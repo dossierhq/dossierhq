@@ -119,6 +119,38 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
+-- Name: principals; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.principals (
+    id integer NOT NULL,
+    provider character varying(255) NOT NULL,
+    identifier character varying(255) NOT NULL,
+    subjects_id integer NOT NULL
+);
+
+
+--
+-- Name: principals_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.principals_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: principals_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.principals_id_seq OWNED BY public.principals.id;
+
+
+--
 -- Name: schemaversion; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -162,10 +194,33 @@ ALTER SEQUENCE public.users_id_seq OWNED BY public.subjects.id;
 
 
 --
+-- Name: principals id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.principals ALTER COLUMN id SET DEFAULT nextval('public.principals_id_seq'::regclass);
+
+
+--
 -- Name: subjects id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.subjects ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
+
+
+--
+-- Name: principals principals_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.principals
+    ADD CONSTRAINT principals_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: principals principals_provider_identifier_key; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.principals
+    ADD CONSTRAINT principals_provider_identifier_key UNIQUE (provider, identifier);
 
 
 --
@@ -190,6 +245,14 @@ ALTER TABLE ONLY public.subjects
 
 ALTER TABLE ONLY public.subjects
     ADD CONSTRAINT users_uuid_key UNIQUE (uuid);
+
+
+--
+-- Name: principals principals_subjects_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.principals
+    ADD CONSTRAINT principals_subjects_id_fkey FOREIGN KEY (subjects_id) REFERENCES public.subjects(id) ON DELETE CASCADE;
 
 
 --
