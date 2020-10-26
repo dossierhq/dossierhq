@@ -119,6 +119,70 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
+-- Name: entities; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.entities (
+    id integer NOT NULL,
+    uuid uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+    name character varying(255) NOT NULL,
+    type character varying(255) NOT NULL
+);
+
+
+--
+-- Name: entities_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.entities_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: entities_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.entities_id_seq OWNED BY public.entities.id;
+
+
+--
+-- Name: entity_fields; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.entity_fields (
+    id integer NOT NULL,
+    entities_id integer NOT NULL,
+    name character varying(255) NOT NULL,
+    data jsonb NOT NULL
+);
+
+
+--
+-- Name: entity_fields_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.entity_fields_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: entity_fields_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.entity_fields_id_seq OWNED BY public.entity_fields.id;
+
+
+--
 -- Name: principals; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -194,6 +258,20 @@ ALTER SEQUENCE public.users_id_seq OWNED BY public.subjects.id;
 
 
 --
+-- Name: entities id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.entities ALTER COLUMN id SET DEFAULT nextval('public.entities_id_seq'::regclass);
+
+
+--
+-- Name: entity_fields id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.entity_fields ALTER COLUMN id SET DEFAULT nextval('public.entity_fields_id_seq'::regclass);
+
+
+--
 -- Name: principals id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -205,6 +283,30 @@ ALTER TABLE ONLY public.principals ALTER COLUMN id SET DEFAULT nextval('public.p
 --
 
 ALTER TABLE ONLY public.subjects ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
+
+
+--
+-- Name: entities entities_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.entities
+    ADD CONSTRAINT entities_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: entities entities_uuid_key; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.entities
+    ADD CONSTRAINT entities_uuid_key UNIQUE (uuid);
+
+
+--
+-- Name: entity_fields entity_fields_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.entity_fields
+    ADD CONSTRAINT entity_fields_pkey PRIMARY KEY (id);
 
 
 --
@@ -245,6 +347,14 @@ ALTER TABLE ONLY public.subjects
 
 ALTER TABLE ONLY public.subjects
     ADD CONSTRAINT users_uuid_key UNIQUE (uuid);
+
+
+--
+-- Name: entity_fields entity_fields_entities_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.entity_fields
+    ADD CONSTRAINT entity_fields_entities_id_fkey FOREIGN KEY (entities_id) REFERENCES public.entities(id) ON DELETE CASCADE;
 
 
 --
