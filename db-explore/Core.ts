@@ -67,17 +67,18 @@ export async function createEntity(
   type: string,
   name: string,
   fields: Record<string, unknown>
-) {
+): Promise<{ uuid: string }> {
   const values = encodeFieldsToValues(type, fields);
 
-  await Db.withTransaction(async (client) => {
+  return await Db.withTransaction(async (client) => {
     const {
-      rows,
-    } = await client.query(
-      `INSERT INTO entities (name, type) VALUES ($1, $2)  RETURNING id`,
+      id: entityId,
+      uuid,
+    }: { id: number; uuid: string } = await Db.queryOne(
+      client,
+      `INSERT INTO entities (name, type) VALUES ($1, $2)  RETURNING id, uuid`,
       [name, type]
     );
-    const entityId = rows[0].id;
     await client.query(
       `INSERT INTO entity_versions (entities_id, created_by) VALUES ($1, $2)`,
       [entityId, session.subjectId]
@@ -89,6 +90,7 @@ export async function createEntity(
         [entityId, name, data]
       );
     }
+    return { uuid };
   });
 }
 
@@ -162,6 +164,41 @@ export async function deleteEntity(session: Session, uuid: string) {
       [version, entityId]
     );
   });
+}
+
+export async function getEntity(uuid: string): Promise<Entity> {
+  const entity = await Db.queryOne(
+    Db.pool,
+    `SELECT id, uuid, type, name FROM entities WHERE uuid = $1 AND published_deleted = false`,
+    [uuid]
+  );
+
+  const values: {
+    entities_id: number;
+    name: string;
+    data: unknown;
+  }[] = await Db.queryMany(
+    Db.pool,
+    `SELECT name, data FROM published_entity_fields WHERE entities_id = $1`,
+    [entity.id]
+  );
+
+  const entitySpec = TypeSpecifications.getEntityTypeSpecification(entity.type);
+  const fields: Record<string, unknown> = {};
+  for (const value of values) {
+    const fieldSpec = TypeSpecifications.getEntityFieldSpecification(
+      entitySpec,
+      value.name
+    );
+    const fieldAdapter = EntityFieldTypeAdapters.getAdapter(fieldSpec);
+    fields[value.name] = fieldAdapter.decodeData(value.data);
+  }
+  return {
+    uuid: entity.uuid,
+    name: entity.name,
+    type: entity.type,
+    fields: fields,
+  };
 }
 
 export async function getAllEntities(): Promise<Entity[]> {

@@ -148,7 +148,14 @@ async function menuCreateEntity() {
 
   const result = await menuEditEntryFields(type, '(Untitled)', {});
   if (result) {
-    await Core.createEntity(session, type, result.name, result.fields);
+    const { uuid } = await Core.createEntity(
+      session,
+      type,
+      result.name,
+      result.fields
+    );
+    state.entity = await Core.getEntity(uuid);
+    dumpEntity(state.entity);
   }
 }
 
@@ -162,6 +169,8 @@ async function menuEditEntity(entity: Entity) {
   );
   if (result) {
     await Core.updateEntity(session, entity.uuid, result.name, result.fields);
+    state.entity = await Core.getEntity(entity.uuid);
+    dumpEntity(state.entity);
   }
 }
 
@@ -179,6 +188,16 @@ async function menuSelectEntity() {
     },
   ]);
   state.entity = entities[entityIndex];
+}
+
+function dumpEntity(entity: Entity) {
+  console.table({
+    uuid: entity.uuid,
+    name: entity.name,
+    type: entity.type,
+  });
+  console.log('Fields');
+  console.table(entity.fields);
 }
 
 function dumpState() {
@@ -277,13 +296,7 @@ async function mainMenu() {
           await menuSelectEntity();
           break;
         case 'show-entity':
-          console.table({
-            uuid: state.entity?.uuid,
-            name: state.entity?.name,
-            type: state.entity?.type,
-          });
-          console.log('Fields');
-          console.table(state.entity?.fields);
+          dumpEntity(getEntity());
           break;
         case 'delete-entity': {
           await Core.deleteEntity(getSession(), getEntity().uuid);

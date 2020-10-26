@@ -72,14 +72,15 @@ export async function queryMany(
   return rows;
 }
 
-export async function withTransaction(
-  callback: (client: Queryable) => Promise<void>
+export async function withTransaction<T>(
+  callback: (client: Queryable) => Promise<T>
 ) {
   const client = await pool.connect();
   try {
     await client.query('BEGIN');
-    await callback(client);
+    const result = await callback(client);
     await client.query('COMMIT');
+    return result;
   } catch (e) {
     await client.query('ROLLBACK');
     throw e;
