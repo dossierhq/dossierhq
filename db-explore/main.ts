@@ -2,7 +2,40 @@
 require('dotenv').config();
 import inquirer from 'inquirer';
 import * as Core from './Core';
+import type { Session } from './Core';
 import * as Db from './Db';
+
+interface State {
+  session: Session | null;
+}
+const state: State = { session: null };
+
+function getSession(): Session {
+  if (!state.session) {
+    throw new Error('No active session');
+  }
+  return state.session;
+}
+
+async function menuCreateSession() {
+  const principals = await Core.selectAllPrincipals();
+  const { principalIndex } = await inquirer.prompt([
+    {
+      name: 'principalIndex',
+      type: 'list',
+      message: 'Which principal?',
+      choices: principals.map((p, index) => ({
+        value: index,
+        name: `${p.provider} / ${p.identifier}`,
+      })),
+    },
+  ]);
+  const selectedPrincipal = principals[principalIndex];
+  state.session = await Core.createSessionForPrincipal(
+    selectedPrincipal.provider,
+    selectedPrincipal.identifier
+  );
+}
 
 async function menuCreatePrincipal() {
   const answers = await inquirer.prompt([
@@ -46,6 +79,7 @@ async function menuCreatePrincipal() {
 }
 
 async function menuCreateBlogPost() {
+  const session = getSession();
   const { title } = await inquirer.prompt([
     {
       name: 'title',
@@ -54,7 +88,7 @@ async function menuCreateBlogPost() {
     },
   ]);
 
-  await Core.insertEntity('blog-post', title, { title });
+  await Core.createEntity(session, 'blog-post', title, { title });
 }
 
 async function mainMenu() {
@@ -69,6 +103,7 @@ async function mainMenu() {
         default: lastChoice,
         choices: [
           { value: 'create-principal', name: 'Create principal' },
+          { value: 'create-session', name: 'Create session with principal' },
           { value: 'dump-principals', name: 'Dump principals' },
           new inquirer.Separator(),
           { value: 'create-blog-post', name: 'Create blog post' },
@@ -79,27 +114,34 @@ async function mainMenu() {
       },
     ]);
     lastChoice = answers.action;
-    switch (answers.action) {
-      case 'create-principal':
-        await menuCreatePrincipal();
-        break;
-      case 'dump-principals': {
-        const principals = await Core.selectAllPrincipals();
-        console.table(principals);
-        break;
+    try {
+      switch (answers.action) {
+        case 'create-session':
+          await menuCreateSession();
+          break;
+        case 'create-principal':
+          await menuCreatePrincipal();
+          break;
+        case 'dump-principals': {
+          const principals = await Core.selectAllPrincipals();
+          console.table(principals);
+          break;
+        }
+        case 'create-blog-post':
+          await menuCreateBlogPost();
+          break;
+        case 'get-all-entities': {
+          const entities = await Core.getAllEntities();
+          console.table(entities);
+          break;
+        }
+        case 'exit':
+          return;
+        default:
+          throw Error(`Unhandled action: ${answers.action}`);
       }
-      case 'create-blog-post':
-        await menuCreateBlogPost();
-        break;
-      case 'get-all-entities': {
-        const entities = await Core.getAllEntities();
-        console.table(entities);
-        break;
-      }
-      case 'exit':
-        return;
-      default:
-        throw Error(`Unhandled action: ${answers.action}`);
+    } catch (error) {
+      console.warn('Caught error', error);
     }
   }
 }

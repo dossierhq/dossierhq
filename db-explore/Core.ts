@@ -2,6 +2,22 @@ import * as Db from './Db';
 import * as EntityFieldTypeAdapters from './EntityFieldTypeAdapters';
 import * as TypeSpecifications from './TypeSpecifications';
 
+export interface Session {
+  subjectId: number;
+}
+
+export async function createSessionForPrincipal(
+  provider: string,
+  identifier: string
+): Promise<Session> {
+  const { id } = await Db.queryOne(
+    Db.pool,
+    `SELECT s.id FROM subjects s, principals p WHERE p.provider = $1 AND p.identifier = $2 AND p.subjects_id = s.id`,
+    [provider, identifier]
+  );
+  return { subjectId: id };
+}
+
 export async function createPrincipal(provider: string, identifier: string) {
   await Db.withTransaction(async (client) => {
     const { rows } = await client.query(
@@ -15,14 +31,17 @@ export async function createPrincipal(provider: string, identifier: string) {
   });
 }
 
-export async function selectAllPrincipals() {
+export async function selectAllPrincipals(): Promise<
+  { uuid: string; provider: string; identifier: string }[]
+> {
   return await Db.queryMany(
     Db.pool,
     `SELECT s.uuid, p.provider, p.identifier FROM subjects s, principals p WHERE s.id = p.subjects_id`
   );
 }
 
-export async function insertEntity(
+export async function createEntity(
+  session: Session,
   type: string,
   name: string,
   fields: Record<string, unknown>
@@ -47,6 +66,10 @@ export async function insertEntity(
       [name, type]
     );
     const entityId = rows[0].id;
+    await client.query(
+      `INSERT INTO entity_versions (entities_id, created_by) VALUES ($1, $2)`,
+      [entityId, session.subjectId]
+    );
     for (const { name, data } of values) {
       //TODO change to one query
       await client.query(
@@ -73,7 +96,7 @@ export async function getAllEntities() {
     data: unknown;
   }[] = await Db.queryMany(
     Db.pool,
-    `SELECT entities_id, name, data FROM entity_fields WHERE entities_id = ANY($1)`,
+    `SELECT entities_id, name, data FROM published_entity_fields WHERE entities_id = ANY($1)`,
     [entities.map((x) => x.id)]
   );
 

@@ -20,7 +20,8 @@
   "scripts": {
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write .",
-    "start": "ts-node main.ts"
+    "start": "ts-node main.ts",
+    "ts:check": "tsc --noEmit"
   },
   "author": "",
   "license": "ISC"

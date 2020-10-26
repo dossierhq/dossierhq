@@ -25,7 +25,7 @@ export function queryAsync<
   return client.query<R>(query, values);
 }
 
-async function queryOneAsync(
+export async function queryOne(
   client: Queryable,
   queryTextOrConfig: any,
   values: any

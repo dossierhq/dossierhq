@@ -126,7 +126,8 @@ CREATE TABLE public.entities (
     id integer NOT NULL,
     uuid uuid DEFAULT public.uuid_generate_v4() NOT NULL,
     name character varying(255) NOT NULL,
-    type character varying(255) NOT NULL
+    type character varying(255) NOT NULL,
+    published_version smallint DEFAULT 0 NOT NULL
 );
 
 
@@ -158,7 +159,9 @@ CREATE TABLE public.entity_fields (
     id integer NOT NULL,
     entities_id integer NOT NULL,
     name character varying(255) NOT NULL,
-    data jsonb NOT NULL
+    data jsonb NOT NULL,
+    min_version smallint DEFAULT 0 NOT NULL,
+    max_version smallint DEFAULT 0 NOT NULL
 );
 
 
@@ -180,6 +183,39 @@ CREATE SEQUENCE public.entity_fields_id_seq
 --
 
 ALTER SEQUENCE public.entity_fields_id_seq OWNED BY public.entity_fields.id;
+
+
+--
+-- Name: entity_versions; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.entity_versions (
+    id integer NOT NULL,
+    entities_id integer NOT NULL,
+    version smallint DEFAULT 0 NOT NULL,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    created_by integer NOT NULL
+);
+
+
+--
+-- Name: entity_versions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.entity_versions_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: entity_versions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.entity_versions_id_seq OWNED BY public.entity_versions.id;
 
 
 --
@@ -212,6 +248,20 @@ CREATE SEQUENCE public.principals_id_seq
 --
 
 ALTER SEQUENCE public.principals_id_seq OWNED BY public.principals.id;
+
+
+--
+-- Name: published_entity_fields; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW public.published_entity_fields AS
+ SELECT ef.id,
+    ef.entities_id,
+    ef.name,
+    ef.data
+   FROM public.entities e,
+    public.entity_fields ef
+  WHERE ((e.id = ef.entities_id) AND (e.published_version >= ef.min_version) AND (e.published_version <= ef.max_version));
 
 
 --
@@ -272,6 +322,13 @@ ALTER TABLE ONLY public.entity_fields ALTER COLUMN id SET DEFAULT nextval('publi
 
 
 --
+-- Name: entity_versions id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.entity_versions ALTER COLUMN id SET DEFAULT nextval('public.entity_versions_id_seq'::regclass);
+
+
+--
 -- Name: principals id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -307,6 +364,22 @@ ALTER TABLE ONLY public.entities
 
 ALTER TABLE ONLY public.entity_fields
     ADD CONSTRAINT entity_fields_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: entity_versions entity_versions_entities_id_version_key; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.entity_versions
+    ADD CONSTRAINT entity_versions_entities_id_version_key UNIQUE (entities_id, version);
+
+
+--
+-- Name: entity_versions entity_versions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.entity_versions
+    ADD CONSTRAINT entity_versions_pkey PRIMARY KEY (id);
 
 
 --
@@ -355,6 +428,22 @@ ALTER TABLE ONLY public.subjects
 
 ALTER TABLE ONLY public.entity_fields
     ADD CONSTRAINT entity_fields_entities_id_fkey FOREIGN KEY (entities_id) REFERENCES public.entities(id) ON DELETE CASCADE;
+
+
+--
+-- Name: entity_versions entity_versions_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.entity_versions
+    ADD CONSTRAINT entity_versions_created_by_fkey FOREIGN KEY (created_by) REFERENCES public.subjects(id);
+
+
+--
+-- Name: entity_versions entity_versions_entities_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.entity_versions
+    ADD CONSTRAINT entity_versions_entities_id_fkey FOREIGN KEY (entities_id) REFERENCES public.entities(id) ON DELETE CASCADE;
 
 
 --
