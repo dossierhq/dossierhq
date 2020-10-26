@@ -101,18 +101,18 @@ export async function updateEntity(
   await Db.withTransaction(async (client) => {
     const {
       entities_id: entityId,
-      version: maxVersion,
+      version: previousVersion,
     } = await Db.queryOne(
       client,
       `SELECT ev.entities_id, MAX(ev.version) AS version FROM entity_versions ev, entities e WHERE e.uuid = $1 AND e.id = ev.entities_id GROUP BY entities_id`,
       [uuid]
     );
-    const version = maxVersion + 1;
+    const newVersion = previousVersion + 1;
 
     const { type } = await Db.queryOne(
       client,
       `UPDATE entities SET name = $1, published_version = $2 WHERE id = $3 RETURNING type`,
-      [name, version, entityId]
+      [name, newVersion, entityId]
     );
 
     const values = encodeFieldsToValues(type, fields);
@@ -120,7 +120,7 @@ export async function updateEntity(
     await Db.queryNone(
       client,
       `INSERT INTO entity_versions (entities_id, created_by, version) VALUES ($1, $2, $3)`,
-      [entityId, session.subjectId, version]
+      [entityId, session.subjectId, newVersion]
     );
 
     for (const { name, data } of values) {
@@ -128,14 +128,14 @@ export async function updateEntity(
       await Db.queryNone(
         client,
         `INSERT INTO entity_fields (entities_id, name, data, min_version, max_version) VALUES ($1, $2, $3, $4, $4)`,
-        [entityId, name, data, version]
+        [entityId, name, data, newVersion]
       );
     }
     // Update max_version of active fields that aren't updated
     await Db.queryNone(
       client,
-      `UPDATE entity_fields SET max_version = $1 WHERE entities_id = $2 AND name != ANY($3) AND $1 >= min_version AND $1 <= max_version`,
-      [version, entityId, Object.keys(fields)]
+      `UPDATE entity_fields SET max_version = $1 WHERE entities_id = $2 AND name != ANY($3) AND $4 >= min_version AND $4 <= max_version`,
+      [newVersion, entityId, Object.keys(fields), previousVersion]
     );
   });
 }

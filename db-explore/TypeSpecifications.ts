@@ -6,6 +6,7 @@ export interface EntityTypeSpecification {
 export interface EntityFieldSpecification {
   name: string;
   type: EntityFieldType;
+  isName?: boolean;
 }
 
 export enum EntityFieldType {
@@ -16,8 +17,15 @@ const specifications: EntityTypeSpecification[] = [];
 
 specifications.push({
   name: 'blog-post',
-  fields: [{ name: 'title', type: EntityFieldType.BasicString }],
+  fields: [
+    { name: 'title', type: EntityFieldType.BasicString, isName: true },
+    { name: 'summary', type: EntityFieldType.BasicString },
+  ],
 });
+
+export function getAllEntitySpecifications() {
+  return specifications;
+}
 
 export function getEntityTypeSpecification(
   type: string

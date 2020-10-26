@@ -5,6 +5,7 @@ import inquirer, { ChoiceBase } from 'inquirer';
 import * as Core from './Core';
 import type { Entity, Session } from './Core';
 import * as Db from './Db';
+import * as TypeSpecifications from './TypeSpecifications';
 
 interface State {
   session: Session | null;
@@ -87,31 +88,81 @@ async function menuCreatePrincipal() {
   await Core.createPrincipal(provider, identifier);
 }
 
-async function menuCreateBlogPost() {
-  const session = getSession();
-  const { title } = await inquirer.prompt([
+async function menuEditEntryFields(
+  type: string,
+  defaultName: string,
+  defaultValues: Record<string, unknown>
+) {
+  const entitySpec = TypeSpecifications.getEntityTypeSpecification(type);
+  const { fieldsToEdit }: { fieldsToEdit: string[] } = await inquirer.prompt([
     {
-      name: 'title',
-      type: 'input',
-      message: 'Title',
+      name: 'fieldsToEdit',
+      type: 'checkbox',
+      message: 'Select which fields to edit',
+      choices: entitySpec.fields.map((fieldSpec) => ({
+        value: fieldSpec.name,
+        name: fieldSpec.name,
+        checked: true,
+      })),
     },
   ]);
 
-  await Core.createEntity(session, 'blog-post', title, { title });
+  if (fieldsToEdit.length === 0) {
+    return null;
+  }
+
+  const fieldValues = await inquirer.prompt(
+    fieldsToEdit.map((fieldName) => ({
+      name: fieldName,
+      type: 'input',
+      message: TypeSpecifications.getEntityFieldSpecification(
+        entitySpec,
+        fieldName
+      ).name,
+      default: defaultValues[fieldName],
+    }))
+  );
+
+  const nameFieldName = entitySpec.fields.find((x) => x.isName)?.name;
+
+  const newName =
+    nameFieldName && fieldValues[nameFieldName]
+      ? fieldValues[nameFieldName]
+      : defaultName;
+  return { name: newName, fields: fieldValues };
 }
 
-async function menuEditBlogPost(entity: Entity) {
+async function menuCreateEntity() {
   const session = getSession();
-  const { title } = await inquirer.prompt([
+
+  const { type } = await inquirer.prompt([
     {
-      name: 'title',
-      type: 'input',
-      message: 'Title',
-      default: entity.fields.title,
+      name: 'type',
+      type: 'list',
+      choices: TypeSpecifications.getAllEntitySpecifications().map((x) => ({
+        value: x.name,
+        name: x.name,
+      })),
     },
   ]);
 
-  await Core.updateEntity(session, entity.uuid, title, { title });
+  const result = await menuEditEntryFields(type, '(Untitled)', {});
+  if (result) {
+    await Core.createEntity(session, type, result.name, result.fields);
+  }
+}
+
+async function menuEditEntity(entity: Entity) {
+  const session = getSession();
+
+  const result = await menuEditEntryFields(
+    entity.type,
+    entity.name,
+    entity.fields
+  );
+  if (result) {
+    await Core.updateEntity(session, entity.uuid, result.name, result.fields);
+  }
 }
 
 async function menuSelectEntity() {
@@ -167,14 +218,14 @@ async function mainMenu() {
       { value: 'dump-principals', name: 'Dump principals' },
       new inquirer.Separator(),
       {
-        value: 'create-blog-post',
-        name: 'Create blog post',
+        value: 'create-entity',
+        name: 'Create entity',
         disabled: !state.session,
       },
       {
-        value: 'edit-blog-post',
-        name: 'Edit blog post',
-        disabled: !state.session || state.entity?.type !== 'blog-post',
+        value: 'edit-entity',
+        name: 'Edit entity',
+        disabled: !state.session || !state.entity,
       },
       { value: 'get-all-entities', name: 'Show all entities' },
       { value: 'select-entity', name: 'Select entity' },
@@ -211,11 +262,11 @@ async function mainMenu() {
           console.table(principals);
           break;
         }
-        case 'create-blog-post':
-          await menuCreateBlogPost();
+        case 'create-entity':
+          await menuCreateEntity();
           break;
-        case 'edit-blog-post':
-          await menuEditBlogPost(getEntity());
+        case 'edit-entity':
+          await menuEditEntity(getEntity());
           break;
         case 'get-all-entities': {
           const entities = await Core.getAllEntities();
