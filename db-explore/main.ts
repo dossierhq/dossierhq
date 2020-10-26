@@ -1,7 +1,7 @@
 #!/usr/bin/env npx ts-node
 require('dotenv').config();
 import chalk from 'chalk';
-import inquirer from 'inquirer';
+import inquirer, { ChoiceBase } from 'inquirer';
 import * as Core from './Core';
 import type { Entity, Session } from './Core';
 import * as Db from './Db';
@@ -130,10 +130,44 @@ function dumpState() {
   console.log();
 }
 
+type ChoiceInit =
+  | { value: unknown; name: string; disabled?: boolean }
+  | ChoiceBase;
+
+function cleanupChoices(choiceInits: ChoiceInit[]) {
+  return choiceInits.map((x) => {
+    if (x instanceof Object && (x as any)['disabled']) {
+      return new inquirer.Separator((x as any).name);
+    }
+    return x;
+  });
+}
+
 async function mainMenu() {
   let lastChoice = null;
   while (true) {
     dumpState();
+    const choices = [
+      { value: 'create-session', name: 'Create session with principal' },
+      { value: 'create-principal', name: 'Create principal' },
+      { value: 'dump-principals', name: 'Dump principals' },
+      new inquirer.Separator(),
+      {
+        value: 'create-blog-post',
+        name: 'Create blog post',
+        disabled: !state.session,
+      },
+      { value: 'get-all-entities', name: 'Show all entities' },
+      { value: 'select-entity', name: 'Select entity' },
+      { value: 'show-entity', name: 'Show entity', disabled: !state.entity },
+      {
+        value: 'delete-entity',
+        name: 'Delete entity',
+        disabled: !state.session || !state.entity,
+      },
+      new inquirer.Separator(),
+      { value: 'exit', name: 'Exit' },
+    ];
     const answers: any = await inquirer.prompt([
       {
         name: 'action',
@@ -141,19 +175,7 @@ async function mainMenu() {
         pageSize: 20,
         message: 'What do you want to do?',
         default: lastChoice,
-        choices: [
-          { value: 'create-session', name: 'Create session with principal' },
-          { value: 'create-principal', name: 'Create principal' },
-          { value: 'dump-principals', name: 'Dump principals' },
-          new inquirer.Separator(),
-          { value: 'create-blog-post', name: 'Create blog post' },
-          { value: 'get-all-entities', name: 'Show all entities' },
-          { value: 'select-entity', name: 'Select entity' },
-          { value: 'show-entity', name: 'Show entity' },
-          { value: 'delete-entity', name: 'Delete entity' },
-          new inquirer.Separator(),
-          { value: 'exit', name: 'Exit' },
-        ],
+        choices: cleanupChoices(choices),
       },
     ]);
     lastChoice = answers.action;
