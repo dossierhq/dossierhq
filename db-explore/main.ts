@@ -45,6 +45,18 @@ async function menuCreatePrincipal() {
   await Core.createPrincipal(provider, identifier);
 }
 
+async function menuCreateBlogPost() {
+  const { title } = await inquirer.prompt([
+    {
+      name: 'title',
+      type: 'input',
+      message: 'Title',
+    },
+  ]);
+
+  await Core.insertEntity('blog-post', title, { title });
+}
+
 async function mainMenu() {
   let lastChoice = null;
   while (true) {
@@ -59,6 +71,8 @@ async function mainMenu() {
           { value: 'create-principal', name: 'Create principal' },
           { value: 'dump-principals', name: 'Dump principals' },
           new inquirer.Separator(),
+          { value: 'create-blog-post', name: 'Create blog post' },
+          new inquirer.Separator(),
           { value: 'exit', name: 'Exit' },
         ],
       },
@@ -68,9 +82,13 @@ async function mainMenu() {
       case 'create-principal':
         await menuCreatePrincipal();
         break;
-      case 'dump-principals':
+      case 'dump-principals': {
         const principals = await Core.selectAllPrincipals();
         console.table(principals);
+        break;
+      }
+      case 'create-blog-post':
+        await menuCreateBlogPost();
         break;
       case 'exit':
         return;
