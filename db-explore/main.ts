@@ -100,6 +100,20 @@ async function menuCreateBlogPost() {
   await Core.createEntity(session, 'blog-post', title, { title });
 }
 
+async function menuEditBlogPost(entity: Entity) {
+  const session = getSession();
+  const { title } = await inquirer.prompt([
+    {
+      name: 'title',
+      type: 'input',
+      message: 'Title',
+      default: entity.fields.title,
+    },
+  ]);
+
+  await Core.updateEntity(session, entity.uuid, title, { title });
+}
+
 async function menuSelectEntity() {
   const entities = await Core.getAllEntities();
   const { entityIndex } = await inquirer.prompt([
@@ -157,6 +171,11 @@ async function mainMenu() {
         name: 'Create blog post',
         disabled: !state.session,
       },
+      {
+        value: 'edit-blog-post',
+        name: 'Edit blog post',
+        disabled: !state.session || state.entity?.type !== 'blog-post',
+      },
       { value: 'get-all-entities', name: 'Show all entities' },
       { value: 'select-entity', name: 'Select entity' },
       { value: 'show-entity', name: 'Show entity', disabled: !state.entity },
@@ -194,6 +213,9 @@ async function mainMenu() {
         }
         case 'create-blog-post':
           await menuCreateBlogPost();
+          break;
+        case 'edit-blog-post':
+          await menuEditBlogPost(getEntity());
           break;
         case 'get-all-entities': {
           const entities = await Core.getAllEntities();
