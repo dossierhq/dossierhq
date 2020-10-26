@@ -18,6 +18,8 @@
     "prettier": "^2.1.2"
   },
   "scripts": {
+    "prettier:check": "prettier --check .",
+    "prettier:fix": "prettier --write .",
     "start": "ts-node main.ts"
   },
   "author": "",

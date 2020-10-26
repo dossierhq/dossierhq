@@ -1,44 +1,44 @@
 #!/usr/bin/env npx ts-node
-require("dotenv").config();
-import inquirer from "inquirer";
-import * as Core from "./Core";
-import * as Db from "./Db";
+require('dotenv').config();
+import inquirer from 'inquirer';
+import * as Core from './Core';
+import * as Db from './Db';
 
 async function menuCreatePrincipal() {
   const answers = await inquirer.prompt([
     {
-      name: "action",
-      type: "list",
-      message: "Which principal?",
+      name: 'action',
+      type: 'list',
+      message: 'Which principal?',
       choices: [
-        { value: "enter", name: "Enter" },
-        { value: "hardcoded", name: "sys/12345" },
+        { value: 'enter', name: 'Enter' },
+        { value: 'hardcoded', name: 'sys/12345' },
       ],
     },
   ]);
 
-  let provider = "";
-  let identifier = "";
+  let provider = '';
+  let identifier = '';
 
   switch (answers.action) {
-    case "enter":
+    case 'enter':
       const answers = await inquirer.prompt([
         {
-          name: "provider",
-          type: "input",
-          message: "Which provider?",
-          default: "sys",
+          name: 'provider',
+          type: 'input',
+          message: 'Which provider?',
+          default: 'sys',
         },
-        { name: "identifier", type: "input", message: "Which identifier?" },
+        { name: 'identifier', type: 'input', message: 'Which identifier?' },
       ]);
 
       provider = answers.provider;
       identifier = answers.identifier;
 
       break;
-    case "hardcoded": {
-      provider = "sys";
-      identifier = "12345";
+    case 'hardcoded': {
+      provider = 'sys';
+      identifier = '12345';
       break;
     }
   }
@@ -50,29 +50,29 @@ async function mainMenu() {
   while (true) {
     const answers: any = await inquirer.prompt([
       {
-        name: "action",
-        type: "list",
+        name: 'action',
+        type: 'list',
         pageSize: 20,
-        message: "What do you want to do?",
+        message: 'What do you want to do?',
         default: lastChoice,
         choices: [
-          { value: "create-principal", name: "Create principal" },
-          { value: "dump-principals", name: "Dump principals" },
+          { value: 'create-principal', name: 'Create principal' },
+          { value: 'dump-principals', name: 'Dump principals' },
           new inquirer.Separator(),
-          { value: "exit", name: "Exit" },
+          { value: 'exit', name: 'Exit' },
         ],
       },
     ]);
     lastChoice = answers.action;
     switch (answers.action) {
-      case "create-principal":
+      case 'create-principal':
         await menuCreatePrincipal();
         break;
-      case "dump-principals":
+      case 'dump-principals':
         const principals = await Core.selectAllPrincipals();
         console.table(principals);
         break;
-      case "exit":
+      case 'exit':
         return;
       default:
         throw Error(`Unhandled action: ${answers.action}`);

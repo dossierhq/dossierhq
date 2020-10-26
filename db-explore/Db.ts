@@ -1,4 +1,4 @@
-import { Pool, QueryResult, QueryResultRow } from "pg";
+import { Pool, QueryResult, QueryResultRow } from 'pg';
 
 export interface Queryable {
   query<R extends QueryResultRow = any, I extends any[] = any[]>(
@@ -77,11 +77,11 @@ export async function withTransaction(
 ) {
   const client = await pool.connect();
   try {
-    await client.query("BEGIN");
+    await client.query('BEGIN');
     await callback(client);
-    await client.query("COMMIT");
+    await client.query('COMMIT');
   } catch (e) {
-    await client.query("ROLLBACK");
+    await client.query('ROLLBACK');
     throw e;
   } finally {
     client.release();

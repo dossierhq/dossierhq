@@ -3,7 +3,7 @@ services:
   db:
     image: postgis/postgis:13-3.0-alpine
     ports:
-      - "5432:5432"
+      - '5432:5432'
     environment:
       POSTGRES_DB: datadata-db-explore
       POSTGRES_USER: testuser

@@ -1,4 +1,4 @@
-import * as Db from "./Db";
+import * as Db from './Db';
 
 export async function createPrincipal(provider: string, identifier: string) {
   await Db.withTransaction(async (client) => {
