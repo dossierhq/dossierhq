@@ -51,7 +51,7 @@ async function queryNoneOrOneAsync<
   return rows[0];
 }
 
-async function queryNoneAsync<I extends any[] = any[]>(
+export async function queryNone<I extends any[] = any[]>(
   client: Queryable,
   text: string,
   values?: I

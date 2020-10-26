@@ -6,6 +6,13 @@ export interface Session {
   subjectId: number;
 }
 
+export interface Entity {
+  uuid: string;
+  name: string;
+  type: string;
+  fields: Record<string, unknown>;
+}
+
 export async function createSessionForPrincipal(
   provider: string,
   identifier: string
@@ -80,7 +87,31 @@ export async function createEntity(
   });
 }
 
-export async function getAllEntities() {
+export async function deleteEntity(session: Session, uuid: string) {
+  await Db.withTransaction(async (client) => {
+    const {
+      entities_id: entityId,
+      version: maxVersion,
+    } = await Db.queryOne(
+      client,
+      `SELECT ev.entities_id, MAX(ev.version) AS version FROM entity_versions ev, entities e WHERE e.uuid = $1 AND e.id = ev.entities_id GROUP BY entities_id`,
+      [uuid]
+    );
+    const version = maxVersion + 1;
+    await Db.queryNone(
+      client,
+      `INSERT INTO entity_versions (entities_id, created_by, version) VALUES ($1, $2, $3)`,
+      [entityId, session.subjectId, version]
+    );
+    await Db.queryNone(
+      client,
+      `UPDATE entities SET published_version = $1, published_deleted = true WHERE id = $2`,
+      [version, entityId]
+    );
+  });
+}
+
+export async function getAllEntities(): Promise<Entity[]> {
   const entities: {
     id: number;
     uuid: string;
@@ -88,7 +119,7 @@ export async function getAllEntities() {
     name: string;
   }[] = await Db.queryMany(
     Db.pool,
-    `SELECT id, uuid, type, name FROM entities`
+    `SELECT id, uuid, type, name FROM entities WHERE published_deleted = false`
   );
   const values: {
     entities_id: number;
@@ -117,7 +148,12 @@ export async function getAllEntities() {
       const fieldAdapter = EntityFieldTypeAdapters.getAdapter(fieldSpec);
       fields[value.name] = fieldAdapter.decodeData(value.data);
     }
-    result.push({ uuid: entity.uuid, name: entity.name, fields: fields });
+    result.push({
+      uuid: entity.uuid,
+      name: entity.name,
+      type: entity.type,
+      fields: fields,
+    });
   }
   return result;
 }

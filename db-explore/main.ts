@@ -2,19 +2,27 @@
 require('dotenv').config();
 import inquirer from 'inquirer';
 import * as Core from './Core';
-import type { Session } from './Core';
+import type { Entity, Session } from './Core';
 import * as Db from './Db';
 
 interface State {
   session: Session | null;
+  entity: Entity | null;
 }
-const state: State = { session: null };
+const state: State = { session: null, entity: null };
 
 function getSession(): Session {
   if (!state.session) {
     throw new Error('No active session');
   }
   return state.session;
+}
+
+function getEntity(): Entity {
+  if (!state.entity) {
+    throw new Error('No selected entity');
+  }
+  return state.entity;
 }
 
 async function menuCreateSession() {
@@ -91,6 +99,22 @@ async function menuCreateBlogPost() {
   await Core.createEntity(session, 'blog-post', title, { title });
 }
 
+async function menuSelectEntity() {
+  const entities = await Core.getAllEntities();
+  const { entityIndex } = await inquirer.prompt([
+    {
+      name: 'entityIndex',
+      type: 'list',
+      message: 'Which entity?',
+      choices: entities.map((e, index) => ({
+        value: index,
+        name: `${e.type} / ${e.name} (${e.uuid})`,
+      })),
+    },
+  ]);
+  state.entity = entities[entityIndex];
+}
+
 async function mainMenu() {
   let lastChoice = null;
   while (true) {
@@ -102,12 +126,14 @@ async function mainMenu() {
         message: 'What do you want to do?',
         default: lastChoice,
         choices: [
-          { value: 'create-principal', name: 'Create principal' },
           { value: 'create-session', name: 'Create session with principal' },
+          { value: 'create-principal', name: 'Create principal' },
           { value: 'dump-principals', name: 'Dump principals' },
           new inquirer.Separator(),
           { value: 'create-blog-post', name: 'Create blog post' },
-          { value: 'get-all-entities', name: 'Get all entities' },
+          { value: 'get-all-entities', name: 'Show all entities' },
+          { value: 'select-entity', name: 'Select entity' },
+          { value: 'delete-entity', name: 'Delete entity' },
           new inquirer.Separator(),
           { value: 'exit', name: 'Exit' },
         ],
@@ -133,6 +159,14 @@ async function mainMenu() {
         case 'get-all-entities': {
           const entities = await Core.getAllEntities();
           console.table(entities);
+          break;
+        }
+        case 'select-entity':
+          await menuSelectEntity();
+          break;
+        case 'delete-entity': {
+          await Core.deleteEntity(getSession(), getEntity().uuid);
+          state.entity = null;
           break;
         }
         case 'exit':

@@ -127,7 +127,8 @@ CREATE TABLE public.entities (
     uuid uuid DEFAULT public.uuid_generate_v4() NOT NULL,
     name character varying(255) NOT NULL,
     type character varying(255) NOT NULL,
-    published_version smallint DEFAULT 0 NOT NULL
+    published_version smallint DEFAULT 0 NOT NULL,
+    published_deleted boolean DEFAULT false NOT NULL
 );
 
 
