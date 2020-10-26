@@ -4,7 +4,8 @@ import {
 } from './TypeSpecifications';
 
 export interface EntityFieldTypeAdapter {
-  getData(rawData: unknown): unknown;
+  encodeData(rawData: unknown): unknown;
+  decodeData(data: unknown): unknown;
   name: EntityFieldType;
 }
 
@@ -12,7 +13,8 @@ const adapters: EntityFieldTypeAdapter[] = [];
 
 adapters.push({
   name: EntityFieldType.BasicString,
-  getData: (x) => JSON.stringify(x),
+  encodeData: (x) => JSON.stringify(x),
+  decodeData: (x) => x,
 });
 
 export function getAdapter(

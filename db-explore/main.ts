@@ -72,6 +72,7 @@ async function mainMenu() {
           { value: 'dump-principals', name: 'Dump principals' },
           new inquirer.Separator(),
           { value: 'create-blog-post', name: 'Create blog post' },
+          { value: 'get-all-entities', name: 'Get all entities' },
           new inquirer.Separator(),
           { value: 'exit', name: 'Exit' },
         ],
@@ -90,6 +91,11 @@ async function mainMenu() {
       case 'create-blog-post':
         await menuCreateBlogPost();
         break;
+      case 'get-all-entities': {
+        const entities = await Core.getAllEntities();
+        console.table(entities);
+        break;
+      }
       case 'exit':
         return;
       default:

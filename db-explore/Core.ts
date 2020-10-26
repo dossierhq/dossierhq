@@ -27,18 +27,15 @@ export async function insertEntity(
   name: string,
   fields: Record<string, unknown>
 ) {
-  const typeSpec = TypeSpecifications.getEntityTypeSpecification(type);
-  if (!typeSpec) {
-    throw new Error(`Type (${type}) doesn't exist`);
-  }
+  const entitySpec = TypeSpecifications.getEntityTypeSpecification(type);
   const values: { name: string; data: unknown }[] = [];
   for (const [fieldName, fieldData] of Object.entries(fields)) {
-    const fieldSpecification = TypeSpecifications.getEntityFieldSpecification(
-      typeSpec,
+    const fieldSpec = TypeSpecifications.getEntityFieldSpecification(
+      entitySpec,
       fieldName
     );
-    const fieldAdapter = EntityFieldTypeAdapters.getAdapter(fieldSpecification);
-    const data = fieldAdapter.getData(fieldData);
+    const fieldAdapter = EntityFieldTypeAdapters.getAdapter(fieldSpec);
+    const data = fieldAdapter.encodeData(fieldData);
     values.push({ name: fieldName, data });
   }
 
@@ -58,4 +55,46 @@ export async function insertEntity(
       );
     }
   });
+}
+
+export async function getAllEntities() {
+  const entities: {
+    id: number;
+    uuid: string;
+    type: string;
+    name: string;
+  }[] = await Db.queryMany(
+    Db.pool,
+    `SELECT id, uuid, type, name FROM entities`
+  );
+  const values: {
+    entities_id: number;
+    name: string;
+    data: unknown;
+  }[] = await Db.queryMany(
+    Db.pool,
+    `SELECT entities_id, name, data FROM entity_fields WHERE entities_id = ANY($1)`,
+    [entities.map((x) => x.id)]
+  );
+
+  const result = [];
+  for (const entity of entities) {
+    const entitySpec = TypeSpecifications.getEntityTypeSpecification(
+      entity.type
+    );
+    const fields: Record<string, unknown> = {};
+    for (const value of values) {
+      if (value.entities_id !== entity.id) {
+        continue;
+      }
+      const fieldSpec = TypeSpecifications.getEntityFieldSpecification(
+        entitySpec,
+        value.name
+      );
+      const fieldAdapter = EntityFieldTypeAdapters.getAdapter(fieldSpec);
+      fields[value.name] = fieldAdapter.decodeData(value.data);
+    }
+    result.push({ uuid: entity.uuid, name: entity.name, fields: fields });
+  }
+  return result;
 }

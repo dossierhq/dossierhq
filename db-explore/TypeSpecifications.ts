@@ -21,8 +21,12 @@ specifications.push({
 
 export function getEntityTypeSpecification(
   type: string
-): EntityTypeSpecification | null {
-  return specifications.find((x) => x.name === type) ?? null;
+): EntityTypeSpecification {
+  const result = specifications.find((x) => x.name === type);
+  if (!result) {
+    throw new Error(`Entity type (${type}) doesn't exist`);
+  }
+  return result;
 }
 
 export function getEntityFieldSpecification(
