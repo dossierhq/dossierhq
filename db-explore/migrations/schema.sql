@@ -131,10 +131,10 @@ CREATE TABLE public.schemaversion (
 
 
 --
--- Name: users; Type: TABLE; Schema: public; Owner: -
+-- Name: subjects; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE public.users (
+CREATE TABLE public.subjects (
     id integer NOT NULL,
     uuid uuid DEFAULT public.uuid_generate_v4() NOT NULL,
     created_at timestamp with time zone DEFAULT now() NOT NULL
@@ -158,14 +158,14 @@ CREATE SEQUENCE public.users_id_seq
 -- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
+ALTER SEQUENCE public.users_id_seq OWNED BY public.subjects.id;
 
 
 --
--- Name: users id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: subjects id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
+ALTER TABLE ONLY public.subjects ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
 
 
 --
@@ -177,18 +177,18 @@ ALTER TABLE ONLY public.schemaversion
 
 
 --
--- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: subjects users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.users
+ALTER TABLE ONLY public.subjects
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
 
 
 --
--- Name: users users_uuid_key; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: subjects users_uuid_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.users
+ALTER TABLE ONLY public.subjects
     ADD CONSTRAINT users_uuid_key UNIQUE (uuid);
 
 
