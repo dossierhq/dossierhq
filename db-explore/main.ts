@@ -1,5 +1,6 @@
 #!/usr/bin/env npx ts-node
 require('dotenv').config();
+import chalk from 'chalk';
 import inquirer from 'inquirer';
 import * as Core from './Core';
 import type { Entity, Session } from './Core';
@@ -115,9 +116,24 @@ async function menuSelectEntity() {
   state.entity = entities[entityIndex];
 }
 
+function dumpState() {
+  console.log(
+    `\n${chalk.cyan('Session:')} ${state.session ? chalk.bold('set') : 'null'}`
+  );
+  if (state.entity) {
+    console.log(
+      `${chalk.cyan('Entity:')} ${state.entity.name} / ${
+        state.entity.type
+      } ${chalk.italic(`(${state.entity.uuid})`)}`
+    );
+  }
+  console.log();
+}
+
 async function mainMenu() {
   let lastChoice = null;
   while (true) {
+    dumpState();
     const answers: any = await inquirer.prompt([
       {
         name: 'action',
@@ -133,6 +149,7 @@ async function mainMenu() {
           { value: 'create-blog-post', name: 'Create blog post' },
           { value: 'get-all-entities', name: 'Show all entities' },
           { value: 'select-entity', name: 'Select entity' },
+          { value: 'show-entity', name: 'Show entity' },
           { value: 'delete-entity', name: 'Delete entity' },
           new inquirer.Separator(),
           { value: 'exit', name: 'Exit' },
@@ -163,6 +180,15 @@ async function mainMenu() {
         }
         case 'select-entity':
           await menuSelectEntity();
+          break;
+        case 'show-entity':
+          console.table({
+            uuid: state.entity?.uuid,
+            name: state.entity?.name,
+            type: state.entity?.type,
+          });
+          console.log('Fields');
+          console.table(state.entity?.fields);
           break;
         case 'delete-entity': {
           await Core.deleteEntity(getSession(), getEntity().uuid);

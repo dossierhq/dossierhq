@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "chalk": "^4.1.0",
     "dotenv": "^8.2.0",
     "inquirer": "^7.3.3",
     "pg": "^8.4.1",
