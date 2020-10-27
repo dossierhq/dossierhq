@@ -136,7 +136,7 @@ export async function updateEntity(
     // Update max_version of active fields that aren't updated
     await Db.queryNone(
       client,
-      `UPDATE entity_fields SET max_version = $1 WHERE entities_id = $2 AND name != ANY($3) AND $4 >= min_version AND $4 <= max_version`,
+      `UPDATE entity_fields SET max_version = $1 WHERE entities_id = $2 AND NOT (name = ANY($3)) AND $4 >= min_version AND $4 <= max_version`,
       [newVersion, entityId, Object.keys(fields), previousVersion]
     );
   });
