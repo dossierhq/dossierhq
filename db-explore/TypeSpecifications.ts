@@ -15,13 +15,42 @@ export enum EntityFieldType {
 
 const specifications: EntityTypeSpecification[] = [];
 
-specifications.push({
-  name: 'blog-post',
-  fields: [
-    { name: 'title', type: EntityFieldType.BasicString, isName: true },
-    { name: 'summary', type: EntityFieldType.BasicString },
-  ],
-});
+specifications.push(
+  {
+    name: 'blog-post',
+    fields: [
+      { name: 'title', type: EntityFieldType.BasicString, isName: true },
+      { name: 'summary', type: EntityFieldType.BasicString },
+    ],
+  },
+  {
+    name: 'place-of-business',
+    fields: [
+      { name: 'name', type: EntityFieldType.BasicString, isName: true },
+      { name: 'address1', type: EntityFieldType.BasicString },
+      { name: 'address2', type: EntityFieldType.BasicString },
+      { name: 'city', type: EntityFieldType.BasicString },
+      { name: 'zip', type: EntityFieldType.BasicString },
+      { name: 'phone', type: EntityFieldType.BasicString },
+      { name: 'email', type: EntityFieldType.BasicString },
+      { name: 'facebook', type: EntityFieldType.BasicString },
+      { name: 'instagram', type: EntityFieldType.BasicString },
+      { name: 'web', type: EntityFieldType.BasicString },
+    ],
+  },
+  {
+    name: 'organization',
+    fields: [
+      { name: 'name', type: EntityFieldType.BasicString, isName: true },
+      { name: 'organizationNumber', type: EntityFieldType.BasicString },
+      { name: 'address1', type: EntityFieldType.BasicString },
+      { name: 'address2', type: EntityFieldType.BasicString },
+      { name: 'city', type: EntityFieldType.BasicString },
+      { name: 'zip', type: EntityFieldType.BasicString },
+      { name: 'web', type: EntityFieldType.BasicString },
+    ],
+  }
+);
 
 export function getAllEntitySpecifications() {
   return specifications;
