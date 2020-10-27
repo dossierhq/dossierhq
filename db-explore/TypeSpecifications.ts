@@ -11,6 +11,7 @@ export interface EntityFieldSpecification {
 
 export enum EntityFieldType {
   BasicString = 'string',
+  Reference = 'reference',
 }
 
 const specifications: EntityTypeSpecification[] = [];
@@ -36,6 +37,7 @@ specifications.push(
       { name: 'facebook', type: EntityFieldType.BasicString },
       { name: 'instagram', type: EntityFieldType.BasicString },
       { name: 'web', type: EntityFieldType.BasicString },
+      { name: 'owner', type: EntityFieldType.Reference },
     ],
   },
   {

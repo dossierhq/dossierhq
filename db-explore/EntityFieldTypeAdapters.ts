@@ -11,11 +11,18 @@ export interface EntityFieldTypeAdapter {
 
 const adapters: EntityFieldTypeAdapter[] = [];
 
-adapters.push({
-  name: EntityFieldType.BasicString,
-  encodeData: (x) => JSON.stringify(x),
-  decodeData: (x) => x,
-});
+adapters.push(
+  {
+    name: EntityFieldType.BasicString,
+    encodeData: (x) => JSON.stringify(x),
+    decodeData: (x) => x,
+  },
+  {
+    name: EntityFieldType.Reference,
+    encodeData: (x) => JSON.stringify(x),
+    decodeData: (x) => x,
+  }
+);
 
 export function getAdapter(
   fieldSpec: EntityFieldSpecification

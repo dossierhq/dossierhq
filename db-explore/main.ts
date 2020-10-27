@@ -6,6 +6,10 @@ import * as Core from './Core';
 import type { Entity, Session } from './Core';
 import * as Db from './Db';
 import * as TypeSpecifications from './TypeSpecifications';
+import {
+  EntityFieldType,
+  EntityFieldSpecification,
+} from './TypeSpecifications';
 
 interface State {
   session: Session | null;
@@ -88,6 +92,43 @@ async function menuCreatePrincipal() {
   await Core.createPrincipal(provider, identifier);
 }
 
+async function menuEditBasicStringEntryField(
+  fieldSpec: EntityFieldSpecification,
+  defaultValue: unknown
+) {
+  const { value } = await inquirer.prompt([
+    {
+      name: 'value',
+      type: 'input',
+      message: fieldSpec.name,
+      default: defaultValue,
+    },
+  ]);
+  return value;
+}
+
+async function menuEditReferenceEntryField(
+  fieldSpec: EntityFieldSpecification,
+  defaultValue: unknown
+) {
+  const entity = await menuSelectEntity(fieldSpec.name);
+  return [entity.uuid];
+}
+
+async function menuEditEntryField(
+  fieldSpec: EntityFieldSpecification,
+  defaultValue: unknown
+) {
+  switch (fieldSpec.type) {
+    case EntityFieldType.BasicString:
+      return menuEditBasicStringEntryField(fieldSpec, defaultValue);
+    case EntityFieldType.Reference:
+      return menuEditReferenceEntryField(fieldSpec, defaultValue);
+    default:
+      throw new Error(`Unknown type (${fieldSpec.type})`);
+  }
+}
+
 async function menuEditEntryFields(
   type: string,
   defaultName: string,
@@ -111,23 +152,23 @@ async function menuEditEntryFields(
     return null;
   }
 
-  const fieldValues = await inquirer.prompt(
-    fieldsToEdit.map((fieldName) => ({
-      name: fieldName,
-      type: 'input',
-      message: TypeSpecifications.getEntityFieldSpecification(
-        entitySpec,
-        fieldName
-      ).name,
-      default: defaultValues[fieldName],
-    }))
-  );
+  const fieldValues: Record<string, unknown> = {};
+  for (const fieldName of fieldsToEdit) {
+    const fieldSpec = TypeSpecifications.getEntityFieldSpecification(
+      entitySpec,
+      fieldName
+    );
+    fieldValues[fieldName] = await menuEditEntryField(
+      fieldSpec,
+      defaultValues[fieldName]
+    );
+  }
 
   const nameFieldName = entitySpec.fields.find((x) => x.isName)?.name;
 
-  const newName =
+  const newName: string =
     nameFieldName && fieldValues[nameFieldName]
-      ? fieldValues[nameFieldName]
+      ? (fieldValues[nameFieldName] as string)
       : defaultName;
   return { name: newName, fields: fieldValues };
 }
@@ -174,20 +215,20 @@ async function menuEditEntity(entity: Entity) {
   }
 }
 
-async function menuSelectEntity() {
+async function menuSelectEntity(message: string) {
   const entities = await Core.getAllEntities();
   const { entityIndex } = await inquirer.prompt([
     {
       name: 'entityIndex',
       type: 'list',
-      message: 'Which entity?',
+      message,
       choices: entities.map((e, index) => ({
         value: index,
         name: `${e.type} / ${e.name} (${e.uuid})`,
       })),
     },
   ]);
-  state.entity = entities[entityIndex];
+  return entities[entityIndex];
 }
 
 function dumpEntity(entity: Entity) {
@@ -293,7 +334,8 @@ async function mainMenu() {
           break;
         }
         case 'select-entity':
-          await menuSelectEntity();
+          state.entity = await menuSelectEntity('Select an entity');
+          dumpEntity(getEntity());
           break;
         case 'show-entity':
           dumpEntity(getEntity());
