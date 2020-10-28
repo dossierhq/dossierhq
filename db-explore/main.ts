@@ -13,7 +13,7 @@ import {
 
 interface State {
   session: Session | null;
-  entity: Entity | null;
+  entity: { item: Entity; referenced: Entity[] } | null;
 }
 const state: State = { session: null, entity: null };
 
@@ -24,11 +24,18 @@ function getSession(): Session {
   return state.session;
 }
 
-function getEntity(): Entity {
+function getEntity(): { item: Entity; referenced: Entity[] } {
   if (!state.entity) {
     throw new Error('No selected entity');
   }
   return state.entity;
+}
+
+function setEntity(entity: { item: Entity; referenced: Entity[] } | null) {
+  state.entity = entity;
+  if (entity) {
+    dumpEntity(entity);
+  }
 }
 
 async function menuCreateSession() {
@@ -112,7 +119,7 @@ async function menuEditReferenceEntryField(
   defaultValue: unknown
 ) {
   const entity = await menuSelectEntity(fieldSpec.name);
-  return [{ uuid: entity.uuid }];
+  return [{ uuid: entity.item.uuid }];
 }
 
 async function menuEditEntryField(
@@ -195,8 +202,8 @@ async function menuCreateEntity() {
       result.name,
       result.fields
     );
-    state.entity = await Core.getEntity(uuid);
-    dumpEntity(state.entity);
+    const entity = await Core.getEntity(uuid);
+    setEntity(entity);
   }
 }
 
@@ -210,8 +217,8 @@ async function menuEditEntity(entity: Entity) {
   );
   if (result) {
     await Core.updateEntity(session, entity.uuid, result.name, result.fields);
-    state.entity = await Core.getEntity(entity.uuid);
-    dumpEntity(state.entity);
+    const newEntity = await Core.getEntity(entity.uuid);
+    setEntity(newEntity);
   }
 }
 
@@ -222,23 +229,24 @@ async function menuSelectEntity(message: string) {
       name: 'entityIndex',
       type: 'list',
       message,
-      choices: entities.map((e, index) => ({
+      choices: entities.items.map((e, index) => ({
         value: index,
         name: `${e.type} / ${e.name} (${e.uuid})`,
       })),
     },
   ]);
-  return entities[entityIndex];
+  return { item: entities.items[entityIndex], referenced: entities.items };
 }
 
-function dumpEntity(entity: Entity) {
+function dumpEntity(entity: { item: Entity; referenced: Entity[] }) {
+  const resolved = Core.resolveEntity(entity.item, entity.referenced);
   console.table({
-    uuid: entity.uuid,
-    name: entity.name,
-    type: entity.type,
+    uuid: resolved.uuid,
+    name: resolved.name,
+    type: resolved.type,
   });
   console.log('Fields');
-  console.table(entity.fields);
+  console.log(resolved.fields);
 }
 
 function dumpState() {
@@ -247,9 +255,9 @@ function dumpState() {
   );
   if (state.entity) {
     console.log(
-      `${chalk.cyan('Entity:')} ${state.entity.name} / ${
-        state.entity.type
-      } ${chalk.italic(`(${state.entity.uuid})`)}`
+      `${chalk.cyan('Entity:')} ${state.entity.item.name} / ${
+        state.entity.item.type
+      } ${chalk.italic(`(${state.entity.item.uuid})`)}`
     );
   }
   console.log();
@@ -326,7 +334,7 @@ async function mainMenu() {
           await menuCreateEntity();
           break;
         case 'edit-entity':
-          await menuEditEntity(getEntity());
+          await menuEditEntity(getEntity().item);
           break;
         case 'get-all-entities': {
           const entities = await Core.getAllEntities();
@@ -334,15 +342,14 @@ async function mainMenu() {
           break;
         }
         case 'select-entity':
-          state.entity = await menuSelectEntity('Select an entity');
-          dumpEntity(getEntity());
+          setEntity(await menuSelectEntity('Select an entity'));
           break;
         case 'show-entity':
           dumpEntity(getEntity());
           break;
         case 'delete-entity': {
-          await Core.deleteEntity(getSession(), getEntity().uuid);
-          state.entity = null;
+          await Core.deleteEntity(getSession(), getEntity().item.uuid);
+          setEntity(null);
           break;
         }
         case 'exit':

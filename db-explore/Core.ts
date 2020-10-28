@@ -67,6 +67,24 @@ function encodeFieldsToValues(type: string, fields: Record<string, unknown>) {
   return values;
 }
 
+function decodeValuesToFields(
+  type: string,
+  values: { name: string; data: unknown }[]
+) {
+  const entitySpec = TypeSpecifications.getEntityTypeSpecification(type);
+  const fields: Record<string, unknown> = {};
+  for (const value of values) {
+    const fieldSpec = TypeSpecifications.getEntityFieldSpecification(
+      entitySpec,
+      value.name
+    );
+    const fieldAdapter = EntityFieldTypeAdapters.getAdapter(fieldSpec);
+    const decodedData = fieldAdapter.decodeData(value.data);
+    fields[value.name] = decodedData;
+  }
+  return fields;
+}
+
 export async function createEntity(
   session: Session,
   type: string,
@@ -194,15 +212,21 @@ export async function deleteEntity(session: Session, uuid: string) {
   });
 }
 
-export async function getEntity(uuid: string): Promise<Entity> {
-  const entity = await Db.queryOne(
+export async function getEntity(
+  uuid: string
+): Promise<{ item: Entity; referenced: Entity[] }> {
+  const entity: {
+    id: number;
+    uuid: string;
+    type: string;
+    name: string;
+  } = await Db.queryOne(
     Db.pool,
     `SELECT id, uuid, type, name FROM entities WHERE uuid = $1 AND published_deleted = false`,
     [uuid]
   );
 
   const values: {
-    entities_id: number;
     name: string;
     data: unknown;
   }[] = await Db.queryMany(
@@ -211,34 +235,34 @@ export async function getEntity(uuid: string): Promise<Entity> {
     [entity.id]
   );
 
-  const entitySpec = TypeSpecifications.getEntityTypeSpecification(entity.type);
-  const fields: Record<string, unknown> = {};
-  for (const value of values) {
-    const fieldSpec = TypeSpecifications.getEntityFieldSpecification(
-      entitySpec,
-      value.name
-    );
-    const fieldAdapter = EntityFieldTypeAdapters.getAdapter(fieldSpec);
-    fields[value.name] = fieldAdapter.decodeData(value.data);
-  }
-  return {
-    uuid: entity.uuid,
-    name: entity.name,
-    type: entity.type,
-    fields: fields,
-  };
-}
+  const fields = decodeValuesToFields(entity.type, values);
 
-export async function getAllEntities(): Promise<Entity[]> {
-  const entities: {
+  const referencedEntities: {
     id: number;
     uuid: string;
     type: string;
     name: string;
   }[] = await Db.queryMany(
     Db.pool,
-    `SELECT id, uuid, type, name FROM entities WHERE published_deleted = false`
+    'SELECT e.id, e.uuid, e.type, e.name FROM entities e, published_entity_fields pef, entity_field_references efr WHERE pef.entities_id = $1 AND pef.id = efr.entity_fields_id AND efr.entities_id = e.id',
+    [entity.id]
   );
+  const referenced = await getEntities(referencedEntities);
+
+  return {
+    item: {
+      uuid: entity.uuid,
+      name: entity.name,
+      type: entity.type,
+      fields,
+    },
+    referenced,
+  };
+}
+
+async function getEntities(
+  entities: { id: number; type: string; uuid: string; name: string }[]
+) {
   const values: {
     entities_id: number;
     name: string;
@@ -249,23 +273,12 @@ export async function getAllEntities(): Promise<Entity[]> {
     [entities.map((x) => x.id)]
   );
 
-  const result = [];
+  const result: Entity[] = [];
   for (const entity of entities) {
-    const entitySpec = TypeSpecifications.getEntityTypeSpecification(
-      entity.type
+    const fields = decodeValuesToFields(
+      entity.type,
+      values.filter((x) => x.entities_id === entity.id)
     );
-    const fields: Record<string, unknown> = {};
-    for (const value of values) {
-      if (value.entities_id !== entity.id) {
-        continue;
-      }
-      const fieldSpec = TypeSpecifications.getEntityFieldSpecification(
-        entitySpec,
-        value.name
-      );
-      const fieldAdapter = EntityFieldTypeAdapters.getAdapter(fieldSpec);
-      fields[value.name] = fieldAdapter.decodeData(value.data);
-    }
     result.push({
       uuid: entity.uuid,
       name: entity.name,
@@ -274,4 +287,54 @@ export async function getAllEntities(): Promise<Entity[]> {
     });
   }
   return result;
+}
+
+export async function getAllEntities(): Promise<{
+  items: Entity[];
+  referenced: Entity[];
+}> {
+  const entities: {
+    id: number;
+    uuid: string;
+    type: string;
+    name: string;
+  }[] = await Db.queryMany(
+    Db.pool,
+    `SELECT id, uuid, type, name FROM entities WHERE published_deleted = false`
+  );
+  const items = await getEntities(entities);
+
+  const referencedEntities: {
+    id: number;
+    uuid: string;
+    type: string;
+    name: string;
+  }[] = await Db.queryMany(
+    Db.pool,
+    'SELECT e.id, e.uuid, e.type, e.name FROM entities e, published_entity_fields pef, entity_field_references efr WHERE pef.id = efr.entity_fields_id AND efr.entities_id = e.id',
+    []
+  );
+  const referenced = await getEntities(referencedEntities);
+
+  return { items, referenced };
+}
+
+export function resolveEntity(entity: Entity, referenced: Entity[]) {
+  const entitySpec = TypeSpecifications.getEntityTypeSpecification(entity.type);
+  const fields: Record<string, unknown> = {};
+  for (const [name, value] of Object.entries(entity.fields)) {
+    const fieldSpec = TypeSpecifications.getEntityFieldSpecification(
+      entitySpec,
+      name
+    );
+    if (fieldSpec.type === TypeSpecifications.EntityFieldType.ReferenceSet) {
+      fields[name] = (value as { uuid: string }[]).map(
+        (item) => referenced.find((x) => x.uuid === item.uuid) || item
+      );
+    } else {
+      fields[name] = value;
+    }
+  }
+
+  return { ...entity, fields };
 }
