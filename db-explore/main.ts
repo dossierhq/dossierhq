@@ -118,7 +118,8 @@ async function menuEditReferenceEntryField(
   fieldSpec: EntityFieldSpecification,
   defaultValue: unknown
 ) {
-  const entity = await menuSelectEntity(fieldSpec.name);
+  const query = await menuCreateQuery();
+  const entity = await menuSelectEntity(fieldSpec.name, query);
   return [{ uuid: entity.item.uuid }];
 }
 
@@ -222,8 +223,23 @@ async function menuEditEntity(entity: Entity) {
   }
 }
 
-async function menuSelectEntity(message: string) {
-  const entities = await Core.getAllEntities();
+async function menuCreateQuery(): Promise<Core.Query> {
+  const { entityTypes }: { entityTypes: string[] } = await inquirer.prompt([
+    {
+      name: 'entityTypes',
+      type: 'checkbox',
+      message: 'Select which entity types to show (none=all)',
+      choices: TypeSpecifications.getAllEntitySpecifications().map((x) => ({
+        value: x.name,
+        name: x.name,
+      })),
+    },
+  ]);
+  return { entityTypes };
+}
+
+async function menuSelectEntity(message: string, query: Core.Query) {
+  const entities = await Core.getAllEntities(query);
   const { entityIndex } = await inquirer.prompt([
     {
       name: 'entityIndex',
@@ -337,12 +353,14 @@ async function mainMenu() {
           await menuEditEntity(getEntity().item);
           break;
         case 'get-all-entities': {
-          const entities = await Core.getAllEntities();
-          console.table(entities);
+          const entities = await Core.getAllEntities(await menuCreateQuery());
+          console.table(entities.items);
           break;
         }
         case 'select-entity':
-          setEntity(await menuSelectEntity('Select an entity'));
+          setEntity(
+            await menuSelectEntity('Select an entity', await menuCreateQuery())
+          );
           break;
         case 'show-entity':
           dumpEntity(getEntity());

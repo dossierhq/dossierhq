@@ -13,6 +13,10 @@ export interface Entity {
   fields: Record<string, unknown>;
 }
 
+export interface Query {
+  entityTypes?: string[];
+}
+
 export async function createSessionForPrincipal(
   provider: string,
   identifier: string
@@ -289,19 +293,30 @@ async function getEntities(
   return result;
 }
 
-export async function getAllEntities(): Promise<{
+export async function getAllEntities(
+  query: Query
+): Promise<{
   items: Entity[];
   referenced: Entity[];
 }> {
-  const entities: {
+  let entities: {
     id: number;
     uuid: string;
     type: string;
     name: string;
-  }[] = await Db.queryMany(
-    Db.pool,
-    `SELECT id, uuid, type, name FROM entities WHERE published_deleted = false`
-  );
+  }[];
+  if (query.entityTypes && query.entityTypes.length > 0) {
+    entities = await Db.queryMany(
+      Db.pool,
+      `SELECT id, uuid, type, name FROM entities WHERE published_deleted = false AND type = ANY($1)`,
+      [query.entityTypes]
+    );
+  } else {
+    entities = await Db.queryMany(
+      Db.pool,
+      `SELECT id, uuid, type, name FROM entities WHERE published_deleted = false`
+    );
+  }
   const items = await getEntities(entities);
 
   const referencedEntities: {
