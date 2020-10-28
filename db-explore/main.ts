@@ -112,7 +112,7 @@ async function menuEditReferenceEntryField(
   defaultValue: unknown
 ) {
   const entity = await menuSelectEntity(fieldSpec.name);
-  return [entity.uuid];
+  return [{ uuid: entity.uuid }];
 }
 
 async function menuEditEntryField(
@@ -122,7 +122,7 @@ async function menuEditEntryField(
   switch (fieldSpec.type) {
     case EntityFieldType.BasicString:
       return menuEditBasicStringEntryField(fieldSpec, defaultValue);
-    case EntityFieldType.Reference:
+    case EntityFieldType.ReferenceSet:
       return menuEditReferenceEntryField(fieldSpec, defaultValue);
     default:
       throw new Error(`Unknown type (${fieldSpec.type})`);
