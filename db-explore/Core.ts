@@ -49,7 +49,11 @@ export async function selectAllPrincipals(): Promise<
 
 function encodeFieldsToValues(type: string, fields: Record<string, unknown>) {
   const entitySpec = TypeSpecifications.getEntityTypeSpecification(type);
-  const values: { name: string; data: unknown }[] = [];
+  const values: {
+    name: string;
+    data: unknown;
+    referenceUUIDs: null | string[];
+  }[] = [];
   for (const [fieldName, fieldData] of Object.entries(fields)) {
     const fieldSpec = TypeSpecifications.getEntityFieldSpecification(
       entitySpec,
@@ -57,7 +61,8 @@ function encodeFieldsToValues(type: string, fields: Record<string, unknown>) {
     );
     const fieldAdapter = EntityFieldTypeAdapters.getAdapter(fieldSpec);
     const data = fieldAdapter.encodeData(fieldData);
-    values.push({ name: fieldName, data });
+    const referenceUUIDs = fieldAdapter.getReferenceUUIDs(fieldData);
+    values.push({ name: fieldName, data, referenceUUIDs });
   }
   return values;
 }
@@ -83,12 +88,24 @@ export async function createEntity(
       `INSERT INTO entity_versions (entities_id, created_by) VALUES ($1, $2)`,
       [entityId, session.subjectId]
     );
-    for (const { name, data } of values) {
+    for (const { name, data, referenceUUIDs } of values) {
       //TODO change to one query
-      await client.query(
-        `INSERT INTO entity_fields (entities_id, name, data) VALUES ($1, $2, $3)`,
+      const { id: fieldId } = await Db.queryOne(
+        client,
+        `INSERT INTO entity_fields (entities_id, name, data) VALUES ($1, $2, $3) RETURNING id`,
         [entityId, name, data]
       );
+      if (referenceUUIDs && referenceUUIDs.length > 0) {
+        for (const uuid of referenceUUIDs) {
+          //TODO ensure uuid existed
+          await Db.queryNone(
+            client,
+            `INSERT INTO entity_field_references (entity_fields_id, entities_id)
+               SELECT $1, id FROM entities WHERE uuid = $2`,
+            [fieldId, uuid]
+          );
+        }
+      }
     }
     return { uuid };
   });
@@ -125,13 +142,24 @@ export async function updateEntity(
       [entityId, session.subjectId, newVersion]
     );
 
-    for (const { name, data } of values) {
+    for (const { name, data, referenceUUIDs } of values) {
       //TODO change to one query
-      await Db.queryNone(
+      const { id: fieldId } = await Db.queryOne(
         client,
-        `INSERT INTO entity_fields (entities_id, name, data, min_version, max_version) VALUES ($1, $2, $3, $4, $4)`,
+        `INSERT INTO entity_fields (entities_id, name, data, min_version, max_version) VALUES ($1, $2, $3, $4, $4) RETURNING id`,
         [entityId, name, data, newVersion]
       );
+      if (referenceUUIDs && referenceUUIDs.length > 0) {
+        for (const uuid of referenceUUIDs) {
+          //TODO ensure uuid existed
+          await Db.queryNone(
+            client,
+            `INSERT INTO entity_field_references (entity_fields_id, entities_id)
+               SELECT $1, id FROM entities WHERE uuid = $2`,
+            [fieldId, uuid]
+          );
+        }
+      }
     }
     // Update max_version of active fields that aren't updated
     await Db.queryNone(

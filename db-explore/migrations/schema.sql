@@ -153,6 +153,37 @@ ALTER SEQUENCE public.entities_id_seq OWNED BY public.entities.id;
 
 
 --
+-- Name: entity_field_references; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.entity_field_references (
+    id integer NOT NULL,
+    entity_fields_id integer NOT NULL,
+    entities_id integer NOT NULL
+);
+
+
+--
+-- Name: entity_field_references_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.entity_field_references_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: entity_field_references_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.entity_field_references_id_seq OWNED BY public.entity_field_references.id;
+
+
+--
 -- Name: entity_fields; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -316,6 +347,13 @@ ALTER TABLE ONLY public.entities ALTER COLUMN id SET DEFAULT nextval('public.ent
 
 
 --
+-- Name: entity_field_references id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.entity_field_references ALTER COLUMN id SET DEFAULT nextval('public.entity_field_references_id_seq'::regclass);
+
+
+--
 -- Name: entity_fields id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -357,6 +395,14 @@ ALTER TABLE ONLY public.entities
 
 ALTER TABLE ONLY public.entities
     ADD CONSTRAINT entities_uuid_key UNIQUE (uuid);
+
+
+--
+-- Name: entity_field_references entity_field_references_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.entity_field_references
+    ADD CONSTRAINT entity_field_references_pkey PRIMARY KEY (id);
 
 
 --
@@ -421,6 +467,22 @@ ALTER TABLE ONLY public.subjects
 
 ALTER TABLE ONLY public.subjects
     ADD CONSTRAINT users_uuid_key UNIQUE (uuid);
+
+
+--
+-- Name: entity_field_references entity_field_references_entities_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.entity_field_references
+    ADD CONSTRAINT entity_field_references_entities_id_fkey FOREIGN KEY (entities_id) REFERENCES public.entities(id) ON DELETE CASCADE;
+
+
+--
+-- Name: entity_field_references entity_field_references_entity_fields_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.entity_field_references
+    ADD CONSTRAINT entity_field_references_entity_fields_id_fkey FOREIGN KEY (entity_fields_id) REFERENCES public.entity_fields(id) ON DELETE CASCADE;
 
 
 --

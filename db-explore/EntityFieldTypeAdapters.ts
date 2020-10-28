@@ -6,6 +6,7 @@ import {
 export interface EntityFieldTypeAdapter {
   encodeData(rawData: unknown): unknown;
   decodeData(data: unknown): unknown;
+  getReferenceUUIDs(rawData: unknown): null | string[];
   name: EntityFieldType;
 }
 
@@ -16,12 +17,14 @@ adapters.push(
     name: EntityFieldType.BasicString,
     encodeData: (x) => JSON.stringify(x),
     decodeData: (x) => x,
+    getReferenceUUIDs: (rawData) => null,
   },
   {
     name: EntityFieldType.ReferenceSet,
     encodeData: (x: { uuid: string }[]) =>
       JSON.stringify(x.map((ref) => ref.uuid)),
     decodeData: (x: string[]) => x.map((uuid) => ({ uuid })),
+    getReferenceUUIDs: (x: { uuid: string }[]) => x.map((ref) => ref.uuid),
   }
 );
 
