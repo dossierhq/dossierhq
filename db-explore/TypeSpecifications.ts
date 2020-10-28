@@ -7,6 +7,8 @@ export interface EntityFieldSpecification {
   name: string;
   type: EntityFieldType;
   isName?: boolean;
+  /** Applicable for ReferenceSet */
+  entityTypes?: string[];
 }
 
 export enum EntityFieldType {
@@ -37,7 +39,11 @@ specifications.push(
       { name: 'facebook', type: EntityFieldType.BasicString },
       { name: 'instagram', type: EntityFieldType.BasicString },
       { name: 'web', type: EntityFieldType.BasicString },
-      { name: 'owner', type: EntityFieldType.ReferenceSet },
+      {
+        name: 'owner',
+        type: EntityFieldType.ReferenceSet,
+        entityTypes: ['organization'],
+      },
     ],
   },
   {
