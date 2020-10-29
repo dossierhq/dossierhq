@@ -1,0 +1,5 @@
+{
+  "editor.formatOnSave": true,
+  "cSpell.words": ["datadata", "dockest", "postgres", "testpass", "testuser"],
+  "files.insertFinalNewline": true
+}

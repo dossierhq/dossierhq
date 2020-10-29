@@ -1,2 +1,3 @@
-/tsconfig.json
+/docker-compose.dockest-generated.yml
 /package-lock.json
+/tsconfig.json

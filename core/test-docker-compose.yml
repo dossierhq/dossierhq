@@ -1,0 +1,11 @@
+version: '3.8'
+services:
+  db:
+    image: postgis/postgis:13-3.0-alpine
+    ports:
+      - published: 5438
+        target: 5432
+    environment:
+      POSTGRES_DB: datadata-core-test
+      POSTGRES_USER: testuser
+      POSTGRES_PASSWORD: testpass
