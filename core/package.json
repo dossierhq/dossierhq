@@ -4,12 +4,20 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "ci:check": "npm run ts:check && npm run eslint:check && npm run prettier:check && npm test",
+    "ci:check": "npm run ts:check && npm run eslint:check && npm run prettier:check && npm run test:with-db",
     "eslint:check": "eslint",
     "eslint:fix": "eslint --fix",
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write .",
-    "test": "ts-node ./test/dockest",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:with-db": "concurrently -n pg,test \"npm run test:db:up\" \"./scripts/run-test-with-db.sh\"",
+    "test:with-db:watch": "concurrently -n pg,test \"npm run test:db:up\" \"./scripts/run-test-with-db.sh --watch\"",
+    "test:db:up": "docker-compose -f test-docker-compose.yml -p datadata-core-test up",
+    "test:db:wait": "./scripts/db-wait-for-connection.js",
+    "test:db:migrate": "./scripts/db-test-migrate.sh",
+    "test:db:cli": "./scripts/db-test-cli.sh",
+    "test:db:down": "docker-compose -f test-docker-compose.yml -p datadata-core-test down",
     "ts:check": "tsc --noEmit"
   },
   "author": "",
@@ -19,12 +27,17 @@
     "@types/jest": "^26.0.15",
     "@typescript-eslint/eslint-plugin": "^4.6.0",
     "@typescript-eslint/parser": "^4.6.0",
-    "dockest": "^2.1.0",
+    "concurrently": "^5.3.0",
+    "dotenv": "^8.2.0",
     "eslint": "^7.12.1",
     "jest": "^26.6.1",
     "prettier": "2.1.2",
     "ts-jest": "^26.4.3",
     "ts-node": "^9.0.0",
     "typescript": "^4.0.3"
+  },
+  "dependencies": {
+    "@types/pg": "^7.14.5",
+    "pg": "^8.4.2"
   }
 }

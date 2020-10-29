@@ -1,6 +1,6 @@
 version: '3.8'
 services:
-  db:
+  postgres:
     image: postgis/postgis:13-3.0-alpine
     ports:
       - published: 5438
