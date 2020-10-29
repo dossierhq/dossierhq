@@ -1,0 +1,4 @@
+CREATE TABLE test (
+  id SERIAL PRIMARY KEY,
+  foo VARCHAR(255)
+)

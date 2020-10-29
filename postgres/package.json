@@ -1,0 +1,19 @@
+{
+  "name": "@datadata/postgres",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "bin": {
+    "datadata-pg-migrate": "./datadata-pg-migrate.js"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "pg": "^8.4.2",
+    "postgrator": "^4.1.1",
+    "url-parse-lax": "^4.0.0"
+  }
+}

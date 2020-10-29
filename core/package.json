@@ -1,5 +1,5 @@
 {
-  "name": "datadata-core",
+  "name": "@datadata/core",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -15,6 +15,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@datadata/postgres": "file:../postgres",
     "@types/jest": "^26.0.15",
     "@typescript-eslint/eslint-plugin": "^4.6.0",
     "@typescript-eslint/parser": "^4.6.0",
