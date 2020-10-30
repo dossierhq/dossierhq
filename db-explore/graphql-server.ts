@@ -1,4 +1,5 @@
 #!/usr/bin/env npx ts-node
+require('dotenv').config();
 import express from 'express';
 import { graphqlHTTP } from 'express-graphql';
 import {
@@ -16,6 +17,8 @@ import {
   GraphQLString,
   GraphQLUnionType,
 } from 'graphql';
+
+import * as Core from './Core';
 import * as TypeSpecifications from './TypeSpecifications';
 import {
   EntityFieldSpecification,
@@ -142,12 +145,14 @@ function createSchema<TSource, TContext>() {
         args: {
           id: { type: new GraphQLNonNull(GraphQLID) },
         },
-        resolve: (_, { id }) => {
-          const nodes: Record<string, any> = {
-            pob1: { id, type: 'PlaceOfBusiness', facebook: 'HWLLO' },
-            org1: { id, type: 'Organization' },
+        resolve: async (source, { id }, context) => {
+          const { item } = await Core.getEntity(id);
+          return {
+            id: item.uuid,
+            name: item.name,
+            type: item.type,
+            ...item.fields, // TODO should this be the output from getEntity?
           };
-          return nodes[id];
         },
       }),
     },
