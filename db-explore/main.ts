@@ -124,7 +124,7 @@ async function menuEditReferenceEntryField(
       : undefined
   );
   const entity = await menuSelectEntity(fieldSpec.name, query);
-  return [{ uuid: entity.item.uuid }];
+  return entity ? [{ uuid: entity.item.uuid }] : [];
 }
 
 async function menuEditEntryField(
@@ -250,6 +250,12 @@ async function menuCreateQuery(initialQuery?: Core.Query): Promise<Core.Query> {
 
 async function menuSelectEntity(message: string, query: Core.Query) {
   const entities = await Core.getAllEntities(query);
+  if (entities.items.length === 0) {
+    await inquirer.prompt([
+      { name: 'confirm', type: 'input', message: 'There are no items' },
+    ]);
+    return null;
+  }
   const { entityIndex } = await inquirer.prompt([
     {
       name: 'entityIndex',
