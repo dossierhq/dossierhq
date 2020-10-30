@@ -8,13 +8,14 @@ export interface EntityFieldSpecification {
   name: string;
   type: EntityFieldType;
   isName?: boolean;
-  /** Applicable for ReferenceSet */
+  /** Applicable for Reference and ReferenceSet */
   entityTypes?: string[];
 }
 
 export enum EntityFieldType {
-  BasicString = 'string',
-  ReferenceSet = 'reference-set',
+  BasicString = 'String',
+  Reference = 'Reference',
+  ReferenceSet = 'ReferenceSet',
 }
 
 const specifications: EntityTypeSpecification[] = [];
@@ -42,7 +43,7 @@ specifications.push(
       { name: 'web', type: EntityFieldType.BasicString },
       {
         name: 'owner',
-        type: EntityFieldType.ReferenceSet,
+        type: EntityFieldType.Reference,
         entityTypes: ['Organization'],
       },
     ],

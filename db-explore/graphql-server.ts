@@ -59,6 +59,8 @@ function createSchema() {
         case EntityFieldType.BasicString:
           fields[field.name] = { type: GraphQLString };
           break;
+        case EntityFieldType.Reference:
+          continue; //TODO handle reference
         case EntityFieldType.ReferenceSet:
           continue; //TODO handle references
         default:

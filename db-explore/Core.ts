@@ -1,6 +1,7 @@
 import * as Db from './Db';
 import * as EntityFieldTypeAdapters from './EntityFieldTypeAdapters';
 import * as TypeSpecifications from './TypeSpecifications';
+import { EntityFieldType } from './TypeSpecifications';
 
 export interface Session {
   subjectId: number;
@@ -342,7 +343,11 @@ export function resolveEntity(entity: Entity, referenced: Entity[]) {
       entitySpec,
       name
     );
-    if (fieldSpec.type === TypeSpecifications.EntityFieldType.ReferenceSet) {
+    if (fieldSpec.type === EntityFieldType.Reference) {
+      fields[name] =
+        referenced.find((x) => x.uuid === (value as { uuid: string }).uuid) ||
+        value;
+    } else if (fieldSpec.type === EntityFieldType.ReferenceSet) {
       fields[name] = (value as { uuid: string }[]).map(
         (item) => referenced.find((x) => x.uuid === item.uuid) || item
       );

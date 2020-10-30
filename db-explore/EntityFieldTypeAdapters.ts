@@ -20,6 +20,12 @@ adapters.push(
     getReferenceUUIDs: (rawData) => null,
   },
   {
+    name: EntityFieldType.Reference,
+    encodeData: (x: { uuid: string }) => JSON.stringify(x.uuid),
+    decodeData: (x: string) => ({ uuid: x }),
+    getReferenceUUIDs: (x: { uuid: string }) => [x.uuid],
+  },
+  {
     name: EntityFieldType.ReferenceSet,
     encodeData: (x: { uuid: string }[]) =>
       JSON.stringify(x.map((ref) => ref.uuid)),

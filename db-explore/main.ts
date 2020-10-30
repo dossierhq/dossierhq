@@ -124,6 +124,19 @@ async function menuEditReferenceEntryField(
       : undefined
   );
   const entity = await menuSelectEntity(fieldSpec.name, query);
+  return entity ? { uuid: entity.item.uuid } : null;
+}
+
+async function menuEditReferenceSetEntryField(
+  fieldSpec: EntityFieldSpecification,
+  defaultValue: unknown
+) {
+  const query = await menuCreateQuery(
+    fieldSpec.entityTypes && fieldSpec.entityTypes.length > 0
+      ? { entityTypes: fieldSpec.entityTypes }
+      : undefined
+  );
+  const entity = await menuSelectEntity(fieldSpec.name, query);
   return entity ? [{ uuid: entity.item.uuid }] : [];
 }
 
@@ -134,8 +147,10 @@ async function menuEditEntryField(
   switch (fieldSpec.type) {
     case EntityFieldType.BasicString:
       return menuEditBasicStringEntryField(fieldSpec, defaultValue);
-    case EntityFieldType.ReferenceSet:
+    case EntityFieldType.Reference:
       return menuEditReferenceEntryField(fieldSpec, defaultValue);
+    case EntityFieldType.ReferenceSet:
+      return menuEditReferenceSetEntryField(fieldSpec, defaultValue);
     default:
       throw new Error(`Unknown type (${fieldSpec.type})`);
   }
