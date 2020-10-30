@@ -1,4 +1,5 @@
 export interface EntityTypeSpecification {
+  /** PascalCase. Reserved names: Node, Entity, EntityType, Query */
   name: string;
   fields: EntityFieldSpecification[];
 }
@@ -20,14 +21,14 @@ const specifications: EntityTypeSpecification[] = [];
 
 specifications.push(
   {
-    name: 'blog-post',
+    name: 'BlogPost',
     fields: [
       { name: 'title', type: EntityFieldType.BasicString, isName: true },
       { name: 'summary', type: EntityFieldType.BasicString },
     ],
   },
   {
-    name: 'place-of-business',
+    name: 'PlaceOfBusiness',
     fields: [
       { name: 'name', type: EntityFieldType.BasicString, isName: true },
       { name: 'address1', type: EntityFieldType.BasicString },
@@ -42,12 +43,12 @@ specifications.push(
       {
         name: 'owner',
         type: EntityFieldType.ReferenceSet,
-        entityTypes: ['organization'],
+        entityTypes: ['Organization'],
       },
     ],
   },
   {
-    name: 'organization',
+    name: 'Organization',
     fields: [
       { name: 'name', type: EntityFieldType.BasicString, isName: true },
       { name: 'organizationNumber', type: EntityFieldType.BasicString },
