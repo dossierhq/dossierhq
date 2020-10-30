@@ -4,6 +4,7 @@ var { graphqlHTTP } = require('express-graphql');
 import graphql, {
   GraphQLEnumType,
   GraphQLEnumValueConfigMap,
+  GraphQLFieldConfig,
   GraphQLFieldConfigMap,
   GraphQLID,
   GraphQLInterfaceType,
@@ -12,9 +13,42 @@ import graphql, {
   GraphQLObjectType,
   GraphQLSchema,
   GraphQLString,
+  GraphQLUnionType,
 } from 'graphql';
 import * as TypeSpecifications from './TypeSpecifications';
-import { EntityFieldType } from './TypeSpecifications';
+import {
+  EntityFieldSpecification,
+  EntityFieldType,
+} from './TypeSpecifications';
+
+function createReferenceField(
+  fieldSpec: EntityFieldSpecification,
+  entityInterface: GraphQLInterfaceType,
+  entityTypes: GraphQLObjectType[]
+): GraphQLFieldConfig<any, any> {
+  if (fieldSpec.entityTypes && fieldSpec.entityTypes.length > 0) {
+    const referencedTypes: GraphQLObjectType[] = [];
+    for (const referencedName of fieldSpec.entityTypes) {
+      const referencedType = entityTypes.find((x) => x.name === referencedName);
+      if (!referencedType) {
+        console.warn(`Can't find referenced type (${referencedName})`);
+        return { type: entityInterface };
+      }
+      referencedTypes.push(referencedType);
+    }
+    if (referencedTypes.length === 1) {
+      return { type: referencedTypes[0] };
+    }
+    // TODO can the generated name clash with other types definitions? Should there be a prefix?
+    return {
+      type: new GraphQLUnionType({
+        name: `Generated${referencedTypes.map((x) => x.name).join('Or')}`,
+        types: referencedTypes,
+      }),
+    };
+  }
+  return { type: entityInterface };
+}
 
 function createSchema() {
   const entityTypes = TypeSpecifications.getAllEntitySpecifications();
@@ -48,32 +82,40 @@ function createSchema() {
   });
   types.push(entityInterface);
 
+  const gqEntityTypes: GraphQLObjectType[] = [];
   for (const entityType of entityTypes) {
-    const fields: GraphQLFieldConfigMap<any, any> = {
-      id: { type: new GraphQLNonNull(GraphQLID) },
-      type: { type: new GraphQLNonNull(entityTypeEnum) },
-      name: { type: GraphQLString },
-    };
-    for (const field of entityType.fields) {
-      switch (field.type) {
-        case EntityFieldType.BasicString:
-          fields[field.name] = { type: GraphQLString };
-          break;
-        case EntityFieldType.Reference:
-          continue; //TODO handle reference
-        case EntityFieldType.ReferenceSet:
-          continue; //TODO handle references
-        default:
-          throw new Error(`Unexpected type (${field.type})`);
-      }
-    }
-    types.push(
-      new GraphQLObjectType({
-        name: entityType.name,
-        interfaces: [nodeInterface, entityInterface],
-        fields,
-      })
-    );
+    const type = new GraphQLObjectType({
+      name: entityType.name,
+      interfaces: [nodeInterface, entityInterface],
+      fields: () => {
+        const fields: GraphQLFieldConfigMap<any, any> = {
+          id: { type: new GraphQLNonNull(GraphQLID) },
+          type: { type: new GraphQLNonNull(entityTypeEnum) },
+          name: { type: GraphQLString },
+        };
+        for (const fieldSpec of entityType.fields) {
+          switch (fieldSpec.type) {
+            case EntityFieldType.BasicString:
+              fields[fieldSpec.name] = { type: GraphQLString };
+              break;
+            case EntityFieldType.Reference:
+              fields[fieldSpec.name] = createReferenceField(
+                fieldSpec,
+                entityInterface,
+                gqEntityTypes
+              );
+              break;
+            case EntityFieldType.ReferenceSet:
+              continue; //TODO handle reference
+            default:
+              throw new Error(`Unexpected type (${fieldSpec.type})`);
+          }
+        }
+        return fields;
+      },
+    });
+    types.push(type);
+    gqEntityTypes.push(type);
   }
 
   const queryType = new GraphQLObjectType({

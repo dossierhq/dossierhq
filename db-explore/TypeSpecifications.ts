@@ -1,4 +1,5 @@
 export interface EntityTypeSpecification {
+  // TODO reserved or should there be a `graphqlName` when there is an issue?
   /** PascalCase. Reserved names: Node, Entity, EntityType, Query */
   name: string;
   fields: EntityFieldSpecification[];
