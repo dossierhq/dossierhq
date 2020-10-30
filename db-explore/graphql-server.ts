@@ -1,7 +1,7 @@
 #!/usr/bin/env npx ts-node
-var express = require('express');
-var { graphqlHTTP } = require('express-graphql');
-import graphql, {
+import express from 'express';
+import { graphqlHTTP } from 'express-graphql';
+import {
   GraphQLEnumType,
   GraphQLEnumValueConfigMap,
   GraphQLFieldConfig,
@@ -11,6 +11,7 @@ import graphql, {
   GraphQLNamedType,
   GraphQLNonNull,
   GraphQLObjectType,
+  GraphQLResolveInfo,
   GraphQLSchema,
   GraphQLString,
   GraphQLUnionType,
@@ -21,13 +22,13 @@ import {
   EntityFieldType,
 } from './TypeSpecifications';
 
-function createReferenceField(
+function createReferenceField<TSource, TContext>(
   fieldSpec: EntityFieldSpecification,
   entityInterface: GraphQLInterfaceType,
   entityTypes: GraphQLObjectType[]
-): GraphQLFieldConfig<any, any> {
+): GraphQLFieldConfig<TSource, TContext> {
   if (fieldSpec.entityTypes && fieldSpec.entityTypes.length > 0) {
-    const referencedTypes: GraphQLObjectType[] = [];
+    const referencedTypes: GraphQLObjectType<TSource, TContext>[] = [];
     for (const referencedName of fieldSpec.entityTypes) {
       const referencedType = entityTypes.find((x) => x.name === referencedName);
       if (!referencedType) {
@@ -50,7 +51,17 @@ function createReferenceField(
   return { type: entityInterface };
 }
 
-function createSchema() {
+function buildField<TSource, TContext, TArgs>(
+  options: GraphQLFieldConfig<TSource, TContext, TArgs>
+) {
+  return options as GraphQLFieldConfig<
+    TSource,
+    TContext,
+    { [argName: string]: any }
+  >;
+}
+
+function createSchema<TSource, TContext>() {
   const entityTypes = TypeSpecifications.getAllEntitySpecifications();
 
   const types: GraphQLNamedType[] = [];
@@ -82,11 +93,16 @@ function createSchema() {
   });
   types.push(entityInterface);
 
-  const gqEntityTypes: GraphQLObjectType[] = [];
+  const gqEntityTypes: GraphQLObjectType<{ type: string }, TContext>[] = [];
   for (const entityType of entityTypes) {
-    const type = new GraphQLObjectType({
+    const type = new GraphQLObjectType<{ type: string }, TContext>({
       name: entityType.name,
       interfaces: [nodeInterface, entityInterface],
+      isTypeOf: (
+        source: { type: string },
+        context: TContext,
+        info: GraphQLResolveInfo
+      ) => source.type === entityType.name,
       fields: () => {
         const fields: GraphQLFieldConfigMap<any, any> = {
           id: { type: new GraphQLNonNull(GraphQLID) },
@@ -118,34 +134,33 @@ function createSchema() {
     gqEntityTypes.push(type);
   }
 
-  const queryType = new GraphQLObjectType({
+  const queryType = new GraphQLObjectType<TSource, TContext>({
     name: 'Query',
     fields: {
-      node: {
+      node: buildField<TSource, TContext, { id: string }>({
         type: nodeInterface,
         args: {
           id: { type: new GraphQLNonNull(GraphQLID) },
         },
-      },
+        resolve: (_, { id }) => {
+          const nodes: Record<string, any> = {
+            pob1: { id, type: 'PlaceOfBusiness', facebook: 'HWLLO' },
+            org1: { id, type: 'Organization' },
+          };
+          return nodes[id];
+        },
+      }),
     },
   });
 
   return new GraphQLSchema({ query: queryType, types });
 }
 
-// The root provides a resolver function for each API endpoint
-var root = {
-  hello: () => {
-    return 'Hello world!';
-  },
-};
-
 var app = express();
 app.use(
   '/graphql',
   graphqlHTTP({
-    schema: createSchema(),
-    rootValue: root,
+    schema: createSchema<any, GraphQLSchema>(),
     graphiql: true,
   })
 );
