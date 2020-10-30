@@ -6,7 +6,11 @@
   "dependencies": {
     "chalk": "^4.1.0",
     "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-graphql": "^0.11.0",
+    "graphql": "^15.4.0",
     "inquirer": "^7.3.3",
+    "nodemon": "^2.0.6",
     "pg": "^8.4.1",
     "postgrator": "^4.1.0",
     "ts-node": "^9.0.0",
@@ -22,6 +26,7 @@
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write .",
     "start": "ts-node main.ts",
+    "start:graphql:watch": "nodemon ./graphql-server.ts",
     "ts:check": "tsc --noEmit"
   },
   "author": "",
