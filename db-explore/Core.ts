@@ -252,7 +252,7 @@ export async function getEntity(
     'SELECT e.id, e.uuid, e.type, e.name FROM entities e, published_entity_fields pef, entity_field_references efr WHERE pef.entities_id = $1 AND pef.id = efr.entity_fields_id AND efr.entities_id = e.id',
     [entity.id]
   );
-  const referenced = await getEntities(referencedEntities);
+  const referenced = await doGetEntities(referencedEntities);
 
   return {
     item: {
@@ -265,7 +265,25 @@ export async function getEntity(
   };
 }
 
-async function getEntities(
+export async function getEntities(
+  uuids: string[]
+): Promise<{ items: Entity[]; referenced: Entity[] }> {
+  const entities: {
+    id: number;
+    uuid: string;
+    type: string;
+    name: string;
+  }[] = await Db.queryMany(
+    Db.pool,
+    `SELECT id, uuid, type, name FROM entities WHERE published_deleted = false AND uuid = ANY($1)`,
+    [uuids]
+  );
+
+  const items = await doGetEntities(entities);
+  return { items, referenced: [] }; //TODO get referenced items
+}
+
+async function doGetEntities(
   entities: { id: number; type: string; uuid: string; name: string }[]
 ) {
   const values: {
@@ -318,7 +336,7 @@ export async function getAllEntities(
       `SELECT id, uuid, type, name FROM entities WHERE published_deleted = false`
     );
   }
-  const items = await getEntities(entities);
+  const items = await doGetEntities(entities);
 
   const referencedEntities: {
     id: number;
@@ -330,7 +348,7 @@ export async function getAllEntities(
     'SELECT e.id, e.uuid, e.type, e.name FROM entities e, published_entity_fields pef, entity_field_references efr WHERE pef.id = efr.entity_fields_id AND efr.entities_id = e.id',
     []
   );
-  const referenced = await getEntities(referencedEntities);
+  const referenced = await doGetEntities(referencedEntities);
 
   return { items, referenced };
 }

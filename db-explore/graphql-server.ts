@@ -9,6 +9,7 @@ import {
   GraphQLFieldConfigMap,
   GraphQLID,
   GraphQLInterfaceType,
+  GraphQLList,
   GraphQLNamedType,
   GraphQLNonNull,
   GraphQLObjectType,
@@ -146,13 +147,33 @@ function createSchema<TSource, TContext>() {
           id: { type: new GraphQLNonNull(GraphQLID) },
         },
         resolve: async (source, { id }, context) => {
-          const { item } = await Core.getEntity(id);
+          const { item } = await Core.getEntity(id); // TODO skip fetching references
           return {
+            id: item.uuid,
+            name: item.name,
+            type: item.type, // TODO skip type since __typename already exist?
+            ...item.fields, // TODO should this be the output from getEntity?
+          };
+        },
+      }),
+      nodes: buildField<TSource, TContext, { ids: string[] }>({
+        type: new GraphQLNonNull(new GraphQLList(nodeInterface)),
+        args: {
+          ids: {
+            type: new GraphQLNonNull(
+              new GraphQLList(new GraphQLNonNull(GraphQLID))
+            ),
+          },
+        },
+        resolve: async (source, { ids }, context) => {
+          const { items } = await Core.getEntities(ids); // TODO skip fetching references
+          // TODO return null if 404 on any node (https://graphql.org/learn/global-object-identification/#fields)
+          return items.map((item) => ({
             id: item.uuid,
             name: item.name,
             type: item.type,
             ...item.fields, // TODO should this be the output from getEntity?
-          };
+          }));
         },
       }),
     },
