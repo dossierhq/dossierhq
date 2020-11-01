@@ -34,7 +34,7 @@ function randomWeightedSelect<T>(values: T[], weights: number[]) {
     }
     remainingRandom -= weight;
   }
-  throw new Error('Unexpected, remaining random' + remainingRandom);
+  throw new Error('Unexpected, remaining random: ' + remainingRandom);
 }
 
 function randomGenerate<T>(values: Array<T | (() => T)>, weights: number[]) {
@@ -72,6 +72,39 @@ async function main() {
         ),
         city: faker.address.city(),
         zip: faker.address.zipCode(),
+        web: randomNullUndefined(faker.internet.url, 30, 0, 70),
+      },
+    };
+  });
+  await createEntities(session, 'PlaceOfBusiness', 10, () => {
+    const name = faker.company.companyName();
+    return {
+      name,
+      entry: {
+        name,
+        address1: faker.address.streetAddress(),
+        address2: randomNullUndefined(
+          faker.address.secondaryAddress,
+          50,
+          0,
+          50
+        ),
+        city: faker.address.city(),
+        zip: faker.address.zipCode(),
+        phone: randomNullUndefined(faker.phone.phoneNumber, 30, 0, 70),
+        email: randomNullUndefined(faker.internet.email, 30, 0, 70),
+        facebook: randomNullUndefined(
+          () => `https://facebook.com/${faker.lorem.slug()}`,
+          30,
+          0,
+          70
+        ),
+        instagram: randomNullUndefined(
+          () => `https://instagram.com/${faker.lorem.slug()}`,
+          30,
+          0,
+          70
+        ),
         web: randomNullUndefined(faker.internet.url, 30, 0, 70),
       },
     };
