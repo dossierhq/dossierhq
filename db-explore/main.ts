@@ -344,6 +344,7 @@ async function mainMenu() {
       },
       { value: 'get-all-entities', name: 'Show all entities' },
       { value: 'select-entity', name: 'Select entity' },
+      { value: 'select-random-entity', name: 'Select random entity' },
       { value: 'show-entity', name: 'Show entity', disabled: !state.entity },
       {
         value: 'delete-entity',
@@ -392,6 +393,9 @@ async function mainMenu() {
           setEntity(
             await menuSelectEntity('Select an entity', await menuCreateQuery())
           );
+          break;
+        case 'select-random-entity':
+          setEntity(await Core.getRandomEntity(await menuCreateQuery()));
           break;
         case 'show-entity':
           dumpEntity(getEntity());

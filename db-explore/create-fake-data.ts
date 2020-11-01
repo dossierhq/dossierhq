@@ -29,7 +29,7 @@ function randomWeightedSelect<T>(values: T[], weights: number[]) {
   let remainingRandom = originalRandom;
   for (let i = 0; i < weights.length; i += 1) {
     const weight = weights[i];
-    if (remainingRandom < weight) {
+    if (remainingRandom <= weight) {
       return values[i];
     }
     remainingRandom -= weight;

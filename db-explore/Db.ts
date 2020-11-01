@@ -28,7 +28,7 @@ export function queryAsync<
 export async function queryOne(
   client: Queryable,
   queryTextOrConfig: any,
-  values: any
+  values?: any
 ): Promise<any> {
   const { rows } = await client.query(queryTextOrConfig, values);
   if (rows.length !== 1) {
@@ -37,7 +37,7 @@ export async function queryOne(
   return rows[0];
 }
 
-async function queryNoneOrOneAsync<
+export async function queryNoneOrOne<
   R extends any = any,
   I extends any[] = any[]
 >(client: Queryable, text: string, values?: I): Promise<R | null> {

@@ -230,7 +230,49 @@ export async function getEntity(
     `SELECT id, uuid, type, name FROM entities WHERE uuid = $1 AND published_deleted = false`,
     [uuid]
   );
+  return doGetEntity(entity);
+}
 
+export async function getRandomEntity(
+  query: Query
+): Promise<{
+  item: Entity;
+  referenced: Entity[];
+} | null> {
+  const totalCount = await getTotalCount(query);
+  if (totalCount === 0) {
+    return null;
+  }
+  const offset = Math.floor(Math.random() * totalCount);
+
+  let entity: {
+    id: number;
+    uuid: string;
+    type: string;
+    name: string;
+  };
+  if (query.entityTypes && query.entityTypes.length > 0) {
+    entity = await Db.queryOne(
+      Db.pool,
+      `SELECT id, uuid, type, name FROM entities WHERE published_deleted = false AND type = ANY($1) LIMIT 1 OFFSET $2`,
+      [query.entityTypes, offset]
+    );
+  } else {
+    entity = await Db.queryOne(
+      Db.pool,
+      `SELECT id, uuid, type, name FROM entities WHERE published_deleted = false LIMIT 1 OFFSET $1`,
+      [offset]
+    );
+  }
+  return await doGetEntity(entity);
+}
+
+async function doGetEntity(entity: {
+  id: number;
+  uuid: string;
+  type: string;
+  name: string;
+}) {
   const values: {
     name: string;
     data: unknown;
@@ -351,6 +393,23 @@ export async function getAllEntities(
   const referenced = await doGetEntities(referencedEntities);
 
   return { items, referenced };
+}
+
+async function getTotalCount(query: Query): Promise<number> {
+  // Convert count to ::integer since count() is bigint (js doesn't support 64 bit numbers so pg return it as string)
+  if (query.entityTypes && query.entityTypes.length > 0) {
+    const { count } = await Db.queryOne(
+      Db.pool,
+      `SELECT COUNT(id)::integer FROM entities WHERE published_deleted = false AND type = ANY($1)`,
+      [query.entityTypes]
+    );
+    return count;
+  }
+  const { count } = await Db.queryOne(
+    Db.pool,
+    `SELECT COUNT(id)::integer FROM entities WHERE published_deleted = false`
+  );
+  return count;
 }
 
 export function resolveEntity(entity: Entity, referenced: Entity[]) {
