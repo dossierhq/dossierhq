@@ -4,14 +4,19 @@ import faker from 'faker';
 import * as Core from './Core';
 import * as Db from './Db';
 
+type PromiseOrValue<T> = Promise<T> | T;
+
 async function createEntities(
   session: Core.Session,
   type: string,
   count: number,
-  entryGenerator: () => { name: string; entry: Record<string, unknown> }
+  entryGenerator: () => PromiseOrValue<{
+    name: string;
+    entry: Record<string, unknown>;
+  }>
 ) {
   for (let i = 0; i < count; i += 1) {
-    const { name, entry } = entryGenerator();
+    const { name, entry } = await entryGenerator();
     const filteredEntry: Record<string, unknown> = {};
     // TODO remove and add support to core?
     for (const [key, value] of Object.entries(entry)) {
@@ -54,9 +59,14 @@ function randomNullUndefined<T>(
   );
 }
 
+async function randomReference(query: Core.Query) {
+  const result = await Core.getRandomEntity(query);
+  return !result ? null : { uuid: result.item.uuid };
+}
+
 async function main() {
   const session = await Core.createSessionForPrincipal('sys', '12345');
-  await createEntities(session, 'Organization', 10, () => {
+  await createEntities(session, 'Organization', 10000, () => {
     const name = faker.company.companyName();
     return {
       name,
@@ -76,7 +86,7 @@ async function main() {
       },
     };
   });
-  await createEntities(session, 'PlaceOfBusiness', 10, () => {
+  await createEntities(session, 'PlaceOfBusiness', 10000, async () => {
     const name = faker.company.companyName();
     return {
       name,
@@ -106,6 +116,12 @@ async function main() {
           70
         ),
         web: randomNullUndefined(faker.internet.url, 30, 0, 70),
+        owner: await randomNullUndefined(
+          () => randomReference({ entityTypes: ['Organization'] }),
+          90,
+          0,
+          10
+        ),
       },
     };
   });
