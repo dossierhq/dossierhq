@@ -156,6 +156,7 @@ function createSchema<TSource, TContext>() {
           };
         },
       }),
+
       nodes: buildField<TSource, TContext, { ids: string[] }>({
         type: new GraphQLNonNull(new GraphQLList(nodeInterface)),
         args: {
@@ -174,6 +175,23 @@ function createSchema<TSource, TContext>() {
             type: item.type,
             ...item.fields, // TODO should this be the output from getEntity?
           }));
+        },
+      }),
+
+      randomEntity: buildField<TSource, TContext, void>({
+        type: entityInterface,
+        resolve: async (source, args, context) => {
+          const result = await Core.getRandomEntity({}); // TODO skip fetching references
+          if (!result) {
+            return null;
+          }
+          const { item } = result;
+          return {
+            id: item.uuid,
+            name: item.name,
+            type: item.type, // TODO skip type since __typename already exist?
+            ...item.fields, // TODO should this be the output from getEntity?
+          };
         },
       }),
     },
