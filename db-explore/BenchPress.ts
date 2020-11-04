@@ -10,25 +10,25 @@ interface BenchPressClock {
 }
 
 interface BenchPressOptions {
+  name: string;
   warmup: number;
   iterations: number;
 }
 
 interface BenchPressResult {
-  result: bigint[];
-  iterations: number;
-  successCount: number;
-  successDuration: bigint;
+  name: string;
+  iterationDurations_ns: Array<bigint | null>;
+  iterationCount: number;
 }
 
 interface BenchPressReportOptions {
-  name: string;
   percentiles: number[];
   folder: string;
   baseName: string;
 }
 
 interface BenchPressProcessedResult {
+  name: string;
   iterationCount: number;
   successCount: number;
   failureCount: number;
@@ -37,102 +37,131 @@ interface BenchPressProcessedResult {
   min_ms: number;
   max_ms: number;
   percentiles_ms: Record<string, number>;
-  iterations_ms: number[];
+  iterations_ms: Array<number | null>;
 }
 
 function delay(delay_ms: number) {
   return new Promise((resolve) => setTimeout(resolve, delay_ms));
 }
 
+function createClock() {
+  let startTime: bigint | null = null;
+  let duration: bigint | null = null;
+
+  return {
+    clock: {
+      start: () => {
+        if (startTime !== null) {
+          throw new Error('Called start() twice in a row');
+        } else {
+          startTime = process.hrtime.bigint();
+        }
+      },
+      stop: () => {
+        const now = process.hrtime.bigint();
+        if (startTime !== null) {
+          duration = now - startTime;
+        } else {
+          throw new Error('Called stop() before start()');
+        }
+      },
+    },
+    controlClock: {
+      reset: () => {
+        startTime = duration = null;
+      },
+      duration_ns: () => {
+        if (duration === null) {
+          throw new Error('Did not call clock.stop()');
+        }
+        return duration;
+      },
+    },
+  };
+}
+
 export async function runTest(
   iteration: (clock: BenchPressClock) => Promise<boolean>,
   options: BenchPressOptions
 ): Promise<BenchPressResult> {
-  let startTime: bigint | null = null;
-  let duration: bigint | null = null;
+  const { clock, controlClock } = createClock();
 
-  const clock = {
-    start: () => {
-      if (startTime !== null) {
-        throw new Error('Called start() twice in a row');
-      } else {
-        startTime = process.hrtime.bigint();
-      }
-    },
-    stop: () => {
-      const now = process.hrtime.bigint();
-      if (startTime !== null) {
-        duration = now - startTime;
-      } else {
-        throw new Error('Called stop() before start()');
-      }
-    },
-  };
-
-  // Warmup
+  console.log(`Warming up '${options.name}' (${options.warmup} iterations)`);
   for (let i = 0; i < options.warmup; i += 1) {
-    startTime = duration = null;
-    const success = await iteration(clock);
+    controlClock.reset();
+    const _ = await iteration(clock);
   }
 
-  // Iterations
-  const result = new Array<bigint>(options.iterations);
-  let successCount = 0;
-  let successDuration: bigint = 0n;
+  console.log(
+    `Starting test '${options.name}' (${options.iterations} iterations)`
+  );
+  const iterationDurations_ms = new Array<bigint | null>(
+    options.iterations
+  ).fill(null);
   for (let i = 0; i < options.iterations; i += 1) {
-    startTime = duration = null;
+    controlClock.reset();
     const success = await iteration(clock);
 
     if (success) {
-      if (duration === null) {
-        throw new Error('Did not call clock.stop()');
-      } else {
-        result[i] = duration;
-        successCount += 1;
-        successDuration += duration;
-      }
+      iterationDurations_ms[i] = controlClock.duration_ns();
     }
   }
 
   return {
-    result,
-    iterations: options.iterations,
-    successCount,
-    successDuration,
+    name: options.name,
+    iterationDurations_ns: iterationDurations_ms,
+    iterationCount: options.iterations,
   };
 }
 
-function ns_to_ms(nano: bigint) {
-  return Number(nano / 1_000_000n);
+function ns_to_ms(ns: bigint) {
+  return Number(ns / 1_000_000n);
 }
 
-function ms_to_hz(millis: number) {
-  return 1e3 / millis;
+function ms_to_hz(ms: number) {
+  return 1e3 / ms;
 }
 
 function percentile_ms(resultSorted_ns: bigint[], percentile: number) {
-  return ns_to_ms(resultSorted_ns[(resultSorted_ns.length * percentile) / 100]);
+  let index = Math.round((resultSorted_ns.length * percentile) / 100);
+  if (index >= resultSorted_ns.length) {
+    index = resultSorted_ns.length - 1;
+  }
+
+  return ns_to_ms(resultSorted_ns[index]);
 }
 
 function processResults(
   result: BenchPressResult,
   options: BenchPressReportOptions
 ): BenchPressProcessedResult {
-  const resultSorted_ns = [...result.result].sort((a, b) => Number(a - b));
-  const iterations_ms = result.result.map(ns_to_ms);
+  const successfulIterations_ns = result.iterationDurations_ns.filter(
+    (x) => x !== null
+  ) as bigint[];
+  const resultSorted_ns = [...successfulIterations_ns].sort((a, b) =>
+    Number(a - b)
+  );
+  const iterations_ms = result.iterationDurations_ns.map((x) =>
+    x === null ? null : ns_to_ms(x)
+  );
+
+  const successCount = successfulIterations_ns.length;
+  const successDuration_ns = successfulIterations_ns.reduce(
+    (sum, val) => sum + val,
+    0n
+  );
   const min_ms = ns_to_ms(resultSorted_ns[0]);
   const max_ms = ns_to_ms(resultSorted_ns[resultSorted_ns.length - 1]);
-  const mean_ms = ns_to_ms(
-    result.successDuration / BigInt(result.successCount)
-  );
+  const mean_ms = ns_to_ms(successDuration_ns / BigInt(successCount));
   const percentiles_ms = Object.fromEntries(
     options.percentiles.map((p) => [p, percentile_ms(resultSorted_ns, p)])
   );
   return {
-    iterationCount: result.iterations,
-    successCount: result.successCount,
-    failureCount: result.iterations - result.successCount,
-    successDuration_ms: ns_to_ms(result.successDuration),
+    name: result.name,
+    iterationCount: result.iterationCount,
+    successCount,
+    failureCount: result.iterationCount - successCount,
+    successDuration_ms: ns_to_ms(successDuration_ns),
     mean_ms,
     min_ms,
     max_ms,
@@ -153,15 +182,17 @@ export async function reportResult(
 
   await reportResultJson(processed, options);
   await reportResultGnuPlot(processed, options);
+  console.log('Done.');
 }
 
 function reportResultConsole(processed: BenchPressProcessedResult) {
+  console.log();
   console.log(
     `Number of successful iterations: ${processed.successCount} / ${processed.iterationCount}`
   );
   console.log(`Number of failed iterations: ${processed.failureCount}`);
   console.log(
-    `Duration of successful iteration: ${processed.successDuration_ms} ms`
+    `Duration of successful iterations: ${processed.successDuration_ms} ms`
   );
 
   function logMetric(name: string, duration_ms: number) {
@@ -194,7 +225,7 @@ async function reportResultJson(
   }
 
   const data = {
-    name: options.name,
+    name: processed.name,
     unit: 'ms',
     iterationCount: processed.iterationCount,
     successCount: processed.successCount,
@@ -232,7 +263,7 @@ set xlabel 'Iteration'
 set ylabel 'Duration (ms)'
 set yrange [0:]
 
-plot '${path.basename(gnuPlotDataPath)}' title '${options.name}',\\
+plot '${path.basename(gnuPlotDataPath)}' title '${processed.name}',\\
   ${processed.mean_ms} title 'avg',\\
   ${processed.max_ms} title 'max',\\
 ${Object.entries(processed.percentiles_ms)
@@ -241,7 +272,9 @@ ${Object.entries(processed.percentiles_ms)
   .join('\n')}
   ${processed.min_ms} title 'min'`;
 
-  const gnuPlotData = processed.iterations_ms.join('\n');
+  const gnuPlotData = processed.iterations_ms
+    .map((x) => (x === null ? 'NaN' : x))
+    .join('\n');
 
   console.log(`Writing to ${gnuPlotScriptPath}`);
   await fs.promises.writeFile(gnuPlotScriptPath, gnuPlotScript);
@@ -261,25 +294,20 @@ export function fileTimestamp() {
 async function main() {
   const result = await runTest(
     async (clock) => {
-      // setup
-      const count = 1000;
       clock.start();
-      // test
       await delay(100 + Math.random() * 20);
       clock.stop();
-      // check result
-      return true;
+      return Math.random() > 0.1; // fail 10% of the time
     },
-    { warmup: 5, iterations: 100 }
+    { name: 'setTimeout', warmup: 5, iterations: 100 }
   );
 
   const timestamp = fileTimestamp();
 
   await reportResult(result, {
-    name: 'test',
     percentiles: [50, 90, 95],
     folder: path.join(__dirname, 'output'),
-    baseName: `test-${timestamp}`,
+    baseName: `set-timeout-${timestamp}`,
   });
 }
 

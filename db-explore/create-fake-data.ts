@@ -80,11 +80,10 @@ async function createOrganization(session: Core.Session, timestamp: string) {
       clock.stop();
       return true;
     },
-    { warmup: 30, iterations: 10000 }
+    { name: 'create organization', warmup: 30, iterations: 10000 }
   );
 
   await BenchPress.reportResult(result, {
-    name: 'create organization',
     percentiles: PERCENTILES,
     folder: path.join(__dirname, 'output'),
     baseName: `create-organization-${timestamp}`,
@@ -135,11 +134,10 @@ async function createPlaceOfBusiness(session: Core.Session, timestamp: string) {
       clock.stop();
       return true;
     },
-    { warmup: 30, iterations: 10000 }
+    { name: 'create place-of-business', warmup: 30, iterations: 10000 }
   );
 
   await BenchPress.reportResult(result, {
-    name: 'create place-of-business',
     percentiles: PERCENTILES,
     folder: path.join(__dirname, 'output'),
     baseName: `create-place-of-business-${timestamp}`,
