@@ -1,17 +1,59 @@
-import {
-  Entity,
-  Query,
-  Session,
-  createSessionForPrincipal,
-  decodeValuesToFields,
-  encodeFieldsToValues,
-} from './Core';
+import * as Core from './Core';
 import * as Db from './Db';
-import * as EntityFieldTypeAdapters from './EntityFieldTypeAdapters';
+import * as EntityFieldTypeAdapters from './EntityFieldTypeAdaptersB';
 import * as TypeSpecifications from './TypeSpecifications';
 import { EntityFieldType } from './TypeSpecifications';
 
-export { Query, Session, Entity, createSessionForPrincipal };
+export type Entity = Core.Entity;
+export type Query = Core.Query;
+export type Session = Core.Session;
+
+export const createSessionForPrincipal = Core.createSessionForPrincipal;
+export const selectAllPrincipals = Core.selectAllPrincipals;
+export const createPrincipal = Core.createPrincipal;
+export const resolveEntity = Core.resolveEntity;
+
+export function encodeFieldsToValues(
+  type: string,
+  fields: Record<string, unknown>
+) {
+  const entitySpec = TypeSpecifications.getEntityTypeSpecification(type);
+  const result: { data: Record<string, unknown>; referenceUUIDs: string[] } = {
+    data: {},
+    referenceUUIDs: [],
+  };
+  for (const [fieldName, fieldData] of Object.entries(fields)) {
+    const fieldSpec = TypeSpecifications.getEntityFieldSpecification(
+      entitySpec,
+      fieldName
+    );
+    const fieldAdapter = EntityFieldTypeAdapters.getAdapter(fieldSpec);
+    result.data[fieldName] = fieldAdapter.encodeData(fieldData);
+    const referenceUUIDs = fieldAdapter.getReferenceUUIDs(fieldData);
+    if (referenceUUIDs) {
+      result.referenceUUIDs.push(...referenceUUIDs);
+    }
+  }
+  return result;
+}
+
+export function decodeValuesToFields(
+  type: string,
+  data: Record<string, unknown>
+) {
+  const entitySpec = TypeSpecifications.getEntityTypeSpecification(type);
+  const result: Record<string, unknown> = {};
+  for (const [name, value] of Object.entries(data)) {
+    const fieldSpec = TypeSpecifications.getEntityFieldSpecification(
+      entitySpec,
+      name
+    );
+    const fieldAdapter = EntityFieldTypeAdapters.getAdapter(fieldSpec);
+    const decodedData = fieldAdapter.decodeData(value);
+    result[name] = decodedData;
+  }
+  return result;
+}
 
 export async function createEntity(
   session: Session,
@@ -19,7 +61,7 @@ export async function createEntity(
   name: string,
   fields: Record<string, unknown>
 ): Promise<{ uuid: string }> {
-  const values = encodeFieldsToValues(type, fields);
+  const { data, referenceUUIDs } = encodeFieldsToValues(type, fields);
 
   return await Db.withTransaction(async (client) => {
     const {
@@ -33,32 +75,103 @@ export async function createEntity(
     const { id: versionsId } = await Db.queryOne(
       client,
       `INSERT INTO entityb_versions (entities_id, version, created_by, data) VALUES ($1, 0, $2, $3) RETURNING id`,
-      [
-        entityId,
-        session.subjectId,
-        Object.fromEntries(values.map((x) => [x.name, x.data])),
-      ]
+      [entityId, session.subjectId, data]
     );
     await Db.queryNone(
       client,
       `UPDATE entitiesb SET published_entityb_versions = $1 WHERE id = $2`,
       [versionsId, entityId]
     );
-    for (const { referenceUUIDs } of values) {
-      if (referenceUUIDs && referenceUUIDs.length > 0) {
-        for (const uuid of referenceUUIDs) {
-          //TODO ensure uuid existed
-          await Db.queryNone(
-            client,
-            `INSERT INTO entityb_version_references (entityb_versions_id, entities_id)
+    for (const uuid of referenceUUIDs) {
+      //TODO ensure uuid existed
+      await Db.queryNone(
+        client,
+        `INSERT INTO entityb_version_references (entityb_versions_id, entities_id)
                SELECT $1, id FROM entitiesb WHERE uuid = $2`,
-            [versionsId, uuid]
-          );
-        }
-      }
+        [versionsId, uuid]
+      );
     }
     return { uuid };
   });
+}
+
+export async function updateEntity(
+  session: Session,
+  uuid: string,
+  name: string,
+  fields: Record<string, unknown>
+) {
+  // await Db.withTransaction(async (client) => {
+  //   const {
+  //     entities_id: entityId,
+  //     version: previousVersion,
+  //   } = await Db.queryOne(
+  //     client,
+  //     `SELECT ev.entities_id, MAX(ev.version) AS version FROM entity_versions ev, entities e WHERE e.uuid = $1 AND e.id = ev.entities_id GROUP BY entities_id`,
+  //     [uuid]
+  //   );
+  //   const newVersion = previousVersion + 1;
+  //   const { type } = await Db.queryOne(
+  //     client,
+  //     `UPDATE entities SET name = $1, published_version = $2 WHERE id = $3 RETURNING type`,
+  //     [name, newVersion, entityId]
+  //   );
+  //   const values = encodeFieldsToValues(type, fields);
+  //   await Db.queryNone(
+  //     client,
+  //     `INSERT INTO entity_versions (entities_id, created_by, version) VALUES ($1, $2, $3)`,
+  //     [entityId, session.subjectId, newVersion]
+  //   );
+  //   for (const { name, data, referenceUUIDs } of values) {
+  //     //TODO change to one query
+  //     const { id: fieldId } = await Db.queryOne(
+  //       client,
+  //       `INSERT INTO entity_fields (entities_id, name, data, min_version, max_version) VALUES ($1, $2, $3, $4, $4) RETURNING id`,
+  //       [entityId, name, data, newVersion]
+  //     );
+  //     if (referenceUUIDs && referenceUUIDs.length > 0) {
+  //       for (const uuid of referenceUUIDs) {
+  //         //TODO ensure uuid existed
+  //         await Db.queryNone(
+  //           client,
+  //           `INSERT INTO entity_field_references (entity_fields_id, entities_id)
+  //              SELECT $1, id FROM entities WHERE uuid = $2`,
+  //           [fieldId, uuid]
+  //         );
+  //       }
+  //     }
+  //   }
+  //   // Update max_version of active fields that aren't updated
+  //   await Db.queryNone(
+  //     client,
+  //     `UPDATE entity_fields SET max_version = $1 WHERE entities_id = $2 AND NOT (name = ANY($3)) AND $4 >= min_version AND $4 <= max_version`,
+  //     [newVersion, entityId, Object.keys(fields), previousVersion]
+  //   );
+  // });
+}
+
+export async function deleteEntity(session: Session, uuid: string) {
+  // await Db.withTransaction(async (client) => {
+  //   const {
+  //     entities_id: entityId,
+  //     version: maxVersion,
+  //   } = await Db.queryOne(
+  //     client,
+  //     `SELECT ev.entities_id, MAX(ev.version) AS version FROM entity_versions ev, entities e WHERE e.uuid = $1 AND e.id = ev.entities_id GROUP BY entities_id`,
+  //     [uuid]
+  //   );
+  //   const version = maxVersion + 1;
+  //   await Db.queryNone(
+  //     client,
+  //     `INSERT INTO entity_versions (entities_id, created_by, version) VALUES ($1, $2, $3)`,
+  //     [entityId, session.subjectId, version]
+  //   );
+  //   await Db.queryNone(
+  //     client,
+  //     `UPDATE entities SET published_version = $1, published_deleted = true WHERE id = $2`,
+  //     [version, entityId]
+  //   );
+  // });
 }
 
 export async function getEntity(
@@ -71,7 +184,7 @@ export async function getEntity(
     name: string;
   } = await Db.queryOne(
     Db.pool,
-    `SELECT id, uuid, type, name FROM entities WHERE uuid = $1 AND published_deleted = false`,
+    `SELECT id, uuid, type, name FROM entitiesb WHERE uuid = $1 AND published_deleted = false`,
     [uuid]
   );
   return doGetEntity(entity);
@@ -123,10 +236,7 @@ async function doGetEntity(entity: {
     [entity.id]
   );
 
-  const fields = decodeValuesToFields(
-    entity.type,
-    Object.entries(data).map(([name, data]) => ({ name, data }))
-  );
+  const fields = decodeValuesToFields(entity.type, data);
 
   const referencedEntities: {
     id: number;
@@ -156,20 +266,17 @@ async function doGetEntities(
 ) {
   const values: {
     entities_id: number;
-    name: string;
-    data: unknown;
+    data: Record<string, unknown>;
   }[] = await Db.queryMany(
     Db.pool,
-    `SELECT entities_id, name, data FROM published_entity_fields WHERE entities_id = ANY($1)`,
+    `SELECT entities_id, data FROM entityb_versions WHERE entities_id = ANY($1)`,
     [entities.map((x) => x.id)]
   );
 
   const result: Entity[] = [];
   for (const entity of entities) {
-    const fields = decodeValuesToFields(
-      entity.type,
-      values.filter((x) => x.entities_id === entity.id)
-    );
+    const data = values.find((x) => x.entities_id === entity.id)?.data || {};
+    const fields = decodeValuesToFields(entity.type, data);
     result.push({
       uuid: entity.uuid,
       name: entity.name,
@@ -178,6 +285,52 @@ async function doGetEntities(
     });
   }
   return result;
+}
+
+export async function getAllEntities(
+  query: Query
+): Promise<{
+  items: Entity[];
+  referenced: Entity[];
+}> {
+  let entities: {
+    id: number;
+    uuid: string;
+    type: string;
+    name: string;
+  }[];
+  if (query.entityTypes && query.entityTypes.length > 0) {
+    entities = await Db.queryMany(
+      Db.pool,
+      `SELECT id, uuid, type, name FROM entitiesb WHERE published_deleted = false AND type = ANY($1)`,
+      [query.entityTypes]
+    );
+  } else {
+    entities = await Db.queryMany(
+      Db.pool,
+      `SELECT id, uuid, type, name FROM entitiesb WHERE published_deleted = false`
+    );
+  }
+  const items = await doGetEntities(entities);
+
+  const referencedEntities: {
+    id: number;
+    uuid: string;
+    type: string;
+    name: string;
+  }[] = await Db.queryMany(
+    Db.pool,
+    `SELECT e2.id, e2.uuid, e2.type, e2.name FROM entitiesb e1, entitiesb e2, entityb_versions ev, entityb_version_references evr
+    WHERE
+      e1.published_deleted = false
+      AND e1.id = ev.entities_id
+      AND ev.id = evr.entityb_versions_id
+      AND evr.entityb_versions_id = e2.id`,
+    []
+  );
+  const referenced = await doGetEntities(referencedEntities);
+
+  return { items, referenced };
 }
 
 async function getTotalCount(query: Query): Promise<number> {
