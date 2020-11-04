@@ -30,7 +30,9 @@
     "prettier:fix": "prettier --write .",
     "start": "ts-node main.ts",
     "start:graphql:watch": "nodemon ./graphql-server.ts",
-    "ts:check": "tsc --noEmit"
+    "ts:build": "tsc --declaration",
+    "ts:check": "tsc --noEmit",
+    "ts:watch": "tsc --declaration --watch"
   },
   "author": "",
   "license": "ISC"
