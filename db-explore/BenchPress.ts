@@ -33,6 +33,7 @@ interface BenchPressProcessedResult {
   successCount: number;
   failureCount: number;
   successDuration_ms: number;
+  standardDeviation_ms: number;
   mean_ms: number;
   min_ms: number;
   max_ms: number;
@@ -122,6 +123,17 @@ function ms_to_hz(ms: number) {
   return 1e3 / ms;
 }
 
+function getStandardDeviation_ms(data_ns: bigint[]) {
+  const data_ms = data_ns.map(ns_to_ms);
+  const count = data_ms.length;
+  const mean_ms = data_ms.reduce((sum, val) => sum + val, 0) / count;
+  const squaredDiff_ms = data_ms.reduce(
+    (diffSq, x) => diffSq + (x - mean_ms) ** 2,
+    0
+  );
+  return Math.sqrt(squaredDiff_ms / (count - 1));
+}
+
 function percentile_ms(resultSorted_ns: bigint[], percentile: number) {
   let index = Math.round((resultSorted_ns.length * percentile) / 100);
   if (index >= resultSorted_ns.length) {
@@ -153,15 +165,18 @@ function processResults(
   const min_ms = ns_to_ms(resultSorted_ns[0]);
   const max_ms = ns_to_ms(resultSorted_ns[resultSorted_ns.length - 1]);
   const mean_ms = ns_to_ms(successDuration_ns / BigInt(successCount));
+  const standardDeviation_ms = getStandardDeviation_ms(successfulIterations_ns);
   const percentiles_ms = Object.fromEntries(
     options.percentiles.map((p) => [p, percentile_ms(resultSorted_ns, p)])
   );
+
   return {
     name: result.name,
     iterationCount: result.iterationCount,
     successCount,
     failureCount: result.iterationCount - successCount,
     successDuration_ms: ns_to_ms(successDuration_ns),
+    standardDeviation_ms: standardDeviation_ms,
     mean_ms,
     min_ms,
     max_ms,
@@ -194,16 +209,21 @@ function reportResultConsole(processed: BenchPressProcessedResult) {
   console.log(
     `Duration of successful iterations: ${processed.successDuration_ms} ms`
   );
+  console.log();
 
-  function logMetric(name: string, duration_ms: number) {
+  function logMetric(name: string, duration_ms: number, suffix?: string) {
     console.log(
-      `${name}: ${duration_ms} ms (${ms_to_hz(duration_ms).toFixed(2)} ops/s)`
+      `${name}: ${duration_ms} ms (${ms_to_hz(duration_ms).toFixed(2)} ops/s)${
+        suffix ? ' ' + suffix : ''
+      }`
     );
   }
 
-  console.log();
-
-  logMetric('Avg iteration', processed.mean_ms);
+  logMetric(
+    'Avg iteration',
+    processed.mean_ms,
+    `(std dev: ${processed.standardDeviation_ms.toFixed(2)} ms)`
+  );
   logMetric('Min iteration', processed.min_ms);
   for (const [percentile, duration_ms] of Object.entries(
     processed.percentiles_ms
@@ -231,6 +251,7 @@ async function reportResultJson(
     successCount: processed.successCount,
     failureCount: processed.failureCount,
     successDuration: processed.successDuration_ms,
+    standardDeviation: processed.standardDeviation_ms,
     mean: processed.mean_ms,
     min: processed.min_ms,
     ...percentileData,
