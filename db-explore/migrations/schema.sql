@@ -153,6 +153,40 @@ ALTER SEQUENCE public.entities_id_seq OWNED BY public.entities.id;
 
 
 --
+-- Name: entitiesb; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.entitiesb (
+    id integer NOT NULL,
+    uuid uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+    name character varying(255) NOT NULL,
+    type character varying(255) NOT NULL,
+    published_deleted boolean DEFAULT false NOT NULL,
+    published_entityb_versions integer
+);
+
+
+--
+-- Name: entitiesb_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.entitiesb_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: entitiesb_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.entitiesb_id_seq OWNED BY public.entitiesb.id;
+
+
+--
 -- Name: entity_field_references; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -251,6 +285,71 @@ ALTER SEQUENCE public.entity_versions_id_seq OWNED BY public.entity_versions.id;
 
 
 --
+-- Name: entityb_version_references; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.entityb_version_references (
+    id integer NOT NULL,
+    entityb_versions_id integer NOT NULL,
+    entities_id integer NOT NULL
+);
+
+
+--
+-- Name: entityb_version_references_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.entityb_version_references_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: entityb_version_references_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.entityb_version_references_id_seq OWNED BY public.entityb_version_references.id;
+
+
+--
+-- Name: entityb_versions; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.entityb_versions (
+    id integer NOT NULL,
+    entities_id integer NOT NULL,
+    version smallint NOT NULL,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    created_by integer NOT NULL,
+    data jsonb NOT NULL
+);
+
+
+--
+-- Name: entityb_versions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.entityb_versions_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: entityb_versions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.entityb_versions_id_seq OWNED BY public.entityb_versions.id;
+
+
+--
 -- Name: principals; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -340,10 +439,77 @@ ALTER SEQUENCE public.users_id_seq OWNED BY public.subjects.id;
 
 
 --
+-- Name: big_data_a; Type: TABLE; Schema: topology; Owner: -
+--
+
+CREATE TABLE topology.big_data_a (
+    id integer NOT NULL,
+    some_data text
+);
+
+
+--
+-- Name: big_data_a_id_seq; Type: SEQUENCE; Schema: topology; Owner: -
+--
+
+CREATE SEQUENCE topology.big_data_a_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: big_data_a_id_seq; Type: SEQUENCE OWNED BY; Schema: topology; Owner: -
+--
+
+ALTER SEQUENCE topology.big_data_a_id_seq OWNED BY topology.big_data_a.id;
+
+
+--
+-- Name: big_data_b; Type: TABLE; Schema: topology; Owner: -
+--
+
+CREATE TABLE topology.big_data_b (
+    id integer NOT NULL,
+    some_data text
+);
+
+
+--
+-- Name: big_data_b_id_seq; Type: SEQUENCE; Schema: topology; Owner: -
+--
+
+CREATE SEQUENCE topology.big_data_b_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: big_data_b_id_seq; Type: SEQUENCE OWNED BY; Schema: topology; Owner: -
+--
+
+ALTER SEQUENCE topology.big_data_b_id_seq OWNED BY topology.big_data_b.id;
+
+
+--
 -- Name: entities id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.entities ALTER COLUMN id SET DEFAULT nextval('public.entities_id_seq'::regclass);
+
+
+--
+-- Name: entitiesb id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.entitiesb ALTER COLUMN id SET DEFAULT nextval('public.entitiesb_id_seq'::regclass);
 
 
 --
@@ -368,6 +534,20 @@ ALTER TABLE ONLY public.entity_versions ALTER COLUMN id SET DEFAULT nextval('pub
 
 
 --
+-- Name: entityb_version_references id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.entityb_version_references ALTER COLUMN id SET DEFAULT nextval('public.entityb_version_references_id_seq'::regclass);
+
+
+--
+-- Name: entityb_versions id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.entityb_versions ALTER COLUMN id SET DEFAULT nextval('public.entityb_versions_id_seq'::regclass);
+
+
+--
 -- Name: principals id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -379,6 +559,20 @@ ALTER TABLE ONLY public.principals ALTER COLUMN id SET DEFAULT nextval('public.p
 --
 
 ALTER TABLE ONLY public.subjects ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
+
+
+--
+-- Name: big_data_a id; Type: DEFAULT; Schema: topology; Owner: -
+--
+
+ALTER TABLE ONLY topology.big_data_a ALTER COLUMN id SET DEFAULT nextval('topology.big_data_a_id_seq'::regclass);
+
+
+--
+-- Name: big_data_b id; Type: DEFAULT; Schema: topology; Owner: -
+--
+
+ALTER TABLE ONLY topology.big_data_b ALTER COLUMN id SET DEFAULT nextval('topology.big_data_b_id_seq'::regclass);
 
 
 --
@@ -395,6 +589,22 @@ ALTER TABLE ONLY public.entities
 
 ALTER TABLE ONLY public.entities
     ADD CONSTRAINT entities_uuid_key UNIQUE (uuid);
+
+
+--
+-- Name: entitiesb entitiesb_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.entitiesb
+    ADD CONSTRAINT entitiesb_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: entitiesb entitiesb_uuid_key; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.entitiesb
+    ADD CONSTRAINT entitiesb_uuid_key UNIQUE (uuid);
 
 
 --
@@ -427,6 +637,22 @@ ALTER TABLE ONLY public.entity_versions
 
 ALTER TABLE ONLY public.entity_versions
     ADD CONSTRAINT entity_versions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: entityb_version_references entityb_version_references_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.entityb_version_references
+    ADD CONSTRAINT entityb_version_references_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: entityb_versions entityb_versions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.entityb_versions
+    ADD CONSTRAINT entityb_versions_pkey PRIMARY KEY (id);
 
 
 --
@@ -470,6 +696,22 @@ ALTER TABLE ONLY public.subjects
 
 
 --
+-- Name: big_data_a big_data_a_id_key; Type: CONSTRAINT; Schema: topology; Owner: -
+--
+
+ALTER TABLE ONLY topology.big_data_a
+    ADD CONSTRAINT big_data_a_id_key UNIQUE (id);
+
+
+--
+-- Name: entitiesb entitiesb_published_entityb_versions_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.entitiesb
+    ADD CONSTRAINT entitiesb_published_entityb_versions_fkey FOREIGN KEY (published_entityb_versions) REFERENCES public.entityb_versions(id);
+
+
+--
 -- Name: entity_field_references entity_field_references_entities_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -507,6 +749,38 @@ ALTER TABLE ONLY public.entity_versions
 
 ALTER TABLE ONLY public.entity_versions
     ADD CONSTRAINT entity_versions_entities_id_fkey FOREIGN KEY (entities_id) REFERENCES public.entities(id) ON DELETE CASCADE;
+
+
+--
+-- Name: entityb_version_references entityb_version_references_entities_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.entityb_version_references
+    ADD CONSTRAINT entityb_version_references_entities_id_fkey FOREIGN KEY (entities_id) REFERENCES public.entities(id) ON DELETE CASCADE;
+
+
+--
+-- Name: entityb_version_references entityb_version_references_entityb_versions_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.entityb_version_references
+    ADD CONSTRAINT entityb_version_references_entityb_versions_id_fkey FOREIGN KEY (entityb_versions_id) REFERENCES public.entityb_versions(id) ON DELETE CASCADE;
+
+
+--
+-- Name: entityb_versions entityb_versions_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.entityb_versions
+    ADD CONSTRAINT entityb_versions_created_by_fkey FOREIGN KEY (created_by) REFERENCES public.subjects(id);
+
+
+--
+-- Name: entityb_versions entityb_versions_entities_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.entityb_versions
+    ADD CONSTRAINT entityb_versions_entities_id_fkey FOREIGN KEY (entities_id) REFERENCES public.entitiesb(id) ON DELETE CASCADE;
 
 
 --

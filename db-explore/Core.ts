@@ -52,7 +52,10 @@ export async function selectAllPrincipals(): Promise<
   );
 }
 
-function encodeFieldsToValues(type: string, fields: Record<string, unknown>) {
+export function encodeFieldsToValues(
+  type: string,
+  fields: Record<string, unknown>
+) {
   const entitySpec = TypeSpecifications.getEntityTypeSpecification(type);
   const values: {
     name: string;
