@@ -1,31 +1,22 @@
 #!/usr/bin/env npx ts-node
 require('dotenv').config();
 import faker from 'faker';
+import path from 'path';
+import * as BenchPress from './BenchPress';
 import * as Core from './Core';
 import * as Db from './Db';
 
-type PromiseOrValue<T> = Promise<T> | T;
+const PERCENTILES = [50, 90, 95];
 
-async function createEntities(
-  session: Core.Session,
-  type: string,
-  count: number,
-  entryGenerator: () => PromiseOrValue<{
-    name: string;
-    entry: Record<string, unknown>;
-  }>
-) {
-  for (let i = 0; i < count; i += 1) {
-    const { name, entry } = await entryGenerator();
-    const filteredEntry: Record<string, unknown> = {};
-    // TODO remove and add support to core?
-    for (const [key, value] of Object.entries(entry)) {
-      if (value !== null && value !== undefined) {
-        filteredEntry[key] = value;
-      }
+function cleanupEntity(entity: Record<string, unknown>) {
+  const cleanedUpEntity: Record<string, unknown> = {};
+  // TODO remove and add support to core?
+  for (const [key, value] of Object.entries(entity)) {
+    if (value !== null && value !== undefined) {
+      cleanedUpEntity[key] = value;
     }
-    await Core.createEntity(session, type, name, filteredEntry);
   }
+  return cleanedUpEntity;
 }
 
 function randomWeightedSelect<T>(values: T[], weights: number[]) {
@@ -64,13 +55,11 @@ async function randomReference(query: Core.Query) {
   return !result ? null : { uuid: result.item.uuid };
 }
 
-async function main() {
-  const session = await Core.createSessionForPrincipal('sys', '12345');
-  await createEntities(session, 'Organization', 10000, () => {
-    const name = faker.company.companyName();
-    return {
-      name,
-      entry: {
+async function createOrganization(session: Core.Session, timestamp: string) {
+  const result = await BenchPress.runTest(
+    async (clock) => {
+      const name = faker.company.companyName();
+      const entity = cleanupEntity({
         name,
         organizationNumber: randomNullUndefined('000000-000', 99, 0, 1),
         address1: faker.address.streetAddress(),
@@ -83,14 +72,30 @@ async function main() {
         city: faker.address.city(),
         zip: faker.address.zipCode(),
         web: randomNullUndefined(faker.internet.url, 30, 0, 70),
-      },
-    };
+      });
+
+      clock.start();
+      await Core.createEntity(session, 'Organization', name, entity);
+
+      clock.stop();
+      return true;
+    },
+    { warmup: 30, iterations: 10000 }
+  );
+
+  await BenchPress.reportResult(result, {
+    name: 'create organization',
+    percentiles: PERCENTILES,
+    folder: path.join(__dirname, 'output'),
+    baseName: `create-organization-${timestamp}`,
   });
-  await createEntities(session, 'PlaceOfBusiness', 10000, async () => {
-    const name = faker.company.companyName();
-    return {
-      name,
-      entry: {
+}
+
+async function createPlaceOfBusiness(session: Core.Session, timestamp: string) {
+  const result = await BenchPress.runTest(
+    async (clock) => {
+      const name = faker.company.companyName();
+      const entity = cleanupEntity({
         name,
         address1: faker.address.streetAddress(),
         address2: randomNullUndefined(
@@ -122,9 +127,32 @@ async function main() {
           0,
           10
         ),
-      },
-    };
+      });
+
+      clock.start();
+
+      await Core.createEntity(session, 'PlaceOfBusiness', name, entity);
+      clock.stop();
+      return true;
+    },
+    { warmup: 30, iterations: 10000 }
+  );
+
+  await BenchPress.reportResult(result, {
+    name: 'create place-of-business',
+    percentiles: PERCENTILES,
+    folder: path.join(__dirname, 'output'),
+    baseName: `create-place-of-business-${timestamp}`,
   });
+}
+
+async function main() {
+  const timestamp = BenchPress.fileTimestamp();
+  const session = await Core.createSessionForPrincipal('sys', '12345');
+
+  await createOrganization(session, timestamp);
+
+  await createPlaceOfBusiness(session, timestamp);
 }
 
 if (require.main === module) {

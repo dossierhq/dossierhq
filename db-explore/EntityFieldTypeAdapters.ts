@@ -39,7 +39,7 @@ export function getAdapter(
 ): EntityFieldTypeAdapter {
   const result = adapters.find((x) => x.name === fieldSpec.type);
   if (!result) {
-    throw new Error(`Can't find field type (${name})`);
+    throw new Error(`Can't find field type (${fieldSpec.type})`);
   }
   return result;
 }

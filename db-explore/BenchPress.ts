@@ -44,8 +44,8 @@ function delay(delay_ms: number) {
   return new Promise((resolve) => setTimeout(resolve, delay_ms));
 }
 
-async function runTest(
-  test: (clock: BenchPressClock) => Promise<boolean>,
+export async function runTest(
+  iteration: (clock: BenchPressClock) => Promise<boolean>,
   options: BenchPressOptions
 ): Promise<BenchPressResult> {
   let startTime: bigint | null = null;
@@ -72,7 +72,7 @@ async function runTest(
   // Warmup
   for (let i = 0; i < options.warmup; i += 1) {
     startTime = duration = null;
-    const success = await test(clock);
+    const success = await iteration(clock);
   }
 
   // Iterations
@@ -81,7 +81,7 @@ async function runTest(
   let successDuration: bigint = 0n;
   for (let i = 0; i < options.iterations; i += 1) {
     startTime = duration = null;
-    const success = await test(clock);
+    const success = await iteration(clock);
 
     if (success) {
       if (duration === null) {
@@ -141,7 +141,7 @@ function processResults(
   };
 }
 
-async function reportResult(
+export async function reportResult(
   result: BenchPressResult,
   options: BenchPressReportOptions
 ) {
@@ -253,6 +253,11 @@ ${Object.entries(processed.percentiles_ms)
   });
 }
 
+/** 'yyyy-mm-dd-hh-mm-ss' */
+export function fileTimestamp() {
+  return new Date().toISOString().replace(/[T:]/g, '-').replace(/\..+$/, '');
+}
+
 async function main() {
   const result = await runTest(
     async (clock) => {
@@ -268,11 +273,7 @@ async function main() {
     { warmup: 5, iterations: 100 }
   );
 
-  // yyyy-mm-dd-hh-mm-ss
-  const timestamp = new Date()
-    .toISOString()
-    .replace(/[T:]/g, '-')
-    .replace(/\..+$/, '');
+  const timestamp = fileTimestamp();
 
   await reportResult(result, {
     name: 'test',
