@@ -151,27 +151,27 @@ export async function updateEntity(
 }
 
 export async function deleteEntity(session: Session, uuid: string) {
-  // await Db.withTransaction(async (client) => {
-  //   const {
-  //     entities_id: entityId,
-  //     version: maxVersion,
-  //   } = await Db.queryOne(
-  //     client,
-  //     `SELECT ev.entities_id, MAX(ev.version) AS version FROM entity_versions ev, entities e WHERE e.uuid = $1 AND e.id = ev.entities_id GROUP BY entities_id`,
-  //     [uuid]
-  //   );
-  //   const version = maxVersion + 1;
-  //   await Db.queryNone(
-  //     client,
-  //     `INSERT INTO entity_versions (entities_id, created_by, version) VALUES ($1, $2, $3)`,
-  //     [entityId, session.subjectId, version]
-  //   );
-  //   await Db.queryNone(
-  //     client,
-  //     `UPDATE entities SET published_version = $1, published_deleted = true WHERE id = $2`,
-  //     [version, entityId]
-  //   );
-  // });
+  await Db.withTransaction(async (client) => {
+    const {
+      entities_id: entityId,
+      version: maxVersion,
+    } = await Db.queryOne(
+      client,
+      `SELECT ev.entities_id, MAX(ev.version) AS version FROM entityb_versions ev, entitiesb e WHERE e.uuid = $1 AND e.id = ev.entities_id GROUP BY entities_id`,
+      [uuid]
+    );
+    const version = maxVersion + 1;
+    const { id: versionsId } = await Db.queryOne(
+      client,
+      `INSERT INTO entityb_versions (entities_id, created_by, version) VALUES ($1, $2, $3) RETURNING id`,
+      [entityId, session.subjectId, version]
+    );
+    await Db.queryNone(
+      client,
+      `UPDATE entitiesb SET published_entityb_versions = $1, published_deleted = true WHERE id = $2`,
+      [versionsId, entityId]
+    );
+  });
 }
 
 export async function getEntity(

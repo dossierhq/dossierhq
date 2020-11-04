@@ -325,7 +325,7 @@ CREATE TABLE public.entityb_versions (
     version smallint NOT NULL,
     created_at timestamp with time zone DEFAULT now() NOT NULL,
     created_by integer NOT NULL,
-    data jsonb NOT NULL
+    data jsonb
 );
 
 
