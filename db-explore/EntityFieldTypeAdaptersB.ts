@@ -21,9 +21,9 @@ adapters.push(
   },
   {
     name: EntityFieldType.Reference,
-    encodeData: (x: { uuid: string }) => x.uuid,
-    decodeData: (x: string) => ({ uuid: x }),
-    getReferenceUUIDs: (x: { uuid: string }) => [x.uuid],
+    encodeData: (x: { uuid: string }) => x?.uuid,
+    decodeData: (x: string) => (x ? { uuid: x } : undefined),
+    getReferenceUUIDs: (x: { uuid: string }) => (x ? [x.uuid] : null),
   },
   {
     name: EntityFieldType.ReferenceSet,

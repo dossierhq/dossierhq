@@ -2,7 +2,6 @@ import * as Core from './Core';
 import * as Db from './Db';
 import * as EntityFieldTypeAdapters from './EntityFieldTypeAdaptersB';
 import * as TypeSpecifications from './TypeSpecifications';
-import { EntityFieldType } from './TypeSpecifications';
 
 export type Entity = Core.Entity;
 export type Query = Core.Query;
@@ -15,21 +14,19 @@ export const resolveEntity = Core.resolveEntity;
 
 export function encodeFieldsToValues(
   type: string,
-  fields: Record<string, unknown>
+  fields: Record<string, unknown>,
+  previousData: Record<string, unknown>
 ) {
   const entitySpec = TypeSpecifications.getEntityTypeSpecification(type);
   const result: { data: Record<string, unknown>; referenceUUIDs: string[] } = {
     data: {},
     referenceUUIDs: [],
   };
-  for (const [fieldName, fieldData] of Object.entries(fields)) {
-    const fieldSpec = TypeSpecifications.getEntityFieldSpecification(
-      entitySpec,
-      fieldName
-    );
+  for (const fieldSpec of entitySpec.fields) {
     const fieldAdapter = EntityFieldTypeAdapters.getAdapter(fieldSpec);
-    result.data[fieldName] = fieldAdapter.encodeData(fieldData);
-    const referenceUUIDs = fieldAdapter.getReferenceUUIDs(fieldData);
+    const data = fields[fieldSpec.name] || previousData[fieldSpec.name];
+    result.data[fieldSpec.name] = fieldAdapter.encodeData(data);
+    const referenceUUIDs = fieldAdapter.getReferenceUUIDs(data);
     if (referenceUUIDs) {
       result.referenceUUIDs.push(...referenceUUIDs);
     }
@@ -61,7 +58,7 @@ export async function createEntity(
   name: string,
   fields: Record<string, unknown>
 ): Promise<{ uuid: string }> {
-  const { data, referenceUUIDs } = encodeFieldsToValues(type, fields);
+  const { data, referenceUUIDs } = encodeFieldsToValues(type, fields, {});
 
   return await Db.withTransaction(async (client) => {
     const {
@@ -101,53 +98,56 @@ export async function updateEntity(
   name: string,
   fields: Record<string, unknown>
 ) {
-  // await Db.withTransaction(async (client) => {
-  //   const {
-  //     entities_id: entityId,
-  //     version: previousVersion,
-  //   } = await Db.queryOne(
-  //     client,
-  //     `SELECT ev.entities_id, MAX(ev.version) AS version FROM entity_versions ev, entities e WHERE e.uuid = $1 AND e.id = ev.entities_id GROUP BY entities_id`,
-  //     [uuid]
-  //   );
-  //   const newVersion = previousVersion + 1;
-  //   const { type } = await Db.queryOne(
-  //     client,
-  //     `UPDATE entities SET name = $1, published_version = $2 WHERE id = $3 RETURNING type`,
-  //     [name, newVersion, entityId]
-  //   );
-  //   const values = encodeFieldsToValues(type, fields);
-  //   await Db.queryNone(
-  //     client,
-  //     `INSERT INTO entity_versions (entities_id, created_by, version) VALUES ($1, $2, $3)`,
-  //     [entityId, session.subjectId, newVersion]
-  //   );
-  //   for (const { name, data, referenceUUIDs } of values) {
-  //     //TODO change to one query
-  //     const { id: fieldId } = await Db.queryOne(
-  //       client,
-  //       `INSERT INTO entity_fields (entities_id, name, data, min_version, max_version) VALUES ($1, $2, $3, $4, $4) RETURNING id`,
-  //       [entityId, name, data, newVersion]
-  //     );
-  //     if (referenceUUIDs && referenceUUIDs.length > 0) {
-  //       for (const uuid of referenceUUIDs) {
-  //         //TODO ensure uuid existed
-  //         await Db.queryNone(
-  //           client,
-  //           `INSERT INTO entity_field_references (entity_fields_id, entities_id)
-  //              SELECT $1, id FROM entities WHERE uuid = $2`,
-  //           [fieldId, uuid]
-  //         );
-  //       }
-  //     }
-  //   }
-  //   // Update max_version of active fields that aren't updated
-  //   await Db.queryNone(
-  //     client,
-  //     `UPDATE entity_fields SET max_version = $1 WHERE entities_id = $2 AND NOT (name = ANY($3)) AND $4 >= min_version AND $4 <= max_version`,
-  //     [newVersion, entityId, Object.keys(fields), previousVersion]
-  //   );
-  // });
+  await Db.withTransaction(async (client) => {
+    const {
+      entities_id: entityId,
+      version: maxVersion,
+    } = await Db.queryOne(
+      client,
+      `SELECT ev.entities_id, MAX(ev.version) AS version FROM entityb_versions ev, entitiesb e WHERE e.uuid = $1 AND e.id = ev.entities_id GROUP BY entities_id`,
+      [uuid]
+    );
+    const newVersion = maxVersion + 1;
+
+    const { type } = await Db.queryOne(
+      client,
+      'SELECT type FROM entitiesb e WHERE e.id = $1',
+      [entityId]
+    );
+
+    const { data: previousDataRaw } = await Db.queryOne(
+      client,
+      'SELECT data FROM entityb_versions WHERE entities_id = $1 AND data IS NOT NULL ORDER BY version DESC LIMIT 1',
+      [entityId]
+    );
+    const previousData = decodeValuesToFields(type, previousDataRaw);
+
+    const { data, referenceUUIDs } = encodeFieldsToValues(
+      type,
+      fields,
+      previousData
+    );
+    const { id: versionsId } = await Db.queryOne(
+      client,
+      `INSERT INTO entityb_versions (entities_id, created_by, version, data) VALUES ($1, $2, $3, $4) RETURNING id`,
+      [entityId, session.subjectId, newVersion, data]
+    );
+    await Db.queryNone(
+      client,
+      `UPDATE entitiesb SET name = $1, published_entityb_versions = $2 WHERE id = $3`,
+      [name, versionsId, entityId]
+    );
+
+    for (const uuid of referenceUUIDs) {
+      //TODO ensure uuid existed
+      await Db.queryNone(
+        client,
+        `INSERT INTO entityb_version_references (entityb_versions_id, entities_id)
+               SELECT $1, id FROM entitiesb WHERE uuid = $2`,
+        [versionsId, uuid]
+      );
+    }
+  });
 }
 
 export async function deleteEntity(session: Session, uuid: string) {
