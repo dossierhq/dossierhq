@@ -75,7 +75,7 @@ export function encodeFieldsToValues(
   return values;
 }
 
-function decodeValuesToFields(
+export function decodeValuesToFields(
   type: string,
   values: { name: string; data: unknown }[]
 ) {

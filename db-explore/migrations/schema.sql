@@ -756,7 +756,7 @@ ALTER TABLE ONLY public.entity_versions
 --
 
 ALTER TABLE ONLY public.entityb_version_references
-    ADD CONSTRAINT entityb_version_references_entities_id_fkey FOREIGN KEY (entities_id) REFERENCES public.entities(id) ON DELETE CASCADE;
+    ADD CONSTRAINT entityb_version_references_entities_id_fkey FOREIGN KEY (entities_id) REFERENCES public.entitiesb(id) ON DELETE CASCADE;
 
 
 --
