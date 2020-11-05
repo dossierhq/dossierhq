@@ -73,9 +73,11 @@ async function createOrganization(
     });
 
     clock.start();
+
     await Core.createEntity(session, 'Organization', name, entity);
 
     clock.stop();
+
     return true;
   }, options);
 
@@ -125,8 +127,36 @@ async function createPlaceOfBusiness(
     clock.start();
 
     await Core.createEntity(session, 'PlaceOfBusiness', name, entity);
+
     clock.stop();
+
     return true;
+  }, options);
+
+  await BenchPress.reportResult(result, {
+    percentiles: PERCENTILES,
+    folder: path.join(__dirname, 'output'),
+    baseName,
+  });
+}
+
+async function deleteEntities(
+  session: Core.Session,
+  options: BenchPress.BenchPressOptions,
+  baseName: string
+) {
+  const result = await BenchPress.runTest(async (clock) => {
+    const reference = await randomReference({});
+
+    clock.start();
+
+    if (reference) {
+      await Core.deleteEntity(session, reference.uuid);
+    }
+
+    clock.stop();
+
+    return !!reference;
   }, options);
 
   await BenchPress.reportResult(result, {
@@ -149,6 +179,11 @@ async function main() {
     session,
     { name: 'create place-of-business', warmup: 30, iterations: 10_000 },
     `create-place-of-business-${timestamp}`
+  );
+  await deleteEntities(
+    session,
+    { name: 'delete entity', warmup: 30, iterations: 20_000 },
+    `delete-entities-${timestamp}`
   );
 }
 

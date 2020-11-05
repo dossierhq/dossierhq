@@ -275,7 +275,7 @@ async function reportResultGnuPlot(
   const gnuPlotPngPath = path.join(options.folder, `${options.baseName}.png`);
 
   const gnuPlotScript = `# gnuplot script
-set term pngcairo dashed font 'Avenir Next Condensed Regular' fontscale 0.8
+set term pngcairo dashed font 'Avenir Next Condensed Regular' fontscale 0.8 size 1024,768
 set output '${path.basename(gnuPlotPngPath)}'
 
 set key outside
