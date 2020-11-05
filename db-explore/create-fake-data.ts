@@ -55,92 +55,84 @@ async function randomReference(query: Core.Query) {
   return !result ? null : { uuid: result.item.uuid };
 }
 
-async function createOrganization(session: Core.Session, timestamp: string) {
-  const result = await BenchPress.runTest(
-    async (clock) => {
-      const name = faker.company.companyName();
-      const entity = cleanupEntity({
-        name,
-        organizationNumber: randomNullUndefined('000000-000', 99, 0, 1),
-        address1: faker.address.streetAddress(),
-        address2: randomNullUndefined(
-          faker.address.secondaryAddress,
-          50,
-          0,
-          50
-        ),
-        city: faker.address.city(),
-        zip: faker.address.zipCode(),
-        web: randomNullUndefined(faker.internet.url, 30, 0, 70),
-      });
+async function createOrganization(
+  session: Core.Session,
+  options: BenchPress.BenchPressOptions,
+  baseName: string
+) {
+  const result = await BenchPress.runTest(async (clock) => {
+    const name = faker.company.companyName();
+    const entity = cleanupEntity({
+      name,
+      organizationNumber: randomNullUndefined('000000-000', 99, 0, 1),
+      address1: faker.address.streetAddress(),
+      address2: randomNullUndefined(faker.address.secondaryAddress, 50, 0, 50),
+      city: faker.address.city(),
+      zip: faker.address.zipCode(),
+      web: randomNullUndefined(faker.internet.url, 30, 0, 70),
+    });
 
-      clock.start();
-      await Core.createEntity(session, 'Organization', name, entity);
+    clock.start();
+    await Core.createEntity(session, 'Organization', name, entity);
 
-      clock.stop();
-      return true;
-    },
-    { name: 'create organization', warmup: 30, iterations: 10000 }
-  );
+    clock.stop();
+    return true;
+  }, options);
 
   await BenchPress.reportResult(result, {
     percentiles: PERCENTILES,
     folder: path.join(__dirname, 'output'),
-    baseName: `create-organization-${timestamp}`,
+    baseName,
   });
 }
 
-async function createPlaceOfBusiness(session: Core.Session, timestamp: string) {
-  const result = await BenchPress.runTest(
-    async (clock) => {
-      const name = faker.company.companyName();
-      const entity = cleanupEntity({
-        name,
-        address1: faker.address.streetAddress(),
-        address2: randomNullUndefined(
-          faker.address.secondaryAddress,
-          50,
-          0,
-          50
-        ),
-        city: faker.address.city(),
-        zip: faker.address.zipCode(),
-        phone: randomNullUndefined(faker.phone.phoneNumber, 30, 0, 70),
-        email: randomNullUndefined(faker.internet.email, 30, 0, 70),
-        facebook: randomNullUndefined(
-          () => `https://facebook.com/${faker.lorem.slug()}`,
-          30,
-          0,
-          70
-        ),
-        instagram: randomNullUndefined(
-          () => `https://instagram.com/${faker.lorem.slug()}`,
-          30,
-          0,
-          70
-        ),
-        web: randomNullUndefined(faker.internet.url, 30, 0, 70),
-        owner: await randomNullUndefined(
-          () => randomReference({ entityTypes: ['Organization'] }),
-          90,
-          0,
-          10
-        ),
-      });
+async function createPlaceOfBusiness(
+  session: Core.Session,
+  options: BenchPress.BenchPressOptions,
+  baseName: string
+) {
+  const result = await BenchPress.runTest(async (clock) => {
+    const name = faker.company.companyName();
+    const entity = cleanupEntity({
+      name,
+      address1: faker.address.streetAddress(),
+      address2: randomNullUndefined(faker.address.secondaryAddress, 50, 0, 50),
+      city: faker.address.city(),
+      zip: faker.address.zipCode(),
+      phone: randomNullUndefined(faker.phone.phoneNumber, 30, 0, 70),
+      email: randomNullUndefined(faker.internet.email, 30, 0, 70),
+      facebook: randomNullUndefined(
+        () => `https://facebook.com/${faker.lorem.slug()}`,
+        30,
+        0,
+        70
+      ),
+      instagram: randomNullUndefined(
+        () => `https://instagram.com/${faker.lorem.slug()}`,
+        30,
+        0,
+        70
+      ),
+      web: randomNullUndefined(faker.internet.url, 30, 0, 70),
+      owner: await randomNullUndefined(
+        () => randomReference({ entityTypes: ['Organization'] }),
+        90,
+        0,
+        10
+      ),
+    });
 
-      clock.start();
+    clock.start();
 
-      await Core.createEntity(session, 'PlaceOfBusiness', name, entity);
-      clock.stop();
-      return true;
-    },
-    { name: 'create place-of-business', warmup: 30, iterations: 10000 }
-  );
+    await Core.createEntity(session, 'PlaceOfBusiness', name, entity);
+    clock.stop();
+    return true;
+  }, options);
 
   await BenchPress.reportResult(result, {
     percentiles: PERCENTILES,
     folder: path.join(__dirname, 'output'),
-    baseName: `create-place-of-business-${timestamp}`,
+    baseName,
   });
 }
 
@@ -148,9 +140,16 @@ async function main() {
   const timestamp = BenchPress.fileTimestamp();
   const session = await Core.createSessionForPrincipal('sys', '12345');
 
-  await createOrganization(session, timestamp);
-
-  await createPlaceOfBusiness(session, timestamp);
+  await createOrganization(
+    session,
+    { name: 'create organization', warmup: 30, iterations: 10_000 },
+    `create-organization-${timestamp}`
+  );
+  await createPlaceOfBusiness(
+    session,
+    { name: 'create place-of-business', warmup: 30, iterations: 10_000 },
+    `create-place-of-business-${timestamp}`
+  );
 }
 
 if (require.main === module) {

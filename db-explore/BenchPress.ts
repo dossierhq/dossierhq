@@ -4,24 +4,24 @@ import path from 'path';
 import childProcess from 'child_process';
 import { promisify } from 'util';
 
-interface BenchPressClock {
+export interface BenchPressClock {
   start: () => void;
   stop: () => void;
 }
 
-interface BenchPressOptions {
+export interface BenchPressOptions {
   name: string;
   warmup: number;
   iterations: number;
 }
 
-interface BenchPressResult {
+export interface BenchPressResult {
   name: string;
   iterationDurations_ns: Array<bigint | null>;
   iterationCount: number;
 }
 
-interface BenchPressReportOptions {
+export interface BenchPressReportOptions {
   percentiles: number[];
   folder: string;
   baseName: string;
