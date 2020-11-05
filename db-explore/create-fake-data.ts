@@ -55,22 +55,72 @@ async function randomReference(query: Core.Query) {
   return !result ? null : { uuid: result.item.uuid };
 }
 
-async function createOrganization(
+async function createEntity(
+  type: string
+): Promise<{ name: string; entity: Record<string, unknown> }> {
+  if (type === 'Organization') {
+    return createOrganization();
+  }
+  if (type === 'PlaceOfBusiness') {
+    return await createPlaceOfBusiness();
+  }
+  throw new Error('Unknown type: ' + type);
+}
+
+function createOrganization() {
+  const name = faker.company.companyName();
+  const entity = cleanupEntity({
+    name,
+    organizationNumber: randomNullUndefined('000000-000', 99, 0, 1),
+    address1: faker.address.streetAddress(),
+    address2: randomNullUndefined(faker.address.secondaryAddress, 50, 0, 50),
+    city: faker.address.city(),
+    zip: faker.address.zipCode(),
+    web: randomNullUndefined(faker.internet.url, 30, 0, 70),
+  });
+  return { name, entity };
+}
+
+async function createPlaceOfBusiness() {
+  const name = faker.company.companyName();
+  const entity = cleanupEntity({
+    name,
+    address1: faker.address.streetAddress(),
+    address2: randomNullUndefined(faker.address.secondaryAddress, 50, 0, 50),
+    city: faker.address.city(),
+    zip: faker.address.zipCode(),
+    phone: randomNullUndefined(faker.phone.phoneNumber, 30, 0, 70),
+    email: randomNullUndefined(faker.internet.email, 30, 0, 70),
+    facebook: randomNullUndefined(
+      () => `https://facebook.com/${faker.lorem.slug()}`,
+      30,
+      0,
+      70
+    ),
+    instagram: randomNullUndefined(
+      () => `https://instagram.com/${faker.lorem.slug()}`,
+      30,
+      0,
+      70
+    ),
+    web: randomNullUndefined(faker.internet.url, 30, 0, 70),
+    owner: await randomNullUndefined(
+      () => randomReference({ entityTypes: ['Organization'] }),
+      90,
+      0,
+      10
+    ),
+  });
+  return { name, entity };
+}
+
+async function testCreateOrganizationEntities(
   session: Core.Session,
   options: BenchPress.BenchPressOptions,
   baseName: string
 ) {
   const result = await BenchPress.runTest(async (clock) => {
-    const name = faker.company.companyName();
-    const entity = cleanupEntity({
-      name,
-      organizationNumber: randomNullUndefined('000000-000', 99, 0, 1),
-      address1: faker.address.streetAddress(),
-      address2: randomNullUndefined(faker.address.secondaryAddress, 50, 0, 50),
-      city: faker.address.city(),
-      zip: faker.address.zipCode(),
-      web: randomNullUndefined(faker.internet.url, 30, 0, 70),
-    });
+    const { name, entity } = createOrganization();
 
     clock.start();
 
@@ -88,41 +138,13 @@ async function createOrganization(
   });
 }
 
-async function createPlaceOfBusiness(
+async function testCreatePlaceOfBusinessEntities(
   session: Core.Session,
   options: BenchPress.BenchPressOptions,
   baseName: string
 ) {
   const result = await BenchPress.runTest(async (clock) => {
-    const name = faker.company.companyName();
-    const entity = cleanupEntity({
-      name,
-      address1: faker.address.streetAddress(),
-      address2: randomNullUndefined(faker.address.secondaryAddress, 50, 0, 50),
-      city: faker.address.city(),
-      zip: faker.address.zipCode(),
-      phone: randomNullUndefined(faker.phone.phoneNumber, 30, 0, 70),
-      email: randomNullUndefined(faker.internet.email, 30, 0, 70),
-      facebook: randomNullUndefined(
-        () => `https://facebook.com/${faker.lorem.slug()}`,
-        30,
-        0,
-        70
-      ),
-      instagram: randomNullUndefined(
-        () => `https://instagram.com/${faker.lorem.slug()}`,
-        30,
-        0,
-        70
-      ),
-      web: randomNullUndefined(faker.internet.url, 30, 0, 70),
-      owner: await randomNullUndefined(
-        () => randomReference({ entityTypes: ['Organization'] }),
-        90,
-        0,
-        10
-      ),
-    });
+    const { name, entity } = await createPlaceOfBusiness();
 
     clock.start();
 
@@ -140,23 +162,88 @@ async function createPlaceOfBusiness(
   });
 }
 
-async function deleteEntities(
+async function testCreateEntities(
+  session: Core.Session,
+  options: BenchPress.BenchPressOptions,
+  baseName: string
+) {
+  const result = await BenchPress.runTest(async (clock) => {
+    const type = randomWeightedSelect(
+      ['Organization', 'PlaceOfBusiness'],
+      [30, 70]
+    );
+    const { name, entity } = await createEntity(type);
+
+    clock.start();
+
+    await Core.createEntity(session, type, name, entity);
+
+    clock.stop();
+
+    return true;
+  }, options);
+
+  await BenchPress.reportResult(result, {
+    percentiles: PERCENTILES,
+    folder: path.join(__dirname, 'output'),
+    baseName,
+  });
+}
+
+async function testEditEntities(
+  session: Core.Session,
+  options: BenchPress.BenchPressOptions,
+  baseName: string
+) {
+  const result = await BenchPress.runTest(async (clock) => {
+    const existingEntity = await Core.getRandomEntity({
+      entityTypes: ['Organization', 'PlaceOfBusiness'],
+    });
+    if (!existingEntity) {
+      return false;
+    }
+    const { type } = existingEntity.item;
+    const { name: newName, entity: newEntity } = await createEntity(type);
+
+    clock.start();
+
+    await Core.updateEntity(
+      session,
+      existingEntity.item.uuid,
+      newName,
+      newEntity
+    );
+
+    clock.stop();
+
+    return true;
+  }, options);
+
+  await BenchPress.reportResult(result, {
+    percentiles: PERCENTILES,
+    folder: path.join(__dirname, 'output'),
+    baseName,
+  });
+}
+
+async function testDeleteEntities(
   session: Core.Session,
   options: BenchPress.BenchPressOptions,
   baseName: string
 ) {
   const result = await BenchPress.runTest(async (clock) => {
     const reference = await randomReference({});
+    if (!reference) {
+      return false;
+    }
 
     clock.start();
 
-    if (reference) {
-      await Core.deleteEntity(session, reference.uuid);
-    }
+    await Core.deleteEntity(session, reference.uuid);
 
     clock.stop();
 
-    return !!reference;
+    return true;
   }, options);
 
   await BenchPress.reportResult(result, {
@@ -170,20 +257,38 @@ async function main() {
   const timestamp = BenchPress.fileTimestamp();
   const session = await Core.createSessionForPrincipal('sys', '12345');
 
-  await createOrganization(
+  await testCreateEntities(
+    session,
+    { name: 'create entities', warmup: 30, iterations: 10_000 },
+    `create-entity-${timestamp}`
+  );
+  console.log('\n');
+
+  await testCreateOrganizationEntities(
     session,
     { name: 'create organization', warmup: 30, iterations: 10_000 },
     `create-organization-${timestamp}`
   );
-  await createPlaceOfBusiness(
+  console.log('\n');
+
+  await testCreatePlaceOfBusinessEntities(
     session,
     { name: 'create place-of-business', warmup: 30, iterations: 10_000 },
     `create-place-of-business-${timestamp}`
   );
-  await deleteEntities(
+  console.log('\n');
+
+  await testEditEntities(
     session,
-    { name: 'delete entity', warmup: 30, iterations: 20_000 },
-    `delete-entities-${timestamp}`
+    { name: 'edit entity', warmup: 30, iterations: 10_000 },
+    `edit-entity-${timestamp}`
+  );
+  console.log('\n');
+
+  await testDeleteEntities(
+    session,
+    { name: 'delete entity', warmup: 30, iterations: 10_000 },
+    `delete-entity-${timestamp}`
   );
 }
 
