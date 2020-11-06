@@ -704,6 +704,41 @@ ALTER TABLE ONLY topology.big_data_a
 
 
 --
+-- Name: entities_non_deleted; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX entities_non_deleted ON public.entities USING btree (id) WHERE (published_deleted = false);
+
+
+--
+-- Name: entitiesb_non_deleted_index; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX entitiesb_non_deleted_index ON public.entitiesb USING btree (id) WHERE (published_deleted = false);
+
+
+--
+-- Name: entity_field_references_entity_fields_id_index; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX entity_field_references_entity_fields_id_index ON public.entity_field_references USING btree (entity_fields_id, entities_id);
+
+
+--
+-- Name: entity_fields_entities_is; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX entity_fields_entities_is ON public.entity_fields USING btree (entities_id);
+
+
+--
+-- Name: entityb_version_references_entityb_versions_id_index; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX entityb_version_references_entityb_versions_id_index ON public.entityb_version_references USING btree (entityb_versions_id);
+
+
+--
 -- Name: entitiesb entitiesb_published_entityb_versions_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 

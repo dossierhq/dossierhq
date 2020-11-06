@@ -264,7 +264,7 @@ async function menuCreateQuery(initialQuery?: Core.Query): Promise<Core.Query> {
 }
 
 async function menuSelectEntity(message: string, query: Core.Query) {
-  const entities = await Core.getAllEntities(query);
+  const entities = await Core.getAllEntities(query, { first: 50 });
   if (entities.items.length === 0) {
     await inquirer.prompt([
       { name: 'confirm', type: 'input', message: 'There are no items' },
@@ -385,7 +385,9 @@ async function mainMenu() {
           await menuEditEntity(getEntity().item);
           break;
         case 'get-all-entities': {
-          const entities = await Core.getAllEntities(await menuCreateQuery());
+          const entities = await Core.getAllEntities(await menuCreateQuery(), {
+            first: 50,
+          });
           console.table(entities.items);
           break;
         }

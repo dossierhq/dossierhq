@@ -355,11 +355,13 @@ async function doGetEntities(
 }
 
 export async function getAllEntities(
-  query: Query
+  query: Query,
+  paging: { first: number; after?: string }
 ): Promise<{
   items: Entity[];
   referenced: Entity[];
 }> {
+  const offset = 0; // TODO from paging.after
   let entities: {
     id: number;
     uuid: string;
@@ -369,13 +371,14 @@ export async function getAllEntities(
   if (query.entityTypes && query.entityTypes.length > 0) {
     entities = await Db.queryMany(
       Db.pool,
-      `SELECT id, uuid, type, name FROM entities WHERE published_deleted = false AND type = ANY($1)`,
-      [query.entityTypes]
+      `SELECT id, uuid, type, name FROM entities WHERE published_deleted = false AND type = ANY($1) LIMIT $2 OFFSET $3`,
+      [query.entityTypes, paging.first, offset]
     );
   } else {
     entities = await Db.queryMany(
       Db.pool,
-      `SELECT id, uuid, type, name FROM entities WHERE published_deleted = false`
+      `SELECT id, uuid, type, name FROM entities WHERE published_deleted = false LIMIT $1 OFFSET $2`,
+      [paging.first, offset]
     );
   }
   const items = await doGetEntities(entities);
@@ -387,8 +390,13 @@ export async function getAllEntities(
     name: string;
   }[] = await Db.queryMany(
     Db.pool,
-    'SELECT e.id, e.uuid, e.type, e.name FROM entities e, published_entity_fields pef, entity_field_references efr WHERE pef.id = efr.entity_fields_id AND efr.entities_id = e.id',
-    []
+    `SELECT e.id, e.uuid, e.type, e.name FROM entities e, published_entity_fields pef, entity_field_references efr
+    WHERE pef.entities_id = ANY($1)
+      AND pef.id = efr.entity_fields_id
+      AND efr.entities_id = e.id
+    GROUP BY
+      e.id`,
+    [entities.map((x) => x.id)]
   );
   const referenced = await doGetEntities(referencedEntities);
 

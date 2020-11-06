@@ -226,6 +226,53 @@ async function testEditEntities(
   });
 }
 
+async function testGetEntity(
+  options: BenchPress.BenchPressOptions,
+  baseName: string
+) {
+  const result = await BenchPress.runTest(async (clock) => {
+    const reference = await randomReference({});
+    if (!reference) {
+      return false;
+    }
+
+    clock.start();
+
+    const entity = await Core.getEntity(reference.uuid);
+
+    clock.stop();
+
+    return entity !== null;
+  }, options);
+
+  await BenchPress.reportResult(result, {
+    percentiles: PERCENTILES,
+    folder: path.join(__dirname, 'output'),
+    baseName,
+  });
+}
+
+async function testGetEntities(
+  options: BenchPress.BenchPressOptions,
+  baseName: string
+) {
+  const result = await BenchPress.runTest(async (clock) => {
+    clock.start();
+
+    const entities = await Core.getAllEntities({}, { first: 50 });
+
+    clock.stop();
+
+    return entities.items.length === 50;
+  }, options);
+
+  await BenchPress.reportResult(result, {
+    percentiles: PERCENTILES,
+    folder: path.join(__dirname, 'output'),
+    baseName,
+  });
+}
+
 async function testDeleteEntities(
   session: Core.Session,
   options: BenchPress.BenchPressOptions,
@@ -254,40 +301,53 @@ async function testDeleteEntities(
 }
 
 async function main() {
+  const iterations = 10_000;
   const timestamp = BenchPress.fileTimestamp();
   const session = await Core.createSessionForPrincipal('sys', '12345');
 
   await testCreateEntities(
     session,
-    { name: 'create entities', warmup: 30, iterations: 10_000 },
+    { name: 'create entities', warmup: 30, iterations },
     `create-entity-${timestamp}`
   );
   console.log('\n');
 
   await testCreateOrganizationEntities(
     session,
-    { name: 'create organization', warmup: 30, iterations: 10_000 },
+    { name: 'create organization', warmup: 30, iterations },
     `create-organization-${timestamp}`
   );
   console.log('\n');
 
   await testCreatePlaceOfBusinessEntities(
     session,
-    { name: 'create place-of-business', warmup: 30, iterations: 10_000 },
+    { name: 'create place-of-business', warmup: 30, iterations },
     `create-place-of-business-${timestamp}`
   );
   console.log('\n');
 
   await testEditEntities(
     session,
-    { name: 'edit entity', warmup: 30, iterations: 10_000 },
+    { name: 'edit entity', warmup: 30, iterations },
     `edit-entity-${timestamp}`
+  );
+  console.log('\n');
+
+  await testGetEntity(
+    { name: 'get entity', warmup: 30, iterations },
+    `get-entity-${timestamp}`
+  );
+  console.log('\n');
+
+  await testGetEntities(
+    { name: 'get entities', warmup: 30, iterations },
+    `get-entities-${timestamp}`
   );
   console.log('\n');
 
   await testDeleteEntities(
     session,
-    { name: 'delete entity', warmup: 30, iterations: 10_000 },
+    { name: 'delete entity', warmup: 30, iterations },
     `delete-entity-${timestamp}`
   );
 }

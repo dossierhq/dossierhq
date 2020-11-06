@@ -288,11 +288,13 @@ async function doGetEntities(
 }
 
 export async function getAllEntities(
-  query: Query
+  query: Query,
+  paging: { first: number; after?: string }
 ): Promise<{
   items: Entity[];
   referenced: Entity[];
 }> {
+  const offset = 0; // TODO from paging.after
   let entities: {
     id: number;
     uuid: string;
@@ -302,13 +304,14 @@ export async function getAllEntities(
   if (query.entityTypes && query.entityTypes.length > 0) {
     entities = await Db.queryMany(
       Db.pool,
-      `SELECT id, uuid, type, name FROM entitiesb WHERE published_deleted = false AND type = ANY($1)`,
-      [query.entityTypes]
+      `SELECT id, uuid, type, name FROM entitiesb WHERE published_deleted = false AND type = ANY($1) LIMIT $2 OFFSET $3`,
+      [query.entityTypes, paging.first, offset]
     );
   } else {
     entities = await Db.queryMany(
       Db.pool,
-      `SELECT id, uuid, type, name FROM entitiesb WHERE published_deleted = false`
+      `SELECT id, uuid, type, name FROM entitiesb WHERE published_deleted = false LIMIT $1 OFFSET $2`,
+      [paging.first, offset]
     );
   }
   const items = await doGetEntities(entities);
@@ -322,11 +325,11 @@ export async function getAllEntities(
     Db.pool,
     `SELECT e2.id, e2.uuid, e2.type, e2.name FROM entitiesb e1, entitiesb e2, entityb_versions ev, entityb_version_references evr
     WHERE
-      e1.published_deleted = false
+      e1.id = ANY($1)
       AND e1.id = ev.entities_id
       AND ev.id = evr.entityb_versions_id
       AND evr.entityb_versions_id = e2.id`,
-    []
+    [entities.map((x) => x.id)]
   );
   const referenced = await doGetEntities(referencedEntities);
 
