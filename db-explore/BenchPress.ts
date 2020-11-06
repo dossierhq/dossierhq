@@ -10,13 +10,15 @@ export interface BenchPressClock {
 }
 
 export interface BenchPressOptions {
-  name: string;
+  testName: string;
+  runName: string;
   warmup: number;
   iterations: number;
 }
 
 export interface BenchPressResult {
-  name: string;
+  testName: string;
+  runName: string;
   iterationDurations_ns: Array<bigint | null>;
   iterationCount: number;
 }
@@ -25,10 +27,12 @@ export interface BenchPressReportOptions {
   percentiles: number[];
   folder: string;
   baseName: string;
+  tsvFilename: string;
 }
 
 interface BenchPressProcessedResult {
-  name: string;
+  testName: string;
+  runName: string;
   iterationCount: number;
   successCount: number;
   failureCount: number;
@@ -87,7 +91,9 @@ export async function runTest(
 ): Promise<BenchPressResult> {
   const { clock, controlClock } = createClock();
 
-  console.log(`Warming up '${options.name}' (${options.warmup} iterations)`);
+  console.log(
+    `Warming up '${options.testName}' (${options.warmup} iterations)`
+  );
   for (let i = 0; i < options.warmup; i += 1) {
     process.stdout.write(`\x1b[0GIteration [${i + 1}/${options.warmup}]`);
     controlClock.reset();
@@ -95,7 +101,7 @@ export async function runTest(
   }
 
   console.log(
-    `\nStarting test '${options.name}' (${options.iterations} iterations)`
+    `\nStarting test '${options.testName}' (${options.iterations} iterations)`
   );
   const iterationDurations_ms = new Array<bigint | null>(
     options.iterations
@@ -113,7 +119,8 @@ export async function runTest(
   console.log();
 
   return {
-    name: options.name,
+    testName: options.testName,
+    runName: options.runName,
     iterationDurations_ns: iterationDurations_ms,
     iterationCount: options.iterations,
   };
@@ -175,7 +182,8 @@ function processResults(
   );
 
   return {
-    name: result.name,
+    testName: result.testName,
+    runName: result.runName,
     iterationCount: result.iterationCount,
     successCount,
     failureCount: result.iterationCount - successCount,
@@ -194,11 +202,13 @@ export async function reportResult(
   options: BenchPressReportOptions
 ) {
   const processed = processResults(result, options);
-  reportResultConsole(processed);
 
+  reportResultConsole(processed);
   console.log();
+
   await fs.promises.mkdir(options.folder, { recursive: true });
 
+  await reportResultTsv(processed, options);
   await reportResultJson(processed, options);
   await reportResultGnuPlot(processed, options);
   console.log('Done.');
@@ -237,6 +247,51 @@ function reportResultConsole(processed: BenchPressProcessedResult) {
   logMetric('Max iteration', processed.max_ms);
 }
 
+async function reportResultTsv(
+  processed: BenchPressProcessedResult,
+  options: BenchPressReportOptions
+) {
+  const header =
+    [
+      'Test name',
+      'Run name',
+      'Base name',
+      'Avg',
+      'StdDev',
+      'Min',
+      ...Object.keys(processed.percentiles_ms).map((x) => `p${x}`),
+      'Max',
+    ].join('\t') + '\n';
+  const row =
+    [
+      processed.testName,
+      processed.runName,
+      options.baseName,
+      processed.mean_ms,
+      processed.standardDeviation_ms.toFixed(2),
+      processed.min_ms,
+      ...Object.values(processed.percentiles_ms),
+      processed.max_ms,
+    ].join('\t') + '\n';
+
+  const tsvPath = path.join(options.folder, options.tsvFilename);
+  console.log(`Writing to ${tsvPath}`);
+  try {
+    const existingData = await fs.promises.readFile(tsvPath, 'utf8');
+    if (!existingData.startsWith(header)) {
+      throw new Error(
+        `Existing file (${tsvPath}) doesn't start with the expected header: ${header}`
+      );
+    }
+    await fs.promises.writeFile(tsvPath, `${existingData}${row}`);
+  } catch (error) {
+    if (error.code !== 'ENOENT') {
+      throw error;
+    }
+    await fs.promises.writeFile(tsvPath, `${header}${row}`);
+  }
+}
+
 async function reportResultJson(
   processed: BenchPressProcessedResult,
   options: BenchPressReportOptions
@@ -249,7 +304,7 @@ async function reportResultJson(
   }
 
   const data = {
-    name: processed.name,
+    name: processed.testName,
     unit: 'ms',
     iterationCount: processed.iterationCount,
     successCount: processed.successCount,
@@ -288,7 +343,7 @@ set xlabel 'Iteration'
 set ylabel 'Duration (ms)'
 set yrange [0:]
 
-plot '${path.basename(gnuPlotDataPath)}' title '${processed.name}',\\
+plot '${path.basename(gnuPlotDataPath)}' title '${processed.testName}',\\
   ${processed.mean_ms} title 'avg',\\
   ${processed.max_ms} title 'max',\\
 ${Object.entries(processed.percentiles_ms)
@@ -316,7 +371,7 @@ export function fileTimestamp() {
   return new Date().toISOString().replace(/[T:]/g, '-').replace(/\..+$/, '');
 }
 
-async function main() {
+async function main(runName: string) {
   const result = await runTest(
     async (clock) => {
       clock.start();
@@ -324,20 +379,22 @@ async function main() {
       clock.stop();
       return Math.random() > 0.1; // fail 10% of the time
     },
-    { name: 'setTimeout', warmup: 5, iterations: 100 }
+    { testName: 'setTimeout', runName, warmup: 5, iterations: 100 }
   );
-
-  const timestamp = fileTimestamp();
 
   await reportResult(result, {
     percentiles: [50, 90, 95],
     folder: path.join(__dirname, 'output'),
-    baseName: `set-timeout-${timestamp}`,
+    baseName: `${runName}-set-timeout`,
+    tsvFilename: 'benchmark.tsv',
   });
 }
 
 if (require.main === module) {
-  main().catch((error) => {
+  const runName = process.argv[2] || '';
+  const timestamp = fileTimestamp();
+  const fullRunName = runName ? `${timestamp}-${runName}` : timestamp;
+  main(fullRunName).catch((error) => {
     console.warn(error);
     process.exitCode = 1;
   });

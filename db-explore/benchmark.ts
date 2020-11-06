@@ -6,8 +6,6 @@ import * as BenchPress from './BenchPress';
 import * as Core from './Core';
 import * as Db from './Db';
 
-const PERCENTILES = [50, 90, 95];
-
 function cleanupEntity(entity: Record<string, unknown>) {
   const cleanedUpEntity: Record<string, unknown> = {};
   // TODO remove and add support to core?
@@ -116,10 +114,9 @@ async function createPlaceOfBusiness() {
 
 async function testCreateOrganizationEntities(
   session: Core.Session,
-  options: BenchPress.BenchPressOptions,
-  baseName: string
+  options: BenchPress.BenchPressOptions
 ) {
-  const result = await BenchPress.runTest(async (clock) => {
+  return await BenchPress.runTest(async (clock) => {
     const { name, entity } = createOrganization();
 
     clock.start();
@@ -130,20 +127,13 @@ async function testCreateOrganizationEntities(
 
     return true;
   }, options);
-
-  await BenchPress.reportResult(result, {
-    percentiles: PERCENTILES,
-    folder: path.join(__dirname, 'output'),
-    baseName,
-  });
 }
 
 async function testCreatePlaceOfBusinessEntities(
   session: Core.Session,
-  options: BenchPress.BenchPressOptions,
-  baseName: string
+  options: BenchPress.BenchPressOptions
 ) {
-  const result = await BenchPress.runTest(async (clock) => {
+  return await BenchPress.runTest(async (clock) => {
     const { name, entity } = await createPlaceOfBusiness();
 
     clock.start();
@@ -154,20 +144,13 @@ async function testCreatePlaceOfBusinessEntities(
 
     return true;
   }, options);
-
-  await BenchPress.reportResult(result, {
-    percentiles: PERCENTILES,
-    folder: path.join(__dirname, 'output'),
-    baseName,
-  });
 }
 
 async function testCreateEntities(
   session: Core.Session,
-  options: BenchPress.BenchPressOptions,
-  baseName: string
+  options: BenchPress.BenchPressOptions
 ) {
-  const result = await BenchPress.runTest(async (clock) => {
+  return await BenchPress.runTest(async (clock) => {
     const type = randomWeightedSelect(
       ['Organization', 'PlaceOfBusiness'],
       [30, 70]
@@ -182,20 +165,13 @@ async function testCreateEntities(
 
     return true;
   }, options);
-
-  await BenchPress.reportResult(result, {
-    percentiles: PERCENTILES,
-    folder: path.join(__dirname, 'output'),
-    baseName,
-  });
 }
 
 async function testEditEntities(
   session: Core.Session,
-  options: BenchPress.BenchPressOptions,
-  baseName: string
+  options: BenchPress.BenchPressOptions
 ) {
-  const result = await BenchPress.runTest(async (clock) => {
+  return await BenchPress.runTest(async (clock) => {
     const existingEntity = await Core.getRandomEntity({
       entityTypes: ['Organization', 'PlaceOfBusiness'],
     });
@@ -218,19 +194,10 @@ async function testEditEntities(
 
     return true;
   }, options);
-
-  await BenchPress.reportResult(result, {
-    percentiles: PERCENTILES,
-    folder: path.join(__dirname, 'output'),
-    baseName,
-  });
 }
 
-async function testGetEntity(
-  options: BenchPress.BenchPressOptions,
-  baseName: string
-) {
-  const result = await BenchPress.runTest(async (clock) => {
+async function testGetEntity(options: BenchPress.BenchPressOptions) {
+  return await BenchPress.runTest(async (clock) => {
     const reference = await randomReference({});
     if (!reference) {
       return false;
@@ -244,19 +211,10 @@ async function testGetEntity(
 
     return entity !== null;
   }, options);
-
-  await BenchPress.reportResult(result, {
-    percentiles: PERCENTILES,
-    folder: path.join(__dirname, 'output'),
-    baseName,
-  });
 }
 
-async function testGetEntities(
-  options: BenchPress.BenchPressOptions,
-  baseName: string
-) {
-  const result = await BenchPress.runTest(async (clock) => {
+async function testGetEntities(options: BenchPress.BenchPressOptions) {
+  return await BenchPress.runTest(async (clock) => {
     clock.start();
 
     const entities = await Core.getAllEntities({}, { first: 50 });
@@ -265,20 +223,13 @@ async function testGetEntities(
 
     return entities.items.length === 50;
   }, options);
-
-  await BenchPress.reportResult(result, {
-    percentiles: PERCENTILES,
-    folder: path.join(__dirname, 'output'),
-    baseName,
-  });
 }
 
 async function testDeleteEntities(
   session: Core.Session,
-  options: BenchPress.BenchPressOptions,
-  baseName: string
+  options: BenchPress.BenchPressOptions
 ) {
-  const result = await BenchPress.runTest(async (clock) => {
+  return await BenchPress.runTest(async (clock) => {
     const reference = await randomReference({});
     if (!reference) {
       return false;
@@ -292,68 +243,98 @@ async function testDeleteEntities(
 
     return true;
   }, options);
-
-  await BenchPress.reportResult(result, {
-    percentiles: PERCENTILES,
-    folder: path.join(__dirname, 'output'),
-    baseName,
-  });
 }
 
-async function main() {
-  const iterations = 10_000;
-  const timestamp = BenchPress.fileTimestamp();
+async function report(
+  resultPromise: Promise<BenchPress.BenchPressResult>,
+  baseName: string
+) {
+  const result = await resultPromise;
+  await BenchPress.reportResult(result, {
+    percentiles: [50, 90, 95],
+    folder: path.join(process.cwd(), 'output'),
+    baseName,
+    tsvFilename: 'crud-benchmark.tsv',
+  });
+
+  console.log();
+}
+
+async function main(runName: string) {
+  const iterations = 1_000;
   const session = await Core.createSessionForPrincipal('sys', '12345');
 
-  await testCreateEntities(
-    session,
-    { name: 'create entities', warmup: 30, iterations },
-    `create-entity-${timestamp}`
+  await report(
+    testCreateEntities(session, {
+      testName: 'create entities',
+      runName,
+      warmup: 30,
+      iterations,
+    }),
+    `${runName}-create-entity`
   );
-  console.log('\n');
 
-  await testCreateOrganizationEntities(
-    session,
-    { name: 'create organization', warmup: 30, iterations },
-    `create-organization-${timestamp}`
+  await report(
+    testCreateOrganizationEntities(session, {
+      testName: 'create organization',
+      runName,
+      warmup: 30,
+      iterations,
+    }),
+    `${runName}-create-organization`
   );
-  console.log('\n');
 
-  await testCreatePlaceOfBusinessEntities(
-    session,
-    { name: 'create place-of-business', warmup: 30, iterations },
-    `create-place-of-business-${timestamp}`
+  await report(
+    testCreatePlaceOfBusinessEntities(session, {
+      testName: 'create place-of-business',
+      runName,
+      warmup: 30,
+      iterations,
+    }),
+    `${runName}-create-place-of-business`
   );
-  console.log('\n');
 
-  await testEditEntities(
-    session,
-    { name: 'edit entity', warmup: 30, iterations },
-    `edit-entity-${timestamp}`
+  await report(
+    testEditEntities(session, {
+      testName: 'edit entity',
+      runName,
+      warmup: 30,
+      iterations,
+    }),
+    `${runName}-edit-entity`
   );
-  console.log('\n');
 
-  await testGetEntity(
-    { name: 'get entity', warmup: 30, iterations },
-    `get-entity-${timestamp}`
+  await report(
+    testGetEntity({ testName: 'get entity', runName, warmup: 30, iterations }),
+    `${runName}-get-entity`
   );
-  console.log('\n');
 
-  await testGetEntities(
-    { name: 'get entities', warmup: 30, iterations },
-    `get-entities-${timestamp}`
+  await report(
+    testGetEntities({
+      testName: 'get entities',
+      runName,
+      warmup: 30,
+      iterations,
+    }),
+    `${runName}-get-entities`
   );
-  console.log('\n');
 
-  await testDeleteEntities(
-    session,
-    { name: 'delete entity', warmup: 30, iterations },
-    `delete-entity-${timestamp}`
+  await report(
+    testDeleteEntities(session, {
+      testName: 'delete entity',
+      runName,
+      warmup: 30,
+      iterations,
+    }),
+    `${runName}-delete-entity`
   );
 }
 
 if (require.main === module) {
-  main()
+  const runName = process.argv[2] || '';
+  const timestamp = BenchPress.fileTimestamp();
+  const fullRunName = runName ? `${timestamp}-${runName}` : timestamp;
+  main(fullRunName)
     .then(Db.shutDownAsync)
     .catch((error) => {
       console.warn(error);
