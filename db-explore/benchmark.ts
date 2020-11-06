@@ -3,7 +3,7 @@ require('dotenv').config();
 import faker from 'faker';
 import path from 'path';
 import * as BenchPress from './BenchPress';
-import * as Core from './Core';
+import * as Core from './CoreB';
 import * as Db from './Db';
 
 function cleanupEntity(entity: Record<string, unknown>) {

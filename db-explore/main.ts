@@ -2,8 +2,8 @@
 require('dotenv').config();
 import chalk from 'chalk';
 import inquirer, { ChoiceBase } from 'inquirer';
-import * as Core from './Core';
-import type { Entity, Session } from './Core';
+import * as Core from './CoreB';
+import type { Entity, Session } from './CoreB';
 import * as Db from './Db';
 import * as TypeSpecifications from './TypeSpecifications';
 import {
