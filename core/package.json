@@ -2,7 +2,10 @@
   "name": "@datadata/core",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
   "scripts": {
     "ci:check": "npm run ts:check && npm run eslint:check && npm run prettier:check && npm run test:with-db",
     "eslint:check": "eslint",
