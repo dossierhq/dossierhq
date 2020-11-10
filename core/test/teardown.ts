@@ -1,5 +1,2 @@
-import * as TestDb from './TestDb';
-
-export default async function (): Promise<void> {
-  await TestDb.shutDown();
-}
+// eslint-disable-next-line @typescript-eslint/no-empty-function
+export default async function (): Promise<void> {}
