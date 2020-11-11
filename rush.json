@@ -374,6 +374,10 @@
       "projectFolder": "."
     },
     {
+      "packageName": "benchpress",
+      "projectFolder": "benchpress"
+    },
+    {
       "packageName": "@datadata/cli",
       "projectFolder": "cli"
     },
