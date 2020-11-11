@@ -1,18 +1,18 @@
 #!/usr/bin/env npx ts-node
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
-import { Auth, Instance } from '@datadata/core';
+import { CliAuth } from '@datadata/cli';
+import type { Session } from '@datadata/core';
+import { Instance } from '@datadata/core';
 
 async function main() {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const instance = new Instance({ databaseUrl: process.env.DATABASE_URL! });
   try {
-    const authSession = instance.createAuthContext();
-    const sessionResult = await Auth.createSessionForPrincipal(authSession, 'a', 'b');
-    if (sessionResult.isError()) {
-      throw new Error('Failed creating session: ' + sessionResult.error);
+    let session: Session | null = null;
+    while (!session) {
+      session = await CliAuth.veryInsecureCreateSession(instance, 'test', 'john-smith');
     }
-    const session = sessionResult.value;
     const context = instance.createSessionContext(session);
   } finally {
     await instance.shutdown();

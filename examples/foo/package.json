@@ -5,19 +5,24 @@
   "main": "index.js",
   "scripts": {
     "ci:check": "npm run ts:check && npm run eslint:check && npm run prettier:check",
+    "db:migrate": "./scripts/db-migrate.sh",
     "test": "echo \"Error: no test specified\" && exit 1",
     "eslint:check": "eslint",
     "eslint:fix": "eslint --fix",
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write .",
+    "start": "ts-node ./src/main.ts",
     "ts:check": "tsc --noEmit"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@datadata/core": "file:../../core"
+    "@datadata/cli": "file:../../cli",
+    "@datadata/core": "file:../../core",
+    "dotenv": "^8.2.0"
   },
   "devDependencies": {
+    "@datadata/postgres": "file:../../postgres",
     "@types/node": "^14.14.6",
     "@typescript-eslint/eslint-plugin": "^4.6.1",
     "@typescript-eslint/parser": "^4.6.1",
