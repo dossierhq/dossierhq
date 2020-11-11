@@ -1,8 +1,6 @@
 {
   "editor.formatOnSave": true,
-  "cSpell.words": [
-    "datadata"
-  ],
+  "cSpell.words": ["datadata"],
   "files.insertFinalNewline": true,
   "editor.tabSize": 2
 }
