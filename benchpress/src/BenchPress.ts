@@ -2,22 +2,7 @@ import childProcess from 'child_process';
 import fs from 'fs';
 import path from 'path';
 import { promisify } from 'util';
-import type { BenchPressClock } from '.';
-import { createClock } from './Clock';
-
-export interface BenchPressOptions {
-  testName: string;
-  runName: string;
-  warmup: number;
-  iterations: number;
-}
-
-export interface BenchPressResult {
-  testName: string;
-  runName: string;
-  iterationDurations_ns: Array<bigint | null>;
-  iterationCount: number;
-}
+import type { BenchPressResult } from '.';
 
 export interface BenchPressReportOptions {
   percentiles: number[];
@@ -41,43 +26,8 @@ interface BenchPressProcessedResult {
   iterations_ms: Array<number | null>;
 }
 
-export function delay(delay_ms: number) {
+export function delay(delay_ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, delay_ms));
-}
-
-export async function runTest(
-  iteration: (clock: BenchPressClock) => Promise<boolean>,
-  options: BenchPressOptions
-): Promise<BenchPressResult> {
-  const { clock, controlClock } = createClock();
-
-  console.log(`Warming up '${options.testName}' (${options.warmup} iterations)`);
-  for (let i = 0; i < options.warmup; i += 1) {
-    process.stdout.write(`\x1b[0GIteration [${i + 1}/${options.warmup}]`);
-    controlClock.reset();
-    const _ = await iteration(clock);
-  }
-
-  console.log(`\nStarting test '${options.testName}' (${options.iterations} iterations)`);
-  const iterationDurations_ms = new Array<bigint | null>(options.iterations).fill(null);
-  for (let i = 0; i < options.iterations; i += 1) {
-    process.stdout.write(`\x1b[0GIteration [${i + 1}/${options.iterations}]`);
-
-    controlClock.reset();
-    const success = await iteration(clock);
-
-    if (success) {
-      iterationDurations_ms[i] = controlClock.duration_ns();
-    }
-  }
-  console.log();
-
-  return {
-    testName: options.testName,
-    runName: options.runName,
-    iterationDurations_ns: iterationDurations_ms,
-    iterationCount: options.iterations,
-  };
 }
 
 function ns_to_ms(ns: bigint) {
@@ -141,7 +91,10 @@ function processResults(
   };
 }
 
-export async function reportResult(result: BenchPressResult, options: BenchPressReportOptions) {
+export async function reportResult(
+  result: BenchPressResult,
+  options: BenchPressReportOptions
+): Promise<void> {
   const processed = processResults(result, options);
 
   reportResultConsole(processed);
@@ -297,6 +250,6 @@ ${Object.entries(processed.percentiles_ms)
 }
 
 /** 'yyyy-mm-dd-hh-mm-ss' */
-export function fileTimestamp() {
+export function fileTimestamp(): string {
   return new Date().toISOString().replace(/[T:]/g, '-').replace(/\..+$/, '');
 }
