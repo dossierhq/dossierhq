@@ -1,0 +1,23 @@
+{
+  "name": "datadata",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "example": "examples"
+  },
+  "scripts": {
+    "ci:check:all": "./scripts/npm-all-projects.sh run ci:check --if-present"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jonasb/datadata.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jonasb/datadata/issues"
+  },
+  "homepage": "https://github.com/jonasb/datadata#readme"
+}

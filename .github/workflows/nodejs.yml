@@ -1,0 +1,20 @@
+name: Node CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js 14
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.14.0
+      - name: npm ci
+        run: |
+          ./scripts/npm-all-projects.sh ci
+      - name: check
+        run: |
+          npm run ci:check:all
