@@ -21,7 +21,7 @@ async function createSessionForPrincipal(
   }
   try {
     const { id } = await Db.queryOne<{ id: number }>(
-      context.queryable,
+      context,
       'SELECT s.id FROM subjects s, principals p WHERE p.provider = $1 AND p.identifier = $2 AND p.subjects_id = s.id',
       [provider, identifier]
     );
@@ -44,12 +44,12 @@ async function createPrincipal(
   }
   return await context.withTransaction(async (context) => {
     const { id, uuid } = await Db.queryOne<{ id: number; uuid: string }>(
-      context.queryable,
+      context,
       'INSERT INTO subjects DEFAULT VALUES RETURNING id, uuid'
     );
     try {
       await Db.queryNone(
-        context.queryable,
+        context,
         'INSERT INTO principals (provider, identifier, subjects_id) VALUES ($1, $2, $3)',
         [provider, identifier, id]
       );

@@ -6,6 +6,7 @@ import type {
   QueryResultRow,
 } from 'pg';
 import { Pool as PgPool } from 'pg';
+import type { Context } from '.';
 
 export class UnexpectedQuantityError extends Error {
   constructor(message: string, readonly actual: number) {
@@ -32,6 +33,14 @@ interface PoolWrapper extends Pool {
   wrapped: PgPool;
 }
 
+function getQueryable(context: Context<unknown>): PgQueryable {
+  return (context.queryable as QueryableWrapper).wrapped;
+}
+
+function getPool(context: Context<unknown>): PgPool {
+  return (context.pool as PoolWrapper).wrapped;
+}
+
 export function connect(databaseUrl: string): Pool {
   const wrapper: PoolWrapper = {
     _type: 'Pool',
@@ -47,10 +56,10 @@ export function disconnect(pool: Pool): Promise<void> {
 }
 
 export async function withRootTransaction<T>(
-  pool: Pool,
+  context: Context<unknown>,
   callback: (queryable: Queryable) => Promise<T>
 ): Promise<T> {
-  const client = await (pool as PoolWrapper).wrapped.connect();
+  const client = await getPool(context).connect();
   const clientWrapper: QueryableWrapper = { _type: 'Queryable', wrapped: client };
   try {
     await client.query('BEGIN');
@@ -66,46 +75,46 @@ export async function withRootTransaction<T>(
 }
 
 export async function withNestedTransaction<T>(
-  queryable: Queryable,
+  context: Context<unknown>,
   callback: () => Promise<T>
 ): Promise<T> {
-  const q = (queryable as QueryableWrapper).wrapped;
+  const queryable = getQueryable(context);
   try {
-    await q.query('BEGIN');
+    await queryable.query('BEGIN');
     const result = await callback();
-    await q.query('COMMIT');
+    await queryable.query('COMMIT');
     return result;
   } catch (e) {
-    await q.query('ROLLBACK');
+    await queryable.query('ROLLBACK');
     throw e;
   }
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function query<R extends QueryResultRow = any, I extends any[] = any[]>(
-  queryable: Queryable,
+  context: Context<unknown>,
   queryTextOrConfig: string | QueryConfig<I>,
   values?: I
 ): Promise<QueryResult<R>> {
-  return (queryable as QueryableWrapper).wrapped.query(queryTextOrConfig, values);
+  return getQueryable(context).query(queryTextOrConfig, values);
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function queryArray<R extends any[] = any[], I extends any[] = any[]>(
-  queryable: Queryable,
+  context: Context<unknown>,
   queryConfig: QueryArrayConfig<I>,
   values?: I
 ): Promise<QueryArrayResult<R>> {
-  return (queryable as QueryableWrapper).wrapped.query(queryConfig, values);
+  return getQueryable(context).query(queryConfig, values);
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function queryNone<I extends any[] = any[]>(
-  queryable: Queryable,
+  context: Context<unknown>,
   queryTextOrConfig: string | QueryConfig<I>,
   values?: I
 ): Promise<void> {
-  const { rows } = await (queryable as QueryableWrapper).wrapped.query(queryTextOrConfig, values);
+  const { rows } = await getQueryable(context).query(queryTextOrConfig, values);
   if (rows.length === 0) {
     return;
   }
@@ -114,11 +123,11 @@ export async function queryNone<I extends any[] = any[]>(
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function queryNoneOrOne<R extends QueryResultRow = any, I extends any[] = any[]>(
-  queryable: Queryable,
+  context: Context<unknown>,
   queryTextOrConfig: string | QueryConfig<I>,
   values?: I
 ): Promise<R | null> {
-  const { rows } = await (queryable as QueryableWrapper).wrapped.query(queryTextOrConfig, values);
+  const { rows } = await getQueryable(context).query(queryTextOrConfig, values);
   if (rows.length === 0) {
     return null;
   }
@@ -130,11 +139,11 @@ export async function queryNoneOrOne<R extends QueryResultRow = any, I extends a
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function queryOne<R extends QueryResultRow = any, I extends any[] = any[]>(
-  queryable: Queryable,
+  context: Context<unknown>,
   queryTextOrConfig: string | QueryConfig<I>,
   values?: I
 ): Promise<R> {
-  const { rows } = await (queryable as QueryableWrapper).wrapped.query(queryTextOrConfig, values);
+  const { rows } = await getQueryable(context).query(queryTextOrConfig, values);
   if (rows.length !== 1) {
     throw new UnexpectedQuantityError(`Expected 1 row, got ${rows.length}`, rows.length);
   }
@@ -143,10 +152,10 @@ export async function queryOne<R extends QueryResultRow = any, I extends any[] =
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function queryMany<R extends QueryResultRow = any, I extends any[] = any[]>(
-  queryable: Queryable,
+  context: Context<unknown>,
   queryTextOrConfig: string | QueryConfig<I>,
   values?: I
 ): Promise<R[]> {
-  const { rows } = await (queryable as QueryableWrapper).wrapped.query(queryTextOrConfig, values);
+  const { rows } = await getQueryable(context).query(queryTextOrConfig, values);
   return rows;
 }

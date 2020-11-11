@@ -3,6 +3,7 @@ import type { Pool, Queryable } from './Db';
 import * as Db from './Db';
 
 export interface Context<TContext> {
+  readonly pool: Pool;
   readonly queryable: Queryable;
   withTransaction<T>(callback: (context: TContext) => Promise<T>): Promise<T>;
 }
@@ -18,11 +19,9 @@ export interface SessionContext extends Context<SessionContext> {
 }
 
 abstract class ContextImpl<TContext> implements Context<TContext> {
-  readonly pool: Pool;
   readonly queryable: Queryable;
 
-  constructor(pool: Pool, transactionQueryable: Queryable | null) {
-    this.pool = pool;
+  constructor(readonly pool: Pool, transactionQueryable: Queryable | null) {
     this.queryable = transactionQueryable ?? pool;
   }
 
@@ -31,12 +30,12 @@ abstract class ContextImpl<TContext> implements Context<TContext> {
   async withTransaction<T>(callback: (context: TContext) => Promise<T>): Promise<T> {
     if (this.pool !== this.queryable) {
       // Already in transaction
-      return await Db.withNestedTransaction(this.queryable, async () => {
+      return await Db.withNestedTransaction(this, async () => {
         return callback((this as unknown) as TContext);
       });
     }
 
-    return await Db.withRootTransaction(this.pool, async (client) => {
+    return await Db.withRootTransaction(this, async (client) => {
       const context = this.copyWithNewQueryable(client);
       return callback(context);
     });

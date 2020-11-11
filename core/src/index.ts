@@ -1,5 +1,5 @@
 export type { Session } from './Auth';
-export type { AuthContext, SessionContext } from './Context';
+export type { AuthContext, Context, SessionContext } from './Context';
 export type { PromiseResult, Result } from './ErrorResult';
 
 export { default as Auth } from './Auth';
