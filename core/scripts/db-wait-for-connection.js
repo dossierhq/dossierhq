@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+/* eslint-disable @typescript-eslint/no-var-requires, no-undef */
 require('dotenv').config({ path: require('path').resolve(process.cwd(), '.env.test') });
 const { Pool } = require('pg');
 
@@ -25,6 +26,7 @@ function delay(t) {
 }
 
 async function main() {
+  // eslint-disable-next-line no-constant-condition
   while (true) {
     if (await canConnect()) {
       return;

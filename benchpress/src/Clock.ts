@@ -3,7 +3,12 @@ export interface BenchPressClock {
   stop: () => void;
 }
 
-export function createClock() {
+interface ControlClock {
+  reset: () => void;
+  duration_ns: () => bigint;
+}
+
+export function createClock(): { clock: BenchPressClock; controlClock: ControlClock } {
   let startTime: bigint | null = null;
   let duration: bigint | null = null;
 

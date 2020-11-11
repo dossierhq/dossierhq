@@ -8,8 +8,8 @@
   },
   "scripts": {
     "ci:check": "npm run ts:check && npm run eslint:check && npm run prettier:check",
-    "eslint:check": "eslint",
-    "eslint:fix": "eslint --fix",
+    "eslint:check": "eslint .",
+    "eslint:fix": "eslint --fix .",
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write .",
     "ts:check": "tsc --noEmit"
