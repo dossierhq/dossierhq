@@ -8,7 +8,10 @@
     "example": "examples"
   },
   "scripts": {
-    "ci:check:all": "./scripts/npm-all-projects.sh run ci:check --if-present"
+    "ci:check:all": "./scripts/npm-all-projects.sh run ci:check --if-present",
+    "db:migrate:all": "./scripts/npm-all-projects.sh run db:migrate --if-present",
+    "db:start": "./scripts/db-start.sh",
+    "db:stop": "./scripts/db-stop.sh"
   },
   "repository": {
     "type": "git",
