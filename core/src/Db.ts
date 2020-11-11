@@ -7,6 +7,13 @@ import type {
 } from 'pg';
 import { Pool as PgPool } from 'pg';
 
+export class UnexpectedQuantityError extends Error {
+  constructor(message: string, readonly actual: number) {
+    super(message);
+    this.name = 'UnexpectedQuantityError';
+  }
+}
+
 type PgQueryable = Pick<PgPool, 'query'>;
 
 export interface Queryable {
@@ -102,7 +109,7 @@ export async function queryNone<I extends any[] = any[]>(
   if (rows.length === 0) {
     return;
   }
-  throw new Error(`Expected 0 rows, got ${rows.length}`);
+  throw new UnexpectedQuantityError(`Expected 0 rows, got ${rows.length}`, rows.length);
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -116,7 +123,7 @@ export async function queryNoneOrOne<R extends QueryResultRow = any, I extends a
     return null;
   }
   if (rows.length !== 1) {
-    throw new Error(`Expected 0 or 1 row, got ${rows.length}`);
+    throw new UnexpectedQuantityError(`Expected 0 or 1 row, got ${rows.length}`, rows.length);
   }
   return rows[0];
 }
@@ -129,7 +136,7 @@ export async function queryOne<R extends QueryResultRow = any, I extends any[] =
 ): Promise<R> {
   const { rows } = await (queryable as QueryableWrapper).wrapped.query(queryTextOrConfig, values);
   if (rows.length !== 1) {
-    throw new Error(`Expected 1 row, got ${rows.length}`);
+    throw new UnexpectedQuantityError(`Expected 1 row, got ${rows.length}`, rows.length);
   }
   return rows[0];
 }

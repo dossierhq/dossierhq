@@ -1,13 +1,16 @@
 export enum ErrorType {
-  BadRequest,
-  Conflict,
+  BadRequest = 'BadRequest',
+  Conflict = 'Conflict',
+  NotFound = 'NotFound',
 }
 
-export type Result<TOk, TError> = OkResult<TOk, TError> | ErrorResult<TOk, TError>;
+export type Result<TOk, TError extends ErrorType> =
+  | OkResult<TOk, TError>
+  | ErrorResult<TOk, TError>;
 
-export type PromiseResult<TOk, TError> = Promise<Result<TOk, TError>>;
+export type PromiseResult<TOk, TError extends ErrorType> = Promise<Result<TOk, TError>>;
 
-class OkResult<TOk, TError> {
+class OkResult<TOk, TError extends ErrorType> {
   constructor(readonly value: TOk) {}
 
   isOk(): this is OkResult<TOk, TError> {
@@ -19,7 +22,7 @@ class OkResult<TOk, TError> {
   }
 }
 
-class ErrorResult<TOk, TError> {
+class ErrorResult<TOk, TError extends ErrorType> {
   constructor(readonly error: TError) {}
 
   isOk(): this is OkResult<TOk, TError> {
@@ -31,7 +34,7 @@ class ErrorResult<TOk, TError> {
   }
 }
 
-function createError<TError>(error: TError) {
+function createError<TError extends ErrorType>(error: TError) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return new ErrorResult<any, TError>(error);
 }
@@ -39,8 +42,9 @@ function createError<TError>(error: TError) {
 export const Errors = {
   BadRequest: createError(ErrorType.BadRequest),
   Conflict: createError(ErrorType.Conflict),
+  NotFound: createError(ErrorType.NotFound),
 };
 
-export function ok<TOk, TError>(value: TOk): OkResult<TOk, TError> {
+export function ok<TOk, TError extends ErrorType>(value: TOk): OkResult<TOk, TError> {
   return new OkResult(value);
 }

@@ -8,7 +8,11 @@ async function main() {
   const instance = new Instance({ databaseUrl: process.env.DATABASE_URL! });
   try {
     const authSession = instance.createAuthContext();
-    const session = await Auth.createSessionForPrincipal(authSession, 'a', 'b');
+    const sessionResult = await Auth.createSessionForPrincipal(authSession, 'a', 'b');
+    if (sessionResult.isError()) {
+      throw new Error('Failed creating session: ' + sessionResult.error);
+    }
+    const session = sessionResult.value;
     const context = instance.createSessionContext(session);
   } finally {
     await instance.shutdown();
