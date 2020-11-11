@@ -12,9 +12,9 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 14.14.0
-      - name: npm ci
+      - name: rush install
         run: |
-          ./scripts/npm-all-projects.sh ci
+          node common/scripts/install-run-rush.js install
       - name: check
         run: |
           npm run ci:check:all
