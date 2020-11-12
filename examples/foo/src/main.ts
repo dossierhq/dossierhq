@@ -14,6 +14,7 @@ async function main() {
       session = await CliAuth.veryInsecureCreateSession(instance, 'test', 'john-smith');
     }
     const context = instance.createSessionContext(session);
+    await instance.reloadSchema(context);
   } finally {
     await instance.shutdown();
   }
