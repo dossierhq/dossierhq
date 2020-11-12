@@ -6,7 +6,7 @@ import type {
   QueryResultRow,
 } from 'pg';
 import { Pool as PgPool } from 'pg';
-import type { Context } from '.';
+import type { Context, ErrorType, PromiseResult } from '.';
 
 export class UnexpectedQuantityError extends Error {
   constructor(message: string, readonly actual: number) {
@@ -55,16 +55,20 @@ export function disconnect(pool: Pool): Promise<void> {
   return (pool as PoolWrapper).wrapped.end();
 }
 
-export async function withRootTransaction<T>(
+export async function withRootTransaction<TOk, TError extends ErrorType>(
   context: Context<unknown>,
-  callback: (queryable: Queryable) => Promise<T>
-): Promise<T> {
+  callback: (queryable: Queryable) => PromiseResult<TOk, TError>
+): PromiseResult<TOk, TError> {
   const client = await getPool(context).connect();
   const clientWrapper: QueryableWrapper = { _type: 'Queryable', wrapped: client };
   try {
     await client.query('BEGIN');
     const result = await callback(clientWrapper);
-    await client.query('COMMIT');
+    if (result.isOk()) {
+      await client.query('COMMIT');
+    } else {
+      await client.query('ROLLBACK');
+    }
     return result;
   } catch (e) {
     await client.query('ROLLBACK');
@@ -74,15 +78,19 @@ export async function withRootTransaction<T>(
   }
 }
 
-export async function withNestedTransaction<T>(
+export async function withNestedTransaction<TOk, TError extends ErrorType>(
   context: Context<unknown>,
-  callback: () => Promise<T>
-): Promise<T> {
+  callback: () => PromiseResult<TOk, TError>
+): PromiseResult<TOk, TError> {
   const queryable = getQueryable(context);
   try {
     await queryable.query('BEGIN');
     const result = await callback();
-    await queryable.query('COMMIT');
+    if (result.isOk()) {
+      await queryable.query('COMMIT');
+    } else {
+      await queryable.query('ROLLBACK');
+    }
     return result;
   } catch (e) {
     await queryable.query('ROLLBACK');
