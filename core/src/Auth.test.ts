@@ -1,12 +1,11 @@
-import { Auth, AuthContext, Instance } from '.';
-import { ErrorType } from '.';
+import { Auth, AuthContext, ErrorType, Instance } from '.';
 import TestInstance from '../test/TestInstance';
 
 let instance: Instance;
 let context: AuthContext;
 
-beforeAll(() => {
-  instance = TestInstance.createInstance();
+beforeAll(async () => {
+  instance = await TestInstance.createInstance({ loadSchema: false });
   context = instance.createAuthContext();
 });
 afterAll(async () => {
