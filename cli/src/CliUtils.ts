@@ -6,3 +6,9 @@ export function logErrorType(message: string, errorType: ErrorType): void {
     `${chalk.yellow(chalk.bold('!'))} ${chalk.bold(message + ':')} ${chalk.yellow(errorType)}`
   );
 }
+
+export function logError(error: Error): void {
+  console.log(
+    `${chalk.yellow(chalk.bold('!'))} ${chalk.bold('Caught error' + ':')} ${chalk.yellow(error)}`
+  );
+}

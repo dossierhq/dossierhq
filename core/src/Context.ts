@@ -1,8 +1,9 @@
-import type { Session } from '.';
+import type { Instance, Session } from '.';
 import type { Pool, Queryable } from './Db';
 import * as Db from './Db';
 
 export interface Context<TContext> {
+  readonly instance: Instance;
   readonly pool: Pool;
   readonly queryable: Queryable;
   withTransaction<T>(callback: (context: TContext) => Promise<T>): Promise<T>;
@@ -21,7 +22,11 @@ export interface SessionContext extends Context<SessionContext> {
 abstract class ContextImpl<TContext> implements Context<TContext> {
   readonly queryable: Queryable;
 
-  constructor(readonly pool: Pool, transactionQueryable: Queryable | null) {
+  constructor(
+    readonly instance: Instance,
+    readonly pool: Pool,
+    transactionQueryable: Queryable | null
+  ) {
     this.queryable = transactionQueryable ?? pool;
   }
 
@@ -43,24 +48,29 @@ abstract class ContextImpl<TContext> implements Context<TContext> {
 }
 
 export class AuthContextImpl extends ContextImpl<AuthContext> implements AuthContext {
-  constructor(pool: Pool, transactionQueryable: Queryable | null = null) {
-    super(pool, transactionQueryable);
+  constructor(instance: Instance, pool: Pool, transactionQueryable: Queryable | null = null) {
+    super(instance, pool, transactionQueryable);
   }
 
   protected copyWithNewQueryable(transactionQueryable: Queryable): AuthContext {
-    return new AuthContextImpl(this.pool, transactionQueryable);
+    return new AuthContextImpl(this.instance, this.pool, transactionQueryable);
   }
 }
 
 export class SessionContextImpl extends ContextImpl<SessionContext> implements SessionContext {
   readonly session: Session;
 
-  constructor(session: Session, pool: Pool, transactionQueryable: Queryable | null = null) {
-    super(pool, transactionQueryable);
+  constructor(
+    instance: Instance,
+    session: Session,
+    pool: Pool,
+    transactionQueryable: Queryable | null = null
+  ) {
+    super(instance, pool, transactionQueryable);
     this.session = session;
   }
 
   protected copyWithNewQueryable(transactionQueryable: Queryable): SessionContext {
-    return new SessionContextImpl(this.session, this.pool, transactionQueryable);
+    return new SessionContextImpl(this.instance, this.session, this.pool, transactionQueryable);
   }
 }
