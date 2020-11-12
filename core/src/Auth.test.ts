@@ -1,6 +1,6 @@
 import { Auth, AuthContext, ErrorType, Instance } from '.';
 import TestInstance from '../test/TestInstance';
-import { expectErrorResult } from '../test/TestUtils';
+import { expectErrorResult, uuidMatcher } from '../test/TestUtils';
 
 let instance: Instance;
 let context: AuthContext;
@@ -22,9 +22,7 @@ describe('createPrincipal', () => {
     const result = await Auth.createPrincipal(context, 'test', randomIdentifier());
     expect(result.isOk()).toBeTruthy();
     if (result.isOk()) {
-      expect(result.value).toMatch(
-        /[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89aAbB][a-f0-9]{3}-[a-f0-9]{12}/
-      );
+      expect(result.value).toMatch(uuidMatcher);
     }
   });
 

@@ -1,4 +1,4 @@
-import { Instance } from '.';
+import type { Instance } from '.';
 import TestInstance from '../test/TestInstance';
 
 let instance: Instance;
