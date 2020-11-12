@@ -1,4 +1,5 @@
-import type { AuthContext, ErrorType, PromiseResult, Result } from '.';
+import type { AuthContext, ErrorType, PromiseResult } from '.';
+import { ensureRequired } from './Assertions';
 import * as Db from './Db';
 import { notOk, ok } from './ErrorResult';
 
@@ -11,24 +12,14 @@ export default {
   createPrincipal,
 };
 
-function checkProviderAndIdentifier(
-  provider: string,
-  identifier: string
-): Result<true, ErrorType.BadRequest> {
-  if (!provider && !identifier) return notOk.BadRequest('Missing provider and identifier');
-  if (!provider) return notOk.BadRequest('Missing provider');
-  if (!identifier) return notOk.BadRequest('Missing identifier');
-  return ok(true);
-}
-
 async function createSessionForPrincipal(
   context: AuthContext,
   provider: string,
   identifier: string
 ): PromiseResult<Session, ErrorType.BadRequest | ErrorType.NotFound> {
-  const checkResult = checkProviderAndIdentifier(provider, identifier);
-  if (checkResult.isError()) {
-    return checkResult;
+  const assertion = ensureRequired({ provider, identifier });
+  if (assertion.isError()) {
+    return assertion;
   }
   try {
     const { id } = await Db.queryOne<{ id: number }>(
@@ -50,9 +41,9 @@ async function createPrincipal(
   provider: string,
   identifier: string
 ): PromiseResult<string, ErrorType.BadRequest | ErrorType.Conflict> {
-  const checkResult = checkProviderAndIdentifier(provider, identifier);
-  if (checkResult.isError()) {
-    return checkResult;
+  const assertion = ensureRequired({ provider, identifier });
+  if (assertion.isError()) {
+    return assertion;
   }
   return await context.withTransaction(async (context) => {
     const { id, uuid } = await Db.queryOne<{ id: number; uuid: string }>(

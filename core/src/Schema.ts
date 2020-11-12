@@ -29,4 +29,8 @@ export interface SchemaSpecification {
 
 export class Schema {
   constructor(readonly spec: SchemaSpecification) {}
+
+  getEntityTypeSpecification(type: string): EntityTypeSpecification | null {
+    return this.spec.types[type] ?? null;
+  }
 }
