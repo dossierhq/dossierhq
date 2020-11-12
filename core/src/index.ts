@@ -1,7 +1,7 @@
 export type { Session } from './Auth';
 export type { AuthContext, Context, SessionContext } from './Context';
-export type { PromiseResult, Result } from './ErrorResult';
-export type { EntityFieldSpecification, Schema } from './Schema';
+export type { ErrorResult, OkResult, PromiseResult, Result } from './ErrorResult';
+export type { EntityFieldSpecification, EntityTypeSpecification, Schema } from './Schema';
 
 export { default as Auth } from './Auth';
 export * as EntityAdmin from './EntityAdmin';

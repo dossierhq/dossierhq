@@ -2,25 +2,19 @@ import inquirer from 'inquirer';
 import type { AuthContext, Instance, Session } from '@datadata/core';
 import { Auth, ErrorType } from '@datadata/core';
 import * as CliUtils from './CliUtils';
+import { showConfirm } from './widgets/Confirm';
 
 async function createPrincipalWithConfirm(
   authContext: AuthContext,
   provider: string,
   identifier: string
 ) {
-  const { create } = await inquirer.prompt([
-    {
-      name: 'create',
-      type: 'confirm',
-      message: 'Principal doesn’t exist. Create new principal?',
-    },
-  ]);
-  if (create) {
+  if (await showConfirm('Principal doesn’t exist. Create new principal?')) {
     const result = await Auth.createPrincipal(authContext, provider, identifier);
     if (result.isOk()) {
       return true;
     }
-    CliUtils.logErrorType('Failed creating principal', result.error);
+    CliUtils.logErrorResult('Failed creating principal', result);
   }
   return false;
 }
@@ -52,7 +46,7 @@ export async function veryInsecureCreateSession(
     return sessionResult.value;
   }
   if (sessionResult.error !== ErrorType.NotFound) {
-    CliUtils.logErrorType('Failed creating session', sessionResult.error);
+    CliUtils.logErrorResult('Failed creating session', sessionResult);
     return null;
   }
 
@@ -67,6 +61,6 @@ export async function veryInsecureCreateSession(
   if (sessionResult.isOk()) {
     return sessionResult.value;
   }
-  CliUtils.logErrorType('Failed creating session', sessionResult.error);
+  CliUtils.logErrorResult('Failed creating session', sessionResult);
   return null;
 }

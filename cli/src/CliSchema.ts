@@ -1,5 +1,6 @@
 import chalk from 'chalk';
 import type { Context } from '@datadata/core';
+import { showItemSelector } from './widgets/ItemSelector';
 
 export function showSchema(context: Context<unknown>): void {
   const { instance } = context;
@@ -14,4 +15,15 @@ export function showSchema(context: Context<unknown>): void {
       );
     }
   }
+}
+
+export async function selectEntityType(context: Context<unknown>): Promise<string> {
+  const { instance } = context;
+  const schema = instance.getSchema();
+  const types = Object.keys(schema.spec.types);
+  const { name: typeName } = await showItemSelector(
+    'Which entity type?',
+    types.map((x) => ({ id: x, name: x }))
+  );
+  return typeName;
 }
