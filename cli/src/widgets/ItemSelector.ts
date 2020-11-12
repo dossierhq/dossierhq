@@ -16,10 +16,10 @@ function isSeparator(
   return !!(item as any)['separator'];
 }
 
-export async function showItemSelector<T extends ItemSelectorItem>(
+export async function showItemSelector<T extends ItemSelectorItem = ItemSelectorItem>(
   message: string,
   items: Array<T | ItemSelectorSeparator>,
-  defaultItemId: string | null
+  defaultItemId: string | null = null
 ): Promise<T> {
   const choices = items.map((a) => {
     if (isSeparator(a)) {
@@ -30,15 +30,15 @@ export async function showItemSelector<T extends ItemSelectorItem>(
   const defaultItem = defaultItemId
     ? items.find((a) => !isSeparator(a) && a.id === defaultItemId)
     : null;
-  const { action } = await inquirer.prompt<{ action: T }>([
+  const { item } = await inquirer.prompt<{ item: T }>([
     {
-      name: 'action',
+      name: 'item',
       type: 'list',
       pageSize: 20,
       message,
       default: defaultItem,
-      choices: choices,
+      choices,
     },
   ]);
-  return action;
+  return item;
 }

@@ -10,7 +10,7 @@ export type Result<TOk, TError extends ErrorType> =
 
 export type PromiseResult<TOk, TError extends ErrorType> = Promise<Result<TOk, TError>>;
 
-class OkResult<TOk, TError extends ErrorType> {
+export class OkResult<TOk, TError extends ErrorType> {
   constructor(readonly value: TOk) {}
 
   isOk(): this is OkResult<TOk, TError> {
@@ -22,7 +22,7 @@ class OkResult<TOk, TError extends ErrorType> {
   }
 }
 
-class ErrorResult<TOk, TError extends ErrorType> {
+export class ErrorResult<TOk, TError extends ErrorType> {
   constructor(readonly error: TError, readonly message: string) {}
 
   isOk(): this is OkResult<TOk, TError> {
