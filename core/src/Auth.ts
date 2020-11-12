@@ -1,6 +1,6 @@
-import type { AuthContext, ErrorType, PromiseResult } from '.';
+import type { AuthContext, ErrorType, PromiseResult, Result } from '.';
 import * as Db from './Db';
-import { Errors, ok } from './ErrorResult';
+import { notOk, ok } from './ErrorResult';
 
 export interface Session {
   readonly subjectId: number;
@@ -11,13 +11,24 @@ export default {
   createPrincipal,
 };
 
+function checkProviderAndIdentifier(
+  provider: string,
+  identifier: string
+): Result<true, ErrorType.BadRequest> {
+  if (!provider && !identifier) return notOk.BadRequest('Missing provider and identifier');
+  if (!provider) return notOk.BadRequest('Missing provider');
+  if (!identifier) return notOk.BadRequest('Missing identifier');
+  return ok(true);
+}
+
 async function createSessionForPrincipal(
   context: AuthContext,
   provider: string,
   identifier: string
 ): PromiseResult<Session, ErrorType.BadRequest | ErrorType.NotFound> {
-  if (!provider || !identifier) {
-    return Errors.BadRequest;
+  const checkResult = checkProviderAndIdentifier(provider, identifier);
+  if (checkResult.isError()) {
+    return checkResult;
   }
   try {
     const { id } = await Db.queryOne<{ id: number }>(
@@ -28,7 +39,7 @@ async function createSessionForPrincipal(
     return ok({ subjectId: id });
   } catch (error) {
     if (error instanceof Db.UnexpectedQuantityError) {
-      return Errors.NotFound;
+      return notOk.NotFound('Principal doesn’t exist');
     }
     throw error;
   }
@@ -39,8 +50,9 @@ async function createPrincipal(
   provider: string,
   identifier: string
 ): PromiseResult<string, ErrorType.BadRequest | ErrorType.Conflict> {
-  if (!provider || !identifier) {
-    return Errors.BadRequest;
+  const checkResult = checkProviderAndIdentifier(provider, identifier);
+  if (checkResult.isError()) {
+    return checkResult;
   }
   return await context.withTransaction(async (context) => {
     const { id, uuid } = await Db.queryOne<{ id: number; uuid: string }>(
@@ -58,7 +70,7 @@ async function createPrincipal(
         error.message ===
         'duplicate key value violates unique constraint "principals_provider_identifier_key"'
       ) {
-        return Errors.Conflict;
+        return notOk.Conflict('Principal already exist');
       }
       throw error;
     }

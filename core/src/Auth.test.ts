@@ -1,5 +1,6 @@
 import { Auth, AuthContext, ErrorType, Instance } from '.';
 import TestInstance from '../test/TestInstance';
+import { expectErrorResult } from '../test/TestUtils';
 
 let instance: Instance;
 let context: AuthContext;
@@ -33,18 +34,18 @@ describe('createPrincipal', () => {
     expect(firstResult.isOk());
 
     const secondResult = await Auth.createPrincipal(context, 'test', identifier);
-    expect(secondResult.isError() && secondResult.error).toEqual(ErrorType.Conflict);
+    expectErrorResult(secondResult, ErrorType.Conflict, 'Principal already exist');
   });
 
   test('Error: create missing provider', async () => {
     const identifier = randomIdentifier();
     const result = await Auth.createPrincipal(context, '', identifier);
-    expect(result.isError() && result.error).toEqual(ErrorType.BadRequest);
+    expectErrorResult(result, ErrorType.BadRequest, 'Missing provider');
   });
 
   test('Error: create missing identifier', async () => {
     const result = await Auth.createPrincipal(context, 'test', '');
-    expect(result.isError() && result.error).toEqual(ErrorType.BadRequest);
+    expectErrorResult(result, ErrorType.BadRequest, 'Missing identifier');
   });
 });
 
@@ -64,16 +65,16 @@ describe('createSessionForPrincipal', () => {
   test('Error: missing provider', async () => {
     const identifier = randomIdentifier();
     const session = await Auth.createSessionForPrincipal(context, '', identifier);
-    expect(session.isError() && session.error).toEqual(ErrorType.BadRequest);
+    expectErrorResult(session, ErrorType.BadRequest, 'Missing provider');
   });
 
   test('Error: missing identifier', async () => {
     const session = await Auth.createSessionForPrincipal(context, 'test', '');
-    expect(session.isError() && session.error).toEqual(ErrorType.BadRequest);
+    expectErrorResult(session, ErrorType.BadRequest, 'Missing identifier');
   });
 
   test('Error: non-existent principal', async () => {
     const result = await Auth.createSessionForPrincipal(context, 'test', randomIdentifier());
-    expect(result.isError() && result.error).toEqual(ErrorType.NotFound);
+    expectErrorResult(result, ErrorType.NotFound, 'Principal doesn’t exist');
   });
 });

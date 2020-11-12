@@ -12,7 +12,8 @@
     "db:migrate:all": "./scripts/npm-all-projects.sh run db:migrate --if-present",
     "db:start": "./scripts/db-start.sh",
     "db:stop": "./scripts/db-stop.sh",
-    "eslint:check:all": "./scripts/npm-all-projects.sh run eslint:check --if-present"
+    "eslint:check:all": "./scripts/npm-all-projects.sh run eslint:check --if-present",
+    "ts:check:all": "./scripts/npm-all-projects.sh run ts:check --if-present"
   },
   "repository": {
     "type": "git",

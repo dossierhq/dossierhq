@@ -23,7 +23,7 @@ class OkResult<TOk, TError extends ErrorType> {
 }
 
 class ErrorResult<TOk, TError extends ErrorType> {
-  constructor(readonly error: TError) {}
+  constructor(readonly error: TError, readonly message: string) {}
 
   isOk(): this is OkResult<TOk, TError> {
     return false;
@@ -34,17 +34,20 @@ class ErrorResult<TOk, TError extends ErrorType> {
   }
 }
 
-function createError<TError extends ErrorType>(error: TError) {
+function createError<TError extends ErrorType>(error: TError, message: string) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return new ErrorResult<any, TError>(error);
+  return new ErrorResult<any, TError>(error, message);
 }
-
-export const Errors = {
-  BadRequest: createError(ErrorType.BadRequest),
-  Conflict: createError(ErrorType.Conflict),
-  NotFound: createError(ErrorType.NotFound),
-};
 
 export function ok<TOk, TError extends ErrorType>(value: TOk): OkResult<TOk, TError> {
   return new OkResult(value);
 }
+
+export const notOk = {
+  BadRequest: (message: string): ErrorResult<unknown, ErrorType.BadRequest> =>
+    createError(ErrorType.BadRequest, message),
+  Conflict: (message: string): ErrorResult<unknown, ErrorType.Conflict> =>
+    createError(ErrorType.Conflict, message),
+  NotFound: (message: string): ErrorResult<unknown, ErrorType.NotFound> =>
+    createError(ErrorType.NotFound, message),
+};
