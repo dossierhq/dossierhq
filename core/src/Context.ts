@@ -1,4 +1,4 @@
-import type { Instance, Session } from '.';
+import type { ErrorType, Instance, PromiseResult, Session } from '.';
 import type { Pool, Queryable } from './Db';
 import * as Db from './Db';
 
@@ -6,17 +6,24 @@ export interface Context<TContext> {
   readonly instance: Instance;
   readonly pool: Pool;
   readonly queryable: Queryable;
-  withTransaction<T>(callback: (context: TContext) => Promise<T>): Promise<T>;
+
+  withTransaction<TOk, TError extends ErrorType>(
+    callback: (context: TContext) => PromiseResult<TOk, TError>
+  ): PromiseResult<TOk, TError>;
 }
 
 export interface AuthContext extends Context<AuthContext> {
-  withTransaction<T>(callback: (context: AuthContext) => Promise<T>): Promise<T>;
+  withTransaction<TOk, TError extends ErrorType>(
+    callback: (context: AuthContext) => PromiseResult<TOk, TError>
+  ): PromiseResult<TOk, TError>;
 }
 
 export interface SessionContext extends Context<SessionContext> {
   readonly session: Session;
 
-  withTransaction<T>(callback: (context: SessionContext) => Promise<T>): Promise<T>;
+  withTransaction<TOk, TError extends ErrorType>(
+    callback: (context: SessionContext) => PromiseResult<TOk, TError>
+  ): PromiseResult<TOk, TError>;
 }
 
 abstract class ContextImpl<TContext> implements Context<TContext> {
@@ -32,7 +39,9 @@ abstract class ContextImpl<TContext> implements Context<TContext> {
 
   protected abstract copyWithNewQueryable(transactionQueryable: Queryable): TContext;
 
-  async withTransaction<T>(callback: (context: TContext) => Promise<T>): Promise<T> {
+  async withTransaction<TOk, TError extends ErrorType>(
+    callback: (context: TContext) => PromiseResult<TOk, TError>
+  ): PromiseResult<TOk, TError> {
     if (this.pool !== this.queryable) {
       // Already in transaction
       return await Db.withNestedTransaction(this, async () => {

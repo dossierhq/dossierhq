@@ -6,7 +6,7 @@ export enum ErrorType {
 
 export type Result<TOk, TError extends ErrorType> =
   | OkResult<TOk, TError>
-  | ErrorResult<TOk, TError>;
+  | ErrorResult<unknown, TError>;
 
 export type PromiseResult<TOk, TError extends ErrorType> = Promise<Result<TOk, TError>>;
 
