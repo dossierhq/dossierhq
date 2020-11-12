@@ -32,11 +32,11 @@ export default class Instance {
 
   createAuthContext(): AuthContext {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    return new AuthContextImpl(this.#pool!);
+    return new AuthContextImpl(this, this.#pool!);
   }
 
   createSessionContext(session: Session): SessionContext {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    return new SessionContextImpl(session, this.#pool!);
+    return new SessionContextImpl(this, session, this.#pool!);
   }
 }

@@ -1,7 +1,7 @@
 #!/usr/bin/env npx ts-node
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
-import { CliAuth } from '@datadata/cli';
+import { CliAuth, CliMain } from '@datadata/cli';
 import type { Session } from '@datadata/core';
 import { Instance } from '@datadata/core';
 
@@ -15,6 +15,8 @@ async function main() {
     }
     const context = instance.createSessionContext(session);
     await instance.reloadSchema(context);
+
+    await CliMain.mainMenu(context);
   } finally {
     await instance.shutdown();
   }
