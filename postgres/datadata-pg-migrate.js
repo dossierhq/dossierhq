@@ -18,7 +18,7 @@ function getConnectionDetailsFromUrl() {
   };
 }
 
-async function main() {
+async function main(targetVersion) {
   const connectionDetails = getConnectionDetailsFromUrl();
   const postgrator = new Postgrator({
     ...connectionDetails,
@@ -29,8 +29,7 @@ async function main() {
   });
 
   try {
-    const target = undefined; // Change if targeting other than latest version
-    const appliedMigrations = await postgrator.migrate(target);
+    const appliedMigrations = await postgrator.migrate(targetVersion);
     console.log('Applied migrations', appliedMigrations);
   } catch (error) {
     console.error(error);
@@ -39,7 +38,12 @@ async function main() {
 }
 
 if (require.main === module) {
-  main().catch((error) => {
+  const args = process.argv.slice(2);
+  if (args.length > 1) {
+    throw new Error(`Expected 0 or 1 arguments, got ${args.length}: ${args}`)
+  }
+  const targetVersion = args[0]; // undefined => latest
+  main(targetVersion).catch((error) => {
     console.warn(error);
     process.exitCode = 1;
   });

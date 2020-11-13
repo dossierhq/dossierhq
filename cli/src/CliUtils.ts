@@ -1,5 +1,6 @@
 import chalk from 'chalk';
-import type { ErrorResult, ErrorType } from '@datadata/core';
+import type { EntityFieldSpecification, ErrorResult, ErrorType } from '@datadata/core';
+import { EntityFieldType } from '@datadata/core';
 
 export function logErrorResult(
   message: string,
@@ -16,4 +17,12 @@ export function logError(error: Error): void {
   console.log(
     `${chalk.yellow(chalk.bold('!'))} ${chalk.bold('Caught error' + ':')} ${chalk.yellow(error)}`
   );
+}
+
+export function formatValue(fieldSpec: EntityFieldSpecification, value: unknown): string {
+  switch (fieldSpec.type) {
+    case EntityFieldType.String:
+      return value ? (value as string) : chalk.grey('<not set>');
+  }
+  throw new Error(`Unknown type (${fieldSpec.type})`);
 }
