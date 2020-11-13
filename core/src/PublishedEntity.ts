@@ -1,5 +1,6 @@
 import type { PromiseResult, SessionContext } from '.';
 import * as Db from './Db';
+import type { EntitiesTableFields } from './DbTableTypes';
 import * as EntityFieldTypeAdapters from './EntityFieldTypeAdapters';
 import { ErrorType, notOk, ok } from './ErrorResult';
 
@@ -10,12 +11,9 @@ export interface Entity {
   [fieldName: string]: unknown;
 }
 
-interface EntityMainInfo {
-  uuid: string;
-  type: string;
-  name: string;
+type EntityMainInfo = Pick<EntitiesTableFields, 'uuid' | 'type' | 'name'> & {
   data: Record<string, unknown>;
-}
+};
 
 export async function getEntity(
   context: SessionContext,
