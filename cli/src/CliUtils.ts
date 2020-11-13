@@ -19,7 +19,11 @@ export function logError(error: Error): void {
   );
 }
 
-export function formatValue(fieldSpec: EntityFieldSpecification, value: unknown): string {
+export function logKeyValue(key: string, value: string): void {
+  console.log(`${chalk.bold(`${key}:`)} ${value}`);
+}
+
+export function formatFieldValue(fieldSpec: EntityFieldSpecification, value: unknown): string {
   switch (fieldSpec.type) {
     case EntityFieldType.String:
       return value ? (value as string) : chalk.grey('<not set>');

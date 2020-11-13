@@ -38,7 +38,17 @@ function createMainActions(state: State): Array<MainActionItem | ItemSelectorSep
       name: 'Delete entity',
       enabled: !!state.currentEntity,
       action: async () => {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         await CliEntityAdmin.deleteEntity(state.context, state.currentEntity!.id);
+      },
+    },
+    {
+      id: 'show-entity-history',
+      name: 'Show entity history',
+      enabled: !!state.currentEntity,
+      action: async () => {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        await CliEntityAdmin.showEntityHistory(state.context, state.currentEntity!.id);
       },
     },
     { separator: true, name: '─PUBLISHED────' },

@@ -159,3 +159,15 @@ describe('deleteEntity()', () => {
     expectErrorResult(result, ErrorType.NotFound, 'No such entity');
   });
 });
+
+describe('getEntityHistory()', () => {
+  // rest is tested elsewhere
+
+  test('Error: Get version history with invalid id', async () => {
+    const result = await EntityAdmin.getEntityHistory(
+      context,
+      '5b14e69f-6612-4ddb-bb42-7be273104486'
+    );
+    expectErrorResult(result, ErrorType.NotFound, 'No such entity');
+  });
+});
