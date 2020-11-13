@@ -1,3 +1,9 @@
+export interface SubjectsTableFields {
+  id: number;
+  uuid: string;
+  created_at: Date;
+}
+
 export interface EntitiesTableFields {
   id: number;
   uuid: string;

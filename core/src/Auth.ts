@@ -1,10 +1,13 @@
 import type { AuthContext, ErrorType, PromiseResult } from '.';
 import { ensureRequired } from './Assertions';
 import * as Db from './Db';
+import type { SubjectsTableFields } from './DbTableTypes';
 import { notOk, ok } from './ErrorResult';
 
 export interface Session {
-  readonly subjectId: number;
+  readonly subjectInternalId: number;
+  /** UUIDv4 */
+  readonly subjectId: string;
 }
 
 export default {
@@ -22,12 +25,12 @@ async function createSessionForPrincipal(
     return assertion;
   }
   try {
-    const { id } = await Db.queryOne<{ id: number }>(
+    const { id, uuid } = await Db.queryOne<Pick<SubjectsTableFields, 'id' | 'uuid'>>(
       context,
-      'SELECT s.id FROM subjects s, principals p WHERE p.provider = $1 AND p.identifier = $2 AND p.subjects_id = s.id',
+      'SELECT s.id, s.uuid FROM subjects s, principals p WHERE p.provider = $1 AND p.identifier = $2 AND p.subjects_id = s.id',
       [provider, identifier]
     );
-    return ok({ subjectId: id });
+    return ok({ subjectInternalId: id, subjectId: uuid });
   } catch (error) {
     if (error instanceof Db.UnexpectedQuantityError) {
       return notOk.NotFound('Principal doesn’t exist');
@@ -46,7 +49,7 @@ async function createPrincipal(
     return assertion;
   }
   return await context.withTransaction(async (context) => {
-    const { id, uuid } = await Db.queryOne<{ id: number; uuid: string }>(
+    const { id, uuid } = await Db.queryOne<Pick<SubjectsTableFields, 'id' | 'uuid'>>(
       context,
       'INSERT INTO subjects DEFAULT VALUES RETURNING id, uuid'
     );

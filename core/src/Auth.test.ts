@@ -1,6 +1,6 @@
 import { Auth, AuthContext, ErrorType, Instance } from '.';
 import TestInstance from '../test/TestInstance';
-import { expectErrorResult, uuidMatcher } from '../test/TestUtils';
+import { expectErrorResult, expectOkResult, uuidMatcher } from '../test/TestUtils';
 
 let instance: Instance;
 let context: AuthContext;
@@ -20,8 +20,7 @@ function randomIdentifier() {
 describe('createPrincipal', () => {
   test('Create test/new-identifier', async () => {
     const result = await Auth.createPrincipal(context, 'test', randomIdentifier());
-    expect(result.isOk()).toBeTruthy();
-    if (result.isOk()) {
+    if (expectOkResult(result)) {
       expect(result.value).toMatch(uuidMatcher);
     }
   });
@@ -29,7 +28,7 @@ describe('createPrincipal', () => {
   test('Error: Create duplicate fails', async () => {
     const identifier = randomIdentifier();
     const firstResult = await Auth.createPrincipal(context, 'test', identifier);
-    expect(firstResult.isOk());
+    expectOkResult(firstResult);
 
     const secondResult = await Auth.createPrincipal(context, 'test', identifier);
     expectErrorResult(secondResult, ErrorType.Conflict, 'Principal already exist');
@@ -51,12 +50,12 @@ describe('createSessionForPrincipal', () => {
   test('Use existing principal', async () => {
     const identifier = randomIdentifier();
     const result = await Auth.createPrincipal(context, 'test', identifier);
-    expect(result.isOk()).toBeTruthy();
+    expectOkResult(result);
 
     const session = await Auth.createSessionForPrincipal(context, 'test', identifier);
-    expect(session.isOk()).toBeTruthy();
-    if (session.isOk()) {
-      expect(typeof session.value.subjectId).toBe('number');
+    if (expectOkResult(session)) {
+      expect(session.value.subjectId).toMatch(uuidMatcher);
+      expect(typeof session.value.subjectInternalId).toBe('number');
     }
   });
 
