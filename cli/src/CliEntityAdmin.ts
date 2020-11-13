@@ -29,7 +29,7 @@ interface EditFieldSelectorItem extends ItemSelectorItem {
 export async function createEntity(context: SessionContext): Promise<{ id: string } | null> {
   const type = await CliSchema.selectEntityType(context);
   const entity = (await editEntity(context, { _type: type })) as AdminEntityCreate;
-  const publish = await showConfirm('Do you want to publish the entity?');
+  const publish = await showConfirm('Publish the entity?');
   const result = await EntityAdmin.createEntity(context, entity, { publish });
   if (result.isError()) {
     CliUtils.logErrorResult('Failed creating entity', result);
@@ -113,4 +113,14 @@ async function editFieldString(fieldSpec: EntityFieldSpecification, defaultValue
     },
   ]);
   return value;
+}
+
+export async function deleteEntity(context: SessionContext, id: string): Promise<void> {
+  const publish = await showConfirm('Publish the deletion of the entity?');
+  const result = await EntityAdmin.deleteEntity(context, id, { publish });
+  if (result.isError()) {
+    CliUtils.logErrorResult('Failed creating entity', result);
+    return;
+  }
+  console.log(`${chalk.bold('Deleted:')} ${id}`);
 }
