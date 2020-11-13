@@ -73,3 +73,52 @@ function encodeFieldsToValues(
   }
   return ok(result);
 }
+
+export async function deleteEntity(
+  context: SessionContext,
+  id: string,
+  options: { publish: boolean }
+): PromiseResult<void, ErrorType.NotFound> {
+  return await context.withTransaction(async (context) => {
+    const versionResult = await resolveMaxVersionForEntity(context, id);
+    if (versionResult.isError()) {
+      return versionResult;
+    }
+    const { entityId, maxVersion } = versionResult.value;
+    const version = maxVersion + 1;
+    const { id: versionsId } = await Db.queryOne<{ id: number }>(
+      context,
+      'INSERT INTO entity_versions (entities_id, created_by, version) VALUES ($1, $2, $3) RETURNING id',
+      [entityId, context.session.subjectId, version]
+    );
+    if (options.publish) {
+      await Db.queryNone(
+        context,
+        'UPDATE entities SET published_entity_versions_id = $1, published_deleted = true WHERE id = $2',
+        [versionsId, entityId]
+      );
+    }
+    return ok(undefined);
+  });
+}
+
+async function resolveMaxVersionForEntity(
+  context: SessionContext,
+  id: string
+): PromiseResult<{ entityId: number; maxVersion: number }, ErrorType.NotFound> {
+  const result = await Db.queryNoneOrOne<{
+    entities_id: number;
+    version: number;
+  }>(
+    context,
+    `SELECT ev.entities_id, MAX(ev.version) AS version
+      FROM entity_versions ev, entities e
+      WHERE e.uuid = $1 AND e.id = ev.entities_id
+      GROUP BY entities_id`,
+    [id]
+  );
+  if (!result) {
+    return notOk.NotFound('No such entity');
+  }
+  return ok({ entityId: result.entities_id, maxVersion: result.version });
+}

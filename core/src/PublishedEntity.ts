@@ -5,8 +5,8 @@ import { ErrorType, notOk, ok } from './ErrorResult';
 
 export interface Entity {
   id: string;
-  _name: string;
   _type: string;
+  _name: string;
   [fieldName: string]: unknown;
 }
 
