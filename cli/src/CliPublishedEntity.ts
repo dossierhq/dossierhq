@@ -1,12 +1,12 @@
 import chalk from 'chalk';
 import type { Entity, SessionContext } from '@datadata/core';
 import { PublishedEntity } from '@datadata/core';
-import * as CliUtils from './CliUtils';
+import { formatFieldValue, logErrorResult, logKeyValue } from './CliUtils';
 
 export async function showEntity(context: SessionContext, id: string): Promise<Entity | null> {
   const result = await PublishedEntity.getEntity(context, id);
   if (result.isError()) {
-    CliUtils.logErrorResult('Failed getting entity', result);
+    logErrorResult('Failed getting entity', result);
     return null;
   }
   const entity = result.value.item;
@@ -15,9 +15,9 @@ export async function showEntity(context: SessionContext, id: string): Promise<E
 }
 
 function printEntity(context: SessionContext, entity: Entity) {
-  printKeyValue('type', entity._type);
-  printKeyValue('name', entity._name);
-  printKeyValue('id', entity.id);
+  logKeyValue('type', entity._type);
+  logKeyValue('name', entity._name);
+  logKeyValue('id', entity.id);
 
   const schema = context.instance.getSchema();
   const entitySpec = schema.getEntityTypeSpecification(entity._type);
@@ -28,10 +28,6 @@ function printEntity(context: SessionContext, entity: Entity) {
 
   for (const fieldSpec of entitySpec.fields) {
     const value = entity[fieldSpec.name];
-    printKeyValue(fieldSpec.name, CliUtils.formatValue(fieldSpec, value));
+    logKeyValue(fieldSpec.name, formatFieldValue(fieldSpec, value));
   }
-}
-
-function printKeyValue(key: string, value: string) {
-  console.log(`${chalk.bold(`${key}:`)} ${value}`);
 }

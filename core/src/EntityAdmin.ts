@@ -1,8 +1,22 @@
 import type { ErrorType, PromiseResult, Result, SessionContext } from '.';
 import { ensureRequired } from './Assertions';
 import * as Db from './Db';
+import type { EntitiesTableFields, EntityVersionsTableFields } from './DbTableTypes';
 import * as EntityFieldTypeAdapters from './EntityFieldTypeAdapters';
 import { notOk, ok } from './ErrorResult';
+
+export interface EntityHistory {
+  id: string;
+  type: string;
+  name: string;
+  versions: {
+    version: number;
+    isDelete: boolean;
+    isPublished: boolean;
+    createdBy: string;
+    createdAt: Date;
+  }[];
+}
 
 interface AdminEntityCreate {
   /** UUIDv4 */
@@ -24,7 +38,7 @@ export async function createEntity(
   const { type, name, data } = encodeResult.value;
 
   return await context.withTransaction(async (context) => {
-    const { id: entityId, uuid } = await Db.queryOne<{ id: number; uuid: string }>(
+    const { id: entityId, uuid } = await Db.queryOne<Pick<EntitiesTableFields, 'id' | 'uuid'>>(
       context,
       'INSERT INTO entities (name, type) VALUES ($1, $2) RETURNING id, uuid',
       [name, type]
@@ -121,4 +135,55 @@ async function resolveMaxVersionForEntity(
     return notOk.NotFound('No such entity');
   }
   return ok({ entityId: result.entities_id, maxVersion: result.version });
+}
+
+export async function getEntityHistory(
+  context: SessionContext,
+  id: string
+): PromiseResult<EntityHistory, ErrorType.NotFound> {
+  const entityMain = await Db.queryNoneOrOne<
+    Pick<EntitiesTableFields, 'id' | 'uuid' | 'type' | 'name' | 'published_entity_versions_id'>
+  >(
+    context,
+    `SELECT id, uuid, type, name, published_entity_versions_id
+      FROM entities e
+      WHERE uuid = $1`,
+    [id]
+  );
+  if (!entityMain) {
+    return notOk.NotFound('No such entity');
+  }
+
+  const versions = await Db.queryMany<
+    Pick<EntityVersionsTableFields, 'id' | 'version' | 'created_at'> & {
+      created_by_uuid: string;
+      deleted: boolean;
+    }
+  >(
+    context,
+    `SELECT
+      ev.id,
+      ev.version,
+      ev.created_at,
+      s.uuid AS created_by_uuid,
+      ev.data IS NULL as deleted
+     FROM entity_versions ev, subjects s
+     WHERE ev.entities_id = $1 AND ev.created_by = s.id
+     ORDER BY ev.version`,
+    [entityMain.id]
+  );
+
+  const result: EntityHistory = {
+    id: entityMain.uuid,
+    type: entityMain.type,
+    name: entityMain.name,
+    versions: versions.map((v) => ({
+      version: v.version,
+      isDelete: v.deleted,
+      isPublished: v.id === entityMain.published_entity_versions_id,
+      createdBy: v.created_by_uuid,
+      createdAt: v.created_at,
+    })),
+  };
+  return ok(result);
 }
