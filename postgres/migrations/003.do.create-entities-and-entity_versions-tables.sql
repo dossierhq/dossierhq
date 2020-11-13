@@ -16,4 +16,4 @@ CREATE TABLE entity_versions (
 );
 
 ALTER TABLE entities
-  ADD COLUMN published_entity_versions INTEGER REFERENCES entity_versions(id);
+  ADD COLUMN published_entity_versions_id INTEGER REFERENCES entity_versions(id);

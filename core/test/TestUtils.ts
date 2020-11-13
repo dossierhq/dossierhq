@@ -1,7 +1,16 @@
-import type { Instance, Result, SessionContext } from '../src';
+import type { Instance, OkResult, Result, SessionContext } from '../src';
 import { Auth, ErrorType } from '../src';
 
 export const uuidMatcher = /[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89aAbB][a-f0-9]{3}-[a-f0-9]{12}/;
+
+export function expectOkResult<TOk, TError extends ErrorType>(
+  actual: Result<unknown, ErrorType>
+): actual is OkResult<TOk, TError> {
+  if (actual.isError()) {
+    throw new Error(`Expected ok, got error ${actual.error}: ${actual.message}`);
+  }
+  return true;
+}
 
 export function expectErrorResult(
   actual: Result<unknown, ErrorType>,

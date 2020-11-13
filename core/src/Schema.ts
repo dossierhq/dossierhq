@@ -33,4 +33,11 @@ export class Schema {
   getEntityTypeSpecification(type: string): EntityTypeSpecification | null {
     return this.spec.types[type] ?? null;
   }
+
+  getEntityFieldSpecification(
+    entitySpec: EntityTypeSpecification,
+    fieldName: string
+  ): EntityFieldSpecification | null {
+    return entitySpec.fields.find((x) => x.name === fieldName) ?? null;
+  }
 }
