@@ -47,7 +47,7 @@ export async function createEntity(
     const { id: versionsId } = await Db.queryOne<{ id: number }>(
       context,
       'INSERT INTO entity_versions (entities_id, version, created_by, data) VALUES ($1, 0, $2, $3) RETURNING id',
-      [entityId, context.session.subjectId, data]
+      [entityId, context.session.subjectInternalId, data]
     );
     if (options.publish) {
       await Db.queryNone(
@@ -103,7 +103,7 @@ export async function deleteEntity(
     const { id: versionsId } = await Db.queryOne<{ id: number }>(
       context,
       'INSERT INTO entity_versions (entities_id, created_by, version) VALUES ($1, $2, $3) RETURNING id',
-      [entityId, context.session.subjectId, version]
+      [entityId, context.session.subjectInternalId, version]
     );
     if (options.publish) {
       await Db.queryNone(
