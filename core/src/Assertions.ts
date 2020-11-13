@@ -1,5 +1,4 @@
-import type { Result } from '.';
-import { ErrorType } from '.';
+import type { ErrorType, Result } from '.';
 import { notOk, ok } from './ErrorResult';
 
 export function ensureRequired(
