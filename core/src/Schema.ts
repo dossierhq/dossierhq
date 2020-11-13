@@ -2,7 +2,7 @@ import type { Context } from '.';
 
 export async function getSchema(context: Context<unknown>): Promise<Schema> {
   return new Schema({
-    types: {
+    entityTypes: {
       BlogPost: { fields: [{ name: 'title', type: EntityFieldType.String, isName: true }] },
       Category: { fields: [{ name: 'title', type: EntityFieldType.String }] },
     },
@@ -24,14 +24,14 @@ export enum EntityFieldType {
 }
 
 export interface SchemaSpecification {
-  types: Record<string, EntityTypeSpecification>;
+  entityTypes: Record<string, EntityTypeSpecification>;
 }
 
 export class Schema {
   constructor(readonly spec: SchemaSpecification) {}
 
   getEntityTypeSpecification(type: string): EntityTypeSpecification | null {
-    return this.spec.types[type] ?? null;
+    return this.spec.entityTypes[type] ?? null;
   }
 
   getEntityFieldSpecification(
