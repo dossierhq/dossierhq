@@ -33,6 +33,14 @@ function createMainActions(state: State): Array<MainActionItem | ItemSelectorSep
         }
       },
     },
+    {
+      id: 'delete-entity',
+      name: 'Delete entity',
+      enabled: !!state.currentEntity,
+      action: async () => {
+        await CliEntityAdmin.deleteEntity(state.context, state.currentEntity!.id);
+      },
+    },
     { separator: true, name: '─PUBLISHED────' },
     {
       id: 'show-published-entity',
