@@ -1,7 +1,12 @@
 import type { Instance, SessionContext } from '.';
-import { EntityAdmin, ErrorType } from '.';
+import { EntityAdmin, ErrorType, PublishedEntity } from '.';
 import TestInstance from '../test/TestInstance';
-import { ensureSessionContext, expectErrorResult, uuidMatcher } from '../test/TestUtils';
+import {
+  ensureSessionContext,
+  expectErrorResult,
+  expectOkResult,
+  uuidMatcher,
+} from '../test/TestUtils';
 
 let instance: Instance;
 let context: SessionContext;
@@ -16,26 +21,34 @@ afterAll(async () => {
 
 describe('createEntity()', () => {
   test('Create BlogPost and publish', async () => {
-    const result = await EntityAdmin.createEntity(
+    const createResult = await EntityAdmin.createEntity(
       context,
       { _type: 'BlogPost', _name: 'Foo', title: 'Title' },
       { publish: true }
     );
-    expect(result.isOk()).toBeTruthy();
-    if (result.isOk()) {
-      expect(result.value.id).toMatch(uuidMatcher);
+    if (expectOkResult(createResult)) {
+      expect(createResult.value.id).toMatch(uuidMatcher);
+
+      const fetchResult = await PublishedEntity.getEntity(context, createResult.value.id);
+      if (expectOkResult(fetchResult)) {
+        const { id, ...entityExceptId } = fetchResult.value.item;
+        expect(id).toMatch(uuidMatcher);
+        expect(entityExceptId).toEqual({ _type: 'BlogPost', _name: 'Foo', title: 'Title' });
+      }
     }
   });
 
   test('Create BlogPost w/o publish', async () => {
-    const result = await EntityAdmin.createEntity(
+    const createResult = await EntityAdmin.createEntity(
       context,
       { _type: 'BlogPost', _name: 'Draft', title: 'Draft' },
       { publish: false }
     );
-    expect(result.isOk()).toBeTruthy();
-    if (result.isOk()) {
-      expect(result.value.id).toMatch(uuidMatcher);
+    if (expectOkResult(createResult)) {
+      expect(createResult.value.id).toMatch(uuidMatcher);
+
+      const fetchResult = await PublishedEntity.getEntity(context, createResult.value.id);
+      expectErrorResult(fetchResult, ErrorType.NotFound, 'No such entity');
     }
   });
 

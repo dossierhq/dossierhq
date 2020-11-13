@@ -1,5 +1,4 @@
-import type { PromiseResult, Result, SessionContext } from '.';
-import { ErrorType } from '.';
+import type { ErrorType, PromiseResult, Result, SessionContext } from '.';
 import { ensureRequired } from './Assertions';
 import * as Db from './Db';
 import * as EntityFieldTypeAdapters from './EntityFieldTypeAdapters';
@@ -39,7 +38,7 @@ export async function createEntity(
     if (options.publish) {
       await Db.queryNone(
         context,
-        'UPDATE entities SET published_entity_versions = $1 WHERE id = $2',
+        'UPDATE entities SET published_entity_versions_id = $1 WHERE id = $2',
         [versionsId, entityId]
       );
     }
