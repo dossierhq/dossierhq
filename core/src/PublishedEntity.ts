@@ -1,7 +1,7 @@
-import type { SessionContext } from '.';
+import type { PromiseResult, SessionContext } from '.';
 import * as Db from './Db';
 import * as EntityFieldTypeAdapters from './EntityFieldTypeAdapters';
-import { ErrorType, notOk, ok, PromiseResult } from './ErrorResult';
+import { ErrorType, notOk, ok } from './ErrorResult';
 
 export interface Entity {
   id: string;

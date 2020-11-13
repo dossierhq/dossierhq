@@ -2,26 +2,48 @@ import type { SessionContext } from '@datadata/core';
 import type { ItemSelectorItem, ItemSelectorSeparator } from './widgets/ItemSelector';
 import { showItemSelector } from './widgets/ItemSelector';
 import * as CliEntityAdmin from './CliEntityAdmin';
+import * as CliPublishedEntity from './CliPublishedEntity';
 import * as CliSchema from './CliSchema';
 import * as CliUtils from './CliUtils';
+
+interface State {
+  readonly context: SessionContext;
+  currentEntity: { id: string } | null;
+}
 
 interface MainActionItem extends ItemSelectorItem {
   action?: () => Promise<void>;
 }
 
-function createMainActions(context: SessionContext): Array<MainActionItem | ItemSelectorSeparator> {
+function createMainActions(state: State): Array<MainActionItem | ItemSelectorSeparator> {
   return [
     {
       id: 'show-schema',
       name: 'Show schema',
-      action: async () => CliSchema.showSchema(context),
+      action: async () => CliSchema.showSchema(state.context),
     },
-    { separator: true },
+    { separator: true, name: '─ADMIN────────' },
     {
       id: 'create-entity',
       name: 'Create entity',
       action: async () => {
-        const result = await CliEntityAdmin.createEntity(context);
+        const createdEntity = await CliEntityAdmin.createEntity(state.context);
+        if (createdEntity) {
+          state.currentEntity = createdEntity;
+        }
+      },
+    },
+    { separator: true, name: '─PUBLISHED────' },
+    {
+      id: 'show-published-entity',
+      name: 'Show entity',
+      enabled: !!state.currentEntity,
+      action: async () => {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        const entity = await CliPublishedEntity.showEntity(state.context, state.currentEntity!.id);
+        if (entity) {
+          state.currentEntity = entity;
+        }
       },
     },
     { separator: true },
@@ -33,10 +55,11 @@ function createMainActions(context: SessionContext): Array<MainActionItem | Item
 }
 
 export async function mainMenu(context: SessionContext): Promise<void> {
+  const state: State = { context, currentEntity: null };
   let lastActionId = null;
   // eslint-disable-next-line no-constant-condition
   while (true) {
-    const mainActions = createMainActions(context);
+    const mainActions = createMainActions(state);
     const action: MainActionItem = await showItemSelector(
       'What do you want to do?',
       mainActions,

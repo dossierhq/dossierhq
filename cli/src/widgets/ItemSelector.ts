@@ -3,10 +3,12 @@ import inquirer from 'inquirer';
 export interface ItemSelectorItem {
   id: string;
   name: string;
+  enabled?: boolean;
 }
 
 export interface ItemSelectorSeparator {
   separator: true;
+  name?: string;
 }
 
 function isSeparator(
@@ -23,7 +25,10 @@ export async function showItemSelector<T extends ItemSelectorItem = ItemSelector
 ): Promise<T> {
   const choices = items.map((a) => {
     if (isSeparator(a)) {
-      return new inquirer.Separator();
+      return new inquirer.Separator(a.name);
+    }
+    if (a.enabled === false) {
+      return new inquirer.Separator(a.name);
     }
     return { name: a.name, value: a };
   });

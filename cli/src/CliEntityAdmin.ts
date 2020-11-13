@@ -87,20 +87,12 @@ function createItemSelectorItems(
     const value = entity[fieldSpec.name];
     items.push({
       id: fieldSpec.name,
-      name: `${chalk.bold(fieldSpec.name)}: ${formatValue(fieldSpec, value)}`,
+      name: `${chalk.bold(fieldSpec.name)}: ${CliUtils.formatValue(fieldSpec, value)}`,
       defaultValue: value,
     });
   }
   items.push({ id: '_exit', name: 'Done' });
   return items;
-}
-
-function formatValue(fieldSpec: EntityFieldSpecification, value: unknown): string {
-  switch (fieldSpec.type) {
-    case EntityFieldType.String:
-      return value ? (value as string) : chalk.grey('<not set>');
-  }
-  throw new Error(`Unknown type (${fieldSpec.type})`);
 }
 
 async function editField(fieldSpec: EntityFieldSpecification, defaultValue: unknown) {
