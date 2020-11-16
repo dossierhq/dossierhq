@@ -19,5 +19,5 @@ export interface EntityVersionsTableFields {
   version: number;
   created_at: Date;
   created_by: number;
-  data: unknown | null;
+  data: Record<string, unknown> | null;
 }

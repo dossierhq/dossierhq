@@ -1,7 +1,8 @@
 import type { PromiseResult, SessionContext } from '.';
 import * as Db from './Db';
-import type { EntitiesTableFields } from './DbTableTypes';
-import * as EntityFieldTypeAdapters from './EntityFieldTypeAdapters';
+import type { EntitiesTableFields, EntityVersionsTableFields } from './DbTableTypes';
+import { assembleEntity } from './EntityCodec';
+
 import { ErrorType, notOk, ok } from './ErrorResult';
 
 export interface Entity {
@@ -11,15 +12,13 @@ export interface Entity {
   [fieldName: string]: unknown;
 }
 
-type EntityMainInfo = Pick<EntitiesTableFields, 'uuid' | 'type' | 'name'> & {
-  data: Record<string, unknown>;
-};
-
 export async function getEntity(
   context: SessionContext,
   id: string
 ): PromiseResult<{ item: Entity }, ErrorType.NotFound> {
-  const entityMain = await Db.queryNoneOrOne<EntityMainInfo>(
+  const entityMain = await Db.queryNoneOrOne<
+    Pick<EntitiesTableFields, 'uuid' | 'type' | 'name'> & Pick<EntityVersionsTableFields, 'data'>
+  >(
     context,
     `SELECT e.uuid, e.type, e.name, ev.data
       FROM entities e, entity_versions ev
@@ -37,27 +36,4 @@ export async function getEntity(
   return ok({
     item: entity,
   });
-}
-
-export function assembleEntity(context: SessionContext, entityMain: EntityMainInfo): Entity {
-  const schema = context.instance.getSchema();
-  const entitySpec = schema.getEntityTypeSpecification(entityMain.type);
-  if (!entitySpec) {
-    throw new Error(`No entity spec for type ${entityMain.type}`);
-  }
-  const entity: Entity = {
-    id: entityMain.uuid,
-    _type: entityMain.type,
-    _name: entityMain.name,
-  };
-  for (const [fieldName, fieldValue] of Object.entries(entityMain.data)) {
-    const fieldSpec = schema.getEntityFieldSpecification(entitySpec, fieldName);
-    if (!fieldSpec) {
-      throw new Error(`No field spec for ${fieldName} in entity spec ${entityMain.type}`);
-    }
-    const fieldAdapter = EntityFieldTypeAdapters.getAdapter(fieldSpec);
-    const decodedData = fieldAdapter.decodeData(fieldValue);
-    entity[fieldName] = decodedData;
-  }
-  return entity;
 }
