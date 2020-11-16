@@ -20,6 +20,57 @@ afterAll(async () => {
   await instance.shutdown();
 });
 
+describe('getEntity()', () => {
+  // rest is tested elsewhere
+
+  test('No version means max version', async () => {
+    const createResult = await EntityAdmin.createEntity(
+      context,
+      { _type: 'BlogPost', _name: 'Foo', title: 'Title' },
+      { publish: true }
+    );
+
+    if (expectOkResult(createResult)) {
+      const { id } = createResult.value;
+      const deleteResult = await EntityAdmin.deleteEntity(context, id, { publish: true });
+      expectOkResult(deleteResult);
+
+      const versionMaxResult = await EntityAdmin.getEntity(context, id, {});
+      if (expectOkResult(versionMaxResult)) {
+        expect(versionMaxResult.value.item).toEqual({
+          id,
+          _type: 'BlogPost',
+          _name: 'Foo',
+          // No title since deleted
+        });
+      }
+    }
+  });
+
+  test('Error: Get entity with invalid id', async () => {
+    const result = await EntityAdmin.getEntity(context, '13e4c7da-616e-44a3-a039-24f96f9b17da', {});
+    expectErrorResult(result, ErrorType.NotFound, 'No such entity');
+  });
+
+  test('Error: Get entity with invalid version', async () => {
+    const createResult = await EntityAdmin.createEntity(
+      context,
+      { _type: 'BlogPost', _name: 'Foo', title: 'Title' },
+      { publish: true }
+    );
+
+    if (expectOkResult(createResult)) {
+      const { id } = createResult.value;
+
+      const resultMinusOne = await EntityAdmin.getEntity(context, id, { version: -1 });
+      expectErrorResult(resultMinusOne, ErrorType.NotFound, 'No such entity or version');
+
+      const resultOne = await EntityAdmin.getEntity(context, id, { version: 1 });
+      expectErrorResult(resultOne, ErrorType.NotFound, 'No such entity or version');
+    }
+  });
+});
+
 describe('createEntity()', () => {
   test('Create BlogPost and publish', async () => {
     const createResult = await EntityAdmin.createEntity(
@@ -29,24 +80,38 @@ describe('createEntity()', () => {
     );
     if (expectOkResult(createResult)) {
       expect(createResult.value.id).toMatch(uuidMatcher);
+      const { id } = createResult.value;
 
-      const fetchResult = await PublishedEntity.getEntity(context, createResult.value.id);
-      if (expectOkResult(fetchResult)) {
-        const { id, ...entityExceptId } = fetchResult.value.item;
-        expect(id).toMatch(uuidMatcher);
-        expect(entityExceptId).toEqual({ _type: 'BlogPost', _name: 'Foo', title: 'Title' });
+      const historyResult = await EntityAdmin.getEntityHistory(context, id);
+      if (expectOkResult(historyResult)) {
+        expectEntityHistoryVersions(historyResult.value, [
+          {
+            version: 0,
+            isDelete: false,
+            isPublished: true,
+            createdBy: context.session.subjectId,
+          },
+        ]);
+      }
 
-        const historyResult = await EntityAdmin.getEntityHistory(context, id);
-        if (expectOkResult(historyResult)) {
-          expectEntityHistoryVersions(historyResult.value, [
-            {
-              version: 0,
-              isDelete: false,
-              isPublished: true,
-              createdBy: context.session.subjectId,
-            },
-          ]);
-        }
+      const version0Result = await EntityAdmin.getEntity(context, id, { version: 0 });
+      if (expectOkResult(version0Result)) {
+        expect(version0Result.value.item).toEqual({
+          id,
+          _type: 'BlogPost',
+          _name: 'Foo',
+          title: 'Title',
+        });
+      }
+
+      const publishedResult = await PublishedEntity.getEntity(context, id);
+      if (expectOkResult(publishedResult)) {
+        expect(publishedResult.value.item).toEqual({
+          id,
+          _type: 'BlogPost',
+          _name: 'Foo',
+          title: 'Title',
+        });
       }
     }
   });
@@ -59,11 +124,9 @@ describe('createEntity()', () => {
     );
     if (expectOkResult(createResult)) {
       expect(createResult.value.id).toMatch(uuidMatcher);
+      const { id } = createResult.value;
 
-      const fetchResult = await PublishedEntity.getEntity(context, createResult.value.id);
-      expectErrorResult(fetchResult, ErrorType.NotFound, 'No such entity');
-
-      const historyResult = await EntityAdmin.getEntityHistory(context, createResult.value.id);
+      const historyResult = await EntityAdmin.getEntityHistory(context, id);
       if (expectOkResult(historyResult)) {
         expectEntityHistoryVersions(historyResult.value, [
           {
@@ -74,6 +137,19 @@ describe('createEntity()', () => {
           },
         ]);
       }
+
+      const version0Result = await EntityAdmin.getEntity(context, id, { version: 0 });
+      if (expectOkResult(version0Result)) {
+        expect(version0Result.value.item).toEqual({
+          id,
+          _type: 'BlogPost',
+          _name: 'Draft',
+          title: 'Draft',
+        });
+      }
+
+      const publishedResult = await PublishedEntity.getEntity(context, id);
+      expectErrorResult(publishedResult, ErrorType.NotFound, 'No such entity');
     }
   });
 
@@ -118,28 +194,46 @@ describe('deleteEntity()', () => {
     if (expectOkResult(createResult)) {
       const { id } = createResult.value;
       const deleteResult = await EntityAdmin.deleteEntity(context, id, { publish: true });
-      if (expectOkResult(deleteResult)) {
-        const fetchResult = await PublishedEntity.getEntity(context, id);
-        expectErrorResult(fetchResult, ErrorType.NotFound, 'No such entity');
+      expectOkResult(deleteResult);
 
-        const historyResult = await EntityAdmin.getEntityHistory(context, createResult.value.id);
-        if (expectOkResult(historyResult)) {
-          expectEntityHistoryVersions(historyResult.value, [
-            {
-              version: 0,
-              isDelete: false,
-              isPublished: false,
-              createdBy: context.session.subjectId,
-            },
-            {
-              version: 1,
-              isDelete: true,
-              isPublished: true,
-              createdBy: context.session.subjectId,
-            },
-          ]);
-        }
+      const historyResult = await EntityAdmin.getEntityHistory(context, createResult.value.id);
+      if (expectOkResult(historyResult)) {
+        expectEntityHistoryVersions(historyResult.value, [
+          {
+            version: 0,
+            isDelete: false,
+            isPublished: false,
+            createdBy: context.session.subjectId,
+          },
+          {
+            version: 1,
+            isDelete: true,
+            isPublished: true,
+            createdBy: context.session.subjectId,
+          },
+        ]);
       }
+
+      const version0Result = await EntityAdmin.getEntity(context, id, { version: 0 });
+      if (expectOkResult(version0Result)) {
+        expect(version0Result.value.item).toEqual({
+          id,
+          _type: 'BlogPost',
+          _name: 'Delete',
+          title: 'Delete',
+        });
+      }
+      const version1Result = await EntityAdmin.getEntity(context, id, { version: 1 });
+      if (expectOkResult(version1Result)) {
+        expect(version1Result.value.item).toEqual({
+          id,
+          _type: 'BlogPost',
+          _name: 'Delete',
+        });
+      }
+
+      const publishedResult = await PublishedEntity.getEntity(context, id);
+      expectErrorResult(publishedResult, ErrorType.NotFound, 'No such entity');
     }
   });
 
@@ -152,28 +246,46 @@ describe('deleteEntity()', () => {
     if (expectOkResult(createResult)) {
       const { id } = createResult.value;
       const deleteResult = await EntityAdmin.deleteEntity(context, id, { publish: true });
-      if (expectOkResult(deleteResult)) {
-        const fetchResult = await PublishedEntity.getEntity(context, id);
-        expectErrorResult(fetchResult, ErrorType.NotFound, 'No such entity');
+      expectOkResult(deleteResult);
 
-        const historyResult = await EntityAdmin.getEntityHistory(context, createResult.value.id);
-        if (expectOkResult(historyResult)) {
-          expectEntityHistoryVersions(historyResult.value, [
-            {
-              version: 0,
-              isDelete: false,
-              isPublished: false,
-              createdBy: context.session.subjectId,
-            },
-            {
-              version: 1,
-              isDelete: true,
-              isPublished: true,
-              createdBy: context.session.subjectId,
-            },
-          ]);
-        }
+      const historyResult = await EntityAdmin.getEntityHistory(context, createResult.value.id);
+      if (expectOkResult(historyResult)) {
+        expectEntityHistoryVersions(historyResult.value, [
+          {
+            version: 0,
+            isDelete: false,
+            isPublished: false,
+            createdBy: context.session.subjectId,
+          },
+          {
+            version: 1,
+            isDelete: true,
+            isPublished: true,
+            createdBy: context.session.subjectId,
+          },
+        ]);
       }
+
+      const version0Result = await EntityAdmin.getEntity(context, id, { version: 0 });
+      if (expectOkResult(version0Result)) {
+        expect(version0Result.value.item).toEqual({
+          id,
+          _type: 'BlogPost',
+          _name: 'Draft',
+          title: 'Draft',
+        });
+      }
+      const version1Result = await EntityAdmin.getEntity(context, id, { version: 1 });
+      if (expectOkResult(version1Result)) {
+        expect(version1Result.value.item).toEqual({
+          id,
+          _type: 'BlogPost',
+          _name: 'Draft',
+        });
+      }
+
+      const publishedResult = await PublishedEntity.getEntity(context, id);
+      expectErrorResult(publishedResult, ErrorType.NotFound, 'No such entity');
     }
   });
 
@@ -186,31 +298,52 @@ describe('deleteEntity()', () => {
     if (expectOkResult(createResult)) {
       const { id } = createResult.value;
       const deleteResult = await EntityAdmin.deleteEntity(context, id, { publish: false });
-      if (expectOkResult(deleteResult)) {
-        const fetchResult = await PublishedEntity.getEntity(context, id);
-        if (expectOkResult(fetchResult)) {
-          const { id: fetchId, ...entityExceptId } = fetchResult.value.item;
-          expect(fetchId).toBe(id);
-          expect(entityExceptId).toEqual({ _type: 'BlogPost', _name: 'Delete', title: 'Delete' });
+      expectOkResult(deleteResult);
 
-          const historyResult = await EntityAdmin.getEntityHistory(context, createResult.value.id);
-          if (expectOkResult(historyResult)) {
-            expectEntityHistoryVersions(historyResult.value, [
-              {
-                version: 0,
-                isDelete: false,
-                isPublished: true,
-                createdBy: context.session.subjectId,
-              },
-              {
-                version: 1,
-                isDelete: true,
-                isPublished: false,
-                createdBy: context.session.subjectId,
-              },
-            ]);
-          }
-        }
+      const historyResult = await EntityAdmin.getEntityHistory(context, createResult.value.id);
+      if (expectOkResult(historyResult)) {
+        expectEntityHistoryVersions(historyResult.value, [
+          {
+            version: 0,
+            isDelete: false,
+            isPublished: true,
+            createdBy: context.session.subjectId,
+          },
+          {
+            version: 1,
+            isDelete: true,
+            isPublished: false,
+            createdBy: context.session.subjectId,
+          },
+        ]);
+      }
+
+      const version0Result = await EntityAdmin.getEntity(context, id, { version: 0 });
+      if (expectOkResult(version0Result)) {
+        expect(version0Result.value.item).toEqual({
+          id,
+          _type: 'BlogPost',
+          _name: 'Delete',
+          title: 'Delete',
+        });
+      }
+      const version1Result = await EntityAdmin.getEntity(context, id, { version: 1 });
+      if (expectOkResult(version1Result)) {
+        expect(version1Result.value.item).toEqual({
+          id,
+          _type: 'BlogPost',
+          _name: 'Delete',
+        });
+      }
+
+      const publishedResult = await PublishedEntity.getEntity(context, id);
+      if (expectOkResult(publishedResult)) {
+        expect(publishedResult.value.item).toEqual({
+          id,
+          _type: 'BlogPost',
+          _name: 'Delete',
+          title: 'Delete',
+        });
       }
     }
   });
@@ -224,28 +357,46 @@ describe('deleteEntity()', () => {
     if (expectOkResult(createResult)) {
       const { id } = createResult.value;
       const deleteResult = await EntityAdmin.deleteEntity(context, id, { publish: false });
-      if (expectOkResult(deleteResult)) {
-        const fetchResult = await PublishedEntity.getEntity(context, id);
-        expectErrorResult(fetchResult, ErrorType.NotFound, 'No such entity');
+      expectOkResult(deleteResult);
 
-        const historyResult = await EntityAdmin.getEntityHistory(context, createResult.value.id);
-        if (expectOkResult(historyResult)) {
-          expectEntityHistoryVersions(historyResult.value, [
-            {
-              version: 0,
-              isDelete: false,
-              isPublished: false,
-              createdBy: context.session.subjectId,
-            },
-            {
-              version: 1,
-              isDelete: true,
-              isPublished: false,
-              createdBy: context.session.subjectId,
-            },
-          ]);
-        }
+      const historyResult = await EntityAdmin.getEntityHistory(context, createResult.value.id);
+      if (expectOkResult(historyResult)) {
+        expectEntityHistoryVersions(historyResult.value, [
+          {
+            version: 0,
+            isDelete: false,
+            isPublished: false,
+            createdBy: context.session.subjectId,
+          },
+          {
+            version: 1,
+            isDelete: true,
+            isPublished: false,
+            createdBy: context.session.subjectId,
+          },
+        ]);
       }
+
+      const version0Result = await EntityAdmin.getEntity(context, id, { version: 0 });
+      if (expectOkResult(version0Result)) {
+        expect(version0Result.value.item).toEqual({
+          id,
+          _type: 'BlogPost',
+          _name: 'Draft',
+          title: 'Draft',
+        });
+      }
+      const version1Result = await EntityAdmin.getEntity(context, id, { version: 1 });
+      if (expectOkResult(version1Result)) {
+        expect(version1Result.value.item).toEqual({
+          id,
+          _type: 'BlogPost',
+          _name: 'Draft',
+        });
+      }
+
+      const publishedResult = await PublishedEntity.getEntity(context, id);
+      expectErrorResult(publishedResult, ErrorType.NotFound, 'No such entity');
     }
   });
 

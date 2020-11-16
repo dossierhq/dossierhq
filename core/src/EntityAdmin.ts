@@ -2,6 +2,7 @@ import type { ErrorType, PromiseResult, Result, SessionContext } from '.';
 import { ensureRequired } from './Assertions';
 import * as Db from './Db';
 import type { EntitiesTableFields, EntityVersionsTableFields } from './DbTableTypes';
+import { assembleEntity } from './EntityCodec';
 import * as EntityFieldTypeAdapters from './EntityFieldTypeAdapters';
 import { notOk, ok } from './ErrorResult';
 
@@ -18,12 +19,56 @@ export interface EntityHistory {
   }[];
 }
 
+interface AdminEntity {
+  /** UUIDv4 */
+  id: string;
+  _name: string;
+  _type: string;
+  [fieldName: string]: unknown;
+}
+
+//TODO export
 interface AdminEntityCreate {
   /** UUIDv4 */
   id?: string;
   _name: string;
   _type: string;
   [fieldName: string]: unknown;
+}
+
+export async function getEntity(
+  context: SessionContext,
+  id: string,
+  options: { version?: number }
+): PromiseResult<{ item: AdminEntity }, ErrorType.NotFound> {
+  let version: number;
+  if (typeof options.version === 'number') {
+    version = options.version;
+  } else {
+    const versionResult = await resolveMaxVersionForEntity(context, id);
+    if (versionResult.isError()) {
+      return versionResult;
+    }
+    version = versionResult.value.maxVersion;
+  }
+  const entityMain = await Db.queryNoneOrOne(
+    context,
+    `SELECT e.uuid, e.type, e.name, ev.data
+      FROM entities e, entity_versions ev
+      WHERE e.uuid = $1
+      AND e.id = ev.entities_id
+      AND ev.version = $2`,
+    [id, version]
+  );
+  if (!entityMain) {
+    return notOk.NotFound('No such entity or version');
+  }
+
+  const entity = assembleEntity(context, entityMain);
+
+  return ok({
+    item: entity,
+  });
 }
 
 export async function createEntity(
