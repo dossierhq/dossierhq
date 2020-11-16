@@ -1,7 +1,7 @@
 import type { ErrorType, PromiseResult, Result, SessionContext } from '.';
 import { ensureRequired } from './Assertions';
 import * as Db from './Db';
-import type { EntitiesTableFields, EntityVersionsTableFields } from './DbTableTypes';
+import type { EntitiesTable, EntityVersionsTable } from './DbTableTypes';
 import { assembleEntity } from './EntityCodec';
 import * as EntityFieldTypeAdapters from './EntityFieldTypeAdapters';
 import { notOk, ok } from './ErrorResult';
@@ -83,7 +83,7 @@ export async function createEntity(
   const { type, name, data } = encodeResult.value;
 
   return await context.withTransaction(async (context) => {
-    const { id: entityId, uuid } = await Db.queryOne<Pick<EntitiesTableFields, 'id' | 'uuid'>>(
+    const { id: entityId, uuid } = await Db.queryOne<Pick<EntitiesTable, 'id' | 'uuid'>>(
       context,
       'INSERT INTO entities (name, type) VALUES ($1, $2) RETURNING id, uuid',
       [name, type]
@@ -187,7 +187,7 @@ export async function getEntityHistory(
   id: string
 ): PromiseResult<EntityHistory, ErrorType.NotFound> {
   const entityMain = await Db.queryNoneOrOne<
-    Pick<EntitiesTableFields, 'id' | 'uuid' | 'type' | 'name' | 'published_entity_versions_id'>
+    Pick<EntitiesTable, 'id' | 'uuid' | 'type' | 'name' | 'published_entity_versions_id'>
   >(
     context,
     `SELECT id, uuid, type, name, published_entity_versions_id
@@ -200,7 +200,7 @@ export async function getEntityHistory(
   }
 
   const versions = await Db.queryMany<
-    Pick<EntityVersionsTableFields, 'id' | 'version' | 'created_at'> & {
+    Pick<EntityVersionsTable, 'id' | 'version' | 'created_at'> & {
       created_by_uuid: string;
       deleted: boolean;
     }

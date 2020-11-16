@@ -1,7 +1,7 @@
 import type { AuthContext, ErrorType, PromiseResult } from '.';
 import { ensureRequired } from './Assertions';
 import * as Db from './Db';
-import type { SubjectsTableFields } from './DbTableTypes';
+import type { SubjectsTable } from './DbTableTypes';
 import { notOk, ok } from './ErrorResult';
 
 export interface Session {
@@ -25,7 +25,7 @@ async function createSessionForPrincipal(
     return assertion;
   }
   try {
-    const { id, uuid } = await Db.queryOne<Pick<SubjectsTableFields, 'id' | 'uuid'>>(
+    const { id, uuid } = await Db.queryOne<Pick<SubjectsTable, 'id' | 'uuid'>>(
       context,
       'SELECT s.id, s.uuid FROM subjects s, principals p WHERE p.provider = $1 AND p.identifier = $2 AND p.subjects_id = s.id',
       [provider, identifier]
@@ -49,7 +49,7 @@ async function createPrincipal(
     return assertion;
   }
   return await context.withTransaction(async (context) => {
-    const { id, uuid } = await Db.queryOne<Pick<SubjectsTableFields, 'id' | 'uuid'>>(
+    const { id, uuid } = await Db.queryOne<Pick<SubjectsTable, 'id' | 'uuid'>>(
       context,
       'INSERT INTO subjects DEFAULT VALUES RETURNING id, uuid'
     );

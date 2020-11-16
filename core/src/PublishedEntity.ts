@@ -1,6 +1,6 @@
 import type { PromiseResult, SessionContext } from '.';
 import * as Db from './Db';
-import type { EntitiesTableFields, EntityVersionsTableFields } from './DbTableTypes';
+import type { EntitiesTable, EntityVersionsTable } from './DbTableTypes';
 import { assembleEntity } from './EntityCodec';
 
 import { ErrorType, notOk, ok } from './ErrorResult';
@@ -17,7 +17,7 @@ export async function getEntity(
   id: string
 ): PromiseResult<{ item: Entity }, ErrorType.NotFound> {
   const entityMain = await Db.queryNoneOrOne<
-    Pick<EntitiesTableFields, 'uuid' | 'type' | 'name'> & Pick<EntityVersionsTableFields, 'data'>
+    Pick<EntitiesTable, 'uuid' | 'type' | 'name'> & Pick<EntityVersionsTable, 'data'>
   >(
     context,
     `SELECT e.uuid, e.type, e.name, ev.data

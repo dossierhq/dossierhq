@@ -1,9 +1,9 @@
 import type { SessionContext } from '.';
-import type { EntitiesTableFields, EntityVersionsTableFields } from './DbTableTypes';
+import type { EntitiesTable, EntityVersionsTable } from './DbTableTypes';
 import * as EntityFieldTypeAdapters from './EntityFieldTypeAdapters';
 
-type EntityValues = Pick<EntitiesTableFields, 'uuid' | 'type' | 'name'> &
-  Pick<EntityVersionsTableFields, 'data'>;
+type EntityValues = Pick<EntitiesTable, 'uuid' | 'type' | 'name'> &
+  Pick<EntityVersionsTable, 'data'>;
 
 interface Entityish {
   id: string;
