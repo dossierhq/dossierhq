@@ -1,10 +1,10 @@
-export interface SubjectsTableFields {
+export interface SubjectsTable {
   id: number;
   uuid: string;
   created_at: Date;
 }
 
-export interface EntitiesTableFields {
+export interface EntitiesTable {
   id: number;
   uuid: string;
   name: string;
@@ -13,7 +13,7 @@ export interface EntitiesTableFields {
   published_entity_versions_id: number | null;
 }
 
-export interface EntityVersionsTableFields {
+export interface EntityVersionsTable {
   id: number;
   entities_id: number;
   version: number;
