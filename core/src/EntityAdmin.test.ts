@@ -184,6 +184,249 @@ describe('createEntity()', () => {
   });
 });
 
+describe('updateEntity()', () => {
+  test('Update BlogPost and publish', async () => {
+    const createResult = await EntityAdmin.createEntity(
+      context,
+      { _type: 'BlogPost', _name: 'Original', title: 'Original' },
+      { publish: true }
+    );
+    if (expectOkResult(createResult)) {
+      const { id } = createResult.value;
+
+      const updateResult = await EntityAdmin.updateEntity(
+        context,
+        { id, _type: 'BlogPost', _name: 'Updated name', title: 'Updated title' },
+        { publish: true }
+      );
+      expectOkResult(updateResult);
+
+      const historyResult = await EntityAdmin.getEntityHistory(context, id);
+      if (expectOkResult(historyResult)) {
+        expectEntityHistoryVersions(historyResult.value, [
+          {
+            version: 0,
+            isDelete: false,
+            isPublished: false,
+            createdBy: context.session.subjectId,
+          },
+          {
+            version: 1,
+            isDelete: false,
+            isPublished: true,
+            createdBy: context.session.subjectId,
+          },
+        ]);
+      }
+
+      const version0Result = await EntityAdmin.getEntity(context, id, { version: 0 });
+      if (expectOkResult(version0Result)) {
+        expect(version0Result.value.item).toEqual({
+          id,
+          _type: 'BlogPost',
+          _name: 'Updated name', // original name isn't kept
+          title: 'Original',
+        });
+      }
+
+      const version1Result = await EntityAdmin.getEntity(context, id, { version: 1 });
+      if (expectOkResult(version1Result)) {
+        expect(version1Result.value.item).toEqual({
+          id,
+          _type: 'BlogPost',
+          _name: 'Updated name',
+          title: 'Updated title',
+        });
+      }
+
+      const publishedResult = await PublishedEntity.getEntity(context, id);
+      if (expectOkResult(publishedResult)) {
+        expect(publishedResult.value.item).toEqual({
+          id,
+          _type: 'BlogPost',
+          _name: 'Updated name',
+          title: 'Updated title',
+        });
+      }
+    }
+  });
+
+  test('Update BlogPost w/o publish', async () => {
+    const createResult = await EntityAdmin.createEntity(
+      context,
+      { _type: 'BlogPost', _name: 'First', title: 'First' },
+      { publish: true }
+    );
+    if (expectOkResult(createResult)) {
+      const { id } = createResult.value;
+
+      const updateResult = await EntityAdmin.updateEntity(
+        context,
+        { id, _type: 'BlogPost', _name: 'Updated name', title: 'Updated title' },
+        { publish: false }
+      );
+      expectOkResult(updateResult);
+
+      const historyResult = await EntityAdmin.getEntityHistory(context, id);
+      if (expectOkResult(historyResult)) {
+        expectEntityHistoryVersions(historyResult.value, [
+          {
+            version: 0,
+            isDelete: false,
+            isPublished: true,
+            createdBy: context.session.subjectId,
+          },
+          {
+            version: 1,
+            isDelete: false,
+            isPublished: false,
+            createdBy: context.session.subjectId,
+          },
+        ]);
+      }
+
+      const version0Result = await EntityAdmin.getEntity(context, id, { version: 0 });
+      if (expectOkResult(version0Result)) {
+        expect(version0Result.value.item).toEqual({
+          id,
+          _type: 'BlogPost',
+          _name: 'Updated name',
+          title: 'First',
+        });
+      }
+      const version1Result = await EntityAdmin.getEntity(context, id, { version: 1 });
+      if (expectOkResult(version1Result)) {
+        expect(version1Result.value.item).toEqual({
+          id,
+          _type: 'BlogPost',
+          _name: 'Updated name',
+          title: 'Updated title',
+        });
+      }
+
+      const publishedResult = await PublishedEntity.getEntity(context, id);
+      if (expectOkResult(publishedResult)) {
+        expect(publishedResult.value.item).toEqual({
+          id,
+          _type: 'BlogPost',
+          _name: 'Updated name',
+          title: 'First',
+        });
+      }
+    }
+  });
+
+  test('Update BlogPost w/o type and name', async () => {
+    const createResult = await EntityAdmin.createEntity(
+      context,
+      { _type: 'BlogPost', _name: 'Original', title: 'Original' },
+      { publish: true }
+    );
+    if (expectOkResult(createResult)) {
+      const { id } = createResult.value;
+
+      const updateResult = await EntityAdmin.updateEntity(
+        context,
+        { id, title: 'Updated title' },
+        { publish: true }
+      );
+      expectOkResult(updateResult);
+
+      const historyResult = await EntityAdmin.getEntityHistory(context, id);
+      if (expectOkResult(historyResult)) {
+        expectEntityHistoryVersions(historyResult.value, [
+          {
+            version: 0,
+            isDelete: false,
+            isPublished: false,
+            createdBy: context.session.subjectId,
+          },
+          {
+            version: 1,
+            isDelete: false,
+            isPublished: true,
+            createdBy: context.session.subjectId,
+          },
+        ]);
+      }
+
+      const version0Result = await EntityAdmin.getEntity(context, id, { version: 0 });
+      if (expectOkResult(version0Result)) {
+        expect(version0Result.value.item).toEqual({
+          id,
+          _type: 'BlogPost',
+          _name: 'Original',
+          title: 'Original',
+        });
+      }
+      const version1Result = await EntityAdmin.getEntity(context, id, { version: 1 });
+      if (expectOkResult(version1Result)) {
+        expect(version1Result.value.item).toEqual({
+          id,
+          _type: 'BlogPost',
+          _name: 'Original',
+          title: 'Updated title',
+        });
+      }
+
+      const publishedResult = await PublishedEntity.getEntity(context, id);
+      if (expectOkResult(publishedResult)) {
+        expect(publishedResult.value.item).toEqual({
+          id,
+          _type: 'BlogPost',
+          _name: 'Original',
+          title: 'Updated title',
+        });
+      }
+    }
+  });
+
+  test('Error: Update with invalid id', async () => {
+    const result = await EntityAdmin.updateEntity(
+      context,
+      {
+        id: 'f773ac54-37db-42df-9b55-b6da8de344c3',
+        _type: 'BlogPost',
+        _name: 'name',
+        foo: 'title',
+      },
+      { publish: false }
+    );
+
+    expectErrorResult(result, ErrorType.NotFound, 'No such entity');
+  });
+
+  test('Error: Update with different type', async () => {
+    const createResult = await EntityAdmin.createEntity(
+      context,
+      {
+        _type: 'Category',
+        _name: 'foo',
+        title: 'foo',
+      },
+      { publish: true }
+    );
+    if (expectOkResult(createResult)) {
+      const { id } = createResult.value;
+      const updateResult = await EntityAdmin.updateEntity(
+        context,
+        {
+          id,
+          _type: 'BlogPost',
+          _name: 'name',
+          foo: 'title',
+        },
+        { publish: true }
+      );
+      expectErrorResult(
+        updateResult,
+        ErrorType.BadRequest,
+        'New type BlogPost doesn’t correspond to previous type Category'
+      );
+    }
+  });
+});
+
 describe('deleteEntity()', () => {
   test('Delete & publish published BlogPost', async () => {
     const createResult = await EntityAdmin.createEntity(

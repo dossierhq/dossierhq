@@ -36,6 +36,15 @@ interface AdminEntityCreate {
   [fieldName: string]: unknown;
 }
 
+//TODO export
+interface AdminEntityUpdate {
+  /** UUIDv4 */
+  id: string;
+  _name?: string;
+  _type?: string;
+  [fieldName: string]: unknown;
+}
+
 export async function getEntity(
   context: SessionContext,
   id: string,
@@ -105,12 +114,67 @@ export async function createEntity(
   });
 }
 
+export async function updateEntity(
+  context: SessionContext,
+  entity: AdminEntityUpdate,
+  options: { publish: boolean }
+): PromiseResult<void, ErrorType.BadRequest | ErrorType.NotFound> {
+  return await context.withTransaction(async (context) => {
+    const versionResult = await resolveMaxVersionForEntity(context, entity.id);
+    if (versionResult.isError()) {
+      return versionResult;
+    }
+    const { entityId, maxVersion } = versionResult.value;
+    const newVersion = maxVersion + 1;
+
+    const { type, name: previousName } = await Db.queryOne<Pick<EntitiesTable, 'type' | 'name'>>(
+      context,
+      'SELECT type, name FROM entities e WHERE e.id = $1',
+      [entityId]
+    );
+
+    if (entity._type && entity._type !== type) {
+      return notOk.BadRequest(
+        `New type ${entity._type} doesn’t correspond to previous type ${type}`
+      );
+    }
+
+    const encodeResult = encodeFieldsToValues(context, {
+      _name: previousName,
+      ...entity,
+      _type: type,
+    });
+    if (encodeResult.isError()) {
+      return encodeResult;
+    }
+    const { data, name } = encodeResult.value;
+
+    const { id: versionsId } = await Db.queryOne<Pick<EntityVersionsTable, 'id'>>(
+      context,
+      'INSERT INTO entity_versions (entities_id, created_by, version, data) VALUES ($1, $2, $3, $4) RETURNING id',
+      [entityId, context.session.subjectInternalId, newVersion, data]
+    );
+    if (options.publish) {
+      await Db.queryNone(
+        context,
+        'UPDATE entities SET name = $1, published_entity_versions_id = $2 WHERE id = $3',
+        [name, versionsId, entityId]
+      );
+    } else {
+      await Db.queryNone(context, 'UPDATE entities SET name = $1 WHERE id = $2', [name, entityId]);
+    }
+    return ok(undefined);
+  });
+}
+
 function encodeFieldsToValues(
   context: SessionContext,
-  entity: AdminEntityCreate
+  entity: { _type: string; _name: string; [fieldName: string]: unknown }
 ): Result<{ type: string; name: string; data: Record<string, unknown> }, ErrorType.BadRequest> {
   const assertion = ensureRequired({ 'entity._type': entity._type, 'entity._name': entity._name });
-  if (assertion.isError()) return assertion;
+  if (assertion.isError()) {
+    return assertion;
+  }
 
   const { _type: type, _name: name } = entity;
 
