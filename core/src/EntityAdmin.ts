@@ -1,9 +1,7 @@
-import type { ErrorType, PromiseResult, Result, SessionContext } from '.';
-import { ensureRequired } from './Assertions';
+import type { ErrorType, PromiseResult, SessionContext } from '.';
 import * as Db from './Db';
 import type { EntitiesTable, EntityVersionsTable } from './DbTableTypes';
-import { assembleEntity } from './EntityCodec';
-import * as EntityFieldTypeAdapters from './EntityFieldTypeAdapters';
+import { decodeEntity, encodeEntity } from './EntityCodec';
 import { notOk, ok } from './ErrorResult';
 
 export interface EntityHistory {
@@ -73,7 +71,7 @@ export async function getEntity(
     return notOk.NotFound('No such entity or version');
   }
 
-  const entity = assembleEntity(context, entityMain);
+  const entity = decodeEntity(context, entityMain);
 
   return ok({
     item: entity,
@@ -85,7 +83,7 @@ export async function createEntity(
   entity: AdminEntityCreate,
   options: { publish: boolean }
 ): PromiseResult<{ id: string }, ErrorType.BadRequest> {
-  const encodeResult = encodeFieldsToValues(context, entity, null);
+  const encodeResult = encodeEntity(context, entity, null);
   if (encodeResult.isError()) {
     return encodeResult;
   }
@@ -145,7 +143,7 @@ export async function updateEntity(
       [entityId, maxVersion]
     );
 
-    const encodeResult = encodeFieldsToValues(
+    const encodeResult = encodeEntity(
       context,
       {
         _name: previousName, // default to previous but allow changing
@@ -175,41 +173,6 @@ export async function updateEntity(
     }
     return ok(undefined);
   });
-}
-
-function encodeFieldsToValues(
-  context: SessionContext,
-  entity: { _type: string; _name: string; [fieldName: string]: unknown },
-  defaultValuesEncoded: Record<string, unknown> | null
-): Result<{ type: string; name: string; data: Record<string, unknown> }, ErrorType.BadRequest> {
-  const assertion = ensureRequired({ 'entity._type': entity._type, 'entity._name': entity._name });
-  if (assertion.isError()) {
-    return assertion;
-  }
-
-  const { _type: type, _name: name } = entity;
-
-  const schema = context.instance.getSchema();
-  const entitySpec = schema.getEntityTypeSpecification(type);
-  if (!entitySpec) {
-    return notOk.BadRequest(`Entity type ${type} doesn’t exist`);
-  }
-
-  const result: { type: string; name: string; data: Record<string, unknown> } = {
-    type,
-    name,
-    data: {},
-  };
-  for (const fieldSpec of entitySpec.fields) {
-    const fieldAdapter = EntityFieldTypeAdapters.getAdapter(fieldSpec);
-    if (fieldSpec.name in entity) {
-      const data = entity[fieldSpec.name];
-      result.data[fieldSpec.name] = fieldAdapter.encodeData(data);
-    } else if (defaultValuesEncoded && fieldSpec.name in defaultValuesEncoded) {
-      result.data[fieldSpec.name] = defaultValuesEncoded[fieldSpec.name]; // is already encoded
-    }
-  }
-  return ok(result);
 }
 
 export async function deleteEntity(

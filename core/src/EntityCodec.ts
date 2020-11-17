@@ -1,6 +1,8 @@
-import type { SessionContext } from '.';
+import type { ErrorType, Result, SessionContext } from '.';
+import { ensureRequired } from './Assertions';
 import type { EntitiesTable, EntityVersionsTable } from './DbTableTypes';
 import * as EntityFieldTypeAdapters from './EntityFieldTypeAdapters';
+import { notOk, ok } from './ErrorResult';
 
 type EntityValues = Pick<EntitiesTable, 'uuid' | 'type' | 'name'> &
   Pick<EntityVersionsTable, 'data'>;
@@ -12,7 +14,7 @@ interface Entityish {
   [fieldName: string]: unknown;
 }
 
-export function assembleEntity(context: SessionContext, values: EntityValues): Entityish {
+export function decodeEntity(context: SessionContext, values: EntityValues): Entityish {
   const schema = context.instance.getSchema();
   const entitySpec = schema.getEntityTypeSpecification(values.type);
   if (!entitySpec) {
@@ -35,4 +37,39 @@ export function assembleEntity(context: SessionContext, values: EntityValues): E
     }
   }
   return entity;
+}
+
+export function encodeEntity(
+  context: SessionContext,
+  entity: { _type: string; _name: string; [fieldName: string]: unknown },
+  defaultValuesEncoded: Record<string, unknown> | null
+): Result<{ type: string; name: string; data: Record<string, unknown> }, ErrorType.BadRequest> {
+  const assertion = ensureRequired({ 'entity._type': entity._type, 'entity._name': entity._name });
+  if (assertion.isError()) {
+    return assertion;
+  }
+
+  const { _type: type, _name: name } = entity;
+
+  const schema = context.instance.getSchema();
+  const entitySpec = schema.getEntityTypeSpecification(type);
+  if (!entitySpec) {
+    return notOk.BadRequest(`Entity type ${type} doesn’t exist`);
+  }
+
+  const result: { type: string; name: string; data: Record<string, unknown> } = {
+    type,
+    name,
+    data: {},
+  };
+  for (const fieldSpec of entitySpec.fields) {
+    const fieldAdapter = EntityFieldTypeAdapters.getAdapter(fieldSpec);
+    if (fieldSpec.name in entity) {
+      const data = entity[fieldSpec.name];
+      result.data[fieldSpec.name] = fieldAdapter.encodeData(data);
+    } else if (defaultValuesEncoded && fieldSpec.name in defaultValuesEncoded) {
+      result.data[fieldSpec.name] = defaultValuesEncoded[fieldSpec.name]; // is already encoded
+    }
+  }
+  return ok(result);
 }
