@@ -1,7 +1,7 @@
 import type { PromiseResult, SessionContext } from '.';
 import * as Db from './Db';
 import type { EntitiesTable, EntityVersionsTable } from './DbTableTypes';
-import { assembleEntity } from './EntityCodec';
+import { decodeEntity } from './EntityCodec';
 
 import { ErrorType, notOk, ok } from './ErrorResult';
 
@@ -31,7 +31,7 @@ export async function getEntity(
     return notOk.NotFound('No such entity');
   }
 
-  const entity = assembleEntity(context, entityMain);
+  const entity = decodeEntity(context, entityMain);
 
   return ok({
     item: entity,
