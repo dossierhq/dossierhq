@@ -34,6 +34,15 @@ function createMainActions(state: State): Array<MainActionItem | ItemSelectorSep
       },
     },
     {
+      id: 'show-admin-entity',
+      name: 'Show entity',
+      enabled: !!state.currentEntity,
+      action: async () => {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        await CliEntityAdmin.showLatestEntity(state.context, state.currentEntity!.id);
+      },
+    },
+    {
       id: 'delete-entity',
       name: 'Delete entity',
       enabled: !!state.currentEntity,
@@ -49,6 +58,15 @@ function createMainActions(state: State): Array<MainActionItem | ItemSelectorSep
       action: async () => {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         await CliEntityAdmin.showEntityHistory(state.context, state.currentEntity!.id);
+      },
+    },
+    {
+      id: 'show-entity-version',
+      name: 'Show entity version',
+      enabled: !!state.currentEntity,
+      action: async () => {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        await CliEntityAdmin.showEntityVersion(state.context, state.currentEntity!.id);
       },
     },
     { separator: true, name: '─PUBLISHED────' },

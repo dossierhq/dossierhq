@@ -1,9 +1,13 @@
 import chalk from 'chalk';
 import inquirer from 'inquirer';
-import { EntityAdmin, SessionContext } from '@datadata/core';
-import { EntityFieldSpecification, EntityFieldType, EntityTypeSpecification } from '@datadata/core';
+import type {
+  EntityFieldSpecification,
+  EntityTypeSpecification,
+  SessionContext,
+} from '@datadata/core';
+import { EntityAdmin, EntityFieldType } from '@datadata/core';
 import * as CliSchema from './CliSchema';
-import { formatFieldValue, logErrorResult, logKeyValue } from './CliUtils';
+import { formatFieldValue, logEntity, logErrorResult, logKeyValue } from './CliUtils';
 import { showConfirm } from './widgets/Confirm';
 import type { ItemSelectorItem } from './widgets/ItemSelector';
 import { showItemSelector } from './widgets/ItemSelector';
@@ -141,6 +145,77 @@ export async function showEntityHistory(context: SessionContext, id: string): Pr
     if (version.isPublished) tags.push(chalk.green('published'));
     logKeyValue('version', `${version.version} ${tags.join(', ')}`);
     logKeyValue('  created by', version.createdBy);
-    logKeyValue('  created ay', version.createdAt.toISOString());
+    logKeyValue('  created at', version.createdAt.toISOString());
+  }
+}
+
+export async function showLatestEntity(context: SessionContext, id: string): Promise<void> {
+  const result = await EntityAdmin.getEntity(context, id, {});
+  if (result.isOk()) {
+    logEntity(context, result.value.item);
+  } else {
+    logErrorResult('Failed getting entity version', result);
+  }
+}
+
+async function selectEntityVersion(
+  context: SessionContext,
+  message: string,
+  id: string,
+  defaultVersion: number | null
+): Promise<number | null> {
+  const result = await EntityAdmin.getEntityHistory(context, id);
+  if (result.isError()) {
+    logErrorResult('Failed retrieving history', result);
+    return null;
+  }
+
+  const defaultItemId = typeof defaultVersion === 'number' ? String(defaultVersion) : undefined;
+  const versionItems = result.value.versions
+    .map((version) => {
+      const tags = [];
+      if (version.isDelete) tags.push(chalk.red('deleted'));
+      if (version.isPublished) tags.push(chalk.green('published'));
+      const tagsString = tags.join(', ');
+
+      return {
+        id: String(version.version),
+        name: `${version.version} ${tagsString ? tagsString + ' ' : ''}${chalk.grey(
+          `created at ${version.createdAt.toISOString()}`
+        )}`,
+      };
+    })
+    .reverse();
+
+  const item = await showItemSelector(
+    message,
+    [...versionItems, { id: 'back', name: 'Done' }],
+    defaultItemId
+  );
+  if (item.id === 'back') {
+    return null;
+  }
+  return Number.parseInt(item.id);
+}
+
+export async function showEntityVersion(context: SessionContext, id: string): Promise<void> {
+  let currentVersion: number | null = null;
+  // eslint-disable-next-line no-constant-condition
+  while (true) {
+    currentVersion = await selectEntityVersion(
+      context,
+      'Which entity version to view?',
+      id,
+      currentVersion
+    );
+    if (currentVersion === null) {
+      return;
+    }
+    const result = await EntityAdmin.getEntity(context, id, { version: currentVersion });
+    if (result.isOk()) {
+      logEntity(context, result.value.item);
+    } else {
+      logErrorResult('Failed getting entity version', result);
+    }
   }
 }
