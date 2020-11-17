@@ -1,5 +1,13 @@
-import type { EntityHistory, Instance, OkResult, Result, SessionContext } from '../src';
-import { Auth, ErrorType } from '../src';
+import type {
+  EntityHistory,
+  EntityTypeSpecification,
+  Instance,
+  OkResult,
+  Result,
+  SchemaSpecification,
+  SessionContext,
+} from '../src';
+import { Auth, ErrorType, Schema } from '../src';
 
 export const uuidMatcher = /[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89aAbB][a-f0-9]{3}-[a-f0-9]{12}/;
 
@@ -55,6 +63,20 @@ export async function ensureSessionContext(
     );
   }
   return instance.createSessionContext(sessionResult2.value);
+}
+
+export async function updateSchema(
+  context: SessionContext,
+  entityTypes: Record<string, EntityTypeSpecification>
+): Promise<void> {
+  const oldSchema = context.instance.getSchema();
+  const spec: SchemaSpecification = {
+    ...oldSchema,
+    entityTypes: { ...oldSchema.spec.entityTypes, ...entityTypes },
+  };
+  const newSchema = new Schema(spec);
+  const result = await context.instance.setSchema(context, newSchema);
+  result.throwIfError();
 }
 
 export function expectEntityHistoryVersions(

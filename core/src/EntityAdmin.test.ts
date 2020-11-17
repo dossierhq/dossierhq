@@ -1,5 +1,5 @@
 import type { Instance, SessionContext } from '.';
-import { EntityAdmin, ErrorType, PublishedEntity } from '.';
+import { EntityAdmin, EntityFieldType, ErrorType, PublishedEntity } from '.';
 import TestInstance from '../test/TestInstance';
 import {
   ensureSessionContext,
@@ -7,6 +7,7 @@ import {
   expectEntityHistoryVersions,
   expectOkResult,
   uuidMatcher,
+  updateSchema,
 } from '../test/TestUtils';
 
 let instance: Instance;
@@ -15,6 +16,15 @@ let context: SessionContext;
 beforeAll(async () => {
   instance = await TestInstance.createInstance({ loadSchema: true });
   context = await ensureSessionContext(instance, 'test', 'entity-admin');
+  await updateSchema(context, {
+    BlogPost: {
+      fields: [
+        { name: 'title', type: EntityFieldType.String, isName: true },
+        { name: 'summary', type: EntityFieldType.String },
+      ],
+    },
+    Category: { fields: [{ name: 'title', type: EntityFieldType.String }] },
+  });
 });
 afterAll(async () => {
   await instance.shutdown();

@@ -2,8 +2,9 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
 import { CliAuth, CliMain } from '@datadata/cli';
-import type { Session } from '@datadata/core';
-import { Instance } from '@datadata/core';
+import type { SchemaSpecification, Session } from '@datadata/core';
+import { Instance, Schema } from '@datadata/core';
+import SchemaSpec from './schema.json';
 
 async function main() {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -14,7 +15,7 @@ async function main() {
       session = await CliAuth.veryInsecureCreateSession(instance, 'test', 'john-smith');
     }
     const context = instance.createSessionContext(session);
-    await instance.reloadSchema(context);
+    await instance.setSchema(context, new Schema(SchemaSpec as SchemaSpecification));
 
     await CliMain.mainMenu(context);
   } finally {
