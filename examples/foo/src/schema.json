@@ -1,0 +1,25 @@
+{
+  "entityTypes": {
+    "BlogPost": {
+      "fields": [
+        {
+          "name": "title",
+          "type": "String",
+          "isName": true
+        },
+        {
+          "name": "summary",
+          "type": "String"
+        }
+      ]
+    },
+    "Category": {
+      "fields": [
+        {
+          "name": "title",
+          "type": "String"
+        }
+      ]
+    }
+  }
+}

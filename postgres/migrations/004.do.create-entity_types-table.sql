@@ -1,0 +1,5 @@
+CREATE TABLE entity_types (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255) UNIQUE NOT NULL,
+  specification JSONB NOT NULL
+);

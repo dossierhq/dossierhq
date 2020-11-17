@@ -1,8 +1,9 @@
-import type { AuthContext, Context, Schema, Session, SessionContext } from '.';
+import type { AuthContext, Schema, Session, SessionContext } from '.';
 import { AuthContextImpl, SessionContextImpl } from './Context';
 import type { Pool } from './Db';
 import * as Db from './Db';
-import { getSchema } from './Schema';
+import type { ErrorType, PromiseResult } from './ErrorResult';
+import { getSchema, setSchema } from './Schema';
 
 export default class Instance {
   #pool: Pool | null;
@@ -21,13 +22,24 @@ export default class Instance {
     }
   }
 
-  async reloadSchema(context: Context<unknown>): Promise<void> {
+  async reloadSchema(context: SessionContext): Promise<void> {
     this.#schema = await getSchema(context);
   }
 
   getSchema(): Schema {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     return this.#schema!;
+  }
+
+  async setSchema(
+    context: SessionContext,
+    schema: Schema
+  ): PromiseResult<void, ErrorType.BadRequest> {
+    const result = await setSchema(context, schema);
+    if (result.isOk()) {
+      this.#schema = schema;
+    }
+    return result;
   }
 
   createAuthContext(): AuthContext {

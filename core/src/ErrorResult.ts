@@ -20,6 +20,10 @@ export class OkResult<TOk, TError extends ErrorType> {
   isError(): this is ErrorResult<TOk, TError> {
     return false;
   }
+
+  throwIfError(): void {
+    // do nothing
+  }
 }
 
 export class ErrorResult<TOk, TError extends ErrorType> {
@@ -31,6 +35,10 @@ export class ErrorResult<TOk, TError extends ErrorType> {
 
   isError(): this is ErrorResult<TOk, TError> {
     return true;
+  }
+
+  throwIfError(): never {
+    throw new Error(`${this.error}: ${this.message}`);
   }
 }
 

@@ -1,3 +1,11 @@
+import type { EntityTypeSpecification } from '.';
+
+export interface EntityTypesTable {
+  id: number;
+  name: string;
+  specification: EntityTypeSpecification;
+}
+
 export interface SubjectsTable {
   id: number;
   uuid: string;
