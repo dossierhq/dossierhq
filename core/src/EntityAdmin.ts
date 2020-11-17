@@ -17,7 +17,7 @@ export interface EntityHistory {
   }[];
 }
 
-interface AdminEntity {
+export interface AdminEntity {
   /** UUIDv4 */
   id: string;
   _name: string;
@@ -25,8 +25,7 @@ interface AdminEntity {
   [fieldName: string]: unknown;
 }
 
-//TODO export
-interface AdminEntityCreate {
+export interface AdminEntityCreate {
   /** UUIDv4 */
   id?: string;
   _name: string;
@@ -34,11 +33,11 @@ interface AdminEntityCreate {
   [fieldName: string]: unknown;
 }
 
-//TODO export
-interface AdminEntityUpdate {
+export interface AdminEntityUpdate {
   /** UUIDv4 */
   id: string;
   _name?: string;
+  /** If provided, has to be same as the entities existing type, i.e. there's no way to change the type of an entity */
   _type?: string;
   [fieldName: string]: unknown;
 }
