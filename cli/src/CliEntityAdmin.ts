@@ -11,20 +11,7 @@ import { formatFieldValue, logEntity, logErrorResult, logKeyValue } from './CliU
 import { showConfirm } from './widgets/Confirm';
 import type { ItemSelectorItem } from './widgets/ItemSelector';
 import { showItemSelector } from './widgets/ItemSelector';
-
-//TODO move to core?
-interface AdminEntityCreate {
-  /** UUIDv4 */
-  id?: string;
-  _name: string;
-  _type: string;
-  [fieldName: string]: unknown;
-}
-//TODO move to core?
-interface EditEntity {
-  _type: string;
-  [fieldName: string]: unknown;
-}
+import { showStringEdit } from './widgets/StringEdit';
 
 interface EditFieldSelectorItem extends ItemSelectorItem {
   defaultValue?: unknown;
@@ -32,7 +19,16 @@ interface EditFieldSelectorItem extends ItemSelectorItem {
 
 export async function createEntity(context: SessionContext): Promise<{ id: string } | null> {
   const type = await CliSchema.selectEntityType(context);
-  const entity = (await editEntity(context, { _type: type })) as AdminEntityCreate;
+  const entity = {
+    _type: type,
+    _name: '',
+    ...(await editEntityValues(context, { _type: type })),
+  };
+
+  while (!entity._name) {
+    entity._name = await showStringEdit('What name to use for the entity?');
+  }
+
   const publish = await showConfirm('Publish the entity?');
   const result = await EntityAdmin.createEntity(context, entity, { publish });
   if (result.isError()) {
@@ -43,24 +39,41 @@ export async function createEntity(context: SessionContext): Promise<{ id: strin
   return result.value;
 }
 
-async function editEntity(
+export async function editEntity(context: SessionContext, id: string): Promise<void> {
+  const getResult = await EntityAdmin.getEntity(context, id, {});
+  if (getResult.isError()) {
+    logErrorResult('Failed fetching entity data', getResult);
+    return;
+  }
+
+  const entity = { id, ...(await editEntityValues(context, getResult.value.item)) };
+  const publish = await showConfirm('Publish the entity?');
+  const updateResult = await EntityAdmin.updateEntity(context, entity, { publish });
+  if (updateResult.isError()) {
+    logErrorResult('Failed creating entity', updateResult);
+    return;
+  }
+  console.log(`${chalk.bold('Updated:')} ${id}`);
+}
+
+async function editEntityValues(
   context: SessionContext,
-  startingEntity: EditEntity
+  defaultValues: { _type: string; [fieldName: string]: unknown }
 ): Promise<Record<string, unknown>> {
   const { instance } = context;
   const schema = instance.getSchema();
-  const entitySpec = schema.getEntityTypeSpecification(startingEntity._type);
+  const entitySpec = schema.getEntityTypeSpecification(defaultValues._type);
   if (!entitySpec) {
-    throw new Error(`Couldn't find entity spec for type: ${startingEntity._type}`);
+    throw new Error(`Couldn't find entity spec for type: ${defaultValues._type}`);
   }
 
-  const changedEntity: Record<string, unknown> = { _type: startingEntity._type };
+  const changedValues: Record<string, unknown> = {};
 
   // eslint-disable-next-line no-constant-condition
   while (true) {
     const item = await showItemSelector(
       'Which field to edit?',
-      createItemSelectorItems(entitySpec, changedEntity)
+      createItemSelectorItems(entitySpec, changedValues, defaultValues)
     );
     if (item.id === '_exit') {
       break;
@@ -68,27 +81,31 @@ async function editEntity(
     const fieldName = item.id;
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const fieldSpec = entitySpec.fields.find((x) => x.name === fieldName)!;
-    changedEntity[fieldName] = await editField(fieldSpec, item.defaultValue);
+    changedValues[fieldName] = await editField(fieldSpec, item.defaultValue);
   }
 
   const nameFieldSpec = entitySpec.fields.find((x) => x.isName);
   if (nameFieldSpec) {
-    const name = changedEntity[nameFieldSpec.name];
+    const name = changedValues[nameFieldSpec.name];
     if (name) {
-      changedEntity._name = name;
+      changedValues._name = name;
     }
   }
 
-  return changedEntity;
+  return changedValues;
 }
 
 function createItemSelectorItems(
   entitySpec: EntityTypeSpecification,
-  entity: Record<string, unknown>
+  currentValues: Record<string, unknown>,
+  defaultValues: Record<string, unknown>
 ): EditFieldSelectorItem[] {
   const items: EditFieldSelectorItem[] = [];
   for (const fieldSpec of entitySpec.fields) {
-    const value = entity[fieldSpec.name];
+    const value =
+      fieldSpec.name in currentValues
+        ? currentValues[fieldSpec.name]
+        : defaultValues[fieldSpec.name];
     items.push({
       id: fieldSpec.name,
       name: `${chalk.bold(fieldSpec.name)}: ${formatFieldValue(fieldSpec, value)}`,
@@ -108,15 +125,7 @@ async function editField(fieldSpec: EntityFieldSpecification, defaultValue: unkn
 }
 
 async function editFieldString(fieldSpec: EntityFieldSpecification, defaultValue: unknown) {
-  const { value } = await inquirer.prompt([
-    {
-      name: 'value',
-      type: 'input',
-      message: fieldSpec.name,
-      default: defaultValue,
-    },
-  ]);
-  return value;
+  return await showStringEdit(fieldSpec.name, defaultValue as string);
 }
 
 export async function deleteEntity(context: SessionContext, id: string): Promise<void> {

@@ -43,6 +43,15 @@ function createMainActions(state: State): Array<MainActionItem | ItemSelectorSep
       },
     },
     {
+      id: 'edit-admin-entity',
+      name: 'Edit entity',
+      enabled: !!state.currentEntity,
+      action: async () => {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        await CliEntityAdmin.editEntity(state.context, state.currentEntity!.id);
+      },
+    },
+    {
       id: 'delete-entity',
       name: 'Delete entity',
       enabled: !!state.currentEntity,
