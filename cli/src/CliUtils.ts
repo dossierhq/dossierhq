@@ -29,7 +29,7 @@ export function logKeyValue(key: string, value: string): void {
   console.log(`${chalk.bold(`${key}:`)} ${value}`);
 }
 
-export function logEntity(context: SessionContext, entity: Entity) {
+export function logEntity(context: SessionContext, entity: Entity): void {
   logKeyValue('type', entity._type);
   logKeyValue('name', entity._name);
   logKeyValue('id', entity.id);
