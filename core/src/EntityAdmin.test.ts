@@ -17,13 +17,13 @@ beforeAll(async () => {
   instance = await TestInstance.createInstance({ loadSchema: true });
   context = await ensureSessionContext(instance, 'test', 'entity-admin');
   await updateSchema(context, {
-    BlogPost: {
+    EntityAdminFoo: {
       fields: [
         { name: 'title', type: EntityFieldType.String, isName: true },
         { name: 'summary', type: EntityFieldType.String },
       ],
     },
-    Category: { fields: [{ name: 'title', type: EntityFieldType.String }] },
+    EntityAdminBar: { fields: [{ name: 'title', type: EntityFieldType.String }] },
   });
 });
 afterAll(async () => {
@@ -36,7 +36,7 @@ describe('getEntity()', () => {
   test('No version means max version', async () => {
     const createResult = await EntityAdmin.createEntity(
       context,
-      { _type: 'BlogPost', _name: 'Foo', title: 'Title' },
+      { _type: 'EntityAdminFoo', _name: 'Foo', title: 'Title' },
       { publish: true }
     );
 
@@ -49,7 +49,7 @@ describe('getEntity()', () => {
       if (expectOkResult(versionMaxResult)) {
         expect(versionMaxResult.value.item).toEqual({
           id,
-          _type: 'BlogPost',
+          _type: 'EntityAdminFoo',
           _name: 'Foo',
           // No title since deleted
         });
@@ -65,7 +65,7 @@ describe('getEntity()', () => {
   test('Error: Get entity with invalid version', async () => {
     const createResult = await EntityAdmin.createEntity(
       context,
-      { _type: 'BlogPost', _name: 'Foo', title: 'Title' },
+      { _type: 'EntityAdminFoo', _name: 'Foo', title: 'Title' },
       { publish: true }
     );
 
@@ -82,10 +82,10 @@ describe('getEntity()', () => {
 });
 
 describe('createEntity()', () => {
-  test('Create BlogPost and publish', async () => {
+  test('Create EntityAdminFoo and publish', async () => {
     const createResult = await EntityAdmin.createEntity(
       context,
-      { _type: 'BlogPost', _name: 'Foo', title: 'Title' },
+      { _type: 'EntityAdminFoo', _name: 'Foo', title: 'Title' },
       { publish: true }
     );
     if (expectOkResult(createResult)) {
@@ -108,7 +108,7 @@ describe('createEntity()', () => {
       if (expectOkResult(version0Result)) {
         expect(version0Result.value.item).toEqual({
           id,
-          _type: 'BlogPost',
+          _type: 'EntityAdminFoo',
           _name: 'Foo',
           title: 'Title',
         });
@@ -118,7 +118,7 @@ describe('createEntity()', () => {
       if (expectOkResult(publishedResult)) {
         expect(publishedResult.value.item).toEqual({
           id,
-          _type: 'BlogPost',
+          _type: 'EntityAdminFoo',
           _name: 'Foo',
           title: 'Title',
         });
@@ -126,10 +126,10 @@ describe('createEntity()', () => {
     }
   });
 
-  test('Create BlogPost w/o publish', async () => {
+  test('Create EntityAdminFoo w/o publish', async () => {
     const createResult = await EntityAdmin.createEntity(
       context,
-      { _type: 'BlogPost', _name: 'Draft', title: 'Draft' },
+      { _type: 'EntityAdminFoo', _name: 'Draft', title: 'Draft' },
       { publish: false }
     );
     if (expectOkResult(createResult)) {
@@ -152,7 +152,7 @@ describe('createEntity()', () => {
       if (expectOkResult(version0Result)) {
         expect(version0Result.value.item).toEqual({
           id,
-          _type: 'BlogPost',
+          _type: 'EntityAdminFoo',
           _name: 'Draft',
           title: 'Draft',
         });
@@ -186,7 +186,7 @@ describe('createEntity()', () => {
   test('Error: Create without _name', async () => {
     const result = await EntityAdmin.createEntity(
       context,
-      { _type: 'BlogPost', _name: '', foo: 'title' },
+      { _type: 'EntityAdminFoo', _name: '', foo: 'title' },
       { publish: false }
     );
 
@@ -195,10 +195,10 @@ describe('createEntity()', () => {
 });
 
 describe('updateEntity()', () => {
-  test('Update BlogPost and publish', async () => {
+  test('Update EntityAdminFoo and publish', async () => {
     const createResult = await EntityAdmin.createEntity(
       context,
-      { _type: 'BlogPost', _name: 'Original', title: 'Original' },
+      { _type: 'EntityAdminFoo', _name: 'Original', title: 'Original' },
       { publish: true }
     );
     if (expectOkResult(createResult)) {
@@ -206,7 +206,7 @@ describe('updateEntity()', () => {
 
       const updateResult = await EntityAdmin.updateEntity(
         context,
-        { id, _type: 'BlogPost', _name: 'Updated name', title: 'Updated title' },
+        { id, _type: 'EntityAdminFoo', _name: 'Updated name', title: 'Updated title' },
         { publish: true }
       );
       expectOkResult(updateResult);
@@ -233,7 +233,7 @@ describe('updateEntity()', () => {
       if (expectOkResult(version0Result)) {
         expect(version0Result.value.item).toEqual({
           id,
-          _type: 'BlogPost',
+          _type: 'EntityAdminFoo',
           _name: 'Updated name', // original name isn't kept
           title: 'Original',
         });
@@ -243,7 +243,7 @@ describe('updateEntity()', () => {
       if (expectOkResult(version1Result)) {
         expect(version1Result.value.item).toEqual({
           id,
-          _type: 'BlogPost',
+          _type: 'EntityAdminFoo',
           _name: 'Updated name',
           title: 'Updated title',
         });
@@ -253,7 +253,7 @@ describe('updateEntity()', () => {
       if (expectOkResult(publishedResult)) {
         expect(publishedResult.value.item).toEqual({
           id,
-          _type: 'BlogPost',
+          _type: 'EntityAdminFoo',
           _name: 'Updated name',
           title: 'Updated title',
         });
@@ -261,10 +261,10 @@ describe('updateEntity()', () => {
     }
   });
 
-  test('Update BlogPost w/o publish', async () => {
+  test('Update EntityAdminFoo w/o publish', async () => {
     const createResult = await EntityAdmin.createEntity(
       context,
-      { _type: 'BlogPost', _name: 'First', title: 'First' },
+      { _type: 'EntityAdminFoo', _name: 'First', title: 'First' },
       { publish: true }
     );
     if (expectOkResult(createResult)) {
@@ -272,7 +272,7 @@ describe('updateEntity()', () => {
 
       const updateResult = await EntityAdmin.updateEntity(
         context,
-        { id, _type: 'BlogPost', _name: 'Updated name', title: 'Updated title' },
+        { id, _type: 'EntityAdminFoo', _name: 'Updated name', title: 'Updated title' },
         { publish: false }
       );
       expectOkResult(updateResult);
@@ -299,7 +299,7 @@ describe('updateEntity()', () => {
       if (expectOkResult(version0Result)) {
         expect(version0Result.value.item).toEqual({
           id,
-          _type: 'BlogPost',
+          _type: 'EntityAdminFoo',
           _name: 'Updated name',
           title: 'First',
         });
@@ -308,7 +308,7 @@ describe('updateEntity()', () => {
       if (expectOkResult(version1Result)) {
         expect(version1Result.value.item).toEqual({
           id,
-          _type: 'BlogPost',
+          _type: 'EntityAdminFoo',
           _name: 'Updated name',
           title: 'Updated title',
         });
@@ -318,7 +318,7 @@ describe('updateEntity()', () => {
       if (expectOkResult(publishedResult)) {
         expect(publishedResult.value.item).toEqual({
           id,
-          _type: 'BlogPost',
+          _type: 'EntityAdminFoo',
           _name: 'Updated name',
           title: 'First',
         });
@@ -326,10 +326,10 @@ describe('updateEntity()', () => {
     }
   });
 
-  test('Update BlogPost w/o type and name', async () => {
+  test('Update EntityAdminFoo w/o type and name', async () => {
     const createResult = await EntityAdmin.createEntity(
       context,
-      { _type: 'BlogPost', _name: 'Original', title: 'Original' },
+      { _type: 'EntityAdminFoo', _name: 'Original', title: 'Original' },
       { publish: true }
     );
     if (expectOkResult(createResult)) {
@@ -364,7 +364,7 @@ describe('updateEntity()', () => {
       if (expectOkResult(version0Result)) {
         expect(version0Result.value.item).toEqual({
           id,
-          _type: 'BlogPost',
+          _type: 'EntityAdminFoo',
           _name: 'Original',
           title: 'Original',
         });
@@ -373,7 +373,7 @@ describe('updateEntity()', () => {
       if (expectOkResult(version1Result)) {
         expect(version1Result.value.item).toEqual({
           id,
-          _type: 'BlogPost',
+          _type: 'EntityAdminFoo',
           _name: 'Original',
           title: 'Updated title',
         });
@@ -383,7 +383,7 @@ describe('updateEntity()', () => {
       if (expectOkResult(publishedResult)) {
         expect(publishedResult.value.item).toEqual({
           id,
-          _type: 'BlogPost',
+          _type: 'EntityAdminFoo',
           _name: 'Original',
           title: 'Updated title',
         });
@@ -391,10 +391,15 @@ describe('updateEntity()', () => {
     }
   });
 
-  test('Update BlogPost w/o providing all fields', async () => {
+  test('Update EntityAdminFoo w/o providing all fields', async () => {
     const createResult = await EntityAdmin.createEntity(
       context,
-      { _type: 'BlogPost', _name: 'First name', title: 'First title', summary: 'First summary' },
+      {
+        _type: 'EntityAdminFoo',
+        _name: 'First name',
+        title: 'First title',
+        summary: 'First summary',
+      },
       { publish: true }
     );
     if (expectOkResult(createResult)) {
@@ -429,7 +434,7 @@ describe('updateEntity()', () => {
       if (expectOkResult(version0Result)) {
         expect(version0Result.value.item).toEqual({
           id,
-          _type: 'BlogPost',
+          _type: 'EntityAdminFoo',
           _name: 'First name',
           title: 'First title',
           summary: 'First summary',
@@ -439,7 +444,7 @@ describe('updateEntity()', () => {
       if (expectOkResult(version1Result)) {
         expect(version1Result.value.item).toEqual({
           id,
-          _type: 'BlogPost',
+          _type: 'EntityAdminFoo',
           _name: 'First name',
           title: 'First title',
           summary: 'Updated summary',
@@ -450,7 +455,7 @@ describe('updateEntity()', () => {
       if (expectOkResult(publishedResult)) {
         expect(publishedResult.value.item).toEqual({
           id,
-          _type: 'BlogPost',
+          _type: 'EntityAdminFoo',
           _name: 'First name',
           title: 'First title',
           summary: 'Updated summary',
@@ -464,7 +469,7 @@ describe('updateEntity()', () => {
       context,
       {
         id: 'f773ac54-37db-42df-9b55-b6da8de344c3',
-        _type: 'BlogPost',
+        _type: 'EntityAdminFoo',
         _name: 'name',
         foo: 'title',
       },
@@ -478,7 +483,7 @@ describe('updateEntity()', () => {
     const createResult = await EntityAdmin.createEntity(
       context,
       {
-        _type: 'Category',
+        _type: 'EntityAdminBar',
         _name: 'foo',
         title: 'foo',
       },
@@ -490,7 +495,7 @@ describe('updateEntity()', () => {
         context,
         {
           id,
-          _type: 'BlogPost',
+          _type: 'EntityAdminFoo',
           _name: 'name',
           foo: 'title',
         },
@@ -499,17 +504,17 @@ describe('updateEntity()', () => {
       expectErrorResult(
         updateResult,
         ErrorType.BadRequest,
-        'New type BlogPost doesn’t correspond to previous type Category'
+        'New type EntityAdminFoo doesn’t correspond to previous type EntityAdminBar'
       );
     }
   });
 });
 
 describe('deleteEntity()', () => {
-  test('Delete & publish published BlogPost', async () => {
+  test('Delete & publish published EntityAdminFoo', async () => {
     const createResult = await EntityAdmin.createEntity(
       context,
-      { _type: 'BlogPost', _name: 'Delete', title: 'Delete' },
+      { _type: 'EntityAdminFoo', _name: 'Delete', title: 'Delete' },
       { publish: true }
     );
     if (expectOkResult(createResult)) {
@@ -539,7 +544,7 @@ describe('deleteEntity()', () => {
       if (expectOkResult(version0Result)) {
         expect(version0Result.value.item).toEqual({
           id,
-          _type: 'BlogPost',
+          _type: 'EntityAdminFoo',
           _name: 'Delete',
           title: 'Delete',
         });
@@ -548,7 +553,7 @@ describe('deleteEntity()', () => {
       if (expectOkResult(version1Result)) {
         expect(version1Result.value.item).toEqual({
           id,
-          _type: 'BlogPost',
+          _type: 'EntityAdminFoo',
           _name: 'Delete',
         });
       }
@@ -558,10 +563,10 @@ describe('deleteEntity()', () => {
     }
   });
 
-  test('Delete & publish never published BlogPost', async () => {
+  test('Delete & publish never published EntityAdminFoo', async () => {
     const createResult = await EntityAdmin.createEntity(
       context,
-      { _type: 'BlogPost', _name: 'Draft', title: 'Draft' },
+      { _type: 'EntityAdminFoo', _name: 'Draft', title: 'Draft' },
       { publish: false }
     );
     if (expectOkResult(createResult)) {
@@ -591,7 +596,7 @@ describe('deleteEntity()', () => {
       if (expectOkResult(version0Result)) {
         expect(version0Result.value.item).toEqual({
           id,
-          _type: 'BlogPost',
+          _type: 'EntityAdminFoo',
           _name: 'Draft',
           title: 'Draft',
         });
@@ -600,7 +605,7 @@ describe('deleteEntity()', () => {
       if (expectOkResult(version1Result)) {
         expect(version1Result.value.item).toEqual({
           id,
-          _type: 'BlogPost',
+          _type: 'EntityAdminFoo',
           _name: 'Draft',
         });
       }
@@ -610,10 +615,10 @@ describe('deleteEntity()', () => {
     }
   });
 
-  test('Delete w/o publish published BlogPost', async () => {
+  test('Delete w/o publish published EntityAdminFoo', async () => {
     const createResult = await EntityAdmin.createEntity(
       context,
-      { _type: 'BlogPost', _name: 'Delete', title: 'Delete' },
+      { _type: 'EntityAdminFoo', _name: 'Delete', title: 'Delete' },
       { publish: true }
     );
     if (expectOkResult(createResult)) {
@@ -643,7 +648,7 @@ describe('deleteEntity()', () => {
       if (expectOkResult(version0Result)) {
         expect(version0Result.value.item).toEqual({
           id,
-          _type: 'BlogPost',
+          _type: 'EntityAdminFoo',
           _name: 'Delete',
           title: 'Delete',
         });
@@ -652,7 +657,7 @@ describe('deleteEntity()', () => {
       if (expectOkResult(version1Result)) {
         expect(version1Result.value.item).toEqual({
           id,
-          _type: 'BlogPost',
+          _type: 'EntityAdminFoo',
           _name: 'Delete',
         });
       }
@@ -661,7 +666,7 @@ describe('deleteEntity()', () => {
       if (expectOkResult(publishedResult)) {
         expect(publishedResult.value.item).toEqual({
           id,
-          _type: 'BlogPost',
+          _type: 'EntityAdminFoo',
           _name: 'Delete',
           title: 'Delete',
         });
@@ -669,10 +674,10 @@ describe('deleteEntity()', () => {
     }
   });
 
-  test('Delete w/o publish never published BlogPost', async () => {
+  test('Delete w/o publish never published EntityAdminFoo', async () => {
     const createResult = await EntityAdmin.createEntity(
       context,
-      { _type: 'BlogPost', _name: 'Draft', title: 'Draft' },
+      { _type: 'EntityAdminFoo', _name: 'Draft', title: 'Draft' },
       { publish: false }
     );
     if (expectOkResult(createResult)) {
@@ -702,7 +707,7 @@ describe('deleteEntity()', () => {
       if (expectOkResult(version0Result)) {
         expect(version0Result.value.item).toEqual({
           id,
-          _type: 'BlogPost',
+          _type: 'EntityAdminFoo',
           _name: 'Draft',
           title: 'Draft',
         });
@@ -711,7 +716,7 @@ describe('deleteEntity()', () => {
       if (expectOkResult(version1Result)) {
         expect(version1Result.value.item).toEqual({
           id,
-          _type: 'BlogPost',
+          _type: 'EntityAdminFoo',
           _name: 'Draft',
         });
       }
