@@ -3,7 +3,12 @@ import type { Context } from '.';
 export async function getSchema(context: Context<unknown>): Promise<Schema> {
   return new Schema({
     entityTypes: {
-      BlogPost: { fields: [{ name: 'title', type: EntityFieldType.String, isName: true }] },
+      BlogPost: {
+        fields: [
+          { name: 'title', type: EntityFieldType.String, isName: true },
+          { name: 'summary', type: EntityFieldType.String },
+        ],
+      },
       Category: { fields: [{ name: 'title', type: EntityFieldType.String }] },
     },
   });

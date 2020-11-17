@@ -85,7 +85,7 @@ export async function createEntity(
   entity: AdminEntityCreate,
   options: { publish: boolean }
 ): PromiseResult<{ id: string }, ErrorType.BadRequest> {
-  const encodeResult = encodeFieldsToValues(context, entity);
+  const encodeResult = encodeFieldsToValues(context, entity, null);
   if (encodeResult.isError()) {
     return encodeResult;
   }
@@ -139,11 +139,21 @@ export async function updateEntity(
       );
     }
 
-    const encodeResult = encodeFieldsToValues(context, {
-      _name: previousName,
-      ...entity,
-      _type: type,
-    });
+    const { data: previousDataEncoded } = await Db.queryOne<Pick<EntityVersionsTable, 'data'>>(
+      context,
+      'SELECT data FROM entity_versions WHERE entities_id = $1 AND version = $2',
+      [entityId, maxVersion]
+    );
+
+    const encodeResult = encodeFieldsToValues(
+      context,
+      {
+        _name: previousName, // default to previous but allow changing
+        ...entity,
+        _type: type, // always same as previously stored
+      },
+      previousDataEncoded
+    );
     if (encodeResult.isError()) {
       return encodeResult;
     }
@@ -169,7 +179,8 @@ export async function updateEntity(
 
 function encodeFieldsToValues(
   context: SessionContext,
-  entity: { _type: string; _name: string; [fieldName: string]: unknown }
+  entity: { _type: string; _name: string; [fieldName: string]: unknown },
+  defaultValuesEncoded: Record<string, unknown> | null
 ): Result<{ type: string; name: string; data: Record<string, unknown> }, ErrorType.BadRequest> {
   const assertion = ensureRequired({ 'entity._type': entity._type, 'entity._name': entity._name });
   if (assertion.isError()) {
@@ -191,8 +202,12 @@ function encodeFieldsToValues(
   };
   for (const fieldSpec of entitySpec.fields) {
     const fieldAdapter = EntityFieldTypeAdapters.getAdapter(fieldSpec);
-    const data = entity[fieldSpec.name];
-    result.data[fieldSpec.name] = fieldAdapter.encodeData(data);
+    if (fieldSpec.name in entity) {
+      const data = entity[fieldSpec.name];
+      result.data[fieldSpec.name] = fieldAdapter.encodeData(data);
+    } else if (defaultValuesEncoded && fieldSpec.name in defaultValuesEncoded) {
+      result.data[fieldSpec.name] = defaultValuesEncoded[fieldSpec.name]; // is already encoded
+    }
   }
   return ok(result);
 }

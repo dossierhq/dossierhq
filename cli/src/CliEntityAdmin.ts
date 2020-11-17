@@ -50,7 +50,7 @@ export async function editEntity(context: SessionContext, id: string): Promise<v
   const publish = await showConfirm('Publish the entity?');
   const updateResult = await EntityAdmin.updateEntity(context, entity, { publish });
   if (updateResult.isError()) {
-    logErrorResult('Failed creating entity', updateResult);
+    logErrorResult('Failed updating entity', updateResult);
     return;
   }
   console.log(`${chalk.bold('Updated:')} ${id}`);
