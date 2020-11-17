@@ -381,6 +381,74 @@ describe('updateEntity()', () => {
     }
   });
 
+  test('Update BlogPost w/o providing all fields', async () => {
+    const createResult = await EntityAdmin.createEntity(
+      context,
+      { _type: 'BlogPost', _name: 'First name', title: 'First title', summary: 'First summary' },
+      { publish: true }
+    );
+    if (expectOkResult(createResult)) {
+      const { id } = createResult.value;
+
+      const updateResult = await EntityAdmin.updateEntity(
+        context,
+        { id, summary: 'Updated summary' },
+        { publish: true }
+      );
+      expectOkResult(updateResult);
+
+      const historyResult = await EntityAdmin.getEntityHistory(context, id);
+      if (expectOkResult(historyResult)) {
+        expectEntityHistoryVersions(historyResult.value, [
+          {
+            version: 0,
+            isDelete: false,
+            isPublished: false,
+            createdBy: context.session.subjectId,
+          },
+          {
+            version: 1,
+            isDelete: false,
+            isPublished: true,
+            createdBy: context.session.subjectId,
+          },
+        ]);
+      }
+
+      const version0Result = await EntityAdmin.getEntity(context, id, { version: 0 });
+      if (expectOkResult(version0Result)) {
+        expect(version0Result.value.item).toEqual({
+          id,
+          _type: 'BlogPost',
+          _name: 'First name',
+          title: 'First title',
+          summary: 'First summary',
+        });
+      }
+      const version1Result = await EntityAdmin.getEntity(context, id, { version: 1 });
+      if (expectOkResult(version1Result)) {
+        expect(version1Result.value.item).toEqual({
+          id,
+          _type: 'BlogPost',
+          _name: 'First name',
+          title: 'First title',
+          summary: 'Updated summary',
+        });
+      }
+
+      const publishedResult = await PublishedEntity.getEntity(context, id);
+      if (expectOkResult(publishedResult)) {
+        expect(publishedResult.value.item).toEqual({
+          id,
+          _type: 'BlogPost',
+          _name: 'First name',
+          title: 'First title',
+          summary: 'Updated summary',
+        });
+      }
+    }
+  });
+
   test('Error: Update with invalid id', async () => {
     const result = await EntityAdmin.updateEntity(
       context,
