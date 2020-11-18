@@ -5055,10 +5055,12 @@ packages:
       tarball: 'file:projects/datadata-examples-foo.tgz'
     version: 0.0.0
   'file:projects/datadata.tgz':
+    dependencies:
+      dotenv: 8.2.0
     dev: false
     name: '@rush-temp/datadata'
     resolution:
-      integrity: sha512-CxMU7sm7wyybFdIJ1H5IV705U+djPrGpEIYpfYX4YrwupjCdMBI6l+T4gIgjPedFtAKTEbxkp48RVF/r9aLInQ==
+      integrity: sha512-+yYjzW276dZkvV1R8PaGOVoOk4YfglvQW+70+wWiCBUCxI1Y495YyFPWEngCv356WK84uQn6RKgUW9zaBqYoHg==
       tarball: 'file:projects/datadata.tgz'
     version: 0.0.0
   'file:projects/graphql.tgz_ts-node@9.0.0':

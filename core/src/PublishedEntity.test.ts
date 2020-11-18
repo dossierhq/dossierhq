@@ -1,13 +1,12 @@
 import type { Instance, SessionContext } from '.';
 import { ErrorType, PublishedEntity } from '.';
-import TestInstance from '../test/TestInstance';
-import { ensureSessionContext, expectErrorResult } from '../test/TestUtils';
+import { createTestInstance, ensureSessionContext, expectErrorResult } from './TestUtils';
 
 let instance: Instance;
 let context: SessionContext;
 
 beforeAll(async () => {
-  instance = await TestInstance.createInstance({ loadSchema: true });
+  instance = await createTestInstance({ loadSchema: true });
   context = await ensureSessionContext(instance, 'test', 'published-entity');
 });
 afterAll(async () => {

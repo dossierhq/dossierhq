@@ -1,20 +1,19 @@
 import type { Instance, SessionContext } from '.';
 import { EntityAdmin, EntityFieldType, ErrorType, PublishedEntity } from '.';
-import TestInstance from '../test/TestInstance';
 import {
+  createTestInstance,
   ensureSessionContext,
   expectErrorResult,
-  expectEntityHistoryVersions,
   expectOkResult,
-  uuidMatcher,
   updateSchema,
-} from '../test/TestUtils';
+} from './TestUtils';
+import { expectEntityHistoryVersions, uuidMatcher } from '../test/AdditionalTestUtils';
 
 let instance: Instance;
 let context: SessionContext;
 
 beforeAll(async () => {
-  instance = await TestInstance.createInstance({ loadSchema: true });
+  instance = await createTestInstance({ loadSchema: true });
   context = await ensureSessionContext(instance, 'test', 'entity-admin');
   await updateSchema(context, {
     EntityAdminFoo: {

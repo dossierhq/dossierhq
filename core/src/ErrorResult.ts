@@ -21,6 +21,10 @@ export class OkResult<TOk, TError extends ErrorType> {
     return false;
   }
 
+  asError(): Error {
+    return new Error('Expected error, but was ok');
+  }
+
   throwIfError(): void {
     // do nothing
   }
@@ -35,6 +39,10 @@ export class ErrorResult<TOk, TError extends ErrorType> {
 
   isError(): this is ErrorResult<TOk, TError> {
     return true;
+  }
+
+  asError(): Error {
+    return new Error(`${this.error}: ${this.message}`);
   }
 
   throwIfError(): never {
