@@ -1,5 +1,5 @@
 import { EntityFieldType, PublishedEntity } from '@datadata/core';
-import type { EntityTypeSpecification, Schema, SessionContext } from '@datadata/core';
+import type { Entity, EntityTypeSpecification, Schema, SessionContext } from '@datadata/core';
 import {
   GraphQLEnumType,
   GraphQLID,
@@ -14,18 +14,11 @@ import type {
   GraphQLEnumValueConfigMap,
   GraphQLFieldConfigMap,
   GraphQLNamedType,
-  GraphQLResolveInfo,
   GraphQLSchemaConfig,
 } from 'graphql';
 
 interface SessionGraphQLContext {
   context: SessionContext;
-}
-
-interface EntitySource {
-  id: string;
-  _type: string;
-  _name: string;
 }
 
 export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
@@ -94,7 +87,6 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         interfaces: this.getInterfaces('Node'),
         fields: {
           id: { type: new GraphQLNonNull(GraphQLID) },
-          _type: { type: new GraphQLNonNull(this.getType('EntityType')) },
           _name: { type: new GraphQLNonNull(GraphQLString) },
         },
       })
@@ -109,14 +101,13 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
 
   addEntityType(name: string, entitySpec: EntityTypeSpecification): void {
     this.addType(
-      new GraphQLObjectType<EntitySource, TContext>({
+      new GraphQLObjectType<Entity, TContext>({
         name,
         interfaces: this.getInterfaces('Node', 'Entity'),
-        isTypeOf: (source, unusedContext, unusedInfo: GraphQLResolveInfo) => source._type === name,
+        isTypeOf: (source, unusedContext, unusedInfo) => source._type === name,
         fields: () => {
-          const fields: GraphQLFieldConfigMap<EntitySource, TContext> = {
+          const fields: GraphQLFieldConfigMap<Entity, TContext> = {
             id: { type: new GraphQLNonNull(GraphQLID) },
-            _type: { type: new GraphQLNonNull(this.getType('EntityType')) },
             _name: { type: new GraphQLNonNull(GraphQLString) },
           };
           for (const fieldSpec of entitySpec.fields) {
