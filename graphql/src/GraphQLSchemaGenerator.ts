@@ -1,3 +1,4 @@
+import { EntityFieldType } from '@datadata/core';
 import type { EntityTypeSpecification, Schema } from '@datadata/core';
 import {
   GraphQLEnumType,
@@ -112,6 +113,15 @@ export class GraphQLSchemaGenerator {
             _type: { type: new GraphQLNonNull(this.getType('EntityType')) },
             _name: { type: new GraphQLNonNull(GraphQLString) },
           };
+          for (const fieldSpec of entitySpec.fields) {
+            switch (fieldSpec.type) {
+              case EntityFieldType.String:
+                fields[fieldSpec.name] = { type: GraphQLString };
+                break;
+              default:
+                throw new Error(`Unexpected type (${fieldSpec.type})`);
+            }
+          }
           return fields;
         },
       })
