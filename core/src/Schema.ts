@@ -1,9 +1,9 @@
-import type { SessionContext } from '.';
+import type { Context, SessionContext } from '.';
 import * as Db from './Db';
 import type { EntityTypesTable } from './DbTableTypes';
 import { ErrorType, ok, PromiseResult } from './ErrorResult';
 
-export async function getSchema(context: SessionContext): Promise<Schema> {
+export async function getSchema(context: Context<unknown>): Promise<Schema> {
   const entityTypes: SchemaSpecification['entityTypes'] = {};
 
   const entitySpecs = await Db.queryMany<Pick<EntityTypesTable, 'name' | 'specification'>>(

@@ -4,10 +4,10 @@ dependencies:
   '@rush-temp/core': 'file:projects/core.tgz'
   '@rush-temp/datadata': 'file:projects/datadata.tgz'
   '@rush-temp/datadata-examples-foo': 'file:projects/datadata-examples-foo.tgz'
+  '@rush-temp/graphql': 'file:projects/graphql.tgz'
   '@rush-temp/postgres': 'file:projects/postgres.tgz'
   '@types/inquirer': 7.3.1
   '@types/jest': 26.0.15
-  '@types/node': 14.14.7
   '@types/pg': 7.14.6
   '@typescript-eslint/eslint-plugin': 4.7.0_e0872ac31e5aafe6623f77947c0152d6
   '@typescript-eslint/parser': 4.7.0_eslint@7.13.0+typescript@4.0.5
@@ -4980,15 +4980,17 @@ packages:
       integrity: sha512-Ux4ygGWsu2c7isFWe8Yu1YluJmqVhxqK2cLXNQA5AcC3QfbGNpM7fu0Y8b/z16pXLnFxZYvWhd3fhBY9DLmC6Q==
   'file:projects/benchpress.tgz':
     dependencies:
+      '@types/node': 14.14.7
       '@typescript-eslint/eslint-plugin': 4.7.0_e0872ac31e5aafe6623f77947c0152d6
       '@typescript-eslint/parser': 4.7.0_eslint@7.13.0+typescript@4.0.5
       eslint: 7.13.0
       prettier: 2.1.2
+      ts-node: 9.0.0_typescript@4.0.5
       typescript: 4.0.5
     dev: false
     name: '@rush-temp/benchpress'
     resolution:
-      integrity: sha512-zcwVu8TETZN0mPh82fi4AdjwS6v74v2NT+SPlBmVpU8QRDzGRyNYClyH7Nr0Exjh+7jQvF7wx4qtmEHzCiaDKw==
+      integrity: sha512-oN6B9e0eu3+lni8cJbV0E7pPR/crcge/gX+NdiJLQsDHiH40UK92K7NTCjllPRl3dlbWjXK9I0VPjQB9rxkSvg==
       tarball: 'file:projects/benchpress.tgz'
     version: 0.0.0
   'file:projects/cli.tgz':
@@ -5051,6 +5053,19 @@ packages:
       integrity: sha512-CxMU7sm7wyybFdIJ1H5IV705U+djPrGpEIYpfYX4YrwupjCdMBI6l+T4gIgjPedFtAKTEbxkp48RVF/r9aLInQ==
       tarball: 'file:projects/datadata.tgz'
     version: 0.0.0
+  'file:projects/graphql.tgz':
+    dependencies:
+      '@typescript-eslint/eslint-plugin': 4.7.0_e0872ac31e5aafe6623f77947c0152d6
+      '@typescript-eslint/parser': 4.7.0_eslint@7.13.0+typescript@4.0.5
+      eslint: 7.13.0
+      prettier: 2.1.2
+      typescript: 4.0.5
+    dev: false
+    name: '@rush-temp/graphql'
+    resolution:
+      integrity: sha512-rEkUEdmtRqZD5XdFIMFQFvhiY3rY8UOKx6UWovFm7kPtVT7tBwwWxbbk0i51ey4CCGzJmquMrybe4eyY+DtlTw==
+      tarball: 'file:projects/graphql.tgz'
+    version: 0.0.0
   'file:projects/postgres.tgz':
     dependencies:
       pg: 8.5.0_pg@8.5.0
@@ -5069,10 +5084,10 @@ specifiers:
   '@rush-temp/core': 'file:./projects/core.tgz'
   '@rush-temp/datadata': 'file:./projects/datadata.tgz'
   '@rush-temp/datadata-examples-foo': 'file:./projects/datadata-examples-foo.tgz'
+  '@rush-temp/graphql': 'file:./projects/graphql.tgz'
   '@rush-temp/postgres': 'file:./projects/postgres.tgz'
   '@types/inquirer': ^7.3.1
   '@types/jest': ^26.0.15
-  '@types/node': ^14.14.6
   '@types/pg': ^7.14.5
   '@typescript-eslint/eslint-plugin': ^4.6.1
   '@typescript-eslint/parser': ^4.6.1

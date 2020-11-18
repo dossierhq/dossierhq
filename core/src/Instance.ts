@@ -1,4 +1,4 @@
-import type { AuthContext, Schema, Session, SessionContext } from '.';
+import type { AuthContext, Context, Schema, Session, SessionContext } from '.';
 import { AuthContextImpl, SessionContextImpl } from './Context';
 import type { Pool } from './Db';
 import * as Db from './Db';
@@ -22,7 +22,7 @@ export default class Instance {
     }
   }
 
-  async reloadSchema(context: SessionContext): Promise<void> {
+  async reloadSchema(context: Context<unknown>): Promise<void> {
     this.#schema = await getSchema(context);
   }
 

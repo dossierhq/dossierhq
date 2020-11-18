@@ -1,34 +1,34 @@
 {
-  "name": "datadata-examples-foo",
+  "name": "@datadata/graphql",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
   "scripts": {
-    "ci:check": "npm run ts:check && npm run eslint:check && npm run prettier:check",
-    "db:migrate": "./scripts/db-migrate.sh",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "ci:check": "npm run ts:check && npm run eslint:check && npm run prettier:check && npm test",
     "eslint:check": "eslint .",
     "eslint:fix": "eslint --fix .",
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write .",
-    "start": "ts-node ./src/main.ts",
+    "test": "jest",
+    "test:watch": "jest --watch",
     "ts:check": "tsc --noEmit"
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "@datadata/cli": "1.0.0",
-    "@datadata/core": "1.0.0",
-    "dotenv": "^8.2.0"
-  },
   "devDependencies": {
-    "@datadata/postgres": "1.0.0",
-    "@types/node": "^14.14.7",
+    "@types/jest": "~26.0.15",
     "@typescript-eslint/eslint-plugin": "^4.6.1",
     "@typescript-eslint/parser": "^4.6.1",
     "eslint": "^7.13.0",
+    "jest": "~26.6.3",
     "prettier": "2.1.2",
-    "ts-node": "^9.0.0",
+    "ts-jest": "~26.4.4",
     "typescript": "^4.0.5"
+  },
+  "dependencies": {
+    "@datadata/core": "1.0.0"
   }
 }

@@ -4,7 +4,6 @@
  */
 {
   "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/rush.schema.json",
-
   /**
    * (Required) This specifies the version of the Rush engine to be used in this repo.
    * Rush's "version selector" feature ensures that the globally installed tool will
@@ -17,7 +16,6 @@
    * correct error-underlining and tab-completion for editors such as VS Code.
    */
   "rushVersion": "5.35.2",
-
   /**
    * The next field selects which package manager should be installed and determines its version.
    * Rush installs its own local copy of the package manager to ensure that your build process
@@ -27,10 +25,8 @@
    * for details about these alternatives.
    */
   "pnpmVersion": "4.14.4",
-
   // "npmVersion": "4.5.0",
   // "yarnVersion": "1.9.4",
-
   /**
    * Options that are only used when the PNPM package manager is selected
    */
@@ -108,7 +104,6 @@
      */
     // "useWorkspaces": true
   },
-
   /**
    * Older releases of the Node.js engine may be missing features required by your system.
    * Other releases may have bugs.  In particular, the "latest" version will not be a
@@ -118,7 +113,6 @@
    * for your repo.
    */
   "nodeSupportedVersionRange": ">=14.14.0 <15.0.0",
-
   /**
    * Odd-numbered major versions of Node.js are experimental.  Even-numbered releases
    * spend six months in a stabilization period before the first Long Term Support (LTS) version.
@@ -131,7 +125,6 @@
    * to disable Rush's warning.
    */
   // "suppressNodeLtsWarning": false,
-
   /**
    * If you would like the version specifiers for your dependencies to be consistent, then
    * uncomment this line. This is effectively similar to running "rush check" before any
@@ -144,7 +137,6 @@
    * section of the common-versions.json.
    */
   // "ensureConsistentVersions": true,
-
   /**
    * Large monorepos can become intimidating for newcomers if project folder paths don't follow
    * a consistent and recognizable pattern.  When the system allows nested folder trees,
@@ -170,7 +162,6 @@
    */
   // "projectFolderMinDepth": 2,
   // "projectFolderMaxDepth": 2,
-
   /**
    * Today the npmjs.com registry enforces fairly strict naming rules for packages, but in the early
    * days there was no standard and hardly any enforcement.  A few large legacy projects are still using
@@ -183,7 +174,6 @@
    * The default value is false.
    */
   // "allowMostlyStandardPackageNames": true,
-
   /**
    * This feature helps you to review and approve new packages before they are introduced
    * to your monorepo.  For example, you may be concerned about licensing, code quality,
@@ -219,7 +209,6 @@
   //    */
   //   // "ignoredNpmScopes": ["@types"]
   // },
-
   /**
    * If you use Git as your version control system, this section has some additional
    * optional features you can use.
@@ -255,7 +244,6 @@
      */
     // "versionBumpCommitMessage": "Applying package updates. [skip-ci]"
   },
-
   "repository": {
     /**
      * The URL of this Git repository, used by "rush change" to determine the base branch for your PR.
@@ -284,7 +272,6 @@
      */
     // "defaultRemote": "origin"
   },
-
   /**
    * Event hooks are customized script actions that Rush executes when specific events occur
    */
@@ -295,23 +282,19 @@
     "preRushInstall": [
       // "common/scripts/pre-rush-install.js"
     ],
-
     /**
      * The list of shell commands to run after the Rush installation finishes
      */
     "postRushInstall": [],
-
     /**
      * The list of shell commands to run before the Rush build command starts
      */
     "preRushBuild": [],
-
     /**
      * The list of shell commands to run after the Rush build command finishes
      */
     "postRushBuild": []
   },
-
   /**
    * Installation variants allow you to maintain a parallel set of configuration files that can be
    * used to build the entire monorepo with an alternate set of dependencies.  For example, suppose
@@ -342,7 +325,6 @@
     //   "description": "Build this repo using the previous release of the SDK"
     // }
   ],
-
   /**
    * Rush can collect anonymous telemetry about everyday developer activity such as
    * success/failure of installs, builds, and other operations.  You can use this to identify
@@ -352,14 +334,12 @@
    * in the "eventHooks" section.
    */
   // "telemetryEnabled": false,
-
   /**
    * Allows creation of hotfix changes. This feature is experimental so it is disabled by default.
    * If this is set, 'rush change' only allows a 'hotfix' change type to be specified. This change type
    * will be used when publishing subsequent changes from the monorepo.
    */
   // "hotfixChangeEnabled": false,
-
   /**
    * (Required) This is the inventory of projects to be managed by Rush.
    *
@@ -388,6 +368,10 @@
     {
       "packageName": "datadata-examples-foo",
       "projectFolder": "examples/foo"
+    },
+    {
+      "packageName": "@datadata/graphql",
+      "projectFolder": "graphql"
     },
     {
       "packageName": "@datadata/postgres",
