@@ -1,6 +1,6 @@
 {
   "editor.formatOnSave": true,
-  "cSpell.words": [""],
+  "cSpell.words": ["datadata", "graphqlid"],
   "files.insertFinalNewline": true,
   "editor.tabSize": 2
 }
