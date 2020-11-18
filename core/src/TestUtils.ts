@@ -31,7 +31,7 @@ export async function ensureSessionContext(
     return instance.createSessionContext(sessionResult.value);
   }
 
-  expectErrorResult(sessionResult, ErrorType.NotFound, 'Entity not found');
+  expectErrorResult(sessionResult, ErrorType.NotFound, 'Principal doesn’t exist');
 
   const createResult = await Auth.createPrincipal(authContext, provider, identifier);
   createResult.throwIfError();
