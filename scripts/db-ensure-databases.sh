@@ -40,7 +40,12 @@ function grant_access_for_user {
   set -a
   source "$THIS_DIR/../.env"
   set +a
+
   create_user "examplesfoouser" "examplesfoopass"
   create_database "datadata-examples-foo"
   grant_access_for_user "datadata-examples-foo" "examplesfoouser"
+
+  create_user "graphqltestuser" "graphqltestpass"
+  create_database "datadata-graphql"
+  grant_access_for_user "datadata-graphql" "graphqltestuser"
 )

@@ -1,10 +1,10 @@
 import type { Instance } from '.';
-import TestInstance from '../test/TestInstance';
+import { createTestInstance } from './TestUtils';
 
 let instance: Instance;
 
 beforeAll(async () => {
-  instance = await TestInstance.createInstance({ loadSchema: false });
+  instance = await createTestInstance({ loadSchema: false });
 });
 afterAll(async () => {
   await instance.shutdown();

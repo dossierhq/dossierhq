@@ -15,6 +15,17 @@ jobs:
       - name: rush install
         run: |
           node common/scripts/install-run-rush.js install
+      - name: start db
+        run: |
+          npm run db:start &
+          npm run db:wait
+      - name: setup db
+        run: |
+          npm run db:ensure-dbs
+          npm run db:migrate:all
       - name: check
         run: |
           npm run ci:check:all
+      - name: stop db
+        run: |
+          npm run db:stop

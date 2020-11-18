@@ -20,3 +20,4 @@ export { ErrorType } from './ErrorResult';
 export { default as Instance } from './Instance';
 export * as PublishedEntity from './PublishedEntity';
 export { EntityFieldType, Schema } from './Schema';
+export * as TestUtils from './TestUtils';

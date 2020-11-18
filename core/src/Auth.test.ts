@@ -1,12 +1,12 @@
 import { Auth, AuthContext, ErrorType, Instance } from '.';
-import TestInstance from '../test/TestInstance';
-import { expectErrorResult, expectOkResult, uuidMatcher } from '../test/TestUtils';
+import { createTestInstance, expectErrorResult, expectOkResult } from './TestUtils';
+import { uuidMatcher } from '../test/AdditionalTestUtils';
 
 let instance: Instance;
 let context: AuthContext;
 
 beforeAll(async () => {
-  instance = await TestInstance.createInstance({ loadSchema: false });
+  instance = await createTestInstance({ loadSchema: false });
   context = instance.createAuthContext();
 });
 afterAll(async () => {

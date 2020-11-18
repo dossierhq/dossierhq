@@ -9,9 +9,11 @@
   },
   "scripts": {
     "ci:check:all": "./scripts/npm-all-projects.sh run ci:check --if-present",
+    "db:ensure-dbs": "./scripts/db-ensure-databases.sh",
     "db:migrate:all": "./scripts/npm-all-projects.sh run db:migrate --if-present",
     "db:start": "./scripts/db-start.sh",
     "db:stop": "./scripts/db-stop.sh",
+    "db:wait": "./scripts/db-wait-for-connection.js",
     "eslint:check:all": "./scripts/npm-all-projects.sh run eslint:check --if-present",
     "ts:check:all": "./scripts/npm-all-projects.sh run ts:check --if-present"
   },
@@ -24,5 +26,9 @@
   "bugs": {
     "url": "https://github.com/jonasb/datadata/issues"
   },
-  "homepage": "https://github.com/jonasb/datadata#readme"
+  "homepage": "https://github.com/jonasb/datadata#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "pg": "^8.4.2"
+  }
 }
