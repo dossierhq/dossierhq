@@ -1,5 +1,5 @@
-import { EntityFieldType } from '@datadata/core';
-import type { EntityTypeSpecification, Schema } from '@datadata/core';
+import { EntityFieldType, PublishedEntity } from '@datadata/core';
+import type { EntityTypeSpecification, Schema, SessionContext } from '@datadata/core';
 import {
   GraphQLEnumType,
   GraphQLID,
@@ -18,7 +18,17 @@ import type {
   GraphQLSchemaConfig,
 } from 'graphql';
 
-export class GraphQLSchemaGenerator {
+interface SessionGraphQLContext {
+  context: SessionContext;
+}
+
+interface EntitySource {
+  id: string;
+  _type: string;
+  _name: string;
+}
+
+export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
   #types: GraphQLNamedType[] = [];
 
   constructor(readonly schema: Schema) {}
@@ -91,24 +101,20 @@ export class GraphQLSchemaGenerator {
     );
   }
 
-  addEntityTypes<TContext>(): void {
+  addEntityTypes(): void {
     for (const [entityName, entitySpec] of Object.entries(this.schema.spec.entityTypes)) {
-      this.addEntityType<TContext>(entityName, entitySpec);
+      this.addEntityType(entityName, entitySpec);
     }
   }
 
-  addEntityType<TContext>(name: string, entitySpec: EntityTypeSpecification): void {
+  addEntityType(name: string, entitySpec: EntityTypeSpecification): void {
     this.addType(
-      new GraphQLObjectType<{ _type: string }, TContext>({
+      new GraphQLObjectType<EntitySource, TContext>({
         name,
         interfaces: this.getInterfaces('Node', 'Entity'),
-        isTypeOf: (
-          source: { _type: string },
-          unusedContext: TContext,
-          unusedInfo: GraphQLResolveInfo
-        ) => source._type === name,
+        isTypeOf: (source, unusedContext, unusedInfo: GraphQLResolveInfo) => source._type === name,
         fields: () => {
-          const fields: GraphQLFieldConfigMap<unknown, TContext> = {
+          const fields: GraphQLFieldConfigMap<EntitySource, TContext> = {
             id: { type: new GraphQLNonNull(GraphQLID) },
             _type: { type: new GraphQLNonNull(this.getType('EntityType')) },
             _name: { type: new GraphQLNonNull(GraphQLString) },
@@ -128,13 +134,24 @@ export class GraphQLSchemaGenerator {
     );
   }
 
-  buildSchemaConfig<TSource, TContext>(): GraphQLSchemaConfig {
+  buildSchemaConfig<TSource>(): GraphQLSchemaConfig {
     this.addSupportingTypes();
-    this.addEntityTypes<TContext>();
+    this.addEntityTypes();
 
     const queryType = new GraphQLObjectType<TSource, TContext>({
       name: 'Query',
       fields: {
+        node: {
+          type: this.getInterface('Node'),
+          args: {
+            id: { type: new GraphQLNonNull(GraphQLID) },
+          },
+          resolve: async (unusedSource, { id }, context) => {
+            const result = await PublishedEntity.getEntity(context.context, id);
+            return result.isOk() ? result.value.item : null; // TODO handle error
+          },
+        },
+
         hello: {
           type: GraphQLString,
           resolve() {
@@ -146,7 +163,7 @@ export class GraphQLSchemaGenerator {
     return { query: queryType, types: this.#types };
   }
 
-  buildSchema<TSource, TContext>(): GraphQLSchema {
-    return new GraphQLSchema(this.buildSchemaConfig<TSource, TContext>());
+  buildSchema<TSource>(): GraphQLSchema {
+    return new GraphQLSchema(this.buildSchemaConfig<TSource>());
   }
 }
