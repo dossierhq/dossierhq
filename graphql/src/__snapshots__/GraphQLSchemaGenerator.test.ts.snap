@@ -125,6 +125,51 @@ Object {
           "enumValues": null,
           "fields": Array [
             Object {
+              "name": "id",
+              "type": Object {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": Object {
+                  "name": "ID",
+                },
+              },
+            },
+            Object {
+              "name": "_type",
+              "type": Object {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": Object {
+                  "name": "EntityType",
+                },
+              },
+            },
+            Object {
+              "name": "_name",
+              "type": Object {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": Object {
+                  "name": "String",
+                },
+              },
+            },
+          ],
+          "interfaces": Array [
+            Object {
+              "name": "Node",
+            },
+            Object {
+              "name": "Entity",
+            },
+          ],
+          "kind": "OBJECT",
+          "name": "Foo",
+        },
+        Object {
+          "enumValues": null,
+          "fields": Array [
+            Object {
               "name": "hello",
               "type": Object {
                 "kind": "SCALAR",
