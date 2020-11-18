@@ -1,4 +1,4 @@
-import type { Schema } from '@datadata/core';
+import type { EntityTypeSpecification, Schema } from '@datadata/core';
 import {
   GraphQLEnumType,
   GraphQLID,
@@ -9,7 +9,13 @@ import {
   GraphQLString,
   isInterfaceType,
 } from 'graphql';
-import type { GraphQLEnumValueConfigMap, GraphQLNamedType, GraphQLSchemaConfig } from 'graphql';
+import type {
+  GraphQLEnumValueConfigMap,
+  GraphQLFieldConfigMap,
+  GraphQLNamedType,
+  GraphQLResolveInfo,
+  GraphQLSchemaConfig,
+} from 'graphql';
 
 export class GraphQLSchemaGenerator {
   #types: GraphQLNamedType[] = [];
@@ -37,6 +43,10 @@ export class GraphQLSchemaGenerator {
       return type;
     }
     throw new Error(`Type ${name} is not an interface`);
+  }
+
+  getInterfaces(...names: string[]): GraphQLInterfaceType[] {
+    return names.map((name) => this.getInterface(name));
   }
 
   addSupportingTypes(): void {
@@ -70,7 +80,7 @@ export class GraphQLSchemaGenerator {
     this.addType(
       new GraphQLInterfaceType({
         name: 'Entity',
-        interfaces: [this.getInterface('Node')],
+        interfaces: this.getInterfaces('Node'),
         fields: {
           id: { type: new GraphQLNonNull(GraphQLID) },
           _type: { type: new GraphQLNonNull(this.getType('EntityType')) },
@@ -80,8 +90,38 @@ export class GraphQLSchemaGenerator {
     );
   }
 
+  addEntityTypes<TContext>(): void {
+    for (const [entityName, entitySpec] of Object.entries(this.schema.spec.entityTypes)) {
+      this.addEntityType<TContext>(entityName, entitySpec);
+    }
+  }
+
+  addEntityType<TContext>(name: string, entitySpec: EntityTypeSpecification): void {
+    this.addType(
+      new GraphQLObjectType<{ _type: string }, TContext>({
+        name,
+        interfaces: this.getInterfaces('Node', 'Entity'),
+        isTypeOf: (
+          source: { _type: string },
+          unusedContext: TContext,
+          unusedInfo: GraphQLResolveInfo
+        ) => source._type === name,
+        fields: () => {
+          const fields: GraphQLFieldConfigMap<unknown, TContext> = {
+            id: { type: new GraphQLNonNull(GraphQLID) },
+            _type: { type: new GraphQLNonNull(this.getType('EntityType')) },
+            _name: { type: new GraphQLNonNull(GraphQLString) },
+          };
+          return fields;
+        },
+      })
+    );
+  }
+
   buildSchemaConfig<TSource, TContext>(): GraphQLSchemaConfig {
     this.addSupportingTypes();
+    this.addEntityTypes<TContext>();
+
     const queryType = new GraphQLObjectType<TSource, TContext>({
       name: 'Query',
       fields: {
