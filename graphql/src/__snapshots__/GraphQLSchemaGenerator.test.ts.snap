@@ -187,3 +187,218 @@ Object {
   },
 }
 `;
+
+exports[`Two entity types schema spec Generated QL schema 1`] = `
+Object {
+  "data": Object {
+    "__schema": Object {
+      "types": Array [
+        Object {
+          "enumValues": null,
+          "fields": Array [
+            Object {
+              "name": "id",
+              "type": Object {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": Object {
+                  "name": "ID",
+                },
+              },
+            },
+          ],
+          "interfaces": Array [],
+          "kind": "INTERFACE",
+          "name": "Node",
+        },
+        Object {
+          "enumValues": Array [
+            Object {
+              "name": "Foo",
+            },
+            Object {
+              "name": "Bar",
+            },
+          ],
+          "fields": null,
+          "interfaces": null,
+          "kind": "ENUM",
+          "name": "EntityType",
+        },
+        Object {
+          "enumValues": null,
+          "fields": Array [
+            Object {
+              "name": "id",
+              "type": Object {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": Object {
+                  "name": "ID",
+                },
+              },
+            },
+            Object {
+              "name": "_type",
+              "type": Object {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": Object {
+                  "name": "EntityType",
+                },
+              },
+            },
+            Object {
+              "name": "_name",
+              "type": Object {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": Object {
+                  "name": "String",
+                },
+              },
+            },
+          ],
+          "interfaces": Array [
+            Object {
+              "name": "Node",
+            },
+          ],
+          "kind": "INTERFACE",
+          "name": "Entity",
+        },
+        Object {
+          "enumValues": null,
+          "fields": Array [
+            Object {
+              "name": "id",
+              "type": Object {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": Object {
+                  "name": "ID",
+                },
+              },
+            },
+            Object {
+              "name": "_type",
+              "type": Object {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": Object {
+                  "name": "EntityType",
+                },
+              },
+            },
+            Object {
+              "name": "_name",
+              "type": Object {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": Object {
+                  "name": "String",
+                },
+              },
+            },
+            Object {
+              "name": "fooField",
+              "type": Object {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null,
+              },
+            },
+          ],
+          "interfaces": Array [
+            Object {
+              "name": "Node",
+            },
+            Object {
+              "name": "Entity",
+            },
+          ],
+          "kind": "OBJECT",
+          "name": "Foo",
+        },
+        Object {
+          "enumValues": null,
+          "fields": Array [
+            Object {
+              "name": "id",
+              "type": Object {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": Object {
+                  "name": "ID",
+                },
+              },
+            },
+            Object {
+              "name": "_type",
+              "type": Object {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": Object {
+                  "name": "EntityType",
+                },
+              },
+            },
+            Object {
+              "name": "_name",
+              "type": Object {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": Object {
+                  "name": "String",
+                },
+              },
+            },
+            Object {
+              "name": "barField1",
+              "type": Object {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null,
+              },
+            },
+            Object {
+              "name": "barField2",
+              "type": Object {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null,
+              },
+            },
+          ],
+          "interfaces": Array [
+            Object {
+              "name": "Node",
+            },
+            Object {
+              "name": "Entity",
+            },
+          ],
+          "kind": "OBJECT",
+          "name": "Bar",
+        },
+        Object {
+          "enumValues": null,
+          "fields": Array [
+            Object {
+              "name": "hello",
+              "type": Object {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null,
+              },
+            },
+          ],
+          "interfaces": Array [],
+          "kind": "OBJECT",
+          "name": "Query",
+        },
+      ],
+    },
+  },
+}
+`;

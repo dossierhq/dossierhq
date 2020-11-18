@@ -1,4 +1,4 @@
-import { Schema } from '@datadata/core';
+import { EntityFieldType, Schema } from '@datadata/core';
 import type { SchemaSpecification } from '@datadata/core';
 import { ExecutionResult, graphql, specifiedScalarTypes } from 'graphql';
 import { GraphQLSchemaGenerator } from './GraphQLSchemaGenerator';
@@ -63,6 +63,24 @@ describe('Empty schema spec', () => {
 
 describe('One empty entity type schema spec', () => {
   const schemaSpec = { entityTypes: { Foo: { fields: [] } } };
+  test('Generated QL schema', async () => {
+    const result = await describeGeneratedSchema(schemaSpec);
+    expect(result).toMatchSnapshot();
+  });
+});
+
+describe('Two entity types schema spec', () => {
+  const schemaSpec = {
+    entityTypes: {
+      Foo: { fields: [{ name: 'fooField', type: EntityFieldType.String }] },
+      Bar: {
+        fields: [
+          { name: 'barField1', type: EntityFieldType.String },
+          { name: 'barField2', type: EntityFieldType.String },
+        ],
+      },
+    },
+  };
   test('Generated QL schema', async () => {
     const result = await describeGeneratedSchema(schemaSpec);
     expect(result).toMatchSnapshot();
