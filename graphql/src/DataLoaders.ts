@@ -1,5 +1,5 @@
-import { EntityFieldSpecification, EntityFieldType, PublishedEntity } from '@datadata/core';
-import type { Entity, SessionContext } from '@datadata/core';
+import { EntityAdmin, EntityFieldType, PublishedEntity } from '@datadata/core';
+import type { AdminEntity, Entity, EntityFieldSpecification, SessionContext } from '@datadata/core';
 import type { SessionGraphQLContext } from './GraphQLSchemaGenerator';
 
 // TODO move to core, use by cli?
@@ -51,6 +51,41 @@ function buildResolversForEntity<TContext extends SessionGraphQLContext>(
     if (isReferenceFieldType(fieldSpec, value) && value) {
       result[fieldSpec.name] = (args: undefined, context: TContext, unusedInfo: unknown) =>
         loadEntity(context, value.id);
+    }
+  }
+  return result;
+}
+
+export async function loadAdminEntity<TContext extends SessionGraphQLContext>(
+  context: TContext,
+  id: string,
+  version: number | undefined | null
+): Promise<AdminEntity> {
+  if (context.context.isError()) {
+    throw context.context.toError();
+  }
+  const sessionContext = context.context.value;
+  const result = await EntityAdmin.getEntity(sessionContext, id, { version });
+  if (result.isError()) {
+    throw result.toError();
+  }
+  return buildResolversForAdminEntity(sessionContext, result.value.item);
+}
+
+function buildResolversForAdminEntity<TContext extends SessionGraphQLContext>(
+  context: SessionContext,
+  entity: AdminEntity
+): AdminEntity {
+  const entitySpec = context.instance.getSchema().getEntityTypeSpecification(entity._type);
+  if (!entitySpec) {
+    throw new Error(`Couldn't find entity spec for type: ${entity._name}`);
+  }
+  const result = { ...entity };
+  for (const fieldSpec of entitySpec.fields) {
+    const value = result[fieldSpec.name];
+    if (isReferenceFieldType(fieldSpec, value) && value) {
+      result[fieldSpec.name] = (args: undefined, context: TContext, unusedInfo: unknown) =>
+        loadAdminEntity(context, value.id, null);
     }
   }
   return result;

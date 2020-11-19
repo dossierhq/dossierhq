@@ -18,6 +18,7 @@ beforeAll(async () => {
       fields: [
         { name: 'title', type: EntityFieldType.String, isName: true },
         { name: 'summary', type: EntityFieldType.String },
+        { name: 'bar', type: EntityFieldType.Reference },
       ],
     },
     QueryAdminBar: { fields: [{ name: 'title', type: EntityFieldType.String }] },
@@ -217,6 +218,73 @@ GraphQL request:23:13
    |             ^
 24 |               id`,
       ]);
+    }
+  });
+
+  test('Query referenced entity', async () => {
+    const createBarResult = await EntityAdmin.createEntity(
+      context,
+      { _type: 'QueryAdminBar', _name: 'Bar name', title: 'Bar title' },
+      { publish: true }
+    );
+    if (expectOkResult(createBarResult)) {
+      const barId = createBarResult.value.id;
+
+      const createFooResult = await EntityAdmin.createEntity(
+        context,
+        { _type: 'QueryAdminFoo', _name: 'Foo name', title: 'Foo title', bar: { id: barId } },
+        { publish: true }
+      );
+      if (expectOkResult(createFooResult)) {
+        const fooId = createFooResult.value.id;
+
+        const result = await graphql(
+          schema,
+          `
+            query Entity($id: ID!) {
+              adminEntity(id: $id) {
+                __typename
+                id
+                _type
+                _name
+                ... on AdminQueryAdminFoo {
+                  title
+                  bar {
+                    __typename
+                    id
+                    _type
+                    _name
+                    ... on AdminQueryAdminBar {
+                      title
+                    }
+                  }
+                }
+              }
+            }
+          `,
+          undefined,
+          { context: ok(context) },
+          { id: fooId }
+        );
+        expect(result).toEqual({
+          data: {
+            adminEntity: {
+              __typename: 'AdminQueryAdminFoo',
+              id: fooId,
+              _type: 'QueryAdminFoo',
+              _name: 'Foo name',
+              title: 'Foo title',
+              bar: {
+                __typename: 'AdminQueryAdminBar',
+                id: barId,
+                _type: 'QueryAdminBar',
+                _name: 'Bar name',
+                title: 'Bar title',
+              },
+            },
+          },
+        });
+      }
     }
   });
 

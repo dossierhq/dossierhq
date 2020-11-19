@@ -1,4 +1,4 @@
-import { EntityAdmin, EntityFieldType, ErrorType } from '@datadata/core';
+import { EntityFieldType, ErrorType } from '@datadata/core';
 import type {
   AdminEntity,
   Entity,
@@ -25,7 +25,7 @@ import type {
   GraphQLNamedType,
   GraphQLSchemaConfig,
 } from 'graphql';
-import { loadEntity } from './DataLoaders';
+import { loadAdminEntity, loadEntity } from './DataLoaders';
 
 export interface SessionGraphQLContext {
   context: Result<SessionContext, ErrorType.NotAuthenticated>;
@@ -223,15 +223,8 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         id: { type: new GraphQLNonNull(GraphQLID) },
         version: { type: GraphQLInt },
       },
-      resolve: async (unusedSource, { id, version }, context) => {
-        if (context.context.isError()) {
-          throw context.context.toError();
-        }
-        const result = await EntityAdmin.getEntity(context.context.value, id, { version });
-        if (result.isError()) {
-          throw result.toError();
-        }
-        return result.value.item;
+      resolve: async (source, args, context, unusedInfo) => {
+        return await loadAdminEntity(context, args.id, args.version);
       },
     });
   }
