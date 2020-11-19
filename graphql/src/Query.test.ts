@@ -127,11 +127,19 @@ describe('QueryFoo', () => {
       { context },
       { id: '6043cb20-50dc-43d9-8d55-fc9b892b30af' }
     );
-    expect(result).toEqual({
-      data: {
-        node: null,
-      },
+    expect(result.data).toEqual({
+      node: null,
     });
+    const errorStrings = result.errors?.map(printError);
+    expect(errorStrings).toEqual([
+      `NotFound: No such entity
+
+GraphQL request:3:11
+2 |         query Entity($id: ID!) {
+3 |           node(id: $id) {
+  |           ^
+4 |             id`,
+    ]);
   });
 
   test('Error: No session', async () => {

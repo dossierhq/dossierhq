@@ -143,7 +143,10 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
               throw new NotAuthenticatedError();
             }
             const result = await PublishedEntity.getEntity(context.context, id);
-            return result.isOk() ? result.value.item : null; // TODO handle error
+            if (result.isError()) {
+              throw result.asError();
+            }
+            return result.value.item;
           },
         },
       },
