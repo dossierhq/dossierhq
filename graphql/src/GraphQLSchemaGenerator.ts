@@ -16,9 +16,10 @@ import type {
   GraphQLNamedType,
   GraphQLSchemaConfig,
 } from 'graphql';
+import { NotAuthenticatedError } from './Errors';
 
-interface SessionGraphQLContext {
-  context: SessionContext;
+export interface SessionGraphQLContext {
+  context?: SessionContext;
 }
 
 export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
@@ -138,6 +139,9 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
             id: { type: new GraphQLNonNull(GraphQLID) },
           },
           resolve: async (unusedSource, { id }, context) => {
+            if (!context.context) {
+              throw new NotAuthenticatedError();
+            }
             const result = await PublishedEntity.getEntity(context.context, id);
             return result.isOk() ? result.value.item : null; // TODO handle error
           },
