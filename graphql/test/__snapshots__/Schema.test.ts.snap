@@ -49,7 +49,7 @@ type Query {
 "
 `;
 
-exports[`Two entity types schema spec Generated QL schema 1`] = `
+exports[`Two entity types with reference schema spec Generated QL schema 1`] = `
 "interface Node {
   id: ID!
 }
@@ -74,7 +74,7 @@ type Bar implements Node & Entity {
   id: ID!
   _name: String!
   barField1: String
-  barField2: String
+  barField2: Entity
 }
 
 interface AdminEntity {
@@ -95,7 +95,7 @@ type AdminBar implements AdminEntity {
   _type: EntityType!
   _name: String!
   barField1: String
-  barField2: String
+  barField2: AdminEntity
 }
 
 type Query {

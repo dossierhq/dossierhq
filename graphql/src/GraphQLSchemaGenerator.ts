@@ -125,6 +125,9 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
           };
           for (const fieldSpec of entitySpec.fields) {
             switch (fieldSpec.type) {
+              case EntityFieldType.Reference:
+                fields[fieldSpec.name] = { type: this.getInterface('Entity') };
+                break;
               case EntityFieldType.String:
                 fields[fieldSpec.name] = { type: GraphQLString };
                 break;
@@ -175,6 +178,9 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
           };
           for (const fieldSpec of entitySpec.fields) {
             switch (fieldSpec.type) {
+              case EntityFieldType.Reference:
+                fields[fieldSpec.name] = { type: this.getInterface('AdminEntity') };
+                break;
               case EntityFieldType.String:
                 fields[fieldSpec.name] = { type: GraphQLString };
                 break;
