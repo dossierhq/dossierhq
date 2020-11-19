@@ -22,7 +22,7 @@ export class OkResult<TOk, TError extends ErrorType> {
     return false;
   }
 
-  asError(): Error {
+  toError(): Error {
     return new Error('Expected error, but was ok');
   }
 
@@ -42,7 +42,7 @@ export class ErrorResult<TOk, TError extends ErrorType> {
     return true;
   }
 
-  asError(): Error {
+  toError(): Error {
     return new Error(`${this.error}: ${this.message}`);
   }
 
