@@ -2,7 +2,7 @@ import { EntityAdmin, EntityFieldType, notOk, ok, TestUtils } from '@datadata/co
 import type { Instance, SessionContext } from '@datadata/core';
 import { graphql, printError } from 'graphql';
 import type { GraphQLSchema } from 'graphql';
-import { GraphQLSchemaGenerator } from './GraphQLSchemaGenerator';
+import { GraphQLSchemaGenerator } from '../src/GraphQLSchemaGenerator';
 
 const { createTestInstance, ensureSessionContext, expectOkResult, updateSchema } = TestUtils;
 
