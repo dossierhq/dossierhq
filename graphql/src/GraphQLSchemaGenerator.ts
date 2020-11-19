@@ -142,13 +142,6 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
             return result.isOk() ? result.value.item : null; // TODO handle error
           },
         },
-
-        hello: {
-          type: GraphQLString,
-          resolve() {
-            return 'world';
-          },
-        },
       },
     });
     return { query: queryType, types: this.#types };

@@ -28,8 +28,8 @@ afterAll(async () => {
   await instance?.shutdown();
 });
 
-describe('Hello', () => {
-  test('QueryFoo', async () => {
+describe('QueryFoo', () => {
+  test('Query all fields of created entity', async () => {
     const createResult = await EntityAdmin.createEntity(
       context,
       { _type: 'QueryFoo', _name: 'Howdy name', title: 'Howdy title', summary: 'Howdy summary' },
@@ -69,5 +69,68 @@ describe('Hello', () => {
         },
       });
     }
+  });
+
+  test('Query null fields of created entity', async () => {
+    const createResult = await EntityAdmin.createEntity(
+      context,
+      { _type: 'QueryFoo', _name: 'Howdy name' },
+      { publish: true }
+    );
+    if (expectOkResult(createResult)) {
+      const { id } = createResult.value;
+
+      const result = await graphql(
+        schema,
+        `
+          query Entity($id: ID!) {
+            node(id: $id) {
+              __typename
+              id
+              ... on QueryFoo {
+                _name
+                title
+                summary
+              }
+            }
+          }
+        `,
+        undefined,
+        { context },
+        { id }
+      );
+      expect(result).toEqual({
+        data: {
+          node: {
+            __typename: 'QueryFoo',
+            id,
+            _name: 'Howdy name',
+            title: null,
+            summary: null,
+          },
+        },
+      });
+    }
+  });
+
+  test('Error: Query invalid id', async () => {
+    const result = await graphql(
+      schema,
+      `
+        query Entity($id: ID!) {
+          node(id: $id) {
+            id
+          }
+        }
+      `,
+      undefined,
+      { context },
+      { id: '6043cb20-50dc-43d9-8d55-fc9b892b30af' }
+    );
+    expect(result).toEqual({
+      data: {
+        node: null,
+      },
+    });
   });
 });
