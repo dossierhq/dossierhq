@@ -59,6 +59,10 @@ export interface SchemaSpecification {
 export class Schema {
   constructor(readonly spec: SchemaSpecification) {}
 
+  getEntityTypeCount(): number {
+    return Object.keys(this.spec.entityTypes).length;
+  }
+
   getEntityTypeSpecification(type: string): EntityTypeSpecification | null {
     return this.spec.entityTypes[type] ?? null;
   }
