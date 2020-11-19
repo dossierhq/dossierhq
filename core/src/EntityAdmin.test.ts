@@ -20,6 +20,7 @@ beforeAll(async () => {
       fields: [
         { name: 'title', type: EntityFieldType.String, isName: true },
         { name: 'summary', type: EntityFieldType.String },
+        { name: 'bar', type: EntityFieldType.Reference },
       ],
     },
     EntityAdminBar: { fields: [{ name: 'title', type: EntityFieldType.String }] },
@@ -159,6 +160,48 @@ describe('createEntity()', () => {
 
       const publishedResult = await PublishedEntity.getEntity(context, id);
       expectErrorResult(publishedResult, ErrorType.NotFound, 'No such entity');
+    }
+  });
+
+  test('Create EntityAdminFoo with reference to Bar', async () => {
+    const createBarResult = await EntityAdmin.createEntity(
+      context,
+      { _type: 'EntityAdminBar', _name: 'Bar name', title: 'Bar title' },
+      { publish: true }
+    );
+    if (expectOkResult(createBarResult)) {
+      const barId = createBarResult.value.id;
+      const createFooResult = await EntityAdmin.createEntity(
+        context,
+        { _type: 'EntityAdminFoo', _name: 'Foo name', title: 'Foo title', bar: { id: barId } },
+        { publish: true }
+      );
+      if (expectOkResult(createFooResult)) {
+        expect(createFooResult.value.id).toMatch(uuidMatcher);
+        const fooId = createFooResult.value.id;
+
+        const fooVersion0Result = await EntityAdmin.getEntity(context, fooId, { version: 0 });
+        if (expectOkResult(fooVersion0Result)) {
+          expect(fooVersion0Result.value.item).toEqual({
+            id: fooId,
+            _type: 'EntityAdminFoo',
+            _name: 'Foo name',
+            title: 'Foo title',
+            bar: { id: barId },
+          });
+        }
+
+        const publishedFooResult = await PublishedEntity.getEntity(context, fooId);
+        if (expectOkResult(publishedFooResult)) {
+          expect(publishedFooResult.value.item).toEqual({
+            id: fooId,
+            _type: 'EntityAdminFoo',
+            _name: 'Foo name',
+            title: 'Foo title',
+            bar: { id: barId },
+          });
+        }
+      }
     }
   });
 
