@@ -68,15 +68,18 @@ async function editEntityValues(
 
   const changedValues: Record<string, unknown> = {};
 
+  let lastItemId = null;
   // eslint-disable-next-line no-constant-condition
   while (true) {
-    const item = await showItemSelector(
+    const item: EditFieldSelectorItem = await showItemSelector(
       'Which field to edit?',
-      createItemSelectorItems(entitySpec, changedValues, defaultValues)
+      createItemSelectorItems(entitySpec, changedValues, defaultValues),
+      lastItemId
     );
     if (item.id === '_exit') {
       break;
     }
+    lastItemId = item.id;
     const fieldName = item.id;
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const fieldSpec = entitySpec.fields.find((x) => x.name === fieldName)!;
