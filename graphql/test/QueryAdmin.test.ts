@@ -122,6 +122,104 @@ describe('QueryAdminFoo', () => {
     }
   });
 
+  test('Query different versions of same entity created entity', async () => {
+    const createResult = await EntityAdmin.createEntity(
+      context,
+      {
+        _type: 'QueryAdminFoo',
+        _name: 'First name',
+        title: 'First title',
+        summary: 'First summary',
+      },
+      { publish: true }
+    );
+    if (expectOkResult(createResult)) {
+      const { id } = createResult.value;
+
+      expectOkResult(
+        await EntityAdmin.updateEntity(
+          context,
+          { id, title: 'Second title', summary: 'Second summary' },
+          { publish: true }
+        )
+      );
+
+      const result = await graphql(
+        schema,
+        `
+          query TwoVersionsOfAdminEntity(
+            $id: ID!
+            $version1: Int!
+            $version2: Int!
+            $version3: Int!
+            $version4: Int
+          ) {
+            first: adminEntity(id: $id, version: $version1) {
+              id
+              ... on AdminQueryAdminFoo {
+                title
+                summary
+              }
+            }
+            second: adminEntity(id: $id, version: $version2) {
+              id
+              ... on AdminQueryAdminFoo {
+                title
+                summary
+              }
+            }
+            third: adminEntity(id: $id, version: $version3) {
+              id
+              ... on AdminQueryAdminFoo {
+                title
+                summary
+              }
+            }
+            fourth: adminEntity(id: $id, version: $version4) {
+              id
+              ... on AdminQueryAdminFoo {
+                title
+                summary
+              }
+            }
+          }
+        `,
+        undefined,
+        { context: ok(context) },
+        { id, version1: 0, version2: 1, version3: 100, version4: null }
+      );
+      expect(result.data).toEqual({
+        first: {
+          id,
+          title: 'First title',
+          summary: 'First summary',
+        },
+        second: {
+          id,
+          title: 'Second title',
+          summary: 'Second summary',
+        },
+        third: null, // invalid version
+        fourth: {
+          //default to max
+          id,
+          title: 'Second title',
+          summary: 'Second summary',
+        },
+      });
+      const errorStrings = result.errors?.map(printError);
+      expect(errorStrings).toEqual([
+        `NotFound: No such entity or version
+
+GraphQL request:23:13
+22 |             }
+23 |             third: adminEntity(id: $id, version: $version3) {
+   |             ^
+24 |               id`,
+      ]);
+    }
+  });
+
   test('Error: Query invalid id', async () => {
     const result = await graphql(
       schema,
