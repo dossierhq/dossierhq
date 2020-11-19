@@ -45,7 +45,7 @@ export interface AdminEntityUpdate {
 export async function getEntity(
   context: SessionContext,
   id: string,
-  options: { version?: number }
+  options: { version?: number | null }
 ): PromiseResult<{ item: AdminEntity }, ErrorType.NotFound> {
   let version: number;
   if (typeof options.version === 'number') {

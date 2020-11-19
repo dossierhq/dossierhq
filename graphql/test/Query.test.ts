@@ -18,6 +18,7 @@ beforeAll(async () => {
       fields: [
         { name: 'title', type: EntityFieldType.String, isName: true },
         { name: 'summary', type: EntityFieldType.String },
+        { name: 'bar', type: EntityFieldType.Reference },
       ],
     },
     QueryBar: { fields: [{ name: 'title', type: EntityFieldType.String }] },
@@ -91,6 +92,9 @@ describe('QueryFoo', () => {
                 _name
                 title
                 summary
+                bar {
+                  id
+                }
               }
             }
           }
@@ -107,9 +111,73 @@ describe('QueryFoo', () => {
             _name: 'Howdy name',
             title: null,
             summary: null,
+            bar: null,
           },
         },
       });
+    }
+  });
+
+  test('Query referenced entity', async () => {
+    const createBarResult = await EntityAdmin.createEntity(
+      context,
+      { _type: 'QueryBar', _name: 'Bar name', title: 'Bar title' },
+      { publish: true }
+    );
+    if (expectOkResult(createBarResult)) {
+      const barId = createBarResult.value.id;
+
+      const createFooResult = await EntityAdmin.createEntity(
+        context,
+        { _type: 'QueryFoo', _name: 'Foo name', title: 'Foo title', bar: { id: barId } },
+        { publish: true }
+      );
+      if (expectOkResult(createFooResult)) {
+        const fooId = createFooResult.value.id;
+
+        const result = await graphql(
+          schema,
+          `
+            query Entity($id: ID!) {
+              node(id: $id) {
+                __typename
+                id
+                ... on QueryFoo {
+                  _name
+                  title
+                  bar {
+                    __typename
+                    id
+                    _name
+                    ... on QueryBar {
+                      title
+                    }
+                  }
+                }
+              }
+            }
+          `,
+          undefined,
+          { context: ok(context) },
+          { id: fooId }
+        );
+        expect(result).toEqual({
+          data: {
+            node: {
+              __typename: 'QueryFoo',
+              id: fooId,
+              _name: 'Foo name',
+              title: 'Foo title',
+              bar: {
+                __typename: 'QueryBar',
+                _name: 'Bar name',
+                id: barId,
+                title: 'Bar title',
+              },
+            },
+          },
+        });
+      }
     }
   });
 
