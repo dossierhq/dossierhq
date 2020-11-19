@@ -1,5 +1,6 @@
-import { EntityFieldType, ErrorType, PublishedEntity } from '@datadata/core';
+import { EntityAdmin, EntityFieldType, ErrorType, PublishedEntity } from '@datadata/core';
 import type {
+  AdminEntity,
   Entity,
   EntityTypeSpecification,
   Result,
@@ -9,6 +10,7 @@ import type {
 import {
   GraphQLEnumType,
   GraphQLID,
+  GraphQLInt,
   GraphQLInterfaceType,
   GraphQLNonNull,
   GraphQLObjectType,
@@ -18,6 +20,7 @@ import {
 } from 'graphql';
 import type {
   GraphQLEnumValueConfigMap,
+  GraphQLFieldConfig,
   GraphQLFieldConfigMap,
   GraphQLNamedType,
   GraphQLSchemaConfig,
@@ -25,6 +28,10 @@ import type {
 
 export interface SessionGraphQLContext {
   context: Result<SessionContext, ErrorType.NotAuthenticated>;
+}
+
+function toAdminTypeName(name: string) {
+  return 'Admin' + name;
 }
 
 export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
@@ -70,14 +77,14 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       })
     );
 
+    if (this.schema.getEntityTypeCount() === 0) {
+      return;
+    }
+
     // EntityType
     const entityTypeEnumValues: GraphQLEnumValueConfigMap = {};
     for (const typeName of Object.keys(this.schema.spec.entityTypes)) {
       entityTypeEnumValues[typeName] = {};
-    }
-    if (Object.keys(entityTypeEnumValues).length === 0) {
-      // Can't create EntityType with no enum values
-      return;
     }
     this.addType(
       new GraphQLEnumType({
@@ -132,6 +139,9 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
   }
 
   addAdminSupportingTypes(): void {
+    if (this.schema.getEntityTypeCount() === 0) {
+      return;
+    }
     // AdminEntity
     this.addType(
       new GraphQLInterfaceType({
@@ -139,6 +149,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         fields: {
           id: { type: new GraphQLNonNull(GraphQLID) },
           _name: { type: new GraphQLNonNull(GraphQLString) },
+          _type: { type: new GraphQLNonNull(this.getType('EntityType')) },
         },
       })
     );
@@ -146,19 +157,18 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
 
   addAdminEntityTypes(): void {
     for (const [entityName, entitySpec] of Object.entries(this.schema.spec.entityTypes)) {
-      this.addAdminEntityType(entityName, entitySpec);
+      this.addAdminEntityType(toAdminTypeName(entityName), entitySpec);
     }
   }
 
   addAdminEntityType(name: string, entitySpec: EntityTypeSpecification): void {
-    const graphQLName = `Admin${name}`;
     this.addType(
-      new GraphQLObjectType<Entity, TContext>({
-        name: graphQLName,
+      new GraphQLObjectType<AdminEntity, TContext>({
+        name,
         interfaces: this.getInterfaces('AdminEntity'),
-        isTypeOf: (source, unusedContext, unusedInfo) => source._type === name,
+        isTypeOf: (source, unusedContext, unusedInfo) => toAdminTypeName(source._type) === name,
         fields: () => {
-          const fields: GraphQLFieldConfigMap<Entity, TContext> = {
+          const fields: GraphQLFieldConfigMap<AdminEntity, TContext> = {
             id: { type: new GraphQLNonNull(GraphQLID) },
             _type: { type: new GraphQLNonNull(this.getType('EntityType')) },
             _name: { type: new GraphQLNonNull(GraphQLString) },
@@ -178,32 +188,65 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     );
   }
 
+  buildQueryFieldNode<TSource>(): GraphQLFieldConfig<TSource, TContext> {
+    return {
+      type: this.getInterface('Node'),
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLID) },
+      },
+      resolve: async (unusedSource, { id }, context) => {
+        if (context.context.isError()) {
+          throw context.context.toError();
+        }
+        const result = await PublishedEntity.getEntity(context.context.value, id);
+        if (result.isError()) {
+          throw result.toError();
+        }
+        return result.value.item;
+      },
+    };
+  }
+
+  buildQueryFieldAdminEntity<TSource>(): GraphQLFieldConfig<TSource, TContext> | null {
+    if (Object.keys(this.schema.spec.entityTypes).length === 0) {
+      return null;
+    }
+    return {
+      type: this.getInterface('AdminEntity'),
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLID) },
+        version: { type: GraphQLInt },
+      },
+      resolve: async (unusedSource, { id, version }, context) => {
+        if (context.context.isError()) {
+          throw context.context.toError();
+        }
+        const result = await EntityAdmin.getEntity(context.context.value, id, { version });
+        if (result.isError()) {
+          throw result.toError();
+        }
+        return result.value.item;
+      },
+    };
+  }
+
   buildSchemaConfig<TSource>(): GraphQLSchemaConfig {
     this.addSupportingTypes();
     this.addEntityTypes();
     this.addAdminSupportingTypes();
     this.addAdminEntityTypes();
 
+    const node = this.buildQueryFieldNode<TSource>();
+    const adminEntity = this.buildQueryFieldAdminEntity();
+
+    const fields: GraphQLFieldConfigMap<TSource, TContext> = { node };
+    if (adminEntity) {
+      fields.adminEntity = adminEntity;
+    }
+
     const queryType = new GraphQLObjectType<TSource, TContext>({
       name: 'Query',
-      fields: {
-        node: {
-          type: this.getInterface('Node'),
-          args: {
-            id: { type: new GraphQLNonNull(GraphQLID) },
-          },
-          resolve: async (unusedSource, { id }, context) => {
-            if (context.context.isError()) {
-              throw context.context.toError();
-            }
-            const result = await PublishedEntity.getEntity(context.context.value, id);
-            if (result.isError()) {
-              throw result.toError();
-            }
-            return result.value.item;
-          },
-        },
-      },
+      fields,
     });
     return { query: queryType, types: this.#types };
   }
