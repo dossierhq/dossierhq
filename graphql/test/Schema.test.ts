@@ -137,14 +137,14 @@ describe('One empty entity type schema spec', () => {
   });
 });
 
-describe('Two entity types schema spec', () => {
+describe('Two entity types with reference schema spec', () => {
   const schemaSpec = {
     entityTypes: {
       Foo: { fields: [{ name: 'fooField', type: EntityFieldType.String }] },
       Bar: {
         fields: [
           { name: 'barField1', type: EntityFieldType.String },
-          { name: 'barField2', type: EntityFieldType.String },
+          { name: 'barField2', type: EntityFieldType.Reference },
         ],
       },
     },
