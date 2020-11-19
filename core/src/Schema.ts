@@ -49,6 +49,7 @@ export interface EntityFieldSpecification {
 }
 
 export enum EntityFieldType {
+  Reference = 'Reference',
   String = 'String',
 }
 
