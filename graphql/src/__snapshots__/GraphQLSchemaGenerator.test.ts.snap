@@ -7,7 +7,6 @@ exports[`Empty schema spec Generated QL schema 1`] = `
 
 type Query {
   node(id: ID!): Node
-  hello: String
 }
 "
 `;
@@ -33,7 +32,6 @@ type Foo implements Node & Entity {
 
 type Query {
   node(id: ID!): Node
-  hello: String
 }
 "
 `;
@@ -68,7 +66,6 @@ type Bar implements Node & Entity {
 
 type Query {
   node(id: ID!): Node
-  hello: String
 }
 "
 `;
