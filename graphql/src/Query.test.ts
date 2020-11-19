@@ -1,4 +1,4 @@
-import { EntityAdmin, EntityFieldType, TestUtils } from '@datadata/core';
+import { EntityAdmin, EntityFieldType, notOk, ok, TestUtils } from '@datadata/core';
 import type { Instance, SessionContext } from '@datadata/core';
 import { graphql, printError } from 'graphql';
 import type { GraphQLSchema } from 'graphql';
@@ -54,7 +54,7 @@ describe('QueryFoo', () => {
           }
         `,
         undefined,
-        { context },
+        { context: ok(context) },
         { id }
       );
       expect(result).toEqual({
@@ -96,7 +96,7 @@ describe('QueryFoo', () => {
           }
         `,
         undefined,
-        { context },
+        { context: ok(context) },
         { id }
       );
       expect(result).toEqual({
@@ -124,7 +124,7 @@ describe('QueryFoo', () => {
         }
       `,
       undefined,
-      { context },
+      { context: ok(context) },
       { id: '6043cb20-50dc-43d9-8d55-fc9b892b30af' }
     );
     expect(result.data).toEqual({
@@ -153,7 +153,7 @@ GraphQL request:3:11
         }
       `,
       undefined,
-      { context: null },
+      { context: notOk.NotAuthenticated('No session') },
       { id: '6043cb20-50dc-43d9-8d55-fc9b892b30af' }
     );
     expect(result.data).toEqual({
@@ -161,7 +161,7 @@ GraphQL request:3:11
     });
     const errorStrings = result.errors?.map(printError);
     expect(errorStrings).toEqual([
-      `Not authenticated
+      `NotAuthenticated: No session
 
 GraphQL request:3:11
 2 |         query Entity($id: ID!) {

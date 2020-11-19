@@ -1,6 +1,7 @@
 export enum ErrorType {
   BadRequest = 'BadRequest',
   Conflict = 'Conflict',
+  NotAuthenticated = 'NotAuthenticated',
   NotFound = 'NotFound',
 }
 
@@ -64,6 +65,8 @@ export const notOk = {
     createError(ErrorType.BadRequest, message),
   Conflict: (message: string): ErrorResult<unknown, ErrorType.Conflict> =>
     createError(ErrorType.Conflict, message),
+  NotAuthenticated: (message: string): ErrorResult<unknown, ErrorType.NotAuthenticated> =>
+    createError(ErrorType.NotAuthenticated, message),
   NotFound: (message: string): ErrorResult<unknown, ErrorType.NotFound> =>
     createError(ErrorType.NotFound, message),
 };

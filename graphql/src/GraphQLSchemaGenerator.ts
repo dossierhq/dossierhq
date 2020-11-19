@@ -1,5 +1,11 @@
-import { EntityFieldType, PublishedEntity } from '@datadata/core';
-import type { Entity, EntityTypeSpecification, Schema, SessionContext } from '@datadata/core';
+import { EntityFieldType, ErrorType, PublishedEntity } from '@datadata/core';
+import type {
+  Entity,
+  EntityTypeSpecification,
+  Result,
+  Schema,
+  SessionContext,
+} from '@datadata/core';
 import {
   GraphQLEnumType,
   GraphQLID,
@@ -16,10 +22,9 @@ import type {
   GraphQLNamedType,
   GraphQLSchemaConfig,
 } from 'graphql';
-import { NotAuthenticatedError } from './Errors';
 
 export interface SessionGraphQLContext {
-  context?: SessionContext;
+  context: Result<SessionContext, ErrorType.NotAuthenticated>;
 }
 
 export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
@@ -139,10 +144,10 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
             id: { type: new GraphQLNonNull(GraphQLID) },
           },
           resolve: async (unusedSource, { id }, context) => {
-            if (!context.context) {
-              throw new NotAuthenticatedError();
+            if (context.context.isError()) {
+              throw context.context.asError();
             }
-            const result = await PublishedEntity.getEntity(context.context, id);
+            const result = await PublishedEntity.getEntity(context.context.value, id);
             if (result.isError()) {
               throw result.asError();
             }
