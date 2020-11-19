@@ -11,7 +11,9 @@
     "eslint:fix": "eslint --fix .",
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write .",
-    "start": "ts-node ./src/main.ts",
+    "start": "npm run start:cli",
+    "start:cli": "ts-node ./src/cli.ts",
+    "start:graphql": "ts-node ./src/graphql.ts",
     "ts:check": "tsc --noEmit"
   },
   "author": "",
@@ -19,6 +21,7 @@
   "dependencies": {
     "@datadata/cli": "1.0.0",
     "@datadata/core": "1.0.0",
+    "@datadata/graphql": "1.0.0",
     "dotenv": "^8.2.0"
   },
   "devDependencies": {
