@@ -145,11 +145,11 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
           },
           resolve: async (unusedSource, { id }, context) => {
             if (context.context.isError()) {
-              throw context.context.asError();
+              throw context.context.toError();
             }
             const result = await PublishedEntity.getEntity(context.context.value, id);
             if (result.isError()) {
-              throw result.asError();
+              throw result.toError();
             }
             return result.value.item;
           },

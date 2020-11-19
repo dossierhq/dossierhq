@@ -38,7 +38,7 @@ export async function ensureSessionContext(
 
   const sessionResult2 = await Auth.createSessionForPrincipal(authContext, provider, identifier);
   if (sessionResult2.isError()) {
-    throw sessionResult2.asError();
+    throw sessionResult2.toError();
   }
 
   return instance.createSessionContext(sessionResult2.value);
