@@ -131,9 +131,58 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     );
   }
 
+  addAdminSupportingTypes(): void {
+    // AdminEntity
+    this.addType(
+      new GraphQLInterfaceType({
+        name: 'AdminEntity',
+        fields: {
+          id: { type: new GraphQLNonNull(GraphQLID) },
+          _name: { type: new GraphQLNonNull(GraphQLString) },
+        },
+      })
+    );
+  }
+
+  addAdminEntityTypes(): void {
+    for (const [entityName, entitySpec] of Object.entries(this.schema.spec.entityTypes)) {
+      this.addAdminEntityType(entityName, entitySpec);
+    }
+  }
+
+  addAdminEntityType(name: string, entitySpec: EntityTypeSpecification): void {
+    const graphQLName = `Admin${name}`;
+    this.addType(
+      new GraphQLObjectType<Entity, TContext>({
+        name: graphQLName,
+        interfaces: this.getInterfaces('AdminEntity'),
+        isTypeOf: (source, unusedContext, unusedInfo) => source._type === name,
+        fields: () => {
+          const fields: GraphQLFieldConfigMap<Entity, TContext> = {
+            id: { type: new GraphQLNonNull(GraphQLID) },
+            _type: { type: new GraphQLNonNull(this.getType('EntityType')) },
+            _name: { type: new GraphQLNonNull(GraphQLString) },
+          };
+          for (const fieldSpec of entitySpec.fields) {
+            switch (fieldSpec.type) {
+              case EntityFieldType.String:
+                fields[fieldSpec.name] = { type: GraphQLString };
+                break;
+              default:
+                throw new Error(`Unexpected type (${fieldSpec.type})`);
+            }
+          }
+          return fields;
+        },
+      })
+    );
+  }
+
   buildSchemaConfig<TSource>(): GraphQLSchemaConfig {
     this.addSupportingTypes();
     this.addEntityTypes();
+    this.addAdminSupportingTypes();
+    this.addAdminEntityTypes();
 
     const queryType = new GraphQLObjectType<TSource, TContext>({
       name: 'Query',

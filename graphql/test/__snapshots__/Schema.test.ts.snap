@@ -5,6 +5,11 @@ exports[`Empty schema spec Generated QL schema 1`] = `
   id: ID!
 }
 
+interface AdminEntity {
+  id: ID!
+  _name: String!
+}
+
 type Query {
   node(id: ID!): Node
 }
@@ -27,6 +32,17 @@ interface Entity implements Node {
 
 type Foo implements Node & Entity {
   id: ID!
+  _name: String!
+}
+
+interface AdminEntity {
+  id: ID!
+  _name: String!
+}
+
+type AdminFoo implements AdminEntity {
+  id: ID!
+  _type: EntityType!
   _name: String!
 }
 
@@ -59,6 +75,26 @@ type Foo implements Node & Entity {
 
 type Bar implements Node & Entity {
   id: ID!
+  _name: String!
+  barField1: String
+  barField2: String
+}
+
+interface AdminEntity {
+  id: ID!
+  _name: String!
+}
+
+type AdminFoo implements AdminEntity {
+  id: ID!
+  _type: EntityType!
+  _name: String!
+  fooField: String
+}
+
+type AdminBar implements AdminEntity {
+  id: ID!
+  _type: EntityType!
   _name: String!
   barField1: String
   barField2: String
