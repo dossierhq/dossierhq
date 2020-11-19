@@ -1,7 +1,7 @@
 import { EntityFieldType, Schema } from '@datadata/core';
 import type { SchemaSpecification } from '@datadata/core';
 import { graphql, printSchema } from 'graphql';
-import { GraphQLSchemaGenerator } from './GraphQLSchemaGenerator';
+import { GraphQLSchemaGenerator } from '../src/GraphQLSchemaGenerator';
 
 function describeGeneratedSchema(schemaSpec: SchemaSpecification) {
   const generator = new GraphQLSchemaGenerator(new Schema(schemaSpec));
