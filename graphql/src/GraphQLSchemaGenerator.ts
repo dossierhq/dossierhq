@@ -26,7 +26,7 @@ import type {
   GraphQLNamedType,
   GraphQLSchemaConfig,
 } from 'graphql';
-import { loadAdminEntity, loadEntity } from './DataLoaders';
+import { loadAdminEntity, loadAdminSearchEntities, loadEntity } from './DataLoaders';
 
 export interface SessionGraphQLContext {
   context: Result<SessionContext, ErrorType.NotAuthenticated>;
