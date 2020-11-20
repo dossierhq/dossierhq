@@ -1,11 +1,12 @@
 import chalk from 'chalk';
 import {
-  EntityAdmin,
-  ErrorType,
   isReferenceFieldType,
   isStringFieldType,
   ok,
   notOk,
+  EntityAdmin,
+  EntityFieldType,
+  ErrorType,
 } from '@datadata/core';
 import type {
   AdminEntity,
@@ -18,6 +19,7 @@ import * as CliSchema from './CliSchema';
 import {
   formatEntityOneLine,
   formatFieldValue,
+  isReferenceAnEntity,
   logEntity,
   logErrorResult,
   logKeyValue,
@@ -109,14 +111,10 @@ async function editEntityValues(
   context: SessionContext,
   defaultValues: { _type: string; [fieldName: string]: unknown }
 ): Promise<Record<string, unknown>> {
-  const { instance } = context;
-  const schema = instance.getSchema();
-  const entitySpec = schema.getEntityTypeSpecification(defaultValues._type);
-  if (!entitySpec) {
-    throw new Error(`Couldn't find entity spec for type: ${defaultValues._type}`);
-  }
-
+  const entitySpec = getEntitySpec(context, defaultValues);
   const changedValues: Record<string, unknown> = {};
+
+  await replaceReferencesWithEntities(context, defaultValues);
 
   let lastItemId = null;
   // eslint-disable-next-line no-constant-condition
@@ -150,6 +148,45 @@ async function editEntityValues(
   }
 
   return changedValues;
+}
+
+function getEntitySpec(
+  context: SessionContext,
+  entity: { _type: string; [fieldName: string]: unknown }
+) {
+  const { instance } = context;
+  const schema = instance.getSchema();
+  const entitySpec = schema.getEntityTypeSpecification(entity._type);
+  if (!entitySpec) {
+    throw new Error(`Couldn't find entity spec for type: ${entity._type}`);
+  }
+  return entitySpec;
+}
+
+async function replaceReferencesWithEntities(
+  context: SessionContext,
+  entity: { _type: string; [fieldName: string]: unknown }
+) {
+  const entitySpec = getEntitySpec(context, entity);
+  for (const fieldSpec of entitySpec.fields) {
+    if (!(fieldSpec.name in entity)) {
+      continue;
+    }
+    const value = entity[fieldSpec.name];
+    if (fieldSpec.type === EntityFieldType.Reference) {
+      if (isReferenceFieldType(fieldSpec, value)) {
+        if (!value || isReferenceAnEntity(value)) {
+          continue;
+        }
+        const referenceResult = await EntityAdmin.getEntity(context, value.id, {});
+        if (referenceResult.isOk()) {
+          entity[fieldSpec.name] = referenceResult.value.item;
+        } else {
+          logErrorResult('Failed fetching reference', referenceResult);
+        }
+      }
+    }
+  }
 }
 
 function createItemSelectorItems(
@@ -232,7 +269,9 @@ export async function showEntityHistory(context: SessionContext, id: string): Pr
 export async function showLatestEntity(context: SessionContext, id: string): Promise<void> {
   const result = await EntityAdmin.getEntity(context, id, {});
   if (result.isOk()) {
-    logEntity(context, result.value.item);
+    const entity = result.value.item;
+    await replaceReferencesWithEntities(context, entity);
+    logEntity(context, entity);
   } else {
     logErrorResult('Failed getting entity version', result);
   }

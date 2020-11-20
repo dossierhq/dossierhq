@@ -52,11 +52,14 @@ export function formatEntityOneLine(entity: Entity): string {
   return `${entity._type} | ${chalk.bold(entity._name)} | ${entity.id}`;
 }
 
+export function isReferenceAnEntity(value: { id: string } | null): value is Entity {
+  return !!value && Object.keys(value).indexOf('_type') >= 0;
+}
+
 export function formatFieldValue(fieldSpec: EntityFieldSpecification, value: unknown): string {
   if (isReferenceFieldType(fieldSpec, value)) {
-    // Check if it's actually an entity an not just a reference
-    if (value && Object.keys(value).indexOf('_type') >= 0) {
-      return formatEntityOneLine(value as Entity);
+    if (isReferenceAnEntity(value)) {
+      return formatEntityOneLine(value);
     }
     return value ? value.id : chalk.grey('<not set>');
   }
