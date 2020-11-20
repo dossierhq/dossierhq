@@ -12,6 +12,7 @@ import {
   GraphQLID,
   GraphQLInt,
   GraphQLInterfaceType,
+  GraphQLList,
   GraphQLNonNull,
   GraphQLObjectType,
   GraphQLSchema,
@@ -213,10 +214,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     });
   }
 
-  buildQueryFieldAdminEntity<TSource>(): GraphQLFieldConfig<TSource, TContext> | null {
-    if (Object.keys(this.schema.spec.entityTypes).length === 0) {
-      return null;
-    }
+  buildQueryFieldAdminEntity<TSource>(): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<TSource, TContext, { id: string; version: number | null }>({
       type: this.getInterface('AdminEntity'),
       args: {
@@ -229,23 +227,35 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     });
   }
 
+  buildQueryFieldAdminSearchEntities<TSource>(): GraphQLFieldConfig<TSource, TContext> {
+    return fieldConfigWithArgs<TSource, TContext, unknown>({
+      type: new GraphQLNonNull(new GraphQLList(this.getInterface('AdminEntity'))),
+      args: {},
+      resolve: async (source, args, context, unusedInfo) => {
+        return await loadAdminSearchEntities(context);
+      },
+    });
+  }
+
   buildSchemaConfig<TSource>(): GraphQLSchemaConfig {
     this.addSupportingTypes();
     this.addEntityTypes();
     this.addAdminSupportingTypes();
     this.addAdminEntityTypes();
 
-    const node = this.buildQueryFieldNode();
-    const adminEntity = this.buildQueryFieldAdminEntity();
-
-    const fields: GraphQLFieldConfigMap<TSource, TContext> = { node };
-    if (adminEntity) {
-      fields.adminEntity = adminEntity;
-    }
+    const includeEntities = Object.keys(this.schema.spec.entityTypes).length > 0;
 
     const queryType = new GraphQLObjectType<TSource, TContext>({
       name: 'Query',
-      fields,
+      fields: {
+        node: this.buildQueryFieldNode(),
+        ...(includeEntities
+          ? {
+              adminEntity: this.buildQueryFieldAdminEntity(),
+              adminSearchEntities: this.buildQueryFieldAdminSearchEntities(),
+            }
+          : {}),
+      },
     });
     return { query: queryType, types: this.#types };
   }

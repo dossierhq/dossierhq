@@ -4,7 +4,7 @@ import type { EntitiesTable, EntityVersionsTable } from './DbTableTypes';
 import * as EntityFieldTypeAdapters from './EntityFieldTypeAdapters';
 import { notOk, ok } from './ErrorResult';
 
-type EntityValues = Pick<EntitiesTable, 'uuid' | 'type' | 'name'> &
+export type EntityValues = Pick<EntitiesTable, 'uuid' | 'type' | 'name'> &
   Pick<EntityVersionsTable, 'data'>;
 
 interface Entityish {
