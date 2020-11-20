@@ -100,13 +100,13 @@ export async function createEntity(
       'INSERT INTO entity_versions (entities_id, version, created_by, data) VALUES ($1, 0, $2, $3) RETURNING id',
       [entityId, context.session.subjectInternalId, data]
     );
-    if (options.publish) {
-      await Db.queryNone(
-        context,
-        'UPDATE entities SET published_entity_versions_id = $1 WHERE id = $2',
-        [versionsId, entityId]
-      );
-    }
+    await Db.queryNone(
+      context,
+      `UPDATE entities SET latest_draft_entity_versions_id = $1 ${
+        options.publish ? ', published_entity_versions_id = $1' : ''
+      } WHERE id = $2`,
+      [versionsId, entityId]
+    );
     return ok({ id: uuid });
   });
 }
@@ -161,15 +161,13 @@ export async function updateEntity(
       'INSERT INTO entity_versions (entities_id, created_by, version, data) VALUES ($1, $2, $3, $4) RETURNING id',
       [entityId, context.session.subjectInternalId, newVersion, data]
     );
-    if (options.publish) {
-      await Db.queryNone(
-        context,
-        'UPDATE entities SET name = $1, published_entity_versions_id = $2 WHERE id = $3',
-        [name, versionsId, entityId]
-      );
-    } else {
-      await Db.queryNone(context, 'UPDATE entities SET name = $1 WHERE id = $2', [name, entityId]);
-    }
+    await Db.queryNone(
+      context,
+      `UPDATE entities SET name = $1, latest_draft_entity_versions_id = $2 ${
+        options.publish ? ', published_entity_versions_id = $2' : ''
+      }  WHERE id = $3`,
+      [name, versionsId, entityId]
+    );
     return ok(undefined);
   });
 }
@@ -191,13 +189,13 @@ export async function deleteEntity(
       'INSERT INTO entity_versions (entities_id, created_by, version) VALUES ($1, $2, $3) RETURNING id',
       [entityId, context.session.subjectInternalId, version]
     );
-    if (options.publish) {
-      await Db.queryNone(
-        context,
-        'UPDATE entities SET published_entity_versions_id = $1, published_deleted = true WHERE id = $2',
-        [versionsId, entityId]
-      );
-    }
+    await Db.queryNone(
+      context,
+      `UPDATE entities SET latest_draft_entity_versions_id = $1 ${
+        options.publish ? ', published_entity_versions_id = $1, published_deleted = true' : ''
+      }  WHERE id = $2`,
+      [versionsId, entityId]
+    );
     return ok(undefined);
   });
 }
@@ -206,15 +204,11 @@ async function resolveMaxVersionForEntity(
   context: SessionContext,
   id: string
 ): PromiseResult<{ entityId: number; maxVersion: number }, ErrorType.NotFound> {
-  const result = await Db.queryNoneOrOne<{
-    entities_id: number;
-    version: number;
-  }>(
+  const result = await Db.queryNoneOrOne<Pick<EntityVersionsTable, 'entities_id' | 'version'>>(
     context,
-    `SELECT ev.entities_id, MAX(ev.version) AS version
+    `SELECT ev.entities_id, ev.version
       FROM entity_versions ev, entities e
-      WHERE e.uuid = $1 AND e.id = ev.entities_id
-      GROUP BY entities_id`,
+      WHERE e.uuid = $1 AND e.latest_draft_entity_versions_id = ev.id`,
     [id]
   );
   if (!result) {
