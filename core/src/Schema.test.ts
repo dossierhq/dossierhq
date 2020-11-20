@@ -1,5 +1,6 @@
-import type { Instance } from '.';
-import { createTestInstance } from './TestUtils';
+import { ErrorType, Schema } from '.';
+import type { EntityFieldType, Instance } from '.';
+import { createTestInstance, expectErrorResult, expectOkResult } from './TestUtils';
 
 let instance: Instance;
 
@@ -15,5 +16,21 @@ describe('Instance.reloadSchema()', () => {
     await instance.reloadSchema(instance.createAuthContext());
     const schema = instance.getSchema();
     expect(schema.spec).toBeTruthy();
+  });
+});
+
+describe('validate()', () => {
+  test('Empty spec validates', () => {
+    expectOkResult(new Schema({ entityTypes: {} }).validate());
+  });
+
+  test('Error: Invalid field type', () => {
+    expectErrorResult(
+      new Schema({
+        entityTypes: { Foo: { fields: [{ name: 'bar', type: 'Invalid' as EntityFieldType }] } },
+      }).validate(),
+      ErrorType.BadRequest,
+      'Foo.bar: Specified type Invalid doesn’t exist'
+    );
   });
 });

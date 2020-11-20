@@ -35,6 +35,10 @@ export default class Instance {
     context: SessionContext,
     schema: Schema
   ): PromiseResult<void, ErrorType.BadRequest> {
+    const validation = schema.validate();
+    if (validation.isError()) {
+      return validation;
+    }
     const result = await setSchema(context, schema);
     if (result.isOk()) {
       this.#schema = schema;
