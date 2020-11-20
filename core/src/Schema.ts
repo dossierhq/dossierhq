@@ -53,6 +53,25 @@ export enum EntityFieldType {
   String = 'String',
 }
 
+export interface EntityFieldValueTypeMap {
+  [EntityFieldType.Reference]: { id: string } | null;
+  [EntityFieldType.String]: string | null;
+}
+
+export function isReferenceFieldType(
+  fieldSpec: EntityFieldSpecification,
+  value: unknown
+): value is EntityFieldValueTypeMap[EntityFieldType.Reference] {
+  return fieldSpec.type === EntityFieldType.Reference;
+}
+
+export function isStringFieldType(
+  fieldSpec: EntityFieldSpecification,
+  value: unknown
+): value is EntityFieldValueTypeMap[EntityFieldType.String] {
+  return fieldSpec.type === EntityFieldType.String;
+}
+
 export interface SchemaSpecification {
   entityTypes: Record<string, EntityTypeSpecification>;
 }

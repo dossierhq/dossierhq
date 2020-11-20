@@ -1,12 +1,27 @@
 import chalk from 'chalk';
+import {
+  EntityAdmin,
+  ErrorType,
+  isReferenceFieldType,
+  isStringFieldType,
+  ok,
+  notOk,
+} from '@datadata/core';
 import type {
+  AdminEntity,
   EntityFieldSpecification,
   EntityTypeSpecification,
+  PromiseResult,
   SessionContext,
 } from '@datadata/core';
-import { EntityAdmin, EntityFieldType } from '@datadata/core';
 import * as CliSchema from './CliSchema';
-import { formatFieldValue, logEntity, logErrorResult, logKeyValue } from './CliUtils';
+import {
+  formatEntityOneLine,
+  formatFieldValue,
+  logEntity,
+  logErrorResult,
+  logKeyValue,
+} from './CliUtils';
 import { showConfirm } from './widgets/Confirm';
 import type { ItemSelectorItem } from './widgets/ItemSelector';
 import { showItemSelector } from './widgets/ItemSelector';
@@ -24,8 +39,31 @@ export async function searchEntities(context: SessionContext): Promise<void> {
   }
   console.log(chalk.cyan('Entity type | Name | Id'));
   for (const entity of result.value.items) {
-    console.log(`${entity._type} | ${chalk.bold(entity._name)} | ${entity.id}`);
+    console.log(formatEntityOneLine(entity));
   }
+}
+
+async function selectEntity(
+  context: SessionContext,
+  message: string,
+  unusedDefaultValue: { id: string } | null
+): PromiseResult<AdminEntity, ErrorType.NotFound> {
+  const result = await EntityAdmin.searchEntities(context);
+  if (result.isError()) {
+    return result;
+  }
+  if (result.value.items.length === 0) {
+    return notOk.NotFound('No entries found');
+  }
+  const item = await showItemSelector<{ id: string; name: string; entity: AdminEntity }>(
+    message,
+    result.value.items.map((entity) => ({
+      id: entity.id,
+      name: formatEntityOneLine(entity),
+      entity,
+    }))
+  );
+  return ok(item.entity);
 }
 
 export async function createEntity(context: SessionContext): Promise<{ id: string } | null> {
@@ -95,7 +133,12 @@ async function editEntityValues(
     const fieldName = item.id;
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const fieldSpec = entitySpec.fields.find((x) => x.name === fieldName)!;
-    changedValues[fieldName] = await editField(fieldSpec, item.defaultValue);
+    const result = await editField(context, fieldSpec, item.defaultValue);
+    if (result.isOk()) {
+      changedValues[fieldName] = result.value;
+    } else {
+      logErrorResult('Failed editing field', result);
+    }
   }
 
   const nameFieldSpec = entitySpec.fields.find((x) => x.isName);
@@ -130,16 +173,30 @@ function createItemSelectorItems(
   return items;
 }
 
-async function editField(fieldSpec: EntityFieldSpecification, defaultValue: unknown) {
-  switch (fieldSpec.type) {
-    case EntityFieldType.String:
-      return editFieldString(fieldSpec, defaultValue);
+async function editField(
+  context: SessionContext,
+  fieldSpec: EntityFieldSpecification,
+  defaultValue: unknown
+): PromiseResult<unknown, ErrorType> {
+  if (isReferenceFieldType(fieldSpec, defaultValue)) {
+    return editFieldReference(context, fieldSpec, defaultValue);
+  }
+  if (isStringFieldType(fieldSpec, defaultValue)) {
+    return editFieldString(fieldSpec, defaultValue);
   }
   throw new Error(`Unknown type (${fieldSpec.type})`);
 }
 
-async function editFieldString(fieldSpec: EntityFieldSpecification, defaultValue: unknown) {
-  return await showStringEdit(fieldSpec.name, defaultValue as string);
+async function editFieldReference(
+  context: SessionContext,
+  fieldSpec: EntityFieldSpecification,
+  defaultValue: { id: string } | null
+) {
+  return await selectEntity(context, fieldSpec.name, defaultValue);
+}
+
+async function editFieldString(fieldSpec: EntityFieldSpecification, defaultValue: string | null) {
+  return ok(await showStringEdit(fieldSpec.name, defaultValue));
 }
 
 export async function deleteEntity(context: SessionContext, id: string): Promise<void> {

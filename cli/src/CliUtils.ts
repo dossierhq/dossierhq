@@ -1,4 +1,5 @@
 import chalk from 'chalk';
+import { isReferenceFieldType, isStringFieldType } from '@datadata/core';
 import type {
   Entity,
   EntityFieldSpecification,
@@ -6,7 +7,6 @@ import type {
   ErrorType,
   SessionContext,
 } from '@datadata/core';
-import { EntityFieldType } from '@datadata/core';
 
 export function logErrorResult(
   message: string,
@@ -23,6 +23,7 @@ export function logError(error: Error): void {
   console.log(
     `${chalk.yellow(chalk.bold('!'))} ${chalk.bold('Caught error' + ':')} ${chalk.yellow(error)}`
   );
+  console.log(error);
 }
 
 export function logKeyValue(key: string, value: string): void {
@@ -47,10 +48,20 @@ export function logEntity(context: SessionContext, entity: Entity): void {
   }
 }
 
+export function formatEntityOneLine(entity: Entity): string {
+  return `${entity._type} | ${chalk.bold(entity._name)} | ${entity.id}`;
+}
+
 export function formatFieldValue(fieldSpec: EntityFieldSpecification, value: unknown): string {
-  switch (fieldSpec.type) {
-    case EntityFieldType.String:
-      return value ? (value as string) : chalk.grey('<not set>');
+  if (isReferenceFieldType(fieldSpec, value)) {
+    // Check if it's actually an entity an not just a reference
+    if (value && Object.keys(value).indexOf('_type') >= 0) {
+      return formatEntityOneLine(value as Entity);
+    }
+    return value ? value.id : chalk.grey('<not set>');
+  }
+  if (isStringFieldType(fieldSpec, value)) {
+    return value ? value : chalk.grey('<not set>');
   }
   throw new Error(`Unknown type (${fieldSpec.type})`);
 }

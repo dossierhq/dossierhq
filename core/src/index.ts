@@ -19,5 +19,5 @@ export * as EntityAdmin from './EntityAdmin';
 export { ErrorType, ok, notOk } from './ErrorResult';
 export { default as Instance } from './Instance';
 export * as PublishedEntity from './PublishedEntity';
-export { EntityFieldType, Schema } from './Schema';
+export { EntityFieldType, isReferenceFieldType, isStringFieldType, Schema } from './Schema';
 export * as TestUtils from './TestUtils';
