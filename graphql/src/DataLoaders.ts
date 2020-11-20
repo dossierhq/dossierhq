@@ -90,3 +90,18 @@ function buildResolversForAdminEntity<TContext extends SessionGraphQLContext>(
   }
   return result;
 }
+
+export async function loadAdminSearchEntities<TContext extends SessionGraphQLContext>(
+  context: TContext
+): Promise<AdminEntity[]> {
+  if (context.context.isError()) {
+    throw context.context.toError();
+  }
+  const sessionContext = context.context.value;
+  const result = await EntityAdmin.searchEntities(sessionContext);
+  if (result.isError()) {
+    throw result.toError();
+  }
+
+  return result.value.items.map((entity) => buildResolversForAdminEntity(sessionContext, entity));
+}

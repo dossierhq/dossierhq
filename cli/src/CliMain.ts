@@ -24,6 +24,13 @@ function createMainActions(state: State): Array<MainActionItem | ItemSelectorSep
     },
     { separator: true, name: '─ADMIN────────' },
     {
+      id: 'search-admin-entities',
+      name: 'Search entities',
+      action: async () => {
+        await CliEntityAdmin.searchEntities(state.context);
+      },
+    },
+    {
       id: 'create-entity',
       name: 'Create entity',
       action: async () => {

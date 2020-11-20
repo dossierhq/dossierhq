@@ -2,6 +2,7 @@ import type { ErrorType, PromiseResult, SessionContext } from '.';
 import * as Db from './Db';
 import type { EntitiesTable, EntityVersionsTable } from './DbTableTypes';
 import { decodeEntity, encodeEntity } from './EntityCodec';
+import type { EntityValues } from './EntityCodec';
 import { notOk, ok } from './ErrorResult';
 
 export interface EntityHistory {
@@ -57,7 +58,7 @@ export async function getEntity(
     }
     version = versionResult.value.maxVersion;
   }
-  const entityMain = await Db.queryNoneOrOne(
+  const entityMain = await Db.queryNoneOrOne<EntityValues>(
     context,
     `SELECT e.uuid, e.type, e.name, ev.data
       FROM entities e, entity_versions ev
@@ -75,6 +76,19 @@ export async function getEntity(
   return ok({
     item: entity,
   });
+}
+
+export async function searchEntities(
+  context: SessionContext
+): PromiseResult<{ items: AdminEntity[] }, ErrorType> {
+  const entitiesValues = await Db.queryMany<EntityValues>(
+    context,
+    `SELECT e.uuid, e.type, e.name, ev.data
+      FROM entities e, entity_versions ev
+      WHERE e.latest_draft_entity_versions_id = ev.id`
+  );
+  const entities = entitiesValues.map((x) => decodeEntity(context, x));
+  return ok({ items: entities });
 }
 
 export async function createEntity(
