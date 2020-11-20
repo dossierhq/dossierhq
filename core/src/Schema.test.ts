@@ -1,5 +1,5 @@
-import { ErrorType, Schema } from '.';
-import type { EntityFieldType, Instance } from '.';
+import { EntityFieldType, ErrorType, Schema } from '.';
+import type { Instance } from '.';
 import { createTestInstance, expectErrorResult, expectOkResult } from './TestUtils';
 
 let instance: Instance;
@@ -31,6 +31,35 @@ describe('validate()', () => {
       }).validate(),
       ErrorType.BadRequest,
       'Foo.bar: Specified type Invalid doesn’t exist'
+    );
+  });
+
+  test('Error: Reference to invalid entity type', () => {
+    expectErrorResult(
+      new Schema({
+        entityTypes: {
+          Foo: {
+            fields: [{ name: 'bar', type: EntityFieldType.Reference, entityTypes: ['Invalid'] }],
+          },
+        },
+      }).validate(),
+      ErrorType.BadRequest,
+      'Foo.bar: Referenced entity type in entityTypes Invalid doesn’t exist'
+    );
+  });
+
+  test('Error: entityTypes specified on String field', () => {
+    expectErrorResult(
+      new Schema({
+        entityTypes: {
+          Foo: {
+            fields: [{ name: 'bar', type: EntityFieldType.String, entityTypes: ['Bar'] }],
+          },
+          Bar: { fields: [] },
+        },
+      }).validate(),
+      ErrorType.BadRequest,
+      'Foo.bar: Field with type String shouldn’t specify entityTypes'
     );
   });
 });
