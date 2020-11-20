@@ -1,7 +1,7 @@
-import type { Context, SessionContext } from '.';
+import type { Context, PromiseResult, Result, SessionContext } from '.';
+import { notOk, ok, ErrorType } from '.';
 import * as Db from './Db';
 import type { EntityTypesTable } from './DbTableTypes';
-import { ErrorType, ok, PromiseResult } from './ErrorResult';
 
 export async function getSchema(context: Context<unknown>): Promise<Schema> {
   const entityTypes: SchemaSpecification['entityTypes'] = {};
@@ -42,15 +42,15 @@ export interface EntityTypeSpecification {
   fields: EntityFieldSpecification[];
 }
 
+export enum EntityFieldType {
+  Reference = 'Reference',
+  String = 'String',
+}
+
 export interface EntityFieldSpecification {
   name: string;
   type: EntityFieldType;
   isName?: boolean;
-}
-
-export enum EntityFieldType {
-  Reference = 'Reference',
-  String = 'String',
 }
 
 export interface EntityFieldValueTypeMap {
@@ -78,6 +78,20 @@ export interface SchemaSpecification {
 
 export class Schema {
   constructor(readonly spec: SchemaSpecification) {}
+
+  validate(): Result<void, ErrorType.BadRequest> {
+    for (const [name, entitySpec] of Object.entries(this.spec.entityTypes)) {
+      for (const fieldSpec of entitySpec.fields) {
+        if (!(fieldSpec.type in EntityFieldType)) {
+          return notOk.BadRequest(
+            `${name}.${fieldSpec.name}: Specified type ${fieldSpec.type} doesn’t exist`
+          );
+        }
+      }
+    }
+
+    return ok(undefined);
+  }
 
   getEntityTypeCount(): number {
     return Object.keys(this.spec.entityTypes).length;

@@ -238,6 +238,8 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
   }
 
   buildSchemaConfig<TSource>(): GraphQLSchemaConfig {
+    this.schema.validate().throwIfError();
+
     this.addSupportingTypes();
     this.addEntityTypes();
     this.addAdminSupportingTypes();
