@@ -18,7 +18,7 @@ beforeAll(async () => {
       fields: [
         { name: 'title', type: EntityFieldType.String, isName: true },
         { name: 'summary', type: EntityFieldType.String },
-        { name: 'bar', type: EntityFieldType.Reference },
+        { name: 'bar', type: EntityFieldType.Reference, entityTypes: ['QueryBar'] },
       ],
     },
     QueryBar: { fields: [{ name: 'title', type: EntityFieldType.String }] },
@@ -149,9 +149,7 @@ describe('QueryFoo', () => {
                     __typename
                     id
                     _name
-                    ... on QueryBar {
-                      title
-                    }
+                    title
                   }
                 }
               }
