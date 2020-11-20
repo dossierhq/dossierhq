@@ -18,7 +18,7 @@ beforeAll(async () => {
       fields: [
         { name: 'title', type: EntityFieldType.String, isName: true },
         { name: 'summary', type: EntityFieldType.String },
-        { name: 'bar', type: EntityFieldType.Reference },
+        { name: 'bar', type: EntityFieldType.Reference, entityTypes: ['QueryAdminBar'] },
       ],
     },
     QueryAdminBar: { fields: [{ name: 'title', type: EntityFieldType.String }] },
@@ -254,9 +254,7 @@ GraphQL request:23:13
                     id
                     _type
                     _name
-                    ... on AdminQueryAdminBar {
-                      title
-                    }
+                    title
                   }
                 }
               }
