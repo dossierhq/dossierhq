@@ -51,6 +51,8 @@ export interface EntityFieldSpecification {
   name: string;
   type: EntityFieldType;
   isName?: boolean;
+  /** Applicable for Reference */
+  entityTypes?: string[];
 }
 
 export interface EntityFieldValueTypeMap {
@@ -86,6 +88,21 @@ export class Schema {
           return notOk.BadRequest(
             `${name}.${fieldSpec.name}: Specified type ${fieldSpec.type} doesn’t exist`
           );
+        }
+
+        if (fieldSpec.entityTypes && fieldSpec.entityTypes.length > 0) {
+          if (fieldSpec.type !== EntityFieldType.Reference) {
+            return notOk.BadRequest(
+              `${name}.${fieldSpec.name}: Field with type ${fieldSpec.type} shouldn’t specify entityTypes`
+            );
+          }
+          for (const referencedTypeName of fieldSpec.entityTypes) {
+            if (!(referencedTypeName in this.spec.entityTypes)) {
+              return notOk.BadRequest(
+                `${name}.${fieldSpec.name}: Referenced entity type in entityTypes ${referencedTypeName} doesn’t exist`
+              );
+            }
+          }
         }
       }
     }
