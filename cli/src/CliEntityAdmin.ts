@@ -5,7 +5,6 @@ import {
   ok,
   notOk,
   EntityAdmin,
-  EntityFieldType,
   ErrorType,
 } from '@datadata/core';
 import type {
@@ -19,10 +18,11 @@ import * as CliSchema from './CliSchema';
 import {
   formatEntityOneLine,
   formatFieldValue,
-  isReferenceAnEntity,
+  getEntitySpec,
   logEntity,
   logErrorResult,
   logKeyValue,
+  replaceReferencesWithEntitiesGeneric,
 } from './CliUtils';
 import { showConfirm } from './widgets/Confirm';
 import type { ItemSelectorItem } from './widgets/ItemSelector';
@@ -148,45 +148,6 @@ async function editEntityValues(
   }
 
   return changedValues;
-}
-
-function getEntitySpec(
-  context: SessionContext,
-  entity: { _type: string; [fieldName: string]: unknown }
-) {
-  const { instance } = context;
-  const schema = instance.getSchema();
-  const entitySpec = schema.getEntityTypeSpecification(entity._type);
-  if (!entitySpec) {
-    throw new Error(`Couldn't find entity spec for type: ${entity._type}`);
-  }
-  return entitySpec;
-}
-
-async function replaceReferencesWithEntities(
-  context: SessionContext,
-  entity: { _type: string; [fieldName: string]: unknown }
-) {
-  const entitySpec = getEntitySpec(context, entity);
-  for (const fieldSpec of entitySpec.fields) {
-    if (!(fieldSpec.name in entity)) {
-      continue;
-    }
-    const value = entity[fieldSpec.name];
-    if (fieldSpec.type === EntityFieldType.Reference) {
-      if (isReferenceFieldType(fieldSpec, value)) {
-        if (!value || isReferenceAnEntity(value)) {
-          continue;
-        }
-        const referenceResult = await EntityAdmin.getEntity(context, value.id, {});
-        if (referenceResult.isOk()) {
-          entity[fieldSpec.name] = referenceResult.value.item;
-        } else {
-          logErrorResult('Failed fetching reference', referenceResult);
-        }
-      }
-    }
-  }
 }
 
 function createItemSelectorItems(
@@ -337,4 +298,13 @@ export async function showEntityVersion(context: SessionContext, id: string): Pr
       logErrorResult('Failed getting entity version', result);
     }
   }
+}
+
+async function replaceReferencesWithEntities(
+  context: SessionContext,
+  entity: { _type: string; [fieldName: string]: unknown }
+) {
+  await replaceReferencesWithEntitiesGeneric(context, entity, async (context, id) => {
+    return await EntityAdmin.getEntity(context, id, {});
+  });
 }
