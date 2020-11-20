@@ -80,7 +80,8 @@ export async function getEntity(
 
 export async function searchEntities(
   context: SessionContext
-): PromiseResult<{ items: AdminEntity[] }, ErrorType> {
+): PromiseResult<{ items: AdminEntity[] }, ErrorType.BadRequest> {
+  //TODO which errors can occur?
   const entitiesValues = await Db.queryMany<EntityValues>(
     context,
     `SELECT e.uuid, e.type, e.name, ev.data
