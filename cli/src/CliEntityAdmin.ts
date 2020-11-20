@@ -49,7 +49,7 @@ async function selectEntity(
   context: SessionContext,
   message: string,
   unusedDefaultValue: { id: string } | null
-): PromiseResult<AdminEntity, ErrorType.NotFound> {
+): PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.NotFound> {
   const result = await EntityAdmin.searchEntities(context);
   if (result.isError()) {
     return result;
