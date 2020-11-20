@@ -1,5 +1,6 @@
 import type { EntityFieldSpecification } from '.';
 import { EntityFieldType } from './Schema';
+import type { EntityFieldValueTypeMap } from './Schema';
 
 export interface EntityFieldTypeAdapter<TDecoded = unknown, TEncoded = unknown> {
   encodeData(decodedData: TDecoded): TEncoded;
@@ -7,19 +8,25 @@ export interface EntityFieldTypeAdapter<TDecoded = unknown, TEncoded = unknown> 
   getReferenceUUIDs(decodedData: TDecoded): null | string[];
 }
 
-const referenceCodec: EntityFieldTypeAdapter<{ id: string } | null, string | null> = {
+const referenceCodec: EntityFieldTypeAdapter<
+  EntityFieldValueTypeMap[EntityFieldType.Reference],
+  string | null
+> = {
   encodeData: (x) => (x ? x.id : null),
   decodeData: (x) => (x ? { id: x } : null),
   getReferenceUUIDs: (x) => (x ? [x.id] : null),
 };
 
-const stringCodec: EntityFieldTypeAdapter<string | null, string | null> = {
+const stringCodec: EntityFieldTypeAdapter<
+  EntityFieldValueTypeMap[EntityFieldType.String],
+  string | null
+> = {
   encodeData: (x) => x,
   decodeData: (x) => x,
   getReferenceUUIDs: (unusedX) => null,
 };
 
-const adapters: Record<EntityFieldType, EntityFieldTypeAdapter> = {
+const adapters: Record<EntityFieldType, EntityFieldTypeAdapter<unknown>> = {
   [EntityFieldType.Reference]: referenceCodec,
   [EntityFieldType.String]: stringCodec,
 };

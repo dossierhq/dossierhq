@@ -1,6 +1,9 @@
 import inquirer from 'inquirer';
 
-export async function showStringEdit(message: string, defaultValue?: string): Promise<string> {
+export async function showStringEdit(
+  message: string,
+  defaultValue?: string | null
+): Promise<string> {
   const { value } = await inquirer.prompt([
     {
       name: 'value',
