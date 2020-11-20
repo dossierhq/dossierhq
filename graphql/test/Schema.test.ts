@@ -154,3 +154,33 @@ describe('Two entity types with reference schema spec', () => {
     expect(result).toMatchSnapshot();
   });
 });
+
+describe('Multiple references with entityTypes schema spec', () => {
+  const schemaSpec = {
+    entityTypes: {
+      Foo: {
+        fields: [
+          { name: 'noMeansAll', type: EntityFieldType.Reference, entityTypes: [] },
+          { name: 'bar', type: EntityFieldType.Reference, entityTypes: ['Bar'] },
+          { name: 'bazBar', type: EntityFieldType.Reference, entityTypes: ['Baz', 'Bar'] },
+          {
+            name: 'fooBarBaz',
+            type: EntityFieldType.Reference,
+            entityTypes: ['Foo', 'Bar', 'Baz'],
+          },
+          {
+            name: 'barBarBar',
+            type: EntityFieldType.Reference,
+            entityTypes: ['Bar', 'Bar', 'Bar'],
+          },
+        ],
+      },
+      Bar: { fields: [] },
+      Baz: { fields: [] },
+    },
+  };
+  test('Generated QL schema', () => {
+    const result = describeGeneratedSchema(schemaSpec);
+    expect(result).toMatchSnapshot();
+  });
+});
