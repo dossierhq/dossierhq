@@ -23,7 +23,6 @@ import type {
   GraphQLEnumValueConfigMap,
   GraphQLFieldConfig,
   GraphQLFieldConfigMap,
-  GraphQLNamedType,
   GraphQLSchemaConfig,
 } from 'graphql';
 import { loadAdminEntity, loadAdminSearchEntities, loadEntity } from './DataLoaders';
@@ -42,19 +41,21 @@ function fieldConfigWithArgs<TSource, TContext, TArgs>(
   return config as GraphQLFieldConfig<TSource, TContext>;
 }
 
+type InterfaceObjectEnumType = GraphQLInterfaceType | GraphQLObjectType | GraphQLEnumType;
+
 export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
-  #types: GraphQLNamedType[] = [];
+  #types: InterfaceObjectEnumType[] = [];
 
   constructor(readonly schema: Schema) {}
 
-  addType(type: GraphQLNamedType): void {
+  addType(type: InterfaceObjectEnumType): void {
     if (this.#types.find((x) => x.name === type.name)) {
       throw new Error(`Type with name ${type.name} already exists`);
     }
     this.#types.push(type);
   }
 
-  getType(name: string): GraphQLNamedType {
+  getType(name: string): InterfaceObjectEnumType {
     const type = this.#types.find((x) => x.name === name);
     if (!type) {
       throw new Error(`Type with name ${name} doesn't exist`);
@@ -72,6 +73,36 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
 
   getInterfaces(...names: string[]): GraphQLInterfaceType[] {
     return names.map((name) => this.getInterface(name));
+  }
+
+  getOrCreateEntityUnion(isAdmin: boolean, names: string[]): InterfaceObjectEnumType {
+    if (names.length === 0) {
+      return this.getType(isAdmin ? 'AdminEntity' : 'Entity');
+    }
+
+    // Convert to AdminName if isAdmin, remove duplicated, sort alphabetically
+    const filteredNames = [...new Set(names.map((x) => (isAdmin ? toAdminTypeName(x) : x)))];
+    filteredNames.sort();
+
+    if (filteredNames.length === 1) {
+      return this.getType(filteredNames[0]);
+    }
+
+    const enumName = `$${filteredNames.join('Or')}`;
+    const existingEnum = this.#types.find((x) => x.name === enumName);
+    if (existingEnum) {
+      return existingEnum;
+    }
+
+    const enumValues: GraphQLEnumValueConfigMap = {};
+    filteredNames.forEach((name) => (enumValues[name] = {}));
+    const enumType = new GraphQLEnumType({
+      name: enumName,
+      values: enumValues,
+    });
+
+    this.addType(enumType);
+    return enumType;
   }
 
   addSupportingTypes(): void {
@@ -134,7 +165,9 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
           for (const fieldSpec of entitySpec.fields) {
             switch (fieldSpec.type) {
               case EntityFieldType.Reference:
-                fields[fieldSpec.name] = { type: this.getInterface('Entity') };
+                fields[fieldSpec.name] = {
+                  type: this.getOrCreateEntityUnion(false, fieldSpec.entityTypes || []),
+                };
                 break;
               case EntityFieldType.String:
                 fields[fieldSpec.name] = { type: GraphQLString };
@@ -187,7 +220,9 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
           for (const fieldSpec of entitySpec.fields) {
             switch (fieldSpec.type) {
               case EntityFieldType.Reference:
-                fields[fieldSpec.name] = { type: this.getInterface('AdminEntity') };
+                fields[fieldSpec.name] = {
+                  type: this.getOrCreateEntityUnion(true, fieldSpec.entityTypes || []),
+                };
                 break;
               case EntityFieldType.String:
                 fields[fieldSpec.name] = { type: GraphQLString };

@@ -11,6 +11,101 @@ type Query {
 "
 `;
 
+exports[`Multiple references with entityTypes schema spec Generated QL schema 1`] = `
+"interface Node {
+  id: ID!
+}
+
+enum EntityType {
+  Foo
+  Bar
+  Baz
+}
+
+interface Entity implements Node {
+  id: ID!
+  _name: String!
+}
+
+type Foo implements Node & Entity {
+  id: ID!
+  _name: String!
+  noMeansAll: Entity
+  bar: Bar
+  bazBar: $BarOrBaz
+  fooBarBaz: $BarOrBazOrFoo
+  barBarBar: Bar
+}
+
+type Bar implements Node & Entity {
+  id: ID!
+  _name: String!
+}
+
+type Baz implements Node & Entity {
+  id: ID!
+  _name: String!
+}
+
+interface AdminEntity {
+  id: ID!
+  _name: String!
+  _type: EntityType!
+}
+
+type AdminFoo implements AdminEntity {
+  id: ID!
+  _type: EntityType!
+  _name: String!
+  noMeansAll: AdminEntity
+  bar: AdminBar
+  bazBar: $AdminBarOrAdminBaz
+  fooBarBaz: $AdminBarOrAdminBazOrAdminFoo
+  barBarBar: AdminBar
+}
+
+type AdminBar implements AdminEntity {
+  id: ID!
+  _type: EntityType!
+  _name: String!
+}
+
+type AdminBaz implements AdminEntity {
+  id: ID!
+  _type: EntityType!
+  _name: String!
+}
+
+enum $BarOrBaz {
+  Bar
+  Baz
+}
+
+enum $BarOrBazOrFoo {
+  Bar
+  Baz
+  Foo
+}
+
+enum $AdminBarOrAdminBaz {
+  AdminBar
+  AdminBaz
+}
+
+enum $AdminBarOrAdminBazOrAdminFoo {
+  AdminBar
+  AdminBaz
+  AdminFoo
+}
+
+type Query {
+  node(id: ID!): Node
+  adminEntity(id: ID!, version: Int): AdminEntity
+  adminSearchEntities: [AdminEntity]!
+}
+"
+`;
+
 exports[`One empty entity type schema spec Generated QL schema 1`] = `
 "interface Node {
   id: ID!
