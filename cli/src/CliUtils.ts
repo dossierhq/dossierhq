@@ -1,5 +1,11 @@
 import chalk from 'chalk';
-import { isReferenceFieldType, isStringFieldType } from '@datadata/core';
+import {
+  EntityFieldType,
+  EntityTypeSpecification,
+  isReferenceFieldType,
+  isStringFieldType,
+  PromiseResult,
+} from '@datadata/core';
 import type {
   Entity,
   EntityFieldSpecification,
@@ -7,6 +13,11 @@ import type {
   ErrorType,
   SessionContext,
 } from '@datadata/core';
+
+interface Entityish {
+  _type: string;
+  [fieldName: string]: unknown;
+}
 
 export function logErrorResult(
   message: string,
@@ -52,10 +63,6 @@ export function formatEntityOneLine(entity: Entity): string {
   return `${entity._type} | ${chalk.bold(entity._name)} | ${entity.id}`;
 }
 
-export function isReferenceAnEntity(value: { id: string } | null): value is Entity {
-  return !!value && Object.keys(value).indexOf('_type') >= 0;
-}
-
 export function formatFieldValue(fieldSpec: EntityFieldSpecification, value: unknown): string {
   if (isReferenceFieldType(fieldSpec, value)) {
     if (isReferenceAnEntity(value)) {
@@ -67,4 +74,45 @@ export function formatFieldValue(fieldSpec: EntityFieldSpecification, value: unk
     return value ? value : chalk.grey('<not set>');
   }
   throw new Error(`Unknown type (${fieldSpec.type})`);
+}
+
+export function getEntitySpec(context: SessionContext, entity: Entityish): EntityTypeSpecification {
+  const { instance } = context;
+  const schema = instance.getSchema();
+  const entitySpec = schema.getEntityTypeSpecification(entity._type);
+  if (!entitySpec) {
+    throw new Error(`Couldn't find entity spec for type: ${entity._type}`);
+  }
+  return entitySpec;
+}
+
+export function isReferenceAnEntity(value: { id: string } | null): value is Entity {
+  return !!value && Object.keys(value).indexOf('_type') >= 0;
+}
+
+export async function replaceReferencesWithEntitiesGeneric(
+  context: SessionContext,
+  entity: Entityish,
+  entityFetcher: (context: SessionContext, id: string) => PromiseResult<{ item: Entity }, ErrorType>
+): Promise<void> {
+  const entitySpec = getEntitySpec(context, entity);
+  for (const fieldSpec of entitySpec.fields) {
+    if (!(fieldSpec.name in entity)) {
+      continue;
+    }
+    const value = entity[fieldSpec.name];
+    if (fieldSpec.type === EntityFieldType.Reference) {
+      if (isReferenceFieldType(fieldSpec, value)) {
+        if (!value || isReferenceAnEntity(value)) {
+          continue;
+        }
+        const referenceResult = await entityFetcher(context, value.id);
+        if (referenceResult.isOk()) {
+          entity[fieldSpec.name] = referenceResult.value.item;
+        } else {
+          logErrorResult('Failed fetching reference', referenceResult);
+        }
+      }
+    }
+  }
 }
