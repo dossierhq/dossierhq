@@ -1,10 +1,12 @@
-import type { Connection, Edge, ErrorType, PromiseResult, SessionContext } from '.';
-import { toOpaqueCursor } from './Connection';
+import type { Connection, Edge, ErrorType, Paging, PromiseResult, SessionContext } from '.';
+import { fromOpaqueCursor, toOpaqueCursor } from './Connection';
 import * as Db from './Db';
 import type { EntitiesTable, EntityVersionsTable } from './DbTableTypes';
 import { decodeEntity, encodeEntity } from './EntityCodec';
 import type { EntityValues } from './EntityCodec';
 import { notOk, ok } from './ErrorResult';
+import QueryBuilder from './QueryBuilder';
+import { resolvePaging } from './Paging';
 
 export interface EntityHistory {
   id: string;
@@ -80,15 +82,32 @@ export async function getEntity(
 }
 
 export async function searchEntities(
-  context: SessionContext
+  context: SessionContext,
+  paging?: Paging
 ): PromiseResult<Connection<Edge<AdminEntity, ErrorType>> | null, ErrorType.BadRequest> {
   //TODO which errors can occur?
+
+  const qb = new QueryBuilder(`SELECT e.id, e.uuid, e.type, e.name, ev.data
+    FROM entities e, entity_versions ev
+    WHERE e.latest_draft_entity_versions_id = ev.id`);
+
+  const resolvedPaging = resolvePaging(paging);
+  if (resolvedPaging.isFirst) {
+    if (resolvedPaging.cursor !== null) {
+      qb.addQuery(`AND e.id > ${qb.addValue(resolvedPaging.cursor)}`);
+    }
+    qb.addQuery(`ORDER BY e.id LIMIT ${qb.addValue(resolvedPaging.count)}`);
+  } else {
+    if (resolvedPaging.cursor) {
+      qb.addQuery(`AND e.id < ${qb.addValue(resolvedPaging.cursor)}`);
+    }
+    qb.addQuery(`ORDER BY e.id DESC LIMIT ${qb.addValue(resolvedPaging.count)}`);
+  }
+
   const entitiesValues = await Db.queryMany<Pick<EntitiesTable, 'id'> & EntityValues>(
     context,
-    `SELECT e.id, e.uuid, e.type, e.name, ev.data
-      FROM entities e, entity_versions ev
-      WHERE e.latest_draft_entity_versions_id = ev.id
-      ORDER BY e.id`
+    qb.query,
+    qb.values
   );
   const entities = entitiesValues.map((x) => decodeEntity(context, x));
   if (entities.length === 0) {

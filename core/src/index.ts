@@ -8,6 +8,7 @@ export type {
   EntityHistory,
 } from './EntityAdmin';
 export type { ErrorResult, OkResult, PromiseResult, Result } from './ErrorResult';
+export type { Paging } from './Paging';
 export type { Entity } from './PublishedEntity';
 export type {
   EntityFieldSpecification,
