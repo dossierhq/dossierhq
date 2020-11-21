@@ -214,7 +214,7 @@ describe('One empty entity type schema spec', () => {
   test('Ensure AdminEntityEdge matches Connection spec', async () => {
     // From https://relay.dev/graphql/connections.htm#sec-Edge-Types.Introspection
     const query = `{
-      __type(name: "AdminEntityEdge") {
+      __type(name: "AdminEntityEdge") { # Changed from "Example"
         fields {
           name
           type {
@@ -236,6 +236,7 @@ describe('One empty entity type schema spec', () => {
             {
               name: 'node',
               type: {
+                // Changed from "Example" / "Object"
                 name: 'AdminEntity',
                 kind: 'INTERFACE',
                 ofType: null,
@@ -250,6 +251,60 @@ describe('One empty entity type schema spec', () => {
                 ofType: {
                   name: 'String',
                   kind: 'SCALAR',
+                },
+              },
+            },
+          ],
+        },
+      },
+    };
+    const result = await querySchema(schemaSpec, query);
+
+    expect(result).toEqual(expected);
+  });
+
+  test('Ensure AdminEntityConnection matches Connection spec', async () => {
+    // From https://relay.dev/graphql/connections.htm#sec-Connection-Types.Introspection
+    const query = `{
+      __type(name: "AdminEntityConnection") { # Changed from ExampleConnection
+        fields {
+          name
+          type {
+            name
+            kind
+            ofType {
+              name
+              kind
+            }
+          }
+        }
+      }
+    }`;
+    const expected = {
+      data: {
+        __type: {
+          fields: [
+            // May contain other items
+            {
+              name: 'pageInfo',
+              type: {
+                name: null,
+                kind: 'NON_NULL',
+                ofType: {
+                  name: 'PageInfo',
+                  kind: 'OBJECT',
+                },
+              },
+            },
+            {
+              name: 'edges',
+              type: {
+                name: null,
+                kind: 'LIST',
+                ofType: {
+                  // Changed from "ExampleEdge"
+                  name: 'AdminEntityEdge',
+                  kind: 'OBJECT',
                 },
               },
             },

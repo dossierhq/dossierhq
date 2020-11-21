@@ -72,6 +72,11 @@ type AdminEntityEdge {
   cursor: String!
 }
 
+type AdminEntityConnection {
+  pageInfo: PageInfo!
+  edges: [AdminEntityEdge]
+}
+
 type AdminFoo implements AdminEntity {
   id: ID!
   _type: EntityType!
@@ -120,7 +125,7 @@ enum $AdminBarOrAdminBazOrAdminFoo {
 type Query {
   node(id: ID!): Node
   adminEntity(id: ID!, version: Int): AdminEntity
-  adminSearchEntities: [AdminEntity]!
+  adminSearchEntities: AdminEntityConnection!
 }
 "
 `;
@@ -162,6 +167,11 @@ type AdminEntityEdge {
   cursor: String!
 }
 
+type AdminEntityConnection {
+  pageInfo: PageInfo!
+  edges: [AdminEntityEdge]
+}
+
 type AdminFoo implements AdminEntity {
   id: ID!
   _type: EntityType!
@@ -171,7 +181,7 @@ type AdminFoo implements AdminEntity {
 type Query {
   node(id: ID!): Node
   adminEntity(id: ID!, version: Int): AdminEntity
-  adminSearchEntities: [AdminEntity]!
+  adminSearchEntities: AdminEntityConnection!
 }
 "
 `;
@@ -222,6 +232,11 @@ type AdminEntityEdge {
   cursor: String!
 }
 
+type AdminEntityConnection {
+  pageInfo: PageInfo!
+  edges: [AdminEntityEdge]
+}
+
 type AdminFoo implements AdminEntity {
   id: ID!
   _type: EntityType!
@@ -240,7 +255,7 @@ type AdminBar implements AdminEntity {
 type Query {
   node(id: ID!): Node
   adminEntity(id: ID!, version: Int): AdminEntity
-  adminSearchEntities: [AdminEntity]!
+  adminSearchEntities: AdminEntityConnection!
 }
 "
 `;

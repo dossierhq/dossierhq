@@ -222,6 +222,17 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         },
       })
     );
+
+    // AdminEntityConnection
+    this.addType(
+      new GraphQLObjectType({
+        name: 'AdminEntityConnection',
+        fields: {
+          pageInfo: { type: new GraphQLNonNull(this.getType('PageInfo')) },
+          edges: { type: new GraphQLList(this.getType('AdminEntityEdge')) },
+        },
+      })
+    );
   }
 
   addAdminEntityTypes(): void {
@@ -289,7 +300,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
 
   buildQueryFieldAdminSearchEntities<TSource>(): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<TSource, TContext, unknown>({
-      type: new GraphQLNonNull(new GraphQLList(this.getInterface('AdminEntity'))),
+      type: new GraphQLNonNull(this.getType('AdminEntityConnection')),
       args: {},
       resolve: async (source, args, context, unusedInfo) => {
         return await loadAdminSearchEntities(context);
