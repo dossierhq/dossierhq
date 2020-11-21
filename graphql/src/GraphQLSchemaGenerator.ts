@@ -211,6 +211,17 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         },
       })
     );
+
+    // AdminEntityEdge
+    this.addType(
+      new GraphQLObjectType({
+        name: 'AdminEntityEdge',
+        fields: {
+          node: { type: this.getType('AdminEntity') },
+          cursor: { type: new GraphQLNonNull(GraphQLString) },
+        },
+      })
+    );
   }
 
   addAdminEntityTypes(): void {

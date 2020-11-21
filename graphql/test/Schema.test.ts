@@ -210,6 +210,57 @@ describe('One empty entity type schema spec', () => {
 
     expect(result).toEqual(expected);
   });
+
+  test('Ensure AdminEntityEdge matches Connection spec', async () => {
+    // From https://relay.dev/graphql/connections.htm#sec-Edge-Types.Introspection
+    const query = `{
+      __type(name: "AdminEntityEdge") {
+        fields {
+          name
+          type {
+            name
+            kind
+            ofType {
+              name
+              kind
+            }
+          }
+        }
+      }
+    }`;
+    const expected = {
+      data: {
+        __type: {
+          fields: [
+            // May contain other items
+            {
+              name: 'node',
+              type: {
+                name: 'AdminEntity',
+                kind: 'INTERFACE',
+                ofType: null,
+              },
+            },
+            {
+              name: 'cursor',
+              type: {
+                // This shows the cursor type as String!, other types are possible
+                name: null,
+                kind: 'NON_NULL',
+                ofType: {
+                  name: 'String',
+                  kind: 'SCALAR',
+                },
+              },
+            },
+          ],
+        },
+      },
+    };
+    const result = await querySchema(schemaSpec, query);
+
+    expect(result).toEqual(expected);
+  });
 });
 
 describe('Two entity types with reference schema spec', () => {
