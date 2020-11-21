@@ -1,4 +1,5 @@
 export type { Session } from './Auth';
+export type { Connection, Edge, PageInfo } from './Connection';
 export type { AuthContext, Context, SessionContext } from './Context';
 export type {
   AdminEntity,

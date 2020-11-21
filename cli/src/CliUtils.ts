@@ -24,10 +24,14 @@ export function logErrorResult(
   errorResult: ErrorResult<unknown, ErrorType>
 ): void {
   console.log(
-    `${chalk.yellow(chalk.bold('!'))} ${chalk.bold(message + ':')} ${chalk.yellow(
-      errorResult.error
-    )} ${errorResult.message}`
+    `${chalk.yellow(chalk.bold('!'))} ${chalk.bold(message + ':')} ${formatErrorResult(
+      errorResult
+    )}`
   );
+}
+
+export function formatErrorResult(errorResult: ErrorResult<unknown, ErrorType>): string {
+  return `${chalk.yellow(errorResult.error)} ${errorResult.message}`;
 }
 
 export function logError(error: Error): void {

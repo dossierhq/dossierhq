@@ -1,4 +1,5 @@
-import type { ErrorType, PromiseResult, SessionContext } from '.';
+import type { Connection, Edge, ErrorType, PromiseResult, SessionContext } from '.';
+import { toOpaqueCursor } from './Connection';
 import * as Db from './Db';
 import type { EntitiesTable, EntityVersionsTable } from './DbTableTypes';
 import { decodeEntity, encodeEntity } from './EntityCodec';
@@ -80,16 +81,31 @@ export async function getEntity(
 
 export async function searchEntities(
   context: SessionContext
-): PromiseResult<{ items: AdminEntity[] }, ErrorType.BadRequest> {
+): PromiseResult<Connection<Edge<AdminEntity, ErrorType>> | null, ErrorType.BadRequest> {
   //TODO which errors can occur?
-  const entitiesValues = await Db.queryMany<EntityValues>(
+  const entitiesValues = await Db.queryMany<Pick<EntitiesTable, 'id'> & EntityValues>(
     context,
-    `SELECT e.uuid, e.type, e.name, ev.data
+    `SELECT e.id, e.uuid, e.type, e.name, ev.data
       FROM entities e, entity_versions ev
-      WHERE e.latest_draft_entity_versions_id = ev.id`
+      WHERE e.latest_draft_entity_versions_id = ev.id
+      ORDER BY e.id`
   );
   const entities = entitiesValues.map((x) => decodeEntity(context, x));
-  return ok({ items: entities });
+  if (entities.length === 0) {
+    return ok(null);
+  }
+  return ok({
+    pageInfo: {
+      hasNextPage: false,
+      hasPreviousPage: false,
+      startCursor: toOpaqueCursor(entitiesValues[0].id),
+      endCursor: toOpaqueCursor(entitiesValues[entitiesValues.length - 1].id),
+    },
+    edges: entities.map((entity, index) => ({
+      cursor: toOpaqueCursor(entitiesValues[index].id),
+      node: ok(entity),
+    })),
+  });
 }
 
 export async function createEntity(

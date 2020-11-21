@@ -1,17 +1,10 @@
 import { EntityAdmin, isReferenceFieldType, PublishedEntity } from '@datadata/core';
-import type { AdminEntity, Entity, SessionContext } from '@datadata/core';
+import type { AdminEntity, Entity, PageInfo, SessionContext } from '@datadata/core';
 import type { SessionGraphQLContext } from './GraphQLSchemaGenerator';
 
-interface PageInfo {
-  hasPreviousPage: boolean;
-  hasNextPage: boolean;
-  startCursor: string;
-  endCursor: string;
-}
-
-interface Connection<T> {
+interface Connection<T extends Edge<unknown>> {
   pageInfo: PageInfo;
-  edges: Edge<T>[];
+  edges: T[];
 }
 
 interface Edge<T> {
@@ -90,7 +83,7 @@ function buildResolversForAdminEntity<TContext extends SessionGraphQLContext>(
 
 export async function loadAdminSearchEntities<TContext extends SessionGraphQLContext>(
   context: TContext
-): Promise<Connection<AdminEntity>> {
+): Promise<Connection<Edge<AdminEntity>> | null> {
   if (context.context.isError()) {
     throw context.context.toError();
   }
@@ -100,16 +93,20 @@ export async function loadAdminSearchEntities<TContext extends SessionGraphQLCon
     throw result.toError();
   }
 
+  if (result.value === null) {
+    // No results
+    return null;
+  }
+
   return {
-    pageInfo: {
-      hasNextPage: false,
-      hasPreviousPage: false,
-      startCursor: '',
-      endCursor: '',
-    },
-    edges: result.value.items.map((entity) => ({
-      node: buildResolversForAdminEntity(sessionContext, entity),
-      cursor: '',
-    })),
+    pageInfo: result.value.pageInfo,
+    edges: result.value.edges.map((edge) => {
+      return {
+        cursor: edge.cursor,
+        node: edge.node.isOk()
+          ? buildResolversForAdminEntity(sessionContext, edge.node.value)
+          : null, //TODO throw error if accessed?
+      };
+    }),
   };
 }
