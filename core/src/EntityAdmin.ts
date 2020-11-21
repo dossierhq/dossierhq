@@ -92,16 +92,17 @@ export async function searchEntities(
     WHERE e.latest_draft_entity_versions_id = ev.id`);
 
   const resolvedPaging = resolvePaging(paging);
+  const countToRequest = resolvedPaging.count + 1; // request one more to calculate hasNextPage
   if (resolvedPaging.isFirst) {
     if (resolvedPaging.cursor !== null) {
       qb.addQuery(`AND e.id > ${qb.addValue(resolvedPaging.cursor)}`);
     }
-    qb.addQuery(`ORDER BY e.id LIMIT ${qb.addValue(resolvedPaging.count)}`);
+    qb.addQuery(`ORDER BY e.id LIMIT ${qb.addValue(countToRequest)}`);
   } else {
     if (resolvedPaging.cursor) {
       qb.addQuery(`AND e.id < ${qb.addValue(resolvedPaging.cursor)}`);
     }
-    qb.addQuery(`ORDER BY e.id DESC LIMIT ${qb.addValue(resolvedPaging.count)}`);
+    qb.addQuery(`ORDER BY e.id DESC LIMIT ${qb.addValue(countToRequest)}`);
   }
 
   const entitiesValues = await Db.queryMany<Pick<EntitiesTable, 'id'> & EntityValues>(
@@ -109,14 +110,19 @@ export async function searchEntities(
     qb.query,
     qb.values
   );
+  const hasExtraPage = entitiesValues.length > resolvedPaging.count;
+  if (hasExtraPage) {
+    entitiesValues.splice(resolvedPaging.count, 1);
+  }
+
   const entities = entitiesValues.map((x) => decodeEntity(context, x));
   if (entities.length === 0) {
     return ok(null);
   }
   return ok({
     pageInfo: {
-      hasNextPage: false,
-      hasPreviousPage: false,
+      hasNextPage: resolvedPaging.isFirst ? hasExtraPage : false,
+      hasPreviousPage: resolvedPaging.isFirst ? false : hasExtraPage,
       startCursor: toOpaqueCursor(entitiesValues[0].id),
       endCursor: toOpaqueCursor(entitiesValues[entitiesValues.length - 1].id),
     },
