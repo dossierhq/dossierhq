@@ -17,6 +17,7 @@ import type {
 import * as CliSchema from './CliSchema';
 import {
   formatEntityOneLine,
+  formatErrorResult,
   formatFieldValue,
   getEntitySpec,
   logEntity,
@@ -39,9 +40,18 @@ export async function searchEntities(context: SessionContext): Promise<void> {
     logErrorResult('Failed fetching entity data', result);
     return;
   }
+  if (result.value === null) {
+    console.log('No result');
+    return;
+  }
   console.log(chalk.cyan('Entity type | Name | Id'));
-  for (const entity of result.value.items) {
-    console.log(formatEntityOneLine(entity));
+  for (const edge of result.value.edges) {
+    const entity = edge.node;
+    if (entity.isOk()) {
+      console.log(formatEntityOneLine(entity.value));
+    } else {
+      logErrorResult('Failed loading entity', entity);
+    }
   }
 }
 
@@ -54,17 +64,27 @@ async function selectEntity(
   if (result.isError()) {
     return result;
   }
-  if (result.value.items.length === 0) {
+  if (result.value === null) {
     return notOk.NotFound('No entries found');
   }
-  const item = await showItemSelector<{ id: string; name: string; entity: AdminEntity }>(
+  const item = await showItemSelector<{
+    id: string;
+    name: string;
+    entity?: AdminEntity;
+    enabled?: boolean;
+  }>(
     message,
-    result.value.items.map((entity) => ({
-      id: entity.id,
-      name: formatEntityOneLine(entity),
-      entity,
-    }))
+    result.value.edges.map((edge) => {
+      if (edge.node.isOk()) {
+        const entity = edge.node.value;
+        return { id: entity.id, name: formatEntityOneLine(entity), entity };
+      }
+      return { id: edge.cursor, name: formatErrorResult(edge.node), enabled: false };
+    })
   );
+  if (!item.entity) {
+    throw new Error(`Unexpectedly no entity`);
+  }
   return ok(item.entity);
 }
 

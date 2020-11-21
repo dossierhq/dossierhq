@@ -27,8 +27,10 @@ export default class Instance {
   }
 
   getSchema(): Schema {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    return this.#schema!;
+    if (!this.#schema) {
+      throw new Error('Schema is not set');
+    }
+    return this.#schema;
   }
 
   async setSchema(

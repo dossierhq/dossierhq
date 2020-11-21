@@ -15,7 +15,11 @@ async function main() {
       session = await CliAuth.veryInsecureCreateSession(instance, 'test', 'john-smith');
     }
     const context = instance.createSessionContext(session);
-    await instance.setSchema(context, new Schema(SchemaSpec as SchemaSpecification));
+    const loadSchema = await instance.setSchema(
+      context,
+      new Schema(SchemaSpec as SchemaSpecification)
+    );
+    loadSchema.throwIfError();
 
     await CliMain.mainMenu(context);
   } finally {
