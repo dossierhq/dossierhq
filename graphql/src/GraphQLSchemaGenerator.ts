@@ -8,6 +8,7 @@ import type {
   SessionContext,
 } from '@datadata/core';
 import {
+  GraphQLBoolean,
   GraphQLEnumType,
   GraphQLID,
   GraphQLInt,
@@ -112,6 +113,19 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         name: 'Node',
         fields: {
           id: { type: new GraphQLNonNull(GraphQLID) },
+        },
+      })
+    );
+
+    // PageInfo
+    this.addType(
+      new GraphQLObjectType({
+        name: 'PageInfo',
+        fields: {
+          hasNextPage: { type: new GraphQLNonNull(GraphQLBoolean) },
+          hasPreviousPage: { type: new GraphQLNonNull(GraphQLBoolean) },
+          startCursor: { type: new GraphQLNonNull(GraphQLString) },
+          endCursor: { type: new GraphQLNonNull(GraphQLString) },
         },
       })
     );

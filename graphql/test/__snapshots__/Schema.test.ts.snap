@@ -5,6 +5,13 @@ exports[`Empty schema spec Generated QL schema 1`] = `
   id: ID!
 }
 
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String!
+  endCursor: String!
+}
+
 type Query {
   node(id: ID!): Node
 }
@@ -14,6 +21,13 @@ type Query {
 exports[`Multiple references with entityTypes schema spec Generated QL schema 1`] = `
 "interface Node {
   id: ID!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String!
+  endCursor: String!
 }
 
 enum EntityType {
@@ -111,6 +125,13 @@ exports[`One empty entity type schema spec Generated QL schema 1`] = `
   id: ID!
 }
 
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String!
+  endCursor: String!
+}
+
 enum EntityType {
   Foo
 }
@@ -148,6 +169,13 @@ type Query {
 exports[`Two entity types with reference schema spec Generated QL schema 1`] = `
 "interface Node {
   id: ID!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String!
+  endCursor: String!
 }
 
 enum EntityType {
