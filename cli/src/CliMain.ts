@@ -1,6 +1,6 @@
 import type { SessionContext } from '@datadata/core';
-import type { ItemSelectorItem, ItemSelectorSeparator } from './widgets/ItemSelector';
-import { showItemSelector } from './widgets/ItemSelector';
+import type { ItemSelectorItem, ItemSelectorSeparator } from './widgets';
+import { showItemSelector } from './widgets';
 import * as CliEntityAdmin from './CliEntityAdmin';
 import * as CliPublishedEntity from './CliPublishedEntity';
 import * as CliSchema from './CliSchema';

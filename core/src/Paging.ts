@@ -1,11 +1,17 @@
 import { fromOpaqueCursor } from './Connection';
 import { pagingDefaultCount } from './Constants';
 
-export type Paging = { first?: number; after?: string } | { last?: number; before?: string };
+export type Paging = { first?: number; after?: string; last?: number; before?: string };
 export interface ResolvedPaging {
-  isFirst: boolean;
+  isForwards: boolean;
   cursor: number | null;
   count: number;
+}
+
+export function isPagingForwards(paging?: Paging): boolean {
+  return (
+    !paging || 'first' in paging || 'after' in paging || !('last' in paging || 'before' in paging)
+  );
 }
 
 function getCount(paging: Paging | undefined, key: 'first' | 'last') {
@@ -24,11 +30,10 @@ function getCursor(paging: Paging | undefined, key: 'after' | 'before') {
 }
 
 export function resolvePaging(paging?: Paging): ResolvedPaging {
-  const isFirst =
-    !paging || 'first' in paging || 'after' in paging || !('last' in paging || 'before' in paging);
+  const isForwards = isPagingForwards(paging);
   return {
-    isFirst,
-    count: getCount(paging, isFirst ? 'first' : 'last'),
-    cursor: getCursor(paging, isFirst ? 'after' : 'before'),
+    isForwards: isForwards,
+    count: getCount(paging, isForwards ? 'first' : 'last'),
+    cursor: getCursor(paging, isForwards ? 'after' : 'before'),
   };
 }

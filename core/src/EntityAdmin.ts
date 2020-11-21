@@ -1,5 +1,5 @@
 import type { Connection, Edge, ErrorType, Paging, PromiseResult, SessionContext } from '.';
-import { fromOpaqueCursor, toOpaqueCursor } from './Connection';
+import { toOpaqueCursor } from './Connection';
 import * as Db from './Db';
 import type { EntitiesTable, EntityVersionsTable } from './DbTableTypes';
 import { decodeEntity, encodeEntity } from './EntityCodec';
@@ -93,7 +93,7 @@ export async function searchEntities(
 
   const resolvedPaging = resolvePaging(paging);
   const countToRequest = resolvedPaging.count + 1; // request one more to calculate hasNextPage
-  if (resolvedPaging.isFirst) {
+  if (resolvedPaging.isForwards) {
     if (resolvedPaging.cursor !== null) {
       qb.addQuery(`AND e.id > ${qb.addValue(resolvedPaging.cursor)}`);
     }
@@ -115,14 +115,19 @@ export async function searchEntities(
     entitiesValues.splice(resolvedPaging.count, 1);
   }
 
+  if (!resolvedPaging.isForwards) {
+    // Reverse since DESC order returns the rows in the wrong order, we want them in the same order as for forwards pagination
+    entitiesValues.reverse();
+  }
+
   const entities = entitiesValues.map((x) => decodeEntity(context, x));
   if (entities.length === 0) {
     return ok(null);
   }
   return ok({
     pageInfo: {
-      hasNextPage: resolvedPaging.isFirst ? hasExtraPage : false,
-      hasPreviousPage: resolvedPaging.isFirst ? false : hasExtraPage,
+      hasNextPage: resolvedPaging.isForwards ? hasExtraPage : false,
+      hasPreviousPage: resolvedPaging.isForwards ? false : hasExtraPage,
       startCursor: toOpaqueCursor(entitiesValues[0].id),
       endCursor: toOpaqueCursor(entitiesValues[entitiesValues.length - 1].id),
     },

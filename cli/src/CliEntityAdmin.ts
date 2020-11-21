@@ -1,5 +1,6 @@
 import chalk from 'chalk';
 import {
+  isPagingForwards,
   isReferenceFieldType,
   isStringFieldType,
   ok,
@@ -26,10 +27,8 @@ import {
   logKeyValue,
   replaceReferencesWithEntitiesGeneric,
 } from './CliUtils';
-import { showConfirm } from './widgets/Confirm';
-import type { ItemSelectorItem } from './widgets/ItemSelector';
-import { showItemSelector } from './widgets/ItemSelector';
-import { showStringEdit } from './widgets/StringEdit';
+import type { ItemSelectorItem } from './widgets';
+import { showConfirm, showIntegerEdit, showItemSelector, showStringEdit } from './widgets';
 
 interface EditFieldSelectorItem extends ItemSelectorItem {
   defaultValue?: unknown;
@@ -68,7 +67,8 @@ async function selectEntity(
   message: string,
   unusedDefaultValue: { id: string } | null
 ): PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.NotFound> {
-  const paging: Paging = { first: 2, after: undefined };
+  const { paging } = await configureQuery();
+  const isForward = isPagingForwards(paging);
   let lastItemId: string | null = null;
   // eslint-disable-next-line no-constant-condition
   while (true) {
@@ -88,7 +88,13 @@ async function selectEntity(
         }
         return { id: edge.cursor, name: formatErrorResult(edge.node), enabled: false };
       }),
-      { id: '_next', name: 'Next page', enabled: result.value.pageInfo.hasNextPage },
+      {
+        id: '_next',
+        name: isForward ? 'Next page' : 'Previous page',
+        enabled: isForward
+          ? result.value.pageInfo.hasNextPage
+          : result.value.pageInfo.hasPreviousPage,
+      },
     ];
     const item: EntitySelectorItem = await showItemSelector<EntitySelectorItem>(
       message,
@@ -101,7 +107,47 @@ async function selectEntity(
       return ok(item.entity);
     }
     if (item.id === '_next') {
-      paging.after = result.value.pageInfo.endCursor;
+      if (isForward) {
+        paging.after = result.value.pageInfo.endCursor;
+      } else {
+        paging.before = result.value.pageInfo.startCursor;
+      }
+    }
+  }
+}
+
+async function configureQuery(): Promise<{ paging: Paging }> {
+  let lastItemId = '_search';
+  let pagingIsForward = true;
+  let pagingCount = 25;
+  // eslint-disable-next-line no-constant-condition
+  while (true) {
+    const items = [
+      {
+        id: '_direction',
+        name: `${chalk.bold('Direction:')} ${pagingIsForward ? 'forward' : 'backward'}`,
+      },
+      { id: '_count', name: `${chalk.bold('Page size:')} ${pagingCount}` },
+      { id: '_search', name: 'Search' },
+    ];
+    const item = await showItemSelector('Configure the search', items, lastItemId);
+    lastItemId = item.id;
+
+    switch (item.id) {
+      case '_direction':
+        pagingIsForward = !pagingIsForward;
+        break;
+      case '_count':
+        pagingCount = await showIntegerEdit('How many items to show per page?', pagingCount);
+        break;
+      case '_search':
+        return {
+          paging: pagingIsForward
+            ? {
+                first: pagingCount,
+              }
+            : { last: pagingCount },
+        };
     }
   }
 }

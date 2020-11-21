@@ -1,6 +1,6 @@
 import chalk from 'chalk';
 import type { Context } from '@datadata/core';
-import { showItemSelector } from './widgets/ItemSelector';
+import { showItemSelector } from './widgets';
 
 export function showSchema(context: Context<unknown>): void {
   const { instance } = context;
