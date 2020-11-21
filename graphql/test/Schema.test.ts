@@ -135,6 +135,81 @@ describe('One empty entity type schema spec', () => {
 
     expect(result).toEqual(expected);
   });
+
+  test('Ensure PageInfo matches Connection spec', async () => {
+    // From https://relay.dev/graphql/connections.htm#sec-undefined.PageInfo.Introspection
+    const query = `{
+      __type(name: "PageInfo") {
+        fields {
+          name
+          type {
+            name
+            kind
+            ofType {
+              name
+              kind
+            }
+          }
+        }
+      }
+    }`;
+    const expected = {
+      data: {
+        __type: {
+          fields: [
+            // May contain other fields.
+            {
+              name: 'hasNextPage',
+              type: {
+                name: null,
+                kind: 'NON_NULL',
+                ofType: {
+                  name: 'Boolean',
+                  kind: 'SCALAR',
+                },
+              },
+            },
+            {
+              name: 'hasPreviousPage',
+              type: {
+                name: null,
+                kind: 'NON_NULL',
+                ofType: {
+                  name: 'Boolean',
+                  kind: 'SCALAR',
+                },
+              },
+            },
+            {
+              name: 'startCursor',
+              type: {
+                name: null,
+                kind: 'NON_NULL',
+                ofType: {
+                  name: 'String',
+                  kind: 'SCALAR',
+                },
+              },
+            },
+            {
+              name: 'endCursor',
+              type: {
+                name: null,
+                kind: 'NON_NULL',
+                ofType: {
+                  name: 'String',
+                  kind: 'SCALAR',
+                },
+              },
+            },
+          ],
+        },
+      },
+    };
+    const result = await querySchema(schemaSpec, query);
+
+    expect(result).toEqual(expected);
+  });
 });
 
 describe('Two entity types with reference schema spec', () => {
