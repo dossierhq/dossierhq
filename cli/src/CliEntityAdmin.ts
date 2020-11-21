@@ -11,6 +11,7 @@ import type {
   AdminEntity,
   EntityFieldSpecification,
   EntityTypeSpecification,
+  Paging,
   PromiseResult,
   SessionContext,
 } from '@datadata/core';
@@ -60,32 +61,38 @@ async function selectEntity(
   message: string,
   unusedDefaultValue: { id: string } | null
 ): PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.NotFound> {
-  const result = await EntityAdmin.searchEntities(context);
-  if (result.isError()) {
-    return result;
+  const paging: Paging = { first: 2, after: undefined };
+  // eslint-disable-next-line no-constant-condition
+  while (true) {
+    const result = await EntityAdmin.searchEntities(context, paging);
+    if (result.isError()) {
+      return result;
+    }
+    if (result.value === null) {
+      return notOk.NotFound('No entries found');
+    }
+    const item = await showItemSelector<{
+      id: string;
+      name: string;
+      entity?: AdminEntity;
+      enabled?: boolean;
+    }>(message, [
+      ...result.value.edges.map((edge) => {
+        if (edge.node.isOk()) {
+          const entity = edge.node.value;
+          return { id: entity.id, name: formatEntityOneLine(entity), entity };
+        }
+        return { id: edge.cursor, name: formatErrorResult(edge.node), enabled: false };
+      }),
+      { id: '_next', name: 'Next page' },
+    ]);
+    if (item.entity) {
+      return ok(item.entity);
+    }
+    if (item.id === '_next') {
+      paging.after = result.value.pageInfo.endCursor;
+    }
   }
-  if (result.value === null) {
-    return notOk.NotFound('No entries found');
-  }
-  const item = await showItemSelector<{
-    id: string;
-    name: string;
-    entity?: AdminEntity;
-    enabled?: boolean;
-  }>(
-    message,
-    result.value.edges.map((edge) => {
-      if (edge.node.isOk()) {
-        const entity = edge.node.value;
-        return { id: entity.id, name: formatEntityOneLine(entity), entity };
-      }
-      return { id: edge.cursor, name: formatErrorResult(edge.node), enabled: false };
-    })
-  );
-  if (!item.entity) {
-    throw new Error(`Unexpectedly no entity`);
-  }
-  return ok(item.entity);
 }
 
 export async function createEntity(context: SessionContext): Promise<{ id: string } | null> {
