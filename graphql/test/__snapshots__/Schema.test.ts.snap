@@ -67,6 +67,11 @@ interface AdminEntity {
   _type: EntityType!
 }
 
+type AdminEntityEdge {
+  node: AdminEntity
+  cursor: String!
+}
+
 type AdminFoo implements AdminEntity {
   id: ID!
   _type: EntityType!
@@ -152,6 +157,11 @@ interface AdminEntity {
   _type: EntityType!
 }
 
+type AdminEntityEdge {
+  node: AdminEntity
+  cursor: String!
+}
+
 type AdminFoo implements AdminEntity {
   id: ID!
   _type: EntityType!
@@ -205,6 +215,11 @@ interface AdminEntity {
   id: ID!
   _name: String!
   _type: EntityType!
+}
+
+type AdminEntityEdge {
+  node: AdminEntity
+  cursor: String!
 }
 
 type AdminFoo implements AdminEntity {
