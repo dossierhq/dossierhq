@@ -2,7 +2,7 @@ import inquirer from 'inquirer';
 import type { AuthContext, Instance, Session } from '@datadata/core';
 import { Auth, ErrorType } from '@datadata/core';
 import * as CliUtils from './CliUtils';
-import { showConfirm } from './widgets/Confirm';
+import { showConfirm } from './widgets';
 
 async function createPrincipalWithConfirm(
   authContext: AuthContext,
