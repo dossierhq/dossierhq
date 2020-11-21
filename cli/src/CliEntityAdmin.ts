@@ -35,6 +35,13 @@ interface EditFieldSelectorItem extends ItemSelectorItem {
   defaultValue?: unknown;
 }
 
+interface EntitySelectorItem {
+  id: string;
+  name: string;
+  entity?: AdminEntity;
+  enabled?: boolean;
+}
+
 export async function searchEntities(context: SessionContext): Promise<void> {
   const result = await EntityAdmin.searchEntities(context);
   if (result.isError()) {
@@ -62,6 +69,7 @@ async function selectEntity(
   unusedDefaultValue: { id: string } | null
 ): PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.NotFound> {
   const paging: Paging = { first: 2, after: undefined };
+  let lastItemId: string | null = null;
   // eslint-disable-next-line no-constant-condition
   while (true) {
     const result = await EntityAdmin.searchEntities(context, paging);
@@ -71,12 +79,8 @@ async function selectEntity(
     if (result.value === null) {
       return notOk.NotFound('No entries found');
     }
-    const item = await showItemSelector<{
-      id: string;
-      name: string;
-      entity?: AdminEntity;
-      enabled?: boolean;
-    }>(message, [
+
+    const items = [
       ...result.value.edges.map((edge) => {
         if (edge.node.isOk()) {
           const entity = edge.node.value;
@@ -84,8 +88,15 @@ async function selectEntity(
         }
         return { id: edge.cursor, name: formatErrorResult(edge.node), enabled: false };
       }),
-      { id: '_next', name: 'Next page' },
-    ]);
+      { id: '_next', name: 'Next page', enabled: result.value.pageInfo.hasNextPage },
+    ];
+    const item: EntitySelectorItem = await showItemSelector<EntitySelectorItem>(
+      message,
+      items,
+      lastItemId
+    );
+    lastItemId = item.id;
+
     if (item.entity) {
       return ok(item.entity);
     }
