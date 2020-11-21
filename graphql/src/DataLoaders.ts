@@ -2,6 +2,23 @@ import { EntityAdmin, isReferenceFieldType, PublishedEntity } from '@datadata/co
 import type { AdminEntity, Entity, SessionContext } from '@datadata/core';
 import type { SessionGraphQLContext } from './GraphQLSchemaGenerator';
 
+interface PageInfo {
+  hasPreviousPage: boolean;
+  hasNextPage: boolean;
+  startCursor: string;
+  endCursor: string;
+}
+
+interface Connection<T> {
+  pageInfo: PageInfo;
+  edges: Edge<T>[];
+}
+
+interface Edge<T> {
+  node: T | null;
+  cursor: string;
+}
+
 export async function loadEntity<TContext extends SessionGraphQLContext>(
   context: TContext,
   id: string
@@ -73,7 +90,7 @@ function buildResolversForAdminEntity<TContext extends SessionGraphQLContext>(
 
 export async function loadAdminSearchEntities<TContext extends SessionGraphQLContext>(
   context: TContext
-): Promise<AdminEntity[]> {
+): Promise<Connection<AdminEntity>> {
   if (context.context.isError()) {
     throw context.context.toError();
   }
@@ -83,5 +100,16 @@ export async function loadAdminSearchEntities<TContext extends SessionGraphQLCon
     throw result.toError();
   }
 
-  return result.value.items.map((entity) => buildResolversForAdminEntity(sessionContext, entity));
+  return {
+    pageInfo: {
+      hasNextPage: false,
+      hasPreviousPage: false,
+      startCursor: '',
+      endCursor: '',
+    },
+    edges: result.value.items.map((entity) => ({
+      node: buildResolversForAdminEntity(sessionContext, entity),
+      cursor: '',
+    })),
+  };
 }
