@@ -299,11 +299,22 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
   }
 
   buildQueryFieldAdminSearchEntities<TSource>(): GraphQLFieldConfig<TSource, TContext> {
-    return fieldConfigWithArgs<TSource, TContext, unknown>({
-      type: new GraphQLNonNull(this.getType('AdminEntityConnection')),
-      args: {},
+    return fieldConfigWithArgs<
+      TSource,
+      TContext,
+      { first?: number; after?: string; last?: number; before?: string }
+    >({
+      type: this.getType('AdminEntityConnection'),
+      args: {
+        first: { type: GraphQLInt },
+        after: { type: GraphQLString },
+        last: { type: GraphQLInt },
+        before: { type: GraphQLString },
+      },
       resolve: async (source, args, context, unusedInfo) => {
-        return await loadAdminSearchEntities(context);
+        const { first, after, last, before } = args;
+        const paging = { first, after, last, before };
+        return await loadAdminSearchEntities(context, paging);
       },
     });
   }

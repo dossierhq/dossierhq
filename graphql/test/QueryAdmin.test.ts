@@ -1,5 +1,12 @@
-import { EntityAdmin, EntityFieldType, notOk, ok, TestUtils } from '@datadata/core';
-import type { Instance, SessionContext } from '@datadata/core';
+import { EntityAdmin, EntityFieldType, ErrorType, notOk, ok, TestUtils } from '@datadata/core';
+import type {
+  AdminEntity,
+  Connection,
+  Edge,
+  Instance,
+  Paging,
+  SessionContext,
+} from '@datadata/core';
 import { graphql, printError } from 'graphql';
 import type { GraphQLSchema } from 'graphql';
 import { GraphQLSchemaGenerator } from '../src/GraphQLSchemaGenerator';
@@ -9,6 +16,7 @@ const { createTestInstance, ensureSessionContext, expectOkResult, updateSchema }
 let instance: Instance;
 let context: SessionContext;
 let schema: GraphQLSchema;
+let entitiesOfTypeQueryAdminOnlyEditBefore: AdminEntity[];
 
 beforeAll(async () => {
   instance = await createTestInstance({ loadSchema: true });
@@ -22,12 +30,70 @@ beforeAll(async () => {
       ],
     },
     QueryAdminBar: { fields: [{ name: 'title', type: EntityFieldType.String }] },
+    QueryAdminOnlyEditBefore: { fields: [{ name: 'message', type: EntityFieldType.String }] },
   });
   schema = new GraphQLSchemaGenerator(context.instance.getSchema()).buildSchema();
+
+  entitiesOfTypeQueryAdminOnlyEditBefore = await ensureTestEntitiesExist(context);
 });
 afterAll(async () => {
   await instance?.shutdown();
 });
+
+async function ensureTestEntitiesExist(context: SessionContext) {
+  const requestedCount = 50;
+  const entitiesOfType: AdminEntity[] = [];
+  await visitAllEntityPages(context, (connection) => {
+    for (const edge of connection.edges) {
+      if (edge.node.isOk() && edge.node.value._type === 'QueryAdminOnlyEditBefore') {
+        entitiesOfType.push(edge.node.value);
+        return entitiesOfType.length < requestedCount;
+      }
+    }
+  });
+
+  while (entitiesOfType.length < requestedCount) {
+    const random = String(Math.random()).slice(2);
+    const createResult = await EntityAdmin.createEntity(
+      context,
+      { _type: 'QueryAdminOnlyEditBefore', _name: random, message: `Hey ${random}` },
+      { publish: true }
+    );
+    if (createResult.isError()) {
+      throw createResult.toError();
+    }
+    const getResult = await EntityAdmin.getEntity(context, createResult.value.id, {});
+    getResult.throwIfError();
+    if (getResult.isOk()) {
+      entitiesOfType.push(getResult.value.item);
+    }
+  }
+  return entitiesOfType;
+}
+
+//TODO add support for limiting types
+async function visitAllEntityPages(
+  context: SessionContext,
+  visitor: (connection: Connection<Edge<AdminEntity, ErrorType>>) => void
+) {
+  const paging: Paging = {};
+  // eslint-disable-next-line no-constant-condition
+  while (true) {
+    const result = await EntityAdmin.searchEntities(context, paging);
+    if (result.isError()) {
+      throw result.toError();
+    }
+    if (result.value === null) {
+      return;
+    }
+
+    visitor(result.value);
+    paging.after = result.value.pageInfo.endCursor;
+    if (!result.value.pageInfo.hasNextPage) {
+      return;
+    }
+  }
+}
 
 describe('QueryAdminFoo', () => {
   test('Query all fields of created entity', async () => {
@@ -342,5 +408,67 @@ GraphQL request:3:11
   |           ^
 4 |             id`,
     ]);
+  });
+});
+
+describe('searchAdminEntities()', () => {
+  test('Default => 25', async () => {
+    const result = await graphql(
+      schema,
+      `
+        {
+          adminSearchEntities {
+            edges {
+              node {
+                id
+              }
+            }
+          }
+        }
+      `,
+      undefined,
+      { context: ok(context) }
+    );
+    expect(result.data?.adminSearchEntities.edges).toHaveLength(25);
+  });
+
+  test('first 10', async () => {
+    const result = await graphql(
+      schema,
+      `
+        {
+          adminSearchEntities(first: 10) {
+            edges {
+              node {
+                id
+              }
+            }
+          }
+        }
+      `,
+      undefined,
+      { context: ok(context) }
+    );
+    expect(result.data?.adminSearchEntities.edges).toHaveLength(10);
+  });
+
+  test('last 10', async () => {
+    const result = await graphql(
+      schema,
+      `
+        {
+          adminSearchEntities(first: 10) {
+            edges {
+              node {
+                id
+              }
+            }
+          }
+        }
+      `,
+      undefined,
+      { context: ok(context) }
+    );
+    expect(result.data?.adminSearchEntities.edges).toHaveLength(10);
   });
 });

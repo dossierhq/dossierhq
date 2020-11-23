@@ -42,6 +42,15 @@ describe('resolvePaging()', () => {
       cursor: 999,
     }));
 
+  test('last, rest undefined => last', () =>
+    expect(
+      resolvePaging({ first: undefined, after: undefined, last: 1, before: undefined })
+    ).toEqual({
+      isForwards: false,
+      count: 1,
+      cursor: null,
+    }));
+
   // if both, default to first
 
   test('first,last => first', () =>
