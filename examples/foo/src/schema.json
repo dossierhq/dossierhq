@@ -14,9 +14,7 @@
         {
           "name": "category",
           "type": "Reference",
-          "entityTypes": [
-            "Category"
-          ]
+          "entityTypes": ["Category"]
         }
       ]
     },
