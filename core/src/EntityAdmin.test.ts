@@ -65,12 +65,9 @@ async function visitAllEntityPages(
 ) {
   const ownPaging = { ...paging };
   const isForwards = isPagingForwards(ownPaging);
-  console.log('Starting visitAllEntityPages', { paging, isForwards });
   // eslint-disable-next-line no-constant-condition
   while (true) {
-    console.log('  > searching', ownPaging);
     const result = await EntityAdmin.searchEntities(context, ownPaging);
-    console.log('Got ', result.isError() ? 'error' : result.value?.pageInfo);
     if (result.isError()) {
       throw result.toError();
     }

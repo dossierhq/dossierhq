@@ -125,7 +125,7 @@ enum $AdminBarOrAdminBazOrAdminFoo {
 type Query {
   node(id: ID!): Node
   adminEntity(id: ID!, version: Int): AdminEntity
-  adminSearchEntities: AdminEntityConnection!
+  adminSearchEntities(first: Int, after: String, last: Int, before: String): AdminEntityConnection
 }
 "
 `;
@@ -181,7 +181,7 @@ type AdminFoo implements AdminEntity {
 type Query {
   node(id: ID!): Node
   adminEntity(id: ID!, version: Int): AdminEntity
-  adminSearchEntities: AdminEntityConnection!
+  adminSearchEntities(first: Int, after: String, last: Int, before: String): AdminEntityConnection
 }
 "
 `;
@@ -255,7 +255,7 @@ type AdminBar implements AdminEntity {
 type Query {
   node(id: ID!): Node
   adminEntity(id: ID!, version: Int): AdminEntity
-  adminSearchEntities: AdminEntityConnection!
+  adminSearchEntities(first: Int, after: String, last: Int, before: String): AdminEntityConnection
 }
 "
 `;
