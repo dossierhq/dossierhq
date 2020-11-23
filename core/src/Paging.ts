@@ -10,7 +10,10 @@ export interface ResolvedPaging {
 
 export function isPagingForwards(paging?: Paging): boolean {
   return (
-    !paging || 'first' in paging || 'after' in paging || !('last' in paging || 'before' in paging)
+    !paging ||
+    typeof paging.first === 'number' ||
+    typeof paging.after === 'string' ||
+    !(typeof paging.last === 'number' || typeof paging.before === 'string')
   );
 }
 

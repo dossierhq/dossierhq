@@ -15,6 +15,7 @@
     "db:stop": "./scripts/db-stop.sh",
     "db:wait": "./scripts/db-wait-for-connection.js",
     "eslint:check:all": "./scripts/npm-all-projects.sh run eslint:check --if-present",
+    "prettier:fix:all": "./scripts/npm-all-projects.sh run prettier:fix --if-present",
     "test:all": "./scripts/npm-all-projects.sh run test --if-present",
     "test:watch:all": "concurrently -n core,gql \"cd core && npm run test:watch -- --watchAll\" \"cd graphql && npm run test:watch -- --watchAll\"",
     "ts:check:all": "./scripts/npm-all-projects.sh run ts:check --if-present"
