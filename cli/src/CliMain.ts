@@ -24,10 +24,18 @@ function createMainActions(state: State): Array<MainActionItem | ItemSelectorSep
     },
     { separator: true, name: '─ADMIN────────' },
     {
-      id: 'search-admin-entities',
-      name: 'Search entities',
+      id: 'select-admin-entity',
+      name: 'Select entity',
       action: async () => {
-        await CliEntityAdmin.searchEntities(state.context);
+        const result = await CliEntityAdmin.selectEntity(
+          state.context,
+          'Select entity',
+          null,
+          null
+        );
+        if (result.isOk()) {
+          state.currentEntity = result.value;
+        }
       },
     },
     {
