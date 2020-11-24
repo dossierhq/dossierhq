@@ -30,17 +30,17 @@ export function searchAdminEntitiesQuery(
     }
     qb.addQuery(`AND type = ANY(${qb.addValue(filter.entityTypes)})`);
   }
+  if (resolvedPaging.after !== null) {
+    qb.addQuery(`AND e.id > ${qb.addValue(resolvedPaging.after)}`);
+  }
+  if (resolvedPaging.before !== null) {
+    qb.addQuery(`AND e.id < ${qb.addValue(resolvedPaging.before)}`);
+  }
 
   const countToRequest = resolvedPaging.count + 1; // request one more to calculate hasNextPage
   if (resolvedPaging.isForwards) {
-    if (resolvedPaging.after !== null) {
-      qb.addQuery(`AND e.id > ${qb.addValue(resolvedPaging.after)}`);
-    }
     qb.addQuery(`ORDER BY e.id LIMIT ${qb.addValue(countToRequest)}`);
   } else {
-    if (resolvedPaging.before) {
-      qb.addQuery(`AND e.id < ${qb.addValue(resolvedPaging.before)}`);
-    }
     qb.addQuery(`ORDER BY e.id DESC LIMIT ${qb.addValue(countToRequest)}`);
   }
   return ok({
