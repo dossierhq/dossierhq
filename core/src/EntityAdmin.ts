@@ -7,6 +7,7 @@ import type { EntityValues } from './EntityCodec';
 import { notOk, ok } from './ErrorResult';
 import QueryBuilder from './QueryBuilder';
 import { resolvePaging } from './Paging';
+import { searchAdminEntitiesQuery } from './QueryGenerator';
 
 export interface EntityHistory {
   id: string;
@@ -87,28 +88,13 @@ export async function searchEntities(
 ): PromiseResult<Connection<Edge<AdminEntity, ErrorType>> | null, ErrorType.BadRequest> {
   //TODO which errors can occur?
 
-  const qb = new QueryBuilder(`SELECT e.id, e.uuid, e.type, e.name, ev.data
-    FROM entities e, entity_versions ev
-    WHERE e.latest_draft_entity_versions_id = ev.id`);
-
   const resolvedPaging = resolvePaging(paging);
-  const countToRequest = resolvedPaging.count + 1; // request one more to calculate hasNextPage
-  if (resolvedPaging.isForwards) {
-    if (resolvedPaging.cursor !== null) {
-      qb.addQuery(`AND e.id > ${qb.addValue(resolvedPaging.cursor)}`);
-    }
-    qb.addQuery(`ORDER BY e.id LIMIT ${qb.addValue(countToRequest)}`);
-  } else {
-    if (resolvedPaging.cursor) {
-      qb.addQuery(`AND e.id < ${qb.addValue(resolvedPaging.cursor)}`);
-    }
-    qb.addQuery(`ORDER BY e.id DESC LIMIT ${qb.addValue(countToRequest)}`);
-  }
+  const { query, values } = searchAdminEntitiesQuery(resolvedPaging);
 
   const entitiesValues = await Db.queryMany<Pick<EntitiesTable, 'id'> & EntityValues>(
     context,
-    qb.query,
-    qb.values
+    query,
+    values
   );
   const hasExtraPage = entitiesValues.length > resolvedPaging.count;
   if (hasExtraPage) {

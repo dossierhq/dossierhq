@@ -15,6 +15,10 @@ export default class QueryBuilder {
     }
   }
 
+  build(): { query: string; values: unknown[] } {
+    return { query: this.query, values: this.values };
+  }
+
   addQuery(query: string): void {
     const isKeyword = isUpperCase(query[0]);
     const separator = isKeyword ? ' ' : ', ';
