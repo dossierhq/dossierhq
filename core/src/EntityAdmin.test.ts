@@ -356,6 +356,32 @@ describe('searchEntities()', () => {
     }
   });
 
+  test('First 0', async () => {
+    const result = await EntityAdmin.searchEntities(
+      context,
+      {
+        entityTypes: ['AdminOnlyEditBefore'],
+      },
+      { first: 0 }
+    );
+    if (expectOkResult(result)) {
+      expect(result.value).toBeNull();
+    }
+  });
+
+  test('Last 0', async () => {
+    const result = await EntityAdmin.searchEntities(
+      context,
+      {
+        entityTypes: ['AdminOnlyEditBefore'],
+      },
+      { last: 0 }
+    );
+    if (expectOkResult(result)) {
+      expect(result.value).toBeNull();
+    }
+  });
+
   test('Last', async () => {
     const result = await EntityAdmin.searchEntities(
       context,
