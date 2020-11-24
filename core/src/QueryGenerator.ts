@@ -21,15 +21,15 @@ export function searchAdminEntitiesQuery(
   FROM entities e, entity_versions ev
   WHERE e.latest_draft_entity_versions_id = ev.id`);
 
-  if (filter?.entityTypes && filter.entityTypes.length > 0) {
-    const schema = context.instance.getSchema();
-    for (const entityType of filter.entityTypes) {
-      if (schema.getEntityTypeSpecification(entityType) === null) {
-        return notOk.BadRequest(`Can’t find entity type in filter: ${entityType}`);
-      }
-    }
-    qb.addQuery(`AND type = ANY(${qb.addValue(filter.entityTypes)})`);
+  // Filter: entityTypes
+  const entityTypesResult = getFilterEntityTypes(context, filter);
+  if (entityTypesResult.isError()) {
+    return entityTypesResult;
   }
+  if (entityTypesResult.value.length > 0) {
+    qb.addQuery(`AND type = ANY(${qb.addValue(entityTypesResult.value)})`);
+  }
+
   if (resolvedPaging.after !== null) {
     qb.addQuery(`AND e.id > ${qb.addValue(resolvedPaging.after)}`);
   }
@@ -49,4 +49,39 @@ export function searchAdminEntitiesQuery(
     pagingCount: resolvedPaging.count,
   });
 }
+
+export function totalAdminEntitiesQuery(
+  context: SessionContext,
+  filter: AdminFilter | undefined
+): Result<{ query: string; values: unknown[] }, ErrorType.BadRequest> {
+  // Convert count to ::integer since count() is bigint (js doesn't support 64 bit numbers so pg return it as string)
+  const qb = new QueryBuilder(`SELECT COUNT(e.id)::integer AS count FROM entities e WHERE true`);
+  //TODO remove need for WHERE true
+
+  // Filter: entityTypes
+  const entityTypesResult = getFilterEntityTypes(context, filter);
+  if (entityTypesResult.isError()) {
+    return entityTypesResult;
+  }
+  if (entityTypesResult.value.length > 0) {
+    qb.addQuery(`AND type = ANY(${qb.addValue(entityTypesResult.value)})`);
+  }
+
+  return ok(qb.build());
+}
+
+function getFilterEntityTypes(
+  context: SessionContext,
+  filter: AdminFilter | undefined
+): Result<string[], ErrorType.BadRequest> {
+  if (!filter?.entityTypes || filter.entityTypes.length === 0) {
+    return ok([]);
+  }
+  const schema = context.instance.getSchema();
+  for (const entityType of filter.entityTypes) {
+    if (schema.getEntityTypeSpecification(entityType) === null) {
+      return notOk.BadRequest(`Can’t find entity type in filter: ${entityType}`);
+    }
+  }
+  return ok(filter.entityTypes);
 }

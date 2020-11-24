@@ -5,7 +5,7 @@ import type { EntitiesTable, EntityVersionsTable } from './DbTableTypes';
 import { decodeEntity, encodeEntity } from './EntityCodec';
 import type { EntityValues } from './EntityCodec';
 import { notOk, ok } from './ErrorResult';
-import { searchAdminEntitiesQuery } from './QueryGenerator';
+import { searchAdminEntitiesQuery, totalAdminEntitiesQuery } from './QueryGenerator';
 
 export interface EntityHistory {
   id: string;
@@ -124,6 +124,23 @@ export async function searchEntities(
       node: ok(entity),
     })),
   });
+}
+
+export async function getTotalCount(
+  context: SessionContext,
+  filter?: AdminFilter,
+  paging?: Paging
+): PromiseResult<number, ErrorType.BadRequest> {
+  const query = totalAdminEntitiesQuery(context, filter, paging);
+  if (query.isError()) {
+    return query;
+  }
+  const { count } = await Db.queryOne<{ count: number }>(
+    context,
+    query.value.query,
+    query.value.values
+  );
+  return ok(count);
 }
 
 export async function createEntity(

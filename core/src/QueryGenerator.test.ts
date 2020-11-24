@@ -1,7 +1,7 @@
 import type { Instance, SessionContext } from '.';
 import { ErrorType } from './';
 import { toOpaqueCursor } from './Connection';
-import { searchAdminEntitiesQuery } from './QueryGenerator';
+import { searchAdminEntitiesQuery, totalAdminEntitiesQuery } from './QueryGenerator';
 import { createTestInstance, ensureSessionContext, expectErrorResult } from './TestUtils';
 
 let instance: Instance;
@@ -252,5 +252,62 @@ describe('searchAdminEntitiesQuery()', () => {
   test('Error: invalid entity type in filter', () => {
     const result = searchAdminEntitiesQuery(context, { entityTypes: ['Invalid'] }, undefined);
     expectErrorResult(result, ErrorType.BadRequest, 'Can’t find entity type in filter: Invalid');
+  });
+});
+
+describe('totalAdminEntitiesQuery()', () => {
+  test('no filter', () => {
+    expect(totalAdminEntitiesQuery(context, undefined)).toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "query": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE true",
+          "values": Array [],
+        },
+      }
+    `);
+  });
+
+  test('no entity type => all', () => {
+    expect(totalAdminEntitiesQuery(context, { entityTypes: [] })).toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "query": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE true",
+          "values": Array [],
+        },
+      }
+    `);
+  });
+
+  test('one entity type', () => {
+    expect(totalAdminEntitiesQuery(context, { entityTypes: ['EntityAdminFoo'] }))
+      .toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "query": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE true AND type = ANY($1)",
+          "values": Array [
+            Array [
+              "EntityAdminFoo",
+            ],
+          ],
+        },
+      }
+    `);
+  });
+
+  test('two entity types', () => {
+    expect(totalAdminEntitiesQuery(context, { entityTypes: ['EntityAdminFoo', 'EntityAdminBar'] }))
+      .toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "query": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE true AND type = ANY($1)",
+          "values": Array [
+            Array [
+              "EntityAdminFoo",
+              "EntityAdminBar",
+            ],
+          ],
+        },
+      }
+    `);
   });
 });

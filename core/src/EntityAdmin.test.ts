@@ -492,6 +492,17 @@ describe('searchEntities()', () => {
   });
 });
 
+describe('getTotalCount', () => {
+  test('Check that we get the correct count', async () => {
+    const result = await EntityAdmin.getTotalCount(context, {
+      entityTypes: ['AdminOnlyEditBefore'],
+    });
+    if (expectOkResult(result)) {
+      expect(result.value).toBe(entitiesOfTypeAdminOnlyEditBefore.length);
+    }
+  });
+});
+
 describe('updateEntity()', () => {
   test('Update EntityAdminFoo and publish', async () => {
     const createResult = await EntityAdmin.createEntity(
