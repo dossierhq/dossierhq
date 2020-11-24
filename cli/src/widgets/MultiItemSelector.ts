@@ -29,7 +29,7 @@ export async function showMultiItemSelector<
     if (a.enabled === false) {
       return { name: a.name, disabled: true };
     }
-    return { name: a.name, value: a, checked: !!a.selected, disabled: !a.enabled };
+    return { name: a.name, value: a, checked: !!a.selected };
   });
   const result = await inquirer.prompt<{ item: T[] }>([
     {

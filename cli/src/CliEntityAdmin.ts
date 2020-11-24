@@ -42,28 +42,7 @@ interface EntitySelectorItem {
   enabled?: boolean;
 }
 
-export async function searchEntities(context: SessionContext): Promise<void> {
-  const result = await EntityAdmin.searchEntities(context);
-  if (result.isError()) {
-    logErrorResult('Failed fetching entity data', result);
-    return;
-  }
-  if (result.value === null) {
-    console.log('No result');
-    return;
-  }
-  console.log(chalk.cyan('Entity type | Name | Id'));
-  for (const edge of result.value.edges) {
-    const entity = edge.node;
-    if (entity.isOk()) {
-      console.log(formatEntityOneLine(entity.value));
-    } else {
-      logErrorResult('Failed loading entity', entity);
-    }
-  }
-}
-
-async function selectEntity(
+export async function selectEntity(
   context: SessionContext,
   message: string,
   initialFilter: AdminFilter | null,
