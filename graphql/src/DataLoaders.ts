@@ -1,5 +1,12 @@
 import { EntityAdmin, isReferenceFieldType, PublishedEntity } from '@datadata/core';
-import type { AdminEntity, Entity, Paging, PageInfo, SessionContext } from '@datadata/core';
+import type {
+  AdminEntity,
+  AdminFilter,
+  Entity,
+  Paging,
+  PageInfo,
+  SessionContext,
+} from '@datadata/core';
 import type { SessionGraphQLContext } from './GraphQLSchemaGenerator';
 
 interface Connection<T extends Edge<unknown>> {
@@ -83,13 +90,14 @@ function buildResolversForAdminEntity<TContext extends SessionGraphQLContext>(
 
 export async function loadAdminSearchEntities<TContext extends SessionGraphQLContext>(
   context: TContext,
+  filter: AdminFilter | undefined,
   paging: Paging
 ): Promise<Connection<Edge<AdminEntity>> | null> {
   if (context.context.isError()) {
     throw context.context.toError();
   }
   const sessionContext = context.context.value;
-  const result = await EntityAdmin.searchEntities(sessionContext, undefined, paging);
+  const result = await EntityAdmin.searchEntities(sessionContext, filter, paging);
   if (result.isError()) {
     throw result.toError();
   }

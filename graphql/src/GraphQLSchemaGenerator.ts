@@ -11,6 +11,7 @@ import {
   GraphQLBoolean,
   GraphQLEnumType,
   GraphQLID,
+  GraphQLInputObjectType,
   GraphQLInt,
   GraphQLInterfaceType,
   GraphQLList,
@@ -46,6 +47,7 @@ type InterfaceObjectEnumType = GraphQLInterfaceType | GraphQLObjectType | GraphQ
 
 export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
   #types: InterfaceObjectEnumType[] = [];
+  #inputTypes: GraphQLInputObjectType[] = [];
 
   constructor(readonly schema: Schema) {}
 
@@ -104,6 +106,21 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
 
     this.addType(enumType);
     return enumType;
+  }
+
+  addInputType(type: GraphQLInputObjectType): void {
+    if (this.#inputTypes.find((x) => x.name === type.name)) {
+      throw new Error(`Input type with name ${type.name} already exists`);
+    }
+    this.#inputTypes.push(type);
+  }
+
+  getInputType(name: string): GraphQLInputObjectType {
+    const type = this.#inputTypes.find((x) => x.name === name);
+    if (!type) {
+      throw new Error(`Input type with name ${name} doesn't exist`);
+    }
+    return type;
   }
 
   addSupportingTypes(): void {
@@ -233,6 +250,16 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         },
       })
     );
+
+    // AdminFilterInput
+    this.addInputType(
+      new GraphQLInputObjectType({
+        name: 'AdminFilterInput',
+        fields: {
+          entityTypes: { type: new GraphQLList(GraphQLString) },
+        },
+      })
+    );
   }
 
   addAdminEntityTypes(): void {
@@ -302,19 +329,26 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     return fieldConfigWithArgs<
       TSource,
       TContext,
-      { first?: number; after?: string; last?: number; before?: string }
+      {
+        filter?: { entityTypes?: string[] };
+        first?: number;
+        after?: string;
+        last?: number;
+        before?: string;
+      }
     >({
       type: this.getType('AdminEntityConnection'),
       args: {
+        filter: { type: this.getInputType('AdminFilterInput') },
         first: { type: GraphQLInt },
         after: { type: GraphQLString },
         last: { type: GraphQLInt },
         before: { type: GraphQLString },
       },
       resolve: async (source, args, context, unusedInfo) => {
-        const { first, after, last, before } = args;
+        const { filter, first, after, last, before } = args;
         const paging = { first, after, last, before };
-        return await loadAdminSearchEntities(context, paging);
+        return await loadAdminSearchEntities(context, filter, paging);
       },
     });
   }
@@ -341,7 +375,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
           : {}),
       },
     });
-    return { query: queryType, types: this.#types };
+    return { query: queryType, types: [...this.#types, ...this.#inputTypes] };
   }
 
   buildSchema<TSource>(): GraphQLSchema {

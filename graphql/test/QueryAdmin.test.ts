@@ -51,7 +51,6 @@ async function ensureTestEntitiesExist(context: SessionContext) {
       for (const edge of connection.edges) {
         if (edge.node.isOk()) {
           entitiesOfType.push(edge.node.value);
-          return entitiesOfType.length < requestedCount;
         }
       }
     }
@@ -422,7 +421,7 @@ describe('searchAdminEntities()', () => {
       schema,
       `
         {
-          adminSearchEntities {
+          adminSearchEntities(filter: { entityTypes: ["QueryAdminOnlyEditBefore"] }) {
             edges {
               node {
                 id
@@ -434,7 +433,9 @@ describe('searchAdminEntities()', () => {
       undefined,
       { context: ok(context) }
     );
-    expect(result.data?.adminSearchEntities.edges).toHaveLength(25);
+    expect(result.data?.adminSearchEntities.edges).toEqual(
+      entitiesOfTypeQueryAdminOnlyEditBefore.slice(0, 25).map((x) => ({ node: { id: x.id } }))
+    );
   });
 
   test('first 10', async () => {
@@ -442,7 +443,7 @@ describe('searchAdminEntities()', () => {
       schema,
       `
         {
-          adminSearchEntities(first: 10) {
+          adminSearchEntities(filter: { entityTypes: ["QueryAdminOnlyEditBefore"] }, first: 10) {
             edges {
               node {
                 id
@@ -454,7 +455,9 @@ describe('searchAdminEntities()', () => {
       undefined,
       { context: ok(context) }
     );
-    expect(result.data?.adminSearchEntities.edges).toHaveLength(10);
+    expect(result.data?.adminSearchEntities.edges).toEqual(
+      entitiesOfTypeQueryAdminOnlyEditBefore.slice(0, 10).map((x) => ({ node: { id: x.id } }))
+    );
   });
 
   test('last 10', async () => {
@@ -462,7 +465,7 @@ describe('searchAdminEntities()', () => {
       schema,
       `
         {
-          adminSearchEntities(first: 10) {
+          adminSearchEntities(filter: { entityTypes: ["QueryAdminOnlyEditBefore"] }, last: 10) {
             edges {
               node {
                 id
@@ -474,6 +477,8 @@ describe('searchAdminEntities()', () => {
       undefined,
       { context: ok(context) }
     );
-    expect(result.data?.adminSearchEntities.edges).toHaveLength(10);
+    expect(result.data?.adminSearchEntities.edges).toEqual(
+      entitiesOfTypeQueryAdminOnlyEditBefore.slice(-10).map((x) => ({ node: { id: x.id } }))
+    );
   });
 });

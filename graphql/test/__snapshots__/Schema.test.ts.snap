@@ -51,6 +51,17 @@ type Foo implements Node & Entity {
   barBarBar: Bar
 }
 
+enum $BarOrBaz {
+  Bar
+  Baz
+}
+
+enum $BarOrBazOrFoo {
+  Bar
+  Baz
+  Foo
+}
+
 type Bar implements Node & Entity {
   id: ID!
   _name: String!
@@ -88,6 +99,17 @@ type AdminFoo implements AdminEntity {
   barBarBar: AdminBar
 }
 
+enum $AdminBarOrAdminBaz {
+  AdminBar
+  AdminBaz
+}
+
+enum $AdminBarOrAdminBazOrAdminFoo {
+  AdminBar
+  AdminBaz
+  AdminFoo
+}
+
 type AdminBar implements AdminEntity {
   id: ID!
   _type: EntityType!
@@ -100,32 +122,14 @@ type AdminBaz implements AdminEntity {
   _name: String!
 }
 
-enum $BarOrBaz {
-  Bar
-  Baz
-}
-
-enum $BarOrBazOrFoo {
-  Bar
-  Baz
-  Foo
-}
-
-enum $AdminBarOrAdminBaz {
-  AdminBar
-  AdminBaz
-}
-
-enum $AdminBarOrAdminBazOrAdminFoo {
-  AdminBar
-  AdminBaz
-  AdminFoo
+input AdminFilterInput {
+  entityTypes: [String]
 }
 
 type Query {
   node(id: ID!): Node
   adminEntity(id: ID!, version: Int): AdminEntity
-  adminSearchEntities(first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminSearchEntities(filter: AdminFilterInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
 }
 "
 `;
@@ -178,10 +182,14 @@ type AdminFoo implements AdminEntity {
   _name: String!
 }
 
+input AdminFilterInput {
+  entityTypes: [String]
+}
+
 type Query {
   node(id: ID!): Node
   adminEntity(id: ID!, version: Int): AdminEntity
-  adminSearchEntities(first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminSearchEntities(filter: AdminFilterInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
 }
 "
 `;
@@ -252,10 +260,14 @@ type AdminBar implements AdminEntity {
   barField2: AdminEntity
 }
 
+input AdminFilterInput {
+  entityTypes: [String]
+}
+
 type Query {
   node(id: ID!): Node
   adminEntity(id: ID!, version: Int): AdminEntity
-  adminSearchEntities(first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminSearchEntities(filter: AdminFilterInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
 }
 "
 `;
