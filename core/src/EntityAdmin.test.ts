@@ -19,6 +19,7 @@ import { expectEntityHistoryVersions, uuidMatcher } from '../test/AdditionalTest
 
 let instance: Instance;
 let context: SessionContext;
+let entitiesOfTypeAdminOnlyEditBefore: AdminEntity[];
 
 beforeAll(async () => {
   instance = await createTestInstance({ loadSchema: true });
@@ -35,7 +36,7 @@ beforeAll(async () => {
     AdminOnlyEditBefore: { fields: [{ name: 'message', type: EntityFieldType.String }] },
   });
 
-  await ensureEntitiesExistForAdminOnlyEditBefore(context);
+  entitiesOfTypeAdminOnlyEditBefore = await ensureEntitiesExistForAdminOnlyEditBefore(context);
 });
 afterAll(async () => {
   await instance.shutdown();
@@ -43,7 +44,8 @@ afterAll(async () => {
 
 async function ensureEntitiesExistForAdminOnlyEditBefore(context: SessionContext) {
   const requestedCount = 50;
-  let totalEntitiesOfType = 0;
+  const entitiesOfType: AdminEntity[] = [];
+  // TODO add total count to AdminEntity instead
   await visitAllEntityPages(
     context,
     { entityTypes: ['AdminOnlyEditBefore'] },
@@ -51,23 +53,29 @@ async function ensureEntitiesExistForAdminOnlyEditBefore(context: SessionContext
     (connection) => {
       for (const edge of connection.edges) {
         if (edge.node.isOk()) {
-          totalEntitiesOfType += 1;
-          return totalEntitiesOfType < requestedCount;
+          entitiesOfType.push(edge.node.value);
         }
       }
     }
   );
 
-  while (totalEntitiesOfType < requestedCount) {
+  while (entitiesOfType.length < requestedCount) {
     const random = String(Math.random()).slice(2);
-    const result = await EntityAdmin.createEntity(
+    const createResult = await EntityAdmin.createEntity(
       context,
       { _type: 'AdminOnlyEditBefore', _name: random, message: `Hey ${random}` },
       { publish: true }
     );
-    result.throwIfError();
-    totalEntitiesOfType += 1;
+    if (createResult.isError()) {
+      throw createResult.toError();
+    }
+    const getResult = await EntityAdmin.getEntity(context, createResult.value.id, {});
+    getResult.throwIfError();
+    if (getResult.isOk()) {
+      entitiesOfType.push(getResult.value.item);
+    }
   }
+  return entitiesOfType;
 }
 
 async function visitAllEntityPages(
@@ -309,41 +317,152 @@ describe('createEntity()', () => {
   });
 });
 
+function expectConnectionToMatchSlice(
+  connection: Connection<Edge<AdminEntity, ErrorType>> | null,
+  sliceStart: number,
+  sliceEnd?: number
+) {
+  const actualIds = connection?.edges.map((edge) => ({
+    id: edge.node.isOk() ? edge.node.value.id : edge.node,
+  }));
+
+  const expectedIds = entitiesOfTypeAdminOnlyEditBefore
+    .slice(sliceStart, sliceEnd)
+    .map((x) => ({ id: x.id }));
+
+  expect(actualIds).toEqual(expectedIds);
+}
+
 describe('searchEntities()', () => {
-  test('Order is same when searching forwards and backwards', async () => {
-    const forwardsIds: string[] = [];
-    await visitAllEntityPages(
-      context,
-      { entityTypes: ['AdminOnlyEditBefore'] },
-      { first: 25 },
-      (connection) => {
-        for (const edge of connection.edges) {
-          if (edge.node.isOk()) {
-            forwardsIds.push(edge.node.value.id);
-          }
-        }
-      }
-    );
-    expect(forwardsIds.length).toBeGreaterThanOrEqual(50);
+  test('Default => first 25', async () => {
+    const result = await EntityAdmin.searchEntities(context, {
+      entityTypes: ['AdminOnlyEditBefore'],
+    });
+    if (expectOkResult(result)) {
+      expectConnectionToMatchSlice(result.value, 0, 25);
+    }
+  });
 
-    const backwardsIds: string[] = [];
-    await visitAllEntityPages(
+  test('First', async () => {
+    const result = await EntityAdmin.searchEntities(
       context,
-      { entityTypes: ['AdminOnlyEditBefore'] },
-      { last: 8 },
-      (connection) => {
-        // Each page is received in the same order as when paging forwards, it's just that they start from the last page
-        const pageIds: string[] = [];
-        for (const edge of connection.edges) {
-          if (edge.node.isOk()) {
-            pageIds.push(edge.node.value.id);
-          }
-        }
-        backwardsIds.splice(0, 0, ...pageIds);
-      }
+      {
+        entityTypes: ['AdminOnlyEditBefore'],
+      },
+      { first: 10 }
     );
+    if (expectOkResult(result)) {
+      expectConnectionToMatchSlice(result.value, 0, 10);
+    }
+  });
 
-    expect(forwardsIds).toEqual(backwardsIds);
+  test('Last', async () => {
+    const result = await EntityAdmin.searchEntities(
+      context,
+      {
+        entityTypes: ['AdminOnlyEditBefore'],
+      },
+      { last: 10 }
+    );
+    if (expectOkResult(result)) {
+      expectConnectionToMatchSlice(result.value, -10);
+    }
+  });
+
+  test('First after', async () => {
+    const firstResult = await EntityAdmin.searchEntities(
+      context,
+      {
+        entityTypes: ['AdminOnlyEditBefore'],
+      },
+      { first: 10 }
+    );
+    if (expectOkResult(firstResult)) {
+      const secondResult = await EntityAdmin.searchEntities(
+        context,
+        {
+          entityTypes: ['AdminOnlyEditBefore'],
+        },
+        { first: 20, after: firstResult.value?.pageInfo.endCursor }
+      );
+      if (expectOkResult(secondResult)) {
+        expectConnectionToMatchSlice(secondResult.value, 10, 10 + 20);
+      }
+    }
+  });
+
+  test('Last before', async () => {
+    const firstResult = await EntityAdmin.searchEntities(
+      context,
+      {
+        entityTypes: ['AdminOnlyEditBefore'],
+      },
+      { last: 10 }
+    );
+    if (expectOkResult(firstResult)) {
+      const secondResult = await EntityAdmin.searchEntities(
+        context,
+        {
+          entityTypes: ['AdminOnlyEditBefore'],
+        },
+        { last: 20, before: firstResult.value?.pageInfo.startCursor }
+      );
+      if (expectOkResult(secondResult)) {
+        expectConnectionToMatchSlice(secondResult.value, -10 - 20, -10);
+      }
+    }
+  });
+
+  test('First between', async () => {
+    const firstResult = await EntityAdmin.searchEntities(
+      context,
+      {
+        entityTypes: ['AdminOnlyEditBefore'],
+      },
+      { first: 20 }
+    );
+    if (expectOkResult(firstResult)) {
+      const secondResult = await EntityAdmin.searchEntities(
+        context,
+        {
+          entityTypes: ['AdminOnlyEditBefore'],
+        },
+        {
+          first: 20,
+          after: firstResult.value?.edges[2].cursor,
+          before: firstResult.value?.edges[8].cursor,
+        }
+      );
+      if (expectOkResult(secondResult)) {
+        expectConnectionToMatchSlice(secondResult.value, 3 /*inclusive*/, 8 /*exclusive*/);
+      }
+    }
+  });
+
+  test('Last between', async () => {
+    const firstResult = await EntityAdmin.searchEntities(
+      context,
+      {
+        entityTypes: ['AdminOnlyEditBefore'],
+      },
+      { first: 20 }
+    );
+    if (expectOkResult(firstResult)) {
+      const secondResult = await EntityAdmin.searchEntities(
+        context,
+        {
+          entityTypes: ['AdminOnlyEditBefore'],
+        },
+        {
+          last: 20,
+          after: firstResult.value?.edges[2].cursor,
+          before: firstResult.value?.edges[8].cursor,
+        }
+      );
+      if (expectOkResult(secondResult)) {
+        expectConnectionToMatchSlice(secondResult.value, 3 /*inclusive*/, 8 /*exclusive*/);
+      }
+    }
   });
 });
 

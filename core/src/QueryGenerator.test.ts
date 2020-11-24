@@ -105,6 +105,56 @@ describe('searchAdminEntitiesQuery()', () => {
     `);
   });
 
+  test('first 10 between after and before', () => {
+    expect(
+      searchAdminEntitiesQuery(context, undefined, {
+        first: 10,
+        after: toOpaqueCursor(123),
+        before: toOpaqueCursor(456),
+      })
+    ).toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "isForwards": true,
+          "pagingCount": 10,
+          "query": "SELECT e.id, e.uuid, e.type, e.name, ev.data
+        FROM entities e, entity_versions ev
+        WHERE e.latest_draft_entity_versions_id = ev.id AND e.id > $1 AND e.id < $2 ORDER BY e.id LIMIT $3",
+          "values": Array [
+            123,
+            456,
+            11,
+          ],
+        },
+      }
+    `);
+  });
+
+  test('last 10 between after and before', () => {
+    expect(
+      searchAdminEntitiesQuery(context, undefined, {
+        last: 10,
+        after: toOpaqueCursor(123),
+        before: toOpaqueCursor(456),
+      })
+    ).toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "isForwards": false,
+          "pagingCount": 10,
+          "query": "SELECT e.id, e.uuid, e.type, e.name, ev.data
+        FROM entities e, entity_versions ev
+        WHERE e.latest_draft_entity_versions_id = ev.id AND e.id > $1 AND e.id < $2 ORDER BY e.id DESC LIMIT $3",
+          "values": Array [
+            123,
+            456,
+            11,
+          ],
+        },
+      }
+    `);
+  });
+
   test('filter no entity type, i.e. include all', () => {
     expect(searchAdminEntitiesQuery(context, { entityTypes: [] }, undefined))
       .toMatchInlineSnapshot(`
