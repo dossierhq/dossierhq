@@ -45,10 +45,10 @@ afterAll(async () => {
 
 async function ensureEntitiesExistForAdminOnlyEditBefore(context: SessionContext) {
   const requestedCount = 50;
-  // If there aren't enough entities, create some
   const entitiesOfTypeCount = await EntityAdmin.getTotalCount(context, {
     entityTypes: ['AdminOnlyEditBefore'],
   });
+
   if (expectOkResult(entitiesOfTypeCount)) {
     for (let count = entitiesOfTypeCount.value; count < requestedCount; count += 1) {
       const random = String(Math.random()).slice(2);
