@@ -27,7 +27,7 @@ async function startServer(instance: Instance, authContext: AuthContext, port: n
   const app = express();
   app.use(
     '/graphql',
-    graphqlHTTP(async (request, response, params) => {
+    graphqlHTTP(async (request, unusedResponse, unusedParams) => {
       const context: SessionGraphQLContext = { context: notOk.NotAuthenticated('No session') };
       const sessionResult = await createSessionContext(authContext, request.headers);
       if (sessionResult.isOk()) {
