@@ -55,8 +55,7 @@ export function totalAdminEntitiesQuery(
   filter: AdminFilter | undefined
 ): Result<{ query: string; values: unknown[] }, ErrorType.BadRequest> {
   // Convert count to ::integer since count() is bigint (js doesn't support 64 bit numbers so pg return it as string)
-  const qb = new QueryBuilder(`SELECT COUNT(e.id)::integer AS count FROM entities e WHERE true`);
-  //TODO remove need for WHERE true
+  const qb = new QueryBuilder('SELECT COUNT(e.id)::integer AS count FROM entities e WHERE');
 
   // Filter: entityTypes
   const entityTypesResult = getFilterEntityTypes(context, filter);

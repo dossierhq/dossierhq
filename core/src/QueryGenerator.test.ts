@@ -260,7 +260,7 @@ describe('totalAdminEntitiesQuery()', () => {
     expect(totalAdminEntitiesQuery(context, undefined)).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
-          "query": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE true",
+          "query": "SELECT COUNT(e.id)::integer AS count FROM entities e",
           "values": Array [],
         },
       }
@@ -271,7 +271,7 @@ describe('totalAdminEntitiesQuery()', () => {
     expect(totalAdminEntitiesQuery(context, { entityTypes: [] })).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
-          "query": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE true",
+          "query": "SELECT COUNT(e.id)::integer AS count FROM entities e",
           "values": Array [],
         },
       }
@@ -283,7 +283,7 @@ describe('totalAdminEntitiesQuery()', () => {
       .toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
-          "query": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE true AND type = ANY($1)",
+          "query": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE type = ANY($1)",
           "values": Array [
             Array [
               "EntityAdminFoo",
@@ -299,7 +299,7 @@ describe('totalAdminEntitiesQuery()', () => {
       .toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
-          "query": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE true AND type = ANY($1)",
+          "query": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE type = ANY($1)",
           "values": Array [
             Array [
               "EntityAdminFoo",
