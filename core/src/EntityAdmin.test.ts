@@ -1,4 +1,12 @@
-import type { AdminEntity, Connection, Edge, Instance, Paging, SessionContext } from '.';
+import type {
+  AdminEntity,
+  AdminFilter,
+  Connection,
+  Edge,
+  Instance,
+  Paging,
+  SessionContext,
+} from '.';
 import { isPagingForwards, EntityAdmin, EntityFieldType, ErrorType, PublishedEntity } from '.';
 import {
   createTestInstance,
@@ -36,14 +44,19 @@ afterAll(async () => {
 async function ensureEntitiesExistForAdminOnlyEditBefore(context: SessionContext) {
   const requestedCount = 50;
   let totalEntitiesOfType = 0;
-  await visitAllEntityPages(context, { first: 100 }, (connection) => {
-    for (const edge of connection.edges) {
-      if (edge.node.isOk() && edge.node.value._type === 'AdminOnlyEditBefore') {
-        totalEntitiesOfType += 1;
-        return totalEntitiesOfType < requestedCount;
+  await visitAllEntityPages(
+    context,
+    { entityTypes: ['AdminOnlyEditBefore'] },
+    { first: 100 },
+    (connection) => {
+      for (const edge of connection.edges) {
+        if (edge.node.isOk()) {
+          totalEntitiesOfType += 1;
+          return totalEntitiesOfType < requestedCount;
+        }
       }
     }
-  });
+  );
 
   while (totalEntitiesOfType < requestedCount) {
     const random = String(Math.random()).slice(2);
@@ -57,9 +70,9 @@ async function ensureEntitiesExistForAdminOnlyEditBefore(context: SessionContext
   }
 }
 
-//TODO add support for limiting types
 async function visitAllEntityPages(
   context: SessionContext,
+  filter: AdminFilter,
   paging: Paging,
   visitor: (connection: Connection<Edge<AdminEntity, ErrorType>>) => void
 ) {
@@ -67,7 +80,7 @@ async function visitAllEntityPages(
   const isForwards = isPagingForwards(ownPaging);
   // eslint-disable-next-line no-constant-condition
   while (true) {
-    const result = await EntityAdmin.searchEntities(context, undefined, ownPaging);
+    const result = await EntityAdmin.searchEntities(context, filter, ownPaging);
     if (result.isError()) {
       throw result.toError();
     }
@@ -299,26 +312,36 @@ describe('createEntity()', () => {
 describe('searchEntities()', () => {
   test('Order is same when searching forwards and backwards', async () => {
     const forwardsIds: string[] = [];
-    await visitAllEntityPages(context, { first: 25 }, (connection) => {
-      for (const edge of connection.edges) {
-        if (edge.node.isOk() && edge.node.value._type === 'AdminOnlyEditBefore') {
-          forwardsIds.push(edge.node.value.id);
+    await visitAllEntityPages(
+      context,
+      { entityTypes: ['AdminOnlyEditBefore'] },
+      { first: 25 },
+      (connection) => {
+        for (const edge of connection.edges) {
+          if (edge.node.isOk()) {
+            forwardsIds.push(edge.node.value.id);
+          }
         }
       }
-    });
+    );
     expect(forwardsIds.length).toBeGreaterThanOrEqual(50);
 
     const backwardsIds: string[] = [];
-    await visitAllEntityPages(context, { last: 8 }, (connection) => {
-      // Each page is received in the same order as when paging forwards, it's just that they start from the last page
-      const pageIds: string[] = [];
-      for (const edge of connection.edges) {
-        if (edge.node.isOk() && edge.node.value._type === 'AdminOnlyEditBefore') {
-          pageIds.push(edge.node.value.id);
+    await visitAllEntityPages(
+      context,
+      { entityTypes: ['AdminOnlyEditBefore'] },
+      { last: 8 },
+      (connection) => {
+        // Each page is received in the same order as when paging forwards, it's just that they start from the last page
+        const pageIds: string[] = [];
+        for (const edge of connection.edges) {
+          if (edge.node.isOk()) {
+            pageIds.push(edge.node.value.id);
+          }
         }
+        backwardsIds.splice(0, 0, ...pageIds);
       }
-      backwardsIds.splice(0, 0, ...pageIds);
-    });
+    );
 
     expect(forwardsIds).toEqual(backwardsIds);
   });

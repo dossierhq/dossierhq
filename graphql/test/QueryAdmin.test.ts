@@ -1,6 +1,7 @@
 import { EntityAdmin, EntityFieldType, ErrorType, notOk, ok, TestUtils } from '@datadata/core';
 import type {
   AdminEntity,
+  AdminFilter,
   Connection,
   Edge,
   Instance,
@@ -43,14 +44,18 @@ afterAll(async () => {
 async function ensureTestEntitiesExist(context: SessionContext) {
   const requestedCount = 50;
   const entitiesOfType: AdminEntity[] = [];
-  await visitAllEntityPages(context, (connection) => {
-    for (const edge of connection.edges) {
-      if (edge.node.isOk() && edge.node.value._type === 'QueryAdminOnlyEditBefore') {
-        entitiesOfType.push(edge.node.value);
-        return entitiesOfType.length < requestedCount;
+  await visitAllEntityPages(
+    context,
+    { entityTypes: ['QueryAdminOnlyEditBefore'] },
+    (connection) => {
+      for (const edge of connection.edges) {
+        if (edge.node.isOk()) {
+          entitiesOfType.push(edge.node.value);
+          return entitiesOfType.length < requestedCount;
+        }
       }
     }
-  });
+  );
 
   while (entitiesOfType.length < requestedCount) {
     const random = String(Math.random()).slice(2);
@@ -71,15 +76,15 @@ async function ensureTestEntitiesExist(context: SessionContext) {
   return entitiesOfType;
 }
 
-//TODO add support for limiting types
 async function visitAllEntityPages(
   context: SessionContext,
+  filter: AdminFilter,
   visitor: (connection: Connection<Edge<AdminEntity, ErrorType>>) => void
 ) {
   const paging: Paging = {};
   // eslint-disable-next-line no-constant-condition
   while (true) {
-    const result = await EntityAdmin.searchEntities(context, undefined, paging);
+    const result = await EntityAdmin.searchEntities(context, filter, paging);
     if (result.isError()) {
       throw result.toError();
     }
