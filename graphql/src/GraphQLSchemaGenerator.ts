@@ -12,14 +12,19 @@ import {
   GraphQLEnumType,
   GraphQLID,
   GraphQLInputObjectType,
+  GraphQLInputType,
   GraphQLInt,
   GraphQLInterfaceType,
   GraphQLList,
+  GraphQLNamedType,
   GraphQLNonNull,
   GraphQLObjectType,
+  GraphQLOutputType,
   GraphQLSchema,
   GraphQLString,
+  isInputType,
   isInterfaceType,
+  isOutputType,
 } from 'graphql';
 import type {
   GraphQLEnumValueConfigMap,
@@ -43,27 +48,40 @@ function fieldConfigWithArgs<TSource, TContext, TArgs>(
   return config as GraphQLFieldConfig<TSource, TContext>;
 }
 
-type InterfaceObjectEnumType = GraphQLInterfaceType | GraphQLObjectType | GraphQLEnumType;
-
 export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
-  #types: InterfaceObjectEnumType[] = [];
-  #inputTypes: GraphQLInputObjectType[] = [];
+  #types: GraphQLNamedType[] = [];
 
   constructor(readonly schema: Schema) {}
 
-  addType(type: InterfaceObjectEnumType): void {
+  addType(type: GraphQLNamedType): void {
     if (this.#types.find((x) => x.name === type.name)) {
       throw new Error(`Type with name ${type.name} already exists`);
     }
     this.#types.push(type);
   }
 
-  getType(name: string): InterfaceObjectEnumType {
+  getType(name: string): GraphQLNamedType {
     const type = this.#types.find((x) => x.name === name);
     if (!type) {
       throw new Error(`Type with name ${name} doesn't exist`);
     }
     return type;
+  }
+
+  getOutputType(name: string): GraphQLOutputType {
+    const type = this.getType(name);
+    if (isOutputType(type)) {
+      return type;
+    }
+    throw new Error(`Type ${name} is not an output type`);
+  }
+
+  getInputType(name: string): GraphQLInputType {
+    const type = this.getType(name);
+    if (isInputType(type)) {
+      return type;
+    }
+    throw new Error(`Type ${name} is not an input type`);
   }
 
   getInterface(name: string): GraphQLInterfaceType {
@@ -78,9 +96,9 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     return names.map((name) => this.getInterface(name));
   }
 
-  getOrCreateEntityUnion(isAdmin: boolean, names: string[]): InterfaceObjectEnumType {
+  getOrCreateEntityUnion(isAdmin: boolean, names: string[]): GraphQLOutputType {
     if (names.length === 0) {
-      return this.getType(isAdmin ? 'AdminEntity' : 'Entity');
+      return this.getOutputType(isAdmin ? 'AdminEntity' : 'Entity');
     }
 
     // Convert to AdminName if isAdmin, remove duplicated, sort alphabetically
@@ -88,13 +106,16 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     filteredNames.sort();
 
     if (filteredNames.length === 1) {
-      return this.getType(filteredNames[0]);
+      return this.getOutputType(filteredNames[0]);
     }
 
     const enumName = `$${filteredNames.join('Or')}`;
     const existingEnum = this.#types.find((x) => x.name === enumName);
     if (existingEnum) {
-      return existingEnum;
+      if (isOutputType(existingEnum)) {
+        return existingEnum;
+      }
+      throw new Error(`Type ${enumName} is not an output type`);
     }
 
     const enumValues: GraphQLEnumValueConfigMap = {};
@@ -106,21 +127,6 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
 
     this.addType(enumType);
     return enumType;
-  }
-
-  addInputType(type: GraphQLInputObjectType): void {
-    if (this.#inputTypes.find((x) => x.name === type.name)) {
-      throw new Error(`Input type with name ${type.name} already exists`);
-    }
-    this.#inputTypes.push(type);
-  }
-
-  getInputType(name: string): GraphQLInputObjectType {
-    const type = this.#inputTypes.find((x) => x.name === name);
-    if (!type) {
-      throw new Error(`Input type with name ${name} doesn't exist`);
-    }
-    return type;
   }
 
   addSupportingTypes(): void {
@@ -234,7 +240,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       new GraphQLObjectType({
         name: 'AdminEntityEdge',
         fields: {
-          node: { type: this.getType('AdminEntity') },
+          node: { type: this.getOutputType('AdminEntity') },
           cursor: { type: new GraphQLNonNull(GraphQLString) },
         },
       })
@@ -252,7 +258,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     );
 
     // AdminFilterInput
-    this.addInputType(
+    this.addType(
       new GraphQLInputObjectType({
         name: 'AdminFilterInput',
         fields: {
@@ -337,7 +343,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         before?: string;
       }
     >({
-      type: this.getType('AdminEntityConnection'),
+      type: this.getOutputType('AdminEntityConnection'),
       args: {
         filter: { type: this.getInputType('AdminFilterInput') },
         first: { type: GraphQLInt },
@@ -375,7 +381,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
           : {}),
       },
     });
-    return { query: queryType, types: [...this.#types, ...this.#inputTypes] };
+    return { query: queryType, types: this.#types };
   }
 
   buildSchema<TSource>(): GraphQLSchema {
