@@ -5,6 +5,7 @@ export type {
   AdminEntity,
   AdminEntityCreate,
   AdminEntityUpdate,
+  AdminFilter,
   EntityHistory,
 } from './EntityAdmin';
 export type { ErrorResult, OkResult, PromiseResult, Result } from './ErrorResult';

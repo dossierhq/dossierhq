@@ -72,7 +72,7 @@ async function selectEntity(
   let lastItemId: string | null = null;
   // eslint-disable-next-line no-constant-condition
   while (true) {
-    const result = await EntityAdmin.searchEntities(context, paging);
+    const result = await EntityAdmin.searchEntities(context, undefined, paging);
     if (result.isError()) {
       return result;
     }

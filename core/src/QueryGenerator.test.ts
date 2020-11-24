@@ -1,74 +1,210 @@
+import type { Instance, SessionContext } from '.';
+import { ErrorType } from './';
 import { toOpaqueCursor } from './Connection';
 import { resolvePaging } from './Paging';
 import { searchAdminEntitiesQuery } from './QueryGenerator';
+import { createTestInstance, ensureSessionContext, expectErrorResult } from './TestUtils';
+
+let instance: Instance;
+let context: SessionContext;
+
+beforeAll(async () => {
+  instance = await createTestInstance({ loadSchema: true });
+  context = await ensureSessionContext(instance, 'test', 'query-generator');
+});
+afterAll(async () => {
+  await instance.shutdown();
+});
 
 describe('searchAdminEntitiesQuery()', () => {
   test('default paging', () => {
-    expect(searchAdminEntitiesQuery(resolvePaging())).toMatchInlineSnapshot(`
-      Object {
-        "query": "SELECT e.id, e.uuid, e.type, e.name, ev.data
+    expect(searchAdminEntitiesQuery(context, undefined, resolvePaging())).toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "query": "SELECT e.id, e.uuid, e.type, e.name, ev.data
         FROM entities e, entity_versions ev
         WHERE e.latest_draft_entity_versions_id = ev.id ORDER BY e.id LIMIT $1",
-        "values": Array [
-          26,
-        ],
+          "values": Array [
+            26,
+          ],
+        },
       }
     `);
   });
 
   test('first 10', () => {
-    expect(searchAdminEntitiesQuery(resolvePaging({ first: 10 }))).toMatchInlineSnapshot(`
-      Object {
-        "query": "SELECT e.id, e.uuid, e.type, e.name, ev.data
+    expect(searchAdminEntitiesQuery(context, undefined, resolvePaging({ first: 10 })))
+      .toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "query": "SELECT e.id, e.uuid, e.type, e.name, ev.data
         FROM entities e, entity_versions ev
         WHERE e.latest_draft_entity_versions_id = ev.id ORDER BY e.id LIMIT $1",
-        "values": Array [
-          11,
-        ],
+          "values": Array [
+            11,
+          ],
+        },
       }
     `);
   });
 
   test('first 10 after', () => {
-    expect(searchAdminEntitiesQuery(resolvePaging({ first: 10, after: toOpaqueCursor(999) })))
-      .toMatchInlineSnapshot(`
-      Object {
-        "query": "SELECT e.id, e.uuid, e.type, e.name, ev.data
+    expect(
+      searchAdminEntitiesQuery(
+        context,
+        undefined,
+        resolvePaging({ first: 10, after: toOpaqueCursor(999) })
+      )
+    ).toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "query": "SELECT e.id, e.uuid, e.type, e.name, ev.data
         FROM entities e, entity_versions ev
         WHERE e.latest_draft_entity_versions_id = ev.id AND e.id > $1 ORDER BY e.id LIMIT $2",
-        "values": Array [
-          999,
-          11,
-        ],
+          "values": Array [
+            999,
+            11,
+          ],
+        },
       }
     `);
   });
 
   test('last 10', () => {
-    expect(searchAdminEntitiesQuery(resolvePaging({ last: 10 }))).toMatchInlineSnapshot(`
-      Object {
-        "query": "SELECT e.id, e.uuid, e.type, e.name, ev.data
+    expect(searchAdminEntitiesQuery(context, undefined, resolvePaging({ last: 10 })))
+      .toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "query": "SELECT e.id, e.uuid, e.type, e.name, ev.data
         FROM entities e, entity_versions ev
         WHERE e.latest_draft_entity_versions_id = ev.id ORDER BY e.id DESC LIMIT $1",
-        "values": Array [
-          11,
-        ],
+          "values": Array [
+            11,
+          ],
+        },
       }
     `);
   });
 
   test('last 10 before', () => {
-    expect(searchAdminEntitiesQuery(resolvePaging({ last: 10, before: toOpaqueCursor(456) })))
-      .toMatchInlineSnapshot(`
-      Object {
-        "query": "SELECT e.id, e.uuid, e.type, e.name, ev.data
+    expect(
+      searchAdminEntitiesQuery(
+        context,
+        undefined,
+        resolvePaging({ last: 10, before: toOpaqueCursor(456) })
+      )
+    ).toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "query": "SELECT e.id, e.uuid, e.type, e.name, ev.data
         FROM entities e, entity_versions ev
         WHERE e.latest_draft_entity_versions_id = ev.id AND e.id < $1 ORDER BY e.id DESC LIMIT $2",
-        "values": Array [
-          456,
-          11,
-        ],
+          "values": Array [
+            456,
+            11,
+          ],
+        },
       }
     `);
+  });
+
+  test('filter no entity type, i.e. include all', () => {
+    expect(searchAdminEntitiesQuery(context, { entityTypes: [] }, resolvePaging(undefined)))
+      .toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "query": "SELECT e.id, e.uuid, e.type, e.name, ev.data
+        FROM entities e, entity_versions ev
+        WHERE e.latest_draft_entity_versions_id = ev.id ORDER BY e.id LIMIT $1",
+          "values": Array [
+            26,
+          ],
+        },
+      }
+    `);
+  });
+
+  test('filter one entity type', () => {
+    expect(
+      searchAdminEntitiesQuery(
+        context,
+        { entityTypes: ['EntityAdminFoo'] },
+        resolvePaging(undefined)
+      )
+    ).toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "query": "SELECT e.id, e.uuid, e.type, e.name, ev.data
+        FROM entities e, entity_versions ev
+        WHERE e.latest_draft_entity_versions_id = ev.id AND type = ANY($1) ORDER BY e.id LIMIT $2",
+          "values": Array [
+            Array [
+              "EntityAdminFoo",
+            ],
+            26,
+          ],
+        },
+      }
+    `);
+  });
+
+  test('filter two entity types', () => {
+    expect(
+      searchAdminEntitiesQuery(
+        context,
+        { entityTypes: ['EntityAdminFoo', 'EntityAdminBar'] },
+        resolvePaging(undefined)
+      )
+    ).toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "query": "SELECT e.id, e.uuid, e.type, e.name, ev.data
+        FROM entities e, entity_versions ev
+        WHERE e.latest_draft_entity_versions_id = ev.id AND type = ANY($1) ORDER BY e.id LIMIT $2",
+          "values": Array [
+            Array [
+              "EntityAdminFoo",
+              "EntityAdminBar",
+            ],
+            26,
+          ],
+        },
+      }
+    `);
+  });
+
+  test('filter two entity types, first and after', () => {
+    expect(
+      searchAdminEntitiesQuery(
+        context,
+        { entityTypes: ['EntityAdminFoo', 'EntityAdminBar'] },
+        resolvePaging({ first: 10, after: toOpaqueCursor(543) })
+      )
+    ).toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "query": "SELECT e.id, e.uuid, e.type, e.name, ev.data
+        FROM entities e, entity_versions ev
+        WHERE e.latest_draft_entity_versions_id = ev.id AND type = ANY($1) AND e.id > $2 ORDER BY e.id LIMIT $3",
+          "values": Array [
+            Array [
+              "EntityAdminFoo",
+              "EntityAdminBar",
+            ],
+            543,
+            11,
+          ],
+        },
+      }
+    `);
+  });
+
+  test('Error: invalid entity type in filter', () => {
+    const result = searchAdminEntitiesQuery(
+      context,
+      { entityTypes: ['Invalid'] },
+      resolvePaging(undefined)
+    );
+    expectErrorResult(result, ErrorType.BadRequest, 'Can’t find entity type in filter: Invalid');
   });
 });
