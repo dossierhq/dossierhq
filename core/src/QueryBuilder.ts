@@ -1,7 +1,3 @@
-function isUpperCase(s: string) {
-  return s === s.toUpperCase();
-}
-
 /** This is not a general purpose SQL query builder, please ensure that the resulting SQL is what you're after.
  *
  */
@@ -16,17 +12,43 @@ export default class QueryBuilder {
   }
 
   build(): { query: string; values: unknown[] } {
-    return { query: this.query, values: this.values };
+    let query = this.query;
+    if (this.query.endsWith('WHERE')) {
+      query = query.slice(0, -'WHERE'.length).trimEnd();
+    }
+    return { query, values: this.values };
   }
 
-  addQuery(query: string): void {
-    const isKeyword = isUpperCase(query[0]);
-    const separator = isKeyword ? ' ' : ', ';
-    this.query += separator + query;
+  addQuery(querySegment: string): void {
+    let segmentToAdd = querySegment;
+    if (this.query.endsWith('WHERE') && segmentToAdd.startsWith('AND')) {
+      segmentToAdd = segmentToAdd.slice('AND'.length).trimStart();
+    }
+
+    const currentEndsWithKeyword = endsWithKeyword(this.query);
+    const newStartsWithKeyword = startsWithKeyword(segmentToAdd);
+
+    let separator = '';
+    if (currentEndsWithKeyword && !newStartsWithKeyword) {
+      separator = ' ';
+    } else if (!currentEndsWithKeyword && !newStartsWithKeyword) {
+      separator = ', ';
+    } else if (!currentEndsWithKeyword && newStartsWithKeyword) {
+      separator = ' ';
+    }
+    this.query += separator + segmentToAdd;
   }
 
   addValue(value: unknown): string {
     this.values.push(value);
     return '$' + this.values.length;
   }
+}
+
+function startsWithKeyword(query: string) {
+  return !!query.match(/^[A-Z]+\w/);
+}
+
+function endsWithKeyword(query: string) {
+  return !!query.match(/\w[A-Z]+$/);
 }
