@@ -89,7 +89,7 @@ export async function loadAdminSearchEntities<TContext extends SessionGraphQLCon
     throw context.context.toError();
   }
   const sessionContext = context.context.value;
-  const result = await EntityAdmin.searchEntities(sessionContext, paging);
+  const result = await EntityAdmin.searchEntities(sessionContext, undefined, paging);
   if (result.isError()) {
     throw result.toError();
   }

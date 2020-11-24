@@ -5,7 +5,6 @@ import type { EntitiesTable, EntityVersionsTable } from './DbTableTypes';
 import { decodeEntity, encodeEntity } from './EntityCodec';
 import type { EntityValues } from './EntityCodec';
 import { notOk, ok } from './ErrorResult';
-import QueryBuilder from './QueryBuilder';
 import { resolvePaging } from './Paging';
 import { searchAdminEntitiesQuery } from './QueryGenerator';
 
@@ -47,6 +46,10 @@ export interface AdminEntityUpdate {
   [fieldName: string]: unknown;
 }
 
+export interface AdminFilter {
+  entityTypes?: string[];
+}
+
 export async function getEntity(
   context: SessionContext,
   id: string,
@@ -84,17 +87,18 @@ export async function getEntity(
 
 export async function searchEntities(
   context: SessionContext,
+  filter?: AdminFilter,
   paging?: Paging
 ): PromiseResult<Connection<Edge<AdminEntity, ErrorType>> | null, ErrorType.BadRequest> {
-  //TODO which errors can occur?
-
   const resolvedPaging = resolvePaging(paging);
-  const { query, values } = searchAdminEntitiesQuery(resolvedPaging);
-
+  const query = searchAdminEntitiesQuery(context, filter, resolvedPaging);
+  if (query.isError()) {
+    return query;
+  }
   const entitiesValues = await Db.queryMany<Pick<EntitiesTable, 'id'> & EntityValues>(
     context,
-    query,
-    values
+    query.value.query,
+    query.value.values
   );
   const hasExtraPage = entitiesValues.length > resolvedPaging.count;
   if (hasExtraPage) {
