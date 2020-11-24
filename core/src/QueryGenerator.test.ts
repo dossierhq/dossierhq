@@ -1,7 +1,6 @@
 import type { Instance, SessionContext } from '.';
 import { ErrorType } from './';
 import { toOpaqueCursor } from './Connection';
-import { resolvePaging } from './Paging';
 import { searchAdminEntitiesQuery } from './QueryGenerator';
 import { createTestInstance, ensureSessionContext, expectErrorResult } from './TestUtils';
 
@@ -18,9 +17,11 @@ afterAll(async () => {
 
 describe('searchAdminEntitiesQuery()', () => {
   test('default paging', () => {
-    expect(searchAdminEntitiesQuery(context, undefined, resolvePaging())).toMatchInlineSnapshot(`
+    expect(searchAdminEntitiesQuery(context, undefined, undefined)).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
+          "isForwards": true,
+          "pagingCount": 25,
           "query": "SELECT e.id, e.uuid, e.type, e.name, ev.data
         FROM entities e, entity_versions ev
         WHERE e.latest_draft_entity_versions_id = ev.id ORDER BY e.id LIMIT $1",
@@ -33,10 +34,11 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('first 10', () => {
-    expect(searchAdminEntitiesQuery(context, undefined, resolvePaging({ first: 10 })))
-      .toMatchInlineSnapshot(`
+    expect(searchAdminEntitiesQuery(context, undefined, { first: 10 })).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
+          "isForwards": true,
+          "pagingCount": 10,
           "query": "SELECT e.id, e.uuid, e.type, e.name, ev.data
         FROM entities e, entity_versions ev
         WHERE e.latest_draft_entity_versions_id = ev.id ORDER BY e.id LIMIT $1",
@@ -49,15 +51,12 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('first 10 after', () => {
-    expect(
-      searchAdminEntitiesQuery(
-        context,
-        undefined,
-        resolvePaging({ first: 10, after: toOpaqueCursor(999) })
-      )
-    ).toMatchInlineSnapshot(`
+    expect(searchAdminEntitiesQuery(context, undefined, { first: 10, after: toOpaqueCursor(999) }))
+      .toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
+          "isForwards": true,
+          "pagingCount": 10,
           "query": "SELECT e.id, e.uuid, e.type, e.name, ev.data
         FROM entities e, entity_versions ev
         WHERE e.latest_draft_entity_versions_id = ev.id AND e.id > $1 ORDER BY e.id LIMIT $2",
@@ -71,10 +70,11 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('last 10', () => {
-    expect(searchAdminEntitiesQuery(context, undefined, resolvePaging({ last: 10 })))
-      .toMatchInlineSnapshot(`
+    expect(searchAdminEntitiesQuery(context, undefined, { last: 10 })).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
+          "isForwards": false,
+          "pagingCount": 10,
           "query": "SELECT e.id, e.uuid, e.type, e.name, ev.data
         FROM entities e, entity_versions ev
         WHERE e.latest_draft_entity_versions_id = ev.id ORDER BY e.id DESC LIMIT $1",
@@ -87,15 +87,12 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('last 10 before', () => {
-    expect(
-      searchAdminEntitiesQuery(
-        context,
-        undefined,
-        resolvePaging({ last: 10, before: toOpaqueCursor(456) })
-      )
-    ).toMatchInlineSnapshot(`
+    expect(searchAdminEntitiesQuery(context, undefined, { last: 10, before: toOpaqueCursor(456) }))
+      .toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
+          "isForwards": false,
+          "pagingCount": 10,
           "query": "SELECT e.id, e.uuid, e.type, e.name, ev.data
         FROM entities e, entity_versions ev
         WHERE e.latest_draft_entity_versions_id = ev.id AND e.id < $1 ORDER BY e.id DESC LIMIT $2",
@@ -109,10 +106,12 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('filter no entity type, i.e. include all', () => {
-    expect(searchAdminEntitiesQuery(context, { entityTypes: [] }, resolvePaging(undefined)))
+    expect(searchAdminEntitiesQuery(context, { entityTypes: [] }, undefined))
       .toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
+          "isForwards": true,
+          "pagingCount": 25,
           "query": "SELECT e.id, e.uuid, e.type, e.name, ev.data
         FROM entities e, entity_versions ev
         WHERE e.latest_draft_entity_versions_id = ev.id ORDER BY e.id LIMIT $1",
@@ -125,15 +124,12 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('filter one entity type', () => {
-    expect(
-      searchAdminEntitiesQuery(
-        context,
-        { entityTypes: ['EntityAdminFoo'] },
-        resolvePaging(undefined)
-      )
-    ).toMatchInlineSnapshot(`
+    expect(searchAdminEntitiesQuery(context, { entityTypes: ['EntityAdminFoo'] }, undefined))
+      .toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
+          "isForwards": true,
+          "pagingCount": 25,
           "query": "SELECT e.id, e.uuid, e.type, e.name, ev.data
         FROM entities e, entity_versions ev
         WHERE e.latest_draft_entity_versions_id = ev.id AND type = ANY($1) ORDER BY e.id LIMIT $2",
@@ -153,11 +149,13 @@ describe('searchAdminEntitiesQuery()', () => {
       searchAdminEntitiesQuery(
         context,
         { entityTypes: ['EntityAdminFoo', 'EntityAdminBar'] },
-        resolvePaging(undefined)
+        undefined
       )
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
+          "isForwards": true,
+          "pagingCount": 25,
           "query": "SELECT e.id, e.uuid, e.type, e.name, ev.data
         FROM entities e, entity_versions ev
         WHERE e.latest_draft_entity_versions_id = ev.id AND type = ANY($1) ORDER BY e.id LIMIT $2",
@@ -178,11 +176,13 @@ describe('searchAdminEntitiesQuery()', () => {
       searchAdminEntitiesQuery(
         context,
         { entityTypes: ['EntityAdminFoo', 'EntityAdminBar'] },
-        resolvePaging({ first: 10, after: toOpaqueCursor(543) })
+        { first: 10, after: toOpaqueCursor(543) }
       )
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
+          "isForwards": true,
+          "pagingCount": 10,
           "query": "SELECT e.id, e.uuid, e.type, e.name, ev.data
         FROM entities e, entity_versions ev
         WHERE e.latest_draft_entity_versions_id = ev.id AND type = ANY($1) AND e.id > $2 ORDER BY e.id LIMIT $3",
@@ -200,11 +200,7 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('Error: invalid entity type in filter', () => {
-    const result = searchAdminEntitiesQuery(
-      context,
-      { entityTypes: ['Invalid'] },
-      resolvePaging(undefined)
-    );
+    const result = searchAdminEntitiesQuery(context, { entityTypes: ['Invalid'] }, undefined);
     expectErrorResult(result, ErrorType.BadRequest, 'Can’t find entity type in filter: Invalid');
   });
 });

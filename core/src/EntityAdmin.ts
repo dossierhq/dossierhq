@@ -5,7 +5,6 @@ import type { EntitiesTable, EntityVersionsTable } from './DbTableTypes';
 import { decodeEntity, encodeEntity } from './EntityCodec';
 import type { EntityValues } from './EntityCodec';
 import { notOk, ok } from './ErrorResult';
-import { resolvePaging } from './Paging';
 import { searchAdminEntitiesQuery } from './QueryGenerator';
 
 export interface EntityHistory {
@@ -90,8 +89,7 @@ export async function searchEntities(
   filter?: AdminFilter,
   paging?: Paging
 ): PromiseResult<Connection<Edge<AdminEntity, ErrorType>> | null, ErrorType.BadRequest> {
-  const resolvedPaging = resolvePaging(paging);
-  const query = searchAdminEntitiesQuery(context, filter, resolvedPaging);
+  const query = searchAdminEntitiesQuery(context, filter, paging);
   if (query.isError()) {
     return query;
   }
@@ -100,12 +98,12 @@ export async function searchEntities(
     query.value.query,
     query.value.values
   );
-  const hasExtraPage = entitiesValues.length > resolvedPaging.count;
+  const hasExtraPage = entitiesValues.length > query.value.pagingCount;
   if (hasExtraPage) {
-    entitiesValues.splice(resolvedPaging.count, 1);
+    entitiesValues.splice(query.value.pagingCount, 1);
   }
 
-  if (!resolvedPaging.isForwards) {
+  if (!query.value.isForwards) {
     // Reverse since DESC order returns the rows in the wrong order, we want them in the same order as for forwards pagination
     entitiesValues.reverse();
   }
@@ -116,8 +114,8 @@ export async function searchEntities(
   }
   return ok({
     pageInfo: {
-      hasNextPage: resolvedPaging.isForwards ? hasExtraPage : false,
-      hasPreviousPage: resolvedPaging.isForwards ? false : hasExtraPage,
+      hasNextPage: query.value.isForwards ? hasExtraPage : false,
+      hasPreviousPage: query.value.isForwards ? false : hasExtraPage,
       startCursor: toOpaqueCursor(entitiesValues[0].id),
       endCursor: toOpaqueCursor(entitiesValues[entitiesValues.length - 1].id),
     },
