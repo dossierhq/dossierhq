@@ -1,4 +1,5 @@
 import type { ErrorType, Result } from '.';
+import { ok, notOk } from '.';
 
 export interface PageInfo {
   hasPreviousPage: boolean;
@@ -21,6 +22,10 @@ export function toOpaqueCursor(id: number): string {
   return Buffer.from(String(id)).toString('base64');
 }
 
-export function fromOpaqueCursor(cursor: string): number {
-  return Number.parseInt(Buffer.from(cursor, 'base64').toString('ascii'));
+export function fromOpaqueCursor(cursor: string): Result<number, ErrorType.BadRequest> {
+  const value = Number.parseInt(Buffer.from(cursor, 'base64').toString('ascii'));
+  if (Number.isNaN(value)) {
+    return notOk.BadRequest('Invalid format of cursor');
+  }
+  return ok(value);
 }

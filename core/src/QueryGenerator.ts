@@ -1,13 +1,22 @@
-import type { AdminFilter, Result, SessionContext } from './';
+import type { AdminFilter, Paging, Result, SessionContext } from './';
 import { ErrorType, notOk, ok } from '.';
-import type { ResolvedPaging } from './Paging';
+import { resolvePaging } from './Paging';
 import QueryBuilder from './QueryBuilder';
 
 export function searchAdminEntitiesQuery(
   context: SessionContext,
-  filter: undefined | AdminFilter,
-  paging: ResolvedPaging
-): Result<{ query: string; values: unknown[] }, ErrorType.BadRequest> {
+  filter: AdminFilter | undefined,
+  paging: Paging | undefined
+): Result<
+  { query: string; values: unknown[]; isForwards: boolean; pagingCount: number },
+  ErrorType.BadRequest
+> {
+  const pagingResult = resolvePaging(paging);
+  if (pagingResult.isError()) {
+    return pagingResult;
+  }
+  const resolvedPaging = pagingResult.value;
+
   const qb = new QueryBuilder(`SELECT e.id, e.uuid, e.type, e.name, ev.data
   FROM entities e, entity_versions ev
   WHERE e.latest_draft_entity_versions_id = ev.id`);
@@ -22,17 +31,22 @@ export function searchAdminEntitiesQuery(
     qb.addQuery(`AND type = ANY(${qb.addValue(filter.entityTypes)})`);
   }
 
-  const countToRequest = paging.count + 1; // request one more to calculate hasNextPage
-  if (paging.isForwards) {
-    if (paging.cursor !== null) {
-      qb.addQuery(`AND e.id > ${qb.addValue(paging.cursor)}`);
+  const countToRequest = resolvedPaging.count + 1; // request one more to calculate hasNextPage
+  if (resolvedPaging.isForwards) {
+    if (resolvedPaging.after !== null) {
+      qb.addQuery(`AND e.id > ${qb.addValue(resolvedPaging.after)}`);
     }
     qb.addQuery(`ORDER BY e.id LIMIT ${qb.addValue(countToRequest)}`);
   } else {
-    if (paging.cursor) {
-      qb.addQuery(`AND e.id < ${qb.addValue(paging.cursor)}`);
+    if (resolvedPaging.before) {
+      qb.addQuery(`AND e.id < ${qb.addValue(resolvedPaging.before)}`);
     }
     qb.addQuery(`ORDER BY e.id DESC LIMIT ${qb.addValue(countToRequest)}`);
   }
-  return ok(qb.build());
+  return ok({
+    ...qb.build(),
+    isForwards: resolvedPaging.isForwards,
+    pagingCount: resolvedPaging.count,
+  });
+}
 }
