@@ -35,7 +35,8 @@ beforeAll(async () => {
   });
   schema = new GraphQLSchemaGenerator(context.instance.getSchema()).buildSchema();
 
-  entitiesOfTypeQueryAdminOnlyEditBefore = await ensureTestEntitiesExist(context);
+  await ensureTestEntitiesExist(context);
+  entitiesOfTypeQueryAdminOnlyEditBefore = await getEntitiesForAdminOnlyEditBefore(context);
 });
 afterAll(async () => {
   await instance?.shutdown();
@@ -43,36 +44,37 @@ afterAll(async () => {
 
 async function ensureTestEntitiesExist(context: SessionContext) {
   const requestedCount = 50;
-  const entitiesOfType: AdminEntity[] = [];
+  const entitiesOfTypeCount = await EntityAdmin.getTotalCount(context, {
+    entityTypes: ['QueryAdminOnlyEditBefore'],
+  });
+
+  if (expectOkResult(entitiesOfTypeCount)) {
+    for (let count = entitiesOfTypeCount.value; count < requestedCount; count += 1) {
+      const random = String(Math.random()).slice(2);
+      const createResult = await EntityAdmin.createEntity(
+        context,
+        { _type: 'QueryAdminOnlyEditBefore', _name: random, message: `Hey ${random}` },
+        { publish: true }
+      );
+      createResult.throwIfError();
+    }
+  }
+}
+
+async function getEntitiesForAdminOnlyEditBefore(context: SessionContext) {
+  const entities: AdminEntity[] = [];
   await visitAllEntityPages(
     context,
     { entityTypes: ['QueryAdminOnlyEditBefore'] },
     (connection) => {
       for (const edge of connection.edges) {
         if (edge.node.isOk()) {
-          entitiesOfType.push(edge.node.value);
+          entities.push(edge.node.value);
         }
       }
     }
   );
-
-  while (entitiesOfType.length < requestedCount) {
-    const random = String(Math.random()).slice(2);
-    const createResult = await EntityAdmin.createEntity(
-      context,
-      { _type: 'QueryAdminOnlyEditBefore', _name: random, message: `Hey ${random}` },
-      { publish: true }
-    );
-    if (createResult.isError()) {
-      throw createResult.toError();
-    }
-    const getResult = await EntityAdmin.getEntity(context, createResult.value.id, {});
-    getResult.throwIfError();
-    if (getResult.isOk()) {
-      entitiesOfType.push(getResult.value.item);
-    }
-  }
-  return entitiesOfType;
+  return entities;
 }
 
 async function visitAllEntityPages(
