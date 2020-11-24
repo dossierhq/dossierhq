@@ -19,7 +19,7 @@ import { expectEntityHistoryVersions, uuidMatcher } from '../test/AdditionalTest
 
 let instance: Instance;
 let context: SessionContext;
-let entitiesOfTypeAdminOnlyEditBefore: AdminEntity[];
+let idsOfTypeAdminOnlyEditBefore: string[];
 
 beforeAll(async () => {
   instance = await createTestInstance({ loadSchema: true });
@@ -36,7 +36,8 @@ beforeAll(async () => {
     AdminOnlyEditBefore: { fields: [{ name: 'message', type: EntityFieldType.String }] },
   });
 
-  entitiesOfTypeAdminOnlyEditBefore = await ensureEntitiesExistForAdminOnlyEditBefore(context);
+  await ensureEntitiesExistForAdminOnlyEditBefore(context);
+  idsOfTypeAdminOnlyEditBefore = await getIdsForAdminOnlyEditBefore(context);
 });
 afterAll(async () => {
   await instance.shutdown();
@@ -44,8 +45,25 @@ afterAll(async () => {
 
 async function ensureEntitiesExistForAdminOnlyEditBefore(context: SessionContext) {
   const requestedCount = 50;
-  const entitiesOfType: AdminEntity[] = [];
-  // TODO add total count to AdminEntity instead
+  // If there aren't enough entities, create some
+  const entitiesOfTypeCount = await EntityAdmin.getTotalCount(context, {
+    entityTypes: ['AdminOnlyEditBefore'],
+  });
+  if (expectOkResult(entitiesOfTypeCount)) {
+    for (let count = entitiesOfTypeCount.value; count < requestedCount; count += 1) {
+      const random = String(Math.random()).slice(2);
+      const createResult = await EntityAdmin.createEntity(
+        context,
+        { _type: 'AdminOnlyEditBefore', _name: random, message: `Hey ${random}` },
+        { publish: true }
+      );
+      createResult.throwIfError();
+    }
+  }
+}
+
+async function getIdsForAdminOnlyEditBefore(context: SessionContext) {
+  const ids: string[] = [];
   await visitAllEntityPages(
     context,
     { entityTypes: ['AdminOnlyEditBefore'] },
@@ -53,29 +71,12 @@ async function ensureEntitiesExistForAdminOnlyEditBefore(context: SessionContext
     (connection) => {
       for (const edge of connection.edges) {
         if (edge.node.isOk()) {
-          entitiesOfType.push(edge.node.value);
+          ids.push(edge.node.value.id);
         }
       }
     }
   );
-
-  while (entitiesOfType.length < requestedCount) {
-    const random = String(Math.random()).slice(2);
-    const createResult = await EntityAdmin.createEntity(
-      context,
-      { _type: 'AdminOnlyEditBefore', _name: random, message: `Hey ${random}` },
-      { publish: true }
-    );
-    if (createResult.isError()) {
-      throw createResult.toError();
-    }
-    const getResult = await EntityAdmin.getEntity(context, createResult.value.id, {});
-    getResult.throwIfError();
-    if (getResult.isOk()) {
-      entitiesOfType.push(getResult.value.item);
-    }
-  }
-  return entitiesOfType;
+  return ids;
 }
 
 async function visitAllEntityPages(
@@ -326,9 +327,9 @@ function expectConnectionToMatchSlice(
     id: edge.node.isOk() ? edge.node.value.id : edge.node,
   }));
 
-  const expectedIds = entitiesOfTypeAdminOnlyEditBefore
+  const expectedIds = idsOfTypeAdminOnlyEditBefore
     .slice(sliceStart, sliceEnd)
-    .map((x) => ({ id: x.id }));
+    .map((x) => ({ id: x }));
 
   expect(actualIds).toEqual(expectedIds);
 }
@@ -498,7 +499,7 @@ describe('getTotalCount', () => {
       entityTypes: ['AdminOnlyEditBefore'],
     });
     if (expectOkResult(result)) {
-      expect(result.value).toBe(entitiesOfTypeAdminOnlyEditBefore.length);
+      expect(result.value).toBe(idsOfTypeAdminOnlyEditBefore.length);
     }
   });
 });
