@@ -51,17 +51,6 @@ type Foo implements Node & Entity {
   barBarBar: Bar
 }
 
-enum $BarOrBaz {
-  Bar
-  Baz
-}
-
-enum $BarOrBazOrFoo {
-  Bar
-  Baz
-  Foo
-}
-
 type Bar implements Node & Entity {
   id: ID!
   _name: String!
@@ -88,6 +77,10 @@ type AdminEntityConnection {
   edges: [AdminEntityEdge]
 }
 
+input AdminFilterInput {
+  entityTypes: [String]
+}
+
 type AdminFoo implements AdminEntity {
   id: ID!
   _type: EntityType!
@@ -97,17 +90,6 @@ type AdminFoo implements AdminEntity {
   bazBar: $AdminBarOrAdminBaz
   fooBarBaz: $AdminBarOrAdminBazOrAdminFoo
   barBarBar: AdminBar
-}
-
-enum $AdminBarOrAdminBaz {
-  AdminBar
-  AdminBaz
-}
-
-enum $AdminBarOrAdminBazOrAdminFoo {
-  AdminBar
-  AdminBaz
-  AdminFoo
 }
 
 type AdminBar implements AdminEntity {
@@ -122,8 +104,26 @@ type AdminBaz implements AdminEntity {
   _name: String!
 }
 
-input AdminFilterInput {
-  entityTypes: [String]
+enum $BarOrBaz {
+  Bar
+  Baz
+}
+
+enum $BarOrBazOrFoo {
+  Bar
+  Baz
+  Foo
+}
+
+enum $AdminBarOrAdminBaz {
+  AdminBar
+  AdminBaz
+}
+
+enum $AdminBarOrAdminBazOrAdminFoo {
+  AdminBar
+  AdminBaz
+  AdminFoo
 }
 
 type Query {
@@ -176,14 +176,14 @@ type AdminEntityConnection {
   edges: [AdminEntityEdge]
 }
 
+input AdminFilterInput {
+  entityTypes: [String]
+}
+
 type AdminFoo implements AdminEntity {
   id: ID!
   _type: EntityType!
   _name: String!
-}
-
-input AdminFilterInput {
-  entityTypes: [String]
 }
 
 type Query {
@@ -245,6 +245,10 @@ type AdminEntityConnection {
   edges: [AdminEntityEdge]
 }
 
+input AdminFilterInput {
+  entityTypes: [String]
+}
+
 type AdminFoo implements AdminEntity {
   id: ID!
   _type: EntityType!
@@ -258,10 +262,6 @@ type AdminBar implements AdminEntity {
   _name: String!
   barField1: String
   barField2: AdminEntity
-}
-
-input AdminFilterInput {
-  entityTypes: [String]
 }
 
 type Query {
