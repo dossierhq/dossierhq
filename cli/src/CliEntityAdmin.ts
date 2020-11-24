@@ -1,15 +1,16 @@
 import chalk from 'chalk';
 import {
+  EntityAdmin,
+  ErrorType,
   isPagingForwards,
   isReferenceFieldType,
   isStringFieldType,
-  ok,
   notOk,
-  EntityAdmin,
-  ErrorType,
+  ok,
 } from '@datadata/core';
 import type {
   AdminEntity,
+  AdminFilter,
   EntityFieldSpecification,
   EntityTypeSpecification,
   Paging,
@@ -65,14 +66,15 @@ export async function searchEntities(context: SessionContext): Promise<void> {
 async function selectEntity(
   context: SessionContext,
   message: string,
+  initialFilter: AdminFilter | null,
   unusedDefaultValue: { id: string } | null
 ): PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.NotFound> {
-  const { paging } = await configureQuery();
+  const { filter, paging } = await configureQuery(context, initialFilter);
   const isForward = isPagingForwards(paging);
   let lastItemId: string | null = null;
   // eslint-disable-next-line no-constant-condition
   while (true) {
-    const result = await EntityAdmin.searchEntities(context, undefined, paging);
+    const result = await EntityAdmin.searchEntities(context, filter, paging);
     if (result.isError()) {
       return result;
     }
@@ -116,13 +118,24 @@ async function selectEntity(
   }
 }
 
-async function configureQuery(): Promise<{ paging: Paging }> {
+async function configureQuery(
+  context: SessionContext,
+  initialFilter: AdminFilter | null
+): Promise<{ filter: AdminFilter; paging: Paging }> {
   let lastItemId = '_search';
+  const filter: AdminFilter = initialFilter ? { ...initialFilter } : {};
   let pagingIsForward = true;
   let pagingCount = 25;
   // eslint-disable-next-line no-constant-condition
   while (true) {
     const items = [
+      {
+        id: '_entityTypes',
+        name: `${chalk.bold('Entity types:')} ${
+          filter.entityTypes?.join(', ') ?? chalk.grey('<not set>')
+        }`,
+        enabled: (initialFilter?.entityTypes?.length ?? 0) === 0,
+      },
       {
         id: '_direction',
         name: `${chalk.bold('Direction:')} ${pagingIsForward ? 'forward' : 'backward'}`,
@@ -134,6 +147,9 @@ async function configureQuery(): Promise<{ paging: Paging }> {
     lastItemId = item.id;
 
     switch (item.id) {
+      case '_entityTypes':
+        filter.entityTypes = await CliSchema.selectEntityTypes(context);
+        break;
       case '_direction':
         pagingIsForward = !pagingIsForward;
         break;
@@ -142,6 +158,7 @@ async function configureQuery(): Promise<{ paging: Paging }> {
         break;
       case '_search':
         return {
+          filter,
           paging: pagingIsForward
             ? {
                 first: pagingCount,
@@ -274,7 +291,12 @@ async function editFieldReference(
   fieldSpec: EntityFieldSpecification,
   defaultValue: { id: string } | null
 ) {
-  return await selectEntity(context, fieldSpec.name, defaultValue);
+  return await selectEntity(
+    context,
+    fieldSpec.name,
+    { entityTypes: fieldSpec.entityTypes },
+    defaultValue
+  );
 }
 
 async function editFieldString(fieldSpec: EntityFieldSpecification, defaultValue: string | null) {
