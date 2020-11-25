@@ -8,7 +8,7 @@ export function searchAdminEntitiesQuery(
   filter: AdminFilter | undefined,
   paging: Paging | undefined
 ): Result<
-  { query: string; values: unknown[]; isForwards: boolean; pagingCount: number },
+  { text: string; values: unknown[]; isForwards: boolean; pagingCount: number },
   ErrorType.BadRequest
 > {
   const pagingResult = resolvePaging(paging);
@@ -53,7 +53,7 @@ export function searchAdminEntitiesQuery(
 export function totalAdminEntitiesQuery(
   context: SessionContext,
   filter: AdminFilter | undefined
-): Result<{ query: string; values: unknown[] }, ErrorType.BadRequest> {
+): Result<{ text: string; values: unknown[] }, ErrorType.BadRequest> {
   // Convert count to ::integer since count() is bigint (js doesn't support 64 bit numbers so pg return it as string)
   const qb = new QueryBuilder('SELECT COUNT(e.id)::integer AS count FROM entities e WHERE');
 

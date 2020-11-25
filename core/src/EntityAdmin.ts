@@ -95,8 +95,7 @@ export async function searchEntities(
   }
   const entitiesValues = await Db.queryMany<Pick<EntitiesTable, 'id'> & EntityValues>(
     context,
-    query.value.query,
-    query.value.values
+    query.value
   );
   const hasExtraPage = entitiesValues.length > query.value.pagingCount;
   if (hasExtraPage) {
@@ -134,11 +133,7 @@ export async function getTotalCount(
   if (query.isError()) {
     return query;
   }
-  const { count } = await Db.queryOne<{ count: number }>(
-    context,
-    query.value.query,
-    query.value.values
-  );
+  const { count } = await Db.queryOne<{ count: number }>(context, query.value);
   return ok(count);
 }
 

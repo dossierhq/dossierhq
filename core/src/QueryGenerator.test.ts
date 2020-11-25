@@ -22,7 +22,7 @@ describe('searchAdminEntitiesQuery()', () => {
         "value": Object {
           "isForwards": true,
           "pagingCount": 25,
-          "query": "SELECT e.id, e.uuid, e.type, e.name, ev.data
+          "text": "SELECT e.id, e.uuid, e.type, e.name, ev.data
         FROM entities e, entity_versions ev
         WHERE e.latest_draft_entity_versions_id = ev.id ORDER BY e.id LIMIT $1",
           "values": Array [
@@ -39,7 +39,7 @@ describe('searchAdminEntitiesQuery()', () => {
         "value": Object {
           "isForwards": true,
           "pagingCount": 10,
-          "query": "SELECT e.id, e.uuid, e.type, e.name, ev.data
+          "text": "SELECT e.id, e.uuid, e.type, e.name, ev.data
         FROM entities e, entity_versions ev
         WHERE e.latest_draft_entity_versions_id = ev.id ORDER BY e.id LIMIT $1",
           "values": Array [
@@ -57,7 +57,7 @@ describe('searchAdminEntitiesQuery()', () => {
         "value": Object {
           "isForwards": true,
           "pagingCount": 10,
-          "query": "SELECT e.id, e.uuid, e.type, e.name, ev.data
+          "text": "SELECT e.id, e.uuid, e.type, e.name, ev.data
         FROM entities e, entity_versions ev
         WHERE e.latest_draft_entity_versions_id = ev.id AND e.id > $1 ORDER BY e.id LIMIT $2",
           "values": Array [
@@ -75,7 +75,7 @@ describe('searchAdminEntitiesQuery()', () => {
         "value": Object {
           "isForwards": false,
           "pagingCount": 10,
-          "query": "SELECT e.id, e.uuid, e.type, e.name, ev.data
+          "text": "SELECT e.id, e.uuid, e.type, e.name, ev.data
         FROM entities e, entity_versions ev
         WHERE e.latest_draft_entity_versions_id = ev.id ORDER BY e.id DESC LIMIT $1",
           "values": Array [
@@ -93,7 +93,7 @@ describe('searchAdminEntitiesQuery()', () => {
         "value": Object {
           "isForwards": false,
           "pagingCount": 10,
-          "query": "SELECT e.id, e.uuid, e.type, e.name, ev.data
+          "text": "SELECT e.id, e.uuid, e.type, e.name, ev.data
         FROM entities e, entity_versions ev
         WHERE e.latest_draft_entity_versions_id = ev.id AND e.id < $1 ORDER BY e.id DESC LIMIT $2",
           "values": Array [
@@ -117,7 +117,7 @@ describe('searchAdminEntitiesQuery()', () => {
         "value": Object {
           "isForwards": true,
           "pagingCount": 10,
-          "query": "SELECT e.id, e.uuid, e.type, e.name, ev.data
+          "text": "SELECT e.id, e.uuid, e.type, e.name, ev.data
         FROM entities e, entity_versions ev
         WHERE e.latest_draft_entity_versions_id = ev.id AND e.id > $1 AND e.id < $2 ORDER BY e.id LIMIT $3",
           "values": Array [
@@ -142,7 +142,7 @@ describe('searchAdminEntitiesQuery()', () => {
         "value": Object {
           "isForwards": false,
           "pagingCount": 10,
-          "query": "SELECT e.id, e.uuid, e.type, e.name, ev.data
+          "text": "SELECT e.id, e.uuid, e.type, e.name, ev.data
         FROM entities e, entity_versions ev
         WHERE e.latest_draft_entity_versions_id = ev.id AND e.id > $1 AND e.id < $2 ORDER BY e.id DESC LIMIT $3",
           "values": Array [
@@ -162,7 +162,7 @@ describe('searchAdminEntitiesQuery()', () => {
         "value": Object {
           "isForwards": true,
           "pagingCount": 25,
-          "query": "SELECT e.id, e.uuid, e.type, e.name, ev.data
+          "text": "SELECT e.id, e.uuid, e.type, e.name, ev.data
         FROM entities e, entity_versions ev
         WHERE e.latest_draft_entity_versions_id = ev.id ORDER BY e.id LIMIT $1",
           "values": Array [
@@ -180,7 +180,7 @@ describe('searchAdminEntitiesQuery()', () => {
         "value": Object {
           "isForwards": true,
           "pagingCount": 25,
-          "query": "SELECT e.id, e.uuid, e.type, e.name, ev.data
+          "text": "SELECT e.id, e.uuid, e.type, e.name, ev.data
         FROM entities e, entity_versions ev
         WHERE e.latest_draft_entity_versions_id = ev.id AND type = ANY($1) ORDER BY e.id LIMIT $2",
           "values": Array [
@@ -206,7 +206,7 @@ describe('searchAdminEntitiesQuery()', () => {
         "value": Object {
           "isForwards": true,
           "pagingCount": 25,
-          "query": "SELECT e.id, e.uuid, e.type, e.name, ev.data
+          "text": "SELECT e.id, e.uuid, e.type, e.name, ev.data
         FROM entities e, entity_versions ev
         WHERE e.latest_draft_entity_versions_id = ev.id AND type = ANY($1) ORDER BY e.id LIMIT $2",
           "values": Array [
@@ -233,7 +233,7 @@ describe('searchAdminEntitiesQuery()', () => {
         "value": Object {
           "isForwards": true,
           "pagingCount": 10,
-          "query": "SELECT e.id, e.uuid, e.type, e.name, ev.data
+          "text": "SELECT e.id, e.uuid, e.type, e.name, ev.data
         FROM entities e, entity_versions ev
         WHERE e.latest_draft_entity_versions_id = ev.id AND type = ANY($1) AND e.id > $2 ORDER BY e.id LIMIT $3",
           "values": Array [
@@ -260,7 +260,7 @@ describe('totalAdminEntitiesQuery()', () => {
     expect(totalAdminEntitiesQuery(context, undefined)).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
-          "query": "SELECT COUNT(e.id)::integer AS count FROM entities e",
+          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e",
           "values": Array [],
         },
       }
@@ -271,7 +271,7 @@ describe('totalAdminEntitiesQuery()', () => {
     expect(totalAdminEntitiesQuery(context, { entityTypes: [] })).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
-          "query": "SELECT COUNT(e.id)::integer AS count FROM entities e",
+          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e",
           "values": Array [],
         },
       }
@@ -283,7 +283,7 @@ describe('totalAdminEntitiesQuery()', () => {
       .toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
-          "query": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE type = ANY($1)",
+          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE type = ANY($1)",
           "values": Array [
             Array [
               "EntityAdminFoo",
@@ -299,7 +299,7 @@ describe('totalAdminEntitiesQuery()', () => {
       .toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
-          "query": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE type = ANY($1)",
+          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE type = ANY($1)",
           "values": Array [
             Array [
               "EntityAdminFoo",
