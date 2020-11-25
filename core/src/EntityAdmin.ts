@@ -128,10 +128,9 @@ export async function searchEntities(
 
 export async function getTotalCount(
   context: SessionContext,
-  filter?: AdminFilter,
-  paging?: Paging
+  filter?: AdminFilter
 ): PromiseResult<number, ErrorType.BadRequest> {
-  const query = totalAdminEntitiesQuery(context, filter, paging);
+  const query = totalAdminEntitiesQuery(context, filter);
   if (query.isError()) {
     return query;
   }
