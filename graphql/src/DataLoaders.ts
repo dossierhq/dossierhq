@@ -7,6 +7,7 @@ import type {
   PageInfo,
   SessionContext,
 } from '@datadata/core';
+import type { GraphQLResolveInfo } from 'graphql';
 import type { SessionGraphQLContext } from './GraphQLSchemaGenerator';
 
 interface Connection<T extends Edge<unknown>> {
@@ -14,19 +15,38 @@ interface Connection<T extends Edge<unknown>> {
   edges: T[];
 }
 
+type FieldValueOrResolver<TContext, TResult> =
+  | TResult
+  | Promise<TResult>
+  | ((
+      args: unknown,
+      context: TContext,
+      unusedInfo: GraphQLResolveInfo
+    ) => TResult | Promise<TResult>);
+
+interface ConnectionWithTotalCount<T extends Edge<unknown>, TContext> extends Connection<T> {
+  totalCount: FieldValueOrResolver<TContext, number>;
+}
+
 interface Edge<T> {
   node: T | null;
   cursor: string;
+}
+
+function getSessionContext<TContext extends SessionGraphQLContext>(
+  context: TContext
+): SessionContext {
+  if (context.context.isError()) {
+    throw context.context.toError();
+  }
+  return context.context.value;
 }
 
 export async function loadEntity<TContext extends SessionGraphQLContext>(
   context: TContext,
   id: string
 ): Promise<Entity> {
-  if (context.context.isError()) {
-    throw context.context.toError();
-  }
-  const sessionContext = context.context.value;
+  const sessionContext = getSessionContext(context);
   const result = await PublishedEntity.getEntity(sessionContext, id);
   if (result.isError()) {
     throw result.toError();
@@ -58,10 +78,7 @@ export async function loadAdminEntity<TContext extends SessionGraphQLContext>(
   id: string,
   version: number | undefined | null
 ): Promise<AdminEntity> {
-  if (context.context.isError()) {
-    throw context.context.toError();
-  }
-  const sessionContext = context.context.value;
+  const sessionContext = getSessionContext(context);
   const result = await EntityAdmin.getEntity(sessionContext, id, { version });
   if (result.isError()) {
     throw result.toError();
@@ -92,11 +109,8 @@ export async function loadAdminSearchEntities<TContext extends SessionGraphQLCon
   context: TContext,
   filter: AdminFilter | undefined,
   paging: Paging
-): Promise<Connection<Edge<AdminEntity>> | null> {
-  if (context.context.isError()) {
-    throw context.context.toError();
-  }
-  const sessionContext = context.context.value;
+): Promise<ConnectionWithTotalCount<Edge<AdminEntity>, TContext> | null> {
+  const sessionContext = getSessionContext(context);
   const result = await EntityAdmin.searchEntities(sessionContext, filter, paging);
   if (result.isError()) {
     throw result.toError();
@@ -117,5 +131,19 @@ export async function loadAdminSearchEntities<TContext extends SessionGraphQLCon
           : null, //TODO throw error if accessed?
       };
     }),
+    totalCount: buildTotalCount(filter),
+  };
+}
+
+function buildTotalCount<TContext extends SessionGraphQLContext>(
+  filter: AdminFilter | undefined
+): FieldValueOrResolver<TContext, number> {
+  return async (args: unknown, context: TContext, unusedInfo: GraphQLResolveInfo) => {
+    const sessionContext = getSessionContext(context);
+    const result = await EntityAdmin.getTotalCount(sessionContext, filter);
+    if (result.isError()) {
+      throw result.toError();
+    }
+    return result.value;
   };
 }

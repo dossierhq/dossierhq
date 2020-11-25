@@ -75,6 +75,7 @@ type AdminEntityEdge {
 type AdminEntityConnection {
   pageInfo: PageInfo!
   edges: [AdminEntityEdge]
+  totalCount: Int!
 }
 
 input AdminFilterInput {
@@ -174,6 +175,7 @@ type AdminEntityEdge {
 type AdminEntityConnection {
   pageInfo: PageInfo!
   edges: [AdminEntityEdge]
+  totalCount: Int!
 }
 
 input AdminFilterInput {
@@ -243,6 +245,7 @@ type AdminEntityEdge {
 type AdminEntityConnection {
   pageInfo: PageInfo!
   edges: [AdminEntityEdge]
+  totalCount: Int!
 }
 
 input AdminFilterInput {
