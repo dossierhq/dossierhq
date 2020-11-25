@@ -253,6 +253,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         fields: {
           pageInfo: { type: new GraphQLNonNull(this.getType('PageInfo')) },
           edges: { type: new GraphQLList(this.getType('AdminEntityEdge')) },
+          totalCount: { type: new GraphQLNonNull(GraphQLInt) },
         },
       })
     );

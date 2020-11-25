@@ -424,6 +424,7 @@ describe('searchAdminEntities()', () => {
       `
         {
           adminSearchEntities(filter: { entityTypes: ["QueryAdminOnlyEditBefore"] }) {
+            totalCount
             edges {
               node {
                 id
@@ -437,6 +438,9 @@ describe('searchAdminEntities()', () => {
     );
     expect(result.data?.adminSearchEntities.edges).toEqual(
       entitiesOfTypeQueryAdminOnlyEditBefore.slice(0, 25).map((x) => ({ node: { id: x.id } }))
+    );
+    expect(result.data?.adminSearchEntities.totalCount).toEqual(
+      entitiesOfTypeQueryAdminOnlyEditBefore.length
     );
   });
 

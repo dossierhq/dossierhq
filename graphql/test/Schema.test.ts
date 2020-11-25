@@ -314,6 +314,13 @@ describe('One empty entity type schema spec', () => {
     };
     const result = await querySchema(schemaSpec, query);
 
+    if (result.data) {
+      // Remove fields that are not in the spec
+      result.data.__type.fields = result.data.__type.fields.filter(
+        (x: { name: string }) => x.name !== 'totalCount'
+      );
+    }
+
     expect(result).toEqual(expected);
   });
 });
