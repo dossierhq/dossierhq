@@ -50,6 +50,13 @@ export async function selectEntity(
 ): PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.NotFound> {
   const { filter, paging } = await configureQuery(context, initialFilter);
   const isForward = isPagingForwards(paging);
+
+  const totalCountResult = await EntityAdmin.getTotalCount(context, filter);
+  if (totalCountResult.isError()) {
+    return totalCountResult;
+  }
+  logKeyValue('Total count', String(totalCountResult.value));
+
   let lastItemId: string | null = null;
   // eslint-disable-next-line no-constant-condition
   while (true) {
