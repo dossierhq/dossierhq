@@ -4,7 +4,7 @@ test('Only original query', () => {
   const qb = new QueryBuilder('SELECT * FROM foo WHERE a = $1', ['first']);
   expect(qb.build()).toMatchInlineSnapshot(`
     Object {
-      "query": "SELECT * FROM foo WHERE a = $1",
+      "text": "SELECT * FROM foo WHERE a = $1",
       "values": Array [
         "first",
       ],
@@ -17,7 +17,7 @@ test('SELECT * FROM foo + WHERE a = $1', () => {
   qb.addQuery(`WHERE a = ${qb.addValue('first')}`);
   expect(qb.build()).toMatchInlineSnapshot(`
     Object {
-      "query": "SELECT * FROM foo WHERE a = $1",
+      "text": "SELECT * FROM foo WHERE a = $1",
       "values": Array [
         "first",
       ],
@@ -29,7 +29,7 @@ test('Trailing WHERE is removed', () => {
   const qb = new QueryBuilder('SELECT * FROM foo WHERE');
   expect(qb.build()).toMatchInlineSnapshot(`
     Object {
-      "query": "SELECT * FROM foo",
+      "text": "SELECT * FROM foo",
       "values": Array [],
     }
   `);
@@ -40,8 +40,25 @@ test('Starting AND is removed when adding to trailing WHERE', () => {
   qb.addQuery('AND bar = 1');
   expect(qb.build()).toMatchInlineSnapshot(`
     Object {
-      "query": "SELECT * FROM foo WHERE bar = 1",
+      "text": "SELECT * FROM foo WHERE bar = 1",
       "values": Array [],
+    }
+  `);
+});
+
+test('Insert multiple values', () => {
+  const qb = new QueryBuilder('INSERT INTO foo (a) VALUES');
+  qb.addQuery(`(${qb.addValue(1)})`);
+  qb.addQuery(`(${qb.addValue(2)})`);
+  qb.addQuery(`(${qb.addValue(3)})`);
+  expect(qb.build()).toMatchInlineSnapshot(`
+    Object {
+      "text": "INSERT INTO foo (a) VALUES ($1), ($2), ($3)",
+      "values": Array [
+        1,
+        2,
+        3,
+      ],
     }
   `);
 });

@@ -2,30 +2,30 @@
  *
  */
 export default class QueryBuilder {
-  query: string;
-  values: unknown[] = [];
+  #query: string;
+  #values: unknown[] = [];
   constructor(query: string, values?: unknown[]) {
-    this.query = query;
+    this.#query = query;
     if (values) {
-      this.values.push(...values);
+      this.#values.push(...values);
     }
   }
 
-  build(): { query: string; values: unknown[] } {
-    let query = this.query;
-    if (this.query.endsWith('WHERE')) {
-      query = query.slice(0, -'WHERE'.length).trimEnd();
+  build(): { text: string; values: unknown[] } {
+    let text = this.#query;
+    if (this.#query.endsWith('WHERE')) {
+      text = text.slice(0, -'WHERE'.length).trimEnd();
     }
-    return { query, values: this.values };
+    return { text, values: this.#values };
   }
 
   addQuery(querySegment: string): void {
     let segmentToAdd = querySegment;
-    if (this.query.endsWith('WHERE') && segmentToAdd.startsWith('AND')) {
+    if (this.#query.endsWith('WHERE') && segmentToAdd.startsWith('AND')) {
       segmentToAdd = segmentToAdd.slice('AND'.length).trimStart();
     }
 
-    const currentEndsWithKeyword = endsWithKeyword(this.query);
+    const currentEndsWithKeyword = endsWithKeyword(this.#query);
     const newStartsWithKeyword = startsWithKeyword(segmentToAdd);
 
     let separator = '';
@@ -36,12 +36,12 @@ export default class QueryBuilder {
     } else if (!currentEndsWithKeyword && newStartsWithKeyword) {
       separator = ' ';
     }
-    this.query += separator + segmentToAdd;
+    this.#query += separator + segmentToAdd;
   }
 
   addValue(value: unknown): string {
-    this.values.push(value);
-    return '$' + this.values.length;
+    this.#values.push(value);
+    return '$' + this.#values.length;
   }
 }
 
