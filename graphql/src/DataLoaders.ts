@@ -18,11 +18,7 @@ interface Connection<T extends Edge<unknown>> {
 type FieldValueOrResolver<TContext, TResult> =
   | TResult
   | Promise<TResult>
-  | ((
-      args: unknown,
-      context: TContext,
-      unusedInfo: GraphQLResolveInfo
-    ) => TResult | Promise<TResult>);
+  | ((args: unknown, context: TContext, info: GraphQLResolveInfo) => TResult | Promise<TResult>);
 
 interface ConnectionWithTotalCount<T extends Edge<unknown>, TContext> extends Connection<T> {
   totalCount: FieldValueOrResolver<TContext, number>;
@@ -138,7 +134,7 @@ export async function loadAdminSearchEntities<TContext extends SessionGraphQLCon
 function buildTotalCount<TContext extends SessionGraphQLContext>(
   filter: AdminFilter | undefined
 ): FieldValueOrResolver<TContext, number> {
-  return async (args: unknown, context: TContext, unusedInfo: GraphQLResolveInfo) => {
+  return async (args, context, unusedInfo) => {
     const sessionContext = getSessionContext(context);
     const result = await EntityAdmin.getTotalCount(sessionContext, filter);
     if (result.isError()) {
