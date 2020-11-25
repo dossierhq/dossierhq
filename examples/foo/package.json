@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "ci:check": "npm run ts:check && npm run eslint:check && npm run prettier:check",
+    "db:cli": "./scripts/db-cli.sh",
     "db:migrate": "./scripts/db-migrate.sh",
     "test": "echo \"Error: no test specified\" && exit 1",
     "eslint:check": "eslint .",

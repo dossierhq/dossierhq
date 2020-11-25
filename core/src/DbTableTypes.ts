@@ -30,3 +30,9 @@ export interface EntityVersionsTable {
   created_by: number;
   data: Record<string, unknown> | null;
 }
+
+export interface EntityVersionReferencesTable {
+  id: number;
+  entity_versions_id: number;
+  entities_id: number;
+}

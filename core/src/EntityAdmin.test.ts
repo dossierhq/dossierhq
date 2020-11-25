@@ -29,7 +29,7 @@ beforeAll(async () => {
       fields: [
         { name: 'title', type: EntityFieldType.String, isName: true },
         { name: 'summary', type: EntityFieldType.String },
-        { name: 'bar', type: EntityFieldType.Reference },
+        { name: 'bar', type: EntityFieldType.Reference, entityTypes: ['EntityAdminBar'] },
       ],
     },
     EntityAdminBar: { fields: [{ name: 'title', type: EntityFieldType.String }] },
@@ -315,6 +315,43 @@ describe('createEntity()', () => {
     );
 
     expectErrorResult(result, ErrorType.BadRequest, 'Missing entity._name');
+  });
+
+  test('Error: Create EntityAdminFoo with reference to missing entity', async () => {
+    const result = await EntityAdmin.createEntity(
+      context,
+      {
+        _type: 'EntityAdminFoo',
+        _name: 'Foo name',
+        title: 'Foo title',
+        bar: { id: 'fcc46a9e-2097-4bd6-bb08-56d5f59db26b' },
+      },
+      { publish: true }
+    );
+    expectErrorResult(
+      result,
+      ErrorType.BadRequest,
+      'Referenced entity (fcc46a9e-2097-4bd6-bb08-56d5f59db26b) of field bar doesn’t exist'
+    );
+  });
+
+  test('Error: Create EntityAdminFoo with reference to wrong entity type', async () => {
+    const referenceId = idsOfTypeAdminOnlyEditBefore[0];
+    const result = await EntityAdmin.createEntity(
+      context,
+      {
+        _type: 'EntityAdminFoo',
+        _name: 'Foo name',
+        title: 'Foo title',
+        bar: { id: referenceId },
+      },
+      { publish: true }
+    );
+    expectErrorResult(
+      result,
+      ErrorType.BadRequest,
+      `Referenced entity (${referenceId}) of field bar has an invalid type AdminOnlyEditBefore`
+    );
   });
 });
 
@@ -774,6 +811,148 @@ describe('updateEntity()', () => {
     }
   });
 
+  test('Update EntityAdminFoo with reference', async () => {
+    const createFooResult = await EntityAdmin.createEntity(
+      context,
+      {
+        _type: 'EntityAdminFoo',
+        _name: 'First name',
+        title: 'First title',
+        summary: 'First summary',
+      },
+      { publish: true }
+    );
+    if (expectOkResult(createFooResult)) {
+      const { id: fooId } = createFooResult.value;
+
+      const createBarResult = await EntityAdmin.createEntity(
+        context,
+        {
+          _type: 'EntityAdminBar',
+          _name: 'Bar entity',
+          title: 'Bar entity',
+        },
+        { publish: true }
+      );
+      if (expectOkResult(createBarResult)) {
+        const { id: barId } = createBarResult.value;
+
+        const updateResult = await EntityAdmin.updateEntity(
+          context,
+          { id: fooId, bar: { id: barId } },
+          { publish: true }
+        );
+        expectOkResult(updateResult);
+
+        const version0Result = await EntityAdmin.getEntity(context, fooId, { version: 0 });
+        if (expectOkResult(version0Result)) {
+          expect(version0Result.value.item).toEqual({
+            id: fooId,
+            _type: 'EntityAdminFoo',
+            _name: 'First name',
+            title: 'First title',
+            summary: 'First summary',
+          });
+        }
+        const version1Result = await EntityAdmin.getEntity(context, fooId, { version: 1 });
+        if (expectOkResult(version1Result)) {
+          expect(version1Result.value.item).toEqual({
+            id: fooId,
+            _type: 'EntityAdminFoo',
+            _name: 'First name',
+            title: 'First title',
+            summary: 'First summary',
+            bar: { id: barId },
+          });
+        }
+
+        const publishedResult = await PublishedEntity.getEntity(context, fooId);
+        if (expectOkResult(publishedResult)) {
+          expect(publishedResult.value.item).toEqual({
+            id: fooId,
+            _type: 'EntityAdminFoo',
+            _name: 'First name',
+            title: 'First title',
+            summary: 'First summary',
+            bar: { id: barId },
+          });
+        }
+      }
+    }
+  });
+
+  test('Update EntityAdminFoo without chaning a reference', async () => {
+    const createBarResult = await EntityAdmin.createEntity(
+      context,
+      {
+        _type: 'EntityAdminBar',
+        _name: 'Bar entity',
+        title: 'Bar entity',
+      },
+      { publish: true }
+    );
+    if (expectOkResult(createBarResult)) {
+      const { id: barId } = createBarResult.value;
+
+      const createFooResult = await EntityAdmin.createEntity(
+        context,
+        {
+          _type: 'EntityAdminFoo',
+          _name: 'First name',
+          title: 'First title',
+          summary: 'First summary',
+          bar: { id: barId },
+        },
+        { publish: true }
+      );
+      if (expectOkResult(createFooResult)) {
+        const { id: fooId } = createFooResult.value;
+
+        const updateResult = await EntityAdmin.updateEntity(
+          context,
+          { id: fooId, summary: 'Updated summary' },
+          { publish: true }
+        );
+        expectOkResult(updateResult);
+
+        const version0Result = await EntityAdmin.getEntity(context, fooId, { version: 0 });
+        if (expectOkResult(version0Result)) {
+          expect(version0Result.value.item).toEqual({
+            id: fooId,
+            _type: 'EntityAdminFoo',
+            _name: 'First name',
+            title: 'First title',
+            summary: 'First summary',
+            bar: { id: barId },
+          });
+        }
+        const version1Result = await EntityAdmin.getEntity(context, fooId, { version: 1 });
+        if (expectOkResult(version1Result)) {
+          expect(version1Result.value.item).toEqual({
+            id: fooId,
+            _type: 'EntityAdminFoo',
+            _name: 'First name',
+            title: 'First title',
+            summary: 'Updated summary',
+            bar: { id: barId },
+          });
+        }
+
+        const publishedResult = await PublishedEntity.getEntity(context, fooId);
+        if (expectOkResult(publishedResult)) {
+          expect(publishedResult.value.item).toEqual({
+            id: fooId,
+            _type: 'EntityAdminFoo',
+            _name: 'First name',
+            title: 'First title',
+            summary: 'Updated summary',
+            bar: { id: barId },
+          });
+        }
+      }
+    }
+  });
+
   test('Error: Update with invalid id', async () => {
     const result = await EntityAdmin.updateEntity(
       context,
@@ -815,6 +994,59 @@ describe('updateEntity()', () => {
         updateResult,
         ErrorType.BadRequest,
         'New type EntityAdminFoo doesn’t correspond to previous type EntityAdminBar'
+      );
+    }
+  });
+
+  test('Error: Update EntityAdminFoo with reference to missing entity', async () => {
+    const createResult = await EntityAdmin.createEntity(
+      context,
+      {
+        _type: 'EntityAdminFoo',
+        _name: 'Foo name',
+        title: 'Foo title',
+      },
+      { publish: true }
+    );
+    if (expectOkResult(createResult)) {
+      const { id } = createResult.value;
+      const updateResult = await EntityAdmin.updateEntity(
+        context,
+        { id, bar: { id: '9783ca4f-f5b4-4f6a-a7bf-aae33e227841' } },
+        { publish: true }
+      );
+
+      expectErrorResult(
+        updateResult,
+        ErrorType.BadRequest,
+        'Referenced entity (9783ca4f-f5b4-4f6a-a7bf-aae33e227841) of field bar doesn’t exist'
+      );
+    }
+  });
+
+  test('Error: Update EntityAdminFoo with reference to wrong entity type', async () => {
+    const createResult = await EntityAdmin.createEntity(
+      context,
+      {
+        _type: 'EntityAdminFoo',
+        _name: 'Foo name',
+        title: 'Foo title',
+      },
+      { publish: true }
+    );
+    if (expectOkResult(createResult)) {
+      const { id } = createResult.value;
+      const referenceId = idsOfTypeAdminOnlyEditBefore[0];
+
+      const updateResult = await EntityAdmin.updateEntity(
+        context,
+        { id, bar: { id: referenceId } },
+        { publish: true }
+      );
+      expectErrorResult(
+        updateResult,
+        ErrorType.BadRequest,
+        `Referenced entity (${referenceId}) of field bar has an invalid type AdminOnlyEditBefore`
       );
     }
   });
