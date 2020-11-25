@@ -1,10 +1,11 @@
 import type { Connection, Edge, ErrorType, Paging, PromiseResult, SessionContext } from '.';
+import { notOk, ok } from '.';
 import { toOpaqueCursor } from './Connection';
 import * as Db from './Db';
 import type { EntitiesTable, EntityVersionsTable } from './DbTableTypes';
 import { decodeEntity, encodeEntity } from './EntityCodec';
 import type { EntityValues } from './EntityCodec';
-import { notOk, ok } from './ErrorResult';
+import QueryBuilder from './QueryBuilder';
 import { searchAdminEntitiesQuery, totalAdminEntitiesQuery } from './QueryGenerator';
 
 export interface EntityHistory {
@@ -142,11 +143,11 @@ export async function createEntity(
   entity: AdminEntityCreate,
   options: { publish: boolean }
 ): PromiseResult<{ id: string }, ErrorType.BadRequest> {
-  const encodeResult = encodeEntity(context, entity, null);
+  const encodeResult = await encodeEntity(context, entity, null);
   if (encodeResult.isError()) {
     return encodeResult;
   }
-  const { type, name, data } = encodeResult.value;
+  const { type, name, data, referenceIds } = encodeResult.value;
 
   return await context.withTransaction(async (context) => {
     const { id: entityId, uuid } = await Db.queryOne<Pick<EntitiesTable, 'id' | 'uuid'>>(
@@ -167,6 +168,16 @@ export async function createEntity(
       } WHERE id = $2`,
       [versionsId, entityId]
     );
+    if (referenceIds.length > 0) {
+      const qb = new QueryBuilder(
+        'INSERT INTO entity_version_references (entity_versions_id, entities_id) VALUES',
+        [versionsId]
+      );
+      for (const referenceId of referenceIds) {
+        qb.addQuery(`($1, ${qb.addValue(referenceId)})`);
+      }
+      await Db.queryNone(context, qb.build());
+    }
     return ok({ id: uuid });
   });
 }
@@ -202,7 +213,7 @@ export async function updateEntity(
       [entityId, maxVersion]
     );
 
-    const encodeResult = encodeEntity(
+    const encodeResult = await encodeEntity(
       context,
       {
         _name: previousName, // default to previous but allow changing
@@ -214,7 +225,7 @@ export async function updateEntity(
     if (encodeResult.isError()) {
       return encodeResult;
     }
-    const { data, name } = encodeResult.value;
+    const { data, name, referenceIds } = encodeResult.value;
 
     const { id: versionsId } = await Db.queryOne<Pick<EntityVersionsTable, 'id'>>(
       context,
@@ -228,6 +239,18 @@ export async function updateEntity(
       }  WHERE id = $3`,
       [name, versionsId, entityId]
     );
+
+    if (referenceIds.length > 0) {
+      const qb = new QueryBuilder(
+        'INSERT INTO entity_version_references (entity_versions_id, entities_id) VALUES',
+        [versionsId]
+      );
+      for (const referenceId of referenceIds) {
+        qb.addQuery(`($1, ${qb.addValue(referenceId)})`);
+      }
+      await Db.queryNone(context, qb.build());
+    }
+
     return ok(undefined);
   });
 }
