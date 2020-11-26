@@ -132,6 +132,10 @@ type Query {
   adminEntity(id: ID!, version: Int): AdminEntity
   adminSearchEntities(filter: AdminFilterInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
 }
+
+type Mutation {
+  deleteEntity(id: ID!, publish: Boolean!): AdminEntity!
+}
 "
 `;
 
@@ -192,6 +196,10 @@ type Query {
   node(id: ID!): Node
   adminEntity(id: ID!, version: Int): AdminEntity
   adminSearchEntities(filter: AdminFilterInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+}
+
+type Mutation {
+  deleteEntity(id: ID!, publish: Boolean!): AdminEntity!
 }
 "
 `;
@@ -271,6 +279,10 @@ type Query {
   node(id: ID!): Node
   adminEntity(id: ID!, version: Int): AdminEntity
   adminSearchEntities(filter: AdminFilterInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+}
+
+type Mutation {
+  deleteEntity(id: ID!, publish: Boolean!): AdminEntity!
 }
 "
 `;
