@@ -143,7 +143,7 @@ export async function createEntity(
   context: SessionContext,
   entity: AdminEntityCreate,
   options: { publish: boolean }
-): PromiseResult<{ id: string }, ErrorType.BadRequest> {
+): PromiseResult<AdminEntity, ErrorType.BadRequest> {
   const encodeResult = await encodeEntity(context, entity, null);
   if (encodeResult.isError()) {
     return encodeResult;
@@ -179,7 +179,7 @@ export async function createEntity(
       }
       await Db.queryNone(context, qb.build());
     }
-    return ok({ id: uuid });
+    return ok({ id: uuid, _version: 0, ...entity });
   });
 }
 
