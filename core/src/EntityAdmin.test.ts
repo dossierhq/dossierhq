@@ -175,6 +175,14 @@ describe('createEntity()', () => {
       expect(createResult.value.id).toMatch(uuidMatcher);
       const { id } = createResult.value;
 
+      expect(createResult.value).toEqual({
+        id,
+        _type: 'EntityAdminFoo',
+        _name: 'Foo',
+        _version: 0,
+        title: 'Title',
+      });
+
       const historyResult = await EntityAdmin.getEntityHistory(context, id);
       if (expectOkResult(historyResult)) {
         expectEntityHistoryVersions(historyResult.value, [
@@ -220,6 +228,14 @@ describe('createEntity()', () => {
       expect(createResult.value.id).toMatch(uuidMatcher);
       const { id } = createResult.value;
 
+      expect(createResult.value).toEqual({
+        id,
+        _type: 'EntityAdminFoo',
+        _name: 'Draft',
+        _version: 0,
+        title: 'Draft',
+      });
+
       const historyResult = await EntityAdmin.getEntityHistory(context, id);
       if (expectOkResult(historyResult)) {
         expectEntityHistoryVersions(historyResult.value, [
@@ -264,6 +280,15 @@ describe('createEntity()', () => {
       if (expectOkResult(createFooResult)) {
         expect(createFooResult.value.id).toMatch(uuidMatcher);
         const fooId = createFooResult.value.id;
+
+        expect(createFooResult.value).toEqual({
+          id: fooId,
+          _type: 'EntityAdminFoo',
+          _name: 'Foo name',
+          _version: 0,
+          title: 'Foo title',
+          bar: { id: barId },
+        });
 
         const fooVersion0Result = await EntityAdmin.getEntity(context, fooId, { version: 0 });
         if (expectOkResult(fooVersion0Result)) {
