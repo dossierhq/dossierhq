@@ -22,7 +22,7 @@ describe('searchAdminEntitiesQuery()', () => {
         "value": Object {
           "isForwards": true,
           "pagingCount": 25,
-          "text": "SELECT e.id, e.uuid, e.type, e.name, ev.data
+          "text": "SELECT e.id, e.uuid, e.type, e.name, ev.version, ev.data
         FROM entities e, entity_versions ev
         WHERE e.latest_draft_entity_versions_id = ev.id ORDER BY e.id LIMIT $1",
           "values": Array [
@@ -39,7 +39,7 @@ describe('searchAdminEntitiesQuery()', () => {
         "value": Object {
           "isForwards": true,
           "pagingCount": 10,
-          "text": "SELECT e.id, e.uuid, e.type, e.name, ev.data
+          "text": "SELECT e.id, e.uuid, e.type, e.name, ev.version, ev.data
         FROM entities e, entity_versions ev
         WHERE e.latest_draft_entity_versions_id = ev.id ORDER BY e.id LIMIT $1",
           "values": Array [
@@ -57,7 +57,7 @@ describe('searchAdminEntitiesQuery()', () => {
         "value": Object {
           "isForwards": true,
           "pagingCount": 10,
-          "text": "SELECT e.id, e.uuid, e.type, e.name, ev.data
+          "text": "SELECT e.id, e.uuid, e.type, e.name, ev.version, ev.data
         FROM entities e, entity_versions ev
         WHERE e.latest_draft_entity_versions_id = ev.id AND e.id > $1 ORDER BY e.id LIMIT $2",
           "values": Array [
@@ -75,7 +75,7 @@ describe('searchAdminEntitiesQuery()', () => {
         "value": Object {
           "isForwards": false,
           "pagingCount": 10,
-          "text": "SELECT e.id, e.uuid, e.type, e.name, ev.data
+          "text": "SELECT e.id, e.uuid, e.type, e.name, ev.version, ev.data
         FROM entities e, entity_versions ev
         WHERE e.latest_draft_entity_versions_id = ev.id ORDER BY e.id DESC LIMIT $1",
           "values": Array [
@@ -93,7 +93,7 @@ describe('searchAdminEntitiesQuery()', () => {
         "value": Object {
           "isForwards": false,
           "pagingCount": 10,
-          "text": "SELECT e.id, e.uuid, e.type, e.name, ev.data
+          "text": "SELECT e.id, e.uuid, e.type, e.name, ev.version, ev.data
         FROM entities e, entity_versions ev
         WHERE e.latest_draft_entity_versions_id = ev.id AND e.id < $1 ORDER BY e.id DESC LIMIT $2",
           "values": Array [
@@ -117,7 +117,7 @@ describe('searchAdminEntitiesQuery()', () => {
         "value": Object {
           "isForwards": true,
           "pagingCount": 10,
-          "text": "SELECT e.id, e.uuid, e.type, e.name, ev.data
+          "text": "SELECT e.id, e.uuid, e.type, e.name, ev.version, ev.data
         FROM entities e, entity_versions ev
         WHERE e.latest_draft_entity_versions_id = ev.id AND e.id > $1 AND e.id < $2 ORDER BY e.id LIMIT $3",
           "values": Array [
@@ -142,7 +142,7 @@ describe('searchAdminEntitiesQuery()', () => {
         "value": Object {
           "isForwards": false,
           "pagingCount": 10,
-          "text": "SELECT e.id, e.uuid, e.type, e.name, ev.data
+          "text": "SELECT e.id, e.uuid, e.type, e.name, ev.version, ev.data
         FROM entities e, entity_versions ev
         WHERE e.latest_draft_entity_versions_id = ev.id AND e.id > $1 AND e.id < $2 ORDER BY e.id DESC LIMIT $3",
           "values": Array [
@@ -162,7 +162,7 @@ describe('searchAdminEntitiesQuery()', () => {
         "value": Object {
           "isForwards": true,
           "pagingCount": 25,
-          "text": "SELECT e.id, e.uuid, e.type, e.name, ev.data
+          "text": "SELECT e.id, e.uuid, e.type, e.name, ev.version, ev.data
         FROM entities e, entity_versions ev
         WHERE e.latest_draft_entity_versions_id = ev.id ORDER BY e.id LIMIT $1",
           "values": Array [
@@ -180,7 +180,7 @@ describe('searchAdminEntitiesQuery()', () => {
         "value": Object {
           "isForwards": true,
           "pagingCount": 25,
-          "text": "SELECT e.id, e.uuid, e.type, e.name, ev.data
+          "text": "SELECT e.id, e.uuid, e.type, e.name, ev.version, ev.data
         FROM entities e, entity_versions ev
         WHERE e.latest_draft_entity_versions_id = ev.id AND type = ANY($1) ORDER BY e.id LIMIT $2",
           "values": Array [
@@ -206,7 +206,7 @@ describe('searchAdminEntitiesQuery()', () => {
         "value": Object {
           "isForwards": true,
           "pagingCount": 25,
-          "text": "SELECT e.id, e.uuid, e.type, e.name, ev.data
+          "text": "SELECT e.id, e.uuid, e.type, e.name, ev.version, ev.data
         FROM entities e, entity_versions ev
         WHERE e.latest_draft_entity_versions_id = ev.id AND type = ANY($1) ORDER BY e.id LIMIT $2",
           "values": Array [
@@ -233,7 +233,7 @@ describe('searchAdminEntitiesQuery()', () => {
         "value": Object {
           "isForwards": true,
           "pagingCount": 10,
-          "text": "SELECT e.id, e.uuid, e.type, e.name, ev.data
+          "text": "SELECT e.id, e.uuid, e.type, e.name, ev.version, ev.data
         FROM entities e, entity_versions ev
         WHERE e.latest_draft_entity_versions_id = ev.id AND type = ANY($1) AND e.id > $2 ORDER BY e.id LIMIT $3",
           "values": Array [

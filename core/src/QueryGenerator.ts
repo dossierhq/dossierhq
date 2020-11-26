@@ -17,7 +17,7 @@ export function searchAdminEntitiesQuery(
   }
   const resolvedPaging = pagingResult.value;
 
-  const qb = new QueryBuilder(`SELECT e.id, e.uuid, e.type, e.name, ev.data
+  const qb = new QueryBuilder(`SELECT e.id, e.uuid, e.type, e.name, ev.version, ev.data
   FROM entities e, entity_versions ev
   WHERE e.latest_draft_entity_versions_id = ev.id`);
 
