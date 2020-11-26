@@ -125,6 +125,7 @@ describe('QueryAdminFoo', () => {
               id
               _type
               _name
+              _version
               ... on AdminQueryAdminFoo {
                 title
                 summary
@@ -141,6 +142,7 @@ describe('QueryAdminFoo', () => {
           adminEntity: {
             __typename: 'AdminQueryAdminFoo',
             id,
+            _version: 0,
             _type: 'QueryAdminFoo',
             _name: 'Howdy name',
             title: 'Howdy title',
@@ -169,6 +171,7 @@ describe('QueryAdminFoo', () => {
               id
               _type
               _name
+              _version
               ... on AdminQueryAdminFoo {
                 title
                 summary
@@ -187,6 +190,7 @@ describe('QueryAdminFoo', () => {
             id,
             _type: 'QueryAdminFoo',
             _name: 'Howdy name',
+            _version: 0,
             title: null,
             summary: null,
           },
@@ -229,6 +233,7 @@ describe('QueryAdminFoo', () => {
           ) {
             first: adminEntity(id: $id, version: $version1) {
               id
+              _version
               ... on AdminQueryAdminFoo {
                 title
                 summary
@@ -236,6 +241,7 @@ describe('QueryAdminFoo', () => {
             }
             second: adminEntity(id: $id, version: $version2) {
               id
+              _version
               ... on AdminQueryAdminFoo {
                 title
                 summary
@@ -243,6 +249,7 @@ describe('QueryAdminFoo', () => {
             }
             third: adminEntity(id: $id, version: $version3) {
               id
+              _version
               ... on AdminQueryAdminFoo {
                 title
                 summary
@@ -250,6 +257,7 @@ describe('QueryAdminFoo', () => {
             }
             fourth: adminEntity(id: $id, version: $version4) {
               id
+              _version
               ... on AdminQueryAdminFoo {
                 title
                 summary
@@ -264,11 +272,13 @@ describe('QueryAdminFoo', () => {
       expect(result.data).toEqual({
         first: {
           id,
+          _version: 0,
           title: 'First title',
           summary: 'First summary',
         },
         second: {
           id,
+          _version: 1,
           title: 'Second title',
           summary: 'Second summary',
         },
@@ -276,20 +286,23 @@ describe('QueryAdminFoo', () => {
         fourth: {
           //default to max
           id,
+          _version: 1,
           title: 'Second title',
           summary: 'Second summary',
         },
       });
       const errorStrings = result.errors?.map(printError);
-      expect(errorStrings).toEqual([
-        `NotFound: No such entity or version
+      expect(errorStrings).toMatchInlineSnapshot(`
+        Array [
+          "NotFound: No such entity or version
 
-GraphQL request:23:13
-22 |             }
-23 |             third: adminEntity(id: $id, version: $version3) {
-   |             ^
-24 |               id`,
-      ]);
+        GraphQL request:25:13
+        24 |             }
+        25 |             third: adminEntity(id: $id, version: $version3) {
+           |             ^
+        26 |               id",
+        ]
+      `);
     }
   });
 
@@ -319,6 +332,7 @@ GraphQL request:23:13
                 id
                 _type
                 _name
+                _version
                 ... on AdminQueryAdminFoo {
                   title
                   bar {
@@ -343,6 +357,7 @@ GraphQL request:23:13
               id: fooId,
               _type: 'QueryAdminFoo',
               _name: 'Foo name',
+              _version: 0,
               title: 'Foo title',
               bar: {
                 __typename: 'AdminQueryAdminBar',

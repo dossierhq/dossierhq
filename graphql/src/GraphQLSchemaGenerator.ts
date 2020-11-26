@@ -232,6 +232,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
           id: { type: new GraphQLNonNull(GraphQLID) },
           _name: { type: new GraphQLNonNull(GraphQLString) },
           _type: { type: new GraphQLNonNull(this.getType('EntityType')) },
+          _version: { type: new GraphQLNonNull(GraphQLInt) },
         },
       })
     );
@@ -287,6 +288,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
             id: { type: new GraphQLNonNull(GraphQLID) },
             _type: { type: new GraphQLNonNull(this.getType('EntityType')) },
             _name: { type: new GraphQLNonNull(GraphQLString) },
+            _version: { type: new GraphQLNonNull(GraphQLInt) },
           };
           for (const fieldSpec of entitySpec.fields) {
             switch (fieldSpec.type) {
