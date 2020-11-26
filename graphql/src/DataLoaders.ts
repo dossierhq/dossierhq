@@ -9,6 +9,7 @@ import type {
 } from '@datadata/core';
 import type { GraphQLResolveInfo } from 'graphql';
 import type { SessionGraphQLContext } from './GraphQLSchemaGenerator';
+import { getSessionContext } from './Utils';
 
 interface Connection<T extends Edge<unknown>> {
   pageInfo: PageInfo;
@@ -27,15 +28,6 @@ interface ConnectionWithTotalCount<T extends Edge<unknown>, TContext> extends Co
 interface Edge<T> {
   node: T | null;
   cursor: string;
-}
-
-function getSessionContext<TContext extends SessionGraphQLContext>(
-  context: TContext
-): SessionContext {
-  if (context.context.isError()) {
-    throw context.context.toError();
-  }
-  return context.context.value;
 }
 
 export async function loadEntity<TContext extends SessionGraphQLContext>(

@@ -16,10 +16,8 @@ import {
   GraphQLInt,
   GraphQLInterfaceType,
   GraphQLList,
-  GraphQLNamedType,
   GraphQLNonNull,
   GraphQLObjectType,
-  GraphQLOutputType,
   GraphQLSchema,
   GraphQLString,
   isInputType,
@@ -30,9 +28,12 @@ import type {
   GraphQLEnumValueConfigMap,
   GraphQLFieldConfig,
   GraphQLFieldConfigMap,
+  GraphQLNamedType,
+  GraphQLOutputType,
   GraphQLSchemaConfig,
 } from 'graphql';
 import { loadAdminEntity, loadAdminSearchEntities, loadEntity } from './DataLoaders';
+import * as Mutations from './Mutations';
 
 export interface SessionGraphQLContext {
   context: Result<SessionContext, ErrorType.NotAuthenticated>;
@@ -360,17 +361,10 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     });
   }
 
-  buildSchemaConfig<TSource>(): GraphQLSchemaConfig {
-    this.schema.validate().throwIfError();
-
-    this.addSupportingTypes();
-    this.addEntityTypes();
-    this.addAdminSupportingTypes();
-    this.addAdminEntityTypes();
-
+  buildQueryType<TSource>(): GraphQLObjectType {
     const includeEntities = Object.keys(this.schema.spec.entityTypes).length > 0;
 
-    const queryType = new GraphQLObjectType<TSource, TContext>({
+    return new GraphQLObjectType<TSource, TContext>({
       name: 'Query',
       fields: {
         node: this.buildQueryFieldNode(),
@@ -382,7 +376,55 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
           : {}),
       },
     });
-    return { query: queryType, types: this.#types };
+  }
+
+  buildMutationDeleteEntity<TSource>(): GraphQLFieldConfig<TSource, TContext> {
+    return fieldConfigWithArgs<
+      TSource,
+      TContext,
+      {
+        id: string;
+        publish: boolean;
+      }
+    >({
+      type: new GraphQLNonNull(this.getType('AdminEntity')),
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLID) },
+        publish: { type: new GraphQLNonNull(GraphQLBoolean) },
+      },
+      resolve: async (source, args, context, unusedInfo) => {
+        const { id, publish } = args;
+        return await Mutations.deleteEntity(context, id, publish);
+      },
+    });
+  }
+
+  buildMutationType<TSource>(): GraphQLObjectType | null {
+    const includeEntities = Object.keys(this.schema.spec.entityTypes).length > 0;
+    if (!includeEntities) {
+      return null;
+    }
+
+    return new GraphQLObjectType<TSource, TContext>({
+      name: 'Mutation',
+      fields: {
+        deleteEntity: this.buildMutationDeleteEntity(),
+      },
+    });
+  }
+
+  buildSchemaConfig<TSource>(): GraphQLSchemaConfig {
+    this.schema.validate().throwIfError();
+
+    this.addSupportingTypes();
+    this.addEntityTypes();
+    this.addAdminSupportingTypes();
+    this.addAdminEntityTypes();
+
+    const queryType = this.buildQueryType<TSource>();
+    const mutationType = this.buildMutationType<TSource>();
+
+    return { query: queryType, mutation: mutationType, types: this.#types };
   }
 
   buildSchema<TSource>(): GraphQLSchema {

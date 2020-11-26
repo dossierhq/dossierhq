@@ -1062,7 +1062,9 @@ describe('deleteEntity()', () => {
     if (expectOkResult(createResult)) {
       const { id } = createResult.value;
       const deleteResult = await EntityAdmin.deleteEntity(context, id, { publish: true });
-      expectOkResult(deleteResult);
+      if (expectOkResult(deleteResult)) {
+        expect(deleteResult.value).toEqual({ id, _type: 'EntityAdminFoo', _name: 'Delete' });
+      }
 
       const historyResult = await EntityAdmin.getEntityHistory(context, createResult.value.id);
       if (expectOkResult(historyResult)) {
@@ -1114,7 +1116,9 @@ describe('deleteEntity()', () => {
     if (expectOkResult(createResult)) {
       const { id } = createResult.value;
       const deleteResult = await EntityAdmin.deleteEntity(context, id, { publish: true });
-      expectOkResult(deleteResult);
+      if (expectOkResult(deleteResult)) {
+        expect(deleteResult.value).toEqual({ id, _type: 'EntityAdminFoo', _name: 'Draft' });
+      }
 
       const historyResult = await EntityAdmin.getEntityHistory(context, createResult.value.id);
       if (expectOkResult(historyResult)) {
@@ -1166,7 +1170,9 @@ describe('deleteEntity()', () => {
     if (expectOkResult(createResult)) {
       const { id } = createResult.value;
       const deleteResult = await EntityAdmin.deleteEntity(context, id, { publish: false });
-      expectOkResult(deleteResult);
+      if (expectOkResult(deleteResult)) {
+        expect(deleteResult.value).toEqual({ id, _type: 'EntityAdminFoo', _name: 'Delete' });
+      }
 
       const historyResult = await EntityAdmin.getEntityHistory(context, createResult.value.id);
       if (expectOkResult(historyResult)) {
@@ -1225,7 +1231,9 @@ describe('deleteEntity()', () => {
     if (expectOkResult(createResult)) {
       const { id } = createResult.value;
       const deleteResult = await EntityAdmin.deleteEntity(context, id, { publish: false });
-      expectOkResult(deleteResult);
+      if (expectOkResult(deleteResult)) {
+        expect(deleteResult.value).toEqual({ id, _type: 'EntityAdminFoo', _name: 'Draft' });
+      }
 
       const historyResult = await EntityAdmin.getEntityHistory(context, createResult.value.id);
       if (expectOkResult(historyResult)) {

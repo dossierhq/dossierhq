@@ -259,13 +259,23 @@ export async function deleteEntity(
   context: SessionContext,
   id: string,
   options: { publish: boolean }
-): PromiseResult<void, ErrorType.NotFound> {
+): PromiseResult<AdminEntity, ErrorType.NotFound> {
   return await context.withTransaction(async (context) => {
-    const versionResult = await resolveMaxVersionForEntity(context, id);
-    if (versionResult.isError()) {
-      return versionResult;
+    // Entity info
+    const entityInfo = await Db.queryNoneOrOne<
+      Pick<EntitiesTable, 'id' | 'name' | 'type'> & Pick<EntityVersionsTable, 'version'>
+    >(
+      context,
+      `SELECT e.id, e.name, e.type, ev.version
+        FROM entity_versions ev, entities e
+        WHERE e.uuid = $1 AND e.latest_draft_entity_versions_id = ev.id`,
+      [id]
+    );
+    if (!entityInfo) {
+      return notOk.NotFound('No such entity');
     }
-    const { entityId, maxVersion } = versionResult.value;
+    const { id: entityId, name, type, version: maxVersion } = entityInfo;
+
     const version = maxVersion + 1;
     const { id: versionsId } = await Db.queryOne<{ id: number }>(
       context,
@@ -279,7 +289,7 @@ export async function deleteEntity(
       }  WHERE id = $2`,
       [versionsId, entityId]
     );
-    return ok(undefined);
+    return ok({ id, _type: type, _name: name });
   });
 }
 
