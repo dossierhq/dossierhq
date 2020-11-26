@@ -18,7 +18,11 @@ beforeAll(async () => {
       fields: [
         { name: 'title', type: EntityFieldType.String, isName: true },
         { name: 'summary', type: EntityFieldType.String },
+        { name: 'bar', type: EntityFieldType.Reference, entityTypes: ['MutationBar'] },
       ],
+    },
+    MutationBar: {
+      fields: [],
     },
   });
   schema = new GraphQLSchemaGenerator(context.instance.getSchema()).buildSchema();
@@ -28,7 +32,7 @@ afterAll(async () => {
 });
 
 describe('create*Entity()', () => {
-  test('create', async () => {
+  test('Create', async () => {
     const result = await graphql(
       schema,
       `
@@ -82,6 +86,80 @@ describe('create*Entity()', () => {
         title: 'Foo title',
         summary: 'Foo summary',
       });
+    }
+  });
+
+  test('Create with reference', async () => {
+    const createBarResult = await EntityAdmin.createEntity(
+      context,
+      { _type: 'MutationBar', _name: 'Bar' },
+      { publish: true }
+    );
+    if (expectOkResult(createBarResult)) {
+      const { id: barId } = createBarResult.value;
+      const gqlResult = await graphql(
+        schema,
+        `
+          mutation CreateFooEntity($entity: AdminMutationFooCreateInput!, $publish: Boolean!) {
+            createMutationFooEntity(entity: $entity, publish: $publish) {
+              __typename
+              id
+              _type
+              _name
+              _version
+              title
+              summary
+              bar {
+                id
+                _name
+              }
+            }
+          }
+        `,
+        undefined,
+        { context: ok(context) },
+        {
+          entity: {
+            _type: 'MutationFoo',
+            _name: 'Foo name',
+            title: 'Foo title',
+            summary: 'Foo summary',
+            bar: { id: barId },
+          },
+          publish: true,
+        }
+      );
+
+      const fooId = gqlResult.data?.createMutationFooEntity.id;
+      expect(gqlResult).toEqual({
+        data: {
+          createMutationFooEntity: {
+            __typename: 'AdminMutationFoo',
+            id: fooId,
+            _type: 'MutationFoo',
+            _name: 'Foo name',
+            _version: 0,
+            title: 'Foo title',
+            summary: 'Foo summary',
+            bar: { id: barId, _name: 'Bar' },
+          },
+        },
+      });
+
+      const getResult = await EntityAdmin.getEntity(context, fooId, {});
+      if (expectOkResult(getResult)) {
+        expect(getResult.value.item).toEqual({
+          id: fooId,
+          _type: 'MutationFoo',
+          _name: 'Foo name',
+          _version: 0,
+          title: 'Foo title',
+          summary: 'Foo summary',
+          bar: {
+            id: barId,
+          },
+        });
+      }
     }
   });
 });

@@ -74,7 +74,7 @@ export async function loadAdminEntity<TContext extends SessionGraphQLContext>(
   return buildResolversForAdminEntity(sessionContext, result.value.item);
 }
 
-function buildResolversForAdminEntity<TContext extends SessionGraphQLContext>(
+export function buildResolversForAdminEntity<TContext extends SessionGraphQLContext>(
   context: SessionContext,
   entity: AdminEntity
 ): AdminEntity {
