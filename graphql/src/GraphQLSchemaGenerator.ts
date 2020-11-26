@@ -1,4 +1,4 @@
-import { EntityFieldType, ErrorType } from '@datadata/core';
+import { EntityFieldType, ErrorType, notOk } from '@datadata/core';
 import type {
   AdminEntity,
   AdminEntityCreate,
@@ -21,6 +21,7 @@ import {
   GraphQLObjectType,
   GraphQLSchema,
   GraphQLString,
+  isEnumType,
   isInputType,
   isInterfaceType,
   isOutputType,
@@ -81,6 +82,14 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       return type;
     }
     throw new Error(`Type ${name} is not an output type`);
+  }
+
+  getEnumType(name: string): GraphQLEnumType {
+    const type = this.getType(name);
+    if (isEnumType(type)) {
+      return type;
+    }
+    throw new Error(`Type ${name} is not an enum type`);
   }
 
   getInputType(name: string): GraphQLInputType {
@@ -330,7 +339,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         name: toAdminCreateInputTypeName(name),
         fields: () => {
           const fields: GraphQLInputFieldConfigMap = {
-            _type: { type: new GraphQLNonNull(this.getType('EntityType')) },
+            _type: { type: this.getEnumType('EntityType') },
             _name: { type: new GraphQLNonNull(GraphQLString) },
           };
           for (const fieldSpec of entitySpec.fields) {
@@ -439,6 +448,12 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       },
       resolve: async (source, args, context, unusedInfo) => {
         const { entity, publish } = args;
+        if (entity._type && entity._type !== entityName) {
+          throw notOk
+            .BadRequest(`Specified type (entity._type=${entity._type}) should be ${entityName}`)
+            .toError();
+        }
+        entity._type = entityName;
         return await Mutations.createEntity(context, entity, publish);
       },
     });

@@ -162,6 +162,83 @@ describe('create*Entity()', () => {
       }
     }
   });
+
+  test('Create without specifying _type', async () => {
+    const result = await graphql(
+      schema,
+      `
+        mutation CreateFooEntity($entity: AdminMutationFooCreateInput!, $publish: Boolean!) {
+          createMutationFooEntity(entity: $entity, publish: $publish) {
+            __typename
+            id
+            _type
+            _name
+            _version
+            title
+            summary
+          }
+        }
+      `,
+      undefined,
+      { context: ok(context) },
+      {
+        entity: {
+          _name: 'Foo name',
+          title: 'Foo title',
+          summary: 'Foo summary',
+        },
+        publish: true,
+      }
+    );
+
+    const id = result.data?.createMutationFooEntity.id;
+    expect(result).toEqual({
+      data: {
+        createMutationFooEntity: {
+          __typename: 'AdminMutationFoo',
+          id,
+          _type: 'MutationFoo',
+          _name: 'Foo name',
+          _version: 0,
+          title: 'Foo title',
+          summary: 'Foo summary',
+        },
+      },
+    });
+  });
+
+  test('Error: Create with the wrong _type', async () => {
+    const result = await graphql(
+      schema,
+      `
+        mutation CreateFooEntity($entity: AdminMutationFooCreateInput!, $publish: Boolean!) {
+          createMutationFooEntity(entity: $entity, publish: $publish) {
+            id
+          }
+        }
+      `,
+      undefined,
+      { context: ok(context) },
+      {
+        entity: {
+          _type: 'MutationBar', // should be Foo
+          _name: 'Foo name',
+          title: 'Foo title',
+          summary: 'Foo summary',
+        },
+        publish: true,
+      }
+    );
+
+    expect(result).toMatchInlineSnapshot(`
+      Object {
+        "data": null,
+        "errors": Array [
+          [GraphQLError: BadRequest: Specified type (entity._type=MutationBar) should be MutationFoo],
+        ],
+      }
+    `);
+  });
 });
 
 describe('deleteEntity()', () => {
