@@ -27,6 +27,65 @@ afterAll(async () => {
   await instance?.shutdown();
 });
 
+describe('create*Entity()', () => {
+  test('create', async () => {
+    const result = await graphql(
+      schema,
+      `
+        mutation CreateFooEntity($entity: AdminMutationFooCreateInput!, $publish: Boolean!) {
+          createMutationFooEntity(entity: $entity, publish: $publish) {
+            __typename
+            id
+            _type
+            _name
+            _version
+            title
+            summary
+          }
+        }
+      `,
+      undefined,
+      { context: ok(context) },
+      {
+        entity: {
+          _type: 'MutationFoo',
+          _name: 'Foo name',
+          title: 'Foo title',
+          summary: 'Foo summary',
+        },
+        publish: true,
+      }
+    );
+
+    const id = result.data?.createMutationFooEntity.id;
+    expect(result).toEqual({
+      data: {
+        createMutationFooEntity: {
+          __typename: 'AdminMutationFoo',
+          id,
+          _type: 'MutationFoo',
+          _name: 'Foo name',
+          _version: 0,
+          title: 'Foo title',
+          summary: 'Foo summary',
+        },
+      },
+    });
+
+    const getResult = await EntityAdmin.getEntity(context, id, {});
+    if (expectOkResult(getResult)) {
+      expect(getResult.value.item).toEqual({
+        id,
+        _type: 'MutationFoo',
+        _name: 'Foo name',
+        _version: 0,
+        title: 'Foo title',
+        summary: 'Foo summary',
+      });
+    }
+  });
+});
+
 describe('deleteEntity()', () => {
   test('Delete and publish', async () => {
     const createResult = await EntityAdmin.createEntity(

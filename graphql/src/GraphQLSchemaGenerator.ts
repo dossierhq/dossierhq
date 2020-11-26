@@ -1,6 +1,7 @@
 import { EntityFieldType, ErrorType } from '@datadata/core';
 import type {
   AdminEntity,
+  AdminEntityCreate,
   Entity,
   EntityTypeSpecification,
   Result,
@@ -28,6 +29,7 @@ import type {
   GraphQLEnumValueConfigMap,
   GraphQLFieldConfig,
   GraphQLFieldConfigMap,
+  GraphQLInputFieldConfigMap,
   GraphQLNamedType,
   GraphQLOutputType,
   GraphQLSchemaConfig,
@@ -41,6 +43,10 @@ export interface SessionGraphQLContext {
 
 function toAdminTypeName(name: string) {
   return 'Admin' + name;
+}
+
+function toAdminCreateInputTypeName(name: string) {
+  return `Admin${name}CreateInput`;
 }
 
 function fieldConfigWithArgs<TSource, TContext, TArgs>(
@@ -269,20 +275,30 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         },
       })
     );
+
+    // AdminReferenceInput
+    this.addType(
+      new GraphQLInputObjectType({
+        name: 'AdminReferenceInput',
+        fields: {
+          id: { type: new GraphQLNonNull(GraphQLID) },
+        },
+      })
+    );
   }
 
   addAdminEntityTypes(): void {
     for (const [entityName, entitySpec] of Object.entries(this.schema.spec.entityTypes)) {
-      this.addAdminEntityType(toAdminTypeName(entityName), entitySpec);
+      this.addAdminEntityType(entityName, entitySpec);
     }
   }
 
   addAdminEntityType(name: string, entitySpec: EntityTypeSpecification): void {
     this.addType(
       new GraphQLObjectType<AdminEntity, TContext>({
-        name,
+        name: toAdminTypeName(name),
         interfaces: this.getInterfaces('AdminEntity'),
-        isTypeOf: (source, unusedContext, unusedInfo) => toAdminTypeName(source._type) === name,
+        isTypeOf: (source, unusedContext, unusedInfo) => source._type === name,
         fields: () => {
           const fields: GraphQLFieldConfigMap<AdminEntity, TContext> = {
             id: { type: new GraphQLNonNull(GraphQLID) },
@@ -295,6 +311,33 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
               case EntityFieldType.Reference:
                 fields[fieldSpec.name] = {
                   type: this.getOrCreateEntityUnion(true, fieldSpec.entityTypes || []),
+                };
+                break;
+              case EntityFieldType.String:
+                fields[fieldSpec.name] = { type: GraphQLString };
+                break;
+              default:
+                throw new Error(`Unexpected type (${fieldSpec.type})`);
+            }
+          }
+          return fields;
+        },
+      })
+    );
+
+    this.addType(
+      new GraphQLInputObjectType({
+        name: toAdminCreateInputTypeName(name),
+        fields: () => {
+          const fields: GraphQLInputFieldConfigMap = {
+            _type: { type: new GraphQLNonNull(this.getType('EntityType')) },
+            _name: { type: new GraphQLNonNull(GraphQLString) },
+          };
+          for (const fieldSpec of entitySpec.fields) {
+            switch (fieldSpec.type) {
+              case EntityFieldType.Reference:
+                fields[fieldSpec.name] = {
+                  type: this.getInputType('AdminReferenceInput'),
                 };
                 break;
               case EntityFieldType.String:
@@ -380,6 +423,27 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     });
   }
 
+  buildMutationCreateEntity<TSource>(entityName: string): GraphQLFieldConfig<TSource, TContext> {
+    return fieldConfigWithArgs<
+      TSource,
+      TContext,
+      {
+        entity: AdminEntityCreate;
+        publish: boolean;
+      }
+    >({
+      type: new GraphQLNonNull(this.getType(toAdminTypeName(entityName))),
+      args: {
+        entity: { type: new GraphQLNonNull(this.getType(toAdminCreateInputTypeName(entityName))) },
+        publish: { type: new GraphQLNonNull(GraphQLBoolean) },
+      },
+      resolve: async (source, args, context, unusedInfo) => {
+        const { entity, publish } = args;
+        return await Mutations.createEntity(context, entity, publish);
+      },
+    });
+  }
+
   buildMutationDeleteEntity<TSource>(): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<
       TSource,
@@ -407,11 +471,17 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       return null;
     }
 
+    const fields: GraphQLFieldConfigMap<TSource, TContext> = {
+      deleteEntity: this.buildMutationDeleteEntity(),
+    };
+
+    for (const [entityType, unusedTypeSpec] of Object.entries(this.schema.spec.entityTypes)) {
+      fields[`create${entityType}Entity`] = this.buildMutationCreateEntity(entityType);
+    }
+
     return new GraphQLObjectType<TSource, TContext>({
       name: 'Mutation',
-      fields: {
-        deleteEntity: this.buildMutationDeleteEntity(),
-      },
+      fields,
     });
   }
 

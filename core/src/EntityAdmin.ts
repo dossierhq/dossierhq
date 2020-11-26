@@ -31,8 +31,8 @@ export interface AdminEntity {
 }
 
 export interface AdminEntityCreate {
-  /** UUIDv4 */
-  id?: string;
+  // /** UUIDv4 */
+  //TODO  id?: string;
   _name: string;
   _type: string;
   [fieldName: string]: unknown;
