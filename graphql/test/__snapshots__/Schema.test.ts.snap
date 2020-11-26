@@ -65,6 +65,7 @@ interface AdminEntity {
   id: ID!
   _name: String!
   _type: EntityType!
+  _version: Int!
 }
 
 type AdminEntityEdge {
@@ -86,6 +87,7 @@ type AdminFoo implements AdminEntity {
   id: ID!
   _type: EntityType!
   _name: String!
+  _version: Int!
   noMeansAll: AdminEntity
   bar: AdminBar
   bazBar: $AdminBarOrAdminBaz
@@ -97,12 +99,14 @@ type AdminBar implements AdminEntity {
   id: ID!
   _type: EntityType!
   _name: String!
+  _version: Int!
 }
 
 type AdminBaz implements AdminEntity {
   id: ID!
   _type: EntityType!
   _name: String!
+  _version: Int!
 }
 
 enum $BarOrBaz {
@@ -169,6 +173,7 @@ interface AdminEntity {
   id: ID!
   _name: String!
   _type: EntityType!
+  _version: Int!
 }
 
 type AdminEntityEdge {
@@ -190,6 +195,7 @@ type AdminFoo implements AdminEntity {
   id: ID!
   _type: EntityType!
   _name: String!
+  _version: Int!
 }
 
 type Query {
@@ -243,6 +249,7 @@ interface AdminEntity {
   id: ID!
   _name: String!
   _type: EntityType!
+  _version: Int!
 }
 
 type AdminEntityEdge {
@@ -264,6 +271,7 @@ type AdminFoo implements AdminEntity {
   id: ID!
   _type: EntityType!
   _name: String!
+  _version: Int!
   fooField: String
 }
 
@@ -271,6 +279,7 @@ type AdminBar implements AdminEntity {
   id: ID!
   _type: EntityType!
   _name: String!
+  _version: Int!
   barField1: String
   barField2: AdminEntity
 }
