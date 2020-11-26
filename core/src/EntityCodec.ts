@@ -1,19 +1,22 @@
-import type { EntityTypeSpecification, ErrorType, PromiseResult, SessionContext } from '.';
 import { notOk, ok } from '.';
+import type {
+  AdminEntity,
+  Entity,
+  EntityTypeSpecification,
+  ErrorType,
+  PromiseResult,
+  SessionContext,
+} from '.';
 import { ensureRequired } from './Assertions';
 import * as Db from './Db';
 import type { EntitiesTable, EntityVersionsTable } from './DbTableTypes';
 import * as EntityFieldTypeAdapters from './EntityFieldTypeAdapters';
 
+export type AdminEntityValues = Pick<EntitiesTable, 'uuid' | 'type' | 'name'> &
+  Pick<EntityVersionsTable, 'data' | 'version'>;
+
 export type EntityValues = Pick<EntitiesTable, 'uuid' | 'type' | 'name'> &
   Pick<EntityVersionsTable, 'data'>;
-
-interface Entityish {
-  id: string;
-  _type: string;
-  _name: string;
-  [fieldName: string]: unknown;
-}
 
 interface EncodeEntityResult {
   type: string;
@@ -22,16 +25,42 @@ interface EncodeEntityResult {
   referenceIds: number[];
 }
 
-export function decodeEntity(context: SessionContext, values: EntityValues): Entityish {
+export function decodePublishedEntity(context: SessionContext, values: EntityValues): Entity {
   const schema = context.instance.getSchema();
   const entitySpec = schema.getEntityTypeSpecification(values.type);
   if (!entitySpec) {
     throw new Error(`No entity spec for type ${values.type}`);
   }
-  const entity: Entityish = {
+  const entity: Entity = {
     id: values.uuid,
     _type: values.type,
     _name: values.name,
+  };
+  if (values.data) {
+    for (const [fieldName, fieldValue] of Object.entries(values.data)) {
+      const fieldSpec = schema.getEntityFieldSpecification(entitySpec, fieldName);
+      if (!fieldSpec) {
+        throw new Error(`No field spec for ${fieldName} in entity spec ${values.type}`);
+      }
+      const fieldAdapter = EntityFieldTypeAdapters.getAdapter(fieldSpec);
+      const decodedData = fieldAdapter.decodeData(fieldValue);
+      entity[fieldName] = decodedData;
+    }
+  }
+  return entity;
+}
+
+export function decodeAdminEntity(context: SessionContext, values: AdminEntityValues): AdminEntity {
+  const schema = context.instance.getSchema();
+  const entitySpec = schema.getEntityTypeSpecification(values.type);
+  if (!entitySpec) {
+    throw new Error(`No entity spec for type ${values.type}`);
+  }
+  const entity: AdminEntity = {
+    id: values.uuid,
+    _type: values.type,
+    _name: values.name,
+    _version: values.version,
   };
   if (values.data) {
     for (const [fieldName, fieldValue] of Object.entries(values.data)) {

@@ -133,6 +133,7 @@ describe('getEntity()', () => {
           id,
           _type: 'EntityAdminFoo',
           _name: 'Foo',
+          _version: 1,
           // No title since deleted
         });
       }
@@ -192,6 +193,7 @@ describe('createEntity()', () => {
           id,
           _type: 'EntityAdminFoo',
           _name: 'Foo',
+          _version: 0,
           title: 'Title',
         });
       }
@@ -236,6 +238,7 @@ describe('createEntity()', () => {
           id,
           _type: 'EntityAdminFoo',
           _name: 'Draft',
+          _version: 0,
           title: 'Draft',
         });
       }
@@ -268,6 +271,7 @@ describe('createEntity()', () => {
             id: fooId,
             _type: 'EntityAdminFoo',
             _name: 'Foo name',
+            _version: 0,
             title: 'Foo title',
             bar: { id: barId },
           });
@@ -582,6 +586,7 @@ describe('updateEntity()', () => {
           id,
           _type: 'EntityAdminFoo',
           _name: 'Updated name', // original name isn't kept
+          _version: 0,
           title: 'Original',
         });
       }
@@ -592,6 +597,7 @@ describe('updateEntity()', () => {
           id,
           _type: 'EntityAdminFoo',
           _name: 'Updated name',
+          _version: 1,
           title: 'Updated title',
         });
       }
@@ -648,6 +654,7 @@ describe('updateEntity()', () => {
           id,
           _type: 'EntityAdminFoo',
           _name: 'Updated name',
+          _version: 0,
           title: 'First',
         });
       }
@@ -657,6 +664,7 @@ describe('updateEntity()', () => {
           id,
           _type: 'EntityAdminFoo',
           _name: 'Updated name',
+          _version: 1,
           title: 'Updated title',
         });
       }
@@ -713,6 +721,7 @@ describe('updateEntity()', () => {
           id,
           _type: 'EntityAdminFoo',
           _name: 'Original',
+          _version: 0,
           title: 'Original',
         });
       }
@@ -722,6 +731,7 @@ describe('updateEntity()', () => {
           id,
           _type: 'EntityAdminFoo',
           _name: 'Original',
+          _version: 1,
           title: 'Updated title',
         });
       }
@@ -783,6 +793,7 @@ describe('updateEntity()', () => {
           id,
           _type: 'EntityAdminFoo',
           _name: 'First name',
+          _version: 0,
           title: 'First title',
           summary: 'First summary',
         });
@@ -793,6 +804,7 @@ describe('updateEntity()', () => {
           id,
           _type: 'EntityAdminFoo',
           _name: 'First name',
+          _version: 1,
           title: 'First title',
           summary: 'Updated summary',
         });
@@ -850,6 +862,7 @@ describe('updateEntity()', () => {
             id: fooId,
             _type: 'EntityAdminFoo',
             _name: 'First name',
+            _version: 0,
             title: 'First title',
             summary: 'First summary',
           });
@@ -860,6 +873,7 @@ describe('updateEntity()', () => {
             id: fooId,
             _type: 'EntityAdminFoo',
             _name: 'First name',
+            _version: 1,
             title: 'First title',
             summary: 'First summary',
             bar: { id: barId },
@@ -921,6 +935,7 @@ describe('updateEntity()', () => {
             id: fooId,
             _type: 'EntityAdminFoo',
             _name: 'First name',
+            _version: 0,
             title: 'First title',
             summary: 'First summary',
             bar: { id: barId },
@@ -932,6 +947,7 @@ describe('updateEntity()', () => {
             id: fooId,
             _type: 'EntityAdminFoo',
             _name: 'First name',
+            _version: 1,
             title: 'First title',
             summary: 'Updated summary',
             bar: { id: barId },
@@ -1063,7 +1079,12 @@ describe('deleteEntity()', () => {
       const { id } = createResult.value;
       const deleteResult = await EntityAdmin.deleteEntity(context, id, { publish: true });
       if (expectOkResult(deleteResult)) {
-        expect(deleteResult.value).toEqual({ id, _type: 'EntityAdminFoo', _name: 'Delete' });
+        expect(deleteResult.value).toEqual({
+          id,
+          _type: 'EntityAdminFoo',
+          _name: 'Delete',
+          _version: 1,
+        });
       }
 
       const historyResult = await EntityAdmin.getEntityHistory(context, createResult.value.id);
@@ -1090,6 +1111,7 @@ describe('deleteEntity()', () => {
           id,
           _type: 'EntityAdminFoo',
           _name: 'Delete',
+          _version: 0,
           title: 'Delete',
         });
       }
@@ -1099,6 +1121,7 @@ describe('deleteEntity()', () => {
           id,
           _type: 'EntityAdminFoo',
           _name: 'Delete',
+          _version: 1,
         });
       }
 
@@ -1117,7 +1140,12 @@ describe('deleteEntity()', () => {
       const { id } = createResult.value;
       const deleteResult = await EntityAdmin.deleteEntity(context, id, { publish: true });
       if (expectOkResult(deleteResult)) {
-        expect(deleteResult.value).toEqual({ id, _type: 'EntityAdminFoo', _name: 'Draft' });
+        expect(deleteResult.value).toEqual({
+          id,
+          _type: 'EntityAdminFoo',
+          _name: 'Draft',
+          _version: 1,
+        });
       }
 
       const historyResult = await EntityAdmin.getEntityHistory(context, createResult.value.id);
@@ -1144,6 +1172,7 @@ describe('deleteEntity()', () => {
           id,
           _type: 'EntityAdminFoo',
           _name: 'Draft',
+          _version: 0,
           title: 'Draft',
         });
       }
@@ -1153,6 +1182,7 @@ describe('deleteEntity()', () => {
           id,
           _type: 'EntityAdminFoo',
           _name: 'Draft',
+          _version: 1,
         });
       }
 
@@ -1171,7 +1201,12 @@ describe('deleteEntity()', () => {
       const { id } = createResult.value;
       const deleteResult = await EntityAdmin.deleteEntity(context, id, { publish: false });
       if (expectOkResult(deleteResult)) {
-        expect(deleteResult.value).toEqual({ id, _type: 'EntityAdminFoo', _name: 'Delete' });
+        expect(deleteResult.value).toEqual({
+          id,
+          _type: 'EntityAdminFoo',
+          _name: 'Delete',
+          _version: 1,
+        });
       }
 
       const historyResult = await EntityAdmin.getEntityHistory(context, createResult.value.id);
@@ -1198,6 +1233,7 @@ describe('deleteEntity()', () => {
           id,
           _type: 'EntityAdminFoo',
           _name: 'Delete',
+          _version: 0,
           title: 'Delete',
         });
       }
@@ -1207,6 +1243,7 @@ describe('deleteEntity()', () => {
           id,
           _type: 'EntityAdminFoo',
           _name: 'Delete',
+          _version: 1,
         });
       }
 
@@ -1232,7 +1269,12 @@ describe('deleteEntity()', () => {
       const { id } = createResult.value;
       const deleteResult = await EntityAdmin.deleteEntity(context, id, { publish: false });
       if (expectOkResult(deleteResult)) {
-        expect(deleteResult.value).toEqual({ id, _type: 'EntityAdminFoo', _name: 'Draft' });
+        expect(deleteResult.value).toEqual({
+          id,
+          _type: 'EntityAdminFoo',
+          _name: 'Draft',
+          _version: 1,
+        });
       }
 
       const historyResult = await EntityAdmin.getEntityHistory(context, createResult.value.id);
@@ -1259,6 +1301,7 @@ describe('deleteEntity()', () => {
           id,
           _type: 'EntityAdminFoo',
           _name: 'Draft',
+          _version: 0,
           title: 'Draft',
         });
       }
@@ -1268,6 +1311,7 @@ describe('deleteEntity()', () => {
           id,
           _type: 'EntityAdminFoo',
           _name: 'Draft',
+          _version: 1,
         });
       }
 

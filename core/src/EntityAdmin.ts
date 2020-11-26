@@ -3,8 +3,8 @@ import { notOk, ok } from '.';
 import { toOpaqueCursor } from './Connection';
 import * as Db from './Db';
 import type { EntitiesTable, EntityVersionsTable } from './DbTableTypes';
-import { decodeEntity, encodeEntity } from './EntityCodec';
-import type { EntityValues } from './EntityCodec';
+import { decodeAdminEntity, encodeEntity } from './EntityCodec';
+import type { AdminEntityValues } from './EntityCodec';
 import QueryBuilder from './QueryBuilder';
 import { searchAdminEntitiesQuery, totalAdminEntitiesQuery } from './QueryGenerator';
 
@@ -26,6 +26,7 @@ export interface AdminEntity {
   id: string;
   _name: string;
   _type: string;
+  _version: number;
   [fieldName: string]: unknown;
 }
 
@@ -65,9 +66,9 @@ export async function getEntity(
     }
     version = versionResult.value.maxVersion;
   }
-  const entityMain = await Db.queryNoneOrOne<EntityValues>(
+  const entityMain = await Db.queryNoneOrOne<AdminEntityValues>(
     context,
-    `SELECT e.uuid, e.type, e.name, ev.data
+    `SELECT e.uuid, e.type, e.name, ev.version, ev.data
       FROM entities e, entity_versions ev
       WHERE e.uuid = $1
       AND e.id = ev.entities_id
@@ -78,7 +79,7 @@ export async function getEntity(
     return notOk.NotFound('No such entity or version');
   }
 
-  const entity = decodeEntity(context, entityMain);
+  const entity = decodeAdminEntity(context, entityMain);
 
   return ok({
     item: entity,
@@ -94,7 +95,7 @@ export async function searchEntities(
   if (query.isError()) {
     return query;
   }
-  const entitiesValues = await Db.queryMany<Pick<EntitiesTable, 'id'> & EntityValues>(
+  const entitiesValues = await Db.queryMany<Pick<EntitiesTable, 'id'> & AdminEntityValues>(
     context,
     query.value
   );
@@ -108,7 +109,7 @@ export async function searchEntities(
     entitiesValues.reverse();
   }
 
-  const entities = entitiesValues.map((x) => decodeEntity(context, x));
+  const entities = entitiesValues.map((x) => decodeAdminEntity(context, x));
   if (entities.length === 0) {
     return ok(null);
   }
@@ -289,7 +290,7 @@ export async function deleteEntity(
       }  WHERE id = $2`,
       [versionsId, entityId]
     );
-    return ok({ id, _type: type, _name: name });
+    return ok({ id, _type: type, _name: name, _version: version });
   });
 }
 

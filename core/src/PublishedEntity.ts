@@ -1,9 +1,8 @@
+import { ErrorType, notOk, ok } from '.';
 import type { PromiseResult, SessionContext } from '.';
 import * as Db from './Db';
 import type { EntitiesTable, EntityVersionsTable } from './DbTableTypes';
-import { decodeEntity } from './EntityCodec';
-
-import { ErrorType, notOk, ok } from './ErrorResult';
+import { decodePublishedEntity } from './EntityCodec';
 
 export interface Entity {
   id: string;
@@ -31,7 +30,7 @@ export async function getEntity(
     return notOk.NotFound('No such entity');
   }
 
-  const entity = decodeEntity(context, entityMain);
+  const entity = decodePublishedEntity(context, entityMain);
 
   return ok({
     item: entity,
