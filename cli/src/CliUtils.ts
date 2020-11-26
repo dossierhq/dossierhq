@@ -7,6 +7,7 @@ import {
   PromiseResult,
 } from '@datadata/core';
 import type {
+  AdminEntity,
   Entity,
   EntityFieldSpecification,
   ErrorResult,
@@ -17,6 +18,10 @@ import type {
 interface Entityish {
   _type: string;
   [fieldName: string]: unknown;
+}
+
+function isAdminEntity(entity: AdminEntity | Entity): entity is AdminEntity {
+  return '_version' in entity;
 }
 
 export function logErrorResult(
@@ -45,10 +50,13 @@ export function logKeyValue(key: string, value: string): void {
   console.log(`${chalk.bold(`${key}:`)} ${value}`);
 }
 
-export function logEntity(context: SessionContext, entity: Entity): void {
+export function logEntity(context: SessionContext, entity: AdminEntity | Entity): void {
   logKeyValue('type', entity._type);
   logKeyValue('name', entity._name);
   logKeyValue('id', entity.id);
+  if (isAdminEntity(entity)) {
+    logKeyValue('version', String(entity._version));
+  }
 
   const schema = context.instance.getSchema();
   const entitySpec = schema.getEntityTypeSpecification(entity._type);

@@ -296,7 +296,7 @@ export async function deleteEntity(context: SessionContext, id: string): Promise
     logErrorResult('Failed creating entity', result);
     return;
   }
-  console.log(`${chalk.bold('Deleted:')} ${id}`);
+  console.log(`${chalk.bold('Deleted:')} ${id} (version: ${result.value._version})`);
 }
 
 export async function showEntityHistory(context: SessionContext, id: string): Promise<void> {
