@@ -241,6 +241,205 @@ describe('create*Entity()', () => {
   });
 });
 
+describe('update*Entity()', () => {
+  test('Update minimal', async () => {
+    const createResult = await EntityAdmin.createEntity(
+      context,
+      { _type: 'MutationFoo', _name: 'First name', title: 'First title', summary: 'First summary' },
+      { publish: true }
+    );
+    if (expectOkResult(createResult)) {
+      const { id } = createResult.value;
+      const result = await graphql(
+        schema,
+        `
+          mutation UpdateFooEntity($entity: AdminMutationFooUpdateInput!, $publish: Boolean!) {
+            updateMutationFooEntity(entity: $entity, publish: $publish) {
+              __typename
+              id
+              _type
+              _name
+              _version
+              title
+              summary
+            }
+          }
+        `,
+        undefined,
+        { context: ok(context) },
+        {
+          entity: {
+            id,
+            title: 'Updated title',
+          },
+          publish: true,
+        }
+      );
+
+      expect(result).toEqual({
+        data: {
+          updateMutationFooEntity: {
+            __typename: 'AdminMutationFoo',
+            id,
+            _type: 'MutationFoo',
+            _name: 'First name',
+            _version: 1,
+            title: 'Updated title',
+            summary: 'First summary',
+          },
+        },
+      });
+
+      const getResult = await EntityAdmin.getEntity(context, id, {});
+      if (expectOkResult(getResult)) {
+        expect(getResult.value.item).toEqual({
+          id,
+          _type: 'MutationFoo',
+          _name: 'First name',
+          _version: 1,
+          title: 'Updated title',
+          summary: 'First summary',
+        });
+      }
+    }
+  });
+
+  test('Update with all values including reference', async () => {
+    const createBarResult = await EntityAdmin.createEntity(
+      context,
+      { _type: 'MutationBar', _name: 'Bar' },
+      { publish: true }
+    );
+    if (expectOkResult(createBarResult)) {
+      const { id: barId } = createBarResult.value;
+
+      const createFooResult = await EntityAdmin.createEntity(
+        context,
+        {
+          _type: 'MutationFoo',
+          _name: 'First name',
+          title: 'First title',
+          summary: 'First summary',
+        },
+        { publish: true }
+      );
+      if (expectOkResult(createFooResult)) {
+        const { id: fooId } = createFooResult.value;
+        const result = await graphql(
+          schema,
+          `
+            mutation UpdateFooEntity($entity: AdminMutationFooUpdateInput!, $publish: Boolean!) {
+              updateMutationFooEntity(entity: $entity, publish: $publish) {
+                __typename
+                id
+                _type
+                _name
+                _version
+                title
+                summary
+                bar {
+                  __typename
+                  id
+                  _type
+                  _name
+                }
+              }
+            }
+          `,
+          undefined,
+          { context: ok(context) },
+          {
+            entity: {
+              id: fooId,
+              _type: 'MutationFoo',
+              _name: 'Updated name',
+              title: 'Updated title',
+              summary: 'Updated summary',
+              bar: { id: barId },
+            },
+            publish: true,
+          }
+        );
+
+        expect(result).toEqual({
+          data: {
+            updateMutationFooEntity: {
+              __typename: 'AdminMutationFoo',
+              id: fooId,
+              _type: 'MutationFoo',
+              _name: 'Updated name',
+              _version: 1,
+              title: 'Updated title',
+              summary: 'Updated summary',
+              bar: {
+                __typename: 'AdminMutationBar',
+                id: barId,
+                _type: 'MutationBar',
+                _name: 'Bar',
+              },
+            },
+          },
+        });
+
+        const getResult = await EntityAdmin.getEntity(context, fooId, {});
+        if (expectOkResult(getResult)) {
+          expect(getResult.value.item).toEqual({
+            id: fooId,
+            _type: 'MutationFoo',
+            _name: 'Updated name',
+            _version: 1,
+            title: 'Updated title',
+            summary: 'Updated summary',
+            bar: { id: barId },
+          });
+        }
+      }
+    }
+  });
+
+  test('Error: Update with the wrong _type', async () => {
+    const createResult = await EntityAdmin.createEntity(
+      context,
+      { _type: 'MutationFoo', _name: 'Name' },
+      { publish: true }
+    );
+    if (expectOkResult(createResult)) {
+      const { id } = createResult.value;
+      const result = await graphql(
+        schema,
+        `
+          mutation UpdateFooEntity($entity: AdminMutationFooUpdateInput!, $publish: Boolean!) {
+            updateMutationFooEntity(entity: $entity, publish: $publish) {
+              id
+            }
+          }
+        `,
+        undefined,
+        { context: ok(context) },
+        {
+          entity: {
+            id,
+            _type: 'MutationBar', // should be Foo
+            _name: 'Foo name',
+            title: 'Foo title',
+            summary: 'Foo summary',
+          },
+          publish: true,
+        }
+      );
+
+      expect(result).toMatchInlineSnapshot(`
+        Object {
+          "data": null,
+          "errors": Array [
+            [GraphQLError: BadRequest: Specified type (entity._type=MutationBar) should be MutationFoo],
+          ],
+        }
+      `);
+    }
+  });
+});
+
 describe('deleteEntity()', () => {
   test('Delete and publish', async () => {
     const createResult = await EntityAdmin.createEntity(

@@ -109,6 +109,17 @@ input AdminFooCreateInput {
   barBarBar: AdminReferenceInput
 }
 
+input AdminFooUpdateInput {
+  id: ID!
+  _type: EntityType
+  _name: String
+  noMeansAll: AdminReferenceInput
+  bar: AdminReferenceInput
+  bazBar: AdminReferenceInput
+  fooBarBaz: AdminReferenceInput
+  barBarBar: AdminReferenceInput
+}
+
 type AdminBar implements AdminEntity {
   id: ID!
   _type: EntityType!
@@ -121,6 +132,12 @@ input AdminBarCreateInput {
   _name: String!
 }
 
+input AdminBarUpdateInput {
+  id: ID!
+  _type: EntityType
+  _name: String
+}
+
 type AdminBaz implements AdminEntity {
   id: ID!
   _type: EntityType!
@@ -131,6 +148,12 @@ type AdminBaz implements AdminEntity {
 input AdminBazCreateInput {
   _type: EntityType
   _name: String!
+}
+
+input AdminBazUpdateInput {
+  id: ID!
+  _type: EntityType
+  _name: String
 }
 
 enum $BarOrBaz {
@@ -164,8 +187,11 @@ type Query {
 type Mutation {
   deleteEntity(id: ID!, publish: Boolean!): AdminEntity!
   createFooEntity(entity: AdminFooCreateInput!, publish: Boolean!): AdminFoo!
+  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean!): AdminFoo!
   createBarEntity(entity: AdminBarCreateInput!, publish: Boolean!): AdminBar!
+  updateBarEntity(entity: AdminBarUpdateInput!, publish: Boolean!): AdminBar!
   createBazEntity(entity: AdminBazCreateInput!, publish: Boolean!): AdminBaz!
+  updateBazEntity(entity: AdminBazUpdateInput!, publish: Boolean!): AdminBaz!
 }
 "
 `;
@@ -234,6 +260,12 @@ input AdminFooCreateInput {
   _name: String!
 }
 
+input AdminFooUpdateInput {
+  id: ID!
+  _type: EntityType
+  _name: String
+}
+
 type Query {
   node(id: ID!): Node
   adminEntity(id: ID!, version: Int): AdminEntity
@@ -243,6 +275,7 @@ type Query {
 type Mutation {
   deleteEntity(id: ID!, publish: Boolean!): AdminEntity!
   createFooEntity(entity: AdminFooCreateInput!, publish: Boolean!): AdminFoo!
+  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean!): AdminFoo!
 }
 "
 `;
@@ -322,6 +355,13 @@ input AdminFooCreateInput {
   fooField: String
 }
 
+input AdminFooUpdateInput {
+  id: ID!
+  _type: EntityType
+  _name: String
+  fooField: String
+}
+
 type AdminBar implements AdminEntity {
   id: ID!
   _type: EntityType!
@@ -338,6 +378,14 @@ input AdminBarCreateInput {
   barField2: AdminReferenceInput
 }
 
+input AdminBarUpdateInput {
+  id: ID!
+  _type: EntityType
+  _name: String
+  barField1: String
+  barField2: AdminReferenceInput
+}
+
 type Query {
   node(id: ID!): Node
   adminEntity(id: ID!, version: Int): AdminEntity
@@ -347,7 +395,9 @@ type Query {
 type Mutation {
   deleteEntity(id: ID!, publish: Boolean!): AdminEntity!
   createFooEntity(entity: AdminFooCreateInput!, publish: Boolean!): AdminFoo!
+  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean!): AdminFoo!
   createBarEntity(entity: AdminBarCreateInput!, publish: Boolean!): AdminBar!
+  updateBarEntity(entity: AdminBarUpdateInput!, publish: Boolean!): AdminBar!
 }
 "
 `;
