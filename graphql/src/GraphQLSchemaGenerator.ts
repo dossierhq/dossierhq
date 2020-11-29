@@ -36,7 +36,12 @@ import type {
   GraphQLOutputType,
   GraphQLSchemaConfig,
 } from 'graphql';
-import { loadAdminEntity, loadAdminSearchEntities, loadEntity } from './DataLoaders';
+import {
+  loadAdminEntity,
+  loadAdminSearchEntities,
+  loadEntity,
+  loadVersionHistory,
+} from './DataLoaders';
 import * as Mutations from './Mutations';
 
 export interface SessionGraphQLContext {
@@ -299,6 +304,37 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         },
       })
     );
+
+    // AdminEntityVersionHistoryItem
+    this.addType(
+      new GraphQLObjectType({
+        name: 'AdminEntityVersionHistoryItem',
+        fields: {
+          version: { type: new GraphQLNonNull(GraphQLInt) },
+          deleted: { type: new GraphQLNonNull(GraphQLBoolean) },
+          published: { type: new GraphQLNonNull(GraphQLBoolean) },
+          createdBy: { type: new GraphQLNonNull(GraphQLID) },
+          createdAt: { type: new GraphQLNonNull(GraphQLString) }, // TODO handle dates
+        },
+      })
+    );
+
+    // AdminEntityVersionHistory
+    this.addType(
+      new GraphQLObjectType({
+        name: 'AdminEntityVersionHistory',
+        fields: {
+          id: { type: new GraphQLNonNull(GraphQLID) },
+          type: { type: new GraphQLNonNull(this.getType('EntityType')) },
+          name: { type: new GraphQLNonNull(GraphQLString) },
+          versions: {
+            type: new GraphQLNonNull(
+              new GraphQLList(this.getType('AdminEntityVersionHistoryItem'))
+            ),
+          },
+        },
+      })
+    );
   }
 
   addAdminEntityTypes(): void {
@@ -448,6 +484,17 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     });
   }
 
+  buildQueryFieldVersionHistory<TSource>(): GraphQLFieldConfig<TSource, TContext> {
+    return fieldConfigWithArgs<TSource, TContext, { id: string }>({
+      type: this.getOutputType('AdminEntityVersionHistory'),
+      args: { id: { type: new GraphQLNonNull(GraphQLID) } },
+      resolve: async (source, args, context, unusedInfo) => {
+        const { id } = args;
+        return await loadVersionHistory(context, id);
+      },
+    });
+  }
+
   buildQueryType<TSource>(): GraphQLObjectType {
     const includeEntities = Object.keys(this.schema.spec.entityTypes).length > 0;
 
@@ -459,6 +506,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
           ? {
               adminEntity: this.buildQueryFieldAdminEntity(),
               adminSearchEntities: this.buildQueryFieldAdminSearchEntities(),
+              versionHistory: this.buildQueryFieldVersionHistory(),
             }
           : {}),
       },

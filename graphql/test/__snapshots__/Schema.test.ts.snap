@@ -87,6 +87,21 @@ input AdminReferenceInput {
   id: ID!
 }
 
+type AdminEntityVersionHistoryItem {
+  version: Int!
+  deleted: Boolean!
+  published: Boolean!
+  createdBy: ID!
+  createdAt: String!
+}
+
+type AdminEntityVersionHistory {
+  id: ID!
+  type: EntityType!
+  name: String!
+  versions: [AdminEntityVersionHistoryItem]!
+}
+
 type AdminFoo implements AdminEntity {
   id: ID!
   _type: EntityType!
@@ -182,6 +197,7 @@ type Query {
   node(id: ID!): Node
   adminEntity(id: ID!, version: Int): AdminEntity
   adminSearchEntities(filter: AdminFilterInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  versionHistory(id: ID!): AdminEntityVersionHistory
 }
 
 type Mutation {
@@ -248,6 +264,21 @@ input AdminReferenceInput {
   id: ID!
 }
 
+type AdminEntityVersionHistoryItem {
+  version: Int!
+  deleted: Boolean!
+  published: Boolean!
+  createdBy: ID!
+  createdAt: String!
+}
+
+type AdminEntityVersionHistory {
+  id: ID!
+  type: EntityType!
+  name: String!
+  versions: [AdminEntityVersionHistoryItem]!
+}
+
 type AdminFoo implements AdminEntity {
   id: ID!
   _type: EntityType!
@@ -270,6 +301,7 @@ type Query {
   node(id: ID!): Node
   adminEntity(id: ID!, version: Int): AdminEntity
   adminSearchEntities(filter: AdminFilterInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  versionHistory(id: ID!): AdminEntityVersionHistory
 }
 
 type Mutation {
@@ -341,6 +373,21 @@ input AdminReferenceInput {
   id: ID!
 }
 
+type AdminEntityVersionHistoryItem {
+  version: Int!
+  deleted: Boolean!
+  published: Boolean!
+  createdBy: ID!
+  createdAt: String!
+}
+
+type AdminEntityVersionHistory {
+  id: ID!
+  type: EntityType!
+  name: String!
+  versions: [AdminEntityVersionHistoryItem]!
+}
+
 type AdminFoo implements AdminEntity {
   id: ID!
   _type: EntityType!
@@ -390,6 +437,7 @@ type Query {
   node(id: ID!): Node
   adminEntity(id: ID!, version: Int): AdminEntity
   adminSearchEntities(filter: AdminFilterInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  versionHistory(id: ID!): AdminEntityVersionHistory
 }
 
 type Mutation {

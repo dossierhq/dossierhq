@@ -311,8 +311,8 @@ export async function showEntityHistory(context: SessionContext, id: string): Pr
   logKeyValue('id', history.id);
   for (const version of history.versions) {
     const tags = [];
-    if (version.isDelete) tags.push(chalk.red('deleted'));
-    if (version.isPublished) tags.push(chalk.green('published'));
+    if (version.deleted) tags.push(chalk.red('deleted'));
+    if (version.published) tags.push(chalk.green('published'));
     logKeyValue('version', `${version.version} ${tags.join(', ')}`);
     logKeyValue('  created by', version.createdBy);
     logKeyValue('  created at', version.createdAt.toISOString());
@@ -346,8 +346,8 @@ async function selectEntityVersion(
   const versionItems = result.value.versions
     .map((version) => {
       const tags = [];
-      if (version.isDelete) tags.push(chalk.red('deleted'));
-      if (version.isPublished) tags.push(chalk.green('published'));
+      if (version.deleted) tags.push(chalk.red('deleted'));
+      if (version.published) tags.push(chalk.green('published'));
       const tagsString = tags.join(', ');
 
       return {

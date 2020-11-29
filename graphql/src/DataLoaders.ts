@@ -3,6 +3,7 @@ import type {
   AdminEntity,
   AdminFilter,
   Entity,
+  EntityHistory,
   Paging,
   PageInfo,
   SessionContext,
@@ -134,4 +135,16 @@ function buildTotalCount<TContext extends SessionGraphQLContext>(
     }
     return result.value;
   };
+}
+
+export async function loadVersionHistory<TContext extends SessionGraphQLContext>(
+  context: TContext,
+  id: string
+): Promise<EntityHistory> {
+  const sessionContext = getSessionContext(context);
+  const result = await EntityAdmin.getEntityHistory(sessionContext, id);
+  if (result.isError()) {
+    throw result.toError();
+  }
+  return result.value;
 }
