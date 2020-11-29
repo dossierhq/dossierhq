@@ -258,6 +258,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
           _name: { type: new GraphQLNonNull(GraphQLString) },
           _type: { type: new GraphQLNonNull(this.getType('EntityType')) },
           _version: { type: new GraphQLNonNull(GraphQLInt) },
+          _deleted: { type: new GraphQLNonNull(GraphQLBoolean) },
         },
       })
     );
@@ -353,6 +354,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
             _type: { type: new GraphQLNonNull(this.getType('EntityType')) },
             _name: { type: new GraphQLNonNull(GraphQLString) },
             _version: { type: new GraphQLNonNull(GraphQLInt) },
+            _deleted: { type: new GraphQLNonNull(GraphQLBoolean) },
           };
           for (const fieldSpec of entitySpec.fields) {
             switch (fieldSpec.type) {

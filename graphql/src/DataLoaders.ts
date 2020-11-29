@@ -84,6 +84,10 @@ export function buildResolversForAdminEntity<TContext extends SessionGraphQLCont
     throw new Error(`Couldn't find entity spec for type: ${entity._name}`);
   }
   const result = { ...entity };
+
+  // _deleted is optional in AdminEntity, but not in GraphQL, so derive value
+  result._deleted = entity._deleted === true;
+
   for (const fieldSpec of entitySpec.fields) {
     const value = result[fieldSpec.name];
     if (isReferenceFieldType(fieldSpec, value) && value) {

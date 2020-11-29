@@ -465,6 +465,7 @@ describe('deleteEntity()', () => {
               _type
               _name
               _version
+              _deleted
             }
           }
         `,
@@ -480,6 +481,7 @@ describe('deleteEntity()', () => {
             _type: 'MutationFoo',
             _name: 'Howdy name',
             _version: 1,
+            _deleted: true,
           },
         },
       });
@@ -510,6 +512,7 @@ describe('deleteEntity()', () => {
               _type
               _name
               _version
+              _deleted
             }
           }
         `,
@@ -525,6 +528,7 @@ describe('deleteEntity()', () => {
             _type: 'MutationFoo',
             _name: 'Howdy name',
             _version: 1,
+            _deleted: true,
           },
         },
       });
