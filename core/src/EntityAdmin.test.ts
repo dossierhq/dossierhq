@@ -585,7 +585,15 @@ describe('updateEntity()', () => {
         { id, _type: 'EntityAdminFoo', _name: 'Updated name', title: 'Updated title' },
         { publish: true }
       );
-      expectOkResult(updateResult);
+      if (expectOkResult(updateResult)) {
+        expect(updateResult.value).toEqual({
+          id,
+          _type: 'EntityAdminFoo',
+          _name: 'Updated name',
+          _version: 1,
+          title: 'Updated title',
+        });
+      }
 
       const historyResult = await EntityAdmin.getEntityHistory(context, id);
       if (expectOkResult(historyResult)) {
@@ -653,7 +661,15 @@ describe('updateEntity()', () => {
         { id, _type: 'EntityAdminFoo', _name: 'Updated name', title: 'Updated title' },
         { publish: false }
       );
-      expectOkResult(updateResult);
+      if (expectOkResult(updateResult)) {
+        expect(updateResult.value).toEqual({
+          id,
+          _type: 'EntityAdminFoo',
+          _name: 'Updated name',
+          _version: 1,
+          title: 'Updated title',
+        });
+      }
 
       const historyResult = await EntityAdmin.getEntityHistory(context, id);
       if (expectOkResult(historyResult)) {
@@ -720,7 +736,15 @@ describe('updateEntity()', () => {
         { id, title: 'Updated title' },
         { publish: true }
       );
-      expectOkResult(updateResult);
+      if (expectOkResult(updateResult)) {
+        expect(updateResult.value).toEqual({
+          id,
+          _type: 'EntityAdminFoo',
+          _name: 'Original',
+          _version: 1,
+          title: 'Updated title',
+        });
+      }
 
       const historyResult = await EntityAdmin.getEntityHistory(context, id);
       if (expectOkResult(historyResult)) {
@@ -792,7 +816,16 @@ describe('updateEntity()', () => {
         { id, summary: 'Updated summary' },
         { publish: true }
       );
-      expectOkResult(updateResult);
+      if (expectOkResult(updateResult)) {
+        expect(updateResult.value).toEqual({
+          id,
+          _type: 'EntityAdminFoo',
+          _name: 'First name',
+          _version: 1,
+          title: 'First title',
+          summary: 'Updated summary',
+        });
+      }
 
       const historyResult = await EntityAdmin.getEntityHistory(context, id);
       if (expectOkResult(historyResult)) {
@@ -879,7 +912,17 @@ describe('updateEntity()', () => {
           { id: fooId, bar: { id: barId } },
           { publish: true }
         );
-        expectOkResult(updateResult);
+        if (expectOkResult(updateResult)) {
+          expect(updateResult.value).toEqual({
+            id: fooId,
+            _type: 'EntityAdminFoo',
+            _name: 'First name',
+            _version: 1,
+            title: 'First title',
+            summary: 'First summary',
+            bar: { id: barId },
+          });
+        }
 
         const version0Result = await EntityAdmin.getEntity(context, fooId, { version: 0 });
         if (expectOkResult(version0Result)) {
@@ -920,7 +963,7 @@ describe('updateEntity()', () => {
     }
   });
 
-  test('Update EntityAdminFoo without chaning a reference', async () => {
+  test('Update EntityAdminFoo without changing a reference', async () => {
     const createBarResult = await EntityAdmin.createEntity(
       context,
       {
@@ -952,7 +995,17 @@ describe('updateEntity()', () => {
           { id: fooId, summary: 'Updated summary' },
           { publish: true }
         );
-        expectOkResult(updateResult);
+        if (expectOkResult(updateResult)) {
+          expect(updateResult.value).toEqual({
+            id: fooId,
+            _type: 'EntityAdminFoo',
+            _name: 'First name',
+            _version: 1,
+            title: 'First title',
+            summary: 'Updated summary',
+            bar: { id: barId },
+          });
+        }
 
         const version0Result = await EntityAdmin.getEntity(context, fooId, { version: 0 });
         if (expectOkResult(version0Result)) {

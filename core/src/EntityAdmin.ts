@@ -3,7 +3,7 @@ import { notOk, ok } from '.';
 import { toOpaqueCursor } from './Connection';
 import * as Db from './Db';
 import type { EntitiesTable, EntityVersionsTable } from './DbTableTypes';
-import { decodeAdminEntity, encodeEntity } from './EntityCodec';
+import { decodeAdminEntity, encodeEntity, resolveEntity } from './EntityCodec';
 import type { AdminEntityValues } from './EntityCodec';
 import QueryBuilder from './QueryBuilder';
 import { searchAdminEntitiesQuery, totalAdminEntitiesQuery } from './QueryGenerator';
@@ -144,7 +144,7 @@ export async function createEntity(
   entity: AdminEntityCreate,
   options: { publish: boolean }
 ): PromiseResult<AdminEntity, ErrorType.BadRequest> {
-  const encodeResult = await encodeEntity(context, entity, null);
+  const encodeResult = await encodeEntity(context, entity);
   if (encodeResult.isError()) {
     return encodeResult;
   }
@@ -187,7 +187,7 @@ export async function updateEntity(
   context: SessionContext,
   entity: AdminEntityUpdate,
   options: { publish: boolean }
-): PromiseResult<void, ErrorType.BadRequest | ErrorType.NotFound> {
+): PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.NotFound> {
   return await context.withTransaction(async (context) => {
     const versionResult = await resolveMaxVersionForEntity(context, entity.id);
     if (versionResult.isError()) {
@@ -202,27 +202,26 @@ export async function updateEntity(
       [entityId]
     );
 
-    if (entity._type && entity._type !== type) {
-      return notOk.BadRequest(
-        `New type ${entity._type} doesn’t correspond to previous type ${type}`
-      );
-    }
-
     const { data: previousDataEncoded } = await Db.queryOne<Pick<EntityVersionsTable, 'data'>>(
       context,
       'SELECT data FROM entity_versions WHERE entities_id = $1 AND version = $2',
       [entityId, maxVersion]
     );
 
-    const encodeResult = await encodeEntity(
+    const resolvedResult = resolveEntity(
       context,
-      {
-        _name: previousName, // default to previous but allow changing
-        ...entity,
-        _type: type, // always same as previously stored
-      },
+      entity,
+      type,
+      previousName,
+      newVersion,
       previousDataEncoded
     );
+    if (resolvedResult.isError()) {
+      return resolvedResult;
+    }
+    const updatedEntity = resolvedResult.value;
+
+    const encodeResult = await encodeEntity(context, updatedEntity);
     if (encodeResult.isError()) {
       return encodeResult;
     }
@@ -252,7 +251,7 @@ export async function updateEntity(
       await Db.queryNone(context, qb.build());
     }
 
-    return ok(undefined);
+    return ok(updatedEntity);
   });
 }
 

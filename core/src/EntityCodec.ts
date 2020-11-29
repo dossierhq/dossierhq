@@ -1,10 +1,12 @@
 import { notOk, ok } from '.';
 import type {
   AdminEntity,
+  AdminEntityUpdate,
   Entity,
   EntityTypeSpecification,
   ErrorType,
   PromiseResult,
+  Result,
   SessionContext,
 } from '.';
 import { ensureRequired } from './Assertions';
@@ -76,10 +78,46 @@ export function decodeAdminEntity(context: SessionContext, values: AdminEntityVa
   return entity;
 }
 
+export function resolveEntity(
+  context: SessionContext,
+  entity: AdminEntityUpdate,
+  type: string,
+  previousName: string,
+  version: number,
+  previousValuesEncoded: Record<string, unknown> | null
+): Result<AdminEntity, ErrorType.BadRequest> {
+  if (entity._type && entity._type !== type) {
+    return notOk.BadRequest(`New type ${entity._type} doesn’t correspond to previous type ${type}`);
+  }
+  const result: AdminEntity = {
+    id: entity.id,
+    _name: entity._name || previousName,
+    _type: type,
+    _version: version,
+  };
+
+  const schema = context.instance.getSchema();
+  const entitySpec = schema.getEntityTypeSpecification(result._type);
+  if (!entitySpec) {
+    return notOk.BadRequest(`Entity type ${type} doesn’t exist`);
+  }
+
+  for (const fieldSpec of entitySpec.fields) {
+    if (fieldSpec.name in entity) {
+      result[fieldSpec.name] = entity[fieldSpec.name];
+    } else if (previousValuesEncoded && fieldSpec.name in previousValuesEncoded) {
+      const fieldAdapter = EntityFieldTypeAdapters.getAdapter(fieldSpec);
+      const encodedData = previousValuesEncoded[fieldSpec.name];
+      result[fieldSpec.name] = fieldAdapter.decodeData(encodedData);
+    }
+  }
+
+  return ok(result);
+}
+
 export async function encodeEntity(
   context: SessionContext,
-  entity: { _type: string; _name: string; [fieldName: string]: unknown },
-  defaultValuesEncoded: Record<string, unknown> | null
+  entity: { _type: string; _name: string; [fieldName: string]: unknown }
 ): PromiseResult<EncodeEntityResult, ErrorType.BadRequest> {
   const assertion = ensureRequired({ 'entity._type': entity._type, 'entity._name': entity._name });
   if (assertion.isError()) {
@@ -105,18 +143,10 @@ export async function encodeEntity(
     if (fieldSpec.name in entity) {
       const data = entity[fieldSpec.name];
       result.data[fieldSpec.name] = fieldAdapter.encodeData(data);
-    } else if (defaultValuesEncoded && fieldSpec.name in defaultValuesEncoded) {
-      const encodedData = defaultValuesEncoded[fieldSpec.name];
-      result.data[fieldSpec.name] = encodedData;
     }
   }
 
-  const referenceIdsResult = await collectReferenceIds(
-    context,
-    entitySpec,
-    entity,
-    defaultValuesEncoded
-  );
+  const referenceIdsResult = await collectReferenceIds(context, entitySpec, entity);
   if (referenceIdsResult.isError()) {
     return referenceIdsResult;
   }
@@ -128,8 +158,7 @@ export async function encodeEntity(
 async function collectReferenceIds(
   context: SessionContext,
   entitySpec: EntityTypeSpecification,
-  entity: { _type: string; _name: string; [fieldName: string]: unknown },
-  defaultValuesEncoded: Record<string, unknown> | null
+  entity: { _type: string; _name: string; [fieldName: string]: unknown }
 ): PromiseResult<number[], ErrorType.BadRequest> {
   const uuids = new Set<string>();
 
@@ -139,10 +168,6 @@ async function collectReferenceIds(
     if (fieldSpec.name in entity) {
       const data = entity[fieldSpec.name];
       fieldUUIDs = fieldAdapter.getReferenceUUIDs(data);
-    } else if (defaultValuesEncoded && fieldSpec.name in defaultValuesEncoded) {
-      // TODO check when existing reference isn't updated
-      const encodedData = defaultValuesEncoded[fieldSpec.name];
-      fieldUUIDs = fieldAdapter.getReferenceUUIDs(fieldAdapter.decodeData(encodedData));
     }
     fieldUUIDs?.forEach((x) => uuids.add(x));
   }
@@ -163,9 +188,6 @@ async function collectReferenceIds(
     if (fieldSpec.name in entity) {
       const data = entity[fieldSpec.name];
       fieldUUIDs = fieldAdapter.getReferenceUUIDs(data);
-    } else if (defaultValuesEncoded && fieldSpec.name in defaultValuesEncoded) {
-      const encodedData = defaultValuesEncoded[fieldSpec.name];
-      fieldUUIDs = fieldAdapter.getReferenceUUIDs(fieldAdapter.decodeData(encodedData));
     }
 
     if (!fieldUUIDs || fieldUUIDs.length === 0) {
