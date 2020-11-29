@@ -12,13 +12,15 @@ export interface EntityHistory {
   id: string;
   type: string;
   name: string;
-  versions: {
-    version: number;
-    isDelete: boolean;
-    isPublished: boolean;
-    createdBy: string;
-    createdAt: Date;
-  }[];
+  versions: EntityHistoryItem[];
+}
+
+export interface EntityHistoryItem {
+  version: number;
+  deleted: boolean;
+  published: boolean;
+  createdBy: string;
+  createdAt: Date;
 }
 
 export interface AdminEntity {
@@ -42,7 +44,7 @@ export interface AdminEntityUpdate {
   /** UUIDv4 */
   id: string;
   _name?: string;
-  /** If provided, has to be same as the entities existing type, i.e. there's no way to change the type of an entity */
+  /** If provided, has to be same as the entity's existing type, i.e. there's no way to change the type of an entity */
   _type?: string;
   [fieldName: string]: unknown;
 }
@@ -346,10 +348,10 @@ export async function getEntityHistory(
     id: entityMain.uuid,
     type: entityMain.type,
     name: entityMain.name,
-    versions: versions.map((v) => ({
+    versions: versions.map<EntityHistoryItem>((v) => ({
       version: v.version,
-      isDelete: v.deleted,
-      isPublished: v.id === entityMain.published_entity_versions_id,
+      deleted: v.deleted,
+      published: v.id === entityMain.published_entity_versions_id,
       createdBy: v.created_by_uuid,
       createdAt: v.created_at,
     })),

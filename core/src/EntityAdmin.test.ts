@@ -188,8 +188,8 @@ describe('createEntity()', () => {
         expectEntityHistoryVersions(historyResult.value, [
           {
             version: 0,
-            isDelete: false,
-            isPublished: true,
+            deleted: false,
+            published: true,
             createdBy: context.session.subjectId,
           },
         ]);
@@ -241,8 +241,8 @@ describe('createEntity()', () => {
         expectEntityHistoryVersions(historyResult.value, [
           {
             version: 0,
-            isDelete: false,
-            isPublished: false,
+            deleted: false,
+            published: false,
             createdBy: context.session.subjectId,
           },
         ]);
@@ -600,14 +600,14 @@ describe('updateEntity()', () => {
         expectEntityHistoryVersions(historyResult.value, [
           {
             version: 0,
-            isDelete: false,
-            isPublished: false,
+            deleted: false,
+            published: false,
             createdBy: context.session.subjectId,
           },
           {
             version: 1,
-            isDelete: false,
-            isPublished: true,
+            deleted: false,
+            published: true,
             createdBy: context.session.subjectId,
           },
         ]);
@@ -676,14 +676,14 @@ describe('updateEntity()', () => {
         expectEntityHistoryVersions(historyResult.value, [
           {
             version: 0,
-            isDelete: false,
-            isPublished: true,
+            deleted: false,
+            published: true,
             createdBy: context.session.subjectId,
           },
           {
             version: 1,
-            isDelete: false,
-            isPublished: false,
+            deleted: false,
+            published: false,
             createdBy: context.session.subjectId,
           },
         ]);
@@ -751,14 +751,14 @@ describe('updateEntity()', () => {
         expectEntityHistoryVersions(historyResult.value, [
           {
             version: 0,
-            isDelete: false,
-            isPublished: false,
+            deleted: false,
+            published: false,
             createdBy: context.session.subjectId,
           },
           {
             version: 1,
-            isDelete: false,
-            isPublished: true,
+            deleted: false,
+            published: true,
             createdBy: context.session.subjectId,
           },
         ]);
@@ -832,14 +832,14 @@ describe('updateEntity()', () => {
         expectEntityHistoryVersions(historyResult.value, [
           {
             version: 0,
-            isDelete: false,
-            isPublished: false,
+            deleted: false,
+            published: false,
             createdBy: context.session.subjectId,
           },
           {
             version: 1,
-            isDelete: false,
-            isPublished: true,
+            deleted: false,
+            published: true,
             createdBy: context.session.subjectId,
           },
         ]);
@@ -1170,14 +1170,14 @@ describe('deleteEntity()', () => {
         expectEntityHistoryVersions(historyResult.value, [
           {
             version: 0,
-            isDelete: false,
-            isPublished: false,
+            deleted: false,
+            published: false,
             createdBy: context.session.subjectId,
           },
           {
             version: 1,
-            isDelete: true,
-            isPublished: true,
+            deleted: true,
+            published: true,
             createdBy: context.session.subjectId,
           },
         ]);
@@ -1231,14 +1231,14 @@ describe('deleteEntity()', () => {
         expectEntityHistoryVersions(historyResult.value, [
           {
             version: 0,
-            isDelete: false,
-            isPublished: false,
+            deleted: false,
+            published: false,
             createdBy: context.session.subjectId,
           },
           {
             version: 1,
-            isDelete: true,
-            isPublished: true,
+            deleted: true,
+            published: true,
             createdBy: context.session.subjectId,
           },
         ]);
@@ -1292,14 +1292,14 @@ describe('deleteEntity()', () => {
         expectEntityHistoryVersions(historyResult.value, [
           {
             version: 0,
-            isDelete: false,
-            isPublished: true,
+            deleted: false,
+            published: true,
             createdBy: context.session.subjectId,
           },
           {
             version: 1,
-            isDelete: true,
-            isPublished: false,
+            deleted: true,
+            published: false,
             createdBy: context.session.subjectId,
           },
         ]);
@@ -1360,14 +1360,14 @@ describe('deleteEntity()', () => {
         expectEntityHistoryVersions(historyResult.value, [
           {
             version: 0,
-            isDelete: false,
-            isPublished: false,
+            deleted: false,
+            published: false,
             createdBy: context.session.subjectId,
           },
           {
             version: 1,
-            isDelete: true,
-            isPublished: false,
+            deleted: true,
+            published: false,
             createdBy: context.session.subjectId,
           },
         ]);

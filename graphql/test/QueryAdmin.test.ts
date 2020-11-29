@@ -503,3 +503,66 @@ describe('searchAdminEntities()', () => {
     );
   });
 });
+
+describe('versionHistory()', () => {
+  test('History with edit and unpublished delete', async () => {
+    const createResult = await EntityAdmin.createEntity(
+      context,
+      { _type: 'QueryAdminFoo', _name: 'Foo name', title: 'First title' },
+      { publish: true }
+    );
+    if (expectOkResult(createResult)) {
+      const { id } = createResult.value;
+
+      const updateResult = await EntityAdmin.updateEntity(
+        context,
+        { id, title: 'Updated title' },
+        { publish: true }
+      );
+      expectOkResult(updateResult);
+
+      const deleteResult = await EntityAdmin.deleteEntity(context, id, { publish: false });
+      expectOkResult(deleteResult);
+
+      const result = await graphql(
+        schema,
+        `
+          query VersionHistory($id: ID!) {
+            versionHistory(id: $id) {
+              id
+              type
+              name
+              versions {
+                version
+                deleted
+                published
+                createdBy
+                createdAt
+              }
+            }
+          }
+        `,
+        undefined,
+        { context: ok(context) },
+        { id }
+      );
+      // Remove createdAt since it's tricky to test 🤷‍♂️
+      result.data?.versionHistory.versions.forEach(
+        (x: { createdAt?: string }) => delete x.createdAt
+      );
+
+      expect(result.data).toEqual({
+        versionHistory: {
+          id,
+          name: 'Foo name',
+          type: 'QueryAdminFoo',
+          versions: [
+            { createdBy: context.session.subjectId, deleted: false, published: false, version: 0 },
+            { createdBy: context.session.subjectId, deleted: false, published: true, version: 1 },
+            { createdBy: context.session.subjectId, deleted: true, published: false, version: 2 },
+          ],
+        },
+      });
+    }
+  });
+});
