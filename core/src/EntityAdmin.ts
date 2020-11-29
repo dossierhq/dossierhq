@@ -189,24 +189,20 @@ export async function updateEntity(
   options: { publish: boolean }
 ): PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.NotFound> {
   return await context.withTransaction(async (context) => {
-    const versionResult = await resolveMaxVersionForEntity(context, entity.id);
-    if (versionResult.isError()) {
-      return versionResult;
+    const previousValues = await Db.queryNoneOrOne<
+      Pick<EntitiesTable, 'id' | 'type' | 'name'> & Pick<EntityVersionsTable, 'version' | 'data'>
+    >(
+      context,
+      `SELECT e.id, e.type, e.name, ev.version, ev.data
+        FROM entities e, entity_versions ev
+        WHERE e.uuid = $1 AND e.latest_draft_entity_versions_id = ev.id`,
+      [entity.id]
+    );
+    if (!previousValues) {
+      return notOk.NotFound('No such entity');
     }
-    const { entityId, maxVersion } = versionResult.value;
-    const newVersion = maxVersion + 1;
-
-    const { type, name: previousName } = await Db.queryOne<Pick<EntitiesTable, 'type' | 'name'>>(
-      context,
-      'SELECT type, name FROM entities e WHERE e.id = $1',
-      [entityId]
-    );
-
-    const { data: previousDataEncoded } = await Db.queryOne<Pick<EntityVersionsTable, 'data'>>(
-      context,
-      'SELECT data FROM entity_versions WHERE entities_id = $1 AND version = $2',
-      [entityId, maxVersion]
-    );
+    const { id: entityId, data: previousDataEncoded, type, name: previousName } = previousValues;
+    const newVersion = previousValues.version + 1;
 
     const resolvedResult = resolveEntity(
       context,
