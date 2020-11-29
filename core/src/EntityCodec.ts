@@ -64,7 +64,9 @@ export function decodeAdminEntity(context: SessionContext, values: AdminEntityVa
     _name: values.name,
     _version: values.version,
   };
-  if (values.data) {
+  if (!values.data) {
+    entity._deleted = true;
+  } else {
     for (const [fieldName, fieldValue] of Object.entries(values.data)) {
       const fieldSpec = schema.getEntityFieldSpecification(entitySpec, fieldName);
       if (!fieldSpec) {

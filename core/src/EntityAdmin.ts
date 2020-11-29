@@ -29,6 +29,7 @@ export interface AdminEntity {
   _name: string;
   _type: string;
   _version: number;
+  _deleted?: boolean;
   [fieldName: string]: unknown;
 }
 
@@ -287,7 +288,7 @@ export async function deleteEntity(
       }  WHERE id = $2`,
       [versionsId, entityId]
     );
-    return ok({ id, _type: type, _name: name, _version: version });
+    return ok(decodeAdminEntity(context, { uuid: id, type, name, version, data: null }));
   });
 }
 

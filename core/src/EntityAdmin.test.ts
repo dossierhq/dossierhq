@@ -134,7 +134,7 @@ describe('getEntity()', () => {
           _type: 'EntityAdminFoo',
           _name: 'Foo',
           _version: 1,
-          // No title since deleted
+          _deleted: true,
         });
       }
     }
@@ -1162,6 +1162,7 @@ describe('deleteEntity()', () => {
           _type: 'EntityAdminFoo',
           _name: 'Delete',
           _version: 1,
+          _deleted: true,
         });
       }
 
@@ -1200,6 +1201,7 @@ describe('deleteEntity()', () => {
           _type: 'EntityAdminFoo',
           _name: 'Delete',
           _version: 1,
+          _deleted: true,
         });
       }
 
@@ -1223,6 +1225,7 @@ describe('deleteEntity()', () => {
           _type: 'EntityAdminFoo',
           _name: 'Draft',
           _version: 1,
+          _deleted: true,
         });
       }
 
@@ -1261,6 +1264,7 @@ describe('deleteEntity()', () => {
           _type: 'EntityAdminFoo',
           _name: 'Draft',
           _version: 1,
+          _deleted: true,
         });
       }
 
@@ -1284,6 +1288,7 @@ describe('deleteEntity()', () => {
           _type: 'EntityAdminFoo',
           _name: 'Delete',
           _version: 1,
+          _deleted: true,
         });
       }
 
@@ -1322,6 +1327,7 @@ describe('deleteEntity()', () => {
           _type: 'EntityAdminFoo',
           _name: 'Delete',
           _version: 1,
+          _deleted: true,
         });
       }
 
@@ -1352,6 +1358,7 @@ describe('deleteEntity()', () => {
           _type: 'EntityAdminFoo',
           _name: 'Draft',
           _version: 1,
+          _deleted: true,
         });
       }
 
@@ -1390,6 +1397,7 @@ describe('deleteEntity()', () => {
           _type: 'EntityAdminFoo',
           _name: 'Draft',
           _version: 1,
+          _deleted: true,
         });
       }
 
