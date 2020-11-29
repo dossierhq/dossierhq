@@ -66,6 +66,7 @@ interface AdminEntity {
   _name: String!
   _type: EntityType!
   _version: Int!
+  _deleted: Boolean!
 }
 
 type AdminEntityEdge {
@@ -107,6 +108,7 @@ type AdminFoo implements AdminEntity {
   _type: EntityType!
   _name: String!
   _version: Int!
+  _deleted: Boolean!
   noMeansAll: AdminEntity
   bar: AdminBar
   bazBar: $AdminBarOrAdminBaz
@@ -140,6 +142,7 @@ type AdminBar implements AdminEntity {
   _type: EntityType!
   _name: String!
   _version: Int!
+  _deleted: Boolean!
 }
 
 input AdminBarCreateInput {
@@ -158,6 +161,7 @@ type AdminBaz implements AdminEntity {
   _type: EntityType!
   _name: String!
   _version: Int!
+  _deleted: Boolean!
 }
 
 input AdminBazCreateInput {
@@ -243,6 +247,7 @@ interface AdminEntity {
   _name: String!
   _type: EntityType!
   _version: Int!
+  _deleted: Boolean!
 }
 
 type AdminEntityEdge {
@@ -284,6 +289,7 @@ type AdminFoo implements AdminEntity {
   _type: EntityType!
   _name: String!
   _version: Int!
+  _deleted: Boolean!
 }
 
 input AdminFooCreateInput {
@@ -352,6 +358,7 @@ interface AdminEntity {
   _name: String!
   _type: EntityType!
   _version: Int!
+  _deleted: Boolean!
 }
 
 type AdminEntityEdge {
@@ -393,6 +400,7 @@ type AdminFoo implements AdminEntity {
   _type: EntityType!
   _name: String!
   _version: Int!
+  _deleted: Boolean!
   fooField: String
 }
 
@@ -414,6 +422,7 @@ type AdminBar implements AdminEntity {
   _type: EntityType!
   _name: String!
   _version: Int!
+  _deleted: Boolean!
   barField1: String
   barField2: AdminEntity
 }

@@ -126,6 +126,7 @@ describe('QueryAdminFoo', () => {
               _type
               _name
               _version
+              _deleted
               ... on AdminQueryAdminFoo {
                 title
                 summary
@@ -145,6 +146,7 @@ describe('QueryAdminFoo', () => {
             _version: 0,
             _type: 'QueryAdminFoo',
             _name: 'Howdy name',
+            _deleted: false,
             title: 'Howdy title',
             summary: 'Howdy summary',
           },
@@ -224,7 +226,7 @@ describe('QueryAdminFoo', () => {
       const result = await graphql(
         schema,
         `
-          query TwoVersionsOfAdminEntity(
+          query FourVersionsOfAdminEntity(
             $id: ID!
             $version1: Int!
             $version2: Int!
@@ -303,6 +305,73 @@ describe('QueryAdminFoo', () => {
         26 |               id",
         ]
       `);
+    }
+  });
+
+  test('Query deleted entity', async () => {
+    const createResult = await EntityAdmin.createEntity(
+      context,
+      {
+        _type: 'QueryAdminFoo',
+        _name: 'First name',
+        title: 'First title',
+        summary: 'First summary',
+      },
+      { publish: true }
+    );
+    if (expectOkResult(createResult)) {
+      const { id } = createResult.value;
+
+      expectOkResult(await EntityAdmin.deleteEntity(context, id, { publish: false }));
+
+      const result = await graphql(
+        schema,
+        `
+          query TwoVersionsOfAdminEntity($id: ID!, $version1: Int!, $version2: Int!) {
+            first: adminEntity(id: $id, version: $version1) {
+              id
+              _version
+              _deleted
+              _name
+              ... on AdminQueryAdminFoo {
+                title
+                summary
+              }
+            }
+            second: adminEntity(id: $id, version: $version2) {
+              id
+              _version
+              _deleted
+              _name
+              ... on AdminQueryAdminFoo {
+                title
+                summary
+              }
+            }
+          }
+        `,
+        undefined,
+        { context: ok(context) },
+        { id, version1: 0, version2: 1 }
+      );
+      expect(result.data).toEqual({
+        first: {
+          id,
+          _version: 0,
+          _deleted: false,
+          _name: 'First name',
+          title: 'First title',
+          summary: 'First summary',
+        },
+        second: {
+          id,
+          _version: 1,
+          _deleted: true,
+          _name: 'First name',
+          title: null,
+          summary: null,
+        },
+      });
     }
   });
 
