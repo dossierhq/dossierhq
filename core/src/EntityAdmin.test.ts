@@ -20,6 +20,7 @@ import { expectEntityHistoryVersions, uuidMatcher } from '../test/AdditionalTest
 let instance: Instance;
 let context: SessionContext;
 let idsOfTypeAdminOnlyEditBefore: string[];
+let deletedIdsOfTypeAdminOnlyEditBefore: string[];
 
 beforeAll(async () => {
   instance = await createTestInstance({ loadSchema: true });
@@ -37,7 +38,16 @@ beforeAll(async () => {
   });
 
   await ensureEntitiesExistForAdminOnlyEditBefore(context);
-  idsOfTypeAdminOnlyEditBefore = await getIdsForAdminOnlyEditBefore(context);
+  const knownIds = await getIdsForAdminOnlyEditBefore(context);
+  idsOfTypeAdminOnlyEditBefore = knownIds.ids;
+  if (knownIds.deletedIds.length > 0) {
+    deletedIdsOfTypeAdminOnlyEditBefore = knownIds.deletedIds;
+  } else {
+    deletedIdsOfTypeAdminOnlyEditBefore = await deleteEntities(
+      context,
+      idsOfTypeAdminOnlyEditBefore.slice(0, 10)
+    );
+  }
 });
 afterAll(async () => {
   await instance.shutdown();
@@ -64,6 +74,7 @@ async function ensureEntitiesExistForAdminOnlyEditBefore(context: SessionContext
 
 async function getIdsForAdminOnlyEditBefore(context: SessionContext) {
   const ids: string[] = [];
+  const deletedIds: string[] = [];
   await visitAllEntityPages(
     context,
     { entityTypes: ['AdminOnlyEditBefore'] },
@@ -71,12 +82,23 @@ async function getIdsForAdminOnlyEditBefore(context: SessionContext) {
     (connection) => {
       for (const edge of connection.edges) {
         if (edge.node.isOk()) {
-          ids.push(edge.node.value.id);
+          const entity = edge.node.value;
+          ids.push(entity.id);
+          if (entity._deleted) {
+            deletedIds.push(entity.id);
+          }
         }
       }
     }
   );
-  return ids;
+  return { ids, deletedIds };
+}
+
+async function deleteEntities(context: SessionContext, idsToDelete: string[]) {
+  for (const id of idsToDelete) {
+    expectOkResult(await EntityAdmin.deleteEntity(context, id, { publish: true }));
+  }
+  return idsToDelete;
 }
 
 async function visitAllEntityPages(
@@ -98,6 +120,7 @@ async function visitAllEntityPages(
     }
 
     visitor(result.value);
+
     if (isForwards) {
       ownPaging.after = result.value.pageInfo.endCursor;
       if (!result.value.pageInfo.hasNextPage) {
@@ -556,6 +579,36 @@ describe('searchEntities()', () => {
         expectConnectionToMatchSlice(secondResult.value, 3 /*inclusive*/, 8 /*exclusive*/);
       }
     }
+  });
+
+  test('Deleted entities are reported as such', async () => {
+    let deletedCount = 0;
+    let notDeletedCount = 0;
+
+    await visitAllEntityPages(
+      context,
+      { entityTypes: ['AdminOnlyEditBefore'] },
+      { first: 50 },
+      (connection) => {
+        for (const edge of connection.edges) {
+          if (edge.node.isOk()) {
+            const entity = edge.node.value;
+            if (entity._deleted) {
+              expect(deletedIdsOfTypeAdminOnlyEditBefore.indexOf(entity.id)).toBeGreaterThanOrEqual(
+                0
+              );
+              deletedCount += 1;
+            } else {
+              expect(deletedIdsOfTypeAdminOnlyEditBefore.indexOf(entity.id)).toBeLessThan(0);
+              notDeletedCount += 1;
+            }
+          }
+        }
+      }
+    );
+
+    expect(deletedCount).toBeGreaterThan(0);
+    expect(notDeletedCount).toBeGreaterThan(0);
   });
 });
 
