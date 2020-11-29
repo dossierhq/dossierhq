@@ -87,7 +87,7 @@ input AdminReferenceInput {
   id: ID!
 }
 
-type AdminEntityVersionHistoryItem {
+type AdminEntityVersionInfo {
   version: Int!
   deleted: Boolean!
   published: Boolean!
@@ -95,11 +95,11 @@ type AdminEntityVersionHistoryItem {
   createdAt: String!
 }
 
-type AdminEntityVersionHistory {
+type AdminEntityHistory {
   id: ID!
   type: EntityType!
   name: String!
-  versions: [AdminEntityVersionHistoryItem]!
+  versions: [AdminEntityVersionInfo]!
 }
 
 type AdminFoo implements AdminEntity {
@@ -196,8 +196,8 @@ enum $AdminBarOrAdminBazOrAdminFoo {
 type Query {
   node(id: ID!): Node
   adminEntity(id: ID!, version: Int): AdminEntity
+  adminEntityHistory(id: ID!): AdminEntityHistory
   adminSearchEntities(filter: AdminFilterInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
-  versionHistory(id: ID!): AdminEntityVersionHistory
 }
 
 type Mutation {
@@ -264,7 +264,7 @@ input AdminReferenceInput {
   id: ID!
 }
 
-type AdminEntityVersionHistoryItem {
+type AdminEntityVersionInfo {
   version: Int!
   deleted: Boolean!
   published: Boolean!
@@ -272,11 +272,11 @@ type AdminEntityVersionHistoryItem {
   createdAt: String!
 }
 
-type AdminEntityVersionHistory {
+type AdminEntityHistory {
   id: ID!
   type: EntityType!
   name: String!
-  versions: [AdminEntityVersionHistoryItem]!
+  versions: [AdminEntityVersionInfo]!
 }
 
 type AdminFoo implements AdminEntity {
@@ -300,8 +300,8 @@ input AdminFooUpdateInput {
 type Query {
   node(id: ID!): Node
   adminEntity(id: ID!, version: Int): AdminEntity
+  adminEntityHistory(id: ID!): AdminEntityHistory
   adminSearchEntities(filter: AdminFilterInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
-  versionHistory(id: ID!): AdminEntityVersionHistory
 }
 
 type Mutation {
@@ -373,7 +373,7 @@ input AdminReferenceInput {
   id: ID!
 }
 
-type AdminEntityVersionHistoryItem {
+type AdminEntityVersionInfo {
   version: Int!
   deleted: Boolean!
   published: Boolean!
@@ -381,11 +381,11 @@ type AdminEntityVersionHistoryItem {
   createdAt: String!
 }
 
-type AdminEntityVersionHistory {
+type AdminEntityHistory {
   id: ID!
   type: EntityType!
   name: String!
-  versions: [AdminEntityVersionHistoryItem]!
+  versions: [AdminEntityVersionInfo]!
 }
 
 type AdminFoo implements AdminEntity {
@@ -436,8 +436,8 @@ input AdminBarUpdateInput {
 type Query {
   node(id: ID!): Node
   adminEntity(id: ID!, version: Int): AdminEntity
+  adminEntityHistory(id: ID!): AdminEntityHistory
   adminSearchEntities(filter: AdminFilterInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
-  versionHistory(id: ID!): AdminEntityVersionHistory
 }
 
 type Mutation {

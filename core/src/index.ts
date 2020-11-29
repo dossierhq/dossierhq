@@ -4,9 +4,10 @@ export type { AuthContext, Context, SessionContext } from './Context';
 export type {
   AdminEntity,
   AdminEntityCreate,
+  AdminEntityHistory,
   AdminEntityUpdate,
+  AdminEntityVersionInfo,
   AdminFilter,
-  EntityHistory,
 } from './EntityAdmin';
 export type { ErrorResult, OkResult, PromiseResult, Result } from './ErrorResult';
 export type { Paging } from './Paging';

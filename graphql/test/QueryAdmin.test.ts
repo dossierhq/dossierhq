@@ -527,8 +527,8 @@ describe('versionHistory()', () => {
       const result = await graphql(
         schema,
         `
-          query VersionHistory($id: ID!) {
-            versionHistory(id: $id) {
+          query EntityHistory($id: ID!) {
+            adminEntityHistory(id: $id) {
               id
               type
               name
@@ -547,12 +547,12 @@ describe('versionHistory()', () => {
         { id }
       );
       // Remove createdAt since it's tricky to test 🤷‍♂️
-      result.data?.versionHistory.versions.forEach(
+      result.data?.adminEntityHistory.versions.forEach(
         (x: { createdAt?: string }) => delete x.createdAt
       );
 
       expect(result.data).toEqual({
-        versionHistory: {
+        adminEntityHistory: {
           id,
           name: 'Foo name',
           type: 'QueryAdminFoo',
@@ -564,5 +564,34 @@ describe('versionHistory()', () => {
         },
       });
     }
+  });
+
+  test('Error: invalid id', async () => {
+    const result = await graphql(
+      schema,
+      `
+        query EntityHistory($id: ID!) {
+          adminEntityHistory(id: $id) {
+            id
+            versions {
+              version
+            }
+          }
+        }
+      `,
+      undefined,
+      { context: ok(context) },
+      { id: '6698130c-b56d-48cd-81f5-1f74bedc552e' }
+    );
+    expect(result).toMatchInlineSnapshot(`
+      Object {
+        "data": Object {
+          "adminEntityHistory": null,
+        },
+        "errors": Array [
+          [GraphQLError: NotFound: No such entity],
+        ],
+      }
+    `);
   });
 });

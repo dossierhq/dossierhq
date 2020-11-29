@@ -305,10 +305,10 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       })
     );
 
-    // AdminEntityVersionHistoryItem
+    // AdminEntityVersionInfo
     this.addType(
       new GraphQLObjectType({
-        name: 'AdminEntityVersionHistoryItem',
+        name: 'AdminEntityVersionInfo',
         fields: {
           version: { type: new GraphQLNonNull(GraphQLInt) },
           deleted: { type: new GraphQLNonNull(GraphQLBoolean) },
@@ -319,18 +319,16 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       })
     );
 
-    // AdminEntityVersionHistory
+    // AdminEntityHistory
     this.addType(
       new GraphQLObjectType({
-        name: 'AdminEntityVersionHistory',
+        name: 'AdminEntityHistory',
         fields: {
           id: { type: new GraphQLNonNull(GraphQLID) },
           type: { type: new GraphQLNonNull(this.getType('EntityType')) },
           name: { type: new GraphQLNonNull(GraphQLString) },
           versions: {
-            type: new GraphQLNonNull(
-              new GraphQLList(this.getType('AdminEntityVersionHistoryItem'))
-            ),
+            type: new GraphQLNonNull(new GraphQLList(this.getType('AdminEntityVersionInfo'))),
           },
         },
       })
@@ -484,9 +482,9 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     });
   }
 
-  buildQueryFieldVersionHistory<TSource>(): GraphQLFieldConfig<TSource, TContext> {
+  buildQueryFieldAdminEntityHistory<TSource>(): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<TSource, TContext, { id: string }>({
-      type: this.getOutputType('AdminEntityVersionHistory'),
+      type: this.getOutputType('AdminEntityHistory'),
       args: { id: { type: new GraphQLNonNull(GraphQLID) } },
       resolve: async (source, args, context, unusedInfo) => {
         const { id } = args;
@@ -505,8 +503,8 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         ...(includeEntities
           ? {
               adminEntity: this.buildQueryFieldAdminEntity(),
+              adminEntityHistory: this.buildQueryFieldAdminEntityHistory(),
               adminSearchEntities: this.buildQueryFieldAdminSearchEntities(),
-              versionHistory: this.buildQueryFieldVersionHistory(),
             }
           : {}),
       },

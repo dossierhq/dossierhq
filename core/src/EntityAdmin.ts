@@ -8,14 +8,14 @@ import type { AdminEntityValues } from './EntityCodec';
 import QueryBuilder from './QueryBuilder';
 import { searchAdminEntitiesQuery, totalAdminEntitiesQuery } from './QueryGenerator';
 
-export interface EntityHistory {
+export interface AdminEntityHistory {
   id: string;
   type: string;
   name: string;
-  versions: EntityHistoryItem[];
+  versions: AdminEntityVersionInfo[];
 }
 
-export interface EntityHistoryItem {
+export interface AdminEntityVersionInfo {
   version: number;
   deleted: boolean;
   published: boolean;
@@ -311,7 +311,7 @@ async function resolveMaxVersionForEntity(
 export async function getEntityHistory(
   context: SessionContext,
   id: string
-): PromiseResult<EntityHistory, ErrorType.NotFound> {
+): PromiseResult<AdminEntityHistory, ErrorType.NotFound> {
   const entityMain = await Db.queryNoneOrOne<
     Pick<EntitiesTable, 'id' | 'uuid' | 'type' | 'name' | 'published_entity_versions_id'>
   >(
@@ -344,11 +344,11 @@ export async function getEntityHistory(
     [entityMain.id]
   );
 
-  const result: EntityHistory = {
+  const result: AdminEntityHistory = {
     id: entityMain.uuid,
     type: entityMain.type,
     name: entityMain.name,
-    versions: versions.map<EntityHistoryItem>((v) => ({
+    versions: versions.map<AdminEntityVersionInfo>((v) => ({
       version: v.version,
       deleted: v.deleted,
       published: v.id === entityMain.published_entity_versions_id,
