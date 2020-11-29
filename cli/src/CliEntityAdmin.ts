@@ -191,7 +191,7 @@ export async function editEntity(context: SessionContext, id: string): Promise<v
     logErrorResult('Failed updating entity', updateResult);
     return;
   }
-  console.log(`${chalk.bold('Updated:')} ${id}`);
+  console.log(`${chalk.bold('Updated:')} ${id} (version: ${updateResult.value._version})`);
 }
 
 async function editEntityValues(
