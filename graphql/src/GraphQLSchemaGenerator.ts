@@ -2,6 +2,7 @@ import { EntityFieldType, ErrorType, notOk } from '@datadata/core';
 import type {
   AdminEntity,
   AdminEntityCreate,
+  AdminEntityUpdate,
   Entity,
   EntityTypeSpecification,
   Result,
@@ -48,6 +49,10 @@ function toAdminTypeName(name: string) {
 
 function toAdminCreateInputTypeName(name: string) {
   return `Admin${name}CreateInput`;
+}
+
+function toAdminUpdateInputTypeName(name: string) {
+  return `Admin${name}UpdateInput`;
 }
 
 function fieldConfigWithArgs<TSource, TContext, TArgs>(
@@ -360,6 +365,34 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         },
       })
     );
+
+    this.addType(
+      new GraphQLInputObjectType({
+        name: toAdminUpdateInputTypeName(name),
+        fields: () => {
+          const fields: GraphQLInputFieldConfigMap = {
+            id: { type: new GraphQLNonNull(GraphQLID) },
+            _type: { type: this.getEnumType('EntityType') },
+            _name: { type: GraphQLString },
+          };
+          for (const fieldSpec of entitySpec.fields) {
+            switch (fieldSpec.type) {
+              case EntityFieldType.Reference:
+                fields[fieldSpec.name] = {
+                  type: this.getInputType('AdminReferenceInput'),
+                };
+                break;
+              case EntityFieldType.String:
+                fields[fieldSpec.name] = { type: GraphQLString };
+                break;
+              default:
+                throw new Error(`Unexpected type (${fieldSpec.type})`);
+            }
+          }
+          return fields;
+        },
+      })
+    );
   }
 
   buildQueryFieldNode<TSource>(): GraphQLFieldConfig<TSource, TContext> {
@@ -459,6 +492,32 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     });
   }
 
+  buildMutationUpdateEntity<TSource>(entityName: string): GraphQLFieldConfig<TSource, TContext> {
+    return fieldConfigWithArgs<
+      TSource,
+      TContext,
+      {
+        entity: AdminEntityUpdate;
+        publish: boolean;
+      }
+    >({
+      type: new GraphQLNonNull(this.getType(toAdminTypeName(entityName))),
+      args: {
+        entity: { type: new GraphQLNonNull(this.getType(toAdminUpdateInputTypeName(entityName))) },
+        publish: { type: new GraphQLNonNull(GraphQLBoolean) },
+      },
+      resolve: async (source, args, context, unusedInfo) => {
+        const { entity, publish } = args;
+        if (entity._type && entity._type !== entityName) {
+          throw notOk
+            .BadRequest(`Specified type (entity._type=${entity._type}) should be ${entityName}`)
+            .toError();
+        }
+        return await Mutations.updateEntity(context, entity, publish);
+      },
+    });
+  }
+
   buildMutationDeleteEntity<TSource>(): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<
       TSource,
@@ -492,6 +551,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
 
     for (const [entityType, unusedTypeSpec] of Object.entries(this.schema.spec.entityTypes)) {
       fields[`create${entityType}Entity`] = this.buildMutationCreateEntity(entityType);
+      fields[`update${entityType}Entity`] = this.buildMutationUpdateEntity(entityType);
     }
 
     return new GraphQLObjectType<TSource, TContext>({
