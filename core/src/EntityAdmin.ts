@@ -52,6 +52,8 @@ export interface AdminEntityUpdate {
 
 export interface AdminFilter {
   entityTypes?: string[];
+  /** Entities referencing the entity (by id) */
+  referencing?: string;
 }
 
 export async function getEntity(

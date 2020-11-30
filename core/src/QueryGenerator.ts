@@ -18,8 +18,12 @@ export function searchAdminEntitiesQuery(
   const resolvedPaging = pagingResult.value;
 
   const qb = new QueryBuilder(`SELECT e.id, e.uuid, e.type, e.name, ev.version, ev.data
-  FROM entities e, entity_versions ev
-  WHERE e.latest_draft_entity_versions_id = ev.id`);
+  FROM entities e, entity_versions ev`);
+  if (filter?.referencing) {
+    qb.addQuery('entity_version_references evr, entities e2');
+  }
+
+  qb.addQuery('WHERE e.latest_draft_entity_versions_id = ev.id');
 
   // Filter: entityTypes
   const entityTypesResult = getFilterEntityTypes(context, filter);
@@ -27,9 +31,19 @@ export function searchAdminEntitiesQuery(
     return entityTypesResult;
   }
   if (entityTypesResult.value.length > 0) {
-    qb.addQuery(`AND type = ANY(${qb.addValue(entityTypesResult.value)})`);
+    qb.addQuery(`AND e.type = ANY(${qb.addValue(entityTypesResult.value)})`);
   }
 
+  // Filter: referencing
+  if (filter?.referencing) {
+    qb.addQuery(
+      `AND ev.id = evr.entity_versions_id AND evr.entities_id = e2.id AND e2.uuid = ${qb.addValue(
+        filter.referencing
+      )}`
+    );
+  }
+
+  // Paging
   if (resolvedPaging.after !== null) {
     qb.addQuery(`AND e.id > ${qb.addValue(resolvedPaging.after)}`);
   }
@@ -43,6 +57,7 @@ export function searchAdminEntitiesQuery(
   } else {
     qb.addQuery(`ORDER BY e.id DESC LIMIT ${qb.addValue(countToRequest)}`);
   }
+
   return ok({
     ...qb.build(),
     isForwards: resolvedPaging.isForwards,

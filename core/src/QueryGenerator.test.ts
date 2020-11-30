@@ -23,8 +23,7 @@ describe('searchAdminEntitiesQuery()', () => {
           "isForwards": true,
           "pagingCount": 25,
           "text": "SELECT e.id, e.uuid, e.type, e.name, ev.version, ev.data
-        FROM entities e, entity_versions ev
-        WHERE e.latest_draft_entity_versions_id = ev.id ORDER BY e.id LIMIT $1",
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id ORDER BY e.id LIMIT $1",
           "values": Array [
             26,
           ],
@@ -40,8 +39,7 @@ describe('searchAdminEntitiesQuery()', () => {
           "isForwards": true,
           "pagingCount": 10,
           "text": "SELECT e.id, e.uuid, e.type, e.name, ev.version, ev.data
-        FROM entities e, entity_versions ev
-        WHERE e.latest_draft_entity_versions_id = ev.id ORDER BY e.id LIMIT $1",
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id ORDER BY e.id LIMIT $1",
           "values": Array [
             11,
           ],
@@ -58,8 +56,7 @@ describe('searchAdminEntitiesQuery()', () => {
           "isForwards": true,
           "pagingCount": 10,
           "text": "SELECT e.id, e.uuid, e.type, e.name, ev.version, ev.data
-        FROM entities e, entity_versions ev
-        WHERE e.latest_draft_entity_versions_id = ev.id AND e.id > $1 ORDER BY e.id LIMIT $2",
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.id > $1 ORDER BY e.id LIMIT $2",
           "values": Array [
             999,
             11,
@@ -76,8 +73,7 @@ describe('searchAdminEntitiesQuery()', () => {
           "isForwards": false,
           "pagingCount": 10,
           "text": "SELECT e.id, e.uuid, e.type, e.name, ev.version, ev.data
-        FROM entities e, entity_versions ev
-        WHERE e.latest_draft_entity_versions_id = ev.id ORDER BY e.id DESC LIMIT $1",
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id ORDER BY e.id DESC LIMIT $1",
           "values": Array [
             11,
           ],
@@ -94,8 +90,7 @@ describe('searchAdminEntitiesQuery()', () => {
           "isForwards": false,
           "pagingCount": 10,
           "text": "SELECT e.id, e.uuid, e.type, e.name, ev.version, ev.data
-        FROM entities e, entity_versions ev
-        WHERE e.latest_draft_entity_versions_id = ev.id AND e.id < $1 ORDER BY e.id DESC LIMIT $2",
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.id < $1 ORDER BY e.id DESC LIMIT $2",
           "values": Array [
             456,
             11,
@@ -118,8 +113,7 @@ describe('searchAdminEntitiesQuery()', () => {
           "isForwards": true,
           "pagingCount": 10,
           "text": "SELECT e.id, e.uuid, e.type, e.name, ev.version, ev.data
-        FROM entities e, entity_versions ev
-        WHERE e.latest_draft_entity_versions_id = ev.id AND e.id > $1 AND e.id < $2 ORDER BY e.id LIMIT $3",
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.id > $1 AND e.id < $2 ORDER BY e.id LIMIT $3",
           "values": Array [
             123,
             456,
@@ -143,8 +137,7 @@ describe('searchAdminEntitiesQuery()', () => {
           "isForwards": false,
           "pagingCount": 10,
           "text": "SELECT e.id, e.uuid, e.type, e.name, ev.version, ev.data
-        FROM entities e, entity_versions ev
-        WHERE e.latest_draft_entity_versions_id = ev.id AND e.id > $1 AND e.id < $2 ORDER BY e.id DESC LIMIT $3",
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.id > $1 AND e.id < $2 ORDER BY e.id DESC LIMIT $3",
           "values": Array [
             123,
             456,
@@ -163,8 +156,7 @@ describe('searchAdminEntitiesQuery()', () => {
           "isForwards": true,
           "pagingCount": 25,
           "text": "SELECT e.id, e.uuid, e.type, e.name, ev.version, ev.data
-        FROM entities e, entity_versions ev
-        WHERE e.latest_draft_entity_versions_id = ev.id ORDER BY e.id LIMIT $1",
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id ORDER BY e.id LIMIT $1",
           "values": Array [
             26,
           ],
@@ -181,8 +173,7 @@ describe('searchAdminEntitiesQuery()', () => {
           "isForwards": true,
           "pagingCount": 25,
           "text": "SELECT e.id, e.uuid, e.type, e.name, ev.version, ev.data
-        FROM entities e, entity_versions ev
-        WHERE e.latest_draft_entity_versions_id = ev.id AND type = ANY($1) ORDER BY e.id LIMIT $2",
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.type = ANY($1) ORDER BY e.id LIMIT $2",
           "values": Array [
             Array [
               "EntityAdminFoo",
@@ -207,8 +198,7 @@ describe('searchAdminEntitiesQuery()', () => {
           "isForwards": true,
           "pagingCount": 25,
           "text": "SELECT e.id, e.uuid, e.type, e.name, ev.version, ev.data
-        FROM entities e, entity_versions ev
-        WHERE e.latest_draft_entity_versions_id = ev.id AND type = ANY($1) ORDER BY e.id LIMIT $2",
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.type = ANY($1) ORDER BY e.id LIMIT $2",
           "values": Array [
             Array [
               "EntityAdminFoo",
@@ -234,14 +224,67 @@ describe('searchAdminEntitiesQuery()', () => {
           "isForwards": true,
           "pagingCount": 10,
           "text": "SELECT e.id, e.uuid, e.type, e.name, ev.version, ev.data
-        FROM entities e, entity_versions ev
-        WHERE e.latest_draft_entity_versions_id = ev.id AND type = ANY($1) AND e.id > $2 ORDER BY e.id LIMIT $3",
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.type = ANY($1) AND e.id > $2 ORDER BY e.id LIMIT $3",
           "values": Array [
             Array [
               "EntityAdminFoo",
               "EntityAdminBar",
             ],
             543,
+            11,
+          ],
+        },
+      }
+    `);
+  });
+
+  test('filter referencing', () => {
+    expect(
+      searchAdminEntitiesQuery(
+        context,
+        { referencing: '37b48706-803e-4227-a51e-8208db12d949' },
+        undefined
+      )
+    ).toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "isForwards": true,
+          "pagingCount": 25,
+          "text": "SELECT e.id, e.uuid, e.type, e.name, ev.version, ev.data
+        FROM entities e, entity_versions ev, entity_version_references evr, entities e2 WHERE e.latest_draft_entity_versions_id = ev.id AND ev.id = evr.entity_versions_id AND evr.entities_id = e2.id AND e2.uuid = $1 ORDER BY e.id LIMIT $2",
+          "values": Array [
+            "37b48706-803e-4227-a51e-8208db12d949",
+            26,
+          ],
+        },
+      }
+    `);
+  });
+
+  test('filter referencing and entity types and paging', () => {
+    expect(
+      searchAdminEntitiesQuery(
+        context,
+        {
+          entityTypes: ['EntityAdminFoo', 'EntityAdminBar'],
+          referencing: '37b48706-803e-4227-a51e-8208db12d949',
+        },
+        { first: 10, after: toOpaqueCursor(123) }
+      )
+    ).toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "isForwards": true,
+          "pagingCount": 10,
+          "text": "SELECT e.id, e.uuid, e.type, e.name, ev.version, ev.data
+        FROM entities e, entity_versions ev, entity_version_references evr, entities e2 WHERE e.latest_draft_entity_versions_id = ev.id AND e.type = ANY($1) AND ev.id = evr.entity_versions_id AND evr.entities_id = e2.id AND e2.uuid = $2 AND e.id > $3 ORDER BY e.id LIMIT $4",
+          "values": Array [
+            Array [
+              "EntityAdminFoo",
+              "EntityAdminBar",
+            ],
+            "37b48706-803e-4227-a51e-8208db12d949",
+            123,
             11,
           ],
         },

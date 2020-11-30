@@ -34,6 +34,12 @@ beforeAll(async () => {
       ],
     },
     EntityAdminBar: { fields: [{ name: 'title', type: EntityFieldType.String }] },
+    EntityAdminBaz: {
+      fields: [
+        { name: 'title', type: EntityFieldType.String },
+        { name: 'bar', type: EntityFieldType.Reference, entityTypes: ['EntityAdminBar'] },
+      ],
+    },
     AdminOnlyEditBefore: { fields: [{ name: 'message', type: EntityFieldType.String }] },
   });
 
@@ -609,6 +615,98 @@ describe('searchEntities()', () => {
 
     expect(deletedCount).toBeGreaterThan(0);
     expect(notDeletedCount).toBeGreaterThan(0);
+  });
+
+  test('Filter based on referencing, one reference', async () => {
+    const createBarResult = await EntityAdmin.createEntity(
+      context,
+      { _type: 'EntityAdminBar', _name: 'Bar', title: 'Bar' },
+      { publish: true }
+    );
+    if (expectOkResult(createBarResult)) {
+      const { id: barId } = createBarResult.value;
+
+      const createFooResult = await EntityAdmin.createEntity(
+        context,
+        { _type: 'EntityAdminFoo', _name: 'Foo', bar: { id: barId } },
+        { publish: true }
+      );
+      if (expectOkResult(createFooResult)) {
+        const { id: fooId } = createFooResult.value;
+
+        const searchResult = await EntityAdmin.searchEntities(context, { referencing: barId });
+        if (expectOkResult(searchResult)) {
+          expect(searchResult.value?.edges).toHaveLength(1);
+          expect(searchResult.value?.edges[0].node).toEqual({
+            value: {
+              id: fooId,
+              _type: 'EntityAdminFoo',
+              _name: 'Foo',
+              _version: 0,
+              bar: { id: barId },
+            },
+          });
+        }
+      }
+    }
+  });
+
+  test('Filter based on referencing, no references', async () => {
+    const createBarResult = await EntityAdmin.createEntity(
+      context,
+      { _type: 'EntityAdminBar', _name: 'Bar', title: 'Bar' },
+      { publish: true }
+    );
+    if (expectOkResult(createBarResult)) {
+      const { id: barId } = createBarResult.value;
+
+      const searchResult = await EntityAdmin.searchEntities(context, { referencing: barId });
+      if (expectOkResult(searchResult)) {
+        expect(searchResult.value).toBeNull();
+      }
+    }
+  });
+
+  test('Filter based on referencing and entityTypes, one reference', async () => {
+    const createBarResult = await EntityAdmin.createEntity(
+      context,
+      { _type: 'EntityAdminBar', _name: 'Bar', title: 'Bar' },
+      { publish: true }
+    );
+    if (expectOkResult(createBarResult)) {
+      const { id: barId } = createBarResult.value;
+
+      const createFooResult = await EntityAdmin.createEntity(
+        context,
+        { _type: 'EntityAdminFoo', _name: 'Foo', bar: { id: barId } },
+        { publish: true }
+      );
+      const createBazResult = await EntityAdmin.createEntity(
+        context,
+        { _type: 'EntityAdminBaz', _name: 'Baz', bar: { id: barId } },
+        { publish: true }
+      );
+      if (expectOkResult(createFooResult) && expectOkResult(createBazResult)) {
+        const { id: bazId } = createBazResult.value;
+
+        const searchResult = await EntityAdmin.searchEntities(context, {
+          entityTypes: ['EntityAdminBaz'],
+          referencing: barId,
+        });
+        if (expectOkResult(searchResult)) {
+          expect(searchResult.value?.edges).toHaveLength(1);
+          expect(searchResult.value?.edges[0].node).toEqual({
+            value: {
+              id: bazId,
+              _type: 'EntityAdminBaz',
+              _name: 'Baz',
+              _version: 0,
+              bar: { id: barId },
+            },
+          });
+        }
+      }
+    }
   });
 });
 
