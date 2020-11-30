@@ -326,7 +326,7 @@ describe('totalAdminEntitiesQuery()', () => {
       .toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
-          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE type = ANY($1)",
+          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.type = ANY($1)",
           "values": Array [
             Array [
               "EntityAdminFoo",
@@ -342,12 +342,49 @@ describe('totalAdminEntitiesQuery()', () => {
       .toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
-          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE type = ANY($1)",
+          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.type = ANY($1)",
           "values": Array [
             Array [
               "EntityAdminFoo",
               "EntityAdminBar",
             ],
+          ],
+        },
+      }
+    `);
+  });
+
+  test('filter referencing', () => {
+    expect(
+      totalAdminEntitiesQuery(context, { referencing: '37b48706-803e-4227-a51e-8208db12d949' })
+    ).toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e, entity_versions ev, entity_version_references evr, entities e2 WHERE e.latest_draft_entity_versions_id = ev.id AND ev.id = evr.entity_versions_id AND evr.entities_id = e2.id AND e2.uuid = $1",
+          "values": Array [
+            "37b48706-803e-4227-a51e-8208db12d949",
+          ],
+        },
+      }
+    `);
+  });
+
+  test('filter referencing and entity types and paging', () => {
+    expect(
+      totalAdminEntitiesQuery(context, {
+        entityTypes: ['EntityAdminFoo', 'EntityAdminBar'],
+        referencing: '37b48706-803e-4227-a51e-8208db12d949',
+      })
+    ).toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e, entity_versions ev, entity_version_references evr, entities e2 WHERE e.type = ANY($1) AND e.latest_draft_entity_versions_id = ev.id AND ev.id = evr.entity_versions_id AND evr.entities_id = e2.id AND e2.uuid = $2",
+          "values": Array [
+            Array [
+              "EntityAdminFoo",
+              "EntityAdminBar",
+            ],
+            "37b48706-803e-4227-a51e-8208db12d949",
           ],
         },
       }

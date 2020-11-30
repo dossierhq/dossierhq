@@ -141,6 +141,48 @@ async function visitAllEntityPages(
   }
 }
 
+async function createBarWithFooBazReferences(
+  contest: SessionContext,
+  fooCount: number,
+  bazCount: number
+) {
+  const createBarResult = await EntityAdmin.createEntity(
+    context,
+    { _type: 'EntityAdminBar', _name: 'Bar', title: 'Bar' },
+    { publish: true }
+  );
+  if (createBarResult.isError()) {
+    throw createBarResult.toError();
+  }
+
+  const { id: barId } = createBarResult.value;
+
+  const fooEntities: AdminEntity[] = [];
+  const bazEntities: AdminEntity[] = [];
+
+  for (let i = 0; i < fooCount; i += 1) {
+    const createFooResult = await EntityAdmin.createEntity(
+      context,
+      { _type: 'EntityAdminFoo', _name: 'Foo: ' + i, bar: { id: barId } },
+      { publish: true }
+    );
+    if (expectOkResult(createFooResult)) {
+      fooEntities.push(createFooResult.value);
+    }
+  }
+  for (let i = 0; i < bazCount; i += 1) {
+    const createBazResult = await EntityAdmin.createEntity(
+      context,
+      { _type: 'EntityAdminBaz', _name: 'Baz: ' + i, bar: { id: barId } },
+      { publish: true }
+    );
+    if (expectOkResult(createBazResult)) {
+      bazEntities.push(createBazResult.value);
+    }
+  }
+  return { barId, fooEntities, bazEntities };
+}
+
 describe('getEntity()', () => {
   // rest is tested elsewhere
 
@@ -618,94 +660,40 @@ describe('searchEntities()', () => {
   });
 
   test('Filter based on referencing, one reference', async () => {
-    const createBarResult = await EntityAdmin.createEntity(
-      context,
-      { _type: 'EntityAdminBar', _name: 'Bar', title: 'Bar' },
-      { publish: true }
-    );
-    if (expectOkResult(createBarResult)) {
-      const { id: barId } = createBarResult.value;
+    const { barId, fooEntities } = await createBarWithFooBazReferences(context, 1, 0);
+    const [fooEntity] = fooEntities;
 
-      const createFooResult = await EntityAdmin.createEntity(
-        context,
-        { _type: 'EntityAdminFoo', _name: 'Foo', bar: { id: barId } },
-        { publish: true }
-      );
-      if (expectOkResult(createFooResult)) {
-        const { id: fooId } = createFooResult.value;
-
-        const searchResult = await EntityAdmin.searchEntities(context, { referencing: barId });
-        if (expectOkResult(searchResult)) {
-          expect(searchResult.value?.edges).toHaveLength(1);
-          expect(searchResult.value?.edges[0].node).toEqual({
-            value: {
-              id: fooId,
-              _type: 'EntityAdminFoo',
-              _name: 'Foo',
-              _version: 0,
-              bar: { id: barId },
-            },
-          });
-        }
-      }
+    const searchResult = await EntityAdmin.searchEntities(context, { referencing: barId });
+    if (expectOkResult(searchResult)) {
+      expect(searchResult.value?.edges).toHaveLength(1);
+      expect(searchResult.value?.edges[0].node).toEqual({
+        value: fooEntity,
+      });
     }
   });
 
   test('Filter based on referencing, no references', async () => {
-    const createBarResult = await EntityAdmin.createEntity(
-      context,
-      { _type: 'EntityAdminBar', _name: 'Bar', title: 'Bar' },
-      { publish: true }
-    );
-    if (expectOkResult(createBarResult)) {
-      const { id: barId } = createBarResult.value;
+    const { barId } = await createBarWithFooBazReferences(context, 0, 0);
 
-      const searchResult = await EntityAdmin.searchEntities(context, { referencing: barId });
-      if (expectOkResult(searchResult)) {
-        expect(searchResult.value).toBeNull();
-      }
+    const searchResult = await EntityAdmin.searchEntities(context, { referencing: barId });
+    if (expectOkResult(searchResult)) {
+      expect(searchResult.value).toBeNull();
     }
   });
 
   test('Filter based on referencing and entityTypes, one reference', async () => {
-    const createBarResult = await EntityAdmin.createEntity(
-      context,
-      { _type: 'EntityAdminBar', _name: 'Bar', title: 'Bar' },
-      { publish: true }
-    );
-    if (expectOkResult(createBarResult)) {
-      const { id: barId } = createBarResult.value;
+    const { barId, bazEntities } = await createBarWithFooBazReferences(context, 1, 1);
+    const [bazEntity] = bazEntities;
 
-      const createFooResult = await EntityAdmin.createEntity(
-        context,
-        { _type: 'EntityAdminFoo', _name: 'Foo', bar: { id: barId } },
-        { publish: true }
-      );
-      const createBazResult = await EntityAdmin.createEntity(
-        context,
-        { _type: 'EntityAdminBaz', _name: 'Baz', bar: { id: barId } },
-        { publish: true }
-      );
-      if (expectOkResult(createFooResult) && expectOkResult(createBazResult)) {
-        const { id: bazId } = createBazResult.value;
-
-        const searchResult = await EntityAdmin.searchEntities(context, {
-          entityTypes: ['EntityAdminBaz'],
-          referencing: barId,
-        });
-        if (expectOkResult(searchResult)) {
-          expect(searchResult.value?.edges).toHaveLength(1);
-          expect(searchResult.value?.edges[0].node).toEqual({
-            value: {
-              id: bazId,
-              _type: 'EntityAdminBaz',
-              _name: 'Baz',
-              _version: 0,
-              bar: { id: barId },
-            },
-          });
-        }
-      }
+    const searchResult = await EntityAdmin.searchEntities(context, {
+      entityTypes: ['EntityAdminBaz'],
+      referencing: barId,
+    });
+    if (expectOkResult(searchResult)) {
+      expect(searchResult.value?.edges).toHaveLength(1);
+      expect(searchResult.value?.edges[0].node).toEqual({
+        value: bazEntity,
+      });
     }
   });
 });
@@ -717,6 +705,36 @@ describe('getTotalCount', () => {
     });
     if (expectOkResult(result)) {
       expect(result.value).toBe(idsOfTypeAdminOnlyEditBefore.length);
+    }
+  });
+
+  test('Filter based on referencing, one reference', async () => {
+    const { barId } = await createBarWithFooBazReferences(context, 1, 0);
+
+    const result = await EntityAdmin.getTotalCount(context, { referencing: barId });
+    if (expectOkResult(result)) {
+      expect(result.value).toBe(1);
+    }
+  });
+
+  test('Filter based on referencing, no references', async () => {
+    const { barId } = await createBarWithFooBazReferences(context, 0, 0);
+
+    const result = await EntityAdmin.getTotalCount(context, { referencing: barId });
+    if (expectOkResult(result)) {
+      expect(result.value).toBe(0);
+    }
+  });
+
+  test('Filter based on referencing and entityTypes, one reference', async () => {
+    const { barId } = await createBarWithFooBazReferences(context, 1, 1);
+
+    const result = await EntityAdmin.getTotalCount(context, {
+      entityTypes: ['EntityAdminBaz'],
+      referencing: barId,
+    });
+    if (expectOkResult(result)) {
+      expect(result.value).toBe(1);
     }
   });
 });

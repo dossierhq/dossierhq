@@ -70,7 +70,13 @@ export function totalAdminEntitiesQuery(
   filter: AdminFilter | undefined
 ): Result<{ text: string; values: unknown[] }, ErrorType.BadRequest> {
   // Convert count to ::integer since count() is bigint (js doesn't support 64 bit numbers so pg return it as string)
-  const qb = new QueryBuilder('SELECT COUNT(e.id)::integer AS count FROM entities e WHERE');
+  const qb = new QueryBuilder('SELECT COUNT(e.id)::integer AS count FROM entities e');
+
+  if (filter?.referencing) {
+    qb.addQuery('entity_versions ev, entity_version_references evr, entities e2');
+  }
+
+  qb.addQuery('WHERE');
 
   // Filter: entityTypes
   const entityTypesResult = getFilterEntityTypes(context, filter);
@@ -78,7 +84,17 @@ export function totalAdminEntitiesQuery(
     return entityTypesResult;
   }
   if (entityTypesResult.value.length > 0) {
-    qb.addQuery(`AND type = ANY(${qb.addValue(entityTypesResult.value)})`);
+    qb.addQuery(`AND e.type = ANY(${qb.addValue(entityTypesResult.value)})`);
+  }
+
+  // Filter: referencing
+  if (filter?.referencing) {
+    qb.addQuery('AND e.latest_draft_entity_versions_id = ev.id');
+    qb.addQuery(
+      `AND ev.id = evr.entity_versions_id AND evr.entities_id = e2.id AND e2.uuid = ${qb.addValue(
+        filter.referencing
+      )}`
+    );
   }
 
   return ok(qb.build());
