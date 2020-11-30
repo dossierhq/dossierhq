@@ -325,6 +325,26 @@ export async function showLatestEntity(context: SessionContext, id: string): Pro
     const entity = result.value.item;
     await replaceReferencesWithEntities(context, entity);
     logEntity(context, entity);
+
+    const totalResult = await EntityAdmin.getTotalCount(context, { referencing: id });
+    if (totalResult.isError()) {
+      logErrorResult('Failed getting items referencing this entity', totalResult);
+    } else if (totalResult.value > 0) {
+      console.log();
+      logKeyValue('Entities referencing this entity', String(totalResult.value));
+      const referencesResult = await EntityAdmin.searchEntities(context, { referencing: id });
+      if (referencesResult.isError()) {
+        logErrorResult('Failed searching references', referencesResult);
+      } else if (referencesResult.value) {
+        for (const edge of referencesResult.value?.edges) {
+          if (edge.node.isOk()) {
+            console.log(formatEntityOneLine(edge.node.value));
+          } else {
+            logErrorResult('', edge.node);
+          }
+        }
+      }
+    }
   } else {
     logErrorResult('Failed getting entity version', result);
   }
