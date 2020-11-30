@@ -101,7 +101,35 @@ async function visitAllEntityPages(
   }
 }
 
-describe('QueryAdminFoo', () => {
+async function createBarWithFooReferences(contest: SessionContext, fooCount: number) {
+  const createBarResult = await EntityAdmin.createEntity(
+    context,
+    { _type: 'QueryAdminBar', _name: 'Bar', title: 'Bar' },
+    { publish: true }
+  );
+  if (createBarResult.isError()) {
+    throw createBarResult.toError();
+  }
+
+  const { id: barId } = createBarResult.value;
+
+  const fooEntities: AdminEntity[] = [];
+
+  for (let i = 0; i < fooCount; i += 1) {
+    const createFooResult = await EntityAdmin.createEntity(
+      context,
+      { _type: 'QueryAdminFoo', _name: 'Foo: ' + i, bar: { id: barId } },
+      { publish: true }
+    );
+    if (expectOkResult(createFooResult)) {
+      fooEntities.push(createFooResult.value);
+    }
+  }
+
+  return { barId, fooEntities };
+}
+
+describe('adminEntity()', () => {
   test('Query all fields of created entity', async () => {
     const createResult = await EntityAdmin.createEntity(
       context,
@@ -570,6 +598,39 @@ describe('searchAdminEntities()', () => {
     expect(result.data?.adminSearchEntities.edges).toEqual(
       entitiesOfTypeQueryAdminOnlyEditBefore.slice(-10).map((x) => ({ node: { id: x.id } }))
     );
+  });
+
+  test('Filter based on referencing, one reference', async () => {
+    const { barId, fooEntities } = await createBarWithFooReferences(context, 1);
+    const [fooEntity] = fooEntities;
+
+    const result = await graphql(
+      schema,
+      `
+        query QueryReferencing($id: ID!) {
+          adminSearchEntities(filter: { referencing: $id }) {
+            edges {
+              node {
+                id
+              }
+            }
+            totalCount
+          }
+        }
+      `,
+      undefined,
+      { context: ok(context) },
+      { id: barId }
+    );
+
+    expect(result).toEqual({
+      data: {
+        adminSearchEntities: {
+          totalCount: 1,
+          edges: [{ node: { id: fooEntity.id } }],
+        },
+      },
+    });
   });
 });
 

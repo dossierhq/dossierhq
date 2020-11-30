@@ -82,6 +82,7 @@ type AdminEntityConnection {
 
 input AdminFilterInput {
   entityTypes: [String]
+  referencing: ID
 }
 
 input AdminReferenceInput {
@@ -263,6 +264,7 @@ type AdminEntityConnection {
 
 input AdminFilterInput {
   entityTypes: [String]
+  referencing: ID
 }
 
 input AdminReferenceInput {
@@ -374,6 +376,7 @@ type AdminEntityConnection {
 
 input AdminFilterInput {
   entityTypes: [String]
+  referencing: ID
 }
 
 input AdminReferenceInput {

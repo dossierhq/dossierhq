@@ -3,6 +3,7 @@ import type {
   AdminEntity,
   AdminEntityCreate,
   AdminEntityUpdate,
+  AdminFilter,
   Entity,
   EntityTypeSpecification,
   Result,
@@ -292,6 +293,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         name: 'AdminFilterInput',
         fields: {
           entityTypes: { type: new GraphQLList(GraphQLString) },
+          referencing: { type: GraphQLID },
         },
       })
     );
@@ -461,7 +463,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       TSource,
       TContext,
       {
-        filter?: { entityTypes?: string[] };
+        filter?: AdminFilter;
         first?: number;
         after?: string;
         last?: number;
