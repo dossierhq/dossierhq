@@ -600,6 +600,34 @@ describe('searchAdminEntities()', () => {
     );
   });
 
+  test('last 10, ordered by _name', async () => {
+    const result = await graphql(
+      schema,
+      `
+        {
+          adminSearchEntities(
+            filter: { entityTypes: ["QueryAdminOnlyEditBefore"], order: "_name" }
+            last: 10
+          ) {
+            edges {
+              node {
+                id
+              }
+            }
+          }
+        }
+      `,
+      undefined,
+      { context: ok(context) }
+    );
+    expect(result.data?.adminSearchEntities.edges).toEqual(
+      [...entitiesOfTypeQueryAdminOnlyEditBefore]
+        .sort((a, b) => (a._name < b._name ? -1 : 1))
+        .slice(-10)
+        .map((x) => ({ node: { id: x.id } }))
+    );
+  });
+
   test('Filter based on referencing, one reference', async () => {
     const { barId, fooEntities } = await createBarWithFooReferences(context, 1);
     const [fooEntity] = fooEntities;

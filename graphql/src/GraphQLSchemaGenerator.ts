@@ -294,6 +294,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         fields: {
           entityTypes: { type: new GraphQLList(GraphQLString) },
           referencing: { type: GraphQLID },
+          order: { type: GraphQLString }, // TODO should be enum?
         },
       })
     );
