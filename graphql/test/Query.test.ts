@@ -63,7 +63,7 @@ describe('QueryFoo', () => {
           node: {
             __typename: 'QueryFoo',
             id,
-            _name: 'Howdy name',
+            _name: createResult.value._name,
             title: 'Howdy title',
             summary: 'Howdy summary',
           },
@@ -108,7 +108,7 @@ describe('QueryFoo', () => {
           node: {
             __typename: 'QueryFoo',
             id,
-            _name: 'Howdy name',
+            _name: createResult.value._name,
             title: null,
             summary: null,
             bar: null,
@@ -164,11 +164,11 @@ describe('QueryFoo', () => {
             node: {
               __typename: 'QueryFoo',
               id: fooId,
-              _name: 'Foo name',
+              _name: createFooResult.value._name,
               title: 'Foo title',
               bar: {
                 __typename: 'QueryBar',
-                _name: 'Bar name',
+                _name: createBarResult.value._name,
                 id: barId,
                 title: 'Bar title',
               },

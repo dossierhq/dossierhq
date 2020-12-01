@@ -173,7 +173,8 @@ export async function createEntity(context: SessionContext): Promise<{ id: strin
     logErrorResult('Failed creating entity', result);
     return null;
   }
-  console.log(`${chalk.bold('Created:')} ${result.value.id}`);
+  console.log(chalk.bold('Created entity'));
+  logEntity(context, result.value);
   return result.value;
 }
 
@@ -191,7 +192,8 @@ export async function editEntity(context: SessionContext, id: string): Promise<v
     logErrorResult('Failed updating entity', updateResult);
     return;
   }
-  console.log(`${chalk.bold('Updated:')} ${id} (version: ${updateResult.value._version})`);
+  console.log(chalk.bold('Updated'));
+  logEntity(context, updateResult.value);
 }
 
 async function editEntityValues(

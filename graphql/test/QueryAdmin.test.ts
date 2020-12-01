@@ -142,7 +142,7 @@ describe('adminEntity()', () => {
       { publish: true }
     );
     if (expectOkResult(createResult)) {
-      const { id } = createResult.value;
+      const { id, _name: name } = createResult.value;
 
       const result = await graphql(
         schema,
@@ -173,7 +173,7 @@ describe('adminEntity()', () => {
             id,
             _version: 0,
             _type: 'QueryAdminFoo',
-            _name: 'Howdy name',
+            _name: name,
             _deleted: false,
             title: 'Howdy title',
             summary: 'Howdy summary',
@@ -190,7 +190,7 @@ describe('adminEntity()', () => {
       { publish: true }
     );
     if (expectOkResult(createResult)) {
-      const { id } = createResult.value;
+      const { id, _name: name } = createResult.value;
 
       const result = await graphql(
         schema,
@@ -219,7 +219,7 @@ describe('adminEntity()', () => {
             __typename: 'AdminQueryAdminFoo',
             id,
             _type: 'QueryAdminFoo',
-            _name: 'Howdy name',
+            _name: name,
             _version: 0,
             title: null,
             summary: null,
@@ -348,7 +348,7 @@ describe('adminEntity()', () => {
       { publish: true }
     );
     if (expectOkResult(createResult)) {
-      const { id } = createResult.value;
+      const { id, _name: name } = createResult.value;
 
       expectOkResult(await EntityAdmin.deleteEntity(context, id, { publish: false }));
 
@@ -387,7 +387,7 @@ describe('adminEntity()', () => {
           id,
           _version: 0,
           _deleted: false,
-          _name: 'First name',
+          _name: name,
           title: 'First title',
           summary: 'First summary',
         },
@@ -395,7 +395,7 @@ describe('adminEntity()', () => {
           id,
           _version: 1,
           _deleted: true,
-          _name: 'First name',
+          _name: name,
           title: null,
           summary: null,
         },
@@ -453,14 +453,14 @@ describe('adminEntity()', () => {
               __typename: 'AdminQueryAdminFoo',
               id: fooId,
               _type: 'QueryAdminFoo',
-              _name: 'Foo name',
+              _name: createFooResult.value._name,
               _version: 0,
               title: 'Foo title',
               bar: {
                 __typename: 'AdminQueryAdminBar',
                 id: barId,
                 _type: 'QueryAdminBar',
-                _name: 'Bar name',
+                _name: createBarResult.value._name,
                 title: 'Bar title',
               },
             },
@@ -712,7 +712,7 @@ describe('versionHistory()', () => {
       expect(result.data).toEqual({
         adminEntityHistory: {
           id,
-          name: 'Foo name',
+          name: createResult.value._name,
           type: 'QueryAdminFoo',
           versions: [
             { createdBy: context.session.subjectId, deleted: false, published: false, version: 0 },

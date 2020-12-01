@@ -3,7 +3,12 @@ import { notOk, ok } from '.';
 import { toOpaqueCursor } from './Connection';
 import * as Db from './Db';
 import type { EntitiesTable, EntityVersionsTable } from './DbTableTypes';
-import { decodeAdminEntity, encodeEntity, resolveEntity } from './EntityCodec';
+import {
+  decodeAdminEntity,
+  encodeEntity,
+  resolveCreateEntity,
+  resolveUpdateEntity,
+} from './EntityCodec';
 import type { AdminEntityValues } from './EntityCodec';
 import QueryBuilder from './QueryBuilder';
 import { searchAdminEntitiesQuery, totalAdminEntitiesQuery } from './QueryGenerator';
@@ -145,23 +150,68 @@ export async function getTotalCount(
   return ok(count);
 }
 
+async function withUniqueNameAttempt<TResult>(
+  context: SessionContext,
+  name: string,
+  attempt: (context: SessionContext, name: string) => Promise<TResult>
+) {
+  let potentiallyModifiedName = name;
+  let first = true;
+  for (let i = 0; i < 10; i += 1) {
+    await Db.queryNone(
+      context,
+      first ? 'SAVEPOINT unique_name' : 'ROLLBACK TO SAVEPOINT unique_name; SAVEPOINT unique_name'
+    );
+    first = false;
+
+    try {
+      const result = await attempt(context, potentiallyModifiedName);
+      // No exception => it's all good
+      await Db.queryNone(context, 'RELEASE SAVEPOINT unique_name');
+
+      return result;
+    } catch (error) {
+      if (
+        error.name === 'error' &&
+        error.message === 'duplicate key value violates unique constraint "entities_name_key"'
+      ) {
+        potentiallyModifiedName = `${name}#${Math.random().toFixed(8).slice(2)}`;
+        continue;
+      }
+      throw error;
+    }
+  }
+  throw new Error(`Failed creating a unique name for ${name}`);
+}
+
 export async function createEntity(
   context: SessionContext,
   entity: AdminEntityCreate,
   options: { publish: boolean }
 ): PromiseResult<AdminEntity, ErrorType.BadRequest> {
-  const encodeResult = await encodeEntity(context, entity);
+  const resolvedResult = resolveCreateEntity(context, entity);
+  if (resolvedResult.isError()) {
+    return resolvedResult;
+  }
+  const createEntity = resolvedResult.value;
+
+  const encodeResult = await encodeEntity(context, createEntity);
   if (encodeResult.isError()) {
     return encodeResult;
   }
   const { type, name, data, referenceIds } = encodeResult.value;
 
   return await context.withTransaction(async (context) => {
-    const { id: entityId, uuid } = await Db.queryOne<Pick<EntitiesTable, 'id' | 'uuid'>>(
-      context,
-      'INSERT INTO entities (name, type) VALUES ($1, $2) RETURNING id, uuid',
-      [name, type]
-    );
+    const { entityId } = await withUniqueNameAttempt(context, name, async (context, name) => {
+      const { id: entityId, uuid } = await Db.queryOne<Pick<EntitiesTable, 'id' | 'uuid'>>(
+        context,
+        'INSERT INTO entities (name, type) VALUES ($1, $2) RETURNING id, uuid',
+        [name, type]
+      );
+      createEntity.id = uuid;
+      createEntity._name = name;
+      return { entityId };
+    });
 
     const { id: versionsId } = await Db.queryOne<{ id: number }>(
       context,
@@ -185,7 +235,7 @@ export async function createEntity(
       }
       await Db.queryNone(context, qb.build());
     }
-    return ok({ id: uuid, _version: 0, ...entity });
+    return ok(createEntity as AdminEntity);
   });
 }
 
@@ -210,7 +260,7 @@ export async function updateEntity(
     const { id: entityId, data: previousDataEncoded, type, name: previousName } = previousValues;
     const newVersion = previousValues.version + 1;
 
-    const resolvedResult = resolveEntity(
+    const resolvedResult = resolveUpdateEntity(
       context,
       entity,
       type,
@@ -234,12 +284,23 @@ export async function updateEntity(
       'INSERT INTO entity_versions (entities_id, created_by, version, data) VALUES ($1, $2, $3, $4) RETURNING id',
       [entityId, context.session.subjectInternalId, newVersion, data]
     );
+
+    if (name !== previousName) {
+      await withUniqueNameAttempt(context, name, async (context, name) => {
+        await Db.queryNone(context, 'UPDATE entities SET name = $1 WHERE id = $2', [
+          name,
+          entityId,
+        ]);
+        updatedEntity._name = name;
+      });
+    }
+
     await Db.queryNone(
       context,
-      `UPDATE entities SET name = $1, latest_draft_entity_versions_id = $2 ${
-        options.publish ? ', published_entity_versions_id = $2' : ''
-      }  WHERE id = $3`,
-      [name, versionsId, entityId]
+      `UPDATE entities SET latest_draft_entity_versions_id = $1 ${
+        options.publish ? ', published_entity_versions_id = $1' : ''
+      }  WHERE id = $2`,
+      [versionsId, entityId]
     );
 
     if (referenceIds.length > 0) {
