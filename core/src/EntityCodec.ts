@@ -1,6 +1,7 @@
 import { notOk, ok } from '.';
 import type {
   AdminEntity,
+  AdminEntityCreate,
   AdminEntityUpdate,
   Entity,
   EntityTypeSpecification,
@@ -80,7 +81,36 @@ export function decodeAdminEntity(context: SessionContext, values: AdminEntityVa
   return entity;
 }
 
-export function resolveEntity(
+export function resolveCreateEntity(
+  context: SessionContext,
+  entity: AdminEntityCreate
+): Result<AdminEntityCreate, ErrorType.BadRequest> {
+  if (!entity._type) {
+    return notOk.BadRequest('Missing entity._type');
+  }
+
+  const result: AdminEntityCreate = {
+    _name: entity._name,
+    _type: entity._type,
+    _version: 0,
+  };
+
+  const schema = context.instance.getSchema();
+  const entitySpec = schema.getEntityTypeSpecification(result._type);
+  if (!entitySpec) {
+    return notOk.BadRequest(`Entity type ${result._type} doesn’t exist`);
+  }
+
+  for (const fieldSpec of entitySpec.fields) {
+    if (fieldSpec.name in entity) {
+      result[fieldSpec.name] = entity[fieldSpec.name];
+    }
+  }
+
+  return ok(result);
+}
+
+export function resolveUpdateEntity(
   context: SessionContext,
   entity: AdminEntityUpdate,
   type: string,
@@ -101,7 +131,7 @@ export function resolveEntity(
   const schema = context.instance.getSchema();
   const entitySpec = schema.getEntityTypeSpecification(result._type);
   if (!entitySpec) {
-    return notOk.BadRequest(`Entity type ${type} doesn’t exist`);
+    return notOk.BadRequest(`Entity type ${result._type} doesn’t exist`);
   }
 
   for (const fieldSpec of entitySpec.fields) {

@@ -62,13 +62,16 @@ describe('create*Entity()', () => {
     );
 
     const id = result.data?.createMutationFooEntity.id;
+    const name = result.data?.createMutationFooEntity._name;
+    expect(name).toMatch(/^Foo name(#[0-9]+)?$/);
+
     expect(result).toEqual({
       data: {
         createMutationFooEntity: {
           __typename: 'AdminMutationFoo',
           id,
           _type: 'MutationFoo',
-          _name: 'Foo name',
+          _name: name,
           _version: 0,
           title: 'Foo title',
           summary: 'Foo summary',
@@ -81,7 +84,7 @@ describe('create*Entity()', () => {
       expect(getResult.value.item).toEqual({
         id,
         _type: 'MutationFoo',
-        _name: 'Foo name',
+        _name: name,
         _version: 0,
         title: 'Foo title',
         summary: 'Foo summary',
@@ -96,7 +99,7 @@ describe('create*Entity()', () => {
       { publish: true }
     );
     if (expectOkResult(createBarResult)) {
-      const { id: barId } = createBarResult.value;
+      const { id: barId, _name: barName } = createBarResult.value;
       const gqlResult = await graphql(
         schema,
         `
@@ -131,17 +134,18 @@ describe('create*Entity()', () => {
       );
 
       const fooId = gqlResult.data?.createMutationFooEntity.id;
+      const fooName = gqlResult.data?.createMutationFooEntity._name;
       expect(gqlResult).toEqual({
         data: {
           createMutationFooEntity: {
             __typename: 'AdminMutationFoo',
             id: fooId,
             _type: 'MutationFoo',
-            _name: 'Foo name',
+            _name: fooName,
             _version: 0,
             title: 'Foo title',
             summary: 'Foo summary',
-            bar: { id: barId, _name: 'Bar' },
+            bar: { id: barId, _name: barName },
           },
         },
       });
@@ -151,7 +155,7 @@ describe('create*Entity()', () => {
         expect(getResult.value.item).toEqual({
           id: fooId,
           _type: 'MutationFoo',
-          _name: 'Foo name',
+          _name: fooName,
           _version: 0,
           title: 'Foo title',
           summary: 'Foo summary',
@@ -192,13 +196,16 @@ describe('create*Entity()', () => {
     );
 
     const id = result.data?.createMutationFooEntity.id;
+    const name = result.data?.createMutationFooEntity._name;
+    expect(name).toMatch(/^Foo name(#[0-9]+)?$/);
+
     expect(result).toEqual({
       data: {
         createMutationFooEntity: {
           __typename: 'AdminMutationFoo',
           id,
           _type: 'MutationFoo',
-          _name: 'Foo name',
+          _name: name,
           _version: 0,
           title: 'Foo title',
           summary: 'Foo summary',
@@ -249,7 +256,7 @@ describe('update*Entity()', () => {
       { publish: true }
     );
     if (expectOkResult(createResult)) {
-      const { id } = createResult.value;
+      const { id, _name: name } = createResult.value;
       const result = await graphql(
         schema,
         `
@@ -282,7 +289,7 @@ describe('update*Entity()', () => {
             __typename: 'AdminMutationFoo',
             id,
             _type: 'MutationFoo',
-            _name: 'First name',
+            _name: name,
             _version: 1,
             title: 'Updated title',
             summary: 'First summary',
@@ -295,7 +302,7 @@ describe('update*Entity()', () => {
         expect(getResult.value.item).toEqual({
           id,
           _type: 'MutationFoo',
-          _name: 'First name',
+          _name: name,
           _version: 1,
           title: 'Updated title',
           summary: 'First summary',
@@ -311,7 +318,7 @@ describe('update*Entity()', () => {
       { publish: true }
     );
     if (expectOkResult(createBarResult)) {
-      const { id: barId } = createBarResult.value;
+      const { id: barId, _name: barName } = createBarResult.value;
 
       const createFooResult = await EntityAdmin.createEntity(
         context,
@@ -361,13 +368,16 @@ describe('update*Entity()', () => {
           }
         );
 
+        const name = result.data?.updateMutationFooEntity._name;
+        expect(name).toMatch(/^Updated name(#[0-9]+)?$/);
+
         expect(result).toEqual({
           data: {
             updateMutationFooEntity: {
               __typename: 'AdminMutationFoo',
               id: fooId,
               _type: 'MutationFoo',
-              _name: 'Updated name',
+              _name: name,
               _version: 1,
               title: 'Updated title',
               summary: 'Updated summary',
@@ -375,7 +385,7 @@ describe('update*Entity()', () => {
                 __typename: 'AdminMutationBar',
                 id: barId,
                 _type: 'MutationBar',
-                _name: 'Bar',
+                _name: barName,
               },
             },
           },
@@ -386,7 +396,7 @@ describe('update*Entity()', () => {
           expect(getResult.value.item).toEqual({
             id: fooId,
             _type: 'MutationFoo',
-            _name: 'Updated name',
+            _name: name,
             _version: 1,
             title: 'Updated title',
             summary: 'Updated summary',
@@ -453,7 +463,7 @@ describe('deleteEntity()', () => {
       { publish: true }
     );
     if (expectOkResult(createResult)) {
-      const { id } = createResult.value;
+      const { id, _name: name } = createResult.value;
 
       const result = await graphql(
         schema,
@@ -479,7 +489,7 @@ describe('deleteEntity()', () => {
             __typename: 'AdminMutationFoo',
             id,
             _type: 'MutationFoo',
-            _name: 'Howdy name',
+            _name: name,
             _version: 1,
             _deleted: true,
           },
@@ -500,7 +510,7 @@ describe('deleteEntity()', () => {
       { publish: true }
     );
     if (expectOkResult(createResult)) {
-      const { id } = createResult.value;
+      const { id, _name: name } = createResult.value;
 
       const result = await graphql(
         schema,
@@ -526,7 +536,7 @@ describe('deleteEntity()', () => {
             __typename: 'AdminMutationFoo',
             id,
             _type: 'MutationFoo',
-            _name: 'Howdy name',
+            _name: name,
             _version: 1,
             _deleted: true,
           },

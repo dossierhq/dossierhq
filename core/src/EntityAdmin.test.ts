@@ -203,7 +203,7 @@ describe('getEntity()', () => {
         expect(versionMaxResult.value.item).toEqual({
           id,
           _type: 'EntityAdminFoo',
-          _name: 'Foo',
+          _name: createResult.value._name,
           _version: 1,
           _deleted: true,
         });
@@ -243,13 +243,14 @@ describe('createEntity()', () => {
       { publish: true }
     );
     if (expectOkResult(createResult)) {
-      expect(createResult.value.id).toMatch(uuidMatcher);
-      const { id } = createResult.value;
+      const { id, _name: name } = createResult.value;
+      expect(id).toMatch(uuidMatcher);
+      expect(name).toMatch(/^Foo(#[0-9]+)?$/);
 
       expect(createResult.value).toEqual({
         id,
         _type: 'EntityAdminFoo',
-        _name: 'Foo',
+        _name: name,
         _version: 0,
         title: 'Title',
       });
@@ -271,7 +272,7 @@ describe('createEntity()', () => {
         expect(version0Result.value.item).toEqual({
           id,
           _type: 'EntityAdminFoo',
-          _name: 'Foo',
+          _name: name,
           _version: 0,
           title: 'Title',
         });
@@ -282,7 +283,7 @@ describe('createEntity()', () => {
         expect(publishedResult.value.item).toEqual({
           id,
           _type: 'EntityAdminFoo',
-          _name: 'Foo',
+          _name: name,
           title: 'Title',
         });
       }
@@ -302,7 +303,7 @@ describe('createEntity()', () => {
       expect(createResult.value).toEqual({
         id,
         _type: 'EntityAdminFoo',
-        _name: 'Draft',
+        _name: createResult.value._name,
         _version: 0,
         title: 'Draft',
       });
@@ -324,7 +325,7 @@ describe('createEntity()', () => {
         expect(version0Result.value.item).toEqual({
           id,
           _type: 'EntityAdminFoo',
-          _name: 'Draft',
+          _name: createResult.value._name,
           _version: 0,
           title: 'Draft',
         });
@@ -355,7 +356,7 @@ describe('createEntity()', () => {
         expect(createFooResult.value).toEqual({
           id: fooId,
           _type: 'EntityAdminFoo',
-          _name: 'Foo name',
+          _name: createFooResult.value._name,
           _version: 0,
           title: 'Foo title',
           bar: { id: barId },
@@ -366,7 +367,7 @@ describe('createEntity()', () => {
           expect(fooVersion0Result.value.item).toEqual({
             id: fooId,
             _type: 'EntityAdminFoo',
-            _name: 'Foo name',
+            _name: createFooResult.value._name,
             _version: 0,
             title: 'Foo title',
             bar: { id: barId },
@@ -378,7 +379,7 @@ describe('createEntity()', () => {
           expect(publishedFooResult.value.item).toEqual({
             id: fooId,
             _type: 'EntityAdminFoo',
-            _name: 'Foo name',
+            _name: createFooResult.value._name,
             title: 'Foo title',
             bar: { id: barId },
           });
@@ -768,6 +769,7 @@ describe('updateEntity()', () => {
     );
     if (expectOkResult(createResult)) {
       const { id } = createResult.value;
+      let name = createResult.value._name;
 
       const updateResult = await EntityAdmin.updateEntity(
         context,
@@ -775,10 +777,13 @@ describe('updateEntity()', () => {
         { publish: true }
       );
       if (expectOkResult(updateResult)) {
+        name = updateResult.value._name;
+        expect(name).toMatch(/^Updated name(#[0-9]+)?$/);
+
         expect(updateResult.value).toEqual({
           id,
           _type: 'EntityAdminFoo',
-          _name: 'Updated name',
+          _name: name,
           _version: 1,
           title: 'Updated title',
         });
@@ -807,7 +812,7 @@ describe('updateEntity()', () => {
         expect(version0Result.value.item).toEqual({
           id,
           _type: 'EntityAdminFoo',
-          _name: 'Updated name', // original name isn't kept
+          _name: name, // original name isn't kept
           _version: 0,
           title: 'Original',
         });
@@ -818,7 +823,7 @@ describe('updateEntity()', () => {
         expect(version1Result.value.item).toEqual({
           id,
           _type: 'EntityAdminFoo',
-          _name: 'Updated name',
+          _name: name,
           _version: 1,
           title: 'Updated title',
         });
@@ -829,7 +834,7 @@ describe('updateEntity()', () => {
         expect(publishedResult.value.item).toEqual({
           id,
           _type: 'EntityAdminFoo',
-          _name: 'Updated name',
+          _name: name,
           title: 'Updated title',
         });
       }
@@ -844,6 +849,7 @@ describe('updateEntity()', () => {
     );
     if (expectOkResult(createResult)) {
       const { id } = createResult.value;
+      let name = createResult.value._name;
 
       const updateResult = await EntityAdmin.updateEntity(
         context,
@@ -851,10 +857,13 @@ describe('updateEntity()', () => {
         { publish: false }
       );
       if (expectOkResult(updateResult)) {
+        name = updateResult.value._name;
+        expect(name).toMatch(/^Updated name(#[0-9]+)?$/);
+
         expect(updateResult.value).toEqual({
           id,
           _type: 'EntityAdminFoo',
-          _name: 'Updated name',
+          _name: name,
           _version: 1,
           title: 'Updated title',
         });
@@ -883,7 +892,7 @@ describe('updateEntity()', () => {
         expect(version0Result.value.item).toEqual({
           id,
           _type: 'EntityAdminFoo',
-          _name: 'Updated name',
+          _name: name,
           _version: 0,
           title: 'First',
         });
@@ -893,7 +902,7 @@ describe('updateEntity()', () => {
         expect(version1Result.value.item).toEqual({
           id,
           _type: 'EntityAdminFoo',
-          _name: 'Updated name',
+          _name: name,
           _version: 1,
           title: 'Updated title',
         });
@@ -904,7 +913,7 @@ describe('updateEntity()', () => {
         expect(publishedResult.value.item).toEqual({
           id,
           _type: 'EntityAdminFoo',
-          _name: 'Updated name',
+          _name: name,
           title: 'First',
         });
       }
@@ -929,7 +938,7 @@ describe('updateEntity()', () => {
         expect(updateResult.value).toEqual({
           id,
           _type: 'EntityAdminFoo',
-          _name: 'Original',
+          _name: createResult.value._name,
           _version: 1,
           title: 'Updated title',
         });
@@ -958,7 +967,7 @@ describe('updateEntity()', () => {
         expect(version0Result.value.item).toEqual({
           id,
           _type: 'EntityAdminFoo',
-          _name: 'Original',
+          _name: createResult.value._name,
           _version: 0,
           title: 'Original',
         });
@@ -968,7 +977,7 @@ describe('updateEntity()', () => {
         expect(version1Result.value.item).toEqual({
           id,
           _type: 'EntityAdminFoo',
-          _name: 'Original',
+          _name: createResult.value._name,
           _version: 1,
           title: 'Updated title',
         });
@@ -979,7 +988,7 @@ describe('updateEntity()', () => {
         expect(publishedResult.value.item).toEqual({
           id,
           _type: 'EntityAdminFoo',
-          _name: 'Original',
+          _name: createResult.value._name,
           title: 'Updated title',
         });
       }
@@ -1009,7 +1018,7 @@ describe('updateEntity()', () => {
         expect(updateResult.value).toEqual({
           id,
           _type: 'EntityAdminFoo',
-          _name: 'First name',
+          _name: createResult.value._name,
           _version: 1,
           title: 'First title',
           summary: 'Updated summary',
@@ -1039,7 +1048,7 @@ describe('updateEntity()', () => {
         expect(version0Result.value.item).toEqual({
           id,
           _type: 'EntityAdminFoo',
-          _name: 'First name',
+          _name: createResult.value._name,
           _version: 0,
           title: 'First title',
           summary: 'First summary',
@@ -1050,7 +1059,7 @@ describe('updateEntity()', () => {
         expect(version1Result.value.item).toEqual({
           id,
           _type: 'EntityAdminFoo',
-          _name: 'First name',
+          _name: createResult.value._name,
           _version: 1,
           title: 'First title',
           summary: 'Updated summary',
@@ -1062,7 +1071,7 @@ describe('updateEntity()', () => {
         expect(publishedResult.value.item).toEqual({
           id,
           _type: 'EntityAdminFoo',
-          _name: 'First name',
+          _name: createResult.value._name,
           title: 'First title',
           summary: 'Updated summary',
         });
@@ -1105,7 +1114,7 @@ describe('updateEntity()', () => {
           expect(updateResult.value).toEqual({
             id: fooId,
             _type: 'EntityAdminFoo',
-            _name: 'First name',
+            _name: createFooResult.value._name,
             _version: 1,
             title: 'First title',
             summary: 'First summary',
@@ -1118,7 +1127,7 @@ describe('updateEntity()', () => {
           expect(version0Result.value.item).toEqual({
             id: fooId,
             _type: 'EntityAdminFoo',
-            _name: 'First name',
+            _name: createFooResult.value._name,
             _version: 0,
             title: 'First title',
             summary: 'First summary',
@@ -1129,7 +1138,7 @@ describe('updateEntity()', () => {
           expect(version1Result.value.item).toEqual({
             id: fooId,
             _type: 'EntityAdminFoo',
-            _name: 'First name',
+            _name: createFooResult.value._name,
             _version: 1,
             title: 'First title',
             summary: 'First summary',
@@ -1142,7 +1151,7 @@ describe('updateEntity()', () => {
           expect(publishedResult.value.item).toEqual({
             id: fooId,
             _type: 'EntityAdminFoo',
-            _name: 'First name',
+            _name: createFooResult.value._name,
             title: 'First title',
             summary: 'First summary',
             bar: { id: barId },
@@ -1188,7 +1197,7 @@ describe('updateEntity()', () => {
           expect(updateResult.value).toEqual({
             id: fooId,
             _type: 'EntityAdminFoo',
-            _name: 'First name',
+            _name: createFooResult.value._name,
             _version: 1,
             title: 'First title',
             summary: 'Updated summary',
@@ -1201,7 +1210,7 @@ describe('updateEntity()', () => {
           expect(version0Result.value.item).toEqual({
             id: fooId,
             _type: 'EntityAdminFoo',
-            _name: 'First name',
+            _name: createFooResult.value._name,
             _version: 0,
             title: 'First title',
             summary: 'First summary',
@@ -1213,7 +1222,7 @@ describe('updateEntity()', () => {
           expect(version1Result.value.item).toEqual({
             id: fooId,
             _type: 'EntityAdminFoo',
-            _name: 'First name',
+            _name: createFooResult.value._name,
             _version: 1,
             title: 'First title',
             summary: 'Updated summary',
@@ -1226,7 +1235,7 @@ describe('updateEntity()', () => {
           expect(publishedResult.value.item).toEqual({
             id: fooId,
             _type: 'EntityAdminFoo',
-            _name: 'First name',
+            _name: createFooResult.value._name,
             title: 'First title',
             summary: 'Updated summary',
             bar: { id: barId },
@@ -1349,7 +1358,7 @@ describe('deleteEntity()', () => {
         expect(deleteResult.value).toEqual({
           id,
           _type: 'EntityAdminFoo',
-          _name: 'Delete',
+          _name: createResult.value._name,
           _version: 1,
           _deleted: true,
         });
@@ -1378,7 +1387,7 @@ describe('deleteEntity()', () => {
         expect(version0Result.value.item).toEqual({
           id,
           _type: 'EntityAdminFoo',
-          _name: 'Delete',
+          _name: createResult.value._name,
           _version: 0,
           title: 'Delete',
         });
@@ -1388,7 +1397,7 @@ describe('deleteEntity()', () => {
         expect(version1Result.value.item).toEqual({
           id,
           _type: 'EntityAdminFoo',
-          _name: 'Delete',
+          _name: createResult.value._name,
           _version: 1,
           _deleted: true,
         });
@@ -1412,7 +1421,7 @@ describe('deleteEntity()', () => {
         expect(deleteResult.value).toEqual({
           id,
           _type: 'EntityAdminFoo',
-          _name: 'Draft',
+          _name: createResult.value._name,
           _version: 1,
           _deleted: true,
         });
@@ -1441,7 +1450,7 @@ describe('deleteEntity()', () => {
         expect(version0Result.value.item).toEqual({
           id,
           _type: 'EntityAdminFoo',
-          _name: 'Draft',
+          _name: createResult.value._name,
           _version: 0,
           title: 'Draft',
         });
@@ -1451,7 +1460,7 @@ describe('deleteEntity()', () => {
         expect(version1Result.value.item).toEqual({
           id,
           _type: 'EntityAdminFoo',
-          _name: 'Draft',
+          _name: createResult.value._name,
           _version: 1,
           _deleted: true,
         });
@@ -1475,7 +1484,7 @@ describe('deleteEntity()', () => {
         expect(deleteResult.value).toEqual({
           id,
           _type: 'EntityAdminFoo',
-          _name: 'Delete',
+          _name: createResult.value._name,
           _version: 1,
           _deleted: true,
         });
@@ -1504,7 +1513,7 @@ describe('deleteEntity()', () => {
         expect(version0Result.value.item).toEqual({
           id,
           _type: 'EntityAdminFoo',
-          _name: 'Delete',
+          _name: createResult.value._name,
           _version: 0,
           title: 'Delete',
         });
@@ -1514,7 +1523,7 @@ describe('deleteEntity()', () => {
         expect(version1Result.value.item).toEqual({
           id,
           _type: 'EntityAdminFoo',
-          _name: 'Delete',
+          _name: createResult.value._name,
           _version: 1,
           _deleted: true,
         });
@@ -1525,7 +1534,7 @@ describe('deleteEntity()', () => {
         expect(publishedResult.value.item).toEqual({
           id,
           _type: 'EntityAdminFoo',
-          _name: 'Delete',
+          _name: createResult.value._name,
           title: 'Delete',
         });
       }
@@ -1545,7 +1554,7 @@ describe('deleteEntity()', () => {
         expect(deleteResult.value).toEqual({
           id,
           _type: 'EntityAdminFoo',
-          _name: 'Draft',
+          _name: createResult.value._name,
           _version: 1,
           _deleted: true,
         });
@@ -1574,7 +1583,7 @@ describe('deleteEntity()', () => {
         expect(version0Result.value.item).toEqual({
           id,
           _type: 'EntityAdminFoo',
-          _name: 'Draft',
+          _name: createResult.value._name,
           _version: 0,
           title: 'Draft',
         });
@@ -1584,7 +1593,7 @@ describe('deleteEntity()', () => {
         expect(version1Result.value.item).toEqual({
           id,
           _type: 'EntityAdminFoo',
-          _name: 'Draft',
+          _name: createResult.value._name,
           _version: 1,
           _deleted: true,
         });

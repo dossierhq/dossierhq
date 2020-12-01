@@ -123,7 +123,7 @@ export async function queryNone<I extends any[] = any[]>(
   values?: I
 ): Promise<void> {
   const { rows } = await getQueryable(context).query(queryTextOrConfig, values);
-  if (rows.length === 0) {
+  if (!rows || rows.length === 0) {
     return;
   }
   throw new UnexpectedQuantityError(`Expected 0 rows, got ${rows.length}`, rows.length);
