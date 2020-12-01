@@ -7,6 +7,7 @@ import { decodeAdminEntity, encodeEntity, resolveEntity } from './EntityCodec';
 import type { AdminEntityValues } from './EntityCodec';
 import QueryBuilder from './QueryBuilder';
 import { searchAdminEntitiesQuery, totalAdminEntitiesQuery } from './QueryGenerator';
+import type { SearchAdminEntitiesItem } from './QueryGenerator';
 
 export interface AdminEntityHistory {
   id: string;
@@ -54,6 +55,7 @@ export interface AdminFilter {
   entityTypes?: string[];
   /** Entities referencing the entity (by id) */
   referencing?: string;
+  order?: '_name';
 }
 
 export async function getEntity(
@@ -100,10 +102,7 @@ export async function searchEntities(
   if (query.isError()) {
     return query;
   }
-  const entitiesValues = await Db.queryMany<Pick<EntitiesTable, 'id'> & AdminEntityValues>(
-    context,
-    query.value
-  );
+  const entitiesValues = await Db.queryMany<SearchAdminEntitiesItem>(context, query.value);
   const hasExtraPage = entitiesValues.length > query.value.pagingCount;
   if (hasExtraPage) {
     entitiesValues.splice(query.value.pagingCount, 1);
@@ -118,15 +117,17 @@ export async function searchEntities(
   if (entities.length === 0) {
     return ok(null);
   }
+
+  const { cursorName, cursorType } = query.value;
   return ok({
     pageInfo: {
       hasNextPage: query.value.isForwards ? hasExtraPage : false,
       hasPreviousPage: query.value.isForwards ? false : hasExtraPage,
-      startCursor: toOpaqueCursor(entitiesValues[0].id),
-      endCursor: toOpaqueCursor(entitiesValues[entitiesValues.length - 1].id),
+      startCursor: toOpaqueCursor(cursorType, entitiesValues[0][cursorName]),
+      endCursor: toOpaqueCursor(cursorType, entitiesValues[entitiesValues.length - 1][cursorName]),
     },
     edges: entities.map((entity, index) => ({
-      cursor: toOpaqueCursor(entitiesValues[index].id),
+      cursor: toOpaqueCursor(cursorType, entitiesValues[index][cursorName]),
       node: ok(entity),
     })),
   });

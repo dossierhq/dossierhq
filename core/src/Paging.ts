@@ -1,15 +1,16 @@
 import { ErrorType, notOk, ok } from './';
 import type { Result } from './';
 import { fromOpaqueCursor } from './Connection';
+import type { CursorNativeType } from './Connection';
 import { pagingDefaultCount } from './Constants';
 
 export type Paging = { first?: number; after?: string; last?: number; before?: string };
 
-export interface ResolvedPaging {
+export interface ResolvedPaging<TCursor> {
   isForwards: boolean;
   count: number;
-  before: number | null;
-  after: number | null;
+  before: TCursor | null;
+  after: TCursor | null;
 }
 
 export function isPagingForwards(paging?: Paging): boolean {
@@ -22,20 +23,27 @@ function getCount(paging: Paging | undefined, key: 'first' | 'last') {
   return typeof count === 'number' ? count : null;
 }
 
-function getCursor(paging: Paging | undefined, key: 'after' | 'before') {
+function getCursor(
+  cursorType: CursorNativeType,
+  paging: Paging | undefined,
+  key: 'after' | 'before'
+) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const cursor = (paging as any)?.[key];
   if (cursor) {
-    return fromOpaqueCursor(cursor);
+    return fromOpaqueCursor(cursorType, cursor);
   }
   return null;
 }
 
-export function resolvePaging(paging?: Paging): Result<ResolvedPaging, ErrorType.BadRequest> {
+export function resolvePaging<TCursor>(
+  cursorType: CursorNativeType,
+  paging?: Paging
+): Result<ResolvedPaging<TCursor>, ErrorType.BadRequest> {
   const first = getCount(paging, 'first');
   const last = getCount(paging, 'last');
-  const after = getCursor(paging, 'after');
-  const before = getCursor(paging, 'before');
+  const after = getCursor(cursorType, paging, 'after');
+  const before = getCursor(cursorType, paging, 'before');
 
   if (first !== null && first < 0) {
     return notOk.BadRequest('Paging first is a negative value');
@@ -61,7 +69,7 @@ export function resolvePaging(paging?: Paging): Result<ResolvedPaging, ErrorType
   return ok({
     isForwards,
     count,
-    before: before?.isOk() ? before.value : null,
-    after: after?.isOk() ? after.value : null,
+    before: before?.isOk() ? (before.value as TCursor) : null,
+    after: after?.isOk() ? (after.value as TCursor) : null,
   });
 }

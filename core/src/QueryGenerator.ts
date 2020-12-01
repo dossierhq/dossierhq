@@ -1,17 +1,41 @@
 import type { AdminFilter, Paging, Result, SessionContext } from './';
 import { ErrorType, notOk, ok } from '.';
+import type { CursorNativeType } from './Connection';
+import type { EntitiesTable } from './DbTableTypes';
+import type { AdminEntityValues } from './EntityCodec';
 import { resolvePaging } from './Paging';
 import QueryBuilder from './QueryBuilder';
 
+export type SearchAdminEntitiesItem = Pick<EntitiesTable, 'id'> & AdminEntityValues;
 export function searchAdminEntitiesQuery(
   context: SessionContext,
   filter: AdminFilter | undefined,
   paging: Paging | undefined
 ): Result<
-  { text: string; values: unknown[]; isForwards: boolean; pagingCount: number },
+  {
+    text: string;
+    values: unknown[];
+    isForwards: boolean;
+    pagingCount: number;
+    cursorName: keyof SearchAdminEntitiesItem;
+    cursorType: CursorNativeType;
+  },
   ErrorType.BadRequest
 > {
-  const pagingResult = resolvePaging(paging);
+  let cursorName: keyof SearchAdminEntitiesItem;
+  let cursorType: CursorNativeType;
+  switch (filter?.order) {
+    case '_name':
+      cursorName = 'name';
+      cursorType = 'string';
+      break;
+    default:
+      cursorName = 'id';
+      cursorType = 'int';
+      break;
+  }
+
+  const pagingResult = resolvePaging(cursorType, paging);
   if (pagingResult.isError()) {
     return pagingResult;
   }
@@ -43,25 +67,34 @@ export function searchAdminEntitiesQuery(
     );
   }
 
-  // Paging
+  // Paging 1/2
   if (resolvedPaging.after !== null) {
-    qb.addQuery(`AND e.id > ${qb.addValue(resolvedPaging.after)}`);
+    qb.addQuery(`AND e.${cursorName} > ${qb.addValue(resolvedPaging.after)}`);
   }
   if (resolvedPaging.before !== null) {
-    qb.addQuery(`AND e.id < ${qb.addValue(resolvedPaging.before)}`);
+    qb.addQuery(`AND e.${cursorName} < ${qb.addValue(resolvedPaging.before)}`);
   }
 
-  const countToRequest = resolvedPaging.count + 1; // request one more to calculate hasNextPage
-  if (resolvedPaging.isForwards) {
-    qb.addQuery(`ORDER BY e.id LIMIT ${qb.addValue(countToRequest)}`);
-  } else {
-    qb.addQuery(`ORDER BY e.id DESC LIMIT ${qb.addValue(countToRequest)}`);
+  // Ordering
+  switch (filter?.order) {
+    case '_name':
+      qb.addQuery('ORDER BY e.name');
+      break;
+    default:
+      qb.addQuery('ORDER BY e.id');
+      break;
   }
+
+  // Paging 2/2
+  const countToRequest = resolvedPaging.count + 1; // request one more to calculate hasNextPage
+  qb.addQuery(`${resolvedPaging.isForwards ? '' : 'DESC '}LIMIT ${qb.addValue(countToRequest)}`);
 
   return ok({
     ...qb.build(),
     isForwards: resolvedPaging.isForwards,
     pagingCount: resolvedPaging.count,
+    cursorName,
+    cursorType,
   });
 }
 

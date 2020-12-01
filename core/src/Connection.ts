@@ -1,6 +1,8 @@
 import type { ErrorType, Result } from '.';
 import { ok, notOk } from '.';
 
+export type CursorNativeType = 'int' | 'string';
+
 export interface PageInfo {
   hasPreviousPage: boolean;
   hasNextPage: boolean;
@@ -18,14 +20,34 @@ export interface Edge<TOk, TError extends ErrorType> {
   cursor: string;
 }
 
-export function toOpaqueCursor(id: number): string {
-  return Buffer.from(String(id)).toString('base64');
+export function toOpaqueCursor(type: CursorNativeType, value: unknown): string {
+  switch (type) {
+    case 'int':
+      return Buffer.from(String(value as number)).toString('base64');
+    case 'string':
+      return Buffer.from(value as string).toString('base64');
+    default:
+      throw new Error(`Unknown cursor type ${type}`);
+  }
 }
 
-export function fromOpaqueCursor(cursor: string): Result<number, ErrorType.BadRequest> {
-  const value = Number.parseInt(Buffer.from(cursor, 'base64').toString('ascii'));
-  if (Number.isNaN(value)) {
-    return notOk.BadRequest('Invalid format of cursor');
+export function fromOpaqueCursor(
+  type: CursorNativeType,
+  cursor: string
+): Result<unknown, ErrorType.BadRequest> {
+  switch (type) {
+    case 'int': {
+      const value = Number.parseInt(Buffer.from(cursor, 'base64').toString('ascii'));
+      if (Number.isNaN(value)) {
+        return notOk.BadRequest('Invalid format of cursor');
+      }
+      return ok(value);
+    }
+    case 'string': {
+      const value = Buffer.from(cursor, 'base64').toString('ascii');
+      return ok(value);
+    }
+    default:
+      throw new Error(`Unknown cursor type ${type}`);
   }
-  return ok(value);
 }
