@@ -14,7 +14,9 @@
         {
           "name": "category",
           "type": "Reference",
-          "entityTypes": ["Category"]
+          "entityTypes": [
+            "Category"
+          ]
         }
       ]
     },
@@ -22,7 +24,8 @@
       "fields": [
         {
           "name": "title",
-          "type": "String"
+          "type": "String",
+          "isName": true
         }
       ]
     }

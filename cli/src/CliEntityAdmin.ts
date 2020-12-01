@@ -123,6 +123,10 @@ async function configureQuery(
         enabled: (initialFilter?.entityTypes?.length ?? 0) === 0,
       },
       {
+        id: '_order',
+        name: `${chalk.bold('Order:')} ${filter.order ?? 'default'}`,
+      },
+      {
         id: '_direction',
         name: `${chalk.bold('Direction:')} ${pagingIsForward ? 'forward' : 'backward'}`,
       },
@@ -135,6 +139,9 @@ async function configureQuery(
     switch (item.id) {
       case '_entityTypes':
         filter.entityTypes = await CliSchema.selectEntityTypes(context);
+        break;
+      case '_order':
+        filter.order = await selectOrder(filter.order);
         break;
       case '_direction':
         pagingIsForward = !pagingIsForward;
@@ -153,6 +160,21 @@ async function configureQuery(
         };
     }
   }
+}
+
+async function selectOrder(order: string | undefined) {
+  const item = await showItemSelector(
+    'How to order the results?',
+    [
+      { id: 'default', name: 'Default' },
+      { id: '_name', name: 'Name' },
+    ],
+    order ?? 'default'
+  );
+  if (item.id === 'default') {
+    return undefined;
+  }
+  return item.id;
 }
 
 export async function createEntity(context: SessionContext): Promise<{ id: string } | null> {

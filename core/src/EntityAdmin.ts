@@ -60,7 +60,8 @@ export interface AdminFilter {
   entityTypes?: string[];
   /** Entities referencing the entity (by id) */
   referencing?: string;
-  order?: '_name';
+  /** Valid values: _name */
+  order?: string;
 }
 
 export async function getEntity(
