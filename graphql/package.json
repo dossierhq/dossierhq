@@ -8,6 +8,7 @@
   },
   "scripts": {
     "ci:check": "npm run ts:check && npm run eslint:check && npm run prettier:check && npm test",
+    "db:cli": "./scripts/db-cli.sh",
     "db:migrate": "./scripts/db-migrate.sh",
     "eslint:check": "eslint .",
     "eslint:fix": "eslint --fix .",
