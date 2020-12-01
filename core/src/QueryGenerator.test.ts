@@ -20,6 +20,8 @@ describe('searchAdminEntitiesQuery()', () => {
     expect(searchAdminEntitiesQuery(context, undefined, undefined)).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
+          "cursorName": "id",
+          "cursorType": "int",
           "isForwards": true,
           "pagingCount": 25,
           "text": "SELECT e.id, e.uuid, e.type, e.name, ev.version, ev.data
@@ -36,6 +38,8 @@ describe('searchAdminEntitiesQuery()', () => {
     expect(searchAdminEntitiesQuery(context, undefined, { first: 10 })).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
+          "cursorName": "id",
+          "cursorType": "int",
           "isForwards": true,
           "pagingCount": 10,
           "text": "SELECT e.id, e.uuid, e.type, e.name, ev.version, ev.data
@@ -49,10 +53,13 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('first 10 after', () => {
-    expect(searchAdminEntitiesQuery(context, undefined, { first: 10, after: toOpaqueCursor(999) }))
-      .toMatchInlineSnapshot(`
+    expect(
+      searchAdminEntitiesQuery(context, undefined, { first: 10, after: toOpaqueCursor('int', 999) })
+    ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
+          "cursorName": "id",
+          "cursorType": "int",
           "isForwards": true,
           "pagingCount": 10,
           "text": "SELECT e.id, e.uuid, e.type, e.name, ev.version, ev.data
@@ -70,6 +77,8 @@ describe('searchAdminEntitiesQuery()', () => {
     expect(searchAdminEntitiesQuery(context, undefined, { last: 10 })).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
+          "cursorName": "id",
+          "cursorType": "int",
           "isForwards": false,
           "pagingCount": 10,
           "text": "SELECT e.id, e.uuid, e.type, e.name, ev.version, ev.data
@@ -83,10 +92,13 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('last 10 before', () => {
-    expect(searchAdminEntitiesQuery(context, undefined, { last: 10, before: toOpaqueCursor(456) }))
-      .toMatchInlineSnapshot(`
+    expect(
+      searchAdminEntitiesQuery(context, undefined, { last: 10, before: toOpaqueCursor('int', 456) })
+    ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
+          "cursorName": "id",
+          "cursorType": "int",
           "isForwards": false,
           "pagingCount": 10,
           "text": "SELECT e.id, e.uuid, e.type, e.name, ev.version, ev.data
@@ -104,12 +116,14 @@ describe('searchAdminEntitiesQuery()', () => {
     expect(
       searchAdminEntitiesQuery(context, undefined, {
         first: 10,
-        after: toOpaqueCursor(123),
-        before: toOpaqueCursor(456),
+        after: toOpaqueCursor('int', 123),
+        before: toOpaqueCursor('int', 456),
       })
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
+          "cursorName": "id",
+          "cursorType": "int",
           "isForwards": true,
           "pagingCount": 10,
           "text": "SELECT e.id, e.uuid, e.type, e.name, ev.version, ev.data
@@ -128,12 +142,14 @@ describe('searchAdminEntitiesQuery()', () => {
     expect(
       searchAdminEntitiesQuery(context, undefined, {
         last: 10,
-        after: toOpaqueCursor(123),
-        before: toOpaqueCursor(456),
+        after: toOpaqueCursor('int', 123),
+        before: toOpaqueCursor('int', 456),
       })
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
+          "cursorName": "id",
+          "cursorType": "int",
           "isForwards": false,
           "pagingCount": 10,
           "text": "SELECT e.id, e.uuid, e.type, e.name, ev.version, ev.data
@@ -153,6 +169,8 @@ describe('searchAdminEntitiesQuery()', () => {
       .toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
+          "cursorName": "id",
+          "cursorType": "int",
           "isForwards": true,
           "pagingCount": 25,
           "text": "SELECT e.id, e.uuid, e.type, e.name, ev.version, ev.data
@@ -170,6 +188,8 @@ describe('searchAdminEntitiesQuery()', () => {
       .toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
+          "cursorName": "id",
+          "cursorType": "int",
           "isForwards": true,
           "pagingCount": 25,
           "text": "SELECT e.id, e.uuid, e.type, e.name, ev.version, ev.data
@@ -195,6 +215,8 @@ describe('searchAdminEntitiesQuery()', () => {
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
+          "cursorName": "id",
+          "cursorType": "int",
           "isForwards": true,
           "pagingCount": 25,
           "text": "SELECT e.id, e.uuid, e.type, e.name, ev.version, ev.data
@@ -216,11 +238,13 @@ describe('searchAdminEntitiesQuery()', () => {
       searchAdminEntitiesQuery(
         context,
         { entityTypes: ['EntityAdminFoo', 'EntityAdminBar'] },
-        { first: 10, after: toOpaqueCursor(543) }
+        { first: 10, after: toOpaqueCursor('int', 543) }
       )
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
+          "cursorName": "id",
+          "cursorType": "int",
           "isForwards": true,
           "pagingCount": 10,
           "text": "SELECT e.id, e.uuid, e.type, e.name, ev.version, ev.data
@@ -248,6 +272,8 @@ describe('searchAdminEntitiesQuery()', () => {
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
+          "cursorName": "id",
+          "cursorType": "int",
           "isForwards": true,
           "pagingCount": 25,
           "text": "SELECT e.id, e.uuid, e.type, e.name, ev.version, ev.data
@@ -269,11 +295,13 @@ describe('searchAdminEntitiesQuery()', () => {
           entityTypes: ['EntityAdminFoo', 'EntityAdminBar'],
           referencing: '37b48706-803e-4227-a51e-8208db12d949',
         },
-        { first: 10, after: toOpaqueCursor(123) }
+        { first: 10, after: toOpaqueCursor('int', 123) }
       )
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
+          "cursorName": "id",
+          "cursorType": "int",
           "isForwards": true,
           "pagingCount": 10,
           "text": "SELECT e.id, e.uuid, e.type, e.name, ev.version, ev.data
@@ -286,6 +314,32 @@ describe('searchAdminEntitiesQuery()', () => {
             "37b48706-803e-4227-a51e-8208db12d949",
             123,
             11,
+          ],
+        },
+      }
+    `);
+  });
+
+  test('order by name', () => {
+    expect(
+      searchAdminEntitiesQuery(
+        context,
+        {
+          order: '_name',
+        },
+        undefined
+      )
+    ).toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "cursorName": "name",
+          "cursorType": "string",
+          "isForwards": true,
+          "pagingCount": 25,
+          "text": "SELECT e.id, e.uuid, e.type, e.name, ev.version, ev.data
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id ORDER BY e.name LIMIT $1",
+          "values": Array [
+            26,
           ],
         },
       }

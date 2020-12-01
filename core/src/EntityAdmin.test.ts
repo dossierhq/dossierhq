@@ -19,7 +19,7 @@ import { expectEntityHistoryVersions, uuidMatcher } from '../test/AdditionalTest
 
 let instance: Instance;
 let context: SessionContext;
-let idsOfTypeAdminOnlyEditBefore: string[];
+let entitiesOfTypeAdminOnlyEditBefore: AdminEntity[];
 let deletedIdsOfTypeAdminOnlyEditBefore: string[];
 
 beforeAll(async () => {
@@ -44,14 +44,14 @@ beforeAll(async () => {
   });
 
   await ensureEntitiesExistForAdminOnlyEditBefore(context);
-  const knownIds = await getIdsForAdminOnlyEditBefore(context);
-  idsOfTypeAdminOnlyEditBefore = knownIds.ids;
+  const knownIds = await getEntitiesForAdminOnlyEditBefore(context);
+  entitiesOfTypeAdminOnlyEditBefore = knownIds.entities;
   if (knownIds.deletedIds.length > 0) {
     deletedIdsOfTypeAdminOnlyEditBefore = knownIds.deletedIds;
   } else {
     deletedIdsOfTypeAdminOnlyEditBefore = await deleteEntities(
       context,
-      idsOfTypeAdminOnlyEditBefore.slice(0, 10)
+      entitiesOfTypeAdminOnlyEditBefore.slice(0, 10).map((x) => x.id)
     );
   }
 });
@@ -78,8 +78,8 @@ async function ensureEntitiesExistForAdminOnlyEditBefore(context: SessionContext
   }
 }
 
-async function getIdsForAdminOnlyEditBefore(context: SessionContext) {
-  const ids: string[] = [];
+async function getEntitiesForAdminOnlyEditBefore(context: SessionContext) {
+  const entities: AdminEntity[] = [];
   const deletedIds: string[] = [];
   await visitAllEntityPages(
     context,
@@ -89,7 +89,7 @@ async function getIdsForAdminOnlyEditBefore(context: SessionContext) {
       for (const edge of connection.edges) {
         if (edge.node.isOk()) {
           const entity = edge.node.value;
-          ids.push(entity.id);
+          entities.push(entity);
           if (entity._deleted) {
             deletedIds.push(entity.id);
           }
@@ -97,7 +97,7 @@ async function getIdsForAdminOnlyEditBefore(context: SessionContext) {
       }
     }
   );
-  return { ids, deletedIds };
+  return { entities, deletedIds };
 }
 
 async function deleteEntities(context: SessionContext, idsToDelete: string[]) {
@@ -436,7 +436,7 @@ describe('createEntity()', () => {
   });
 
   test('Error: Create EntityAdminFoo with reference to wrong entity type', async () => {
-    const referenceId = idsOfTypeAdminOnlyEditBefore[0];
+    const referenceId = entitiesOfTypeAdminOnlyEditBefore[0].id;
     const result = await EntityAdmin.createEntity(
       context,
       {
@@ -458,15 +458,19 @@ describe('createEntity()', () => {
 function expectConnectionToMatchSlice(
   connection: Connection<Edge<AdminEntity, ErrorType>> | null,
   sliceStart: number,
-  sliceEnd?: number
+  sliceEnd: number | undefined,
+  compareFn?: (a: AdminEntity, b: AdminEntity) => number
 ) {
   const actualIds = connection?.edges.map((edge) => ({
     id: edge.node.isOk() ? edge.node.value.id : edge.node,
   }));
 
-  const expectedIds = idsOfTypeAdminOnlyEditBefore
-    .slice(sliceStart, sliceEnd)
-    .map((x) => ({ id: x }));
+  let expectedEntities = entitiesOfTypeAdminOnlyEditBefore;
+  if (compareFn) {
+    expectedEntities = [...entitiesOfTypeAdminOnlyEditBefore].sort(compareFn);
+  }
+
+  const expectedIds = expectedEntities.slice(sliceStart, sliceEnd).map((x) => ({ id: x.id }));
 
   expect(actualIds).toEqual(expectedIds);
 }
@@ -529,7 +533,7 @@ describe('searchEntities()', () => {
       { last: 10 }
     );
     if (expectOkResult(result)) {
-      expectConnectionToMatchSlice(result.value, -10);
+      expectConnectionToMatchSlice(result.value, -10, undefined);
     }
   });
 
@@ -629,6 +633,22 @@ describe('searchEntities()', () => {
     }
   });
 
+  test('First default, ordered by _name', async () => {
+    const result = await EntityAdmin.searchEntities(
+      context,
+      {
+        entityTypes: ['AdminOnlyEditBefore'],
+        order: '_name',
+      },
+      { first: 20 }
+    );
+    if (expectOkResult(result)) {
+      expectConnectionToMatchSlice(result.value, 0, 20, (a, b) => {
+        return a._name < b._name ? -1 : 1;
+      });
+    }
+  });
+
   test('Deleted entities are reported as such', async () => {
     let deletedCount = 0;
     let notDeletedCount = 0;
@@ -704,7 +724,7 @@ describe('getTotalCount', () => {
       entityTypes: ['AdminOnlyEditBefore'],
     });
     if (expectOkResult(result)) {
-      expect(result.value).toBe(idsOfTypeAdminOnlyEditBefore.length);
+      expect(result.value).toBe(entitiesOfTypeAdminOnlyEditBefore.length);
     }
   });
 
@@ -1299,7 +1319,7 @@ describe('updateEntity()', () => {
     );
     if (expectOkResult(createResult)) {
       const { id } = createResult.value;
-      const referenceId = idsOfTypeAdminOnlyEditBefore[0];
+      const referenceId = entitiesOfTypeAdminOnlyEditBefore[0].id;
 
       const updateResult = await EntityAdmin.updateEntity(
         context,
