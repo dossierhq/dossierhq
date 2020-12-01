@@ -1079,6 +1079,49 @@ describe('updateEntity()', () => {
     }
   });
 
+  test('Update EntityAdminFoo with the same name', async () => {
+    const createResult = await EntityAdmin.createEntity(
+      context,
+      {
+        _type: 'EntityAdminFoo',
+        _name: 'First name',
+        title: 'First title',
+        summary: 'First summary',
+      },
+      { publish: true }
+    );
+    if (expectOkResult(createResult)) {
+      const { id, _name: name } = createResult.value;
+
+      const updateResult = await EntityAdmin.updateEntity(
+        context,
+        { id, _name: name },
+        { publish: true }
+      );
+      if (expectOkResult(updateResult)) {
+        expect(updateResult.value).toEqual({
+          id,
+          _type: 'EntityAdminFoo',
+          _name: name,
+          _version: 1,
+          title: 'First title',
+          summary: 'First summary',
+        });
+      }
+
+      const publishedResult = await PublishedEntity.getEntity(context, id);
+      if (expectOkResult(publishedResult)) {
+        expect(publishedResult.value.item).toEqual({
+          id,
+          _type: 'EntityAdminFoo',
+          _name: name,
+          title: 'First title',
+          summary: 'First summary',
+        });
+      }
+    }
+  });
+
   test('Update EntityAdminFoo with reference', async () => {
     const createFooResult = await EntityAdmin.createEntity(
       context,
