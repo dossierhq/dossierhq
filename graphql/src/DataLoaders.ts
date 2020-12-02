@@ -1,4 +1,9 @@
-import { EntityAdmin, isReferenceFieldType, PublishedEntity } from '@datadata/core';
+import {
+  EntityAdmin,
+  isReferenceFieldType,
+  isReferenceListFieldType,
+  PublishedEntity,
+} from '@datadata/core';
 import type {
   AdminEntity,
   AdminEntityHistory,
@@ -43,6 +48,23 @@ export async function loadEntity<TContext extends SessionGraphQLContext>(
   return buildResolversForEntity(sessionContext, result.value.item);
 }
 
+async function loadEntities<TContext extends SessionGraphQLContext>(
+  context: TContext,
+  ids: string[]
+): Promise<Array<Entity | null>> {
+  const sessionContext = getSessionContext(context);
+  // TODO add PublishedEntity.getEntities
+  const results = await Promise.all(ids.map((id) => PublishedEntity.getEntity(sessionContext, id)));
+  return results.map((result) => {
+    if (result.isOk()) {
+      return buildResolversForEntity(sessionContext, result.value.item);
+    } else {
+      // TODO handle errors
+      return null;
+    }
+  });
+}
+
 function buildResolversForEntity<TContext extends SessionGraphQLContext>(
   context: SessionContext,
   entity: Entity
@@ -54,9 +76,15 @@ function buildResolversForEntity<TContext extends SessionGraphQLContext>(
   const result = { ...entity };
   for (const fieldSpec of entitySpec.fields) {
     const value = result[fieldSpec.name];
-    if (isReferenceFieldType(fieldSpec, value) && value) {
+    if (isReferenceFieldType(fieldSpec, value)) {
       result[fieldSpec.name] = (args: undefined, context: TContext, unusedInfo: unknown) =>
         loadEntity(context, value.id);
+    } else if (isReferenceListFieldType(fieldSpec, value)) {
+      result[fieldSpec.name] = (args: undefined, context: TContext, unusedInfo: unknown) =>
+        loadEntities(
+          context,
+          value.map((x) => x.id)
+        );
     }
   }
   return result;
@@ -75,6 +103,23 @@ export async function loadAdminEntity<TContext extends SessionGraphQLContext>(
   return buildResolversForAdminEntity(sessionContext, result.value.item);
 }
 
+async function loadAdminEntities<TContext extends SessionGraphQLContext>(
+  context: TContext,
+  ids: string[]
+): Promise<Array<AdminEntity | null>> {
+  const sessionContext = getSessionContext(context);
+  // TODO add EntityAdmin.getEntities
+  const results = await Promise.all(ids.map((id) => EntityAdmin.getEntity(sessionContext, id, {})));
+  return results.map((result) => {
+    if (result.isOk()) {
+      return buildResolversForAdminEntity(sessionContext, result.value.item);
+    } else {
+      // TODO handle errors
+      return null;
+    }
+  });
+}
+
 export function buildResolversForAdminEntity<TContext extends SessionGraphQLContext>(
   context: SessionContext,
   entity: AdminEntity
@@ -90,9 +135,15 @@ export function buildResolversForAdminEntity<TContext extends SessionGraphQLCont
 
   for (const fieldSpec of entitySpec.fields) {
     const value = result[fieldSpec.name];
-    if (isReferenceFieldType(fieldSpec, value) && value) {
+    if (isReferenceFieldType(fieldSpec, value)) {
       result[fieldSpec.name] = (args: undefined, context: TContext, unusedInfo: unknown) =>
         loadAdminEntity(context, value.id, null);
+    } else if (isReferenceListFieldType(fieldSpec, value)) {
+      result[fieldSpec.name] = (args: undefined, context: TContext, unusedInfo: unknown) =>
+        loadAdminEntities(
+          context,
+          value.map((x) => x.id)
+        );
     }
   }
   return result;
