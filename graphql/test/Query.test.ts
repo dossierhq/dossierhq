@@ -19,6 +19,7 @@ beforeAll(async () => {
         { name: 'title', type: EntityFieldType.String, isName: true },
         { name: 'summary', type: EntityFieldType.String },
         { name: 'bar', type: EntityFieldType.Reference, entityTypes: ['QueryBar'] },
+        { name: 'tags', type: EntityFieldType.String, list: true },
       ],
     },
     QueryBar: { fields: [{ name: 'title', type: EntityFieldType.String }] },
@@ -33,7 +34,13 @@ describe('QueryFoo', () => {
   test('Query all fields of created entity', async () => {
     const createResult = await EntityAdmin.createEntity(
       context,
-      { _type: 'QueryFoo', _name: 'Howdy name', title: 'Howdy title', summary: 'Howdy summary' },
+      {
+        _type: 'QueryFoo',
+        _name: 'Howdy name',
+        title: 'Howdy title',
+        summary: 'Howdy summary',
+        tags: ['one', 'two', 'three'],
+      },
       { publish: true }
     );
     if (expectOkResult(createResult)) {
@@ -50,6 +57,7 @@ describe('QueryFoo', () => {
                 _name
                 title
                 summary
+                tags
               }
             }
           }
@@ -66,6 +74,7 @@ describe('QueryFoo', () => {
             _name: createResult.value._name,
             title: 'Howdy title',
             summary: 'Howdy summary',
+            tags: ['one', 'two', 'three'],
           },
         },
       });
@@ -95,6 +104,7 @@ describe('QueryFoo', () => {
                 bar {
                   id
                 }
+                tags
               }
             }
           }
@@ -112,6 +122,7 @@ describe('QueryFoo', () => {
             title: null,
             summary: null,
             bar: null,
+            tags: null,
           },
         },
       });
