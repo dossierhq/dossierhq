@@ -18,8 +18,9 @@ beforeAll(async () => {
       fields: [
         { name: 'title', type: EntityFieldType.String, isName: true },
         { name: 'summary', type: EntityFieldType.String },
-        { name: 'bar', type: EntityFieldType.Reference, entityTypes: ['QueryBar'] },
         { name: 'tags', type: EntityFieldType.String, list: true },
+        { name: 'bar', type: EntityFieldType.Reference, entityTypes: ['QueryBar'] },
+        { name: 'bars', type: EntityFieldType.Reference, entityTypes: ['QueryBar'], list: true },
       ],
     },
     QueryBar: { fields: [{ name: 'title', type: EntityFieldType.String }] },
@@ -30,7 +31,7 @@ afterAll(async () => {
   await instance?.shutdown();
 });
 
-describe('QueryFoo', () => {
+describe('node()', () => {
   test('Query all fields of created entity', async () => {
     const createResult = await EntityAdmin.createEntity(
       context,
@@ -183,6 +184,86 @@ describe('QueryFoo', () => {
                 id: barId,
                 title: 'Bar title',
               },
+            },
+          },
+        });
+      }
+    }
+  });
+
+  test('Query referenced entity list', async () => {
+    const createBar1Result = await EntityAdmin.createEntity(
+      context,
+      { _type: 'QueryBar', _name: 'Bar 1 name', title: 'Bar 1 title' },
+      { publish: true }
+    );
+    const createBar2Result = await EntityAdmin.createEntity(
+      context,
+      { _type: 'QueryBar', _name: 'Bar 2 name', title: 'Bar 2 title' },
+      { publish: true }
+    );
+    if (expectOkResult(createBar1Result) && expectOkResult(createBar2Result)) {
+      const bar1Id = createBar1Result.value.id;
+      const bar2Id = createBar2Result.value.id;
+
+      const createFooResult = await EntityAdmin.createEntity(
+        context,
+        {
+          _type: 'QueryFoo',
+          _name: 'Foo name',
+          title: 'Foo title',
+          bars: [{ id: bar1Id }, { id: bar2Id }],
+        },
+        { publish: true }
+      );
+      if (expectOkResult(createFooResult)) {
+        const fooId = createFooResult.value.id;
+
+        const result = await graphql(
+          schema,
+          `
+            query Entity($id: ID!) {
+              node(id: $id) {
+                __typename
+                id
+                ... on QueryFoo {
+                  _name
+                  title
+                  bars {
+                    __typename
+                    id
+                    _name
+                    title
+                  }
+                }
+              }
+            }
+          `,
+          undefined,
+          { context: ok(context) },
+          { id: fooId }
+        );
+        expect(result).toEqual({
+          data: {
+            node: {
+              __typename: 'QueryFoo',
+              id: fooId,
+              _name: createFooResult.value._name,
+              title: 'Foo title',
+              bars: [
+                {
+                  __typename: 'QueryBar',
+                  _name: createBar1Result.value._name,
+                  id: bar1Id,
+                  title: 'Bar 1 title',
+                },
+                {
+                  __typename: 'QueryBar',
+                  _name: createBar2Result.value._name,
+                  id: bar2Id,
+                  title: 'Bar 2 title',
+                },
+              ],
             },
           },
         });

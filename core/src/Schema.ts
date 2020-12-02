@@ -65,14 +65,28 @@ export function isReferenceFieldType(
   fieldSpec: EntityFieldSpecification,
   value: unknown
 ): value is EntityFieldValueTypeMap[EntityFieldType.Reference] {
-  return fieldSpec.type === EntityFieldType.Reference;
+  return value && fieldSpec.type === EntityFieldType.Reference && !fieldSpec.list;
+}
+
+export function isReferenceListFieldType(
+  fieldSpec: EntityFieldSpecification,
+  value: unknown
+): value is Array<EntityFieldValueTypeMap[EntityFieldType.Reference]> {
+  return value && fieldSpec.type === EntityFieldType.Reference && !!fieldSpec.list;
 }
 
 export function isStringFieldType(
   fieldSpec: EntityFieldSpecification,
   value: unknown
 ): value is EntityFieldValueTypeMap[EntityFieldType.String] {
-  return fieldSpec.type === EntityFieldType.String;
+  return value && fieldSpec.type === EntityFieldType.String && !fieldSpec.list;
+}
+
+export function isStringListFieldType(
+  fieldSpec: EntityFieldSpecification,
+  value: unknown
+): value is EntityFieldValueTypeMap[EntityFieldType.String] {
+  return value && fieldSpec.type === EntityFieldType.String && !!fieldSpec.list;
 }
 
 export interface SchemaSpecification {

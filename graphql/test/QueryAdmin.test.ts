@@ -27,8 +27,14 @@ beforeAll(async () => {
       fields: [
         { name: 'title', type: EntityFieldType.String, isName: true },
         { name: 'summary', type: EntityFieldType.String },
-        { name: 'bar', type: EntityFieldType.Reference, entityTypes: ['QueryAdminBar'] },
         { name: 'tags', type: EntityFieldType.String, list: true },
+        { name: 'bar', type: EntityFieldType.Reference, entityTypes: ['QueryAdminBar'] },
+        {
+          name: 'bars',
+          type: EntityFieldType.Reference,
+          list: true,
+          entityTypes: ['QueryAdminBar'],
+        },
       ],
     },
     QueryAdminBar: { fields: [{ name: 'title', type: EntityFieldType.String }] },
@@ -469,6 +475,86 @@ describe('adminEntity()', () => {
                 _name: createBarResult.value._name,
                 title: 'Bar title',
               },
+            },
+          },
+        });
+      }
+    }
+  });
+
+  test('Query referenced entity list', async () => {
+    const createBar1Result = await EntityAdmin.createEntity(
+      context,
+      { _type: 'QueryAdminBar', _name: 'Bar 1 name', title: 'Bar 1 title' },
+      { publish: true }
+    );
+    const createBar2Result = await EntityAdmin.createEntity(
+      context,
+      { _type: 'QueryAdminBar', _name: 'Bar 2 name', title: 'Bar 2 title' },
+      { publish: true }
+    );
+    if (expectOkResult(createBar1Result) && expectOkResult(createBar2Result)) {
+      const bar1Id = createBar1Result.value.id;
+      const bar2Id = createBar2Result.value.id;
+
+      const createFooResult = await EntityAdmin.createEntity(
+        context,
+        {
+          _type: 'QueryAdminFoo',
+          _name: 'Foo name',
+          title: 'Foo title',
+          bars: [{ id: bar1Id }, { id: bar2Id }],
+        },
+        { publish: true }
+      );
+      if (expectOkResult(createFooResult)) {
+        const fooId = createFooResult.value.id;
+
+        const result = await graphql(
+          schema,
+          `
+            query Entity($id: ID!) {
+              adminEntity(id: $id) {
+                __typename
+                id
+                ... on AdminQueryAdminFoo {
+                  _name
+                  title
+                  bars {
+                    __typename
+                    id
+                    _name
+                    title
+                  }
+                }
+              }
+            }
+          `,
+          undefined,
+          { context: ok(context) },
+          { id: fooId }
+        );
+        expect(result).toEqual({
+          data: {
+            adminEntity: {
+              __typename: 'AdminQueryAdminFoo',
+              id: fooId,
+              _name: createFooResult.value._name,
+              title: 'Foo title',
+              bars: [
+                {
+                  __typename: 'AdminQueryAdminBar',
+                  _name: createBar1Result.value._name,
+                  id: bar1Id,
+                  title: 'Bar 1 title',
+                },
+                {
+                  __typename: 'AdminQueryAdminBar',
+                  _name: createBar2Result.value._name,
+                  id: bar2Id,
+                  title: 'Bar 2 title',
+                },
+              ],
             },
           },
         });
