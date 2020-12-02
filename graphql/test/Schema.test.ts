@@ -372,3 +372,21 @@ describe('Multiple references with entityTypes schema spec', () => {
     expect(result).toMatchSnapshot();
   });
 });
+
+describe('List of strings and references schema spec', () => {
+  const schemaSpec = {
+    entityTypes: {
+      Foo: {
+        fields: [
+          { name: 'strings', type: EntityFieldType.String, list: true },
+          { name: 'bars', type: EntityFieldType.Reference, list: true, entityTypes: ['Bar'] },
+        ],
+      },
+      Bar: { fields: [] },
+    },
+  };
+  test('Generated QL schema', () => {
+    const result = describeGeneratedSchema(schemaSpec);
+    expect(result).toMatchSnapshot();
+  });
+});
