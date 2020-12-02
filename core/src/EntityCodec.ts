@@ -45,9 +45,23 @@ export function decodePublishedEntity(context: SessionContext, values: EntityVal
       if (!fieldSpec) {
         throw new Error(`No field spec for ${fieldName} in entity spec ${values.type}`);
       }
+      if (fieldValue === null || fieldValue === undefined) {
+        entity[fieldName] = null;
+        continue;
+      }
       const fieldAdapter = EntityFieldTypeAdapters.getAdapter(fieldSpec);
-      const decodedData = fieldAdapter.decodeData(fieldValue);
-      entity[fieldName] = decodedData;
+      if (fieldSpec.list) {
+        if (!Array.isArray(fieldValue)) {
+          throw new Error(`Expected list but got ${fieldValue} (${fieldName})`);
+        }
+        const decodedItems: unknown[] = [];
+        entity[fieldName] = decodedItems;
+        for (const encodedItem of fieldValue) {
+          decodedItems.push(fieldAdapter.decodeData(encodedItem));
+        }
+      } else {
+        entity[fieldName] = fieldAdapter.decodeData(fieldValue);
+      }
     }
   }
   return entity;
@@ -174,7 +188,30 @@ export async function encodeEntity(
     const fieldAdapter = EntityFieldTypeAdapters.getAdapter(fieldSpec);
     if (fieldSpec.name in entity) {
       const data = entity[fieldSpec.name];
-      result.data[fieldSpec.name] = fieldAdapter.encodeData(data);
+      if (data === null || data === undefined) {
+        continue;
+      }
+      const prefix = `entity.${fieldSpec.name}`;
+      if (fieldSpec.list) {
+        if (!Array.isArray(data)) {
+          return notOk.BadRequest(`${prefix}: expected list`);
+        }
+        const encodedItems: unknown[] = [];
+        result.data[fieldSpec.name] = encodedItems;
+        for (const decodedItem of data) {
+          const encodeResult = fieldAdapter.encodeData(prefix, decodedItem);
+          if (encodeResult.isError()) {
+            return encodeResult;
+          }
+          encodedItems.push(encodeResult.value);
+        }
+      } else {
+        const encodeResult = fieldAdapter.encodeData(prefix, data);
+        if (encodeResult.isError()) {
+          return encodeResult;
+        }
+        result.data[fieldSpec.name] = encodeResult.value;
+      }
     }
   }
 

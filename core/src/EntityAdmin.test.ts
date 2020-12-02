@@ -38,6 +38,7 @@ beforeAll(async () => {
       fields: [
         { name: 'title', type: EntityFieldType.String },
         { name: 'bar', type: EntityFieldType.Reference, entityTypes: ['EntityAdminBar'] },
+        { name: 'tags', type: EntityFieldType.String, list: true },
       ],
     },
     AdminOnlyEditBefore: { fields: [{ name: 'message', type: EntityFieldType.String }] },
@@ -388,6 +389,35 @@ describe('createEntity()', () => {
     }
   });
 
+  test('Create EntityAdminBaz with string list', async () => {
+    const createResult = await EntityAdmin.createEntity(
+      context,
+      { _type: 'EntityAdminBaz', _name: 'Baz', tags: ['one', 'two', 'three'] },
+      { publish: true }
+    );
+    if (expectOkResult(createResult)) {
+      const { id, _name: name } = createResult.value;
+      expect(createResult.value).toEqual({
+        id,
+        _type: 'EntityAdminBaz',
+        _name: name,
+        _version: 0,
+        tags: ['one', 'two', 'three'],
+      });
+
+      const getResult = await EntityAdmin.getEntity(context, id, {});
+      if (expectOkResult(getResult)) {
+        expect(getResult.value.item).toEqual({
+          id,
+          _type: 'EntityAdminBaz',
+          _name: name,
+          _version: 0,
+          tags: ['one', 'two', 'three'],
+        });
+      }
+    }
+  });
+
   test('Error: Create with invalid type', async () => {
     const result = await EntityAdmin.createEntity(
       context,
@@ -452,6 +482,28 @@ describe('createEntity()', () => {
       result,
       ErrorType.BadRequest,
       `Referenced entity (${referenceId}) of field bar has an invalid type AdminOnlyEditBefore`
+    );
+  });
+
+  test('Error: Set string when expecting list of string', async () => {
+    const createResult = await EntityAdmin.createEntity(
+      context,
+      { _type: 'EntityAdminBaz', _name: 'Baz', tags: 'invalid' },
+      { publish: true }
+    );
+    expectErrorResult(createResult, ErrorType.BadRequest, 'entity.tags: expected list');
+  });
+
+  test('Error: Set list of string when expecting string', async () => {
+    const createResult = await EntityAdmin.createEntity(
+      context,
+      { _type: 'EntityAdminBaz', _name: 'Baz', title: ['invalid', 'foo'] },
+      { publish: true }
+    );
+    expectErrorResult(
+      createResult,
+      ErrorType.BadRequest,
+      'entity.title: expected string, got list'
     );
   });
 });
