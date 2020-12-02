@@ -50,14 +50,15 @@ export enum EntityFieldType {
 export interface EntityFieldSpecification {
   name: string;
   type: EntityFieldType;
+  list?: boolean;
   isName?: boolean;
   /** Applicable for Reference */
   entityTypes?: string[];
 }
 
 export interface EntityFieldValueTypeMap {
-  [EntityFieldType.Reference]: { id: string } | null;
-  [EntityFieldType.String]: string | null;
+  [EntityFieldType.Reference]: { id: string };
+  [EntityFieldType.String]: string;
 }
 
 export function isReferenceFieldType(
