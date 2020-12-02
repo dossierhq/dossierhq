@@ -13,7 +13,18 @@ const referenceCodec: EntityFieldTypeAdapter<
   EntityFieldValueTypeMap[EntityFieldType.Reference],
   string
 > = {
-  encodeData: (prefix: string, x) => ok(x.id),
+  encodeData: (prefix: string, x) => {
+    if (Array.isArray(x)) {
+      return notOk.BadRequest(`${prefix}: expected reference, got list`);
+    }
+    if (typeof x !== 'object') {
+      return notOk.BadRequest(`${prefix}: expected reference, got ${typeof x}`);
+    }
+    if (typeof x.id !== 'string') {
+      return notOk.BadRequest(`${prefix}.id: expected string, got ${typeof x.id}`);
+    }
+    return ok(x.id);
+  },
   decodeData: (x) => ({ id: x }),
   getReferenceUUIDs: (x) => (x ? [x.id] : null),
 };

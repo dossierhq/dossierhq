@@ -39,6 +39,12 @@ beforeAll(async () => {
         { name: 'title', type: EntityFieldType.String },
         { name: 'bar', type: EntityFieldType.Reference, entityTypes: ['EntityAdminBar'] },
         { name: 'tags', type: EntityFieldType.String, list: true },
+        {
+          name: 'bars',
+          type: EntityFieldType.Reference,
+          list: true,
+          entityTypes: ['EntityAdminBar'],
+        },
       ],
     },
     AdminOnlyEditBefore: { fields: [{ name: 'message', type: EntityFieldType.String }] },
@@ -418,6 +424,81 @@ describe('createEntity()', () => {
     }
   });
 
+  test('Create EntityAdminBaz with reference list', async () => {
+    const createBar1Result = await EntityAdmin.createEntity(
+      context,
+      { _type: 'EntityAdminBar', _name: 'Bar1' },
+      { publish: true }
+    );
+    const createBar2Result = await EntityAdmin.createEntity(
+      context,
+      { _type: 'EntityAdminBar', _name: 'Bar2' },
+      { publish: true }
+    );
+
+    if (expectOkResult(createBar1Result) && expectOkResult(createBar2Result)) {
+      const { id: bar1Id } = createBar1Result.value;
+      const { id: bar2Id } = createBar2Result.value;
+
+      const createBazResult = await EntityAdmin.createEntity(
+        context,
+        { _type: 'EntityAdminBaz', _name: 'Baz', bars: [{ id: bar1Id }, { id: bar2Id }] },
+        { publish: true }
+      );
+      if (expectOkResult(createBazResult)) {
+        const { id, _name: name } = createBazResult.value;
+        expect(createBazResult.value).toEqual({
+          id,
+          _type: 'EntityAdminBaz',
+          _name: name,
+          _version: 0,
+          bars: [{ id: bar1Id }, { id: bar2Id }],
+        });
+
+        const getResult = await EntityAdmin.getEntity(context, id, {});
+        if (expectOkResult(getResult)) {
+          expect(getResult.value.item).toEqual({
+            id,
+            _type: 'EntityAdminBaz',
+            _name: name,
+            _version: 0,
+            bars: [{ id: bar1Id }, { id: bar2Id }],
+          });
+        }
+
+        const referencesTo1 = await EntityAdmin.searchEntities(context, { referencing: bar1Id });
+        if (expectOkResult(referencesTo1)) {
+          expect(referencesTo1.value?.edges.map((x) => x.node)).toEqual([
+            {
+              value: {
+                id,
+                _type: 'EntityAdminBaz',
+                _name: name,
+                _version: 0,
+                bars: [{ id: bar1Id }, { id: bar2Id }],
+              },
+            },
+          ]);
+        }
+
+        const referencesTo2 = await EntityAdmin.searchEntities(context, { referencing: bar2Id });
+        if (expectOkResult(referencesTo2)) {
+          expect(referencesTo2.value?.edges.map((x) => x.node)).toEqual([
+            {
+              value: {
+                id,
+                _type: 'EntityAdminBaz',
+                _name: name,
+                _version: 0,
+                bars: [{ id: bar1Id }, { id: bar2Id }],
+              },
+            },
+          ]);
+        }
+      }
+    }
+  });
+
   test('Error: Create with invalid type', async () => {
     const result = await EntityAdmin.createEntity(
       context,
@@ -504,6 +585,39 @@ describe('createEntity()', () => {
       createResult,
       ErrorType.BadRequest,
       'entity.title: expected string, got list'
+    );
+  });
+
+  test('Error: Set reference when expecting list of references', async () => {
+    const createResult = await EntityAdmin.createEntity(
+      context,
+      {
+        _type: 'EntityAdminBaz',
+        _name: 'Baz',
+        bars: { id: 'fcc46a9e-2097-4bd6-bb08-56d5f59db26b' },
+      },
+      { publish: true }
+    );
+    expectErrorResult(createResult, ErrorType.BadRequest, 'entity.bars: expected list');
+  });
+
+  test('Error: Set list of references when expecting reference', async () => {
+    const createResult = await EntityAdmin.createEntity(
+      context,
+      {
+        _type: 'EntityAdminBaz',
+        _name: 'Baz',
+        bar: [
+          { id: 'fcc46a9e-2097-4bd6-bb08-56d5f59db26b' },
+          { id: 'fcc46a9e-2097-4bd6-bb08-56d5f59db26b' },
+        ],
+      },
+      { publish: true }
+    );
+    expectErrorResult(
+      createResult,
+      ErrorType.BadRequest,
+      'entity.bar: expected reference, got list'
     );
   });
 });

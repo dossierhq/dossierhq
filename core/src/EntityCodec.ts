@@ -14,6 +14,7 @@ import { ensureRequired } from './Assertions';
 import * as Db from './Db';
 import type { EntitiesTable, EntityVersionsTable } from './DbTableTypes';
 import * as EntityFieldTypeAdapters from './EntityFieldTypeAdapters';
+import type { EntityFieldSpecification } from './Schema';
 
 export type AdminEntityValues = Pick<EntitiesTable, 'uuid' | 'type' | 'name'> &
   Pick<EntityVersionsTable, 'data' | 'version'>;
@@ -88,8 +89,18 @@ export function decodeAdminEntity(context: SessionContext, values: AdminEntityVa
         throw new Error(`No field spec for ${fieldName} in entity spec ${values.type}`);
       }
       const fieldAdapter = EntityFieldTypeAdapters.getAdapter(fieldSpec);
-      const decodedData = fieldAdapter.decodeData(fieldValue);
-      entity[fieldName] = decodedData;
+      if (fieldSpec.list) {
+        if (!Array.isArray(fieldValue)) {
+          throw new Error(`Expected list but got ${fieldValue} (${fieldName})`);
+        }
+        const decodedItems: unknown[] = [];
+        entity[fieldName] = decodedItems;
+        for (const encodedItem of fieldValue) {
+          decodedItems.push(fieldAdapter.decodeData(encodedItem));
+        }
+      } else {
+        entity[fieldName] = fieldAdapter.decodeData(fieldValue);
+      }
     }
   }
   return entity;
@@ -227,18 +238,16 @@ export async function encodeEntity(
 async function collectReferenceIds(
   context: SessionContext,
   entitySpec: EntityTypeSpecification,
-  entity: { _type: string; _name: string; [fieldName: string]: unknown }
+  entity: AdminEntityCreate | AdminEntityUpdate
 ): PromiseResult<number[], ErrorType.BadRequest> {
   const uuids = new Set<string>();
 
   for (const fieldSpec of entitySpec.fields) {
-    const fieldAdapter = EntityFieldTypeAdapters.getAdapter(fieldSpec);
-    let fieldUUIDs: string[] | null = null;
-    if (fieldSpec.name in entity) {
-      const data = entity[fieldSpec.name];
-      fieldUUIDs = fieldAdapter.getReferenceUUIDs(data);
+    const fieldReferences = getReferencesForField(entity, fieldSpec);
+    if (fieldReferences.isError()) {
+      return fieldReferences;
     }
-    fieldUUIDs?.forEach((x) => uuids.add(x));
+    fieldReferences.value?.forEach((x) => uuids.add(x));
   }
 
   if (uuids.size === 0) {
@@ -252,12 +261,11 @@ async function collectReferenceIds(
   );
 
   for (const fieldSpec of entitySpec.fields) {
-    const fieldAdapter = EntityFieldTypeAdapters.getAdapter(fieldSpec);
-    let fieldUUIDs: string[] | null = null;
-    if (fieldSpec.name in entity) {
-      const data = entity[fieldSpec.name];
-      fieldUUIDs = fieldAdapter.getReferenceUUIDs(data);
+    const fieldReferences = getReferencesForField(entity, fieldSpec);
+    if (fieldReferences.isError()) {
+      return fieldReferences;
     }
+    const fieldUUIDs = fieldReferences.value;
 
     if (!fieldUUIDs || fieldUUIDs.length === 0) {
       continue;
@@ -280,4 +288,31 @@ async function collectReferenceIds(
   }
 
   return ok(items.map((item) => item.id));
+}
+
+function getReferencesForField(
+  entity: AdminEntityCreate | AdminEntityUpdate,
+  fieldSpec: EntityFieldSpecification
+): Result<string[] | null, ErrorType.BadRequest> {
+  const fieldAdapter = EntityFieldTypeAdapters.getAdapter(fieldSpec);
+  let fieldUUIDs: string[] | null = null;
+  if (fieldSpec.name in entity) {
+    const data = entity[fieldSpec.name];
+    const prefix = `entity.${fieldSpec.name}`;
+    if (fieldSpec.list) {
+      fieldUUIDs = [];
+      if (!Array.isArray(data)) {
+        return notOk.BadRequest(`${prefix}: Expected list`);
+      }
+      for (const decodedItem of data) {
+        const uuids = fieldAdapter.getReferenceUUIDs(decodedItem);
+        if (uuids) {
+          fieldUUIDs.push(...uuids);
+        }
+      }
+    } else {
+      fieldUUIDs = fieldAdapter.getReferenceUUIDs(data);
+    }
+  }
+  return ok(fieldUUIDs);
 }
