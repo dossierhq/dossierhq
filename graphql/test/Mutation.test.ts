@@ -19,6 +19,7 @@ beforeAll(async () => {
         { name: 'title', type: EntityFieldType.String, isName: true },
         { name: 'summary', type: EntityFieldType.String },
         { name: 'bar', type: EntityFieldType.Reference, entityTypes: ['MutationBar'] },
+        { name: 'tags', type: EntityFieldType.String, list: true },
       ],
     },
     MutationBar: {
@@ -45,6 +46,7 @@ describe('create*Entity()', () => {
             _version
             title
             summary
+            tags
           }
         }
       `,
@@ -56,6 +58,7 @@ describe('create*Entity()', () => {
           _name: 'Foo name',
           title: 'Foo title',
           summary: 'Foo summary',
+          tags: ['one', 'two', 'three'],
         },
         publish: true,
       }
@@ -75,6 +78,7 @@ describe('create*Entity()', () => {
           _version: 0,
           title: 'Foo title',
           summary: 'Foo summary',
+          tags: ['one', 'two', 'three'],
         },
       },
     });
@@ -88,6 +92,7 @@ describe('create*Entity()', () => {
         _version: 0,
         title: 'Foo title',
         summary: 'Foo summary',
+        tags: ['one', 'two', 'three'],
       });
     }
   });
@@ -252,7 +257,13 @@ describe('update*Entity()', () => {
   test('Update minimal', async () => {
     const createResult = await EntityAdmin.createEntity(
       context,
-      { _type: 'MutationFoo', _name: 'First name', title: 'First title', summary: 'First summary' },
+      {
+        _type: 'MutationFoo',
+        _name: 'First name',
+        title: 'First title',
+        summary: 'First summary',
+        tags: ['one', 'two', 'three'],
+      },
       { publish: true }
     );
     if (expectOkResult(createResult)) {
@@ -269,6 +280,7 @@ describe('update*Entity()', () => {
               _version
               title
               summary
+              tags
             }
           }
         `,
@@ -293,6 +305,7 @@ describe('update*Entity()', () => {
             _version: 1,
             title: 'Updated title',
             summary: 'First summary',
+            tags: ['one', 'two', 'three'],
           },
         },
       });
@@ -306,6 +319,7 @@ describe('update*Entity()', () => {
           _version: 1,
           title: 'Updated title',
           summary: 'First summary',
+          tags: ['one', 'two', 'three'],
         });
       }
     }
@@ -327,6 +341,7 @@ describe('update*Entity()', () => {
           _name: 'First name',
           title: 'First title',
           summary: 'First summary',
+          tags: ['one', 'two', 'three'],
         },
         { publish: true }
       );
@@ -344,6 +359,7 @@ describe('update*Entity()', () => {
                 _version
                 title
                 summary
+                tags
                 bar {
                   __typename
                   id
@@ -362,6 +378,7 @@ describe('update*Entity()', () => {
               _name: 'Updated name',
               title: 'Updated title',
               summary: 'Updated summary',
+              tags: ['these', 'are', 'new'],
               bar: { id: barId },
             },
             publish: true,
@@ -381,6 +398,7 @@ describe('update*Entity()', () => {
               _version: 1,
               title: 'Updated title',
               summary: 'Updated summary',
+              tags: ['these', 'are', 'new'],
               bar: {
                 __typename: 'AdminMutationBar',
                 id: barId,
@@ -400,6 +418,7 @@ describe('update*Entity()', () => {
             _version: 1,
             title: 'Updated title',
             summary: 'Updated summary',
+            tags: ['these', 'are', 'new'],
             bar: { id: barId },
           });
         }

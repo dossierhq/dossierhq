@@ -28,6 +28,7 @@ beforeAll(async () => {
         { name: 'title', type: EntityFieldType.String, isName: true },
         { name: 'summary', type: EntityFieldType.String },
         { name: 'bar', type: EntityFieldType.Reference, entityTypes: ['QueryAdminBar'] },
+        { name: 'tags', type: EntityFieldType.String, list: true },
       ],
     },
     QueryAdminBar: { fields: [{ name: 'title', type: EntityFieldType.String }] },
@@ -138,6 +139,7 @@ describe('adminEntity()', () => {
         _name: 'Howdy name',
         title: 'Howdy title',
         summary: 'Howdy summary',
+        tags: ['one', 'two', 'three'],
       },
       { publish: true }
     );
@@ -158,6 +160,7 @@ describe('adminEntity()', () => {
               ... on AdminQueryAdminFoo {
                 title
                 summary
+                tags
               }
             }
           }
@@ -177,6 +180,7 @@ describe('adminEntity()', () => {
             _deleted: false,
             title: 'Howdy title',
             summary: 'Howdy summary',
+            tags: ['one', 'two', 'three'],
           },
         },
       });
@@ -205,6 +209,7 @@ describe('adminEntity()', () => {
               ... on AdminQueryAdminFoo {
                 title
                 summary
+                tags
               }
             }
           }
@@ -223,6 +228,7 @@ describe('adminEntity()', () => {
             _version: 0,
             title: null,
             summary: null,
+            tags: null,
           },
         },
       });
