@@ -227,18 +227,21 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
             _name: { type: new GraphQLNonNull(GraphQLString) },
           };
           for (const fieldSpec of entitySpec.fields) {
+            let fieldType;
             switch (fieldSpec.type) {
               case EntityFieldType.Reference:
-                fields[fieldSpec.name] = {
-                  type: this.getOrCreateEntityUnion(false, fieldSpec.entityTypes || []),
-                };
+                fieldType = this.getOrCreateEntityUnion(false, fieldSpec.entityTypes || []);
                 break;
               case EntityFieldType.String:
-                fields[fieldSpec.name] = { type: GraphQLString };
+                fieldType = GraphQLString;
                 break;
               default:
                 throw new Error(`Unexpected type (${fieldSpec.type})`);
             }
+
+            fields[fieldSpec.name] = {
+              type: fieldSpec.list ? new GraphQLList(new GraphQLNonNull(fieldType)) : fieldType,
+            };
           }
           return fields;
         },
@@ -360,18 +363,20 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
             _deleted: { type: new GraphQLNonNull(GraphQLBoolean) },
           };
           for (const fieldSpec of entitySpec.fields) {
+            let fieldType;
             switch (fieldSpec.type) {
               case EntityFieldType.Reference:
-                fields[fieldSpec.name] = {
-                  type: this.getOrCreateEntityUnion(true, fieldSpec.entityTypes || []),
-                };
+                fieldType = this.getOrCreateEntityUnion(true, fieldSpec.entityTypes || []);
                 break;
               case EntityFieldType.String:
-                fields[fieldSpec.name] = { type: GraphQLString };
+                fieldType = GraphQLString;
                 break;
               default:
                 throw new Error(`Unexpected type (${fieldSpec.type})`);
             }
+            fields[fieldSpec.name] = {
+              type: fieldSpec.list ? new GraphQLList(new GraphQLNonNull(fieldType)) : fieldType,
+            };
           }
           return fields;
         },
@@ -387,18 +392,20 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
             _name: { type: new GraphQLNonNull(GraphQLString) },
           };
           for (const fieldSpec of entitySpec.fields) {
+            let fieldType;
             switch (fieldSpec.type) {
               case EntityFieldType.Reference:
-                fields[fieldSpec.name] = {
-                  type: this.getInputType('AdminReferenceInput'),
-                };
+                fieldType = this.getInputType('AdminReferenceInput');
                 break;
               case EntityFieldType.String:
-                fields[fieldSpec.name] = { type: GraphQLString };
+                fieldType = GraphQLString;
                 break;
               default:
                 throw new Error(`Unexpected type (${fieldSpec.type})`);
             }
+            fields[fieldSpec.name] = {
+              type: fieldSpec.list ? new GraphQLList(new GraphQLNonNull(fieldType)) : fieldType,
+            };
           }
           return fields;
         },
@@ -415,18 +422,20 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
             _name: { type: GraphQLString },
           };
           for (const fieldSpec of entitySpec.fields) {
+            let fieldType;
             switch (fieldSpec.type) {
               case EntityFieldType.Reference:
-                fields[fieldSpec.name] = {
-                  type: this.getInputType('AdminReferenceInput'),
-                };
+                fieldType = this.getInputType('AdminReferenceInput');
                 break;
               case EntityFieldType.String:
-                fields[fieldSpec.name] = { type: GraphQLString };
+                fieldType = GraphQLString;
                 break;
               default:
                 throw new Error(`Unexpected type (${fieldSpec.type})`);
             }
+            fields[fieldSpec.name] = {
+              type: fieldSpec.list ? new GraphQLList(new GraphQLNonNull(fieldType)) : fieldType,
+            };
           }
           return fields;
         },
