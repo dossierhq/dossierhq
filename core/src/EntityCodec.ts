@@ -46,26 +46,28 @@ export function decodePublishedEntity(context: SessionContext, values: EntityVal
       if (!fieldSpec) {
         throw new Error(`No field spec for ${fieldName} in entity spec ${values.type}`);
       }
-      if (fieldValue === null || fieldValue === undefined) {
-        entity[fieldName] = null;
-        continue;
-      }
-      const fieldAdapter = EntityFieldTypeAdapters.getAdapter(fieldSpec);
-      if (fieldSpec.list) {
-        if (!Array.isArray(fieldValue)) {
-          throw new Error(`Expected list but got ${fieldValue} (${fieldName})`);
-        }
-        const decodedItems: unknown[] = [];
-        entity[fieldName] = decodedItems;
-        for (const encodedItem of fieldValue) {
-          decodedItems.push(fieldAdapter.decodeData(encodedItem));
-        }
-      } else {
-        entity[fieldName] = fieldAdapter.decodeData(fieldValue);
-      }
+      entity[fieldName] = decodeFieldItemOrList(fieldSpec, fieldValue);
     }
   }
   return entity;
+}
+
+function decodeFieldItemOrList(fieldSpec: EntityFieldSpecification, fieldValue: unknown) {
+  if (fieldValue === null || fieldValue === undefined) {
+    return null;
+  }
+  const fieldAdapter = EntityFieldTypeAdapters.getAdapter(fieldSpec);
+  if (fieldSpec.list) {
+    if (!Array.isArray(fieldValue)) {
+      throw new Error(`Expected list but got ${fieldValue} (${fieldSpec.name})`);
+    }
+    const decodedItems: unknown[] = [];
+    for (const encodedItem of fieldValue) {
+      decodedItems.push(fieldAdapter.decodeData(encodedItem));
+    }
+    return decodedItems;
+  }
+  return fieldAdapter.decodeData(fieldValue);
 }
 
 export function decodeAdminEntity(context: SessionContext, values: AdminEntityValues): AdminEntity {
@@ -88,19 +90,7 @@ export function decodeAdminEntity(context: SessionContext, values: AdminEntityVa
       if (!fieldSpec) {
         throw new Error(`No field spec for ${fieldName} in entity spec ${values.type}`);
       }
-      const fieldAdapter = EntityFieldTypeAdapters.getAdapter(fieldSpec);
-      if (fieldSpec.list) {
-        if (!Array.isArray(fieldValue)) {
-          throw new Error(`Expected list but got ${fieldValue} (${fieldName})`);
-        }
-        const decodedItems: unknown[] = [];
-        entity[fieldName] = decodedItems;
-        for (const encodedItem of fieldValue) {
-          decodedItems.push(fieldAdapter.decodeData(encodedItem));
-        }
-      } else {
-        entity[fieldName] = fieldAdapter.decodeData(fieldValue);
-      }
+      entity[fieldName] = decodeFieldItemOrList(fieldSpec, fieldValue);
     }
   }
   return entity;
@@ -163,9 +153,8 @@ export function resolveUpdateEntity(
     if (fieldSpec.name in entity) {
       result[fieldSpec.name] = entity[fieldSpec.name];
     } else if (previousValuesEncoded && fieldSpec.name in previousValuesEncoded) {
-      const fieldAdapter = EntityFieldTypeAdapters.getAdapter(fieldSpec);
       const encodedData = previousValuesEncoded[fieldSpec.name];
-      result[fieldSpec.name] = fieldAdapter.decodeData(encodedData);
+      result[fieldSpec.name] = decodeFieldItemOrList(fieldSpec, encodedData);
     }
   }
 
