@@ -142,6 +142,25 @@ export async function replaceReferencesWithEntitiesGeneric(
           logErrorResult('Failed fetching reference', referenceResult);
         }
       }
+      if (isReferenceListFieldType(fieldSpec, value)) {
+        if (!value) {
+          continue;
+        }
+        entity[fieldSpec.name] = await Promise.all(
+          value.map(async (reference) => {
+            if (!isReferenceAnEntity(reference)) {
+              //TODO change to getEntities()
+              const referenceResult = await entityFetcher(context, reference.id);
+              if (referenceResult.isOk()) {
+                return referenceResult.value.item;
+              } else {
+                logErrorResult('Failed fetching reference', referenceResult);
+              }
+            }
+            return reference;
+          })
+        );
+      }
     }
   }
 }
