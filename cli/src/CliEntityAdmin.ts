@@ -5,6 +5,7 @@ import {
   isPagingForwards,
   isReferenceFieldType,
   isStringFieldType,
+  isStringListFieldType,
   notOk,
   ok,
 } from '@datadata/core';
@@ -28,8 +29,14 @@ import {
   logKeyValue,
   replaceReferencesWithEntitiesGeneric,
 } from './CliUtils';
+import {
+  showConfirm,
+  showIntegerEdit,
+  showItemSelector,
+  showMultiItemSelector,
+  showStringEdit,
+} from './widgets';
 import type { ItemSelectorItem } from './widgets';
-import { showConfirm, showIntegerEdit, showItemSelector, showStringEdit } from './widgets';
 
 interface EditFieldSelectorItem extends ItemSelectorItem {
   defaultValue?: unknown;
@@ -293,6 +300,9 @@ async function editField(
   if (isStringFieldType(fieldSpec, defaultValue)) {
     return editFieldString(fieldSpec, defaultValue);
   }
+  if (isStringListFieldType(fieldSpec, defaultValue)) {
+    return editFieldStringList(fieldSpec, defaultValue);
+  }
   throw new Error(`Unknown type (${fieldSpec.type})`);
 }
 
@@ -311,6 +321,44 @@ async function editFieldReference(
 
 async function editFieldString(fieldSpec: EntityFieldSpecification, defaultValue: string | null) {
   return ok(await showStringEdit(fieldSpec.name, defaultValue));
+}
+
+async function editFieldStringList(
+  fieldSpec: EntityFieldSpecification,
+  defaultValue: string[] | null
+) {
+  let exit = false;
+  const result = defaultValue ? [...defaultValue] : [];
+  let lastItemId: string | null = null;
+  while (!exit) {
+    const items = [
+      ...result.map((x, index) => ({ id: String(index), name: `${index + 1}: ${x}` })),
+      { id: '_add', name: 'Add' },
+      { id: '_remove', name: 'Remove', enabled: result.length > 0 },
+      { id: '_done', name: 'Done' },
+    ];
+    const item: ItemSelectorItem = await showItemSelector('Select string item', items, lastItemId);
+    lastItemId = item.id;
+    if (item.id === '_done') {
+      exit = true;
+    } else if (item.id === '_add') {
+      const newItem = await showStringEdit('New item', '');
+      result.push(newItem);
+    } else if (item.id === '_remove') {
+      const itemsToRemove = await showMultiItemSelector(
+        'Which items to delete?',
+        result.map((x, index) => ({ id: String(index), name: `${index + 1}: ${x}` }))
+      );
+      for (const item of itemsToRemove.reverse()) {
+        result.splice(Number.parseInt(item.id), 1);
+      }
+    } else {
+      const index = Number.parseInt(item.id);
+      const editedItem = await showStringEdit('Edit item', result[index]);
+      result[index] = editedItem;
+    }
+  }
+  return ok(result);
 }
 
 export async function deleteEntity(context: SessionContext, id: string): Promise<void> {
