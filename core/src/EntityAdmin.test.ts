@@ -1371,83 +1371,93 @@ describe('updateEntity()', () => {
   });
 
   test('Update EntityAdminFoo without changing a reference', async () => {
-    const createBarResult = await EntityAdmin.createEntity(
+    const createBar1Result = await EntityAdmin.createEntity(
       context,
       {
         _type: 'EntityAdminBar',
-        _name: 'Bar entity',
-        title: 'Bar entity',
+        _name: 'Bar 1 entity',
+        title: 'Bar 1 entity',
       },
       { publish: true }
     );
-    if (expectOkResult(createBarResult)) {
-      const { id: barId } = createBarResult.value;
+    const createBar2Result = await EntityAdmin.createEntity(
+      context,
+      {
+        _type: 'EntityAdminBar',
+        _name: 'Bar 2 entity',
+        title: 'Bar 2 entity',
+      },
+      { publish: true }
+    );
+    if (expectOkResult(createBar1Result) && expectOkResult(createBar2Result)) {
+      const { id: bar1Id } = createBar1Result.value;
+      const { id: bar2Id } = createBar2Result.value;
 
-      const createFooResult = await EntityAdmin.createEntity(
+      const createBazResult = await EntityAdmin.createEntity(
         context,
         {
-          _type: 'EntityAdminFoo',
+          _type: 'EntityAdminBaz',
           _name: 'First name',
           title: 'First title',
-          summary: 'First summary',
-          bar: { id: barId },
+          bar: { id: bar1Id },
+          bars: [{ id: bar1Id }, { id: bar2Id }],
         },
         { publish: true }
       );
-      if (expectOkResult(createFooResult)) {
-        const { id: fooId } = createFooResult.value;
+      if (expectOkResult(createBazResult)) {
+        const { id: bazId } = createBazResult.value;
 
         const updateResult = await EntityAdmin.updateEntity(
           context,
-          { id: fooId, summary: 'Updated summary' },
+          { id: bazId, title: 'Updated title' },
           { publish: true }
         );
         if (expectOkResult(updateResult)) {
           expect(updateResult.value).toEqual({
-            id: fooId,
-            _type: 'EntityAdminFoo',
-            _name: createFooResult.value._name,
+            id: bazId,
+            _type: 'EntityAdminBaz',
+            _name: createBazResult.value._name,
             _version: 1,
-            title: 'First title',
-            summary: 'Updated summary',
-            bar: { id: barId },
+            title: 'Updated title',
+            bar: { id: bar1Id },
+            bars: [{ id: bar1Id }, { id: bar2Id }],
           });
         }
 
-        const version0Result = await EntityAdmin.getEntity(context, fooId, { version: 0 });
+        const version0Result = await EntityAdmin.getEntity(context, bazId, { version: 0 });
         if (expectOkResult(version0Result)) {
           expect(version0Result.value.item).toEqual({
-            id: fooId,
-            _type: 'EntityAdminFoo',
-            _name: createFooResult.value._name,
+            id: bazId,
+            _type: 'EntityAdminBaz',
+            _name: createBazResult.value._name,
             _version: 0,
             title: 'First title',
-            summary: 'First summary',
-            bar: { id: barId },
+            bar: { id: bar1Id },
+            bars: [{ id: bar1Id }, { id: bar2Id }],
           });
         }
-        const version1Result = await EntityAdmin.getEntity(context, fooId, { version: 1 });
+        const version1Result = await EntityAdmin.getEntity(context, bazId, { version: 1 });
         if (expectOkResult(version1Result)) {
           expect(version1Result.value.item).toEqual({
-            id: fooId,
-            _type: 'EntityAdminFoo',
-            _name: createFooResult.value._name,
+            id: bazId,
+            _type: 'EntityAdminBaz',
+            _name: createBazResult.value._name,
             _version: 1,
-            title: 'First title',
-            summary: 'Updated summary',
-            bar: { id: barId },
+            title: 'Updated title',
+            bar: { id: bar1Id },
+            bars: [{ id: bar1Id }, { id: bar2Id }],
           });
         }
 
-        const publishedResult = await PublishedEntity.getEntity(context, fooId);
+        const publishedResult = await PublishedEntity.getEntity(context, bazId);
         if (expectOkResult(publishedResult)) {
           expect(publishedResult.value.item).toEqual({
-            id: fooId,
-            _type: 'EntityAdminFoo',
-            _name: createFooResult.value._name,
-            title: 'First title',
-            summary: 'Updated summary',
-            bar: { id: barId },
+            id: bazId,
+            _type: 'EntityAdminBaz',
+            _name: createBazResult.value._name,
+            title: 'Updated title',
+            bar: { id: bar1Id },
+            bars: [{ id: bar1Id }, { id: bar2Id }],
           });
         }
       }
