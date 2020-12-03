@@ -1,4 +1,5 @@
 import chalk from 'chalk';
+import { EntityFieldType } from '@datadata/core';
 import type { Context } from '@datadata/core';
 import { showItemSelector, showMultiItemSelector } from './widgets';
 
@@ -8,8 +9,15 @@ export function showSchema(context: Context<unknown>): void {
   for (const [typeName, typeSpec] of Object.entries(schema.spec.entityTypes)) {
     console.log(chalk.bold(typeName));
     for (const fieldSpec of typeSpec.fields) {
+      let type: string = fieldSpec.type;
+      if (type === EntityFieldType.Reference && (fieldSpec.entityTypes?.length ?? 0) > 0) {
+        type = `${type} (${fieldSpec.entityTypes?.join(', ')})`;
+      }
+      if (fieldSpec.list) {
+        type = `[${type}]`;
+      }
       console.log(
-        `  ${chalk.bold(fieldSpec.name)}: ${fieldSpec.type}${
+        `  ${chalk.bold(fieldSpec.name)}: ${type}${
           fieldSpec.isName === true ? chalk.grey('  entity name') : ''
         }`
       );

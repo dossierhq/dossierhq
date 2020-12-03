@@ -17,6 +17,11 @@
           "entityTypes": [
             "Category"
           ]
+        },
+        {
+          "name": "tags",
+          "type": "String",
+          "list": true
         }
       ]
     },
