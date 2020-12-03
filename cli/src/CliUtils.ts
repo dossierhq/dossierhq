@@ -3,7 +3,9 @@ import {
   EntityFieldType,
   EntityTypeSpecification,
   isReferenceFieldType,
+  isReferenceListFieldType,
   isStringFieldType,
+  isStringListFieldType,
   PromiseResult,
 } from '@datadata/core';
 import type {
@@ -86,8 +88,19 @@ export function formatFieldValue(fieldSpec: EntityFieldSpecification, value: unk
     }
     return value ? value.id : chalk.grey('<not set>');
   }
+  if (isReferenceListFieldType(fieldSpec, value)) {
+    if (!value) {
+      return chalk.grey('<not set>');
+    }
+    return value
+      .map((x) => (isReferenceAnEntity(x) ? formatEntityOneLine(x) : x.id))
+      .join(chalk.grey(', '));
+  }
   if (isStringFieldType(fieldSpec, value)) {
     return value ? value : chalk.grey('<not set>');
+  }
+  if (isStringListFieldType(fieldSpec, value)) {
+    return value ? value.join(chalk.grey(', ')) : chalk.grey('<not set>');
   }
   throw new Error(`Unknown type (${fieldSpec.type})`);
 }

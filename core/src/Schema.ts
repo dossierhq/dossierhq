@@ -63,30 +63,30 @@ export interface EntityFieldValueTypeMap {
 
 export function isReferenceFieldType(
   fieldSpec: EntityFieldSpecification,
-  value: unknown
-): value is EntityFieldValueTypeMap[EntityFieldType.Reference] {
-  return value && fieldSpec.type === EntityFieldType.Reference && !fieldSpec.list;
+  value: unknown | null
+): value is EntityFieldValueTypeMap[EntityFieldType.Reference] | null {
+  return fieldSpec.type === EntityFieldType.Reference && !fieldSpec.list;
 }
 
 export function isReferenceListFieldType(
   fieldSpec: EntityFieldSpecification,
-  value: unknown
-): value is Array<EntityFieldValueTypeMap[EntityFieldType.Reference]> {
-  return value && fieldSpec.type === EntityFieldType.Reference && !!fieldSpec.list;
+  value: unknown | null
+): value is Array<EntityFieldValueTypeMap[EntityFieldType.Reference]> | null {
+  return fieldSpec.type === EntityFieldType.Reference && !!fieldSpec.list;
 }
 
 export function isStringFieldType(
   fieldSpec: EntityFieldSpecification,
-  value: unknown
-): value is EntityFieldValueTypeMap[EntityFieldType.String] {
-  return value && fieldSpec.type === EntityFieldType.String && !fieldSpec.list;
+  value: unknown | null
+): value is EntityFieldValueTypeMap[EntityFieldType.String] | null {
+  return fieldSpec.type === EntityFieldType.String && !fieldSpec.list;
 }
 
 export function isStringListFieldType(
   fieldSpec: EntityFieldSpecification,
-  value: unknown
-): value is EntityFieldValueTypeMap[EntityFieldType.String] {
-  return value && fieldSpec.type === EntityFieldType.String && !!fieldSpec.list;
+  value: unknown | null
+): value is Array<EntityFieldValueTypeMap[EntityFieldType.String]> | null {
+  return fieldSpec.type === EntityFieldType.String && !!fieldSpec.list;
 }
 
 export interface SchemaSpecification {
