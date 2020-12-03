@@ -18,8 +18,9 @@ beforeAll(async () => {
       fields: [
         { name: 'title', type: EntityFieldType.String, isName: true },
         { name: 'summary', type: EntityFieldType.String },
-        { name: 'bar', type: EntityFieldType.Reference, entityTypes: ['MutationBar'] },
         { name: 'tags', type: EntityFieldType.String, list: true },
+        { name: 'bar', type: EntityFieldType.Reference, entityTypes: ['MutationBar'] },
+        { name: 'bars', type: EntityFieldType.Reference, list: true, entityTypes: ['MutationBar'] },
       ],
     },
     MutationBar: {
@@ -167,6 +168,89 @@ describe('create*Entity()', () => {
           bar: {
             id: barId,
           },
+        });
+      }
+    }
+  });
+
+  test('Create with reference list', async () => {
+    const createBar1Result = await EntityAdmin.createEntity(
+      context,
+      { _type: 'MutationBar', _name: 'Bar 1' },
+      { publish: true }
+    );
+    const createBar2Result = await EntityAdmin.createEntity(
+      context,
+      { _type: 'MutationBar', _name: 'Bar 2' },
+      { publish: true }
+    );
+    if (expectOkResult(createBar1Result) && expectOkResult(createBar2Result)) {
+      const { id: bar1Id, _name: bar1Name } = createBar1Result.value;
+      const { id: bar2Id, _name: bar2Name } = createBar2Result.value;
+
+      const gqlResult = await graphql(
+        schema,
+        `
+          mutation CreateFooEntity($entity: AdminMutationFooCreateInput!, $publish: Boolean!) {
+            createMutationFooEntity(entity: $entity, publish: $publish) {
+              __typename
+              id
+              _type
+              _name
+              _version
+              title
+              summary
+              bars {
+                id
+                _name
+              }
+            }
+          }
+        `,
+        undefined,
+        { context: ok(context) },
+        {
+          entity: {
+            _type: 'MutationFoo',
+            _name: 'Foo name',
+            title: 'Foo title',
+            summary: 'Foo summary',
+            bars: [{ id: bar1Id }, { id: bar2Id }],
+          },
+          publish: true,
+        }
+      );
+
+      const fooId = gqlResult.data?.createMutationFooEntity.id;
+      const fooName = gqlResult.data?.createMutationFooEntity._name;
+      expect(gqlResult).toEqual({
+        data: {
+          createMutationFooEntity: {
+            __typename: 'AdminMutationFoo',
+            id: fooId,
+            _type: 'MutationFoo',
+            _name: fooName,
+            _version: 0,
+            title: 'Foo title',
+            summary: 'Foo summary',
+            bars: [
+              { id: bar1Id, _name: bar1Name },
+              { id: bar2Id, _name: bar2Name },
+            ],
+          },
+        },
+      });
+
+      const getResult = await EntityAdmin.getEntity(context, fooId, {});
+      if (expectOkResult(getResult)) {
+        expect(getResult.value.item).toEqual({
+          id: fooId,
+          _type: 'MutationFoo',
+          _name: fooName,
+          _version: 0,
+          title: 'Foo title',
+          summary: 'Foo summary',
+          bars: [{ id: bar1Id }, { id: bar2Id }],
         });
       }
     }
@@ -325,14 +409,20 @@ describe('update*Entity()', () => {
     }
   });
 
-  test('Update with all values including reference', async () => {
-    const createBarResult = await EntityAdmin.createEntity(
+  test('Update with all values including references', async () => {
+    const createBar1Result = await EntityAdmin.createEntity(
       context,
-      { _type: 'MutationBar', _name: 'Bar' },
+      { _type: 'MutationBar', _name: 'Bar 1' },
       { publish: true }
     );
-    if (expectOkResult(createBarResult)) {
-      const { id: barId, _name: barName } = createBarResult.value;
+    const createBar2Result = await EntityAdmin.createEntity(
+      context,
+      { _type: 'MutationBar', _name: 'Bar 2' },
+      { publish: true }
+    );
+    if (expectOkResult(createBar1Result) && expectOkResult(createBar2Result)) {
+      const { id: bar1Id, _name: bar1Name } = createBar1Result.value;
+      const { id: bar2Id, _name: bar2Name } = createBar2Result.value;
 
       const createFooResult = await EntityAdmin.createEntity(
         context,
@@ -366,6 +456,12 @@ describe('update*Entity()', () => {
                   _type
                   _name
                 }
+                bars {
+                  __typename
+                  id
+                  _type
+                  _name
+                }
               }
             }
           `,
@@ -379,7 +475,8 @@ describe('update*Entity()', () => {
               title: 'Updated title',
               summary: 'Updated summary',
               tags: ['these', 'are', 'new'],
-              bar: { id: barId },
+              bar: { id: bar1Id },
+              bars: [{ id: bar1Id }, { id: bar2Id }],
             },
             publish: true,
           }
@@ -401,10 +498,24 @@ describe('update*Entity()', () => {
               tags: ['these', 'are', 'new'],
               bar: {
                 __typename: 'AdminMutationBar',
-                id: barId,
+                id: bar1Id,
                 _type: 'MutationBar',
-                _name: barName,
+                _name: bar1Name,
               },
+              bars: [
+                {
+                  __typename: 'AdminMutationBar',
+                  id: bar1Id,
+                  _type: 'MutationBar',
+                  _name: bar1Name,
+                },
+                {
+                  __typename: 'AdminMutationBar',
+                  id: bar2Id,
+                  _type: 'MutationBar',
+                  _name: bar2Name,
+                },
+              ],
             },
           },
         });
@@ -419,7 +530,8 @@ describe('update*Entity()', () => {
             title: 'Updated title',
             summary: 'Updated summary',
             tags: ['these', 'are', 'new'],
-            bar: { id: barId },
+            bar: { id: bar1Id },
+            bars: [{ id: bar1Id }, { id: bar2Id }],
           });
         }
       }
