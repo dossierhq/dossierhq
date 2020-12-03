@@ -4,6 +4,7 @@ import {
   ErrorType,
   isPagingForwards,
   isReferenceFieldType,
+  isReferenceListFieldType,
   isStringFieldType,
   isStringListFieldType,
   notOk,
@@ -24,6 +25,7 @@ import {
   formatErrorResult,
   formatFieldValue,
   getEntitySpec,
+  isReferenceAnEntity,
   logEntity,
   logErrorResult,
   logKeyValue,
@@ -297,6 +299,9 @@ async function editField(
   if (isReferenceFieldType(fieldSpec, defaultValue)) {
     return editFieldReference(context, fieldSpec, defaultValue);
   }
+  if (isReferenceListFieldType(fieldSpec, defaultValue)) {
+    return editFieldReferenceList(context, fieldSpec, defaultValue);
+  }
   if (isStringFieldType(fieldSpec, defaultValue)) {
     return editFieldString(fieldSpec, defaultValue);
   }
@@ -319,6 +324,20 @@ async function editFieldReference(
   );
 }
 
+async function editFieldReferenceList(
+  context: SessionContext,
+  fieldSpec: EntityFieldSpecification,
+  defaultValue: { id: string }[] | null
+) {
+  return await editFieldList(
+    fieldSpec,
+    'Select reference item',
+    defaultValue,
+    (item) => (isReferenceAnEntity(item) ? formatEntityOneLine(item) : item.id),
+    (item) => editFieldReference(context, fieldSpec, item)
+  );
+}
+
 async function editFieldString(fieldSpec: EntityFieldSpecification, defaultValue: string | null) {
   return ok(await showStringEdit(fieldSpec.name, defaultValue));
 }
@@ -327,35 +346,55 @@ async function editFieldStringList(
   fieldSpec: EntityFieldSpecification,
   defaultValue: string[] | null
 ) {
+  return await editFieldList(
+    fieldSpec,
+    'Select string item',
+    defaultValue,
+    (item) => item,
+    (item) => editFieldString(fieldSpec, item)
+  );
+}
+
+async function editFieldList<TItem>(
+  fieldSpec: EntityFieldSpecification,
+  message: string,
+  defaultValue: TItem[] | null,
+  formatItem: (item: TItem) => string,
+  editItem: (item: TItem | null) => PromiseResult<TItem, ErrorType>
+) {
   let exit = false;
   const result = defaultValue ? [...defaultValue] : [];
   let lastItemId: string | null = null;
   while (!exit) {
     const items = [
-      ...result.map((x, index) => ({ id: String(index), name: `${index + 1}: ${x}` })),
+      ...result.map((x, index) => ({ id: String(index), name: `${index + 1}: ${formatItem(x)}` })),
       { id: '_add', name: 'Add' },
       { id: '_remove', name: 'Remove', enabled: result.length > 0 },
       { id: '_done', name: 'Done' },
     ];
-    const item: ItemSelectorItem = await showItemSelector('Select string item', items, lastItemId);
+    const item: ItemSelectorItem = await showItemSelector(message, items, lastItemId);
     lastItemId = item.id;
     if (item.id === '_done') {
       exit = true;
     } else if (item.id === '_add') {
-      const newItem = await showStringEdit('New item', '');
-      result.push(newItem);
+      const newItem = await editItem(null);
+      if (newItem.isOk()) {
+        result.push(newItem.value);
+      }
     } else if (item.id === '_remove') {
       const itemsToRemove = await showMultiItemSelector(
         'Which items to delete?',
-        result.map((x, index) => ({ id: String(index), name: `${index + 1}: ${x}` }))
+        result.map((x, index) => ({ id: String(index), name: `${index + 1}: ${formatItem(x)}` }))
       );
       for (const item of itemsToRemove.reverse()) {
         result.splice(Number.parseInt(item.id), 1);
       }
     } else {
       const index = Number.parseInt(item.id);
-      const editedItem = await showStringEdit('Edit item', result[index]);
-      result[index] = editedItem;
+      const editedItem = await editItem(result[index]);
+      if (editedItem.isOk()) {
+        result[index] = editedItem.value;
+      }
     }
   }
   return ok(result);

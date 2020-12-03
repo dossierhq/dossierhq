@@ -19,6 +19,14 @@
           ]
         },
         {
+          "name": "categories",
+          "type": "Reference",
+          "list": true,
+          "entityTypes": [
+            "Category"
+          ]
+        },
+        {
           "name": "tags",
           "type": "String",
           "list": true
