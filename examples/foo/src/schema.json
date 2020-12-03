@@ -14,17 +14,13 @@
         {
           "name": "category",
           "type": "Reference",
-          "entityTypes": [
-            "Category"
-          ]
+          "entityTypes": ["Category"]
         },
         {
           "name": "categories",
           "type": "Reference",
           "list": true,
-          "entityTypes": [
-            "Category"
-          ]
+          "entityTypes": ["Category"]
         },
         {
           "name": "tags",
