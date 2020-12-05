@@ -1,4 +1,4 @@
-import type { AdminFilter, Paging, Result, SessionContext } from './';
+import type { AdminQuery, Paging, Result, SessionContext } from './';
 import { ErrorType, notOk, ok } from '.';
 import type { CursorNativeType } from './Connection';
 import type { EntitiesTable } from './DbTableTypes';
@@ -9,7 +9,7 @@ import QueryBuilder from './QueryBuilder';
 export type SearchAdminEntitiesItem = Pick<EntitiesTable, 'id'> & AdminEntityValues;
 export function searchAdminEntitiesQuery(
   context: SessionContext,
-  filter: AdminFilter | undefined,
+  query: AdminQuery | undefined,
   paging: Paging | undefined
 ): Result<
   {
@@ -24,7 +24,7 @@ export function searchAdminEntitiesQuery(
 > {
   let cursorName: keyof SearchAdminEntitiesItem;
   let cursorType: CursorNativeType;
-  switch (filter?.order) {
+  switch (query?.order) {
     case '_name':
       cursorName = 'name';
       cursorType = 'string';
@@ -43,14 +43,14 @@ export function searchAdminEntitiesQuery(
 
   const qb = new QueryBuilder(`SELECT e.id, e.uuid, e.type, e.name, ev.version, ev.data
   FROM entities e, entity_versions ev`);
-  if (filter?.referencing) {
+  if (query?.referencing) {
     qb.addQuery('entity_version_references evr, entities e2');
   }
 
   qb.addQuery('WHERE e.latest_draft_entity_versions_id = ev.id');
 
   // Filter: entityTypes
-  const entityTypesResult = getFilterEntityTypes(context, filter);
+  const entityTypesResult = getFilterEntityTypes(context, query);
   if (entityTypesResult.isError()) {
     return entityTypesResult;
   }
@@ -59,10 +59,10 @@ export function searchAdminEntitiesQuery(
   }
 
   // Filter: referencing
-  if (filter?.referencing) {
+  if (query?.referencing) {
     qb.addQuery(
       `AND ev.id = evr.entity_versions_id AND evr.entities_id = e2.id AND e2.uuid = ${qb.addValue(
-        filter.referencing
+        query.referencing
       )}`
     );
   }
@@ -76,7 +76,7 @@ export function searchAdminEntitiesQuery(
   }
 
   // Ordering
-  switch (filter?.order) {
+  switch (query?.order) {
     case '_name':
       qb.addQuery('ORDER BY e.name');
       break;
@@ -100,19 +100,19 @@ export function searchAdminEntitiesQuery(
 
 export function totalAdminEntitiesQuery(
   context: SessionContext,
-  filter: AdminFilter | undefined
+  query: AdminQuery | undefined
 ): Result<{ text: string; values: unknown[] }, ErrorType.BadRequest> {
   // Convert count to ::integer since count() is bigint (js doesn't support 64 bit numbers so pg return it as string)
   const qb = new QueryBuilder('SELECT COUNT(e.id)::integer AS count FROM entities e');
 
-  if (filter?.referencing) {
+  if (query?.referencing) {
     qb.addQuery('entity_versions ev, entity_version_references evr, entities e2');
   }
 
   qb.addQuery('WHERE');
 
   // Filter: entityTypes
-  const entityTypesResult = getFilterEntityTypes(context, filter);
+  const entityTypesResult = getFilterEntityTypes(context, query);
   if (entityTypesResult.isError()) {
     return entityTypesResult;
   }
@@ -121,11 +121,11 @@ export function totalAdminEntitiesQuery(
   }
 
   // Filter: referencing
-  if (filter?.referencing) {
+  if (query?.referencing) {
     qb.addQuery('AND e.latest_draft_entity_versions_id = ev.id');
     qb.addQuery(
       `AND ev.id = evr.entity_versions_id AND evr.entities_id = e2.id AND e2.uuid = ${qb.addValue(
-        filter.referencing
+        query.referencing
       )}`
     );
   }
@@ -135,16 +135,16 @@ export function totalAdminEntitiesQuery(
 
 function getFilterEntityTypes(
   context: SessionContext,
-  filter: AdminFilter | undefined
+  query: AdminQuery | undefined
 ): Result<string[], ErrorType.BadRequest> {
-  if (!filter?.entityTypes || filter.entityTypes.length === 0) {
+  if (!query?.entityTypes || query.entityTypes.length === 0) {
     return ok([]);
   }
   const schema = context.instance.getSchema();
-  for (const entityType of filter.entityTypes) {
+  for (const entityType of query.entityTypes) {
     if (schema.getEntityTypeSpecification(entityType) === null) {
-      return notOk.BadRequest(`Can’t find entity type in filter: ${entityType}`);
+      return notOk.BadRequest(`Can’t find entity type in query: ${entityType}`);
     }
   }
-  return ok(filter.entityTypes);
+  return ok(query.entityTypes);
 }

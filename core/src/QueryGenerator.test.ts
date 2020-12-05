@@ -164,7 +164,7 @@ describe('searchAdminEntitiesQuery()', () => {
     `);
   });
 
-  test('filter no entity type, i.e. include all', () => {
+  test('query no entity type, i.e. include all', () => {
     expect(searchAdminEntitiesQuery(context, { entityTypes: [] }, undefined))
       .toMatchInlineSnapshot(`
       OkResult {
@@ -183,7 +183,7 @@ describe('searchAdminEntitiesQuery()', () => {
     `);
   });
 
-  test('filter one entity type', () => {
+  test('query one entity type', () => {
     expect(searchAdminEntitiesQuery(context, { entityTypes: ['EntityAdminFoo'] }, undefined))
       .toMatchInlineSnapshot(`
       OkResult {
@@ -205,7 +205,7 @@ describe('searchAdminEntitiesQuery()', () => {
     `);
   });
 
-  test('filter two entity types', () => {
+  test('query two entity types', () => {
     expect(
       searchAdminEntitiesQuery(
         context,
@@ -233,7 +233,7 @@ describe('searchAdminEntitiesQuery()', () => {
     `);
   });
 
-  test('filter two entity types, first and after', () => {
+  test('query two entity types, first and after', () => {
     expect(
       searchAdminEntitiesQuery(
         context,
@@ -262,7 +262,7 @@ describe('searchAdminEntitiesQuery()', () => {
     `);
   });
 
-  test('filter referencing', () => {
+  test('query referencing', () => {
     expect(
       searchAdminEntitiesQuery(
         context,
@@ -287,7 +287,7 @@ describe('searchAdminEntitiesQuery()', () => {
     `);
   });
 
-  test('filter referencing and entity types and paging', () => {
+  test('query referencing and entity types and paging', () => {
     expect(
       searchAdminEntitiesQuery(
         context,
@@ -346,14 +346,14 @@ describe('searchAdminEntitiesQuery()', () => {
     `);
   });
 
-  test('Error: invalid entity type in filter', () => {
+  test('Error: invalid entity type in query', () => {
     const result = searchAdminEntitiesQuery(context, { entityTypes: ['Invalid'] }, undefined);
-    expectErrorResult(result, ErrorType.BadRequest, 'Can’t find entity type in filter: Invalid');
+    expectErrorResult(result, ErrorType.BadRequest, 'Can’t find entity type in query: Invalid');
   });
 });
 
 describe('totalAdminEntitiesQuery()', () => {
-  test('no filter', () => {
+  test('no query', () => {
     expect(totalAdminEntitiesQuery(context, undefined)).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
@@ -408,7 +408,7 @@ describe('totalAdminEntitiesQuery()', () => {
     `);
   });
 
-  test('filter referencing', () => {
+  test('query referencing', () => {
     expect(
       totalAdminEntitiesQuery(context, { referencing: '37b48706-803e-4227-a51e-8208db12d949' })
     ).toMatchInlineSnapshot(`
@@ -423,7 +423,7 @@ describe('totalAdminEntitiesQuery()', () => {
     `);
   });
 
-  test('filter referencing and entity types and paging', () => {
+  test('query referencing and entity types and paging', () => {
     expect(
       totalAdminEntitiesQuery(context, {
         entityTypes: ['EntityAdminFoo', 'EntityAdminBar'],

@@ -1,6 +1,6 @@
 import type {
   AdminEntity,
-  AdminFilter,
+  AdminQuery,
   Connection,
   Edge,
   Instance,
@@ -116,7 +116,7 @@ async function deleteEntities(context: SessionContext, idsToDelete: string[]) {
 
 async function visitAllEntityPages(
   context: SessionContext,
-  filter: AdminFilter,
+  query: AdminQuery,
   paging: Paging,
   visitor: (connection: Connection<Edge<AdminEntity, ErrorType>>) => void
 ) {
@@ -124,7 +124,7 @@ async function visitAllEntityPages(
   const isForwards = isPagingForwards(ownPaging);
   // eslint-disable-next-line no-constant-condition
   while (true) {
-    const result = await EntityAdmin.searchEntities(context, filter, ownPaging);
+    const result = await EntityAdmin.searchEntities(context, query, ownPaging);
     if (result.isError()) {
       throw result.toError();
     }
@@ -846,7 +846,7 @@ describe('searchEntities()', () => {
     expect(notDeletedCount).toBeGreaterThan(0);
   });
 
-  test('Filter based on referencing, one reference', async () => {
+  test('Query based on referencing, one reference', async () => {
     const { barId, fooEntities } = await createBarWithFooBazReferences(context, 1, 0);
     const [fooEntity] = fooEntities;
 
@@ -859,7 +859,7 @@ describe('searchEntities()', () => {
     }
   });
 
-  test('Filter based on referencing, no references', async () => {
+  test('Query based on referencing, no references', async () => {
     const { barId } = await createBarWithFooBazReferences(context, 0, 0);
 
     const searchResult = await EntityAdmin.searchEntities(context, { referencing: barId });
@@ -868,7 +868,7 @@ describe('searchEntities()', () => {
     }
   });
 
-  test('Filter based on referencing and entityTypes, one reference', async () => {
+  test('Query based on referencing and entityTypes, one reference', async () => {
     const { barId, bazEntities } = await createBarWithFooBazReferences(context, 1, 1);
     const [bazEntity] = bazEntities;
 
@@ -895,7 +895,7 @@ describe('getTotalCount', () => {
     }
   });
 
-  test('Filter based on referencing, one reference', async () => {
+  test('Query based on referencing, one reference', async () => {
     const { barId } = await createBarWithFooBazReferences(context, 1, 0);
 
     const result = await EntityAdmin.getTotalCount(context, { referencing: barId });
@@ -904,7 +904,7 @@ describe('getTotalCount', () => {
     }
   });
 
-  test('Filter based on referencing, no references', async () => {
+  test('Query based on referencing, no references', async () => {
     const { barId } = await createBarWithFooBazReferences(context, 0, 0);
 
     const result = await EntityAdmin.getTotalCount(context, { referencing: barId });
@@ -913,7 +913,7 @@ describe('getTotalCount', () => {
     }
   });
 
-  test('Filter based on referencing and entityTypes, one reference', async () => {
+  test('Query based on referencing and entityTypes, one reference', async () => {
     const { barId } = await createBarWithFooBazReferences(context, 1, 1);
 
     const result = await EntityAdmin.getTotalCount(context, {

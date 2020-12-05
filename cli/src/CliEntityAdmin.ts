@@ -12,7 +12,7 @@ import {
 } from '@datadata/core';
 import type {
   AdminEntity,
-  AdminFilter,
+  AdminQuery,
   EntityFieldSpecification,
   EntityTypeSpecification,
   Paging,
@@ -54,13 +54,13 @@ interface EntitySelectorItem {
 export async function selectEntity(
   context: SessionContext,
   message: string,
-  initialFilter: AdminFilter | null,
+  initialQuery: AdminQuery | null,
   unusedDefaultValue: { id: string } | null
 ): PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.NotFound> {
-  const { filter, paging } = await configureQuery(context, initialFilter);
+  const { query, paging } = await configureQuery(context, initialQuery);
   const isForward = isPagingForwards(paging);
 
-  const totalCountResult = await EntityAdmin.getTotalCount(context, filter);
+  const totalCountResult = await EntityAdmin.getTotalCount(context, query);
   if (totalCountResult.isError()) {
     return totalCountResult;
   }
@@ -69,7 +69,7 @@ export async function selectEntity(
   let lastItemId: string | null = null;
   // eslint-disable-next-line no-constant-condition
   while (true) {
-    const result = await EntityAdmin.searchEntities(context, filter, paging);
+    const result = await EntityAdmin.searchEntities(context, query, paging);
     if (result.isError()) {
       return result;
     }
@@ -115,10 +115,10 @@ export async function selectEntity(
 
 async function configureQuery(
   context: SessionContext,
-  initialFilter: AdminFilter | null
-): Promise<{ filter: AdminFilter; paging: Paging }> {
+  initialQuery: AdminQuery | null
+): Promise<{ query: AdminQuery; paging: Paging }> {
   let lastItemId = '_search';
-  const filter: AdminFilter = initialFilter ? { ...initialFilter } : {};
+  const query: AdminQuery = initialQuery ? { ...initialQuery } : {};
   let pagingIsForward = true;
   let pagingCount = 25;
   // eslint-disable-next-line no-constant-condition
@@ -127,13 +127,13 @@ async function configureQuery(
       {
         id: '_entityTypes',
         name: `${chalk.bold('Entity types:')} ${
-          filter.entityTypes?.join(', ') ?? chalk.grey('<not set>')
+          query.entityTypes?.join(', ') ?? chalk.grey('<not set>')
         }`,
-        enabled: (initialFilter?.entityTypes?.length ?? 0) === 0,
+        enabled: (initialQuery?.entityTypes?.length ?? 0) === 0,
       },
       {
         id: '_order',
-        name: `${chalk.bold('Order:')} ${filter.order ?? 'default'}`,
+        name: `${chalk.bold('Order:')} ${query.order ?? 'default'}`,
       },
       {
         id: '_direction',
@@ -147,10 +147,10 @@ async function configureQuery(
 
     switch (item.id) {
       case '_entityTypes':
-        filter.entityTypes = await CliSchema.selectEntityTypes(context);
+        query.entityTypes = await CliSchema.selectEntityTypes(context);
         break;
       case '_order':
-        filter.order = await selectOrder(filter.order);
+        query.order = await selectOrder(query.order);
         break;
       case '_direction':
         pagingIsForward = !pagingIsForward;
@@ -160,7 +160,7 @@ async function configureQuery(
         break;
       case '_search':
         return {
-          filter,
+          query,
           paging: pagingIsForward
             ? {
                 first: pagingCount,
