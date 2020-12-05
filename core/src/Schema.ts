@@ -1,41 +1,30 @@
 import type { Context, PromiseResult, Result, SessionContext } from '.';
 import { notOk, ok, ErrorType } from '.';
 import * as Db from './Db';
-import type { EntityTypesTable } from './DbTableTypes';
+import type { SchemaVersionsTable } from './DbTableTypes';
 
 export async function getSchema(context: Context<unknown>): Promise<Schema> {
-  const entityTypes: SchemaSpecification['entityTypes'] = {};
-
-  const entitySpecs = await Db.queryMany<Pick<EntityTypesTable, 'name' | 'specification'>>(
+  const { specification } = await Db.queryOne<Pick<SchemaVersionsTable, 'specification'>>(
     context,
-    'SELECT name, specification FROM entity_types'
+    'SELECT specification FROM schema_versions ORDER BY id DESC LIMIT 1'
   );
-  for (const { name, specification } of entitySpecs) {
-    entityTypes[name] = specification;
-  }
 
-  return new Schema({
-    entityTypes,
-  });
+  return new Schema(specification);
 }
 
 export async function setSchema(
   context: SessionContext,
   schema: Schema
 ): PromiseResult<void, ErrorType.BadRequest> {
-  return await context.withTransaction(async (context) => {
-    for (const [name, entitySpec] of Object.entries(schema.spec.entityTypes)) {
-      await Db.queryNone(
-        context,
-        `INSERT INTO entity_types(name, specification) VALUES ($1, $2)
-          ON CONFLICT (name) DO UPDATE SET specification = EXCLUDED.specification`,
-        [name, entitySpec]
-      );
-      // TODO remove entity types not included?
-    }
-
-    return ok(undefined);
-  });
+  const validation = schema.validate();
+  if (validation.isError()) {
+    return validation;
+  }
+  // TODO check if different
+  await Db.queryNone(context, 'INSERT INTO schema_versions (specification) VALUES ($1)', [
+    schema.spec,
+  ]);
+  return ok(undefined);
 }
 
 export interface EntityTypeSpecification {

@@ -23,7 +23,7 @@ let entitiesOfTypeAdminOnlyEditBefore: AdminEntity[];
 let deletedIdsOfTypeAdminOnlyEditBefore: string[];
 
 beforeAll(async () => {
-  instance = await createTestInstance({ loadSchema: true });
+  instance = await createTestInstance();
   context = await ensureSessionContext(instance, 'test', 'entity-admin');
   await updateSchema(context, {
     EntityAdminFoo: {

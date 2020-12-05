@@ -5,18 +5,10 @@ import { createTestInstance, expectErrorResult, expectOkResult } from './TestUti
 let instance: Instance;
 
 beforeAll(async () => {
-  instance = await createTestInstance({ loadSchema: false });
+  instance = await createTestInstance();
 });
 afterAll(async () => {
   await instance.shutdown();
-});
-
-describe('Instance.reloadSchema()', () => {
-  test('Load', async () => {
-    await instance.reloadSchema(instance.createAuthContext());
-    const schema = instance.getSchema();
-    expect(schema.spec).toBeTruthy();
-  });
 });
 
 describe('validate()', () => {

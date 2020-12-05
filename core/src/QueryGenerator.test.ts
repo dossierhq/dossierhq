@@ -2,14 +2,23 @@ import type { Instance, SessionContext } from '.';
 import { ErrorType } from './';
 import { toOpaqueCursor } from './Connection';
 import { searchAdminEntitiesQuery, totalAdminEntitiesQuery } from './QueryGenerator';
-import { createTestInstance, ensureSessionContext, expectErrorResult } from './TestUtils';
+import {
+  createTestInstance,
+  ensureSessionContext,
+  expectErrorResult,
+  updateSchema,
+} from './TestUtils';
 
 let instance: Instance;
 let context: SessionContext;
 
 beforeAll(async () => {
-  instance = await createTestInstance({ loadSchema: true });
+  instance = await createTestInstance();
   context = await ensureSessionContext(instance, 'test', 'query-generator');
+  await updateSchema(context, {
+    QueryGeneratorFoo: { fields: [] },
+    QueryGeneratorBar: { fields: [] },
+  });
 });
 afterAll(async () => {
   await instance.shutdown();
@@ -184,7 +193,7 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('query one entity type', () => {
-    expect(searchAdminEntitiesQuery(context, { entityTypes: ['EntityAdminFoo'] }, undefined))
+    expect(searchAdminEntitiesQuery(context, { entityTypes: ['QueryGeneratorFoo'] }, undefined))
       .toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
@@ -196,7 +205,7 @@ describe('searchAdminEntitiesQuery()', () => {
         FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.type = ANY($1) ORDER BY e.id LIMIT $2",
           "values": Array [
             Array [
-              "EntityAdminFoo",
+              "QueryGeneratorFoo",
             ],
             26,
           ],
@@ -209,7 +218,7 @@ describe('searchAdminEntitiesQuery()', () => {
     expect(
       searchAdminEntitiesQuery(
         context,
-        { entityTypes: ['EntityAdminFoo', 'EntityAdminBar'] },
+        { entityTypes: ['QueryGeneratorFoo', 'QueryGeneratorBar'] },
         undefined
       )
     ).toMatchInlineSnapshot(`
@@ -223,8 +232,8 @@ describe('searchAdminEntitiesQuery()', () => {
         FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.type = ANY($1) ORDER BY e.id LIMIT $2",
           "values": Array [
             Array [
-              "EntityAdminFoo",
-              "EntityAdminBar",
+              "QueryGeneratorFoo",
+              "QueryGeneratorBar",
             ],
             26,
           ],
@@ -237,7 +246,7 @@ describe('searchAdminEntitiesQuery()', () => {
     expect(
       searchAdminEntitiesQuery(
         context,
-        { entityTypes: ['EntityAdminFoo', 'EntityAdminBar'] },
+        { entityTypes: ['QueryGeneratorFoo', 'QueryGeneratorBar'] },
         { first: 10, after: toOpaqueCursor('int', 543) }
       )
     ).toMatchInlineSnapshot(`
@@ -251,8 +260,8 @@ describe('searchAdminEntitiesQuery()', () => {
         FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.type = ANY($1) AND e.id > $2 ORDER BY e.id LIMIT $3",
           "values": Array [
             Array [
-              "EntityAdminFoo",
-              "EntityAdminBar",
+              "QueryGeneratorFoo",
+              "QueryGeneratorBar",
             ],
             543,
             11,
@@ -292,7 +301,7 @@ describe('searchAdminEntitiesQuery()', () => {
       searchAdminEntitiesQuery(
         context,
         {
-          entityTypes: ['EntityAdminFoo', 'EntityAdminBar'],
+          entityTypes: ['QueryGeneratorFoo', 'QueryGeneratorBar'],
           referencing: '37b48706-803e-4227-a51e-8208db12d949',
         },
         { first: 10, after: toOpaqueCursor('int', 123) }
@@ -308,8 +317,8 @@ describe('searchAdminEntitiesQuery()', () => {
         FROM entities e, entity_versions ev, entity_version_references evr, entities e2 WHERE e.latest_draft_entity_versions_id = ev.id AND e.type = ANY($1) AND ev.id = evr.entity_versions_id AND evr.entities_id = e2.id AND e2.uuid = $2 AND e.id > $3 ORDER BY e.id LIMIT $4",
           "values": Array [
             Array [
-              "EntityAdminFoo",
-              "EntityAdminBar",
+              "QueryGeneratorFoo",
+              "QueryGeneratorBar",
             ],
             "37b48706-803e-4227-a51e-8208db12d949",
             123,
@@ -376,14 +385,14 @@ describe('totalAdminEntitiesQuery()', () => {
   });
 
   test('one entity type', () => {
-    expect(totalAdminEntitiesQuery(context, { entityTypes: ['EntityAdminFoo'] }))
+    expect(totalAdminEntitiesQuery(context, { entityTypes: ['QueryGeneratorFoo'] }))
       .toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
           "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.type = ANY($1)",
           "values": Array [
             Array [
-              "EntityAdminFoo",
+              "QueryGeneratorFoo",
             ],
           ],
         },
@@ -392,15 +401,16 @@ describe('totalAdminEntitiesQuery()', () => {
   });
 
   test('two entity types', () => {
-    expect(totalAdminEntitiesQuery(context, { entityTypes: ['EntityAdminFoo', 'EntityAdminBar'] }))
-      .toMatchInlineSnapshot(`
+    expect(
+      totalAdminEntitiesQuery(context, { entityTypes: ['QueryGeneratorFoo', 'QueryGeneratorBar'] })
+    ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
           "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.type = ANY($1)",
           "values": Array [
             Array [
-              "EntityAdminFoo",
-              "EntityAdminBar",
+              "QueryGeneratorFoo",
+              "QueryGeneratorBar",
             ],
           ],
         },
@@ -426,7 +436,7 @@ describe('totalAdminEntitiesQuery()', () => {
   test('query referencing and entity types and paging', () => {
     expect(
       totalAdminEntitiesQuery(context, {
-        entityTypes: ['EntityAdminFoo', 'EntityAdminBar'],
+        entityTypes: ['QueryGeneratorFoo', 'QueryGeneratorBar'],
         referencing: '37b48706-803e-4227-a51e-8208db12d949',
       })
     ).toMatchInlineSnapshot(`
@@ -435,8 +445,8 @@ describe('totalAdminEntitiesQuery()', () => {
           "text": "SELECT COUNT(e.id)::integer AS count FROM entities e, entity_versions ev, entity_version_references evr, entities e2 WHERE e.type = ANY($1) AND e.latest_draft_entity_versions_id = ev.id AND ev.id = evr.entity_versions_id AND evr.entities_id = e2.id AND e2.uuid = $2",
           "values": Array [
             Array [
-              "EntityAdminFoo",
-              "EntityAdminBar",
+              "QueryGeneratorFoo",
+              "QueryGeneratorBar",
             ],
             "37b48706-803e-4227-a51e-8208db12d949",
           ],

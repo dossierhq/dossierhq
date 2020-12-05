@@ -7,16 +7,9 @@ import type {
   SessionContext,
 } from '.';
 
-export async function createTestInstance({
-  loadSchema,
-}: {
-  loadSchema?: boolean;
-}): Promise<Instance> {
+export async function createTestInstance(): Promise<Instance> {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const instance = new Instance({ databaseUrl: process.env.DATABASE_URL! });
-  if (loadSchema === true || loadSchema === undefined) {
-    await instance.reloadSchema(instance.createAuthContext());
-  }
   return instance;
 }
 
@@ -48,10 +41,17 @@ export async function updateSchema(
   context: SessionContext,
   entityTypes: Record<string, EntityTypeSpecification>
 ): Promise<void> {
-  const oldSchema = context.instance.getSchema();
+  let oldSchemaSpec: SchemaSpecification = {
+    entityTypes: {},
+  };
+  try {
+    oldSchemaSpec = (await context.instance.getSchema()).spec;
+  } catch (error) {
+    // TODO ensure it's due to no schema existing
+  }
   const spec: SchemaSpecification = {
-    ...oldSchema,
-    entityTypes: { ...oldSchema.spec.entityTypes, ...entityTypes },
+    ...oldSchemaSpec,
+    entityTypes: { ...oldSchemaSpec.entityTypes, ...entityTypes },
   };
   const newSchema = new Schema(spec);
   const result = await context.instance.setSchema(context, newSchema);

@@ -11,7 +11,7 @@ let context: SessionContext;
 let schema: GraphQLSchema;
 
 beforeAll(async () => {
-  instance = await createTestInstance({ loadSchema: true });
+  instance = await createTestInstance();
   context = await ensureSessionContext(instance, 'test', 'mutation');
   await updateSchema(context, {
     MutationFoo: {

@@ -6,7 +6,7 @@ let instance: Instance;
 let context: SessionContext;
 
 beforeAll(async () => {
-  instance = await createTestInstance({ loadSchema: true });
+  instance = await createTestInstance();
   context = await ensureSessionContext(instance, 'test', 'published-entity');
 });
 afterAll(async () => {
