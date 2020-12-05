@@ -7,7 +7,7 @@ export type {
   AdminEntityHistory,
   AdminEntityUpdate,
   AdminEntityVersionInfo,
-  AdminFilter,
+  AdminQuery,
 } from './EntityAdmin';
 export type { ErrorResult, OkResult, PromiseResult, Result } from './ErrorResult';
 export type { Paging } from './Paging';

@@ -7,7 +7,7 @@ import {
 import type {
   AdminEntity,
   AdminEntityHistory,
-  AdminFilter,
+  AdminQuery,
   Entity,
   Paging,
   PageInfo,
@@ -151,11 +151,11 @@ export function buildResolversForAdminEntity<TContext extends SessionGraphQLCont
 
 export async function loadAdminSearchEntities<TContext extends SessionGraphQLContext>(
   context: TContext,
-  filter: AdminFilter | undefined,
+  query: AdminQuery | undefined,
   paging: Paging
 ): Promise<ConnectionWithTotalCount<Edge<AdminEntity>, TContext> | null> {
   const sessionContext = getSessionContext(context);
-  const result = await EntityAdmin.searchEntities(sessionContext, filter, paging);
+  const result = await EntityAdmin.searchEntities(sessionContext, query, paging);
   if (result.isError()) {
     throw result.toError();
   }
@@ -175,16 +175,16 @@ export async function loadAdminSearchEntities<TContext extends SessionGraphQLCon
           : null, //TODO throw error if accessed?
       };
     }),
-    totalCount: buildTotalCount(filter),
+    totalCount: buildTotalCount(query),
   };
 }
 
 function buildTotalCount<TContext extends SessionGraphQLContext>(
-  filter: AdminFilter | undefined
+  query: AdminQuery | undefined
 ): FieldValueOrResolver<TContext, number> {
   return async (args, context, unusedInfo) => {
     const sessionContext = getSessionContext(context);
-    const result = await EntityAdmin.getTotalCount(sessionContext, filter);
+    const result = await EntityAdmin.getTotalCount(sessionContext, query);
     if (result.isError()) {
       throw result.toError();
     }

@@ -3,7 +3,7 @@ import type {
   AdminEntity,
   AdminEntityCreate,
   AdminEntityUpdate,
-  AdminFilter,
+  AdminQuery,
   Entity,
   EntityTypeSpecification,
   Result,
@@ -290,10 +290,10 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       })
     );
 
-    // AdminFilterInput
+    // AdminQueryInput
     this.addType(
       new GraphQLInputObjectType({
-        name: 'AdminFilterInput',
+        name: 'AdminQueryInput',
         fields: {
           entityTypes: { type: new GraphQLList(GraphQLString) },
           referencing: { type: GraphQLID },
@@ -473,7 +473,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       TSource,
       TContext,
       {
-        filter?: AdminFilter;
+        query?: AdminQuery;
         first?: number;
         after?: string;
         last?: number;
@@ -482,16 +482,16 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     >({
       type: this.getOutputType('AdminEntityConnection'),
       args: {
-        filter: { type: this.getInputType('AdminFilterInput') },
+        query: { type: this.getInputType('AdminQueryInput') },
         first: { type: GraphQLInt },
         after: { type: GraphQLString },
         last: { type: GraphQLInt },
         before: { type: GraphQLString },
       },
       resolve: async (source, args, context, unusedInfo) => {
-        const { filter, first, after, last, before } = args;
+        const { query, first, after, last, before } = args;
         const paging = { first, after, last, before };
-        return await loadAdminSearchEntities(context, filter, paging);
+        return await loadAdminSearchEntities(context, query, paging);
       },
     });
   }

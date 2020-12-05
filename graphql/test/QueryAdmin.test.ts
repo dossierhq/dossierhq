@@ -1,7 +1,7 @@
 import { EntityAdmin, EntityFieldType, ErrorType, notOk, ok, TestUtils } from '@datadata/core';
 import type {
   AdminEntity,
-  AdminFilter,
+  AdminQuery,
   Connection,
   Edge,
   Instance,
@@ -86,13 +86,13 @@ async function getEntitiesForAdminOnlyEditBefore(context: SessionContext) {
 
 async function visitAllEntityPages(
   context: SessionContext,
-  filter: AdminFilter,
+  query: AdminQuery,
   visitor: (connection: Connection<Edge<AdminEntity, ErrorType>>) => void
 ) {
   const paging: Paging = {};
   // eslint-disable-next-line no-constant-condition
   while (true) {
-    const result = await EntityAdmin.searchEntities(context, filter, paging);
+    const result = await EntityAdmin.searchEntities(context, query, paging);
     if (result.isError()) {
       throw result.toError();
     }
@@ -627,7 +627,7 @@ describe('searchAdminEntities()', () => {
       schema,
       `
         {
-          adminSearchEntities(filter: { entityTypes: ["QueryAdminOnlyEditBefore"] }) {
+          adminSearchEntities(query: { entityTypes: ["QueryAdminOnlyEditBefore"] }) {
             totalCount
             edges {
               node {
@@ -653,7 +653,7 @@ describe('searchAdminEntities()', () => {
       schema,
       `
         {
-          adminSearchEntities(filter: { entityTypes: ["QueryAdminOnlyEditBefore"] }, first: 10) {
+          adminSearchEntities(query: { entityTypes: ["QueryAdminOnlyEditBefore"] }, first: 10) {
             edges {
               node {
                 id
@@ -675,7 +675,7 @@ describe('searchAdminEntities()', () => {
       schema,
       `
         {
-          adminSearchEntities(filter: { entityTypes: ["QueryAdminOnlyEditBefore"] }, last: 10) {
+          adminSearchEntities(query: { entityTypes: ["QueryAdminOnlyEditBefore"] }, last: 10) {
             edges {
               node {
                 id
@@ -698,7 +698,7 @@ describe('searchAdminEntities()', () => {
       `
         {
           adminSearchEntities(
-            filter: { entityTypes: ["QueryAdminOnlyEditBefore"], order: "_name" }
+            query: { entityTypes: ["QueryAdminOnlyEditBefore"], order: "_name" }
             last: 10
           ) {
             edges {
@@ -728,7 +728,7 @@ describe('searchAdminEntities()', () => {
       schema,
       `
         query QueryReferencing($id: ID!) {
-          adminSearchEntities(filter: { referencing: $id }) {
+          adminSearchEntities(query: { referencing: $id }) {
             edges {
               node {
                 id

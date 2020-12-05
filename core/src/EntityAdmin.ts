@@ -56,7 +56,7 @@ export interface AdminEntityUpdate {
   [fieldName: string]: unknown;
 }
 
-export interface AdminFilter {
+export interface AdminQuery {
   entityTypes?: string[];
   /** Entities referencing the entity (by id) */
   referencing?: string;
@@ -101,20 +101,20 @@ export async function getEntity(
 
 export async function searchEntities(
   context: SessionContext,
-  filter?: AdminFilter,
+  query?: AdminQuery,
   paging?: Paging
 ): PromiseResult<Connection<Edge<AdminEntity, ErrorType>> | null, ErrorType.BadRequest> {
-  const query = searchAdminEntitiesQuery(context, filter, paging);
-  if (query.isError()) {
-    return query;
+  const sqlQuery = searchAdminEntitiesQuery(context, query, paging);
+  if (sqlQuery.isError()) {
+    return sqlQuery;
   }
-  const entitiesValues = await Db.queryMany<SearchAdminEntitiesItem>(context, query.value);
-  const hasExtraPage = entitiesValues.length > query.value.pagingCount;
+  const entitiesValues = await Db.queryMany<SearchAdminEntitiesItem>(context, sqlQuery.value);
+  const hasExtraPage = entitiesValues.length > sqlQuery.value.pagingCount;
   if (hasExtraPage) {
-    entitiesValues.splice(query.value.pagingCount, 1);
+    entitiesValues.splice(sqlQuery.value.pagingCount, 1);
   }
 
-  if (!query.value.isForwards) {
+  if (!sqlQuery.value.isForwards) {
     // Reverse since DESC order returns the rows in the wrong order, we want them in the same order as for forwards pagination
     entitiesValues.reverse();
   }
@@ -124,11 +124,11 @@ export async function searchEntities(
     return ok(null);
   }
 
-  const { cursorName, cursorType } = query.value;
+  const { cursorName, cursorType } = sqlQuery.value;
   return ok({
     pageInfo: {
-      hasNextPage: query.value.isForwards ? hasExtraPage : false,
-      hasPreviousPage: query.value.isForwards ? false : hasExtraPage,
+      hasNextPage: sqlQuery.value.isForwards ? hasExtraPage : false,
+      hasPreviousPage: sqlQuery.value.isForwards ? false : hasExtraPage,
       startCursor: toOpaqueCursor(cursorType, entitiesValues[0][cursorName]),
       endCursor: toOpaqueCursor(cursorType, entitiesValues[entitiesValues.length - 1][cursorName]),
     },
@@ -141,13 +141,13 @@ export async function searchEntities(
 
 export async function getTotalCount(
   context: SessionContext,
-  filter?: AdminFilter
+  query?: AdminQuery
 ): PromiseResult<number, ErrorType.BadRequest> {
-  const query = totalAdminEntitiesQuery(context, filter);
-  if (query.isError()) {
-    return query;
+  const sqlQuery = totalAdminEntitiesQuery(context, query);
+  if (sqlQuery.isError()) {
+    return sqlQuery;
   }
-  const { count } = await Db.queryOne<{ count: number }>(context, query.value);
+  const { count } = await Db.queryOne<{ count: number }>(context, sqlQuery.value);
   return ok(count);
 }
 

@@ -71,7 +71,7 @@ type AdminEntityConnection {
   totalCount: Int!
 }
 
-input AdminFilterInput {
+input AdminQueryInput {
   entityTypes: [String]
   referencing: ID
   order: String
@@ -144,7 +144,7 @@ type Query {
   node(id: ID!): Node
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntityHistory(id: ID!): AdminEntityHistory
-  adminSearchEntities(filter: AdminFilterInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
 }
 
 type Mutation {
@@ -219,7 +219,7 @@ type AdminEntityConnection {
   totalCount: Int!
 }
 
-input AdminFilterInput {
+input AdminQueryInput {
   entityTypes: [String]
   referencing: ID
   order: String
@@ -342,7 +342,7 @@ type Query {
   node(id: ID!): Node
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntityHistory(id: ID!): AdminEntityHistory
-  adminSearchEntities(filter: AdminFilterInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
 }
 
 type Mutation {
@@ -402,7 +402,7 @@ type AdminEntityConnection {
   totalCount: Int!
 }
 
-input AdminFilterInput {
+input AdminQueryInput {
   entityTypes: [String]
   referencing: ID
   order: String
@@ -450,7 +450,7 @@ type Query {
   node(id: ID!): Node
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntityHistory(id: ID!): AdminEntityHistory
-  adminSearchEntities(filter: AdminFilterInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
 }
 
 type Mutation {
@@ -515,7 +515,7 @@ type AdminEntityConnection {
   totalCount: Int!
 }
 
-input AdminFilterInput {
+input AdminQueryInput {
   entityTypes: [String]
   referencing: ID
   order: String
@@ -591,7 +591,7 @@ type Query {
   node(id: ID!): Node
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntityHistory(id: ID!): AdminEntityHistory
-  adminSearchEntities(filter: AdminFilterInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
 }
 
 type Mutation {
