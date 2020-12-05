@@ -1,9 +1,8 @@
-import type { EntityTypeSpecification } from '.';
+import type { SchemaSpecification } from '.';
 
-export interface EntityTypesTable {
+export interface SchemaVersionsTable {
   id: number;
-  name: string;
-  specification: EntityTypeSpecification;
+  specification: SchemaSpecification;
 }
 
 export interface SubjectsTable {

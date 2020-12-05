@@ -6,7 +6,7 @@ let instance: Instance;
 let context: AuthContext;
 
 beforeAll(async () => {
-  instance = await createTestInstance({ loadSchema: false });
+  instance = await createTestInstance();
   context = instance.createAuthContext();
 });
 afterAll(async () => {
