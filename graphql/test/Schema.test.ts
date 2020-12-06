@@ -332,7 +332,7 @@ describe('Two entity types with reference schema spec', () => {
       Bar: {
         fields: [
           { name: 'barField1', type: FieldType.String },
-          { name: 'barField2', type: FieldType.Reference },
+          { name: 'barField2', type: FieldType.EntityType },
         ],
       },
     },
@@ -349,17 +349,17 @@ describe('Multiple references with entityTypes schema spec', () => {
     entityTypes: {
       Foo: {
         fields: [
-          { name: 'noMeansAll', type: FieldType.Reference, entityTypes: [] },
-          { name: 'bar', type: FieldType.Reference, entityTypes: ['Bar'] },
-          { name: 'bazBar', type: FieldType.Reference, entityTypes: ['Baz', 'Bar'] },
+          { name: 'noMeansAll', type: FieldType.EntityType, entityTypes: [] },
+          { name: 'bar', type: FieldType.EntityType, entityTypes: ['Bar'] },
+          { name: 'bazBar', type: FieldType.EntityType, entityTypes: ['Baz', 'Bar'] },
           {
             name: 'fooBarBaz',
-            type: FieldType.Reference,
+            type: FieldType.EntityType,
             entityTypes: ['Foo', 'Bar', 'Baz'],
           },
           {
             name: 'barBarBar',
-            type: FieldType.Reference,
+            type: FieldType.EntityType,
             entityTypes: ['Bar', 'Bar', 'Bar'],
           },
         ],
@@ -381,7 +381,7 @@ describe('List of strings and references schema spec', () => {
       Foo: {
         fields: [
           { name: 'strings', type: FieldType.String, list: true },
-          { name: 'bars', type: FieldType.Reference, list: true, entityTypes: ['Bar'] },
+          { name: 'bars', type: FieldType.EntityType, list: true, entityTypes: ['Bar'] },
         ],
       },
       Bar: { fields: [] },

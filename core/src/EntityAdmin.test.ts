@@ -31,18 +31,18 @@ beforeAll(async () => {
         fields: [
           { name: 'title', type: FieldType.String, isName: true },
           { name: 'summary', type: FieldType.String },
-          { name: 'bar', type: FieldType.Reference, entityTypes: ['EntityAdminBar'] },
+          { name: 'bar', type: FieldType.EntityType, entityTypes: ['EntityAdminBar'] },
         ],
       },
       EntityAdminBar: { fields: [{ name: 'title', type: FieldType.String }] },
       EntityAdminBaz: {
         fields: [
           { name: 'title', type: FieldType.String },
-          { name: 'bar', type: FieldType.Reference, entityTypes: ['EntityAdminBar'] },
+          { name: 'bar', type: FieldType.EntityType, entityTypes: ['EntityAdminBar'] },
           { name: 'tags', type: FieldType.String, list: true },
           {
             name: 'bars',
-            type: FieldType.Reference,
+            type: FieldType.EntityType,
             list: true,
             entityTypes: ['EntityAdminBar'],
           },
@@ -100,7 +100,7 @@ beforeAll(async () => {
       EntityAdminStringReference: {
         fields: [
           { name: 'string', type: FieldType.String },
-          { name: 'reference', type: FieldType.Reference, entityTypes: ['EntityAdminBar'] },
+          { name: 'reference', type: FieldType.EntityType, entityTypes: ['EntityAdminBar'] },
         ],
       },
       EntityAdminListFields: {
@@ -108,7 +108,7 @@ beforeAll(async () => {
           { name: 'stringList', type: FieldType.String, list: true },
           {
             name: 'referenceList',
-            type: FieldType.Reference,
+            type: FieldType.EntityType,
             list: true,
             entityTypes: ['EntityAdminBar'],
           },

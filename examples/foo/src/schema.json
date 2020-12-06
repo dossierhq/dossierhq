@@ -13,12 +13,12 @@
         },
         {
           "name": "category",
-          "type": "Reference",
+          "type": "EntityType",
           "entityTypes": ["Category"]
         },
         {
           "name": "categories",
-          "type": "Reference",
+          "type": "EntityType",
           "list": true,
           "entityTypes": ["Category"]
         },

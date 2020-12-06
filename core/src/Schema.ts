@@ -36,7 +36,7 @@ export interface ValueTypeSpecification {
 }
 
 export enum FieldType {
-  Reference = 'Reference',
+  EntityType = 'EntityType',
   String = 'String',
   ValueType = 'ValueType',
 }
@@ -46,14 +46,14 @@ export interface FieldSpecification {
   type: FieldType;
   list?: boolean;
   isName?: boolean;
-  /** Applicable when type is Reference */
+  /** Applicable when type is EntityType */
   entityTypes?: string[];
   /** Applicable when type is ValueType */
   valueTypes?: string[];
 }
 
 export interface FieldValueTypeMap {
-  [FieldType.Reference]: { id: string };
+  [FieldType.EntityType]: { id: string };
   [FieldType.String]: string;
   [FieldType.ValueType]: { _type: string; [key: string]: unknown };
 }
@@ -61,15 +61,15 @@ export interface FieldValueTypeMap {
 export function isReferenceFieldType(
   fieldSpec: FieldSpecification,
   value: unknown | null
-): value is FieldValueTypeMap[FieldType.Reference] | null {
-  return fieldSpec.type === FieldType.Reference && !fieldSpec.list;
+): value is FieldValueTypeMap[FieldType.EntityType] | null {
+  return fieldSpec.type === FieldType.EntityType && !fieldSpec.list;
 }
 
 export function isReferenceListFieldType(
   fieldSpec: FieldSpecification,
   value: unknown | null
-): value is Array<FieldValueTypeMap[FieldType.Reference]> | null {
-  return fieldSpec.type === FieldType.Reference && !!fieldSpec.list;
+): value is Array<FieldValueTypeMap[FieldType.EntityType]> | null {
+  return fieldSpec.type === FieldType.EntityType && !!fieldSpec.list;
 }
 
 export function isStringFieldType(
@@ -121,7 +121,7 @@ export class Schema {
         }
 
         if (fieldSpec.entityTypes && fieldSpec.entityTypes.length > 0) {
-          if (fieldSpec.type !== FieldType.Reference) {
+          if (fieldSpec.type !== FieldType.EntityType) {
             return notOk.BadRequest(
               `${name}.${fieldSpec.name}: Field with type ${fieldSpec.type} shouldn’t specify entityTypes`
             );

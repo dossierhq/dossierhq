@@ -229,7 +229,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
           for (const fieldSpec of entitySpec.fields) {
             let fieldType;
             switch (fieldSpec.type) {
-              case FieldType.Reference:
+              case FieldType.EntityType:
                 fieldType = this.getOrCreateEntityUnion(false, fieldSpec.entityTypes || []);
                 break;
               case FieldType.String:
@@ -365,7 +365,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
           for (const fieldSpec of entitySpec.fields) {
             let fieldType;
             switch (fieldSpec.type) {
-              case FieldType.Reference:
+              case FieldType.EntityType:
                 fieldType = this.getOrCreateEntityUnion(true, fieldSpec.entityTypes || []);
                 break;
               case FieldType.String:
@@ -394,7 +394,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
           for (const fieldSpec of entitySpec.fields) {
             let fieldType;
             switch (fieldSpec.type) {
-              case FieldType.Reference:
+              case FieldType.EntityType:
                 fieldType = this.getInputType('AdminReferenceInput');
                 break;
               case FieldType.String:
@@ -424,7 +424,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
           for (const fieldSpec of entitySpec.fields) {
             let fieldType;
             switch (fieldSpec.type) {
-              case FieldType.Reference:
+              case FieldType.EntityType:
                 fieldType = this.getInputType('AdminReferenceInput');
                 break;
               case FieldType.String:
