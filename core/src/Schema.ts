@@ -31,9 +31,14 @@ export interface EntityTypeSpecification {
   fields: EntityFieldSpecification[];
 }
 
+export interface ValueTypeSpecification {
+  fields: EntityFieldSpecification[];
+}
+
 export enum EntityFieldType {
   Reference = 'Reference',
   String = 'String',
+  ValueType = 'ValueType',
 }
 
 export interface EntityFieldSpecification {
@@ -41,13 +46,16 @@ export interface EntityFieldSpecification {
   type: EntityFieldType;
   list?: boolean;
   isName?: boolean;
-  /** Applicable for Reference */
+  /** Applicable when type is Reference */
   entityTypes?: string[];
+  /** Applicable when type is ValueType */
+  valueTypes?: string[];
 }
 
 export interface EntityFieldValueTypeMap {
   [EntityFieldType.Reference]: { id: string };
   [EntityFieldType.String]: string;
+  [EntityFieldType.ValueType]: { _type: string; [key: string]: unknown };
 }
 
 export function isReferenceFieldType(
@@ -80,14 +88,18 @@ export function isStringListFieldType(
 
 export interface SchemaSpecification {
   entityTypes: Record<string, EntityTypeSpecification>;
+  valueTypes: Record<string, ValueTypeSpecification>;
 }
 
 export class Schema {
   constructor(readonly spec: SchemaSpecification) {}
 
   validate(): Result<void, ErrorType.BadRequest> {
-    for (const [name, entitySpec] of Object.entries(this.spec.entityTypes)) {
-      for (const fieldSpec of entitySpec.fields) {
+    for (const [name, typeSpec] of [
+      ...Object.entries(this.spec.entityTypes),
+      ...Object.entries(this.spec.valueTypes),
+    ]) {
+      for (const fieldSpec of typeSpec.fields) {
         if (!(fieldSpec.type in EntityFieldType)) {
           return notOk.BadRequest(
             `${name}.${fieldSpec.name}: Specified type ${fieldSpec.type} doesn’t exist`
@@ -104,6 +116,21 @@ export class Schema {
             if (!(referencedTypeName in this.spec.entityTypes)) {
               return notOk.BadRequest(
                 `${name}.${fieldSpec.name}: Referenced entity type in entityTypes ${referencedTypeName} doesn’t exist`
+              );
+            }
+          }
+        }
+
+        if (fieldSpec.valueTypes && fieldSpec.valueTypes.length > 0) {
+          if (fieldSpec.type !== EntityFieldType.ValueType) {
+            return notOk.BadRequest(
+              `${name}.${fieldSpec.name}: Field with type ${fieldSpec.type} shouldn’t specify valueTypes`
+            );
+          }
+          for (const referencedTypeName of fieldSpec.valueTypes) {
+            if (!(referencedTypeName in this.spec.valueTypes)) {
+              return notOk.BadRequest(
+                `${name}.${fieldSpec.name}: Value type in valueTypes ${referencedTypeName} doesn’t exist`
               );
             }
           }
@@ -127,5 +154,9 @@ export class Schema {
     fieldName: string
   ): EntityFieldSpecification | null {
     return entitySpec.fields.find((x) => x.name === fieldName) ?? null;
+  }
+
+  getValueTypeSpecification(type: string): ValueTypeSpecification | null {
+    return this.spec.valueTypes[type] ?? null;
   }
 }

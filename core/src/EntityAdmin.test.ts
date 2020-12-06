@@ -46,9 +46,28 @@ beforeAll(async () => {
             list: true,
             entityTypes: ['EntityAdminBar'],
           },
+          { name: 'oneString', type: EntityFieldType.ValueType, valueTypes: ['OneString'] },
+          { name: 'twoStrings', type: EntityFieldType.ValueType, valueTypes: ['TwoStrings'] },
+          {
+            name: 'twoStringsList',
+            type: EntityFieldType.ValueType,
+            valueTypes: ['TwoStrings'],
+            list: true,
+          },
         ],
       },
       AdminOnlyEditBefore: { fields: [{ name: 'message', type: EntityFieldType.String }] },
+    },
+    valueTypes: {
+      OneString: {
+        fields: [{ name: 'one', type: EntityFieldType.String }],
+      },
+      TwoStrings: {
+        fields: [
+          { name: 'one', type: EntityFieldType.String },
+          { name: 'two', type: EntityFieldType.String },
+        ],
+      },
     },
   });
 
@@ -501,6 +520,81 @@ describe('createEntity()', () => {
     }
   });
 
+  test('Create EntityAdminBaz with TwoStrings value type', async () => {
+    const createResult = await EntityAdmin.createEntity(
+      context,
+      {
+        _type: 'EntityAdminBaz',
+        _name: 'Baz',
+        twoStrings: { _type: 'TwoStrings', one: 'First', two: 'Second' },
+      },
+      { publish: true }
+    );
+    if (expectOkResult(createResult)) {
+      const { id, _name: name } = createResult.value;
+      expect(createResult.value).toEqual({
+        id,
+        _type: 'EntityAdminBaz',
+        _name: name,
+        _version: 0,
+        twoStrings: { _type: 'TwoStrings', one: 'First', two: 'Second' },
+      });
+
+      const getResult = await EntityAdmin.getEntity(context, id, {});
+      if (expectOkResult(getResult)) {
+        expect(getResult.value.item).toEqual({
+          id,
+          _type: 'EntityAdminBaz',
+          _name: name,
+          _version: 0,
+          twoStrings: { _type: 'TwoStrings', one: 'First', two: 'Second' },
+        });
+      }
+    }
+  });
+
+  test('Create EntityAdminBaz with list of TwoStrings value type', async () => {
+    const createResult = await EntityAdmin.createEntity(
+      context,
+      {
+        _type: 'EntityAdminBaz',
+        _name: 'Baz',
+        twoStringsList: [
+          { _type: 'TwoStrings', one: 'First', two: 'Second' },
+          { _type: 'TwoStrings', one: 'Three', two: 'Four' },
+        ],
+      },
+      { publish: true }
+    );
+    if (expectOkResult(createResult)) {
+      const { id, _name: name } = createResult.value;
+      expect(createResult.value).toEqual({
+        id,
+        _type: 'EntityAdminBaz',
+        _name: name,
+        _version: 0,
+        twoStringsList: [
+          { _type: 'TwoStrings', one: 'First', two: 'Second' },
+          { _type: 'TwoStrings', one: 'Three', two: 'Four' },
+        ],
+      });
+
+      const getResult = await EntityAdmin.getEntity(context, id, {});
+      if (expectOkResult(getResult)) {
+        expect(getResult.value.item).toEqual({
+          id,
+          _type: 'EntityAdminBaz',
+          _name: name,
+          _version: 0,
+          twoStringsList: [
+            { _type: 'TwoStrings', one: 'First', two: 'Second' },
+            { _type: 'TwoStrings', one: 'Three', two: 'Four' },
+          ],
+        });
+      }
+    }
+  });
+
   test('Error: Create with invalid type', async () => {
     const result = await EntityAdmin.createEntity(
       context,
@@ -620,6 +714,86 @@ describe('createEntity()', () => {
       createResult,
       ErrorType.BadRequest,
       'entity.bar: expected reference, got list'
+    );
+  });
+
+  test('Error: value type missing _type', async () => {
+    const createResult = await EntityAdmin.createEntity(
+      context,
+      {
+        _type: 'EntityAdminBaz',
+        _name: 'Baz',
+        twoStrings: { one: 'One', two: 'Two' },
+      },
+      { publish: true }
+    );
+    expectErrorResult(createResult, ErrorType.BadRequest, 'entity.twoStrings: missing _type');
+  });
+
+  test('Error: value type with invalid _type', async () => {
+    const createResult = await EntityAdmin.createEntity(
+      context,
+      {
+        _type: 'EntityAdminBaz',
+        _name: 'Baz',
+        twoStrings: { _type: 'Invalid' },
+      },
+      { publish: true }
+    );
+    expectErrorResult(
+      createResult,
+      ErrorType.BadRequest,
+      'entity.twoStrings: value type Invalid doesn’t exist'
+    );
+  });
+
+  test('Error: value type with wrong _type', async () => {
+    const createResult = await EntityAdmin.createEntity(
+      context,
+      {
+        _type: 'EntityAdminBaz',
+        _name: 'Baz',
+        oneString: { _type: 'TwoStrings', one: 'One', two: 'Two' },
+      },
+      { publish: true }
+    );
+    expectErrorResult(
+      createResult,
+      ErrorType.BadRequest,
+      'entity.oneString: value of type TwoStrings is not allowed'
+    );
+  });
+
+  test('Error: single value type when list expected', async () => {
+    const createResult = await EntityAdmin.createEntity(
+      context,
+      {
+        _type: 'EntityAdminBaz',
+        _name: 'Baz',
+        twoStringsList: { _type: 'TwoStrings', one: 'One', two: 'Two' },
+      },
+      { publish: true }
+    );
+    expectErrorResult(createResult, ErrorType.BadRequest, 'entity.twoStringsList: expected list');
+  });
+
+  test('Error: list of value type when single item expected', async () => {
+    const createResult = await EntityAdmin.createEntity(
+      context,
+      {
+        _type: 'EntityAdminBaz',
+        _name: 'Baz',
+        twoStrings: [
+          { _type: 'TwoStrings', one: 'One', two: 'Two' },
+          { _type: 'TwoStrings', one: 'One', two: 'Two' },
+        ],
+      },
+      { publish: true }
+    );
+    expectErrorResult(
+      createResult,
+      ErrorType.BadRequest,
+      'entity.twoStrings: expected single value, got list'
     );
   });
 });

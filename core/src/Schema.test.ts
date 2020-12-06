@@ -13,13 +13,14 @@ afterAll(async () => {
 
 describe('validate()', () => {
   test('Empty spec validates', () => {
-    expectOkResult(new Schema({ entityTypes: {} }).validate());
+    expectOkResult(new Schema({ entityTypes: {}, valueTypes: {} }).validate());
   });
 
   test('Error: Invalid field type', () => {
     expectErrorResult(
       new Schema({
         entityTypes: { Foo: { fields: [{ name: 'bar', type: 'Invalid' as EntityFieldType }] } },
+        valueTypes: {},
       }).validate(),
       ErrorType.BadRequest,
       'Foo.bar: Specified type Invalid doesn’t exist'
@@ -34,6 +35,7 @@ describe('validate()', () => {
             fields: [{ name: 'bar', type: EntityFieldType.Reference, entityTypes: ['Invalid'] }],
           },
         },
+        valueTypes: {},
       }).validate(),
       ErrorType.BadRequest,
       'Foo.bar: Referenced entity type in entityTypes Invalid doesn’t exist'
@@ -49,9 +51,41 @@ describe('validate()', () => {
           },
           Bar: { fields: [] },
         },
+        valueTypes: {},
       }).validate(),
       ErrorType.BadRequest,
       'Foo.bar: Field with type String shouldn’t specify entityTypes'
+    );
+  });
+
+  test('Error: Value type with invalid value type', () => {
+    expectErrorResult(
+      new Schema({
+        entityTypes: {
+          Foo: {
+            fields: [{ name: 'bar', type: EntityFieldType.ValueType, valueTypes: ['Invalid'] }],
+          },
+        },
+        valueTypes: {},
+      }).validate(),
+      ErrorType.BadRequest,
+      'Foo.bar: Value type in valueTypes Invalid doesn’t exist'
+    );
+  });
+
+  test('Error: valueTypes specified on String field', () => {
+    expectErrorResult(
+      new Schema({
+        entityTypes: {
+          Foo: {
+            fields: [{ name: 'bar', type: EntityFieldType.String, valueTypes: ['Bar'] }],
+          },
+          Bar: { fields: [] },
+        },
+        valueTypes: {},
+      }).validate(),
+      ErrorType.BadRequest,
+      'Foo.bar: Field with type String shouldn’t specify valueTypes'
     );
   });
 });

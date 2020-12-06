@@ -1,11 +1,5 @@
 import { Auth, ErrorType, Instance, Schema } from '.';
-import type {
-  EntityTypeSpecification,
-  OkResult,
-  Result,
-  SchemaSpecification,
-  SessionContext,
-} from '.';
+import type { OkResult, Result, SchemaSpecification, SessionContext } from '.';
 
 export async function createTestInstance(): Promise<Instance> {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -43,6 +37,7 @@ export async function updateSchema(
 ): Promise<void> {
   let oldSchemaSpec: SchemaSpecification = {
     entityTypes: {},
+    valueTypes: {},
   };
   try {
     await context.instance.reloadSchema(context);
@@ -54,6 +49,7 @@ export async function updateSchema(
     ...oldSchemaSpec,
     ...newSchemaSpec,
     entityTypes: { ...oldSchemaSpec.entityTypes, ...newSchemaSpec.entityTypes },
+    valueTypes: { ...oldSchemaSpec.valueTypes, ...newSchemaSpec.valueTypes },
   };
   const newSchema = new Schema(spec);
   const result = await context.instance.setSchema(context, newSchema);

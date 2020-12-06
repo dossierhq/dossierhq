@@ -41,9 +41,25 @@ const stringCodec: EntityFieldTypeAdapter<
   getReferenceUUIDs: (unusedX) => null,
 };
 
+const invalidCodec: EntityFieldTypeAdapter<
+  EntityFieldValueTypeMap[EntityFieldType.ValueType],
+  unknown
+> = {
+  encodeData: (unusedPrefix, unusedData) => {
+    throw new Error('Should not be used');
+  },
+  decodeData: (unusedData) => {
+    throw new Error('Should not be used');
+  },
+  getReferenceUUIDs: (unusedData) => {
+    throw new Error('Should not be used');
+  },
+};
+
 const adapters: Record<EntityFieldType, EntityFieldTypeAdapter<unknown>> = {
   [EntityFieldType.Reference]: referenceCodec,
   [EntityFieldType.String]: stringCodec,
+  [EntityFieldType.ValueType]: invalidCodec,
 };
 
 export function getAdapter(fieldSpec: EntityFieldSpecification): EntityFieldTypeAdapter {
