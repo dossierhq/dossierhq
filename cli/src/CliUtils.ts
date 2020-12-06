@@ -130,7 +130,7 @@ export async function replaceReferencesWithEntitiesGeneric(
       continue;
     }
     const value = entity[fieldSpec.name];
-    if (fieldSpec.type === FieldType.Reference) {
+    if (fieldSpec.type === FieldType.EntityType) {
       if (isReferenceFieldType(fieldSpec, value)) {
         if (!value || isReferenceAnEntity(value)) {
           continue;

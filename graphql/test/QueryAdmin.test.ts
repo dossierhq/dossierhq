@@ -29,10 +29,10 @@ beforeAll(async () => {
           { name: 'title', type: FieldType.String, isName: true },
           { name: 'summary', type: FieldType.String },
           { name: 'tags', type: FieldType.String, list: true },
-          { name: 'bar', type: FieldType.Reference, entityTypes: ['QueryAdminBar'] },
+          { name: 'bar', type: FieldType.EntityType, entityTypes: ['QueryAdminBar'] },
           {
             name: 'bars',
-            type: FieldType.Reference,
+            type: FieldType.EntityType,
             list: true,
             entityTypes: ['QueryAdminBar'],
           },

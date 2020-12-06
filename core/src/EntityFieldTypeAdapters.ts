@@ -9,7 +9,7 @@ export interface FieldTypeAdapter<TDecoded = unknown, TEncoded = unknown> {
   getReferenceUUIDs(decodedData: TDecoded): null | string[];
 }
 
-const referenceCodec: FieldTypeAdapter<FieldValueTypeMap[FieldType.Reference], string> = {
+const entityTypeCodec: FieldTypeAdapter<FieldValueTypeMap[FieldType.EntityType], string> = {
   encodeData: (prefix: string, x) => {
     if (Array.isArray(x)) {
       return notOk.BadRequest(`${prefix}: expected reference, got list`);
@@ -48,7 +48,7 @@ const invalidCodec: FieldTypeAdapter<FieldValueTypeMap[FieldType.ValueType], unk
 };
 
 const adapters: Record<FieldType, FieldTypeAdapter<unknown>> = {
-  [FieldType.Reference]: referenceCodec,
+  [FieldType.EntityType]: entityTypeCodec,
   [FieldType.String]: stringCodec,
   [FieldType.ValueType]: invalidCodec,
 };

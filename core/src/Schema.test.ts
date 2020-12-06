@@ -32,7 +32,7 @@ describe('validate()', () => {
       new Schema({
         entityTypes: {
           Foo: {
-            fields: [{ name: 'bar', type: FieldType.Reference, entityTypes: ['Invalid'] }],
+            fields: [{ name: 'bar', type: FieldType.EntityType, entityTypes: ['Invalid'] }],
           },
         },
         valueTypes: {},
