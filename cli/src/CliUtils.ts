@@ -2,10 +2,10 @@ import chalk from 'chalk';
 import {
   EntityTypeSpecification,
   FieldType,
-  isReferenceFieldType,
-  isReferenceListFieldType,
-  isStringFieldType,
-  isStringListFieldType,
+  isEntityTypeField,
+  isEntityTypeListField,
+  isStringField,
+  isStringListField,
   PromiseResult,
 } from '@datadata/core';
 import type {
@@ -82,13 +82,13 @@ export function formatEntityOneLine(entity: Entity): string {
 }
 
 export function formatFieldValue(fieldSpec: FieldSpecification, value: unknown): string {
-  if (isReferenceFieldType(fieldSpec, value)) {
+  if (isEntityTypeField(fieldSpec, value)) {
     if (isReferenceAnEntity(value)) {
       return formatEntityOneLine(value);
     }
     return value ? value.id : chalk.grey('<not set>');
   }
-  if (isReferenceListFieldType(fieldSpec, value)) {
+  if (isEntityTypeListField(fieldSpec, value)) {
     if (!value) {
       return chalk.grey('<not set>');
     }
@@ -96,10 +96,10 @@ export function formatFieldValue(fieldSpec: FieldSpecification, value: unknown):
       .map((x) => (isReferenceAnEntity(x) ? formatEntityOneLine(x) : x.id))
       .join(chalk.grey(', '));
   }
-  if (isStringFieldType(fieldSpec, value)) {
+  if (isStringField(fieldSpec, value)) {
     return value ? value : chalk.grey('<not set>');
   }
-  if (isStringListFieldType(fieldSpec, value)) {
+  if (isStringListField(fieldSpec, value)) {
     return value ? value.join(chalk.grey(', ')) : chalk.grey('<not set>');
   }
   throw new Error(`Unknown type (${fieldSpec.type})`);
@@ -131,7 +131,7 @@ export async function replaceReferencesWithEntitiesGeneric(
     }
     const value = entity[fieldSpec.name];
     if (fieldSpec.type === FieldType.EntityType) {
-      if (isReferenceFieldType(fieldSpec, value)) {
+      if (isEntityTypeField(fieldSpec, value)) {
         if (!value || isReferenceAnEntity(value)) {
           continue;
         }
@@ -142,7 +142,7 @@ export async function replaceReferencesWithEntitiesGeneric(
           logErrorResult('Failed fetching reference', referenceResult);
         }
       }
-      if (isReferenceListFieldType(fieldSpec, value)) {
+      if (isEntityTypeListField(fieldSpec, value)) {
         if (!value) {
           continue;
         }

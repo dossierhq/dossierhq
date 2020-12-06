@@ -1,7 +1,7 @@
 import {
   EntityAdmin,
-  isReferenceFieldType,
-  isReferenceListFieldType,
+  isEntityTypeField,
+  isEntityTypeListField,
   PublishedEntity,
 } from '@datadata/core';
 import type {
@@ -76,10 +76,10 @@ function buildResolversForEntity<TContext extends SessionGraphQLContext>(
   const result = { ...entity };
   for (const fieldSpec of entitySpec.fields) {
     const value = result[fieldSpec.name];
-    if (isReferenceFieldType(fieldSpec, value) && value) {
+    if (isEntityTypeField(fieldSpec, value) && value) {
       result[fieldSpec.name] = (args: undefined, context: TContext, unusedInfo: unknown) =>
         loadEntity(context, value.id);
-    } else if (isReferenceListFieldType(fieldSpec, value) && value && value.length > 0) {
+    } else if (isEntityTypeListField(fieldSpec, value) && value && value.length > 0) {
       result[fieldSpec.name] = (args: undefined, context: TContext, unusedInfo: unknown) =>
         loadEntities(
           context,
@@ -135,10 +135,10 @@ export function buildResolversForAdminEntity<TContext extends SessionGraphQLCont
 
   for (const fieldSpec of entitySpec.fields) {
     const value = result[fieldSpec.name];
-    if (isReferenceFieldType(fieldSpec, value) && value) {
+    if (isEntityTypeField(fieldSpec, value) && value) {
       result[fieldSpec.name] = (args: undefined, context: TContext, unusedInfo: unknown) =>
         loadAdminEntity(context, value.id, null);
-    } else if (isReferenceListFieldType(fieldSpec, value) && value && value.length > 0) {
+    } else if (isEntityTypeListField(fieldSpec, value) && value && value.length > 0) {
       result[fieldSpec.name] = (args: undefined, context: TContext, unusedInfo: unknown) =>
         loadAdminEntities(
           context,

@@ -58,42 +58,42 @@ export interface FieldValueTypeMap {
   [FieldType.ValueType]: { _type: string; [key: string]: unknown };
 }
 
-export function isReferenceFieldType(
+export function isEntityTypeField(
   fieldSpec: FieldSpecification,
   value: unknown | null
 ): value is FieldValueTypeMap[FieldType.EntityType] | null {
   return fieldSpec.type === FieldType.EntityType && !fieldSpec.list;
 }
 
-export function isReferenceListFieldType(
+export function isEntityTypeListField(
   fieldSpec: FieldSpecification,
   value: unknown | null
 ): value is Array<FieldValueTypeMap[FieldType.EntityType]> | null {
   return fieldSpec.type === FieldType.EntityType && !!fieldSpec.list;
 }
 
-export function isStringFieldType(
+export function isStringField(
   fieldSpec: FieldSpecification,
   value: unknown | null
 ): value is FieldValueTypeMap[FieldType.String] | null {
   return fieldSpec.type === FieldType.String && !fieldSpec.list;
 }
 
-export function isStringListFieldType(
+export function isStringListField(
   fieldSpec: FieldSpecification,
   value: unknown | null
 ): value is Array<FieldValueTypeMap[FieldType.String]> | null {
   return fieldSpec.type === FieldType.String && !!fieldSpec.list;
 }
 
-export function isValueTypeFieldType(
+export function isValueTypeField(
   fieldSpec: FieldSpecification,
   value: unknown | null
 ): value is FieldValueTypeMap[FieldType.ValueType] | null {
   return fieldSpec.type === FieldType.ValueType && !fieldSpec.list;
 }
 
-export function isValueTypeListFieldType(
+export function isValueTypeListField(
   fieldSpec: FieldSpecification,
   value: unknown | null
 ): value is Array<FieldValueTypeMap[FieldType.ValueType]> | null {

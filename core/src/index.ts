@@ -22,12 +22,12 @@ export { isPagingForwards } from './Paging';
 export * as PublishedEntity from './PublishedEntity';
 export {
   FieldType,
-  isReferenceFieldType,
-  isReferenceListFieldType,
-  isStringFieldType,
-  isStringListFieldType,
-  isValueTypeFieldType,
-  isValueTypeListFieldType,
+  isEntityTypeField,
+  isEntityTypeListField,
+  isStringField,
+  isStringListField,
+  isValueTypeField,
+  isValueTypeListField,
   Schema,
 } from './Schema';
 export * as TestUtils from './TestUtils';

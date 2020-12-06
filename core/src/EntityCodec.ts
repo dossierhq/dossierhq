@@ -1,4 +1,4 @@
-import { FieldType, isValueTypeFieldType, notOk, ok, Schema } from '.';
+import { FieldType, isValueTypeField, notOk, ok, Schema } from '.';
 import type {
   AdminEntity,
   AdminEntityCreate,
@@ -456,13 +456,13 @@ function visitAllFields(
           const fieldItemPrefix = `${fieldPrefix}[${i}]`;
           const fieldItem = fieldValue[i];
           visitor(fieldSpec, fieldItemPrefix, fieldItem);
-          if (isValueTypeFieldType(fieldSpec, fieldItem) && fieldItem) {
+          if (isValueTypeField(fieldSpec, fieldItem) && fieldItem) {
             doVisitItem(fieldItemPrefix, fieldItem, false);
           }
         }
       } else {
         visitor(fieldSpec, fieldPrefix, fieldValue);
-        if (isValueTypeFieldType(fieldSpec, fieldValue) && fieldValue) {
+        if (isValueTypeField(fieldSpec, fieldValue) && fieldValue) {
           doVisitItem(fieldPrefix, fieldValue, false);
         }
       }
