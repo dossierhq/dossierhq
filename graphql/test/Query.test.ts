@@ -1,4 +1,4 @@
-import { EntityAdmin, EntityFieldType, notOk, ok, TestUtils } from '@datadata/core';
+import { EntityAdmin, FieldType, notOk, ok, TestUtils } from '@datadata/core';
 import type { Instance, SessionContext } from '@datadata/core';
 import { graphql, printError } from 'graphql';
 import type { GraphQLSchema } from 'graphql';
@@ -17,14 +17,14 @@ beforeAll(async () => {
     entityTypes: {
       QueryFoo: {
         fields: [
-          { name: 'title', type: EntityFieldType.String, isName: true },
-          { name: 'summary', type: EntityFieldType.String },
-          { name: 'tags', type: EntityFieldType.String, list: true },
-          { name: 'bar', type: EntityFieldType.Reference, entityTypes: ['QueryBar'] },
-          { name: 'bars', type: EntityFieldType.Reference, entityTypes: ['QueryBar'], list: true },
+          { name: 'title', type: FieldType.String, isName: true },
+          { name: 'summary', type: FieldType.String },
+          { name: 'tags', type: FieldType.String, list: true },
+          { name: 'bar', type: FieldType.Reference, entityTypes: ['QueryBar'] },
+          { name: 'bars', type: FieldType.Reference, entityTypes: ['QueryBar'], list: true },
         ],
       },
-      QueryBar: { fields: [{ name: 'title', type: EntityFieldType.String }] },
+      QueryBar: { fields: [{ name: 'title', type: FieldType.String }] },
     },
   });
   schema = new GraphQLSchemaGenerator(context.instance.getSchema()).buildSchema();

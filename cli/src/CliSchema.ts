@@ -1,5 +1,5 @@
 import chalk from 'chalk';
-import { EntityFieldType } from '@datadata/core';
+import { FieldType } from '@datadata/core';
 import type { Context } from '@datadata/core';
 import { showItemSelector, showMultiItemSelector } from './widgets';
 
@@ -10,7 +10,7 @@ export function showSchema(context: Context<unknown>): void {
     console.log(chalk.bold(typeName));
     for (const fieldSpec of typeSpec.fields) {
       let type: string = fieldSpec.type;
-      if (type === EntityFieldType.Reference && (fieldSpec.entityTypes?.length ?? 0) > 0) {
+      if (type === FieldType.Reference && (fieldSpec.entityTypes?.length ?? 0) > 0) {
         type = `${type} (${fieldSpec.entityTypes?.join(', ')})`;
       }
       if (fieldSpec.list) {

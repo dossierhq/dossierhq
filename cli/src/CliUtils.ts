@@ -1,7 +1,7 @@
 import chalk from 'chalk';
 import {
-  EntityFieldType,
   EntityTypeSpecification,
+  FieldType,
   isReferenceFieldType,
   isReferenceListFieldType,
   isStringFieldType,
@@ -11,9 +11,9 @@ import {
 import type {
   AdminEntity,
   Entity,
-  EntityFieldSpecification,
   ErrorResult,
   ErrorType,
+  FieldSpecification,
   SessionContext,
 } from '@datadata/core';
 
@@ -81,7 +81,7 @@ export function formatEntityOneLine(entity: Entity): string {
   return `${entity._type} | ${chalk.bold(entity._name)} | ${entity.id}`;
 }
 
-export function formatFieldValue(fieldSpec: EntityFieldSpecification, value: unknown): string {
+export function formatFieldValue(fieldSpec: FieldSpecification, value: unknown): string {
   if (isReferenceFieldType(fieldSpec, value)) {
     if (isReferenceAnEntity(value)) {
       return formatEntityOneLine(value);
@@ -130,7 +130,7 @@ export async function replaceReferencesWithEntitiesGeneric(
       continue;
     }
     const value = entity[fieldSpec.name];
-    if (fieldSpec.type === EntityFieldType.Reference) {
+    if (fieldSpec.type === FieldType.Reference) {
       if (isReferenceFieldType(fieldSpec, value)) {
         if (!value || isReferenceAnEntity(value)) {
           continue;
