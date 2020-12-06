@@ -14,17 +14,24 @@ beforeAll(async () => {
   instance = await createTestInstance();
   context = await ensureSessionContext(instance, 'test', 'mutation');
   await updateSchema(context, {
-    MutationFoo: {
-      fields: [
-        { name: 'title', type: EntityFieldType.String, isName: true },
-        { name: 'summary', type: EntityFieldType.String },
-        { name: 'tags', type: EntityFieldType.String, list: true },
-        { name: 'bar', type: EntityFieldType.Reference, entityTypes: ['MutationBar'] },
-        { name: 'bars', type: EntityFieldType.Reference, list: true, entityTypes: ['MutationBar'] },
-      ],
-    },
-    MutationBar: {
-      fields: [],
+    entityTypes: {
+      MutationFoo: {
+        fields: [
+          { name: 'title', type: EntityFieldType.String, isName: true },
+          { name: 'summary', type: EntityFieldType.String },
+          { name: 'tags', type: EntityFieldType.String, list: true },
+          { name: 'bar', type: EntityFieldType.Reference, entityTypes: ['MutationBar'] },
+          {
+            name: 'bars',
+            type: EntityFieldType.Reference,
+            list: true,
+            entityTypes: ['MutationBar'],
+          },
+        ],
+      },
+      MutationBar: {
+        fields: [],
+      },
     },
   });
   schema = new GraphQLSchemaGenerator(context.instance.getSchema()).buildSchema();
