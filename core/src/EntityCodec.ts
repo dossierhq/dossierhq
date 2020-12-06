@@ -1,4 +1,4 @@
-import { EntityFieldType, notOk, ok, Schema } from '.';
+import { EntityFieldType, isValueTypeFieldType, notOk, ok, Schema } from '.';
 import type {
   AdminEntity,
   AdminEntityCreate,
@@ -265,7 +265,7 @@ export async function encodeEntity(
     }
   }
 
-  const referenceIdsResult = await collectReferenceIds(context, entitySpec, entity);
+  const referenceIdsResult = await collectReferenceIds(context, entity);
   if (referenceIdsResult.isError()) {
     return referenceIdsResult;
   }
@@ -369,50 +369,46 @@ function encodeValueTypeField(
 
 async function collectReferenceIds(
   context: SessionContext,
-  entitySpec: EntityTypeSpecification,
-  entity: AdminEntityCreate | AdminEntityUpdate
+  entity: { _type: string; [fieldName: string]: unknown }
 ): PromiseResult<number[], ErrorType.BadRequest> {
-  const uuids = new Set<string>();
+  const allUUIDs = new Set<string>();
+  const requestedReferences: {
+    prefix: string;
+    uuids: string[];
+    entityTypes: string[] | undefined;
+  }[] = [];
 
-  for (const fieldSpec of entitySpec.fields) {
-    const fieldReferences = getReferencesForField(entity, fieldSpec);
-    if (fieldReferences.isError()) {
-      return fieldReferences;
+  visitAllFields(context, entity, (fieldSpec, prefix, data) => {
+    if (fieldSpec.type !== EntityFieldType.ValueType) {
+      const fieldAdapter = EntityFieldTypeAdapters.getAdapter(fieldSpec);
+      const uuids = fieldAdapter.getReferenceUUIDs(data);
+      if (uuids && uuids.length > 0) {
+        uuids.forEach((x) => allUUIDs.add(x));
+        requestedReferences.push({ prefix, uuids, entityTypes: fieldSpec.entityTypes });
+      }
     }
-    fieldReferences.value?.forEach((x) => uuids.add(x));
-  }
+  });
 
-  if (uuids.size === 0) {
+  if (allUUIDs.size === 0) {
     return ok([]);
   }
 
   const items = await Db.queryMany<Pick<EntitiesTable, 'id' | 'type' | 'uuid'>>(
     context,
     'SELECT id, uuid, type FROM entities WHERE uuid = ANY($1)',
-    [[...uuids]]
+    [[...allUUIDs]]
   );
 
-  for (const fieldSpec of entitySpec.fields) {
-    const fieldReferences = getReferencesForField(entity, fieldSpec);
-    if (fieldReferences.isError()) {
-      return fieldReferences;
-    }
-    const fieldUUIDs = fieldReferences.value;
-
-    if (!fieldUUIDs || fieldUUIDs.length === 0) {
-      continue;
-    }
-    for (const uuid of fieldUUIDs) {
+  for (const request of requestedReferences) {
+    for (const uuid of request.uuids) {
       const item = items.find((x) => x.uuid === uuid);
       if (!item) {
-        return notOk.BadRequest(
-          `Referenced entity (${uuid}) of field ${fieldSpec.name} doesn’t exist`
-        );
+        return notOk.BadRequest(`${request.prefix}: referenced entity (${uuid}) doesn’t exist`);
       }
-      if (fieldSpec.entityTypes && fieldSpec.entityTypes.length > 0) {
-        if (fieldSpec.entityTypes.indexOf(item.type) < 0) {
+      if (request.entityTypes && request.entityTypes.length > 0) {
+        if (request.entityTypes.indexOf(item.type) < 0) {
           return notOk.BadRequest(
-            `Referenced entity (${uuid}) of field ${fieldSpec.name} has an invalid type ${item.type}`
+            `${request.prefix}: referenced entity (${uuid}) has an invalid type ${item.type}`
           );
         }
       }
@@ -422,32 +418,60 @@ async function collectReferenceIds(
   return ok(items.map((item) => item.id));
 }
 
-function getReferencesForField(
-  entity: AdminEntityCreate | AdminEntityUpdate,
-  fieldSpec: EntityFieldSpecification
-): Result<string[] | null, ErrorType.BadRequest> {
-  if (fieldSpec.type === EntityFieldType.ValueType) {
-    return ok(null); //TODO support references in value types
-  }
-  const fieldAdapter = EntityFieldTypeAdapters.getAdapter(fieldSpec);
-  let fieldUUIDs: string[] | null = null;
-  if (fieldSpec.name in entity) {
-    const data = entity[fieldSpec.name];
-    const prefix = `entity.${fieldSpec.name}`;
-    if (fieldSpec.list) {
-      fieldUUIDs = [];
-      if (!Array.isArray(data)) {
-        return notOk.BadRequest(`${prefix}: Expected list`);
+function visitAllFields(
+  context: SessionContext,
+  entity: { _type: string; [fieldName: string]: unknown },
+  visitor: (fieldSpec: EntityFieldSpecification, prefix: string, data: unknown) => void,
+  prefix = 'entity'
+) {
+  const schema = context.instance.getSchema();
+
+  function doVisitItem(
+    prefix: string,
+    item: { _type: string; [fieldName: string]: unknown },
+    isEntity: boolean
+  ) {
+    let fieldSpecs;
+    if (isEntity) {
+      const entitySpec = schema.getEntityTypeSpecification(item._type);
+      if (!entitySpec) {
+        throw new Error(`Couldn't find spec for entity type ${item._type}`);
       }
-      for (const decodedItem of data) {
-        const uuids = fieldAdapter.getReferenceUUIDs(decodedItem);
-        if (uuids) {
-          fieldUUIDs.push(...uuids);
+      fieldSpecs = entitySpec.fields;
+    } else {
+      const valueSpec = schema.getValueTypeSpecification(item._type);
+      if (!valueSpec) {
+        throw new Error(`Couldn't find spec for value type ${item._type}`);
+      }
+      fieldSpecs = valueSpec.fields;
+    }
+
+    for (const fieldSpec of fieldSpecs) {
+      const fieldValue = item[fieldSpec.name];
+      if (fieldValue === null || fieldValue === undefined) {
+        continue;
+      }
+      const fieldPrefix = `${prefix}.${fieldSpec.name}`;
+      if (fieldSpec.list) {
+        if (!Array.isArray(fieldValue)) {
+          throw new Error(`${fieldPrefix}: expected list got ${typeof fieldValue}`);
+        }
+        for (let i = 0; i < fieldValue.length; i += 1) {
+          const fieldItemPrefix = `${fieldPrefix}[${i}]`;
+          const fieldItem = fieldValue[i];
+          visitor(fieldSpec, fieldItemPrefix, fieldItem);
+          if (isValueTypeFieldType(fieldSpec, fieldItem) && fieldItem) {
+            doVisitItem(fieldItemPrefix, fieldItem, false);
+          }
+        }
+      } else {
+        visitor(fieldSpec, fieldPrefix, fieldValue);
+        if (isValueTypeFieldType(fieldSpec, fieldValue) && fieldValue) {
+          doVisitItem(fieldPrefix, fieldValue, false);
         }
       }
-    } else {
-      fieldUUIDs = fieldAdapter.getReferenceUUIDs(data);
     }
   }
-  return ok(fieldUUIDs);
+
+  doVisitItem(prefix, entity, true);
 }

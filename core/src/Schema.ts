@@ -86,6 +86,20 @@ export function isStringListFieldType(
   return fieldSpec.type === EntityFieldType.String && !!fieldSpec.list;
 }
 
+export function isValueTypeFieldType(
+  fieldSpec: EntityFieldSpecification,
+  value: unknown | null
+): value is EntityFieldValueTypeMap[EntityFieldType.ValueType] | null {
+  return fieldSpec.type === EntityFieldType.ValueType && !fieldSpec.list;
+}
+
+export function isValueTypeListFieldType(
+  fieldSpec: EntityFieldSpecification,
+  value: unknown | null
+): value is Array<EntityFieldValueTypeMap[EntityFieldType.ValueType]> | null {
+  return fieldSpec.type === EntityFieldType.ValueType && !!fieldSpec.list;
+}
+
 export interface SchemaSpecification {
   entityTypes: Record<string, EntityTypeSpecification>;
   valueTypes: Record<string, ValueTypeSpecification>;
