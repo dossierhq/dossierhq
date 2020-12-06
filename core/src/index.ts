@@ -30,6 +30,8 @@ export {
   isReferenceListFieldType,
   isStringFieldType,
   isStringListFieldType,
+  isValueTypeFieldType,
+  isValueTypeListFieldType,
   Schema,
 } from './Schema';
 export * as TestUtils from './TestUtils';

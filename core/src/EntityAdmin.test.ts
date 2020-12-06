@@ -686,6 +686,23 @@ describe('createEntity()', () => {
             },
           });
         }
+
+        const barReferences = await EntityAdmin.searchEntities(context, { referencing: barId });
+        expect(barReferences.isOk() && barReferences.value?.edges.map((x) => x.node)).toEqual([
+          {
+            value: {
+              id: bazId,
+              _type: 'EntityAdminBaz',
+              _name: bazName,
+              _version: 0,
+              stringReference: {
+                _type: 'EntityAdminStringReference',
+                string: 'Hello string',
+                reference: { id: barId },
+              },
+            },
+          },
+        ]);
       }
     }
   });
@@ -782,6 +799,18 @@ describe('createEntity()', () => {
             ],
           });
         }
+
+        const bar1References = await EntityAdmin.searchEntities(context, { referencing: bar1Id });
+        expect(
+          bar1References.isOk() &&
+            bar1References.value?.edges.map((x) => (x.node.isOk() ? x.node.value.id : null))
+        ).toEqual([bazId]);
+
+        const bar2References = await EntityAdmin.searchEntities(context, { referencing: bar2Id });
+        expect(
+          bar2References.isOk() &&
+            bar2References.value?.edges.map((x) => (x.node.isOk() ? x.node.value.id : null))
+        ).toEqual([bazId]);
       }
     }
   });
@@ -840,7 +869,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       result,
       ErrorType.BadRequest,
-      'Referenced entity (fcc46a9e-2097-4bd6-bb08-56d5f59db26b) of field bar doesn’t exist'
+      'entity.bar: referenced entity (fcc46a9e-2097-4bd6-bb08-56d5f59db26b) doesn’t exist'
     );
   });
 
@@ -859,7 +888,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       result,
       ErrorType.BadRequest,
-      `Referenced entity (${referenceId}) of field bar has an invalid type AdminOnlyEditBefore`
+      `entity.bar: referenced entity (${referenceId}) has an invalid type AdminOnlyEditBefore`
     );
   });
 
@@ -1946,7 +1975,7 @@ describe('updateEntity()', () => {
       expectErrorResult(
         updateResult,
         ErrorType.BadRequest,
-        'Referenced entity (9783ca4f-f5b4-4f6a-a7bf-aae33e227841) of field bar doesn’t exist'
+        'entity.bar: referenced entity (9783ca4f-f5b4-4f6a-a7bf-aae33e227841) doesn’t exist'
       );
     }
   });
@@ -1973,7 +2002,7 @@ describe('updateEntity()', () => {
       expectErrorResult(
         updateResult,
         ErrorType.BadRequest,
-        `Referenced entity (${referenceId}) of field bar has an invalid type AdminOnlyEditBefore`
+        `entity.bar: referenced entity (${referenceId}) has an invalid type AdminOnlyEditBefore`
       );
     }
   });
