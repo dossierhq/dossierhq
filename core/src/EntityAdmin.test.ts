@@ -618,11 +618,21 @@ describe('createEntity()', () => {
   test('Error: Create without _name', async () => {
     const result = await EntityAdmin.createEntity(
       context,
-      { _type: 'EntityAdminFoo', _name: '', foo: 'title' },
+      { _type: 'EntityAdminFoo', _name: '', title: 'title' },
       { publish: false }
     );
 
     expectErrorResult(result, ErrorType.BadRequest, 'Missing entity._name');
+  });
+
+  test('Error: Create with invalid field', async () => {
+    const result = await EntityAdmin.createEntity(
+      context,
+      { _type: 'EntityAdminFoo', _name: 'Foo', invalid: 'hello' },
+      { publish: false }
+    );
+
+    expectErrorResult(result, ErrorType.BadRequest, 'Unsupported field names: invalid');
   });
 
   test('Error: Create EntityAdminFoo with reference to missing entity', async () => {
@@ -1682,6 +1692,28 @@ describe('updateEntity()', () => {
         ErrorType.BadRequest,
         'New type EntityAdminFoo doesn’t correspond to previous type EntityAdminBar'
       );
+    }
+  });
+
+  test('Error: Update with invalid field', async () => {
+    const createResult = await EntityAdmin.createEntity(
+      context,
+      {
+        _type: 'EntityAdminFoo',
+        _name: 'Foo name',
+        title: 'Foo title',
+      },
+      { publish: true }
+    );
+    if (expectOkResult(createResult)) {
+      const { id } = createResult.value;
+      const updateResult = await EntityAdmin.updateEntity(
+        context,
+        { id, invalid: 'hello' },
+        { publish: false }
+      );
+
+      expectErrorResult(updateResult, ErrorType.BadRequest, 'Unsupported field names: invalid');
     }
   });
 

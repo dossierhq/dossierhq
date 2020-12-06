@@ -123,6 +123,11 @@ export function resolveCreateEntity(
     return notOk.BadRequest(`Entity type ${result._type} doesn’t exist`);
   }
 
+  const unsupportedFieldsResult = checkForUnsupportedFields(entitySpec, entity);
+  if (unsupportedFieldsResult.isError()) {
+    return unsupportedFieldsResult;
+  }
+
   for (const fieldSpec of entitySpec.fields) {
     if (fieldSpec.name in entity) {
       result[fieldSpec.name] = entity[fieldSpec.name];
@@ -156,6 +161,11 @@ export function resolveUpdateEntity(
     return notOk.BadRequest(`Entity type ${result._type} doesn’t exist`);
   }
 
+  const unsupportedFieldsResult = checkForUnsupportedFields(entitySpec, entity);
+  if (unsupportedFieldsResult.isError()) {
+    return unsupportedFieldsResult;
+  }
+
   for (const fieldSpec of entitySpec.fields) {
     if (fieldSpec.name in entity) {
       result[fieldSpec.name] = entity[fieldSpec.name];
@@ -166,6 +176,21 @@ export function resolveUpdateEntity(
   }
 
   return ok(result);
+}
+
+function checkForUnsupportedFields(
+  entitySpec: EntityTypeSpecification,
+  entity: AdminEntityCreate | AdminEntityUpdate
+): Result<void, ErrorType.BadRequest> {
+  const unsupportedFieldNames = new Set(Object.keys(entity));
+
+  ['id', '_name', '_type', '_version'].forEach((x) => unsupportedFieldNames.delete(x));
+  entitySpec.fields.forEach((x) => unsupportedFieldNames.delete(x.name));
+
+  if (unsupportedFieldNames.size > 0) {
+    return notOk.BadRequest(`Unsupported field names: ${[...unsupportedFieldNames].join(', ')}`);
+  }
+  return ok(undefined);
 }
 
 export async function encodeEntity(
