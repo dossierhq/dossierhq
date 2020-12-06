@@ -16,7 +16,7 @@ async function querySchema(schemaSpec: SchemaSpecification, query: string) {
 }
 
 describe('Empty schema spec', () => {
-  const schemaSpec = { entityTypes: {} };
+  const schemaSpec = { entityTypes: {}, valueTypes: {} };
   test('Generated QL schema', () => {
     const result = describeGeneratedSchema(schemaSpec);
     expect(result).toMatchSnapshot();
@@ -24,7 +24,7 @@ describe('Empty schema spec', () => {
 });
 
 describe('One empty entity type schema spec', () => {
-  const schemaSpec = { entityTypes: { Foo: { fields: [] } } };
+  const schemaSpec = { entityTypes: { Foo: { fields: [] } }, valueTypes: {} };
   test('Generated QL schema', () => {
     const result = describeGeneratedSchema(schemaSpec);
     expect(result).toMatchSnapshot();
@@ -336,6 +336,7 @@ describe('Two entity types with reference schema spec', () => {
         ],
       },
     },
+    valueTypes: {},
   };
   test('Generated QL schema', () => {
     const result = describeGeneratedSchema(schemaSpec);
@@ -366,6 +367,7 @@ describe('Multiple references with entityTypes schema spec', () => {
       Bar: { fields: [] },
       Baz: { fields: [] },
     },
+    valueTypes: {},
   };
   test('Generated QL schema', () => {
     const result = describeGeneratedSchema(schemaSpec);
@@ -384,6 +386,7 @@ describe('List of strings and references schema spec', () => {
       },
       Bar: { fields: [] },
     },
+    valueTypes: {},
   };
   test('Generated QL schema', () => {
     const result = describeGeneratedSchema(schemaSpec);

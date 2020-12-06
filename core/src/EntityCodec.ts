@@ -1,9 +1,10 @@
-import { notOk, ok } from '.';
+import { EntityFieldType, notOk, ok, Schema } from '.';
 import type {
   AdminEntity,
   AdminEntityCreate,
   AdminEntityUpdate,
   Entity,
+  EntityFieldSpecification,
   EntityTypeSpecification,
   ErrorType,
   PromiseResult,
@@ -14,7 +15,6 @@ import { ensureRequired } from './Assertions';
 import * as Db from './Db';
 import type { EntitiesTable, EntityVersionsTable } from './DbTableTypes';
 import * as EntityFieldTypeAdapters from './EntityFieldTypeAdapters';
-import type { EntityFieldSpecification } from './Schema';
 
 export type AdminEntityValues = Pick<EntitiesTable, 'uuid' | 'type' | 'name'> &
   Pick<EntityVersionsTable, 'data' | 'version'>;
@@ -63,9 +63,16 @@ function decodeFieldItemOrList(fieldSpec: EntityFieldSpecification, fieldValue: 
     }
     const decodedItems: unknown[] = [];
     for (const encodedItem of fieldValue) {
-      decodedItems.push(fieldAdapter.decodeData(encodedItem));
+      if (fieldSpec.type === EntityFieldType.ValueType) {
+        decodedItems.push(encodedItem); // TODO decode value types
+      } else {
+        decodedItems.push(fieldAdapter.decodeData(encodedItem));
+      }
     }
     return decodedItems;
+  }
+  if (fieldSpec.type === EntityFieldType.ValueType) {
+    return fieldValue; // TODO decode value types
   }
   return fieldAdapter.decodeData(fieldValue);
 }
@@ -185,7 +192,6 @@ export async function encodeEntity(
     referenceIds: [],
   };
   for (const fieldSpec of entitySpec.fields) {
-    const fieldAdapter = EntityFieldTypeAdapters.getAdapter(fieldSpec);
     if (fieldSpec.name in entity) {
       const data = entity[fieldSpec.name];
       if (data === null || data === undefined) {
@@ -199,14 +205,14 @@ export async function encodeEntity(
         const encodedItems: unknown[] = [];
         result.data[fieldSpec.name] = encodedItems;
         for (const decodedItem of data) {
-          const encodeResult = fieldAdapter.encodeData(prefix, decodedItem);
+          const encodeResult = encodeFieldData(schema, fieldSpec, prefix, decodedItem);
           if (encodeResult.isError()) {
             return encodeResult;
           }
           encodedItems.push(encodeResult.value);
         }
       } else {
-        const encodeResult = fieldAdapter.encodeData(prefix, data);
+        const encodeResult = encodeFieldData(schema, fieldSpec, prefix, data);
         if (encodeResult.isError()) {
           return encodeResult;
         }
@@ -222,6 +228,43 @@ export async function encodeEntity(
   result.referenceIds.push(...referenceIdsResult.value);
 
   return ok(result);
+}
+
+function encodeFieldData(
+  schema: Schema,
+  fieldSpec: EntityFieldSpecification,
+  prefix: string,
+  data: unknown
+): Result<unknown, ErrorType.BadRequest> {
+  if (fieldSpec.type !== EntityFieldType.ValueType) {
+    const fieldAdapter = EntityFieldTypeAdapters.getAdapter(fieldSpec);
+    return fieldAdapter.encodeData(prefix, data);
+  }
+
+  if (Array.isArray(data)) {
+    return notOk.BadRequest(`${prefix}: expected single value, got list`);
+  }
+  if (typeof data !== 'object' || !data) {
+    return notOk.BadRequest(`${prefix}: expected object, got ${typeof data}`);
+  }
+  const value = data as { _type: string; [key: string]: unknown };
+  const valueType = value._type;
+  if (!valueType) {
+    return notOk.BadRequest(`${prefix}: missing _type`);
+  }
+  const valueSpec = schema.getValueTypeSpecification(valueType);
+  if (!valueSpec) {
+    return notOk.BadRequest(`${prefix}: value type ${valueType} doesn’t exist`);
+  }
+  if (
+    fieldSpec.valueTypes &&
+    fieldSpec.valueTypes.length > 0 &&
+    fieldSpec.valueTypes.indexOf(valueType) < 0
+  ) {
+    return notOk.BadRequest(`${prefix}: value of type ${valueType} is not allowed`);
+  }
+
+  return ok(data);
 }
 
 async function collectReferenceIds(
@@ -283,6 +326,9 @@ function getReferencesForField(
   entity: AdminEntityCreate | AdminEntityUpdate,
   fieldSpec: EntityFieldSpecification
 ): Result<string[] | null, ErrorType.BadRequest> {
+  if (fieldSpec.type === EntityFieldType.ValueType) {
+    return ok(null); //TODO support references in value types
+  }
   const fieldAdapter = EntityFieldTypeAdapters.getAdapter(fieldSpec);
   let fieldUUIDs: string[] | null = null;
   if (fieldSpec.name in entity) {
