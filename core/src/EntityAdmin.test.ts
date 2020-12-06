@@ -26,28 +26,30 @@ beforeAll(async () => {
   instance = await createTestInstance();
   context = await ensureSessionContext(instance, 'test', 'entity-admin');
   await updateSchema(context, {
-    EntityAdminFoo: {
-      fields: [
-        { name: 'title', type: EntityFieldType.String, isName: true },
-        { name: 'summary', type: EntityFieldType.String },
-        { name: 'bar', type: EntityFieldType.Reference, entityTypes: ['EntityAdminBar'] },
-      ],
+    entityTypes: {
+      EntityAdminFoo: {
+        fields: [
+          { name: 'title', type: EntityFieldType.String, isName: true },
+          { name: 'summary', type: EntityFieldType.String },
+          { name: 'bar', type: EntityFieldType.Reference, entityTypes: ['EntityAdminBar'] },
+        ],
+      },
+      EntityAdminBar: { fields: [{ name: 'title', type: EntityFieldType.String }] },
+      EntityAdminBaz: {
+        fields: [
+          { name: 'title', type: EntityFieldType.String },
+          { name: 'bar', type: EntityFieldType.Reference, entityTypes: ['EntityAdminBar'] },
+          { name: 'tags', type: EntityFieldType.String, list: true },
+          {
+            name: 'bars',
+            type: EntityFieldType.Reference,
+            list: true,
+            entityTypes: ['EntityAdminBar'],
+          },
+        ],
+      },
+      AdminOnlyEditBefore: { fields: [{ name: 'message', type: EntityFieldType.String }] },
     },
-    EntityAdminBar: { fields: [{ name: 'title', type: EntityFieldType.String }] },
-    EntityAdminBaz: {
-      fields: [
-        { name: 'title', type: EntityFieldType.String },
-        { name: 'bar', type: EntityFieldType.Reference, entityTypes: ['EntityAdminBar'] },
-        { name: 'tags', type: EntityFieldType.String, list: true },
-        {
-          name: 'bars',
-          type: EntityFieldType.Reference,
-          list: true,
-          entityTypes: ['EntityAdminBar'],
-        },
-      ],
-    },
-    AdminOnlyEditBefore: { fields: [{ name: 'message', type: EntityFieldType.String }] },
   });
 
   await ensureEntitiesExistForAdminOnlyEditBefore(context);

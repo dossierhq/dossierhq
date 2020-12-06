@@ -16,8 +16,10 @@ beforeAll(async () => {
   instance = await createTestInstance();
   context = await ensureSessionContext(instance, 'test', 'query-generator');
   await updateSchema(context, {
-    QueryGeneratorFoo: { fields: [] },
-    QueryGeneratorBar: { fields: [] },
+    entityTypes: {
+      QueryGeneratorFoo: { fields: [] },
+      QueryGeneratorBar: { fields: [] },
+    },
   });
 });
 afterAll(async () => {

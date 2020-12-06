@@ -39,19 +39,21 @@ export async function ensureSessionContext(
 
 export async function updateSchema(
   context: SessionContext,
-  entityTypes: Record<string, EntityTypeSpecification>
+  newSchemaSpec: Partial<SchemaSpecification>
 ): Promise<void> {
   let oldSchemaSpec: SchemaSpecification = {
     entityTypes: {},
   };
   try {
-    oldSchemaSpec = (await context.instance.getSchema()).spec;
+    await context.instance.reloadSchema(context);
+    oldSchemaSpec = context.instance.getSchema().spec;
   } catch (error) {
     // TODO ensure it's due to no schema existing
   }
   const spec: SchemaSpecification = {
     ...oldSchemaSpec,
-    entityTypes: { ...oldSchemaSpec.entityTypes, ...entityTypes },
+    ...newSchemaSpec,
+    entityTypes: { ...oldSchemaSpec.entityTypes, ...newSchemaSpec.entityTypes },
   };
   const newSchema = new Schema(spec);
   const result = await context.instance.setSchema(context, newSchema);
