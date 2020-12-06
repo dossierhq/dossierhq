@@ -78,6 +78,11 @@ beforeAll(async () => {
             list: true,
             valueTypes: ['EntityAdminListFields'],
           },
+          {
+            name: 'nested',
+            type: EntityFieldType.ValueType,
+            valueTypes: ['EntityAdminNested'],
+          },
         ],
       },
       AdminOnlyEditBefore: { fields: [{ name: 'message', type: EntityFieldType.String }] },
@@ -106,6 +111,16 @@ beforeAll(async () => {
             type: EntityFieldType.Reference,
             list: true,
             entityTypes: ['EntityAdminBar'],
+          },
+        ],
+      },
+      EntityAdminNested: {
+        fields: [
+          { name: 'title', type: EntityFieldType.String },
+          {
+            name: 'child',
+            type: EntityFieldType.ValueType,
+            valueTypes: ['EntityAdminNested'],
           },
         ],
       },
@@ -811,6 +826,72 @@ describe('createEntity()', () => {
           bar2References.isOk() &&
             bar2References.value?.edges.map((x) => (x.node.isOk() ? x.node.value.id : null))
         ).toEqual([bazId]);
+      }
+    }
+  });
+
+  test('Create EntityAdminBaz with EntityAdminNested value type', async () => {
+    const createResult = await EntityAdmin.createEntity(
+      context,
+      {
+        _type: 'EntityAdminBaz',
+        _name: 'Baz',
+        nested: {
+          _type: 'EntityAdminNested',
+          title: 'Nested 0',
+          child: {
+            _type: 'EntityAdminNested',
+            title: 'Nested 0.a',
+            child: {
+              _type: 'EntityAdminNested',
+              title: 'Nested 0.a.I',
+            },
+          },
+        },
+      },
+      { publish: true }
+    );
+    if (expectOkResult(createResult)) {
+      const { id: bazId, _name: bazName } = createResult.value;
+      expect(createResult.value).toEqual({
+        id: bazId,
+        _type: 'EntityAdminBaz',
+        _name: bazName,
+        _version: 0,
+        nested: {
+          _type: 'EntityAdminNested',
+          title: 'Nested 0',
+          child: {
+            _type: 'EntityAdminNested',
+            title: 'Nested 0.a',
+            child: {
+              _type: 'EntityAdminNested',
+              title: 'Nested 0.a.I',
+            },
+          },
+        },
+      });
+
+      const getResult = await EntityAdmin.getEntity(context, bazId, {});
+      if (expectOkResult(getResult)) {
+        expect(getResult.value.item).toEqual({
+          id: bazId,
+          _type: 'EntityAdminBaz',
+          _name: bazName,
+          _version: 0,
+          nested: {
+            _type: 'EntityAdminNested',
+            title: 'Nested 0',
+            child: {
+              _type: 'EntityAdminNested',
+              title: 'Nested 0.a',
+              child: {
+                _type: 'EntityAdminNested',
+                title: 'Nested 0.a.I',
+              },
+            },
+          },
+        });
       }
     }
   });
