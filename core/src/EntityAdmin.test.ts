@@ -46,37 +46,67 @@ beforeAll(async () => {
             list: true,
             entityTypes: ['EntityAdminBar'],
           },
-          { name: 'oneString', type: EntityFieldType.ValueType, valueTypes: ['OneString'] },
-          { name: 'twoStrings', type: EntityFieldType.ValueType, valueTypes: ['TwoStrings'] },
+          {
+            name: 'oneString',
+            type: EntityFieldType.ValueType,
+            valueTypes: ['EntityAdminOneString'],
+          },
+          {
+            name: 'twoStrings',
+            type: EntityFieldType.ValueType,
+            valueTypes: ['EntityAdminTwoStrings'],
+          },
           {
             name: 'twoStringsList',
             type: EntityFieldType.ValueType,
-            valueTypes: ['TwoStrings'],
+            valueTypes: ['EntityAdminTwoStrings'],
             list: true,
           },
           {
             name: 'stringReference',
             type: EntityFieldType.ValueType,
-            valueTypes: ['StringReference'],
+            valueTypes: ['EntityAdminStringReference'],
+          },
+          {
+            name: 'listFields',
+            type: EntityFieldType.ValueType,
+            valueTypes: ['EntityAdminListFields'],
+          },
+          {
+            name: 'listFieldsList',
+            type: EntityFieldType.ValueType,
+            list: true,
+            valueTypes: ['EntityAdminListFields'],
           },
         ],
       },
       AdminOnlyEditBefore: { fields: [{ name: 'message', type: EntityFieldType.String }] },
     },
     valueTypes: {
-      OneString: {
+      EntityAdminOneString: {
         fields: [{ name: 'one', type: EntityFieldType.String }],
       },
-      TwoStrings: {
+      EntityAdminTwoStrings: {
         fields: [
           { name: 'one', type: EntityFieldType.String },
           { name: 'two', type: EntityFieldType.String },
         ],
       },
-      StringReference: {
+      EntityAdminStringReference: {
         fields: [
           { name: 'string', type: EntityFieldType.String },
           { name: 'reference', type: EntityFieldType.Reference, entityTypes: ['EntityAdminBar'] },
+        ],
+      },
+      EntityAdminListFields: {
+        fields: [
+          { name: 'stringList', type: EntityFieldType.String, list: true },
+          {
+            name: 'referenceList',
+            type: EntityFieldType.Reference,
+            list: true,
+            entityTypes: ['EntityAdminBar'],
+          },
         ],
       },
     },
@@ -531,13 +561,13 @@ describe('createEntity()', () => {
     }
   });
 
-  test('Create EntityAdminBaz with TwoStrings value type', async () => {
+  test('Create EntityAdminBaz with EntityAdminTwoStrings value type', async () => {
     const createResult = await EntityAdmin.createEntity(
       context,
       {
         _type: 'EntityAdminBaz',
         _name: 'Baz',
-        twoStrings: { _type: 'TwoStrings', one: 'First', two: 'Second' },
+        twoStrings: { _type: 'EntityAdminTwoStrings', one: 'First', two: 'Second' },
       },
       { publish: true }
     );
@@ -548,7 +578,7 @@ describe('createEntity()', () => {
         _type: 'EntityAdminBaz',
         _name: name,
         _version: 0,
-        twoStrings: { _type: 'TwoStrings', one: 'First', two: 'Second' },
+        twoStrings: { _type: 'EntityAdminTwoStrings', one: 'First', two: 'Second' },
       });
 
       const getResult = await EntityAdmin.getEntity(context, id, {});
@@ -558,21 +588,21 @@ describe('createEntity()', () => {
           _type: 'EntityAdminBaz',
           _name: name,
           _version: 0,
-          twoStrings: { _type: 'TwoStrings', one: 'First', two: 'Second' },
+          twoStrings: { _type: 'EntityAdminTwoStrings', one: 'First', two: 'Second' },
         });
       }
     }
   });
 
-  test('Create EntityAdminBaz with list of TwoStrings value type', async () => {
+  test('Create EntityAdminBaz with list of EntityAdminTwoStrings value type', async () => {
     const createResult = await EntityAdmin.createEntity(
       context,
       {
         _type: 'EntityAdminBaz',
         _name: 'Baz',
         twoStringsList: [
-          { _type: 'TwoStrings', one: 'First', two: 'Second' },
-          { _type: 'TwoStrings', one: 'Three', two: 'Four' },
+          { _type: 'EntityAdminTwoStrings', one: 'First', two: 'Second' },
+          { _type: 'EntityAdminTwoStrings', one: 'Three', two: 'Four' },
         ],
       },
       { publish: true }
@@ -585,8 +615,8 @@ describe('createEntity()', () => {
         _name: name,
         _version: 0,
         twoStringsList: [
-          { _type: 'TwoStrings', one: 'First', two: 'Second' },
-          { _type: 'TwoStrings', one: 'Three', two: 'Four' },
+          { _type: 'EntityAdminTwoStrings', one: 'First', two: 'Second' },
+          { _type: 'EntityAdminTwoStrings', one: 'Three', two: 'Four' },
         ],
       });
 
@@ -598,15 +628,15 @@ describe('createEntity()', () => {
           _name: name,
           _version: 0,
           twoStringsList: [
-            { _type: 'TwoStrings', one: 'First', two: 'Second' },
-            { _type: 'TwoStrings', one: 'Three', two: 'Four' },
+            { _type: 'EntityAdminTwoStrings', one: 'First', two: 'Second' },
+            { _type: 'EntityAdminTwoStrings', one: 'Three', two: 'Four' },
           ],
         });
       }
     }
   });
 
-  test('Create EntityAdminBaz with StringReference value type', async () => {
+  test('Create EntityAdminBaz with EntityAdminStringReference value type', async () => {
     const createBarResult = await EntityAdmin.createEntity(
       context,
       { _type: 'EntityAdminBar', _name: 'Bar' },
@@ -621,7 +651,7 @@ describe('createEntity()', () => {
           _type: 'EntityAdminBaz',
           _name: 'Baz',
           stringReference: {
-            _type: 'StringReference',
+            _type: 'EntityAdminStringReference',
             string: 'Hello string',
             reference: { id: barId },
           },
@@ -636,7 +666,7 @@ describe('createEntity()', () => {
           _name: bazName,
           _version: 0,
           stringReference: {
-            _type: 'StringReference',
+            _type: 'EntityAdminStringReference',
             string: 'Hello string',
             reference: { id: barId },
           },
@@ -650,10 +680,106 @@ describe('createEntity()', () => {
             _name: bazName,
             _version: 0,
             stringReference: {
-              _type: 'StringReference',
+              _type: 'EntityAdminStringReference',
               string: 'Hello string',
               reference: { id: barId },
             },
+          });
+        }
+      }
+    }
+  });
+
+  test('Create EntityAdminBaz with EntityAdminListFields value type', async () => {
+    const createBar1Result = await EntityAdmin.createEntity(
+      context,
+      { _type: 'EntityAdminBar', _name: 'Bar 1' },
+      { publish: true }
+    );
+    const createBar2Result = await EntityAdmin.createEntity(
+      context,
+      { _type: 'EntityAdminBar', _name: 'Bar 2' },
+      { publish: true }
+    );
+    if (expectOkResult(createBar1Result) && expectOkResult(createBar2Result)) {
+      const { id: bar1Id } = createBar1Result.value;
+      const { id: bar2Id } = createBar2Result.value;
+
+      const createBazResult = await EntityAdmin.createEntity(
+        context,
+        {
+          _type: 'EntityAdminBaz',
+          _name: 'Baz',
+          listFields: {
+            _type: 'EntityAdminListFields',
+            stringList: ['one', 'two', 'three'],
+            referenceList: [{ id: bar1Id }, { id: bar2Id }],
+          },
+          listFieldsList: [
+            {
+              _type: 'EntityAdminListFields',
+              stringList: ['three', 'two', 'one'],
+              referenceList: [{ id: bar2Id }, { id: bar1Id }],
+            },
+            {
+              _type: 'EntityAdminListFields',
+              stringList: ['one', 'two', 'three'],
+              referenceList: [{ id: bar1Id }, { id: bar2Id }],
+            },
+          ],
+        },
+        { publish: true }
+      );
+      if (expectOkResult(createBazResult)) {
+        const { id: bazId, _name: bazName } = createBazResult.value;
+        expect(createBazResult.value).toEqual({
+          id: bazId,
+          _type: 'EntityAdminBaz',
+          _name: bazName,
+          _version: 0,
+          listFields: {
+            _type: 'EntityAdminListFields',
+            stringList: ['one', 'two', 'three'],
+            referenceList: [{ id: bar1Id }, { id: bar2Id }],
+          },
+          listFieldsList: [
+            {
+              _type: 'EntityAdminListFields',
+              stringList: ['three', 'two', 'one'],
+              referenceList: [{ id: bar2Id }, { id: bar1Id }],
+            },
+            {
+              _type: 'EntityAdminListFields',
+              stringList: ['one', 'two', 'three'],
+              referenceList: [{ id: bar1Id }, { id: bar2Id }],
+            },
+          ],
+        });
+
+        const getResult = await EntityAdmin.getEntity(context, bazId, {});
+        if (expectOkResult(getResult)) {
+          expect(getResult.value.item).toEqual({
+            id: bazId,
+            _type: 'EntityAdminBaz',
+            _name: bazName,
+            _version: 0,
+            listFields: {
+              _type: 'EntityAdminListFields',
+              stringList: ['one', 'two', 'three'],
+              referenceList: [{ id: bar1Id }, { id: bar2Id }],
+            },
+            listFieldsList: [
+              {
+                _type: 'EntityAdminListFields',
+                stringList: ['three', 'two', 'one'],
+                referenceList: [{ id: bar2Id }, { id: bar1Id }],
+              },
+              {
+                _type: 'EntityAdminListFields',
+                stringList: ['one', 'two', 'three'],
+                referenceList: [{ id: bar1Id }, { id: bar2Id }],
+              },
+            ],
           });
         }
       }
@@ -828,14 +954,14 @@ describe('createEntity()', () => {
       {
         _type: 'EntityAdminBaz',
         _name: 'Baz',
-        oneString: { _type: 'TwoStrings', one: 'One', two: 'Two' },
+        oneString: { _type: 'EntityAdminTwoStrings', one: 'One', two: 'Two' },
       },
       { publish: true }
     );
     expectErrorResult(
       createResult,
       ErrorType.BadRequest,
-      'entity.oneString: value of type TwoStrings is not allowed'
+      'entity.oneString: value of type EntityAdminTwoStrings is not allowed'
     );
   });
 
@@ -845,7 +971,7 @@ describe('createEntity()', () => {
       {
         _type: 'EntityAdminBaz',
         _name: 'Baz',
-        oneString: { _type: 'OneString', one: 'One', invalid: 'value' },
+        oneString: { _type: 'EntityAdminOneString', one: 'One', invalid: 'value' },
       },
       { publish: true }
     );
@@ -862,7 +988,7 @@ describe('createEntity()', () => {
       {
         _type: 'EntityAdminBaz',
         _name: 'Baz',
-        twoStringsList: { _type: 'TwoStrings', one: 'One', two: 'Two' },
+        twoStringsList: { _type: 'EntityAdminTwoStrings', one: 'One', two: 'Two' },
       },
       { publish: true }
     );
@@ -876,8 +1002,8 @@ describe('createEntity()', () => {
         _type: 'EntityAdminBaz',
         _name: 'Baz',
         twoStrings: [
-          { _type: 'TwoStrings', one: 'One', two: 'Two' },
-          { _type: 'TwoStrings', one: 'One', two: 'Two' },
+          { _type: 'EntityAdminTwoStrings', one: 'One', two: 'Two' },
+          { _type: 'EntityAdminTwoStrings', one: 'One', two: 'Two' },
         ],
       },
       { publish: true }
