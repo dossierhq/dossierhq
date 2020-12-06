@@ -54,6 +54,11 @@ beforeAll(async () => {
             valueTypes: ['TwoStrings'],
             list: true,
           },
+          {
+            name: 'stringReference',
+            type: EntityFieldType.ValueType,
+            valueTypes: ['StringReference'],
+          },
         ],
       },
       AdminOnlyEditBefore: { fields: [{ name: 'message', type: EntityFieldType.String }] },
@@ -66,6 +71,12 @@ beforeAll(async () => {
         fields: [
           { name: 'one', type: EntityFieldType.String },
           { name: 'two', type: EntityFieldType.String },
+        ],
+      },
+      StringReference: {
+        fields: [
+          { name: 'string', type: EntityFieldType.String },
+          { name: 'reference', type: EntityFieldType.Reference, entityTypes: ['EntityAdminBar'] },
         ],
       },
     },
@@ -595,6 +606,60 @@ describe('createEntity()', () => {
     }
   });
 
+  test('Create EntityAdminBaz with StringReference value type', async () => {
+    const createBarResult = await EntityAdmin.createEntity(
+      context,
+      { _type: 'EntityAdminBar', _name: 'Bar' },
+      { publish: true }
+    );
+    if (expectOkResult(createBarResult)) {
+      const { id: barId } = createBarResult.value;
+
+      const createBazResult = await EntityAdmin.createEntity(
+        context,
+        {
+          _type: 'EntityAdminBaz',
+          _name: 'Baz',
+          stringReference: {
+            _type: 'StringReference',
+            string: 'Hello string',
+            reference: { id: barId },
+          },
+        },
+        { publish: true }
+      );
+      if (expectOkResult(createBazResult)) {
+        const { id: bazId, _name: bazName } = createBazResult.value;
+        expect(createBazResult.value).toEqual({
+          id: bazId,
+          _type: 'EntityAdminBaz',
+          _name: bazName,
+          _version: 0,
+          stringReference: {
+            _type: 'StringReference',
+            string: 'Hello string',
+            reference: { id: barId },
+          },
+        });
+
+        const getResult = await EntityAdmin.getEntity(context, bazId, {});
+        if (expectOkResult(getResult)) {
+          expect(getResult.value.item).toEqual({
+            id: bazId,
+            _type: 'EntityAdminBaz',
+            _name: bazName,
+            _version: 0,
+            stringReference: {
+              _type: 'StringReference',
+              string: 'Hello string',
+              reference: { id: barId },
+            },
+          });
+        }
+      }
+    }
+  });
+
   test('Error: Create with invalid type', async () => {
     const result = await EntityAdmin.createEntity(
       context,
@@ -771,6 +836,23 @@ describe('createEntity()', () => {
       createResult,
       ErrorType.BadRequest,
       'entity.oneString: value of type TwoStrings is not allowed'
+    );
+  });
+
+  test('Error: value type with invalid field', async () => {
+    const createResult = await EntityAdmin.createEntity(
+      context,
+      {
+        _type: 'EntityAdminBaz',
+        _name: 'Baz',
+        oneString: { _type: 'OneString', one: 'One', invalid: 'value' },
+      },
+      { publish: true }
+    );
+    expectErrorResult(
+      createResult,
+      ErrorType.BadRequest,
+      'entity.oneString: Unsupported field names: invalid'
     );
   });
 
