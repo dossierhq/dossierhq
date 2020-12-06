@@ -1,10 +1,10 @@
-import { EntityFieldType, isValueTypeFieldType, notOk, ok, Schema } from '.';
+import { FieldType, isValueTypeFieldType, notOk, ok, Schema } from '.';
 import type {
   AdminEntity,
   AdminEntityCreate,
   AdminEntityUpdate,
   Entity,
-  EntityFieldSpecification,
+  FieldSpecification,
   EntityTypeSpecification,
   ErrorType,
   PromiseResult,
@@ -52,11 +52,7 @@ export function decodePublishedEntity(context: SessionContext, values: EntityVal
   return entity;
 }
 
-function decodeFieldItemOrList(
-  schema: Schema,
-  fieldSpec: EntityFieldSpecification,
-  fieldValue: unknown
-) {
+function decodeFieldItemOrList(schema: Schema, fieldSpec: FieldSpecification, fieldValue: unknown) {
   if (fieldValue === null || fieldValue === undefined) {
     return null;
   }
@@ -67,7 +63,7 @@ function decodeFieldItemOrList(
     }
     const decodedItems: unknown[] = [];
     for (const encodedItem of fieldValue) {
-      if (fieldSpec.type === EntityFieldType.ValueType) {
+      if (fieldSpec.type === FieldType.ValueType) {
         const decodedItem = decodeValueTypeField(schema, fieldSpec, encodedItem);
         decodedItems.push(decodedItem);
       } else {
@@ -76,7 +72,7 @@ function decodeFieldItemOrList(
     }
     return decodedItems;
   }
-  if (fieldSpec.type === EntityFieldType.ValueType) {
+  if (fieldSpec.type === FieldType.ValueType) {
     return decodeValueTypeField(
       schema,
       fieldSpec,
@@ -88,7 +84,7 @@ function decodeFieldItemOrList(
 
 function decodeValueTypeField(
   schema: Schema,
-  fieldSpec: EntityFieldSpecification,
+  fieldSpec: FieldSpecification,
   encodedValue: { _type: string; [key: string]: unknown }
 ) {
   const valueSpec = schema.getValueTypeSpecification(encodedValue._type);
@@ -276,7 +272,7 @@ export async function encodeEntity(
 
 function encodeFieldItemOrList(
   schema: Schema,
-  fieldSpec: EntityFieldSpecification,
+  fieldSpec: FieldSpecification,
   prefix: string,
   data: unknown
 ): Result<unknown, ErrorType.BadRequest> {
@@ -288,7 +284,7 @@ function encodeFieldItemOrList(
     const encodedItems: unknown[] = [];
     for (const decodedItem of data) {
       let encodedItemResult;
-      if (fieldSpec.type === EntityFieldType.ValueType) {
+      if (fieldSpec.type === FieldType.ValueType) {
         encodedItemResult = encodeValueTypeField(schema, fieldSpec, prefix, decodedItem);
       } else {
         encodedItemResult = fieldAdapter.encodeData(prefix, decodedItem);
@@ -301,7 +297,7 @@ function encodeFieldItemOrList(
     return ok(encodedItems);
   }
 
-  if (fieldSpec.type === EntityFieldType.ValueType) {
+  if (fieldSpec.type === FieldType.ValueType) {
     return encodeValueTypeField(schema, fieldSpec, prefix, data);
   }
   return fieldAdapter.encodeData(prefix, data);
@@ -309,7 +305,7 @@ function encodeFieldItemOrList(
 
 function encodeValueTypeField(
   schema: Schema,
-  fieldSpec: EntityFieldSpecification,
+  fieldSpec: FieldSpecification,
   prefix: string,
   data: unknown
 ): Result<unknown, ErrorType.BadRequest> {
@@ -379,7 +375,7 @@ async function collectReferenceIds(
   }[] = [];
 
   visitAllFields(context, entity, (fieldSpec, prefix, data) => {
-    if (fieldSpec.type !== EntityFieldType.ValueType) {
+    if (fieldSpec.type !== FieldType.ValueType) {
       const fieldAdapter = EntityFieldTypeAdapters.getAdapter(fieldSpec);
       const uuids = fieldAdapter.getReferenceUUIDs(data);
       if (uuids && uuids.length > 0) {
@@ -421,7 +417,7 @@ async function collectReferenceIds(
 function visitAllFields(
   context: SessionContext,
   entity: { _type: string; [fieldName: string]: unknown },
-  visitor: (fieldSpec: EntityFieldSpecification, prefix: string, data: unknown) => void,
+  visitor: (fieldSpec: FieldSpecification, prefix: string, data: unknown) => void,
   prefix = 'entity'
 ) {
   const schema = context.instance.getSchema();

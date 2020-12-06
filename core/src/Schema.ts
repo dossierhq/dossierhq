@@ -28,22 +28,22 @@ export async function setSchema(
 }
 
 export interface EntityTypeSpecification {
-  fields: EntityFieldSpecification[];
+  fields: FieldSpecification[];
 }
 
 export interface ValueTypeSpecification {
-  fields: EntityFieldSpecification[];
+  fields: FieldSpecification[];
 }
 
-export enum EntityFieldType {
+export enum FieldType {
   Reference = 'Reference',
   String = 'String',
   ValueType = 'ValueType',
 }
 
-export interface EntityFieldSpecification {
+export interface FieldSpecification {
   name: string;
-  type: EntityFieldType;
+  type: FieldType;
   list?: boolean;
   isName?: boolean;
   /** Applicable when type is Reference */
@@ -52,52 +52,52 @@ export interface EntityFieldSpecification {
   valueTypes?: string[];
 }
 
-export interface EntityFieldValueTypeMap {
-  [EntityFieldType.Reference]: { id: string };
-  [EntityFieldType.String]: string;
-  [EntityFieldType.ValueType]: { _type: string; [key: string]: unknown };
+export interface FieldValueTypeMap {
+  [FieldType.Reference]: { id: string };
+  [FieldType.String]: string;
+  [FieldType.ValueType]: { _type: string; [key: string]: unknown };
 }
 
 export function isReferenceFieldType(
-  fieldSpec: EntityFieldSpecification,
+  fieldSpec: FieldSpecification,
   value: unknown | null
-): value is EntityFieldValueTypeMap[EntityFieldType.Reference] | null {
-  return fieldSpec.type === EntityFieldType.Reference && !fieldSpec.list;
+): value is FieldValueTypeMap[FieldType.Reference] | null {
+  return fieldSpec.type === FieldType.Reference && !fieldSpec.list;
 }
 
 export function isReferenceListFieldType(
-  fieldSpec: EntityFieldSpecification,
+  fieldSpec: FieldSpecification,
   value: unknown | null
-): value is Array<EntityFieldValueTypeMap[EntityFieldType.Reference]> | null {
-  return fieldSpec.type === EntityFieldType.Reference && !!fieldSpec.list;
+): value is Array<FieldValueTypeMap[FieldType.Reference]> | null {
+  return fieldSpec.type === FieldType.Reference && !!fieldSpec.list;
 }
 
 export function isStringFieldType(
-  fieldSpec: EntityFieldSpecification,
+  fieldSpec: FieldSpecification,
   value: unknown | null
-): value is EntityFieldValueTypeMap[EntityFieldType.String] | null {
-  return fieldSpec.type === EntityFieldType.String && !fieldSpec.list;
+): value is FieldValueTypeMap[FieldType.String] | null {
+  return fieldSpec.type === FieldType.String && !fieldSpec.list;
 }
 
 export function isStringListFieldType(
-  fieldSpec: EntityFieldSpecification,
+  fieldSpec: FieldSpecification,
   value: unknown | null
-): value is Array<EntityFieldValueTypeMap[EntityFieldType.String]> | null {
-  return fieldSpec.type === EntityFieldType.String && !!fieldSpec.list;
+): value is Array<FieldValueTypeMap[FieldType.String]> | null {
+  return fieldSpec.type === FieldType.String && !!fieldSpec.list;
 }
 
 export function isValueTypeFieldType(
-  fieldSpec: EntityFieldSpecification,
+  fieldSpec: FieldSpecification,
   value: unknown | null
-): value is EntityFieldValueTypeMap[EntityFieldType.ValueType] | null {
-  return fieldSpec.type === EntityFieldType.ValueType && !fieldSpec.list;
+): value is FieldValueTypeMap[FieldType.ValueType] | null {
+  return fieldSpec.type === FieldType.ValueType && !fieldSpec.list;
 }
 
 export function isValueTypeListFieldType(
-  fieldSpec: EntityFieldSpecification,
+  fieldSpec: FieldSpecification,
   value: unknown | null
-): value is Array<EntityFieldValueTypeMap[EntityFieldType.ValueType]> | null {
-  return fieldSpec.type === EntityFieldType.ValueType && !!fieldSpec.list;
+): value is Array<FieldValueTypeMap[FieldType.ValueType]> | null {
+  return fieldSpec.type === FieldType.ValueType && !!fieldSpec.list;
 }
 
 export interface SchemaSpecification {
@@ -114,14 +114,14 @@ export class Schema {
       ...Object.entries(this.spec.valueTypes),
     ]) {
       for (const fieldSpec of typeSpec.fields) {
-        if (!(fieldSpec.type in EntityFieldType)) {
+        if (!(fieldSpec.type in FieldType)) {
           return notOk.BadRequest(
             `${name}.${fieldSpec.name}: Specified type ${fieldSpec.type} doesn’t exist`
           );
         }
 
         if (fieldSpec.entityTypes && fieldSpec.entityTypes.length > 0) {
-          if (fieldSpec.type !== EntityFieldType.Reference) {
+          if (fieldSpec.type !== FieldType.Reference) {
             return notOk.BadRequest(
               `${name}.${fieldSpec.name}: Field with type ${fieldSpec.type} shouldn’t specify entityTypes`
             );
@@ -136,7 +136,7 @@ export class Schema {
         }
 
         if (fieldSpec.valueTypes && fieldSpec.valueTypes.length > 0) {
-          if (fieldSpec.type !== EntityFieldType.ValueType) {
+          if (fieldSpec.type !== FieldType.ValueType) {
             return notOk.BadRequest(
               `${name}.${fieldSpec.name}: Field with type ${fieldSpec.type} shouldn’t specify valueTypes`
             );
@@ -166,7 +166,7 @@ export class Schema {
   getEntityFieldSpecification(
     entitySpec: EntityTypeSpecification,
     fieldName: string
-  ): EntityFieldSpecification | null {
+  ): FieldSpecification | null {
     return entitySpec.fields.find((x) => x.name === fieldName) ?? null;
   }
 
@@ -177,7 +177,7 @@ export class Schema {
   getValueFieldSpecification(
     valueSpec: ValueTypeSpecification,
     fieldName: string
-  ): EntityFieldSpecification | null {
+  ): FieldSpecification | null {
     return valueSpec.fields.find((x) => x.name === fieldName) ?? null;
   }
 }

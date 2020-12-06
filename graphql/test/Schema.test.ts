@@ -1,4 +1,4 @@
-import { EntityFieldType, Schema } from '@datadata/core';
+import { FieldType, Schema } from '@datadata/core';
 import type { SchemaSpecification } from '@datadata/core';
 import { graphql, printSchema } from 'graphql';
 import { GraphQLSchemaGenerator } from '../src/GraphQLSchemaGenerator';
@@ -328,11 +328,11 @@ describe('One empty entity type schema spec', () => {
 describe('Two entity types with reference schema spec', () => {
   const schemaSpec = {
     entityTypes: {
-      Foo: { fields: [{ name: 'fooField', type: EntityFieldType.String }] },
+      Foo: { fields: [{ name: 'fooField', type: FieldType.String }] },
       Bar: {
         fields: [
-          { name: 'barField1', type: EntityFieldType.String },
-          { name: 'barField2', type: EntityFieldType.Reference },
+          { name: 'barField1', type: FieldType.String },
+          { name: 'barField2', type: FieldType.Reference },
         ],
       },
     },
@@ -349,17 +349,17 @@ describe('Multiple references with entityTypes schema spec', () => {
     entityTypes: {
       Foo: {
         fields: [
-          { name: 'noMeansAll', type: EntityFieldType.Reference, entityTypes: [] },
-          { name: 'bar', type: EntityFieldType.Reference, entityTypes: ['Bar'] },
-          { name: 'bazBar', type: EntityFieldType.Reference, entityTypes: ['Baz', 'Bar'] },
+          { name: 'noMeansAll', type: FieldType.Reference, entityTypes: [] },
+          { name: 'bar', type: FieldType.Reference, entityTypes: ['Bar'] },
+          { name: 'bazBar', type: FieldType.Reference, entityTypes: ['Baz', 'Bar'] },
           {
             name: 'fooBarBaz',
-            type: EntityFieldType.Reference,
+            type: FieldType.Reference,
             entityTypes: ['Foo', 'Bar', 'Baz'],
           },
           {
             name: 'barBarBar',
-            type: EntityFieldType.Reference,
+            type: FieldType.Reference,
             entityTypes: ['Bar', 'Bar', 'Bar'],
           },
         ],
@@ -380,8 +380,8 @@ describe('List of strings and references schema spec', () => {
     entityTypes: {
       Foo: {
         fields: [
-          { name: 'strings', type: EntityFieldType.String, list: true },
-          { name: 'bars', type: EntityFieldType.Reference, list: true, entityTypes: ['Bar'] },
+          { name: 'strings', type: FieldType.String, list: true },
+          { name: 'bars', type: FieldType.Reference, list: true, entityTypes: ['Bar'] },
         ],
       },
       Bar: { fields: [] },

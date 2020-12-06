@@ -1,18 +1,15 @@
 import { ErrorType, notOk, ok } from '.';
-import type { EntityFieldSpecification, Result } from '.';
-import { EntityFieldType } from './Schema';
-import type { EntityFieldValueTypeMap } from './Schema';
+import type { FieldSpecification, Result } from '.';
+import { FieldType } from './Schema';
+import type { FieldValueTypeMap } from './Schema';
 
-export interface EntityFieldTypeAdapter<TDecoded = unknown, TEncoded = unknown> {
+export interface FieldTypeAdapter<TDecoded = unknown, TEncoded = unknown> {
   encodeData(prefix: string, decodedData: TDecoded): Result<TEncoded, ErrorType.BadRequest>;
   decodeData(encodedData: TEncoded): TDecoded;
   getReferenceUUIDs(decodedData: TDecoded): null | string[];
 }
 
-const referenceCodec: EntityFieldTypeAdapter<
-  EntityFieldValueTypeMap[EntityFieldType.Reference],
-  string
-> = {
+const referenceCodec: FieldTypeAdapter<FieldValueTypeMap[FieldType.Reference], string> = {
   encodeData: (prefix: string, x) => {
     if (Array.isArray(x)) {
       return notOk.BadRequest(`${prefix}: expected reference, got list`);
@@ -29,10 +26,7 @@ const referenceCodec: EntityFieldTypeAdapter<
   getReferenceUUIDs: (x) => (x ? [x.id] : null),
 };
 
-const stringCodec: EntityFieldTypeAdapter<
-  EntityFieldValueTypeMap[EntityFieldType.String],
-  string
-> = {
+const stringCodec: FieldTypeAdapter<FieldValueTypeMap[FieldType.String], string> = {
   encodeData: (prefix: string, x) =>
     typeof x === 'string'
       ? ok(x)
@@ -41,10 +35,7 @@ const stringCodec: EntityFieldTypeAdapter<
   getReferenceUUIDs: (unusedX) => null,
 };
 
-const invalidCodec: EntityFieldTypeAdapter<
-  EntityFieldValueTypeMap[EntityFieldType.ValueType],
-  unknown
-> = {
+const invalidCodec: FieldTypeAdapter<FieldValueTypeMap[FieldType.ValueType], unknown> = {
   encodeData: (unusedPrefix, unusedData) => {
     throw new Error('Should not be used');
   },
@@ -56,13 +47,13 @@ const invalidCodec: EntityFieldTypeAdapter<
   },
 };
 
-const adapters: Record<EntityFieldType, EntityFieldTypeAdapter<unknown>> = {
-  [EntityFieldType.Reference]: referenceCodec,
-  [EntityFieldType.String]: stringCodec,
-  [EntityFieldType.ValueType]: invalidCodec,
+const adapters: Record<FieldType, FieldTypeAdapter<unknown>> = {
+  [FieldType.Reference]: referenceCodec,
+  [FieldType.String]: stringCodec,
+  [FieldType.ValueType]: invalidCodec,
 };
 
-export function getAdapter(fieldSpec: EntityFieldSpecification): EntityFieldTypeAdapter {
+export function getAdapter(fieldSpec: FieldSpecification): FieldTypeAdapter {
   const result = adapters[fieldSpec.type];
   if (!result) {
     throw new Error(`Can't find field type (${fieldSpec.type})`);

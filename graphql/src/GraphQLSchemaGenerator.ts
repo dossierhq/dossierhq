@@ -1,4 +1,4 @@
-import { EntityFieldType, ErrorType, notOk } from '@datadata/core';
+import { ErrorType, FieldType, notOk } from '@datadata/core';
 import type {
   AdminEntity,
   AdminEntityCreate,
@@ -229,10 +229,10 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
           for (const fieldSpec of entitySpec.fields) {
             let fieldType;
             switch (fieldSpec.type) {
-              case EntityFieldType.Reference:
+              case FieldType.Reference:
                 fieldType = this.getOrCreateEntityUnion(false, fieldSpec.entityTypes || []);
                 break;
-              case EntityFieldType.String:
+              case FieldType.String:
                 fieldType = GraphQLString;
                 break;
               default:
@@ -365,10 +365,10 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
           for (const fieldSpec of entitySpec.fields) {
             let fieldType;
             switch (fieldSpec.type) {
-              case EntityFieldType.Reference:
+              case FieldType.Reference:
                 fieldType = this.getOrCreateEntityUnion(true, fieldSpec.entityTypes || []);
                 break;
-              case EntityFieldType.String:
+              case FieldType.String:
                 fieldType = GraphQLString;
                 break;
               default:
@@ -394,10 +394,10 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
           for (const fieldSpec of entitySpec.fields) {
             let fieldType;
             switch (fieldSpec.type) {
-              case EntityFieldType.Reference:
+              case FieldType.Reference:
                 fieldType = this.getInputType('AdminReferenceInput');
                 break;
-              case EntityFieldType.String:
+              case FieldType.String:
                 fieldType = GraphQLString;
                 break;
               default:
@@ -424,10 +424,10 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
           for (const fieldSpec of entitySpec.fields) {
             let fieldType;
             switch (fieldSpec.type) {
-              case EntityFieldType.Reference:
+              case FieldType.Reference:
                 fieldType = this.getInputType('AdminReferenceInput');
                 break;
-              case EntityFieldType.String:
+              case FieldType.String:
                 fieldType = GraphQLString;
                 break;
               default:

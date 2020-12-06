@@ -1,4 +1,4 @@
-import { EntityAdmin, EntityFieldType, ok, TestUtils } from '@datadata/core';
+import { EntityAdmin, FieldType, ok, TestUtils } from '@datadata/core';
 import type { Instance, SessionContext } from '@datadata/core';
 import { graphql } from 'graphql';
 import type { GraphQLSchema } from 'graphql';
@@ -17,13 +17,13 @@ beforeAll(async () => {
     entityTypes: {
       MutationFoo: {
         fields: [
-          { name: 'title', type: EntityFieldType.String, isName: true },
-          { name: 'summary', type: EntityFieldType.String },
-          { name: 'tags', type: EntityFieldType.String, list: true },
-          { name: 'bar', type: EntityFieldType.Reference, entityTypes: ['MutationBar'] },
+          { name: 'title', type: FieldType.String, isName: true },
+          { name: 'summary', type: FieldType.String },
+          { name: 'tags', type: FieldType.String, list: true },
+          { name: 'bar', type: FieldType.Reference, entityTypes: ['MutationBar'] },
           {
             name: 'bars',
-            type: EntityFieldType.Reference,
+            type: FieldType.Reference,
             list: true,
             entityTypes: ['MutationBar'],
           },

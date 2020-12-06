@@ -1,4 +1,4 @@
-import { EntityAdmin, EntityFieldType, ErrorType, notOk, ok, TestUtils } from '@datadata/core';
+import { EntityAdmin, ErrorType, FieldType, notOk, ok, TestUtils } from '@datadata/core';
 import type {
   AdminEntity,
   AdminQuery,
@@ -26,20 +26,20 @@ beforeAll(async () => {
     entityTypes: {
       QueryAdminFoo: {
         fields: [
-          { name: 'title', type: EntityFieldType.String, isName: true },
-          { name: 'summary', type: EntityFieldType.String },
-          { name: 'tags', type: EntityFieldType.String, list: true },
-          { name: 'bar', type: EntityFieldType.Reference, entityTypes: ['QueryAdminBar'] },
+          { name: 'title', type: FieldType.String, isName: true },
+          { name: 'summary', type: FieldType.String },
+          { name: 'tags', type: FieldType.String, list: true },
+          { name: 'bar', type: FieldType.Reference, entityTypes: ['QueryAdminBar'] },
           {
             name: 'bars',
-            type: EntityFieldType.Reference,
+            type: FieldType.Reference,
             list: true,
             entityTypes: ['QueryAdminBar'],
           },
         ],
       },
-      QueryAdminBar: { fields: [{ name: 'title', type: EntityFieldType.String }] },
-      QueryAdminOnlyEditBefore: { fields: [{ name: 'message', type: EntityFieldType.String }] },
+      QueryAdminBar: { fields: [{ name: 'title', type: FieldType.String }] },
+      QueryAdminOnlyEditBefore: { fields: [{ name: 'message', type: FieldType.String }] },
     },
   });
   schema = new GraphQLSchemaGenerator(context.instance.getSchema()).buildSchema();

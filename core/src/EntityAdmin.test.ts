@@ -7,7 +7,7 @@ import type {
   Paging,
   SessionContext,
 } from '.';
-import { isPagingForwards, EntityAdmin, EntityFieldType, ErrorType, PublishedEntity } from '.';
+import { EntityAdmin, ErrorType, FieldType, isPagingForwards, PublishedEntity } from '.';
 import {
   createTestInstance,
   ensureSessionContext,
@@ -29,86 +29,86 @@ beforeAll(async () => {
     entityTypes: {
       EntityAdminFoo: {
         fields: [
-          { name: 'title', type: EntityFieldType.String, isName: true },
-          { name: 'summary', type: EntityFieldType.String },
-          { name: 'bar', type: EntityFieldType.Reference, entityTypes: ['EntityAdminBar'] },
+          { name: 'title', type: FieldType.String, isName: true },
+          { name: 'summary', type: FieldType.String },
+          { name: 'bar', type: FieldType.Reference, entityTypes: ['EntityAdminBar'] },
         ],
       },
-      EntityAdminBar: { fields: [{ name: 'title', type: EntityFieldType.String }] },
+      EntityAdminBar: { fields: [{ name: 'title', type: FieldType.String }] },
       EntityAdminBaz: {
         fields: [
-          { name: 'title', type: EntityFieldType.String },
-          { name: 'bar', type: EntityFieldType.Reference, entityTypes: ['EntityAdminBar'] },
-          { name: 'tags', type: EntityFieldType.String, list: true },
+          { name: 'title', type: FieldType.String },
+          { name: 'bar', type: FieldType.Reference, entityTypes: ['EntityAdminBar'] },
+          { name: 'tags', type: FieldType.String, list: true },
           {
             name: 'bars',
-            type: EntityFieldType.Reference,
+            type: FieldType.Reference,
             list: true,
             entityTypes: ['EntityAdminBar'],
           },
           {
             name: 'oneString',
-            type: EntityFieldType.ValueType,
+            type: FieldType.ValueType,
             valueTypes: ['EntityAdminOneString'],
           },
           {
             name: 'twoStrings',
-            type: EntityFieldType.ValueType,
+            type: FieldType.ValueType,
             valueTypes: ['EntityAdminTwoStrings'],
           },
           {
             name: 'twoStringsList',
-            type: EntityFieldType.ValueType,
+            type: FieldType.ValueType,
             valueTypes: ['EntityAdminTwoStrings'],
             list: true,
           },
           {
             name: 'stringReference',
-            type: EntityFieldType.ValueType,
+            type: FieldType.ValueType,
             valueTypes: ['EntityAdminStringReference'],
           },
           {
             name: 'listFields',
-            type: EntityFieldType.ValueType,
+            type: FieldType.ValueType,
             valueTypes: ['EntityAdminListFields'],
           },
           {
             name: 'listFieldsList',
-            type: EntityFieldType.ValueType,
+            type: FieldType.ValueType,
             list: true,
             valueTypes: ['EntityAdminListFields'],
           },
           {
             name: 'nested',
-            type: EntityFieldType.ValueType,
+            type: FieldType.ValueType,
             valueTypes: ['EntityAdminNested'],
           },
         ],
       },
-      AdminOnlyEditBefore: { fields: [{ name: 'message', type: EntityFieldType.String }] },
+      AdminOnlyEditBefore: { fields: [{ name: 'message', type: FieldType.String }] },
     },
     valueTypes: {
       EntityAdminOneString: {
-        fields: [{ name: 'one', type: EntityFieldType.String }],
+        fields: [{ name: 'one', type: FieldType.String }],
       },
       EntityAdminTwoStrings: {
         fields: [
-          { name: 'one', type: EntityFieldType.String },
-          { name: 'two', type: EntityFieldType.String },
+          { name: 'one', type: FieldType.String },
+          { name: 'two', type: FieldType.String },
         ],
       },
       EntityAdminStringReference: {
         fields: [
-          { name: 'string', type: EntityFieldType.String },
-          { name: 'reference', type: EntityFieldType.Reference, entityTypes: ['EntityAdminBar'] },
+          { name: 'string', type: FieldType.String },
+          { name: 'reference', type: FieldType.Reference, entityTypes: ['EntityAdminBar'] },
         ],
       },
       EntityAdminListFields: {
         fields: [
-          { name: 'stringList', type: EntityFieldType.String, list: true },
+          { name: 'stringList', type: FieldType.String, list: true },
           {
             name: 'referenceList',
-            type: EntityFieldType.Reference,
+            type: FieldType.Reference,
             list: true,
             entityTypes: ['EntityAdminBar'],
           },
@@ -116,10 +116,10 @@ beforeAll(async () => {
       },
       EntityAdminNested: {
         fields: [
-          { name: 'title', type: EntityFieldType.String },
+          { name: 'title', type: FieldType.String },
           {
             name: 'child',
-            type: EntityFieldType.ValueType,
+            type: FieldType.ValueType,
             valueTypes: ['EntityAdminNested'],
           },
         ],

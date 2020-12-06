@@ -1,4 +1,4 @@
-import { EntityFieldType, ErrorType, Schema } from '.';
+import { ErrorType, FieldType, Schema } from '.';
 import type { Instance } from '.';
 import { createTestInstance, expectErrorResult, expectOkResult } from './TestUtils';
 
@@ -19,7 +19,7 @@ describe('validate()', () => {
   test('Error: Invalid field type', () => {
     expectErrorResult(
       new Schema({
-        entityTypes: { Foo: { fields: [{ name: 'bar', type: 'Invalid' as EntityFieldType }] } },
+        entityTypes: { Foo: { fields: [{ name: 'bar', type: 'Invalid' as FieldType }] } },
         valueTypes: {},
       }).validate(),
       ErrorType.BadRequest,
@@ -32,7 +32,7 @@ describe('validate()', () => {
       new Schema({
         entityTypes: {
           Foo: {
-            fields: [{ name: 'bar', type: EntityFieldType.Reference, entityTypes: ['Invalid'] }],
+            fields: [{ name: 'bar', type: FieldType.Reference, entityTypes: ['Invalid'] }],
           },
         },
         valueTypes: {},
@@ -47,7 +47,7 @@ describe('validate()', () => {
       new Schema({
         entityTypes: {
           Foo: {
-            fields: [{ name: 'bar', type: EntityFieldType.String, entityTypes: ['Bar'] }],
+            fields: [{ name: 'bar', type: FieldType.String, entityTypes: ['Bar'] }],
           },
           Bar: { fields: [] },
         },
@@ -63,7 +63,7 @@ describe('validate()', () => {
       new Schema({
         entityTypes: {
           Foo: {
-            fields: [{ name: 'bar', type: EntityFieldType.ValueType, valueTypes: ['Invalid'] }],
+            fields: [{ name: 'bar', type: FieldType.ValueType, valueTypes: ['Invalid'] }],
           },
         },
         valueTypes: {},
@@ -78,7 +78,7 @@ describe('validate()', () => {
       new Schema({
         entityTypes: {
           Foo: {
-            fields: [{ name: 'bar', type: EntityFieldType.String, valueTypes: ['Bar'] }],
+            fields: [{ name: 'bar', type: FieldType.String, valueTypes: ['Bar'] }],
           },
           Bar: { fields: [] },
         },

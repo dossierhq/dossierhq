@@ -13,8 +13,8 @@ import {
 import type {
   AdminEntity,
   AdminQuery,
-  EntityFieldSpecification,
   EntityTypeSpecification,
+  FieldSpecification,
   Paging,
   PromiseResult,
   SessionContext,
@@ -293,7 +293,7 @@ function createItemSelectorItems(
 
 async function editField(
   context: SessionContext,
-  fieldSpec: EntityFieldSpecification,
+  fieldSpec: FieldSpecification,
   defaultValue: unknown
 ): PromiseResult<unknown, ErrorType> {
   if (isReferenceFieldType(fieldSpec, defaultValue)) {
@@ -313,7 +313,7 @@ async function editField(
 
 async function editFieldReference(
   context: SessionContext,
-  fieldSpec: EntityFieldSpecification,
+  fieldSpec: FieldSpecification,
   defaultValue: { id: string } | null
 ) {
   return await selectEntity(
@@ -326,7 +326,7 @@ async function editFieldReference(
 
 async function editFieldReferenceList(
   context: SessionContext,
-  fieldSpec: EntityFieldSpecification,
+  fieldSpec: FieldSpecification,
   defaultValue: { id: string }[] | null
 ) {
   return await editFieldList(
@@ -338,14 +338,11 @@ async function editFieldReferenceList(
   );
 }
 
-async function editFieldString(fieldSpec: EntityFieldSpecification, defaultValue: string | null) {
+async function editFieldString(fieldSpec: FieldSpecification, defaultValue: string | null) {
   return ok(await showStringEdit(fieldSpec.name, defaultValue));
 }
 
-async function editFieldStringList(
-  fieldSpec: EntityFieldSpecification,
-  defaultValue: string[] | null
-) {
+async function editFieldStringList(fieldSpec: FieldSpecification, defaultValue: string[] | null) {
   return await editFieldList(
     fieldSpec,
     'Select string item',
@@ -356,7 +353,7 @@ async function editFieldStringList(
 }
 
 async function editFieldList<TItem>(
-  fieldSpec: EntityFieldSpecification,
+  fieldSpec: FieldSpecification,
   message: string,
   defaultValue: TItem[] | null,
   formatItem: (item: TItem) => string,
