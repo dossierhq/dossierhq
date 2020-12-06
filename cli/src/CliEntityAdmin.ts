@@ -3,10 +3,10 @@ import {
   EntityAdmin,
   ErrorType,
   isPagingForwards,
-  isReferenceFieldType,
-  isReferenceListFieldType,
-  isStringFieldType,
-  isStringListFieldType,
+  isEntityTypeField,
+  isEntityTypeListField,
+  isStringField,
+  isStringListField,
   notOk,
   ok,
 } from '@datadata/core';
@@ -296,16 +296,16 @@ async function editField(
   fieldSpec: FieldSpecification,
   defaultValue: unknown
 ): PromiseResult<unknown, ErrorType> {
-  if (isReferenceFieldType(fieldSpec, defaultValue)) {
+  if (isEntityTypeField(fieldSpec, defaultValue)) {
     return editFieldReference(context, fieldSpec, defaultValue);
   }
-  if (isReferenceListFieldType(fieldSpec, defaultValue)) {
+  if (isEntityTypeListField(fieldSpec, defaultValue)) {
     return editFieldReferenceList(context, fieldSpec, defaultValue);
   }
-  if (isStringFieldType(fieldSpec, defaultValue)) {
+  if (isStringField(fieldSpec, defaultValue)) {
     return editFieldString(fieldSpec, defaultValue);
   }
-  if (isStringListFieldType(fieldSpec, defaultValue)) {
+  if (isStringListField(fieldSpec, defaultValue)) {
     return editFieldStringList(fieldSpec, defaultValue);
   }
   throw new Error(`Unknown type (${fieldSpec.type})`);
