@@ -257,26 +257,11 @@ export async function encodeEntity(
         continue;
       }
       const prefix = `entity.${fieldSpec.name}`;
-      if (fieldSpec.list) {
-        if (!Array.isArray(data)) {
-          return notOk.BadRequest(`${prefix}: expected list`);
-        }
-        const encodedItems: unknown[] = [];
-        result.data[fieldSpec.name] = encodedItems;
-        for (const decodedItem of data) {
-          const encodeResult = encodeFieldData(schema, fieldSpec, prefix, decodedItem);
-          if (encodeResult.isError()) {
-            return encodeResult;
-          }
-          encodedItems.push(encodeResult.value);
-        }
-      } else {
-        const encodeResult = encodeFieldData(schema, fieldSpec, prefix, data);
-        if (encodeResult.isError()) {
-          return encodeResult;
-        }
-        result.data[fieldSpec.name] = encodeResult.value;
+      const encodeResult = encodeFieldItemOrList(schema, fieldSpec, prefix, data);
+      if (encodeResult.isError()) {
+        return encodeResult;
       }
+      result.data[fieldSpec.name] = encodeResult.value;
     }
   }
 
@@ -289,20 +274,40 @@ export async function encodeEntity(
   return ok(result);
 }
 
-function encodeFieldData(
+function encodeFieldItemOrList(
   schema: Schema,
   fieldSpec: EntityFieldSpecification,
   prefix: string,
   data: unknown
 ): Result<unknown, ErrorType.BadRequest> {
-  if (fieldSpec.type === EntityFieldType.ValueType) {
-    return encodeValueTypeFieldData(schema, fieldSpec, prefix, data);
-  }
   const fieldAdapter = EntityFieldTypeAdapters.getAdapter(fieldSpec);
+  if (fieldSpec.list) {
+    if (!Array.isArray(data)) {
+      return notOk.BadRequest(`${prefix}: expected list`);
+    }
+    const encodedItems: unknown[] = [];
+    for (const decodedItem of data) {
+      let encodedItemResult;
+      if (fieldSpec.type === EntityFieldType.ValueType) {
+        encodedItemResult = encodeValueTypeField(schema, fieldSpec, prefix, decodedItem);
+      } else {
+        encodedItemResult = fieldAdapter.encodeData(prefix, decodedItem);
+      }
+      if (encodedItemResult.isError()) {
+        return encodedItemResult;
+      }
+      encodedItems.push(encodedItemResult.value);
+    }
+    return ok(encodedItems);
+  }
+
+  if (fieldSpec.type === EntityFieldType.ValueType) {
+    return encodeValueTypeField(schema, fieldSpec, prefix, data);
+  }
   return fieldAdapter.encodeData(prefix, data);
 }
 
-function encodeValueTypeFieldData(
+function encodeValueTypeField(
   schema: Schema,
   fieldSpec: EntityFieldSpecification,
   prefix: string,
@@ -347,7 +352,7 @@ function encodeValueTypeFieldData(
     if (fieldValue === null || fieldValue === undefined) {
       continue;
     }
-    const encodedField = encodeFieldData(
+    const encodedField = encodeFieldItemOrList(
       schema,
       fieldSpec,
       `${prefix}.${fieldSpec.name}`,
