@@ -46,13 +46,17 @@ export function decodePublishedEntity(context: SessionContext, values: EntityVal
       if (!fieldSpec) {
         throw new Error(`No field spec for ${fieldName} in entity spec ${values.type}`);
       }
-      entity[fieldName] = decodeFieldItemOrList(fieldSpec, fieldValue);
+      entity[fieldName] = decodeFieldItemOrList(schema, fieldSpec, fieldValue);
     }
   }
   return entity;
 }
 
-function decodeFieldItemOrList(fieldSpec: EntityFieldSpecification, fieldValue: unknown) {
+function decodeFieldItemOrList(
+  schema: Schema,
+  fieldSpec: EntityFieldSpecification,
+  fieldValue: unknown
+) {
   if (fieldValue === null || fieldValue === undefined) {
     return null;
   }
@@ -64,7 +68,8 @@ function decodeFieldItemOrList(fieldSpec: EntityFieldSpecification, fieldValue: 
     const decodedItems: unknown[] = [];
     for (const encodedItem of fieldValue) {
       if (fieldSpec.type === EntityFieldType.ValueType) {
-        decodedItems.push(encodedItem); // TODO decode value types
+        const decodedItem = decodeValueTypeField(schema, fieldSpec, encodedItem);
+        decodedItems.push(decodedItem);
       } else {
         decodedItems.push(fieldAdapter.decodeData(encodedItem));
       }
@@ -72,9 +77,38 @@ function decodeFieldItemOrList(fieldSpec: EntityFieldSpecification, fieldValue: 
     return decodedItems;
   }
   if (fieldSpec.type === EntityFieldType.ValueType) {
-    return fieldValue; // TODO decode value types
+    return decodeValueTypeField(
+      schema,
+      fieldSpec,
+      fieldValue as { _type: string; [key: string]: unknown }
+    );
   }
   return fieldAdapter.decodeData(fieldValue);
+}
+
+function decodeValueTypeField(
+  schema: Schema,
+  fieldSpec: EntityFieldSpecification,
+  encodedValue: { _type: string; [key: string]: unknown }
+) {
+  const valueSpec = schema.getValueTypeSpecification(encodedValue._type);
+  if (!valueSpec) {
+    throw new Error(`Couldn't find spec for value type ${encodedValue._type}`);
+  }
+  const decodedValue: { _type: string; [key: string]: unknown } = { _type: encodedValue._type };
+  for (const [fieldName, fieldValue] of Object.entries(encodedValue)) {
+    if (fieldName === '_type') {
+      continue;
+    }
+
+    const fieldSpec = schema.getValueFieldSpecification(valueSpec, fieldName);
+    if (!fieldSpec) {
+      throw new Error(`No field spec for ${fieldName} in value spec ${encodedValue._type}`);
+    }
+    decodedValue[fieldName] = decodeFieldItemOrList(schema, fieldSpec, fieldValue);
+  }
+
+  return decodedValue;
 }
 
 export function decodeAdminEntity(context: SessionContext, values: AdminEntityValues): AdminEntity {
@@ -97,7 +131,7 @@ export function decodeAdminEntity(context: SessionContext, values: AdminEntityVa
       if (!fieldSpec) {
         throw new Error(`No field spec for ${fieldName} in entity spec ${values.type}`);
       }
-      entity[fieldName] = decodeFieldItemOrList(fieldSpec, fieldValue);
+      entity[fieldName] = decodeFieldItemOrList(schema, fieldSpec, fieldValue);
     }
   }
   return entity;
@@ -171,7 +205,7 @@ export function resolveUpdateEntity(
       result[fieldSpec.name] = entity[fieldSpec.name];
     } else if (previousValuesEncoded && fieldSpec.name in previousValuesEncoded) {
       const encodedData = previousValuesEncoded[fieldSpec.name];
-      result[fieldSpec.name] = decodeFieldItemOrList(fieldSpec, encodedData);
+      result[fieldSpec.name] = decodeFieldItemOrList(schema, fieldSpec, encodedData);
     }
   }
 
@@ -261,11 +295,19 @@ function encodeFieldData(
   prefix: string,
   data: unknown
 ): Result<unknown, ErrorType.BadRequest> {
-  if (fieldSpec.type !== EntityFieldType.ValueType) {
-    const fieldAdapter = EntityFieldTypeAdapters.getAdapter(fieldSpec);
-    return fieldAdapter.encodeData(prefix, data);
+  if (fieldSpec.type === EntityFieldType.ValueType) {
+    return encodeValueTypeFieldData(schema, fieldSpec, prefix, data);
   }
+  const fieldAdapter = EntityFieldTypeAdapters.getAdapter(fieldSpec);
+  return fieldAdapter.encodeData(prefix, data);
+}
 
+function encodeValueTypeFieldData(
+  schema: Schema,
+  fieldSpec: EntityFieldSpecification,
+  prefix: string,
+  data: unknown
+): Result<unknown, ErrorType.BadRequest> {
   if (Array.isArray(data)) {
     return notOk.BadRequest(`${prefix}: expected single value, got list`);
   }
@@ -289,7 +331,35 @@ function encodeFieldData(
     return notOk.BadRequest(`${prefix}: value of type ${valueType} is not allowed`);
   }
 
-  return ok(data);
+  const unsupportedFields = new Set(Object.keys(value));
+  unsupportedFields.delete('_type');
+  valueSpec.fields.forEach((x) => unsupportedFields.delete(x.name));
+  if (unsupportedFields.size > 0) {
+    return notOk.BadRequest(
+      `${prefix}: Unsupported field names: ${[...unsupportedFields].join(', ')}`
+    );
+  }
+
+  const encodedValue: { _type: string; [key: string]: unknown } = { _type: valueType };
+
+  for (const fieldSpec of valueSpec.fields) {
+    const fieldValue = value[fieldSpec.name];
+    if (fieldValue === null || fieldValue === undefined) {
+      continue;
+    }
+    const encodedField = encodeFieldData(
+      schema,
+      fieldSpec,
+      `${prefix}.${fieldSpec.name}`,
+      fieldValue
+    );
+    if (encodedField.isError()) {
+      return encodedField;
+    }
+    encodedValue[fieldSpec.name] = encodedField.value;
+  }
+
+  return ok(encodedValue);
 }
 
 async function collectReferenceIds(

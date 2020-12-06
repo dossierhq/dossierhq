@@ -159,4 +159,11 @@ export class Schema {
   getValueTypeSpecification(type: string): ValueTypeSpecification | null {
     return this.spec.valueTypes[type] ?? null;
   }
+
+  getValueFieldSpecification(
+    valueSpec: ValueTypeSpecification,
+    fieldName: string
+  ): EntityFieldSpecification | null {
+    return valueSpec.fields.find((x) => x.name === fieldName) ?? null;
+  }
 }
