@@ -4,13 +4,17 @@ import { graphql, printSchema } from 'graphql';
 import { GraphQLSchemaGenerator } from '../src/GraphQLSchemaGenerator';
 
 function describeGeneratedSchema(schemaSpec: SchemaSpecification) {
-  const generator = new GraphQLSchemaGenerator(new Schema(schemaSpec));
+  const schema = new Schema(schemaSpec);
+  schema.validate().throwIfError();
+  const generator = new GraphQLSchemaGenerator(schema);
   const graphQLSchema = generator.buildSchema();
   return printSchema(graphQLSchema);
 }
 
 async function querySchema(schemaSpec: SchemaSpecification, query: string) {
-  const generator = new GraphQLSchemaGenerator(new Schema(schemaSpec));
+  const schema = new Schema(schemaSpec);
+  schema.validate().throwIfError();
+  const generator = new GraphQLSchemaGenerator(schema);
   const graphQLSchema = generator.buildSchema();
   return await graphql(graphQLSchema, query);
 }
@@ -387,6 +391,43 @@ describe('List of strings and references schema spec', () => {
       Bar: { fields: [] },
     },
     valueTypes: {},
+  };
+  test('Generated QL schema', () => {
+    const result = describeGeneratedSchema(schemaSpec);
+    expect(result).toMatchSnapshot();
+  });
+});
+
+describe('Value type schema spec', () => {
+  const schemaSpec = {
+    entityTypes: {
+      Foo: {
+        fields: [
+          { name: 'valueOne', type: FieldType.ValueType, valueTypes: ['ValueOne'] },
+          { name: 'unspecifiedValue', type: FieldType.ValueType },
+          {
+            name: 'valueOneOrList',
+            type: FieldType.ValueType,
+            valueTypes: ['ValueOne', 'ValueList'],
+          },
+        ],
+      },
+      Bar: { fields: [] },
+    },
+    valueTypes: {
+      ValueOne: {
+        fields: [
+          { name: 'one', type: FieldType.String },
+          { name: 'two', type: FieldType.EntityType, entityTypes: ['Bar'] },
+        ],
+      },
+      ValueList: {
+        fields: [
+          { name: 'one', type: FieldType.String, list: true },
+          { name: 'two', type: FieldType.EntityType, list: true, entityTypes: ['Bar'] },
+        ],
+      },
+    },
   };
   test('Generated QL schema', () => {
     const result = describeGeneratedSchema(schemaSpec);

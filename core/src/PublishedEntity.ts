@@ -11,6 +11,11 @@ export interface Entity {
   [fieldName: string]: unknown;
 }
 
+export interface Value {
+  _type: string;
+  [fieldName: string]: unknown;
+}
+
 export async function getEntity(
   context: SessionContext,
   id: string

@@ -1,4 +1,4 @@
-import { ErrorType, FieldType, notOk } from '@datadata/core';
+import { ErrorType, FieldType, notOk, Value, ValueTypeSpecification } from '@datadata/core';
 import type {
   AdminEntity,
   AdminEntityCreate,
@@ -128,7 +128,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       return this.getOutputType(isAdmin ? 'AdminEntity' : 'Entity');
     }
 
-    // Convert to AdminName if isAdmin, remove duplicated, sort alphabetically
+    // Convert to AdminName if isAdmin, remove duplicates, sort alphabetically
     const filteredNames = [...new Set(names.map((x) => (isAdmin ? toAdminTypeName(x) : x)))];
     filteredNames.sort();
 
@@ -154,6 +154,48 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
 
     this.addType(enumType);
     return enumType;
+  }
+
+  getOrCreateValueUnion(names: string[]): GraphQLOutputType {
+    if (names.length === 0) {
+      return this.getOutputType('Value');
+    }
+
+    // Remove duplicates, sort alphabetically
+    const filteredNames = [...new Set(names)];
+    filteredNames.sort();
+
+    if (filteredNames.length === 1) {
+      return this.getOutputType(filteredNames[0]);
+    }
+
+    const enumName = `$${filteredNames.join('Or')}`;
+    const existingEnum = this.#types.find((x) => x.name === enumName);
+    if (existingEnum) {
+      if (isOutputType(existingEnum)) {
+        return existingEnum;
+      }
+      throw new Error(`Type ${enumName} is not an output type`);
+    }
+
+    const enumValues: GraphQLEnumValueConfigMap = {};
+    filteredNames.forEach((name) => (enumValues[name] = {}));
+    const enumType = new GraphQLEnumType({
+      name: enumName,
+      values: enumValues,
+    });
+
+    this.addType(enumType);
+    return enumType;
+  }
+
+  getValueInputType(names: string[]): GraphQLInputType {
+    const uniqueNames = [...new Set(names)];
+    if (uniqueNames.length !== 1) {
+      return GraphQLString; // JSON since there's no support for polymorphism on input types
+    }
+
+    return this.getInputType(`${uniqueNames[0]}Input`);
   }
 
   addSupportingTypes(): void {
@@ -207,6 +249,30 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         },
       })
     );
+
+    if (this.schema.getValueTypeCount() > 0) {
+      // ValueType
+      const valueTypeEnumValues: GraphQLEnumValueConfigMap = {};
+      for (const typeName of Object.keys(this.schema.spec.valueTypes)) {
+        valueTypeEnumValues[typeName] = {};
+      }
+      this.addType(
+        new GraphQLEnumType({
+          name: 'ValueType',
+          values: valueTypeEnumValues,
+        })
+      );
+
+      // Value
+      this.addType(
+        new GraphQLInterfaceType({
+          name: 'Value',
+          fields: {
+            _type: { type: new GraphQLNonNull(GraphQLString) },
+          },
+        })
+      );
+    }
   }
 
   addEntityTypes(): void {
@@ -230,10 +296,87 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
             let fieldType;
             switch (fieldSpec.type) {
               case FieldType.EntityType:
-                fieldType = this.getOrCreateEntityUnion(false, fieldSpec.entityTypes || []);
+                fieldType = this.getOrCreateEntityUnion(false, fieldSpec.entityTypes ?? []);
                 break;
               case FieldType.String:
                 fieldType = GraphQLString;
+                break;
+              case FieldType.ValueType:
+                fieldType = this.getOrCreateValueUnion(fieldSpec.valueTypes ?? []);
+                break;
+              default:
+                throw new Error(`Unexpected type (${fieldSpec.type})`);
+            }
+
+            fields[fieldSpec.name] = {
+              type: fieldSpec.list ? new GraphQLList(new GraphQLNonNull(fieldType)) : fieldType,
+            };
+          }
+          return fields;
+        },
+      })
+    );
+  }
+
+  addValueTypes(): void {
+    for (const [valueName, valueSpec] of Object.entries(this.schema.spec.valueTypes)) {
+      this.addValueType(valueName, valueSpec);
+    }
+  }
+
+  addValueType(name: string, valueSpec: ValueTypeSpecification): void {
+    this.addType(
+      new GraphQLObjectType<Value, TContext>({
+        name,
+        interfaces: this.getInterfaces('Value'),
+        isTypeOf: (source, unusedContext, unusedInfo) => source._type === name,
+        fields: () => {
+          const fields: GraphQLFieldConfigMap<Value, TContext> = {
+            _name: { type: new GraphQLNonNull(GraphQLString) },
+          };
+          for (const fieldSpec of valueSpec.fields) {
+            let fieldType;
+            switch (fieldSpec.type) {
+              case FieldType.EntityType:
+                fieldType = this.getOrCreateEntityUnion(false, fieldSpec.entityTypes ?? []);
+                break;
+              case FieldType.String:
+                fieldType = GraphQLString;
+                break;
+              case FieldType.ValueType:
+                fieldType = this.getOrCreateValueUnion(fieldSpec.valueTypes ?? []);
+                break;
+              default:
+                throw new Error(`Unexpected type (${fieldSpec.type})`);
+            }
+
+            fields[fieldSpec.name] = {
+              type: fieldSpec.list ? new GraphQLList(new GraphQLNonNull(fieldType)) : fieldType,
+            };
+          }
+          return fields;
+        },
+      })
+    );
+
+    this.addType(
+      new GraphQLInputObjectType({
+        name: `${name}Input`,
+        fields: () => {
+          const fields: GraphQLInputFieldConfigMap = {
+            _name: { type: new GraphQLNonNull(GraphQLString) },
+          };
+          for (const fieldSpec of valueSpec.fields) {
+            let fieldType;
+            switch (fieldSpec.type) {
+              case FieldType.EntityType:
+                fieldType = this.getInputType('AdminReferenceInput');
+                break;
+              case FieldType.String:
+                fieldType = GraphQLString;
+                break;
+              case FieldType.ValueType:
+                fieldType = this.getValueInputType(fieldSpec.valueTypes ?? []);
                 break;
               default:
                 throw new Error(`Unexpected type (${fieldSpec.type})`);
@@ -366,10 +509,13 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
             let fieldType;
             switch (fieldSpec.type) {
               case FieldType.EntityType:
-                fieldType = this.getOrCreateEntityUnion(true, fieldSpec.entityTypes || []);
+                fieldType = this.getOrCreateEntityUnion(true, fieldSpec.entityTypes ?? []);
                 break;
               case FieldType.String:
                 fieldType = GraphQLString;
+                break;
+              case FieldType.ValueType:
+                fieldType = this.getOrCreateValueUnion(fieldSpec.valueTypes ?? []);
                 break;
               default:
                 throw new Error(`Unexpected type (${fieldSpec.type})`);
@@ -400,6 +546,9 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
               case FieldType.String:
                 fieldType = GraphQLString;
                 break;
+              case FieldType.ValueType:
+                fieldType = this.getValueInputType(fieldSpec.valueTypes ?? []);
+                break;
               default:
                 throw new Error(`Unexpected type (${fieldSpec.type})`);
             }
@@ -429,6 +578,9 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
                 break;
               case FieldType.String:
                 fieldType = GraphQLString;
+                break;
+              case FieldType.ValueType:
+                fieldType = this.getValueInputType(fieldSpec.valueTypes ?? []);
                 break;
               default:
                 throw new Error(`Unexpected type (${fieldSpec.type})`);
@@ -625,6 +777,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
 
     this.addSupportingTypes();
     this.addEntityTypes();
+    this.addValueTypes();
     this.addAdminSupportingTypes();
     this.addAdminEntityTypes();
 
