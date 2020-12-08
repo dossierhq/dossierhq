@@ -170,6 +170,10 @@ export class Schema {
     return entitySpec.fields.find((x) => x.name === fieldName) ?? null;
   }
 
+  getValueTypeCount(): number {
+    return Object.keys(this.spec.valueTypes).length;
+  }
+
   getValueTypeSpecification(type: string): ValueTypeSpecification | null {
     return this.spec.valueTypes[type] ?? null;
   }

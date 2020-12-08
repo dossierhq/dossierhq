@@ -603,3 +603,184 @@ type Mutation {
 }
 "
 `;
+
+exports[`Value type schema spec Generated QL schema 1`] = `
+"interface Node {
+  id: ID!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String!
+  endCursor: String!
+}
+
+enum EntityType {
+  Foo
+  Bar
+}
+
+interface Entity implements Node {
+  id: ID!
+  _name: String!
+}
+
+enum ValueType {
+  ValueOne
+  ValueList
+}
+
+interface Value {
+  _type: String!
+}
+
+type Foo implements Node & Entity {
+  id: ID!
+  _name: String!
+  valueOne: ValueOne
+  unspecifiedValue: Value
+  valueOneOrList: $ValueListOrValueOne
+}
+
+type Bar implements Node & Entity {
+  id: ID!
+  _name: String!
+}
+
+type ValueOne implements Value {
+  _name: String!
+  one: String
+  two: Bar
+}
+
+input ValueOneInput {
+  _name: String!
+  one: String
+  two: AdminReferenceInput
+}
+
+type ValueList implements Value {
+  _name: String!
+  one: [String!]
+  two: [Bar!]
+}
+
+input ValueListInput {
+  _name: String!
+  one: [String!]
+  two: [AdminReferenceInput!]
+}
+
+interface AdminEntity {
+  id: ID!
+  _name: String!
+  _type: EntityType!
+  _version: Int!
+  _deleted: Boolean!
+}
+
+type AdminEntityEdge {
+  node: AdminEntity
+  cursor: String!
+}
+
+type AdminEntityConnection {
+  pageInfo: PageInfo!
+  edges: [AdminEntityEdge]
+  totalCount: Int!
+}
+
+input AdminQueryInput {
+  entityTypes: [String]
+  referencing: ID
+  order: String
+}
+
+input AdminReferenceInput {
+  id: ID!
+}
+
+type AdminEntityVersionInfo {
+  version: Int!
+  deleted: Boolean!
+  published: Boolean!
+  createdBy: ID!
+  createdAt: String!
+}
+
+type AdminEntityHistory {
+  id: ID!
+  type: EntityType!
+  name: String!
+  versions: [AdminEntityVersionInfo]!
+}
+
+type AdminFoo implements AdminEntity {
+  id: ID!
+  _type: EntityType!
+  _name: String!
+  _version: Int!
+  _deleted: Boolean!
+  valueOne: ValueOne
+  unspecifiedValue: Value
+  valueOneOrList: $ValueListOrValueOne
+}
+
+input AdminFooCreateInput {
+  _type: EntityType
+  _name: String!
+  valueOne: ValueOneInput
+  unspecifiedValue: String
+  valueOneOrList: String
+}
+
+input AdminFooUpdateInput {
+  id: ID!
+  _type: EntityType
+  _name: String
+  valueOne: ValueOneInput
+  unspecifiedValue: String
+  valueOneOrList: String
+}
+
+type AdminBar implements AdminEntity {
+  id: ID!
+  _type: EntityType!
+  _name: String!
+  _version: Int!
+  _deleted: Boolean!
+}
+
+input AdminBarCreateInput {
+  _type: EntityType
+  _name: String!
+}
+
+input AdminBarUpdateInput {
+  id: ID!
+  _type: EntityType
+  _name: String
+}
+
+enum $ValueListOrValueOne {
+  ValueList
+  ValueOne
+}
+
+type Query {
+  node(id: ID!): Node
+  adminEntity(id: ID!, version: Int): AdminEntity
+  adminEntityHistory(id: ID!): AdminEntityHistory
+  adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+}
+
+type Mutation {
+  deleteEntity(id: ID!, publish: Boolean!): AdminEntity!
+  createFooEntity(entity: AdminFooCreateInput!, publish: Boolean!): AdminFoo!
+  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean!): AdminFoo!
+  createBarEntity(entity: AdminBarCreateInput!, publish: Boolean!): AdminBar!
+  updateBarEntity(entity: AdminBarUpdateInput!, publish: Boolean!): AdminBar!
+}
+"
+`;
