@@ -252,8 +252,8 @@ type AdminFoo implements AdminEntity {
   _deleted: Boolean!
   noMeansAll: AdminEntity
   bar: AdminBar
-  bazBar: $AdminBarOrAdminBaz
-  fooBarBaz: $AdminBarOrAdminBazOrAdminFoo
+  bazBar: $AdminBarOrBaz
+  fooBarBaz: $AdminBarOrBazOrFoo
   barBarBar: AdminBar
 }
 
@@ -327,12 +327,12 @@ enum $BarOrBazOrFoo {
   Foo
 }
 
-enum $AdminBarOrAdminBaz {
+enum $AdminBarOrBaz {
   AdminBar
   AdminBaz
 }
 
-enum $AdminBarOrAdminBazOrAdminFoo {
+enum $AdminBarOrBazOrFoo {
   AdminBar
   AdminBaz
   AdminFoo
@@ -632,7 +632,7 @@ enum ValueType {
 }
 
 interface Value {
-  _type: String!
+  _type: ValueType!
 }
 
 type Foo implements Node & Entity {
@@ -649,27 +649,15 @@ type Bar implements Node & Entity {
 }
 
 type ValueOne implements Value {
-  _type: String!
+  _type: ValueType!
   one: String
   two: Bar
 }
 
-input ValueOneInput {
-  _type: String!
-  one: String
-  two: AdminReferenceInput
-}
-
 type ValueList implements Value {
-  _type: String!
+  _type: ValueType!
   one: [String!]
   two: [Bar!]
-}
-
-input ValueListInput {
-  _type: String!
-  one: [String!]
-  two: [AdminReferenceInput!]
 }
 
 interface AdminEntity {
@@ -701,6 +689,10 @@ input AdminReferenceInput {
   id: ID!
 }
 
+interface AdminValue {
+  _type: ValueType!
+}
+
 type AdminEntityVersionInfo {
   version: Int!
   deleted: Boolean!
@@ -722,15 +714,15 @@ type AdminFoo implements AdminEntity {
   _name: String!
   _version: Int!
   _deleted: Boolean!
-  valueOne: ValueOne
-  unspecifiedValue: Value
-  valueOneOrList: $ValueListOrValueOne
+  valueOne: AdminValueOne
+  unspecifiedValue: AdminValue
+  valueOneOrList: $AdminValueListOrValueOne
 }
 
 input AdminFooCreateInput {
   _type: EntityType
   _name: String!
-  valueOne: ValueOneInput
+  valueOne: AdminValueOneInput
   unspecifiedValue: String
   valueOneOrList: String
 }
@@ -739,7 +731,7 @@ input AdminFooUpdateInput {
   id: ID!
   _type: EntityType
   _name: String
-  valueOne: ValueOneInput
+  valueOne: AdminValueOneInput
   unspecifiedValue: String
   valueOneOrList: String
 }
@@ -763,9 +755,38 @@ input AdminBarUpdateInput {
   _name: String
 }
 
+type AdminValueOne implements AdminValue {
+  _type: ValueType!
+  one: String
+  two: AdminBar
+}
+
+input AdminValueOneInput {
+  _type: ValueType!
+  one: String
+  two: AdminReferenceInput
+}
+
+type AdminValueList implements AdminValue {
+  _type: ValueType!
+  one: [String!]
+  two: [AdminBar!]
+}
+
+input AdminValueListInput {
+  _type: ValueType!
+  one: [String!]
+  two: [AdminReferenceInput!]
+}
+
 enum $ValueListOrValueOne {
   ValueList
   ValueOne
+}
+
+enum $AdminValueListOrValueOne {
+  AdminValueList
+  AdminValueOne
 }
 
 type Query {

@@ -49,8 +49,8 @@ export interface SessionGraphQLContext {
   context: Result<SessionContext, ErrorType.NotAuthenticated>;
 }
 
-function toAdminTypeName(name: string) {
-  return 'Admin' + name;
+function toAdminTypeName(name: string, isAdmin = true) {
+  return isAdmin ? 'Admin' + name : name;
 }
 
 function toAdminCreateInputTypeName(name: string) {
@@ -59,6 +59,10 @@ function toAdminCreateInputTypeName(name: string) {
 
 function toAdminUpdateInputTypeName(name: string) {
   return `Admin${name}UpdateInput`;
+}
+
+function toAdminValueInputTypeName(name: string) {
+  return `Admin${name}Input`;
 }
 
 function fieldConfigWithArgs<TSource, TContext, TArgs>(
@@ -125,18 +129,18 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
 
   getOrCreateEntityUnion(isAdmin: boolean, names: string[]): GraphQLOutputType {
     if (names.length === 0) {
-      return this.getOutputType(isAdmin ? 'AdminEntity' : 'Entity');
+      return this.getOutputType(toAdminTypeName('Entity', isAdmin));
     }
 
-    // Convert to AdminName if isAdmin, remove duplicates, sort alphabetically
-    const filteredNames = [...new Set(names.map((x) => (isAdmin ? toAdminTypeName(x) : x)))];
+    // Remove duplicates, sort alphabetically
+    const filteredNames = [...new Set(names)];
     filteredNames.sort();
 
     if (filteredNames.length === 1) {
-      return this.getOutputType(filteredNames[0]);
+      return this.getOutputType(toAdminTypeName(filteredNames[0], isAdmin));
     }
 
-    const enumName = `$${filteredNames.join('Or')}`;
+    const enumName = `$${toAdminTypeName(filteredNames.join('Or'), isAdmin)}`; // TODO change $ to _?
     const existingEnum = this.#types.find((x) => x.name === enumName);
     if (existingEnum) {
       if (isOutputType(existingEnum)) {
@@ -146,7 +150,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     }
 
     const enumValues: GraphQLEnumValueConfigMap = {};
-    filteredNames.forEach((name) => (enumValues[name] = {}));
+    filteredNames.forEach((name) => (enumValues[toAdminTypeName(name, isAdmin)] = {}));
     const enumType = new GraphQLEnumType({
       name: enumName,
       values: enumValues,
@@ -156,9 +160,9 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     return enumType;
   }
 
-  getOrCreateValueUnion(names: string[]): GraphQLOutputType {
+  getOrCreateValueUnion(isAdmin: boolean, names: string[]): GraphQLOutputType {
     if (names.length === 0) {
-      return this.getOutputType('Value');
+      return this.getOutputType(toAdminTypeName('Value', isAdmin));
     }
 
     // Remove duplicates, sort alphabetically
@@ -166,10 +170,10 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     filteredNames.sort();
 
     if (filteredNames.length === 1) {
-      return this.getOutputType(filteredNames[0]);
+      return this.getOutputType(toAdminTypeName(filteredNames[0], isAdmin));
     }
 
-    const enumName = `$${filteredNames.join('Or')}`;
+    const enumName = `$${toAdminTypeName(filteredNames.join('Or'), isAdmin)}`;
     const existingEnum = this.#types.find((x) => x.name === enumName);
     if (existingEnum) {
       if (isOutputType(existingEnum)) {
@@ -179,7 +183,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     }
 
     const enumValues: GraphQLEnumValueConfigMap = {};
-    filteredNames.forEach((name) => (enumValues[name] = {}));
+    filteredNames.forEach((name) => (enumValues[toAdminTypeName(name, isAdmin)] = {}));
     const enumType = new GraphQLEnumType({
       name: enumName,
       values: enumValues,
@@ -195,7 +199,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       return GraphQLString; // JSON since there's no support for polymorphism on input types
     }
 
-    return this.getInputType(`${uniqueNames[0]}Input`);
+    return this.getInputType(toAdminValueInputTypeName(uniqueNames[0]));
   }
 
   addSupportingTypes(): void {
@@ -268,7 +272,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         new GraphQLInterfaceType({
           name: 'Value',
           fields: {
-            _type: { type: new GraphQLNonNull(GraphQLString) },
+            _type: { type: new GraphQLNonNull(this.getEnumType('ValueType')) },
           },
         })
       );
@@ -302,7 +306,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
                 fieldType = GraphQLString;
                 break;
               case FieldType.ValueType:
-                fieldType = this.getOrCreateValueUnion(fieldSpec.valueTypes ?? []);
+                fieldType = this.getOrCreateValueUnion(false, fieldSpec.valueTypes ?? []);
                 break;
               default:
                 throw new Error(`Unexpected type (${fieldSpec.type})`);
@@ -332,7 +336,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         isTypeOf: (source, unusedContext, unusedInfo) => source._type === name,
         fields: () => {
           const fields: GraphQLFieldConfigMap<Value, TContext> = {
-            _type: { type: new GraphQLNonNull(GraphQLString) },
+            _type: { type: new GraphQLNonNull(this.getEnumType('ValueType')) },
           };
           for (const fieldSpec of valueSpec.fields) {
             let fieldType;
@@ -344,39 +348,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
                 fieldType = GraphQLString;
                 break;
               case FieldType.ValueType:
-                fieldType = this.getOrCreateValueUnion(fieldSpec.valueTypes ?? []);
-                break;
-              default:
-                throw new Error(`Unexpected type (${fieldSpec.type})`);
-            }
-
-            fields[fieldSpec.name] = {
-              type: fieldSpec.list ? new GraphQLList(new GraphQLNonNull(fieldType)) : fieldType,
-            };
-          }
-          return fields;
-        },
-      })
-    );
-
-    this.addType(
-      new GraphQLInputObjectType({
-        name: `${name}Input`,
-        fields: () => {
-          const fields: GraphQLInputFieldConfigMap = {
-            _type: { type: new GraphQLNonNull(GraphQLString) },
-          };
-          for (const fieldSpec of valueSpec.fields) {
-            let fieldType;
-            switch (fieldSpec.type) {
-              case FieldType.EntityType:
-                fieldType = this.getInputType('AdminReferenceInput');
-                break;
-              case FieldType.String:
-                fieldType = GraphQLString;
-                break;
-              case FieldType.ValueType:
-                fieldType = this.getValueInputType(fieldSpec.valueTypes ?? []);
+                fieldType = this.getOrCreateValueUnion(false, fieldSpec.valueTypes ?? []);
                 break;
               default:
                 throw new Error(`Unexpected type (${fieldSpec.type})`);
@@ -455,6 +427,18 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       })
     );
 
+    if (this.schema.getValueTypeCount() > 0) {
+      // AdminValue
+      this.addType(
+        new GraphQLInterfaceType({
+          name: 'AdminValue',
+          fields: {
+            _type: { type: new GraphQLNonNull(this.getEnumType('ValueType')) },
+          },
+        })
+      );
+    }
+
     // AdminEntityVersionInfo
     this.addType(
       new GraphQLObjectType({
@@ -495,7 +479,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     this.addType(
       new GraphQLObjectType<AdminEntity, TContext>({
         name: toAdminTypeName(name),
-        interfaces: this.getInterfaces('AdminEntity'),
+        interfaces: this.getInterfaces(toAdminTypeName('Entity')),
         isTypeOf: (source, unusedContext, unusedInfo) => source._type === name,
         fields: () => {
           const fields: GraphQLFieldConfigMap<AdminEntity, TContext> = {
@@ -515,7 +499,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
                 fieldType = GraphQLString;
                 break;
               case FieldType.ValueType:
-                fieldType = this.getOrCreateValueUnion(fieldSpec.valueTypes ?? []);
+                fieldType = this.getOrCreateValueUnion(true, fieldSpec.valueTypes ?? []);
                 break;
               default:
                 throw new Error(`Unexpected type (${fieldSpec.type})`);
@@ -585,6 +569,80 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
               default:
                 throw new Error(`Unexpected type (${fieldSpec.type})`);
             }
+            fields[fieldSpec.name] = {
+              type: fieldSpec.list ? new GraphQLList(new GraphQLNonNull(fieldType)) : fieldType,
+            };
+          }
+          return fields;
+        },
+      })
+    );
+  }
+
+  addAdminValueTypes(): void {
+    for (const [valueName, valueSpec] of Object.entries(this.schema.spec.valueTypes)) {
+      this.addAdminValueType(valueName, valueSpec);
+    }
+  }
+
+  addAdminValueType(name: string, valueSpec: ValueTypeSpecification): void {
+    this.addType(
+      new GraphQLObjectType<Value, TContext>({
+        name: toAdminTypeName(name),
+        interfaces: this.getInterfaces(toAdminTypeName('Value')),
+        isTypeOf: (source, unusedContext, unusedInfo) => source._type === name,
+        fields: () => {
+          const fields: GraphQLFieldConfigMap<Value, TContext> = {
+            _type: { type: new GraphQLNonNull(this.getEnumType('ValueType')) },
+          };
+          for (const fieldSpec of valueSpec.fields) {
+            let fieldType;
+            switch (fieldSpec.type) {
+              case FieldType.EntityType:
+                fieldType = this.getOrCreateEntityUnion(true, fieldSpec.entityTypes ?? []);
+                break;
+              case FieldType.String:
+                fieldType = GraphQLString;
+                break;
+              case FieldType.ValueType:
+                fieldType = this.getOrCreateValueUnion(true, fieldSpec.valueTypes ?? []);
+                break;
+              default:
+                throw new Error(`Unexpected type (${fieldSpec.type})`);
+            }
+
+            fields[fieldSpec.name] = {
+              type: fieldSpec.list ? new GraphQLList(new GraphQLNonNull(fieldType)) : fieldType,
+            };
+          }
+          return fields;
+        },
+      })
+    );
+
+    this.addType(
+      new GraphQLInputObjectType({
+        name: toAdminValueInputTypeName(name),
+        fields: () => {
+          const fields: GraphQLInputFieldConfigMap = {
+            _type: { type: new GraphQLNonNull(this.getEnumType('ValueType')) },
+          };
+          for (const fieldSpec of valueSpec.fields) {
+            let fieldType;
+            switch (fieldSpec.type) {
+              case FieldType.EntityType:
+                fieldType = this.getInputType('AdminReferenceInput');
+                break;
+              case FieldType.String:
+                fieldType = GraphQLString;
+                break;
+              case FieldType.ValueType:
+                fieldType = this.getValueInputType(fieldSpec.valueTypes ?? []);
+                break;
+              default:
+                throw new Error(`Unexpected type (${fieldSpec.type})`);
+            }
+
             fields[fieldSpec.name] = {
               type: fieldSpec.list ? new GraphQLList(new GraphQLNonNull(fieldType)) : fieldType,
             };
@@ -780,6 +838,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     this.addValueTypes();
     this.addAdminSupportingTypes();
     this.addAdminEntityTypes();
+    this.addAdminValueTypes();
 
     const queryType = this.buildQueryType<TSource>();
     const mutationType = this.buildMutationType<TSource>();
