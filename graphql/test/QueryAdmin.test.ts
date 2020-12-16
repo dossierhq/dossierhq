@@ -36,10 +36,19 @@ beforeAll(async () => {
             list: true,
             entityTypes: ['QueryAdminBar'],
           },
+          { name: 'stringedBar', type: FieldType.ValueType, valueTypes: ['QueryAdminStringedBar'] },
         ],
       },
       QueryAdminBar: { fields: [{ name: 'title', type: FieldType.String }] },
       QueryAdminOnlyEditBefore: { fields: [{ name: 'message', type: FieldType.String }] },
+    },
+    valueTypes: {
+      QueryAdminStringedBar: {
+        fields: [
+          { name: 'text', type: FieldType.String },
+          { name: 'bar', type: FieldType.EntityType, entityTypes: ['QueryAdminBar'] },
+        ],
+      },
     },
   });
   schema = new GraphQLSchemaGenerator(context.instance.getSchema()).buildSchema();
@@ -218,6 +227,15 @@ describe('adminEntity()', () => {
                 title
                 summary
                 tags
+                bar {
+                  id
+                }
+                bars {
+                  id
+                }
+                stringedBar {
+                  _type
+                }
               }
             }
           }
@@ -237,6 +255,9 @@ describe('adminEntity()', () => {
             title: null,
             summary: null,
             tags: null,
+            bar: null,
+            bars: null,
+            stringedBar: null,
           },
         },
       });
@@ -557,6 +578,78 @@ describe('adminEntity()', () => {
                   title: 'Bar 2 title',
                 },
               ],
+            },
+          },
+        });
+      }
+    }
+  });
+
+  test('Query value type', async () => {
+    const createBarResult = await EntityAdmin.createEntity(
+      context,
+      { _type: 'QueryAdminBar', _name: 'Bar name', title: 'Bar title' },
+      { publish: true }
+    );
+    if (expectOkResult(createBarResult)) {
+      const barId = createBarResult.value.id;
+
+      const createFooResult = await EntityAdmin.createEntity(
+        context,
+        {
+          _type: 'QueryAdminFoo',
+          _name: 'Foo name',
+          title: 'Foo title',
+          stringedBar: {
+            _type: 'QueryAdminStringedBar',
+            text: 'Stringed text',
+            bar: { id: barId },
+          },
+        },
+        { publish: true }
+      );
+      if (expectOkResult(createFooResult)) {
+        const fooId = createFooResult.value.id;
+
+        const result = await graphql(
+          schema,
+          `
+            query Entity($id: ID!) {
+              adminEntity(id: $id) {
+                __typename
+                id
+                _type
+                _name
+                _version
+                ... on AdminQueryAdminFoo {
+                  title
+                  stringedBar {
+                    __typename
+                    _type
+                    text
+                  }
+                }
+              }
+            }
+          `,
+          undefined,
+          { context: ok(context) },
+          { id: fooId }
+        );
+        expect(result).toEqual({
+          data: {
+            adminEntity: {
+              __typename: 'AdminQueryAdminFoo',
+              id: fooId,
+              _type: 'QueryAdminFoo',
+              _name: createFooResult.value._name,
+              _version: 0,
+              title: 'Foo title',
+              stringedBar: {
+                __typename: 'AdminQueryAdminStringedBar',
+                _type: 'QueryAdminStringedBar',
+                text: 'Stringed text',
+              },
             },
           },
         });
