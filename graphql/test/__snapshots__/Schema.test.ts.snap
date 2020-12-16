@@ -649,25 +649,25 @@ type Bar implements Node & Entity {
 }
 
 type ValueOne implements Value {
-  _name: String!
+  _type: String!
   one: String
   two: Bar
 }
 
 input ValueOneInput {
-  _name: String!
+  _type: String!
   one: String
   two: AdminReferenceInput
 }
 
 type ValueList implements Value {
-  _name: String!
+  _type: String!
   one: [String!]
   two: [Bar!]
 }
 
 input ValueListInput {
-  _name: String!
+  _type: String!
   one: [String!]
   two: [AdminReferenceInput!]
 }
