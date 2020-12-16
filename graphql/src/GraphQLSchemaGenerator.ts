@@ -332,7 +332,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         isTypeOf: (source, unusedContext, unusedInfo) => source._type === name,
         fields: () => {
           const fields: GraphQLFieldConfigMap<Value, TContext> = {
-            _name: { type: new GraphQLNonNull(GraphQLString) },
+            _type: { type: new GraphQLNonNull(GraphQLString) },
           };
           for (const fieldSpec of valueSpec.fields) {
             let fieldType;
@@ -364,7 +364,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         name: `${name}Input`,
         fields: () => {
           const fields: GraphQLInputFieldConfigMap = {
-            _name: { type: new GraphQLNonNull(GraphQLString) },
+            _type: { type: new GraphQLNonNull(GraphQLString) },
           };
           for (const fieldSpec of valueSpec.fields) {
             let fieldType;
