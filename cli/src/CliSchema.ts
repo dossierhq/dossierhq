@@ -2,6 +2,7 @@ import chalk from 'chalk';
 import { FieldType } from '@datadata/core';
 import type { Context } from '@datadata/core';
 import { showItemSelector, showMultiItemSelector } from './widgets';
+import { logKeyValue } from './CliUtils';
 
 export function showSchema(context: Context<unknown>): void {
   const { instance } = context;
@@ -47,10 +48,25 @@ export async function selectEntityTypes(context: Context<unknown>): Promise<stri
   return items.map((x) => x.id);
 }
 
-export async function selectValueType(context: Context<unknown>): Promise<string> {
+export async function selectValueType(
+  context: Context<unknown>,
+  filterTypes?: string[]
+): Promise<string> {
   const { instance } = context;
   const schema = instance.getSchema();
-  const types = Object.keys(schema.spec.valueTypes);
+
+  filterTypes?.forEach((x) => {
+    if (!schema.spec.valueTypes[x]) throw new Error(`Specified filter type ${x} doesn't exist`);
+  });
+
+  const types =
+    filterTypes && filterTypes.length > 0 ? filterTypes : Object.keys(schema.spec.valueTypes);
+
+  if (types.length === 1) {
+    logKeyValue('Value type', types[0]);
+    return types[0];
+  }
+
   const { name: typeName } = await showItemSelector(
     'Which value type?',
     types.map((x) => ({ id: x, name: x }))
