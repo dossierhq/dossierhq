@@ -576,6 +576,15 @@ describe('update*Entity()', () => {
                   _type
                   _name
                 }
+                stringedBar {
+                  __typename
+                  _type
+                  text
+                  bar {
+                    __typename
+                    id
+                  }
+                }
               }
             }
           `,
@@ -591,6 +600,11 @@ describe('update*Entity()', () => {
               tags: ['these', 'are', 'new'],
               bar: { id: bar1Id },
               bars: [{ id: bar1Id }, { id: bar2Id }],
+              stringedBar: {
+                _type: 'MutationStringedBar',
+                text: 'Value text',
+                bar: { id: bar2Id },
+              },
             },
             publish: true,
           }
@@ -630,6 +644,15 @@ describe('update*Entity()', () => {
                   _name: bar2Name,
                 },
               ],
+              stringedBar: {
+                __typename: 'AdminMutationStringedBar',
+                _type: 'MutationStringedBar',
+                text: 'Value text',
+                bar: {
+                  __typename: 'AdminMutationBar',
+                  id: bar2Id,
+                },
+              },
             },
           },
         });
@@ -646,6 +669,11 @@ describe('update*Entity()', () => {
             tags: ['these', 'are', 'new'],
             bar: { id: bar1Id },
             bars: [{ id: bar1Id }, { id: bar2Id }],
+            stringedBar: {
+              _type: 'MutationStringedBar',
+              text: 'Value text',
+              bar: { id: bar2Id },
+            },
           });
         }
       }
