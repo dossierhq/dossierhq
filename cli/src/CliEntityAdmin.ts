@@ -2,11 +2,13 @@ import chalk from 'chalk';
 import {
   EntityAdmin,
   ErrorType,
-  isPagingForwards,
   isEntityTypeField,
   isEntityTypeListField,
+  isPagingForwards,
   isStringField,
   isStringListField,
+  isValueTypeField,
+  isValueTypeListField,
   notOk,
   ok,
 } from '@datadata/core';
@@ -18,18 +20,23 @@ import type {
   Paging,
   PromiseResult,
   SessionContext,
+  Value,
+  ValueTypeSpecification,
 } from '@datadata/core';
 import * as CliSchema from './CliSchema';
 import {
   formatEntityOneLine,
   formatErrorResult,
   formatFieldValue,
+  formatValueItemOneLine,
   getEntitySpec,
+  getValueSpec,
   isReferenceAnEntity,
   logEntity,
   logErrorResult,
   logKeyValue,
-  replaceReferencesWithEntitiesGeneric,
+  replaceEntityReferencesWithEntitiesGeneric,
+  replaceValueItemReferencesWithEntitiesGeneric,
 } from './CliUtils';
 import {
   showConfirm,
@@ -234,14 +241,14 @@ async function editEntityValues(
   const entitySpec = getEntitySpec(context, defaultValues);
   const changedValues: Record<string, unknown> = {};
 
-  await replaceReferencesWithEntities(context, defaultValues);
+  await replaceEntityReferencesWithEntities(context, defaultValues);
 
   let lastItemId = null;
   // eslint-disable-next-line no-constant-condition
   while (true) {
     const item: EditFieldSelectorItem = await showItemSelector(
       'Which field to edit?',
-      createItemSelectorItems(entitySpec, changedValues, defaultValues),
+      createEntityFieldSelectorItems(entitySpec, changedValues, defaultValues),
       lastItemId
     );
     if (item.id === '_exit') {
@@ -270,7 +277,7 @@ async function editEntityValues(
   return changedValues;
 }
 
-function createItemSelectorItems(
+function createEntityFieldSelectorItems(
   entitySpec: EntityTypeSpecification,
   currentValues: Record<string, unknown>,
   defaultValues: Record<string, unknown>
@@ -301,6 +308,12 @@ async function editField(
   }
   if (isEntityTypeListField(fieldSpec, defaultValue)) {
     return editFieldReferenceList(context, fieldSpec, defaultValue);
+  }
+  if (isValueTypeField(fieldSpec, defaultValue)) {
+    return editFieldValueType(context, fieldSpec, defaultValue);
+  }
+  if (isValueTypeListField(fieldSpec, defaultValue)) {
+    return editFieldValueTypeList(context, fieldSpec, defaultValue);
   }
   if (isStringField(fieldSpec, defaultValue)) {
     return editFieldString(fieldSpec, defaultValue);
@@ -335,6 +348,76 @@ async function editFieldReferenceList(
     defaultValue,
     (item) => (isReferenceAnEntity(item) ? formatEntityOneLine(item) : item.id),
     (item) => editFieldReference(context, fieldSpec, item)
+  );
+}
+
+async function editFieldValueType(
+  context: SessionContext,
+  fieldSpec: FieldSpecification,
+  defaultValue: Value | null
+): PromiseResult<Value, ErrorType.BadRequest> {
+  //TODO which error type
+  const valueItem = defaultValue
+    ? { ...defaultValue }
+    : { _type: await CliSchema.selectValueType(context) };
+  const valueSpec = getValueSpec(context, valueItem);
+
+  await replaceValueItemReferencesWithEntities(context, valueItem);
+
+  let lastItemId = null;
+  // eslint-disable-next-line no-constant-condition
+  while (true) {
+    const item: EditFieldSelectorItem = await showItemSelector(
+      'Which field to edit?',
+      createValueItemFieldSelectorItems(valueSpec, valueItem),
+      lastItemId
+    );
+    if (item.id === '_exit') {
+      break;
+    }
+    lastItemId = item.id;
+    const fieldName = item.id;
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const fieldSpec = valueSpec.fields.find((x) => x.name === fieldName)!;
+    const result = await editField(context, fieldSpec, item.defaultValue);
+    if (result.isOk()) {
+      valueItem[fieldName] = result.value;
+    } else {
+      logErrorResult('Failed editing field', result);
+    }
+  }
+
+  return ok(valueItem);
+}
+
+function createValueItemFieldSelectorItems(
+  valueSpec: ValueTypeSpecification,
+  valueItem: Value
+): EditFieldSelectorItem[] {
+  const items: EditFieldSelectorItem[] = [];
+  for (const fieldSpec of valueSpec.fields) {
+    const value = valueItem[fieldSpec.name];
+    items.push({
+      id: fieldSpec.name,
+      name: `${chalk.bold(fieldSpec.name)}: ${formatFieldValue(fieldSpec, value)}`,
+      defaultValue: value,
+    });
+  }
+  items.push({ id: '_exit', name: 'Done' });
+  return items;
+}
+
+async function editFieldValueTypeList(
+  context: SessionContext,
+  fieldSpec: FieldSpecification,
+  defaultValue: Value[] | null
+) {
+  return await editFieldList(
+    fieldSpec,
+    'Select value item',
+    defaultValue,
+    (item) => formatValueItemOneLine(item),
+    (item) => editFieldValueType(context, fieldSpec, item)
   );
 }
 
@@ -431,7 +514,7 @@ export async function showLatestEntity(context: SessionContext, id: string): Pro
   const result = await EntityAdmin.getEntity(context, id, {});
   if (result.isOk()) {
     const entity = result.value.item;
-    await replaceReferencesWithEntities(context, entity);
+    await replaceEntityReferencesWithEntities(context, entity);
     logEntity(context, entity);
 
     const totalResult = await EntityAdmin.getTotalCount(context, { referencing: id });
@@ -520,11 +603,17 @@ export async function showEntityVersion(context: SessionContext, id: string): Pr
   }
 }
 
-async function replaceReferencesWithEntities(
+async function replaceEntityReferencesWithEntities(
   context: SessionContext,
   entity: { _type: string; [fieldName: string]: unknown }
 ) {
-  await replaceReferencesWithEntitiesGeneric(context, entity, async (context, id) => {
+  await replaceEntityReferencesWithEntitiesGeneric(context, entity, async (context, id) => {
+    return await EntityAdmin.getEntity(context, id, {});
+  });
+}
+
+async function replaceValueItemReferencesWithEntities(context: SessionContext, valueItem: Value) {
+  await replaceValueItemReferencesWithEntitiesGeneric(context, valueItem, async (context, id) => {
     return await EntityAdmin.getEntity(context, id, {});
   });
 }

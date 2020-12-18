@@ -23,6 +23,11 @@
           "entityTypes": ["Category"]
         },
         {
+          "name": "annotatedCategory",
+          "type": "ValueType",
+          "valueTypes": ["AnnotatedCategory"]
+        },
+        {
           "name": "tags",
           "type": "String",
           "list": true
@@ -39,5 +44,19 @@
       ]
     }
   },
-  "valueTypes": {}
+  "valueTypes": {
+    "AnnotatedCategory": {
+      "fields": [
+        {
+          "name": "annotation",
+          "type": "String"
+        },
+        {
+          "name": "category",
+          "type": "EntityType",
+          "entityTypes": ["Category"]
+        }
+      ]
+    }
+  }
 }
