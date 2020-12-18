@@ -79,19 +79,7 @@ function buildResolversForEntity<TContext extends SessionGraphQLContext>(
     throw new Error(`Couldn't find entity spec for type: ${entity._type}`);
   }
   const result = { ...entity };
-  for (const fieldSpec of entitySpec.fields) {
-    const value = result[fieldSpec.name];
-    if (isEntityTypeField(fieldSpec, value) && value) {
-      result[fieldSpec.name] = (args: undefined, context: TContext, unusedInfo: unknown) =>
-        loadEntity(context, value.id);
-    } else if (isEntityTypeListField(fieldSpec, value) && value && value.length > 0) {
-      result[fieldSpec.name] = (args: undefined, context: TContext, unusedInfo: unknown) =>
-        loadEntities(
-          context,
-          value.map((x) => x.id)
-        );
-    }
-  }
+  resolveFields<TContext>(context, entitySpec, result, false);
   return result;
 }
 
@@ -138,21 +126,8 @@ export function buildResolversForAdminEntity<TContext extends SessionGraphQLCont
   // _deleted is optional in AdminEntity, but not in GraphQL, so derive value
   result._deleted = entity._deleted === true;
 
-  resolveFields<TContext>(context, entitySpec, result);
+  resolveFields<TContext>(context, entitySpec, result, true);
 
-  return result;
-}
-
-export function buildResolversForAdminValue<TContext extends SessionGraphQLContext>(
-  context: SessionContext,
-  valueItem: Value
-): Value {
-  const valueSpec = context.instance.getSchema().getValueTypeSpecification(valueItem._type);
-  if (!valueSpec) {
-    throw new Error(`Couldn't find value spec for type: ${valueItem._type}`);
-  }
-  const result = { ...valueItem };
-  resolveFields<TContext>(context, valueSpec, result);
   return result;
 }
 
@@ -189,25 +164,39 @@ export async function loadAdminSearchEntities<TContext extends SessionGraphQLCon
 function resolveFields<TContext extends SessionGraphQLContext>(
   context: SessionContext,
   spec: EntityTypeSpecification | ValueTypeSpecification,
-  item: Value | AdminEntity
+  item: Value | Entity | AdminEntity,
+  isAdmin: boolean
 ) {
   for (const fieldSpec of spec.fields) {
     const value = item[fieldSpec.name];
     if (isEntityTypeField(fieldSpec, value) && value) {
       item[fieldSpec.name] = (args: undefined, context: TContext, unusedInfo: unknown) =>
-        loadAdminEntity(context, value.id, null);
+        isAdmin ? loadAdminEntity(context, value.id, null) : loadEntity(context, value.id);
     } else if (isEntityTypeListField(fieldSpec, value) && value && value.length > 0) {
-      item[fieldSpec.name] = (args: undefined, context: TContext, unusedInfo: unknown) =>
-        loadAdminEntities(
-          context,
-          value.map((x) => x.id)
-        );
+      item[fieldSpec.name] = (args: undefined, context: TContext, unusedInfo: unknown) => {
+        const ids = value.map((x) => x.id);
+        return isAdmin ? loadAdminEntities(context, ids) : loadEntities(context, ids);
+      };
     } else if (isValueTypeField(fieldSpec, value) && value) {
-      item[fieldSpec.name] = buildResolversForAdminValue(context, value);
+      item[fieldSpec.name] = buildResolversForValue(context, value, isAdmin);
     } else if (isValueTypeListField(fieldSpec, value) && value && value.length > 0) {
-      item[fieldSpec.name] = value.map((x) => buildResolversForAdminValue(context, x));
+      item[fieldSpec.name] = value.map((x) => buildResolversForValue(context, x, isAdmin));
     }
   }
+}
+
+export function buildResolversForValue<TContext extends SessionGraphQLContext>(
+  context: SessionContext,
+  valueItem: Value,
+  isAdmin: boolean
+): Value {
+  const valueSpec = context.instance.getSchema().getValueTypeSpecification(valueItem._type);
+  if (!valueSpec) {
+    throw new Error(`Couldn't find value spec for type: ${valueItem._type}`);
+  }
+  const result = { ...valueItem };
+  resolveFields<TContext>(context, valueSpec, result, isAdmin);
+  return result;
 }
 
 function buildTotalCount<TContext extends SessionGraphQLContext>(
