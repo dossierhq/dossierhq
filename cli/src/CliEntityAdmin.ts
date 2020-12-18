@@ -359,7 +359,7 @@ async function editFieldValueType(
   //TODO which error type
   const valueItem = defaultValue
     ? { ...defaultValue }
-    : { _type: await CliSchema.selectValueType(context) };
+    : { _type: await CliSchema.selectValueType(context, fieldSpec.valueTypes) };
   const valueSpec = getValueSpec(context, valueItem);
 
   await replaceValueItemReferencesWithEntities(context, valueItem);
