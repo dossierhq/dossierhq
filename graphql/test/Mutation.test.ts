@@ -27,10 +27,19 @@ beforeAll(async () => {
             list: true,
             entityTypes: ['MutationBar'],
           },
+          { name: 'stringedBar', type: FieldType.ValueType, valueTypes: ['MutationStringedBar'] },
         ],
       },
       MutationBar: {
         fields: [],
+      },
+    },
+    valueTypes: {
+      MutationStringedBar: {
+        fields: [
+          { name: 'text', type: FieldType.String },
+          { name: 'bar', type: FieldType.EntityType, entityTypes: ['MutationBar'] },
+        ],
       },
     },
   });
@@ -258,6 +267,104 @@ describe('create*Entity()', () => {
           title: 'Foo title',
           summary: 'Foo summary',
           bars: [{ id: bar1Id }, { id: bar2Id }],
+        });
+      }
+    }
+  });
+
+  test('Create with value type with reference', async () => {
+    const createBarResult = await EntityAdmin.createEntity(
+      context,
+      { _type: 'MutationBar', _name: 'Bar' },
+      { publish: true }
+    );
+    if (expectOkResult(createBarResult)) {
+      const { id: barId, _name: barName } = createBarResult.value;
+      const gqlResult = await graphql(
+        schema,
+        `
+          mutation CreateFooEntity($entity: AdminMutationFooCreateInput!, $publish: Boolean!) {
+            createMutationFooEntity(entity: $entity, publish: $publish) {
+              __typename
+              id
+              _type
+              _name
+              _version
+              title
+              summary
+              stringedBar {
+                __typename
+                _type
+                text
+                bar {
+                  __typename
+                  _type
+                  id
+                  _name
+                }
+              }
+            }
+          }
+        `,
+        undefined,
+        { context: ok(context) },
+        {
+          entity: {
+            _type: 'MutationFoo',
+            _name: 'Foo name',
+            title: 'Foo title',
+            summary: 'Foo summary',
+            stringedBar: {
+              _type: 'MutationStringedBar',
+              text: 'Value text',
+              bar: { id: barId },
+            },
+          },
+          publish: true,
+        }
+      );
+
+      const fooId = gqlResult.data?.createMutationFooEntity.id;
+      const fooName = gqlResult.data?.createMutationFooEntity._name;
+      expect(gqlResult).toEqual({
+        data: {
+          createMutationFooEntity: {
+            __typename: 'AdminMutationFoo',
+            id: fooId,
+            _type: 'MutationFoo',
+            _name: fooName,
+            _version: 0,
+            title: 'Foo title',
+            summary: 'Foo summary',
+            stringedBar: {
+              __typename: 'AdminMutationStringedBar',
+              _type: 'MutationStringedBar',
+              text: 'Value text',
+              bar: {
+                __typename: 'AdminMutationBar',
+                _type: 'MutationBar',
+                id: barId,
+                _name: barName,
+              },
+            },
+          },
+        },
+      });
+
+      const getResult = await EntityAdmin.getEntity(context, fooId, {});
+      if (expectOkResult(getResult)) {
+        expect(getResult.value.item).toEqual({
+          id: fooId,
+          _type: 'MutationFoo',
+          _name: fooName,
+          _version: 0,
+          title: 'Foo title',
+          summary: 'Foo summary',
+          stringedBar: {
+            _type: 'MutationStringedBar',
+            text: 'Value text',
+            bar: { id: barId },
+          },
         });
       }
     }
