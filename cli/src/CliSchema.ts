@@ -46,3 +46,14 @@ export async function selectEntityTypes(context: Context<unknown>): Promise<stri
   );
   return items.map((x) => x.id);
 }
+
+export async function selectValueType(context: Context<unknown>): Promise<string> {
+  const { instance } = context;
+  const schema = instance.getSchema();
+  const types = Object.keys(schema.spec.valueTypes);
+  const { name: typeName } = await showItemSelector(
+    'Which value type?',
+    types.map((x) => ({ id: x, name: x }))
+  );
+  return typeName;
+}

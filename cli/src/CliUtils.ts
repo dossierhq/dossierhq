@@ -6,6 +6,8 @@ import {
   isEntityTypeListField,
   isStringField,
   isStringListField,
+  isValueTypeField,
+  isValueTypeListField,
   PromiseResult,
 } from '@datadata/core';
 import type {
@@ -15,6 +17,8 @@ import type {
   ErrorType,
   FieldSpecification,
   SessionContext,
+  Value,
+  ValueTypeSpecification,
 } from '@datadata/core';
 
 interface Entityish {
@@ -81,6 +85,10 @@ export function formatEntityOneLine(entity: Entity): string {
   return `${entity._type} | ${chalk.bold(entity._name)} | ${entity.id}`;
 }
 
+export function formatValueItemOneLine(value: Value): string {
+  return `${value._type}`;
+}
+
 export function formatFieldValue(fieldSpec: FieldSpecification, value: unknown): string {
   if (isEntityTypeField(fieldSpec, value)) {
     if (isReferenceAnEntity(value)) {
@@ -95,6 +103,18 @@ export function formatFieldValue(fieldSpec: FieldSpecification, value: unknown):
     return value
       .map((x) => (isReferenceAnEntity(x) ? formatEntityOneLine(x) : x.id))
       .join(chalk.grey(', '));
+  }
+  if (isValueTypeField(fieldSpec, value)) {
+    if (!value) {
+      return chalk.grey('<not set>');
+    }
+    return formatValueItemOneLine(value);
+  }
+  if (isValueTypeListField(fieldSpec, value)) {
+    if (!value) {
+      return chalk.grey('<not set>');
+    }
+    return value.map(formatValueItemOneLine).join(chalk.grey(', '));
   }
   if (isStringField(fieldSpec, value)) {
     return value ? value : chalk.grey('<not set>');
@@ -115,21 +135,59 @@ export function getEntitySpec(context: SessionContext, entity: Entityish): Entit
   return entitySpec;
 }
 
+export function getValueSpec(context: SessionContext, valueItem: Value): ValueTypeSpecification {
+  const { instance } = context;
+  const schema = instance.getSchema();
+  const valueSpec = schema.getValueTypeSpecification(valueItem._type);
+  if (!valueSpec) {
+    throw new Error(`Couldn't find value spec for type: ${valueItem._type}`);
+  }
+  return valueSpec;
+}
+
 export function isReferenceAnEntity(value: { id: string } | null): value is Entity {
   return !!value && Object.keys(value).indexOf('_type') >= 0;
 }
 
-export async function replaceReferencesWithEntitiesGeneric(
+export async function replaceEntityReferencesWithEntitiesGeneric(
   context: SessionContext,
   entity: Entityish,
   entityFetcher: (context: SessionContext, id: string) => PromiseResult<{ item: Entity }, ErrorType>
 ): Promise<void> {
   const entitySpec = getEntitySpec(context, entity);
-  for (const fieldSpec of entitySpec.fields) {
-    if (!(fieldSpec.name in entity)) {
+  await replaceEntityOrValueItemReferencesWithEntitiesGeneric(
+    context,
+    entitySpec,
+    entity,
+    entityFetcher
+  );
+}
+
+export async function replaceValueItemReferencesWithEntitiesGeneric(
+  context: SessionContext,
+  valueItem: Value,
+  entityFetcher: (context: SessionContext, id: string) => PromiseResult<{ item: Entity }, ErrorType>
+): Promise<void> {
+  const valueSpec = getValueSpec(context, valueItem);
+  await replaceEntityOrValueItemReferencesWithEntitiesGeneric(
+    context,
+    valueSpec,
+    valueItem,
+    entityFetcher
+  );
+}
+
+async function replaceEntityOrValueItemReferencesWithEntitiesGeneric(
+  context: SessionContext,
+  spec: EntityTypeSpecification | ValueTypeSpecification,
+  item: Entityish,
+  entityFetcher: (context: SessionContext, id: string) => PromiseResult<{ item: Entity }, ErrorType>
+): Promise<void> {
+  for (const fieldSpec of spec.fields) {
+    if (!(fieldSpec.name in item)) {
       continue;
     }
-    const value = entity[fieldSpec.name];
+    const value = item[fieldSpec.name];
     if (fieldSpec.type === FieldType.EntityType) {
       if (isEntityTypeField(fieldSpec, value)) {
         if (!value || isReferenceAnEntity(value)) {
@@ -137,7 +195,7 @@ export async function replaceReferencesWithEntitiesGeneric(
         }
         const referenceResult = await entityFetcher(context, value.id);
         if (referenceResult.isOk()) {
-          entity[fieldSpec.name] = referenceResult.value.item;
+          item[fieldSpec.name] = referenceResult.value.item;
         } else {
           logErrorResult('Failed fetching reference', referenceResult);
         }
@@ -146,7 +204,7 @@ export async function replaceReferencesWithEntitiesGeneric(
         if (!value) {
           continue;
         }
-        entity[fieldSpec.name] = await Promise.all(
+        item[fieldSpec.name] = await Promise.all(
           value.map(async (reference) => {
             if (!isReferenceAnEntity(reference)) {
               //TODO change to getEntities()
