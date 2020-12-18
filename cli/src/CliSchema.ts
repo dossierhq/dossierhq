@@ -13,6 +13,8 @@ export function showSchema(context: Context<unknown>): void {
       let type: string = fieldSpec.type;
       if (type === FieldType.EntityType && (fieldSpec.entityTypes?.length ?? 0) > 0) {
         type = `${type} (${fieldSpec.entityTypes?.join(', ')})`;
+      } else if (type === FieldType.ValueType && (fieldSpec.valueTypes?.length ?? 0) > 0) {
+        type = `${type} (${fieldSpec.valueTypes?.join(', ')})`;
       }
       if (fieldSpec.list) {
         type = `[${type}]`;
