@@ -2,6 +2,8 @@ import {
   EntityAdmin,
   isEntityTypeField,
   isEntityTypeListField,
+  isValueTypeField,
+  isValueTypeListField,
   PublishedEntity,
 } from '@datadata/core';
 import type {
@@ -9,9 +11,10 @@ import type {
   AdminEntityHistory,
   AdminQuery,
   Entity,
-  Paging,
   PageInfo,
+  Paging,
   SessionContext,
+  Value,
 } from '@datadata/core';
 import type { GraphQLResolveInfo } from 'graphql';
 import type { SessionGraphQLContext } from './GraphQLSchemaGenerator';
@@ -71,7 +74,7 @@ function buildResolversForEntity<TContext extends SessionGraphQLContext>(
 ): Entity {
   const entitySpec = context.instance.getSchema().getEntityTypeSpecification(entity._type);
   if (!entitySpec) {
-    throw new Error(`Couldn't find entity spec for type: ${entity._name}`);
+    throw new Error(`Couldn't find entity spec for type: ${entity._type}`);
   }
   const result = { ...entity };
   for (const fieldSpec of entitySpec.fields) {
@@ -126,7 +129,7 @@ export function buildResolversForAdminEntity<TContext extends SessionGraphQLCont
 ): AdminEntity {
   const entitySpec = context.instance.getSchema().getEntityTypeSpecification(entity._type);
   if (!entitySpec) {
-    throw new Error(`Couldn't find entity spec for type: ${entity._name}`);
+    throw new Error(`Couldn't find entity spec for type: ${entity._type}`);
   }
   const result = { ...entity };
 
@@ -144,6 +147,40 @@ export function buildResolversForAdminEntity<TContext extends SessionGraphQLCont
           context,
           value.map((x) => x.id)
         );
+    } else if (isValueTypeField(fieldSpec, value) && value) {
+      result[fieldSpec.name] = buildResolversForAdminValue(context, value);
+    } else if (isValueTypeListField(fieldSpec, value) && value && value.length > 0) {
+      result[fieldSpec.name] = value.map((x) => buildResolversForAdminValue(context, x));
+    }
+  }
+  return result;
+}
+
+export function buildResolversForAdminValue<TContext extends SessionGraphQLContext>(
+  context: SessionContext,
+  valueItem: Value
+): Value {
+  const valueSpec = context.instance.getSchema().getValueTypeSpecification(valueItem._type);
+  if (!valueSpec) {
+    throw new Error(`Couldn't find value spec for type: ${valueItem._type}`);
+  }
+  const result = { ...valueItem };
+
+  for (const fieldSpec of valueSpec.fields) {
+    const value = result[fieldSpec.name];
+    if (isEntityTypeField(fieldSpec, value) && value) {
+      result[fieldSpec.name] = (args: undefined, context: TContext, unusedInfo: unknown) =>
+        loadAdminEntity(context, value.id, null);
+    } else if (isEntityTypeListField(fieldSpec, value) && value && value.length > 0) {
+      result[fieldSpec.name] = (args: undefined, context: TContext, unusedInfo: unknown) =>
+        loadAdminEntities(
+          context,
+          value.map((x) => x.id)
+        );
+    } else if (isValueTypeField(fieldSpec, value) && value) {
+      result[fieldSpec.name] = buildResolversForAdminValue(context, value);
+    } else if (isValueTypeListField(fieldSpec, value) && value && value.length > 0) {
+      result[fieldSpec.name] = value.map((x) => buildResolversForAdminValue(context, x));
     }
   }
   return result;

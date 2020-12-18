@@ -627,6 +627,13 @@ describe('adminEntity()', () => {
                     __typename
                     _type
                     text
+                    bar {
+                      __typename
+                      id
+                      _type
+                      _name
+                      title
+                    }
                   }
                 }
               }
@@ -649,6 +656,13 @@ describe('adminEntity()', () => {
                 __typename: 'AdminQueryAdminStringedBar',
                 _type: 'QueryAdminStringedBar',
                 text: 'Stringed text',
+                bar: {
+                  __typename: 'AdminQueryAdminBar',
+                  id: barId,
+                  _type: 'QueryAdminBar',
+                  _name: createBarResult.value._name,
+                  title: 'Bar title',
+                },
               },
             },
           },
