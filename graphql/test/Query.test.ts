@@ -22,9 +22,18 @@ beforeAll(async () => {
           { name: 'tags', type: FieldType.String, list: true },
           { name: 'bar', type: FieldType.EntityType, entityTypes: ['QueryBar'] },
           { name: 'bars', type: FieldType.EntityType, entityTypes: ['QueryBar'], list: true },
+          { name: 'stringedBar', type: FieldType.ValueType, valueTypes: ['QueryStringedBar'] },
         ],
       },
       QueryBar: { fields: [{ name: 'title', type: FieldType.String }] },
+    },
+    valueTypes: {
+      QueryStringedBar: {
+        fields: [
+          { name: 'text', type: FieldType.String },
+          { name: 'bar', type: FieldType.EntityType, entityTypes: ['QueryBar'] },
+        ],
+      },
     },
   });
   schema = new GraphQLSchemaGenerator(context.instance.getSchema()).buildSchema();
@@ -107,7 +116,13 @@ describe('node()', () => {
                 bar {
                   id
                 }
+                bars {
+                  id
+                }
                 tags
+                stringedBar {
+                  __typename
+                }
               }
             }
           }
@@ -125,7 +140,9 @@ describe('node()', () => {
             title: null,
             summary: null,
             bar: null,
+            bars: null,
             tags: null,
+            stringedBar: null,
           },
         },
       });
@@ -266,6 +283,82 @@ describe('node()', () => {
                   title: 'Bar 2 title',
                 },
               ],
+            },
+          },
+        });
+      }
+    }
+  });
+
+  test('Query value type', async () => {
+    const createBarResult = await EntityAdmin.createEntity(
+      context,
+      { _type: 'QueryBar', _name: 'Bar name', title: 'Bar title' },
+      { publish: true }
+    );
+    if (expectOkResult(createBarResult)) {
+      const barId = createBarResult.value.id;
+
+      const createFooResult = await EntityAdmin.createEntity(
+        context,
+        {
+          _type: 'QueryFoo',
+          _name: 'Foo name',
+          title: 'Foo title',
+          stringedBar: { _type: 'QueryStringedBar', text: 'Value text', bar: { id: barId } },
+        },
+        { publish: true }
+      );
+      if (expectOkResult(createFooResult)) {
+        const fooId = createFooResult.value.id;
+
+        const result = await graphql(
+          schema,
+          `
+            query Entity($id: ID!) {
+              node(id: $id) {
+                __typename
+                id
+                ... on QueryFoo {
+                  _name
+                  title
+                  stringedBar {
+                    __typename
+                    _type
+                    text
+                    bar {
+                      __typename
+                      id
+                      _name
+                      title
+                    }
+                  }
+                }
+              }
+            }
+          `,
+          undefined,
+          { context: ok(context) },
+          { id: fooId }
+        );
+        expect(result).toEqual({
+          data: {
+            node: {
+              __typename: 'QueryFoo',
+              id: fooId,
+              _name: createFooResult.value._name,
+              title: 'Foo title',
+              stringedBar: {
+                __typename: 'QueryStringedBar',
+                _type: 'QueryStringedBar',
+                text: 'Value text',
+                bar: {
+                  __typename: 'QueryBar',
+                  _name: createBarResult.value._name,
+                  id: barId,
+                  title: 'Bar title',
+                },
+              },
             },
           },
         });
