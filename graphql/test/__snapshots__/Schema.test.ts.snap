@@ -72,7 +72,7 @@ type AdminEntityConnection {
 }
 
 input AdminQueryInput {
-  entityTypes: [String]
+  entityTypes: [EntityType]
   referencing: ID
   order: String
 }
@@ -220,7 +220,7 @@ type AdminEntityConnection {
 }
 
 input AdminQueryInput {
-  entityTypes: [String]
+  entityTypes: [EntityType]
   referencing: ID
   order: String
 }
@@ -403,7 +403,7 @@ type AdminEntityConnection {
 }
 
 input AdminQueryInput {
-  entityTypes: [String]
+  entityTypes: [EntityType]
   referencing: ID
   order: String
 }
@@ -516,7 +516,7 @@ type AdminEntityConnection {
 }
 
 input AdminQueryInput {
-  entityTypes: [String]
+  entityTypes: [EntityType]
   referencing: ID
   order: String
 }
@@ -680,7 +680,7 @@ type AdminEntityConnection {
 }
 
 input AdminQueryInput {
-  entityTypes: [String]
+  entityTypes: [EntityType]
   referencing: ID
   order: String
 }
