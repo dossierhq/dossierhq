@@ -111,7 +111,13 @@ export class Schema {
   constructor(readonly spec: SchemaSpecification) {}
 
   validate(): Result<void, ErrorType.BadRequest> {
+    const usedNames = new Set();
     for (const typeSpec of [...this.spec.entityTypes, ...this.spec.valueTypes]) {
+      if (usedNames.has(typeSpec.name)) {
+        return notOk.BadRequest(`${typeSpec.name}: Duplicate type name`);
+      }
+      usedNames.add(typeSpec.name);
+
       for (const fieldSpec of typeSpec.fields) {
         if (!(fieldSpec.type in FieldType)) {
           return notOk.BadRequest(

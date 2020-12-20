@@ -27,6 +27,31 @@ describe('validate()', () => {
     );
   });
 
+  test('Error: Duplicate entity type names', () => {
+    expectErrorResult(
+      new Schema({
+        entityTypes: [
+          { name: 'Foo', fields: [] },
+          { name: 'Foo', fields: [] },
+        ],
+        valueTypes: [],
+      }).validate(),
+      ErrorType.BadRequest,
+      'Foo: Duplicate type name'
+    );
+  });
+
+  test('Error: Duplicate entity and value type names', () => {
+    expectErrorResult(
+      new Schema({
+        entityTypes: [{ name: 'Foo', fields: [] }],
+        valueTypes: [{ name: 'Foo', fields: [] }],
+      }).validate(),
+      ErrorType.BadRequest,
+      'Foo: Duplicate type name'
+    );
+  });
+
   test('Error: Reference to invalid entity type', () => {
     expectErrorResult(
       new Schema({
