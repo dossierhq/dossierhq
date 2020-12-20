@@ -1,6 +1,7 @@
 {
-  "entityTypes": {
-    "BlogPost": {
+  "entityTypes": [
+    {
+      "name": "BlogPost",
       "fields": [
         {
           "name": "title",
@@ -34,7 +35,8 @@
         }
       ]
     },
-    "Category": {
+    {
+      "name": "Category",
       "fields": [
         {
           "name": "title",
@@ -43,9 +45,10 @@
         }
       ]
     }
-  },
-  "valueTypes": {
-    "AnnotatedCategory": {
+  ],
+  "valueTypes": [
+    {
+      "name": "AnnotatedCategory",
       "fields": [
         {
           "name": "annotation",
@@ -58,5 +61,5 @@
         }
       ]
     }
-  }
+  ]
 }

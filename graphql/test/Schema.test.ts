@@ -20,7 +20,7 @@ async function querySchema(schemaSpec: SchemaSpecification, query: string) {
 }
 
 describe('Empty schema spec', () => {
-  const schemaSpec = { entityTypes: {}, valueTypes: {} };
+  const schemaSpec = { entityTypes: [], valueTypes: [] };
   test('Generated QL schema', () => {
     const result = describeGeneratedSchema(schemaSpec);
     expect(result).toMatchSnapshot();
@@ -28,7 +28,7 @@ describe('Empty schema spec', () => {
 });
 
 describe('One empty entity type schema spec', () => {
-  const schemaSpec = { entityTypes: { Foo: { fields: [] } }, valueTypes: {} };
+  const schemaSpec = { entityTypes: [{ name: 'Foo', fields: [] }], valueTypes: [] };
   test('Generated QL schema', () => {
     const result = describeGeneratedSchema(schemaSpec);
     expect(result).toMatchSnapshot();
@@ -331,16 +331,17 @@ describe('One empty entity type schema spec', () => {
 
 describe('Two entity types with reference schema spec', () => {
   const schemaSpec = {
-    entityTypes: {
-      Foo: { fields: [{ name: 'fooField', type: FieldType.String }] },
-      Bar: {
+    entityTypes: [
+      { name: 'Foo', fields: [{ name: 'fooField', type: FieldType.String }] },
+      {
+        name: 'Bar',
         fields: [
           { name: 'barField1', type: FieldType.String },
           { name: 'barField2', type: FieldType.EntityType },
         ],
       },
-    },
-    valueTypes: {},
+    ],
+    valueTypes: [],
   };
   test('Generated QL schema', () => {
     const result = describeGeneratedSchema(schemaSpec);
@@ -350,8 +351,9 @@ describe('Two entity types with reference schema spec', () => {
 
 describe('Multiple references with entityTypes schema spec', () => {
   const schemaSpec = {
-    entityTypes: {
-      Foo: {
+    entityTypes: [
+      {
+        name: 'Foo',
         fields: [
           { name: 'noMeansAll', type: FieldType.EntityType, entityTypes: [] },
           { name: 'bar', type: FieldType.EntityType, entityTypes: ['Bar'] },
@@ -368,10 +370,10 @@ describe('Multiple references with entityTypes schema spec', () => {
           },
         ],
       },
-      Bar: { fields: [] },
-      Baz: { fields: [] },
-    },
-    valueTypes: {},
+      { name: 'Bar', fields: [] },
+      { name: 'Baz', fields: [] },
+    ],
+    valueTypes: [],
   };
   test('Generated QL schema', () => {
     const result = describeGeneratedSchema(schemaSpec);
@@ -381,16 +383,17 @@ describe('Multiple references with entityTypes schema spec', () => {
 
 describe('List of strings and references schema spec', () => {
   const schemaSpec = {
-    entityTypes: {
-      Foo: {
+    entityTypes: [
+      {
+        name: 'Foo',
         fields: [
           { name: 'strings', type: FieldType.String, list: true },
           { name: 'bars', type: FieldType.EntityType, list: true, entityTypes: ['Bar'] },
         ],
       },
-      Bar: { fields: [] },
-    },
-    valueTypes: {},
+      { name: 'Bar', fields: [] },
+    ],
+    valueTypes: [],
   };
   test('Generated QL schema', () => {
     const result = describeGeneratedSchema(schemaSpec);
@@ -400,8 +403,9 @@ describe('List of strings and references schema spec', () => {
 
 describe('Value type schema spec', () => {
   const schemaSpec = {
-    entityTypes: {
-      Foo: {
+    entityTypes: [
+      {
+        name: 'Foo',
         fields: [
           { name: 'valueOne', type: FieldType.ValueType, valueTypes: ['ValueOne'] },
           { name: 'unspecifiedValue', type: FieldType.ValueType },
@@ -412,22 +416,24 @@ describe('Value type schema spec', () => {
           },
         ],
       },
-      Bar: { fields: [] },
-    },
-    valueTypes: {
-      ValueOne: {
+      { name: 'Bar', fields: [] },
+    ],
+    valueTypes: [
+      {
+        name: 'ValueOne',
         fields: [
           { name: 'one', type: FieldType.String },
           { name: 'two', type: FieldType.EntityType, entityTypes: ['Bar'] },
         ],
       },
-      ValueList: {
+      {
+        name: 'ValueList',
         fields: [
           { name: 'one', type: FieldType.String, list: true },
           { name: 'two', type: FieldType.EntityType, list: true, entityTypes: ['Bar'] },
         ],
       },
-    },
+    ],
   };
   test('Generated QL schema', () => {
     const result = describeGeneratedSchema(schemaSpec);

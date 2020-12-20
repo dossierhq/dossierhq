@@ -35,10 +35,7 @@ export async function updateSchema(
   context: SessionContext,
   newSchemaSpec: Partial<SchemaSpecification>
 ): Promise<void> {
-  let oldSchemaSpec: SchemaSpecification = {
-    entityTypes: {},
-    valueTypes: {},
-  };
+  let oldSchemaSpec: SchemaSpecification = { entityTypes: [], valueTypes: [] };
   try {
     await context.instance.reloadSchema(context);
     oldSchemaSpec = context.instance.getSchema().spec;
@@ -48,9 +45,27 @@ export async function updateSchema(
   const spec: SchemaSpecification = {
     ...oldSchemaSpec,
     ...newSchemaSpec,
-    entityTypes: { ...oldSchemaSpec.entityTypes, ...newSchemaSpec.entityTypes },
-    valueTypes: { ...oldSchemaSpec.valueTypes, ...newSchemaSpec.valueTypes },
+    entityTypes: [...oldSchemaSpec.entityTypes],
+    valueTypes: [...oldSchemaSpec.valueTypes],
   };
+
+  for (const entitySpec of newSchemaSpec.entityTypes ?? []) {
+    const existingIndex = spec.entityTypes.findIndex((x) => x.name === entitySpec.name);
+    if (existingIndex >= 0) {
+      spec.entityTypes[existingIndex] = entitySpec;
+    } else {
+      spec.entityTypes.push(entitySpec);
+    }
+  }
+  for (const valueSpec of newSchemaSpec.valueTypes ?? []) {
+    const existingIndex = spec.valueTypes.findIndex((x) => x.name === valueSpec.name);
+    if (existingIndex >= 0) {
+      spec.valueTypes[existingIndex] = valueSpec;
+    } else {
+      spec.valueTypes.push(valueSpec);
+    }
+  }
+
   const newSchema = new Schema(spec);
   const result = await context.instance.setSchema(context, newSchema);
   result.throwIfError();

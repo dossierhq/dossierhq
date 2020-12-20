@@ -232,8 +232,8 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
 
     // EntityType
     const entityTypeEnumValues: GraphQLEnumValueConfigMap = {};
-    for (const typeName of Object.keys(this.schema.spec.entityTypes)) {
-      entityTypeEnumValues[typeName] = {};
+    for (const entitySpec of this.schema.spec.entityTypes) {
+      entityTypeEnumValues[entitySpec.name] = {};
     }
     this.addType(
       new GraphQLEnumType({
@@ -257,8 +257,8 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     if (this.schema.getValueTypeCount() > 0) {
       // ValueType
       const valueTypeEnumValues: GraphQLEnumValueConfigMap = {};
-      for (const typeName of Object.keys(this.schema.spec.valueTypes)) {
-        valueTypeEnumValues[typeName] = {};
+      for (const valueSpec of this.schema.spec.valueTypes) {
+        valueTypeEnumValues[valueSpec.name] = {};
       }
       this.addType(
         new GraphQLEnumType({
@@ -280,17 +280,17 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
   }
 
   addEntityTypes(): void {
-    for (const [entityName, entitySpec] of Object.entries(this.schema.spec.entityTypes)) {
-      this.addEntityType(entityName, entitySpec);
+    for (const entitySpec of this.schema.spec.entityTypes) {
+      this.addEntityType(entitySpec);
     }
   }
 
-  addEntityType(name: string, entitySpec: EntityTypeSpecification): void {
+  addEntityType(entitySpec: EntityTypeSpecification): void {
     this.addType(
       new GraphQLObjectType<Entity, TContext>({
-        name,
+        name: entitySpec.name,
         interfaces: this.getInterfaces('Node', 'Entity'),
-        isTypeOf: (source, unusedContext, unusedInfo) => source._type === name,
+        isTypeOf: (source, unusedContext, unusedInfo) => source._type === entitySpec.name,
         fields: () => {
           const fields: GraphQLFieldConfigMap<Entity, TContext> = {
             id: { type: new GraphQLNonNull(GraphQLID) },
@@ -323,17 +323,17 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
   }
 
   addValueTypes(): void {
-    for (const [valueName, valueSpec] of Object.entries(this.schema.spec.valueTypes)) {
-      this.addValueType(valueName, valueSpec);
+    for (const valueSpec of this.schema.spec.valueTypes) {
+      this.addValueType(valueSpec);
     }
   }
 
-  addValueType(name: string, valueSpec: ValueTypeSpecification): void {
+  addValueType(valueSpec: ValueTypeSpecification): void {
     this.addType(
       new GraphQLObjectType<Value, TContext>({
-        name,
+        name: valueSpec.name,
         interfaces: this.getInterfaces('Value'),
-        isTypeOf: (source, unusedContext, unusedInfo) => source._type === name,
+        isTypeOf: (source, unusedContext, unusedInfo) => source._type === valueSpec.name,
         fields: () => {
           const fields: GraphQLFieldConfigMap<Value, TContext> = {
             _type: { type: new GraphQLNonNull(this.getEnumType('ValueType')) },
@@ -470,17 +470,17 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
   }
 
   addAdminEntityTypes(): void {
-    for (const [entityName, entitySpec] of Object.entries(this.schema.spec.entityTypes)) {
-      this.addAdminEntityType(entityName, entitySpec);
+    for (const entitySpec of this.schema.spec.entityTypes) {
+      this.addAdminEntityType(entitySpec);
     }
   }
 
-  addAdminEntityType(name: string, entitySpec: EntityTypeSpecification): void {
+  addAdminEntityType(entitySpec: EntityTypeSpecification): void {
     this.addType(
       new GraphQLObjectType<AdminEntity, TContext>({
-        name: toAdminTypeName(name),
+        name: toAdminTypeName(entitySpec.name),
         interfaces: this.getInterfaces(toAdminTypeName('Entity')),
-        isTypeOf: (source, unusedContext, unusedInfo) => source._type === name,
+        isTypeOf: (source, unusedContext, unusedInfo) => source._type === entitySpec.name,
         fields: () => {
           const fields: GraphQLFieldConfigMap<AdminEntity, TContext> = {
             id: { type: new GraphQLNonNull(GraphQLID) },
@@ -515,7 +515,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
 
     this.addType(
       new GraphQLInputObjectType({
-        name: toAdminCreateInputTypeName(name),
+        name: toAdminCreateInputTypeName(entitySpec.name),
         fields: () => {
           const fields: GraphQLInputFieldConfigMap = {
             _type: { type: this.getEnumType('EntityType') },
@@ -547,7 +547,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
 
     this.addType(
       new GraphQLInputObjectType({
-        name: toAdminUpdateInputTypeName(name),
+        name: toAdminUpdateInputTypeName(entitySpec.name),
         fields: () => {
           const fields: GraphQLInputFieldConfigMap = {
             id: { type: new GraphQLNonNull(GraphQLID) },
@@ -580,17 +580,17 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
   }
 
   addAdminValueTypes(): void {
-    for (const [valueName, valueSpec] of Object.entries(this.schema.spec.valueTypes)) {
-      this.addAdminValueType(valueName, valueSpec);
+    for (const valueSpec of this.schema.spec.valueTypes) {
+      this.addAdminValueType(valueSpec);
     }
   }
 
-  addAdminValueType(name: string, valueSpec: ValueTypeSpecification): void {
+  addAdminValueType(valueSpec: ValueTypeSpecification): void {
     this.addType(
       new GraphQLObjectType<Value, TContext>({
-        name: toAdminTypeName(name),
+        name: toAdminTypeName(valueSpec.name),
         interfaces: this.getInterfaces(toAdminTypeName('Value')),
-        isTypeOf: (source, unusedContext, unusedInfo) => source._type === name,
+        isTypeOf: (source, unusedContext, unusedInfo) => source._type === valueSpec.name,
         fields: () => {
           const fields: GraphQLFieldConfigMap<Value, TContext> = {
             _type: { type: new GraphQLNonNull(this.getEnumType('ValueType')) },
@@ -622,7 +622,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
 
     this.addType(
       new GraphQLInputObjectType({
-        name: toAdminValueInputTypeName(name),
+        name: toAdminValueInputTypeName(valueSpec.name),
         fields: () => {
           const fields: GraphQLInputFieldConfigMap = {
             _type: { type: new GraphQLNonNull(this.getEnumType('ValueType')) },
@@ -718,7 +718,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
   }
 
   buildQueryType<TSource>(): GraphQLObjectType {
-    const includeEntities = Object.keys(this.schema.spec.entityTypes).length > 0;
+    const includeEntities = this.schema.getEntityTypeCount() > 0;
 
     return new GraphQLObjectType<TSource, TContext>({
       name: 'Query',
@@ -810,7 +810,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
   }
 
   buildMutationType<TSource>(): GraphQLObjectType | null {
-    const includeEntities = Object.keys(this.schema.spec.entityTypes).length > 0;
+    const includeEntities = this.schema.getEntityTypeCount() > 0;
     if (!includeEntities) {
       return null;
     }
@@ -819,9 +819,9 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       deleteEntity: this.buildMutationDeleteEntity(),
     };
 
-    for (const [entityType, unusedTypeSpec] of Object.entries(this.schema.spec.entityTypes)) {
-      fields[`create${entityType}Entity`] = this.buildMutationCreateEntity(entityType);
-      fields[`update${entityType}Entity`] = this.buildMutationUpdateEntity(entityType);
+    for (const entitySpec of this.schema.spec.entityTypes) {
+      fields[`create${entitySpec.name}Entity`] = this.buildMutationCreateEntity(entitySpec.name);
+      fields[`update${entitySpec.name}Entity`] = this.buildMutationUpdateEntity(entitySpec.name);
     }
 
     return new GraphQLObjectType<TSource, TContext>({
