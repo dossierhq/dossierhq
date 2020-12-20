@@ -28,10 +28,12 @@ export async function setSchema(
 }
 
 export interface EntityTypeSpecification {
+  name: string;
   fields: FieldSpecification[];
 }
 
 export interface ValueTypeSpecification {
+  name: string;
   fields: FieldSpecification[];
 }
 
@@ -101,35 +103,32 @@ export function isValueTypeListField(
 }
 
 export interface SchemaSpecification {
-  entityTypes: Record<string, EntityTypeSpecification>;
-  valueTypes: Record<string, ValueTypeSpecification>;
+  entityTypes: EntityTypeSpecification[];
+  valueTypes: ValueTypeSpecification[];
 }
 
 export class Schema {
   constructor(readonly spec: SchemaSpecification) {}
 
   validate(): Result<void, ErrorType.BadRequest> {
-    for (const [name, typeSpec] of [
-      ...Object.entries(this.spec.entityTypes),
-      ...Object.entries(this.spec.valueTypes),
-    ]) {
+    for (const typeSpec of [...this.spec.entityTypes, ...this.spec.valueTypes]) {
       for (const fieldSpec of typeSpec.fields) {
         if (!(fieldSpec.type in FieldType)) {
           return notOk.BadRequest(
-            `${name}.${fieldSpec.name}: Specified type ${fieldSpec.type} doesn’t exist`
+            `${typeSpec.name}.${fieldSpec.name}: Specified type ${fieldSpec.type} doesn’t exist`
           );
         }
 
         if (fieldSpec.entityTypes && fieldSpec.entityTypes.length > 0) {
           if (fieldSpec.type !== FieldType.EntityType) {
             return notOk.BadRequest(
-              `${name}.${fieldSpec.name}: Field with type ${fieldSpec.type} shouldn’t specify entityTypes`
+              `${typeSpec.name}.${fieldSpec.name}: Field with type ${fieldSpec.type} shouldn’t specify entityTypes`
             );
           }
           for (const referencedTypeName of fieldSpec.entityTypes) {
-            if (!(referencedTypeName in this.spec.entityTypes)) {
+            if (this.spec.entityTypes.findIndex((x) => x.name === referencedTypeName) < 0) {
               return notOk.BadRequest(
-                `${name}.${fieldSpec.name}: Referenced entity type in entityTypes ${referencedTypeName} doesn’t exist`
+                `${typeSpec.name}.${fieldSpec.name}: Referenced entity type in entityTypes ${referencedTypeName} doesn’t exist`
               );
             }
           }
@@ -138,13 +137,13 @@ export class Schema {
         if (fieldSpec.valueTypes && fieldSpec.valueTypes.length > 0) {
           if (fieldSpec.type !== FieldType.ValueType) {
             return notOk.BadRequest(
-              `${name}.${fieldSpec.name}: Field with type ${fieldSpec.type} shouldn’t specify valueTypes`
+              `${typeSpec.name}.${fieldSpec.name}: Field with type ${fieldSpec.type} shouldn’t specify valueTypes`
             );
           }
           for (const referencedTypeName of fieldSpec.valueTypes) {
-            if (!(referencedTypeName in this.spec.valueTypes)) {
+            if (this.spec.valueTypes.findIndex((x) => x.name === referencedTypeName) < 0) {
               return notOk.BadRequest(
-                `${name}.${fieldSpec.name}: Value type in valueTypes ${referencedTypeName} doesn’t exist`
+                `${typeSpec.name}.${fieldSpec.name}: Value type in valueTypes ${referencedTypeName} doesn’t exist`
               );
             }
           }
@@ -156,11 +155,11 @@ export class Schema {
   }
 
   getEntityTypeCount(): number {
-    return Object.keys(this.spec.entityTypes).length;
+    return this.spec.entityTypes.length;
   }
 
   getEntityTypeSpecification(type: string): EntityTypeSpecification | null {
-    return this.spec.entityTypes[type] ?? null;
+    return this.spec.entityTypes.find((x) => x.name === type) ?? null;
   }
 
   getEntityFieldSpecification(
@@ -171,11 +170,11 @@ export class Schema {
   }
 
   getValueTypeCount(): number {
-    return Object.keys(this.spec.valueTypes).length;
+    return this.spec.valueTypes.length;
   }
 
   getValueTypeSpecification(type: string): ValueTypeSpecification | null {
-    return this.spec.valueTypes[type] ?? null;
+    return this.spec.valueTypes.find((x) => x.name === type) ?? null;
   }
 
   getValueFieldSpecification(

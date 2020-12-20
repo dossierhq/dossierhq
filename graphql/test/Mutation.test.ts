@@ -14,8 +14,9 @@ beforeAll(async () => {
   instance = await createTestInstance();
   context = await ensureSessionContext(instance, 'test', 'mutation');
   await updateSchema(context, {
-    entityTypes: {
-      MutationFoo: {
+    entityTypes: [
+      {
+        name: 'MutationFoo',
         fields: [
           { name: 'title', type: FieldType.String, isName: true },
           { name: 'summary', type: FieldType.String },
@@ -30,18 +31,17 @@ beforeAll(async () => {
           { name: 'stringedBar', type: FieldType.ValueType, valueTypes: ['MutationStringedBar'] },
         ],
       },
-      MutationBar: {
-        fields: [],
-      },
-    },
-    valueTypes: {
-      MutationStringedBar: {
+      { name: 'MutationBar', fields: [] },
+    ],
+    valueTypes: [
+      {
+        name: 'MutationStringedBar',
         fields: [
           { name: 'text', type: FieldType.String },
           { name: 'bar', type: FieldType.EntityType, entityTypes: ['MutationBar'] },
         ],
       },
-    },
+    ],
   });
   schema = new GraphQLSchemaGenerator(context.instance.getSchema()).buildSchema();
 });

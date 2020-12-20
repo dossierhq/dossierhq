@@ -23,8 +23,9 @@ beforeAll(async () => {
   instance = await createTestInstance();
   context = await ensureSessionContext(instance, 'test', 'query');
   await updateSchema(context, {
-    entityTypes: {
-      QueryAdminFoo: {
+    entityTypes: [
+      {
+        name: 'QueryAdminFoo',
         fields: [
           { name: 'title', type: FieldType.String, isName: true },
           { name: 'summary', type: FieldType.String },
@@ -39,17 +40,18 @@ beforeAll(async () => {
           { name: 'stringedBar', type: FieldType.ValueType, valueTypes: ['QueryAdminStringedBar'] },
         ],
       },
-      QueryAdminBar: { fields: [{ name: 'title', type: FieldType.String }] },
-      QueryAdminOnlyEditBefore: { fields: [{ name: 'message', type: FieldType.String }] },
-    },
-    valueTypes: {
-      QueryAdminStringedBar: {
+      { name: 'QueryAdminBar', fields: [{ name: 'title', type: FieldType.String }] },
+      { name: 'QueryAdminOnlyEditBefore', fields: [{ name: 'message', type: FieldType.String }] },
+    ],
+    valueTypes: [
+      {
+        name: 'QueryAdminStringedBar',
         fields: [
           { name: 'text', type: FieldType.String },
           { name: 'bar', type: FieldType.EntityType, entityTypes: ['QueryAdminBar'] },
         ],
       },
-    },
+    ],
   });
   schema = new GraphQLSchemaGenerator(context.instance.getSchema()).buildSchema();
 

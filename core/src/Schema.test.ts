@@ -13,14 +13,14 @@ afterAll(async () => {
 
 describe('validate()', () => {
   test('Empty spec validates', () => {
-    expectOkResult(new Schema({ entityTypes: {}, valueTypes: {} }).validate());
+    expectOkResult(new Schema({ entityTypes: [], valueTypes: [] }).validate());
   });
 
   test('Error: Invalid field type', () => {
     expectErrorResult(
       new Schema({
-        entityTypes: { Foo: { fields: [{ name: 'bar', type: 'Invalid' as FieldType }] } },
-        valueTypes: {},
+        entityTypes: [{ name: 'Foo', fields: [{ name: 'bar', type: 'Invalid' as FieldType }] }],
+        valueTypes: [],
       }).validate(),
       ErrorType.BadRequest,
       'Foo.bar: Specified type Invalid doesn’t exist'
@@ -30,12 +30,13 @@ describe('validate()', () => {
   test('Error: Reference to invalid entity type', () => {
     expectErrorResult(
       new Schema({
-        entityTypes: {
-          Foo: {
+        entityTypes: [
+          {
+            name: 'Foo',
             fields: [{ name: 'bar', type: FieldType.EntityType, entityTypes: ['Invalid'] }],
           },
-        },
-        valueTypes: {},
+        ],
+        valueTypes: [],
       }).validate(),
       ErrorType.BadRequest,
       'Foo.bar: Referenced entity type in entityTypes Invalid doesn’t exist'
@@ -45,13 +46,11 @@ describe('validate()', () => {
   test('Error: entityTypes specified on String field', () => {
     expectErrorResult(
       new Schema({
-        entityTypes: {
-          Foo: {
-            fields: [{ name: 'bar', type: FieldType.String, entityTypes: ['Bar'] }],
-          },
-          Bar: { fields: [] },
-        },
-        valueTypes: {},
+        entityTypes: [
+          { name: 'Foo', fields: [{ name: 'bar', type: FieldType.String, entityTypes: ['Bar'] }] },
+          { name: 'Bar', fields: [] },
+        ],
+        valueTypes: [],
       }).validate(),
       ErrorType.BadRequest,
       'Foo.bar: Field with type String shouldn’t specify entityTypes'
@@ -61,12 +60,13 @@ describe('validate()', () => {
   test('Error: Value type with invalid value type', () => {
     expectErrorResult(
       new Schema({
-        entityTypes: {
-          Foo: {
+        entityTypes: [
+          {
+            name: 'Foo',
             fields: [{ name: 'bar', type: FieldType.ValueType, valueTypes: ['Invalid'] }],
           },
-        },
-        valueTypes: {},
+        ],
+        valueTypes: [],
       }).validate(),
       ErrorType.BadRequest,
       'Foo.bar: Value type in valueTypes Invalid doesn’t exist'
@@ -76,13 +76,11 @@ describe('validate()', () => {
   test('Error: valueTypes specified on String field', () => {
     expectErrorResult(
       new Schema({
-        entityTypes: {
-          Foo: {
-            fields: [{ name: 'bar', type: FieldType.String, valueTypes: ['Bar'] }],
-          },
-          Bar: { fields: [] },
-        },
-        valueTypes: {},
+        entityTypes: [
+          { name: 'Foo', fields: [{ name: 'bar', type: FieldType.String, valueTypes: ['Bar'] }] },
+          { name: 'Bar', fields: [] },
+        ],
+        valueTypes: [],
       }).validate(),
       ErrorType.BadRequest,
       'Foo.bar: Field with type String shouldn’t specify valueTypes'

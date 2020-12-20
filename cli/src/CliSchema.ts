@@ -7,8 +7,8 @@ import { logKeyValue } from './CliUtils';
 export function showSchema(context: Context<unknown>): void {
   const { instance } = context;
   const schema = instance.getSchema();
-  for (const [typeName, typeSpec] of Object.entries(schema.spec.entityTypes)) {
-    console.log(chalk.bold(typeName));
+  for (const typeSpec of schema.spec.entityTypes) {
+    console.log(chalk.bold(typeSpec.name));
     for (const fieldSpec of typeSpec.fields) {
       let type: string = fieldSpec.type;
       if (type === FieldType.EntityType && (fieldSpec.entityTypes?.length ?? 0) > 0) {
@@ -31,7 +31,7 @@ export function showSchema(context: Context<unknown>): void {
 export async function selectEntityType(context: Context<unknown>): Promise<string> {
   const { instance } = context;
   const schema = instance.getSchema();
-  const types = Object.keys(schema.spec.entityTypes);
+  const types = schema.spec.entityTypes.map((x) => x.name);
   const { name: typeName } = await showItemSelector(
     'Which entity type?',
     types.map((x) => ({ id: x, name: x }))
@@ -42,7 +42,7 @@ export async function selectEntityType(context: Context<unknown>): Promise<strin
 export async function selectEntityTypes(context: Context<unknown>): Promise<string[]> {
   const { instance } = context;
   const schema = instance.getSchema();
-  const types = Object.keys(schema.spec.entityTypes);
+  const types = schema.spec.entityTypes.map((x) => x.name);
   const items = await showMultiItemSelector(
     'Which entity types?',
     types.map((x) => ({ id: x, name: x }))
@@ -58,11 +58,13 @@ export async function selectValueType(
   const schema = instance.getSchema();
 
   filterTypes?.forEach((x) => {
-    if (!schema.spec.valueTypes[x]) throw new Error(`Specified filter type ${x} doesn't exist`);
+    if (!schema.getValueTypeSpecification(x)) {
+      throw new Error(`Specified filter type ${x} doesn't exist`);
+    }
   });
 
   const types =
-    filterTypes && filterTypes.length > 0 ? filterTypes : Object.keys(schema.spec.valueTypes);
+    filterTypes && filterTypes.length > 0 ? filterTypes : schema.spec.valueTypes.map((x) => x.name);
 
   if (types.length === 1) {
     logKeyValue('Value type', types[0]);

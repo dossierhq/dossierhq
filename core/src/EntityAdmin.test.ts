@@ -26,16 +26,18 @@ beforeAll(async () => {
   instance = await createTestInstance();
   context = await ensureSessionContext(instance, 'test', 'entity-admin');
   await updateSchema(context, {
-    entityTypes: {
-      EntityAdminFoo: {
+    entityTypes: [
+      {
+        name: 'EntityAdminFoo',
         fields: [
           { name: 'title', type: FieldType.String, isName: true },
           { name: 'summary', type: FieldType.String },
           { name: 'bar', type: FieldType.EntityType, entityTypes: ['EntityAdminBar'] },
         ],
       },
-      EntityAdminBar: { fields: [{ name: 'title', type: FieldType.String }] },
-      EntityAdminBaz: {
+      { name: 'EntityAdminBar', fields: [{ name: 'title', type: FieldType.String }] },
+      {
+        name: 'EntityAdminBaz',
         fields: [
           { name: 'title', type: FieldType.String },
           { name: 'bar', type: FieldType.EntityType, entityTypes: ['EntityAdminBar'] },
@@ -85,25 +87,29 @@ beforeAll(async () => {
           },
         ],
       },
-      AdminOnlyEditBefore: { fields: [{ name: 'message', type: FieldType.String }] },
-    },
-    valueTypes: {
-      EntityAdminOneString: {
+      { name: 'AdminOnlyEditBefore', fields: [{ name: 'message', type: FieldType.String }] },
+    ],
+    valueTypes: [
+      {
+        name: 'EntityAdminOneString',
         fields: [{ name: 'one', type: FieldType.String }],
       },
-      EntityAdminTwoStrings: {
+      {
+        name: 'EntityAdminTwoStrings',
         fields: [
           { name: 'one', type: FieldType.String },
           { name: 'two', type: FieldType.String },
         ],
       },
-      EntityAdminStringReference: {
+      {
+        name: 'EntityAdminStringReference',
         fields: [
           { name: 'string', type: FieldType.String },
           { name: 'reference', type: FieldType.EntityType, entityTypes: ['EntityAdminBar'] },
         ],
       },
-      EntityAdminListFields: {
+      {
+        name: 'EntityAdminListFields',
         fields: [
           { name: 'stringList', type: FieldType.String, list: true },
           {
@@ -114,7 +120,8 @@ beforeAll(async () => {
           },
         ],
       },
-      EntityAdminNested: {
+      {
+        name: 'EntityAdminNested',
         fields: [
           { name: 'title', type: FieldType.String },
           {
@@ -124,7 +131,7 @@ beforeAll(async () => {
           },
         ],
       },
-    },
+    ],
   });
 
   await ensureEntitiesExistForAdminOnlyEditBefore(context);
