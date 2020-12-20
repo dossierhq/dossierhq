@@ -1,13 +1,14 @@
 import chalk from 'chalk';
 import { FieldType } from '@datadata/core';
-import type { Context } from '@datadata/core';
+import type { Context, EntityTypeSpecification, ValueTypeSpecification } from '@datadata/core';
 import { showItemSelector, showMultiItemSelector } from './widgets';
 import { logKeyValue } from './CliUtils';
 
 export function showSchema(context: Context<unknown>): void {
   const { instance } = context;
   const schema = instance.getSchema();
-  for (const typeSpec of schema.spec.entityTypes) {
+
+  const logTypeSpec = (typeSpec: EntityTypeSpecification | ValueTypeSpecification) => {
     console.log(chalk.bold(typeSpec.name));
     for (const fieldSpec of typeSpec.fields) {
       let type: string = fieldSpec.type;
@@ -24,6 +25,19 @@ export function showSchema(context: Context<unknown>): void {
           fieldSpec.isName === true ? chalk.grey('  entity name') : ''
         }`
       );
+    }
+  };
+
+  if (schema.getEntityTypeCount() > 0) {
+    console.log(chalk.cyan(chalk.bold('Entity types')));
+    for (const entitySpec of schema.spec.entityTypes) {
+      logTypeSpec(entitySpec);
+    }
+  }
+  if (schema.getValueTypeCount() > 0) {
+    console.log(chalk.cyan(chalk.bold('Value types')));
+    for (const valueSpec of schema.spec.valueTypes) {
+      logTypeSpec(valueSpec);
     }
   }
 }
