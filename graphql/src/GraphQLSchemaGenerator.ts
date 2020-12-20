@@ -410,7 +410,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       new GraphQLInputObjectType({
         name: 'AdminQueryInput',
         fields: {
-          entityTypes: { type: new GraphQLList(GraphQLString) },
+          entityTypes: { type: new GraphQLList(this.getEnumType('EntityType')) },
           referencing: { type: GraphQLID },
           order: { type: GraphQLString }, // TODO should be enum?
         },

@@ -738,7 +738,7 @@ describe('searchAdminEntities()', () => {
       schema,
       `
         {
-          adminSearchEntities(query: { entityTypes: ["QueryAdminOnlyEditBefore"] }) {
+          adminSearchEntities(query: { entityTypes: [QueryAdminOnlyEditBefore] }) {
             totalCount
             edges {
               node {
@@ -759,12 +759,35 @@ describe('searchAdminEntities()', () => {
     );
   });
 
+  test('Default => 25, filter type as argument', async () => {
+    const result = await graphql(
+      schema,
+      `
+        query Search($entityTypes: [EntityType]) {
+          adminSearchEntities(query: { entityTypes: $entityTypes }) {
+            edges {
+              node {
+                id
+              }
+            }
+          }
+        }
+      `,
+      undefined,
+      { context: ok(context) },
+      { entityTypes: ['QueryAdminOnlyEditBefore'] }
+    );
+    expect(result.data?.adminSearchEntities.edges).toEqual(
+      entitiesOfTypeQueryAdminOnlyEditBefore.slice(0, 25).map((x) => ({ node: { id: x.id } }))
+    );
+  });
+
   test('first 10', async () => {
     const result = await graphql(
       schema,
       `
         {
-          adminSearchEntities(query: { entityTypes: ["QueryAdminOnlyEditBefore"] }, first: 10) {
+          adminSearchEntities(query: { entityTypes: [QueryAdminOnlyEditBefore] }, first: 10) {
             edges {
               node {
                 id
@@ -786,7 +809,7 @@ describe('searchAdminEntities()', () => {
       schema,
       `
         {
-          adminSearchEntities(query: { entityTypes: ["QueryAdminOnlyEditBefore"] }, last: 10) {
+          adminSearchEntities(query: { entityTypes: [QueryAdminOnlyEditBefore] }, last: 10) {
             edges {
               node {
                 id
@@ -809,7 +832,7 @@ describe('searchAdminEntities()', () => {
       `
         {
           adminSearchEntities(
-            query: { entityTypes: ["QueryAdminOnlyEditBefore"], order: "_name" }
+            query: { entityTypes: [QueryAdminOnlyEditBefore], order: "_name" }
             last: 10
           ) {
             edges {
