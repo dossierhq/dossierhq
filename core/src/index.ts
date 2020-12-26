@@ -28,11 +28,15 @@ export * as PublishedEntity from './PublishedEntity';
 export {
   FieldType,
   isEntityTypeField,
+  isEntityTypeItemField,
   isEntityTypeListField,
   isStringField,
+  isStringItemField,
   isStringListField,
   isValueTypeField,
+  isValueTypeItemField,
   isValueTypeListField,
   Schema,
+  visitFieldsRecursively,
 } from './Schema';
 export * as TestUtils from './TestUtils';

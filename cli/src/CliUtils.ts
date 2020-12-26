@@ -3,12 +3,16 @@ import {
   EntityTypeSpecification,
   FieldType,
   isEntityTypeField,
+  isEntityTypeItemField,
   isEntityTypeListField,
   isStringField,
+  isStringItemField,
   isStringListField,
   isValueTypeField,
+  isValueTypeItemField,
   isValueTypeListField,
   PromiseResult,
+  visitFieldsRecursively,
 } from '@datadata/core';
 import type {
   AdminEntity,
@@ -69,16 +73,37 @@ export function logEntity(context: SessionContext, entity: AdminEntity | Entity)
   }
 
   const schema = context.instance.getSchema();
-  const entitySpec = schema.getEntityTypeSpecification(entity._type);
-  if (!entitySpec) {
-    console.log(chalk.red(`No entity spec exist for type ${entity._type}`));
-    return;
-  }
 
-  for (const fieldSpec of entitySpec.fields) {
-    const value = entity[fieldSpec.name];
-    logKeyValue(fieldSpec.name, formatFieldValue(fieldSpec, value));
-  }
+  visitFieldsRecursively<{ indent: string }>({
+    schema,
+    entity,
+    visitor: (fieldSpec, data, visitContext, listIndex) => {
+      let value;
+      if (isEntityTypeItemField(fieldSpec, data)) {
+        if (isReferenceAnEntity(data)) {
+          value = formatEntityOneLine(data);
+        } else {
+          value = data ? data.id : chalk.grey('<not set>');
+        }
+      } else if (isValueTypeItemField(fieldSpec, data)) {
+        value = data ? formatValueItemOneLine(data) : chalk.grey('<not set>');
+      } else if (isStringItemField(fieldSpec, data)) {
+        value = data ? data : chalk.grey('<not set>');
+      } else {
+        throw new Error(`Unknown type (${fieldSpec.type})`);
+      }
+      logKeyValue(
+        visitContext.indent + (listIndex === undefined ? fieldSpec.name : listIndex),
+        value
+      );
+    },
+    enterList: (fieldSpec, list, { indent }) => {
+      console.log(indent + chalk.bold(fieldSpec.name));
+      return { indent: indent + '  ' };
+    },
+    enterValueItem: (fieldSpec, valueItem, { indent }) => ({ indent: indent + '  ' }),
+    initialVisitContext: { indent: '' },
+  });
 }
 
 export function formatEntityOneLine(entity: Entity): string {
