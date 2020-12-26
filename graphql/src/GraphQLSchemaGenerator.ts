@@ -140,7 +140,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       return this.getOutputType(toAdminTypeName(filteredNames[0], isAdmin));
     }
 
-    const enumName = `$${toAdminTypeName(filteredNames.join('Or'), isAdmin)}`; // TODO change $ to _?
+    const enumName = `_${toAdminTypeName(filteredNames.join('Or'), isAdmin)}`;
     const existingEnum = this.#types.find((x) => x.name === enumName);
     if (existingEnum) {
       if (isOutputType(existingEnum)) {
@@ -173,7 +173,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       return this.getOutputType(toAdminTypeName(filteredNames[0], isAdmin));
     }
 
-    const enumName = `$${toAdminTypeName(filteredNames.join('Or'), isAdmin)}`;
+    const enumName = `_${toAdminTypeName(filteredNames.join('Or'), isAdmin)}`;
     const existingEnum = this.#types.find((x) => x.name === enumName);
     if (existingEnum) {
       if (isOutputType(existingEnum)) {
