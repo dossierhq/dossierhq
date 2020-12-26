@@ -185,8 +185,8 @@ type Foo implements Node & Entity {
   _name: String!
   noMeansAll: Entity
   bar: Bar
-  bazBar: $BarOrBaz
-  fooBarBaz: $BarOrBazOrFoo
+  bazBar: _BarOrBaz
+  fooBarBaz: _BarOrBazOrFoo
   barBarBar: Bar
 }
 
@@ -252,8 +252,8 @@ type AdminFoo implements AdminEntity {
   _deleted: Boolean!
   noMeansAll: AdminEntity
   bar: AdminBar
-  bazBar: $AdminBarOrBaz
-  fooBarBaz: $AdminBarOrBazOrFoo
+  bazBar: _AdminBarOrBaz
+  fooBarBaz: _AdminBarOrBazOrFoo
   barBarBar: AdminBar
 }
 
@@ -316,23 +316,23 @@ input AdminBazUpdateInput {
   _name: String
 }
 
-enum $BarOrBaz {
+enum _BarOrBaz {
   Bar
   Baz
 }
 
-enum $BarOrBazOrFoo {
+enum _BarOrBazOrFoo {
   Bar
   Baz
   Foo
 }
 
-enum $AdminBarOrBaz {
+enum _AdminBarOrBaz {
   AdminBar
   AdminBaz
 }
 
-enum $AdminBarOrBazOrFoo {
+enum _AdminBarOrBazOrFoo {
   AdminBar
   AdminBaz
   AdminFoo
@@ -640,7 +640,7 @@ type Foo implements Node & Entity {
   _name: String!
   valueOne: ValueOne
   unspecifiedValue: Value
-  valueOneOrList: $ValueListOrValueOne
+  valueOneOrList: _ValueListOrValueOne
 }
 
 type Bar implements Node & Entity {
@@ -716,7 +716,7 @@ type AdminFoo implements AdminEntity {
   _deleted: Boolean!
   valueOne: AdminValueOne
   unspecifiedValue: AdminValue
-  valueOneOrList: $AdminValueListOrValueOne
+  valueOneOrList: _AdminValueListOrValueOne
 }
 
 input AdminFooCreateInput {
@@ -779,12 +779,12 @@ input AdminValueListInput {
   two: [AdminReferenceInput!]
 }
 
-enum $ValueListOrValueOne {
+enum _ValueListOrValueOne {
   ValueList
   ValueOne
 }
 
-enum $AdminValueListOrValueOne {
+enum _AdminValueListOrValueOne {
   AdminValueList
   AdminValueOne
 }
