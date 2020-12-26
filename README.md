@@ -5,9 +5,18 @@
 - `brew install pgcli` (optional, for Postgres access)
 - `brew install gnuplot` (for benchmarking)
 
+## VS Code extensions
+
+- [Code Spell Checker](vscode:extension/streetsidesoftware.code-spell-checker)
+- [ESLint](vscode:extension/dbaeumer.vscode-eslint)
+- [Prettier](vscode:extension/esbenp.prettier-vscode)
+
 ## Getting started
 
-`rush update` to install dependencies.
+- `rush update` to install dependencies.
+- `npm run db:start`
+- `npm run db:ensure-dbs`
+- `npm run db:migrate:all`
 
 ## Dependencies
 
