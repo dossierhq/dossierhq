@@ -15,6 +15,7 @@ export type { Entity, Value } from './PublishedEntity';
 export type {
   EntityTypeSpecification,
   FieldSpecification,
+  FieldValueTypeMap,
   SchemaSpecification,
   ValueTypeSpecification,
 } from './Schema';
@@ -23,10 +24,7 @@ export { default as Auth } from './Auth';
 export * as EntityAdmin from './EntityAdmin';
 export { ErrorType, ok, notOk } from './ErrorResult';
 export { default as Instance } from './Instance';
-export { isPagingForwards } from './Paging';
-export * as PublishedEntity from './PublishedEntity';
 export {
-  FieldType,
   isEntityTypeField,
   isEntityTypeItemField,
   isEntityTypeListField,
@@ -36,7 +34,12 @@ export {
   isValueTypeField,
   isValueTypeItemField,
   isValueTypeListField,
-  Schema,
   visitFieldsRecursively,
+} from './ItemUtils';
+export { isPagingForwards } from './Paging';
+export * as PublishedEntity from './PublishedEntity';
+export {
+  FieldType,
+  Schema,
 } from './Schema';
 export * as TestUtils from './TestUtils';
