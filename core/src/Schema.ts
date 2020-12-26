@@ -60,6 +60,7 @@ export interface FieldValueTypeMap {
   [FieldType.ValueType]: { _type: string; [key: string]: unknown };
 }
 
+/** Check if `value` with `fieldSpec` is a single EntityType field */
 export function isEntityTypeField(
   fieldSpec: FieldSpecification,
   value: unknown | null
@@ -67,6 +68,7 @@ export function isEntityTypeField(
   return fieldSpec.type === FieldType.EntityType && !fieldSpec.list;
 }
 
+/** Check if `value` with `fieldSpec` is a list EntityType field */
 export function isEntityTypeListField(
   fieldSpec: FieldSpecification,
   value: unknown | null
@@ -74,6 +76,7 @@ export function isEntityTypeListField(
   return fieldSpec.type === FieldType.EntityType && !!fieldSpec.list;
 }
 
+/** Check if `value` with `fieldSpec` is either a single EntityType field or an item in a list field */
 export function isEntityTypeItemField(
   fieldSpec: FieldSpecification,
   value: unknown | null
@@ -81,6 +84,7 @@ export function isEntityTypeItemField(
   return fieldSpec.type === FieldType.EntityType;
 }
 
+/** Check if `value` with `fieldSpec` is a single String field */
 export function isStringField(
   fieldSpec: FieldSpecification,
   value: unknown | null
@@ -88,6 +92,7 @@ export function isStringField(
   return fieldSpec.type === FieldType.String && !fieldSpec.list;
 }
 
+/** Check if `value` with `fieldSpec` is a list String field */
 export function isStringListField(
   fieldSpec: FieldSpecification,
   value: unknown | null
@@ -95,6 +100,7 @@ export function isStringListField(
   return fieldSpec.type === FieldType.String && !!fieldSpec.list;
 }
 
+/** Check if `value` with `fieldSpec` is either a single String field or an item in a list field */
 export function isStringItemField(
   fieldSpec: FieldSpecification,
   value: unknown | null
@@ -102,6 +108,7 @@ export function isStringItemField(
   return fieldSpec.type === FieldType.String;
 }
 
+/** Check if `value` with `fieldSpec` is a single ValueType field */
 export function isValueTypeField(
   fieldSpec: FieldSpecification,
   value: unknown | null
@@ -109,6 +116,7 @@ export function isValueTypeField(
   return fieldSpec.type === FieldType.ValueType && !fieldSpec.list;
 }
 
+/** Check if `value` with `fieldSpec` is a list ValueType field */
 export function isValueTypeListField(
   fieldSpec: FieldSpecification,
   value: unknown | null
@@ -116,6 +124,7 @@ export function isValueTypeListField(
   return fieldSpec.type === FieldType.ValueType && !!fieldSpec.list;
 }
 
+/** Check if `value` with `fieldSpec` is either a single ValueType field or an item in a list field */
 export function isValueTypeItemField(
   fieldSpec: FieldSpecification,
   value: unknown | null
