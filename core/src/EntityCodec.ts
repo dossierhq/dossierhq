@@ -1,4 +1,4 @@
-import { FieldType, isValueTypeField, notOk, ok, Schema } from '.';
+import { FieldType, notOk, ok, visitFieldsRecursively, visitorPathToString } from '.';
 import type {
   AdminEntity,
   AdminEntityCreate,
@@ -9,6 +9,7 @@ import type {
   ErrorType,
   PromiseResult,
   Result,
+  Schema,
   SessionContext,
 } from '.';
 import { ensureRequired } from './Assertions';
@@ -374,15 +375,24 @@ async function collectReferenceIds(
     entityTypes: string[] | undefined;
   }[] = [];
 
-  visitAllFields(context, entity, (fieldSpec, prefix, data) => {
-    if (fieldSpec.type !== FieldType.ValueType) {
-      const fieldAdapter = EntityFieldTypeAdapters.getAdapter(fieldSpec);
-      const uuids = fieldAdapter.getReferenceUUIDs(data);
-      if (uuids && uuids.length > 0) {
-        uuids.forEach((x) => allUUIDs.add(x));
-        requestedReferences.push({ prefix, uuids, entityTypes: fieldSpec.entityTypes });
+  visitFieldsRecursively({
+    schema: context.instance.getSchema(),
+    entity,
+    visitField: (path, fieldSpec, data, visitContext) => {
+      if (fieldSpec.type !== FieldType.ValueType) {
+        const fieldAdapter = EntityFieldTypeAdapters.getAdapter(fieldSpec);
+        const uuids = fieldAdapter.getReferenceUUIDs(data);
+        if (uuids && uuids.length > 0) {
+          uuids.forEach((x) => allUUIDs.add(x));
+          requestedReferences.push({
+            prefix: visitorPathToString(path),
+            uuids,
+            entityTypes: fieldSpec.entityTypes,
+          });
+        }
       }
-    }
+    },
+    initialVisitContext: undefined,
   });
 
   if (allUUIDs.size === 0) {
@@ -412,62 +422,4 @@ async function collectReferenceIds(
   }
 
   return ok(items.map((item) => item.id));
-}
-
-function visitAllFields(
-  context: SessionContext,
-  entity: { _type: string; [fieldName: string]: unknown },
-  visitor: (fieldSpec: FieldSpecification, prefix: string, data: unknown) => void,
-  prefix = 'entity'
-) {
-  const schema = context.instance.getSchema();
-
-  function doVisitItem(
-    prefix: string,
-    item: { _type: string; [fieldName: string]: unknown },
-    isEntity: boolean
-  ) {
-    let fieldSpecs;
-    if (isEntity) {
-      const entitySpec = schema.getEntityTypeSpecification(item._type);
-      if (!entitySpec) {
-        throw new Error(`Couldn't find spec for entity type ${item._type}`);
-      }
-      fieldSpecs = entitySpec.fields;
-    } else {
-      const valueSpec = schema.getValueTypeSpecification(item._type);
-      if (!valueSpec) {
-        throw new Error(`Couldn't find spec for value type ${item._type}`);
-      }
-      fieldSpecs = valueSpec.fields;
-    }
-
-    for (const fieldSpec of fieldSpecs) {
-      const fieldValue = item[fieldSpec.name];
-      if (fieldValue === null || fieldValue === undefined) {
-        continue;
-      }
-      const fieldPrefix = `${prefix}.${fieldSpec.name}`;
-      if (fieldSpec.list) {
-        if (!Array.isArray(fieldValue)) {
-          throw new Error(`${fieldPrefix}: expected list got ${typeof fieldValue}`);
-        }
-        for (let i = 0; i < fieldValue.length; i += 1) {
-          const fieldItemPrefix = `${fieldPrefix}[${i}]`;
-          const fieldItem = fieldValue[i];
-          visitor(fieldSpec, fieldItemPrefix, fieldItem);
-          if (isValueTypeField(fieldSpec, fieldItem) && fieldItem) {
-            doVisitItem(fieldItemPrefix, fieldItem, false);
-          }
-        }
-      } else {
-        visitor(fieldSpec, fieldPrefix, fieldValue);
-        if (isValueTypeField(fieldSpec, fieldValue) && fieldValue) {
-          doVisitItem(fieldPrefix, fieldValue, false);
-        }
-      }
-    }
-  }
-
-  doVisitItem(prefix, entity, true);
 }

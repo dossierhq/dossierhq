@@ -89,25 +89,25 @@ export function visitFieldsRecursively<TVisitContext>({
   schema,
   entity,
   visitField,
-  enterValueItem,
-  enterList,
+  enterValueItem = undefined,
+  enterList = undefined,
   initialVisitContext,
 }: {
   schema: Schema;
-  entity: Entity | AdminEntity;
+  entity: { _type: string; [fieldName: string]: unknown };
   visitField: (
     path: Array<string | number>,
     fieldSpec: FieldSpecification,
     data: unknown,
     visitContext: TVisitContext
   ) => void;
-  enterValueItem: (
+  enterValueItem?: (
     path: Array<string | number>,
     fieldSpec: FieldSpecification,
     valueItem: Value,
     visitContext: TVisitContext
   ) => TVisitContext;
-  enterList: (
+  enterList?: (
     path: Array<string | number>,
     fieldSpec: FieldSpecification,
     list: unknown[],
@@ -150,7 +150,9 @@ export function visitFieldsRecursively<TVisitContext>({
             `${visitorPathToString(fieldPath)}: expected list got ${typeof fieldValue}`
           );
         }
-        const listVisitContext = enterList(fieldPath, fieldSpec, fieldValue, visitContext);
+        const listVisitContext = enterList
+          ? enterList(fieldPath, fieldSpec, fieldValue, visitContext)
+          : visitContext;
         for (let i = 0; i < fieldValue.length; i += 1) {
           const fieldItemPath = [...fieldPath, i];
           const fieldItem = fieldValue[i];
@@ -160,7 +162,9 @@ export function visitFieldsRecursively<TVisitContext>({
               fieldItemPath,
               fieldItem,
               false,
-              enterValueItem(fieldItemPath, fieldSpec, fieldItem, listVisitContext)
+              enterValueItem
+                ? enterValueItem(fieldItemPath, fieldSpec, fieldItem, listVisitContext)
+                : listVisitContext
             );
           }
         }
@@ -171,7 +175,9 @@ export function visitFieldsRecursively<TVisitContext>({
             fieldPath,
             fieldValue,
             false,
-            enterValueItem(fieldPath, fieldSpec, fieldValue, visitContext)
+            enterValueItem
+              ? enterValueItem(fieldPath, fieldSpec, fieldValue, visitContext)
+              : visitContext
           );
         }
       }
