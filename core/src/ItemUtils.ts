@@ -137,8 +137,7 @@ export function visitFieldsRecursively<TVisitContext>({
           const fieldItemPrefix = `${fieldPrefix}[${i}]`;
           const fieldItem = fieldValue[i];
           visitor(fieldSpec, fieldItem, listVisitContext, i); //TODO fieldItemPrefix
-          if (isValueTypeField(fieldSpec, fieldItem) && fieldItem) {
-            //TODO correct?
+          if (isValueTypeItemField(fieldSpec, fieldItem) && fieldItem) {
             doVisitItem(
               fieldItemPrefix,
               fieldItem,
