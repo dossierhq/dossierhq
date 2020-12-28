@@ -76,14 +76,14 @@ export function isValueTypeItemField(
 export function visitFieldsRecursively<TVisitContext>({
   schema,
   entity,
-  visitor,
+  visitField,
   enterValueItem,
   enterList,
   initialVisitContext,
 }: {
   schema: Schema;
   entity: Entity | AdminEntity;
-  visitor: (
+  visitField: (
     fieldSpec: FieldSpecification,
     data: unknown,
     visitContext: TVisitContext,
@@ -136,7 +136,7 @@ export function visitFieldsRecursively<TVisitContext>({
         for (let i = 0; i < fieldValue.length; i += 1) {
           const fieldItemPrefix = `${fieldPrefix}[${i}]`;
           const fieldItem = fieldValue[i];
-          visitor(fieldSpec, fieldItem, listVisitContext, i); //TODO fieldItemPrefix
+          visitField(fieldSpec, fieldItem, listVisitContext, i); //TODO fieldItemPrefix
           if (isValueTypeItemField(fieldSpec, fieldItem) && fieldItem) {
             doVisitItem(
               fieldItemPrefix,
@@ -147,7 +147,7 @@ export function visitFieldsRecursively<TVisitContext>({
           }
         }
       } else {
-        visitor(fieldSpec, fieldValue, visitContext, undefined); // TODO fieldPrefix,
+        visitField(fieldSpec, fieldValue, visitContext, undefined); // TODO fieldPrefix,
         if (isValueTypeField(fieldSpec, fieldValue) && fieldValue) {
           doVisitItem(
             fieldPrefix,
