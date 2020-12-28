@@ -7,14 +7,14 @@ function buildMockCallbacks<TVisitContext>() {
   return {
     calls,
     callbacks: {
-      visitor: (
+      visitField: (
         fieldSpec: FieldSpecification,
         data: unknown,
         visitContext: TVisitContext,
         listIndex: number | undefined
       ) => {
         calls.push({
-          action: 'visitor',
+          action: 'visitField',
           value: data,
           visitContext,
           listIndex,
@@ -97,14 +97,14 @@ describe('visitFieldsRecursively()', () => {
     expect(calls).toMatchInlineSnapshot(`
       Array [
         Object {
-          "action": "visitor",
+          "action": "visitField",
           "fieldName": "string",
           "listIndex": undefined,
           "value": "Hello string",
           "visitContext": undefined,
         },
         Object {
-          "action": "visitor",
+          "action": "visitField",
           "fieldName": "bar",
           "listIndex": undefined,
           "value": Object {
@@ -113,7 +113,7 @@ describe('visitFieldsRecursively()', () => {
           "visitContext": undefined,
         },
         Object {
-          "action": "visitor",
+          "action": "visitField",
           "fieldName": "valueOne",
           "listIndex": undefined,
           "value": Object {
@@ -131,14 +131,14 @@ describe('visitFieldsRecursively()', () => {
           "type": "ValueOne",
         },
         Object {
-          "action": "visitor",
+          "action": "visitField",
           "fieldName": "string",
           "listIndex": undefined,
           "value": "value string",
           "visitContext": undefined,
         },
         Object {
-          "action": "visitor",
+          "action": "visitField",
           "fieldName": "bar",
           "listIndex": undefined,
           "value": Object {
@@ -210,14 +210,14 @@ describe('visitFieldsRecursively()', () => {
           "visitContext": undefined,
         },
         Object {
-          "action": "visitor",
+          "action": "visitField",
           "fieldName": "strings",
           "listIndex": 0,
           "value": "Hello string",
           "visitContext": undefined,
         },
         Object {
-          "action": "visitor",
+          "action": "visitField",
           "fieldName": "strings",
           "listIndex": 1,
           "value": "World string",
@@ -230,7 +230,7 @@ describe('visitFieldsRecursively()', () => {
           "visitContext": undefined,
         },
         Object {
-          "action": "visitor",
+          "action": "visitField",
           "fieldName": "bars",
           "listIndex": 0,
           "value": Object {
@@ -239,7 +239,7 @@ describe('visitFieldsRecursively()', () => {
           "visitContext": undefined,
         },
         Object {
-          "action": "visitor",
+          "action": "visitField",
           "fieldName": "bars",
           "listIndex": 1,
           "value": Object {
@@ -254,7 +254,7 @@ describe('visitFieldsRecursively()', () => {
           "visitContext": undefined,
         },
         Object {
-          "action": "visitor",
+          "action": "visitField",
           "fieldName": "valueOnes",
           "listIndex": 0,
           "value": Object {
@@ -286,14 +286,14 @@ describe('visitFieldsRecursively()', () => {
           "visitContext": undefined,
         },
         Object {
-          "action": "visitor",
+          "action": "visitField",
           "fieldName": "strings",
           "listIndex": 0,
           "value": "One",
           "visitContext": undefined,
         },
         Object {
-          "action": "visitor",
+          "action": "visitField",
           "fieldName": "strings",
           "listIndex": 1,
           "value": "Two",
@@ -306,7 +306,7 @@ describe('visitFieldsRecursively()', () => {
           "visitContext": undefined,
         },
         Object {
-          "action": "visitor",
+          "action": "visitField",
           "fieldName": "bars",
           "listIndex": 0,
           "value": Object {
@@ -315,7 +315,7 @@ describe('visitFieldsRecursively()', () => {
           "visitContext": undefined,
         },
         Object {
-          "action": "visitor",
+          "action": "visitField",
           "fieldName": "bars",
           "listIndex": 1,
           "value": Object {
@@ -324,7 +324,7 @@ describe('visitFieldsRecursively()', () => {
           "visitContext": undefined,
         },
         Object {
-          "action": "visitor",
+          "action": "visitField",
           "fieldName": "valueOnes",
           "listIndex": 1,
           "value": Object {
@@ -356,14 +356,14 @@ describe('visitFieldsRecursively()', () => {
           "visitContext": undefined,
         },
         Object {
-          "action": "visitor",
+          "action": "visitField",
           "fieldName": "strings",
           "listIndex": 0,
           "value": "First",
           "visitContext": undefined,
         },
         Object {
-          "action": "visitor",
+          "action": "visitField",
           "fieldName": "strings",
           "listIndex": 1,
           "value": "Second",
@@ -376,7 +376,7 @@ describe('visitFieldsRecursively()', () => {
           "visitContext": undefined,
         },
         Object {
-          "action": "visitor",
+          "action": "visitField",
           "fieldName": "bars",
           "listIndex": 0,
           "value": Object {
@@ -385,7 +385,7 @@ describe('visitFieldsRecursively()', () => {
           "visitContext": undefined,
         },
         Object {
-          "action": "visitor",
+          "action": "visitField",
           "fieldName": "bars",
           "listIndex": 1,
           "value": Object {
