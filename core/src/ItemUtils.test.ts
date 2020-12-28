@@ -1,5 +1,5 @@
 import type { FieldSpecification, Value } from '.';
-import { Schema, visitFieldsRecursively } from '.';
+import { Schema, visitFieldsRecursively, visitorPathToString } from '.';
 import { FieldType } from './Schema';
 
 function buildMockCallbacks<TVisitContext>() {
@@ -8,33 +8,45 @@ function buildMockCallbacks<TVisitContext>() {
     calls,
     callbacks: {
       visitField: (
+        path: Array<string | number>,
         fieldSpec: FieldSpecification,
         data: unknown,
-        visitContext: TVisitContext,
-        listIndex: number | undefined
+        visitContext: TVisitContext
       ) => {
         calls.push({
           action: 'visitField',
+          fieldName: fieldSpec.name,
+          path: visitorPathToString(path),
           value: data,
           visitContext,
-          listIndex,
-          fieldName: fieldSpec.name,
         });
       },
       enterValueItem: (
+        path: Array<string | number>,
         fieldSpec: FieldSpecification,
         valueItem: Value,
         visitContext: TVisitContext
       ) => {
-        calls.push({ action: 'enterValueItem', type: valueItem._type, fieldName: fieldSpec.name });
+        calls.push({
+          action: 'enterValueItem',
+          fieldName: fieldSpec.name,
+          path: visitorPathToString(path),
+          type: valueItem._type,
+        });
         return visitContext;
       },
-      enterList: (fieldSpec: FieldSpecification, list: unknown[], visitContext: TVisitContext) => {
+      enterList: (
+        path: Array<string | number>,
+        fieldSpec: FieldSpecification,
+        list: unknown[],
+        visitContext: TVisitContext
+      ) => {
         calls.push({
           action: 'enterList',
-          length: list.length,
-          visitContext,
           fieldName: fieldSpec.name,
+          length: list.length,
+          path: visitorPathToString(path),
+          visitContext,
         });
       },
     },
@@ -99,14 +111,14 @@ describe('visitFieldsRecursively()', () => {
         Object {
           "action": "visitField",
           "fieldName": "string",
-          "listIndex": undefined,
+          "path": "entity.string",
           "value": "Hello string",
           "visitContext": undefined,
         },
         Object {
           "action": "visitField",
           "fieldName": "bar",
-          "listIndex": undefined,
+          "path": "entity.bar",
           "value": Object {
             "id": "bar id 1",
           },
@@ -115,7 +127,7 @@ describe('visitFieldsRecursively()', () => {
         Object {
           "action": "visitField",
           "fieldName": "valueOne",
-          "listIndex": undefined,
+          "path": "entity.valueOne",
           "value": Object {
             "_type": "ValueOne",
             "bar": Object {
@@ -128,19 +140,20 @@ describe('visitFieldsRecursively()', () => {
         Object {
           "action": "enterValueItem",
           "fieldName": "valueOne",
+          "path": "entity.valueOne",
           "type": "ValueOne",
         },
         Object {
           "action": "visitField",
           "fieldName": "string",
-          "listIndex": undefined,
+          "path": "entity.valueOne.string",
           "value": "value string",
           "visitContext": undefined,
         },
         Object {
           "action": "visitField",
           "fieldName": "bar",
-          "listIndex": undefined,
+          "path": "entity.valueOne.bar",
           "value": Object {
             "id": "bar id 2",
           },
@@ -207,19 +220,20 @@ describe('visitFieldsRecursively()', () => {
           "action": "enterList",
           "fieldName": "strings",
           "length": 2,
+          "path": "entity.strings",
           "visitContext": undefined,
         },
         Object {
           "action": "visitField",
           "fieldName": "strings",
-          "listIndex": 0,
+          "path": "entity.strings[0]",
           "value": "Hello string",
           "visitContext": undefined,
         },
         Object {
           "action": "visitField",
           "fieldName": "strings",
-          "listIndex": 1,
+          "path": "entity.strings[1]",
           "value": "World string",
           "visitContext": undefined,
         },
@@ -227,12 +241,13 @@ describe('visitFieldsRecursively()', () => {
           "action": "enterList",
           "fieldName": "bars",
           "length": 2,
+          "path": "entity.bars",
           "visitContext": undefined,
         },
         Object {
           "action": "visitField",
           "fieldName": "bars",
-          "listIndex": 0,
+          "path": "entity.bars[0]",
           "value": Object {
             "id": "bar id 1",
           },
@@ -241,7 +256,7 @@ describe('visitFieldsRecursively()', () => {
         Object {
           "action": "visitField",
           "fieldName": "bars",
-          "listIndex": 1,
+          "path": "entity.bars[1]",
           "value": Object {
             "id": "bar id 2",
           },
@@ -251,12 +266,13 @@ describe('visitFieldsRecursively()', () => {
           "action": "enterList",
           "fieldName": "valueOnes",
           "length": 2,
+          "path": "entity.valueOnes",
           "visitContext": undefined,
         },
         Object {
           "action": "visitField",
           "fieldName": "valueOnes",
-          "listIndex": 0,
+          "path": "entity.valueOnes[0]",
           "value": Object {
             "_type": "ValueOne",
             "bars": Array [
@@ -277,25 +293,27 @@ describe('visitFieldsRecursively()', () => {
         Object {
           "action": "enterValueItem",
           "fieldName": "valueOnes",
+          "path": "entity.valueOnes[0]",
           "type": "ValueOne",
         },
         Object {
           "action": "enterList",
           "fieldName": "strings",
           "length": 2,
+          "path": "entity.valueOnes[0].strings",
           "visitContext": undefined,
         },
         Object {
           "action": "visitField",
           "fieldName": "strings",
-          "listIndex": 0,
+          "path": "entity.valueOnes[0].strings[0]",
           "value": "One",
           "visitContext": undefined,
         },
         Object {
           "action": "visitField",
           "fieldName": "strings",
-          "listIndex": 1,
+          "path": "entity.valueOnes[0].strings[1]",
           "value": "Two",
           "visitContext": undefined,
         },
@@ -303,12 +321,13 @@ describe('visitFieldsRecursively()', () => {
           "action": "enterList",
           "fieldName": "bars",
           "length": 2,
+          "path": "entity.valueOnes[0].bars",
           "visitContext": undefined,
         },
         Object {
           "action": "visitField",
           "fieldName": "bars",
-          "listIndex": 0,
+          "path": "entity.valueOnes[0].bars[0]",
           "value": Object {
             "id": "bar id 3",
           },
@@ -317,7 +336,7 @@ describe('visitFieldsRecursively()', () => {
         Object {
           "action": "visitField",
           "fieldName": "bars",
-          "listIndex": 1,
+          "path": "entity.valueOnes[0].bars[1]",
           "value": Object {
             "id": "bar id 4",
           },
@@ -326,7 +345,7 @@ describe('visitFieldsRecursively()', () => {
         Object {
           "action": "visitField",
           "fieldName": "valueOnes",
-          "listIndex": 1,
+          "path": "entity.valueOnes[1]",
           "value": Object {
             "_type": "ValueOne",
             "bars": Array [
@@ -347,25 +366,27 @@ describe('visitFieldsRecursively()', () => {
         Object {
           "action": "enterValueItem",
           "fieldName": "valueOnes",
+          "path": "entity.valueOnes[1]",
           "type": "ValueOne",
         },
         Object {
           "action": "enterList",
           "fieldName": "strings",
           "length": 2,
+          "path": "entity.valueOnes[1].strings",
           "visitContext": undefined,
         },
         Object {
           "action": "visitField",
           "fieldName": "strings",
-          "listIndex": 0,
+          "path": "entity.valueOnes[1].strings[0]",
           "value": "First",
           "visitContext": undefined,
         },
         Object {
           "action": "visitField",
           "fieldName": "strings",
-          "listIndex": 1,
+          "path": "entity.valueOnes[1].strings[1]",
           "value": "Second",
           "visitContext": undefined,
         },
@@ -373,12 +394,13 @@ describe('visitFieldsRecursively()', () => {
           "action": "enterList",
           "fieldName": "bars",
           "length": 2,
+          "path": "entity.valueOnes[1].bars",
           "visitContext": undefined,
         },
         Object {
           "action": "visitField",
           "fieldName": "bars",
-          "listIndex": 0,
+          "path": "entity.valueOnes[1].bars[0]",
           "value": Object {
             "id": "bar id 5",
           },
@@ -387,7 +409,7 @@ describe('visitFieldsRecursively()', () => {
         Object {
           "action": "visitField",
           "fieldName": "bars",
-          "listIndex": 1,
+          "path": "entity.valueOnes[1].bars[1]",
           "value": Object {
             "id": "bar id 6",
           },

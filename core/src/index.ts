@@ -35,11 +35,9 @@ export {
   isValueTypeItemField,
   isValueTypeListField,
   visitFieldsRecursively,
+  visitorPathToString,
 } from './ItemUtils';
 export { isPagingForwards } from './Paging';
 export * as PublishedEntity from './PublishedEntity';
-export {
-  FieldType,
-  Schema,
-} from './Schema';
+export { FieldType, Schema } from './Schema';
 export * as TestUtils from './TestUtils';

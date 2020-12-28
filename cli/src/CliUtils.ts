@@ -77,7 +77,7 @@ export function logEntity(context: SessionContext, entity: AdminEntity | Entity)
   visitFieldsRecursively<{ indent: string }>({
     schema,
     entity,
-    visitor: (fieldSpec, data, visitContext, listIndex) => {
+    visitField: (path, fieldSpec, data, visitContext) => {
       let value;
       if (isEntityTypeItemField(fieldSpec, data)) {
         if (isReferenceAnEntity(data)) {
@@ -92,16 +92,17 @@ export function logEntity(context: SessionContext, entity: AdminEntity | Entity)
       } else {
         throw new Error(`Unknown type (${fieldSpec.type})`);
       }
+      const listIndex = Number.isInteger(path[path.length - 1]) ? path[path.length - 1] : undefined;
       logKeyValue(
         visitContext.indent + (listIndex === undefined ? fieldSpec.name : listIndex),
         value
       );
     },
-    enterList: (fieldSpec, list, { indent }) => {
+    enterList: (path, fieldSpec, list, { indent }) => {
       console.log(indent + chalk.bold(fieldSpec.name));
       return { indent: indent + '  ' };
     },
-    enterValueItem: (fieldSpec, valueItem, { indent }) => ({ indent: indent + '  ' }),
+    enterValueItem: (path, fieldSpec, valueItem, { indent }) => ({ indent: indent + '  ' }),
     initialVisitContext: { indent: '' },
   });
 }
