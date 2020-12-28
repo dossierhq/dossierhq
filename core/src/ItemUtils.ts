@@ -73,6 +73,18 @@ export function isValueTypeItemField(
   return fieldSpec.type === FieldType.ValueType;
 }
 
+export function visitorPathToString(path: Array<string | number>) {
+  let result = 'entity';
+  for (const segment of path) {
+    if (Number.isInteger(segment)) {
+      result += `[${segment}]`;
+    } else {
+      result += `.${segment}`;
+    }
+  }
+  return result;
+}
+
 export function visitFieldsRecursively<TVisitContext>({
   schema,
   entity,
@@ -84,17 +96,19 @@ export function visitFieldsRecursively<TVisitContext>({
   schema: Schema;
   entity: Entity | AdminEntity;
   visitField: (
+    path: Array<string | number>,
     fieldSpec: FieldSpecification,
     data: unknown,
-    visitContext: TVisitContext,
-    listIndex: number | undefined
+    visitContext: TVisitContext
   ) => void;
   enterValueItem: (
+    path: Array<string | number>,
     fieldSpec: FieldSpecification,
     valueItem: Value,
     visitContext: TVisitContext
   ) => TVisitContext;
   enterList: (
+    path: Array<string | number>,
     fieldSpec: FieldSpecification,
     list: unknown[],
     visitContext: TVisitContext
@@ -102,7 +116,7 @@ export function visitFieldsRecursively<TVisitContext>({
   initialVisitContext: TVisitContext;
 }): void {
   function doVisitItem(
-    prefix: string,
+    path: Array<string | number>,
     item: { _type: string; [fieldName: string]: unknown },
     isEntity: boolean,
     visitContext: TVisitContext
@@ -117,7 +131,9 @@ export function visitFieldsRecursively<TVisitContext>({
     } else {
       const valueSpec = schema.getValueTypeSpecification(item._type);
       if (!valueSpec) {
-        throw new Error(`Couldn't find spec for value type ${item._type}`);
+        throw new Error(
+          `${visitorPathToString(path)}: Couldn't find spec for value type ${item._type}`
+        );
       }
       fieldSpecs = valueSpec.fields;
     }
@@ -127,38 +143,40 @@ export function visitFieldsRecursively<TVisitContext>({
       if (fieldValue === null || fieldValue === undefined) {
         continue;
       }
-      const fieldPrefix = `${prefix}.${fieldSpec.name}`;
+      const fieldPath = [...path, fieldSpec.name];
       if (fieldSpec.list) {
         if (!Array.isArray(fieldValue)) {
-          throw new Error(`${fieldPrefix}: expected list got ${typeof fieldValue}`);
+          throw new Error(
+            `${visitorPathToString(fieldPath)}: expected list got ${typeof fieldValue}`
+          );
         }
-        const listVisitContext = enterList(fieldSpec, fieldValue, visitContext);
+        const listVisitContext = enterList(fieldPath, fieldSpec, fieldValue, visitContext);
         for (let i = 0; i < fieldValue.length; i += 1) {
-          const fieldItemPrefix = `${fieldPrefix}[${i}]`;
+          const fieldItemPath = [...fieldPath, i];
           const fieldItem = fieldValue[i];
-          visitField(fieldSpec, fieldItem, listVisitContext, i); //TODO fieldItemPrefix
+          visitField(fieldItemPath, fieldSpec, fieldItem, listVisitContext);
           if (isValueTypeItemField(fieldSpec, fieldItem) && fieldItem) {
             doVisitItem(
-              fieldItemPrefix,
+              fieldItemPath,
               fieldItem,
               false,
-              enterValueItem(fieldSpec, fieldItem, listVisitContext)
+              enterValueItem(fieldItemPath, fieldSpec, fieldItem, listVisitContext)
             );
           }
         }
       } else {
-        visitField(fieldSpec, fieldValue, visitContext, undefined); // TODO fieldPrefix,
+        visitField(fieldPath, fieldSpec, fieldValue, visitContext);
         if (isValueTypeField(fieldSpec, fieldValue) && fieldValue) {
           doVisitItem(
-            fieldPrefix,
+            fieldPath,
             fieldValue,
             false,
-            enterValueItem(fieldSpec, fieldValue, visitContext)
+            enterValueItem(fieldPath, fieldSpec, fieldValue, visitContext)
           );
         }
       }
     }
   }
 
-  doVisitItem('entity', entity, true, initialVisitContext);
+  doVisitItem([], entity, true, initialVisitContext);
 }
