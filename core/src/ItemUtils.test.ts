@@ -418,4 +418,133 @@ describe('visitFieldsRecursively()', () => {
       ]
     `);
   });
+
+  test('recursive value items', () => {
+    const schema = new Schema({
+      entityTypes: [
+        {
+          name: 'Foo',
+          fields: [
+            { name: 'string', type: FieldType.String },
+            { name: 'bar', type: FieldType.EntityType },
+            { name: 'valueOne', type: FieldType.ValueType },
+          ],
+        },
+      ],
+      valueTypes: [
+        {
+          name: 'ValueOne',
+          fields: [
+            { name: 'string', type: FieldType.String },
+            { name: 'valueOne', type: FieldType.ValueType },
+          ],
+        },
+      ],
+    });
+    const { calls, callbacks } = buildMockCallbacks();
+    visitFieldsRecursively({
+      schema,
+      entity: {
+        id: 'id1',
+        _type: 'Foo',
+        _name: 'hello',
+        valueOne: {
+          _type: 'ValueOne',
+          string: 'root',
+          valueOne: {
+            _type: 'ValueOne',
+            string: 'root->valueOne',
+            valueOne: { _type: 'ValueOne', string: 'root->valueOne->valueOne' },
+          },
+        },
+      },
+      ...callbacks,
+      initialVisitContext: undefined,
+    });
+    expect(calls).toMatchInlineSnapshot(`
+      Array [
+        Object {
+          "action": "visitField",
+          "fieldName": "valueOne",
+          "path": "entity.valueOne",
+          "value": Object {
+            "_type": "ValueOne",
+            "string": "root",
+            "valueOne": Object {
+              "_type": "ValueOne",
+              "string": "root->valueOne",
+              "valueOne": Object {
+                "_type": "ValueOne",
+                "string": "root->valueOne->valueOne",
+              },
+            },
+          },
+          "visitContext": undefined,
+        },
+        Object {
+          "action": "enterValueItem",
+          "fieldName": "valueOne",
+          "path": "entity.valueOne",
+          "type": "ValueOne",
+        },
+        Object {
+          "action": "visitField",
+          "fieldName": "string",
+          "path": "entity.valueOne.string",
+          "value": "root",
+          "visitContext": undefined,
+        },
+        Object {
+          "action": "visitField",
+          "fieldName": "valueOne",
+          "path": "entity.valueOne.valueOne",
+          "value": Object {
+            "_type": "ValueOne",
+            "string": "root->valueOne",
+            "valueOne": Object {
+              "_type": "ValueOne",
+              "string": "root->valueOne->valueOne",
+            },
+          },
+          "visitContext": undefined,
+        },
+        Object {
+          "action": "enterValueItem",
+          "fieldName": "valueOne",
+          "path": "entity.valueOne.valueOne",
+          "type": "ValueOne",
+        },
+        Object {
+          "action": "visitField",
+          "fieldName": "string",
+          "path": "entity.valueOne.valueOne.string",
+          "value": "root->valueOne",
+          "visitContext": undefined,
+        },
+        Object {
+          "action": "visitField",
+          "fieldName": "valueOne",
+          "path": "entity.valueOne.valueOne.valueOne",
+          "value": Object {
+            "_type": "ValueOne",
+            "string": "root->valueOne->valueOne",
+          },
+          "visitContext": undefined,
+        },
+        Object {
+          "action": "enterValueItem",
+          "fieldName": "valueOne",
+          "path": "entity.valueOne.valueOne.valueOne",
+          "type": "ValueOne",
+        },
+        Object {
+          "action": "visitField",
+          "fieldName": "string",
+          "path": "entity.valueOne.valueOne.valueOne.string",
+          "value": "root->valueOne->valueOne",
+          "visitContext": undefined,
+        },
+      ]
+    `);
+  });
 });
