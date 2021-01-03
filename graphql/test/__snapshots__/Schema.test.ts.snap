@@ -629,6 +629,7 @@ interface Entity implements Node {
 enum ValueType {
   ValueOne
   ValueList
+  NestedValue
 }
 
 interface Value {
@@ -641,6 +642,7 @@ type Foo implements Node & Entity {
   valueOne: ValueOne
   unspecifiedValue: Value
   valueOneOrList: _ValueListOrValueOne
+  nestedValue: NestedValue
 }
 
 type Bar implements Node & Entity {
@@ -658,6 +660,12 @@ type ValueList implements Value {
   _type: ValueType!
   one: [String!]
   two: [Bar!]
+}
+
+type NestedValue implements Value {
+  _type: ValueType!
+  text: String
+  child: NestedValue
 }
 
 interface AdminEntity {
@@ -717,6 +725,7 @@ type AdminFoo implements AdminEntity {
   valueOne: AdminValueOne
   unspecifiedValue: AdminValue
   valueOneOrList: _AdminValueListOrValueOne
+  nestedValue: AdminNestedValue
 }
 
 input AdminFooCreateInput {
@@ -726,6 +735,8 @@ input AdminFooCreateInput {
   valueOne: AdminValueOneInput
   unspecifiedValueJson: String
   valueOneOrListJson: String
+  nestedValueJson: String
+  nestedValue: AdminNestedValueInput
 }
 
 input AdminFooUpdateInput {
@@ -736,6 +747,8 @@ input AdminFooUpdateInput {
   valueOne: AdminValueOneInput
   unspecifiedValueJson: String
   valueOneOrListJson: String
+  nestedValueJson: String
+  nestedValue: AdminNestedValueInput
 }
 
 type AdminBar implements AdminEntity {
@@ -779,6 +792,19 @@ input AdminValueListInput {
   _type: ValueType!
   one: [String!]
   two: [AdminReferenceInput!]
+}
+
+type AdminNestedValue implements AdminValue {
+  _type: ValueType!
+  text: String
+  child: AdminNestedValue
+}
+
+input AdminNestedValueInput {
+  _type: ValueType!
+  text: String
+  childJson: String
+  child: AdminNestedValueInput
 }
 
 enum _ValueListOrValueOne {

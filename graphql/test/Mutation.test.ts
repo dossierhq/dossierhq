@@ -29,6 +29,7 @@ beforeAll(async () => {
             entityTypes: ['MutationBar'],
           },
           { name: 'stringedBar', type: FieldType.ValueType, valueTypes: ['MutationStringedBar'] },
+          { name: 'nestedValue', type: FieldType.ValueType, valueTypes: ['MutationNestedValue'] },
           { name: 'anyValueItem', type: FieldType.ValueType },
           { name: 'anyValueItems', type: FieldType.ValueType, list: true },
         ],
@@ -41,6 +42,13 @@ beforeAll(async () => {
         fields: [
           { name: 'text', type: FieldType.String },
           { name: 'bar', type: FieldType.EntityType, entityTypes: ['MutationBar'] },
+        ],
+      },
+      {
+        name: 'MutationNestedValue',
+        fields: [
+          { name: 'text', type: FieldType.String },
+          { name: 'child', type: FieldType.ValueType, valueTypes: ['MutationNestedValue'] },
         ],
       },
     ],
@@ -380,7 +388,7 @@ describe('create*Entity()', () => {
     );
 
     if (expectOkResult(createBarResult)) {
-      const { id: barId, _name: barName } = createBarResult.value;
+      const { id: barId } = createBarResult.value;
 
       const createFooResult = await graphql(
         schema,
@@ -472,6 +480,96 @@ describe('create*Entity()', () => {
           ],
         });
       }
+    }
+  });
+
+  test('Create nested value item with inner JSON', async () => {
+    const createResult = await graphql(
+      schema,
+      `
+        mutation CreateFooEntity($entity: AdminMutationFooCreateInput!, $publish: Boolean!) {
+          createMutationFooEntity(entity: $entity, publish: $publish) {
+            __typename
+            id
+            _type
+            _name
+            _version
+            nestedValue {
+              __typename
+              _type
+              text
+              child {
+                __typename
+                _type
+                text
+                child {
+                  __typename
+                  _type
+                  text
+                }
+              }
+            }
+          }
+        }
+      `,
+      undefined,
+      { context: ok(context) },
+      {
+        entity: {
+          _type: 'MutationFoo',
+          _name: 'Foo name',
+          nestedValue: {
+            _type: 'MutationNestedValue',
+            text: 'Outer',
+            childJson: JSON.stringify({
+              _type: 'MutationNestedValue',
+              text: 'Inner',
+            }),
+          },
+        },
+        publish: true,
+      }
+    );
+
+    const fooId = createResult.data?.createMutationFooEntity.id;
+    const fooName = createResult.data?.createMutationFooEntity._name;
+
+    expect(createResult).toEqual({
+      data: {
+        createMutationFooEntity: {
+          __typename: 'AdminMutationFoo',
+          id: fooId,
+          _type: 'MutationFoo',
+          _name: fooName,
+          _version: 0,
+          nestedValue: {
+            __typename: 'AdminMutationNestedValue',
+            _type: 'MutationNestedValue',
+            text: 'Outer',
+            child: {
+              __typename: 'AdminMutationNestedValue',
+              _type: 'MutationNestedValue',
+              text: 'Inner',
+              child: null,
+            },
+          },
+        },
+      },
+    });
+
+    const getResult = await EntityAdmin.getEntity(context, fooId, {});
+    if (expectOkResult(getResult)) {
+      expect(getResult.value.item).toEqual({
+        id: fooId,
+        _type: 'MutationFoo',
+        _name: fooName,
+        _version: 0,
+        nestedValue: {
+          _type: 'MutationNestedValue',
+          text: 'Outer',
+          child: { _type: 'MutationNestedValue', text: 'Inner' },
+        },
+      });
     }
   });
 
