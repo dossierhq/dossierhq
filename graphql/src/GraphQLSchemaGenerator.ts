@@ -1,4 +1,4 @@
-import { ErrorType, FieldType, notOk, Value, ValueTypeSpecification } from '@datadata/core';
+import { ErrorType, FieldType, isValueTypeField, notOk } from '@datadata/core';
 import type {
   AdminEntity,
   AdminEntityCreate,
@@ -9,6 +9,8 @@ import type {
   Result,
   Schema,
   SessionContext,
+  Value,
+  ValueTypeSpecification,
 } from '@datadata/core';
 import {
   GraphQLBoolean,
@@ -685,7 +687,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
             .toError();
         }
         entity._type = entityName;
-        this.resolveJsonFields(entity);
+        this.resolveJsonFields(entity, entityName);
         return await Mutations.createEntity(context, entity, publish);
       },
     });
@@ -712,36 +714,73 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
             .BadRequest(`Specified type (entity._type=${entity._type}) should be ${entityName}`)
             .toError();
         }
-        this.resolveJsonFields(entity);
+        this.resolveJsonFields(entity, entityName);
         return await Mutations.updateEntity(context, entity, publish);
       },
     });
   }
 
-  resolveJsonFields(entity: Record<string, unknown>) {
-    // TODO needs to be done recursively
-    for (const fieldName of Object.keys(entity)) {
-      if (fieldName.endsWith('Json')) {
-        const fieldNameWithoutJson = fieldName.slice(0, -'Json'.length);
-        const jsonValue = entity[fieldName];
-        let decodedValue;
-        if (jsonValue === null) {
-          decodedValue = null;
-        } else {
-          if (typeof jsonValue !== 'string') {
-            throw new Error(`${fieldName}: Expected string, got ${typeof jsonValue}`);
-          }
-          try {
-            decodedValue = JSON.parse(jsonValue);
-          } catch (error) {
-            throw new Error(`${fieldName}: Failed parsing JSON: ${error.message}`);
-          }
+  resolveJsonFields(entity: AdminEntityCreate | AdminEntityUpdate, entityTypeName: string) {
+    const visitItem = (
+      item: AdminEntityCreate | AdminEntityUpdate | Value,
+      typeSpec: EntityTypeSpecification | ValueTypeSpecification,
+      prefix: string,
+      isEntity: boolean
+    ) => {
+      for (const fieldName of Object.keys(item)) {
+        // Skip standard fields
+        if (fieldName === '_type' || fieldName === '_name' || fieldName === 'id') {
+          continue;
         }
 
-        delete entity[fieldName];
-        entity[fieldNameWithoutJson] = decodedValue;
+        const fieldPrefix = `${prefix}.${fieldName}`;
+        const fieldValue = item[fieldName];
+
+        // Decode JSON fields
+        if (fieldName.endsWith('Json')) {
+          const fieldNameWithoutJson = fieldName.slice(0, -'Json'.length);
+
+          let decodedValue;
+          if (fieldValue === null) {
+            decodedValue = null;
+          } else if (fieldValue === undefined) {
+            decodedValue = undefined;
+          } else {
+            if (typeof fieldValue !== 'string') {
+              throw new Error(`${fieldPrefix}: Expected string, got ${typeof fieldValue}`);
+            }
+            try {
+              decodedValue = JSON.parse(fieldValue);
+            } catch (error) {
+              throw new Error(`${fieldPrefix}: Failed parsing JSON: ${error.message}`);
+            }
+          }
+
+          delete item[fieldName];
+          item[fieldNameWithoutJson] = decodedValue;
+          continue;
+        }
+
+        const fieldSpec = isEntity
+          ? this.schema.getEntityFieldSpecification(typeSpec, fieldName)
+          : this.schema.getValueFieldSpecification(typeSpec, fieldName);
+        if (fieldSpec && isValueTypeField(fieldSpec, fieldValue) && fieldValue) {
+          const type = fieldValue._type;
+          const valueSpec = this.schema.getValueTypeSpecification(type);
+          if (!valueSpec) {
+            throw new Error(`${fieldPrefix}: No such type ${type}`);
+          }
+
+          visitItem(fieldValue, valueSpec, fieldPrefix, false);
+        }
       }
+    };
+
+    const entitySpec = this.schema.getEntityTypeSpecification(entityTypeName);
+    if (!entitySpec) {
+      throw new Error(`No such entity type ${entityTypeName}`);
     }
+    visitItem(entity, entitySpec, 'entity', true);
   }
 
   buildMutationDeleteEntity<TSource>(): GraphQLFieldConfig<TSource, TContext> {

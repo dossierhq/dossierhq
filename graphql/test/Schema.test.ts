@@ -414,6 +414,7 @@ describe('Value type schema spec', () => {
             type: FieldType.ValueType,
             valueTypes: ['ValueOne', 'ValueList'],
           },
+          { name: 'nestedValue', type: FieldType.ValueType, valueTypes: ['NestedValue'] },
         ],
       },
       { name: 'Bar', fields: [] },
@@ -431,6 +432,13 @@ describe('Value type schema spec', () => {
         fields: [
           { name: 'one', type: FieldType.String, list: true },
           { name: 'two', type: FieldType.EntityType, list: true, entityTypes: ['Bar'] },
+        ],
+      },
+      {
+        name: 'NestedValue',
+        fields: [
+          { name: 'text', type: FieldType.String },
+          { name: 'child', type: FieldType.ValueType, valueTypes: ['NestedValue'] },
         ],
       },
     ],
