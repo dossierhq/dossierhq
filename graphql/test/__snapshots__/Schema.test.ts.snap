@@ -722,18 +722,20 @@ type AdminFoo implements AdminEntity {
 input AdminFooCreateInput {
   _type: EntityType
   _name: String!
+  valueOneJson: String
   valueOne: AdminValueOneInput
-  unspecifiedValue: String
-  valueOneOrList: String
+  unspecifiedValueJson: String
+  valueOneOrListJson: String
 }
 
 input AdminFooUpdateInput {
   id: ID!
   _type: EntityType
   _name: String
+  valueOneJson: String
   valueOne: AdminValueOneInput
-  unspecifiedValue: String
-  valueOneOrList: String
+  unspecifiedValueJson: String
+  valueOneOrListJson: String
 }
 
 type AdminBar implements AdminEntity {

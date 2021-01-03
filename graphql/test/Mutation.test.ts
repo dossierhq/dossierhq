@@ -29,6 +29,8 @@ beforeAll(async () => {
             entityTypes: ['MutationBar'],
           },
           { name: 'stringedBar', type: FieldType.ValueType, valueTypes: ['MutationStringedBar'] },
+          { name: 'anyValueItem', type: FieldType.ValueType },
+          { name: 'anyValueItems', type: FieldType.ValueType, list: true },
         ],
       },
       { name: 'MutationBar', fields: [] },
@@ -370,6 +372,109 @@ describe('create*Entity()', () => {
     }
   });
 
+  test('Create with value JSON', async () => {
+    const createBarResult = await EntityAdmin.createEntity(
+      context,
+      { _type: 'MutationBar', _name: 'Bar' },
+      { publish: true }
+    );
+
+    if (expectOkResult(createBarResult)) {
+      const { id: barId, _name: barName } = createBarResult.value;
+
+      const createFooResult = await graphql(
+        schema,
+        `
+          mutation CreateFooEntity($entity: AdminMutationFooCreateInput!, $publish: Boolean!) {
+            createMutationFooEntity(entity: $entity, publish: $publish) {
+              __typename
+              id
+              _type
+              _name
+              _version
+              anyValueItem {
+                __typename
+                _type
+              }
+              anyValueItems {
+                __typename
+                _type
+              }
+            }
+          }
+        `,
+        undefined,
+        { context: ok(context) },
+        {
+          entity: {
+            _type: 'MutationFoo',
+            _name: 'Foo name',
+            anyValueItemJson: JSON.stringify({
+              _type: 'MutationStringedBar',
+              text: 'A value',
+              bar: { id: barId },
+            }),
+            anyValueItemsJson: JSON.stringify([
+              {
+                _type: 'MutationStringedBar',
+                text: 'A value in a list',
+                bar: { id: barId },
+              },
+            ]),
+          },
+          publish: true,
+        }
+      );
+
+      const fooId = createFooResult.data?.createMutationFooEntity.id;
+      const fooName = createFooResult.data?.createMutationFooEntity._name;
+
+      expect(createFooResult).toEqual({
+        data: {
+          createMutationFooEntity: {
+            __typename: 'AdminMutationFoo',
+            id: fooId,
+            _type: 'MutationFoo',
+            _name: fooName,
+            _version: 0,
+            anyValueItem: {
+              __typename: 'AdminMutationStringedBar',
+              _type: 'MutationStringedBar',
+            },
+            anyValueItems: [
+              {
+                __typename: 'AdminMutationStringedBar',
+                _type: 'MutationStringedBar',
+              },
+            ],
+          },
+        },
+      });
+
+      const getResult = await EntityAdmin.getEntity(context, fooId, {});
+      if (expectOkResult(getResult)) {
+        expect(getResult.value.item).toEqual({
+          id: fooId,
+          _type: 'MutationFoo',
+          _name: fooName,
+          _version: 0,
+          anyValueItem: {
+            _type: 'MutationStringedBar',
+            text: 'A value',
+            bar: { id: barId },
+          },
+          anyValueItems: [
+            {
+              _type: 'MutationStringedBar',
+              text: 'A value in a list',
+              bar: { id: barId },
+            },
+          ],
+        });
+      }
+    }
+  });
+
   test('Create without specifying _type', async () => {
     const result = await graphql(
       schema,
@@ -585,6 +690,14 @@ describe('update*Entity()', () => {
                     id
                   }
                 }
+                anyValueItem {
+                  __typename
+                  _type
+                }
+                anyValueItems {
+                  __typename
+                  _type
+                }
               }
             }
           `,
@@ -605,11 +718,24 @@ describe('update*Entity()', () => {
                 text: 'Value text',
                 bar: { id: bar2Id },
               },
+              anyValueItemJson: JSON.stringify({
+                _type: 'MutationStringedBar',
+                text: 'A value item',
+                bar: { id: bar1Id },
+              }),
+              anyValueItemsJson: JSON.stringify([
+                {
+                  _type: 'MutationStringedBar',
+                  text: 'A value item in a list',
+                  bar: { id: bar2Id },
+                },
+              ]),
             },
             publish: true,
           }
         );
 
+        expect(result.errors).toBeFalsy();
         const name = result.data?.updateMutationFooEntity._name;
         expect(name).toMatch(/^Updated name(#[0-9]+)?$/);
 
@@ -653,6 +779,16 @@ describe('update*Entity()', () => {
                   id: bar2Id,
                 },
               },
+              anyValueItem: {
+                __typename: 'AdminMutationStringedBar',
+                _type: 'MutationStringedBar',
+              },
+              anyValueItems: [
+                {
+                  __typename: 'AdminMutationStringedBar',
+                  _type: 'MutationStringedBar',
+                },
+              ],
             },
           },
         });
@@ -674,6 +810,18 @@ describe('update*Entity()', () => {
               text: 'Value text',
               bar: { id: bar2Id },
             },
+            anyValueItem: {
+              _type: 'MutationStringedBar',
+              text: 'A value item',
+              bar: { id: bar1Id },
+            },
+            anyValueItems: [
+              {
+                _type: 'MutationStringedBar',
+                text: 'A value item in a list',
+                bar: { id: bar2Id },
+              },
+            ],
           });
         }
       }

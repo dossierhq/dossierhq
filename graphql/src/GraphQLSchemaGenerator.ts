@@ -193,10 +193,10 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     return enumType;
   }
 
-  getValueInputType(names: string[]): GraphQLInputType {
+  getValueInputType(names: string[]): GraphQLInputType | null {
     const uniqueNames = [...new Set(names)];
     if (uniqueNames.length !== 1) {
-      return GraphQLString; // JSON since there's no support for polymorphism on input types
+      return null; //There's no support for polymorphism on input types
     }
 
     return this.getInputType(toAdminValueInputTypeName(uniqueNames[0]));
@@ -563,16 +563,21 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         case FieldType.String:
           fieldType = GraphQLString;
           break;
-        case FieldType.ValueType:
+        case FieldType.ValueType: {
+          fields[`${fieldSpec.name}Json`] = { type: GraphQLString };
+
           fieldType = this.getValueInputType(fieldSpec.valueTypes ?? []);
           break;
+        }
         default:
           throw new Error(`Unexpected type (${fieldSpec.type})`);
       }
 
-      fields[fieldSpec.name] = {
-        type: fieldSpec.list ? new GraphQLList(new GraphQLNonNull(fieldType)) : fieldType,
-      };
+      if (fieldType) {
+        fields[fieldSpec.name] = {
+          type: fieldSpec.list ? new GraphQLList(new GraphQLNonNull(fieldType)) : fieldType,
+        };
+      }
     }
   }
 
@@ -680,6 +685,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
             .toError();
         }
         entity._type = entityName;
+        this.resolveJsonFields(entity);
         return await Mutations.createEntity(context, entity, publish);
       },
     });
@@ -706,9 +712,36 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
             .BadRequest(`Specified type (entity._type=${entity._type}) should be ${entityName}`)
             .toError();
         }
+        this.resolveJsonFields(entity);
         return await Mutations.updateEntity(context, entity, publish);
       },
     });
+  }
+
+  resolveJsonFields(entity: Record<string, unknown>) {
+    // TODO needs to be done recursively
+    for (const fieldName of Object.keys(entity)) {
+      if (fieldName.endsWith('Json')) {
+        const fieldNameWithoutJson = fieldName.slice(0, -'Json'.length);
+        const jsonValue = entity[fieldName];
+        let decodedValue;
+        if (jsonValue === null) {
+          decodedValue = null;
+        } else {
+          if (typeof jsonValue !== 'string') {
+            throw new Error(`${fieldName}: Expected string, got ${typeof jsonValue}`);
+          }
+          try {
+            decodedValue = JSON.parse(jsonValue);
+          } catch (error) {
+            throw new Error(`${fieldName}: Failed parsing JSON: ${error.message}`);
+          }
+        }
+
+        delete entity[fieldName];
+        entity[fieldNameWithoutJson] = decodedValue;
+      }
+    }
   }
 
   buildMutationDeleteEntity<TSource>(): GraphQLFieldConfig<TSource, TContext> {
