@@ -53,7 +53,7 @@ export async function loadEntity<TContext extends SessionGraphQLContext>(
   return buildResolversForEntity(sessionContext, result.value.item);
 }
 
-async function loadEntities<TContext extends SessionGraphQLContext>(
+export async function loadEntities<TContext extends SessionGraphQLContext>(
   context: TContext,
   ids: string[]
 ): Promise<Array<Entity | null>> {
