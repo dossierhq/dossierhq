@@ -1,4 +1,4 @@
-import type { Connection, Edge, ErrorType, Paging, PromiseResult, SessionContext } from '.';
+import type { Connection, Edge, ErrorType, Paging, PromiseResult, Result, SessionContext } from '.';
 import { notOk, ok } from '.';
 import { toOpaqueCursor } from './Connection';
 import * as Db from './Db';
@@ -97,6 +97,30 @@ export async function getEntity(
   return ok({
     item: entity,
   });
+}
+
+export async function getEntities(
+  context: SessionContext,
+  ids: string[]
+): Promise<Result<AdminEntity, ErrorType.NotFound>[]> {
+  const entitiesMain = await Db.queryMany<AdminEntityValues>(
+    context,
+    `SELECT e.uuid, e.type, e.name, ev.version, ev.data
+      FROM entities e, entity_versions ev
+      WHERE e.uuid = ANY($1)
+      AND e.latest_draft_entity_versions_id = ev.id`,
+    [ids]
+  );
+
+  const result: Result<AdminEntity, ErrorType.NotFound>[] = ids.map((id) => {
+    const entityMain = entitiesMain.find((x) => x.uuid === id);
+    if (!entityMain) {
+      return notOk.NotFound('No such entity');
+    }
+    return ok(decodeAdminEntity(context, entityMain));
+  });
+
+  return result;
 }
 
 export async function searchEntities(
