@@ -233,7 +233,7 @@ async function visitAllEntityPages(
 }
 
 async function createBarWithFooBazReferences(
-  contest: SessionContext,
+  context: SessionContext,
   fooCount: number,
   bazCount: number
 ) {
