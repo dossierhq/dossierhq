@@ -326,6 +326,89 @@ describe('getEntity()', () => {
   });
 });
 
+describe('getEntities()', () => {
+  test('Get 2 entities', async () => {
+    const createFoo1Result = await EntityAdmin.createEntity(
+      context,
+      { _type: 'EntityAdminFoo', _name: 'Foo', title: 'Title 1' },
+      { publish: true }
+    );
+    const createFoo2Result = await EntityAdmin.createEntity(
+      context,
+      { _type: 'EntityAdminFoo', _name: 'Foo', title: 'Title 2' },
+      { publish: true }
+    );
+
+    if (expectOkResult(createFoo1Result) && expectOkResult(createFoo2Result)) {
+      const { id: foo1Id, _name: foo1Name } = createFoo1Result.value;
+      const { id: foo2Id, _name: foo2Name } = createFoo2Result.value;
+
+      const result = await EntityAdmin.getEntities(context, [foo2Id, foo1Id]);
+      expect(result).toHaveLength(2);
+      expect(result[0]).toEqual({
+        value: {
+          _type: 'EntityAdminFoo',
+          id: foo2Id,
+          _name: foo2Name,
+          _version: 0,
+          title: 'Title 2',
+        },
+      });
+      expect(result[1]).toEqual({
+        value: {
+          _type: 'EntityAdminFoo',
+          id: foo1Id,
+          _name: foo1Name,
+          _version: 0,
+          title: 'Title 1',
+        },
+      });
+    }
+  });
+
+  test('Gets the last version', async () => {
+    const createFooResult = await EntityAdmin.createEntity(
+      context,
+      { _type: 'EntityAdminFoo', _name: 'Foo', title: 'First title' },
+      { publish: true }
+    );
+
+    if (expectOkResult(createFooResult)) {
+      const { id: fooId, _name: fooName } = createFooResult.value;
+
+      expectOkResult(
+        await EntityAdmin.updateEntity(
+          context,
+          { id: fooId, title: 'Updated title' },
+          { publish: false }
+        )
+      );
+
+      const result = await EntityAdmin.getEntities(context, [fooId]);
+      expect(result).toHaveLength(1);
+      expect(result[0]).toEqual({
+        value: {
+          _type: 'EntityAdminFoo',
+          id: fooId,
+          _name: fooName,
+          _version: 1,
+          title: 'Updated title',
+        },
+      });
+    }
+  });
+
+  test('Error: Get entities with invalid ids', async () => {
+    const result = await EntityAdmin.getEntities(context, [
+      '13e4c7da-616e-44a3-a039-24f96f9b17da',
+      '13e4c7da-616e-44a3-44a3-24f96f9b17da',
+    ]);
+    expect(result).toHaveLength(2);
+    expectErrorResult(result[0], ErrorType.NotFound, 'No such entity');
+    expectErrorResult(result[1], ErrorType.NotFound, 'No such entity');
+  });
+});
+
 describe('createEntity()', () => {
   test('Create EntityAdminFoo and publish', async () => {
     const createResult = await EntityAdmin.createEntity(
