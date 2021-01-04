@@ -14,6 +14,7 @@ type PageInfo {
 
 type Query {
   node(id: ID!): Node
+  nodes(ids: [ID!]!): [Node]
 }
 "
 `;
@@ -142,6 +143,7 @@ input AdminBarUpdateInput {
 
 type Query {
   node(id: ID!): Node
+  nodes(ids: [ID!]!): [Node]
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntityHistory(id: ID!): AdminEntityHistory
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
@@ -340,6 +342,7 @@ enum _AdminBarOrBazOrFoo {
 
 type Query {
   node(id: ID!): Node
+  nodes(ids: [ID!]!): [Node]
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntityHistory(id: ID!): AdminEntityHistory
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
@@ -448,6 +451,7 @@ input AdminFooUpdateInput {
 
 type Query {
   node(id: ID!): Node
+  nodes(ids: [ID!]!): [Node]
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntityHistory(id: ID!): AdminEntityHistory
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
@@ -589,6 +593,7 @@ input AdminBarUpdateInput {
 
 type Query {
   node(id: ID!): Node
+  nodes(ids: [ID!]!): [Node]
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntityHistory(id: ID!): AdminEntityHistory
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
@@ -819,6 +824,7 @@ enum _AdminValueListOrValueOne {
 
 type Query {
   node(id: ID!): Node
+  nodes(ids: [ID!]!): [Node]
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntityHistory(id: ID!): AdminEntityHistory
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection

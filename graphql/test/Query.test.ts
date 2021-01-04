@@ -426,3 +426,76 @@ GraphQL request:3:11
     ]);
   });
 });
+
+describe('nodes()', () => {
+  test('Query null fields of created entity', async () => {
+    const createFoo1Result = await EntityAdmin.createEntity(
+      context,
+      { _type: 'QueryFoo', _name: 'Howdy name 1' },
+      { publish: true }
+    );
+    const createFoo2Result = await EntityAdmin.createEntity(
+      context,
+      { _type: 'QueryFoo', _name: 'Howdy name 2' },
+      { publish: true }
+    );
+    if (expectOkResult(createFoo1Result) && expectOkResult(createFoo2Result)) {
+      const { id: foo1Id, _name: foo1Name } = createFoo1Result.value;
+      const { id: foo2Id, _name: foo2Name } = createFoo2Result.value;
+
+      const result = await graphql(
+        schema,
+        `
+          query Entities($ids: [ID!]!) {
+            nodes(ids: $ids) {
+              __typename
+              id
+              ... on QueryFoo {
+                _name
+              }
+            }
+          }
+        `,
+        undefined,
+        { context: ok(context) },
+        { ids: [foo1Id, foo2Id] }
+      );
+      expect(result).toEqual({
+        data: {
+          nodes: [
+            {
+              __typename: 'QueryFoo',
+              id: foo1Id,
+              _name: foo1Name,
+            },
+            {
+              __typename: 'QueryFoo',
+              id: foo2Id,
+              _name: foo2Name,
+            },
+          ],
+        },
+      });
+    }
+  });
+
+  test('Error: Query invalid id', async () => {
+    const result = await graphql(
+      schema,
+      `
+        query Entities($ids: [ID!]!) {
+          nodes(ids: $ids) {
+            id
+          }
+        }
+      `,
+      undefined,
+      { context: ok(context) },
+      { ids: ['6043cb20-50dc-43d9-8d55-fc9b892b30af'] }
+    );
+    expect(result.data).toEqual({
+      nodes: [null],
+    });
+    expect(result.errors).toBeFalsy();
+  });
+});

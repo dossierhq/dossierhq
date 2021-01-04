@@ -42,6 +42,7 @@ import type {
 import {
   loadAdminEntity,
   loadAdminSearchEntities,
+  loadEntities,
   loadEntity,
   loadVersionHistory,
 } from './DataLoaders';
@@ -595,6 +596,18 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     });
   }
 
+  buildQueryFieldNodes<TSource>(): GraphQLFieldConfig<TSource, TContext> {
+    return fieldConfigWithArgs<TSource, TContext, { ids: string[] }>({
+      type: new GraphQLList(this.getInterface('Node')),
+      args: {
+        ids: { type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(GraphQLID))) },
+      },
+      resolve: async (source, args, context, unusedInfo) => {
+        return await loadEntities(context, args.ids);
+      },
+    });
+  }
+
   buildQueryFieldAdminEntity<TSource>(): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<TSource, TContext, { id: string; version: number | null }>({
       type: this.getInterface('AdminEntity'),
@@ -654,6 +667,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       name: 'Query',
       fields: {
         node: this.buildQueryFieldNode(),
+        nodes: this.buildQueryFieldNodes(),
         ...(includeEntities
           ? {
               adminEntity: this.buildQueryFieldAdminEntity(),
