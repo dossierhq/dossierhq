@@ -58,11 +58,10 @@ async function loadEntities<TContext extends SessionGraphQLContext>(
   ids: string[]
 ): Promise<Array<Entity | null>> {
   const sessionContext = getSessionContext(context);
-  // TODO add PublishedEntity.getEntities
-  const results = await Promise.all(ids.map((id) => PublishedEntity.getEntity(sessionContext, id)));
+  const results = await PublishedEntity.getEntities(sessionContext, ids);
   return results.map((result) => {
     if (result.isOk()) {
-      return buildResolversForEntity(sessionContext, result.value.item);
+      return buildResolversForEntity(sessionContext, result.value);
     } else {
       // TODO handle errors
       return null;
