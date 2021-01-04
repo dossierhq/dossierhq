@@ -732,6 +732,82 @@ GraphQL request:3:11
   });
 });
 
+describe('adminEntities()', () => {
+  test('Query 2 entities', async () => {
+    const createFoo1Result = await EntityAdmin.createEntity(
+      context,
+      { _type: 'QueryAdminFoo', _name: 'Howdy name 1' },
+      { publish: true }
+    );
+    const createFoo2Result = await EntityAdmin.createEntity(
+      context,
+      { _type: 'QueryAdminFoo', _name: 'Howdy name 2' },
+      { publish: true }
+    );
+    if (expectOkResult(createFoo1Result) && expectOkResult(createFoo2Result)) {
+      const { id: foo1Id, _name: foo1Name } = createFoo1Result.value;
+      const { id: foo2Id, _name: foo2Name } = createFoo2Result.value;
+
+      const result = await graphql(
+        schema,
+        `
+          query Entities($ids: [ID!]!) {
+            adminEntities(ids: $ids) {
+              __typename
+              _type
+              id
+              ... on AdminQueryAdminFoo {
+                _name
+              }
+            }
+          }
+        `,
+        undefined,
+        { context: ok(context) },
+        { ids: [foo1Id, foo2Id] }
+      );
+      expect(result).toEqual({
+        data: {
+          adminEntities: [
+            {
+              __typename: 'AdminQueryAdminFoo',
+              _type: 'QueryAdminFoo',
+              id: foo1Id,
+              _name: foo1Name,
+            },
+            {
+              __typename: 'AdminQueryAdminFoo',
+              _type: 'QueryAdminFoo',
+              id: foo2Id,
+              _name: foo2Name,
+            },
+          ],
+        },
+      });
+    }
+  });
+
+  test('Error: Query invalid id', async () => {
+    const result = await graphql(
+      schema,
+      `
+        query Entities($ids: [ID!]!) {
+          adminEntities(ids: $ids) {
+            id
+          }
+        }
+      `,
+      undefined,
+      { context: ok(context) },
+      { ids: ['6043cb20-50dc-43d9-8d55-fc9b892b30af'] }
+    );
+    expect(result.data).toEqual({
+      adminEntities: [null],
+    });
+    expect(result.errors).toBeFalsy();
+  });
+});
+
 describe('searchAdminEntities()', () => {
   test('Default => 25', async () => {
     const result = await graphql(

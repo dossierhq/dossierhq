@@ -62,10 +62,9 @@ export async function loadEntities<TContext extends SessionGraphQLContext>(
   return results.map((result) => {
     if (result.isOk()) {
       return buildResolversForEntity(sessionContext, result.value);
-    } else {
-      // TODO handle errors
-      return null;
     }
+    // TODO handle errors
+    return null;
   });
 }
 
@@ -95,20 +94,18 @@ export async function loadAdminEntity<TContext extends SessionGraphQLContext>(
   return buildResolversForAdminEntity(sessionContext, result.value.item);
 }
 
-async function loadAdminEntities<TContext extends SessionGraphQLContext>(
+export async function loadAdminEntities<TContext extends SessionGraphQLContext>(
   context: TContext,
   ids: string[]
 ): Promise<Array<AdminEntity | null>> {
   const sessionContext = getSessionContext(context);
-  // TODO add EntityAdmin.getEntities
-  const results = await Promise.all(ids.map((id) => EntityAdmin.getEntity(sessionContext, id, {})));
+  const results = await EntityAdmin.getEntities(sessionContext, ids);
   return results.map((result) => {
     if (result.isOk()) {
-      return buildResolversForAdminEntity(sessionContext, result.value.item);
-    } else {
-      // TODO handle errors
-      return null;
+      return buildResolversForAdminEntity(sessionContext, result.value);
     }
+    // TODO handle errors
+    return null;
   });
 }
 
