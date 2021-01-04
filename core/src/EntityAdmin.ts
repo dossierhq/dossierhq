@@ -103,6 +103,10 @@ export async function getEntities(
   context: SessionContext,
   ids: string[]
 ): Promise<Result<AdminEntity, ErrorType.NotFound>[]> {
+  if (ids.length === 0) {
+    return [];
+  }
+
   const entitiesMain = await Db.queryMany<AdminEntityValues>(
     context,
     `SELECT e.uuid, e.type, e.name, ev.version, ev.data

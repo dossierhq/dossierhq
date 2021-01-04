@@ -327,6 +327,11 @@ describe('getEntity()', () => {
 });
 
 describe('getEntities()', () => {
+  test('Get no entities', async () => {
+    const result = await EntityAdmin.getEntities(context, []);
+    expect(result).toHaveLength(0);
+  });
+
   test('Get 2 entities', async () => {
     const createFoo1Result = await EntityAdmin.createEntity(
       context,
