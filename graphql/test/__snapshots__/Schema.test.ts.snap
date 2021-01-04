@@ -145,6 +145,7 @@ type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
   adminEntity(id: ID!, version: Int): AdminEntity
+  adminEntities(ids: [ID!]!): [AdminEntity]
   adminEntityHistory(id: ID!): AdminEntityHistory
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
 }
@@ -344,6 +345,7 @@ type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
   adminEntity(id: ID!, version: Int): AdminEntity
+  adminEntities(ids: [ID!]!): [AdminEntity]
   adminEntityHistory(id: ID!): AdminEntityHistory
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
 }
@@ -453,6 +455,7 @@ type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
   adminEntity(id: ID!, version: Int): AdminEntity
+  adminEntities(ids: [ID!]!): [AdminEntity]
   adminEntityHistory(id: ID!): AdminEntityHistory
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
 }
@@ -595,6 +598,7 @@ type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
   adminEntity(id: ID!, version: Int): AdminEntity
+  adminEntities(ids: [ID!]!): [AdminEntity]
   adminEntityHistory(id: ID!): AdminEntityHistory
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
 }
@@ -826,6 +830,7 @@ type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
   adminEntity(id: ID!, version: Int): AdminEntity
+  adminEntities(ids: [ID!]!): [AdminEntity]
   adminEntityHistory(id: ID!): AdminEntityHistory
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
 }

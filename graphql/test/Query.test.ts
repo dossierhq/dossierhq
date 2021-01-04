@@ -428,7 +428,7 @@ GraphQL request:3:11
 });
 
 describe('nodes()', () => {
-  test('Query null fields of created entity', async () => {
+  test('Query 2 entities', async () => {
     const createFoo1Result = await EntityAdmin.createEntity(
       context,
       { _type: 'QueryFoo', _name: 'Howdy name 1' },

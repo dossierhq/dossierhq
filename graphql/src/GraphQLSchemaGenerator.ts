@@ -40,6 +40,7 @@ import type {
   GraphQLSchemaConfig,
 } from 'graphql';
 import {
+  loadAdminEntities,
   loadAdminEntity,
   loadAdminSearchEntities,
   loadEntities,
@@ -621,6 +622,18 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     });
   }
 
+  buildQueryFieldAdminEntities<TSource>(): GraphQLFieldConfig<TSource, TContext> {
+    return fieldConfigWithArgs<TSource, TContext, { ids: string[] }>({
+      type: new GraphQLList(this.getInterface('AdminEntity')),
+      args: {
+        ids: { type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(GraphQLID))) },
+      },
+      resolve: async (source, args, context, unusedInfo) => {
+        return await loadAdminEntities(context, args.ids);
+      },
+    });
+  }
+
   buildQueryFieldAdminSearchEntities<TSource>(): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<
       TSource,
@@ -671,6 +684,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         ...(includeEntities
           ? {
               adminEntity: this.buildQueryFieldAdminEntity(),
+              adminEntities: this.buildQueryFieldAdminEntities(),
               adminEntityHistory: this.buildQueryFieldAdminEntityHistory(),
               adminSearchEntities: this.buildQueryFieldAdminSearchEntities(),
             }
