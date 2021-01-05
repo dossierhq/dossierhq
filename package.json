@@ -32,12 +32,8 @@
   "homepage": "https://github.com/jonasb/datadata#readme",
   "dependencies": {
     "concurrently": "^5.3.0",
-    "dotenv": "^8.2.0",
-    "pg": "^8.4.2",
-    "express": "~4.17.1",
-    "express-graphql": "~0.11.0"
+    "dotenv": "^8.2.0"
   },
   "devDependencies": {
-    "@types/express": "~4.17.9"
   }
 }
