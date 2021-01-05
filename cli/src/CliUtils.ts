@@ -1,6 +1,5 @@
 import chalk from 'chalk';
 import {
-  EntityTypeSpecification,
   FieldType,
   isEntityTypeField,
   isEntityTypeItemField,
@@ -11,15 +10,17 @@ import {
   isValueTypeField,
   isValueTypeItemField,
   isValueTypeListField,
-  PromiseResult,
   visitFieldsRecursively,
 } from '@datadata/core';
 import type {
   AdminEntity,
   Entity,
+  EntityTypeSpecification,
   ErrorResult,
   ErrorType,
   FieldSpecification,
+  PromiseResult,
+  Result,
   SessionContext,
   Value,
   ValueTypeSpecification,
@@ -29,6 +30,15 @@ interface Entityish {
   _type: string;
   [fieldName: string]: unknown;
 }
+
+type EntityFetcher = (
+  context: SessionContext,
+  id: string
+) => PromiseResult<{ item: Entity }, ErrorType>;
+type MultipleEntitiesFetcher = (
+  context: SessionContext,
+  ids: string[]
+) => Promise<Result<Entity, ErrorType>[]>;
 
 function isAdminEntity(entity: AdminEntity | Entity): entity is AdminEntity {
   return '_version' in entity;
@@ -54,6 +64,10 @@ export function logError(error: Error): void {
     `${chalk.yellow(chalk.bold('!'))} ${chalk.bold('Caught error' + ':')} ${chalk.yellow(error)}`
   );
   console.log(error);
+}
+
+export function logErrorMessage(error: string, message: string) {
+  console.log(`${chalk.yellow(chalk.bold('!'))} ${chalk.bold(error + ':')} ${message}`);
 }
 
 export function logKeyValue(key: string, value: string): void {
@@ -178,28 +192,32 @@ export function isReferenceAnEntity(value: { id: string } | null): value is Enti
 export async function replaceEntityReferencesWithEntitiesGeneric(
   context: SessionContext,
   entity: Entityish,
-  entityFetcher: (context: SessionContext, id: string) => PromiseResult<{ item: Entity }, ErrorType>
+  entityFetcher: EntityFetcher,
+  multipleEntitiesFetcher: MultipleEntitiesFetcher
 ): Promise<void> {
   const entitySpec = getEntitySpec(context, entity);
   await replaceEntityOrValueItemReferencesWithEntitiesGeneric(
     context,
     entitySpec,
     entity,
-    entityFetcher
+    entityFetcher,
+    multipleEntitiesFetcher
   );
 }
 
 export async function replaceValueItemReferencesWithEntitiesGeneric(
   context: SessionContext,
   valueItem: Value,
-  entityFetcher: (context: SessionContext, id: string) => PromiseResult<{ item: Entity }, ErrorType>
+  entityFetcher: EntityFetcher,
+  multipleEntitiesFetcher: MultipleEntitiesFetcher
 ): Promise<void> {
   const valueSpec = getValueSpec(context, valueItem);
   await replaceEntityOrValueItemReferencesWithEntitiesGeneric(
     context,
     valueSpec,
     valueItem,
-    entityFetcher
+    entityFetcher,
+    multipleEntitiesFetcher
   );
 }
 
@@ -207,7 +225,8 @@ async function replaceEntityOrValueItemReferencesWithEntitiesGeneric(
   context: SessionContext,
   spec: EntityTypeSpecification | ValueTypeSpecification,
   item: Entityish,
-  entityFetcher: (context: SessionContext, id: string) => PromiseResult<{ item: Entity }, ErrorType>
+  entityFetcher: EntityFetcher,
+  multipleEntitiesFetcher: MultipleEntitiesFetcher
 ): Promise<void> {
   for (const fieldSpec of spec.fields) {
     if (!(fieldSpec.name in item)) {
@@ -225,25 +244,24 @@ async function replaceEntityOrValueItemReferencesWithEntitiesGeneric(
         } else {
           logErrorResult('Failed fetching reference', referenceResult);
         }
-      }
-      if (isEntityTypeListField(fieldSpec, value)) {
+      } else if (isEntityTypeListField(fieldSpec, value)) {
         if (!value) {
           continue;
         }
-        item[fieldSpec.name] = await Promise.all(
-          value.map(async (reference) => {
+        const referenceIds = value.filter((x) => !isReferenceAnEntity(x)).map((x) => x.id);
+        if (referenceIds.length > 0) {
+          const entities = await multipleEntitiesFetcher(context, referenceIds);
+          item[fieldSpec.name] = value.map((reference) => {
             if (!isReferenceAnEntity(reference)) {
-              //TODO change to getEntities()
-              const referenceResult = await entityFetcher(context, reference.id);
-              if (referenceResult.isOk()) {
-                return referenceResult.value.item;
-              } else {
-                logErrorResult('Failed fetching reference', referenceResult);
+              const entityResult = entities.find((x) => x.isOk() && x.value.id === reference.id);
+              if (entityResult?.isOk()) {
+                return entityResult.value;
               }
+              logErrorMessage('Failed fetching reference', reference.id);
             }
             return reference;
-          })
-        );
+          });
+        }
       }
     }
   }
