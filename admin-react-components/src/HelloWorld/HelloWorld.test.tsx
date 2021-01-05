@@ -1,8 +1,8 @@
 import * as React from 'react';
 import * as renderer from 'react-test-renderer';
-import { HelloWorld } from './HelloWorld';
+import { Normal } from './HelloWorld.stories';
 
-test('<HelloWorld/>', () => {
-  const tree = renderer.create(<HelloWorld />).toJSON();
+test('Normal', () => {
+  const tree = renderer.create(<Normal />).toJSON();
   expect(tree).toMatchSnapshot();
 });

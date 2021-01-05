@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<HelloWorld/> 1`] = `
+exports[`Normal 1`] = `
 <div>
   Hello world
 </div>
