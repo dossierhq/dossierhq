@@ -4,9 +4,9 @@ import type {
   AdminQuery,
   Connection,
   Edge,
-  Instance,
   Paging,
   SessionContext,
+  Server,
 } from '@datadata/server';
 import { EntityAdmin, ServerTestUtils } from '@datadata/server';
 import { graphql, printError } from 'graphql';
@@ -14,16 +14,16 @@ import type { GraphQLSchema } from 'graphql';
 import { GraphQLSchemaGenerator } from '../src/GraphQLSchemaGenerator';
 
 const { expectOkResult } = CoreTestUtils;
-const { createTestInstance, ensureSessionContext, updateSchema } = ServerTestUtils;
+const { createTestServer, ensureSessionContext, updateSchema } = ServerTestUtils;
 
-let instance: Instance;
+let server: Server;
 let context: SessionContext;
 let schema: GraphQLSchema;
 let entitiesOfTypeQueryAdminOnlyEditBefore: AdminEntity[];
 
 beforeAll(async () => {
-  instance = await createTestInstance();
-  context = await ensureSessionContext(instance, 'test', 'query');
+  server = await createTestServer();
+  context = await ensureSessionContext(server, 'test', 'query');
   await updateSchema(context, {
     entityTypes: [
       {
@@ -55,13 +55,13 @@ beforeAll(async () => {
       },
     ],
   });
-  schema = new GraphQLSchemaGenerator(context.instance.getSchema()).buildSchema();
+  schema = new GraphQLSchemaGenerator(context.server.getSchema()).buildSchema();
 
   await ensureTestEntitiesExist(context);
   entitiesOfTypeQueryAdminOnlyEditBefore = await getEntitiesForAdminOnlyEditBefore(context);
 });
 afterAll(async () => {
-  await instance?.shutdown();
+  await server?.shutdown();
 });
 
 async function ensureTestEntitiesExist(context: SessionContext) {

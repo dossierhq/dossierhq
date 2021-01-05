@@ -5,19 +5,19 @@ import { CliAuth, CliMain } from '@datadata/cli';
 import type { SchemaSpecification } from '@datadata/core';
 import { Schema } from '@datadata/core';
 import type { Session } from '@datadata/server';
-import { Instance } from '@datadata/server';
+import { Server } from '@datadata/server';
 import SchemaSpec from './schema.json';
 
 async function main() {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const instance = new Instance({ databaseUrl: process.env.DATABASE_URL! });
+  const server = new Server({ databaseUrl: process.env.DATABASE_URL! });
   try {
     let session: Session | null = null;
     while (!session) {
-      session = await CliAuth.veryInsecureCreateSession(instance, 'test', 'john-smith');
+      session = await CliAuth.veryInsecureCreateSession(server, 'test', 'john-smith');
     }
-    const context = instance.createSessionContext(session);
-    const loadSchema = await instance.setSchema(
+    const context = server.createSessionContext(session);
+    const loadSchema = await server.setSchema(
       context,
       new Schema(SchemaSpec as SchemaSpecification)
     );
@@ -25,7 +25,7 @@ async function main() {
 
     await CliMain.mainMenu(context);
   } finally {
-    await instance.shutdown();
+    await server.shutdown();
   }
 }
 

@@ -1,10 +1,10 @@
 import type { ErrorType, PromiseResult } from '@datadata/core';
-import type { Instance, Session } from '.';
+import type { Server, Session } from '.';
 import type { Pool, Queryable } from './Db';
 import * as Db from './Db';
 
 export interface Context<TContext> {
-  readonly instance: Instance;
+  readonly server: Server;
   readonly pool: Pool;
   readonly queryable: Queryable;
 
@@ -31,7 +31,7 @@ abstract class ContextImpl<TContext> implements Context<TContext> {
   readonly queryable: Queryable;
 
   constructor(
-    readonly instance: Instance,
+    readonly server: Server,
     readonly pool: Pool,
     transactionQueryable: Queryable | null
   ) {
@@ -58,12 +58,12 @@ abstract class ContextImpl<TContext> implements Context<TContext> {
 }
 
 export class AuthContextImpl extends ContextImpl<AuthContext> implements AuthContext {
-  constructor(instance: Instance, pool: Pool, transactionQueryable: Queryable | null = null) {
-    super(instance, pool, transactionQueryable);
+  constructor(server: Server, pool: Pool, transactionQueryable: Queryable | null = null) {
+    super(server, pool, transactionQueryable);
   }
 
   protected copyWithNewQueryable(transactionQueryable: Queryable): AuthContext {
-    return new AuthContextImpl(this.instance, this.pool, transactionQueryable);
+    return new AuthContextImpl(this.server, this.pool, transactionQueryable);
   }
 }
 
@@ -71,16 +71,16 @@ export class SessionContextImpl extends ContextImpl<SessionContext> implements S
   readonly session: Session;
 
   constructor(
-    instance: Instance,
+    server: Server,
     session: Session,
     pool: Pool,
     transactionQueryable: Queryable | null = null
   ) {
-    super(instance, pool, transactionQueryable);
+    super(server, pool, transactionQueryable);
     this.session = session;
   }
 
   protected copyWithNewQueryable(transactionQueryable: Queryable): SessionContext {
-    return new SessionContextImpl(this.instance, this.session, this.pool, transactionQueryable);
+    return new SessionContextImpl(this.server, this.session, this.pool, transactionQueryable);
   }
 }

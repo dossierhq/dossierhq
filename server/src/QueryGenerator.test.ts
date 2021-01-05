@@ -1,17 +1,17 @@
 import { CoreTestUtils, ErrorType } from '@datadata/core';
-import type { Instance, SessionContext } from '.';
+import type { Server, SessionContext } from '.';
 import { toOpaqueCursor } from './Connection';
 import { searchAdminEntitiesQuery, totalAdminEntitiesQuery } from './QueryGenerator';
-import { createTestInstance, ensureSessionContext, updateSchema } from './ServerTestUtils';
+import { createTestServer, ensureSessionContext, updateSchema } from './ServerTestUtils';
 
 const { expectErrorResult } = CoreTestUtils;
 
-let instance: Instance;
+let server: Server;
 let context: SessionContext;
 
 beforeAll(async () => {
-  instance = await createTestInstance();
-  context = await ensureSessionContext(instance, 'test', 'query-generator');
+  server = await createTestServer();
+  context = await ensureSessionContext(server, 'test', 'query-generator');
   await updateSchema(context, {
     entityTypes: [
       { name: 'QueryGeneratorFoo', fields: [] },
@@ -20,7 +20,7 @@ beforeAll(async () => {
   });
 });
 afterAll(async () => {
-  await instance.shutdown();
+  await server.shutdown();
 });
 
 describe('searchAdminEntitiesQuery()', () => {

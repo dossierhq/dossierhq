@@ -1,20 +1,20 @@
 import { CoreTestUtils, FieldType, notOk, ok } from '@datadata/core';
 import { EntityAdmin, ServerTestUtils } from '@datadata/server';
-import type { Instance, SessionContext } from '@datadata/server';
+import type { Server, SessionContext } from '@datadata/server';
 import { graphql, printError } from 'graphql';
 import type { GraphQLSchema } from 'graphql';
 import { GraphQLSchemaGenerator } from '../src/GraphQLSchemaGenerator';
 
 const { expectOkResult } = CoreTestUtils;
-const { createTestInstance, ensureSessionContext, updateSchema } = ServerTestUtils;
+const { createTestServer, ensureSessionContext, updateSchema } = ServerTestUtils;
 
-let instance: Instance;
+let server: Server;
 let context: SessionContext;
 let schema: GraphQLSchema;
 
 beforeAll(async () => {
-  instance = await createTestInstance();
-  context = await ensureSessionContext(instance, 'test', 'query');
+  server = await createTestServer();
+  context = await ensureSessionContext(server, 'test', 'query');
   await updateSchema(context, {
     entityTypes: [
       {
@@ -40,10 +40,10 @@ beforeAll(async () => {
       },
     ],
   });
-  schema = new GraphQLSchemaGenerator(context.instance.getSchema()).buildSchema();
+  schema = new GraphQLSchemaGenerator(context.server.getSchema()).buildSchema();
 });
 afterAll(async () => {
-  await instance?.shutdown();
+  await server?.shutdown();
 });
 
 describe('node()', () => {

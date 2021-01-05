@@ -1,6 +1,6 @@
 import inquirer from 'inquirer';
 import { ErrorType } from '@datadata/core';
-import type { AuthContext, Instance, Session } from '@datadata/server';
+import type { AuthContext, Server, Session } from '@datadata/server';
 import { Auth } from '@datadata/server';
 import * as CliUtils from './CliUtils';
 import { showConfirm } from './widgets';
@@ -21,7 +21,7 @@ async function createPrincipalWithConfirm(
 }
 
 export async function veryInsecureCreateSession(
-  instance: Instance,
+  server: Server,
   defaultProvider: string,
   defaultIdentifier: string
 ): Promise<Session | null> {
@@ -41,7 +41,7 @@ export async function veryInsecureCreateSession(
   ]);
 
   // Try to create session (first attempt)
-  const authContext = instance.createAuthContext();
+  const authContext = server.createAuthContext();
   let sessionResult = await Auth.createSessionForPrincipal(authContext, provider, identifier);
   if (sessionResult.isOk()) {
     return sessionResult.value;

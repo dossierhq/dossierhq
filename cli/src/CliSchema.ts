@@ -6,8 +6,8 @@ import { showItemSelector, showMultiItemSelector } from './widgets';
 import { logKeyValue } from './CliUtils';
 
 export function showSchema(context: Context<unknown>): void {
-  const { instance } = context;
-  const schema = instance.getSchema();
+  const { server } = context;
+  const schema = server.getSchema();
 
   const logTypeSpec = (typeSpec: EntityTypeSpecification | ValueTypeSpecification) => {
     console.log(chalk.bold(typeSpec.name));
@@ -44,8 +44,8 @@ export function showSchema(context: Context<unknown>): void {
 }
 
 export async function selectEntityType(context: Context<unknown>): Promise<string> {
-  const { instance } = context;
-  const schema = instance.getSchema();
+  const { server } = context;
+  const schema = server.getSchema();
   const types = schema.spec.entityTypes.map((x) => x.name);
   const { name: typeName } = await showItemSelector(
     'Which entity type?',
@@ -55,8 +55,8 @@ export async function selectEntityType(context: Context<unknown>): Promise<strin
 }
 
 export async function selectEntityTypes(context: Context<unknown>): Promise<string[]> {
-  const { instance } = context;
-  const schema = instance.getSchema();
+  const { server } = context;
+  const schema = server.getSchema();
   const types = schema.spec.entityTypes.map((x) => x.name);
   const items = await showMultiItemSelector(
     'Which entity types?',
@@ -69,8 +69,8 @@ export async function selectValueType(
   context: Context<unknown>,
   filterTypes?: string[]
 ): Promise<string> {
-  const { instance } = context;
-  const schema = instance.getSchema();
+  const { server } = context;
+  const schema = server.getSchema();
 
   filterTypes?.forEach((x) => {
     if (!schema.getValueTypeSpecification(x)) {

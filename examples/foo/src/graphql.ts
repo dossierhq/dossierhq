@@ -2,7 +2,7 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
 import { ok, notOk } from '@datadata/core';
-import { Auth, Instance } from '@datadata/server';
+import { Auth, Server } from '@datadata/server';
 import type { AuthContext } from '@datadata/server';
 import { GraphQLSchemaGenerator } from '@datadata/graphql';
 import type { SessionGraphQLContext } from '@datadata/graphql';
@@ -23,8 +23,8 @@ async function createSessionContext(authContext: AuthContext, headers: IncomingH
   return sessionResult;
 }
 
-async function startServer(instance: Instance, authContext: AuthContext, port: number) {
-  const schema = new GraphQLSchemaGenerator(instance.getSchema()).buildSchema();
+async function startServer(server: Server, authContext: AuthContext, port: number) {
+  const schema = new GraphQLSchemaGenerator(server.getSchema()).buildSchema();
   const app = express();
   app.use(
     '/graphql',
@@ -32,7 +32,7 @@ async function startServer(instance: Instance, authContext: AuthContext, port: n
       const context: SessionGraphQLContext = { context: notOk.NotAuthenticated('No session') };
       const sessionResult = await createSessionContext(authContext, request.headers);
       if (sessionResult.isOk()) {
-        context.context = ok(instance.createSessionContext(sessionResult.value));
+        context.context = ok(server.createSessionContext(sessionResult.value));
       }
       return {
         schema,
@@ -52,10 +52,10 @@ async function startServer(instance: Instance, authContext: AuthContext, port: n
 
 async function main(port: number) {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const instance = new Instance({ databaseUrl: process.env.DATABASE_URL! });
-  const authContext = instance.createAuthContext();
-  await instance.reloadSchema(authContext);
-  await startServer(instance, authContext, port);
+  const server = new Server({ databaseUrl: process.env.DATABASE_URL! });
+  const authContext = server.createAuthContext();
+  await server.reloadSchema(authContext);
+  await startServer(server, authContext, port);
 }
 
 if (require.main === module) {

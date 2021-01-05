@@ -1,25 +1,25 @@
 import { CoreTestUtils, ErrorType, Schema } from '@datadata/core';
 import type { SchemaSpecification } from '@datadata/core';
-import { Auth, Instance } from '.';
+import { Auth, Server } from '.';
 import type { SessionContext } from '.';
 
 const { expectErrorResult } = CoreTestUtils;
 
-export async function createTestInstance(): Promise<Instance> {
+export async function createTestServer(): Promise<Server> {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const instance = new Instance({ databaseUrl: process.env.DATABASE_URL! });
-  return instance;
+  const server = new Server({ databaseUrl: process.env.DATABASE_URL! });
+  return server;
 }
 
 export async function ensureSessionContext(
-  instance: Instance,
+  server: Server,
   provider: string,
   identifier: string
 ): Promise<SessionContext> {
-  const authContext = instance.createAuthContext();
+  const authContext = server.createAuthContext();
   const sessionResult = await Auth.createSessionForPrincipal(authContext, provider, identifier);
   if (sessionResult.isOk()) {
-    return instance.createSessionContext(sessionResult.value);
+    return server.createSessionContext(sessionResult.value);
   }
 
   expectErrorResult(sessionResult, ErrorType.NotFound, 'Principal doesn’t exist');
@@ -32,7 +32,7 @@ export async function ensureSessionContext(
     throw sessionResult2.toError();
   }
 
-  return instance.createSessionContext(sessionResult2.value);
+  return server.createSessionContext(sessionResult2.value);
 }
 
 export async function updateSchema(
@@ -41,8 +41,8 @@ export async function updateSchema(
 ): Promise<void> {
   let oldSchemaSpec: SchemaSpecification = { entityTypes: [], valueTypes: [] };
   try {
-    await context.instance.reloadSchema(context);
-    oldSchemaSpec = context.instance.getSchema().spec;
+    await context.server.reloadSchema(context);
+    oldSchemaSpec = context.server.getSchema().spec;
   } catch (error) {
     // TODO ensure it's due to no schema existing
   }
@@ -71,6 +71,6 @@ export async function updateSchema(
   }
 
   const newSchema = new Schema(spec);
-  const result = await context.instance.setSchema(context, newSchema);
+  const result = await context.server.setSchema(context, newSchema);
   result.throwIfError();
 }
