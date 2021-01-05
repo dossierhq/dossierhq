@@ -28,4 +28,5 @@ module.exports = {
       },
     ],
   },
+  settings: { react: { version: '17.0.1' } },
 };
