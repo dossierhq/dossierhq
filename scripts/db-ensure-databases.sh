@@ -41,9 +41,9 @@ function grant_access_for_user {
   source "$THIS_DIR/../.env"
   set +a
 
-  create_user "coretestuser" "coretestpass"
-  create_database "datadata-core"
-  grant_access_for_user "datadata-core" "coretestuser"
+  create_user "servertestuser" "servertestpass"
+  create_database "datadata-server"
+  grant_access_for_user "datadata-server" "servertestuser"
 
   create_user "examplesfoouser" "examplesfoopass"
   create_database "datadata-examples-foo"

@@ -33,6 +33,7 @@
   },
   "dependencies": {
     "@datadata/core": "1.0.0",
+    "@datadata/server": "1.0.0",
     "graphql": "~15.4.0"
   }
 }

@@ -1,5 +1,9 @@
-import { Auth, ErrorType, Instance, Schema } from '.';
-import type { OkResult, Result, SchemaSpecification, SessionContext } from '.';
+import { CoreTestUtils, ErrorType, Schema } from '@datadata/core';
+import type { SchemaSpecification } from '@datadata/core';
+import { Auth, Instance } from '.';
+import type { SessionContext } from '.';
+
+const { expectErrorResult } = CoreTestUtils;
 
 export async function createTestInstance(): Promise<Instance> {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -69,28 +73,4 @@ export async function updateSchema(
   const newSchema = new Schema(spec);
   const result = await context.instance.setSchema(context, newSchema);
   result.throwIfError();
-}
-
-export function expectOkResult<TOk, TError extends ErrorType>(
-  actual: Result<unknown, ErrorType>
-): actual is OkResult<TOk, TError> {
-  if (actual.isError()) {
-    throw new Error(`Expected ok, got error ${actual.error}: ${actual.message}`);
-  }
-  return true;
-}
-
-export function expectErrorResult(
-  actual: Result<unknown, ErrorType>,
-  expectedErrorType: ErrorType,
-  expectedMessage: string
-): void {
-  if (!actual.isError()) {
-    throw new Error(`Expected error, but was ok`);
-  }
-  const expectedString = `${expectedErrorType}: ${expectedMessage}`;
-  const actualString = `${actual.error}: ${actual.message}`;
-  if (actualString !== expectedString) {
-    throw new Error(`Expected (${expectedString}), got ${actualString}`);
-  }
 }

@@ -1,4 +1,4 @@
-import type { SessionContext } from '@datadata/core';
+import type { SessionContext } from '@datadata/server';
 import type { ItemSelectorItem, ItemSelectorSeparator } from './widgets';
 import { showItemSelector } from './widgets';
 import * as CliEntityAdmin from './CliEntityAdmin';

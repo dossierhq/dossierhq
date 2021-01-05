@@ -1,5 +1,5 @@
-import type { ErrorType, Result } from '.';
-import { notOk, ok } from './ErrorResult';
+import type { ErrorType, Result } from '@datadata/core';
+import { notOk, ok } from '@datadata/core';
 
 export function ensureRequired(
   parameters: Record<string, unknown>

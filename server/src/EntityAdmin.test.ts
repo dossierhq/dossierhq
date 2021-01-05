@@ -1,21 +1,11 @@
-import type {
-  AdminEntity,
-  AdminQuery,
-  Connection,
-  Edge,
-  Instance,
-  Paging,
-  SessionContext,
-} from '.';
-import { EntityAdmin, ErrorType, FieldType, isPagingForwards, PublishedEntity } from '.';
-import {
-  createTestInstance,
-  ensureSessionContext,
-  expectErrorResult,
-  expectOkResult,
-  updateSchema,
-} from './TestUtils';
+import { CoreTestUtils, ErrorType, FieldType } from '@datadata/core';
+import type { AdminEntity } from '@datadata/core';
+import type { AdminQuery, Connection, Edge, Instance, Paging, SessionContext } from '.';
+import { EntityAdmin, isPagingForwards, PublishedEntity } from '.';
+import { createTestInstance, ensureSessionContext, updateSchema } from './ServerTestUtils';
 import { expectEntityHistoryVersions, uuidMatcher } from '../test/AdditionalTestUtils';
+
+const { expectErrorResult, expectOkResult } = CoreTestUtils;
 
 let instance: Instance;
 let context: SessionContext;

@@ -1,21 +1,9 @@
-import { ErrorType, notOk, ok } from '.';
-import type { PromiseResult, Result, SessionContext } from '.';
+import type { Entity, PromiseResult, Result } from '@datadata/core';
+import { ErrorType, notOk, ok } from '@datadata/core';
+import type { SessionContext } from '.';
 import * as Db from './Db';
 import type { EntitiesTable, EntityVersionsTable } from './DbTableTypes';
 import { decodePublishedEntity } from './EntityCodec';
-
-export interface Entity {
-  id: string;
-  _type: string;
-  _name: string;
-  [fieldName: string]: unknown;
-}
-
-//TODO rename to ValueItem
-export interface Value {
-  _type: string;
-  [fieldName: string]: unknown;
-}
 
 export async function getEntity(
   context: SessionContext,

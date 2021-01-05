@@ -1,6 +1,7 @@
 import chalk from 'chalk';
 import { FieldType } from '@datadata/core';
-import type { Context, EntityTypeSpecification, ValueTypeSpecification } from '@datadata/core';
+import type { EntityTypeSpecification, ValueTypeSpecification } from '@datadata/core';
+import type { Context } from '@datadata/server';
 import { showItemSelector, showMultiItemSelector } from './widgets';
 import { logKeyValue } from './CliUtils';
 

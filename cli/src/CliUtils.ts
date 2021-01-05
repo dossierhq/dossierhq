@@ -21,10 +21,10 @@ import type {
   FieldSpecification,
   PromiseResult,
   Result,
-  SessionContext,
   Value,
   ValueTypeSpecification,
 } from '@datadata/core';
+import type { SessionContext } from '@datadata/server';
 
 interface Entityish {
   _type: string;

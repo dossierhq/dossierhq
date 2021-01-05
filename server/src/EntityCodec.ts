@@ -1,4 +1,3 @@
-import { FieldType, notOk, ok, visitFieldsRecursively, visitorPathToString } from '.';
 import type {
   AdminEntity,
   AdminEntityCreate,
@@ -10,8 +9,9 @@ import type {
   PromiseResult,
   Result,
   Schema,
-  SessionContext,
-} from '.';
+} from '@datadata/core';
+import { FieldType, notOk, ok, visitFieldsRecursively, visitorPathToString } from '@datadata/core';
+import type { SessionContext } from '.';
 import { ensureRequired } from './Assertions';
 import * as Db from './Db';
 import type { EntitiesTable, EntityVersionsTable } from './DbTableTypes';

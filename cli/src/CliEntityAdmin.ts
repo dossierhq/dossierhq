@@ -1,10 +1,8 @@
 import chalk from 'chalk';
 import {
-  EntityAdmin,
   ErrorType,
   isEntityTypeField,
   isEntityTypeListField,
-  isPagingForwards,
   isStringField,
   isStringListField,
   isValueTypeField,
@@ -14,15 +12,14 @@ import {
 } from '@datadata/core';
 import type {
   AdminEntity,
-  AdminQuery,
   EntityTypeSpecification,
   FieldSpecification,
-  Paging,
   PromiseResult,
-  SessionContext,
   Value,
   ValueTypeSpecification,
 } from '@datadata/core';
+import type { AdminQuery, Paging, SessionContext } from '@datadata/server';
+import { EntityAdmin, isPagingForwards } from '@datadata/server';
 import * as CliSchema from './CliSchema';
 import {
   formatEntityOneLine,

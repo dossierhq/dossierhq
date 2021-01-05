@@ -1,6 +1,9 @@
-import { Auth, AuthContext, ErrorType, Instance } from '.';
-import { createTestInstance, expectErrorResult, expectOkResult } from './TestUtils';
+import { CoreTestUtils, ErrorType } from '@datadata/core';
+import { Auth, AuthContext, Instance } from '.';
+import { createTestInstance } from './ServerTestUtils';
 import { uuidMatcher } from '../test/AdditionalTestUtils';
+
+const { expectErrorResult, expectOkResult } = CoreTestUtils;
 
 let instance: Instance;
 let context: AuthContext;

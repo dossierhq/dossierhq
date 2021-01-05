@@ -1,4 +1,5 @@
-import type { ErrorType, Instance, PromiseResult, Session } from '.';
+import type { ErrorType, PromiseResult } from '@datadata/core';
+import type { Instance, Session } from '.';
 import type { Pool, Queryable } from './Db';
 import * as Db from './Db';
 

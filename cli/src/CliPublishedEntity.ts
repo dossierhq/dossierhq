@@ -1,5 +1,6 @@
-import type { Entity, SessionContext } from '@datadata/core';
-import { PublishedEntity } from '@datadata/core';
+import type { Entity } from '@datadata/core';
+import type { SessionContext } from '@datadata/server';
+import { PublishedEntity } from '@datadata/server';
 import { logEntity, logErrorResult, replaceEntityReferencesWithEntitiesGeneric } from './CliUtils';
 
 export async function showEntity(context: SessionContext, id: string): Promise<Entity | null> {

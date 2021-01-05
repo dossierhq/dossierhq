@@ -3,15 +3,14 @@ import type {
   AdminEntity,
   AdminEntityCreate,
   AdminEntityUpdate,
-  AdminQuery,
   Entity,
   EntityTypeSpecification,
   Result,
   Schema,
-  SessionContext,
   Value,
   ValueTypeSpecification,
 } from '@datadata/core';
+import type { AdminQuery, SessionContext } from '@datadata/server';
 import {
   GraphQLBoolean,
   GraphQLEnumType,
@@ -531,7 +530,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     typeSpec: EntityTypeSpecification | ValueTypeSpecification,
     fields: GraphQLFieldConfigMap<TSource, TContext>,
     isAdmin: boolean
-  ) {
+  ): void {
     for (const fieldSpec of typeSpec.fields) {
       let fieldType;
       switch (fieldSpec.type) {
@@ -557,7 +556,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
   addTypeSpecificationInputFields(
     typeSpec: EntityTypeSpecification | ValueTypeSpecification,
     fields: GraphQLInputFieldConfigMap
-  ) {
+  ): void {
     for (const fieldSpec of typeSpec.fields) {
       let fieldType;
       switch (fieldSpec.type) {
@@ -748,7 +747,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     });
   }
 
-  resolveJsonFields(entity: AdminEntityCreate | AdminEntityUpdate, entityTypeName: string) {
+  resolveJsonFields(entity: AdminEntityCreate | AdminEntityUpdate, entityTypeName: string): void {
     const visitItem = (
       item: AdminEntityCreate | AdminEntityUpdate | Value,
       typeSpec: EntityTypeSpecification | ValueTypeSpecification,

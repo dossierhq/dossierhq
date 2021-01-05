@@ -1,12 +1,9 @@
-import { EntityAdmin, ErrorType, FieldType, PublishedEntity } from '.';
+import { CoreTestUtils, ErrorType, FieldType } from '@datadata/core';
+import { EntityAdmin, PublishedEntity } from '.';
 import type { Instance, SessionContext } from '.';
-import {
-  createTestInstance,
-  ensureSessionContext,
-  expectErrorResult,
-  expectOkResult,
-  updateSchema,
-} from './TestUtils';
+import { createTestInstance, ensureSessionContext, updateSchema } from './ServerTestUtils';
+
+const { expectErrorResult, expectOkResult } = CoreTestUtils;
 
 let instance: Instance;
 let context: SessionContext;

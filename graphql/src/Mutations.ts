@@ -1,5 +1,5 @@
-import { EntityAdmin } from '@datadata/core';
 import type { AdminEntity, AdminEntityCreate, AdminEntityUpdate } from '@datadata/core';
+import { EntityAdmin } from '@datadata/server';
 import type { SessionGraphQLContext } from '.';
 import { buildResolversForAdminEntity } from './DataLoaders';
 import { getSessionContext } from './Utils';

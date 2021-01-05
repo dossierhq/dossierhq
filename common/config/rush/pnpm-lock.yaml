@@ -9,6 +9,7 @@ dependencies:
   '@rush-temp/datadata-examples-next-web': 'file:projects/datadata-examples-next-web.tgz'
   '@rush-temp/graphql': 'file:projects/graphql.tgz_ts-node@9.0.0'
   '@rush-temp/postgres': 'file:projects/postgres.tgz'
+  '@rush-temp/server': 'file:projects/server.tgz'
   '@storybook/addon-actions': 6.1.11_4695a47c40ef995f48f8c834d2fb82ec
   '@storybook/addon-essentials': 6.1.11_41290644a8a28e132bdd805e7f06002c
   '@storybook/addon-links': 6.1.11_react-dom@17.0.1+react@17.0.1
@@ -14357,6 +14358,26 @@ packages:
       integrity: sha512-+BJQBa7VkkK3EQKo499/RBGTMnOV34lI7NMDfPEPD/6f4oFGmiIViI09Pwy+MSVC+UH2tYneKxLcN8uazQH1tg==
       tarball: 'file:projects/postgres.tgz'
     version: 0.0.0
+  'file:projects/server.tgz':
+    dependencies:
+      '@types/jest': 26.0.15
+      '@types/pg': 7.14.6
+      '@typescript-eslint/eslint-plugin': 4.7.0_71ed4b9550f3442846154d16e6f08f9e
+      '@typescript-eslint/parser': 4.7.0_eslint@7.13.0+typescript@4.1.3
+      dotenv: 8.2.0
+      eslint: 7.13.0
+      jest: 26.6.3_ts-node@9.0.0
+      pg: 8.5.0_pg@8.5.0
+      prettier: 2.1.2
+      ts-jest: 26.4.4_jest@26.6.3+typescript@4.1.3
+      ts-node: 9.0.0_typescript@4.1.3
+      typescript: 4.1.3
+    dev: false
+    name: '@rush-temp/server'
+    resolution:
+      integrity: sha512-V0sl0sZKMGFjEi295I4FzOllGIlnXqDF+lS8P6zwv8XOHL9Y47z0ax1BF4fGuZogRGExPYbFygXSuuOEzaaJzw==
+      tarball: 'file:projects/server.tgz'
+    version: 0.0.0
 registry: ''
 specifiers:
   '@babel/core': ^7.12.10
@@ -14369,6 +14390,7 @@ specifiers:
   '@rush-temp/datadata-examples-next-web': 'file:./projects/datadata-examples-next-web.tgz'
   '@rush-temp/graphql': 'file:./projects/graphql.tgz'
   '@rush-temp/postgres': 'file:./projects/postgres.tgz'
+  '@rush-temp/server': 'file:./projects/server.tgz'
   '@storybook/addon-actions': ^6.1.11
   '@storybook/addon-essentials': ^6.1.11
   '@storybook/addon-links': ^6.1.11

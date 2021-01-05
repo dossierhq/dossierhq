@@ -1,4 +1,4 @@
-import type { SchemaSpecification } from '.';
+import type { SchemaSpecification } from '@datadata/core';
 
 export interface SchemaVersionsTable {
   id: number;

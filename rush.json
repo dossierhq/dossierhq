@@ -384,6 +384,10 @@
     {
       "packageName": "@datadata/postgres",
       "projectFolder": "postgres"
+    },
+    {
+      "packageName": "@datadata/server",
+      "projectFolder": "server"
     }
     // {
     //   /**

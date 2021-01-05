@@ -1,13 +1,10 @@
+import { CoreTestUtils, ErrorType } from '@datadata/core';
 import type { Instance, SessionContext } from '.';
-import { ErrorType } from './';
 import { toOpaqueCursor } from './Connection';
 import { searchAdminEntitiesQuery, totalAdminEntitiesQuery } from './QueryGenerator';
-import {
-  createTestInstance,
-  ensureSessionContext,
-  expectErrorResult,
-  updateSchema,
-} from './TestUtils';
+import { createTestInstance, ensureSessionContext, updateSchema } from './ServerTestUtils';
+
+const { expectErrorResult } = CoreTestUtils;
 
 let instance: Instance;
 let context: SessionContext;

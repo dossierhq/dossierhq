@@ -8,8 +8,6 @@
   },
   "scripts": {
     "ci:check": "npm run ts:check && npm run eslint:check && npm run prettier:check && npm test",
-    "db:cli": "./scripts/db-cli.sh",
-    "db:migrate": "./scripts/db-migrate.sh",
     "eslint:check": "eslint .",
     "eslint:fix": "eslint --fix .",
     "prettier:check": "prettier --check .",
@@ -21,11 +19,9 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@datadata/postgres": "1.0.0",
     "@types/jest": "~26.0.15",
     "@typescript-eslint/eslint-plugin": "^4.6.1",
     "@typescript-eslint/parser": "^4.6.1",
-    "dotenv": "^8.2.0",
     "eslint": "^7.13.0",
     "jest": "~26.6.3",
     "prettier": "2.1.2",
@@ -33,8 +29,5 @@
     "ts-node": "^9.0.0",
     "typescript": "^4.0.5"
   },
-  "dependencies": {
-    "@types/pg": "^7.14.5",
-    "pg": "^8.4.2"
-  }
+  "dependencies": {}
 }

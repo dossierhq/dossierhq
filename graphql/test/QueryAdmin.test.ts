@@ -1,18 +1,20 @@
-import { EntityAdmin, ErrorType, FieldType, notOk, ok, TestUtils } from '@datadata/core';
+import type { AdminEntity } from '@datadata/core';
+import { CoreTestUtils, ErrorType, FieldType, notOk, ok } from '@datadata/core';
 import type {
-  AdminEntity,
   AdminQuery,
   Connection,
   Edge,
   Instance,
   Paging,
   SessionContext,
-} from '@datadata/core';
+} from '@datadata/server';
+import { EntityAdmin, ServerTestUtils } from '@datadata/server';
 import { graphql, printError } from 'graphql';
 import type { GraphQLSchema } from 'graphql';
 import { GraphQLSchemaGenerator } from '../src/GraphQLSchemaGenerator';
 
-const { createTestInstance, ensureSessionContext, expectOkResult, updateSchema } = TestUtils;
+const { expectOkResult } = CoreTestUtils;
+const { createTestInstance, ensureSessionContext, updateSchema } = ServerTestUtils;
 
 let instance: Instance;
 let context: SessionContext;
