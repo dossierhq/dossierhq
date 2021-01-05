@@ -3,9 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "ci:check": "npm run ts:check && npm run eslint:check && npm run prettier:check && npm test",
+    "eslint:check": "eslint .",
+    "eslint:fix": "eslint --fix .",
+    "prettier:check": "prettier --check .",
+    "prettier:fix": "prettier --write .",
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "ts:check": "tsc --noEmit"
   },
   "dependencies": {
     "@datadata/admin-react-components": "1.0.0",
@@ -16,6 +22,11 @@
   "devDependencies": {
     "@types/node": "^14.14.7",
     "@types/react": "~17.0.0",
+    "@typescript-eslint/eslint-plugin": "^4.6.1",
+    "@typescript-eslint/parser": "^4.6.1",
+    "eslint": "^7.13.0",
+    "eslint-plugin-react": "~7.22.0",
+    "prettier": "2.1.2",
     "typescript": "^4.0.5"
   }
 }
