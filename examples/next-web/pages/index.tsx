@@ -1,3 +1,4 @@
+import { HelloWorld } from '@datadata/admin-react-components';
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 
@@ -8,6 +9,7 @@ export default function Home() {
         <title>Create Next App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <HelloWorld />
 
       <main className={styles.main}>
         <h1 className={styles.title}>
