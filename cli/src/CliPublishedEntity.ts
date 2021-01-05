@@ -15,7 +15,14 @@ export async function showEntity(context: SessionContext, id: string): Promise<E
 }
 
 async function replaceReferencesWithEntities(context: SessionContext, entity: Entity) {
-  await replaceEntityReferencesWithEntitiesGeneric(context, entity, async (context, id) => {
-    return await PublishedEntity.getEntity(context, id);
-  });
+  await replaceEntityReferencesWithEntitiesGeneric(
+    context,
+    entity,
+    async (context, id) => {
+      return await PublishedEntity.getEntity(context, id);
+    },
+    async (context, ids) => {
+      return await PublishedEntity.getEntities(context, ids);
+    }
+  );
 }

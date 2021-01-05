@@ -607,13 +607,27 @@ async function replaceEntityReferencesWithEntities(
   context: SessionContext,
   entity: { _type: string; [fieldName: string]: unknown }
 ) {
-  await replaceEntityReferencesWithEntitiesGeneric(context, entity, async (context, id) => {
-    return await EntityAdmin.getEntity(context, id, {});
-  });
+  await replaceEntityReferencesWithEntitiesGeneric(
+    context,
+    entity,
+    async (context, id) => {
+      return await EntityAdmin.getEntity(context, id, {});
+    },
+    async (context, ids) => {
+      return await EntityAdmin.getEntities(context, ids);
+    }
+  );
 }
 
 async function replaceValueItemReferencesWithEntities(context: SessionContext, valueItem: Value) {
-  await replaceValueItemReferencesWithEntitiesGeneric(context, valueItem, async (context, id) => {
-    return await EntityAdmin.getEntity(context, id, {});
-  });
+  await replaceValueItemReferencesWithEntitiesGeneric(
+    context,
+    valueItem,
+    async (context, id) => {
+      return await EntityAdmin.getEntity(context, id, {});
+    },
+    async (context, ids) => {
+      return await EntityAdmin.getEntities(context, ids);
+    }
+  );
 }
