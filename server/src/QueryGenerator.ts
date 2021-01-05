@@ -141,7 +141,7 @@ function getFilterEntityTypes(
   if (!query?.entityTypes || query.entityTypes.length === 0) {
     return ok([]);
   }
-  const schema = context.instance.getSchema();
+  const schema = context.server.getSchema();
   for (const entityType of query.entityTypes) {
     if (schema.getEntityTypeSpecification(entityType) === null) {
       return notOk.BadRequest(`Can’t find entity type in query: ${entityType}`);

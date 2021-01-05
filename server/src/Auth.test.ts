@@ -1,19 +1,19 @@
 import { CoreTestUtils, ErrorType } from '@datadata/core';
-import { Auth, AuthContext, Instance } from '.';
-import { createTestInstance } from './ServerTestUtils';
+import { Auth, AuthContext, Server } from '.';
+import { createTestServer } from './ServerTestUtils';
 import { uuidMatcher } from '../test/AdditionalTestUtils';
 
 const { expectErrorResult, expectOkResult } = CoreTestUtils;
 
-let instance: Instance;
+let server: Server;
 let context: AuthContext;
 
 beforeAll(async () => {
-  instance = await createTestInstance();
-  context = instance.createAuthContext();
+  server = await createTestServer();
+  context = server.createAuthContext();
 });
 afterAll(async () => {
-  await instance.shutdown();
+  await server.shutdown();
 });
 
 function randomIdentifier() {

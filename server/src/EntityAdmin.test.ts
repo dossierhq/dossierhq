@@ -1,20 +1,20 @@
 import { CoreTestUtils, ErrorType, FieldType } from '@datadata/core';
 import type { AdminEntity } from '@datadata/core';
-import type { AdminQuery, Connection, Edge, Instance, Paging, SessionContext } from '.';
+import type { AdminQuery, Connection, Edge, Server, Paging, SessionContext } from '.';
 import { EntityAdmin, isPagingForwards, PublishedEntity } from '.';
-import { createTestInstance, ensureSessionContext, updateSchema } from './ServerTestUtils';
+import { createTestServer, ensureSessionContext, updateSchema } from './ServerTestUtils';
 import { expectEntityHistoryVersions, uuidMatcher } from '../test/AdditionalTestUtils';
 
 const { expectErrorResult, expectOkResult } = CoreTestUtils;
 
-let instance: Instance;
+let server: Server;
 let context: SessionContext;
 let entitiesOfTypeAdminOnlyEditBefore: AdminEntity[];
 let deletedIdsOfTypeAdminOnlyEditBefore: string[];
 
 beforeAll(async () => {
-  instance = await createTestInstance();
-  context = await ensureSessionContext(instance, 'test', 'entity-admin');
+  server = await createTestServer();
+  context = await ensureSessionContext(server, 'test', 'entity-admin');
   await updateSchema(context, {
     entityTypes: [
       {
@@ -137,7 +137,7 @@ beforeAll(async () => {
   }
 });
 afterAll(async () => {
-  await instance.shutdown();
+  await server.shutdown();
 });
 
 async function ensureEntitiesExistForAdminOnlyEditBefore(context: SessionContext) {

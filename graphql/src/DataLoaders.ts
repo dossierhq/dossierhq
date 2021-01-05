@@ -73,7 +73,7 @@ function buildResolversForEntity<TContext extends SessionGraphQLContext>(
   context: SessionContext,
   entity: Entity
 ): Entity {
-  const entitySpec = context.instance.getSchema().getEntityTypeSpecification(entity._type);
+  const entitySpec = context.server.getSchema().getEntityTypeSpecification(entity._type);
   if (!entitySpec) {
     throw new Error(`Couldn't find entity spec for type: ${entity._type}`);
   }
@@ -114,7 +114,7 @@ export function buildResolversForAdminEntity<TContext extends SessionGraphQLCont
   context: SessionContext,
   entity: AdminEntity
 ): AdminEntity {
-  const entitySpec = context.instance.getSchema().getEntityTypeSpecification(entity._type);
+  const entitySpec = context.server.getSchema().getEntityTypeSpecification(entity._type);
   if (!entitySpec) {
     throw new Error(`Couldn't find entity spec for type: ${entity._type}`);
   }
@@ -187,7 +187,7 @@ export function buildResolversForValue<TContext extends SessionGraphQLContext>(
   valueItem: Value,
   isAdmin: boolean
 ): Value {
-  const valueSpec = context.instance.getSchema().getValueTypeSpecification(valueItem._type);
+  const valueSpec = context.server.getSchema().getValueTypeSpecification(valueItem._type);
   if (!valueSpec) {
     throw new Error(`Couldn't find value spec for type: ${valueItem._type}`);
   }

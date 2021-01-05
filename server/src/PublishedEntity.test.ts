@@ -1,16 +1,16 @@
 import { CoreTestUtils, ErrorType, FieldType } from '@datadata/core';
 import { EntityAdmin, PublishedEntity } from '.';
-import type { Instance, SessionContext } from '.';
-import { createTestInstance, ensureSessionContext, updateSchema } from './ServerTestUtils';
+import type { Server, SessionContext } from '.';
+import { createTestServer, ensureSessionContext, updateSchema } from './ServerTestUtils';
 
 const { expectErrorResult, expectOkResult } = CoreTestUtils;
 
-let instance: Instance;
+let server: Server;
 let context: SessionContext;
 
 beforeAll(async () => {
-  instance = await createTestInstance();
-  context = await ensureSessionContext(instance, 'test', 'published-entity');
+  server = await createTestServer();
+  context = await ensureSessionContext(server, 'test', 'published-entity');
   await updateSchema(context, {
     entityTypes: [
       {
@@ -21,7 +21,7 @@ beforeAll(async () => {
   });
 });
 afterAll(async () => {
-  await instance.shutdown();
+  await server.shutdown();
 });
 
 describe('getEntity()', () => {

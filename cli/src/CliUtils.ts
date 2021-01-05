@@ -86,7 +86,7 @@ export function logEntity(context: SessionContext, entity: AdminEntity | Entity)
     }
   }
 
-  const schema = context.instance.getSchema();
+  const schema = context.server.getSchema();
 
   visitFieldsRecursively<{ indent: string }>({
     schema,
@@ -166,8 +166,8 @@ export function formatFieldValue(fieldSpec: FieldSpecification, value: unknown):
 }
 
 export function getEntitySpec(context: SessionContext, entity: Entityish): EntityTypeSpecification {
-  const { instance } = context;
-  const schema = instance.getSchema();
+  const { server } = context;
+  const schema = server.getSchema();
   const entitySpec = schema.getEntityTypeSpecification(entity._type);
   if (!entitySpec) {
     throw new Error(`Couldn't find entity spec for type: ${entity._type}`);
@@ -176,8 +176,8 @@ export function getEntitySpec(context: SessionContext, entity: Entityish): Entit
 }
 
 export function getValueSpec(context: SessionContext, valueItem: Value): ValueTypeSpecification {
-  const { instance } = context;
-  const schema = instance.getSchema();
+  const { server } = context;
+  const schema = server.getSchema();
   const valueSpec = schema.getValueTypeSpecification(valueItem._type);
   if (!valueSpec) {
     throw new Error(`Couldn't find value spec for type: ${valueItem._type}`);

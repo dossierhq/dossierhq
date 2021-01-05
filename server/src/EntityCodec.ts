@@ -31,7 +31,7 @@ interface EncodeEntityResult {
 }
 
 export function decodePublishedEntity(context: SessionContext, values: EntityValues): Entity {
-  const schema = context.instance.getSchema();
+  const schema = context.server.getSchema();
   const entitySpec = schema.getEntityTypeSpecification(values.type);
   if (!entitySpec) {
     throw new Error(`No entity spec for type ${values.type}`);
@@ -109,7 +109,7 @@ function decodeValueTypeField(
 }
 
 export function decodeAdminEntity(context: SessionContext, values: AdminEntityValues): AdminEntity {
-  const schema = context.instance.getSchema();
+  const schema = context.server.getSchema();
   const entitySpec = schema.getEntityTypeSpecification(values.type);
   if (!entitySpec) {
     throw new Error(`No entity spec for type ${values.type}`);
@@ -148,7 +148,7 @@ export function resolveCreateEntity(
     _version: 0,
   };
 
-  const schema = context.instance.getSchema();
+  const schema = context.server.getSchema();
   const entitySpec = schema.getEntityTypeSpecification(result._type);
   if (!entitySpec) {
     return notOk.BadRequest(`Entity type ${result._type} doesn’t exist`);
@@ -186,7 +186,7 @@ export function resolveUpdateEntity(
     _version: version,
   };
 
-  const schema = context.instance.getSchema();
+  const schema = context.server.getSchema();
   const entitySpec = schema.getEntityTypeSpecification(result._type);
   if (!entitySpec) {
     return notOk.BadRequest(`Entity type ${result._type} doesn’t exist`);
@@ -235,7 +235,7 @@ export async function encodeEntity(
 
   const { _type: type, _name: name } = entity;
 
-  const schema = context.instance.getSchema();
+  const schema = context.server.getSchema();
   const entitySpec = schema.getEntityTypeSpecification(type);
   if (!entitySpec) {
     return notOk.BadRequest(`Entity type ${type} doesn’t exist`);
@@ -376,7 +376,7 @@ async function collectReferenceIds(
   }[] = [];
 
   visitFieldsRecursively({
-    schema: context.instance.getSchema(),
+    schema: context.server.getSchema(),
     entity,
     visitField: (path, fieldSpec, data, unusedVisitContext) => {
       if (fieldSpec.type !== FieldType.ValueType) {

@@ -5,7 +5,7 @@ import type { Pool } from './Db';
 import * as Db from './Db';
 import { getSchema, setSchema } from './Schema';
 
-export default class Instance {
+export default class Server {
   #pool: Pool | null;
   #schema: Schema | null = null;
 

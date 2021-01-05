@@ -6,7 +6,7 @@ export type { Paging } from './Paging';
 
 export { default as Auth } from './Auth';
 export * as EntityAdmin from './EntityAdmin';
-export { default as Instance } from './Instance';
 export { isPagingForwards } from './Paging';
 export * as PublishedEntity from './PublishedEntity';
+export { default as Server } from './Server';
 export * as ServerTestUtils from './ServerTestUtils';
