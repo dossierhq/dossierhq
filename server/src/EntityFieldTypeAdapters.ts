@@ -1,7 +1,5 @@
-import { ErrorType, notOk, ok } from '.';
-import type { FieldSpecification, Result } from '.';
-import { FieldType } from './Schema';
-import type { FieldValueTypeMap } from './Schema';
+import { ErrorType, FieldType, notOk, ok } from '@datadata/core';
+import type { FieldSpecification, FieldValueTypeMap, Result } from '@datadata/core';
 
 export interface FieldTypeAdapter<TDecoded = unknown, TEncoded = unknown> {
   encodeData(prefix: string, decodedData: TDecoded): Result<TEncoded, ErrorType.BadRequest>;

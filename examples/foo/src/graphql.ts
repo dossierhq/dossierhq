@@ -1,8 +1,9 @@
 #!/usr/bin/env npx ts-node
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
-import { Auth, Instance, ok, notOk } from '@datadata/core';
-import type { AuthContext } from '@datadata/core';
+import { ok, notOk } from '@datadata/core';
+import { Auth, Instance } from '@datadata/server';
+import type { AuthContext } from '@datadata/server';
 import { GraphQLSchemaGenerator } from '@datadata/graphql';
 import type { SessionGraphQLContext } from '@datadata/graphql';
 import express from 'express';

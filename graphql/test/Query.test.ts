@@ -1,10 +1,12 @@
-import { EntityAdmin, FieldType, notOk, ok, TestUtils } from '@datadata/core';
-import type { Instance, SessionContext } from '@datadata/core';
+import { CoreTestUtils, FieldType, notOk, ok } from '@datadata/core';
+import { EntityAdmin, ServerTestUtils } from '@datadata/server';
+import type { Instance, SessionContext } from '@datadata/server';
 import { graphql, printError } from 'graphql';
 import type { GraphQLSchema } from 'graphql';
 import { GraphQLSchemaGenerator } from '../src/GraphQLSchemaGenerator';
 
-const { createTestInstance, ensureSessionContext, expectOkResult, updateSchema } = TestUtils;
+const { expectOkResult } = CoreTestUtils;
+const { createTestInstance, ensureSessionContext, updateSchema } = ServerTestUtils;
 
 let instance: Instance;
 let context: SessionContext;

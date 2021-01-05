@@ -1,15 +1,5 @@
 import { ErrorType, FieldType, Schema } from '.';
-import type { Instance } from '.';
-import { createTestInstance, expectErrorResult, expectOkResult } from './TestUtils';
-
-let instance: Instance;
-
-beforeAll(async () => {
-  instance = await createTestInstance();
-});
-afterAll(async () => {
-  await instance.shutdown();
-});
+import { expectErrorResult, expectOkResult } from './CoreTestUtils';
 
 describe('validate()', () => {
   test('Empty spec validates', () => {

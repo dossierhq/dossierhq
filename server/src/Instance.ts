@@ -1,8 +1,8 @@
-import type { AuthContext, Context, Schema, Session, SessionContext } from '.';
+import type { ErrorType, PromiseResult, Schema } from '@datadata/core';
+import type { AuthContext, Context, Session, SessionContext } from '.';
 import { AuthContextImpl, SessionContextImpl } from './Context';
 import type { Pool } from './Db';
 import * as Db from './Db';
-import type { ErrorType, PromiseResult } from './ErrorResult';
 import { getSchema, setSchema } from './Schema';
 
 export default class Instance {

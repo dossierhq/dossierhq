@@ -2,8 +2,10 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
 import { CliAuth, CliMain } from '@datadata/cli';
-import type { SchemaSpecification, Session } from '@datadata/core';
-import { Instance, Schema } from '@datadata/core';
+import type { SchemaSpecification } from '@datadata/core';
+import { Schema } from '@datadata/core';
+import type { Session } from '@datadata/server';
+import { Instance } from '@datadata/server';
 import SchemaSpec from './schema.json';
 
 async function main() {

@@ -1,6 +1,7 @@
 import inquirer from 'inquirer';
-import type { AuthContext, Instance, Session } from '@datadata/core';
-import { Auth, ErrorType } from '@datadata/core';
+import { ErrorType } from '@datadata/core';
+import type { AuthContext, Instance, Session } from '@datadata/server';
+import { Auth } from '@datadata/server';
 import * as CliUtils from './CliUtils';
 import { showConfirm } from './widgets';
 

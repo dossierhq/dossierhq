@@ -1,3 +1,4 @@
+import type { ErrorType, PromiseResult } from '@datadata/core';
 import type {
   QueryArrayConfig,
   QueryArrayResult,
@@ -6,7 +7,7 @@ import type {
   QueryResultRow,
 } from 'pg';
 import { Pool as PgPool } from 'pg';
-import type { Context, ErrorType, PromiseResult } from '.';
+import type { Context } from '.';
 
 export class UnexpectedQuantityError extends Error {
   constructor(message: string, readonly actual: number) {

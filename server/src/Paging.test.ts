@@ -1,7 +1,8 @@
+import { CoreTestUtils, ErrorType } from '@datadata/core';
 import { toOpaqueCursor } from './Connection';
-import { ErrorType } from './ErrorResult';
 import { resolvePaging } from './Paging';
-import { expectErrorResult } from './TestUtils';
+
+const { expectErrorResult } = CoreTestUtils;
 
 describe('resolvePaging()', () => {
   test('undefined', () =>

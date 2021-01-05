@@ -1,5 +1,13 @@
-import type { Connection, Edge, ErrorType, Paging, PromiseResult, Result, SessionContext } from '.';
-import { notOk, ok } from '.';
+import { notOk, ok } from '@datadata/core';
+import type {
+  AdminEntity,
+  AdminEntityCreate,
+  AdminEntityUpdate,
+  ErrorType,
+  PromiseResult,
+  Result,
+} from '@datadata/core';
+import type { Connection, Edge, Paging, SessionContext } from '.';
 import { toOpaqueCursor } from './Connection';
 import * as Db from './Db';
 import type { EntitiesTable, EntityVersionsTable } from './DbTableTypes';
@@ -27,33 +35,6 @@ export interface AdminEntityVersionInfo {
   published: boolean;
   createdBy: string;
   createdAt: Date;
-}
-
-export interface AdminEntity {
-  /** UUIDv4 */
-  id: string;
-  _name: string;
-  _type: string;
-  _version: number;
-  _deleted?: boolean;
-  [fieldName: string]: unknown;
-}
-
-export interface AdminEntityCreate {
-  // /** UUIDv4 */
-  //TODO  id?: string;
-  _name: string;
-  _type: string;
-  [fieldName: string]: unknown;
-}
-
-export interface AdminEntityUpdate {
-  /** UUIDv4 */
-  id: string;
-  _name?: string;
-  /** If provided, has to be same as the entity's existing type, i.e. there's no way to change the type of an entity */
-  _type?: string;
-  [fieldName: string]: unknown;
 }
 
 export interface AdminQuery {

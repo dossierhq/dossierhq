@@ -1,0 +1,15 @@
+{
+  "editor.formatOnSave": true,
+  "cSpell.words": [
+    "Queryable",
+    "SAVEPOINT",
+    "datadata",
+    "dockest",
+    "postgres",
+    "testpass",
+    "testuser"
+  ],
+  "files.insertFinalNewline": true,
+  "editor.tabSize": 2,
+  "editor.rulers": [100]
+}

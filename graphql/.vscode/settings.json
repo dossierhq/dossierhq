@@ -1,6 +1,6 @@
 {
   "editor.formatOnSave": true,
-  "cSpell.words": ["datadata", "graphqlid"],
+  "cSpell.words": ["datadata", "graphqlid", "postgres"],
   "files.insertFinalNewline": true,
   "editor.tabSize": 2
 }
