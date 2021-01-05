@@ -1,12 +1,12 @@
 {
-    "editor.formatOnSave": true,
-    "files.insertFinalNewline": true,
-    "editor.tabSize": 2,
-    "cSpell.words": [
-        "SAVEPOINT",
-        "datadata",
-        "graphiql",
-        "graphqlid",
-        "queryable"
-    ]
+  "files.insertFinalNewline": true,
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2,
+  "cSpell.words": [
+    "SAVEPOINT",
+    "datadata",
+    "graphiql",
+    "graphqlid",
+    "queryable"
+  ]
 }
