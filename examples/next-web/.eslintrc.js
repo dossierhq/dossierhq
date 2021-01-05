@@ -28,5 +28,7 @@ module.exports = {
         argsIgnorePattern: '^unused',
       },
     ],
+    'react/react-in-jsx-scope': 'off',
   },
+  settings: { react: { version: 'detect' } },
 };
