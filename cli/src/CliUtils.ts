@@ -66,7 +66,7 @@ export function logError(error: Error): void {
   console.log(error);
 }
 
-export function logErrorMessage(error: string, message: string) {
+export function logErrorMessage(error: string, message: string): void {
   console.log(`${chalk.yellow(chalk.bold('!'))} ${chalk.bold(error + ':')} ${message}`);
 }
 
