@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "ci:check": "npm run ts:check && npm run eslint:check && npm run prettier:check && npm test",
+    "ci:check": "npm run ts:check && npm run eslint:check && npm run prettier:check",
     "eslint:check": "eslint .",
     "eslint:fix": "eslint --fix .",
     "prettier:check": "prettier --check .",
