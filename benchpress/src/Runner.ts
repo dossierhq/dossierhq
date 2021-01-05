@@ -25,7 +25,7 @@ export async function runTest(
   for (let i = 0; i < options.warmup; i += 1) {
     process.stdout.write(`\x1b[0GIteration [${i + 1}/${options.warmup}]`);
     controlClock.reset();
-    const _ = await iteration(clock);
+    const unusedSuccess = await iteration(clock);
   }
 
   console.log(`\nStarting test '${options.testName}' (${options.iterations} iterations)`);

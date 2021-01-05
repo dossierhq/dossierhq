@@ -1,4 +1,4 @@
-import type { AdminEntity, Entity, FieldSpecification, FieldValueTypeMap, Schema, Value } from '.';
+import type { FieldSpecification, FieldValueTypeMap, Schema, Value } from '.';
 import { FieldType } from '.';
 
 /** Check if `value` with `fieldSpec` is a single EntityType field */
@@ -73,7 +73,7 @@ export function isValueTypeItemField(
   return fieldSpec.type === FieldType.ValueType;
 }
 
-export function visitorPathToString(path: Array<string | number>) {
+export function visitorPathToString(path: Array<string | number>): string {
   let result = 'entity';
   for (const segment of path) {
     if (Number.isInteger(segment)) {

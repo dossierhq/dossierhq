@@ -11,5 +11,16 @@ module.exports = {
   },
   plugins: ['@typescript-eslint'],
   reportUnusedDisableDirectives: true,
-  rules: {},
+  rules: {
+    '@typescript-eslint/no-unused-vars': [
+      'warn',
+      {
+        vars: 'local',
+        args: 'after-used',
+        ignoreRestSiblings: true,
+        varsIgnorePattern: '^unused',
+        argsIgnorePattern: '^unused',
+      },
+    ],
+  },
 };

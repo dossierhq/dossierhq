@@ -378,7 +378,7 @@ async function collectReferenceIds(
   visitFieldsRecursively({
     schema: context.instance.getSchema(),
     entity,
-    visitField: (path, fieldSpec, data, visitContext) => {
+    visitField: (path, fieldSpec, data, unusedVisitContext) => {
       if (fieldSpec.type !== FieldType.ValueType) {
         const fieldAdapter = EntityFieldTypeAdapters.getAdapter(fieldSpec);
         const uuids = fieldAdapter.getReferenceUUIDs(data);

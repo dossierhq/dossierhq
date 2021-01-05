@@ -1,4 +1,4 @@
-import type { AdminEntity, Context, Entity, PromiseResult, Result, SessionContext, Value } from '.';
+import type { Context, PromiseResult, Result, SessionContext } from '.';
 import { notOk, ok, ErrorType } from '.';
 import * as Db from './Db';
 import type { SchemaVersionsTable } from './DbTableTypes';
