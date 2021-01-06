@@ -40,7 +40,11 @@ export interface SchemaSpecification {
 }
 
 export class Schema {
-  constructor(readonly spec: SchemaSpecification) {}
+  readonly spec: SchemaSpecification;
+
+  constructor(spec: SchemaSpecification) {
+    this.spec = spec;
+  }
 
   validate(): Result<void, ErrorType.BadRequest> {
     const usedNames = new Set();
