@@ -1,7 +1,6 @@
 dependencies:
   '@babel/core': 7.12.10
   '@hapi/boom': 9.1.1
-  '@hapi/joi': 17.1.1
   '@rush-temp/admin-react-components': 'file:projects/admin-react-components.tgz_ts-node@9.0.0'
   '@rush-temp/benchpress': 'file:projects/benchpress.tgz'
   '@rush-temp/cli': 'file:projects/cli.tgz'
@@ -21,7 +20,6 @@ dependencies:
   '@testing-library/react': 11.2.2_react-dom@17.0.1+react@17.0.1
   '@types/debug': 4.1.5
   '@types/express': 4.17.9
-  '@types/hapi__joi': 17.1.6
   '@types/inquirer': 7.3.1
   '@types/jest': 26.0.15
   '@types/node': 14.14.20
@@ -45,6 +43,7 @@ dependencies:
   graphql: 15.4.0
   inquirer: 7.3.3
   jest: 26.6.3_ts-node@9.0.0
+  joi: 17.3.0
   next: 10.0.4_c39e9db791ea05e3ec4e0e74abb7a6b5
   next-transpile-modules: 6.0.0
   pg: 8.5.0_pg@8.5.0
@@ -2101,6 +2100,20 @@ packages:
       react-dom: 15.x || 16.x || 16.4.0-alpha.0911da3
     resolution:
       integrity: sha512-+mtn9wjlB9NN2CNnnC/BRYtwdKBfSyyasPYraNAyvaV1occr/5NnB4CVzjEZipNHwYebQwcndGUmpFzxAUoqSA==
+  /@sideway/address/4.1.0:
+    dependencies:
+      '@hapi/hoek': 9.1.1
+    dev: false
+    resolution:
+      integrity: sha512-wAH/JYRXeIFQRsxerIuLjgUu2Xszam+O5xKeatJ4oudShOOirfmsQ1D6LL54XOU2tizpCYku+s1wmU0SYdpoSA==
+  /@sideway/formula/3.0.0:
+    dev: false
+    resolution:
+      integrity: sha512-vHe7wZ4NOXVfkoRb8T5otiENVlT7a3IAiw7H5M2+GO+9CDgcVUUsX1zalAztCmwyOr2RUTGJdgB+ZvSVqmdHmg==
+  /@sideway/pinpoint/2.0.0:
+    dev: false
+    resolution:
+      integrity: sha512-RNiOoTPkptFtSVzQevY/yWtZwf/RxyVnPy/OcA9HBM3MlGDnBEYL5B41H0MTn0Uec8Hi+2qUtTfG2WWZBmMejQ==
   /@sinonjs/commons/1.8.1:
     dependencies:
       type-detect: 4.0.8
@@ -9425,6 +9438,16 @@ packages:
       ts-node: '*'
     resolution:
       integrity: sha512-lGS5PXGAzR4RF7V5+XObhqz2KZIDUA1yD0DG6pBVmy10eh0ZIXQImRuzocsI/N2XZ1GrLFwTS27In2i2jlpq1Q==
+  /joi/17.3.0:
+    dependencies:
+      '@hapi/hoek': 9.1.1
+      '@hapi/topo': 5.0.0
+      '@sideway/address': 4.1.0
+      '@sideway/formula': 3.0.0
+      '@sideway/pinpoint': 2.0.0
+    dev: false
+    resolution:
+      integrity: sha512-Qh5gdU6niuYbUIUV5ejbsMiiFmBdw8Kcp8Buj2JntszCkCfxJ9Cz76OtHxOZMPXrt5810iDIXs+n1nNVoquHgg==
   /js-string-escape/1.0.1:
     dev: false
     engines:
@@ -14809,16 +14832,18 @@ packages:
       debug: 4.3.1
       eslint: 7.13.0
       eslint-plugin-react: 7.22.0_eslint@7.13.0
+      joi: 17.3.0
       next: 10.0.4_c39e9db791ea05e3ec4e0e74abb7a6b5
       next-transpile-modules: 6.0.0
       prettier: 2.1.2
       react: 17.0.1
       react-dom: 17.0.1_react@17.0.1
+      ts-node: 9.0.0_typescript@4.1.3
       typescript: 4.1.3
     dev: false
     name: '@rush-temp/datadata-examples-next-web'
     resolution:
-      integrity: sha512-ysj97eE7Mw/1k01c9kAA30g2kewEi+hAkkLzsASKGb5bp8VxlGgGlFSt3zrt6NVYyCs3ofLqwOrYErISaZGr4w==
+      integrity: sha512-kF4D4vwSyu1B6wlJ05HtFLaRTSSvg2AKXgk6D8FQwnnXYCcq78ylOkpSSIIybMfy1xIogGn/d2NOlCvQruKfSA==
       tarball: 'file:projects/datadata-examples-next-web.tgz'
     version: 0.0.0
   'file:projects/datadata.tgz':
@@ -14887,7 +14912,6 @@ registry: ''
 specifiers:
   '@babel/core': ^7.12.10
   '@hapi/boom': ~9.1.1
-  '@hapi/joi': ~17.1.1
   '@rush-temp/admin-react-components': 'file:./projects/admin-react-components.tgz'
   '@rush-temp/benchpress': 'file:./projects/benchpress.tgz'
   '@rush-temp/cli': 'file:./projects/cli.tgz'
@@ -14907,7 +14931,6 @@ specifiers:
   '@testing-library/react': ~11.2.2
   '@types/debug': ~4.1.5
   '@types/express': ~4.17.9
-  '@types/hapi__joi': ~17.1.6
   '@types/inquirer': ^7.3.1
   '@types/jest': ~26.0.15
   '@types/node': ^14.14.7
@@ -14931,6 +14954,7 @@ specifiers:
   graphql: ~15.4.0
   inquirer: ^7.3.3
   jest: ~26.6.3
+  joi: ~17.3.0
   next: ~10.0.4
   next-transpile-modules: ~6.0.0
   pg: ^8.4.2

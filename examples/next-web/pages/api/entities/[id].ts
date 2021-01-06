@@ -1,6 +1,6 @@
 import { EntityAdmin } from '@datadata/server';
 import Boom from '@hapi/boom';
-import Joi from '@hapi/joi';
+import Joi from 'joi';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import type { EntityResponse } from '../../../types/ResponseTypes';
 import { errorResultToBoom } from '../../../utils/ErrorUtils';
