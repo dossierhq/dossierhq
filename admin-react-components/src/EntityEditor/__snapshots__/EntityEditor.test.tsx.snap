@@ -1,95 +1,98 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`DeletedFoo 1`] = `
+exports[`DeletedFoo render 1`] = `
 <form
   onSubmit={[Function]}
 >
   <div>
     <label>
       Name
+      <input
+        onChange={[Function]}
+        type="text"
+        value="Hello"
+      />
     </label>
-    <input
-      onChange={[Function]}
-      type="text"
-      value="Hello"
-    />
   </div>
   <hr />
   <div>
     <label>
       title
+      <input
+        onChange={[Function]}
+        type="text"
+        value=""
+      />
     </label>
-    <input
-      onChange={[Function]}
-      type="text"
-      value=""
-    />
   </div>
   <input
+    disabled={false}
     type="submit"
     value="Save"
   />
 </form>
 `;
 
-exports[`FullFoo 1`] = `
+exports[`FullFoo render 1`] = `
 <form
   onSubmit={[Function]}
 >
   <div>
     <label>
       Name
+      <input
+        onChange={[Function]}
+        type="text"
+        value="Hello"
+      />
     </label>
-    <input
-      onChange={[Function]}
-      type="text"
-      value="Hello"
-    />
   </div>
   <hr />
   <div>
     <label>
       title
+      <input
+        onChange={[Function]}
+        type="text"
+        value="Hello"
+      />
     </label>
-    <input
-      onChange={[Function]}
-      type="text"
-      value="Hello"
-    />
   </div>
   <input
+    disabled={false}
     type="submit"
     value="Save"
   />
 </form>
 `;
 
-exports[`NewFoo 1`] = `
+exports[`NewFoo render 1`] = `
 <form
   onSubmit={[Function]}
 >
   <div>
     <label>
       Name
+      <input
+        onChange={[Function]}
+        type="text"
+        value=""
+      />
     </label>
-    <input
-      onChange={[Function]}
-      type="text"
-      value=""
-    />
   </div>
   <hr />
   <div>
     <label>
       title
+      <input
+        onChange={[Function]}
+        type="text"
+        value=""
+      />
     </label>
-    <input
-      onChange={[Function]}
-      type="text"
-      value=""
-    />
   </div>
   <input
+    disabled={true}
     type="submit"
     value="Save"
   />

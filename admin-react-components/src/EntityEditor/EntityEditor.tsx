@@ -66,7 +66,7 @@ export function EntityEditor({ entity, schema, onSubmit }: EntityEditorProps): J
         throw new Error(`No support for fieldSpec ${fieldSpec.type} (list: ${!!fieldSpec.list})`);
       })}
 
-      <InputSubmit value="Save" />
+      <InputSubmit value="Save" disabled={!state.name} />
     </Form>
   );
 }
