@@ -5,8 +5,11 @@ module.exports = {
   },
   extends: [
     'eslint:recommended',
-    'plugin:react/recommended',
     'plugin:@typescript-eslint/recommended',
+    'plugin:jest-dom/recommended',
+    'plugin:react/recommended',
+    'plugin:testing-library/react',
+    'plugin:testing-library/recommended',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -14,7 +17,7 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: 'module',
   },
-  plugins: ['react', '@typescript-eslint'],
+  plugins: ['@typescript-eslint', 'jest-dom', 'react', 'testing-library'],
   reportUnusedDisableDirectives: true,
   rules: {
     '@typescript-eslint/no-unused-vars': [

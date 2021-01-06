@@ -8,8 +8,10 @@ interface Props {
 export function FormField({ label, children }: Props): JSX.Element {
   return (
     <div>
-      <label>{label}</label>
-      {children}
+      <label>
+        {label}
+        {children}
+      </label>
     </div>
   );
 }
