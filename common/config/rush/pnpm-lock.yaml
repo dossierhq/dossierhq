@@ -13,6 +13,7 @@ dependencies:
   '@storybook/addon-actions': 6.1.11_4695a47c40ef995f48f8c834d2fb82ec
   '@storybook/addon-essentials': 6.1.11_41290644a8a28e132bdd805e7f06002c
   '@storybook/addon-links': 6.1.11_react-dom@17.0.1+react@17.0.1
+  '@storybook/addon-storyshots': 6.1.11_b2ecb7584a920451cb36e73d3407bd54
   '@storybook/react': 6.1.11_37e629242fc5505a3291b78a8a7825d6
   '@types/express': 4.17.9
   '@types/inquirer': 7.3.1
@@ -1804,7 +1805,7 @@ packages:
       integrity: sha512-YHlVIjP5nfEyjlrSr8t/YdNfU/1XEt7c5b4OxcXCjyRhjzLYu/rO69/WHPuYcbCWkz8kAeZVZp2N2+IOLLEPGw==
   /@jest/transform/26.6.2:
     dependencies:
-      '@babel/core': 7.12.3
+      '@babel/core': 7.12.10
       '@jest/types': 26.6.2
       babel-plugin-istanbul: 6.0.0
       chalk: 4.1.0
@@ -1824,6 +1825,17 @@ packages:
       node: '>= 10.14.2'
     resolution:
       integrity: sha512-E9JjhUgNzvuQ+vVAL21vlyfy12gP0GhazGgJC4h6qUt1jSdUXGWJ1wfu/X7Sd8etSgxV4ovT1pb9v5D6QW4XgA==
+  /@jest/types/25.5.0:
+    dependencies:
+      '@types/istanbul-lib-coverage': 2.0.3
+      '@types/istanbul-reports': 1.1.2
+      '@types/yargs': 15.0.9
+      chalk: 3.0.0
+    dev: false
+    engines:
+      node: '>= 8.3'
+    resolution:
+      integrity: sha512-OXD0RgQ86Tu3MazKo8bnrkDRaDXXMGUqd+kTtLtK1Zb7CRzQcaSRPPPV37SvYTdevXEBVxe0HXylEjs8ibkmCw==
   /@jest/types/26.6.2:
     dependencies:
       '@types/istanbul-lib-coverage': 2.0.3
@@ -2389,6 +2401,107 @@ packages:
         optional: true
     resolution:
       integrity: sha512-OIBeOdTHNr/egIuyOUEtEBtZJXVp9PEPQ4MDxvKsCgpnXruPhjenPNW+mQKxm4SefpePW7zkx6k1ubpYVJUeag==
+  /@storybook/addon-storyshots/6.1.11_b2ecb7584a920451cb36e73d3407bd54:
+    dependencies:
+      '@jest/transform': 26.6.2
+      '@storybook/addons': 6.1.11_react-dom@17.0.1+react@17.0.1
+      '@storybook/client-api': 6.1.11_react-dom@17.0.1+react@17.0.1
+      '@storybook/core': 6.1.11_5d7cd809fa1c09e159291a065ad2c183
+      '@storybook/react': 6.1.11_37e629242fc5505a3291b78a8a7825d6
+      '@types/glob': 7.1.3
+      '@types/jest': 25.2.3
+      '@types/jest-specific-snapshot': 0.5.5
+      '@types/react': 17.0.0
+      babel-plugin-require-context-hook: 1.0.0
+      core-js: 3.8.2
+      glob: 7.1.6
+      global: 4.4.0
+      jest: 26.6.3_ts-node@9.0.0
+      jest-specific-snapshot: 4.0.0_jest@26.6.3
+      pretty-format: 26.6.2
+      react: 17.0.1
+      react-dom: 17.0.1_react@17.0.1
+      react-test-renderer: 17.0.1_react@17.0.1
+      read-pkg-up: 7.0.1
+      regenerator-runtime: 0.13.7
+      ts-dedent: 2.0.0
+      typescript: 4.1.3
+    dev: false
+    peerDependencies:
+      '@storybook/react': '*'
+      '@storybook/vue': '*'
+      '@types/react': '*'
+      jest: '*'
+      jest-preset-angular: '*'
+      jest-vue-preprocessor: '*'
+      react: ^16.8.0 || ^17.0.0
+      react-dom: ^16.8.0 || ^17.0.0
+      typescript: '*'
+      vue: '*'
+    peerDependenciesMeta:
+      '@storybook/vue':
+        optional: true
+      jest-preset-angular:
+        optional: true
+      jest-vue-preprocessor:
+        optional: true
+      react:
+        optional: true
+      react-dom:
+        optional: true
+      vue:
+        optional: true
+    resolution:
+      integrity: sha512-2qRmDKCAtoPnyJiGstX3I2D/3+kccFaTipnIs+YcxI2ugZzs6CjfLewJoZVL+ouQDg0iS/70j+HQtGOTBhLc+w==
+  /@storybook/addon-storyshots/6.1.11_ddccebbcd72a30aa7cee43673486a78a:
+    dependencies:
+      '@jest/transform': 26.6.2
+      '@storybook/addons': 6.1.11_react-dom@17.0.1+react@17.0.1
+      '@storybook/client-api': 6.1.11_react-dom@17.0.1+react@17.0.1
+      '@storybook/core': 6.1.11_b10dc8a65b4d2edc722e4a3e348b4892
+      '@storybook/react': 6.1.11_4cd6b9b0b5df32dd44a05e3a5690b4f7
+      '@types/glob': 7.1.3
+      '@types/jest': 25.2.3
+      '@types/jest-specific-snapshot': 0.5.5
+      babel-plugin-require-context-hook: 1.0.0
+      core-js: 3.8.2
+      glob: 7.1.6
+      global: 4.4.0
+      jest-specific-snapshot: 4.0.0_jest@26.6.3
+      pretty-format: 26.6.2
+      react: 17.0.1
+      react-dom: 17.0.1_react@17.0.1
+      react-test-renderer: 17.0.1_react@17.0.1
+      read-pkg-up: 7.0.1
+      regenerator-runtime: 0.13.7
+      ts-dedent: 2.0.0
+    dev: false
+    peerDependencies:
+      '@storybook/react': '*'
+      '@storybook/vue': '*'
+      '@types/react': '*'
+      jest: '*'
+      jest-preset-angular: '*'
+      jest-vue-preprocessor: '*'
+      react: ^16.8.0 || ^17.0.0
+      react-dom: ^16.8.0 || ^17.0.0
+      typescript: '*'
+      vue: '*'
+    peerDependenciesMeta:
+      '@storybook/vue':
+        optional: true
+      jest-preset-angular:
+        optional: true
+      jest-vue-preprocessor:
+        optional: true
+      react:
+        optional: true
+      react-dom:
+        optional: true
+      vue:
+        optional: true
+    resolution:
+      integrity: sha512-2qRmDKCAtoPnyJiGstX3I2D/3+kccFaTipnIs+YcxI2ugZzs6CjfLewJoZVL+ouQDg0iS/70j+HQtGOTBhLc+w==
   /@storybook/addon-toolbars/6.1.11_4695a47c40ef995f48f8c834d2fb82ec:
     dependencies:
       '@storybook/addons': 6.1.11_react-dom@17.0.1+react@17.0.1
@@ -3140,12 +3253,32 @@ packages:
     dev: false
     resolution:
       integrity: sha512-plGgXAPfVKFoYfa9NpYDAkseG+g6Jr294RqeqcqDixSbU34MZVJRi/P+7Y8GDpzkEwLaGZZOpKIEmeVZNtKsrg==
+  /@types/istanbul-reports/1.1.2:
+    dependencies:
+      '@types/istanbul-lib-coverage': 2.0.3
+      '@types/istanbul-lib-report': 3.0.0
+    dev: false
+    resolution:
+      integrity: sha512-P/W9yOX/3oPZSpaYOCQzGqgCQRXn0FFO/V8bWrCQs+wLmvVVxk6CRBXALEvNs9OHIatlnlFokfhuDo2ug01ciw==
   /@types/istanbul-reports/3.0.0:
     dependencies:
       '@types/istanbul-lib-report': 3.0.0
     dev: false
     resolution:
       integrity: sha512-nwKNbvnwJ2/mndE9ItP/zc2TCzw6uuodnF4EHYWD+gCQDVBuRQL5UzbZD0/ezy1iKsFU2ZQiDqg4M9dN4+wZgA==
+  /@types/jest-specific-snapshot/0.5.5:
+    dependencies:
+      '@types/jest': 26.0.15
+    dev: false
+    resolution:
+      integrity: sha512-AaPPw2tE8ewfjD6qGLkEd4DOfM6pPOK7ob/RSOe1Z8Oo70r9Jgo0SlWyfxslPAOvLfQukQtiVPm6DcnjSoZU5A==
+  /@types/jest/25.2.3:
+    dependencies:
+      jest-diff: 25.5.0
+      pretty-format: 25.5.0
+    dev: false
+    resolution:
+      integrity: sha512-JXc1nK/tXHiDhV55dvfzqtmP4S3sy3T3ouV2tkViZgxY/zeUkcpQcQPGRlgF4KmWzWW5oiWYSZwtCB+2RsE4Fw==
   /@types/jest/26.0.15:
     dependencies:
       jest-diff: 26.6.2
@@ -3259,6 +3392,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-EswbYJDF1kkrx93/YU+BbBtb46CCtDMvTiGmcOa/c5PETnwTiSWoseJ1oSWeRl/4rUXkhME9bVURvvPg0W5YQw==
+  /@types/react-dom/17.0.0:
+    dependencies:
+      '@types/react': 17.0.0
+    dev: false
+    resolution:
+      integrity: sha512-lUqY7OlkF/RbNtD5nIq7ot8NquXrdFrjSOR6+w9a9RFQevGi1oZO1dcJbXMeONAPKtZ2UrZOEJ5UOCVsxbLk/g==
   /@types/react-syntax-highlighter/11.0.4:
     dependencies:
       '@types/react': 17.0.0
@@ -4132,7 +4271,7 @@ packages:
       integrity: sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
   /autoprefixer/9.8.6:
     dependencies:
-      browserslist: 4.14.6
+      browserslist: 4.16.0
       caniuse-lite: 1.0.30001173
       colorette: 1.2.1
       normalize-range: 0.1.2
@@ -4389,6 +4528,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-UQ0NmGHj/HAqi5Bew8WvNfCk8wSsmdgNd8ZdMjBCICtyCJCq9LiqgqvjCYe570/Wg7AQArSq1VQ60Dd/CHN7mQ==
+  /babel-plugin-require-context-hook/1.0.0:
+    dev: false
+    resolution:
+      integrity: sha512-EMZD1563QUqLhzrqcThk759RhuNVX/ZJdrtGK6drwzgvnR+ARjWyXIHPbu+tUNaMGtPz/gQeAM2M6VUw2UiUeA==
   /babel-plugin-syntax-jsx/6.18.0:
     dev: false
     resolution:
@@ -5942,6 +6085,12 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-E+B1gzkl2gqxt1IhUzwjrxBKRqx1UzC3WLONHinn8S3T6lwV/agVCyitiFOsGJ/eYuEUBvD71MZHy3Pv1G9doQ==
+  /diff-sequences/25.2.6:
+    dev: false
+    engines:
+      node: '>= 8.3'
+    resolution:
+      integrity: sha512-Hq8o7+6GaZeoFjtpgvRBUknSXNeJiCx7V9Fr94ZMljNiCr9n9L8H8aJqgWOQiDDGdyn29fRNcDdRVJ5fdyihfg==
   /diff-sequences/26.6.2:
     dev: false
     engines:
@@ -8473,7 +8622,7 @@ packages:
       integrity: sha512-UiUIqxMgRDET6eR+o5HbfRYP1l0hqkWOs7vNxC/mggutCMUIhWMm8gAHb8tHlyfD3/l6rlgNA5cKdDzEAf6hEg==
   /istanbul-lib-instrument/4.0.3:
     dependencies:
-      '@babel/core': 7.12.3
+      '@babel/core': 7.12.10
       '@istanbuljs/schema': 0.1.2
       istanbul-lib-coverage: 3.0.0
       semver: 6.3.0
@@ -8596,6 +8745,17 @@ packages:
         optional: true
     resolution:
       integrity: sha512-t5qdIj/bCj2j7NFVHb2nFB4aUdfucDn3JRKgrZnplb8nieAirAzRSHP8uDEd+qV6ygzg9Pz4YG7UTJf94LPSyg==
+  /jest-diff/25.5.0:
+    dependencies:
+      chalk: 3.0.0
+      diff-sequences: 25.2.6
+      jest-get-type: 25.2.6
+      pretty-format: 25.5.0
+    dev: false
+    engines:
+      node: '>= 8.3'
+    resolution:
+      integrity: sha512-z1kygetuPiREYdNIumRpAHY6RXiGmp70YHptjdaxTWGmA085W3iCnXNx0DhflK3vwrKmrRWyY1wUpkPMVxMK7A==
   /jest-diff/26.6.2:
     dependencies:
       chalk: 4.1.0
@@ -8654,6 +8814,12 @@ packages:
       node: '>= 10.14.2'
     resolution:
       integrity: sha512-zhtMio3Exty18dy8ee8eJ9kjnRyZC1N4C1Nt/VShN1apyXc8rWGtJ9lI7vqiWcyyXS4BVSEn9lxAM2D+07/Tag==
+  /jest-get-type/25.2.6:
+    dev: false
+    engines:
+      node: '>= 8.3'
+    resolution:
+      integrity: sha512-DxjtyzOHjObRM+sM1knti6or+eOgcGU4xVSb2HNP1TqO4ahsT+rqZg+nyqHWJSvWgKC5cG3QjGFBqxLghiF/Ig==
   /jest-get-type/26.3.0:
     dev: false
     engines:
@@ -8898,6 +9064,15 @@ packages:
       node: '>= 10.14.2'
     resolution:
       integrity: sha512-OLhxz05EzUtsAmOMzuupt1lHYXCNib0ECyuZ/PZOx9TrZcC8vL0x+DUG3TL+GLX3yHG45e6YGjIm0XwDc3q3og==
+  /jest-specific-snapshot/4.0.0_jest@26.6.3:
+    dependencies:
+      jest: 26.6.3_ts-node@9.0.0
+      jest-snapshot: 26.6.2
+    dev: false
+    peerDependencies:
+      jest: '>= 26.0.0'
+    resolution:
+      integrity: sha512-YdW5P/MVwOizWR0MJwURxdrjdXvdG2MMpXKVGr7dZ2YrBmE6E6Ab74UL3DOYmGmzaCnNAW1CL02pY5MTHE3ulQ==
   /jest-util/26.6.2:
     dependencies:
       '@jest/types': 26.6.2
@@ -10889,6 +11064,17 @@ packages:
     dev: false
     resolution:
       integrity: sha512-EY5oDzmsX5wvuynAByrmY0P0hcp+QpnAKbJng2A2MPjVKXCxrDSUkzghVJ4ZGPIv+JC4gX8fPUWscC0RtjsWGw==
+  /pretty-format/25.5.0:
+    dependencies:
+      '@jest/types': 25.5.0
+      ansi-regex: 5.0.0
+      ansi-styles: 4.3.0
+      react-is: 16.13.1
+    dev: false
+    engines:
+      node: '>= 8.3'
+    resolution:
+      integrity: sha512-kbo/kq2LQ/A/is0PQwsEHM7Ca6//bGPPvU6UnsdDRSKTWxT/ru/xb88v4BJf6a69H+uTytOEsTusT9ksd/1iWQ==
   /pretty-format/26.6.2:
     dependencies:
       '@jest/types': 26.6.2
@@ -14197,9 +14383,11 @@ packages:
       '@storybook/addon-actions': 6.1.11_4695a47c40ef995f48f8c834d2fb82ec
       '@storybook/addon-essentials': 6.1.11_2933e38b4d2c2f10a8e2f1fc622a27ea
       '@storybook/addon-links': 6.1.11_react-dom@17.0.1+react@17.0.1
+      '@storybook/addon-storyshots': 6.1.11_ddccebbcd72a30aa7cee43673486a78a
       '@storybook/react': 6.1.11_4cd6b9b0b5df32dd44a05e3a5690b4f7
       '@types/jest': 26.0.15
       '@types/react': 17.0.0
+      '@types/react-dom': 17.0.0
       '@types/react-test-renderer': 17.0.0
       '@typescript-eslint/eslint-plugin': 4.7.0_e0872ac31e5aafe6623f77947c0152d6
       '@typescript-eslint/parser': 4.7.0_eslint@7.13.0+typescript@4.0.5
@@ -14219,7 +14407,7 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-dknVyhg4tq1qjKPGqSzPrvVj1AXGq6CdVNdqR3BR2Z8A8P7S1h6eSyn1Wza/88RyKbkQqR5VMdvEuUsV8KldtQ==
+      integrity: sha512-loQhwbHtXBH679g9DBQ6SIpcOh/fuEoDbsl6EFKpQHNwmrv8+2xRZwka304BNxg98ivds6fimBFTst9YawIQqA==
       tarball: 'file:projects/admin-react-components.tgz'
     version: 0.0.0
   'file:projects/benchpress.tgz':
@@ -14250,7 +14438,7 @@ packages:
     dev: false
     name: '@rush-temp/cli'
     resolution:
-      integrity: sha512-1KdzTOsvWbynDR7rEJmpNw6dOFyL1FIc25g3AKQevtlpyQF0VY7zGwx75IbCY2ZLrmlS4uq7ZwHzwM/PRvdAzw==
+      integrity: sha512-KlQdtfHW8puRueqAoqXJqnWTbb915S2ud9Pro/7o/c7bh/p+2GdnnY6BRMGdWvb5W8lBxX95RHN7BfsUfdHz3g==
       tarball: 'file:projects/cli.tgz'
     version: 0.0.0
   'file:projects/core.tgz':
@@ -14271,7 +14459,7 @@ packages:
     dev: false
     name: '@rush-temp/core'
     resolution:
-      integrity: sha512-CCbJwyirlGo5osct5lBykyEnHTLvR1GhMy4a8jZ8eaBrQ7G+p8N4dRAzsKssoIildJHNzuJtei39XWHS5ptmHg==
+      integrity: sha512-BEj+k3bcC9cqrJzGSU1gAwXjXBEwfR5BtsspfZbSTgdqGDyg2HvA3uO28x4etiASDAdehxzBKp5hOytZIGK3mQ==
       tarball: 'file:projects/core.tgz'
     version: 0.0.0
   'file:projects/datadata-examples-foo.tgz_graphql@15.4.0':
@@ -14293,7 +14481,7 @@ packages:
     peerDependencies:
       graphql: '*'
     resolution:
-      integrity: sha512-UGEmB5JVMwWjnq7S4kpFno0HmHP0by+V80IS1DWoEcj+i+mbdiPWq/NQa/8RZb5vDsTWXAiqATN5ZmDROF8BsQ==
+      integrity: sha512-r57JxnOEhX7IYZHSZnq0JO4UqjCXNDr5VRyaBeqVnT+UUvvyWD8IWT2W50U1qWW499Zd/ZhN0x2h65BEmNnQcw==
       tarball: 'file:projects/datadata-examples-foo.tgz'
     version: 0.0.0
   'file:projects/datadata-examples-next-web.tgz':
@@ -14344,7 +14532,7 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-4RpQpzqbJ8kb1JeAkuxFB7tbESqBb1wYBDbbHt6Xy30jne4ETcTm/Kn+n+s8keuaDWtr9RotrPl+oJbMHdN7Xw==
+      integrity: sha512-A4ysPLAIWja1ebviRjNunVSy0oWLAQKKNTyXo9j339fArv4Z0bGugVa/eDEIB7BmUahzh8biztMdNnwueYyfjA==
       tarball: 'file:projects/graphql.tgz'
     version: 0.0.0
   'file:projects/postgres.tgz':
@@ -14394,6 +14582,7 @@ specifiers:
   '@storybook/addon-actions': ^6.1.11
   '@storybook/addon-essentials': ^6.1.11
   '@storybook/addon-links': ^6.1.11
+  '@storybook/addon-storyshots': ^6.1.11
   '@storybook/react': ^6.1.11
   '@types/express': ~4.17.9
   '@types/inquirer': ^7.3.1

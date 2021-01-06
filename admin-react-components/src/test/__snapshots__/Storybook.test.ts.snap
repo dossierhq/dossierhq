@@ -1,0 +1,103 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots Components/EntityEditor Deleted Foo 1`] = `
+<form
+  onSubmit={[Function]}
+>
+  <div>
+    <label>
+      Name
+    </label>
+    <input
+      onChange={[Function]}
+      type="text"
+      value="Hello"
+    />
+  </div>
+  <hr />
+  <div>
+    <label>
+      title
+    </label>
+    <input
+      onChange={[Function]}
+      type="text"
+      value=""
+    />
+  </div>
+  <input
+    type="submit"
+    value="Save"
+  />
+</form>
+`;
+
+exports[`Storyshots Components/EntityEditor Full Foo 1`] = `
+<form
+  onSubmit={[Function]}
+>
+  <div>
+    <label>
+      Name
+    </label>
+    <input
+      onChange={[Function]}
+      type="text"
+      value="Hello"
+    />
+  </div>
+  <hr />
+  <div>
+    <label>
+      title
+    </label>
+    <input
+      onChange={[Function]}
+      type="text"
+      value="Hello"
+    />
+  </div>
+  <input
+    type="submit"
+    value="Save"
+  />
+</form>
+`;
+
+exports[`Storyshots Components/EntityEditor New Foo 1`] = `
+<form
+  onSubmit={[Function]}
+>
+  <div>
+    <label>
+      Name
+    </label>
+    <input
+      onChange={[Function]}
+      type="text"
+      value=""
+    />
+  </div>
+  <hr />
+  <div>
+    <label>
+      title
+    </label>
+    <input
+      onChange={[Function]}
+      type="text"
+      value=""
+    />
+  </div>
+  <input
+    type="submit"
+    value="Save"
+  />
+</form>
+`;
+
+exports[`Storyshots Components/HelloWorld Normal 1`] = `
+<div>
+  Hello world
+</div>
+`;
