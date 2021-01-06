@@ -25,6 +25,7 @@
     "@storybook/addon-actions": "^6.1.11",
     "@storybook/addon-essentials": "^6.1.11",
     "@storybook/addon-links": "^6.1.11",
+    "@storybook/addon-storyshots": "^6.1.11",
     "@storybook/react": "^6.1.11",
     "@types/jest": "~26.0.15",
     "@types/react-test-renderer": "~17.0.0",
