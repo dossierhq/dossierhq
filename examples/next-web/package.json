@@ -13,10 +13,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "start:cli": "env TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' npx ts-node cli.ts",
     "ts:check": "tsc --noEmit"
   },
   "dependencies": {
     "@datadata/admin-react-components": "1.0.0",
+    "@datadata/cli": "1.0.0",
     "@datadata/core": "1.0.0",
     "@datadata/server": "1.0.0",
     "@hapi/boom": "~9.1.1",
@@ -38,6 +40,7 @@
     "eslint": "^7.13.0",
     "eslint-plugin-react": "~7.22.0",
     "prettier": "2.1.2",
+    "ts-node": "^9.0.0",
     "typescript": "^4.0.5"
   }
 }
