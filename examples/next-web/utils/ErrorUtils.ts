@@ -1,0 +1,19 @@
+import type { ErrorResult } from '@datadata/core';
+import { ErrorType } from '@datadata/core';
+import boom, { boomify } from '@hapi/boom';
+import type { Boom } from '@hapi/boom';
+
+export function errorResultToBoom(error: ErrorResult<unknown, ErrorType>): Boom {
+  switch (error.error) {
+    case ErrorType.BadRequest:
+      return boom.badRequest(error.message);
+    case ErrorType.Conflict:
+      return boom.conflict(error.message);
+    case ErrorType.NotAuthenticated:
+      return boom.unauthorized(error.message);
+    case ErrorType.NotFound:
+      return boom.notFound(error.message);
+    default:
+      return boomify(error.toError());
+  }
+}

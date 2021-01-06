@@ -1,10 +1,23 @@
 import Boom from '@hapi/boom';
+import Joi, { ObjectSchema } from '@hapi/joi';
 import debug from 'debug';
-import { NextApiResponse, NextApiRequest } from 'next';
+import type { NextApiResponse, NextApiRequest } from 'next';
 
 const debugWarn = debug('app:w:handler');
 
-function handleError<T>(res: NextApiResponse<T>, error: Error) {
+export function validateRequestQuery<T>(
+  value: NextApiRequest['query'],
+  schema: ObjectSchema<T>
+): T {
+  try {
+    return Joi.attempt(value, schema);
+  } catch (error) {
+    debugWarn('Failed validation', error.message);
+    throw Boom.badRequest();
+  }
+}
+
+export function handleError<T>(res: NextApiResponse<T>, error: Error): void {
   const boomError = Boom.boomify(error);
   for (const [name, value] of Object.entries(boomError.output.headers)) {
     res.setHeader(name, value);
