@@ -99,6 +99,10 @@ function createAdminEntity(
   } else {
     result = { _type: originalEntity._type, _name: state.name };
   }
-  //TODO fields
+  for (const { fieldSpec, value, initialValue } of state.fields) {
+    if (value !== initialValue) {
+      result[fieldSpec.name] = value;
+    }
+  }
   return result;
 }
