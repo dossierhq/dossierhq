@@ -1,7 +1,7 @@
 import type { SchemaSpecification } from '@datadata/core';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { handleGetAsync } from '../../utils/HandlerUtils';
-import { getServerConnection } from '../../utils/ServerConnection';
+import { getServerConnection } from '../../utils/ServerUtils';
 
 export default async (
   req: NextApiRequest,
