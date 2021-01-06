@@ -49,6 +49,10 @@ function grant_access_for_user {
   create_database "datadata-examples-foo"
   grant_access_for_user "datadata-examples-foo" "examplesfoouser"
 
+  create_user "examplesnextwebuser" "examplesnextwebpass"
+  create_database "datadata-examples-next-web"
+  grant_access_for_user "datadata-examples-next-web" "examplesnextwebuser"
+
   create_user "graphqltestuser" "graphqltestpass"
   create_database "datadata-graphql"
   grant_access_for_user "datadata-graphql" "graphqltestuser"

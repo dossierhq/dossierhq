@@ -3,5 +3,9 @@
   "files.insertFinalNewline": true,
   "editor.tabSize": 2,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "cSpell.words": ["datadata"]
+  "cSpell.words": [
+    "boomify",
+    "datadata",
+    "postgres"
+  ]
 }
