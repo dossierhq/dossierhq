@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "ci:check": "npm run ts:check && npm run eslint:check && npm run prettier:check",
+    "db:cli": "./scripts/db-cli.sh",
+    "db:migrate": "./scripts/db-migrate.sh",
     "eslint:check": "eslint .",
     "eslint:fix": "eslint --fix .",
     "prettier:check": "prettier --check .",
@@ -15,12 +17,17 @@
   },
   "dependencies": {
     "@datadata/admin-react-components": "1.0.0",
+    "@datadata/core": "1.0.0",
+    "@datadata/server": "1.0.0",
+    "@hapi/boom": "~9.1.1",
+    "debug": "~4.3.1",
     "next": "~10.0.4",
     "next-transpile-modules": "~6.0.0",
     "react": "~17.0.1",
     "react-dom": "~17.0.1"
   },
   "devDependencies": {
+    "@datadata/postgres": "1.0.0",
     "@types/node": "^14.14.7",
     "@types/react": "~17.0.0",
     "@typescript-eslint/eslint-plugin": "^4.6.1",
