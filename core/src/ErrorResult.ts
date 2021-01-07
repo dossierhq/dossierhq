@@ -1,7 +1,11 @@
 export enum ErrorType {
+  /** Corresponds to 400 Bad Request */
   BadRequest = 'BadRequest',
+  /** Corresponds to 409 Conflict */
   Conflict = 'Conflict',
+  /** Corresponds to 401 Unauthenticated */
   NotAuthenticated = 'NotAuthenticated',
+  /** Corresponds to 404 Not Found */
   NotFound = 'NotFound',
 }
 
