@@ -42,7 +42,7 @@ export async function handleGetAsync<T>(
 ): Promise<void> {
   await handleAsync(res, async () => {
     if (req.method !== 'GET') {
-      throw Boom.badRequest();
+      throw Boom.methodNotAllowed(undefined, undefined, 'GET');
     }
     const body = await handler();
     res.status(200).json(body);
@@ -51,31 +51,29 @@ export async function handleGetAsync<T>(
 
 export async function handlePostAsync<T, R>(
   req: NextApiRequest,
-  res: NextApiResponse,
+  res: NextApiResponse<R>,
   handler: (body: T) => Promise<{ location: string; body: R }>
 ): Promise<void> {
   await handleAsync(res, async () => {
     if (req.method !== 'POST') {
-      throw Boom.badRequest();
+      throw Boom.methodNotAllowed(undefined, undefined, 'POST');
     }
-    const requestBody = JSON.parse(req.body);
-    const { location, body: responseBody } = await handler(requestBody);
+    const { location, body: responseBody } = await handler(req.body);
     res.setHeader('Location', location);
     res.status(201).json(responseBody);
   });
 }
 
-export async function handlePutAsync<T>(
+export async function handlePutAsync<T, R>(
   req: NextApiRequest,
-  res: NextApiResponse,
-  handler: (body: T) => Promise<void>
+  res: NextApiResponse<R>,
+  handler: (body: T) => Promise<R>
 ): Promise<void> {
   await handleAsync(res, async () => {
     if (req.method !== 'PUT') {
-      throw Boom.badRequest();
+      throw Boom.methodNotAllowed(undefined, undefined, 'PUT');
     }
-    const body = JSON.parse(req.body);
-    await handler(body);
-    res.json({ success: true });
+    const responseBody = await handler(req.body);
+    res.status(200).json(responseBody);
   });
 }
