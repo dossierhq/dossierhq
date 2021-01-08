@@ -1,0 +1,121 @@
+/* 
+  TYPOGRAPHY
+*/
+:root {
+  --dd-font-family-headlines: Helvetica, sans-serif;
+  --dd-font-family-normal: Helvetica, sans-serif;
+}
+
+.dd.text-headline1 {
+  font-family: var(--dd-font-family-headlines);
+  font-size: 6rem;
+}
+
+.dd.text-headline2 {
+  font-family: var(--dd-font-family-headlines);
+  font-size: 3.75rem;
+}
+
+.dd.text-headline3 {
+  font-family: var(--dd-font-family-headlines);
+  font-size: 3rem;
+}
+
+.dd.text-headline4 {
+  font-family: var(--dd-font-family-headlines);
+  font-size: 2.125rem;
+}
+
+.dd.text-headline5 {
+  font-family: var(--dd-font-family-headlines);
+  font-size: 1.5rem;
+}
+
+.dd.text-headline6 {
+  font-family: var(--dd-font-family-headlines);
+  font-size: 1.25rem;
+}
+
+.dd.text-subtitle1 {
+  font-family: var(--dd-font-family-headlines);
+  font-size: 1rem;
+}
+
+.dd.text-subtitle2 {
+  font-family: var(--dd-font-family-headlines);
+  font-size: 0.875rem;
+}
+
+.dd.text-body1 {
+  font-family: var(--dd-font-family-normal);
+  font-size: 1rem;
+}
+
+.dd.text-body2 {
+  font-family: var(--dd-font-family-normal);
+  font-size: 0.875rem;
+}
+
+.dd.text-button {
+  font-family: var(--dd-font-family-normal);
+  font-size: 0.875rem;
+  text-transform: uppercase;
+}
+
+.dd.text-caption {
+  font-family: var(--dd-font-family-normal);
+  font-size: 0.75rem;
+}
+
+.dd.text-overline {
+  font-family: var(--dd-font-family-normal);
+  font-size: 0.625rem;
+}
+
+/*
+  COLORS
+*/
+
+:root {
+  --dd-bg-color-h: 348;
+  --dd-bg-color-s: 100%;
+  --dd-bg-color-l: 61%;
+}
+
+.dd.bg-primary {
+  --dd-bg-color-h: 171;
+  --dd-bg-color-s: 100%;
+  --dd-bg-color-l: 41%;
+}
+
+/*
+  COMPONENTS
+*/
+
+.dd.button {
+  background-color: hsl(var(--dd-bg-color-h), var(--dd-bg-color-s), var(--dd-bg-color-l));
+  border-radius: 0.5em;
+  border-style: none;
+}
+
+.dd.button:hover {
+  background-color: hsl(
+    var(--dd-bg-color-h),
+    var(--dd-bg-color-s),
+    calc(var(--dd-bg-color-l) - 10%)
+  );
+}
+
+.dd.button:disabled {
+  background-color: hsl(
+    var(--dd-bg-color-h),
+    var(--dd-bg-color-s),
+    calc(var(--dd-bg-color-l) + 10%)
+  );
+}
+
+.dd.divider {
+  border-style: none;
+  border-top: 1px solid rgba(34, 36, 38, 0.15);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}

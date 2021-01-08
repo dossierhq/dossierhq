@@ -1,3 +1,4 @@
+import '@datadata/admin-react-components/src/main.css';
 import '../styles/globals.css';
 
 function MyApp({
