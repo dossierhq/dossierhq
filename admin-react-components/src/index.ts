@@ -1,3 +1,4 @@
+export { Divider } from './Divider/Divider';
 export { EntityEditor } from './EntityEditor/EntityEditor';
 export { Form } from './Form/Form';
 export { FormField } from './FormField/FormField';

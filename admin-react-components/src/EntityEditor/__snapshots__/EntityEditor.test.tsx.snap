@@ -2,23 +2,32 @@
 
 exports[`DeletedFoo render 1`] = `
 <form
+  className="dd-form"
   onSubmit={[Function]}
 >
   <div>
-    <label>
+    <label
+      className="dd text-subtitle1"
+    >
       Name
       <input
+        className="dd text-body1"
         onChange={[Function]}
         type="text"
         value="Hello"
       />
     </label>
   </div>
-  <hr />
+  <hr
+    className="dd divider"
+  />
   <div>
-    <label>
+    <label
+      className="dd text-subtitle1"
+    >
       title
       <input
+        className="dd text-body1"
         onChange={[Function]}
         type="text"
         value=""
@@ -26,6 +35,7 @@ exports[`DeletedFoo render 1`] = `
     </label>
   </div>
   <input
+    className="dd button text-button bg-primary"
     disabled={false}
     type="submit"
     value="Save"
@@ -35,23 +45,32 @@ exports[`DeletedFoo render 1`] = `
 
 exports[`FullFoo render 1`] = `
 <form
+  className="dd-form"
   onSubmit={[Function]}
 >
   <div>
-    <label>
+    <label
+      className="dd text-subtitle1"
+    >
       Name
       <input
+        className="dd text-body1"
         onChange={[Function]}
         type="text"
         value="Hello"
       />
     </label>
   </div>
-  <hr />
+  <hr
+    className="dd divider"
+  />
   <div>
-    <label>
+    <label
+      className="dd text-subtitle1"
+    >
       title
       <input
+        className="dd text-body1"
         onChange={[Function]}
         type="text"
         value="Hello"
@@ -59,6 +78,7 @@ exports[`FullFoo render 1`] = `
     </label>
   </div>
   <input
+    className="dd button text-button bg-primary"
     disabled={false}
     type="submit"
     value="Save"
@@ -68,23 +88,32 @@ exports[`FullFoo render 1`] = `
 
 exports[`NewFoo render 1`] = `
 <form
+  className="dd-form"
   onSubmit={[Function]}
 >
   <div>
-    <label>
+    <label
+      className="dd text-subtitle1"
+    >
       Name
       <input
+        className="dd text-body1"
         onChange={[Function]}
         type="text"
         value=""
       />
     </label>
   </div>
-  <hr />
+  <hr
+    className="dd divider"
+  />
   <div>
-    <label>
+    <label
+      className="dd text-subtitle1"
+    >
       title
       <input
+        className="dd text-body1"
         onChange={[Function]}
         type="text"
         value=""
@@ -92,6 +121,7 @@ exports[`NewFoo render 1`] = `
     </label>
   </div>
   <input
+    className="dd button text-button bg-primary"
     disabled={true}
     type="submit"
     value="Save"

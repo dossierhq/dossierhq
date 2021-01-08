@@ -1,10 +1,17 @@
 import React from 'react';
 
-interface Props {
+export interface InputSubmitProps {
   value: string;
   disabled?: boolean;
 }
 
-export function InputSubmit({ value, disabled }: Props): JSX.Element {
-  return <input type="submit" value={value} disabled={disabled} />;
+export function InputSubmit({ value, disabled }: InputSubmitProps): JSX.Element {
+  return (
+    <input
+      className="dd button text-button bg-primary"
+      type="submit"
+      value={value}
+      disabled={disabled}
+    />
+  );
 }

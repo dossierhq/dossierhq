@@ -8,7 +8,7 @@ import {
   Schema,
 } from '@datadata/core';
 import React, { useState } from 'react';
-import { Form, FormField, InputText } from '..';
+import { Divider, Form, FormField, InputText } from '..';
 import { InputSubmit } from '../InputSubmit/InputSubmit';
 
 interface NewEntity {
@@ -47,7 +47,7 @@ export function EntityEditor({ entity, schema, onSubmit }: EntityEditorProps): J
       <FormField label="Name">
         <InputText value={state.name} onChange={(x) => setState({ ...state, name: x })} />
       </FormField>
-      <hr />
+      <Divider />
       {state.fields.map(({ fieldSpec, value, initialValue }, index) => {
         if (isStringField(fieldSpec, value)) {
           return (
