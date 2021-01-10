@@ -39,11 +39,13 @@
 .dd.text-subtitle1 {
   font-family: var(--dd-font-family-headlines);
   font-size: 1rem;
+  font-weight: 600;
 }
 
 .dd.text-subtitle2 {
   font-family: var(--dd-font-family-headlines);
   font-size: 0.875rem;
+  font-weight: 600;
 }
 
 .dd.text-body1 {
@@ -58,7 +60,8 @@
 
 .dd.text-button {
   font-family: var(--dd-font-family-normal);
-  font-size: 0.875rem;
+  font-size: 1rem;
+  font-weight: 500;
 }
 
 .dd.text-caption {
@@ -76,23 +79,28 @@
 */
 
 :root {
-  --dd-bg-color-h: 348;
-  --dd-bg-color-s: 100%;
-  --dd-bg-color-l: 61%;
+  --dd-bg-color-h: 0;
+  --dd-bg-color-s: 0%;
+  --dd-bg-color-l: 100%;
   --dd-color-h: 0;
   --dd-color-s: 0%;
   --dd-color-l: 5%;
+  --dd-color-accent: #5146ee;
 }
 
 .dd.bg-primary {
-  --dd-bg-color-h: 171;
-  --dd-bg-color-s: 100%;
-  --dd-bg-color-l: 41%;
+  --dd-bg-color-h: 141;
+  --dd-bg-color-s: 52%;
+  --dd-bg-color-l: 53%;
+  --dd-color-h: 0;
+  --dd-color-s: 0%;
+  --dd-color-l: 100%;
 }
 
 .dd.button,
 .dd.has-background {
   background-color: hsl(var(--dd-bg-color-h), var(--dd-bg-color-s), var(--dd-bg-color-l));
+  transition: background-color 0.5s;
 }
 
 .dd.button:enabled:hover,
@@ -104,22 +112,21 @@
   );
 }
 
-.dd.button:active,
+.dd.button:enabled:active,
 .dd.is-active {
-  background-color: hsl(var(--dd-bg-color-h), var(--dd-bg-color-s), var(--dd-bg-color-l));
+  background-color: hsl(
+    var(--dd-bg-color-h),
+    var(--dd-bg-color-s),
+    calc(var(--dd-bg-color-l) + 5%)
+  );
 }
 
 .dd:disabled,
 .dd.is-disabled {
-  background-color: hsl(
-    var(--dd-bg-color-h),
-    var(--dd-bg-color-s),
-    calc(var(--dd-bg-color-l) + 10%)
-  );
+  background-color: hsl(var(--dd-bg-color-h), 0%, var(--dd-bg-color-l));
 }
 
 .dd {
-  /* TODO white on dark background. var=1 or 0 */
   color: hsl(var(--dd-color-h), var(--dd-color-s), var(--dd-color-l));
 }
 
@@ -127,14 +134,48 @@
   COMPONENTS
 */
 
+.dd.form {
+  border-radius: 0.5em;
+  padding: 0.75em;
+  box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px,
+    rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+}
+
 .dd.button {
   border-radius: 0.5em;
   border-style: none;
   padding: 0.75em 1.5em;
 }
 
+.dd.form-control {
+  margin-top: 0.2em;
+  margin-bottom: 0.5em;
+  display: flex;
+  flex-direction: column;
+}
+
+.dd.input {
+  margin-left: 0px;
+  margin-right: 0px;
+  border-radius: 0.5em;
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgb(209, 213, 219);
+  padding: 0.5em 0.75em;
+  outline-color: transparent;
+  outline-width: 0px;
+}
+
+.dd.input:focus {
+  border-color: var(--dd-color-accent);
+  box-shadow: 0px 0px 0px 1px var(--dd-color-accent);
+  outline-color: transparent;
+}
+
 .dd.divider {
   border-style: none;
   border-top: 1px solid rgba(34, 36, 38, 0.15);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: 1em;
+  margin-bottom: 1em;
 }

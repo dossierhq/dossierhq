@@ -9,7 +9,7 @@ interface Props {
 export function InputText({ onChange, readOnly, value }: Props): JSX.Element {
   return (
     <input
-      className="dd text-body1"
+      className="dd text-body1 input"
       type="text"
       value={value ?? ''}
       readOnly={readOnly}

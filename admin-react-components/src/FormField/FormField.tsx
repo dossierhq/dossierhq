@@ -10,7 +10,7 @@ export function FormField({ label, children }: Props): JSX.Element {
     <div>
       <label className="dd text-subtitle1">
         {label}
-        {children}
+        <div className="dd form-control">{children}</div>
       </label>
     </div>
   );
