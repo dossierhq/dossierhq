@@ -2,7 +2,7 @@
 
 exports[`DeletedFoo render 1`] = `
 <form
-  className="dd-form"
+  className="dd form has-background"
   onSubmit={[Function]}
 >
   <div>
@@ -10,12 +10,16 @@ exports[`DeletedFoo render 1`] = `
       className="dd text-subtitle1"
     >
       Name
-      <input
-        className="dd text-body1"
-        onChange={[Function]}
-        type="text"
-        value="Hello"
-      />
+      <div
+        className="dd form-control"
+      >
+        <input
+          className="dd text-body1 input"
+          onChange={[Function]}
+          type="text"
+          value="Hello"
+        />
+      </div>
     </label>
   </div>
   <hr
@@ -26,12 +30,16 @@ exports[`DeletedFoo render 1`] = `
       className="dd text-subtitle1"
     >
       title
-      <input
-        className="dd text-body1"
-        onChange={[Function]}
-        type="text"
-        value=""
-      />
+      <div
+        className="dd form-control"
+      >
+        <input
+          className="dd text-body1 input"
+          onChange={[Function]}
+          type="text"
+          value=""
+        />
+      </div>
     </label>
   </div>
   <input
@@ -45,7 +53,7 @@ exports[`DeletedFoo render 1`] = `
 
 exports[`FullFoo render 1`] = `
 <form
-  className="dd-form"
+  className="dd form has-background"
   onSubmit={[Function]}
 >
   <div>
@@ -53,12 +61,16 @@ exports[`FullFoo render 1`] = `
       className="dd text-subtitle1"
     >
       Name
-      <input
-        className="dd text-body1"
-        onChange={[Function]}
-        type="text"
-        value="Hello"
-      />
+      <div
+        className="dd form-control"
+      >
+        <input
+          className="dd text-body1 input"
+          onChange={[Function]}
+          type="text"
+          value="Hello"
+        />
+      </div>
     </label>
   </div>
   <hr
@@ -69,12 +81,16 @@ exports[`FullFoo render 1`] = `
       className="dd text-subtitle1"
     >
       title
-      <input
-        className="dd text-body1"
-        onChange={[Function]}
-        type="text"
-        value="Hello"
-      />
+      <div
+        className="dd form-control"
+      >
+        <input
+          className="dd text-body1 input"
+          onChange={[Function]}
+          type="text"
+          value="Hello"
+        />
+      </div>
     </label>
   </div>
   <input
@@ -88,7 +104,7 @@ exports[`FullFoo render 1`] = `
 
 exports[`NewFoo render 1`] = `
 <form
-  className="dd-form"
+  className="dd form has-background"
   onSubmit={[Function]}
 >
   <div>
@@ -96,12 +112,16 @@ exports[`NewFoo render 1`] = `
       className="dd text-subtitle1"
     >
       Name
-      <input
-        className="dd text-body1"
-        onChange={[Function]}
-        type="text"
-        value=""
-      />
+      <div
+        className="dd form-control"
+      >
+        <input
+          className="dd text-body1 input"
+          onChange={[Function]}
+          type="text"
+          value=""
+        />
+      </div>
     </label>
   </div>
   <hr
@@ -112,12 +132,16 @@ exports[`NewFoo render 1`] = `
       className="dd text-subtitle1"
     >
       title
-      <input
-        className="dd text-body1"
-        onChange={[Function]}
-        type="text"
-        value=""
-      />
+      <div
+        className="dd form-control"
+      >
+        <input
+          className="dd text-body1 input"
+          onChange={[Function]}
+          type="text"
+          value=""
+        />
+      </div>
     </label>
   </div>
   <input

@@ -5,7 +5,7 @@ interface ColorSwatchProps {
   disabled?: boolean;
 }
 
-export function ColorSwatch({ className }: ColorSwatchProps) {
+export function ColorSwatch({ className }: ColorSwatchProps): JSX.Element {
   const [colors, setColors] = useState<null | { backgroundColor: string; color: string }>(null);
 
   const onRefChanged = useCallback(
