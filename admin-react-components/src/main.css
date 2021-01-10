@@ -59,7 +59,6 @@
 .dd.text-button {
   font-family: var(--dd-font-family-normal);
   font-size: 0.875rem;
-  text-transform: uppercase;
 }
 
 .dd.text-caption {
@@ -80,6 +79,9 @@
   --dd-bg-color-h: 348;
   --dd-bg-color-s: 100%;
   --dd-bg-color-l: 61%;
+  --dd-color-h: 0;
+  --dd-color-s: 0%;
+  --dd-color-l: 5%;
 }
 
 .dd.bg-primary {
@@ -88,17 +90,13 @@
   --dd-bg-color-l: 41%;
 }
 
-/*
-  COMPONENTS
-*/
-
-.dd.button {
+.dd.button,
+.dd.has-background {
   background-color: hsl(var(--dd-bg-color-h), var(--dd-bg-color-s), var(--dd-bg-color-l));
-  border-radius: 0.5em;
-  border-style: none;
 }
 
-.dd.button:hover {
+.dd.button:enabled:hover,
+.dd.is-hover {
   background-color: hsl(
     var(--dd-bg-color-h),
     var(--dd-bg-color-s),
@@ -106,12 +104,33 @@
   );
 }
 
-.dd.button:disabled {
+.dd.button:active,
+.dd.is-active {
+  background-color: hsl(var(--dd-bg-color-h), var(--dd-bg-color-s), var(--dd-bg-color-l));
+}
+
+.dd:disabled,
+.dd.is-disabled {
   background-color: hsl(
     var(--dd-bg-color-h),
     var(--dd-bg-color-s),
     calc(var(--dd-bg-color-l) + 10%)
   );
+}
+
+.dd {
+  /* TODO white on dark background. var=1 or 0 */
+  color: hsl(var(--dd-color-h), var(--dd-color-s), var(--dd-color-l));
+}
+
+/*
+  COMPONENTS
+*/
+
+.dd.button {
+  border-radius: 0.5em;
+  border-style: none;
+  padding: 0.75em 1.5em;
 }
 
 .dd.divider {
