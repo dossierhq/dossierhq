@@ -1,15 +1,13 @@
-import {
+import type {
   AdminEntity,
   AdminEntityCreate,
   AdminEntityUpdate,
   EntityTypeSpecification,
   FieldSpecification,
-  isStringField,
   Schema,
 } from '@datadata/core';
 import React, { useState } from 'react';
-import { Divider, Form, FormField, InputText } from '..';
-import { InputSubmit } from '../InputSubmit/InputSubmit';
+import { Divider, EntityFieldEditor, Form, FormField, InputSubmit, InputText } from '..';
 
 interface NewEntity {
   _type: string;
@@ -49,21 +47,20 @@ export function EntityEditor({ entity, schema, onSubmit }: EntityEditorProps): J
       </FormField>
       <Divider />
       {state.fields.map(({ fieldSpec, value, initialValue }, index) => {
-        if (isStringField(fieldSpec, value)) {
-          return (
-            <FormField key={fieldSpec.name} label={fieldSpec.name}>
-              <InputText
-                value={value}
-                onChange={(x) => {
-                  const newFields = [...state.fields];
-                  newFields[index] = { fieldSpec, value: x, initialValue };
-                  setState({ ...state, fields: newFields });
-                }}
-              />
-            </FormField>
-          );
-        }
-        throw new Error(`No support for fieldSpec ${fieldSpec.type} (list: ${!!fieldSpec.list})`);
+        const handleFieldChanged = (newValue: unknown) => {
+          const newFields = [...state.fields];
+          newFields[index] = { fieldSpec, value: newValue, initialValue };
+          setState({ ...state, fields: newFields });
+        };
+
+        return (
+          <EntityFieldEditor
+            key={fieldSpec.name}
+            fieldSpec={fieldSpec}
+            value={value}
+            onValueChanged={handleFieldChanged}
+          />
+        );
       })}
 
       <InputSubmit value="Save" disabled={!state.name} />
