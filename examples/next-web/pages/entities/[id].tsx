@@ -10,20 +10,17 @@ import { validateQuery } from '../../utils/PageUtils';
 interface RouterQuery {
   id: string;
 }
-const routerSchema = Joi.object<RouterQuery>({ id: Joi.string() });
+const routerSchema = Joi.object<RouterQuery>({ id: Joi.string().required() });
 
-export default function EntitiesIndexPage(): JSX.Element {
-  const router = useRouter();
+function PageContent({ query }: { query: RouterQuery }) {
   const [schema, setSchema] = useState<Schema | null>(null);
   const [entity, setEntity] = useState<AdminEntity | null>(null);
-
-  const { id } = validateQuery(router.query, routerSchema);
 
   useEffect(() => {
     (async () => {
       try {
         const schemaResponse = await fetchJsonAsync<SchemaResponse>(urls.schema);
-        const entityResponse = await fetchJsonAsync<EntityResponse>(urls.entity(id));
+        const entityResponse = await fetchJsonAsync<EntityResponse>(urls.entity(query.id));
 
         const schema = new Schema(schemaResponse.spec);
         setSchema(schema);
@@ -33,7 +30,7 @@ export default function EntitiesIndexPage(): JSX.Element {
         console.warn(error);
       }
     })();
-  }, [id]);
+  }, [query.id]);
 
   const handleSubmit = useCallback(
     (entity: AdminEntityCreate | AdminEntityUpdate) => {
@@ -41,7 +38,7 @@ export default function EntitiesIndexPage(): JSX.Element {
         try {
           //TODO handle create
           //TODO entity includes id on update, so always POST?
-          await fetchJsonAsync<EntityResponse>(urls.entity(id), {
+          await fetchJsonAsync<EntityResponse>(urls.entity(query.id), {
             method: 'PUT',
             headers: { 'content-type': 'application/json' },
             body: JSON.stringify({ item: entity }),
@@ -51,7 +48,7 @@ export default function EntitiesIndexPage(): JSX.Element {
         }
       })();
     },
-    [id]
+    [query.id]
   );
 
   return (
@@ -61,4 +58,15 @@ export default function EntitiesIndexPage(): JSX.Element {
       ) : null}
     </div>
   );
+}
+
+export default function EntitiesIndexPage(): JSX.Element | null {
+  const router = useRouter();
+
+  if (Object.keys(router.query).length === 0) {
+    return null;
+  }
+  const query = validateQuery(router.query, routerSchema);
+
+  return <PageContent query={query} />;
 }
