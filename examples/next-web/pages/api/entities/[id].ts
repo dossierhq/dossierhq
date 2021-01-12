@@ -16,7 +16,7 @@ import { getServerConnection, getSessionContextForRequest } from '../../../utils
 interface RequestQuery {
   id: string;
 }
-const requestSchema = Joi.object<RequestQuery>({ id: Joi.string() });
+const requestSchema = Joi.object<RequestQuery>({ id: Joi.string().required() });
 
 export default async (req: NextApiRequest, res: NextApiResponse<EntityResponse>): Promise<void> => {
   if (req.method === 'GET') {
