@@ -1,3 +1,4 @@
+import type { EntityReference } from '@datadata/core';
 import type { SessionContext } from '@datadata/server';
 import type { ItemSelectorItem, ItemSelectorSeparator } from './widgets';
 import { showItemSelector } from './widgets';
@@ -8,7 +9,7 @@ import * as CliUtils from './CliUtils';
 
 interface State {
   readonly context: SessionContext;
-  currentEntity: { id: string } | null;
+  currentEntity: EntityReference | null;
 }
 
 interface MainActionItem extends ItemSelectorItem {

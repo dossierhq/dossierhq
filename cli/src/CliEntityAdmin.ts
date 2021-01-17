@@ -12,6 +12,7 @@ import {
 } from '@datadata/core';
 import type {
   AdminEntity,
+  EntityReference,
   EntityTypeSpecification,
   FieldSpecification,
   PromiseResult,
@@ -59,7 +60,7 @@ export async function selectEntity(
   context: SessionContext,
   message: string,
   initialQuery: AdminQuery | null,
-  unusedDefaultValue: { id: string } | null
+  unusedDefaultValue: EntityReference | null
 ): PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.NotFound> {
   const { query, paging } = await configureQuery(context, initialQuery);
   const isForward = isPagingForwards(paging);
@@ -190,7 +191,7 @@ async function selectOrder(order: string | undefined) {
   return item.id;
 }
 
-export async function createEntity(context: SessionContext): Promise<{ id: string } | null> {
+export async function createEntity(context: SessionContext): Promise<EntityReference | null> {
   const type = await CliSchema.selectEntityType(context);
   const entity = {
     _type: type,
@@ -324,7 +325,7 @@ async function editField(
 async function editFieldReference(
   context: SessionContext,
   fieldSpec: FieldSpecification,
-  defaultValue: { id: string } | null
+  defaultValue: EntityReference | null
 ) {
   return await selectEntity(
     context,
@@ -337,7 +338,7 @@ async function editFieldReference(
 async function editFieldReferenceList(
   context: SessionContext,
   fieldSpec: FieldSpecification,
-  defaultValue: { id: string }[] | null
+  defaultValue: EntityReference[] | null
 ) {
   return await editFieldList(
     fieldSpec,

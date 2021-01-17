@@ -5,6 +5,10 @@ export interface Entity {
   [fieldName: string]: unknown;
 }
 
+export interface EntityReference {
+  id: string;
+}
+
 //TODO rename to ValueItem
 export interface Value {
   _type: string;

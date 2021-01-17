@@ -6,7 +6,14 @@ export type {
   SchemaSpecification,
   ValueTypeSpecification,
 } from './Schema';
-export type { AdminEntity, AdminEntityCreate, AdminEntityUpdate, Entity, Value } from './Types';
+export type {
+  AdminEntity,
+  AdminEntityCreate,
+  AdminEntityUpdate,
+  Entity,
+  EntityReference,
+  Value,
+} from './Types';
 
 export { ErrorType, ok, notOk } from './ErrorResult';
 export {
