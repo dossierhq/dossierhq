@@ -5,8 +5,7 @@ import { Auth, Server } from '@datadata/server';
 import type { NextApiRequest } from 'next';
 import SchemaSpec from './schema.json';
 
-let server: Server | null = null;
-let authContext: AuthContext | null = null;
+let serverConnectionPromise: Promise<{ server: Server; authContext: AuthContext }> | null = null;
 
 async function ensureSession(authContext: AuthContext, provider: string, identifier: string) {
   let sessionResult = await Auth.createSessionForPrincipal(authContext, provider, identifier);
@@ -42,18 +41,22 @@ export async function getSessionContextForRequest(
 }
 
 export async function getServerConnection(): Promise<{ server: Server; authContext: AuthContext }> {
-  if (!server || !authContext) {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    server = new Server({ databaseUrl: process.env.DATABASE_URL! });
-    authContext = server.createAuthContext();
+  if (!serverConnectionPromise) {
+    serverConnectionPromise = (async () => {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const server = new Server({ databaseUrl: process.env.DATABASE_URL! });
+      const authContext = server.createAuthContext();
 
-    const session = await ensureSession(authContext, 'sys', 'schemaloader');
-    const context = server.createSessionContext(session);
-    const loadSchema = await server.setSchema(
-      context,
-      new Schema(SchemaSpec as SchemaSpecification)
-    );
-    loadSchema.throwIfError();
+      const session = await ensureSession(authContext, 'sys', 'schemaloader');
+      const context = server.createSessionContext(session);
+      const loadSchema = await server.setSchema(
+        context,
+        new Schema(SchemaSpec as SchemaSpecification)
+      );
+      loadSchema.throwIfError();
+      return { server, authContext };
+    })();
   }
-  return { server, authContext };
+
+  return serverConnectionPromise;
 }
