@@ -7,3 +7,4 @@ export { FormField } from './FormField/FormField';
 export { HelloWorld } from './HelloWorld/HelloWorld';
 export { InputSubmit } from './InputSubmit/InputSubmit';
 export { InputText } from './InputText/InputText';
+export { Modal } from './Modal/Modal';
