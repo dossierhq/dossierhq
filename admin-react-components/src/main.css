@@ -179,3 +179,29 @@
   margin-top: 1em;
   margin-bottom: 1em;
 }
+
+.dd.modal {
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.dd.modal-background {
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  position: absolute;
+  background-color: #000000cc;
+}
+
+.dd.modal-content {
+  z-index: 2;
+}

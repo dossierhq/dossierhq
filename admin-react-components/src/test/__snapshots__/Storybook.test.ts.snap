@@ -40,30 +40,48 @@ exports[`Storyshots Components/Button Primary Disabled 1`] = `
 
 exports[`Storyshots Components/EntityEditor Deleted Foo 1`] = `
 <form
+  className="dd form has-background"
   onSubmit={[Function]}
 >
   <div>
-    <label>
+    <label
+      className="dd text-subtitle1"
+    >
       Name
-      <input
-        onChange={[Function]}
-        type="text"
-        value="Hello"
-      />
+      <div
+        className="dd form-control"
+      >
+        <input
+          className="dd text-body1 input"
+          onChange={[Function]}
+          type="text"
+          value="Hello"
+        />
+      </div>
     </label>
   </div>
-  <hr />
+  <hr
+    className="dd divider"
+  />
   <div>
-    <label>
+    <label
+      className="dd text-subtitle1"
+    >
       title
-      <input
-        onChange={[Function]}
-        type="text"
-        value=""
-      />
+      <div
+        className="dd form-control"
+      >
+        <input
+          className="dd text-body1 input"
+          onChange={[Function]}
+          type="text"
+          value=""
+        />
+      </div>
     </label>
   </div>
   <input
+    className="dd button text-button bg-primary"
     disabled={false}
     type="submit"
     value="Save"
@@ -73,30 +91,48 @@ exports[`Storyshots Components/EntityEditor Deleted Foo 1`] = `
 
 exports[`Storyshots Components/EntityEditor Full Foo 1`] = `
 <form
+  className="dd form has-background"
   onSubmit={[Function]}
 >
   <div>
-    <label>
+    <label
+      className="dd text-subtitle1"
+    >
       Name
-      <input
-        onChange={[Function]}
-        type="text"
-        value="Hello"
-      />
+      <div
+        className="dd form-control"
+      >
+        <input
+          className="dd text-body1 input"
+          onChange={[Function]}
+          type="text"
+          value="Hello"
+        />
+      </div>
     </label>
   </div>
-  <hr />
+  <hr
+    className="dd divider"
+  />
   <div>
-    <label>
+    <label
+      className="dd text-subtitle1"
+    >
       title
-      <input
-        onChange={[Function]}
-        type="text"
-        value="Hello"
-      />
+      <div
+        className="dd form-control"
+      >
+        <input
+          className="dd text-body1 input"
+          onChange={[Function]}
+          type="text"
+          value="Hello"
+        />
+      </div>
     </label>
   </div>
   <input
+    className="dd button text-button bg-primary"
     disabled={false}
     type="submit"
     value="Save"
@@ -106,30 +142,48 @@ exports[`Storyshots Components/EntityEditor Full Foo 1`] = `
 
 exports[`Storyshots Components/EntityEditor New Foo 1`] = `
 <form
+  className="dd form has-background"
   onSubmit={[Function]}
 >
   <div>
-    <label>
+    <label
+      className="dd text-subtitle1"
+    >
       Name
-      <input
-        onChange={[Function]}
-        type="text"
-        value=""
-      />
+      <div
+        className="dd form-control"
+      >
+        <input
+          className="dd text-body1 input"
+          onChange={[Function]}
+          type="text"
+          value=""
+        />
+      </div>
     </label>
   </div>
-  <hr />
+  <hr
+    className="dd divider"
+  />
   <div>
-    <label>
+    <label
+      className="dd text-subtitle1"
+    >
       title
-      <input
-        onChange={[Function]}
-        type="text"
-        value=""
-      />
+      <div
+        className="dd form-control"
+      >
+        <input
+          className="dd text-body1 input"
+          onChange={[Function]}
+          type="text"
+          value=""
+        />
+      </div>
     </label>
   </div>
   <input
+    className="dd button text-button bg-primary"
     disabled={true}
     type="submit"
     value="Save"
@@ -141,4 +195,21 @@ exports[`Storyshots Components/HelloWorld Normal 1`] = `
 <div>
   Hello world
 </div>
+`;
+
+exports[`Storyshots Components/InputSubmit Disabled 1`] = `
+<input
+  className="dd button text-button bg-primary"
+  disabled={true}
+  type="submit"
+  value="Done"
+/>
+`;
+
+exports[`Storyshots Components/InputSubmit Normal 1`] = `
+<input
+  className="dd button text-button bg-primary"
+  type="submit"
+  value="Done"
+/>
 `;
