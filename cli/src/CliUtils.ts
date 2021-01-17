@@ -15,6 +15,7 @@ import {
 import type {
   AdminEntity,
   Entity,
+  EntityReference,
   EntityTypeSpecification,
   ErrorResult,
   ErrorType,
@@ -185,7 +186,7 @@ export function getValueSpec(context: SessionContext, valueItem: Value): ValueTy
   return valueSpec;
 }
 
-export function isReferenceAnEntity(value: { id: string } | null): value is Entity {
+export function isReferenceAnEntity(value: EntityReference | null): value is Entity {
   return !!value && Object.keys(value).indexOf('_type') >= 0;
 }
 
