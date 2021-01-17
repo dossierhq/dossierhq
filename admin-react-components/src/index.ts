@@ -1,3 +1,4 @@
+export { Button } from './Button/Button';
 export { Divider } from './Divider/Divider';
 export { EntityEditor } from './EntityEditor/EntityEditor';
 export { EntityFieldEditor } from './EntityFieldEditor/EntityFieldEditor';

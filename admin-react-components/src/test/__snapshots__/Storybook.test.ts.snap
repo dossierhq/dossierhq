@@ -1,5 +1,43 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Storyshots Components/Button Disabled 1`] = `
+<button
+  className="dd button text-button "
+  disabled={true}
+  type="button"
+>
+  Text
+</button>
+`;
+
+exports[`Storyshots Components/Button Normal 1`] = `
+<button
+  className="dd button text-button "
+  type="button"
+>
+  Text
+</button>
+`;
+
+exports[`Storyshots Components/Button Primary 1`] = `
+<button
+  className="dd button text-button bg-primary"
+  type="button"
+>
+  Text
+</button>
+`;
+
+exports[`Storyshots Components/Button Primary Disabled 1`] = `
+<button
+  className="dd button text-button bg-primary"
+  disabled={true}
+  type="button"
+>
+  Text
+</button>
+`;
+
 exports[`Storyshots Components/EntityEditor Deleted Foo 1`] = `
 <form
   onSubmit={[Function]}
