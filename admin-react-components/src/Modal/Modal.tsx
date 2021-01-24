@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 interface ModalProps {
   show: boolean;
@@ -10,6 +10,12 @@ export function Modal({ show, onClose, children }: ModalProps): JSX.Element | nu
   if (!show) {
     return null;
   }
+
+  useEffect(() => {
+    if (show && document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
+  }, [show]);
 
   return (
     <div className="dd modal">
