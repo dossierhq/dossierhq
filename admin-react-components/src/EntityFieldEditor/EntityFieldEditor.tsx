@@ -10,11 +10,15 @@ interface Props {
 }
 
 export function EntityFieldEditor({ fieldSpec, value, onValueChanged }: Props): JSX.Element {
-  let editor;
-  if (isStringField(fieldSpec, value)) {
-    editor = <InputText value={value} onChange={onValueChanged} />;
-  } else {
-    return <div>{`${fieldSpec.type} (list: ${!!fieldSpec.list})`} is not supported</div>;
-  }
-  return <FormField label={fieldSpec.name}>{editor}</FormField>;
+  return (
+    <FormField
+      label={fieldSpec.name}
+      render={({ id }) => {
+        if (isStringField(fieldSpec, value)) {
+          return <InputText id={id} value={value} onChange={onValueChanged} />;
+        }
+        return <div>{`${fieldSpec.type} (list: ${!!fieldSpec.list})`} is not supported</div>;
+      }}
+    />
+  );
 }

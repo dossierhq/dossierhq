@@ -42,9 +42,12 @@ export function EntityEditor({ entity, schema, onSubmit }: EntityEditorProps): J
 
   return (
     <Form onSubmit={() => onSubmit(createAdminEntity(entity, state))}>
-      <FormField label="Name">
-        <InputText value={state.name} onChange={(x) => setState({ ...state, name: x })} />
-      </FormField>
+      <FormField
+        label="Name"
+        render={({ id }) => (
+          <InputText id={id} value={state.name} onChange={(x) => setState({ ...state, name: x })} />
+        )}
+      />
       <Divider />
       {state.fields.map(({ fieldSpec, value, initialValue }, index) => {
         const handleFieldChanged = (newValue: unknown) => {

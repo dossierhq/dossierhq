@@ -1,17 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 interface Props {
   label: string;
-  children: React.ReactNode;
+  render: ({ id }: { id: string }) => React.ReactNode;
 }
 
-export function FormField({ label, children }: Props): JSX.Element {
+export function FormField({ label, render }: Props): JSX.Element {
+  const [id] = useState(String(Math.random()));
   return (
     <div>
-      <label className="dd text-subtitle1">
+      <label htmlFor={id} className="dd text-subtitle1">
         {label}
-        <div className="dd form-control">{children}</div>
       </label>
+      <div className="dd form-control">{render({ id })}</div>
     </div>
   );
 }
