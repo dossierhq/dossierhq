@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useKeyHandler } from '../utils/KeyboardUtils';
 
 interface ModalProps {
   show: boolean;
@@ -16,6 +17,8 @@ export function Modal({ show, onClose, children }: ModalProps): JSX.Element | nu
       document.activeElement.blur();
     }
   }, [show]);
+
+  useKeyHandler(['Escape'], onClose);
 
   return (
     <div className="dd modal">
