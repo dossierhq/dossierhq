@@ -13,13 +13,7 @@ export function Modal({ show, onClose, children }: ModalProps): JSX.Element | nu
 
   return (
     <div className="dd modal">
-      <div
-        className="dd modal-background"
-        onClick={(e) => {
-          e.preventDefault(); // TODO without this the show button activates and the modal shows again, figure out why
-          onClose();
-        }}
-      />
+      <div className="dd modal-background" onClick={onClose} />
       <div className="dd modal-content has-background">{children}</div>
     </div>
   );
