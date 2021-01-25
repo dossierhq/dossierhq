@@ -8,19 +8,21 @@ exports[`DeletedFoo render 1`] = `
   <div>
     <label
       className="dd text-subtitle1"
+      htmlFor="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-_name"
     >
       Name
-      <div
-        className="dd form-control"
-      >
-        <input
-          className="dd text-body1 input"
-          onChange={[Function]}
-          type="text"
-          value="Hello"
-        />
-      </div>
     </label>
+    <div
+      className="dd form-control"
+    >
+      <input
+        className="dd text-body1 input"
+        id="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-_name"
+        onChange={[Function]}
+        type="text"
+        value="Hello"
+      />
+    </div>
   </div>
   <hr
     className="dd divider"
@@ -28,19 +30,21 @@ exports[`DeletedFoo render 1`] = `
   <div>
     <label
       className="dd text-subtitle1"
+      htmlFor="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-title"
     >
       title
-      <div
-        className="dd form-control"
-      >
-        <input
-          className="dd text-body1 input"
-          onChange={[Function]}
-          type="text"
-          value=""
-        />
-      </div>
     </label>
+    <div
+      className="dd form-control"
+    >
+      <input
+        className="dd text-body1 input"
+        id="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-title"
+        onChange={[Function]}
+        type="text"
+        value=""
+      />
+    </div>
   </div>
   <input
     className="dd button text-button bg-primary"
@@ -59,19 +63,21 @@ exports[`FullFoo render 1`] = `
   <div>
     <label
       className="dd text-subtitle1"
+      htmlFor="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-_name"
     >
       Name
-      <div
-        className="dd form-control"
-      >
-        <input
-          className="dd text-body1 input"
-          onChange={[Function]}
-          type="text"
-          value="Hello"
-        />
-      </div>
     </label>
+    <div
+      className="dd form-control"
+    >
+      <input
+        className="dd text-body1 input"
+        id="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-_name"
+        onChange={[Function]}
+        type="text"
+        value="Hello"
+      />
+    </div>
   </div>
   <hr
     className="dd divider"
@@ -79,19 +85,21 @@ exports[`FullFoo render 1`] = `
   <div>
     <label
       className="dd text-subtitle1"
+      htmlFor="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-title"
     >
       title
-      <div
-        className="dd form-control"
-      >
-        <input
-          className="dd text-body1 input"
-          onChange={[Function]}
-          type="text"
-          value="Hello"
-        />
-      </div>
     </label>
+    <div
+      className="dd form-control"
+    >
+      <input
+        className="dd text-body1 input"
+        id="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-title"
+        onChange={[Function]}
+        type="text"
+        value="Hello"
+      />
+    </div>
   </div>
   <input
     className="dd button text-button bg-primary"
@@ -110,19 +118,21 @@ exports[`NewFoo render 1`] = `
   <div>
     <label
       className="dd text-subtitle1"
+      htmlFor="new-entity-123-_name"
     >
       Name
-      <div
-        className="dd form-control"
-      >
-        <input
-          className="dd text-body1 input"
-          onChange={[Function]}
-          type="text"
-          value=""
-        />
-      </div>
     </label>
+    <div
+      className="dd form-control"
+    >
+      <input
+        className="dd text-body1 input"
+        id="new-entity-123-_name"
+        onChange={[Function]}
+        type="text"
+        value=""
+      />
+    </div>
   </div>
   <hr
     className="dd divider"
@@ -130,19 +140,21 @@ exports[`NewFoo render 1`] = `
   <div>
     <label
       className="dd text-subtitle1"
+      htmlFor="new-entity-123-title"
     >
       title
-      <div
-        className="dd form-control"
-      >
-        <input
-          className="dd text-body1 input"
-          onChange={[Function]}
-          type="text"
-          value=""
-        />
-      </div>
     </label>
+    <div
+      className="dd form-control"
+    >
+      <input
+        className="dd text-body1 input"
+        id="new-entity-123-title"
+        onChange={[Function]}
+        type="text"
+        value=""
+      />
+    </div>
   </div>
   <input
     className="dd button text-button bg-primary"
