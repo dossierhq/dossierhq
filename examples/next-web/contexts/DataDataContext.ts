@@ -1,21 +1,8 @@
 import type { DataDataContextValue } from '@datadata/admin-react-components';
-import type {
-  AdminEntity,
-  Connection,
-  Edge,
-  ErrorResult,
-  PromiseResult,
-  Result,
-} from '@datadata/core';
-import { createErrorResult, ErrorType, ok, Schema } from '@datadata/core';
+import type { AdminEntity, Connection, Edge, ErrorResult, PromiseResult } from '@datadata/core';
+import { convertJsonConnection, convertJsonEdge, ErrorType, ok, Schema } from '@datadata/core';
 import { useEffect, useMemo, useState } from 'react';
-import type {
-  JsonConnection,
-  JsonEdge,
-  JsonResult,
-  SchemaResponse,
-  SearchEntitiesResponse,
-} from '../types/ResponseTypes';
+import type { SchemaResponse, SearchEntitiesResponse } from '../types/ResponseTypes';
 import { fetchJsonAsync, fetchJsonResult, urls } from '../utils/BackendUtils';
 
 class ContextValue implements DataDataContextValue {
@@ -39,28 +26,6 @@ class ContextValue implements DataDataContextValue {
     }
     return result as ErrorResult<unknown, ErrorType.BadRequest>;
   }
-}
-
-function convertJsonEdge<TOk, TError extends ErrorType>(
-  jsonEdge: JsonEdge<TOk, TError>
-): Edge<TOk, TError> {
-  return { node: convertJsonResult(jsonEdge.node), cursor: jsonEdge.cursor };
-}
-
-function convertJsonResult<TOk, TError extends ErrorType>(
-  jsonResult: JsonResult<TOk, TError>
-): Result<TOk, TError> {
-  if ('value' in jsonResult) {
-    return ok(jsonResult.value);
-  }
-  return createErrorResult(jsonResult.error, jsonResult.message);
-}
-
-function convertJsonConnection<
-  TIn extends JsonEdge<unknown, ErrorType>,
-  TOut extends Edge<unknown, ErrorType>
->(jsonConnection: JsonConnection<TIn>, edgeConverter: (edge: TIn) => TOut): Connection<TOut> {
-  return { pageInfo: jsonConnection.pageInfo, edges: jsonConnection.edges.map(edgeConverter) };
 }
 
 async function loadSchema() {
