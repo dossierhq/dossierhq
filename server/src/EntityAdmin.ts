@@ -3,11 +3,13 @@ import type {
   AdminEntity,
   AdminEntityCreate,
   AdminEntityUpdate,
+  Connection,
+  Edge,
   ErrorType,
   PromiseResult,
   Result,
 } from '@datadata/core';
-import type { Connection, Edge, Paging, SessionContext } from '.';
+import type { Paging, SessionContext } from '.';
 import { toOpaqueCursor } from './Connection';
 import * as Db from './Db';
 import type { EntitiesTable, EntityVersionsTable } from './DbTableTypes';

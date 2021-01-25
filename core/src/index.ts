@@ -1,3 +1,4 @@
+export type { Connection, Edge, PageInfo } from './Connection';
 export type { ErrorResult, OkResult, PromiseResult, Result } from './ErrorResult';
 export type {
   EntityTypeSpecification,
