@@ -55,9 +55,11 @@ export class ErrorResult<TOk, TError extends ErrorType> {
   }
 }
 
-function createError<TError extends ErrorType>(error: TError, message: string) {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return new ErrorResult<any, TError>(error, message);
+export function createErrorResult<TError extends ErrorType>(
+  error: TError,
+  message: string
+): ErrorResult<unknown, TError> {
+  return new ErrorResult<unknown, TError>(error, message);
 }
 
 export function ok<TOk, TError extends ErrorType>(value: TOk): OkResult<TOk, TError> {
@@ -66,11 +68,11 @@ export function ok<TOk, TError extends ErrorType>(value: TOk): OkResult<TOk, TEr
 
 export const notOk = {
   BadRequest: (message: string): ErrorResult<unknown, ErrorType.BadRequest> =>
-    createError(ErrorType.BadRequest, message),
+    createErrorResult(ErrorType.BadRequest, message),
   Conflict: (message: string): ErrorResult<unknown, ErrorType.Conflict> =>
-    createError(ErrorType.Conflict, message),
+    createErrorResult(ErrorType.Conflict, message),
   NotAuthenticated: (message: string): ErrorResult<unknown, ErrorType.NotAuthenticated> =>
-    createError(ErrorType.NotAuthenticated, message),
+    createErrorResult(ErrorType.NotAuthenticated, message),
   NotFound: (message: string): ErrorResult<unknown, ErrorType.NotFound> =>
-    createError(ErrorType.NotFound, message),
+    createErrorResult(ErrorType.NotFound, message),
 };
