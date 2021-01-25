@@ -1,8 +1,22 @@
 import type { DataDataContextValue } from '@datadata/admin-react-components';
-import { Schema } from '@datadata/core';
+import type {
+  AdminEntity,
+  Connection,
+  Edge,
+  ErrorResult,
+  PromiseResult,
+  Result,
+} from '@datadata/core';
+import { createErrorResult, ErrorType, ok, Schema } from '@datadata/core';
 import { useEffect, useMemo, useState } from 'react';
-import type { SchemaResponse } from '../types/ResponseTypes';
-import { fetchJsonAsync, urls } from '../utils/BackendUtils';
+import type {
+  JsonConnection,
+  JsonEdge,
+  JsonResult,
+  SchemaResponse,
+  SearchEntitiesResponse,
+} from '../types/ResponseTypes';
+import { fetchJsonAsync, fetchJsonResult, urls } from '../utils/BackendUtils';
 
 class ContextValue implements DataDataContextValue {
   schema: Schema;
@@ -10,6 +24,43 @@ class ContextValue implements DataDataContextValue {
   constructor(schema: Schema) {
     this.schema = schema;
   }
+
+  async searchEntities(): PromiseResult<
+    Connection<Edge<AdminEntity, ErrorType>> | null,
+    ErrorType.BadRequest
+  > {
+    const result = await fetchJsonResult<SearchEntitiesResponse, ErrorType.BadRequest>(
+      [ErrorType.BadRequest],
+      urls.searchEntities
+    );
+    if (result.isOk() && result.value?.edges) {
+      const connection = convertJsonConnection(result.value, convertJsonEdge);
+      return ok(connection);
+    }
+    return result as ErrorResult<unknown, ErrorType.BadRequest>;
+  }
+}
+
+function convertJsonEdge<TOk, TError extends ErrorType>(
+  jsonEdge: JsonEdge<TOk, TError>
+): Edge<TOk, TError> {
+  return { node: convertJsonResult(jsonEdge.node), cursor: jsonEdge.cursor };
+}
+
+function convertJsonResult<TOk, TError extends ErrorType>(
+  jsonResult: JsonResult<TOk, TError>
+): Result<TOk, TError> {
+  if ('value' in jsonResult) {
+    return ok(jsonResult.value);
+  }
+  return createErrorResult(jsonResult.error, jsonResult.message);
+}
+
+function convertJsonConnection<
+  TIn extends JsonEdge<unknown, ErrorType>,
+  TOut extends Edge<unknown, ErrorType>
+>(jsonConnection: JsonConnection<TIn>, edgeConverter: (edge: TIn) => TOut): Connection<TOut> {
+  return { pageInfo: jsonConnection.pageInfo, edges: jsonConnection.edges.map(edgeConverter) };
 }
 
 async function loadSchema() {
