@@ -1,4 +1,6 @@
+export type { DataDataContextValue } from './contexts/DataDataContext';
 export { Button } from './Button/Button';
+export { DataDataContext } from './contexts/DataDataContext';
 export { Divider } from './Divider/Divider';
 export { EntityEditor } from './EntityEditor/EntityEditor';
 export { EntityFieldEditor } from './EntityFieldEditor/EntityFieldEditor';
