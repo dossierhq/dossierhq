@@ -1,8 +1,16 @@
 import { useEffect, useRef } from 'react';
 
+export function useWindowEventListener<K extends keyof WindowEventMap>(
+  type: K,
+  listener: (ev: WindowEventMap[K]) => void | EventListenerObject,
+  options?: boolean | AddEventListenerOptions
+): void {
+  useEventListener(window, type, listener as EventListenerOrEventListenerObject, options);
+}
+
 export function useDocumentEventListener<K extends keyof DocumentEventMap>(
   type: K,
-  listener: (ev: DocumentEventMap[K]) => void | { handleEvent: (ev: DocumentEventMap[K]) => void },
+  listener: (ev: DocumentEventMap[K]) => void | EventListenerObject,
   options?: boolean | AddEventListenerOptions
 ): void {
   useEventListener(document, type, listener as EventListenerOrEventListenerObject, options);
