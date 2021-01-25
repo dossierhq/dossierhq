@@ -16,7 +16,7 @@ export type {
   Value,
 } from './Types';
 
-export { ErrorType, ok, notOk } from './ErrorResult';
+export { createErrorResult, ErrorType, ok, notOk } from './ErrorResult';
 export {
   isEntityTypeField,
   isEntityTypeItemField,
