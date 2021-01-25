@@ -17,16 +17,19 @@ export function EntityFieldEditor({
   onValueChanged,
 }: Props): JSX.Element {
   const id = `${idPrefix}-${fieldSpec.name}`;
+
+  let editor;
+  if (isStringField(fieldSpec, value)) {
+    editor = <InputText id={id} value={value} onChange={onValueChanged} />;
+  } else if (isEntityTypeField(fieldSpec, value)) {
+    editor = <EntityPicker id={id} value={value} onChange={onValueChanged} />;
+  } else {
+    editor = <div>{`${fieldSpec.type} (list: ${!!fieldSpec.list})`} is not supported</div>;
+  }
+
   return (
-    <FormField
-      controlId={id}
-      label={fieldSpec.name}
-      render={({ id }) => {
-        if (isStringField(fieldSpec, value)) {
-          return <InputText id={id} value={value} onChange={onValueChanged} />;
-        }
-        return <div>{`${fieldSpec.type} (list: ${!!fieldSpec.list})`} is not supported</div>;
-      }}
-    />
+    <FormField htmlFor={id} label={fieldSpec.name}>
+      {editor}
+    </FormField>
   );
 }
