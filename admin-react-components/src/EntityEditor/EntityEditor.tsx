@@ -53,15 +53,17 @@ export function EntityEditor({
       : `new-entity-${String(Math.random()).slice(2)}`
   );
 
+  const nameId = `${resolvedIdPrefix}-_name`;
+
   return (
     <Form onSubmit={() => onSubmit(createAdminEntity(entity, state))}>
-      <FormField
-        controlId={`${resolvedIdPrefix}-_name`}
-        label="Name"
-        render={({ id }) => (
-          <InputText id={id} value={state.name} onChange={(x) => setState({ ...state, name: x })} />
-        )}
-      />
+      <FormField htmlFor={nameId} label="Name">
+        <InputText
+          id={nameId}
+          value={state.name}
+          onChange={(x) => setState({ ...state, name: x })}
+        />
+      </FormField>
       <Divider />
       {state.fields.map(({ fieldSpec, value, initialValue }, index) => {
         const handleFieldChanged = (newValue: unknown) => {
