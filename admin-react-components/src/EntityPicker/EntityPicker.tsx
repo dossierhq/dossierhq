@@ -1,6 +1,7 @@
-import type { EntityReference } from '@datadata/core';
-import React, { useCallback, useState } from 'react';
+import type { AdminEntity, Connection, Edge, EntityReference, ErrorType } from '@datadata/core';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { Button, Modal } from '..';
+import { DataDataContext, DataDataContextValue } from '../contexts/DataDataContext';
 
 interface Props {
   id: string;
@@ -8,10 +9,37 @@ interface Props {
   onChange?: (value: string) => void;
 }
 
-export function EntityPicker({ id, value, onChange }: Props): JSX.Element {
+interface InnerProps extends Props {
+  searchEntities: DataDataContextValue['searchEntities'];
+}
+
+export function EntityPicker({ id, value, onChange }: Props): JSX.Element | null {
+  const context = useContext(DataDataContext);
+  if (!context) {
+    return null;
+  }
+
+  return <EntityPickerInner {...{ id, value, onChange, searchEntities: context.searchEntities }} />;
+}
+
+function EntityPickerInner({ id, value, onChange, searchEntities }: InnerProps) {
   const [show, setShow] = useState(false);
   const handleShow = useCallback(() => setShow(true), [setShow]);
   const handleClose = useCallback(() => setShow(false), [setShow]);
+  const [connection, setConnection] = useState<Connection<Edge<AdminEntity, ErrorType>> | null>(
+    null
+  );
+
+  useEffect(() => {
+    if (show) {
+      searchEntities().then((result) => {
+        if (result.isOk()) {
+          setConnection(result.value);
+        }
+        //TODO error handling
+      });
+    }
+  }, [show]);
 
   return (
     <>
@@ -20,6 +48,10 @@ export function EntityPicker({ id, value, onChange }: Props): JSX.Element {
       </Button>
       <Modal show={show} onClose={handleClose}>
         <p>Hello world</p>
+        {connection &&
+          connection.edges.map((edge) => (
+            <p key={edge.cursor}>{edge.node.isOk() ? edge.node.value._name : edge.node.error}</p>
+          ))}
       </Modal>
     </>
   );
