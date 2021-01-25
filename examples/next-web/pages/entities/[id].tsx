@@ -1,9 +1,10 @@
-import { EntityEditor } from '@datadata/admin-react-components';
-import { AdminEntity, AdminEntityCreate, AdminEntityUpdate, Schema } from '@datadata/core';
+import { DataDataContext, EntityEditor } from '@datadata/admin-react-components';
+import type { AdminEntity, AdminEntityCreate, AdminEntityUpdate } from '@datadata/core';
 import Joi from 'joi';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
-import type { EntityResponse, SchemaResponse } from '../../types/ResponseTypes';
+import { useInitializeContext } from '../../contexts/DataDataContext';
+import type { EntityResponse } from '../../types/ResponseTypes';
 import { fetchJsonAsync, urls } from '../../utils/BackendUtils';
 import { validateQuery } from '../../utils/PageUtils';
 
@@ -13,18 +14,13 @@ interface RouterQuery {
 const routerSchema = Joi.object<RouterQuery>({ id: Joi.string().required() });
 
 function PageContent({ query }: { query: RouterQuery }) {
-  const [schema, setSchema] = useState<Schema | null>(null);
+  const { contextValue } = useInitializeContext();
   const [entity, setEntity] = useState<AdminEntity | null>(null);
 
   useEffect(() => {
     (async () => {
       try {
-        const schemaResponse = await fetchJsonAsync<SchemaResponse>(urls.schema);
         const entityResponse = await fetchJsonAsync<EntityResponse>(urls.entity(query.id));
-
-        const schema = new Schema(schemaResponse.spec);
-        setSchema(schema);
-
         setEntity(entityResponse.item);
       } catch (error) {
         console.warn(error);
@@ -52,11 +48,9 @@ function PageContent({ query }: { query: RouterQuery }) {
   );
 
   return (
-    <div>
-      {schema && entity ? (
-        <EntityEditor schema={schema} entity={entity} onSubmit={handleSubmit} />
-      ) : null}
-    </div>
+    <DataDataContext.Provider value={contextValue}>
+      <div>{entity ? <EntityEditor entity={entity} onSubmit={handleSubmit} /> : null}</div>
+    </DataDataContext.Provider>
   );
 }
 

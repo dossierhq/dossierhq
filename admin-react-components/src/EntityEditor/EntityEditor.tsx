@@ -4,10 +4,17 @@ import type {
   AdminEntityUpdate,
   EntityTypeSpecification,
   FieldSpecification,
-  Schema,
 } from '@datadata/core';
-import React, { useState } from 'react';
-import { Divider, EntityFieldEditor, Form, FormField, InputSubmit, InputText } from '..';
+import React, { useContext, useState } from 'react';
+import {
+  DataDataContext,
+  Divider,
+  EntityFieldEditor,
+  Form,
+  FormField,
+  InputSubmit,
+  InputText,
+} from '..';
 
 interface NewEntity {
   _type: string;
@@ -17,8 +24,12 @@ export interface EntityEditorProps {
   idPrefix?: string;
   entity: NewEntity | AdminEntity;
   onSubmit: (entity: AdminEntityCreate | AdminEntityUpdate) => void;
-  schema: Schema;
 }
+
+type EntityEditorContentsProps = Pick<EntityEditorProps, 'entity' | 'onSubmit'> & {
+  idPrefix: string;
+  entitySpec: EntityTypeSpecification;
+};
 
 interface EntityEditorState {
   name: string;
@@ -35,16 +46,9 @@ interface FieldEditorState {
 export function EntityEditor({
   idPrefix,
   entity,
-  schema,
   onSubmit,
-}: EntityEditorProps): JSX.Element {
-  const { _type: type } = entity;
-  const entitySpec = schema.getEntityTypeSpecification(type);
-  if (!entitySpec) {
-    throw new Error(`No such entity type in schema (${type})`);
-  }
-
-  const [state, setState] = useState(() => createInitialState(entitySpec, entity));
+}: EntityEditorProps): JSX.Element | null {
+  const context = useContext(DataDataContext);
   const [resolvedIdPrefix] = useState(
     idPrefix
       ? idPrefix
@@ -53,7 +57,33 @@ export function EntityEditor({
       : `new-entity-${String(Math.random()).slice(2)}`
   );
 
-  const nameId = `${resolvedIdPrefix}-_name`;
+  if (!context) {
+    return null;
+  }
+
+  const { schema } = context;
+  const { _type: type } = entity;
+  const entitySpec = schema.getEntityTypeSpecification(type);
+  if (!entitySpec) {
+    throw new Error(`No such entity type in schema (${type})`);
+  }
+
+  return (
+    <EntityEditorContents
+      {...{ idPrefix: resolvedIdPrefix, entity, entitySpec, onSubmit, schema }}
+    />
+  );
+}
+
+function EntityEditorContents({
+  idPrefix,
+  entity,
+  entitySpec,
+  onSubmit,
+}: EntityEditorContentsProps): JSX.Element {
+  const [state, setState] = useState(() => createInitialState(entitySpec, entity));
+
+  const nameId = `${idPrefix}-_name`;
 
   return (
     <Form onSubmit={() => onSubmit(createAdminEntity(entity, state))}>
@@ -74,7 +104,7 @@ export function EntityEditor({
 
         return (
           <EntityFieldEditor
-            idPrefix={resolvedIdPrefix}
+            idPrefix={idPrefix}
             key={fieldSpec.name}
             fieldSpec={fieldSpec}
             value={value}

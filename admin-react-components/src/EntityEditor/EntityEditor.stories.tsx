@@ -3,18 +3,21 @@ import React from 'react';
 import { EntityEditor } from './EntityEditor';
 import type { EntityEditorProps } from './EntityEditor';
 import schema from '../StoryboardSchema';
+import { DataDataContext } from '../..';
 
 export default {
   title: 'Components/EntityEditor',
   component: EntityEditor,
   argTypes: { onSubmit: { action: 'submit' } },
-  args: {
-    schema,
-  },
+  args: {},
 };
 
 const Template: Story<EntityEditorProps> = (args) => {
-  return <EntityEditor {...args} />;
+  return (
+    <DataDataContext.Provider value={{ schema }}>
+      <EntityEditor {...args} />
+    </DataDataContext.Provider>
+  );
 };
 
 export const NewFoo = Template.bind({});
