@@ -1,7 +1,7 @@
 import React from 'react';
 import type { FieldSpecification } from '@datadata/core';
-import { isStringField } from '@datadata/core';
-import { FormField, InputText } from '..';
+import { isEntityTypeField, isStringField } from '@datadata/core';
+import { EntityPicker, FormField, InputText } from '..';
 
 interface Props {
   idPrefix: string;

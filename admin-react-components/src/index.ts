@@ -2,6 +2,7 @@ export { Button } from './Button/Button';
 export { Divider } from './Divider/Divider';
 export { EntityEditor } from './EntityEditor/EntityEditor';
 export { EntityFieldEditor } from './EntityFieldEditor/EntityFieldEditor';
+export { EntityPicker } from './EntityPicker/EntityPicker';
 export { Form } from './Form/Form';
 export { FormField } from './FormField/FormField';
 export { HelloWorld } from './HelloWorld/HelloWorld';
