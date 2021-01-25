@@ -14,6 +14,7 @@ interface NewEntity {
 }
 
 export interface EntityEditorProps {
+  idPrefix?: string;
   entity: NewEntity | AdminEntity;
   onSubmit: (entity: AdminEntityCreate | AdminEntityUpdate) => void;
   schema: Schema;
@@ -31,7 +32,12 @@ interface FieldEditorState {
   initialValue: unknown;
 }
 
-export function EntityEditor({ entity, schema, onSubmit }: EntityEditorProps): JSX.Element {
+export function EntityEditor({
+  idPrefix,
+  entity,
+  schema,
+  onSubmit,
+}: EntityEditorProps): JSX.Element {
   const { _type: type } = entity;
   const entitySpec = schema.getEntityTypeSpecification(type);
   if (!entitySpec) {
@@ -39,10 +45,18 @@ export function EntityEditor({ entity, schema, onSubmit }: EntityEditorProps): J
   }
 
   const [state, setState] = useState(() => createInitialState(entitySpec, entity));
+  const [resolvedIdPrefix] = useState(
+    idPrefix
+      ? idPrefix
+      : 'id' in entity
+      ? `entity-${entity.id}`
+      : `new-entity-${String(Math.random()).slice(2)}`
+  );
 
   return (
     <Form onSubmit={() => onSubmit(createAdminEntity(entity, state))}>
       <FormField
+        controlId={`${resolvedIdPrefix}-_name`}
         label="Name"
         render={({ id }) => (
           <InputText id={id} value={state.name} onChange={(x) => setState({ ...state, name: x })} />
@@ -58,6 +72,7 @@ export function EntityEditor({ entity, schema, onSubmit }: EntityEditorProps): J
 
         return (
           <EntityFieldEditor
+            idPrefix={resolvedIdPrefix}
             key={fieldSpec.name}
             fieldSpec={fieldSpec}
             value={value}

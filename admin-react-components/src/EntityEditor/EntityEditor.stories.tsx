@@ -18,7 +18,7 @@ const Template: Story<EntityEditorProps> = (args) => {
 };
 
 export const NewFoo = Template.bind({});
-NewFoo.args = { entity: { _type: 'Foo' } };
+NewFoo.args = { entity: { _type: 'Foo' }, idPrefix: 'new-entity-123' };
 
 export const FullFoo = Template.bind({});
 FullFoo.args = {
