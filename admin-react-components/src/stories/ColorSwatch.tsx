@@ -48,7 +48,7 @@ interface ColorSwatchGroupProps {
   className: string;
 }
 
-export function ColorSwatchGroup({ className }: ColorSwatchGroupProps) {
+export function ColorSwatchGroup({ className }: ColorSwatchGroupProps): JSX.Element {
   return (
     <div style={{ display: 'flex', flexDirection: 'row' }}>
       <ColorSwatch className={className} />

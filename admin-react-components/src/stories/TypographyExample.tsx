@@ -5,7 +5,7 @@ interface Props {
   loremIpsum?: boolean;
 }
 
-export default function TypographyExample({ className, loremIpsum }: Props) {
+export default function TypographyExample({ className, loremIpsum }: Props): JSX.Element {
   const [fontStyles, setFontStyles] = useState<Record<string, string>>({});
 
   const onRefChanged = useCallback(
@@ -39,13 +39,13 @@ export default function TypographyExample({ className, loremIpsum }: Props) {
       </p>
       <table>
         <tr>
-          {Object.keys(fontStyles).map((x) => (
-            <th>{x}</th>
+          {Object.keys(fontStyles).map((key) => (
+            <th key={key}>{key}</th>
           ))}
         </tr>
         <tr>
-          {Object.values(fontStyles).map((x) => (
-            <td>{x}</td>
+          {Object.entries(fontStyles).map(([key, value]) => (
+            <td key={key}>{value}</td>
           ))}
         </tr>
       </table>
