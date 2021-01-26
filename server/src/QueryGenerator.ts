@@ -1,6 +1,6 @@
-import type { Result } from '@datadata/core';
+import type { AdminQuery, Paging, Result } from '@datadata/core';
 import { ErrorType, notOk, ok } from '@datadata/core';
-import type { AdminQuery, Paging, SessionContext } from './';
+import type { SessionContext } from './';
 import type { CursorNativeType } from './Connection';
 import type { EntitiesTable } from './DbTableTypes';
 import type { AdminEntityValues } from './EntityCodec';

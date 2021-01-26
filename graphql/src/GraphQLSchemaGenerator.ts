@@ -3,6 +3,7 @@ import type {
   AdminEntity,
   AdminEntityCreate,
   AdminEntityUpdate,
+  AdminQuery,
   Entity,
   EntityTypeSpecification,
   Result,
@@ -10,7 +11,7 @@ import type {
   Value,
   ValueTypeSpecification,
 } from '@datadata/core';
-import type { AdminQuery, SessionContext } from '@datadata/server';
+import type { SessionContext } from '@datadata/server';
 import {
   GraphQLBoolean,
   GraphQLEnumType,

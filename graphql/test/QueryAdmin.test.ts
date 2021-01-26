@@ -1,6 +1,6 @@
-import type { AdminEntity, Connection, Edge } from '@datadata/core';
+import type { AdminEntity, AdminQuery, Connection, Edge, Paging } from '@datadata/core';
 import { CoreTestUtils, ErrorType, FieldType, notOk, ok } from '@datadata/core';
-import type { AdminQuery, Paging, SessionContext, Server } from '@datadata/server';
+import type { SessionContext, Server } from '@datadata/server';
 import { EntityAdmin, ServerTestUtils } from '@datadata/server';
 import { graphql, printError } from 'graphql';
 import type { GraphQLSchema } from 'graphql';
