@@ -1,4 +1,4 @@
-import { ok } from '@datadata/core';
+import { notOk, ok } from '@datadata/core';
 import type { Story } from '@storybook/react/types-6-0';
 import React from 'react';
 import { DataDataContext } from '../..';
@@ -15,7 +15,13 @@ export default {
 
 const Template: Story<EntityEditorProps> = (args) => {
   return (
-    <DataDataContext.Provider value={{ schema, searchEntities: () => Promise.resolve(ok(null)) }}>
+    <DataDataContext.Provider
+      value={{
+        schema,
+        getEntity: () => Promise.resolve(notOk.NotFound('Not implemented')),
+        searchEntities: () => Promise.resolve(ok(null)),
+      }}
+    >
       <EntityEditor {...args} />
     </DataDataContext.Provider>
   );
