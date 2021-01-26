@@ -1,5 +1,13 @@
 import type { DataDataContextValue } from '@datadata/admin-react-components';
-import type { AdminEntity, Connection, Edge, ErrorResult, PromiseResult } from '@datadata/core';
+import type {
+  AdminEntity,
+  AdminQuery,
+  Connection,
+  Edge,
+  ErrorResult,
+  Paging,
+  PromiseResult,
+} from '@datadata/core';
 import { convertJsonConnection, convertJsonEdge, ErrorType, ok, Schema } from '@datadata/core';
 import { useEffect, useMemo, useState } from 'react';
 import type { SchemaResponse, SearchEntitiesResponse } from '../types/ResponseTypes';
@@ -12,13 +20,13 @@ class ContextValue implements DataDataContextValue {
     this.schema = schema;
   }
 
-  async searchEntities(): PromiseResult<
-    Connection<Edge<AdminEntity, ErrorType>> | null,
-    ErrorType.BadRequest
-  > {
+  async searchEntities(
+    query?: AdminQuery,
+    paging?: Paging
+  ): PromiseResult<Connection<Edge<AdminEntity, ErrorType>> | null, ErrorType.BadRequest> {
     const result = await fetchJsonResult<SearchEntitiesResponse, ErrorType.BadRequest>(
       [ErrorType.BadRequest],
-      urls.searchEntities
+      urls.searchEntities(query, paging)
     );
     if (result.isOk() && result.value?.edges) {
       const connection = convertJsonConnection(result.value, convertJsonEdge);
