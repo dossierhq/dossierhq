@@ -91,6 +91,7 @@ function EntityPickerInner({
       <Button id={id} onClick={handleShow}>
         {entity ? entity._name : value ? value.id : 'Not set'}
       </Button>
+      <Button onClick={() => onChange?.(null)}>Remove</Button>
       <Modal show={show} onClose={handleClose}>
         {connection &&
           connection.edges.map((edge) => {
