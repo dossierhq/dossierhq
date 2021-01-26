@@ -1,9 +1,10 @@
+import { ok } from '@datadata/core';
 import type { Story } from '@storybook/react/types-6-0';
 import React from 'react';
+import { DataDataContext } from '../..';
 import { EntityEditor } from './EntityEditor';
 import type { EntityEditorProps } from './EntityEditor';
 import schema from '../StoryboardSchema';
-import { DataDataContext } from '../..';
 
 export default {
   title: 'Components/EntityEditor',
@@ -14,7 +15,7 @@ export default {
 
 const Template: Story<EntityEditorProps> = (args) => {
   return (
-    <DataDataContext.Provider value={{ schema }}>
+    <DataDataContext.Provider value={{ schema, searchEntities: () => Promise.resolve(ok(null)) }}>
       <EntityEditor {...args} />
     </DataDataContext.Provider>
   );
