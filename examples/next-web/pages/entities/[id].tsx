@@ -20,7 +20,7 @@ function PageContent({ query }: { query: RouterQuery }) {
   useEffect(() => {
     (async () => {
       try {
-        const entityResponse = await fetchJsonAsync<EntityResponse>(urls.entity(query.id));
+        const entityResponse = await fetchJsonAsync<EntityResponse>(urls.getEntity(query.id, {}));
         setEntity(entityResponse.item);
       } catch (error) {
         console.warn(error);
@@ -34,7 +34,9 @@ function PageContent({ query }: { query: RouterQuery }) {
         try {
           //TODO handle create
           //TODO entity includes id on update, so always POST?
-          await fetchJsonAsync<EntityResponse>(urls.entity(query.id), {
+          //TODO version
+          //TODO use context
+          await fetchJsonAsync<EntityResponse>(urls.getEntity(query.id, {}), {
             method: 'PUT',
             headers: { 'content-type': 'application/json' },
             body: JSON.stringify({ item: entity }),

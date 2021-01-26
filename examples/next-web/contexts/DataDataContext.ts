@@ -10,7 +10,11 @@ import type {
 } from '@datadata/core';
 import { convertJsonConnection, convertJsonEdge, ErrorType, ok, Schema } from '@datadata/core';
 import { useEffect, useMemo, useState } from 'react';
-import type { SchemaResponse, SearchEntitiesResponse } from '../types/ResponseTypes';
+import type {
+  EntityResponse,
+  SchemaResponse,
+  SearchEntitiesResponse,
+} from '../types/ResponseTypes';
 import { fetchJsonAsync, fetchJsonResult, urls } from '../utils/BackendUtils';
 
 class ContextValue implements DataDataContextValue {
@@ -18,6 +22,16 @@ class ContextValue implements DataDataContextValue {
 
   constructor(schema: Schema) {
     this.schema = schema;
+  }
+
+  async getEntity(
+    id: string,
+    options: { version?: number | null }
+  ): PromiseResult<{ item: AdminEntity }, ErrorType.NotFound> {
+    return await fetchJsonResult<EntityResponse, ErrorType.NotFound>(
+      [ErrorType.NotFound],
+      urls.getEntity(id, options)
+    );
   }
 
   async searchEntities(
