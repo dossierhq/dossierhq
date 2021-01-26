@@ -18,6 +18,7 @@ const Template: Story<EntityEditorProps> = (args) => {
     <DataDataContext.Provider
       value={{
         schema,
+        useEntity: () => ({}),
         getEntity: () => Promise.resolve(notOk.NotFound('Not implemented')),
         searchEntities: () => Promise.resolve(ok(null)),
       }}

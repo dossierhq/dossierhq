@@ -10,6 +10,7 @@ import type {
 } from '@datadata/core';
 import { convertJsonConnection, convertJsonEdge, ErrorType, ok, Schema } from '@datadata/core';
 import { useEffect, useMemo, useState } from 'react';
+import useSWR from 'swr';
 import type {
   EntityResponse,
   SchemaResponse,
@@ -22,6 +23,14 @@ class ContextValue implements DataDataContextValue {
 
   constructor(schema: Schema) {
     this.schema = schema;
+  }
+
+  useEntity(
+    id: string | undefined,
+    options: { version?: number | null }
+  ): { entity?: { item: AdminEntity }; entityError?: Error } {
+    const { data, error } = useSWR<EntityResponse>(id ? urls.getEntity(id, options) : null);
+    return { entity: data, entityError: error };
   }
 
   async getEntity(
