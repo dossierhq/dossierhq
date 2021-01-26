@@ -6,7 +6,7 @@ import { DataDataContext, DataDataContextValue } from '../contexts/DataDataConte
 interface Props {
   id: string;
   value: EntityReference | null;
-  onChange?: (value: string) => void;
+  onChange?: (value: EntityReference | null) => void;
 }
 
 interface InnerProps extends Props {
@@ -47,11 +47,23 @@ function EntityPickerInner({ id, value, onChange, searchEntities }: InnerProps) 
         {value ? value.id : 'Not set'}
       </Button>
       <Modal show={show} onClose={handleClose}>
-        <p>Hello world</p>
         {connection &&
-          connection.edges.map((edge) => (
-            <p key={edge.cursor}>{edge.node.isOk() ? edge.node.value._name : edge.node.error}</p>
-          ))}
+          connection.edges.map((edge) => {
+            const entity = edge.node.isOk() ? edge.node.value : null;
+            return (
+              <p
+                key={edge.cursor}
+                onClick={() => {
+                  if (entity && onChange) {
+                    onChange({ id: entity.id });
+                  }
+                  handleClose();
+                }}
+              >
+                {edge.node.isOk() ? edge.node.value._name : edge.node.error}
+              </p>
+            );
+          })}
       </Modal>
     </>
   );
