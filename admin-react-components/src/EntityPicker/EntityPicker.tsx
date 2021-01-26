@@ -19,6 +19,7 @@ interface Props {
 }
 
 interface InnerProps extends Props {
+  getEntity: DataDataContextValue['getEntity'];
   searchEntities: DataDataContextValue['searchEntities'];
 }
 
@@ -30,18 +31,48 @@ export function EntityPicker({ id, value, fieldSpec, onChange }: Props): JSX.Ele
 
   return (
     <EntityPickerInner
-      {...{ id, value, fieldSpec, onChange, searchEntities: context.searchEntities }}
+      {...{
+        id,
+        value,
+        fieldSpec,
+        onChange,
+        getEntity: context.getEntity,
+        searchEntities: context.searchEntities,
+      }}
     />
   );
 }
 
-function EntityPickerInner({ id, value, fieldSpec, onChange, searchEntities }: InnerProps) {
+function EntityPickerInner({
+  id,
+  value,
+  fieldSpec,
+  onChange,
+  getEntity,
+  searchEntities,
+}: InnerProps) {
   const [show, setShow] = useState(false);
   const handleShow = useCallback(() => setShow(true), [setShow]);
   const handleClose = useCallback(() => setShow(false), [setShow]);
+  const [entity, setEntity] = useState<AdminEntity | null>(null);
   const [connection, setConnection] = useState<Connection<Edge<AdminEntity, ErrorType>> | null>(
     null
   );
+
+  useEffect(() => {
+    if (value) {
+      getEntity(value.id, {}).then((result) => {
+        if (result.isOk()) {
+          setEntity(result.value.item);
+        }
+        //TODO error handling
+      });
+    } else {
+      if (entity) {
+        setEntity(null);
+      }
+    }
+  }, [value]);
 
   useEffect(() => {
     if (show) {
@@ -58,7 +89,7 @@ function EntityPickerInner({ id, value, fieldSpec, onChange, searchEntities }: I
   return (
     <>
       <Button id={id} onClick={handleShow}>
-        {value ? value.id : 'Not set'}
+        {entity ? entity._name : value ? value.id : 'Not set'}
       </Button>
       <Modal show={show} onClose={handleClose}>
         {connection &&
