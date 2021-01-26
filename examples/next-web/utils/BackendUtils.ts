@@ -1,5 +1,6 @@
-import type { PromiseResult } from '@datadata/core';
+import type { AdminQuery, Paging, PromiseResult } from '@datadata/core';
 import { ErrorType, ok } from '@datadata/core';
+import { encodeQuery } from './QueryUtils';
 
 export enum OperationStatus {
   None,
@@ -13,7 +14,8 @@ const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 export const urls = {
   schema: `${baseUrl}/schema`,
   entity: (id: string): string => `${baseUrl}/entities/${id}`,
-  searchEntities: `${baseUrl}/search-entities`,
+  searchEntities: (query?: AdminQuery, paging?: Paging): string =>
+    `${baseUrl}/search-entities?${encodeQuery({ query, paging })}`,
 };
 
 export async function fetchJsonAsync<T>(

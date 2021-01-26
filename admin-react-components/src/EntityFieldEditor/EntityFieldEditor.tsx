@@ -22,7 +22,7 @@ export function EntityFieldEditor({
   if (isStringField(fieldSpec, value)) {
     editor = <InputText id={id} value={value} onChange={onValueChanged} />;
   } else if (isEntityTypeField(fieldSpec, value)) {
-    editor = <EntityPicker id={id} value={value} onChange={onValueChanged} />;
+    editor = <EntityPicker id={id} value={value} fieldSpec={fieldSpec} onChange={onValueChanged} />;
   } else {
     editor = <div>{`${fieldSpec.type} (list: ${!!fieldSpec.list})`} is not supported</div>;
   }

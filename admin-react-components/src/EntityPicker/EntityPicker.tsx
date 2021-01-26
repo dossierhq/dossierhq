@@ -1,4 +1,12 @@
-import type { AdminEntity, Connection, Edge, EntityReference, ErrorType } from '@datadata/core';
+import type {
+  AdminEntity,
+  AdminQuery,
+  Connection,
+  Edge,
+  EntityReference,
+  ErrorType,
+  FieldSpecification,
+} from '@datadata/core';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { Button, Modal } from '..';
 import { DataDataContext, DataDataContextValue } from '../contexts/DataDataContext';
@@ -6,6 +14,7 @@ import { DataDataContext, DataDataContextValue } from '../contexts/DataDataConte
 interface Props {
   id: string;
   value: EntityReference | null;
+  fieldSpec: FieldSpecification;
   onChange?: (value: EntityReference | null) => void;
 }
 
@@ -13,16 +22,20 @@ interface InnerProps extends Props {
   searchEntities: DataDataContextValue['searchEntities'];
 }
 
-export function EntityPicker({ id, value, onChange }: Props): JSX.Element | null {
+export function EntityPicker({ id, value, fieldSpec, onChange }: Props): JSX.Element | null {
   const context = useContext(DataDataContext);
   if (!context) {
     return null;
   }
 
-  return <EntityPickerInner {...{ id, value, onChange, searchEntities: context.searchEntities }} />;
+  return (
+    <EntityPickerInner
+      {...{ id, value, fieldSpec, onChange, searchEntities: context.searchEntities }}
+    />
+  );
 }
 
-function EntityPickerInner({ id, value, onChange, searchEntities }: InnerProps) {
+function EntityPickerInner({ id, value, fieldSpec, onChange, searchEntities }: InnerProps) {
   const [show, setShow] = useState(false);
   const handleShow = useCallback(() => setShow(true), [setShow]);
   const handleClose = useCallback(() => setShow(false), [setShow]);
@@ -32,7 +45,8 @@ function EntityPickerInner({ id, value, onChange, searchEntities }: InnerProps) 
 
   useEffect(() => {
     if (show) {
-      searchEntities().then((result) => {
+      const query: AdminQuery = { entityTypes: fieldSpec.entityTypes };
+      searchEntities(query).then((result) => {
         if (result.isOk()) {
           setConnection(result.value);
         }
