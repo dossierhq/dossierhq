@@ -12,14 +12,16 @@ import {
 } from '@datadata/core';
 import type {
   AdminEntity,
+  AdminQuery,
   EntityReference,
   EntityTypeSpecification,
   FieldSpecification,
+  Paging,
   PromiseResult,
   Value,
   ValueTypeSpecification,
 } from '@datadata/core';
-import type { AdminQuery, Paging, SessionContext } from '@datadata/server';
+import type { SessionContext } from '@datadata/server';
 import { EntityAdmin, isPagingForwards } from '@datadata/server';
 import * as CliSchema from './CliSchema';
 import {

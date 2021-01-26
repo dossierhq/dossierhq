@@ -1,4 +1,3 @@
-export type { Connection, Edge, PageInfo } from './Connection';
 export type { ErrorResult, OkResult, PromiseResult, Result } from './ErrorResult';
 export type { JsonConnection, JsonEdge, JsonResult } from './JsonUtils';
 export type {
@@ -12,8 +11,13 @@ export type {
   AdminEntity,
   AdminEntityCreate,
   AdminEntityUpdate,
+  AdminQuery,
+  Connection,
+  Edge,
   Entity,
   EntityReference,
+  Paging,
+  PageInfo,
   Value,
 } from './Types';
 

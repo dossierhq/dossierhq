@@ -1,10 +1,8 @@
 import { ErrorType, notOk, ok } from '@datadata/core';
-import type { Result } from '@datadata/core';
+import type { Paging, Result } from '@datadata/core';
 import { fromOpaqueCursor } from './Connection';
 import type { CursorNativeType } from './Connection';
 import { pagingDefaultCount } from './Constants';
-
-export type Paging = { first?: number; after?: string; last?: number; before?: string };
 
 export interface ResolvedPaging<TCursor> {
   isForwards: boolean;

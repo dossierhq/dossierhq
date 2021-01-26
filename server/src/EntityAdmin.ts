@@ -3,13 +3,15 @@ import type {
   AdminEntity,
   AdminEntityCreate,
   AdminEntityUpdate,
+  AdminQuery,
   Connection,
   Edge,
   ErrorType,
+  Paging,
   PromiseResult,
   Result,
 } from '@datadata/core';
-import type { Paging, SessionContext } from '.';
+import type { SessionContext } from '.';
 import { toOpaqueCursor } from './Connection';
 import * as Db from './Db';
 import type { EntitiesTable, EntityVersionsTable } from './DbTableTypes';
@@ -37,14 +39,6 @@ export interface AdminEntityVersionInfo {
   published: boolean;
   createdBy: string;
   createdAt: Date;
-}
-
-export interface AdminQuery {
-  entityTypes?: string[];
-  /** Entities referencing the entity (by id) */
-  referencing?: string;
-  /** Valid values: _name */
-  order?: string;
 }
 
 export async function getEntity(
