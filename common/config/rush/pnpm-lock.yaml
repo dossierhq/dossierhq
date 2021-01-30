@@ -45,6 +45,7 @@ dependencies:
   inquirer: 7.3.3
   jest: 26.6.3_ts-node@9.0.0
   joi: 17.3.0
+  mini-svg-data-uri: 1.2.3
   next: 10.0.4_c39e9db791ea05e3ec4e0e74abb7a6b5
   next-transpile-modules: 6.0.0
   pg: 8.5.0_pg@8.5.0
@@ -54,6 +55,7 @@ dependencies:
   react: 17.0.1
   react-dom: 17.0.1_react@17.0.1
   react-test-renderer: 17.0.1_react@17.0.1
+  svgo: 1.3.2
   swr: 0.4.0_react@17.0.1
   ts-jest: 26.4.4_jest@26.6.3+typescript@4.1.3
   ts-node: 9.0.0_typescript@4.1.3
@@ -3495,6 +3497,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-KfRL3PuHmqQLOG+2tGpRO26Ctg+Cq1E01D2DMriKEATHgWLfeNDmq9e29Q9WIky0dQ3NPkd1mzYH8Lm936Z9qw==
+  /@types/q/1.5.4:
+    dev: false
+    resolution:
+      integrity: sha512-1HcDas8SEj4z1Wc696tH56G8OlRaH/sqZOynNNB+HF0WOeXPaxTtbYzJY2oEfiUxjSKjhCKr+MvR7dCHcEelug==
   /@types/qs/6.9.5:
     dev: false
     resolution:
@@ -5580,6 +5586,16 @@ packages:
       node: '>= 0.12.0'
     resolution:
       integrity: sha1-bqa989hTrlTMuOR7+gvz+QMfsYQ=
+  /coa/2.0.2:
+    dependencies:
+      '@types/q': 1.5.4
+      chalk: 2.4.2
+      q: 1.5.1
+    dev: false
+    engines:
+      node: '>= 4.0'
+    resolution:
+      integrity: sha512-q5/jG+YQnSy4nRTV4F7lPepBJZ8qBNJJDBuJdoejDyLXgmL7IEo+Le2JDZudFTFt7mrCqIRaSjws4ygRCTCAXA==
   /code-point-at/1.1.0:
     dev: false
     engines:
@@ -6009,6 +6025,10 @@ packages:
       webpack: ^4.27.0 || ^5.0.0
     resolution:
       integrity: sha512-rdezjCjScIrsL8BSYszgT4s476IcNKt6yX69t0pHjJVnPUTDpn4WfIpDQTN3wCJvUvfsz/mFjuGOekf3PY3NUg==
+  /css-select-base-adapter/0.1.1:
+    dev: false
+    resolution:
+      integrity: sha512-jQVeeRG70QI08vSTwf1jHxp74JoZsr2XSgETae8/xC8ovSnL2WF87GTLO86Sbwdt2lK4Umg4HnnwMO4YF3Ce7w==
   /css-select/2.1.0:
     dependencies:
       boolbase: 1.0.0
@@ -6018,6 +6038,24 @@ packages:
     dev: false
     resolution:
       integrity: sha512-Dqk7LQKpwLoH3VovzZnkzegqNSuAziQyNZUcrdDM401iY+R5NkGBXGmtO05/yaXQziALuPogeG0b7UAgjnTJTQ==
+  /css-tree/1.0.0-alpha.37:
+    dependencies:
+      mdn-data: 2.0.4
+      source-map: 0.6.1
+    dev: false
+    engines:
+      node: '>=8.0.0'
+    resolution:
+      integrity: sha512-DMxWJg0rnz7UgxKT0Q1HU/L9BeJI0M6ksor0OgqOnF+aRCDWg/N2641HmVyU9KVIu0OVVWOb2IpC9A+BJRnejg==
+  /css-tree/1.1.2:
+    dependencies:
+      mdn-data: 2.0.14
+      source-map: 0.6.1
+    dev: false
+    engines:
+      node: '>=8.0.0'
+    resolution:
+      integrity: sha512-wCoWush5Aeo48GLhfHPbmvZs59Z+M7k5+B1xDnXbdWNcEF423DoFdqSWE0PM5aNk5nI5cp1q7ms36zGApY/sKQ==
   /css-what/3.4.2:
     dev: false
     engines:
@@ -6066,6 +6104,14 @@ packages:
     dev: false
     resolution:
       integrity: sha512-9vOyjw8Dj/T12kIOnXPZ5VnEIo6F3YMaIn0wqJXmn277R58cWpI3AvtdlCBtohX7VAUNYcyk2d0dKcXXkb5I6Q==
+  /csso/4.2.0:
+    dependencies:
+      css-tree: 1.1.2
+    dev: false
+    engines:
+      node: '>=8.0.0'
+    resolution:
+      integrity: sha512-wvlcdIbf6pwKEk7vHj8/Bkc0B4ylXZruLvOgs9doS5eOsOpuodOV2zJChSpkp+pRpYQLQMeF04nr3Z68Sta9jA==
   /cssom/0.3.8:
     dev: false
     resolution:
@@ -9936,6 +9982,14 @@ packages:
     dev: false
     resolution:
       integrity: sha512-jVU0Nr2B9X3MU4tSK7JP1CMkSvOj7X5l/GboG1tKRw52lLF1x2Ju92Ms9tNetCcbfX3hzlM73zYo2NKkWSfF/A==
+  /mdn-data/2.0.14:
+    dev: false
+    resolution:
+      integrity: sha512-dn6wd0uw5GsdswPFfsgMp5NSB0/aDe6fK94YJV/AJDYXL6HVLWBsxeq7js7Ad+mU2K9LAlwpk6kN2D5mwCPVow==
+  /mdn-data/2.0.4:
+    dev: false
+    resolution:
+      integrity: sha512-iV3XNKw06j5Q7mi6h+9vbx23Tv7JkjEVgKHW4pimwyDGWm0OIQntJJ+u1C6mg6mK1EaTv42XQ7w76yuzH7M2cA==
   /mdurl/1.0.1:
     dev: false
     resolution:
@@ -10089,6 +10143,10 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha512-I9jwMn07Sy/IwOj3zVkVik2JTvgpaykDZEigL6Rx6N9LbMywwUSMtxET+7lVoDLLd3O3IXwJwvuuns8UB/HeAg==
+  /mini-svg-data-uri/1.2.3:
+    dev: false
+    resolution:
+      integrity: sha512-zd6KCAyXgmq6FV1mR10oKXYtvmA9vRoB6xPSTUJTbFApCtkefDnYueVR1gkof3KcdLZo1Y8mjF2DFmQMIxsHNQ==
   /minimalistic-assert/1.0.1:
     dev: false
     resolution:
@@ -11544,6 +11602,13 @@ packages:
       node: '>=6'
     resolution:
       integrity: sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==
+  /q/1.5.1:
+    dev: false
+    engines:
+      node: '>=0.6.0'
+      teleport: '>=0.2.0'
+    resolution:
+      integrity: sha1-fjL3W0E4EpHQRhHxvxQQmsAGUdc=
   /qs/6.5.2:
     dev: false
     engines:
@@ -12486,6 +12551,10 @@ packages:
         optional: true
     resolution:
       integrity: sha512-2LqoNPtKkZq/XbXNQ4C64GFEleSEHKv6NPSI+bMC/l+jpEXGJhiRYkAQToO24MR7NU4JRY2RpLpJ/gjo2Uf13w==
+  /sax/1.2.4:
+    dev: false
+    resolution:
+      integrity: sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw==
   /saxes/5.0.1:
     dependencies:
       xmlchars: 2.2.0
@@ -13305,6 +13374,27 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-zoE5/e+dnEijk6ASB6/qrK+oYdm2do1hjoLWrqUC/8WEIW1gbxFcKuBof7sW8ArN6e+AYvsE8HBGiVRWL/F5CA==
+  /svgo/1.3.2:
+    dependencies:
+      chalk: 2.4.2
+      coa: 2.0.2
+      css-select: 2.1.0
+      css-select-base-adapter: 0.1.1
+      css-tree: 1.0.0-alpha.37
+      csso: 4.2.0
+      js-yaml: 3.14.0
+      mkdirp: 0.5.5
+      object.values: 1.1.2
+      sax: 1.2.4
+      stable: 0.1.8
+      unquote: 1.1.1
+      util.promisify: 1.0.0
+    dev: false
+    engines:
+      node: '>=4.0.0'
+    hasBin: true
+    resolution:
+      integrity: sha512-yhy/sQYxR5BkC98CY7o31VGsg014AKLEPxdfhora76l36hD9Rdy5NZA/Ocn6yayNPgSamYdtX2rFJdcv07AYVw==
   /swr/0.4.0_react@17.0.1:
     dependencies:
       dequal: 2.0.2
@@ -14754,10 +14844,12 @@ packages:
       eslint-plugin-react: 7.22.0_eslint@7.13.0
       eslint-plugin-testing-library: 3.10.1_eslint@7.13.0+typescript@4.0.5
       jest: 26.6.3_ts-node@9.0.0
+      mini-svg-data-uri: 1.2.3
       prettier: 2.1.2
       react: 17.0.1
       react-dom: 17.0.1_react@17.0.1
       react-test-renderer: 17.0.1_react@17.0.1
+      svgo: 1.3.2
       ts-jest: 26.4.4_jest@26.6.3+typescript@4.0.5
       typescript: 4.0.5
     dev: false
@@ -14766,7 +14858,7 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-VLcw3RqKrLCrMAGOMhAUEZjs8ueDYataerqCQVA4TDjy0mb2hW5S6gPTgqijuQps7aagxtVyk3r3ONXGakMSlw==
+      integrity: sha512-6yoQ2+dUOGhR/oeUNl60zkbetbW2yKy9jTR2Prer93GPFMTIjyT2Um2tsTBK2jds1h2B9acbb6YgbIFvb5zdUA==
       tarball: 'file:projects/admin-react-components.tgz'
     version: 0.0.0
   'file:projects/benchpress.tgz':
@@ -14983,6 +15075,7 @@ specifiers:
   inquirer: ^7.3.3
   jest: ~26.6.3
   joi: ~17.3.0
+  mini-svg-data-uri: ~1.2.3
   next: ~10.0.4
   next-transpile-modules: ~6.0.0
   pg: ^8.4.2
@@ -14992,6 +15085,7 @@ specifiers:
   react: ~17.0.1
   react-dom: ~17.0.1
   react-test-renderer: ~17.0.1
+  svgo: ~1.3.2
   swr: ~0.4.0
   ts-jest: ~26.4.4
   ts-node: ^9.0.0
