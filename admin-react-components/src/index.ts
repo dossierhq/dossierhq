@@ -1,4 +1,5 @@
 export type { DataDataContextValue } from './contexts/DataDataContext';
+export type { IconProps } from './Icon/Icon';
 export { Button } from './Button/Button';
 export { DataDataContext } from './contexts/DataDataContext';
 export { Divider } from './Divider/Divider';
@@ -8,6 +9,7 @@ export { EntityPicker } from './EntityPicker/EntityPicker';
 export { Form } from './Form/Form';
 export { FormField } from './FormField/FormField';
 export { HelloWorld } from './HelloWorld/HelloWorld';
+export { Icon, IconTypes } from './Icon/Icon';
 export { InputSubmit } from './InputSubmit/InputSubmit';
 export { InputText } from './InputText/InputText';
 export { Modal } from './Modal/Modal';
