@@ -154,6 +154,13 @@
   flex-direction: column;
 }
 
+.dd.icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  display: inline-block;
+  vertical-align: middle;
+}
+
 .dd.input {
   margin-left: 0px;
   margin-right: 0px;
