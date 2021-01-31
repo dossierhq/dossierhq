@@ -8,7 +8,7 @@ import type {
   FieldSpecification,
 } from '@datadata/core';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { Button, Icon, Modal } from '..';
+import { Button, Icon, IconButton, Modal } from '..';
 import { DataDataContext, DataDataContextValue } from '../contexts/DataDataContext';
 
 interface Props {
@@ -74,13 +74,17 @@ function EntityPickerInner({
 
   return (
     <>
-      <Button id={id} onClick={handleShow}>
-        {entity ? entity.item._name : value ? value.id : 'Not set'}
-      </Button>
-      <Button onClick={() => onChange?.(null)}>
-        Remove
-        <Icon icon="remove" />
-      </Button>
+      <div style={{ display: 'flex' }}>
+        <Button id={id} onClick={handleShow}>
+          {entity ? entity.item._name : value ? value.id : 'Not set'}
+        </Button>
+        <IconButton
+          icon="remove"
+          ariaLabel="Remove entity"
+          onClick={() => onChange?.(null)}
+          disabled={!value}
+        />
+      </div>
       <Modal show={show} onClose={handleClose}>
         {connection &&
           connection.edges.map((edge) => {
