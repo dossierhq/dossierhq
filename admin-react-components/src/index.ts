@@ -8,7 +8,6 @@ export { EntityFieldEditor } from './EntityFieldEditor/EntityFieldEditor';
 export { EntityPicker } from './EntityPicker/EntityPicker';
 export { Form } from './Form/Form';
 export { FormField } from './FormField/FormField';
-export { HelloWorld } from './HelloWorld/HelloWorld';
 export { Icon, IconTypes } from './Icon/Icon';
 export { InputSubmit } from './InputSubmit/InputSubmit';
 export { InputText } from './InputText/InputText';
