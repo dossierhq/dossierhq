@@ -8,7 +8,7 @@ import type {
   FieldSpecification,
 } from '@datadata/core';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { Button, Icon, IconButton, Modal } from '..';
+import { Button, IconButton, Modal } from '..';
 import { DataDataContext, DataDataContextValue } from '../contexts/DataDataContext';
 
 interface Props {

@@ -16,7 +16,11 @@ export type Result<TOk, TError extends ErrorType> =
 export type PromiseResult<TOk, TError extends ErrorType> = Promise<Result<TOk, TError>>;
 
 export class OkResult<TOk, TError extends ErrorType> {
-  constructor(readonly value: TOk) {}
+  readonly value: TOk;
+
+  constructor(value: TOk) {
+    this.value = value;
+  }
 
   isOk(): this is OkResult<TOk, TError> {
     return true;
@@ -36,7 +40,13 @@ export class OkResult<TOk, TError extends ErrorType> {
 }
 
 export class ErrorResult<TOk, TError extends ErrorType> {
-  constructor(readonly error: TError, readonly message: string) {}
+  readonly error: TError;
+  readonly message: string;
+
+  constructor(error: TError, message: string) {
+    this.error = error;
+    this.message = message;
+  }
 
   isOk(): this is OkResult<TOk, TError> {
     return false;

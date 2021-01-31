@@ -1,10 +1,10 @@
-import { notOk, ok } from '@datadata/core';
 import type { Story } from '@storybook/react/types-6-0';
 import React from 'react';
 import { DataDataContext } from '../..';
 import { EntityEditor } from './EntityEditor';
 import type { EntityEditorProps } from './EntityEditor';
-import schema from '../StoryboardSchema';
+import { foo1Id, fooDeletedId, getEntityFixture } from '../test/EntityFixtures';
+import TestContextValue from '../test/TestContextValue';
 
 export default {
   title: 'Components/EntityEditor',
@@ -15,14 +15,7 @@ export default {
 
 const Template: Story<EntityEditorProps> = (args) => {
   return (
-    <DataDataContext.Provider
-      value={{
-        schema,
-        useEntity: () => ({}),
-        getEntity: () => Promise.resolve(notOk.NotFound('Not implemented')),
-        searchEntities: () => Promise.resolve(ok(null)),
-      }}
-    >
+    <DataDataContext.Provider value={new TestContextValue()}>
       <EntityEditor {...args} />
     </DataDataContext.Provider>
   );
@@ -33,22 +26,10 @@ NewFoo.args = { entity: { _type: 'Foo' }, idPrefix: 'new-entity-123' };
 
 export const FullFoo = Template.bind({});
 FullFoo.args = {
-  entity: {
-    id: 'fc66b4d7-61ff-44d4-8f68-cb7f526df046',
-    _type: 'Foo',
-    _name: 'Hello',
-    _version: 0,
-    title: 'Hello',
-  },
+  entity: getEntityFixture(foo1Id),
 };
 
 export const DeletedFoo = Template.bind({});
 DeletedFoo.args = {
-  entity: {
-    id: 'fc66b4d7-61ff-44d4-8f68-cb7f526df046',
-    _type: 'Foo',
-    _name: 'Hello',
-    _version: 1,
-    _deleted: true,
-  },
+  entity: getEntityFixture(fooDeletedId),
 };

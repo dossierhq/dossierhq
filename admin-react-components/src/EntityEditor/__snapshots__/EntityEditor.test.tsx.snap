@@ -8,7 +8,7 @@ exports[`DeletedFoo render 1`] = `
   <div>
     <label
       className="dd text-subtitle1"
-      htmlFor="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-_name"
+      htmlFor="entity-fb62be03-a0a9-4689-9987-bacee0e7692d-_name"
     >
       Name
     </label>
@@ -17,7 +17,7 @@ exports[`DeletedFoo render 1`] = `
     >
       <input
         className="dd text-body1 input"
-        id="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-_name"
+        id="entity-fb62be03-a0a9-4689-9987-bacee0e7692d-_name"
         onChange={[Function]}
         type="text"
         value="Hello"
@@ -30,7 +30,7 @@ exports[`DeletedFoo render 1`] = `
   <div>
     <label
       className="dd text-subtitle1"
-      htmlFor="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-title"
+      htmlFor="entity-fb62be03-a0a9-4689-9987-bacee0e7692d-title"
     >
       title
     </label>
@@ -39,11 +39,48 @@ exports[`DeletedFoo render 1`] = `
     >
       <input
         className="dd text-body1 input"
-        id="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-title"
+        id="entity-fb62be03-a0a9-4689-9987-bacee0e7692d-title"
         onChange={[Function]}
         type="text"
         value=""
       />
+    </div>
+  </div>
+  <div>
+    <label
+      className="dd text-subtitle1"
+      htmlFor="entity-fb62be03-a0a9-4689-9987-bacee0e7692d-bar"
+    >
+      bar
+    </label>
+    <div
+      className="dd form-control"
+    >
+      <div
+        style={
+          Object {
+            "display": "flex",
+          }
+        }
+      >
+        <button
+          className="dd button text-button "
+          id="entity-fb62be03-a0a9-4689-9987-bacee0e7692d-bar"
+          onClick={[Function]}
+          type="button"
+        >
+          Not set
+        </button>
+        <button
+          aria-label="Remove entity"
+          className="dd button icon-button"
+          disabled={true}
+        >
+          <span
+            className="dd icon remove"
+          />
+        </button>
+      </div>
     </div>
   </div>
   <input
@@ -101,6 +138,44 @@ exports[`FullFoo render 1`] = `
       />
     </div>
   </div>
+  <div>
+    <label
+      className="dd text-subtitle1"
+      htmlFor="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-bar"
+    >
+      bar
+    </label>
+    <div
+      className="dd form-control"
+    >
+      <div
+        style={
+          Object {
+            "display": "flex",
+          }
+        }
+      >
+        <button
+          className="dd button text-button "
+          id="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-bar"
+          onClick={[Function]}
+          type="button"
+        >
+          Bar 1
+        </button>
+        <button
+          aria-label="Remove entity"
+          className="dd button icon-button"
+          disabled={false}
+          onClick={[Function]}
+        >
+          <span
+            className="dd icon remove"
+          />
+        </button>
+      </div>
+    </div>
+  </div>
   <input
     className="dd button text-button bg-primary"
     disabled={false}
@@ -154,6 +229,43 @@ exports[`NewFoo render 1`] = `
         type="text"
         value=""
       />
+    </div>
+  </div>
+  <div>
+    <label
+      className="dd text-subtitle1"
+      htmlFor="new-entity-123-bar"
+    >
+      bar
+    </label>
+    <div
+      className="dd form-control"
+    >
+      <div
+        style={
+          Object {
+            "display": "flex",
+          }
+        }
+      >
+        <button
+          className="dd button text-button "
+          id="new-entity-123-bar"
+          onClick={[Function]}
+          type="button"
+        >
+          Not set
+        </button>
+        <button
+          aria-label="Remove entity"
+          className="dd button icon-button"
+          disabled={true}
+        >
+          <span
+            className="dd icon remove"
+          />
+        </button>
+      </div>
     </div>
   </div>
   <input
