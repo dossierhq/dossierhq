@@ -203,10 +203,27 @@ exports[`Storyshots Components/EntityEditor New Foo 1`] = `
 </form>
 `;
 
-exports[`Storyshots Components/HelloWorld Normal 1`] = `
-<div>
-  Hello world
-</div>
+exports[`Storyshots Components/IconButton Disabled 1`] = `
+<button
+  aria-label="Remove"
+  className="dd button icon-button"
+  disabled={true}
+>
+  <span
+    className="dd icon remove"
+  />
+</button>
+`;
+
+exports[`Storyshots Components/IconButton Normal 1`] = `
+<button
+  aria-label="Remove"
+  className="dd button icon-button"
+>
+  <span
+    className="dd icon remove"
+  />
+</button>
 `;
 
 exports[`Storyshots Components/InputSubmit Disabled 1`] = `

@@ -147,6 +147,10 @@
   padding: 0.75em 1.5em;
 }
 
+.dd.icon-button {
+  padding: 0.25em;
+}
+
 .dd.form-control {
   margin-top: 0.2em;
   margin-bottom: 0.5em;
