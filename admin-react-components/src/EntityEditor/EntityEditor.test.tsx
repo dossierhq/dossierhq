@@ -1,6 +1,7 @@
 import type { Story } from '@storybook/react/types-6-0';
 import '@testing-library/jest-dom';
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import * as React from 'react';
 import * as renderer from 'react-test-renderer';
 import type { EntityEditorProps } from './EntityEditor';
@@ -29,12 +30,6 @@ const finders = {
   saveButton: () => screen.getByRole('button', { name: /save/i }),
 };
 
-const actions = {
-  changeTextInput: (element: HTMLElement, value: string) => {
-    fireEvent.change(element, { target: { value } });
-  },
-};
-
 describe('NewFoo', () => {
   test('render', () => {
     expect(renderStoryToJSON(NewFoo)).toMatchSnapshot();
@@ -47,9 +42,9 @@ describe('NewFoo', () => {
     const name = finders.nameInput();
     const submit = finders.saveButton();
 
-    actions.changeTextInput(name, 'New name');
+    userEvent.type(name, 'New name');
 
-    fireEvent.click(submit);
+    userEvent.click(submit);
 
     expect(onSubmit.mock.calls).toMatchInlineSnapshot(`
           Array [
@@ -67,10 +62,10 @@ describe('NewFoo', () => {
     const onSubmit = jest.fn();
     render(renderStory(NewFoo, { onSubmit }));
 
-    actions.changeTextInput(finders.nameInput(), 'New name'); // TODO remove, update automatically
-    actions.changeTextInput(finders.fooTitleInput(), 'New title');
+    userEvent.type(finders.nameInput(), 'New name'); // TODO remove, update automatically
+    userEvent.type(finders.fooTitleInput(), 'New title');
 
-    fireEvent.click(finders.saveButton());
+    userEvent.click(finders.saveButton());
 
     expect(onSubmit.mock.calls).toMatchInlineSnapshot(`
       Array [
@@ -95,11 +90,11 @@ describe('NewFoo', () => {
     expect(submit).toBeDisabled();
 
     // Enabled when name is updated
-    actions.changeTextInput(name, 'New name');
+    userEvent.type(name, 'New name');
     expect(submit).toBeEnabled();
 
     // Enabled when name is updated
-    actions.changeTextInput(name, '');
+    userEvent.clear(name);
     expect(submit).toBeDisabled();
   });
 });
@@ -113,9 +108,11 @@ describe('FullFoo', () => {
     const onSubmit = jest.fn();
     render(renderStory(FullFoo, { onSubmit }));
 
-    actions.changeTextInput(finders.nameInput(), 'New name');
+    const name = finders.nameInput();
+    userEvent.clear(name);
+    userEvent.type(name, 'New name');
 
-    fireEvent.click(finders.saveButton());
+    userEvent.click(finders.saveButton());
 
     expect(onSubmit.mock.calls).toMatchInlineSnapshot(`
       Array [
@@ -134,9 +131,11 @@ describe('FullFoo', () => {
     const onSubmit = jest.fn();
     render(renderStory(FullFoo, { onSubmit }));
 
-    actions.changeTextInput(finders.fooTitleInput(), 'New title');
+    const fooTitle = finders.fooTitleInput();
+    userEvent.clear(fooTitle);
+    userEvent.type(fooTitle, 'New title');
 
-    fireEvent.click(finders.saveButton());
+    userEvent.click(finders.saveButton());
 
     expect(onSubmit.mock.calls).toMatchInlineSnapshot(`
       Array [
@@ -155,11 +154,11 @@ describe('FullFoo', () => {
     const onSubmit = jest.fn();
     render(renderStory(FullFoo, { onSubmit }));
 
-    fireEvent.click(finders.fooBarButton());
+    userEvent.click(finders.fooBarButton());
 
-    fireEvent.click(await waitFor(() => finders.entityPickerBar2()));
+    userEvent.click(await waitFor(() => finders.entityPickerBar2()));
 
-    fireEvent.click(finders.saveButton());
+    userEvent.click(finders.saveButton());
 
     expect(onSubmit.mock.calls).toMatchInlineSnapshot(`
       Array [
