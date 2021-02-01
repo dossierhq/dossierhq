@@ -113,6 +113,7 @@ exports[`Storyshots Components/EntityEditor Deleted Foo 1`] = `
           aria-label="Remove entity"
           className="dd button icon-button"
           disabled={true}
+          type="button"
         >
           <span
             className="dd icon remove"
@@ -206,6 +207,7 @@ exports[`Storyshots Components/EntityEditor Full Foo 1`] = `
           className="dd button icon-button"
           disabled={false}
           onClick={[Function]}
+          type="button"
         >
           <span
             className="dd icon remove"
@@ -298,6 +300,7 @@ exports[`Storyshots Components/EntityEditor New Foo 1`] = `
           aria-label="Remove entity"
           className="dd button icon-button"
           disabled={true}
+          type="button"
         >
           <span
             className="dd icon remove"
@@ -320,6 +323,7 @@ exports[`Storyshots Components/IconButton Disabled 1`] = `
   aria-label="Remove"
   className="dd button icon-button"
   disabled={true}
+  type="button"
 >
   <span
     className="dd icon remove"
@@ -331,6 +335,7 @@ exports[`Storyshots Components/IconButton Normal 1`] = `
 <button
   aria-label="Remove"
   className="dd button icon-button"
+  type="button"
 >
   <span
     className="dd icon remove"
