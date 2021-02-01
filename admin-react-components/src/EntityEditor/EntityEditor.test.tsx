@@ -1,6 +1,6 @@
 import type { Story } from '@storybook/react/types-6-0';
 import '@testing-library/jest-dom';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import * as React from 'react';
 import * as renderer from 'react-test-renderer';
 import type { EntityEditorProps } from './EntityEditor';
@@ -24,6 +24,8 @@ function renderStoryToJSON(
 const finders = {
   nameInput: () => screen.getByLabelText('Name'),
   fooTitleInput: () => screen.getByLabelText('title'),
+  fooBarButton: () => screen.getByLabelText('bar'),
+  entityPickerBar2: () => screen.getByText('Bar 2'),
   saveButton: () => screen.getByRole('button', { name: /save/i }),
 };
 
@@ -143,6 +145,31 @@ describe('FullFoo', () => {
             "_type": "Foo",
             "id": "fc66b4d7-61ff-44d4-8f68-cb7f526df046",
             "title": "New title",
+          },
+        ],
+      ]
+    `);
+  });
+
+  test('Select Bar entity and submit', async () => {
+    const onSubmit = jest.fn();
+    render(renderStory(FullFoo, { onSubmit }));
+
+    fireEvent.click(finders.fooBarButton());
+
+    fireEvent.click(await waitFor(() => finders.entityPickerBar2()));
+
+    fireEvent.click(finders.saveButton());
+
+    expect(onSubmit.mock.calls).toMatchInlineSnapshot(`
+      Array [
+        Array [
+          Object {
+            "_type": "Foo",
+            "bar": Object {
+              "id": "eb5732e2-b931-492b-82f1-f8fdd464f0d2",
+            },
+            "id": "fc66b4d7-61ff-44d4-8f68-cb7f526df046",
           },
         ],
       ]
