@@ -16,6 +16,7 @@ export function IconButton({ icon, ariaLabel, disabled, onClick }: IconButtonPro
       aria-label={ariaLabel}
       onClick={disabled ? undefined : onClick}
       disabled={disabled}
+      type="button"
     >
       <Icon icon={icon} />
     </button>

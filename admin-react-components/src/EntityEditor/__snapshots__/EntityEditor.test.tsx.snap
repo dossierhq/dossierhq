@@ -75,6 +75,7 @@ exports[`DeletedFoo render 1`] = `
           aria-label="Remove entity"
           className="dd button icon-button"
           disabled={true}
+          type="button"
         >
           <span
             className="dd icon remove"
@@ -168,6 +169,7 @@ exports[`FullFoo render 1`] = `
           className="dd button icon-button"
           disabled={false}
           onClick={[Function]}
+          type="button"
         >
           <span
             className="dd icon remove"
@@ -260,6 +262,7 @@ exports[`NewFoo render 1`] = `
           aria-label="Remove entity"
           className="dd button icon-button"
           disabled={true}
+          type="button"
         >
           <span
             className="dd icon remove"

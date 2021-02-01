@@ -1,6 +1,6 @@
 import type { Story } from '@storybook/react/types-6-0';
 import '@testing-library/jest-dom';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import * as React from 'react';
 import * as renderer from 'react-test-renderer';
@@ -26,6 +26,10 @@ const finders = {
   nameInput: () => screen.getByLabelText('Name'),
   fooTitleInput: () => screen.getByLabelText('title'),
   fooBarButton: () => screen.getByLabelText('bar'),
+  fooBarRemoveButton: () => {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    return within(screen.getByLabelText('bar').parentElement!).getByLabelText('Remove entity');
+  },
   entityPickerBar2: () => screen.getByText('Bar 2'),
   saveButton: () => screen.getByRole('button', { name: /save/i }),
 };
@@ -144,6 +148,27 @@ describe('FullFoo', () => {
             "_type": "Foo",
             "id": "fc66b4d7-61ff-44d4-8f68-cb7f526df046",
             "title": "New title",
+          },
+        ],
+      ]
+    `);
+  });
+
+  test('Remove Bar entity and submit', async () => {
+    const onSubmit = jest.fn();
+    render(renderStory(FullFoo, { onSubmit }));
+
+    userEvent.click(finders.fooBarRemoveButton());
+
+    userEvent.click(finders.saveButton());
+
+    expect(onSubmit.mock.calls).toMatchInlineSnapshot(`
+      Array [
+        Array [
+          Object {
+            "_type": "Foo",
+            "bar": null,
+            "id": "fc66b4d7-61ff-44d4-8f68-cb7f526df046",
           },
         ],
       ]
