@@ -18,6 +18,7 @@ dependencies:
   '@storybook/react': 6.1.11_37e629242fc5505a3291b78a8a7825d6
   '@testing-library/jest-dom': 5.11.8
   '@testing-library/react': 11.2.2_react-dom@17.0.1+react@17.0.1
+  '@testing-library/user-event': 12.6.2
   '@types/debug': 4.1.5
   '@types/express': 4.17.9
   '@types/inquirer': 7.3.1
@@ -3249,6 +3250,17 @@ packages:
       react-dom: '*'
     resolution:
       integrity: sha512-jaxm0hwUjv+hzC+UFEywic7buDC9JQ1q3cDsrWVSDAPmLotfA6E6kUHlYm/zOeGCac6g48DR36tFHxl7Zb+N5A==
+  /@testing-library/user-event/12.6.2:
+    dependencies:
+      '@babel/runtime': 7.12.5
+    dev: false
+    engines:
+      node: '>=10'
+      npm: '>=6'
+    peerDependencies:
+      '@testing-library/dom': '>=7.21.4'
+    resolution:
+      integrity: sha512-4OsiTSo2vbQm+eOnm1un8b9i2Re4mn+D7d7ET6HXtzYKY7vPe3O01iYKRmSW9vS5mNrQcCLwvRhVq1gWs5YGKA==
   /@types/anymatch/1.3.1:
     dev: false
     resolution:
@@ -14831,6 +14843,7 @@ packages:
       '@storybook/react': 6.1.11_4cd6b9b0b5df32dd44a05e3a5690b4f7
       '@testing-library/jest-dom': 5.11.8
       '@testing-library/react': 11.2.2_react-dom@17.0.1+react@17.0.1
+      '@testing-library/user-event': 12.6.2
       '@types/jest': 26.0.15
       '@types/react': 17.0.0
       '@types/react-dom': 17.0.0
@@ -14858,7 +14871,7 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-6yoQ2+dUOGhR/oeUNl60zkbetbW2yKy9jTR2Prer93GPFMTIjyT2Um2tsTBK2jds1h2B9acbb6YgbIFvb5zdUA==
+      integrity: sha512-7deaOlWD81cMGnyo5n+UmPctkOXUEPJDBolYdbfASMIY9MEN6tKu5x9+6vrwXMPrH7juqPTz8UIBoqizXJ8cTw==
       tarball: 'file:projects/admin-react-components.tgz'
     version: 0.0.0
   'file:projects/benchpress.tgz':
@@ -15048,6 +15061,7 @@ specifiers:
   '@storybook/react': ^6.1.11
   '@testing-library/jest-dom': ~5.11.8
   '@testing-library/react': ~11.2.2
+  '@testing-library/user-event': ~12.6.2
   '@types/debug': ~4.1.5
   '@types/express': ~4.17.9
   '@types/inquirer': ^7.3.1
