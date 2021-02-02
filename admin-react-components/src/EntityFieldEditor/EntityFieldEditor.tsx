@@ -6,7 +6,7 @@ import {
   isStringField,
   isStringListField,
 } from '@datadata/core';
-import { EntityFieldListWrapper, EntityPicker, FormField, InputText } from '..';
+import { EntityFieldListWrapper, EntityPicker, FormField, StringFieldEditor } from '..';
 
 interface Props {
   idPrefix: string;
@@ -32,7 +32,9 @@ export function EntityFieldEditor({
 
   let editor;
   if (isStringField(fieldSpec, value)) {
-    editor = <InputText id={id} value={value} onChange={onValueChanged} />;
+    editor = (
+      <StringFieldEditor id={id} value={value} fieldSpec={fieldSpec} onChange={onValueChanged} />
+    );
   } else if (isStringListField(fieldSpec, value)) {
     editor = (
       <EntityFieldListWrapper
@@ -40,7 +42,7 @@ export function EntityFieldEditor({
         value={value}
         fieldSpec={fieldSpec}
         onChange={onValueChanged}
-        Editor={InputText}
+        Editor={StringFieldEditor}
       />
     );
   } else if (isEntityTypeField(fieldSpec, value)) {

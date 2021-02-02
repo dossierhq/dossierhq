@@ -75,13 +75,25 @@ exports[`Storyshots Components/EntityEditor Deleted Foo 1`] = `
     <div
       className="dd form-control"
     >
-      <input
-        className="dd text-body1 input"
-        id="entity-fb62be03-a0a9-4689-9987-bacee0e7692d-title"
-        onChange={[Function]}
-        type="text"
-        value=""
-      />
+      <div>
+        <input
+          className="dd text-body1 input"
+          id="entity-fb62be03-a0a9-4689-9987-bacee0e7692d-title"
+          onChange={[Function]}
+          type="text"
+          value=""
+        />
+        <button
+          aria-label="Clear"
+          className="dd button icon-button"
+          onClick={[Function]}
+          type="button"
+        >
+          <span
+            className="dd icon remove"
+          />
+        </button>
+      </div>
     </div>
   </div>
   <div>
@@ -95,13 +107,25 @@ exports[`Storyshots Components/EntityEditor Deleted Foo 1`] = `
       className="dd form-control"
     >
       <div>
-        <input
-          className="dd text-body1 input"
-          id="entity-fb62be03-a0a9-4689-9987-bacee0e7692d-tags"
-          onChange={[Function]}
-          type="text"
-          value=""
-        />
+        <div>
+          <input
+            className="dd text-body1 input"
+            id="entity-fb62be03-a0a9-4689-9987-bacee0e7692d-tags"
+            onChange={[Function]}
+            type="text"
+            value=""
+          />
+          <button
+            aria-label="Remove item"
+            className="dd button icon-button"
+            onClick={[Function]}
+            type="button"
+          >
+            <span
+              className="dd icon remove"
+            />
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -229,13 +253,25 @@ exports[`Storyshots Components/EntityEditor Full Foo 1`] = `
     <div
       className="dd form-control"
     >
-      <input
-        className="dd text-body1 input"
-        id="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-title"
-        onChange={[Function]}
-        type="text"
-        value="Hello"
-      />
+      <div>
+        <input
+          className="dd text-body1 input"
+          id="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-title"
+          onChange={[Function]}
+          type="text"
+          value="Hello"
+        />
+        <button
+          aria-label="Clear"
+          className="dd button icon-button"
+          onClick={[Function]}
+          type="button"
+        >
+          <span
+            className="dd icon remove"
+          />
+        </button>
+      </div>
     </div>
   </div>
   <div>
@@ -249,31 +285,79 @@ exports[`Storyshots Components/EntityEditor Full Foo 1`] = `
       className="dd form-control"
     >
       <div>
-        <input
-          className="dd text-body1 input"
-          id="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-tags"
-          onChange={[Function]}
-          type="text"
-          value="one"
-        />
-        <input
-          className="dd text-body1 input"
-          onChange={[Function]}
-          type="text"
-          value="two"
-        />
-        <input
-          className="dd text-body1 input"
-          onChange={[Function]}
-          type="text"
-          value="three"
-        />
-        <input
-          className="dd text-body1 input"
-          onChange={[Function]}
-          type="text"
-          value=""
-        />
+        <div>
+          <input
+            className="dd text-body1 input"
+            id="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-tags"
+            onChange={[Function]}
+            type="text"
+            value="one"
+          />
+          <button
+            aria-label="Remove item"
+            className="dd button icon-button"
+            onClick={[Function]}
+            type="button"
+          >
+            <span
+              className="dd icon remove"
+            />
+          </button>
+        </div>
+        <div>
+          <input
+            className="dd text-body1 input"
+            onChange={[Function]}
+            type="text"
+            value="two"
+          />
+          <button
+            aria-label="Remove item"
+            className="dd button icon-button"
+            onClick={[Function]}
+            type="button"
+          >
+            <span
+              className="dd icon remove"
+            />
+          </button>
+        </div>
+        <div>
+          <input
+            className="dd text-body1 input"
+            onChange={[Function]}
+            type="text"
+            value="three"
+          />
+          <button
+            aria-label="Remove item"
+            className="dd button icon-button"
+            onClick={[Function]}
+            type="button"
+          >
+            <span
+              className="dd icon remove"
+            />
+          </button>
+        </div>
+        <div>
+          <input
+            className="dd text-body1 input"
+            onChange={[Function]}
+            type="text"
+            value=""
+          />
+          <button
+            aria-label="Remove item"
+            className="dd button icon-button"
+            onClick={[Function]}
+            type="button"
+          >
+            <span
+              className="dd icon remove"
+            />
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -454,13 +538,25 @@ exports[`Storyshots Components/EntityEditor New Foo 1`] = `
     <div
       className="dd form-control"
     >
-      <input
-        className="dd text-body1 input"
-        id="new-entity-123-title"
-        onChange={[Function]}
-        type="text"
-        value=""
-      />
+      <div>
+        <input
+          className="dd text-body1 input"
+          id="new-entity-123-title"
+          onChange={[Function]}
+          type="text"
+          value=""
+        />
+        <button
+          aria-label="Clear"
+          className="dd button icon-button"
+          onClick={[Function]}
+          type="button"
+        >
+          <span
+            className="dd icon remove"
+          />
+        </button>
+      </div>
     </div>
   </div>
   <div>
@@ -474,13 +570,25 @@ exports[`Storyshots Components/EntityEditor New Foo 1`] = `
       className="dd form-control"
     >
       <div>
-        <input
-          className="dd text-body1 input"
-          id="new-entity-123-tags"
-          onChange={[Function]}
-          type="text"
-          value=""
-        />
+        <div>
+          <input
+            className="dd text-body1 input"
+            id="new-entity-123-tags"
+            onChange={[Function]}
+            type="text"
+            value=""
+          />
+          <button
+            aria-label="Remove item"
+            className="dd button icon-button"
+            onClick={[Function]}
+            type="button"
+          >
+            <span
+              className="dd icon remove"
+            />
+          </button>
+        </div>
       </div>
     </div>
   </div>
