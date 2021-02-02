@@ -13,7 +13,7 @@ const Template: Story<IconButtonProps> = (args) => {
 };
 
 export const Normal = Template.bind({});
-Normal.args = { icon: 'remove', ariaLabel: 'Remove' };
+Normal.args = { icon: 'remove', title: 'Remove' };
 
 export const Disabled = Template.bind({});
-Disabled.args = { icon: 'remove', ariaLabel: 'Remove', disabled: true };
+Disabled.args = { icon: 'remove', title: 'Remove', disabled: true };

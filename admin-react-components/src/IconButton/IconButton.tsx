@@ -4,16 +4,16 @@ import { Icon } from '..';
 
 export interface IconButtonProps {
   icon: IconType;
-  ariaLabel: string;
+  title: string;
   disabled?: boolean;
   onClick?: () => void;
 }
 
-export function IconButton({ icon, ariaLabel, disabled, onClick }: IconButtonProps): JSX.Element {
+export function IconButton({ icon, title, disabled, onClick }: IconButtonProps): JSX.Element {
   return (
     <button
       className="dd button icon-button"
-      aria-label={ariaLabel}
+      title={title}
       onClick={disabled ? undefined : onClick}
       disabled={disabled}
       type="button"

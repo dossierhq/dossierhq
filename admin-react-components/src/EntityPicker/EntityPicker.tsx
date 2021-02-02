@@ -74,7 +74,7 @@ function EntityPickerInner({
         </Button>
         <IconButton
           icon="remove"
-          ariaLabel="Remove entity"
+          title="Remove entity"
           onClick={() => onChange?.(null)}
           disabled={!value}
         />

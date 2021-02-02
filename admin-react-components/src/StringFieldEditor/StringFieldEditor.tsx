@@ -9,7 +9,7 @@ export function StringFieldEditor({ id, value, fieldSpec, onChange }: Props): JS
     <div>
       <InputText {...{ id, value, onChange }} />
       <IconButton
-        ariaLabel={fieldSpec.list ? 'Remove item' : 'Clear'}
+        title={fieldSpec.list ? 'Remove item' : 'Clear'}
         icon="remove"
         onClick={() => onChange?.(null)}
       />

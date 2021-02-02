@@ -84,9 +84,9 @@ exports[`Storyshots Components/EntityEditor Deleted Foo 1`] = `
           value=""
         />
         <button
-          aria-label="Clear"
           className="dd button icon-button"
           onClick={[Function]}
+          title="Clear"
           type="button"
         >
           <span
@@ -116,9 +116,9 @@ exports[`Storyshots Components/EntityEditor Deleted Foo 1`] = `
             value=""
           />
           <button
-            aria-label="Remove item"
             className="dd button icon-button"
             onClick={[Function]}
+            title="Remove item"
             type="button"
           >
             <span
@@ -155,9 +155,9 @@ exports[`Storyshots Components/EntityEditor Deleted Foo 1`] = `
           Not set
         </button>
         <button
-          aria-label="Remove entity"
           className="dd button icon-button"
           disabled={true}
+          title="Remove entity"
           type="button"
         >
           <span
@@ -194,9 +194,9 @@ exports[`Storyshots Components/EntityEditor Deleted Foo 1`] = `
             Not set
           </button>
           <button
-            aria-label="Remove entity"
             className="dd button icon-button"
             disabled={true}
+            title="Remove entity"
             type="button"
           >
             <span
@@ -262,9 +262,9 @@ exports[`Storyshots Components/EntityEditor Full Foo 1`] = `
           value="Hello"
         />
         <button
-          aria-label="Clear"
           className="dd button icon-button"
           onClick={[Function]}
+          title="Clear"
           type="button"
         >
           <span
@@ -294,9 +294,9 @@ exports[`Storyshots Components/EntityEditor Full Foo 1`] = `
             value="one"
           />
           <button
-            aria-label="Remove item"
             className="dd button icon-button"
             onClick={[Function]}
+            title="Remove item"
             type="button"
           >
             <span
@@ -312,9 +312,9 @@ exports[`Storyshots Components/EntityEditor Full Foo 1`] = `
             value="two"
           />
           <button
-            aria-label="Remove item"
             className="dd button icon-button"
             onClick={[Function]}
+            title="Remove item"
             type="button"
           >
             <span
@@ -330,9 +330,9 @@ exports[`Storyshots Components/EntityEditor Full Foo 1`] = `
             value="three"
           />
           <button
-            aria-label="Remove item"
             className="dd button icon-button"
             onClick={[Function]}
+            title="Remove item"
             type="button"
           >
             <span
@@ -348,9 +348,9 @@ exports[`Storyshots Components/EntityEditor Full Foo 1`] = `
             value=""
           />
           <button
-            aria-label="Remove item"
             className="dd button icon-button"
             onClick={[Function]}
+            title="Remove item"
             type="button"
           >
             <span
@@ -387,10 +387,10 @@ exports[`Storyshots Components/EntityEditor Full Foo 1`] = `
           Bar 1
         </button>
         <button
-          aria-label="Remove entity"
           className="dd button icon-button"
           disabled={false}
           onClick={[Function]}
+          title="Remove entity"
           type="button"
         >
           <span
@@ -427,10 +427,10 @@ exports[`Storyshots Components/EntityEditor Full Foo 1`] = `
             Bar 1
           </button>
           <button
-            aria-label="Remove entity"
             className="dd button icon-button"
             disabled={false}
             onClick={[Function]}
+            title="Remove entity"
             type="button"
           >
             <span
@@ -453,10 +453,10 @@ exports[`Storyshots Components/EntityEditor Full Foo 1`] = `
             Bar 2
           </button>
           <button
-            aria-label="Remove entity"
             className="dd button icon-button"
             disabled={false}
             onClick={[Function]}
+            title="Remove entity"
             type="button"
           >
             <span
@@ -479,9 +479,9 @@ exports[`Storyshots Components/EntityEditor Full Foo 1`] = `
             Not set
           </button>
           <button
-            aria-label="Remove entity"
             className="dd button icon-button"
             disabled={true}
+            title="Remove entity"
             type="button"
           >
             <span
@@ -547,9 +547,9 @@ exports[`Storyshots Components/EntityEditor New Foo 1`] = `
           value=""
         />
         <button
-          aria-label="Clear"
           className="dd button icon-button"
           onClick={[Function]}
+          title="Clear"
           type="button"
         >
           <span
@@ -579,9 +579,9 @@ exports[`Storyshots Components/EntityEditor New Foo 1`] = `
             value=""
           />
           <button
-            aria-label="Remove item"
             className="dd button icon-button"
             onClick={[Function]}
+            title="Remove item"
             type="button"
           >
             <span
@@ -618,9 +618,9 @@ exports[`Storyshots Components/EntityEditor New Foo 1`] = `
           Not set
         </button>
         <button
-          aria-label="Remove entity"
           className="dd button icon-button"
           disabled={true}
+          title="Remove entity"
           type="button"
         >
           <span
@@ -657,9 +657,9 @@ exports[`Storyshots Components/EntityEditor New Foo 1`] = `
             Not set
           </button>
           <button
-            aria-label="Remove entity"
             className="dd button icon-button"
             disabled={true}
+            title="Remove entity"
             type="button"
           >
             <span
@@ -681,9 +681,9 @@ exports[`Storyshots Components/EntityEditor New Foo 1`] = `
 
 exports[`Storyshots Components/IconButton Disabled 1`] = `
 <button
-  aria-label="Remove"
   className="dd button icon-button"
   disabled={true}
+  title="Remove"
   type="button"
 >
   <span
@@ -694,8 +694,8 @@ exports[`Storyshots Components/IconButton Disabled 1`] = `
 
 exports[`Storyshots Components/IconButton Normal 1`] = `
 <button
-  aria-label="Remove"
   className="dd button icon-button"
+  title="Remove"
   type="button"
 >
   <span
