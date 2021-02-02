@@ -15,3 +15,4 @@ export { IconButton } from './IconButton/IconButton';
 export { InputSubmit } from './InputSubmit/InputSubmit';
 export { InputText } from './InputText/InputText';
 export { Modal } from './Modal/Modal';
+export { StringFieldEditor } from './StringFieldEditor/StringFieldEditor';
