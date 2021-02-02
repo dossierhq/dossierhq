@@ -6,7 +6,9 @@ const schema = new Schema({
       name: 'Foo',
       fields: [
         { name: 'title', type: FieldType.String, isName: true },
+        { name: 'tags', type: FieldType.String, list: true },
         { name: 'bar', type: FieldType.EntityType, entityTypes: ['Bar'] },
+        { name: 'bars', type: FieldType.EntityType, entityTypes: ['Bar'], list: true },
       ],
     },
     { name: 'Bar', fields: [{ name: 'title', type: FieldType.String, isName: true }] },

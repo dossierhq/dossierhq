@@ -87,6 +87,27 @@ exports[`Storyshots Components/EntityEditor Deleted Foo 1`] = `
   <div>
     <label
       className="dd text-subtitle1"
+      htmlFor="entity-fb62be03-a0a9-4689-9987-bacee0e7692d-tags"
+    >
+      tags
+    </label>
+    <div
+      className="dd form-control"
+    >
+      <div>
+        <input
+          className="dd text-body1 input"
+          id="entity-fb62be03-a0a9-4689-9987-bacee0e7692d-tags"
+          onChange={[Function]}
+          type="text"
+          value=""
+        />
+      </div>
+    </div>
+  </div>
+  <div>
+    <label
+      className="dd text-subtitle1"
       htmlFor="entity-fb62be03-a0a9-4689-9987-bacee0e7692d-bar"
     >
       bar
@@ -119,6 +140,46 @@ exports[`Storyshots Components/EntityEditor Deleted Foo 1`] = `
             className="dd icon remove"
           />
         </button>
+      </div>
+    </div>
+  </div>
+  <div>
+    <label
+      className="dd text-subtitle1"
+      htmlFor="entity-fb62be03-a0a9-4689-9987-bacee0e7692d-bars"
+    >
+      bars
+    </label>
+    <div
+      className="dd form-control"
+    >
+      <div>
+        <div
+          style={
+            Object {
+              "display": "flex",
+            }
+          }
+        >
+          <button
+            className="dd button text-button "
+            id="entity-fb62be03-a0a9-4689-9987-bacee0e7692d-bars"
+            onClick={[Function]}
+            type="button"
+          >
+            Not set
+          </button>
+          <button
+            aria-label="Remove entity"
+            className="dd button icon-button"
+            disabled={true}
+            type="button"
+          >
+            <span
+              className="dd icon remove"
+            />
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -180,6 +241,45 @@ exports[`Storyshots Components/EntityEditor Full Foo 1`] = `
   <div>
     <label
       className="dd text-subtitle1"
+      htmlFor="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-tags"
+    >
+      tags
+    </label>
+    <div
+      className="dd form-control"
+    >
+      <div>
+        <input
+          className="dd text-body1 input"
+          id="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-tags"
+          onChange={[Function]}
+          type="text"
+          value="one"
+        />
+        <input
+          className="dd text-body1 input"
+          onChange={[Function]}
+          type="text"
+          value="two"
+        />
+        <input
+          className="dd text-body1 input"
+          onChange={[Function]}
+          type="text"
+          value="three"
+        />
+        <input
+          className="dd text-body1 input"
+          onChange={[Function]}
+          type="text"
+          value=""
+        />
+      </div>
+    </div>
+  </div>
+  <div>
+    <label
+      className="dd text-subtitle1"
       htmlFor="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-bar"
     >
       bar
@@ -213,6 +313,98 @@ exports[`Storyshots Components/EntityEditor Full Foo 1`] = `
             className="dd icon remove"
           />
         </button>
+      </div>
+    </div>
+  </div>
+  <div>
+    <label
+      className="dd text-subtitle1"
+      htmlFor="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-bars"
+    >
+      bars
+    </label>
+    <div
+      className="dd form-control"
+    >
+      <div>
+        <div
+          style={
+            Object {
+              "display": "flex",
+            }
+          }
+        >
+          <button
+            className="dd button text-button "
+            id="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-bars"
+            onClick={[Function]}
+            type="button"
+          >
+            Bar 1
+          </button>
+          <button
+            aria-label="Remove entity"
+            className="dd button icon-button"
+            disabled={false}
+            onClick={[Function]}
+            type="button"
+          >
+            <span
+              className="dd icon remove"
+            />
+          </button>
+        </div>
+        <div
+          style={
+            Object {
+              "display": "flex",
+            }
+          }
+        >
+          <button
+            className="dd button text-button "
+            onClick={[Function]}
+            type="button"
+          >
+            Bar 2
+          </button>
+          <button
+            aria-label="Remove entity"
+            className="dd button icon-button"
+            disabled={false}
+            onClick={[Function]}
+            type="button"
+          >
+            <span
+              className="dd icon remove"
+            />
+          </button>
+        </div>
+        <div
+          style={
+            Object {
+              "display": "flex",
+            }
+          }
+        >
+          <button
+            className="dd button text-button "
+            onClick={[Function]}
+            type="button"
+          >
+            Not set
+          </button>
+          <button
+            aria-label="Remove entity"
+            className="dd button icon-button"
+            disabled={true}
+            type="button"
+          >
+            <span
+              className="dd icon remove"
+            />
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -274,6 +466,27 @@ exports[`Storyshots Components/EntityEditor New Foo 1`] = `
   <div>
     <label
       className="dd text-subtitle1"
+      htmlFor="new-entity-123-tags"
+    >
+      tags
+    </label>
+    <div
+      className="dd form-control"
+    >
+      <div>
+        <input
+          className="dd text-body1 input"
+          id="new-entity-123-tags"
+          onChange={[Function]}
+          type="text"
+          value=""
+        />
+      </div>
+    </div>
+  </div>
+  <div>
+    <label
+      className="dd text-subtitle1"
       htmlFor="new-entity-123-bar"
     >
       bar
@@ -306,6 +519,46 @@ exports[`Storyshots Components/EntityEditor New Foo 1`] = `
             className="dd icon remove"
           />
         </button>
+      </div>
+    </div>
+  </div>
+  <div>
+    <label
+      className="dd text-subtitle1"
+      htmlFor="new-entity-123-bars"
+    >
+      bars
+    </label>
+    <div
+      className="dd form-control"
+    >
+      <div>
+        <div
+          style={
+            Object {
+              "display": "flex",
+            }
+          }
+        >
+          <button
+            className="dd button text-button "
+            id="new-entity-123-bars"
+            onClick={[Function]}
+            type="button"
+          >
+            Not set
+          </button>
+          <button
+            aria-label="Remove entity"
+            className="dd button icon-button"
+            disabled={true}
+            type="button"
+          >
+            <span
+              className="dd icon remove"
+            />
+          </button>
+        </div>
       </div>
     </div>
   </div>

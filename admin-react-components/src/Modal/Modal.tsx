@@ -21,7 +21,7 @@ export function Modal({ show, onClose, children }: ModalProps): JSX.Element | nu
   useKeyHandler(['Escape'], onClose);
 
   return (
-    <div className="dd modal">
+    <div className="dd modal" role="dialog">
       <div className="dd modal-background" onClick={onClose} />
       <div className="dd modal-content has-background">{children}</div>
     </div>

@@ -1,10 +1,12 @@
 export type { DataDataContextValue } from './contexts/DataDataContext';
 export type { IconProps, IconType } from './Icon/Icon';
+export type { EntityFieldEditorProps } from './EntityFieldEditor/EntityFieldEditor';
 export { Button } from './Button/Button';
 export { DataDataContext } from './contexts/DataDataContext';
 export { Divider } from './Divider/Divider';
 export { EntityEditor } from './EntityEditor/EntityEditor';
 export { EntityFieldEditor } from './EntityFieldEditor/EntityFieldEditor';
+export { EntityFieldListWrapper } from './EntityFieldListWrapper/EntityFieldListWrapper';
 export { EntityPicker } from './EntityPicker/EntityPicker';
 export { Form } from './Form/Form';
 export { FormField } from './FormField/FormField';

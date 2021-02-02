@@ -28,9 +28,12 @@ const finders = {
   fooBarButton: () => screen.getByLabelText('bar'),
   fooBarRemoveButton: () => {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    return within(screen.getByLabelText('bar').parentElement!).getByLabelText('Remove entity');
+    const barParent = screen.getByLabelText('bar').parentElement!;
+    return within(barParent).getByLabelText('Remove entity');
   },
-  entityPickerBar2: () => screen.getByText('Bar 2'),
+  entityPickerBar2: () => {
+    return within(screen.getByRole('dialog')).getByText('Bar 2');
+  },
   saveButton: () => screen.getByRole('button', { name: /save/i }),
 };
 
@@ -179,9 +182,11 @@ describe('FullFoo', () => {
     const onSubmit = jest.fn();
     render(renderStory(FullFoo, { onSubmit }));
 
-    userEvent.click(finders.fooBarButton());
+    const bar = finders.fooBarButton();
+    userEvent.click(bar);
 
-    userEvent.click(await waitFor(() => finders.entityPickerBar2()));
+    const bar2 = await waitFor(() => finders.entityPickerBar2());
+    userEvent.click(bar2);
 
     userEvent.click(finders.saveButton());
 

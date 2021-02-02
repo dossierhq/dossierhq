@@ -13,7 +13,9 @@ const entities: Array<AdminEntity[]> = [
       _name: 'Hello',
       _version: 0,
       title: 'Hello',
+      tags: ['one', 'two', 'three'],
       bar: { id: bar1Id },
+      bars: [{ id: bar1Id }, { id: bar2Id }],
     },
   ],
   [

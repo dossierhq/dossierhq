@@ -5,18 +5,12 @@ import type {
   Edge,
   EntityReference,
   ErrorType,
-  FieldSpecification,
 } from '@datadata/core';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { Button, IconButton, Modal } from '..';
-import { DataDataContext, DataDataContextValue } from '../contexts/DataDataContext';
+import type { DataDataContextValue, EntityFieldEditorProps } from '..';
+import { Button, DataDataContext, IconButton, Modal } from '..';
 
-interface Props {
-  id: string;
-  value: EntityReference | null;
-  fieldSpec: FieldSpecification;
-  onChange?: (value: EntityReference | null) => void;
-}
+type Props = EntityFieldEditorProps<EntityReference>;
 
 interface InnerProps extends Props {
   useEntity: DataDataContextValue['useEntity'];
