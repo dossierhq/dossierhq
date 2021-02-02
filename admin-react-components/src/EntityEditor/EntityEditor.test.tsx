@@ -29,7 +29,7 @@ const finders = {
   fooBarRemoveButton: () => {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const barParent = screen.getByLabelText('bar').parentElement!;
-    return within(barParent).getByLabelText('Remove entity');
+    return within(barParent).getByTitle('Remove entity');
   },
   entityPickerBar2: () => {
     return within(screen.getByRole('dialog')).getByText('Bar 2');
