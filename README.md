@@ -23,3 +23,10 @@
 Run `rush add --package foo` instead of `npm install foo` (`rush add --package foo --dev` instead of `npm install --save-dev foo`).
 
 Check that the same versions of dependencies are used, run `rush check`.
+
+## Upgrade dependencies
+
+- Update `rushVersion` and `pnpmVersion` in `rush.json`
+- `npm run upgrade-dependencies:all`
+- `rush update`
+- `rush check`

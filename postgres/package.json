@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "upgrade-dependencies": "npx npm-check-updates -u --packageFile ./package.json",
+    "upgrade-dependencies:check": "npx npm-check-updates"
   },
   "author": "",
   "bin": {
@@ -12,7 +14,7 @@
   },
   "license": "ISC",
   "dependencies": {
-    "pg": "^8.4.2",
+    "pg": "^8.5.1",
     "postgrator": "^4.1.1",
     "url-parse-lax": "^4.0.0"
   }
