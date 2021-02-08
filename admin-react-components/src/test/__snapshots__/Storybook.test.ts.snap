@@ -40,7 +40,7 @@ exports[`Storyshots Components/Button Primary Disabled 1`] = `
 
 exports[`Storyshots Components/EntityEditor Deleted Foo 1`] = `
 <form
-  className="dd form has-background"
+  className="dd segment has-background"
   onSubmit={[Function]}
 >
   <div>
@@ -207,6 +207,64 @@ exports[`Storyshots Components/EntityEditor Deleted Foo 1`] = `
       </div>
     </div>
   </div>
+  <div>
+    <label
+      className="dd text-subtitle1"
+      htmlFor="entity-fb62be03-a0a9-4689-9987-bacee0e7692d-annotatedBar"
+    >
+      annotatedBar
+    </label>
+    <div
+      className="dd form-control"
+    >
+      <div
+        className="dd segment"
+      >
+        <select
+          onChange={[Function]}
+        >
+          <option
+            value=""
+          >
+            Select value type
+          </option>
+          <option>
+            AnnotatedBar
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div>
+    <label
+      className="dd text-subtitle1"
+      htmlFor="entity-fb62be03-a0a9-4689-9987-bacee0e7692d-annotatedBars"
+    >
+      annotatedBars
+    </label>
+    <div
+      className="dd form-control"
+    >
+      <div>
+        <div
+          className="dd segment"
+        >
+          <select
+            onChange={[Function]}
+          >
+            <option
+              value=""
+            >
+              Select value type
+            </option>
+            <option>
+              AnnotatedBar
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
   <input
     className="dd button text-button bg-primary"
     disabled={false}
@@ -218,7 +276,7 @@ exports[`Storyshots Components/EntityEditor Deleted Foo 1`] = `
 
 exports[`Storyshots Components/EntityEditor Full Foo 1`] = `
 <form
-  className="dd form has-background"
+  className="dd segment has-background"
   onSubmit={[Function]}
 >
   <div>
@@ -307,6 +365,7 @@ exports[`Storyshots Components/EntityEditor Full Foo 1`] = `
         <div>
           <input
             className="dd text-body1 input"
+            id="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-tags-1"
             onChange={[Function]}
             type="text"
             value="two"
@@ -325,6 +384,7 @@ exports[`Storyshots Components/EntityEditor Full Foo 1`] = `
         <div>
           <input
             className="dd text-body1 input"
+            id="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-tags-2"
             onChange={[Function]}
             type="text"
             value="three"
@@ -343,6 +403,7 @@ exports[`Storyshots Components/EntityEditor Full Foo 1`] = `
         <div>
           <input
             className="dd text-body1 input"
+            id="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-tags-3"
             onChange={[Function]}
             type="text"
             value=""
@@ -447,6 +508,7 @@ exports[`Storyshots Components/EntityEditor Full Foo 1`] = `
         >
           <button
             className="dd button text-button "
+            id="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-bars-1"
             onClick={[Function]}
             type="button"
           >
@@ -473,6 +535,7 @@ exports[`Storyshots Components/EntityEditor Full Foo 1`] = `
         >
           <button
             className="dd button text-button "
+            id="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-bars-2"
             onClick={[Function]}
             type="button"
           >
@@ -492,6 +555,318 @@ exports[`Storyshots Components/EntityEditor Full Foo 1`] = `
       </div>
     </div>
   </div>
+  <div>
+    <label
+      className="dd text-subtitle1"
+      htmlFor="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBar"
+    >
+      annotatedBar
+    </label>
+    <div
+      className="dd form-control"
+    >
+      <div
+        className="dd segment"
+      >
+        <p
+          className="dd text-caption"
+        >
+          AnnotatedBar
+           
+          <button
+            className="dd button icon-button"
+            onClick={[Function]}
+            title="Remove value item"
+            type="button"
+          >
+            <span
+              className="dd icon remove"
+            />
+          </button>
+        </p>
+        <div>
+          <label
+            className="dd text-subtitle1"
+            htmlFor="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBar-annotation"
+          >
+            annotation
+          </label>
+          <div
+            className="dd form-control"
+          >
+            <div>
+              <input
+                className="dd text-body1 input"
+                id="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBar-annotation"
+                onChange={[Function]}
+                type="text"
+                value="Annotation"
+              />
+              <button
+                className="dd button icon-button"
+                onClick={[Function]}
+                title="Clear"
+                type="button"
+              >
+                <span
+                  className="dd icon remove"
+                />
+              </button>
+            </div>
+          </div>
+        </div>
+        <div>
+          <label
+            className="dd text-subtitle1"
+            htmlFor="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBar-bar"
+          >
+            bar
+          </label>
+          <div
+            className="dd form-control"
+          >
+            <div
+              style={
+                Object {
+                  "display": "flex",
+                }
+              }
+            >
+              <button
+                className="dd button text-button "
+                id="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBar-bar"
+                onClick={[Function]}
+                type="button"
+              >
+                Bar 2
+              </button>
+              <button
+                className="dd button icon-button"
+                disabled={false}
+                onClick={[Function]}
+                title="Remove entity"
+                type="button"
+              >
+                <span
+                  className="dd icon remove"
+                />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <label
+      className="dd text-subtitle1"
+      htmlFor="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars"
+    >
+      annotatedBars
+    </label>
+    <div
+      className="dd form-control"
+    >
+      <div>
+        <div
+          className="dd segment"
+        >
+          <p
+            className="dd text-caption"
+          >
+            AnnotatedBar
+             
+            <button
+              className="dd button icon-button"
+              onClick={[Function]}
+              title="Remove value item"
+              type="button"
+            >
+              <span
+                className="dd icon remove"
+              />
+            </button>
+          </p>
+          <div>
+            <label
+              className="dd text-subtitle1"
+              htmlFor="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-annotation"
+            >
+              annotation
+            </label>
+            <div
+              className="dd form-control"
+            >
+              <div>
+                <input
+                  className="dd text-body1 input"
+                  id="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-annotation"
+                  onChange={[Function]}
+                  type="text"
+                  value="First"
+                />
+                <button
+                  className="dd button icon-button"
+                  onClick={[Function]}
+                  title="Clear"
+                  type="button"
+                >
+                  <span
+                    className="dd icon remove"
+                  />
+                </button>
+              </div>
+            </div>
+          </div>
+          <div>
+            <label
+              className="dd text-subtitle1"
+              htmlFor="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-bar"
+            >
+              bar
+            </label>
+            <div
+              className="dd form-control"
+            >
+              <div
+                style={
+                  Object {
+                    "display": "flex",
+                  }
+                }
+              >
+                <button
+                  className="dd button text-button "
+                  id="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-bar"
+                  onClick={[Function]}
+                  type="button"
+                >
+                  Bar 1
+                </button>
+                <button
+                  className="dd button icon-button"
+                  disabled={false}
+                  onClick={[Function]}
+                  title="Remove entity"
+                  type="button"
+                >
+                  <span
+                    className="dd icon remove"
+                  />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          className="dd segment"
+        >
+          <p
+            className="dd text-caption"
+          >
+            AnnotatedBar
+             
+            <button
+              className="dd button icon-button"
+              onClick={[Function]}
+              title="Remove value item"
+              type="button"
+            >
+              <span
+                className="dd icon remove"
+              />
+            </button>
+          </p>
+          <div>
+            <label
+              className="dd text-subtitle1"
+              htmlFor="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-1-annotation"
+            >
+              annotation
+            </label>
+            <div
+              className="dd form-control"
+            >
+              <div>
+                <input
+                  className="dd text-body1 input"
+                  id="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-1-annotation"
+                  onChange={[Function]}
+                  type="text"
+                  value="Second"
+                />
+                <button
+                  className="dd button icon-button"
+                  onClick={[Function]}
+                  title="Clear"
+                  type="button"
+                >
+                  <span
+                    className="dd icon remove"
+                  />
+                </button>
+              </div>
+            </div>
+          </div>
+          <div>
+            <label
+              className="dd text-subtitle1"
+              htmlFor="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-1-bar"
+            >
+              bar
+            </label>
+            <div
+              className="dd form-control"
+            >
+              <div
+                style={
+                  Object {
+                    "display": "flex",
+                  }
+                }
+              >
+                <button
+                  className="dd button text-button "
+                  id="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-1-bar"
+                  onClick={[Function]}
+                  type="button"
+                >
+                  Bar 2
+                </button>
+                <button
+                  className="dd button icon-button"
+                  disabled={false}
+                  onClick={[Function]}
+                  title="Remove entity"
+                  type="button"
+                >
+                  <span
+                    className="dd icon remove"
+                  />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          className="dd segment"
+        >
+          <select
+            onChange={[Function]}
+          >
+            <option
+              value=""
+            >
+              Select value type
+            </option>
+            <option>
+              AnnotatedBar
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
   <input
     className="dd button text-button bg-primary"
     disabled={false}
@@ -503,7 +878,7 @@ exports[`Storyshots Components/EntityEditor Full Foo 1`] = `
 
 exports[`Storyshots Components/EntityEditor New Foo 1`] = `
 <form
-  className="dd form has-background"
+  className="dd segment has-background"
   onSubmit={[Function]}
 >
   <div>
@@ -666,6 +1041,64 @@ exports[`Storyshots Components/EntityEditor New Foo 1`] = `
               className="dd icon remove"
             />
           </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <label
+      className="dd text-subtitle1"
+      htmlFor="new-entity-123-annotatedBar"
+    >
+      annotatedBar
+    </label>
+    <div
+      className="dd form-control"
+    >
+      <div
+        className="dd segment"
+      >
+        <select
+          onChange={[Function]}
+        >
+          <option
+            value=""
+          >
+            Select value type
+          </option>
+          <option>
+            AnnotatedBar
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div>
+    <label
+      className="dd text-subtitle1"
+      htmlFor="new-entity-123-annotatedBars"
+    >
+      annotatedBars
+    </label>
+    <div
+      className="dd form-control"
+    >
+      <div>
+        <div
+          className="dd segment"
+        >
+          <select
+            onChange={[Function]}
+          >
+            <option
+              value=""
+            >
+              Select value type
+            </option>
+            <option>
+              AnnotatedBar
+            </option>
+          </select>
         </div>
       </div>
     </div>

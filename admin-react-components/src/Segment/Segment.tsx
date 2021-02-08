@@ -1,0 +1,9 @@
+import React from 'react';
+
+interface SegmentProps {
+  children: React.ReactNode;
+}
+
+export function Segment({ children }: SegmentProps): JSX.Element {
+  return <div className="dd segment">{children}</div>;
+}

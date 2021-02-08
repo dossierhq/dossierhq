@@ -1,6 +1,13 @@
 import type { Story } from '@storybook/react/types-6-0';
 import '@testing-library/jest-dom';
-import { render, screen, waitFor, within } from '@testing-library/react';
+import {
+  getElementError,
+  queryByAttribute,
+  render,
+  screen,
+  waitFor,
+  within,
+} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import * as React from 'react';
 import * as renderer from 'react-test-renderer';
@@ -22,13 +29,27 @@ function renderStoryToJSON(
   return renderer.create(renderStory(StoryUnderTest, overrideArgs)).toJSON();
 }
 
+function getByStoryId(story: Story<EntityEditorProps>, subId: string) {
+  let idPrefix = story.args?.idPrefix;
+  if (!idPrefix && story.args?.entity && 'id' in story.args.entity) {
+    idPrefix = `entity-${story.args.entity.id}`;
+  }
+  expect(idPrefix).toBeTruthy();
+  const id = `${idPrefix}-${subId}`;
+  const result = queryByAttribute('id', document.body, id);
+  if (!result) {
+    throw getElementError(`No result for ${id}`, document.body);
+  }
+  return result;
+}
+
 const finders = {
   nameInput: () => screen.getByLabelText('Name'),
   fooTitleInput: () => screen.getByLabelText('title'),
-  fooBarButton: () => screen.getByLabelText('bar'),
-  fooBarRemoveButton: () => {
+  fooBarButton: (story: Story<EntityEditorProps>) => getByStoryId(story, 'bar'),
+  fooBarRemoveButton: (story: Story<EntityEditorProps>) => {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const barParent = screen.getByLabelText('bar').parentElement!;
+    const barParent = getByStoryId(story, 'bar').parentElement!;
     return within(barParent).getByTitle('Remove entity');
   },
   entityPickerBar2: () => {
@@ -161,7 +182,7 @@ describe('FullFoo', () => {
     const onSubmit = jest.fn();
     render(renderStory(FullFoo, { onSubmit }));
 
-    userEvent.click(finders.fooBarRemoveButton());
+    userEvent.click(finders.fooBarRemoveButton(FullFoo));
 
     userEvent.click(finders.saveButton());
 
@@ -182,7 +203,7 @@ describe('FullFoo', () => {
     const onSubmit = jest.fn();
     render(renderStory(FullFoo, { onSubmit }));
 
-    const bar = finders.fooBarButton();
+    const bar = finders.fooBarButton(FullFoo);
     userEvent.click(bar);
 
     const bar2 = await waitFor(() => finders.entityPickerBar2());
