@@ -508,10 +508,10 @@ exports[`Storyshots Components/EntityEditor Full Foo 1`] = `
         <p
           className="dd text-caption"
         >
-          AnnotatedBar
-           
+          AnnotatedBar 
           <button
             className="dd button icon-button"
+            data-testid="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBar.remove"
             onClick={[Function]}
             title="Remove value item"
             type="button"
@@ -610,10 +610,10 @@ exports[`Storyshots Components/EntityEditor Full Foo 1`] = `
           <p
             className="dd text-caption"
           >
-            AnnotatedBar
-             
+            AnnotatedBar 
             <button
               className="dd button icon-button"
+              data-testid="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars.remove"
               onClick={[Function]}
               title="Remove value item"
               type="button"
@@ -699,10 +699,10 @@ exports[`Storyshots Components/EntityEditor Full Foo 1`] = `
           <p
             className="dd text-caption"
           >
-            AnnotatedBar
-             
+            AnnotatedBar 
             <button
               className="dd button icon-button"
+              data-testid="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-1.remove"
               onClick={[Function]}
               title="Remove value item"
               type="button"

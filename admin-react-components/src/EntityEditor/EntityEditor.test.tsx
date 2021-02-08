@@ -29,16 +29,20 @@ function renderStoryToJSON(
   return renderer.create(renderStory(StoryUnderTest, overrideArgs)).toJSON();
 }
 
-function getByStoryId(story: Story<EntityEditorProps>, subId: string) {
+function storyToId(story: Story<EntityEditorProps>, subId: string) {
   let idPrefix = story.args?.idPrefix;
   if (!idPrefix && story.args?.entity && 'id' in story.args.entity) {
     idPrefix = `entity-${story.args.entity.id}`;
   }
   expect(idPrefix).toBeTruthy();
-  const id = `${idPrefix}-${subId}`;
+  return `${idPrefix}-${subId}`;
+}
+
+function getByStoryId(story: Story<EntityEditorProps>, subId: string) {
+  const id = storyToId(story, subId);
   const result = queryByAttribute('id', document.body, id);
   if (!result) {
-    throw getElementError(`No result for ${id}`, document.body);
+    throw getElementError(`No result for id=${id}`, document.body);
   }
   return result;
 }
@@ -51,6 +55,16 @@ const finders = {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const barParent = getByStoryId(story, 'bar').parentElement!;
     return within(barParent).getByTitle('Remove entity');
+  },
+  fooAnnotatedBarRemoveButton: (story: Story<EntityEditorProps>) => {
+    return screen.getByTestId(storyToId(story, 'annotatedBar.remove'));
+  },
+  fooAnnotatedBarAnnotationInput: (story: Story<EntityEditorProps>) =>
+    getByStoryId(story, 'annotatedBar-annotation'),
+  fooAnnotatedBarBarButton: (story: Story<EntityEditorProps>) =>
+    getByStoryId(story, 'annotatedBar-bar'),
+  entityPickerBar1: () => {
+    return within(screen.getByRole('dialog')).getByText('Bar 1');
   },
   entityPickerBar2: () => {
     return within(screen.getByRole('dialog')).getByText('Bar 2');
@@ -218,6 +232,86 @@ describe('FullFoo', () => {
             "_type": "Foo",
             "bar": Object {
               "id": "eb5732e2-b931-492b-82f1-f8fdd464f0d2",
+            },
+            "id": "fc66b4d7-61ff-44d4-8f68-cb7f526df046",
+          },
+        ],
+      ]
+    `);
+  });
+
+  test('Remove AnnotatedBar value and submit', async () => {
+    const onSubmit = jest.fn();
+    render(renderStory(FullFoo, { onSubmit }));
+
+    userEvent.click(finders.fooAnnotatedBarRemoveButton(FullFoo));
+
+    userEvent.click(finders.saveButton());
+
+    expect(onSubmit.mock.calls).toMatchInlineSnapshot(`
+      Array [
+        Array [
+          Object {
+            "_type": "Foo",
+            "annotatedBar": null,
+            "id": "fc66b4d7-61ff-44d4-8f68-cb7f526df046",
+          },
+        ],
+      ]
+    `);
+  });
+
+  test('Change AnnotatedBar annotation value and submit', async () => {
+    const onSubmit = jest.fn();
+    render(renderStory(FullFoo, { onSubmit }));
+
+    const annotation = finders.fooAnnotatedBarAnnotationInput(FullFoo);
+    userEvent.clear(annotation);
+    userEvent.type(annotation, 'New annotation');
+
+    userEvent.click(finders.saveButton());
+
+    expect(onSubmit.mock.calls).toMatchInlineSnapshot(`
+      Array [
+        Array [
+          Object {
+            "_type": "Foo",
+            "annotatedBar": Object {
+              "_type": "AnnotatedBar",
+              "annotation": "New annotation",
+              "bar": Object {
+                "id": "eb5732e2-b931-492b-82f1-f8fdd464f0d2",
+              },
+            },
+            "id": "fc66b4d7-61ff-44d4-8f68-cb7f526df046",
+          },
+        ],
+      ]
+    `);
+  });
+
+  test('Select AnnotatedBar bar value and submit', async () => {
+    const onSubmit = jest.fn();
+    render(renderStory(FullFoo, { onSubmit }));
+
+    userEvent.click(finders.fooAnnotatedBarBarButton(FullFoo));
+
+    const bar1 = await waitFor(() => finders.entityPickerBar1());
+    userEvent.click(bar1);
+
+    userEvent.click(finders.saveButton());
+
+    expect(onSubmit.mock.calls).toMatchInlineSnapshot(`
+      Array [
+        Array [
+          Object {
+            "_type": "Foo",
+            "annotatedBar": Object {
+              "_type": "AnnotatedBar",
+              "annotation": "Annotation",
+              "bar": Object {
+                "id": "cb228716-d3dd-444f-9a77-80443d436339",
+              },
             },
             "id": "fc66b4d7-61ff-44d4-8f68-cb7f526df046",
           },

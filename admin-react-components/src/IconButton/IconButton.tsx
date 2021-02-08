@@ -6,10 +6,17 @@ export interface IconButtonProps {
   icon: IconType;
   title: string;
   disabled?: boolean;
+  dataTestId?: string;
   onClick?: () => void;
 }
 
-export function IconButton({ icon, title, disabled, onClick }: IconButtonProps): JSX.Element {
+export function IconButton({
+  icon,
+  title,
+  disabled,
+  dataTestId,
+  onClick,
+}: IconButtonProps): JSX.Element {
   return (
     <button
       className="dd button icon-button"
@@ -17,6 +24,7 @@ export function IconButton({ icon, title, disabled, onClick }: IconButtonProps):
       onClick={disabled ? undefined : onClick}
       disabled={disabled}
       type="button"
+      data-testid={dataTestId}
     >
       <Icon icon={icon} />
     </button>
