@@ -4,7 +4,7 @@ import { IconButton } from './IconButton';
 import type { IconButtonProps } from './IconButton';
 
 export default {
-  title: 'Components/IconButton',
+  title: 'Generic/IconButton',
   component: IconButton,
 };
 

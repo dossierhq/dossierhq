@@ -8,7 +8,7 @@ import {
   isValueTypeField,
   isValueTypeListField,
 } from '@datadata/core';
-import { EntityFieldListWrapper, EntityPicker, FormField, StringFieldEditor } from '..';
+import { EntityFieldListWrapper, EntityPicker, FormField, StringFieldEditor } from '../..';
 import { ValueTypeFieldEditor } from '../ValueTypeFieldEditor/ValueTypeFieldEditor';
 
 interface Props {

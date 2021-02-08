@@ -1,6 +1,6 @@
 import type { Value } from '@datadata/core';
 import React, { useCallback } from 'react';
-import { EntityFieldEditor, EntityFieldEditorProps, IconButton, Segment } from '..';
+import { EntityFieldEditor, EntityFieldEditorProps, IconButton, Segment } from '../..';
 
 type Props = EntityFieldEditorProps<Value>;
 

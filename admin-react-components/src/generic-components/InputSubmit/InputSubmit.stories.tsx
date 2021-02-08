@@ -4,7 +4,7 @@ import { InputSubmit } from './InputSubmit';
 import type { InputSubmitProps } from './InputSubmit';
 
 export default {
-  title: 'Components/InputSubmit',
+  title: 'Generic/InputSubmit',
   component: InputSubmit,
 };
 

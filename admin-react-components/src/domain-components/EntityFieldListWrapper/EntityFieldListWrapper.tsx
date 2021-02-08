@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import type { EntityFieldEditorProps } from '..';
+import type { EntityFieldEditorProps } from '../..';
 
 interface Props extends EntityFieldEditorProps<unknown[]> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

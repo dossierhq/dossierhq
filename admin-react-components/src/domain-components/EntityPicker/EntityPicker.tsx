@@ -7,8 +7,8 @@ import type {
   ErrorType,
 } from '@datadata/core';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import type { DataDataContextValue, EntityFieldEditorProps } from '..';
-import { Button, DataDataContext, IconButton, Modal } from '..';
+import type { DataDataContextValue, EntityFieldEditorProps } from '../..';
+import { Button, DataDataContext, IconButton, Modal } from '../..';
 
 type Props = EntityFieldEditorProps<EntityReference>;
 

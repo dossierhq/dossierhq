@@ -3,11 +3,11 @@ import React from 'react';
 import { DataDataContext } from '../..';
 import { EntityEditor } from './EntityEditor';
 import type { EntityEditorProps } from './EntityEditor';
-import { foo1Id, fooDeletedId, getEntityFixture } from '../test/EntityFixtures';
-import TestContextValue from '../test/TestContextValue';
+import { foo1Id, fooDeletedId, getEntityFixture } from '../../test/EntityFixtures';
+import TestContextValue from '../../test/TestContextValue';
 
 export default {
-  title: 'Components/EntityEditor',
+  title: 'Domain/EntityEditor',
   component: EntityEditor,
   argTypes: { onSubmit: { action: 'submit' } },
   args: {},
