@@ -12,7 +12,6 @@ export { Form } from './generic-components/Form/Form';
 export { FormField } from './generic-components/FormField/FormField';
 export { Icon, IconTypes } from './generic-components/Icon/Icon';
 export { IconButton } from './generic-components/IconButton/IconButton';
-export { InputSubmit } from './generic-components/InputSubmit/InputSubmit';
 export { InputText } from './generic-components/InputText/InputText';
 export { Modal } from './generic-components/Modal/Modal';
 export { Segment } from './generic-components/Segment/Segment';

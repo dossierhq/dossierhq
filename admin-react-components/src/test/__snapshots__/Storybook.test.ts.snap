@@ -218,12 +218,13 @@ exports[`Storyshots Domain/EntityEditor Deleted Foo 1`] = `
       </div>
     </div>
   </div>
-  <input
+  <button
     className="dd button text-button bg-primary"
     disabled={false}
     type="submit"
-    value="Save"
-  />
+  >
+    Save
+  </button>
 </form>
 `;
 
@@ -824,12 +825,13 @@ exports[`Storyshots Domain/EntityEditor Full Foo 1`] = `
       </div>
     </div>
   </div>
-  <input
+  <button
     className="dd button text-button bg-primary"
     disabled={false}
     type="submit"
-    value="Save"
-  />
+  >
+    Save
+  </button>
 </form>
 `;
 
@@ -1051,12 +1053,13 @@ exports[`Storyshots Domain/EntityEditor New Foo 1`] = `
       </div>
     </div>
   </div>
-  <input
+  <button
     className="dd button text-button bg-primary"
     disabled={true}
     type="submit"
-    value="Save"
-  />
+  >
+    Save
+  </button>
 </form>
 `;
 
@@ -1098,6 +1101,15 @@ exports[`Storyshots Generic/Button Primary Disabled 1`] = `
 </button>
 `;
 
+exports[`Storyshots Generic/Button Submit Normal 1`] = `
+<button
+  className="dd button text-button "
+  type="submit"
+>
+  Done
+</button>
+`;
+
 exports[`Storyshots Generic/IconButton Disabled 1`] = `
 <button
   className="dd button icon-button"
@@ -1121,21 +1133,4 @@ exports[`Storyshots Generic/IconButton Normal 1`] = `
     className="dd icon remove"
   />
 </button>
-`;
-
-exports[`Storyshots Generic/InputSubmit Disabled 1`] = `
-<input
-  className="dd button text-button bg-primary"
-  disabled={true}
-  type="submit"
-  value="Done"
-/>
-`;
-
-exports[`Storyshots Generic/InputSubmit Normal 1`] = `
-<input
-  className="dd button text-button bg-primary"
-  type="submit"
-  value="Done"
-/>
 `;

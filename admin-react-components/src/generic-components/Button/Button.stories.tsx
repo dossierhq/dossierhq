@@ -23,3 +23,6 @@ Primary.args = { className: 'bg-primary', children: 'Text' };
 
 export const PrimaryDisabled = Template.bind({});
 PrimaryDisabled.args = { className: 'bg-primary', children: 'Text', disabled: true };
+
+export const SubmitNormal = Template.bind({});
+SubmitNormal.args = { children: 'Done', type: 'submit' };
