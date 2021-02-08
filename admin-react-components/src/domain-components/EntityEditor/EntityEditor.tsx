@@ -8,12 +8,12 @@ import type {
 } from '@datadata/core';
 import React, { useContext, useState } from 'react';
 import {
+  Button,
   DataDataContext,
   Divider,
   EntityFieldEditor,
   Form,
   FormField,
-  InputSubmit,
   InputText,
 } from '../..';
 
@@ -117,7 +117,9 @@ function EntityEditorContents({
         );
       })}
 
-      <InputSubmit value="Save" disabled={!state.name} />
+      <Button className="bg-primary" type="submit" disabled={!state.name}>
+        Save
+      </Button>
     </Form>
   );
 }
