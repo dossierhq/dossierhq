@@ -1,14 +1,5 @@
 import type { DataDataContextValue } from '@datadata/admin-react-components';
-import type {
-  AdminEntity,
-  AdminQuery,
-  Connection,
-  Edge,
-  ErrorResult,
-  Paging,
-  PromiseResult,
-} from '@datadata/core';
-import { convertJsonConnection, convertJsonEdge, ErrorType, ok, Schema } from '@datadata/core';
+import { convertJsonConnection, convertJsonEdge, ErrorType, Schema } from '@datadata/core';
 import { useEffect, useMemo, useState } from 'react';
 import useSWR from 'swr';
 import type {
@@ -25,23 +16,17 @@ class ContextValue implements DataDataContextValue {
     this.schema = schema;
   }
 
-  useEntity(
-    id: string | undefined,
-    options: { version?: number | null }
-  ): { entity?: { item: AdminEntity }; entityError?: Error } {
+  useEntity: DataDataContextValue['useEntity'] = (id, options) => {
     const { data, error } = useSWR<EntityResponse>(id ? urls.getEntity(id, options) : null);
     return { entity: data, entityError: error };
-  }
+  };
 
-  async getEntity(
-    id: string,
-    options: { version?: number | null }
-  ): PromiseResult<{ item: AdminEntity }, ErrorType.NotFound> {
+  getEntity: DataDataContextValue['getEntity'] = async (id, options) => {
     return await fetchJsonResult<EntityResponse, ErrorType.NotFound>(
       [ErrorType.NotFound],
       urls.getEntity(id, options)
     );
-  }
+  };
 
   useSearchEntities: DataDataContextValue['useSearchEntities'] = (query, paging) => {
     const { data, error } = useSWR<SearchEntitiesResponse>(urls.searchEntities(query, paging));
