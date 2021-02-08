@@ -16,6 +16,7 @@ const schema = new Schema({
           valueTypes: ['AnnotatedBar'],
           list: true,
         },
+        { name: 'nested', type: FieldType.ValueType, valueTypes: ['NestedValueItem'] },
       ],
     },
     { name: 'Bar', fields: [{ name: 'title', type: FieldType.String, isName: true }] },
@@ -33,6 +34,13 @@ const schema = new Schema({
           type: FieldType.EntityType,
           entityTypes: ['Bar'],
         },
+      ],
+    },
+    {
+      name: 'NestedValueItem',
+      fields: [
+        { name: 'text', type: FieldType.String },
+        { name: 'child', type: FieldType.ValueType, valueTypes: ['NestedValueItem'] },
       ],
     },
   ],
