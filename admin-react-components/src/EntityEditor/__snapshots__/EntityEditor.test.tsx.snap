@@ -45,16 +45,6 @@ exports[`DeletedFoo render 1`] = `
           type="text"
           value=""
         />
-        <button
-          className="dd button icon-button"
-          onClick={[Function]}
-          title="Clear"
-          type="button"
-        >
-          <span
-            className="dd icon remove"
-          />
-        </button>
       </div>
     </div>
   </div>
@@ -77,16 +67,6 @@ exports[`DeletedFoo render 1`] = `
             type="text"
             value=""
           />
-          <button
-            className="dd button icon-button"
-            onClick={[Function]}
-            title="Remove item"
-            type="button"
-          >
-            <span
-              className="dd icon remove"
-            />
-          </button>
         </div>
       </div>
     </div>
@@ -114,17 +94,7 @@ exports[`DeletedFoo render 1`] = `
           onClick={[Function]}
           type="button"
         >
-          Not set
-        </button>
-        <button
-          className="dd button icon-button"
-          disabled={true}
-          title="Remove entity"
-          type="button"
-        >
-          <span
-            className="dd icon remove"
-          />
+          Select entity
         </button>
       </div>
     </div>
@@ -153,17 +123,7 @@ exports[`DeletedFoo render 1`] = `
             onClick={[Function]}
             type="button"
           >
-            Not set
-          </button>
-          <button
-            className="dd button icon-button"
-            disabled={true}
-            title="Remove entity"
-            type="button"
-          >
-            <span
-              className="dd icon remove"
-            />
+            Select entity
           </button>
         </div>
       </div>
@@ -370,16 +330,6 @@ exports[`FullFoo render 1`] = `
             type="text"
             value=""
           />
-          <button
-            className="dd button icon-button"
-            onClick={[Function]}
-            title="Remove item"
-            type="button"
-          >
-            <span
-              className="dd icon remove"
-            />
-          </button>
         </div>
       </div>
     </div>
@@ -411,7 +361,6 @@ exports[`FullFoo render 1`] = `
         </button>
         <button
           className="dd button icon-button"
-          disabled={false}
           onClick={[Function]}
           title="Remove entity"
           type="button"
@@ -451,7 +400,6 @@ exports[`FullFoo render 1`] = `
           </button>
           <button
             className="dd button icon-button"
-            disabled={false}
             onClick={[Function]}
             title="Remove entity"
             type="button"
@@ -478,7 +426,6 @@ exports[`FullFoo render 1`] = `
           </button>
           <button
             className="dd button icon-button"
-            disabled={false}
             onClick={[Function]}
             title="Remove entity"
             type="button"
@@ -501,17 +448,7 @@ exports[`FullFoo render 1`] = `
             onClick={[Function]}
             type="button"
           >
-            Not set
-          </button>
-          <button
-            className="dd button icon-button"
-            disabled={true}
-            title="Remove entity"
-            type="button"
-          >
-            <span
-              className="dd icon remove"
-            />
+            Select entity
           </button>
         </div>
       </div>
@@ -604,7 +541,6 @@ exports[`FullFoo render 1`] = `
               </button>
               <button
                 className="dd button icon-button"
-                disabled={false}
                 onClick={[Function]}
                 title="Remove entity"
                 type="button"
@@ -707,7 +643,6 @@ exports[`FullFoo render 1`] = `
                 </button>
                 <button
                   className="dd button icon-button"
-                  disabled={false}
                   onClick={[Function]}
                   title="Remove entity"
                   type="button"
@@ -797,7 +732,6 @@ exports[`FullFoo render 1`] = `
                 </button>
                 <button
                   className="dd button icon-button"
-                  disabled={false}
                   onClick={[Function]}
                   title="Remove entity"
                   type="button"
@@ -883,16 +817,6 @@ exports[`NewFoo render 1`] = `
           type="text"
           value=""
         />
-        <button
-          className="dd button icon-button"
-          onClick={[Function]}
-          title="Clear"
-          type="button"
-        >
-          <span
-            className="dd icon remove"
-          />
-        </button>
       </div>
     </div>
   </div>
@@ -915,16 +839,6 @@ exports[`NewFoo render 1`] = `
             type="text"
             value=""
           />
-          <button
-            className="dd button icon-button"
-            onClick={[Function]}
-            title="Remove item"
-            type="button"
-          >
-            <span
-              className="dd icon remove"
-            />
-          </button>
         </div>
       </div>
     </div>
@@ -952,17 +866,7 @@ exports[`NewFoo render 1`] = `
           onClick={[Function]}
           type="button"
         >
-          Not set
-        </button>
-        <button
-          className="dd button icon-button"
-          disabled={true}
-          title="Remove entity"
-          type="button"
-        >
-          <span
-            className="dd icon remove"
-          />
+          Select entity
         </button>
       </div>
     </div>
@@ -991,17 +895,7 @@ exports[`NewFoo render 1`] = `
             onClick={[Function]}
             type="button"
           >
-            Not set
-          </button>
-          <button
-            className="dd button icon-button"
-            disabled={true}
-            title="Remove entity"
-            type="button"
-          >
-            <span
-              className="dd icon remove"
-            />
+            Select entity
           </button>
         </div>
       </div>
