@@ -8,11 +8,13 @@ export function StringFieldEditor({ id, value, fieldSpec, onChange }: Props): JS
   return (
     <div>
       <InputText {...{ id, value, onChange }} />
-      <IconButton
-        title={fieldSpec.list ? 'Remove item' : 'Clear'}
-        icon="remove"
-        onClick={() => onChange?.(null)}
-      />
+      {value !== null ? (
+        <IconButton
+          title={fieldSpec.list ? 'Remove item' : 'Clear'}
+          icon="remove"
+          onClick={() => onChange?.(null)}
+        />
+      ) : null}
     </div>
   );
 }

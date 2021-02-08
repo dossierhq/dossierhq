@@ -78,14 +78,11 @@ function EntityPickerInner({
     <>
       <div style={{ display: 'flex' }}>
         <Button id={id} onClick={handleShow}>
-          {entity ? entity.item._name : value ? value.id : 'Not set'}
+          {entity ? entity.item._name : value ? value.id : 'Select entity'}
         </Button>
-        <IconButton
-          icon="remove"
-          title="Remove entity"
-          onClick={() => onChange?.(null)}
-          disabled={!value}
-        />
+        {value ? (
+          <IconButton icon="remove" title="Remove entity" onClick={() => onChange?.(null)} />
+        ) : null}
       </div>
       <Modal show={show} onClose={handleClose}>
         {connection &&
