@@ -225,6 +225,34 @@ exports[`Storyshots Components/EntityEditor Deleted Foo 1`] = `
       </div>
     </div>
   </div>
+  <div>
+    <label
+      className="dd text-subtitle1"
+      htmlFor="entity-fb62be03-a0a9-4689-9987-bacee0e7692d-nested"
+    >
+      nested
+    </label>
+    <div
+      className="dd form-control"
+    >
+      <div
+        className="dd segment"
+      >
+        <select
+          onChange={[Function]}
+        >
+          <option
+            value=""
+          >
+            Select value type
+          </option>
+          <option>
+            NestedValueItem
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
   <input
     className="dd button text-button bg-primary"
     disabled={false}
@@ -801,6 +829,34 @@ exports[`Storyshots Components/EntityEditor Full Foo 1`] = `
       </div>
     </div>
   </div>
+  <div>
+    <label
+      className="dd text-subtitle1"
+      htmlFor="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-nested"
+    >
+      nested
+    </label>
+    <div
+      className="dd form-control"
+    >
+      <div
+        className="dd segment"
+      >
+        <select
+          onChange={[Function]}
+        >
+          <option
+            value=""
+          >
+            Select value type
+          </option>
+          <option>
+            NestedValueItem
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
   <input
     className="dd button text-button bg-primary"
     disabled={false}
@@ -994,6 +1050,34 @@ exports[`Storyshots Components/EntityEditor New Foo 1`] = `
             </option>
           </select>
         </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <label
+      className="dd text-subtitle1"
+      htmlFor="new-entity-123-nested"
+    >
+      nested
+    </label>
+    <div
+      className="dd form-control"
+    >
+      <div
+        className="dd segment"
+      >
+        <select
+          onChange={[Function]}
+        >
+          <option
+            value=""
+          >
+            Select value type
+          </option>
+          <option>
+            NestedValueItem
+          </option>
+        </select>
       </div>
     </div>
   </div>
