@@ -7,6 +7,7 @@ export { Divider } from './generic-components/Divider/Divider';
 export { EntityEditor } from './domain-components/EntityEditor/EntityEditor';
 export { EntityFieldEditor } from './domain-components/EntityFieldEditor/EntityFieldEditor';
 export { EntityFieldListWrapper } from './domain-components/EntityFieldListWrapper/EntityFieldListWrapper';
+export { EntityList } from './domain-components/EntityList/EntityList';
 export { EntityPicker } from './domain-components/EntityPicker/EntityPicker';
 export { Form } from './generic-components/Form/Form';
 export { FormField } from './generic-components/FormField/FormField';

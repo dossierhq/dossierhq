@@ -1,20 +1,12 @@
-import type {
-  AdminEntity,
-  AdminQuery,
-  Connection,
-  Edge,
-  EntityReference,
-  ErrorType,
-} from '@datadata/core';
-import React, { useCallback, useContext, useEffect, useState } from 'react';
-import type { DataDataContextValue, EntityFieldEditorProps } from '../..';
+import type { EntityReference } from '@datadata/core';
+import React, { useCallback, useContext, useState } from 'react';
+import { DataDataContextValue, EntityFieldEditorProps, EntityList } from '../..';
 import { Button, DataDataContext, IconButton, Modal } from '../..';
 
 type Props = EntityFieldEditorProps<EntityReference>;
 
 interface InnerProps extends Props {
   useEntity: DataDataContextValue['useEntity'];
-  searchEntities: DataDataContextValue['searchEntities'];
 }
 
 export function EntityPicker({
@@ -28,6 +20,7 @@ export function EntityPicker({
   if (!context) {
     return null;
   }
+  const { useEntity } = context;
 
   return (
     <EntityPickerInner
@@ -37,42 +30,27 @@ export function EntityPicker({
         schema,
         fieldSpec,
         onChange,
-        useEntity: context.useEntity,
-        searchEntities: context.searchEntities,
+        useEntity,
       }}
     />
   );
 }
 
-function EntityPickerInner({
-  id,
-  value,
-  schema,
-  fieldSpec,
-  onChange,
-  useEntity,
-  searchEntities,
-}: InnerProps) {
+function EntityPickerInner({ id, value, schema, fieldSpec, onChange, useEntity }: InnerProps) {
   const [show, setShow] = useState(false);
   const handleShow = useCallback(() => setShow(true), [setShow]);
   const handleClose = useCallback(() => setShow(false), [setShow]);
-  const [connection, setConnection] = useState<Connection<Edge<AdminEntity, ErrorType>> | null>(
-    null
+  const handleEntityClick = useCallback(
+    (entity) => {
+      if (onChange) {
+        onChange({ id: entity.id });
+      }
+      handleClose();
+    },
+    [onChange, handleClose]
   );
 
   const { entity, entityError } = useEntity(value?.id, {});
-
-  useEffect(() => {
-    if (show) {
-      const query: AdminQuery = { entityTypes: fieldSpec.entityTypes };
-      searchEntities(query).then((result) => {
-        if (result.isOk()) {
-          setConnection(result.value);
-        }
-        //TODO error handling
-      });
-    }
-  }, [show]);
 
   return (
     <>
@@ -85,23 +63,12 @@ function EntityPickerInner({
         ) : null}
       </div>
       <Modal show={show} onClose={handleClose}>
-        {connection &&
-          connection.edges.map((edge) => {
-            const entity = edge.node.isOk() ? edge.node.value : null;
-            return (
-              <p
-                key={edge.cursor}
-                onClick={() => {
-                  if (entity && onChange) {
-                    onChange({ id: entity.id });
-                  }
-                  handleClose();
-                }}
-              >
-                {edge.node.isOk() ? edge.node.value._name : edge.node.error}
-              </p>
-            );
-          })}
+        {show ? (
+          <EntityList
+            query={{ entityTypes: fieldSpec.entityTypes }}
+            onEntityClick={handleEntityClick}
+          />
+        ) : null}
       </Modal>
     </>
   );

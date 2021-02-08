@@ -24,10 +24,10 @@ export interface DataDataContextValue {
     options: { version?: number | null }
   ) => PromiseResult<{ item: AdminEntity }, ErrorType.NotFound>;
 
-  searchEntities: (
+  useSearchEntities: (
     query?: AdminQuery,
     paging?: Paging
-  ) => PromiseResult<Connection<Edge<AdminEntity, ErrorType>> | null, ErrorType.BadRequest>;
+  ) => { connection?: Connection<Edge<AdminEntity, ErrorType>> | null; connectionError?: Error };
 }
 
 export const DataDataContext = createContext<DataDataContextValue | null>(null);

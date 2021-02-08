@@ -56,7 +56,7 @@ function PageContent({ query }: { query: RouterQuery }) {
   );
 }
 
-export default function EntitiesIndexPage(): JSX.Element | null {
+export default function EntityPage(): JSX.Element | null {
   const router = useRouter();
 
   if (Object.keys(router.query).length === 0) {
