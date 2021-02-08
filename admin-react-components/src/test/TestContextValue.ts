@@ -1,4 +1,4 @@
-import type { AdminEntity, ErrorType, PromiseResult } from '@datadata/core';
+import type { AdminEntity } from '@datadata/core';
 import { notOk, ok } from '@datadata/core';
 import type { DataDataContextValue } from '..';
 import { cloneFixture } from './EntityFixtures';
@@ -28,10 +28,7 @@ export default class TestContextValue implements DataDataContextValue {
     return this.#entities.map(this.findLatestVersion);
   }
 
-  useEntity = (
-    id: string | undefined,
-    options: { version?: number | null }
-  ): { entity?: { item: AdminEntity }; entityError?: Error } => {
+  useEntity: DataDataContextValue['useEntity'] = (id, options) => {
     if (!id) return {};
     const entity = this.findEntity(id, options.version);
     if (entity) {
@@ -40,10 +37,7 @@ export default class TestContextValue implements DataDataContextValue {
     return {};
   };
 
-  getEntity = async (
-    id: string,
-    options: { version?: number | null }
-  ): PromiseResult<{ item: AdminEntity }, ErrorType.NotFound> => {
+  getEntity: DataDataContextValue['getEntity'] = async (id, options) => {
     const entity = this.findEntity(id, options.version);
     if (entity) {
       return ok({ item: entity });
