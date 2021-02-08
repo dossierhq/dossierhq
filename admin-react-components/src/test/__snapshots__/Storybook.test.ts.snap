@@ -1063,6 +1063,31 @@ exports[`Storyshots Domain/EntityEditor New Foo 1`] = `
 </form>
 `;
 
+exports[`Storyshots Domain/EntityList Normal 1`] = `
+<div>
+  <p
+    onClick={[Function]}
+  >
+    Foo 1
+  </p>
+  <p
+    onClick={[Function]}
+  >
+    Foo deleted
+  </p>
+  <p
+    onClick={[Function]}
+  >
+    Bar 1
+  </p>
+  <p
+    onClick={[Function]}
+  >
+    Bar 2
+  </p>
+</div>
+`;
+
 exports[`Storyshots Generic/Button Disabled 1`] = `
 <button
   className="dd button text-button "

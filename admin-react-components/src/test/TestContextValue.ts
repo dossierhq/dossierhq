@@ -1,12 +1,4 @@
-import type {
-  AdminEntity,
-  AdminQuery,
-  Connection,
-  Edge,
-  ErrorType,
-  Paging,
-  PromiseResult,
-} from '@datadata/core';
+import type { AdminEntity, ErrorType, PromiseResult } from '@datadata/core';
 import { notOk, ok } from '@datadata/core';
 import type { DataDataContextValue } from '..';
 import { cloneFixture } from './EntityFixtures';
@@ -60,10 +52,7 @@ export default class TestContextValue implements DataDataContextValue {
     return notOk.NotFound('No such entity or version');
   };
 
-  searchEntities = async (
-    query?: AdminQuery,
-    paging?: Paging
-  ): PromiseResult<Connection<Edge<AdminEntity, ErrorType>> | null, ErrorType.BadRequest> => {
+  useSearchEntities: DataDataContextValue['useSearchEntities'] = (query, paging) => {
     const entities = this.getLatestEntities().filter((x) => {
       if (
         query?.entityTypes?.length &&
@@ -75,16 +64,18 @@ export default class TestContextValue implements DataDataContextValue {
       return true;
     });
     if (entities.length === 0) {
-      return ok(null);
+      return { connection: null };
     }
-    return ok({
-      pageInfo: {
-        hasPreviousPage: false,
-        hasNextPage: false,
-        startCursor: entities[0].id,
-        endCursor: entities[entities.length - 1].id,
+    return {
+      connection: {
+        pageInfo: {
+          hasPreviousPage: false,
+          hasNextPage: false,
+          startCursor: entities[0].id,
+          endCursor: entities[entities.length - 1].id,
+        },
+        edges: entities.map((entity) => ({ cursor: entity.id, node: ok(entity) })),
       },
-      edges: entities.map((entity) => ({ cursor: entity.id, node: ok(entity) })),
-    });
+    };
   };
 }

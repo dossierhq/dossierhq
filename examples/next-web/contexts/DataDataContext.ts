@@ -43,20 +43,14 @@ class ContextValue implements DataDataContextValue {
     );
   }
 
-  async searchEntities(
-    query?: AdminQuery,
-    paging?: Paging
-  ): PromiseResult<Connection<Edge<AdminEntity, ErrorType>> | null, ErrorType.BadRequest> {
-    const result = await fetchJsonResult<SearchEntitiesResponse, ErrorType.BadRequest>(
-      [ErrorType.BadRequest],
-      urls.searchEntities(query, paging)
-    );
-    if (result.isOk() && result.value?.edges) {
-      const connection = convertJsonConnection(result.value, convertJsonEdge);
-      return ok(connection);
+  useSearchEntities: DataDataContextValue['useSearchEntities'] = (query, paging) => {
+    const { data, error } = useSWR<SearchEntitiesResponse>(urls.searchEntities(query, paging));
+    if (data) {
+      const connection = convertJsonConnection(data, convertJsonEdge);
+      return { connection, connectionError: error };
     }
-    return result as ErrorResult<unknown, ErrorType.BadRequest>;
-  }
+    return { connection: undefined, connectionError: error };
+  };
 }
 
 async function loadSchema() {
