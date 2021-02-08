@@ -48,7 +48,13 @@ export function ValueTypeFieldEditor({
   return (
     <Segment>
       <p className="dd text-caption">
-        {type} <IconButton icon="remove" title="Remove value item" onClick={handleRemove} />
+        {type + ' '}
+        <IconButton
+          icon="remove"
+          title="Remove value item"
+          dataTestId={`${id}.remove`}
+          onClick={handleRemove}
+        />
       </p>
       {valueSpec.fields.map((valueFieldSpec) => {
         const handleFieldChanged = (newFieldValue: unknown) => {
