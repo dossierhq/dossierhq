@@ -20,7 +20,7 @@ exports[`Storyshots Domain/EntityEditor Deleted Foo 1`] = `
         id="entity-fb62be03-a0a9-4689-9987-bacee0e7692d-_name"
         onChange={[Function]}
         type="text"
-        value="Hello"
+        value="Foo deleted"
       />
     </div>
   </div>
@@ -248,7 +248,7 @@ exports[`Storyshots Domain/EntityEditor Full Foo 1`] = `
         id="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-_name"
         onChange={[Function]}
         type="text"
-        value="Hello"
+        value="Foo 1"
       />
     </div>
   </div>

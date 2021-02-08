@@ -10,7 +10,7 @@ const entities: Array<AdminEntity[]> = [
     {
       id: foo1Id,
       _type: 'Foo',
-      _name: 'Hello',
+      _name: 'Foo 1',
       _version: 0,
       title: 'Hello',
       tags: ['one', 'two', 'three'],
@@ -27,14 +27,14 @@ const entities: Array<AdminEntity[]> = [
     {
       id: fooDeletedId,
       _type: 'Foo',
-      _name: 'Hello',
+      _name: 'Foo deleted',
       _version: 1,
       _deleted: true,
     },
     {
       id: fooDeletedId,
       _type: 'Foo',
-      _name: 'Hello',
+      _name: 'Foo deleted',
       title: 'Hello',
       _version: 0,
     },
