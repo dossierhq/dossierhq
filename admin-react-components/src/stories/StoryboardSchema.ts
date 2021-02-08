@@ -9,11 +9,33 @@ const schema = new Schema({
         { name: 'tags', type: FieldType.String, list: true },
         { name: 'bar', type: FieldType.EntityType, entityTypes: ['Bar'] },
         { name: 'bars', type: FieldType.EntityType, entityTypes: ['Bar'], list: true },
+        { name: 'annotatedBar', type: FieldType.ValueType, valueTypes: ['AnnotatedBar'] },
+        {
+          name: 'annotatedBars',
+          type: FieldType.ValueType,
+          valueTypes: ['AnnotatedBar'],
+          list: true,
+        },
       ],
     },
     { name: 'Bar', fields: [{ name: 'title', type: FieldType.String, isName: true }] },
   ],
-  valueTypes: [],
+  valueTypes: [
+    {
+      name: 'AnnotatedBar',
+      fields: [
+        {
+          name: 'annotation',
+          type: FieldType.String,
+        },
+        {
+          name: 'bar',
+          type: FieldType.EntityType,
+          entityTypes: ['Bar'],
+        },
+      ],
+    },
+  ],
 });
 
 export default schema;

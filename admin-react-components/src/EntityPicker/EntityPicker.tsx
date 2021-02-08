@@ -17,7 +17,13 @@ interface InnerProps extends Props {
   searchEntities: DataDataContextValue['searchEntities'];
 }
 
-export function EntityPicker({ id, value, fieldSpec, onChange }: Props): JSX.Element | null {
+export function EntityPicker({
+  id,
+  value,
+  schema,
+  fieldSpec,
+  onChange,
+}: Props): JSX.Element | null {
   const context = useContext(DataDataContext);
   if (!context) {
     return null;
@@ -28,6 +34,7 @@ export function EntityPicker({ id, value, fieldSpec, onChange }: Props): JSX.Ele
       {...{
         id,
         value,
+        schema,
         fieldSpec,
         onChange,
         useEntity: context.useEntity,
@@ -40,6 +47,7 @@ export function EntityPicker({ id, value, fieldSpec, onChange }: Props): JSX.Ele
 function EntityPickerInner({
   id,
   value,
+  schema,
   fieldSpec,
   onChange,
   useEntity,

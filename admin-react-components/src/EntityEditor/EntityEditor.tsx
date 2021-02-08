@@ -4,6 +4,7 @@ import type {
   AdminEntityUpdate,
   EntityTypeSpecification,
   FieldSpecification,
+  Schema,
 } from '@datadata/core';
 import React, { useContext, useState } from 'react';
 import {
@@ -28,6 +29,7 @@ export interface EntityEditorProps {
 
 type EntityEditorContentsProps = Pick<EntityEditorProps, 'entity' | 'onSubmit'> & {
   idPrefix: string;
+  schema: Schema;
   entitySpec: EntityTypeSpecification;
 };
 
@@ -70,7 +72,7 @@ export function EntityEditor({
 
   return (
     <EntityEditorContents
-      {...{ idPrefix: resolvedIdPrefix, entity, entitySpec, onSubmit, schema }}
+      {...{ idPrefix: resolvedIdPrefix, entity, schema, entitySpec, onSubmit }}
     />
   );
 }
@@ -78,6 +80,7 @@ export function EntityEditor({
 function EntityEditorContents({
   idPrefix,
   entity,
+  schema,
   entitySpec,
   onSubmit,
 }: EntityEditorContentsProps): JSX.Element {
@@ -106,6 +109,7 @@ function EntityEditorContents({
           <EntityFieldEditor
             idPrefix={idPrefix}
             key={fieldSpec.name}
+            schema={schema}
             fieldSpec={fieldSpec}
             value={value}
             onValueChanged={handleFieldChanged}

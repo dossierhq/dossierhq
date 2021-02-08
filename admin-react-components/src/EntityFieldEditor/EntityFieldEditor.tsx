@@ -1,29 +1,35 @@
 import React from 'react';
-import type { FieldSpecification } from '@datadata/core';
+import type { FieldSpecification, Schema } from '@datadata/core';
 import {
   isEntityTypeField,
   isEntityTypeListField,
   isStringField,
   isStringListField,
+  isValueTypeField,
+  isValueTypeListField,
 } from '@datadata/core';
 import { EntityFieldListWrapper, EntityPicker, FormField, StringFieldEditor } from '..';
+import { ValueTypeFieldEditor } from '../ValueTypeFieldEditor/ValueTypeFieldEditor';
 
 interface Props {
   idPrefix: string;
+  schema: Schema;
   fieldSpec: FieldSpecification;
   value: unknown;
   onValueChanged: (value: unknown) => void;
 }
 
 export interface EntityFieldEditorProps<T> {
-  id?: string;
+  id: string;
   value: T | null;
+  schema: Schema;
   fieldSpec: FieldSpecification;
   onChange?: (value: T | null) => void;
 }
 
 export function EntityFieldEditor({
   idPrefix,
+  schema,
   fieldSpec,
   value,
   onValueChanged,
@@ -33,28 +39,65 @@ export function EntityFieldEditor({
   let editor;
   if (isStringField(fieldSpec, value)) {
     editor = (
-      <StringFieldEditor id={id} value={value} fieldSpec={fieldSpec} onChange={onValueChanged} />
+      <StringFieldEditor
+        id={id}
+        value={value}
+        schema={schema}
+        fieldSpec={fieldSpec}
+        onChange={onValueChanged}
+      />
     );
   } else if (isStringListField(fieldSpec, value)) {
     editor = (
       <EntityFieldListWrapper
         id={id}
         value={value}
+        schema={schema}
         fieldSpec={fieldSpec}
         onChange={onValueChanged}
         Editor={StringFieldEditor}
       />
     );
   } else if (isEntityTypeField(fieldSpec, value)) {
-    editor = <EntityPicker id={id} value={value} fieldSpec={fieldSpec} onChange={onValueChanged} />;
+    editor = (
+      <EntityPicker
+        id={id}
+        value={value}
+        schema={schema}
+        fieldSpec={fieldSpec}
+        onChange={onValueChanged}
+      />
+    );
   } else if (isEntityTypeListField(fieldSpec, value)) {
     editor = (
       <EntityFieldListWrapper
         id={id}
         value={value}
+        schema={schema}
         fieldSpec={fieldSpec}
         onChange={onValueChanged}
         Editor={EntityPicker}
+      />
+    );
+  } else if (isValueTypeField(fieldSpec, value)) {
+    editor = (
+      <ValueTypeFieldEditor
+        id={id}
+        value={value}
+        schema={schema}
+        fieldSpec={fieldSpec}
+        onChange={onValueChanged}
+      />
+    );
+  } else if (isValueTypeListField(fieldSpec, value)) {
+    editor = (
+      <EntityFieldListWrapper
+        id={id}
+        value={value}
+        schema={schema}
+        fieldSpec={fieldSpec}
+        onChange={onValueChanged}
+        Editor={ValueTypeFieldEditor}
       />
     );
   } else {

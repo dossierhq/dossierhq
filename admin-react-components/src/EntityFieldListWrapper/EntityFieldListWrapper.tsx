@@ -9,6 +9,7 @@ interface Props extends EntityFieldEditorProps<unknown[]> {
 export function EntityFieldListWrapper({
   id,
   value,
+  schema,
   fieldSpec,
   onChange,
   Editor,
@@ -36,8 +37,9 @@ export function EntityFieldListWrapper({
         return (
           <Editor
             key={index}
-            id={index === 0 ? id : undefined}
+            id={index === 0 ? id : `${id}-${index}`}
             value={x}
+            schema={schema}
             fieldSpec={fieldSpec}
             onChange={(newItemValue) => handleItemChange(newItemValue, index)}
           />

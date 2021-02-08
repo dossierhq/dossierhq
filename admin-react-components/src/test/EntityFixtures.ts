@@ -16,6 +16,11 @@ const entities: Array<AdminEntity[]> = [
       tags: ['one', 'two', 'three'],
       bar: { id: bar1Id },
       bars: [{ id: bar1Id }, { id: bar2Id }],
+      annotatedBar: { _type: 'AnnotatedBar', annotation: 'Annotation', bar: { id: bar2Id } },
+      annotatedBars: [
+        { _type: 'AnnotatedBar', annotation: 'First', bar: { id: bar1Id } },
+        { _type: 'AnnotatedBar', annotation: 'Second', bar: { id: bar2Id } },
+      ],
     },
   ],
   [
