@@ -15,7 +15,7 @@ import {
   FormField,
   InputSubmit,
   InputText,
-} from '..';
+} from '../..';
 
 interface NewEntity {
   _type: string;
