@@ -23,6 +23,7 @@ export function ValueTypeFieldEditor({
     return (
       <Segment>
         <select
+          id={id}
           onChange={(e) => {
             const newValueType = e.target.value;
             if (newValueType && onChange) {

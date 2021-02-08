@@ -181,6 +181,7 @@ exports[`Storyshots Components/EntityEditor Deleted Foo 1`] = `
         className="dd segment"
       >
         <select
+          id="entity-fb62be03-a0a9-4689-9987-bacee0e7692d-annotatedBar"
           onChange={[Function]}
         >
           <option
@@ -210,6 +211,7 @@ exports[`Storyshots Components/EntityEditor Deleted Foo 1`] = `
           className="dd segment"
         >
           <select
+            id="entity-fb62be03-a0a9-4689-9987-bacee0e7692d-annotatedBars"
             onChange={[Function]}
           >
             <option
@@ -239,6 +241,7 @@ exports[`Storyshots Components/EntityEditor Deleted Foo 1`] = `
         className="dd segment"
       >
         <select
+          id="entity-fb62be03-a0a9-4689-9987-bacee0e7692d-nested"
           onChange={[Function]}
         >
           <option
@@ -814,6 +817,7 @@ exports[`Storyshots Components/EntityEditor Full Foo 1`] = `
           className="dd segment"
         >
           <select
+            id="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-2"
             onChange={[Function]}
           >
             <option
@@ -843,6 +847,7 @@ exports[`Storyshots Components/EntityEditor Full Foo 1`] = `
         className="dd segment"
       >
         <select
+          id="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-nested"
           onChange={[Function]}
         >
           <option
@@ -1009,6 +1014,7 @@ exports[`Storyshots Components/EntityEditor New Foo 1`] = `
         className="dd segment"
       >
         <select
+          id="new-entity-123-annotatedBar"
           onChange={[Function]}
         >
           <option
@@ -1038,6 +1044,7 @@ exports[`Storyshots Components/EntityEditor New Foo 1`] = `
           className="dd segment"
         >
           <select
+            id="new-entity-123-annotatedBars"
             onChange={[Function]}
           >
             <option
@@ -1067,6 +1074,7 @@ exports[`Storyshots Components/EntityEditor New Foo 1`] = `
         className="dd segment"
       >
         <select
+          id="new-entity-123-nested"
           onChange={[Function]}
         >
           <option
