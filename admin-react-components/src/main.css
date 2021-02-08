@@ -145,10 +145,12 @@
   border-radius: 0.5em;
   border-style: none;
   padding: 0.75em 1.5em;
+  cursor: pointer;
 }
 
 .dd.icon-button {
   padding: 0.25em;
+  cursor: pointer;
 }
 
 .dd.form-control {
