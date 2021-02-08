@@ -48,7 +48,7 @@ dependencies:
   joi: 17.3.0
   mini-svg-data-uri: 1.2.3
   next: 10.0.6_c39e9db791ea05e3ec4e0e74abb7a6b5
-  next-transpile-modules: 6.0.0
+  next-transpile-modules: 6.1.0
   pg: 8.5.1
   postgrator: 4.1.1
   prettier: 2.2.1
@@ -7131,15 +7131,6 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-PpOwAdQ/YlXQ2vj8a3h8IipDuYRi3wceVQQGYWxNINccq40Anw7BlsEXCMbt1Zt+OLA6Fq9suIpIWD0OsnISlw==
-  /find-up/5.0.0:
-    dependencies:
-      locate-path: 6.0.0
-      path-exists: 4.0.0
-    dev: false
-    engines:
-      node: '>=10'
-    resolution:
-      integrity: sha512-78/PXT1wlLLDgTzDs7sjq9hzz0vXD+zn+7wypEe4fXQxCmdmqfGsEPQxmiCSQI3ajFV91bVSsvNtrJRiW6nGng==
   /flat-cache/3.0.4:
     dependencies:
       flatted: 3.1.1
@@ -9447,14 +9438,6 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-t7hw9pI+WvuwNJXwk5zVHpyhIqzg2qTlklJOf0mVxGSbe3Fp2VieZcduNYjaLDoy6p9uGpQEGWG87WpMKlNq8g==
-  /locate-path/6.0.0:
-    dependencies:
-      p-locate: 5.0.0
-    dev: false
-    engines:
-      node: '>=10'
-    resolution:
-      integrity: sha512-iPZK6eYjbxRu3uB4/WZ3EsEIMJFMqAoopl3R+zuq0UjcAm/MO6KCweDgPfP3elTztoKP3KtnVHxTn2NHBSDVUw==
   /lodash-es/4.17.20:
     dev: false
     resolution:
@@ -9983,13 +9966,13 @@ packages:
     dev: false
     resolution:
       integrity: sha1-D2p0STIj26BP59v7bNyAS/fkbdA=
-  /next-transpile-modules/6.0.0:
+  /next-transpile-modules/6.1.0:
     dependencies:
       enhanced-resolve: 5.7.0
-      pkg-dir: 5.0.0
+      escalade: 3.1.1
     dev: false
     resolution:
-      integrity: sha512-+Xdn4Upb8FeOXorzqVFyqww3kR9ML6S7y6Q3gFnoLdsqC5Jim3fwGNGTHENLOwedoKxcM6bCyRBuMYzyxru/wA==
+      integrity: sha512-IVjXHXnvr/n7liIe7SZcDbq3Gab4zltmKk7sC8zqn/L3TJt1V49W0OnUdtD/LRUdET3i34EfH/4p45SjgyQbNw==
   /next/10.0.6_c39e9db791ea05e3ec4e0e74abb7a6b5:
     dependencies:
       '@ampproject/toolbox-optimizer': 2.7.1-alpha.0
@@ -10479,14 +10462,6 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-R79ZZ/0wAxKGu3oYMlz8jy/kbhsNrS7SKZ7PxEHBgJ5+F2mtFW2fK2cOtBh1cHYkQsbzFV7I+EoRKe6Yt0oK7A==
-  /p-locate/5.0.0:
-    dependencies:
-      p-limit: 3.1.0
-    dev: false
-    engines:
-      node: '>=10'
-    resolution:
-      integrity: sha512-LaNjtRWUBY++zB5nE/NwcaoMylSPk+S+ZHNB1TzdbMJMny6dynpAGt7X/tl/QYq3TIeE6nxHppbo2LGymrG5Pw==
   /p-map/2.1.0:
     dev: false
     engines:
@@ -10832,14 +10807,6 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-HRDzbaKjC+AOWVXxAU/x54COGeIv9eb+6CkDSQoNTt4XyWoIJvuPsXizxu/Fr23EiekbtZwmh1IcIG/l/a10GQ==
-  /pkg-dir/5.0.0:
-    dependencies:
-      find-up: 5.0.0
-    dev: false
-    engines:
-      node: '>=10'
-    resolution:
-      integrity: sha512-NPE8TDbzl/3YQYY7CSS228s3g2ollTFnc+Qi3tqmqJp9Vg2ovUpixcJEo2HJScN2Ez+kEaal6y70c0ehqJBJeA==
   /pkg-up/3.1.0:
     dependencies:
       find-up: 3.0.0
@@ -14356,7 +14323,7 @@ packages:
       eslint-plugin-react: 7.22.0_eslint@7.19.0
       joi: 17.3.0
       next: 10.0.6_c39e9db791ea05e3ec4e0e74abb7a6b5
-      next-transpile-modules: 6.0.0
+      next-transpile-modules: 6.1.0
       prettier: 2.2.1
       qs: 6.9.6
       react: 17.0.1
@@ -14367,7 +14334,7 @@ packages:
     dev: false
     name: '@rush-temp/datadata-examples-next-web'
     resolution:
-      integrity: sha512-iPoO65LlGFLchbPR6Xq6DPvhLn+7a5E5XHbMu8Fcvtcwfy0xwz7rrzCAQh/fpWBGx3fxnPUxc5pIu/WiqYa+iQ==
+      integrity: sha512-5zi3LJ5NNDJ5Niiyy5o1EmUXBNAq+ua48JydC+dV30r8AKuDW7W3/x1JSaXo8OCsLmVqX2gBBzxT9HhN5bx4AA==
       tarball: file:projects/datadata-examples-next-web.tgz
     version: 0.0.0
   file:projects/datadata.tgz:
@@ -14482,8 +14449,8 @@ specifiers:
   jest: ~26.6.3
   joi: ~17.3.0
   mini-svg-data-uri: ~1.2.3
-  next: ~10.0.4
-  next-transpile-modules: ~6.0.0
+  next: ~10.0.6
+  next-transpile-modules: ~6.1.0
   pg: ^8.5.1
   postgrator: ^4.1.1
   prettier: 2.2.1
