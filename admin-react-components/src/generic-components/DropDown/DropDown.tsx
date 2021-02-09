@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Button, Icon } from '../..';
 import { useKeyHandler } from '../../utils/KeyboardUtils';
+import { useWindowClick } from '../../utils/MouseUtils';
 
 export interface DropDownProps {
   id?: string;
@@ -16,13 +17,9 @@ export interface DropDownItem {
 
 export function DropDown({ id, text, items, onItemClick }: DropDownProps): JSX.Element {
   const [isActive, setActive] = useState(false);
-  useKeyHandler(
-    ['Escape'],
-    () => {
-      setActive(false);
-    },
-    isActive
-  );
+  const handleClose = useCallback(() => setActive(false), [setActive]);
+  useKeyHandler(['Escape'], handleClose, isActive);
+  useWindowClick(id, handleClose, isActive);
 
   return (
     <div>
