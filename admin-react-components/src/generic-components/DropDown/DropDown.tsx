@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Icon } from '../..';
+import { useKeyHandler } from '../../utils/KeyboardUtils';
 
 export interface DropDownProps {
   id?: string;
@@ -15,6 +16,14 @@ export interface DropDownItem {
 
 export function DropDown({ id, text, items, onItemClick }: DropDownProps): JSX.Element {
   const [isActive, setActive] = useState(false);
+  useKeyHandler(
+    ['Escape'],
+    () => {
+      setActive(false);
+    },
+    isActive
+  );
+
   return (
     <div>
       <Button id={id} onClick={() => setActive(!isActive)}>

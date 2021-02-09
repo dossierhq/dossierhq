@@ -8,17 +8,17 @@ interface ModalProps {
 }
 
 export function Modal({ show, onClose, children }: ModalProps): JSX.Element | null {
-  if (!show) {
-    return null;
-  }
-
   useEffect(() => {
     if (show && document.activeElement instanceof HTMLElement) {
       document.activeElement.blur();
     }
   }, [show]);
 
-  useKeyHandler(['Escape'], onClose);
+  useKeyHandler(['Escape'], onClose, show);
+
+  if (!show) {
+    return null;
+  }
 
   return (
     <div className="dd modal" role="dialog">
