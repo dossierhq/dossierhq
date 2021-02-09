@@ -1,8 +1,8 @@
 import React from 'react';
 
-export type IconType = 'open-window' | 'remove';
+export type IconType = 'chevron-down' | 'open-window' | 'remove';
 
-export const IconTypes: IconType[] = ['open-window', 'remove'];
+export const IconTypes: IconType[] = ['chevron-down', 'open-window', 'remove'];
 
 export interface IconProps {
   icon: IconType;

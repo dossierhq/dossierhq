@@ -142,19 +142,20 @@ exports[`Storyshots Domain/EntityEditor Deleted Foo 1`] = `
       <div
         className="dd segment"
       >
-        <select
-          id="entity-fb62be03-a0a9-4689-9987-bacee0e7692d-annotatedBar"
-          onChange={[Function]}
-        >
-          <option
-            value=""
+        <div>
+          <button
+            className="dd button text-button "
+            id="entity-fb62be03-a0a9-4689-9987-bacee0e7692d-annotatedBar"
+            onClick={[Function]}
+            type="button"
           >
-            Select value type
-          </option>
-          <option>
-            AnnotatedBar
-          </option>
-        </select>
+            Add value item
+             
+            <span
+              className="dd icon chevron-down"
+            />
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -172,19 +173,20 @@ exports[`Storyshots Domain/EntityEditor Deleted Foo 1`] = `
         <div
           className="dd segment"
         >
-          <select
-            id="entity-fb62be03-a0a9-4689-9987-bacee0e7692d-annotatedBars"
-            onChange={[Function]}
-          >
-            <option
-              value=""
+          <div>
+            <button
+              className="dd button text-button "
+              id="entity-fb62be03-a0a9-4689-9987-bacee0e7692d-annotatedBars"
+              onClick={[Function]}
+              type="button"
             >
-              Select value type
-            </option>
-            <option>
-              AnnotatedBar
-            </option>
-          </select>
+              Add value item
+               
+              <span
+                className="dd icon chevron-down"
+              />
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -202,19 +204,20 @@ exports[`Storyshots Domain/EntityEditor Deleted Foo 1`] = `
       <div
         className="dd segment"
       >
-        <select
-          id="entity-fb62be03-a0a9-4689-9987-bacee0e7692d-nested"
-          onChange={[Function]}
-        >
-          <option
-            value=""
+        <div>
+          <button
+            className="dd button text-button "
+            id="entity-fb62be03-a0a9-4689-9987-bacee0e7692d-nested"
+            onClick={[Function]}
+            type="button"
           >
-            Select value type
-          </option>
-          <option>
-            NestedValueItem
-          </option>
-        </select>
+            Add value item
+             
+            <span
+              className="dd icon chevron-down"
+            />
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -779,19 +782,20 @@ exports[`Storyshots Domain/EntityEditor Full Foo 1`] = `
         <div
           className="dd segment"
         >
-          <select
-            id="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-2"
-            onChange={[Function]}
-          >
-            <option
-              value=""
+          <div>
+            <button
+              className="dd button text-button "
+              id="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-2"
+              onClick={[Function]}
+              type="button"
             >
-              Select value type
-            </option>
-            <option>
-              AnnotatedBar
-            </option>
-          </select>
+              Add value item
+               
+              <span
+                className="dd icon chevron-down"
+              />
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -809,19 +813,20 @@ exports[`Storyshots Domain/EntityEditor Full Foo 1`] = `
       <div
         className="dd segment"
       >
-        <select
-          id="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-nested"
-          onChange={[Function]}
-        >
-          <option
-            value=""
+        <div>
+          <button
+            className="dd button text-button "
+            id="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-nested"
+            onClick={[Function]}
+            type="button"
           >
-            Select value type
-          </option>
-          <option>
-            NestedValueItem
-          </option>
-        </select>
+            Add value item
+             
+            <span
+              className="dd icon chevron-down"
+            />
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -977,19 +982,20 @@ exports[`Storyshots Domain/EntityEditor New Foo 1`] = `
       <div
         className="dd segment"
       >
-        <select
-          id="new-entity-123-annotatedBar"
-          onChange={[Function]}
-        >
-          <option
-            value=""
+        <div>
+          <button
+            className="dd button text-button "
+            id="new-entity-123-annotatedBar"
+            onClick={[Function]}
+            type="button"
           >
-            Select value type
-          </option>
-          <option>
-            AnnotatedBar
-          </option>
-        </select>
+            Add value item
+             
+            <span
+              className="dd icon chevron-down"
+            />
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -1007,19 +1013,20 @@ exports[`Storyshots Domain/EntityEditor New Foo 1`] = `
         <div
           className="dd segment"
         >
-          <select
-            id="new-entity-123-annotatedBars"
-            onChange={[Function]}
-          >
-            <option
-              value=""
+          <div>
+            <button
+              className="dd button text-button "
+              id="new-entity-123-annotatedBars"
+              onClick={[Function]}
+              type="button"
             >
-              Select value type
-            </option>
-            <option>
-              AnnotatedBar
-            </option>
-          </select>
+              Add value item
+               
+              <span
+                className="dd icon chevron-down"
+              />
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -1037,19 +1044,20 @@ exports[`Storyshots Domain/EntityEditor New Foo 1`] = `
       <div
         className="dd segment"
       >
-        <select
-          id="new-entity-123-nested"
-          onChange={[Function]}
-        >
-          <option
-            value=""
+        <div>
+          <button
+            className="dd button text-button "
+            id="new-entity-123-nested"
+            onClick={[Function]}
+            type="button"
           >
-            Select value type
-          </option>
-          <option>
-            NestedValueItem
-          </option>
-        </select>
+            Add value item
+             
+            <span
+              className="dd icon chevron-down"
+            />
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -1085,6 +1093,70 @@ exports[`Storyshots Domain/EntityList Normal 1`] = `
   >
     Bar 2
   </p>
+</div>
+`;
+
+exports[`Storyshots Domain/TypePicker Entity Types 1`] = `
+<div>
+  <button
+    className="dd button text-button "
+    onClick={[Function]}
+    type="button"
+  >
+    Select entity type
+     
+    <span
+      className="dd icon chevron-down"
+    />
+  </button>
+</div>
+`;
+
+exports[`Storyshots Domain/TypePicker Entity Types Filtered 1`] = `
+<div>
+  <button
+    className="dd button text-button "
+    onClick={[Function]}
+    type="button"
+  >
+    Select entity type
+     
+    <span
+      className="dd icon chevron-down"
+    />
+  </button>
+</div>
+`;
+
+exports[`Storyshots Domain/TypePicker Value Types 1`] = `
+<div>
+  <button
+    className="dd button text-button "
+    onClick={[Function]}
+    type="button"
+  >
+    Select value type
+     
+    <span
+      className="dd icon chevron-down"
+    />
+  </button>
+</div>
+`;
+
+exports[`Storyshots Domain/TypePicker Value Types Filtered 1`] = `
+<div>
+  <button
+    className="dd button text-button "
+    onClick={[Function]}
+    type="button"
+  >
+    Select value type
+     
+    <span
+      className="dd icon chevron-down"
+    />
+  </button>
 </div>
 `;
 
@@ -1126,6 +1198,18 @@ exports[`Storyshots Generic/Button Primary Disabled 1`] = `
 </button>
 `;
 
+exports[`Storyshots Generic/Button Primary Icon 1`] = `
+<button
+  className="dd button text-button bg-primary"
+  type="button"
+>
+  Text 
+  <span
+    className="dd icon chevron-down"
+  />
+</button>
+`;
+
 exports[`Storyshots Generic/Button Submit Normal 1`] = `
 <button
   className="dd button text-button "
@@ -1133,6 +1217,22 @@ exports[`Storyshots Generic/Button Submit Normal 1`] = `
 >
   Done
 </button>
+`;
+
+exports[`Storyshots Generic/DropDown Normal 1`] = `
+<div>
+  <button
+    className="dd button text-button "
+    onClick={[Function]}
+    type="button"
+  >
+    Dropdown
+     
+    <span
+      className="dd icon chevron-down"
+    />
+  </button>
+</div>
 `;
 
 exports[`Storyshots Generic/IconButton Disabled 1`] = `

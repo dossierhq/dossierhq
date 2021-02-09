@@ -4,6 +4,7 @@ export type { EntityFieldEditorProps } from './domain-components/EntityFieldEdit
 export { Button } from './generic-components/Button/Button';
 export { DataDataContext } from './contexts/DataDataContext';
 export { Divider } from './generic-components/Divider/Divider';
+export { DropDown } from './generic-components/DropDown/DropDown';
 export { EntityEditor } from './domain-components/EntityEditor/EntityEditor';
 export { EntityFieldEditor } from './domain-components/EntityFieldEditor/EntityFieldEditor';
 export { EntityFieldListWrapper } from './domain-components/EntityFieldListWrapper/EntityFieldListWrapper';
@@ -17,4 +18,5 @@ export { InputText } from './generic-components/InputText/InputText';
 export { Modal } from './generic-components/Modal/Modal';
 export { Segment } from './generic-components/Segment/Segment';
 export { StringFieldEditor } from './domain-components/StringFieldEditor/StringFieldEditor';
+export { TypePicker } from './domain-components/TypePicker/TypePicker';
 export { ValueTypeFieldEditor } from './domain-components/ValueTypeFieldEditor/ValueTypeFieldEditor';
