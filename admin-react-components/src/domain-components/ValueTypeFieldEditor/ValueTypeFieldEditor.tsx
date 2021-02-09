@@ -1,6 +1,7 @@
 import type { Value } from '@datadata/core';
 import React, { useCallback } from 'react';
 import { EntityFieldEditor, EntityFieldEditorProps, IconButton, Segment } from '../..';
+import { TypePicker } from '../TypePicker/TypePicker';
 
 type Props = EntityFieldEditorProps<Value>;
 
@@ -14,28 +15,16 @@ export function ValueTypeFieldEditor({
   const handleRemove = useCallback(() => onChange?.(null), [onChange]);
 
   if (!value) {
-    let valueTypes = schema.spec.valueTypes.map((x) => x.name);
-    if (fieldSpec.valueTypes && fieldSpec.valueTypes.length > 0) {
-      valueTypes = valueTypes.filter(
-        (x) => fieldSpec.valueTypes && fieldSpec.valueTypes.indexOf(x) >= 0
-      );
-    }
     return (
       <Segment>
-        <select
+        <TypePicker
           id={id}
-          onChange={(e) => {
-            const newValueType = e.target.value;
-            if (newValueType && onChange) {
-              onChange({ _type: e.target.value });
-            }
-          }}
-        >
-          <option value="">Select value type</option>
-          {valueTypes.map((valueType) => (
-            <option key={valueType}>{valueType}</option>
-          ))}
-        </select>
+          text="Add value item"
+          showValueTypes
+          valueTypes={fieldSpec.valueTypes}
+          schema={schema}
+          onTypeSelected={(type) => onChange?.({ _type: type })}
+        />
       </Segment>
     );
   }

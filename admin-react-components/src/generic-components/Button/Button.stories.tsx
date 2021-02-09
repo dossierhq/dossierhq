@@ -2,6 +2,7 @@ import type { Story } from '@storybook/react/types-6-0';
 import React from 'react';
 import { Button } from './Button';
 import type { ButtonProps } from './Button';
+import { Icon } from '../..';
 
 export default {
   title: 'Generic/Button',
@@ -20,6 +21,16 @@ Disabled.args = { children: 'Text', disabled: true };
 
 export const Primary = Template.bind({});
 Primary.args = { className: 'bg-primary', children: 'Text' };
+
+export const PrimaryIcon = Template.bind({});
+PrimaryIcon.args = {
+  className: 'bg-primary',
+  children: (
+    <>
+      Text <Icon icon="chevron-down" />
+    </>
+  ),
+};
 
 export const PrimaryDisabled = Template.bind({});
 PrimaryDisabled.args = { className: 'bg-primary', children: 'Text', disabled: true };

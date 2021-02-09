@@ -1,3 +1,7 @@
+.dd.icon.chevron-down {
+  background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg' fill-rule='evenodd' clip-rule='evenodd' stroke-linecap='round' stroke-linejoin='round' stroke-miterlimit='1.5'%3e%3cg fill='none' stroke='black' stroke-width='2'%3e%3cpath d='M16 18.5l9-5M16 18.5l-9-5'/%3e%3c/g%3e%3c/svg%3e");
+}
+
 .dd.icon.open-window {
   background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg' fill-rule='evenodd' clip-rule='evenodd' stroke-linecap='round' stroke-linejoin='round' stroke-miterlimit='1.5'%3e%3cg fill='none' stroke='black' stroke-width='2'%3e%3cpath d='M17.105 3.983H8.464a4.483 4.483 0 00-4.481 4.481v15.054A4.484 4.484 0 008.464 28h15.054A4.484 4.484 0 0028 23.518v-8.64M16 16L27 5M21 4h7v7'/%3e%3c/g%3e%3c/svg%3e");
 }
