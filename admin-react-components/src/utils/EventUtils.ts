@@ -5,7 +5,9 @@ export function useWindowEventListener<K extends keyof WindowEventMap>(
   listener: (ev: WindowEventMap[K]) => void | EventListenerObject,
   options?: boolean | AddEventListenerOptions
 ): void {
-  useEventListener(window, type, listener as EventListenerOrEventListenerObject, options);
+  if (typeof window !== 'undefined') {
+    useEventListener(window, type, listener as EventListenerOrEventListenerObject, options);
+  }
 }
 
 export function useDocumentEventListener<K extends keyof DocumentEventMap>(
@@ -13,7 +15,9 @@ export function useDocumentEventListener<K extends keyof DocumentEventMap>(
   listener: (ev: DocumentEventMap[K]) => void | EventListenerObject,
   options?: boolean | AddEventListenerOptions
 ): void {
-  useEventListener(document, type, listener as EventListenerOrEventListenerObject, options);
+  if (typeof document !== 'undefined') {
+    useEventListener(document, type, listener as EventListenerOrEventListenerObject, options);
+  }
 }
 
 export function useEventListener(
