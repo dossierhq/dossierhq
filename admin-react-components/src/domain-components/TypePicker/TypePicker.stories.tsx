@@ -8,7 +8,7 @@ import TestContextValue from '../../test/TestContextValue';
 export default {
   title: 'Domain/TypePicker',
   component: TypePicker,
-  args: {},
+  args: { id: 'type-picker' },
 };
 
 const Template: Story<TypePickerProps> = (args) => {
