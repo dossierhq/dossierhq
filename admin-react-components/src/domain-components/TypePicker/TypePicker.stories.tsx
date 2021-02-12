@@ -2,16 +2,21 @@ import type { Story } from '@storybook/react/types-6-0';
 import React from 'react';
 import { TypePicker } from './TypePicker';
 import type { TypePickerProps } from './TypePicker';
-import schema from '../../stories/StoryboardSchema';
+import { DataDataContext } from '../..';
+import TestContextValue from '../../test/TestContextValue';
 
 export default {
   title: 'Domain/TypePicker',
   component: TypePicker,
-  args: { schema },
+  args: {},
 };
 
 const Template: Story<TypePickerProps> = (args) => {
-  return <TypePicker {...args} />;
+  return (
+    <DataDataContext.Provider value={new TestContextValue()}>
+      <TypePicker {...args} />
+    </DataDataContext.Provider>
+  );
 };
 
 export const EntityTypes = Template.bind({});

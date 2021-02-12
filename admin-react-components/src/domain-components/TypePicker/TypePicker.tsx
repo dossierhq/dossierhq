@@ -1,12 +1,11 @@
-import type { EntityTypeSpecification, Schema, ValueTypeSpecification } from '@datadata/core';
-import React from 'react';
-import { DropDown } from '../../';
-import type { DropDownItem } from '../../generic-components/DropDown/DropDown';
+import type { EntityTypeSpecification, ValueTypeSpecification } from '@datadata/core';
+import React, { useContext } from 'react';
+import { DataDataContext, DropDown } from '../../';
+import type { DropDownItem } from '../../';
 
 export interface TypePickerProps {
   id?: string;
   text: string;
-  schema: Schema;
   showEntityTypes?: boolean;
   entityTypes?: string[];
   showValueTypes?: boolean;
@@ -17,19 +16,23 @@ export interface TypePickerProps {
 export function TypePicker({
   id,
   text,
-  schema,
   showEntityTypes,
   entityTypes,
   showValueTypes,
   valueTypes,
   onTypeSelected,
 }: TypePickerProps): JSX.Element {
+  const context = useContext(DataDataContext);
+
   const items: DropDownItem[] = [];
-  if (showEntityTypes) {
-    items.push(...gatherItems(schema.spec.entityTypes, entityTypes));
-  }
-  if (showValueTypes) {
-    items.push(...gatherItems(schema.spec.valueTypes, valueTypes));
+  if (context) {
+    const { schema } = context;
+    if (showEntityTypes) {
+      items.push(...gatherItems(schema.spec.entityTypes, entityTypes));
+    }
+    if (showValueTypes) {
+      items.push(...gatherItems(schema.spec.valueTypes, valueTypes));
+    }
   }
 
   return (

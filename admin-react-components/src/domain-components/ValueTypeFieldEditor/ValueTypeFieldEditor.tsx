@@ -22,7 +22,6 @@ export function ValueTypeFieldEditor({
           text="Add value item"
           showValueTypes
           valueTypes={fieldSpec.valueTypes}
-          schema={schema}
           onTypeSelected={(type) => onChange?.({ _type: type })}
         />
       </Segment>
