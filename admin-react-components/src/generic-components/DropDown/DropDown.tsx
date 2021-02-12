@@ -4,7 +4,7 @@ import { useKeyHandler } from '../../utils/KeyboardUtils';
 import { useWindowClick } from '../../utils/MouseUtils';
 
 export interface DropDownProps {
-  id?: string;
+  id: string;
   text: string;
   items: DropDownItem[];
   onItemClick: (item: DropDownItem) => void;

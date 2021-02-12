@@ -4,7 +4,7 @@ import { DataDataContext, DropDown } from '../../';
 import type { DropDownItem } from '../../';
 
 export interface TypePickerProps {
-  id?: string;
+  id: string;
   text: string;
   showEntityTypes?: boolean;
   entityTypes?: string[];
