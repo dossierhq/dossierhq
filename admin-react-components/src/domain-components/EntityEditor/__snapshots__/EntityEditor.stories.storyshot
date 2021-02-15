@@ -1070,3 +1070,9 @@ exports[`Storyshots Domain/EntityEditor New Foo 1`] = `
   </button>
 </form>
 `;
+
+exports[`Storyshots Domain/EntityEditor Slow Full Foo 1`] = `
+<div
+  className="dd loader"
+/>
+`;

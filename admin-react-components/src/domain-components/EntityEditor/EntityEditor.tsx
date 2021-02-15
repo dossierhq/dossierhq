@@ -15,6 +15,7 @@ import {
   Form,
   FormField,
   InputText,
+  Loader,
 } from '../..';
 import type { DataDataContextValue } from '../..';
 
@@ -82,7 +83,7 @@ export function EntityEditor({ idPrefix, entity }: EntityEditorProps): JSX.Eleme
   }, [context, entity, initialEditorState]);
 
   if (!context || !initialEditorState) {
-    return null;
+    return <Loader />;
   }
 
   const { schema, createEntity, updateEntity } = context;

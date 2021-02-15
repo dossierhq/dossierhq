@@ -12,21 +12,22 @@ import {
 import userEvent from '@testing-library/user-event';
 import * as React from 'react';
 import * as renderer from 'react-test-renderer';
+import type { DataDataContextValue } from '../..';
 import TestContextValue from '../../test/TestContextValue';
 import type { EntityEditorProps } from './EntityEditor';
 import { default as Default, DeletedFoo, FullFoo, NewFoo } from './EntityEditor.stories';
 
 function renderStory(
-  StoryUnderTest: Story<EntityEditorProps & { contextValue?: TestContextValue }>,
-  overrideArgs?: Partial<EntityEditorProps & { contextValue?: TestContextValue }>
+  StoryUnderTest: Story<EntityEditorProps & { contextValue?: DataDataContextValue }>,
+  overrideArgs?: Partial<EntityEditorProps & { contextValue?: DataDataContextValue }>
 ) {
   const args = { ...Default.args, ...StoryUnderTest.args, ...overrideArgs } as EntityEditorProps;
   return <StoryUnderTest {...args} />;
 }
 
 async function renderStoryToJSON(
-  StoryUnderTest: Story<EntityEditorProps & { contextValue?: TestContextValue }>,
-  overrideArgs?: Partial<EntityEditorProps & { contextValue?: TestContextValue }>
+  StoryUnderTest: Story<EntityEditorProps & { contextValue?: DataDataContextValue }>,
+  overrideArgs?: Partial<EntityEditorProps & { contextValue?: DataDataContextValue }>
 ) {
   let storyRenderer: renderer.ReactTestRenderer | undefined;
   await renderer.act(async () => {
