@@ -9,7 +9,7 @@ export default class TestContextValue implements DataDataContextValue {
   schema = schema;
   #entities = cloneFixture();
 
-  findEntity(id: string, version?: number | null): AdminEntity | null {
+  private findEntity(id: string, version?: number | null): AdminEntity | null {
     const versions = this.#entities.find((x) => x[0].id === id);
     if (!versions) {
       return null;
@@ -20,12 +20,12 @@ export default class TestContextValue implements DataDataContextValue {
     return this.findLatestVersion(versions);
   }
 
-  findLatestVersion(versions: AdminEntity[]): AdminEntity {
+  private findLatestVersion(versions: AdminEntity[]): AdminEntity {
     const maxVersion = versions.reduce((max, entity) => Math.max(max, entity._version), 0);
     return versions.find((entity) => entity._version === maxVersion) as AdminEntity;
   }
 
-  getLatestEntities(): AdminEntity[] {
+  private getLatestEntities(): AdminEntity[] {
     return this.#entities.map(this.findLatestVersion);
   }
 
