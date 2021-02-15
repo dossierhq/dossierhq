@@ -1,15 +1,19 @@
 import initStoryshots, { Stories2SnapsConverter } from '@storybook/addon-storyshots';
+import path from 'path';
 import { act, create, ReactTestRenderer } from 'react-test-renderer';
 
 const converter = new Stories2SnapsConverter();
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const runTest = async (story: any, context: any) => {
-  const filename = converter.getSnapshotFileName(context);
+async function runTest(story: any, context: any) {
+  let filename = converter.getSnapshotFileName(context);
 
   if (!filename) {
     return;
   }
+
+  // Adjust path since we're not running in src/ root
+  filename = path.join('..', filename);
 
   const storyElement = story.render();
   let tree: ReactTestRenderer | undefined;
@@ -20,7 +24,7 @@ const runTest = async (story: any, context: any) => {
   expect(tree?.toJSON()).toMatchSpecificSnapshot(filename);
 
   tree?.unmount();
-};
+}
 
 initStoryshots({
   asyncJest: true,
