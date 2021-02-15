@@ -1,7 +1,8 @@
 import type { DataDataContextValue } from '@datadata/admin-react-components';
-import { convertJsonConnection, convertJsonEdge, ErrorType, Schema } from '@datadata/core';
+import { convertJsonConnection, convertJsonEdge, ErrorType, ok, Schema } from '@datadata/core';
 import { useEffect, useMemo, useState } from 'react';
 import useSWR from 'swr';
+import type { EntityCreateRequest, EntityUpdateRequest } from '../types/RequestTypes';
 import type {
   EntityResponse,
   SchemaResponse,
@@ -35,6 +36,42 @@ class ContextValue implements DataDataContextValue {
       return { connection, connectionError: error };
     }
     return { connection: undefined, connectionError: error };
+  };
+
+  createEntity: DataDataContextValue['createEntity'] = async (entity, options) => {
+    const body: EntityCreateRequest = { item: entity, options };
+    const result = await fetchJsonResult<EntityResponse, ErrorType.BadRequest>(
+      [ErrorType.BadRequest],
+      urls.createEntity,
+      {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(body),
+      }
+    );
+
+    if (result.isOk()) {
+      return ok(result.value.item);
+    }
+    return result;
+  };
+
+  updateEntity: DataDataContextValue['updateEntity'] = async (entity, options) => {
+    const body: EntityUpdateRequest = { item: entity, options };
+    const result = await fetchJsonResult<EntityResponse, ErrorType.BadRequest | ErrorType.NotFound>(
+      [ErrorType.BadRequest, ErrorType.NotFound],
+      urls.getEntity(entity.id, {}), //TODO
+      {
+        method: 'PUT',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(body),
+      }
+    );
+
+    if (result.isOk()) {
+      return ok(result.value.item);
+    }
+    return result;
   };
 }
 

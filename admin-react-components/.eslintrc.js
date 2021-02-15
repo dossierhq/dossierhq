@@ -7,6 +7,7 @@ module.exports = {
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:jest-dom/recommended',
+    'plugin:react-hooks/recommended',
     'plugin:react/recommended',
     'plugin:testing-library/react',
     'plugin:testing-library/recommended',

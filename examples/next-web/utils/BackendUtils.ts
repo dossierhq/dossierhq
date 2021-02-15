@@ -54,7 +54,7 @@ statusErrorMapping.set(401, ErrorType.NotAuthenticated);
 statusErrorMapping.set(404, ErrorType.NotFound);
 
 export async function fetchJsonResult<TOk, TError extends ErrorType>(
-  expectedErrors: [TError],
+  expectedErrors: TError[],
   input: RequestInfo,
   init?: RequestInit
 ): PromiseResult<TOk, TError> {

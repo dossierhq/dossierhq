@@ -1,5 +1,7 @@
 import type {
   AdminEntity,
+  AdminEntityCreate,
+  AdminEntityUpdate,
   AdminQuery,
   Connection,
   Edge,
@@ -28,6 +30,16 @@ export interface DataDataContextValue {
     query?: AdminQuery,
     paging?: Paging
   ) => { connection?: Connection<Edge<AdminEntity, ErrorType>> | null; connectionError?: Error };
+
+  createEntity: (
+    entity: AdminEntityCreate,
+    options: { publish: boolean }
+  ) => PromiseResult<AdminEntity, ErrorType.BadRequest>;
+
+  updateEntity: (
+    entity: AdminEntityUpdate,
+    options: { publish: boolean }
+  ) => PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.NotFound>;
 }
 
 export const DataDataContext = createContext<DataDataContextValue | null>(null);
