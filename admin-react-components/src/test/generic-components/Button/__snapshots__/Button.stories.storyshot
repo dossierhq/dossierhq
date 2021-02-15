@@ -1,0 +1,60 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots Generic/Button Disabled 1`] = `
+<button
+  className="dd button text-button "
+  disabled={true}
+  type="button"
+>
+  Text
+</button>
+`;
+
+exports[`Storyshots Generic/Button Normal 1`] = `
+<button
+  className="dd button text-button "
+  type="button"
+>
+  Text
+</button>
+`;
+
+exports[`Storyshots Generic/Button Primary 1`] = `
+<button
+  className="dd button text-button bg-primary"
+  type="button"
+>
+  Text
+</button>
+`;
+
+exports[`Storyshots Generic/Button Primary Disabled 1`] = `
+<button
+  className="dd button text-button bg-primary"
+  disabled={true}
+  type="button"
+>
+  Text
+</button>
+`;
+
+exports[`Storyshots Generic/Button Primary Icon 1`] = `
+<button
+  className="dd button text-button bg-primary"
+  type="button"
+>
+  Text 
+  <span
+    className="dd icon chevron-down"
+  />
+</button>
+`;
+
+exports[`Storyshots Generic/Button Submit Normal 1`] = `
+<button
+  className="dd button text-button "
+  type="submit"
+>
+  Done
+</button>
+`;

@@ -1,0 +1,69 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots Domain/TypePicker Entity Types 1`] = `
+<div>
+  <button
+    className="dd button text-button "
+    id="type-picker"
+    onClick={[Function]}
+    type="button"
+  >
+    Select entity type
+     
+    <span
+      className="dd icon chevron-down"
+    />
+  </button>
+</div>
+`;
+
+exports[`Storyshots Domain/TypePicker Entity Types Filtered 1`] = `
+<div>
+  <button
+    className="dd button text-button "
+    id="type-picker"
+    onClick={[Function]}
+    type="button"
+  >
+    Select entity type
+     
+    <span
+      className="dd icon chevron-down"
+    />
+  </button>
+</div>
+`;
+
+exports[`Storyshots Domain/TypePicker Value Types 1`] = `
+<div>
+  <button
+    className="dd button text-button "
+    id="type-picker"
+    onClick={[Function]}
+    type="button"
+  >
+    Select value type
+     
+    <span
+      className="dd icon chevron-down"
+    />
+  </button>
+</div>
+`;
+
+exports[`Storyshots Domain/TypePicker Value Types Filtered 1`] = `
+<div>
+  <button
+    className="dd button text-button "
+    id="type-picker"
+    onClick={[Function]}
+    type="button"
+  >
+    Select value type
+     
+    <span
+      className="dd icon chevron-down"
+    />
+  </button>
+</div>
+`;
