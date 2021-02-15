@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots Generic/IconButton Disabled 1`] = `
+<button
+  className="dd button icon-button"
+  disabled={true}
+  title="Remove"
+  type="button"
+>
+  <span
+    className="dd icon remove"
+  />
+</button>
+`;
+
+exports[`Storyshots Generic/IconButton Normal 1`] = `
+<button
+  className="dd button icon-button"
+  title="Remove"
+  type="button"
+>
+  <span
+    className="dd icon remove"
+  />
+</button>
+`;
