@@ -131,6 +131,11 @@
   color: hsl(var(--dd-color-h), var(--dd-color-s), var(--dd-color-l));
 }
 
+.dd.loader {
+  border-color: hsl(var(--dd-bg-color-h), var(--dd-bg-color-s), calc(var(--dd-bg-color-l) - 10%));
+  border-top-color: var(--dd-color-accent);
+}
+
 /*
   COMPONENTS
 */
@@ -203,6 +208,24 @@
 .dd.dropdown-menu li {
   padding: 0.25em;
   cursor: pointer;
+}
+
+.dd.loader {
+  border-width: 0.2em;
+  border-style: solid;
+  border-radius: 50%;
+  width: 1em;
+  height: 1em;
+  animation: dd-spin 2s linear infinite;
+}
+
+@keyframes dd-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .dd.modal {

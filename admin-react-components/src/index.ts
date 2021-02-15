@@ -17,6 +17,7 @@ export { FormField } from './generic-components/FormField/FormField';
 export { Icon, IconTypes } from './generic-components/Icon/Icon';
 export { IconButton } from './generic-components/IconButton/IconButton';
 export { InputText } from './generic-components/InputText/InputText';
+export { Loader } from './generic-components/Loader/Loader';
 export { Modal } from './generic-components/Modal/Modal';
 export { Segment } from './generic-components/Segment/Segment';
 export { StringFieldEditor } from './domain-components/StringFieldEditor/StringFieldEditor';
