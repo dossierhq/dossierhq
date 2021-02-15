@@ -1,6 +1,7 @@
 import type { Story } from '@storybook/react/types-6-0';
 import '@testing-library/jest-dom';
 import {
+  act,
   getElementError,
   queryByAttribute,
   render,
@@ -11,22 +12,27 @@ import {
 import userEvent from '@testing-library/user-event';
 import * as React from 'react';
 import * as renderer from 'react-test-renderer';
+import TestContextValue from '../../test/TestContextValue';
 import type { EntityEditorProps } from './EntityEditor';
 import { default as Default, DeletedFoo, FullFoo, NewFoo } from './EntityEditor.stories';
 
 function renderStory(
-  StoryUnderTest: Story<EntityEditorProps>,
-  overrideArgs?: Partial<EntityEditorProps>
+  StoryUnderTest: Story<EntityEditorProps & { contextValue?: TestContextValue }>,
+  overrideArgs?: Partial<EntityEditorProps & { contextValue?: TestContextValue }>
 ) {
   const args = { ...Default.args, ...StoryUnderTest.args, ...overrideArgs } as EntityEditorProps;
   return <StoryUnderTest {...args} />;
 }
 
-function renderStoryToJSON(
-  StoryUnderTest: Story<EntityEditorProps>,
-  overrideArgs?: Partial<EntityEditorProps>
+async function renderStoryToJSON(
+  StoryUnderTest: Story<EntityEditorProps & { contextValue?: TestContextValue }>,
+  overrideArgs?: Partial<EntityEditorProps & { contextValue?: TestContextValue }>
 ) {
-  return renderer.create(renderStory(StoryUnderTest, overrideArgs)).toJSON();
+  let storyRenderer: renderer.ReactTestRenderer | undefined;
+  await renderer.act(async () => {
+    storyRenderer = renderer.create(renderStory(StoryUnderTest, overrideArgs));
+  });
+  return storyRenderer?.toJSON();
 }
 
 function storyToId(story: Story<EntityEditorProps>, subId: string) {
@@ -73,49 +79,63 @@ const finders = {
 };
 
 describe('NewFoo', () => {
-  test('render', () => {
-    expect(renderStoryToJSON(NewFoo)).toMatchSnapshot();
+  test('render', async () => {
+    expect(await renderStoryToJSON(NewFoo)).toMatchSnapshot();
   });
 
   test('Enter name and submit', async () => {
-    const onSubmit = jest.fn();
-    render(renderStory(NewFoo, { onSubmit }));
+    const contextValue = new TestContextValue();
+    const createEntity = jest.spyOn(contextValue, 'createEntity');
+    act(() => {
+      render(renderStory(NewFoo, { contextValue }));
+    });
 
     const name = finders.nameInput();
-    const submit = finders.saveButton();
-
     userEvent.type(name, 'New name');
 
-    userEvent.click(submit);
+    await act(async () => {
+      userEvent.click(finders.saveButton());
+    });
 
-    expect(onSubmit.mock.calls).toMatchInlineSnapshot(`
-          Array [
-            Array [
-              Object {
-                "_name": "New name",
-                "_type": "Foo",
-              },
-            ],
-          ]
-      `);
+    expect(createEntity.mock.calls).toMatchInlineSnapshot(`
+      Array [
+        Array [
+          Object {
+            "_name": "New name",
+            "_type": "Foo",
+          },
+          Object {
+            "publish": true,
+          },
+        ],
+      ]
+    `);
   });
 
   test('Enter title and submit', async () => {
-    const onSubmit = jest.fn();
-    render(renderStory(NewFoo, { onSubmit }));
+    const contextValue = new TestContextValue();
+    const createEntity = jest.spyOn(contextValue, 'createEntity');
+    act(() => {
+      render(renderStory(NewFoo, { contextValue }));
+    });
 
     userEvent.type(finders.nameInput(), 'New name'); // TODO remove, update automatically
     userEvent.type(finders.fooTitleInput(), 'New title');
 
-    userEvent.click(finders.saveButton());
+    await act(async () => {
+      userEvent.click(finders.saveButton());
+    });
 
-    expect(onSubmit.mock.calls).toMatchInlineSnapshot(`
+    expect(createEntity.mock.calls).toMatchInlineSnapshot(`
       Array [
         Array [
           Object {
             "_name": "New name",
             "_type": "Foo",
             "title": "New title",
+          },
+          Object {
+            "publish": true,
           },
         ],
       ]
@@ -142,21 +162,26 @@ describe('NewFoo', () => {
 });
 
 describe('FullFoo', () => {
-  test('render', () => {
-    expect(renderStoryToJSON(FullFoo)).toMatchSnapshot();
+  test('render', async () => {
+    expect(await renderStoryToJSON(FullFoo)).toMatchSnapshot();
   });
 
   test('Enter name and submit', async () => {
-    const onSubmit = jest.fn();
-    render(renderStory(FullFoo, { onSubmit }));
+    const contextValue = new TestContextValue();
+    const updateEntity = jest.spyOn(contextValue, 'updateEntity');
+    await act(async () => {
+      render(renderStory(FullFoo, { contextValue }));
+    });
 
     const name = finders.nameInput();
     userEvent.clear(name);
     userEvent.type(name, 'New name');
 
-    userEvent.click(finders.saveButton());
+    await act(async () => {
+      userEvent.click(finders.saveButton());
+    });
 
-    expect(onSubmit.mock.calls).toMatchInlineSnapshot(`
+    expect(updateEntity.mock.calls).toMatchInlineSnapshot(`
       Array [
         Array [
           Object {
@@ -164,22 +189,30 @@ describe('FullFoo', () => {
             "_type": "Foo",
             "id": "fc66b4d7-61ff-44d4-8f68-cb7f526df046",
           },
+          Object {
+            "publish": true,
+          },
         ],
       ]
     `);
   });
 
   test('Enter title and submit', async () => {
-    const onSubmit = jest.fn();
-    render(renderStory(FullFoo, { onSubmit }));
+    const contextValue = new TestContextValue();
+    const updateEntity = jest.spyOn(contextValue, 'updateEntity');
+    await act(async () => {
+      render(renderStory(FullFoo, { contextValue }));
+    });
 
     const fooTitle = finders.fooTitleInput();
     userEvent.clear(fooTitle);
     userEvent.type(fooTitle, 'New title');
 
-    userEvent.click(finders.saveButton());
+    await act(async () => {
+      userEvent.click(finders.saveButton());
+    });
 
-    expect(onSubmit.mock.calls).toMatchInlineSnapshot(`
+    expect(updateEntity.mock.calls).toMatchInlineSnapshot(`
       Array [
         Array [
           Object {
@@ -187,20 +220,28 @@ describe('FullFoo', () => {
             "id": "fc66b4d7-61ff-44d4-8f68-cb7f526df046",
             "title": "New title",
           },
+          Object {
+            "publish": true,
+          },
         ],
       ]
     `);
   });
 
   test('Remove Bar entity and submit', async () => {
-    const onSubmit = jest.fn();
-    render(renderStory(FullFoo, { onSubmit }));
+    const contextValue = new TestContextValue();
+    const updateEntity = jest.spyOn(contextValue, 'updateEntity');
+    await act(async () => {
+      render(renderStory(FullFoo, { contextValue }));
+    });
 
     userEvent.click(finders.fooBarRemoveButton(FullFoo));
 
-    userEvent.click(finders.saveButton());
+    await act(async () => {
+      userEvent.click(finders.saveButton());
+    });
 
-    expect(onSubmit.mock.calls).toMatchInlineSnapshot(`
+    expect(updateEntity.mock.calls).toMatchInlineSnapshot(`
       Array [
         Array [
           Object {
@@ -208,14 +249,20 @@ describe('FullFoo', () => {
             "bar": null,
             "id": "fc66b4d7-61ff-44d4-8f68-cb7f526df046",
           },
+          Object {
+            "publish": true,
+          },
         ],
       ]
     `);
   });
 
   test('Select Bar entity and submit', async () => {
-    const onSubmit = jest.fn();
-    render(renderStory(FullFoo, { onSubmit }));
+    const contextValue = new TestContextValue();
+    const updateEntity = jest.spyOn(contextValue, 'updateEntity');
+    await act(async () => {
+      render(renderStory(FullFoo, { contextValue }));
+    });
 
     const bar = finders.fooBarButton(FullFoo);
     userEvent.click(bar);
@@ -223,9 +270,11 @@ describe('FullFoo', () => {
     const bar2 = await waitFor(() => finders.entityPickerBar2());
     userEvent.click(bar2);
 
-    userEvent.click(finders.saveButton());
+    await act(async () => {
+      userEvent.click(finders.saveButton());
+    });
 
-    expect(onSubmit.mock.calls).toMatchInlineSnapshot(`
+    expect(updateEntity.mock.calls).toMatchInlineSnapshot(`
       Array [
         Array [
           Object {
@@ -235,20 +284,28 @@ describe('FullFoo', () => {
             },
             "id": "fc66b4d7-61ff-44d4-8f68-cb7f526df046",
           },
+          Object {
+            "publish": true,
+          },
         ],
       ]
     `);
   });
 
   test('Remove AnnotatedBar value and submit', async () => {
-    const onSubmit = jest.fn();
-    render(renderStory(FullFoo, { onSubmit }));
+    const contextValue = new TestContextValue();
+    const updateEntity = jest.spyOn(contextValue, 'updateEntity');
+    await act(async () => {
+      render(renderStory(FullFoo, { contextValue }));
+    });
 
     userEvent.click(finders.fooAnnotatedBarRemoveButton(FullFoo));
 
-    userEvent.click(finders.saveButton());
+    await act(async () => {
+      userEvent.click(finders.saveButton());
+    });
 
-    expect(onSubmit.mock.calls).toMatchInlineSnapshot(`
+    expect(updateEntity.mock.calls).toMatchInlineSnapshot(`
       Array [
         Array [
           Object {
@@ -256,22 +313,30 @@ describe('FullFoo', () => {
             "annotatedBar": null,
             "id": "fc66b4d7-61ff-44d4-8f68-cb7f526df046",
           },
+          Object {
+            "publish": true,
+          },
         ],
       ]
     `);
   });
 
   test('Change AnnotatedBar annotation value and submit', async () => {
-    const onSubmit = jest.fn();
-    render(renderStory(FullFoo, { onSubmit }));
+    const contextValue = new TestContextValue();
+    const updateEntity = jest.spyOn(contextValue, 'updateEntity');
+    await act(async () => {
+      render(renderStory(FullFoo, { contextValue }));
+    });
 
     const annotation = finders.fooAnnotatedBarAnnotationInput(FullFoo);
     userEvent.clear(annotation);
     userEvent.type(annotation, 'New annotation');
 
-    userEvent.click(finders.saveButton());
+    await act(async () => {
+      userEvent.click(finders.saveButton());
+    });
 
-    expect(onSubmit.mock.calls).toMatchInlineSnapshot(`
+    expect(updateEntity.mock.calls).toMatchInlineSnapshot(`
       Array [
         Array [
           Object {
@@ -285,23 +350,31 @@ describe('FullFoo', () => {
             },
             "id": "fc66b4d7-61ff-44d4-8f68-cb7f526df046",
           },
+          Object {
+            "publish": true,
+          },
         ],
       ]
     `);
   });
 
   test('Select AnnotatedBar bar value and submit', async () => {
-    const onSubmit = jest.fn();
-    render(renderStory(FullFoo, { onSubmit }));
+    const contextValue = new TestContextValue();
+    const updateEntity = jest.spyOn(contextValue, 'updateEntity');
+    await act(async () => {
+      render(renderStory(FullFoo, { contextValue }));
+    });
 
     userEvent.click(finders.fooAnnotatedBarBarButton(FullFoo));
 
     const bar1 = await waitFor(() => finders.entityPickerBar1());
     userEvent.click(bar1);
 
-    userEvent.click(finders.saveButton());
+    await act(async () => {
+      userEvent.click(finders.saveButton());
+    });
 
-    expect(onSubmit.mock.calls).toMatchInlineSnapshot(`
+    expect(updateEntity.mock.calls).toMatchInlineSnapshot(`
       Array [
         Array [
           Object {
@@ -315,6 +388,9 @@ describe('FullFoo', () => {
             },
             "id": "fc66b4d7-61ff-44d4-8f68-cb7f526df046",
           },
+          Object {
+            "publish": true,
+          },
         ],
       ]
     `);
@@ -322,7 +398,7 @@ describe('FullFoo', () => {
 });
 
 describe('DeletedFoo', () => {
-  test('render', () => {
-    expect(renderStoryToJSON(DeletedFoo)).toMatchSnapshot();
+  test('render', async () => {
+    expect(await renderStoryToJSON(DeletedFoo)).toMatchSnapshot();
   });
 });

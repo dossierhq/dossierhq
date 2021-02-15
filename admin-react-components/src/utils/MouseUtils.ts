@@ -16,7 +16,7 @@ export function useWindowClick(ignoreId: string, onClick: () => void, enabled?: 
       }
       onClick();
     },
-    [onClick, enabled]
+    [onClick, enabled, ignoreId]
   );
   useWindowEventListener('click', listener);
 }

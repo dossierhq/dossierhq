@@ -6,6 +6,7 @@ export function useWindowEventListener<K extends keyof WindowEventMap>(
   options?: boolean | AddEventListenerOptions
 ): void {
   if (typeof window !== 'undefined') {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     useEventListener(window, type, listener as EventListenerOrEventListenerObject, options);
   }
 }
@@ -16,6 +17,7 @@ export function useDocumentEventListener<K extends keyof DocumentEventMap>(
   options?: boolean | AddEventListenerOptions
 ): void {
   if (typeof document !== 'undefined') {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     useEventListener(document, type, listener as EventListenerOrEventListenerObject, options);
   }
 }

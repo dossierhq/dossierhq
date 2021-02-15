@@ -29,6 +29,7 @@ dependencies:
   '@types/react': 17.0.1
   '@types/react-test-renderer': 17.0.0
   '@types/testing-library__jest-dom': 5.9.5
+  '@types/uuid': 8.3.0
   '@typescript-eslint/eslint-plugin': 4.14.2_e5f964fa93e839b7a7927397f6cb9cb1
   '@typescript-eslint/parser': 4.14.2_eslint@7.19.0+typescript@4.1.3
   babel-loader: 8.2.2_@babel+core@7.12.13
@@ -39,6 +40,7 @@ dependencies:
   eslint: 7.19.0
   eslint-plugin-jest-dom: 3.6.5_eslint@7.19.0
   eslint-plugin-react: 7.22.0_eslint@7.19.0
+  eslint-plugin-react-hooks: 4.2.0_eslint@7.19.0
   eslint-plugin-testing-library: 3.10.1_eslint@7.19.0+typescript@4.1.3
   express: 4.17.1
   express-graphql: 0.12.0_graphql@15.5.0
@@ -62,6 +64,7 @@ dependencies:
   ts-node: 9.1.1_typescript@4.1.3
   typescript: 4.1.3
   url-parse-lax: 4.0.0
+  uuid: 8.3.2
 lockfileVersion: 5.2
 packages:
   /@ampproject/toolbox-core/2.7.4:
@@ -3462,6 +3465,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-FvUupuM3rlRsRtCN+fDudtmytGO6iHJuuRKS1Ss0pG5z8oX0diNEw94UEL7hgDbpN94rgaK5R7sWm6RrSkZuAQ==
+  /@types/uuid/8.3.0:
+    dev: false
+    resolution:
+      integrity: sha512-eQ9qFW/fhfGJF8WKHGEHZEyVWfZxrT+6CLIJGBcZPfxUh/+BnEj+UCGYMlr9qZuX/2AltsvwrGqp0LhEW8D0zQ==
   /@types/webpack-env/1.16.0:
     dev: false
     resolution:
@@ -6569,6 +6576,16 @@ packages:
       eslint: '>=6.8'
     resolution:
       integrity: sha512-iaJ5aSQghp9u2ciLAseWIVu7X5tW+WwNJwMBDToK4GBfwGXXQJDLt5IBNtm6fHvC3FRzCGwvyNMIG1g5gF+icQ==
+  /eslint-plugin-react-hooks/4.2.0_eslint@7.19.0:
+    dependencies:
+      eslint: 7.19.0
+    dev: false
+    engines:
+      node: '>=10'
+    peerDependencies:
+      eslint: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0
+    resolution:
+      integrity: sha512-623WEiZJqxR7VdxFCKLI6d6LLpwJkGPYKODnkH3D7WpOG5KM8yWueBd8TLsNAetEJNF5iJmolaAKO3F8yzyVBQ==
   /eslint-plugin-react/7.22.0_eslint@7.19.0:
     dependencies:
       array-includes: 3.1.2
@@ -13730,6 +13747,11 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-FOmRr+FmWEIG8uhZv6C2bTgEVXsHk08kE7mPlrBbEe+c3r9pjceVPgupIfNIhc4yx55H69OXANrUaSuu9eInKg==
+  /uuid/8.3.2:
+    dev: false
+    hasBin: true
+    resolution:
+      integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==
   /v8-compile-cache/2.2.0:
     dev: false
     resolution:
@@ -14208,12 +14230,14 @@ packages:
       '@types/react': 17.0.1
       '@types/react-test-renderer': 17.0.0
       '@types/testing-library__jest-dom': 5.9.5
+      '@types/uuid': 8.3.0
       '@typescript-eslint/eslint-plugin': 4.14.2_e5f964fa93e839b7a7927397f6cb9cb1
       '@typescript-eslint/parser': 4.14.2_eslint@7.19.0+typescript@4.1.3
       babel-loader: 8.2.2_@babel+core@7.12.13
       eslint: 7.19.0
       eslint-plugin-jest-dom: 3.6.5_eslint@7.19.0
       eslint-plugin-react: 7.22.0_eslint@7.19.0
+      eslint-plugin-react-hooks: 4.2.0_eslint@7.19.0
       eslint-plugin-testing-library: 3.10.1_eslint@7.19.0+typescript@4.1.3
       jest: 26.6.3_ts-node@9.1.1
       mini-svg-data-uri: 1.2.3
@@ -14224,13 +14248,14 @@ packages:
       svgo: 1.3.2
       ts-jest: 26.5.0_jest@26.6.3+typescript@4.1.3
       typescript: 4.1.3
+      uuid: 8.3.2
     dev: false
     id: file:projects/admin-react-components.tgz
     name: '@rush-temp/admin-react-components'
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-KTmqjkNPIzzYr7g+ML3g8xJly/ZUh3hNAWn096b4gWKex+kYIsGW17CtIqxLO25OyqwDzvedP8coI33FvobXig==
+      integrity: sha512-u+4tgsvGV7dYZkXxkr4PWVEOt7npp0vW3GtVWxCoLtUNwhb6S64orio+L4bVvySVthuLJotCE8ZbwI8ZtJRNKw==
       tarball: file:projects/admin-react-components.tgz
     version: 0.0.0
   file:projects/benchpress.tgz:
@@ -14393,6 +14418,7 @@ packages:
       ts-jest: 26.5.0_jest@26.6.3+typescript@4.1.3
       ts-node: 9.1.1_typescript@4.1.3
       typescript: 4.1.3
+      uuid: 8.3.2
     dev: false
     name: '@rush-temp/server'
     resolution:
@@ -14431,6 +14457,7 @@ specifiers:
   '@types/react': ~17.0.1
   '@types/react-test-renderer': ~17.0.0
   '@types/testing-library__jest-dom': ~5.9.5
+  '@types/uuid': ^8.3.0
   '@typescript-eslint/eslint-plugin': ^4.14.2
   '@typescript-eslint/parser': ^4.14.2
   babel-loader: ^8.2.2
@@ -14441,6 +14468,7 @@ specifiers:
   eslint: ^7.19.0
   eslint-plugin-jest-dom: ~3.6.5
   eslint-plugin-react: ~7.22.0
+  eslint-plugin-react-hooks: ~4.2.0
   eslint-plugin-testing-library: ~3.10.1
   express: ~4.17.1
   express-graphql: ~0.12.0
@@ -14464,3 +14492,4 @@ specifiers:
   ts-node: ^9.1.1
   typescript: ^4.1.3
   url-parse-lax: ^4.0.0
+  uuid: ^8.3.2

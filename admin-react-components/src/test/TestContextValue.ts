@@ -1,5 +1,6 @@
 import type { AdminEntity } from '@datadata/core';
 import { notOk, ok } from '@datadata/core';
+import { v4 as uuidv4 } from 'uuid';
 import type { DataDataContextValue } from '..';
 import { cloneFixture } from './EntityFixtures';
 import schema from '../stories/StoryboardSchema';
@@ -71,5 +72,26 @@ export default class TestContextValue implements DataDataContextValue {
         edges: entities.map((entity) => ({ cursor: entity.id, node: ok(entity) })),
       },
     };
+  };
+
+  createEntity: DataDataContextValue['createEntity'] = async (entity, options) => {
+    const newEntity = { ...entity, id: uuidv4(), _version: 0 };
+    this.#entities.push([newEntity]);
+    return ok(newEntity);
+  };
+
+  updateEntity: DataDataContextValue['updateEntity'] = async (entity, options) => {
+    const versions = this.#entities.find((x) => x[0].id === entity.id);
+    if (!versions) {
+      return notOk.NotFound('No such entity');
+    }
+    const previousVersion = this.findLatestVersion(versions);
+    const newEntity = {
+      ...previousVersion,
+      ...entity,
+      _version: previousVersion._version + 1,
+    };
+    versions.push(newEntity);
+    return ok(newEntity);
   };
 }
