@@ -1,5 +1,5 @@
-import { ErrorType, notOk, ok } from '@datadata/core';
-import type { Paging, Result } from '@datadata/core';
+import { notOk, ok } from '@datadata/core';
+import type { Paging, Result, ErrorType } from '@datadata/core';
 import { fromOpaqueCursor } from './Connection';
 import type { CursorNativeType } from './Connection';
 import { pagingDefaultCount } from './Constants';

@@ -1,5 +1,6 @@
 import { CoreTestUtils, ErrorType } from '@datadata/core';
-import { Auth, AuthContext, Server } from '.';
+import type { AuthContext, Server } from '.';
+import { Auth } from '.';
 import { createTestServer } from './ServerTestUtils';
 import { uuidMatcher } from '../test/AdditionalTestUtils';
 
