@@ -1,6 +1,6 @@
 {
   "editor.formatOnSave": true,
-  "cSpell.words": ["Storyshots", "datadata", "graphqlid", "unmount"],
+  "cSpell.words": ["datadata", "graphqlid", "hoverable", "storyshots", "unmount"],
   "files.insertFinalNewline": true,
   "editor.tabSize": 2,
   "editor.defaultFormatter": "esbenp.prettier-vscode"

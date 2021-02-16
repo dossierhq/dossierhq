@@ -97,13 +97,11 @@
   --dd-color-l: 100%;
 }
 
-.dd.button,
 .dd.has-background {
   background-color: hsl(var(--dd-bg-color-h), var(--dd-bg-color-s), var(--dd-bg-color-l));
   transition: background-color 0.5s;
 }
 
-.dd.button:enabled:hover,
 .dd.hoverable:hover,
 .dd.is-hover {
   background-color: hsl(
@@ -113,7 +111,7 @@
   );
 }
 
-.dd.button:enabled:active,
+.dd.hoverable:active,
 .dd.is-active {
   background-color: hsl(
     var(--dd-bg-color-h),
@@ -122,7 +120,7 @@
   );
 }
 
-.dd:disabled,
+.dd.hoverable:disabled,
 .dd.is-disabled {
   background-color: hsl(var(--dd-bg-color-h), 0%, var(--dd-bg-color-l));
 }
