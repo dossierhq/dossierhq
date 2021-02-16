@@ -36,6 +36,9 @@ PrimaryIcon.args = {
 export const PrimaryDisabled = Template.bind({});
 PrimaryDisabled.args = { className: 'bg-primary', children: 'Text', disabled: true };
 
+export const PrimaryLoading = Template.bind({});
+PrimaryLoading.args = { className: 'bg-primary', children: 'Text', loading: true };
+
 export const SubmitNormal = Template.bind({});
 SubmitNormal.args = { children: 'Done', type: 'submit' };
 

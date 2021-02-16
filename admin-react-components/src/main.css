@@ -132,7 +132,7 @@
 }
 
 .dd.loader {
-  border-color: hsl(var(--dd-bg-color-h), var(--dd-bg-color-s), calc(var(--dd-bg-color-l) - 10%));
+  border-color: #0002;
   border-top-color: var(--dd-color-accent);
 }
 

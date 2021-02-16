@@ -26,7 +26,7 @@ export function Button({
       className={`dd button text-button ${className ?? ''}`}
       type={type ?? 'button'}
       onClick={disabled || loading ? undefined : onClick}
-      disabled={disabled || loading}
+      disabled={disabled}
     >
       {loading ? (
         <Stack>
