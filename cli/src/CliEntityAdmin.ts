@@ -1,6 +1,5 @@
 import chalk from 'chalk';
 import {
-  ErrorType,
   isEntityTypeField,
   isEntityTypeListField,
   isStringField,
@@ -15,6 +14,7 @@ import type {
   AdminQuery,
   EntityReference,
   EntityTypeSpecification,
+  ErrorType,
   FieldSpecification,
   Paging,
   PromiseResult,
