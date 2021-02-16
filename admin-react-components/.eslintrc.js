@@ -21,8 +21,8 @@ module.exports = {
   plugins: ['@typescript-eslint', 'jest-dom', 'react', 'testing-library'],
   reportUnusedDisableDirectives: true,
   rules: {
-    '@typescript-eslint/consistent-type-imports': ['error'],
-    '@typescript-eslint/no-parameter-properties': ['warn'],
+    '@typescript-eslint/consistent-type-imports': ['warn'],
+    '@typescript-eslint/no-parameter-properties': ['error'],
     '@typescript-eslint/no-unused-vars': [
       'warn',
       {
