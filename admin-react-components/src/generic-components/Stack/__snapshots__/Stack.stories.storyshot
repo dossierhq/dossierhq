@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Storyshots Generic/Stack Green Bottom With Centered Yellow 1`] = `
+exports[`Storyshots Generic/Stack Center 1`] = `
 <div
   className="dd stack"
 >
@@ -16,6 +16,77 @@ exports[`Storyshots Generic/Stack Green Bottom With Centered Yellow 1`] = `
         }
       }
     />
+  </div>
+  <div
+    style={
+      Object {
+        "background": "green",
+        "height": "4em",
+      }
+    }
+  />
+</div>
+`;
+
+exports[`Storyshots Generic/Stack Corners 1`] = `
+<div
+  className="dd stack"
+>
+  <div
+    className="dd stack-layer left top"
+  >
+    <p
+      className="dd text-subtitle1"
+      style={
+        Object {
+          "background": "yellow",
+        }
+      }
+    >
+      top-left
+    </p>
+  </div>
+  <div
+    className="dd stack-layer top right"
+  >
+    <p
+      className="dd text-subtitle1"
+      style={
+        Object {
+          "background": "yellow",
+        }
+      }
+    >
+      top-right
+    </p>
+  </div>
+  <div
+    className="dd stack-layer left bottom"
+  >
+    <p
+      className="dd text-subtitle1"
+      style={
+        Object {
+          "background": "yellow",
+        }
+      }
+    >
+      bottom-left
+    </p>
+  </div>
+  <div
+    className="dd stack-layer right bottom"
+  >
+    <p
+      className="dd text-subtitle1"
+      style={
+        Object {
+          "background": "yellow",
+        }
+      }
+    >
+      bottom-right
+    </p>
   </div>
   <div
     style={
