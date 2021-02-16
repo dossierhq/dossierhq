@@ -1,6 +1,7 @@
 import type { AdminEntity, AdminQuery } from '@datadata/core';
 import React, { useContext } from 'react';
-import { DataDataContext, DataDataContextValue } from '../..';
+import type { DataDataContextValue } from '../..';
+import { DataDataContext } from '../..';
 
 export interface EntityListProps {
   query?: AdminQuery;
