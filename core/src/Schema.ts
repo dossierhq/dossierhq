@@ -1,5 +1,5 @@
-import type { EntityReference, Result } from '.';
-import { notOk, ok, ErrorType } from '.';
+import type { EntityReference, Result , ErrorType } from '.';
+import { notOk, ok } from '.';
 
 export interface EntityTypeSpecification {
   name: string;

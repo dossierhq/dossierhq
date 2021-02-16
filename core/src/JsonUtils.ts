@@ -1,4 +1,5 @@
-import { Connection, createErrorResult, Edge, ErrorType, ok, PageInfo, Result } from '.';
+import type { Connection, Edge, ErrorType, PageInfo, Result } from '.';
+import { createErrorResult, ok } from '.';
 
 export interface JsonConnection<T extends JsonEdge<unknown, ErrorType>> {
   pageInfo: PageInfo;
