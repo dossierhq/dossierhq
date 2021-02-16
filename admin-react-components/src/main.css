@@ -298,6 +298,28 @@ p.dd {
   height: 100%;
 }
 
+.dd.stack-layer {
+  position: absolute;
+  display: flex;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.dd.stack-layer.left {
+  justify-content: flex-start;
+}
+.dd.stack-layer.top {
+  align-items: flex-start;
+}
+.dd.stack-layer.right {
+  justify-content: flex-end;
+}
+.dd.stack-layer.bottom {
+  align-items: flex-end;
+}
+
 .dd.stack-center-layer {
   position: absolute;
   display: flex;
