@@ -1,4 +1,4 @@
-import { ErrorType, FieldType, isValueTypeField, notOk } from '@datadata/core';
+import { FieldType, isValueTypeField, notOk } from '@datadata/core';
 import type {
   AdminEntity,
   AdminEntityCreate,
@@ -6,6 +6,7 @@ import type {
   AdminQuery,
   Entity,
   EntityTypeSpecification,
+  ErrorType,
   Result,
   Schema,
   Value,
@@ -17,7 +18,6 @@ import {
   GraphQLEnumType,
   GraphQLID,
   GraphQLInputObjectType,
-  GraphQLInputType,
   GraphQLInt,
   GraphQLInterfaceType,
   GraphQLList,
@@ -35,6 +35,7 @@ import type {
   GraphQLFieldConfig,
   GraphQLFieldConfigMap,
   GraphQLInputFieldConfigMap,
+  GraphQLInputType,
   GraphQLNamedType,
   GraphQLOutputType,
   GraphQLSchemaConfig,
@@ -77,8 +78,11 @@ function fieldConfigWithArgs<TSource, TContext, TArgs>(
 
 export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
   #types: GraphQLNamedType[] = [];
+  readonly schema: Schema;
 
-  constructor(readonly schema: Schema) {}
+  constructor(schema: Schema) {
+    this.schema = schema;
+  }
 
   addType(type: GraphQLNamedType): void {
     if (this.#types.find((x) => x.name === type.name)) {
