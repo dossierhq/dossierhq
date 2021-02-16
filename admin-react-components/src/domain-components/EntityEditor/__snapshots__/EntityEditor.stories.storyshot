@@ -2,7 +2,7 @@
 
 exports[`Storyshots Domain/EntityEditor Deleted Foo 1`] = `
 <form
-  className="dd segment has-background"
+  className="dd segment has-shadow has-background"
   onSubmit={[Function]}
 >
   <div>
@@ -140,7 +140,7 @@ exports[`Storyshots Domain/EntityEditor Deleted Foo 1`] = `
       className="dd form-control"
     >
       <div
-        className="dd segment"
+        className="dd segment has-shadow"
       >
         <div>
           <button
@@ -171,7 +171,7 @@ exports[`Storyshots Domain/EntityEditor Deleted Foo 1`] = `
     >
       <div>
         <div
-          className="dd segment"
+          className="dd segment has-shadow"
         >
           <div>
             <button
@@ -202,7 +202,7 @@ exports[`Storyshots Domain/EntityEditor Deleted Foo 1`] = `
       className="dd form-control"
     >
       <div
-        className="dd segment"
+        className="dd segment has-shadow"
       >
         <div>
           <button
@@ -233,7 +233,7 @@ exports[`Storyshots Domain/EntityEditor Deleted Foo 1`] = `
 
 exports[`Storyshots Domain/EntityEditor Full Foo 1`] = `
 <form
-  className="dd segment has-background"
+  className="dd segment has-shadow has-background"
   onSubmit={[Function]}
 >
   <div>
@@ -500,7 +500,7 @@ exports[`Storyshots Domain/EntityEditor Full Foo 1`] = `
       className="dd form-control"
     >
       <div
-        className="dd segment"
+        className="dd segment has-shadow"
       >
         <p
           className="dd text-caption"
@@ -602,7 +602,7 @@ exports[`Storyshots Domain/EntityEditor Full Foo 1`] = `
     >
       <div>
         <div
-          className="dd segment"
+          className="dd segment has-shadow"
         >
           <p
             className="dd text-caption"
@@ -691,7 +691,7 @@ exports[`Storyshots Domain/EntityEditor Full Foo 1`] = `
           </div>
         </div>
         <div
-          className="dd segment"
+          className="dd segment has-shadow"
         >
           <p
             className="dd text-caption"
@@ -780,7 +780,7 @@ exports[`Storyshots Domain/EntityEditor Full Foo 1`] = `
           </div>
         </div>
         <div
-          className="dd segment"
+          className="dd segment has-shadow"
         >
           <div>
             <button
@@ -811,7 +811,7 @@ exports[`Storyshots Domain/EntityEditor Full Foo 1`] = `
       className="dd form-control"
     >
       <div
-        className="dd segment"
+        className="dd segment has-shadow"
       >
         <div>
           <button
@@ -842,7 +842,7 @@ exports[`Storyshots Domain/EntityEditor Full Foo 1`] = `
 
 exports[`Storyshots Domain/EntityEditor New Foo 1`] = `
 <form
-  className="dd segment has-background"
+  className="dd segment has-shadow has-background"
   onSubmit={[Function]}
 >
   <div>
@@ -980,7 +980,7 @@ exports[`Storyshots Domain/EntityEditor New Foo 1`] = `
       className="dd form-control"
     >
       <div
-        className="dd segment"
+        className="dd segment has-shadow"
       >
         <div>
           <button
@@ -1011,7 +1011,7 @@ exports[`Storyshots Domain/EntityEditor New Foo 1`] = `
     >
       <div>
         <div
-          className="dd segment"
+          className="dd segment has-shadow"
         >
           <div>
             <button
@@ -1042,7 +1042,7 @@ exports[`Storyshots Domain/EntityEditor New Foo 1`] = `
       className="dd form-control"
     >
       <div
-        className="dd segment"
+        className="dd segment has-shadow"
       >
         <div>
           <button

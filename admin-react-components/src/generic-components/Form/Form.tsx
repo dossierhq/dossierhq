@@ -8,7 +8,7 @@ interface Props {
 export function Form({ onSubmit, children }: Props): JSX.Element {
   return (
     <form
-      className="dd segment has-background"
+      className="dd segment has-shadow has-background"
       onSubmit={(event) => {
         event.preventDefault();
         onSubmit();
