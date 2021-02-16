@@ -1,6 +1,7 @@
 import initStoryshots, { Stories2SnapsConverter } from '@storybook/addon-storyshots';
 import path from 'path';
-import { act, create, ReactTestRenderer } from 'react-test-renderer';
+import type { ReactTestRenderer } from 'react-test-renderer';
+import { act, create } from 'react-test-renderer';
 
 const converter = new Stories2SnapsConverter();
 
