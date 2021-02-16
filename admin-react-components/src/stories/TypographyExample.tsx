@@ -11,8 +11,13 @@ export default function TypographyExample({ className, loremIpsum }: Props): JSX
   const onRefChanged = useCallback(
     (ref) => {
       if (ref) {
-        const { fontFamily, fontWeight, fontSize } = getComputedStyle(ref);
-        setFontStyles({ Font: fontFamily, Weight: fontWeight, Size: fontSize });
+        const { fontFamily, fontWeight, fontSize, lineHeight } = getComputedStyle(ref);
+        setFontStyles({
+          Font: fontFamily,
+          Weight: fontWeight,
+          Size: fontSize,
+          'Line-height': lineHeight,
+        });
       }
     },
     [setFontStyles]
