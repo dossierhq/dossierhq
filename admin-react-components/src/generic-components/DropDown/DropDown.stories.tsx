@@ -6,6 +6,7 @@ import type { DropDownProps } from './DropDown';
 export default {
   title: 'Generic/DropDown',
   component: DropDown,
+  args: { id: 'drop-down' },
 };
 
 const Template: Story<DropDownProps> = (args) => {
