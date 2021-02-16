@@ -28,13 +28,13 @@ export interface SessionContext extends Context<SessionContext> {
 }
 
 abstract class ContextImpl<TContext> implements Context<TContext> {
+  readonly server: Server;
+  readonly pool: Pool;
   readonly queryable: Queryable;
 
-  constructor(
-    readonly server: Server,
-    readonly pool: Pool,
-    transactionQueryable: Queryable | null
-  ) {
+  constructor(server: Server, pool: Pool, transactionQueryable: Queryable | null) {
+    this.server = server;
+    this.pool = pool;
     this.queryable = transactionQueryable ?? pool;
   }
 

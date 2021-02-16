@@ -10,9 +10,12 @@ import { Pool as PgPool } from 'pg';
 import type { Context } from '.';
 
 export class UnexpectedQuantityError extends Error {
-  constructor(message: string, readonly actual: number) {
+  readonly actual: number;
+
+  constructor(message: string, actual: number) {
     super(message);
     this.name = 'UnexpectedQuantityError';
+    this.actual = actual;
   }
 }
 
