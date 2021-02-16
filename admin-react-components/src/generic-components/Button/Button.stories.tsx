@@ -7,6 +7,7 @@ import { Icon } from '../..';
 export default {
   title: 'Generic/Button',
   component: Button,
+  args: {},
 };
 
 const Template: Story<ButtonProps> = (args) => {
@@ -37,3 +38,10 @@ PrimaryDisabled.args = { className: 'bg-primary', children: 'Text', disabled: tr
 
 export const SubmitNormal = Template.bind({});
 SubmitNormal.args = { children: 'Done', type: 'submit' };
+
+export const SubmitLoading = Template.bind({});
+SubmitLoading.args = {
+  children: 'Done',
+  type: 'submit',
+  loading: true,
+};
