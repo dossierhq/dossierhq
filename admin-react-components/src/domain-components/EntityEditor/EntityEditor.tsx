@@ -6,6 +6,7 @@ import type {
   FieldSpecification,
   Schema,
 } from '@datadata/core';
+import type { Dispatch, SetStateAction } from 'react';
 import React, { useContext, useEffect, useState } from 'react';
 import {
   Button,
@@ -109,11 +110,14 @@ function EntityEditorInner({
   updateEntity,
 }: EntityEditorInnerProps): JSX.Element {
   const [state, setState] = useState(initialEditorState);
+  const [submitLoading, setSubmitLoading] = useState(false);
 
   const nameId = `${idPrefix}-_name`;
 
   return (
-    <Form onSubmit={() => createOrSaveEntity(state, setState, createEntity, updateEntity)}>
+    <Form
+      onSubmit={() => submitEntity(state, setState, setSubmitLoading, createEntity, updateEntity)}
+    >
       <FormField htmlFor={nameId} label="Name">
         <InputText
           id={nameId}
@@ -141,7 +145,7 @@ function EntityEditorInner({
         );
       })}
 
-      <Button className="bg-primary" type="submit" disabled={!state.name}>
+      <Button className="bg-primary" type="submit" disabled={!state.name} loading={submitLoading}>
         Save
       </Button>
     </Form>
@@ -187,18 +191,26 @@ function createAdminEntity(state: EntityEditorState): AdminEntityCreate | AdminE
   return result;
 }
 
-async function createOrSaveEntity(
+async function submitEntity(
   editorState: EntityEditorState,
   setState: (state: EntityEditorState) => void,
+  setSubmitLoading: Dispatch<SetStateAction<boolean>>,
   createEntity: DataDataContextValue['createEntity'],
   updateEntity: DataDataContextValue['updateEntity']
 ) {
-  const entity = createAdminEntity(editorState);
-  const result = await (editorState.isNew
-    ? createEntity(entity as AdminEntityCreate, { publish: true })
-    : updateEntity(entity as AdminEntityUpdate, { publish: true }));
-  // TODO handle error
-  if (result.isOk()) {
-    setState(createEditorState(editorState.entitySpec, result.value));
+  try {
+    setSubmitLoading(true);
+    const entity = createAdminEntity(editorState);
+    const result = await (editorState.isNew
+      ? createEntity(entity as AdminEntityCreate, { publish: true })
+      : updateEntity(entity as AdminEntityUpdate, { publish: true }));
+    // TODO handle error
+    if (result.isOk()) {
+      setState(createEditorState(editorState.entitySpec, result.value));
+    }
+  } catch (error) {
+    // TODO handle
+  } finally {
+    setSubmitLoading(false);
   }
 }
