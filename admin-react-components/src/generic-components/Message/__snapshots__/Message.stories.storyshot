@@ -1,0 +1,76 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots Generic/Message Danger 1`] = `
+<div
+  className="dd message has-background has-shadow bg-danger"
+>
+  <p
+    className="dd text-headline5"
+  >
+    Title
+  </p>
+  <p
+    className="dd text-body1"
+  >
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer volutpat ante sem, quis aliquet urna consectetur ut. In elit erat, ultrices id tellus nec, efficitur tempor ipsum. Fusce sit amet nisl a ex feugiat auctor in id nunc.
+  </p>
+</div>
+`;
+
+exports[`Storyshots Generic/Message Normal 1`] = `
+<div
+  className="dd message has-background has-shadow "
+>
+  <p
+    className="dd text-headline5"
+  >
+    Title
+  </p>
+  <p
+    className="dd text-body1"
+  >
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer volutpat ante sem, quis aliquet urna consectetur ut. In elit erat, ultrices id tellus nec, efficitur tempor ipsum. Fusce sit amet nisl a ex feugiat auctor in id nunc.
+  </p>
+</div>
+`;
+
+exports[`Storyshots Generic/Message Normal Message 1`] = `
+<div
+  className="dd message has-background has-shadow "
+>
+  <p
+    className="dd text-body1"
+  >
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer volutpat ante sem, quis aliquet urna consectetur ut. In elit erat, ultrices id tellus nec, efficitur tempor ipsum. Fusce sit amet nisl a ex feugiat auctor in id nunc.
+  </p>
+</div>
+`;
+
+exports[`Storyshots Generic/Message Normal Title 1`] = `
+<div
+  className="dd message has-background has-shadow "
+>
+  <p
+    className="dd text-headline5"
+  >
+    Title
+  </p>
+</div>
+`;
+
+exports[`Storyshots Generic/Message Primary 1`] = `
+<div
+  className="dd message has-background has-shadow bg-primary"
+>
+  <p
+    className="dd text-headline5"
+  >
+    Title
+  </p>
+  <p
+    className="dd text-body1"
+  >
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer volutpat ante sem, quis aliquet urna consectetur ut. In elit erat, ultrices id tellus nec, efficitur tempor ipsum. Fusce sit amet nisl a ex feugiat auctor in id nunc.
+  </p>
+</div>
+`;

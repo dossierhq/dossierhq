@@ -74,6 +74,19 @@
   font-size: 0.625rem;
 }
 
+/* User agent reset */
+p.dd {
+  margin: 0;
+}
+
+.dd.text-headline1,
+.dd.text-headline2,
+.dd.text-headline3,
+.dd.text-headline4,
+.dd.text-headline5 + .dd.text-body1 {
+  margin-top: 0.5rem;
+}
+
 /*
   COLORS
 */
@@ -92,6 +105,15 @@
   --dd-bg-color-h: 141;
   --dd-bg-color-s: 52%;
   --dd-bg-color-l: 53%;
+  --dd-color-h: 0;
+  --dd-color-s: 0%;
+  --dd-color-l: 100%;
+}
+
+.dd.bg-danger {
+  --dd-bg-color-h: 348;
+  --dd-bg-color-s: 100%;
+  --dd-bg-color-l: 61%;
   --dd-color-h: 0;
   --dd-color-s: 0%;
   --dd-color-l: 100%;
@@ -135,14 +157,25 @@
 }
 
 /*
+  HELPERS
+*/
+
+.dd.dim {
+  opacity: 0.5;
+}
+
+.dd.has-shadow {
+  box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px,
+    rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+}
+
+/*
   COMPONENTS
 */
 
 .dd.segment {
   border-radius: 0.5em;
   padding: 0.75em;
-  box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px,
-    rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
 }
 
 .dd.button {
@@ -189,10 +222,6 @@
   outline-color: transparent;
 }
 
-.dd.dim {
-  opacity: 0.5;
-}
-
 .dd.divider {
   border-style: none;
   border-top: 1px solid rgba(34, 36, 38, 0.15);
@@ -228,6 +257,11 @@
   100% {
     transform: rotate(360deg);
   }
+}
+
+.dd.message {
+  border-radius: 0.5em;
+  padding: 0.75em;
 }
 
 .dd.modal {

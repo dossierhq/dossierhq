@@ -3,6 +3,7 @@ export type { DropDownItem } from './generic-components/DropDown/DropDown';
 export type { EntityEditorProps } from './domain-components/EntityEditor/EntityEditor';
 export type { EntityFieldEditorProps } from './domain-components/EntityFieldEditor/EntityFieldEditor';
 export type { IconProps, IconType } from './generic-components/Icon/Icon';
+export type { Kind } from './utils/KindUtils';
 export { Button } from './generic-components/Button/Button';
 export { DataDataContext } from './contexts/DataDataContext';
 export { Divider } from './generic-components/Divider/Divider';
