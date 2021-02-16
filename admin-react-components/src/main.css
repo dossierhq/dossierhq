@@ -191,6 +191,10 @@
   outline-color: transparent;
 }
 
+.dd.dim {
+  opacity: 0.5;
+}
+
 .dd.divider {
   border-style: none;
   border-top: 1px solid rgba(34, 36, 38, 0.15);
@@ -252,4 +256,21 @@
 
 .dd.modal-content {
   z-index: 2;
+}
+
+.dd.stack {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.dd.stack-center-layer {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
 }

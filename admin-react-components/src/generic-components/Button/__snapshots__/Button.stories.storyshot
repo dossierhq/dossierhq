@@ -50,6 +50,31 @@ exports[`Storyshots Generic/Button Primary Icon 1`] = `
 </button>
 `;
 
+exports[`Storyshots Generic/Button Submit Loading 1`] = `
+<button
+  className="dd button text-button "
+  disabled={true}
+  type="submit"
+>
+  <div
+    className="dd stack"
+  >
+    <div
+      className="dd stack-center-layer"
+    >
+      <div
+        className="dd loader"
+      />
+    </div>
+    <div
+      className="dd dim"
+    >
+      Done
+    </div>
+  </div>
+</button>
+`;
+
 exports[`Storyshots Generic/Button Submit Normal 1`] = `
 <button
   className="dd button text-button "

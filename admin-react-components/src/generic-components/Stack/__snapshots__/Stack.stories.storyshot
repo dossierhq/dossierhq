@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots Generic/Stack Green Bottom With Centered Yellow 1`] = `
+<div
+  className="dd stack"
+>
+  <div
+    className="dd stack-center-layer"
+  >
+    <div
+      style={
+        Object {
+          "background": "yellow",
+          "height": "1em",
+          "width": "1em",
+        }
+      }
+    />
+  </div>
+  <div
+    style={
+      Object {
+        "background": "green",
+        "height": "4em",
+      }
+    }
+  />
+</div>
+`;
