@@ -1,4 +1,4 @@
-import type { EntityReference, Result , ErrorType } from '.';
+import type { EntityReference, Result, ErrorType } from '.';
 import { notOk, ok } from '.';
 
 export interface EntityTypeSpecification {

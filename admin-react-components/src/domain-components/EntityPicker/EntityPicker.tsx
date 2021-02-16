@@ -1,6 +1,6 @@
 import type { EntityReference } from '@datadata/core';
 import React, { useCallback, useContext, useState } from 'react';
-import type { DataDataContextValue, EntityFieldEditorProps} from '../..';
+import type { DataDataContextValue, EntityFieldEditorProps } from '../..';
 import { EntityList } from '../..';
 import { Button, DataDataContext, IconButton, Modal } from '../..';
 
