@@ -3,7 +3,7 @@
 exports[`Storyshots Generic/DropDown Normal 1`] = `
 <div>
   <button
-    className="dd button text-button "
+    className="dd button has-background hoverable text-button "
     onClick={[Function]}
     type="button"
   >

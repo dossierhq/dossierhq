@@ -89,7 +89,7 @@ exports[`DeletedFoo render 1`] = `
         }
       >
         <button
-          className="dd button text-button "
+          className="dd button has-background hoverable text-button "
           id="entity-fb62be03-a0a9-4689-9987-bacee0e7692d-bar"
           onClick={[Function]}
           type="button"
@@ -118,7 +118,7 @@ exports[`DeletedFoo render 1`] = `
           }
         >
           <button
-            className="dd button text-button "
+            className="dd button has-background hoverable text-button "
             id="entity-fb62be03-a0a9-4689-9987-bacee0e7692d-bars"
             onClick={[Function]}
             type="button"
@@ -144,7 +144,7 @@ exports[`DeletedFoo render 1`] = `
       >
         <div>
           <button
-            className="dd button text-button "
+            className="dd button has-background hoverable text-button "
             id="entity-fb62be03-a0a9-4689-9987-bacee0e7692d-annotatedBar"
             onClick={[Function]}
             type="button"
@@ -175,7 +175,7 @@ exports[`DeletedFoo render 1`] = `
         >
           <div>
             <button
-              className="dd button text-button "
+              className="dd button has-background hoverable text-button "
               id="entity-fb62be03-a0a9-4689-9987-bacee0e7692d-annotatedBars"
               onClick={[Function]}
               type="button"
@@ -206,7 +206,7 @@ exports[`DeletedFoo render 1`] = `
       >
         <div>
           <button
-            className="dd button text-button "
+            className="dd button has-background hoverable text-button "
             id="entity-fb62be03-a0a9-4689-9987-bacee0e7692d-nested"
             onClick={[Function]}
             type="button"
@@ -222,7 +222,7 @@ exports[`DeletedFoo render 1`] = `
     </div>
   </div>
   <button
-    className="dd button text-button bg-primary"
+    className="dd button has-background hoverable text-button bg-primary"
     disabled={false}
     type="submit"
   >
@@ -387,7 +387,7 @@ exports[`FullFoo render 1`] = `
         }
       >
         <button
-          className="dd button text-button "
+          className="dd button has-background hoverable text-button "
           id="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-bar"
           onClick={[Function]}
           type="button"
@@ -426,7 +426,7 @@ exports[`FullFoo render 1`] = `
           }
         >
           <button
-            className="dd button text-button "
+            className="dd button has-background hoverable text-button "
             id="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-bars"
             onClick={[Function]}
             type="button"
@@ -452,7 +452,7 @@ exports[`FullFoo render 1`] = `
           }
         >
           <button
-            className="dd button text-button "
+            className="dd button has-background hoverable text-button "
             id="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-bars-1"
             onClick={[Function]}
             type="button"
@@ -478,7 +478,7 @@ exports[`FullFoo render 1`] = `
           }
         >
           <button
-            className="dd button text-button "
+            className="dd button has-background hoverable text-button "
             id="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-bars-2"
             onClick={[Function]}
             type="button"
@@ -567,7 +567,7 @@ exports[`FullFoo render 1`] = `
               }
             >
               <button
-                className="dd button text-button "
+                className="dd button has-background hoverable text-button "
                 id="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBar-bar"
                 onClick={[Function]}
                 type="button"
@@ -669,7 +669,7 @@ exports[`FullFoo render 1`] = `
                 }
               >
                 <button
-                  className="dd button text-button "
+                  className="dd button has-background hoverable text-button "
                   id="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-bar"
                   onClick={[Function]}
                   type="button"
@@ -758,7 +758,7 @@ exports[`FullFoo render 1`] = `
                 }
               >
                 <button
-                  className="dd button text-button "
+                  className="dd button has-background hoverable text-button "
                   id="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-1-bar"
                   onClick={[Function]}
                   type="button"
@@ -784,7 +784,7 @@ exports[`FullFoo render 1`] = `
         >
           <div>
             <button
-              className="dd button text-button "
+              className="dd button has-background hoverable text-button "
               id="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-2"
               onClick={[Function]}
               type="button"
@@ -815,7 +815,7 @@ exports[`FullFoo render 1`] = `
       >
         <div>
           <button
-            className="dd button text-button "
+            className="dd button has-background hoverable text-button "
             id="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-nested"
             onClick={[Function]}
             type="button"
@@ -831,7 +831,7 @@ exports[`FullFoo render 1`] = `
     </div>
   </div>
   <button
-    className="dd button text-button bg-primary"
+    className="dd button has-background hoverable text-button bg-primary"
     disabled={false}
     type="submit"
   >
@@ -929,7 +929,7 @@ exports[`NewFoo render 1`] = `
         }
       >
         <button
-          className="dd button text-button "
+          className="dd button has-background hoverable text-button "
           id="new-entity-123-bar"
           onClick={[Function]}
           type="button"
@@ -958,7 +958,7 @@ exports[`NewFoo render 1`] = `
           }
         >
           <button
-            className="dd button text-button "
+            className="dd button has-background hoverable text-button "
             id="new-entity-123-bars"
             onClick={[Function]}
             type="button"
@@ -984,7 +984,7 @@ exports[`NewFoo render 1`] = `
       >
         <div>
           <button
-            className="dd button text-button "
+            className="dd button has-background hoverable text-button "
             id="new-entity-123-annotatedBar"
             onClick={[Function]}
             type="button"
@@ -1015,7 +1015,7 @@ exports[`NewFoo render 1`] = `
         >
           <div>
             <button
-              className="dd button text-button "
+              className="dd button has-background hoverable text-button "
               id="new-entity-123-annotatedBars"
               onClick={[Function]}
               type="button"
@@ -1046,7 +1046,7 @@ exports[`NewFoo render 1`] = `
       >
         <div>
           <button
-            className="dd button text-button "
+            className="dd button has-background hoverable text-button "
             id="new-entity-123-nested"
             onClick={[Function]}
             type="button"
@@ -1062,7 +1062,7 @@ exports[`NewFoo render 1`] = `
     </div>
   </div>
   <button
-    className="dd button text-button bg-primary"
+    className="dd button has-background hoverable text-button bg-primary"
     disabled={true}
     type="submit"
   >
