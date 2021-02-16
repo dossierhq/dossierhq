@@ -103,6 +103,10 @@ p.dd {
   --dd-color-accent: #5146ee;
 }
 
+.dd.icon {
+  filter: brightness(var(--dd-color-l));
+}
+
 .dd.bg-primary {
   --dd-bg-color-h: 141;
   --dd-bg-color-s: 52%;
@@ -153,6 +157,10 @@ p.dd {
   color: hsl(var(--dd-color-h), var(--dd-color-s), var(--dd-color-l));
 }
 
+.dd.icon-button {
+  background-color: transparent;
+}
+
 .dd.loader {
   border-color: #0002;
   border-top-color: var(--dd-color-accent);
@@ -190,6 +198,7 @@ p.dd {
 .dd.icon-button {
   padding: 0.25em;
   cursor: pointer;
+  border: none;
 }
 
 .dd.form-control {

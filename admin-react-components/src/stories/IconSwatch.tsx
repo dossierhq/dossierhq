@@ -7,14 +7,21 @@ export function IconSwatch({ icon }: IconProps): JSX.Element {
     <div className="dd has-background text-body1">
       {icon}
       <br />
-      <span
-        style={{
-          outline: '1px dashed black',
-          display: 'inline-block',
-        }}
-      >
-        <Icon icon={icon} />
-      </span>
+      <div style={{ display: 'flex', flexDirection: 'row' }}>
+        <span
+          style={{
+            outline: '1px dashed black',
+            display: 'inline-block',
+          }}
+        >
+          <Icon icon={icon} />
+        </span>
+        {['primary', 'danger'].map((bg) => (
+          <div key={bg} className={`dd has-background bg-${bg}`}>
+            <Icon icon={icon} />
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

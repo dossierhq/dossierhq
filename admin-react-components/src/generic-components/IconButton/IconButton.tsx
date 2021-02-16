@@ -19,7 +19,7 @@ export function IconButton({
 }: IconButtonProps): JSX.Element {
   return (
     <button
-      className="dd button icon-button"
+      className="dd icon-button"
       title={title}
       onClick={disabled ? undefined : onClick}
       disabled={disabled}
