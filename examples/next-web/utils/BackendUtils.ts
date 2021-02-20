@@ -1,4 +1,5 @@
 import type { AdminQuery, Paging, PromiseResult } from '@datadata/core';
+import { createErrorResult } from '@datadata/core';
 import { ErrorType, ok } from '@datadata/core';
 import { encodeQuery } from './QueryUtils';
 
@@ -65,6 +66,9 @@ export async function fetchJsonResult<TOk, TError extends ErrorType>(
     if (!errorType || expectedErrors.indexOf(errorType as TError) < 0) {
       throw new Error(`${response.status} ${responseText}`);
     }
+    const responseJson = JSON.parse(responseText);
+    const { message } = responseJson;
+    return createErrorResult(errorType as TError, message);
   }
   const json: TOk = await response.json();
   return ok(json);
