@@ -4,6 +4,7 @@ export type { EntityEditorProps } from './domain-components/EntityEditor/EntityE
 export type { EntityFieldEditorProps } from './domain-components/EntityFieldEditor/EntityFieldEditor';
 export type { IconProps, IconType } from './generic-components/Icon/Icon';
 export type { Kind } from './utils/KindUtils';
+export type { MessageItem } from './generic-components/Message/Message';
 export { Button } from './generic-components/Button/Button';
 export { DataDataContext } from './contexts/DataDataContext';
 export { Divider } from './generic-components/Divider/Divider';
@@ -19,6 +20,7 @@ export { Icon, IconTypes } from './generic-components/Icon/Icon';
 export { IconButton } from './generic-components/IconButton/IconButton';
 export { InputText } from './generic-components/InputText/InputText';
 export { Loader } from './generic-components/Loader/Loader';
+export { Message } from './generic-components/Message/Message';
 export { Modal } from './generic-components/Modal/Modal';
 export { Segment } from './generic-components/Segment/Segment';
 export { Stack } from './generic-components/Stack/Stack';

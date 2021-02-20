@@ -17,8 +17,9 @@ import {
   FormField,
   InputText,
   Loader,
+  Message,
 } from '../..';
-import type { DataDataContextValue } from '../..';
+import type { DataDataContextValue, MessageItem } from '../..';
 
 export interface EntityEditorProps {
   idPrefix?: string;
@@ -111,12 +112,22 @@ function EntityEditorInner({
 }: EntityEditorInnerProps): JSX.Element {
   const [state, setState] = useState(initialEditorState);
   const [submitLoading, setSubmitLoading] = useState(false);
+  const [submitMessage, setSubmitMessage] = useState<MessageItem | null>(null);
 
   const nameId = `${idPrefix}-_name`;
 
   return (
     <Form
-      onSubmit={() => submitEntity(state, setState, setSubmitLoading, createEntity, updateEntity)}
+      onSubmit={() =>
+        submitEntity(
+          state,
+          setState,
+          setSubmitLoading,
+          setSubmitMessage,
+          createEntity,
+          updateEntity
+        )
+      }
     >
       <FormField htmlFor={nameId} label="Name">
         <InputText
@@ -148,6 +159,9 @@ function EntityEditorInner({
       <Button className="bg-primary" type="submit" disabled={!state.name} loading={submitLoading}>
         Save
       </Button>
+      {submitMessage ? (
+        <Message {...submitMessage} onDismiss={() => setSubmitMessage(null)} />
+      ) : null}
     </Form>
   );
 }
@@ -195,6 +209,7 @@ async function submitEntity(
   editorState: EntityEditorState,
   setState: (state: EntityEditorState) => void,
   setSubmitLoading: Dispatch<SetStateAction<boolean>>,
+  setSubmitMessage: Dispatch<SetStateAction<MessageItem | null>>,
   createEntity: DataDataContextValue['createEntity'],
   updateEntity: DataDataContextValue['updateEntity']
 ) {
@@ -204,12 +219,22 @@ async function submitEntity(
     const result = await (editorState.isNew
       ? createEntity(entity as AdminEntityCreate, { publish: true })
       : updateEntity(entity as AdminEntityUpdate, { publish: true }));
-    // TODO handle error
+
     if (result.isOk()) {
       setState(createEditorState(editorState.entitySpec, result.value));
+    } else {
+      setSubmitMessage({
+        kind: 'danger',
+        title: editorState.isNew ? 'Failed creating entity' : 'Failed saving entity',
+        message: `${result.error}: ${result.message}`,
+      });
     }
   } catch (error) {
-    // TODO handle
+    setSubmitMessage({
+      kind: 'danger',
+      title: editorState.isNew ? 'Failed creating entity' : 'Failed saving entity',
+      message: error.message,
+    });
   } finally {
     setSubmitLoading(false);
   }

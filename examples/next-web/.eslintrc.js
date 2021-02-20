@@ -18,6 +18,7 @@ module.exports = {
   plugins: ['react', '@typescript-eslint'],
   reportUnusedDisableDirectives: true,
   rules: {
+    '@typescript-eslint/consistent-type-imports': ['warn'],
     '@typescript-eslint/no-unused-vars': [
       'warn',
       {

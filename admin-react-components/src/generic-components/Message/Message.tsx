@@ -3,10 +3,13 @@ import type { Kind } from '../..';
 import { kindToClassName } from '../../utils/KindUtils';
 import { IconButton, Stack } from '../..';
 
-export interface MessageProps {
+export interface MessageItem {
   kind?: Kind;
   title?: string;
   message?: string;
+}
+
+export interface MessageProps extends MessageItem {
   onDismiss: () => void;
 }
 
