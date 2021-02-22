@@ -1,6 +1,5 @@
 import type { AdminQuery, Paging, PromiseResult } from '@datadata/core';
-import { createErrorResult } from '@datadata/core';
-import { ErrorType, ok } from '@datadata/core';
+import { createErrorResult, ErrorType, notOk, ok } from '@datadata/core';
 import { encodeQuery } from './QueryUtils';
 
 export enum OperationStatus {
@@ -21,7 +20,7 @@ export const urls = {
     `${baseUrl}/search-entities?${encodeQuery({ query, paging })}`,
 };
 
-export async function fetchJsonAsync<T>(
+export async function fetchJson<T>(
   input: RequestInfo,
   init?: RequestInit,
   setOperationStatus?: (status: OperationStatus) => void
@@ -48,28 +47,45 @@ export async function fetchJsonAsync<T>(
   }
 }
 
+// TODO move to core
 const statusErrorMapping = new Map<number, ErrorType>();
 statusErrorMapping.set(400, ErrorType.BadRequest);
 statusErrorMapping.set(409, ErrorType.Conflict);
 statusErrorMapping.set(401, ErrorType.NotAuthenticated);
 statusErrorMapping.set(404, ErrorType.NotFound);
 
-export async function fetchJsonResult<TOk, TError extends ErrorType>(
-  expectedErrors: TError[],
+// TODO Should TError always be ErrorType?
+export async function fetchJsonResult<TOk, TError extends ErrorType | ErrorType.Generic>(
+  expectedErrors: TError[] | null,
   input: RequestInfo,
   init?: RequestInit
-): PromiseResult<TOk, TError> {
-  const response = await fetch(input, init);
-  if (!response.ok) {
-    const responseText = await response.text();
-    const errorType = statusErrorMapping.get(response.status);
-    if (!errorType || expectedErrors.indexOf(errorType as TError) < 0) {
-      throw new Error(`${response.status} ${responseText}`);
+): PromiseResult<TOk, TError | ErrorType.Generic> {
+  try {
+    const response = await fetch(input, init);
+    if (!response.ok) {
+      const responseText = await response.text();
+      const errorType = statusErrorMapping.get(response.status);
+      if (!errorType) {
+        return notOk.Generic(`${response.status} ${responseText}`);
+      }
+      const responseJson = JSON.parse(responseText);
+      const { message } = responseJson;
+      if (expectedErrors && expectedErrors.indexOf(errorType as TError) < 0) {
+        return notOk.Generic(`Unexpected error type: ${errorType}: ${message}`);
+      }
+      return createErrorResult(errorType as TError, message);
     }
-    const responseJson = JSON.parse(responseText);
-    const { message } = responseJson;
-    return createErrorResult(errorType as TError, message);
+    const json: TOk = await response.json();
+    return ok(json);
+  } catch (error) {
+    return notOk.Generic(`Unexpected ${error.name}: ${error.message}`);
   }
-  const json: TOk = await response.json();
-  return ok(json);
+}
+
+export async function swrFetcher<T>(url: string): Promise<T> {
+  const result = await fetchJsonResult(null, url);
+  if (result.isError()) {
+    throw result.toError();
+  }
+  return result.value as T;
 }

@@ -1,5 +1,13 @@
 import type { DataDataContextValue } from '@datadata/admin-react-components';
-import { convertJsonConnection, convertJsonEdge, ErrorType, ok, Schema } from '@datadata/core';
+import type { ErrorResultError } from '@datadata/core';
+import {
+  convertJsonConnection,
+  convertJsonEdge,
+  createErrorResultFromError,
+  ErrorType,
+  ok,
+  Schema,
+} from '@datadata/core';
 import { useEffect, useMemo, useState } from 'react';
 import useSWR from 'swr';
 import type { EntityCreateRequest, EntityUpdateRequest } from '../types/RequestTypes';
@@ -8,7 +16,7 @@ import type {
   SchemaResponse,
   SearchEntitiesResponse,
 } from '../types/ResponseTypes';
-import { fetchJsonAsync, fetchJsonResult, urls } from '../utils/BackendUtils';
+import { fetchJson, fetchJsonResult, swrFetcher, urls } from '../utils/BackendUtils';
 
 class ContextValue implements DataDataContextValue {
   schema: Schema;
@@ -18,17 +26,24 @@ class ContextValue implements DataDataContextValue {
   }
 
   useEntity: DataDataContextValue['useEntity'] = (id, options) => {
-    const { data, error } = useSWR<EntityResponse>(id ? urls.getEntity(id, options) : null);
-    return { entity: data, entityError: error };
+    const { data, error } = useSWR<EntityResponse, ErrorResultError>(
+      id ? urls.getEntity(id, options) : null,
+      swrFetcher
+    );
+    const entityError = error ? createErrorResultFromError(error) : undefined;
+    return { entity: data, entityError };
   };
 
   useSearchEntities: DataDataContextValue['useSearchEntities'] = (query, paging) => {
-    const { data, error } = useSWR<SearchEntitiesResponse>(urls.searchEntities(query, paging));
+    const { data, error } = useSWR<SearchEntitiesResponse, ErrorResultError>(
+      urls.searchEntities(query, paging)
+    );
+    const connectionError = error ? createErrorResultFromError(error) : undefined;
     if (data) {
       const connection = convertJsonConnection(data, convertJsonEdge);
-      return { connection, connectionError: error };
+      return { connection, connectionError };
     }
-    return { connection: undefined, connectionError: error };
+    return { connection: undefined, connectionError };
   };
 
   createEntity: DataDataContextValue['createEntity'] = async (entity, options) => {
@@ -71,7 +86,7 @@ class ContextValue implements DataDataContextValue {
 async function loadSchema() {
   //TODO swr?
 
-  const schemaResponse = await fetchJsonAsync<SchemaResponse>(urls.schema);
+  const schemaResponse = await fetchJson<SchemaResponse>(urls.schema);
   const schema = new Schema(schemaResponse.spec);
   return schema;
 }
