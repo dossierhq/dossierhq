@@ -27,11 +27,11 @@ export function DropDown({ id, text, items, onItemClick }: DropDownProps): JSX.E
         {text} <Icon icon="chevron-down" />
       </Button>
       {isActive ? (
-        <ul className="dd dropdown-menu has-background segment">
+        <ul className="dd dropdown-menu is-rounded has-background has-shadow list-container">
           {items.map((item) => (
             <li
               key={item.key}
-              className="dd text-button hoverable"
+              className="dd button text-button hoverable"
               onClick={() => {
                 onItemClick(item);
                 setActive(false);

@@ -1,26 +1,36 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Storyshots Domain/EntityList Normal 1`] = `
-<div>
-  <p
+<div
+  className="dd list-container"
+>
+  <button
+    className="dd button has-background hoverable text-button "
     onClick={[Function]}
+    type="button"
   >
-    Foo 1
-  </p>
-  <p
+    Foo: Foo 1
+  </button>
+  <button
+    className="dd button has-background hoverable text-button "
     onClick={[Function]}
+    type="button"
   >
-    Foo deleted
-  </p>
-  <p
+    Foo: Foo deleted
+  </button>
+  <button
+    className="dd button has-background hoverable text-button "
     onClick={[Function]}
+    type="button"
   >
-    Bar 1
-  </p>
-  <p
+    Bar: Bar 1
+  </button>
+  <button
+    className="dd button has-background hoverable text-button "
     onClick={[Function]}
+    type="button"
   >
-    Bar 2
-  </p>
+    Bar: Bar 2
+  </button>
 </div>
 `;

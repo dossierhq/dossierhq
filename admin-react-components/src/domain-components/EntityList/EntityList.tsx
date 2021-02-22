@@ -1,7 +1,7 @@
 import type { AdminEntity, AdminQuery } from '@datadata/core';
 import React, { useContext } from 'react';
 import type { DataDataContextValue } from '../..';
-import { DataDataContext } from '../..';
+import { Button, DataDataContext, Message } from '../..';
 
 export interface EntityListProps {
   query?: AdminQuery;
@@ -25,19 +25,23 @@ function EntityListInner({ query, useSearchEntities, onEntityClick }: InnerProps
   const { connection, connectionError } = useSearchEntities(query);
 
   return (
-    <div>
+    <div className="dd list-container">
       {connection &&
         connection.edges.map((edge) => {
-          const entity = edge.node.isOk() ? edge.node.value : null;
+          if (edge.node.isOk()) {
+            const entity = edge.node.value;
+            return (
+              <Button key={edge.cursor} onClick={() => onEntityClick(entity)}>
+                {`${entity._type}: ${entity._name}`}
+              </Button>
+            );
+          }
           return (
-            <p
+            <Message
               key={edge.cursor}
-              onClick={() => {
-                if (entity) onEntityClick(entity);
-              }}
-            >
-              {edge.node.isOk() ? edge.node.value._name : edge.node.error}
-            </p>
+              kind="danger"
+              message={`${edge.node.error}: ${edge.node.message}`}
+            />
           );
         })}
     </div>
