@@ -11,7 +11,8 @@ exports[`Storyshots Generic/Message Danger 1`] = `
       className="dd stack-layer top right"
     >
       <button
-        className="dd button icon-button"
+        className="dd icon-button"
+        onClick={[Function]}
         title="Close"
         type="button"
       >
@@ -45,7 +46,8 @@ exports[`Storyshots Generic/Message Normal 1`] = `
       className="dd stack-layer top right"
     >
       <button
-        className="dd button icon-button"
+        className="dd icon-button"
+        onClick={[Function]}
         title="Close"
         type="button"
       >
@@ -79,7 +81,8 @@ exports[`Storyshots Generic/Message Normal Message 1`] = `
       className="dd stack-layer top right"
     >
       <button
-        className="dd button icon-button"
+        className="dd icon-button"
+        onClick={[Function]}
         title="Close"
         type="button"
       >
@@ -88,6 +91,27 @@ exports[`Storyshots Generic/Message Normal Message 1`] = `
         />
       </button>
     </div>
+    <p
+      className="dd text-body1"
+    >
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer volutpat ante sem, quis aliquet urna consectetur ut. In elit erat, ultrices id tellus nec, efficitur tempor ipsum. Fusce sit amet nisl a ex feugiat auctor in id nunc.
+    </p>
+  </div>
+</div>
+`;
+
+exports[`Storyshots Generic/Message Normal No On Dismiss 1`] = `
+<div
+  className="dd message has-background has-shadow "
+>
+  <div
+    className="dd stack"
+  >
+    <p
+      className="dd text-headline5"
+    >
+      Title
+    </p>
     <p
       className="dd text-body1"
     >
@@ -108,7 +132,8 @@ exports[`Storyshots Generic/Message Normal Title 1`] = `
       className="dd stack-layer top right"
     >
       <button
-        className="dd button icon-button"
+        className="dd icon-button"
+        onClick={[Function]}
         title="Close"
         type="button"
       >
@@ -137,7 +162,8 @@ exports[`Storyshots Generic/Message Primary 1`] = `
       className="dd stack-layer top right"
     >
       <button
-        className="dd button icon-button"
+        className="dd icon-button"
+        onClick={[Function]}
         title="Close"
         type="button"
       >

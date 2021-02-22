@@ -58,3 +58,6 @@ DeletedFoo.args = { entity: { id: fooDeletedId } };
 
 export const SlowFullFoo = Template.bind({});
 SlowFullFoo.args = { entity: { id: foo1Id }, contextValue: new SlowTestContextValue() };
+
+export const NotFound = Template.bind({});
+NotFound.args = { entity: { id: 'c6f97fae-1213-4be0-996f-4f20c7da7e65' } };
