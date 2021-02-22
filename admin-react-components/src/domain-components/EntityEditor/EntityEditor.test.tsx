@@ -71,10 +71,10 @@ const finders = {
   fooAnnotatedBarBarButton: (story: Story<EntityEditorProps>) =>
     getByStoryId(story, 'annotatedBar-bar'),
   entityPickerBar1: () => {
-    return within(screen.getByRole('dialog')).getByText('Bar 1');
+    return within(screen.getByRole('dialog')).getByText('Bar: Bar 1');
   },
   entityPickerBar2: () => {
-    return within(screen.getByRole('dialog')).getByText('Bar 2');
+    return within(screen.getByRole('dialog')).getByText('Bar: Bar 2');
   },
   saveButton: () => screen.getByRole('button', { name: /save/i }),
 };
