@@ -29,6 +29,15 @@ export interface EntityEditorProps {
 interface EntityEditorInnerProps {
   idPrefix: string;
   schema: Schema;
+  entitySelector: EntityEditorProps['entity'];
+  useEntity: DataDataContextValue['useEntity'];
+  createEntity: DataDataContextValue['createEntity'];
+  updateEntity: DataDataContextValue['updateEntity'];
+}
+
+interface EntityEditorInnermostProps {
+  idPrefix: string;
+  schema: Schema;
   initialEditorState: EntityEditorState;
   createEntity: DataDataContextValue['createEntity'];
   updateEntity: DataDataContextValue['updateEntity'];
@@ -58,44 +67,20 @@ export function EntityEditor({ idPrefix, entity }: EntityEditorProps): JSX.Eleme
       ? `entity-${entity.id}`
       : `new-entity-${String(Math.random()).slice(2)}`
   );
-  const [initialEditorState, setInitialEditorState] = useState<EntityEditorState | null>(null);
-  useEffect(() => {
-    if (!context?.schema || !context?.getEntity || initialEditorState) {
-      return;
-    }
-    if ('isNew' in entity) {
-      const entitySpec = context.schema.getEntityTypeSpecification(entity.type);
-      if (!entitySpec) {
-        throw new Error(`No such entity type in schema (${entity.type})`);
-      }
-      setInitialEditorState(createEditorState(entitySpec, null));
-    } else {
-      (async () => {
-        const result = await context.getEntity(entity.id, {});
-        if (result.isOk()) {
-          const { item } = result.value;
-          const entitySpec = context.schema.getEntityTypeSpecification(item._type);
-          if (!entitySpec) {
-            throw new Error(`No such entity type in schema (${item._type})`);
-          }
-          setInitialEditorState(createEditorState(entitySpec, item));
-        }
-      })();
-    }
-  }, [context, entity, initialEditorState]);
 
-  if (!context || !initialEditorState) {
+  if (!context) {
     return <Loader />;
   }
 
-  const { schema, createEntity, updateEntity } = context;
+  const { schema, useEntity, createEntity, updateEntity } = context;
 
   return (
     <EntityEditorInner
       {...{
         idPrefix: resolvedIdPrefix,
+        entitySelector: entity,
         schema,
-        initialEditorState,
+        useEntity,
         createEntity,
         updateEntity,
       }}
@@ -105,11 +90,57 @@ export function EntityEditor({ idPrefix, entity }: EntityEditorProps): JSX.Eleme
 
 function EntityEditorInner({
   idPrefix,
+  schema,
+  entitySelector,
+  useEntity,
+  createEntity,
+  updateEntity,
+}: EntityEditorInnerProps) {
+  const [initialEditorState, setInitialEditorState] = useState<EntityEditorState | null>(null);
+  const { entity, entityError } = useEntity(
+    'isNew' in entitySelector ? undefined : entitySelector.id,
+    {}
+  );
+
+  useEffect(() => {
+    if (initialEditorState) {
+      return;
+    }
+    if ('isNew' in entitySelector) {
+      const entitySpec = schema.getEntityTypeSpecification(entitySelector.type);
+      if (!entitySpec) {
+        //TODO error handle
+        throw new Error(`No such entity type in schema (${entitySelector.type})`);
+      }
+      setInitialEditorState(createEditorState(entitySpec, null));
+    } else if (entity) {
+      const { item } = entity;
+      const entitySpec = schema.getEntityTypeSpecification(item._type);
+      if (!entitySpec) {
+        throw new Error(`No such entity type in schema (${item._type})`);
+      }
+      setInitialEditorState(createEditorState(entitySpec, item));
+    }
+  }, [schema, entitySelector, entity, initialEditorState]);
+
+  if (!initialEditorState) {
+    return <Loader />;
+  }
+
+  return (
+    <EntityEditorInnermost
+      {...{ idPrefix, initialEditorState, schema, createEntity, updateEntity }}
+    />
+  );
+}
+
+function EntityEditorInnermost({
+  idPrefix,
   initialEditorState,
   schema,
   createEntity,
   updateEntity,
-}: EntityEditorInnerProps): JSX.Element {
+}: EntityEditorInnermostProps): JSX.Element {
   const [state, setState] = useState(initialEditorState);
   const [submitLoading, setSubmitLoading] = useState(false);
   const [submitMessage, setSubmitMessage] = useState<MessageItem | null>(null);

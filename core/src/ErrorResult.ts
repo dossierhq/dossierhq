@@ -57,11 +57,23 @@ export class ErrorResult<TOk, TError extends ErrorType> {
   }
 
   toError(): Error {
-    return new Error(`${this.error}: ${this.message}`);
+    return new ErrorResultError(this);
   }
 
   throwIfError(): never {
-    throw new Error(`${this.error}: ${this.message}`);
+    throw new ErrorResultError(this);
+  }
+}
+
+export class ErrorResultError extends Error {
+  errorType: ErrorType;
+  errorMessage: string;
+
+  constructor(result: ErrorResult<unknown, ErrorType>) {
+    super(`${result.error}: ${result.message}`);
+    this.name = 'ErrorResultError';
+    this.errorType = result.error;
+    this.errorMessage = result.message;
   }
 }
 
@@ -70,6 +82,12 @@ export function createErrorResult<TError extends ErrorType>(
   message: string
 ): ErrorResult<unknown, TError> {
   return new ErrorResult<unknown, TError>(error, message);
+}
+
+export function createErrorResultFromError(
+  error: ErrorResultError
+): ErrorResult<unknown, ErrorType> {
+  return new ErrorResult<unknown, ErrorType>(error.errorType, error.errorMessage);
 }
 
 export function ok<TOk, TError extends ErrorType>(value: TOk): OkResult<TOk, TError> {

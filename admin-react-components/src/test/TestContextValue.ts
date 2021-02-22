@@ -35,16 +35,7 @@ export default class TestContextValue implements DataDataContextValue {
     if (entity) {
       return { entity: { item: entity } };
     }
-    return {};
-  };
-
-  getEntity: DataDataContextValue['getEntity'] = async (id, options) => {
-    const entity = this.findEntity(id, options.version);
-    if (entity) {
-      return ok({ item: entity });
-    }
-
-    return notOk.NotFound('No such entity or version');
+    return { entityError: notOk.NotFound('No such entity or version') };
   };
 
   useSearchEntities: DataDataContextValue['useSearchEntities'] = (query, paging) => {

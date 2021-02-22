@@ -32,11 +32,6 @@ class SlowTestContextValue implements DataDataContextValue {
     return this.#inner.useEntity(id, options);
   };
 
-  getEntity: DataDataContextValue['getEntity'] = async (id, options) => {
-    await this.delay();
-    return await this.#inner.getEntity(id, options);
-  };
-
   useSearchEntities: DataDataContextValue['useSearchEntities'] = (query, paging) => {
     return this.#inner.useSearchEntities(query, paging);
   };
