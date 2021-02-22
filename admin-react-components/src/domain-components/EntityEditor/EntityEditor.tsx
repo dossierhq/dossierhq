@@ -96,6 +96,7 @@ function EntityEditorInner({
   createEntity,
   updateEntity,
 }: EntityEditorInnerProps) {
+  const [initErrorMessage, setInitErrorMessage] = useState<MessageItem | null>(null);
   const [initialEditorState, setInitialEditorState] = useState<EntityEditorState | null>(null);
   const { entity, entityError } = useEntity(
     'isNew' in entitySelector ? undefined : entitySelector.id,
@@ -108,21 +109,31 @@ function EntityEditorInner({
     }
     if ('isNew' in entitySelector) {
       const entitySpec = schema.getEntityTypeSpecification(entitySelector.type);
-      if (!entitySpec) {
-        //TODO error handle
-        throw new Error(`No such entity type in schema (${entitySelector.type})`);
+      if (entitySpec) {
+        setInitialEditorState(createEditorState(entitySpec, null));
+      } else {
+        setInitErrorMessage({
+          kind: 'danger',
+          message: `Can't create entity with unsupported type: ${entitySelector.type}`,
+        });
       }
-      setInitialEditorState(createEditorState(entitySpec, null));
     } else if (entity) {
       const { item } = entity;
       const entitySpec = schema.getEntityTypeSpecification(item._type);
-      if (!entitySpec) {
-        throw new Error(`No such entity type in schema (${item._type})`);
+      if (entitySpec) {
+        setInitialEditorState(createEditorState(entitySpec, item));
+      } else {
+        setInitErrorMessage({
+          kind: 'danger',
+          message: `Can't edit entity with unsupported type: ${item._type}`,
+        });
       }
-      setInitialEditorState(createEditorState(entitySpec, item));
     }
   }, [schema, entitySelector, entity, initialEditorState]);
 
+  if (initErrorMessage) {
+    return <Message {...initErrorMessage} />;
+  }
   if (!initialEditorState && !entityError) {
     return <Loader />;
   }

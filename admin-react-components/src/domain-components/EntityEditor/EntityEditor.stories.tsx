@@ -61,3 +61,9 @@ SlowFullFoo.args = { entity: { id: foo1Id }, contextValue: new SlowTestContextVa
 
 export const NotFound = Template.bind({});
 NotFound.args = { entity: { id: 'c6f97fae-1213-4be0-996f-4f20c7da7e65' } };
+
+export const InvalidTypeNewEntity = Template.bind({});
+InvalidTypeNewEntity.args = {
+  entity: { type: 'InvalidType', isNew: true },
+  idPrefix: 'new-entity-123',
+};
