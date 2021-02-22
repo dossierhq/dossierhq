@@ -277,7 +277,7 @@ exports[`FullFoo render 1`] = `
           value="Hello"
         />
         <button
-          className="dd button icon-button"
+          className="dd icon-button"
           onClick={[Function]}
           title="Clear"
           type="button"
@@ -309,7 +309,7 @@ exports[`FullFoo render 1`] = `
             value="one"
           />
           <button
-            className="dd button icon-button"
+            className="dd icon-button"
             onClick={[Function]}
             title="Remove item"
             type="button"
@@ -328,7 +328,7 @@ exports[`FullFoo render 1`] = `
             value="two"
           />
           <button
-            className="dd button icon-button"
+            className="dd icon-button"
             onClick={[Function]}
             title="Remove item"
             type="button"
@@ -347,7 +347,7 @@ exports[`FullFoo render 1`] = `
             value="three"
           />
           <button
-            className="dd button icon-button"
+            className="dd icon-button"
             onClick={[Function]}
             title="Remove item"
             type="button"
@@ -395,7 +395,7 @@ exports[`FullFoo render 1`] = `
           Bar 1
         </button>
         <button
-          className="dd button icon-button"
+          className="dd icon-button"
           onClick={[Function]}
           title="Remove entity"
           type="button"
@@ -434,7 +434,7 @@ exports[`FullFoo render 1`] = `
             Bar 1
           </button>
           <button
-            className="dd button icon-button"
+            className="dd icon-button"
             onClick={[Function]}
             title="Remove entity"
             type="button"
@@ -460,7 +460,7 @@ exports[`FullFoo render 1`] = `
             Bar 2
           </button>
           <button
-            className="dd button icon-button"
+            className="dd icon-button"
             onClick={[Function]}
             title="Remove entity"
             type="button"
@@ -507,7 +507,7 @@ exports[`FullFoo render 1`] = `
         >
           AnnotatedBar 
           <button
-            className="dd button icon-button"
+            className="dd icon-button"
             data-testid="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBar.remove"
             onClick={[Function]}
             title="Remove value item"
@@ -537,7 +537,7 @@ exports[`FullFoo render 1`] = `
                 value="Annotation"
               />
               <button
-                className="dd button icon-button"
+                className="dd icon-button"
                 onClick={[Function]}
                 title="Clear"
                 type="button"
@@ -575,7 +575,7 @@ exports[`FullFoo render 1`] = `
                 Bar 2
               </button>
               <button
-                className="dd button icon-button"
+                className="dd icon-button"
                 onClick={[Function]}
                 title="Remove entity"
                 type="button"
@@ -609,7 +609,7 @@ exports[`FullFoo render 1`] = `
           >
             AnnotatedBar 
             <button
-              className="dd button icon-button"
+              className="dd icon-button"
               data-testid="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars.remove"
               onClick={[Function]}
               title="Remove value item"
@@ -639,7 +639,7 @@ exports[`FullFoo render 1`] = `
                   value="First"
                 />
                 <button
-                  className="dd button icon-button"
+                  className="dd icon-button"
                   onClick={[Function]}
                   title="Clear"
                   type="button"
@@ -677,7 +677,7 @@ exports[`FullFoo render 1`] = `
                   Bar 1
                 </button>
                 <button
-                  className="dd button icon-button"
+                  className="dd icon-button"
                   onClick={[Function]}
                   title="Remove entity"
                   type="button"
@@ -698,7 +698,7 @@ exports[`FullFoo render 1`] = `
           >
             AnnotatedBar 
             <button
-              className="dd button icon-button"
+              className="dd icon-button"
               data-testid="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-1.remove"
               onClick={[Function]}
               title="Remove value item"
@@ -728,7 +728,7 @@ exports[`FullFoo render 1`] = `
                   value="Second"
                 />
                 <button
-                  className="dd button icon-button"
+                  className="dd icon-button"
                   onClick={[Function]}
                   title="Clear"
                   type="button"
@@ -766,7 +766,7 @@ exports[`FullFoo render 1`] = `
                   Bar 2
                 </button>
                 <button
-                  className="dd button icon-button"
+                  className="dd icon-button"
                   onClick={[Function]}
                   title="Remove entity"
                   type="button"

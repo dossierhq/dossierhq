@@ -9,6 +9,11 @@ export default {
 };
 
 const Template: Story<MessageProps> = (args) => {
+  if (!('onDismiss' in args)) {
+    // Default to having a onDismiss for dismiss icon to show up for storyshots
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    args.onDismiss = () => {};
+  }
   return <Message {...args} />;
 };
 
@@ -27,6 +32,13 @@ NormalTitle.args = { title: 'Title' };
 export const NormalMessage = Template.bind({});
 NormalMessage.args = {
   message: loremIpsum,
+};
+
+export const NormalNoOnDismiss = Template.bind({});
+NormalNoOnDismiss.args = {
+  title: 'Title',
+  message: loremIpsum,
+  onDismiss: undefined,
 };
 
 export const Primary = Template.bind({});

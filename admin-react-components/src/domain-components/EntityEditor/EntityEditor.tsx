@@ -123,14 +123,25 @@ function EntityEditorInner({
     }
   }, [schema, entitySelector, entity, initialEditorState]);
 
-  if (!initialEditorState) {
+  if (!initialEditorState && !entityError) {
     return <Loader />;
   }
 
   return (
-    <EntityEditorInnermost
-      {...{ idPrefix, initialEditorState, schema, createEntity, updateEntity }}
-    />
+    <>
+      {entityError ? (
+        <Message
+          kind="danger"
+          title="Failed loading entity"
+          message={`${entityError.error}: ${entityError.message}`}
+        />
+      ) : null}
+      {initialEditorState ? (
+        <EntityEditorInnermost
+          {...{ idPrefix, initialEditorState, schema, createEntity, updateEntity }}
+        />
+      ) : null}
+    </>
   );
 }
 
