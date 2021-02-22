@@ -1,10 +1,12 @@
 import React from 'react';
+import type { Kind } from '../..';
 import { Loader, Stack } from '../..';
+import { kindToClassName } from '../../utils/KindUtils';
 
 export interface ButtonProps {
   id?: string;
-  className?: string;
   type?: 'button' | 'submit';
+  kind?: Kind;
   disabled?: boolean;
   loading?: boolean;
   onClick?: () => void;
@@ -13,8 +15,8 @@ export interface ButtonProps {
 
 export function Button({
   id,
-  className,
   type,
+  kind,
   disabled,
   loading,
   onClick,
@@ -23,7 +25,7 @@ export function Button({
   return (
     <button
       id={id}
-      className={`dd button has-background hoverable text-button ${className ?? ''}`}
+      className={`dd button has-background hoverable text-button ${kindToClassName(kind)}`}
       type={type ?? 'button'}
       onClick={disabled || loading ? undefined : onClick}
       disabled={disabled}
