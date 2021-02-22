@@ -23,7 +23,7 @@ export function Modal({ show, onClose, children }: ModalProps): JSX.Element | nu
   return (
     <div className="dd modal" role="dialog">
       <div className="dd modal-background" onClick={onClose} />
-      <div className="dd modal-content has-background">{children}</div>
+      <div className="dd modal-content has-background is-rounded">{children}</div>
     </div>
   );
 }
