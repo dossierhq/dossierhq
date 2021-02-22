@@ -21,11 +21,11 @@ export const Disabled = Template.bind({});
 Disabled.args = { children: 'Text', disabled: true };
 
 export const Primary = Template.bind({});
-Primary.args = { className: 'bg-primary', children: 'Text' };
+Primary.args = { kind: 'primary', children: 'Text' };
 
 export const PrimaryIcon = Template.bind({});
 PrimaryIcon.args = {
-  className: 'bg-primary',
+  kind: 'primary',
   children: (
     <>
       Text <Icon icon="chevron-down" />
@@ -34,10 +34,10 @@ PrimaryIcon.args = {
 };
 
 export const PrimaryDisabled = Template.bind({});
-PrimaryDisabled.args = { className: 'bg-primary', children: 'Text', disabled: true };
+PrimaryDisabled.args = { kind: 'primary', children: 'Text', disabled: true };
 
 export const PrimaryLoading = Template.bind({});
-PrimaryLoading.args = { className: 'bg-primary', children: 'Text', loading: true };
+PrimaryLoading.args = { kind: 'primary', children: 'Text', loading: true };
 
 export const SubmitNormal = Template.bind({});
 SubmitNormal.args = { children: 'Done', type: 'submit' };

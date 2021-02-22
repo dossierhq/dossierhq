@@ -219,7 +219,7 @@ function EntityEditorInnermost({
         );
       })}
 
-      <Button className="bg-primary" type="submit" disabled={!state.name} loading={submitLoading}>
+      <Button kind="primary" type="submit" disabled={!state.name} loading={submitLoading}>
         Save
       </Button>
       {submitMessage ? (
