@@ -59,6 +59,7 @@ class ContextValue implements DataDataContextValue {
     );
 
     if (result.isOk()) {
+      updateCachedEntity(result.value);
       return ok(result.value.item);
     }
     return result;

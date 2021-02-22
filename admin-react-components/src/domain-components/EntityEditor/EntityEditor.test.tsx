@@ -160,6 +160,27 @@ describe('NewFoo', () => {
     userEvent.clear(name);
     expect(submit).toBeDisabled();
   });
+
+  test('useEntity is called with id after create', async () => {
+    const contextValue = new TestContextValue();
+    const useEntity = jest.spyOn(contextValue, 'useEntity');
+    act(() => {
+      render(renderStory(NewFoo, { contextValue }));
+    });
+
+    userEvent.type(finders.nameInput(), 'New name');
+
+    await act(async () => {
+      userEvent.click(finders.saveButton());
+    });
+
+    const callWithId = useEntity.mock.calls.find((args) => {
+      const id = args[0];
+      return !!id;
+    });
+    // Since id is random, just make sure we get it
+    expect(callWithId).toBeTruthy();
+  });
 });
 
 describe('FullFoo', () => {

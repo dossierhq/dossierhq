@@ -41,6 +41,7 @@ interface EntityEditorInnermostProps {
   initialEditorState: EntityEditorState;
   createEntity: DataDataContextValue['createEntity'];
   updateEntity: DataDataContextValue['updateEntity'];
+  onEntityIdCreated: (id: string) => void;
 }
 
 interface EntityEditorState {
@@ -98,10 +99,10 @@ function EntityEditorInner({
 }: EntityEditorInnerProps) {
   const [initErrorMessage, setInitErrorMessage] = useState<MessageItem | null>(null);
   const [initialEditorState, setInitialEditorState] = useState<EntityEditorState | null>(null);
-  const { entity, entityError } = useEntity(
-    'isNew' in entitySelector ? undefined : entitySelector.id,
-    {}
+  const [entityId, setEntityId] = useState(
+    'isNew' in entitySelector ? undefined : entitySelector.id
   );
+  const { entity, entityError } = useEntity(entityId, {});
 
   useEffect(() => {
     if (initialEditorState) {
@@ -149,7 +150,14 @@ function EntityEditorInner({
       ) : null}
       {initialEditorState ? (
         <EntityEditorInnermost
-          {...{ idPrefix, initialEditorState, schema, createEntity, updateEntity }}
+          {...{
+            idPrefix,
+            initialEditorState,
+            schema,
+            createEntity,
+            updateEntity,
+            onEntityIdCreated: setEntityId,
+          }}
         />
       ) : null}
     </>
@@ -162,6 +170,7 @@ function EntityEditorInnermost({
   schema,
   createEntity,
   updateEntity,
+  onEntityIdCreated,
 }: EntityEditorInnermostProps): JSX.Element {
   const [state, setState] = useState(initialEditorState);
   const [submitLoading, setSubmitLoading] = useState(false);
@@ -178,7 +187,8 @@ function EntityEditorInnermost({
           setSubmitLoading,
           setSubmitMessage,
           createEntity,
-          updateEntity
+          updateEntity,
+          onEntityIdCreated
         )
       }
     >
@@ -264,7 +274,8 @@ async function submitEntity(
   setSubmitLoading: Dispatch<SetStateAction<boolean>>,
   setSubmitMessage: Dispatch<SetStateAction<MessageItem | null>>,
   createEntity: DataDataContextValue['createEntity'],
-  updateEntity: DataDataContextValue['updateEntity']
+  updateEntity: DataDataContextValue['updateEntity'],
+  onEntityIdCreated: (id: string) => void
 ) {
   try {
     setSubmitLoading(true);
@@ -275,6 +286,9 @@ async function submitEntity(
 
     if (result.isOk()) {
       setState(createEditorState(editorState.entitySpec, result.value));
+      if (editorState.isNew) {
+        onEntityIdCreated(result.value.id);
+      }
     } else {
       setSubmitMessage({
         kind: 'danger',
