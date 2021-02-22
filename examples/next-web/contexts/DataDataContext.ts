@@ -22,13 +22,6 @@ class ContextValue implements DataDataContextValue {
     return { entity: data, entityError: error };
   };
 
-  getEntity: DataDataContextValue['getEntity'] = async (id, options) => {
-    return await fetchJsonResult<EntityResponse, ErrorType.NotFound>(
-      [ErrorType.NotFound],
-      urls.getEntity(id, options)
-    );
-  };
-
   useSearchEntities: DataDataContextValue['useSearchEntities'] = (query, paging) => {
     const { data, error } = useSWR<SearchEntitiesResponse>(urls.searchEntities(query, paging));
     if (data) {

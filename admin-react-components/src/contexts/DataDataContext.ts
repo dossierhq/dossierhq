@@ -5,6 +5,7 @@ import type {
   AdminQuery,
   Connection,
   Edge,
+  ErrorResult,
   ErrorType,
   Paging,
   PromiseResult,
@@ -19,17 +20,15 @@ export interface DataDataContextValue {
   useEntity: (
     id: string | undefined,
     options: { version?: number | null }
-  ) => { entity?: { item: AdminEntity }; entityError?: Error };
-
-  getEntity: (
-    id: string,
-    options: { version?: number | null }
-  ) => PromiseResult<{ item: AdminEntity }, ErrorType.NotFound>;
+  ) => { entity?: { item: AdminEntity }; entityError?: ErrorResult<unknown, ErrorType> };
 
   useSearchEntities: (
     query?: AdminQuery,
     paging?: Paging
-  ) => { connection?: Connection<Edge<AdminEntity, ErrorType>> | null; connectionError?: Error };
+  ) => {
+    connection?: Connection<Edge<AdminEntity, ErrorType>> | null;
+    connectionError?: ErrorResult<unknown, ErrorType>;
+  };
 
   createEntity: (
     entity: AdminEntityCreate,
