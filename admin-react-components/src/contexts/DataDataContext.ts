@@ -33,12 +33,12 @@ export interface DataDataContextValue {
   createEntity: (
     entity: AdminEntityCreate,
     options: { publish: boolean }
-  ) => PromiseResult<AdminEntity, ErrorType.BadRequest>;
+  ) => PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.Generic>;
 
   updateEntity: (
     entity: AdminEntityUpdate,
     options: { publish: boolean }
-  ) => PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.NotFound>;
+  ) => PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic>;
 }
 
 export const DataDataContext = createContext<DataDataContextValue | null>(null);

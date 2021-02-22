@@ -7,6 +7,7 @@ export enum ErrorType {
   NotAuthenticated = 'NotAuthenticated',
   /** Corresponds to 404 Not Found */
   NotFound = 'NotFound',
+  Generic = 'Generic',
 }
 
 export type Result<TOk, TError extends ErrorType> =
@@ -99,6 +100,8 @@ export const notOk = {
     createErrorResult(ErrorType.BadRequest, message),
   Conflict: (message: string): ErrorResult<unknown, ErrorType.Conflict> =>
     createErrorResult(ErrorType.Conflict, message),
+  Generic: (message: string): ErrorResult<unknown, ErrorType.Generic> =>
+    createErrorResult(ErrorType.Generic, message),
   NotAuthenticated: (message: string): ErrorResult<unknown, ErrorType.NotAuthenticated> =>
     createErrorResult(ErrorType.NotAuthenticated, message),
   NotFound: (message: string): ErrorResult<unknown, ErrorType.NotFound> =>
