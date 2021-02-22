@@ -9,7 +9,7 @@ import {
   Schema,
 } from '@datadata/core';
 import { useEffect, useMemo, useState } from 'react';
-import useSWR from 'swr';
+import useSWR, { mutate } from 'swr';
 import type { EntityCreateRequest, EntityUpdateRequest } from '../types/RequestTypes';
 import type {
   EntityResponse,
@@ -77,10 +77,15 @@ class ContextValue implements DataDataContextValue {
     );
 
     if (result.isOk()) {
+      updateCachedEntity(result.value);
       return ok(result.value.item);
     }
     return result;
   };
+}
+
+function updateCachedEntity(entity: EntityResponse) {
+  mutate(urls.getEntity(entity.item.id, {}), entity, false);
 }
 
 async function loadSchema() {
