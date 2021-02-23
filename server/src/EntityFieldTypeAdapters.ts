@@ -24,6 +24,30 @@ const entityTypeCodec: FieldTypeAdapter<FieldValueTypeMap[FieldType.EntityType],
   getReferenceUUIDs: (x) => (x ? [x.id] : null),
 };
 
+const locationCodec: FieldTypeAdapter<FieldValueTypeMap[FieldType.Location], [number, number]> = {
+  encodeData: (prefix: string, data) => {
+    if (Array.isArray(data)) {
+      return notOk.BadRequest(`${prefix}: expected location, got list`);
+    }
+    if (typeof data !== 'object') {
+      return notOk.BadRequest(`${prefix}: expected location object, got ${typeof data}`);
+    }
+    const { lat, lng } = data;
+    if (typeof lat !== 'number' || typeof lng !== 'number') {
+      if (typeof lat !== 'number' && typeof lng !== 'number') {
+        return notOk.BadRequest(`${prefix}: expected {lat: number, lng: number}, got ${data}`);
+      }
+      if (typeof lat !== 'number') {
+        return notOk.BadRequest(`${prefix}: expected lat to be number, got ${typeof lat}`);
+      }
+      return notOk.BadRequest(`${prefix}: expected lng to be number, got ${typeof lng}`);
+    }
+    return ok([lat, lng]);
+  },
+  decodeData: ([lat, lng]) => ({ lat, lng }),
+  getReferenceUUIDs: (unusedData) => null,
+};
+
 const stringCodec: FieldTypeAdapter<FieldValueTypeMap[FieldType.String], string> = {
   encodeData: (prefix: string, x) =>
     typeof x === 'string'
@@ -47,6 +71,7 @@ const invalidCodec: FieldTypeAdapter<FieldValueTypeMap[FieldType.ValueType], unk
 
 const adapters: Record<FieldType, FieldTypeAdapter<unknown>> = {
   [FieldType.EntityType]: entityTypeCodec,
+  [FieldType.Location]: locationCodec,
   [FieldType.String]: stringCodec,
   [FieldType.ValueType]: invalidCodec,
 };
