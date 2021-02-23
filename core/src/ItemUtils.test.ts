@@ -74,6 +74,7 @@ describe('visitFieldsRecursively()', () => {
           fields: [
             { name: 'string', type: FieldType.String },
             { name: 'bar', type: FieldType.EntityType },
+            { name: 'location', type: FieldType.Location },
             { name: 'valueOne', type: FieldType.ValueType },
           ],
         },
@@ -87,6 +88,7 @@ describe('visitFieldsRecursively()', () => {
           name: 'ValueOne',
           fields: [
             { name: 'string', type: FieldType.String },
+            { name: 'location', type: FieldType.Location },
             { name: 'bar', type: FieldType.EntityType },
           ],
         },
@@ -100,6 +102,7 @@ describe('visitFieldsRecursively()', () => {
         _type: 'Foo',
         _name: 'hello',
         string: 'Hello string',
+        location: { lat: 55.60498, lng: 13.003822 },
         bar: { id: 'bar id 1' },
         valueOne: { _type: 'ValueOne', string: 'value string', bar: { id: 'bar id 2' } },
       },
@@ -121,6 +124,16 @@ describe('visitFieldsRecursively()', () => {
           "path": "entity.bar",
           "value": Object {
             "id": "bar id 1",
+          },
+          "visitContext": undefined,
+        },
+        Object {
+          "action": "visitField",
+          "fieldName": "location",
+          "path": "entity.location",
+          "value": Object {
+            "lat": 55.60498,
+            "lng": 13.003822,
           },
           "visitContext": undefined,
         },
@@ -170,6 +183,7 @@ describe('visitFieldsRecursively()', () => {
           name: 'Foo',
           fields: [
             { name: 'strings', type: FieldType.String, list: true },
+            { name: 'locations', type: FieldType.Location, list: true },
             { name: 'bars', type: FieldType.EntityType, list: true },
             { name: 'valueOnes', type: FieldType.ValueType, list: true },
           ],
@@ -197,6 +211,7 @@ describe('visitFieldsRecursively()', () => {
         _type: 'Foo',
         _name: 'hello',
         strings: ['Hello string', 'World string'],
+        locations: [{ lat: 55.60498, lng: 13.003822 }],
         bars: [{ id: 'bar id 1' }, { id: 'bar id 2' }],
         valueOnes: [
           {
@@ -235,6 +250,23 @@ describe('visitFieldsRecursively()', () => {
           "fieldName": "strings",
           "path": "entity.strings[1]",
           "value": "World string",
+          "visitContext": undefined,
+        },
+        Object {
+          "action": "enterList",
+          "fieldName": "locations",
+          "length": 1,
+          "path": "entity.locations",
+          "visitContext": undefined,
+        },
+        Object {
+          "action": "visitField",
+          "fieldName": "locations",
+          "path": "entity.locations[0]",
+          "value": Object {
+            "lat": 55.60498,
+            "lng": 13.003822,
+          },
           "visitContext": undefined,
         },
         Object {
