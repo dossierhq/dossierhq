@@ -11,6 +11,11 @@ export interface EntityReference {
   id: string;
 }
 
+export interface Location {
+  lat: number;
+  lng: number;
+}
+
 //TODO rename to ValueItem
 export interface Value {
   _type: string;

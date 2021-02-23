@@ -4,6 +4,9 @@ import {
   isEntityTypeField,
   isEntityTypeItemField,
   isEntityTypeListField,
+  isLocationField,
+  isLocationItemField,
+  isLocationListField,
   isStringField,
   isStringItemField,
   isStringListField,
@@ -20,6 +23,7 @@ import type {
   ErrorResult,
   ErrorType,
   FieldSpecification,
+  Location,
   PromiseResult,
   Result,
   Value,
@@ -104,6 +108,8 @@ export function logEntity(context: SessionContext, entity: AdminEntity | Entity)
         value = data ? formatValueItemOneLine(data) : chalk.grey('<not set>');
       } else if (isStringItemField(fieldSpec, data)) {
         value = data ? data : chalk.grey('<not set>');
+      } else if (isLocationItemField(fieldSpec, data)) {
+        value = data ? formatLocation(data) : chalk.grey('<not set>');
       } else {
         throw new Error(`Unknown type (${fieldSpec.type})`);
       }
@@ -128,6 +134,10 @@ export function formatEntityOneLine(entity: Entity): string {
 
 export function formatValueItemOneLine(value: Value): string {
   return `${value._type}`;
+}
+
+export function formatLocation({ lat, lng }: Location): string {
+  return `${chalk.grey('(')}${lat}${chalk.grey(',')} ${lng}${chalk.grey(')')}`;
 }
 
 export function formatFieldValue(fieldSpec: FieldSpecification, value: unknown): string {
@@ -162,6 +172,12 @@ export function formatFieldValue(fieldSpec: FieldSpecification, value: unknown):
   }
   if (isStringListField(fieldSpec, value)) {
     return value ? value.join(chalk.grey(', ')) : chalk.grey('<not set>');
+  }
+  if (isLocationField(fieldSpec, value)) {
+    return value ? formatLocation(value) : chalk.grey('<not set>');
+  }
+  if (isLocationListField(fieldSpec, value)) {
+    return value ? value.map(formatLocation).join(chalk.grey(', ')) : chalk.grey('<not set>');
   }
   throw new Error(`Unknown type (${fieldSpec.type})`);
 }

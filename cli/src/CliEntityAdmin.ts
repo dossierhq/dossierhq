@@ -2,6 +2,8 @@ import chalk from 'chalk';
 import {
   isEntityTypeField,
   isEntityTypeListField,
+  isLocationField,
+  isLocationListField,
   isStringField,
   isStringListField,
   isValueTypeField,
@@ -16,6 +18,7 @@ import type {
   EntityTypeSpecification,
   ErrorType,
   FieldSpecification,
+  Location,
   Paging,
   PromiseResult,
   Value,
@@ -28,6 +31,7 @@ import {
   formatEntityOneLine,
   formatErrorResult,
   formatFieldValue,
+  formatLocation,
   formatValueItemOneLine,
   getEntitySpec,
   getValueSpec,
@@ -42,6 +46,7 @@ import {
   showConfirm,
   showIntegerEdit,
   showItemSelector,
+  showLocationEdit,
   showMultiItemSelector,
   showStringEdit,
 } from './widgets';
@@ -321,6 +326,12 @@ async function editField(
   if (isStringListField(fieldSpec, defaultValue)) {
     return editFieldStringList(fieldSpec, defaultValue);
   }
+  if (isLocationField(fieldSpec, defaultValue)) {
+    return editFieldLocation(fieldSpec, defaultValue);
+  }
+  if (isLocationListField(fieldSpec, defaultValue)) {
+    return editFieldLocationList(fieldSpec, defaultValue);
+  }
   throw new Error(`Unknown type (${fieldSpec.type})`);
 }
 
@@ -435,12 +446,29 @@ async function editFieldStringList(fieldSpec: FieldSpecification, defaultValue: 
   );
 }
 
+async function editFieldLocation(fieldSpec: FieldSpecification, defaultValue: Location | null) {
+  return ok(await showLocationEdit(fieldSpec.name, defaultValue));
+}
+
+async function editFieldLocationList(
+  fieldSpec: FieldSpecification,
+  defaultValue: Location[] | null
+) {
+  return await editFieldList(
+    fieldSpec,
+    'Select location item',
+    defaultValue,
+    (item) => formatLocation(item),
+    (item) => editFieldLocation(fieldSpec, item)
+  );
+}
+
 async function editFieldList<TItem>(
   fieldSpec: FieldSpecification,
   message: string,
   defaultValue: TItem[] | null,
   formatItem: (item: TItem) => string,
-  editItem: (item: TItem | null) => PromiseResult<TItem, ErrorType>
+  editItem: (item: TItem | null) => PromiseResult<TItem | null, ErrorType>
 ) {
   let exit = false;
   const result = defaultValue ? [...defaultValue] : [];
@@ -458,7 +486,7 @@ async function editFieldList<TItem>(
       exit = true;
     } else if (item.id === '_add') {
       const newItem = await editItem(null);
-      if (newItem.isOk()) {
+      if (newItem.isOk() && newItem.value !== null) {
         result.push(newItem.value);
       }
     } else if (item.id === '_remove') {
@@ -473,7 +501,11 @@ async function editFieldList<TItem>(
       const index = Number.parseInt(item.id);
       const editedItem = await editItem(result[index]);
       if (editedItem.isOk()) {
-        result[index] = editedItem.value;
+        if (editedItem.value !== null) {
+          result[index] = editedItem.value;
+        } else {
+          result.splice(index, 1);
+        }
       }
     }
   }
