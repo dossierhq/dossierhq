@@ -23,6 +23,8 @@ beforeAll(async () => {
           { name: 'title', type: FieldType.String, isName: true },
           { name: 'summary', type: FieldType.String },
           { name: 'tags', type: FieldType.String, list: true },
+          { name: 'location', type: FieldType.Location },
+          { name: 'locations', type: FieldType.Location, list: true },
           { name: 'bar', type: FieldType.EntityType, entityTypes: ['QueryBar'] },
           { name: 'bars', type: FieldType.EntityType, entityTypes: ['QueryBar'], list: true },
           { name: 'stringedBar', type: FieldType.ValueType, valueTypes: ['QueryStringedBar'] },
@@ -55,6 +57,11 @@ describe('node()', () => {
         _name: 'Howdy name',
         title: 'Howdy title',
         summary: 'Howdy summary',
+        location: { lat: 55.60498, lng: 13.003822 },
+        locations: [
+          { lat: 55.60498, lng: 13.003822 },
+          { lat: 56.381561, lng: 13.99286 },
+        ],
         tags: ['one', 'two', 'three'],
       },
       { publish: true }
@@ -74,6 +81,14 @@ describe('node()', () => {
                 title
                 summary
                 tags
+                location {
+                  lat
+                  lng
+                }
+                locations {
+                  lat
+                  lng
+                }
               }
             }
           }
@@ -91,6 +106,11 @@ describe('node()', () => {
             title: 'Howdy title',
             summary: 'Howdy summary',
             tags: ['one', 'two', 'three'],
+            location: { lat: 55.60498, lng: 13.003822 },
+            locations: [
+              { lat: 55.60498, lng: 13.003822 },
+              { lat: 56.381561, lng: 13.99286 },
+            ],
           },
         },
       });
@@ -124,6 +144,14 @@ describe('node()', () => {
                   id
                 }
                 tags
+                location {
+                  lat
+                  lng
+                }
+                locations {
+                  lat
+                  lng
+                }
                 stringedBar {
                   __typename
                 }
@@ -146,6 +174,8 @@ describe('node()', () => {
             bar: null,
             bars: null,
             tags: null,
+            location: null,
+            locations: null,
             stringedBar: null,
           },
         },
