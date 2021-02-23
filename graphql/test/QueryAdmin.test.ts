@@ -25,6 +25,8 @@ beforeAll(async () => {
           { name: 'title', type: FieldType.String, isName: true },
           { name: 'summary', type: FieldType.String },
           { name: 'tags', type: FieldType.String, list: true },
+          { name: 'location', type: FieldType.Location },
+          { name: 'locations', type: FieldType.Location, list: true },
           { name: 'bar', type: FieldType.EntityType, entityTypes: ['QueryAdminBar'] },
           {
             name: 'bars',
@@ -154,6 +156,11 @@ describe('adminEntity()', () => {
         title: 'Howdy title',
         summary: 'Howdy summary',
         tags: ['one', 'two', 'three'],
+        location: { lat: 55.60498, lng: 13.003822 },
+        locations: [
+          { lat: 55.60498, lng: 13.003822 },
+          { lat: 56.381561, lng: 13.99286 },
+        ],
       },
       { publish: true }
     );
@@ -175,6 +182,14 @@ describe('adminEntity()', () => {
                 title
                 summary
                 tags
+                location {
+                  lat
+                  lng
+                }
+                locations {
+                  lat
+                  lng
+                }
               }
             }
           }
@@ -195,6 +210,11 @@ describe('adminEntity()', () => {
             title: 'Howdy title',
             summary: 'Howdy summary',
             tags: ['one', 'two', 'three'],
+            location: { lat: 55.60498, lng: 13.003822 },
+            locations: [
+              { lat: 55.60498, lng: 13.003822 },
+              { lat: 56.381561, lng: 13.99286 },
+            ],
           },
         },
       });
@@ -230,6 +250,14 @@ describe('adminEntity()', () => {
                 bars {
                   id
                 }
+                location {
+                  lat
+                  lng
+                }
+                locations {
+                  lat
+                  lng
+                }
                 stringedBar {
                   _type
                 }
@@ -254,6 +282,8 @@ describe('adminEntity()', () => {
             tags: null,
             bar: null,
             bars: null,
+            location: null,
+            locations: null,
             stringedBar: null,
           },
         },

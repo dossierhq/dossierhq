@@ -23,6 +23,8 @@ beforeAll(async () => {
           { name: 'title', type: FieldType.String, isName: true },
           { name: 'summary', type: FieldType.String },
           { name: 'tags', type: FieldType.String, list: true },
+          { name: 'location', type: FieldType.Location },
+          { name: 'locations', type: FieldType.Location, list: true },
           { name: 'bar', type: FieldType.EntityType, entityTypes: ['MutationBar'] },
           {
             name: 'bars',
@@ -76,6 +78,14 @@ describe('create*Entity()', () => {
             title
             summary
             tags
+            location {
+              lat
+              lng
+            }
+            locations {
+              lat
+              lng
+            }
           }
         }
       `,
@@ -88,6 +98,11 @@ describe('create*Entity()', () => {
           title: 'Foo title',
           summary: 'Foo summary',
           tags: ['one', 'two', 'three'],
+          location: { lat: 55.60498, lng: 13.003822 },
+          locations: [
+            { lat: 55.60498, lng: 13.003822 },
+            { lat: 56.381561, lng: 13.99286 },
+          ],
         },
         publish: true,
       }
@@ -108,6 +123,11 @@ describe('create*Entity()', () => {
           title: 'Foo title',
           summary: 'Foo summary',
           tags: ['one', 'two', 'three'],
+          location: { lat: 55.60498, lng: 13.003822 },
+          locations: [
+            { lat: 55.60498, lng: 13.003822 },
+            { lat: 56.381561, lng: 13.99286 },
+          ],
         },
       },
     });
@@ -122,6 +142,11 @@ describe('create*Entity()', () => {
         title: 'Foo title',
         summary: 'Foo summary',
         tags: ['one', 'two', 'three'],
+        location: { lat: 55.60498, lng: 13.003822 },
+        locations: [
+          { lat: 55.60498, lng: 13.003822 },
+          { lat: 56.381561, lng: 13.99286 },
+        ],
       });
     }
   });
