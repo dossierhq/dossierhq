@@ -16,6 +16,7 @@ import type { SessionContext } from '@datadata/server';
 import {
   GraphQLBoolean,
   GraphQLEnumType,
+  GraphQLFloat,
   GraphQLID,
   GraphQLInputObjectType,
   GraphQLInt,
@@ -285,6 +286,28 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         })
       );
     }
+
+    // Location
+    this.addType(
+      new GraphQLObjectType({
+        name: 'Location',
+        fields: {
+          lat: { type: new GraphQLNonNull(GraphQLFloat) },
+          lng: { type: new GraphQLNonNull(GraphQLFloat) },
+        },
+      })
+    );
+
+    // LocationInput
+    this.addType(
+      new GraphQLInputObjectType({
+        name: 'LocationInput',
+        fields: {
+          lat: { type: new GraphQLNonNull(GraphQLFloat) },
+          lng: { type: new GraphQLNonNull(GraphQLFloat) },
+        },
+      })
+    );
   }
 
   addEntityTypes(): void {
@@ -542,6 +565,9 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         case FieldType.EntityType:
           fieldType = this.getOrCreateEntityUnion(isAdmin, fieldSpec.entityTypes ?? []);
           break;
+        case FieldType.Location:
+          fieldType = this.getOutputType('Location');
+          break;
         case FieldType.String:
           fieldType = GraphQLString;
           break;
@@ -567,6 +593,9 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       switch (fieldSpec.type) {
         case FieldType.EntityType:
           fieldType = this.getInputType('AdminReferenceInput');
+          break;
+        case FieldType.Location:
+          fieldType = this.getInputType('LocationInput');
           break;
         case FieldType.String:
           fieldType = GraphQLString;
