@@ -13,6 +13,7 @@ export interface ValueTypeSpecification {
 
 export enum FieldType {
   EntityType = 'EntityType',
+  Location = 'Location',
   String = 'String',
   ValueType = 'ValueType',
 }
@@ -30,6 +31,7 @@ export interface FieldSpecification {
 
 export interface FieldValueTypeMap {
   [FieldType.EntityType]: EntityReference;
+  [FieldType.Location]: { lat: number; lng: number };
   [FieldType.String]: string;
   [FieldType.ValueType]: { _type: string; [key: string]: unknown };
 }

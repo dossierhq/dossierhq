@@ -25,6 +25,30 @@ export function isEntityTypeItemField(
   return fieldSpec.type === FieldType.EntityType;
 }
 
+/** Check if `value` with `fieldSpec` is a single Location field */
+export function isLocationField(
+  fieldSpec: FieldSpecification,
+  value: unknown | null
+): value is FieldValueTypeMap[FieldType.Location] | null {
+  return fieldSpec.type === FieldType.Location && !fieldSpec.list;
+}
+
+/** Check if `value` with `fieldSpec` is a list Location field */
+export function isLocationListField(
+  fieldSpec: FieldSpecification,
+  value: unknown | null
+): value is Array<FieldValueTypeMap[FieldType.Location]> | null {
+  return fieldSpec.type === FieldType.Location && !!fieldSpec.list;
+}
+
+/** Check if `value` with `fieldSpec` is either a single Location field or an item in a list field */
+export function isLocationItemField(
+  fieldSpec: FieldSpecification,
+  value: unknown | null
+): value is FieldValueTypeMap[FieldType.Location] | null {
+  return fieldSpec.type === FieldType.Location;
+}
+
 /** Check if `value` with `fieldSpec` is a single String field */
 export function isStringField(
   fieldSpec: FieldSpecification,
