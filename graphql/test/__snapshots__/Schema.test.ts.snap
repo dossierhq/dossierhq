@@ -19,7 +19,7 @@ type Query {
 "
 `;
 
-exports[`List of strings and references schema spec Generated QL schema 1`] = `
+exports[`List of strings, locations and references schema spec Generated QL schema 1`] = `
 "interface Node {
   id: ID!
 }
@@ -41,10 +41,21 @@ interface Entity implements Node {
   _name: String!
 }
 
+type Location {
+  lat: Float!
+  lng: Float!
+}
+
+input LocationInput {
+  lat: Float!
+  lng: Float!
+}
+
 type Foo implements Node & Entity {
   id: ID!
   _name: String!
   strings: [String!]
+  locations: [Location!]
   bars: [Bar!]
 }
 
@@ -104,6 +115,7 @@ type AdminFoo implements AdminEntity {
   _version: Int!
   _deleted: Boolean!
   strings: [String!]
+  locations: [Location!]
   bars: [AdminBar!]
 }
 
@@ -111,6 +123,7 @@ input AdminFooCreateInput {
   _type: EntityType
   _name: String!
   strings: [String!]
+  locations: [LocationInput!]
   bars: [AdminReferenceInput!]
 }
 
@@ -119,6 +132,7 @@ input AdminFooUpdateInput {
   _type: EntityType
   _name: String
   strings: [String!]
+  locations: [LocationInput!]
   bars: [AdminReferenceInput!]
 }
 
@@ -181,6 +195,16 @@ enum EntityType {
 interface Entity implements Node {
   id: ID!
   _name: String!
+}
+
+type Location {
+  lat: Float!
+  lng: Float!
+}
+
+input LocationInput {
+  lat: Float!
+  lng: Float!
 }
 
 type Foo implements Node & Entity {
@@ -383,6 +407,16 @@ interface Entity implements Node {
   _name: String!
 }
 
+type Location {
+  lat: Float!
+  lng: Float!
+}
+
+input LocationInput {
+  lat: Float!
+  lng: Float!
+}
+
 type Foo implements Node & Entity {
   id: ID!
   _name: String!
@@ -490,6 +524,16 @@ interface Entity implements Node {
   _name: String!
 }
 
+type Location {
+  lat: Float!
+  lng: Float!
+}
+
+input LocationInput {
+  lat: Float!
+  lng: Float!
+}
+
 type Foo implements Node & Entity {
   id: ID!
   _name: String!
@@ -501,6 +545,7 @@ type Bar implements Node & Entity {
   _name: String!
   barField1: String
   barField2: Entity
+  barField3: Location
 }
 
 interface AdminEntity {
@@ -577,6 +622,7 @@ type AdminBar implements AdminEntity {
   _deleted: Boolean!
   barField1: String
   barField2: AdminEntity
+  barField3: Location
 }
 
 input AdminBarCreateInput {
@@ -584,6 +630,7 @@ input AdminBarCreateInput {
   _name: String!
   barField1: String
   barField2: AdminReferenceInput
+  barField3: LocationInput
 }
 
 input AdminBarUpdateInput {
@@ -592,6 +639,7 @@ input AdminBarUpdateInput {
   _name: String
   barField1: String
   barField2: AdminReferenceInput
+  barField3: LocationInput
 }
 
 type Query {
@@ -643,6 +691,16 @@ enum ValueType {
 
 interface Value {
   _type: ValueType!
+}
+
+type Location {
+  lat: Float!
+  lng: Float!
+}
+
+input LocationInput {
+  lat: Float!
+  lng: Float!
 }
 
 type Foo implements Node & Entity {

@@ -338,6 +338,7 @@ describe('Two entity types with reference schema spec', () => {
         fields: [
           { name: 'barField1', type: FieldType.String },
           { name: 'barField2', type: FieldType.EntityType },
+          { name: 'barField3', type: FieldType.Location },
         ],
       },
     ],
@@ -381,13 +382,14 @@ describe('Multiple references with entityTypes schema spec', () => {
   });
 });
 
-describe('List of strings and references schema spec', () => {
+describe('List of strings, locations and references schema spec', () => {
   const schemaSpec = {
     entityTypes: [
       {
         name: 'Foo',
         fields: [
           { name: 'strings', type: FieldType.String, list: true },
+          { name: 'locations', type: FieldType.Location, list: true },
           { name: 'bars', type: FieldType.EntityType, list: true, entityTypes: ['Bar'] },
         ],
       },
