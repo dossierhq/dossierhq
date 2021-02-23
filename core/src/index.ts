@@ -16,6 +16,7 @@ export type {
   Edge,
   Entity,
   EntityReference,
+  Location,
   Paging,
   PageInfo,
   Value,

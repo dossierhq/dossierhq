@@ -1,4 +1,4 @@
-import type { EntityReference, Result, ErrorType } from '.';
+import type { EntityReference, Result, ErrorType, Location } from '.';
 import { notOk, ok } from '.';
 
 export interface EntityTypeSpecification {
@@ -31,7 +31,7 @@ export interface FieldSpecification {
 
 export interface FieldValueTypeMap {
   [FieldType.EntityType]: EntityReference;
-  [FieldType.Location]: { lat: number; lng: number };
+  [FieldType.Location]: Location;
   [FieldType.String]: string;
   [FieldType.ValueType]: { _type: string; [key: string]: unknown };
 }
