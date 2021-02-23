@@ -32,6 +32,8 @@ beforeAll(async () => {
           { name: 'title', type: FieldType.String },
           { name: 'bar', type: FieldType.EntityType, entityTypes: ['EntityAdminBar'] },
           { name: 'tags', type: FieldType.String, list: true },
+          { name: 'location', type: FieldType.Location },
+          { name: 'locations', type: FieldType.Location, list: true },
           {
             name: 'bars',
             type: FieldType.EntityType,
@@ -581,6 +583,51 @@ describe('createEntity()', () => {
           _name: name,
           _version: 0,
           tags: ['one', 'two', 'three'],
+        });
+      }
+    }
+  });
+
+  test('Create EntityAdminBaz with location and location list', async () => {
+    const createResult = await EntityAdmin.createEntity(
+      context,
+      {
+        _type: 'EntityAdminBaz',
+        _name: 'Baz',
+        location: { lat: 55.60498, lng: 13.003822 },
+        locations: [
+          { lat: 55.60498, lng: 13.003822 },
+          { lat: 56.381561, lng: 13.99286 },
+        ],
+      },
+      { publish: true }
+    );
+    if (expectOkResult(createResult)) {
+      const { id, _name: name } = createResult.value;
+      expect(createResult.value).toEqual({
+        id,
+        _type: 'EntityAdminBaz',
+        _name: name,
+        _version: 0,
+        location: { lat: 55.60498, lng: 13.003822 },
+        locations: [
+          { lat: 55.60498, lng: 13.003822 },
+          { lat: 56.381561, lng: 13.99286 },
+        ],
+      });
+
+      const getResult = await EntityAdmin.getEntity(context, id, {});
+      if (expectOkResult(getResult)) {
+        expect(getResult.value.item).toEqual({
+          id,
+          _type: 'EntityAdminBaz',
+          _name: name,
+          _version: 0,
+          location: { lat: 55.60498, lng: 13.003822 },
+          locations: [
+            { lat: 55.60498, lng: 13.003822 },
+            { lat: 56.381561, lng: 13.99286 },
+          ],
         });
       }
     }
@@ -1174,6 +1221,53 @@ describe('createEntity()', () => {
       createResult,
       ErrorType.BadRequest,
       'entity.oneString: Unsupported field names: invalid'
+    );
+  });
+
+  test('Error: single location when list expected', async () => {
+    const createResult = await EntityAdmin.createEntity(
+      context,
+      {
+        _type: 'EntityAdminBaz',
+        _name: 'Baz',
+        locations: { lat: 55.60498, lng: 13.003822 },
+      },
+      { publish: true }
+    );
+    expectErrorResult(createResult, ErrorType.BadRequest, 'entity.locations: expected list');
+  });
+
+  test('Error: location list when single item expected', async () => {
+    const createResult = await EntityAdmin.createEntity(
+      context,
+      {
+        _type: 'EntityAdminBaz',
+        _name: 'Baz',
+        location: [{ lat: 55.60498, lng: 13.003822 }],
+      },
+      { publish: true }
+    );
+    expectErrorResult(
+      createResult,
+      ErrorType.BadRequest,
+      'entity.location: expected location, got list'
+    );
+  });
+
+  test('Error: location with empty object', async () => {
+    const createResult = await EntityAdmin.createEntity(
+      context,
+      {
+        _type: 'EntityAdminBaz',
+        _name: 'Baz',
+        location: {},
+      },
+      { publish: true }
+    );
+    expectErrorResult(
+      createResult,
+      ErrorType.BadRequest,
+      'entity.location: expected {lat: number, lng: number}, got [object Object]'
     );
   });
 
