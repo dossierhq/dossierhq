@@ -427,6 +427,7 @@ describe('Value type schema spec', () => {
         fields: [
           { name: 'one', type: FieldType.String },
           { name: 'two', type: FieldType.EntityType, entityTypes: ['Bar'] },
+          { name: 'three', type: FieldType.Location },
         ],
       },
       {
@@ -434,6 +435,7 @@ describe('Value type schema spec', () => {
         fields: [
           { name: 'one', type: FieldType.String, list: true },
           { name: 'two', type: FieldType.EntityType, list: true, entityTypes: ['Bar'] },
+          { name: 'three', type: FieldType.Location, list: true },
         ],
       },
       {
