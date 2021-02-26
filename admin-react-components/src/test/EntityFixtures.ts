@@ -14,6 +14,11 @@ const entities: Array<AdminEntity[]> = [
       _version: 0,
       title: 'Hello',
       tags: ['one', 'two', 'three'],
+      location: { lat: 55.60498, lng: 13.003822 },
+      locations: [
+        { lat: 55.60498, lng: 13.003822 },
+        { lat: 56.381561, lng: 13.99286 },
+      ],
       bar: { id: bar1Id },
       bars: [{ id: bar1Id }, { id: bar2Id }],
       annotatedBar: { _type: 'AnnotatedBar', annotation: 'Annotation', bar: { id: bar2Id } },
