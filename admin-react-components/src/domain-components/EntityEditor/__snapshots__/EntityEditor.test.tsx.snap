@@ -74,6 +74,64 @@ exports[`DeletedFoo render 1`] = `
   <div>
     <label
       className="dd text-subtitle1"
+      htmlFor="entity-fb62be03-a0a9-4689-9987-bacee0e7692d-location"
+    >
+      location
+    </label>
+    <div
+      className="dd form-control"
+    >
+      <div
+        style={
+          Object {
+            "display": "flex",
+          }
+        }
+      >
+        <button
+          className="dd button has-background hoverable text-button "
+          id="entity-fb62be03-a0a9-4689-9987-bacee0e7692d-location"
+          onClick={[Function]}
+          type="button"
+        >
+          Select location
+        </button>
+      </div>
+    </div>
+  </div>
+  <div>
+    <label
+      className="dd text-subtitle1"
+      htmlFor="entity-fb62be03-a0a9-4689-9987-bacee0e7692d-locations"
+    >
+      locations
+    </label>
+    <div
+      className="dd form-control"
+    >
+      <div>
+        <div
+          style={
+            Object {
+              "display": "flex",
+            }
+          }
+        >
+          <button
+            className="dd button has-background hoverable text-button "
+            id="entity-fb62be03-a0a9-4689-9987-bacee0e7692d-locations"
+            onClick={[Function]}
+            type="button"
+          >
+            Select location
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <label
+      className="dd text-subtitle1"
       htmlFor="entity-fb62be03-a0a9-4689-9987-bacee0e7692d-bar"
     >
       bar
@@ -365,6 +423,126 @@ exports[`FullFoo render 1`] = `
             type="text"
             value=""
           />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <label
+      className="dd text-subtitle1"
+      htmlFor="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-location"
+    >
+      location
+    </label>
+    <div
+      className="dd form-control"
+    >
+      <div
+        style={
+          Object {
+            "display": "flex",
+          }
+        }
+      >
+        <button
+          className="dd button has-background hoverable text-button "
+          id="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-location"
+          onClick={[Function]}
+          type="button"
+        >
+          55.60498, 13.003822
+        </button>
+        <button
+          className="dd icon-button"
+          onClick={[Function]}
+          title="Remove location"
+          type="button"
+        >
+          <span
+            className="dd icon remove"
+          />
+        </button>
+      </div>
+    </div>
+  </div>
+  <div>
+    <label
+      className="dd text-subtitle1"
+      htmlFor="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-locations"
+    >
+      locations
+    </label>
+    <div
+      className="dd form-control"
+    >
+      <div>
+        <div
+          style={
+            Object {
+              "display": "flex",
+            }
+          }
+        >
+          <button
+            className="dd button has-background hoverable text-button "
+            id="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-locations"
+            onClick={[Function]}
+            type="button"
+          >
+            55.60498, 13.003822
+          </button>
+          <button
+            className="dd icon-button"
+            onClick={[Function]}
+            title="Remove location"
+            type="button"
+          >
+            <span
+              className="dd icon remove"
+            />
+          </button>
+        </div>
+        <div
+          style={
+            Object {
+              "display": "flex",
+            }
+          }
+        >
+          <button
+            className="dd button has-background hoverable text-button "
+            id="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-locations-1"
+            onClick={[Function]}
+            type="button"
+          >
+            56.381561, 13.99286
+          </button>
+          <button
+            className="dd icon-button"
+            onClick={[Function]}
+            title="Remove location"
+            type="button"
+          >
+            <span
+              className="dd icon remove"
+            />
+          </button>
+        </div>
+        <div
+          style={
+            Object {
+              "display": "flex",
+            }
+          }
+        >
+          <button
+            className="dd button has-background hoverable text-button "
+            id="entity-fc66b4d7-61ff-44d4-8f68-cb7f526df046-locations-2"
+            onClick={[Function]}
+            type="button"
+          >
+            Select location
+          </button>
         </div>
       </div>
     </div>
@@ -907,6 +1085,64 @@ exports[`NewFoo render 1`] = `
             type="text"
             value=""
           />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <label
+      className="dd text-subtitle1"
+      htmlFor="new-entity-123-location"
+    >
+      location
+    </label>
+    <div
+      className="dd form-control"
+    >
+      <div
+        style={
+          Object {
+            "display": "flex",
+          }
+        }
+      >
+        <button
+          className="dd button has-background hoverable text-button "
+          id="new-entity-123-location"
+          onClick={[Function]}
+          type="button"
+        >
+          Select location
+        </button>
+      </div>
+    </div>
+  </div>
+  <div>
+    <label
+      className="dd text-subtitle1"
+      htmlFor="new-entity-123-locations"
+    >
+      locations
+    </label>
+    <div
+      className="dd form-control"
+    >
+      <div>
+        <div
+          style={
+            Object {
+              "display": "flex",
+            }
+          }
+        >
+          <button
+            className="dd button has-background hoverable text-button "
+            id="new-entity-123-locations"
+            onClick={[Function]}
+            type="button"
+          >
+            Select location
+          </button>
         </div>
       </div>
     </div>

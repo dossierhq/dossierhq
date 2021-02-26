@@ -3,12 +3,20 @@ import type { FieldSpecification, Schema } from '@datadata/core';
 import {
   isEntityTypeField,
   isEntityTypeListField,
+  isLocationField,
+  isLocationListField,
   isStringField,
   isStringListField,
   isValueTypeField,
   isValueTypeListField,
 } from '@datadata/core';
-import { EntityFieldListWrapper, EntityPicker, FormField, StringFieldEditor } from '../..';
+import {
+  EntityFieldListWrapper,
+  EntityPicker,
+  FormField,
+  LocationFieldEditor,
+  StringFieldEditor,
+} from '../..';
 import { ValueTypeFieldEditor } from '../ValueTypeFieldEditor/ValueTypeFieldEditor';
 
 interface Props {
@@ -56,6 +64,27 @@ export function EntityFieldEditor({
         fieldSpec={fieldSpec}
         onChange={onValueChanged}
         Editor={StringFieldEditor}
+      />
+    );
+  } else if (isLocationField(fieldSpec, value)) {
+    editor = (
+      <LocationFieldEditor
+        id={id}
+        value={value}
+        schema={schema}
+        fieldSpec={fieldSpec}
+        onChange={onValueChanged}
+      />
+    );
+  } else if (isLocationListField(fieldSpec, value)) {
+    editor = (
+      <EntityFieldListWrapper
+        id={id}
+        value={value}
+        schema={schema}
+        fieldSpec={fieldSpec}
+        onChange={onValueChanged}
+        Editor={LocationFieldEditor}
       />
     );
   } else if (isEntityTypeField(fieldSpec, value)) {

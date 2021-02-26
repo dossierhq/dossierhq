@@ -7,6 +7,8 @@ const schema = new Schema({
       fields: [
         { name: 'title', type: FieldType.String, isName: true },
         { name: 'tags', type: FieldType.String, list: true },
+        { name: 'location', type: FieldType.Location },
+        { name: 'locations', type: FieldType.Location, list: true },
         { name: 'bar', type: FieldType.EntityType, entityTypes: ['Bar'] },
         { name: 'bars', type: FieldType.EntityType, entityTypes: ['Bar'], list: true },
         { name: 'annotatedBar', type: FieldType.ValueType, valueTypes: ['AnnotatedBar'] },

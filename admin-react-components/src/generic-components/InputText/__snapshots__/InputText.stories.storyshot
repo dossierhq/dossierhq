@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots Generic/InputText Normal 1`] = `
+<input
+  className="dd text-body1 input"
+  onChange={[Function]}
+  type="text"
+  value=""
+/>
+`;
+
+exports[`Storyshots Generic/InputText Number 1`] = `
+<input
+  className="dd text-body1 input"
+  onChange={[Function]}
+  type="number"
+  value=""
+/>
+`;

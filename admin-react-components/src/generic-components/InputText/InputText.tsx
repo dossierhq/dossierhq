@@ -1,18 +1,19 @@
 import React from 'react';
 
-interface Props {
+export interface InputTextProps {
   id?: string;
   onChange?: (value: string) => void;
   readOnly?: boolean;
+  type?: 'text' | 'number';
   value: string | null;
 }
 
-export function InputText({ id, onChange, readOnly, value }: Props): JSX.Element {
+export function InputText({ id, onChange, readOnly, type, value }: InputTextProps): JSX.Element {
   return (
     <input
       id={id}
       className="dd text-body1 input"
-      type="text"
+      type={type ?? 'text'}
       value={value ?? ''}
       readOnly={readOnly}
       onChange={onChange ? (event) => onChange(event.target.value) : undefined}

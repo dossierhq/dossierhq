@@ -20,6 +20,7 @@ export { Icon, IconTypes } from './generic-components/Icon/Icon';
 export { IconButton } from './generic-components/IconButton/IconButton';
 export { InputText } from './generic-components/InputText/InputText';
 export { Loader } from './generic-components/Loader/Loader';
+export { LocationFieldEditor } from './domain-components/LocationFieldEditor/LocationFieldEditor';
 export { Message } from './generic-components/Message/Message';
 export { Modal } from './generic-components/Modal/Modal';
 export { Segment } from './generic-components/Segment/Segment';
