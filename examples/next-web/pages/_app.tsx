@@ -1,5 +1,6 @@
 import '@datadata/admin-react-components/src/main.css';
 import '@datadata/admin-react-components/src/icons.css';
+import 'leaflet/dist/leaflet.css';
 import '../styles/globals.css';
 
 function MyApp({
