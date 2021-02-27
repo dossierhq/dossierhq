@@ -58,7 +58,10 @@
   },
   "dependencies": {
     "@datadata/core": "1.0.0",
+    "@types/leaflet": "~1.5.23",
     "@types/react": "~17.0.1",
-    "react": "~17.0.1"
+    "leaflet": "~1.7.1",
+    "react": "~17.0.1",
+    "react-leaflet": "~3.1.0"
   }
 }

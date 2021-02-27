@@ -45,7 +45,7 @@ exports[`Storyshots Generic/Button Primary Icon 1`] = `
 >
   Text 
   <span
-    className="dd icon chevron-down"
+    className="dd icon icon-chevron-down"
   />
 </button>
 `;

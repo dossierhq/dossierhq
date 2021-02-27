@@ -17,7 +17,7 @@ exports[`Storyshots Generic/Message Danger 1`] = `
         type="button"
       >
         <span
-          className="dd icon remove"
+          className="dd icon icon-remove"
         />
       </button>
     </div>
@@ -52,7 +52,7 @@ exports[`Storyshots Generic/Message Normal 1`] = `
         type="button"
       >
         <span
-          className="dd icon remove"
+          className="dd icon icon-remove"
         />
       </button>
     </div>
@@ -87,7 +87,7 @@ exports[`Storyshots Generic/Message Normal Message 1`] = `
         type="button"
       >
         <span
-          className="dd icon remove"
+          className="dd icon icon-remove"
         />
       </button>
     </div>
@@ -138,7 +138,7 @@ exports[`Storyshots Generic/Message Normal Title 1`] = `
         type="button"
       >
         <span
-          className="dd icon remove"
+          className="dd icon icon-remove"
         />
       </button>
     </div>
@@ -168,7 +168,7 @@ exports[`Storyshots Generic/Message Primary 1`] = `
         type="button"
       >
         <span
-          className="dd icon remove"
+          className="dd icon icon-remove"
         />
       </button>
     </div>

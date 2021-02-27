@@ -210,7 +210,7 @@ exports[`Storyshots Domain/EntityEditor Deleted Foo 1`] = `
             Add value item
              
             <span
-              className="dd icon chevron-down"
+              className="dd icon icon-chevron-down"
             />
           </button>
         </div>
@@ -241,7 +241,7 @@ exports[`Storyshots Domain/EntityEditor Deleted Foo 1`] = `
               Add value item
                
               <span
-                className="dd icon chevron-down"
+                className="dd icon icon-chevron-down"
               />
             </button>
           </div>
@@ -272,7 +272,7 @@ exports[`Storyshots Domain/EntityEditor Deleted Foo 1`] = `
             Add value item
              
             <span
-              className="dd icon chevron-down"
+              className="dd icon icon-chevron-down"
             />
           </button>
         </div>
@@ -341,7 +341,7 @@ exports[`Storyshots Domain/EntityEditor Full Foo 1`] = `
           type="button"
         >
           <span
-            className="dd icon remove"
+            className="dd icon icon-remove"
           />
         </button>
       </div>
@@ -373,7 +373,7 @@ exports[`Storyshots Domain/EntityEditor Full Foo 1`] = `
             type="button"
           >
             <span
-              className="dd icon remove"
+              className="dd icon icon-remove"
             />
           </button>
         </div>
@@ -392,7 +392,7 @@ exports[`Storyshots Domain/EntityEditor Full Foo 1`] = `
             type="button"
           >
             <span
-              className="dd icon remove"
+              className="dd icon icon-remove"
             />
           </button>
         </div>
@@ -411,7 +411,7 @@ exports[`Storyshots Domain/EntityEditor Full Foo 1`] = `
             type="button"
           >
             <span
-              className="dd icon remove"
+              className="dd icon icon-remove"
             />
           </button>
         </div>
@@ -459,7 +459,7 @@ exports[`Storyshots Domain/EntityEditor Full Foo 1`] = `
           type="button"
         >
           <span
-            className="dd icon remove"
+            className="dd icon icon-remove"
           />
         </button>
       </div>
@@ -498,7 +498,7 @@ exports[`Storyshots Domain/EntityEditor Full Foo 1`] = `
             type="button"
           >
             <span
-              className="dd icon remove"
+              className="dd icon icon-remove"
             />
           </button>
         </div>
@@ -524,7 +524,7 @@ exports[`Storyshots Domain/EntityEditor Full Foo 1`] = `
             type="button"
           >
             <span
-              className="dd icon remove"
+              className="dd icon icon-remove"
             />
           </button>
         </div>
@@ -579,7 +579,7 @@ exports[`Storyshots Domain/EntityEditor Full Foo 1`] = `
           type="button"
         >
           <span
-            className="dd icon remove"
+            className="dd icon icon-remove"
           />
         </button>
       </div>
@@ -618,7 +618,7 @@ exports[`Storyshots Domain/EntityEditor Full Foo 1`] = `
             type="button"
           >
             <span
-              className="dd icon remove"
+              className="dd icon icon-remove"
             />
           </button>
         </div>
@@ -644,7 +644,7 @@ exports[`Storyshots Domain/EntityEditor Full Foo 1`] = `
             type="button"
           >
             <span
-              className="dd icon remove"
+              className="dd icon icon-remove"
             />
           </button>
         </div>
@@ -692,7 +692,7 @@ exports[`Storyshots Domain/EntityEditor Full Foo 1`] = `
             type="button"
           >
             <span
-              className="dd icon remove"
+              className="dd icon icon-remove"
             />
           </button>
         </p>
@@ -721,7 +721,7 @@ exports[`Storyshots Domain/EntityEditor Full Foo 1`] = `
                 type="button"
               >
                 <span
-                  className="dd icon remove"
+                  className="dd icon icon-remove"
                 />
               </button>
             </div>
@@ -759,7 +759,7 @@ exports[`Storyshots Domain/EntityEditor Full Foo 1`] = `
                 type="button"
               >
                 <span
-                  className="dd icon remove"
+                  className="dd icon icon-remove"
                 />
               </button>
             </div>
@@ -794,7 +794,7 @@ exports[`Storyshots Domain/EntityEditor Full Foo 1`] = `
               type="button"
             >
               <span
-                className="dd icon remove"
+                className="dd icon icon-remove"
               />
             </button>
           </p>
@@ -823,7 +823,7 @@ exports[`Storyshots Domain/EntityEditor Full Foo 1`] = `
                   type="button"
                 >
                   <span
-                    className="dd icon remove"
+                    className="dd icon icon-remove"
                   />
                 </button>
               </div>
@@ -861,7 +861,7 @@ exports[`Storyshots Domain/EntityEditor Full Foo 1`] = `
                   type="button"
                 >
                   <span
-                    className="dd icon remove"
+                    className="dd icon icon-remove"
                   />
                 </button>
               </div>
@@ -883,7 +883,7 @@ exports[`Storyshots Domain/EntityEditor Full Foo 1`] = `
               type="button"
             >
               <span
-                className="dd icon remove"
+                className="dd icon icon-remove"
               />
             </button>
           </p>
@@ -912,7 +912,7 @@ exports[`Storyshots Domain/EntityEditor Full Foo 1`] = `
                   type="button"
                 >
                   <span
-                    className="dd icon remove"
+                    className="dd icon icon-remove"
                   />
                 </button>
               </div>
@@ -950,7 +950,7 @@ exports[`Storyshots Domain/EntityEditor Full Foo 1`] = `
                   type="button"
                 >
                   <span
-                    className="dd icon remove"
+                    className="dd icon icon-remove"
                   />
                 </button>
               </div>
@@ -970,7 +970,7 @@ exports[`Storyshots Domain/EntityEditor Full Foo 1`] = `
               Add value item
                
               <span
-                className="dd icon chevron-down"
+                className="dd icon icon-chevron-down"
               />
             </button>
           </div>
@@ -1001,7 +1001,7 @@ exports[`Storyshots Domain/EntityEditor Full Foo 1`] = `
             Add value item
              
             <span
-              className="dd icon chevron-down"
+              className="dd icon icon-chevron-down"
             />
           </button>
         </div>
@@ -1244,7 +1244,7 @@ exports[`Storyshots Domain/EntityEditor New Foo 1`] = `
             Add value item
              
             <span
-              className="dd icon chevron-down"
+              className="dd icon icon-chevron-down"
             />
           </button>
         </div>
@@ -1275,7 +1275,7 @@ exports[`Storyshots Domain/EntityEditor New Foo 1`] = `
               Add value item
                
               <span
-                className="dd icon chevron-down"
+                className="dd icon icon-chevron-down"
               />
             </button>
           </div>
@@ -1306,7 +1306,7 @@ exports[`Storyshots Domain/EntityEditor New Foo 1`] = `
             Add value item
              
             <span
-              className="dd icon chevron-down"
+              className="dd icon icon-chevron-down"
             />
           </button>
         </div>
@@ -1396,7 +1396,7 @@ exports[`Storyshots Domain/EntityEditor Slow Full Foo 1`] = `
           type="button"
         >
           <span
-            className="dd icon remove"
+            className="dd icon icon-remove"
           />
         </button>
       </div>
@@ -1428,7 +1428,7 @@ exports[`Storyshots Domain/EntityEditor Slow Full Foo 1`] = `
             type="button"
           >
             <span
-              className="dd icon remove"
+              className="dd icon icon-remove"
             />
           </button>
         </div>
@@ -1447,7 +1447,7 @@ exports[`Storyshots Domain/EntityEditor Slow Full Foo 1`] = `
             type="button"
           >
             <span
-              className="dd icon remove"
+              className="dd icon icon-remove"
             />
           </button>
         </div>
@@ -1466,7 +1466,7 @@ exports[`Storyshots Domain/EntityEditor Slow Full Foo 1`] = `
             type="button"
           >
             <span
-              className="dd icon remove"
+              className="dd icon icon-remove"
             />
           </button>
         </div>
@@ -1514,7 +1514,7 @@ exports[`Storyshots Domain/EntityEditor Slow Full Foo 1`] = `
           type="button"
         >
           <span
-            className="dd icon remove"
+            className="dd icon icon-remove"
           />
         </button>
       </div>
@@ -1553,7 +1553,7 @@ exports[`Storyshots Domain/EntityEditor Slow Full Foo 1`] = `
             type="button"
           >
             <span
-              className="dd icon remove"
+              className="dd icon icon-remove"
             />
           </button>
         </div>
@@ -1579,7 +1579,7 @@ exports[`Storyshots Domain/EntityEditor Slow Full Foo 1`] = `
             type="button"
           >
             <span
-              className="dd icon remove"
+              className="dd icon icon-remove"
             />
           </button>
         </div>
@@ -1634,7 +1634,7 @@ exports[`Storyshots Domain/EntityEditor Slow Full Foo 1`] = `
           type="button"
         >
           <span
-            className="dd icon remove"
+            className="dd icon icon-remove"
           />
         </button>
       </div>
@@ -1673,7 +1673,7 @@ exports[`Storyshots Domain/EntityEditor Slow Full Foo 1`] = `
             type="button"
           >
             <span
-              className="dd icon remove"
+              className="dd icon icon-remove"
             />
           </button>
         </div>
@@ -1699,7 +1699,7 @@ exports[`Storyshots Domain/EntityEditor Slow Full Foo 1`] = `
             type="button"
           >
             <span
-              className="dd icon remove"
+              className="dd icon icon-remove"
             />
           </button>
         </div>
@@ -1747,7 +1747,7 @@ exports[`Storyshots Domain/EntityEditor Slow Full Foo 1`] = `
             type="button"
           >
             <span
-              className="dd icon remove"
+              className="dd icon icon-remove"
             />
           </button>
         </p>
@@ -1776,7 +1776,7 @@ exports[`Storyshots Domain/EntityEditor Slow Full Foo 1`] = `
                 type="button"
               >
                 <span
-                  className="dd icon remove"
+                  className="dd icon icon-remove"
                 />
               </button>
             </div>
@@ -1814,7 +1814,7 @@ exports[`Storyshots Domain/EntityEditor Slow Full Foo 1`] = `
                 type="button"
               >
                 <span
-                  className="dd icon remove"
+                  className="dd icon icon-remove"
                 />
               </button>
             </div>
@@ -1849,7 +1849,7 @@ exports[`Storyshots Domain/EntityEditor Slow Full Foo 1`] = `
               type="button"
             >
               <span
-                className="dd icon remove"
+                className="dd icon icon-remove"
               />
             </button>
           </p>
@@ -1878,7 +1878,7 @@ exports[`Storyshots Domain/EntityEditor Slow Full Foo 1`] = `
                   type="button"
                 >
                   <span
-                    className="dd icon remove"
+                    className="dd icon icon-remove"
                   />
                 </button>
               </div>
@@ -1916,7 +1916,7 @@ exports[`Storyshots Domain/EntityEditor Slow Full Foo 1`] = `
                   type="button"
                 >
                   <span
-                    className="dd icon remove"
+                    className="dd icon icon-remove"
                   />
                 </button>
               </div>
@@ -1938,7 +1938,7 @@ exports[`Storyshots Domain/EntityEditor Slow Full Foo 1`] = `
               type="button"
             >
               <span
-                className="dd icon remove"
+                className="dd icon icon-remove"
               />
             </button>
           </p>
@@ -1967,7 +1967,7 @@ exports[`Storyshots Domain/EntityEditor Slow Full Foo 1`] = `
                   type="button"
                 >
                   <span
-                    className="dd icon remove"
+                    className="dd icon icon-remove"
                   />
                 </button>
               </div>
@@ -2005,7 +2005,7 @@ exports[`Storyshots Domain/EntityEditor Slow Full Foo 1`] = `
                   type="button"
                 >
                   <span
-                    className="dd icon remove"
+                    className="dd icon icon-remove"
                   />
                 </button>
               </div>
@@ -2025,7 +2025,7 @@ exports[`Storyshots Domain/EntityEditor Slow Full Foo 1`] = `
               Add value item
                
               <span
-                className="dd icon chevron-down"
+                className="dd icon icon-chevron-down"
               />
             </button>
           </div>
@@ -2056,7 +2056,7 @@ exports[`Storyshots Domain/EntityEditor Slow Full Foo 1`] = `
             Add value item
              
             <span
-              className="dd icon chevron-down"
+              className="dd icon icon-chevron-down"
             />
           </button>
         </div>

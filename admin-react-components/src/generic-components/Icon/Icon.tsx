@@ -9,5 +9,5 @@ export interface IconProps {
 }
 
 export function Icon({ icon }: IconProps): JSX.Element {
-  return <span className={`dd icon ${icon}`} />;
+  return <span className={`dd icon icon-${icon}`} />;
 }

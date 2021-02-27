@@ -8,7 +8,7 @@ exports[`Storyshots Generic/IconButton Disabled 1`] = `
   type="button"
 >
   <span
-    className="dd icon remove"
+    className="dd icon icon-remove"
   />
 </button>
 `;
@@ -20,7 +20,7 @@ exports[`Storyshots Generic/IconButton Normal 1`] = `
   type="button"
 >
   <span
-    className="dd icon remove"
+    className="dd icon icon-remove"
   />
 </button>
 `;
