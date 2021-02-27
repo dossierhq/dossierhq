@@ -100,7 +100,10 @@ function CurrentLocationMarker({
 }) {
   useMapEvents({
     click: (event) => {
-      onChange?.(event.latlng);
+      onChange?.({
+        lat: Math.round(event.latlng.lat * 1e6) / 1e6,
+        lng: Math.round(event.latlng.lng * 1e6) / 1e6,
+      });
     },
   });
   return value ? <Marker position={[value.lat, value.lng]} icon={currentMarkerIcon} /> : null;
