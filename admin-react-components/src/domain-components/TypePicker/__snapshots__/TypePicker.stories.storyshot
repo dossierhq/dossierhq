@@ -11,7 +11,7 @@ exports[`Storyshots Domain/TypePicker Entity Types 1`] = `
     Select entity type
      
     <span
-      className="dd icon chevron-down"
+      className="dd icon icon-chevron-down"
     />
   </button>
 </div>
@@ -28,7 +28,7 @@ exports[`Storyshots Domain/TypePicker Entity Types Filtered 1`] = `
     Select entity type
      
     <span
-      className="dd icon chevron-down"
+      className="dd icon icon-chevron-down"
     />
   </button>
 </div>
@@ -45,7 +45,7 @@ exports[`Storyshots Domain/TypePicker Value Types 1`] = `
     Select value type
      
     <span
-      className="dd icon chevron-down"
+      className="dd icon icon-chevron-down"
     />
   </button>
 </div>
@@ -62,7 +62,7 @@ exports[`Storyshots Domain/TypePicker Value Types Filtered 1`] = `
     Select value type
      
     <span
-      className="dd icon chevron-down"
+      className="dd icon icon-chevron-down"
     />
   </button>
 </div>

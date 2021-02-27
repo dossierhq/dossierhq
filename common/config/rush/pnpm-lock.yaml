@@ -23,6 +23,7 @@ dependencies:
   '@types/express': 4.17.11
   '@types/inquirer': 7.3.1
   '@types/jest': 26.0.20
+  '@types/leaflet': 1.5.23
   '@types/node': 14.14.25
   '@types/pg': 7.14.9
   '@types/qs': 6.9.5
@@ -48,6 +49,7 @@ dependencies:
   inquirer: 7.3.3
   jest: 26.6.3_ts-node@9.1.1
   joi: 17.3.0
+  leaflet: 1.7.1
   mini-svg-data-uri: 1.2.3
   next: 10.0.6_c39e9db791ea05e3ec4e0e74abb7a6b5
   next-transpile-modules: 6.1.0
@@ -57,6 +59,7 @@ dependencies:
   qs: 6.9.6
   react: 17.0.1
   react-dom: 17.0.1_react@17.0.1
+  react-leaflet: 3.1.0_09d6067ecd174b3b583fc8cfec228ea2
   react-test-renderer: 17.0.1_react@17.0.1
   svgo: 1.3.2
   swr: 0.4.1_react@17.0.1
@@ -2266,6 +2269,18 @@ packages:
       react-dom: 15.x || 16.x || 16.4.0-alpha.0911da3
     resolution:
       integrity: sha512-+mtn9wjlB9NN2CNnnC/BRYtwdKBfSyyasPYraNAyvaV1occr/5NnB4CVzjEZipNHwYebQwcndGUmpFzxAUoqSA==
+  /@react-leaflet/core/1.0.2_09d6067ecd174b3b583fc8cfec228ea2:
+    dependencies:
+      leaflet: 1.7.1
+      react: 17.0.1
+      react-dom: 17.0.1_react@17.0.1
+    dev: false
+    peerDependencies:
+      leaflet: ^1.7.1
+      react: ^17.0.1
+      react-dom: ^17.0.1
+    resolution:
+      integrity: sha512-QbleYZTMcgujAEyWGki8Lx6cXQqWkNtQlqf5c7NImlIp8bKW66bFpez/6EVatW7+p9WKBOEOVci/9W7WW70EZg==
   /@sideway/address/4.1.0:
     dependencies:
       '@hapi/hoek': 9.1.1
@@ -3184,6 +3199,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-no+R6rW60JEc59977wIxreQVsIEOAYwgCqldrA/vkpCnbD7MqTefO97lmoBe4WE0F156bC4uLSP1XHDOySnChg==
+  /@types/geojson/7946.0.7:
+    dev: false
+    resolution:
+      integrity: sha512-wE2v81i4C4Ol09RtsWFAqg3BUitWbHSpSlIo+bNdsCJijO9sjme+zm+73ZMCa/qMC8UEERxzGbvmr1cffo2SiQ==
   /@types/glob-base/0.3.0:
     dev: false
     resolution:
@@ -3280,6 +3299,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-3c+yGKvVP5Y9TYBEibGNR+kLtijnj7mYrXRg+WpFb2X9xm04g/DXYkfg4hmzJQosc9snFNUPkbYIhu+KAm6jJw==
+  /@types/leaflet/1.5.23:
+    dependencies:
+      '@types/geojson': 7946.0.7
+    dev: false
+    resolution:
+      integrity: sha512-S/xpuwjZuwYMP+4ZzQ10PX0Jy+0XmwPeojtjqhbca9UXaINdoru91Qm/DUUXyh4qYm3CP6Vher06l/UcA9tUKQ==
   /@types/markdown-to-jsx/6.11.3:
     dependencies:
       '@types/react': 17.0.1
@@ -9367,6 +9392,10 @@ packages:
       yarn: '>=1.0.0'
     resolution:
       integrity: sha512-prXSYk799h3GY3iOWnC6ZigYzMPjxN2svgjJ9shk7oMadSNX3wXy0B6F32PMJv7qtMnrIbUxoEHzbutvxR2LBQ==
+  /leaflet/1.7.1:
+    dev: false
+    resolution:
+      integrity: sha512-/xwPEBidtg69Q3HlqPdU3DnrXQOvQU/CCHA1tcDQVzOwm91YMYaILjNp7L4Eaw5Z4sOYdbBz6koWyibppd8Zqw==
   /leven/3.1.0:
     dev: false
     engines:
@@ -11495,6 +11524,19 @@ packages:
     dev: false
     resolution:
       integrity: sha512-NAnt2iGDXohE5LI7uBnLnqvLQMtzhkiAOLXTmv+qnF9Ky7xAPcX8Up/xWIhxvLVGJvuLiNc4xQLtuqDRzb4fSA==
+  /react-leaflet/3.1.0_09d6067ecd174b3b583fc8cfec228ea2:
+    dependencies:
+      '@react-leaflet/core': 1.0.2_09d6067ecd174b3b583fc8cfec228ea2
+      leaflet: 1.7.1
+      react: 17.0.1
+      react-dom: 17.0.1_react@17.0.1
+    dev: false
+    peerDependencies:
+      leaflet: ^1.7.1
+      react: ^17.0.1
+      react-dom: ^17.0.1
+    resolution:
+      integrity: sha512-kdZS8NYbYFPmkQr7zSDR2gkKGFeWvkxqoqcmZEckzHL4d5c85dJ2gbbqhaPDpmWWgaRw9O29uA/77qpKmK4mTQ==
   /react-lifecycles-compat/3.0.4:
     dev: false
     resolution:
@@ -14227,6 +14269,7 @@ packages:
       '@testing-library/react': 11.2.5_react-dom@17.0.1+react@17.0.1
       '@testing-library/user-event': 12.6.3
       '@types/jest': 26.0.20
+      '@types/leaflet': 1.5.23
       '@types/react': 17.0.1
       '@types/react-test-renderer': 17.0.0
       '@types/testing-library__jest-dom': 5.9.5
@@ -14240,10 +14283,12 @@ packages:
       eslint-plugin-react-hooks: 4.2.0_eslint@7.19.0
       eslint-plugin-testing-library: 3.10.1_eslint@7.19.0+typescript@4.1.3
       jest: 26.6.3_ts-node@9.1.1
+      leaflet: 1.7.1
       mini-svg-data-uri: 1.2.3
       prettier: 2.2.1
       react: 17.0.1
       react-dom: 17.0.1_react@17.0.1
+      react-leaflet: 3.1.0_09d6067ecd174b3b583fc8cfec228ea2
       react-test-renderer: 17.0.1_react@17.0.1
       svgo: 1.3.2
       ts-jest: 26.5.0_jest@26.6.3+typescript@4.1.3
@@ -14255,7 +14300,7 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-u+4tgsvGV7dYZkXxkr4PWVEOt7npp0vW3GtVWxCoLtUNwhb6S64orio+L4bVvySVthuLJotCE8ZbwI8ZtJRNKw==
+      integrity: sha512-+rxJ/3EqLm65Tpayitbr49ldUreDMQVkTraiVFq7cETjzKqXJg4W1ppRGoPqAPyWArzQ4Fgpdrmy9nVBBBXjuA==
       tarball: file:projects/admin-react-components.tgz
     version: 0.0.0
   file:projects/benchpress.tgz:
@@ -14451,6 +14496,7 @@ specifiers:
   '@types/express': ~4.17.11
   '@types/inquirer': ^7.3.1
   '@types/jest': ~26.0.20
+  '@types/leaflet': ~1.5.23
   '@types/node': ^14.14.25
   '@types/pg': ^7.14.9
   '@types/qs': ~6.9.5
@@ -14476,6 +14522,7 @@ specifiers:
   inquirer: ^7.3.3
   jest: ~26.6.3
   joi: ~17.3.0
+  leaflet: ~1.7.1
   mini-svg-data-uri: ~1.2.3
   next: ~10.0.6
   next-transpile-modules: ~6.1.0
@@ -14485,6 +14532,7 @@ specifiers:
   qs: ~6.9.6
   react: ~17.0.1
   react-dom: ~17.0.1
+  react-leaflet: ~3.1.0
   react-test-renderer: ~17.0.1
   svgo: ~1.3.2
   swr: ~0.4.1

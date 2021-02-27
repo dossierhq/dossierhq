@@ -210,7 +210,7 @@ exports[`DeletedFoo render 1`] = `
             Add value item
              
             <span
-              className="dd icon chevron-down"
+              className="dd icon icon-chevron-down"
             />
           </button>
         </div>
@@ -241,7 +241,7 @@ exports[`DeletedFoo render 1`] = `
               Add value item
                
               <span
-                className="dd icon chevron-down"
+                className="dd icon icon-chevron-down"
               />
             </button>
           </div>
@@ -272,7 +272,7 @@ exports[`DeletedFoo render 1`] = `
             Add value item
              
             <span
-              className="dd icon chevron-down"
+              className="dd icon icon-chevron-down"
             />
           </button>
         </div>
@@ -341,7 +341,7 @@ exports[`FullFoo render 1`] = `
           type="button"
         >
           <span
-            className="dd icon remove"
+            className="dd icon icon-remove"
           />
         </button>
       </div>
@@ -373,7 +373,7 @@ exports[`FullFoo render 1`] = `
             type="button"
           >
             <span
-              className="dd icon remove"
+              className="dd icon icon-remove"
             />
           </button>
         </div>
@@ -392,7 +392,7 @@ exports[`FullFoo render 1`] = `
             type="button"
           >
             <span
-              className="dd icon remove"
+              className="dd icon icon-remove"
             />
           </button>
         </div>
@@ -411,7 +411,7 @@ exports[`FullFoo render 1`] = `
             type="button"
           >
             <span
-              className="dd icon remove"
+              className="dd icon icon-remove"
             />
           </button>
         </div>
@@ -459,7 +459,7 @@ exports[`FullFoo render 1`] = `
           type="button"
         >
           <span
-            className="dd icon remove"
+            className="dd icon icon-remove"
           />
         </button>
       </div>
@@ -498,7 +498,7 @@ exports[`FullFoo render 1`] = `
             type="button"
           >
             <span
-              className="dd icon remove"
+              className="dd icon icon-remove"
             />
           </button>
         </div>
@@ -524,7 +524,7 @@ exports[`FullFoo render 1`] = `
             type="button"
           >
             <span
-              className="dd icon remove"
+              className="dd icon icon-remove"
             />
           </button>
         </div>
@@ -579,7 +579,7 @@ exports[`FullFoo render 1`] = `
           type="button"
         >
           <span
-            className="dd icon remove"
+            className="dd icon icon-remove"
           />
         </button>
       </div>
@@ -618,7 +618,7 @@ exports[`FullFoo render 1`] = `
             type="button"
           >
             <span
-              className="dd icon remove"
+              className="dd icon icon-remove"
             />
           </button>
         </div>
@@ -644,7 +644,7 @@ exports[`FullFoo render 1`] = `
             type="button"
           >
             <span
-              className="dd icon remove"
+              className="dd icon icon-remove"
             />
           </button>
         </div>
@@ -692,7 +692,7 @@ exports[`FullFoo render 1`] = `
             type="button"
           >
             <span
-              className="dd icon remove"
+              className="dd icon icon-remove"
             />
           </button>
         </p>
@@ -721,7 +721,7 @@ exports[`FullFoo render 1`] = `
                 type="button"
               >
                 <span
-                  className="dd icon remove"
+                  className="dd icon icon-remove"
                 />
               </button>
             </div>
@@ -759,7 +759,7 @@ exports[`FullFoo render 1`] = `
                 type="button"
               >
                 <span
-                  className="dd icon remove"
+                  className="dd icon icon-remove"
                 />
               </button>
             </div>
@@ -794,7 +794,7 @@ exports[`FullFoo render 1`] = `
               type="button"
             >
               <span
-                className="dd icon remove"
+                className="dd icon icon-remove"
               />
             </button>
           </p>
@@ -823,7 +823,7 @@ exports[`FullFoo render 1`] = `
                   type="button"
                 >
                   <span
-                    className="dd icon remove"
+                    className="dd icon icon-remove"
                   />
                 </button>
               </div>
@@ -861,7 +861,7 @@ exports[`FullFoo render 1`] = `
                   type="button"
                 >
                   <span
-                    className="dd icon remove"
+                    className="dd icon icon-remove"
                   />
                 </button>
               </div>
@@ -883,7 +883,7 @@ exports[`FullFoo render 1`] = `
               type="button"
             >
               <span
-                className="dd icon remove"
+                className="dd icon icon-remove"
               />
             </button>
           </p>
@@ -912,7 +912,7 @@ exports[`FullFoo render 1`] = `
                   type="button"
                 >
                   <span
-                    className="dd icon remove"
+                    className="dd icon icon-remove"
                   />
                 </button>
               </div>
@@ -950,7 +950,7 @@ exports[`FullFoo render 1`] = `
                   type="button"
                 >
                   <span
-                    className="dd icon remove"
+                    className="dd icon icon-remove"
                   />
                 </button>
               </div>
@@ -970,7 +970,7 @@ exports[`FullFoo render 1`] = `
               Add value item
                
               <span
-                className="dd icon chevron-down"
+                className="dd icon icon-chevron-down"
               />
             </button>
           </div>
@@ -1001,7 +1001,7 @@ exports[`FullFoo render 1`] = `
             Add value item
              
             <span
-              className="dd icon chevron-down"
+              className="dd icon icon-chevron-down"
             />
           </button>
         </div>
@@ -1228,7 +1228,7 @@ exports[`NewFoo render 1`] = `
             Add value item
              
             <span
-              className="dd icon chevron-down"
+              className="dd icon icon-chevron-down"
             />
           </button>
         </div>
@@ -1259,7 +1259,7 @@ exports[`NewFoo render 1`] = `
               Add value item
                
               <span
-                className="dd icon chevron-down"
+                className="dd icon icon-chevron-down"
               />
             </button>
           </div>
@@ -1290,7 +1290,7 @@ exports[`NewFoo render 1`] = `
             Add value item
              
             <span
-              className="dd icon chevron-down"
+              className="dd icon icon-chevron-down"
             />
           </button>
         </div>

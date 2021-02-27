@@ -298,6 +298,7 @@ ul.dd li {
   align-items: center;
   justify-content: center;
   z-index: 1;
+  padding: 1rem;
 }
 
 .dd.modal-background {
@@ -311,6 +312,12 @@ ul.dd li {
 
 .dd.modal-content {
   z-index: 2;
+  overflow: hidden;
+}
+
+.dd.modal-content.is-large {
+  width: 100%;
+  height: 100%;
 }
 
 .dd.stack {
