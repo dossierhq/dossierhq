@@ -68,11 +68,17 @@ function LocationEditor({
           value={latString}
           onChange={(lat) => dispatch({ type: 'lat', value: lat })}
           type="number"
+          min={-90.0}
+          max={90.0}
+          step={0.000001}
         />
         <InputText
           value={lngString}
           onChange={(lng) => dispatch({ type: 'lng', value: lng })}
           type="number"
+          min={-180.0}
+          max={180.0}
+          step={0.000001}
         />
       </div>
       <MapContainer
