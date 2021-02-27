@@ -13,6 +13,10 @@
           "type": "String"
         },
         {
+          "name": "location",
+          "type": "Location"
+        },
+        {
           "name": "category",
           "type": "EntityType",
           "entityTypes": ["Category"]
