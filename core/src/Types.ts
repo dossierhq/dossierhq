@@ -55,6 +55,7 @@ export interface AdminQuery {
   referencing?: string;
   /** Valid values: _name */
   order?: string;
+  boundingBox?: { bottomLeft: Location; topRight: Location };
 }
 
 export interface Paging {

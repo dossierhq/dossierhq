@@ -47,6 +47,9 @@ export function searchAdminEntitiesQuery(
   if (query?.referencing) {
     qb.addQuery('entity_version_references evr, entities e2');
   }
+  if (query?.boundingBox) {
+    qb.addQuery('entity_version_locations evl');
+  }
 
   qb.addQuery('WHERE e.latest_draft_entity_versions_id = ev.id');
 
@@ -65,6 +68,18 @@ export function searchAdminEntitiesQuery(
       `AND ev.id = evr.entity_versions_id AND evr.entities_id = e2.id AND e2.uuid = ${qb.addValue(
         query.referencing
       )}`
+    );
+  }
+
+  // Filter: bounding box
+  if (query?.boundingBox) {
+    const { bottomLeft, topRight } = query.boundingBox;
+    qb.addQuery(
+      `AND ev.id = evl.entity_versions_id AND evl.location && ST_MakeEnvelope(${qb.addValue(
+        bottomLeft.lng
+      )}, ${qb.addValue(bottomLeft.lat)}, ${qb.addValue(topRight.lng)}, ${qb.addValue(
+        topRight.lat
+      )}, 4326)`
     );
   }
 
@@ -106,8 +121,14 @@ export function totalAdminEntitiesQuery(
   // Convert count to ::integer since count() is bigint (js doesn't support 64 bit numbers so pg return it as string)
   const qb = new QueryBuilder('SELECT COUNT(e.id)::integer AS count FROM entities e');
 
+  if (query?.referencing || query?.boundingBox) {
+    qb.addQuery('entity_versions ev');
+  }
   if (query?.referencing) {
-    qb.addQuery('entity_versions ev, entity_version_references evr, entities e2');
+    qb.addQuery('entity_version_references evr, entities e2');
+  }
+  if (query?.boundingBox) {
+    qb.addQuery('entity_version_locations evl');
   }
 
   qb.addQuery('WHERE');
@@ -121,13 +142,28 @@ export function totalAdminEntitiesQuery(
     qb.addQuery(`AND e.type = ANY(${qb.addValue(entityTypesResult.value)})`);
   }
 
+  if (query?.referencing || query?.boundingBox) {
+    qb.addQuery('AND e.latest_draft_entity_versions_id = ev.id');
+  }
+
   // Filter: referencing
   if (query?.referencing) {
-    qb.addQuery('AND e.latest_draft_entity_versions_id = ev.id');
     qb.addQuery(
       `AND ev.id = evr.entity_versions_id AND evr.entities_id = e2.id AND e2.uuid = ${qb.addValue(
         query.referencing
       )}`
+    );
+  }
+
+  // Filter: bounding box
+  if (query?.boundingBox) {
+    const { bottomLeft, topRight } = query.boundingBox;
+    qb.addQuery(
+      `AND ev.id = evl.entity_versions_id AND evl.location && ST_MakeEnvelope(${qb.addValue(
+        bottomLeft.lng
+      )}, ${qb.addValue(bottomLeft.lat)}, ${qb.addValue(topRight.lng)}, ${qb.addValue(
+        topRight.lat
+      )}, 4326)`
     );
   }
 

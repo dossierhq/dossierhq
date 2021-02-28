@@ -295,6 +295,39 @@ describe('searchAdminEntitiesQuery()', () => {
     `);
   });
 
+  test('query bounding box', () => {
+    expect(
+      searchAdminEntitiesQuery(
+        context,
+        {
+          boundingBox: {
+            bottomLeft: { lat: 55.07, lng: 11.62 },
+            topRight: { lat: 56.79, lng: 16.25 },
+          },
+        },
+        undefined
+      )
+    ).toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "cursorName": "id",
+          "cursorType": "int",
+          "isForwards": true,
+          "pagingCount": 25,
+          "text": "SELECT e.id, e.uuid, e.type, e.name, ev.version, ev.data
+        FROM entities e, entity_versions ev, entity_version_locations evl WHERE e.latest_draft_entity_versions_id = ev.id AND ev.id = evl.entity_versions_id AND evl.location && ST_MakeEnvelope($1, $2, $3, $4, 4326) ORDER BY e.id LIMIT $5",
+          "values": Array [
+            11.62,
+            55.07,
+            16.25,
+            56.79,
+            26,
+          ],
+        },
+      }
+    `);
+  });
+
   test('query referencing and entity types and paging', () => {
     expect(
       searchAdminEntitiesQuery(
@@ -448,6 +481,29 @@ describe('totalAdminEntitiesQuery()', () => {
               "QueryGeneratorBar",
             ],
             "37b48706-803e-4227-a51e-8208db12d949",
+          ],
+        },
+      }
+    `);
+  });
+
+  test('query bounding box', () => {
+    expect(
+      totalAdminEntitiesQuery(context, {
+        boundingBox: {
+          bottomLeft: { lat: 55.07, lng: 11.62 },
+          topRight: { lat: 56.79, lng: 16.25 },
+        },
+      })
+    ).toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e, entity_versions ev, entity_version_locations evl WHERE e.latest_draft_entity_versions_id = ev.id AND ev.id = evl.entity_versions_id AND evl.location && ST_MakeEnvelope($1, $2, $3, $4, 4326)",
+          "values": Array [
+            11.62,
+            55.07,
+            16.25,
+            56.79,
           ],
         },
       }
