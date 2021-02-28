@@ -205,7 +205,7 @@ export async function createEntity(
   if (encodeResult.isError()) {
     return encodeResult;
   }
-  const { type, name, data, referenceIds } = encodeResult.value;
+  const { type, name, data, referenceIds, locations } = encodeResult.value;
 
   return await context.withTransaction(async (context) => {
     const { entityId } = await withUniqueNameAttempt(context, name, async (context, name) => {
@@ -241,6 +241,21 @@ export async function createEntity(
       }
       await Db.queryNone(context, qb.build());
     }
+    if (locations.length > 0) {
+      const qb = new QueryBuilder(
+        'INSERT INTO entity_version_locations (entity_versions_id, location) VALUES',
+        [versionsId]
+      );
+      for (const location of locations) {
+        qb.addQuery(
+          `($1, ST_SetSRID(ST_Point(${qb.addValue(location.lng)}, ${qb.addValue(
+            location.lat
+          )}), 4326))`
+        );
+      }
+      await Db.queryNone(context, qb.build());
+    }
+
     return ok(createEntity as AdminEntity);
   });
 }

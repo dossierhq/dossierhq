@@ -3,14 +3,22 @@ import type {
   AdminEntityCreate,
   AdminEntityUpdate,
   Entity,
-  FieldSpecification,
   EntityTypeSpecification,
   ErrorType,
+  FieldSpecification,
+  Location,
   PromiseResult,
   Result,
   Schema,
 } from '@datadata/core';
-import { FieldType, notOk, ok, visitFieldsRecursively, visitorPathToString } from '@datadata/core';
+import {
+  FieldType,
+  isLocationItemField,
+  notOk,
+  ok,
+  visitFieldsRecursively,
+  visitorPathToString,
+} from '@datadata/core';
 import type { SessionContext } from '.';
 import { ensureRequired } from './Assertions';
 import * as Db from './Db';
@@ -28,6 +36,7 @@ interface EncodeEntityResult {
   name: string;
   data: Record<string, unknown>;
   referenceIds: number[];
+  locations: Location[];
 }
 
 export function decodePublishedEntity(context: SessionContext, values: EntityValues): Entity {
@@ -246,6 +255,7 @@ export async function encodeEntity(
     name,
     data: {},
     referenceIds: [],
+    locations: [],
   };
   for (const fieldSpec of entitySpec.fields) {
     if (fieldSpec.name in entity) {
@@ -262,11 +272,13 @@ export async function encodeEntity(
     }
   }
 
-  const referenceIdsResult = await collectReferenceIds(context, entity);
-  if (referenceIdsResult.isError()) {
-    return referenceIdsResult;
+  const collectResult = await collectReferenceIdsAndLocations(context, entity);
+  if (collectResult.isError()) {
+    return collectResult;
   }
-  result.referenceIds.push(...referenceIdsResult.value);
+  const { referenceIds, locations } = collectResult.value;
+  result.referenceIds.push(...referenceIds);
+  result.locations.push(...locations);
 
   return ok(result);
 }
@@ -364,16 +376,18 @@ function encodeValueTypeField(
   return ok(encodedValue);
 }
 
-async function collectReferenceIds(
+async function collectReferenceIdsAndLocations(
   context: SessionContext,
   entity: { _type: string; [fieldName: string]: unknown }
-): PromiseResult<number[], ErrorType.BadRequest> {
+): PromiseResult<{ referenceIds: number[]; locations: Location[] }, ErrorType.BadRequest> {
   const allUUIDs = new Set<string>();
   const requestedReferences: {
     prefix: string;
     uuids: string[];
     entityTypes: string[] | undefined;
   }[] = [];
+
+  const locations: Location[] = [];
 
   visitFieldsRecursively({
     schema: context.server.getSchema(),
@@ -391,12 +405,16 @@ async function collectReferenceIds(
           });
         }
       }
+
+      if (isLocationItemField(fieldSpec, data) && data) {
+        locations.push(data);
+      }
     },
     initialVisitContext: undefined,
   });
 
   if (allUUIDs.size === 0) {
-    return ok([]);
+    return ok({ referenceIds: [], locations });
   }
 
   const items = await Db.queryMany<Pick<EntitiesTable, 'id' | 'type' | 'uuid'>>(
@@ -421,5 +439,5 @@ async function collectReferenceIds(
     }
   }
 
-  return ok(items.map((item) => item.id));
+  return ok({ referenceIds: items.map((item) => item.id), locations });
 }
