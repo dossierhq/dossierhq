@@ -12,6 +12,7 @@ export type {
   AdminEntityCreate,
   AdminEntityUpdate,
   AdminQuery,
+  BoundingBox,
   Connection,
   Edge,
   Entity,

@@ -36,7 +36,7 @@ class ContextValue implements DataDataContextValue {
 
   useSearchEntities: DataDataContextValue['useSearchEntities'] = (query, paging) => {
     const { data, error } = useSWR<SearchEntitiesResponse, ErrorResultError>(
-      urls.searchEntities(query, paging)
+      query ? urls.searchEntities(query, paging) : null
     );
     const connectionError = error ? createErrorResultFromError(error) : undefined;
     if (data) {

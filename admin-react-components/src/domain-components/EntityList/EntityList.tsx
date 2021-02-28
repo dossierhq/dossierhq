@@ -22,7 +22,7 @@ export function EntityList({ query, onEntityClick }: EntityListProps): JSX.Eleme
 }
 
 function EntityListInner({ query, useSearchEntities, onEntityClick }: InnerProps) {
-  const { connection, connectionError } = useSearchEntities(query);
+  const { connection, connectionError } = useSearchEntities(query ?? {});
 
   return (
     <div className="dd list-container">

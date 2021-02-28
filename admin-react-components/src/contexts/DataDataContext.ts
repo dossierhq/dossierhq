@@ -22,6 +22,7 @@ export interface DataDataContextValue {
     options: { version?: number | null }
   ) => { entity?: { item: AdminEntity }; entityError?: ErrorResult<unknown, ErrorType> };
 
+  /** Searches for entities. If `query` is `undefined` no data is fetched */
   useSearchEntities: (
     query?: AdminQuery,
     paging?: Paging

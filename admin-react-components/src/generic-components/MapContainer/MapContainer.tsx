@@ -1,7 +1,7 @@
-import type { Location } from '@datadata/core';
+import type { BoundingBox, Location } from '@datadata/core';
 import { Icon } from 'leaflet';
 import type { FunctionComponent } from 'react';
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   MapContainer as LeafletMapContainer,
   Marker,
@@ -24,7 +24,12 @@ const currentMarkerIcon = new Icon({
 export interface MapContainerProps {
   center: Location | null;
   style?: React.CSSProperties;
+  onBoundingBoxChanged?: (boundingBox: BoundingBox) => void;
   children: React.ReactNode;
+}
+
+interface MarkerProps {
+  location: Location;
 }
 
 interface EditLocationMarkerProps {
@@ -33,16 +38,21 @@ interface EditLocationMarkerProps {
 }
 
 interface MapContainerComponent extends FunctionComponent<MapContainerProps> {
+  Marker: FunctionComponent<MarkerProps>;
   CurrentLocationMarker: FunctionComponent<EditLocationMarkerProps>;
 }
 
 export const MapContainer: MapContainerComponent = ({
   center,
   style,
+  onBoundingBoxChanged,
   children,
 }: MapContainerProps) => {
   return (
     <LeafletMapContainer center={center ?? defaultCenter} zoom={13} scrollWheelZoom style={style}>
+      {onBoundingBoxChanged ? (
+        <MapEventListener onBoundingBoxChanged={onBoundingBoxChanged} />
+      ) : null}
       <TileLayer
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -52,6 +62,32 @@ export const MapContainer: MapContainerComponent = ({
   );
 };
 MapContainer.displayName = 'Map';
+
+function MapEventListener({
+  onBoundingBoxChanged,
+}: {
+  onBoundingBoxChanged: (boundingBox: BoundingBox) => void;
+}) {
+  const map = useMapEvents({
+    moveend: (unusedEvent) => {
+      const bounds = map.getBounds();
+      onBoundingBoxChanged({ bottomLeft: bounds.getSouthWest(), topRight: bounds.getNorthEast() });
+    },
+  });
+
+  useEffect(() => {
+    const bounds = map.getBounds();
+    onBoundingBoxChanged({ bottomLeft: bounds.getSouthWest(), topRight: bounds.getNorthEast() });
+  }, [map, onBoundingBoxChanged]);
+
+  return null;
+}
+
+function MapContainerMarker({ location }: MarkerProps) {
+  return <Marker position={[location.lat, location.lng]} icon={currentMarkerIcon} />;
+}
+MapContainer.Marker = MapContainerMarker;
+MapContainer.Marker.displayName = 'MapContainer.Marker';
 
 function EditLocationMarker({ value, onChange }: EditLocationMarkerProps): JSX.Element | null {
   useMapEvents({
