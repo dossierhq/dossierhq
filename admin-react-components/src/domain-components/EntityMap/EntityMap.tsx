@@ -43,14 +43,29 @@ function EntityMapInner({ query, style, schema, useSearchEntities, onEntityClick
               return null;
             }
             const entity = edge.node.value;
-            return <EntityMarker key={entity.id} schema={schema} entity={entity} />;
+            return (
+              <EntityMarker
+                key={entity.id}
+                schema={schema}
+                entity={entity}
+                onClick={() => onEntityClick(entity)}
+              />
+            );
           })
         : null}
     </MapContainer>
   );
 }
 
-function EntityMarker({ schema, entity }: { schema: Schema; entity: AdminEntity }) {
+function EntityMarker({
+  schema,
+  entity,
+  onClick,
+}: {
+  schema: Schema;
+  entity: AdminEntity;
+  onClick: () => void;
+}) {
   const entityLocations: { location: Location }[] = [];
   visitFieldsRecursively({
     schema,
@@ -66,9 +81,12 @@ function EntityMarker({ schema, entity }: { schema: Schema; entity: AdminEntity 
   return (
     <>
       {entityLocations.map((item, index) => (
-        <MapContainer.Marker key={index} location={item.location}>
-          {entity._type}: {entity._name}
-        </MapContainer.Marker>
+        <MapContainer.Marker
+          key={index}
+          location={item.location}
+          title={`${entity._type}: ${entity._name}`}
+          onClick={onClick}
+        />
       ))}
     </>
   );

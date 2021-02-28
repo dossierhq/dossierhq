@@ -31,7 +31,8 @@ export interface MapContainerProps {
 
 interface MarkerProps {
   location: Location;
-  children?: React.ReactNode;
+  title?: string;
+  onClick?: () => void;
 }
 
 interface EditLocationMarkerProps {
@@ -85,11 +86,14 @@ function MapEventListener({
   return null;
 }
 
-function MapContainerMarker({ location, children }: MarkerProps) {
+function MapContainerMarker({ location, title, onClick }: MarkerProps) {
   return (
-    <Marker position={[location.lat, location.lng]} icon={currentMarkerIcon}>
-      {children ? <Popup>{children}</Popup> : null}
-    </Marker>
+    <Marker
+      position={[location.lat, location.lng]}
+      icon={currentMarkerIcon}
+      title={title}
+      eventHandlers={onClick ? { click: onClick } : undefined}
+    />
   );
 }
 MapContainer.Marker = MapContainerMarker;
