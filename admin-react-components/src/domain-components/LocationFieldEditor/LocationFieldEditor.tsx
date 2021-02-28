@@ -1,24 +1,10 @@
 import type { Location } from '@datadata/core';
-import { Icon } from 'leaflet';
 import React, { useCallback, useEffect, useReducer, useState } from 'react';
-import { MapContainer, Marker, TileLayer, useMapEvents } from 'react-leaflet';
 import type { EntityFieldEditorProps } from '../..';
-import { Button, IconButton, InputText, Modal } from '../..';
+import { Button, IconButton, InputText, MapContainer, Modal } from '../..';
 import { initializeLocationState, reduceLocation } from './LocationReducer';
 
 type Props = EntityFieldEditorProps<Location>;
-
-const defaultCenter = { lat: 55.60498, lng: 13.003822 };
-
-const transparentImage =
-  'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
-
-const currentMarkerIcon = new Icon({
-  iconUrl: transparentImage,
-  className: 'dd icon-map-marker',
-  iconSize: [22, 28],
-  iconAnchor: [11, 26],
-});
 
 export function LocationFieldEditor({ id, value, fieldSpec, onChange }: Props): JSX.Element {
   const [show, setShow] = useState(false);
@@ -81,36 +67,9 @@ function LocationEditor({
           step={0.000001}
         />
       </div>
-      <MapContainer
-        center={value ?? defaultCenter}
-        zoom={13}
-        scrollWheelZoom
-        style={{ width: '100%', flexGrow: 1 }}
-      >
-        <TileLayer
-          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        <CurrentLocationMarker value={value} onChange={onChange} />
+      <MapContainer center={value} style={{ width: '100%', flexGrow: 1 }}>
+        <MapContainer.CurrentLocationMarker value={value} onChange={(x) => onChange?.(x)} />
       </MapContainer>
     </div>
   );
-}
-
-function CurrentLocationMarker({
-  value,
-  onChange,
-}: {
-  value: Location | null;
-  onChange?: (location: Location | null) => void;
-}) {
-  useMapEvents({
-    click: (event) => {
-      onChange?.({
-        lat: Math.round(event.latlng.lat * 1e6) / 1e6,
-        lng: Math.round(event.latlng.lng * 1e6) / 1e6,
-      });
-    },
-  });
-  return value ? <Marker position={[value.lat, value.lng]} icon={currentMarkerIcon} /> : null;
 }
