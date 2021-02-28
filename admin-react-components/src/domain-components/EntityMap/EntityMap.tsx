@@ -66,7 +66,9 @@ function EntityMarker({ schema, entity }: { schema: Schema; entity: AdminEntity 
   return (
     <>
       {entityLocations.map((item, index) => (
-        <MapContainer.Marker key={index} location={item.location} />
+        <MapContainer.Marker key={index} location={item.location}>
+          {entity._type}: {entity._name}
+        </MapContainer.Marker>
       ))}
     </>
   );
