@@ -17,3 +17,15 @@ exports[`Storyshots Generic/InputText Number 1`] = `
   value=""
 />
 `;
+
+exports[`Storyshots Generic/InputText Number Float 1`] = `
+<input
+  className="dd text-body1 input"
+  max={10}
+  min={0}
+  onChange={[Function]}
+  step={0.1}
+  type="number"
+  value=""
+/>
+`;
