@@ -5,6 +5,7 @@ import React, { useEffect } from 'react';
 import {
   MapContainer as LeafletMapContainer,
   Marker,
+  Popup,
   TileLayer,
   useMapEvents,
 } from 'react-leaflet';
@@ -30,6 +31,7 @@ export interface MapContainerProps {
 
 interface MarkerProps {
   location: Location;
+  children?: React.ReactNode;
 }
 
 interface EditLocationMarkerProps {
@@ -83,8 +85,12 @@ function MapEventListener({
   return null;
 }
 
-function MapContainerMarker({ location }: MarkerProps) {
-  return <Marker position={[location.lat, location.lng]} icon={currentMarkerIcon} />;
+function MapContainerMarker({ location, children }: MarkerProps) {
+  return (
+    <Marker position={[location.lat, location.lng]} icon={currentMarkerIcon}>
+      {children ? <Popup>{children}</Popup> : null}
+    </Marker>
+  );
 }
 MapContainer.Marker = MapContainerMarker;
 MapContainer.Marker.displayName = 'MapContainer.Marker';
