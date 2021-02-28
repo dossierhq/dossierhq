@@ -16,6 +16,11 @@ export interface Location {
   lng: number;
 }
 
+export interface BoundingBox {
+  bottomLeft: Location;
+  topRight: Location;
+}
+
 //TODO rename to ValueItem
 export interface Value {
   _type: string;
@@ -55,7 +60,7 @@ export interface AdminQuery {
   referencing?: string;
   /** Valid values: _name */
   order?: string;
-  boundingBox?: { bottomLeft: Location; topRight: Location };
+  boundingBox?: BoundingBox;
 }
 
 export interface Paging {

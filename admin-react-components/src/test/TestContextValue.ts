@@ -1,4 +1,5 @@
-import type { AdminEntity } from '@datadata/core';
+import type { AdminEntity, Location } from '@datadata/core';
+import { isLocationItemField, visitFieldsRecursively } from '@datadata/core';
 import { notOk, ok } from '@datadata/core';
 import { v4 as uuidv4 } from 'uuid';
 import type { DataDataContextValue } from '..';
@@ -39,13 +40,43 @@ export default class TestContextValue implements DataDataContextValue {
   };
 
   useSearchEntities: DataDataContextValue['useSearchEntities'] = (query, paging) => {
-    const entities = this.getLatestEntities().filter((x) => {
+    if (!query) {
+      return {};
+    }
+
+    const { boundingBox } = query;
+
+    const entities = this.getLatestEntities().filter((entity) => {
       if (
-        query?.entityTypes?.length &&
+        query.entityTypes?.length &&
         query.entityTypes.length > 0 &&
-        query.entityTypes.indexOf(x._type) < 0
+        query.entityTypes.indexOf(entity._type) < 0
       ) {
         return false;
+      }
+      if (boundingBox) {
+        const locations: Location[] = [];
+        visitFieldsRecursively({
+          schema: this.schema,
+          entity,
+          visitField: (path, fieldSpec, data, unusedVisitContext) => {
+            if (isLocationItemField(fieldSpec, data) && data) {
+              locations.push(data);
+            }
+          },
+          initialVisitContext: undefined,
+        });
+        if (
+          !locations.find(
+            ({ lat, lng }) =>
+              lat >= boundingBox.bottomLeft.lat &&
+              lat <= boundingBox.topRight.lat &&
+              lng >= boundingBox.bottomLeft.lng &&
+              lng <= boundingBox.topRight.lng
+          )
+        ) {
+          return false;
+        }
       }
       return true;
     });

@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots Domain/EntityMap Normal 1`] = `
+<div
+  style={
+    Object {
+      "height": "300px",
+      "width": "300px",
+    }
+  }
+/>
+`;
