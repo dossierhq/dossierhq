@@ -22,3 +22,6 @@ Normal.args = {};
 
 export const Number = Template.bind({});
 Number.args = { type: 'number' };
+
+export const NumberFloat = Template.bind({});
+NumberFloat.args = { type: 'number', step: 0.1, min: 0.0, max: 10.0 };
