@@ -5,8 +5,8 @@ import React, { useEffect } from 'react';
 import {
   MapContainer as LeafletMapContainer,
   Marker,
-  Popup,
   TileLayer,
+  Tooltip,
   useMapEvents,
 } from 'react-leaflet';
 
@@ -31,7 +31,7 @@ export interface MapContainerProps {
 
 interface MarkerProps {
   location: Location;
-  title?: string;
+  tooltip?: string;
   onClick?: () => void;
 }
 
@@ -86,14 +86,15 @@ function MapEventListener({
   return null;
 }
 
-function MapContainerMarker({ location, title, onClick }: MarkerProps) {
+function MapContainerMarker({ location, tooltip, onClick }: MarkerProps) {
   return (
     <Marker
       position={[location.lat, location.lng]}
       icon={currentMarkerIcon}
-      title={title}
       eventHandlers={onClick ? { click: onClick } : undefined}
-    />
+    >
+      {tooltip ? <Tooltip>{tooltip}</Tooltip> : null}
+    </Marker>
   );
 }
 MapContainer.Marker = MapContainerMarker;

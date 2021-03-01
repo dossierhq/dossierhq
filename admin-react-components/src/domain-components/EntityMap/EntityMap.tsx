@@ -84,7 +84,7 @@ function EntityMarker({
         <MapContainer.Marker
           key={index}
           location={item.location}
-          title={`${entity._type}: ${entity._name}`}
+          tooltip={`${entity._type}: ${entity._name}`}
           onClick={onClick}
         />
       ))}
