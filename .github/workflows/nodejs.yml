@@ -22,7 +22,9 @@ jobs:
       - name: setup db
         run: |
           npm run db:ensure-dbs
+          npm run db:make-users:superuser
           npm run db:migrate:all
+          npm run db:make-users:no-superuser
       - name: check
         run: |
           npm run ci:check:all

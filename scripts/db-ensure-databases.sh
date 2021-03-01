@@ -10,9 +10,7 @@ function exec_in_container {
 }
 
 function psql_in_container {
-  #exec_in_container psql -d "$DATABASE_URL" "$@"
-  echo psql -d "$DATABASE_URL" "$@"
-  psql -d "$DATABASE_URL" "$@"
+  exec_in_container psql -d "$DATABASE_URL" "$@"
 }
 
 function create_user {

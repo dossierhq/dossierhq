@@ -34,6 +34,7 @@ async function main(targetVersion) {
   } catch (error) {
     console.error(error);
     console.log(error.appliedMigrations);
+    process.exitCode = 1
   }
 }
 
