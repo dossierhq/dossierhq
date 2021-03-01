@@ -14,6 +14,9 @@
     "build": "next build",
     "start": "next start",
     "start:cli": "env TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' npx ts-node cli.ts",
+    "test": "jest",
+    "test:update-snapshot": "jest --updateSnapshot",
+    "test:watch": "jest --watch",
     "ts:check": "tsc --noEmit",
     "upgrade-dependencies": "npx npm-check-updates -u --packageFile ./package.json",
     "upgrade-dependencies:check": "npx npm-check-updates"
@@ -30,20 +33,21 @@
     "next-transpile-modules": "~6.1.0",
     "react": "~17.0.1",
     "react-dom": "~17.0.1",
-    "qs": "~6.9.6",
     "swr": "~0.4.1"
   },
   "devDependencies": {
     "@datadata/postgres": "1.0.0",
     "@types/debug": "~4.1.5",
+    "@types/jest": "~26.0.20",
     "@types/node": "^14.14.25",
     "@types/react": "~17.0.1",
-    "@types/qs": "~6.9.5",
     "@typescript-eslint/eslint-plugin": "^4.14.2",
     "@typescript-eslint/parser": "^4.14.2",
     "eslint": "^7.19.0",
     "eslint-plugin-react": "~7.22.0",
+    "jest": "~26.6.3",
     "prettier": "2.2.1",
+    "ts-jest": "~26.5.0",
     "ts-node": "^9.1.1",
     "typescript": "^4.1.3"
   }
