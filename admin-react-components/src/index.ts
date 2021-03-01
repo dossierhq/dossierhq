@@ -15,6 +15,7 @@ export { EntityFieldListWrapper } from './domain-components/EntityFieldListWrapp
 export { EntityList } from './domain-components/EntityList/EntityList';
 export { EntityMap } from './domain-components/EntityMap/EntityMap';
 export { EntityPicker } from './domain-components/EntityPicker/EntityPicker';
+export { EntitySearch } from './domain-components/EntitySearch/EntitySearch';
 export { Form } from './generic-components/Form/Form';
 export { FormField } from './generic-components/FormField/FormField';
 export { Icon, IconTypes } from './generic-components/Icon/Icon';

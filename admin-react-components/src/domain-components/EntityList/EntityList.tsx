@@ -5,6 +5,7 @@ import { Button, DataDataContext, Message } from '../..';
 
 export interface EntityListProps {
   query?: AdminQuery;
+  style?: React.CSSProperties;
   onEntityClick: (entity: AdminEntity) => void;
 }
 
@@ -12,20 +13,20 @@ interface InnerProps extends EntityListProps {
   useSearchEntities: DataDataContextValue['useSearchEntities'];
 }
 
-export function EntityList({ query, onEntityClick }: EntityListProps): JSX.Element | null {
+export function EntityList({ query, style, onEntityClick }: EntityListProps): JSX.Element | null {
   const context = useContext(DataDataContext);
   if (!context) {
     return null;
   }
   const { useSearchEntities } = context;
-  return <EntityListInner {...{ query, useSearchEntities, onEntityClick }} />;
+  return <EntityListInner {...{ query, style, useSearchEntities, onEntityClick }} />;
 }
 
-function EntityListInner({ query, useSearchEntities, onEntityClick }: InnerProps) {
+function EntityListInner({ query, style, useSearchEntities, onEntityClick }: InnerProps) {
   const { connection, connectionError } = useSearchEntities(query ?? {});
 
   return (
-    <div className="dd list-container">
+    <div className="dd list-container" style={style}>
       {connection &&
         connection.edges.map((edge) => {
           if (edge.node.isOk()) {

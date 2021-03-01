@@ -1,8 +1,7 @@
 import type { EntityReference } from '@datadata/core';
 import React, { useCallback, useContext, useState } from 'react';
 import type { DataDataContextValue, EntityFieldEditorProps } from '../..';
-import { EntityList } from '../..';
-import { Button, DataDataContext, IconButton, Modal } from '../..';
+import { Button, DataDataContext, EntitySearch, IconButton, Modal } from '../..';
 
 type Props = EntityFieldEditorProps<EntityReference>;
 
@@ -63,11 +62,12 @@ function EntityPickerInner({ id, value, schema, fieldSpec, onChange, useEntity }
           <IconButton icon="remove" title="Remove entity" onClick={() => onChange?.(null)} />
         ) : null}
       </div>
-      <Modal show={show} onClose={handleClose}>
+      <Modal show={show} onClose={handleClose} size="large">
         {show ? (
-          <EntityList
+          <EntitySearch
             query={{ entityTypes: fieldSpec.entityTypes }}
             onEntityClick={handleEntityClick}
+            style={{ width: '100%', height: '100%' }}
           />
         ) : null}
       </Modal>

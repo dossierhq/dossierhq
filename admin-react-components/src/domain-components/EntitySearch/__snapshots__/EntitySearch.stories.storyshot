@@ -1,0 +1,68 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots Domain/EntitySearch Normal 1`] = `
+<div
+  style={
+    Object {
+      "inset": 0,
+      "position": "absolute",
+    }
+  }
+>
+  <div
+    style={
+      Object {
+        "display": "flex",
+        "flexDirection": "column",
+        "height": "100%",
+        "width": "100%",
+      }
+    }
+  >
+    <button
+      className="dd button has-background hoverable text-button "
+      onClick={[Function]}
+      type="button"
+    >
+      Toggle list/map
+    </button>
+    <div
+      className="dd list-container"
+      style={
+        Object {
+          "flexGrow": 1,
+        }
+      }
+    >
+      <button
+        className="dd button has-background hoverable text-button "
+        onClick={[Function]}
+        type="button"
+      >
+        Foo: Foo 1
+      </button>
+      <button
+        className="dd button has-background hoverable text-button "
+        onClick={[Function]}
+        type="button"
+      >
+        Foo: Foo deleted
+      </button>
+      <button
+        className="dd button has-background hoverable text-button "
+        onClick={[Function]}
+        type="button"
+      >
+        Bar: Bar 1
+      </button>
+      <button
+        className="dd button has-background hoverable text-button "
+        onClick={[Function]}
+        type="button"
+      >
+        Bar: Bar 2
+      </button>
+    </div>
+  </div>
+</div>
+`;

@@ -288,10 +288,7 @@ ul.dd li {
 }
 
 .dd.modal {
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   position: fixed;
   display: flex;
   flex-direction: column;
@@ -302,10 +299,7 @@ ul.dd li {
 }
 
 .dd.modal-background {
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   position: absolute;
   background-color: #000000cc;
 }
@@ -329,10 +323,7 @@ ul.dd li {
 .dd.stack-layer {
   position: absolute;
   display: flex;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
 }
 
 .dd.stack-layer.left {
@@ -353,8 +344,5 @@ ul.dd li {
   display: flex;
   justify-content: center;
   align-items: center;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
 }
