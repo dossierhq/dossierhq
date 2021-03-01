@@ -298,7 +298,7 @@ export async function updateEntity(
     if (encodeResult.isError()) {
       return encodeResult;
     }
-    const { data, name, referenceIds } = encodeResult.value;
+    const { data, name, referenceIds, locations } = encodeResult.value;
 
     const { id: versionsId } = await Db.queryOne<Pick<EntityVersionsTable, 'id'>>(
       context,
@@ -331,6 +331,21 @@ export async function updateEntity(
       );
       for (const referenceId of referenceIds) {
         qb.addQuery(`($1, ${qb.addValue(referenceId)})`);
+      }
+      await Db.queryNone(context, qb.build());
+    }
+
+    if (locations.length > 0) {
+      const qb = new QueryBuilder(
+        'INSERT INTO entity_version_locations (entity_versions_id, location) VALUES',
+        [versionsId]
+      );
+      for (const location of locations) {
+        qb.addQuery(
+          `($1, ST_SetSRID(ST_Point(${qb.addValue(location.lng)}, ${qb.addValue(
+            location.lat
+          )}), 4326))`
+        );
       }
       await Db.queryNone(context, qb.build());
     }
