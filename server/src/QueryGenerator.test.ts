@@ -314,7 +314,7 @@ describe('searchAdminEntitiesQuery()', () => {
           "cursorType": "int",
           "isForwards": true,
           "pagingCount": 25,
-          "text": "SELECT e.id, e.uuid, e.type, e.name, ev.version, ev.data
+          "text": "SELECT DISTINCT e.id, e.uuid, e.type, e.name, ev.version, ev.data
         FROM entities e, entity_versions ev, entity_version_locations evl WHERE e.latest_draft_entity_versions_id = ev.id AND ev.id = evl.entity_versions_id AND evl.location && ST_MakeEnvelope($1, $2, $3, $4, 4326) ORDER BY e.id LIMIT $5",
           "values": Array [
             11.62,

@@ -35,6 +35,8 @@ export default class QueryBuilder {
       separator = ', ';
     } else if (!currentEndsWithKeyword && newStartsWithKeyword) {
       separator = ' ';
+    } else if (currentEndsWithKeyword && newStartsWithKeyword) {
+      separator = ' ';
     }
     this.#query += separator + segmentToAdd;
   }

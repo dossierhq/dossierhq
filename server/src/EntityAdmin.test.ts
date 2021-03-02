@@ -1,5 +1,12 @@
 import { CoreTestUtils, ErrorType, FieldType } from '@datadata/core';
-import type { AdminEntity, AdminQuery, Connection, Edge, Paging } from '@datadata/core';
+import type {
+  AdminEntity,
+  AdminQuery,
+  BoundingBox,
+  Connection,
+  Edge,
+  Paging,
+} from '@datadata/core';
 import type { Server, SessionContext } from '.';
 import { EntityAdmin, isPagingForwards, PublishedEntity } from '.';
 import { createTestServer, ensureSessionContext, updateSchema } from './ServerTestUtils';
@@ -266,6 +273,20 @@ async function createBarWithFooBazReferences(
     }
   }
   return { barId, fooEntities, bazEntities };
+}
+
+/** Random bounding box (which doesn't wrap 180/-180 longitude) */
+function randomBoundingBox(heightLat = 1.0, widthLng = 1.0): BoundingBox {
+  function randomInRange(min: number, max: number) {
+    return min + Math.random() * (max - min);
+  }
+
+  const bottomLeft = {
+    lat: randomInRange(-90, 90 - heightLat),
+    lng: randomInRange(-180, 180 - widthLng),
+  };
+  const topRight = { lat: bottomLeft.lat + heightLat, lng: bottomLeft.lng + widthLng };
+  return { bottomLeft, topRight };
 }
 
 describe('getEntity()', () => {
@@ -1578,6 +1599,101 @@ describe('searchEntities()', () => {
       expect(searchResult.value?.edges[0].node).toEqual({
         value: bazEntity,
       });
+    }
+  });
+
+  test('Query based on bounding box', async () => {
+    const boundingBox = randomBoundingBox();
+    const center = {
+      lat: (boundingBox.bottomLeft.lat + boundingBox.topRight.lat) / 2,
+      lng: (boundingBox.bottomLeft.lng + boundingBox.topRight.lng) / 2,
+    };
+    const createResult = await EntityAdmin.createEntity(
+      context,
+      { _type: 'EntityAdminBaz', _name: 'Baz', location: center },
+      { publish: true }
+    );
+
+    if (expectOkResult(createResult)) {
+      const { id: fooId } = createResult.value;
+      const searchResult = await EntityAdmin.searchEntities(context, { boundingBox });
+      if (expectOkResult(searchResult)) {
+        let fooIdCount = 0;
+        for (const edge of searchResult.value?.edges ?? []) {
+          if (expectOkResult(edge.node)) {
+            if (edge.node.value.id === fooId) {
+              fooIdCount += 1;
+            }
+          }
+        }
+        expect(fooIdCount).toBe(1);
+      }
+    }
+  });
+
+  test('Query based on bounding box (outside)', async () => {
+    const boundingBox = randomBoundingBox();
+    const outside = {
+      lat: (boundingBox.bottomLeft.lat + boundingBox.topRight.lat) / 2,
+      lng:
+        boundingBox.bottomLeft.lng > 0
+          ? boundingBox.bottomLeft.lng - 1
+          : boundingBox.topRight.lng + 1,
+    };
+    const createResult = await EntityAdmin.createEntity(
+      context,
+      { _type: 'EntityAdminBaz', _name: 'Baz', location: outside },
+      { publish: true }
+    );
+
+    if (expectOkResult(createResult)) {
+      const { id: fooId } = createResult.value;
+      const searchResult = await EntityAdmin.searchEntities(context, { boundingBox });
+      if (expectOkResult(searchResult)) {
+        let fooIdCount = 0;
+        for (const edge of searchResult.value?.edges ?? []) {
+          if (expectOkResult(edge.node)) {
+            if (edge.node.value.id === fooId) {
+              fooIdCount += 1;
+            }
+          }
+        }
+        expect(fooIdCount).toBe(0);
+      }
+    }
+  });
+
+  test('Query based on bounding box with two locations inside', async () => {
+    const boundingBox = randomBoundingBox();
+    const center = {
+      lat: (boundingBox.bottomLeft.lat + boundingBox.topRight.lat) / 2,
+      lng: (boundingBox.bottomLeft.lng + boundingBox.topRight.lng) / 2,
+    };
+    const inside = {
+      lat: center.lat,
+      lng: (center.lng + boundingBox.topRight.lng) / 2,
+    };
+
+    const createResult = await EntityAdmin.createEntity(
+      context,
+      { _type: 'EntityAdminBaz', _name: 'Baz', locations: [center, inside] },
+      { publish: true }
+    );
+
+    if (expectOkResult(createResult)) {
+      const { id: fooId } = createResult.value;
+      const searchResult = await EntityAdmin.searchEntities(context, { boundingBox });
+      if (expectOkResult(searchResult)) {
+        let fooIdCount = 0;
+        for (const edge of searchResult.value?.edges ?? []) {
+          if (expectOkResult(edge.node)) {
+            if (edge.node.value.id === fooId) {
+              fooIdCount += 1;
+            }
+          }
+        }
+        expect(fooIdCount).toBe(1);
+      }
     }
   });
 });
