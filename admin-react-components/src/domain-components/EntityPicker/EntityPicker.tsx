@@ -3,9 +3,9 @@ import React, { useCallback, useContext, useState } from 'react';
 import type { DataDataContextValue, EntityFieldEditorProps } from '../..';
 import { Button, DataDataContext, EntitySearch, IconButton, Modal } from '../..';
 
-type Props = EntityFieldEditorProps<EntityReference>;
+export type EntityPickerProps = EntityFieldEditorProps<EntityReference>;
 
-interface InnerProps extends Props {
+interface InnerProps extends EntityPickerProps {
   useEntity: DataDataContextValue['useEntity'];
 }
 
@@ -15,7 +15,7 @@ export function EntityPicker({
   schema,
   fieldSpec,
   onChange,
-}: Props): JSX.Element | null {
+}: EntityPickerProps): JSX.Element | null {
   const context = useContext(DataDataContext);
   if (!context) {
     return null;

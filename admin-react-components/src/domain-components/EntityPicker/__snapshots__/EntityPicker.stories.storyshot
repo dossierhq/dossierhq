@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots Domain/EntityPicker Initial Bar 1`] = `
+<div
+  style={
+    Object {
+      "display": "flex",
+    }
+  }
+>
+  <button
+    className="dd button has-background hoverable text-button "
+    id="id-123"
+    onClick={[Function]}
+    type="button"
+  >
+    Bar 2
+  </button>
+  <button
+    className="dd icon-button"
+    onClick={[Function]}
+    title="Remove entity"
+    type="button"
+  >
+    <span
+      className="dd icon icon-remove"
+    />
+  </button>
+</div>
+`;
+
+exports[`Storyshots Domain/EntityPicker Normal Bar 1`] = `
+<div
+  style={
+    Object {
+      "display": "flex",
+    }
+  }
+>
+  <button
+    className="dd button has-background hoverable text-button "
+    id="id-123"
+    onClick={[Function]}
+    type="button"
+  >
+    Select entity
+  </button>
+</div>
+`;
