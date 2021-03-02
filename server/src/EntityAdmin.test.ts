@@ -227,7 +227,8 @@ async function visitAllEntityPages(
 async function createBarWithFooBazReferences(
   context: SessionContext,
   fooCount: number,
-  bazCount: number
+  bazCount: number,
+  bazReferencesPerEntity = 1
 ) {
   const createBarResult = await EntityAdmin.createEntity(
     context,
@@ -254,9 +255,10 @@ async function createBarWithFooBazReferences(
     }
   }
   for (let i = 0; i < bazCount; i += 1) {
+    const bars = [...new Array(bazReferencesPerEntity - 1)].map(() => ({ id: barId }));
     const createBazResult = await EntityAdmin.createEntity(
       context,
-      { _type: 'EntityAdminBaz', _name: 'Baz: ' + i, bar: { id: barId } },
+      { _type: 'EntityAdminBaz', _name: 'Baz: ' + i, bar: { id: barId }, bars },
       { publish: true }
     );
     if (expectOkResult(createBazResult)) {
@@ -1551,6 +1553,18 @@ describe('searchEntities()', () => {
     }
   });
 
+  test('Query based on referencing, two references from one entity', async () => {
+    const { barId, bazEntities } = await createBarWithFooBazReferences(context, 0, 1, 2);
+
+    const searchResult = await EntityAdmin.searchEntities(context, { referencing: barId });
+    if (expectOkResult(searchResult)) {
+      expect(searchResult.value?.edges).toHaveLength(1);
+      expect(searchResult.value?.edges[0].node).toEqual({
+        value: bazEntities[0],
+      });
+    }
+  });
+
   test('Query based on referencing and entityTypes, one reference', async () => {
     const { barId, bazEntities } = await createBarWithFooBazReferences(context, 1, 1);
     const [bazEntity] = bazEntities;
@@ -1603,6 +1617,15 @@ describe('getTotalCount', () => {
       entityTypes: ['EntityAdminBaz'],
       referencing: barId,
     });
+    if (expectOkResult(result)) {
+      expect(result.value).toBe(1);
+    }
+  });
+
+  test('Query based on referencing, two references from one entity', async () => {
+    const { barId } = await createBarWithFooBazReferences(context, 0, 1, 2);
+
+    const result = await EntityAdmin.getTotalCount(context, { referencing: barId });
     if (expectOkResult(result)) {
       expect(result.value).toBe(1);
     }
