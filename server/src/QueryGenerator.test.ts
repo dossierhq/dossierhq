@@ -502,7 +502,7 @@ describe('totalAdminEntitiesQuery()', () => {
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
-          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e, entity_versions ev, entity_version_locations evl WHERE e.latest_draft_entity_versions_id = ev.id AND ev.id = evl.entity_versions_id AND evl.location && ST_MakeEnvelope($1, $2, $3, $4, 4326)",
+          "text": "SELECT COUNT(DISTINCT e.id)::integer AS count FROM entities e, entity_versions ev, entity_version_locations evl WHERE e.latest_draft_entity_versions_id = ev.id AND ev.id = evl.entity_versions_id AND evl.location && ST_MakeEnvelope($1, $2, $3, $4, 4326)",
           "values": Array [
             11.62,
             55.07,
