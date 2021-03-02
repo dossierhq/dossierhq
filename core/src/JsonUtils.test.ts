@@ -1,5 +1,21 @@
-import type { Connection, Edge, JsonConnection, JsonEdge, JsonResult } from '.';
-import { convertJsonConnection, convertJsonEdge, convertJsonResult, ErrorType, notOk, ok } from '.';
+import type {
+  AdminEntityHistory,
+  Connection,
+  Edge,
+  JsonAdminEntityHistory,
+  JsonConnection,
+  JsonEdge,
+  JsonResult,
+} from '.';
+import {
+  convertJsonConnection,
+  convertJsonEdge,
+  convertJsonEntityVersion,
+  convertJsonResult,
+  ErrorType,
+  notOk,
+  ok,
+} from '.';
 import { expectErrorResult, expectOkResult } from './CoreTestUtils';
 
 interface CustomEdge extends Edge<{ foo: string }, ErrorType> {
@@ -72,5 +88,23 @@ describe('convertJsonResult()', () => {
     const asJson: JsonResult<{ foo: number }, ErrorType> = JSON.parse(JSON.stringify(expected));
     const converted = convertJsonResult(asJson);
     expectErrorResult(converted, ErrorType.NotAuthenticated, 'Error message');
+  });
+});
+
+describe('convertJsonEntityVersion()', () => {
+  test('History with one version', () => {
+    const expected: AdminEntityHistory = {
+      id: '123',
+      type: 'Foo',
+      name: 'Hello',
+      versions: [
+        { createdAt: new Date(), createdBy: '4321', deleted: false, published: true, version: 0 },
+      ],
+    };
+    const asJson: JsonAdminEntityHistory = JSON.parse(JSON.stringify(expected));
+    const converted = convertJsonEntityVersion(asJson);
+    expect(converted).toEqual(expected);
+
+    expect(converted.versions[0].createdAt).toBeInstanceOf(Date);
   });
 });

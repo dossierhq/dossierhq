@@ -1,4 +1,4 @@
-import type { AdminEntity, Location } from '@datadata/core';
+import type { AdminEntity, AdminEntityHistory, Location } from '@datadata/core';
 import { isLocationItemField, visitFieldsRecursively } from '@datadata/core';
 import { notOk, ok } from '@datadata/core';
 import { v4 as uuidv4 } from 'uuid';
@@ -37,6 +37,14 @@ export default class TestContextValue implements DataDataContextValue {
       return { entity: { item: entity } };
     }
     return { entityError: notOk.NotFound('No such entity or version') };
+  };
+
+  useEntityHistory: DataDataContextValue['useEntityHistory'] = (id) => {
+    if (!id) {
+      return {};
+    }
+    return { entityHistoryError: notOk.Generic('Not yet implemented') };
+    //TODO implement
   };
 
   useSearchEntities: DataDataContextValue['useSearchEntities'] = (query, paging) => {

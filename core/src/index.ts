@@ -1,5 +1,11 @@
 export type { ErrorResult, OkResult, PromiseResult, Result } from './ErrorResult';
-export type { JsonConnection, JsonEdge, JsonResult } from './JsonUtils';
+export type {
+  JsonAdminEntityHistory,
+  JsonAdminEntityVersionInfo,
+  JsonConnection,
+  JsonEdge,
+  JsonResult,
+} from './JsonUtils';
 export type {
   EntityTypeSpecification,
   FieldSpecification,
@@ -49,6 +55,11 @@ export {
   visitFieldsRecursively,
   visitorPathToString,
 } from './ItemUtils';
-export { convertJsonConnection, convertJsonEdge, convertJsonResult } from './JsonUtils';
+export {
+  convertJsonConnection,
+  convertJsonEdge,
+  convertJsonEntityVersion,
+  convertJsonResult,
+} from './JsonUtils';
 export { FieldType, Schema } from './Schema';
 export * as CoreTestUtils from './CoreTestUtils';

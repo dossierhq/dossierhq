@@ -7,7 +7,7 @@ export interface EntityMetadataProps {
 }
 
 interface EntityMetadataInnerProps extends EntityMetadataProps {
-  useEntity: DataDataContextValue['useEntity'];
+  useEntityHistory: DataDataContextValue['useEntityHistory'];
 }
 
 export function EntityMetadata({ entityId }: EntityMetadataProps): JSX.Element {
@@ -17,30 +17,49 @@ export function EntityMetadata({ entityId }: EntityMetadataProps): JSX.Element {
     return <Loader />;
   }
 
-  const { useEntity } = context;
+  const { useEntityHistory } = context;
 
-  return <EntityMetadataInner {...{ entityId, useEntity }} />;
+  return <EntityMetadataInner {...{ entityId, useEntityHistory }} />;
 }
 
-function EntityMetadataInner({ entityId, useEntity }: EntityMetadataInnerProps) {
-  const { entity, entityError } = useEntity(entityId, {});
+function EntityMetadataInner({ entityId, useEntityHistory }: EntityMetadataInnerProps) {
+  const { entityHistory, entityHistoryError } = useEntityHistory(entityId);
 
-  if (!entity && !entityError) {
+  if (!entityHistory && !entityHistoryError) {
     return <Loader />;
   }
 
   return (
     <div className="dd has-shadow has-background">
-      {entity ? (
+      {entityHistory ? (
         <>
-          <p className="dd text-body1">{entity.item._name}</p>
-          <p className="dd text-body1">{entity.item._type}</p>
-          <p className="dd text-body1">{entity.item._version}</p>
-          <p className="dd text-body1">{entity.item.id}</p>
+          <p className="dd text-body1">{entityHistory.name}</p>
+          <p className="dd text-body1">{entityHistory.type}</p>
+          <p className="dd text-body1">{entityHistory.id}</p>
+          {entityHistory.versions.map((version) => {
+            const status = [];
+            if (version.published) {
+              status.push('Published');
+            }
+            if (version.deleted) {
+              status.push('Deleted');
+            }
+            return (
+              <div key={version.version} className="dd has-shadow">
+                <p className="dd text-body1">{version.version}</p>
+                <p className="dd text-body1">{version.createdAt.toISOString()}</p>
+                <p className="dd text-body1">{version.createdBy}</p>
+                {status.length > 0 ? <p className="dd text-body1">{status.join(', ')}</p> : null}
+              </div>
+            );
+          })}
         </>
       ) : null}
-      {entityError ? (
-        <Message kind="danger" message={`${entityError.error}: ${entityError.message}`} />
+      {entityHistoryError ? (
+        <Message
+          kind="danger"
+          message={`${entityHistoryError.error}: ${entityHistoryError.message}`}
+        />
       ) : null}
     </div>
   );
