@@ -10,7 +10,9 @@ export type {
 export type {
   AdminEntity,
   AdminEntityCreate,
+  AdminEntityHistory,
   AdminEntityUpdate,
+  AdminEntityVersionInfo,
   AdminQuery,
   BoundingBox,
   Connection,
@@ -18,8 +20,8 @@ export type {
   Entity,
   EntityReference,
   Location,
-  Paging,
   PageInfo,
+  Paging,
   Value,
 } from './Types';
 

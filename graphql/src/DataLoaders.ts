@@ -6,6 +6,7 @@ import {
 } from '@datadata/core';
 import type {
   AdminEntity,
+  AdminEntityHistory,
   AdminQuery,
   Entity,
   EntityTypeSpecification,
@@ -14,7 +15,7 @@ import type {
   Value,
   ValueTypeSpecification,
 } from '@datadata/core';
-import type { AdminEntityHistory, SessionContext } from '@datadata/server';
+import type { SessionContext } from '@datadata/server';
 import { EntityAdmin, PublishedEntity } from '@datadata/server';
 import type { GraphQLResolveInfo } from 'graphql';
 import type { SessionGraphQLContext } from './GraphQLSchemaGenerator';

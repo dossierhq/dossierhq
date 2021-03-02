@@ -2,7 +2,9 @@ import { notOk, ok } from '@datadata/core';
 import type {
   AdminEntity,
   AdminEntityCreate,
+  AdminEntityHistory,
   AdminEntityUpdate,
+  AdminEntityVersionInfo,
   AdminQuery,
   Connection,
   Edge,
@@ -25,21 +27,6 @@ import type { AdminEntityValues } from './EntityCodec';
 import QueryBuilder from './QueryBuilder';
 import { searchAdminEntitiesQuery, totalAdminEntitiesQuery } from './QueryGenerator';
 import type { SearchAdminEntitiesItem } from './QueryGenerator';
-
-export interface AdminEntityHistory {
-  id: string;
-  type: string;
-  name: string;
-  versions: AdminEntityVersionInfo[];
-}
-
-export interface AdminEntityVersionInfo {
-  version: number;
-  deleted: boolean;
-  published: boolean;
-  createdBy: string;
-  createdAt: Date;
-}
 
 export async function getEntity(
   context: SessionContext,
