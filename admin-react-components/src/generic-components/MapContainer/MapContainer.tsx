@@ -74,13 +74,23 @@ function MapEventListener({
   const map = useMapEvents({
     moveend: (unusedEvent) => {
       const bounds = map.getBounds();
-      onBoundingBoxChanged({ bottomLeft: bounds.getSouthWest(), topRight: bounds.getNorthEast() });
+      onBoundingBoxChanged({
+        minLat: bounds.getSouth(),
+        maxLat: bounds.getNorth(),
+        minLng: bounds.getWest(),
+        maxLng: bounds.getEast(),
+      });
     },
   });
 
   useEffect(() => {
     const bounds = map.getBounds();
-    onBoundingBoxChanged({ bottomLeft: bounds.getSouthWest(), topRight: bounds.getNorthEast() });
+    onBoundingBoxChanged({
+      minLat: bounds.getSouth(),
+      maxLat: bounds.getNorth(),
+      minLng: bounds.getWest(),
+      maxLng: bounds.getEast(),
+    });
   }, [map, onBoundingBoxChanged]);
 
   return null;

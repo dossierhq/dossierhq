@@ -301,8 +301,10 @@ describe('searchAdminEntitiesQuery()', () => {
         context,
         {
           boundingBox: {
-            bottomLeft: { lat: 55.07, lng: 11.62 },
-            topRight: { lat: 56.79, lng: 16.25 },
+            minLat: 55.07,
+            maxLat: 56.79,
+            minLng: 11.62,
+            maxLng: 16.25,
           },
         },
         undefined
@@ -491,8 +493,10 @@ describe('totalAdminEntitiesQuery()', () => {
     expect(
       totalAdminEntitiesQuery(context, {
         boundingBox: {
-          bottomLeft: { lat: 55.07, lng: 11.62 },
-          topRight: { lat: 56.79, lng: 16.25 },
+          minLat: 55.07,
+          maxLat: 56.79,
+          minLng: 11.62,
+          maxLng: 16.25,
         },
       })
     ).toMatchInlineSnapshot(`
