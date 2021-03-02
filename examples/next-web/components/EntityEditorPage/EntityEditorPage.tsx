@@ -1,4 +1,4 @@
-import { DataDataContext, EntityEditor } from '@datadata/admin-react-components';
+import { DataDataContext, EntityEditorContainer } from '@datadata/admin-react-components';
 import type { EntityEditorProps } from '@datadata/admin-react-components';
 import { useInitializeContext } from '../../contexts/DataDataContext';
 
@@ -14,7 +14,7 @@ export function EntityEditorPage({ entityId, entityType }: EntityEditorPageProps
 
   return (
     <DataDataContext.Provider value={contextValue}>
-      <EntityEditor entity={entity} />
+      <EntityEditorContainer entity={entity} />
     </DataDataContext.Provider>
   );
 }

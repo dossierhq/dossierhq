@@ -24,10 +24,12 @@ import type { DataDataContextValue, MessageItem } from '../..';
 export interface EntityEditorProps {
   idPrefix?: string;
   entity: { id: string } | { type: string; isNew: true };
+  style?: React.CSSProperties;
 }
 
 interface EntityEditorInnerProps {
   idPrefix: string;
+  style?: React.CSSProperties;
   schema: Schema;
   entitySelector: EntityEditorProps['entity'];
   useEntity: DataDataContextValue['useEntity'];
@@ -37,6 +39,7 @@ interface EntityEditorInnerProps {
 
 interface EntityEditorInnermostProps {
   idPrefix: string;
+  style?: React.CSSProperties;
   schema: Schema;
   initialEditorState: EntityEditorState;
   createEntity: DataDataContextValue['createEntity'];
@@ -59,7 +62,7 @@ interface FieldEditorState {
   initialValue: unknown;
 }
 
-export function EntityEditor({ idPrefix, entity }: EntityEditorProps): JSX.Element | null {
+export function EntityEditor({ idPrefix, entity, style }: EntityEditorProps): JSX.Element | null {
   const context = useContext(DataDataContext);
   const [resolvedIdPrefix] = useState(
     idPrefix
@@ -80,6 +83,7 @@ export function EntityEditor({ idPrefix, entity }: EntityEditorProps): JSX.Eleme
       {...{
         idPrefix: resolvedIdPrefix,
         entitySelector: entity,
+        style,
         schema,
         useEntity,
         createEntity,
@@ -93,6 +97,7 @@ function EntityEditorInner({
   idPrefix,
   schema,
   entitySelector,
+  style,
   useEntity,
   createEntity,
   updateEntity,
@@ -153,6 +158,7 @@ function EntityEditorInner({
           {...{
             idPrefix,
             initialEditorState,
+            style,
             schema,
             createEntity,
             updateEntity,
@@ -167,6 +173,7 @@ function EntityEditorInner({
 function EntityEditorInnermost({
   idPrefix,
   initialEditorState,
+  style,
   schema,
   createEntity,
   updateEntity,
@@ -191,6 +198,7 @@ function EntityEditorInnermost({
           onEntityIdCreated
         )
       }
+      style={style}
     >
       <FormField htmlFor={nameId} label="Name">
         <InputText

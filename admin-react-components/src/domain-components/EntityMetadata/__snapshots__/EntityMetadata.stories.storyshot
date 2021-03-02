@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots Domain/EntityMetadata Normal 1`] = `
+<div
+  className="dd has-shadow has-background"
+>
+  <p
+    className="dd text-body1"
+  >
+    Foo 1
+  </p>
+  <p
+    className="dd text-body1"
+  >
+    Foo
+  </p>
+  <p
+    className="dd text-body1"
+  >
+    0
+  </p>
+  <p
+    className="dd text-body1"
+  >
+    fc66b4d7-61ff-44d4-8f68-cb7f526df046
+  </p>
+</div>
+`;
