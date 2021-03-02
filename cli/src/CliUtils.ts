@@ -17,6 +17,7 @@ import {
 } from '@datadata/core';
 import type {
   AdminEntity,
+  BoundingBox,
   Entity,
   EntityReference,
   EntityTypeSpecification,
@@ -138,6 +139,12 @@ export function formatValueItemOneLine(value: Value): string {
 
 export function formatLocation({ lat, lng }: Location): string {
   return `${chalk.grey('(')}${lat}${chalk.grey(',')} ${lng}${chalk.grey(')')}`;
+}
+
+export function formatBoundingBox({ minLat, maxLat, minLng, maxLng }: BoundingBox): string {
+  return `${minLat}${chalk.grey('–')}${maxLat}${chalk.grey(',')} ${minLng}${chalk.grey(
+    '–'
+  )}${maxLng}`;
 }
 
 export function formatFieldValue(fieldSpec: FieldSpecification, value: unknown): string {

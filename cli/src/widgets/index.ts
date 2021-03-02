@@ -1,3 +1,4 @@
+export * from './BoundingBoxEdit';
 export * from './Confirm';
 export * from './ItemSelector';
 export * from './LocationEdit';
