@@ -121,7 +121,13 @@ export function totalAdminEntitiesQuery(
   query: AdminQuery | undefined
 ): Result<{ text: string; values: unknown[] }, ErrorType.BadRequest> {
   // Convert count to ::integer since count() is bigint (js doesn't support 64 bit numbers so pg return it as string)
-  const qb = new QueryBuilder('SELECT COUNT(e.id)::integer AS count FROM entities e');
+  const qb = new QueryBuilder('SELECT');
+  if (query?.boundingBox) {
+    qb.addQuery('COUNT(DISTINCT e.id)::integer');
+  } else {
+    qb.addQuery('COUNT(e.id)::integer');
+  }
+  qb.addQuery('AS count FROM entities e');
 
   if (query?.referencing || query?.boundingBox) {
     qb.addQuery('entity_versions ev');

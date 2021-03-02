@@ -1742,6 +1742,36 @@ describe('getTotalCount', () => {
       expect(result.value).toBe(1);
     }
   });
+
+  test('Query based on bounding box with two locations inside', async () => {
+    const boundingBox = randomBoundingBox();
+    const center = {
+      lat: (boundingBox.minLat + boundingBox.maxLat) / 2,
+      lng: (boundingBox.minLng + boundingBox.maxLng) / 2,
+    };
+    const inside = {
+      lat: center.lat,
+      lng: (center.lng + boundingBox.maxLng) / 2,
+    };
+
+    const createResult = await EntityAdmin.createEntity(
+      context,
+      { _type: 'EntityAdminBaz', _name: 'Baz', locations: [center, inside] },
+      { publish: true }
+    );
+
+    if (expectOkResult(createResult)) {
+      const searchResult = await EntityAdmin.searchEntities(context, { boundingBox });
+
+      const totalResult = await EntityAdmin.getTotalCount(context, { boundingBox });
+      if (expectOkResult(searchResult) && expectOkResult(totalResult)) {
+        // Hopefully there aren't too many entities in the bounding box
+        expect(searchResult.value?.pageInfo.hasNextPage).toBeFalsy();
+
+        expect(totalResult.value).toBe(searchResult.value?.edges.length);
+      }
+    }
+  });
 });
 
 describe('updateEntity()', () => {
