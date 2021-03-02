@@ -56,6 +56,21 @@ export interface AdminEntityUpdate {
   [fieldName: string]: unknown;
 }
 
+export interface AdminEntityHistory {
+  id: string;
+  type: string;
+  name: string;
+  versions: AdminEntityVersionInfo[];
+}
+
+export interface AdminEntityVersionInfo {
+  version: number;
+  deleted: boolean;
+  published: boolean;
+  createdBy: string;
+  createdAt: Date;
+}
+
 export interface AdminQuery {
   entityTypes?: string[];
   /** Entities referencing the entity (by id) */
