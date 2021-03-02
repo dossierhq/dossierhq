@@ -281,12 +281,11 @@ function randomBoundingBox(heightLat = 1.0, widthLng = 1.0): BoundingBox {
     return min + Math.random() * (max - min);
   }
 
-  const bottomLeft = {
-    lat: randomInRange(-90, 90 - heightLat),
-    lng: randomInRange(-180, 180 - widthLng),
-  };
-  const topRight = { lat: bottomLeft.lat + heightLat, lng: bottomLeft.lng + widthLng };
-  return { bottomLeft, topRight };
+  const minLat = randomInRange(-90, 90 - heightLat);
+  const minLng = randomInRange(-180, 180 - widthLng);
+  const maxLat = minLat + heightLat;
+  const maxLng = minLng + widthLng;
+  return { minLat, maxLat, minLng, maxLng };
 }
 
 describe('getEntity()', () => {
@@ -1605,8 +1604,8 @@ describe('searchEntities()', () => {
   test('Query based on bounding box', async () => {
     const boundingBox = randomBoundingBox();
     const center = {
-      lat: (boundingBox.bottomLeft.lat + boundingBox.topRight.lat) / 2,
-      lng: (boundingBox.bottomLeft.lng + boundingBox.topRight.lng) / 2,
+      lat: (boundingBox.minLat + boundingBox.maxLat) / 2,
+      lng: (boundingBox.minLng + boundingBox.maxLng) / 2,
     };
     const createResult = await EntityAdmin.createEntity(
       context,
@@ -1634,11 +1633,8 @@ describe('searchEntities()', () => {
   test('Query based on bounding box (outside)', async () => {
     const boundingBox = randomBoundingBox();
     const outside = {
-      lat: (boundingBox.bottomLeft.lat + boundingBox.topRight.lat) / 2,
-      lng:
-        boundingBox.bottomLeft.lng > 0
-          ? boundingBox.bottomLeft.lng - 1
-          : boundingBox.topRight.lng + 1,
+      lat: (boundingBox.minLat + boundingBox.maxLat) / 2,
+      lng: boundingBox.minLng > 0 ? boundingBox.minLng - 1 : boundingBox.maxLng + 1,
     };
     const createResult = await EntityAdmin.createEntity(
       context,
@@ -1666,12 +1662,12 @@ describe('searchEntities()', () => {
   test('Query based on bounding box with two locations inside', async () => {
     const boundingBox = randomBoundingBox();
     const center = {
-      lat: (boundingBox.bottomLeft.lat + boundingBox.topRight.lat) / 2,
-      lng: (boundingBox.bottomLeft.lng + boundingBox.topRight.lng) / 2,
+      lat: (boundingBox.minLat + boundingBox.maxLat) / 2,
+      lng: (boundingBox.minLng + boundingBox.maxLng) / 2,
     };
     const inside = {
       lat: center.lat,
-      lng: (center.lng + boundingBox.topRight.lng) / 2,
+      lng: (center.lng + boundingBox.maxLng) / 2,
     };
 
     const createResult = await EntityAdmin.createEntity(

@@ -69,10 +69,10 @@ export default class TestContextValue implements DataDataContextValue {
         if (
           !locations.find(
             ({ lat, lng }) =>
-              lat >= boundingBox.bottomLeft.lat &&
-              lat <= boundingBox.topRight.lat &&
-              lng >= boundingBox.bottomLeft.lng &&
-              lng <= boundingBox.topRight.lng
+              lat >= boundingBox.minLat &&
+              lat <= boundingBox.maxLat &&
+              lng >= boundingBox.minLng &&
+              lng <= boundingBox.maxLng
           )
         ) {
           return false;

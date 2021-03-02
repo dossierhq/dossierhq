@@ -17,8 +17,10 @@ export interface Location {
 }
 
 export interface BoundingBox {
-  bottomLeft: Location;
-  topRight: Location;
+  minLat: number;
+  maxLat: number;
+  minLng: number;
+  maxLng: number;
 }
 
 //TODO rename to ValueItem
