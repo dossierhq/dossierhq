@@ -18,6 +18,10 @@ export class SlowTestContextValue implements DataDataContextValue {
     return this.#inner.useEntity(id, options);
   };
 
+  useEntityHistory: DataDataContextValue['useEntityHistory'] = (id) => {
+    return this.#inner.useEntityHistory(id);
+  };
+
   useSearchEntities: DataDataContextValue['useSearchEntities'] = (query, paging) => {
     return this.#inner.useSearchEntities(query, paging);
   };

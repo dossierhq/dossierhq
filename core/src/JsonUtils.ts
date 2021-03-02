@@ -1,4 +1,12 @@
-import type { Connection, Edge, ErrorType, PageInfo, Result } from '.';
+import type {
+  AdminEntityHistory,
+  AdminEntityVersionInfo,
+  Connection,
+  Edge,
+  ErrorType,
+  PageInfo,
+  Result,
+} from '.';
 import { createErrorResult, ok } from '.';
 
 export interface JsonConnection<T extends JsonEdge<unknown, ErrorType>> {
@@ -14,6 +22,14 @@ export interface JsonEdge<TOk, TError extends ErrorType> {
 export type JsonResult<TOk, TError extends ErrorType> =
   | { value: TOk }
   | { error: TError; message: string };
+
+export interface JsonAdminEntityHistory extends Omit<AdminEntityHistory, 'versions'> {
+  versions: JsonAdminEntityVersionInfo[];
+}
+
+export interface JsonAdminEntityVersionInfo extends Omit<AdminEntityVersionInfo, 'createdAt'> {
+  createdAt: string;
+}
 
 export function convertJsonConnection<
   TIn extends JsonEdge<unknown, ErrorType>,
@@ -35,4 +51,16 @@ export function convertJsonResult<TOk, TError extends ErrorType>(
     return ok(jsonResult.value);
   }
   return createErrorResult(jsonResult.error, jsonResult.message);
+}
+
+export function convertJsonEntityVersion(
+  entityVersion: JsonAdminEntityHistory
+): AdminEntityHistory {
+  return {
+    ...entityVersion,
+    versions: entityVersion.versions.map((version) => ({
+      ...version,
+      createdAt: new Date(version.createdAt),
+    })),
+  };
 }

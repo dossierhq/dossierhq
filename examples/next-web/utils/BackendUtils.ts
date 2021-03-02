@@ -16,6 +16,7 @@ export const urls = {
   createEntity: `${baseUrl}/entities`,
   getEntity: (id: string, options: { version?: number | null }): string =>
     `${baseUrl}/entities/${id}?${encodeQuery({ options })}`,
+  getEntityHistory: (id: string): string => `${baseUrl}/entity-history/${id}`,
   searchEntities: (query?: AdminQuery, paging?: Paging): string =>
     `${baseUrl}/search-entities?${encodeQuery({ query, paging })}`,
 };

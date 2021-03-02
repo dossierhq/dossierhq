@@ -1,6 +1,7 @@
 import type {
   AdminEntity,
   AdminEntityCreate,
+  AdminEntityHistory,
   AdminEntityUpdate,
   AdminQuery,
   Connection,
@@ -21,6 +22,11 @@ export interface DataDataContextValue {
     id: string | undefined,
     options: { version?: number | null }
   ) => { entity?: { item: AdminEntity }; entityError?: ErrorResult<unknown, ErrorType> };
+
+  /** Loads the history for an entity. If `id` is `undefined` no data is fetched */
+  useEntityHistory: (
+    id: string | undefined
+  ) => { entityHistory?: AdminEntityHistory; entityHistoryError?: ErrorResult<unknown, ErrorType> };
 
   /** Searches for entities. If `query` is `undefined` no data is fetched */
   useSearchEntities: (

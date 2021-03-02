@@ -3,6 +3,7 @@ import type { ErrorResultError } from '@datadata/core';
 import {
   convertJsonConnection,
   convertJsonEdge,
+  convertJsonEntityVersion,
   createErrorResultFromError,
   ErrorType,
   ok,
@@ -12,6 +13,7 @@ import { useEffect, useMemo, useState } from 'react';
 import useSWR, { mutate } from 'swr';
 import type { EntityCreateRequest, EntityUpdateRequest } from '../types/RequestTypes';
 import type {
+  EntityHistoryResponse,
   EntityResponse,
   SchemaResponse,
   SearchEntitiesResponse,
@@ -32,6 +34,19 @@ class ContextValue implements DataDataContextValue {
     );
     const entityError = error ? createErrorResultFromError(error) : undefined;
     return { entity: data, entityError };
+  };
+
+  useEntityHistory: DataDataContextValue['useEntityHistory'] = (id) => {
+    const { data, error } = useSWR<EntityHistoryResponse, ErrorResultError>(
+      id ? urls.getEntityHistory(id) : null,
+      swrFetcher
+    );
+
+    const entityHistoryError = error ? createErrorResultFromError(error) : undefined;
+    if (data) {
+      return { entityHistory: convertJsonEntityVersion(data), entityHistoryError };
+    }
+    return { entityHistory: undefined, entityHistoryError };
   };
 
   useSearchEntities: DataDataContextValue['useSearchEntities'] = (query, paging) => {

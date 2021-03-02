@@ -1,6 +1,7 @@
 import type {
   AdminEntity,
   ErrorType,
+  JsonAdminEntityHistory,
   JsonConnection,
   JsonEdge,
   SchemaSpecification,
@@ -9,6 +10,8 @@ import type {
 export interface EntityResponse {
   item: AdminEntity;
 }
+
+export type EntityHistoryResponse = JsonAdminEntityHistory;
 
 export interface SchemaResponse {
   spec: SchemaSpecification;
