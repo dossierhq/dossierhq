@@ -60,9 +60,9 @@ export interface AdminQuery {
   entityTypes?: string[];
   /** Entities referencing the entity (by id) */
   referencing?: string;
+  boundingBox?: BoundingBox;
   /** Valid values: _name */
   order?: string;
-  boundingBox?: BoundingBox;
 }
 
 export interface Paging {

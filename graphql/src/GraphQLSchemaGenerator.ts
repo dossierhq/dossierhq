@@ -308,6 +308,19 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         },
       })
     );
+
+    // BoundingBoxInput
+    this.addType(
+      new GraphQLInputObjectType({
+        name: 'BoundingBoxInput',
+        fields: {
+          minLat: { type: new GraphQLNonNull(GraphQLFloat) },
+          maxLat: { type: new GraphQLNonNull(GraphQLFloat) },
+          minLng: { type: new GraphQLNonNull(GraphQLFloat) },
+          maxLng: { type: new GraphQLNonNull(GraphQLFloat) },
+        },
+      })
+    );
   }
 
   addEntityTypes(): void {
@@ -405,6 +418,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         fields: {
           entityTypes: { type: new GraphQLList(this.getEnumType('EntityType')) },
           referencing: { type: GraphQLID },
+          boundingBox: { type: this.getInputType('BoundingBoxInput') },
           order: { type: GraphQLString }, // TODO should be enum?
         },
       })

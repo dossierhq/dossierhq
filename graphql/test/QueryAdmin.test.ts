@@ -1,4 +1,12 @@
-import type { AdminEntity, AdminQuery, Connection, Edge, Paging, ErrorType } from '@datadata/core';
+import type {
+  AdminEntity,
+  AdminQuery,
+  BoundingBox,
+  Connection,
+  Edge,
+  ErrorType,
+  Paging,
+} from '@datadata/core';
 import { CoreTestUtils, FieldType, notOk, ok } from '@datadata/core';
 import type { SessionContext, Server } from '@datadata/server';
 import { EntityAdmin, ServerTestUtils } from '@datadata/server';
@@ -118,7 +126,7 @@ async function visitAllEntityPages(
   }
 }
 
-async function createBarWithFooReferences(contest: SessionContext, fooCount: number) {
+async function createBarWithFooReferences(context: SessionContext, fooCount: number) {
   const createBarResult = await EntityAdmin.createEntity(
     context,
     { _type: 'QueryAdminBar', _name: 'Bar', title: 'Bar' },
@@ -144,6 +152,19 @@ async function createBarWithFooReferences(contest: SessionContext, fooCount: num
   }
 
   return { barId, fooEntities };
+}
+
+/** Random bounding box (which doesn't wrap 180/-180 longitude) */
+function randomBoundingBox(heightLat = 1.0, widthLng = 1.0): BoundingBox {
+  function randomInRange(min: number, max: number) {
+    return min + Math.random() * (max - min);
+  }
+
+  const minLat = randomInRange(-90, 90 - heightLat);
+  const minLng = randomInRange(-180, 180 - widthLng);
+  const maxLat = minLat + heightLat;
+  const maxLng = minLng + widthLng;
+  return { minLat, maxLat, minLng, maxLng };
 }
 
 describe('adminEntity()', () => {
@@ -986,6 +1007,55 @@ describe('searchAdminEntities()', () => {
         },
       },
     });
+  });
+
+  test('Filter based on bounding box', async () => {
+    const boundingBox = randomBoundingBox();
+    const center = {
+      lat: (boundingBox.minLat + boundingBox.maxLat) / 2,
+      lng: (boundingBox.minLng + boundingBox.maxLng) / 2,
+    };
+    const createResult = await EntityAdmin.createEntity(
+      context,
+      {
+        _type: 'QueryAdminFoo',
+        _name: 'Howdy name',
+        location: center,
+      },
+      { publish: true }
+    );
+    if (expectOkResult(createResult)) {
+      const { id: fooId } = createResult.value;
+
+      const result = await graphql(
+        schema,
+        `
+          query QueryBoundingBox($boundingBox: BoundingBoxInput!) {
+            adminSearchEntities(query: { boundingBox: $boundingBox }) {
+              edges {
+                node {
+                  id
+                }
+              }
+              totalCount
+            }
+          }
+        `,
+        undefined,
+        { context: ok(context) },
+        { boundingBox }
+      );
+
+      expect(result?.data?.adminSearchEntities.totalCount).toBeGreaterThanOrEqual(1);
+
+      let fooIdCount = 0;
+      for (const edge of result?.data?.adminSearchEntities.edges) {
+        if (edge.node.id === fooId) {
+          fooIdCount += 1;
+        }
+      }
+      expect(fooIdCount).toBe(1);
+    }
   });
 });
 
