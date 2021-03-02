@@ -1,6 +1,7 @@
 import Boom from '@hapi/boom';
 import debug from 'debug';
-import Joi, { ObjectSchema } from 'joi';
+import type { ObjectSchema } from 'joi';
+import Joi from 'joi';
 import type { NextApiResponse, NextApiRequest } from 'next';
 
 const debugWarn = debug('app:w:handler');
