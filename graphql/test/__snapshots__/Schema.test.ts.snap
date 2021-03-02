@@ -51,6 +51,13 @@ input LocationInput {
   lng: Float!
 }
 
+input BoundingBoxInput {
+  minLat: Float!
+  maxLat: Float!
+  minLng: Float!
+  maxLng: Float!
+}
+
 type Foo implements Node & Entity {
   id: ID!
   _name: String!
@@ -86,6 +93,7 @@ type AdminEntityConnection {
 input AdminQueryInput {
   entityTypes: [EntityType]
   referencing: ID
+  boundingBox: BoundingBoxInput
   order: String
 }
 
@@ -207,6 +215,13 @@ input LocationInput {
   lng: Float!
 }
 
+input BoundingBoxInput {
+  minLat: Float!
+  maxLat: Float!
+  minLng: Float!
+  maxLng: Float!
+}
+
 type Foo implements Node & Entity {
   id: ID!
   _name: String!
@@ -249,6 +264,7 @@ type AdminEntityConnection {
 input AdminQueryInput {
   entityTypes: [EntityType]
   referencing: ID
+  boundingBox: BoundingBoxInput
   order: String
 }
 
@@ -417,6 +433,13 @@ input LocationInput {
   lng: Float!
 }
 
+input BoundingBoxInput {
+  minLat: Float!
+  maxLat: Float!
+  minLng: Float!
+  maxLng: Float!
+}
+
 type Foo implements Node & Entity {
   id: ID!
   _name: String!
@@ -444,6 +467,7 @@ type AdminEntityConnection {
 input AdminQueryInput {
   entityTypes: [EntityType]
   referencing: ID
+  boundingBox: BoundingBoxInput
   order: String
 }
 
@@ -534,6 +558,13 @@ input LocationInput {
   lng: Float!
 }
 
+input BoundingBoxInput {
+  minLat: Float!
+  maxLat: Float!
+  minLng: Float!
+  maxLng: Float!
+}
+
 type Foo implements Node & Entity {
   id: ID!
   _name: String!
@@ -570,6 +601,7 @@ type AdminEntityConnection {
 input AdminQueryInput {
   entityTypes: [EntityType]
   referencing: ID
+  boundingBox: BoundingBoxInput
   order: String
 }
 
@@ -703,6 +735,13 @@ input LocationInput {
   lng: Float!
 }
 
+input BoundingBoxInput {
+  minLat: Float!
+  maxLat: Float!
+  minLng: Float!
+  maxLng: Float!
+}
+
 type Foo implements Node & Entity {
   id: ID!
   _name: String!
@@ -759,6 +798,7 @@ type AdminEntityConnection {
 input AdminQueryInput {
   entityTypes: [EntityType]
   referencing: ID
+  boundingBox: BoundingBoxInput
   order: String
 }
 
