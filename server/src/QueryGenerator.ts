@@ -120,8 +120,8 @@ export function totalAdminEntitiesQuery(
   context: SessionContext,
   query: AdminQuery | undefined
 ): Result<{ text: string; values: unknown[] }, ErrorType.BadRequest> {
-  // Convert count to ::integer since count() is bigint (js doesn't support 64 bit numbers so pg return it as string)
   const qb = new QueryBuilder('SELECT');
+  // Convert count to ::integer since count() is bigint (js doesn't support 64 bit numbers so pg return it as string)
   if (query?.boundingBox) {
     qb.addQuery('COUNT(DISTINCT e.id)::integer');
   } else {
