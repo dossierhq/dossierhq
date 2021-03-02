@@ -28,6 +28,7 @@ import type { SessionContext } from '@datadata/server';
 import { EntityAdmin, isPagingForwards } from '@datadata/server';
 import * as CliSchema from './CliSchema';
 import {
+  formatBoundingBox,
   formatEntityOneLine,
   formatErrorResult,
   formatFieldValue,
@@ -43,6 +44,7 @@ import {
   replaceValueItemReferencesWithEntitiesGeneric,
 } from './CliUtils';
 import {
+  showBoundingBoxEdit,
   showConfirm,
   showIntegerEdit,
   showItemSelector,
@@ -144,6 +146,12 @@ async function configureQuery(
         enabled: (initialQuery?.entityTypes?.length ?? 0) === 0,
       },
       {
+        id: '_boundingBox',
+        name: `${chalk.bold('Bounding box:')} ${
+          query.boundingBox ? formatBoundingBox(query.boundingBox) : chalk.grey('<not set>')
+        }`,
+      },
+      {
         id: '_order',
         name: `${chalk.bold('Order:')} ${query.order ?? 'default'}`,
       },
@@ -160,6 +168,10 @@ async function configureQuery(
     switch (item.id) {
       case '_entityTypes':
         query.entityTypes = await CliSchema.selectEntityTypes(context);
+        break;
+      case '_boundingBox':
+        query.boundingBox =
+          (await showBoundingBoxEdit('Bounding box', query.boundingBox ?? null)) ?? undefined;
         break;
       case '_order':
         query.order = await selectOrder(query.order);
