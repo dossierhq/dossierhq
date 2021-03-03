@@ -11,6 +11,7 @@ dependencies:
   '@rush-temp/graphql': file:projects/graphql.tgz_ts-node@9.1.1
   '@rush-temp/postgres': file:projects/postgres.tgz
   '@rush-temp/server': file:projects/server.tgz
+  '@rush-temp/testing-utils': file:projects/testing-utils.tgz_ts-node@9.1.1
   '@storybook/addon-actions': 6.1.17_487a5850de69ee967c83196c011473eb
   '@storybook/addon-essentials': 6.1.17_22bb8171db11cfa4a9b9b2c182c0565c
   '@storybook/addon-links': 6.1.17_react-dom@17.0.1+react@17.0.1
@@ -26,7 +27,6 @@ dependencies:
   '@types/leaflet': 1.5.23
   '@types/node': 14.14.25
   '@types/pg': 7.14.9
-  '@types/qs': 6.9.5
   '@types/react': 17.0.1
   '@types/react-test-renderer': 17.0.0
   '@types/testing-library__jest-dom': 5.9.5
@@ -56,7 +56,6 @@ dependencies:
   pg: 8.5.1
   postgrator: 4.1.1
   prettier: 2.2.1
-  qs: 6.9.6
   react: 17.0.1
   react-dom: 17.0.1_react@17.0.1
   react-leaflet: 3.1.0_09d6067ecd174b3b583fc8cfec228ea2
@@ -14383,6 +14382,7 @@ packages:
       '@hapi/joi': 17.1.1
       '@types/debug': 4.1.5
       '@types/hapi__joi': 17.1.6
+      '@types/jest': 26.0.20
       '@types/node': 14.14.25
       '@types/qs': 6.9.5
       '@types/react': 17.0.1
@@ -14391,6 +14391,7 @@ packages:
       debug: 4.3.1
       eslint: 7.19.0
       eslint-plugin-react: 7.22.0_eslint@7.19.0
+      jest: 26.6.3_ts-node@9.1.1
       joi: 17.3.0
       next: 10.0.6_c39e9db791ea05e3ec4e0e74abb7a6b5
       next-transpile-modules: 6.1.0
@@ -14399,12 +14400,13 @@ packages:
       react: 17.0.1
       react-dom: 17.0.1_react@17.0.1
       swr: 0.4.1_react@17.0.1
+      ts-jest: 26.5.0_jest@26.6.3+typescript@4.1.3
       ts-node: 9.1.1_typescript@4.1.3
       typescript: 4.1.3
     dev: false
     name: '@rush-temp/datadata-examples-next-web'
     resolution:
-      integrity: sha512-5zi3LJ5NNDJ5Niiyy5o1EmUXBNAq+ua48JydC+dV30r8AKuDW7W3/x1JSaXo8OCsLmVqX2gBBzxT9HhN5bx4AA==
+      integrity: sha512-O2dxbr6fJYEuJXAwMuifQhXep9TyNaAWHvFrchi5194v852BMdYsyWaH0H1GxAafyHPAG6iHUxawXQ7vF5ayjg==
       tarball: file:projects/datadata-examples-next-web.tgz
     version: 0.0.0
   file:projects/datadata.tgz:
@@ -14470,6 +14472,25 @@ packages:
       integrity: sha512-IUHoy7AkZZvdsDh0egbF5qg20+XUTnMYvgPRtZ0DYlbHkLaP7vNaBafypr+4Mpotn1fogMYM/5ua8nG0gNhweQ==
       tarball: file:projects/server.tgz
     version: 0.0.0
+  file:projects/testing-utils.tgz_ts-node@9.1.1:
+    dependencies:
+      '@types/jest': 26.0.20
+      '@typescript-eslint/eslint-plugin': 4.14.2_e5f964fa93e839b7a7927397f6cb9cb1
+      '@typescript-eslint/parser': 4.14.2_eslint@7.19.0+typescript@4.1.3
+      eslint: 7.19.0
+      jest: 26.6.3_ts-node@9.1.1
+      prettier: 2.2.1
+      ts-jest: 26.5.0_jest@26.6.3+typescript@4.1.3
+      typescript: 4.1.3
+    dev: false
+    id: file:projects/testing-utils.tgz
+    name: '@rush-temp/testing-utils'
+    peerDependencies:
+      ts-node: '*'
+    resolution:
+      integrity: sha512-8pdyUKhnYNUE2l4Zc3nrVeQaY9jnTt5DRu9p3gAcWZhG2vUg7PUXb5qLU6kH5unewGTTPvJPSiZTCSkYKd47Ow==
+      tarball: file:projects/testing-utils.tgz
+    version: 0.0.0
 registry: ''
 specifiers:
   '@babel/core': ^7.12.13
@@ -14484,6 +14505,7 @@ specifiers:
   '@rush-temp/graphql': file:./projects/graphql.tgz
   '@rush-temp/postgres': file:./projects/postgres.tgz
   '@rush-temp/server': file:./projects/server.tgz
+  '@rush-temp/testing-utils': file:./projects/testing-utils.tgz
   '@storybook/addon-actions': ^6.1.17
   '@storybook/addon-essentials': ^6.1.17
   '@storybook/addon-links': ^6.1.17
@@ -14499,7 +14521,6 @@ specifiers:
   '@types/leaflet': ~1.5.23
   '@types/node': ^14.14.25
   '@types/pg': ^7.14.9
-  '@types/qs': ~6.9.5
   '@types/react': ~17.0.1
   '@types/react-test-renderer': ~17.0.0
   '@types/testing-library__jest-dom': ~5.9.5
@@ -14529,7 +14550,6 @@ specifiers:
   pg: ^8.5.1
   postgrator: ^4.1.1
   prettier: 2.2.1
-  qs: ~6.9.6
   react: ~17.0.1
   react-dom: ~17.0.1
   react-leaflet: ~3.1.0
