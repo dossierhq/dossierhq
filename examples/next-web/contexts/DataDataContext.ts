@@ -102,6 +102,7 @@ class ContextValue implements DataDataContextValue {
 
 function updateCachedEntity(entity: EntityResponse) {
   mutate(urls.getEntity(entity.item.id, {}), entity, false);
+  mutate(urls.getEntityHistory(entity.item.id));
 }
 
 async function loadSchema() {
