@@ -388,6 +388,10 @@
     {
       "packageName": "@datadata/server",
       "projectFolder": "server"
+    },
+    {
+      "packageName": "@datadata/testing-utils",
+      "projectFolder": "testing-utils"
     }
     // {
     //   /**
