@@ -66,6 +66,14 @@ export class InMemoryServerInner {
     return versions.find((entity) => entity._version === maxVersion) as AdminEntity;
   }
 
+  getUniqueName(id: string | null, name: string): string {
+    const entityWithSameName = this.#entities.find((x) => x.versions[0]._name === name);
+    if (!entityWithSameName || entityWithSameName.versions[0].id === id) {
+      return name;
+    }
+    return `${name}#${Math.random().toFixed(8).slice(2)}`;
+  }
+
   addNewEntity(entity: AdminEntity, userId: string): void {
     this.#entities.push({
       versions: [entity],
@@ -79,6 +87,8 @@ export class InMemoryServerInner {
       throw new Error(`Can't find ${entity.id}`);
     }
     fullEntity.versions.push(entity);
+    fullEntity.versions.forEach((x) => (x._name = entity._name));
+
     fullEntity.history.push({
       version: entity._version,
       createdAt: new Date(),
