@@ -21,10 +21,10 @@ export default class TestContextValue implements DataDataContextValue {
     this.#context = this.#server.createContext(userId);
   }
 
-  useEntity: DataDataContextValue['useEntity'] = (id, options) => {
+  useEntity: DataDataContextValue['useEntity'] = (id, version) => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const { data, error } = useSWR(
-      id ? [this.#rootKey, 'useEntity', id, options.version] : null,
+      id ? [this.#rootKey, 'useEntity', id, version] : null,
       this.useEntityFetcher
     );
 
@@ -38,7 +38,7 @@ export default class TestContextValue implements DataDataContextValue {
     id: string,
     version: number | null
   ) => {
-    const result = await InMemoryAdmin.getEntity(this.#context, id, { version });
+    const result = await InMemoryAdmin.getEntity(this.#context, id, version);
     if (result.isOk()) {
       return result.value;
     }

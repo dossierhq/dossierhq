@@ -49,7 +49,7 @@ export async function loadEntity<TContext extends SessionGraphQLContext>(
   if (result.isError()) {
     throw result.toError();
   }
-  return buildResolversForEntity(sessionContext, result.value.item);
+  return buildResolversForEntity(sessionContext, result.value);
 }
 
 export async function loadEntities<TContext extends SessionGraphQLContext>(
@@ -86,11 +86,11 @@ export async function loadAdminEntity<TContext extends SessionGraphQLContext>(
   version: number | undefined | null
 ): Promise<AdminEntity> {
   const sessionContext = getSessionContext(context);
-  const result = await EntityAdmin.getEntity(sessionContext, id, { version });
+  const result = await EntityAdmin.getEntity(sessionContext, id, version);
   if (result.isError()) {
     throw result.toError();
   }
-  return buildResolversForAdminEntity(sessionContext, result.value.item);
+  return buildResolversForAdminEntity(sessionContext, result.value);
 }
 
 export async function loadAdminEntities<TContext extends SessionGraphQLContext>(

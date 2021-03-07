@@ -19,11 +19,11 @@ export const InMemoryAdmin = {
   getEntity: async (
     context: InMemorySessionContext,
     id: string,
-    options: { version?: number | null }
-  ): PromiseResult<{ item: AdminEntity }, ErrorType.NotFound> => {
-    const item = context.server.getEntity(id, options.version);
-    if (item) {
-      return ok({ item });
+    version?: number | null
+  ): PromiseResult<AdminEntity, ErrorType.NotFound> => {
+    const entity = context.server.getEntity(id, version);
+    if (entity) {
+      return ok(entity);
     }
     return notOk.NotFound('No such entity or version');
   },

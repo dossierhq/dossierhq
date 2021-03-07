@@ -20,8 +20,8 @@ export interface DataDataContextValue {
   /** Loads an entity. If `id` is `undefined` no data is fetched */
   useEntity: (
     id: string | undefined,
-    options: { version?: number | null }
-  ) => { entity?: { item: AdminEntity }; entityError?: ErrorResult<unknown, ErrorType> };
+    version?: number | null
+  ) => { entity?: AdminEntity; entityError?: ErrorResult<unknown, ErrorType> };
 
   /** Loads the history for an entity. If `id` is `undefined` no data is fetched */
   useEntityHistory: (

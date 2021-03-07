@@ -14,8 +14,8 @@ const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 export const urls = {
   schema: `${baseUrl}/schema`,
   createEntity: `${baseUrl}/entities`,
-  getEntity: (id: string, options: { version?: number | null }): string =>
-    `${baseUrl}/entities/${id}?${encodeQuery({ options })}`,
+  getEntity: (id: string, version?: number | null): string =>
+    `${baseUrl}/entities/${id}${version ? `?version=${version}` : ''}`,
   getEntityHistory: (id: string): string => `${baseUrl}/entity-history/${id}`,
   searchEntities: (query?: AdminQuery, paging?: Paging): string =>
     `${baseUrl}/search-entities?${encodeQuery({ query, paging })}`,

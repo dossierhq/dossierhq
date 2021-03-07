@@ -27,13 +27,14 @@ class ContextValue implements DataDataContextValue {
     this.schema = schema;
   }
 
-  useEntity: DataDataContextValue['useEntity'] = (id, options) => {
+  useEntity: DataDataContextValue['useEntity'] = (id, version) => {
     const { data, error } = useSWR<EntityResponse, ErrorResultError>(
-      id ? urls.getEntity(id, options) : null,
+      id ? urls.getEntity(id, version) : null,
       swrFetcher
     );
+
     const entityError = error ? createErrorResultFromError(error) : undefined;
-    return { entity: data, entityError };
+    return { entity: data?.item, entityError };
   };
 
   useEntityHistory: DataDataContextValue['useEntityHistory'] = (id) => {
@@ -84,7 +85,7 @@ class ContextValue implements DataDataContextValue {
     const body: EntityUpdateRequest = { item: entity, options };
     const result = await fetchJsonResult<EntityResponse, ErrorType.BadRequest | ErrorType.NotFound>(
       [ErrorType.BadRequest, ErrorType.NotFound],
-      urls.getEntity(entity.id, {}), //TODO
+      urls.getEntity(entity.id), //TODO
       {
         method: 'PUT',
         headers: { 'content-type': 'application/json' },
@@ -101,7 +102,7 @@ class ContextValue implements DataDataContextValue {
 }
 
 function updateCachedEntity(entity: EntityResponse) {
-  mutate(urls.getEntity(entity.item.id, {}), entity, false);
+  mutate(urls.getEntity(entity.item.id), entity, false);
   mutate(urls.getEntityHistory(entity.item.id));
 }
 

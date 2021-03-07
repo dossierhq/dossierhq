@@ -9,7 +9,7 @@ export async function showEntity(context: SessionContext, id: string): Promise<E
     logErrorResult('Failed getting entity', result);
     return null;
   }
-  const entity = result.value.item;
+  const entity = result.value;
   await replaceReferencesWithEntities(context, entity);
   logEntity(context, entity);
   return entity;

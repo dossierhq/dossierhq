@@ -22,7 +22,7 @@ export default async (req: NextApiRequest, res: NextApiResponse<EntityResponse>)
       throw errorResultToBoom(result);
     }
     return {
-      location: BackendUtils.urls.getEntity(result.value.id, {}),
+      location: BackendUtils.urls.getEntity(result.value.id),
       body: { item: result.value },
     };
   });

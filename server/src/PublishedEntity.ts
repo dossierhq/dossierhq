@@ -8,7 +8,7 @@ import { decodePublishedEntity } from './EntityCodec';
 export async function getEntity(
   context: SessionContext,
   id: string
-): PromiseResult<{ item: Entity }, ErrorType.NotFound> {
+): PromiseResult<Entity, ErrorType.NotFound> {
   const entityMain = await Db.queryNoneOrOne<
     Pick<EntitiesTable, 'uuid' | 'type' | 'name'> & Pick<EntityVersionsTable, 'data'>
   >(
@@ -26,9 +26,7 @@ export async function getEntity(
 
   const entity = decodePublishedEntity(context, entityMain);
 
-  return ok({
-    item: entity,
-  });
+  return ok(entity);
 }
 
 /**

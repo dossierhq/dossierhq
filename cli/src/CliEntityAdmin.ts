@@ -234,13 +234,13 @@ export async function createEntity(context: SessionContext): Promise<EntityRefer
 }
 
 export async function editEntity(context: SessionContext, id: string): Promise<void> {
-  const getResult = await EntityAdmin.getEntity(context, id, {});
+  const getResult = await EntityAdmin.getEntity(context, id);
   if (getResult.isError()) {
     logErrorResult('Failed fetching entity data', getResult);
     return;
   }
 
-  const entity = { id, ...(await editEntityValues(context, getResult.value.item)) };
+  const entity = { id, ...(await editEntityValues(context, getResult.value)) };
   const publish = await showConfirm('Publish the entity?');
   const updateResult = await EntityAdmin.updateEntity(context, entity, { publish });
   if (updateResult.isError()) {
@@ -555,9 +555,9 @@ export async function showEntityHistory(context: SessionContext, id: string): Pr
 }
 
 export async function showLatestEntity(context: SessionContext, id: string): Promise<void> {
-  const result = await EntityAdmin.getEntity(context, id, {});
+  const result = await EntityAdmin.getEntity(context, id);
   if (result.isOk()) {
-    const entity = result.value.item;
+    const entity = result.value;
     await replaceEntityReferencesWithEntities(context, entity);
     logEntity(context, entity);
 
@@ -638,9 +638,9 @@ export async function showEntityVersion(context: SessionContext, id: string): Pr
     if (currentVersion === null) {
       return;
     }
-    const result = await EntityAdmin.getEntity(context, id, { version: currentVersion });
+    const result = await EntityAdmin.getEntity(context, id, currentVersion);
     if (result.isOk()) {
-      logEntity(context, result.value.item);
+      logEntity(context, result.value);
     } else {
       logErrorResult('Failed getting entity version', result);
     }
@@ -655,7 +655,7 @@ async function replaceEntityReferencesWithEntities(
     context,
     entity,
     async (context, id) => {
-      return await EntityAdmin.getEntity(context, id, {});
+      return await EntityAdmin.getEntity(context, id);
     },
     async (context, ids) => {
       return await EntityAdmin.getEntities(context, ids);
@@ -668,7 +668,7 @@ async function replaceValueItemReferencesWithEntities(context: SessionContext, v
     context,
     valueItem,
     async (context, id) => {
-      return await EntityAdmin.getEntity(context, id, {});
+      return await EntityAdmin.getEntity(context, id);
     },
     async (context, ids) => {
       return await EntityAdmin.getEntities(context, ids);
