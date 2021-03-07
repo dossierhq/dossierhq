@@ -16,15 +16,13 @@ describe('getEntity()', () => {
       },
     ]);
     const context = server.createContext(uuidv4());
-    const entityResult = await InMemoryAdmin.getEntity(context, id, {});
+    const entityResult = await InMemoryAdmin.getEntity(context, id);
     if (expectOkResult(entityResult)) {
       expect(entityResult.value).toEqual({
-        item: {
-          _name: 'Foo',
-          _type: 'Foo',
-          _version: 0,
-          id,
-        },
+        _name: 'Foo',
+        _type: 'Foo',
+        _version: 0,
+        id,
       });
     }
   });

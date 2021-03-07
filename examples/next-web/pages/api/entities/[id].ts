@@ -11,23 +11,21 @@ import {
   handlePutAsync,
   validateRequestQuery,
 } from '../../../utils/HandlerUtils';
-import { decodeQuery } from '../../../utils/QueryUtils';
 import { getServerConnection, getSessionContextForRequest } from '../../../utils/ServerUtils';
 
 interface RequestQuery {
   id: string;
-  options?: string;
+  version?: number | null;
 }
 const requestSchema = Joi.object<RequestQuery>({
   id: Joi.string().required(),
-  options: Joi.string().allow('').required(),
+  version: Joi.number(),
 });
 
 export default async (req: NextApiRequest, res: NextApiResponse<EntityResponse>): Promise<void> => {
   if (req.method === 'GET') {
     await handleGetAsync(req, res, async () => {
-      const { id } = validateRequestQuery(req.query, requestSchema);
-      const options = decodeQuery<{ version?: number | null }>('options', req.query) ?? {};
+      const { id, version } = validateRequestQuery(req.query, requestSchema);
 
       const { authContext, server } = await getServerConnection();
       const authResult = await getSessionContextForRequest(server, authContext, req);
@@ -36,11 +34,11 @@ export default async (req: NextApiRequest, res: NextApiResponse<EntityResponse>)
       }
       const context = authResult.value;
 
-      const result = await EntityAdmin.getEntity(context, id, options);
+      const result = await EntityAdmin.getEntity(context, id, version);
       if (result.isError()) {
         throw errorResultToBoom(result);
       }
-      return result.value;
+      return { item: result.value };
     });
   } else if (req.method === 'PUT') {
     await handlePutAsync(req, res, async (body: EntityUpdateRequest) => {

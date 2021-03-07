@@ -132,9 +132,9 @@ describe('create*Entity()', () => {
       },
     });
 
-    const getResult = await EntityAdmin.getEntity(context, id, {});
+    const getResult = await EntityAdmin.getEntity(context, id);
     if (expectOkResult(getResult)) {
-      expect(getResult.value.item).toEqual({
+      expect(getResult.value).toEqual({
         id,
         _type: 'MutationFoo',
         _name: name,
@@ -209,9 +209,9 @@ describe('create*Entity()', () => {
         },
       });
 
-      const getResult = await EntityAdmin.getEntity(context, fooId, {});
+      const getResult = await EntityAdmin.getEntity(context, fooId);
       if (expectOkResult(getResult)) {
-        expect(getResult.value.item).toEqual({
+        expect(getResult.value).toEqual({
           id: fooId,
           _type: 'MutationFoo',
           _name: fooName,
@@ -294,9 +294,9 @@ describe('create*Entity()', () => {
         },
       });
 
-      const getResult = await EntityAdmin.getEntity(context, fooId, {});
+      const getResult = await EntityAdmin.getEntity(context, fooId);
       if (expectOkResult(getResult)) {
-        expect(getResult.value.item).toEqual({
+        expect(getResult.value).toEqual({
           id: fooId,
           _type: 'MutationFoo',
           _name: fooName,
@@ -388,9 +388,9 @@ describe('create*Entity()', () => {
         },
       });
 
-      const getResult = await EntityAdmin.getEntity(context, fooId, {});
+      const getResult = await EntityAdmin.getEntity(context, fooId);
       if (expectOkResult(getResult)) {
-        expect(getResult.value.item).toEqual({
+        expect(getResult.value).toEqual({
           id: fooId,
           _type: 'MutationFoo',
           _name: fooName,
@@ -486,9 +486,9 @@ describe('create*Entity()', () => {
         },
       });
 
-      const getResult = await EntityAdmin.getEntity(context, fooId, {});
+      const getResult = await EntityAdmin.getEntity(context, fooId);
       if (expectOkResult(getResult)) {
-        expect(getResult.value.item).toEqual({
+        expect(getResult.value).toEqual({
           id: fooId,
           _type: 'MutationFoo',
           _name: fooName,
@@ -584,9 +584,9 @@ describe('create*Entity()', () => {
       },
     });
 
-    const getResult = await EntityAdmin.getEntity(context, fooId, {});
+    const getResult = await EntityAdmin.getEntity(context, fooId);
     if (expectOkResult(getResult)) {
-      expect(getResult.value.item).toEqual({
+      expect(getResult.value).toEqual({
         id: fooId,
         _type: 'MutationFoo',
         _name: fooName,
@@ -738,9 +738,9 @@ describe('update*Entity()', () => {
         },
       });
 
-      const getResult = await EntityAdmin.getEntity(context, id, {});
+      const getResult = await EntityAdmin.getEntity(context, id);
       if (expectOkResult(getResult)) {
-        expect(getResult.value.item).toEqual({
+        expect(getResult.value).toEqual({
           id,
           _type: 'MutationFoo',
           _name: name,
@@ -918,9 +918,9 @@ describe('update*Entity()', () => {
           },
         });
 
-        const getResult = await EntityAdmin.getEntity(context, fooId, {});
+        const getResult = await EntityAdmin.getEntity(context, fooId);
         if (expectOkResult(getResult)) {
-          expect(getResult.value.item).toEqual({
+          expect(getResult.value).toEqual({
             id: fooId,
             _type: 'MutationFoo',
             _name: name,

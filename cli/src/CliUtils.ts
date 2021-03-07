@@ -37,10 +37,7 @@ interface Entityish {
   [fieldName: string]: unknown;
 }
 
-type EntityFetcher = (
-  context: SessionContext,
-  id: string
-) => PromiseResult<{ item: Entity }, ErrorType>;
+type EntityFetcher = (context: SessionContext, id: string) => PromiseResult<Entity, ErrorType>;
 type MultipleEntitiesFetcher = (
   context: SessionContext,
   ids: string[]

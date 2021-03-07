@@ -107,7 +107,7 @@ function EntityEditorInner({
   const [entityId, setEntityId] = useState(
     'isNew' in entitySelector ? undefined : entitySelector.id
   );
-  const { entity, entityError } = useEntity(entityId, {});
+  const { entity, entityError } = useEntity(entityId);
 
   useEffect(() => {
     if (initialEditorState) {
@@ -124,14 +124,13 @@ function EntityEditorInner({
         });
       }
     } else if (entity) {
-      const { item } = entity;
-      const entitySpec = schema.getEntityTypeSpecification(item._type);
+      const entitySpec = schema.getEntityTypeSpecification(entity._type);
       if (entitySpec) {
-        setInitialEditorState(createEditorState(entitySpec, item));
+        setInitialEditorState(createEditorState(entitySpec, entity));
       } else {
         setInitErrorMessage({
           kind: 'danger',
-          message: `Can't edit entity with unsupported type: ${item._type}`,
+          message: `Can't edit entity with unsupported type: ${entity._type}`,
         });
       }
     }

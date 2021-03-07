@@ -31,17 +31,17 @@ import type { SearchAdminEntitiesItem } from './QueryGenerator';
 export async function getEntity(
   context: SessionContext,
   id: string,
-  options: { version?: number | null }
-): PromiseResult<{ item: AdminEntity }, ErrorType.NotFound> {
-  let version: number;
-  if (typeof options.version === 'number') {
-    version = options.version;
+  version?: number | null
+): PromiseResult<AdminEntity, ErrorType.NotFound> {
+  let actualVersion: number;
+  if (typeof version === 'number') {
+    actualVersion = version;
   } else {
     const versionResult = await resolveMaxVersionForEntity(context, id);
     if (versionResult.isError()) {
       return versionResult;
     }
-    version = versionResult.value.maxVersion;
+    actualVersion = versionResult.value.maxVersion;
   }
   const entityMain = await Db.queryNoneOrOne<AdminEntityValues>(
     context,
@@ -50,7 +50,7 @@ export async function getEntity(
       WHERE e.uuid = $1
       AND e.id = ev.entities_id
       AND ev.version = $2`,
-    [id, version]
+    [id, actualVersion]
   );
   if (!entityMain) {
     return notOk.NotFound('No such entity or version');
@@ -58,9 +58,7 @@ export async function getEntity(
 
   const entity = decodeAdminEntity(context, entityMain);
 
-  return ok({
-    item: entity,
-  });
+  return ok(entity);
 }
 
 export async function getEntities(

@@ -303,9 +303,9 @@ describe('getEntity()', () => {
       const deleteResult = await EntityAdmin.deleteEntity(context, id, { publish: true });
       expectOkResult(deleteResult);
 
-      const versionMaxResult = await EntityAdmin.getEntity(context, id, {});
+      const versionMaxResult = await EntityAdmin.getEntity(context, id);
       if (expectOkResult(versionMaxResult)) {
-        expect(versionMaxResult.value.item).toEqual({
+        expect(versionMaxResult.value).toEqual({
           id,
           _type: 'EntityAdminFoo',
           _name: createResult.value._name,
@@ -317,7 +317,7 @@ describe('getEntity()', () => {
   });
 
   test('Error: Get entity with invalid id', async () => {
-    const result = await EntityAdmin.getEntity(context, '13e4c7da-616e-44a3-a039-24f96f9b17da', {});
+    const result = await EntityAdmin.getEntity(context, '13e4c7da-616e-44a3-a039-24f96f9b17da');
     expectErrorResult(result, ErrorType.NotFound, 'No such entity');
   });
 
@@ -331,10 +331,10 @@ describe('getEntity()', () => {
     if (expectOkResult(createResult)) {
       const { id } = createResult.value;
 
-      const resultMinusOne = await EntityAdmin.getEntity(context, id, { version: -1 });
+      const resultMinusOne = await EntityAdmin.getEntity(context, id, -1);
       expectErrorResult(resultMinusOne, ErrorType.NotFound, 'No such entity or version');
 
-      const resultOne = await EntityAdmin.getEntity(context, id, { version: 1 });
+      const resultOne = await EntityAdmin.getEntity(context, id, 1);
       expectErrorResult(resultOne, ErrorType.NotFound, 'No such entity or version');
     }
   });
@@ -460,9 +460,9 @@ describe('createEntity()', () => {
         ]);
       }
 
-      const version0Result = await EntityAdmin.getEntity(context, id, { version: 0 });
+      const version0Result = await EntityAdmin.getEntity(context, id, 0);
       if (expectOkResult(version0Result)) {
-        expect(version0Result.value.item).toEqual({
+        expect(version0Result.value).toEqual({
           id,
           _type: 'EntityAdminFoo',
           _name: name,
@@ -473,7 +473,7 @@ describe('createEntity()', () => {
 
       const publishedResult = await PublishedEntity.getEntity(context, id);
       if (expectOkResult(publishedResult)) {
-        expect(publishedResult.value.item).toEqual({
+        expect(publishedResult.value).toEqual({
           id,
           _type: 'EntityAdminFoo',
           _name: name,
@@ -513,9 +513,9 @@ describe('createEntity()', () => {
         ]);
       }
 
-      const version0Result = await EntityAdmin.getEntity(context, id, { version: 0 });
+      const version0Result = await EntityAdmin.getEntity(context, id, 0);
       if (expectOkResult(version0Result)) {
-        expect(version0Result.value.item).toEqual({
+        expect(version0Result.value).toEqual({
           id,
           _type: 'EntityAdminFoo',
           _name: createResult.value._name,
@@ -555,9 +555,9 @@ describe('createEntity()', () => {
           bar: { id: barId },
         });
 
-        const fooVersion0Result = await EntityAdmin.getEntity(context, fooId, { version: 0 });
+        const fooVersion0Result = await EntityAdmin.getEntity(context, fooId, 0);
         if (expectOkResult(fooVersion0Result)) {
-          expect(fooVersion0Result.value.item).toEqual({
+          expect(fooVersion0Result.value).toEqual({
             id: fooId,
             _type: 'EntityAdminFoo',
             _name: createFooResult.value._name,
@@ -569,7 +569,7 @@ describe('createEntity()', () => {
 
         const publishedFooResult = await PublishedEntity.getEntity(context, fooId);
         if (expectOkResult(publishedFooResult)) {
-          expect(publishedFooResult.value.item).toEqual({
+          expect(publishedFooResult.value).toEqual({
             id: fooId,
             _type: 'EntityAdminFoo',
             _name: createFooResult.value._name,
@@ -597,9 +597,9 @@ describe('createEntity()', () => {
         tags: ['one', 'two', 'three'],
       });
 
-      const getResult = await EntityAdmin.getEntity(context, id, {});
+      const getResult = await EntityAdmin.getEntity(context, id);
       if (expectOkResult(getResult)) {
-        expect(getResult.value.item).toEqual({
+        expect(getResult.value).toEqual({
           id,
           _type: 'EntityAdminBaz',
           _name: name,
@@ -638,9 +638,9 @@ describe('createEntity()', () => {
         ],
       });
 
-      const getResult = await EntityAdmin.getEntity(context, id, {});
+      const getResult = await EntityAdmin.getEntity(context, id);
       if (expectOkResult(getResult)) {
-        expect(getResult.value.item).toEqual({
+        expect(getResult.value).toEqual({
           id,
           _type: 'EntityAdminBaz',
           _name: name,
@@ -686,9 +686,9 @@ describe('createEntity()', () => {
           bars: [{ id: bar1Id }, { id: bar2Id }],
         });
 
-        const getResult = await EntityAdmin.getEntity(context, id, {});
+        const getResult = await EntityAdmin.getEntity(context, id);
         if (expectOkResult(getResult)) {
-          expect(getResult.value.item).toEqual({
+          expect(getResult.value).toEqual({
             id,
             _type: 'EntityAdminBaz',
             _name: name,
@@ -750,9 +750,9 @@ describe('createEntity()', () => {
         twoStrings: { _type: 'EntityAdminTwoStrings', one: 'First', two: 'Second' },
       });
 
-      const getResult = await EntityAdmin.getEntity(context, id, {});
+      const getResult = await EntityAdmin.getEntity(context, id);
       if (expectOkResult(getResult)) {
-        expect(getResult.value.item).toEqual({
+        expect(getResult.value).toEqual({
           id,
           _type: 'EntityAdminBaz',
           _name: name,
@@ -789,9 +789,9 @@ describe('createEntity()', () => {
         ],
       });
 
-      const getResult = await EntityAdmin.getEntity(context, id, {});
+      const getResult = await EntityAdmin.getEntity(context, id);
       if (expectOkResult(getResult)) {
-        expect(getResult.value.item).toEqual({
+        expect(getResult.value).toEqual({
           id,
           _type: 'EntityAdminBaz',
           _name: name,
@@ -841,9 +841,9 @@ describe('createEntity()', () => {
           },
         });
 
-        const getResult = await EntityAdmin.getEntity(context, bazId, {});
+        const getResult = await EntityAdmin.getEntity(context, bazId);
         if (expectOkResult(getResult)) {
-          expect(getResult.value.item).toEqual({
+          expect(getResult.value).toEqual({
             id: bazId,
             _type: 'EntityAdminBaz',
             _name: bazName,
@@ -942,9 +942,9 @@ describe('createEntity()', () => {
           ],
         });
 
-        const getResult = await EntityAdmin.getEntity(context, bazId, {});
+        const getResult = await EntityAdmin.getEntity(context, bazId);
         if (expectOkResult(getResult)) {
-          expect(getResult.value.item).toEqual({
+          expect(getResult.value).toEqual({
             id: bazId,
             _type: 'EntityAdminBaz',
             _name: bazName,
@@ -1026,9 +1026,9 @@ describe('createEntity()', () => {
         },
       });
 
-      const getResult = await EntityAdmin.getEntity(context, bazId, {});
+      const getResult = await EntityAdmin.getEntity(context, bazId);
       if (expectOkResult(getResult)) {
-        expect(getResult.value.item).toEqual({
+        expect(getResult.value).toEqual({
           id: bazId,
           _type: 'EntityAdminBaz',
           _name: bazName,
@@ -1821,9 +1821,9 @@ describe('updateEntity()', () => {
         ]);
       }
 
-      const version0Result = await EntityAdmin.getEntity(context, id, { version: 0 });
+      const version0Result = await EntityAdmin.getEntity(context, id, 0);
       if (expectOkResult(version0Result)) {
-        expect(version0Result.value.item).toEqual({
+        expect(version0Result.value).toEqual({
           id,
           _type: 'EntityAdminFoo',
           _name: name, // original name isn't kept
@@ -1832,9 +1832,9 @@ describe('updateEntity()', () => {
         });
       }
 
-      const version1Result = await EntityAdmin.getEntity(context, id, { version: 1 });
+      const version1Result = await EntityAdmin.getEntity(context, id, 1);
       if (expectOkResult(version1Result)) {
-        expect(version1Result.value.item).toEqual({
+        expect(version1Result.value).toEqual({
           id,
           _type: 'EntityAdminFoo',
           _name: name,
@@ -1845,7 +1845,7 @@ describe('updateEntity()', () => {
 
       const publishedResult = await PublishedEntity.getEntity(context, id);
       if (expectOkResult(publishedResult)) {
-        expect(publishedResult.value.item).toEqual({
+        expect(publishedResult.value).toEqual({
           id,
           _type: 'EntityAdminFoo',
           _name: name,
@@ -1901,9 +1901,9 @@ describe('updateEntity()', () => {
         ]);
       }
 
-      const version0Result = await EntityAdmin.getEntity(context, id, { version: 0 });
+      const version0Result = await EntityAdmin.getEntity(context, id, 0);
       if (expectOkResult(version0Result)) {
-        expect(version0Result.value.item).toEqual({
+        expect(version0Result.value).toEqual({
           id,
           _type: 'EntityAdminFoo',
           _name: name,
@@ -1911,9 +1911,9 @@ describe('updateEntity()', () => {
           title: 'First',
         });
       }
-      const version1Result = await EntityAdmin.getEntity(context, id, { version: 1 });
+      const version1Result = await EntityAdmin.getEntity(context, id, 1);
       if (expectOkResult(version1Result)) {
-        expect(version1Result.value.item).toEqual({
+        expect(version1Result.value).toEqual({
           id,
           _type: 'EntityAdminFoo',
           _name: name,
@@ -1924,7 +1924,7 @@ describe('updateEntity()', () => {
 
       const publishedResult = await PublishedEntity.getEntity(context, id);
       if (expectOkResult(publishedResult)) {
-        expect(publishedResult.value.item).toEqual({
+        expect(publishedResult.value).toEqual({
           id,
           _type: 'EntityAdminFoo',
           _name: name,
@@ -1976,9 +1976,9 @@ describe('updateEntity()', () => {
         ]);
       }
 
-      const version0Result = await EntityAdmin.getEntity(context, id, { version: 0 });
+      const version0Result = await EntityAdmin.getEntity(context, id, 0);
       if (expectOkResult(version0Result)) {
-        expect(version0Result.value.item).toEqual({
+        expect(version0Result.value).toEqual({
           id,
           _type: 'EntityAdminFoo',
           _name: createResult.value._name,
@@ -1986,9 +1986,9 @@ describe('updateEntity()', () => {
           title: 'Original',
         });
       }
-      const version1Result = await EntityAdmin.getEntity(context, id, { version: 1 });
+      const version1Result = await EntityAdmin.getEntity(context, id, 1);
       if (expectOkResult(version1Result)) {
-        expect(version1Result.value.item).toEqual({
+        expect(version1Result.value).toEqual({
           id,
           _type: 'EntityAdminFoo',
           _name: createResult.value._name,
@@ -1999,7 +1999,7 @@ describe('updateEntity()', () => {
 
       const publishedResult = await PublishedEntity.getEntity(context, id);
       if (expectOkResult(publishedResult)) {
-        expect(publishedResult.value.item).toEqual({
+        expect(publishedResult.value).toEqual({
           id,
           _type: 'EntityAdminFoo',
           _name: createResult.value._name,
@@ -2057,9 +2057,9 @@ describe('updateEntity()', () => {
         ]);
       }
 
-      const version0Result = await EntityAdmin.getEntity(context, id, { version: 0 });
+      const version0Result = await EntityAdmin.getEntity(context, id, 0);
       if (expectOkResult(version0Result)) {
-        expect(version0Result.value.item).toEqual({
+        expect(version0Result.value).toEqual({
           id,
           _type: 'EntityAdminFoo',
           _name: createResult.value._name,
@@ -2068,9 +2068,9 @@ describe('updateEntity()', () => {
           summary: 'First summary',
         });
       }
-      const version1Result = await EntityAdmin.getEntity(context, id, { version: 1 });
+      const version1Result = await EntityAdmin.getEntity(context, id, 1);
       if (expectOkResult(version1Result)) {
-        expect(version1Result.value.item).toEqual({
+        expect(version1Result.value).toEqual({
           id,
           _type: 'EntityAdminFoo',
           _name: createResult.value._name,
@@ -2082,7 +2082,7 @@ describe('updateEntity()', () => {
 
       const publishedResult = await PublishedEntity.getEntity(context, id);
       if (expectOkResult(publishedResult)) {
-        expect(publishedResult.value.item).toEqual({
+        expect(publishedResult.value).toEqual({
           id,
           _type: 'EntityAdminFoo',
           _name: createResult.value._name,
@@ -2125,7 +2125,7 @@ describe('updateEntity()', () => {
 
       const publishedResult = await PublishedEntity.getEntity(context, id);
       if (expectOkResult(publishedResult)) {
-        expect(publishedResult.value.item).toEqual({
+        expect(publishedResult.value).toEqual({
           id,
           _type: 'EntityAdminFoo',
           _name: name,
@@ -2179,9 +2179,9 @@ describe('updateEntity()', () => {
           });
         }
 
-        const version0Result = await EntityAdmin.getEntity(context, fooId, { version: 0 });
+        const version0Result = await EntityAdmin.getEntity(context, fooId, 0);
         if (expectOkResult(version0Result)) {
-          expect(version0Result.value.item).toEqual({
+          expect(version0Result.value).toEqual({
             id: fooId,
             _type: 'EntityAdminFoo',
             _name: createFooResult.value._name,
@@ -2190,9 +2190,9 @@ describe('updateEntity()', () => {
             summary: 'First summary',
           });
         }
-        const version1Result = await EntityAdmin.getEntity(context, fooId, { version: 1 });
+        const version1Result = await EntityAdmin.getEntity(context, fooId, 1);
         if (expectOkResult(version1Result)) {
-          expect(version1Result.value.item).toEqual({
+          expect(version1Result.value).toEqual({
             id: fooId,
             _type: 'EntityAdminFoo',
             _name: createFooResult.value._name,
@@ -2205,7 +2205,7 @@ describe('updateEntity()', () => {
 
         const publishedResult = await PublishedEntity.getEntity(context, fooId);
         if (expectOkResult(publishedResult)) {
-          expect(publishedResult.value.item).toEqual({
+          expect(publishedResult.value).toEqual({
             id: fooId,
             _type: 'EntityAdminFoo',
             _name: createFooResult.value._name,
@@ -2272,9 +2272,9 @@ describe('updateEntity()', () => {
           });
         }
 
-        const version0Result = await EntityAdmin.getEntity(context, bazId, { version: 0 });
+        const version0Result = await EntityAdmin.getEntity(context, bazId, 0);
         if (expectOkResult(version0Result)) {
-          expect(version0Result.value.item).toEqual({
+          expect(version0Result.value).toEqual({
             id: bazId,
             _type: 'EntityAdminBaz',
             _name: createBazResult.value._name,
@@ -2284,9 +2284,9 @@ describe('updateEntity()', () => {
             bars: [{ id: bar1Id }, { id: bar2Id }],
           });
         }
-        const version1Result = await EntityAdmin.getEntity(context, bazId, { version: 1 });
+        const version1Result = await EntityAdmin.getEntity(context, bazId, 1);
         if (expectOkResult(version1Result)) {
-          expect(version1Result.value.item).toEqual({
+          expect(version1Result.value).toEqual({
             id: bazId,
             _type: 'EntityAdminBaz',
             _name: createBazResult.value._name,
@@ -2299,7 +2299,7 @@ describe('updateEntity()', () => {
 
         const publishedResult = await PublishedEntity.getEntity(context, bazId);
         if (expectOkResult(publishedResult)) {
-          expect(publishedResult.value.item).toEqual({
+          expect(publishedResult.value).toEqual({
             id: bazId,
             _type: 'EntityAdminBaz',
             _name: createBazResult.value._name,
@@ -2471,9 +2471,9 @@ describe('deleteEntity()', () => {
         ]);
       }
 
-      const version0Result = await EntityAdmin.getEntity(context, id, { version: 0 });
+      const version0Result = await EntityAdmin.getEntity(context, id, 0);
       if (expectOkResult(version0Result)) {
-        expect(version0Result.value.item).toEqual({
+        expect(version0Result.value).toEqual({
           id,
           _type: 'EntityAdminFoo',
           _name: createResult.value._name,
@@ -2481,9 +2481,9 @@ describe('deleteEntity()', () => {
           title: 'Delete',
         });
       }
-      const version1Result = await EntityAdmin.getEntity(context, id, { version: 1 });
+      const version1Result = await EntityAdmin.getEntity(context, id, 1);
       if (expectOkResult(version1Result)) {
-        expect(version1Result.value.item).toEqual({
+        expect(version1Result.value).toEqual({
           id,
           _type: 'EntityAdminFoo',
           _name: createResult.value._name,
@@ -2534,9 +2534,9 @@ describe('deleteEntity()', () => {
         ]);
       }
 
-      const version0Result = await EntityAdmin.getEntity(context, id, { version: 0 });
+      const version0Result = await EntityAdmin.getEntity(context, id, 0);
       if (expectOkResult(version0Result)) {
-        expect(version0Result.value.item).toEqual({
+        expect(version0Result.value).toEqual({
           id,
           _type: 'EntityAdminFoo',
           _name: createResult.value._name,
@@ -2544,9 +2544,9 @@ describe('deleteEntity()', () => {
           title: 'Draft',
         });
       }
-      const version1Result = await EntityAdmin.getEntity(context, id, { version: 1 });
+      const version1Result = await EntityAdmin.getEntity(context, id, 1);
       if (expectOkResult(version1Result)) {
-        expect(version1Result.value.item).toEqual({
+        expect(version1Result.value).toEqual({
           id,
           _type: 'EntityAdminFoo',
           _name: createResult.value._name,
@@ -2597,9 +2597,9 @@ describe('deleteEntity()', () => {
         ]);
       }
 
-      const version0Result = await EntityAdmin.getEntity(context, id, { version: 0 });
+      const version0Result = await EntityAdmin.getEntity(context, id, 0);
       if (expectOkResult(version0Result)) {
-        expect(version0Result.value.item).toEqual({
+        expect(version0Result.value).toEqual({
           id,
           _type: 'EntityAdminFoo',
           _name: createResult.value._name,
@@ -2607,9 +2607,9 @@ describe('deleteEntity()', () => {
           title: 'Delete',
         });
       }
-      const version1Result = await EntityAdmin.getEntity(context, id, { version: 1 });
+      const version1Result = await EntityAdmin.getEntity(context, id, 1);
       if (expectOkResult(version1Result)) {
-        expect(version1Result.value.item).toEqual({
+        expect(version1Result.value).toEqual({
           id,
           _type: 'EntityAdminFoo',
           _name: createResult.value._name,
@@ -2620,7 +2620,7 @@ describe('deleteEntity()', () => {
 
       const publishedResult = await PublishedEntity.getEntity(context, id);
       if (expectOkResult(publishedResult)) {
-        expect(publishedResult.value.item).toEqual({
+        expect(publishedResult.value).toEqual({
           id,
           _type: 'EntityAdminFoo',
           _name: createResult.value._name,
@@ -2667,9 +2667,9 @@ describe('deleteEntity()', () => {
         ]);
       }
 
-      const version0Result = await EntityAdmin.getEntity(context, id, { version: 0 });
+      const version0Result = await EntityAdmin.getEntity(context, id, 0);
       if (expectOkResult(version0Result)) {
-        expect(version0Result.value.item).toEqual({
+        expect(version0Result.value).toEqual({
           id,
           _type: 'EntityAdminFoo',
           _name: createResult.value._name,
@@ -2677,9 +2677,9 @@ describe('deleteEntity()', () => {
           title: 'Draft',
         });
       }
-      const version1Result = await EntityAdmin.getEntity(context, id, { version: 1 });
+      const version1Result = await EntityAdmin.getEntity(context, id, 1);
       if (expectOkResult(version1Result)) {
-        expect(version1Result.value.item).toEqual({
+        expect(version1Result.value).toEqual({
           id,
           _type: 'EntityAdminFoo',
           _name: createResult.value._name,

@@ -50,13 +50,13 @@ function EntityPickerInner({ id, value, schema, fieldSpec, onChange, useEntity }
     [onChange, handleClose]
   );
 
-  const { entity, entityError } = useEntity(value?.id, {});
+  const { entity, entityError } = useEntity(value?.id);
 
   return (
     <>
       <div style={{ display: 'flex' }}>
         <Button id={id} onClick={handleShow}>
-          {entity ? entity.item._name : value ? value.id : 'Select entity'}
+          {entity ? entity._name : value ? value.id : 'Select entity'}
         </Button>
         {value ? (
           <IconButton icon="remove" title="Remove entity" onClick={() => onChange?.(null)} />
