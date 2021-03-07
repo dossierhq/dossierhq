@@ -1,2 +1,3 @@
 export type { InMemorySessionContext, JsonInMemoryEntity } from './InMemoryServer';
-export { InMemoryAdmin, InMemoryServer } from './InMemoryServer';
+export { InMemoryAdmin } from './InMemoryAdmin';
+export { InMemoryServer } from './InMemoryServer';

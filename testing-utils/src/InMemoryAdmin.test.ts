@@ -1,11 +1,11 @@
 import { Schema } from '@datadata/core';
 import { expectOkResult } from '@datadata/core/src/CoreTestUtils';
 import { v4 as uuidv4 } from 'uuid';
-import { InMemoryAdmin, InMemoryServer } from './InMemoryServer';
+import { InMemoryAdmin, InMemoryServer } from '.';
 
 const schema = new Schema({ entityTypes: [{ name: 'Foo', fields: [] }], valueTypes: [] });
 
-describe('Admin getEntity()', () => {
+describe('getEntity()', () => {
   test('Fetch preloaded entity', async () => {
     const id = uuidv4();
     const server = new InMemoryServer(schema);
