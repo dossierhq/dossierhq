@@ -742,19 +742,21 @@ exports[`Storyshots Domain/EntityEditorContainer Normal 1`] = `
   <div
     className="dd has-shadow has-background"
   >
-    <div
-      className="dd message has-background has-shadow bg-danger"
+    <p
+      className="dd text-body1"
     >
-      <div
-        className="dd stack"
-      >
-        <p
-          className="dd text-body1"
-        >
-          Generic: Not yet implemented
-        </p>
-      </div>
-    </div>
+      Foo 1
+    </p>
+    <p
+      className="dd text-body1"
+    >
+      Foo
+    </p>
+    <p
+      className="dd text-body1"
+    >
+      fc66b4d7-61ff-44d4-8f68-cb7f526df046
+    </p>
   </div>
 </div>
 `;
