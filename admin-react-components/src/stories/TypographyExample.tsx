@@ -43,16 +43,18 @@ export default function TypographyExample({ className, loremIpsum }: Props): JSX
           : ''}
       </p>
       <table>
-        <tr>
-          {Object.keys(fontStyles).map((key) => (
-            <th key={key}>{key}</th>
-          ))}
-        </tr>
-        <tr>
-          {Object.entries(fontStyles).map(([key, value]) => (
-            <td key={key}>{value}</td>
-          ))}
-        </tr>
+        <tbody>
+          <tr>
+            {Object.keys(fontStyles).map((key) => (
+              <th key={key}>{key}</th>
+            ))}
+          </tr>
+          <tr>
+            {Object.entries(fontStyles).map(([key, value]) => (
+              <td key={key}>{value}</td>
+            ))}
+          </tr>
+        </tbody>
       </table>
     </div>
   );
