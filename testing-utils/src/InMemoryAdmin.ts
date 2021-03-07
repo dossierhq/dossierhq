@@ -95,7 +95,12 @@ export const InMemoryAdmin = {
     entity: AdminEntityCreate,
     options: { publish: boolean }
   ): PromiseResult<AdminEntity, ErrorType.BadRequest> => {
-    const newEntity = { ...entity, id: uuidv4(), _version: 0 };
+    const newEntity = {
+      ...entity,
+      id: uuidv4(),
+      _version: 0,
+      _name: context.server.getUniqueName(null, entity._name),
+    };
     context.server.addNewEntity(newEntity, context.userId);
     return ok(newEntity);
   },
@@ -114,6 +119,7 @@ export const InMemoryAdmin = {
       ...entity,
       _version: previousVersion._version + 1,
     };
+    newEntity._name = context.server.getUniqueName(entity.id, newEntity._name);
     context.server.addUpdatedEntity(newEntity, context.userId);
     return ok(newEntity);
   },
