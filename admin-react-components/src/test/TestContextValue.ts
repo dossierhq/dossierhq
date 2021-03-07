@@ -1,8 +1,8 @@
 import type { AdminQuery, Paging } from '@datadata/core';
-import { createErrorResultFromError, notOk } from '@datadata/core';
+import { createErrorResultFromError } from '@datadata/core';
 import { InMemoryAdmin, InMemoryServer } from '@datadata/testing-utils';
 import type { InMemorySessionContext } from '@datadata/testing-utils';
-import useSWR from 'swr';
+import useSWR, { mutate } from 'swr';
 import { v4 as uuidv4 } from 'uuid';
 import type { DataDataContextValue } from '..';
 import { entitiesFixture } from './EntityFixtures';
@@ -24,7 +24,7 @@ export default class TestContextValue implements DataDataContextValue {
   useEntity: DataDataContextValue['useEntity'] = (id, options) => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const { data, error } = useSWR(
-      id ? [this.#rootKey, id, options.version] : null,
+      id ? [this.#rootKey, 'useEntity', id, options.version] : null,
       this.useEntityFetcher
     );
 
@@ -32,7 +32,12 @@ export default class TestContextValue implements DataDataContextValue {
     return { entity: data, entityError };
   };
 
-  private useEntityFetcher = async (unusedRootKey: string, id: string, version: number | null) => {
+  private useEntityFetcher = async (
+    rootKey: string,
+    action: 'useEntity',
+    id: string,
+    version: number | null
+  ) => {
     const result = await InMemoryAdmin.getEntity(this.#context, id, { version });
     if (result.isOk()) {
       return result.value;
@@ -41,24 +46,43 @@ export default class TestContextValue implements DataDataContextValue {
   };
 
   useEntityHistory: DataDataContextValue['useEntityHistory'] = (id) => {
-    if (!id) {
-      return {};
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const { data, error } = useSWR(
+      id ? [this.#rootKey, 'useEntityHistory', id] : null,
+      this.useEntityHistoryFetcher
+    );
+
+    const entityHistoryError = error ? createErrorResultFromError(error) : undefined;
+    return { entityHistory: data, entityError: entityHistoryError };
+  };
+
+  private useEntityHistoryFetcher = async (
+    rootKey: string,
+    action: 'useEntityHistory',
+    id: string
+  ) => {
+    const result = await InMemoryAdmin.getEntityHistory(this.#context, id);
+    if (result.isOk()) {
+      return result.value;
     }
-    return { entityHistoryError: notOk.Generic('Not yet implemented') };
-    //TODO implement
+    throw result.toError();
   };
 
   useSearchEntities: DataDataContextValue['useSearchEntities'] = (query, paging) => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const { data, error } = useSWR(
-      query ? [this.#rootKey, JSON.stringify({ query, paging })] : null,
+      query ? [this.#rootKey, 'useSearchEntities', JSON.stringify({ query, paging })] : null,
       this.useSearchEntitiesFetcher
     );
     const connectionError = error ? createErrorResultFromError(error) : undefined;
     return { connection: data, connectionError };
   };
 
-  private useSearchEntitiesFetcher = async (unusedRootKey: string, json: string) => {
+  private useSearchEntitiesFetcher = async (
+    rootKey: string,
+    action: 'useSearchEntities',
+    json: string
+  ) => {
     const { query, paging }: { query: AdminQuery; paging: Paging | undefined } = JSON.parse(json);
     const result = await InMemoryAdmin.searchEntities(this.#context, query, paging);
     if (result.isOk()) {
@@ -68,10 +92,23 @@ export default class TestContextValue implements DataDataContextValue {
   };
 
   createEntity: DataDataContextValue['createEntity'] = async (entity, options) => {
-    return InMemoryAdmin.createEntity(this.#context, entity, options);
+    const result = await InMemoryAdmin.createEntity(this.#context, entity, options);
+    if (result.isOk()) {
+      this.invalidateEntity(result.value.id);
+    }
+    return result;
   };
 
   updateEntity: DataDataContextValue['updateEntity'] = async (entity, options) => {
-    return InMemoryAdmin.updateEntity(this.#context, entity, options);
+    const result = await InMemoryAdmin.updateEntity(this.#context, entity, options);
+    if (result.isOk()) {
+      this.invalidateEntity(result.value.id);
+    }
+    return result;
   };
+
+  private invalidateEntity(id: string) {
+    mutate([this.#rootKey, 'useEntity', id, null]);
+    mutate([this.#rootKey, 'useEntityHistory', id]);
+  }
 }

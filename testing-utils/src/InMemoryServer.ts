@@ -1,6 +1,7 @@
 import type {
   AdminEntity,
   AdminEntityCreate,
+  AdminEntityHistory,
   AdminEntityUpdate,
   AdminQuery,
   Connection,
@@ -65,6 +66,29 @@ export class InMemoryServer {
     return this.findLatestVersion(fullEntity.versions);
   }
 
+  getEntityHistory(id: string): AdminEntityHistory | null {
+    const fullEntity = this.#entities.find((x) => x.versions[0].id === id);
+    if (!fullEntity) {
+      return null;
+    }
+    const result: AdminEntityHistory = {
+      id,
+      type: fullEntity.versions[0]._type,
+      name: fullEntity.versions[0]._name,
+      versions: fullEntity.history.map((item) => {
+        const entity = fullEntity.versions.find((x) => x._version === item.version);
+        return {
+          version: item.version,
+          createdBy: item.createdBy,
+          createdAt: item.createdAt,
+          deleted: !!entity?._deleted,
+          published: fullEntity.publishedVersion === item.version,
+        };
+      }),
+    };
+    return result;
+  }
+
   getLatestEntities(): AdminEntity[] {
     return this.#entities.map((x) => this.findLatestVersion(x.versions));
   }
@@ -106,6 +130,17 @@ export const InMemoryAdmin = {
       return ok({ item });
     }
     return notOk.NotFound('No such entity or version');
+  },
+
+  getEntityHistory: async (
+    context: InMemorySessionContext,
+    id: string
+  ): PromiseResult<AdminEntityHistory, ErrorType.NotFound> => {
+    const history = context.server.getEntityHistory(id);
+    if (!history) {
+      return notOk.NotFound('No such entity');
+    }
+    return ok(history);
   },
 
   searchEntities: async (
