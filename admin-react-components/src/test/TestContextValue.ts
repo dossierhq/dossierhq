@@ -1,42 +1,43 @@
-import type { AdminEntity, AdminEntityHistory, Location } from '@datadata/core';
-import { isLocationItemField, visitFieldsRecursively } from '@datadata/core';
-import { notOk, ok } from '@datadata/core';
+import type { AdminQuery, Paging } from '@datadata/core';
+import { createErrorResultFromError, notOk } from '@datadata/core';
+import { InMemoryAdmin, InMemoryServer } from '@datadata/testing-utils';
+import type { InMemorySessionContext } from '@datadata/testing-utils';
+import useSWR from 'swr';
 import { v4 as uuidv4 } from 'uuid';
 import type { DataDataContextValue } from '..';
-import { cloneFixture } from './EntityFixtures';
+import { entitiesFixture } from './EntityFixtures';
 import schema from '../stories/StoryboardSchema';
 
 export default class TestContextValue implements DataDataContextValue {
   schema = schema;
-  #entities = cloneFixture();
+  #server: InMemoryServer;
+  #context: InMemorySessionContext;
+  #rootKey = uuidv4();
 
-  private findEntity(id: string, version?: number | null): AdminEntity | null {
-    const versions = this.#entities.find((x) => x[0].id === id);
-    if (!versions) {
-      return null;
-    }
-    if (typeof version === 'number') {
-      return versions.find((entity) => entity._version === version) ?? null;
-    }
-    return this.findLatestVersion(versions);
-  }
-
-  private findLatestVersion(versions: AdminEntity[]): AdminEntity {
-    const maxVersion = versions.reduce((max, entity) => Math.max(max, entity._version), 0);
-    return versions.find((entity) => entity._version === maxVersion) as AdminEntity;
-  }
-
-  private getLatestEntities(): AdminEntity[] {
-    return this.#entities.map(this.findLatestVersion);
+  constructor() {
+    const userId = 'adba1452-1b89-42e9-8878-d0a2becf101f';
+    this.#server = new InMemoryServer(schema);
+    this.#server.loadEntities(entitiesFixture);
+    this.#context = this.#server.createContext(userId);
   }
 
   useEntity: DataDataContextValue['useEntity'] = (id, options) => {
-    if (!id) return {};
-    const entity = this.findEntity(id, options.version);
-    if (entity) {
-      return { entity: { item: entity } };
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const { data, error } = useSWR(
+      id ? [this.#rootKey, id, options.version] : null,
+      this.useEntityFetcher
+    );
+
+    const entityError = error ? createErrorResultFromError(error) : undefined;
+    return { entity: data, entityError };
+  };
+
+  private useEntityFetcher = async (unusedRootKey: string, id: string, version: number | null) => {
+    const result = await InMemoryAdmin.getEntity(this.#context, id, { version });
+    if (result.isOk()) {
+      return result.value;
     }
-    return { entityError: notOk.NotFound('No such entity or version') };
+    throw result.toError();
   };
 
   useEntityHistory: DataDataContextValue['useEntityHistory'] = (id) => {
@@ -48,80 +49,29 @@ export default class TestContextValue implements DataDataContextValue {
   };
 
   useSearchEntities: DataDataContextValue['useSearchEntities'] = (query, paging) => {
-    if (!query) {
-      return {};
-    }
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const { data, error } = useSWR(
+      query ? [this.#rootKey, JSON.stringify({ query, paging })] : null,
+      this.useSearchEntitiesFetcher
+    );
+    const connectionError = error ? createErrorResultFromError(error) : undefined;
+    return { connection: data, connectionError };
+  };
 
-    const { boundingBox } = query;
-
-    const entities = this.getLatestEntities().filter((entity) => {
-      if (
-        query.entityTypes?.length &&
-        query.entityTypes.length > 0 &&
-        query.entityTypes.indexOf(entity._type) < 0
-      ) {
-        return false;
-      }
-      if (boundingBox) {
-        const locations: Location[] = [];
-        visitFieldsRecursively({
-          schema: this.schema,
-          entity,
-          visitField: (path, fieldSpec, data, unusedVisitContext) => {
-            if (isLocationItemField(fieldSpec, data) && data) {
-              locations.push(data);
-            }
-          },
-          initialVisitContext: undefined,
-        });
-        if (
-          !locations.find(
-            ({ lat, lng }) =>
-              lat >= boundingBox.minLat &&
-              lat <= boundingBox.maxLat &&
-              lng >= boundingBox.minLng &&
-              lng <= boundingBox.maxLng
-          )
-        ) {
-          return false;
-        }
-      }
-      return true;
-    });
-    if (entities.length === 0) {
-      return { connection: null };
+  private useSearchEntitiesFetcher = async (unusedRootKey: string, json: string) => {
+    const { query, paging }: { query: AdminQuery; paging: Paging | undefined } = JSON.parse(json);
+    const result = await InMemoryAdmin.searchEntities(this.#context, query, paging);
+    if (result.isOk()) {
+      return result.value;
     }
-    return {
-      connection: {
-        pageInfo: {
-          hasPreviousPage: false,
-          hasNextPage: false,
-          startCursor: entities[0].id,
-          endCursor: entities[entities.length - 1].id,
-        },
-        edges: entities.map((entity) => ({ cursor: entity.id, node: ok(entity) })),
-      },
-    };
+    throw result.toError();
   };
 
   createEntity: DataDataContextValue['createEntity'] = async (entity, options) => {
-    const newEntity = { ...entity, id: uuidv4(), _version: 0 };
-    this.#entities.push([newEntity]);
-    return ok(newEntity);
+    return InMemoryAdmin.createEntity(this.#context, entity, options);
   };
 
   updateEntity: DataDataContextValue['updateEntity'] = async (entity, options) => {
-    const versions = this.#entities.find((x) => x[0].id === entity.id);
-    if (!versions) {
-      return notOk.NotFound('No such entity');
-    }
-    const previousVersion = this.findLatestVersion(versions);
-    const newEntity = {
-      ...previousVersion,
-      ...entity,
-      _version: previousVersion._version + 1,
-    };
-    versions.push(newEntity);
-    return ok(newEntity);
+    return InMemoryAdmin.updateEntity(this.#context, entity, options);
   };
 }

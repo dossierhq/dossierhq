@@ -20,11 +20,11 @@ interface InMemoryEntity {
   history: { version: number; createdBy: string; createdAt: Date }[];
 }
 
-interface JsonInMemoryEntity extends Omit<InMemoryEntity, 'history'> {
+export interface JsonInMemoryEntity extends Omit<InMemoryEntity, 'history'> {
   history: { version: number; createdBy: string; createdAt: string }[];
 }
 
-interface InMemorySessionContext {
+export interface InMemorySessionContext {
   server: InMemoryServer;
   userId: string;
 }
