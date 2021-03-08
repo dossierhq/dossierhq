@@ -116,6 +116,10 @@ type AdminEntityHistory {
   versions: [AdminEntityVersionInfo]!
 }
 
+type AdminEntityPublishPayload {
+  id: ID!
+}
+
 type AdminFoo implements AdminEntity {
   id: ID!
   _type: EntityType!
@@ -174,6 +178,7 @@ type Query {
 
 type Mutation {
   deleteEntity(id: ID!): AdminEntity!
+  publishEntity(id: ID!, version: Int!): AdminEntityPublishPayload
   createFooEntity(entity: AdminFooCreateInput!): AdminFoo!
   updateFooEntity(entity: AdminFooUpdateInput!): AdminFoo!
   createBarEntity(entity: AdminBarCreateInput!): AdminBar!
@@ -287,6 +292,10 @@ type AdminEntityHistory {
   versions: [AdminEntityVersionInfo]!
 }
 
+type AdminEntityPublishPayload {
+  id: ID!
+}
+
 type AdminFoo implements AdminEntity {
   id: ID!
   _type: EntityType!
@@ -392,6 +401,7 @@ type Query {
 
 type Mutation {
   deleteEntity(id: ID!): AdminEntity!
+  publishEntity(id: ID!, version: Int!): AdminEntityPublishPayload
   createFooEntity(entity: AdminFooCreateInput!): AdminFoo!
   updateFooEntity(entity: AdminFooUpdateInput!): AdminFoo!
   createBarEntity(entity: AdminBarCreateInput!): AdminBar!
@@ -490,6 +500,10 @@ type AdminEntityHistory {
   versions: [AdminEntityVersionInfo]!
 }
 
+type AdminEntityPublishPayload {
+  id: ID!
+}
+
 type AdminFoo implements AdminEntity {
   id: ID!
   _type: EntityType!
@@ -520,6 +534,7 @@ type Query {
 
 type Mutation {
   deleteEntity(id: ID!): AdminEntity!
+  publishEntity(id: ID!, version: Int!): AdminEntityPublishPayload
   createFooEntity(entity: AdminFooCreateInput!): AdminFoo!
   updateFooEntity(entity: AdminFooUpdateInput!): AdminFoo!
 }
@@ -624,6 +639,10 @@ type AdminEntityHistory {
   versions: [AdminEntityVersionInfo]!
 }
 
+type AdminEntityPublishPayload {
+  id: ID!
+}
+
 type AdminFoo implements AdminEntity {
   id: ID!
   _type: EntityType!
@@ -685,6 +704,7 @@ type Query {
 
 type Mutation {
   deleteEntity(id: ID!): AdminEntity!
+  publishEntity(id: ID!, version: Int!): AdminEntityPublishPayload
   createFooEntity(entity: AdminFooCreateInput!): AdminFoo!
   updateFooEntity(entity: AdminFooUpdateInput!): AdminFoo!
   createBarEntity(entity: AdminBarCreateInput!): AdminBar!
@@ -825,6 +845,10 @@ type AdminEntityHistory {
   versions: [AdminEntityVersionInfo]!
 }
 
+type AdminEntityPublishPayload {
+  id: ID!
+}
+
 type AdminFoo implements AdminEntity {
   id: ID!
   _type: EntityType!
@@ -941,6 +965,7 @@ type Query {
 
 type Mutation {
   deleteEntity(id: ID!): AdminEntity!
+  publishEntity(id: ID!, version: Int!): AdminEntityPublishPayload
   createFooEntity(entity: AdminFooCreateInput!): AdminFoo!
   updateFooEntity(entity: AdminFooUpdateInput!): AdminFoo!
   createBarEntity(entity: AdminBarCreateInput!): AdminBar!
