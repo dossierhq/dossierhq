@@ -39,3 +39,16 @@ export async function deleteEntity<TContext extends SessionGraphQLContext>(
   }
   return result.value;
 }
+
+export async function publishEntity<TContext extends SessionGraphQLContext>(
+  context: TContext,
+  id: string,
+  version: number
+): Promise<{ id: string }> {
+  const sessionContext = getSessionContext(context);
+  const result = await EntityAdmin.publishEntity(sessionContext, id, version);
+  if (result.isError()) {
+    throw result.toError();
+  }
+  return { id };
+}
