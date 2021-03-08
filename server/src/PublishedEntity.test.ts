@@ -38,19 +38,22 @@ describe('getEntities()', () => {
   });
 
   test('Get two entities', async () => {
-    const createFoo1Result = await EntityAdmin.createEntity(
-      context,
-      { _type: 'PublishedEntityFoo', _name: 'Foo 1', title: 'Title 1' },
-      { publish: true }
-    );
-    const createFoo2Result = await EntityAdmin.createEntity(
-      context,
-      { _type: 'PublishedEntityFoo', _name: 'Foo 2', title: 'Title 2' },
-      { publish: true }
-    );
+    const createFoo1Result = await EntityAdmin.createEntity(context, {
+      _type: 'PublishedEntityFoo',
+      _name: 'Foo 1',
+      title: 'Title 1',
+    });
+    const createFoo2Result = await EntityAdmin.createEntity(context, {
+      _type: 'PublishedEntityFoo',
+      _name: 'Foo 2',
+      title: 'Title 2',
+    });
     if (expectOkResult(createFoo1Result) && expectOkResult(createFoo2Result)) {
       const { id: foo1Id, _name: foo1Name } = createFoo1Result.value;
       const { id: foo2Id, _name: foo2Name } = createFoo2Result.value;
+
+      await EntityAdmin.publishEntity(context, foo1Id, 0);
+      await EntityAdmin.publishEntity(context, foo2Id, 0);
 
       const result = await PublishedEntity.getEntities(context, [foo2Id, foo1Id]);
       expect(result).toHaveLength(2);
@@ -64,13 +67,15 @@ describe('getEntities()', () => {
   });
 
   test('Get one missing, one existing entity', async () => {
-    const createFooResult = await EntityAdmin.createEntity(
-      context,
-      { _type: 'PublishedEntityFoo', _name: 'Foo', title: 'Title' },
-      { publish: true }
-    );
+    const createFooResult = await EntityAdmin.createEntity(context, {
+      _type: 'PublishedEntityFoo',
+      _name: 'Foo',
+      title: 'Title',
+    });
     if (expectOkResult(createFooResult)) {
       const { id: foo1Id, _name: foo1Name } = createFooResult.value;
+
+      await EntityAdmin.publishEntity(context, foo1Id, 0);
 
       const result = await PublishedEntity.getEntities(context, [
         'f09fdd62-4a1e-4320-afba-8dd0781799df',

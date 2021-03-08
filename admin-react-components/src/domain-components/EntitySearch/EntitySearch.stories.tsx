@@ -1,5 +1,5 @@
 import type { Story } from '@storybook/react/types-6-0';
-import React, { Component } from 'react';
+import React from 'react';
 import { DataDataContext } from '../..';
 import { EntitySearch } from './EntitySearch';
 import type { EntitySearchProps } from './EntitySearch';

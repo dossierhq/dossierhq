@@ -222,14 +222,16 @@ export async function createEntity(context: SessionContext): Promise<EntityRefer
     entity._name = await showStringEdit('What name to use for the entity?');
   }
 
-  const publish = await showConfirm('Publish the entity?');
-  const result = await EntityAdmin.createEntity(context, entity, { publish });
+  const result = await EntityAdmin.createEntity(context, entity);
   if (result.isError()) {
     logErrorResult('Failed creating entity', result);
     return null;
   }
   console.log(chalk.bold('Created entity'));
   logEntity(context, result.value);
+
+  await publishEntity(context, result.value);
+
   return result.value;
 }
 
@@ -241,14 +243,25 @@ export async function editEntity(context: SessionContext, id: string): Promise<v
   }
 
   const entity = { id, ...(await editEntityValues(context, getResult.value)) };
-  const publish = await showConfirm('Publish the entity?');
-  const updateResult = await EntityAdmin.updateEntity(context, entity, { publish });
+  const updateResult = await EntityAdmin.updateEntity(context, entity);
   if (updateResult.isError()) {
     logErrorResult('Failed updating entity', updateResult);
     return;
   }
   console.log(chalk.bold('Updated'));
   logEntity(context, updateResult.value);
+
+  await publishEntity(context, updateResult.value);
+}
+
+async function publishEntity(context: SessionContext, entity: AdminEntity) {
+  const publish = await showConfirm('Publish the entity?');
+  if (publish) {
+    const publishResult = await EntityAdmin.publishEntity(context, entity.id, entity._version);
+    if (publishResult.isError()) {
+      logErrorResult('Failed publishing entity', publishResult);
+    }
+  }
 }
 
 async function editEntityValues(
@@ -525,13 +538,14 @@ async function editFieldList<TItem>(
 }
 
 export async function deleteEntity(context: SessionContext, id: string): Promise<void> {
-  const publish = await showConfirm('Publish the deletion of the entity?');
-  const result = await EntityAdmin.deleteEntity(context, id, { publish });
+  const result = await EntityAdmin.deleteEntity(context, id);
   if (result.isError()) {
     logErrorResult('Failed creating entity', result);
     return;
   }
   console.log(`${chalk.bold('Deleted:')} ${id} (version: ${result.value._version})`);
+
+  await publishEntity(context, result.value);
 }
 
 export async function showEntityHistory(context: SessionContext, id: string): Promise<void> {

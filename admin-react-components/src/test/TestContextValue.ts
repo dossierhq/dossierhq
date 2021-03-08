@@ -91,16 +91,16 @@ export default class TestContextValue implements DataDataContextValue {
     throw result.toError();
   };
 
-  createEntity: DataDataContextValue['createEntity'] = async (entity, options) => {
-    const result = await InMemoryAdmin.createEntity(this.#context, entity, options);
+  createEntity: DataDataContextValue['createEntity'] = async (entity) => {
+    const result = await InMemoryAdmin.createEntity(this.#context, entity);
     if (result.isOk()) {
       this.invalidateEntity(result.value.id);
     }
     return result;
   };
 
-  updateEntity: DataDataContextValue['updateEntity'] = async (entity, options) => {
-    const result = await InMemoryAdmin.updateEntity(this.#context, entity, options);
+  updateEntity: DataDataContextValue['updateEntity'] = async (entity) => {
+    const result = await InMemoryAdmin.updateEntity(this.#context, entity);
     if (result.isOk()) {
       this.invalidateEntity(result.value.id);
     }

@@ -76,11 +76,11 @@ async function ensureTestEntitiesExist(context: SessionContext) {
   if (expectOkResult(entitiesOfTypeCount)) {
     for (let count = entitiesOfTypeCount.value; count < requestedCount; count += 1) {
       const random = String(Math.random()).slice(2);
-      const createResult = await EntityAdmin.createEntity(
-        context,
-        { _type: 'QueryAdminOnlyEditBefore', _name: random, message: `Hey ${random}` },
-        { publish: true }
-      );
+      const createResult = await EntityAdmin.createEntity(context, {
+        _type: 'QueryAdminOnlyEditBefore',
+        _name: random,
+        message: `Hey ${random}`,
+      });
       createResult.throwIfError();
     }
   }
@@ -127,11 +127,11 @@ async function visitAllEntityPages(
 }
 
 async function createBarWithFooReferences(context: SessionContext, fooCount: number) {
-  const createBarResult = await EntityAdmin.createEntity(
-    context,
-    { _type: 'QueryAdminBar', _name: 'Bar', title: 'Bar' },
-    { publish: true }
-  );
+  const createBarResult = await EntityAdmin.createEntity(context, {
+    _type: 'QueryAdminBar',
+    _name: 'Bar',
+    title: 'Bar',
+  });
   if (createBarResult.isError()) {
     throw createBarResult.toError();
   }
@@ -141,11 +141,11 @@ async function createBarWithFooReferences(context: SessionContext, fooCount: num
   const fooEntities: AdminEntity[] = [];
 
   for (let i = 0; i < fooCount; i += 1) {
-    const createFooResult = await EntityAdmin.createEntity(
-      context,
-      { _type: 'QueryAdminFoo', _name: 'Foo: ' + i, bar: { id: barId } },
-      { publish: true }
-    );
+    const createFooResult = await EntityAdmin.createEntity(context, {
+      _type: 'QueryAdminFoo',
+      _name: 'Foo: ' + i,
+      bar: { id: barId },
+    });
     if (expectOkResult(createFooResult)) {
       fooEntities.push(createFooResult.value);
     }
@@ -169,22 +169,18 @@ function randomBoundingBox(heightLat = 1.0, widthLng = 1.0): BoundingBox {
 
 describe('adminEntity()', () => {
   test('Query all fields of created entity', async () => {
-    const createResult = await EntityAdmin.createEntity(
-      context,
-      {
-        _type: 'QueryAdminFoo',
-        _name: 'Howdy name',
-        title: 'Howdy title',
-        summary: 'Howdy summary',
-        tags: ['one', 'two', 'three'],
-        location: { lat: 55.60498, lng: 13.003822 },
-        locations: [
-          { lat: 55.60498, lng: 13.003822 },
-          { lat: 56.381561, lng: 13.99286 },
-        ],
-      },
-      { publish: true }
-    );
+    const createResult = await EntityAdmin.createEntity(context, {
+      _type: 'QueryAdminFoo',
+      _name: 'Howdy name',
+      title: 'Howdy title',
+      summary: 'Howdy summary',
+      tags: ['one', 'two', 'three'],
+      location: { lat: 55.60498, lng: 13.003822 },
+      locations: [
+        { lat: 55.60498, lng: 13.003822 },
+        { lat: 56.381561, lng: 13.99286 },
+      ],
+    });
     if (expectOkResult(createResult)) {
       const { id, _name: name } = createResult.value;
 
@@ -243,11 +239,10 @@ describe('adminEntity()', () => {
   });
 
   test('Query null fields of created entity', async () => {
-    const createResult = await EntityAdmin.createEntity(
-      context,
-      { _type: 'QueryAdminFoo', _name: 'Howdy name' },
-      { publish: true }
-    );
+    const createResult = await EntityAdmin.createEntity(context, {
+      _type: 'QueryAdminFoo',
+      _name: 'Howdy name',
+    });
     if (expectOkResult(createResult)) {
       const { id, _name: name } = createResult.value;
 
@@ -313,25 +308,21 @@ describe('adminEntity()', () => {
   });
 
   test('Query different versions of same entity created entity', async () => {
-    const createResult = await EntityAdmin.createEntity(
-      context,
-      {
-        _type: 'QueryAdminFoo',
-        _name: 'First name',
-        title: 'First title',
-        summary: 'First summary',
-      },
-      { publish: true }
-    );
+    const createResult = await EntityAdmin.createEntity(context, {
+      _type: 'QueryAdminFoo',
+      _name: 'First name',
+      title: 'First title',
+      summary: 'First summary',
+    });
     if (expectOkResult(createResult)) {
       const { id } = createResult.value;
 
       expectOkResult(
-        await EntityAdmin.updateEntity(
-          context,
-          { id, title: 'Second title', summary: 'Second summary' },
-          { publish: true }
-        )
+        await EntityAdmin.updateEntity(context, {
+          id,
+          title: 'Second title',
+          summary: 'Second summary',
+        })
       );
 
       const result = await graphql(
@@ -420,20 +411,16 @@ describe('adminEntity()', () => {
   });
 
   test('Query deleted entity', async () => {
-    const createResult = await EntityAdmin.createEntity(
-      context,
-      {
-        _type: 'QueryAdminFoo',
-        _name: 'First name',
-        title: 'First title',
-        summary: 'First summary',
-      },
-      { publish: true }
-    );
+    const createResult = await EntityAdmin.createEntity(context, {
+      _type: 'QueryAdminFoo',
+      _name: 'First name',
+      title: 'First title',
+      summary: 'First summary',
+    });
     if (expectOkResult(createResult)) {
       const { id, _name: name } = createResult.value;
 
-      expectOkResult(await EntityAdmin.deleteEntity(context, id, { publish: false }));
+      expectOkResult(await EntityAdmin.deleteEntity(context, id));
 
       const result = await graphql(
         schema,
@@ -487,19 +474,20 @@ describe('adminEntity()', () => {
   });
 
   test('Query referenced entity', async () => {
-    const createBarResult = await EntityAdmin.createEntity(
-      context,
-      { _type: 'QueryAdminBar', _name: 'Bar name', title: 'Bar title' },
-      { publish: true }
-    );
+    const createBarResult = await EntityAdmin.createEntity(context, {
+      _type: 'QueryAdminBar',
+      _name: 'Bar name',
+      title: 'Bar title',
+    });
     if (expectOkResult(createBarResult)) {
       const barId = createBarResult.value.id;
 
-      const createFooResult = await EntityAdmin.createEntity(
-        context,
-        { _type: 'QueryAdminFoo', _name: 'Foo name', title: 'Foo title', bar: { id: barId } },
-        { publish: true }
-      );
+      const createFooResult = await EntityAdmin.createEntity(context, {
+        _type: 'QueryAdminFoo',
+        _name: 'Foo name',
+        title: 'Foo title',
+        bar: { id: barId },
+      });
       if (expectOkResult(createFooResult)) {
         const fooId = createFooResult.value.id;
 
@@ -554,30 +542,26 @@ describe('adminEntity()', () => {
   });
 
   test('Query referenced entity list', async () => {
-    const createBar1Result = await EntityAdmin.createEntity(
-      context,
-      { _type: 'QueryAdminBar', _name: 'Bar 1 name', title: 'Bar 1 title' },
-      { publish: true }
-    );
-    const createBar2Result = await EntityAdmin.createEntity(
-      context,
-      { _type: 'QueryAdminBar', _name: 'Bar 2 name', title: 'Bar 2 title' },
-      { publish: true }
-    );
+    const createBar1Result = await EntityAdmin.createEntity(context, {
+      _type: 'QueryAdminBar',
+      _name: 'Bar 1 name',
+      title: 'Bar 1 title',
+    });
+    const createBar2Result = await EntityAdmin.createEntity(context, {
+      _type: 'QueryAdminBar',
+      _name: 'Bar 2 name',
+      title: 'Bar 2 title',
+    });
     if (expectOkResult(createBar1Result) && expectOkResult(createBar2Result)) {
       const bar1Id = createBar1Result.value.id;
       const bar2Id = createBar2Result.value.id;
 
-      const createFooResult = await EntityAdmin.createEntity(
-        context,
-        {
-          _type: 'QueryAdminFoo',
-          _name: 'Foo name',
-          title: 'Foo title',
-          bars: [{ id: bar1Id }, { id: bar2Id }],
-        },
-        { publish: true }
-      );
+      const createFooResult = await EntityAdmin.createEntity(context, {
+        _type: 'QueryAdminFoo',
+        _name: 'Foo name',
+        title: 'Foo title',
+        bars: [{ id: bar1Id }, { id: bar2Id }],
+      });
       if (expectOkResult(createFooResult)) {
         const fooId = createFooResult.value.id;
 
@@ -634,28 +618,24 @@ describe('adminEntity()', () => {
   });
 
   test('Query value type', async () => {
-    const createBarResult = await EntityAdmin.createEntity(
-      context,
-      { _type: 'QueryAdminBar', _name: 'Bar name', title: 'Bar title' },
-      { publish: true }
-    );
+    const createBarResult = await EntityAdmin.createEntity(context, {
+      _type: 'QueryAdminBar',
+      _name: 'Bar name',
+      title: 'Bar title',
+    });
     if (expectOkResult(createBarResult)) {
       const barId = createBarResult.value.id;
 
-      const createFooResult = await EntityAdmin.createEntity(
-        context,
-        {
-          _type: 'QueryAdminFoo',
-          _name: 'Foo name',
-          title: 'Foo title',
-          stringedBar: {
-            _type: 'QueryAdminStringedBar',
-            text: 'Stringed text',
-            bar: { id: barId },
-          },
+      const createFooResult = await EntityAdmin.createEntity(context, {
+        _type: 'QueryAdminFoo',
+        _name: 'Foo name',
+        title: 'Foo title',
+        stringedBar: {
+          _type: 'QueryAdminStringedBar',
+          text: 'Stringed text',
+          bar: { id: barId },
         },
-        { publish: true }
-      );
+      });
       if (expectOkResult(createFooResult)) {
         const fooId = createFooResult.value.id;
 
@@ -780,16 +760,14 @@ GraphQL request:3:11
 
 describe('adminEntities()', () => {
   test('Query 2 entities', async () => {
-    const createFoo1Result = await EntityAdmin.createEntity(
-      context,
-      { _type: 'QueryAdminFoo', _name: 'Howdy name 1' },
-      { publish: true }
-    );
-    const createFoo2Result = await EntityAdmin.createEntity(
-      context,
-      { _type: 'QueryAdminFoo', _name: 'Howdy name 2' },
-      { publish: true }
-    );
+    const createFoo1Result = await EntityAdmin.createEntity(context, {
+      _type: 'QueryAdminFoo',
+      _name: 'Howdy name 1',
+    });
+    const createFoo2Result = await EntityAdmin.createEntity(context, {
+      _type: 'QueryAdminFoo',
+      _name: 'Howdy name 2',
+    });
     if (expectOkResult(createFoo1Result) && expectOkResult(createFoo2Result)) {
       const { id: foo1Id, _name: foo1Name } = createFoo1Result.value;
       const { id: foo2Id, _name: foo2Name } = createFoo2Result.value;
@@ -1015,15 +993,11 @@ describe('searchAdminEntities()', () => {
       lat: (boundingBox.minLat + boundingBox.maxLat) / 2,
       lng: (boundingBox.minLng + boundingBox.maxLng) / 2,
     };
-    const createResult = await EntityAdmin.createEntity(
-      context,
-      {
-        _type: 'QueryAdminFoo',
-        _name: 'Howdy name',
-        location: center,
-      },
-      { publish: true }
-    );
+    const createResult = await EntityAdmin.createEntity(context, {
+      _type: 'QueryAdminFoo',
+      _name: 'Howdy name',
+      location: center,
+    });
     if (expectOkResult(createResult)) {
       const { id: fooId } = createResult.value;
 
@@ -1061,22 +1035,20 @@ describe('searchAdminEntities()', () => {
 
 describe('versionHistory()', () => {
   test('History with edit and unpublished delete', async () => {
-    const createResult = await EntityAdmin.createEntity(
-      context,
-      { _type: 'QueryAdminFoo', _name: 'Foo name', title: 'First title' },
-      { publish: true }
-    );
+    const createResult = await EntityAdmin.createEntity(context, {
+      _type: 'QueryAdminFoo',
+      _name: 'Foo name',
+      title: 'First title',
+    });
     if (expectOkResult(createResult)) {
       const { id } = createResult.value;
 
-      const updateResult = await EntityAdmin.updateEntity(
-        context,
-        { id, title: 'Updated title' },
-        { publish: true }
-      );
-      expectOkResult(updateResult);
+      const updateResult = await EntityAdmin.updateEntity(context, { id, title: 'Updated title' });
+      if (expectOkResult(updateResult)) {
+        expectOkResult(await EntityAdmin.publishEntity(context, id, updateResult.value._version));
+      }
 
-      const deleteResult = await EntityAdmin.deleteEntity(context, id, { publish: false });
+      const deleteResult = await EntityAdmin.deleteEntity(context, id);
       expectOkResult(deleteResult);
 
       const result = await graphql(

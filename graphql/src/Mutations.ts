@@ -6,11 +6,10 @@ import { getSessionContext } from './Utils';
 
 export async function createEntity<TContext extends SessionGraphQLContext>(
   context: TContext,
-  entity: AdminEntityCreate,
-  publish: boolean
+  entity: AdminEntityCreate
 ): Promise<AdminEntity> {
   const sessionContext = getSessionContext(context);
-  const result = await EntityAdmin.createEntity(sessionContext, entity, { publish });
+  const result = await EntityAdmin.createEntity(sessionContext, entity);
   if (result.isError()) {
     throw result.toError();
   }
@@ -19,11 +18,10 @@ export async function createEntity<TContext extends SessionGraphQLContext>(
 
 export async function updateEntity<TContext extends SessionGraphQLContext>(
   context: TContext,
-  entity: AdminEntityUpdate,
-  publish: boolean
+  entity: AdminEntityUpdate
 ): Promise<AdminEntity> {
   const sessionContext = getSessionContext(context);
-  const result = await EntityAdmin.updateEntity(sessionContext, entity, { publish });
+  const result = await EntityAdmin.updateEntity(sessionContext, entity);
   if (result.isError()) {
     throw result.toError();
   }
@@ -32,11 +30,10 @@ export async function updateEntity<TContext extends SessionGraphQLContext>(
 
 export async function deleteEntity<TContext extends SessionGraphQLContext>(
   context: TContext,
-  id: string,
-  publish: boolean
+  id: string
 ): Promise<AdminEntity> {
   const sessionContext = getSessionContext(context);
-  const result = await EntityAdmin.deleteEntity(sessionContext, id, { publish });
+  const result = await EntityAdmin.deleteEntity(sessionContext, id);
   if (result.isError()) {
     throw result.toError();
   }

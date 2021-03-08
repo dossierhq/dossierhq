@@ -288,8 +288,8 @@ async function submitEntity(
     setSubmitLoading(true);
     const entity = createAdminEntity(editorState);
     const result = await (editorState.isNew
-      ? createEntity(entity as AdminEntityCreate, { publish: true })
-      : updateEntity(entity as AdminEntityUpdate, { publish: true }));
+      ? createEntity(entity as AdminEntityCreate)
+      : updateEntity(entity as AdminEntityUpdate));
 
     if (result.isOk()) {
       setState(createEditorState(editorState.entitySpec, result.value));

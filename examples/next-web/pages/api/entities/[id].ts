@@ -50,7 +50,7 @@ export default async (req: NextApiRequest, res: NextApiResponse<EntityResponse>)
       }
       const context = authResult.value;
 
-      const result = await EntityAdmin.updateEntity(context, body.item, body.options);
+      const result = await EntityAdmin.updateEntity(context, body.item);
 
       if (result.isError()) {
         throw errorResultToBoom(result);

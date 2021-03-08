@@ -105,9 +105,6 @@ describe('NewFoo', () => {
             "_name": "New name",
             "_type": "Foo",
           },
-          Object {
-            "publish": true,
-          },
         ],
       ]
     `);
@@ -134,9 +131,6 @@ describe('NewFoo', () => {
             "_name": "New name",
             "_type": "Foo",
             "title": "New title",
-          },
-          Object {
-            "publish": true,
           },
         ],
       ]
@@ -211,9 +205,6 @@ describe('FullFoo', () => {
             "_type": "Foo",
             "id": "fc66b4d7-61ff-44d4-8f68-cb7f526df046",
           },
-          Object {
-            "publish": true,
-          },
         ],
       ]
     `);
@@ -242,9 +233,6 @@ describe('FullFoo', () => {
             "id": "fc66b4d7-61ff-44d4-8f68-cb7f526df046",
             "title": "New title",
           },
-          Object {
-            "publish": true,
-          },
         ],
       ]
     `);
@@ -270,9 +258,6 @@ describe('FullFoo', () => {
             "_type": "Foo",
             "bar": null,
             "id": "fc66b4d7-61ff-44d4-8f68-cb7f526df046",
-          },
-          Object {
-            "publish": true,
           },
         ],
       ]
@@ -306,9 +291,6 @@ describe('FullFoo', () => {
             },
             "id": "fc66b4d7-61ff-44d4-8f68-cb7f526df046",
           },
-          Object {
-            "publish": true,
-          },
         ],
       ]
     `);
@@ -334,9 +316,6 @@ describe('FullFoo', () => {
             "_type": "Foo",
             "annotatedBar": null,
             "id": "fc66b4d7-61ff-44d4-8f68-cb7f526df046",
-          },
-          Object {
-            "publish": true,
           },
         ],
       ]
@@ -372,9 +351,6 @@ describe('FullFoo', () => {
             },
             "id": "fc66b4d7-61ff-44d4-8f68-cb7f526df046",
           },
-          Object {
-            "publish": true,
-          },
         ],
       ]
     `);
@@ -409,9 +385,6 @@ describe('FullFoo', () => {
               },
             },
             "id": "fc66b4d7-61ff-44d4-8f68-cb7f526df046",
-          },
-          Object {
-            "publish": true,
           },
         ],
       ]

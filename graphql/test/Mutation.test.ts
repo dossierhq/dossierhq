@@ -68,8 +68,8 @@ describe('create*Entity()', () => {
     const result = await graphql(
       schema,
       `
-        mutation CreateFooEntity($entity: AdminMutationFooCreateInput!, $publish: Boolean!) {
-          createMutationFooEntity(entity: $entity, publish: $publish) {
+        mutation CreateFooEntity($entity: AdminMutationFooCreateInput!) {
+          createMutationFooEntity(entity: $entity) {
             __typename
             id
             _type
@@ -104,7 +104,6 @@ describe('create*Entity()', () => {
             { lat: 56.381561, lng: 13.99286 },
           ],
         },
-        publish: true,
       }
     );
 
@@ -152,18 +151,17 @@ describe('create*Entity()', () => {
   });
 
   test('Create with reference', async () => {
-    const createBarResult = await EntityAdmin.createEntity(
-      context,
-      { _type: 'MutationBar', _name: 'Bar' },
-      { publish: true }
-    );
+    const createBarResult = await EntityAdmin.createEntity(context, {
+      _type: 'MutationBar',
+      _name: 'Bar',
+    });
     if (expectOkResult(createBarResult)) {
       const { id: barId, _name: barName } = createBarResult.value;
       const gqlResult = await graphql(
         schema,
         `
-          mutation CreateFooEntity($entity: AdminMutationFooCreateInput!, $publish: Boolean!) {
-            createMutationFooEntity(entity: $entity, publish: $publish) {
+          mutation CreateFooEntity($entity: AdminMutationFooCreateInput!) {
+            createMutationFooEntity(entity: $entity) {
               __typename
               id
               _type
@@ -188,7 +186,6 @@ describe('create*Entity()', () => {
             summary: 'Foo summary',
             bar: { id: barId },
           },
-          publish: true,
         }
       );
 
@@ -227,16 +224,14 @@ describe('create*Entity()', () => {
   });
 
   test('Create with reference list', async () => {
-    const createBar1Result = await EntityAdmin.createEntity(
-      context,
-      { _type: 'MutationBar', _name: 'Bar 1' },
-      { publish: true }
-    );
-    const createBar2Result = await EntityAdmin.createEntity(
-      context,
-      { _type: 'MutationBar', _name: 'Bar 2' },
-      { publish: true }
-    );
+    const createBar1Result = await EntityAdmin.createEntity(context, {
+      _type: 'MutationBar',
+      _name: 'Bar 1',
+    });
+    const createBar2Result = await EntityAdmin.createEntity(context, {
+      _type: 'MutationBar',
+      _name: 'Bar 2',
+    });
     if (expectOkResult(createBar1Result) && expectOkResult(createBar2Result)) {
       const { id: bar1Id, _name: bar1Name } = createBar1Result.value;
       const { id: bar2Id, _name: bar2Name } = createBar2Result.value;
@@ -244,8 +239,8 @@ describe('create*Entity()', () => {
       const gqlResult = await graphql(
         schema,
         `
-          mutation CreateFooEntity($entity: AdminMutationFooCreateInput!, $publish: Boolean!) {
-            createMutationFooEntity(entity: $entity, publish: $publish) {
+          mutation CreateFooEntity($entity: AdminMutationFooCreateInput!) {
+            createMutationFooEntity(entity: $entity) {
               __typename
               id
               _type
@@ -270,7 +265,6 @@ describe('create*Entity()', () => {
             summary: 'Foo summary',
             bars: [{ id: bar1Id }, { id: bar2Id }],
           },
-          publish: true,
         }
       );
 
@@ -310,18 +304,17 @@ describe('create*Entity()', () => {
   });
 
   test('Create with value type with reference', async () => {
-    const createBarResult = await EntityAdmin.createEntity(
-      context,
-      { _type: 'MutationBar', _name: 'Bar' },
-      { publish: true }
-    );
+    const createBarResult = await EntityAdmin.createEntity(context, {
+      _type: 'MutationBar',
+      _name: 'Bar',
+    });
     if (expectOkResult(createBarResult)) {
       const { id: barId, _name: barName } = createBarResult.value;
       const gqlResult = await graphql(
         schema,
         `
-          mutation CreateFooEntity($entity: AdminMutationFooCreateInput!, $publish: Boolean!) {
-            createMutationFooEntity(entity: $entity, publish: $publish) {
+          mutation CreateFooEntity($entity: AdminMutationFooCreateInput!) {
+            createMutationFooEntity(entity: $entity) {
               __typename
               id
               _type
@@ -357,7 +350,6 @@ describe('create*Entity()', () => {
               bar: { id: barId },
             },
           },
-          publish: true,
         }
       );
 
@@ -408,11 +400,10 @@ describe('create*Entity()', () => {
   });
 
   test('Create with value JSON', async () => {
-    const createBarResult = await EntityAdmin.createEntity(
-      context,
-      { _type: 'MutationBar', _name: 'Bar' },
-      { publish: true }
-    );
+    const createBarResult = await EntityAdmin.createEntity(context, {
+      _type: 'MutationBar',
+      _name: 'Bar',
+    });
 
     if (expectOkResult(createBarResult)) {
       const { id: barId } = createBarResult.value;
@@ -420,8 +411,8 @@ describe('create*Entity()', () => {
       const createFooResult = await graphql(
         schema,
         `
-          mutation CreateFooEntity($entity: AdminMutationFooCreateInput!, $publish: Boolean!) {
-            createMutationFooEntity(entity: $entity, publish: $publish) {
+          mutation CreateFooEntity($entity: AdminMutationFooCreateInput!) {
+            createMutationFooEntity(entity: $entity) {
               __typename
               id
               _type
@@ -514,8 +505,8 @@ describe('create*Entity()', () => {
     const createResult = await graphql(
       schema,
       `
-        mutation CreateFooEntity($entity: AdminMutationFooCreateInput!, $publish: Boolean!) {
-          createMutationFooEntity(entity: $entity, publish: $publish) {
+        mutation CreateFooEntity($entity: AdminMutationFooCreateInput!) {
+          createMutationFooEntity(entity: $entity) {
             __typename
             id
             _type
@@ -554,7 +545,6 @@ describe('create*Entity()', () => {
             }),
           },
         },
-        publish: true,
       }
     );
 
@@ -604,8 +594,8 @@ describe('create*Entity()', () => {
     const result = await graphql(
       schema,
       `
-        mutation CreateFooEntity($entity: AdminMutationFooCreateInput!, $publish: Boolean!) {
-          createMutationFooEntity(entity: $entity, publish: $publish) {
+        mutation CreateFooEntity($entity: AdminMutationFooCreateInput!) {
+          createMutationFooEntity(entity: $entity) {
             __typename
             id
             _type
@@ -624,7 +614,6 @@ describe('create*Entity()', () => {
           title: 'Foo title',
           summary: 'Foo summary',
         },
-        publish: true,
       }
     );
 
@@ -651,8 +640,8 @@ describe('create*Entity()', () => {
     const result = await graphql(
       schema,
       `
-        mutation CreateFooEntity($entity: AdminMutationFooCreateInput!, $publish: Boolean!) {
-          createMutationFooEntity(entity: $entity, publish: $publish) {
+        mutation CreateFooEntity($entity: AdminMutationFooCreateInput!) {
+          createMutationFooEntity(entity: $entity) {
             id
           }
         }
@@ -666,7 +655,6 @@ describe('create*Entity()', () => {
           title: 'Foo title',
           summary: 'Foo summary',
         },
-        publish: true,
       }
     );
 
@@ -683,24 +671,20 @@ describe('create*Entity()', () => {
 
 describe('update*Entity()', () => {
   test('Update minimal', async () => {
-    const createResult = await EntityAdmin.createEntity(
-      context,
-      {
-        _type: 'MutationFoo',
-        _name: 'First name',
-        title: 'First title',
-        summary: 'First summary',
-        tags: ['one', 'two', 'three'],
-      },
-      { publish: true }
-    );
+    const createResult = await EntityAdmin.createEntity(context, {
+      _type: 'MutationFoo',
+      _name: 'First name',
+      title: 'First title',
+      summary: 'First summary',
+      tags: ['one', 'two', 'three'],
+    });
     if (expectOkResult(createResult)) {
       const { id, _name: name } = createResult.value;
       const result = await graphql(
         schema,
         `
-          mutation UpdateFooEntity($entity: AdminMutationFooUpdateInput!, $publish: Boolean!) {
-            updateMutationFooEntity(entity: $entity, publish: $publish) {
+          mutation UpdateFooEntity($entity: AdminMutationFooUpdateInput!) {
+            updateMutationFooEntity(entity: $entity) {
               __typename
               id
               _type
@@ -719,7 +703,6 @@ describe('update*Entity()', () => {
             id,
             title: 'Updated title',
           },
-          publish: true,
         }
       );
 
@@ -754,38 +737,32 @@ describe('update*Entity()', () => {
   });
 
   test('Update with all values including references', async () => {
-    const createBar1Result = await EntityAdmin.createEntity(
-      context,
-      { _type: 'MutationBar', _name: 'Bar 1' },
-      { publish: true }
-    );
-    const createBar2Result = await EntityAdmin.createEntity(
-      context,
-      { _type: 'MutationBar', _name: 'Bar 2' },
-      { publish: true }
-    );
+    const createBar1Result = await EntityAdmin.createEntity(context, {
+      _type: 'MutationBar',
+      _name: 'Bar 1',
+    });
+    const createBar2Result = await EntityAdmin.createEntity(context, {
+      _type: 'MutationBar',
+      _name: 'Bar 2',
+    });
     if (expectOkResult(createBar1Result) && expectOkResult(createBar2Result)) {
       const { id: bar1Id, _name: bar1Name } = createBar1Result.value;
       const { id: bar2Id, _name: bar2Name } = createBar2Result.value;
 
-      const createFooResult = await EntityAdmin.createEntity(
-        context,
-        {
-          _type: 'MutationFoo',
-          _name: 'First name',
-          title: 'First title',
-          summary: 'First summary',
-          tags: ['one', 'two', 'three'],
-        },
-        { publish: true }
-      );
+      const createFooResult = await EntityAdmin.createEntity(context, {
+        _type: 'MutationFoo',
+        _name: 'First name',
+        title: 'First title',
+        summary: 'First summary',
+        tags: ['one', 'two', 'three'],
+      });
       if (expectOkResult(createFooResult)) {
         const { id: fooId } = createFooResult.value;
         const result = await graphql(
           schema,
           `
-            mutation UpdateFooEntity($entity: AdminMutationFooUpdateInput!, $publish: Boolean!) {
-              updateMutationFooEntity(entity: $entity, publish: $publish) {
+            mutation UpdateFooEntity($entity: AdminMutationFooUpdateInput!) {
+              updateMutationFooEntity(entity: $entity) {
                 __typename
                 id
                 _type
@@ -856,7 +833,6 @@ describe('update*Entity()', () => {
                 },
               ]),
             },
-            publish: true,
           }
         );
 
@@ -954,18 +930,17 @@ describe('update*Entity()', () => {
   });
 
   test('Error: Update with the wrong _type', async () => {
-    const createResult = await EntityAdmin.createEntity(
-      context,
-      { _type: 'MutationFoo', _name: 'Name' },
-      { publish: true }
-    );
+    const createResult = await EntityAdmin.createEntity(context, {
+      _type: 'MutationFoo',
+      _name: 'Name',
+    });
     if (expectOkResult(createResult)) {
       const { id } = createResult.value;
       const result = await graphql(
         schema,
         `
-          mutation UpdateFooEntity($entity: AdminMutationFooUpdateInput!, $publish: Boolean!) {
-            updateMutationFooEntity(entity: $entity, publish: $publish) {
+          mutation UpdateFooEntity($entity: AdminMutationFooUpdateInput!) {
+            updateMutationFooEntity(entity: $entity) {
               id
             }
           }
@@ -980,7 +955,6 @@ describe('update*Entity()', () => {
             title: 'Foo title',
             summary: 'Foo summary',
           },
-          publish: true,
         }
       );
 
@@ -998,24 +972,20 @@ describe('update*Entity()', () => {
 
 describe('deleteEntity()', () => {
   test('Delete and publish', async () => {
-    const createResult = await EntityAdmin.createEntity(
-      context,
-      {
-        _type: 'MutationFoo',
-        _name: 'Howdy name',
-        title: 'Howdy title',
-        summary: 'Howdy summary',
-      },
-      { publish: true }
-    );
+    const createResult = await EntityAdmin.createEntity(context, {
+      _type: 'MutationFoo',
+      _name: 'Howdy name',
+      title: 'Howdy title',
+      summary: 'Howdy summary',
+    });
     if (expectOkResult(createResult)) {
       const { id, _name: name } = createResult.value;
 
       const result = await graphql(
         schema,
         `
-          mutation DeleteEntity($id: ID!, $publish: Boolean!) {
-            deleteEntity(id: $id, publish: $publish) {
+          mutation DeleteEntity($id: ID!) {
+            deleteEntity(id: $id) {
               __typename
               id
               _type
@@ -1027,7 +997,7 @@ describe('deleteEntity()', () => {
         `,
         undefined,
         { context: ok(context) },
-        { id, publish: true }
+        { id }
       );
       expect(result).toEqual({
         data: {
@@ -1045,24 +1015,20 @@ describe('deleteEntity()', () => {
   });
 
   test('Delete w/o publish', async () => {
-    const createResult = await EntityAdmin.createEntity(
-      context,
-      {
-        _type: 'MutationFoo',
-        _name: 'Howdy name',
-        title: 'Howdy title',
-        summary: 'Howdy summary',
-      },
-      { publish: true }
-    );
+    const createResult = await EntityAdmin.createEntity(context, {
+      _type: 'MutationFoo',
+      _name: 'Howdy name',
+      title: 'Howdy title',
+      summary: 'Howdy summary',
+    });
     if (expectOkResult(createResult)) {
       const { id, _name: name } = createResult.value;
 
       const result = await graphql(
         schema,
         `
-          mutation DeleteEntity($id: ID!, $publish: Boolean!) {
-            deleteEntity(id: $id, publish: $publish) {
+          mutation DeleteEntity($id: ID!) {
+            deleteEntity(id: $id) {
               __typename
               id
               _type
@@ -1074,7 +1040,7 @@ describe('deleteEntity()', () => {
         `,
         undefined,
         { context: ok(context) },
-        { id, publish: false }
+        { id }
       );
       expect(result).toEqual({
         data: {
