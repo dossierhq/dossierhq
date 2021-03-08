@@ -38,13 +38,11 @@ export interface DataDataContextValue {
   };
 
   createEntity: (
-    entity: AdminEntityCreate,
-    options: { publish: boolean }
+    entity: AdminEntityCreate
   ) => PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.Generic>;
 
   updateEntity: (
-    entity: AdminEntityUpdate,
-    options: { publish: boolean }
+    entity: AdminEntityUpdate
   ) => PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic>;
 }
 

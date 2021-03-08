@@ -62,8 +62,8 @@ class ContextValue implements DataDataContextValue {
     return { connection: undefined, connectionError };
   };
 
-  createEntity: DataDataContextValue['createEntity'] = async (entity, options) => {
-    const body: EntityCreateRequest = { item: entity, options };
+  createEntity: DataDataContextValue['createEntity'] = async (entity) => {
+    const body: EntityCreateRequest = { item: entity };
     const result = await fetchJsonResult<EntityResponse, ErrorType.BadRequest>(
       [ErrorType.BadRequest],
       urls.createEntity,
@@ -81,8 +81,8 @@ class ContextValue implements DataDataContextValue {
     return result;
   };
 
-  updateEntity: DataDataContextValue['updateEntity'] = async (entity, options) => {
-    const body: EntityUpdateRequest = { item: entity, options };
+  updateEntity: DataDataContextValue['updateEntity'] = async (entity) => {
+    const body: EntityUpdateRequest = { item: entity };
     const result = await fetchJsonResult<EntityResponse, ErrorType.BadRequest | ErrorType.NotFound>(
       [ErrorType.BadRequest, ErrorType.NotFound],
       urls.getEntity(entity.id), //TODO

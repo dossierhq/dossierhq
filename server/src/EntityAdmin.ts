@@ -177,8 +177,7 @@ async function withUniqueNameAttempt<TResult>(
 
 export async function createEntity(
   context: SessionContext,
-  entity: AdminEntityCreate,
-  options: { publish: boolean }
+  entity: AdminEntityCreate
 ): PromiseResult<AdminEntity, ErrorType.BadRequest> {
   const resolvedResult = resolveCreateEntity(context, entity);
   if (resolvedResult.isError()) {
@@ -211,9 +210,7 @@ export async function createEntity(
     );
     await Db.queryNone(
       context,
-      `UPDATE entities SET latest_draft_entity_versions_id = $1 ${
-        options.publish ? ', published_entity_versions_id = $1' : ''
-      } WHERE id = $2`,
+      'UPDATE entities SET latest_draft_entity_versions_id = $1 WHERE id = $2',
       [versionsId, entityId]
     );
     if (referenceIds.length > 0) {
@@ -247,8 +244,7 @@ export async function createEntity(
 
 export async function updateEntity(
   context: SessionContext,
-  entity: AdminEntityUpdate,
-  options: { publish: boolean }
+  entity: AdminEntityUpdate
 ): PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.NotFound> {
   return await context.withTransaction(async (context) => {
     const previousValues = await Db.queryNoneOrOne<
@@ -303,9 +299,7 @@ export async function updateEntity(
 
     await Db.queryNone(
       context,
-      `UPDATE entities SET latest_draft_entity_versions_id = $1 ${
-        options.publish ? ', published_entity_versions_id = $1' : ''
-      }  WHERE id = $2`,
+      'UPDATE entities SET latest_draft_entity_versions_id = $1 WHERE id = $2',
       [versionsId, entityId]
     );
 
@@ -341,8 +335,7 @@ export async function updateEntity(
 
 export async function deleteEntity(
   context: SessionContext,
-  id: string,
-  options: { publish: boolean }
+  id: string
 ): PromiseResult<AdminEntity, ErrorType.NotFound> {
   return await context.withTransaction(async (context) => {
     // Entity info
@@ -368,13 +361,41 @@ export async function deleteEntity(
     );
     await Db.queryNone(
       context,
-      `UPDATE entities SET latest_draft_entity_versions_id = $1 ${
-        options.publish ? ', published_entity_versions_id = $1, published_deleted = true' : ''
-      }  WHERE id = $2`,
+      'UPDATE entities SET latest_draft_entity_versions_id = $1 WHERE id = $2',
       [versionsId, entityId]
     );
     return ok(decodeAdminEntity(context, { uuid: id, type, name, version, data: null }));
   });
+}
+
+export async function publishEntity(
+  context: SessionContext,
+  id: string,
+  version: number
+): PromiseResult<void, ErrorType.BadRequest | ErrorType.NotFound> {
+  const result = await Db.queryNoneOrOne<
+    Pick<EntityVersionsTable, 'id' | 'entities_id'> & { deleted: boolean }
+  >(
+    context,
+    `SELECT ev.id, ev.entities_id, ev.data IS NULL as deleted
+      FROM entity_versions ev, entities e
+      WHERE e.uuid = $1 AND e.id = ev.entities_id
+        AND ev.version = $2`,
+    [id, version]
+  );
+
+  if (!result) {
+    return notOk.NotFound('No such entity');
+  }
+
+  const { id: versionsId, entities_id: entityId, deleted } = result;
+
+  await Db.queryNone(
+    context,
+    'UPDATE entities SET published_entity_versions_id = $1, published_deleted = $2 WHERE id = $3',
+    [versionsId, deleted, entityId]
+  );
+  return ok(undefined);
 }
 
 async function resolveMaxVersionForEntity(

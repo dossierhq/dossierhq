@@ -741,21 +741,13 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
   }
 
   buildMutationCreateEntity<TSource>(entityName: string): GraphQLFieldConfig<TSource, TContext> {
-    return fieldConfigWithArgs<
-      TSource,
-      TContext,
-      {
-        entity: AdminEntityCreate;
-        publish: boolean;
-      }
-    >({
+    return fieldConfigWithArgs<TSource, TContext, { entity: AdminEntityCreate }>({
       type: new GraphQLNonNull(this.getType(toAdminTypeName(entityName))),
       args: {
         entity: { type: new GraphQLNonNull(this.getType(toAdminCreateInputTypeName(entityName))) },
-        publish: { type: new GraphQLNonNull(GraphQLBoolean) },
       },
       resolve: async (source, args, context, unusedInfo) => {
-        const { entity, publish } = args;
+        const { entity } = args;
         if (entity._type && entity._type !== entityName) {
           throw notOk
             .BadRequest(`Specified type (entity._type=${entity._type}) should be ${entityName}`)
@@ -763,34 +755,26 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         }
         entity._type = entityName;
         this.resolveJsonFields(entity, entityName);
-        return await Mutations.createEntity(context, entity, publish);
+        return await Mutations.createEntity(context, entity);
       },
     });
   }
 
   buildMutationUpdateEntity<TSource>(entityName: string): GraphQLFieldConfig<TSource, TContext> {
-    return fieldConfigWithArgs<
-      TSource,
-      TContext,
-      {
-        entity: AdminEntityUpdate;
-        publish: boolean;
-      }
-    >({
+    return fieldConfigWithArgs<TSource, TContext, { entity: AdminEntityUpdate }>({
       type: new GraphQLNonNull(this.getType(toAdminTypeName(entityName))),
       args: {
         entity: { type: new GraphQLNonNull(this.getType(toAdminUpdateInputTypeName(entityName))) },
-        publish: { type: new GraphQLNonNull(GraphQLBoolean) },
       },
       resolve: async (source, args, context, unusedInfo) => {
-        const { entity, publish } = args;
+        const { entity } = args;
         if (entity._type && entity._type !== entityName) {
           throw notOk
             .BadRequest(`Specified type (entity._type=${entity._type}) should be ${entityName}`)
             .toError();
         }
         this.resolveJsonFields(entity, entityName);
-        return await Mutations.updateEntity(context, entity, publish);
+        return await Mutations.updateEntity(context, entity);
       },
     });
   }
@@ -859,22 +843,14 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
   }
 
   buildMutationDeleteEntity<TSource>(): GraphQLFieldConfig<TSource, TContext> {
-    return fieldConfigWithArgs<
-      TSource,
-      TContext,
-      {
-        id: string;
-        publish: boolean;
-      }
-    >({
+    return fieldConfigWithArgs<TSource, TContext, { id: string }>({
       type: new GraphQLNonNull(this.getType('AdminEntity')),
       args: {
         id: { type: new GraphQLNonNull(GraphQLID) },
-        publish: { type: new GraphQLNonNull(GraphQLBoolean) },
       },
       resolve: async (source, args, context, unusedInfo) => {
-        const { id, publish } = args;
-        return await Mutations.deleteEntity(context, id, publish);
+        const { id } = args;
+        return await Mutations.deleteEntity(context, id);
       },
     });
   }

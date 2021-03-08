@@ -92,8 +92,7 @@ export const InMemoryAdmin = {
 
   createEntity: async (
     context: InMemorySessionContext,
-    entity: AdminEntityCreate,
-    options: { publish: boolean }
+    entity: AdminEntityCreate
   ): PromiseResult<AdminEntity, ErrorType.BadRequest> => {
     const newEntity = {
       ...entity,
@@ -107,8 +106,7 @@ export const InMemoryAdmin = {
 
   updateEntity: async (
     context: InMemorySessionContext,
-    entity: AdminEntityUpdate,
-    options: { publish: boolean }
+    entity: AdminEntityUpdate
   ): PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.NotFound> => {
     const previousVersion = context.server.getEntity(entity.id);
     if (!previousVersion) {

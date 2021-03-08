@@ -17,6 +17,7 @@
     "test:update-snapshot": "jest --updateSnapshot",
     "test:watch": "jest --watch",
     "ts:check": "tsc --noEmit",
+    "ts:check:watch": "tsc --noEmit --watch",
     "storybook:dev": "start-storybook -p 6006",
     "storybook:build": "build-storybook",
     "upgrade-dependencies": "npx npm-check-updates -u --packageFile ./package.json",
