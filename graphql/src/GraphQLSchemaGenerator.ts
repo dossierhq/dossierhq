@@ -752,7 +752,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
 
   buildMutationCreateEntity<TSource>(entityName: string): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<TSource, TContext, { entity: AdminEntityCreate }>({
-      type: new GraphQLNonNull(this.getType(toAdminTypeName(entityName))),
+      type: this.getOutputType(toAdminTypeName(entityName)),
       args: {
         entity: { type: new GraphQLNonNull(this.getType(toAdminCreateInputTypeName(entityName))) },
       },
@@ -772,7 +772,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
 
   buildMutationUpdateEntity<TSource>(entityName: string): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<TSource, TContext, { entity: AdminEntityUpdate }>({
-      type: new GraphQLNonNull(this.getType(toAdminTypeName(entityName))),
+      type: this.getOutputType(toAdminTypeName(entityName)),
       args: {
         entity: { type: new GraphQLNonNull(this.getType(toAdminUpdateInputTypeName(entityName))) },
       },
@@ -854,7 +854,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
 
   buildMutationDeleteEntity<TSource>(): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<TSource, TContext, { id: string }>({
-      type: new GraphQLNonNull(this.getType('AdminEntity')),
+      type: this.getOutputType('AdminEntity'),
       args: {
         id: { type: new GraphQLNonNull(GraphQLID) },
       },

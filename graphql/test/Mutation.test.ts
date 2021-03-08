@@ -660,7 +660,9 @@ describe('create*Entity()', () => {
 
     expect(result).toMatchInlineSnapshot(`
       Object {
-        "data": null,
+        "data": Object {
+          "createMutationFooEntity": null,
+        },
         "errors": Array [
           [GraphQLError: BadRequest: Specified type (entity._type=MutationBar) should be MutationFoo],
         ],
@@ -960,7 +962,9 @@ describe('update*Entity()', () => {
 
       expect(result).toMatchInlineSnapshot(`
         Object {
-          "data": null,
+          "data": Object {
+            "updateMutationFooEntity": null,
+          },
           "errors": Array [
             [GraphQLError: BadRequest: Specified type (entity._type=MutationBar) should be MutationFoo],
           ],
@@ -1014,47 +1018,31 @@ describe('deleteEntity()', () => {
     }
   });
 
-  test('Delete w/o publish', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
-      _type: 'MutationFoo',
-      _name: 'Howdy name',
-      title: 'Howdy title',
-      summary: 'Howdy summary',
-    });
-    if (expectOkResult(createResult)) {
-      const { id, _name: name } = createResult.value;
-
-      const result = await graphql(
-        schema,
-        `
-          mutation DeleteEntity($id: ID!) {
-            deleteEntity(id: $id) {
-              __typename
-              id
-              _type
-              _name
-              _version
-              _deleted
-            }
+  test('Error: delete not found', async () => {
+    const result = await graphql(
+      schema,
+      `
+        mutation DeleteEntity($id: ID!) {
+          deleteEntity(id: $id) {
+            __typename
+            id
           }
-        `,
-        undefined,
-        { context: ok(context) },
-        { id }
-      );
-      expect(result).toEqual({
-        data: {
-          deleteEntity: {
-            __typename: 'AdminMutationFoo',
-            id,
-            _type: 'MutationFoo',
-            _name: name,
-            _version: 1,
-            _deleted: true,
-          },
+        }
+      `,
+      undefined,
+      { context: ok(context) },
+      { id: '25f18cdc-fc2f-496d-bca0-5ed9e56f4b94' }
+    );
+    expect(result).toMatchInlineSnapshot(`
+      Object {
+        "data": Object {
+          "deleteEntity": null,
         },
-      });
-    }
+        "errors": Array [
+          [GraphQLError: NotFound: No such entity],
+        ],
+      }
+    `);
   });
 });
 
