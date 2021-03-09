@@ -38,6 +38,7 @@ beforeAll(async () => {
         fields: [
           { name: 'title', type: FieldType.String },
           { name: 'bar', type: FieldType.EntityType, entityTypes: ['EntityAdminBar'] },
+          { name: 'baz', type: FieldType.EntityType, entityTypes: ['EntityAdminBaz'] },
           { name: 'tags', type: FieldType.String, list: true },
           { name: 'location', type: FieldType.Location },
           { name: 'locations', type: FieldType.Location, list: true },
@@ -552,7 +553,6 @@ describe('createEntity()', () => {
     });
     if (expectOkResult(createBarResult)) {
       const barId = createBarResult.value.id;
-      expectOkResult(await EntityAdmin.publishEntity(context, barId, 0));
 
       const createFooResult = await EntityAdmin.createEntity(context, {
         _type: 'EntityAdminFoo',
@@ -573,7 +573,12 @@ describe('createEntity()', () => {
           bar: { id: barId },
         });
 
-        expectOkResult(await EntityAdmin.publishEntity(context, fooId, 0));
+        expectOkResult(
+          await EntityAdmin.publishEntities(context, [
+            { id: fooId, version: 0 },
+            { id: barId, version: 0 },
+          ])
+        );
 
         const fooVersion0Result = await EntityAdmin.getEntity(context, fooId, 0);
         if (expectOkResult(fooVersion0Result)) {
@@ -2087,7 +2092,6 @@ describe('updateEntity()', () => {
       });
       if (expectOkResult(createBarResult)) {
         const { id: barId } = createBarResult.value;
-        expectOkResult(await EntityAdmin.publishEntity(context, barId, 0));
 
         const updateResult = await EntityAdmin.updateEntity(context, {
           id: fooId,
@@ -2105,7 +2109,12 @@ describe('updateEntity()', () => {
           });
         }
 
-        expectOkResult(await EntityAdmin.publishEntity(context, fooId, 1));
+        expectOkResult(
+          await EntityAdmin.publishEntities(context, [
+            { id: fooId, version: 1 },
+            { id: barId, version: 0 },
+          ])
+        );
 
         const version0Result = await EntityAdmin.getEntity(context, fooId, 0);
         if (expectOkResult(version0Result)) {
@@ -2684,7 +2693,76 @@ describe('publishEntity()', () => {
     if (expectOkResult(createBarResult)) {
       const barId = createBarResult.value.id;
 
-      expectOkResult(await EntityAdmin.publishEntity(context, barId, 0));
+      const createFooResult = await EntityAdmin.createEntity(context, {
+        _type: 'EntityAdminFoo',
+        _name: 'Foo name',
+        title: 'Foo title',
+        bar: { id: barId },
+      });
+      if (expectOkResult(createFooResult)) {
+        const { id: fooId } = createFooResult.value;
+
+        expectOkResult(
+          await EntityAdmin.publishEntities(context, [
+            { id: fooId, version: 0 },
+            { id: barId, version: 0 },
+          ])
+        );
+
+        expectOkResult(await EntityAdmin.deleteEntity(context, barId));
+
+        const publishResult = await EntityAdmin.publishEntity(context, barId, 1);
+        expectErrorResult(
+          publishResult,
+          ErrorType.BadRequest,
+          `Referenced by published entities: ${fooId}`
+        );
+      }
+    }
+  });
+});
+
+describe('publishEntities()', () => {
+  test('Two entities referencing each other', async () => {
+    const createBaz1Result = await EntityAdmin.createEntity(context, {
+      _type: 'EntityAdminBaz',
+      _name: 'Baz 1',
+      title: 'Baz title 1',
+    });
+    if (expectOkResult(createBaz1Result)) {
+      const { id: baz1Id } = createBaz1Result.value;
+
+      const createBaz2Result = await EntityAdmin.createEntity(context, {
+        _type: 'EntityAdminBaz',
+        _name: 'Baz 2',
+        title: 'Baz title 2',
+        baz: { id: baz1Id },
+      });
+      if (expectOkResult(createBaz2Result)) {
+        const { id: baz2Id } = createBaz2Result.value;
+
+        expectOkResult(
+          await EntityAdmin.updateEntity(context, { id: baz1Id, baz: { id: baz2Id } })
+        );
+
+        expectOkResult(
+          await EntityAdmin.publishEntities(context, [
+            { id: baz1Id, version: 1 },
+            { id: baz2Id, version: 0 },
+          ])
+        );
+      }
+    }
+  });
+
+  test('Error: Reference to unpublished entity', async () => {
+    const createBarResult = await EntityAdmin.createEntity(context, {
+      _type: 'EntityAdminBar',
+      _name: 'Bar name',
+      title: 'Bar title',
+    });
+    if (expectOkResult(createBarResult)) {
+      const barId = createBarResult.value.id;
 
       const createFooResult = await EntityAdmin.createEntity(context, {
         _type: 'EntityAdminFoo',
@@ -2695,11 +2773,81 @@ describe('publishEntity()', () => {
       if (expectOkResult(createFooResult)) {
         const { id: fooId } = createFooResult.value;
 
-        expectOkResult(await EntityAdmin.publishEntity(context, fooId, 0));
+        const publishResult = await EntityAdmin.publishEntities(context, [
+          { id: fooId, version: 0 },
+        ]);
+        expectErrorResult(
+          publishResult,
+          ErrorType.BadRequest,
+          `References unpublished entities: ${barId}`
+        );
+      }
+    }
+  });
+
+  test('Error: Reference to deleted entity', async () => {
+    const createBarResult = await EntityAdmin.createEntity(context, {
+      _type: 'EntityAdminBar',
+      _name: 'Bar name',
+      title: 'Bar title',
+    });
+    if (expectOkResult(createBarResult)) {
+      const barId = createBarResult.value.id;
+
+      expectOkResult(await EntityAdmin.deleteEntity(context, barId));
+
+      const createFooResult = await EntityAdmin.createEntity(context, {
+        _type: 'EntityAdminFoo',
+        _name: 'Foo name',
+        title: 'Foo title',
+        bar: { id: barId },
+      });
+      if (expectOkResult(createFooResult)) {
+        const { id: fooId } = createFooResult.value;
+
+        const publishResult = await EntityAdmin.publishEntities(context, [
+          { id: fooId, version: 0 },
+          { id: barId, version: 1 },
+        ]);
+        expectErrorResult(
+          publishResult,
+          ErrorType.BadRequest,
+          `References unpublished entities: ${barId}`
+        );
+      }
+    }
+  });
+
+  test('Error: Published entity reference deleted entity', async () => {
+    const createBarResult = await EntityAdmin.createEntity(context, {
+      _type: 'EntityAdminBar',
+      _name: 'Bar name',
+      title: 'Bar title',
+    });
+    if (expectOkResult(createBarResult)) {
+      const barId = createBarResult.value.id;
+
+      const createFooResult = await EntityAdmin.createEntity(context, {
+        _type: 'EntityAdminFoo',
+        _name: 'Foo name',
+        title: 'Foo title',
+        bar: { id: barId },
+      });
+      if (expectOkResult(createFooResult)) {
+        const { id: fooId } = createFooResult.value;
+
+        expectOkResult(
+          await EntityAdmin.publishEntities(context, [
+            { id: fooId, version: 0 },
+            { id: barId, version: 0 },
+          ])
+        );
 
         expectOkResult(await EntityAdmin.deleteEntity(context, barId));
 
-        const publishResult = await EntityAdmin.publishEntity(context, barId, 1);
+        const publishResult = await EntityAdmin.publishEntities(context, [
+          { id: barId, version: 1 },
+        ]);
         expectErrorResult(
           publishResult,
           ErrorType.BadRequest,
