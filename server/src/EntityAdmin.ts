@@ -403,7 +403,7 @@ export async function publishEntity(
     );
     if (publishedReferences.length > 0) {
       return notOk.BadRequest(
-        `Published entities referring to the entity: ${publishedReferences
+        `Referenced by published entities: ${publishedReferences
           .map(({ uuid }) => uuid)
           .join(', ')}`
       );
@@ -420,7 +420,7 @@ export async function publishEntity(
     );
     if (unpublishedReferences.length > 0) {
       return notOk.BadRequest(
-        `Entity references entities that are not published: ${unpublishedReferences
+        `References unpublished entities: ${unpublishedReferences
           .map(({ uuid }) => uuid)
           .join(', ')}`
       );
