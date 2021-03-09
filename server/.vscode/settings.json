@@ -9,9 +9,10 @@
     "testpass",
     "testuser"
   ],
-  "editor.defaultFormatter": "esbenp.prettier-vscode", "[javascript]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[javascript]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
   "editor.formatOnSave": true,
   "editor.rulers": [100],
   "editor.tabSize": 2,
-  "files.insertFinalNewline": true,
+  "files.insertFinalNewline": true
 }
