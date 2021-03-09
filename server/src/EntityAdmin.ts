@@ -390,6 +390,43 @@ export async function publishEntity(
 
   const { id: versionsId, entities_id: entityId, deleted } = result;
 
+  if (deleted) {
+    const publishedReferences = await Db.queryMany<Pick<EntitiesTable, 'uuid'>>(
+      context,
+      `SELECT e.uuid
+        FROM entity_version_references evr, entity_versions ev, entities e
+        WHERE evr.entities_id = $1
+          AND evr.entity_versions_id = ev.id
+          AND ev.entities_id = e.id
+          AND e.published_entity_versions_id = ev.id`,
+      [entityId]
+    );
+    if (publishedReferences.length > 0) {
+      return notOk.BadRequest(
+        `Published entities referring to the entity: ${publishedReferences
+          .map(({ uuid }) => uuid)
+          .join(', ')}`
+      );
+    }
+  } else {
+    const unpublishedReferences = await Db.queryMany<Pick<EntitiesTable, 'uuid'>>(
+      context,
+      `SELECT e.uuid
+       FROM entity_version_references evr, entities e
+       WHERE evr.entity_versions_id = $1
+       AND evr.entities_id = e.id
+       AND (e.published_deleted OR e.published_entity_versions_id IS NULL)`,
+      [versionsId]
+    );
+    if (unpublishedReferences.length > 0) {
+      return notOk.BadRequest(
+        `Entity references entities that are not published: ${unpublishedReferences
+          .map(({ uuid }) => uuid)
+          .join(', ')}`
+      );
+    }
+  }
+
   await Db.queryNone(
     context,
     'UPDATE entities SET published_entity_versions_id = $1, published_deleted = $2 WHERE id = $3',

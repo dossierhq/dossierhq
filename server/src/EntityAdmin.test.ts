@@ -552,6 +552,8 @@ describe('createEntity()', () => {
     });
     if (expectOkResult(createBarResult)) {
       const barId = createBarResult.value.id;
+      expectOkResult(await EntityAdmin.publishEntity(context, barId, 0));
+
       const createFooResult = await EntityAdmin.createEntity(context, {
         _type: 'EntityAdminFoo',
         _name: 'Foo name',
@@ -2085,6 +2087,7 @@ describe('updateEntity()', () => {
       });
       if (expectOkResult(createBarResult)) {
         const { id: barId } = createBarResult.value;
+        expectOkResult(await EntityAdmin.publishEntity(context, barId, 0));
 
         const updateResult = await EntityAdmin.updateEntity(context, {
           id: fooId,
@@ -2157,6 +2160,9 @@ describe('updateEntity()', () => {
     if (expectOkResult(createBar1Result) && expectOkResult(createBar2Result)) {
       const { id: bar1Id } = createBar1Result.value;
       const { id: bar2Id } = createBar2Result.value;
+
+      expectOkResult(await EntityAdmin.publishEntity(context, bar1Id, 0));
+      expectOkResult(await EntityAdmin.publishEntity(context, bar2Id, 0));
 
       const createBazResult = await EntityAdmin.createEntity(context, {
         _type: 'EntityAdminBaz',
