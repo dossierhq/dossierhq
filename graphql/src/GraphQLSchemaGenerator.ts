@@ -434,6 +434,17 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       })
     );
 
+    // AdminReferenceVersionInput
+    this.addType(
+      new GraphQLInputObjectType({
+        name: 'AdminReferenceVersionInput',
+        fields: {
+          id: { type: new GraphQLNonNull(GraphQLID) },
+          version: { type: new GraphQLNonNull(GraphQLInt) },
+        },
+      })
+    );
+
     if (this.schema.getValueTypeCount() > 0) {
       // AdminValue
       this.addType(
@@ -879,6 +890,23 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     });
   }
 
+  buildMutationPublishEntities<TSource>(): GraphQLFieldConfig<TSource, TContext> {
+    return fieldConfigWithArgs<TSource, TContext, { entities: { id: string; version: number }[] }>({
+      type: new GraphQLList(new GraphQLNonNull(this.getOutputType('AdminEntityPublishPayload'))),
+      args: {
+        entities: {
+          type: new GraphQLNonNull(
+            new GraphQLList(new GraphQLNonNull(this.getInputType('AdminReferenceVersionInput')))
+          ),
+        },
+      },
+      resolve: async (source, args, context, unusedInfo) => {
+        const { entities } = args;
+        return await Mutations.publishEntities(context, entities);
+      },
+    });
+  }
+
   buildMutationType<TSource>(): GraphQLObjectType | null {
     const includeEntities = this.schema.getEntityTypeCount() > 0;
     if (!includeEntities) {
@@ -888,6 +916,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     const fields: GraphQLFieldConfigMap<TSource, TContext> = {
       deleteEntity: this.buildMutationDeleteEntity(),
       publishEntity: this.buildMutationPublishEntity(),
+      publishEntities: this.buildMutationPublishEntities(),
     };
 
     for (const entitySpec of this.schema.spec.entityTypes) {

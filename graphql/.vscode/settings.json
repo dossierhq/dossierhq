@@ -1,8 +1,8 @@
 {
-  "editor.formatOnSave": true,
-  "cSpell.words": ["datadata", "graphqlid", "postgres"],
-  "files.insertFinalNewline": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "[javascript]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
-  "editor.tabSize": 2
+  "cSpell.words": ["datadata", "graphqlid", "postgres"],
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2,
+  "files.insertFinalNewline": true
 }
