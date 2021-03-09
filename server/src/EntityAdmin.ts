@@ -445,7 +445,12 @@ export async function publishEntities(
   return context.withTransaction(async (context) => {
     // Step 1: Get version info for each entity
     const missingEntities: { id: string; version: number }[] = [];
-    const versionsInfo: { versionsId: number; entityId: number; deleted: boolean }[] = [];
+    const versionsInfo: {
+      uuid: string;
+      versionsId: number;
+      entityId: number;
+      deleted: boolean;
+    }[] = [];
     for (const { id, version } of entities) {
       const versionInfo = await Db.queryNoneOrOne<
         Pick<EntityVersionsTable, 'id' | 'entities_id'> & { deleted: boolean }
@@ -460,6 +465,7 @@ export async function publishEntities(
 
       if (versionInfo) {
         versionsInfo.push({
+          uuid: id,
           versionsId: versionInfo.id,
           entityId: versionInfo.entities_id,
           deleted: versionInfo.deleted,
@@ -482,7 +488,8 @@ export async function publishEntities(
     }
 
     // Step 3: Check if references are ok
-    for (const { versionsId, deleted, entityId } of versionsInfo) {
+    const referenceErrorMessages: string[] = [];
+    for (const { uuid, versionsId, deleted, entityId } of versionsInfo) {
       if (deleted) {
         const publishedReferences = await Db.queryMany<Pick<EntitiesTable, 'uuid'>>(
           context,
@@ -495,8 +502,8 @@ export async function publishEntities(
           [entityId]
         );
         if (publishedReferences.length > 0) {
-          return notOk.BadRequest(
-            `Referenced by published entities: ${publishedReferences
+          referenceErrorMessages.push(
+            `${uuid}: Referenced by published entities: ${publishedReferences
               .map(({ uuid }) => uuid)
               .join(', ')}`
           );
@@ -512,13 +519,17 @@ export async function publishEntities(
           [versionsId]
         );
         if (unpublishedReferences.length > 0) {
-          return notOk.BadRequest(
-            `References unpublished entities: ${unpublishedReferences
+          referenceErrorMessages.push(
+            `${uuid}: References unpublished entities: ${unpublishedReferences
               .map(({ uuid }) => uuid)
               .join(', ')}`
           );
         }
       }
+    }
+
+    if (referenceErrorMessages.length > 0) {
+      return notOk.BadRequest(referenceErrorMessages.join('\n'));
     }
 
     return ok(undefined);
