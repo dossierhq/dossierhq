@@ -2779,7 +2779,7 @@ describe('publishEntities()', () => {
         expectErrorResult(
           publishResult,
           ErrorType.BadRequest,
-          `References unpublished entities: ${barId}`
+          `${fooId}: References unpublished entities: ${barId}`
         );
       }
     }
@@ -2812,7 +2812,7 @@ describe('publishEntities()', () => {
         expectErrorResult(
           publishResult,
           ErrorType.BadRequest,
-          `References unpublished entities: ${barId}`
+          `${fooId}: References unpublished entities: ${barId}\n${barId}: Referenced by published entities: ${fooId}`
         );
       }
     }
@@ -2851,7 +2851,7 @@ describe('publishEntities()', () => {
         expectErrorResult(
           publishResult,
           ErrorType.BadRequest,
-          `Referenced by published entities: ${fooId}`
+          `${barId}: Referenced by published entities: ${fooId}`
         );
       }
     }
