@@ -435,6 +435,96 @@ export async function publishEntity(
   return ok(undefined);
 }
 
+export async function publishEntities(
+  context: SessionContext,
+  entities: {
+    id: string;
+    version: number;
+  }[]
+): PromiseResult<void, ErrorType.BadRequest | ErrorType.NotFound> {
+  return context.withTransaction(async (context) => {
+    // Step 1: Get version info for each entity
+    const missingEntities: { id: string; version: number }[] = [];
+    const versionsInfo: { versionsId: number; entityId: number; deleted: boolean }[] = [];
+    for (const { id, version } of entities) {
+      const versionInfo = await Db.queryNoneOrOne<
+        Pick<EntityVersionsTable, 'id' | 'entities_id'> & { deleted: boolean }
+      >(
+        context,
+        `SELECT ev.id, ev.entities_id, ev.data IS NULL as deleted
+         FROM entity_versions ev, entities e
+         WHERE e.uuid = $1 AND e.id = ev.entities_id
+           AND ev.version = $2`,
+        [id, version]
+      );
+
+      if (versionInfo) {
+        versionsInfo.push({
+          versionsId: versionInfo.id,
+          entityId: versionInfo.entities_id,
+          deleted: versionInfo.deleted,
+        });
+      } else {
+        missingEntities.push({ id, version });
+      }
+    }
+    if (missingEntities.length > 0) {
+      return notOk.NotFound(`No such entities: ${missingEntities.map(({ id }) => id).join(', ')}`);
+    }
+
+    // Step 2: Publish entities
+    for (const { versionsId, deleted, entityId } of versionsInfo) {
+      await Db.queryNone(
+        context,
+        'UPDATE entities SET published_entity_versions_id = $1, published_deleted = $2 WHERE id = $3',
+        [versionsId, deleted, entityId]
+      );
+    }
+
+    // Step 3: Check if references are ok
+    for (const { versionsId, deleted, entityId } of versionsInfo) {
+      if (deleted) {
+        const publishedReferences = await Db.queryMany<Pick<EntitiesTable, 'uuid'>>(
+          context,
+          `SELECT e.uuid
+           FROM entity_version_references evr, entity_versions ev, entities e
+           WHERE evr.entities_id = $1
+             AND evr.entity_versions_id = ev.id
+             AND ev.entities_id = e.id
+             AND e.published_entity_versions_id = ev.id`,
+          [entityId]
+        );
+        if (publishedReferences.length > 0) {
+          return notOk.BadRequest(
+            `Referenced by published entities: ${publishedReferences
+              .map(({ uuid }) => uuid)
+              .join(', ')}`
+          );
+        }
+      } else {
+        const unpublishedReferences = await Db.queryMany<Pick<EntitiesTable, 'uuid'>>(
+          context,
+          `SELECT e.uuid
+           FROM entity_version_references evr, entities e
+           WHERE evr.entity_versions_id = $1
+             AND evr.entities_id = e.id
+             AND (e.published_deleted OR e.published_entity_versions_id IS NULL)`,
+          [versionsId]
+        );
+        if (unpublishedReferences.length > 0) {
+          return notOk.BadRequest(
+            `References unpublished entities: ${unpublishedReferences
+              .map(({ uuid }) => uuid)
+              .join(', ')}`
+          );
+        }
+      }
+    }
+
+    return ok(undefined);
+  });
+}
+
 async function resolveMaxVersionForEntity(
   context: SessionContext,
   id: string
