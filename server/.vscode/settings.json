@@ -1,16 +1,17 @@
 {
-  "editor.formatOnSave": true,
   "cSpell.words": [
-    "Queryable",
-    "SAVEPOINT",
-    "SRID",
     "datadata",
     "dockest",
     "postgres",
+    "queryable",
+    "savepoint",
+    "srid",
     "testpass",
     "testuser"
   ],
-  "files.insertFinalNewline": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode", "[javascript]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "editor.formatOnSave": true,
+  "editor.rulers": [100],
   "editor.tabSize": 2,
-  "editor.rulers": [100]
+  "files.insertFinalNewline": true,
 }
