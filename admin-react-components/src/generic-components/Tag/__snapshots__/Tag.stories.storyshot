@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots Generic/Tag Danger 1`] = `
+<span
+  className="dd has-background text-caption bg-danger"
+>
+  Danger
+</span>
+`;
+
+exports[`Storyshots Generic/Tag Primary 1`] = `
+<span
+  className="dd has-background text-caption bg-primary"
+>
+  Primary
+</span>
+`;

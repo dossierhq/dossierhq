@@ -38,7 +38,7 @@ exports[`Storyshots Domain/EntityMetadata Deleted 1`] = `
     className="dd has-shadow"
   >
     <p
-      className="dd text-subtitle"
+      className="dd text-subtitle2"
     >
       Version 
       0
@@ -58,10 +58,20 @@ exports[`Storyshots Domain/EntityMetadata Deleted 1`] = `
     className="dd has-shadow"
   >
     <p
-      className="dd text-subtitle"
+      className="dd text-subtitle2"
     >
       Version 
       1
+      <span
+        className="dd has-background text-caption bg-danger"
+      >
+        Deleted
+      </span>
+      <span
+        className="dd has-background text-caption bg-primary"
+      >
+        Published
+      </span>
     </p>
     <p
       className="dd text-body1"
@@ -72,11 +82,6 @@ exports[`Storyshots Domain/EntityMetadata Deleted 1`] = `
       className="dd text-body1"
     >
       a10e49cd-2f4e-4249-b8ee-eaca8466939b
-    </p>
-    <p
-      className="dd text-body1"
-    >
-      Published, Deleted
     </p>
   </div>
 </div>
@@ -120,10 +125,15 @@ exports[`Storyshots Domain/EntityMetadata Normal 1`] = `
     className="dd has-shadow"
   >
     <p
-      className="dd text-subtitle"
+      className="dd text-subtitle2"
     >
       Version 
       0
+      <span
+        className="dd has-background text-caption bg-primary"
+      >
+        Published
+      </span>
     </p>
     <p
       className="dd text-body1"
@@ -134,11 +144,6 @@ exports[`Storyshots Domain/EntityMetadata Normal 1`] = `
       className="dd text-body1"
     >
       a10e49cd-2f4e-4249-b8ee-eaca8466939b
-    </p>
-    <p
-      className="dd text-body1"
-    >
-      Published
     </p>
   </div>
 </div>
