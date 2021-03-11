@@ -31,5 +31,6 @@ export { Modal } from './generic-components/Modal/Modal';
 export { Segment } from './generic-components/Segment/Segment';
 export { Stack } from './generic-components/Stack/Stack';
 export { StringFieldEditor } from './domain-components/StringFieldEditor/StringFieldEditor';
+export { Tag } from './generic-components/Tag/Tag';
 export { TypePicker } from './domain-components/TypePicker/TypePicker';
 export { ValueTypeFieldEditor } from './domain-components/ValueTypeFieldEditor/ValueTypeFieldEditor';

@@ -69,6 +69,7 @@
 .dd.text-caption {
   font-family: var(--dd-font-family-normal);
   font-size: 0.75rem;
+  font-weight: 400;
 }
 
 .dd.text-overline {

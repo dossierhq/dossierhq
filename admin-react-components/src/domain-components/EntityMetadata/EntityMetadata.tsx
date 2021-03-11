@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { DataDataContext, Loader, Message } from '../..';
+import { DataDataContext, Loader, Message, Tag } from '../..';
 import type { DataDataContextValue } from '../../contexts/DataDataContext';
 
 export interface EntityMetadataProps {
@@ -40,19 +40,15 @@ function EntityMetadataInner({ entityId, useEntityHistory }: EntityMetadataInner
           <p className="dd text-subtitle2">ID</p>
           <p className="dd text-body1">{entityHistory.id}</p>
           {entityHistory.versions.map((version) => {
-            const status = [];
-            if (version.published) {
-              status.push('Published');
-            }
-            if (version.deleted) {
-              status.push('Deleted');
-            }
             return (
               <div key={version.version} className="dd has-shadow">
-                <p className="dd text-subtitle">Version {version.version}</p>
+                <p className="dd text-subtitle2">
+                  Version {version.version}
+                  {version.deleted ? <Tag kind="danger" text="Deleted" /> : null}
+                  {version.published ? <Tag kind="primary" text="Published" /> : null}
+                </p>
                 <p className="dd text-body1">{version.createdAt.toLocaleString()}</p>
                 <p className="dd text-body1">{version.createdBy}</p>
-                {status.length > 0 ? <p className="dd text-body1">{status.join(', ')}</p> : null}
               </div>
             );
           })}
