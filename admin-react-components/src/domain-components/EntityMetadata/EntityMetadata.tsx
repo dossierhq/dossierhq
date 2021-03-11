@@ -33,8 +33,11 @@ function EntityMetadataInner({ entityId, useEntityHistory }: EntityMetadataInner
     <div className="dd has-shadow has-background">
       {entityHistory ? (
         <>
+          <p className="dd text-subtitle2">Name</p>
           <p className="dd text-body1">{entityHistory.name}</p>
+          <p className="dd text-subtitle2">Type</p>
           <p className="dd text-body1">{entityHistory.type}</p>
+          <p className="dd text-subtitle2">ID</p>
           <p className="dd text-body1">{entityHistory.id}</p>
           {entityHistory.versions.map((version) => {
             const status = [];
@@ -46,8 +49,8 @@ function EntityMetadataInner({ entityId, useEntityHistory }: EntityMetadataInner
             }
             return (
               <div key={version.version} className="dd has-shadow">
-                <p className="dd text-body1">{version.version}</p>
-                <p className="dd text-body1">{version.createdAt.toISOString()}</p>
+                <p className="dd text-subtitle">Version {version.version}</p>
+                <p className="dd text-body1">{version.createdAt.toLocaleString()}</p>
                 <p className="dd text-body1">{version.createdBy}</p>
                 {status.length > 0 ? <p className="dd text-body1">{status.join(', ')}</p> : null}
               </div>

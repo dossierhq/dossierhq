@@ -4,9 +4,11 @@ export const foo1Id = 'fc66b4d7-61ff-44d4-8f68-cb7f526df046';
 export const fooDeletedId = 'fb62be03-a0a9-4689-9987-bacee0e7692d';
 export const bar1Id = 'cb228716-d3dd-444f-9a77-80443d436339';
 export const bar2Id = 'eb5732e2-b931-492b-82f1-f8fdd464f0d2';
+export const userId1 = 'a10e49cd-2f4e-4249-b8ee-eaca8466939b';
 
 export const entitiesFixture: JsonInMemoryEntity[] = [
   {
+    publishedVersion: 0,
     versions: [
       {
         id: foo1Id,
@@ -29,9 +31,16 @@ export const entitiesFixture: JsonInMemoryEntity[] = [
         ],
       },
     ],
-    history: [],
+    history: [
+      {
+        version: 0,
+        createdAt: '2021-03-11T20:19:39.343Z',
+        createdBy: userId1,
+      },
+    ],
   },
   {
+    publishedVersion: 1,
     versions: [
       {
         id: fooDeletedId,
@@ -48,7 +57,18 @@ export const entitiesFixture: JsonInMemoryEntity[] = [
         _version: 0,
       },
     ],
-    history: [],
+    history: [
+      {
+        version: 0,
+        createdAt: '2021-03-10T18:19:39.343Z',
+        createdBy: userId1,
+      },
+      {
+        version: 1,
+        createdAt: '2021-03-11T20:19:39.343Z',
+        createdBy: userId1,
+      },
+    ],
   },
   {
     versions: [
@@ -60,7 +80,13 @@ export const entitiesFixture: JsonInMemoryEntity[] = [
         title: 'Bar 1',
       },
     ],
-    history: [],
+    history: [
+      {
+        version: 0,
+        createdAt: '2021-03-11T20:19:39.343Z',
+        createdBy: userId1,
+      },
+    ],
   },
   {
     versions: [
@@ -72,6 +98,12 @@ export const entitiesFixture: JsonInMemoryEntity[] = [
         title: 'Bar 2',
       },
     ],
-    history: [],
+    history: [
+      {
+        version: 0,
+        createdAt: '2021-03-11T20:19:39.343Z',
+        createdBy: userId1,
+      },
+    ],
   },
 ];
