@@ -4,7 +4,7 @@ import { DataDataContext } from '../..';
 import { EntityMetadata } from './EntityMetadata';
 import type { EntityMetadataProps } from './EntityMetadata';
 import TestContextValue from '../../test/TestContextValue';
-import { foo1Id } from '../../test/EntityFixtures';
+import { foo1Id, fooDeletedId } from '../../test/EntityFixtures';
 
 const defaultArgs: Partial<EntityMetadataProps> = {};
 
@@ -24,3 +24,6 @@ const Template: Story<EntityMetadataProps> = (args) => {
 
 export const Normal = Template.bind({});
 Normal.args = { entityId: foo1Id };
+
+export const Deleted = Template.bind({});
+Deleted.args = { entityId: fooDeletedId };

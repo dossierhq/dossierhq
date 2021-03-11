@@ -743,9 +743,19 @@ exports[`Storyshots Domain/EntityEditorContainer Normal 1`] = `
     className="dd has-shadow has-background"
   >
     <p
+      className="dd text-subtitle2"
+    >
+      Name
+    </p>
+    <p
       className="dd text-body1"
     >
       Foo 1
+    </p>
+    <p
+      className="dd text-subtitle2"
+    >
+      Type
     </p>
     <p
       className="dd text-body1"
@@ -753,10 +763,40 @@ exports[`Storyshots Domain/EntityEditorContainer Normal 1`] = `
       Foo
     </p>
     <p
+      className="dd text-subtitle2"
+    >
+      ID
+    </p>
+    <p
       className="dd text-body1"
     >
       fc66b4d7-61ff-44d4-8f68-cb7f526df046
     </p>
+    <div
+      className="dd has-shadow"
+    >
+      <p
+        className="dd text-subtitle"
+      >
+        Version 
+        0
+      </p>
+      <p
+        className="dd text-body1"
+      >
+        3/11/2021, 9:19:39 PM
+      </p>
+      <p
+        className="dd text-body1"
+      >
+        a10e49cd-2f4e-4249-b8ee-eaca8466939b
+      </p>
+      <p
+        className="dd text-body1"
+      >
+        Published
+      </p>
+    </div>
   </div>
 </div>
 `;
