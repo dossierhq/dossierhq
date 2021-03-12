@@ -1,12 +1,13 @@
 {
-  "files.insertFinalNewline": true,
-  "editor.formatOnSave": true,
-  "editor.tabSize": 2,
   "cSpell.words": [
     "SAVEPOINT",
     "datadata",
     "graphiql",
     "graphqlid",
     "queryable"
-  ]
+  ],
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2,
+  "files.insertFinalNewline": true,
 }
