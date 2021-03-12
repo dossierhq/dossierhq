@@ -3,7 +3,7 @@ import React from 'react';
 import { DataDataContext } from '../..';
 import { EntitySearch } from './EntitySearch';
 import type { EntitySearchProps } from './EntitySearch';
-import TestContextValue from '../../test/TestContextValue';
+import { createContextValue } from '../../test/TestContextAdapter';
 
 const defaultArgs: Partial<EntitySearchProps> = {
   style: { width: '100%', height: '100%' },
@@ -25,7 +25,7 @@ export default {
 
 const Template: Story<EntitySearchProps> = (args) => {
   return (
-    <DataDataContext.Provider value={new TestContextValue()}>
+    <DataDataContext.Provider value={createContextValue()}>
       <EntitySearch {...args} />
     </DataDataContext.Provider>
   );

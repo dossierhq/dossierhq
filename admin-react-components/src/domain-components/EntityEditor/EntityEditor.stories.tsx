@@ -1,10 +1,13 @@
 import type { Story } from '@storybook/react/types-6-0';
 import React from 'react';
-import type { DataDataContextValue, EntityEditorProps } from '../..';
+import type { EntityEditorProps } from '../..';
 import { DataDataContext, EntityEditor } from '../..';
 import { foo1Id, fooDeletedId } from '../../test/EntityFixtures';
-import { SlowTestContextValue } from '../../test/SlowTestContextValue';
-import TestContextValue from '../../test/TestContextValue';
+import {
+  SlowInterceptor,
+  createContextValue,
+  TestContextAdapter,
+} from '../../test/TestContextAdapter';
 
 export default {
   title: 'Domain/EntityEditor',
@@ -12,9 +15,10 @@ export default {
   args: {},
 };
 
-const Template: Story<EntityEditorProps & { contextValue?: DataDataContextValue }> = (args) => {
+const Template: Story<EntityEditorProps & { contextAdapter?: TestContextAdapter }> = (args) => {
+  const value = createContextValue(args?.contextAdapter);
   return (
-    <DataDataContext.Provider value={args.contextValue ?? new TestContextValue()}>
+    <DataDataContext.Provider value={value}>
       <EntityEditor {...args} />
     </DataDataContext.Provider>
   );
@@ -32,7 +36,7 @@ DeletedFoo.args = { entity: { id: fooDeletedId } };
 export const SlowFullFoo = Template.bind({});
 SlowFullFoo.args = {
   entity: { id: foo1Id },
-  contextValue: new SlowTestContextValue(new TestContextValue()),
+  contextAdapter: new TestContextAdapter(SlowInterceptor),
 };
 
 export const NotFound = Template.bind({});

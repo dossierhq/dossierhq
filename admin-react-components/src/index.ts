@@ -1,4 +1,4 @@
-export type { DataDataContextValue } from './contexts/DataDataContext';
+export type { DataDataContextAdapter } from './contexts/DataDataContext';
 export type { DropDownItem } from './generic-components/DropDown/DropDown';
 export type { EntityEditorProps } from './domain-components/EntityEditor/EntityEditor';
 export type { EntityFieldEditorProps } from './domain-components/EntityFieldEditor/EntityFieldEditor';
@@ -6,7 +6,7 @@ export type { IconProps, IconType } from './generic-components/Icon/Icon';
 export type { Kind } from './utils/KindUtils';
 export type { MessageItem } from './generic-components/Message/Message';
 export { Button } from './generic-components/Button/Button';
-export { DataDataContext } from './contexts/DataDataContext';
+export { DataDataContext, DataDataContextValue } from './contexts/DataDataContext';
 export { Divider } from './generic-components/Divider/Divider';
 export { DropDown } from './generic-components/DropDown/DropDown';
 export { EntityEditor } from './domain-components/EntityEditor/EntityEditor';

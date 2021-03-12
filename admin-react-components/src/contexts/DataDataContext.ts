@@ -7,43 +7,194 @@ import type {
   Connection,
   Edge,
   ErrorResult,
-  ErrorType,
   Paging,
   PromiseResult,
   Schema,
 } from '@datadata/core';
+import { createErrorResultFromError, ErrorType } from '@datadata/core';
 import { createContext } from 'react';
+import useSWR, { mutate } from 'swr';
 
-export interface DataDataContextValue {
-  schema: Schema;
-
-  /** Loads an entity. If `id` is `undefined` no data is fetched */
-  useEntity: (
-    id: string | undefined,
+export interface DataDataContextAdapter {
+  getEntity(
+    id: string,
     version?: number | null
-  ) => { entity?: AdminEntity; entityError?: ErrorResult<unknown, ErrorType> };
-
-  /** Loads the history for an entity. If `id` is `undefined` no data is fetched */
-  useEntityHistory: (
-    id: string | undefined
-  ) => { entityHistory?: AdminEntityHistory; entityHistoryError?: ErrorResult<unknown, ErrorType> };
-
-  /** Searches for entities. If `query` is `undefined` no data is fetched */
-  useSearchEntities: (
+  ): PromiseResult<AdminEntity, ErrorType.NotFound | ErrorType.Generic>;
+  getEntityHistory(
+    id: string
+  ): PromiseResult<AdminEntityHistory, ErrorType.NotFound | ErrorType.Generic>;
+  searchEntities(
     query?: AdminQuery,
     paging?: Paging
-  ) => {
-    connection?: Connection<Edge<AdminEntity, ErrorType>> | null;
-    connectionError?: ErrorResult<unknown, ErrorType>;
+  ): PromiseResult<
+    Connection<Edge<AdminEntity, ErrorType>> | null,
+    ErrorType.BadRequest | ErrorType.Generic
+  >;
+  createEntity(
+    entity: AdminEntityCreate
+  ): PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.Generic>;
+  updateEntity(
+    entity: AdminEntityUpdate
+  ): PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic>;
+}
+
+enum FetcherActions {
+  UseEntity,
+  UseEntityHistory,
+  UseSearchEntities,
+}
+
+export class DataDataContextValue {
+  #adapter: DataDataContextAdapter;
+  #schema: Schema;
+  /** Used to enable different cache keys for SWR */
+  #rootKey: string | undefined;
+
+  constructor(adapter: DataDataContextAdapter, schema: Schema, rootKey?: string) {
+    this.#adapter = adapter;
+    this.#schema = schema;
+    this.#rootKey = rootKey;
+  }
+
+  get schema(): Schema {
+    return this.#schema;
+  }
+
+  /** Loads an entity. If `id` is `undefined` no data is fetched */
+  useEntity = (
+    id: string | undefined,
+    version?: number | null
+  ): {
+    entity?: AdminEntity;
+    entityError?: ErrorResult<unknown, ErrorType.NotFound | ErrorType.Generic>;
+  } => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const { data, error } = useSWR(
+      id ? [this.#rootKey, FetcherActions.UseEntity, id, version ?? null] : null,
+      this.fetcher
+    );
+
+    const entityError = error ? createErrorResultFromError(error, [ErrorType.NotFound]) : undefined;
+    return { entity: data as AdminEntity | undefined, entityError };
   };
 
-  createEntity: (
-    entity: AdminEntityCreate
-  ) => PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.Generic>;
+  /** Loads the history for an entity. If `id` is `undefined` no data is fetched */
+  useEntityHistory = (
+    id: string | undefined
+  ): {
+    entityHistory?: AdminEntityHistory;
+    entityHistoryError?: ErrorResult<unknown, ErrorType.NotFound | ErrorType.Generic>;
+  } => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const { data, error } = useSWR(
+      id ? [this.#rootKey, FetcherActions.UseEntityHistory, id] : null,
+      this.fetcher
+    );
 
-  updateEntity: (
+    const entityHistoryError = error
+      ? createErrorResultFromError(error, [ErrorType.NotFound])
+      : undefined;
+    return {
+      entityHistory: data as AdminEntityHistory | undefined,
+      entityHistoryError,
+    };
+  };
+
+  /** Searches for entities. If `query` is `undefined` no data is fetched */
+  useSearchEntities = (
+    query?: AdminQuery,
+    paging?: Paging
+  ): {
+    connection?: Connection<Edge<AdminEntity, ErrorType>> | null;
+    connectionError?: ErrorResult<unknown, ErrorType.BadRequest | ErrorType.Generic>;
+  } => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const { data, error } = useSWR(
+      query
+        ? [this.#rootKey, FetcherActions.UseSearchEntities, JSON.stringify({ query, paging })]
+        : null,
+      this.fetcher
+    );
+
+    const connectionError = error
+      ? createErrorResultFromError(error, [ErrorType.BadRequest])
+      : undefined;
+    return {
+      connection: data as Connection<Edge<AdminEntity, ErrorType>> | undefined,
+      connectionError,
+    };
+  };
+
+  createEntity = async (
+    entity: AdminEntityCreate
+  ): PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.Generic> => {
+    try {
+      const result = await this.#adapter.createEntity(entity);
+      if (result.isOk()) {
+        this.invalidateEntity(result.value);
+      }
+      return result;
+    } catch (error) {
+      return createErrorResultFromError(error, [ErrorType.BadRequest]);
+    }
+  };
+
+  updateEntity = async (
     entity: AdminEntityUpdate
-  ) => PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic>;
+  ): PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic> => {
+    try {
+      const result = await this.#adapter.updateEntity(entity);
+      if (result.isOk()) {
+        this.invalidateEntity(result.value);
+      }
+      return result;
+    } catch (error) {
+      return createErrorResultFromError(error, [ErrorType.BadRequest, ErrorType.NotFound]);
+    }
+  };
+
+  private invalidateEntity(entity: AdminEntity) {
+    mutate([this.#rootKey, FetcherActions.UseEntity, entity.id, null]);
+    mutate([this.#rootKey, FetcherActions.UseEntityHistory, entity.id]);
+  }
+
+  private fetcher = async (
+    unusedRootKey: string | undefined,
+    action: FetcherActions,
+    ...args: unknown[]
+  ) => {
+    switch (action) {
+      case FetcherActions.UseEntity: {
+        const [id, version] = args as [string, number | null | undefined];
+        const result = await this.#adapter.getEntity(id, version);
+        if (result.isError()) {
+          throw result.toError();
+        }
+        return result.value;
+      }
+      case FetcherActions.UseEntityHistory: {
+        const [id] = args as [string];
+        const result = await this.#adapter.getEntityHistory(id);
+        if (result.isError()) {
+          throw result.toError();
+        }
+        return result.value;
+      }
+      case FetcherActions.UseSearchEntities: {
+        const [json] = args as [string];
+        const { query, paging }: { query: AdminQuery; paging: Paging | undefined } = JSON.parse(
+          json
+        );
+        const result = await this.#adapter.searchEntities(query, paging);
+        if (result.isError()) {
+          throw result.toError();
+        }
+        return result.value;
+      }
+      default:
+        throw new Error(`Unsupported action: ${action}`);
+    }
+  };
 }
 
 export const DataDataContext = createContext<DataDataContextValue | null>(null);

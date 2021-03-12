@@ -1,16 +1,14 @@
-import type { DataDataContextValue } from '@datadata/admin-react-components';
-import type { ErrorResultError } from '@datadata/core';
+import type { DataDataContextAdapter } from '@datadata/admin-react-components';
+import { DataDataContextValue } from '@datadata/admin-react-components';
 import {
   convertJsonConnection,
   convertJsonEdge,
   convertJsonEntityVersion,
-  createErrorResultFromError,
   ErrorType,
   ok,
   Schema,
 } from '@datadata/core';
 import { useEffect, useMemo, useState } from 'react';
-import useSWR, { mutate } from 'swr';
 import type { EntityCreateRequest, EntityUpdateRequest } from '../types/RequestTypes';
 import type {
   EntityHistoryResponse,
@@ -18,51 +16,43 @@ import type {
   SchemaResponse,
   SearchEntitiesResponse,
 } from '../types/ResponseTypes';
-import { fetchJson, fetchJsonResult, swrFetcher, urls } from '../utils/BackendUtils';
+import { fetchJson, fetchJsonResult, urls } from '../utils/BackendUtils';
 
-class ContextValue implements DataDataContextValue {
-  schema: Schema;
-
-  constructor(schema: Schema) {
-    this.schema = schema;
-  }
-
-  useEntity: DataDataContextValue['useEntity'] = (id, version) => {
-    const { data, error } = useSWR<EntityResponse, ErrorResultError>(
-      id ? urls.getEntity(id, version) : null,
-      swrFetcher
+class ContextAdapter implements DataDataContextAdapter {
+  getEntity: DataDataContextAdapter['getEntity'] = async (id, version) => {
+    const result = await fetchJsonResult<EntityResponse, ErrorType.NotFound>(
+      [ErrorType.NotFound],
+      urls.getEntity(id, version)
     );
-
-    const entityError = error ? createErrorResultFromError(error) : undefined;
-    return { entity: data?.item, entityError };
-  };
-
-  useEntityHistory: DataDataContextValue['useEntityHistory'] = (id) => {
-    const { data, error } = useSWR<EntityHistoryResponse, ErrorResultError>(
-      id ? urls.getEntityHistory(id) : null,
-      swrFetcher
-    );
-
-    const entityHistoryError = error ? createErrorResultFromError(error) : undefined;
-    if (data) {
-      return { entityHistory: convertJsonEntityVersion(data), entityHistoryError };
+    if (result.isOk()) {
+      return ok(result.value.item);
     }
-    return { entityHistory: undefined, entityHistoryError };
+    return result;
   };
 
-  useSearchEntities: DataDataContextValue['useSearchEntities'] = (query, paging) => {
-    const { data, error } = useSWR<SearchEntitiesResponse, ErrorResultError>(
-      query ? urls.searchEntities(query, paging) : null
+  getEntityHistory: DataDataContextAdapter['getEntityHistory'] = async (id) => {
+    const result = await fetchJsonResult<EntityHistoryResponse, ErrorType.NotFound>(
+      [ErrorType.NotFound],
+      urls.getEntityHistory(id)
     );
-    const connectionError = error ? createErrorResultFromError(error) : undefined;
-    if (data) {
-      const connection = convertJsonConnection(data, convertJsonEdge);
-      return { connection, connectionError };
+    if (result.isOk()) {
+      return ok(convertJsonEntityVersion(result.value));
     }
-    return { connection: undefined, connectionError };
+    return result;
   };
 
-  createEntity: DataDataContextValue['createEntity'] = async (entity) => {
+  searchEntities: DataDataContextAdapter['searchEntities'] = async (query, paging) => {
+    const result = await fetchJsonResult<SearchEntitiesResponse, ErrorType.BadRequest>(
+      [ErrorType.BadRequest],
+      urls.searchEntities(query, paging)
+    );
+    if (result.isOk()) {
+      return ok(convertJsonConnection(result.value, convertJsonEdge));
+    }
+    return result;
+  };
+
+  createEntity: DataDataContextAdapter['createEntity'] = async (entity) => {
     const body: EntityCreateRequest = { item: entity };
     const result = await fetchJsonResult<EntityResponse, ErrorType.BadRequest>(
       [ErrorType.BadRequest],
@@ -75,13 +65,12 @@ class ContextValue implements DataDataContextValue {
     );
 
     if (result.isOk()) {
-      updateCachedEntity(result.value);
       return ok(result.value.item);
     }
     return result;
   };
 
-  updateEntity: DataDataContextValue['updateEntity'] = async (entity) => {
+  updateEntity: DataDataContextAdapter['updateEntity'] = async (entity) => {
     const body: EntityUpdateRequest = { item: entity };
     const result = await fetchJsonResult<EntityResponse, ErrorType.BadRequest | ErrorType.NotFound>(
       [ErrorType.BadRequest, ErrorType.NotFound],
@@ -94,16 +83,10 @@ class ContextValue implements DataDataContextValue {
     );
 
     if (result.isOk()) {
-      updateCachedEntity(result.value);
       return ok(result.value.item);
     }
     return result;
   };
-}
-
-function updateCachedEntity(entity: EntityResponse) {
-  mutate(urls.getEntity(entity.item.id), entity, false);
-  mutate(urls.getEntityHistory(entity.item.id));
 }
 
 async function loadSchema() {
@@ -129,7 +112,10 @@ export function useInitializeContext(): { contextValue: DataDataContextValue | n
     })();
   }, []);
 
-  const contextValue = useMemo(() => (schema ? new ContextValue(schema) : null), [schema]);
+  const contextValue = useMemo(
+    () => (schema ? new DataDataContextValue(new ContextAdapter(), schema) : null),
+    [schema]
+  );
 
   return { contextValue };
 }

@@ -3,7 +3,7 @@ import React from 'react';
 import { DataDataContext } from '../..';
 import { EntityMetadata } from './EntityMetadata';
 import type { EntityMetadataProps } from './EntityMetadata';
-import TestContextValue from '../../test/TestContextValue';
+import { createContextValue } from '../../test/TestContextAdapter';
 import { foo1Id, fooDeletedId } from '../../test/EntityFixtures';
 
 const defaultArgs: Partial<EntityMetadataProps> = {};
@@ -16,7 +16,7 @@ export default {
 
 const Template: Story<EntityMetadataProps> = (args) => {
   return (
-    <DataDataContext.Provider value={new TestContextValue()}>
+    <DataDataContext.Provider value={createContextValue()}>
       <EntityMetadata {...args} />
     </DataDataContext.Provider>
   );

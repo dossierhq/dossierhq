@@ -55,9 +55,8 @@ statusErrorMapping.set(409, ErrorType.Conflict);
 statusErrorMapping.set(401, ErrorType.NotAuthenticated);
 statusErrorMapping.set(404, ErrorType.NotFound);
 
-// TODO Should TError always be ErrorType?
 export async function fetchJsonResult<TOk, TError extends ErrorType | ErrorType.Generic>(
-  expectedErrors: TError[] | null,
+  expectedErrors: TError[],
   input: RequestInfo,
   init?: RequestInit
 ): PromiseResult<TOk, TError | ErrorType.Generic> {
@@ -71,7 +70,7 @@ export async function fetchJsonResult<TOk, TError extends ErrorType | ErrorType.
       }
       const responseJson = JSON.parse(responseText);
       const { message } = responseJson;
-      if (expectedErrors && expectedErrors.indexOf(errorType as TError) < 0) {
+      if (!expectedErrors.includes(errorType as TError)) {
         return notOk.Generic(`Unexpected error type: ${errorType}: ${message}`);
       }
       return createErrorResult(errorType as TError, message);
@@ -81,12 +80,4 @@ export async function fetchJsonResult<TOk, TError extends ErrorType | ErrorType.
   } catch (error) {
     return notOk.Generic(`Unexpected ${error.name}: ${error.message}`);
   }
-}
-
-export async function swrFetcher<T>(url: string): Promise<T> {
-  const result = await fetchJsonResult(null, url);
-  if (result.isError()) {
-    throw result.toError();
-  }
-  return result.value as T;
 }

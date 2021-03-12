@@ -34,7 +34,13 @@ export interface JsonAdminEntityVersionInfo extends Omit<AdminEntityVersionInfo,
 export function convertJsonConnection<
   TIn extends JsonEdge<unknown, ErrorType>,
   TOut extends Edge<unknown, ErrorType>
->(jsonConnection: JsonConnection<TIn>, edgeConverter: (edge: TIn) => TOut): Connection<TOut> {
+>(
+  jsonConnection: JsonConnection<TIn> | null,
+  edgeConverter: (edge: TIn) => TOut
+): Connection<TOut> | null {
+  if (!jsonConnection) {
+    return null;
+  }
   return { pageInfo: jsonConnection.pageInfo, edges: jsonConnection.edges.map(edgeConverter) };
 }
 
