@@ -16,7 +16,8 @@
       "name": "ci:check",
       "summary": "Runs all ci checks",
       "enableParallelism": true,
-      "ignoreMissingScript": true
+      "ignoreMissingScript": true,
+      "allowWarningsInSuccessfulBuild": true
     }
     // {
     //   /**
