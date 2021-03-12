@@ -9,5 +9,12 @@
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
   "editor.tabSize": 2,
-  "files.insertFinalNewline": true,
+  "files.associations": {
+    "rush.json": "jsonc",
+    "command-line.json": "jsonc",
+    "common-versions.json": "jsonc",
+    "experiments.json": "jsonc",
+    "version-policies.json": "jsonc"
+  },
+  "files.insertFinalNewline": true
 }
