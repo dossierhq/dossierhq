@@ -11,6 +11,13 @@
    * "rush my-global-command --help".
    */
   "commands": [
+    {
+      "commandKind": "bulk",
+      "name": "ci:check",
+      "summary": "Runs all ci checks",
+      "enableParallelism": true,
+      "ignoreMissingScript": true
+    }
     // {
     //   /**
     //    * (Required) Determines the type of custom command.
