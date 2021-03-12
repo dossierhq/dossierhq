@@ -27,7 +27,7 @@ jobs:
           npm run db:make-users:no-superuser
       - name: check
         run: |
-          npm run ci:check:all
+          node common/scripts/install-run-rush.js ci:check --verbose
       - name: stop db
         run: |
           npm run db:stop
