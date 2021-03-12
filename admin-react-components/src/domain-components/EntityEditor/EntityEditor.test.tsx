@@ -154,7 +154,7 @@ describe('NewFoo', () => {
     expect(submit).toBeDisabled();
   });
 
-  test('getEntity is called with id after create', async () => {
+  test('getEntity is not called after create (since cached)', async () => {
     const contextAdapter = new TestContextAdapter();
     const getEntity = jest.spyOn(contextAdapter, 'getEntity');
     act(() => {
@@ -167,12 +167,7 @@ describe('NewFoo', () => {
       userEvent.click(finders.saveButton());
     });
 
-    const callWithId = getEntity.mock.calls.find((args) => {
-      const id = args[0];
-      return !!id;
-    });
-    // Since id is random, just make sure we get it
-    expect(callWithId).toBeTruthy();
+    expect(getEntity.mock.calls).toHaveLength(0);
   });
 });
 
