@@ -85,10 +85,16 @@ export function createErrorResult<TError extends ErrorType>(
   return new ErrorResult<unknown, TError>(error, message);
 }
 
-export function createErrorResultFromError(
-  error: ErrorResultError
-): ErrorResult<unknown, ErrorType> {
-  return new ErrorResult<unknown, ErrorType>(error.errorType, error.errorMessage);
+export function createErrorResultFromError<TError extends ErrorType | ErrorType.Generic>(
+  error: ErrorResultError | Error,
+  expectedErrorTypes: TError[] | null = null
+): ErrorResult<unknown, TError | ErrorType.Generic> {
+  if (error instanceof ErrorResultError) {
+    if (!expectedErrorTypes || expectedErrorTypes.includes(error.errorType as TError)) {
+      return new ErrorResult<unknown, TError>(error.errorType as TError, error.errorMessage);
+    }
+  }
+  return notOk.Generic(error.message);
 }
 
 export function ok<TOk, TError extends ErrorType>(value: TOk): OkResult<TOk, TError> {
