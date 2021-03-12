@@ -154,7 +154,7 @@ export class DataDataContextValue {
   };
 
   private invalidateEntity(entity: AdminEntity) {
-    mutate([this.#rootKey, FetcherActions.UseEntity, entity.id, null]);
+    mutate([this.#rootKey, FetcherActions.UseEntity, entity.id, null], entity, false);
     mutate([this.#rootKey, FetcherActions.UseEntityHistory, entity.id]);
   }
 
