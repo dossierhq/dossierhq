@@ -3,7 +3,7 @@ import React from 'react';
 import { DataDataContext } from '../..';
 import { EntityEditorContainer } from './EntityEditorContainer';
 import type { EntityEditorContainerProps } from './EntityEditorContainer';
-import TestContextValue from '../../test/TestContextValue';
+import { createContextValue } from '../../test/TestContextAdapter';
 import { foo1Id } from '../../test/EntityFixtures';
 
 const defaultArgs: Partial<EntityEditorContainerProps> = { idPrefix: 'id-123' };
@@ -16,7 +16,7 @@ export default {
 
 const Template: Story<EntityEditorContainerProps> = (args) => {
   return (
-    <DataDataContext.Provider value={new TestContextValue()}>
+    <DataDataContext.Provider value={createContextValue()}>
       <EntityEditorContainer {...args} />
     </DataDataContext.Provider>
   );

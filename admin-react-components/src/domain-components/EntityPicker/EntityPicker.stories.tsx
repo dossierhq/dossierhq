@@ -3,7 +3,7 @@ import React from 'react';
 import { DataDataContext } from '../..';
 import { EntityPicker } from './EntityPicker';
 import type { EntityPickerProps } from './EntityPicker';
-import TestContextValue from '../../test/TestContextValue';
+import { createContextValue } from '../../test/TestContextAdapter';
 import schema from '../../stories/StoryboardSchema';
 import { bar2Id } from '../../test/EntityFixtures';
 
@@ -33,7 +33,7 @@ export default {
 
 const Template: Story<EntityPickerProps> = (args) => {
   return (
-    <DataDataContext.Provider value={new TestContextValue()}>
+    <DataDataContext.Provider value={createContextValue()}>
       <EntityPicker {...args} />
     </DataDataContext.Provider>
   );

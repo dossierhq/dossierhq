@@ -3,7 +3,7 @@ import React from 'react';
 import { DataDataContext } from '../..';
 import { EntityMap } from './EntityMap';
 import type { EntityMapProps } from './EntityMap';
-import TestContextValue from '../../test/TestContextValue';
+import { createContextValue } from '../../test/TestContextAdapter';
 
 const defaultArgs: Partial<EntityMapProps> = {
   style: { width: '300px', height: '300px' },
@@ -18,7 +18,7 @@ export default {
 
 const Template: Story<EntityMapProps> = (args) => {
   return (
-    <DataDataContext.Provider value={new TestContextValue()}>
+    <DataDataContext.Provider value={createContextValue()}>
       <EntityMap {...args} />
     </DataDataContext.Provider>
   );

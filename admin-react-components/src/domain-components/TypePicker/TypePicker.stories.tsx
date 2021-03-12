@@ -3,7 +3,7 @@ import React from 'react';
 import { TypePicker } from './TypePicker';
 import type { TypePickerProps } from './TypePicker';
 import { DataDataContext } from '../..';
-import TestContextValue from '../../test/TestContextValue';
+import { createContextValue } from '../../test/TestContextAdapter';
 
 export default {
   title: 'Domain/TypePicker',
@@ -13,7 +13,7 @@ export default {
 
 const Template: Story<TypePickerProps> = (args) => {
   return (
-    <DataDataContext.Provider value={new TestContextValue()}>
+    <DataDataContext.Provider value={createContextValue()}>
       <TypePicker {...args} />
     </DataDataContext.Provider>
   );

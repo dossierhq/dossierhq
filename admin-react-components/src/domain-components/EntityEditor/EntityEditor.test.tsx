@@ -12,22 +12,21 @@ import {
 import userEvent from '@testing-library/user-event';
 import * as React from 'react';
 import * as renderer from 'react-test-renderer';
-import type { DataDataContextValue } from '../..';
-import TestContextValue from '../../test/TestContextValue';
+import { TestContextAdapter } from '../../test/TestContextAdapter';
 import type { EntityEditorProps } from './EntityEditor';
 import { default as Default, DeletedFoo, FullFoo, NewFoo } from './EntityEditor.stories';
 
 function renderStory(
-  StoryUnderTest: Story<EntityEditorProps & { contextValue?: DataDataContextValue }>,
-  overrideArgs?: Partial<EntityEditorProps & { contextValue?: DataDataContextValue }>
+  StoryUnderTest: Story<EntityEditorProps & { contextAdapter?: TestContextAdapter }>,
+  overrideArgs?: Partial<EntityEditorProps & { contextAdapter?: TestContextAdapter }>
 ) {
   const args = { ...Default.args, ...StoryUnderTest.args, ...overrideArgs } as EntityEditorProps;
   return <StoryUnderTest {...args} />;
 }
 
 async function renderStoryToJSON(
-  StoryUnderTest: Story<EntityEditorProps & { contextValue?: DataDataContextValue }>,
-  overrideArgs?: Partial<EntityEditorProps & { contextValue?: DataDataContextValue }>
+  StoryUnderTest: Story<EntityEditorProps & { contextAdapter?: TestContextAdapter }>,
+  overrideArgs?: Partial<EntityEditorProps & { contextAdapter?: TestContextAdapter }>
 ) {
   let storyRenderer: renderer.ReactTestRenderer | undefined;
   await renderer.act(async () => {
@@ -85,10 +84,10 @@ describe('NewFoo', () => {
   });
 
   test('Enter name and submit', async () => {
-    const contextValue = new TestContextValue();
-    const createEntity = jest.spyOn(contextValue, 'createEntity');
+    const contextAdapter = new TestContextAdapter();
+    const createEntity = jest.spyOn(contextAdapter, 'createEntity');
     act(() => {
-      render(renderStory(NewFoo, { contextValue }));
+      render(renderStory(NewFoo, { contextAdapter }));
     });
 
     const name = finders.nameInput();
@@ -111,10 +110,10 @@ describe('NewFoo', () => {
   });
 
   test('Enter title and submit', async () => {
-    const contextValue = new TestContextValue();
-    const createEntity = jest.spyOn(contextValue, 'createEntity');
+    const contextAdapter = new TestContextAdapter();
+    const createEntity = jest.spyOn(contextAdapter, 'createEntity');
     act(() => {
-      render(renderStory(NewFoo, { contextValue }));
+      render(renderStory(NewFoo, { contextAdapter }));
     });
 
     userEvent.type(finders.nameInput(), 'New name'); // TODO remove, update automatically
@@ -155,11 +154,11 @@ describe('NewFoo', () => {
     expect(submit).toBeDisabled();
   });
 
-  test('useEntity is called with id after create', async () => {
-    const contextValue = new TestContextValue();
-    const useEntity = jest.spyOn(contextValue, 'useEntity');
+  test('getEntity is called with id after create', async () => {
+    const contextAdapter = new TestContextAdapter();
+    const getEntity = jest.spyOn(contextAdapter, 'getEntity');
     act(() => {
-      render(renderStory(NewFoo, { contextValue }));
+      render(renderStory(NewFoo, { contextAdapter }));
     });
 
     userEvent.type(finders.nameInput(), 'New name');
@@ -168,7 +167,7 @@ describe('NewFoo', () => {
       userEvent.click(finders.saveButton());
     });
 
-    const callWithId = useEntity.mock.calls.find((args) => {
+    const callWithId = getEntity.mock.calls.find((args) => {
       const id = args[0];
       return !!id;
     });
@@ -183,10 +182,10 @@ describe('FullFoo', () => {
   });
 
   test('Enter name and submit', async () => {
-    const contextValue = new TestContextValue();
-    const updateEntity = jest.spyOn(contextValue, 'updateEntity');
+    const contextAdapter = new TestContextAdapter();
+    const updateEntity = jest.spyOn(contextAdapter, 'updateEntity');
     await act(async () => {
-      render(renderStory(FullFoo, { contextValue }));
+      render(renderStory(FullFoo, { contextAdapter }));
     });
 
     const name = finders.nameInput();
@@ -211,10 +210,10 @@ describe('FullFoo', () => {
   });
 
   test('Enter title and submit', async () => {
-    const contextValue = new TestContextValue();
-    const updateEntity = jest.spyOn(contextValue, 'updateEntity');
+    const contextAdapter = new TestContextAdapter();
+    const updateEntity = jest.spyOn(contextAdapter, 'updateEntity');
     await act(async () => {
-      render(renderStory(FullFoo, { contextValue }));
+      render(renderStory(FullFoo, { contextAdapter }));
     });
 
     const fooTitle = finders.fooTitleInput();
@@ -239,10 +238,10 @@ describe('FullFoo', () => {
   });
 
   test('Remove Bar entity and submit', async () => {
-    const contextValue = new TestContextValue();
-    const updateEntity = jest.spyOn(contextValue, 'updateEntity');
+    const contextAdapter = new TestContextAdapter();
+    const updateEntity = jest.spyOn(contextAdapter, 'updateEntity');
     await act(async () => {
-      render(renderStory(FullFoo, { contextValue }));
+      render(renderStory(FullFoo, { contextAdapter }));
     });
 
     userEvent.click(finders.fooBarRemoveButton(FullFoo));
@@ -265,10 +264,10 @@ describe('FullFoo', () => {
   });
 
   test('Select Bar entity and submit', async () => {
-    const contextValue = new TestContextValue();
-    const updateEntity = jest.spyOn(contextValue, 'updateEntity');
+    const contextAdapter = new TestContextAdapter();
+    const updateEntity = jest.spyOn(contextAdapter, 'updateEntity');
     await act(async () => {
-      render(renderStory(FullFoo, { contextValue }));
+      render(renderStory(FullFoo, { contextAdapter }));
     });
 
     const bar = finders.fooBarButton(FullFoo);
@@ -297,10 +296,10 @@ describe('FullFoo', () => {
   });
 
   test('Remove AnnotatedBar value and submit', async () => {
-    const contextValue = new TestContextValue();
-    const updateEntity = jest.spyOn(contextValue, 'updateEntity');
+    const contextAdapter = new TestContextAdapter();
+    const updateEntity = jest.spyOn(contextAdapter, 'updateEntity');
     await act(async () => {
-      render(renderStory(FullFoo, { contextValue }));
+      render(renderStory(FullFoo, { contextAdapter }));
     });
 
     userEvent.click(finders.fooAnnotatedBarRemoveButton(FullFoo));
@@ -323,10 +322,10 @@ describe('FullFoo', () => {
   });
 
   test('Change AnnotatedBar annotation value and submit', async () => {
-    const contextValue = new TestContextValue();
-    const updateEntity = jest.spyOn(contextValue, 'updateEntity');
+    const contextAdapter = new TestContextAdapter();
+    const updateEntity = jest.spyOn(contextAdapter, 'updateEntity');
     await act(async () => {
-      render(renderStory(FullFoo, { contextValue }));
+      render(renderStory(FullFoo, { contextAdapter }));
     });
 
     const annotation = finders.fooAnnotatedBarAnnotationInput(FullFoo);
@@ -357,10 +356,10 @@ describe('FullFoo', () => {
   });
 
   test('Select AnnotatedBar bar value and submit', async () => {
-    const contextValue = new TestContextValue();
-    const updateEntity = jest.spyOn(contextValue, 'updateEntity');
+    const contextAdapter = new TestContextAdapter();
+    const updateEntity = jest.spyOn(contextAdapter, 'updateEntity');
     await act(async () => {
-      render(renderStory(FullFoo, { contextValue }));
+      render(renderStory(FullFoo, { contextAdapter }));
     });
 
     userEvent.click(finders.fooAnnotatedBarBarButton(FullFoo));

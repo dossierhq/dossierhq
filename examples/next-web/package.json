@@ -32,8 +32,7 @@
     "next": "~10.0.6",
     "next-transpile-modules": "~6.1.0",
     "react": "~17.0.1",
-    "react-dom": "~17.0.1",
-    "swr": "~0.4.1"
+    "react-dom": "~17.0.1"
   },
   "devDependencies": {
     "@datadata/postgres": "1.0.0",
