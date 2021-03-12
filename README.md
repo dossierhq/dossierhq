@@ -28,7 +28,9 @@ Check that the same versions of dependencies are used, run `rush check`.
 
 ## Upgrade dependencies
 
-- Update `rushVersion` and `pnpmVersion` in `rush.json`
+- Update `rushVersion` and `pnpmVersion` in `rush.json` (`npm show @microsoft/rush`/`npm show pnpm`)
 - `npm run upgrade-dependencies:all`
 - `rush update`
 - `rush check`
+- Exceptions:
+  - In `examples/next-web`: `"next": "~10.0.8", "next-transpile-modules": "~6.3.0"`, "Module parse failed: Unexpected token (1:7)". Reverted to `"next": "~10.0.6", "next-transpile-modules": "~6.1.0"`
