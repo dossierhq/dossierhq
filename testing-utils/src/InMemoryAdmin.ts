@@ -58,7 +58,7 @@ export const InMemoryAdmin = {
         visitFieldsRecursively({
           schema: context.server.schema,
           entity,
-          visitField: (path, fieldSpec, data, unusedVisitContext) => {
+          visitField: (_path, fieldSpec, data, _visitContext) => {
             if (isLocationItemField(fieldSpec, data) && data) {
               locations.push(data);
             }

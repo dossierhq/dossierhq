@@ -69,7 +69,7 @@ export async function selectEntity(
   context: SessionContext,
   message: string,
   initialQuery: AdminQuery | null,
-  unusedDefaultValue: EntityReference | null
+  _defaultValue: EntityReference | null
 ): PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.NotFound> {
   const { query, paging } = await configureQuery(context, initialQuery);
   const isForward = isPagingForwards(paging);

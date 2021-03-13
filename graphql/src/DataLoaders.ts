@@ -165,10 +165,10 @@ function resolveFields<TContext extends SessionGraphQLContext>(
   for (const fieldSpec of spec.fields) {
     const value = item[fieldSpec.name];
     if (isEntityTypeField(fieldSpec, value) && value) {
-      item[fieldSpec.name] = (args: undefined, context: TContext, unusedInfo: unknown) =>
+      item[fieldSpec.name] = (_args: undefined, context: TContext, _info: unknown) =>
         isAdmin ? loadAdminEntity(context, value.id, null) : loadEntity(context, value.id);
     } else if (isEntityTypeListField(fieldSpec, value) && value && value.length > 0) {
-      item[fieldSpec.name] = (args: undefined, context: TContext, unusedInfo: unknown) => {
+      item[fieldSpec.name] = (_args: undefined, context: TContext, _info: unknown) => {
         const ids = value.map((x) => x.id);
         return isAdmin ? loadAdminEntities(context, ids) : loadEntities(context, ids);
       };
@@ -197,7 +197,7 @@ export function buildResolversForValue<TContext extends SessionGraphQLContext>(
 function buildTotalCount<TContext extends SessionGraphQLContext>(
   query: AdminQuery | undefined
 ): FieldValueOrResolver<TContext, number> {
-  return async (args, context, unusedInfo) => {
+  return async (args, context, _info) => {
     const sessionContext = getSessionContext(context);
     const result = await EntityAdmin.getTotalCount(sessionContext, query);
     if (result.isError()) {
