@@ -334,7 +334,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       new GraphQLObjectType<Entity, TContext>({
         name: entitySpec.name,
         interfaces: this.getInterfaces('Node', 'Entity'),
-        isTypeOf: (source, unusedContext, unusedInfo) => source._type === entitySpec.name,
+        isTypeOf: (source, _context, _info) => source._type === entitySpec.name,
         fields: () => {
           const fields: GraphQLFieldConfigMap<Entity, TContext> = {
             id: { type: new GraphQLNonNull(GraphQLID) },
@@ -358,7 +358,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       new GraphQLObjectType<Value, TContext>({
         name: valueSpec.name,
         interfaces: this.getInterfaces('Value'),
-        isTypeOf: (source, unusedContext, unusedInfo) => source._type === valueSpec.name,
+        isTypeOf: (source, _context, _info) => source._type === valueSpec.name,
         fields: () => {
           const fields: GraphQLFieldConfigMap<Value, TContext> = {
             _type: { type: new GraphQLNonNull(this.getEnumType('ValueType')) },
@@ -508,7 +508,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       new GraphQLObjectType<AdminEntity, TContext>({
         name: toAdminTypeName(entitySpec.name),
         interfaces: this.getInterfaces(toAdminTypeName('Entity')),
-        isTypeOf: (source, unusedContext, unusedInfo) => source._type === entitySpec.name,
+        isTypeOf: (source, _context, _info) => source._type === entitySpec.name,
         fields: () => {
           const fields: GraphQLFieldConfigMap<AdminEntity, TContext> = {
             id: { type: new GraphQLNonNull(GraphQLID) },
@@ -564,7 +564,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       new GraphQLObjectType<Value, TContext>({
         name: toAdminTypeName(valueSpec.name),
         interfaces: this.getInterfaces(toAdminTypeName('Value')),
-        isTypeOf: (source, unusedContext, unusedInfo) => source._type === valueSpec.name,
+        isTypeOf: (source, _context, _info) => source._type === valueSpec.name,
         fields: () => {
           const fields: GraphQLFieldConfigMap<Value, TContext> = {
             _type: { type: new GraphQLNonNull(this.getEnumType('ValueType')) },
@@ -659,7 +659,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       args: {
         id: { type: new GraphQLNonNull(GraphQLID) },
       },
-      resolve: async (source, args, context, unusedInfo) => {
+      resolve: async (source, args, context, _info) => {
         return await loadEntity(context, args.id);
       },
     });
@@ -671,7 +671,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       args: {
         ids: { type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(GraphQLID))) },
       },
-      resolve: async (source, args, context, unusedInfo) => {
+      resolve: async (_source, args, context, _info) => {
         return await loadEntities(context, args.ids);
       },
     });
@@ -684,7 +684,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         id: { type: new GraphQLNonNull(GraphQLID) },
         version: { type: GraphQLInt },
       },
-      resolve: async (source, args, context, unusedInfo) => {
+      resolve: async (_source, args, context, _info) => {
         return await loadAdminEntity(context, args.id, args.version);
       },
     });
@@ -696,7 +696,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       args: {
         ids: { type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(GraphQLID))) },
       },
-      resolve: async (source, args, context, unusedInfo) => {
+      resolve: async (source, args, context, _info) => {
         return await loadAdminEntities(context, args.ids);
       },
     });
@@ -722,7 +722,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         last: { type: GraphQLInt },
         before: { type: GraphQLString },
       },
-      resolve: async (source, args, context, unusedInfo) => {
+      resolve: async (source, args, context, _info) => {
         const { query, first, after, last, before } = args;
         const paging = { first, after, last, before };
         return await loadAdminSearchEntities(context, query, paging);
@@ -734,7 +734,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     return fieldConfigWithArgs<TSource, TContext, { id: string }>({
       type: this.getOutputType('AdminEntityHistory'),
       args: { id: { type: new GraphQLNonNull(GraphQLID) } },
-      resolve: async (source, args, context, unusedInfo) => {
+      resolve: async (source, args, context, _info) => {
         const { id } = args;
         return await loadVersionHistory(context, id);
       },
@@ -767,7 +767,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       args: {
         entity: { type: new GraphQLNonNull(this.getType(toAdminCreateInputTypeName(entityName))) },
       },
-      resolve: async (source, args, context, unusedInfo) => {
+      resolve: async (source, args, context, _info) => {
         const { entity } = args;
         if (entity._type && entity._type !== entityName) {
           throw notOk
@@ -787,7 +787,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       args: {
         entity: { type: new GraphQLNonNull(this.getType(toAdminUpdateInputTypeName(entityName))) },
       },
-      resolve: async (source, args, context, unusedInfo) => {
+      resolve: async (source, args, context, _info) => {
         const { entity } = args;
         if (entity._type && entity._type !== entityName) {
           throw notOk
@@ -869,7 +869,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       args: {
         id: { type: new GraphQLNonNull(GraphQLID) },
       },
-      resolve: async (source, args, context, unusedInfo) => {
+      resolve: async (source, args, context, _info) => {
         const { id } = args;
         return await Mutations.deleteEntity(context, id);
       },
@@ -883,7 +883,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         id: { type: new GraphQLNonNull(GraphQLID) },
         version: { type: new GraphQLNonNull(GraphQLInt) },
       },
-      resolve: async (source, args, context, unusedInfo) => {
+      resolve: async (source, args, context, _info) => {
         const { id, version } = args;
         return await Mutations.publishEntity(context, id, version);
       },
@@ -900,7 +900,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
           ),
         },
       },
-      resolve: async (source, args, context, unusedInfo) => {
+      resolve: async (source, args, context, _info) => {
         const { entities } = args;
         return await Mutations.publishEntities(context, entities);
       },

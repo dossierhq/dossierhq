@@ -45,7 +45,7 @@ const locationCodec: FieldTypeAdapter<FieldValueTypeMap[FieldType.Location], [nu
     return ok([lat, lng]);
   },
   decodeData: ([lat, lng]) => ({ lat, lng }),
-  getReferenceUUIDs: (unusedData) => null,
+  getReferenceUUIDs: (_data) => null,
 };
 
 const stringCodec: FieldTypeAdapter<FieldValueTypeMap[FieldType.String], string> = {
@@ -54,17 +54,17 @@ const stringCodec: FieldTypeAdapter<FieldValueTypeMap[FieldType.String], string>
       ? ok(x)
       : notOk.BadRequest(`${prefix}: expected string, got ${Array.isArray(x) ? 'list' : typeof x}`),
   decodeData: (x) => x,
-  getReferenceUUIDs: (unusedX) => null,
+  getReferenceUUIDs: (_x) => null,
 };
 
 const invalidCodec: FieldTypeAdapter<FieldValueTypeMap[FieldType.ValueType], unknown> = {
-  encodeData: (unusedPrefix, unusedData) => {
+  encodeData: (_prefix, _data) => {
     throw new Error('Should not be used');
   },
-  decodeData: (unusedData) => {
+  decodeData: (_data) => {
     throw new Error('Should not be used');
   },
-  getReferenceUUIDs: (unusedData) => {
+  getReferenceUUIDs: (_data) => {
     throw new Error('Should not be used');
   },
 };

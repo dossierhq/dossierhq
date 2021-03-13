@@ -159,7 +159,7 @@ export class DataDataContextValue {
   }
 
   private fetcher = async (
-    unusedRootKey: string | undefined,
+    _rootKey: string | undefined,
     action: FetcherActions,
     ...args: unknown[]
   ) => {

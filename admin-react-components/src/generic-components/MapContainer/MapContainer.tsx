@@ -72,7 +72,7 @@ function MapEventListener({
   onBoundingBoxChanged: (boundingBox: BoundingBox) => void;
 }) {
   const map = useMapEvents({
-    moveend: (unusedEvent) => {
+    moveend: (_event) => {
       const bounds = map.getBounds();
       onBoundingBoxChanged({
         minLat: bounds.getSouth(),

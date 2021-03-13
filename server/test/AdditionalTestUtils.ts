@@ -8,7 +8,7 @@ export function expectEntityHistoryVersions(
 ): void {
   // Skip createdAt since dates are unpredictable
   const actualVersions = actual.versions.map((x) => {
-    const { createdAt: unusedCreatedAt, ...version } = x;
+    const { createdAt: _createdAt, ...version } = x;
     return version;
   });
   expect(actualVersions).toEqual(expectedVersions);

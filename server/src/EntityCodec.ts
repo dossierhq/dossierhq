@@ -392,7 +392,7 @@ async function collectReferenceIdsAndLocations(
   visitFieldsRecursively({
     schema: context.server.getSchema(),
     entity,
-    visitField: (path, fieldSpec, data, unusedVisitContext) => {
+    visitField: (path, fieldSpec, data, _visitContext) => {
       if (fieldSpec.type !== FieldType.ValueType) {
         const fieldAdapter = EntityFieldTypeAdapters.getAdapter(fieldSpec);
         const uuids = fieldAdapter.getReferenceUUIDs(data);

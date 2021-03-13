@@ -70,7 +70,7 @@ function EntityMarker({
   visitFieldsRecursively({
     schema,
     entity,
-    visitField: (path, fieldSpec, data, unusedVisitContext) => {
+    visitField: (_path, fieldSpec, data, _visitContext) => {
       if (isLocationItemField(fieldSpec, data) && data) {
         entityLocations.push({ location: data });
       }
