@@ -67,10 +67,7 @@ export class UpdateEntityAction implements EntityEditorStateAction {
   }
 
   reduce(state: EntityEditorState): EntityEditorState {
-    if (state.entity) {
-      //TODO handle subsequent update of entity
-      return state;
-    }
+    //TODO handle update when there are local changes
     const entitySpec = state.schema.getEntityTypeSpecification(this.#entity._type);
     if (!entitySpec) {
       return {

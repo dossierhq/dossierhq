@@ -96,7 +96,7 @@ export const InMemoryAdmin = {
   ): PromiseResult<AdminEntity, ErrorType.BadRequest> => {
     const newEntity = {
       ...entity,
-      id: uuidv4(),
+      id: entity.id ?? uuidv4(),
       _version: 0,
       _name: context.server.getUniqueName(null, entity._name),
     };
