@@ -14,6 +14,7 @@ import {
 } from '../..';
 import type { DataDataContextValue, MessageItem } from '../..';
 import type { EntityEditorState, EntityEditorStateAction } from './EntityEditorReducer';
+import { SetFieldAction, SetNameAction } from './EntityEditorReducer';
 
 export interface EntityEditorNewProps {
   editorState: EntityEditorState;
@@ -91,13 +92,13 @@ function EntityEditorInner({
         <InputText
           id={nameId}
           value={entity.name}
-          onChange={(name) => dispatchEditorState({ type: 'setName', name })}
+          onChange={(name) => dispatchEditorState(new SetNameAction(name))}
         />
       </FormField>
       <Divider />
       {entity.fields.map(({ fieldSpec, value }) => {
         const handleFieldChanged = (newValue: unknown) => {
-          dispatchEditorState({ type: 'setField', field: fieldSpec.name, value: newValue });
+          dispatchEditorState(new SetFieldAction(fieldSpec.name, newValue));
         };
 
         return (
