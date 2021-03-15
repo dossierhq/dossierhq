@@ -2,6 +2,7 @@ export type { DataDataContextAdapter } from './contexts/DataDataContext';
 export type { DropDownItem } from './generic-components/DropDown/DropDown';
 export type { EntityEditorProps } from './domain-components/EntityEditor/EntityEditor';
 export type { EntityEditorNewProps } from './domain-components/EntityEditor/EntityEditorNew';
+export type { EntityEditorSelector } from './domain-components/EntityEditor/EntityEditorReducer';
 export type { EntityFieldEditorProps } from './domain-components/EntityFieldEditor/EntityFieldEditor';
 export type { IconProps, IconType } from './generic-components/Icon/Icon';
 export type { Kind } from './utils/KindUtils';

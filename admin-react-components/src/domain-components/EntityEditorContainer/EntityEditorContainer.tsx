@@ -1,19 +1,36 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { EntityEditor, EntityMetadata } from '../..';
+import { DataDataContext, DataDataContextValue } from '../../contexts/DataDataContext';
+import { Loader } from '../../generic-components/Loader/Loader';
+import { EntityEditorNew } from '../EntityEditor/EntityEditorNew';
+import { EntityEditorSelector, useEntityEditorState } from '../EntityEditor/EntityEditorReducer';
 
 export interface EntityEditorContainerProps {
-  idPrefix?: string;
-  entity: { id: string } | { type: string; isNew: true };
+  entitySelector: EntityEditorSelector;
 }
 
-export function EntityEditorContainer({
-  idPrefix,
-  entity,
-}: EntityEditorContainerProps): JSX.Element {
+interface EntityEditorContainerInnerProps extends EntityEditorContainerProps {
+  contextValue: DataDataContextValue;
+}
+
+export function EntityEditorContainer({ entitySelector }: EntityEditorContainerProps): JSX.Element {
+  const contextValue = useContext(DataDataContext);
+  if (!contextValue) {
+    return <Loader />;
+  }
+
+  return <EntityEditorContainerInner {...{ entitySelector, contextValue }} />;
+}
+
+function EntityEditorContainerInner({
+  entitySelector,
+  contextValue,
+}: EntityEditorContainerInnerProps): JSX.Element {
+  const { editorState, dispatchEditorState } = useEntityEditorState(entitySelector, contextValue);
   return (
     <div style={{ display: 'flex' }}>
-      <EntityEditor {...{ idPrefix, entity }} style={{ flexGrow: 1 }} />
-      {'id' in entity ? <EntityMetadata entityId={entity.id} /> : null}
+      <EntityEditorNew {...{ editorState, dispatchEditorState }} style={{ flexGrow: 1 }} />
+      <EntityMetadata entityId={editorState.id} />
     </div>
   );
 }

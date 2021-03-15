@@ -11,7 +11,7 @@ import { v4 as uuidv4 } from 'uuid';
 import type { DataDataContextValue } from '../..';
 import type { MessageItem } from '../../generic-components/Message/Message';
 
-export type EntitySelector = { id: string } | { id?: string; newType: string };
+export type EntityEditorSelector = { id: string } | { id?: string; newType: string };
 
 export interface EntityEditorState {
   initMessage: MessageItem | null;
@@ -133,7 +133,7 @@ function initializeState({
   entitySelector,
   contextValue,
 }: {
-  entitySelector: EntitySelector;
+  entitySelector: EntityEditorSelector;
   contextValue: DataDataContextValue;
 }): EntityEditorState {
   const { schema } = contextValue;
@@ -173,7 +173,7 @@ function createEditorEntityState(
 }
 
 export function useEntityEditorState(
-  entitySelector: EntitySelector,
+  entitySelector: EntityEditorSelector,
   contextValue: DataDataContextValue
 ): { editorState: EntityEditorState; dispatchEditorState: Dispatch<EntityEditorStateAction> } {
   const { useEntity } = contextValue;
