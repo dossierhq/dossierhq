@@ -33,101 +33,99 @@ interface FieldEditorState {
   initialValue: unknown;
 }
 
-export type EntityEditorStateAction =
-  | SetMessageLoadMessageAction
-  | UpdateEntityAction
-  | SetNameAction
-  | SetFieldAction;
-
-interface SetMessageLoadMessageAction {
-  type: 'setEntityLoadMessage';
-  message: MessageItem | null;
+export interface EntityEditorStateAction {
+  reduce(state: EntityEditorState): EntityEditorState;
 }
 
-interface UpdateEntityAction {
-  type: 'updateEntity';
-  entity: AdminEntity;
-}
+export class SetMessageLoadMessageAction implements EntityEditorStateAction {
+  #message: MessageItem | null;
 
-interface SetNameAction {
-  type: 'setName';
-  name: string;
-}
+  constructor(message: MessageItem | null) {
+    this.#message = message;
+  }
 
-interface SetFieldAction {
-  type: 'setField';
-  field: string;
-  value: unknown;
-}
-
-function isSetEntityLoadMessageAction(
-  action: EntityEditorStateAction
-): action is SetMessageLoadMessageAction {
-  return action.type === 'setEntityLoadMessage';
-}
-
-function isUpdateEntityAction(action: EntityEditorStateAction): action is UpdateEntityAction {
-  return action.type === 'updateEntity';
-}
-
-function isSetNameAction(action: EntityEditorStateAction): action is SetNameAction {
-  return action.type === 'setName';
-}
-
-function isSetFieldAction(action: EntityEditorStateAction): action is SetFieldAction {
-  return action.type === 'setField';
-}
-
-export function reduceEditorState(
-  state: EntityEditorState,
-  action: EntityEditorStateAction
-): EntityEditorState {
-  if (isSetEntityLoadMessageAction(action)) {
-    if (isEqual(state.entityLoadMessage, action.message)) {
+  reduce(state: EntityEditorState): EntityEditorState {
+    if (isEqual(state.entityLoadMessage, this.#message)) {
       return state;
     }
     return {
       ...state,
-      entityLoadMessage: action.message,
+      entityLoadMessage: this.#message,
     };
   }
-  if (isUpdateEntityAction(action)) {
-    const { entity } = action;
+}
+
+export class UpdateEntityAction implements EntityEditorStateAction {
+  #entity: AdminEntity;
+
+  constructor(entity: AdminEntity) {
+    this.#entity = entity;
+  }
+
+  reduce(state: EntityEditorState): EntityEditorState {
     if (state.entity) {
       //TODO handle subsequent update of entity
       return state;
     }
-    const entitySpec = state.schema.getEntityTypeSpecification(entity._type);
+    const entitySpec = state.schema.getEntityTypeSpecification(this.#entity._type);
     if (!entitySpec) {
       return {
         ...state,
         initMessage: {
           kind: 'danger',
-          message: `Can't create entity with unsupported type: ${entity._type}`,
+          message: `Can't create entity with unsupported type: ${this.#entity._type}`,
         },
       };
     }
 
     return {
       ...state,
-      entity: createEditorState(entitySpec, entity),
+      entity: createEditorState(entitySpec, this.#entity),
     };
   }
-  if (isSetNameAction(action)) {
-    const { entity } = state;
-    if (!entity) throw new Error('Unexpected state, no entity');
-    return { ...state, entity: { ...entity, name: action.name } };
+}
+
+export class SetNameAction implements EntityEditorStateAction {
+  #name: string;
+
+  constructor(name: string) {
+    this.#name = name;
   }
-  if (isSetFieldAction(action)) {
+
+  reduce(state: EntityEditorState): EntityEditorState {
+    const { entity } = state;
+    if (!entity) {
+      throw new Error('Unexpected state, no entity');
+    }
+    return { ...state, entity: { ...entity, name: this.#name } };
+  }
+}
+
+export class SetFieldAction implements EntityEditorStateAction {
+  #field: string;
+  #value: unknown;
+
+  constructor(field: string, value: unknown) {
+    this.#field = field;
+    this.#value = value;
+  }
+
+  reduce(state: EntityEditorState): EntityEditorState {
     const { entity } = state;
     if (!entity) throw new Error('Unexpected state, no entity');
     const fields = [...entity.fields];
-    const index = fields.findIndex((x) => x.fieldSpec.name === action.field);
-    if (index < 0) throw new Error(`Invalid field ${action.field}`);
-    fields[index] = { ...fields[index], value: action.value };
+    const index = fields.findIndex((x) => x.fieldSpec.name === this.#field);
+    if (index < 0) throw new Error(`Invalid field ${this.#field}`);
+    fields[index] = { ...fields[index], value: this.#value };
     return { ...state, entity: { ...entity, fields } };
   }
-  return state;
+}
+
+export function reduceEditorState(
+  state: EntityEditorState,
+  action: EntityEditorStateAction
+): EntityEditorState {
+  return action.reduce(state);
 }
 
 function initializeState({
@@ -187,20 +185,21 @@ export function useEntityEditorState(
 
   useEffect(() => {
     if (entity) {
-      dispatchEditorState({ type: 'updateEntity', entity });
+      dispatchEditorState(new UpdateEntityAction(entity));
     }
   }, [entity]);
   useEffect(() => {
-    dispatchEditorState({
-      type: 'setEntityLoadMessage',
-      message: entityError
-        ? {
-            kind: 'danger',
-            title: 'Failed loading entity',
-            message: `${entityError.error}: ${entityError.message}`,
-          }
-        : null,
-    });
+    dispatchEditorState(
+      new SetMessageLoadMessageAction(
+        entityError
+          ? {
+              kind: 'danger',
+              title: 'Failed loading entity',
+              message: `${entityError.error}: ${entityError.message}`,
+            }
+          : null
+      )
+    );
   }, [entityError]);
 
   return { editorState, dispatchEditorState };
