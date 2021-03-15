@@ -39,7 +39,6 @@
     "@types/jest": "~26.0.20",
     "@types/react-test-renderer": "~17.0.1",
     "@types/testing-library__jest-dom": "~5.9.5",
-    "@types/uuid": "^8.3.0",
     "@typescript-eslint/eslint-plugin": "^4.17.0",
     "@typescript-eslint/parser": "^4.17.0",
     "babel-loader": "^8.2.2",
@@ -55,18 +54,19 @@
     "react-test-renderer": "~17.0.1",
     "svgo": "~2.2.2",
     "ts-jest": "~26.5.3",
-    "typescript": "^4.2.3",
-    "uuid": "^8.3.2"
+    "typescript": "^4.2.3"
   },
   "dependencies": {
     "@datadata/core": "1.0.0",
     "@types/leaflet": "~1.7.0",
     "@types/lodash": "~4.14.168",
     "@types/react": "~17.0.3",
+    "@types/uuid": "^8.3.0",
     "leaflet": "~1.7.1",
     "lodash": "~4.17.21",
     "react": "~17.0.1",
     "react-leaflet": "~3.1.0",
-    "swr": "~0.5.2"
+    "swr": "~0.5.2",
+    "uuid": "^8.3.2"
   }
 }

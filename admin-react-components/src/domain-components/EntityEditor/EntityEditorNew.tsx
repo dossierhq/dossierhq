@@ -67,8 +67,8 @@ function EntityEditorInner({
   const { entity } = editorState;
 
   if (!entity) {
-    if (editorState.message) {
-      return <Message {...editorState.message} />;
+    if (editorState.initMessage) {
+      return <Message {...editorState.initMessage} />;
     }
     if (editorState.entityLoadMessage) {
       return <Message {...editorState.entityLoadMessage} />;
@@ -85,7 +85,8 @@ function EntityEditorInner({
       }
       style={style}
     >
-      {editorState.message ? <Message {...editorState.message} /> : null}
+      {editorState.initMessage ? <Message {...editorState.initMessage} /> : null}
+      {editorState.entityLoadMessage ? <Message {...editorState.entityLoadMessage} /> : null}
       <FormField htmlFor={nameId} label="Name">
         <InputText
           id={nameId}

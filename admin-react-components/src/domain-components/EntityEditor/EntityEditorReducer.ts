@@ -7,11 +7,14 @@ import type {
 import isEqual from 'lodash/isEqual';
 import type { Dispatch } from 'react';
 import { useEffect, useReducer } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import type { DataDataContextValue } from '../..';
 import type { MessageItem } from '../../generic-components/Message/Message';
 
+export type EntitySelector = { id: string } | { id?: string; newType: string };
+
 export interface EntityEditorState {
-  message: MessageItem | null;
+  initMessage: MessageItem | null;
   entityLoadMessage: MessageItem | null;
   schema: Schema;
   id: string;
@@ -98,26 +101,16 @@ export function reduceEditorState(
     if (!entitySpec) {
       return {
         ...state,
-        message: {
+        initMessage: {
           kind: 'danger',
           message: `Can't create entity with unsupported type: ${entity._type}`,
         },
       };
     }
-    const fields = entitySpec.fields.map((fieldSpec) => {
-      const value = entity[fieldSpec.name] ?? null;
-      return { fieldSpec, value, initialValue: value };
-    });
 
     return {
       ...state,
-      entity: {
-        entitySpec,
-        version: entity._version,
-        name: entity._name,
-        initialName: entity._name,
-        fields,
-      },
+      entity: createEditorState(entitySpec, entity),
     };
   }
   if (isSetNameAction(action)) {
@@ -138,24 +131,56 @@ export function reduceEditorState(
 }
 
 function initializeState({
-  id,
+  entitySelector,
   contextValue,
 }: {
-  id: string;
+  entitySelector: EntitySelector;
   contextValue: DataDataContextValue;
 }): EntityEditorState {
   const { schema } = contextValue;
-  return { message: null, entityLoadMessage: null, schema, id, entity: null };
+  const id = entitySelector.id ?? uuidv4();
+  let message: MessageItem | null = null;
+  let entity: EntityEditorState['entity'] = null;
+  if ('newType' in entitySelector) {
+    const entitySpec = contextValue.schema.getEntityTypeSpecification(entitySelector.newType);
+    if (entitySpec) {
+      entity = createEditorState(entitySpec, null);
+    } else {
+      message = {
+        kind: 'danger',
+        message: `Can't create entity with unsupported type: ${entitySelector.newType}`,
+      };
+    }
+  }
+
+  return { initMessage: message, entityLoadMessage: null, schema, id, entity };
+}
+
+function createEditorState(
+  entitySpec: EntityTypeSpecification,
+  entity: AdminEntity | null
+): EntityEditorState['entity'] {
+  const fields = entitySpec.fields.map((fieldSpec) => {
+    const value = entity?.[fieldSpec.name] ?? null;
+    return { fieldSpec, value, initialValue: value };
+  });
+  return {
+    entitySpec,
+    version: entity?._version ?? 0,
+    name: entity?._name ?? '',
+    initialName: entity?._name ?? '',
+    fields,
+  };
 }
 
 export function useEntityEditorState(
-  id: string,
+  entitySelector: EntitySelector,
   contextValue: DataDataContextValue
 ): { editorState: EntityEditorState; dispatchEditorState: Dispatch<EntityEditorStateAction> } {
   const { useEntity } = contextValue;
   const [editorState, dispatchEditorState] = useReducer(
     reduceEditorState,
-    { id, contextValue },
+    { entitySelector, contextValue },
     initializeState
   );
   const { entity, entityError } = useEntity(editorState.id);
