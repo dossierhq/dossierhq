@@ -40,11 +40,11 @@ export interface AdminEntity {
 }
 
 export interface AdminEntityCreate {
-  // /** UUIDv4 */
-  //TODO  id?: string;
+  /** UUIDv4. If not provided a new id will be created */
+  id?: string;
   _name: string;
   _type: string;
-  _version: 0;
+  _version?: 0;
   [fieldName: string]: unknown;
 }
 

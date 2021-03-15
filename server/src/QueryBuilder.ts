@@ -45,6 +45,13 @@ export default class QueryBuilder {
     this.#values.push(value);
     return '$' + this.#values.length;
   }
+
+  addValueOrDefault(value: unknown): string {
+    if (value === null || value === undefined) {
+      return 'DEFAULT';
+    }
+    return this.addValue(value);
+  }
 }
 
 function startsWithKeyword(query: string) {
