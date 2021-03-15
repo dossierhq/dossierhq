@@ -137,6 +137,7 @@ type AdminFoo implements AdminEntity {
 }
 
 input AdminFooCreateInput {
+  id: ID
   _type: EntityType
   _name: String!
   strings: [String!]
@@ -162,6 +163,7 @@ type AdminBar implements AdminEntity {
 }
 
 input AdminBarCreateInput {
+  id: ID
   _type: EntityType
   _name: String!
 }
@@ -321,6 +323,7 @@ type AdminFoo implements AdminEntity {
 }
 
 input AdminFooCreateInput {
+  id: ID
   _type: EntityType
   _name: String!
   noMeansAll: AdminReferenceInput
@@ -350,6 +353,7 @@ type AdminBar implements AdminEntity {
 }
 
 input AdminBarCreateInput {
+  id: ID
   _type: EntityType
   _name: String!
 }
@@ -369,6 +373,7 @@ type AdminBaz implements AdminEntity {
 }
 
 input AdminBazCreateInput {
+  id: ID
   _type: EntityType
   _name: String!
 }
@@ -530,6 +535,7 @@ type AdminFoo implements AdminEntity {
 }
 
 input AdminFooCreateInput {
+  id: ID
   _type: EntityType
   _name: String!
 }
@@ -676,6 +682,7 @@ type AdminFoo implements AdminEntity {
 }
 
 input AdminFooCreateInput {
+  id: ID
   _type: EntityType
   _name: String!
   fooField: String
@@ -700,6 +707,7 @@ type AdminBar implements AdminEntity {
 }
 
 input AdminBarCreateInput {
+  id: ID
   _type: EntityType
   _name: String!
   barField1: String
@@ -891,6 +899,7 @@ type AdminFoo implements AdminEntity {
 }
 
 input AdminFooCreateInput {
+  id: ID
   _type: EntityType
   _name: String!
   valueOneJson: String
@@ -922,6 +931,7 @@ type AdminBar implements AdminEntity {
 }
 
 input AdminBarCreateInput {
+  id: ID
   _type: EntityType
   _name: String!
 }

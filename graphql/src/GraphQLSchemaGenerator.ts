@@ -528,6 +528,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         name: toAdminCreateInputTypeName(entitySpec.name),
         fields: () => {
           const fields: GraphQLInputFieldConfigMap = {
+            id: { type: GraphQLID },
             _type: { type: this.getEnumType('EntityType') },
             _name: { type: new GraphQLNonNull(GraphQLString) },
           };
@@ -767,7 +768,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       args: {
         entity: { type: new GraphQLNonNull(this.getType(toAdminCreateInputTypeName(entityName))) },
       },
-      resolve: async (source, args, context, _info) => {
+      resolve: async (_source, args, context, _info) => {
         const { entity } = args;
         if (entity._type && entity._type !== entityName) {
           throw notOk
