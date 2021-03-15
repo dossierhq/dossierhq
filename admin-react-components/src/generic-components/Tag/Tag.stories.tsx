@@ -1,12 +1,13 @@
-import type { Story } from '@storybook/react/types-6-0';
+import type { Meta, Story } from '@storybook/react/types-6-0';
 import React from 'react';
 import { Tag } from './Tag';
 import type { TagProps } from './Tag';
 
-export default {
+const meta: Meta<TagProps> = {
   title: 'Generic/Tag',
   component: Tag,
 };
+export default meta;
 
 const Template: Story<TagProps> = (args) => {
   return <Tag {...args} />;

@@ -1,4 +1,4 @@
-import type { Story } from '@storybook/react/types-6-0';
+import type { Meta, Story } from '@storybook/react/types-6-0';
 import React from 'react';
 import type { DataDataContextValue, EntityEditorNewProps } from '../..';
 import { DataDataContext, EntityEditorNew } from '../..';
@@ -11,18 +11,19 @@ import {
   TestContextAdapter,
 } from '../../test/TestContextAdapter';
 
-export default {
+type StoryProps = Omit<EntityEditorNewProps, 'editorState' | 'dispatchEditorState'> & {
+  entitySelector: EntityEditorSelector;
+  contextAdapter?: TestContextAdapter;
+};
+
+const meta: Meta<StoryProps> = {
   title: 'Domain/EntityEditorNew',
   component: EntityEditorNew,
   args: {},
 };
+export default meta;
 
-const Template: Story<
-  Omit<EntityEditorNewProps, 'editorState' | 'dispatchEditorState'> & {
-    entitySelector: EntityEditorSelector;
-    contextAdapter?: TestContextAdapter;
-  }
-> = (args) => {
+const Template: Story<StoryProps> = (args) => {
   const contextValue = createContextValue(args?.contextAdapter);
   return (
     <DataDataContext.Provider value={contextValue}>

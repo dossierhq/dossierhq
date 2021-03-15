@@ -1,13 +1,14 @@
-import type { Story } from '@storybook/react/types-6-0';
+import type { Meta, Story } from '@storybook/react/types-6-0';
 import React from 'react';
 import { DropDown } from '../..';
 import type { DropDownProps } from './DropDown';
 
-export default {
+const meta: Meta<DropDownProps> = {
   title: 'Generic/DropDown',
   component: DropDown,
   args: { id: 'drop-down' },
 };
+export default meta;
 
 const Template: Story<DropDownProps> = (args) => {
   return <DropDown {...args} />;

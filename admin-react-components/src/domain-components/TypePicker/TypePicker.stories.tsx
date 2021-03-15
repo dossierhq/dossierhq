@@ -1,15 +1,16 @@
-import type { Story } from '@storybook/react/types-6-0';
+import type { Meta, Story } from '@storybook/react/types-6-0';
 import React from 'react';
 import { TypePicker } from './TypePicker';
 import type { TypePickerProps } from './TypePicker';
 import { DataDataContext } from '../..';
 import { createContextValue } from '../../test/TestContextAdapter';
 
-export default {
+const meta: Meta<TypePickerProps> = {
   title: 'Domain/TypePicker',
   component: TypePicker,
   args: { id: 'type-picker' },
 };
+export default meta;
 
 const Template: Story<TypePickerProps> = (args) => {
   return (

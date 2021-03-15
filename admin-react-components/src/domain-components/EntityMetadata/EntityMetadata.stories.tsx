@@ -1,4 +1,4 @@
-import type { Story } from '@storybook/react/types-6-0';
+import type { Meta, Story } from '@storybook/react/types-6-0';
 import React from 'react';
 import { DataDataContext } from '../..';
 import { EntityMetadata } from './EntityMetadata';
@@ -6,13 +6,12 @@ import type { EntityMetadataProps } from './EntityMetadata';
 import { createContextValue } from '../../test/TestContextAdapter';
 import { foo1Id, fooDeletedId } from '../../test/EntityFixtures';
 
-const defaultArgs: Partial<EntityMetadataProps> = {};
-
-export default {
+const meta: Meta<EntityMetadataProps> = {
   title: 'Domain/EntityMetadata',
   component: EntityMetadata,
-  args: defaultArgs,
+  args: {},
 };
+export default meta;
 
 const Template: Story<EntityMetadataProps> = (args) => {
   return (

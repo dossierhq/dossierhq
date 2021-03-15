@@ -20,7 +20,7 @@ exports[`Storyshots Domain/EntityEditorContainer Normal 1`] = `
     <div>
       <label
         className="dd text-subtitle1"
-        htmlFor="id-123-_name"
+        htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-_name"
       >
         Name
       </label>
@@ -29,7 +29,7 @@ exports[`Storyshots Domain/EntityEditorContainer Normal 1`] = `
       >
         <input
           className="dd text-body1 input"
-          id="id-123-_name"
+          id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-_name"
           onChange={[Function]}
           type="text"
           value="Foo 1"
@@ -42,7 +42,7 @@ exports[`Storyshots Domain/EntityEditorContainer Normal 1`] = `
     <div>
       <label
         className="dd text-subtitle1"
-        htmlFor="id-123-title"
+        htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-title"
       >
         title
       </label>
@@ -52,7 +52,7 @@ exports[`Storyshots Domain/EntityEditorContainer Normal 1`] = `
         <div>
           <input
             className="dd text-body1 input"
-            id="id-123-title"
+            id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-title"
             onChange={[Function]}
             type="text"
             value="Hello"
@@ -73,7 +73,7 @@ exports[`Storyshots Domain/EntityEditorContainer Normal 1`] = `
     <div>
       <label
         className="dd text-subtitle1"
-        htmlFor="id-123-tags"
+        htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-tags"
       >
         tags
       </label>
@@ -84,7 +84,7 @@ exports[`Storyshots Domain/EntityEditorContainer Normal 1`] = `
           <div>
             <input
               className="dd text-body1 input"
-              id="id-123-tags"
+              id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-tags"
               onChange={[Function]}
               type="text"
               value="one"
@@ -103,7 +103,7 @@ exports[`Storyshots Domain/EntityEditorContainer Normal 1`] = `
           <div>
             <input
               className="dd text-body1 input"
-              id="id-123-tags-1"
+              id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-tags-1"
               onChange={[Function]}
               type="text"
               value="two"
@@ -122,7 +122,7 @@ exports[`Storyshots Domain/EntityEditorContainer Normal 1`] = `
           <div>
             <input
               className="dd text-body1 input"
-              id="id-123-tags-2"
+              id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-tags-2"
               onChange={[Function]}
               type="text"
               value="three"
@@ -141,7 +141,7 @@ exports[`Storyshots Domain/EntityEditorContainer Normal 1`] = `
           <div>
             <input
               className="dd text-body1 input"
-              id="id-123-tags-3"
+              id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-tags-3"
               onChange={[Function]}
               type="text"
               value=""
@@ -153,7 +153,7 @@ exports[`Storyshots Domain/EntityEditorContainer Normal 1`] = `
     <div>
       <label
         className="dd text-subtitle1"
-        htmlFor="id-123-location"
+        htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-location"
       >
         location
       </label>
@@ -169,7 +169,7 @@ exports[`Storyshots Domain/EntityEditorContainer Normal 1`] = `
         >
           <button
             className="dd button has-background hoverable text-button "
-            id="id-123-location"
+            id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-location"
             onClick={[Function]}
             type="button"
           >
@@ -191,7 +191,7 @@ exports[`Storyshots Domain/EntityEditorContainer Normal 1`] = `
     <div>
       <label
         className="dd text-subtitle1"
-        htmlFor="id-123-locations"
+        htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-locations"
       >
         locations
       </label>
@@ -208,7 +208,7 @@ exports[`Storyshots Domain/EntityEditorContainer Normal 1`] = `
           >
             <button
               className="dd button has-background hoverable text-button "
-              id="id-123-locations"
+              id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-locations"
               onClick={[Function]}
               type="button"
             >
@@ -234,7 +234,7 @@ exports[`Storyshots Domain/EntityEditorContainer Normal 1`] = `
           >
             <button
               className="dd button has-background hoverable text-button "
-              id="id-123-locations-1"
+              id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-locations-1"
               onClick={[Function]}
               type="button"
             >
@@ -260,7 +260,7 @@ exports[`Storyshots Domain/EntityEditorContainer Normal 1`] = `
           >
             <button
               className="dd button has-background hoverable text-button "
-              id="id-123-locations-2"
+              id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-locations-2"
               onClick={[Function]}
               type="button"
             >
@@ -273,7 +273,7 @@ exports[`Storyshots Domain/EntityEditorContainer Normal 1`] = `
     <div>
       <label
         className="dd text-subtitle1"
-        htmlFor="id-123-bar"
+        htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-bar"
       >
         bar
       </label>
@@ -289,7 +289,7 @@ exports[`Storyshots Domain/EntityEditorContainer Normal 1`] = `
         >
           <button
             className="dd button has-background hoverable text-button "
-            id="id-123-bar"
+            id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-bar"
             onClick={[Function]}
             type="button"
           >
@@ -311,7 +311,7 @@ exports[`Storyshots Domain/EntityEditorContainer Normal 1`] = `
     <div>
       <label
         className="dd text-subtitle1"
-        htmlFor="id-123-bars"
+        htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-bars"
       >
         bars
       </label>
@@ -328,7 +328,7 @@ exports[`Storyshots Domain/EntityEditorContainer Normal 1`] = `
           >
             <button
               className="dd button has-background hoverable text-button "
-              id="id-123-bars"
+              id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-bars"
               onClick={[Function]}
               type="button"
             >
@@ -354,7 +354,7 @@ exports[`Storyshots Domain/EntityEditorContainer Normal 1`] = `
           >
             <button
               className="dd button has-background hoverable text-button "
-              id="id-123-bars-1"
+              id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-bars-1"
               onClick={[Function]}
               type="button"
             >
@@ -380,7 +380,7 @@ exports[`Storyshots Domain/EntityEditorContainer Normal 1`] = `
           >
             <button
               className="dd button has-background hoverable text-button "
-              id="id-123-bars-2"
+              id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-bars-2"
               onClick={[Function]}
               type="button"
             >
@@ -393,7 +393,7 @@ exports[`Storyshots Domain/EntityEditorContainer Normal 1`] = `
     <div>
       <label
         className="dd text-subtitle1"
-        htmlFor="id-123-annotatedBar"
+        htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBar"
       >
         annotatedBar
       </label>
@@ -409,7 +409,7 @@ exports[`Storyshots Domain/EntityEditorContainer Normal 1`] = `
             AnnotatedBar 
             <button
               className="dd icon-button"
-              data-testid="id-123-annotatedBar.remove"
+              data-testid="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBar.remove"
               onClick={[Function]}
               title="Remove value item"
               type="button"
@@ -422,7 +422,7 @@ exports[`Storyshots Domain/EntityEditorContainer Normal 1`] = `
           <div>
             <label
               className="dd text-subtitle1"
-              htmlFor="id-123-annotatedBar-annotation"
+              htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBar-annotation"
             >
               annotation
             </label>
@@ -432,7 +432,7 @@ exports[`Storyshots Domain/EntityEditorContainer Normal 1`] = `
               <div>
                 <input
                   className="dd text-body1 input"
-                  id="id-123-annotatedBar-annotation"
+                  id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBar-annotation"
                   onChange={[Function]}
                   type="text"
                   value="Annotation"
@@ -453,7 +453,7 @@ exports[`Storyshots Domain/EntityEditorContainer Normal 1`] = `
           <div>
             <label
               className="dd text-subtitle1"
-              htmlFor="id-123-annotatedBar-bar"
+              htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBar-bar"
             >
               bar
             </label>
@@ -469,7 +469,7 @@ exports[`Storyshots Domain/EntityEditorContainer Normal 1`] = `
               >
                 <button
                   className="dd button has-background hoverable text-button "
-                  id="id-123-annotatedBar-bar"
+                  id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBar-bar"
                   onClick={[Function]}
                   type="button"
                 >
@@ -494,7 +494,7 @@ exports[`Storyshots Domain/EntityEditorContainer Normal 1`] = `
     <div>
       <label
         className="dd text-subtitle1"
-        htmlFor="id-123-annotatedBars"
+        htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars"
       >
         annotatedBars
       </label>
@@ -511,7 +511,7 @@ exports[`Storyshots Domain/EntityEditorContainer Normal 1`] = `
               AnnotatedBar 
               <button
                 className="dd icon-button"
-                data-testid="id-123-annotatedBars.remove"
+                data-testid="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars.remove"
                 onClick={[Function]}
                 title="Remove value item"
                 type="button"
@@ -524,7 +524,7 @@ exports[`Storyshots Domain/EntityEditorContainer Normal 1`] = `
             <div>
               <label
                 className="dd text-subtitle1"
-                htmlFor="id-123-annotatedBars-annotation"
+                htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-annotation"
               >
                 annotation
               </label>
@@ -534,7 +534,7 @@ exports[`Storyshots Domain/EntityEditorContainer Normal 1`] = `
                 <div>
                   <input
                     className="dd text-body1 input"
-                    id="id-123-annotatedBars-annotation"
+                    id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-annotation"
                     onChange={[Function]}
                     type="text"
                     value="First"
@@ -555,7 +555,7 @@ exports[`Storyshots Domain/EntityEditorContainer Normal 1`] = `
             <div>
               <label
                 className="dd text-subtitle1"
-                htmlFor="id-123-annotatedBars-bar"
+                htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-bar"
               >
                 bar
               </label>
@@ -571,7 +571,7 @@ exports[`Storyshots Domain/EntityEditorContainer Normal 1`] = `
                 >
                   <button
                     className="dd button has-background hoverable text-button "
-                    id="id-123-annotatedBars-bar"
+                    id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-bar"
                     onClick={[Function]}
                     type="button"
                   >
@@ -600,7 +600,7 @@ exports[`Storyshots Domain/EntityEditorContainer Normal 1`] = `
               AnnotatedBar 
               <button
                 className="dd icon-button"
-                data-testid="id-123-annotatedBars-1.remove"
+                data-testid="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-1.remove"
                 onClick={[Function]}
                 title="Remove value item"
                 type="button"
@@ -613,7 +613,7 @@ exports[`Storyshots Domain/EntityEditorContainer Normal 1`] = `
             <div>
               <label
                 className="dd text-subtitle1"
-                htmlFor="id-123-annotatedBars-1-annotation"
+                htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-1-annotation"
               >
                 annotation
               </label>
@@ -623,7 +623,7 @@ exports[`Storyshots Domain/EntityEditorContainer Normal 1`] = `
                 <div>
                   <input
                     className="dd text-body1 input"
-                    id="id-123-annotatedBars-1-annotation"
+                    id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-1-annotation"
                     onChange={[Function]}
                     type="text"
                     value="Second"
@@ -644,7 +644,7 @@ exports[`Storyshots Domain/EntityEditorContainer Normal 1`] = `
             <div>
               <label
                 className="dd text-subtitle1"
-                htmlFor="id-123-annotatedBars-1-bar"
+                htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-1-bar"
               >
                 bar
               </label>
@@ -660,7 +660,7 @@ exports[`Storyshots Domain/EntityEditorContainer Normal 1`] = `
                 >
                   <button
                     className="dd button has-background hoverable text-button "
-                    id="id-123-annotatedBars-1-bar"
+                    id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-1-bar"
                     onClick={[Function]}
                     type="button"
                   >
@@ -686,7 +686,7 @@ exports[`Storyshots Domain/EntityEditorContainer Normal 1`] = `
             <div>
               <button
                 className="dd button has-background hoverable text-button "
-                id="id-123-annotatedBars-2"
+                id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-2"
                 onClick={[Function]}
                 type="button"
               >
@@ -704,7 +704,7 @@ exports[`Storyshots Domain/EntityEditorContainer Normal 1`] = `
     <div>
       <label
         className="dd text-subtitle1"
-        htmlFor="id-123-nested"
+        htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-nested"
       >
         nested
       </label>
@@ -717,7 +717,7 @@ exports[`Storyshots Domain/EntityEditorContainer Normal 1`] = `
           <div>
             <button
               className="dd button has-background hoverable text-button "
-              id="id-123-nested"
+              id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-nested"
               onClick={[Function]}
               type="button"
             >

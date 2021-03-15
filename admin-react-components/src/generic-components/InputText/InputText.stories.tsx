@@ -1,12 +1,13 @@
-import type { Story } from '@storybook/react/types-6-0';
+import type { Meta, Story } from '@storybook/react/types-6-0';
 import React, { useState } from 'react';
 import { InputText } from './InputText';
 import type { InputTextProps } from './InputText';
 
-export default {
+const meta: Meta<InputTextProps> = {
   title: 'Generic/InputText',
   component: InputText,
 };
+export default meta;
 
 function ControlledInputText(props: InputTextProps) {
   const [value, setValue] = useState(props.value);
