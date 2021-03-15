@@ -2,7 +2,7 @@ import type { Story } from '@storybook/react/types-6-0';
 import React from 'react';
 import type { DataDataContextValue, EntityEditorNewProps } from '../..';
 import { DataDataContext, EntityEditorNew } from '../..';
-import type { EntitySelector } from './EntityEditorReducer';
+import type { EntityEditorSelector } from './EntityEditorReducer';
 import { useEntityEditorState } from './EntityEditorReducer';
 import { foo1Id, fooDeletedId } from '../../test/EntityFixtures';
 import {
@@ -19,7 +19,7 @@ export default {
 
 const Template: Story<
   Omit<EntityEditorNewProps, 'editorState' | 'dispatchEditorState'> & {
-    entitySelector: EntitySelector;
+    entitySelector: EntityEditorSelector;
     contextAdapter?: TestContextAdapter;
   }
 > = (args) => {
@@ -35,7 +35,7 @@ function Wrapper({
   entitySelector,
   contextValue,
 }: {
-  entitySelector: EntitySelector;
+  entitySelector: EntityEditorSelector;
   contextValue: DataDataContextValue;
 }) {
   const { editorState, dispatchEditorState } = useEntityEditorState(entitySelector, contextValue);
