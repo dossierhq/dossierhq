@@ -256,7 +256,7 @@ function createEditorState(
 function createAdminEntity(state: EntityEditorState): AdminEntityCreate | AdminEntityUpdate {
   let result: AdminEntityCreate | AdminEntityUpdate;
   if (state.isNew) {
-    result = { _type: state.entitySpec.name, _name: state.name };
+    result = { _type: state.entitySpec.name, _name: state.name, _version: 0 };
   } else {
     const { id } = state;
     if (!id) {

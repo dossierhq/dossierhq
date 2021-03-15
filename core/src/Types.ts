@@ -44,6 +44,7 @@ export interface AdminEntityCreate {
   //TODO  id?: string;
   _name: string;
   _type: string;
+  _version: 0;
   [fieldName: string]: unknown;
 }
 
