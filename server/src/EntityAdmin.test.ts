@@ -1096,6 +1096,17 @@ describe('createEntity()', () => {
     expectErrorResult(result, ErrorType.BadRequest, 'Missing entity._name');
   });
 
+  test('Error: Create with invalid _version', async () => {
+    const result = await EntityAdmin.createEntity(context, {
+      _type: 'EntityAdminFoo',
+      _name: 'Foo',
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      _version: 1 as any,
+    });
+
+    expectErrorResult(result, ErrorType.BadRequest, 'Unsupported version for create: 1');
+  });
+
   test('Error: Create with invalid field', async () => {
     const result = await EntityAdmin.createEntity(context, {
       _type: 'EntityAdminFoo',
