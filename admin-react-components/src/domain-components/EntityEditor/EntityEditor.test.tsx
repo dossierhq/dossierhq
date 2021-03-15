@@ -103,7 +103,6 @@ describe('NewFoo', () => {
           Object {
             "_name": "New name",
             "_type": "Foo",
-            "_version": 0,
           },
         ],
       ]
@@ -130,7 +129,6 @@ describe('NewFoo', () => {
           Object {
             "_name": "New name",
             "_type": "Foo",
-            "_version": 0,
             "title": "New title",
           },
         ],
