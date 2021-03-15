@@ -1,20 +1,19 @@
-import type { Story } from '@storybook/react/types-6-0';
+import type { Meta, Story } from '@storybook/react/types-6-0';
 import React from 'react';
 import { DataDataContext } from '../..';
 import { EntityMap } from './EntityMap';
 import type { EntityMapProps } from './EntityMap';
 import { createContextValue } from '../../test/TestContextAdapter';
 
-const defaultArgs: Partial<EntityMapProps> = {
-  style: { width: '300px', height: '300px' },
-};
-
-export default {
+const meta: Meta<EntityMapProps> = {
   title: 'Domain/EntityMap',
   component: EntityMap,
   argTypes: { onEntityClick: { action: 'entity-click' } },
-  args: defaultArgs,
+  args: {
+    style: { width: '300px', height: '300px' },
+  },
 };
+export default meta;
 
 const Template: Story<EntityMapProps> = (args) => {
   return (

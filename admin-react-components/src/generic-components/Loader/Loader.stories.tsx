@@ -1,12 +1,13 @@
-import type { Story } from '@storybook/react/types-6-0';
+import type { Meta, Story } from '@storybook/react/types-6-0';
 import React from 'react';
 import type { LoaderProps } from './Loader';
 import { Loader } from './Loader';
 
-export default {
+const meta: Meta<LoaderProps> = {
   title: 'Generic/Loader',
   component: Loader,
 };
+export default meta;
 
 const Template: Story<LoaderProps> = (args) => {
   return <Loader {...args} />;

@@ -1,12 +1,13 @@
-import type { Story } from '@storybook/react/types-6-0';
+import type { Meta, Story } from '@storybook/react/types-6-0';
 import React from 'react';
 import type { StackProps } from './Stack';
 import { Stack } from './Stack';
 
-export default {
+const meta: Meta<StackProps> = {
   title: 'Generic/Stack',
   component: Stack,
 };
+export default meta;
 
 const Template: Story<StackProps> = (args) => {
   return <Stack {...args} />;

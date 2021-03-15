@@ -1,9 +1,7 @@
 import React, { useContext } from 'react';
-import { EntityEditor, EntityMetadata } from '../..';
-import { DataDataContext, DataDataContextValue } from '../../contexts/DataDataContext';
-import { Loader } from '../../generic-components/Loader/Loader';
-import { EntityEditorNew } from '../EntityEditor/EntityEditorNew';
-import { EntityEditorSelector, useEntityEditorState } from '../EntityEditor/EntityEditorReducer';
+import { DataDataContext, EntityEditorNew, EntityMetadata, Loader } from '../..';
+import type { DataDataContextValue, EntityEditorSelector } from '../..';
+import { useEntityEditorState } from '../EntityEditor/EntityEditorReducer';
 
 export interface EntityEditorContainerProps {
   entitySelector: EntityEditorSelector;

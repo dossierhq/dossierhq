@@ -1,17 +1,16 @@
-import type { Story } from '@storybook/react/types-6-0';
+import type { Meta, Story } from '@storybook/react/types-6-0';
 import React from 'react';
 import type { MapContainerProps } from './MapContainer';
 import { MapContainer } from './MapContainer';
 
-const defaultArgs: Partial<MapContainerProps> = {
-  style: { width: '300px', height: '300px' },
-};
-
-export default {
+const meta: Meta<MapContainerProps> = {
   title: 'Generic/MapContainer',
   component: MapContainer,
-  args: defaultArgs,
+  args: {
+    style: { width: '300px', height: '300px' },
+  },
 };
+export default meta;
 
 const Template: Story<MapContainerProps> = (args) => {
   return <MapContainer {...args} />;

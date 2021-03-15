@@ -1,12 +1,13 @@
-import type { Story } from '@storybook/react/types-6-0';
+import type { Meta, Story } from '@storybook/react/types-6-0';
 import React from 'react';
 import type { MessageProps } from './Message';
 import { Message } from './Message';
 
-export default {
+const meta: Meta<MessageProps> = {
   title: 'Generic/Message',
   component: Message,
 };
+export default meta;
 
 const Template: Story<MessageProps> = (args) => {
   if (!('onDismiss' in args)) {

@@ -1,14 +1,15 @@
-import type { Story } from '@storybook/react/types-6-0';
+import type { Meta, Story } from '@storybook/react/types-6-0';
 import React from 'react';
 import { Button } from './Button';
 import type { ButtonProps } from './Button';
 import { Icon } from '../..';
 
-export default {
+const meta: Meta<ButtonProps> = {
   title: 'Generic/Button',
   component: Button,
   args: {},
 };
+export default meta;
 
 const Template: Story<ButtonProps> = (args) => {
   return <Button {...args} />;
