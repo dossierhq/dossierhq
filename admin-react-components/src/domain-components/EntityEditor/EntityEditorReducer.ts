@@ -81,7 +81,7 @@ export class UpdateEntityAction implements EntityEditorStateAction {
 
     return {
       ...state,
-      entity: createEditorState(entitySpec, this.#entity),
+      entity: createEditorEntityState(entitySpec, this.#entity),
     };
   }
 }
@@ -143,7 +143,7 @@ function initializeState({
   if ('newType' in entitySelector) {
     const entitySpec = contextValue.schema.getEntityTypeSpecification(entitySelector.newType);
     if (entitySpec) {
-      entity = createEditorState(entitySpec, null);
+      entity = createEditorEntityState(entitySpec, null);
     } else {
       message = {
         kind: 'danger',
@@ -155,7 +155,7 @@ function initializeState({
   return { initMessage: message, entityLoadMessage: null, schema, id, entity };
 }
 
-function createEditorState(
+function createEditorEntityState(
   entitySpec: EntityTypeSpecification,
   entity: AdminEntity | null
 ): EntityEditorState['entity'] {
@@ -205,3 +205,7 @@ export function useEntityEditorState(
 
   return { editorState, dispatchEditorState };
 }
+
+export const forTest = {
+  createEditorEntityState,
+};
