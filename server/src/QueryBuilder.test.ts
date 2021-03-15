@@ -62,3 +62,14 @@ test('Insert multiple values', () => {
     }
   `);
 });
+
+test('Insert default value', () => {
+  const qb = new QueryBuilder('INSERT INTO foo (a) VALUES');
+  qb.addQuery(`(${qb.addValueOrDefault(null)})`);
+  expect(qb.build()).toMatchInlineSnapshot(`
+    Object {
+      "text": "INSERT INTO foo (a) VALUES (DEFAULT)",
+      "values": Array [],
+    }
+  `);
+});

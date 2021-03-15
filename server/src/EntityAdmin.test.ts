@@ -7,6 +7,7 @@ import type {
   Edge,
   Paging,
 } from '@datadata/core';
+import { v4 as uuidv4 } from 'uuid';
 import type { Server, SessionContext } from '.';
 import { EntityAdmin, isPagingForwards, PublishedEntity } from '.';
 import { createTestServer, ensureSessionContext, updateSchema } from './ServerTestUtils';
@@ -542,6 +543,25 @@ describe('createEntity()', () => {
 
       const publishedResult = await PublishedEntity.getEntity(context, id);
       expectErrorResult(publishedResult, ErrorType.NotFound, 'No such entity');
+    }
+  });
+
+  test('Create EntityAdminFoo with id', async () => {
+    const id = uuidv4();
+    const createResult = await EntityAdmin.createEntity(context, {
+      id,
+      _type: 'EntityAdminFoo',
+      _name: 'Draft',
+      title: 'Draft',
+    });
+    if (expectOkResult(createResult)) {
+      expect(createResult.value).toEqual({
+        id,
+        _type: 'EntityAdminFoo',
+        _name: createResult.value._name,
+        _version: 0,
+        title: 'Draft',
+      });
     }
   });
 

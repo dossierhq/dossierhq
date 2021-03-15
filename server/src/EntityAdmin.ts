@@ -193,10 +193,14 @@ export async function createEntity(
 
   return await context.withTransaction(async (context) => {
     const { entityId } = await withUniqueNameAttempt(context, name, async (context, name) => {
+      const qb = new QueryBuilder('INSERT INTO entities (uuid, name, type)');
+      qb.addQuery(
+        `VALUES (${qb.addValueOrDefault(entity.id)}, ${qb.addValue(name)}, ${qb.addValue(type)})`
+      );
+      qb.addQuery('RETURNING id, uuid');
       const { id: entityId, uuid } = await Db.queryOne<Pick<EntitiesTable, 'id' | 'uuid'>>(
         context,
-        'INSERT INTO entities (name, type) VALUES ($1, $2) RETURNING id, uuid',
-        [name, type]
+        qb.build()
       );
       createEntity.id = uuid;
       createEntity._name = name;
