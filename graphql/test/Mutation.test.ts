@@ -3,6 +3,7 @@ import { EntityAdmin, ServerTestUtils } from '@datadata/server';
 import type { SessionContext, Server } from '@datadata/server';
 import { graphql } from 'graphql';
 import type { GraphQLSchema } from 'graphql';
+import { v4 as uuidv4 } from 'uuid';
 import { GraphQLSchemaGenerator } from '../src/GraphQLSchemaGenerator';
 
 const { expectOkResult } = CoreTestUtils;
@@ -148,6 +149,52 @@ describe('create*Entity()', () => {
         ],
       });
     }
+  });
+
+  test('Create with ID', async () => {
+    const id = uuidv4();
+    const result = await graphql(
+      schema,
+      `
+        mutation CreateFooEntity($entity: AdminMutationFooCreateInput!) {
+          createMutationFooEntity(entity: $entity) {
+            __typename
+            id
+            _type
+            _name
+            _version
+            title
+          }
+        }
+      `,
+      undefined,
+      { context: ok(context) },
+      {
+        entity: {
+          id,
+          _type: 'MutationFoo',
+          _name: 'Foo name',
+          title: 'Foo title',
+          summary: 'Foo summary',
+        },
+      }
+    );
+
+    const name = result.data?.createMutationFooEntity._name;
+    expect(name).toMatch(/^Foo name(#[0-9]+)?$/);
+
+    expect(result).toEqual({
+      data: {
+        createMutationFooEntity: {
+          __typename: 'AdminMutationFoo',
+          id,
+          _type: 'MutationFoo',
+          _name: name,
+          _version: 0,
+          title: 'Foo title',
+        },
+      },
+    });
   });
 
   test('Create with reference', async () => {
