@@ -48,6 +48,10 @@ export class SetMessageLoadMessageAction implements EntityEditorStateAction {
     if (isEqual(state.entityLoadMessage, this.#message)) {
       return state;
     }
+    if (state.entity?.version === 0 && this.#message) {
+      // Skip loading entity error for new entity
+      return state;
+    }
     return {
       ...state,
       entityLoadMessage: this.#message,

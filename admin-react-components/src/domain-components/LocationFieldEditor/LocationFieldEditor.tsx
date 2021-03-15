@@ -6,7 +6,7 @@ import { initializeLocationState, reduceLocation } from './LocationReducer';
 
 type Props = EntityFieldEditorProps<Location>;
 
-export function LocationFieldEditor({ id, value, fieldSpec, onChange }: Props): JSX.Element {
+export function LocationFieldEditor({ id, value, fieldSpec: _, onChange }: Props): JSX.Element {
   const [show, setShow] = useState(false);
   const handleShow = useCallback(() => setShow(true), [setShow]);
   const handleClose = useCallback(() => setShow(false), [setShow]);
