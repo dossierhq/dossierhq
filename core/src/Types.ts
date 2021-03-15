@@ -54,6 +54,7 @@ export interface AdminEntityUpdate {
   _name?: string;
   /** If provided, has to be same as the entity's existing type, i.e. there's no way to change the type of an entity */
   _type?: string;
+  _version?: number;
   [fieldName: string]: unknown;
 }
 

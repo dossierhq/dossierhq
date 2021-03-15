@@ -150,6 +150,9 @@ export function resolveCreateEntity(
   if (!entity._type) {
     return notOk.BadRequest('Missing entity._type');
   }
+  if (entity._version && entity._version !== 0) {
+    return notOk.BadRequest(`Unsupported version for create: ${entity._version}`);
+  }
 
   const result: AdminEntityCreate = {
     _name: entity._name,
