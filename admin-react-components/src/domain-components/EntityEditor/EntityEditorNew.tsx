@@ -130,6 +130,7 @@ function createAdminEntity(state: EntityEditorState): AdminEntityCreate | AdminE
   let result: AdminEntityCreate | AdminEntityUpdate;
   if (entityState.version === 0) {
     result = {
+      id: state.id,
       _type: entityState.entitySpec.name,
       _name: entityState.name,
       _version: entityState.version,
