@@ -5,19 +5,20 @@ import type {
   Schema,
 } from '@datadata/core';
 import isEqual from 'lodash/isEqual';
-import type { Dispatch } from 'react';
-import { useEffect, useReducer } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import type { DataDataContextValue } from '../..';
 import type { MessageItem } from '../../generic-components/Message/Message';
 
 export type EntityEditorSelector = { id: string } | { id?: string; newType: string };
 
 export interface EntityEditorState {
+  schema: Schema;
+  drafts: EntityEditorDraftState[];
+}
+
+export interface EntityEditorDraftState {
+  id: string;
   initMessage: MessageItem | null;
   entityLoadMessage: MessageItem | null;
-  schema: Schema;
-  id: string;
   entity: null | {
     version: number;
     entitySpec: EntityTypeSpecification;
@@ -37,41 +38,111 @@ export interface EntityEditorStateAction {
   reduce(state: EntityEditorState): EntityEditorState;
 }
 
-export class SetMessageLoadMessageAction implements EntityEditorStateAction {
-  #message: MessageItem | null;
-
-  constructor(message: MessageItem | null) {
-    this.#message = message;
+export class AddDraftAction implements EntityEditorStateAction {
+  #entitySelector: EntityEditorSelector;
+  constructor(entitySelector: EntityEditorSelector) {
+    this.#entitySelector = entitySelector;
   }
 
   reduce(state: EntityEditorState): EntityEditorState {
-    if (isEqual(state.entityLoadMessage, this.#message)) {
+    const id = this.#entitySelector.id ?? uuidv4();
+    let message: MessageItem | null = null;
+    let entity: EntityEditorDraftState['entity'] = null;
+    if ('newType' in this.#entitySelector) {
+      const type = this.#entitySelector.newType;
+      const entitySpec = state.schema.getEntityTypeSpecification(type);
+      if (entitySpec) {
+        entity = createEditorEntityDraftState(entitySpec, null);
+      } else {
+        message = {
+          kind: 'danger',
+          message: `Can't create entity with unsupported type: ${type}`,
+        };
+      }
+    }
+
+    const draft: EntityEditorDraftState = {
+      initMessage: message,
+      entityLoadMessage: null,
+      id,
+      entity,
+    };
+
+    return { ...state, drafts: [...state.drafts, draft] };
+  }
+}
+
+abstract class EntityEditorDraftStateAction implements EntityEditorStateAction {
+  #id: string;
+
+  constructor(id: string) {
+    this.#id = id;
+  }
+
+  reduce(state: EntityEditorState): EntityEditorState {
+    const draftIndex = state.drafts.findIndex((x) => x.id === this.#id);
+    if (draftIndex < 0) {
+      throw new Error(`Can't find draft for ${this.#id}`);
+    }
+    const draftState = state.drafts[draftIndex];
+    const newDraftState = this.reduceDraft(draftState, state);
+    if (draftState === newDraftState) {
       return state;
     }
-    if (state.entity?.version === 0 && this.#message) {
+    const newDrafts = [...state.drafts];
+    newDrafts[draftIndex] = newDraftState;
+    return { ...state, drafts: newDrafts };
+  }
+
+  abstract reduceDraft(
+    draftState: EntityEditorDraftState,
+    state: EntityEditorState
+  ): EntityEditorDraftState;
+}
+
+export class SetMessageLoadMessageAction extends EntityEditorDraftStateAction {
+  #message: MessageItem | null;
+
+  constructor(id: string, message: MessageItem | null) {
+    super(id);
+    this.#message = message;
+  }
+
+  reduceDraft(
+    draftState: EntityEditorDraftState,
+    _state: EntityEditorState
+  ): EntityEditorDraftState {
+    if (isEqual(draftState.entityLoadMessage, this.#message)) {
+      return draftState;
+    }
+    if (draftState.entity?.version === 0 && this.#message) {
       // Skip loading entity error for new entity
-      return state;
+      return draftState;
     }
     return {
-      ...state,
+      ...draftState,
       entityLoadMessage: this.#message,
     };
   }
 }
 
-export class UpdateEntityAction implements EntityEditorStateAction {
+export class UpdateEntityAction extends EntityEditorDraftStateAction {
   #entity: AdminEntity;
 
-  constructor(entity: AdminEntity) {
+  constructor(id: string, entity: AdminEntity) {
+    super(id);
     this.#entity = entity;
   }
 
-  reduce(state: EntityEditorState): EntityEditorState {
+  reduceDraft(
+    draftState: EntityEditorDraftState,
+    state: EntityEditorState
+  ): EntityEditorDraftState {
     //TODO handle update when there are local changes
     const entitySpec = state.schema.getEntityTypeSpecification(this.#entity._type);
     if (!entitySpec) {
       return {
-        ...state,
+        ...draftState,
         initMessage: {
           kind: 'danger',
           message: `Can't create entity with unsupported type: ${this.#entity._type}`,
@@ -80,45 +151,53 @@ export class UpdateEntityAction implements EntityEditorStateAction {
     }
 
     return {
-      ...state,
-      entity: createEditorEntityState(entitySpec, this.#entity),
+      ...draftState,
+      entity: createEditorEntityDraftState(entitySpec, this.#entity),
     };
   }
 }
 
-export class SetNameAction implements EntityEditorStateAction {
+export class SetNameAction extends EntityEditorDraftStateAction {
   #name: string;
 
-  constructor(name: string) {
+  constructor(id: string, name: string) {
+    super(id);
     this.#name = name;
   }
 
-  reduce(state: EntityEditorState): EntityEditorState {
-    const { entity } = state;
+  reduceDraft(
+    draftState: EntityEditorDraftState,
+    _state: EntityEditorState
+  ): EntityEditorDraftState {
+    const { entity } = draftState;
     if (!entity) {
       throw new Error('Unexpected state, no entity');
     }
-    return { ...state, entity: { ...entity, name: this.#name } };
+    return { ...draftState, entity: { ...entity, name: this.#name } };
   }
 }
 
-export class SetFieldAction implements EntityEditorStateAction {
+export class SetFieldAction extends EntityEditorDraftStateAction {
   #field: string;
   #value: unknown;
 
-  constructor(field: string, value: unknown) {
+  constructor(id: string, field: string, value: unknown) {
+    super(id);
     this.#field = field;
     this.#value = value;
   }
 
-  reduce(state: EntityEditorState): EntityEditorState {
-    const { entity } = state;
+  reduceDraft(
+    draftState: EntityEditorDraftState,
+    _state: EntityEditorState
+  ): EntityEditorDraftState {
+    const { entity } = draftState;
     if (!entity) throw new Error('Unexpected state, no entity');
     const fields = [...entity.fields];
     const index = fields.findIndex((x) => x.fieldSpec.name === this.#field);
     if (index < 0) throw new Error(`Invalid field ${this.#field}`);
     fields[index] = { ...fields[index], value: this.#value };
-    return { ...state, entity: { ...entity, fields } };
+    return { ...draftState, entity: { ...entity, fields } };
   }
 }
 
@@ -129,36 +208,14 @@ export function reduceEditorState(
   return action.reduce(state);
 }
 
-function initializeState({
-  entitySelector,
-  contextValue,
-}: {
-  entitySelector: EntityEditorSelector;
-  contextValue: DataDataContextValue;
-}): EntityEditorState {
-  const { schema } = contextValue;
-  const id = entitySelector.id ?? uuidv4();
-  let message: MessageItem | null = null;
-  let entity: EntityEditorState['entity'] = null;
-  if ('newType' in entitySelector) {
-    const entitySpec = contextValue.schema.getEntityTypeSpecification(entitySelector.newType);
-    if (entitySpec) {
-      entity = createEditorEntityState(entitySpec, null);
-    } else {
-      message = {
-        kind: 'danger',
-        message: `Can't create entity with unsupported type: ${entitySelector.newType}`,
-      };
-    }
-  }
-
-  return { initMessage: message, entityLoadMessage: null, schema, id, entity };
+export function initializeEditorState({ schema }: { schema: Schema }): EntityEditorState {
+  return { schema, drafts: [] };
 }
 
-function createEditorEntityState(
+function createEditorEntityDraftState(
   entitySpec: EntityTypeSpecification,
   entity: AdminEntity | null
-): EntityEditorState['entity'] {
+): EntityEditorDraftState['entity'] {
   const fields = entitySpec.fields.map((fieldSpec) => {
     const value = entity?.[fieldSpec.name] ?? null;
     return { fieldSpec, value, initialValue: value };
@@ -171,41 +228,3 @@ function createEditorEntityState(
     fields,
   };
 }
-
-export function useEntityEditorState(
-  entitySelector: EntityEditorSelector,
-  contextValue: DataDataContextValue
-): { editorState: EntityEditorState; dispatchEditorState: Dispatch<EntityEditorStateAction> } {
-  const { useEntity } = contextValue;
-  const [editorState, dispatchEditorState] = useReducer(
-    reduceEditorState,
-    { entitySelector, contextValue },
-    initializeState
-  );
-  const { entity, entityError } = useEntity(editorState.id);
-
-  useEffect(() => {
-    if (entity) {
-      dispatchEditorState(new UpdateEntityAction(entity));
-    }
-  }, [entity]);
-  useEffect(() => {
-    dispatchEditorState(
-      new SetMessageLoadMessageAction(
-        entityError
-          ? {
-              kind: 'danger',
-              title: 'Failed loading entity',
-              message: `${entityError.error}: ${entityError.message}`,
-            }
-          : null
-      )
-    );
-  }, [entityError]);
-
-  return { editorState, dispatchEditorState };
-}
-
-export const forTest = {
-  createEditorEntityState,
-};

@@ -1,6 +1,6 @@
 import type { AdminEntityCreate, AdminEntityUpdate } from '@datadata/core';
 import type { Dispatch, SetStateAction } from 'react';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   Button,
   DataDataContext,
@@ -13,24 +13,32 @@ import {
   Message,
 } from '../..';
 import type { DataDataContextValue, MessageItem } from '../..';
-import type { EntityEditorState, EntityEditorStateAction } from './EntityEditorReducer';
-import { SetFieldAction, SetNameAction } from './EntityEditorReducer';
+import type {
+  EntityEditorDraftState,
+  EntityEditorState,
+  EntityEditorStateAction,
+} from './EntityEditorReducer';
+import {
+  SetFieldAction,
+  SetMessageLoadMessageAction,
+  SetNameAction,
+  UpdateEntityAction,
+} from './EntityEditorReducer';
 
 export interface EntityEditorNewProps {
+  entityId: string;
   editorState: EntityEditorState;
   dispatchEditorState: Dispatch<EntityEditorStateAction>;
   style?: React.CSSProperties;
 }
 
-interface EntityEditorInnerProps {
-  style?: React.CSSProperties;
-  editorState: EntityEditorNewProps['editorState'];
-  dispatchEditorState: Dispatch<EntityEditorStateAction>;
+interface EntityEditorInnerProps extends EntityEditorNewProps {
   createEntity: DataDataContextValue['createEntity'];
   updateEntity: DataDataContextValue['updateEntity'];
 }
 
 export function EntityEditorNew({
+  entityId,
   editorState,
   dispatchEditorState,
   style,
@@ -40,22 +48,62 @@ export function EntityEditorNew({
     return <Loader />;
   }
 
-  const { createEntity, updateEntity } = context;
+  const { useEntity, createEntity, updateEntity } = context;
 
   return (
-    <EntityEditorInner
-      {...{
-        editorState,
-        dispatchEditorState,
-        style,
-        createEntity,
-        updateEntity,
-      }}
-    />
+    <>
+      <EntityLoader {...{ entityId, useEntity, dispatchEditorState }} />
+      <EntityEditorInner
+        {...{
+          entityId,
+          editorState,
+          dispatchEditorState,
+          style,
+          createEntity,
+          updateEntity,
+        }}
+      />
+    </>
   );
 }
 
+function EntityLoader({
+  entityId,
+  useEntity,
+  dispatchEditorState,
+}: {
+  entityId: string;
+  useEntity: DataDataContextValue['useEntity'];
+  dispatchEditorState: Dispatch<EntityEditorStateAction>;
+}) {
+  const { entity, entityError } = useEntity(entityId);
+
+  useEffect(() => {
+    if (entity) {
+      dispatchEditorState(new UpdateEntityAction(entityId, entity));
+    }
+  }, [entityId, entity, dispatchEditorState]);
+
+  useEffect(() => {
+    dispatchEditorState(
+      new SetMessageLoadMessageAction(
+        entityId,
+        entityError
+          ? {
+              kind: 'danger',
+              title: 'Failed loading entity',
+              message: `${entityError.error}: ${entityError.message}`,
+            }
+          : null
+      )
+    );
+  }, [dispatchEditorState, entityError, entityId]);
+
+  return null;
+}
+
 function EntityEditorInner({
+  entityId,
   editorState,
   dispatchEditorState,
   style,
@@ -65,45 +113,49 @@ function EntityEditorInner({
   const [submitLoading, setSubmitLoading] = useState(false);
   const [submitMessage, setSubmitMessage] = useState<MessageItem | null>(null);
 
-  const { entity } = editorState;
+  const draftState = editorState.drafts.find((x) => x.id === entityId);
+  if (!draftState) {
+    throw new Error(`Can't find state for id (${entityId})`);
+  }
+  const { entity } = draftState;
 
   if (!entity) {
-    if (editorState.initMessage) {
-      return <Message {...editorState.initMessage} />;
+    if (draftState.initMessage) {
+      return <Message {...draftState.initMessage} />;
     }
-    if (editorState.entityLoadMessage) {
-      return <Message {...editorState.entityLoadMessage} />;
+    if (draftState.entityLoadMessage) {
+      return <Message {...draftState.entityLoadMessage} />;
     }
     return <Loader />;
   }
 
-  const nameId = `${editorState.id}-_name`;
+  const nameId = `${draftState.id}-_name`;
 
   return (
     <Form
       onSubmit={() =>
-        submitEntity(editorState, setSubmitLoading, setSubmitMessage, createEntity, updateEntity)
+        submitEntity(draftState, setSubmitLoading, setSubmitMessage, createEntity, updateEntity)
       }
       style={style}
     >
-      {editorState.initMessage ? <Message {...editorState.initMessage} /> : null}
-      {editorState.entityLoadMessage ? <Message {...editorState.entityLoadMessage} /> : null}
+      {draftState.initMessage ? <Message {...draftState.initMessage} /> : null}
+      {draftState.entityLoadMessage ? <Message {...draftState.entityLoadMessage} /> : null}
       <FormField htmlFor={nameId} label="Name">
         <InputText
           id={nameId}
           value={entity.name}
-          onChange={(name) => dispatchEditorState(new SetNameAction(name))}
+          onChange={(name) => dispatchEditorState(new SetNameAction(entityId, name))}
         />
       </FormField>
       <Divider />
       {entity.fields.map(({ fieldSpec, value }) => {
         const handleFieldChanged = (newValue: unknown) => {
-          dispatchEditorState(new SetFieldAction(fieldSpec.name, newValue));
+          dispatchEditorState(new SetFieldAction(entityId, fieldSpec.name, newValue));
         };
 
         return (
           <EntityFieldEditor
-            idPrefix={editorState.id}
+            idPrefix={entityId}
             key={fieldSpec.name}
             schema={editorState.schema}
             fieldSpec={fieldSpec}
@@ -123,20 +175,22 @@ function EntityEditorInner({
   );
 }
 
-function createAdminEntity(state: EntityEditorState): AdminEntityCreate | AdminEntityUpdate {
-  const entityState = state.entity;
+function createAdminEntity(
+  draftState: EntityEditorDraftState
+): AdminEntityCreate | AdminEntityUpdate {
+  const entityState = draftState.entity;
   if (!entityState) throw new Error('No entity in state');
 
   let result: AdminEntityCreate | AdminEntityUpdate;
   if (entityState.version === 0) {
     result = {
-      id: state.id,
+      id: draftState.id,
       _type: entityState.entitySpec.name,
       _name: entityState.name,
       _version: entityState.version,
     };
   } else {
-    const { id } = state;
+    const { id } = draftState;
     if (!id) {
       throw new Error('Expected id');
     }
@@ -154,14 +208,14 @@ function createAdminEntity(state: EntityEditorState): AdminEntityCreate | AdminE
 }
 
 async function submitEntity(
-  editorState: EntityEditorState,
+  draftState: EntityEditorDraftState,
   setSubmitLoading: Dispatch<SetStateAction<boolean>>,
   setSubmitMessage: Dispatch<SetStateAction<MessageItem | null>>,
   createEntity: DataDataContextValue['createEntity'],
   updateEntity: DataDataContextValue['updateEntity']
 ) {
   setSubmitLoading(true);
-  const entity = createAdminEntity(editorState);
+  const entity = createAdminEntity(draftState);
   const isNew = entity._version === 0;
   const result = await (isNew
     ? createEntity(entity as AdminEntityCreate)

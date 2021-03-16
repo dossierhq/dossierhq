@@ -1,7 +1,11 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useReducer } from 'react';
 import { DataDataContext, EntityEditorNew, EntityMetadata, Loader } from '../..';
 import type { DataDataContextValue, EntityEditorSelector } from '../..';
-import { useEntityEditorState } from '../EntityEditor/EntityEditorReducer';
+import {
+  AddDraftAction,
+  initializeEditorState,
+  reduceEditorState,
+} from '../EntityEditor/EntityEditorReducer';
 
 export interface EntityEditorContainerProps {
   entitySelector: EntityEditorSelector;
@@ -24,11 +28,24 @@ function EntityEditorContainerInner({
   entitySelector,
   contextValue,
 }: EntityEditorContainerInnerProps): JSX.Element {
-  const { editorState, dispatchEditorState } = useEntityEditorState(entitySelector, contextValue);
+  const [editorState, dispatchEditorState] = useReducer(
+    reduceEditorState,
+    { schema: contextValue.schema },
+    initializeEditorState
+  );
+  useEffect(() => dispatchEditorState(new AddDraftAction(entitySelector)), [entitySelector]);
   return (
-    <div style={{ display: 'flex' }}>
-      <EntityEditorNew {...{ editorState, dispatchEditorState }} style={{ flexGrow: 1 }} />
-      <EntityMetadata entityId={editorState.id} />
-    </div>
+    <>
+      {editorState.drafts.map((draftState) => (
+        <div key={draftState.id} style={{ display: 'flex' }}>
+          <EntityEditorNew
+            entityId={draftState.id}
+            {...{ editorState, dispatchEditorState }}
+            style={{ flexGrow: 1 }}
+          />
+          <EntityMetadata entityId={draftState.id} />
+        </div>
+      ))}
+    </>
   );
 }
