@@ -1,7 +1,7 @@
 import type { Dispatch } from 'react';
 import React from 'react';
 import type { EntityEditorState, EntityEditorStateAction } from '../..';
-import { EntityEditorNew, EntityMetadata } from '../..';
+import { EntityEditor, EntityMetadata } from '../..';
 
 export interface EntityEditorContainerProps {
   editorState: EntityEditorState;
@@ -16,7 +16,7 @@ export function EntityEditorContainer({
     <>
       {editorState.drafts.map((draftState) => (
         <div key={draftState.id} style={{ display: 'flex' }}>
-          <EntityEditorNew
+          <EntityEditor
             entityId={draftState.id}
             {...{ editorState, dispatchEditorState }}
             style={{ flexGrow: 1 }}
