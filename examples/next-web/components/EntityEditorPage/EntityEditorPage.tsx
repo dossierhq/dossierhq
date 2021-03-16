@@ -48,6 +48,7 @@ function EntityEditorPageInner({
       dispatchEditorState(new AddEntityDraftAction(entitySelector));
     }
     setHasAddedInitialDrafts(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const ids = editorState.drafts.map((x) => x.id);
@@ -56,7 +57,7 @@ function EntityEditorPageInner({
     if (hasAddedInitialDrafts && url !== router.asPath) {
       router.replace(url);
     }
-  }, [hasAddedInitialDrafts, ids]);
+  }, [hasAddedInitialDrafts, ids, router]);
 
   return <EntityEditorContainer {...{ editorState, dispatchEditorState }} />;
 }
