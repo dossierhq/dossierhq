@@ -4,15 +4,15 @@ import { TestContextAdapter } from '../../test/TestContextAdapter';
 import { foo1Id } from '../../test/EntityFixtures';
 import type { EntityEditorState } from './EntityEditorReducer';
 import {
-  AddDraftAction,
-  initializeEditorState,
-  reduceEditorState,
+  AddEntityDraftAction,
+  initializeEntityEditorState,
+  reduceEntityEditorState,
   SetNameAction,
   UpdateEntityAction,
 } from './EntityEditorReducer';
 
 function newState(): EntityEditorState {
-  return initializeEditorState({ schema });
+  return initializeEntityEditorState({ schema });
 }
 
 function stateWithoutSchema(state: EntityEditorState) {
@@ -44,29 +44,29 @@ async function updateEntityWithFixture(
     throw entityResult.toError();
   }
   const entity = entityResult.value;
-  return reduceEditorState(state, new UpdateEntityAction(entity.id, entity));
+  return reduceEntityEditorState(state, new UpdateEntityAction(entity.id, entity));
 }
 
-describe('reduceEditorState', () => {
+describe('reduceEntityEditorState', () => {
   test('AddDraftAction new entity', async () => {
     const id = 'e4e78fce-1089-41b8-9b6b-440d2e044061';
     let state = newState();
-    state = reduceEditorState(state, new AddDraftAction({ id, newType: 'Foo' }));
+    state = reduceEntityEditorState(state, new AddEntityDraftAction({ id, newType: 'Foo' }));
     expect(stateWithoutSchema(state)).toMatchSnapshot();
   });
 
   test('SetNameAction new entity', () => {
     const id = uuidv4();
     let state = newState();
-    state = reduceEditorState(state, new AddDraftAction({ id, newType: 'Foo' }));
-    state = reduceEditorState(state, new SetNameAction(id, 'New name'));
+    state = reduceEntityEditorState(state, new AddEntityDraftAction({ id, newType: 'Foo' }));
+    state = reduceEntityEditorState(state, new SetNameAction(id, 'New name'));
     expect(state.drafts[0].entity?.name).toEqual('New name');
   });
 
   test('UpdateEntityAction', async () => {
     const fixtures = new TestContextAdapter();
     let state = newState();
-    state = reduceEditorState(state, new AddDraftAction({ id: foo1Id }));
+    state = reduceEntityEditorState(state, new AddEntityDraftAction({ id: foo1Id }));
     state = await updateEntityWithFixture(state, fixtures, foo1Id);
     expect(stateWithoutSchema(state)).toMatchSnapshot();
   });

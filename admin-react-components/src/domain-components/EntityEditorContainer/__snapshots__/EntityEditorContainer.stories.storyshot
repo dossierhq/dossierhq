@@ -1647,3 +1647,288 @@ exports[`Storyshots Domain/EntityEditorContainer Slow Full Foo 1`] = `
   />
 </div>
 `;
+
+exports[`Storyshots Domain/EntityEditorContainer Two Entities 1`] = `
+Array [
+  <div
+    style={
+      Object {
+        "display": "flex",
+      }
+    }
+  >
+    <form
+      className="dd segment has-shadow has-background"
+      onSubmit={[Function]}
+      style={
+        Object {
+          "flexGrow": 1,
+        }
+      }
+    >
+      <div>
+        <label
+          className="dd text-subtitle1"
+          htmlFor="cb228716-d3dd-444f-9a77-80443d436339-_name"
+        >
+          Name
+        </label>
+        <div
+          className="dd form-control"
+        >
+          <input
+            className="dd text-body1 input"
+            id="cb228716-d3dd-444f-9a77-80443d436339-_name"
+            onChange={[Function]}
+            type="text"
+            value="Bar 1"
+          />
+        </div>
+      </div>
+      <hr
+        className="dd divider"
+      />
+      <div>
+        <label
+          className="dd text-subtitle1"
+          htmlFor="cb228716-d3dd-444f-9a77-80443d436339-title"
+        >
+          title
+        </label>
+        <div
+          className="dd form-control"
+        >
+          <div>
+            <input
+              className="dd text-body1 input"
+              id="cb228716-d3dd-444f-9a77-80443d436339-title"
+              onChange={[Function]}
+              type="text"
+              value="Bar 1"
+            />
+            <button
+              className="dd icon-button"
+              onClick={[Function]}
+              title="Clear"
+              type="button"
+            >
+              <span
+                className="dd icon icon-remove"
+              />
+            </button>
+          </div>
+        </div>
+      </div>
+      <button
+        className="dd button has-background hoverable text-button bg-primary"
+        disabled={false}
+        type="submit"
+      >
+        Save
+      </button>
+    </form>
+    <div
+      className="dd has-shadow has-background"
+    >
+      <p
+        className="dd text-subtitle2"
+      >
+        Name
+      </p>
+      <p
+        className="dd text-body1"
+      >
+        Bar 1
+      </p>
+      <p
+        className="dd text-subtitle2"
+      >
+        Type
+      </p>
+      <p
+        className="dd text-body1"
+      >
+        Bar
+      </p>
+      <p
+        className="dd text-subtitle2"
+      >
+        ID
+      </p>
+      <p
+        className="dd text-body1"
+      >
+        cb228716-d3dd-444f-9a77-80443d436339
+      </p>
+      <div
+        className="dd has-shadow"
+        onClick={[Function]}
+      >
+        <p
+          className="dd text-subtitle2"
+        >
+          Version 
+          0
+        </p>
+        <p
+          className="dd text-body1"
+        >
+          3/11/2021, 9:19:39 PM
+        </p>
+        <p
+          className="dd text-body1"
+        >
+          a10e49cd-2f4e-4249-b8ee-eaca8466939b
+        </p>
+      </div>
+      <button
+        className="dd button has-background hoverable text-button bg-primary"
+        disabled={true}
+        type="button"
+      >
+        Publish
+      </button>
+    </div>
+  </div>,
+  <div
+    style={
+      Object {
+        "display": "flex",
+      }
+    }
+  >
+    <form
+      className="dd segment has-shadow has-background"
+      onSubmit={[Function]}
+      style={
+        Object {
+          "flexGrow": 1,
+        }
+      }
+    >
+      <div>
+        <label
+          className="dd text-subtitle1"
+          htmlFor="eb5732e2-b931-492b-82f1-f8fdd464f0d2-_name"
+        >
+          Name
+        </label>
+        <div
+          className="dd form-control"
+        >
+          <input
+            className="dd text-body1 input"
+            id="eb5732e2-b931-492b-82f1-f8fdd464f0d2-_name"
+            onChange={[Function]}
+            type="text"
+            value="Bar 2"
+          />
+        </div>
+      </div>
+      <hr
+        className="dd divider"
+      />
+      <div>
+        <label
+          className="dd text-subtitle1"
+          htmlFor="eb5732e2-b931-492b-82f1-f8fdd464f0d2-title"
+        >
+          title
+        </label>
+        <div
+          className="dd form-control"
+        >
+          <div>
+            <input
+              className="dd text-body1 input"
+              id="eb5732e2-b931-492b-82f1-f8fdd464f0d2-title"
+              onChange={[Function]}
+              type="text"
+              value="Bar 2"
+            />
+            <button
+              className="dd icon-button"
+              onClick={[Function]}
+              title="Clear"
+              type="button"
+            >
+              <span
+                className="dd icon icon-remove"
+              />
+            </button>
+          </div>
+        </div>
+      </div>
+      <button
+        className="dd button has-background hoverable text-button bg-primary"
+        disabled={false}
+        type="submit"
+      >
+        Save
+      </button>
+    </form>
+    <div
+      className="dd has-shadow has-background"
+    >
+      <p
+        className="dd text-subtitle2"
+      >
+        Name
+      </p>
+      <p
+        className="dd text-body1"
+      >
+        Bar 2
+      </p>
+      <p
+        className="dd text-subtitle2"
+      >
+        Type
+      </p>
+      <p
+        className="dd text-body1"
+      >
+        Bar
+      </p>
+      <p
+        className="dd text-subtitle2"
+      >
+        ID
+      </p>
+      <p
+        className="dd text-body1"
+      >
+        eb5732e2-b931-492b-82f1-f8fdd464f0d2
+      </p>
+      <div
+        className="dd has-shadow"
+        onClick={[Function]}
+      >
+        <p
+          className="dd text-subtitle2"
+        >
+          Version 
+          0
+        </p>
+        <p
+          className="dd text-body1"
+        >
+          3/11/2021, 9:19:39 PM
+        </p>
+        <p
+          className="dd text-body1"
+        >
+          a10e49cd-2f4e-4249-b8ee-eaca8466939b
+        </p>
+      </div>
+      <button
+        className="dd button has-background hoverable text-button bg-primary"
+        disabled={true}
+        type="button"
+      >
+        Publish
+      </button>
+    </div>
+  </div>,
+]
+`;

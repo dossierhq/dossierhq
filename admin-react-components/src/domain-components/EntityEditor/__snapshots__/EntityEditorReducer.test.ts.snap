@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`reduceEditorState AddDraftAction new entity 1`] = `
+exports[`reduceEntityEditorState AddDraftAction new entity 1`] = `
 Object {
   "drafts": Array [
     Object {
@@ -55,7 +55,7 @@ Object {
 }
 `;
 
-exports[`reduceEditorState UpdateEntityAction 1`] = `
+exports[`reduceEntityEditorState UpdateEntityAction 1`] = `
 Object {
   "drafts": Array [
     Object {

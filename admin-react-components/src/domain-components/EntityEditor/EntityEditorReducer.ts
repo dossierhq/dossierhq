@@ -38,7 +38,7 @@ export interface EntityEditorStateAction {
   reduce(state: EntityEditorState): EntityEditorState;
 }
 
-export class AddDraftAction implements EntityEditorStateAction {
+export class AddEntityDraftAction implements EntityEditorStateAction {
   #entitySelector: EntityEditorSelector;
   constructor(entitySelector: EntityEditorSelector) {
     this.#entitySelector = entitySelector;
@@ -201,14 +201,14 @@ export class SetFieldAction extends EntityEditorDraftStateAction {
   }
 }
 
-export function reduceEditorState(
+export function reduceEntityEditorState(
   state: EntityEditorState,
   action: EntityEditorStateAction
 ): EntityEditorState {
   return action.reduce(state);
 }
 
-export function initializeEditorState({ schema }: { schema: Schema }): EntityEditorState {
+export function initializeEntityEditorState({ schema }: { schema: Schema }): EntityEditorState {
   return { schema, drafts: [] };
 }
 
