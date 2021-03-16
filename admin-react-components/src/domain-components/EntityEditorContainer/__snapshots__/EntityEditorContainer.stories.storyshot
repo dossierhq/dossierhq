@@ -1,6 +1,401 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Storyshots Domain/EntityEditorContainer Normal 1`] = `
+exports[`Storyshots Domain/EntityEditorContainer Deleted Foo 1`] = `
+<div
+  style={
+    Object {
+      "display": "flex",
+    }
+  }
+>
+  <form
+    className="dd segment has-shadow has-background"
+    onSubmit={[Function]}
+    style={
+      Object {
+        "flexGrow": 1,
+      }
+    }
+  >
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="fb62be03-a0a9-4689-9987-bacee0e7692d-_name"
+      >
+        Name
+      </label>
+      <div
+        className="dd form-control"
+      >
+        <input
+          className="dd text-body1 input"
+          id="fb62be03-a0a9-4689-9987-bacee0e7692d-_name"
+          onChange={[Function]}
+          type="text"
+          value="Foo deleted"
+        />
+      </div>
+    </div>
+    <hr
+      className="dd divider"
+    />
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="fb62be03-a0a9-4689-9987-bacee0e7692d-title"
+      >
+        title
+      </label>
+      <div
+        className="dd form-control"
+      >
+        <div>
+          <input
+            className="dd text-body1 input"
+            id="fb62be03-a0a9-4689-9987-bacee0e7692d-title"
+            onChange={[Function]}
+            type="text"
+            value=""
+          />
+        </div>
+      </div>
+    </div>
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="fb62be03-a0a9-4689-9987-bacee0e7692d-tags"
+      >
+        tags
+      </label>
+      <div
+        className="dd form-control"
+      >
+        <div>
+          <div>
+            <input
+              className="dd text-body1 input"
+              id="fb62be03-a0a9-4689-9987-bacee0e7692d-tags"
+              onChange={[Function]}
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="fb62be03-a0a9-4689-9987-bacee0e7692d-location"
+      >
+        location
+      </label>
+      <div
+        className="dd form-control"
+      >
+        <div
+          style={
+            Object {
+              "display": "flex",
+            }
+          }
+        >
+          <button
+            className="dd button has-background hoverable text-button "
+            id="fb62be03-a0a9-4689-9987-bacee0e7692d-location"
+            onClick={[Function]}
+            type="button"
+          >
+            Select location
+          </button>
+        </div>
+      </div>
+    </div>
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="fb62be03-a0a9-4689-9987-bacee0e7692d-locations"
+      >
+        locations
+      </label>
+      <div
+        className="dd form-control"
+      >
+        <div>
+          <div
+            style={
+              Object {
+                "display": "flex",
+              }
+            }
+          >
+            <button
+              className="dd button has-background hoverable text-button "
+              id="fb62be03-a0a9-4689-9987-bacee0e7692d-locations"
+              onClick={[Function]}
+              type="button"
+            >
+              Select location
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="fb62be03-a0a9-4689-9987-bacee0e7692d-bar"
+      >
+        bar
+      </label>
+      <div
+        className="dd form-control"
+      >
+        <div
+          style={
+            Object {
+              "display": "flex",
+            }
+          }
+        >
+          <button
+            className="dd button has-background hoverable text-button "
+            id="fb62be03-a0a9-4689-9987-bacee0e7692d-bar"
+            onClick={[Function]}
+            type="button"
+          >
+            Select entity
+          </button>
+        </div>
+      </div>
+    </div>
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="fb62be03-a0a9-4689-9987-bacee0e7692d-bars"
+      >
+        bars
+      </label>
+      <div
+        className="dd form-control"
+      >
+        <div>
+          <div
+            style={
+              Object {
+                "display": "flex",
+              }
+            }
+          >
+            <button
+              className="dd button has-background hoverable text-button "
+              id="fb62be03-a0a9-4689-9987-bacee0e7692d-bars"
+              onClick={[Function]}
+              type="button"
+            >
+              Select entity
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="fb62be03-a0a9-4689-9987-bacee0e7692d-annotatedBar"
+      >
+        annotatedBar
+      </label>
+      <div
+        className="dd form-control"
+      >
+        <div
+          className="dd segment has-shadow"
+        >
+          <div>
+            <button
+              className="dd button has-background hoverable text-button "
+              id="fb62be03-a0a9-4689-9987-bacee0e7692d-annotatedBar"
+              onClick={[Function]}
+              type="button"
+            >
+              Add value item
+               
+              <span
+                className="dd icon icon-chevron-down"
+              />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="fb62be03-a0a9-4689-9987-bacee0e7692d-annotatedBars"
+      >
+        annotatedBars
+      </label>
+      <div
+        className="dd form-control"
+      >
+        <div>
+          <div
+            className="dd segment has-shadow"
+          >
+            <div>
+              <button
+                className="dd button has-background hoverable text-button "
+                id="fb62be03-a0a9-4689-9987-bacee0e7692d-annotatedBars"
+                onClick={[Function]}
+                type="button"
+              >
+                Add value item
+                 
+                <span
+                  className="dd icon icon-chevron-down"
+                />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="fb62be03-a0a9-4689-9987-bacee0e7692d-nested"
+      >
+        nested
+      </label>
+      <div
+        className="dd form-control"
+      >
+        <div
+          className="dd segment has-shadow"
+        >
+          <div>
+            <button
+              className="dd button has-background hoverable text-button "
+              id="fb62be03-a0a9-4689-9987-bacee0e7692d-nested"
+              onClick={[Function]}
+              type="button"
+            >
+              Add value item
+               
+              <span
+                className="dd icon icon-chevron-down"
+              />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button
+      className="dd button has-background hoverable text-button bg-primary"
+      disabled={false}
+      type="submit"
+    >
+      Save
+    </button>
+  </form>
+  <div
+    className="dd has-shadow has-background"
+  >
+    <p
+      className="dd text-subtitle2"
+    >
+      Name
+    </p>
+    <p
+      className="dd text-body1"
+    >
+      Foo deleted
+    </p>
+    <p
+      className="dd text-subtitle2"
+    >
+      Type
+    </p>
+    <p
+      className="dd text-body1"
+    >
+      Foo
+    </p>
+    <p
+      className="dd text-subtitle2"
+    >
+      ID
+    </p>
+    <p
+      className="dd text-body1"
+    >
+      fb62be03-a0a9-4689-9987-bacee0e7692d
+    </p>
+    <div
+      className="dd has-shadow"
+      onClick={[Function]}
+    >
+      <p
+        className="dd text-subtitle2"
+      >
+        Version 
+        0
+      </p>
+      <p
+        className="dd text-body1"
+      >
+        3/10/2021, 7:19:39 PM
+      </p>
+      <p
+        className="dd text-body1"
+      >
+        a10e49cd-2f4e-4249-b8ee-eaca8466939b
+      </p>
+    </div>
+    <div
+      className="dd has-shadow"
+      onClick={[Function]}
+    >
+      <p
+        className="dd text-subtitle2"
+      >
+        Version 
+        1
+        <span
+          className="dd has-background text-caption bg-danger"
+        >
+          Deleted
+        </span>
+        <span
+          className="dd has-background text-caption bg-primary"
+        >
+          Published
+        </span>
+      </p>
+      <p
+        className="dd text-body1"
+      >
+        3/11/2021, 9:19:39 PM
+      </p>
+      <p
+        className="dd text-body1"
+      >
+        a10e49cd-2f4e-4249-b8ee-eaca8466939b
+      </p>
+    </div>
+    <button
+      className="dd button has-background hoverable text-button bg-primary"
+      disabled={true}
+      type="button"
+    >
+      Publish
+    </button>
+  </div>
+</div>
+`;
+
+exports[`Storyshots Domain/EntityEditorContainer Full Foo 1`] = `
 <div
   style={
     Object {
@@ -806,5 +1201,449 @@ exports[`Storyshots Domain/EntityEditorContainer Normal 1`] = `
       Publish
     </button>
   </div>
+</div>
+`;
+
+exports[`Storyshots Domain/EntityEditorContainer Invalid Type New Entity 1`] = `
+<div
+  style={
+    Object {
+      "display": "flex",
+    }
+  }
+>
+  <div
+    className="dd message has-background has-shadow bg-danger"
+  >
+    <div
+      className="dd stack"
+    >
+      <p
+        className="dd text-body1"
+      >
+        Can't create entity with unsupported type: InvalidType
+      </p>
+    </div>
+  </div>
+  <div
+    className="dd has-shadow has-background"
+  >
+    <button
+      className="dd button has-background hoverable text-button bg-primary"
+      disabled={true}
+      type="button"
+    >
+      Publish
+    </button>
+    <div
+      className="dd message has-background has-shadow bg-danger"
+    >
+      <div
+        className="dd stack"
+      >
+        <p
+          className="dd text-body1"
+        >
+          NotFound: No such entity
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Storyshots Domain/EntityEditorContainer New Foo 1`] = `
+<div
+  style={
+    Object {
+      "display": "flex",
+    }
+  }
+>
+  <form
+    className="dd segment has-shadow has-background"
+    onSubmit={[Function]}
+    style={
+      Object {
+        "flexGrow": 1,
+      }
+    }
+  >
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="82ded109-44f2-48b9-a676-43162fda3d7d-_name"
+      >
+        Name
+      </label>
+      <div
+        className="dd form-control"
+      >
+        <input
+          className="dd text-body1 input"
+          id="82ded109-44f2-48b9-a676-43162fda3d7d-_name"
+          onChange={[Function]}
+          type="text"
+          value=""
+        />
+      </div>
+    </div>
+    <hr
+      className="dd divider"
+    />
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="82ded109-44f2-48b9-a676-43162fda3d7d-title"
+      >
+        title
+      </label>
+      <div
+        className="dd form-control"
+      >
+        <div>
+          <input
+            className="dd text-body1 input"
+            id="82ded109-44f2-48b9-a676-43162fda3d7d-title"
+            onChange={[Function]}
+            type="text"
+            value=""
+          />
+        </div>
+      </div>
+    </div>
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="82ded109-44f2-48b9-a676-43162fda3d7d-tags"
+      >
+        tags
+      </label>
+      <div
+        className="dd form-control"
+      >
+        <div>
+          <div>
+            <input
+              className="dd text-body1 input"
+              id="82ded109-44f2-48b9-a676-43162fda3d7d-tags"
+              onChange={[Function]}
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="82ded109-44f2-48b9-a676-43162fda3d7d-location"
+      >
+        location
+      </label>
+      <div
+        className="dd form-control"
+      >
+        <div
+          style={
+            Object {
+              "display": "flex",
+            }
+          }
+        >
+          <button
+            className="dd button has-background hoverable text-button "
+            id="82ded109-44f2-48b9-a676-43162fda3d7d-location"
+            onClick={[Function]}
+            type="button"
+          >
+            Select location
+          </button>
+        </div>
+      </div>
+    </div>
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="82ded109-44f2-48b9-a676-43162fda3d7d-locations"
+      >
+        locations
+      </label>
+      <div
+        className="dd form-control"
+      >
+        <div>
+          <div
+            style={
+              Object {
+                "display": "flex",
+              }
+            }
+          >
+            <button
+              className="dd button has-background hoverable text-button "
+              id="82ded109-44f2-48b9-a676-43162fda3d7d-locations"
+              onClick={[Function]}
+              type="button"
+            >
+              Select location
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="82ded109-44f2-48b9-a676-43162fda3d7d-bar"
+      >
+        bar
+      </label>
+      <div
+        className="dd form-control"
+      >
+        <div
+          style={
+            Object {
+              "display": "flex",
+            }
+          }
+        >
+          <button
+            className="dd button has-background hoverable text-button "
+            id="82ded109-44f2-48b9-a676-43162fda3d7d-bar"
+            onClick={[Function]}
+            type="button"
+          >
+            Select entity
+          </button>
+        </div>
+      </div>
+    </div>
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="82ded109-44f2-48b9-a676-43162fda3d7d-bars"
+      >
+        bars
+      </label>
+      <div
+        className="dd form-control"
+      >
+        <div>
+          <div
+            style={
+              Object {
+                "display": "flex",
+              }
+            }
+          >
+            <button
+              className="dd button has-background hoverable text-button "
+              id="82ded109-44f2-48b9-a676-43162fda3d7d-bars"
+              onClick={[Function]}
+              type="button"
+            >
+              Select entity
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="82ded109-44f2-48b9-a676-43162fda3d7d-annotatedBar"
+      >
+        annotatedBar
+      </label>
+      <div
+        className="dd form-control"
+      >
+        <div
+          className="dd segment has-shadow"
+        >
+          <div>
+            <button
+              className="dd button has-background hoverable text-button "
+              id="82ded109-44f2-48b9-a676-43162fda3d7d-annotatedBar"
+              onClick={[Function]}
+              type="button"
+            >
+              Add value item
+               
+              <span
+                className="dd icon icon-chevron-down"
+              />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="82ded109-44f2-48b9-a676-43162fda3d7d-annotatedBars"
+      >
+        annotatedBars
+      </label>
+      <div
+        className="dd form-control"
+      >
+        <div>
+          <div
+            className="dd segment has-shadow"
+          >
+            <div>
+              <button
+                className="dd button has-background hoverable text-button "
+                id="82ded109-44f2-48b9-a676-43162fda3d7d-annotatedBars"
+                onClick={[Function]}
+                type="button"
+              >
+                Add value item
+                 
+                <span
+                  className="dd icon icon-chevron-down"
+                />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="82ded109-44f2-48b9-a676-43162fda3d7d-nested"
+      >
+        nested
+      </label>
+      <div
+        className="dd form-control"
+      >
+        <div
+          className="dd segment has-shadow"
+        >
+          <div>
+            <button
+              className="dd button has-background hoverable text-button "
+              id="82ded109-44f2-48b9-a676-43162fda3d7d-nested"
+              onClick={[Function]}
+              type="button"
+            >
+              Add value item
+               
+              <span
+                className="dd icon icon-chevron-down"
+              />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button
+      className="dd button has-background hoverable text-button bg-primary"
+      disabled={true}
+      type="submit"
+    >
+      Save
+    </button>
+  </form>
+  <div
+    className="dd has-shadow has-background"
+  >
+    <button
+      className="dd button has-background hoverable text-button bg-primary"
+      disabled={true}
+      type="button"
+    >
+      Publish
+    </button>
+    <div
+      className="dd message has-background has-shadow bg-danger"
+    >
+      <div
+        className="dd stack"
+      >
+        <p
+          className="dd text-body1"
+        >
+          NotFound: No such entity
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Storyshots Domain/EntityEditorContainer Not Found 1`] = `
+<div
+  style={
+    Object {
+      "display": "flex",
+    }
+  }
+>
+  <div
+    className="dd message has-background has-shadow bg-danger"
+  >
+    <div
+      className="dd stack"
+    >
+      <p
+        className="dd text-headline5"
+      >
+        Failed loading entity
+      </p>
+      <p
+        className="dd text-body1"
+      >
+        NotFound: No such entity or version
+      </p>
+    </div>
+  </div>
+  <div
+    className="dd has-shadow has-background"
+  >
+    <button
+      className="dd button has-background hoverable text-button bg-primary"
+      disabled={true}
+      type="button"
+    >
+      Publish
+    </button>
+    <div
+      className="dd message has-background has-shadow bg-danger"
+    >
+      <div
+        className="dd stack"
+      >
+        <p
+          className="dd text-body1"
+        >
+          NotFound: No such entity
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Storyshots Domain/EntityEditorContainer Slow Full Foo 1`] = `
+<div
+  style={
+    Object {
+      "display": "flex",
+    }
+  }
+>
+  <div
+    className="dd loader"
+  />
+  <div
+    className="dd loader"
+  />
 </div>
 `;

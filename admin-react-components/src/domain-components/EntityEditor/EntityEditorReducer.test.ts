@@ -194,7 +194,7 @@ describe('reduceEditorState', () => {
             ],
             "initialName": "Foo 1",
             "name": "Foo 1",
-            "version": 0,
+            "version": 1,
           },
           "entityLoadMessage": null,
           "id": "fc66b4d7-61ff-44d4-8f68-cb7f526df046",
