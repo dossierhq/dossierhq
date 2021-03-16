@@ -1,52 +1,91 @@
+import type { Schema } from '@datadata/core';
 import type { Meta, Story } from '@storybook/react/types-6-0';
-import React from 'react';
-import type { EntityEditorProps } from '../..';
-import { DataDataContext, EntityEditor } from '../..';
+import React, { useEffect, useReducer } from 'react';
+import type { EntityEditorProps, EntityEditorSelector } from '../..';
+import {
+  AddEntityDraftAction,
+  DataDataContext,
+  EntityEditor,
+  initializeEntityEditorState,
+  reduceEntityEditorState,
+} from '../..';
 import { foo1Id, fooDeletedId } from '../../test/EntityFixtures';
 import {
-  SlowInterceptor,
   createContextValue,
+  SlowInterceptor,
   TestContextAdapter,
 } from '../../test/TestContextAdapter';
 
-type StoryProps = EntityEditorProps & { contextAdapter?: TestContextAdapter };
+export type EntityEditorStoryProps = Omit<
+  EntityEditorProps,
+  'entityId' | 'editorState' | 'dispatchEditorState'
+> & {
+  entitySelector: EntityEditorSelector;
+  contextAdapter?: TestContextAdapter;
+};
 
-const meta: Meta<StoryProps> = {
+const meta: Meta<EntityEditorStoryProps> = {
   title: 'Domain/EntityEditor',
   component: EntityEditor,
   args: {},
 };
 export default meta;
 
-const Template: Story<StoryProps> = (args) => {
-  const value = createContextValue(args?.contextAdapter);
+const Template: Story<EntityEditorStoryProps> = (args) => {
+  const contextValue = createContextValue(args?.contextAdapter);
   return (
-    <DataDataContext.Provider value={value}>
-      <EntityEditor {...args} />
+    <DataDataContext.Provider value={contextValue}>
+      <Wrapper entitySelector={args.entitySelector} schema={contextValue.schema} />
     </DataDataContext.Provider>
   );
 };
 
+function Wrapper({
+  entitySelector,
+  schema,
+}: {
+  entitySelector: EntityEditorSelector;
+  schema: Schema;
+}) {
+  const [editorState, dispatchEditorState] = useReducer(
+    reduceEntityEditorState,
+    { schema },
+    initializeEntityEditorState
+  );
+  useEffect(() => dispatchEditorState(new AddEntityDraftAction(entitySelector)), [entitySelector]);
+  const draftState = editorState.drafts[0];
+  if (!draftState) {
+    return null;
+  }
+
+  return (
+    <EntityEditor
+      entityId={draftState.id}
+      editorState={editorState}
+      dispatchEditorState={dispatchEditorState}
+    />
+  );
+}
+
 export const NewFoo = Template.bind({});
-NewFoo.args = { entity: { type: 'Foo', isNew: true }, idPrefix: 'new-entity-123' };
+NewFoo.args = { entitySelector: { id: '82ded109-44f2-48b9-a676-43162fda3d7d', newType: 'Foo' } };
 
 export const FullFoo = Template.bind({});
-FullFoo.args = { entity: { id: foo1Id } };
+FullFoo.args = { entitySelector: { id: foo1Id } };
 
 export const DeletedFoo = Template.bind({});
-DeletedFoo.args = { entity: { id: fooDeletedId } };
+DeletedFoo.args = { entitySelector: { id: fooDeletedId } };
 
 export const SlowFullFoo = Template.bind({});
 SlowFullFoo.args = {
-  entity: { id: foo1Id },
+  entitySelector: { id: foo1Id },
   contextAdapter: new TestContextAdapter(SlowInterceptor),
 };
 
 export const NotFound = Template.bind({});
-NotFound.args = { entity: { id: 'c6f97fae-1213-4be0-996f-4f20c7da7e65' } };
+NotFound.args = { entitySelector: { id: 'c6f97fae-1213-4be0-996f-4f20c7da7e65' } };
 
 export const InvalidTypeNewEntity = Template.bind({});
 InvalidTypeNewEntity.args = {
-  entity: { type: 'InvalidType', isNew: true },
-  idPrefix: 'new-entity-123',
+  entitySelector: { id: 'da4a48d6-341e-4515-941f-b83578191b51', newType: 'InvalidType' },
 };

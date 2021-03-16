@@ -1,7 +1,6 @@
 export type { DataDataContextAdapter } from './contexts/DataDataContext';
 export type { DropDownItem } from './generic-components/DropDown/DropDown';
 export type { EntityEditorProps } from './domain-components/EntityEditor/EntityEditor';
-export type { EntityEditorNewProps } from './domain-components/EntityEditor/EntityEditorNew';
 export type {
   EntityEditorSelector,
   EntityEditorState,
@@ -16,7 +15,6 @@ export { DataDataContext, DataDataContextValue } from './contexts/DataDataContex
 export { Divider } from './generic-components/Divider/Divider';
 export { DropDown } from './generic-components/DropDown/DropDown';
 export { EntityEditor } from './domain-components/EntityEditor/EntityEditor';
-export { EntityEditorNew } from './domain-components/EntityEditor/EntityEditorNew';
 export {
   AddEntityDraftAction,
   initializeEntityEditorState,
