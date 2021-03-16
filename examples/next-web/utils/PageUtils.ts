@@ -3,8 +3,8 @@ import Joi from 'joi';
 import type { ParsedUrlQuery } from 'querystring';
 
 export const urls = {
-  entitiesPage: (id: string): string => `/entities/${id}`,
-  entitiesPageNew: (entityType: string): string => `/entities/new?type=${entityType}`,
+  editPage: (ids: string[]): string => `/entities/edit?ids=${ids.join(',')}`,
+  editPageNew: (entityType: string): string => `/entities/edit?type=${entityType}`,
 };
 
 export function validateQuery<T>(value: ParsedUrlQuery, schema: ObjectSchema<T>): T {
