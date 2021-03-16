@@ -165,7 +165,7 @@ function createEditorEntityState(
   });
   return {
     entitySpec,
-    version: entity?._version ?? 0,
+    version: entity ? entity._version + 1 : 0,
     name: entity?._name ?? '',
     initialName: entity?._name ?? '',
     fields,
