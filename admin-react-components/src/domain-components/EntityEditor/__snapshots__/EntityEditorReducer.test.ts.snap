@@ -1,0 +1,203 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`reduceEditorState AddDraftAction new entity 1`] = `
+Object {
+  "drafts": Array [
+    Object {
+      "entity": Object {
+        "fields": Array [
+          Object {
+            "initialValue": null,
+            "value": null,
+          },
+          Object {
+            "initialValue": null,
+            "value": null,
+          },
+          Object {
+            "initialValue": null,
+            "value": null,
+          },
+          Object {
+            "initialValue": null,
+            "value": null,
+          },
+          Object {
+            "initialValue": null,
+            "value": null,
+          },
+          Object {
+            "initialValue": null,
+            "value": null,
+          },
+          Object {
+            "initialValue": null,
+            "value": null,
+          },
+          Object {
+            "initialValue": null,
+            "value": null,
+          },
+          Object {
+            "initialValue": null,
+            "value": null,
+          },
+        ],
+        "initialName": "",
+        "name": "",
+        "version": 0,
+      },
+      "entityLoadMessage": null,
+      "id": "e4e78fce-1089-41b8-9b6b-440d2e044061",
+      "initMessage": null,
+    },
+  ],
+}
+`;
+
+exports[`reduceEditorState UpdateEntityAction 1`] = `
+Object {
+  "drafts": Array [
+    Object {
+      "entity": Object {
+        "fields": Array [
+          Object {
+            "initialValue": "Hello",
+            "value": "Hello",
+          },
+          Object {
+            "initialValue": Array [
+              "one",
+              "two",
+              "three",
+            ],
+            "value": Array [
+              "one",
+              "two",
+              "three",
+            ],
+          },
+          Object {
+            "initialValue": Object {
+              "lat": 55.60498,
+              "lng": 13.003822,
+            },
+            "value": Object {
+              "lat": 55.60498,
+              "lng": 13.003822,
+            },
+          },
+          Object {
+            "initialValue": Array [
+              Object {
+                "lat": 55.60498,
+                "lng": 13.003822,
+              },
+              Object {
+                "lat": 56.381561,
+                "lng": 13.99286,
+              },
+            ],
+            "value": Array [
+              Object {
+                "lat": 55.60498,
+                "lng": 13.003822,
+              },
+              Object {
+                "lat": 56.381561,
+                "lng": 13.99286,
+              },
+            ],
+          },
+          Object {
+            "initialValue": Object {
+              "id": "cb228716-d3dd-444f-9a77-80443d436339",
+            },
+            "value": Object {
+              "id": "cb228716-d3dd-444f-9a77-80443d436339",
+            },
+          },
+          Object {
+            "initialValue": Array [
+              Object {
+                "id": "cb228716-d3dd-444f-9a77-80443d436339",
+              },
+              Object {
+                "id": "eb5732e2-b931-492b-82f1-f8fdd464f0d2",
+              },
+            ],
+            "value": Array [
+              Object {
+                "id": "cb228716-d3dd-444f-9a77-80443d436339",
+              },
+              Object {
+                "id": "eb5732e2-b931-492b-82f1-f8fdd464f0d2",
+              },
+            ],
+          },
+          Object {
+            "initialValue": Object {
+              "_type": "AnnotatedBar",
+              "annotation": "Annotation",
+              "bar": Object {
+                "id": "eb5732e2-b931-492b-82f1-f8fdd464f0d2",
+              },
+            },
+            "value": Object {
+              "_type": "AnnotatedBar",
+              "annotation": "Annotation",
+              "bar": Object {
+                "id": "eb5732e2-b931-492b-82f1-f8fdd464f0d2",
+              },
+            },
+          },
+          Object {
+            "initialValue": Array [
+              Object {
+                "_type": "AnnotatedBar",
+                "annotation": "First",
+                "bar": Object {
+                  "id": "cb228716-d3dd-444f-9a77-80443d436339",
+                },
+              },
+              Object {
+                "_type": "AnnotatedBar",
+                "annotation": "Second",
+                "bar": Object {
+                  "id": "eb5732e2-b931-492b-82f1-f8fdd464f0d2",
+                },
+              },
+            ],
+            "value": Array [
+              Object {
+                "_type": "AnnotatedBar",
+                "annotation": "First",
+                "bar": Object {
+                  "id": "cb228716-d3dd-444f-9a77-80443d436339",
+                },
+              },
+              Object {
+                "_type": "AnnotatedBar",
+                "annotation": "Second",
+                "bar": Object {
+                  "id": "eb5732e2-b931-492b-82f1-f8fdd464f0d2",
+                },
+              },
+            ],
+          },
+          Object {
+            "initialValue": null,
+            "value": null,
+          },
+        ],
+        "initialName": "Foo 1",
+        "name": "Foo 1",
+        "version": 1,
+      },
+      "entityLoadMessage": null,
+      "id": "fc66b4d7-61ff-44d4-8f68-cb7f526df046",
+      "initMessage": null,
+    },
+  ],
+}
+`;

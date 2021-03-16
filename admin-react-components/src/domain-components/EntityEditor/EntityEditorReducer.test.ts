@@ -1,206 +1,73 @@
-import type { AdminEntity } from '@datadata/core';
-import { CoreTestUtils } from '@datadata/core';
+import { v4 as uuidv4 } from 'uuid';
 import schema from '../../stories/StoryboardSchema';
 import { TestContextAdapter } from '../../test/TestContextAdapter';
 import { foo1Id } from '../../test/EntityFixtures';
 import type { EntityEditorState } from './EntityEditorReducer';
 import {
-  forTest,
+  AddDraftAction,
+  initializeEditorState,
   reduceEditorState,
   SetNameAction,
   UpdateEntityAction,
 } from './EntityEditorReducer';
-const { expectOkResult } = CoreTestUtils;
-const { createEditorEntityState } = forTest;
 
-function entityState(entity: AdminEntity): EntityEditorState['entity'] {
-  const entitySpec = schema.getEntityTypeSpecification(entity._type);
-  if (!entitySpec) {
-    throw new Error('No entity spec');
-  }
-  return createEditorEntityState(entitySpec, entity);
-}
-
-function newState(state: { id: string } & Partial<EntityEditorState>): EntityEditorState {
-  return { initMessage: null, entityLoadMessage: null, schema, entity: null, ...state };
+function newState(): EntityEditorState {
+  return initializeEditorState({ schema });
 }
 
 function stateWithoutSchema(state: EntityEditorState) {
   const { schema, ...newState } = state;
-  if (newState.entity) {
-    const { entitySpec, ...newEntity } = newState.entity;
-    newEntity.fields = newEntity.fields.map((field) => {
-      const { fieldSpec, ...newField } = field;
+  newState.drafts = state.drafts.map((draftState) => {
+    const newDraftState = { ...draftState };
+    if (newDraftState.entity) {
+      const { entitySpec, ...newEntity } = newDraftState.entity;
+      newEntity.fields = newEntity.fields.map((field) => {
+        const { fieldSpec, ...newField } = field;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        return newField as any;
+      });
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      return newField as any;
-    });
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    newState.entity = newEntity as any;
-  }
+      newDraftState.entity = newEntity as any;
+    }
+    return newDraftState;
+  });
   return newState;
 }
 
+async function updateEntityWithFixture(
+  state: EntityEditorState,
+  fixtures: TestContextAdapter,
+  id: string
+): Promise<EntityEditorState> {
+  const entityResult = await fixtures.getEntity(id);
+  if (entityResult.isError()) {
+    throw entityResult.toError();
+  }
+  const entity = entityResult.value;
+  return reduceEditorState(state, new UpdateEntityAction(entity.id, entity));
+}
+
 describe('reduceEditorState', () => {
-  test('SetNameAction', async () => {
-    const fixtures = new TestContextAdapter();
-    const entityResult = await fixtures.getEntity(foo1Id);
-    if (expectOkResult(entityResult)) {
-      const state = reduceEditorState(
-        newState({ id: foo1Id, entity: entityState(entityResult.value) }),
-        new SetNameAction('New name')
-      );
-      expect(state.entity?.name).toEqual('New name');
-    }
+  test('AddDraftAction new entity', async () => {
+    const id = 'e4e78fce-1089-41b8-9b6b-440d2e044061';
+    let state = newState();
+    state = reduceEditorState(state, new AddDraftAction({ id, newType: 'Foo' }));
+    expect(stateWithoutSchema(state)).toMatchSnapshot();
+  });
+
+  test('SetNameAction new entity', () => {
+    const id = uuidv4();
+    let state = newState();
+    state = reduceEditorState(state, new AddDraftAction({ id, newType: 'Foo' }));
+    state = reduceEditorState(state, new SetNameAction(id, 'New name'));
+    expect(state.drafts[0].entity?.name).toEqual('New name');
   });
 
   test('UpdateEntityAction', async () => {
     const fixtures = new TestContextAdapter();
-    const entityResult = await fixtures.getEntity(foo1Id);
-    if (expectOkResult(entityResult)) {
-      const entity = entityResult.value;
-      const state = reduceEditorState(newState({ id: entity.id }), new UpdateEntityAction(entity));
-      expect(stateWithoutSchema(state)).toMatchInlineSnapshot(`
-        Object {
-          "entity": Object {
-            "fields": Array [
-              Object {
-                "initialValue": "Hello",
-                "value": "Hello",
-              },
-              Object {
-                "initialValue": Array [
-                  "one",
-                  "two",
-                  "three",
-                ],
-                "value": Array [
-                  "one",
-                  "two",
-                  "three",
-                ],
-              },
-              Object {
-                "initialValue": Object {
-                  "lat": 55.60498,
-                  "lng": 13.003822,
-                },
-                "value": Object {
-                  "lat": 55.60498,
-                  "lng": 13.003822,
-                },
-              },
-              Object {
-                "initialValue": Array [
-                  Object {
-                    "lat": 55.60498,
-                    "lng": 13.003822,
-                  },
-                  Object {
-                    "lat": 56.381561,
-                    "lng": 13.99286,
-                  },
-                ],
-                "value": Array [
-                  Object {
-                    "lat": 55.60498,
-                    "lng": 13.003822,
-                  },
-                  Object {
-                    "lat": 56.381561,
-                    "lng": 13.99286,
-                  },
-                ],
-              },
-              Object {
-                "initialValue": Object {
-                  "id": "cb228716-d3dd-444f-9a77-80443d436339",
-                },
-                "value": Object {
-                  "id": "cb228716-d3dd-444f-9a77-80443d436339",
-                },
-              },
-              Object {
-                "initialValue": Array [
-                  Object {
-                    "id": "cb228716-d3dd-444f-9a77-80443d436339",
-                  },
-                  Object {
-                    "id": "eb5732e2-b931-492b-82f1-f8fdd464f0d2",
-                  },
-                ],
-                "value": Array [
-                  Object {
-                    "id": "cb228716-d3dd-444f-9a77-80443d436339",
-                  },
-                  Object {
-                    "id": "eb5732e2-b931-492b-82f1-f8fdd464f0d2",
-                  },
-                ],
-              },
-              Object {
-                "initialValue": Object {
-                  "_type": "AnnotatedBar",
-                  "annotation": "Annotation",
-                  "bar": Object {
-                    "id": "eb5732e2-b931-492b-82f1-f8fdd464f0d2",
-                  },
-                },
-                "value": Object {
-                  "_type": "AnnotatedBar",
-                  "annotation": "Annotation",
-                  "bar": Object {
-                    "id": "eb5732e2-b931-492b-82f1-f8fdd464f0d2",
-                  },
-                },
-              },
-              Object {
-                "initialValue": Array [
-                  Object {
-                    "_type": "AnnotatedBar",
-                    "annotation": "First",
-                    "bar": Object {
-                      "id": "cb228716-d3dd-444f-9a77-80443d436339",
-                    },
-                  },
-                  Object {
-                    "_type": "AnnotatedBar",
-                    "annotation": "Second",
-                    "bar": Object {
-                      "id": "eb5732e2-b931-492b-82f1-f8fdd464f0d2",
-                    },
-                  },
-                ],
-                "value": Array [
-                  Object {
-                    "_type": "AnnotatedBar",
-                    "annotation": "First",
-                    "bar": Object {
-                      "id": "cb228716-d3dd-444f-9a77-80443d436339",
-                    },
-                  },
-                  Object {
-                    "_type": "AnnotatedBar",
-                    "annotation": "Second",
-                    "bar": Object {
-                      "id": "eb5732e2-b931-492b-82f1-f8fdd464f0d2",
-                    },
-                  },
-                ],
-              },
-              Object {
-                "initialValue": null,
-                "value": null,
-              },
-            ],
-            "initialName": "Foo 1",
-            "name": "Foo 1",
-            "version": 1,
-          },
-          "entityLoadMessage": null,
-          "id": "fc66b4d7-61ff-44d4-8f68-cb7f526df046",
-          "initMessage": null,
-        }
-      `);
-    }
+    let state = newState();
+    state = reduceEditorState(state, new AddDraftAction({ id: foo1Id }));
+    state = await updateEntityWithFixture(state, fixtures, foo1Id);
+    expect(stateWithoutSchema(state)).toMatchSnapshot();
   });
 });

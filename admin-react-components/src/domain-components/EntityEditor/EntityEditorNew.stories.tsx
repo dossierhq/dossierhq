@@ -1,9 +1,9 @@
 import type { Meta, Story } from '@storybook/react/types-6-0';
-import React from 'react';
+import React, { useEffect, useReducer } from 'react';
 import type { DataDataContextValue, EntityEditorNewProps } from '../..';
 import { DataDataContext, EntityEditorNew } from '../..';
 import type { EntityEditorSelector } from './EntityEditorReducer';
-import { useEntityEditorState } from './EntityEditorReducer';
+import { AddDraftAction, initializeEditorState, reduceEditorState } from './EntityEditorReducer';
 import { foo1Id, fooDeletedId } from '../../test/EntityFixtures';
 import {
   createContextValue,
@@ -39,8 +39,24 @@ function Wrapper({
   entitySelector: EntityEditorSelector;
   contextValue: DataDataContextValue;
 }) {
-  const { editorState, dispatchEditorState } = useEntityEditorState(entitySelector, contextValue);
-  return <EntityEditorNew editorState={editorState} dispatchEditorState={dispatchEditorState} />;
+  const [editorState, dispatchEditorState] = useReducer(
+    reduceEditorState,
+    { schema: contextValue.schema },
+    initializeEditorState
+  );
+  useEffect(() => dispatchEditorState(new AddDraftAction(entitySelector)), [entitySelector]);
+  const draftState = editorState.drafts[0];
+  if (!draftState) {
+    return null;
+  }
+
+  return (
+    <EntityEditorNew
+      entityId={draftState.id}
+      editorState={editorState}
+      dispatchEditorState={dispatchEditorState}
+    />
+  );
 }
 
 export const NewFoo = Template.bind({});

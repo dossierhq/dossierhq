@@ -100,7 +100,7 @@ function PublishButton({
         const publishVersion = version?.version;
         if (typeof publishVersion === 'number') {
           const result = await publishEntity(entityId, publishVersion);
-          console.log('XXX publishEntity result', result);
+          //TODO handle error and loading
         }
       }}
     >
