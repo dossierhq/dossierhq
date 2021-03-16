@@ -1,39 +1,17 @@
-import React, { useContext, useEffect, useReducer } from 'react';
-import { DataDataContext, EntityEditorNew, EntityMetadata, Loader } from '../..';
-import type { DataDataContextValue, EntityEditorSelector } from '../..';
-import {
-  AddDraftAction,
-  initializeEditorState,
-  reduceEditorState,
-} from '../EntityEditor/EntityEditorReducer';
+import type { Dispatch } from 'react';
+import React from 'react';
+import type { EntityEditorState, EntityEditorStateAction } from '../..';
+import { EntityEditorNew, EntityMetadata } from '../..';
 
 export interface EntityEditorContainerProps {
-  entitySelector: EntityEditorSelector;
+  editorState: EntityEditorState;
+  dispatchEditorState: Dispatch<EntityEditorStateAction>;
 }
 
-interface EntityEditorContainerInnerProps extends EntityEditorContainerProps {
-  contextValue: DataDataContextValue;
-}
-
-export function EntityEditorContainer({ entitySelector }: EntityEditorContainerProps): JSX.Element {
-  const contextValue = useContext(DataDataContext);
-  if (!contextValue) {
-    return <Loader />;
-  }
-
-  return <EntityEditorContainerInner {...{ entitySelector, contextValue }} />;
-}
-
-function EntityEditorContainerInner({
-  entitySelector,
-  contextValue,
-}: EntityEditorContainerInnerProps): JSX.Element {
-  const [editorState, dispatchEditorState] = useReducer(
-    reduceEditorState,
-    { schema: contextValue.schema },
-    initializeEditorState
-  );
-  useEffect(() => dispatchEditorState(new AddDraftAction(entitySelector)), [entitySelector]);
+export function EntityEditorContainer({
+  editorState,
+  dispatchEditorState,
+}: EntityEditorContainerProps): JSX.Element {
   return (
     <>
       {editorState.drafts.map((draftState) => (

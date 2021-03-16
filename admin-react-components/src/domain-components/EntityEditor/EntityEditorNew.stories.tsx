@@ -1,9 +1,13 @@
+import type { Schema } from '@datadata/core';
 import type { Meta, Story } from '@storybook/react/types-6-0';
 import React, { useEffect, useReducer } from 'react';
-import type { DataDataContextValue, EntityEditorNewProps } from '../..';
+import type { EntityEditorNewProps, EntityEditorSelector } from '../..';
 import { DataDataContext, EntityEditorNew } from '../..';
-import type { EntityEditorSelector } from './EntityEditorReducer';
-import { AddDraftAction, initializeEditorState, reduceEditorState } from './EntityEditorReducer';
+import {
+  AddEntityDraftAction,
+  initializeEntityEditorState,
+  reduceEntityEditorState,
+} from './EntityEditorReducer';
 import { foo1Id, fooDeletedId } from '../../test/EntityFixtures';
 import {
   createContextValue,
@@ -27,24 +31,24 @@ const Template: Story<StoryProps> = (args) => {
   const contextValue = createContextValue(args?.contextAdapter);
   return (
     <DataDataContext.Provider value={contextValue}>
-      <Wrapper entitySelector={args.entitySelector} contextValue={contextValue} />
+      <Wrapper entitySelector={args.entitySelector} schema={contextValue.schema} />
     </DataDataContext.Provider>
   );
 };
 
 function Wrapper({
   entitySelector,
-  contextValue,
+  schema,
 }: {
   entitySelector: EntityEditorSelector;
-  contextValue: DataDataContextValue;
+  schema: Schema;
 }) {
   const [editorState, dispatchEditorState] = useReducer(
-    reduceEditorState,
-    { schema: contextValue.schema },
-    initializeEditorState
+    reduceEntityEditorState,
+    { schema },
+    initializeEntityEditorState
   );
-  useEffect(() => dispatchEditorState(new AddDraftAction(entitySelector)), [entitySelector]);
+  useEffect(() => dispatchEditorState(new AddEntityDraftAction(entitySelector)), [entitySelector]);
   const draftState = editorState.drafts[0];
   if (!draftState) {
     return null;
