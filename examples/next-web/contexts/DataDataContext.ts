@@ -11,6 +11,7 @@ import {
 import { useEffect, useMemo, useState } from 'react';
 import type { EntityCreateRequest, EntityUpdateRequest } from '../types/RequestTypes';
 import type {
+  ActionResponse,
   EntityHistoryResponse,
   EntityResponse,
   SchemaResponse,
@@ -84,6 +85,21 @@ class ContextAdapter implements DataDataContextAdapter {
 
     if (result.isOk()) {
       return ok(result.value.item);
+    }
+    return result;
+  };
+
+  publishEntity: DataDataContextAdapter['publishEntity'] = async (id, version) => {
+    const result = await fetchJsonResult<ActionResponse, ErrorType.BadRequest | ErrorType.NotFound>(
+      [ErrorType.BadRequest, ErrorType.NotFound],
+      urls.publishEntity(id, version),
+      {
+        method: 'PUT',
+      }
+    );
+
+    if (result.isOk()) {
+      return ok(undefined);
     }
     return result;
   };
