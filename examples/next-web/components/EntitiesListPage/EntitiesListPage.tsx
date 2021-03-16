@@ -7,8 +7,8 @@ import { urls } from '../../utils/PageUtils';
 export default function EntitiesListPage(): JSX.Element {
   const router = useRouter();
   const { contextValue } = useInitializeContext();
-  const handleCreateEntity = (type: string) => router.push(urls.entitiesPageNew(type));
-  const handleEntityClick = (entity: AdminEntity) => router.push(urls.entitiesPage(entity.id));
+  const handleCreateEntity = (type: string) => router.push(urls.editPageNew(type));
+  const handleEntityClick = (entity: AdminEntity) => router.push(urls.editPage([entity.id]));
 
   return (
     <DataDataContext.Provider value={contextValue}>
