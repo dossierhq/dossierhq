@@ -21,7 +21,7 @@ export function validateRequestQuery<T>(
 export function handleError<T>(res: NextApiResponse<T>, error: Error): void {
   const boomError = Boom.boomify(error);
   for (const [name, value] of Object.entries(boomError.output.headers)) {
-    res.setHeader(name, value);
+    res.setHeader(name, value ?? '');
   }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   res.status(boomError.output.statusCode).json(boomError.output.payload as any);
