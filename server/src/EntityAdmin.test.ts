@@ -7,11 +7,11 @@ import type {
   Edge,
   Paging,
 } from '@datadata/core';
-import { v4 as uuidv4 } from 'uuid';
+import { validate as validateUuid, v4 as uuidv4 } from 'uuid';
 import type { Server, SessionContext } from '.';
 import { EntityAdmin, isPagingForwards, PublishedEntity } from '.';
 import { createTestServer, ensureSessionContext, updateSchema } from './ServerTestUtils';
-import { expectEntityHistoryVersions, uuidMatcher } from '../test/AdditionalTestUtils';
+import { expectEntityHistoryVersions } from '../test/AdditionalTestUtils';
 
 const { expectErrorResult, expectOkResult } = CoreTestUtils;
 
@@ -451,7 +451,7 @@ describe('createEntity()', () => {
     });
     if (expectOkResult(createResult)) {
       const { id, _name: name } = createResult.value;
-      expect(id).toMatch(uuidMatcher);
+      expect(validateUuid(id)).toBeTruthy();
       expect(name).toMatch(/^Foo(#[0-9]+)?$/);
 
       expect(createResult.value).toEqual({
@@ -507,7 +507,7 @@ describe('createEntity()', () => {
       title: 'Draft',
     });
     if (expectOkResult(createResult)) {
-      expect(createResult.value.id).toMatch(uuidMatcher);
+      expect(validateUuid(createResult.value.id)).toBeTruthy();
       const { id } = createResult.value;
 
       expect(createResult.value).toEqual({
@@ -581,7 +581,7 @@ describe('createEntity()', () => {
         bar: { id: barId },
       });
       if (expectOkResult(createFooResult)) {
-        expect(createFooResult.value.id).toMatch(uuidMatcher);
+        expect(validateUuid(createFooResult.value.id)).toBeTruthy();
         const fooId = createFooResult.value.id;
 
         expect(createFooResult.value).toEqual({

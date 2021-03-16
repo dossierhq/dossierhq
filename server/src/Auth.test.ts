@@ -1,8 +1,8 @@
 import { CoreTestUtils, ErrorType } from '@datadata/core';
+import { validate as validateUuid } from 'uuid';
 import type { AuthContext, Server } from '.';
 import { Auth } from '.';
 import { createTestServer } from './ServerTestUtils';
-import { uuidMatcher } from '../test/AdditionalTestUtils';
 
 const { expectErrorResult, expectOkResult } = CoreTestUtils;
 
@@ -25,7 +25,7 @@ describe('createPrincipal', () => {
   test('Create test/new-identifier', async () => {
     const result = await Auth.createPrincipal(context, 'test', randomIdentifier());
     if (expectOkResult(result)) {
-      expect(result.value).toMatch(uuidMatcher);
+      expect(validateUuid(result.value)).toBeTruthy();
     }
   });
 
@@ -58,7 +58,7 @@ describe('createSessionForPrincipal', () => {
 
     const session = await Auth.createSessionForPrincipal(context, 'test', identifier);
     if (expectOkResult(session)) {
-      expect(session.value.subjectId).toMatch(uuidMatcher);
+      expect(validateUuid(session.value.subjectId)).toBeTruthy();
       expect(typeof session.value.subjectInternalId).toBe('number');
     }
   });
