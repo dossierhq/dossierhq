@@ -18,3 +18,7 @@ export interface SchemaResponse {
 }
 
 export type SearchEntitiesResponse = JsonConnection<JsonEdge<AdminEntity, ErrorType>> | null;
+
+export interface ActionResponse {
+  success: boolean;
+}

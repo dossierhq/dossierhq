@@ -774,6 +774,7 @@ exports[`Storyshots Domain/EntityEditorContainer Normal 1`] = `
     </p>
     <div
       className="dd has-shadow"
+      onClick={[Function]}
     >
       <p
         className="dd text-subtitle2"
@@ -797,6 +798,13 @@ exports[`Storyshots Domain/EntityEditorContainer Normal 1`] = `
         a10e49cd-2f4e-4249-b8ee-eaca8466939b
       </p>
     </div>
+    <button
+      className="dd button has-background hoverable text-button bg-primary"
+      disabled={true}
+      type="button"
+    >
+      Publish
+    </button>
   </div>
 </div>
 `;

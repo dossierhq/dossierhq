@@ -24,7 +24,7 @@ export class InMemoryServerInner {
   }
 
   getEntity(id: string, version?: number | null): AdminEntity | null {
-    const fullEntity = this.#entities.find((x) => x.versions[0].id === id);
+    const fullEntity = this.getFullEntity(id);
     if (!fullEntity) {
       return null;
     }
@@ -35,7 +35,7 @@ export class InMemoryServerInner {
   }
 
   getEntityHistory(id: string): AdminEntityHistory | null {
-    const fullEntity = this.#entities.find((x) => x.versions[0].id === id);
+    const fullEntity = this.getFullEntity(id);
     if (!fullEntity) {
       return null;
     }
@@ -61,11 +61,6 @@ export class InMemoryServerInner {
     return this.#entities.map((x) => this.findLatestVersion(x.versions));
   }
 
-  private findLatestVersion(versions: AdminEntity[]): AdminEntity {
-    const maxVersion = versions.reduce((max, entity) => Math.max(max, entity._version), 0);
-    return versions.find((entity) => entity._version === maxVersion) as AdminEntity;
-  }
-
   getUniqueName(id: string | null, name: string): string {
     const entityWithSameName = this.#entities.find((x) => x.versions[0]._name === name);
     if (!entityWithSameName || entityWithSameName.versions[0].id === id) {
@@ -82,7 +77,7 @@ export class InMemoryServerInner {
   }
 
   addUpdatedEntity(entity: AdminEntity, userId: string): void {
-    const fullEntity = this.#entities.find((x) => x.versions[0].id === entity.id);
+    const fullEntity = this.getFullEntity(entity.id);
     if (!fullEntity) {
       throw new Error(`Can't find ${entity.id}`);
     }
@@ -94,5 +89,22 @@ export class InMemoryServerInner {
       createdAt: new Date(),
       createdBy: userId,
     });
+  }
+
+  setPublishedVersion(id: string, version: number): void {
+    const fullEntity = this.getFullEntity(id);
+    if (!fullEntity) {
+      throw new Error(`Can't find ${id}`);
+    }
+    fullEntity.publishedVersion = version;
+  }
+
+  private findLatestVersion(versions: AdminEntity[]): AdminEntity {
+    const maxVersion = versions.reduce((max, entity) => Math.max(max, entity._version), 0);
+    return versions.find((entity) => entity._version === maxVersion) as AdminEntity;
+  }
+
+  private getFullEntity(id: string) {
+    return this.#entities.find((x) => x.versions[0].id === id);
   }
 }

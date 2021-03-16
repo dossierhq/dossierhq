@@ -121,4 +121,19 @@ export const InMemoryAdmin = {
     context.server.addUpdatedEntity(newEntity, context.userId);
     return ok(newEntity);
   },
+
+  publishEntity: async (
+    context: InMemorySessionContext,
+    id: string,
+    version: number
+  ): PromiseResult<void, ErrorType.BadRequest | ErrorType.NotFound> => {
+    const entityResult = context.server.getEntity(id, version);
+    if (!entityResult) {
+      return notOk.NotFound('No such entity or version');
+    }
+
+    context.server.setPublishedVersion(id, version);
+
+    return ok(undefined);
+  },
 };

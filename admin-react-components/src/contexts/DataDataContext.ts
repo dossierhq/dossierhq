@@ -36,6 +36,10 @@ export interface DataDataContextAdapter {
   updateEntity(
     entity: AdminEntityUpdate
   ): PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic>;
+  publishEntity(
+    id: string,
+    version: number
+  ): PromiseResult<void, ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic>;
 }
 
 enum FetcherActions {
@@ -153,9 +157,28 @@ export class DataDataContextValue {
     }
   };
 
+  publishEntity = async (
+    id: string,
+    version: number
+  ): PromiseResult<void, ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic> => {
+    try {
+      const result = await this.#adapter.publishEntity(id, version);
+      if (result.isOk()) {
+        this.invalidateEntityPublished(id);
+      }
+      return result;
+    } catch (error) {
+      return createErrorResultFromError(error, [ErrorType.BadRequest, ErrorType.NotFound]);
+    }
+  };
+
   private invalidateEntity(entity: AdminEntity) {
     mutate([this.#rootKey, FetcherActions.UseEntity, entity.id, null], entity, false);
     mutate([this.#rootKey, FetcherActions.UseEntityHistory, entity.id]);
+  }
+
+  private invalidateEntityPublished(id: string) {
+    mutate([this.#rootKey, FetcherActions.UseEntityHistory, id]);
   }
 
   private fetcher = async (
