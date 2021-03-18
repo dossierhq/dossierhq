@@ -132,46 +132,48 @@ function EntityEditorInner({
   const nameId = `${draftState.id}-_name`;
 
   return (
-    <Form
-      onSubmit={() =>
-        submitEntity(draftState, setSubmitLoading, setSubmitMessage, createEntity, updateEntity)
-      }
-      style={style}
-    >
-      {draftState.initMessage ? <Message {...draftState.initMessage} /> : null}
-      {draftState.entityLoadMessage ? <Message {...draftState.entityLoadMessage} /> : null}
-      <FormField htmlFor={nameId} label="Name">
-        <InputText
-          id={nameId}
-          value={entity.name}
-          onChange={(name) => dispatchEditorState(new SetNameAction(entityId, name))}
-        />
-      </FormField>
-      <Divider />
-      {entity.fields.map(({ fieldSpec, value }) => {
-        const handleFieldChanged = (newValue: unknown) => {
-          dispatchEditorState(new SetFieldAction(entityId, fieldSpec.name, newValue));
-        };
-
-        return (
-          <EntityFieldEditor
-            idPrefix={entityId}
-            key={fieldSpec.name}
-            schema={editorState.schema}
-            fieldSpec={fieldSpec}
-            value={value}
-            onValueChanged={handleFieldChanged}
+    <div data-entityid={entityId}>
+      <Form
+        onSubmit={() =>
+          submitEntity(draftState, setSubmitLoading, setSubmitMessage, createEntity, updateEntity)
+        }
+        style={style}
+      >
+        {draftState.initMessage ? <Message {...draftState.initMessage} /> : null}
+        {draftState.entityLoadMessage ? <Message {...draftState.entityLoadMessage} /> : null}
+        <FormField htmlFor={nameId} label="Name">
+          <InputText
+            id={nameId}
+            value={entity.name}
+            onChange={(name) => dispatchEditorState(new SetNameAction(entityId, name))}
           />
-        );
-      })}
+        </FormField>
+        <Divider />
+        {entity.fields.map(({ fieldSpec, value }) => {
+          const handleFieldChanged = (newValue: unknown) => {
+            dispatchEditorState(new SetFieldAction(entityId, fieldSpec.name, newValue));
+          };
 
-      <Button kind="primary" type="submit" disabled={!entity.name} loading={submitLoading}>
-        Save
-      </Button>
-      {submitMessage ? (
-        <Message {...submitMessage} onDismiss={() => setSubmitMessage(null)} />
-      ) : null}
-    </Form>
+          return (
+            <EntityFieldEditor
+              idPrefix={entityId}
+              key={fieldSpec.name}
+              schema={editorState.schema}
+              fieldSpec={fieldSpec}
+              value={value}
+              onValueChanged={handleFieldChanged}
+            />
+          );
+        })}
+
+        <Button kind="primary" type="submit" disabled={!entity.name} loading={submitLoading}>
+          Save
+        </Button>
+        {submitMessage ? (
+          <Message {...submitMessage} onDismiss={() => setSubmitMessage(null)} />
+        ) : null}
+      </Form>
+    </div>
   );
 }
 

@@ -13,6 +13,7 @@ export type EntityEditorSelector = { id: string } | { id?: string; newType: stri
 export interface EntityEditorState {
   schema: Schema;
   drafts: EntityEditorDraftState[];
+  activeEntityId: string | null;
 }
 
 export interface EntityEditorDraftState {
@@ -68,7 +69,22 @@ export class AddEntityDraftAction implements EntityEditorStateAction {
       entity,
     };
 
-    return { ...state, drafts: [...state.drafts, draft] };
+    return {
+      ...state,
+      drafts: [...state.drafts, draft],
+      activeEntityId: state.activeEntityId ?? id,
+    };
+  }
+}
+
+export class SetActiveEntityAction implements EntityEditorStateAction {
+  #entityId: string | null;
+  constructor(entityId: string | null) {
+    this.#entityId = entityId;
+  }
+
+  reduce(state: EntityEditorState): EntityEditorState {
+    return { ...state, activeEntityId: this.#entityId };
   }
 }
 
@@ -209,7 +225,7 @@ export function reduceEntityEditorState(
 }
 
 export function initializeEntityEditorState({ schema }: { schema: Schema }): EntityEditorState {
-  return { schema, drafts: [] };
+  return { schema, drafts: [], activeEntityId: null };
 }
 
 function createEditorEntityDraftState(
