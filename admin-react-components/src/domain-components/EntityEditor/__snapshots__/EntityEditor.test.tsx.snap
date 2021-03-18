@@ -687,22 +687,30 @@ exports[`FullFoo render 1`] = `
         <div
           className="dd segment has-shadow"
         >
-          <p
-            className="dd text-caption"
+          <div
+            className="dd flex-row g-2"
           >
-            AnnotatedBar 
-            <button
-              className="dd icon-button"
-              data-testid="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBar.remove"
-              onClick={[Function]}
-              title="Remove value item"
-              type="button"
+            <div
+              className="dd flex-grow text-caption"
             >
-              <span
-                className="dd icon icon-remove"
-              />
-            </button>
-          </p>
+              AnnotatedBar
+            </div>
+            <div
+              className="dd"
+            >
+              <button
+                className="dd icon-button"
+                data-testid="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBar.remove"
+                onClick={[Function]}
+                title="Remove value item"
+                type="button"
+              >
+                <span
+                  className="dd icon icon-remove"
+                />
+              </button>
+            </div>
+          </div>
           <div>
             <label
               className="dd text-subtitle1"
@@ -789,22 +797,30 @@ exports[`FullFoo render 1`] = `
           <div
             className="dd segment has-shadow"
           >
-            <p
-              className="dd text-caption"
+            <div
+              className="dd flex-row g-2"
             >
-              AnnotatedBar 
-              <button
-                className="dd icon-button"
-                data-testid="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars.remove"
-                onClick={[Function]}
-                title="Remove value item"
-                type="button"
+              <div
+                className="dd flex-grow text-caption"
               >
-                <span
-                  className="dd icon icon-remove"
-                />
-              </button>
-            </p>
+                AnnotatedBar
+              </div>
+              <div
+                className="dd"
+              >
+                <button
+                  className="dd icon-button"
+                  data-testid="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars.remove"
+                  onClick={[Function]}
+                  title="Remove value item"
+                  type="button"
+                >
+                  <span
+                    className="dd icon icon-remove"
+                  />
+                </button>
+              </div>
+            </div>
             <div>
               <label
                 className="dd text-subtitle1"
@@ -878,22 +894,30 @@ exports[`FullFoo render 1`] = `
           <div
             className="dd segment has-shadow"
           >
-            <p
-              className="dd text-caption"
+            <div
+              className="dd flex-row g-2"
             >
-              AnnotatedBar 
-              <button
-                className="dd icon-button"
-                data-testid="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-1.remove"
-                onClick={[Function]}
-                title="Remove value item"
-                type="button"
+              <div
+                className="dd flex-grow text-caption"
               >
-                <span
-                  className="dd icon icon-remove"
-                />
-              </button>
-            </p>
+                AnnotatedBar
+              </div>
+              <div
+                className="dd"
+              >
+                <button
+                  className="dd icon-button"
+                  data-testid="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-1.remove"
+                  onClick={[Function]}
+                  title="Remove value item"
+                  type="button"
+                >
+                  <span
+                    className="dd icon icon-remove"
+                  />
+                </button>
+              </div>
+            </div>
             <div>
               <label
                 className="dd text-subtitle1"
