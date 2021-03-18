@@ -176,6 +176,46 @@ ul.dd li {
 }
 
 /*
+  SPACING
+*/
+
+.dd.m-0 {
+  margin: 0;
+}
+.dd.m-1 {
+  margin: 0.25rem;
+}
+.dd.m-2 {
+  margin: 0.5rem;
+}
+.dd.m-3 {
+  margin: 0.75rem;
+}
+
+.dd.g-1 {
+  gap: 0.25rem;
+}
+.dd.g-2 {
+  gap: 0.5rem;
+}
+.dd.g-3 {
+  gap: 0.75rem;
+}
+
+/*
+  FLEXBOX
+*/
+
+.dd.flex-grow {
+  flex-grow: 1;
+}
+
+.dd.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+/*
   HELPERS
 */
 
