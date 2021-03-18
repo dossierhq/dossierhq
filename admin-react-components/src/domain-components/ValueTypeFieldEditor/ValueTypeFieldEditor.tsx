@@ -1,8 +1,7 @@
 import type { Value } from '@datadata/core';
 import React, { useCallback } from 'react';
 import type { EntityFieldEditorProps } from '../..';
-import { EntityFieldEditor, IconButton, Segment } from '../..';
-import { TypePicker } from '../TypePicker/TypePicker';
+import { EntityFieldEditor, IconButton, Row, Segment, TypePicker } from '../..';
 
 type Props = EntityFieldEditorProps<Value>;
 
@@ -37,15 +36,19 @@ export function ValueTypeFieldEditor({
 
   return (
     <Segment>
-      <p className="dd text-caption">
-        {type + ' '}
-        <IconButton
-          icon="remove"
-          title="Remove value item"
-          dataTestId={`${id}.remove`}
-          onClick={handleRemove}
-        />
-      </p>
+      <Row gap={2}>
+        <Row.Column grow className="text-caption">
+          {type}
+        </Row.Column>
+        <Row.Column>
+          <IconButton
+            icon="remove"
+            title="Remove value item"
+            dataTestId={`${id}.remove`}
+            onClick={handleRemove}
+          />
+        </Row.Column>
+      </Row>
       {valueSpec.fields.map((valueFieldSpec) => {
         const handleFieldChanged = (newFieldValue: unknown) => {
           const newValue = { ...value };
