@@ -2,6 +2,7 @@
 
 exports[`reduceEntityEditorState AddDraftAction new entity 1`] = `
 Object {
+  "activeEntityId": "e4e78fce-1089-41b8-9b6b-440d2e044061",
   "drafts": Array [
     Object {
       "entity": Object {
@@ -57,6 +58,7 @@ Object {
 
 exports[`reduceEntityEditorState UpdateEntityAction 1`] = `
 Object {
+  "activeEntityId": "fc66b4d7-61ff-44d4-8f68-cb7f526df046",
   "drafts": Array [
     Object {
       "entity": Object {

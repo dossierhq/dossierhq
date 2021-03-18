@@ -1,68 +1,49 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`DeletedFoo render 1`] = `
-<form
-  className="dd segment has-shadow has-background"
-  onSubmit={[Function]}
+<div
+  data-entityid="fb62be03-a0a9-4689-9987-bacee0e7692d"
 >
-  <div>
-    <label
-      className="dd text-subtitle1"
-      htmlFor="fb62be03-a0a9-4689-9987-bacee0e7692d-_name"
-    >
-      Name
-    </label>
-    <div
-      className="dd form-control"
-    >
-      <input
-        className="dd text-body1 input"
-        id="fb62be03-a0a9-4689-9987-bacee0e7692d-_name"
-        onChange={[Function]}
-        type="text"
-        value="Foo deleted"
-      />
-    </div>
-  </div>
-  <hr
-    className="dd divider"
-  />
-  <div>
-    <label
-      className="dd text-subtitle1"
-      htmlFor="fb62be03-a0a9-4689-9987-bacee0e7692d-title"
-    >
-      title
-    </label>
-    <div
-      className="dd form-control"
-    >
-      <div>
+  <form
+    className="dd segment has-shadow has-background"
+    onSubmit={[Function]}
+  >
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="fb62be03-a0a9-4689-9987-bacee0e7692d-_name"
+      >
+        Name
+      </label>
+      <div
+        className="dd form-control"
+      >
         <input
           className="dd text-body1 input"
-          id="fb62be03-a0a9-4689-9987-bacee0e7692d-title"
+          id="fb62be03-a0a9-4689-9987-bacee0e7692d-_name"
           onChange={[Function]}
           type="text"
-          value=""
+          value="Foo deleted"
         />
       </div>
     </div>
-  </div>
-  <div>
-    <label
-      className="dd text-subtitle1"
-      htmlFor="fb62be03-a0a9-4689-9987-bacee0e7692d-tags"
-    >
-      tags
-    </label>
-    <div
-      className="dd form-control"
-    >
-      <div>
+    <hr
+      className="dd divider"
+    />
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="fb62be03-a0a9-4689-9987-bacee0e7692d-title"
+      >
+        title
+      </label>
+      <div
+        className="dd form-control"
+      >
         <div>
           <input
             className="dd text-body1 input"
-            id="fb62be03-a0a9-4689-9987-bacee0e7692d-tags"
+            id="fb62be03-a0a9-4689-9987-bacee0e7692d-title"
             onChange={[Function]}
             type="text"
             value=""
@@ -70,46 +51,39 @@ exports[`DeletedFoo render 1`] = `
         </div>
       </div>
     </div>
-  </div>
-  <div>
-    <label
-      className="dd text-subtitle1"
-      htmlFor="fb62be03-a0a9-4689-9987-bacee0e7692d-location"
-    >
-      location
-    </label>
-    <div
-      className="dd form-control"
-    >
-      <div
-        style={
-          Object {
-            "display": "flex",
-          }
-        }
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="fb62be03-a0a9-4689-9987-bacee0e7692d-tags"
       >
-        <button
-          className="dd button has-background hoverable text-button "
-          id="fb62be03-a0a9-4689-9987-bacee0e7692d-location"
-          onClick={[Function]}
-          type="button"
-        >
-          Select location
-        </button>
+        tags
+      </label>
+      <div
+        className="dd form-control"
+      >
+        <div>
+          <div>
+            <input
+              className="dd text-body1 input"
+              id="fb62be03-a0a9-4689-9987-bacee0e7692d-tags"
+              onChange={[Function]}
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-  <div>
-    <label
-      className="dd text-subtitle1"
-      htmlFor="fb62be03-a0a9-4689-9987-bacee0e7692d-locations"
-    >
-      locations
-    </label>
-    <div
-      className="dd form-control"
-    >
-      <div>
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="fb62be03-a0a9-4689-9987-bacee0e7692d-location"
+      >
+        location
+      </label>
+      <div
+        className="dd form-control"
+      >
         <div
           style={
             Object {
@@ -119,7 +93,7 @@ exports[`DeletedFoo render 1`] = `
         >
           <button
             className="dd button has-background hoverable text-button "
-            id="fb62be03-a0a9-4689-9987-bacee0e7692d-locations"
+            id="fb62be03-a0a9-4689-9987-bacee0e7692d-location"
             onClick={[Function]}
             type="button"
           >
@@ -128,46 +102,46 @@ exports[`DeletedFoo render 1`] = `
         </div>
       </div>
     </div>
-  </div>
-  <div>
-    <label
-      className="dd text-subtitle1"
-      htmlFor="fb62be03-a0a9-4689-9987-bacee0e7692d-bar"
-    >
-      bar
-    </label>
-    <div
-      className="dd form-control"
-    >
-      <div
-        style={
-          Object {
-            "display": "flex",
-          }
-        }
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="fb62be03-a0a9-4689-9987-bacee0e7692d-locations"
       >
-        <button
-          className="dd button has-background hoverable text-button "
-          id="fb62be03-a0a9-4689-9987-bacee0e7692d-bar"
-          onClick={[Function]}
-          type="button"
-        >
-          Select entity
-        </button>
+        locations
+      </label>
+      <div
+        className="dd form-control"
+      >
+        <div>
+          <div
+            style={
+              Object {
+                "display": "flex",
+              }
+            }
+          >
+            <button
+              className="dd button has-background hoverable text-button "
+              id="fb62be03-a0a9-4689-9987-bacee0e7692d-locations"
+              onClick={[Function]}
+              type="button"
+            >
+              Select location
+            </button>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-  <div>
-    <label
-      className="dd text-subtitle1"
-      htmlFor="fb62be03-a0a9-4689-9987-bacee0e7692d-bars"
-    >
-      bars
-    </label>
-    <div
-      className="dd form-control"
-    >
-      <div>
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="fb62be03-a0a9-4689-9987-bacee0e7692d-bar"
+      >
+        bar
+      </label>
+      <div
+        className="dd form-control"
+      >
         <div
           style={
             Object {
@@ -177,7 +151,7 @@ exports[`DeletedFoo render 1`] = `
         >
           <button
             className="dd button has-background hoverable text-button "
-            id="fb62be03-a0a9-4689-9987-bacee0e7692d-bars"
+            id="fb62be03-a0a9-4689-9987-bacee0e7692d-bar"
             onClick={[Function]}
             type="button"
           >
@@ -186,55 +160,53 @@ exports[`DeletedFoo render 1`] = `
         </div>
       </div>
     </div>
-  </div>
-  <div>
-    <label
-      className="dd text-subtitle1"
-      htmlFor="fb62be03-a0a9-4689-9987-bacee0e7692d-annotatedBar"
-    >
-      annotatedBar
-    </label>
-    <div
-      className="dd form-control"
-    >
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="fb62be03-a0a9-4689-9987-bacee0e7692d-bars"
+      >
+        bars
+      </label>
       <div
-        className="dd segment has-shadow"
+        className="dd form-control"
       >
         <div>
-          <button
-            className="dd button has-background hoverable text-button "
-            id="fb62be03-a0a9-4689-9987-bacee0e7692d-annotatedBar"
-            onClick={[Function]}
-            type="button"
+          <div
+            style={
+              Object {
+                "display": "flex",
+              }
+            }
           >
-            Add value item
-             
-            <span
-              className="dd icon icon-chevron-down"
-            />
-          </button>
+            <button
+              className="dd button has-background hoverable text-button "
+              id="fb62be03-a0a9-4689-9987-bacee0e7692d-bars"
+              onClick={[Function]}
+              type="button"
+            >
+              Select entity
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <div>
-    <label
-      className="dd text-subtitle1"
-      htmlFor="fb62be03-a0a9-4689-9987-bacee0e7692d-annotatedBars"
-    >
-      annotatedBars
-    </label>
-    <div
-      className="dd form-control"
-    >
-      <div>
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="fb62be03-a0a9-4689-9987-bacee0e7692d-annotatedBar"
+      >
+        annotatedBar
+      </label>
+      <div
+        className="dd form-control"
+      >
         <div
           className="dd segment has-shadow"
         >
           <div>
             <button
               className="dd button has-background hoverable text-button "
-              id="fb62be03-a0a9-4689-9987-bacee0e7692d-annotatedBars"
+              id="fb62be03-a0a9-4689-9987-bacee0e7692d-annotatedBar"
               onClick={[Function]}
               type="button"
             >
@@ -248,234 +220,230 @@ exports[`DeletedFoo render 1`] = `
         </div>
       </div>
     </div>
-  </div>
-  <div>
-    <label
-      className="dd text-subtitle1"
-      htmlFor="fb62be03-a0a9-4689-9987-bacee0e7692d-nested"
-    >
-      nested
-    </label>
-    <div
-      className="dd form-control"
-    >
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="fb62be03-a0a9-4689-9987-bacee0e7692d-annotatedBars"
+      >
+        annotatedBars
+      </label>
       <div
-        className="dd segment has-shadow"
+        className="dd form-control"
       >
         <div>
-          <button
-            className="dd button has-background hoverable text-button "
-            id="fb62be03-a0a9-4689-9987-bacee0e7692d-nested"
-            onClick={[Function]}
-            type="button"
+          <div
+            className="dd segment has-shadow"
           >
-            Add value item
-             
-            <span
-              className="dd icon icon-chevron-down"
-            />
-          </button>
+            <div>
+              <button
+                className="dd button has-background hoverable text-button "
+                id="fb62be03-a0a9-4689-9987-bacee0e7692d-annotatedBars"
+                onClick={[Function]}
+                type="button"
+              >
+                Add value item
+                 
+                <span
+                  className="dd icon icon-chevron-down"
+                />
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <button
-    className="dd button has-background hoverable text-button bg-primary"
-    disabled={false}
-    type="submit"
-  >
-    Save
-  </button>
-</form>
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="fb62be03-a0a9-4689-9987-bacee0e7692d-nested"
+      >
+        nested
+      </label>
+      <div
+        className="dd form-control"
+      >
+        <div
+          className="dd segment has-shadow"
+        >
+          <div>
+            <button
+              className="dd button has-background hoverable text-button "
+              id="fb62be03-a0a9-4689-9987-bacee0e7692d-nested"
+              onClick={[Function]}
+              type="button"
+            >
+              Add value item
+               
+              <span
+                className="dd icon icon-chevron-down"
+              />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button
+      className="dd button has-background hoverable text-button bg-primary"
+      disabled={false}
+      type="submit"
+    >
+      Save
+    </button>
+  </form>
+</div>
 `;
 
 exports[`FullFoo render 1`] = `
-<form
-  className="dd segment has-shadow has-background"
-  onSubmit={[Function]}
+<div
+  data-entityid="fc66b4d7-61ff-44d4-8f68-cb7f526df046"
 >
-  <div>
-    <label
-      className="dd text-subtitle1"
-      htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-_name"
-    >
-      Name
-    </label>
-    <div
-      className="dd form-control"
-    >
-      <input
-        className="dd text-body1 input"
-        id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-_name"
-        onChange={[Function]}
-        type="text"
-        value="Foo 1"
-      />
-    </div>
-  </div>
-  <hr
-    className="dd divider"
-  />
-  <div>
-    <label
-      className="dd text-subtitle1"
-      htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-title"
-    >
-      title
-    </label>
-    <div
-      className="dd form-control"
-    >
-      <div>
+  <form
+    className="dd segment has-shadow has-background"
+    onSubmit={[Function]}
+  >
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-_name"
+      >
+        Name
+      </label>
+      <div
+        className="dd form-control"
+      >
         <input
           className="dd text-body1 input"
-          id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-title"
+          id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-_name"
           onChange={[Function]}
           type="text"
-          value="Hello"
+          value="Foo 1"
         />
-        <button
-          className="dd icon-button"
-          onClick={[Function]}
-          title="Clear"
-          type="button"
-        >
-          <span
-            className="dd icon icon-remove"
-          />
-        </button>
       </div>
     </div>
-  </div>
-  <div>
-    <label
-      className="dd text-subtitle1"
-      htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-tags"
-    >
-      tags
-    </label>
-    <div
-      className="dd form-control"
-    >
-      <div>
-        <div>
-          <input
-            className="dd text-body1 input"
-            id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-tags"
-            onChange={[Function]}
-            type="text"
-            value="one"
-          />
-          <button
-            className="dd icon-button"
-            onClick={[Function]}
-            title="Remove item"
-            type="button"
-          >
-            <span
-              className="dd icon icon-remove"
-            />
-          </button>
-        </div>
-        <div>
-          <input
-            className="dd text-body1 input"
-            id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-tags-1"
-            onChange={[Function]}
-            type="text"
-            value="two"
-          />
-          <button
-            className="dd icon-button"
-            onClick={[Function]}
-            title="Remove item"
-            type="button"
-          >
-            <span
-              className="dd icon icon-remove"
-            />
-          </button>
-        </div>
-        <div>
-          <input
-            className="dd text-body1 input"
-            id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-tags-2"
-            onChange={[Function]}
-            type="text"
-            value="three"
-          />
-          <button
-            className="dd icon-button"
-            onClick={[Function]}
-            title="Remove item"
-            type="button"
-          >
-            <span
-              className="dd icon icon-remove"
-            />
-          </button>
-        </div>
-        <div>
-          <input
-            className="dd text-body1 input"
-            id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-tags-3"
-            onChange={[Function]}
-            type="text"
-            value=""
-          />
-        </div>
-      </div>
-    </div>
-  </div>
-  <div>
-    <label
-      className="dd text-subtitle1"
-      htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-location"
-    >
-      location
-    </label>
-    <div
-      className="dd form-control"
-    >
-      <div
-        style={
-          Object {
-            "display": "flex",
-          }
-        }
+    <hr
+      className="dd divider"
+    />
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-title"
       >
-        <button
-          className="dd button has-background hoverable text-button "
-          id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-location"
-          onClick={[Function]}
-          type="button"
-        >
-          55.60498, 13.003822
-        </button>
-        <button
-          className="dd icon-button"
-          onClick={[Function]}
-          title="Remove location"
-          type="button"
-        >
-          <span
-            className="dd icon icon-remove"
+        title
+      </label>
+      <div
+        className="dd form-control"
+      >
+        <div>
+          <input
+            className="dd text-body1 input"
+            id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-title"
+            onChange={[Function]}
+            type="text"
+            value="Hello"
           />
-        </button>
+          <button
+            className="dd icon-button"
+            onClick={[Function]}
+            title="Clear"
+            type="button"
+          >
+            <span
+              className="dd icon icon-remove"
+            />
+          </button>
+        </div>
       </div>
     </div>
-  </div>
-  <div>
-    <label
-      className="dd text-subtitle1"
-      htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-locations"
-    >
-      locations
-    </label>
-    <div
-      className="dd form-control"
-    >
-      <div>
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-tags"
+      >
+        tags
+      </label>
+      <div
+        className="dd form-control"
+      >
+        <div>
+          <div>
+            <input
+              className="dd text-body1 input"
+              id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-tags"
+              onChange={[Function]}
+              type="text"
+              value="one"
+            />
+            <button
+              className="dd icon-button"
+              onClick={[Function]}
+              title="Remove item"
+              type="button"
+            >
+              <span
+                className="dd icon icon-remove"
+              />
+            </button>
+          </div>
+          <div>
+            <input
+              className="dd text-body1 input"
+              id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-tags-1"
+              onChange={[Function]}
+              type="text"
+              value="two"
+            />
+            <button
+              className="dd icon-button"
+              onClick={[Function]}
+              title="Remove item"
+              type="button"
+            >
+              <span
+                className="dd icon icon-remove"
+              />
+            </button>
+          </div>
+          <div>
+            <input
+              className="dd text-body1 input"
+              id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-tags-2"
+              onChange={[Function]}
+              type="text"
+              value="three"
+            />
+            <button
+              className="dd icon-button"
+              onClick={[Function]}
+              title="Remove item"
+              type="button"
+            >
+              <span
+                className="dd icon icon-remove"
+              />
+            </button>
+          </div>
+          <div>
+            <input
+              className="dd text-body1 input"
+              id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-tags-3"
+              onChange={[Function]}
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-location"
+      >
+        location
+      </label>
+      <div
+        className="dd form-control"
+      >
         <div
           style={
             Object {
@@ -485,7 +453,7 @@ exports[`FullFoo render 1`] = `
         >
           <button
             className="dd button has-background hoverable text-button "
-            id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-locations"
+            id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-location"
             onClick={[Function]}
             type="button"
           >
@@ -502,100 +470,100 @@ exports[`FullFoo render 1`] = `
             />
           </button>
         </div>
-        <div
-          style={
-            Object {
-              "display": "flex",
-            }
-          }
-        >
-          <button
-            className="dd button has-background hoverable text-button "
-            id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-locations-1"
-            onClick={[Function]}
-            type="button"
-          >
-            56.381561, 13.99286
-          </button>
-          <button
-            className="dd icon-button"
-            onClick={[Function]}
-            title="Remove location"
-            type="button"
-          >
-            <span
-              className="dd icon icon-remove"
-            />
-          </button>
-        </div>
-        <div
-          style={
-            Object {
-              "display": "flex",
-            }
-          }
-        >
-          <button
-            className="dd button has-background hoverable text-button "
-            id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-locations-2"
-            onClick={[Function]}
-            type="button"
-          >
-            Select location
-          </button>
-        </div>
       </div>
     </div>
-  </div>
-  <div>
-    <label
-      className="dd text-subtitle1"
-      htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-bar"
-    >
-      bar
-    </label>
-    <div
-      className="dd form-control"
-    >
-      <div
-        style={
-          Object {
-            "display": "flex",
-          }
-        }
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-locations"
       >
-        <button
-          className="dd button has-background hoverable text-button "
-          id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-bar"
-          onClick={[Function]}
-          type="button"
-        >
-          Bar 1
-        </button>
-        <button
-          className="dd icon-button"
-          onClick={[Function]}
-          title="Remove entity"
-          type="button"
-        >
-          <span
-            className="dd icon icon-remove"
-          />
-        </button>
+        locations
+      </label>
+      <div
+        className="dd form-control"
+      >
+        <div>
+          <div
+            style={
+              Object {
+                "display": "flex",
+              }
+            }
+          >
+            <button
+              className="dd button has-background hoverable text-button "
+              id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-locations"
+              onClick={[Function]}
+              type="button"
+            >
+              55.60498, 13.003822
+            </button>
+            <button
+              className="dd icon-button"
+              onClick={[Function]}
+              title="Remove location"
+              type="button"
+            >
+              <span
+                className="dd icon icon-remove"
+              />
+            </button>
+          </div>
+          <div
+            style={
+              Object {
+                "display": "flex",
+              }
+            }
+          >
+            <button
+              className="dd button has-background hoverable text-button "
+              id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-locations-1"
+              onClick={[Function]}
+              type="button"
+            >
+              56.381561, 13.99286
+            </button>
+            <button
+              className="dd icon-button"
+              onClick={[Function]}
+              title="Remove location"
+              type="button"
+            >
+              <span
+                className="dd icon icon-remove"
+              />
+            </button>
+          </div>
+          <div
+            style={
+              Object {
+                "display": "flex",
+              }
+            }
+          >
+            <button
+              className="dd button has-background hoverable text-button "
+              id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-locations-2"
+              onClick={[Function]}
+              type="button"
+            >
+              Select location
+            </button>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-  <div>
-    <label
-      className="dd text-subtitle1"
-      htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-bars"
-    >
-      bars
-    </label>
-    <div
-      className="dd form-control"
-    >
-      <div>
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-bar"
+      >
+        bar
+      </label>
+      <div
+        className="dd form-control"
+      >
         <div
           style={
             Object {
@@ -605,7 +573,7 @@ exports[`FullFoo render 1`] = `
         >
           <button
             className="dd button has-background hoverable text-button "
-            id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-bars"
+            id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-bar"
             onClick={[Function]}
             type="button"
           >
@@ -622,163 +590,100 @@ exports[`FullFoo render 1`] = `
             />
           </button>
         </div>
-        <div
-          style={
-            Object {
-              "display": "flex",
-            }
-          }
-        >
-          <button
-            className="dd button has-background hoverable text-button "
-            id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-bars-1"
-            onClick={[Function]}
-            type="button"
-          >
-            Bar 2
-          </button>
-          <button
-            className="dd icon-button"
-            onClick={[Function]}
-            title="Remove entity"
-            type="button"
-          >
-            <span
-              className="dd icon icon-remove"
-            />
-          </button>
-        </div>
-        <div
-          style={
-            Object {
-              "display": "flex",
-            }
-          }
-        >
-          <button
-            className="dd button has-background hoverable text-button "
-            id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-bars-2"
-            onClick={[Function]}
-            type="button"
-          >
-            Select entity
-          </button>
-        </div>
       </div>
     </div>
-  </div>
-  <div>
-    <label
-      className="dd text-subtitle1"
-      htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBar"
-    >
-      annotatedBar
-    </label>
-    <div
-      className="dd form-control"
-    >
-      <div
-        className="dd segment has-shadow"
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-bars"
       >
-        <p
-          className="dd text-caption"
-        >
-          AnnotatedBar 
-          <button
-            className="dd icon-button"
-            data-testid="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBar.remove"
-            onClick={[Function]}
-            title="Remove value item"
-            type="button"
-          >
-            <span
-              className="dd icon icon-remove"
-            />
-          </button>
-        </p>
+        bars
+      </label>
+      <div
+        className="dd form-control"
+      >
         <div>
-          <label
-            className="dd text-subtitle1"
-            htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBar-annotation"
-          >
-            annotation
-          </label>
           <div
-            className="dd form-control"
-          >
-            <div>
-              <input
-                className="dd text-body1 input"
-                id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBar-annotation"
-                onChange={[Function]}
-                type="text"
-                value="Annotation"
-              />
-              <button
-                className="dd icon-button"
-                onClick={[Function]}
-                title="Clear"
-                type="button"
-              >
-                <span
-                  className="dd icon icon-remove"
-                />
-              </button>
-            </div>
-          </div>
-        </div>
-        <div>
-          <label
-            className="dd text-subtitle1"
-            htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBar-bar"
-          >
-            bar
-          </label>
-          <div
-            className="dd form-control"
-          >
-            <div
-              style={
-                Object {
-                  "display": "flex",
-                }
+            style={
+              Object {
+                "display": "flex",
               }
+            }
+          >
+            <button
+              className="dd button has-background hoverable text-button "
+              id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-bars"
+              onClick={[Function]}
+              type="button"
             >
-              <button
-                className="dd button has-background hoverable text-button "
-                id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBar-bar"
-                onClick={[Function]}
-                type="button"
-              >
-                Bar 2
-              </button>
-              <button
-                className="dd icon-button"
-                onClick={[Function]}
-                title="Remove entity"
-                type="button"
-              >
-                <span
-                  className="dd icon icon-remove"
-                />
-              </button>
-            </div>
+              Bar 1
+            </button>
+            <button
+              className="dd icon-button"
+              onClick={[Function]}
+              title="Remove entity"
+              type="button"
+            >
+              <span
+                className="dd icon icon-remove"
+              />
+            </button>
+          </div>
+          <div
+            style={
+              Object {
+                "display": "flex",
+              }
+            }
+          >
+            <button
+              className="dd button has-background hoverable text-button "
+              id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-bars-1"
+              onClick={[Function]}
+              type="button"
+            >
+              Bar 2
+            </button>
+            <button
+              className="dd icon-button"
+              onClick={[Function]}
+              title="Remove entity"
+              type="button"
+            >
+              <span
+                className="dd icon icon-remove"
+              />
+            </button>
+          </div>
+          <div
+            style={
+              Object {
+                "display": "flex",
+              }
+            }
+          >
+            <button
+              className="dd button has-background hoverable text-button "
+              id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-bars-2"
+              onClick={[Function]}
+              type="button"
+            >
+              Select entity
+            </button>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <div>
-    <label
-      className="dd text-subtitle1"
-      htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars"
-    >
-      annotatedBars
-    </label>
-    <div
-      className="dd form-control"
-    >
-      <div>
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBar"
+      >
+        annotatedBar
+      </label>
+      <div
+        className="dd form-control"
+      >
         <div
           className="dd segment has-shadow"
         >
@@ -788,7 +693,7 @@ exports[`FullFoo render 1`] = `
             AnnotatedBar 
             <button
               className="dd icon-button"
-              data-testid="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars.remove"
+              data-testid="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBar.remove"
               onClick={[Function]}
               title="Remove value item"
               type="button"
@@ -801,7 +706,7 @@ exports[`FullFoo render 1`] = `
           <div>
             <label
               className="dd text-subtitle1"
-              htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-annotation"
+              htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBar-annotation"
             >
               annotation
             </label>
@@ -811,10 +716,10 @@ exports[`FullFoo render 1`] = `
               <div>
                 <input
                   className="dd text-body1 input"
-                  id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-annotation"
+                  id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBar-annotation"
                   onChange={[Function]}
                   type="text"
-                  value="First"
+                  value="Annotation"
                 />
                 <button
                   className="dd icon-button"
@@ -832,7 +737,7 @@ exports[`FullFoo render 1`] = `
           <div>
             <label
               className="dd text-subtitle1"
-              htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-bar"
+              htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBar-bar"
             >
               bar
             </label>
@@ -848,96 +753,7 @@ exports[`FullFoo render 1`] = `
               >
                 <button
                   className="dd button has-background hoverable text-button "
-                  id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-bar"
-                  onClick={[Function]}
-                  type="button"
-                >
-                  Bar 1
-                </button>
-                <button
-                  className="dd icon-button"
-                  onClick={[Function]}
-                  title="Remove entity"
-                  type="button"
-                >
-                  <span
-                    className="dd icon icon-remove"
-                  />
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div
-          className="dd segment has-shadow"
-        >
-          <p
-            className="dd text-caption"
-          >
-            AnnotatedBar 
-            <button
-              className="dd icon-button"
-              data-testid="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-1.remove"
-              onClick={[Function]}
-              title="Remove value item"
-              type="button"
-            >
-              <span
-                className="dd icon icon-remove"
-              />
-            </button>
-          </p>
-          <div>
-            <label
-              className="dd text-subtitle1"
-              htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-1-annotation"
-            >
-              annotation
-            </label>
-            <div
-              className="dd form-control"
-            >
-              <div>
-                <input
-                  className="dd text-body1 input"
-                  id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-1-annotation"
-                  onChange={[Function]}
-                  type="text"
-                  value="Second"
-                />
-                <button
-                  className="dd icon-button"
-                  onClick={[Function]}
-                  title="Clear"
-                  type="button"
-                >
-                  <span
-                    className="dd icon icon-remove"
-                  />
-                </button>
-              </div>
-            </div>
-          </div>
-          <div>
-            <label
-              className="dd text-subtitle1"
-              htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-1-bar"
-            >
-              bar
-            </label>
-            <div
-              className="dd form-control"
-            >
-              <div
-                style={
-                  Object {
-                    "display": "flex",
-                  }
-                }
-              >
-                <button
-                  className="dd button has-background hoverable text-button "
-                  id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-1-bar"
+                  id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBar-bar"
                   onClick={[Function]}
                   type="button"
                 >
@@ -957,13 +773,235 @@ exports[`FullFoo render 1`] = `
             </div>
           </div>
         </div>
+      </div>
+    </div>
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars"
+      >
+        annotatedBars
+      </label>
+      <div
+        className="dd form-control"
+      >
+        <div>
+          <div
+            className="dd segment has-shadow"
+          >
+            <p
+              className="dd text-caption"
+            >
+              AnnotatedBar 
+              <button
+                className="dd icon-button"
+                data-testid="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars.remove"
+                onClick={[Function]}
+                title="Remove value item"
+                type="button"
+              >
+                <span
+                  className="dd icon icon-remove"
+                />
+              </button>
+            </p>
+            <div>
+              <label
+                className="dd text-subtitle1"
+                htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-annotation"
+              >
+                annotation
+              </label>
+              <div
+                className="dd form-control"
+              >
+                <div>
+                  <input
+                    className="dd text-body1 input"
+                    id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-annotation"
+                    onChange={[Function]}
+                    type="text"
+                    value="First"
+                  />
+                  <button
+                    className="dd icon-button"
+                    onClick={[Function]}
+                    title="Clear"
+                    type="button"
+                  >
+                    <span
+                      className="dd icon icon-remove"
+                    />
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div>
+              <label
+                className="dd text-subtitle1"
+                htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-bar"
+              >
+                bar
+              </label>
+              <div
+                className="dd form-control"
+              >
+                <div
+                  style={
+                    Object {
+                      "display": "flex",
+                    }
+                  }
+                >
+                  <button
+                    className="dd button has-background hoverable text-button "
+                    id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-bar"
+                    onClick={[Function]}
+                    type="button"
+                  >
+                    Bar 1
+                  </button>
+                  <button
+                    className="dd icon-button"
+                    onClick={[Function]}
+                    title="Remove entity"
+                    type="button"
+                  >
+                    <span
+                      className="dd icon icon-remove"
+                    />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            className="dd segment has-shadow"
+          >
+            <p
+              className="dd text-caption"
+            >
+              AnnotatedBar 
+              <button
+                className="dd icon-button"
+                data-testid="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-1.remove"
+                onClick={[Function]}
+                title="Remove value item"
+                type="button"
+              >
+                <span
+                  className="dd icon icon-remove"
+                />
+              </button>
+            </p>
+            <div>
+              <label
+                className="dd text-subtitle1"
+                htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-1-annotation"
+              >
+                annotation
+              </label>
+              <div
+                className="dd form-control"
+              >
+                <div>
+                  <input
+                    className="dd text-body1 input"
+                    id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-1-annotation"
+                    onChange={[Function]}
+                    type="text"
+                    value="Second"
+                  />
+                  <button
+                    className="dd icon-button"
+                    onClick={[Function]}
+                    title="Clear"
+                    type="button"
+                  >
+                    <span
+                      className="dd icon icon-remove"
+                    />
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div>
+              <label
+                className="dd text-subtitle1"
+                htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-1-bar"
+              >
+                bar
+              </label>
+              <div
+                className="dd form-control"
+              >
+                <div
+                  style={
+                    Object {
+                      "display": "flex",
+                    }
+                  }
+                >
+                  <button
+                    className="dd button has-background hoverable text-button "
+                    id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-1-bar"
+                    onClick={[Function]}
+                    type="button"
+                  >
+                    Bar 2
+                  </button>
+                  <button
+                    className="dd icon-button"
+                    onClick={[Function]}
+                    title="Remove entity"
+                    type="button"
+                  >
+                    <span
+                      className="dd icon icon-remove"
+                    />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            className="dd segment has-shadow"
+          >
+            <div>
+              <button
+                className="dd button has-background hoverable text-button "
+                id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-2"
+                onClick={[Function]}
+                type="button"
+              >
+                Add value item
+                 
+                <span
+                  className="dd icon icon-chevron-down"
+                />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-nested"
+      >
+        nested
+      </label>
+      <div
+        className="dd form-control"
+      >
         <div
           className="dd segment has-shadow"
         >
           <div>
             <button
               className="dd button has-background hoverable text-button "
-              id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-2"
+              id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-nested"
               onClick={[Function]}
               type="button"
             >
@@ -977,45 +1015,15 @@ exports[`FullFoo render 1`] = `
         </div>
       </div>
     </div>
-  </div>
-  <div>
-    <label
-      className="dd text-subtitle1"
-      htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-nested"
+    <button
+      className="dd button has-background hoverable text-button bg-primary"
+      disabled={false}
+      type="submit"
     >
-      nested
-    </label>
-    <div
-      className="dd form-control"
-    >
-      <div
-        className="dd segment has-shadow"
-      >
-        <div>
-          <button
-            className="dd button has-background hoverable text-button "
-            id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-nested"
-            onClick={[Function]}
-            type="button"
-          >
-            Add value item
-             
-            <span
-              className="dd icon icon-chevron-down"
-            />
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <button
-    className="dd button has-background hoverable text-button bg-primary"
-    disabled={false}
-    type="submit"
-  >
-    Save
-  </button>
-</form>
+      Save
+    </button>
+  </form>
+</div>
 `;
 
 exports[`NewFoo render 1`] = `
