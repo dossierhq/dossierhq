@@ -98,6 +98,10 @@ ul.dd li {
   margin-top: 0.5rem;
 }
 
+.dd {
+  box-sizing: border-box;
+}
+
 /*
   COLORS
 */

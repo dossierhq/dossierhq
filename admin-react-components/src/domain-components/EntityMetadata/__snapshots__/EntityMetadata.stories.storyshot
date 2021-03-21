@@ -47,56 +47,60 @@ exports[`Storyshots Domain/EntityMetadata Deleted 1`] = `
     </p>
   </div>
   <div
-    className="dd dd has-shadow p-2"
-    onClick={[Function]}
+    className="dd flex-grow overflow-y-scroll"
   >
-    <p
-      className="dd text-subtitle2"
+    <div
+      className="dd has-shadow p-2"
+      onClick={[Function]}
     >
-      Version 
-      0
-    </p>
-    <p
-      className="dd text-body1"
-    >
-      3/10/2021, 7:19:39 PM
-    </p>
-    <p
-      className="dd text-body1"
-    >
-      a10e49cd-2f4e-4249-b8ee-eaca8466939b
-    </p>
-  </div>
-  <div
-    className="dd dd has-shadow p-2"
-    onClick={[Function]}
-  >
-    <p
-      className="dd text-subtitle2"
-    >
-      Version 
-      1
-      <span
-        className="dd has-background text-caption bg-danger"
+      <p
+        className="dd text-subtitle2"
       >
-        Deleted
-      </span>
-      <span
-        className="dd has-background text-caption bg-primary"
+        Version 
+        0
+      </p>
+      <p
+        className="dd text-body1"
       >
-        Published
-      </span>
-    </p>
-    <p
-      className="dd text-body1"
+        3/10/2021, 7:19:39 PM
+      </p>
+      <p
+        className="dd text-body1"
+      >
+        a10e49cd-2f4e-4249-b8ee-eaca8466939b
+      </p>
+    </div>
+    <div
+      className="dd has-shadow p-2"
+      onClick={[Function]}
     >
-      3/11/2021, 9:19:39 PM
-    </p>
-    <p
-      className="dd text-body1"
-    >
-      a10e49cd-2f4e-4249-b8ee-eaca8466939b
-    </p>
+      <p
+        className="dd text-subtitle2"
+      >
+        Version 
+        1
+        <span
+          className="dd has-background text-caption bg-danger"
+        >
+          Deleted
+        </span>
+        <span
+          className="dd has-background text-caption bg-primary"
+        >
+          Published
+        </span>
+      </p>
+      <p
+        className="dd text-body1"
+      >
+        3/11/2021, 9:19:39 PM
+      </p>
+      <p
+        className="dd text-body1"
+      >
+        a10e49cd-2f4e-4249-b8ee-eaca8466939b
+      </p>
+    </div>
   </div>
   <button
     className="dd button has-background hoverable text-button bg-primary"
@@ -155,30 +159,34 @@ exports[`Storyshots Domain/EntityMetadata Normal 1`] = `
     </p>
   </div>
   <div
-    className="dd dd has-shadow p-2"
-    onClick={[Function]}
+    className="dd flex-grow overflow-y-scroll"
   >
-    <p
-      className="dd text-subtitle2"
+    <div
+      className="dd has-shadow p-2"
+      onClick={[Function]}
     >
-      Version 
-      0
-      <span
-        className="dd has-background text-caption bg-primary"
+      <p
+        className="dd text-subtitle2"
       >
-        Published
-      </span>
-    </p>
-    <p
-      className="dd text-body1"
-    >
-      3/11/2021, 9:19:39 PM
-    </p>
-    <p
-      className="dd text-body1"
-    >
-      a10e49cd-2f4e-4249-b8ee-eaca8466939b
-    </p>
+        Version 
+        0
+        <span
+          className="dd has-background text-caption bg-primary"
+        >
+          Published
+        </span>
+      </p>
+      <p
+        className="dd text-body1"
+      >
+        3/11/2021, 9:19:39 PM
+      </p>
+      <p
+        className="dd text-body1"
+      >
+        a10e49cd-2f4e-4249-b8ee-eaca8466939b
+      </p>
+    </div>
   </div>
   <button
     className="dd button has-background hoverable text-button bg-primary"
