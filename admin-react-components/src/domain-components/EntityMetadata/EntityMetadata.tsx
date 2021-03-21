@@ -57,28 +57,32 @@ function EntityMetadataInner({
             <p className="dd text-subtitle2">ID</p>
             <p className="dd text-body1">{entityHistory.id}</p>
           </ColumnItem>
-          {entityHistory.versions.map((version) => {
-            return (
-              <ColumnItem
-                key={version.version}
-                className="dd has-shadow p-2"
-                onClick={() => setSelectedVersionId(version.version)}
-              >
-                <p className="dd text-subtitle2">
-                  Version {version.version}
-                  {version.deleted ? <Tag kind="danger" text="Deleted" /> : null}
-                  {version.published ? <Tag kind="primary" text="Published" /> : null}
-                  {version.version === selectedVersionId ? (
-                    <Tag kind="primary" text="Selected" />
-                  ) : null}
-                </p>
-                <p className="dd text-body1">{version.createdAt.toLocaleString()}</p>
-                <p className="dd text-body1">{version.createdBy}</p>
-              </ColumnItem>
-            );
-          })}
         </>
       ) : null}
+      <ColumnItem className="overflow-y-scroll" grow>
+        {entityHistory
+          ? entityHistory.versions.map((version) => {
+              return (
+                <div
+                  key={version.version}
+                  className="dd has-shadow p-2"
+                  onClick={() => setSelectedVersionId(version.version)}
+                >
+                  <p className="dd text-subtitle2">
+                    Version {version.version}
+                    {version.deleted ? <Tag kind="danger" text="Deleted" /> : null}
+                    {version.published ? <Tag kind="primary" text="Published" /> : null}
+                    {version.version === selectedVersionId ? (
+                      <Tag kind="primary" text="Selected" />
+                    ) : null}
+                  </p>
+                  <p className="dd text-body1">{version.createdAt.toLocaleString()}</p>
+                  <p className="dd text-body1">{version.createdBy}</p>
+                </div>
+              );
+            })
+          : null}
+      </ColumnItem>
       <PublishButton entityId={entityId} version={selectedVersion} publishEntity={publishEntity} />
       {entityHistoryError ? (
         <Message

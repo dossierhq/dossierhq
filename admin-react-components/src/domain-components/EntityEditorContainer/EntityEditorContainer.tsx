@@ -45,9 +45,7 @@ export function EntityEditorContainer({
         />
       </div>
       <div>
-        {activeEntityId ? (
-          <EntityMetadata className="overflow-y-scroll h-100" entityId={activeEntityId} />
-        ) : null}
+        {activeEntityId ? <EntityMetadata className="h-100" entityId={activeEntityId} /> : null}
       </div>
     </div>
   );
