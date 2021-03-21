@@ -3,6 +3,7 @@ import type { LayoutProps, SpacingSize } from '../..';
 import { gapClassName, joinClassNames } from '../../utils/ClassNameUtils';
 
 export interface RowProps {
+  className?: string;
   gap?: SpacingSize;
   children: React.ReactNode;
 }
@@ -21,8 +22,10 @@ type RowElementProps<Tag extends keyof JSX.IntrinsicElements> = JSX.IntrinsicEle
   children?: React.ReactNode;
 };
 
-export function Row({ gap, children }: RowProps): JSX.Element {
-  return <div className={joinClassNames('dd flex-row', gapClassName(gap))}>{children}</div>;
+export function Row({ className, gap, children }: RowProps): JSX.Element {
+  return (
+    <div className={joinClassNames('dd flex-row', className, gapClassName(gap))}>{children}</div>
+  );
 }
 
 function itemPropsAsClassName({

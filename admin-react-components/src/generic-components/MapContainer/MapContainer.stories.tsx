@@ -7,7 +7,7 @@ const meta: Meta<MapContainerProps> = {
   title: 'Generic/MapContainer',
   component: MapContainer,
   args: {
-    style: { width: '300px', height: '300px' },
+    className: 'position-fixed inset-0',
   },
 };
 export default meta;

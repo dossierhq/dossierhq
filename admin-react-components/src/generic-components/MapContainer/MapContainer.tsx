@@ -9,6 +9,7 @@ import {
   Tooltip,
   useMapEvents,
 } from 'react-leaflet';
+import { joinClassNames } from '../../utils/ClassNameUtils';
 
 const defaultCenter = { lat: 55.60498, lng: 13.003822 };
 
@@ -23,8 +24,8 @@ const currentMarkerIcon = new Icon({
 });
 
 export interface MapContainerProps {
+  className?: string;
   center: Location | null;
-  style?: React.CSSProperties;
   onBoundingBoxChanged?: (boundingBox: BoundingBox) => void;
   children: React.ReactNode;
 }
@@ -46,13 +47,18 @@ interface MapContainerComponent extends FunctionComponent<MapContainerProps> {
 }
 
 export const MapContainer: MapContainerComponent = ({
+  className,
   center,
-  style,
   onBoundingBoxChanged,
   children,
 }: MapContainerProps) => {
   return (
-    <LeafletMapContainer center={center ?? defaultCenter} zoom={13} scrollWheelZoom style={style}>
+    <LeafletMapContainer
+      className={joinClassNames('dd', className)}
+      center={center ?? defaultCenter}
+      zoom={13}
+      scrollWheelZoom
+    >
       {onBoundingBoxChanged ? (
         <MapEventListener onBoundingBoxChanged={onBoundingBoxChanged} />
       ) : null}
