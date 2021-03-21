@@ -1,27 +1,32 @@
 import React from 'react';
 import { gapClassName, joinClassNames } from '../../utils/ClassNameUtils';
 
-export interface RowProps {
+export interface ColumnProps {
+  className?: string;
   gap?: SpacingSize;
   children: React.ReactNode;
 }
 
-type RowItemProps<AsProps extends LayoutProps> = AsProps & {
+type ColumnItemProps<AsProps extends LayoutProps> = AsProps & {
   as?: React.JSXElementConstructor<AsProps>;
   grow?: boolean;
   className?: string;
   children?: React.ReactNode;
 };
 
-type RowElementProps<Tag extends keyof JSX.IntrinsicElements> = JSX.IntrinsicElements[Tag] & {
+type ColumnElementProps<Tag extends keyof JSX.IntrinsicElements> = JSX.IntrinsicElements[Tag] & {
   as?: Tag;
   grow?: boolean;
   className?: string;
   children?: React.ReactNode;
 };
 
-export function Row({ gap, children }: RowProps): JSX.Element {
-  return <div className={joinClassNames('dd flex-row', gapClassName(gap))}>{children}</div>;
+export function Column({ className, gap, children }: ColumnProps): JSX.Element {
+  return (
+    <ColumnItem className={joinClassNames('dd flex-column', className, gapClassName(gap))}>
+      {children}
+    </ColumnItem>
+  );
 }
 
 function itemPropsAsClassName({
@@ -34,13 +39,13 @@ function itemPropsAsClassName({
   return joinClassNames('dd', grow ? 'flex-grow' : '', className);
 }
 
-export function RowItem<AsProps extends LayoutProps>({
+export function ColumnItem<AsProps extends LayoutProps>({
   as,
   className,
   grow,
   children,
   ...args
-}: RowItemProps<AsProps>): JSX.Element {
+}: ColumnItemProps<AsProps>): JSX.Element {
   const Element = as ?? 'div';
   return (
     <Element className={itemPropsAsClassName({ className, grow })} {...(args as AsProps)}>
@@ -49,13 +54,13 @@ export function RowItem<AsProps extends LayoutProps>({
   );
 }
 
-export function RowElement<Tag extends keyof JSX.IntrinsicElements = 'div'>({
+export function ColumnElement<Tag extends keyof JSX.IntrinsicElements = 'div'>({
   as,
   className,
   grow,
   children,
   ...args
-}: RowElementProps<Tag>): JSX.Element {
+}: ColumnElementProps<Tag>): JSX.Element {
   const Element = (as ?? 'div') as keyof JSX.IntrinsicElements;
   return (
     <Element className={itemPropsAsClassName({ className, grow })} {...(args as unknown)}>

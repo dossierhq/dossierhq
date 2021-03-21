@@ -379,6 +379,11 @@ ul.dd li {
   FLEXBOX
 */
 
+.dd.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
 .dd.flex-grow {
   flex-grow: 1;
 }

@@ -2,40 +2,52 @@
 
 exports[`Storyshots Domain/EntityMetadata Deleted 1`] = `
 <div
-  className="dd has-shadow has-background"
+  className="dd dd flex-column has-shadow has-background p-2 g-2"
 >
-  <p
-    className="dd text-subtitle2"
-  >
-    Name
-  </p>
-  <p
-    className="dd text-body1"
-  >
-    Foo deleted
-  </p>
-  <p
-    className="dd text-subtitle2"
-  >
-    Type
-  </p>
-  <p
-    className="dd text-body1"
-  >
-    Foo
-  </p>
-  <p
-    className="dd text-subtitle2"
-  >
-    ID
-  </p>
-  <p
-    className="dd text-body1"
-  >
-    fb62be03-a0a9-4689-9987-bacee0e7692d
-  </p>
   <div
-    className="dd has-shadow"
+    className="dd"
+  >
+    <p
+      className="dd text-subtitle2"
+    >
+      Name
+    </p>
+    <p
+      className="dd text-body1"
+    >
+      Foo deleted
+    </p>
+  </div>
+  <div
+    className="dd"
+  >
+    <p
+      className="dd text-subtitle2"
+    >
+      Type
+    </p>
+    <p
+      className="dd text-body1"
+    >
+      Foo
+    </p>
+  </div>
+  <div
+    className="dd"
+  >
+    <p
+      className="dd text-subtitle2"
+    >
+      ID
+    </p>
+    <p
+      className="dd text-body1"
+    >
+      fb62be03-a0a9-4689-9987-bacee0e7692d
+    </p>
+  </div>
+  <div
+    className="dd dd has-shadow p-2"
     onClick={[Function]}
   >
     <p
@@ -56,7 +68,7 @@ exports[`Storyshots Domain/EntityMetadata Deleted 1`] = `
     </p>
   </div>
   <div
-    className="dd has-shadow"
+    className="dd dd has-shadow p-2"
     onClick={[Function]}
   >
     <p
@@ -98,40 +110,52 @@ exports[`Storyshots Domain/EntityMetadata Deleted 1`] = `
 
 exports[`Storyshots Domain/EntityMetadata Normal 1`] = `
 <div
-  className="dd has-shadow has-background"
+  className="dd dd flex-column has-shadow has-background p-2 g-2"
 >
-  <p
-    className="dd text-subtitle2"
-  >
-    Name
-  </p>
-  <p
-    className="dd text-body1"
-  >
-    Foo 1
-  </p>
-  <p
-    className="dd text-subtitle2"
-  >
-    Type
-  </p>
-  <p
-    className="dd text-body1"
-  >
-    Foo
-  </p>
-  <p
-    className="dd text-subtitle2"
-  >
-    ID
-  </p>
-  <p
-    className="dd text-body1"
-  >
-    fc66b4d7-61ff-44d4-8f68-cb7f526df046
-  </p>
   <div
-    className="dd has-shadow"
+    className="dd"
+  >
+    <p
+      className="dd text-subtitle2"
+    >
+      Name
+    </p>
+    <p
+      className="dd text-body1"
+    >
+      Foo 1
+    </p>
+  </div>
+  <div
+    className="dd"
+  >
+    <p
+      className="dd text-subtitle2"
+    >
+      Type
+    </p>
+    <p
+      className="dd text-body1"
+    >
+      Foo
+    </p>
+  </div>
+  <div
+    className="dd"
+  >
+    <p
+      className="dd text-subtitle2"
+    >
+      ID
+    </p>
+    <p
+      className="dd text-body1"
+    >
+      fc66b4d7-61ff-44d4-8f68-cb7f526df046
+    </p>
+  </div>
+  <div
+    className="dd dd has-shadow p-2"
     onClick={[Function]}
   >
     <p

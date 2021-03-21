@@ -1,0 +1,64 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots Generic/Column Three Rows 1`] = `
+<div
+  className="dd dd flex-column"
+>
+  <div
+    className="dd"
+    style={
+      Object {
+        "background": "green",
+        "height": "1em",
+        "width": "1em",
+      }
+    }
+  />
+  <div
+    className="dd flex-grow has-background bg-danger"
+    style={
+      Object {
+        "height": "1em",
+        "width": "1em",
+      }
+    }
+  />
+  <div
+    className="dd"
+    style={
+      Object {
+        "background": "blue",
+        "height": "1em",
+        "width": "1em",
+      }
+    }
+  />
+</div>
+`;
+
+exports[`Storyshots Generic/Column Two Rows With Gap 1`] = `
+<div
+  className="dd dd flex-column g-3"
+>
+  <div
+    className="dd"
+    style={
+      Object {
+        "background": "green",
+        "height": "1em",
+        "width": "1em",
+      }
+    }
+  />
+  <div
+    className="dd"
+    style={
+      Object {
+        "background": "blue",
+        "height": "1em",
+        "width": "1em",
+      }
+    }
+  />
+</div>
+`;
