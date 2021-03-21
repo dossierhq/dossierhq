@@ -2,11 +2,7 @@
 
 exports[`Storyshots Domain/EntityPicker Initial Bar 1`] = `
 <div
-  style={
-    Object {
-      "display": "flex",
-    }
-  }
+  className="dd flex-row"
 >
   <button
     className="dd button has-background hoverable text-button "
@@ -31,11 +27,7 @@ exports[`Storyshots Domain/EntityPicker Initial Bar 1`] = `
 
 exports[`Storyshots Domain/EntityPicker Normal Bar 1`] = `
 <div
-  style={
-    Object {
-      "display": "flex",
-    }
-  }
+  className="dd flex-row"
 >
   <button
     className="dd button has-background hoverable text-button "
