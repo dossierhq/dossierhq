@@ -2,7 +2,7 @@
 
 exports[`Storyshots Generic/Column Three Rows 1`] = `
 <div
-  className="dd dd flex-column"
+  className="dd flex-column"
 >
   <div
     className="dd"
@@ -38,7 +38,7 @@ exports[`Storyshots Generic/Column Three Rows 1`] = `
 
 exports[`Storyshots Generic/Column Two Rows With Gap 1`] = `
 <div
-  className="dd dd flex-column g-3"
+  className="dd flex-column g-3"
 >
   <div
     className="dd"

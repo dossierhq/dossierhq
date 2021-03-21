@@ -319,7 +319,7 @@ exports[`Storyshots Domain/EntityEditorContainer Deleted Foo 1`] = `
   </div>
   <div>
     <div
-      className="dd dd flex-column has-shadow has-background p-2 h-100 g-2"
+      className="dd flex-column has-shadow has-background p-2 h-100 g-2"
     >
       <div
         className="dd"
@@ -1202,7 +1202,7 @@ exports[`Storyshots Domain/EntityEditorContainer Full Foo 1`] = `
   </div>
   <div>
     <div
-      className="dd dd flex-column has-shadow has-background p-2 h-100 g-2"
+      className="dd flex-column has-shadow has-background p-2 h-100 g-2"
     >
       <div
         className="dd"
@@ -1325,7 +1325,7 @@ exports[`Storyshots Domain/EntityEditorContainer Invalid Type New Entity 1`] = `
   </div>
   <div>
     <div
-      className="dd dd flex-column has-shadow has-background p-2 h-100 g-2"
+      className="dd flex-column has-shadow has-background p-2 h-100 g-2"
     >
       <div
         className="dd"
@@ -1712,7 +1712,7 @@ exports[`Storyshots Domain/EntityEditorContainer New Foo 1`] = `
   </div>
   <div>
     <div
-      className="dd dd flex-column has-shadow has-background p-2 h-100 g-2"
+      className="dd flex-column has-shadow has-background p-2 h-100 g-2"
     >
       <div
         className="dd"
@@ -1826,7 +1826,7 @@ exports[`Storyshots Domain/EntityEditorContainer Not Found 1`] = `
   </div>
   <div>
     <div
-      className="dd dd flex-column has-shadow has-background p-2 h-100 g-2"
+      className="dd flex-column has-shadow has-background p-2 h-100 g-2"
     >
       <div
         className="dd"
@@ -1921,7 +1921,7 @@ exports[`Storyshots Domain/EntityEditorContainer Slow Full Foo 1`] = `
   </div>
   <div>
     <div
-      className="dd dd flex-column has-shadow has-background p-2 h-100 g-2"
+      className="dd flex-column has-shadow has-background p-2 h-100 g-2"
     >
       <div
         className="dd"
@@ -2152,7 +2152,7 @@ exports[`Storyshots Domain/EntityEditorContainer Two Entities 1`] = `
   </div>
   <div>
     <div
-      className="dd dd flex-column has-shadow has-background p-2 h-100 g-2"
+      className="dd flex-column has-shadow has-background p-2 h-100 g-2"
     >
       <div
         className="dd"
