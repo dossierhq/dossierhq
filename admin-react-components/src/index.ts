@@ -11,6 +11,7 @@ export type { IconProps, IconType } from './generic-components/Icon/Icon';
 export type { Kind } from './utils/KindUtils';
 export type { MessageItem } from './generic-components/Message/Message';
 export { Button } from './generic-components/Button/Button';
+export { Column, ColumnElement, ColumnItem } from './generic-components/Column/Column';
 export { DataDataContext, DataDataContextValue } from './contexts/DataDataContext';
 export { Divider } from './generic-components/Divider/Divider';
 export { DropDown } from './generic-components/DropDown/DropDown';

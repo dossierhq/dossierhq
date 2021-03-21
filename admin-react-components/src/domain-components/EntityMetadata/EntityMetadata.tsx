@@ -1,7 +1,7 @@
 import type { AdminEntityVersionInfo } from '@datadata/core';
 import React, { useContext, useState } from 'react';
 import type { DataDataContextValue } from '../..';
-import { Button, DataDataContext, Loader, Message, Tag } from '../..';
+import { Button, Column, ColumnItem, DataDataContext, Loader, Message, Tag } from '../..';
 
 export interface EntityMetadataProps {
   entityId: string;
@@ -39,20 +39,26 @@ function EntityMetadataInner({
   const selectedVersion = entityHistory?.versions.find((x) => x.version === selectedVersionId);
 
   return (
-    <div className="dd has-shadow has-background">
+    <Column className="has-shadow has-background p-2" gap={2}>
       {entityHistory ? (
         <>
-          <p className="dd text-subtitle2">Name</p>
-          <p className="dd text-body1">{entityHistory.name}</p>
-          <p className="dd text-subtitle2">Type</p>
-          <p className="dd text-body1">{entityHistory.type}</p>
-          <p className="dd text-subtitle2">ID</p>
-          <p className="dd text-body1">{entityHistory.id}</p>
+          <ColumnItem>
+            <p className="dd text-subtitle2">Name</p>
+            <p className="dd text-body1">{entityHistory.name}</p>
+          </ColumnItem>
+          <ColumnItem>
+            <p className="dd text-subtitle2">Type</p>
+            <p className="dd text-body1">{entityHistory.type}</p>
+          </ColumnItem>
+          <ColumnItem>
+            <p className="dd text-subtitle2">ID</p>
+            <p className="dd text-body1">{entityHistory.id}</p>
+          </ColumnItem>
           {entityHistory.versions.map((version) => {
             return (
-              <div
+              <ColumnItem
                 key={version.version}
-                className="dd has-shadow"
+                className="dd has-shadow p-2"
                 onClick={() => setSelectedVersionId(version.version)}
               >
                 <p className="dd text-subtitle2">
@@ -65,7 +71,7 @@ function EntityMetadataInner({
                 </p>
                 <p className="dd text-body1">{version.createdAt.toLocaleString()}</p>
                 <p className="dd text-body1">{version.createdBy}</p>
-              </div>
+              </ColumnItem>
             );
           })}
         </>
@@ -77,7 +83,7 @@ function EntityMetadataInner({
           message={`${entityHistoryError.error}: ${entityHistoryError.message}`}
         />
       ) : null}
-    </div>
+    </Column>
   );
 }
 
