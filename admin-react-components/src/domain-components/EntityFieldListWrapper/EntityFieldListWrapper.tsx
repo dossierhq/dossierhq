@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
 import type { EntityFieldEditorProps } from '../..';
+import { Column } from '../..';
 
 interface Props extends EntityFieldEditorProps<unknown[]> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -32,7 +33,7 @@ export function EntityFieldListWrapper({
   const itemsAndNew = value ? [...value, null] : [null];
 
   return (
-    <div>
+    <Column gap={1}>
       {itemsAndNew.map((x, index) => {
         return (
           <Editor
@@ -45,6 +46,6 @@ export function EntityFieldListWrapper({
           />
         );
       })}
-    </div>
+    </Column>
   );
 }
