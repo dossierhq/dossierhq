@@ -995,68 +995,49 @@ exports[`FullFoo render 1`] = `
 `;
 
 exports[`NewFoo render 1`] = `
-<form
-  className="dd segment has-shadow has-background"
-  onSubmit={[Function]}
+<div
+  data-entityid="82ded109-44f2-48b9-a676-43162fda3d7d"
 >
-  <div>
-    <label
-      className="dd text-subtitle1"
-      htmlFor="82ded109-44f2-48b9-a676-43162fda3d7d-_name"
-    >
-      Name
-    </label>
-    <div
-      className="dd form-control"
-    >
-      <input
-        className="dd text-body1 input"
-        id="82ded109-44f2-48b9-a676-43162fda3d7d-_name"
-        onChange={[Function]}
-        type="text"
-        value=""
-      />
-    </div>
-  </div>
-  <hr
-    className="dd divider"
-  />
-  <div>
-    <label
-      className="dd text-subtitle1"
-      htmlFor="82ded109-44f2-48b9-a676-43162fda3d7d-title"
-    >
-      title
-    </label>
-    <div
-      className="dd form-control"
-    >
-      <div>
+  <form
+    className="dd segment has-shadow has-background"
+    onSubmit={[Function]}
+  >
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="82ded109-44f2-48b9-a676-43162fda3d7d-_name"
+      >
+        Name
+      </label>
+      <div
+        className="dd form-control"
+      >
         <input
           className="dd text-body1 input"
-          id="82ded109-44f2-48b9-a676-43162fda3d7d-title"
+          id="82ded109-44f2-48b9-a676-43162fda3d7d-_name"
           onChange={[Function]}
           type="text"
           value=""
         />
       </div>
     </div>
-  </div>
-  <div>
-    <label
-      className="dd text-subtitle1"
-      htmlFor="82ded109-44f2-48b9-a676-43162fda3d7d-tags"
-    >
-      tags
-    </label>
-    <div
-      className="dd form-control"
-    >
-      <div>
+    <hr
+      className="dd divider"
+    />
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="82ded109-44f2-48b9-a676-43162fda3d7d-title"
+      >
+        title
+      </label>
+      <div
+        className="dd form-control"
+      >
         <div>
           <input
             className="dd text-body1 input"
-            id="82ded109-44f2-48b9-a676-43162fda3d7d-tags"
+            id="82ded109-44f2-48b9-a676-43162fda3d7d-title"
             onChange={[Function]}
             type="text"
             value=""
@@ -1064,56 +1045,47 @@ exports[`NewFoo render 1`] = `
         </div>
       </div>
     </div>
-  </div>
-  <div>
-    <label
-      className="dd text-subtitle1"
-      htmlFor="82ded109-44f2-48b9-a676-43162fda3d7d-location"
-    >
-      location
-    </label>
-    <div
-      className="dd form-control"
-    >
-      <div
-        style={
-          Object {
-            "display": "flex",
-          }
-        }
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="82ded109-44f2-48b9-a676-43162fda3d7d-tags"
       >
-        <button
-          className="dd button has-background hoverable text-button "
-          id="82ded109-44f2-48b9-a676-43162fda3d7d-location"
-          onClick={[Function]}
-          type="button"
+        tags
+      </label>
+      <div
+        className="dd form-control"
+      >
+        <div
+          className="dd flex-column g-1"
         >
-          Select location
-        </button>
+          <div>
+            <input
+              className="dd text-body1 input"
+              id="82ded109-44f2-48b9-a676-43162fda3d7d-tags"
+              onChange={[Function]}
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-  <div>
-    <label
-      className="dd text-subtitle1"
-      htmlFor="82ded109-44f2-48b9-a676-43162fda3d7d-locations"
-    >
-      locations
-    </label>
-    <div
-      className="dd form-control"
-    >
-      <div>
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="82ded109-44f2-48b9-a676-43162fda3d7d-location"
+      >
+        location
+      </label>
+      <div
+        className="dd form-control"
+      >
         <div
-          style={
-            Object {
-              "display": "flex",
-            }
-          }
+          className="dd flex-row"
         >
           <button
             className="dd button has-background hoverable text-button "
-            id="82ded109-44f2-48b9-a676-43162fda3d7d-locations"
+            id="82ded109-44f2-48b9-a676-43162fda3d7d-location"
             onClick={[Function]}
             type="button"
           >
@@ -1122,56 +1094,50 @@ exports[`NewFoo render 1`] = `
         </div>
       </div>
     </div>
-  </div>
-  <div>
-    <label
-      className="dd text-subtitle1"
-      htmlFor="82ded109-44f2-48b9-a676-43162fda3d7d-bar"
-    >
-      bar
-    </label>
-    <div
-      className="dd form-control"
-    >
-      <div
-        style={
-          Object {
-            "display": "flex",
-          }
-        }
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="82ded109-44f2-48b9-a676-43162fda3d7d-locations"
       >
-        <button
-          className="dd button has-background hoverable text-button "
-          id="82ded109-44f2-48b9-a676-43162fda3d7d-bar"
-          onClick={[Function]}
-          type="button"
+        locations
+      </label>
+      <div
+        className="dd form-control"
+      >
+        <div
+          className="dd flex-column g-1"
         >
-          Select entity
-        </button>
+          <div
+            className="dd flex-row"
+          >
+            <button
+              className="dd button has-background hoverable text-button "
+              id="82ded109-44f2-48b9-a676-43162fda3d7d-locations"
+              onClick={[Function]}
+              type="button"
+            >
+              Select location
+            </button>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-  <div>
-    <label
-      className="dd text-subtitle1"
-      htmlFor="82ded109-44f2-48b9-a676-43162fda3d7d-bars"
-    >
-      bars
-    </label>
-    <div
-      className="dd form-control"
-    >
-      <div>
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="82ded109-44f2-48b9-a676-43162fda3d7d-bar"
+      >
+        bar
+      </label>
+      <div
+        className="dd form-control"
+      >
         <div
-          style={
-            Object {
-              "display": "flex",
-            }
-          }
+          className="dd flex-row"
         >
           <button
             className="dd button has-background hoverable text-button "
-            id="82ded109-44f2-48b9-a676-43162fda3d7d-bars"
+            id="82ded109-44f2-48b9-a676-43162fda3d7d-bar"
             onClick={[Function]}
             type="button"
           >
@@ -1180,55 +1146,51 @@ exports[`NewFoo render 1`] = `
         </div>
       </div>
     </div>
-  </div>
-  <div>
-    <label
-      className="dd text-subtitle1"
-      htmlFor="82ded109-44f2-48b9-a676-43162fda3d7d-annotatedBar"
-    >
-      annotatedBar
-    </label>
-    <div
-      className="dd form-control"
-    >
-      <div
-        className="dd segment has-shadow"
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="82ded109-44f2-48b9-a676-43162fda3d7d-bars"
       >
-        <div>
-          <button
-            className="dd button has-background hoverable text-button "
-            id="82ded109-44f2-48b9-a676-43162fda3d7d-annotatedBar"
-            onClick={[Function]}
-            type="button"
+        bars
+      </label>
+      <div
+        className="dd form-control"
+      >
+        <div
+          className="dd flex-column g-1"
+        >
+          <div
+            className="dd flex-row"
           >
-            Add value item
-             
-            <span
-              className="dd icon icon-chevron-down"
-            />
-          </button>
+            <button
+              className="dd button has-background hoverable text-button "
+              id="82ded109-44f2-48b9-a676-43162fda3d7d-bars"
+              onClick={[Function]}
+              type="button"
+            >
+              Select entity
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <div>
-    <label
-      className="dd text-subtitle1"
-      htmlFor="82ded109-44f2-48b9-a676-43162fda3d7d-annotatedBars"
-    >
-      annotatedBars
-    </label>
-    <div
-      className="dd form-control"
-    >
-      <div>
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="82ded109-44f2-48b9-a676-43162fda3d7d-annotatedBar"
+      >
+        annotatedBar
+      </label>
+      <div
+        className="dd form-control"
+      >
         <div
           className="dd segment has-shadow"
         >
           <div>
             <button
               className="dd button has-background hoverable text-button "
-              id="82ded109-44f2-48b9-a676-43162fda3d7d-annotatedBars"
+              id="82ded109-44f2-48b9-a676-43162fda3d7d-annotatedBar"
               onClick={[Function]}
               type="button"
             >
@@ -1242,43 +1204,77 @@ exports[`NewFoo render 1`] = `
         </div>
       </div>
     </div>
-  </div>
-  <div>
-    <label
-      className="dd text-subtitle1"
-      htmlFor="82ded109-44f2-48b9-a676-43162fda3d7d-nested"
-    >
-      nested
-    </label>
-    <div
-      className="dd form-control"
-    >
-      <div
-        className="dd segment has-shadow"
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="82ded109-44f2-48b9-a676-43162fda3d7d-annotatedBars"
       >
-        <div>
-          <button
-            className="dd button has-background hoverable text-button "
-            id="82ded109-44f2-48b9-a676-43162fda3d7d-nested"
-            onClick={[Function]}
-            type="button"
+        annotatedBars
+      </label>
+      <div
+        className="dd form-control"
+      >
+        <div
+          className="dd flex-column g-1"
+        >
+          <div
+            className="dd segment has-shadow"
           >
-            Add value item
-             
-            <span
-              className="dd icon icon-chevron-down"
-            />
-          </button>
+            <div>
+              <button
+                className="dd button has-background hoverable text-button "
+                id="82ded109-44f2-48b9-a676-43162fda3d7d-annotatedBars"
+                onClick={[Function]}
+                type="button"
+              >
+                Add value item
+                 
+                <span
+                  className="dd icon icon-chevron-down"
+                />
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <button
-    className="dd button has-background hoverable text-button bg-primary"
-    disabled={true}
-    type="submit"
-  >
-    Save
-  </button>
-</form>
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="82ded109-44f2-48b9-a676-43162fda3d7d-nested"
+      >
+        nested
+      </label>
+      <div
+        className="dd form-control"
+      >
+        <div
+          className="dd segment has-shadow"
+        >
+          <div>
+            <button
+              className="dd button has-background hoverable text-button "
+              id="82ded109-44f2-48b9-a676-43162fda3d7d-nested"
+              onClick={[Function]}
+              type="button"
+            >
+              Add value item
+               
+              <span
+                className="dd icon icon-chevron-down"
+              />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button
+      className="dd button has-background hoverable text-button bg-primary"
+      disabled={true}
+      type="submit"
+    >
+      Save
+    </button>
+  </form>
+</div>
 `;
