@@ -23,9 +23,7 @@ type ColumnElementProps<Tag extends keyof JSX.IntrinsicElements> = JSX.Intrinsic
 
 export function Column({ className, gap, children }: ColumnProps): JSX.Element {
   return (
-    <ColumnItem className={joinClassNames('dd flex-column', className, gapClassName(gap))}>
-      {children}
-    </ColumnItem>
+    <div className={joinClassNames('dd flex-column', className, gapClassName(gap))}>{children}</div>
   );
 }
 

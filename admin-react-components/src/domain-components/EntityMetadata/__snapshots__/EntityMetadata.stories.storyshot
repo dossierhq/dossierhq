@@ -2,7 +2,7 @@
 
 exports[`Storyshots Domain/EntityMetadata Deleted Foo 1`] = `
 <div
-  className="dd dd flex-column has-shadow has-background p-2 g-2"
+  className="dd flex-column has-shadow has-background p-2 g-2"
 >
   <div
     className="dd"
@@ -114,7 +114,7 @@ exports[`Storyshots Domain/EntityMetadata Deleted Foo 1`] = `
 
 exports[`Storyshots Domain/EntityMetadata Full Foo 1`] = `
 <div
-  className="dd dd flex-column has-shadow has-background p-2 g-2"
+  className="dd flex-column has-shadow has-background p-2 g-2"
 >
   <div
     className="dd"
@@ -200,7 +200,7 @@ exports[`Storyshots Domain/EntityMetadata Full Foo 1`] = `
 
 exports[`Storyshots Domain/EntityMetadata New Foo 1`] = `
 <div
-  className="dd dd flex-column has-shadow has-background p-2 g-2"
+  className="dd flex-column has-shadow has-background p-2 g-2"
 >
   <div
     className="dd"
@@ -272,7 +272,7 @@ exports[`Storyshots Domain/EntityMetadata New Foo 1`] = `
 
 exports[`Storyshots Domain/EntityMetadata Slow Full Foo 1`] = `
 <div
-  className="dd dd flex-column has-shadow has-background p-2 g-2"
+  className="dd flex-column has-shadow has-background p-2 g-2"
 >
   <div
     className="dd"
