@@ -695,21 +695,17 @@ exports[`Storyshots Domain/EntityEditor Full Foo 1`] = `
             >
               AnnotatedBar
             </div>
-            <div
-              className="dd"
+            <button
+              className="dd icon-button dd"
+              data-testid="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBar.remove"
+              onClick={[Function]}
+              title="Remove value item"
+              type="button"
             >
-              <button
-                className="dd icon-button"
-                data-testid="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBar.remove"
-                onClick={[Function]}
-                title="Remove value item"
-                type="button"
-              >
-                <span
-                  className="dd icon icon-remove"
-                />
-              </button>
-            </div>
+              <span
+                className="dd icon icon-remove"
+              />
+            </button>
           </div>
           <div>
             <label
@@ -805,21 +801,17 @@ exports[`Storyshots Domain/EntityEditor Full Foo 1`] = `
               >
                 AnnotatedBar
               </div>
-              <div
-                className="dd"
+              <button
+                className="dd icon-button dd"
+                data-testid="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars.remove"
+                onClick={[Function]}
+                title="Remove value item"
+                type="button"
               >
-                <button
-                  className="dd icon-button"
-                  data-testid="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars.remove"
-                  onClick={[Function]}
-                  title="Remove value item"
-                  type="button"
-                >
-                  <span
-                    className="dd icon icon-remove"
-                  />
-                </button>
-              </div>
+                <span
+                  className="dd icon icon-remove"
+                />
+              </button>
             </div>
             <div>
               <label
@@ -902,21 +894,17 @@ exports[`Storyshots Domain/EntityEditor Full Foo 1`] = `
               >
                 AnnotatedBar
               </div>
-              <div
-                className="dd"
+              <button
+                className="dd icon-button dd"
+                data-testid="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-1.remove"
+                onClick={[Function]}
+                title="Remove value item"
+                type="button"
               >
-                <button
-                  className="dd icon-button"
-                  data-testid="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-1.remove"
-                  onClick={[Function]}
-                  title="Remove value item"
-                  type="button"
-                >
-                  <span
-                    className="dd icon icon-remove"
-                  />
-                </button>
-              </div>
+                <span
+                  className="dd icon icon-remove"
+                />
+              </button>
             </div>
             <div>
               <label
