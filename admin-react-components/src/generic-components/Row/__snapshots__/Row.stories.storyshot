@@ -6,43 +6,33 @@ exports[`Storyshots Generic/Row Three Columns 1`] = `
 >
   <div
     className="dd"
-  >
-    <div
-      style={
-        Object {
-          "background": "green",
-          "height": "1em",
-          "width": "1em",
-        }
+    style={
+      Object {
+        "background": "green",
+        "height": "1em",
+        "width": "1em",
       }
-    />
-  </div>
+    }
+  />
   <div
     className="dd flex-grow has-background bg-danger"
-  >
-    <div
-      style={
-        Object {
-          "background": "yellow",
-          "height": "1em",
-          "width": "1em",
-        }
+    style={
+      Object {
+        "height": "1em",
+        "width": "1em",
       }
-    />
-  </div>
+    }
+  />
   <div
     className="dd"
-  >
-    <div
-      style={
-        Object {
-          "background": "blue",
-          "height": "1em",
-          "width": "1em",
-        }
+    style={
+      Object {
+        "background": "blue",
+        "height": "1em",
+        "width": "1em",
       }
-    />
-  </div>
+    }
+  />
 </div>
 `;
 
@@ -52,29 +42,23 @@ exports[`Storyshots Generic/Row Two Columns With Gap 1`] = `
 >
   <div
     className="dd"
-  >
-    <div
-      style={
-        Object {
-          "background": "green",
-          "height": "1em",
-          "width": "1em",
-        }
+    style={
+      Object {
+        "background": "green",
+        "height": "1em",
+        "width": "1em",
       }
-    />
-  </div>
+    }
+  />
   <div
     className="dd"
-  >
-    <div
-      style={
-        Object {
-          "background": "blue",
-          "height": "1em",
-          "width": "1em",
-        }
+    style={
+      Object {
+        "background": "blue",
+        "height": "1em",
+        "width": "1em",
       }
-    />
-  </div>
+    }
+  />
 </div>
 `;
