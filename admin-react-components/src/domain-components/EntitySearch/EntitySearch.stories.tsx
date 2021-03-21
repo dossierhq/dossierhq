@@ -10,15 +10,8 @@ const meta: Meta<EntitySearchProps> = {
   component: EntitySearch,
   argTypes: { onEntityClick: { action: 'entity-click' } },
   args: {
-    className: 'w-100 h-100',
+    className: 'position-fixed inset-0',
   },
-  decorators: [
-    (Story: React.FunctionComponent): JSX.Element => (
-      <div style={{ position: 'absolute', inset: 0 }}>
-        <Story />
-      </div>
-    ),
-  ],
 };
 export default meta;
 

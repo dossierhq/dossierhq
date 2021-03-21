@@ -87,11 +87,7 @@ exports[`DeletedFoo render 1`] = `
         className="dd form-control"
       >
         <div
-          style={
-            Object {
-              "display": "flex",
-            }
-          }
+          className="dd flex-row"
         >
           <button
             className="dd button has-background hoverable text-button "
@@ -118,11 +114,7 @@ exports[`DeletedFoo render 1`] = `
           className="dd flex-column g-1"
         >
           <div
-            style={
-              Object {
-                "display": "flex",
-              }
-            }
+            className="dd flex-row"
           >
             <button
               className="dd button has-background hoverable text-button "
@@ -147,11 +139,7 @@ exports[`DeletedFoo render 1`] = `
         className="dd form-control"
       >
         <div
-          style={
-            Object {
-              "display": "flex",
-            }
-          }
+          className="dd flex-row"
         >
           <button
             className="dd button has-background hoverable text-button "
@@ -178,11 +166,7 @@ exports[`DeletedFoo render 1`] = `
           className="dd flex-column g-1"
         >
           <div
-            style={
-              Object {
-                "display": "flex",
-              }
-            }
+            className="dd flex-row"
           >
             <button
               className="dd button has-background hoverable text-button "
@@ -455,11 +439,7 @@ exports[`FullFoo render 1`] = `
         className="dd form-control"
       >
         <div
-          style={
-            Object {
-              "display": "flex",
-            }
-          }
+          className="dd flex-row"
         >
           <button
             className="dd button has-background hoverable text-button "
@@ -496,11 +476,7 @@ exports[`FullFoo render 1`] = `
           className="dd flex-column g-1"
         >
           <div
-            style={
-              Object {
-                "display": "flex",
-              }
-            }
+            className="dd flex-row"
           >
             <button
               className="dd button has-background hoverable text-button "
@@ -522,11 +498,7 @@ exports[`FullFoo render 1`] = `
             </button>
           </div>
           <div
-            style={
-              Object {
-                "display": "flex",
-              }
-            }
+            className="dd flex-row"
           >
             <button
               className="dd button has-background hoverable text-button "
@@ -548,11 +520,7 @@ exports[`FullFoo render 1`] = `
             </button>
           </div>
           <div
-            style={
-              Object {
-                "display": "flex",
-              }
-            }
+            className="dd flex-row"
           >
             <button
               className="dd button has-background hoverable text-button "
@@ -577,11 +545,7 @@ exports[`FullFoo render 1`] = `
         className="dd form-control"
       >
         <div
-          style={
-            Object {
-              "display": "flex",
-            }
-          }
+          className="dd flex-row"
         >
           <button
             className="dd button has-background hoverable text-button "
@@ -618,11 +582,7 @@ exports[`FullFoo render 1`] = `
           className="dd flex-column g-1"
         >
           <div
-            style={
-              Object {
-                "display": "flex",
-              }
-            }
+            className="dd flex-row"
           >
             <button
               className="dd button has-background hoverable text-button "
@@ -644,11 +604,7 @@ exports[`FullFoo render 1`] = `
             </button>
           </div>
           <div
-            style={
-              Object {
-                "display": "flex",
-              }
-            }
+            className="dd flex-row"
           >
             <button
               className="dd button has-background hoverable text-button "
@@ -670,11 +626,7 @@ exports[`FullFoo render 1`] = `
             </button>
           </div>
           <div
-            style={
-              Object {
-                "display": "flex",
-              }
-            }
+            className="dd flex-row"
           >
             <button
               className="dd button has-background hoverable text-button "
@@ -763,11 +715,7 @@ exports[`FullFoo render 1`] = `
               className="dd form-control"
             >
               <div
-                style={
-                  Object {
-                    "display": "flex",
-                  }
-                }
+                className="dd flex-row"
               >
                 <button
                   className="dd button has-background hoverable text-button "
@@ -871,11 +819,7 @@ exports[`FullFoo render 1`] = `
                 className="dd form-control"
               >
                 <div
-                  style={
-                    Object {
-                      "display": "flex",
-                    }
-                  }
+                  className="dd flex-row"
                 >
                   <button
                     className="dd button has-background hoverable text-button "
@@ -964,11 +908,7 @@ exports[`FullFoo render 1`] = `
                 className="dd form-control"
               >
                 <div
-                  style={
-                    Object {
-                      "display": "flex",
-                    }
-                  }
+                  className="dd flex-row"
                 >
                   <button
                     className="dd button has-background hoverable text-button "

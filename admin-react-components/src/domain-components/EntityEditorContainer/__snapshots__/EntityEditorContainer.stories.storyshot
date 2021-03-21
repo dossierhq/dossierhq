@@ -93,11 +93,7 @@ exports[`Storyshots Domain/EntityEditorContainer Deleted Foo 1`] = `
             className="dd form-control"
           >
             <div
-              style={
-                Object {
-                  "display": "flex",
-                }
-              }
+              className="dd flex-row"
             >
               <button
                 className="dd button has-background hoverable text-button "
@@ -124,11 +120,7 @@ exports[`Storyshots Domain/EntityEditorContainer Deleted Foo 1`] = `
               className="dd flex-column g-1"
             >
               <div
-                style={
-                  Object {
-                    "display": "flex",
-                  }
-                }
+                className="dd flex-row"
               >
                 <button
                   className="dd button has-background hoverable text-button "
@@ -153,11 +145,7 @@ exports[`Storyshots Domain/EntityEditorContainer Deleted Foo 1`] = `
             className="dd form-control"
           >
             <div
-              style={
-                Object {
-                  "display": "flex",
-                }
-              }
+              className="dd flex-row"
             >
               <button
                 className="dd button has-background hoverable text-button "
@@ -184,11 +172,7 @@ exports[`Storyshots Domain/EntityEditorContainer Deleted Foo 1`] = `
               className="dd flex-column g-1"
             >
               <div
-                style={
-                  Object {
-                    "display": "flex",
-                  }
-                }
+                className="dd flex-row"
               >
                 <button
                   className="dd button has-background hoverable text-button "
@@ -594,11 +578,7 @@ exports[`Storyshots Domain/EntityEditorContainer Full Foo 1`] = `
             className="dd form-control"
           >
             <div
-              style={
-                Object {
-                  "display": "flex",
-                }
-              }
+              className="dd flex-row"
             >
               <button
                 className="dd button has-background hoverable text-button "
@@ -635,11 +615,7 @@ exports[`Storyshots Domain/EntityEditorContainer Full Foo 1`] = `
               className="dd flex-column g-1"
             >
               <div
-                style={
-                  Object {
-                    "display": "flex",
-                  }
-                }
+                className="dd flex-row"
               >
                 <button
                   className="dd button has-background hoverable text-button "
@@ -661,11 +637,7 @@ exports[`Storyshots Domain/EntityEditorContainer Full Foo 1`] = `
                 </button>
               </div>
               <div
-                style={
-                  Object {
-                    "display": "flex",
-                  }
-                }
+                className="dd flex-row"
               >
                 <button
                   className="dd button has-background hoverable text-button "
@@ -687,11 +659,7 @@ exports[`Storyshots Domain/EntityEditorContainer Full Foo 1`] = `
                 </button>
               </div>
               <div
-                style={
-                  Object {
-                    "display": "flex",
-                  }
-                }
+                className="dd flex-row"
               >
                 <button
                   className="dd button has-background hoverable text-button "
@@ -716,11 +684,7 @@ exports[`Storyshots Domain/EntityEditorContainer Full Foo 1`] = `
             className="dd form-control"
           >
             <div
-              style={
-                Object {
-                  "display": "flex",
-                }
-              }
+              className="dd flex-row"
             >
               <button
                 className="dd button has-background hoverable text-button "
@@ -757,11 +721,7 @@ exports[`Storyshots Domain/EntityEditorContainer Full Foo 1`] = `
               className="dd flex-column g-1"
             >
               <div
-                style={
-                  Object {
-                    "display": "flex",
-                  }
-                }
+                className="dd flex-row"
               >
                 <button
                   className="dd button has-background hoverable text-button "
@@ -783,11 +743,7 @@ exports[`Storyshots Domain/EntityEditorContainer Full Foo 1`] = `
                 </button>
               </div>
               <div
-                style={
-                  Object {
-                    "display": "flex",
-                  }
-                }
+                className="dd flex-row"
               >
                 <button
                   className="dd button has-background hoverable text-button "
@@ -809,11 +765,7 @@ exports[`Storyshots Domain/EntityEditorContainer Full Foo 1`] = `
                 </button>
               </div>
               <div
-                style={
-                  Object {
-                    "display": "flex",
-                  }
-                }
+                className="dd flex-row"
               >
                 <button
                   className="dd button has-background hoverable text-button "
@@ -902,11 +854,7 @@ exports[`Storyshots Domain/EntityEditorContainer Full Foo 1`] = `
                   className="dd form-control"
                 >
                   <div
-                    style={
-                      Object {
-                        "display": "flex",
-                      }
-                    }
+                    className="dd flex-row"
                   >
                     <button
                       className="dd button has-background hoverable text-button "
@@ -1010,11 +958,7 @@ exports[`Storyshots Domain/EntityEditorContainer Full Foo 1`] = `
                     className="dd form-control"
                   >
                     <div
-                      style={
-                        Object {
-                          "display": "flex",
-                        }
-                      }
+                      className="dd flex-row"
                     >
                       <button
                         className="dd button has-background hoverable text-button "
@@ -1103,11 +1047,7 @@ exports[`Storyshots Domain/EntityEditorContainer Full Foo 1`] = `
                     className="dd form-control"
                   >
                     <div
-                      style={
-                        Object {
-                          "display": "flex",
-                        }
-                      }
+                      className="dd flex-row"
                     >
                       <button
                         className="dd button has-background hoverable text-button "
@@ -1492,11 +1432,7 @@ exports[`Storyshots Domain/EntityEditorContainer New Foo 1`] = `
             className="dd form-control"
           >
             <div
-              style={
-                Object {
-                  "display": "flex",
-                }
-              }
+              className="dd flex-row"
             >
               <button
                 className="dd button has-background hoverable text-button "
@@ -1523,11 +1459,7 @@ exports[`Storyshots Domain/EntityEditorContainer New Foo 1`] = `
               className="dd flex-column g-1"
             >
               <div
-                style={
-                  Object {
-                    "display": "flex",
-                  }
-                }
+                className="dd flex-row"
               >
                 <button
                   className="dd button has-background hoverable text-button "
@@ -1552,11 +1484,7 @@ exports[`Storyshots Domain/EntityEditorContainer New Foo 1`] = `
             className="dd form-control"
           >
             <div
-              style={
-                Object {
-                  "display": "flex",
-                }
-              }
+              className="dd flex-row"
             >
               <button
                 className="dd button has-background hoverable text-button "
@@ -1583,11 +1511,7 @@ exports[`Storyshots Domain/EntityEditorContainer New Foo 1`] = `
               className="dd flex-column g-1"
             >
               <div
-                style={
-                  Object {
-                    "display": "flex",
-                  }
-                }
+                className="dd flex-row"
               >
                 <button
                   className="dd button has-background hoverable text-button "

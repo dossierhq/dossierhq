@@ -2,55 +2,46 @@
 
 exports[`Storyshots Domain/EntitySearch Normal 1`] = `
 <div
-  style={
-    Object {
-      "inset": 0,
-      "position": "absolute",
-    }
-  }
+  className="dd flex-column position-fixed inset-0"
 >
+  <button
+    className="dd button has-background hoverable text-button "
+    onClick={[Function]}
+    type="button"
+  >
+    Toggle list/map
+  </button>
   <div
-    className="dd flex-column w-100 h-100"
+    className="dd list-container dd flex-grow"
   >
     <button
       className="dd button has-background hoverable text-button "
       onClick={[Function]}
       type="button"
     >
-      Toggle list/map
+      Foo: Foo 1
     </button>
-    <div
-      className="dd list-container dd flex-grow"
+    <button
+      className="dd button has-background hoverable text-button "
+      onClick={[Function]}
+      type="button"
     >
-      <button
-        className="dd button has-background hoverable text-button "
-        onClick={[Function]}
-        type="button"
-      >
-        Foo: Foo 1
-      </button>
-      <button
-        className="dd button has-background hoverable text-button "
-        onClick={[Function]}
-        type="button"
-      >
-        Foo: Foo deleted
-      </button>
-      <button
-        className="dd button has-background hoverable text-button "
-        onClick={[Function]}
-        type="button"
-      >
-        Bar: Bar 1
-      </button>
-      <button
-        className="dd button has-background hoverable text-button "
-        onClick={[Function]}
-        type="button"
-      >
-        Bar: Bar 2
-      </button>
-    </div>
+      Foo: Foo deleted
+    </button>
+    <button
+      className="dd button has-background hoverable text-button "
+      onClick={[Function]}
+      type="button"
+    >
+      Bar: Bar 1
+    </button>
+    <button
+      className="dd button has-background hoverable text-button "
+      onClick={[Function]}
+      type="button"
+    >
+      Bar: Bar 2
+    </button>
   </div>
 </div>
 `;

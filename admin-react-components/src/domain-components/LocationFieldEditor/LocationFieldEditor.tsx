@@ -13,14 +13,14 @@ export function LocationFieldEditor({ id, value, fieldSpec: _, onChange }: Props
 
   return (
     <>
-      <div style={{ display: 'flex' }}>
+      <Row>
         <Button id={id} onClick={handleShow}>
           {value ? `${value.lat}, ${value.lng}` : 'Select location'}
         </Button>
         {value ? (
           <IconButton icon="remove" title="Remove location" onClick={() => onChange?.(null)} />
         ) : null}
-      </div>
+      </Row>
       <Modal show={show} onClose={handleClose} size="large">
         {show ? <LocationEditor value={value} onChange={onChange} /> : null}
       </Modal>
