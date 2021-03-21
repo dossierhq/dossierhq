@@ -8,7 +8,7 @@ import {
 } from '@datadata/admin-react-components';
 import type { Schema } from '@datadata/core';
 import { useRouter } from 'next/router';
-import { useEffect, useReducer, useState } from 'react';
+import { useEffect, useReducer } from 'react';
 import { useInitializeContext } from '../../contexts/DataDataContext';
 import { urls } from '../../utils/PageUtils';
 
@@ -36,28 +36,19 @@ function EntityEditorPageInner({
   entitySelectors: EntityEditorSelector[];
 }) {
   const router = useRouter();
-  const [hasAddedInitialDrafts, setHasAddedInitialDrafts] = useState(false);
   const [editorState, dispatchEditorState] = useReducer(
     reduceEntityEditorState,
-    { schema },
+    { schema, actions: entitySelectors.map((x) => new AddEntityDraftAction(x)) },
     initializeEntityEditorState
   );
-
-  useEffect(() => {
-    for (const entitySelector of entitySelectors) {
-      dispatchEditorState(new AddEntityDraftAction(entitySelector));
-    }
-    setHasAddedInitialDrafts(true);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const ids = editorState.drafts.map((x) => x.id);
   useEffect(() => {
     const url = urls.editPage(ids);
-    if (hasAddedInitialDrafts && url !== router.asPath) {
+    if (url !== router.asPath) {
       router.replace(url);
     }
-  }, [hasAddedInitialDrafts, ids, router]);
+  }, [ids, router]);
 
   return <EntityEditorContainer {...{ editorState, dispatchEditorState }} />;
 }
