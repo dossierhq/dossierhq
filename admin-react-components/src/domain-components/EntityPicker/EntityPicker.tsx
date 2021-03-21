@@ -65,9 +65,9 @@ function EntityPickerInner({ id, value, schema, fieldSpec, onChange, useEntity }
       <Modal show={show} onClose={handleClose} size="large">
         {show ? (
           <EntitySearch
+            className="w-100 h-100"
             query={{ entityTypes: fieldSpec.entityTypes }}
             onEntityClick={handleEntityClick}
-            style={{ width: '100%', height: '100%' }}
           />
         ) : null}
       </Modal>

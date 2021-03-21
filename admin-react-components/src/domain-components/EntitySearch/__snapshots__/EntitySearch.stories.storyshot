@@ -10,14 +10,7 @@ exports[`Storyshots Domain/EntitySearch Normal 1`] = `
   }
 >
   <div
-    style={
-      Object {
-        "display": "flex",
-        "flexDirection": "column",
-        "height": "100%",
-        "width": "100%",
-      }
-    }
+    className="dd flex-column w-100 h-100"
   >
     <button
       className="dd button has-background hoverable text-button "
@@ -27,12 +20,7 @@ exports[`Storyshots Domain/EntitySearch Normal 1`] = `
       Toggle list/map
     </button>
     <div
-      className="dd list-container"
-      style={
-        Object {
-          "flexGrow": 1,
-        }
-      }
+      className="dd list-container dd flex-grow"
     >
       <button
         className="dd button has-background hoverable text-button "

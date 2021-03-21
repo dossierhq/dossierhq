@@ -5,9 +5,9 @@ import type { DataDataContextValue } from '../..';
 import { DataDataContext, MapContainer } from '../..';
 
 export interface EntityMapProps {
+  className?: string;
   query?: AdminQuery;
   onEntityClick: (entity: AdminEntity) => void;
-  style?: React.CSSProperties;
 }
 
 interface InnerProps extends EntityMapProps {
@@ -15,16 +15,22 @@ interface InnerProps extends EntityMapProps {
   useSearchEntities: DataDataContextValue['useSearchEntities'];
 }
 
-export function EntityMap({ query, style, onEntityClick }: EntityMapProps): JSX.Element | null {
+export function EntityMap({ className, query, onEntityClick }: EntityMapProps): JSX.Element | null {
   const context = useContext(DataDataContext);
   if (!context) {
     return null;
   }
   const { schema, useSearchEntities } = context;
-  return <EntityMapInner {...{ query, style, schema, useSearchEntities, onEntityClick }} />;
+  return <EntityMapInner {...{ className, query, schema, useSearchEntities, onEntityClick }} />;
 }
 
-function EntityMapInner({ query, style, schema, useSearchEntities, onEntityClick }: InnerProps) {
+function EntityMapInner({
+  className,
+  query,
+  schema,
+  useSearchEntities,
+  onEntityClick,
+}: InnerProps) {
   const [currentQuery, setCurrentQuery] = useState<AdminQuery | undefined>(undefined);
   const [boundingBox, setBoundingBox] = useState<BoundingBox | null>(null);
   const { connection, connectionError } = useSearchEntities(currentQuery);
@@ -36,7 +42,7 @@ function EntityMapInner({ query, style, schema, useSearchEntities, onEntityClick
   }, [query, boundingBox]);
 
   return (
-    <MapContainer center={null} style={style} onBoundingBoxChanged={setBoundingBox}>
+    <MapContainer className={className} center={null} onBoundingBoxChanged={setBoundingBox}>
       {connection
         ? connection.edges.map((edge) => {
             if (edge.node.isError()) {

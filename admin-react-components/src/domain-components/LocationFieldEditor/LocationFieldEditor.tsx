@@ -1,7 +1,7 @@
 import type { Location } from '@datadata/core';
 import React, { useCallback, useEffect, useReducer, useState } from 'react';
 import type { EntityFieldEditorProps } from '../..';
-import { Button, IconButton, InputText, MapContainer, Modal } from '../..';
+import { Button, Column, ColumnItem, IconButton, InputText, MapContainer, Modal, Row } from '../..';
 import { initializeLocationState, reduceLocation } from './LocationReducer';
 
 type Props = EntityFieldEditorProps<Location>;
@@ -48,8 +48,8 @@ function LocationEditor({
   }, [onChange]);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-      <div style={{ display: 'flex', flexDirection: 'row' }}>
+    <Column className="h-100">
+      <ColumnItem as={Row}>
         <InputText
           value={latString}
           onChange={(lat) => dispatch({ type: 'lat', value: lat })}
@@ -66,10 +66,10 @@ function LocationEditor({
           max={180.0}
           step={0.000001}
         />
-      </div>
-      <MapContainer center={value} style={{ width: '100%', flexGrow: 1 }}>
+      </ColumnItem>
+      <ColumnItem as={MapContainer} grow center={value}>
         <MapContainer.CurrentLocationMarker value={value} onChange={(x) => onChange?.(x)} />
-      </MapContainer>
-    </div>
+      </ColumnItem>
+    </Column>
   );
 }

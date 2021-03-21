@@ -2,22 +2,12 @@
 
 exports[`Storyshots Generic/MapContainer London 1`] = `
 <div
-  style={
-    Object {
-      "height": "300px",
-      "width": "300px",
-    }
-  }
+  className="dd position-fixed inset-0"
 />
 `;
 
 exports[`Storyshots Generic/MapContainer Normal 1`] = `
 <div
-  style={
-    Object {
-      "height": "300px",
-      "width": "300px",
-    }
-  }
+  className="dd position-fixed inset-0"
 />
 `;
