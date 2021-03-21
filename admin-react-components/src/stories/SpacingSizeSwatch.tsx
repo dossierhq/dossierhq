@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from 'react';
+import type { SpacingSize } from '..';
 
 interface SpacingSizeSwatchProps {
   size: SpacingSize;
