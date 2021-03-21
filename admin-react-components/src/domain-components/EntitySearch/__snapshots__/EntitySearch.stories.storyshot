@@ -12,7 +12,7 @@ exports[`Storyshots Domain/EntitySearch Normal 1`] = `
     Toggle list/map
   </button>
   <div
-    className="dd list-container dd flex-grow"
+    className="dd list-container dd flex-grow overflow-y-scroll"
   >
     <button
       className="dd button has-background hoverable text-button "

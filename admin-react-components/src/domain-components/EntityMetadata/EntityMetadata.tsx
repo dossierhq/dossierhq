@@ -73,7 +73,7 @@ function EntityMetadataInner({
         <p className="dd text-subtitle2">ID</p>
         <p className="dd text-body1">{entityId}</p>
       </ColumnItem>
-      <ColumnItem className="overflow-y-scroll" grow>
+      <ColumnItem grow overflowY="scroll">
         {entityHistory ? (
           entityHistory.versions.map((version) => {
             return (

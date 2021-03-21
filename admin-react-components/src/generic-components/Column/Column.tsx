@@ -11,6 +11,7 @@ export interface ColumnProps {
 type ColumnItemProps<AsProps extends LayoutProps> = AsProps & {
   as?: React.JSXElementConstructor<AsProps>;
   grow?: boolean;
+  overflowY?: 'scroll';
   className?: string;
   children?: React.ReactNode;
 };
@@ -18,6 +19,7 @@ type ColumnItemProps<AsProps extends LayoutProps> = AsProps & {
 type ColumnElementProps<Tag extends keyof JSX.IntrinsicElements> = JSX.IntrinsicElements[Tag] & {
   as?: Tag;
   grow?: boolean;
+  overflowY?: 'scroll';
   className?: string;
   children?: React.ReactNode;
 };
@@ -31,23 +33,34 @@ export function Column({ className, gap, children }: ColumnProps): JSX.Element {
 function itemPropsAsClassName({
   className,
   grow,
+  overflowY,
 }: {
   className: string | undefined;
   grow: boolean | undefined;
+  overflowY: 'scroll' | undefined;
 }) {
-  return joinClassNames('dd', grow ? 'flex-grow' : '', className);
+  return joinClassNames(
+    'dd',
+    grow ? 'flex-grow' : '',
+    overflowY === 'scroll' ? 'overflow-y-scroll' : '',
+    className
+  );
 }
 
 export function ColumnItem<AsProps extends LayoutProps>({
   as,
   className,
   grow,
+  overflowY,
   children,
   ...args
 }: ColumnItemProps<AsProps>): JSX.Element {
   const Element = as ?? 'div';
   return (
-    <Element className={itemPropsAsClassName({ className, grow })} {...(args as AsProps)}>
+    <Element
+      className={itemPropsAsClassName({ className, grow, overflowY })}
+      {...(args as AsProps)}
+    >
       {children}
     </Element>
   );
@@ -57,12 +70,16 @@ export function ColumnElement<Tag extends keyof JSX.IntrinsicElements = 'div'>({
   as,
   className,
   grow,
+  overflowY,
   children,
   ...args
 }: ColumnElementProps<Tag>): JSX.Element {
   const Element = (as ?? 'div') as keyof JSX.IntrinsicElements;
   return (
-    <Element className={itemPropsAsClassName({ className, grow })} {...(args as unknown)}>
+    <Element
+      className={itemPropsAsClassName({ className, grow, overflowY })}
+      {...(args as unknown)}
+    >
       {children}
     </Element>
   );
