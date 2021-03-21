@@ -1,6 +1,6 @@
 import type { Schema } from '@datadata/core';
 import type { Meta, Story } from '@storybook/react/types-6-0';
-import React, { useEffect, useReducer } from 'react';
+import React, { useReducer } from 'react';
 import type { EntityEditorSelector } from '../..';
 import { DataDataContext } from '../..';
 import { EntityEditorContainer } from './EntityEditorContainer';
@@ -49,15 +49,9 @@ function Wrapper({
 }) {
   const [editorState, dispatchEditorState] = useReducer(
     reduceEntityEditorState,
-    { schema },
+    { schema, actions: entitySelectors?.map((x) => new AddEntityDraftAction(x)) },
     initializeEntityEditorState
   );
-  useEffect(() => {
-    for (const entitySelector of entitySelectors ?? []) {
-      dispatchEditorState(new AddEntityDraftAction(entitySelector));
-    }
-  }, [entitySelectors]);
-
   return <EntityEditorContainer {...{ className, editorState, dispatchEditorState }} />;
 }
 

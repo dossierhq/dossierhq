@@ -45,7 +45,9 @@ export function EntityEditorContainer({
         />
       </div>
       <div>
-        {activeEntityId ? <EntityMetadata className="h-100" entityId={activeEntityId} /> : null}
+        {activeEntityId ? (
+          <EntityMetadata className="h-100" entityId={activeEntityId} {...{ editorState }} />
+        ) : null}
       </div>
     </div>
   );

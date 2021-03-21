@@ -1,6 +1,6 @@
 import type { Schema } from '@datadata/core';
 import type { Meta, Story } from '@storybook/react/types-6-0';
-import React, { useEffect, useReducer } from 'react';
+import React, { useReducer } from 'react';
 import type { EntityEditorProps, EntityEditorSelector } from '../..';
 import {
   AddEntityDraftAction,
@@ -49,14 +49,10 @@ function Wrapper({
 }) {
   const [editorState, dispatchEditorState] = useReducer(
     reduceEntityEditorState,
-    { schema },
+    { schema, actions: [new AddEntityDraftAction(entitySelector)] },
     initializeEntityEditorState
   );
-  useEffect(() => dispatchEditorState(new AddEntityDraftAction(entitySelector)), [entitySelector]);
   const draftState = editorState.drafts[0];
-  if (!draftState) {
-    return null;
-  }
 
   return (
     <EntityEditor
