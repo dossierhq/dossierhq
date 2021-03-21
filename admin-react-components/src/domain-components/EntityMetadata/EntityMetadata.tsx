@@ -2,9 +2,11 @@ import type { AdminEntityVersionInfo } from '@datadata/core';
 import React, { useContext, useState } from 'react';
 import type { DataDataContextValue } from '../..';
 import { Button, Column, ColumnItem, DataDataContext, Loader, Message, Tag } from '../..';
+import { joinClassNames } from '../../utils/ClassNameUtils';
 
 export interface EntityMetadataProps {
   entityId: string;
+  className?: string;
 }
 
 interface EntityMetadataInnerProps extends EntityMetadataProps {
@@ -12,7 +14,7 @@ interface EntityMetadataInnerProps extends EntityMetadataProps {
   useEntityHistory: DataDataContextValue['useEntityHistory'];
 }
 
-export function EntityMetadata({ entityId }: EntityMetadataProps): JSX.Element {
+export function EntityMetadata({ entityId, className }: EntityMetadataProps): JSX.Element {
   const context = useContext(DataDataContext);
 
   if (!context) {
@@ -21,11 +23,12 @@ export function EntityMetadata({ entityId }: EntityMetadataProps): JSX.Element {
 
   const { publishEntity, useEntityHistory } = context;
 
-  return <EntityMetadataInner {...{ entityId, publishEntity, useEntityHistory }} />;
+  return <EntityMetadataInner {...{ entityId, className, publishEntity, useEntityHistory }} />;
 }
 
 function EntityMetadataInner({
   entityId,
+  className,
   publishEntity,
   useEntityHistory,
 }: EntityMetadataInnerProps) {
@@ -39,7 +42,7 @@ function EntityMetadataInner({
   const selectedVersion = entityHistory?.versions.find((x) => x.version === selectedVersionId);
 
   return (
-    <Column className="has-shadow has-background p-2" gap={2}>
+    <Column className={joinClassNames('has-shadow has-background p-2', className)} gap={2}>
       {entityHistory ? (
         <>
           <ColumnItem>

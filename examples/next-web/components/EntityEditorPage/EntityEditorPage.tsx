@@ -50,5 +50,10 @@ function EntityEditorPageInner({
     }
   }, [ids, router]);
 
-  return <EntityEditorContainer {...{ editorState, dispatchEditorState }} />;
+  return (
+    <EntityEditorContainer
+      className="position-fixed inset-0"
+      {...{ editorState, dispatchEditorState }}
+    />
+  );
 }
