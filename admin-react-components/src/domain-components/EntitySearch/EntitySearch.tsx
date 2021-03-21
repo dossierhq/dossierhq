@@ -15,7 +15,13 @@ export function EntitySearch({ className, query, onEntityClick }: EntitySearchPr
     <Column className={className}>
       <Button onClick={toggleShowList}>Toggle list/map</Button>
       {showList ? (
-        <ColumnItem as={EntityList} grow query={query} onEntityClick={onEntityClick} />
+        <ColumnItem
+          as={EntityList}
+          overflowY="scroll"
+          grow
+          query={query}
+          onEntityClick={onEntityClick}
+        />
       ) : (
         <ColumnItem as={EntityMap} grow query={query} onEntityClick={onEntityClick} />
       )}
