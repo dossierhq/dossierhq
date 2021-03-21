@@ -67,7 +67,7 @@ export function EntityEditor({
   );
 }
 
-function EntityLoader({
+export function EntityLoader({
   entityId,
   useEntity,
   dispatchEditorState,
@@ -75,7 +75,7 @@ function EntityLoader({
   entityId: string;
   useEntity: DataDataContextValue['useEntity'];
   dispatchEditorState: Dispatch<EntityEditorStateAction>;
-}) {
+}): null {
   const { entity, entityError } = useEntity(entityId);
 
   useEffect(() => {

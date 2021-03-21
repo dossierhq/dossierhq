@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Storyshots Domain/EntityMetadata Deleted 1`] = `
+exports[`Storyshots Domain/EntityMetadata Deleted Foo 1`] = `
 <div
   className="dd dd flex-column has-shadow has-background p-2 g-2"
 >
@@ -112,7 +112,7 @@ exports[`Storyshots Domain/EntityMetadata Deleted 1`] = `
 </div>
 `;
 
-exports[`Storyshots Domain/EntityMetadata Normal 1`] = `
+exports[`Storyshots Domain/EntityMetadata Full Foo 1`] = `
 <div
   className="dd dd flex-column has-shadow has-background p-2 g-2"
 >
@@ -187,6 +187,137 @@ exports[`Storyshots Domain/EntityMetadata Normal 1`] = `
         a10e49cd-2f4e-4249-b8ee-eaca8466939b
       </p>
     </div>
+  </div>
+  <button
+    className="dd button has-background hoverable text-button bg-primary"
+    disabled={true}
+    type="button"
+  >
+    Publish
+  </button>
+</div>
+`;
+
+exports[`Storyshots Domain/EntityMetadata New Foo 1`] = `
+<div
+  className="dd dd flex-column has-shadow has-background p-2 g-2"
+>
+  <div
+    className="dd"
+  >
+    <p
+      className="dd text-subtitle2"
+    >
+      Name
+    </p>
+    <p
+      className="dd text-body1"
+    >
+      
+    </p>
+  </div>
+  <div
+    className="dd"
+  >
+    <p
+      className="dd text-subtitle2"
+    >
+      Type
+    </p>
+    <p
+      className="dd text-body1"
+    >
+      Foo
+    </p>
+  </div>
+  <div
+    className="dd"
+  >
+    <p
+      className="dd text-subtitle2"
+    >
+      ID
+    </p>
+    <p
+      className="dd text-body1"
+    >
+      e225c183-9a1d-4fd5-b259-cdc37421d5ce
+    </p>
+  </div>
+  <div
+    className="dd flex-grow overflow-y-scroll"
+  />
+  <button
+    className="dd button has-background hoverable text-button bg-primary"
+    disabled={true}
+    type="button"
+  >
+    Publish
+  </button>
+  <div
+    className="dd message has-background has-shadow bg-danger"
+  >
+    <div
+      className="dd stack"
+    >
+      <p
+        className="dd text-body1"
+      >
+        NotFound: No such entity
+      </p>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Storyshots Domain/EntityMetadata Slow Full Foo 1`] = `
+<div
+  className="dd dd flex-column has-shadow has-background p-2 g-2"
+>
+  <div
+    className="dd"
+  >
+    <p
+      className="dd text-subtitle2"
+    >
+      Name
+    </p>
+    <p
+      className="dd text-body1"
+    />
+  </div>
+  <div
+    className="dd"
+  >
+    <p
+      className="dd text-subtitle2"
+    >
+      Type
+    </p>
+    <p
+      className="dd text-body1"
+    />
+  </div>
+  <div
+    className="dd"
+  >
+    <p
+      className="dd text-subtitle2"
+    >
+      ID
+    </p>
+    <p
+      className="dd text-body1"
+    >
+      fc66b4d7-61ff-44d4-8f68-cb7f526df046
+    </p>
+  </div>
+  <div
+    className="dd flex-grow overflow-y-scroll"
+  >
+    <div
+      className="dd loader"
+    />
   </div>
   <button
     className="dd button has-background hoverable text-button bg-primary"

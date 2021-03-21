@@ -1328,6 +1328,44 @@ exports[`Storyshots Domain/EntityEditorContainer Invalid Type New Entity 1`] = `
       className="dd dd flex-column has-shadow has-background p-2 h-100 g-2"
     >
       <div
+        className="dd"
+      >
+        <p
+          className="dd text-subtitle2"
+        >
+          Name
+        </p>
+        <p
+          className="dd text-body1"
+        />
+      </div>
+      <div
+        className="dd"
+      >
+        <p
+          className="dd text-subtitle2"
+        >
+          Type
+        </p>
+        <p
+          className="dd text-body1"
+        />
+      </div>
+      <div
+        className="dd"
+      >
+        <p
+          className="dd text-subtitle2"
+        >
+          ID
+        </p>
+        <p
+          className="dd text-body1"
+        >
+          da4a48d6-341e-4515-941f-b83578191b51
+        </p>
+      </div>
+      <div
         className="dd flex-grow overflow-y-scroll"
       />
       <button
@@ -1677,6 +1715,48 @@ exports[`Storyshots Domain/EntityEditorContainer New Foo 1`] = `
       className="dd dd flex-column has-shadow has-background p-2 h-100 g-2"
     >
       <div
+        className="dd"
+      >
+        <p
+          className="dd text-subtitle2"
+        >
+          Name
+        </p>
+        <p
+          className="dd text-body1"
+        >
+          
+        </p>
+      </div>
+      <div
+        className="dd"
+      >
+        <p
+          className="dd text-subtitle2"
+        >
+          Type
+        </p>
+        <p
+          className="dd text-body1"
+        >
+          Foo
+        </p>
+      </div>
+      <div
+        className="dd"
+      >
+        <p
+          className="dd text-subtitle2"
+        >
+          ID
+        </p>
+        <p
+          className="dd text-body1"
+        >
+          82ded109-44f2-48b9-a676-43162fda3d7d
+        </p>
+      </div>
+      <div
         className="dd flex-grow overflow-y-scroll"
       />
       <button
@@ -1749,6 +1829,44 @@ exports[`Storyshots Domain/EntityEditorContainer Not Found 1`] = `
       className="dd dd flex-column has-shadow has-background p-2 h-100 g-2"
     >
       <div
+        className="dd"
+      >
+        <p
+          className="dd text-subtitle2"
+        >
+          Name
+        </p>
+        <p
+          className="dd text-body1"
+        />
+      </div>
+      <div
+        className="dd"
+      >
+        <p
+          className="dd text-subtitle2"
+        >
+          Type
+        </p>
+        <p
+          className="dd text-body1"
+        />
+      </div>
+      <div
+        className="dd"
+      >
+        <p
+          className="dd text-subtitle2"
+        >
+          ID
+        </p>
+        <p
+          className="dd text-body1"
+        >
+          c6f97fae-1213-4be0-996f-4f20c7da7e65
+        </p>
+      </div>
+      <div
         className="dd flex-grow overflow-y-scroll"
       />
       <button
@@ -1803,8 +1921,61 @@ exports[`Storyshots Domain/EntityEditorContainer Slow Full Foo 1`] = `
   </div>
   <div>
     <div
-      className="dd loader"
-    />
+      className="dd dd flex-column has-shadow has-background p-2 h-100 g-2"
+    >
+      <div
+        className="dd"
+      >
+        <p
+          className="dd text-subtitle2"
+        >
+          Name
+        </p>
+        <p
+          className="dd text-body1"
+        />
+      </div>
+      <div
+        className="dd"
+      >
+        <p
+          className="dd text-subtitle2"
+        >
+          Type
+        </p>
+        <p
+          className="dd text-body1"
+        />
+      </div>
+      <div
+        className="dd"
+      >
+        <p
+          className="dd text-subtitle2"
+        >
+          ID
+        </p>
+        <p
+          className="dd text-body1"
+        >
+          fc66b4d7-61ff-44d4-8f68-cb7f526df046
+        </p>
+      </div>
+      <div
+        className="dd flex-grow overflow-y-scroll"
+      >
+        <div
+          className="dd loader"
+        />
+      </div>
+      <button
+        className="dd button has-background hoverable text-button bg-primary"
+        disabled={true}
+        type="button"
+      >
+        Publish
+      </button>
+    </div>
   </div>
 </div>
 `;
