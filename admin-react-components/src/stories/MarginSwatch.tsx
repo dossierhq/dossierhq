@@ -1,4 +1,5 @@
 import React from 'react';
+import type { SpacingSize } from '..';
 import { joinClassNames } from '../utils/ClassNameUtils';
 
 interface MarginSwatchProps {
