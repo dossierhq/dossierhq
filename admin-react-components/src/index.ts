@@ -9,7 +9,9 @@ export type {
 export type { EntityFieldEditorProps } from './domain-components/EntityFieldEditor/EntityFieldEditor';
 export type { IconProps, IconType } from './generic-components/Icon/Icon';
 export type { Kind } from './utils/KindUtils';
+export type { LayoutProps, SpacingSize } from './types/LayoutTypes';
 export type { MessageItem } from './generic-components/Message/Message';
+
 export { Button } from './generic-components/Button/Button';
 export { Column, ColumnElement, ColumnItem } from './generic-components/Column/Column';
 export { DataDataContext, DataDataContextValue } from './contexts/DataDataContext';
