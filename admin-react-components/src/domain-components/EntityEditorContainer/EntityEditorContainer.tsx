@@ -34,7 +34,6 @@ export function EntityEditorContainer({
             key={draftState.id}
             entityId={draftState.id}
             {...{ editorState, dispatchEditorState }}
-            style={{ flexGrow: 1 }}
           />
         ))}
         <TypePicker
