@@ -224,8 +224,20 @@ export function reduceEntityEditorState(
   return action.reduce(state);
 }
 
-export function initializeEntityEditorState({ schema }: { schema: Schema }): EntityEditorState {
-  return { schema, drafts: [], activeEntityId: null };
+export function initializeEntityEditorState({
+  schema,
+  actions,
+}: {
+  schema: Schema;
+  actions?: EntityEditorStateAction[];
+}): EntityEditorState {
+  let state: EntityEditorState = { schema, drafts: [], activeEntityId: null };
+  if (actions) {
+    for (const action of actions) {
+      state = reduceEntityEditorState(state, action);
+    }
+  }
+  return state;
 }
 
 function createEditorEntityDraftState(
