@@ -5,13 +5,16 @@ import { EntityEditor, EntityMetadata } from '../..';
 import { TypePicker } from '../TypePicker/TypePicker';
 import { AddEntityDraftAction, SetActiveEntityAction } from '../EntityEditor/EntityEditorReducer';
 import { useWindowEventListener } from '../../utils/EventUtils';
+import { joinClassNames } from '../../utils/ClassNameUtils';
 
 export interface EntityEditorContainerProps {
+  className?: string;
   editorState: EntityEditorState;
   dispatchEditorState: Dispatch<EntityEditorStateAction>;
 }
 
 export function EntityEditorContainer({
+  className,
   editorState,
   dispatchEditorState,
 }: EntityEditorContainerProps): JSX.Element {
@@ -24,24 +27,29 @@ export function EntityEditorContainer({
   const { activeEntityId } = editorState;
 
   return (
-    <>
-      {editorState.drafts.map((draftState) => (
-        <div key={draftState.id} style={{ display: 'flex' }}>
+    <div className={joinClassNames('dd flex-row g-2 overflow-hidden', className)}>
+      <div className="dd flex-grow flex-column g-2 overflow-y-scroll">
+        {editorState.drafts.map((draftState) => (
           <EntityEditor
+            key={draftState.id}
             entityId={draftState.id}
             {...{ editorState, dispatchEditorState }}
             style={{ flexGrow: 1 }}
           />
-          {activeEntityId === draftState.id ? <EntityMetadata entityId={draftState.id} /> : null}
-        </div>
-      ))}
-      <TypePicker
-        id="create-entity-picker"
-        text="Create entity"
-        showEntityTypes
-        onTypeSelected={handleCreateEntity}
-      />
-    </>
+        ))}
+        <TypePicker
+          id="create-entity-picker"
+          text="Create entity"
+          showEntityTypes
+          onTypeSelected={handleCreateEntity}
+        />
+      </div>
+      <div>
+        {activeEntityId ? (
+          <EntityMetadata className="overflow-y-scroll h-100" entityId={activeEntityId} />
+        ) : null}
+      </div>
+    </div>
   );
 }
 

@@ -25,7 +25,7 @@ interface StoryProps extends EntityEditorContainerProps {
 const meta: Meta<StoryProps> = {
   title: 'Domain/EntityEditorContainer',
   component: EntityEditorContainer,
-  args: {},
+  args: { className: 'position-fixed inset-0' },
 };
 export default meta;
 
@@ -39,9 +39,11 @@ const Template: Story<StoryProps> = (args) => {
 };
 
 function Wrapper({
+  className,
   entitySelectors,
   schema,
 }: {
+  className?: string;
   entitySelectors?: EntityEditorSelector[];
   schema: Schema;
 }) {
@@ -56,9 +58,7 @@ function Wrapper({
     }
   }, [entitySelectors]);
 
-  return (
-    <EntityEditorContainer editorState={editorState} dispatchEditorState={dispatchEditorState} />
-  );
+  return <EntityEditorContainer {...{ className, editorState, dispatchEditorState }} />;
 }
 
 export const NewFoo = Template.bind({});
