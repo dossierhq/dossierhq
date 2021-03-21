@@ -13,11 +13,6 @@ exports[`Storyshots Domain/EntityEditorContainer Deleted Foo 1`] = `
       <form
         className="dd segment has-shadow has-background"
         onSubmit={[Function]}
-        style={
-          Object {
-            "flexGrow": 1,
-          }
-        }
       >
         <div>
           <label
@@ -452,11 +447,6 @@ exports[`Storyshots Domain/EntityEditorContainer Full Foo 1`] = `
       <form
         className="dd segment has-shadow has-background"
         onSubmit={[Function]}
-        style={
-          Object {
-            "flexGrow": 1,
-          }
-        }
       >
         <div>
           <label
@@ -1422,11 +1412,6 @@ exports[`Storyshots Domain/EntityEditorContainer New Foo 1`] = `
       <form
         className="dd segment has-shadow has-background"
         onSubmit={[Function]}
-        style={
-          Object {
-            "flexGrow": 1,
-          }
-        }
       >
         <div>
           <label
@@ -2017,11 +2002,6 @@ exports[`Storyshots Domain/EntityEditorContainer Two Entities 1`] = `
       <form
         className="dd segment has-shadow has-background"
         onSubmit={[Function]}
-        style={
-          Object {
-            "flexGrow": 1,
-          }
-        }
       >
         <div>
           <label
@@ -2091,11 +2071,6 @@ exports[`Storyshots Domain/EntityEditorContainer Two Entities 1`] = `
       <form
         className="dd segment has-shadow has-background"
         onSubmit={[Function]}
-        style={
-          Object {
-            "flexGrow": 1,
-          }
-        }
       >
         <div>
           <label

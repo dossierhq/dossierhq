@@ -29,7 +29,6 @@ export interface EntityEditorProps {
   entityId: string;
   editorState: EntityEditorState;
   dispatchEditorState: Dispatch<EntityEditorStateAction>;
-  style?: React.CSSProperties;
 }
 
 interface EntityEditorInnerProps extends EntityEditorProps {
@@ -41,7 +40,6 @@ export function EntityEditor({
   entityId,
   editorState,
   dispatchEditorState,
-  style,
 }: EntityEditorProps): JSX.Element | null {
   const context = useContext(DataDataContext);
   if (!context) {
@@ -58,7 +56,6 @@ export function EntityEditor({
           entityId,
           editorState,
           dispatchEditorState,
-          style,
           createEntity,
           updateEntity,
         }}
@@ -106,7 +103,6 @@ function EntityEditorInner({
   entityId,
   editorState,
   dispatchEditorState,
-  style,
   createEntity,
   updateEntity,
 }: EntityEditorInnerProps): JSX.Element {
@@ -137,7 +133,6 @@ function EntityEditorInner({
         onSubmit={() =>
           submitEntity(draftState, setSubmitLoading, setSubmitMessage, createEntity, updateEntity)
         }
-        style={style}
       >
         {draftState.initMessage ? <Message {...draftState.initMessage} /> : null}
         {draftState.entityLoadMessage ? <Message {...draftState.entityLoadMessage} /> : null}
