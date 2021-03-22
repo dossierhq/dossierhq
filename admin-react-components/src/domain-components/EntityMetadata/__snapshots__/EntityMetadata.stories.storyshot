@@ -2,10 +2,10 @@
 
 exports[`Storyshots Domain/EntityMetadata Deleted Foo 1`] = `
 <div
-  className="dd flex-column has-shadow has-background p-2 g-2"
+  className="dd flex-column has-shadow has-background py-2 g-2"
 >
   <div
-    className="dd"
+    className="dd mx-2"
   >
     <p
       className="dd text-subtitle2"
@@ -19,7 +19,7 @@ exports[`Storyshots Domain/EntityMetadata Deleted Foo 1`] = `
     </p>
   </div>
   <div
-    className="dd"
+    className="dd mx-2"
   >
     <p
       className="dd text-subtitle2"
@@ -33,7 +33,7 @@ exports[`Storyshots Domain/EntityMetadata Deleted Foo 1`] = `
     </p>
   </div>
   <div
-    className="dd"
+    className="dd mx-2"
   >
     <p
       className="dd text-subtitle2"
@@ -47,11 +47,12 @@ exports[`Storyshots Domain/EntityMetadata Deleted Foo 1`] = `
     </p>
   </div>
   <div
-    className="dd flex-grow overflow-y-scroll"
+    className="dd flex-column dd flex-grow overflow-y-scroll p-2 g-1"
   >
-    <div
-      className="dd has-shadow p-2"
+    <button
+      className="dd button has-background hoverable text-button dd has-shadow "
       onClick={[Function]}
+      type="button"
     >
       <p
         className="dd text-subtitle2"
@@ -69,10 +70,11 @@ exports[`Storyshots Domain/EntityMetadata Deleted Foo 1`] = `
       >
         a10e49cd-2f4e-4249-b8ee-eaca8466939b
       </p>
-    </div>
-    <div
-      className="dd has-shadow p-2"
+    </button>
+    <button
+      className="dd button has-background hoverable text-button dd has-shadow "
       onClick={[Function]}
+      type="button"
     >
       <p
         className="dd text-subtitle2"
@@ -100,10 +102,10 @@ exports[`Storyshots Domain/EntityMetadata Deleted Foo 1`] = `
       >
         a10e49cd-2f4e-4249-b8ee-eaca8466939b
       </p>
-    </div>
+    </button>
   </div>
   <button
-    className="dd button has-background hoverable text-button bg-primary"
+    className="dd button has-background hoverable text-button mx-2 bg-primary"
     disabled={true}
     type="button"
   >
@@ -114,10 +116,10 @@ exports[`Storyshots Domain/EntityMetadata Deleted Foo 1`] = `
 
 exports[`Storyshots Domain/EntityMetadata Full Foo 1`] = `
 <div
-  className="dd flex-column has-shadow has-background p-2 g-2"
+  className="dd flex-column has-shadow has-background py-2 g-2"
 >
   <div
-    className="dd"
+    className="dd mx-2"
   >
     <p
       className="dd text-subtitle2"
@@ -131,7 +133,7 @@ exports[`Storyshots Domain/EntityMetadata Full Foo 1`] = `
     </p>
   </div>
   <div
-    className="dd"
+    className="dd mx-2"
   >
     <p
       className="dd text-subtitle2"
@@ -145,7 +147,7 @@ exports[`Storyshots Domain/EntityMetadata Full Foo 1`] = `
     </p>
   </div>
   <div
-    className="dd"
+    className="dd mx-2"
   >
     <p
       className="dd text-subtitle2"
@@ -159,11 +161,12 @@ exports[`Storyshots Domain/EntityMetadata Full Foo 1`] = `
     </p>
   </div>
   <div
-    className="dd flex-grow overflow-y-scroll"
+    className="dd flex-column dd flex-grow overflow-y-scroll p-2 g-1"
   >
-    <div
-      className="dd has-shadow p-2"
+    <button
+      className="dd button has-background hoverable text-button dd has-shadow "
       onClick={[Function]}
+      type="button"
     >
       <p
         className="dd text-subtitle2"
@@ -186,10 +189,10 @@ exports[`Storyshots Domain/EntityMetadata Full Foo 1`] = `
       >
         a10e49cd-2f4e-4249-b8ee-eaca8466939b
       </p>
-    </div>
+    </button>
   </div>
   <button
-    className="dd button has-background hoverable text-button bg-primary"
+    className="dd button has-background hoverable text-button mx-2 bg-primary"
     disabled={true}
     type="button"
   >
@@ -200,10 +203,10 @@ exports[`Storyshots Domain/EntityMetadata Full Foo 1`] = `
 
 exports[`Storyshots Domain/EntityMetadata New Foo 1`] = `
 <div
-  className="dd flex-column has-shadow has-background p-2 g-2"
+  className="dd flex-column has-shadow has-background py-2 g-2"
 >
   <div
-    className="dd"
+    className="dd mx-2"
   >
     <p
       className="dd text-subtitle2"
@@ -217,7 +220,7 @@ exports[`Storyshots Domain/EntityMetadata New Foo 1`] = `
     </p>
   </div>
   <div
-    className="dd"
+    className="dd mx-2"
   >
     <p
       className="dd text-subtitle2"
@@ -231,7 +234,7 @@ exports[`Storyshots Domain/EntityMetadata New Foo 1`] = `
     </p>
   </div>
   <div
-    className="dd"
+    className="dd mx-2"
   >
     <p
       className="dd text-subtitle2"
@@ -245,10 +248,10 @@ exports[`Storyshots Domain/EntityMetadata New Foo 1`] = `
     </p>
   </div>
   <div
-    className="dd flex-grow overflow-y-scroll"
+    className="dd flex-column dd flex-grow overflow-y-scroll p-2 g-1"
   />
   <button
-    className="dd button has-background hoverable text-button bg-primary"
+    className="dd button has-background hoverable text-button mx-2 bg-primary"
     disabled={true}
     type="button"
   >
@@ -272,10 +275,10 @@ exports[`Storyshots Domain/EntityMetadata New Foo 1`] = `
 
 exports[`Storyshots Domain/EntityMetadata Slow Full Foo 1`] = `
 <div
-  className="dd flex-column has-shadow has-background p-2 g-2"
+  className="dd flex-column has-shadow has-background py-2 g-2"
 >
   <div
-    className="dd"
+    className="dd mx-2"
   >
     <p
       className="dd text-subtitle2"
@@ -287,7 +290,7 @@ exports[`Storyshots Domain/EntityMetadata Slow Full Foo 1`] = `
     />
   </div>
   <div
-    className="dd"
+    className="dd mx-2"
   >
     <p
       className="dd text-subtitle2"
@@ -299,7 +302,7 @@ exports[`Storyshots Domain/EntityMetadata Slow Full Foo 1`] = `
     />
   </div>
   <div
-    className="dd"
+    className="dd mx-2"
   >
     <p
       className="dd text-subtitle2"
@@ -313,14 +316,14 @@ exports[`Storyshots Domain/EntityMetadata Slow Full Foo 1`] = `
     </p>
   </div>
   <div
-    className="dd flex-grow overflow-y-scroll"
+    className="dd flex-column dd flex-grow overflow-y-scroll p-2 g-1"
   >
     <div
       className="dd loader"
     />
   </div>
   <button
-    className="dd button has-background hoverable text-button bg-primary"
+    className="dd button has-background hoverable text-button mx-2 bg-primary"
     disabled={true}
     type="button"
   >
