@@ -217,6 +217,26 @@ export class SetFieldAction extends EntityEditorDraftStateAction {
   }
 }
 
+export class ResetEntityAction extends EntityEditorDraftStateAction {
+  constructor(id: string) {
+    super(id);
+  }
+
+  reduceDraft(
+    draftState: EntityEditorDraftState,
+    _state: EntityEditorState
+  ): EntityEditorDraftState {
+    const { entity } = draftState;
+    if (!entity) {
+      return draftState;
+    }
+    const newEntity = { ...entity };
+    newEntity.name = newEntity.initialName;
+    newEntity.fields = newEntity.fields.map((field) => ({ ...field, value: field.initialValue }));
+    return { ...draftState, entity: newEntity };
+  }
+}
+
 export function reduceEntityEditorState(
   state: EntityEditorState,
   action: EntityEditorStateAction

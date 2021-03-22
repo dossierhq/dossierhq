@@ -5,7 +5,7 @@ import { kindToClassName } from '../../utils/KindUtils';
 
 export interface ButtonProps {
   id?: string;
-  type?: 'button' | 'submit';
+  type?: 'button' | 'reset' | 'submit';
   kind?: Kind;
   disabled?: boolean;
   loading?: boolean;
