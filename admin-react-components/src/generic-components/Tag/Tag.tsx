@@ -1,4 +1,5 @@
 import React from 'react';
+import { joinClassNames } from '../../utils/ClassNameUtils';
 import type { Kind } from '../../utils/KindUtils';
 import { kindToClassName } from '../../utils/KindUtils';
 
@@ -8,5 +9,14 @@ export interface TagProps {
 }
 
 export function Tag({ kind, text }: TagProps): JSX.Element {
-  return <span className={`dd has-background text-caption ${kindToClassName(kind)}`}>{text}</span>;
+  return (
+    <span
+      className={joinClassNames(
+        'dd has-background text-caption p-1 is-rounded',
+        kindToClassName(kind)
+      )}
+    >
+      {text}
+    </span>
+  );
 }

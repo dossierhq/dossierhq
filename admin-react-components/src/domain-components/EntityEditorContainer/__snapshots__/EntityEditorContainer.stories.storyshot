@@ -398,12 +398,12 @@ exports[`Storyshots Domain/EntityEditorContainer Deleted Foo 1`] = `
             Version 
             1
             <span
-              className="dd has-background text-caption bg-danger"
+              className="dd has-background text-caption p-1 is-rounded bg-danger"
             >
               Deleted
             </span>
             <span
-              className="dd has-background text-caption bg-primary"
+              className="dd has-background text-caption p-1 is-rounded bg-primary"
             >
               Published
             </span>
@@ -1232,7 +1232,7 @@ exports[`Storyshots Domain/EntityEditorContainer Full Foo 1`] = `
             Version 
             0
             <span
-              className="dd has-background text-caption bg-primary"
+              className="dd has-background text-caption p-1 is-rounded bg-primary"
             >
               Published
             </span>
