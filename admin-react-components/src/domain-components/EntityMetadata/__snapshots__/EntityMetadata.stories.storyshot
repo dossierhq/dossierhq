@@ -47,10 +47,10 @@ exports[`Storyshots Domain/EntityMetadata Deleted Foo 1`] = `
     </p>
   </div>
   <div
-    className="dd flex-column dd flex-grow overflow-y-scroll p-2 g-1"
+    className="dd flex-column dd flex-grow overflow-y-scroll"
   >
     <button
-      className="dd button has-background hoverable text-button dd has-shadow "
+      className="dd button has-background hoverable text-button"
       onClick={[Function]}
       type="button"
     >
@@ -72,7 +72,7 @@ exports[`Storyshots Domain/EntityMetadata Deleted Foo 1`] = `
       </p>
     </button>
     <button
-      className="dd button has-background hoverable text-button dd has-shadow "
+      className="dd button has-background hoverable text-button"
       onClick={[Function]}
       type="button"
     >
@@ -105,7 +105,7 @@ exports[`Storyshots Domain/EntityMetadata Deleted Foo 1`] = `
     </button>
   </div>
   <button
-    className="dd button has-background hoverable text-button mx-2 bg-primary"
+    className="dd button has-background hoverable text-button mx-2 bg-primary is-rounded"
     disabled={true}
     type="button"
   >
@@ -161,10 +161,10 @@ exports[`Storyshots Domain/EntityMetadata Full Foo 1`] = `
     </p>
   </div>
   <div
-    className="dd flex-column dd flex-grow overflow-y-scroll p-2 g-1"
+    className="dd flex-column dd flex-grow overflow-y-scroll"
   >
     <button
-      className="dd button has-background hoverable text-button dd has-shadow "
+      className="dd button has-background hoverable text-button"
       onClick={[Function]}
       type="button"
     >
@@ -192,7 +192,7 @@ exports[`Storyshots Domain/EntityMetadata Full Foo 1`] = `
     </button>
   </div>
   <button
-    className="dd button has-background hoverable text-button mx-2 bg-primary"
+    className="dd button has-background hoverable text-button mx-2 bg-primary is-rounded"
     disabled={true}
     type="button"
   >
@@ -248,10 +248,10 @@ exports[`Storyshots Domain/EntityMetadata New Foo 1`] = `
     </p>
   </div>
   <div
-    className="dd flex-column dd flex-grow overflow-y-scroll p-2 g-1"
+    className="dd flex-column dd flex-grow overflow-y-scroll"
   />
   <button
-    className="dd button has-background hoverable text-button mx-2 bg-primary"
+    className="dd button has-background hoverable text-button mx-2 bg-primary is-rounded"
     disabled={true}
     type="button"
   >
@@ -316,14 +316,14 @@ exports[`Storyshots Domain/EntityMetadata Slow Full Foo 1`] = `
     </p>
   </div>
   <div
-    className="dd flex-column dd flex-grow overflow-y-scroll p-2 g-1"
+    className="dd flex-column dd flex-grow overflow-y-scroll"
   >
     <div
       className="dd loader"
     />
   </div>
   <button
-    className="dd button has-background hoverable text-button mx-2 bg-primary"
+    className="dd button has-background hoverable text-button mx-2 bg-primary is-rounded"
     disabled={true}
     type="button"
   >

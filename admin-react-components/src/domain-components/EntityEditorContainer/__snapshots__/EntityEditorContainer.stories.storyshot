@@ -97,7 +97,7 @@ exports[`Storyshots Domain/EntityEditorContainer Deleted Foo 1`] = `
               className="dd flex-row"
             >
               <button
-                className="dd button has-background hoverable text-button"
+                className="dd button has-background hoverable text-button is-rounded"
                 id="fb62be03-a0a9-4689-9987-bacee0e7692d-location"
                 onClick={[Function]}
                 type="button"
@@ -124,7 +124,7 @@ exports[`Storyshots Domain/EntityEditorContainer Deleted Foo 1`] = `
                 className="dd flex-row"
               >
                 <button
-                  className="dd button has-background hoverable text-button"
+                  className="dd button has-background hoverable text-button is-rounded"
                   id="fb62be03-a0a9-4689-9987-bacee0e7692d-locations"
                   onClick={[Function]}
                   type="button"
@@ -149,7 +149,7 @@ exports[`Storyshots Domain/EntityEditorContainer Deleted Foo 1`] = `
               className="dd flex-row"
             >
               <button
-                className="dd button has-background hoverable text-button"
+                className="dd button has-background hoverable text-button is-rounded"
                 id="fb62be03-a0a9-4689-9987-bacee0e7692d-bar"
                 onClick={[Function]}
                 type="button"
@@ -176,7 +176,7 @@ exports[`Storyshots Domain/EntityEditorContainer Deleted Foo 1`] = `
                 className="dd flex-row"
               >
                 <button
-                  className="dd button has-background hoverable text-button"
+                  className="dd button has-background hoverable text-button is-rounded"
                   id="fb62be03-a0a9-4689-9987-bacee0e7692d-bars"
                   onClick={[Function]}
                   type="button"
@@ -202,7 +202,7 @@ exports[`Storyshots Domain/EntityEditorContainer Deleted Foo 1`] = `
             >
               <div>
                 <button
-                  className="dd button has-background hoverable text-button"
+                  className="dd button has-background hoverable text-button is-rounded"
                   id="fb62be03-a0a9-4689-9987-bacee0e7692d-annotatedBar"
                   onClick={[Function]}
                   type="button"
@@ -235,7 +235,7 @@ exports[`Storyshots Domain/EntityEditorContainer Deleted Foo 1`] = `
               >
                 <div>
                   <button
-                    className="dd button has-background hoverable text-button"
+                    className="dd button has-background hoverable text-button is-rounded"
                     id="fb62be03-a0a9-4689-9987-bacee0e7692d-annotatedBars"
                     onClick={[Function]}
                     type="button"
@@ -266,7 +266,7 @@ exports[`Storyshots Domain/EntityEditorContainer Deleted Foo 1`] = `
             >
               <div>
                 <button
-                  className="dd button has-background hoverable text-button"
+                  className="dd button has-background hoverable text-button is-rounded"
                   id="fb62be03-a0a9-4689-9987-bacee0e7692d-nested"
                   onClick={[Function]}
                   type="button"
@@ -285,14 +285,14 @@ exports[`Storyshots Domain/EntityEditorContainer Deleted Foo 1`] = `
           className="dd flex-row g-1"
         >
           <button
-            className="dd button has-background hoverable text-button bg-primary"
+            className="dd button has-background hoverable text-button bg-primary is-rounded"
             disabled={false}
             type="submit"
           >
             Save
           </button>
           <button
-            className="dd button has-background hoverable text-button"
+            className="dd button has-background hoverable text-button is-rounded"
             disabled={false}
             type="reset"
           >
@@ -303,7 +303,7 @@ exports[`Storyshots Domain/EntityEditorContainer Deleted Foo 1`] = `
     </div>
     <div>
       <button
-        className="dd button has-background hoverable text-button"
+        className="dd button has-background hoverable text-button is-rounded"
         id="create-entity-picker"
         onClick={[Function]}
         type="button"
@@ -363,10 +363,10 @@ exports[`Storyshots Domain/EntityEditorContainer Deleted Foo 1`] = `
         </p>
       </div>
       <div
-        className="dd flex-column dd flex-grow overflow-y-scroll p-2 g-1"
+        className="dd flex-column dd flex-grow overflow-y-scroll"
       >
         <button
-          className="dd button has-background hoverable text-button dd has-shadow "
+          className="dd button has-background hoverable text-button"
           onClick={[Function]}
           type="button"
         >
@@ -388,7 +388,7 @@ exports[`Storyshots Domain/EntityEditorContainer Deleted Foo 1`] = `
           </p>
         </button>
         <button
-          className="dd button has-background hoverable text-button dd has-shadow "
+          className="dd button has-background hoverable text-button"
           onClick={[Function]}
           type="button"
         >
@@ -421,7 +421,7 @@ exports[`Storyshots Domain/EntityEditorContainer Deleted Foo 1`] = `
         </button>
       </div>
       <button
-        className="dd button has-background hoverable text-button mx-2 bg-primary"
+        className="dd button has-background hoverable text-button mx-2 bg-primary is-rounded"
         disabled={true}
         type="button"
       >
@@ -596,7 +596,7 @@ exports[`Storyshots Domain/EntityEditorContainer Full Foo 1`] = `
               className="dd flex-row"
             >
               <button
-                className="dd button has-background hoverable text-button"
+                className="dd button has-background hoverable text-button is-rounded"
                 id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-location"
                 onClick={[Function]}
                 type="button"
@@ -633,7 +633,7 @@ exports[`Storyshots Domain/EntityEditorContainer Full Foo 1`] = `
                 className="dd flex-row"
               >
                 <button
-                  className="dd button has-background hoverable text-button"
+                  className="dd button has-background hoverable text-button is-rounded"
                   id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-locations"
                   onClick={[Function]}
                   type="button"
@@ -655,7 +655,7 @@ exports[`Storyshots Domain/EntityEditorContainer Full Foo 1`] = `
                 className="dd flex-row"
               >
                 <button
-                  className="dd button has-background hoverable text-button"
+                  className="dd button has-background hoverable text-button is-rounded"
                   id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-locations-1"
                   onClick={[Function]}
                   type="button"
@@ -677,7 +677,7 @@ exports[`Storyshots Domain/EntityEditorContainer Full Foo 1`] = `
                 className="dd flex-row"
               >
                 <button
-                  className="dd button has-background hoverable text-button"
+                  className="dd button has-background hoverable text-button is-rounded"
                   id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-locations-2"
                   onClick={[Function]}
                   type="button"
@@ -702,7 +702,7 @@ exports[`Storyshots Domain/EntityEditorContainer Full Foo 1`] = `
               className="dd flex-row"
             >
               <button
-                className="dd button has-background hoverable text-button"
+                className="dd button has-background hoverable text-button is-rounded"
                 id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-bar"
                 onClick={[Function]}
                 type="button"
@@ -739,7 +739,7 @@ exports[`Storyshots Domain/EntityEditorContainer Full Foo 1`] = `
                 className="dd flex-row"
               >
                 <button
-                  className="dd button has-background hoverable text-button"
+                  className="dd button has-background hoverable text-button is-rounded"
                   id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-bars"
                   onClick={[Function]}
                   type="button"
@@ -761,7 +761,7 @@ exports[`Storyshots Domain/EntityEditorContainer Full Foo 1`] = `
                 className="dd flex-row"
               >
                 <button
-                  className="dd button has-background hoverable text-button"
+                  className="dd button has-background hoverable text-button is-rounded"
                   id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-bars-1"
                   onClick={[Function]}
                   type="button"
@@ -783,7 +783,7 @@ exports[`Storyshots Domain/EntityEditorContainer Full Foo 1`] = `
                 className="dd flex-row"
               >
                 <button
-                  className="dd button has-background hoverable text-button"
+                  className="dd button has-background hoverable text-button is-rounded"
                   id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-bars-2"
                   onClick={[Function]}
                   type="button"
@@ -872,7 +872,7 @@ exports[`Storyshots Domain/EntityEditorContainer Full Foo 1`] = `
                     className="dd flex-row"
                   >
                     <button
-                      className="dd button has-background hoverable text-button"
+                      className="dd button has-background hoverable text-button is-rounded"
                       id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBar-bar"
                       onClick={[Function]}
                       type="button"
@@ -976,7 +976,7 @@ exports[`Storyshots Domain/EntityEditorContainer Full Foo 1`] = `
                       className="dd flex-row"
                     >
                       <button
-                        className="dd button has-background hoverable text-button"
+                        className="dd button has-background hoverable text-button is-rounded"
                         id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-bar"
                         onClick={[Function]}
                         type="button"
@@ -1065,7 +1065,7 @@ exports[`Storyshots Domain/EntityEditorContainer Full Foo 1`] = `
                       className="dd flex-row"
                     >
                       <button
-                        className="dd button has-background hoverable text-button"
+                        className="dd button has-background hoverable text-button is-rounded"
                         id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-1-bar"
                         onClick={[Function]}
                         type="button"
@@ -1091,7 +1091,7 @@ exports[`Storyshots Domain/EntityEditorContainer Full Foo 1`] = `
               >
                 <div>
                   <button
-                    className="dd button has-background hoverable text-button"
+                    className="dd button has-background hoverable text-button is-rounded"
                     id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-2"
                     onClick={[Function]}
                     type="button"
@@ -1122,7 +1122,7 @@ exports[`Storyshots Domain/EntityEditorContainer Full Foo 1`] = `
             >
               <div>
                 <button
-                  className="dd button has-background hoverable text-button"
+                  className="dd button has-background hoverable text-button is-rounded"
                   id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-nested"
                   onClick={[Function]}
                   type="button"
@@ -1141,14 +1141,14 @@ exports[`Storyshots Domain/EntityEditorContainer Full Foo 1`] = `
           className="dd flex-row g-1"
         >
           <button
-            className="dd button has-background hoverable text-button bg-primary"
+            className="dd button has-background hoverable text-button bg-primary is-rounded"
             disabled={false}
             type="submit"
           >
             Save
           </button>
           <button
-            className="dd button has-background hoverable text-button"
+            className="dd button has-background hoverable text-button is-rounded"
             disabled={false}
             type="reset"
           >
@@ -1159,7 +1159,7 @@ exports[`Storyshots Domain/EntityEditorContainer Full Foo 1`] = `
     </div>
     <div>
       <button
-        className="dd button has-background hoverable text-button"
+        className="dd button has-background hoverable text-button is-rounded"
         id="create-entity-picker"
         onClick={[Function]}
         type="button"
@@ -1219,10 +1219,10 @@ exports[`Storyshots Domain/EntityEditorContainer Full Foo 1`] = `
         </p>
       </div>
       <div
-        className="dd flex-column dd flex-grow overflow-y-scroll p-2 g-1"
+        className="dd flex-column dd flex-grow overflow-y-scroll"
       >
         <button
-          className="dd button has-background hoverable text-button dd has-shadow "
+          className="dd button has-background hoverable text-button"
           onClick={[Function]}
           type="button"
         >
@@ -1250,7 +1250,7 @@ exports[`Storyshots Domain/EntityEditorContainer Full Foo 1`] = `
         </button>
       </div>
       <button
-        className="dd button has-background hoverable text-button mx-2 bg-primary"
+        className="dd button has-background hoverable text-button mx-2 bg-primary is-rounded"
         disabled={true}
         type="button"
       >
@@ -1283,7 +1283,7 @@ exports[`Storyshots Domain/EntityEditorContainer Invalid Type New Entity 1`] = `
     </div>
     <div>
       <button
-        className="dd button has-background hoverable text-button"
+        className="dd button has-background hoverable text-button is-rounded"
         id="create-entity-picker"
         onClick={[Function]}
         type="button"
@@ -1339,10 +1339,10 @@ exports[`Storyshots Domain/EntityEditorContainer Invalid Type New Entity 1`] = `
         </p>
       </div>
       <div
-        className="dd flex-column dd flex-grow overflow-y-scroll p-2 g-1"
+        className="dd flex-column dd flex-grow overflow-y-scroll"
       />
       <button
-        className="dd button has-background hoverable text-button mx-2 bg-primary"
+        className="dd button has-background hoverable text-button mx-2 bg-primary is-rounded"
         disabled={true}
         type="button"
       >
@@ -1463,7 +1463,7 @@ exports[`Storyshots Domain/EntityEditorContainer New Foo 1`] = `
               className="dd flex-row"
             >
               <button
-                className="dd button has-background hoverable text-button"
+                className="dd button has-background hoverable text-button is-rounded"
                 id="82ded109-44f2-48b9-a676-43162fda3d7d-location"
                 onClick={[Function]}
                 type="button"
@@ -1490,7 +1490,7 @@ exports[`Storyshots Domain/EntityEditorContainer New Foo 1`] = `
                 className="dd flex-row"
               >
                 <button
-                  className="dd button has-background hoverable text-button"
+                  className="dd button has-background hoverable text-button is-rounded"
                   id="82ded109-44f2-48b9-a676-43162fda3d7d-locations"
                   onClick={[Function]}
                   type="button"
@@ -1515,7 +1515,7 @@ exports[`Storyshots Domain/EntityEditorContainer New Foo 1`] = `
               className="dd flex-row"
             >
               <button
-                className="dd button has-background hoverable text-button"
+                className="dd button has-background hoverable text-button is-rounded"
                 id="82ded109-44f2-48b9-a676-43162fda3d7d-bar"
                 onClick={[Function]}
                 type="button"
@@ -1542,7 +1542,7 @@ exports[`Storyshots Domain/EntityEditorContainer New Foo 1`] = `
                 className="dd flex-row"
               >
                 <button
-                  className="dd button has-background hoverable text-button"
+                  className="dd button has-background hoverable text-button is-rounded"
                   id="82ded109-44f2-48b9-a676-43162fda3d7d-bars"
                   onClick={[Function]}
                   type="button"
@@ -1568,7 +1568,7 @@ exports[`Storyshots Domain/EntityEditorContainer New Foo 1`] = `
             >
               <div>
                 <button
-                  className="dd button has-background hoverable text-button"
+                  className="dd button has-background hoverable text-button is-rounded"
                   id="82ded109-44f2-48b9-a676-43162fda3d7d-annotatedBar"
                   onClick={[Function]}
                   type="button"
@@ -1601,7 +1601,7 @@ exports[`Storyshots Domain/EntityEditorContainer New Foo 1`] = `
               >
                 <div>
                   <button
-                    className="dd button has-background hoverable text-button"
+                    className="dd button has-background hoverable text-button is-rounded"
                     id="82ded109-44f2-48b9-a676-43162fda3d7d-annotatedBars"
                     onClick={[Function]}
                     type="button"
@@ -1632,7 +1632,7 @@ exports[`Storyshots Domain/EntityEditorContainer New Foo 1`] = `
             >
               <div>
                 <button
-                  className="dd button has-background hoverable text-button"
+                  className="dd button has-background hoverable text-button is-rounded"
                   id="82ded109-44f2-48b9-a676-43162fda3d7d-nested"
                   onClick={[Function]}
                   type="button"
@@ -1651,14 +1651,14 @@ exports[`Storyshots Domain/EntityEditorContainer New Foo 1`] = `
           className="dd flex-row g-1"
         >
           <button
-            className="dd button has-background hoverable text-button bg-primary"
+            className="dd button has-background hoverable text-button bg-primary is-rounded"
             disabled={true}
             type="submit"
           >
             Save
           </button>
           <button
-            className="dd button has-background hoverable text-button"
+            className="dd button has-background hoverable text-button is-rounded"
             disabled={false}
             type="reset"
           >
@@ -1669,7 +1669,7 @@ exports[`Storyshots Domain/EntityEditorContainer New Foo 1`] = `
     </div>
     <div>
       <button
-        className="dd button has-background hoverable text-button"
+        className="dd button has-background hoverable text-button is-rounded"
         id="create-entity-picker"
         onClick={[Function]}
         type="button"
@@ -1729,10 +1729,10 @@ exports[`Storyshots Domain/EntityEditorContainer New Foo 1`] = `
         </p>
       </div>
       <div
-        className="dd flex-column dd flex-grow overflow-y-scroll p-2 g-1"
+        className="dd flex-column dd flex-grow overflow-y-scroll"
       />
       <button
-        className="dd button has-background hoverable text-button mx-2 bg-primary"
+        className="dd button has-background hoverable text-button mx-2 bg-primary is-rounded"
         disabled={true}
         type="button"
       >
@@ -1783,7 +1783,7 @@ exports[`Storyshots Domain/EntityEditorContainer Not Found 1`] = `
     </div>
     <div>
       <button
-        className="dd button has-background hoverable text-button"
+        className="dd button has-background hoverable text-button is-rounded"
         id="create-entity-picker"
         onClick={[Function]}
         type="button"
@@ -1839,10 +1839,10 @@ exports[`Storyshots Domain/EntityEditorContainer Not Found 1`] = `
         </p>
       </div>
       <div
-        className="dd flex-column dd flex-grow overflow-y-scroll p-2 g-1"
+        className="dd flex-column dd flex-grow overflow-y-scroll"
       />
       <button
-        className="dd button has-background hoverable text-button mx-2 bg-primary"
+        className="dd button has-background hoverable text-button mx-2 bg-primary is-rounded"
         disabled={true}
         type="button"
       >
@@ -1878,7 +1878,7 @@ exports[`Storyshots Domain/EntityEditorContainer Slow Full Foo 1`] = `
     />
     <div>
       <button
-        className="dd button has-background hoverable text-button"
+        className="dd button has-background hoverable text-button is-rounded"
         id="create-entity-picker"
         onClick={[Function]}
         type="button"
@@ -1934,14 +1934,14 @@ exports[`Storyshots Domain/EntityEditorContainer Slow Full Foo 1`] = `
         </p>
       </div>
       <div
-        className="dd flex-column dd flex-grow overflow-y-scroll p-2 g-1"
+        className="dd flex-column dd flex-grow overflow-y-scroll"
       >
         <div
           className="dd loader"
         />
       </div>
       <button
-        className="dd button has-background hoverable text-button mx-2 bg-primary"
+        className="dd button has-background hoverable text-button mx-2 bg-primary is-rounded"
         disabled={true}
         type="button"
       >
@@ -2024,14 +2024,14 @@ exports[`Storyshots Domain/EntityEditorContainer Two Entities 1`] = `
           className="dd flex-row g-1"
         >
           <button
-            className="dd button has-background hoverable text-button bg-primary"
+            className="dd button has-background hoverable text-button bg-primary is-rounded"
             disabled={false}
             type="submit"
           >
             Save
           </button>
           <button
-            className="dd button has-background hoverable text-button"
+            className="dd button has-background hoverable text-button is-rounded"
             disabled={false}
             type="reset"
           >
@@ -2105,14 +2105,14 @@ exports[`Storyshots Domain/EntityEditorContainer Two Entities 1`] = `
           className="dd flex-row g-1"
         >
           <button
-            className="dd button has-background hoverable text-button bg-primary"
+            className="dd button has-background hoverable text-button bg-primary is-rounded"
             disabled={false}
             type="submit"
           >
             Save
           </button>
           <button
-            className="dd button has-background hoverable text-button"
+            className="dd button has-background hoverable text-button is-rounded"
             disabled={false}
             type="reset"
           >
@@ -2123,7 +2123,7 @@ exports[`Storyshots Domain/EntityEditorContainer Two Entities 1`] = `
     </div>
     <div>
       <button
-        className="dd button has-background hoverable text-button"
+        className="dd button has-background hoverable text-button is-rounded"
         id="create-entity-picker"
         onClick={[Function]}
         type="button"
@@ -2183,10 +2183,10 @@ exports[`Storyshots Domain/EntityEditorContainer Two Entities 1`] = `
         </p>
       </div>
       <div
-        className="dd flex-column dd flex-grow overflow-y-scroll p-2 g-1"
+        className="dd flex-column dd flex-grow overflow-y-scroll"
       >
         <button
-          className="dd button has-background hoverable text-button dd has-shadow "
+          className="dd button has-background hoverable text-button"
           onClick={[Function]}
           type="button"
         >
@@ -2209,7 +2209,7 @@ exports[`Storyshots Domain/EntityEditorContainer Two Entities 1`] = `
         </button>
       </div>
       <button
-        className="dd button has-background hoverable text-button mx-2 bg-primary"
+        className="dd button has-background hoverable text-button mx-2 bg-primary is-rounded"
         disabled={true}
         type="button"
       >

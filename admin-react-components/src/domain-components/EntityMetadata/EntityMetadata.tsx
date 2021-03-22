@@ -73,15 +73,15 @@ function EntityMetadataInner({
         <p className="dd text-subtitle2">ID</p>
         <p className="dd text-body1">{entityId}</p>
       </ColumnItem>
-      <ColumnItem as={Column} className="p-2" grow overflowY="scroll" gap={1}>
+      <ColumnItem as={Column} grow overflowY="scroll">
         {entityHistory ? (
           entityHistory.versions.map((version) => {
             return (
               <Button
                 key={version.version}
-                className="dd has-shadow "
                 onClick={() => setSelectedVersionId(version.version)}
                 selected={version.version === selectedVersionId}
+                rounded={false}
               >
                 <p className="dd text-subtitle2">
                   Version {version.version}
