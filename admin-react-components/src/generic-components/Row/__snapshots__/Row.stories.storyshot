@@ -36,6 +36,47 @@ exports[`Storyshots Generic/Row Three Columns 1`] = `
 </div>
 `;
 
+exports[`Storyshots Generic/Row Two Columns With Columns 1`] = `
+<div
+  className="dd flex-row"
+>
+  <div
+    className="dd flex-column dd"
+  >
+    <div
+      className="dd"
+      style={
+        Object {
+          "background": "green",
+          "height": "1em",
+          "width": "1em",
+        }
+      }
+    />
+    <div
+      className="dd"
+      style={
+        Object {
+          "background": "blue",
+          "height": "1em",
+          "width": "1em",
+        }
+      }
+    />
+  </div>
+  <div
+    className="dd"
+    style={
+      Object {
+        "background": "red",
+        "height": "1em",
+        "width": "1em",
+      }
+    }
+  />
+</div>
+`;
+
 exports[`Storyshots Generic/Row Two Columns With Gap 1`] = `
 <div
   className="dd flex-row g-3"

@@ -1,3 +1,4 @@
+export type { ColumnProps } from './generic-components/Column/Column';
 export type { DataDataContextAdapter } from './contexts/DataDataContext';
 export type { DropDownItem } from './generic-components/DropDown/DropDown';
 export type { EntityEditorProps } from './domain-components/EntityEditor/EntityEditor';
@@ -11,9 +12,16 @@ export type { IconProps, IconType } from './generic-components/Icon/Icon';
 export type { Kind } from './utils/KindUtils';
 export type { LayoutProps, SpacingSize } from './types/LayoutTypes';
 export type { MessageItem } from './generic-components/Message/Message';
+export type { RowProps } from './generic-components/Row/Row';
 
 export { Button } from './generic-components/Button/Button';
-export { Column, ColumnElement, ColumnItem } from './generic-components/Column/Column';
+export {
+  Column,
+  ColumnAs,
+  ColumnAsElement,
+  ColumnElement,
+  ColumnItem,
+} from './generic-components/Column/Column';
 export { DataDataContext, DataDataContextValue } from './contexts/DataDataContext';
 export { Divider } from './generic-components/Divider/Divider';
 export { DropDown } from './generic-components/DropDown/DropDown';
@@ -41,7 +49,7 @@ export { LocationFieldEditor } from './domain-components/LocationFieldEditor/Loc
 export { MapContainer } from './generic-components/MapContainer/MapContainer';
 export { Message } from './generic-components/Message/Message';
 export { Modal } from './generic-components/Modal/Modal';
-export { Row, RowElement, RowItem } from './generic-components/Row/Row';
+export { Row, RowAs, RowAsElement, RowElement, RowItem } from './generic-components/Row/Row';
 export { Segment } from './generic-components/Segment/Segment';
 export { Stack } from './generic-components/Stack/Stack';
 export { StringFieldEditor } from './domain-components/StringFieldEditor/StringFieldEditor';

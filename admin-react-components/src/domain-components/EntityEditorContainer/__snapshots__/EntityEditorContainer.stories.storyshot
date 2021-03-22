@@ -11,7 +11,7 @@ exports[`Storyshots Domain/EntityEditorContainer Deleted Foo 1`] = `
       data-entityid="fb62be03-a0a9-4689-9987-bacee0e7692d"
     >
       <form
-        className="dd segment has-shadow has-background"
+        className="dd flex-column p-3 is-rounded has-background has-shadow"
         onReset={[Function]}
         onSubmit={[Function]}
       >
@@ -441,7 +441,7 @@ exports[`Storyshots Domain/EntityEditorContainer Full Foo 1`] = `
       data-entityid="fc66b4d7-61ff-44d4-8f68-cb7f526df046"
     >
       <form
-        className="dd segment has-shadow has-background"
+        className="dd flex-column p-3 is-rounded has-background has-shadow"
         onReset={[Function]}
         onSubmit={[Function]}
       >
@@ -1374,7 +1374,7 @@ exports[`Storyshots Domain/EntityEditorContainer New Foo 1`] = `
       data-entityid="82ded109-44f2-48b9-a676-43162fda3d7d"
     >
       <form
-        className="dd segment has-shadow has-background"
+        className="dd flex-column p-3 is-rounded has-background has-shadow"
         onReset={[Function]}
         onSubmit={[Function]}
       >
@@ -1960,7 +1960,7 @@ exports[`Storyshots Domain/EntityEditorContainer Two Entities 1`] = `
       data-entityid="cb228716-d3dd-444f-9a77-80443d436339"
     >
       <form
-        className="dd segment has-shadow has-background"
+        className="dd flex-column p-3 is-rounded has-background has-shadow"
         onReset={[Function]}
         onSubmit={[Function]}
       >
@@ -2041,7 +2041,7 @@ exports[`Storyshots Domain/EntityEditorContainer Two Entities 1`] = `
       data-entityid="eb5732e2-b931-492b-82f1-f8fdd464f0d2"
     >
       <form
-        className="dd segment has-shadow has-background"
+        className="dd flex-column p-3 is-rounded has-background has-shadow"
         onReset={[Function]}
         onSubmit={[Function]}
       >

@@ -1,7 +1,7 @@
 import type { Meta, Story } from '@storybook/react/types-6-0';
 import React from 'react';
-import type { RowProps } from './Row';
-import { Row, RowElement, RowItem } from './Row';
+import type { RowProps } from '../..';
+import { Column, ColumnElement, Row, RowElement, RowItem } from '../..';
 
 const meta: Meta<RowProps> = {
   title: 'Generic/Row',
@@ -31,6 +31,19 @@ ThreeColumns.args = {
       <RowElement style={{ background: 'green', width: '1em', height: '1em' }} />
       <RowItem grow className="has-background bg-danger" style={{ width: '1em', height: '1em' }} />
       <RowElement style={{ background: 'blue', width: '1em', height: '1em' }} />
+    </>
+  ),
+};
+
+export const TwoColumnsWithColumns = Template.bind({});
+TwoColumnsWithColumns.args = {
+  children: (
+    <>
+      <RowItem as={Column}>
+        <ColumnElement style={{ background: 'green', width: '1em', height: '1em' }} />
+        <ColumnElement style={{ background: 'blue', width: '1em', height: '1em' }} />
+      </RowItem>
+      <RowElement style={{ background: 'red', width: '1em', height: '1em' }} />
     </>
   ),
 };
