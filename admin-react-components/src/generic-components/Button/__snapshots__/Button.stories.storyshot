@@ -74,6 +74,15 @@ exports[`Storyshots Generic/Button Primary Loading 1`] = `
 </button>
 `;
 
+exports[`Storyshots Generic/Button Reset Normal 1`] = `
+<button
+  className="dd button has-background hoverable text-button "
+  type="reset"
+>
+  Reset
+</button>
+`;
+
 exports[`Storyshots Generic/Button Submit Loading 1`] = `
 <button
   className="dd button has-background hoverable text-button "

@@ -6,6 +6,7 @@ exports[`DeletedFoo render 1`] = `
 >
   <form
     className="dd segment has-shadow has-background"
+    onReset={[Function]}
     onSubmit={[Function]}
   >
     <div>
@@ -274,13 +275,24 @@ exports[`DeletedFoo render 1`] = `
         </div>
       </div>
     </div>
-    <button
-      className="dd button has-background hoverable text-button bg-primary"
-      disabled={false}
-      type="submit"
+    <div
+      className="dd flex-row g-1"
     >
-      Save
-    </button>
+      <button
+        className="dd button has-background hoverable text-button bg-primary"
+        disabled={false}
+        type="submit"
+      >
+        Save
+      </button>
+      <button
+        className="dd button has-background hoverable text-button "
+        disabled={false}
+        type="reset"
+      >
+        Reset
+      </button>
+    </div>
   </form>
 </div>
 `;
@@ -291,6 +303,7 @@ exports[`FullFoo render 1`] = `
 >
   <form
     className="dd segment has-shadow has-background"
+    onReset={[Function]}
     onSubmit={[Function]}
   >
     <div>
@@ -983,13 +996,24 @@ exports[`FullFoo render 1`] = `
         </div>
       </div>
     </div>
-    <button
-      className="dd button has-background hoverable text-button bg-primary"
-      disabled={false}
-      type="submit"
+    <div
+      className="dd flex-row g-1"
     >
-      Save
-    </button>
+      <button
+        className="dd button has-background hoverable text-button bg-primary"
+        disabled={false}
+        type="submit"
+      >
+        Save
+      </button>
+      <button
+        className="dd button has-background hoverable text-button "
+        disabled={false}
+        type="reset"
+      >
+        Reset
+      </button>
+    </div>
   </form>
 </div>
 `;

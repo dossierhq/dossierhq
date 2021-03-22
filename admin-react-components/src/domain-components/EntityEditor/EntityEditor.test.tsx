@@ -55,8 +55,8 @@ function getByStoryId(story: Story<EntityEditorStoryProps>, subId: string) {
 }
 
 const finders = {
-  nameInput: () => screen.getByLabelText('Name'),
-  fooTitleInput: () => screen.getByLabelText('title'),
+  nameInput: () => screen.getByLabelText('Name') as HTMLInputElement,
+  fooTitleInput: () => screen.getByLabelText('title') as HTMLInputElement,
   fooBarButton: (story: Story<EntityEditorStoryProps>) => getByStoryId(story, 'bar'),
   fooBarRemoveButton: (story: Story<EntityEditorStoryProps>) => {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -77,6 +77,7 @@ const finders = {
     return within(screen.getByRole('dialog')).getByText('Bar: Bar 2');
   },
   saveButton: () => screen.getByRole('button', { name: /save/i }),
+  resetButton: () => screen.getByRole('button', { name: /reset/i }),
 };
 
 describe('NewFoo', () => {
@@ -403,6 +404,42 @@ describe('FullFoo', () => {
         ],
       ]
     `);
+  });
+
+  test('Enter name and reset', async () => {
+    const contextAdapter = new TestContextAdapter();
+    await act(async () => {
+      render(renderStory(FullFoo, { contextAdapter }));
+    });
+
+    const name = finders.nameInput();
+    userEvent.clear(name);
+    userEvent.type(name, 'New name');
+    expect(name.value).toEqual('New name');
+
+    await act(async () => {
+      userEvent.click(finders.resetButton());
+    });
+
+    expect(name.value).toEqual('Foo 1');
+  });
+
+  test('Enter title and reset', async () => {
+    const contextAdapter = new TestContextAdapter();
+    await act(async () => {
+      render(renderStory(FullFoo, { contextAdapter }));
+    });
+
+    const fooTitle = finders.fooTitleInput();
+    userEvent.clear(fooTitle);
+    userEvent.type(fooTitle, 'New title');
+    expect(fooTitle.value).toEqual('New title');
+
+    await act(async () => {
+      userEvent.click(finders.resetButton());
+    });
+
+    expect(fooTitle.value).toEqual('Hello');
   });
 });
 

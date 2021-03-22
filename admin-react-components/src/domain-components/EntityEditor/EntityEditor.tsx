@@ -11,6 +11,7 @@ import {
   InputText,
   Loader,
   Message,
+  Row,
 } from '../..';
 import type { DataDataContextValue, MessageItem } from '../..';
 import type {
@@ -19,6 +20,7 @@ import type {
   EntityEditorStateAction,
 } from './EntityEditorReducer';
 import {
+  ResetEntityAction,
   SetFieldAction,
   SetMessageLoadMessageAction,
   SetNameAction,
@@ -133,6 +135,7 @@ function EntityEditorInner({
         onSubmit={() =>
           submitEntity(draftState, setSubmitLoading, setSubmitMessage, createEntity, updateEntity)
         }
+        onReset={() => dispatchEditorState(new ResetEntityAction(entityId))}
       >
         {draftState.initMessage ? <Message {...draftState.initMessage} /> : null}
         {draftState.entityLoadMessage ? <Message {...draftState.entityLoadMessage} /> : null}
@@ -161,9 +164,14 @@ function EntityEditorInner({
           );
         })}
 
-        <Button kind="primary" type="submit" disabled={!entity.name} loading={submitLoading}>
-          Save
-        </Button>
+        <Row gap={1}>
+          <Button kind="primary" type="submit" disabled={!entity.name} loading={submitLoading}>
+            Save
+          </Button>
+          <Button type="reset" disabled={!entity}>
+            Reset
+          </Button>
+        </Row>
         {submitMessage ? (
           <Message {...submitMessage} onDismiss={() => setSubmitMessage(null)} />
         ) : null}

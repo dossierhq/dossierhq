@@ -49,3 +49,6 @@ SubmitLoading.args = {
   type: 'submit',
   loading: true,
 };
+
+export const ResetNormal = Template.bind({});
+ResetNormal.args = { children: 'Reset', type: 'reset' };
