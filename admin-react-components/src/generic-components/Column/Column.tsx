@@ -8,6 +8,18 @@ export interface ColumnProps {
   children: React.ReactNode;
 }
 
+export type ColumnAsProps<AsProps extends LayoutProps> = AsProps &
+  ColumnProps & {
+    as?: React.JSXElementConstructor<AsProps>;
+  };
+
+export type ColumnAsElementProps<
+  Tag extends keyof JSX.IntrinsicElements
+> = JSX.IntrinsicElements[Tag] &
+  ColumnProps & {
+    as: Tag;
+  };
+
 type ColumnItemProps<AsProps extends LayoutProps> = AsProps & {
   as?: React.JSXElementConstructor<AsProps>;
   grow?: boolean;
@@ -25,9 +37,50 @@ type ColumnElementProps<Tag extends keyof JSX.IntrinsicElements> = JSX.Intrinsic
 };
 
 export function Column({ className, gap, children }: ColumnProps): JSX.Element {
+  return <div className={columnPropsAsClassName({ className, gap })}>{children}</div>;
+}
+
+export function ColumnAs<AsProps extends LayoutProps>({
+  as,
+  className,
+  gap,
+  children,
+  ...args
+}: ColumnAsProps<AsProps>): JSX.Element {
+  const Element = as ?? 'div';
   return (
-    <div className={joinClassNames('dd flex-column', className, gapClassName(gap))}>{children}</div>
+    <Element
+      className={columnPropsAsClassName({ className, gap })}
+      {...((args as unknown) as AsProps)}
+    >
+      {children}
+    </Element>
   );
+}
+
+export function ColumnAsElement<Tag extends keyof JSX.IntrinsicElements>({
+  as,
+  className,
+  gap,
+  children,
+  ...args
+}: ColumnAsElementProps<Tag>): JSX.Element {
+  const Element = as as keyof JSX.IntrinsicElements;
+  return (
+    <Element className={columnPropsAsClassName({ className, gap })} {...(args as unknown)}>
+      {children}
+    </Element>
+  );
+}
+
+function columnPropsAsClassName({
+  className,
+  gap,
+}: {
+  className: string | undefined;
+  gap: SpacingSize | undefined;
+}) {
+  return joinClassNames('dd flex-column', className, gapClassName(gap));
 }
 
 function itemPropsAsClassName({
@@ -66,7 +119,7 @@ export function ColumnItem<AsProps extends LayoutProps>({
   );
 }
 
-export function ColumnElement<Tag extends keyof JSX.IntrinsicElements = 'div'>({
+export function ColumnElement<Tag extends keyof JSX.IntrinsicElements>({
   as,
   className,
   grow,

@@ -1,7 +1,7 @@
 import type { Meta, Story } from '@storybook/react/types-6-0';
 import React from 'react';
-import type { ColumnProps } from './Column';
-import { Column, ColumnElement, ColumnItem } from './Column';
+import type { ColumnProps } from '../..';
+import { Column, ColumnElement, ColumnItem, Row, RowElement } from '../..';
 
 const meta: Meta<ColumnProps> = {
   title: 'Generic/Column',
@@ -34,6 +34,20 @@ ThreeRows.args = {
         className="has-background bg-danger"
         style={{ width: '1em', height: '1em' }}
       />
+      <ColumnElement style={{ background: 'blue', width: '1em', height: '1em' }} />
+    </>
+  ),
+};
+
+export const TwoRowsWithRows = Template.bind({});
+TwoRowsWithRows.args = {
+  gap: 3,
+  children: (
+    <>
+      <ColumnItem as={Row}>
+        <RowElement style={{ background: 'green', width: '1em', height: '1em' }} />
+        <RowElement style={{ background: 'violet', width: '1em', height: '1em' }} />
+      </ColumnItem>
       <ColumnElement style={{ background: 'blue', width: '1em', height: '1em' }} />
     </>
   ),

@@ -3,6 +3,7 @@ import type { Dispatch, SetStateAction } from 'react';
 import React, { useContext, useEffect, useState } from 'react';
 import {
   Button,
+  ColumnAs,
   DataDataContext,
   Divider,
   EntityFieldEditor,
@@ -131,7 +132,9 @@ function EntityEditorInner({
 
   return (
     <div data-entityid={entityId}>
-      <Form
+      <ColumnAs
+        as={Form}
+        className="p-3 is-rounded has-background has-shadow"
         onSubmit={() =>
           submitEntity(draftState, setSubmitLoading, setSubmitMessage, createEntity, updateEntity)
         }
@@ -175,7 +178,7 @@ function EntityEditorInner({
         {submitMessage ? (
           <Message {...submitMessage} onDismiss={() => setSubmitMessage(null)} />
         ) : null}
-      </Form>
+      </ColumnAs>
     </div>
   );
 }
