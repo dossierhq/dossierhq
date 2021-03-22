@@ -55,6 +55,7 @@ export function ColorSwatchGroup({ className }: ColorSwatchGroupProps): JSX.Elem
       <ColorSwatch className={`${className} is-disabled`} />
       <ColorSwatch className={`${className} is-hover`} />
       <ColorSwatch className={`${className} is-active`} />
+      <ColorSwatch className={`${className} is-selected`} />
     </div>
   );
 }

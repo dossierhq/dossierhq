@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Kind } from '../..';
 import { Loader, Stack } from '../..';
+import { joinClassNames } from '../../utils/ClassNameUtils';
 import { kindToClassName } from '../../utils/KindUtils';
 
 export interface ButtonProps {
@@ -8,6 +9,7 @@ export interface ButtonProps {
   type?: 'button' | 'reset' | 'submit';
   kind?: Kind;
   disabled?: boolean;
+  selected?: boolean;
   loading?: boolean;
   onClick?: () => void;
   children: React.ReactNode;
@@ -18,6 +20,7 @@ export function Button({
   type,
   kind,
   disabled,
+  selected,
   loading,
   onClick,
   children,
@@ -25,7 +28,11 @@ export function Button({
   return (
     <button
       id={id}
-      className={`dd button has-background hoverable text-button ${kindToClassName(kind)}`}
+      className={joinClassNames(
+        'dd button has-background hoverable text-button',
+        kindToClassName(kind),
+        selected ? 'is-selected' : ''
+      )}
       type={type ?? 'button'}
       onClick={disabled || loading ? undefined : onClick}
       disabled={disabled}

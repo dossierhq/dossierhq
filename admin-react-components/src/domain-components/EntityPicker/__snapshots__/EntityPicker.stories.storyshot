@@ -5,7 +5,7 @@ exports[`Storyshots Domain/EntityPicker Initial Bar 1`] = `
   className="dd flex-row"
 >
   <button
-    className="dd button has-background hoverable text-button "
+    className="dd button has-background hoverable text-button"
     id="id-123"
     onClick={[Function]}
     type="button"
@@ -30,7 +30,7 @@ exports[`Storyshots Domain/EntityPicker Normal Bar 1`] = `
   className="dd flex-row"
 >
   <button
-    className="dd button has-background hoverable text-button "
+    className="dd button has-background hoverable text-button"
     id="id-123"
     onClick={[Function]}
     type="button"

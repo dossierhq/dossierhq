@@ -5,7 +5,7 @@ exports[`Storyshots Domain/EntitySearch Normal 1`] = `
   className="dd flex-column position-fixed inset-0"
 >
   <button
-    className="dd button has-background hoverable text-button "
+    className="dd button has-background hoverable text-button"
     onClick={[Function]}
     type="button"
   >
@@ -15,28 +15,28 @@ exports[`Storyshots Domain/EntitySearch Normal 1`] = `
     className="dd list-container dd flex-grow overflow-y-scroll"
   >
     <button
-      className="dd button has-background hoverable text-button "
+      className="dd button has-background hoverable text-button"
       onClick={[Function]}
       type="button"
     >
       Foo: Foo 1
     </button>
     <button
-      className="dd button has-background hoverable text-button "
+      className="dd button has-background hoverable text-button"
       onClick={[Function]}
       type="button"
     >
       Foo: Foo deleted
     </button>
     <button
-      className="dd button has-background hoverable text-button "
+      className="dd button has-background hoverable text-button"
       onClick={[Function]}
       type="button"
     >
       Bar: Bar 1
     </button>
     <button
-      className="dd button has-background hoverable text-button "
+      className="dd button has-background hoverable text-button"
       onClick={[Function]}
       type="button"
     >
