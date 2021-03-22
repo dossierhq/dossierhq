@@ -3,7 +3,7 @@
 exports[`Storyshots Domain/TypePicker Entity Types 1`] = `
 <div>
   <button
-    className="dd button has-background hoverable text-button"
+    className="dd button has-background hoverable text-button is-rounded"
     id="type-picker"
     onClick={[Function]}
     type="button"
@@ -20,7 +20,7 @@ exports[`Storyshots Domain/TypePicker Entity Types 1`] = `
 exports[`Storyshots Domain/TypePicker Entity Types Filtered 1`] = `
 <div>
   <button
-    className="dd button has-background hoverable text-button"
+    className="dd button has-background hoverable text-button is-rounded"
     id="type-picker"
     onClick={[Function]}
     type="button"
@@ -37,7 +37,7 @@ exports[`Storyshots Domain/TypePicker Entity Types Filtered 1`] = `
 exports[`Storyshots Domain/TypePicker Value Types 1`] = `
 <div>
   <button
-    className="dd button has-background hoverable text-button"
+    className="dd button has-background hoverable text-button is-rounded"
     id="type-picker"
     onClick={[Function]}
     type="button"
@@ -54,7 +54,7 @@ exports[`Storyshots Domain/TypePicker Value Types 1`] = `
 exports[`Storyshots Domain/TypePicker Value Types Filtered 1`] = `
 <div>
   <button
-    className="dd button has-background hoverable text-button"
+    className="dd button has-background hoverable text-button is-rounded"
     id="type-picker"
     onClick={[Function]}
     type="button"

@@ -456,7 +456,6 @@ ul.dd li {
 }
 
 .dd.button {
-  border-radius: 0.5em;
   border-style: none;
   padding: 0.75em 1.5em;
   cursor: pointer;

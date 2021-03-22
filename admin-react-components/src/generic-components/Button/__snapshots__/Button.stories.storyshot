@@ -2,7 +2,7 @@
 
 exports[`Storyshots Generic/Button Disabled 1`] = `
 <button
-  className="dd button has-background hoverable text-button"
+  className="dd button has-background hoverable text-button is-rounded"
   disabled={true}
   type="button"
 >
@@ -12,7 +12,7 @@ exports[`Storyshots Generic/Button Disabled 1`] = `
 
 exports[`Storyshots Generic/Button Normal 1`] = `
 <button
-  className="dd button has-background hoverable text-button"
+  className="dd button has-background hoverable text-button is-rounded"
   type="button"
 >
   Text
@@ -21,7 +21,7 @@ exports[`Storyshots Generic/Button Normal 1`] = `
 
 exports[`Storyshots Generic/Button Primary 1`] = `
 <button
-  className="dd button has-background hoverable text-button bg-primary"
+  className="dd button has-background hoverable text-button bg-primary is-rounded"
   type="button"
 >
   Text
@@ -30,7 +30,7 @@ exports[`Storyshots Generic/Button Primary 1`] = `
 
 exports[`Storyshots Generic/Button Primary Disabled 1`] = `
 <button
-  className="dd button has-background hoverable text-button bg-primary"
+  className="dd button has-background hoverable text-button bg-primary is-rounded"
   disabled={true}
   type="button"
 >
@@ -40,7 +40,7 @@ exports[`Storyshots Generic/Button Primary Disabled 1`] = `
 
 exports[`Storyshots Generic/Button Primary Icon 1`] = `
 <button
-  className="dd button has-background hoverable text-button bg-primary"
+  className="dd button has-background hoverable text-button bg-primary is-rounded"
   type="button"
 >
   Text 
@@ -52,7 +52,7 @@ exports[`Storyshots Generic/Button Primary Icon 1`] = `
 
 exports[`Storyshots Generic/Button Primary Loading 1`] = `
 <button
-  className="dd button has-background hoverable text-button bg-primary"
+  className="dd button has-background hoverable text-button bg-primary is-rounded"
   type="button"
 >
   <div
@@ -74,9 +74,18 @@ exports[`Storyshots Generic/Button Primary Loading 1`] = `
 </button>
 `;
 
+exports[`Storyshots Generic/Button Primary Not Rounded 1`] = `
+<button
+  className="dd button has-background hoverable text-button bg-primary"
+  type="button"
+>
+  Text
+</button>
+`;
+
 exports[`Storyshots Generic/Button Primary Selected 1`] = `
 <button
-  className="dd button has-background hoverable text-button bg-primary is-selected"
+  className="dd button has-background hoverable text-button bg-primary is-selected is-rounded"
   type="button"
 >
   Text
@@ -85,7 +94,7 @@ exports[`Storyshots Generic/Button Primary Selected 1`] = `
 
 exports[`Storyshots Generic/Button Reset Normal 1`] = `
 <button
-  className="dd button has-background hoverable text-button"
+  className="dd button has-background hoverable text-button is-rounded"
   type="reset"
 >
   Reset
@@ -94,7 +103,7 @@ exports[`Storyshots Generic/Button Reset Normal 1`] = `
 
 exports[`Storyshots Generic/Button Submit Loading 1`] = `
 <button
-  className="dd button has-background hoverable text-button"
+  className="dd button has-background hoverable text-button is-rounded"
   type="submit"
 >
   <div
@@ -118,7 +127,7 @@ exports[`Storyshots Generic/Button Submit Loading 1`] = `
 
 exports[`Storyshots Generic/Button Submit Normal 1`] = `
 <button
-  className="dd button has-background hoverable text-button"
+  className="dd button has-background hoverable text-button is-rounded"
   type="submit"
 >
   Done

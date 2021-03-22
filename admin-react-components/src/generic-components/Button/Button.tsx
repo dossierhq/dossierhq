@@ -6,10 +6,12 @@ import { kindToClassName } from '../../utils/KindUtils';
 
 export interface ButtonProps {
   id?: string;
+  className?: string;
   type?: 'button' | 'reset' | 'submit';
   kind?: Kind;
   disabled?: boolean;
   selected?: boolean;
+  rounded?: boolean;
   loading?: boolean;
   onClick?: () => void;
   children: React.ReactNode;
@@ -17,11 +19,13 @@ export interface ButtonProps {
 
 export function Button({
   id,
+  className,
   type,
   kind,
   disabled,
   selected,
   loading,
+  rounded,
   onClick,
   children,
 }: ButtonProps): JSX.Element {
@@ -30,8 +34,10 @@ export function Button({
       id={id}
       className={joinClassNames(
         'dd button has-background hoverable text-button',
+        className,
         kindToClassName(kind),
-        selected ? 'is-selected' : ''
+        selected ? 'is-selected' : '',
+        rounded === false ? '' : 'is-rounded'
       )}
       type={type ?? 'button'}
       onClick={disabled || loading ? undefined : onClick}
