@@ -37,6 +37,9 @@ PrimaryIcon.args = {
 export const PrimaryDisabled = Template.bind({});
 PrimaryDisabled.args = { kind: 'primary', children: 'Text', disabled: true };
 
+export const PrimarySelected = Template.bind({});
+PrimarySelected.args = { kind: 'primary', children: 'Text', selected: true };
+
 export const PrimaryLoading = Template.bind({});
 PrimaryLoading.args = { kind: 'primary', children: 'Text', loading: true };
 

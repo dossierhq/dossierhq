@@ -166,6 +166,14 @@ ul.dd li {
   background-color: hsl(var(--dd-bg-color-h), 0%, var(--dd-bg-color-l));
 }
 
+.dd.is-selected {
+  background-color: hsl(
+    var(--dd-bg-color-h),
+    var(--dd-bg-color-s),
+    calc(var(--dd-bg-color-l) - 15%)
+  );
+}
+
 .dd {
   color: hsl(var(--dd-color-h), var(--dd-color-s), var(--dd-color-l));
 }
