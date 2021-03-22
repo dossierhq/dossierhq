@@ -60,46 +60,49 @@ function EntityMetadataInner({
   const selectedVersion = entityHistory?.versions.find((x) => x.version === selectedVersionId);
 
   return (
-    <Column className={joinClassNames('has-shadow has-background p-2', className)} gap={2}>
-      <ColumnItem>
+    <Column className={joinClassNames('has-shadow has-background py-2', className)} gap={2}>
+      <ColumnItem className="mx-2">
         <p className="dd text-subtitle2">Name</p>
         <p className="dd text-body1">{entity?.name}</p>
       </ColumnItem>
-      <ColumnItem>
+      <ColumnItem className="mx-2">
         <p className="dd text-subtitle2">Type</p>
         <p className="dd text-body1">{entity?.entitySpec.name}</p>
       </ColumnItem>
-      <ColumnItem>
+      <ColumnItem className="mx-2">
         <p className="dd text-subtitle2">ID</p>
         <p className="dd text-body1">{entityId}</p>
       </ColumnItem>
-      <ColumnItem grow overflowY="scroll">
+      <ColumnItem as={Column} className="p-2" grow overflowY="scroll" gap={1}>
         {entityHistory ? (
           entityHistory.versions.map((version) => {
             return (
-              <div
+              <Button
                 key={version.version}
-                className="dd has-shadow p-2"
+                className="dd has-shadow "
                 onClick={() => setSelectedVersionId(version.version)}
+                selected={version.version === selectedVersionId}
               >
                 <p className="dd text-subtitle2">
                   Version {version.version}
                   {version.deleted ? <Tag kind="danger" text="Deleted" /> : null}
                   {version.published ? <Tag kind="primary" text="Published" /> : null}
-                  {version.version === selectedVersionId ? (
-                    <Tag kind="primary" text="Selected" />
-                  ) : null}
                 </p>
                 <p className="dd text-body1">{version.createdAt.toLocaleString()}</p>
                 <p className="dd text-body1">{version.createdBy}</p>
-              </div>
+              </Button>
             );
           })
         ) : !entityHistoryError ? (
           <Loader />
         ) : null}
       </ColumnItem>
-      <PublishButton entityId={entityId} version={selectedVersion} publishEntity={publishEntity} />
+      <PublishButton
+        className="mx-2"
+        entityId={entityId}
+        version={selectedVersion}
+        publishEntity={publishEntity}
+      />
       {entityHistoryError ? (
         <Message
           kind="danger"
@@ -111,10 +114,12 @@ function EntityMetadataInner({
 }
 
 function PublishButton({
+  className,
   entityId,
   version,
   publishEntity,
 }: {
+  className: string;
   entityId: string;
   version: AdminEntityVersionInfo | undefined;
   publishEntity: DataDataContextValue['publishEntity'];
@@ -123,6 +128,7 @@ function PublishButton({
 
   return (
     <Button
+      className={className}
       kind="primary"
       disabled={disabled}
       onClick={async () => {
