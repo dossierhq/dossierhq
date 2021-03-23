@@ -1,5 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Storyshots Domain/RichTextFieldEditor Normal 1`] = `
+<div>
+  <div
+    data-editorinitialized="false"
+    id="id-123"
+  />
+</div>
+`;
+
 exports[`Storyshots Domain/RichTextFieldEditor Normal With Initial Paragraph 1`] = `
 <div>
   <button
@@ -13,6 +22,7 @@ exports[`Storyshots Domain/RichTextFieldEditor Normal With Initial Paragraph 1`]
     />
   </button>
   <div
+    data-editorinitialized="false"
     id="id-123"
   />
 </div>
