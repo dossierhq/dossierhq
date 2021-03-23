@@ -1,4 +1,5 @@
 import type { RichText } from '@datadata/core';
+import type { LogLevels } from '@editorjs/editorjs';
 import EditorJS from '@editorjs/editorjs';
 import React, { useEffect, useMemo, useReducer } from 'react';
 import type { EntityFieldEditorProps } from '../..';
@@ -7,6 +8,7 @@ import {
   initializeRichTextState,
   reduceRichTextState,
   SetDataAction,
+  SetInitializedAction,
 } from './RichTextFieldReducer';
 
 export type RichTextFieldEditorProps = EntityFieldEditorProps<RichText>;
@@ -28,7 +30,7 @@ export function RichTextFieldEditor(props: RichTextFieldEditorProps): JSX.Elemen
 }
 
 function RichTextEditor({ id, value, onChange }: RichTextFieldEditorProps) {
-  const [{ data, dataSetFromEditor }, dispatch] = useReducer(
+  const [{ initialized, data, dataSetFromEditor }, dispatch] = useReducer(
     reduceRichTextState,
     { data: value },
     initializeRichTextState
@@ -38,6 +40,8 @@ function RichTextEditor({ id, value, onChange }: RichTextFieldEditorProps) {
     return new EditorJS({
       holder: id,
       data: data ?? undefined,
+      logLevel: 'WARN' as LogLevels,
+      onReady: () => dispatch(new SetInitializedAction()),
       onChange: (api) =>
         api.saver
           .save()
@@ -50,7 +54,7 @@ function RichTextEditor({ id, value, onChange }: RichTextFieldEditorProps) {
   }, []);
 
   useEffect(() => {
-    return () => editor.destroy();
+    return () => editor.destroy?.();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -69,5 +73,5 @@ function RichTextEditor({ id, value, onChange }: RichTextFieldEditorProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, dataSetFromEditor]);
 
-  return <div id={id} />;
+  return <div id={id} data-editorinitialized={initialized ? 'true' : 'false'} />;
 }

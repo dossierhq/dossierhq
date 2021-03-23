@@ -1,20 +1,27 @@
 import type { RichText } from '@datadata/core';
 
 interface RichTextState {
+  initialized: boolean;
   data: RichText | null;
   dataSetFromEditor: boolean;
 }
 
 interface RichTextAction {
-  reduce: (state: RichTextState) => RichTextState;
+  reduce(state: RichTextState): RichTextState;
 }
 
 export function initializeRichTextState({ data }: { data: RichText | null }): RichTextState {
-  return { data, dataSetFromEditor: false };
+  return { initialized: false, data, dataSetFromEditor: false };
 }
 
 export function reduceRichTextState(state: RichTextState, action: RichTextAction): RichTextState {
   return action.reduce(state);
+}
+
+export class SetInitializedAction implements RichTextAction {
+  reduce(state: RichTextState): RichTextState {
+    return { ...state, initialized: true };
+  }
 }
 
 export class SetDataAction implements RichTextAction {

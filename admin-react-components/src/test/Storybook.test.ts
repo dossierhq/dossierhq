@@ -3,6 +3,8 @@ import path from 'path';
 import type { ReactTestRenderer } from 'react-test-renderer';
 import { act, create } from 'react-test-renderer';
 
+jest.mock('@editorjs/editorjs');
+
 const converter = new Stories2SnapsConverter();
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

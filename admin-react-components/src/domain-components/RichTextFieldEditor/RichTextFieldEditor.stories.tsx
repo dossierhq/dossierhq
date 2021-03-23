@@ -4,7 +4,7 @@ import { RichTextFieldEditor } from './RichTextFieldEditor';
 import type { RichTextFieldEditorProps } from './RichTextFieldEditor';
 import schema from '../../stories/StoryboardSchema';
 
-type RichTextFieldEditorStoryProps = Omit<RichTextFieldEditorProps, 'onChange'>;
+export type RichTextFieldEditorStoryProps = Omit<RichTextFieldEditorProps, 'onChange'>;
 
 const meta: Meta<RichTextFieldEditorStoryProps> = {
   title: 'Domain/RichTextFieldEditor',
