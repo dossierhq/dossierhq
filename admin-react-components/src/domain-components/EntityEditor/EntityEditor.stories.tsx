@@ -9,7 +9,7 @@ import {
   initializeEntityEditorState,
   reduceEntityEditorState,
 } from '../..';
-import { foo1Id, fooDeletedId } from '../../test/EntityFixtures';
+import { baz1Id, foo1Id, fooDeletedId } from '../../test/EntityFixtures';
 import {
   createContextValue,
   SlowInterceptor,
@@ -71,6 +71,9 @@ FullFoo.args = { entitySelector: { id: foo1Id } };
 
 export const DeletedFoo = Template.bind({});
 DeletedFoo.args = { entitySelector: { id: fooDeletedId } };
+
+export const FullBaz = Template.bind({});
+FullBaz.args = { entitySelector: { id: baz1Id } };
 
 export const SlowFullFoo = Template.bind({});
 SlowFullFoo.args = {

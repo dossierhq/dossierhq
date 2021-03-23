@@ -48,9 +48,7 @@ function RichTextEditor({ id, value, onChange }: RichTextFieldEditorProps) {
         onChange: (api) =>
           api.saver
             .save()
-            .then((data) => {
-              dispatch(new SetDataAction(data, true));
-            })
+            .then((data) => dispatch(new SetDataAction(data, true)))
             .catch(console.warn),
       })
     );

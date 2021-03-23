@@ -4,6 +4,7 @@ export const foo1Id = 'fc66b4d7-61ff-44d4-8f68-cb7f526df046';
 export const fooDeletedId = 'fb62be03-a0a9-4689-9987-bacee0e7692d';
 export const bar1Id = 'cb228716-d3dd-444f-9a77-80443d436339';
 export const bar2Id = 'eb5732e2-b931-492b-82f1-f8fdd464f0d2';
+export const baz1Id = 'e6e928cc-e45f-452d-8bb0-73c2caad31c2';
 export const userId1 = 'a10e49cd-2f4e-4249-b8ee-eaca8466939b';
 
 export const entitiesFixture: JsonInMemoryEntity[] = [
@@ -97,6 +98,25 @@ export const entitiesFixture: JsonInMemoryEntity[] = [
         _name: 'Bar 2',
         _version: 0,
         title: 'Bar 2',
+      },
+    ],
+    history: [
+      {
+        version: 0,
+        createdAt: '2021-03-11T20:19:39.343Z',
+        createdBy: userId1,
+      },
+    ],
+  },
+  {
+    versions: [
+      {
+        id: baz1Id,
+        _type: 'Baz',
+        _name: 'Baz 1',
+        _version: 0,
+        title: 'Baz 1',
+        body: { blocks: [{ type: 'paragraph', data: { text: 'Hello world' } }] },
       },
     ],
     history: [
