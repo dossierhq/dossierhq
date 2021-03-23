@@ -75,5 +75,11 @@ function RichTextEditor({ id, value, onChange }: RichTextFieldEditorProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, dataSetFromEditor]);
 
-  return <div id={id} data-editorinitialized={initialized ? 'true' : 'false'} />;
+  return (
+    <div
+      id={id}
+      className="dd text-body1"
+      data-editorinitialized={initialized ? 'true' : 'false'}
+    />
+  );
 }
