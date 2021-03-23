@@ -41,6 +41,8 @@ beforeAll(async () => {
           { name: 'bar', type: FieldType.EntityType, entityTypes: ['EntityAdminBar'] },
           { name: 'baz', type: FieldType.EntityType, entityTypes: ['EntityAdminBaz'] },
           { name: 'tags', type: FieldType.String, list: true },
+          { name: 'body', type: FieldType.RichText },
+          { name: 'bodyList', type: FieldType.RichText, list: true },
           { name: 'location', type: FieldType.Location },
           { name: 'locations', type: FieldType.Location, list: true },
           {
@@ -650,6 +652,47 @@ describe('createEntity()', () => {
           _name: name,
           _version: 0,
           tags: ['one', 'two', 'three'],
+        });
+      }
+    }
+  });
+
+  test('Create EntityAdminBaz with rich text and rich text list', async () => {
+    const createResult = await EntityAdmin.createEntity(context, {
+      _type: 'EntityAdminBaz',
+      _name: 'Baz',
+      body: { blocks: [{ type: 'paragraph', data: { text: 'Hello world' } }] },
+      bodyList: [
+        { blocks: [{ type: 'paragraph', data: { text: 'First rich text' } }] },
+        { blocks: [{ type: 'paragraph', data: { text: 'Second rich text' } }] },
+      ],
+    });
+    if (expectOkResult(createResult)) {
+      const { id, _name: name } = createResult.value;
+      expect(createResult.value).toEqual({
+        id,
+        _type: 'EntityAdminBaz',
+        _name: name,
+        _version: 0,
+        body: { blocks: [{ type: 'paragraph', data: { text: 'Hello world' } }] },
+        bodyList: [
+          { blocks: [{ type: 'paragraph', data: { text: 'First rich text' } }] },
+          { blocks: [{ type: 'paragraph', data: { text: 'Second rich text' } }] },
+        ],
+      });
+
+      const getResult = await EntityAdmin.getEntity(context, id);
+      if (expectOkResult(getResult)) {
+        expect(getResult.value).toEqual({
+          id,
+          _type: 'EntityAdminBaz',
+          _name: name,
+          _version: 0,
+          body: { blocks: [{ type: 'paragraph', data: { text: 'Hello world' } }] },
+          bodyList: [
+            { blocks: [{ type: 'paragraph', data: { text: 'First rich text' } }] },
+            { blocks: [{ type: 'paragraph', data: { text: 'Second rich text' } }] },
+          ],
         });
       }
     }

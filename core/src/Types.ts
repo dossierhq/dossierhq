@@ -11,6 +11,15 @@ export interface EntityReference {
   id: string;
 }
 
+export interface RichText {
+  blocks: RichTextBlock[];
+}
+
+export interface RichTextBlock<Type extends string = string, Data = unknown> {
+  type: Type;
+  data: Data;
+}
+
 export interface Location {
   lat: number;
   lng: number;
