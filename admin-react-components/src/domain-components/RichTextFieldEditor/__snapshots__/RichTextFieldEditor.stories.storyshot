@@ -3,6 +3,7 @@
 exports[`Storyshots Domain/RichTextFieldEditor Normal 1`] = `
 <div>
   <div
+    className="dd text-body1"
     data-editorinitialized="false"
     id="id-123"
   />
@@ -22,6 +23,7 @@ exports[`Storyshots Domain/RichTextFieldEditor Normal With Initial Paragraph 1`]
     />
   </button>
   <div
+    className="dd text-body1"
     data-editorinitialized="false"
     id="id-123"
   />
