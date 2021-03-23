@@ -1,5 +1,6 @@
 dependencies:
   '@babel/core': 7.13.10
+  '@editorjs/editorjs': 2.19.3
   '@hapi/boom': 9.1.2
   '@rush-temp/admin-react-components': file:projects/admin-react-components.tgz_ts-node@9.1.1
   '@rush-temp/benchpress': file:projects/benchpress.tgz
@@ -1615,6 +1616,13 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-v9kIhKwjeZThiWrLmj0y17CWoyddASLj9O2yvbZkbvw/N3rWOYy9zkV66ursAoVr0mV15bL8g0c4QZUE6cdDoQ==
+  /@editorjs/editorjs/2.19.3:
+    dependencies:
+      codex-notifier: 1.1.2
+      codex-tooltip: 1.0.2
+    dev: false
+    resolution:
+      integrity: sha512-2IdR164W1csszDZmtCu91q0q7iQ39BBl82bGlNGaXTEiVLr0sySPcmM7v/3DITldEjE+Uovupclba8YAi40KKQ==
   /@emotion/cache/10.0.29:
     dependencies:
       '@emotion/sheet': 0.9.4
@@ -5220,6 +5228,14 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha1-DQcLTQQ6W+ozovGkDi7bPZpMz3c=
+  /codex-notifier/1.1.2:
+    dev: false
+    resolution:
+      integrity: sha512-DCp6xe/LGueJ1N5sXEwcBc3r3PyVkEEDNWCVigfvywAkeXcZMk9K41a31tkEFBW0Ptlwji6/JlAb49E3Yrxbtg==
+  /codex-tooltip/1.0.2:
+    dev: false
+    resolution:
+      integrity: sha512-oC+Bu5X/zyhbPydgMSLWKoM/+vkJMqaLWu3Dt/jZgXS3MWK23INwC5DMBrVXZSufAFk0i0SUni38k9rLMyZn/w==
   /collapse-white-space/1.0.6:
     dev: false
     resolution:
@@ -13848,6 +13864,7 @@ packages:
   file:projects/admin-react-components.tgz_ts-node@9.1.1:
     dependencies:
       '@babel/core': 7.13.10
+      '@editorjs/editorjs': 2.19.3
       '@storybook/addon-actions': 6.1.21_e342ee84aa4c58264377ee43e7695221
       '@storybook/addon-essentials': 6.1.21_d07a906f7122c46ee595eab7d48d29eb
       '@storybook/addon-links': 6.1.21_react-dom@17.0.1+react@17.0.1
@@ -13891,7 +13908,7 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-b/D/TEAY0kJ69t80rxi7HHO2bq5CeqhEJ89QzQhVyke8MkhOjoPhNBZesII8HmRSmKjk2AJW0bKJ96Y8WnIA7Q==
+      integrity: sha512-f8vifOSgn1uDd3JRyz8QClmYRoEeFSXFEqgmtUkxo0aANHZ14PgBbl/8n5QI0c1BGOa5DwNxj6LTGor2CXzX2w==
       tarball: file:projects/admin-react-components.tgz
     version: 0.0.0
   file:projects/benchpress.tgz:
@@ -13999,7 +14016,7 @@ packages:
     dev: false
     name: '@rush-temp/datadata-examples-next-web'
     resolution:
-      integrity: sha512-d3pUFHnoOhrLlwHCa7flf/76uqakMxCg/odP6JsifbgzyqyrgYQD58B9UvCWzVkh0cF41K+U3KrzYPovERzpDw==
+      integrity: sha512-UfO0igx6rzJir41L/Nz9df1oZZj5DG/WcH4DtLcNd9UItNmsKikayIwzLX3QLu2k5QZDfjxy3MzpNQ2XvV1f1w==
       tarball: file:projects/datadata-examples-next-web.tgz
     version: 0.0.0
   file:projects/datadata.tgz:
@@ -14092,6 +14109,7 @@ packages:
 registry: ''
 specifiers:
   '@babel/core': ^7.13.10
+  '@editorjs/editorjs': ~2.19.3
   '@hapi/boom': ~9.1.2
   '@rush-temp/admin-react-components': file:./projects/admin-react-components.tgz
   '@rush-temp/benchpress': file:./projects/benchpress.tgz
@@ -14145,7 +14163,7 @@ specifiers:
   leaflet: ~1.7.1
   lodash: ~4.17.21
   mini-svg-data-uri: ~1.2.3
-  next: ~10.0.6
+  next: ~10.0.9
   next-transpile-modules: ~6.1.0
   pg: ^8.5.1
   postgrator: ^4.1.1

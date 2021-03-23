@@ -49,6 +49,7 @@ export { LocationFieldEditor } from './domain-components/LocationFieldEditor/Loc
 export { MapContainer } from './generic-components/MapContainer/MapContainer';
 export { Message } from './generic-components/Message/Message';
 export { Modal } from './generic-components/Modal/Modal';
+export { RichTextFieldEditor } from './domain-components/RichTextFieldEditor/RichTextFieldEditor';
 export { Row, RowAs, RowAsElement, RowElement, RowItem } from './generic-components/Row/Row';
 export { Segment } from './generic-components/Segment/Segment';
 export { Stack } from './generic-components/Stack/Stack';

@@ -5,6 +5,8 @@ import {
   isEntityTypeListField,
   isLocationField,
   isLocationListField,
+  isRichTextField,
+  isRichTextListField,
   isStringField,
   isStringListField,
   isValueTypeField,
@@ -15,9 +17,10 @@ import {
   EntityPicker,
   FormField,
   LocationFieldEditor,
+  RichTextFieldEditor,
   StringFieldEditor,
+  ValueTypeFieldEditor,
 } from '../..';
-import { ValueTypeFieldEditor } from '../ValueTypeFieldEditor/ValueTypeFieldEditor';
 
 interface Props {
   idPrefix: string;
@@ -64,6 +67,27 @@ export function EntityFieldEditor({
         fieldSpec={fieldSpec}
         onChange={onValueChanged}
         Editor={StringFieldEditor}
+      />
+    );
+  } else if (isRichTextField(fieldSpec, value)) {
+    editor = (
+      <RichTextFieldEditor
+        id={id}
+        value={value}
+        schema={schema}
+        fieldSpec={fieldSpec}
+        onChange={onValueChanged}
+      />
+    );
+  } else if (isRichTextListField(fieldSpec, value)) {
+    editor = (
+      <EntityFieldListWrapper
+        id={id}
+        value={value}
+        schema={schema}
+        fieldSpec={fieldSpec}
+        onChange={onValueChanged}
+        Editor={RichTextFieldEditor}
       />
     );
   } else if (isLocationField(fieldSpec, value)) {

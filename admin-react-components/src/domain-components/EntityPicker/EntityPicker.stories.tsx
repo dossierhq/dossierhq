@@ -38,7 +38,7 @@ InitialBar.args = {
 };
 
 function getFieldSpec(entityType: string, fieldName: string) {
-  const entitySpec = schema.getEntityTypeSpecification('Foo');
+  const entitySpec = schema.getEntityTypeSpecification(entityType);
   if (!entitySpec) {
     throw new Error('Entity not available: ' + entityType);
   }
