@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots Domain/RichTextFieldEditor Normal With Initial Paragraph 1`] = `
+<div>
+  <button
+    className="dd icon-button"
+    onClick={[Function]}
+    title="Clear"
+    type="button"
+  >
+    <span
+      className="dd icon icon-remove"
+    />
+  </button>
+  <div
+    id="id-123"
+  />
+</div>
+`;

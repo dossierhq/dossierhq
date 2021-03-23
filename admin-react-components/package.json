@@ -58,6 +58,7 @@
   },
   "dependencies": {
     "@datadata/core": "1.0.0",
+    "@editorjs/editorjs": "~2.19.3",
     "@types/leaflet": "~1.7.0",
     "@types/lodash": "~4.14.168",
     "@types/react": "~17.0.3",

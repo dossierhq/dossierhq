@@ -24,6 +24,7 @@ export const entitiesFixture: JsonInMemoryEntity[] = [
         ],
         bar: { id: bar1Id },
         bars: [{ id: bar1Id }, { id: bar2Id }],
+        body: { blocks: [{ type: 'paragraph', data: { text: 'Hello world' } }] },
         annotatedBar: { _type: 'AnnotatedBar', annotation: 'Annotation', bar: { id: bar2Id } },
         annotatedBars: [
           { _type: 'AnnotatedBar', annotation: 'First', bar: { id: bar1Id } },
