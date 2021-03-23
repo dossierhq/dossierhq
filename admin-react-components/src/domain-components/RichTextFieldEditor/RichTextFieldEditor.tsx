@@ -59,9 +59,13 @@ function RichTextEditor({ id, value, onChange }: RichTextFieldEditorProps) {
   }, []);
 
   useEffect(() => {
-    if (value && value !== data) {
+    if (value !== data) {
       dispatch(new SetDataAction(value, false));
-      editor?.render(value);
+      if (value) {
+        editor?.render(value);
+      } else {
+        editor?.clear();
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
