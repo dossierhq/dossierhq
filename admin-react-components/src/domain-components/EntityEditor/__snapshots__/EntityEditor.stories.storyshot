@@ -297,6 +297,87 @@ exports[`Storyshots Domain/EntityEditor Deleted Foo 1`] = `
 </div>
 `;
 
+exports[`Storyshots Domain/EntityEditor Full Baz 1`] = `
+<div
+  data-entityid="e6e928cc-e45f-452d-8bb0-73c2caad31c2"
+>
+  <form
+    className="dd flex-column p-3 is-rounded has-background has-shadow"
+    onReset={[Function]}
+    onSubmit={[Function]}
+  >
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="e6e928cc-e45f-452d-8bb0-73c2caad31c2-_name"
+      >
+        Name
+      </label>
+      <div
+        className="dd form-control"
+      >
+        <input
+          className="dd text-body1 input"
+          id="e6e928cc-e45f-452d-8bb0-73c2caad31c2-_name"
+          onChange={[Function]}
+          type="text"
+          value="Baz 1"
+        />
+      </div>
+    </div>
+    <hr
+      className="dd divider"
+    />
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="e6e928cc-e45f-452d-8bb0-73c2caad31c2-body"
+      >
+        body
+      </label>
+      <div
+        className="dd form-control"
+      >
+        <div>
+          <button
+            className="dd icon-button"
+            onClick={[Function]}
+            title="Clear"
+            type="button"
+          >
+            <span
+              className="dd icon icon-remove"
+            />
+          </button>
+          <div
+            data-editorinitialized="false"
+            id="e6e928cc-e45f-452d-8bb0-73c2caad31c2-body"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      className="dd flex-row g-1"
+    >
+      <button
+        className="dd button has-background hoverable text-button bg-primary is-rounded"
+        disabled={false}
+        type="submit"
+      >
+        Save
+      </button>
+      <button
+        className="dd button has-background hoverable text-button is-rounded"
+        disabled={false}
+        type="reset"
+      >
+        Reset
+      </button>
+    </div>
+  </form>
+</div>
+`;
+
 exports[`Storyshots Domain/EntityEditor Full Foo 1`] = `
 <div
   data-entityid="fc66b4d7-61ff-44d4-8f68-cb7f526df046"
