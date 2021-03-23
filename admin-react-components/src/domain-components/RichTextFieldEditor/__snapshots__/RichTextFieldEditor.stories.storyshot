@@ -3,6 +3,13 @@
 exports[`Storyshots Domain/RichTextFieldEditor Normal 1`] = `
 <div>
   <div
+    className="dd flex-row"
+  >
+    <div
+      className="dd flex-grow"
+    />
+  </div>
+  <div
     className="dd text-body1"
     data-editorinitialized="false"
     id="id-123"
@@ -12,16 +19,23 @@ exports[`Storyshots Domain/RichTextFieldEditor Normal 1`] = `
 
 exports[`Storyshots Domain/RichTextFieldEditor Normal With Initial Paragraph 1`] = `
 <div>
-  <button
-    className="dd icon-button"
-    onClick={[Function]}
-    title="Clear"
-    type="button"
+  <div
+    className="dd flex-row"
   >
-    <span
-      className="dd icon icon-remove"
+    <div
+      className="dd flex-grow"
     />
-  </button>
+    <button
+      className="dd icon-button a"
+      onClick={[Function]}
+      title="Clear"
+      type="button"
+    >
+      <span
+        className="dd icon icon-remove"
+      />
+    </button>
+  </div>
   <div
     className="dd text-body1"
     data-editorinitialized="false"

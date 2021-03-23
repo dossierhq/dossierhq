@@ -199,6 +199,13 @@ exports[`Storyshots Domain/EntityEditorContainer Deleted Foo 1`] = `
           >
             <div>
               <div
+                className="dd flex-row"
+              >
+                <div
+                  className="dd flex-grow"
+                />
+              </div>
+              <div
                 className="dd text-body1"
                 data-editorinitialized="false"
                 id="fb62be03-a0a9-4689-9987-bacee0e7692d-body"
@@ -824,16 +831,23 @@ exports[`Storyshots Domain/EntityEditorContainer Full Foo 1`] = `
             className="dd form-control"
           >
             <div>
-              <button
-                className="dd icon-button"
-                onClick={[Function]}
-                title="Clear"
-                type="button"
+              <div
+                className="dd flex-row"
               >
-                <span
-                  className="dd icon icon-remove"
+                <div
+                  className="dd flex-grow"
                 />
-              </button>
+                <button
+                  className="dd icon-button a"
+                  onClick={[Function]}
+                  title="Clear"
+                  type="button"
+                >
+                  <span
+                    className="dd icon icon-remove"
+                  />
+                </button>
+              </div>
               <div
                 className="dd text-body1"
                 data-editorinitialized="false"
@@ -1612,6 +1626,13 @@ exports[`Storyshots Domain/EntityEditorContainer New Foo 1`] = `
             className="dd form-control"
           >
             <div>
+              <div
+                className="dd flex-row"
+              >
+                <div
+                  className="dd flex-grow"
+                />
+              </div>
               <div
                 className="dd text-body1"
                 data-editorinitialized="false"

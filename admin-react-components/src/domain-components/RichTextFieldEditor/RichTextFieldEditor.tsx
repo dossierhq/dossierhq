@@ -3,7 +3,7 @@ import type { LogLevels } from '@editorjs/editorjs';
 import EditorJS from '@editorjs/editorjs';
 import React, { useEffect, useReducer, useState } from 'react';
 import type { EntityFieldEditorProps } from '../..';
-import { IconButton } from '../..';
+import { IconButton, Row, RowItem } from '../..';
 import {
   initializeRichTextState,
   reduceRichTextState,
@@ -17,13 +17,17 @@ export function RichTextFieldEditor(props: RichTextFieldEditorProps): JSX.Elemen
   const { value, fieldSpec, onChange } = props;
   return (
     <div>
-      {value !== null ? (
-        <IconButton
-          title={fieldSpec.list ? 'Remove item' : 'Clear'}
-          icon="remove"
-          onClick={() => onChange?.(null)}
-        />
-      ) : null}
+      <Row>
+        <RowItem grow />
+        {value !== null && value.blocks.length > 0 ? (
+          <IconButton
+            className="a"
+            title={fieldSpec.list ? 'Remove item' : 'Clear'}
+            icon="remove"
+            onClick={() => onChange?.(null)}
+          />
+        ) : null}
+      </Row>
       <RichTextEditor {...props} />
     </div>
   );
