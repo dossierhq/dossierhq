@@ -1,7 +1,7 @@
 import type { RichText } from '@datadata/core';
 import type { LogLevels } from '@editorjs/editorjs';
 import EditorJS from '@editorjs/editorjs';
-import React, { useEffect, useMemo, useReducer } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import type { EntityFieldEditorProps } from '../..';
 import { IconButton } from '../..';
 import {
@@ -30,38 +30,37 @@ export function RichTextFieldEditor(props: RichTextFieldEditorProps): JSX.Elemen
 }
 
 function RichTextEditor({ id, value, onChange }: RichTextFieldEditorProps) {
+  const [editor, setEditor] = useState<EditorJS | null>(null);
   const [{ initialized, data, dataSetFromEditor }, dispatch] = useReducer(
     reduceRichTextState,
     { data: value },
     initializeRichTextState
   );
 
-  const editor = useMemo(() => {
-    return new EditorJS({
-      holder: id,
-      data: data ?? undefined,
-      logLevel: 'WARN' as LogLevels,
-      onReady: () => dispatch(new SetInitializedAction()),
-      onChange: (api) =>
-        api.saver
-          .save()
-          .then((data) => {
-            dispatch(new SetDataAction(data, true));
-          })
-          .catch(console.warn),
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   useEffect(() => {
-    return () => editor.destroy?.();
+    setEditor(
+      new EditorJS({
+        holder: id,
+        data: data ?? undefined,
+        logLevel: 'WARN' as LogLevels,
+        onReady: () => dispatch(new SetInitializedAction()),
+        onChange: (api) =>
+          api.saver
+            .save()
+            .then((data) => {
+              dispatch(new SetDataAction(data, true));
+            })
+            .catch(console.warn),
+      })
+    );
+    return () => editor?.destroy?.();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     if (value && value !== data) {
       dispatch(new SetDataAction(value, false));
-      editor.render(value);
+      editor?.render(value);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
