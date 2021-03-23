@@ -2,21 +2,20 @@ import React, { useCallback } from 'react';
 import type { EntityFieldEditorProps } from '../..';
 import { Column } from '../..';
 
-interface Props extends EntityFieldEditorProps<unknown[]> {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  Editor: React.JSXElementConstructor<EntityFieldEditorProps<any>>;
+interface Props<Item> extends EntityFieldEditorProps<Item[]> {
+  Editor: React.JSXElementConstructor<EntityFieldEditorProps<Item>>;
 }
 
-export function EntityFieldListWrapper({
+export function EntityFieldListWrapper<Item>({
   id,
   value,
   schema,
   fieldSpec,
   onChange,
   Editor,
-}: Props): JSX.Element {
+}: Props<Item>): JSX.Element {
   const handleItemChange = useCallback(
-    (itemValue: unknown, index: number) => {
+    (itemValue: Item | null, index: number) => {
       if (onChange) {
         const newValue = value ? [...value] : [];
         if (itemValue === null || itemValue === undefined) {
