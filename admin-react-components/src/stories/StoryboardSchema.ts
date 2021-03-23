@@ -11,6 +11,7 @@ const schema = new Schema({
         { name: 'locations', type: FieldType.Location, list: true },
         { name: 'bar', type: FieldType.EntityType, entityTypes: ['Bar'] },
         { name: 'bars', type: FieldType.EntityType, entityTypes: ['Bar'], list: true },
+        { name: 'body', type: FieldType.RichText },
         { name: 'annotatedBar', type: FieldType.ValueType, valueTypes: ['AnnotatedBar'] },
         {
           name: 'annotatedBars',
