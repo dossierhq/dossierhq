@@ -43,6 +43,10 @@ Object {
             "initialValue": null,
             "value": null,
           },
+          Object {
+            "initialValue": null,
+            "value": null,
+          },
         ],
         "initialName": "",
         "name": "",
@@ -136,6 +140,28 @@ Object {
                 "id": "eb5732e2-b931-492b-82f1-f8fdd464f0d2",
               },
             ],
+          },
+          Object {
+            "initialValue": Object {
+              "blocks": Array [
+                Object {
+                  "data": Object {
+                    "text": "Hello world",
+                  },
+                  "type": "paragraph",
+                },
+              ],
+            },
+            "value": Object {
+              "blocks": Array [
+                Object {
+                  "data": Object {
+                    "text": "Hello world",
+                  },
+                  "type": "paragraph",
+                },
+              ],
+            },
           },
           Object {
             "initialValue": Object {

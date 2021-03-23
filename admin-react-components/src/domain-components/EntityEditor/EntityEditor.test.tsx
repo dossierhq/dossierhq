@@ -16,6 +16,8 @@ import { TestContextAdapter } from '../../test/TestContextAdapter';
 import type { EntityEditorStoryProps } from './EntityEditor.stories';
 import { default as StoryMeta, DeletedFoo, FullFoo, NewFoo } from './EntityEditor.stories';
 
+jest.mock('@editorjs/editorjs');
+
 function renderStory(
   StoryUnderTest: Story<EntityEditorStoryProps>,
   overrideArgs?: Partial<EntityEditorStoryProps>
