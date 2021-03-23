@@ -28,6 +28,8 @@ export type {
   Location,
   PageInfo,
   Paging,
+  RichText,
+  RichTextBlock,
   Value,
 } from './Types';
 
@@ -46,6 +48,9 @@ export {
   isLocationField,
   isLocationItemField,
   isLocationListField,
+  isRichTextField,
+  isRichTextItemField,
+  isRichTextListField,
   isStringField,
   isStringItemField,
   isStringListField,

@@ -73,6 +73,30 @@ export function isStringItemField(
   return fieldSpec.type === FieldType.String;
 }
 
+/** Check if `value` with `fieldSpec` is a single RichText field */
+export function isRichTextField(
+  fieldSpec: FieldSpecification,
+  value: unknown | null
+): value is FieldValueTypeMap[FieldType.RichText] | null {
+  return fieldSpec.type === FieldType.RichText && !fieldSpec.list;
+}
+
+/** Check if `value` with `fieldSpec` is a list RichText field */
+export function isRichTextListField(
+  fieldSpec: FieldSpecification,
+  value: unknown | null
+): value is Array<FieldValueTypeMap[FieldType.RichText]> | null {
+  return fieldSpec.type === FieldType.RichText && !!fieldSpec.list;
+}
+
+/** Check if `value` with `fieldSpec` is either a single RichText field or an item in a list field */
+export function isRichTextItemField(
+  fieldSpec: FieldSpecification,
+  value: unknown | null
+): value is FieldValueTypeMap[FieldType.RichText] | null {
+  return fieldSpec.type === FieldType.RichText;
+}
+
 /** Check if `value` with `fieldSpec` is a single ValueType field */
 export function isValueTypeField(
   fieldSpec: FieldSpecification,

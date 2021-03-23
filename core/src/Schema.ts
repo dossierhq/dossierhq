@@ -1,4 +1,4 @@
-import type { EntityReference, Result, ErrorType, Location } from '.';
+import type { EntityReference, Result, ErrorType, Location, RichText } from '.';
 import { notOk, ok } from '.';
 
 export interface EntityTypeSpecification {
@@ -14,6 +14,7 @@ export interface ValueTypeSpecification {
 export enum FieldType {
   EntityType = 'EntityType',
   Location = 'Location',
+  RichText = 'RichText',
   String = 'String',
   ValueType = 'ValueType',
 }
@@ -32,6 +33,7 @@ export interface FieldSpecification {
 export interface FieldValueTypeMap {
   [FieldType.EntityType]: EntityReference;
   [FieldType.Location]: Location;
+  [FieldType.RichText]: RichText;
   [FieldType.String]: string;
   [FieldType.ValueType]: { _type: string; [key: string]: unknown };
 }
