@@ -43,6 +43,7 @@ function RichTextEditor({ id, value, onChange }: RichTextFieldEditorProps) {
         holder: id,
         data: data ?? undefined,
         logLevel: 'WARN' as LogLevels,
+        minHeight: 0,
         onReady: () => dispatch(new SetInitializedAction()),
         onChange: (api) =>
           api.saver
