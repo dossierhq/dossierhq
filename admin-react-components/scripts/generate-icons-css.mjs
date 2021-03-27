@@ -3,9 +3,7 @@
 import fs from 'fs/promises';
 import svgToDataUri from 'mini-svg-data-uri';
 import path from 'path';
-import SVGO from 'svgo';
-
-const svgo = new SVGO();
+import { optimize } from 'svgo';
 
 const config = {
   inputDir: new URL('../icons/export/', import.meta.url).pathname,
@@ -27,14 +25,14 @@ async function loadIcons() {
   return result;
 }
 
-async function optimizeSvg(svg) {
-  return (await svgo.optimize(svg)).data;
+function optimizeSvg(svg) {
+  return optimize(svg).data;
 }
 
 async function writeToCss(icons) {
   let result = '';
   for (const { name, svg } of icons) {
-    const optimizedSvg = await optimizeSvg(svg);
+    const optimizedSvg = optimizeSvg(svg);
     console.log(`> ${name} ${optimizedSvg.length}b (original ${svg.length}b)`);
     if (result) result += '\n';
     result += `.dd.icon-${name} {\n`;
