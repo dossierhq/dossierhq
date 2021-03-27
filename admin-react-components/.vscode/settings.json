@@ -2,7 +2,9 @@
   "editor.formatOnSave": true,
   "cSpell.words": [
     "datadata",
+    "editorinitialized",
     "editorjs",
+    "entityid",
     "graphqlid",
     "hoverable",
     "storyshots",

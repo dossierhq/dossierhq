@@ -1,19 +1,27 @@
 import type { RichText } from '@datadata/core';
 import type { LogLevels } from '@editorjs/editorjs';
 import EditorJS from '@editorjs/editorjs';
-import React, { useEffect, useReducer, useState } from 'react';
-import type { EntityFieldEditorProps } from '../..';
-import { IconButton, Row, RowItem } from '../..';
+import React, { useContext, useEffect, useReducer, useState } from 'react';
+import type { DataDataContextValue, EntityFieldEditorProps } from '../..';
+import { DataDataContext, IconButton, Row, RowItem } from '../..';
 import {
   initializeRichTextState,
   reduceRichTextState,
   SetDataAction,
   SetInitializedAction,
 } from './RichTextFieldReducer';
+import type { ValueItemToolConfig } from './ValueItemTool';
+import { createValueItemToolFactory } from './ValueItemTool';
 
 export type RichTextFieldEditorProps = EntityFieldEditorProps<RichText>;
 
-export function RichTextFieldEditor(props: RichTextFieldEditorProps): JSX.Element {
+export function RichTextFieldEditor(props: RichTextFieldEditorProps): JSX.Element | null {
+  const context = useContext(DataDataContext);
+
+  if (!context) {
+    return null;
+  }
+
   const { value, fieldSpec, onChange } = props;
   return (
     <div>
@@ -28,12 +36,19 @@ export function RichTextFieldEditor(props: RichTextFieldEditorProps): JSX.Elemen
           />
         ) : null}
       </Row>
-      <RichTextEditor {...props} />
+      <RichTextEditor {...props} context={context} />
     </div>
   );
 }
 
-function RichTextEditor({ id, value, onChange }: RichTextFieldEditorProps) {
+function RichTextEditor({
+  id,
+  value,
+  fieldSpec,
+  schema: _,
+  context,
+  onChange,
+}: RichTextFieldEditorProps & { context: DataDataContextValue }) {
   const [editor, setEditor] = useState<EditorJS | null>(null);
   const [{ initialized, data, dataSetFromEditor }, dispatch] = useReducer(
     reduceRichTextState,
@@ -42,12 +57,22 @@ function RichTextEditor({ id, value, onChange }: RichTextFieldEditorProps) {
   );
 
   useEffect(() => {
+    const valueItemConfig: ValueItemToolConfig = {
+      id,
+      fieldSpec,
+    };
     setEditor(
       new EditorJS({
         holder: id,
         data: data ?? undefined,
         logLevel: 'WARN' as LogLevels,
         minHeight: 0,
+        tools: {
+          valueItem: {
+            class: createValueItemToolFactory(context),
+            config: valueItemConfig,
+          },
+        },
         onReady: () => dispatch(new SetInitializedAction()),
         onChange: (api) =>
           api.saver

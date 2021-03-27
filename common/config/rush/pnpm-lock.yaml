@@ -30,6 +30,7 @@ dependencies:
   '@types/node': 14.14.35
   '@types/pg': 7.14.11
   '@types/react': 17.0.3
+  '@types/react-dom': 17.0.3
   '@types/react-test-renderer': 17.0.1
   '@types/testing-library__jest-dom': 5.9.5
   '@types/uuid': 8.3.0
@@ -3363,6 +3364,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-EswbYJDF1kkrx93/YU+BbBtb46CCtDMvTiGmcOa/c5PETnwTiSWoseJ1oSWeRl/4rUXkhME9bVURvvPg0W5YQw==
+  /@types/react-dom/17.0.3:
+    dependencies:
+      '@types/react': 17.0.3
+    dev: false
+    resolution:
+      integrity: sha512-4NnJbCeWE+8YBzupn/YrJxZ8VnjcJq5iR1laqQ1vkpQgBiA7bwk0Rp24fxsdNinzJY2U+HHS4dJJDPdoMjdJ7w==
   /@types/react-syntax-highlighter/11.0.4:
     dependencies:
       '@types/react': 17.0.3
@@ -13877,6 +13884,7 @@ packages:
       '@types/leaflet': 1.7.0
       '@types/lodash': 4.14.168
       '@types/react': 17.0.3
+      '@types/react-dom': 17.0.3
       '@types/react-test-renderer': 17.0.1
       '@types/testing-library__jest-dom': 5.9.5
       '@types/uuid': 8.3.0
@@ -13908,7 +13916,7 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-f8vifOSgn1uDd3JRyz8QClmYRoEeFSXFEqgmtUkxo0aANHZ14PgBbl/8n5QI0c1BGOa5DwNxj6LTGor2CXzX2w==
+      integrity: sha512-ZqHNFoax6HbePnO7W5iDM7qpe7BJLnd0uH/+hph9kzR3FfQPLJ0n4uOXkRiYGUt8q3TN+5Wp32ZN/26bFeHrMw==
       tarball: file:projects/admin-react-components.tgz
     version: 0.0.0
   file:projects/benchpress.tgz:
@@ -14139,6 +14147,7 @@ specifiers:
   '@types/node': ^14.14.35
   '@types/pg': ^7.14.11
   '@types/react': ~17.0.3
+  '@types/react-dom': ~17.0.3
   '@types/react-test-renderer': ~17.0.1
   '@types/testing-library__jest-dom': ~5.9.5
   '@types/uuid': ^8.3.0
