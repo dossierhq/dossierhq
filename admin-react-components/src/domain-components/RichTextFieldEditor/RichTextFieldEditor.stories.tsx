@@ -1,10 +1,15 @@
 import type { Meta, Story } from '@storybook/react/types-6-0';
 import React, { useState } from 'react';
+import { DataDataContext } from '../../';
 import { RichTextFieldEditor } from './RichTextFieldEditor';
 import type { RichTextFieldEditorProps } from './RichTextFieldEditor';
 import schema from '../../stories/StoryboardSchema';
+import type { TestContextAdapter } from '../../test/TestContextAdapter';
+import { createContextValue } from '../../test/TestContextAdapter';
 
-export type RichTextFieldEditorStoryProps = Omit<RichTextFieldEditorProps, 'onChange'>;
+export type RichTextFieldEditorStoryProps = Omit<RichTextFieldEditorProps, 'onChange'> & {
+  contextAdapter?: TestContextAdapter;
+};
 
 const meta: Meta<RichTextFieldEditorStoryProps> = {
   title: 'Domain/RichTextFieldEditor',
@@ -18,7 +23,12 @@ const meta: Meta<RichTextFieldEditorStoryProps> = {
 export default meta;
 
 const Template: Story<RichTextFieldEditorStoryProps> = (args) => {
-  return <Wrapper {...args} />;
+  const contextValue = createContextValue(args.contextAdapter);
+  return (
+    <DataDataContext.Provider value={contextValue}>
+      <Wrapper {...args} />
+    </DataDataContext.Provider>
+  );
 };
 
 function Wrapper({ value, ...props }: RichTextFieldEditorStoryProps) {
