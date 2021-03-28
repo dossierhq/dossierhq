@@ -3,11 +3,13 @@
 import fs from 'fs/promises';
 import svgToDataUri from 'mini-svg-data-uri';
 import path from 'path';
+import prettier from 'prettier';
 import { optimize } from 'svgo';
 
 const config = {
   inputDir: new URL('../icons/export/', import.meta.url).pathname,
   iconsCssPath: new URL('../src/icons.css', import.meta.url).pathname,
+  iconsTypescriptPath: new URL('../src/icons.ts', import.meta.url).pathname,
 };
 
 async function loadIcons() {
@@ -20,31 +22,54 @@ async function loadIcons() {
     }
     const name = path.basename(file, '.svg');
     const svg = await fs.readFile(path.join(config.inputDir, file), { encoding: 'utf8' });
-    result.push({ name, svg });
+    result.push({ name, svg, toCss: true, toTypescript: true });
   }
+  result.sort((a, b) => a.name.localeCompare(b.name));
   return result;
 }
 
-function optimizeSvg(svg) {
-  return optimize(svg).data;
+function optimizeIcons(icons) {
+  for (const icon of icons) {
+    const { name, svg } = icon;
+    const optimizedSvg = optimize(svg).data;
+    console.log(`> ${name} ${optimizedSvg.length}b (original ${svg.length}b)`);
+    icon.optimizedSvg = optimizedSvg;
+  }
 }
 
 async function writeToCss(icons) {
   let result = '';
-  for (const { name, svg } of icons) {
-    const optimizedSvg = optimizeSvg(svg);
-    console.log(`> ${name} ${optimizedSvg.length}b (original ${svg.length}b)`);
+  for (const { name, optimizedSvg, toCss } of icons) {
+    if (!toCss) continue;
     if (result) result += '\n';
     result += `.dd.icon-${name} {\n`;
     result += `  background-image: url("${svgToDataUri(optimizedSvg)}");\n`;
     result += '}\n';
   }
+  console.log(`Writing CSS to ${config.iconsCssPath}`);
   await fs.writeFile(config.iconsCssPath, result, 'utf8');
+}
+
+async function writeToTypescript(icons) {
+  let result = 'export default {\n';
+  for (const { name, optimizedSvg, toTypescript } of icons) {
+    if (!toTypescript) continue;
+    result += `  '${name}': '${optimizedSvg}',\n`;
+  }
+  result += '};\n';
+
+  const prettierConfig = await prettier.resolveConfig(config.iconsTypescriptPath);
+  result = prettier.format(result, { ...prettierConfig, filepath: config.iconsTypescriptPath });
+
+  console.log(`Writing Typescript to ${config.iconsTypescriptPath}`);
+  await fs.writeFile(config.iconsTypescriptPath, result, 'utf8');
 }
 
 async function main() {
   const icons = await loadIcons();
+  optimizeIcons(icons);
   await writeToCss(icons);
+  await writeToTypescript(icons);
 }
 
 main().catch((error) => {
