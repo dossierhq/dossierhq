@@ -1,4 +1,4 @@
-import type { FieldSpecification, Value } from '@datadata/core';
+import type { EntityReference, FieldSpecification } from '@datadata/core';
 import type {
   BlockTool,
   BlockToolConstructable,
@@ -8,18 +8,18 @@ import type {
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import type { DataDataContextValue } from '../..';
-import { DataDataContext, ValueTypeFieldEditor } from '../..';
+import { DataDataContext, EntityPicker } from '../..';
 import icons from '../../icons';
 
-export interface ValueItemToolConfig {
+export interface EntityToolConfig {
   id: string;
   fieldSpec: FieldSpecification;
 }
 
-export function createValueItemToolFactory(context: DataDataContextValue): BlockToolConstructable {
+export function createEntityToolFactory(context: DataDataContextValue): BlockToolConstructable {
   // since EditorJS (most likely) does a deep clone of config, provide context through dynamic sub class
-  const factoryClass = class extends ValueItemTool {
-    constructor(config: BlockToolConstructorOptions<Value, ValueItemToolConfig>) {
+  const factoryClass = class extends EntityTool {
+    constructor(config: BlockToolConstructorOptions<EntityReference, EntityToolConfig>) {
       super(config, context);
     }
   };
@@ -27,20 +27,20 @@ export function createValueItemToolFactory(context: DataDataContextValue): Block
   return (factoryClass as unknown) as BlockToolConstructable;
 }
 
-class ValueItemTool implements BlockTool {
+class EntityTool implements BlockTool {
   static get toolbox(): BlockToolConstructable['toolbox'] {
     return {
-      title: 'Value item',
-      icon: icons['value-item-tool'],
+      title: 'Entity',
+      icon: icons['entity-tool'],
     };
   }
 
-  #config: ValueItemToolConfig;
-  #data: Value | null;
+  #config: EntityToolConfig;
+  #data: EntityReference | null;
   #context: DataDataContextValue;
 
   constructor(
-    { api: _, data, config }: BlockToolConstructorOptions<Value, ValueItemToolConfig>,
+    { api: _, data, config }: BlockToolConstructorOptions<EntityReference, EntityToolConfig>,
     context: DataDataContextValue
   ) {
     if (!config) {
@@ -80,15 +80,15 @@ function Wrapper({
   context: DataDataContextValue;
   id: string;
   fieldSpec: FieldSpecification;
-  initialData: Value | null;
-  onDataChange: (data: Value | null) => void;
+  initialData: EntityReference | null;
+  onDataChange: (data: EntityReference | null) => void;
 }) {
   const [value, setValue] = useState(initialData);
   onDataChange(value);
 
   return (
     <DataDataContext.Provider value={context}>
-      <ValueTypeFieldEditor
+      <EntityPicker
         {...{ id, fieldSpec, schema: context.schema }}
         value={value}
         onChange={setValue}
