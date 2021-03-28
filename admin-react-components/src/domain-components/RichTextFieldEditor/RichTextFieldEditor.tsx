@@ -4,6 +4,8 @@ import EditorJS from '@editorjs/editorjs';
 import React, { useContext, useEffect, useReducer, useState } from 'react';
 import type { DataDataContextValue, EntityFieldEditorProps } from '../..';
 import { DataDataContext, IconButton, Row, RowItem } from '../..';
+import type { EntityToolConfig } from './EntityTool';
+import { createEntityToolFactory } from './EntityTool';
 import {
   initializeRichTextState,
   reduceRichTextState,
@@ -57,10 +59,8 @@ function RichTextEditor({
   );
 
   useEffect(() => {
-    const valueItemConfig: ValueItemToolConfig = {
-      id,
-      fieldSpec,
-    };
+    const valueItemConfig: ValueItemToolConfig = { id, fieldSpec };
+    const entityConfig: EntityToolConfig = { id, fieldSpec };
     setEditor(
       new EditorJS({
         holder: id,
@@ -71,6 +71,10 @@ function RichTextEditor({
           valueItem: {
             class: createValueItemToolFactory(context),
             config: valueItemConfig,
+          },
+          entity: {
+            class: createEntityToolFactory(context),
+            config: entityConfig,
           },
         },
         onReady: () => dispatch(new SetInitializedAction()),
