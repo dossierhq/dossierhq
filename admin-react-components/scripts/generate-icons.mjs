@@ -14,16 +14,27 @@ const config = {
 
 async function loadIcons() {
   const result = [];
-  const files = await fs.readdir(config.inputDir);
 
-  for (const file of files) {
-    if (!file.endsWith('.svg')) {
-      continue;
+  async function loadDirectory(directory, toExport) {
+    const files = await fs.readdir(directory);
+
+    for (const file of files) {
+      if (!file.endsWith('.svg')) {
+        continue;
+      }
+      const name = path.basename(file, '.svg');
+      const svg = await fs.readFile(path.join(directory, file), { encoding: 'utf8' });
+      result.push({ name, svg, ...toExport });
     }
-    const name = path.basename(file, '.svg');
-    const svg = await fs.readFile(path.join(config.inputDir, file), { encoding: 'utf8' });
-    result.push({ name, svg, toCss: true, toTypescript: true });
   }
+
+  await loadDirectory(config.inputDir, { toCss: true, toTypescript: true });
+  await loadDirectory(path.join(config.inputDir, 'css'), { toCss: true, toTypescript: false });
+  await loadDirectory(path.join(config.inputDir, 'typescript'), {
+    toCss: false,
+    toTypescript: true,
+  });
+
   result.sort((a, b) => a.name.localeCompare(b.name));
   return result;
 }
