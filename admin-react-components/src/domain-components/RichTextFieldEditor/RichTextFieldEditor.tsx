@@ -111,7 +111,7 @@ function RichTextEditor({
   return (
     <div
       id={id}
-      className="dd text-body1"
+      className="dd text-body1 rich-text"
       data-editorinitialized={initialized ? 'true' : 'false'}
     />
   );

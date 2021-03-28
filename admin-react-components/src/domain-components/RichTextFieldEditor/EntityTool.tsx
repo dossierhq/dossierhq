@@ -53,6 +53,7 @@ class EntityTool implements BlockTool {
 
   render(): HTMLElement {
     const wrapper = document.createElement('div');
+    wrapper.className = 'dd py-1';
     ReactDOM.render(
       <Wrapper
         {...this.#config}

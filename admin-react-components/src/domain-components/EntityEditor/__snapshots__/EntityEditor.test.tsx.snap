@@ -200,7 +200,7 @@ exports[`DeletedFoo render 1`] = `
             />
           </div>
           <div
-            className="dd text-body1"
+            className="dd text-body1 rich-text"
             data-editorinitialized="false"
             id="fb62be03-a0a9-4689-9987-bacee0e7692d-body"
           />
@@ -708,7 +708,7 @@ exports[`FullFoo render 1`] = `
             </button>
           </div>
           <div
-            className="dd text-body1"
+            className="dd text-body1 rich-text"
             data-editorinitialized="false"
             id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-body"
           />
