@@ -67,6 +67,16 @@ NormalWithEntity.args = {
   value: { blocks: [{ type: 'entity', data: { id: foo1Id } }] },
 };
 
+export const OnlyBar = Template.bind({});
+OnlyBar.args = {
+  fieldSpec: getFieldSpec('Baz', 'bodyBar'),
+};
+
+export const OnlyNested = Template.bind({});
+OnlyNested.args = {
+  fieldSpec: getFieldSpec('Baz', 'bodyNested'),
+};
+
 function getFieldSpec(entityType: string, fieldName: string) {
   const entitySpec = schema.getEntityTypeSpecification(entityType);
   if (!entitySpec) {

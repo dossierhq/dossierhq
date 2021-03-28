@@ -6,6 +6,39 @@ describe('validate()', () => {
     expectOkResult(new Schema({ entityTypes: [], valueTypes: [] }).validate());
   });
 
+  test('Limit value and entity types on rich text', () => {
+    expectOkResult(
+      new Schema({
+        entityTypes: [
+          {
+            name: 'Foo',
+            fields: [
+              {
+                name: 'bar',
+                type: FieldType.RichText,
+                valueTypes: ['Value'],
+                entityTypes: ['Foo'],
+              },
+            ],
+          },
+        ],
+        valueTypes: [
+          {
+            name: 'Value',
+            fields: [
+              {
+                name: 'bar',
+                type: FieldType.RichText,
+                valueTypes: ['Value'],
+                entityTypes: ['Foo'],
+              },
+            ],
+          },
+        ],
+      }).validate()
+    );
+  });
+
   test('Error: Invalid field type', () => {
     expectErrorResult(
       new Schema({

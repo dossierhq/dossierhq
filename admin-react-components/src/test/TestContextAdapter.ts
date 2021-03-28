@@ -7,6 +7,8 @@ import { entitiesFixture } from './EntityFixtures';
 import schema from '../stories/StoryboardSchema';
 
 export function createContextValue(adapter?: TestContextAdapter): DataDataContextValue {
+  schema.validate().throwIfError();
+
   return new DataDataContextValue(adapter ?? new TestContextAdapter(), schema, uuidv4());
 }
 

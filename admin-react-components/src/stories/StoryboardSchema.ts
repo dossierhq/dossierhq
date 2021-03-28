@@ -23,7 +23,14 @@ const schema = new Schema({
       ],
     },
     { name: 'Bar', fields: [{ name: 'title', type: FieldType.String, isName: true }] },
-    { name: 'Baz', fields: [{ name: 'body', type: FieldType.RichText }] },
+    {
+      name: 'Baz',
+      fields: [
+        { name: 'body', type: FieldType.RichText },
+        { name: 'bodyBar', type: FieldType.RichText, entityTypes: ['Bar'] },
+        { name: 'bodyNested', type: FieldType.RichText, valueTypes: ['NestedValueItem'] },
+      ],
+    },
   ],
   valueTypes: [
     {
