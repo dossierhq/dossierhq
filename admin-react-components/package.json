@@ -10,7 +10,7 @@
     "ci:check": "npm run ts:check && npm run eslint:check && npm run prettier:check && npm test",
     "eslint:check": "eslint .",
     "eslint:fix": "eslint --fix .",
-    "icons:update-css": "scripts/generate-icons-css.mjs",
+    "icons:update": "scripts/generate-icons.mjs",
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write .",
     "test": "jest",

@@ -13,7 +13,3 @@
 .dd.icon-remove {
   background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg' xml:space='preserve' style='fill-rule:evenodd%3bclip-rule:evenodd%3bstroke-linecap:round%3bstroke-linejoin:round%3bstroke-miterlimit:1.5'%3e%3cpath d='M4 28 27 5M4 5l23 23' style='fill:none%3bstroke:white%3bstroke-width:2px'/%3e%3c/svg%3e");
 }
-
-.dd.icon-value-item {
-  background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 14 14' xmlns='http://www.w3.org/2000/svg' xml:space='preserve' style='fill-rule:evenodd%3bclip-rule:evenodd%3bstroke-linecap:round%3bstroke-linejoin:round%3bstroke-miterlimit:1.5'%3e%3cpath d='M4.938 4.644 7 9.356M9.062 4.644 7 9.356' style='fill:none%3bstroke:%23707684%3bstroke-width:1.3px'/%3e%3c/svg%3e");
-}
