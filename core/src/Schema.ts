@@ -66,7 +66,7 @@ export class Schema {
         }
 
         if (fieldSpec.entityTypes && fieldSpec.entityTypes.length > 0) {
-          if (fieldSpec.type !== FieldType.EntityType) {
+          if (fieldSpec.type !== FieldType.EntityType && fieldSpec.type !== FieldType.RichText) {
             return notOk.BadRequest(
               `${typeSpec.name}.${fieldSpec.name}: Field with type ${fieldSpec.type} shouldn’t specify entityTypes`
             );
@@ -81,7 +81,7 @@ export class Schema {
         }
 
         if (fieldSpec.valueTypes && fieldSpec.valueTypes.length > 0) {
-          if (fieldSpec.type !== FieldType.ValueType) {
+          if (fieldSpec.type !== FieldType.ValueType && fieldSpec.type !== FieldType.RichText) {
             return notOk.BadRequest(
               `${typeSpec.name}.${fieldSpec.name}: Field with type ${fieldSpec.type} shouldn’t specify valueTypes`
             );
