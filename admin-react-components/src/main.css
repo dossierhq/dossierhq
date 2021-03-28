@@ -568,6 +568,13 @@ ul.dd li {
   height: 100%;
 }
 
+.dd.rich-text {
+  border-radius: 0.5em;
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgb(209, 213, 219);
+}
+
 .dd.stack {
   position: relative;
   width: 100%;

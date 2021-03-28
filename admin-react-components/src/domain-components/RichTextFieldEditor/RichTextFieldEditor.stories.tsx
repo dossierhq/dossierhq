@@ -4,6 +4,7 @@ import { DataDataContext } from '../../';
 import { RichTextFieldEditor } from './RichTextFieldEditor';
 import type { RichTextFieldEditorProps } from './RichTextFieldEditor';
 import schema from '../../stories/StoryboardSchema';
+import { bar2Id, foo1Id } from '../../test/EntityFixtures';
 import type { TestContextAdapter } from '../../test/TestContextAdapter';
 import { createContextValue } from '../../test/TestContextAdapter';
 
@@ -41,10 +42,29 @@ Normal.args = {
   fieldSpec: getFieldSpec('Baz', 'body'),
 };
 
-export const NormalWithInitialParagraph = Template.bind({});
-NormalWithInitialParagraph.args = {
+export const NormalWithParagraph = Template.bind({});
+NormalWithParagraph.args = {
   fieldSpec: getFieldSpec('Baz', 'body'),
   value: { blocks: [{ type: 'paragraph', data: { text: 'Hello world' } }] },
+};
+
+export const NormalWithValueItem = Template.bind({});
+NormalWithValueItem.args = {
+  fieldSpec: getFieldSpec('Baz', 'body'),
+  value: {
+    blocks: [
+      {
+        type: 'valueItem',
+        data: { _type: 'AnnotatedBar', annotation: 'Annotation', bar: { id: bar2Id } },
+      },
+    ],
+  },
+};
+
+export const NormalWithEntity = Template.bind({});
+NormalWithEntity.args = {
+  fieldSpec: getFieldSpec('Baz', 'body'),
+  value: { blocks: [{ type: 'entity', data: { id: foo1Id } }] },
 };
 
 function getFieldSpec(entityType: string, fieldName: string) {

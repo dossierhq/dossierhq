@@ -10,14 +10,14 @@ exports[`Storyshots Domain/RichTextFieldEditor Normal 1`] = `
     />
   </div>
   <div
-    className="dd text-body1"
+    className="dd text-body1 rich-text"
     data-editorinitialized="false"
     id="id-123"
   />
 </div>
 `;
 
-exports[`Storyshots Domain/RichTextFieldEditor Normal With Initial Paragraph 1`] = `
+exports[`Storyshots Domain/RichTextFieldEditor Normal With Entity 1`] = `
 <div>
   <div
     className="dd flex-row"
@@ -37,7 +37,61 @@ exports[`Storyshots Domain/RichTextFieldEditor Normal With Initial Paragraph 1`]
     </button>
   </div>
   <div
-    className="dd text-body1"
+    className="dd text-body1 rich-text"
+    data-editorinitialized="false"
+    id="id-123"
+  />
+</div>
+`;
+
+exports[`Storyshots Domain/RichTextFieldEditor Normal With Paragraph 1`] = `
+<div>
+  <div
+    className="dd flex-row"
+  >
+    <div
+      className="dd flex-grow"
+    />
+    <button
+      className="dd icon-button a"
+      onClick={[Function]}
+      title="Clear"
+      type="button"
+    >
+      <span
+        className="dd icon icon-remove"
+      />
+    </button>
+  </div>
+  <div
+    className="dd text-body1 rich-text"
+    data-editorinitialized="false"
+    id="id-123"
+  />
+</div>
+`;
+
+exports[`Storyshots Domain/RichTextFieldEditor Normal With Value Item 1`] = `
+<div>
+  <div
+    className="dd flex-row"
+  >
+    <div
+      className="dd flex-grow"
+    />
+    <button
+      className="dd icon-button a"
+      onClick={[Function]}
+      title="Clear"
+      type="button"
+    >
+      <span
+        className="dd icon icon-remove"
+      />
+    </button>
+  </div>
+  <div
+    className="dd text-body1 rich-text"
     data-editorinitialized="false"
     id="id-123"
   />
