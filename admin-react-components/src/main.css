@@ -509,6 +509,7 @@ ul.dd li {
 
 .dd.dropdown-menu {
   position: absolute;
+  z-index: 1;
 }
 
 .dd.list-container {
