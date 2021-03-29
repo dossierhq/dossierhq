@@ -10,7 +10,7 @@ exports[`Storyshots Domain/RichTextFieldEditor Normal 1`] = `
     />
   </div>
   <div
-    className="dd text-body1 rich-text"
+    className="dd text-body1 rich-text px-1"
     data-editorinitialized="false"
     id="id-123"
   />
@@ -37,7 +37,7 @@ exports[`Storyshots Domain/RichTextFieldEditor Normal With Entity 1`] = `
     </button>
   </div>
   <div
-    className="dd text-body1 rich-text"
+    className="dd text-body1 rich-text px-1"
     data-editorinitialized="false"
     id="id-123"
   />
@@ -64,7 +64,7 @@ exports[`Storyshots Domain/RichTextFieldEditor Normal With Paragraph 1`] = `
     </button>
   </div>
   <div
-    className="dd text-body1 rich-text"
+    className="dd text-body1 rich-text px-1"
     data-editorinitialized="false"
     id="id-123"
   />
@@ -91,7 +91,7 @@ exports[`Storyshots Domain/RichTextFieldEditor Normal With Value Item 1`] = `
     </button>
   </div>
   <div
-    className="dd text-body1 rich-text"
+    className="dd text-body1 rich-text px-1"
     data-editorinitialized="false"
     id="id-123"
   />
@@ -108,7 +108,7 @@ exports[`Storyshots Domain/RichTextFieldEditor Only Bar 1`] = `
     />
   </div>
   <div
-    className="dd text-body1 rich-text"
+    className="dd text-body1 rich-text px-1"
     data-editorinitialized="false"
     id="id-123"
   />
@@ -125,7 +125,7 @@ exports[`Storyshots Domain/RichTextFieldEditor Only Nested 1`] = `
     />
   </div>
   <div
-    className="dd text-body1 rich-text"
+    className="dd text-body1 rich-text px-1"
     data-editorinitialized="false"
     id="id-123"
   />
