@@ -7,6 +7,7 @@ import type {
   Connection,
   Edge,
   ErrorResult,
+  FieldSpecification,
   Paging,
   PromiseResult,
   Schema,
@@ -14,8 +15,15 @@ import type {
 import { createErrorResultFromError, ErrorType } from '@datadata/core';
 import { createContext } from 'react';
 import useSWR, { mutate } from 'swr';
+import type { EditorJsToolSettings } from '..';
 
 export interface DataDataContextAdapter {
+  getEditorJSConfig(
+    fieldSpec: FieldSpecification,
+    standardBlockTools: { [toolName: string]: EditorJsToolSettings },
+    standardInlineTools: string[]
+  ): { tools: { [toolName: string]: EditorJsToolSettings }; inlineToolbar: string[] };
+
   getEntity(
     id: string,
     version?: number | null
@@ -59,6 +67,14 @@ export class DataDataContextValue {
     this.#schema = schema;
     this.#rootKey = rootKey;
   }
+
+  getEditorJSConfig = (
+    fieldSpec: FieldSpecification,
+    standardBlockTools: { [toolName: string]: EditorJsToolSettings },
+    standardInlineTools: string[]
+  ): { tools: { [toolName: string]: EditorJsToolSettings }; inlineToolbar: string[] } => {
+    return this.#adapter.getEditorJSConfig(fieldSpec, standardBlockTools, standardInlineTools);
+  };
 
   get schema(): Schema {
     return this.#schema;

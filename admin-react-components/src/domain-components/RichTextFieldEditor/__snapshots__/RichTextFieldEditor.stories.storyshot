@@ -97,3 +97,37 @@ exports[`Storyshots Domain/RichTextFieldEditor Normal With Value Item 1`] = `
   />
 </div>
 `;
+
+exports[`Storyshots Domain/RichTextFieldEditor Only Bar 1`] = `
+<div>
+  <div
+    className="dd flex-row"
+  >
+    <div
+      className="dd flex-grow"
+    />
+  </div>
+  <div
+    className="dd text-body1 rich-text"
+    data-editorinitialized="false"
+    id="id-123"
+  />
+</div>
+`;
+
+exports[`Storyshots Domain/RichTextFieldEditor Only Nested 1`] = `
+<div>
+  <div
+    className="dd flex-row"
+  >
+    <div
+      className="dd flex-grow"
+    />
+  </div>
+  <div
+    className="dd text-body1 rich-text"
+    data-editorinitialized="false"
+    id="id-123"
+  />
+</div>
+`;

@@ -19,15 +19,22 @@ export enum FieldType {
   ValueType = 'ValueType',
 }
 
+export enum RichTextBlockType {
+  entity = 'entity',
+  valueItem = 'valueItem',
+  paragraph = 'paragraph',
+}
+
 export interface FieldSpecification {
   name: string;
   type: FieldType;
   list?: boolean;
   isName?: boolean;
-  /** Applicable when type is EntityType */
+  /** Applicable when type is EntityType or RichText */
   entityTypes?: string[];
-  /** Applicable when type is ValueType */
+  /** Applicable when type is ValueType or RichText */
   valueTypes?: string[];
+  richTextBlocks?: { type: RichTextBlockType | string; inlineTypes?: string[] }[];
 }
 
 export interface FieldValueTypeMap {

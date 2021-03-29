@@ -29,6 +29,14 @@ export class TestContextAdapter implements DataDataContextAdapter {
     this.#interceptor = interceptor;
   }
 
+  getEditorJSConfig: DataDataContextAdapter['getEditorJSConfig'] = (
+    _fieldSpec,
+    standardBlockTools,
+    standardInlineTools
+  ) => {
+    return { tools: standardBlockTools, inlineToolbar: standardInlineTools };
+  };
+
   getEntity: DataDataContextAdapter['getEntity'] = async (id, version) => {
     if (this.#interceptor) await this.#interceptor();
     return await InMemoryAdmin.getEntity(this.#context, id, version);

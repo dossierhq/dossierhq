@@ -1,4 +1,7 @@
-import type { DataDataContextAdapter } from '@datadata/admin-react-components';
+import type {
+  DataDataContextAdapter,
+  EditorJsToolSettings,
+} from '@datadata/admin-react-components';
 import { DataDataContextValue } from '@datadata/admin-react-components';
 import {
   convertJsonConnection,
@@ -18,8 +21,53 @@ import type {
   SearchEntitiesResponse,
 } from '../types/ResponseTypes';
 import { fetchJson, fetchJsonResult, urls } from '../utils/BackendUtils';
+import customTools from './EditorJsTools';
 
 class ContextAdapter implements DataDataContextAdapter {
+  getEditorJSConfig: DataDataContextAdapter['getEditorJSConfig'] = (
+    fieldSpec,
+    standardBlockTools,
+    standardInlineTools
+  ) => {
+    const defaultInlineToolbar = [...standardInlineTools, ...Object.keys(customTools.inlineTools)];
+
+    const tools: { [toolName: string]: EditorJsToolSettings } = {};
+
+    if (fieldSpec.richTextBlocks && fieldSpec.richTextBlocks.length > 0) {
+      for (const { type, inlineTypes } of fieldSpec.richTextBlocks) {
+        if (standardBlockTools[type]) {
+          tools[type] = standardBlockTools[type];
+        } else {
+          const blockTool = customTools.blockTools[type];
+          if (blockTool) {
+            tools[type] = { class: blockTool, inlineToolbar: inlineTypes ?? defaultInlineToolbar };
+          } else {
+            throw new Error(`No support for tool ${type}`);
+          }
+        }
+      }
+    } else {
+      Object.entries(standardBlockTools).forEach(
+        ([toolName, config]) => (tools[toolName] = config)
+      );
+      Object.entries(customTools.blockTools).forEach(
+        ([toolName, constructable]) =>
+          (tools[toolName] = {
+            class: constructable,
+          })
+      );
+    }
+
+    Object.entries(customTools.inlineTools).forEach(
+      ([toolName, constructable]) =>
+        (tools[toolName] = {
+          class: constructable,
+        })
+    );
+
+    return { tools, inlineToolbar: defaultInlineToolbar };
+  };
+
   getEntity: DataDataContextAdapter['getEntity'] = async (id, version) => {
     const result = await fetchJsonResult<EntityResponse, ErrorType.NotFound>(
       [ErrorType.NotFound],
