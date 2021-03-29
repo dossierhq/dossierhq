@@ -206,7 +206,7 @@ exports[`Storyshots Domain/EntityEditorContainer Deleted Foo 1`] = `
                 />
               </div>
               <div
-                className="dd text-body1 rich-text"
+                className="dd text-body1 rich-text px-1"
                 data-editorinitialized="false"
                 id="fb62be03-a0a9-4689-9987-bacee0e7692d-body"
               />
@@ -849,7 +849,7 @@ exports[`Storyshots Domain/EntityEditorContainer Full Foo 1`] = `
                 </button>
               </div>
               <div
-                className="dd text-body1 rich-text"
+                className="dd text-body1 rich-text px-1"
                 data-editorinitialized="false"
                 id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-body"
               />
@@ -1634,7 +1634,7 @@ exports[`Storyshots Domain/EntityEditorContainer New Foo 1`] = `
                 />
               </div>
               <div
-                className="dd text-body1 rich-text"
+                className="dd text-body1 rich-text px-1"
                 data-editorinitialized="false"
                 id="82ded109-44f2-48b9-a676-43162fda3d7d-body"
               />
