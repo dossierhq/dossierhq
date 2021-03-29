@@ -1,3 +1,7 @@
+export type {
+  ToolConstructable as EditorJsToolConstructable,
+  ToolSettings as EditorJsToolSettings,
+} from '@editorjs/editorjs';
 export type { ColumnProps } from './generic-components/Column/Column';
 export type { DataDataContextAdapter } from './contexts/DataDataContext';
 export type { DropDownItem } from './generic-components/DropDown/DropDown';

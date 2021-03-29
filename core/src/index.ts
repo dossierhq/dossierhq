@@ -66,5 +66,5 @@ export {
   convertJsonEntityVersion,
   convertJsonResult,
 } from './JsonUtils';
-export { FieldType, Schema } from './Schema';
+export { FieldType, RichTextBlockType, Schema } from './Schema';
 export * as CoreTestUtils from './CoreTestUtils';

@@ -1,4 +1,4 @@
-import { FieldType, Schema } from '@datadata/core';
+import { FieldType, RichTextBlockType, Schema } from '@datadata/core';
 
 const schema = new Schema({
   entityTypes: [
@@ -27,8 +27,18 @@ const schema = new Schema({
       name: 'Baz',
       fields: [
         { name: 'body', type: FieldType.RichText },
-        { name: 'bodyBar', type: FieldType.RichText, entityTypes: ['Bar'] },
-        { name: 'bodyNested', type: FieldType.RichText, valueTypes: ['NestedValueItem'] },
+        {
+          name: 'bodyBar',
+          type: FieldType.RichText,
+          entityTypes: ['Bar'],
+          richTextBlocks: [{ type: RichTextBlockType.entity }],
+        },
+        {
+          name: 'bodyNested',
+          type: FieldType.RichText,
+          valueTypes: ['NestedValueItem'],
+          richTextBlocks: [{ type: RichTextBlockType.valueItem }],
+        },
       ],
     },
   ],

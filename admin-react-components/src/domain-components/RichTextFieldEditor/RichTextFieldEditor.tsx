@@ -1,5 +1,6 @@
-import type { RichText } from '@datadata/core';
-import type { LogLevels } from '@editorjs/editorjs';
+import type { FieldSpecification, RichText } from '@datadata/core';
+import { RichTextBlockType } from '@datadata/core';
+import type { LogLevels, ToolSettings } from '@editorjs/editorjs';
 import EditorJS from '@editorjs/editorjs';
 import React, { useContext, useEffect, useReducer, useState } from 'react';
 import type { DataDataContextValue, EntityFieldEditorProps } from '../..';
@@ -59,24 +60,15 @@ function RichTextEditor({
   );
 
   useEffect(() => {
-    const valueItemConfig: ValueItemToolConfig = { id, fieldSpec };
-    const entityConfig: EntityToolConfig = { id, fieldSpec };
+    const { tools, inlineToolbar } = initializeTools(context, fieldSpec, id);
     setEditor(
       new EditorJS({
         holder: id,
         data: data ?? undefined,
         logLevel: 'WARN' as LogLevels,
         minHeight: 0,
-        tools: {
-          valueItem: {
-            class: createValueItemToolFactory(context),
-            config: valueItemConfig,
-          },
-          entity: {
-            class: createEntityToolFactory(context),
-            config: entityConfig,
-          },
-        },
+        inlineToolbar,
+        tools,
         onReady: () => dispatch(new SetInitializedAction()),
         onChange: (api) =>
           api.saver
@@ -115,4 +107,40 @@ function RichTextEditor({
       data-editorinitialized={initialized ? 'true' : 'false'}
     />
   );
+}
+
+function initializeTools(context: DataDataContextValue, fieldSpec: FieldSpecification, id: string) {
+  const standardTools: { [toolName: string]: ToolSettings } = {};
+  const includeAll = !fieldSpec.richTextBlocks || fieldSpec.richTextBlocks.length === 0;
+
+  if (includeAll || fieldSpec.richTextBlocks?.find((x) => x.type === RichTextBlockType.entity)) {
+    const config: EntityToolConfig = { id, fieldSpec };
+    standardTools[RichTextBlockType.entity] = {
+      class: createEntityToolFactory(context),
+      config,
+    };
+  }
+
+  if (includeAll || fieldSpec.richTextBlocks?.find((x) => x.type === RichTextBlockType.valueItem)) {
+    const config: ValueItemToolConfig = { id, fieldSpec };
+    standardTools[RichTextBlockType.valueItem] = {
+      class: createValueItemToolFactory(context),
+      config,
+    };
+  }
+
+  if (
+    !includeAll &&
+    !fieldSpec.richTextBlocks?.find((x) => x.type === RichTextBlockType.paragraph)
+  ) {
+    standardTools[RichTextBlockType.paragraph] = { toolbox: false } as ToolSettings;
+  }
+
+  const { tools, inlineToolbar } = context.getEditorJSConfig(fieldSpec, standardTools, [
+    'bold',
+    'italic',
+    'link',
+  ]);
+
+  return { tools, inlineToolbar };
 }

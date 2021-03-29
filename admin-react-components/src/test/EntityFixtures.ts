@@ -1,3 +1,4 @@
+import { RichTextBlockType } from '@datadata/core';
 import type { JsonInMemoryEntity } from '@datadata/testing-utils';
 
 export const foo1Id = 'fc66b4d7-61ff-44d4-8f68-cb7f526df046';
@@ -25,7 +26,7 @@ export const entitiesFixture: JsonInMemoryEntity[] = [
         ],
         bar: { id: bar1Id },
         bars: [{ id: bar1Id }, { id: bar2Id }],
-        body: { blocks: [{ type: 'paragraph', data: { text: 'Hello world' } }] },
+        body: { blocks: [{ type: RichTextBlockType.paragraph, data: { text: 'Hello world' } }] },
         annotatedBar: { _type: 'AnnotatedBar', annotation: 'Annotation', bar: { id: bar2Id } },
         annotatedBars: [
           { _type: 'AnnotatedBar', annotation: 'First', bar: { id: bar1Id } },
@@ -116,7 +117,16 @@ export const entitiesFixture: JsonInMemoryEntity[] = [
         _name: 'Baz 1',
         _version: 0,
         title: 'Baz 1',
-        body: { blocks: [{ type: 'paragraph', data: { text: 'Hello world' } }] },
+        body: { blocks: [{ type: RichTextBlockType.paragraph, data: { text: 'Hello world' } }] },
+        bodyBar: { blocks: [{ type: RichTextBlockType.entity, data: { id: bar2Id } }] },
+        bodyNested: {
+          blocks: [
+            {
+              type: RichTextBlockType.valueItem,
+              data: { _type: 'NestedValueItem', text: 'Hello nested', child: null },
+            },
+          ],
+        },
       },
     ],
     history: [
