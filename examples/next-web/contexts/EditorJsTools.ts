@@ -1,7 +1,7 @@
 import type { EditorJsToolConstructable } from '@datadata/admin-react-components';
 import Checklist from '@editorjs/checklist';
-import InlineCode from '@editorjs/inline-code';
 import Header from '@editorjs/header';
+import InlineCode from '@editorjs/inline-code';
 import List from '@editorjs/list';
 import Quote from '@editorjs/quote';
 import Underline from '@editorjs/underline';
