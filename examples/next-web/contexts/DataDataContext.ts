@@ -54,6 +54,7 @@ class ContextAdapter implements DataDataContextAdapter {
         ([toolName, constructable]) =>
           (tools[toolName] = {
             class: constructable,
+            inlineToolbar: defaultInlineToolbar,
           })
       );
     }
