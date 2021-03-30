@@ -719,6 +719,122 @@ describe('visitFieldsRecursively()', () => {
     `);
   });
 
+  test('rich text list', () => {
+    const schema = new Schema({
+      entityTypes: [
+        {
+          name: 'Foo',
+          fields: [{ name: 'bodyList', type: FieldType.RichText, list: true }],
+        },
+      ],
+      valueTypes: [],
+    });
+    const { calls, callbacks } = buildMockCallbacks();
+    visitFieldsRecursively({
+      schema,
+      entity: {
+        id: 'id1',
+        _type: 'Foo',
+        _name: 'hello',
+        bodyList: [
+          {
+            blocks: [{ type: RichTextBlockType.paragraph, data: { text: 'First rich text item' } }],
+          },
+          {
+            blocks: [
+              { type: RichTextBlockType.paragraph, data: { text: 'Second rich text item' } },
+              {
+                type: RichTextBlockType.paragraph,
+                data: { text: 'Second block in second rich text item' },
+              },
+            ],
+          },
+        ],
+      },
+      ...callbacks,
+      initialVisitContext: undefined,
+    });
+    expect(calls).toMatchInlineSnapshot(`
+      Array [
+        Object {
+          "action": "enterList",
+          "fieldName": "bodyList",
+          "length": 2,
+          "path": "entity.bodyList",
+          "visitContext": undefined,
+        },
+        Object {
+          "action": "visitField",
+          "fieldName": "bodyList",
+          "path": "entity.bodyList[0]",
+          "value": Object {
+            "blocks": Array [
+              Object {
+                "data": Object {
+                  "text": "First rich text item",
+                },
+                "type": "paragraph",
+              },
+            ],
+          },
+          "visitContext": undefined,
+        },
+        Object {
+          "action": "visitRichTextBlock",
+          "blockData": Object {
+            "text": "First rich text item",
+          },
+          "blockType": "paragraph",
+          "fieldName": "bodyList",
+          "path": "entity.bodyList[0][0]",
+          "visitContext": undefined,
+        },
+        Object {
+          "action": "visitField",
+          "fieldName": "bodyList",
+          "path": "entity.bodyList[1]",
+          "value": Object {
+            "blocks": Array [
+              Object {
+                "data": Object {
+                  "text": "Second rich text item",
+                },
+                "type": "paragraph",
+              },
+              Object {
+                "data": Object {
+                  "text": "Second block in second rich text item",
+                },
+                "type": "paragraph",
+              },
+            ],
+          },
+          "visitContext": undefined,
+        },
+        Object {
+          "action": "visitRichTextBlock",
+          "blockData": Object {
+            "text": "Second rich text item",
+          },
+          "blockType": "paragraph",
+          "fieldName": "bodyList",
+          "path": "entity.bodyList[1][0]",
+          "visitContext": undefined,
+        },
+        Object {
+          "action": "visitRichTextBlock",
+          "blockData": Object {
+            "text": "Second block in second rich text item",
+          },
+          "blockType": "paragraph",
+          "fieldName": "bodyList",
+          "path": "entity.bodyList[1][1]",
+          "visitContext": undefined,
+        },
+      ]
+    `);
+  });
+
   test('recursive value items', () => {
     const schema = new Schema({
       entityTypes: [
