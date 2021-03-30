@@ -211,45 +211,44 @@ export function visitFieldsRecursively<TVisitContext>({
         for (let i = 0; i < fieldValue.length; i += 1) {
           const fieldItemPath = [...fieldPath, i];
           const fieldItem = fieldValue[i];
-          visitField(fieldItemPath, fieldSpec, fieldItem, listVisitContext);
-          if (isValueTypeItemField(fieldSpec, fieldItem) && fieldItem) {
-            doVisitItem(
-              fieldItemPath,
-              fieldItem,
-              false,
-              enterValueItem
-                ? enterValueItem(fieldItemPath, fieldSpec, fieldItem, listVisitContext)
-                : listVisitContext
-            );
-          }
+
+          doVisitItemField(fieldItemPath, fieldSpec, fieldItem, listVisitContext);
         }
       } else {
-        visitField(fieldPath, fieldSpec, fieldValue, visitContext);
-        if (isValueTypeField(fieldSpec, fieldValue) && fieldValue) {
+        doVisitItemField(fieldPath, fieldSpec, fieldValue, visitContext);
+      }
+    }
+  }
+
+  function doVisitItemField(
+    path: (string | number)[],
+    fieldSpec: FieldSpecification,
+    value: unknown,
+    visitContext: TVisitContext
+  ) {
+    visitField(path, fieldSpec, value, visitContext);
+
+    if (isValueTypeItemField(fieldSpec, value) && value) {
+      doVisitItem(
+        path,
+        value,
+        false,
+        enterValueItem ? enterValueItem(path, fieldSpec, value, visitContext) : visitContext
+      );
+    } else if (isRichTextItemField(fieldSpec, value) && value) {
+      for (let i = 0; i < value.blocks.length; i += 1) {
+        const blockPath = [...path, i];
+        const block = value.blocks[i];
+        visitRichTextBlock(blockPath, fieldSpec, block, visitContext);
+        if (block.type === RichTextBlockType.valueItem && block.data) {
           doVisitItem(
-            fieldPath,
-            fieldValue,
+            blockPath,
+            block.data as Value,
             false,
             enterValueItem
-              ? enterValueItem(fieldPath, fieldSpec, fieldValue, visitContext)
+              ? enterValueItem(path, fieldSpec, block.data as Value, visitContext)
               : visitContext
           );
-        } else if (isRichTextField(fieldSpec, fieldValue) && fieldValue) {
-          for (let i = 0; i < fieldValue.blocks.length; i += 1) {
-            const blockPath = [...fieldPath, i];
-            const block = fieldValue.blocks[i];
-            visitRichTextBlock(blockPath, fieldSpec, block, visitContext);
-            if (block.type === RichTextBlockType.valueItem && block.data) {
-              doVisitItem(
-                blockPath,
-                block.data as Value,
-                false,
-                enterValueItem
-                  ? enterValueItem(fieldPath, fieldSpec, block.data as Value, visitContext)
-                  : visitContext
-              );
-            }
-          }
         }
       }
     }
