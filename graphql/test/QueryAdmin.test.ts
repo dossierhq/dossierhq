@@ -7,7 +7,7 @@ import type {
   ErrorType,
   Paging,
 } from '@datadata/core';
-import { CoreTestUtils, FieldType, notOk, ok } from '@datadata/core';
+import { CoreTestUtils, FieldType, notOk, ok, RichTextBlockType } from '@datadata/core';
 import type { SessionContext, Server } from '@datadata/server';
 import { EntityAdmin, ServerTestUtils } from '@datadata/server';
 import { graphql, printError } from 'graphql';
@@ -33,6 +33,7 @@ beforeAll(async () => {
           { name: 'title', type: FieldType.String, isName: true },
           { name: 'summary', type: FieldType.String },
           { name: 'tags', type: FieldType.String, list: true },
+          { name: 'body', type: FieldType.RichText },
           { name: 'location', type: FieldType.Location },
           { name: 'locations', type: FieldType.Location, list: true },
           { name: 'bar', type: FieldType.EntityType, entityTypes: ['QueryAdminBar'] },
@@ -63,6 +64,7 @@ beforeAll(async () => {
   await ensureTestEntitiesExist(context);
   entitiesOfTypeQueryAdminOnlyEditBefore = await getEntitiesForAdminOnlyEditBefore(context);
 });
+
 afterAll(async () => {
   await server?.shutdown();
 });
@@ -468,6 +470,58 @@ describe('adminEntity()', () => {
           _name: name,
           title: null,
           summary: null,
+        },
+      });
+    }
+  });
+
+  test('Query rich text field', async () => {
+    const createFooResult = await EntityAdmin.createEntity(context, {
+      _type: 'QueryAdminFoo',
+      _name: 'Foo name',
+      body: { blocks: [{ type: RichTextBlockType.paragraph, data: { text: 'Hello foo world' } }] },
+    });
+    if (expectOkResult(createFooResult)) {
+      const fooId = createFooResult.value.id;
+
+      const result = await graphql(
+        schema,
+        `
+          query Entity($id: ID!) {
+            adminEntity(id: $id) {
+              __typename
+              id
+              _type
+              _name
+              _version
+              ... on AdminQueryAdminFoo {
+                body {
+                  blocksJson
+                  entities {
+                    id
+                  }
+                }
+              }
+            }
+          }
+        `,
+        undefined,
+        { context: ok(context) },
+        { id: fooId }
+      );
+      expect(result).toEqual({
+        data: {
+          adminEntity: {
+            __typename: 'AdminQueryAdminFoo',
+            id: fooId,
+            _type: 'QueryAdminFoo',
+            _name: createFooResult.value._name,
+            _version: 0,
+            body: {
+              blocksJson: '[{"data":{"text":"Hello foo world"},"type":"paragraph"}]',
+              entities: [],
+            },
+          },
         },
       });
     }

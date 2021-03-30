@@ -1,4 +1,4 @@
-import { CoreTestUtils, FieldType, notOk, ok } from '@datadata/core';
+import { CoreTestUtils, FieldType, notOk, ok, RichTextBlockType } from '@datadata/core';
 import { EntityAdmin, ServerTestUtils } from '@datadata/server';
 import type { Server, SessionContext } from '@datadata/server';
 import { graphql, printError } from 'graphql';
@@ -23,6 +23,7 @@ beforeAll(async () => {
           { name: 'title', type: FieldType.String, isName: true },
           { name: 'summary', type: FieldType.String },
           { name: 'tags', type: FieldType.String, list: true },
+          { name: 'body', type: FieldType.RichText },
           { name: 'location', type: FieldType.Location },
           { name: 'locations', type: FieldType.Location, list: true },
           { name: 'bar', type: FieldType.EntityType, entityTypes: ['QueryBar'] },
@@ -44,6 +45,7 @@ beforeAll(async () => {
   });
   schema = new GraphQLSchemaGenerator(context.server.getSchema()).buildSchema();
 });
+
 afterAll(async () => {
   await server?.shutdown();
 });
@@ -176,6 +178,56 @@ describe('node()', () => {
             location: null,
             locations: null,
             stringedBar: null,
+          },
+        },
+      });
+    }
+  });
+
+  test('Query rich text', async () => {
+    const createFooResult = await EntityAdmin.createEntity(context, {
+      _type: 'QueryFoo',
+      _name: 'Foo name',
+      body: { blocks: [{ type: RichTextBlockType.paragraph, data: { text: 'Hello world' } }] },
+    });
+    if (expectOkResult(createFooResult)) {
+      const fooId = createFooResult.value.id;
+
+      expectOkResult(await EntityAdmin.publishEntity(context, fooId, 0));
+
+      const result = await graphql(
+        schema,
+        `
+          query Entity($id: ID!) {
+            node(id: $id) {
+              __typename
+              id
+              ... on QueryFoo {
+                _name
+                body {
+                  blocksJson
+                  entities {
+                    id
+                  }
+                }
+              }
+            }
+          }
+        `,
+        undefined,
+        { context: ok(context) },
+        { id: fooId }
+      );
+      expect(result).toEqual({
+        data: {
+          node: {
+            __typename: 'QueryFoo',
+            id: fooId,
+            _name: createFooResult.value._name,
+            body: {
+              blocksJson: '[{"data":{"text":"Hello world"},"type":"paragraph"}]',
+              entities: [],
+            },
           },
         },
       });
