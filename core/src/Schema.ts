@@ -101,6 +101,44 @@ export class Schema {
             }
           }
         }
+
+        if (fieldSpec.richTextBlocks && fieldSpec.richTextBlocks.length > 0) {
+          if (fieldSpec.type !== FieldType.RichText) {
+            return notOk.BadRequest(
+              `${typeSpec.name}.${fieldSpec.name}: Field with type ${fieldSpec.type} shouldn’t specify richTextBlocks`
+            );
+          }
+
+          const paragraph = fieldSpec.richTextBlocks.find(
+            (x) => x.type === RichTextBlockType.paragraph
+          );
+          if (!paragraph) {
+            return notOk.BadRequest(
+              `${typeSpec.name}.${fieldSpec.name}: richTextBlocks must include paragraph`
+            );
+          }
+
+          const usedRichTextBlockTypes = new Set();
+          for (const richTextBlock of fieldSpec.richTextBlocks) {
+            if (usedRichTextBlockTypes.has(richTextBlock.type)) {
+              return notOk.BadRequest(
+                `${typeSpec.name}.${fieldSpec.name}: richTextBlocks with type ${richTextBlock.type} is duplicated`
+              );
+            }
+            usedRichTextBlockTypes.add(richTextBlock.type);
+
+            if (
+              (richTextBlock.type === RichTextBlockType.entity ||
+                richTextBlock.type === RichTextBlockType.valueItem) &&
+              richTextBlock.inlineTypes &&
+              richTextBlock.inlineTypes.length > 0
+            ) {
+              return notOk.BadRequest(
+                `${typeSpec.name}.${fieldSpec.name}: richTextBlocks with type ${richTextBlock.type} shouldn’t specify inlineTypes`
+              );
+            }
+          }
+        }
       }
     }
 

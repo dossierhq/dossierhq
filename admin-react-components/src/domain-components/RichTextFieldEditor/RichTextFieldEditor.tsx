@@ -129,13 +129,6 @@ function initializeTools(context: DataDataContextValue, fieldSpec: FieldSpecific
     };
   }
 
-  if (
-    !includeAll &&
-    !fieldSpec.richTextBlocks?.find((x) => x.type === RichTextBlockType.paragraph)
-  ) {
-    standardTools[RichTextBlockType.paragraph] = { toolbox: false } as ToolSettings;
-  }
-
   const { tools, inlineToolbar } = context.getEditorJSConfig(fieldSpec, standardTools, [
     'bold',
     'italic',

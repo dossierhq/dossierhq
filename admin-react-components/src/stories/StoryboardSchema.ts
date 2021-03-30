@@ -31,13 +31,19 @@ const schema = new Schema({
           name: 'bodyBar',
           type: FieldType.RichText,
           entityTypes: ['Bar'],
-          richTextBlocks: [{ type: RichTextBlockType.entity }],
+          richTextBlocks: [
+            { type: RichTextBlockType.entity },
+            { type: RichTextBlockType.paragraph },
+          ],
         },
         {
           name: 'bodyNested',
           type: FieldType.RichText,
           valueTypes: ['NestedValueItem'],
-          richTextBlocks: [{ type: RichTextBlockType.valueItem }],
+          richTextBlocks: [
+            { type: RichTextBlockType.valueItem },
+            { type: RichTextBlockType.paragraph },
+          ],
         },
       ],
     },

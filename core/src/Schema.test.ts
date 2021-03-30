@@ -1,4 +1,4 @@
-import { ErrorType, FieldType, Schema } from '.';
+import { ErrorType, FieldType, RichTextBlockType, Schema } from '.';
 import { expectErrorResult, expectOkResult } from './CoreTestUtils';
 
 describe('validate()', () => {
@@ -132,6 +132,100 @@ describe('validate()', () => {
       }).validate(),
       ErrorType.BadRequest,
       'Foo.bar: Field with type String shouldn’t specify valueTypes'
+    );
+  });
+
+  test('Error: richTextBlocks specified on String field', () => {
+    expectErrorResult(
+      new Schema({
+        entityTypes: [
+          {
+            name: 'Foo',
+            fields: [
+              {
+                name: 'bar',
+                type: FieldType.String,
+                richTextBlocks: [{ type: RichTextBlockType.paragraph }],
+              },
+            ],
+          },
+        ],
+        valueTypes: [],
+      }).validate(),
+      ErrorType.BadRequest,
+      'Foo.bar: Field with type String shouldn’t specify richTextBlocks'
+    );
+  });
+
+  test('Error: richTextBlocks with duplicate type', () => {
+    expectErrorResult(
+      new Schema({
+        entityTypes: [
+          {
+            name: 'Foo',
+            fields: [
+              {
+                name: 'bar',
+                type: FieldType.RichText,
+                richTextBlocks: [
+                  { type: RichTextBlockType.paragraph },
+                  { type: RichTextBlockType.paragraph },
+                ],
+              },
+            ],
+          },
+        ],
+        valueTypes: [],
+      }).validate(),
+      ErrorType.BadRequest,
+      'Foo.bar: richTextBlocks with type paragraph is duplicated'
+    );
+  });
+
+  test('Error: richTextBlocks without paragraph', () => {
+    expectErrorResult(
+      new Schema({
+        entityTypes: [
+          {
+            name: 'Foo',
+            fields: [
+              {
+                name: 'bar',
+                type: FieldType.RichText,
+                richTextBlocks: [{ type: RichTextBlockType.entity }],
+              },
+            ],
+          },
+        ],
+        valueTypes: [],
+      }).validate(),
+      ErrorType.BadRequest,
+      'Foo.bar: richTextBlocks must include paragraph'
+    );
+  });
+
+  test('Error: richTextBlock for entity with inlineTypes', () => {
+    expectErrorResult(
+      new Schema({
+        entityTypes: [
+          {
+            name: 'Foo',
+            fields: [
+              {
+                name: 'bar',
+                type: FieldType.RichText,
+                richTextBlocks: [
+                  { type: RichTextBlockType.paragraph },
+                  { type: RichTextBlockType.entity, inlineTypes: ['bold'] },
+                ],
+              },
+            ],
+          },
+        ],
+        valueTypes: [],
+      }).validate(),
+      ErrorType.BadRequest,
+      'Foo.bar: richTextBlocks with type entity shouldn’t specify inlineTypes'
     );
   });
 });
