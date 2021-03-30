@@ -1,6 +1,11 @@
-import type { FieldSpecification, Value } from '.';
-import { Schema, visitFieldsRecursively, visitorPathToString } from '.';
-import { FieldType } from './Schema';
+import type { FieldSpecification, RichTextBlock, Value } from '.';
+import {
+  FieldType,
+  RichTextBlockType,
+  Schema,
+  visitFieldsRecursively,
+  visitorPathToString,
+} from '.';
 
 function buildMockCallbacks<TVisitContext>() {
   const calls: unknown[] = [];
@@ -18,6 +23,21 @@ function buildMockCallbacks<TVisitContext>() {
           fieldName: fieldSpec.name,
           path: visitorPathToString(path),
           value: data,
+          visitContext,
+        });
+      },
+      visitRichTextBlock: (
+        path: Array<string | number>,
+        fieldSpec: FieldSpecification,
+        block: RichTextBlock,
+        visitContext: TVisitContext
+      ) => {
+        calls.push({
+          action: 'visitRichTextBlock',
+          fieldName: fieldSpec.name,
+          path: visitorPathToString(path),
+          blockType: block.type,
+          blockData: block.data,
           visitContext,
         });
       },
@@ -445,6 +465,254 @@ describe('visitFieldsRecursively()', () => {
           "value": Object {
             "id": "bar id 6",
           },
+          "visitContext": undefined,
+        },
+      ]
+    `);
+  });
+
+  test('rich text', () => {
+    const schema = new Schema({
+      entityTypes: [
+        {
+          name: 'Foo',
+          fields: [{ name: 'body', type: FieldType.RichText }],
+        },
+      ],
+      valueTypes: [],
+    });
+    const { calls, callbacks } = buildMockCallbacks();
+    visitFieldsRecursively({
+      schema,
+      entity: {
+        id: 'id1',
+        _type: 'Foo',
+        _name: 'hello',
+        body: {
+          blocks: [
+            { type: RichTextBlockType.paragraph, data: { text: 'Hello world' } },
+            { type: 'randomType', data: { value: 'Random' } },
+            { type: RichTextBlockType.entity, data: { id: 'bar id' } },
+          ],
+        },
+      },
+      ...callbacks,
+      initialVisitContext: undefined,
+    });
+    expect(calls).toMatchInlineSnapshot(`
+      Array [
+        Object {
+          "action": "visitField",
+          "fieldName": "body",
+          "path": "entity.body",
+          "value": Object {
+            "blocks": Array [
+              Object {
+                "data": Object {
+                  "text": "Hello world",
+                },
+                "type": "paragraph",
+              },
+              Object {
+                "data": Object {
+                  "value": "Random",
+                },
+                "type": "randomType",
+              },
+              Object {
+                "data": Object {
+                  "id": "bar id",
+                },
+                "type": "entity",
+              },
+            ],
+          },
+          "visitContext": undefined,
+        },
+        Object {
+          "action": "visitRichTextBlock",
+          "blockData": Object {
+            "text": "Hello world",
+          },
+          "blockType": "paragraph",
+          "fieldName": "body",
+          "path": "entity.body[0]",
+          "visitContext": undefined,
+        },
+        Object {
+          "action": "visitRichTextBlock",
+          "blockData": Object {
+            "value": "Random",
+          },
+          "blockType": "randomType",
+          "fieldName": "body",
+          "path": "entity.body[1]",
+          "visitContext": undefined,
+        },
+        Object {
+          "action": "visitRichTextBlock",
+          "blockData": Object {
+            "id": "bar id",
+          },
+          "blockType": "entity",
+          "fieldName": "body",
+          "path": "entity.body[2]",
+          "visitContext": undefined,
+        },
+      ]
+    `);
+  });
+
+  test('rich text with nested value item', () => {
+    const schema = new Schema({
+      entityTypes: [
+        {
+          name: 'Foo',
+          fields: [{ name: 'body', type: FieldType.RichText }],
+        },
+      ],
+      valueTypes: [
+        {
+          name: 'ValueOne',
+          fields: [
+            { name: 'string', type: FieldType.String },
+            { name: 'location', type: FieldType.Location },
+            { name: 'bar', type: FieldType.EntityType },
+            { name: 'child', type: FieldType.ValueType },
+          ],
+        },
+      ],
+    });
+    const { calls, callbacks } = buildMockCallbacks();
+    visitFieldsRecursively({
+      schema,
+      entity: {
+        id: 'id1',
+        _type: 'Foo',
+        _name: 'hello',
+        body: {
+          blocks: [
+            {
+              type: RichTextBlockType.valueItem,
+              data: {
+                _type: 'ValueOne',
+                string: 'Hello',
+                location: { lat: 55.60498, lng: 13.003822 },
+                bar: { id: 'bar id' },
+                child: { _type: 'ValueOne', string: 'Nested' },
+              },
+            },
+          ],
+        },
+      },
+      ...callbacks,
+      initialVisitContext: undefined,
+    });
+    expect(calls).toMatchInlineSnapshot(`
+      Array [
+        Object {
+          "action": "visitField",
+          "fieldName": "body",
+          "path": "entity.body",
+          "value": Object {
+            "blocks": Array [
+              Object {
+                "data": Object {
+                  "_type": "ValueOne",
+                  "bar": Object {
+                    "id": "bar id",
+                  },
+                  "child": Object {
+                    "_type": "ValueOne",
+                    "string": "Nested",
+                  },
+                  "location": Object {
+                    "lat": 55.60498,
+                    "lng": 13.003822,
+                  },
+                  "string": "Hello",
+                },
+                "type": "valueItem",
+              },
+            ],
+          },
+          "visitContext": undefined,
+        },
+        Object {
+          "action": "visitRichTextBlock",
+          "blockData": Object {
+            "_type": "ValueOne",
+            "bar": Object {
+              "id": "bar id",
+            },
+            "child": Object {
+              "_type": "ValueOne",
+              "string": "Nested",
+            },
+            "location": Object {
+              "lat": 55.60498,
+              "lng": 13.003822,
+            },
+            "string": "Hello",
+          },
+          "blockType": "valueItem",
+          "fieldName": "body",
+          "path": "entity.body[0]",
+          "visitContext": undefined,
+        },
+        Object {
+          "action": "enterValueItem",
+          "fieldName": "body",
+          "path": "entity.body",
+          "type": "ValueOne",
+        },
+        Object {
+          "action": "visitField",
+          "fieldName": "string",
+          "path": "entity.body[0].string",
+          "value": "Hello",
+          "visitContext": undefined,
+        },
+        Object {
+          "action": "visitField",
+          "fieldName": "location",
+          "path": "entity.body[0].location",
+          "value": Object {
+            "lat": 55.60498,
+            "lng": 13.003822,
+          },
+          "visitContext": undefined,
+        },
+        Object {
+          "action": "visitField",
+          "fieldName": "bar",
+          "path": "entity.body[0].bar",
+          "value": Object {
+            "id": "bar id",
+          },
+          "visitContext": undefined,
+        },
+        Object {
+          "action": "visitField",
+          "fieldName": "child",
+          "path": "entity.body[0].child",
+          "value": Object {
+            "_type": "ValueOne",
+            "string": "Nested",
+          },
+          "visitContext": undefined,
+        },
+        Object {
+          "action": "enterValueItem",
+          "fieldName": "child",
+          "path": "entity.body[0].child",
+          "type": "ValueOne",
+        },
+        Object {
+          "action": "visitField",
+          "fieldName": "string",
+          "path": "entity.body[0].child.string",
+          "value": "Nested",
           "visitContext": undefined,
         },
       ]
