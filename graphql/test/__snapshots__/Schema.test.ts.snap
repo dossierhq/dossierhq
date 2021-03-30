@@ -41,6 +41,11 @@ interface Entity implements Node {
   _name: String!
 }
 
+type RichText {
+  blocksJson: String!
+  entities: [Entity]
+}
+
 type Location {
   lat: Float!
   lng: Float!
@@ -104,6 +109,15 @@ input AdminReferenceInput {
 input AdminReferenceVersionInput {
   id: ID!
   version: Int!
+}
+
+type AdminRichText {
+  blocksJson: String!
+  entities: [AdminEntity]
+}
+
+input AdminRichTextInput {
+  blocksJson: String!
 }
 
 type AdminEntityVersionInfo {
@@ -218,6 +232,11 @@ interface Entity implements Node {
   _name: String!
 }
 
+type RichText {
+  blocksJson: String!
+  entities: [Entity]
+}
+
 type Location {
   lat: Float!
   lng: Float!
@@ -288,6 +307,15 @@ input AdminReferenceInput {
 input AdminReferenceVersionInput {
   id: ID!
   version: Int!
+}
+
+type AdminRichText {
+  blocksJson: String!
+  entities: [AdminEntity]
+}
+
+input AdminRichTextInput {
+  blocksJson: String!
 }
 
 type AdminEntityVersionInfo {
@@ -450,6 +478,11 @@ interface Entity implements Node {
   _name: String!
 }
 
+type RichText {
+  blocksJson: String!
+  entities: [Entity]
+}
+
 type Location {
   lat: Float!
   lng: Float!
@@ -505,6 +538,15 @@ input AdminReferenceInput {
 input AdminReferenceVersionInput {
   id: ID!
   version: Int!
+}
+
+type AdminRichText {
+  blocksJson: String!
+  entities: [AdminEntity]
+}
+
+input AdminRichTextInput {
+  blocksJson: String!
 }
 
 type AdminEntityVersionInfo {
@@ -565,6 +607,160 @@ type Mutation {
 "
 `;
 
+exports[`Rich text schema spec Generated QL schema 1`] = `
+"interface Node {
+  id: ID!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String!
+  endCursor: String!
+}
+
+enum EntityType {
+  Foo
+}
+
+interface Entity implements Node {
+  id: ID!
+  _name: String!
+}
+
+type RichText {
+  blocksJson: String!
+  entities: [Entity]
+}
+
+type Location {
+  lat: Float!
+  lng: Float!
+}
+
+input LocationInput {
+  lat: Float!
+  lng: Float!
+}
+
+input BoundingBoxInput {
+  minLat: Float!
+  maxLat: Float!
+  minLng: Float!
+  maxLng: Float!
+}
+
+type Foo implements Node & Entity {
+  id: ID!
+  _name: String!
+  body: RichText
+}
+
+interface AdminEntity {
+  id: ID!
+  _name: String!
+  _type: EntityType!
+  _version: Int!
+  _deleted: Boolean!
+}
+
+type AdminEntityEdge {
+  node: AdminEntity
+  cursor: String!
+}
+
+type AdminEntityConnection {
+  pageInfo: PageInfo!
+  edges: [AdminEntityEdge]
+  totalCount: Int!
+}
+
+input AdminQueryInput {
+  entityTypes: [EntityType]
+  referencing: ID
+  boundingBox: BoundingBoxInput
+  order: String
+}
+
+input AdminReferenceInput {
+  id: ID!
+}
+
+input AdminReferenceVersionInput {
+  id: ID!
+  version: Int!
+}
+
+type AdminRichText {
+  blocksJson: String!
+  entities: [AdminEntity]
+}
+
+input AdminRichTextInput {
+  blocksJson: String!
+}
+
+type AdminEntityVersionInfo {
+  version: Int!
+  deleted: Boolean!
+  published: Boolean!
+  createdBy: ID!
+  createdAt: String!
+}
+
+type AdminEntityHistory {
+  id: ID!
+  type: EntityType!
+  name: String!
+  versions: [AdminEntityVersionInfo]!
+}
+
+type AdminEntityPublishPayload {
+  id: ID!
+}
+
+type AdminFoo implements AdminEntity {
+  id: ID!
+  _type: EntityType!
+  _name: String!
+  _version: Int!
+  _deleted: Boolean!
+  body: AdminRichText
+}
+
+input AdminFooCreateInput {
+  id: ID
+  _type: EntityType
+  _name: String!
+  body: AdminRichTextInput
+}
+
+input AdminFooUpdateInput {
+  id: ID!
+  _type: EntityType
+  _name: String
+  body: AdminRichTextInput
+}
+
+type Query {
+  node(id: ID!): Node
+  nodes(ids: [ID!]!): [Node]
+  adminEntity(id: ID!, version: Int): AdminEntity
+  adminEntities(ids: [ID!]!): [AdminEntity]
+  adminEntityHistory(id: ID!): AdminEntityHistory
+  adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+}
+
+type Mutation {
+  deleteEntity(id: ID!): AdminEntity
+  publishEntity(id: ID!, version: Int!): AdminEntityPublishPayload
+  publishEntities(entities: [AdminReferenceVersionInput!]!): [AdminEntityPublishPayload!]
+  createFooEntity(entity: AdminFooCreateInput!): AdminFoo
+  updateFooEntity(entity: AdminFooUpdateInput!): AdminFoo
+}
+"
+`;
+
 exports[`Two entity types with reference schema spec Generated QL schema 1`] = `
 "interface Node {
   id: ID!
@@ -585,6 +781,11 @@ enum EntityType {
 interface Entity implements Node {
   id: ID!
   _name: String!
+}
+
+type RichText {
+  blocksJson: String!
+  entities: [Entity]
 }
 
 type Location {
@@ -651,6 +852,15 @@ input AdminReferenceInput {
 input AdminReferenceVersionInput {
   id: ID!
   version: Int!
+}
+
+type AdminRichText {
+  blocksJson: String!
+  entities: [AdminEntity]
+}
+
+input AdminRichTextInput {
+  blocksJson: String!
 }
 
 type AdminEntityVersionInfo {
@@ -777,6 +987,11 @@ interface Value {
   _type: ValueType!
 }
 
+type RichText {
+  blocksJson: String!
+  entities: [Entity]
+}
+
 type Location {
   lat: Float!
   lng: Float!
@@ -865,6 +1080,15 @@ input AdminReferenceVersionInput {
 
 interface AdminValue {
   _type: ValueType!
+}
+
+type AdminRichText {
+  blocksJson: String!
+  entities: [AdminEntity]
+}
+
+input AdminRichTextInput {
+  blocksJson: String!
 }
 
 type AdminEntityVersionInfo {

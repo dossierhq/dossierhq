@@ -287,6 +287,17 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       );
     }
 
+    // RichText
+    this.addType(
+      new GraphQLObjectType({
+        name: 'RichText',
+        fields: {
+          blocksJson: { type: new GraphQLNonNull(GraphQLString) },
+          entities: { type: new GraphQLList(this.getInterface('Entity')) },
+        },
+      })
+    );
+
     // Location
     this.addType(
       new GraphQLObjectType({
@@ -457,6 +468,27 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       );
     }
 
+    // AdminRichText
+    this.addType(
+      new GraphQLObjectType({
+        name: 'AdminRichText',
+        fields: {
+          blocksJson: { type: new GraphQLNonNull(GraphQLString) },
+          entities: { type: new GraphQLList(this.getInterface('AdminEntity')) },
+        },
+      })
+    );
+
+    // AdminRichTextInput
+    this.addType(
+      new GraphQLInputObjectType({
+        name: 'AdminRichTextInput',
+        fields: {
+          blocksJson: { type: new GraphQLNonNull(GraphQLString) },
+        },
+      })
+    );
+
     // AdminEntityVersionInfo
     this.addType(
       new GraphQLObjectType({
@@ -604,6 +636,9 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         case FieldType.Location:
           fieldType = this.getOutputType('Location');
           break;
+        case FieldType.RichText:
+          fieldType = this.getOutputType(toAdminTypeName('RichText', isAdmin));
+          break;
         case FieldType.String:
           fieldType = GraphQLString;
           break;
@@ -632,6 +667,9 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
           break;
         case FieldType.Location:
           fieldType = this.getInputType('LocationInput');
+          break;
+        case FieldType.RichText:
+          fieldType = this.getInputType('AdminRichTextInput');
           break;
         case FieldType.String:
           fieldType = GraphQLString;
@@ -697,7 +735,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       args: {
         ids: { type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(GraphQLID))) },
       },
-      resolve: async (source, args, context, _info) => {
+      resolve: async (_source, args, context, _info) => {
         return await loadAdminEntities(context, args.ids);
       },
     });

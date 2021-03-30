@@ -452,3 +452,19 @@ describe('Value type schema spec', () => {
     expect(result).toMatchSnapshot();
   });
 });
+
+describe('Rich text schema spec', () => {
+  const schemaSpec = {
+    entityTypes: [
+      {
+        name: 'Foo',
+        fields: [{ name: 'body', type: FieldType.RichText }],
+      },
+    ],
+    valueTypes: [],
+  };
+  test('Generated QL schema', () => {
+    const result = describeGeneratedSchema(schemaSpec);
+    expect(result).toMatchSnapshot();
+  });
+});
