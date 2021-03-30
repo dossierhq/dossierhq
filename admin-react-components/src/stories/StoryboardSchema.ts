@@ -45,6 +45,16 @@ const schema = new Schema({
             { type: RichTextBlockType.paragraph },
           ],
         },
+        {
+          name: 'bodyItalicOnly',
+          type: FieldType.RichText,
+          richTextBlocks: [{ type: RichTextBlockType.paragraph, inlineTypes: ['italic'] }],
+        },
+        {
+          name: 'bodyNoInline',
+          type: FieldType.RichText,
+          richTextBlocks: [{ type: RichTextBlockType.paragraph, inlineTypes: [] }],
+        },
       ],
     },
   ],

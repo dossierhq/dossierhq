@@ -40,7 +40,7 @@ class ContextAdapter implements DataDataContextAdapter {
         } else {
           const blockTool = customTools.blockTools[type];
           if (blockTool) {
-            tools[type] = { class: blockTool, inlineToolbar: inlineTypes ?? defaultInlineToolbar };
+            tools[type] = { class: blockTool, inlineToolbar: inlineTypes ?? true };
           } else {
             throw new Error(`No support for tool ${type}`);
           }
@@ -54,7 +54,7 @@ class ContextAdapter implements DataDataContextAdapter {
         ([toolName, constructable]) =>
           (tools[toolName] = {
             class: constructable,
-            inlineToolbar: defaultInlineToolbar,
+            inlineToolbar: true,
           })
       );
     }

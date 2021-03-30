@@ -34,6 +34,11 @@ export interface FieldSpecification {
   entityTypes?: string[];
   /** Applicable when type is ValueType or RichText */
   valueTypes?: string[];
+  /** Applicable when type is RichText. All block types are enabled if none are specified. The type
+   * can either be a standard RichTextBlockType or any type that's enabled.
+   * If inlineTypes isn't specified all inline types are enabled. If inlineTypes is an empty array,
+   * no inline types are enabled.
+   */
   richTextBlocks?: { type: RichTextBlockType | string; inlineTypes?: string[] }[];
 }
 

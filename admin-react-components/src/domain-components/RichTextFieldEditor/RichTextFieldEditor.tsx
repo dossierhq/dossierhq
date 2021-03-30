@@ -113,6 +113,13 @@ function initializeTools(context: DataDataContextValue, fieldSpec: FieldSpecific
   const standardTools: { [toolName: string]: ToolSettings } = {};
   const includeAll = !fieldSpec.richTextBlocks || fieldSpec.richTextBlocks.length === 0;
 
+  const paragraphInlineToolbar = fieldSpec.richTextBlocks?.find(
+    (x) => x.type === RichTextBlockType.paragraph
+  )?.inlineTypes;
+  standardTools[RichTextBlockType.paragraph] = {
+    inlineToolbar: paragraphInlineToolbar ? paragraphInlineToolbar : true,
+  } as ToolSettings;
+
   if (includeAll || fieldSpec.richTextBlocks?.find((x) => x.type === RichTextBlockType.entity)) {
     const config: EntityToolConfig = { id, fieldSpec };
     standardTools[RichTextBlockType.entity] = {
