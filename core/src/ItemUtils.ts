@@ -1,5 +1,5 @@
-import type { FieldSpecification, FieldValueTypeMap, Schema, Value } from '.';
-import { FieldType } from '.';
+import type { FieldSpecification, FieldValueTypeMap, RichTextBlock, Schema, Value } from '.';
+import { FieldType, RichTextBlockType } from '.';
 
 /** Check if `value` with `fieldSpec` is a single EntityType field */
 export function isEntityTypeField(
@@ -137,6 +137,7 @@ export function visitFieldsRecursively<TVisitContext>({
   schema,
   entity,
   visitField,
+  visitRichTextBlock,
   enterValueItem = undefined,
   enterList = undefined,
   initialVisitContext,
@@ -147,6 +148,12 @@ export function visitFieldsRecursively<TVisitContext>({
     path: Array<string | number>,
     fieldSpec: FieldSpecification,
     data: unknown,
+    visitContext: TVisitContext
+  ) => void;
+  visitRichTextBlock: (
+    path: Array<string | number>,
+    fieldSpec: FieldSpecification,
+    block: RichTextBlock,
     visitContext: TVisitContext
   ) => void;
   enterValueItem?: (
@@ -227,6 +234,22 @@ export function visitFieldsRecursively<TVisitContext>({
               ? enterValueItem(fieldPath, fieldSpec, fieldValue, visitContext)
               : visitContext
           );
+        } else if (isRichTextField(fieldSpec, fieldValue) && fieldValue) {
+          for (let i = 0; i < fieldValue.blocks.length; i += 1) {
+            const blockPath = [...fieldPath, i];
+            const block = fieldValue.blocks[i];
+            visitRichTextBlock(blockPath, fieldSpec, block, visitContext);
+            if (block.type === RichTextBlockType.valueItem && block.data) {
+              doVisitItem(
+                blockPath,
+                block.data as Value,
+                false,
+                enterValueItem
+                  ? enterValueItem(fieldPath, fieldSpec, block.data as Value, visitContext)
+                  : visitContext
+              );
+            }
+          }
         }
       }
     }
