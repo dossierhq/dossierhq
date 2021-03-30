@@ -127,6 +127,16 @@ export const entitiesFixture: JsonInMemoryEntity[] = [
             },
           ],
         },
+        bodyItalicOnly: {
+          blocks: [
+            { type: RichTextBlockType.paragraph, data: { text: 'Text with <i>italic</i>' } },
+          ],
+        },
+        bodyNoInline: {
+          blocks: [
+            { type: RichTextBlockType.paragraph, data: { text: 'Text with no inline styles' } },
+          ],
+        },
       },
     ],
     history: [
