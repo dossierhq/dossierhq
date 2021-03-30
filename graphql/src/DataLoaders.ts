@@ -1,6 +1,7 @@
 import {
   isEntityTypeField,
   isEntityTypeListField,
+  isRichTextField,
   isValueTypeField,
   isValueTypeListField,
 } from '@datadata/core';
@@ -164,7 +165,12 @@ function resolveFields<TContext extends SessionGraphQLContext>(
 ) {
   for (const fieldSpec of spec.fields) {
     const value = item[fieldSpec.name];
-    if (isEntityTypeField(fieldSpec, value) && value) {
+    if (isRichTextField(fieldSpec, value) && value) {
+      item[fieldSpec.name] = {
+        blocksJson: JSON.stringify(value.blocks),
+        entities: [],
+      };
+    } else if (isEntityTypeField(fieldSpec, value) && value) {
       item[fieldSpec.name] = (_args: undefined, context: TContext, _info: unknown) =>
         isAdmin ? loadAdminEntity(context, value.id, null) : loadEntity(context, value.id);
     } else if (isEntityTypeListField(fieldSpec, value) && value && value.length > 0) {
