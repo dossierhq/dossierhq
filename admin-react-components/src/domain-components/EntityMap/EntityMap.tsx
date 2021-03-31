@@ -81,6 +81,9 @@ function EntityMarker({
         entityLocations.push({ location: data });
       }
     },
+    visitRichTextBlock: (_path, _fieldSpec, _block, _visitContext) => {
+      //empty
+    },
     initialVisitContext: undefined,
   });
 
