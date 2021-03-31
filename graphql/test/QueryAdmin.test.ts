@@ -527,6 +527,68 @@ describe('adminEntity()', () => {
     }
   });
 
+  test('Query rich text with reference', async () => {
+    const createBarResult = await EntityAdmin.createEntity(context, {
+      _type: 'QueryAdminBar',
+      _name: 'Bar name',
+      title: 'Bar title',
+    });
+    if (expectOkResult(createBarResult)) {
+      const { id: barId, _name: barName } = createBarResult.value;
+
+      const createFooResult = await EntityAdmin.createEntity(context, {
+        _type: 'QueryAdminFoo',
+        _name: 'Foo name',
+        body: { blocks: [{ type: RichTextBlockType.entity, data: { id: barId } }] },
+      });
+      if (expectOkResult(createFooResult)) {
+        const { id: fooId } = createFooResult.value;
+
+        const result = await graphql(
+          schema,
+          `
+            query Entity($id: ID!) {
+              adminEntity(id: $id) {
+                __typename
+                id
+                _type
+                _name
+                _version
+                ... on AdminQueryAdminFoo {
+                  body {
+                    blocksJson
+                    entities {
+                      id
+                      _name
+                    }
+                  }
+                }
+              }
+            }
+          `,
+          undefined,
+          { context: ok(context) },
+          { id: fooId }
+        );
+        expect(result).toEqual({
+          data: {
+            adminEntity: {
+              __typename: 'AdminQueryAdminFoo',
+              id: fooId,
+              _type: 'QueryAdminFoo',
+              _name: createFooResult.value._name,
+              _version: 0,
+              body: {
+                blocksJson: `[{"data":{"id":"${barId}"},"type":"entity"}]`,
+                entities: [{ id: barId, _name: barName }],
+              },
+            },
+          },
+        });
+      }
+    }
+  });
+
   test('Query referenced entity', async () => {
     const createBarResult = await EntityAdmin.createEntity(context, {
       _type: 'QueryAdminBar',

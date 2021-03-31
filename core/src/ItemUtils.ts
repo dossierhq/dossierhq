@@ -1,4 +1,12 @@
-import type { FieldSpecification, FieldValueTypeMap, RichTextBlock, Schema, Value } from '.';
+import type {
+  AdminEntity,
+  EntityReference,
+  FieldSpecification,
+  FieldValueTypeMap,
+  RichTextBlock,
+  Schema,
+  Value,
+} from '.';
 import { FieldType, RichTextBlockType } from '.';
 
 /** Check if `value` with `fieldSpec` is a single EntityType field */
@@ -121,8 +129,26 @@ export function isValueTypeItemField(
   return fieldSpec.type === FieldType.ValueType;
 }
 
-export function visitorPathToString(path: Array<string | number>): string {
-  let result = 'entity';
+export function isRichTextEntityBlock(
+  block: RichTextBlock
+): block is RichTextBlock<RichTextBlockType.entity, EntityReference | null> {
+  return block.type === RichTextBlockType.entity;
+}
+
+export function isRichTextParagraphBlock(
+  block: RichTextBlock
+): block is RichTextBlock<RichTextBlockType.paragraph, { text: string }> {
+  return block.type === RichTextBlockType.paragraph;
+}
+
+export function isRichTextValueItemBlock(
+  block: RichTextBlock
+): block is RichTextBlock<RichTextBlockType.valueItem, Value | null> {
+  return block.type === RichTextBlockType.valueItem;
+}
+
+export function visitorPathToString(path: (string | number)[]): string {
+  let result = 'entity'; //TODO nah, remove
   for (const segment of path) {
     if (Number.isInteger(segment)) {
       result += `[${segment}]`;
@@ -133,6 +159,39 @@ export function visitorPathToString(path: Array<string | number>): string {
   return result;
 }
 
+type VisitorVisitField<TVisitContext> = (
+  path: Array<string | number>,
+  fieldSpec: FieldSpecification,
+  data: unknown,
+  visitContext: TVisitContext
+) => void;
+type VisitorVisitRichTextBlock<TVisitContext> = (
+  path: Array<string | number>,
+  fieldSpec: FieldSpecification,
+  block: RichTextBlock,
+  visitContext: TVisitContext
+) => void;
+type VisitorEnterValueItem<TVisitContext> = (
+  path: Array<string | number>,
+  fieldSpec: FieldSpecification,
+  valueItem: Value,
+  visitContext: TVisitContext
+) => TVisitContext;
+type VisitorEnterList<TVisitContext> = (
+  path: Array<string | number>,
+  fieldSpec: FieldSpecification,
+  list: unknown[],
+  visitContext: TVisitContext
+) => TVisitContext;
+
+interface VisitorCallbacks<TVisitContext> {
+  visitField: VisitorVisitField<TVisitContext>;
+  visitRichTextBlock: VisitorVisitRichTextBlock<TVisitContext>;
+  enterValueItem: VisitorEnterValueItem<TVisitContext> | undefined;
+  enterList: VisitorEnterList<TVisitContext> | undefined;
+}
+
+// TODO Rename to visitItemRecursively and cleanup interface
 export function visitFieldsRecursively<TVisitContext>({
   schema,
   entity,
@@ -144,115 +203,150 @@ export function visitFieldsRecursively<TVisitContext>({
 }: {
   schema: Schema;
   entity: { _type: string; [fieldName: string]: unknown };
-  visitField: (
-    path: Array<string | number>,
-    fieldSpec: FieldSpecification,
-    data: unknown,
-    visitContext: TVisitContext
-  ) => void;
-  visitRichTextBlock: (
-    path: Array<string | number>,
-    fieldSpec: FieldSpecification,
-    block: RichTextBlock,
-    visitContext: TVisitContext
-  ) => void;
-  enterValueItem?: (
-    path: Array<string | number>,
-    fieldSpec: FieldSpecification,
-    valueItem: Value,
-    visitContext: TVisitContext
-  ) => TVisitContext;
-  enterList?: (
-    path: Array<string | number>,
-    fieldSpec: FieldSpecification,
-    list: unknown[],
-    visitContext: TVisitContext
-  ) => TVisitContext;
+  visitField: VisitorVisitField<TVisitContext>;
+  visitRichTextBlock: VisitorVisitRichTextBlock<TVisitContext>;
+  enterValueItem?: VisitorEnterValueItem<TVisitContext>;
+  enterList?: VisitorEnterList<TVisitContext>;
   initialVisitContext: TVisitContext;
 }): void {
-  function doVisitItem(
-    path: Array<string | number>,
-    item: { _type: string; [fieldName: string]: unknown },
-    isEntity: boolean,
-    visitContext: TVisitContext
-  ) {
-    let fieldSpecs;
-    if (isEntity) {
-      const entitySpec = schema.getEntityTypeSpecification(item._type);
-      if (!entitySpec) {
-        throw new Error(`Couldn't find spec for entity type ${item._type}`);
-      }
-      fieldSpecs = entitySpec.fields;
-    } else {
-      const valueSpec = schema.getValueTypeSpecification(item._type);
-      if (!valueSpec) {
+  doVisitItemRecursively(
+    schema,
+    [],
+    entity,
+    true,
+    { visitField, visitRichTextBlock, enterValueItem, enterList },
+    initialVisitContext
+  );
+}
+
+export function visitFieldRecursively<TVisitContext>({
+  schema,
+  path = [],
+  fieldSpec,
+  value,
+  visitField,
+  visitRichTextBlock,
+  enterValueItem = undefined,
+  enterList = undefined,
+  visitContext,
+}: {
+  schema: Schema;
+  path?: (string | number)[];
+  fieldSpec: FieldSpecification;
+  value: unknown;
+  visitField: VisitorVisitField<TVisitContext>;
+  visitRichTextBlock: VisitorVisitRichTextBlock<TVisitContext>;
+  enterValueItem?: VisitorEnterValueItem<TVisitContext>;
+  enterList?: VisitorEnterList<TVisitContext>;
+  visitContext: TVisitContext;
+}): void {
+  doVisitFieldRecursively(
+    schema,
+    path,
+    fieldSpec,
+    value,
+    { visitField, visitRichTextBlock, enterValueItem, enterList },
+    visitContext
+  );
+}
+
+function doVisitItemRecursively<TVisitContext>(
+  schema: Schema,
+  path: (string | number)[],
+  item: Value | AdminEntity,
+  isEntity: boolean,
+  callbacks: VisitorCallbacks<TVisitContext>,
+  visitContext: TVisitContext
+) {
+  const { enterList } = callbacks;
+  let fieldSpecs;
+  if (isEntity) {
+    const entitySpec = schema.getEntityTypeSpecification(item._type);
+    if (!entitySpec) {
+      throw new Error(`Couldn't find spec for entity type ${item._type}`);
+    }
+    fieldSpecs = entitySpec.fields;
+  } else {
+    const valueSpec = schema.getValueTypeSpecification(item._type);
+    if (!valueSpec) {
+      throw new Error(
+        `${visitorPathToString(path)}: Couldn't find spec for value type ${item._type}`
+      );
+    }
+    fieldSpecs = valueSpec.fields;
+  }
+
+  for (const fieldSpec of fieldSpecs) {
+    const fieldValue = item[fieldSpec.name];
+    if (fieldValue === null || fieldValue === undefined) {
+      continue;
+    }
+    const fieldPath = [...path, fieldSpec.name];
+    if (fieldSpec.list) {
+      if (!Array.isArray(fieldValue)) {
         throw new Error(
-          `${visitorPathToString(path)}: Couldn't find spec for value type ${item._type}`
+          `${visitorPathToString(fieldPath)}: expected list got ${typeof fieldValue}`
         );
       }
-      fieldSpecs = valueSpec.fields;
-    }
+      const listVisitContext = enterList
+        ? enterList(fieldPath, fieldSpec, fieldValue, visitContext)
+        : visitContext;
+      for (let i = 0; i < fieldValue.length; i += 1) {
+        const fieldItemPath = [...fieldPath, i];
+        const fieldItem = fieldValue[i];
 
-    for (const fieldSpec of fieldSpecs) {
-      const fieldValue = item[fieldSpec.name];
-      if (fieldValue === null || fieldValue === undefined) {
-        continue;
+        doVisitFieldRecursively(
+          schema,
+          fieldItemPath,
+          fieldSpec,
+          fieldItem,
+          callbacks,
+          listVisitContext
+        );
       }
-      const fieldPath = [...path, fieldSpec.name];
-      if (fieldSpec.list) {
-        if (!Array.isArray(fieldValue)) {
-          throw new Error(
-            `${visitorPathToString(fieldPath)}: expected list got ${typeof fieldValue}`
-          );
-        }
-        const listVisitContext = enterList
-          ? enterList(fieldPath, fieldSpec, fieldValue, visitContext)
-          : visitContext;
-        for (let i = 0; i < fieldValue.length; i += 1) {
-          const fieldItemPath = [...fieldPath, i];
-          const fieldItem = fieldValue[i];
+    } else {
+      doVisitFieldRecursively(schema, fieldPath, fieldSpec, fieldValue, callbacks, visitContext);
+    }
+  }
+}
 
-          doVisitItemField(fieldItemPath, fieldSpec, fieldItem, listVisitContext);
-        }
-      } else {
-        doVisitItemField(fieldPath, fieldSpec, fieldValue, visitContext);
+function doVisitFieldRecursively<TVisitContext>(
+  schema: Schema,
+  path: (string | number)[],
+  fieldSpec: FieldSpecification,
+  value: unknown,
+  callbacks: VisitorCallbacks<TVisitContext>,
+  visitContext: TVisitContext
+) {
+  const { enterValueItem, visitField, visitRichTextBlock } = callbacks;
+  visitField(path, fieldSpec, value, visitContext);
+
+  if (isValueTypeItemField(fieldSpec, value) && value) {
+    doVisitItemRecursively(
+      schema,
+      path,
+      value,
+      false,
+      callbacks,
+      enterValueItem ? enterValueItem(path, fieldSpec, value, visitContext) : visitContext
+    );
+  } else if (isRichTextItemField(fieldSpec, value) && value) {
+    for (let i = 0; i < value.blocks.length; i += 1) {
+      const blockPath = [...path, i];
+      const block = value.blocks[i];
+      visitRichTextBlock(blockPath, fieldSpec, block, visitContext);
+      if (block.type === RichTextBlockType.valueItem && block.data) {
+        doVisitItemRecursively(
+          schema,
+          blockPath,
+          block.data as Value,
+          false,
+          callbacks,
+          enterValueItem
+            ? enterValueItem(path, fieldSpec, block.data as Value, visitContext)
+            : visitContext
+        );
       }
     }
   }
-
-  function doVisitItemField(
-    path: (string | number)[],
-    fieldSpec: FieldSpecification,
-    value: unknown,
-    visitContext: TVisitContext
-  ) {
-    visitField(path, fieldSpec, value, visitContext);
-
-    if (isValueTypeItemField(fieldSpec, value) && value) {
-      doVisitItem(
-        path,
-        value,
-        false,
-        enterValueItem ? enterValueItem(path, fieldSpec, value, visitContext) : visitContext
-      );
-    } else if (isRichTextItemField(fieldSpec, value) && value) {
-      for (let i = 0; i < value.blocks.length; i += 1) {
-        const blockPath = [...path, i];
-        const block = value.blocks[i];
-        visitRichTextBlock(blockPath, fieldSpec, block, visitContext);
-        if (block.type === RichTextBlockType.valueItem && block.data) {
-          doVisitItem(
-            blockPath,
-            block.data as Value,
-            false,
-            enterValueItem
-              ? enterValueItem(path, fieldSpec, block.data as Value, visitContext)
-              : visitContext
-          );
-        }
-      }
-    }
-  }
-
-  doVisitItem([], entity, true, initialVisitContext);
 }

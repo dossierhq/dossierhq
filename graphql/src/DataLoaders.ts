@@ -1,9 +1,11 @@
 import {
   isEntityTypeField,
   isEntityTypeListField,
+  isRichTextEntityBlock,
   isRichTextField,
   isValueTypeField,
   isValueTypeListField,
+  visitFieldRecursively,
 } from '@datadata/core';
 import type {
   AdminEntity,
@@ -11,8 +13,10 @@ import type {
   AdminQuery,
   Entity,
   EntityTypeSpecification,
-  Paging,
+  FieldSpecification,
   PageInfo,
+  Paging,
+  RichText,
   Value,
   ValueTypeSpecification,
 } from '@datadata/core';
@@ -166,9 +170,15 @@ function resolveFields<TContext extends SessionGraphQLContext>(
   for (const fieldSpec of spec.fields) {
     const value = item[fieldSpec.name];
     if (isRichTextField(fieldSpec, value) && value) {
+      const ids = extractEntityIdsForRichTextField(context, fieldSpec, value);
       item[fieldSpec.name] = {
         blocksJson: JSON.stringify(value.blocks),
-        entities: [],
+        entities:
+          ids.length === 0
+            ? []
+            : (_args: undefined, context: TContext, _info: unknown) => {
+                return isAdmin ? loadAdminEntities(context, ids) : loadEntities(context, ids);
+              },
       };
     } else if (isEntityTypeField(fieldSpec, value) && value) {
       item[fieldSpec.name] = (_args: undefined, context: TContext, _info: unknown) =>
@@ -184,6 +194,31 @@ function resolveFields<TContext extends SessionGraphQLContext>(
       item[fieldSpec.name] = value.map((x) => buildResolversForValue(context, x, isAdmin));
     }
   }
+}
+
+function extractEntityIdsForRichTextField(
+  context: SessionContext,
+  fieldSpec: FieldSpecification,
+  value: RichText
+) {
+  const entityIds = new Set<string>();
+  visitFieldRecursively({
+    schema: context.server.getSchema(),
+    fieldSpec,
+    value,
+    visitField: (_path, fieldSpec, data, _visitContext) => {
+      if (isEntityTypeField(fieldSpec, data) && data) {
+        entityIds.add(data.id);
+      }
+    },
+    visitRichTextBlock: (_path, _fieldSpec, block, _visitContext) => {
+      if (isRichTextEntityBlock(block) && block.data) {
+        entityIds.add(block.data.id);
+      }
+    },
+    visitContext: undefined,
+  });
+  return [...entityIds];
 }
 
 export function buildResolversForValue<TContext extends SessionGraphQLContext>(

@@ -14,6 +14,7 @@ import type {
 import {
   FieldType,
   isLocationItemField,
+  isRichTextEntityBlock,
   notOk,
   ok,
   visitFieldsRecursively,
@@ -411,6 +412,16 @@ async function collectReferenceIdsAndLocations(
 
       if (isLocationItemField(fieldSpec, data) && data) {
         locations.push(data);
+      }
+    },
+    visitRichTextBlock: (path, fieldSpec, block, _visitContext) => {
+      if (isRichTextEntityBlock(block) && block.data) {
+        allUUIDs.add(block.data.id);
+        requestedReferences.push({
+          prefix: visitorPathToString(path),
+          uuids: [block.data.id],
+          entityTypes: fieldSpec.entityTypes,
+        });
       }
     },
     initialVisitContext: undefined,

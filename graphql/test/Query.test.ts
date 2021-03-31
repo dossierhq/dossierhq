@@ -234,6 +234,73 @@ describe('node()', () => {
     }
   });
 
+  test('Query rich text with reference', async () => {
+    const createBarResult = await EntityAdmin.createEntity(context, {
+      _type: 'QueryBar',
+      _name: 'Bar name',
+      title: 'Bar title',
+    });
+    if (expectOkResult(createBarResult)) {
+      const { id: barId, _name: barName } = createBarResult.value;
+
+      expectOkResult(await EntityAdmin.publishEntity(context, barId, 0));
+
+      const createFooResult = await EntityAdmin.createEntity(context, {
+        _type: 'QueryFoo',
+        _name: 'Foo name',
+        body: {
+          blocks: [
+            { type: RichTextBlockType.entity, data: { id: barId } },
+            { type: RichTextBlockType.paragraph, data: { text: 'Hello world' } },
+          ],
+        },
+      });
+      if (expectOkResult(createFooResult)) {
+        const { id: fooId } = createFooResult.value;
+
+        expectOkResult(await EntityAdmin.publishEntity(context, fooId, 0));
+
+        const result = await graphql(
+          schema,
+          `
+            query Entity($id: ID!) {
+              node(id: $id) {
+                __typename
+                id
+                ... on QueryFoo {
+                  _name
+                  body {
+                    blocksJson
+                    entities {
+                      id
+                      _name
+                    }
+                  }
+                }
+              }
+            }
+          `,
+          undefined,
+          { context: ok(context) },
+          { id: fooId }
+        );
+        expect(result).toEqual({
+          data: {
+            node: {
+              __typename: 'QueryFoo',
+              id: fooId,
+              _name: createFooResult.value._name,
+              body: {
+                blocksJson: `[{"data":{"id":"${barId}"},"type":"entity"},{"data":{"text":"Hello world"},"type":"paragraph"}]`,
+                entities: [{ id: barId, _name: barName }],
+              },
+            },
+          },
+        });
+      }
+    }
+  });
+
   test('Query referenced entity', async () => {
     const createBarResult = await EntityAdmin.createEntity(context, {
       _type: 'QueryBar',
