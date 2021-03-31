@@ -527,19 +527,33 @@ describe('adminEntity()', () => {
     }
   });
 
-  test('Query rich text with reference', async () => {
-    const createBarResult = await EntityAdmin.createEntity(context, {
+  test('Query rich text with references', async () => {
+    const createBar1Result = await EntityAdmin.createEntity(context, {
       _type: 'QueryAdminBar',
-      _name: 'Bar name',
-      title: 'Bar title',
+      _name: 'Bar name 1',
+      title: 'Bar title 1',
     });
-    if (expectOkResult(createBarResult)) {
-      const { id: barId, _name: barName } = createBarResult.value;
+    const createBar2Result = await EntityAdmin.createEntity(context, {
+      _type: 'QueryAdminBar',
+      _name: 'Bar name 2',
+      title: 'Bar title 2',
+    });
+    if (expectOkResult(createBar1Result) && expectOkResult(createBar2Result)) {
+      const { id: bar1Id, _name: bar1Name } = createBar1Result.value;
+      const { id: bar2Id, _name: bar2Name } = createBar2Result.value;
 
       const createFooResult = await EntityAdmin.createEntity(context, {
         _type: 'QueryAdminFoo',
         _name: 'Foo name',
-        body: { blocks: [{ type: RichTextBlockType.entity, data: { id: barId } }] },
+        body: {
+          blocks: [
+            { type: RichTextBlockType.entity, data: { id: bar1Id } },
+            {
+              type: RichTextBlockType.valueItem,
+              data: { _type: 'QueryAdminStringedBar', text: 'Hello', bar: { id: bar2Id } },
+            },
+          ],
+        },
       });
       if (expectOkResult(createFooResult)) {
         const { id: fooId } = createFooResult.value;
@@ -579,8 +593,11 @@ describe('adminEntity()', () => {
               _name: createFooResult.value._name,
               _version: 0,
               body: {
-                blocksJson: `[{"data":{"id":"${barId}"},"type":"entity"}]`,
-                entities: [{ id: barId, _name: barName }],
+                blocksJson: `[{"data":{"id":"${bar1Id}"},"type":"entity"},{"data":{"bar":{"id":"${bar2Id}"},"text":"Hello","_type":"QueryAdminStringedBar"},"type":"valueItem"}]`,
+                entities: [
+                  { id: bar1Id, _name: bar1Name },
+                  { id: bar2Id, _name: bar2Name },
+                ],
               },
             },
           },
