@@ -117,6 +117,9 @@ export function logEntity(context: SessionContext, entity: AdminEntity | Entity)
         value
       );
     },
+    visitRichTextBlock: (_path, _fieldSpec, _block, _visitContext) => {
+      // TODO implement
+    },
     enterList: (path, fieldSpec, list, { indent }) => {
       console.log(indent + chalk.bold(fieldSpec.name));
       return { indent: indent + '  ' };
