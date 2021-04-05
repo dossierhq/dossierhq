@@ -1,4 +1,4 @@
-import { CoreTestUtils, FieldType, ok } from '@datadata/core';
+import { CoreTestUtils, FieldType, ok, RichTextBlockType } from '@datadata/core';
 import { EntityAdmin, ServerTestUtils } from '@datadata/server';
 import type { SessionContext, Server } from '@datadata/server';
 import { graphql } from 'graphql';
@@ -24,6 +24,7 @@ beforeAll(async () => {
           { name: 'title', type: FieldType.String, isName: true },
           { name: 'summary', type: FieldType.String },
           { name: 'tags', type: FieldType.String, list: true },
+          { name: 'body', type: FieldType.RichText, entityTypes: ['MutationBar'] },
           { name: 'location', type: FieldType.Location },
           { name: 'locations', type: FieldType.Location, list: true },
           { name: 'bar', type: FieldType.EntityType, entityTypes: ['MutationBar'] },
@@ -195,6 +196,88 @@ describe('create*Entity()', () => {
         },
       },
     });
+  });
+
+  test('Create with rich text with reference', async () => {
+    const createBarResult = await EntityAdmin.createEntity(context, {
+      _type: 'MutationBar',
+      _name: 'Bar',
+    });
+    if (expectOkResult(createBarResult)) {
+      const { id: barId, _name: barName } = createBarResult.value;
+      const gqlResult = await graphql(
+        schema,
+        `
+          mutation CreateFooEntity($entity: AdminMutationFooCreateInput!) {
+            createMutationFooEntity(entity: $entity) {
+              __typename
+              id
+              _type
+              _name
+              _version
+              title
+              summary
+              body {
+                blocksJson
+              }
+            }
+          }
+        `,
+        undefined,
+        { context: ok(context) },
+        {
+          entity: {
+            _type: 'MutationFoo',
+            _name: 'Foo name',
+            title: 'Foo title',
+            summary: 'Foo summary',
+            body: {
+              blocksJson: JSON.stringify([
+                { type: RichTextBlockType.paragraph, data: { text: 'Hello world' } },
+                { type: RichTextBlockType.entity, data: { id: barId } },
+              ]),
+            },
+          },
+        }
+      );
+
+      const fooId = gqlResult.data?.createMutationFooEntity.id;
+      const fooName = gqlResult.data?.createMutationFooEntity._name;
+      expect(gqlResult).toEqual({
+        data: {
+          createMutationFooEntity: {
+            __typename: 'AdminMutationFoo',
+            id: fooId,
+            _type: 'MutationFoo',
+            _name: fooName,
+            _version: 0,
+            title: 'Foo title',
+            summary: 'Foo summary',
+            body: {
+              blocksJson: `[{"type":"paragraph","data":{"text":"Hello world"}},{"type":"entity","data":{"id":"${barId}"}}]`,
+            },
+          },
+        },
+      });
+
+      const getResult = await EntityAdmin.getEntity(context, fooId);
+      if (expectOkResult(getResult)) {
+        expect(getResult.value).toEqual({
+          id: fooId,
+          _type: 'MutationFoo',
+          _name: fooName,
+          _version: 0,
+          title: 'Foo title',
+          summary: 'Foo summary',
+          body: {
+            blocks: [
+              { type: RichTextBlockType.paragraph, data: { text: 'Hello world' } },
+              { type: RichTextBlockType.entity, data: { id: barId } },
+            ],
+          },
+        });
+      }
+    }
   });
 
   test('Create with reference', async () => {
