@@ -1,4 +1,4 @@
-import { FieldType, isValueTypeField, notOk } from '@datadata/core';
+import { FieldType, isRichTextField, isValueTypeField, notOk } from '@datadata/core';
 import type {
   AdminEntity,
   AdminEntityCreate,
@@ -814,7 +814,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
             .toError();
         }
         entity._type = entityName;
-        this.resolveJsonFields(entity, entityName);
+        this.resolveJsonInputFields(entity, entityName);
         return await Mutations.createEntity(context, entity);
       },
     });
@@ -833,13 +833,16 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
             .BadRequest(`Specified type (entity._type=${entity._type}) should be ${entityName}`)
             .toError();
         }
-        this.resolveJsonFields(entity, entityName);
+        this.resolveJsonInputFields(entity, entityName);
         return await Mutations.updateEntity(context, entity);
       },
     });
   }
 
-  resolveJsonFields(entity: AdminEntityCreate | AdminEntityUpdate, entityTypeName: string): void {
+  resolveJsonInputFields(
+    entity: AdminEntityCreate | AdminEntityUpdate,
+    entityTypeName: string
+  ): void {
     const visitItem = (
       item: AdminEntityCreate | AdminEntityUpdate | Value,
       typeSpec: EntityTypeSpecification | ValueTypeSpecification,
@@ -855,25 +858,10 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         const fieldPrefix = `${prefix}.${fieldName}`;
         const fieldValue = item[fieldName];
 
-        // Decode JSON fields
+        // Decode JSON value item fields
         if (fieldName.endsWith('Json')) {
           const fieldNameWithoutJson = fieldName.slice(0, -'Json'.length);
-
-          let decodedValue;
-          if (fieldValue === null) {
-            decodedValue = null;
-          } else if (fieldValue === undefined) {
-            decodedValue = undefined;
-          } else {
-            if (typeof fieldValue !== 'string') {
-              throw new Error(`${fieldPrefix}: Expected string, got ${typeof fieldValue}`);
-            }
-            try {
-              decodedValue = JSON.parse(fieldValue);
-            } catch (error) {
-              throw new Error(`${fieldPrefix}: Failed parsing JSON: ${error.message}`);
-            }
-          }
+          const decodedValue = this.decodeJsonInputField(fieldPrefix, fieldValue);
 
           delete item[fieldName];
           item[fieldNameWithoutJson] = decodedValue;
@@ -883,6 +871,21 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         const fieldSpec = isEntity
           ? this.schema.getEntityFieldSpecification(typeSpec, fieldName)
           : this.schema.getValueFieldSpecification(typeSpec, fieldName);
+
+        // Decode RichText field
+        if (fieldSpec && isRichTextField(fieldSpec, fieldValue) && fieldValue) {
+          if (typeof fieldValue !== 'object') {
+            throw new Error(`${fieldPrefix}: Expected object, got ${typeof fieldValue}`);
+          }
+          const { blocksJson, ...nonBlocks } = (fieldValue as unknown) as { blocksJson: string };
+          item[fieldName] = {
+            ...nonBlocks,
+            blocks: this.decodeJsonInputField(fieldPrefix + '.blocksJson', blocksJson),
+          };
+          continue;
+        }
+
+        // Traverse into value items
         if (fieldSpec && isValueTypeField(fieldSpec, fieldValue) && fieldValue) {
           const type = fieldValue._type;
           const valueSpec = this.schema.getValueTypeSpecification(type);
@@ -900,6 +903,24 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       throw new Error(`No such entity type ${entityTypeName}`);
     }
     visitItem(entity, entitySpec, 'entity', true);
+  }
+
+  decodeJsonInputField(fieldPrefix: string, fieldValue: unknown): unknown {
+    if (fieldValue === null) {
+      return null;
+    }
+    if (fieldValue === undefined) {
+      return undefined;
+    }
+
+    if (typeof fieldValue !== 'string') {
+      throw new Error(`${fieldPrefix}: Expected string, got ${typeof fieldValue}`);
+    }
+    try {
+      return JSON.parse(fieldValue);
+    } catch (error) {
+      throw new Error(`${fieldPrefix}: Failed parsing JSON: ${error.message}`);
+    }
   }
 
   buildMutationDeleteEntity<TSource>(): GraphQLFieldConfig<TSource, TContext> {
