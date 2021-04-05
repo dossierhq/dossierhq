@@ -3,6 +3,7 @@ import type {
   EntityReference,
   FieldSpecification,
   FieldValueTypeMap,
+  RichText,
   RichTextBlock,
   Schema,
   Value,
@@ -183,12 +184,19 @@ type VisitorEnterList<TVisitContext> = (
   list: unknown[],
   visitContext: TVisitContext
 ) => TVisitContext;
+type VisitorEnterRichText<TVisitContext> = (
+  path: Array<string | number>,
+  fieldSpec: FieldSpecification,
+  RichText: RichText,
+  visitContext: TVisitContext
+) => TVisitContext;
 
 interface VisitorCallbacks<TVisitContext> {
   visitField: VisitorVisitField<TVisitContext>;
   visitRichTextBlock: VisitorVisitRichTextBlock<TVisitContext>;
   enterValueItem: VisitorEnterValueItem<TVisitContext> | undefined;
   enterList: VisitorEnterList<TVisitContext> | undefined;
+  enterRichText: VisitorEnterRichText<TVisitContext> | undefined;
 }
 
 // TODO Rename to visitItemRecursively and cleanup interface
@@ -199,6 +207,7 @@ export function visitFieldsRecursively<TVisitContext>({
   visitRichTextBlock,
   enterValueItem = undefined,
   enterList = undefined,
+  enterRichText = undefined,
   initialVisitContext,
 }: {
   schema: Schema;
@@ -207,6 +216,7 @@ export function visitFieldsRecursively<TVisitContext>({
   visitRichTextBlock: VisitorVisitRichTextBlock<TVisitContext>;
   enterValueItem?: VisitorEnterValueItem<TVisitContext>;
   enterList?: VisitorEnterList<TVisitContext>;
+  enterRichText?: VisitorEnterRichText<TVisitContext>;
   initialVisitContext: TVisitContext;
 }): void {
   doVisitItemRecursively(
@@ -214,7 +224,7 @@ export function visitFieldsRecursively<TVisitContext>({
     [],
     entity,
     true,
-    { visitField, visitRichTextBlock, enterValueItem, enterList },
+    { visitField, visitRichTextBlock, enterValueItem, enterList, enterRichText },
     initialVisitContext
   );
 }
@@ -228,6 +238,7 @@ export function visitFieldRecursively<TVisitContext>({
   visitRichTextBlock,
   enterValueItem = undefined,
   enterList = undefined,
+  enterRichText = undefined,
   visitContext,
 }: {
   schema: Schema;
@@ -238,6 +249,7 @@ export function visitFieldRecursively<TVisitContext>({
   visitRichTextBlock: VisitorVisitRichTextBlock<TVisitContext>;
   enterValueItem?: VisitorEnterValueItem<TVisitContext>;
   enterList?: VisitorEnterList<TVisitContext>;
+  enterRichText?: VisitorEnterRichText<TVisitContext>;
   visitContext: TVisitContext;
 }): void {
   doVisitFieldRecursively(
@@ -245,7 +257,7 @@ export function visitFieldRecursively<TVisitContext>({
     path,
     fieldSpec,
     value,
-    { visitField, visitRichTextBlock, enterValueItem, enterList },
+    { visitField, visitRichTextBlock, enterValueItem, enterList, enterRichText },
     visitContext
   );
 }
@@ -318,7 +330,7 @@ function doVisitFieldRecursively<TVisitContext>(
   callbacks: VisitorCallbacks<TVisitContext>,
   visitContext: TVisitContext
 ) {
-  const { enterValueItem, visitField, visitRichTextBlock } = callbacks;
+  const { enterRichText, enterValueItem, visitField, visitRichTextBlock } = callbacks;
   visitField(path, fieldSpec, value, visitContext);
 
   if (isValueTypeItemField(fieldSpec, value) && value) {
@@ -331,10 +343,13 @@ function doVisitFieldRecursively<TVisitContext>(
       enterValueItem ? enterValueItem(path, fieldSpec, value, visitContext) : visitContext
     );
   } else if (isRichTextItemField(fieldSpec, value) && value) {
+    const richTextVisitContext = enterRichText
+      ? enterRichText(path, fieldSpec, value, visitContext)
+      : visitContext;
     for (let i = 0; i < value.blocks.length; i += 1) {
       const blockPath = [...path, i];
       const block = value.blocks[i];
-      visitRichTextBlock(blockPath, fieldSpec, block, visitContext);
+      visitRichTextBlock(blockPath, fieldSpec, block, richTextVisitContext);
       if (block.type === RichTextBlockType.valueItem && block.data) {
         doVisitItemRecursively(
           schema,
@@ -343,8 +358,8 @@ function doVisitFieldRecursively<TVisitContext>(
           false,
           callbacks,
           enterValueItem
-            ? enterValueItem(path, fieldSpec, block.data as Value, visitContext)
-            : visitContext
+            ? enterValueItem(path, fieldSpec, block.data as Value, richTextVisitContext)
+            : richTextVisitContext
         );
       }
     }

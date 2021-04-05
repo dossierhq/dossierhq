@@ -7,6 +7,9 @@ import {
   isLocationField,
   isLocationItemField,
   isLocationListField,
+  isRichTextField,
+  isRichTextItemField,
+  isRichTextListField,
   isStringField,
   isStringItemField,
   isStringListField,
@@ -27,6 +30,7 @@ import type {
   Location,
   PromiseResult,
   Result,
+  RichText,
   Value,
   ValueTypeSpecification,
 } from '@datadata/core';
@@ -106,6 +110,8 @@ export function logEntity(context: SessionContext, entity: AdminEntity | Entity)
         value = data ? formatValueItemOneLine(data) : chalk.grey('<not set>');
       } else if (isStringItemField(fieldSpec, data)) {
         value = data ? data : chalk.grey('<not set>');
+      } else if (isRichTextItemField(fieldSpec, data)) {
+        value = data ? formatRichTextOneLine(data) : chalk.grey('<not set>');
       } else if (isLocationItemField(fieldSpec, data)) {
         value = data ? formatLocation(data) : chalk.grey('<not set>');
       } else {
@@ -117,14 +123,16 @@ export function logEntity(context: SessionContext, entity: AdminEntity | Entity)
         value
       );
     },
-    visitRichTextBlock: (_path, _fieldSpec, _block, _visitContext) => {
-      // TODO implement
+    visitRichTextBlock: (path, _fieldSpec, block, visitContext) => {
+      const blockIndex = path[path.length - 1];
+      logKeyValue(visitContext.indent + blockIndex, `${block.type}: ${JSON.stringify(block.data)}`);
     },
     enterList: (path, fieldSpec, list, { indent }) => {
       console.log(indent + chalk.bold(fieldSpec.name));
       return { indent: indent + '  ' };
     },
     enterValueItem: (path, fieldSpec, valueItem, { indent }) => ({ indent: indent + '  ' }),
+    enterRichText: (path, fieldSpec, valueItem, { indent }) => ({ indent: indent + '  ' }),
     initialVisitContext: { indent: '' },
   });
 }
@@ -135,6 +143,12 @@ export function formatEntityOneLine(entity: Entity): string {
 
 export function formatValueItemOneLine(value: Value): string {
   return `${value._type}`;
+}
+
+export function formatRichTextOneLine(value: RichText): string {
+  return `${chalk.grey('[')}${value.blocks.map((b) => b.type).join(chalk.grey(', '))}${chalk.grey(
+    ']'
+  )}`;
 }
 
 export function formatLocation({ lat, lng }: Location): string {
@@ -179,6 +193,14 @@ export function formatFieldValue(fieldSpec: FieldSpecification, value: unknown):
   }
   if (isStringListField(fieldSpec, value)) {
     return value ? value.join(chalk.grey(', ')) : chalk.grey('<not set>');
+  }
+  if (isRichTextField(fieldSpec, value)) {
+    return value ? formatRichTextOneLine(value) : chalk.grey('<not set>');
+  }
+  if (isRichTextListField(fieldSpec, value)) {
+    return value
+      ? value.map(formatRichTextOneLine).join(chalk.grey(', '))
+      : chalk.grey('<not set>');
   }
   if (isLocationField(fieldSpec, value)) {
     return value ? formatLocation(value) : chalk.grey('<not set>');
