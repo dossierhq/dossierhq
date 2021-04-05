@@ -1,4 +1,4 @@
-import type { FieldSpecification, RichTextBlock, Value } from '.';
+import type { FieldSpecification, RichText, RichTextBlock, Value } from '.';
 import {
   FieldType,
   RichTextBlockType,
@@ -68,6 +68,19 @@ function buildMockCallbacks<TVisitContext>() {
           path: visitorPathToString(path),
           visitContext,
         });
+      },
+      enterRichText: (
+        path: Array<string | number>,
+        fieldSpec: FieldSpecification,
+        richText: RichText,
+        visitContext: TVisitContext
+      ) => {
+        calls.push({
+          action: 'enterRichText',
+          fieldName: fieldSpec.name,
+          path: visitorPathToString(path),
+        });
+        return visitContext;
       },
     },
   };
@@ -530,6 +543,11 @@ describe('visitFieldsRecursively()', () => {
           "visitContext": undefined,
         },
         Object {
+          "action": "enterRichText",
+          "fieldName": "body",
+          "path": "entity.body",
+        },
+        Object {
           "action": "visitRichTextBlock",
           "blockData": Object {
             "text": "Hello world",
@@ -637,6 +655,11 @@ describe('visitFieldsRecursively()', () => {
             ],
           },
           "visitContext": undefined,
+        },
+        Object {
+          "action": "enterRichText",
+          "fieldName": "body",
+          "path": "entity.body",
         },
         Object {
           "action": "visitRichTextBlock",
@@ -780,6 +803,11 @@ describe('visitFieldsRecursively()', () => {
           "visitContext": undefined,
         },
         Object {
+          "action": "enterRichText",
+          "fieldName": "bodyList",
+          "path": "entity.bodyList[0]",
+        },
+        Object {
           "action": "visitRichTextBlock",
           "blockData": Object {
             "text": "First rich text item",
@@ -810,6 +838,11 @@ describe('visitFieldsRecursively()', () => {
             ],
           },
           "visitContext": undefined,
+        },
+        Object {
+          "action": "enterRichText",
+          "fieldName": "bodyList",
+          "path": "entity.bodyList[1]",
         },
         Object {
           "action": "visitRichTextBlock",

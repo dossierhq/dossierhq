@@ -4,6 +4,8 @@ import {
   isEntityTypeListField,
   isLocationField,
   isLocationListField,
+  isRichTextField,
+  isRichTextListField,
   isStringField,
   isStringListField,
   isValueTypeField,
@@ -21,6 +23,7 @@ import type {
   Location,
   Paging,
   PromiseResult,
+  RichText,
   Value,
   ValueTypeSpecification,
 } from '@datadata/core';
@@ -33,6 +36,7 @@ import {
   formatErrorResult,
   formatFieldValue,
   formatLocation,
+  formatRichTextOneLine,
   formatValueItemOneLine,
   getEntitySpec,
   getValueSpec,
@@ -50,6 +54,7 @@ import {
   showItemSelector,
   showLocationEdit,
   showMultiItemSelector,
+  showRichTextEdit,
   showStringEdit,
 } from './widgets';
 import type { ItemSelectorItem } from './widgets';
@@ -340,7 +345,7 @@ async function editField(
     return editFieldReferenceList(context, fieldSpec, defaultValue);
   }
   if (isValueTypeField(fieldSpec, defaultValue)) {
-    return editFieldValueType(context, fieldSpec, defaultValue);
+    return editFieldValueItem(context, fieldSpec, defaultValue);
   }
   if (isValueTypeListField(fieldSpec, defaultValue)) {
     return editFieldValueTypeList(context, fieldSpec, defaultValue);
@@ -350,6 +355,12 @@ async function editField(
   }
   if (isStringListField(fieldSpec, defaultValue)) {
     return editFieldStringList(fieldSpec, defaultValue);
+  }
+  if (isRichTextField(fieldSpec, defaultValue)) {
+    return editFieldRichText(context, fieldSpec, defaultValue);
+  }
+  if (isRichTextListField(fieldSpec, defaultValue)) {
+    return editFieldRichTextList(context, fieldSpec, defaultValue);
   }
   if (isLocationField(fieldSpec, defaultValue)) {
     return editFieldLocation(fieldSpec, defaultValue);
@@ -387,7 +398,7 @@ async function editFieldReferenceList(
   );
 }
 
-async function editFieldValueType(
+export async function editFieldValueItem(
   context: SessionContext,
   fieldSpec: FieldSpecification,
   defaultValue: Value | null
@@ -453,7 +464,7 @@ async function editFieldValueTypeList(
     'Select value item',
     defaultValue,
     (item) => formatValueItemOneLine(item),
-    (item) => editFieldValueType(context, fieldSpec, item)
+    (item) => editFieldValueItem(context, fieldSpec, item)
   );
 }
 
@@ -468,6 +479,28 @@ async function editFieldStringList(fieldSpec: FieldSpecification, defaultValue: 
     defaultValue,
     (item) => item,
     (item) => editFieldString(fieldSpec, item)
+  );
+}
+
+async function editFieldRichText(
+  context: SessionContext,
+  fieldSpec: FieldSpecification,
+  defaultValue: RichText | null
+) {
+  return ok(await showRichTextEdit(context, fieldSpec, fieldSpec.name, defaultValue));
+}
+
+async function editFieldRichTextList(
+  context: SessionContext,
+  fieldSpec: FieldSpecification,
+  defaultValue: RichText[] | null
+) {
+  return await editFieldList(
+    fieldSpec,
+    'Select rich text item',
+    defaultValue,
+    (item) => formatRichTextOneLine(item),
+    (item) => editFieldRichText(context, fieldSpec, item)
   );
 }
 
