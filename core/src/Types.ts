@@ -68,8 +68,6 @@ export interface AdminEntityUpdate {
 
 export interface AdminEntityHistory {
   id: string;
-  type: string;
-  name: string;
   versions: AdminEntityVersionInfo[];
 }
 

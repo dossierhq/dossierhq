@@ -509,8 +509,6 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         name: 'AdminEntityHistory',
         fields: {
           id: { type: new GraphQLNonNull(GraphQLID) },
-          type: { type: new GraphQLNonNull(this.getType('EntityType')) },
-          name: { type: new GraphQLNonNull(GraphQLString) },
           versions: {
             type: new GraphQLNonNull(new GraphQLList(this.getType('AdminEntityVersionInfo'))),
           },
