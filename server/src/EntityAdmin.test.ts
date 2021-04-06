@@ -42,6 +42,11 @@ beforeAll(async () => {
           { name: 'baz', type: FieldType.EntityType, entityTypes: ['EntityAdminBaz'] },
           { name: 'tags', type: FieldType.String, list: true },
           { name: 'body', type: FieldType.RichText },
+          {
+            name: 'bodyOnlyParagraph',
+            type: FieldType.RichText,
+            richTextBlocks: [{ type: RichTextBlockType.paragraph }],
+          },
           { name: 'bodyList', type: FieldType.RichText, list: true },
           { name: 'location', type: FieldType.Location },
           { name: 'locations', type: FieldType.Location, list: true },
@@ -1396,6 +1401,117 @@ describe('createEntity()', () => {
       createResult,
       ErrorType.BadRequest,
       'entity.oneString: Unsupported field names: invalid'
+    );
+  });
+
+  test('Error: rich text single, where list is expected', async () => {
+    const createResult = await EntityAdmin.createEntity(context, {
+      _type: 'EntityAdminBaz',
+      _name: 'Baz',
+      bodyList: { blocks: [] },
+    });
+    expectErrorResult(createResult, ErrorType.BadRequest, 'entity.bodyList: expected list');
+  });
+
+  test('Error: rich text list, where single is expected', async () => {
+    const createResult = await EntityAdmin.createEntity(context, {
+      _type: 'EntityAdminBaz',
+      _name: 'Baz',
+      body: [{ blocks: [] }],
+    });
+    expectErrorResult(
+      createResult,
+      ErrorType.BadRequest,
+      'entity.body: expected single value, got list'
+    );
+  });
+
+  test('Error: rich text, forgotten blocks', async () => {
+    const createResult = await EntityAdmin.createEntity(context, {
+      _type: 'EntityAdminBaz',
+      _name: 'Baz',
+      body: [{ type: RichTextBlockType.paragraph, data: { text: '' } }],
+    });
+    expectErrorResult(
+      createResult,
+      ErrorType.BadRequest,
+      'entity.body: expected single value, got list'
+    );
+  });
+
+  test('Error: rich text with string', async () => {
+    const createResult = await EntityAdmin.createEntity(context, {
+      _type: 'EntityAdminBaz',
+      _name: 'Baz',
+      body: 'Hello',
+    });
+    expectErrorResult(
+      createResult,
+      ErrorType.BadRequest,
+      'entity.body: expected object, got string'
+    );
+  });
+
+  test('Error: rich text without blocks', async () => {
+    const createResult = await EntityAdmin.createEntity(context, {
+      _type: 'EntityAdminBaz',
+      _name: 'Baz',
+      body: {},
+    });
+    expectErrorResult(createResult, ErrorType.BadRequest, 'entity.body: missing blocks');
+  });
+
+  test('Error: rich text, blocks as string', async () => {
+    const createResult = await EntityAdmin.createEntity(context, {
+      _type: 'EntityAdminBaz',
+      _name: 'Baz',
+      body: { blocks: 'Hello' },
+    });
+    expectErrorResult(
+      createResult,
+      ErrorType.BadRequest,
+      'entity.body.blocks: expected array, got string'
+    );
+  });
+
+  test('Error: rich text with version and time', async () => {
+    const createResult = await EntityAdmin.createEntity(context, {
+      _type: 'EntityAdminBaz',
+      _name: 'Baz',
+      body: { blocks: [], version: '123', time: 123123 },
+    });
+    expectErrorResult(
+      createResult,
+      ErrorType.BadRequest,
+      'entity.body: unexpected keys version, time'
+    );
+  });
+
+  test('Error: rich text with invalid block type', async () => {
+    const createResult = await EntityAdmin.createEntity(context, {
+      _type: 'EntityAdminBaz',
+      _name: 'Baz',
+      bodyOnlyParagraph: { blocks: [{ type: RichTextBlockType.entity, data: null }] },
+    });
+    expectErrorResult(
+      createResult,
+      ErrorType.BadRequest,
+      'entity.bodyOnlyParagraph[0]: rich text block of type entity is not allowed'
+    );
+  });
+
+  test('Error: rich text with block with invalid keys', async () => {
+    const createResult = await EntityAdmin.createEntity(context, {
+      _type: 'EntityAdminBaz',
+      _name: 'Baz',
+      body: {
+        blocks: [{ type: RichTextBlockType.entity, data: null, invalid: true, unexpected: false }],
+      },
+    });
+    expectErrorResult(
+      createResult,
+      ErrorType.BadRequest,
+      'entity.body[0]: unexpected keys invalid, unexpected'
     );
   });
 
