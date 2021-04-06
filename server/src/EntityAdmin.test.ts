@@ -781,6 +781,24 @@ describe('createEntity()', () => {
             },
           });
         }
+
+        const referencingBar1Result = await EntityAdmin.searchEntities(context, {
+          referencing: bar1Id,
+        });
+        if (expectOkResult(referencingBar1Result)) {
+          expect(referencingBar1Result.value?.edges).toHaveLength(1);
+          const node = referencingBar1Result.value?.edges[0].node;
+          expect(node?.isOk() && node.value.id).toEqual(bazId);
+        }
+
+        const referencingBar2Result = await EntityAdmin.searchEntities(context, {
+          referencing: bar2Id,
+        });
+        if (expectOkResult(referencingBar2Result)) {
+          expect(referencingBar2Result.value?.edges).toHaveLength(1);
+          const node = referencingBar2Result.value?.edges[0].node;
+          expect(node?.isOk() && node.value.id).toEqual(bazId);
+        }
       }
     }
   });
