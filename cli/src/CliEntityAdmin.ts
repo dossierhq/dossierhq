@@ -588,8 +588,6 @@ export async function showEntityHistory(context: SessionContext, id: string): Pr
     return;
   }
   const history = result.value;
-  logKeyValue('type', history.type);
-  logKeyValue('name', history.name);
   logKeyValue('id', history.id);
   for (const version of history.versions) {
     const tags = [];

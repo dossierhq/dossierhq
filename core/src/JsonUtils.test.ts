@@ -95,8 +95,6 @@ describe('convertJsonEntityVersion()', () => {
   test('History with one version', () => {
     const expected: AdminEntityHistory = {
       id: '123',
-      type: 'Foo',
-      name: 'Hello',
       versions: [
         { createdAt: new Date(), createdBy: '4321', deleted: false, published: true, version: 0 },
       ],

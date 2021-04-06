@@ -41,8 +41,6 @@ export class InMemoryServerInner {
     }
     const result: AdminEntityHistory = {
       id,
-      type: fullEntity.versions[0]._type,
-      name: fullEntity.versions[0]._name,
       versions: fullEntity.history.map((item) => {
         const entity = fullEntity.versions.find((x) => x._version === item.version);
         return {

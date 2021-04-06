@@ -562,10 +562,10 @@ export async function getEntityHistory(
   id: string
 ): PromiseResult<AdminEntityHistory, ErrorType.NotFound> {
   const entityMain = await Db.queryNoneOrOne<
-    Pick<EntitiesTable, 'id' | 'uuid' | 'type' | 'name' | 'published_entity_versions_id'>
+    Pick<EntitiesTable, 'id' | 'uuid' | 'published_entity_versions_id'>
   >(
     context,
-    `SELECT id, uuid, type, name, published_entity_versions_id
+    `SELECT id, uuid, published_entity_versions_id
       FROM entities e
       WHERE uuid = $1`,
     [id]
@@ -595,8 +595,6 @@ export async function getEntityHistory(
 
   const result: AdminEntityHistory = {
     id: entityMain.uuid,
-    type: entityMain.type,
-    name: entityMain.name,
     versions: versions.map<AdminEntityVersionInfo>((v) => ({
       version: v.version,
       deleted: v.deleted,

@@ -1190,8 +1190,6 @@ describe('versionHistory()', () => {
           query EntityHistory($id: ID!) {
             adminEntityHistory(id: $id) {
               id
-              type
-              name
               versions {
                 version
                 deleted
@@ -1214,8 +1212,6 @@ describe('versionHistory()', () => {
       expect(result.data).toEqual({
         adminEntityHistory: {
           id,
-          name: createResult.value._name,
-          type: 'QueryAdminFoo',
           versions: [
             { createdBy: context.session.subjectId, deleted: false, published: false, version: 0 },
             { createdBy: context.session.subjectId, deleted: false, published: true, version: 1 },

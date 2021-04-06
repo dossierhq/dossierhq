@@ -130,8 +130,6 @@ type AdminEntityVersionInfo {
 
 type AdminEntityHistory {
   id: ID!
-  type: EntityType!
-  name: String!
   versions: [AdminEntityVersionInfo]!
 }
 
@@ -328,8 +326,6 @@ type AdminEntityVersionInfo {
 
 type AdminEntityHistory {
   id: ID!
-  type: EntityType!
-  name: String!
   versions: [AdminEntityVersionInfo]!
 }
 
@@ -559,8 +555,6 @@ type AdminEntityVersionInfo {
 
 type AdminEntityHistory {
   id: ID!
-  type: EntityType!
-  name: String!
   versions: [AdminEntityVersionInfo]!
 }
 
@@ -710,8 +704,6 @@ type AdminEntityVersionInfo {
 
 type AdminEntityHistory {
   id: ID!
-  type: EntityType!
-  name: String!
   versions: [AdminEntityVersionInfo]!
 }
 
@@ -873,8 +865,6 @@ type AdminEntityVersionInfo {
 
 type AdminEntityHistory {
   id: ID!
-  type: EntityType!
-  name: String!
   versions: [AdminEntityVersionInfo]!
 }
 
@@ -1101,8 +1091,6 @@ type AdminEntityVersionInfo {
 
 type AdminEntityHistory {
   id: ID!
-  type: EntityType!
-  name: String!
   versions: [AdminEntityVersionInfo]!
 }
 
