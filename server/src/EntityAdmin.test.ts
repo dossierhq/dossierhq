@@ -124,6 +124,16 @@ beforeAll(async () => {
         ],
       },
       {
+        name: 'EntityAdminStringedLocation',
+        fields: [
+          { name: 'string', type: FieldType.String },
+          {
+            name: 'location',
+            type: FieldType.Location,
+          },
+        ],
+      },
+      {
         name: 'EntityAdminNested',
         fields: [
           { name: 'title', type: FieldType.String },
@@ -1812,6 +1822,66 @@ describe('searchEntities()', () => {
           }
         }
         expect(fooIdCount).toBe(1);
+      }
+    }
+  });
+
+  test('Query based on bounding box for rich text', async () => {
+    const boundingBox = randomBoundingBox();
+    const center = {
+      lat: (boundingBox.minLat + boundingBox.maxLat) / 2,
+      lng: (boundingBox.minLng + boundingBox.maxLng) / 2,
+    };
+
+    const createResult = await EntityAdmin.createEntity(context, {
+      _type: 'EntityAdminBaz',
+      _name: 'Baz',
+      body: {
+        blocks: [
+          {
+            type: RichTextBlockType.valueItem,
+            data: {
+              _type: 'EntityAdminStringedLocation',
+              string: 'Hello location',
+              location: center,
+            },
+          },
+        ],
+      },
+    });
+
+    if (expectOkResult(createResult)) {
+      const { id: bazId, _name: bazName } = createResult.value;
+      const searchResult = await EntityAdmin.searchEntities(context, { boundingBox });
+      if (expectOkResult(searchResult)) {
+        let bazIdCount = 0;
+        for (const edge of searchResult.value?.edges ?? []) {
+          if (expectOkResult(edge.node)) {
+            if (edge.node.value.id === bazId) {
+              bazIdCount += 1;
+
+              expect(edge.node.value).toEqual({
+                id: bazId,
+                _type: 'EntityAdminBaz',
+                _name: bazName,
+                _version: 0,
+                body: {
+                  blocks: [
+                    {
+                      type: RichTextBlockType.valueItem,
+                      data: {
+                        _type: 'EntityAdminStringedLocation',
+                        string: 'Hello location',
+                        location: center,
+                      },
+                    },
+                  ],
+                },
+              });
+            }
+          }
+        }
+        expect(bazIdCount).toBe(1);
       }
     }
   });
