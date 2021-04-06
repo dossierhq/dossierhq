@@ -518,7 +518,7 @@ describe('adminEntity()', () => {
             _name: createFooResult.value._name,
             _version: 0,
             body: {
-              blocksJson: '[{"data":{"text":"Hello foo world"},"type":"paragraph"}]',
+              blocksJson: '[{"type":"paragraph","data":{"text":"Hello foo world"}}]',
               entities: [],
             },
           },
@@ -593,7 +593,7 @@ describe('adminEntity()', () => {
               _name: createFooResult.value._name,
               _version: 0,
               body: {
-                blocksJson: `[{"data":{"id":"${bar1Id}"},"type":"entity"},{"data":{"bar":{"id":"${bar2Id}"},"text":"Hello","_type":"QueryAdminStringedBar"},"type":"valueItem"}]`,
+                blocksJson: `[{"type":"entity","data":{"id":"${bar1Id}"}},{"type":"valueItem","data":{"_type":"QueryAdminStringedBar","bar":{"id":"${bar2Id}"},"text":"Hello"}}]`,
                 entities: [
                   { id: bar1Id, _name: bar1Name },
                   { id: bar2Id, _name: bar2Name },

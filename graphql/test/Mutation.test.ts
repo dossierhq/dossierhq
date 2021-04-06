@@ -204,7 +204,7 @@ describe('create*Entity()', () => {
       _name: 'Bar',
     });
     if (expectOkResult(createBarResult)) {
-      const { id: barId, _name: barName } = createBarResult.value;
+      const { id: barId } = createBarResult.value;
       const gqlResult = await graphql(
         schema,
         `
