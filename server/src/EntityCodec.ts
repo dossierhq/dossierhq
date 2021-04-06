@@ -11,7 +11,7 @@ import type {
   Result,
   RichText,
   Schema,
-  Value,
+  ValueItem,
 } from '@datadata/core';
 import {
   FieldType,
@@ -99,7 +99,7 @@ function decodeFieldItemOrList(schema: Schema, fieldSpec: FieldSpecification, fi
     return decodedItems;
   }
   if (fieldSpec.type === FieldType.ValueType) {
-    return decodeValueItemField(schema, fieldSpec, fieldValue as Value);
+    return decodeValueItemField(schema, fieldSpec, fieldValue as ValueItem);
   }
   if (fieldSpec.type === FieldType.RichText) {
     return decodeRichTextField(schema, fieldSpec, fieldValue as EncodedRichTextBlock[]);
@@ -116,7 +116,7 @@ function decodeValueItemField(
   if (!valueSpec) {
     throw new Error(`Couldn't find spec for value type ${encodedValue._type}`);
   }
-  const decodedValue: Value = { _type: encodedValue._type };
+  const decodedValue: ValueItem = { _type: encodedValue._type };
   for (const [fieldName, fieldValue] of Object.entries(encodedValue)) {
     if (fieldName === '_type') {
       continue;
@@ -141,7 +141,7 @@ function decodeRichTextField(
     const { t: type, d: encodedData } = block;
     let decodedData = encodedData;
     if (type === RichTextBlockType.valueItem && encodedData) {
-      decodedData = decodeValueItemField(schema, fieldSpec, encodedData as Value);
+      decodedData = decodeValueItemField(schema, fieldSpec, encodedData as ValueItem);
     } else if (type === RichTextBlockType.entity && encodedData) {
       const adapter = EntityFieldTypeAdapters.getAdapterForType(FieldType.EntityType);
       decodedData = adapter.decodeData(encodedData);
@@ -364,7 +364,7 @@ function encodeValueItemField(
   schema: Schema,
   fieldSpec: FieldSpecification,
   prefix: string,
-  data: Value | null
+  data: ValueItem | null
 ): Result<unknown, ErrorType.BadRequest> {
   if (Array.isArray(data)) {
     return notOk.BadRequest(`${prefix}: expected single value, got list`);
@@ -398,7 +398,7 @@ function encodeValueItemField(
     );
   }
 
-  const encodedValue: Value = { _type: valueType };
+  const encodedValue: ValueItem = { _type: valueType };
 
   for (const fieldSpec of valueSpec.fields) {
     const fieldValue = value[fieldSpec.name];

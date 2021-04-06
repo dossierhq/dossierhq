@@ -17,7 +17,7 @@ import type {
   PageInfo,
   Paging,
   RichText,
-  Value,
+  ValueItem,
   ValueTypeSpecification,
 } from '@datadata/core';
 import type { SessionContext } from '@datadata/server';
@@ -164,7 +164,7 @@ export async function loadAdminSearchEntities<TContext extends SessionGraphQLCon
 function resolveFields<TContext extends SessionGraphQLContext>(
   context: SessionContext,
   spec: EntityTypeSpecification | ValueTypeSpecification,
-  item: Value | Entity | AdminEntity,
+  item: ValueItem | Entity | AdminEntity,
   isAdmin: boolean
 ) {
   for (const fieldSpec of spec.fields) {
@@ -223,9 +223,9 @@ function extractEntityIdsForRichTextField(
 
 export function buildResolversForValue<TContext extends SessionGraphQLContext>(
   context: SessionContext,
-  valueItem: Value,
+  valueItem: ValueItem,
   isAdmin: boolean
-): Value {
+): ValueItem {
   const valueSpec = context.server.getSchema().getValueTypeSpecification(valueItem._type);
   if (!valueSpec) {
     throw new Error(`Couldn't find value spec for type: ${valueItem._type}`);

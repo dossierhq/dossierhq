@@ -1,4 +1,4 @@
-import type { FieldSpecification, RichText, RichTextBlock, Value } from '.';
+import type { FieldSpecification, RichText, RichTextBlock, ValueItem } from '.';
 import {
   FieldType,
   RichTextBlockType,
@@ -44,7 +44,7 @@ function buildMockCallbacks<TVisitContext>() {
       enterValueItem: (
         path: Array<string | number>,
         fieldSpec: FieldSpecification,
-        valueItem: Value,
+        valueItem: ValueItem,
         visitContext: TVisitContext
       ) => {
         calls.push({

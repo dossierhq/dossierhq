@@ -1,4 +1,4 @@
-import type { EntityReference, Result, ErrorType, Location, RichText, Value } from '.';
+import type { EntityReference, Result, ErrorType, Location, RichText, ValueItem } from '.';
 import { notOk, ok } from '.';
 
 export interface EntityTypeSpecification {
@@ -47,7 +47,7 @@ export interface FieldValueTypeMap {
   [FieldType.Location]: Location;
   [FieldType.RichText]: RichText;
   [FieldType.String]: string;
-  [FieldType.ValueType]: Value;
+  [FieldType.ValueType]: ValueItem;
 }
 
 export interface SchemaSpecification {

@@ -31,7 +31,7 @@ import type {
   PromiseResult,
   Result,
   RichText,
-  Value,
+  ValueItem,
   ValueTypeSpecification,
 } from '@datadata/core';
 import type { SessionContext } from '@datadata/server';
@@ -141,7 +141,7 @@ export function formatEntityOneLine(entity: Entity): string {
   return `${entity._type} | ${chalk.bold(entity._name)} | ${entity.id}`;
 }
 
-export function formatValueItemOneLine(value: Value): string {
+export function formatValueItemOneLine(value: ValueItem): string {
   return `${value._type}`;
 }
 
@@ -221,7 +221,10 @@ export function getEntitySpec(context: SessionContext, entity: Entityish): Entit
   return entitySpec;
 }
 
-export function getValueSpec(context: SessionContext, valueItem: Value): ValueTypeSpecification {
+export function getValueSpec(
+  context: SessionContext,
+  valueItem: ValueItem
+): ValueTypeSpecification {
   const { server } = context;
   const schema = server.getSchema();
   const valueSpec = schema.getValueTypeSpecification(valueItem._type);
@@ -253,7 +256,7 @@ export async function replaceEntityReferencesWithEntitiesGeneric(
 
 export async function replaceValueItemReferencesWithEntitiesGeneric(
   context: SessionContext,
-  valueItem: Value,
+  valueItem: ValueItem,
   entityFetcher: EntityFetcher,
   multipleEntitiesFetcher: MultipleEntitiesFetcher
 ): Promise<void> {

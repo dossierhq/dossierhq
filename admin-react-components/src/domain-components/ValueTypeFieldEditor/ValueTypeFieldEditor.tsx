@@ -1,9 +1,9 @@
-import type { Value } from '@datadata/core';
+import type { ValueItem } from '@datadata/core';
 import React, { useCallback } from 'react';
 import type { EntityFieldEditorProps } from '../..';
 import { EntityFieldEditor, IconButton, Row, RowItem, Segment, TypePicker } from '../..';
 
-type Props = EntityFieldEditorProps<Value>;
+type Props = EntityFieldEditorProps<ValueItem>;
 
 export function ValueTypeFieldEditor({
   id,
