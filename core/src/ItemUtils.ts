@@ -149,12 +149,16 @@ export function isRichTextValueItemBlock(
 }
 
 export function visitorPathToString(path: (string | number)[]): string {
-  let result = 'entity'; //TODO nah, remove
+  let result = '';
   for (const segment of path) {
     if (Number.isInteger(segment)) {
       result += `[${segment}]`;
     } else {
-      result += `.${segment}`;
+      if (result.length === 0) {
+        result += segment;
+      } else {
+        result += `.${segment}`;
+      }
     }
   }
   return result;
@@ -199,10 +203,10 @@ interface VisitorCallbacks<TVisitContext> {
   enterRichText: VisitorEnterRichText<TVisitContext> | undefined;
 }
 
-// TODO Rename to visitItemRecursively and cleanup interface
-export function visitFieldsRecursively<TVisitContext>({
+export function visitItemRecursively<TVisitContext>({
   schema,
-  entity,
+  item,
+  path,
   visitField,
   visitRichTextBlock,
   enterValueItem = undefined,
@@ -211,7 +215,8 @@ export function visitFieldsRecursively<TVisitContext>({
   initialVisitContext,
 }: {
   schema: Schema;
-  entity: { _type: string; [fieldName: string]: unknown };
+  item: AdminEntity | ValueItem;
+  path?: (number | string)[];
   visitField: VisitorVisitField<TVisitContext>;
   visitRichTextBlock: VisitorVisitRichTextBlock<TVisitContext>;
   enterValueItem?: VisitorEnterValueItem<TVisitContext>;
@@ -221,8 +226,8 @@ export function visitFieldsRecursively<TVisitContext>({
 }): void {
   doVisitItemRecursively(
     schema,
-    [],
-    entity,
+    path ?? [],
+    item,
     true,
     { visitField, visitRichTextBlock, enterValueItem, enterList, enterRichText },
     initialVisitContext

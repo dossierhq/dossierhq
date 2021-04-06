@@ -61,7 +61,7 @@ export {
   isValueTypeItemField,
   isValueTypeListField,
   visitFieldRecursively,
-  visitFieldsRecursively,
+  visitItemRecursively,
   visitorPathToString,
 } from './ItemUtils';
 export {

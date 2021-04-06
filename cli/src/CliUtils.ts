@@ -16,7 +16,7 @@ import {
   isValueTypeField,
   isValueTypeItemField,
   isValueTypeListField,
-  visitFieldsRecursively,
+  visitItemRecursively,
 } from '@datadata/core';
 import type {
   AdminEntity,
@@ -95,9 +95,9 @@ export function logEntity(context: SessionContext, entity: AdminEntity | Entity)
 
   const schema = context.server.getSchema();
 
-  visitFieldsRecursively<{ indent: string }>({
+  visitItemRecursively<{ indent: string }>({
     schema,
-    entity,
+    item: entity,
     visitField: (path, fieldSpec, data, visitContext) => {
       let value;
       if (isEntityTypeItemField(fieldSpec, data)) {
