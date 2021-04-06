@@ -1,5 +1,6 @@
 import '@datadata/admin-react-components/src/main.css';
 import '@datadata/admin-react-components/src/icons.css';
+import 'graphql-voyager/dist/voyager.css';
 import 'leaflet/dist/leaflet.css';
 import '../styles/globals.css';
 
