@@ -65,6 +65,20 @@ export async function handlePostAsync<T, R>(
   });
 }
 
+export async function handlePostWithoutLocation<T, R>(
+  req: NextApiRequest,
+  res: NextApiResponse<R>,
+  handler: (body: T) => Promise<R>
+): Promise<void> {
+  await handleAsync(res, async () => {
+    if (req.method !== 'POST') {
+      throw Boom.methodNotAllowed(undefined, undefined, 'POST');
+    }
+    const result = await handler(req.body);
+    res.status(200).json(result);
+  });
+}
+
 export async function handlePutAsync<T, R>(
   req: NextApiRequest,
   res: NextApiResponse<R>,

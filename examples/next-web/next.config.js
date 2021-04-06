@@ -3,6 +3,7 @@ const path = require('path');
 const withTranspileModules = require('next-transpile-modules')([
   '@datadata/admin-react-components',
   '@datadata/core',
+  '@datadata/graphql',
   '@datadata/server',
 ]);
 
