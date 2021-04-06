@@ -11,7 +11,7 @@ import type {
   Paging,
   PromiseResult,
 } from '@datadata/core';
-import { isLocationItemField, notOk, ok, visitFieldsRecursively } from '@datadata/core';
+import { isLocationItemField, notOk, ok, visitItemRecursively } from '@datadata/core';
 import { v4 as uuidv4 } from 'uuid';
 import type { InMemorySessionContext } from '.';
 
@@ -55,9 +55,9 @@ export const InMemoryAdmin = {
       if (query?.boundingBox) {
         const { minLat, maxLat, minLng, maxLng } = query.boundingBox;
         const locations: Location[] = [];
-        visitFieldsRecursively({
+        visitItemRecursively({
           schema: context.server.schema,
-          entity,
+          item: entity,
           visitField: (_path, fieldSpec, data, _visitContext) => {
             if (isLocationItemField(fieldSpec, data) && data) {
               locations.push(data);

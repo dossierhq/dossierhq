@@ -1,5 +1,5 @@
 import type { AdminEntity, AdminQuery, BoundingBox, Location, Schema } from '@datadata/core';
-import { isLocationItemField, visitFieldsRecursively } from '@datadata/core';
+import { isLocationItemField, visitItemRecursively } from '@datadata/core';
 import React, { useContext, useEffect, useState } from 'react';
 import type { DataDataContextValue } from '../..';
 import { DataDataContext, MapContainer } from '../..';
@@ -73,9 +73,9 @@ function EntityMarker({
   onClick: () => void;
 }) {
   const entityLocations: { location: Location }[] = [];
-  visitFieldsRecursively({
+  visitItemRecursively({
     schema,
-    entity,
+    item: entity,
     visitField: (_path, fieldSpec, data, _visitContext) => {
       if (isLocationItemField(fieldSpec, data) && data) {
         entityLocations.push({ location: data });

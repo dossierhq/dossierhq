@@ -25,7 +25,7 @@ import {
   notOk,
   ok,
   RichTextBlockType,
-  visitFieldsRecursively,
+  visitItemRecursively,
   visitorPathToString,
 } from '@datadata/core';
 import type { SessionContext } from '.';
@@ -498,9 +498,10 @@ async function collectReferenceIdsAndLocations(
 
   const locations: Location[] = [];
 
-  visitFieldsRecursively({
+  visitItemRecursively({
     schema: context.server.getSchema(),
-    entity,
+    item: entity,
+    path: ['entity'],
     visitField: (path, fieldSpec, data, _visitContext) => {
       if (fieldSpec.type !== FieldType.ValueType && fieldSpec.type !== FieldType.RichText) {
         const fieldAdapter = EntityFieldTypeAdapters.getAdapter(fieldSpec);
