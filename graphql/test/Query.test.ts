@@ -225,7 +225,7 @@ describe('node()', () => {
             id: fooId,
             _name: createFooResult.value._name,
             body: {
-              blocksJson: '[{"data":{"text":"Hello world"},"type":"paragraph"}]',
+              blocksJson: '[{"type":"paragraph","data":{"text":"Hello world"}}]',
               entities: [],
             },
           },
@@ -291,7 +291,7 @@ describe('node()', () => {
               id: fooId,
               _name: createFooResult.value._name,
               body: {
-                blocksJson: `[{"data":{"id":"${barId}"},"type":"entity"},{"data":{"text":"Hello world"},"type":"paragraph"}]`,
+                blocksJson: `[{"type":"entity","data":{"id":"${barId}"}},{"type":"paragraph","data":{"text":"Hello world"}}]`,
                 entities: [{ id: barId, _name: barName }],
               },
             },
