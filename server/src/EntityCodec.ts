@@ -9,14 +9,22 @@ import type {
   Location,
   PromiseResult,
   Result,
+  RichText,
   Schema,
+  Value,
 } from '@datadata/core';
 import {
   FieldType,
   isLocationItemField,
   isRichTextEntityBlock,
+  isRichTextField,
+  isRichTextItemField,
+  isRichTextValueItemBlock,
+  isValueTypeField,
+  isValueTypeItemField,
   notOk,
   ok,
+  RichTextBlockType,
   visitFieldsRecursively,
   visitorPathToString,
 } from '@datadata/core';
@@ -38,6 +46,11 @@ interface EncodeEntityResult {
   data: Record<string, unknown>;
   referenceIds: number[];
   locations: Location[];
+}
+
+interface EncodedRichTextBlock {
+  t: string;
+  d: unknown;
 }
 
 export function decodePublishedEntity(context: SessionContext, values: EntityValues): Entity {
@@ -75,8 +88,10 @@ function decodeFieldItemOrList(schema: Schema, fieldSpec: FieldSpecification, fi
     const decodedItems: unknown[] = [];
     for (const encodedItem of fieldValue) {
       if (fieldSpec.type === FieldType.ValueType) {
-        const decodedItem = decodeValueTypeField(schema, fieldSpec, encodedItem);
+        const decodedItem = decodeValueItemField(schema, fieldSpec, encodedItem);
         decodedItems.push(decodedItem);
+      } else if (fieldSpec.type === FieldType.RichText) {
+        decodedItems.push(decodeRichTextField(schema, fieldSpec, encodedItem));
       } else {
         decodedItems.push(fieldAdapter.decodeData(encodedItem));
       }
@@ -84,16 +99,15 @@ function decodeFieldItemOrList(schema: Schema, fieldSpec: FieldSpecification, fi
     return decodedItems;
   }
   if (fieldSpec.type === FieldType.ValueType) {
-    return decodeValueTypeField(
-      schema,
-      fieldSpec,
-      fieldValue as { _type: string; [key: string]: unknown }
-    );
+    return decodeValueItemField(schema, fieldSpec, fieldValue as Value);
+  }
+  if (fieldSpec.type === FieldType.RichText) {
+    return decodeRichTextField(schema, fieldSpec, fieldValue as EncodedRichTextBlock[]);
   }
   return fieldAdapter.decodeData(fieldValue);
 }
 
-function decodeValueTypeField(
+function decodeValueItemField(
   schema: Schema,
   fieldSpec: FieldSpecification,
   encodedValue: { _type: string; [key: string]: unknown }
@@ -102,7 +116,7 @@ function decodeValueTypeField(
   if (!valueSpec) {
     throw new Error(`Couldn't find spec for value type ${encodedValue._type}`);
   }
-  const decodedValue: { _type: string; [key: string]: unknown } = { _type: encodedValue._type };
+  const decodedValue: Value = { _type: encodedValue._type };
   for (const [fieldName, fieldValue] of Object.entries(encodedValue)) {
     if (fieldName === '_type') {
       continue;
@@ -116,6 +130,28 @@ function decodeValueTypeField(
   }
 
   return decodedValue;
+}
+
+function decodeRichTextField(
+  schema: Schema,
+  fieldSpec: FieldSpecification,
+  encodedValue: EncodedRichTextBlock[]
+): RichText {
+  const decodedBlocks = encodedValue.map((block) => {
+    const { t: type, d: encodedData } = block;
+    let decodedData = encodedData;
+    if (type === RichTextBlockType.valueItem && encodedData) {
+      decodedData = decodeValueItemField(schema, fieldSpec, encodedData as Value);
+    } else if (type === RichTextBlockType.entity && encodedData) {
+      const adapter = EntityFieldTypeAdapters.getAdapterForType(FieldType.EntityType);
+      decodedData = adapter.decodeData(encodedData);
+    }
+    return {
+      type,
+      data: decodedData,
+    };
+  });
+  return { blocks: decodedBlocks };
 }
 
 export function decodeAdminEntity(context: SessionContext, values: AdminEntityValues): AdminEntity {
@@ -301,8 +337,10 @@ function encodeFieldItemOrList(
     const encodedItems: unknown[] = [];
     for (const decodedItem of data) {
       let encodedItemResult;
-      if (fieldSpec.type === FieldType.ValueType) {
-        encodedItemResult = encodeValueTypeField(schema, fieldSpec, prefix, decodedItem);
+      if (isValueTypeItemField(fieldSpec, decodedItem)) {
+        encodedItemResult = encodeValueItemField(schema, fieldSpec, prefix, decodedItem);
+      } else if (isRichTextItemField(fieldSpec, decodedItem)) {
+        encodedItemResult = encodeRichTextField(schema, fieldSpec, prefix, decodedItem);
       } else {
         encodedItemResult = fieldAdapter.encodeData(prefix, decodedItem);
       }
@@ -314,17 +352,19 @@ function encodeFieldItemOrList(
     return ok(encodedItems);
   }
 
-  if (fieldSpec.type === FieldType.ValueType) {
-    return encodeValueTypeField(schema, fieldSpec, prefix, data);
+  if (isValueTypeField(fieldSpec, data)) {
+    return encodeValueItemField(schema, fieldSpec, prefix, data);
+  } else if (isRichTextField(fieldSpec, data)) {
+    return encodeRichTextField(schema, fieldSpec, prefix, data);
   }
   return fieldAdapter.encodeData(prefix, data);
 }
 
-function encodeValueTypeField(
+function encodeValueItemField(
   schema: Schema,
   fieldSpec: FieldSpecification,
   prefix: string,
-  data: unknown
+  data: Value | null
 ): Result<unknown, ErrorType.BadRequest> {
   if (Array.isArray(data)) {
     return notOk.BadRequest(`${prefix}: expected single value, got list`);
@@ -358,7 +398,7 @@ function encodeValueTypeField(
     );
   }
 
-  const encodedValue: { _type: string; [key: string]: unknown } = { _type: valueType };
+  const encodedValue: Value = { _type: valueType };
 
   for (const fieldSpec of valueSpec.fields) {
     const fieldValue = value[fieldSpec.name];
@@ -380,6 +420,71 @@ function encodeValueTypeField(
   return ok(encodedValue);
 }
 
+function encodeRichTextField(
+  schema: Schema,
+  fieldSpec: FieldSpecification,
+  prefix: string,
+  data: RichText | null
+): Result<unknown, ErrorType.BadRequest> {
+  if (Array.isArray(data)) {
+    return notOk.BadRequest(`${prefix}: expected single value, got list`);
+  }
+  if (typeof data !== 'object' || !data) {
+    return notOk.BadRequest(`${prefix}: expected object, got ${typeof data}`);
+  }
+  const { blocks, ...unexpectedData } = data;
+  if (!blocks) {
+    return notOk.BadRequest(`${prefix}: missing blocks`);
+  }
+  if (!Array.isArray(blocks)) {
+    return notOk.BadRequest(`${prefix}.blocks: expected array, got ${typeof blocks}`);
+  }
+
+  if (Object.keys(unexpectedData).length > 0) {
+    return notOk.BadRequest(`${prefix}: unexpected keys ${Object.keys(unexpectedData).join(', ')}`);
+  }
+
+  const encodedBlocks: EncodedRichTextBlock[] = [];
+  for (let i = 0; i < blocks.length; i += 1) {
+    const blockPrefix = `${prefix}[${i}]`;
+    const block = blocks[i];
+    const { type, data, ...unexpectedBlockData } = block;
+    if (
+      fieldSpec.richTextBlocks &&
+      fieldSpec.richTextBlocks.length > 0 &&
+      !fieldSpec.richTextBlocks.find((x) => x.type === type)
+    ) {
+      return notOk.BadRequest(`${blockPrefix}: rich text block of type ${type} is not allowed`);
+    }
+
+    if (Object.keys(unexpectedBlockData).length > 0) {
+      return notOk.BadRequest(
+        `${blockPrefix}: unexpected keys ${Object.keys(unexpectedBlockData).join(', ')}`
+      );
+    }
+
+    let encodedBlockData = data;
+    if (isRichTextValueItemBlock(block) && data) {
+      const encodeResult = encodeValueItemField(schema, fieldSpec, blockPrefix, block.data);
+      if (encodeResult.isError()) {
+        return encodeResult;
+      }
+      encodedBlockData = encodeResult.value;
+    } else if (isRichTextEntityBlock(block) && data) {
+      const adapter = EntityFieldTypeAdapters.getAdapterForType(FieldType.EntityType);
+      const encodeResult = adapter.encodeData(blockPrefix, block.data);
+      if (encodeResult.isError()) {
+        return encodeResult;
+      }
+      encodedBlockData = encodeResult.value;
+    }
+
+    encodedBlocks.push({ t: type, d: encodedBlockData });
+  }
+
+  return ok(encodedBlocks);
+}
+
 async function collectReferenceIdsAndLocations(
   context: SessionContext,
   entity: { _type: string; [fieldName: string]: unknown }
@@ -397,7 +502,7 @@ async function collectReferenceIdsAndLocations(
     schema: context.server.getSchema(),
     entity,
     visitField: (path, fieldSpec, data, _visitContext) => {
-      if (fieldSpec.type !== FieldType.ValueType) {
+      if (fieldSpec.type !== FieldType.ValueType && fieldSpec.type !== FieldType.RichText) {
         const fieldAdapter = EntityFieldTypeAdapters.getAdapter(fieldSpec);
         const uuids = fieldAdapter.getReferenceUUIDs(data);
         if (uuids && uuids.length > 0) {

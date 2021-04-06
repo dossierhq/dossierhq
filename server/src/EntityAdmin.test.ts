@@ -1,4 +1,4 @@
-import { CoreTestUtils, ErrorType, FieldType } from '@datadata/core';
+import { CoreTestUtils, ErrorType, FieldType, RichTextBlockType } from '@datadata/core';
 import type {
   AdminEntity,
   AdminQuery,
@@ -694,6 +694,93 @@ describe('createEntity()', () => {
             { blocks: [{ type: 'paragraph', data: { text: 'Second rich text' } }] },
           ],
         });
+      }
+    }
+  });
+
+  test('Create EntityAdminBaz with rich text with value item and entity references', async () => {
+    const createBar1Result = await EntityAdmin.createEntity(context, {
+      _type: 'EntityAdminBar',
+      _name: 'Bar 1',
+    });
+    const createBar2Result = await EntityAdmin.createEntity(context, {
+      _type: 'EntityAdminBar',
+      _name: 'Bar 2',
+    });
+    if (expectOkResult(createBar1Result) && expectOkResult(createBar2Result)) {
+      const { id: bar1Id } = createBar1Result.value;
+      const { id: bar2Id } = createBar2Result.value;
+
+      const createBazResult = await EntityAdmin.createEntity(context, {
+        _type: 'EntityAdminBaz',
+        _name: 'Baz',
+        body: {
+          blocks: [
+            { type: RichTextBlockType.entity, data: { id: bar1Id } },
+            { type: RichTextBlockType.entity, data: null },
+            {
+              type: RichTextBlockType.valueItem,
+              data: {
+                _type: 'EntityAdminStringReference',
+                string: 'Hello bar 2',
+                reference: { id: bar2Id },
+              },
+            },
+            {
+              type: RichTextBlockType.valueItem,
+              data: null,
+            },
+          ],
+        },
+      });
+      if (expectOkResult(createBazResult)) {
+        const { id: bazId, _name: bazName } = createBazResult.value;
+        expect(createBazResult.value).toEqual({
+          id: bazId,
+          _type: 'EntityAdminBaz',
+          _name: bazName,
+          _version: 0,
+          body: {
+            blocks: [
+              { type: RichTextBlockType.entity, data: { id: bar1Id } },
+              { type: RichTextBlockType.entity, data: null },
+              {
+                type: RichTextBlockType.valueItem,
+                data: {
+                  _type: 'EntityAdminStringReference',
+                  string: 'Hello bar 2',
+                  reference: { id: bar2Id },
+                },
+              },
+              { type: RichTextBlockType.valueItem, data: null },
+            ],
+          },
+        });
+
+        const getResult = await EntityAdmin.getEntity(context, bazId);
+        if (expectOkResult(getResult)) {
+          expect(getResult.value).toEqual({
+            id: bazId,
+            _type: 'EntityAdminBaz',
+            _name: bazName,
+            _version: 0,
+            body: {
+              blocks: [
+                { type: RichTextBlockType.entity, data: { id: bar1Id } },
+                { type: RichTextBlockType.entity, data: null },
+                {
+                  type: RichTextBlockType.valueItem,
+                  data: {
+                    _type: 'EntityAdminStringReference',
+                    string: 'Hello bar 2',
+                    reference: { id: bar2Id },
+                  },
+                },
+                { type: RichTextBlockType.valueItem, data: null },
+              ],
+            },
+          });
+        }
       }
     }
   });

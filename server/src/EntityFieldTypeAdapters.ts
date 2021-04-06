@@ -1,11 +1,5 @@
 import { FieldType, notOk, ok } from '@datadata/core';
-import type {
-  ErrorType,
-  FieldSpecification,
-  FieldValueTypeMap,
-  Result,
-  RichText,
-} from '@datadata/core';
+import type { ErrorType, FieldSpecification, FieldValueTypeMap, Result } from '@datadata/core';
 
 export interface FieldTypeAdapter<TDecoded = unknown, TEncoded = unknown> {
   encodeData(prefix: string, decodedData: TDecoded): Result<TEncoded, ErrorType.BadRequest>;
@@ -54,12 +48,6 @@ const locationCodec: FieldTypeAdapter<FieldValueTypeMap[FieldType.Location], [nu
   getReferenceUUIDs: (_data) => null,
 };
 
-const richTextCodec: FieldTypeAdapter<FieldValueTypeMap[FieldType.RichText], RichText> = {
-  encodeData: (_prefix: string, data) => ok(data),
-  decodeData: (data) => data,
-  getReferenceUUIDs: (_data) => null, //TODO add support for EntityType / ValueType
-};
-
 const stringCodec: FieldTypeAdapter<FieldValueTypeMap[FieldType.String], string> = {
   encodeData: (prefix: string, x) =>
     typeof x === 'string'
@@ -84,15 +72,19 @@ const invalidCodec: FieldTypeAdapter<FieldValueTypeMap[FieldType.ValueType], unk
 const adapters: Record<FieldType, FieldTypeAdapter<unknown>> = {
   [FieldType.EntityType]: entityTypeCodec,
   [FieldType.Location]: locationCodec,
-  [FieldType.RichText]: richTextCodec,
+  [FieldType.RichText]: invalidCodec,
   [FieldType.String]: stringCodec,
   [FieldType.ValueType]: invalidCodec,
 };
 
 export function getAdapter(fieldSpec: FieldSpecification): FieldTypeAdapter {
-  const result = adapters[fieldSpec.type];
+  return getAdapterForType(fieldSpec.type);
+}
+
+export function getAdapterForType(fieldType: FieldType): FieldTypeAdapter {
+  const result = adapters[fieldType];
   if (!result) {
-    throw new Error(`Can't find field type (${fieldSpec.type})`);
+    throw new Error(`Can't find field type (${fieldType})`);
   }
   return result;
 }
