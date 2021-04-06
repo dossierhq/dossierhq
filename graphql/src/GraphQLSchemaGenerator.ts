@@ -9,7 +9,7 @@ import type {
   ErrorType,
   Result,
   Schema,
-  Value,
+  ValueItem,
   ValueTypeSpecification,
 } from '@datadata/core';
 import type { SessionContext } from '@datadata/server';
@@ -366,12 +366,12 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
 
   addValueType(valueSpec: ValueTypeSpecification): void {
     this.addType(
-      new GraphQLObjectType<Value, TContext>({
+      new GraphQLObjectType<ValueItem, TContext>({
         name: valueSpec.name,
         interfaces: this.getInterfaces('Value'),
         isTypeOf: (source, _context, _info) => source._type === valueSpec.name,
         fields: () => {
-          const fields: GraphQLFieldConfigMap<Value, TContext> = {
+          const fields: GraphQLFieldConfigMap<ValueItem, TContext> = {
             _type: { type: new GraphQLNonNull(this.getEnumType('ValueType')) },
           };
           this.addTypeSpecificationOutputFields(valueSpec, fields, false);
@@ -594,12 +594,12 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
 
   addAdminValueType(valueSpec: ValueTypeSpecification): void {
     this.addType(
-      new GraphQLObjectType<Value, TContext>({
+      new GraphQLObjectType<ValueItem, TContext>({
         name: toAdminTypeName(valueSpec.name),
         interfaces: this.getInterfaces(toAdminTypeName('Value')),
         isTypeOf: (source, _context, _info) => source._type === valueSpec.name,
         fields: () => {
-          const fields: GraphQLFieldConfigMap<Value, TContext> = {
+          const fields: GraphQLFieldConfigMap<ValueItem, TContext> = {
             _type: { type: new GraphQLNonNull(this.getEnumType('ValueType')) },
           };
           this.addTypeSpecificationOutputFields(valueSpec, fields, true);
@@ -844,7 +844,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     entityTypeName: string
   ): void {
     const visitItem = (
-      item: AdminEntityCreate | AdminEntityUpdate | Value,
+      item: AdminEntityCreate | AdminEntityUpdate | ValueItem,
       typeSpec: EntityTypeSpecification | ValueTypeSpecification,
       prefix: string,
       isEntity: boolean

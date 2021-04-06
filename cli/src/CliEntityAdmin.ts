@@ -24,7 +24,7 @@ import type {
   Paging,
   PromiseResult,
   RichText,
-  Value,
+  ValueItem,
   ValueTypeSpecification,
 } from '@datadata/core';
 import type { SessionContext } from '@datadata/server';
@@ -401,8 +401,8 @@ async function editFieldReferenceList(
 export async function editFieldValueItem(
   context: SessionContext,
   fieldSpec: FieldSpecification,
-  defaultValue: Value | null
-): PromiseResult<Value, ErrorType.BadRequest> {
+  defaultValue: ValueItem | null
+): PromiseResult<ValueItem, ErrorType.BadRequest> {
   //TODO which error type
   const valueItem = defaultValue
     ? { ...defaultValue }
@@ -439,7 +439,7 @@ export async function editFieldValueItem(
 
 function createValueItemFieldSelectorItems(
   valueSpec: ValueTypeSpecification,
-  valueItem: Value
+  valueItem: ValueItem
 ): EditFieldSelectorItem[] {
   const items: EditFieldSelectorItem[] = [];
   for (const fieldSpec of valueSpec.fields) {
@@ -457,7 +457,7 @@ function createValueItemFieldSelectorItems(
 async function editFieldValueTypeList(
   context: SessionContext,
   fieldSpec: FieldSpecification,
-  defaultValue: Value[] | null
+  defaultValue: ValueItem[] | null
 ) {
   return await editFieldList(
     fieldSpec,
@@ -710,7 +710,10 @@ async function replaceEntityReferencesWithEntities(
   );
 }
 
-async function replaceValueItemReferencesWithEntities(context: SessionContext, valueItem: Value) {
+async function replaceValueItemReferencesWithEntities(
+  context: SessionContext,
+  valueItem: ValueItem
+) {
   await replaceValueItemReferencesWithEntitiesGeneric(
     context,
     valueItem,

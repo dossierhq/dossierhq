@@ -1,4 +1,4 @@
-import type { FieldSpecification, Value } from '@datadata/core';
+import type { FieldSpecification, ValueItem } from '@datadata/core';
 import type {
   BlockTool,
   BlockToolConstructable,
@@ -19,7 +19,7 @@ export interface ValueItemToolConfig {
 export function createValueItemToolFactory(context: DataDataContextValue): BlockToolConstructable {
   // since EditorJS (most likely) does a deep clone of config, provide context through dynamic sub class
   const factoryClass = class extends ValueItemTool {
-    constructor(config: BlockToolConstructorOptions<Value, ValueItemToolConfig>) {
+    constructor(config: BlockToolConstructorOptions<ValueItem, ValueItemToolConfig>) {
       super(config, context);
     }
   };
@@ -36,11 +36,11 @@ class ValueItemTool implements BlockTool {
   }
 
   #config: ValueItemToolConfig;
-  #data: Value | null;
+  #data: ValueItem | null;
   #context: DataDataContextValue;
 
   constructor(
-    { api: _, data, config }: BlockToolConstructorOptions<Value, ValueItemToolConfig>,
+    { api: _, data, config }: BlockToolConstructorOptions<ValueItem, ValueItemToolConfig>,
     context: DataDataContextValue
   ) {
     if (!config) {
@@ -81,8 +81,8 @@ function Wrapper({
   context: DataDataContextValue;
   id: string;
   fieldSpec: FieldSpecification;
-  initialData: Value | null;
-  onDataChange: (data: Value | null) => void;
+  initialData: ValueItem | null;
+  onDataChange: (data: ValueItem | null) => void;
 }) {
   const [value, setValue] = useState(initialData);
   onDataChange(value);

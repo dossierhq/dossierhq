@@ -30,7 +30,7 @@ export type {
   Paging,
   RichText,
   RichTextBlock,
-  Value,
+  ValueItem,
 } from './Types';
 
 export {

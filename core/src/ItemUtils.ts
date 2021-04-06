@@ -6,7 +6,7 @@ import type {
   RichText,
   RichTextBlock,
   Schema,
-  Value,
+  ValueItem,
 } from '.';
 import { FieldType, RichTextBlockType } from '.';
 
@@ -144,7 +144,7 @@ export function isRichTextParagraphBlock(
 
 export function isRichTextValueItemBlock(
   block: RichTextBlock
-): block is RichTextBlock<RichTextBlockType.valueItem, Value | null> {
+): block is RichTextBlock<RichTextBlockType.valueItem, ValueItem | null> {
   return block.type === RichTextBlockType.valueItem;
 }
 
@@ -175,7 +175,7 @@ type VisitorVisitRichTextBlock<TVisitContext> = (
 type VisitorEnterValueItem<TVisitContext> = (
   path: Array<string | number>,
   fieldSpec: FieldSpecification,
-  valueItem: Value,
+  valueItem: ValueItem,
   visitContext: TVisitContext
 ) => TVisitContext;
 type VisitorEnterList<TVisitContext> = (
@@ -265,7 +265,7 @@ export function visitFieldRecursively<TVisitContext>({
 function doVisitItemRecursively<TVisitContext>(
   schema: Schema,
   path: (string | number)[],
-  item: Value | AdminEntity,
+  item: ValueItem | AdminEntity,
   isEntity: boolean,
   callbacks: VisitorCallbacks<TVisitContext>,
   visitContext: TVisitContext
@@ -354,11 +354,11 @@ function doVisitFieldRecursively<TVisitContext>(
         doVisitItemRecursively(
           schema,
           blockPath,
-          block.data as Value,
+          block.data as ValueItem,
           false,
           callbacks,
           enterValueItem
-            ? enterValueItem(path, fieldSpec, block.data as Value, richTextVisitContext)
+            ? enterValueItem(path, fieldSpec, block.data as ValueItem, richTextVisitContext)
             : richTextVisitContext
         );
       }

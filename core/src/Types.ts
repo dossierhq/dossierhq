@@ -32,8 +32,7 @@ export interface BoundingBox {
   maxLng: number;
 }
 
-//TODO rename to ValueItem
-export interface Value {
+export interface ValueItem {
   _type: string;
   [fieldName: string]: unknown;
 }
