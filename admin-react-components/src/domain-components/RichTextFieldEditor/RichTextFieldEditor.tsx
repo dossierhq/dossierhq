@@ -73,7 +73,7 @@ function RichTextEditor({
         onChange: (api) =>
           api.saver
             .save()
-            .then((data) => dispatch(new SetDataAction(data, true)))
+            .then(({ blocks }) => dispatch(new SetDataAction({ blocks }, true)))
             .catch(console.warn),
       })
     );
