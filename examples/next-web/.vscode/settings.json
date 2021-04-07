@@ -1,7 +1,14 @@
 {
-  "editor.formatOnSave": true,
-  "files.insertFinalNewline": true,
-  "editor.tabSize": 2,
+  "cSpell.words": [
+    "boomify",
+    "datadata",
+    "editorjs",
+    "graphi",
+    "graphiql",
+    "postgres"
+  ],
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "cSpell.words": ["boomify", "datadata", "editorjs", "postgres"]
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2,
+  "files.insertFinalNewline": true
 }
