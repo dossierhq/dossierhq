@@ -1,3 +1,4 @@
+import type { SessionGraphQLContext } from '@datadata/graphql';
 import { GraphQLSchemaGenerator } from '@datadata/graphql';
 import { graphql } from 'graphql';
 import type { ExecutionResult, GraphQLSchema } from 'graphql';
@@ -18,21 +19,14 @@ export default async (
     if (authResult.isError()) {
       throw errorResultToBoom(authResult);
     }
-    const context = authResult.value;
+    const context: SessionGraphQLContext = { context: authResult };
 
     if (!graphQLSchema) {
       graphQLSchema = new GraphQLSchemaGenerator(server.getSchema()).buildSchema();
     }
 
-    const { query, variableValues, operationName } = req.body;
-    const result = await graphql(
-      graphQLSchema,
-      query,
-      null,
-      context,
-      variableValues,
-      operationName
-    );
+    const { query, variables, operationName } = req.body;
+    const result = await graphql(graphQLSchema, query, null, context, variables, operationName);
 
     return result;
   });
