@@ -11,7 +11,7 @@ jobs:
       - name: Use Node.js 14
         uses: actions/setup-node@v2
         with:
-          node-version: 14.14.0
+          node-version: 14.16.1
       - name: rush install
         run: |
           node common/scripts/install-run-rush.js install
