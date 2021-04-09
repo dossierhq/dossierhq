@@ -120,6 +120,24 @@ ul.dd li {
   filter: brightness(var(--dd-color-l));
 }
 
+.dd.bg-blank1 {
+  --dd-bg-color-h: 0;
+  --dd-bg-color-s: 0%;
+  --dd-bg-color-l: 95%;
+  --dd-color-h: 0;
+  --dd-color-s: 0%;
+  --dd-color-l: 5%;
+}
+
+.dd.bg-blank2 {
+  --dd-bg-color-h: 0;
+  --dd-bg-color-s: 0%;
+  --dd-bg-color-l: 90%;
+  --dd-color-h: 0;
+  --dd-color-s: 0%;
+  --dd-color-l: 5%;
+}
+
 .dd.bg-primary {
   --dd-bg-color-h: 141;
   --dd-bg-color-s: 52%;

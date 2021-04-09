@@ -16,7 +16,7 @@ export function IconSwatch({ icon }: IconProps): JSX.Element {
         >
           <Icon icon={icon} />
         </span>
-        {['primary', 'danger'].map((bg) => (
+        {['blank1', 'blank2', 'primary', 'danger'].map((bg) => (
           <div key={bg} className={`dd has-background bg-${bg}`}>
             <Icon icon={icon} />
           </div>
