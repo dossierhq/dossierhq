@@ -236,5 +236,7 @@ export class DataDataContextValue {
   };
 }
 
-export const DataDataContext = createContext<DataDataContextValue | null>(null);
+export const DataDataContext = createContext<DataDataContextValue>(({
+  defaultContextValue: true,
+} as unknown) as DataDataContextValue);
 DataDataContext.displayName = 'DataDataContext';
