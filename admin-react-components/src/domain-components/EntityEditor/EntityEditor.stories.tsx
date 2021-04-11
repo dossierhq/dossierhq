@@ -18,10 +18,7 @@ import {
   TestContextAdapter,
 } from '../../test/TestContextAdapter';
 
-export type EntityEditorStoryProps = Omit<
-  EntityEditorProps,
-  'entityId' | 'editorState' | 'dispatchEditorState'
-> & {
+export type EntityEditorStoryProps = Omit<EntityEditorProps, 'entityId'> & {
   entitySelector: EntityEditorSelector;
   contextAdapter?: TestContextAdapter;
 };
