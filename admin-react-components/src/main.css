@@ -138,6 +138,33 @@ ul.dd li {
   --dd-color-l: 5%;
 }
 
+.dd.bg-blank98 {
+  --dd-bg-color-h: 0;
+  --dd-bg-color-s: 0%;
+  --dd-bg-color-l: 10%;
+  --dd-color-h: 0;
+  --dd-color-s: 0%;
+  --dd-color-l: 70%;
+}
+
+.dd.bg-blank99 {
+  --dd-bg-color-h: 0;
+  --dd-bg-color-s: 0%;
+  --dd-bg-color-l: 5%;
+  --dd-color-h: 0;
+  --dd-color-s: 0%;
+  --dd-color-l: 80%;
+}
+
+.dd.bg-blank100 {
+  --dd-bg-color-h: 0;
+  --dd-bg-color-s: 0%;
+  --dd-bg-color-l: 0%;
+  --dd-color-h: 0;
+  --dd-color-s: 0%;
+  --dd-color-l: 100%;
+}
+
 .dd.bg-primary {
   --dd-bg-color-h: 141;
   --dd-bg-color-s: 52%;
