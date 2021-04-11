@@ -21,10 +21,6 @@ export type RichTextFieldEditorProps = EntityFieldEditorProps<RichText>;
 export function RichTextFieldEditor(props: RichTextFieldEditorProps): JSX.Element | null {
   const context = useContext(DataDataContext);
 
-  if (!context) {
-    return null;
-  }
-
   const { value, fieldSpec, onChange } = props;
   return (
     <div>

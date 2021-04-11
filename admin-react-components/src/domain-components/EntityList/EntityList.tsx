@@ -1,6 +1,5 @@
 import type { AdminEntity, AdminQuery } from '@datadata/core';
 import React, { useContext } from 'react';
-import type { DataDataContextValue } from '../..';
 import { Button, DataDataContext, Message } from '../..';
 import { joinClassNames } from '../../utils/ClassNameUtils';
 
@@ -10,24 +9,12 @@ export interface EntityListProps {
   onEntityClick: (entity: AdminEntity) => void;
 }
 
-interface InnerProps extends EntityListProps {
-  useSearchEntities: DataDataContextValue['useSearchEntities'];
-}
-
 export function EntityList({
   className,
   query,
   onEntityClick,
 }: EntityListProps): JSX.Element | null {
-  const context = useContext(DataDataContext);
-  if (!context) {
-    return null;
-  }
-  const { useSearchEntities } = context;
-  return <EntityListInner {...{ className, query, useSearchEntities, onEntityClick }} />;
-}
-
-function EntityListInner({ className, query, useSearchEntities, onEntityClick }: InnerProps) {
+  const { useSearchEntities } = useContext(DataDataContext);
   const { connection, connectionError } = useSearchEntities(query ?? {});
 
   return (

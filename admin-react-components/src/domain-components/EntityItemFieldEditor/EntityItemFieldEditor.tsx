@@ -1,13 +1,9 @@
 import type { EntityReference } from '@datadata/core';
 import React, { useCallback, useContext, useState } from 'react';
-import type { DataDataContextValue, EntityFieldEditorProps } from '../..';
+import type { EntityFieldEditorProps } from '../..';
 import { Button, DataDataContext, EntitySearch, IconButton, Modal, Row } from '../..';
 
 export type EntityItemFieldEditorProps = EntityFieldEditorProps<EntityReference>;
-
-interface InnerProps extends EntityItemFieldEditorProps {
-  useEntity: DataDataContextValue['useEntity'];
-}
 
 export function EntityItemFieldEditor({
   id,
@@ -16,34 +12,7 @@ export function EntityItemFieldEditor({
   fieldSpec,
   onChange,
 }: EntityItemFieldEditorProps): JSX.Element | null {
-  const context = useContext(DataDataContext);
-  if (!context) {
-    return null;
-  }
-  const { useEntity } = context;
-
-  return (
-    <EntityItemFieldEditorInner
-      {...{
-        id,
-        value,
-        schema,
-        fieldSpec,
-        onChange,
-        useEntity,
-      }}
-    />
-  );
-}
-
-function EntityItemFieldEditorInner({
-  id,
-  value,
-  schema,
-  fieldSpec,
-  onChange,
-  useEntity,
-}: InnerProps) {
+  const { useEntity } = useContext(DataDataContext);
   const [show, setShow] = useState(false);
   const handleShow = useCallback(() => setShow(true), [setShow]);
   const handleClose = useCallback(() => setShow(false), [setShow]);
