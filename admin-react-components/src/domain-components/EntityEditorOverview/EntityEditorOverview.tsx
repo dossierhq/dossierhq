@@ -1,7 +1,7 @@
 import type { Dispatch } from 'react';
 import React, { useCallback } from 'react';
 import type { EntityEditorState, EntityEditorStateAction } from '../..';
-import { AddEntityDraftAction, TypePicker } from '../..';
+import { AddEntityDraftAction, Button, Column, SetActiveEntityAction, TypePicker } from '../..';
 
 export interface EntityEditorOverviewProps {
   editorState: EntityEditorState;
@@ -16,9 +16,16 @@ export function EntityEditorOverview({
     (type: string) => dispatchEditorState(new AddEntityDraftAction({ newType: type })),
     [dispatchEditorState]
   );
+  const handleEntityClick = useCallback(
+    (entityId: string) => {
+      dispatchEditorState(new SetActiveEntityAction(entityId));
+      document.getElementById(entityId)?.scrollIntoView({ behavior: 'smooth' });
+    },
+    [dispatchEditorState]
+  );
 
   return (
-    <div>
+    <Column>
       <TypePicker
         id="create-entity-picker"
         text="Create"
@@ -26,10 +33,16 @@ export function EntityEditorOverview({
         onTypeSelected={handleCreateEntity}
       />
       {editorState.drafts.map((draft) => (
-        <div key={draft.id}>
-          <a href={`#${draft.id}`}>{draft.entity?.name ?? 'Unnamed'}</a>
-        </div>
+        <Button
+          key={draft.id}
+          selected={draft.id === editorState.activeEntityId}
+          rounded={false}
+          onClick={() => handleEntityClick(draft.id)}
+        >
+          <p className="dd text-subtitle2">{draft.entity?.entitySpec.name}</p>
+          <p className="dd text-body">{draft.entity?.name || '(Unnamed)'}</p>
+        </Button>
       ))}
-    </div>
+    </Column>
   );
 }

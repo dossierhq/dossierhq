@@ -34,6 +34,7 @@ export {
   AddEntityDraftAction,
   initializeEntityEditorState,
   reduceEntityEditorState,
+  SetActiveEntityAction,
 } from './domain-components/EntityEditor/EntityEditorReducer';
 export { EntityEditorContainer } from './domain-components/EntityEditorContainer/EntityEditorContainer';
 export { EntityEditorOverview } from './domain-components/EntityEditorOverview/EntityEditorOverview';
