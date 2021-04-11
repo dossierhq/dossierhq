@@ -48,13 +48,16 @@ function EntityMetadataInner({
   publishEntity,
   useEntityHistory,
 }: EntityMetadataInnerProps) {
-  const { entityHistory, entityHistoryError } = useEntityHistory(entityId);
-  const [selectedVersionId, setSelectedVersionId] = useState<number | null>(null);
-
   const draftState = editorState.drafts.find((x) => x.id === entityId);
   if (!draftState) {
     throw new Error(`Can't find state for id (${entityId})`);
   }
+
+  const { entityHistory, entityHistoryError } = useEntityHistory(
+    draftState.exists ? entityId : undefined
+  );
+  const [selectedVersionId, setSelectedVersionId] = useState<number | null>(null);
+
   const { entity } = draftState;
 
   const selectedVersion = entityHistory?.versions.find((x) => x.version === selectedVersionId);
@@ -93,7 +96,7 @@ function EntityMetadataInner({
               </Button>
             );
           })
-        ) : !entityHistoryError ? (
+        ) : !entityHistoryError && draftState.exists ? (
           <Loader />
         ) : null}
       </ColumnItem>

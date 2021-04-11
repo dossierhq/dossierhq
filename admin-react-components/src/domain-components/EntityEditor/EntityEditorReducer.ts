@@ -20,6 +20,7 @@ export interface EntityEditorDraftState {
   id: string;
   initMessage: MessageItem | null;
   entityLoadMessage: MessageItem | null;
+  exists: boolean;
   entity: null | {
     version: number;
     entitySpec: EntityTypeSpecification;
@@ -49,7 +50,9 @@ export class AddEntityDraftAction implements EntityEditorStateAction {
     const id = this.#entitySelector.id ?? uuidv4();
     let message: MessageItem | null = null;
     let entity: EntityEditorDraftState['entity'] = null;
+    let exists = true;
     if ('newType' in this.#entitySelector) {
+      exists = false;
       const type = this.#entitySelector.newType;
       const entitySpec = state.schema.getEntityTypeSpecification(type);
       if (entitySpec) {
@@ -67,6 +70,7 @@ export class AddEntityDraftAction implements EntityEditorStateAction {
       entityLoadMessage: null,
       id,
       entity,
+      exists,
     };
 
     return {
@@ -214,6 +218,22 @@ export class SetFieldAction extends EntityEditorDraftStateAction {
     if (index < 0) throw new Error(`Invalid field ${this.#field}`);
     fields[index] = { ...fields[index], value: this.#value };
     return { ...draftState, entity: { ...entity, fields } };
+  }
+}
+
+export class EntityUpsertedAction extends EntityEditorDraftStateAction {
+  constructor(id: string) {
+    super(id);
+  }
+
+  reduceDraft(
+    draftState: EntityEditorDraftState,
+    _state: EntityEditorState
+  ): EntityEditorDraftState {
+    if (draftState.exists) {
+      return draftState;
+    }
+    return { ...draftState, exists: true };
   }
 }
 
