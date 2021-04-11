@@ -2,6 +2,7 @@ import {
   Column,
   DataDataContext,
   EntitySearch,
+  Loader,
   TypePicker,
 } from '@datadata/admin-react-components';
 import type { AdminEntity } from '@datadata/core';
@@ -14,6 +15,10 @@ export default function EntitiesListPage(): JSX.Element {
   const { contextValue } = useInitializeContext();
   const handleCreateEntity = (type: string) => router.push(urls.editPageNew(type));
   const handleEntityClick = (entity: AdminEntity) => router.push(urls.editPage([entity.id]));
+
+  if (!contextValue) {
+    return <Loader />;
+  }
 
   return (
     <DataDataContext.Provider value={contextValue}>

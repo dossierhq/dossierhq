@@ -4,6 +4,7 @@ import {
   DataDataContext,
   EntityEditorContainer,
   initializeEntityEditorState,
+  Loader,
   reduceEntityEditorState,
 } from '@datadata/admin-react-components';
 import type { Schema } from '@datadata/core';
@@ -18,6 +19,10 @@ export interface EntityEditorPageProps {
 
 export function EntityEditorPage({ entitySelectors }: EntityEditorPageProps): JSX.Element {
   const { contextValue } = useInitializeContext();
+
+  if (!contextValue) {
+    return <Loader />;
+  }
 
   return (
     <DataDataContext.Provider value={contextValue}>
