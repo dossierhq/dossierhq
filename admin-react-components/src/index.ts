@@ -27,6 +27,10 @@ export {
   ColumnItem,
 } from './generic-components/Column/Column';
 export { DataDataContext, DataDataContextValue } from './contexts/DataDataContext';
+export {
+  EntityEditorDispatchContext,
+  EntityEditorStateContext,
+} from './contexts/EntityEditorState';
 export { Divider } from './generic-components/Divider/Divider';
 export { DropDown } from './generic-components/DropDown/DropDown';
 export { EntityEditor } from './domain-components/EntityEditor/EntityEditor';

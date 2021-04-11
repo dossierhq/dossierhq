@@ -1,23 +1,25 @@
 import type { Dispatch } from 'react';
-import React from 'react';
+import React, { useContext } from 'react';
 import type { EntityEditorState, EntityEditorStateAction } from '../..';
-import { EntityEditor, EntityEditorOverview, EntityMetadata } from '../..';
-import { SetActiveEntityAction } from '../EntityEditor/EntityEditorReducer';
+import {
+  EntityEditor,
+  EntityEditorDispatchContext,
+  EntityEditorStateContext,
+  EntityEditorOverview,
+  EntityMetadata,
+  SetActiveEntityAction,
+} from '../..';
 import { joinClassNames } from '../../utils/ClassNameUtils';
 import { findAscendantElement } from '../../utils/DOMUtils';
 import { useWindowEventListener } from '../../utils/EventUtils';
 
 export interface EntityEditorContainerProps {
   className?: string;
-  editorState: EntityEditorState;
-  dispatchEditorState: Dispatch<EntityEditorStateAction>;
 }
 
-export function EntityEditorContainer({
-  className,
-  editorState,
-  dispatchEditorState,
-}: EntityEditorContainerProps): JSX.Element {
+export function EntityEditorContainer({ className }: EntityEditorContainerProps): JSX.Element {
+  const editorState = useContext(EntityEditorStateContext);
+  const dispatchEditorState = useContext(EntityEditorDispatchContext);
   useEntityEditorFocused(editorState, dispatchEditorState);
 
   const { activeEntityId } = editorState;
