@@ -6,6 +6,8 @@ import {
   ColumnAs,
   DataDataContext,
   Divider,
+  EntityEditorDispatchContext,
+  EntityEditorStateContext,
   EntityFieldEditor,
   Form,
   FormField,
@@ -15,11 +17,7 @@ import {
   Row,
 } from '../..';
 import type { DataDataContextValue, MessageItem } from '../..';
-import type {
-  EntityEditorDraftState,
-  EntityEditorState,
-  EntityEditorStateAction,
-} from './EntityEditorReducer';
+import type { EntityEditorDraftState, EntityEditorStateAction } from './EntityEditorReducer';
 import {
   EntityUpsertedAction,
   ResetEntityAction,
@@ -31,8 +29,6 @@ import {
 
 export interface EntityEditorProps {
   entityId: string;
-  editorState: EntityEditorState;
-  dispatchEditorState: Dispatch<EntityEditorStateAction>;
 }
 
 interface EntityEditorInnerProps extends EntityEditorProps {
@@ -41,11 +37,10 @@ interface EntityEditorInnerProps extends EntityEditorProps {
   updateEntity: DataDataContextValue['updateEntity'];
 }
 
-export function EntityEditor({
-  entityId,
-  editorState,
-  dispatchEditorState,
-}: EntityEditorProps): JSX.Element | null {
+export function EntityEditor({ entityId }: EntityEditorProps): JSX.Element | null {
+  const editorState = useContext(EntityEditorStateContext);
+  const dispatchEditorState = useContext(EntityEditorDispatchContext);
+
   const draftState = editorState.drafts.find((x) => x.id === entityId);
   if (!draftState) {
     throw new Error(`Can't find state for id (${entityId})`);
@@ -111,11 +106,11 @@ export function EntityLoader({
 function EntityEditorInner({
   entityId,
   draftState,
-  editorState,
-  dispatchEditorState,
   createEntity,
   updateEntity,
 }: EntityEditorInnerProps): JSX.Element {
+  const editorState = useContext(EntityEditorStateContext);
+  const dispatchEditorState = useContext(EntityEditorDispatchContext);
   const [submitLoading, setSubmitLoading] = useState(false);
   const [submitMessage, setSubmitMessage] = useState<MessageItem | null>(null);
 

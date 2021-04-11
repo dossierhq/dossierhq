@@ -59,7 +59,7 @@ function Wrapper({
   return (
     <EntityEditorDispatchContext.Provider value={dispatchEditorState}>
       <EntityEditorStateContext.Provider value={editorState}>
-        <EntityEditorContainer {...{ className, editorState, dispatchEditorState }} />
+        <EntityEditorContainer className={className} />
       </EntityEditorStateContext.Provider>
     </EntityEditorDispatchContext.Provider>
   );
