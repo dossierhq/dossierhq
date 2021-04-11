@@ -165,14 +165,14 @@ describe('NewFoo', () => {
     expect(submit).toBeDisabled();
   });
 
-  test('getEntity is called once', async () => {
+  test('getEntity is not called', async () => {
     const contextAdapter = new TestContextAdapter();
     const getEntity = jest.spyOn(contextAdapter, 'getEntity');
     await act(async () => {
       render(renderStory(NewFoo, { contextAdapter }));
     });
 
-    expect(getEntity.mock.calls).toEqual([[NewFoo.args?.entitySelector?.id, null]]);
+    expect(getEntity.mock.calls).toEqual([]);
   });
 
   test('getEntity is not called after create (since cached)', async () => {
