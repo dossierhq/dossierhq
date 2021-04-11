@@ -18,7 +18,6 @@ const meta: Meta<RichTextFieldEditorStoryProps> = {
   args: {
     id: 'id-123',
     value: null,
-    schema,
   },
 };
 export default meta;

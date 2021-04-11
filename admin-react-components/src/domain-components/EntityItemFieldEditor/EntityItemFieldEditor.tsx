@@ -8,7 +8,6 @@ export type EntityItemFieldEditorProps = EntityFieldEditorProps<EntityReference>
 export function EntityItemFieldEditor({
   id,
   value,
-  schema,
   fieldSpec,
   onChange,
 }: EntityItemFieldEditorProps): JSX.Element | null {
