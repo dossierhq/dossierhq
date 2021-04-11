@@ -3,19 +3,19 @@ import React, { useCallback, useContext, useState } from 'react';
 import type { DataDataContextValue, EntityFieldEditorProps } from '../..';
 import { Button, DataDataContext, EntitySearch, IconButton, Modal, Row } from '../..';
 
-export type EntityPickerProps = EntityFieldEditorProps<EntityReference>;
+export type EntityItemFieldEditorProps = EntityFieldEditorProps<EntityReference>;
 
-interface InnerProps extends EntityPickerProps {
+interface InnerProps extends EntityItemFieldEditorProps {
   useEntity: DataDataContextValue['useEntity'];
 }
 
-export function EntityPicker({
+export function EntityItemFieldEditor({
   id,
   value,
   schema,
   fieldSpec,
   onChange,
-}: EntityPickerProps): JSX.Element | null {
+}: EntityItemFieldEditorProps): JSX.Element | null {
   const context = useContext(DataDataContext);
   if (!context) {
     return null;
@@ -23,7 +23,7 @@ export function EntityPicker({
   const { useEntity } = context;
 
   return (
-    <EntityPickerInner
+    <EntityItemFieldEditorInner
       {...{
         id,
         value,
@@ -36,7 +36,14 @@ export function EntityPicker({
   );
 }
 
-function EntityPickerInner({ id, value, schema, fieldSpec, onChange, useEntity }: InnerProps) {
+function EntityItemFieldEditorInner({
+  id,
+  value,
+  schema,
+  fieldSpec,
+  onChange,
+  useEntity,
+}: InnerProps) {
   const [show, setShow] = useState(false);
   const handleShow = useCallback(() => setShow(true), [setShow]);
   const handleClose = useCallback(() => setShow(false), [setShow]);

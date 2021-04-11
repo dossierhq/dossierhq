@@ -39,10 +39,10 @@ export { EntityEditorContainer } from './domain-components/EntityEditorContainer
 export { EntityEditorOverview } from './domain-components/EntityEditorOverview/EntityEditorOverview';
 export { EntityFieldEditor } from './domain-components/EntityFieldEditor/EntityFieldEditor';
 export { EntityFieldListWrapper } from './domain-components/EntityFieldListWrapper/EntityFieldListWrapper';
+export { EntityItemFieldEditor } from './domain-components/EntityItemFieldEditor/EntityItemFieldEditor';
 export { EntityList } from './domain-components/EntityList/EntityList';
 export { EntityMap } from './domain-components/EntityMap/EntityMap';
 export { EntityMetadata } from './domain-components/EntityMetadata/EntityMetadata';
-export { EntityPicker } from './domain-components/EntityPicker/EntityPicker';
 export { EntitySearch } from './domain-components/EntitySearch/EntitySearch';
 export { Form } from './generic-components/Form/Form';
 export { FormField } from './generic-components/FormField/FormField';

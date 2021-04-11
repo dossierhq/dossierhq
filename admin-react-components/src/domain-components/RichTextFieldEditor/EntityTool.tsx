@@ -8,7 +8,7 @@ import type {
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import type { DataDataContextValue } from '../..';
-import { DataDataContext, EntityPicker } from '../..';
+import { DataDataContext, EntityItemFieldEditor } from '../..';
 import icons from '../../icons';
 
 export interface EntityToolConfig {
@@ -89,7 +89,7 @@ function Wrapper({
 
   return (
     <DataDataContext.Provider value={context}>
-      <EntityPicker
+      <EntityItemFieldEditor
         {...{ id, fieldSpec, schema: context.schema }}
         value={value}
         onChange={setValue}
