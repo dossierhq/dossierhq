@@ -1470,19 +1470,6 @@ exports[`Storyshots Domain/EntityEditorContainer Invalid Type New Entity 1`] = `
       >
         Publish
       </button>
-      <div
-        className="dd message has-background has-shadow bg-danger"
-      >
-        <div
-          className="dd stack"
-        >
-          <p
-            className="dd text-body1"
-          >
-            NotFound: No such entity
-          </p>
-        </div>
-      </div>
     </div>
   </div>
 </div>
@@ -1907,19 +1894,6 @@ exports[`Storyshots Domain/EntityEditorContainer New Foo 1`] = `
       >
         Publish
       </button>
-      <div
-        className="dd message has-background has-shadow bg-danger"
-      >
-        <div
-          className="dd stack"
-        >
-          <p
-            className="dd text-body1"
-          >
-            NotFound: No such entity
-          </p>
-        </div>
-      </div>
     </div>
   </div>
 </div>
@@ -2035,19 +2009,6 @@ exports[`Storyshots Domain/EntityEditorContainer Not Found 1`] = `
       >
         Publish
       </button>
-      <div
-        className="dd message has-background has-shadow bg-danger"
-      >
-        <div
-          className="dd stack"
-        >
-          <p
-            className="dd text-body1"
-          >
-            NotFound: No such entity
-          </p>
-        </div>
-      </div>
     </div>
   </div>
 </div>

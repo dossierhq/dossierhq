@@ -257,19 +257,6 @@ exports[`Storyshots Domain/EntityMetadata New Foo 1`] = `
   >
     Publish
   </button>
-  <div
-    className="dd message has-background has-shadow bg-danger"
-  >
-    <div
-      className="dd stack"
-    >
-      <p
-        className="dd text-body1"
-      >
-        NotFound: No such entity
-      </p>
-    </div>
-  </div>
 </div>
 `;
 
