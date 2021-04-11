@@ -4,6 +4,7 @@ import type {
   FieldSpecification,
   Schema,
 } from '@datadata/core';
+import { ErrorType } from '@datadata/core';
 import isEqual from 'lodash/isEqual';
 import { v4 as uuidv4 } from 'uuid';
 import type { MessageItem } from '../../generic-components/Message/Message';
@@ -121,10 +122,12 @@ abstract class EntityEditorDraftStateAction implements EntityEditorStateAction {
 }
 
 export class SetMessageLoadMessageAction extends EntityEditorDraftStateAction {
+  #errorType: ErrorType | null;
   #message: MessageItem | null;
 
-  constructor(id: string, message: MessageItem | null) {
+  constructor(id: string, errorType: ErrorType | null, message: MessageItem | null) {
     super(id);
+    this.#errorType = errorType;
     this.#message = message;
   }
 
@@ -132,16 +135,15 @@ export class SetMessageLoadMessageAction extends EntityEditorDraftStateAction {
     draftState: EntityEditorDraftState,
     _state: EntityEditorState
   ): EntityEditorDraftState {
-    if (isEqual(draftState.entityLoadMessage, this.#message)) {
-      return draftState;
-    }
-    if (draftState.entity?.version === 0 && this.#message) {
-      // Skip loading entity error for new entity
+    const permanentError = this.#errorType === ErrorType.NotFound;
+    const changeExists = draftState.exists && permanentError;
+    if (isEqual(draftState.entityLoadMessage, this.#message) && !changeExists) {
       return draftState;
     }
     return {
       ...draftState,
       entityLoadMessage: this.#message,
+      ...(changeExists ? { exists: false } : undefined),
     };
   }
 }

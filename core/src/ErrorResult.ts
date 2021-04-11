@@ -89,9 +89,11 @@ export function createErrorResultFromError<TError extends ErrorType | ErrorType.
   error: ErrorResultError | Error,
   expectedErrorTypes: TError[] | null = null
 ): ErrorResult<unknown, TError | ErrorType.Generic> {
-  if (error instanceof ErrorResultError) {
-    if (!expectedErrorTypes || expectedErrorTypes.includes(error.errorType as TError)) {
-      return new ErrorResult<unknown, TError>(error.errorType as TError, error.errorMessage);
+  // For some reason instanceof doesn't always work, due to Next.js compilation?
+  if (error instanceof ErrorResultError || error.constructor.name === 'ErrorResultError') {
+    const e = error as ErrorResultError;
+    if (!expectedErrorTypes || expectedErrorTypes.includes(e.errorType as TError)) {
+      return new ErrorResult<unknown, TError>(e.errorType as TError, e.errorMessage);
     }
   }
   return notOk.Generic(error.message);
