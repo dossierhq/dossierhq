@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Storyshots Domain/EntityEditorOverview Normal 1`] = `
-<div>
+<div
+  className="dd flex-column"
+>
   <div>
     <button
       className="dd button has-background hoverable text-button is-rounded"
@@ -16,39 +18,77 @@ exports[`Storyshots Domain/EntityEditorOverview Normal 1`] = `
       />
     </button>
   </div>
-  <div>
-    <a
-      href="#fc66b4d7-61ff-44d4-8f68-cb7f526df046"
+  <button
+    className="dd button has-background hoverable text-button is-selected"
+    onClick={[Function]}
+    type="button"
+  >
+    <p
+      className="dd text-subtitle2"
+    >
+      Foo
+    </p>
+    <p
+      className="dd text-body"
     >
       Foo 1
-    </a>
-  </div>
-  <div>
-    <a
-      href="#cb228716-d3dd-444f-9a77-80443d436339"
+    </p>
+  </button>
+  <button
+    className="dd button has-background hoverable text-button"
+    onClick={[Function]}
+    type="button"
+  >
+    <p
+      className="dd text-subtitle2"
+    >
+      Bar
+    </p>
+    <p
+      className="dd text-body"
     >
       Bar 1
-    </a>
-  </div>
-  <div>
-    <a
-      href="#eb5732e2-b931-492b-82f1-f8fdd464f0d2"
+    </p>
+  </button>
+  <button
+    className="dd button has-background hoverable text-button"
+    onClick={[Function]}
+    type="button"
+  >
+    <p
+      className="dd text-subtitle2"
+    >
+      Bar
+    </p>
+    <p
+      className="dd text-body"
     >
       Bar 2
-    </a>
-  </div>
-  <div>
-    <a
-      href="#fb62be03-a0a9-4689-9987-bacee0e7692d"
+    </p>
+  </button>
+  <button
+    className="dd button has-background hoverable text-button"
+    onClick={[Function]}
+    type="button"
+  >
+    <p
+      className="dd text-subtitle2"
+    >
+      Foo
+    </p>
+    <p
+      className="dd text-body"
     >
       Foo deleted
-    </a>
-  </div>
+    </p>
+  </button>
 </div>
 `;
 
 exports[`Storyshots Domain/EntityEditorOverview Slow 1`] = `
-<div>
+<div
+  className="dd flex-column"
+>
   <div>
     <button
       className="dd button has-background hoverable text-button is-rounded"
@@ -63,33 +103,61 @@ exports[`Storyshots Domain/EntityEditorOverview Slow 1`] = `
       />
     </button>
   </div>
-  <div>
-    <a
-      href="#fc66b4d7-61ff-44d4-8f68-cb7f526df046"
+  <button
+    className="dd button has-background hoverable text-button is-selected"
+    onClick={[Function]}
+    type="button"
+  >
+    <p
+      className="dd text-subtitle2"
+    />
+    <p
+      className="dd text-body"
     >
-      Unnamed
-    </a>
-  </div>
-  <div>
-    <a
-      href="#cb228716-d3dd-444f-9a77-80443d436339"
+      (Unnamed)
+    </p>
+  </button>
+  <button
+    className="dd button has-background hoverable text-button"
+    onClick={[Function]}
+    type="button"
+  >
+    <p
+      className="dd text-subtitle2"
+    />
+    <p
+      className="dd text-body"
     >
-      Unnamed
-    </a>
-  </div>
-  <div>
-    <a
-      href="#eb5732e2-b931-492b-82f1-f8fdd464f0d2"
+      (Unnamed)
+    </p>
+  </button>
+  <button
+    className="dd button has-background hoverable text-button"
+    onClick={[Function]}
+    type="button"
+  >
+    <p
+      className="dd text-subtitle2"
+    />
+    <p
+      className="dd text-body"
     >
-      Unnamed
-    </a>
-  </div>
-  <div>
-    <a
-      href="#fb62be03-a0a9-4689-9987-bacee0e7692d"
+      (Unnamed)
+    </p>
+  </button>
+  <button
+    className="dd button has-background hoverable text-button"
+    onClick={[Function]}
+    type="button"
+  >
+    <p
+      className="dd text-subtitle2"
+    />
+    <p
+      className="dd text-body"
     >
-      Unnamed
-    </a>
-  </div>
+      (Unnamed)
+    </p>
+  </button>
 </div>
 `;

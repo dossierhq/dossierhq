@@ -1,8 +1,8 @@
 import type { Dispatch } from 'react';
-import React, { useCallback } from 'react';
+import React from 'react';
 import type { EntityEditorState, EntityEditorStateAction } from '../..';
-import { EntityEditor, EntityEditorOverview, EntityMetadata, TypePicker } from '../..';
-import { AddEntityDraftAction, SetActiveEntityAction } from '../EntityEditor/EntityEditorReducer';
+import { EntityEditor, EntityEditorOverview, EntityMetadata } from '../..';
+import { SetActiveEntityAction } from '../EntityEditor/EntityEditorReducer';
 import { joinClassNames } from '../../utils/ClassNameUtils';
 import { findAscendantElement } from '../../utils/DOMUtils';
 import { useWindowEventListener } from '../../utils/EventUtils';
@@ -19,17 +19,13 @@ export function EntityEditorContainer({
   dispatchEditorState,
 }: EntityEditorContainerProps): JSX.Element {
   useEntityEditorFocused(editorState, dispatchEditorState);
-  const handleCreateEntity = useCallback(
-    (type: string) => dispatchEditorState(new AddEntityDraftAction({ newType: type })),
-    [dispatchEditorState]
-  );
 
   const { activeEntityId } = editorState;
 
   return (
-    <div className={joinClassNames('dd flex-row g-2 overflow-hidden', className)}>
+    <div className={joinClassNames('dd flex-row overflow-hidden', className)}>
       <EntityEditorOverview {...{ editorState, dispatchEditorState }} />
-      <div className="dd flex-grow flex-column g-2 overflow-y-scroll">
+      <div className="dd flex-grow flex-column g-2 overflow-y-scroll px-3">
         {editorState.drafts.map((draftState) => (
           <EntityEditor
             key={draftState.id}
@@ -37,12 +33,6 @@ export function EntityEditorContainer({
             {...{ editorState, dispatchEditorState }}
           />
         ))}
-        <TypePicker
-          id="create-entity-picker"
-          text="Create entity"
-          showEntityTypes
-          onTypeSelected={handleCreateEntity}
-        />
       </div>
       <div>
         {activeEntityId ? (

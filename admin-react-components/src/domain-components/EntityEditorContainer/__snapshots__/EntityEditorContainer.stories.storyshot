@@ -2,9 +2,11 @@
 
 exports[`Storyshots Domain/EntityEditorContainer Deleted Foo 1`] = `
 <div
-  className="dd flex-row g-2 overflow-hidden position-fixed inset-0"
+  className="dd flex-row overflow-hidden position-fixed inset-0"
 >
-  <div>
+  <div
+    className="dd flex-column"
+  >
     <div>
       <button
         className="dd button has-background hoverable text-button is-rounded"
@@ -19,16 +21,25 @@ exports[`Storyshots Domain/EntityEditorContainer Deleted Foo 1`] = `
         />
       </button>
     </div>
-    <div>
-      <a
-        href="#fb62be03-a0a9-4689-9987-bacee0e7692d"
+    <button
+      className="dd button has-background hoverable text-button is-selected"
+      onClick={[Function]}
+      type="button"
+    >
+      <p
+        className="dd text-subtitle2"
+      >
+        Foo
+      </p>
+      <p
+        className="dd text-body"
       >
         Foo deleted
-      </a>
-    </div>
+      </p>
+    </button>
   </div>
   <div
-    className="dd flex-grow flex-column g-2 overflow-y-scroll"
+    className="dd flex-grow flex-column g-2 overflow-y-scroll px-3"
   >
     <div
       data-entityid="fb62be03-a0a9-4689-9987-bacee0e7692d"
@@ -351,20 +362,6 @@ exports[`Storyshots Domain/EntityEditorContainer Deleted Foo 1`] = `
         </div>
       </form>
     </div>
-    <div>
-      <button
-        className="dd button has-background hoverable text-button is-rounded"
-        id="create-entity-picker"
-        onClick={[Function]}
-        type="button"
-      >
-        Create entity
-         
-        <span
-          className="dd icon icon-chevron-down"
-        />
-      </button>
-    </div>
   </div>
   <div>
     <div
@@ -484,9 +481,11 @@ exports[`Storyshots Domain/EntityEditorContainer Deleted Foo 1`] = `
 
 exports[`Storyshots Domain/EntityEditorContainer Full Foo 1`] = `
 <div
-  className="dd flex-row g-2 overflow-hidden position-fixed inset-0"
+  className="dd flex-row overflow-hidden position-fixed inset-0"
 >
-  <div>
+  <div
+    className="dd flex-column"
+  >
     <div>
       <button
         className="dd button has-background hoverable text-button is-rounded"
@@ -501,16 +500,25 @@ exports[`Storyshots Domain/EntityEditorContainer Full Foo 1`] = `
         />
       </button>
     </div>
-    <div>
-      <a
-        href="#fc66b4d7-61ff-44d4-8f68-cb7f526df046"
+    <button
+      className="dd button has-background hoverable text-button is-selected"
+      onClick={[Function]}
+      type="button"
+    >
+      <p
+        className="dd text-subtitle2"
+      >
+        Foo
+      </p>
+      <p
+        className="dd text-body"
       >
         Foo 1
-      </a>
-    </div>
+      </p>
+    </button>
   </div>
   <div
-    className="dd flex-grow flex-column g-2 overflow-y-scroll"
+    className="dd flex-grow flex-column g-2 overflow-y-scroll px-3"
   >
     <div
       data-entityid="fc66b4d7-61ff-44d4-8f68-cb7f526df046"
@@ -1267,20 +1275,6 @@ exports[`Storyshots Domain/EntityEditorContainer Full Foo 1`] = `
         </div>
       </form>
     </div>
-    <div>
-      <button
-        className="dd button has-background hoverable text-button is-rounded"
-        id="create-entity-picker"
-        onClick={[Function]}
-        type="button"
-      >
-        Create entity
-         
-        <span
-          className="dd icon icon-chevron-down"
-        />
-      </button>
-    </div>
   </div>
   <div>
     <div
@@ -1373,9 +1367,11 @@ exports[`Storyshots Domain/EntityEditorContainer Full Foo 1`] = `
 
 exports[`Storyshots Domain/EntityEditorContainer Invalid Type New Entity 1`] = `
 <div
-  className="dd flex-row g-2 overflow-hidden position-fixed inset-0"
+  className="dd flex-row overflow-hidden position-fixed inset-0"
 >
-  <div>
+  <div
+    className="dd flex-column"
+  >
     <div>
       <button
         className="dd button has-background hoverable text-button is-rounded"
@@ -1390,16 +1386,23 @@ exports[`Storyshots Domain/EntityEditorContainer Invalid Type New Entity 1`] = `
         />
       </button>
     </div>
-    <div>
-      <a
-        href="#da4a48d6-341e-4515-941f-b83578191b51"
+    <button
+      className="dd button has-background hoverable text-button is-selected"
+      onClick={[Function]}
+      type="button"
+    >
+      <p
+        className="dd text-subtitle2"
+      />
+      <p
+        className="dd text-body"
       >
-        Unnamed
-      </a>
-    </div>
+        (Unnamed)
+      </p>
+    </button>
   </div>
   <div
-    className="dd flex-grow flex-column g-2 overflow-y-scroll"
+    className="dd flex-grow flex-column g-2 overflow-y-scroll px-3"
   >
     <div
       className="dd message has-background has-shadow bg-danger"
@@ -1413,20 +1416,6 @@ exports[`Storyshots Domain/EntityEditorContainer Invalid Type New Entity 1`] = `
           Can't create entity with unsupported type: InvalidType
         </p>
       </div>
-    </div>
-    <div>
-      <button
-        className="dd button has-background hoverable text-button is-rounded"
-        id="create-entity-picker"
-        onClick={[Function]}
-        type="button"
-      >
-        Create entity
-         
-        <span
-          className="dd icon icon-chevron-down"
-        />
-      </button>
     </div>
   </div>
   <div>
@@ -1501,9 +1490,11 @@ exports[`Storyshots Domain/EntityEditorContainer Invalid Type New Entity 1`] = `
 
 exports[`Storyshots Domain/EntityEditorContainer New Foo 1`] = `
 <div
-  className="dd flex-row g-2 overflow-hidden position-fixed inset-0"
+  className="dd flex-row overflow-hidden position-fixed inset-0"
 >
-  <div>
+  <div
+    className="dd flex-column"
+  >
     <div>
       <button
         className="dd button has-background hoverable text-button is-rounded"
@@ -1518,16 +1509,25 @@ exports[`Storyshots Domain/EntityEditorContainer New Foo 1`] = `
         />
       </button>
     </div>
-    <div>
-      <a
-        href="#82ded109-44f2-48b9-a676-43162fda3d7d"
+    <button
+      className="dd button has-background hoverable text-button is-selected"
+      onClick={[Function]}
+      type="button"
+    >
+      <p
+        className="dd text-subtitle2"
       >
-        
-      </a>
-    </div>
+        Foo
+      </p>
+      <p
+        className="dd text-body"
+      >
+        (Unnamed)
+      </p>
+    </button>
   </div>
   <div
-    className="dd flex-grow flex-column g-2 overflow-y-scroll"
+    className="dd flex-grow flex-column g-2 overflow-y-scroll px-3"
   >
     <div
       data-entityid="82ded109-44f2-48b9-a676-43162fda3d7d"
@@ -1850,20 +1850,6 @@ exports[`Storyshots Domain/EntityEditorContainer New Foo 1`] = `
         </div>
       </form>
     </div>
-    <div>
-      <button
-        className="dd button has-background hoverable text-button is-rounded"
-        id="create-entity-picker"
-        onClick={[Function]}
-        type="button"
-      >
-        Create entity
-         
-        <span
-          className="dd icon icon-chevron-down"
-        />
-      </button>
-    </div>
   </div>
   <div>
     <div
@@ -1941,9 +1927,11 @@ exports[`Storyshots Domain/EntityEditorContainer New Foo 1`] = `
 
 exports[`Storyshots Domain/EntityEditorContainer Not Found 1`] = `
 <div
-  className="dd flex-row g-2 overflow-hidden position-fixed inset-0"
+  className="dd flex-row overflow-hidden position-fixed inset-0"
 >
-  <div>
+  <div
+    className="dd flex-column"
+  >
     <div>
       <button
         className="dd button has-background hoverable text-button is-rounded"
@@ -1958,16 +1946,23 @@ exports[`Storyshots Domain/EntityEditorContainer Not Found 1`] = `
         />
       </button>
     </div>
-    <div>
-      <a
-        href="#c6f97fae-1213-4be0-996f-4f20c7da7e65"
+    <button
+      className="dd button has-background hoverable text-button is-selected"
+      onClick={[Function]}
+      type="button"
+    >
+      <p
+        className="dd text-subtitle2"
+      />
+      <p
+        className="dd text-body"
       >
-        Unnamed
-      </a>
-    </div>
+        (Unnamed)
+      </p>
+    </button>
   </div>
   <div
-    className="dd flex-grow flex-column g-2 overflow-y-scroll"
+    className="dd flex-grow flex-column g-2 overflow-y-scroll px-3"
   >
     <div
       className="dd message has-background has-shadow bg-danger"
@@ -1986,20 +1981,6 @@ exports[`Storyshots Domain/EntityEditorContainer Not Found 1`] = `
           NotFound: No such entity or version
         </p>
       </div>
-    </div>
-    <div>
-      <button
-        className="dd button has-background hoverable text-button is-rounded"
-        id="create-entity-picker"
-        onClick={[Function]}
-        type="button"
-      >
-        Create entity
-         
-        <span
-          className="dd icon icon-chevron-down"
-        />
-      </button>
     </div>
   </div>
   <div>
@@ -2074,9 +2055,11 @@ exports[`Storyshots Domain/EntityEditorContainer Not Found 1`] = `
 
 exports[`Storyshots Domain/EntityEditorContainer Slow Full Foo 1`] = `
 <div
-  className="dd flex-row g-2 overflow-hidden position-fixed inset-0"
+  className="dd flex-row overflow-hidden position-fixed inset-0"
 >
-  <div>
+  <div
+    className="dd flex-column"
+  >
     <div>
       <button
         className="dd button has-background hoverable text-button is-rounded"
@@ -2091,34 +2074,27 @@ exports[`Storyshots Domain/EntityEditorContainer Slow Full Foo 1`] = `
         />
       </button>
     </div>
-    <div>
-      <a
-        href="#fc66b4d7-61ff-44d4-8f68-cb7f526df046"
+    <button
+      className="dd button has-background hoverable text-button is-selected"
+      onClick={[Function]}
+      type="button"
+    >
+      <p
+        className="dd text-subtitle2"
+      />
+      <p
+        className="dd text-body"
       >
-        Unnamed
-      </a>
-    </div>
+        (Unnamed)
+      </p>
+    </button>
   </div>
   <div
-    className="dd flex-grow flex-column g-2 overflow-y-scroll"
+    className="dd flex-grow flex-column g-2 overflow-y-scroll px-3"
   >
     <div
       className="dd loader"
     />
-    <div>
-      <button
-        className="dd button has-background hoverable text-button is-rounded"
-        id="create-entity-picker"
-        onClick={[Function]}
-        type="button"
-      >
-        Create entity
-         
-        <span
-          className="dd icon icon-chevron-down"
-        />
-      </button>
-    </div>
   </div>
   <div>
     <div
@@ -2183,9 +2159,11 @@ exports[`Storyshots Domain/EntityEditorContainer Slow Full Foo 1`] = `
 
 exports[`Storyshots Domain/EntityEditorContainer Two Entities 1`] = `
 <div
-  className="dd flex-row g-2 overflow-hidden position-fixed inset-0"
+  className="dd flex-row overflow-hidden position-fixed inset-0"
 >
-  <div>
+  <div
+    className="dd flex-column"
+  >
     <div>
       <button
         className="dd button has-background hoverable text-button is-rounded"
@@ -2200,23 +2178,41 @@ exports[`Storyshots Domain/EntityEditorContainer Two Entities 1`] = `
         />
       </button>
     </div>
-    <div>
-      <a
-        href="#cb228716-d3dd-444f-9a77-80443d436339"
+    <button
+      className="dd button has-background hoverable text-button is-selected"
+      onClick={[Function]}
+      type="button"
+    >
+      <p
+        className="dd text-subtitle2"
+      >
+        Bar
+      </p>
+      <p
+        className="dd text-body"
       >
         Bar 1
-      </a>
-    </div>
-    <div>
-      <a
-        href="#eb5732e2-b931-492b-82f1-f8fdd464f0d2"
+      </p>
+    </button>
+    <button
+      className="dd button has-background hoverable text-button"
+      onClick={[Function]}
+      type="button"
+    >
+      <p
+        className="dd text-subtitle2"
+      >
+        Bar
+      </p>
+      <p
+        className="dd text-body"
       >
         Bar 2
-      </a>
-    </div>
+      </p>
+    </button>
   </div>
   <div
-    className="dd flex-grow flex-column g-2 overflow-y-scroll"
+    className="dd flex-grow flex-column g-2 overflow-y-scroll px-3"
   >
     <div
       data-entityid="cb228716-d3dd-444f-9a77-80443d436339"
@@ -2381,20 +2377,6 @@ exports[`Storyshots Domain/EntityEditorContainer Two Entities 1`] = `
           </button>
         </div>
       </form>
-    </div>
-    <div>
-      <button
-        className="dd button has-background hoverable text-button is-rounded"
-        id="create-entity-picker"
-        onClick={[Function]}
-        type="button"
-      >
-        Create entity
-         
-        <span
-          className="dd icon icon-chevron-down"
-        />
-      </button>
     </div>
   </div>
   <div>
