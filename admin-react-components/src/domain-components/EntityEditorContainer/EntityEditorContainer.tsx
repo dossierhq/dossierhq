@@ -1,11 +1,11 @@
 import type { Dispatch } from 'react';
 import React, { useCallback } from 'react';
 import type { EntityEditorState, EntityEditorStateAction } from '../..';
-import { EntityEditor, EntityMetadata } from '../..';
-import { TypePicker } from '../TypePicker/TypePicker';
+import { EntityEditor, EntityMetadata, TypePicker } from '../..';
 import { AddEntityDraftAction, SetActiveEntityAction } from '../EntityEditor/EntityEditorReducer';
-import { useWindowEventListener } from '../../utils/EventUtils';
 import { joinClassNames } from '../../utils/ClassNameUtils';
+import { findAscendantElement } from '../../utils/DOMUtils';
+import { useWindowEventListener } from '../../utils/EventUtils';
 
 export interface EntityEditorContainerProps {
   className?: string;
@@ -58,18 +58,10 @@ function useEntityEditorFocused(
 ) {
   useWindowEventListener('focusin', (event) => {
     if (event.target instanceof HTMLElement) {
-      for (
-        let element: HTMLElement | null = event.target;
-        element;
-        element = element.parentElement
-      ) {
-        const entityId = element.dataset.entityid;
-        if (entityId) {
-          if (entityId !== editorState.activeEntityId) {
-            dispatchEditorState(new SetActiveEntityAction(entityId));
-          }
-          break;
-        }
+      const editorElement = findAscendantElement(event.target, (el) => !!el.dataset.entityid);
+      const focusedEntityId = editorElement?.dataset.entityid;
+      if (focusedEntityId && focusedEntityId !== editorState.activeEntityId) {
+        dispatchEditorState(new SetActiveEntityAction(focusedEntityId));
       }
     }
   });
