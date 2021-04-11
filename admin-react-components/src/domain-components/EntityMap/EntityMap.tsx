@@ -1,7 +1,6 @@
 import type { AdminEntity, AdminQuery, BoundingBox, Location, Schema } from '@datadata/core';
 import { isLocationItemField, visitItemRecursively } from '@datadata/core';
 import React, { useContext, useEffect, useState } from 'react';
-import type { DataDataContextValue } from '../..';
 import { DataDataContext, MapContainer } from '../..';
 
 export interface EntityMapProps {
@@ -10,27 +9,8 @@ export interface EntityMapProps {
   onEntityClick: (entity: AdminEntity) => void;
 }
 
-interface InnerProps extends EntityMapProps {
-  schema: Schema;
-  useSearchEntities: DataDataContextValue['useSearchEntities'];
-}
-
 export function EntityMap({ className, query, onEntityClick }: EntityMapProps): JSX.Element | null {
-  const context = useContext(DataDataContext);
-  if (!context) {
-    return null;
-  }
-  const { schema, useSearchEntities } = context;
-  return <EntityMapInner {...{ className, query, schema, useSearchEntities, onEntityClick }} />;
-}
-
-function EntityMapInner({
-  className,
-  query,
-  schema,
-  useSearchEntities,
-  onEntityClick,
-}: InnerProps) {
+  const { schema, useSearchEntities } = useContext(DataDataContext);
   const [currentQuery, setCurrentQuery] = useState<AdminQuery | undefined>(undefined);
   const [boundingBox, setBoundingBox] = useState<BoundingBox | null>(null);
   const { connection, connectionError } = useSearchEntities(currentQuery);

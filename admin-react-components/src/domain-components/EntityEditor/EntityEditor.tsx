@@ -46,17 +46,12 @@ export function EntityEditor({
   editorState,
   dispatchEditorState,
 }: EntityEditorProps): JSX.Element | null {
-  const context = useContext(DataDataContext);
-  if (!context) {
-    return <Loader />;
-  }
-
   const draftState = editorState.drafts.find((x) => x.id === entityId);
   if (!draftState) {
     throw new Error(`Can't find state for id (${entityId})`);
   }
 
-  const { useEntity, createEntity, updateEntity } = context;
+  const { useEntity, createEntity, updateEntity } = useContext(DataDataContext);
 
   return (
     <>

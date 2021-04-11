@@ -22,17 +22,14 @@ export function TypePicker({
   valueTypes,
   onTypeSelected,
 }: TypePickerProps): JSX.Element {
-  const context = useContext(DataDataContext);
+  const { schema } = useContext(DataDataContext);
 
   const items: DropDownItem[] = [];
-  if (context) {
-    const { schema } = context;
-    if (showEntityTypes) {
-      items.push(...gatherItems(schema.spec.entityTypes, entityTypes));
-    }
-    if (showValueTypes) {
-      items.push(...gatherItems(schema.spec.valueTypes, valueTypes));
-    }
+  if (showEntityTypes) {
+    items.push(...gatherItems(schema.spec.entityTypes, entityTypes));
+  }
+  if (showValueTypes) {
+    items.push(...gatherItems(schema.spec.valueTypes, valueTypes));
   }
 
   return (

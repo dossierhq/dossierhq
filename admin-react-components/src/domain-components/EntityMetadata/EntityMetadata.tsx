@@ -10,49 +10,17 @@ export interface EntityMetadataProps {
   editorState: EntityEditorState;
 }
 
-interface EntityMetadataInnerProps extends EntityMetadataProps {
-  publishEntity: DataDataContextValue['publishEntity'];
-  useEntityHistory: DataDataContextValue['useEntityHistory'];
-}
-
 export function EntityMetadata({
   entityId,
   className,
   editorState,
 }: EntityMetadataProps): JSX.Element {
-  const context = useContext(DataDataContext);
-
-  if (!context) {
-    return <Loader />;
-  }
-
-  const { publishEntity, useEntityHistory } = context;
-
-  return (
-    <EntityMetadataInner
-      {...{
-        entityId,
-        className,
-        editorState,
-        publishEntity,
-        useEntityHistory,
-      }}
-    />
-  );
-}
-
-function EntityMetadataInner({
-  entityId,
-  className,
-  editorState,
-  publishEntity,
-  useEntityHistory,
-}: EntityMetadataInnerProps) {
   const draftState = editorState.drafts.find((x) => x.id === entityId);
   if (!draftState) {
     throw new Error(`Can't find state for id (${entityId})`);
   }
 
+  const { publishEntity, useEntityHistory } = useContext(DataDataContext);
   const { entityHistory, entityHistoryError } = useEntityHistory(
     draftState.exists ? entityId : undefined
   );
