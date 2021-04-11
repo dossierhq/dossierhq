@@ -32,7 +32,7 @@ Check that the same versions of dependencies are used, run `rush check`.
 - Update node version in `.nvmrc` and `.github/workflows/nodejs.yml`
 - Update `rushVersion` and `pnpmVersion` in `rush.json` (`npm show @microsoft/rush version`/`npm show pnpm version`)
 - `npm run upgrade-dependencies:all`
-- `rush update`
+- `rush update --full`
 - `rush check`
 - `rush ci:check`
 - Exceptions:

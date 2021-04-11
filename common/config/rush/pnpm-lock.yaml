@@ -6935,7 +6935,7 @@ packages:
       integrity: sha1-+8cfDEGt6zf5bFd60e1C2P2sypE=
   /fork-ts-checker-webpack-plugin/4.1.6:
     dependencies:
-      '@babel/code-frame': 7.12.13
+      '@babel/code-frame': 7.10.4
       chalk: 2.4.2
       micromatch: 3.1.10
       minimatch: 3.0.4
