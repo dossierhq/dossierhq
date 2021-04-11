@@ -3,6 +3,8 @@ import {
   AddEntityDraftAction,
   DataDataContext,
   EntityEditorContainer,
+  EntityEditorDispatchContext,
+  EntityEditorStateContext,
   initializeEntityEditorState,
   Loader,
   reduceEntityEditorState,
@@ -26,9 +28,7 @@ export function EntityEditorPage({ entitySelectors }: EntityEditorPageProps): JS
 
   return (
     <DataDataContext.Provider value={contextValue}>
-      {contextValue ? (
-        <EntityEditorPageInner schema={contextValue.schema} entitySelectors={entitySelectors} />
-      ) : null}
+      <EntityEditorPageInner schema={contextValue.schema} entitySelectors={entitySelectors} />
     </DataDataContext.Provider>
   );
 }
@@ -56,9 +56,13 @@ function EntityEditorPageInner({
   }, [ids, router]);
 
   return (
-    <EntityEditorContainer
-      className="position-fixed inset-0"
-      {...{ editorState, dispatchEditorState }}
-    />
+    <EntityEditorDispatchContext.Provider value={dispatchEditorState}>
+      <EntityEditorStateContext.Provider value={editorState}>
+        <EntityEditorContainer
+          className="position-fixed inset-0"
+          {...{ editorState, dispatchEditorState }}
+        />
+      </EntityEditorStateContext.Provider>
+    </EntityEditorDispatchContext.Provider>
   );
 }

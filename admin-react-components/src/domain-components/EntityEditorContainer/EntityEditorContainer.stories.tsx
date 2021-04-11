@@ -2,8 +2,12 @@ import type { Schema } from '@datadata/core';
 import type { Meta, Story } from '@storybook/react/types-6-0';
 import React, { useReducer } from 'react';
 import type { EntityEditorSelector } from '../..';
-import { DataDataContext } from '../..';
-import { EntityEditorContainer } from './EntityEditorContainer';
+import {
+  DataDataContext,
+  EntityEditorContainer,
+  EntityEditorDispatchContext,
+  EntityEditorStateContext,
+} from '../..';
 import type { EntityEditorContainerProps } from './EntityEditorContainer';
 import {
   createContextValue,
@@ -52,7 +56,13 @@ function Wrapper({
     { schema, actions: entitySelectors?.map((x) => new AddEntityDraftAction(x)) },
     initializeEntityEditorState
   );
-  return <EntityEditorContainer {...{ className, editorState, dispatchEditorState }} />;
+  return (
+    <EntityEditorDispatchContext.Provider value={dispatchEditorState}>
+      <EntityEditorStateContext.Provider value={editorState}>
+        <EntityEditorContainer {...{ className, editorState, dispatchEditorState }} />
+      </EntityEditorStateContext.Provider>
+    </EntityEditorDispatchContext.Provider>
+  );
 }
 
 export const NewFoo = Template.bind({});
