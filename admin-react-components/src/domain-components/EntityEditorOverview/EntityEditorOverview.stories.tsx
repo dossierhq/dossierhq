@@ -2,7 +2,7 @@ import type { Schema } from '@datadata/core';
 import type { Meta, Story } from '@storybook/react/types-6-0';
 import React, { useReducer } from 'react';
 import type { DataDataContextValue, EntityEditorSelector } from '../..';
-import { DataDataContext } from '../..';
+import { DataDataContext, EntityEditorDispatchContext, EntityEditorStateContext } from '../..';
 import { EntityEditorOverview } from './EntityEditorOverview';
 import type { EntityEditorOverviewProps } from './EntityEditorOverview';
 import {
@@ -39,7 +39,6 @@ const Template: Story<StoryProps> = (args) => {
 };
 
 function Wrapper({
-  className,
   entitySelectors,
   schema,
   useEntity,
@@ -57,12 +56,16 @@ function Wrapper({
   // EntityLoader is needed since we don't use any EntityEditor here
 
   return (
-    <>
-      {entitySelectors?.map(({ id }) =>
-        id ? <EntityLoader key={id} entityId={id} {...{ useEntity, dispatchEditorState }} /> : null
-      )}
-      <EntityEditorOverview {...{ className, editorState, dispatchEditorState }} />
-    </>
+    <EntityEditorDispatchContext.Provider value={dispatchEditorState}>
+      <EntityEditorStateContext.Provider value={editorState}>
+        {entitySelectors?.map(({ id }) =>
+          id ? (
+            <EntityLoader key={id} entityId={id} {...{ useEntity, dispatchEditorState }} />
+          ) : null
+        )}
+        <EntityEditorOverview />
+      </EntityEditorStateContext.Provider>
+    </EntityEditorDispatchContext.Provider>
   );
 }
 

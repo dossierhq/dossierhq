@@ -5,6 +5,8 @@ import type { DataDataContextValue, EntityEditorSelector } from '../..';
 import {
   AddEntityDraftAction,
   DataDataContext,
+  EntityEditorDispatchContext,
+  EntityEditorStateContext,
   EntityMetadata,
   initializeEntityEditorState,
   reduceEntityEditorState,
@@ -64,10 +66,15 @@ function Wrapper({
 
   // EntityLoader is needed since we don't use any EntityEditor here
   return (
-    <>
-      <EntityLoader entityId={draftState.id} {...{ editorState, dispatchEditorState, useEntity }} />
-      <EntityMetadata entityId={draftState.id} {...{ className, editorState }} />
-    </>
+    <EntityEditorDispatchContext.Provider value={dispatchEditorState}>
+      <EntityEditorStateContext.Provider value={editorState}>
+        <EntityLoader
+          entityId={draftState.id}
+          {...{ editorState, dispatchEditorState, useEntity }}
+        />
+        <EntityMetadata entityId={draftState.id} {...{ className, editorState }} />
+      </EntityEditorStateContext.Provider>
+    </EntityEditorDispatchContext.Provider>
   );
 }
 

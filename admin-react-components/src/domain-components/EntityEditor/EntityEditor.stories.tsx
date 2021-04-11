@@ -6,6 +6,8 @@ import {
   AddEntityDraftAction,
   DataDataContext,
   EntityEditor,
+  EntityEditorDispatchContext,
+  EntityEditorStateContext,
   initializeEntityEditorState,
   reduceEntityEditorState,
 } from '../..';
@@ -55,11 +57,11 @@ function Wrapper({
   const draftState = editorState.drafts[0];
 
   return (
-    <EntityEditor
-      entityId={draftState.id}
-      editorState={editorState}
-      dispatchEditorState={dispatchEditorState}
-    />
+    <EntityEditorDispatchContext.Provider value={dispatchEditorState}>
+      <EntityEditorStateContext.Provider value={editorState}>
+        <EntityEditor entityId={draftState.id} />
+      </EntityEditorStateContext.Provider>
+    </EntityEditorDispatchContext.Provider>
   );
 }
 

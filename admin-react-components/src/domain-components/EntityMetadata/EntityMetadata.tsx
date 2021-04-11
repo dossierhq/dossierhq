@@ -1,20 +1,25 @@
 import type { AdminEntityVersionInfo } from '@datadata/core';
 import React, { useContext, useState } from 'react';
-import type { DataDataContextValue, EntityEditorState } from '../..';
-import { Button, Column, ColumnItem, DataDataContext, Loader, Message, Tag } from '../..';
+import type { DataDataContextValue } from '../..';
+import {
+  Button,
+  Column,
+  ColumnItem,
+  DataDataContext,
+  EntityEditorStateContext,
+  Loader,
+  Message,
+  Tag,
+} from '../..';
 import { joinClassNames } from '../../utils/ClassNameUtils';
 
 export interface EntityMetadataProps {
   entityId: string;
   className?: string;
-  editorState: EntityEditorState;
 }
 
-export function EntityMetadata({
-  entityId,
-  className,
-  editorState,
-}: EntityMetadataProps): JSX.Element {
+export function EntityMetadata({ entityId, className }: EntityMetadataProps): JSX.Element {
+  const editorState = useContext(EntityEditorStateContext);
   const draftState = editorState.drafts.find((x) => x.id === entityId);
   if (!draftState) {
     throw new Error(`Can't find state for id (${entityId})`);

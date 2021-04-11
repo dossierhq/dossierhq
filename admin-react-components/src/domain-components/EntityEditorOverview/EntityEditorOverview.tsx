@@ -1,17 +1,22 @@
-import type { Dispatch } from 'react';
+import { useContext } from 'react';
 import React, { useCallback } from 'react';
-import type { EntityEditorState, EntityEditorStateAction } from '../..';
-import { AddEntityDraftAction, Button, Column, SetActiveEntityAction, TypePicker } from '../..';
+import {
+  AddEntityDraftAction,
+  Button,
+  Column,
+  EntityEditorDispatchContext,
+  EntityEditorStateContext,
+  SetActiveEntityAction,
+  TypePicker,
+} from '../..';
 
-export interface EntityEditorOverviewProps {
-  editorState: EntityEditorState;
-  dispatchEditorState: Dispatch<EntityEditorStateAction>;
-}
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface EntityEditorOverviewProps {}
 
-export function EntityEditorOverview({
-  editorState,
-  dispatchEditorState,
-}: EntityEditorOverviewProps): JSX.Element {
+export function EntityEditorOverview(): JSX.Element {
+  const editorState = useContext(EntityEditorStateContext);
+  const dispatchEditorState = useContext(EntityEditorDispatchContext);
+
   const handleCreateEntity = useCallback(
     (type: string) => dispatchEditorState(new AddEntityDraftAction({ newType: type })),
     [dispatchEditorState]
