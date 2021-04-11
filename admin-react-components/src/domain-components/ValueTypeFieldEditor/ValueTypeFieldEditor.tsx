@@ -62,7 +62,6 @@ export function ValueTypeFieldEditor({ id, value, fieldSpec, onChange }: Props):
           <EntityFieldEditor
             idPrefix={id}
             key={valueFieldSpec.name}
-            schema={schema}
             fieldSpec={valueFieldSpec}
             value={value[valueFieldSpec.name]}
             onValueChanged={handleFieldChanged}

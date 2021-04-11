@@ -1,5 +1,5 @@
 import React from 'react';
-import type { FieldSpecification, Schema } from '@datadata/core';
+import type { FieldSpecification } from '@datadata/core';
 import {
   isEntityTypeField,
   isEntityTypeListField,
@@ -24,7 +24,6 @@ import {
 
 interface Props {
   idPrefix: string;
-  schema: Schema;
   fieldSpec: FieldSpecification;
   value: unknown;
   onValueChanged: (value: unknown) => void;

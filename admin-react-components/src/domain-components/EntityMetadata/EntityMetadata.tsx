@@ -19,8 +19,8 @@ export interface EntityMetadataProps {
 }
 
 export function EntityMetadata({ entityId, className }: EntityMetadataProps): JSX.Element {
-  const editorState = useContext(EntityEditorStateContext);
-  const draftState = editorState.drafts.find((x) => x.id === entityId);
+  const { drafts } = useContext(EntityEditorStateContext);
+  const draftState = drafts.find((x) => x.id === entityId);
   if (!draftState) {
     throw new Error(`Can't find state for id (${entityId})`);
   }

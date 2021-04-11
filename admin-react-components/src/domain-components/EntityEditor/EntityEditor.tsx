@@ -38,27 +38,22 @@ interface EntityEditorInnerProps extends EntityEditorProps {
 }
 
 export function EntityEditor({ entityId }: EntityEditorProps): JSX.Element | null {
-  const editorState = useContext(EntityEditorStateContext);
-  const dispatchEditorState = useContext(EntityEditorDispatchContext);
+  const { drafts } = useContext(EntityEditorStateContext);
 
-  const draftState = editorState.drafts.find((x) => x.id === entityId);
+  const draftState = drafts.find((x) => x.id === entityId);
   if (!draftState) {
     throw new Error(`Can't find state for id (${entityId})`);
   }
 
-  const { useEntity, createEntity, updateEntity } = useContext(DataDataContext);
+  const { createEntity, updateEntity } = useContext(DataDataContext);
 
   return (
     <>
-      {draftState.exists ? (
-        <EntityLoader {...{ entityId, useEntity, dispatchEditorState }} />
-      ) : null}
+      {draftState.exists ? <EntityLoader entityId={entityId} /> : null}
       <EntityEditorInner
         {...{
           entityId,
           draftState,
-          editorState,
-          dispatchEditorState,
           createEntity,
           updateEntity,
         }}
@@ -67,15 +62,9 @@ export function EntityEditor({ entityId }: EntityEditorProps): JSX.Element | nul
   );
 }
 
-export function EntityLoader({
-  entityId,
-  useEntity,
-  dispatchEditorState,
-}: {
-  entityId: string;
-  useEntity: DataDataContextValue['useEntity'];
-  dispatchEditorState: Dispatch<EntityEditorStateAction>;
-}): null {
+export function EntityLoader({ entityId }: { entityId: string }): null {
+  const { useEntity } = useContext(DataDataContext);
+  const dispatchEditorState = useContext(EntityEditorDispatchContext);
   const { entity, entityError } = useEntity(entityId);
 
   useEffect(() => {
@@ -109,7 +98,6 @@ function EntityEditorInner({
   createEntity,
   updateEntity,
 }: EntityEditorInnerProps): JSX.Element {
-  const editorState = useContext(EntityEditorStateContext);
   const dispatchEditorState = useContext(EntityEditorDispatchContext);
   const [submitLoading, setSubmitLoading] = useState(false);
   const [submitMessage, setSubmitMessage] = useState<MessageItem | null>(null);
@@ -164,7 +152,6 @@ function EntityEditorInner({
             <EntityFieldEditor
               idPrefix={entityId}
               key={fieldSpec.name}
-              schema={editorState.schema}
               fieldSpec={fieldSpec}
               value={value}
               onValueChanged={handleFieldChanged}

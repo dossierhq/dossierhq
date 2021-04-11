@@ -14,7 +14,7 @@ import {
 export interface EntityEditorOverviewProps {}
 
 export function EntityEditorOverview(): JSX.Element {
-  const editorState = useContext(EntityEditorStateContext);
+  const { activeEntityId, drafts } = useContext(EntityEditorStateContext);
   const dispatchEditorState = useContext(EntityEditorDispatchContext);
 
   const handleCreateEntity = useCallback(
@@ -37,10 +37,10 @@ export function EntityEditorOverview(): JSX.Element {
         showEntityTypes
         onTypeSelected={handleCreateEntity}
       />
-      {editorState.drafts.map((draft) => (
+      {drafts.map((draft) => (
         <Button
           key={draft.id}
-          selected={draft.id === editorState.activeEntityId}
+          selected={draft.id === activeEntityId}
           rounded={false}
           onClick={() => handleEntityClick(draft.id)}
         >

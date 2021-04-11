@@ -1,7 +1,7 @@
 import type { Schema } from '@datadata/core';
 import type { Meta, Story } from '@storybook/react/types-6-0';
 import React, { useReducer } from 'react';
-import type { DataDataContextValue, EntityEditorSelector } from '../..';
+import type { EntityEditorSelector } from '../..';
 import {
   AddEntityDraftAction,
   DataDataContext,
@@ -20,7 +20,7 @@ import {
   TestContextAdapter,
 } from '../../test/TestContextAdapter';
 
-export type EntityMetadataStoryProps = Omit<EntityMetadataProps, 'entityId' | 'editorState'> & {
+export type EntityMetadataStoryProps = Omit<EntityMetadataProps, 'entityId'> & {
   entitySelector: EntityEditorSelector;
   contextAdapter?: TestContextAdapter;
 };
@@ -40,7 +40,6 @@ const Template: Story<EntityMetadataStoryProps> = (args) => {
         className={args.className}
         entitySelector={args.entitySelector}
         schema={contextValue.schema}
-        useEntity={contextValue.useEntity}
       />
     </DataDataContext.Provider>
   );
@@ -50,12 +49,10 @@ function Wrapper({
   className,
   entitySelector,
   schema,
-  useEntity,
 }: {
   className?: string;
   entitySelector: EntityEditorSelector;
   schema: Schema;
-  useEntity: DataDataContextValue['useEntity'];
 }) {
   const [editorState, dispatchEditorState] = useReducer(
     reduceEntityEditorState,
@@ -68,11 +65,8 @@ function Wrapper({
   return (
     <EntityEditorDispatchContext.Provider value={dispatchEditorState}>
       <EntityEditorStateContext.Provider value={editorState}>
-        <EntityLoader
-          entityId={draftState.id}
-          {...{ editorState, dispatchEditorState, useEntity }}
-        />
-        <EntityMetadata entityId={draftState.id} {...{ className, editorState }} />
+        <EntityLoader entityId={draftState.id} />
+        <EntityMetadata entityId={draftState.id} className={className} />
       </EntityEditorStateContext.Provider>
     </EntityEditorDispatchContext.Provider>
   );
