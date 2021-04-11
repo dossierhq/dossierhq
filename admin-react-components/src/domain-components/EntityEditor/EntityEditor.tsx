@@ -98,6 +98,7 @@ export function EntityLoader({
     dispatchEditorState(
       new SetMessageLoadMessageAction(
         entityId,
+        entityError?.error ?? null,
         entityError
           ? {
               kind: 'danger',
