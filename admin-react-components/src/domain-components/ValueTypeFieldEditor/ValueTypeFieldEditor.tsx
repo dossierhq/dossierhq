@@ -1,17 +1,20 @@
 import type { ValueItem } from '@datadata/core';
-import React, { useCallback } from 'react';
+import React, { useCallback, useContext } from 'react';
 import type { EntityFieldEditorProps } from '../..';
-import { EntityFieldEditor, IconButton, Row, RowItem, Segment, TypePicker } from '../..';
+import {
+  DataDataContext,
+  EntityFieldEditor,
+  IconButton,
+  Row,
+  RowItem,
+  Segment,
+  TypePicker,
+} from '../..';
 
 type Props = EntityFieldEditorProps<ValueItem>;
 
-export function ValueTypeFieldEditor({
-  id,
-  value,
-  schema,
-  fieldSpec,
-  onChange,
-}: Props): JSX.Element {
+export function ValueTypeFieldEditor({ id, value, fieldSpec, onChange }: Props): JSX.Element {
+  const { schema } = useContext(DataDataContext);
   const handleRemove = useCallback(() => onChange?.(null), [onChange]);
 
   if (!value) {

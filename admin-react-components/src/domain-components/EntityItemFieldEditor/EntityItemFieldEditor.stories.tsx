@@ -13,7 +13,6 @@ const meta: Meta<EntityItemFieldEditorProps> = {
   args: {
     id: 'id-123',
     value: null,
-    schema,
   },
 };
 export default meta;

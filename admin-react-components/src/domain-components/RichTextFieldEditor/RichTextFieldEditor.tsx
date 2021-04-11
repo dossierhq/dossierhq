@@ -44,7 +44,6 @@ function RichTextEditor({
   id,
   value,
   fieldSpec,
-  schema: _,
   context,
   onChange,
 }: RichTextFieldEditorProps & { context: DataDataContextValue }) {

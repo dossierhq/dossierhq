@@ -33,14 +33,12 @@ interface Props {
 export interface EntityFieldEditorProps<T> {
   id: string;
   value: T | null;
-  schema: Schema;
   fieldSpec: FieldSpecification;
   onChange?: (value: T | null) => void;
 }
 
 export function EntityFieldEditor({
   idPrefix,
-  schema,
   fieldSpec,
   value,
   onValueChanged,
@@ -50,20 +48,13 @@ export function EntityFieldEditor({
   let editor;
   if (isStringField(fieldSpec, value)) {
     editor = (
-      <StringFieldEditor
-        id={id}
-        value={value}
-        schema={schema}
-        fieldSpec={fieldSpec}
-        onChange={onValueChanged}
-      />
+      <StringFieldEditor id={id} value={value} fieldSpec={fieldSpec} onChange={onValueChanged} />
     );
   } else if (isStringListField(fieldSpec, value)) {
     editor = (
       <EntityFieldListWrapper
         id={id}
         value={value}
-        schema={schema}
         fieldSpec={fieldSpec}
         onChange={onValueChanged}
         Editor={StringFieldEditor}
@@ -71,20 +62,13 @@ export function EntityFieldEditor({
     );
   } else if (isRichTextField(fieldSpec, value)) {
     editor = (
-      <RichTextFieldEditor
-        id={id}
-        value={value}
-        schema={schema}
-        fieldSpec={fieldSpec}
-        onChange={onValueChanged}
-      />
+      <RichTextFieldEditor id={id} value={value} fieldSpec={fieldSpec} onChange={onValueChanged} />
     );
   } else if (isRichTextListField(fieldSpec, value)) {
     editor = (
       <EntityFieldListWrapper
         id={id}
         value={value}
-        schema={schema}
         fieldSpec={fieldSpec}
         onChange={onValueChanged}
         Editor={RichTextFieldEditor}
@@ -92,20 +76,13 @@ export function EntityFieldEditor({
     );
   } else if (isLocationField(fieldSpec, value)) {
     editor = (
-      <LocationFieldEditor
-        id={id}
-        value={value}
-        schema={schema}
-        fieldSpec={fieldSpec}
-        onChange={onValueChanged}
-      />
+      <LocationFieldEditor id={id} value={value} fieldSpec={fieldSpec} onChange={onValueChanged} />
     );
   } else if (isLocationListField(fieldSpec, value)) {
     editor = (
       <EntityFieldListWrapper
         id={id}
         value={value}
-        schema={schema}
         fieldSpec={fieldSpec}
         onChange={onValueChanged}
         Editor={LocationFieldEditor}
@@ -116,7 +93,6 @@ export function EntityFieldEditor({
       <EntityItemFieldEditor
         id={id}
         value={value}
-        schema={schema}
         fieldSpec={fieldSpec}
         onChange={onValueChanged}
       />
@@ -126,7 +102,6 @@ export function EntityFieldEditor({
       <EntityFieldListWrapper
         id={id}
         value={value}
-        schema={schema}
         fieldSpec={fieldSpec}
         onChange={onValueChanged}
         Editor={EntityItemFieldEditor}
@@ -134,20 +109,13 @@ export function EntityFieldEditor({
     );
   } else if (isValueTypeField(fieldSpec, value)) {
     editor = (
-      <ValueTypeFieldEditor
-        id={id}
-        value={value}
-        schema={schema}
-        fieldSpec={fieldSpec}
-        onChange={onValueChanged}
-      />
+      <ValueTypeFieldEditor id={id} value={value} fieldSpec={fieldSpec} onChange={onValueChanged} />
     );
   } else if (isValueTypeListField(fieldSpec, value)) {
     editor = (
       <EntityFieldListWrapper
         id={id}
         value={value}
-        schema={schema}
         fieldSpec={fieldSpec}
         onChange={onValueChanged}
         Editor={ValueTypeFieldEditor}
