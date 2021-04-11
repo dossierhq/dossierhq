@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+import { findAscendantElement } from './DOMUtils';
 import { useWindowEventListener } from './EventUtils';
 
 export function useWindowClick(ignoreId: string, onClick: () => void, enabled?: boolean): void {
@@ -7,13 +8,12 @@ export function useWindowClick(ignoreId: string, onClick: () => void, enabled?: 
       if (enabled === false) {
         return;
       }
-      if (
-        event.target instanceof Element &&
-        ignoreId &&
-        event.target.getAttribute('id') === ignoreId
-      ) {
-        return;
+      if (event.target instanceof HTMLElement) {
+        if (findAscendantElement(event.target, (it) => it.getAttribute('id') === ignoreId)) {
+          return;
+        }
       }
+
       onClick();
     },
     [onClick, enabled, ignoreId]
