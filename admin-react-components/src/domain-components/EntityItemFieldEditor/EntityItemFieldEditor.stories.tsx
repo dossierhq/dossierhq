@@ -1,15 +1,15 @@
 import type { Meta, Story } from '@storybook/react/types-6-0';
 import React from 'react';
 import { DataDataContext } from '../..';
-import { EntityPicker } from './EntityPicker';
-import type { EntityPickerProps } from './EntityPicker';
+import { EntityItemFieldEditor } from './EntityItemFieldEditor';
+import type { EntityItemFieldEditorProps } from './EntityItemFieldEditor';
 import { createContextValue } from '../../test/TestContextAdapter';
 import schema from '../../stories/StoryboardSchema';
 import { bar2Id } from '../../test/EntityFixtures';
 
-const meta: Meta<EntityPickerProps> = {
-  title: 'Domain/EntityPicker',
-  component: EntityPicker,
+const meta: Meta<EntityItemFieldEditorProps> = {
+  title: 'Domain/EntityItemFieldEditor',
+  component: EntityItemFieldEditor,
   args: {
     id: 'id-123',
     value: null,
@@ -18,10 +18,10 @@ const meta: Meta<EntityPickerProps> = {
 };
 export default meta;
 
-const Template: Story<EntityPickerProps> = (args) => {
+const Template: Story<EntityItemFieldEditorProps> = (args) => {
   return (
     <DataDataContext.Provider value={createContextValue()}>
-      <EntityPicker {...args} />
+      <EntityItemFieldEditor {...args} />
     </DataDataContext.Provider>
   );
 };

@@ -14,7 +14,7 @@ import {
 } from '@datadata/core';
 import {
   EntityFieldListWrapper,
-  EntityPicker,
+  EntityItemFieldEditor,
   FormField,
   LocationFieldEditor,
   RichTextFieldEditor,
@@ -113,7 +113,7 @@ export function EntityFieldEditor({
     );
   } else if (isEntityTypeField(fieldSpec, value)) {
     editor = (
-      <EntityPicker
+      <EntityItemFieldEditor
         id={id}
         value={value}
         schema={schema}
@@ -129,7 +129,7 @@ export function EntityFieldEditor({
         schema={schema}
         fieldSpec={fieldSpec}
         onChange={onValueChanged}
-        Editor={EntityPicker}
+        Editor={EntityItemFieldEditor}
       />
     );
   } else if (isValueTypeField(fieldSpec, value)) {

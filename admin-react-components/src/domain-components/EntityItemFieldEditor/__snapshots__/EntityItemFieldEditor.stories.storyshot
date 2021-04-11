@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Storyshots Domain/EntityPicker Initial Bar 1`] = `
+exports[`Storyshots Domain/EntityItemFieldEditor Initial Bar 1`] = `
 <div
   className="dd flex-row"
 >
@@ -25,7 +25,7 @@ exports[`Storyshots Domain/EntityPicker Initial Bar 1`] = `
 </div>
 `;
 
-exports[`Storyshots Domain/EntityPicker Normal Bar 1`] = `
+exports[`Storyshots Domain/EntityItemFieldEditor Normal Bar 1`] = `
 <div
   className="dd flex-row"
 >
