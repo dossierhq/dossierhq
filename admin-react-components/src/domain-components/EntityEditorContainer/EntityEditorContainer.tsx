@@ -1,7 +1,7 @@
 import type { Dispatch } from 'react';
 import React, { useCallback } from 'react';
 import type { EntityEditorState, EntityEditorStateAction } from '../..';
-import { EntityEditor, EntityMetadata, TypePicker } from '../..';
+import { EntityEditor, EntityEditorOverview, EntityMetadata, TypePicker } from '../..';
 import { AddEntityDraftAction, SetActiveEntityAction } from '../EntityEditor/EntityEditorReducer';
 import { joinClassNames } from '../../utils/ClassNameUtils';
 import { findAscendantElement } from '../../utils/DOMUtils';
@@ -28,6 +28,7 @@ export function EntityEditorContainer({
 
   return (
     <div className={joinClassNames('dd flex-row g-2 overflow-hidden', className)}>
+      <EntityEditorOverview {...{ editorState, dispatchEditorState }} />
       <div className="dd flex-grow flex-column g-2 overflow-y-scroll">
         {editorState.drafts.map((draftState) => (
           <EntityEditor

@@ -4,11 +4,35 @@ exports[`Storyshots Domain/EntityEditorContainer Deleted Foo 1`] = `
 <div
   className="dd flex-row g-2 overflow-hidden position-fixed inset-0"
 >
+  <div>
+    <div>
+      <button
+        className="dd button has-background hoverable text-button is-rounded"
+        id="create-entity-picker"
+        onClick={[Function]}
+        type="button"
+      >
+        Create
+         
+        <span
+          className="dd icon icon-chevron-down"
+        />
+      </button>
+    </div>
+    <div>
+      <a
+        href="#fb62be03-a0a9-4689-9987-bacee0e7692d"
+      >
+        Foo deleted
+      </a>
+    </div>
+  </div>
   <div
     className="dd flex-grow flex-column g-2 overflow-y-scroll"
   >
     <div
       data-entityid="fb62be03-a0a9-4689-9987-bacee0e7692d"
+      id="fb62be03-a0a9-4689-9987-bacee0e7692d"
     >
       <form
         className="dd flex-column p-3 is-rounded has-background has-shadow"
@@ -462,11 +486,35 @@ exports[`Storyshots Domain/EntityEditorContainer Full Foo 1`] = `
 <div
   className="dd flex-row g-2 overflow-hidden position-fixed inset-0"
 >
+  <div>
+    <div>
+      <button
+        className="dd button has-background hoverable text-button is-rounded"
+        id="create-entity-picker"
+        onClick={[Function]}
+        type="button"
+      >
+        Create
+         
+        <span
+          className="dd icon icon-chevron-down"
+        />
+      </button>
+    </div>
+    <div>
+      <a
+        href="#fc66b4d7-61ff-44d4-8f68-cb7f526df046"
+      >
+        Foo 1
+      </a>
+    </div>
+  </div>
   <div
     className="dd flex-grow flex-column g-2 overflow-y-scroll"
   >
     <div
       data-entityid="fc66b4d7-61ff-44d4-8f68-cb7f526df046"
+      id="fc66b4d7-61ff-44d4-8f68-cb7f526df046"
     >
       <form
         className="dd flex-column p-3 is-rounded has-background has-shadow"
@@ -1327,6 +1375,29 @@ exports[`Storyshots Domain/EntityEditorContainer Invalid Type New Entity 1`] = `
 <div
   className="dd flex-row g-2 overflow-hidden position-fixed inset-0"
 >
+  <div>
+    <div>
+      <button
+        className="dd button has-background hoverable text-button is-rounded"
+        id="create-entity-picker"
+        onClick={[Function]}
+        type="button"
+      >
+        Create
+         
+        <span
+          className="dd icon icon-chevron-down"
+        />
+      </button>
+    </div>
+    <div>
+      <a
+        href="#da4a48d6-341e-4515-941f-b83578191b51"
+      >
+        Unnamed
+      </a>
+    </div>
+  </div>
   <div
     className="dd flex-grow flex-column g-2 overflow-y-scroll"
   >
@@ -1432,11 +1503,35 @@ exports[`Storyshots Domain/EntityEditorContainer New Foo 1`] = `
 <div
   className="dd flex-row g-2 overflow-hidden position-fixed inset-0"
 >
+  <div>
+    <div>
+      <button
+        className="dd button has-background hoverable text-button is-rounded"
+        id="create-entity-picker"
+        onClick={[Function]}
+        type="button"
+      >
+        Create
+         
+        <span
+          className="dd icon icon-chevron-down"
+        />
+      </button>
+    </div>
+    <div>
+      <a
+        href="#82ded109-44f2-48b9-a676-43162fda3d7d"
+      >
+        
+      </a>
+    </div>
+  </div>
   <div
     className="dd flex-grow flex-column g-2 overflow-y-scroll"
   >
     <div
       data-entityid="82ded109-44f2-48b9-a676-43162fda3d7d"
+      id="82ded109-44f2-48b9-a676-43162fda3d7d"
     >
       <form
         className="dd flex-column p-3 is-rounded has-background has-shadow"
@@ -1848,6 +1943,29 @@ exports[`Storyshots Domain/EntityEditorContainer Not Found 1`] = `
 <div
   className="dd flex-row g-2 overflow-hidden position-fixed inset-0"
 >
+  <div>
+    <div>
+      <button
+        className="dd button has-background hoverable text-button is-rounded"
+        id="create-entity-picker"
+        onClick={[Function]}
+        type="button"
+      >
+        Create
+         
+        <span
+          className="dd icon icon-chevron-down"
+        />
+      </button>
+    </div>
+    <div>
+      <a
+        href="#c6f97fae-1213-4be0-996f-4f20c7da7e65"
+      >
+        Unnamed
+      </a>
+    </div>
+  </div>
   <div
     className="dd flex-grow flex-column g-2 overflow-y-scroll"
   >
@@ -1958,6 +2076,29 @@ exports[`Storyshots Domain/EntityEditorContainer Slow Full Foo 1`] = `
 <div
   className="dd flex-row g-2 overflow-hidden position-fixed inset-0"
 >
+  <div>
+    <div>
+      <button
+        className="dd button has-background hoverable text-button is-rounded"
+        id="create-entity-picker"
+        onClick={[Function]}
+        type="button"
+      >
+        Create
+         
+        <span
+          className="dd icon icon-chevron-down"
+        />
+      </button>
+    </div>
+    <div>
+      <a
+        href="#fc66b4d7-61ff-44d4-8f68-cb7f526df046"
+      >
+        Unnamed
+      </a>
+    </div>
+  </div>
   <div
     className="dd flex-grow flex-column g-2 overflow-y-scroll"
   >
@@ -2044,11 +2185,42 @@ exports[`Storyshots Domain/EntityEditorContainer Two Entities 1`] = `
 <div
   className="dd flex-row g-2 overflow-hidden position-fixed inset-0"
 >
+  <div>
+    <div>
+      <button
+        className="dd button has-background hoverable text-button is-rounded"
+        id="create-entity-picker"
+        onClick={[Function]}
+        type="button"
+      >
+        Create
+         
+        <span
+          className="dd icon icon-chevron-down"
+        />
+      </button>
+    </div>
+    <div>
+      <a
+        href="#cb228716-d3dd-444f-9a77-80443d436339"
+      >
+        Bar 1
+      </a>
+    </div>
+    <div>
+      <a
+        href="#eb5732e2-b931-492b-82f1-f8fdd464f0d2"
+      >
+        Bar 2
+      </a>
+    </div>
+  </div>
   <div
     className="dd flex-grow flex-column g-2 overflow-y-scroll"
   >
     <div
       data-entityid="cb228716-d3dd-444f-9a77-80443d436339"
+      id="cb228716-d3dd-444f-9a77-80443d436339"
     >
       <form
         className="dd flex-column p-3 is-rounded has-background has-shadow"
@@ -2130,6 +2302,7 @@ exports[`Storyshots Domain/EntityEditorContainer Two Entities 1`] = `
     </div>
     <div
       data-entityid="eb5732e2-b931-492b-82f1-f8fdd464f0d2"
+      id="eb5732e2-b931-492b-82f1-f8fdd464f0d2"
     >
       <form
         className="dd flex-column p-3 is-rounded has-background has-shadow"

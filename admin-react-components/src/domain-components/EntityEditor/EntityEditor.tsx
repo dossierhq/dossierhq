@@ -131,7 +131,7 @@ function EntityEditorInner({
   const nameId = `${draftState.id}-_name`;
 
   return (
-    <div data-entityid={entityId}>
+    <div id={entityId} data-entityid={entityId}>
       <ColumnAs
         as={Form}
         className="p-3 is-rounded has-background has-shadow"
