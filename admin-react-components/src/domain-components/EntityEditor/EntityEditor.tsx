@@ -21,6 +21,7 @@ import type {
   EntityEditorStateAction,
 } from './EntityEditorReducer';
 import {
+  EntityUpsertedAction,
   ResetEntityAction,
   SetFieldAction,
   SetMessageLoadMessageAction,
@@ -35,6 +36,7 @@ export interface EntityEditorProps {
 }
 
 interface EntityEditorInnerProps extends EntityEditorProps {
+  draftState: EntityEditorDraftState;
   createEntity: DataDataContextValue['createEntity'];
   updateEntity: DataDataContextValue['updateEntity'];
 }
@@ -49,14 +51,22 @@ export function EntityEditor({
     return <Loader />;
   }
 
+  const draftState = editorState.drafts.find((x) => x.id === entityId);
+  if (!draftState) {
+    throw new Error(`Can't find state for id (${entityId})`);
+  }
+
   const { useEntity, createEntity, updateEntity } = context;
 
   return (
     <>
-      <EntityLoader {...{ entityId, useEntity, dispatchEditorState }} />
+      {draftState.exists ? (
+        <EntityLoader {...{ entityId, useEntity, dispatchEditorState }} />
+      ) : null}
       <EntityEditorInner
         {...{
           entityId,
+          draftState,
           editorState,
           dispatchEditorState,
           createEntity,
@@ -104,6 +114,7 @@ export function EntityLoader({
 
 function EntityEditorInner({
   entityId,
+  draftState,
   editorState,
   dispatchEditorState,
   createEntity,
@@ -112,10 +123,6 @@ function EntityEditorInner({
   const [submitLoading, setSubmitLoading] = useState(false);
   const [submitMessage, setSubmitMessage] = useState<MessageItem | null>(null);
 
-  const draftState = editorState.drafts.find((x) => x.id === entityId);
-  if (!draftState) {
-    throw new Error(`Can't find state for id (${entityId})`);
-  }
   const { entity } = draftState;
 
   if (!entity) {
@@ -136,7 +143,14 @@ function EntityEditorInner({
         as={Form}
         className="p-3 is-rounded has-background has-shadow"
         onSubmit={() =>
-          submitEntity(draftState, setSubmitLoading, setSubmitMessage, createEntity, updateEntity)
+          submitEntity(
+            draftState,
+            setSubmitLoading,
+            setSubmitMessage,
+            createEntity,
+            updateEntity,
+            dispatchEditorState
+          )
         }
         onReset={() => dispatchEditorState(new ResetEntityAction(entityId))}
       >
@@ -220,7 +234,8 @@ async function submitEntity(
   setSubmitLoading: Dispatch<SetStateAction<boolean>>,
   setSubmitMessage: Dispatch<SetStateAction<MessageItem | null>>,
   createEntity: DataDataContextValue['createEntity'],
-  updateEntity: DataDataContextValue['updateEntity']
+  updateEntity: DataDataContextValue['updateEntity'],
+  dispatchEditorState: Dispatch<EntityEditorStateAction>
 ) {
   setSubmitLoading(true);
   const entity = createAdminEntity(draftState);
@@ -229,7 +244,9 @@ async function submitEntity(
     ? createEntity(entity as AdminEntityCreate)
     : updateEntity(entity as AdminEntityUpdate));
 
-  if (result.isError()) {
+  if (result.isOk()) {
+    dispatchEditorState(new EntityUpsertedAction(draftState.id));
+  } else {
     setSubmitMessage({
       kind: 'danger',
       title: isNew ? 'Failed creating entity' : 'Failed saving entity',

@@ -9,6 +9,7 @@
     "hoverable",
     "storyshots",
     "unmount",
+    "upserted",
     "uuidv"
   ],
   "files.insertFinalNewline": true,
