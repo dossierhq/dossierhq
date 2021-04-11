@@ -36,6 +36,7 @@ export {
   reduceEntityEditorState,
 } from './domain-components/EntityEditor/EntityEditorReducer';
 export { EntityEditorContainer } from './domain-components/EntityEditorContainer/EntityEditorContainer';
+export { EntityEditorOverview } from './domain-components/EntityEditorOverview/EntityEditorOverview';
 export { EntityFieldEditor } from './domain-components/EntityFieldEditor/EntityFieldEditor';
 export { EntityFieldListWrapper } from './domain-components/EntityFieldListWrapper/EntityFieldListWrapper';
 export { EntityList } from './domain-components/EntityList/EntityList';

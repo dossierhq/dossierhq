@@ -3,6 +3,7 @@
 exports[`DeletedFoo render 1`] = `
 <div
   data-entityid="fb62be03-a0a9-4689-9987-bacee0e7692d"
+  id="fb62be03-a0a9-4689-9987-bacee0e7692d"
 >
   <form
     className="dd flex-column p-3 is-rounded has-background has-shadow"
@@ -326,6 +327,7 @@ exports[`DeletedFoo render 1`] = `
 exports[`FullFoo render 1`] = `
 <div
   data-entityid="fc66b4d7-61ff-44d4-8f68-cb7f526df046"
+  id="fc66b4d7-61ff-44d4-8f68-cb7f526df046"
 >
   <form
     className="dd flex-column p-3 is-rounded has-background has-shadow"
