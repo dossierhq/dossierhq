@@ -100,6 +100,7 @@ input AdminQueryInput {
   referencing: ID
   boundingBox: BoundingBoxInput
   order: String
+  text: String
 }
 
 input AdminReferenceInput {
@@ -296,6 +297,7 @@ input AdminQueryInput {
   referencing: ID
   boundingBox: BoundingBoxInput
   order: String
+  text: String
 }
 
 input AdminReferenceInput {
@@ -525,6 +527,7 @@ input AdminQueryInput {
   referencing: ID
   boundingBox: BoundingBoxInput
   order: String
+  text: String
 }
 
 input AdminReferenceInput {
@@ -674,6 +677,7 @@ input AdminQueryInput {
   referencing: ID
   boundingBox: BoundingBoxInput
   order: String
+  text: String
 }
 
 input AdminReferenceInput {
@@ -835,6 +839,7 @@ input AdminQueryInput {
   referencing: ID
   boundingBox: BoundingBoxInput
   order: String
+  text: String
 }
 
 input AdminReferenceInput {
@@ -1057,6 +1062,7 @@ input AdminQueryInput {
   referencing: ID
   boundingBox: BoundingBoxInput
   order: String
+  text: String
 }
 
 input AdminReferenceInput {
