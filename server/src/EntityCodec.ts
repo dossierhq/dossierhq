@@ -19,6 +19,8 @@ import {
   isRichTextEntityBlock,
   isRichTextField,
   isRichTextItemField,
+  isRichTextParagraphBlock,
+  isStringItemField,
   isRichTextValueItemBlock,
   isValueTypeField,
   isValueTypeItemField,
@@ -46,6 +48,7 @@ interface EncodeEntityResult {
   data: Record<string, unknown>;
   referenceIds: number[];
   locations: Location[];
+  fullTextSearchText: string[];
 }
 
 interface EncodedRichTextBlock {
@@ -296,6 +299,7 @@ export async function encodeEntity(
     data: {},
     referenceIds: [],
     locations: [],
+    fullTextSearchText: [],
   };
   for (const fieldSpec of entitySpec.fields) {
     if (fieldSpec.name in entity) {
@@ -316,9 +320,10 @@ export async function encodeEntity(
   if (collectResult.isError()) {
     return collectResult;
   }
-  const { referenceIds, locations } = collectResult.value;
+  const { referenceIds, locations, fullTextSearchText } = collectResult.value;
   result.referenceIds.push(...referenceIds);
   result.locations.push(...locations);
+  result.fullTextSearchText.push(...fullTextSearchText);
 
   return ok(result);
 }
@@ -488,7 +493,10 @@ function encodeRichTextField(
 async function collectReferenceIdsAndLocations(
   context: SessionContext,
   entity: { _type: string; [fieldName: string]: unknown }
-): PromiseResult<{ referenceIds: number[]; locations: Location[] }, ErrorType.BadRequest> {
+): PromiseResult<
+  { referenceIds: number[]; locations: Location[]; fullTextSearchText: string[] },
+  ErrorType.BadRequest
+> {
   const allUUIDs = new Set<string>();
   const requestedReferences: {
     prefix: string;
@@ -497,6 +505,8 @@ async function collectReferenceIdsAndLocations(
   }[] = [];
 
   const locations: Location[] = [];
+
+  const fullTextSearchText: string[] = [];
 
   visitItemRecursively({
     schema: context.server.getSchema(),
@@ -518,6 +528,8 @@ async function collectReferenceIdsAndLocations(
 
       if (isLocationItemField(fieldSpec, data) && data) {
         locations.push(data);
+      } else if (isStringItemField(fieldSpec, data) && data) {
+        fullTextSearchText.push(data);
       }
     },
     visitRichTextBlock: (path, fieldSpec, block, _visitContext) => {
@@ -528,13 +540,18 @@ async function collectReferenceIdsAndLocations(
           uuids: [block.data.id],
           entityTypes: fieldSpec.entityTypes,
         });
+      } else if (isRichTextParagraphBlock(block)) {
+        const text = block.data.text;
+        if (text) {
+          fullTextSearchText.push(text);
+        }
       }
     },
     initialVisitContext: undefined,
   });
 
   if (allUUIDs.size === 0) {
-    return ok({ referenceIds: [], locations });
+    return ok({ referenceIds: [], locations, fullTextSearchText });
   }
 
   const items = await Db.queryMany<Pick<EntitiesTable, 'id' | 'type' | 'uuid'>>(
@@ -559,5 +576,5 @@ async function collectReferenceIdsAndLocations(
     }
   }
 
-  return ok({ referenceIds: items.map((item) => item.id), locations });
+  return ok({ referenceIds: items.map((item) => item.id), locations, fullTextSearchText });
 }

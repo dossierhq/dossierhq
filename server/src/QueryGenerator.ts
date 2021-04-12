@@ -88,11 +88,7 @@ export function searchAdminEntitiesQuery(
 
   // Filter: text
   if (query?.text) {
-    qb.addQuery(
-      `AND jsonb_to_tsvector(ev.data, '["string", "numeric"]') @@ websearch_to_tsquery(${qb.addValue(
-        query.text
-      )})`
-    );
+    qb.addQuery(`AND e.latest_fts @@ websearch_to_tsquery(${qb.addValue(query.text)})`);
   }
 
   // Paging 1/2
@@ -139,7 +135,7 @@ export function totalAdminEntitiesQuery(
   }
   qb.addQuery('AS count FROM entities e');
 
-  if (query?.referencing || query?.boundingBox || query?.text) {
+  if (query?.referencing || query?.boundingBox) {
     qb.addQuery('entity_versions ev');
   }
   if (query?.referencing) {
@@ -160,7 +156,7 @@ export function totalAdminEntitiesQuery(
     qb.addQuery(`AND e.type = ANY(${qb.addValue(entityTypesResult.value)})`);
   }
 
-  if (query?.referencing || query?.boundingBox || query?.text) {
+  if (query?.referencing || query?.boundingBox) {
     qb.addQuery('AND e.latest_draft_entity_versions_id = ev.id');
   }
 
@@ -185,11 +181,7 @@ export function totalAdminEntitiesQuery(
 
   // Filter: text
   if (query?.text) {
-    qb.addQuery(
-      `AND jsonb_to_tsvector(ev.data, '["string", "numeric"]') @@ websearch_to_tsquery(${qb.addValue(
-        query.text
-      )})`
-    );
+    qb.addQuery(`AND e.latest_fts @@ websearch_to_tsquery(${qb.addValue(query.text)})`);
   }
 
   return ok(qb.build());

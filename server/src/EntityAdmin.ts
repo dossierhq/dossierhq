@@ -189,13 +189,15 @@ export async function createEntity(
   if (encodeResult.isError()) {
     return encodeResult;
   }
-  const { type, name, data, referenceIds, locations } = encodeResult.value;
+  const { type, name, data, referenceIds, locations, fullTextSearchText } = encodeResult.value;
 
   return await context.withTransaction(async (context) => {
     const { entityId } = await withUniqueNameAttempt(context, name, async (context, name) => {
-      const qb = new QueryBuilder('INSERT INTO entities (uuid, name, type)');
+      const qb = new QueryBuilder('INSERT INTO entities (uuid, name, type, latest_fts)');
       qb.addQuery(
-        `VALUES (${qb.addValueOrDefault(entity.id)}, ${qb.addValue(name)}, ${qb.addValue(type)})`
+        `VALUES (${qb.addValueOrDefault(entity.id)}, ${qb.addValue(name)}, ${qb.addValue(
+          type
+        )}, to_tsvector(${qb.addValue(fullTextSearchText.join(' '))}))`
       );
       qb.addQuery('RETURNING id, uuid');
       const { id: entityId, uuid } = await Db.queryOne<Pick<EntitiesTable, 'id' | 'uuid'>>(
@@ -283,7 +285,7 @@ export async function updateEntity(
     if (encodeResult.isError()) {
       return encodeResult;
     }
-    const { data, name, referenceIds, locations } = encodeResult.value;
+    const { data, name, referenceIds, locations, fullTextSearchText } = encodeResult.value;
 
     const { id: versionsId } = await Db.queryOne<Pick<EntityVersionsTable, 'id'>>(
       context,
@@ -303,8 +305,8 @@ export async function updateEntity(
 
     await Db.queryNone(
       context,
-      'UPDATE entities SET latest_draft_entity_versions_id = $1 WHERE id = $2',
-      [versionsId, entityId]
+      'UPDATE entities SET latest_draft_entity_versions_id = $1, latest_fts = to_tsvector($2) WHERE id = $3',
+      [versionsId, fullTextSearchText.join(' '), entityId]
     );
 
     if (referenceIds.length > 0) {
