@@ -8,6 +8,7 @@ import { resolvePaging } from './Paging';
 import QueryBuilder from './QueryBuilder';
 
 export type SearchAdminEntitiesItem = Pick<EntitiesTable, 'id'> & AdminEntityValues;
+
 export function searchAdminEntitiesQuery(
   context: SessionContext,
   query: AdminQuery | undefined,
@@ -82,6 +83,15 @@ export function searchAdminEntitiesQuery(
       `AND ev.id = evl.entity_versions_id AND evl.location && ST_MakeEnvelope(${qb.addValue(
         minLng
       )}, ${qb.addValue(minLat)}, ${qb.addValue(maxLng)}, ${qb.addValue(maxLat)}, 4326)`
+    );
+  }
+
+  // Filter: text
+  if (query?.text) {
+    qb.addQuery(
+      `AND jsonb_to_tsvector(ev.data, '["string", "numeric"]') @@ plainto_tsquery(${qb.addValue(
+        query.text
+      )})`
     );
   }
 
@@ -170,6 +180,15 @@ export function totalAdminEntitiesQuery(
       `AND ev.id = evl.entity_versions_id AND evl.location && ST_MakeEnvelope(${qb.addValue(
         minLng
       )}, ${qb.addValue(minLat)}, ${qb.addValue(maxLng)}, ${qb.addValue(maxLat)}, 4326)`
+    );
+  }
+
+  // Filter: text
+  if (query?.text) {
+    qb.addQuery(
+      `AND jsonb_to_tsvector(ev.data, '["string", "numeric"]') @@ plainto_tsquery(${qb.addValue(
+        query.text
+      )})`
     );
   }
 
