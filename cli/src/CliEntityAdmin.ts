@@ -144,6 +144,10 @@ async function configureQuery(
   while (true) {
     const items = [
       {
+        id: '_text',
+        name: `${chalk.bold('Text:')} ${query.text ? query.text : chalk.grey('<not set>')}`,
+      },
+      {
         id: '_entityTypes',
         name: `${chalk.bold('Entity types:')} ${
           query.entityTypes?.join(', ') ?? chalk.grey('<not set>')
@@ -171,6 +175,9 @@ async function configureQuery(
     lastItemId = item.id;
 
     switch (item.id) {
+      case '_text':
+        query.text = await showStringEdit('Text', query.text || '');
+        break;
       case '_entityTypes':
         query.entityTypes = await CliSchema.selectEntityTypes(context);
         break;
