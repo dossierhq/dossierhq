@@ -56,6 +56,12 @@ interface EncodedRichTextBlock {
   d: unknown;
 }
 
+interface RequestedReference {
+  prefix: string;
+  uuids: string[];
+  entityTypes: string[] | undefined;
+}
+
 export function decodePublishedEntity(context: SessionContext, values: EntityValues): Entity {
   const schema = context.server.getSchema();
   const entitySpec = schema.getEntityTypeSpecification(values.type);
@@ -316,12 +322,16 @@ export async function encodeEntity(
     }
   }
 
-  const collectResult = await collectReferenceIdsAndLocations(context, entity);
-  if (collectResult.isError()) {
-    return collectResult;
+  const { requestedReferences, locations, fullTextSearchText } = collectDataFromEntity(
+    context,
+    entity
+  );
+  const resolveResult = await resolveRequestedEntityReferences(context, requestedReferences);
+  if (resolveResult.isError()) {
+    return resolveResult;
   }
-  const { referenceIds, locations, fullTextSearchText } = collectResult.value;
-  result.referenceIds.push(...referenceIds);
+
+  result.referenceIds.push(...resolveResult.value);
   result.locations.push(...locations);
   result.fullTextSearchText.push(...fullTextSearchText);
 
@@ -490,22 +500,16 @@ function encodeRichTextField(
   return ok(encodedBlocks);
 }
 
-async function collectReferenceIdsAndLocations(
+function collectDataFromEntity(
   context: SessionContext,
   entity: { _type: string; [fieldName: string]: unknown }
-): PromiseResult<
-  { referenceIds: number[]; locations: Location[]; fullTextSearchText: string[] },
-  ErrorType.BadRequest
-> {
-  const allUUIDs = new Set<string>();
-  const requestedReferences: {
-    prefix: string;
-    uuids: string[];
-    entityTypes: string[] | undefined;
-  }[] = [];
-
+): {
+  requestedReferences: RequestedReference[];
+  locations: Location[];
+  fullTextSearchText: string[];
+} {
+  const requestedReferences: RequestedReference[] = [];
   const locations: Location[] = [];
-
   const fullTextSearchText: string[] = [];
 
   visitItemRecursively({
@@ -517,7 +521,6 @@ async function collectReferenceIdsAndLocations(
         const fieldAdapter = EntityFieldTypeAdapters.getAdapter(fieldSpec);
         const uuids = fieldAdapter.getReferenceUUIDs(data);
         if (uuids && uuids.length > 0) {
-          uuids.forEach((x) => allUUIDs.add(x));
           requestedReferences.push({
             prefix: visitorPathToString(path),
             uuids,
@@ -534,7 +537,6 @@ async function collectReferenceIdsAndLocations(
     },
     visitRichTextBlock: (path, fieldSpec, block, _visitContext) => {
       if (isRichTextEntityBlock(block) && block.data) {
-        allUUIDs.add(block.data.id);
         requestedReferences.push({
           prefix: visitorPathToString(path),
           uuids: [block.data.id],
@@ -550,8 +552,18 @@ async function collectReferenceIdsAndLocations(
     initialVisitContext: undefined,
   });
 
+  return { requestedReferences, locations, fullTextSearchText };
+}
+
+async function resolveRequestedEntityReferences(
+  context: SessionContext,
+  requestedReferences: RequestedReference[]
+): PromiseResult<number[], ErrorType.BadRequest> {
+  const allUUIDs = new Set();
+  requestedReferences.forEach(({ uuids }) => uuids.forEach((uuid) => allUUIDs.add(uuid)));
+
   if (allUUIDs.size === 0) {
-    return ok({ referenceIds: [], locations, fullTextSearchText });
+    return ok([]);
   }
 
   const items = await Db.queryMany<Pick<EntitiesTable, 'id' | 'type' | 'uuid'>>(
@@ -576,5 +588,9 @@ async function collectReferenceIdsAndLocations(
     }
   }
 
-  return ok({ referenceIds: items.map((item) => item.id), locations, fullTextSearchText });
+  return ok(items.map(({ id }) => id));
 }
+
+export const forTest = {
+  collectDataFromEntity,
+};
