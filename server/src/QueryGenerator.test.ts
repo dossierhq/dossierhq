@@ -330,6 +330,33 @@ describe('searchAdminEntitiesQuery()', () => {
     `);
   });
 
+  test('query text', () => {
+    expect(
+      searchAdminEntitiesQuery(
+        context,
+        {
+          text: 'foo bar',
+        },
+        {}
+      )
+    ).toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "cursorName": "id",
+          "cursorType": "int",
+          "isForwards": true,
+          "pagingCount": 25,
+          "text": "SELECT e.id, e.uuid, e.type, e.name, ev.version, ev.data
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND jsonb_to_tsvector(ev.data, '[\\"string\\", \\"numeric\\"]') @@ plainto_tsquery($1) ORDER BY e.id LIMIT $2",
+          "values": Array [
+            "foo bar",
+            26,
+          ],
+        },
+      }
+    `);
+  });
+
   test('query referencing and entity types and paging', () => {
     expect(
       searchAdminEntitiesQuery(
@@ -508,6 +535,23 @@ describe('totalAdminEntitiesQuery()', () => {
             55.07,
             16.25,
             56.79,
+          ],
+        },
+      }
+    `);
+  });
+
+  test('query text', () => {
+    expect(
+      totalAdminEntitiesQuery(context, {
+        text: 'foo bar',
+      })
+    ).toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE jsonb_to_tsvector(ev.data, '[\\"string\\", \\"numeric\\"]') @@ plainto_tsquery($1)",
+          "values": Array [
+            "foo bar",
           ],
         },
       }

@@ -1,7 +1,9 @@
 import React from 'react';
+import { joinClassNames } from '../../utils/ClassNameUtils';
 
 export interface InputTextProps {
   id?: string;
+  className?: string;
   onChange?: (value: string) => void;
   readOnly?: boolean;
   type?: 'text' | 'number';
@@ -13,6 +15,7 @@ export interface InputTextProps {
 
 export function InputText({
   id,
+  className,
   onChange,
   readOnly,
   type,
@@ -24,7 +27,7 @@ export function InputText({
   return (
     <input
       id={id}
-      className="dd text-body1 input"
+      className={joinClassNames('dd text-body1 input', className)}
       type={type ?? 'text'}
       value={value ?? ''}
       min={min}

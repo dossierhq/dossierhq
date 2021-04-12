@@ -86,6 +86,7 @@ export interface AdminQuery {
   boundingBox?: BoundingBox;
   /** Valid values: _name */
   order?: string;
+  text?: string;
 }
 
 export interface Paging {
