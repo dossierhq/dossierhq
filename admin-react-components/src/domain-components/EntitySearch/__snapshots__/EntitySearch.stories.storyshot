@@ -4,13 +4,23 @@ exports[`Storyshots Domain/EntitySearch Normal 1`] = `
 <div
   className="dd flex-column position-fixed inset-0"
 >
-  <button
-    className="dd button has-background hoverable text-button is-rounded"
-    onClick={[Function]}
-    type="button"
+  <div
+    className="dd flex-row dd"
   >
-    Toggle list/map
-  </button>
+    <input
+      className="dd text-body1 input dd flex-grow"
+      onChange={[Function]}
+      type="text"
+      value=""
+    />
+    <button
+      className="dd button has-background hoverable text-button is-rounded"
+      onClick={[Function]}
+      type="button"
+    >
+      Toggle list/map
+    </button>
+  </div>
   <div
     className="dd list-container dd flex-grow overflow-y-scroll"
   >
