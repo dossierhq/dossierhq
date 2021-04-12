@@ -1164,6 +1164,30 @@ describe('searchAdminEntities()', () => {
       expect(fooIdCount).toBe(1);
     }
   });
+
+  test('Filter based on text', async () => {
+    const result = await graphql(
+      schema,
+      `
+        query QueryBoundingBox($text: String!) {
+          adminSearchEntities(query: { text: $text }) {
+            edges {
+              node {
+                id
+              }
+            }
+            totalCount
+          }
+        }
+      `,
+      undefined,
+      { context: ok(context) },
+      { text: 'Hey' } // There are at least 50 QueryAdminOnlyEditBefore entities
+    );
+
+    expect(result?.data?.adminSearchEntities.totalCount).toBeGreaterThanOrEqual(50);
+    expect(result?.data?.adminSearchEntities.edges.length).toBe(25);
+  });
 });
 
 describe('versionHistory()', () => {

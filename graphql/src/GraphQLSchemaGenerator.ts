@@ -431,6 +431,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
           referencing: { type: GraphQLID },
           boundingBox: { type: this.getInputType('BoundingBoxInput') },
           order: { type: GraphQLString }, // TODO should be enum?
+          text: { type: GraphQLString },
         },
       })
     );
@@ -759,7 +760,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         last: { type: GraphQLInt },
         before: { type: GraphQLString },
       },
-      resolve: async (source, args, context, _info) => {
+      resolve: async (_source, args, context, _info) => {
         const { query, first, after, last, before } = args;
         const paging = { first, after, last, before };
         return await loadAdminSearchEntities(context, query, paging);
