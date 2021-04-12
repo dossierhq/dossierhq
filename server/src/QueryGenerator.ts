@@ -139,7 +139,7 @@ export function totalAdminEntitiesQuery(
   }
   qb.addQuery('AS count FROM entities e');
 
-  if (query?.referencing || query?.boundingBox) {
+  if (query?.referencing || query?.boundingBox || query?.text) {
     qb.addQuery('entity_versions ev');
   }
   if (query?.referencing) {
@@ -160,7 +160,7 @@ export function totalAdminEntitiesQuery(
     qb.addQuery(`AND e.type = ANY(${qb.addValue(entityTypesResult.value)})`);
   }
 
-  if (query?.referencing || query?.boundingBox) {
+  if (query?.referencing || query?.boundingBox || query?.text) {
     qb.addQuery('AND e.latest_draft_entity_versions_id = ev.id');
   }
 
