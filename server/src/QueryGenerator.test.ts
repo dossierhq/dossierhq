@@ -549,7 +549,7 @@ describe('totalAdminEntitiesQuery()', () => {
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
-          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE jsonb_to_tsvector(ev.data, '[\\"string\\", \\"numeric\\"]') @@ plainto_tsquery($1)",
+          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND jsonb_to_tsvector(ev.data, '[\\"string\\", \\"numeric\\"]') @@ plainto_tsquery($1)",
           "values": Array [
             "foo bar",
           ],
