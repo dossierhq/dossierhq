@@ -89,7 +89,7 @@ export function searchAdminEntitiesQuery(
   // Filter: text
   if (query?.text) {
     qb.addQuery(
-      `AND jsonb_to_tsvector(ev.data, '["string", "numeric"]') @@ plainto_tsquery(${qb.addValue(
+      `AND jsonb_to_tsvector(ev.data, '["string", "numeric"]') @@ websearch_to_tsquery(${qb.addValue(
         query.text
       )})`
     );
@@ -186,7 +186,7 @@ export function totalAdminEntitiesQuery(
   // Filter: text
   if (query?.text) {
     qb.addQuery(
-      `AND jsonb_to_tsvector(ev.data, '["string", "numeric"]') @@ plainto_tsquery(${qb.addValue(
+      `AND jsonb_to_tsvector(ev.data, '["string", "numeric"]') @@ websearch_to_tsquery(${qb.addValue(
         query.text
       )})`
     );
