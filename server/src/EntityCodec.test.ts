@@ -134,6 +134,14 @@ describe('collectDataFromEntity', () => {
               type: RichTextBlockType.valueItem,
               data: { _type: 'EntityCodecValueOne', string: 'one two' },
             },
+            {
+              type: 'header',
+              data: { level: 3, text: 'Header text' },
+            },
+            {
+              type: 'random',
+              data: { foo: ['a', 'b'], bar: { z: 123 } },
+            },
           ],
         },
         richTexts: [{ blocks: [{ type: RichTextBlockType.paragraph, data: { text: 'two' } }] }],
@@ -143,6 +151,11 @@ describe('collectDataFromEntity', () => {
         "fullTextSearchText": Array [
           "one one",
           "one two",
+          "3",
+          "Header text",
+          "a",
+          "b",
+          "123",
           "two",
         ],
         "locations": Array [],
