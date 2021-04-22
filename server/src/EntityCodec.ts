@@ -547,12 +547,41 @@ function collectDataFromEntity(
         if (text) {
           fullTextSearchText.push(text);
         }
+      } else if (isRichTextValueItemBlock(block)) {
+        // skip since visitField will be called
+      } else {
+        extractFullTextValuesRecursively(block.data, fullTextSearchText);
       }
     },
     initialVisitContext: undefined,
   });
 
   return { requestedReferences, locations, fullTextSearchText };
+}
+
+function extractFullTextValuesRecursively(node: unknown, fullTextSearchText: string[]) {
+  if (!node) {
+    return;
+  }
+
+  switch (typeof node) {
+    case 'bigint':
+      fullTextSearchText.push(String(node));
+      break;
+    case 'number':
+      fullTextSearchText.push(String(node));
+      break;
+    case 'object':
+      if (node) {
+        Object.values(node).forEach((it) =>
+          extractFullTextValuesRecursively(it, fullTextSearchText)
+        );
+      }
+      break;
+    case 'string':
+      fullTextSearchText.push(node);
+      break;
+  }
 }
 
 async function resolveRequestedEntityReferences(
