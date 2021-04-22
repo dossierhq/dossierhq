@@ -265,6 +265,20 @@ async function visitAllEntityPages(
   }
 }
 
+async function countSearchResultWithEntity(query: AdminQuery, entityId: string) {
+  let matchCount = 0;
+
+  await visitAllEntityPages(context, query, { first: 50 }, (connection) => {
+    for (const edge of connection.edges) {
+      if (edge.node.isOk() && edge.node.value.id === entityId) {
+        matchCount += 1;
+      }
+    }
+  });
+
+  return matchCount;
+}
+
 async function createBarWithFooBazReferences(
   context: SessionContext,
   fooCount: number,
@@ -2001,6 +2015,51 @@ describe('searchEntities()', () => {
       }
     }
   });
+
+  test('Query based on text (after creation and updating)', async () => {
+    const createResult = await EntityAdmin.createEntity(context, {
+      _type: 'EntityAdminFoo',
+      _name: 'Foo',
+      summary: 'this is some serious summary with the best conclusion',
+    });
+    if (expectOkResult(createResult)) {
+      const { id: fooId } = createResult.value;
+
+      const matchesInitial = await countSearchResultWithEntity(
+        {
+          entityTypes: ['EntityAdminFoo'],
+          text: 'serious conclusion',
+        },
+        fooId
+      );
+      expect(matchesInitial).toBe(1);
+
+      const matchesBeforeUpdate = await countSearchResultWithEntity(
+        {
+          entityTypes: ['EntityAdminFoo'],
+          text: 'fox jumping',
+        },
+        fooId
+      );
+      expect(matchesBeforeUpdate).toBe(0);
+
+      expectOkResult(
+        await EntityAdmin.updateEntity(context, {
+          id: fooId,
+          summary: "who's jumping? It it the fox",
+        })
+      );
+
+      const matchesAfterUpdate = await countSearchResultWithEntity(
+        {
+          entityTypes: ['EntityAdminFoo'],
+          text: 'fox jumping',
+        },
+        fooId
+      );
+      expect(matchesAfterUpdate).toBe(1);
+    }
+  });
 });
 
 describe('getTotalCount', () => {
@@ -2078,6 +2137,24 @@ describe('getTotalCount', () => {
         expect(searchResult.value?.pageInfo.hasNextPage).toBeFalsy();
 
         expect(totalResult.value).toBe(searchResult.value?.edges.length);
+      }
+    }
+  });
+
+  test('Query based on text', async () => {
+    const resultBefore = await EntityAdmin.getTotalCount(context, { text: 'sensational clown' });
+    if (expectOkResult(resultBefore)) {
+      expectOkResult(
+        await EntityAdmin.createEntity(context, {
+          _type: 'EntityAdminFoo',
+          _name: 'foo',
+          summary: 'That was indeed a sensational clown',
+        })
+      );
+
+      const resultAfter = await EntityAdmin.getTotalCount(context, { text: 'sensational clown' });
+      if (expectOkResult(resultAfter)) {
+        expect(resultAfter.value).toBe(resultBefore.value + 1);
       }
     }
   });
