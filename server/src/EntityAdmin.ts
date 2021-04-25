@@ -438,6 +438,13 @@ export async function publishEntity(
     'UPDATE entities SET published_entity_versions_id = $1, published_deleted = $2 WHERE id = $3',
     [versionsId, deleted, entityId]
   );
+
+  await Db.queryNone(
+    context,
+    'INSERT INTO entity_publish_events (entity_versions_id, published_by) VALUES ($1, $2)',
+    [versionsId, context.session.subjectInternalId]
+  );
+
   return ok(undefined);
 }
 
@@ -538,6 +545,17 @@ export async function publishEntities(
       return notOk.BadRequest(referenceErrorMessages.join('\n'));
     }
 
+    // Step 4: Create publish event
+    const qb = new QueryBuilder(
+      'INSERT INTO entity_publish_events (entity_versions_id, published_by) VALUES'
+    );
+    const subjectValue = qb.addValue(context.session.subjectInternalId);
+    for (const versionInfo of versionsInfo) {
+      qb.addQuery(`(${qb.addValue(versionInfo.versionsId)}, ${subjectValue})`);
+    }
+    await Db.queryNone(context, qb.build());
+
+    //
     return ok(undefined);
   });
 }
