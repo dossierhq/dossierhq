@@ -4,7 +4,6 @@ import type {
   AdminEntityCreate,
   AdminEntityHistory,
   AdminEntityUpdate,
-  AdminEntityPublishHistory,
   AdminEntityVersionInfo,
   AdminQuery,
   Connection,
@@ -12,6 +11,7 @@ import type {
   ErrorType,
   Paging,
   PromiseResult,
+  PublishHistory,
   Result,
 } from '@datadata/core';
 import type { SessionContext } from '.';
@@ -634,7 +634,7 @@ export async function getEntityHistory(
 export async function getPublishHistory(
   context: SessionContext,
   id: string
-): PromiseResult<AdminEntityPublishHistory, ErrorType.NotFound> {
+): PromiseResult<PublishHistory, ErrorType.NotFound> {
   const entityInfo = await Db.queryNoneOrOne<Pick<EntitiesTable, 'id'>>(
     context,
     'SELECT id FROM entities WHERE uuid = $1',

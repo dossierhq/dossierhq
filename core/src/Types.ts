@@ -79,12 +79,12 @@ export interface AdminEntityVersionInfo {
   createdAt: Date;
 }
 
-export interface AdminEntityPublishHistory {
+export interface PublishHistory {
   id: string;
-  events: AdminEntityPublishEvent[];
+  events: PublishEvent[];
 }
 
-export interface AdminEntityPublishEvent {
+export interface PublishEvent {
   version: number | null;
   publishedAt: Date;
   publishedBy: string;
