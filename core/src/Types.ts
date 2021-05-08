@@ -79,6 +79,17 @@ export interface AdminEntityVersionInfo {
   createdAt: Date;
 }
 
+export interface AdminEntityPublishHistory {
+  id: string;
+  events: AdminEntityPublishEvent[];
+}
+
+export interface AdminEntityPublishEvent {
+  version: number | null;
+  publishedAt: Date;
+  publishedBy: string;
+}
+
 export interface AdminQuery {
   entityTypes?: string[];
   /** Entities referencing the entity (by id) */

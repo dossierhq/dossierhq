@@ -17,6 +17,8 @@ export type {
   AdminEntity,
   AdminEntityCreate,
   AdminEntityHistory,
+  AdminEntityPublishEvent,
+  AdminEntityPublishHistory,
   AdminEntityUpdate,
   AdminEntityVersionInfo,
   AdminQuery,
