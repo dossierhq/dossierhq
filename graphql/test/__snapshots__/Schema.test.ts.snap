@@ -134,6 +134,17 @@ type AdminEntityHistory {
   versions: [AdminEntityVersionInfo]!
 }
 
+type PublishEvent {
+  version: Int
+  publishedBy: ID!
+  publishedAt: String!
+}
+
+type PublishHistory {
+  id: ID!
+  events: [PublishEvent]!
+}
+
 type AdminEntityPublishPayload {
   id: ID!
 }
@@ -193,6 +204,7 @@ type Query {
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminEntityHistory(id: ID!): AdminEntityHistory
+  publishHistory(id: ID!): PublishHistory
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
 }
 
@@ -331,6 +343,17 @@ type AdminEntityHistory {
   versions: [AdminEntityVersionInfo]!
 }
 
+type PublishEvent {
+  version: Int
+  publishedBy: ID!
+  publishedAt: String!
+}
+
+type PublishHistory {
+  id: ID!
+  events: [PublishEvent]!
+}
+
 type AdminEntityPublishPayload {
   id: ID!
 }
@@ -438,6 +461,7 @@ type Query {
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminEntityHistory(id: ID!): AdminEntityHistory
+  publishHistory(id: ID!): PublishHistory
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
 }
 
@@ -561,6 +585,17 @@ type AdminEntityHistory {
   versions: [AdminEntityVersionInfo]!
 }
 
+type PublishEvent {
+  version: Int
+  publishedBy: ID!
+  publishedAt: String!
+}
+
+type PublishHistory {
+  id: ID!
+  events: [PublishEvent]!
+}
+
 type AdminEntityPublishPayload {
   id: ID!
 }
@@ -591,6 +626,7 @@ type Query {
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminEntityHistory(id: ID!): AdminEntityHistory
+  publishHistory(id: ID!): PublishHistory
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
 }
 
@@ -711,6 +747,17 @@ type AdminEntityHistory {
   versions: [AdminEntityVersionInfo]!
 }
 
+type PublishEvent {
+  version: Int
+  publishedBy: ID!
+  publishedAt: String!
+}
+
+type PublishHistory {
+  id: ID!
+  events: [PublishEvent]!
+}
+
 type AdminEntityPublishPayload {
   id: ID!
 }
@@ -744,6 +791,7 @@ type Query {
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminEntityHistory(id: ID!): AdminEntityHistory
+  publishHistory(id: ID!): PublishHistory
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
 }
 
@@ -873,6 +921,17 @@ type AdminEntityHistory {
   versions: [AdminEntityVersionInfo]!
 }
 
+type PublishEvent {
+  version: Int
+  publishedBy: ID!
+  publishedAt: String!
+}
+
+type PublishHistory {
+  id: ID!
+  events: [PublishEvent]!
+}
+
 type AdminEntityPublishPayload {
   id: ID!
 }
@@ -935,6 +994,7 @@ type Query {
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminEntityHistory(id: ID!): AdminEntityHistory
+  publishHistory(id: ID!): PublishHistory
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
 }
 
@@ -1100,6 +1160,17 @@ type AdminEntityHistory {
   versions: [AdminEntityVersionInfo]!
 }
 
+type PublishEvent {
+  version: Int
+  publishedBy: ID!
+  publishedAt: String!
+}
+
+type PublishHistory {
+  id: ID!
+  events: [PublishEvent]!
+}
+
 type AdminEntityPublishPayload {
   id: ID!
 }
@@ -1217,6 +1288,7 @@ type Query {
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminEntityHistory(id: ID!): AdminEntityHistory
+  publishHistory(id: ID!): PublishHistory
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
 }
 

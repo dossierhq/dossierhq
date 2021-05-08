@@ -1275,3 +1275,75 @@ describe('versionHistory()', () => {
     `);
   });
 });
+
+describe('publishHistory()', () => {
+  test('History with published', async () => {
+    const createResult = await EntityAdmin.createEntity(context, {
+      _type: 'QueryAdminFoo',
+      _name: 'Foo name',
+      title: 'First title',
+    });
+    if (expectOkResult(createResult)) {
+      const { id, _version: version } = createResult.value;
+
+      expectOkResult(await EntityAdmin.publishEntity(context, id, version));
+
+      const result = await graphql(
+        schema,
+        `
+          query PublishHistory($id: ID!) {
+            publishHistory(id: $id) {
+              id
+              events {
+                version
+                publishedBy
+                publishedAt
+              }
+            }
+          }
+        `,
+        undefined,
+        { context: ok(context) },
+        { id }
+      );
+
+      const { publishedAt } = result.data?.publishHistory.events[0];
+
+      expect(result.data).toEqual({
+        publishHistory: {
+          id,
+          events: [{ publishedBy: context.session.subjectId, publishedAt, version: 0 }],
+        },
+      });
+    }
+  });
+
+  test('Error: invalid id', async () => {
+    const result = await graphql(
+      schema,
+      `
+        query PublishHistory($id: ID!) {
+          publishHistory(id: $id) {
+            id
+            events {
+              version
+            }
+          }
+        }
+      `,
+      undefined,
+      { context: ok(context) },
+      { id: '6698130c-b56d-48cd-81f5-1f74bedc552e' }
+    );
+    expect(result).toMatchInlineSnapshot(`
+      Object {
+        "data": Object {
+          "publishHistory": null,
+        },
+        "errors": Array [
+          [GraphQLError: NotFound: No such entity],
+        ],
+      }
+    `);
+  });
+});

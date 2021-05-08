@@ -47,6 +47,7 @@ import {
   loadAdminSearchEntities,
   loadEntities,
   loadEntity,
+  loadPublishHistory,
   loadVersionHistory,
 } from './DataLoaders';
 import * as Mutations from './Mutations';
@@ -517,6 +518,31 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       })
     );
 
+    // PublishEvent
+    this.addType(
+      new GraphQLObjectType({
+        name: 'PublishEvent',
+        fields: {
+          version: { type: GraphQLInt },
+          publishedBy: { type: new GraphQLNonNull(GraphQLID) },
+          publishedAt: { type: new GraphQLNonNull(GraphQLString) }, // TODO handle dates
+        },
+      })
+    );
+
+    // PublishHistory
+    this.addType(
+      new GraphQLObjectType({
+        name: 'PublishHistory',
+        fields: {
+          id: { type: new GraphQLNonNull(GraphQLID) },
+          events: {
+            type: new GraphQLNonNull(new GraphQLList(this.getType('PublishEvent'))),
+          },
+        },
+      })
+    );
+
     // AdminEntityPublishPayload
     this.addType(
       new GraphQLObjectType({
@@ -779,6 +805,17 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     });
   }
 
+  buildQueryFieldPublishHistory<TSource>(): GraphQLFieldConfig<TSource, TContext> {
+    return fieldConfigWithArgs<TSource, TContext, { id: string }>({
+      type: this.getOutputType('PublishHistory'),
+      args: { id: { type: new GraphQLNonNull(GraphQLID) } },
+      resolve: async (_source, args, context, _info) => {
+        const { id } = args;
+        return await loadPublishHistory(context, id);
+      },
+    });
+  }
+
   buildQueryType<TSource>(): GraphQLObjectType {
     const includeEntities = this.schema.getEntityTypeCount() > 0;
 
@@ -792,6 +829,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
               adminEntity: this.buildQueryFieldAdminEntity(),
               adminEntities: this.buildQueryFieldAdminEntities(),
               adminEntityHistory: this.buildQueryFieldAdminEntityHistory(),
+              publishHistory: this.buildQueryFieldPublishHistory(),
               adminSearchEntities: this.buildQueryFieldAdminSearchEntities(),
             }
           : {}),
