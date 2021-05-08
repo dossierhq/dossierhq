@@ -8,6 +8,7 @@
     "srid",
     "testpass",
     "testuser",
+    "tsvector",
     "uuidv"
   ],
   "editor.defaultFormatter": "esbenp.prettier-vscode",

@@ -4,6 +4,7 @@ import type {
   AdminEntityCreate,
   AdminEntityHistory,
   AdminEntityUpdate,
+  AdminEntityPublishHistory,
   AdminEntityVersionInfo,
   AdminQuery,
   Connection,
@@ -16,7 +17,7 @@ import type {
 import type { SessionContext } from '.';
 import { toOpaqueCursor } from './Connection';
 import * as Db from './Db';
-import type { EntitiesTable, EntityVersionsTable } from './DbTableTypes';
+import type { EntitiesTable, EntityPublishEventsTable, EntityVersionsTable } from './DbTableTypes';
 import {
   decodeAdminEntity,
   encodeEntity,
@@ -441,8 +442,8 @@ export async function publishEntity(
 
   await Db.queryNone(
     context,
-    'INSERT INTO entity_publish_events (entity_versions_id, published_by) VALUES ($1, $2)',
-    [versionsId, context.session.subjectInternalId]
+    'INSERT INTO entity_publish_events (entities_id, entity_versions_id, published_by) VALUES ($1, $2, $3)',
+    [entityId, versionsId, context.session.subjectInternalId]
   );
 
   return ok(undefined);
@@ -547,11 +548,15 @@ export async function publishEntities(
 
     // Step 4: Create publish event
     const qb = new QueryBuilder(
-      'INSERT INTO entity_publish_events (entity_versions_id, published_by) VALUES'
+      'INSERT INTO entity_publish_events (entities_id, entity_versions_id, published_by) VALUES'
     );
     const subjectValue = qb.addValue(context.session.subjectInternalId);
     for (const versionInfo of versionsInfo) {
-      qb.addQuery(`(${qb.addValue(versionInfo.versionsId)}, ${subjectValue})`);
+      qb.addQuery(
+        `(${qb.addValue(versionInfo.entityId)}, ${qb.addValue(
+          versionInfo.versionsId
+        )}, ${subjectValue})`
+      );
     }
     await Db.queryNone(context, qb.build());
 
@@ -624,4 +629,40 @@ export async function getEntityHistory(
     })),
   };
   return ok(result);
+}
+
+export async function getPublishHistory(
+  context: SessionContext,
+  id: string
+): PromiseResult<AdminEntityPublishHistory, ErrorType.NotFound> {
+  const entityInfo = await Db.queryNoneOrOne<Pick<EntitiesTable, 'id'>>(
+    context,
+    'SELECT id FROM entities WHERE uuid = $1',
+    [id]
+  );
+  if (!entityInfo) {
+    return notOk.NotFound('No such entity');
+  }
+
+  const publishEvents = await Db.queryMany<
+    Pick<EntityVersionsTable, 'version'> &
+      Pick<EntityPublishEventsTable, 'published_at'> & {
+        published_by: string;
+      }
+  >(
+    context,
+    `SELECT ev.version, s.uuid AS published_by, epe.published_at
+      FROM entity_publish_events epe, entity_versions ev, subjects s
+      WHERE epe.entities_id = $1 AND epe.entity_versions_id = ev.id AND epe.published_by = s.id
+      ORDER BY epe.published_at`,
+    [entityInfo.id]
+  );
+  return ok({
+    id,
+    events: publishEvents.map((it) => ({
+      version: it.version,
+      publishedAt: it.published_at,
+      publishedBy: it.published_by,
+    })),
+  });
 }

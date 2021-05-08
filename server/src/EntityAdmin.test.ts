@@ -3311,3 +3311,48 @@ describe('getEntityHistory()', () => {
     expectErrorResult(result, ErrorType.NotFound, 'No such entity');
   });
 });
+
+describe('getPublishHistory()', () => {
+  test('New unpublished entity', async () => {
+    const createResult = await EntityAdmin.createEntity(context, {
+      _type: 'EntityAdminBar',
+      _name: 'Unpublished',
+    });
+    if (expectOkResult(createResult)) {
+      const { id } = createResult.value;
+      const historyResult = await EntityAdmin.getPublishHistory(context, id);
+      if (expectOkResult(historyResult)) {
+        expect(historyResult.value).toEqual({ id, events: [] });
+      }
+    }
+  });
+
+  test('One published version', async () => {
+    const createResult = await EntityAdmin.createEntity(context, {
+      _type: 'EntityAdminBar',
+      _name: 'Published',
+    });
+    if (expectOkResult(createResult)) {
+      const { id } = createResult.value;
+
+      expectOkResult(await EntityAdmin.publishEntities(context, [{ id, version: 0 }]));
+
+      const historyResult = await EntityAdmin.getPublishHistory(context, id);
+      if (expectOkResult(historyResult)) {
+        const { publishedAt } = historyResult.value.events[0];
+        expect(historyResult.value).toEqual({
+          id,
+          events: [{ publishedAt, publishedBy: context.session.subjectId, version: 0 }],
+        });
+      }
+    }
+  });
+
+  test('Error: Get publish history with invalid id', async () => {
+    const result = await EntityAdmin.getPublishHistory(
+      context,
+      '5b14e69f-6612-4ddb-bb42-7be273104486'
+    );
+    expectErrorResult(result, ErrorType.NotFound, 'No such entity');
+  });
+});
