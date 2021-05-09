@@ -606,6 +606,21 @@ export async function showEntityHistory(context: SessionContext, id: string): Pr
   }
 }
 
+export async function showPublishHistory(context: SessionContext, id: string): Promise<void> {
+  const result = await EntityAdmin.getPublishHistory(context, id);
+  if (result.isError()) {
+    logErrorResult('Failed retrieving history', result);
+    return;
+  }
+  const history = result.value;
+  logKeyValue('id', history.id);
+  for (const event of history.events) {
+    logKeyValue('version', event.version?.toString() ?? chalk.gray('unpublished'));
+    logKeyValue('  published by', event.publishedBy);
+    logKeyValue('  published at', event.publishedAt.toISOString());
+  }
+}
+
 export async function showLatestEntity(context: SessionContext, id: string): Promise<void> {
   const result = await EntityAdmin.getEntity(context, id);
   if (result.isOk()) {

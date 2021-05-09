@@ -86,6 +86,15 @@ function createMainActions(state: State): Array<MainActionItem | ItemSelectorSep
       },
     },
     {
+      id: 'show-publish-history',
+      name: 'Show publish history',
+      enabled: !!state.currentEntity,
+      action: async () => {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        await CliEntityAdmin.showPublishHistory(state.context, state.currentEntity!.id);
+      },
+    },
+    {
       id: 'show-entity-version',
       name: 'Show entity version',
       enabled: !!state.currentEntity,
