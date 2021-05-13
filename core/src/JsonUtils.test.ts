@@ -1,10 +1,10 @@
 import type {
-  AdminEntityHistory,
   Connection,
   Edge,
-  JsonAdminEntityHistory,
+  EntityHistory,
   JsonConnection,
   JsonEdge,
+  JsonEntityHistory,
   JsonPublishHistory,
   JsonResult,
   PublishHistory,
@@ -12,7 +12,7 @@ import type {
 import {
   convertJsonConnection,
   convertJsonEdge,
-  convertJsonEntityVersion,
+  convertJsonEntityHistory,
   convertJsonPublishHistory,
   convertJsonResult,
   ErrorType,
@@ -96,14 +96,14 @@ describe('convertJsonResult()', () => {
 
 describe('convertJsonEntityVersion()', () => {
   test('History with one version', () => {
-    const expected: AdminEntityHistory = {
+    const expected: EntityHistory = {
       id: '123',
       versions: [
         { createdAt: new Date(), createdBy: '4321', deleted: false, published: true, version: 0 },
       ],
     };
-    const asJson: JsonAdminEntityHistory = JSON.parse(JSON.stringify(expected));
-    const converted = convertJsonEntityVersion(asJson);
+    const asJson: JsonEntityHistory = JSON.parse(JSON.stringify(expected));
+    const converted = convertJsonEntityHistory(asJson);
     expect(converted).toEqual(expected);
 
     expect(converted.versions[0].createdAt).toBeInstanceOf(Date);

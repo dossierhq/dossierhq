@@ -1,11 +1,11 @@
 import type {
   AdminEntity,
   AdminEntityCreate,
-  AdminEntityHistory,
   AdminEntityUpdate,
   AdminQuery,
   Connection,
   Edge,
+  EntityHistory,
   ErrorResult,
   FieldSpecification,
   Paging,
@@ -31,7 +31,7 @@ export interface DataDataContextAdapter {
   ): PromiseResult<AdminEntity, ErrorType.NotFound | ErrorType.Generic>;
   getEntityHistory(
     id: string
-  ): PromiseResult<AdminEntityHistory, ErrorType.NotFound | ErrorType.Generic>;
+  ): PromiseResult<EntityHistory, ErrorType.NotFound | ErrorType.Generic>;
   getPublishHistory(
     id: string
   ): PromiseResult<PublishHistory, ErrorType.NotFound | ErrorType.Generic>;
@@ -107,7 +107,7 @@ export class DataDataContextValue {
   useEntityHistory = (
     id: string | undefined
   ): {
-    entityHistory?: AdminEntityHistory;
+    entityHistory?: EntityHistory;
     entityHistoryError?: ErrorResult<unknown, ErrorType.NotFound | ErrorType.Generic>;
   } => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -120,7 +120,7 @@ export class DataDataContextValue {
       ? createErrorResultFromError(error, [ErrorType.NotFound])
       : undefined;
     return {
-      entityHistory: data as AdminEntityHistory | undefined,
+      entityHistory: data as EntityHistory | undefined,
       entityHistoryError,
     };
   };

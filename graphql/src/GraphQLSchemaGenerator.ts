@@ -491,10 +491,10 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       })
     );
 
-    // AdminEntityVersionInfo
+    // EntityVersionInfo
     this.addType(
       new GraphQLObjectType({
-        name: 'AdminEntityVersionInfo',
+        name: 'EntityVersionInfo',
         fields: {
           version: { type: new GraphQLNonNull(GraphQLInt) },
           deleted: { type: new GraphQLNonNull(GraphQLBoolean) },
@@ -505,14 +505,14 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       })
     );
 
-    // AdminEntityHistory
+    // EntityHistory
     this.addType(
       new GraphQLObjectType({
-        name: 'AdminEntityHistory',
+        name: 'EntityHistory',
         fields: {
           id: { type: new GraphQLNonNull(GraphQLID) },
           versions: {
-            type: new GraphQLNonNull(new GraphQLList(this.getType('AdminEntityVersionInfo'))),
+            type: new GraphQLNonNull(new GraphQLList(this.getType('EntityVersionInfo'))),
           },
         },
       })
@@ -794,9 +794,9 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     });
   }
 
-  buildQueryFieldAdminEntityHistory<TSource>(): GraphQLFieldConfig<TSource, TContext> {
+  buildQueryFieldEntityHistory<TSource>(): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<TSource, TContext, { id: string }>({
-      type: this.getOutputType('AdminEntityHistory'),
+      type: this.getOutputType('EntityHistory'),
       args: { id: { type: new GraphQLNonNull(GraphQLID) } },
       resolve: async (source, args, context, _info) => {
         const { id } = args;
@@ -828,7 +828,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
           ? {
               adminEntity: this.buildQueryFieldAdminEntity(),
               adminEntities: this.buildQueryFieldAdminEntities(),
-              adminEntityHistory: this.buildQueryFieldAdminEntityHistory(),
+              adminEntityHistory: this.buildQueryFieldEntityHistory(),
               publishHistory: this.buildQueryFieldPublishHistory(),
               adminSearchEntities: this.buildQueryFieldAdminSearchEntities(),
             }

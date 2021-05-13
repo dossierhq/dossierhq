@@ -1,9 +1,4 @@
-import type {
-  AdminEntityHistory,
-  AdminEntityVersionInfo,
-  ErrorResult,
-  ErrorType,
-} from '@datadata/core';
+import type { EntityHistory, EntityVersionInfo, ErrorResult, ErrorType } from '@datadata/core';
 import React, { useContext, useState } from 'react';
 import type { DataDataContextValue } from '../..';
 import {
@@ -74,7 +69,7 @@ export function EntityMetadata({ entityId, className }: EntityMetadataProps): JS
       </ColumnItem>
       <ColumnItem as={Column} grow overflowY="scroll">
         {selectedHistory === 'entity' ? (
-          <EntityHistory
+          <EntityHistoryList
             {...{
               draftState,
               entityHistory,
@@ -102,7 +97,7 @@ export function EntityMetadata({ entityId, className }: EntityMetadataProps): JS
   );
 }
 
-function EntityHistory({
+function EntityHistoryList({
   draftState,
   entityHistory,
   entityHistoryError,
@@ -110,7 +105,7 @@ function EntityHistory({
   setSelectedVersionId,
 }: {
   draftState: EntityEditorDraftState;
-  entityHistory: AdminEntityHistory | undefined;
+  entityHistory: EntityHistory | undefined;
   entityHistoryError: ErrorResult<unknown, ErrorType.NotFound | ErrorType.Generic> | undefined;
   selectedVersionId: number | null;
   setSelectedVersionId: React.Dispatch<React.SetStateAction<number | null>>;
@@ -151,7 +146,7 @@ function PublishButton({
 }: {
   className: string;
   entityId: string;
-  version: AdminEntityVersionInfo | undefined;
+  version: EntityVersionInfo | undefined;
   publishEntity: DataDataContextValue['publishEntity'];
 }) {
   const disabled = !version || version.published;

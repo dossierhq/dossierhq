@@ -66,12 +66,12 @@ export interface AdminEntityUpdate {
   [fieldName: string]: unknown;
 }
 
-export interface AdminEntityHistory {
+export interface EntityHistory {
   id: string;
-  versions: AdminEntityVersionInfo[];
+  versions: EntityVersionInfo[];
 }
 
-export interface AdminEntityVersionInfo {
+export interface EntityVersionInfo {
   version: number;
   deleted: boolean;
   published: boolean;

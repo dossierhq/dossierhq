@@ -1,8 +1,8 @@
 import type {
-  AdminEntityHistory,
-  AdminEntityVersionInfo,
   Connection,
   Edge,
+  EntityHistory,
+  EntityVersionInfo,
   ErrorType,
   PageInfo,
   PublishEvent,
@@ -25,11 +25,11 @@ export type JsonResult<TOk, TError extends ErrorType> =
   | { value: TOk }
   | { error: TError; message: string };
 
-export interface JsonAdminEntityHistory extends Omit<AdminEntityHistory, 'versions'> {
-  versions: JsonAdminEntityVersionInfo[];
+export interface JsonEntityHistory extends Omit<EntityHistory, 'versions'> {
+  versions: JsonEntityVersionInfo[];
 }
 
-export interface JsonAdminEntityVersionInfo extends Omit<AdminEntityVersionInfo, 'createdAt'> {
+export interface JsonEntityVersionInfo extends Omit<EntityVersionInfo, 'createdAt'> {
   createdAt: string;
 }
 
@@ -69,12 +69,10 @@ export function convertJsonResult<TOk, TError extends ErrorType>(
   return createErrorResult(jsonResult.error, jsonResult.message);
 }
 
-export function convertJsonEntityVersion(
-  entityVersion: JsonAdminEntityHistory
-): AdminEntityHistory {
+export function convertJsonEntityHistory(entityHistory: JsonEntityHistory): EntityHistory {
   return {
-    ...entityVersion,
-    versions: entityVersion.versions.map((version) => ({
+    ...entityHistory,
+    versions: entityHistory.versions.map((version) => ({
       ...version,
       createdAt: new Date(version.createdAt),
     })),

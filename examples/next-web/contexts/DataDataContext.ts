@@ -6,7 +6,7 @@ import { DataDataContextValue } from '@datadata/admin-react-components';
 import {
   convertJsonConnection,
   convertJsonEdge,
-  convertJsonEntityVersion,
+  convertJsonEntityHistory,
   convertJsonPublishHistory,
   ErrorType,
   ok,
@@ -88,7 +88,7 @@ class ContextAdapter implements DataDataContextAdapter {
       urls.getEntityHistory(id)
     );
     if (result.isOk()) {
-      return ok(convertJsonEntityVersion(result.value));
+      return ok(convertJsonEntityHistory(result.value));
     }
     return result;
   };

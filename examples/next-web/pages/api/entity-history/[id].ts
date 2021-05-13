@@ -1,4 +1,4 @@
-import type { JsonAdminEntityHistory } from '@datadata/core';
+import type { JsonEntityHistory } from '@datadata/core';
 import { EntityAdmin } from '@datadata/server';
 import Joi from 'joi';
 import type { NextApiRequest, NextApiResponse } from 'next';
@@ -32,6 +32,6 @@ export default async (
     if (result.isError()) {
       throw errorResultToBoom(result);
     }
-    return (result.value as unknown) as JsonAdminEntityHistory;
+    return (result.value as unknown) as JsonEntityHistory;
   });
 };

@@ -9,9 +9,9 @@ import {
 } from '@datadata/core';
 import type {
   AdminEntity,
-  AdminEntityHistory,
   AdminQuery,
   Entity,
+  EntityHistory,
   EntityTypeSpecification,
   FieldSpecification,
   PageInfo,
@@ -252,7 +252,7 @@ function buildTotalCount<TContext extends SessionGraphQLContext>(
 export async function loadVersionHistory<TContext extends SessionGraphQLContext>(
   context: TContext,
   id: string
-): Promise<AdminEntityHistory> {
+): Promise<EntityHistory> {
   const sessionContext = getSessionContext(context);
   const result = await EntityAdmin.getEntityHistory(sessionContext, id);
   if (result.isError()) {

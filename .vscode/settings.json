@@ -4,7 +4,8 @@
     "datadata",
     "graphiql",
     "graphqlid",
-    "queryable"
+    "queryable",
+    "uuidv"
   ],
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,

@@ -1,9 +1,9 @@
 import type {
   AdminEntity,
   ErrorType,
-  JsonAdminEntityHistory,
   JsonConnection,
   JsonEdge,
+  JsonEntityHistory,
   JsonPublishHistory,
   SchemaSpecification,
 } from '@datadata/core';
@@ -12,7 +12,7 @@ export interface EntityResponse {
   item: AdminEntity;
 }
 
-export type EntityHistoryResponse = JsonAdminEntityHistory;
+export type EntityHistoryResponse = JsonEntityHistory;
 
 export type PublishHistoryResponse = JsonPublishHistory;
 
