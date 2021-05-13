@@ -121,7 +121,7 @@ input AdminRichTextInput {
   blocksJson: String!
 }
 
-type AdminEntityVersionInfo {
+type EntityVersionInfo {
   version: Int!
   deleted: Boolean!
   published: Boolean!
@@ -129,9 +129,9 @@ type AdminEntityVersionInfo {
   createdAt: String!
 }
 
-type AdminEntityHistory {
+type EntityHistory {
   id: ID!
-  versions: [AdminEntityVersionInfo]!
+  versions: [EntityVersionInfo]!
 }
 
 type PublishEvent {
@@ -203,7 +203,7 @@ type Query {
   nodes(ids: [ID!]!): [Node]
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
-  adminEntityHistory(id: ID!): AdminEntityHistory
+  adminEntityHistory(id: ID!): EntityHistory
   publishHistory(id: ID!): PublishHistory
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
 }
@@ -330,7 +330,7 @@ input AdminRichTextInput {
   blocksJson: String!
 }
 
-type AdminEntityVersionInfo {
+type EntityVersionInfo {
   version: Int!
   deleted: Boolean!
   published: Boolean!
@@ -338,9 +338,9 @@ type AdminEntityVersionInfo {
   createdAt: String!
 }
 
-type AdminEntityHistory {
+type EntityHistory {
   id: ID!
-  versions: [AdminEntityVersionInfo]!
+  versions: [EntityVersionInfo]!
 }
 
 type PublishEvent {
@@ -460,7 +460,7 @@ type Query {
   nodes(ids: [ID!]!): [Node]
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
-  adminEntityHistory(id: ID!): AdminEntityHistory
+  adminEntityHistory(id: ID!): EntityHistory
   publishHistory(id: ID!): PublishHistory
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
 }
@@ -572,7 +572,7 @@ input AdminRichTextInput {
   blocksJson: String!
 }
 
-type AdminEntityVersionInfo {
+type EntityVersionInfo {
   version: Int!
   deleted: Boolean!
   published: Boolean!
@@ -580,9 +580,9 @@ type AdminEntityVersionInfo {
   createdAt: String!
 }
 
-type AdminEntityHistory {
+type EntityHistory {
   id: ID!
-  versions: [AdminEntityVersionInfo]!
+  versions: [EntityVersionInfo]!
 }
 
 type PublishEvent {
@@ -625,7 +625,7 @@ type Query {
   nodes(ids: [ID!]!): [Node]
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
-  adminEntityHistory(id: ID!): AdminEntityHistory
+  adminEntityHistory(id: ID!): EntityHistory
   publishHistory(id: ID!): PublishHistory
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
 }
@@ -734,7 +734,7 @@ input AdminRichTextInput {
   blocksJson: String!
 }
 
-type AdminEntityVersionInfo {
+type EntityVersionInfo {
   version: Int!
   deleted: Boolean!
   published: Boolean!
@@ -742,9 +742,9 @@ type AdminEntityVersionInfo {
   createdAt: String!
 }
 
-type AdminEntityHistory {
+type EntityHistory {
   id: ID!
-  versions: [AdminEntityVersionInfo]!
+  versions: [EntityVersionInfo]!
 }
 
 type PublishEvent {
@@ -790,7 +790,7 @@ type Query {
   nodes(ids: [ID!]!): [Node]
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
-  adminEntityHistory(id: ID!): AdminEntityHistory
+  adminEntityHistory(id: ID!): EntityHistory
   publishHistory(id: ID!): PublishHistory
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
 }
@@ -908,7 +908,7 @@ input AdminRichTextInput {
   blocksJson: String!
 }
 
-type AdminEntityVersionInfo {
+type EntityVersionInfo {
   version: Int!
   deleted: Boolean!
   published: Boolean!
@@ -916,9 +916,9 @@ type AdminEntityVersionInfo {
   createdAt: String!
 }
 
-type AdminEntityHistory {
+type EntityHistory {
   id: ID!
-  versions: [AdminEntityVersionInfo]!
+  versions: [EntityVersionInfo]!
 }
 
 type PublishEvent {
@@ -993,7 +993,7 @@ type Query {
   nodes(ids: [ID!]!): [Node]
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
-  adminEntityHistory(id: ID!): AdminEntityHistory
+  adminEntityHistory(id: ID!): EntityHistory
   publishHistory(id: ID!): PublishHistory
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
 }
@@ -1147,7 +1147,7 @@ input AdminRichTextInput {
   blocksJson: String!
 }
 
-type AdminEntityVersionInfo {
+type EntityVersionInfo {
   version: Int!
   deleted: Boolean!
   published: Boolean!
@@ -1155,9 +1155,9 @@ type AdminEntityVersionInfo {
   createdAt: String!
 }
 
-type AdminEntityHistory {
+type EntityHistory {
   id: ID!
-  versions: [AdminEntityVersionInfo]!
+  versions: [EntityVersionInfo]!
 }
 
 type PublishEvent {
@@ -1287,7 +1287,7 @@ type Query {
   nodes(ids: [ID!]!): [Node]
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
-  adminEntityHistory(id: ID!): AdminEntityHistory
+  adminEntityHistory(id: ID!): EntityHistory
   publishHistory(id: ID!): PublishHistory
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
 }

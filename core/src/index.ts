@@ -1,9 +1,9 @@
 export type { ErrorResult, OkResult, PromiseResult, Result } from './ErrorResult';
 export type {
-  JsonAdminEntityHistory,
-  JsonAdminEntityVersionInfo,
   JsonConnection,
   JsonEdge,
+  JsonEntityHistory,
+  JsonEntityVersionInfo,
   JsonPublishHistory,
   JsonResult,
 } from './JsonUtils';
@@ -17,15 +17,15 @@ export type {
 export type {
   AdminEntity,
   AdminEntityCreate,
-  AdminEntityHistory,
   AdminEntityUpdate,
-  AdminEntityVersionInfo,
   AdminQuery,
   BoundingBox,
   Connection,
   Edge,
   Entity,
+  EntityHistory,
   EntityReference,
+  EntityVersionInfo,
   Location,
   PageInfo,
   Paging,
@@ -70,7 +70,7 @@ export {
 export {
   convertJsonConnection,
   convertJsonEdge,
-  convertJsonEntityVersion,
+  convertJsonEntityHistory,
   convertJsonPublishHistory,
   convertJsonResult,
 } from './JsonUtils';

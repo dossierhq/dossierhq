@@ -1,11 +1,11 @@
 import type {
   AdminEntity,
   AdminEntityCreate,
-  AdminEntityHistory,
   AdminEntityUpdate,
   AdminQuery,
   Connection,
   Edge,
+  EntityHistory,
   ErrorType,
   Location,
   Paging,
@@ -32,7 +32,7 @@ export const InMemoryAdmin = {
   getEntityHistory: async (
     context: InMemorySessionContext,
     id: string
-  ): PromiseResult<AdminEntityHistory, ErrorType.NotFound> => {
+  ): PromiseResult<EntityHistory, ErrorType.NotFound> => {
     const history = context.server.getEntityHistory(id);
     if (!history) {
       return notOk.NotFound('No such entity');

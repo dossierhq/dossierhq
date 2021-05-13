@@ -2,12 +2,12 @@ import { notOk, ok } from '@datadata/core';
 import type {
   AdminEntity,
   AdminEntityCreate,
-  AdminEntityHistory,
   AdminEntityUpdate,
-  AdminEntityVersionInfo,
   AdminQuery,
   Connection,
   Edge,
+  EntityHistory,
+  EntityVersionInfo,
   ErrorType,
   Paging,
   PromiseResult,
@@ -585,7 +585,7 @@ async function resolveMaxVersionForEntity(
 export async function getEntityHistory(
   context: SessionContext,
   id: string
-): PromiseResult<AdminEntityHistory, ErrorType.NotFound> {
+): PromiseResult<EntityHistory, ErrorType.NotFound> {
   const entityMain = await Db.queryNoneOrOne<
     Pick<EntitiesTable, 'id' | 'uuid' | 'published_entity_versions_id'>
   >(
@@ -618,9 +618,9 @@ export async function getEntityHistory(
     [entityMain.id]
   );
 
-  const result: AdminEntityHistory = {
+  const result: EntityHistory = {
     id: entityMain.uuid,
-    versions: versions.map<AdminEntityVersionInfo>((v) => ({
+    versions: versions.map<EntityVersionInfo>((v) => ({
       version: v.version,
       deleted: v.deleted,
       published: v.id === entityMain.published_entity_versions_id,

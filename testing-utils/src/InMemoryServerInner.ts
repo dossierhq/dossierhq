@@ -1,4 +1,4 @@
-import type { AdminEntity, AdminEntityHistory, PublishHistory, Schema } from '@datadata/core';
+import type { AdminEntity, EntityHistory, PublishHistory, Schema } from '@datadata/core';
 import type { JsonInMemoryEntity } from '.';
 import type { InMemoryEntity } from './InMemoryServer';
 
@@ -39,12 +39,12 @@ export class InMemoryServerInner {
     return this.findLatestVersion(fullEntity.versions);
   }
 
-  getEntityHistory(id: string): AdminEntityHistory | null {
+  getEntityHistory(id: string): EntityHistory | null {
     const fullEntity = this.getFullEntity(id);
     if (!fullEntity) {
       return null;
     }
-    const result: AdminEntityHistory = {
+    const result: EntityHistory = {
       id,
       versions: fullEntity.history.map((item) => {
         const entity = fullEntity.versions.find((x) => x._version === item.version);
