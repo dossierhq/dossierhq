@@ -1204,7 +1204,7 @@ describe('publishEntity()', () => {
       expect(result).toEqual({
         data: {
           publishEntity: {
-            __typename: 'AdminEntityPublishPayload',
+            __typename: 'EntityPublishPayload',
             id,
           },
         },
@@ -1260,7 +1260,7 @@ describe('publishEntities()', () => {
       const result = await graphql(
         schema,
         `
-          mutation PublishEntities($entities: [AdminReferenceVersionInput!]!) {
+          mutation PublishEntities($entities: [EntityVersionInput!]!) {
             publishEntities(entities: $entities) {
               __typename
               id
@@ -1275,7 +1275,7 @@ describe('publishEntities()', () => {
         data: {
           publishEntities: [
             {
-              __typename: 'AdminEntityPublishPayload',
+              __typename: 'EntityPublishPayload',
               id,
             },
           ],
@@ -1294,7 +1294,7 @@ describe('publishEntities()', () => {
     const result = await graphql(
       schema,
       `
-        mutation PublishEntities($entities: [AdminReferenceVersionInput!]!) {
+        mutation PublishEntities($entities: [EntityVersionInput!]!) {
           publishEntities(entities: $entities) {
             __typename
             id

@@ -447,10 +447,10 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       })
     );
 
-    // AdminReferenceVersionInput
+    // EntityVersionInput
     this.addType(
       new GraphQLInputObjectType({
-        name: 'AdminReferenceVersionInput',
+        name: 'EntityVersionInput',
         fields: {
           id: { type: new GraphQLNonNull(GraphQLID) },
           version: { type: new GraphQLNonNull(GraphQLInt) },
@@ -543,10 +543,10 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       })
     );
 
-    // AdminEntityPublishPayload
+    // EntityPublishPayload
     this.addType(
       new GraphQLObjectType({
-        name: 'AdminEntityPublishPayload',
+        name: 'EntityPublishPayload',
         fields: {
           id: { type: new GraphQLNonNull(GraphQLID) },
         },
@@ -828,9 +828,9 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
           ? {
               adminEntity: this.buildQueryFieldAdminEntity(),
               adminEntities: this.buildQueryFieldAdminEntities(),
-              adminEntityHistory: this.buildQueryFieldEntityHistory(),
-              publishHistory: this.buildQueryFieldPublishHistory(),
               adminSearchEntities: this.buildQueryFieldAdminSearchEntities(),
+              entityHistory: this.buildQueryFieldEntityHistory(),
+              publishHistory: this.buildQueryFieldPublishHistory(),
             }
           : {}),
       },
@@ -975,7 +975,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
 
   buildMutationPublishEntity<TSource>(): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<TSource, TContext, { id: string; version: number }>({
-      type: this.getOutputType('AdminEntityPublishPayload'),
+      type: this.getOutputType('EntityPublishPayload'),
       args: {
         id: { type: new GraphQLNonNull(GraphQLID) },
         version: { type: new GraphQLNonNull(GraphQLInt) },
@@ -989,11 +989,11 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
 
   buildMutationPublishEntities<TSource>(): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<TSource, TContext, { entities: { id: string; version: number }[] }>({
-      type: new GraphQLList(new GraphQLNonNull(this.getOutputType('AdminEntityPublishPayload'))),
+      type: new GraphQLList(new GraphQLNonNull(this.getOutputType('EntityPublishPayload'))),
       args: {
         entities: {
           type: new GraphQLNonNull(
-            new GraphQLList(new GraphQLNonNull(this.getInputType('AdminReferenceVersionInput')))
+            new GraphQLList(new GraphQLNonNull(this.getInputType('EntityVersionInput')))
           ),
         },
       },
