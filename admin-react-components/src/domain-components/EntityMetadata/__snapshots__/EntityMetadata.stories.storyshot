@@ -47,6 +47,24 @@ exports[`Storyshots Domain/EntityMetadata Deleted Foo 1`] = `
     </p>
   </div>
   <div
+    className="dd flex-row dd g-2"
+  >
+    <button
+      className="dd button has-background hoverable text-button is-selected is-rounded"
+      onClick={[Function]}
+      type="button"
+    >
+      Entity history
+    </button>
+    <button
+      className="dd button has-background hoverable text-button is-rounded"
+      onClick={[Function]}
+      type="button"
+    >
+      Publish history
+    </button>
+  </div>
+  <div
     className="dd flex-column dd flex-grow overflow-y-scroll"
   >
     <button
@@ -161,6 +179,24 @@ exports[`Storyshots Domain/EntityMetadata Full Foo 1`] = `
     </p>
   </div>
   <div
+    className="dd flex-row dd g-2"
+  >
+    <button
+      className="dd button has-background hoverable text-button is-selected is-rounded"
+      onClick={[Function]}
+      type="button"
+    >
+      Entity history
+    </button>
+    <button
+      className="dd button has-background hoverable text-button is-rounded"
+      onClick={[Function]}
+      type="button"
+    >
+      Publish history
+    </button>
+  </div>
+  <div
     className="dd flex-column dd flex-grow overflow-y-scroll"
   >
     <button
@@ -248,6 +284,24 @@ exports[`Storyshots Domain/EntityMetadata New Foo 1`] = `
     </p>
   </div>
   <div
+    className="dd flex-row dd g-2"
+  >
+    <button
+      className="dd button has-background hoverable text-button is-selected is-rounded"
+      onClick={[Function]}
+      type="button"
+    >
+      Entity history
+    </button>
+    <button
+      className="dd button has-background hoverable text-button is-rounded"
+      onClick={[Function]}
+      type="button"
+    >
+      Publish history
+    </button>
+  </div>
+  <div
     className="dd flex-column dd flex-grow overflow-y-scroll"
   />
   <button
@@ -301,6 +355,24 @@ exports[`Storyshots Domain/EntityMetadata Slow Full Foo 1`] = `
     >
       fc66b4d7-61ff-44d4-8f68-cb7f526df046
     </p>
+  </div>
+  <div
+    className="dd flex-row dd g-2"
+  >
+    <button
+      className="dd button has-background hoverable text-button is-selected is-rounded"
+      onClick={[Function]}
+      type="button"
+    >
+      Entity history
+    </button>
+    <button
+      className="dd button has-background hoverable text-button is-rounded"
+      onClick={[Function]}
+      type="button"
+    >
+      Publish history
+    </button>
   </div>
   <div
     className="dd flex-column dd flex-grow overflow-y-scroll"

@@ -1,4 +1,4 @@
-import type { AdminEntity, AdminEntityHistory, Schema } from '@datadata/core';
+import type { AdminEntity, AdminEntityHistory, PublishHistory, Schema } from '@datadata/core';
 import type { JsonInMemoryEntity } from '.';
 import type { InMemoryEntity } from './InMemoryServer';
 
@@ -12,13 +12,18 @@ export class InMemoryServerInner {
 
   loadEntities(entities: JsonInMemoryEntity[]): void {
     const clone: JsonInMemoryEntity[] = JSON.parse(JSON.stringify(entities));
-    this.#entities = clone.map(({ versions, publishedVersion, history }) => ({
+    this.#entities = clone.map(({ versions, publishedVersion, history, publishEvents }) => ({
       versions,
       publishedVersion,
       history: history.map(({ version, createdBy, createdAt }) => ({
         version,
         createdBy,
         createdAt: new Date(createdAt),
+      })),
+      publishEvents: publishEvents.map(({ version, publishedBy, publishedAt }) => ({
+        version,
+        publishedBy,
+        publishedAt: new Date(publishedAt),
       })),
     }));
   }
@@ -55,6 +60,15 @@ export class InMemoryServerInner {
     return result;
   }
 
+  getPublishHistory(id: string): PublishHistory | null {
+    const fullEntity = this.getFullEntity(id);
+    if (!fullEntity) {
+      return null;
+    }
+    const result: PublishHistory = { id, events: fullEntity.publishEvents };
+    return result;
+  }
+
   getLatestEntities(): AdminEntity[] {
     return this.#entities.map((x) => this.findLatestVersion(x.versions));
   }
@@ -71,6 +85,7 @@ export class InMemoryServerInner {
     this.#entities.push({
       versions: [entity],
       history: [{ version: 0, createdAt: new Date(), createdBy: userId }],
+      publishEvents: [],
     });
   }
 
@@ -89,12 +104,13 @@ export class InMemoryServerInner {
     });
   }
 
-  setPublishedVersion(id: string, version: number): void {
+  setPublishedVersion(id: string, version: number, userId: string): void {
     const fullEntity = this.getFullEntity(id);
     if (!fullEntity) {
       throw new Error(`Can't find ${id}`);
     }
     fullEntity.publishedVersion = version;
+    fullEntity.publishEvents.push({ version, publishedAt: new Date(), publishedBy: userId });
   }
 
   private findLatestVersion(versions: AdminEntity[]): AdminEntity {

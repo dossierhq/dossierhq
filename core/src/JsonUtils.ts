@@ -5,6 +5,8 @@ import type {
   Edge,
   ErrorType,
   PageInfo,
+  PublishEvent,
+  PublishHistory,
   Result,
 } from '.';
 import { createErrorResult, ok } from '.';
@@ -29,6 +31,14 @@ export interface JsonAdminEntityHistory extends Omit<AdminEntityHistory, 'versio
 
 export interface JsonAdminEntityVersionInfo extends Omit<AdminEntityVersionInfo, 'createdAt'> {
   createdAt: string;
+}
+
+export interface JsonPublishHistory extends Omit<PublishHistory, 'events'> {
+  events: JsonPublishEvent[];
+}
+
+export interface JsonPublishEvent extends Omit<PublishEvent, 'publishedAt'> {
+  publishedAt: string;
 }
 
 export function convertJsonConnection<
@@ -67,6 +77,16 @@ export function convertJsonEntityVersion(
     versions: entityVersion.versions.map((version) => ({
       ...version,
       createdAt: new Date(version.createdAt),
+    })),
+  };
+}
+
+export function convertJsonPublishHistory(publishHistory: JsonPublishHistory): PublishHistory {
+  return {
+    ...publishHistory,
+    events: publishHistory.events.map((version) => ({
+      ...version,
+      publishedAt: new Date(version.publishedAt),
     })),
   };
 }

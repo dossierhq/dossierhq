@@ -5,12 +5,15 @@ import type {
   JsonAdminEntityHistory,
   JsonConnection,
   JsonEdge,
+  JsonPublishHistory,
   JsonResult,
+  PublishHistory,
 } from '.';
 import {
   convertJsonConnection,
   convertJsonEdge,
   convertJsonEntityVersion,
+  convertJsonPublishHistory,
   convertJsonResult,
   ErrorType,
   notOk,
@@ -104,5 +107,19 @@ describe('convertJsonEntityVersion()', () => {
     expect(converted).toEqual(expected);
 
     expect(converted.versions[0].createdAt).toBeInstanceOf(Date);
+  });
+});
+
+describe('convertJsonPublishHistory()', () => {
+  test('History with one version', () => {
+    const expected: PublishHistory = {
+      id: '123',
+      events: [{ publishedAt: new Date(), publishedBy: '4321', version: 0 }],
+    };
+    const asJson: JsonPublishHistory = JSON.parse(JSON.stringify(expected));
+    const converted = convertJsonPublishHistory(asJson);
+    expect(converted).toEqual(expected);
+
+    expect(converted.events[0].publishedAt).toBeInstanceOf(Date);
   });
 });

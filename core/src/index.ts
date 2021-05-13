@@ -4,6 +4,7 @@ export type {
   JsonAdminEntityVersionInfo,
   JsonConnection,
   JsonEdge,
+  JsonPublishHistory,
   JsonResult,
 } from './JsonUtils';
 export type {
@@ -70,6 +71,7 @@ export {
   convertJsonConnection,
   convertJsonEdge,
   convertJsonEntityVersion,
+  convertJsonPublishHistory,
   convertJsonResult,
 } from './JsonUtils';
 export { FieldType, RichTextBlockType, Schema } from './Schema';
