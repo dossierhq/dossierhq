@@ -7,6 +7,7 @@ import {
   convertJsonConnection,
   convertJsonEdge,
   convertJsonEntityVersion,
+  convertJsonPublishHistory,
   ErrorType,
   ok,
   Schema,
@@ -17,6 +18,7 @@ import type {
   ActionResponse,
   EntityHistoryResponse,
   EntityResponse,
+  PublishHistoryResponse,
   SchemaResponse,
   SearchEntitiesResponse,
 } from '../types/ResponseTypes';
@@ -87,6 +89,17 @@ class ContextAdapter implements DataDataContextAdapter {
     );
     if (result.isOk()) {
       return ok(convertJsonEntityVersion(result.value));
+    }
+    return result;
+  };
+
+  getPublishHistory: DataDataContextAdapter['getPublishHistory'] = async (id) => {
+    const result = await fetchJsonResult<PublishHistoryResponse, ErrorType.NotFound>(
+      [ErrorType.NotFound],
+      urls.getPublishHistory(id)
+    );
+    if (result.isOk()) {
+      return ok(convertJsonPublishHistory(result.value));
     }
     return result;
   };

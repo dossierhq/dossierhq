@@ -41,6 +41,7 @@ export const entitiesFixture: JsonInMemoryEntity[] = [
         createdBy: userId1,
       },
     ],
+    publishEvents: [{ version: 0, publishedAt: '2021-03-11T20:19:39.343Z', publishedBy: userId1 }],
   },
   {
     publishedVersion: 1,
@@ -72,6 +73,10 @@ export const entitiesFixture: JsonInMemoryEntity[] = [
         createdBy: userId1,
       },
     ],
+    publishEvents: [
+      { version: 0, publishedAt: '2021-03-10T18:19:39.343Z', publishedBy: userId1 },
+      { version: 1, publishedAt: '2021-03-11T20:19:39.343Z', publishedBy: userId1 },
+    ],
   },
   {
     versions: [
@@ -90,6 +95,7 @@ export const entitiesFixture: JsonInMemoryEntity[] = [
         createdBy: userId1,
       },
     ],
+    publishEvents: [],
   },
   {
     versions: [
@@ -108,6 +114,7 @@ export const entitiesFixture: JsonInMemoryEntity[] = [
         createdBy: userId1,
       },
     ],
+    publishEvents: [],
   },
   {
     versions: [
@@ -146,5 +153,6 @@ export const entitiesFixture: JsonInMemoryEntity[] = [
         createdBy: userId1,
       },
     ],
+    publishEvents: [],
   },
 ];

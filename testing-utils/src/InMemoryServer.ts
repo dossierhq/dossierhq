@@ -5,10 +5,12 @@ export interface InMemoryEntity {
   versions: AdminEntity[];
   publishedVersion?: number;
   history: { version: number; createdBy: string; createdAt: Date }[];
+  publishEvents: { version: number | null; publishedBy: string; publishedAt: Date }[];
 }
 
-export interface JsonInMemoryEntity extends Omit<InMemoryEntity, 'history'> {
+export interface JsonInMemoryEntity extends Omit<InMemoryEntity, 'history' | 'publishEvents'> {
   history: { version: number; createdBy: string; createdAt: string }[];
+  publishEvents: { version: number | null; publishedBy: string; publishedAt: string }[];
 }
 
 export interface InMemorySessionContext {

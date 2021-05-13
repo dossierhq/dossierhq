@@ -13,6 +13,9 @@ describe('getEntity()', () => {
       {
         versions: [{ id, _type: 'Foo', _name: 'Foo', _version: 0 }],
         history: [{ version: 0, createdBy: 'user0', createdAt: '2021-03-03T20:51:12.671Z' }],
+        publishEvents: [
+          { version: 0, publishedBy: 'user0', publishedAt: '2021-03-03T20:51:12.671Z' },
+        ],
       },
     ]);
     const context = server.createContext(uuidv4());

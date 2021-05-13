@@ -10,6 +10,7 @@ import type {
   FieldSpecification,
   Paging,
   PromiseResult,
+  PublishHistory,
   Schema,
 } from '@datadata/core';
 import { createErrorResultFromError, ErrorType } from '@datadata/core';
@@ -31,6 +32,9 @@ export interface DataDataContextAdapter {
   getEntityHistory(
     id: string
   ): PromiseResult<AdminEntityHistory, ErrorType.NotFound | ErrorType.Generic>;
+  getPublishHistory(
+    id: string
+  ): PromiseResult<PublishHistory, ErrorType.NotFound | ErrorType.Generic>;
   searchEntities(
     query?: AdminQuery,
     paging?: Paging
@@ -53,6 +57,7 @@ export interface DataDataContextAdapter {
 enum FetcherActions {
   UseEntity,
   UseEntityHistory,
+  UsePublishHistory,
   UseSearchEntities,
 }
 
@@ -117,6 +122,28 @@ export class DataDataContextValue {
     return {
       entityHistory: data as AdminEntityHistory | undefined,
       entityHistoryError,
+    };
+  };
+
+  /** Loads the publish history for an entity. If `id` is `undefined` no data is fetched */
+  usePublishHistory = (
+    id: string | undefined
+  ): {
+    publishHistory?: PublishHistory;
+    publishHistoryError?: ErrorResult<unknown, ErrorType.NotFound | ErrorType.Generic>;
+  } => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const { data, error } = useSWR(
+      id ? [this.#rootKey, FetcherActions.UsePublishHistory, id] : null,
+      this.fetcher
+    );
+
+    const publishHistoryError = error
+      ? createErrorResultFromError(error, [ErrorType.NotFound])
+      : undefined;
+    return {
+      publishHistory: data as PublishHistory | undefined,
+      publishHistoryError,
     };
   };
 
@@ -195,6 +222,7 @@ export class DataDataContextValue {
 
   private invalidateEntityPublished(id: string) {
     mutate([this.#rootKey, FetcherActions.UseEntityHistory, id]);
+    mutate([this.#rootKey, FetcherActions.UsePublishHistory, id]);
   }
 
   private fetcher = async (
@@ -214,6 +242,14 @@ export class DataDataContextValue {
       case FetcherActions.UseEntityHistory: {
         const [id] = args as [string];
         const result = await this.#adapter.getEntityHistory(id);
+        if (result.isError()) {
+          throw result.toError();
+        }
+        return result.value;
+      }
+      case FetcherActions.UsePublishHistory: {
+        const [id] = args as [string];
+        const result = await this.#adapter.getPublishHistory(id);
         if (result.isError()) {
           throw result.toError();
         }

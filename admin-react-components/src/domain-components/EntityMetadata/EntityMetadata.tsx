@@ -1,4 +1,9 @@
-import type { AdminEntityVersionInfo } from '@datadata/core';
+import type {
+  AdminEntityHistory,
+  AdminEntityVersionInfo,
+  ErrorResult,
+  ErrorType,
+} from '@datadata/core';
 import React, { useContext, useState } from 'react';
 import type { DataDataContextValue } from '../..';
 import {
@@ -9,9 +14,11 @@ import {
   EntityEditorStateContext,
   Loader,
   Message,
+  Row,
   Tag,
 } from '../..';
 import { joinClassNames } from '../../utils/ClassNameUtils';
+import type { EntityEditorDraftState } from '../EntityEditor/EntityEditorReducer';
 
 export interface EntityMetadataProps {
   entityId: string;
@@ -24,6 +31,8 @@ export function EntityMetadata({ entityId, className }: EntityMetadataProps): JS
   if (!draftState) {
     throw new Error(`Can't find state for id (${entityId})`);
   }
+
+  const [selectedHistory, setSelectedHistory] = useState<'entity' | 'publish'>('entity');
 
   const { publishEntity, useEntityHistory } = useContext(DataDataContext);
   const { entityHistory, entityHistoryError } = useEntityHistory(
@@ -49,29 +58,33 @@ export function EntityMetadata({ entityId, className }: EntityMetadataProps): JS
         <p className="dd text-subtitle2">ID</p>
         <p className="dd text-body1">{entityId}</p>
       </ColumnItem>
+      <ColumnItem as={Row} gap={2}>
+        <Button
+          selected={selectedHistory === 'entity'}
+          onClick={() => setSelectedHistory('entity')}
+        >
+          Entity history
+        </Button>
+        <Button
+          selected={selectedHistory === 'publish'}
+          onClick={() => setSelectedHistory('publish')}
+        >
+          Publish history
+        </Button>
+      </ColumnItem>
       <ColumnItem as={Column} grow overflowY="scroll">
-        {entityHistory ? (
-          entityHistory.versions.map((version) => {
-            return (
-              <Button
-                key={version.version}
-                onClick={() => setSelectedVersionId(version.version)}
-                selected={version.version === selectedVersionId}
-                rounded={false}
-              >
-                <p className="dd text-subtitle2">
-                  Version {version.version}
-                  {version.deleted ? <Tag kind="danger" text="Deleted" /> : null}
-                  {version.published ? <Tag kind="primary" text="Published" /> : null}
-                </p>
-                <p className="dd text-body1">{version.createdAt.toLocaleString()}</p>
-                <p className="dd text-body1">{version.createdBy}</p>
-              </Button>
-            );
-          })
-        ) : !entityHistoryError && draftState.exists ? (
-          <Loader />
+        {selectedHistory === 'entity' ? (
+          <EntityHistory
+            {...{
+              draftState,
+              entityHistory,
+              entityHistoryError,
+              selectedVersionId,
+              setSelectedVersionId,
+            }}
+          />
         ) : null}
+        {selectedHistory === 'publish' ? <PublishHistory draftState={draftState} /> : null}
       </ColumnItem>
       <PublishButton
         className="mx-2"
@@ -86,6 +99,47 @@ export function EntityMetadata({ entityId, className }: EntityMetadataProps): JS
         />
       ) : null}
     </Column>
+  );
+}
+
+function EntityHistory({
+  draftState,
+  entityHistory,
+  entityHistoryError,
+  selectedVersionId,
+  setSelectedVersionId,
+}: {
+  draftState: EntityEditorDraftState;
+  entityHistory: AdminEntityHistory | undefined;
+  entityHistoryError: ErrorResult<unknown, ErrorType.NotFound | ErrorType.Generic> | undefined;
+  selectedVersionId: number | null;
+  setSelectedVersionId: React.Dispatch<React.SetStateAction<number | null>>;
+}) {
+  return (
+    <>
+      {entityHistory ? (
+        entityHistory.versions.map((version) => {
+          return (
+            <Button
+              key={version.version}
+              onClick={() => setSelectedVersionId(version.version)}
+              selected={version.version === selectedVersionId}
+              rounded={false}
+            >
+              <p className="dd text-subtitle2">
+                Version {version.version}
+                {version.deleted ? <Tag kind="danger" text="Deleted" /> : null}
+                {version.published ? <Tag kind="primary" text="Published" /> : null}
+              </p>
+              <p className="dd text-body1">{version.createdAt.toLocaleString()}</p>
+              <p className="dd text-body1">{version.createdBy}</p>
+            </Button>
+          );
+        })
+      ) : !entityHistoryError && draftState.exists ? (
+        <Loader />
+      ) : null}
+    </>
   );
 }
 
@@ -117,5 +171,38 @@ function PublishButton({
     >
       {version ? `Publish v ${version.version}` : 'Publish'}
     </Button>
+  );
+}
+
+function PublishHistory({ draftState }: { draftState: EntityEditorDraftState }) {
+  const { usePublishHistory } = useContext(DataDataContext);
+  const { publishHistory, publishHistoryError } = usePublishHistory(
+    draftState.exists ? draftState.id : undefined
+  );
+
+  if (!draftState.exists) {
+    return null;
+  }
+  if (!publishHistory && !publishHistoryError) {
+    return <Loader />;
+  }
+  return (
+    <>
+      {publishHistory?.events.map((event, index) => {
+        return (
+          <Column key={index}>
+            <p className="dd text-subtitle2">Version {event.version}</p>
+            <p className="dd text-body1">{event.publishedAt.toLocaleString()}</p>
+            <p className="dd text-body1">{event.publishedBy}</p>
+          </Column>
+        );
+      })}
+      {publishHistoryError ? (
+        <Message
+          kind="danger"
+          message={`${publishHistoryError.error}: ${publishHistoryError.message}`}
+        />
+      ) : null}
+    </>
   );
 }

@@ -10,6 +10,7 @@ import type {
   Location,
   Paging,
   PromiseResult,
+  PublishHistory,
 } from '@datadata/core';
 import { isLocationItemField, notOk, ok, visitItemRecursively } from '@datadata/core';
 import { v4 as uuidv4 } from 'uuid';
@@ -33,6 +34,17 @@ export const InMemoryAdmin = {
     id: string
   ): PromiseResult<AdminEntityHistory, ErrorType.NotFound> => {
     const history = context.server.getEntityHistory(id);
+    if (!history) {
+      return notOk.NotFound('No such entity');
+    }
+    return ok(history);
+  },
+
+  getPublishHistory: async (
+    context: InMemorySessionContext,
+    id: string
+  ): PromiseResult<PublishHistory, ErrorType.NotFound> => {
+    const history = context.server.getPublishHistory(id);
     if (!history) {
       return notOk.NotFound('No such entity');
     }
@@ -135,7 +147,7 @@ export const InMemoryAdmin = {
       return notOk.NotFound('No such entity or version');
     }
 
-    context.server.setPublishedVersion(id, version);
+    context.server.setPublishedVersion(id, version, context.userId);
 
     return ok(undefined);
   },

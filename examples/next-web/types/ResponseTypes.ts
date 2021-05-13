@@ -4,6 +4,7 @@ import type {
   JsonAdminEntityHistory,
   JsonConnection,
   JsonEdge,
+  JsonPublishHistory,
   SchemaSpecification,
 } from '@datadata/core';
 
@@ -12,6 +13,8 @@ export interface EntityResponse {
 }
 
 export type EntityHistoryResponse = JsonAdminEntityHistory;
+
+export type PublishHistoryResponse = JsonPublishHistory;
 
 export interface SchemaResponse {
   spec: SchemaSpecification;
