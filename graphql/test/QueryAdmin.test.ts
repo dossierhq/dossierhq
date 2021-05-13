@@ -1212,7 +1212,7 @@ describe('versionHistory()', () => {
         schema,
         `
           query EntityHistory($id: ID!) {
-            adminEntityHistory(id: $id) {
+            entityHistory(id: $id) {
               id
               versions {
                 version
@@ -1229,12 +1229,12 @@ describe('versionHistory()', () => {
         { id }
       );
       // Remove createdAt since it's tricky to test 🤷‍♂️
-      result.data?.adminEntityHistory.versions.forEach(
+      result.data?.entityHistory.versions.forEach(
         (x: { createdAt?: string }) => delete x.createdAt
       );
 
       expect(result.data).toEqual({
-        adminEntityHistory: {
+        entityHistory: {
           id,
           versions: [
             { createdBy: context.session.subjectId, deleted: false, published: false, version: 0 },
@@ -1251,7 +1251,7 @@ describe('versionHistory()', () => {
       schema,
       `
         query EntityHistory($id: ID!) {
-          adminEntityHistory(id: $id) {
+          entityHistory(id: $id) {
             id
             versions {
               version
@@ -1266,7 +1266,7 @@ describe('versionHistory()', () => {
     expect(result).toMatchInlineSnapshot(`
       Object {
         "data": Object {
-          "adminEntityHistory": null,
+          "entityHistory": null,
         },
         "errors": Array [
           [GraphQLError: NotFound: No such entity],

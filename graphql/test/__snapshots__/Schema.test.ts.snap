@@ -107,7 +107,7 @@ input AdminReferenceInput {
   id: ID!
 }
 
-input AdminReferenceVersionInput {
+input EntityVersionInput {
   id: ID!
   version: Int!
 }
@@ -145,7 +145,7 @@ type PublishHistory {
   events: [PublishEvent]!
 }
 
-type AdminEntityPublishPayload {
+type EntityPublishPayload {
   id: ID!
 }
 
@@ -203,15 +203,15 @@ type Query {
   nodes(ids: [ID!]!): [Node]
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
-  adminEntityHistory(id: ID!): EntityHistory
-  publishHistory(id: ID!): PublishHistory
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  entityHistory(id: ID!): EntityHistory
+  publishHistory(id: ID!): PublishHistory
 }
 
 type Mutation {
   deleteEntity(id: ID!): AdminEntity
-  publishEntity(id: ID!, version: Int!): AdminEntityPublishPayload
-  publishEntities(entities: [AdminReferenceVersionInput!]!): [AdminEntityPublishPayload!]
+  publishEntity(id: ID!, version: Int!): EntityPublishPayload
+  publishEntities(entities: [EntityVersionInput!]!): [EntityPublishPayload!]
   createFooEntity(entity: AdminFooCreateInput!): AdminFoo
   updateFooEntity(entity: AdminFooUpdateInput!): AdminFoo
   createBarEntity(entity: AdminBarCreateInput!): AdminBar
@@ -316,7 +316,7 @@ input AdminReferenceInput {
   id: ID!
 }
 
-input AdminReferenceVersionInput {
+input EntityVersionInput {
   id: ID!
   version: Int!
 }
@@ -354,7 +354,7 @@ type PublishHistory {
   events: [PublishEvent]!
 }
 
-type AdminEntityPublishPayload {
+type EntityPublishPayload {
   id: ID!
 }
 
@@ -460,15 +460,15 @@ type Query {
   nodes(ids: [ID!]!): [Node]
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
-  adminEntityHistory(id: ID!): EntityHistory
-  publishHistory(id: ID!): PublishHistory
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  entityHistory(id: ID!): EntityHistory
+  publishHistory(id: ID!): PublishHistory
 }
 
 type Mutation {
   deleteEntity(id: ID!): AdminEntity
-  publishEntity(id: ID!, version: Int!): AdminEntityPublishPayload
-  publishEntities(entities: [AdminReferenceVersionInput!]!): [AdminEntityPublishPayload!]
+  publishEntity(id: ID!, version: Int!): EntityPublishPayload
+  publishEntities(entities: [EntityVersionInput!]!): [EntityPublishPayload!]
   createFooEntity(entity: AdminFooCreateInput!): AdminFoo
   updateFooEntity(entity: AdminFooUpdateInput!): AdminFoo
   createBarEntity(entity: AdminBarCreateInput!): AdminBar
@@ -558,7 +558,7 @@ input AdminReferenceInput {
   id: ID!
 }
 
-input AdminReferenceVersionInput {
+input EntityVersionInput {
   id: ID!
   version: Int!
 }
@@ -596,7 +596,7 @@ type PublishHistory {
   events: [PublishEvent]!
 }
 
-type AdminEntityPublishPayload {
+type EntityPublishPayload {
   id: ID!
 }
 
@@ -625,15 +625,15 @@ type Query {
   nodes(ids: [ID!]!): [Node]
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
-  adminEntityHistory(id: ID!): EntityHistory
-  publishHistory(id: ID!): PublishHistory
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  entityHistory(id: ID!): EntityHistory
+  publishHistory(id: ID!): PublishHistory
 }
 
 type Mutation {
   deleteEntity(id: ID!): AdminEntity
-  publishEntity(id: ID!, version: Int!): AdminEntityPublishPayload
-  publishEntities(entities: [AdminReferenceVersionInput!]!): [AdminEntityPublishPayload!]
+  publishEntity(id: ID!, version: Int!): EntityPublishPayload
+  publishEntities(entities: [EntityVersionInput!]!): [EntityPublishPayload!]
   createFooEntity(entity: AdminFooCreateInput!): AdminFoo
   updateFooEntity(entity: AdminFooUpdateInput!): AdminFoo
 }
@@ -720,7 +720,7 @@ input AdminReferenceInput {
   id: ID!
 }
 
-input AdminReferenceVersionInput {
+input EntityVersionInput {
   id: ID!
   version: Int!
 }
@@ -758,7 +758,7 @@ type PublishHistory {
   events: [PublishEvent]!
 }
 
-type AdminEntityPublishPayload {
+type EntityPublishPayload {
   id: ID!
 }
 
@@ -790,15 +790,15 @@ type Query {
   nodes(ids: [ID!]!): [Node]
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
-  adminEntityHistory(id: ID!): EntityHistory
-  publishHistory(id: ID!): PublishHistory
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  entityHistory(id: ID!): EntityHistory
+  publishHistory(id: ID!): PublishHistory
 }
 
 type Mutation {
   deleteEntity(id: ID!): AdminEntity
-  publishEntity(id: ID!, version: Int!): AdminEntityPublishPayload
-  publishEntities(entities: [AdminReferenceVersionInput!]!): [AdminEntityPublishPayload!]
+  publishEntity(id: ID!, version: Int!): EntityPublishPayload
+  publishEntities(entities: [EntityVersionInput!]!): [EntityPublishPayload!]
   createFooEntity(entity: AdminFooCreateInput!): AdminFoo
   updateFooEntity(entity: AdminFooUpdateInput!): AdminFoo
 }
@@ -894,7 +894,7 @@ input AdminReferenceInput {
   id: ID!
 }
 
-input AdminReferenceVersionInput {
+input EntityVersionInput {
   id: ID!
   version: Int!
 }
@@ -932,7 +932,7 @@ type PublishHistory {
   events: [PublishEvent]!
 }
 
-type AdminEntityPublishPayload {
+type EntityPublishPayload {
   id: ID!
 }
 
@@ -993,15 +993,15 @@ type Query {
   nodes(ids: [ID!]!): [Node]
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
-  adminEntityHistory(id: ID!): EntityHistory
-  publishHistory(id: ID!): PublishHistory
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  entityHistory(id: ID!): EntityHistory
+  publishHistory(id: ID!): PublishHistory
 }
 
 type Mutation {
   deleteEntity(id: ID!): AdminEntity
-  publishEntity(id: ID!, version: Int!): AdminEntityPublishPayload
-  publishEntities(entities: [AdminReferenceVersionInput!]!): [AdminEntityPublishPayload!]
+  publishEntity(id: ID!, version: Int!): EntityPublishPayload
+  publishEntities(entities: [EntityVersionInput!]!): [EntityPublishPayload!]
   createFooEntity(entity: AdminFooCreateInput!): AdminFoo
   updateFooEntity(entity: AdminFooUpdateInput!): AdminFoo
   createBarEntity(entity: AdminBarCreateInput!): AdminBar
@@ -1129,7 +1129,7 @@ input AdminReferenceInput {
   id: ID!
 }
 
-input AdminReferenceVersionInput {
+input EntityVersionInput {
   id: ID!
   version: Int!
 }
@@ -1171,7 +1171,7 @@ type PublishHistory {
   events: [PublishEvent]!
 }
 
-type AdminEntityPublishPayload {
+type EntityPublishPayload {
   id: ID!
 }
 
@@ -1287,15 +1287,15 @@ type Query {
   nodes(ids: [ID!]!): [Node]
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
-  adminEntityHistory(id: ID!): EntityHistory
-  publishHistory(id: ID!): PublishHistory
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  entityHistory(id: ID!): EntityHistory
+  publishHistory(id: ID!): PublishHistory
 }
 
 type Mutation {
   deleteEntity(id: ID!): AdminEntity
-  publishEntity(id: ID!, version: Int!): AdminEntityPublishPayload
-  publishEntities(entities: [AdminReferenceVersionInput!]!): [AdminEntityPublishPayload!]
+  publishEntity(id: ID!, version: Int!): EntityPublishPayload
+  publishEntities(entities: [EntityVersionInput!]!): [EntityPublishPayload!]
   createFooEntity(entity: AdminFooCreateInput!): AdminFoo
   updateFooEntity(entity: AdminFooUpdateInput!): AdminFoo
   createBarEntity(entity: AdminBarCreateInput!): AdminBar
