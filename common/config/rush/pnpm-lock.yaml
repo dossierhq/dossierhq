@@ -66,7 +66,7 @@ dependencies:
   next-transpile-modules: 6.1.0
   pg: 8.5.1
   postgrator: 4.1.1
-  prettier: 2.2.1
+  prettier: 2.3.0
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
   react-leaflet: 3.1.0_91fa1427a3331e02931dfea77720a290
@@ -10764,6 +10764,13 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-PqyhM2yCjg/oKkFPtTGUojv7gnZAoG80ttl45O6x2Ug/rMJw4wcc9k6aaf2hibP7BGVCCM33gZoGjyvt9mm16Q==
+  /prettier/2.3.0:
+    dev: false
+    engines:
+      node: '>=10.13.0'
+    hasBin: true
+    resolution:
+      integrity: sha512-kXtO4s0Lz/DW/IJ9QdWhAf7/NmPWQXkFr/r/WkR3vyI+0v8amTDxiaQSLzs8NBlytfLWX/7uQUMIW677yLKl4w==
   /pretty-error/2.1.2:
     dependencies:
       lodash: 4.17.21
@@ -13921,7 +13928,7 @@ packages:
       leaflet: 1.7.1
       lodash: 4.17.21
       mini-svg-data-uri: 1.2.3
-      prettier: 2.2.1
+      prettier: 2.3.0
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
       react-leaflet: 3.1.0_91fa1427a3331e02931dfea77720a290
@@ -13937,7 +13944,7 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-+1BRwPR4j6RAIvFcDYdAUsRq3uSMOcEnuI+yl70wx9tSlkj9pe/C2csIyeH0aFHeEy77d81M/5QeYY5fQ95XZQ==
+      integrity: sha512-LKPxHcMHGhKhuuCCW6hvn5hhSbUC9tZm5gBtx1yNpqDfFDuvx99f6SSNq8qudcvg9Zt6GMDu/VDN3aRMMy754g==
       tarball: file:projects/admin-react-components.tgz
     version: 0.0.0
   file:projects/benchpress.tgz:
@@ -13946,13 +13953,13 @@ packages:
       '@typescript-eslint/eslint-plugin': 4.21.0_cda5af1c23ac8590b255ddd624825ef5
       '@typescript-eslint/parser': 4.21.0_eslint@7.23.0+typescript@4.2.4
       eslint: 7.23.0
-      prettier: 2.2.1
+      prettier: 2.3.0
       ts-node: 9.1.1_typescript@4.2.4
       typescript: 4.2.4
     dev: false
     name: '@rush-temp/benchpress'
     resolution:
-      integrity: sha512-nYTfJo7UfZ66dGPtNvrQlv554d2ZPs3LZr1U9lV1Tc41fttFOdeKJ5LKGRsyLVbYHWiKsqMF41NF6eVYbFb6wA==
+      integrity: sha512-S7tRdqA1TswhQAJ0Z6KlzwGRpKVluZR8ii8qUw2OLDd2Kvod9vpqxWncPcwQbH5uo8tNAHu2Cosct367R4e7rQ==
       tarball: file:projects/benchpress.tgz
     version: 0.0.0
   file:projects/cli.tgz:
@@ -13963,12 +13970,12 @@ packages:
       chalk: 4.1.0
       eslint: 7.23.0
       inquirer: 8.0.0
-      prettier: 2.2.1
+      prettier: 2.3.0
       typescript: 4.2.4
     dev: false
     name: '@rush-temp/cli'
     resolution:
-      integrity: sha512-/fey6zYyuTBwpvuW/IlLz3sRcfOvvIAu/VFi/hqZvrxD+4450FlOggk9NS6ZER65IvDv3vhyxBXEl8Z8/FtGqA==
+      integrity: sha512-6DMskO+F2/3IiY+00Nter/ydUifQh5cmYnIjGCjMgDom+Ba3SVNzIjpstKPqulFLptmoSS4Pt+R3/FqavGsizw==
       tarball: file:projects/cli.tgz
     version: 0.0.0
   file:projects/core.tgz:
@@ -13978,14 +13985,14 @@ packages:
       '@typescript-eslint/parser': 4.21.0_eslint@7.23.0+typescript@4.2.4
       eslint: 7.23.0
       jest: 26.6.3_ts-node@9.1.1
-      prettier: 2.2.1
+      prettier: 2.3.0
       ts-jest: 26.5.4_jest@26.6.3+typescript@4.2.4
       ts-node: 9.1.1_typescript@4.2.4
       typescript: 4.2.4
     dev: false
     name: '@rush-temp/core'
     resolution:
-      integrity: sha512-2uTXPdbn9swPFHe5TT/542rO2eFHxog0a+kQavfO0lo19csWKzMMi1tZX5J5/VCYw/bpJ1T42QhoffzRcGMA4g==
+      integrity: sha512-SOSdyOILY5DSmjSxgmp1uyUds9sEpvyuadaxD6UjyHAxyFnohRfo+7FdSOS/kuQ7gwnVcEaU5+SIfAmXRWqmQg==
       tarball: file:projects/core.tgz
     version: 0.0.0
   file:projects/datadata-examples-foo.tgz_graphql@15.5.0:
@@ -13998,7 +14005,7 @@ packages:
       eslint: 7.23.0
       express: 4.17.1
       express-graphql: 0.12.0_graphql@15.5.0
-      prettier: 2.2.1
+      prettier: 2.3.0
       ts-node: 9.1.1_typescript@4.2.4
       typescript: 4.2.4
     dev: false
@@ -14007,7 +14014,7 @@ packages:
     peerDependencies:
       graphql: '*'
     resolution:
-      integrity: sha512-/S+xPQTTqIy30IIfyDGUhckYpuphjO0Jm1wQTSuE/HLB1UTW6aGmZYZRUuxaudVJD9LVbfRN2FABr2AIFqljOQ==
+      integrity: sha512-ctHu04bGQD+Fc7Ym1hvrxdZaCk+TjgQb2yv1X8SOrxc/bh2EcXjfC8sOWvAyXE8xmLDnKtOC6EEwcpsffE4mqA==
       tarball: file:projects/datadata-examples-foo.tgz
     version: 0.0.0
   file:projects/datadata-examples-next-web.tgz:
@@ -14035,7 +14042,7 @@ packages:
       joi: 17.4.0
       next: 10.0.9_507781d099a67956587e23f5ac79078b
       next-transpile-modules: 6.1.0
-      prettier: 2.2.1
+      prettier: 2.3.0
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
       ts-jest: 26.5.4_jest@26.6.3+typescript@4.2.4
@@ -14044,7 +14051,7 @@ packages:
     dev: false
     name: '@rush-temp/datadata-examples-next-web'
     resolution:
-      integrity: sha512-S6VGEmnhvfh1NVGuGgYMZ8gyxgRlc5nOSRK6dZx3zGmEAZsPHwxMxpkTxIlSlz/J8YHhgwQm9NatRK3k1nbegg==
+      integrity: sha512-Jgb9NCpDY84OggEgHBVVCXKEc/ODMW4n1H9rFLbeHYjTUw7hNdGce/+1r9Dz/AdEYR2lTEOuoZVzdOr6litGag==
       tarball: file:projects/datadata-examples-next-web.tgz
     version: 0.0.0
   file:projects/datadata.tgz:
@@ -14067,7 +14074,7 @@ packages:
       eslint: 7.23.0
       graphql: 15.5.0
       jest: 26.6.3_ts-node@9.1.1
-      prettier: 2.2.1
+      prettier: 2.3.0
       ts-jest: 26.5.4_jest@26.6.3+typescript@4.2.4
       typescript: 4.2.4
       uuid: 8.3.2
@@ -14077,7 +14084,7 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-/Pe45JTWSYM8AiP2mcD34PYMhaefQ68VRJGP+9u/iX6/t5E6OhYqP8PLahYg/KwcJcnU+qu8scJ2RoTQXpuSxQ==
+      integrity: sha512-5/d7zDgAyKS/AntALCpdXlsMHnfMz24XOTO6GDy3+gZM30ACv/+8y61jSw83vO0o4R4jr9Ynt+zLPfbHTx6b+A==
       tarball: file:projects/graphql.tgz
     version: 0.0.0
   file:projects/postgres.tgz:
@@ -14102,7 +14109,7 @@ packages:
       eslint: 7.23.0
       jest: 26.6.3_ts-node@9.1.1
       pg: 8.5.1
-      prettier: 2.2.1
+      prettier: 2.3.0
       ts-jest: 26.5.4_jest@26.6.3+typescript@4.2.4
       ts-node: 9.1.1_typescript@4.2.4
       typescript: 4.2.4
@@ -14110,7 +14117,7 @@ packages:
     dev: false
     name: '@rush-temp/server'
     resolution:
-      integrity: sha512-6Uk3wnyQknz5s7HEZ6y+URHJRrhR5fuDiFRhw6lfwyow+2xU6IpmDn6D2E00kvgDzab8Zdo36cJmufmXrjl1kw==
+      integrity: sha512-nNqgC7yv1vEcojmah63agJqmeveqcekCujUTUsCwdlwxcSoznosgA2YJ7v2h5GUgOsB+HrSBP1IntKfp3ZnFNQ==
       tarball: file:projects/server.tgz
     version: 0.0.0
   file:projects/testing-utils.tgz_ts-node@9.1.1:
@@ -14121,7 +14128,7 @@ packages:
       '@typescript-eslint/parser': 4.21.0_eslint@7.23.0+typescript@4.2.4
       eslint: 7.23.0
       jest: 26.6.3_ts-node@9.1.1
-      prettier: 2.2.1
+      prettier: 2.3.0
       ts-jest: 26.5.4_jest@26.6.3+typescript@4.2.4
       typescript: 4.2.4
       uuid: 8.3.2
@@ -14131,9 +14138,10 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-vYR3xD0hh0kaGDtap5X6gJqkPiProsSZTNrBivCKGRJdgHDtB6GiM91do4TFbk0kkfoPdoAJaNT4zmu8S5QjhQ==
+      integrity: sha512-SoRoelbPnMd1oClA28F+HgOLlmGh/XCDPYoIDT3FAHHrgqOVIwANK59e+Bf4l2WNVkbw8VDL3Z+wnal38Kw0Xg==
       tarball: file:projects/testing-utils.tgz
     version: 0.0.0
+registry: ''
 specifiers:
   '@babel/core': ^7.13.15
   '@editorjs/checklist': ~1.3.0
@@ -14202,7 +14210,7 @@ specifiers:
   next-transpile-modules: ~6.1.0
   pg: ^8.5.1
   postgrator: ^4.1.1
-  prettier: 2.2.1
+  prettier: 2.3.0
   react: ~17.0.2
   react-dom: ~17.0.2
   react-leaflet: ~3.1.0

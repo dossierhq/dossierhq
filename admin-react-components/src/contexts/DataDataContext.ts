@@ -282,9 +282,8 @@ export class DataDataContextValue {
       }
       case FetcherActions.UseSearchEntities: {
         const [json] = args as [string];
-        const { query, paging }: { query: AdminQuery; paging: Paging | undefined } = JSON.parse(
-          json
-        );
+        const { query, paging }: { query: AdminQuery; paging: Paging | undefined } =
+          JSON.parse(json);
         const result = await this.#adapter.searchEntities(query, paging);
         if (result.isError()) {
           throw result.toError();
@@ -297,7 +296,7 @@ export class DataDataContextValue {
   };
 }
 
-export const DataDataContext = createContext<DataDataContextValue>(({
+export const DataDataContext = createContext<DataDataContextValue>({
   defaultContextValue: true,
-} as unknown) as DataDataContextValue);
+} as unknown as DataDataContextValue);
 DataDataContext.displayName = 'DataDataContext';

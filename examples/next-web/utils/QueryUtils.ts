@@ -22,5 +22,5 @@ export function decodeQuery<T>(
     throw new Error(`Did not expect an array for ${name}`);
   }
   const value = JSON.parse(decodeURIComponent(encoded));
-  return (value as unknown) as T;
+  return value as unknown as T;
 }

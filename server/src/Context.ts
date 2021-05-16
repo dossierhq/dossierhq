@@ -46,7 +46,7 @@ abstract class ContextImpl<TContext> implements Context<TContext> {
     if (this.pool !== this.queryable) {
       // Already in transaction
       return await Db.withNestedTransaction(this, async () => {
-        return callback((this as unknown) as TContext);
+        return callback(this as unknown as TContext);
       });
     }
 

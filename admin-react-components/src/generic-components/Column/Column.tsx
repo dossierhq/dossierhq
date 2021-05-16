@@ -13,12 +13,11 @@ export type ColumnAsProps<AsProps extends LayoutProps> = AsProps &
     as?: React.JSXElementConstructor<AsProps>;
   };
 
-export type ColumnAsElementProps<
-  Tag extends keyof JSX.IntrinsicElements
-> = JSX.IntrinsicElements[Tag] &
-  ColumnProps & {
-    as: Tag;
-  };
+export type ColumnAsElementProps<Tag extends keyof JSX.IntrinsicElements> =
+  JSX.IntrinsicElements[Tag] &
+    ColumnProps & {
+      as: Tag;
+    };
 
 type ColumnItemProps<AsProps extends LayoutProps> = AsProps & {
   as?: React.JSXElementConstructor<AsProps>;
@@ -51,7 +50,7 @@ export function ColumnAs<AsProps extends LayoutProps>({
   return (
     <Element
       className={columnPropsAsClassName({ className, gap })}
-      {...((args as unknown) as AsProps)}
+      {...(args as unknown as AsProps)}
     >
       {children}
     </Element>

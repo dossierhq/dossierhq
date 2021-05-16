@@ -13,12 +13,11 @@ export type RowAsProps<AsProps extends LayoutProps> = AsProps &
     as?: React.JSXElementConstructor<AsProps>;
   };
 
-export type RowAsElementProps<
-  Tag extends keyof JSX.IntrinsicElements
-> = JSX.IntrinsicElements[Tag] &
-  RowProps & {
-    as: Tag;
-  };
+export type RowAsElementProps<Tag extends keyof JSX.IntrinsicElements> =
+  JSX.IntrinsicElements[Tag] &
+    RowProps & {
+      as: Tag;
+    };
 
 type RowItemProps<AsProps extends LayoutProps> = AsProps & {
   as?: React.JSXElementConstructor<AsProps>;
@@ -51,7 +50,7 @@ export function RowAs<AsProps extends LayoutProps>({
   return (
     <Element
       className={joinClassNames('dd flex-row', className, gapClassName(gap))}
-      {...((args as unknown) as AsProps)}
+      {...(args as unknown as AsProps)}
     >
       {children}
     </Element>

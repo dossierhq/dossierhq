@@ -24,7 +24,7 @@ export function createValueItemToolFactory(context: DataDataContextValue): Block
     }
   };
 
-  return (factoryClass as unknown) as BlockToolConstructable;
+  return factoryClass as unknown as BlockToolConstructable;
 }
 
 class ValueItemTool implements BlockTool {

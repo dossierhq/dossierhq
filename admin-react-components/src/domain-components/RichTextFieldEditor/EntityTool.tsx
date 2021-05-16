@@ -24,7 +24,7 @@ export function createEntityToolFactory(context: DataDataContextValue): BlockToo
     }
   };
 
-  return (factoryClass as unknown) as BlockToolConstructable;
+  return factoryClass as unknown as BlockToolConstructable;
 }
 
 class EntityTool implements BlockTool {
