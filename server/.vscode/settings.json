@@ -9,6 +9,7 @@
     "testpass",
     "testuser",
     "tsvector",
+    "unpublish",
     "uuidv"
   ],
   "editor.defaultFormatter": "esbenp.prettier-vscode",

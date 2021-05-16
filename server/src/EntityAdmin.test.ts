@@ -3298,6 +3298,126 @@ describe('publishEntities()', () => {
       }
     }
   });
+
+  test('Error: Published unknown entity', async () => {
+    const publishResult = await EntityAdmin.publishEntities(context, [
+      { id: 'b1bdcb61-e6aa-47ff-98d8-4cfe8197b290', version: 0 },
+    ]);
+    expectErrorResult(
+      publishResult,
+      ErrorType.NotFound,
+      'No such entities: b1bdcb61-e6aa-47ff-98d8-4cfe8197b290'
+    );
+  });
+
+  test('Error: Published unknown version', async () => {
+    const createFooResult = await EntityAdmin.createEntity(context, {
+      _type: 'EntityAdminFoo',
+      _name: 'Foo name',
+      title: 'Foo title',
+    });
+    if (expectOkResult(createFooResult)) {
+      const { id: fooId } = createFooResult.value;
+      const publishResult = await EntityAdmin.publishEntities(context, [
+        { id: fooId, version: 100 },
+      ]);
+      expectErrorResult(publishResult, ErrorType.NotFound, `No such entities: ${fooId}`);
+    }
+  });
+});
+
+describe('unpublishEntities()', () => {
+  test('Two published entities referencing each other', async () => {
+    const createBaz1Result = await EntityAdmin.createEntity(context, {
+      _type: 'EntityAdminBaz',
+      _name: 'Baz 1',
+      title: 'Baz title 1',
+    });
+    if (expectOkResult(createBaz1Result)) {
+      const { id: baz1Id } = createBaz1Result.value;
+
+      const createBaz2Result = await EntityAdmin.createEntity(context, {
+        _type: 'EntityAdminBaz',
+        _name: 'Baz 2',
+        title: 'Baz title 2',
+        baz: { id: baz1Id },
+      });
+      if (expectOkResult(createBaz2Result)) {
+        const { id: baz2Id } = createBaz2Result.value;
+
+        expectOkResult(
+          await EntityAdmin.updateEntity(context, { id: baz1Id, baz: { id: baz2Id } })
+        );
+
+        expectOkResult(
+          await EntityAdmin.publishEntities(context, [
+            { id: baz1Id, version: 1 },
+            { id: baz2Id, version: 0 },
+          ])
+        );
+
+        expectOkResult(await EntityAdmin.unpublishEntities(context, [baz1Id, baz2Id]));
+      }
+    }
+  });
+
+  test('Unpublished entity referencing', async () => {
+    const createBaz1Result = await EntityAdmin.createEntity(context, {
+      _type: 'EntityAdminBaz',
+      _name: 'Baz 1',
+      title: 'Baz title 1',
+    });
+    if (expectOkResult(createBaz1Result)) {
+      const { id: baz1Id } = createBaz1Result.value;
+
+      const createBaz2Result = await EntityAdmin.createEntity(context, {
+        _type: 'EntityAdminBaz',
+        _name: 'Baz 2',
+        title: 'Baz title 2',
+        baz: { id: baz1Id },
+      });
+      if (expectOkResult(createBaz2Result)) {
+        expectOkResult(await EntityAdmin.publishEntities(context, [{ id: baz1Id, version: 0 }]));
+
+        expectOkResult(await EntityAdmin.unpublishEntities(context, [baz1Id]));
+      }
+    }
+  });
+
+  test('Error: Reference from published entity', async () => {
+    const createBarResult = await EntityAdmin.createEntity(context, {
+      _type: 'EntityAdminBar',
+      _name: 'Bar name',
+      title: 'Bar title',
+    });
+    if (expectOkResult(createBarResult)) {
+      const { id: barId } = createBarResult.value;
+
+      const createFooResult = await EntityAdmin.createEntity(context, {
+        _type: 'EntityAdminFoo',
+        _name: 'Foo name',
+        title: 'Foo title',
+        bar: { id: barId },
+      });
+      if (expectOkResult(createFooResult)) {
+        const { id: fooId } = createFooResult.value;
+
+        expectOkResult(
+          await EntityAdmin.publishEntities(context, [
+            { id: fooId, version: 0 },
+            { id: barId, version: 0 },
+          ])
+        );
+
+        const publishResult = await EntityAdmin.unpublishEntities(context, [barId]);
+        expectErrorResult(
+          publishResult,
+          ErrorType.BadRequest,
+          `${barId}: Published entities referencing entity: ${fooId}`
+        );
+      }
+    }
+  });
 });
 
 describe('getEntityHistory()', () => {
@@ -3343,6 +3463,32 @@ describe('getPublishHistory()', () => {
         expect(historyResult.value).toEqual({
           id,
           events: [{ publishedAt, publishedBy: context.session.subjectId, version: 0 }],
+        });
+      }
+    }
+  });
+
+  test('One unpublished version', async () => {
+    const createResult = await EntityAdmin.createEntity(context, {
+      _type: 'EntityAdminBar',
+      _name: 'Published/Unpublished',
+    });
+    if (expectOkResult(createResult)) {
+      const { id } = createResult.value;
+
+      expectOkResult(await EntityAdmin.publishEntities(context, [{ id, version: 0 }]));
+      expectOkResult(await EntityAdmin.unpublishEntities(context, [id]));
+
+      const historyResult = await EntityAdmin.getPublishHistory(context, id);
+      if (expectOkResult(historyResult)) {
+        const publishedAt0 = historyResult.value.events[0]?.publishedAt;
+        const publishedAt1 = historyResult.value.events[1]?.publishedAt;
+        expect(historyResult.value).toEqual({
+          id,
+          events: [
+            { publishedAt: publishedAt0, publishedBy: context.session.subjectId, version: 0 },
+            { publishedAt: publishedAt1, publishedBy: context.session.subjectId, version: null },
+          ],
         });
       }
     }
