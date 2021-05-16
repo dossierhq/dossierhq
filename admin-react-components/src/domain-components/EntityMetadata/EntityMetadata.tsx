@@ -1,4 +1,4 @@
-import type { EntityHistory, EntityVersionInfo, ErrorResult, ErrorType } from '@datadata/core';
+import type { EntityVersionInfo } from '@datadata/core';
 import React, { useContext, useState } from 'react';
 import {
   Button,
@@ -27,11 +27,6 @@ export function EntityMetadata({ entityId, className }: EntityMetadataProps): JS
   }
 
   const [selectedHistory, setSelectedHistory] = useState<'entity' | 'publish'>('entity');
-
-  const { useEntityHistory } = useContext(DataDataContext);
-  const { entityHistory, entityHistoryError } = useEntityHistory(
-    draftState.exists ? entityId : undefined
-  );
   const [selectedVersionId, setSelectedVersionId] = useState<number | null>(null);
 
   const { entity } = draftState;
@@ -69,8 +64,6 @@ export function EntityMetadata({ entityId, className }: EntityMetadataProps): JS
           <EntityHistoryList
             {...{
               draftState,
-              entityHistory,
-              entityHistoryError,
               selectedVersionId,
               setSelectedVersionId,
             }}
@@ -78,29 +71,24 @@ export function EntityMetadata({ entityId, className }: EntityMetadataProps): JS
         ) : null}
         {selectedHistory === 'publish' ? <PublishHistory draftState={draftState} /> : null}
       </ColumnItem>
-      {entityHistoryError ? (
-        <Message
-          kind="danger"
-          message={`${entityHistoryError.error}: ${entityHistoryError.message}`}
-        />
-      ) : null}
     </Column>
   );
 }
 
 function EntityHistoryList({
   draftState,
-  entityHistory,
-  entityHistoryError,
   selectedVersionId,
   setSelectedVersionId,
 }: {
   draftState: EntityEditorDraftState;
-  entityHistory: EntityHistory | undefined;
-  entityHistoryError: ErrorResult<unknown, ErrorType.NotFound | ErrorType.Generic> | undefined;
   selectedVersionId: number | null;
   setSelectedVersionId: React.Dispatch<React.SetStateAction<number | null>>;
 }) {
+  const { useEntityHistory } = useContext(DataDataContext);
+  const { entityHistory, entityHistoryError } = useEntityHistory(
+    draftState.exists ? draftState.id : undefined
+  );
+
   return (
     <>
       {entityHistory ? (
@@ -128,6 +116,12 @@ function EntityHistoryList({
         })
       ) : !entityHistoryError && draftState.exists ? (
         <Loader />
+      ) : null}
+      {entityHistoryError ? (
+        <Message
+          kind="danger"
+          message={`${entityHistoryError.error}: ${entityHistoryError.message}`}
+        />
       ) : null}
     </>
   );
@@ -178,8 +172,10 @@ function PublishHistory({ draftState }: { draftState: EntityEditorDraftState }) 
     <>
       {publishHistory?.events.map((event, index) => {
         return (
-          <Column key={index}>
-            <p className="dd text-subtitle2">Version {event.version}</p>
+          <Column key={index} className="px-2 py-1">
+            <p className="dd text-subtitle2">
+              {event.version === null ? 'Unpublish' : `Version ${event.version}`}
+            </p>
             <p className="dd text-body1">{event.publishedAt.toLocaleString()}</p>
             <p className="dd text-body1">{event.publishedBy}</p>
           </Column>
