@@ -1,5 +1,13 @@
 {
-  "cSpell.words": ["boomify", "datadata", "editorjs", "graphi", "graphiql", "postgres"],
+  "cSpell.words": [
+    "boomify",
+    "datadata",
+    "editorjs",
+    "graphi",
+    "graphiql",
+    "postgres",
+    "unpublish"
+  ],
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
   "editor.tabSize": 2,

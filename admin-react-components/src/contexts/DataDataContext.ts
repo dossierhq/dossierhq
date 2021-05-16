@@ -54,6 +54,9 @@ export interface DataDataContextAdapter {
       version: number;
     }[]
   ): PromiseResult<void, ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic>;
+  unpublishEntities(
+    entityIds: string[]
+  ): PromiseResult<void, ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic>;
 }
 
 enum FetcherActions {
@@ -213,6 +216,22 @@ export class DataDataContextValue {
       if (result.isOk()) {
         for (const entity of entities) {
           this.invalidateEntityPublished(entity.id);
+        }
+      }
+      return result;
+    } catch (error) {
+      return createErrorResultFromError(error, [ErrorType.BadRequest, ErrorType.NotFound]);
+    }
+  };
+
+  unpublishEntities = async (
+    entityIds: string[]
+  ): PromiseResult<void, ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic> => {
+    try {
+      const result = await this.#adapter.unpublishEntities(entityIds);
+      if (result.isOk()) {
+        for (const entityId of entityIds) {
+          this.invalidateEntityPublished(entityId);
         }
       }
       return result;

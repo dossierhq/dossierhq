@@ -120,7 +120,9 @@ function EntityHistoryList({
               </p>
               <p className="dd text-body1">{version.createdAt.toLocaleString()}</p>
               <p className="dd text-body1">{version.createdBy}</p>
-              {selected ? <PublishButton entityId={draftState.id} version={version} /> : null}
+              {selected ? (
+                <PublishButton className="mt-1" entityId={draftState.id} version={version} />
+              ) : null}
             </Button>
           );
         })
@@ -138,25 +140,24 @@ function PublishButton({
 }: {
   className?: string;
   entityId: string;
-  version: EntityVersionInfo | undefined;
+  version: EntityVersionInfo;
 }) {
-  const { publishEntities } = useContext(DataDataContext);
-  const disabled = !version || version.published;
+  const { publishEntities, unpublishEntities } = useContext(DataDataContext);
+  const publish = !version.published;
 
   return (
     <Button
       className={className}
       kind="primary"
-      disabled={disabled}
       onClick={async () => {
-        const publishVersion = version?.version;
-        if (typeof publishVersion === 'number') {
-          const result = await publishEntities([{ id: entityId, version: publishVersion }]);
-          //TODO handle error and loading
-        }
+        const publishVersion = version.version;
+        const result = await (publish
+          ? publishEntities([{ id: entityId, version: publishVersion }])
+          : unpublishEntities([entityId]));
+        //TODO handle error and loading
       }}
     >
-      Publish
+      {publish ? 'Publish' : 'Unpublish'}
     </Button>
   );
 }
