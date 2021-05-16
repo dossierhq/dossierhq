@@ -104,7 +104,7 @@ export class InMemoryServerInner {
     });
   }
 
-  setPublishedVersion(id: string, version: number, userId: string): void {
+  setPublishedVersion(id: string, version: number | null, userId: string): void {
     const fullEntity = this.getFullEntity(id);
     if (!fullEntity) {
       throw new Error(`Can't find ${id}`);

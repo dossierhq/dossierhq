@@ -11,3 +11,7 @@ export interface EntityUpdateRequest {
 export interface EntityPublishRequest {
   items: { id: string; version: number }[];
 }
+
+export interface EntityUnpublishRequest {
+  items: string[];
+}

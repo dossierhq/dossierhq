@@ -152,4 +152,20 @@ export const InMemoryAdmin = {
 
     return ok(undefined);
   },
+
+  unpublishEntities: async (
+    context: InMemorySessionContext,
+    entityIds: string[]
+  ): PromiseResult<void, ErrorType.BadRequest | ErrorType.NotFound> => {
+    for (const id of entityIds) {
+      const entityResult = context.server.getEntity(id);
+      if (!entityResult) {
+        return notOk.NotFound('No such entity or version');
+      }
+
+      context.server.setPublishedVersion(id, null, context.userId);
+    }
+
+    return ok(undefined);
+  },
 };

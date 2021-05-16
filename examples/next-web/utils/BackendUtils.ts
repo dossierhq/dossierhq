@@ -17,6 +17,7 @@ export const urls = {
   getEntity: (id: string, version?: number | null): string =>
     `${baseUrl}/entities/${id}${version ? `?version=${version}` : ''}`,
   publishEntities: `${baseUrl}/publish-entities`,
+  unpublishEntities: `${baseUrl}/unpublish-entities`,
   getEntityHistory: (id: string): string => `${baseUrl}/entity-history/${id}`,
   getPublishHistory: (id: string): string => `${baseUrl}/publish-history/${id}`,
   searchEntities: (query?: AdminQuery, paging?: Paging): string =>

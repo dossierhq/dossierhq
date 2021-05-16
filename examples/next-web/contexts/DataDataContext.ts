@@ -16,6 +16,7 @@ import { useEffect, useMemo, useState } from 'react';
 import type {
   EntityCreateRequest,
   EntityPublishRequest,
+  EntityUnpublishRequest,
   EntityUpdateRequest,
 } from '../types/RequestTypes';
 import type {
@@ -160,6 +161,24 @@ class ContextAdapter implements DataDataContextAdapter {
     const result = await fetchJsonResult<ActionResponse, ErrorType.BadRequest | ErrorType.NotFound>(
       [ErrorType.BadRequest, ErrorType.NotFound],
       urls.publishEntities,
+      {
+        method: 'PUT',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(body),
+      }
+    );
+
+    if (result.isOk()) {
+      return ok(undefined);
+    }
+    return result;
+  };
+
+  unpublishEntities: DataDataContextAdapter['unpublishEntities'] = async (entityIds) => {
+    const body: EntityUnpublishRequest = { items: entityIds };
+    const result = await fetchJsonResult<ActionResponse, ErrorType.BadRequest | ErrorType.NotFound>(
+      [ErrorType.BadRequest, ErrorType.NotFound],
+      urls.unpublishEntities,
       {
         method: 'PUT',
         headers: { 'content-type': 'application/json' },

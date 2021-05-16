@@ -3,7 +3,7 @@ import { InMemoryServerInner } from './InMemoryServerInner';
 
 export interface InMemoryEntity {
   versions: AdminEntity[];
-  publishedVersion?: number;
+  publishedVersion?: number | null;
   history: { version: number; createdBy: string; createdAt: Date }[];
   publishEvents: { version: number | null; publishedBy: string; publishedAt: Date }[];
 }
