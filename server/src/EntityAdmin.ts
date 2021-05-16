@@ -382,6 +382,11 @@ export async function publishEntities(
     version: number;
   }[]
 ): PromiseResult<void, ErrorType.BadRequest | ErrorType.NotFound> {
+  const uniqueIdCheck = checkUUIDssUnique(entities.map((it) => it.id));
+  if (uniqueIdCheck.isError()) {
+    return uniqueIdCheck;
+  }
+
   return context.withTransaction(async (context) => {
     // Step 1: Get version info for each entity
     const missingEntities: { id: string; version: number }[] = [];
@@ -504,6 +509,11 @@ export async function unpublishEntities(
   context: SessionContext,
   entityIds: string[]
 ): PromiseResult<void, ErrorType.BadRequest | ErrorType.NotFound> {
+  const uniqueIdCheck = checkUUIDssUnique(entityIds);
+  if (uniqueIdCheck.isError()) {
+    return uniqueIdCheck;
+  }
+
   return context.withTransaction(async (context) => {
     // Step 1: Resolve entities and check if all entities exist
     const entitiesInfo = await Db.queryMany<
@@ -591,6 +601,17 @@ async function resolveMaxVersionForEntity(
     return notOk.NotFound('No such entity');
   }
   return ok({ entityId: result.entities_id, maxVersion: result.version });
+}
+
+function checkUUIDssUnique(uuids: string[]): Result<void, ErrorType.BadRequest> {
+  const unique = new Set<string>();
+  for (const uuid of uuids) {
+    if (unique.has(uuid)) {
+      return notOk.BadRequest(`Duplicate ids: ${uuid}`);
+    }
+    unique.add(uuid);
+  }
+  return ok(undefined);
 }
 
 export async function getEntityHistory(

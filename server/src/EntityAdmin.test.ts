@@ -3205,6 +3205,18 @@ describe('publishEntities()', () => {
     }
   });
 
+  test('Error: Duplicate ids', async () => {
+    const publishResult = await EntityAdmin.publishEntities(context, [
+      { id: 'b1bdcb61-e6aa-47ff-98d8-4cfe8197b290', version: 0 },
+      { id: 'b1bdcb61-e6aa-47ff-98d8-4cfe8197b290', version: 1 },
+    ]);
+    expectErrorResult(
+      publishResult,
+      ErrorType.BadRequest,
+      'Duplicate ids: b1bdcb61-e6aa-47ff-98d8-4cfe8197b290'
+    );
+  });
+
   test('Error: Published unknown entity', async () => {
     const publishResult = await EntityAdmin.publishEntities(context, [
       { id: 'b1bdcb61-e6aa-47ff-98d8-4cfe8197b290', version: 0 },
@@ -3352,6 +3364,18 @@ describe('unpublishEntities()', () => {
         `Entities are not published: ${barId}`
       );
     }
+  });
+
+  test('Error: duplicate ids', async () => {
+    const unpublishResult = await EntityAdmin.unpublishEntities(context, [
+      'b1bdcb61-e6aa-47ff-98d8-4cfe8197b290',
+      'b1bdcb61-e6aa-47ff-98d8-4cfe8197b290',
+    ]);
+    expectErrorResult(
+      unpublishResult,
+      ErrorType.BadRequest,
+      'Duplicate ids: b1bdcb61-e6aa-47ff-98d8-4cfe8197b290'
+    );
   });
 });
 
