@@ -122,13 +122,6 @@ exports[`Storyshots Domain/EntityMetadata Deleted Foo 1`] = `
       </p>
     </button>
   </div>
-  <button
-    className="dd button has-background hoverable text-button mx-2 bg-primary is-rounded"
-    disabled={true}
-    type="button"
-  >
-    Publish
-  </button>
 </div>
 `;
 
@@ -227,13 +220,6 @@ exports[`Storyshots Domain/EntityMetadata Full Foo 1`] = `
       </p>
     </button>
   </div>
-  <button
-    className="dd button has-background hoverable text-button mx-2 bg-primary is-rounded"
-    disabled={true}
-    type="button"
-  >
-    Publish
-  </button>
 </div>
 `;
 
@@ -304,13 +290,6 @@ exports[`Storyshots Domain/EntityMetadata New Foo 1`] = `
   <div
     className="dd flex-column dd flex-grow overflow-y-scroll"
   />
-  <button
-    className="dd button has-background hoverable text-button mx-2 bg-primary is-rounded"
-    disabled={true}
-    type="button"
-  >
-    Publish
-  </button>
 </div>
 `;
 
@@ -381,12 +360,5 @@ exports[`Storyshots Domain/EntityMetadata Slow Full Foo 1`] = `
       className="dd loader"
     />
   </div>
-  <button
-    className="dd button has-background hoverable text-button mx-2 bg-primary is-rounded"
-    disabled={true}
-    type="button"
-  >
-    Publish
-  </button>
 </div>
 `;
