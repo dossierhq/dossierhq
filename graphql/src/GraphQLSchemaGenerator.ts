@@ -914,7 +914,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
           if (typeof fieldValue !== 'object') {
             throw new Error(`${fieldPrefix}: Expected object, got ${typeof fieldValue}`);
           }
-          const { blocksJson, ...nonBlocks } = (fieldValue as unknown) as { blocksJson: string };
+          const { blocksJson, ...nonBlocks } = fieldValue as unknown as { blocksJson: string };
           item[fieldName] = {
             ...nonBlocks,
             blocks: this.decodeJsonInputField(fieldPrefix + '.blocksJson', blocksJson),

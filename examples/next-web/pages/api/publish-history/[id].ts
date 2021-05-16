@@ -32,6 +32,6 @@ export default async (
     if (result.isError()) {
       throw errorResultToBoom(result);
     }
-    return (result.value as unknown) as JsonPublishHistory;
+    return result.value as unknown as JsonPublishHistory;
   });
 };

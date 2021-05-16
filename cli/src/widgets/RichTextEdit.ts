@@ -84,11 +84,9 @@ async function selectBlockType(fieldSpec: FieldSpecification) {
   }
 
   const item = await showItemSelector('Select rich text block type', [
-    ...[
-      RichTextBlockType.paragraph,
-      RichTextBlockType.entity,
-      RichTextBlockType.valueItem,
-    ].map((x) => ({ id: x, name: x })),
+    ...[RichTextBlockType.paragraph, RichTextBlockType.entity, RichTextBlockType.valueItem].map(
+      (x) => ({ id: x, name: x })
+    ),
     { id: '_other', name: 'Other...' },
   ]);
   if (item.id === '_other') {
