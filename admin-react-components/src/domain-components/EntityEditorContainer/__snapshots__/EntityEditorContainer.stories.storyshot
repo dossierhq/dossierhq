@@ -485,13 +485,6 @@ exports[`Storyshots Domain/EntityEditorContainer Deleted Foo 1`] = `
           </p>
         </button>
       </div>
-      <button
-        className="dd button has-background hoverable text-button mx-2 bg-primary is-rounded"
-        disabled={true}
-        type="button"
-      >
-        Publish
-      </button>
     </div>
   </div>
 </div>
@@ -1389,13 +1382,6 @@ exports[`Storyshots Domain/EntityEditorContainer Full Foo 1`] = `
           </p>
         </button>
       </div>
-      <button
-        className="dd button has-background hoverable text-button mx-2 bg-primary is-rounded"
-        disabled={true}
-        type="button"
-      >
-        Publish
-      </button>
     </div>
   </div>
 </div>
@@ -1517,13 +1503,6 @@ exports[`Storyshots Domain/EntityEditorContainer Invalid Type New Entity 1`] = `
       <div
         className="dd flex-column dd flex-grow overflow-y-scroll"
       />
-      <button
-        className="dd button has-background hoverable text-button mx-2 bg-primary is-rounded"
-        disabled={true}
-        type="button"
-      >
-        Publish
-      </button>
     </div>
   </div>
 </div>
@@ -1959,13 +1938,6 @@ exports[`Storyshots Domain/EntityEditorContainer New Foo 1`] = `
       <div
         className="dd flex-column dd flex-grow overflow-y-scroll"
       />
-      <button
-        className="dd button has-background hoverable text-button mx-2 bg-primary is-rounded"
-        disabled={true}
-        type="button"
-      >
-        Publish
-      </button>
     </div>
   </div>
 </div>
@@ -2092,13 +2064,6 @@ exports[`Storyshots Domain/EntityEditorContainer Not Found 1`] = `
       <div
         className="dd flex-column dd flex-grow overflow-y-scroll"
       />
-      <button
-        className="dd button has-background hoverable text-button mx-2 bg-primary is-rounded"
-        disabled={true}
-        type="button"
-      >
-        Publish
-      </button>
     </div>
   </div>
 </div>
@@ -2214,13 +2179,6 @@ exports[`Storyshots Domain/EntityEditorContainer Slow Full Foo 1`] = `
           className="dd loader"
         />
       </div>
-      <button
-        className="dd button has-background hoverable text-button mx-2 bg-primary is-rounded"
-        disabled={true}
-        type="button"
-      >
-        Publish
-      </button>
     </div>
   </div>
 </div>
@@ -2538,13 +2496,6 @@ exports[`Storyshots Domain/EntityEditorContainer Two Entities 1`] = `
           </p>
         </button>
       </div>
-      <button
-        className="dd button has-background hoverable text-button mx-2 bg-primary is-rounded"
-        disabled={true}
-        type="button"
-      >
-        Publish
-      </button>
     </div>
   </div>
 </div>

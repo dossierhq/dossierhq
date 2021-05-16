@@ -1,6 +1,5 @@
 import type { EntityHistory, EntityVersionInfo, ErrorResult, ErrorType } from '@datadata/core';
 import React, { useContext, useState } from 'react';
-import type { DataDataContextValue } from '../..';
 import {
   Button,
   Column,
@@ -29,15 +28,13 @@ export function EntityMetadata({ entityId, className }: EntityMetadataProps): JS
 
   const [selectedHistory, setSelectedHistory] = useState<'entity' | 'publish'>('entity');
 
-  const { publishEntities, useEntityHistory } = useContext(DataDataContext);
+  const { useEntityHistory } = useContext(DataDataContext);
   const { entityHistory, entityHistoryError } = useEntityHistory(
     draftState.exists ? entityId : undefined
   );
   const [selectedVersionId, setSelectedVersionId] = useState<number | null>(null);
 
   const { entity } = draftState;
-
-  const selectedVersion = entityHistory?.versions.find((x) => x.version === selectedVersionId);
 
   return (
     <Column className={joinClassNames('has-shadow has-background py-2', className)} gap={2}>
@@ -81,12 +78,6 @@ export function EntityMetadata({ entityId, className }: EntityMetadataProps): JS
         ) : null}
         {selectedHistory === 'publish' ? <PublishHistory draftState={draftState} /> : null}
       </ColumnItem>
-      <PublishButton
-        className="mx-2"
-        entityId={entityId}
-        version={selectedVersion}
-        publishEntities={publishEntities}
-      />
       {entityHistoryError ? (
         <Message
           kind="danger"
@@ -114,11 +105,12 @@ function EntityHistoryList({
     <>
       {entityHistory ? (
         entityHistory.versions.map((version) => {
+          const selected = version.version === selectedVersionId;
           return (
             <Button
               key={version.version}
               onClick={() => setSelectedVersionId(version.version)}
-              selected={version.version === selectedVersionId}
+              selected={selected}
               rounded={false}
             >
               <p className="dd text-subtitle2">
@@ -128,6 +120,7 @@ function EntityHistoryList({
               </p>
               <p className="dd text-body1">{version.createdAt.toLocaleString()}</p>
               <p className="dd text-body1">{version.createdBy}</p>
+              {selected ? <PublishButton entityId={draftState.id} version={version} /> : null}
             </Button>
           );
         })
@@ -142,13 +135,12 @@ function PublishButton({
   className,
   entityId,
   version,
-  publishEntities,
 }: {
-  className: string;
+  className?: string;
   entityId: string;
   version: EntityVersionInfo | undefined;
-  publishEntities: DataDataContextValue['publishEntities'];
 }) {
+  const { publishEntities } = useContext(DataDataContext);
   const disabled = !version || version.published;
 
   return (
@@ -164,7 +156,7 @@ function PublishButton({
         }
       }}
     >
-      {version ? `Publish v ${version.version}` : 'Publish'}
+      Publish
     </Button>
   );
 }
