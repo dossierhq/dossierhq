@@ -269,7 +269,9 @@ export async function editEntity(context: SessionContext, id: string): Promise<v
 async function publishEntity(context: SessionContext, entity: AdminEntity) {
   const publish = await showConfirm('Publish the entity?');
   if (publish) {
-    const publishResult = await EntityAdmin.publishEntity(context, entity.id, entity._version);
+    const publishResult = await EntityAdmin.publishEntities(context, [
+      { id: entity.id, version: entity._version },
+    ]);
     if (publishResult.isError()) {
       logErrorResult('Failed publishing entity', publishResult);
     }

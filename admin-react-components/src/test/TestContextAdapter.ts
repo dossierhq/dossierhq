@@ -67,8 +67,8 @@ export class TestContextAdapter implements DataDataContextAdapter {
     return await InMemoryAdmin.updateEntity(this.#context, entity);
   };
 
-  publishEntity: DataDataContextAdapter['publishEntity'] = async (id, version) => {
+  publishEntities: DataDataContextAdapter['publishEntities'] = async (entities) => {
     if (this.#interceptor) await this.#interceptor();
-    return await InMemoryAdmin.publishEntity(this.#context, id, version);
+    return await InMemoryAdmin.publishEntities(this.#context, entities);
   };
 }

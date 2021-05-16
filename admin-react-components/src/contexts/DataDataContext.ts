@@ -48,9 +48,11 @@ export interface DataDataContextAdapter {
   updateEntity(
     entity: AdminEntityUpdate
   ): PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic>;
-  publishEntity(
-    id: string,
-    version: number
+  publishEntities(
+    entities: {
+      id: string;
+      version: number;
+    }[]
   ): PromiseResult<void, ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic>;
 }
 
@@ -200,14 +202,18 @@ export class DataDataContextValue {
     }
   };
 
-  publishEntity = async (
-    id: string,
-    version: number
+  publishEntities = async (
+    entities: {
+      id: string;
+      version: number;
+    }[]
   ): PromiseResult<void, ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic> => {
     try {
-      const result = await this.#adapter.publishEntity(id, version);
+      const result = await this.#adapter.publishEntities(entities);
       if (result.isOk()) {
-        this.invalidateEntityPublished(id);
+        for (const entity of entities) {
+          this.invalidateEntityPublished(entity.id);
+        }
       }
       return result;
     } catch (error) {

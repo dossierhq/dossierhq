@@ -8,9 +8,11 @@
     "srid",
     "testpass",
     "testuser",
+    "tsquery",
     "tsvector",
     "unpublish",
-    "uuidv"
+    "uuidv",
+    "websearch"
   ],
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "[javascript]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
