@@ -990,6 +990,21 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     });
   }
 
+  buildMutationUnpublishEntities<TSource>(): GraphQLFieldConfig<TSource, TContext> {
+    return fieldConfigWithArgs<TSource, TContext, { ids: string[] }>({
+      type: new GraphQLList(new GraphQLNonNull(this.getOutputType('EntityPublishPayload'))),
+      args: {
+        ids: {
+          type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(GraphQLID))),
+        },
+      },
+      resolve: async (_source, args, context, _info) => {
+        const { ids } = args;
+        return await Mutations.unpublishEntities(context, ids);
+      },
+    });
+  }
+
   buildMutationType<TSource>(): GraphQLObjectType | null {
     const includeEntities = this.schema.getEntityTypeCount() > 0;
     if (!includeEntities) {
@@ -999,6 +1014,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     const fields: GraphQLFieldConfigMap<TSource, TContext> = {
       deleteEntity: this.buildMutationDeleteEntity(),
       publishEntities: this.buildMutationPublishEntities(),
+      unpublishEntities: this.buildMutationUnpublishEntities(),
     };
 
     for (const entitySpec of this.schema.spec.entityTypes) {

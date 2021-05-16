@@ -54,3 +54,15 @@ export async function publishEntities<TContext extends SessionGraphQLContext>(
   }
   return entities.map(({ id }) => ({ id }));
 }
+
+export async function unpublishEntities<TContext extends SessionGraphQLContext>(
+  context: TContext,
+  entityIds: string[]
+): Promise<{ id: string }[]> {
+  const sessionContext = getSessionContext(context);
+  const result = await EntityAdmin.unpublishEntities(sessionContext, entityIds);
+  if (result.isError()) {
+    throw result.toError();
+  }
+  return entityIds.map((id) => ({ id }));
+}
