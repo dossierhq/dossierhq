@@ -3081,6 +3081,28 @@ describe('publishEntities()', () => {
     }
   });
 
+  test('Error: Publish published version', async () => {
+    const createBazResult = await EntityAdmin.createEntity(context, {
+      _type: 'EntityAdminBaz',
+      _name: 'Baz 1',
+      title: 'Baz title 1',
+    });
+    if (expectOkResult(createBazResult)) {
+      const { id: bazId } = createBazResult.value;
+
+      expectOkResult(await EntityAdmin.publishEntities(context, [{ id: bazId, version: 0 }]));
+
+      const secondPublishResult = await EntityAdmin.publishEntities(context, [
+        { id: bazId, version: 0 },
+      ]);
+      expectErrorResult(
+        secondPublishResult,
+        ErrorType.BadRequest,
+        `Entity versions are already published: ${bazId}`
+      );
+    }
+  });
+
   test('Error: Reference to unpublished entity', async () => {
     const createBarResult = await EntityAdmin.createEntity(context, {
       _type: 'EntityAdminBar',
@@ -3274,7 +3296,7 @@ describe('unpublishEntities()', () => {
     ]);
     expectErrorResult(
       publishResult,
-      ErrorType.BadRequest,
+      ErrorType.NotFound,
       `No such entities: 8a678bad-fa57-4f18-a377-633f704fd0d3`
     );
   });

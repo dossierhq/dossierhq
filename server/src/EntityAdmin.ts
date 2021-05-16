@@ -385,6 +385,7 @@ export async function publishEntities(
   return context.withTransaction(async (context) => {
     // Step 1: Get version info for each entity
     const missingEntities: { id: string; version: number }[] = [];
+    const alreadyPublishedEntityIds: string[] = [];
     const versionsInfo: {
       uuid: string;
       versionsId: number;
@@ -393,29 +394,37 @@ export async function publishEntities(
     }[] = [];
     for (const { id, version } of entities) {
       const versionInfo = await Db.queryNoneOrOne<
-        Pick<EntityVersionsTable, 'id' | 'entities_id'> & { deleted: boolean }
+        Pick<EntityVersionsTable, 'id' | 'entities_id'> &
+          Pick<EntitiesTable, 'published_entity_versions_id'> & { deleted: boolean }
       >(
         context,
-        `SELECT ev.id, ev.entities_id, ev.data IS NULL as deleted
+        `SELECT ev.id, ev.entities_id, ev.data IS NULL as deleted, e.published_entity_versions_id
          FROM entity_versions ev, entities e
          WHERE e.uuid = $1 AND e.id = ev.entities_id
            AND ev.version = $2`,
         [id, version]
       );
 
-      if (versionInfo) {
+      if (!versionInfo) {
+        missingEntities.push({ id, version });
+      } else if (versionInfo.published_entity_versions_id === versionInfo.id) {
+        alreadyPublishedEntityIds.push(id);
+      } else {
         versionsInfo.push({
           uuid: id,
           versionsId: versionInfo.id,
           entityId: versionInfo.entities_id,
           deleted: versionInfo.deleted,
         });
-      } else {
-        missingEntities.push({ id, version });
       }
     }
     if (missingEntities.length > 0) {
       return notOk.NotFound(`No such entities: ${missingEntities.map(({ id }) => id).join(', ')}`);
+    }
+    if (alreadyPublishedEntityIds.length > 0) {
+      return notOk.BadRequest(
+        `Entity versions are already published: ${alreadyPublishedEntityIds.join(', ')}`
+      );
     }
 
     // Step 2: Publish entities
