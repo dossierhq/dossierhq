@@ -1212,10 +1212,13 @@ describe('publishEntities()', () => {
         },
       });
 
-      const historyResult = await EntityAdmin.getEntityHistory(context, id);
+      const historyResult = await EntityAdmin.getPublishHistory(context, id);
       if (expectOkResult(historyResult)) {
-        expect(historyResult.value.versions).toHaveLength(1);
-        expect(historyResult.value.versions[0].published).toBeTruthy();
+        const publishedAt = historyResult.value.events[0]?.publishedAt;
+        expect(historyResult.value).toEqual({
+          id,
+          events: [{ publishedAt, publishedBy: context.session.subjectId, version: 0 }],
+        });
       }
     }
   });
@@ -1239,6 +1242,87 @@ describe('publishEntities()', () => {
       Object {
         "data": Object {
           "publishEntities": null,
+        },
+        "errors": Array [
+          [GraphQLError: NotFound: No such entities: 635d7ee9-c1c7-4ae7-bcdf-fb53f30a3cd3],
+        ],
+      }
+    `);
+  });
+});
+
+describe('unpublishEntities()', () => {
+  test('Unpublish', async () => {
+    const createResult = await EntityAdmin.createEntity(context, {
+      _type: 'MutationFoo',
+      _name: 'Howdy name',
+      title: 'Howdy title',
+      summary: 'Howdy summary',
+    });
+    if (expectOkResult(createResult)) {
+      const { id } = createResult.value;
+
+      expectOkResult(await EntityAdmin.publishEntities(context, [{ id, version: 0 }]));
+
+      const result = await graphql(
+        schema,
+        `
+          mutation UnpublishEntities($ids: [ID!]!) {
+            unpublishEntities(ids: $ids) {
+              __typename
+              id
+            }
+          }
+        `,
+        undefined,
+        { context: ok(context) },
+        { ids: [id] }
+      );
+      expect(result).toEqual({
+        data: {
+          unpublishEntities: [
+            {
+              __typename: 'EntityPublishPayload',
+              id,
+            },
+          ],
+        },
+      });
+
+      const historyResult = await EntityAdmin.getPublishHistory(context, id);
+      if (expectOkResult(historyResult)) {
+        const publishedAt0 = historyResult.value.events[0]?.publishedAt;
+        const publishedAt1 = historyResult.value.events[1]?.publishedAt;
+        expect(historyResult.value).toEqual({
+          id,
+          events: [
+            { publishedAt: publishedAt0, publishedBy: context.session.subjectId, version: 0 },
+            { publishedAt: publishedAt1, publishedBy: context.session.subjectId, version: null },
+          ],
+        });
+      }
+    }
+  });
+
+  test('Error: not found', async () => {
+    const result = await graphql(
+      schema,
+      `
+        mutation UnpublishEntities($ids: [ID!]!) {
+          unpublishEntities(ids: $ids) {
+            __typename
+            id
+          }
+        }
+      `,
+      undefined,
+      { context: ok(context) },
+      { ids: ['635d7ee9-c1c7-4ae7-bcdf-fb53f30a3cd3'] }
+    );
+    expect(result).toMatchInlineSnapshot(`
+      Object {
+        "data": Object {
+          "unpublishEntities": null,
         },
         "errors": Array [
           [GraphQLError: NotFound: No such entities: 635d7ee9-c1c7-4ae7-bcdf-fb53f30a3cd3],
