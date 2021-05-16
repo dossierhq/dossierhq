@@ -565,6 +565,74 @@ export async function publishEntities(
   });
 }
 
+export async function unpublishEntities(
+  context: SessionContext,
+  entityIds: string[]
+): PromiseResult<void, ErrorType.BadRequest | ErrorType.NotFound> {
+  return context.withTransaction(async (context) => {
+    // Step 1: Resolve entities and check if all entities exist
+    const entitiesInfo = await Db.queryMany<Pick<EntitiesTable, 'id' | 'uuid'>>(
+      context,
+      'SELECT e.id, e.uuid FROM entities e WHERE e.uuid = ANY($1)',
+      [entityIds]
+    );
+
+    const missingEntityIds = entityIds.filter(
+      (entityId) => !entitiesInfo.find((it) => it.uuid === entityId)
+    );
+
+    if (missingEntityIds.length > 0) {
+      return notOk.NotFound(`No such entities: ${missingEntityIds.join(', ')}`);
+    }
+
+    // Step 2: Unpublish entities
+    await Db.queryNone(
+      context,
+      'UPDATE entities SET published_entity_versions_id = NULL, published_deleted = FALSE WHERE id = ANY($1)',
+      [entitiesInfo.map((it) => it.id)]
+    );
+
+    // Step 3: Check if references are ok
+    const referenceErrorMessages: string[] = [];
+    for (const { id, uuid } of entitiesInfo) {
+      const publishedIncomingReferences = await Db.queryMany<Pick<EntitiesTable, 'uuid'>>(
+        context,
+        `SELECT e.uuid
+           FROM entity_version_references evr, entity_versions ev, entities e
+           WHERE evr.entities_id = $1
+             AND evr.entity_versions_id = ev.id
+             AND ev.entities_id = e.id
+             AND e.published_entity_versions_id = ev.id`,
+        [id]
+      );
+      if (publishedIncomingReferences.length > 0) {
+        referenceErrorMessages.push(
+          `${uuid}: Published entities referencing entity: ${publishedIncomingReferences
+            .map(({ uuid }) => uuid)
+            .join(', ')}`
+        );
+      }
+    }
+
+    if (referenceErrorMessages.length > 0) {
+      return notOk.BadRequest(referenceErrorMessages.join('\n'));
+    }
+
+    // Step 4: Create publish event
+    const qb = new QueryBuilder(
+      'INSERT INTO entity_publish_events (entities_id, entity_versions_id, published_by) VALUES'
+    );
+    const subjectValue = qb.addValue(context.session.subjectInternalId);
+    for (const entityInfo of entitiesInfo) {
+      qb.addQuery(`(${qb.addValue(entityInfo.id)}, NULL, ${subjectValue})`);
+    }
+    await Db.queryNone(context, qb.build());
+
+    //
+    return ok(undefined);
+  });
+}
+
 async function resolveMaxVersionForEntity(
   context: SessionContext,
   id: string
@@ -652,8 +720,10 @@ export async function getPublishHistory(
   >(
     context,
     `SELECT ev.version, s.uuid AS published_by, epe.published_at
-      FROM entity_publish_events epe, entity_versions ev, subjects s
-      WHERE epe.entities_id = $1 AND epe.entity_versions_id = ev.id AND epe.published_by = s.id
+      FROM entity_publish_events epe
+        LEFT OUTER JOIN entity_versions ev ON (epe.entity_versions_id = ev.id)
+        INNER JOIN subjects s ON (epe.published_by = s.id)
+      WHERE epe.entities_id = $1
       ORDER BY epe.published_at`,
     [entityInfo.id]
   );
