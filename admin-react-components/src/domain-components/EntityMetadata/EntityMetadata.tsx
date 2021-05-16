@@ -29,7 +29,7 @@ export function EntityMetadata({ entityId, className }: EntityMetadataProps): JS
 
   const [selectedHistory, setSelectedHistory] = useState<'entity' | 'publish'>('entity');
 
-  const { publishEntity, useEntityHistory } = useContext(DataDataContext);
+  const { publishEntities, useEntityHistory } = useContext(DataDataContext);
   const { entityHistory, entityHistoryError } = useEntityHistory(
     draftState.exists ? entityId : undefined
   );
@@ -85,7 +85,7 @@ export function EntityMetadata({ entityId, className }: EntityMetadataProps): JS
         className="mx-2"
         entityId={entityId}
         version={selectedVersion}
-        publishEntity={publishEntity}
+        publishEntities={publishEntities}
       />
       {entityHistoryError ? (
         <Message
@@ -142,12 +142,12 @@ function PublishButton({
   className,
   entityId,
   version,
-  publishEntity,
+  publishEntities,
 }: {
   className: string;
   entityId: string;
   version: EntityVersionInfo | undefined;
-  publishEntity: DataDataContextValue['publishEntity'];
+  publishEntities: DataDataContextValue['publishEntities'];
 }) {
   const disabled = !version || version.published;
 
@@ -159,7 +159,7 @@ function PublishButton({
       onClick={async () => {
         const publishVersion = version?.version;
         if (typeof publishVersion === 'number') {
-          const result = await publishEntity(entityId, publishVersion);
+          const result = await publishEntities([{ id: entityId, version: publishVersion }]);
           //TODO handle error and loading
         }
       }}

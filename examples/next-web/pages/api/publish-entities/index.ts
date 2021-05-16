@@ -1,22 +1,13 @@
 import { EntityAdmin } from '@datadata/server';
-import Joi from 'joi';
 import type { NextApiRequest, NextApiResponse } from 'next';
+import type { EntityPublishRequest } from '../../../types/RequestTypes';
 import type { ActionResponse } from '../../../types/ResponseTypes';
 import { errorResultToBoom } from '../../../utils/ErrorUtils';
-import { handlePutAsync, validateRequestQuery } from '../../../utils/HandlerUtils';
+import { handlePutAsync } from '../../../utils/HandlerUtils';
 import { getServerConnection, getSessionContextForRequest } from '../../../utils/ServerUtils';
 
-interface RequestQuery {
-  id: string;
-  version: number;
-}
-const requestSchema = Joi.object<RequestQuery>({
-  id: Joi.string().required(),
-  version: Joi.number().required(),
-});
-
 export default async (req: NextApiRequest, res: NextApiResponse<ActionResponse>): Promise<void> => {
-  await handlePutAsync(req, res, async () => {
+  await handlePutAsync(req, res, async (body: EntityPublishRequest) => {
     const { authContext, server } = await getServerConnection();
     const authResult = await getSessionContextForRequest(server, authContext, req);
     if (authResult.isError()) {
@@ -24,9 +15,7 @@ export default async (req: NextApiRequest, res: NextApiResponse<ActionResponse>)
     }
     const context = authResult.value;
 
-    const { id, version } = validateRequestQuery(req.query, requestSchema);
-
-    const publishResult = await EntityAdmin.publishEntity(context, id, version);
+    const publishResult = await EntityAdmin.publishEntities(context, body.items);
     if (publishResult.isError()) {
       throw errorResultToBoom(publishResult);
     }

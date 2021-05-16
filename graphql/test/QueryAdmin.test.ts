@@ -1202,7 +1202,9 @@ describe('versionHistory()', () => {
 
       const updateResult = await EntityAdmin.updateEntity(context, { id, title: 'Updated title' });
       if (expectOkResult(updateResult)) {
-        expectOkResult(await EntityAdmin.publishEntity(context, id, updateResult.value._version));
+        expectOkResult(
+          await EntityAdmin.publishEntities(context, [{ id, version: updateResult.value._version }])
+        );
       }
 
       const deleteResult = await EntityAdmin.deleteEntity(context, id);
@@ -1286,7 +1288,7 @@ describe('publishHistory()', () => {
     if (expectOkResult(createResult)) {
       const { id, _version: version } = createResult.value;
 
-      expectOkResult(await EntityAdmin.publishEntity(context, id, version));
+      expectOkResult(await EntityAdmin.publishEntities(context, [{ id, version }]));
 
       const result = await graphql(
         schema,

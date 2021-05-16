@@ -67,7 +67,7 @@ describe('node()', () => {
     if (expectOkResult(createResult)) {
       const { id } = createResult.value;
 
-      expectOkResult(await EntityAdmin.publishEntity(context, id, 0));
+      expectOkResult(await EntityAdmin.publishEntities(context, [{ id, version: 0 }]));
 
       const result = await graphql(
         schema,
@@ -125,7 +125,7 @@ describe('node()', () => {
     if (expectOkResult(createResult)) {
       const { id } = createResult.value;
 
-      expectOkResult(await EntityAdmin.publishEntity(context, id, 0));
+      expectOkResult(await EntityAdmin.publishEntities(context, [{ id, version: 0 }]));
 
       const result = await graphql(
         schema,
@@ -193,7 +193,7 @@ describe('node()', () => {
     if (expectOkResult(createFooResult)) {
       const fooId = createFooResult.value.id;
 
-      expectOkResult(await EntityAdmin.publishEntity(context, fooId, 0));
+      expectOkResult(await EntityAdmin.publishEntities(context, [{ id: fooId, version: 0 }]));
 
       const result = await graphql(
         schema,
@@ -243,7 +243,7 @@ describe('node()', () => {
     if (expectOkResult(createBarResult)) {
       const { id: barId, _name: barName } = createBarResult.value;
 
-      expectOkResult(await EntityAdmin.publishEntity(context, barId, 0));
+      expectOkResult(await EntityAdmin.publishEntities(context, [{ id: barId, version: 0 }]));
 
       const createFooResult = await EntityAdmin.createEntity(context, {
         _type: 'QueryFoo',
@@ -258,7 +258,7 @@ describe('node()', () => {
       if (expectOkResult(createFooResult)) {
         const { id: fooId } = createFooResult.value;
 
-        expectOkResult(await EntityAdmin.publishEntity(context, fooId, 0));
+        expectOkResult(await EntityAdmin.publishEntities(context, [{ id: fooId, version: 0 }]));
 
         const result = await graphql(
           schema,
@@ -310,7 +310,7 @@ describe('node()', () => {
     if (expectOkResult(createBarResult)) {
       const barId = createBarResult.value.id;
 
-      expectOkResult(await EntityAdmin.publishEntity(context, barId, 0));
+      expectOkResult(await EntityAdmin.publishEntities(context, [{ id: barId, version: 0 }]));
 
       const createFooResult = await EntityAdmin.createEntity(context, {
         _type: 'QueryFoo',
@@ -321,7 +321,7 @@ describe('node()', () => {
       if (expectOkResult(createFooResult)) {
         const fooId = createFooResult.value.id;
 
-        expectOkResult(await EntityAdmin.publishEntity(context, fooId, 0));
+        expectOkResult(await EntityAdmin.publishEntities(context, [{ id: fooId, version: 0 }]));
 
         const result = await graphql(
           schema,
@@ -382,8 +382,12 @@ describe('node()', () => {
       const bar1Id = createBar1Result.value.id;
       const bar2Id = createBar2Result.value.id;
 
-      expectOkResult(await EntityAdmin.publishEntity(context, bar1Id, 0));
-      expectOkResult(await EntityAdmin.publishEntity(context, bar2Id, 0));
+      expectOkResult(
+        await EntityAdmin.publishEntities(context, [
+          { id: bar1Id, version: 0 },
+          { id: bar2Id, version: 0 },
+        ])
+      );
 
       const createFooResult = await EntityAdmin.createEntity(context, {
         _type: 'QueryFoo',
@@ -394,7 +398,7 @@ describe('node()', () => {
       if (expectOkResult(createFooResult)) {
         const fooId = createFooResult.value.id;
 
-        expectOkResult(await EntityAdmin.publishEntity(context, fooId, 0));
+        expectOkResult(await EntityAdmin.publishEntities(context, [{ id: fooId, version: 0 }]));
 
         const result = await graphql(
           schema,
@@ -457,7 +461,7 @@ describe('node()', () => {
     if (expectOkResult(createBarResult)) {
       const barId = createBarResult.value.id;
 
-      expectOkResult(await EntityAdmin.publishEntity(context, barId, 0));
+      expectOkResult(await EntityAdmin.publishEntities(context, [{ id: barId, version: 0 }]));
 
       const createFooResult = await EntityAdmin.createEntity(context, {
         _type: 'QueryFoo',
@@ -468,7 +472,7 @@ describe('node()', () => {
       if (expectOkResult(createFooResult)) {
         const fooId = createFooResult.value.id;
 
-        expectOkResult(await EntityAdmin.publishEntity(context, fooId, 0));
+        expectOkResult(await EntityAdmin.publishEntities(context, [{ id: fooId, version: 0 }]));
 
         const result = await graphql(
           schema,
@@ -597,8 +601,12 @@ describe('nodes()', () => {
       const { id: foo1Id, _name: foo1Name } = createFoo1Result.value;
       const { id: foo2Id, _name: foo2Name } = createFoo2Result.value;
 
-      expectOkResult(await EntityAdmin.publishEntity(context, foo1Id, 0));
-      expectOkResult(await EntityAdmin.publishEntity(context, foo2Id, 0));
+      expectOkResult(
+        await EntityAdmin.publishEntities(context, [
+          { id: foo1Id, version: 0 },
+          { id: foo2Id, version: 0 },
+        ])
+      );
 
       const result = await graphql(
         schema,

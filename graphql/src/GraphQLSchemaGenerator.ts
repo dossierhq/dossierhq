@@ -973,20 +973,6 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     });
   }
 
-  buildMutationPublishEntity<TSource>(): GraphQLFieldConfig<TSource, TContext> {
-    return fieldConfigWithArgs<TSource, TContext, { id: string; version: number }>({
-      type: this.getOutputType('EntityPublishPayload'),
-      args: {
-        id: { type: new GraphQLNonNull(GraphQLID) },
-        version: { type: new GraphQLNonNull(GraphQLInt) },
-      },
-      resolve: async (source, args, context, _info) => {
-        const { id, version } = args;
-        return await Mutations.publishEntity(context, id, version);
-      },
-    });
-  }
-
   buildMutationPublishEntities<TSource>(): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<TSource, TContext, { entities: { id: string; version: number }[] }>({
       type: new GraphQLList(new GraphQLNonNull(this.getOutputType('EntityPublishPayload'))),
@@ -1012,7 +998,6 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
 
     const fields: GraphQLFieldConfigMap<TSource, TContext> = {
       deleteEntity: this.buildMutationDeleteEntity(),
-      publishEntity: this.buildMutationPublishEntity(),
       publishEntities: this.buildMutationPublishEntities(),
     };
 

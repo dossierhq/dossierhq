@@ -7,3 +7,7 @@ export interface EntityCreateRequest {
 export interface EntityUpdateRequest {
   item: AdminEntityUpdate;
 }
+
+export interface EntityPublishRequest {
+  items: { id: string; version: number }[];
+}

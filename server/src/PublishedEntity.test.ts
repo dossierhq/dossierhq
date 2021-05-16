@@ -52,8 +52,10 @@ describe('getEntities()', () => {
       const { id: foo1Id, _name: foo1Name } = createFoo1Result.value;
       const { id: foo2Id, _name: foo2Name } = createFoo2Result.value;
 
-      await EntityAdmin.publishEntity(context, foo1Id, 0);
-      await EntityAdmin.publishEntity(context, foo2Id, 0);
+      await EntityAdmin.publishEntities(context, [
+        { id: foo1Id, version: 0 },
+        { id: foo2Id, version: 0 },
+      ]);
 
       const result = await PublishedEntity.getEntities(context, [foo2Id, foo1Id]);
       expect(result).toHaveLength(2);
@@ -75,7 +77,7 @@ describe('getEntities()', () => {
     if (expectOkResult(createFooResult)) {
       const { id: foo1Id, _name: foo1Name } = createFooResult.value;
 
-      await EntityAdmin.publishEntity(context, foo1Id, 0);
+      await EntityAdmin.publishEntities(context, [{ id: foo1Id, version: 0 }]);
 
       const result = await PublishedEntity.getEntities(context, [
         'f09fdd62-4a1e-4320-afba-8dd0781799df',

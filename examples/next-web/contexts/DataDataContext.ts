@@ -13,7 +13,11 @@ import {
   Schema,
 } from '@datadata/core';
 import { useEffect, useMemo, useState } from 'react';
-import type { EntityCreateRequest, EntityUpdateRequest } from '../types/RequestTypes';
+import type {
+  EntityCreateRequest,
+  EntityPublishRequest,
+  EntityUpdateRequest,
+} from '../types/RequestTypes';
 import type {
   ActionResponse,
   EntityHistoryResponse,
@@ -151,12 +155,15 @@ class ContextAdapter implements DataDataContextAdapter {
     return result;
   };
 
-  publishEntity: DataDataContextAdapter['publishEntity'] = async (id, version) => {
+  publishEntities: DataDataContextAdapter['publishEntities'] = async (entities) => {
+    const body: EntityPublishRequest = { items: entities };
     const result = await fetchJsonResult<ActionResponse, ErrorType.BadRequest | ErrorType.NotFound>(
       [ErrorType.BadRequest, ErrorType.NotFound],
-      urls.publishEntity(id, version),
+      urls.publishEntities,
       {
         method: 'PUT',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(body),
       }
     );
 

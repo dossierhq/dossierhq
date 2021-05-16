@@ -1176,76 +1176,6 @@ describe('deleteEntity()', () => {
   });
 });
 
-describe('publishEntity()', () => {
-  test('Publish', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
-      _type: 'MutationFoo',
-      _name: 'Howdy name',
-      title: 'Howdy title',
-      summary: 'Howdy summary',
-    });
-    if (expectOkResult(createResult)) {
-      const { id } = createResult.value;
-
-      const result = await graphql(
-        schema,
-        `
-          mutation PublishEntity($id: ID!, $version: Int!) {
-            publishEntity(id: $id, version: $version) {
-              __typename
-              id
-            }
-          }
-        `,
-        undefined,
-        { context: ok(context) },
-        { id, version: 0 }
-      );
-      expect(result).toEqual({
-        data: {
-          publishEntity: {
-            __typename: 'EntityPublishPayload',
-            id,
-          },
-        },
-      });
-
-      const historyResult = await EntityAdmin.getEntityHistory(context, id);
-      if (expectOkResult(historyResult)) {
-        expect(historyResult.value.versions).toHaveLength(1);
-        expect(historyResult.value.versions[0].published).toBeTruthy();
-      }
-    }
-  });
-
-  test('Error: not found', async () => {
-    const result = await graphql(
-      schema,
-      `
-        mutation PublishEntity($id: ID!, $version: Int!) {
-          publishEntity(id: $id, version: $version) {
-            __typename
-            id
-          }
-        }
-      `,
-      undefined,
-      { context: ok(context) },
-      { id: '635d7ee9-c1c7-4ae7-bcdf-fb53f30a3cd3', version: 0 }
-    );
-    expect(result).toMatchInlineSnapshot(`
-      Object {
-        "data": Object {
-          "publishEntity": null,
-        },
-        "errors": Array [
-          [GraphQLError: NotFound: No such entity],
-        ],
-      }
-    `);
-  });
-});
-
 describe('publishEntities()', () => {
   test('Publish', async () => {
     const createResult = await EntityAdmin.createEntity(context, {
@@ -1334,14 +1264,13 @@ describe('Multiple', () => {
         `
           mutation UpdateAndPublishFooEntity(
             $entity: AdminMutationFooUpdateInput!
-            $publishId: ID!
-            $publishVersion: Int!
+            $entities: [EntityVersionInput!]!
           ) {
             updateMutationFooEntity(entity: $entity) {
               title
             }
 
-            publishEntity(id: $publishId, version: $publishVersion) {
+            publishEntities(entities: $entities) {
               id
             }
           }
@@ -1353,16 +1282,13 @@ describe('Multiple', () => {
             id,
             title: 'Updated title',
           },
-          publishId: id,
-          publishVersion: 1,
+          entities: { id, version: 1 },
         }
       );
       expect(result).toEqual({
         data: {
           updateMutationFooEntity: { title: 'Updated title' },
-          publishEntity: {
-            id,
-          },
+          publishEntities: [{ id }],
         },
       });
 
