@@ -37,9 +37,8 @@
   "homepage": "https://github.com/jonasb/datadata#readme",
   "dependencies": {
     "concurrently": "^6.0.1",
-    "dotenv": "^8.2.0",
-    "pg": "^8.5.1"
+    "dotenv": "^9.0.2",
+    "pg": "^8.6.0"
   },
-  "devDependencies": {
-  }
+  "devDependencies": {}
 }

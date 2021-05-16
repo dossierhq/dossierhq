@@ -46,7 +46,7 @@ dependencies:
   chalk: 4.1.0
   concurrently: 6.0.1
   debug: 4.3.1
-  dotenv: 8.2.0
+  dotenv: 9.0.2
   eslint: 7.23.0
   eslint-plugin-jest-dom: 3.7.0_eslint@7.23.0
   eslint-plugin-react: 7.23.2_eslint@7.23.0
@@ -64,7 +64,7 @@ dependencies:
   mini-svg-data-uri: 1.2.3
   next: 10.0.9_507781d099a67956587e23f5ac79078b
   next-transpile-modules: 6.1.0
-  pg: 8.5.1
+  pg: 8.6.0
   postgrator: 4.1.1
   prettier: 2.3.0
   react: 17.0.2
@@ -73,7 +73,7 @@ dependencies:
   react-test-renderer: 17.0.2_react@17.0.2
   svgo: 2.3.0
   swr: 0.5.5_react@17.0.2
-  ts-jest: 26.5.4_jest@26.6.3+typescript@4.2.4
+  ts-jest: 26.5.6_jest@26.6.3+typescript@4.2.4
   ts-node: 9.1.1_typescript@4.2.4
   typescript: 4.2.4
   url-parse-lax: 4.0.0
@@ -6033,6 +6033,12 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-8sJ78ElpbDJBHNeBzUbUVLsqKdccaa/BXF1uPTw3GrvQTBgrQrtObr2mUrE38vzYd8cEv+m/JBfDLioYcfXoaw==
+  /dotenv/9.0.2:
+    dev: false
+    engines:
+      node: '>=10'
+    resolution:
+      integrity: sha512-I9OvvrHp4pIARv4+x9iuewrWycX6CcZtoAu1XrzPxc5UygMJXJZYmBsynku8IkrJwgypE5DGNjDPmPRhDCptUg==
   /downshift/6.1.2_react@17.0.2:
     dependencies:
       '@babel/runtime': 7.13.10
@@ -10460,28 +10466,32 @@ packages:
     dev: false
     resolution:
       integrity: sha1-Ywn04OX6kT7BxpMHrjZLSzd8nns=
-  /pg-connection-string/2.4.0:
+  /pg-connection-string/2.5.0:
     dev: false
     resolution:
-      integrity: sha512-3iBXuv7XKvxeMrIgym7njT+HlZkwZqqGX4Bu9cci8xHZNT+Um1gWKqCsAzcC0d95rcKMU5WBg6YRUcHyV0HZKQ==
+      integrity: sha512-r5o/V/ORTA6TmUnyWZR9nCj1klXCO2CEKNRlVuJptZe85QuhFayC7WeMic7ndayT5IRIR0S0xFxFi2ousartlQ==
   /pg-int8/1.0.1:
     dev: false
     engines:
       node: '>=4.0.0'
     resolution:
       integrity: sha512-WCtabS6t3c8SkpDBUlb1kjOs7l66xsGdKpIPZsg4wR+B3+u9UAum2odSsF9tnvxg80h4ZxLWMy4pRjOsFIqQpw==
-  /pg-pool/3.2.2_pg@8.5.1:
+  /pg-pool/3.3.0_pg@8.6.0:
     dependencies:
-      pg: 8.5.1
+      pg: 8.6.0
     dev: false
     peerDependencies:
       pg: '>=8.0'
     resolution:
-      integrity: sha512-ORJoFxAlmmros8igi608iVEbQNNZlp89diFVx6yV5v+ehmpMY9sK6QgpmgoXbmkNaBAx8cOOZh9g80kJv1ooyA==
+      integrity: sha512-0O5huCql8/D6PIRFAlmccjphLYWC+JIzvUhSzXSpGaf+tjTZc4nn+Lr7mLXBbFJfvwbP0ywDv73EiaBsxn7zdg==
   /pg-protocol/1.4.0:
     dev: false
     resolution:
       integrity: sha512-El+aXWcwG/8wuFICMQjM5ZSAm6OWiJicFdNYo+VY3QP+8vI4SvLIWVe51PppTzMhikUJR+PsyIFKqfdXPz/yxA==
+  /pg-protocol/1.5.0:
+    dev: false
+    resolution:
+      integrity: sha512-muRttij7H8TqRNu/DxrAJQITO4Ac7RmX3Klyr/9mJEOBeIpgnF8f9jAfRz5d3XwQZl5qBjF9gLsUtMPJE0vezQ==
   /pg-types/2.2.0:
     dependencies:
       pg-int8: 1.0.1
@@ -10494,13 +10504,13 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha512-qTAAlrEsl8s4OiEQY69wDvcMIdQN6wdz5ojQiOy6YRMuynxenON0O5oCpJI6lshc6scgAY8qvJ2On/p+CXY0GA==
-  /pg/8.5.1:
+  /pg/8.6.0:
     dependencies:
       buffer-writer: 2.0.0
       packet-reader: 1.0.0
-      pg-connection-string: 2.4.0
-      pg-pool: 3.2.2_pg@8.5.1
-      pg-protocol: 1.4.0
+      pg-connection-string: 2.5.0
+      pg-pool: 3.3.0_pg@8.6.0
+      pg-protocol: 1.5.0
       pg-types: 2.2.0
       pgpass: 1.0.4
     dev: false
@@ -10512,7 +10522,7 @@ packages:
       pg-native:
         optional: true
     resolution:
-      integrity: sha512-9wm3yX9lCfjvA98ybCyw2pADUivyNWT/yIP4ZcDVpMN0og70BUWYEGXPCTAQdGTAqnytfRADb7NERrY1qxhIqw==
+      integrity: sha512-qNS9u61lqljTDFvmk/N66EeGq3n6Ujzj0FFyNMGQr6XuEv4tgNTXvJQTfJdcvGit5p5/DWPu+wj920hAJFI+QQ==
   /pgpass/1.0.4:
     dependencies:
       split2: 3.2.2
@@ -12933,7 +12943,7 @@ packages:
     dev: false
     resolution:
       integrity: sha512-3IVX4nI6B5cc31/GFFE+i8ey/N2eA0CZDbo6n0yrz0zDX8ZJ8djmU1p+XRz7G3is0F3bB3pu2pAroFdAWQKU3w==
-  /ts-jest/26.5.4_jest@26.6.3+typescript@4.2.4:
+  /ts-jest/26.5.6_jest@26.6.3+typescript@4.2.4:
     dependencies:
       bs-logger: 0.2.6
       buffer-from: 1.1.1
@@ -12955,7 +12965,7 @@ packages:
       jest: '>=26 <27'
       typescript: '>=3.8 <5.0'
     resolution:
-      integrity: sha512-I5Qsddo+VTm94SukBJ4cPimOoFZsYTeElR2xy6H2TOVs+NsvgYglW8KuQgKoApOKuaU/Ix/vrF9ebFZlb5D2Pg==
+      integrity: sha512-rua+rCP8DxpA8b4DQD/6X2HQS8Zy/xzViVYfEs2OQu68tkCuKLV0Md8pmX55+W24uRIyAsf/BajRfxOs+R2MKA==
   /ts-node/9.1.1_typescript@4.2.4:
     dependencies:
       arg: 4.1.3
@@ -13935,7 +13945,7 @@ packages:
       react-test-renderer: 17.0.2_react@17.0.2
       svgo: 2.3.0
       swr: 0.5.5_react@17.0.2
-      ts-jest: 26.5.4_jest@26.6.3+typescript@4.2.4
+      ts-jest: 26.5.6_jest@26.6.3+typescript@4.2.4
       typescript: 4.2.4
       uuid: 8.3.2
     dev: false
@@ -13944,7 +13954,7 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-LKPxHcMHGhKhuuCCW6hvn5hhSbUC9tZm5gBtx1yNpqDfFDuvx99f6SSNq8qudcvg9Zt6GMDu/VDN3aRMMy754g==
+      integrity: sha512-e2K/RezWFA1ukEqwlHipTU9jszHkccp+aqB4qQZRSxyRyNyupvDYg/o7aM6oKoXADwJ3WbRfv6WkgG5+iGWBdQ==
       tarball: file:projects/admin-react-components.tgz
     version: 0.0.0
   file:projects/benchpress.tgz:
@@ -13986,13 +13996,13 @@ packages:
       eslint: 7.23.0
       jest: 26.6.3_ts-node@9.1.1
       prettier: 2.3.0
-      ts-jest: 26.5.4_jest@26.6.3+typescript@4.2.4
+      ts-jest: 26.5.6_jest@26.6.3+typescript@4.2.4
       ts-node: 9.1.1_typescript@4.2.4
       typescript: 4.2.4
     dev: false
     name: '@rush-temp/core'
     resolution:
-      integrity: sha512-SOSdyOILY5DSmjSxgmp1uyUds9sEpvyuadaxD6UjyHAxyFnohRfo+7FdSOS/kuQ7gwnVcEaU5+SIfAmXRWqmQg==
+      integrity: sha512-zVI+KeoA3N9wTy9CSQSGOEmKbnRPaSFcP+i8Es9unQsgCKA18iMyDsJjzFmuBut3o60myIC8o5FIgmgBd+SobA==
       tarball: file:projects/core.tgz
     version: 0.0.0
   file:projects/datadata-examples-foo.tgz_graphql@15.5.0:
@@ -14001,7 +14011,7 @@ packages:
       '@types/node': 14.14.37
       '@typescript-eslint/eslint-plugin': 4.21.0_cda5af1c23ac8590b255ddd624825ef5
       '@typescript-eslint/parser': 4.21.0_eslint@7.23.0+typescript@4.2.4
-      dotenv: 8.2.0
+      dotenv: 9.0.2
       eslint: 7.23.0
       express: 4.17.1
       express-graphql: 0.12.0_graphql@15.5.0
@@ -14014,7 +14024,7 @@ packages:
     peerDependencies:
       graphql: '*'
     resolution:
-      integrity: sha512-ctHu04bGQD+Fc7Ym1hvrxdZaCk+TjgQb2yv1X8SOrxc/bh2EcXjfC8sOWvAyXE8xmLDnKtOC6EEwcpsffE4mqA==
+      integrity: sha512-PBItCTuYtK4pNST6xXyvqyiCxvrNz5uZ2gPi5d157V9XNHZ4DfHV6r1Lx9M9+TIIRplr2v5izFNzzZLDkpfLCg==
       tarball: file:projects/datadata-examples-foo.tgz
     version: 0.0.0
   file:projects/datadata-examples-next-web.tgz:
@@ -14045,24 +14055,24 @@ packages:
       prettier: 2.3.0
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
-      ts-jest: 26.5.4_jest@26.6.3+typescript@4.2.4
+      ts-jest: 26.5.6_jest@26.6.3+typescript@4.2.4
       ts-node: 9.1.1_typescript@4.2.4
       typescript: 4.2.4
     dev: false
     name: '@rush-temp/datadata-examples-next-web'
     resolution:
-      integrity: sha512-Jgb9NCpDY84OggEgHBVVCXKEc/ODMW4n1H9rFLbeHYjTUw7hNdGce/+1r9Dz/AdEYR2lTEOuoZVzdOr6litGag==
+      integrity: sha512-rtZHpYOCs6Ihyn0ZKEu0koMQhSLH/05FeRzJi5/E6XBEP9r2fAQA5IULBpFAEKE0Y8bI05k0hCLyYREXLBfkNA==
       tarball: file:projects/datadata-examples-next-web.tgz
     version: 0.0.0
   file:projects/datadata.tgz:
     dependencies:
       concurrently: 6.0.1
-      dotenv: 8.2.0
-      pg: 8.5.1
+      dotenv: 9.0.2
+      pg: 8.6.0
     dev: false
     name: '@rush-temp/datadata'
     resolution:
-      integrity: sha512-rL/SERfIxl2IBHrX3TacphXrCd6HkOfVuVg20tFalsDD4L/kXnvIdkTOFCMqNQB4U3HvuNYcAJgBc6SBb7GzcQ==
+      integrity: sha512-GaOu7XLyeqTJJ6/RbvrXP5XjyVNVfbZ+Q3AEqmSF5XohGszSmSlzq+PzClYBNHpDSakl4e0wujtsLbnhbfuHKg==
       tarball: file:projects/datadata.tgz
     version: 0.0.0
   file:projects/graphql.tgz_ts-node@9.1.1:
@@ -14075,7 +14085,7 @@ packages:
       graphql: 15.5.0
       jest: 26.6.3_ts-node@9.1.1
       prettier: 2.3.0
-      ts-jest: 26.5.4_jest@26.6.3+typescript@4.2.4
+      ts-jest: 26.5.6_jest@26.6.3+typescript@4.2.4
       typescript: 4.2.4
       uuid: 8.3.2
     dev: false
@@ -14084,18 +14094,18 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-5/d7zDgAyKS/AntALCpdXlsMHnfMz24XOTO6GDy3+gZM30ACv/+8y61jSw83vO0o4R4jr9Ynt+zLPfbHTx6b+A==
+      integrity: sha512-P/lRdXZm4yxMc2FkYNaJXDup/6JM7UST8zZgKG0iFTJ+rpnh74TkZ3EuOwyE6+Hi3xuMPwei35RFi7sZVjGmLw==
       tarball: file:projects/graphql.tgz
     version: 0.0.0
   file:projects/postgres.tgz:
     dependencies:
-      pg: 8.5.1
+      pg: 8.6.0
       postgrator: 4.1.1
       url-parse-lax: 4.0.0
     dev: false
     name: '@rush-temp/postgres'
     resolution:
-      integrity: sha512-Oq+lwhSfd9nEaud10TObxCTOpf3QzQCQ8h6rUOtJzXl/rQrF/jcDvv48nhp0qsQYD4qbFC1oTg/ZbqDCBgRdbA==
+      integrity: sha512-dYttuYXfMnR1zaWz/yVPG1S64JRxpiSE6ED0F+QcaVssLJypjQh0xE6fhpzt1vU0l1oOMEDHuWKLA9785zLOvA==
       tarball: file:projects/postgres.tgz
     version: 0.0.0
   file:projects/server.tgz:
@@ -14105,19 +14115,19 @@ packages:
       '@types/uuid': 8.3.0
       '@typescript-eslint/eslint-plugin': 4.21.0_cda5af1c23ac8590b255ddd624825ef5
       '@typescript-eslint/parser': 4.21.0_eslint@7.23.0+typescript@4.2.4
-      dotenv: 8.2.0
+      dotenv: 9.0.2
       eslint: 7.23.0
       jest: 26.6.3_ts-node@9.1.1
-      pg: 8.5.1
+      pg: 8.6.0
       prettier: 2.3.0
-      ts-jest: 26.5.4_jest@26.6.3+typescript@4.2.4
+      ts-jest: 26.5.6_jest@26.6.3+typescript@4.2.4
       ts-node: 9.1.1_typescript@4.2.4
       typescript: 4.2.4
       uuid: 8.3.2
     dev: false
     name: '@rush-temp/server'
     resolution:
-      integrity: sha512-nNqgC7yv1vEcojmah63agJqmeveqcekCujUTUsCwdlwxcSoznosgA2YJ7v2h5GUgOsB+HrSBP1IntKfp3ZnFNQ==
+      integrity: sha512-zD/+YzktYm5xNu1OkyLZi+niD3nWiPQNlmLl7QFfzedE+hGjieaQFl6WUnbBHzY71ZL6nKJwZTeNXAQYJkoVQQ==
       tarball: file:projects/server.tgz
     version: 0.0.0
   file:projects/testing-utils.tgz_ts-node@9.1.1:
@@ -14129,7 +14139,7 @@ packages:
       eslint: 7.23.0
       jest: 26.6.3_ts-node@9.1.1
       prettier: 2.3.0
-      ts-jest: 26.5.4_jest@26.6.3+typescript@4.2.4
+      ts-jest: 26.5.6_jest@26.6.3+typescript@4.2.4
       typescript: 4.2.4
       uuid: 8.3.2
     dev: false
@@ -14138,7 +14148,7 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-SoRoelbPnMd1oClA28F+HgOLlmGh/XCDPYoIDT3FAHHrgqOVIwANK59e+Bf4l2WNVkbw8VDL3Z+wnal38Kw0Xg==
+      integrity: sha512-uA/klWHk+uY3sTeGyn+Y5pwiDwXdwRLWVmoSV9oqnLBzT7NPpWXFuh9DWz3RthWSUjdhht3rwAPJJjfVmUwINA==
       tarball: file:projects/testing-utils.tgz
     version: 0.0.0
 registry: ''
@@ -14190,7 +14200,7 @@ specifiers:
   chalk: ~4.1.0
   concurrently: ^6.0.1
   debug: ~4.3.1
-  dotenv: ^8.2.0
+  dotenv: ^9.0.2
   eslint: ^7.23.0
   eslint-plugin-jest-dom: ~3.7.0
   eslint-plugin-react: ~7.23.2
@@ -14208,7 +14218,7 @@ specifiers:
   mini-svg-data-uri: ~1.2.3
   next: ~10.0.6
   next-transpile-modules: ~6.1.0
-  pg: ^8.5.1
+  pg: ^8.6.0
   postgrator: ^4.1.1
   prettier: 2.3.0
   react: ~17.0.2
@@ -14217,7 +14227,7 @@ specifiers:
   react-test-renderer: ~17.0.2
   svgo: ~2.3.0
   swr: ~0.5.5
-  ts-jest: ~26.5.4
+  ts-jest: ~26.5.6
   ts-node: ^9.1.1
   typescript: ^4.2.4
   url-parse-lax: ^4.0.0

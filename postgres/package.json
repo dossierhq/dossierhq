@@ -14,7 +14,7 @@
   },
   "license": "ISC",
   "dependencies": {
-    "pg": "^8.5.1",
+    "pg": "^8.6.0",
     "postgrator": "^4.1.1",
     "url-parse-lax": "^4.0.0"
   }
