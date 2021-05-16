@@ -497,18 +497,26 @@ export async function unpublishEntities(
 ): PromiseResult<void, ErrorType.BadRequest | ErrorType.NotFound> {
   return context.withTransaction(async (context) => {
     // Step 1: Resolve entities and check if all entities exist
-    const entitiesInfo = await Db.queryMany<Pick<EntitiesTable, 'id' | 'uuid'>>(
+    const entitiesInfo = await Db.queryMany<
+      Pick<EntitiesTable, 'id' | 'uuid' | 'published_entity_versions_id'>
+    >(
       context,
-      'SELECT e.id, e.uuid FROM entities e WHERE e.uuid = ANY($1)',
+      'SELECT e.id, e.uuid, e.published_entity_versions_id FROM entities e WHERE e.uuid = ANY($1)',
       [entityIds]
     );
 
     const missingEntityIds = entityIds.filter(
       (entityId) => !entitiesInfo.find((it) => it.uuid === entityId)
     );
-
     if (missingEntityIds.length > 0) {
       return notOk.NotFound(`No such entities: ${missingEntityIds.join(', ')}`);
+    }
+
+    const unpublishedEntities = entitiesInfo
+      .filter((it) => it.published_entity_versions_id === null)
+      .map((it) => it.uuid);
+    if (unpublishedEntities.length > 0) {
+      return notOk.BadRequest(`Entities are not published: ${unpublishedEntities.join(', ')}`);
     }
 
     // Step 2: Unpublish entities

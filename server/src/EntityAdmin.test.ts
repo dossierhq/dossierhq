@@ -3268,6 +3268,17 @@ describe('unpublishEntities()', () => {
     }
   });
 
+  test('Error: invalid id', async () => {
+    const publishResult = await EntityAdmin.unpublishEntities(context, [
+      '8a678bad-fa57-4f18-a377-633f704fd0d3',
+    ]);
+    expectErrorResult(
+      publishResult,
+      ErrorType.BadRequest,
+      `No such entities: 8a678bad-fa57-4f18-a377-633f704fd0d3`
+    );
+  });
+
   test('Error: Reference from published entity', async () => {
     const createBarResult = await EntityAdmin.createEntity(context, {
       _type: 'EntityAdminBar',
@@ -3300,6 +3311,24 @@ describe('unpublishEntities()', () => {
           `${barId}: Published entities referencing entity: ${fooId}`
         );
       }
+    }
+  });
+
+  test('Error: Unpublished entity', async () => {
+    const createBarResult = await EntityAdmin.createEntity(context, {
+      _type: 'EntityAdminBar',
+      _name: 'Bar name',
+      title: 'Bar title',
+    });
+    if (expectOkResult(createBarResult)) {
+      const { id: barId } = createBarResult.value;
+
+      const publishResult = await EntityAdmin.unpublishEntities(context, [barId]);
+      expectErrorResult(
+        publishResult,
+        ErrorType.BadRequest,
+        `Entities are not published: ${barId}`
+      );
     }
   });
 });
