@@ -18,6 +18,7 @@ async function runTest(story: any, context: any) {
   // Adjust path since we're not running in src/ root
   filename = path.join('..', filename);
 
+  // eslint-disable-next-line testing-library/render-result-naming-convention
   const storyElement = story.render();
   let tree: ReactTestRenderer | undefined;
   await act(async () => {
