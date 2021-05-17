@@ -4,7 +4,8 @@
   "description": "",
   "main": "./src/index.ts",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./": "./src/"
   },
   "scripts": {
     "ci:check": "npm run ts:check && npm run eslint:check && npm run prettier:check && npm test",

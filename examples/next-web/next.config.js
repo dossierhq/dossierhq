@@ -8,6 +8,9 @@ const withTranspileModules = require('next-transpile-modules')([
 ]);
 
 module.exports = withTranspileModules({
+  future: {
+    webpack5: true,
+  },
   reactStrictMode: true,
   webpack: (config) => {
     config.resolve.alias['react'] = path.resolve(__dirname, '.', 'node_modules', 'react');
