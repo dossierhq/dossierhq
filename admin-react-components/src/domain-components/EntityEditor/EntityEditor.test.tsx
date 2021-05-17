@@ -61,7 +61,7 @@ const finders = {
   fooTitleInput: () => screen.getByLabelText('title') as HTMLInputElement,
   fooBarButton: (story: Story<EntityEditorStoryProps>) => getByStoryId(story, 'bar'),
   fooBarRemoveButton: (story: Story<EntityEditorStoryProps>) => {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion, testing-library/no-node-access
     const barParent = getByStoryId(story, 'bar').parentElement!;
     return within(barParent).getByTitle('Remove entity');
   },

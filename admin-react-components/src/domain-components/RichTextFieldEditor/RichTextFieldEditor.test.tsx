@@ -21,6 +21,7 @@ async function waitForEditorToInitialize(container: HTMLElement) {
   return act(async () => {
     let continueWaiting = true;
     while (continueWaiting) {
+      // eslint-disable-next-line testing-library/no-node-access
       const res = container.querySelectorAll('[data-editorinitialized="false"]');
       if (res.length === 0) {
         continueWaiting = false;
@@ -35,8 +36,8 @@ describe('RichTextFieldEditor Normal', () => {
   test('renders', async () => {
     let container: HTMLElement | null = null;
     act(() => {
-      const renderResult = render(renderStory(Normal));
-      container = renderResult.container;
+      const { container: renderContainer } = render(renderStory(Normal));
+      container = renderContainer;
     });
     if (!container) throw new Error('No container');
 
