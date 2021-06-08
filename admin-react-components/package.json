@@ -8,7 +8,7 @@
     "./": "./src/"
   },
   "scripts": {
-    "ci:check": "npm run ts:check && npm run eslint:check && npm run prettier:check && npm test",
+    "ci:check": "npm run ts:check && npm run eslint:check && npm run prettier:check && npm test && npm run storybook:build",
     "eslint:check": "eslint .",
     "eslint:fix": "eslint --fix .",
     "icons:update": "scripts/generate-icons.mjs",
