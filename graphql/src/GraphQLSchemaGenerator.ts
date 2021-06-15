@@ -1005,6 +1005,32 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     });
   }
 
+  buildMutationArchiveEntity<TSource>(): GraphQLFieldConfig<TSource, TContext> {
+    return fieldConfigWithArgs<TSource, TContext, { id: string }>({
+      type: this.getOutputType('EntityPublishPayload'),
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLID) },
+      },
+      resolve: async (_source, args, context, _info) => {
+        const { id } = args;
+        return await Mutations.archiveEntity(context, id);
+      },
+    });
+  }
+
+  buildMutationUnarchiveEntity<TSource>(): GraphQLFieldConfig<TSource, TContext> {
+    return fieldConfigWithArgs<TSource, TContext, { id: string }>({
+      type: this.getOutputType('EntityPublishPayload'),
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLID) },
+      },
+      resolve: async (_source, args, context, _info) => {
+        const { id } = args;
+        return await Mutations.unarchiveEntity(context, id);
+      },
+    });
+  }
+
   buildMutationType<TSource>(): GraphQLObjectType | null {
     const includeEntities = this.schema.getEntityTypeCount() > 0;
     if (!includeEntities) {
@@ -1015,6 +1041,8 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       deleteEntity: this.buildMutationDeleteEntity(),
       publishEntities: this.buildMutationPublishEntities(),
       unpublishEntities: this.buildMutationUnpublishEntities(),
+      archiveEntity: this.buildMutationArchiveEntity(),
+      unarchiveEntity: this.buildMutationUnarchiveEntity(),
     };
 
     for (const entitySpec of this.schema.spec.entityTypes) {
