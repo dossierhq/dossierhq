@@ -2,8 +2,8 @@ import type { ErrorType, PromiseResult } from '@datadata/core';
 import { notOk, ok } from '@datadata/core';
 import type { AuthContext } from '.';
 import { ensureRequired } from './Assertions';
-import * as Db from './Db';
-import type { SubjectsTable } from './DbTableTypes';
+import * as Db from './Database';
+import type { SubjectsTable } from './DatabaseTables';
 
 export interface Session {
   readonly subjectInternalId: number;

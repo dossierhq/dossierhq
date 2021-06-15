@@ -1,8 +1,8 @@
 import type { PromiseResult, ErrorType } from '@datadata/core';
 import { ok, Schema } from '@datadata/core';
 import type { Context, SessionContext } from '.';
-import * as Db from './Db';
-import type { SchemaVersionsTable } from './DbTableTypes';
+import * as Db from './Database';
+import type { SchemaVersionsTable } from './DatabaseTables';
 
 export async function getSchema(context: Context<unknown>): Promise<Schema> {
   const { specification } = await Db.queryOne<Pick<SchemaVersionsTable, 'specification'>>(
