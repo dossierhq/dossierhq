@@ -18,6 +18,7 @@ import {
   ErrorType,
   notOk,
   ok,
+  PublishEventKind,
 } from '.';
 import { expectErrorResult, expectOkResult } from './CoreTestUtils';
 
@@ -114,7 +115,14 @@ describe('convertJsonPublishHistory()', () => {
   test('History with one version', () => {
     const expected: PublishHistory = {
       id: '123',
-      events: [{ publishedAt: new Date(), publishedBy: '4321', version: 0 }],
+      events: [
+        {
+          kind: PublishEventKind.Publish,
+          publishedAt: new Date(),
+          publishedBy: '4321',
+          version: 0,
+        },
+      ],
     };
     const asJson: JsonPublishHistory = JSON.parse(JSON.stringify(expected));
     const converted = convertJsonPublishHistory(asJson);

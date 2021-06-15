@@ -1,5 +1,6 @@
 import {
   CoreTestUtils,
+  EntityPublishState,
   ErrorType,
   FieldType,
   PublishEventKind,
@@ -362,6 +363,7 @@ describe('getEntity()', () => {
           _name: createResult.value._name,
           _version: 1,
           _deleted: true,
+          _publishState: EntityPublishState.Draft,
         });
       }
     }
@@ -421,6 +423,7 @@ describe('getEntities()', () => {
           id: foo2Id,
           _name: foo2Name,
           _version: 0,
+          _publishState: EntityPublishState.Draft,
           title: 'Title 2',
         },
       });
@@ -430,6 +433,7 @@ describe('getEntities()', () => {
           id: foo1Id,
           _name: foo1Name,
           _version: 0,
+          _publishState: EntityPublishState.Draft,
           title: 'Title 1',
         },
       });
@@ -458,6 +462,7 @@ describe('getEntities()', () => {
           id: fooId,
           _name: fooName,
           _version: 1,
+          _publishState: EntityPublishState.Draft,
           title: 'Updated title',
         },
       });
@@ -492,6 +497,7 @@ describe('createEntity()', () => {
         _type: 'EntityAdminFoo',
         _name: name,
         _version: 0,
+        _publishState: EntityPublishState.Draft,
         title: 'Title',
       });
 
@@ -517,6 +523,7 @@ describe('createEntity()', () => {
           _type: 'EntityAdminFoo',
           _name: name,
           _version: 0,
+          _publishState: EntityPublishState.Published,
           title: 'Title',
         });
       }
@@ -548,6 +555,7 @@ describe('createEntity()', () => {
         _type: 'EntityAdminFoo',
         _name: createResult.value._name,
         _version: 0,
+        _publishState: EntityPublishState.Draft,
         title: 'Draft',
       });
 
@@ -570,6 +578,7 @@ describe('createEntity()', () => {
           _type: 'EntityAdminFoo',
           _name: createResult.value._name,
           _version: 0,
+          _publishState: EntityPublishState.Draft,
           title: 'Draft',
         });
       }
@@ -593,6 +602,7 @@ describe('createEntity()', () => {
         _type: 'EntityAdminFoo',
         _name: createResult.value._name,
         _version: 0,
+        _publishState: EntityPublishState.Draft,
         title: 'Draft',
       });
     }
@@ -622,6 +632,7 @@ describe('createEntity()', () => {
           _type: 'EntityAdminFoo',
           _name: createFooResult.value._name,
           _version: 0,
+          _publishState: EntityPublishState.Draft,
           title: 'Foo title',
           bar: { id: barId },
         });
@@ -640,6 +651,7 @@ describe('createEntity()', () => {
             _type: 'EntityAdminFoo',
             _name: createFooResult.value._name,
             _version: 0,
+            _publishState: EntityPublishState.Published,
             title: 'Foo title',
             bar: { id: barId },
           });
@@ -672,6 +684,7 @@ describe('createEntity()', () => {
         _type: 'EntityAdminBaz',
         _name: name,
         _version: 0,
+        _publishState: EntityPublishState.Draft,
         tags: ['one', 'two', 'three'],
       });
 
@@ -682,6 +695,7 @@ describe('createEntity()', () => {
           _type: 'EntityAdminBaz',
           _name: name,
           _version: 0,
+          _publishState: EntityPublishState.Draft,
           tags: ['one', 'two', 'three'],
         });
       }
@@ -705,6 +719,7 @@ describe('createEntity()', () => {
         _type: 'EntityAdminBaz',
         _name: name,
         _version: 0,
+        _publishState: EntityPublishState.Draft,
         body: { blocks: [{ type: 'paragraph', data: { text: 'Hello world' } }] },
         bodyList: [
           { blocks: [{ type: 'paragraph', data: { text: 'First rich text' } }] },
@@ -719,6 +734,7 @@ describe('createEntity()', () => {
           _type: 'EntityAdminBaz',
           _name: name,
           _version: 0,
+          _publishState: EntityPublishState.Draft,
           body: { blocks: [{ type: 'paragraph', data: { text: 'Hello world' } }] },
           bodyList: [
             { blocks: [{ type: 'paragraph', data: { text: 'First rich text' } }] },
@@ -771,6 +787,7 @@ describe('createEntity()', () => {
           _type: 'EntityAdminBaz',
           _name: bazName,
           _version: 0,
+          _publishState: EntityPublishState.Draft,
           body: {
             blocks: [
               { type: RichTextBlockType.entity, data: { id: bar1Id } },
@@ -795,6 +812,7 @@ describe('createEntity()', () => {
             _type: 'EntityAdminBaz',
             _name: bazName,
             _version: 0,
+            _publishState: EntityPublishState.Draft,
             body: {
               blocks: [
                 { type: RichTextBlockType.entity, data: { id: bar1Id } },
@@ -851,6 +869,7 @@ describe('createEntity()', () => {
         _type: 'EntityAdminBaz',
         _name: name,
         _version: 0,
+        _publishState: EntityPublishState.Draft,
         location: { lat: 55.60498, lng: 13.003822 },
         locations: [
           { lat: 55.60498, lng: 13.003822 },
@@ -865,6 +884,7 @@ describe('createEntity()', () => {
           _type: 'EntityAdminBaz',
           _name: name,
           _version: 0,
+          _publishState: EntityPublishState.Draft,
           location: { lat: 55.60498, lng: 13.003822 },
           locations: [
             { lat: 55.60498, lng: 13.003822 },
@@ -901,6 +921,7 @@ describe('createEntity()', () => {
           _type: 'EntityAdminBaz',
           _name: name,
           _version: 0,
+          _publishState: EntityPublishState.Draft,
           bars: [{ id: bar1Id }, { id: bar2Id }],
         });
 
@@ -911,6 +932,7 @@ describe('createEntity()', () => {
             _type: 'EntityAdminBaz',
             _name: name,
             _version: 0,
+            _publishState: EntityPublishState.Draft,
             bars: [{ id: bar1Id }, { id: bar2Id }],
           });
         }
@@ -924,6 +946,7 @@ describe('createEntity()', () => {
                 _type: 'EntityAdminBaz',
                 _name: name,
                 _version: 0,
+                _publishState: EntityPublishState.Draft,
                 bars: [{ id: bar1Id }, { id: bar2Id }],
               },
             },
@@ -939,6 +962,7 @@ describe('createEntity()', () => {
                 _type: 'EntityAdminBaz',
                 _name: name,
                 _version: 0,
+                _publishState: EntityPublishState.Draft,
                 bars: [{ id: bar1Id }, { id: bar2Id }],
               },
             },
@@ -961,6 +985,7 @@ describe('createEntity()', () => {
         _type: 'EntityAdminBaz',
         _name: name,
         _version: 0,
+        _publishState: EntityPublishState.Draft,
         twoStrings: { _type: 'EntityAdminTwoStrings', one: 'First', two: 'Second' },
       });
 
@@ -971,6 +996,7 @@ describe('createEntity()', () => {
           _type: 'EntityAdminBaz',
           _name: name,
           _version: 0,
+          _publishState: EntityPublishState.Draft,
           twoStrings: { _type: 'EntityAdminTwoStrings', one: 'First', two: 'Second' },
         });
       }
@@ -993,6 +1019,7 @@ describe('createEntity()', () => {
         _type: 'EntityAdminBaz',
         _name: name,
         _version: 0,
+        _publishState: EntityPublishState.Draft,
         twoStringsList: [
           { _type: 'EntityAdminTwoStrings', one: 'First', two: 'Second' },
           { _type: 'EntityAdminTwoStrings', one: 'Three', two: 'Four' },
@@ -1006,6 +1033,7 @@ describe('createEntity()', () => {
           _type: 'EntityAdminBaz',
           _name: name,
           _version: 0,
+          _publishState: EntityPublishState.Draft,
           twoStringsList: [
             { _type: 'EntityAdminTwoStrings', one: 'First', two: 'Second' },
             { _type: 'EntityAdminTwoStrings', one: 'Three', two: 'Four' },
@@ -1039,6 +1067,7 @@ describe('createEntity()', () => {
           _type: 'EntityAdminBaz',
           _name: bazName,
           _version: 0,
+          _publishState: EntityPublishState.Draft,
           stringReference: {
             _type: 'EntityAdminStringReference',
             string: 'Hello string',
@@ -1053,6 +1082,7 @@ describe('createEntity()', () => {
             _type: 'EntityAdminBaz',
             _name: bazName,
             _version: 0,
+            _publishState: EntityPublishState.Draft,
             stringReference: {
               _type: 'EntityAdminStringReference',
               string: 'Hello string',
@@ -1069,6 +1099,7 @@ describe('createEntity()', () => {
               _type: 'EntityAdminBaz',
               _name: bazName,
               _version: 0,
+              _publishState: EntityPublishState.Draft,
               stringReference: {
                 _type: 'EntityAdminStringReference',
                 string: 'Hello string',
@@ -1122,6 +1153,7 @@ describe('createEntity()', () => {
           _type: 'EntityAdminBaz',
           _name: bazName,
           _version: 0,
+          _publishState: EntityPublishState.Draft,
           listFields: {
             _type: 'EntityAdminListFields',
             stringList: ['one', 'two', 'three'],
@@ -1148,6 +1180,7 @@ describe('createEntity()', () => {
             _type: 'EntityAdminBaz',
             _name: bazName,
             _version: 0,
+            _publishState: EntityPublishState.Draft,
             listFields: {
               _type: 'EntityAdminListFields',
               stringList: ['one', 'two', 'three'],
@@ -1207,6 +1240,7 @@ describe('createEntity()', () => {
         _type: 'EntityAdminBaz',
         _name: bazName,
         _version: 0,
+        _publishState: EntityPublishState.Draft,
         nested: {
           _type: 'EntityAdminNested',
           title: 'Nested 0',
@@ -1228,6 +1262,7 @@ describe('createEntity()', () => {
           _type: 'EntityAdminBaz',
           _name: bazName,
           _version: 0,
+          _publishState: EntityPublishState.Draft,
           nested: {
             _type: 'EntityAdminNested',
             title: 'Nested 0',
@@ -1997,6 +2032,7 @@ describe('searchEntities()', () => {
                 _type: 'EntityAdminBaz',
                 _name: bazName,
                 _version: 0,
+                _publishState: EntityPublishState.Draft,
                 body: {
                   blocks: [
                     {
@@ -2188,6 +2224,7 @@ describe('updateEntity()', () => {
           _type: 'EntityAdminFoo',
           _name: name,
           _version: 1,
+          _publishState: EntityPublishState.Draft,
           title: 'Updated title',
         });
       }
@@ -2219,6 +2256,7 @@ describe('updateEntity()', () => {
           _type: 'EntityAdminFoo',
           _name: name, // original name isn't kept
           _version: 0,
+          _publishState: EntityPublishState.Published,
           title: 'Original',
         });
       }
@@ -2230,6 +2268,7 @@ describe('updateEntity()', () => {
           _type: 'EntityAdminFoo',
           _name: name,
           _version: 1,
+          _publishState: EntityPublishState.Published,
           title: 'Updated title',
         });
       }
@@ -2273,6 +2312,7 @@ describe('updateEntity()', () => {
           _type: 'EntityAdminFoo',
           _name: name,
           _version: 1,
+          _publishState: EntityPublishState.Modified,
           title: 'Updated title',
         });
       }
@@ -2302,6 +2342,7 @@ describe('updateEntity()', () => {
           _type: 'EntityAdminFoo',
           _name: name,
           _version: 0,
+          _publishState: EntityPublishState.Modified,
           title: 'First',
         });
       }
@@ -2312,6 +2353,7 @@ describe('updateEntity()', () => {
           _type: 'EntityAdminFoo',
           _name: name,
           _version: 1,
+          _publishState: EntityPublishState.Modified,
           title: 'Updated title',
         });
       }
@@ -2344,6 +2386,7 @@ describe('updateEntity()', () => {
           _type: 'EntityAdminFoo',
           _name: createResult.value._name,
           _version: 1,
+          _publishState: EntityPublishState.Draft,
           title: 'Updated title',
         });
       }
@@ -2375,6 +2418,7 @@ describe('updateEntity()', () => {
           _type: 'EntityAdminFoo',
           _name: createResult.value._name,
           _version: 0,
+          _publishState: EntityPublishState.Published,
           title: 'Original',
         });
       }
@@ -2385,6 +2429,7 @@ describe('updateEntity()', () => {
           _type: 'EntityAdminFoo',
           _name: createResult.value._name,
           _version: 1,
+          _publishState: EntityPublishState.Published,
           title: 'Updated title',
         });
       }
@@ -2421,6 +2466,7 @@ describe('updateEntity()', () => {
           _type: 'EntityAdminFoo',
           _name: createResult.value._name,
           _version: 1,
+          _publishState: EntityPublishState.Draft,
           title: 'First title',
           summary: 'Updated summary',
         });
@@ -2453,6 +2499,7 @@ describe('updateEntity()', () => {
           _type: 'EntityAdminFoo',
           _name: createResult.value._name,
           _version: 0,
+          _publishState: EntityPublishState.Published,
           title: 'First title',
           summary: 'First summary',
         });
@@ -2464,6 +2511,7 @@ describe('updateEntity()', () => {
           _type: 'EntityAdminFoo',
           _name: createResult.value._name,
           _version: 1,
+          _publishState: EntityPublishState.Published,
           title: 'First title',
           summary: 'Updated summary',
         });
@@ -2499,6 +2547,7 @@ describe('updateEntity()', () => {
           _type: 'EntityAdminFoo',
           _name: name,
           _version: 1,
+          _publishState: EntityPublishState.Draft,
           title: 'First title',
           summary: 'First summary',
         });
@@ -2547,6 +2596,7 @@ describe('updateEntity()', () => {
             _type: 'EntityAdminFoo',
             _name: createFooResult.value._name,
             _version: 1,
+            _publishState: EntityPublishState.Draft,
             title: 'First title',
             summary: 'First summary',
             bar: { id: barId },
@@ -2567,6 +2617,7 @@ describe('updateEntity()', () => {
             _type: 'EntityAdminFoo',
             _name: createFooResult.value._name,
             _version: 0,
+            _publishState: EntityPublishState.Published,
             title: 'First title',
             summary: 'First summary',
           });
@@ -2578,6 +2629,7 @@ describe('updateEntity()', () => {
             _type: 'EntityAdminFoo',
             _name: createFooResult.value._name,
             _version: 1,
+            _publishState: EntityPublishState.Published,
             title: 'First title',
             summary: 'First summary',
             bar: { id: barId },
@@ -2641,6 +2693,7 @@ describe('updateEntity()', () => {
             _type: 'EntityAdminBaz',
             _name: createBazResult.value._name,
             _version: 1,
+            _publishState: EntityPublishState.Draft,
             title: 'Updated title',
             bar: { id: bar1Id },
             bars: [{ id: bar1Id }, { id: bar2Id }],
@@ -2656,6 +2709,7 @@ describe('updateEntity()', () => {
             _type: 'EntityAdminBaz',
             _name: createBazResult.value._name,
             _version: 0,
+            _publishState: EntityPublishState.Published,
             title: 'First title',
             bar: { id: bar1Id },
             bars: [{ id: bar1Id }, { id: bar2Id }],
@@ -2668,6 +2722,7 @@ describe('updateEntity()', () => {
             _type: 'EntityAdminBaz',
             _name: createBazResult.value._name,
             _version: 1,
+            _publishState: EntityPublishState.Published,
             title: 'Updated title',
             bar: { id: bar1Id },
             bars: [{ id: bar1Id }, { id: bar2Id }],
@@ -2798,6 +2853,7 @@ describe('deleteEntity()', () => {
           _type: 'EntityAdminFoo',
           _name: createResult.value._name,
           _version: 1,
+          _publishState: EntityPublishState.Modified,
           _deleted: true,
         });
       }
@@ -2829,6 +2885,7 @@ describe('deleteEntity()', () => {
           _type: 'EntityAdminFoo',
           _name: createResult.value._name,
           _version: 0,
+          _publishState: EntityPublishState.Published,
           title: 'Delete',
         });
       }
@@ -2839,6 +2896,7 @@ describe('deleteEntity()', () => {
           _type: 'EntityAdminFoo',
           _name: createResult.value._name,
           _version: 1,
+          _publishState: EntityPublishState.Published,
           _deleted: true,
         });
       }
@@ -2863,6 +2921,7 @@ describe('deleteEntity()', () => {
           _type: 'EntityAdminFoo',
           _name: createResult.value._name,
           _version: 1,
+          _publishState: EntityPublishState.Draft,
           _deleted: true,
         });
       }
@@ -2894,6 +2953,7 @@ describe('deleteEntity()', () => {
           _type: 'EntityAdminFoo',
           _name: createResult.value._name,
           _version: 0,
+          _publishState: EntityPublishState.Published,
           title: 'Draft',
         });
       }
@@ -2904,6 +2964,7 @@ describe('deleteEntity()', () => {
           _type: 'EntityAdminFoo',
           _name: createResult.value._name,
           _version: 1,
+          _publishState: EntityPublishState.Published,
           _deleted: true,
         });
       }
@@ -2930,6 +2991,7 @@ describe('deleteEntity()', () => {
           _type: 'EntityAdminFoo',
           _name: createResult.value._name,
           _version: 1,
+          _publishState: EntityPublishState.Modified,
           _deleted: true,
         });
       }
@@ -2959,6 +3021,7 @@ describe('deleteEntity()', () => {
           _type: 'EntityAdminFoo',
           _name: createResult.value._name,
           _version: 0,
+          _publishState: EntityPublishState.Modified,
           title: 'Delete',
         });
       }
@@ -2969,6 +3032,7 @@ describe('deleteEntity()', () => {
           _type: 'EntityAdminFoo',
           _name: createResult.value._name,
           _version: 1,
+          _publishState: EntityPublishState.Modified,
           _deleted: true,
         });
       }
@@ -3000,6 +3064,7 @@ describe('deleteEntity()', () => {
           _type: 'EntityAdminFoo',
           _name: createResult.value._name,
           _version: 1,
+          _publishState: EntityPublishState.Draft,
           _deleted: true,
         });
       }
@@ -3029,6 +3094,7 @@ describe('deleteEntity()', () => {
           _type: 'EntityAdminFoo',
           _name: createResult.value._name,
           _version: 0,
+          _publishState: EntityPublishState.Draft,
           title: 'Draft',
         });
       }
@@ -3039,6 +3105,7 @@ describe('deleteEntity()', () => {
           _type: 'EntityAdminFoo',
           _name: createResult.value._name,
           _version: 1,
+          _publishState: EntityPublishState.Draft,
           _deleted: true,
         });
       }
@@ -3393,7 +3460,7 @@ describe('archiveEntity()', () => {
       title: 'Bar title',
     });
     if (expectOkResult(createResult)) {
-      const { id } = createResult.value;
+      const { id, _name: name } = createResult.value;
 
       expectOkResult(await EntityAdmin.archiveEntity(context, id));
 
@@ -3410,6 +3477,18 @@ describe('archiveEntity()', () => {
               version: null,
             },
           ],
+        });
+      }
+
+      const getResult = await EntityAdmin.getEntity(context, id);
+      if (expectOkResult(getResult)) {
+        expect(getResult.value).toEqual<AdminEntity>({
+          id,
+          _name: name,
+          _type: 'EntityAdminBar',
+          _version: 0,
+          _publishState: EntityPublishState.Archived,
+          title: 'Bar title',
         });
       }
     }
@@ -3457,7 +3536,7 @@ describe('archiveEntity()', () => {
 });
 
 describe('unarchiveEntity()', () => {
-  test('Unarchive new entity', async () => {
+  test('Unarchive new entity (does nothing)', async () => {
     const createResult = await EntityAdmin.createEntity(context, {
       _type: 'EntityAdminBar',
       _name: 'Bar name',
@@ -3482,7 +3561,7 @@ describe('unarchiveEntity()', () => {
       title: 'Bar title',
     });
     if (expectOkResult(createResult)) {
-      const { id } = createResult.value;
+      const { id, _name: name } = createResult.value;
 
       expectOkResult(await EntityAdmin.archiveEntity(context, id));
       expectOkResult(await EntityAdmin.unarchiveEntity(context, id));
@@ -3507,6 +3586,18 @@ describe('unarchiveEntity()', () => {
               version: null,
             },
           ],
+        });
+      }
+
+      const getResult = await EntityAdmin.getEntity(context, id);
+      if (expectOkResult(getResult)) {
+        expect(getResult.value).toEqual<AdminEntity>({
+          id,
+          _name: name,
+          _type: 'EntityAdminBar',
+          _version: 0,
+          _publishState: EntityPublishState.Draft,
+          title: 'Bar title',
         });
       }
     }

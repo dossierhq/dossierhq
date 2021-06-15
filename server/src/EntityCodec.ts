@@ -14,6 +14,7 @@ import type {
   ValueItem,
 } from '@datadata/core';
 import {
+  EntityPublishState,
   FieldType,
   isLocationItemField,
   isRichTextEntityBlock,
@@ -36,7 +37,15 @@ import * as Db from './Db';
 import type { EntitiesTable, EntityVersionsTable } from './DbTableTypes';
 import * as EntityFieldTypeAdapters from './EntityFieldTypeAdapters';
 
-export type AdminEntityValues = Pick<EntitiesTable, 'uuid' | 'type' | 'name'> &
+export type AdminEntityValues = Pick<
+  EntitiesTable,
+  | 'uuid'
+  | 'type'
+  | 'name'
+  | 'archived'
+  | 'latest_draft_entity_versions_id'
+  | 'published_entity_versions_id'
+> &
   Pick<EntityVersionsTable, 'data' | 'version'>;
 
 export type EntityValues = Pick<EntitiesTable, 'uuid' | 'type' | 'name'> &
@@ -169,11 +178,24 @@ export function decodeAdminEntity(context: SessionContext, values: AdminEntityVa
   if (!entitySpec) {
     throw new Error(`No entity spec for type ${values.type}`);
   }
+
+  let state: EntityPublishState;
+  if (values.archived) {
+    state = EntityPublishState.Archived;
+  } else if (values.published_entity_versions_id === null) {
+    state = EntityPublishState.Draft;
+  } else if (values.published_entity_versions_id === values.latest_draft_entity_versions_id) {
+    state = EntityPublishState.Published;
+  } else {
+    state = EntityPublishState.Modified;
+  }
+
   const entity: AdminEntity = {
     id: values.uuid,
     _type: values.type,
     _name: values.name,
     _version: values.version,
+    _publishState: state,
   };
   if (!values.data) {
     entity._deleted = true;
@@ -231,17 +253,30 @@ export function resolveUpdateEntity(
   entity: AdminEntityUpdate,
   type: string,
   previousName: string,
+  archived: boolean,
   version: number,
+  publishedVersionId: number | null,
   previousValuesEncoded: Record<string, unknown> | null
 ): Result<AdminEntity, ErrorType.BadRequest> {
   if (entity._type && entity._type !== type) {
     return notOk.BadRequest(`New type ${entity._type} doesn’t correspond to previous type ${type}`);
   }
+
+  let state: EntityPublishState;
+  if (archived) {
+    state = EntityPublishState.Archived;
+  } else if (publishedVersionId === null) {
+    state = EntityPublishState.Draft;
+  } else {
+    state = EntityPublishState.Modified;
+  }
+
   const result: AdminEntity = {
     id: entity.id,
     _name: entity._name || previousName,
     _type: type,
     _version: version,
+    _publishState: state,
   };
 
   const schema = context.server.getSchema();

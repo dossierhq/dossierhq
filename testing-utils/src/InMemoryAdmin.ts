@@ -12,7 +12,13 @@ import type {
   PromiseResult,
   PublishHistory,
 } from '@datadata/core';
-import { isLocationItemField, notOk, ok, visitItemRecursively } from '@datadata/core';
+import {
+  EntityPublishState,
+  isLocationItemField,
+  notOk,
+  ok,
+  visitItemRecursively,
+} from '@datadata/core';
 import { v4 as uuidv4 } from 'uuid';
 import type { InMemorySessionContext } from '.';
 
@@ -109,11 +115,12 @@ export const InMemoryAdmin = {
     context: InMemorySessionContext,
     entity: AdminEntityCreate
   ): PromiseResult<AdminEntity, ErrorType.BadRequest> => {
-    const newEntity = {
+    const newEntity: AdminEntity = {
       ...entity,
       id: entity.id ?? uuidv4(),
       _version: 0,
       _name: context.server.getUniqueName(null, entity._name),
+      _publishState: EntityPublishState.Draft,
     };
     context.server.addNewEntity(newEntity, context.userId);
     return ok(newEntity);

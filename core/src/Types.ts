@@ -37,6 +37,19 @@ export interface ValueItem {
   [fieldName: string]: unknown;
 }
 
+export enum EntityPublishState {
+  /** The entity has never been published. */
+  Draft = 'draft',
+  /** The entity is currently published and has no pending changes. */
+  Published = 'published',
+  /** The entity is currently published but has changes that are not published. */
+  Modified = 'modified',
+  /** The entity has previously been published, but is unpublished. */
+  Withdrawn = 'withdrawn',
+  /** The entity is archived. */
+  Archived = 'archived',
+}
+
 export interface AdminEntity {
   /** UUIDv4 */
   id: string;
@@ -44,6 +57,12 @@ export interface AdminEntity {
   _type: string;
   _version: number;
   _deleted?: boolean;
+
+  /** The current publish state of the entity.
+   *
+   * It is not connected to the requested version so if you get an old version of the entity, the
+   * publish state refer to the state of the latest version. */
+  _publishState: EntityPublishState;
   [fieldName: string]: unknown;
 }
 

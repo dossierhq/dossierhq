@@ -75,5 +75,5 @@ export {
   convertJsonResult,
 } from './JsonUtils';
 export { FieldType, RichTextBlockType, Schema } from './Schema';
-export { PublishEventKind } from './Types';
+export { EntityPublishState, PublishEventKind } from './Types';
 export * as CoreTestUtils from './CoreTestUtils';
