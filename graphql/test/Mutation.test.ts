@@ -1349,6 +1349,148 @@ describe('unpublishEntities()', () => {
   });
 });
 
+describe('archiveEntity()', () => {
+  test('Archive', async () => {
+    const createResult = await EntityAdmin.createEntity(context, {
+      _type: 'MutationFoo',
+      _name: 'Howdy name',
+      title: 'Howdy title',
+      summary: 'Howdy summary',
+    });
+    if (expectOkResult(createResult)) {
+      const { id } = createResult.value;
+
+      const result = await graphql(
+        schema,
+        `
+          mutation ArchiveEntity($id: ID!) {
+            archiveEntity(id: $id) {
+              __typename
+              id
+            }
+          }
+        `,
+        undefined,
+        { context: ok(context) },
+        { id }
+      );
+      expect(result).toEqual({
+        data: {
+          archiveEntity: {
+            __typename: 'EntityPublishPayload',
+            id,
+          },
+        },
+      });
+
+      const historyResult = await EntityAdmin.getPublishHistory(context, id);
+      if (expectOkResult(historyResult)) {
+        const publishedAt = historyResult.value.events[0]?.publishedAt;
+        expect(historyResult.value).toEqual({
+          id,
+          events: [
+            {
+              kind: PublishEventKind.Archive,
+              publishedAt,
+              publishedBy: context.session.subjectId,
+              version: null,
+            },
+          ],
+        });
+      }
+    }
+  });
+});
+
+describe('unarchiveEntity()', () => {
+  test('Unarchive', async () => {
+    const createResult = await EntityAdmin.createEntity(context, {
+      _type: 'MutationFoo',
+      _name: 'Howdy name',
+      title: 'Howdy title',
+      summary: 'Howdy summary',
+    });
+    if (expectOkResult(createResult)) {
+      const { id } = createResult.value;
+
+      expectOkResult(await EntityAdmin.archiveEntity(context, id));
+
+      const result = await graphql(
+        schema,
+        `
+          mutation UnarchiveEntity($id: ID!) {
+            unarchiveEntity(id: $id) {
+              __typename
+              id
+            }
+          }
+        `,
+        undefined,
+        { context: ok(context) },
+        { id }
+      );
+      expect(result).toEqual({
+        data: {
+          unarchiveEntity: {
+            __typename: 'EntityPublishPayload',
+            id,
+          },
+        },
+      });
+
+      const historyResult = await EntityAdmin.getPublishHistory(context, id);
+      if (expectOkResult(historyResult)) {
+        const publishedAt0 = historyResult.value.events[0]?.publishedAt;
+        const publishedAt1 = historyResult.value.events[1]?.publishedAt;
+        expect(historyResult.value).toEqual({
+          id,
+          events: [
+            {
+              kind: PublishEventKind.Archive,
+              publishedAt: publishedAt0,
+              publishedBy: context.session.subjectId,
+              version: null,
+            },
+            {
+              kind: PublishEventKind.Unarchive,
+              publishedAt: publishedAt1,
+              publishedBy: context.session.subjectId,
+              version: null,
+            },
+          ],
+        });
+      }
+    }
+  });
+
+  test('Error: not found', async () => {
+    const result = await graphql(
+      schema,
+      `
+        mutation UnarchiveEntity($id: ID!) {
+          unarchiveEntity(id: $id) {
+            __typename
+            id
+          }
+        }
+      `,
+      undefined,
+      { context: ok(context) },
+      { id: '635d7ee9-c1c7-4ae7-bcdf-fb53f30a3cd3' }
+    );
+    expect(result).toMatchInlineSnapshot(`
+      Object {
+        "data": Object {
+          "unarchiveEntity": null,
+        },
+        "errors": Array [
+          [GraphQLError: NotFound: No such entity],
+        ],
+      }
+    `);
+  });
+});
+
 describe('Multiple', () => {
   test('Update and publish', async () => {
     const createResult = await EntityAdmin.createEntity(context, {

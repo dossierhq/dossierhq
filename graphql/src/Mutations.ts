@@ -66,3 +66,27 @@ export async function unpublishEntities<TContext extends SessionGraphQLContext>(
   }
   return entityIds.map((id) => ({ id }));
 }
+
+export async function archiveEntity<TContext extends SessionGraphQLContext>(
+  context: TContext,
+  id: string
+): Promise<{ id: string }> {
+  const sessionContext = getSessionContext(context);
+  const result = await EntityAdmin.archiveEntity(sessionContext, id);
+  if (result.isError()) {
+    throw result.toError();
+  }
+  return { id };
+}
+
+export async function unarchiveEntity<TContext extends SessionGraphQLContext>(
+  context: TContext,
+  id: string
+): Promise<{ id: string }> {
+  const sessionContext = getSessionContext(context);
+  const result = await EntityAdmin.unarchiveEntity(sessionContext, id);
+  if (result.isError()) {
+    throw result.toError();
+  }
+  return { id };
+}
