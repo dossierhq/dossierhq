@@ -25,6 +25,21 @@ afterAll(async () => {
 });
 
 describe('getEntity()', () => {
+  test('Error: Archived entity', async () => {
+    const createResult = await EntityAdmin.createEntity(context, {
+      _type: 'PublishedEntityFoo',
+      _name: 'Foo 1',
+      title: 'Title 1',
+    });
+    if (expectOkResult(createResult)) {
+      const { id } = createResult.value;
+      expectOkResult(await EntityAdmin.archiveEntity(context, id));
+
+      const result = await PublishedEntity.getEntity(context, id);
+      expectErrorResult(result, ErrorType.NotFound, 'No such entity');
+    }
+  });
+
   test('Error: Get missing id', async () => {
     const result = await PublishedEntity.getEntity(context, 'f09fdd62-4a1e-4320-afba-8dd0781799df');
     expectErrorResult(result, ErrorType.NotFound, 'No such entity');
@@ -88,6 +103,22 @@ describe('getEntities()', () => {
       expect(result[1]).toEqual({
         value: { _type: 'PublishedEntityFoo', id: foo1Id, _name: foo1Name, title: 'Title' },
       });
+    }
+  });
+
+  test('Error: Get archived entity', async () => {
+    const createResult = await EntityAdmin.createEntity(context, {
+      _type: 'PublishedEntityFoo',
+      _name: 'Foo 1',
+      title: 'Title 1',
+    });
+    if (expectOkResult(createResult)) {
+      const { id } = createResult.value;
+      expectOkResult(await EntityAdmin.archiveEntity(context, id));
+
+      const result = await PublishedEntity.getEntities(context, [id]);
+      expect(result).toHaveLength(1);
+      expectErrorResult(result[0], ErrorType.NotFound, 'No such entity');
     }
   });
 
