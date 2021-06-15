@@ -2,7 +2,7 @@ import type { AdminQuery, Paging, Result, ErrorType } from '@datadata/core';
 import { notOk, ok } from '@datadata/core';
 import type { SessionContext } from './';
 import type { CursorNativeType } from './Connection';
-import type { EntitiesTable } from './DbTableTypes';
+import type { EntitiesTable } from './DatabaseTables';
 import type { AdminEntityValues } from './EntityCodec';
 import { resolvePaging } from './Paging';
 import QueryBuilder from './QueryBuilder';

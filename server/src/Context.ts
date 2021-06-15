@@ -1,7 +1,7 @@
 import type { ErrorType, PromiseResult } from '@datadata/core';
 import type { Server, Session } from '.';
-import type { Pool, Queryable } from './Db';
-import * as Db from './Db';
+import type { Pool, Queryable } from './Database';
+import * as Db from './Database';
 
 export interface Context<TContext> {
   readonly server: Server;

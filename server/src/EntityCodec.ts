@@ -33,8 +33,8 @@ import {
 } from '@datadata/core';
 import type { SessionContext } from '.';
 import { ensureRequired } from './Assertions';
-import * as Db from './Db';
-import type { EntitiesTable, EntityVersionsTable } from './DbTableTypes';
+import * as Db from './Database';
+import type { EntitiesTable, EntityVersionsTable } from './DatabaseTables';
 import * as EntityFieldTypeAdapters from './EntityFieldTypeAdapters';
 
 export type AdminEntityValues = Pick<

@@ -18,8 +18,12 @@ import type {
 } from '@datadata/core';
 import type { SessionContext } from '.';
 import { toOpaqueCursor } from './Connection';
-import * as Db from './Db';
-import type { EntitiesTable, EntityPublishEventsTable, EntityVersionsTable } from './DbTableTypes';
+import * as Db from './Database';
+import type {
+  EntitiesTable,
+  EntityPublishEventsTable,
+  EntityVersionsTable,
+} from './DatabaseTables';
 import {
   decodeAdminEntity,
   encodeEntity,

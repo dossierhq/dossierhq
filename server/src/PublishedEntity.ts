@@ -1,8 +1,8 @@
 import type { Entity, PromiseResult, Result, ErrorType } from '@datadata/core';
 import { notOk, ok } from '@datadata/core';
 import type { SessionContext } from '.';
-import * as Db from './Db';
-import type { EntitiesTable, EntityVersionsTable } from './DbTableTypes';
+import * as Db from './Database';
+import type { EntitiesTable, EntityVersionsTable } from './DatabaseTables';
 import { decodePublishedEntity } from './EntityCodec';
 
 export async function getEntity(
