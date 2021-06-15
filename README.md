@@ -4,6 +4,7 @@
 - `npm install -g @microsoft/rush`
 - `brew install pgcli` (optional, for Postgres access)
 - `brew install gnuplot` (for benchmarking)
+- `brew install graphviz` (for documentation)
 
 ## VS Code extensions
 

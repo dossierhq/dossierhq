@@ -7,3 +7,7 @@ A **Subject** can have one or more **Principals**. It could be e.g. represent an
 There can be many **Principal Providers**. E.g. OAuth and `sys` for system principals.
 
 ## Data
+
+## Publishing states
+
+![Publishing states overview](./publishing-states.dot.svg)
