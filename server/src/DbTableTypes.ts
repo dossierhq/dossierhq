@@ -40,6 +40,7 @@ export interface EntityPublishEventsTable {
   id: number;
   entities_id: number;
   entity_versions_id: number | null;
+  kind: 'publish' | 'unpublish' | 'archive' | 'unarchive';
   published_by: number;
   published_at: Date;
 }

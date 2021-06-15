@@ -11,6 +11,8 @@ import type {
   ErrorType,
   Paging,
   PromiseResult,
+  PublishEvent,
+  PublishEventKind,
   PublishHistory,
   Result,
 } from '@datadata/core';
@@ -488,14 +490,14 @@ export async function publishEntities(
 
     // Step 4: Create publish event
     const qb = new QueryBuilder(
-      'INSERT INTO entity_publish_events (entities_id, entity_versions_id, published_by) VALUES'
+      'INSERT INTO entity_publish_events (entities_id, entity_versions_id, published_by, kind) VALUES'
     );
     const subjectValue = qb.addValue(context.session.subjectInternalId);
     for (const versionInfo of versionsInfo) {
       qb.addQuery(
         `(${qb.addValue(versionInfo.entityId)}, ${qb.addValue(
           versionInfo.versionsId
-        )}, ${subjectValue})`
+        )}, ${subjectValue}, 'publish')`
       );
     }
     await Db.queryNone(context, qb.build());
@@ -573,11 +575,11 @@ export async function unpublishEntities(
 
     // Step 4: Create publish event
     const qb = new QueryBuilder(
-      'INSERT INTO entity_publish_events (entities_id, entity_versions_id, published_by) VALUES'
+      'INSERT INTO entity_publish_events (entities_id, entity_versions_id, published_by, kind) VALUES'
     );
     const subjectValue = qb.addValue(context.session.subjectInternalId);
     for (const entityInfo of entitiesInfo) {
-      qb.addQuery(`(${qb.addValue(entityInfo.id)}, NULL, ${subjectValue})`);
+      qb.addQuery(`(${qb.addValue(entityInfo.id)}, NULL, ${subjectValue}, 'unpublish')`);
     }
     await Db.queryNone(context, qb.build());
 
@@ -678,12 +680,12 @@ export async function getPublishHistory(
 
   const publishEvents = await Db.queryMany<
     Pick<EntityVersionsTable, 'version'> &
-      Pick<EntityPublishEventsTable, 'published_at'> & {
+      Pick<EntityPublishEventsTable, 'published_at' | 'kind'> & {
         published_by: string;
       }
   >(
     context,
-    `SELECT ev.version, s.uuid AS published_by, epe.published_at
+    `SELECT ev.version, s.uuid AS published_by, epe.published_at, epe.kind
       FROM entity_publish_events epe
         LEFT OUTER JOIN entity_versions ev ON (epe.entity_versions_id = ev.id)
         INNER JOIN subjects s ON (epe.published_by = s.id)
@@ -693,10 +695,14 @@ export async function getPublishHistory(
   );
   return ok({
     id,
-    events: publishEvents.map((it) => ({
-      version: it.version,
-      publishedAt: it.published_at,
-      publishedBy: it.published_by,
-    })),
+    events: publishEvents.map((it) => {
+      const event: PublishEvent = {
+        version: it.version,
+        kind: it.kind as PublishEventKind,
+        publishedAt: it.published_at,
+        publishedBy: it.published_by,
+      };
+      return event;
+    }),
   });
 }

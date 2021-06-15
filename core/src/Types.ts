@@ -84,7 +84,15 @@ export interface PublishHistory {
   events: PublishEvent[];
 }
 
+export enum PublishEventKind {
+  Publish = 'publish',
+  Unpublish = 'unpublish',
+  Archive = 'archive',
+  Unarchive = 'unarchive',
+}
+
 export interface PublishEvent {
+  kind: PublishEventKind;
   version: number | null;
   publishedAt: Date;
   publishedBy: string;
