@@ -48,7 +48,7 @@ export async function getEntity(
   }
   const entityMain = await Db.queryNoneOrOne<AdminEntityValues>(
     context,
-    `SELECT e.uuid, e.type, e.name, e.archived, e.latest_draft_entity_versions_id, e.published_entity_versions_id, ev.version, ev.data
+    `SELECT e.uuid, e.type, e.name, e.archived, e.never_published, e.latest_draft_entity_versions_id, e.published_entity_versions_id, ev.version, ev.data
       FROM entities e, entity_versions ev
       WHERE e.uuid = $1
       AND e.id = ev.entities_id
@@ -74,7 +74,7 @@ export async function getEntities(
 
   const entitiesMain = await Db.queryMany<AdminEntityValues>(
     context,
-    `SELECT e.uuid, e.type, e.name, e.archived, e.latest_draft_entity_versions_id, e.published_entity_versions_id, ev.version, ev.data
+    `SELECT e.uuid, e.type, e.name, e.archived, e.never_published, e.latest_draft_entity_versions_id, e.published_entity_versions_id, ev.version, ev.data
       FROM entities e, entity_versions ev
       WHERE e.uuid = ANY($1)
       AND e.latest_draft_entity_versions_id = ev.id`,
@@ -266,11 +266,14 @@ export async function updateEntity(
 ): PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.NotFound> {
   return await context.withTransaction(async (context) => {
     const previousValues = await Db.queryNoneOrOne<
-      Pick<EntitiesTable, 'id' | 'type' | 'name' | 'archived' | 'published_entity_versions_id'> &
+      Pick<
+        EntitiesTable,
+        'id' | 'type' | 'name' | 'archived' | 'never_published' | 'published_entity_versions_id'
+      > &
         Pick<EntityVersionsTable, 'version' | 'data'>
     >(
       context,
-      `SELECT e.id, e.type, e.name, e.archived, e.published_entity_versions_id, ev.version, ev.data
+      `SELECT e.id, e.type, e.name, e.archived, e.never_published, e.published_entity_versions_id, ev.version, ev.data
         FROM entities e, entity_versions ev
         WHERE e.uuid = $1 AND e.latest_draft_entity_versions_id = ev.id`,
       [entity.id]
@@ -284,6 +287,7 @@ export async function updateEntity(
       type,
       name: previousName,
       archived,
+      never_published: neverPublished,
       published_entity_versions_id: publishedVersionId,
     } = previousValues;
     const newVersion = previousValues.version + 1;
@@ -294,6 +298,7 @@ export async function updateEntity(
       type,
       previousName,
       archived,
+      neverPublished,
       newVersion,
       publishedVersionId,
       previousDataEncoded
@@ -368,11 +373,14 @@ export async function deleteEntity(
   return await context.withTransaction(async (context) => {
     // Entity info
     const entityInfo = await Db.queryNoneOrOne<
-      Pick<EntitiesTable, 'id' | 'name' | 'type' | 'archived' | 'published_entity_versions_id'> &
+      Pick<
+        EntitiesTable,
+        'id' | 'name' | 'type' | 'archived' | 'never_published' | 'published_entity_versions_id'
+      > &
         Pick<EntityVersionsTable, 'version'>
     >(
       context,
-      `SELECT e.id, e.name, e.type, e.archived, e.published_entity_versions_id, ev.version
+      `SELECT e.id, e.name, e.type, e.archived, e.never_published, e.published_entity_versions_id, ev.version
         FROM entity_versions ev, entities e
         WHERE e.uuid = $1 AND e.latest_draft_entity_versions_id = ev.id`,
       [id]
@@ -401,6 +409,7 @@ export async function deleteEntity(
         version,
         data: null,
         archived: entityInfo.archived,
+        never_published: entityInfo.never_published,
         latest_draft_entity_versions_id: versionsId,
         published_entity_versions_id: entityInfo.published_entity_versions_id,
       })
@@ -469,7 +478,7 @@ export async function publishEntities(
     for (const { versionsId, deleted, entityId } of versionsInfo) {
       await Db.queryNone(
         context,
-        'UPDATE entities SET published_entity_versions_id = $1, published_deleted = $2 WHERE id = $3',
+        'UPDATE entities SET never_published = FALSE, published_entity_versions_id = $1, published_deleted = $2 WHERE id = $3',
         [versionsId, deleted, entityId]
       );
     }

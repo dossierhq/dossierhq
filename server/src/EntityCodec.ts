@@ -42,6 +42,7 @@ export type AdminEntityValues = Pick<
   | 'uuid'
   | 'type'
   | 'name'
+  | 'never_published'
   | 'archived'
   | 'latest_draft_entity_versions_id'
   | 'published_entity_versions_id'
@@ -183,7 +184,7 @@ export function decodeAdminEntity(context: SessionContext, values: AdminEntityVa
   if (values.archived) {
     state = EntityPublishState.Archived;
   } else if (values.published_entity_versions_id === null) {
-    state = EntityPublishState.Draft;
+    state = values.never_published ? EntityPublishState.Draft : EntityPublishState.Withdrawn;
   } else if (values.published_entity_versions_id === values.latest_draft_entity_versions_id) {
     state = EntityPublishState.Published;
   } else {
@@ -254,6 +255,7 @@ export function resolveUpdateEntity(
   type: string,
   previousName: string,
   archived: boolean,
+  neverPublished: boolean,
   version: number,
   publishedVersionId: number | null,
   previousValuesEncoded: Record<string, unknown> | null
@@ -266,7 +268,7 @@ export function resolveUpdateEntity(
   if (archived) {
     state = EntityPublishState.Archived;
   } else if (publishedVersionId === null) {
-    state = EntityPublishState.Draft;
+    state = neverPublished ? EntityPublishState.Draft : EntityPublishState.Withdrawn;
   } else {
     state = EntityPublishState.Modified;
   }

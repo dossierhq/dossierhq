@@ -3318,6 +3318,33 @@ describe('publishEntities()', () => {
 });
 
 describe('unpublishEntities()', () => {
+  test('Sets published state to withdrawn', async () => {
+    const createResult = await EntityAdmin.createEntity(context, {
+      _type: 'EntityAdminBaz',
+      _name: 'Baz 1',
+      title: 'Baz title 1',
+    });
+    if (expectOkResult(createResult)) {
+      const { id, _name: name, _version: version } = createResult.value;
+
+      expectOkResult(await EntityAdmin.publishEntities(context, [{ id, version }]));
+
+      expectOkResult(await EntityAdmin.unpublishEntities(context, [id]));
+
+      const getResult = await EntityAdmin.getEntity(context, id);
+      if (expectOkResult(getResult)) {
+        expect(getResult.value).toEqual<AdminEntity>({
+          id,
+          _type: 'EntityAdminBaz',
+          _name: name,
+          _version: 0,
+          _publishState: EntityPublishState.Withdrawn,
+          title: 'Baz title 1',
+        });
+      }
+    }
+  });
+
   test('Two published entities referencing each other', async () => {
     const createBaz1Result = await EntityAdmin.createEntity(context, {
       _type: 'EntityAdminBaz',
