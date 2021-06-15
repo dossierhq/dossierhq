@@ -1,4 +1,4 @@
-import { CoreTestUtils, FieldType, ok, RichTextBlockType } from '@datadata/core';
+import { CoreTestUtils, FieldType, ok, PublishEventKind, RichTextBlockType } from '@datadata/core';
 import { EntityAdmin, ServerTestUtils } from '@datadata/server';
 import type { SessionContext, Server } from '@datadata/server';
 import { graphql } from 'graphql';
@@ -1217,7 +1217,14 @@ describe('publishEntities()', () => {
         const publishedAt = historyResult.value.events[0]?.publishedAt;
         expect(historyResult.value).toEqual({
           id,
-          events: [{ publishedAt, publishedBy: context.session.subjectId, version: 0 }],
+          events: [
+            {
+              kind: PublishEventKind.Publish,
+              publishedAt,
+              publishedBy: context.session.subjectId,
+              version: 0,
+            },
+          ],
         });
       }
     }
@@ -1296,8 +1303,18 @@ describe('unpublishEntities()', () => {
         expect(historyResult.value).toEqual({
           id,
           events: [
-            { publishedAt: publishedAt0, publishedBy: context.session.subjectId, version: 0 },
-            { publishedAt: publishedAt1, publishedBy: context.session.subjectId, version: null },
+            {
+              kind: PublishEventKind.Publish,
+              publishedAt: publishedAt0,
+              publishedBy: context.session.subjectId,
+              version: 0,
+            },
+            {
+              kind: PublishEventKind.Unpublish,
+              publishedAt: publishedAt1,
+              publishedBy: context.session.subjectId,
+              version: null,
+            },
           ],
         });
       }
