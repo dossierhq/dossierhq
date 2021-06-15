@@ -1,4 +1,11 @@
-import { CoreTestUtils, FieldType, ok, PublishEventKind, RichTextBlockType } from '@datadata/core';
+import {
+  CoreTestUtils,
+  EntityPublishState,
+  FieldType,
+  ok,
+  PublishEventKind,
+  RichTextBlockType,
+} from '@datadata/core';
 import { EntityAdmin, ServerTestUtils } from '@datadata/server';
 import type { SessionContext, Server } from '@datadata/server';
 import { graphql } from 'graphql';
@@ -140,6 +147,7 @@ describe('create*Entity()', () => {
         _type: 'MutationFoo',
         _name: name,
         _version: 0,
+        _publishState: EntityPublishState.Draft,
         title: 'Foo title',
         summary: 'Foo summary',
         tags: ['one', 'two', 'three'],
@@ -267,6 +275,7 @@ describe('create*Entity()', () => {
           _type: 'MutationFoo',
           _name: fooName,
           _version: 0,
+          _publishState: EntityPublishState.Draft,
           title: 'Foo title',
           summary: 'Foo summary',
           body: {
@@ -343,6 +352,7 @@ describe('create*Entity()', () => {
           _type: 'MutationFoo',
           _name: fooName,
           _version: 0,
+          _publishState: EntityPublishState.Draft,
           title: 'Foo title',
           summary: 'Foo summary',
           bar: {
@@ -425,6 +435,7 @@ describe('create*Entity()', () => {
           _type: 'MutationFoo',
           _name: fooName,
           _version: 0,
+          _publishState: EntityPublishState.Draft,
           title: 'Foo title',
           summary: 'Foo summary',
           bars: [{ id: bar1Id }, { id: bar2Id }],
@@ -517,6 +528,7 @@ describe('create*Entity()', () => {
           _type: 'MutationFoo',
           _name: fooName,
           _version: 0,
+          _publishState: EntityPublishState.Draft,
           title: 'Foo title',
           summary: 'Foo summary',
           stringedBar: {
@@ -614,6 +626,7 @@ describe('create*Entity()', () => {
           _type: 'MutationFoo',
           _name: fooName,
           _version: 0,
+          _publishState: EntityPublishState.Draft,
           anyValueItem: {
             _type: 'MutationStringedBar',
             text: 'A value',
@@ -711,6 +724,7 @@ describe('create*Entity()', () => {
         _type: 'MutationFoo',
         _name: fooName,
         _version: 0,
+        _publishState: EntityPublishState.Draft,
         nestedValue: {
           _type: 'MutationNestedValue',
           text: 'Outer',
@@ -860,6 +874,7 @@ describe('update*Entity()', () => {
           _type: 'MutationFoo',
           _name: name,
           _version: 1,
+          _publishState: EntityPublishState.Draft,
           title: 'Updated title',
           summary: 'First summary',
           tags: ['one', 'two', 'three'],
@@ -1033,6 +1048,7 @@ describe('update*Entity()', () => {
             _type: 'MutationFoo',
             _name: name,
             _version: 1,
+            _publishState: EntityPublishState.Draft,
             title: 'Updated title',
             summary: 'Updated summary',
             tags: ['these', 'are', 'new'],

@@ -1,6 +1,7 @@
 import type { AdminEntity, EntityHistory, PublishHistory, Schema } from '@datadata/core';
+import { EntityPublishState, PublishEventKind } from '@datadata/core';
 import type { JsonInMemoryEntity } from '.';
-import type { InMemoryEntity } from './InMemoryServer';
+import type { InMemoryEntity, InMemoryEntityVersion } from './InMemoryServer';
 
 export class InMemoryServerInner {
   schema: Schema;
@@ -20,7 +21,8 @@ export class InMemoryServerInner {
         createdBy,
         createdAt: new Date(createdAt),
       })),
-      publishEvents: publishEvents.map(({ version, publishedBy, publishedAt }) => ({
+      publishEvents: publishEvents.map(({ kind, version, publishedBy, publishedAt }) => ({
+        kind,
         version,
         publishedBy,
         publishedAt: new Date(publishedAt),
@@ -33,10 +35,35 @@ export class InMemoryServerInner {
     if (!fullEntity) {
       return null;
     }
-    if (typeof version === 'number') {
-      return fullEntity.versions.find((entity) => entity._version === version) ?? null;
+
+    const { publishedVersion } = fullEntity;
+
+    let state: EntityPublishState;
+    //TODO add support for Archive
+    if (typeof publishedVersion === 'number') {
+      const laterVersionsThanPublished = fullEntity.versions.some(
+        (it) => it._version > publishedVersion
+      );
+      state = laterVersionsThanPublished
+        ? EntityPublishState.Modified
+        : EntityPublishState.Published;
+    } else {
+      const hasPublished = fullEntity.publishEvents.some(
+        (it) => it.kind === PublishEventKind.Publish
+      );
+      state = hasPublished ? EntityPublishState.Withdrawn : EntityPublishState.Draft;
     }
-    return this.findLatestVersion(fullEntity.versions);
+
+    const entity =
+      typeof version === 'number'
+        ? fullEntity.versions.find((it) => it._version === version) ?? null
+        : this.findLatestVersion(fullEntity.versions);
+
+    if (!entity) {
+      return null;
+    }
+
+    return { ...entity, _publishState: state };
   }
 
   getEntityHistory(id: string): EntityHistory | null {
@@ -81,7 +108,7 @@ export class InMemoryServerInner {
     return `${name}#${Math.random().toFixed(8).slice(2)}`;
   }
 
-  addNewEntity(entity: AdminEntity, userId: string): void {
+  addNewEntity(entity: InMemoryEntityVersion, userId: string): void {
     this.#entities.push({
       versions: [entity],
       history: [{ version: 0, createdAt: new Date(), createdBy: userId }],
@@ -110,10 +137,15 @@ export class InMemoryServerInner {
       throw new Error(`Can't find ${id}`);
     }
     fullEntity.publishedVersion = version;
-    fullEntity.publishEvents.push({ version, publishedAt: new Date(), publishedBy: userId });
+    fullEntity.publishEvents.push({
+      kind: version === null ? PublishEventKind.Unpublish : PublishEventKind.Publish,
+      version,
+      publishedAt: new Date(),
+      publishedBy: userId,
+    });
   }
 
-  private findLatestVersion(versions: AdminEntity[]): AdminEntity {
+  private findLatestVersion(versions: InMemoryEntityVersion[]): AdminEntity {
     const maxVersion = versions.reduce((max, entity) => Math.max(max, entity._version), 0);
     return versions.find((entity) => entity._version === maxVersion) as AdminEntity;
   }

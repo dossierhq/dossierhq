@@ -1,16 +1,35 @@
-import type { AdminEntity, Schema } from '@datadata/core';
+import type { PublishEventKind, Schema } from '@datadata/core';
 import { InMemoryServerInner } from './InMemoryServerInner';
 
 export interface InMemoryEntity {
-  versions: AdminEntity[];
+  versions: InMemoryEntityVersion[];
   publishedVersion?: number | null;
   history: { version: number; createdBy: string; createdAt: Date }[];
-  publishEvents: { version: number | null; publishedBy: string; publishedAt: Date }[];
+  publishEvents: {
+    kind: PublishEventKind;
+    version: number | null;
+    publishedBy: string;
+    publishedAt: Date;
+  }[];
+}
+
+export interface InMemoryEntityVersion {
+  id: string;
+  _name: string;
+  _type: string;
+  _version: number;
+  _deleted?: boolean;
+  [fieldName: string]: unknown;
 }
 
 export interface JsonInMemoryEntity extends Omit<InMemoryEntity, 'history' | 'publishEvents'> {
   history: { version: number; createdBy: string; createdAt: string }[];
-  publishEvents: { version: number | null; publishedBy: string; publishedAt: string }[];
+  publishEvents: {
+    kind: PublishEventKind;
+    version: number | null;
+    publishedBy: string;
+    publishedAt: string;
+  }[];
 }
 
 export interface InMemorySessionContext {

@@ -1,4 +1,4 @@
-import { notOk, ok } from '@datadata/core';
+import { EntityPublishState, notOk, ok } from '@datadata/core';
 import type {
   AdminEntity,
   AdminEntityCreate,
@@ -48,7 +48,7 @@ export async function getEntity(
   }
   const entityMain = await Db.queryNoneOrOne<AdminEntityValues>(
     context,
-    `SELECT e.uuid, e.type, e.name, ev.version, ev.data
+    `SELECT e.uuid, e.type, e.name, e.archived, e.latest_draft_entity_versions_id, e.published_entity_versions_id, ev.version, ev.data
       FROM entities e, entity_versions ev
       WHERE e.uuid = $1
       AND e.id = ev.entities_id
@@ -74,7 +74,7 @@ export async function getEntities(
 
   const entitiesMain = await Db.queryMany<AdminEntityValues>(
     context,
-    `SELECT e.uuid, e.type, e.name, ev.version, ev.data
+    `SELECT e.uuid, e.type, e.name, e.archived, e.latest_draft_entity_versions_id, e.published_entity_versions_id, ev.version, ev.data
       FROM entities e, entity_versions ev
       WHERE e.uuid = ANY($1)
       AND e.latest_draft_entity_versions_id = ev.id`,
@@ -112,7 +112,7 @@ export async function searchEntities(
     entitiesValues.reverse();
   }
 
-  const entities = entitiesValues.map((x) => decodeAdminEntity(context, x));
+  const entities = entitiesValues.map((it) => decodeAdminEntity(context, it));
   if (entities.length === 0) {
     return ok(null);
   }
@@ -195,22 +195,24 @@ export async function createEntity(
   const { type, name, data, referenceIds, locations, fullTextSearchText } = encodeResult.value;
 
   return await context.withTransaction(async (context) => {
-    const { entityId } = await withUniqueNameAttempt(context, name, async (context, name) => {
-      const qb = new QueryBuilder('INSERT INTO entities (uuid, name, type, latest_fts)');
-      qb.addQuery(
-        `VALUES (${qb.addValueOrDefault(entity.id)}, ${qb.addValue(name)}, ${qb.addValue(
-          type
-        )}, to_tsvector(${qb.addValue(fullTextSearchText.join(' '))}))`
-      );
-      qb.addQuery('RETURNING id, uuid');
-      const { id: entityId, uuid } = await Db.queryOne<Pick<EntitiesTable, 'id' | 'uuid'>>(
-        context,
-        qb.build()
-      );
-      createEntity.id = uuid;
-      createEntity._name = name;
-      return { entityId };
-    });
+    const { uuid, actualName, entityId } = await withUniqueNameAttempt(
+      context,
+      name,
+      async (context, name) => {
+        const qb = new QueryBuilder('INSERT INTO entities (uuid, name, type, latest_fts)');
+        qb.addQuery(
+          `VALUES (${qb.addValueOrDefault(entity.id)}, ${qb.addValue(name)}, ${qb.addValue(
+            type
+          )}, to_tsvector(${qb.addValue(fullTextSearchText.join(' '))}))`
+        );
+        qb.addQuery('RETURNING id, uuid');
+        const { id: entityId, uuid } = await Db.queryOne<Pick<EntitiesTable, 'id' | 'uuid'>>(
+          context,
+          qb.build()
+        );
+        return { uuid, actualName: name, entityId };
+      }
+    );
 
     const { id: versionsId } = await Db.queryOne<{ id: number }>(
       context,
@@ -247,7 +249,14 @@ export async function createEntity(
       await Db.queryNone(context, qb.build());
     }
 
-    return ok(createEntity as AdminEntity);
+    const result: AdminEntity = {
+      ...createEntity,
+      id: uuid,
+      _name: actualName,
+      _publishState: EntityPublishState.Draft,
+      _version: 0,
+    };
+    return ok(result);
   });
 }
 
@@ -257,10 +266,11 @@ export async function updateEntity(
 ): PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.NotFound> {
   return await context.withTransaction(async (context) => {
     const previousValues = await Db.queryNoneOrOne<
-      Pick<EntitiesTable, 'id' | 'type' | 'name'> & Pick<EntityVersionsTable, 'version' | 'data'>
+      Pick<EntitiesTable, 'id' | 'type' | 'name' | 'archived' | 'published_entity_versions_id'> &
+        Pick<EntityVersionsTable, 'version' | 'data'>
     >(
       context,
-      `SELECT e.id, e.type, e.name, ev.version, ev.data
+      `SELECT e.id, e.type, e.name, e.archived, e.published_entity_versions_id, ev.version, ev.data
         FROM entities e, entity_versions ev
         WHERE e.uuid = $1 AND e.latest_draft_entity_versions_id = ev.id`,
       [entity.id]
@@ -268,7 +278,14 @@ export async function updateEntity(
     if (!previousValues) {
       return notOk.NotFound('No such entity');
     }
-    const { id: entityId, data: previousDataEncoded, type, name: previousName } = previousValues;
+    const {
+      id: entityId,
+      data: previousDataEncoded,
+      type,
+      name: previousName,
+      archived,
+      published_entity_versions_id: publishedVersionId,
+    } = previousValues;
     const newVersion = previousValues.version + 1;
 
     const resolvedResult = resolveUpdateEntity(
@@ -276,7 +293,9 @@ export async function updateEntity(
       entity,
       type,
       previousName,
+      archived,
       newVersion,
+      publishedVersionId,
       previousDataEncoded
     );
     if (resolvedResult.isError()) {
@@ -349,10 +368,11 @@ export async function deleteEntity(
   return await context.withTransaction(async (context) => {
     // Entity info
     const entityInfo = await Db.queryNoneOrOne<
-      Pick<EntitiesTable, 'id' | 'name' | 'type'> & Pick<EntityVersionsTable, 'version'>
+      Pick<EntitiesTable, 'id' | 'name' | 'type' | 'archived' | 'published_entity_versions_id'> &
+        Pick<EntityVersionsTable, 'version'>
     >(
       context,
-      `SELECT e.id, e.name, e.type, ev.version
+      `SELECT e.id, e.name, e.type, e.archived, e.published_entity_versions_id, ev.version
         FROM entity_versions ev, entities e
         WHERE e.uuid = $1 AND e.latest_draft_entity_versions_id = ev.id`,
       [id]
@@ -373,7 +393,18 @@ export async function deleteEntity(
       'UPDATE entities SET latest_draft_entity_versions_id = $1 WHERE id = $2',
       [versionsId, entityId]
     );
-    return ok(decodeAdminEntity(context, { uuid: id, type, name, version, data: null }));
+    return ok(
+      decodeAdminEntity(context, {
+        uuid: id,
+        type,
+        name,
+        version,
+        data: null,
+        archived: entityInfo.archived,
+        latest_draft_entity_versions_id: versionsId,
+        published_entity_versions_id: entityInfo.published_entity_versions_id,
+      })
+    );
   });
 }
 

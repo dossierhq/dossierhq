@@ -47,7 +47,7 @@ export function searchAdminEntitiesQuery(
   if (query?.boundingBox) {
     qb.addQuery('DISTINCT');
   }
-  qb.addQuery(`e.id, e.uuid, e.type, e.name, ev.version, ev.data
+  qb.addQuery(`e.id, e.uuid, e.type, e.name, e.archived, e.latest_draft_entity_versions_id, e.published_entity_versions_id, ev.version, ev.data
   FROM entities e, entity_versions ev`);
   if (query?.referencing) {
     qb.addQuery('entity_version_references evr, entities e2');
