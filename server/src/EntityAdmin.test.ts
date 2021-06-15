@@ -3385,6 +3385,142 @@ describe('unpublishEntities()', () => {
   });
 });
 
+describe('archiveEntity()', () => {
+  test('Archive new entity', async () => {
+    const createResult = await EntityAdmin.createEntity(context, {
+      _type: 'EntityAdminBar',
+      _name: 'Bar name',
+      title: 'Bar title',
+    });
+    if (expectOkResult(createResult)) {
+      const { id } = createResult.value;
+
+      expectOkResult(await EntityAdmin.archiveEntity(context, id));
+
+      const historyResult = await EntityAdmin.getPublishHistory(context, id);
+      if (expectOkResult(historyResult)) {
+        const { publishedAt } = historyResult.value.events[0];
+        expect(historyResult.value).toEqual({
+          id,
+          events: [
+            {
+              kind: PublishEventKind.Archive,
+              publishedAt,
+              publishedBy: context.session.subjectId,
+              version: null,
+            },
+          ],
+        });
+      }
+    }
+  });
+
+  test('Archive archived entity', async () => {
+    const createResult = await EntityAdmin.createEntity(context, {
+      _type: 'EntityAdminBar',
+      _name: 'Bar name',
+      title: 'Bar title',
+    });
+    if (expectOkResult(createResult)) {
+      const { id } = createResult.value;
+
+      expectOkResult(await EntityAdmin.archiveEntity(context, id));
+      expectOkResult(await EntityAdmin.archiveEntity(context, id));
+
+      const historyResult = await EntityAdmin.getPublishHistory(context, id);
+      if (expectOkResult(historyResult)) {
+        expect(historyResult.value.events).toHaveLength(1); // no event created by second archive
+      }
+    }
+  });
+
+  test('Error: archive published entity', async () => {
+    const createResult = await EntityAdmin.createEntity(context, {
+      _type: 'EntityAdminBar',
+      _name: 'Bar name',
+      title: 'Bar title',
+    });
+    if (expectOkResult(createResult)) {
+      const { id, _version: version } = createResult.value;
+
+      expectOkResult(await EntityAdmin.publishEntities(context, [{ id, version }]));
+
+      const archiveResult = await EntityAdmin.archiveEntity(context, id);
+      expectErrorResult(archiveResult, ErrorType.BadRequest, 'Entity is published');
+    }
+  });
+
+  test('Error: archive with invalid id', async () => {
+    const result = await EntityAdmin.archiveEntity(context, '5b14e69f-6612-4ddb-bb42-7be273104486');
+    expectErrorResult(result, ErrorType.NotFound, 'No such entity');
+  });
+});
+
+describe('unarchiveEntity()', () => {
+  test('Unarchive new entity', async () => {
+    const createResult = await EntityAdmin.createEntity(context, {
+      _type: 'EntityAdminBar',
+      _name: 'Bar name',
+      title: 'Bar title',
+    });
+    if (expectOkResult(createResult)) {
+      const { id } = createResult.value;
+
+      expectOkResult(await EntityAdmin.unarchiveEntity(context, id));
+
+      const historyResult = await EntityAdmin.getPublishHistory(context, id);
+      if (expectOkResult(historyResult)) {
+        expect(historyResult.value).toEqual({ id, events: [] });
+      }
+    }
+  });
+
+  test('Unarchive archived entity', async () => {
+    const createResult = await EntityAdmin.createEntity(context, {
+      _type: 'EntityAdminBar',
+      _name: 'Bar name',
+      title: 'Bar title',
+    });
+    if (expectOkResult(createResult)) {
+      const { id } = createResult.value;
+
+      expectOkResult(await EntityAdmin.archiveEntity(context, id));
+      expectOkResult(await EntityAdmin.unarchiveEntity(context, id));
+
+      const historyResult = await EntityAdmin.getPublishHistory(context, id);
+      if (expectOkResult(historyResult)) {
+        const { publishedAt: publishedAt0 } = historyResult.value.events[0];
+        const { publishedAt: publishedAt1 } = historyResult.value.events[1];
+        expect(historyResult.value).toEqual({
+          id,
+          events: [
+            {
+              kind: PublishEventKind.Archive,
+              publishedAt: publishedAt0,
+              publishedBy: context.session.subjectId,
+              version: null,
+            },
+            {
+              kind: PublishEventKind.Unarchive,
+              publishedAt: publishedAt1,
+              publishedBy: context.session.subjectId,
+              version: null,
+            },
+          ],
+        });
+      }
+    }
+  });
+
+  test('Error: unarchive with invalid id', async () => {
+    const result = await EntityAdmin.unarchiveEntity(
+      context,
+      '5b14e69f-6612-4ddb-bb42-7be273104486'
+    );
+    expectErrorResult(result, ErrorType.NotFound, 'No such entity');
+  });
+});
+
 describe('getEntityHistory()', () => {
   // rest is tested elsewhere
 
