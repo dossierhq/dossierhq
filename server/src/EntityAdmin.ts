@@ -384,7 +384,7 @@ export async function publishEntities(
     version: number;
   }[]
 ): PromiseResult<void, ErrorType.BadRequest | ErrorType.NotFound> {
-  const uniqueIdCheck = checkUUIDssUnique(entities.map((it) => it.id));
+  const uniqueIdCheck = checkUUIDsAreUnique(entities.map((it) => it.id));
   if (uniqueIdCheck.isError()) {
     return uniqueIdCheck;
   }
@@ -511,7 +511,7 @@ export async function unpublishEntities(
   context: SessionContext,
   entityIds: string[]
 ): PromiseResult<void, ErrorType.BadRequest | ErrorType.NotFound> {
-  const uniqueIdCheck = checkUUIDssUnique(entityIds);
+  const uniqueIdCheck = checkUUIDsAreUnique(entityIds);
   if (uniqueIdCheck.isError()) {
     return uniqueIdCheck;
   }
@@ -588,6 +588,77 @@ export async function unpublishEntities(
   });
 }
 
+export async function archiveEntity(
+  context: SessionContext,
+  id: string
+): PromiseResult<void, ErrorType.BadRequest | ErrorType.NotFound> {
+  return context.withTransaction(async (context) => {
+    const entityInfo = await Db.queryNoneOrOne<
+      Pick<EntitiesTable, 'id' | 'published_entity_versions_id' | 'archived'>
+    >(
+      context,
+      'SELECT e.id, e.published_entity_versions_id, e.archived FROM entities e WHERE e.uuid = $1',
+      [id]
+    );
+
+    if (!entityInfo) {
+      return notOk.NotFound('No such entity');
+    }
+    const { id: entityId, published_entity_versions_id: publishedVersionId, archived } = entityInfo;
+
+    if (publishedVersionId) {
+      return notOk.BadRequest('Entity is published');
+    }
+    if (archived) {
+      return ok(undefined); // no change
+    }
+
+    await Promise.all([
+      Db.queryNone(context, 'UPDATE entities SET archived = TRUE WHERE id = $1', [entityId]),
+      Db.queryNone(
+        context,
+        "INSERT INTO entity_publish_events (entities_id, kind, published_by) VALUES ($1, 'archive', $2)",
+        [entityId, context.session.subjectInternalId]
+      ),
+    ]);
+
+    return ok(undefined);
+  });
+}
+
+export async function unarchiveEntity(
+  context: SessionContext,
+  id: string
+): PromiseResult<void, ErrorType.BadRequest | ErrorType.NotFound> {
+  return context.withTransaction(async (context) => {
+    const entityInfo = await Db.queryNoneOrOne<Pick<EntitiesTable, 'id' | 'archived'>>(
+      context,
+      'SELECT e.id, e.archived FROM entities e WHERE e.uuid = $1',
+      [id]
+    );
+
+    if (!entityInfo) {
+      return notOk.NotFound('No such entity');
+    }
+    const { id: entityId, archived } = entityInfo;
+
+    if (!archived) {
+      return ok(undefined); // no change
+    }
+
+    await Promise.all([
+      Db.queryNone(context, 'UPDATE entities SET archived = FALSE WHERE id = $1', [entityId]),
+      Db.queryNone(
+        context,
+        "INSERT INTO entity_publish_events (entities_id, kind, published_by) VALUES ($1, 'unarchive', $2)",
+        [entityId, context.session.subjectInternalId]
+      ),
+    ]);
+
+    return ok(undefined);
+  });
+}
+
 async function resolveMaxVersionForEntity(
   context: SessionContext,
   id: string
@@ -605,7 +676,7 @@ async function resolveMaxVersionForEntity(
   return ok({ entityId: result.entities_id, maxVersion: result.version });
 }
 
-function checkUUIDssUnique(uuids: string[]): Result<void, ErrorType.BadRequest> {
+function checkUUIDsAreUnique(uuids: string[]): Result<void, ErrorType.BadRequest> {
   const unique = new Set<string>();
   for (const uuid of uuids) {
     if (unique.has(uuid)) {
