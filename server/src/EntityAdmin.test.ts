@@ -1,4 +1,10 @@
-import { CoreTestUtils, ErrorType, FieldType, RichTextBlockType } from '@datadata/core';
+import {
+  CoreTestUtils,
+  ErrorType,
+  FieldType,
+  PublishEventKind,
+  RichTextBlockType,
+} from '@datadata/core';
 import type {
   AdminEntity,
   AdminQuery,
@@ -3421,7 +3427,14 @@ describe('getPublishHistory()', () => {
         const { publishedAt } = historyResult.value.events[0];
         expect(historyResult.value).toEqual({
           id,
-          events: [{ publishedAt, publishedBy: context.session.subjectId, version: 0 }],
+          events: [
+            {
+              kind: PublishEventKind.Publish,
+              publishedAt,
+              publishedBy: context.session.subjectId,
+              version: 0,
+            },
+          ],
         });
       }
     }
@@ -3445,8 +3458,18 @@ describe('getPublishHistory()', () => {
         expect(historyResult.value).toEqual({
           id,
           events: [
-            { publishedAt: publishedAt0, publishedBy: context.session.subjectId, version: 0 },
-            { publishedAt: publishedAt1, publishedBy: context.session.subjectId, version: null },
+            {
+              kind: PublishEventKind.Publish,
+              publishedAt: publishedAt0,
+              publishedBy: context.session.subjectId,
+              version: 0,
+            },
+            {
+              kind: PublishEventKind.Unpublish,
+              publishedAt: publishedAt1,
+              publishedBy: context.session.subjectId,
+              version: null,
+            },
           ],
         });
       }
