@@ -1,3 +1,4 @@
+import type { Entity } from '@datadata/core';
 import { CoreTestUtils, ErrorType, FieldType } from '@datadata/core';
 import { EntityAdmin, PublishedEntity } from '.';
 import type { Server, SessionContext } from '.';
@@ -25,6 +26,29 @@ afterAll(async () => {
 });
 
 describe('getEntity()', () => {
+  test('Archived then published entity', async () => {
+    const createResult = await EntityAdmin.createEntity(context, {
+      _type: 'PublishedEntityFoo',
+      _name: 'Foo 1',
+      title: 'Title 1',
+    });
+    if (expectOkResult(createResult)) {
+      const { id, _name: name, _version: version } = createResult.value;
+      expectOkResult(await EntityAdmin.archiveEntity(context, id));
+      expectOkResult(await EntityAdmin.publishEntities(context, [{ id, version }]));
+
+      const result = await PublishedEntity.getEntity(context, id);
+      if (expectOkResult(result)) {
+        expect(result.value).toEqual<Entity>({
+          id,
+          _type: 'PublishedEntityFoo',
+          _name: name,
+          title: 'Title 1',
+        });
+      }
+    }
+  });
+
   test('Error: Archived entity', async () => {
     const createResult = await EntityAdmin.createEntity(context, {
       _type: 'PublishedEntityFoo',

@@ -478,7 +478,7 @@ export async function publishEntities(
     for (const { versionsId, deleted, entityId } of versionsInfo) {
       await Db.queryNone(
         context,
-        'UPDATE entities SET never_published = FALSE, published_entity_versions_id = $1, published_deleted = $2 WHERE id = $3',
+        'UPDATE entities SET never_published = FALSE, archived = FALSE, published_entity_versions_id = $1, published_deleted = $2 WHERE id = $3',
         [versionsId, deleted, entityId]
       );
     }

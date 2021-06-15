@@ -2744,6 +2744,35 @@ describe('updateEntity()', () => {
     }
   });
 
+  test('Update archived EntityAdminFoo', async () => {
+    const createResult = await EntityAdmin.createEntity(context, {
+      _type: 'EntityAdminFoo',
+      _name: 'Original',
+      title: 'Original',
+    });
+    if (expectOkResult(createResult)) {
+      const { id, _name: name } = createResult.value;
+
+      expectOkResult(await EntityAdmin.archiveEntity(context, id));
+
+      const updateResult = await EntityAdmin.updateEntity(context, {
+        id,
+        title: 'Updated title',
+      });
+
+      if (expectOkResult(updateResult)) {
+        expect(updateResult.value).toEqual({
+          id,
+          _type: 'EntityAdminFoo',
+          _name: name,
+          _version: 1,
+          _publishState: EntityPublishState.Archived,
+          title: 'Updated title',
+        });
+      }
+    }
+  });
+
   test('Error: Update with invalid id', async () => {
     const result = await EntityAdmin.updateEntity(context, {
       id: 'f773ac54-37db-42df-9b55-b6da8de344c3',
@@ -3154,6 +3183,33 @@ describe('publishEntities()', () => {
     }
   });
 
+  test('Archived entity', async () => {
+    const createBaz1Result = await EntityAdmin.createEntity(context, {
+      _type: 'EntityAdminBaz',
+      _name: 'Baz 1',
+      title: 'Baz title 1',
+    });
+    if (expectOkResult(createBaz1Result)) {
+      const { id, _name: name, _version: version } = createBaz1Result.value;
+
+      expectOkResult(await EntityAdmin.archiveEntity(context, id));
+
+      expectOkResult(await EntityAdmin.publishEntities(context, [{ id, version }]));
+
+      const getResult = await EntityAdmin.getEntity(context, id);
+      if (expectOkResult(getResult)) {
+        expect(getResult.value).toEqual<AdminEntity>({
+          id,
+          _type: 'EntityAdminBaz',
+          _name: name,
+          _version: 0,
+          _publishState: EntityPublishState.Published,
+          title: 'Baz title 1',
+        });
+      }
+    }
+  });
+
   test('Error: Publish published version', async () => {
     const createBazResult = await EntityAdmin.createEntity(context, {
       _type: 'EntityAdminBaz',
@@ -3462,6 +3518,25 @@ describe('unpublishEntities()', () => {
         publishResult,
         ErrorType.BadRequest,
         `Entities are not published: ${barId}`
+      );
+    }
+  });
+
+  test('Error: Unpublish archived entity', async () => {
+    const createResult = await EntityAdmin.createEntity(context, {
+      _type: 'EntityAdminBaz',
+      _name: 'Baz 1',
+      title: 'Baz title 1',
+    });
+    if (expectOkResult(createResult)) {
+      const { id } = createResult.value;
+
+      expectOkResult(await EntityAdmin.archiveEntity(context, id));
+
+      expectErrorResult(
+        await EntityAdmin.unpublishEntities(context, [id]),
+        ErrorType.BadRequest,
+        `Entities are not published: ${id}`
       );
     }
   });
