@@ -87,6 +87,7 @@ export function logEntity(context: SessionContext, entity: AdminEntity | Entity)
   logKeyValue('id', entity.id);
   if (isAdminEntity(entity)) {
     logKeyValue('version', String(entity._version));
+    logKeyValue('publish state', entity._publishState);
     if (entity._deleted) {
       logKeyValue('deleted', 'true');
       return;
@@ -137,7 +138,10 @@ export function logEntity(context: SessionContext, entity: AdminEntity | Entity)
   });
 }
 
-export function formatEntityOneLine(entity: Entity): string {
+export function formatEntityOneLine(entity: Entity | AdminEntity): string {
+  if (isAdminEntity(entity)) {
+    return `${entity._type} | ${entity._publishState} | ${chalk.bold(entity._name)} | ${entity.id}`;
+  }
   return `${entity._type} | ${chalk.bold(entity._name)} | ${entity.id}`;
 }
 

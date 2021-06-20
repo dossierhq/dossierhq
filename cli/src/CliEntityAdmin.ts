@@ -661,7 +661,10 @@ export async function showPublishHistory(context: SessionContext, id: string): P
   const history = result.value;
   logKeyValue('id', history.id);
   for (const event of history.events) {
-    logKeyValue('version', event.version?.toString() ?? chalk.gray('unpublished'));
+    console.log(chalk.bold(event.kind));
+    if (event.version) {
+      logKeyValue('version', event.version.toString());
+    }
     logKeyValue('  published by', event.publishedBy);
     logKeyValue('  published at', event.publishedAt.toISOString());
   }
