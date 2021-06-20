@@ -242,7 +242,7 @@ export async function createEntity(context: SessionContext): Promise<AdminEntity
   console.log(chalk.bold('Created entity'));
   logEntity(context, createResult.value);
 
-  const publishedEntity = await publishEntity(context, createResult.value);
+  const publishedEntity = await publishEntityVersion(context, createResult.value);
   if (publishedEntity) {
     return publishedEntity;
   }
@@ -266,14 +266,14 @@ export async function editEntity(context: SessionContext, id: string): Promise<A
   console.log(chalk.bold('Updated'));
   logEntity(context, updateResult.value);
 
-  const publishedEntity = await publishEntity(context, updateResult.value);
+  const publishedEntity = await publishEntityVersion(context, updateResult.value);
   if (publishedEntity) {
     return publishedEntity;
   }
   return updateResult.value;
 }
 
-async function publishEntity(
+async function publishEntityVersion(
   context: SessionContext,
   entity: AdminEntity
 ): Promise<AdminEntity | null> {
@@ -598,6 +598,30 @@ async function editFieldList<TItem>(
   return ok(result);
 }
 
+export async function publishEntity(
+  context: SessionContext,
+  id: string
+): Promise<AdminEntity | null> {
+  const version = await selectEntityVersion(context, 'Which version to publish?', id, null);
+
+  if (version === null) {
+    return null;
+  }
+
+  const publishResult = await EntityAdmin.publishEntities(context, [{ id, version }]);
+  if (publishResult.isError()) {
+    logErrorResult('Failed publishing entity', publishResult);
+    return null;
+  }
+  console.log(`${chalk.bold('Published:')} ${id} version: ${version}`);
+  const entityResult = await EntityAdmin.getEntity(context, id);
+  if (entityResult.isError()) {
+    logErrorResult('Failed fetching entity', entityResult);
+    return null;
+  }
+  return entityResult.value;
+}
+
 export async function unpublishEntity(
   context: SessionContext,
   id: string
@@ -680,8 +704,8 @@ export async function showPublishHistory(context: SessionContext, id: string): P
   logKeyValue('id', history.id);
   for (const event of history.events) {
     console.log(chalk.bold(event.kind));
-    if (event.version) {
-      logKeyValue('version', event.version.toString());
+    if (event.version !== null) {
+      logKeyValue('  version', event.version.toString());
     }
     logKeyValue('  published by', event.publishedBy);
     logKeyValue('  published at', event.publishedAt.toISOString());
