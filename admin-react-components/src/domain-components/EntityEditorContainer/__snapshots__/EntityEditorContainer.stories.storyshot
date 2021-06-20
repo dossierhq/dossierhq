@@ -410,6 +410,15 @@ exports[`Storyshots Domain/EntityEditorContainer Deleted Foo 1`] = `
         </p>
       </div>
       <div
+        className="dd"
+      >
+        <span
+          className="dd has-background text-caption p-1 is-rounded ml-1 bg-primary"
+        >
+          published
+        </span>
+      </div>
+      <div
         className="dd flex-row dd g-2"
       >
         <button
@@ -1362,6 +1371,15 @@ exports[`Storyshots Domain/EntityEditorContainer Full Foo 1`] = `
         >
           fc66b4d7-61ff-44d4-8f68-cb7f526df046
         </p>
+      </div>
+      <div
+        className="dd"
+      >
+        <span
+          className="dd has-background text-caption p-1 is-rounded ml-1 bg-primary"
+        >
+          published
+        </span>
       </div>
       <div
         className="dd flex-row dd g-2"
@@ -2481,6 +2499,15 @@ exports[`Storyshots Domain/EntityEditorContainer Two Entities 1`] = `
         >
           cb228716-d3dd-444f-9a77-80443d436339
         </p>
+      </div>
+      <div
+        className="dd"
+      >
+        <span
+          className="dd has-background text-caption p-1 is-rounded ml-1"
+        >
+          draft
+        </span>
       </div>
       <div
         className="dd flex-row dd g-2"

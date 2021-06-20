@@ -47,6 +47,15 @@ exports[`Storyshots Domain/EntityMetadata Deleted Foo 1`] = `
     </p>
   </div>
   <div
+    className="dd"
+  >
+    <span
+      className="dd has-background text-caption p-1 is-rounded ml-1 bg-primary"
+    >
+      published
+    </span>
+  </div>
+  <div
     className="dd flex-row dd g-2"
   >
     <button
@@ -172,6 +181,15 @@ exports[`Storyshots Domain/EntityMetadata Deleted Foo Publish History 1`] = `
     </p>
   </div>
   <div
+    className="dd"
+  >
+    <span
+      className="dd has-background text-caption p-1 is-rounded ml-1 bg-primary"
+    >
+      published
+    </span>
+  </div>
+  <div
     className="dd flex-row dd g-2"
   >
     <button
@@ -281,6 +299,15 @@ exports[`Storyshots Domain/EntityMetadata Full Foo 1`] = `
     </p>
   </div>
   <div
+    className="dd"
+  >
+    <span
+      className="dd has-background text-caption p-1 is-rounded ml-1 bg-primary"
+    >
+      published
+    </span>
+  </div>
+  <div
     className="dd flex-row dd g-2"
   >
     <button
@@ -377,6 +404,15 @@ exports[`Storyshots Domain/EntityMetadata Full Foo Publish History 1`] = `
     >
       fc66b4d7-61ff-44d4-8f68-cb7f526df046
     </p>
+  </div>
+  <div
+    className="dd"
+  >
+    <span
+      className="dd has-background text-caption p-1 is-rounded ml-1 bg-primary"
+    >
+      published
+    </span>
   </div>
   <div
     className="dd flex-row dd g-2"

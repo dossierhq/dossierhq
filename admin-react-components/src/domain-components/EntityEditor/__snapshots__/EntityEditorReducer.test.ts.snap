@@ -56,6 +56,7 @@ Object {
       "exists": false,
       "id": "e4e78fce-1089-41b8-9b6b-440d2e044061",
       "initMessage": null,
+      "publishState": null,
     },
   ],
 }
@@ -227,6 +228,7 @@ Object {
       "exists": true,
       "id": "fc66b4d7-61ff-44d4-8f68-cb7f526df046",
       "initMessage": null,
+      "publishState": "published",
     },
   ],
 }

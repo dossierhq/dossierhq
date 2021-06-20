@@ -248,6 +248,8 @@ export class DataDataContextValue {
   private invalidateEntityPublished(id: string) {
     mutate([this.#rootKey, FetcherActions.UseEntityHistory, id]);
     mutate([this.#rootKey, FetcherActions.UsePublishHistory, id]);
+    // for publish state
+    mutate([this.#rootKey, FetcherActions.UseEntity, id, null]);
   }
 
   private fetcher = async (
