@@ -76,12 +76,21 @@ type Bar implements Node & Entity {
   _name: String!
 }
 
+enum EntityPublishState {
+  draft
+  published
+  modified
+  withdrawn
+  archived
+}
+
 interface AdminEntity {
   id: ID!
   _name: String!
   _type: EntityType!
   _version: Int!
   _deleted: Boolean!
+  _publishState: EntityPublishState!
 }
 
 type AdminEntityEdge {
@@ -155,6 +164,7 @@ type AdminFoo implements AdminEntity {
   _name: String!
   _version: Int!
   _deleted: Boolean!
+  _publishState: EntityPublishState!
   strings: [String!]
   locations: [Location!]
   bars: [AdminBar!]
@@ -184,6 +194,7 @@ type AdminBar implements AdminEntity {
   _name: String!
   _version: Int!
   _deleted: Boolean!
+  _publishState: EntityPublishState!
 }
 
 input AdminBarCreateInput {
@@ -287,12 +298,21 @@ type Baz implements Node & Entity {
   _name: String!
 }
 
+enum EntityPublishState {
+  draft
+  published
+  modified
+  withdrawn
+  archived
+}
+
 interface AdminEntity {
   id: ID!
   _name: String!
   _type: EntityType!
   _version: Int!
   _deleted: Boolean!
+  _publishState: EntityPublishState!
 }
 
 type AdminEntityEdge {
@@ -366,6 +386,7 @@ type AdminFoo implements AdminEntity {
   _name: String!
   _version: Int!
   _deleted: Boolean!
+  _publishState: EntityPublishState!
   noMeansAll: AdminEntity
   bar: AdminBar
   bazBar: _AdminBarOrBaz
@@ -401,6 +422,7 @@ type AdminBar implements AdminEntity {
   _name: String!
   _version: Int!
   _deleted: Boolean!
+  _publishState: EntityPublishState!
 }
 
 input AdminBarCreateInput {
@@ -421,6 +443,7 @@ type AdminBaz implements AdminEntity {
   _name: String!
   _version: Int!
   _deleted: Boolean!
+  _publishState: EntityPublishState!
 }
 
 input AdminBazCreateInput {
@@ -531,12 +554,21 @@ type Foo implements Node & Entity {
   _name: String!
 }
 
+enum EntityPublishState {
+  draft
+  published
+  modified
+  withdrawn
+  archived
+}
+
 interface AdminEntity {
   id: ID!
   _name: String!
   _type: EntityType!
   _version: Int!
   _deleted: Boolean!
+  _publishState: EntityPublishState!
 }
 
 type AdminEntityEdge {
@@ -610,6 +642,7 @@ type AdminFoo implements AdminEntity {
   _name: String!
   _version: Int!
   _deleted: Boolean!
+  _publishState: EntityPublishState!
 }
 
 input AdminFooCreateInput {
@@ -695,12 +728,21 @@ type Foo implements Node & Entity {
   body: RichText
 }
 
+enum EntityPublishState {
+  draft
+  published
+  modified
+  withdrawn
+  archived
+}
+
 interface AdminEntity {
   id: ID!
   _name: String!
   _type: EntityType!
   _version: Int!
   _deleted: Boolean!
+  _publishState: EntityPublishState!
 }
 
 type AdminEntityEdge {
@@ -774,6 +816,7 @@ type AdminFoo implements AdminEntity {
   _name: String!
   _version: Int!
   _deleted: Boolean!
+  _publishState: EntityPublishState!
   body: AdminRichText
 }
 
@@ -871,12 +914,21 @@ type Bar implements Node & Entity {
   barField3: Location
 }
 
+enum EntityPublishState {
+  draft
+  published
+  modified
+  withdrawn
+  archived
+}
+
 interface AdminEntity {
   id: ID!
   _name: String!
   _type: EntityType!
   _version: Int!
   _deleted: Boolean!
+  _publishState: EntityPublishState!
 }
 
 type AdminEntityEdge {
@@ -950,6 +1002,7 @@ type AdminFoo implements AdminEntity {
   _name: String!
   _version: Int!
   _deleted: Boolean!
+  _publishState: EntityPublishState!
   fooField: String
 }
 
@@ -973,6 +1026,7 @@ type AdminBar implements AdminEntity {
   _name: String!
   _version: Int!
   _deleted: Boolean!
+  _publishState: EntityPublishState!
   barField1: String
   barField2: AdminEntity
   barField3: Location
@@ -1108,12 +1162,21 @@ type NestedValue implements Value {
   child: NestedValue
 }
 
+enum EntityPublishState {
+  draft
+  published
+  modified
+  withdrawn
+  archived
+}
+
 interface AdminEntity {
   id: ID!
   _name: String!
   _type: EntityType!
   _version: Int!
   _deleted: Boolean!
+  _publishState: EntityPublishState!
 }
 
 type AdminEntityEdge {
@@ -1191,6 +1254,7 @@ type AdminFoo implements AdminEntity {
   _name: String!
   _version: Int!
   _deleted: Boolean!
+  _publishState: EntityPublishState!
   valueOne: AdminValueOne
   unspecifiedValue: AdminValue
   valueOneOrList: _AdminValueListOrValueOne
@@ -1227,6 +1291,7 @@ type AdminBar implements AdminEntity {
   _name: String!
   _version: Int!
   _deleted: Boolean!
+  _publishState: EntityPublishState!
 }
 
 input AdminBarCreateInput {

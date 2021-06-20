@@ -84,6 +84,7 @@ describe('create*Entity()', () => {
             _type
             _name
             _version
+            _publishState
             title
             summary
             tags
@@ -116,6 +117,7 @@ describe('create*Entity()', () => {
       }
     );
 
+    expect(result.errors).toBeUndefined();
     const id = result.data?.createMutationFooEntity.id;
     const name = result.data?.createMutationFooEntity._name;
     expect(name).toMatch(/^Foo name(#[0-9]+)?$/);
@@ -128,6 +130,7 @@ describe('create*Entity()', () => {
           _type: 'MutationFoo',
           _name: name,
           _version: 0,
+          _publishState: EntityPublishState.Draft,
           title: 'Foo title',
           summary: 'Foo summary',
           tags: ['one', 'two', 'three'],
@@ -172,6 +175,7 @@ describe('create*Entity()', () => {
             _type
             _name
             _version
+            _publishState
             title
           }
         }
@@ -200,6 +204,7 @@ describe('create*Entity()', () => {
           _type: 'MutationFoo',
           _name: name,
           _version: 0,
+          _publishState: EntityPublishState.Draft,
           title: 'Foo title',
         },
       },
@@ -223,6 +228,7 @@ describe('create*Entity()', () => {
               _type
               _name
               _version
+              _publishState
               title
               summary
               body {
@@ -259,6 +265,7 @@ describe('create*Entity()', () => {
             _type: 'MutationFoo',
             _name: fooName,
             _version: 0,
+            _publishState: EntityPublishState.Draft,
             title: 'Foo title',
             summary: 'Foo summary',
             body: {
@@ -306,6 +313,7 @@ describe('create*Entity()', () => {
               _type
               _name
               _version
+              _publishState
               title
               summary
               bar {
@@ -338,6 +346,7 @@ describe('create*Entity()', () => {
             _type: 'MutationFoo',
             _name: fooName,
             _version: 0,
+            _publishState: EntityPublishState.Draft,
             title: 'Foo title',
             summary: 'Foo summary',
             bar: { id: barId, _name: barName },
@@ -836,6 +845,7 @@ describe('update*Entity()', () => {
               _type
               _name
               _version
+              _publishState
               title
               summary
               tags
@@ -860,6 +870,7 @@ describe('update*Entity()', () => {
             _type: 'MutationFoo',
             _name: name,
             _version: 1,
+            _publishState: EntityPublishState.Draft,
             title: 'Updated title',
             summary: 'First summary',
             tags: ['one', 'two', 'three'],

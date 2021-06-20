@@ -386,6 +386,20 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     if (this.schema.getEntityTypeCount() === 0) {
       return;
     }
+    // EntityPublishState
+    this.addType(
+      new GraphQLEnumType({
+        name: 'EntityPublishState',
+        values: {
+          draft: {},
+          published: {},
+          modified: {},
+          withdrawn: {},
+          archived: {},
+        },
+      })
+    );
+
     // AdminEntity
     this.addType(
       new GraphQLInterfaceType({
@@ -396,6 +410,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
           _type: { type: new GraphQLNonNull(this.getType('EntityType')) },
           _version: { type: new GraphQLNonNull(GraphQLInt) },
           _deleted: { type: new GraphQLNonNull(GraphQLBoolean) },
+          _publishState: { type: new GraphQLNonNull(this.getType('EntityPublishState')) },
         },
       })
     );
@@ -573,6 +588,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
             _name: { type: new GraphQLNonNull(GraphQLString) },
             _version: { type: new GraphQLNonNull(GraphQLInt) },
             _deleted: { type: new GraphQLNonNull(GraphQLBoolean) },
+            _publishState: { type: new GraphQLNonNull(this.getType('EntityPublishState')) },
           };
           this.addTypeSpecificationOutputFields(entitySpec, fields, true);
           return fields;
