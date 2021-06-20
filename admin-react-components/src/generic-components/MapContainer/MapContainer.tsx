@@ -32,7 +32,7 @@ export interface MapContainerProps {
 
 interface MarkerProps {
   location: Location;
-  tooltip?: string;
+  tooltip?: JSX.Element;
   onClick?: () => void;
 }
 

@@ -1,7 +1,7 @@
 import type { AdminEntity, AdminQuery, BoundingBox, Location, Schema } from '@datadata/core';
 import { isLocationItemField, visitItemRecursively } from '@datadata/core';
 import React, { useContext, useEffect, useState } from 'react';
-import { DataDataContext, MapContainer } from '../..';
+import { DataDataContext, MapContainer, PublishStateTag } from '../..';
 
 export interface EntityMapProps {
   className?: string;
@@ -73,7 +73,12 @@ function EntityMarker({
         <MapContainer.Marker
           key={index}
           location={item.location}
-          tooltip={`${entity._type}: ${entity._name}`}
+          tooltip={
+            <>
+              {`${entity._type}: ${entity._name}`}
+              <PublishStateTag publishState={entity._publishState} />
+            </>
+          }
           onClick={onClick}
         />
       ))}
