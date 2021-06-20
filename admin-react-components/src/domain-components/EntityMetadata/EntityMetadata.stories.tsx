@@ -39,6 +39,7 @@ const Template: Story<EntityMetadataStoryProps> = (args) => {
       <Wrapper
         className={args.className}
         entitySelector={args.entitySelector}
+        initialSelectedHistory={args.initialSelectedHistory}
         schema={contextValue.schema}
       />
     </DataDataContext.Provider>
@@ -48,10 +49,12 @@ const Template: Story<EntityMetadataStoryProps> = (args) => {
 function Wrapper({
   className,
   entitySelector,
+  initialSelectedHistory,
   schema,
 }: {
   className?: string;
   entitySelector: EntityEditorSelector;
+  initialSelectedHistory?: 'entity' | 'publish';
   schema: Schema;
 }) {
   const [editorState, dispatchEditorState] = useReducer(
@@ -66,7 +69,11 @@ function Wrapper({
     <EntityEditorDispatchContext.Provider value={dispatchEditorState}>
       <EntityEditorStateContext.Provider value={editorState}>
         <EntityLoader entityId={draftState.id} />
-        <EntityMetadata entityId={draftState.id} className={className} />
+        <EntityMetadata
+          entityId={draftState.id}
+          className={className}
+          initialSelectedHistory={initialSelectedHistory}
+        />
       </EntityEditorStateContext.Provider>
     </EntityEditorDispatchContext.Provider>
   );
@@ -78,8 +85,17 @@ NewFoo.args = { entitySelector: { newType: 'Foo', id: 'e225c183-9a1d-4fd5-b259-c
 export const FullFoo = Template.bind({});
 FullFoo.args = { entitySelector: { id: foo1Id } };
 
+export const FullFooPublishHistory = Template.bind({});
+FullFooPublishHistory.args = { entitySelector: { id: foo1Id }, initialSelectedHistory: 'publish' };
+
 export const DeletedFoo = Template.bind({});
 DeletedFoo.args = { entitySelector: { id: fooDeletedId } };
+
+export const DeletedFooPublishHistory = Template.bind({});
+DeletedFooPublishHistory.args = {
+  entitySelector: { id: fooDeletedId },
+  initialSelectedHistory: 'publish',
+};
 
 export const SlowFullFoo = Template.bind({});
 SlowFullFoo.args = {
