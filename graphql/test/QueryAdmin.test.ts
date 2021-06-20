@@ -7,7 +7,14 @@ import type {
   ErrorType,
   Paging,
 } from '@datadata/core';
-import { CoreTestUtils, FieldType, notOk, ok, RichTextBlockType } from '@datadata/core';
+import {
+  CoreTestUtils,
+  EntityPublishState,
+  FieldType,
+  notOk,
+  ok,
+  RichTextBlockType,
+} from '@datadata/core';
 import type { SessionContext, Server } from '@datadata/server';
 import { EntityAdmin, ServerTestUtils } from '@datadata/server';
 import { graphql, printError } from 'graphql';
@@ -197,6 +204,7 @@ describe('adminEntity()', () => {
               _name
               _version
               _deleted
+              _publishState
               ... on AdminQueryAdminFoo {
                 title
                 summary
@@ -226,6 +234,7 @@ describe('adminEntity()', () => {
             _type: 'QueryAdminFoo',
             _name: name,
             _deleted: false,
+            _publishState: EntityPublishState.Draft,
             title: 'Howdy title',
             summary: 'Howdy summary',
             tags: ['one', 'two', 'three'],
@@ -258,6 +267,7 @@ describe('adminEntity()', () => {
               _type
               _name
               _version
+              _publishState
               ... on AdminQueryAdminFoo {
                 title
                 summary
@@ -295,6 +305,7 @@ describe('adminEntity()', () => {
             _type: 'QueryAdminFoo',
             _name: name,
             _version: 0,
+            _publishState: EntityPublishState.Draft,
             title: null,
             summary: null,
             tags: null,
@@ -412,6 +423,51 @@ describe('adminEntity()', () => {
     }
   });
 
+  test('Query published entity', async () => {
+    const createResult = await EntityAdmin.createEntity(context, {
+      _type: 'QueryAdminFoo',
+      _name: 'First name',
+      title: 'First title',
+      summary: 'First summary',
+    });
+    if (expectOkResult(createResult)) {
+      const { id, _name: name, _version: version } = createResult.value;
+
+      expectOkResult(await EntityAdmin.publishEntities(context, [{ id, version }]));
+
+      const result = await graphql(
+        schema,
+        `
+          query AdminEntity($id: ID!) {
+            adminEntity(id: $id) {
+              id
+              _version
+              _name
+              _publishState
+              ... on AdminQueryAdminFoo {
+                title
+                summary
+              }
+            }
+          }
+        `,
+        undefined,
+        { context: ok(context) },
+        { id }
+      );
+      expect(result.data).toEqual({
+        adminEntity: {
+          id,
+          _version: 0,
+          _name: name,
+          _publishState: EntityPublishState.Published,
+          title: 'First title',
+          summary: 'First summary',
+        },
+      });
+    }
+  });
+
   test('Query deleted entity', async () => {
     const createResult = await EntityAdmin.createEntity(context, {
       _type: 'QueryAdminFoo',
@@ -433,6 +489,7 @@ describe('adminEntity()', () => {
               _version
               _deleted
               _name
+              _publishState
               ... on AdminQueryAdminFoo {
                 title
                 summary
@@ -443,6 +500,7 @@ describe('adminEntity()', () => {
               _version
               _deleted
               _name
+              _publishState
               ... on AdminQueryAdminFoo {
                 title
                 summary
@@ -460,6 +518,7 @@ describe('adminEntity()', () => {
           _version: 0,
           _deleted: false,
           _name: name,
+          _publishState: EntityPublishState.Draft,
           title: 'First title',
           summary: 'First summary',
         },
@@ -468,6 +527,7 @@ describe('adminEntity()', () => {
           _version: 1,
           _deleted: true,
           _name: name,
+          _publishState: EntityPublishState.Draft,
           title: null,
           summary: null,
         },
@@ -913,6 +973,7 @@ describe('adminEntities()', () => {
               __typename
               _type
               id
+              _publishState
               ... on AdminQueryAdminFoo {
                 _name
               }
@@ -930,12 +991,14 @@ describe('adminEntities()', () => {
               __typename: 'AdminQueryAdminFoo',
               _type: 'QueryAdminFoo',
               id: foo1Id,
+              _publishState: EntityPublishState.Draft,
               _name: foo1Name,
             },
             {
               __typename: 'AdminQueryAdminFoo',
               _type: 'QueryAdminFoo',
               id: foo2Id,
+              _publishState: EntityPublishState.Draft,
               _name: foo2Name,
             },
           ],
