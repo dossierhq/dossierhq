@@ -3,16 +3,15 @@ import type { SessionContext } from '@datadata/server';
 import { PublishedEntity } from '@datadata/server';
 import { logEntity, logErrorResult, replaceEntityReferencesWithEntitiesGeneric } from './CliUtils';
 
-export async function showEntity(context: SessionContext, id: string): Promise<Entity | null> {
+export async function showEntity(context: SessionContext, id: string): Promise<void> {
   const result = await PublishedEntity.getEntity(context, id);
   if (result.isError()) {
     logErrorResult('Failed getting entity', result);
-    return null;
+    return;
   }
   const entity = result.value;
   await replaceReferencesWithEntities(context, entity);
   logEntity(context, entity);
-  return entity;
 }
 
 async function replaceReferencesWithEntities(context: SessionContext, entity: Entity) {
