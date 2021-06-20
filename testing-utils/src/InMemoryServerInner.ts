@@ -36,34 +36,23 @@ export class InMemoryServerInner {
       return null;
     }
 
-    const { publishedVersion } = fullEntity;
-
-    let state: EntityPublishState;
-    //TODO add support for Archive
-    if (typeof publishedVersion === 'number') {
-      const laterVersionsThanPublished = fullEntity.versions.some(
-        (it) => it._version > publishedVersion
-      );
-      state = laterVersionsThanPublished
-        ? EntityPublishState.Modified
-        : EntityPublishState.Published;
-    } else {
-      const hasPublished = fullEntity.publishEvents.some(
-        (it) => it.kind === PublishEventKind.Publish
-      );
-      state = hasPublished ? EntityPublishState.Withdrawn : EntityPublishState.Draft;
-    }
-
-    const entity =
+    const entityVersion =
       typeof version === 'number'
         ? fullEntity.versions.find((it) => it._version === version) ?? null
         : this.findLatestVersion(fullEntity.versions);
 
-    if (!entity) {
+    if (!entityVersion) {
       return null;
     }
 
-    return { ...entity, _publishState: state };
+    return this.convertToAdminEntity(fullEntity, entityVersion);
+  }
+
+  private convertToAdminEntity(
+    entity: InMemoryEntity,
+    version: InMemoryEntityVersion
+  ): AdminEntity {
+    return { ...version, _publishState: this.getEntityPublishState(entity) };
   }
 
   getEntityHistory(id: string): EntityHistory | null {
@@ -97,7 +86,9 @@ export class InMemoryServerInner {
   }
 
   getLatestEntities(): AdminEntity[] {
-    return this.#entities.map((x) => this.findLatestVersion(x.versions));
+    return this.#entities.map((entity) =>
+      this.convertToAdminEntity(entity, this.findLatestVersion(entity.versions))
+    );
   }
 
   getUniqueName(id: string | null, name: string): string {
@@ -145,12 +136,32 @@ export class InMemoryServerInner {
     });
   }
 
-  private findLatestVersion(versions: InMemoryEntityVersion[]): AdminEntity {
+  private findLatestVersion(versions: InMemoryEntityVersion[]): InMemoryEntityVersion {
     const maxVersion = versions.reduce((max, entity) => Math.max(max, entity._version), 0);
-    return versions.find((entity) => entity._version === maxVersion) as AdminEntity;
+    const version = versions.find((entity) => entity._version === maxVersion);
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    return version!;
   }
 
   private getFullEntity(id: string) {
     return this.#entities.find((x) => x.versions[0].id === id);
+  }
+
+  private getEntityPublishState(entity: InMemoryEntity): EntityPublishState {
+    let state: EntityPublishState;
+    const { publishedVersion } = entity;
+    //TODO add support for Archive
+    if (typeof publishedVersion === 'number') {
+      const laterVersionsThanPublished = entity.versions.some(
+        (it) => it._version > publishedVersion
+      );
+      state = laterVersionsThanPublished
+        ? EntityPublishState.Modified
+        : EntityPublishState.Published;
+    } else {
+      const hasPublished = entity.publishEvents.some((it) => it.kind === PublishEventKind.Publish);
+      state = hasPublished ? EntityPublishState.Withdrawn : EntityPublishState.Draft;
+    }
+    return state;
   }
 }

@@ -9,35 +9,60 @@ exports[`Storyshots Domain/EntityList Normal 1`] = `
     onClick={[Function]}
     type="button"
   >
-    Foo: Foo 1
+    Foo: Foo 1 
+    <span
+      className="dd has-background text-caption p-1 is-rounded bg-primary"
+    >
+      published
+    </span>
   </button>
   <button
     className="dd button has-background hoverable text-button is-rounded"
     onClick={[Function]}
     type="button"
   >
-    Foo: Foo deleted
+    Foo: Foo deleted 
+    <span
+      className="dd has-background text-caption p-1 is-rounded bg-primary"
+    >
+      published
+    </span>
   </button>
   <button
     className="dd button has-background hoverable text-button is-rounded"
     onClick={[Function]}
     type="button"
   >
-    Bar: Bar 1
+    Bar: Bar 1 
+    <span
+      className="dd has-background text-caption p-1 is-rounded"
+    >
+      draft
+    </span>
   </button>
   <button
     className="dd button has-background hoverable text-button is-rounded"
     onClick={[Function]}
     type="button"
   >
-    Bar: Bar 2
+    Bar: Bar 2 
+    <span
+      className="dd has-background text-caption p-1 is-rounded"
+    >
+      draft
+    </span>
   </button>
   <button
     className="dd button has-background hoverable text-button is-rounded"
     onClick={[Function]}
     type="button"
   >
-    Baz: Baz 1
+    Baz: Baz 1 
+    <span
+      className="dd has-background text-caption p-1 is-rounded"
+    >
+      draft
+    </span>
   </button>
 </div>
 `;
