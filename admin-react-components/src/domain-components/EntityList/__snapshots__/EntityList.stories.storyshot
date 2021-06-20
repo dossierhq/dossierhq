@@ -9,9 +9,9 @@ exports[`Storyshots Domain/EntityList Normal 1`] = `
     onClick={[Function]}
     type="button"
   >
-    Foo: Foo 1 
+    Foo: Foo 1
     <span
-      className="dd has-background text-caption p-1 is-rounded bg-primary"
+      className="dd has-background text-caption p-1 is-rounded ml-1 bg-primary"
     >
       published
     </span>
@@ -21,9 +21,9 @@ exports[`Storyshots Domain/EntityList Normal 1`] = `
     onClick={[Function]}
     type="button"
   >
-    Foo: Foo deleted 
+    Foo: Foo deleted
     <span
-      className="dd has-background text-caption p-1 is-rounded bg-primary"
+      className="dd has-background text-caption p-1 is-rounded ml-1 bg-primary"
     >
       published
     </span>
@@ -33,9 +33,9 @@ exports[`Storyshots Domain/EntityList Normal 1`] = `
     onClick={[Function]}
     type="button"
   >
-    Bar: Bar 1 
+    Bar: Bar 1
     <span
-      className="dd has-background text-caption p-1 is-rounded"
+      className="dd has-background text-caption p-1 is-rounded ml-1"
     >
       draft
     </span>
@@ -45,9 +45,9 @@ exports[`Storyshots Domain/EntityList Normal 1`] = `
     onClick={[Function]}
     type="button"
   >
-    Bar: Bar 2 
+    Bar: Bar 2
     <span
-      className="dd has-background text-caption p-1 is-rounded"
+      className="dd has-background text-caption p-1 is-rounded ml-1"
     >
       draft
     </span>
@@ -57,9 +57,9 @@ exports[`Storyshots Domain/EntityList Normal 1`] = `
     onClick={[Function]}
     type="button"
   >
-    Baz: Baz 1 
+    Baz: Baz 1
     <span
-      className="dd has-background text-caption p-1 is-rounded"
+      className="dd has-background text-caption p-1 is-rounded ml-1"
     >
       draft
     </span>

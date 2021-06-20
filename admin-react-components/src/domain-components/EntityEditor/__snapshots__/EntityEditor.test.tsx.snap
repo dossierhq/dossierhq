@@ -595,6 +595,11 @@ exports[`FullFoo render 1`] = `
             type="button"
           >
             Bar 1
+            <span
+              className="dd has-background text-caption p-1 is-rounded ml-1"
+            >
+              draft
+            </span>
           </button>
           <button
             className="dd icon-button"
@@ -632,6 +637,11 @@ exports[`FullFoo render 1`] = `
               type="button"
             >
               Bar 1
+              <span
+                className="dd has-background text-caption p-1 is-rounded ml-1"
+              >
+                draft
+              </span>
             </button>
             <button
               className="dd icon-button"
@@ -654,6 +664,11 @@ exports[`FullFoo render 1`] = `
               type="button"
             >
               Bar 2
+              <span
+                className="dd has-background text-caption p-1 is-rounded ml-1"
+              >
+                draft
+              </span>
             </button>
             <button
               className="dd icon-button"
@@ -801,6 +816,11 @@ exports[`FullFoo render 1`] = `
                   type="button"
                 >
                   Bar 2
+                  <span
+                    className="dd has-background text-caption p-1 is-rounded ml-1"
+                  >
+                    draft
+                  </span>
                 </button>
                 <button
                   className="dd icon-button"
@@ -905,6 +925,11 @@ exports[`FullFoo render 1`] = `
                     type="button"
                   >
                     Bar 1
+                    <span
+                      className="dd has-background text-caption p-1 is-rounded ml-1"
+                    >
+                      draft
+                    </span>
                   </button>
                   <button
                     className="dd icon-button"
@@ -994,6 +1019,11 @@ exports[`FullFoo render 1`] = `
                     type="button"
                   >
                     Bar 2
+                    <span
+                      className="dd has-background text-caption p-1 is-rounded ml-1"
+                    >
+                      draft
+                    </span>
                   </button>
                   <button
                     className="dd icon-button"

@@ -100,12 +100,12 @@ exports[`Storyshots Domain/EntityMetadata Deleted Foo 1`] = `
         Version 
         1
         <span
-          className="dd has-background text-caption p-1 is-rounded bg-danger"
+          className="dd has-background text-caption p-1 is-rounded ml-1 bg-danger"
         >
           Deleted
         </span>
         <span
-          className="dd has-background text-caption p-1 is-rounded bg-primary"
+          className="dd has-background text-caption p-1 is-rounded ml-1 bg-primary"
         >
           Published
         </span>
@@ -312,7 +312,7 @@ exports[`Storyshots Domain/EntityMetadata Full Foo 1`] = `
         Version 
         0
         <span
-          className="dd has-background text-caption p-1 is-rounded bg-primary"
+          className="dd has-background text-caption p-1 is-rounded ml-1 bg-primary"
         >
           Published
         </span>
