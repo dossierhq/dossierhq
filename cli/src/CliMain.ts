@@ -72,6 +72,22 @@ function createMainActions(state: State): Array<MainActionItem | ItemSelectorSep
       },
     },
     {
+      id: 'unpublish-entity',
+      name: 'Unpublish entity',
+      enabled:
+        !!state.currentEntity &&
+        [EntityPublishState.Published, EntityPublishState.Modified].includes(
+          state.currentEntity._publishState
+        ),
+      action: async () => {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        const entity = await CliEntityAdmin.unpublishEntity(state.context, state.currentEntity!.id);
+        if (entity) {
+          state.currentEntity = entity;
+        }
+      },
+    },
+    {
       id: 'archive-entity',
       name: 'Archive entity',
       enabled:
