@@ -174,7 +174,7 @@ function PublishHistory({ draftState }: { draftState: EntityEditorDraftState }) 
         return (
           <Column key={index} className="px-2 py-1">
             <p className="dd text-subtitle2">
-              {event.version === null ? 'Unpublish' : `Version ${event.version}`}
+              {`${event.kind}${event.version !== null ? ` (version ${event.version})` : ''}`}
             </p>
             <p className="dd text-body1">{event.publishedAt.toLocaleString()}</p>
             <p className="dd text-body1">{event.publishedBy}</p>
