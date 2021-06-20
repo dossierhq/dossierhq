@@ -13,21 +13,26 @@ export class InMemoryServerInner {
 
   loadEntities(entities: JsonInMemoryEntity[]): void {
     const clone: JsonInMemoryEntity[] = JSON.parse(JSON.stringify(entities));
-    this.#entities = clone.map(({ versions, publishedVersion, history, publishEvents }) => ({
-      versions,
-      publishedVersion,
-      history: history.map(({ version, createdBy, createdAt }) => ({
-        version,
-        createdBy,
-        createdAt: new Date(createdAt),
-      })),
-      publishEvents: publishEvents.map(({ kind, version, publishedBy, publishedAt }) => ({
-        kind,
-        version,
-        publishedBy,
-        publishedAt: new Date(publishedAt),
-      })),
-    }));
+    this.#entities = clone.map(
+      ({ id, type, name, versions, publishedVersion, history, publishEvents }) => ({
+        id,
+        type,
+        name,
+        versions,
+        publishedVersion,
+        history: history.map(({ version, createdBy, createdAt }) => ({
+          version,
+          createdBy,
+          createdAt: new Date(createdAt),
+        })),
+        publishEvents: publishEvents.map(({ kind, version, publishedBy, publishedAt }) => ({
+          kind,
+          version,
+          publishedBy,
+          publishedAt: new Date(publishedAt),
+        })),
+      })
+    );
   }
 
   getEntity(id: string, version?: number | null): AdminEntity | null {
@@ -52,7 +57,13 @@ export class InMemoryServerInner {
     entity: InMemoryEntity,
     version: InMemoryEntityVersion
   ): AdminEntity {
-    return { ...version, _publishState: this.getEntityPublishState(entity) };
+    return {
+      ...version,
+      id: entity.id,
+      _type: entity.type,
+      _name: entity.name,
+      _publishState: this.getEntityPublishState(entity),
+    };
   }
 
   getEntityHistory(id: string): EntityHistory | null {
@@ -99,9 +110,13 @@ export class InMemoryServerInner {
     return `${name}#${Math.random().toFixed(8).slice(2)}`;
   }
 
-  addNewEntity(entity: InMemoryEntityVersion, userId: string): void {
+  addNewEntity(entity: AdminEntity, userId: string): void {
+    const { id, _type: type, _name: name, ...version } = entity;
     this.#entities.push({
-      versions: [entity],
+      id,
+      type,
+      name,
+      versions: [version],
       history: [{ version: 0, createdAt: new Date(), createdBy: userId }],
       publishEvents: [],
     });
@@ -112,8 +127,9 @@ export class InMemoryServerInner {
     if (!fullEntity) {
       throw new Error(`Can't find ${entity.id}`);
     }
-    fullEntity.versions.push(entity);
-    fullEntity.versions.forEach((x) => (x._name = entity._name));
+    const { id, _type, _name: name, ...version } = entity;
+    fullEntity.name = name;
+    fullEntity.versions.push(version);
 
     fullEntity.history.push({
       version: entity._version,
@@ -144,7 +160,7 @@ export class InMemoryServerInner {
   }
 
   private getFullEntity(id: string) {
-    return this.#entities.find((x) => x.versions[0].id === id);
+    return this.#entities.find((it) => it.id === id);
   }
 
   private getEntityPublishState(entity: InMemoryEntity): EntityPublishState {
