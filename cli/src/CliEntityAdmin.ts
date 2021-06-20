@@ -598,6 +598,24 @@ async function editFieldList<TItem>(
   return ok(result);
 }
 
+export async function unpublishEntity(
+  context: SessionContext,
+  id: string
+): Promise<AdminEntity | null> {
+  const unpublishResult = await EntityAdmin.unpublishEntities(context, [id]);
+  if (unpublishResult.isError()) {
+    logErrorResult('Failed unpublishing entity', unpublishResult);
+    return null;
+  }
+  console.log(`${chalk.bold('Unpublished:')} ${id}`);
+  const entityResult = await EntityAdmin.getEntity(context, id);
+  if (entityResult.isError()) {
+    logErrorResult('Failed fetching entity', entityResult);
+    return null;
+  }
+  return entityResult.value;
+}
+
 export async function archiveEntity(
   context: SessionContext,
   id: string
