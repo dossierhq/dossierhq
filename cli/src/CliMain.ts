@@ -72,6 +72,18 @@ function createMainActions(state: State): Array<MainActionItem | ItemSelectorSep
       },
     },
     {
+      id: 'publish-entity',
+      name: 'Publish entity',
+      enabled: !!state.currentEntity,
+      action: async () => {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        const entity = await CliEntityAdmin.publishEntity(state.context, state.currentEntity!.id);
+        if (entity) {
+          state.currentEntity = entity;
+        }
+      },
+    },
+    {
       id: 'unpublish-entity',
       name: 'Unpublish entity',
       enabled:
