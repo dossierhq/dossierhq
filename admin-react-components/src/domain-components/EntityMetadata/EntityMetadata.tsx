@@ -17,16 +17,23 @@ import type { EntityEditorDraftState } from '../EntityEditor/EntityEditorReducer
 export interface EntityMetadataProps {
   entityId: string;
   className?: string;
+  initialSelectedHistory?: 'entity' | 'publish';
 }
 
-export function EntityMetadata({ entityId, className }: EntityMetadataProps): JSX.Element {
+export function EntityMetadata({
+  entityId,
+  className,
+  initialSelectedHistory,
+}: EntityMetadataProps): JSX.Element {
   const { drafts } = useContext(EntityEditorStateContext);
   const draftState = drafts.find((x) => x.id === entityId);
   if (!draftState) {
     throw new Error(`Can't find state for id (${entityId})`);
   }
 
-  const [selectedHistory, setSelectedHistory] = useState<'entity' | 'publish'>('entity');
+  const [selectedHistory, setSelectedHistory] = useState<'entity' | 'publish'>(
+    initialSelectedHistory ?? 'entity'
+  );
   const [selectedVersionId, setSelectedVersionId] = useState<number | null>(null);
 
   const { entity } = draftState;

@@ -125,6 +125,115 @@ exports[`Storyshots Domain/EntityMetadata Deleted Foo 1`] = `
 </div>
 `;
 
+exports[`Storyshots Domain/EntityMetadata Deleted Foo Publish History 1`] = `
+<div
+  className="dd flex-column has-shadow has-background py-2 g-2"
+>
+  <div
+    className="dd mx-2"
+  >
+    <p
+      className="dd text-subtitle2"
+    >
+      Name
+    </p>
+    <p
+      className="dd text-body1"
+    >
+      Foo deleted
+    </p>
+  </div>
+  <div
+    className="dd mx-2"
+  >
+    <p
+      className="dd text-subtitle2"
+    >
+      Type
+    </p>
+    <p
+      className="dd text-body1"
+    >
+      Foo
+    </p>
+  </div>
+  <div
+    className="dd mx-2"
+  >
+    <p
+      className="dd text-subtitle2"
+    >
+      ID
+    </p>
+    <p
+      className="dd text-body1"
+    >
+      fb62be03-a0a9-4689-9987-bacee0e7692d
+    </p>
+  </div>
+  <div
+    className="dd flex-row dd g-2"
+  >
+    <button
+      className="dd button has-background hoverable text-button is-rounded"
+      onClick={[Function]}
+      type="button"
+    >
+      Entity history
+    </button>
+    <button
+      className="dd button has-background hoverable text-button is-selected is-rounded"
+      onClick={[Function]}
+      type="button"
+    >
+      Publish history
+    </button>
+  </div>
+  <div
+    className="dd flex-column dd flex-grow overflow-y-scroll"
+  >
+    <div
+      className="dd flex-column px-2 py-1"
+    >
+      <p
+        className="dd text-subtitle2"
+      >
+        publish (version 0)
+      </p>
+      <p
+        className="dd text-body1"
+      >
+        3/10/2021, 7:19:39 PM
+      </p>
+      <p
+        className="dd text-body1"
+      >
+        a10e49cd-2f4e-4249-b8ee-eaca8466939b
+      </p>
+    </div>
+    <div
+      className="dd flex-column px-2 py-1"
+    >
+      <p
+        className="dd text-subtitle2"
+      >
+        publish (version 1)
+      </p>
+      <p
+        className="dd text-body1"
+      >
+        3/11/2021, 9:19:39 PM
+      </p>
+      <p
+        className="dd text-body1"
+      >
+        a10e49cd-2f4e-4249-b8ee-eaca8466939b
+      </p>
+    </div>
+  </div>
+</div>
+`;
+
 exports[`Storyshots Domain/EntityMetadata Full Foo 1`] = `
 <div
   className="dd flex-column has-shadow has-background py-2 g-2"
@@ -219,6 +328,96 @@ exports[`Storyshots Domain/EntityMetadata Full Foo 1`] = `
         a10e49cd-2f4e-4249-b8ee-eaca8466939b
       </p>
     </button>
+  </div>
+</div>
+`;
+
+exports[`Storyshots Domain/EntityMetadata Full Foo Publish History 1`] = `
+<div
+  className="dd flex-column has-shadow has-background py-2 g-2"
+>
+  <div
+    className="dd mx-2"
+  >
+    <p
+      className="dd text-subtitle2"
+    >
+      Name
+    </p>
+    <p
+      className="dd text-body1"
+    >
+      Foo 1
+    </p>
+  </div>
+  <div
+    className="dd mx-2"
+  >
+    <p
+      className="dd text-subtitle2"
+    >
+      Type
+    </p>
+    <p
+      className="dd text-body1"
+    >
+      Foo
+    </p>
+  </div>
+  <div
+    className="dd mx-2"
+  >
+    <p
+      className="dd text-subtitle2"
+    >
+      ID
+    </p>
+    <p
+      className="dd text-body1"
+    >
+      fc66b4d7-61ff-44d4-8f68-cb7f526df046
+    </p>
+  </div>
+  <div
+    className="dd flex-row dd g-2"
+  >
+    <button
+      className="dd button has-background hoverable text-button is-rounded"
+      onClick={[Function]}
+      type="button"
+    >
+      Entity history
+    </button>
+    <button
+      className="dd button has-background hoverable text-button is-selected is-rounded"
+      onClick={[Function]}
+      type="button"
+    >
+      Publish history
+    </button>
+  </div>
+  <div
+    className="dd flex-column dd flex-grow overflow-y-scroll"
+  >
+    <div
+      className="dd flex-column px-2 py-1"
+    >
+      <p
+        className="dd text-subtitle2"
+      >
+        publish (version 0)
+      </p>
+      <p
+        className="dd text-body1"
+      >
+        3/11/2021, 9:19:39 PM
+      </p>
+      <p
+        className="dd text-body1"
+      >
+        a10e49cd-2f4e-4249-b8ee-eaca8466939b
+      </p>
+    </div>
   </div>
 </div>
 `;
