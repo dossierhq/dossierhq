@@ -8,6 +8,7 @@ import {
   EntityEditorStateContext,
   Loader,
   Message,
+  PublishStateTag,
   Row,
   Tag,
 } from '../..';
@@ -36,7 +37,7 @@ export function EntityMetadata({
   );
   const [selectedVersionId, setSelectedVersionId] = useState<number | null>(null);
 
-  const { entity } = draftState;
+  const { entity, publishState } = draftState;
 
   return (
     <Column className={joinClassNames('has-shadow has-background py-2', className)} gap={2}>
@@ -52,6 +53,11 @@ export function EntityMetadata({
         <p className="dd text-subtitle2">ID</p>
         <p className="dd text-body1">{entityId}</p>
       </ColumnItem>
+      {publishState ? (
+        <ColumnItem>
+          <PublishStateTag publishState={publishState} />
+        </ColumnItem>
+      ) : null}
       <ColumnItem as={Row} gap={2}>
         <Button
           selected={selectedHistory === 'entity'}

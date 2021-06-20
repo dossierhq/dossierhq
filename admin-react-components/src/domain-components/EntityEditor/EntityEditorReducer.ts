@@ -1,5 +1,6 @@
 import type {
   AdminEntity,
+  EntityPublishState,
   EntityTypeSpecification,
   FieldSpecification,
   Schema,
@@ -22,6 +23,7 @@ export interface EntityEditorDraftState {
   initMessage: MessageItem | null;
   entityLoadMessage: MessageItem | null;
   exists: boolean;
+  publishState: EntityPublishState | null;
   entity: null | {
     version: number;
     entitySpec: EntityTypeSpecification;
@@ -72,6 +74,7 @@ export class AddEntityDraftAction implements EntityEditorStateAction {
       id,
       entity,
       exists,
+      publishState: null,
     };
 
     return {
@@ -174,6 +177,7 @@ export class UpdateEntityAction extends EntityEditorDraftStateAction {
 
     return {
       ...draftState,
+      publishState: this.#entity._publishState,
       entity: createEditorEntityDraftState(entitySpec, this.#entity),
     };
   }
