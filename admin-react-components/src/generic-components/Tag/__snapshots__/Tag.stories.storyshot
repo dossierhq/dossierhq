@@ -2,7 +2,7 @@
 
 exports[`Storyshots Generic/Tag Danger 1`] = `
 <span
-  className="dd has-background text-caption p-1 is-rounded bg-danger"
+  className="dd has-background text-caption p-1 is-rounded ml-1 bg-danger"
 >
   Danger
 </span>
@@ -10,7 +10,7 @@ exports[`Storyshots Generic/Tag Danger 1`] = `
 
 exports[`Storyshots Generic/Tag Primary 1`] = `
 <span
-  className="dd has-background text-caption p-1 is-rounded bg-primary"
+  className="dd has-background text-caption p-1 is-rounded ml-1 bg-primary"
 >
   Primary
 </span>

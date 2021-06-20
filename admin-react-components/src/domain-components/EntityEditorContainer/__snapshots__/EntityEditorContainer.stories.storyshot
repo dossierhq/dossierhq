@@ -463,12 +463,12 @@ exports[`Storyshots Domain/EntityEditorContainer Deleted Foo 1`] = `
             Version 
             1
             <span
-              className="dd has-background text-caption p-1 is-rounded bg-danger"
+              className="dd has-background text-caption p-1 is-rounded ml-1 bg-danger"
             >
               Deleted
             </span>
             <span
-              className="dd has-background text-caption p-1 is-rounded bg-primary"
+              className="dd has-background text-caption p-1 is-rounded ml-1 bg-primary"
             >
               Published
             </span>
@@ -801,6 +801,11 @@ exports[`Storyshots Domain/EntityEditorContainer Full Foo 1`] = `
                 type="button"
               >
                 Bar 1
+                <span
+                  className="dd has-background text-caption p-1 is-rounded ml-1"
+                >
+                  draft
+                </span>
               </button>
               <button
                 className="dd icon-button"
@@ -838,6 +843,11 @@ exports[`Storyshots Domain/EntityEditorContainer Full Foo 1`] = `
                   type="button"
                 >
                   Bar 1
+                  <span
+                    className="dd has-background text-caption p-1 is-rounded ml-1"
+                  >
+                    draft
+                  </span>
                 </button>
                 <button
                   className="dd icon-button"
@@ -860,6 +870,11 @@ exports[`Storyshots Domain/EntityEditorContainer Full Foo 1`] = `
                   type="button"
                 >
                   Bar 2
+                  <span
+                    className="dd has-background text-caption p-1 is-rounded ml-1"
+                  >
+                    draft
+                  </span>
                 </button>
                 <button
                   className="dd icon-button"
@@ -1007,6 +1022,11 @@ exports[`Storyshots Domain/EntityEditorContainer Full Foo 1`] = `
                       type="button"
                     >
                       Bar 2
+                      <span
+                        className="dd has-background text-caption p-1 is-rounded ml-1"
+                      >
+                        draft
+                      </span>
                     </button>
                     <button
                       className="dd icon-button"
@@ -1111,6 +1131,11 @@ exports[`Storyshots Domain/EntityEditorContainer Full Foo 1`] = `
                         type="button"
                       >
                         Bar 1
+                        <span
+                          className="dd has-background text-caption p-1 is-rounded ml-1"
+                        >
+                          draft
+                        </span>
                       </button>
                       <button
                         className="dd icon-button"
@@ -1200,6 +1225,11 @@ exports[`Storyshots Domain/EntityEditorContainer Full Foo 1`] = `
                         type="button"
                       >
                         Bar 2
+                        <span
+                          className="dd has-background text-caption p-1 is-rounded ml-1"
+                        >
+                          draft
+                        </span>
                       </button>
                       <button
                         className="dd icon-button"
@@ -1365,7 +1395,7 @@ exports[`Storyshots Domain/EntityEditorContainer Full Foo 1`] = `
             Version 
             0
             <span
-              className="dd has-background text-caption p-1 is-rounded bg-primary"
+              className="dd has-background text-caption p-1 is-rounded ml-1 bg-primary"
             >
               Published
             </span>

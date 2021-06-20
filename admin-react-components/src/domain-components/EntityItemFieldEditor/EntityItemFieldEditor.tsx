@@ -1,7 +1,15 @@
 import type { EntityReference } from '@datadata/core';
 import React, { useCallback, useContext, useState } from 'react';
 import type { EntityFieldEditorProps } from '../..';
-import { Button, DataDataContext, EntitySearch, IconButton, Modal, Row } from '../..';
+import {
+  Button,
+  DataDataContext,
+  EntitySearch,
+  IconButton,
+  Modal,
+  PublishStateTag,
+  Row,
+} from '../..';
 
 export type EntityItemFieldEditorProps = EntityFieldEditorProps<EntityReference>;
 
@@ -32,6 +40,7 @@ export function EntityItemFieldEditor({
       <Row>
         <Button id={id} onClick={handleShow}>
           {entity ? entity._name : value ? value.id : 'Select entity'}
+          {entity ? <PublishStateTag publishState={entity._publishState} /> : null}
         </Button>
         {value ? (
           <IconButton icon="remove" title="Remove entity" onClick={() => onChange?.(null)} />
