@@ -1,7 +1,9 @@
-import { AdminEntity, EntityPublishState, PublishEventKind, Schema } from '@datadata/core';
-import { expectOkResult } from '@datadata/core/src/CoreTestUtils';
+import type { AdminEntity } from '@datadata/core';
+import { CoreTestUtils, EntityPublishState, PublishEventKind, Schema } from '@datadata/core';
 import { v4 as uuidv4 } from 'uuid';
 import { InMemoryAdmin, InMemoryServer } from '.';
+
+const { expectOkResult } = CoreTestUtils;
 
 const schema = new Schema({ entityTypes: [{ name: 'Foo', fields: [] }], valueTypes: [] });
 
@@ -11,7 +13,9 @@ describe('getEntity()', () => {
     const server = new InMemoryServer(schema);
     server.loadEntities([
       {
-        versions: [{ id, _type: 'Foo', _name: 'Foo', _version: 0 }],
+        id,
+        type: 'Foo',
+        versions: [{ _name: 'Foo', _version: 0 }],
         history: [{ version: 0, createdBy: 'user0', createdAt: '2021-03-03T20:51:12.671Z' }],
         publishedVersion: 0,
         publishEvents: [

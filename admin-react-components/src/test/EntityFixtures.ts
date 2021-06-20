@@ -10,12 +10,12 @@ export const userId1 = 'a10e49cd-2f4e-4249-b8ee-eaca8466939b';
 
 export const entitiesFixture: JsonInMemoryEntity[] = [
   {
+    id: foo1Id,
+    type: 'Foo',
+    name: 'Foo 1',
     publishedVersion: 0,
     versions: [
       {
-        id: foo1Id,
-        _type: 'Foo',
-        _name: 'Foo 1',
         _version: 0,
         title: 'Hello',
         tags: ['one', 'two', 'three'],
@@ -51,19 +51,16 @@ export const entitiesFixture: JsonInMemoryEntity[] = [
     ],
   },
   {
+    id: fooDeletedId,
+    type: 'Foo',
+    name: 'Foo deleted',
     publishedVersion: 1,
     versions: [
       {
-        id: fooDeletedId,
-        _type: 'Foo',
-        _name: 'Foo deleted',
         _version: 1,
         _deleted: true,
       },
       {
-        id: fooDeletedId,
-        _type: 'Foo',
-        _name: 'Foo deleted',
         title: 'Hello',
         _version: 0,
       },
@@ -96,11 +93,11 @@ export const entitiesFixture: JsonInMemoryEntity[] = [
     ],
   },
   {
+    id: bar1Id,
+    type: 'Bar',
+    name: 'Bar 1',
     versions: [
       {
-        id: bar1Id,
-        _type: 'Bar',
-        _name: 'Bar 1',
         _version: 0,
         title: 'Bar 1',
       },
@@ -115,11 +112,11 @@ export const entitiesFixture: JsonInMemoryEntity[] = [
     publishEvents: [],
   },
   {
+    id: bar2Id,
+    type: 'Bar',
+    name: 'Bar 2',
     versions: [
       {
-        id: bar2Id,
-        _type: 'Bar',
-        _name: 'Bar 2',
         _version: 0,
         title: 'Bar 2',
       },
@@ -134,11 +131,11 @@ export const entitiesFixture: JsonInMemoryEntity[] = [
     publishEvents: [],
   },
   {
+    id: baz1Id,
+    type: 'Baz',
+    name: 'Baz 1',
     versions: [
       {
-        id: baz1Id,
-        _type: 'Baz',
-        _name: 'Baz 1',
         _version: 0,
         title: 'Baz 1',
         body: { blocks: [{ type: RichTextBlockType.paragraph, data: { text: 'Hello world' } }] },

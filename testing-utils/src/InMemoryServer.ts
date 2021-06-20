@@ -2,6 +2,9 @@ import type { PublishEventKind, Schema } from '@datadata/core';
 import { InMemoryServerInner } from './InMemoryServerInner';
 
 export interface InMemoryEntity {
+  id: string;
+  type: string;
+  name: string;
   versions: InMemoryEntityVersion[];
   publishedVersion?: number | null;
   history: { version: number; createdBy: string; createdAt: Date }[];
@@ -14,9 +17,6 @@ export interface InMemoryEntity {
 }
 
 export interface InMemoryEntityVersion {
-  id: string;
-  _name: string;
-  _type: string;
   _version: number;
   _deleted?: boolean;
   [fieldName: string]: unknown;
