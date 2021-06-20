@@ -1,6 +1,6 @@
 import type { AdminEntity, AdminQuery } from '@datadata/core';
 import React, { useContext } from 'react';
-import { Button, DataDataContext, Message } from '../..';
+import { Button, DataDataContext, Message, PublishStateTag } from '../..';
 import { joinClassNames } from '../../utils/ClassNameUtils';
 
 export interface EntityListProps {
@@ -25,7 +25,8 @@ export function EntityList({
             const entity = edge.node.value;
             return (
               <Button key={edge.cursor} onClick={() => onEntityClick(entity)}>
-                {`${entity._type}: ${entity._name}`}
+                {`${entity._type}: ${entity._name} `}
+                <PublishStateTag publishState={entity._publishState} />
               </Button>
             );
           }
