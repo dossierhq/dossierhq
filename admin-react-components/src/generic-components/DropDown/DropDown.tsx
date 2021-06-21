@@ -7,7 +7,7 @@ export interface DropDownProps<TItem extends DropDownItem = DropDownItem> {
   id: string;
   className?: string;
   text: string;
-  showAsIcon: boolean;
+  showAsIcon?: boolean;
   items: TItem[];
   onItemClick: (item: TItem) => void;
 }
