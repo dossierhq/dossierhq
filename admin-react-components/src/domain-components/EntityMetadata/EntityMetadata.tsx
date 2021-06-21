@@ -6,14 +6,17 @@ import {
   Column,
   ColumnItem,
   DataDataContext,
+  DropDown,
   EntityEditorStateContext,
   Loader,
   Message,
   PublishStateTag,
   Row,
   RowElement,
+  Stack,
   Tag,
 } from '../..';
+import type { DropDownItem } from '../..';
 import { joinClassNames } from '../../utils/ClassNameUtils';
 import type { EntityEditorDraftState } from '../EntityEditor/EntityEditorReducer';
 import { PublishingButton } from './PublishingButton';
@@ -112,24 +115,30 @@ function EntityHistoryList({
       {entityHistory ? (
         entityHistory.versions.map((version) => {
           const selected = version.version === selectedVersionId;
+          //TODO change Stack to not need outer <div>
+          //TODO change drop down direction to leftwards
+          //TODO remove Button and selected item
           return (
-            <Button
-              key={version.version}
-              onClick={() => setSelectedVersionId(version.version)}
-              selected={selected}
-              rounded={false}
-            >
-              <p className="dd text-subtitle2">
-                Version {version.version}
-                {version.deleted ? <Tag kind="danger" text="Deleted" /> : null}
-                {version.published ? <Tag kind="primary" text="Published" /> : null}
-              </p>
-              <p className="dd text-body1">{version.createdAt.toLocaleString()}</p>
-              <p className="dd text-body1">{version.createdBy}</p>
-              {selected ? (
-                <PublishButton className="mt-1" entityId={draftState.id} version={version} />
-              ) : null}
-            </Button>
+            <div key={version.version}>
+              <Stack>
+                <Button
+                  onClick={() => setSelectedVersionId(version.version)}
+                  selected={selected}
+                  rounded={false}
+                >
+                  <p className="dd text-subtitle2">
+                    Version {version.version}
+                    {version.deleted ? <Tag kind="danger" text="Deleted" /> : null}
+                    {version.published ? <Tag kind="primary" text="Published" /> : null}
+                  </p>
+                  <p className="dd text-body1">{version.createdAt.toLocaleString()}</p>
+                  <p className="dd text-body1">{version.createdBy}</p>
+                </Button>
+                <Stack.Layer top right>
+                  <PublishButton className="" entityId={draftState.id} version={version} />
+                </Stack.Layer>
+              </Stack>
+            </div>
           );
         })
       ) : !entityHistoryError && draftState.exists ? (
@@ -148,29 +157,35 @@ function EntityHistoryList({
 function PublishButton({
   className,
   entityId,
-  version,
+  version: versionInfo,
 }: {
   className?: string;
   entityId: string;
   version: EntityVersionInfo;
 }) {
-  const { publishEntities, unpublishEntities } = useContext(DataDataContext);
-  const publish = !version.published;
+  const { publishEntities } = useContext(DataDataContext);
+  const { published, version } = versionInfo;
+
+  if (published) {
+    return null;
+  }
+
+  const handleItemClick = async ({ key }: DropDownItem) => {
+    if (key === 'publish') {
+      const result = await publishEntities([{ id: entityId, version }]);
+    }
+    //TODO handle error and loading
+  };
 
   return (
-    <Button
+    <DropDown
+      id={`${entityId}-${version}-publish`}
       className={className}
-      kind="primary"
-      onClick={async () => {
-        const publishVersion = version.version;
-        const result = await (publish
-          ? publishEntities([{ id: entityId, version: publishVersion }])
-          : unpublishEntities([entityId]));
-        //TODO handle error and loading
-      }}
-    >
-      {publish ? 'Publish' : 'Unpublish'}
-    </Button>
+      showAsIcon
+      text="Version actions"
+      items={[{ key: 'publish', text: 'Publish version' }]}
+      onItemClick={handleItemClick}
+    />
   );
 }
 
