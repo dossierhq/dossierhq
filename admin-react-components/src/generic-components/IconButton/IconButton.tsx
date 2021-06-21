@@ -4,6 +4,7 @@ import { Icon } from '../..';
 import { joinClassNames } from '../../utils/ClassNameUtils';
 
 export interface IconButtonProps {
+  id?: string;
   className?: string;
   icon: IconType;
   title: string;
@@ -13,6 +14,7 @@ export interface IconButtonProps {
 }
 
 export function IconButton({
+  id,
   className,
   icon,
   title,
@@ -22,6 +24,7 @@ export function IconButton({
 }: IconButtonProps): JSX.Element {
   return (
     <button
+      id={id}
       className={joinClassNames('dd icon-button', className)}
       title={title}
       onClick={disabled ? undefined : onClick}

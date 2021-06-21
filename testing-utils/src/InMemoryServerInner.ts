@@ -14,12 +14,13 @@ export class InMemoryServerInner {
   loadEntities(entities: JsonInMemoryEntity[]): void {
     const clone: JsonInMemoryEntity[] = JSON.parse(JSON.stringify(entities));
     this.#entities = clone.map(
-      ({ id, type, name, versions, publishedVersion, history, publishEvents }) => ({
+      ({ id, type, name, versions, publishedVersion, archived, history, publishEvents }) => ({
         id,
         type,
         name,
         versions,
         publishedVersion,
+        archived,
         history: history.map(({ version, createdBy, createdAt }) => ({
           version,
           createdBy,
@@ -116,6 +117,7 @@ export class InMemoryServerInner {
       id,
       type,
       name,
+      archived: false,
       versions: [version],
       history: [{ version: 0, createdAt: new Date(), createdBy: userId }],
       publishEvents: [],
@@ -144,8 +146,42 @@ export class InMemoryServerInner {
       throw new Error(`Can't find ${id}`);
     }
     fullEntity.publishedVersion = version;
-    fullEntity.publishEvents.push({
-      kind: version === null ? PublishEventKind.Unpublish : PublishEventKind.Publish,
+    fullEntity.archived = false;
+    this.addPublishEvent(
+      fullEntity,
+      version === null ? PublishEventKind.Unpublish : PublishEventKind.Publish,
+      version,
+      userId
+    );
+  }
+
+  archiveEntity(id: string, userId: string): void {
+    const fullEntity = this.getFullEntity(id);
+    if (!fullEntity) {
+      throw new Error(`Can't find ${id}`);
+    }
+    fullEntity.publishedVersion = null;
+    fullEntity.archived = true;
+    this.addPublishEvent(fullEntity, PublishEventKind.Archive, null, userId);
+  }
+
+  unarchiveEntity(id: string, userId: string): void {
+    const fullEntity = this.getFullEntity(id);
+    if (!fullEntity) {
+      throw new Error(`Can't find ${id}`);
+    }
+    fullEntity.archived = false;
+    this.addPublishEvent(fullEntity, PublishEventKind.Unarchive, null, userId);
+  }
+
+  private addPublishEvent(
+    entity: InMemoryEntity,
+    kind: PublishEventKind,
+    version: number | null,
+    userId: string
+  ) {
+    entity.publishEvents.push({
+      kind,
       version,
       publishedAt: new Date(),
       publishedBy: userId,
@@ -165,9 +201,10 @@ export class InMemoryServerInner {
 
   private getEntityPublishState(entity: InMemoryEntity): EntityPublishState {
     let state: EntityPublishState;
-    const { publishedVersion } = entity;
-    //TODO add support for Archive
-    if (typeof publishedVersion === 'number') {
+    const { archived, publishedVersion } = entity;
+    if (archived) {
+      state = EntityPublishState.Archived;
+    } else if (typeof publishedVersion === 'number') {
       const laterVersionsThanPublished = entity.versions.some(
         (it) => it._version > publishedVersion
       );

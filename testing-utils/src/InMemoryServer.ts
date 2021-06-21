@@ -6,6 +6,7 @@ export interface InMemoryEntity {
   type: string;
   name: string;
   versions: InMemoryEntityVersion[];
+  archived?: boolean;
   publishedVersion?: number | null;
   history: { version: number; createdBy: string; createdAt: Date }[];
   publishEvents: {

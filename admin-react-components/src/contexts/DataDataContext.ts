@@ -57,6 +57,12 @@ export interface DataDataContextAdapter {
   unpublishEntities(
     entityIds: string[]
   ): PromiseResult<void, ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic>;
+  archiveEntity(
+    entityId: string
+  ): PromiseResult<void, ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic>;
+  unarchiveEntity(
+    entityId: string
+  ): PromiseResult<void, ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic>;
 }
 
 enum FetcherActions {
@@ -233,6 +239,34 @@ export class DataDataContextValue {
         for (const entityId of entityIds) {
           this.invalidateEntityPublished(entityId);
         }
+      }
+      return result;
+    } catch (error) {
+      return createErrorResultFromError(error, [ErrorType.BadRequest, ErrorType.NotFound]);
+    }
+  };
+
+  archiveEntity = async (
+    id: string
+  ): PromiseResult<void, ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic> => {
+    try {
+      const result = await this.#adapter.archiveEntity(id);
+      if (result.isOk()) {
+        this.invalidateEntityPublished(id);
+      }
+      return result;
+    } catch (error) {
+      return createErrorResultFromError(error, [ErrorType.BadRequest, ErrorType.NotFound]);
+    }
+  };
+
+  unarchiveEntity = async (
+    id: string
+  ): PromiseResult<void, ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic> => {
+    try {
+      const result = await this.#adapter.unarchiveEntity(id);
+      if (result.isOk()) {
+        this.invalidateEntityPublished(id);
       }
       return result;
     } catch (error) {

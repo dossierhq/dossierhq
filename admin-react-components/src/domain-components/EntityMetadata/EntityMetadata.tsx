@@ -1,7 +1,9 @@
-import type { EntityVersionInfo } from '@datadata/core';
+import type { EntityVersionInfo, ErrorType, PromiseResult } from '@datadata/core';
+import { assertIsDefined, EntityPublishState } from '@datadata/core';
 import React, { useContext, useState } from 'react';
 import {
   Button,
+  ButtonWithDropDown,
   Column,
   ColumnItem,
   DataDataContext,
@@ -10,6 +12,7 @@ import {
   Message,
   PublishStateTag,
   Row,
+  RowElement,
   Tag,
 } from '../..';
 import { joinClassNames } from '../../utils/ClassNameUtils';
@@ -28,9 +31,7 @@ export function EntityMetadata({
 }: EntityMetadataProps): JSX.Element {
   const { drafts } = useContext(EntityEditorStateContext);
   const draftState = drafts.find((x) => x.id === entityId);
-  if (!draftState) {
-    throw new Error(`Can't find state for id (${entityId})`);
-  }
+  assertIsDefined(draftState);
 
   const [selectedHistory, setSelectedHistory] = useState<'entity' | 'publish'>(
     initialSelectedHistory ?? 'entity'
@@ -53,11 +54,15 @@ export function EntityMetadata({
         <p className="dd text-subtitle2">ID</p>
         <p className="dd text-body1">{entityId}</p>
       </ColumnItem>
-      {publishState ? (
-        <ColumnItem>
-          <PublishStateTag publishState={publishState} />
-        </ColumnItem>
-      ) : null}
+      <ColumnItem className="mx-2">
+        <Row>
+          <RowElement as="p" className="text-subtitle2" grow>
+            Publish state
+          </RowElement>
+          {publishState ? <PublishStateTag publishState={publishState} /> : null}
+        </Row>
+        <NewPublishButton draftState={draftState} />
+      </ColumnItem>
       <ColumnItem as={Row} gap={2}>
         <Button
           selected={selectedHistory === 'entity'}
@@ -137,6 +142,87 @@ function EntityHistoryList({
         />
       ) : null}
     </>
+  );
+}
+
+function NewPublishButton({
+  draftState,
+}: {
+  draftState: EntityEditorDraftState;
+}): JSX.Element | null {
+  const { archiveEntity, publishEntities, unarchiveEntity, unpublishEntities } =
+    useContext(DataDataContext);
+  const [loading, setLoading] = useState(false);
+
+  const { id, entity, publishState } = draftState;
+
+  if (!publishState) {
+    return null;
+  }
+
+  let publishActionsIds: Array<'publish' | 'unpublish' | 'archive' | 'unarchive'> = [];
+  if ([EntityPublishState.Draft, EntityPublishState.Withdrawn].includes(publishState)) {
+    publishActionsIds = ['publish', 'archive'];
+  } else if (publishState === EntityPublishState.Published) {
+    publishActionsIds = ['unpublish'];
+  } else if (publishState === EntityPublishState.Modified) {
+    publishActionsIds = ['publish', 'unpublish'];
+  } else if (publishState === EntityPublishState.Archived) {
+    publishActionsIds = ['unarchive', 'publish'];
+  }
+
+  const publishActions: { name: string; handler: () => PromiseResult<void, ErrorType> }[] =
+    publishActionsIds.map((action) => {
+      switch (action) {
+        case 'archive':
+          return {
+            name: 'Archive',
+            handler: () => archiveEntity(id),
+          };
+
+        case 'unarchive':
+          return {
+            name: 'Unarchive',
+            handler: () => unarchiveEntity(id),
+          };
+        case 'publish': {
+          assertIsDefined(entity);
+          const latestVersion = entity.version - 1; //TODO make more robust
+          return {
+            name: 'Publish',
+            handler: () => publishEntities([{ id, version: latestVersion }]),
+          };
+        }
+        case 'unpublish':
+          return { name: 'Unpublish', handler: () => unpublishEntities([id]) };
+      }
+    });
+
+  const [buttonAction, ...dropdownActions] = publishActions;
+  const dropDownItems = dropdownActions.map(({ name, handler }) => ({
+    key: name,
+    text: name,
+    handler,
+  }));
+
+  const executeHandler = async (handler: typeof buttonAction['handler']) => {
+    setLoading(true);
+    const result = await handler();
+    setLoading(false);
+  };
+
+  return (
+    <ButtonWithDropDown
+      id="publish-button"
+      kind="primary"
+      loading={loading}
+      dropDownTitle="Publish actions"
+      items={dropDownItems}
+      onClick={() => executeHandler(buttonAction.handler)}
+      onItemClick={(item) => executeHandler(item.handler)}
+    >
+      {buttonAction.name}
+    </ButtonWithDropDown>
   );
 }
 
