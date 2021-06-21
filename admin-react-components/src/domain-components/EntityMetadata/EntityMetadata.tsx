@@ -39,7 +39,6 @@ export function EntityMetadata({
   const [selectedHistory, setSelectedHistory] = useState<'entity' | 'publish'>(
     initialSelectedHistory ?? 'entity'
   );
-  const [selectedVersionId, setSelectedVersionId] = useState<number | null>(null);
 
   const { entity, latestServerVersion, publishState } = draftState;
 
@@ -81,30 +80,14 @@ export function EntityMetadata({
         </Button>
       </ColumnItem>
       <ColumnItem as={Column} grow overflowY="scroll">
-        {selectedHistory === 'entity' ? (
-          <EntityHistoryList
-            {...{
-              draftState,
-              selectedVersionId,
-              setSelectedVersionId,
-            }}
-          />
-        ) : null}
+        {selectedHistory === 'entity' ? <EntityHistoryList draftState={draftState} /> : null}
         {selectedHistory === 'publish' ? <PublishHistory draftState={draftState} /> : null}
       </ColumnItem>
     </Column>
   );
 }
 
-function EntityHistoryList({
-  draftState,
-  selectedVersionId,
-  setSelectedVersionId,
-}: {
-  draftState: EntityEditorDraftState;
-  selectedVersionId: number | null;
-  setSelectedVersionId: React.Dispatch<React.SetStateAction<number | null>>;
-}) {
+function EntityHistoryList({ draftState }: { draftState: EntityEditorDraftState }) {
   const { useEntityHistory } = useContext(DataDataContext);
   const { entityHistory, entityHistoryError } = useEntityHistory(
     draftState.exists ? draftState.id : undefined
@@ -114,18 +97,12 @@ function EntityHistoryList({
     <>
       {entityHistory ? (
         entityHistory.versions.map((version) => {
-          const selected = version.version === selectedVersionId;
           //TODO change Stack to not need outer <div>
           //TODO change drop down direction to leftwards
-          //TODO remove Button and selected item
           return (
-            <div key={version.version}>
+            <div key={version.version} className="dd px-2 py-1">
               <Stack>
-                <Button
-                  onClick={() => setSelectedVersionId(version.version)}
-                  selected={selected}
-                  rounded={false}
-                >
+                <Column>
                   <p className="dd text-subtitle2">
                     Version {version.version}
                     {version.deleted ? <Tag kind="danger" text="Deleted" /> : null}
@@ -133,7 +110,7 @@ function EntityHistoryList({
                   </p>
                   <p className="dd text-body1">{version.createdAt.toLocaleString()}</p>
                   <p className="dd text-body1">{version.createdBy}</p>
-                </Button>
+                </Column>
                 <Stack.Layer top right>
                   <PublishButton className="" entityId={draftState.id} version={version} />
                 </Stack.Layer>
