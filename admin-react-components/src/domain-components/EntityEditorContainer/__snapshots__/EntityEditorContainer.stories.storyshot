@@ -460,14 +460,14 @@ exports[`Storyshots Domain/EntityEditorContainer Deleted Foo 1`] = `
       <div
         className="dd flex-column dd flex-grow overflow-y-scroll"
       >
-        <div>
+        <div
+          className="dd px-2 py-1"
+        >
           <div
             className="dd stack"
           >
-            <button
-              className="dd button has-background hoverable text-button"
-              onClick={[Function]}
-              type="button"
+            <div
+              className="dd flex-column"
             >
               <p
                 className="dd text-subtitle2"
@@ -485,7 +485,7 @@ exports[`Storyshots Domain/EntityEditorContainer Deleted Foo 1`] = `
               >
                 a10e49cd-2f4e-4249-b8ee-eaca8466939b
               </p>
-            </button>
+            </div>
             <div
               className="dd stack-layer top right"
             >
@@ -507,14 +507,14 @@ exports[`Storyshots Domain/EntityEditorContainer Deleted Foo 1`] = `
             </div>
           </div>
         </div>
-        <div>
+        <div
+          className="dd px-2 py-1"
+        >
           <div
             className="dd stack"
           >
-            <button
-              className="dd button has-background hoverable text-button"
-              onClick={[Function]}
-              type="button"
+            <div
+              className="dd flex-column"
             >
               <p
                 className="dd text-subtitle2"
@@ -542,7 +542,7 @@ exports[`Storyshots Domain/EntityEditorContainer Deleted Foo 1`] = `
               >
                 a10e49cd-2f4e-4249-b8ee-eaca8466939b
               </p>
-            </button>
+            </div>
             <div
               className="dd stack-layer top right"
             />
@@ -1478,14 +1478,14 @@ exports[`Storyshots Domain/EntityEditorContainer Full Foo 1`] = `
       <div
         className="dd flex-column dd flex-grow overflow-y-scroll"
       >
-        <div>
+        <div
+          className="dd px-2 py-1"
+        >
           <div
             className="dd stack"
           >
-            <button
-              className="dd button has-background hoverable text-button"
-              onClick={[Function]}
-              type="button"
+            <div
+              className="dd flex-column"
             >
               <p
                 className="dd text-subtitle2"
@@ -1508,7 +1508,7 @@ exports[`Storyshots Domain/EntityEditorContainer Full Foo 1`] = `
               >
                 a10e49cd-2f4e-4249-b8ee-eaca8466939b
               </p>
-            </button>
+            </div>
             <div
               className="dd stack-layer top right"
             />
@@ -2703,14 +2703,14 @@ exports[`Storyshots Domain/EntityEditorContainer Two Entities 1`] = `
       <div
         className="dd flex-column dd flex-grow overflow-y-scroll"
       >
-        <div>
+        <div
+          className="dd px-2 py-1"
+        >
           <div
             className="dd stack"
           >
-            <button
-              className="dd button has-background hoverable text-button"
-              onClick={[Function]}
-              type="button"
+            <div
+              className="dd flex-column"
             >
               <p
                 className="dd text-subtitle2"
@@ -2728,7 +2728,7 @@ exports[`Storyshots Domain/EntityEditorContainer Two Entities 1`] = `
               >
                 a10e49cd-2f4e-4249-b8ee-eaca8466939b
               </p>
-            </button>
+            </div>
             <div
               className="dd stack-layer top right"
             >
