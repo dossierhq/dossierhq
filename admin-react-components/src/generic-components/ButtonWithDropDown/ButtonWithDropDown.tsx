@@ -16,7 +16,7 @@ export function ButtonWithDropDown<TDropDownItem extends DropDownItem>(
   const { id, className, children, dropDownTitle, items, onItemClick, ...buttonProps } = props;
   return (
     <Row className={className}>
-      <Button id={id} {...{ buttonProps }}>
+      <Button id={id} {...buttonProps}>
         {children}
       </Button>
       {items.length > 0 ? (

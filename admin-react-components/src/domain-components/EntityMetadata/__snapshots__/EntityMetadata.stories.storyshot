@@ -67,8 +67,9 @@ exports[`Storyshots Domain/EntityMetadata Deleted Foo 1`] = `
       className="dd flex-row"
     >
       <button
-        className="dd button has-background hoverable text-button is-rounded"
+        className="dd button has-background hoverable text-button bg-primary is-rounded"
         id="publish-button"
+        onClick={[Function]}
         type="button"
       >
         Unpublish
@@ -221,8 +222,9 @@ exports[`Storyshots Domain/EntityMetadata Deleted Foo Publish History 1`] = `
       className="dd flex-row"
     >
       <button
-        className="dd button has-background hoverable text-button is-rounded"
+        className="dd button has-background hoverable text-button bg-primary is-rounded"
         id="publish-button"
+        onClick={[Function]}
         type="button"
       >
         Unpublish
@@ -359,8 +361,9 @@ exports[`Storyshots Domain/EntityMetadata Full Foo 1`] = `
       className="dd flex-row"
     >
       <button
-        className="dd button has-background hoverable text-button is-rounded"
+        className="dd button has-background hoverable text-button bg-primary is-rounded"
         id="publish-button"
+        onClick={[Function]}
         type="button"
       >
         Unpublish
@@ -486,8 +489,9 @@ exports[`Storyshots Domain/EntityMetadata Full Foo Publish History 1`] = `
       className="dd flex-row"
     >
       <button
-        className="dd button has-background hoverable text-button is-rounded"
+        className="dd button has-background hoverable text-button bg-primary is-rounded"
         id="publish-button"
+        onClick={[Function]}
         type="button"
       >
         Unpublish
