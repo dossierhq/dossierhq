@@ -24,6 +24,7 @@ export interface EntityEditorDraftState {
   entityLoadMessage: MessageItem | null;
   exists: boolean;
   publishState: EntityPublishState | null;
+  latestServerVersion: number | null;
   entity: null | {
     version: number;
     entitySpec: EntityTypeSpecification;
@@ -75,6 +76,7 @@ export class AddEntityDraftAction implements EntityEditorStateAction {
       entity,
       exists,
       publishState: null,
+      latestServerVersion: null,
     };
 
     return {
@@ -178,6 +180,7 @@ export class UpdateEntityAction extends EntityEditorDraftStateAction {
     return {
       ...draftState,
       publishState: this.#entity._publishState,
+      latestServerVersion: this.#entity._version,
       entity: createEditorEntityDraftState(entitySpec, this.#entity),
     };
   }
