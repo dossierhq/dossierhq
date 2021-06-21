@@ -97,60 +97,94 @@ exports[`Storyshots Domain/EntityMetadata Deleted Foo 1`] = `
   <div
     className="dd flex-column dd flex-grow overflow-y-scroll"
   >
-    <button
-      className="dd button has-background hoverable text-button"
-      onClick={[Function]}
-      type="button"
-    >
-      <p
-        className="dd text-subtitle2"
+    <div>
+      <div
+        className="dd stack"
       >
-        Version 
-        0
-      </p>
-      <p
-        className="dd text-body1"
-      >
-        3/10/2021, 7:19:39 PM
-      </p>
-      <p
-        className="dd text-body1"
-      >
-        a10e49cd-2f4e-4249-b8ee-eaca8466939b
-      </p>
-    </button>
-    <button
-      className="dd button has-background hoverable text-button"
-      onClick={[Function]}
-      type="button"
-    >
-      <p
-        className="dd text-subtitle2"
-      >
-        Version 
-        1
-        <span
-          className="dd has-background text-caption p-1 is-rounded ml-1 bg-danger"
+        <button
+          className="dd button has-background hoverable text-button"
+          onClick={[Function]}
+          type="button"
         >
-          Deleted
-        </span>
-        <span
-          className="dd has-background text-caption p-1 is-rounded ml-1 bg-primary"
+          <p
+            className="dd text-subtitle2"
+          >
+            Version 
+            0
+          </p>
+          <p
+            className="dd text-body1"
+          >
+            3/10/2021, 7:19:39 PM
+          </p>
+          <p
+            className="dd text-body1"
+          >
+            a10e49cd-2f4e-4249-b8ee-eaca8466939b
+          </p>
+        </button>
+        <div
+          className="dd stack-layer top right"
         >
-          Published
-        </span>
-      </p>
-      <p
-        className="dd text-body1"
+          <div
+            className=""
+          >
+            <button
+              className="dd icon-button"
+              id="fb62be03-a0a9-4689-9987-bacee0e7692d-0-publish"
+              onClick={[Function]}
+              title="Version actions"
+              type="button"
+            >
+              <span
+                className="dd icon icon-chevron-down"
+              />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div
+        className="dd stack"
       >
-        3/11/2021, 9:19:39 PM
-      </p>
-      <p
-        className="dd text-body1"
-      >
-        a10e49cd-2f4e-4249-b8ee-eaca8466939b
-      </p>
-    </button>
+        <button
+          className="dd button has-background hoverable text-button"
+          onClick={[Function]}
+          type="button"
+        >
+          <p
+            className="dd text-subtitle2"
+          >
+            Version 
+            1
+            <span
+              className="dd has-background text-caption p-1 is-rounded ml-1 bg-danger"
+            >
+              Deleted
+            </span>
+            <span
+              className="dd has-background text-caption p-1 is-rounded ml-1 bg-primary"
+            >
+              Published
+            </span>
+          </p>
+          <p
+            className="dd text-body1"
+          >
+            3/11/2021, 9:19:39 PM
+          </p>
+          <p
+            className="dd text-body1"
+          >
+            a10e49cd-2f4e-4249-b8ee-eaca8466939b
+          </p>
+        </button>
+        <div
+          className="dd stack-layer top right"
+        />
+      </div>
+    </div>
   </div>
 </div>
 `;
@@ -391,33 +425,42 @@ exports[`Storyshots Domain/EntityMetadata Full Foo 1`] = `
   <div
     className="dd flex-column dd flex-grow overflow-y-scroll"
   >
-    <button
-      className="dd button has-background hoverable text-button"
-      onClick={[Function]}
-      type="button"
-    >
-      <p
-        className="dd text-subtitle2"
+    <div>
+      <div
+        className="dd stack"
       >
-        Version 
-        0
-        <span
-          className="dd has-background text-caption p-1 is-rounded ml-1 bg-primary"
+        <button
+          className="dd button has-background hoverable text-button"
+          onClick={[Function]}
+          type="button"
         >
-          Published
-        </span>
-      </p>
-      <p
-        className="dd text-body1"
-      >
-        3/11/2021, 9:19:39 PM
-      </p>
-      <p
-        className="dd text-body1"
-      >
-        a10e49cd-2f4e-4249-b8ee-eaca8466939b
-      </p>
-    </button>
+          <p
+            className="dd text-subtitle2"
+          >
+            Version 
+            0
+            <span
+              className="dd has-background text-caption p-1 is-rounded ml-1 bg-primary"
+            >
+              Published
+            </span>
+          </p>
+          <p
+            className="dd text-body1"
+          >
+            3/11/2021, 9:19:39 PM
+          </p>
+          <p
+            className="dd text-body1"
+          >
+            a10e49cd-2f4e-4249-b8ee-eaca8466939b
+          </p>
+        </button>
+        <div
+          className="dd stack-layer top right"
+        />
+      </div>
+    </div>
   </div>
 </div>
 `;
