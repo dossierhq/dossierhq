@@ -2,9 +2,10 @@ export type {
   ToolConstructable as EditorJsToolConstructable,
   ToolSettings as EditorJsToolSettings,
 } from '@editorjs/editorjs';
+export type { ButtonProps } from './generic-components/Button/Button';
 export type { ColumnProps } from './generic-components/Column/Column';
 export type { DataDataContextAdapter } from './contexts/DataDataContext';
-export type { DropDownItem } from './generic-components/DropDown/DropDown';
+export type { DropDownItem, DropDownProps } from './generic-components/DropDown/DropDown';
 export type { EntityEditorProps } from './domain-components/EntityEditor/EntityEditor';
 export type {
   EntityEditorSelector,
@@ -19,6 +20,7 @@ export type { MessageItem } from './generic-components/Message/Message';
 export type { RowProps } from './generic-components/Row/Row';
 
 export { Button } from './generic-components/Button/Button';
+export { ButtonWithDropDown } from './generic-components/ButtonWithDropDown/ButtonWithDropDown';
 export {
   Column,
   ColumnAs,

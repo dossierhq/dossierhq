@@ -15,7 +15,8 @@ describe('getEntity()', () => {
       {
         id,
         type: 'Foo',
-        versions: [{ _name: 'Foo', _version: 0 }],
+        name: 'Foo',
+        versions: [{ _version: 0 }],
         history: [{ version: 0, createdBy: 'user0', createdAt: '2021-03-03T20:51:12.671Z' }],
         publishedVersion: 0,
         publishEvents: [

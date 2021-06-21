@@ -23,3 +23,14 @@ Normal.args = {
     { key: 'three', text: 'Three' },
   ],
 };
+
+export const AsIcon = Template.bind({});
+AsIcon.args = {
+  text: 'Dropdown',
+  showAsIcon: true,
+  items: [
+    { key: 'one', text: 'One' },
+    { key: 'two', text: 'Two' },
+    { key: 'three', text: 'Three' },
+  ],
+};

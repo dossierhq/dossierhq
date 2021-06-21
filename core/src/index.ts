@@ -36,6 +36,7 @@ export type {
   ValueItem,
 } from './Types';
 
+export { assertIsDefined } from './Asserts';
 export {
   createErrorResult,
   createErrorResultFromError,

@@ -76,4 +76,14 @@ export class TestContextAdapter implements DataDataContextAdapter {
     if (this.#interceptor) await this.#interceptor();
     return await InMemoryAdmin.unpublishEntities(this.#context, entityIds);
   };
+
+  archiveEntity: DataDataContextAdapter['archiveEntity'] = async (entityId) => {
+    if (this.#interceptor) await this.#interceptor();
+    return await InMemoryAdmin.archiveEntity(this.#context, entityId);
+  };
+
+  unarchiveEntity: DataDataContextAdapter['unarchiveEntity'] = async (entityId) => {
+    if (this.#interceptor) await this.#interceptor();
+    return await InMemoryAdmin.unarchiveEntity(this.#context, entityId);
+  };
 }

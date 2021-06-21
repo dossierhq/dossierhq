@@ -1,5 +1,21 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Storyshots Generic/DropDown As Icon 1`] = `
+<div>
+  <button
+    className="dd icon-button"
+    id="drop-down"
+    onClick={[Function]}
+    title="Dropdown"
+    type="button"
+  >
+    <span
+      className="dd icon icon-chevron-down"
+    />
+  </button>
+</div>
+`;
+
 exports[`Storyshots Generic/DropDown Normal 1`] = `
 <div>
   <button

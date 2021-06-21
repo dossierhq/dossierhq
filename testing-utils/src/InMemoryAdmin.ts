@@ -175,4 +175,32 @@ export const InMemoryAdmin = {
 
     return ok(undefined);
   },
+
+  archiveEntity: async (
+    context: InMemorySessionContext,
+    entityId: string
+  ): PromiseResult<void, ErrorType.BadRequest | ErrorType.NotFound> => {
+    const entityResult = context.server.getEntity(entityId);
+    if (!entityResult) {
+      return notOk.NotFound('No such entity or version');
+    }
+
+    context.server.archiveEntity(entityId, context.userId);
+
+    return ok(undefined);
+  },
+
+  unarchiveEntity: async (
+    context: InMemorySessionContext,
+    entityId: string
+  ): PromiseResult<void, ErrorType.BadRequest | ErrorType.NotFound> => {
+    const entityResult = context.server.getEntity(entityId);
+    if (!entityResult) {
+      return notOk.NotFound('No such entity or version');
+    }
+
+    context.server.unarchiveEntity(entityId, context.userId);
+
+    return ok(undefined);
+  },
 };

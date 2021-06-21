@@ -1,13 +1,15 @@
 import React, { useCallback, useState } from 'react';
-import { Button, Icon } from '../..';
+import { Button, Icon, IconButton } from '../..';
 import { useKeyHandler } from '../../utils/KeyboardUtils';
 import { useWindowClick } from '../../utils/MouseUtils';
 
-export interface DropDownProps {
+export interface DropDownProps<TItem extends DropDownItem = DropDownItem> {
   id: string;
+  className?: string;
   text: string;
-  items: DropDownItem[];
-  onItemClick: (item: DropDownItem) => void;
+  showAsIcon: boolean;
+  items: TItem[];
+  onItemClick: (item: TItem) => void;
 }
 
 export interface DropDownItem {
@@ -15,17 +17,28 @@ export interface DropDownItem {
   key: string;
 }
 
-export function DropDown({ id, text, items, onItemClick }: DropDownProps): JSX.Element {
+export function DropDown<TItem extends DropDownItem>({
+  id,
+  className,
+  text,
+  showAsIcon,
+  items,
+  onItemClick,
+}: DropDownProps<TItem>): JSX.Element {
   const [isActive, setActive] = useState(false);
   const handleClose = useCallback(() => setActive(false), [setActive]);
   useKeyHandler(['Escape'], handleClose, isActive);
   useWindowClick(id, handleClose, isActive);
 
   return (
-    <div>
-      <Button id={id} onClick={() => setActive(!isActive)}>
-        {text} <Icon icon="chevron-down" />
-      </Button>
+    <div className={className}>
+      {!showAsIcon ? (
+        <Button id={id} onClick={() => setActive(!isActive)}>
+          {text} <Icon icon="chevron-down" />
+        </Button>
+      ) : (
+        <IconButton id={id} icon="chevron-down" title={text} onClick={() => setActive(!isActive)} />
+      )}
       {isActive ? (
         <ul className="dd dropdown-menu is-rounded has-background has-shadow list-container">
           {items.map((item) => (

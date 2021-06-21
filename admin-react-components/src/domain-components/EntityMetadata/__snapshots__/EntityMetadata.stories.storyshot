@@ -47,13 +47,33 @@ exports[`Storyshots Domain/EntityMetadata Deleted Foo 1`] = `
     </p>
   </div>
   <div
-    className="dd"
+    className="dd mx-2"
   >
-    <span
-      className="dd has-background text-caption p-1 is-rounded ml-1 bg-primary"
+    <div
+      className="dd flex-row"
     >
-      published
-    </span>
+      <p
+        className="dd flex-grow text-subtitle2"
+      >
+        Publish state
+      </p>
+      <span
+        className="dd has-background text-caption p-1 is-rounded ml-1 bg-primary"
+      >
+        published
+      </span>
+    </div>
+    <div
+      className="dd flex-row"
+    >
+      <button
+        className="dd button has-background hoverable text-button is-rounded"
+        id="publish-button"
+        type="button"
+      >
+        Unpublish
+      </button>
+    </div>
   </div>
   <div
     className="dd flex-row dd g-2"
@@ -181,13 +201,33 @@ exports[`Storyshots Domain/EntityMetadata Deleted Foo Publish History 1`] = `
     </p>
   </div>
   <div
-    className="dd"
+    className="dd mx-2"
   >
-    <span
-      className="dd has-background text-caption p-1 is-rounded ml-1 bg-primary"
+    <div
+      className="dd flex-row"
     >
-      published
-    </span>
+      <p
+        className="dd flex-grow text-subtitle2"
+      >
+        Publish state
+      </p>
+      <span
+        className="dd has-background text-caption p-1 is-rounded ml-1 bg-primary"
+      >
+        published
+      </span>
+    </div>
+    <div
+      className="dd flex-row"
+    >
+      <button
+        className="dd button has-background hoverable text-button is-rounded"
+        id="publish-button"
+        type="button"
+      >
+        Unpublish
+      </button>
+    </div>
   </div>
   <div
     className="dd flex-row dd g-2"
@@ -299,13 +339,33 @@ exports[`Storyshots Domain/EntityMetadata Full Foo 1`] = `
     </p>
   </div>
   <div
-    className="dd"
+    className="dd mx-2"
   >
-    <span
-      className="dd has-background text-caption p-1 is-rounded ml-1 bg-primary"
+    <div
+      className="dd flex-row"
     >
-      published
-    </span>
+      <p
+        className="dd flex-grow text-subtitle2"
+      >
+        Publish state
+      </p>
+      <span
+        className="dd has-background text-caption p-1 is-rounded ml-1 bg-primary"
+      >
+        published
+      </span>
+    </div>
+    <div
+      className="dd flex-row"
+    >
+      <button
+        className="dd button has-background hoverable text-button is-rounded"
+        id="publish-button"
+        type="button"
+      >
+        Unpublish
+      </button>
+    </div>
   </div>
   <div
     className="dd flex-row dd g-2"
@@ -406,13 +466,33 @@ exports[`Storyshots Domain/EntityMetadata Full Foo Publish History 1`] = `
     </p>
   </div>
   <div
-    className="dd"
+    className="dd mx-2"
   >
-    <span
-      className="dd has-background text-caption p-1 is-rounded ml-1 bg-primary"
+    <div
+      className="dd flex-row"
     >
-      published
-    </span>
+      <p
+        className="dd flex-grow text-subtitle2"
+      >
+        Publish state
+      </p>
+      <span
+        className="dd has-background text-caption p-1 is-rounded ml-1 bg-primary"
+      >
+        published
+      </span>
+    </div>
+    <div
+      className="dd flex-row"
+    >
+      <button
+        className="dd button has-background hoverable text-button is-rounded"
+        id="publish-button"
+        type="button"
+      >
+        Unpublish
+      </button>
+    </div>
   </div>
   <div
     className="dd flex-row dd g-2"
@@ -505,6 +585,19 @@ exports[`Storyshots Domain/EntityMetadata New Foo 1`] = `
     </p>
   </div>
   <div
+    className="dd mx-2"
+  >
+    <div
+      className="dd flex-row"
+    >
+      <p
+        className="dd flex-grow text-subtitle2"
+      >
+        Publish state
+      </p>
+    </div>
+  </div>
+  <div
     className="dd flex-row dd g-2"
   >
     <button
@@ -569,6 +662,19 @@ exports[`Storyshots Domain/EntityMetadata Slow Full Foo 1`] = `
     >
       fc66b4d7-61ff-44d4-8f68-cb7f526df046
     </p>
+  </div>
+  <div
+    className="dd mx-2"
+  >
+    <div
+      className="dd flex-row"
+    >
+      <p
+        className="dd flex-grow text-subtitle2"
+      >
+        Publish state
+      </p>
+    </div>
   </div>
   <div
     className="dd flex-row dd g-2"
