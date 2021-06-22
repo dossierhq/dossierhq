@@ -15,3 +15,7 @@ export interface EntityPublishRequest {
 export interface EntityUnpublishRequest {
   items: string[];
 }
+
+export type EntityArchiveRequest = Record<never, never>;
+
+export type EntityUnarchiveRequest = Record<never, never>;
