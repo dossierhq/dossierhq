@@ -468,73 +468,6 @@ describe('adminEntity()', () => {
     }
   });
 
-  test('Query deleted entity', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
-      _type: 'QueryAdminFoo',
-      _name: 'First name',
-      title: 'First title',
-      summary: 'First summary',
-    });
-    if (expectOkResult(createResult)) {
-      const { id, _name: name } = createResult.value;
-
-      expectOkResult(await EntityAdmin.deleteEntity(context, id));
-
-      const result = await graphql(
-        schema,
-        `
-          query TwoVersionsOfAdminEntity($id: ID!, $version1: Int!, $version2: Int!) {
-            first: adminEntity(id: $id, version: $version1) {
-              id
-              _version
-              _deleted
-              _name
-              _publishState
-              ... on AdminQueryAdminFoo {
-                title
-                summary
-              }
-            }
-            second: adminEntity(id: $id, version: $version2) {
-              id
-              _version
-              _deleted
-              _name
-              _publishState
-              ... on AdminQueryAdminFoo {
-                title
-                summary
-              }
-            }
-          }
-        `,
-        undefined,
-        { context: ok(context) },
-        { id, version1: 0, version2: 1 }
-      );
-      expect(result.data).toEqual({
-        first: {
-          id,
-          _version: 0,
-          _deleted: false,
-          _name: name,
-          _publishState: EntityPublishState.Draft,
-          title: 'First title',
-          summary: 'First summary',
-        },
-        second: {
-          id,
-          _version: 1,
-          _deleted: true,
-          _name: name,
-          _publishState: EntityPublishState.Draft,
-          title: null,
-          summary: null,
-        },
-      });
-    }
-  });
-
   test('Query rich text field', async () => {
     const createFooResult = await EntityAdmin.createEntity(context, {
       _type: 'QueryAdminFoo',
@@ -1254,7 +1187,7 @@ describe('searchAdminEntities()', () => {
 });
 
 describe('versionHistory()', () => {
-  test('History with edit and unpublished delete', async () => {
+  test('History with edit', async () => {
     const createResult = await EntityAdmin.createEntity(context, {
       _type: 'QueryAdminFoo',
       _name: 'Foo name',
@@ -1269,9 +1202,6 @@ describe('versionHistory()', () => {
           await EntityAdmin.publishEntities(context, [{ id, version: updateResult.value._version }])
         );
       }
-
-      const deleteResult = await EntityAdmin.deleteEntity(context, id);
-      expectOkResult(deleteResult);
 
       const result = await graphql(
         schema,
@@ -1303,7 +1233,6 @@ describe('versionHistory()', () => {
           versions: [
             { createdBy: context.session.subjectId, published: false, version: 0 },
             { createdBy: context.session.subjectId, published: true, version: 1 },
-            { createdBy: context.session.subjectId, published: false, version: 2 },
           ],
         },
       });
