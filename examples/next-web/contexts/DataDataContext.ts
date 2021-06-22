@@ -14,8 +14,10 @@ import {
 } from '@datadata/core';
 import { useEffect, useMemo, useState } from 'react';
 import type {
+  EntityArchiveRequest,
   EntityCreateRequest,
   EntityPublishRequest,
+  EntityUnarchiveRequest,
   EntityUnpublishRequest,
   EntityUpdateRequest,
 } from '../types/RequestTypes';
@@ -179,6 +181,42 @@ class ContextAdapter implements DataDataContextAdapter {
     const result = await fetchJsonResult<ActionResponse, ErrorType.BadRequest | ErrorType.NotFound>(
       [ErrorType.BadRequest, ErrorType.NotFound],
       urls.unpublishEntities,
+      {
+        method: 'PUT',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(body),
+      }
+    );
+
+    if (result.isOk()) {
+      return ok(undefined);
+    }
+    return result;
+  };
+
+  archiveEntity: DataDataContextAdapter['archiveEntity'] = async (entityId) => {
+    const body: EntityArchiveRequest = {};
+    const result = await fetchJsonResult<ActionResponse, ErrorType.BadRequest | ErrorType.NotFound>(
+      [ErrorType.BadRequest, ErrorType.NotFound],
+      urls.archiveEntity(entityId),
+      {
+        method: 'PUT',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(body),
+      }
+    );
+
+    if (result.isOk()) {
+      return ok(undefined);
+    }
+    return result;
+  };
+
+  unarchiveEntity: DataDataContextAdapter['unarchiveEntity'] = async (entityId) => {
+    const body: EntityUnarchiveRequest = {};
+    const result = await fetchJsonResult<ActionResponse, ErrorType.BadRequest | ErrorType.NotFound>(
+      [ErrorType.BadRequest, ErrorType.NotFound],
+      urls.unarchiveEntity(entityId),
       {
         method: 'PUT',
         headers: { 'content-type': 'application/json' },
