@@ -975,19 +975,6 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     }
   }
 
-  buildMutationDeleteEntity<TSource>(): GraphQLFieldConfig<TSource, TContext> {
-    return fieldConfigWithArgs<TSource, TContext, { id: string }>({
-      type: this.getOutputType('AdminEntity'),
-      args: {
-        id: { type: new GraphQLNonNull(GraphQLID) },
-      },
-      resolve: async (source, args, context, _info) => {
-        const { id } = args;
-        return await Mutations.deleteEntity(context, id);
-      },
-    });
-  }
-
   buildMutationPublishEntities<TSource>(): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<TSource, TContext, { entities: { id: string; version: number }[] }>({
       type: new GraphQLList(new GraphQLNonNull(this.getOutputType('EntityPublishPayload'))),
@@ -1053,7 +1040,6 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     }
 
     const fields: GraphQLFieldConfigMap<TSource, TContext> = {
-      deleteEntity: this.buildMutationDeleteEntity(),
       publishEntities: this.buildMutationPublishEntities(),
       unpublishEntities: this.buildMutationUnpublishEntities(),
       archiveEntity: this.buildMutationArchiveEntity(),
