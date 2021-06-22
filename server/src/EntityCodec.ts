@@ -83,11 +83,9 @@ export function decodePublishedEntity(context: SessionContext, values: EntityVal
     _type: values.type,
     _name: values.name,
   };
-  for (const [fieldName, fieldValue] of Object.entries(values.data)) {
-    const fieldSpec = schema.getEntityFieldSpecification(entitySpec, fieldName);
-    if (!fieldSpec) {
-      throw new Error(`No field spec for ${fieldName} in entity spec ${values.type}`);
-    }
+  for (const fieldSpec of entitySpec.fields) {
+    const { name: fieldName } = fieldSpec;
+    const fieldValue = values.data[fieldName];
     entity[fieldName] = decodeFieldItemOrList(schema, fieldSpec, fieldValue);
   }
   return entity;
@@ -199,7 +197,7 @@ export function decodeAdminEntity(context: SessionContext, values: AdminEntityVa
   for (const fieldSpec of entitySpec.fields) {
     const { name: fieldName } = fieldSpec;
     const fieldValue = values.data[fieldName];
-    entity[fieldSpec.name] = decodeFieldItemOrList(schema, fieldSpec, fieldValue);
+    entity[fieldName] = decodeFieldItemOrList(schema, fieldSpec, fieldValue);
   }
   return entity;
 }
