@@ -1281,7 +1281,6 @@ describe('versionHistory()', () => {
               id
               versions {
                 version
-                deleted
                 published
                 createdBy
                 createdAt
@@ -1302,9 +1301,9 @@ describe('versionHistory()', () => {
         entityHistory: {
           id,
           versions: [
-            { createdBy: context.session.subjectId, deleted: false, published: false, version: 0 },
-            { createdBy: context.session.subjectId, deleted: false, published: true, version: 1 },
-            { createdBy: context.session.subjectId, deleted: true, published: false, version: 2 },
+            { createdBy: context.session.subjectId, published: false, version: 0 },
+            { createdBy: context.session.subjectId, published: true, version: 1 },
+            { createdBy: context.session.subjectId, published: false, version: 2 },
           ],
         },
       });

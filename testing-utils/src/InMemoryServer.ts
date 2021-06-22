@@ -19,7 +19,6 @@ export interface InMemoryEntity {
 
 export interface InMemoryEntityVersion {
   _version: number;
-  _deleted?: boolean;
   [fieldName: string]: unknown;
 }
 

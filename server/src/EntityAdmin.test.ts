@@ -509,7 +509,6 @@ describe('createEntity()', () => {
         expectEntityHistoryVersions(historyResult.value, [
           {
             version: 0,
-            deleted: false,
             published: true,
             createdBy: context.session.subjectId,
           },
@@ -564,7 +563,6 @@ describe('createEntity()', () => {
         expectEntityHistoryVersions(historyResult.value, [
           {
             version: 0,
-            deleted: false,
             published: false,
             createdBy: context.session.subjectId,
           },
@@ -2236,13 +2234,11 @@ describe('updateEntity()', () => {
         expectEntityHistoryVersions(historyResult.value, [
           {
             version: 0,
-            deleted: false,
             published: false,
             createdBy: context.session.subjectId,
           },
           {
             version: 1,
-            deleted: false,
             published: true,
             createdBy: context.session.subjectId,
           },
@@ -2322,13 +2318,11 @@ describe('updateEntity()', () => {
         expectEntityHistoryVersions(historyResult.value, [
           {
             version: 0,
-            deleted: false,
             published: true,
             createdBy: context.session.subjectId,
           },
           {
             version: 1,
-            deleted: false,
             published: false,
             createdBy: context.session.subjectId,
           },
@@ -2398,13 +2392,11 @@ describe('updateEntity()', () => {
         expectEntityHistoryVersions(historyResult.value, [
           {
             version: 0,
-            deleted: false,
             published: false,
             createdBy: context.session.subjectId,
           },
           {
             version: 1,
-            deleted: false,
             published: true,
             createdBy: context.session.subjectId,
           },
@@ -2479,13 +2471,11 @@ describe('updateEntity()', () => {
         expectEntityHistoryVersions(historyResult.value, [
           {
             version: 0,
-            deleted: false,
             published: false,
             createdBy: context.session.subjectId,
           },
           {
             version: 1,
-            deleted: false,
             published: true,
             createdBy: context.session.subjectId,
           },
@@ -2894,13 +2884,11 @@ describe('deleteEntity()', () => {
         expectEntityHistoryVersions(historyResult.value, [
           {
             version: 0,
-            deleted: false,
             published: false,
             createdBy: context.session.subjectId,
           },
           {
             version: 1,
-            deleted: true,
             published: true,
             createdBy: context.session.subjectId,
           },
@@ -2962,13 +2950,11 @@ describe('deleteEntity()', () => {
         expectEntityHistoryVersions(historyResult.value, [
           {
             version: 0,
-            deleted: false,
             published: false,
             createdBy: context.session.subjectId,
           },
           {
             version: 1,
-            deleted: true,
             published: true,
             createdBy: context.session.subjectId,
           },
@@ -3030,13 +3016,11 @@ describe('deleteEntity()', () => {
         expectEntityHistoryVersions(historyResult.value, [
           {
             version: 0,
-            deleted: false,
             published: true,
             createdBy: context.session.subjectId,
           },
           {
             version: 1,
-            deleted: true,
             published: false,
             createdBy: context.session.subjectId,
           },
@@ -3103,13 +3087,11 @@ describe('deleteEntity()', () => {
         expectEntityHistoryVersions(historyResult.value, [
           {
             version: 0,
-            deleted: false,
             published: false,
             createdBy: context.session.subjectId,
           },
           {
             version: 1,
-            deleted: true,
             published: false,
             createdBy: context.session.subjectId,
           },

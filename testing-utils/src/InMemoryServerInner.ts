@@ -75,12 +75,10 @@ export class InMemoryServerInner {
     const result: EntityHistory = {
       id,
       versions: fullEntity.history.map((item) => {
-        const entity = fullEntity.versions.find((x) => x._version === item.version);
         return {
           version: item.version,
           createdBy: item.createdBy,
           createdAt: item.createdAt,
-          deleted: !!entity?._deleted,
           published: fullEntity.publishedVersion === item.version,
         };
       }),
