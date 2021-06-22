@@ -390,15 +390,14 @@ export async function publishEntities(
       uuid: string;
       versionsId: number;
       entityId: number;
-      deleted: boolean;
     }[] = [];
     for (const { id, version } of entities) {
       const versionInfo = await Db.queryNoneOrOne<
         Pick<EntityVersionsTable, 'id' | 'entities_id'> &
-          Pick<EntitiesTable, 'published_entity_versions_id'> & { deleted: boolean }
+          Pick<EntitiesTable, 'published_entity_versions_id'>
       >(
         context,
-        `SELECT ev.id, ev.entities_id, ev.data IS NULL as deleted, e.published_entity_versions_id
+        `SELECT ev.id, ev.entities_id, e.published_entity_versions_id
          FROM entity_versions ev, entities e
          WHERE e.uuid = $1 AND e.id = ev.entities_id
            AND ev.version = $2`,
@@ -414,7 +413,6 @@ export async function publishEntities(
           uuid: id,
           versionsId: versionInfo.id,
           entityId: versionInfo.entities_id,
-          deleted: versionInfo.deleted,
         });
       }
     }
@@ -428,52 +426,32 @@ export async function publishEntities(
     }
 
     // Step 2: Publish entities
-    for (const { versionsId, deleted, entityId } of versionsInfo) {
+    for (const { versionsId, entityId } of versionsInfo) {
       await Db.queryNone(
         context,
-        'UPDATE entities SET never_published = FALSE, archived = FALSE, published_entity_versions_id = $1, published_deleted = $2 WHERE id = $3',
-        [versionsId, deleted, entityId]
+        'UPDATE entities SET never_published = FALSE, archived = FALSE, published_entity_versions_id = $1 WHERE id = $2',
+        [versionsId, entityId]
       );
     }
 
     // Step 3: Check if references are ok
     const referenceErrorMessages: string[] = [];
-    for (const { uuid, versionsId, deleted, entityId } of versionsInfo) {
-      if (deleted) {
-        const publishedReferences = await Db.queryMany<Pick<EntitiesTable, 'uuid'>>(
-          context,
-          `SELECT e.uuid
-           FROM entity_version_references evr, entity_versions ev, entities e
-           WHERE evr.entities_id = $1
-             AND evr.entity_versions_id = ev.id
-             AND ev.entities_id = e.id
-             AND e.published_entity_versions_id = ev.id`,
-          [entityId]
-        );
-        if (publishedReferences.length > 0) {
-          referenceErrorMessages.push(
-            `${uuid}: Referenced by published entities: ${publishedReferences
-              .map(({ uuid }) => uuid)
-              .join(', ')}`
-          );
-        }
-      } else {
-        const unpublishedReferences = await Db.queryMany<Pick<EntitiesTable, 'uuid'>>(
-          context,
-          `SELECT e.uuid
+    for (const { uuid, versionsId } of versionsInfo) {
+      const unpublishedReferences = await Db.queryMany<Pick<EntitiesTable, 'uuid'>>(
+        context,
+        `SELECT e.uuid
            FROM entity_version_references evr, entities e
            WHERE evr.entity_versions_id = $1
              AND evr.entities_id = e.id
-             AND (e.published_deleted OR e.published_entity_versions_id IS NULL)`,
-          [versionsId]
+             AND e.published_entity_versions_id IS NULL`,
+        [versionsId]
+      );
+      if (unpublishedReferences.length > 0) {
+        referenceErrorMessages.push(
+          `${uuid}: References unpublished entities: ${unpublishedReferences
+            .map(({ uuid }) => uuid)
+            .join(', ')}`
         );
-        if (unpublishedReferences.length > 0) {
-          referenceErrorMessages.push(
-            `${uuid}: References unpublished entities: ${unpublishedReferences
-              .map(({ uuid }) => uuid)
-              .join(', ')}`
-          );
-        }
       }
     }
 
@@ -536,7 +514,7 @@ export async function unpublishEntities(
     // Step 2: Unpublish entities
     await Db.queryNone(
       context,
-      'UPDATE entities SET published_entity_versions_id = NULL, published_deleted = FALSE WHERE id = ANY($1)',
+      'UPDATE entities SET published_entity_versions_id = NULL WHERE id = ANY($1)',
       [entitiesInfo.map((it) => it.id)]
     );
 

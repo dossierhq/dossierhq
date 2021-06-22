@@ -16,7 +16,6 @@ export async function getEntity(
     `SELECT e.uuid, e.type, e.name, ev.data
       FROM entities e, entity_versions ev
       WHERE e.uuid = $1
-      AND e.published_deleted = false
       AND e.published_entity_versions_id = ev.id`,
     [id]
   );
@@ -51,7 +50,6 @@ export async function getEntities(
     `SELECT e.uuid, e.type, e.name, ev.data
       FROM entities e, entity_versions ev
       WHERE e.uuid = ANY($1)
-      AND e.published_deleted = false
       AND e.published_entity_versions_id = ev.id`,
     [ids]
   );
