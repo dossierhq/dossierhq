@@ -26,6 +26,27 @@ let server: Server;
 let context: SessionContext;
 let entitiesOfTypeAdminOnlyEditBefore: AdminEntity[];
 
+const emptyFooFields = { bar: null, summary: null, title: null };
+const emptyBazFields = {
+  bar: null,
+  bars: null,
+  baz: null,
+  body: null,
+  bodyList: null,
+  bodyOnlyParagraph: null,
+  listFields: null,
+  listFieldsList: null,
+  location: null,
+  locations: null,
+  nested: null,
+  oneString: null,
+  stringReference: null,
+  tags: null,
+  title: null,
+  twoStrings: null,
+  twoStringsList: null,
+};
+
 beforeAll(async () => {
   server = await createTestServer();
   context = await ensureSessionContext(server, 'test', 'entity-admin');
@@ -337,6 +358,7 @@ describe('getEntity()', () => {
           _name: createResult.value._name,
           _version: 1,
           _publishState: EntityPublishState.Draft,
+          ...emptyFooFields,
           title: 'Updated title',
         });
       }
@@ -398,6 +420,7 @@ describe('getEntities()', () => {
           _name: foo2Name,
           _version: 0,
           _publishState: EntityPublishState.Draft,
+          ...emptyFooFields,
           title: 'Title 2',
         },
       });
@@ -408,6 +431,7 @@ describe('getEntities()', () => {
           _name: foo1Name,
           _version: 0,
           _publishState: EntityPublishState.Draft,
+          ...emptyFooFields,
           title: 'Title 1',
         },
       });
@@ -437,6 +461,7 @@ describe('getEntities()', () => {
           _name: fooName,
           _version: 1,
           _publishState: EntityPublishState.Draft,
+          ...emptyFooFields,
           title: 'Updated title',
         },
       });
@@ -497,6 +522,7 @@ describe('createEntity()', () => {
           _name: name,
           _version: 0,
           _publishState: EntityPublishState.Published,
+          ...emptyFooFields,
           title: 'Title',
         });
       }
@@ -551,6 +577,7 @@ describe('createEntity()', () => {
           _name: createResult.value._name,
           _version: 0,
           _publishState: EntityPublishState.Draft,
+          ...emptyFooFields,
           title: 'Draft',
         });
       }
@@ -624,6 +651,7 @@ describe('createEntity()', () => {
             _name: createFooResult.value._name,
             _version: 0,
             _publishState: EntityPublishState.Published,
+            ...emptyFooFields,
             title: 'Foo title',
             bar: { id: barId },
           });
@@ -668,6 +696,7 @@ describe('createEntity()', () => {
           _name: name,
           _version: 0,
           _publishState: EntityPublishState.Draft,
+          ...emptyBazFields,
           tags: ['one', 'two', 'three'],
         });
       }
@@ -707,6 +736,7 @@ describe('createEntity()', () => {
           _name: name,
           _version: 0,
           _publishState: EntityPublishState.Draft,
+          ...emptyBazFields,
           body: { blocks: [{ type: 'paragraph', data: { text: 'Hello world' } }] },
           bodyList: [
             { blocks: [{ type: 'paragraph', data: { text: 'First rich text' } }] },
@@ -785,6 +815,7 @@ describe('createEntity()', () => {
             _name: bazName,
             _version: 0,
             _publishState: EntityPublishState.Draft,
+            ...emptyBazFields,
             body: {
               blocks: [
                 { type: RichTextBlockType.entity, data: { id: bar1Id } },
@@ -857,6 +888,7 @@ describe('createEntity()', () => {
           _name: name,
           _version: 0,
           _publishState: EntityPublishState.Draft,
+          ...emptyBazFields,
           location: { lat: 55.60498, lng: 13.003822 },
           locations: [
             { lat: 55.60498, lng: 13.003822 },
@@ -905,6 +937,7 @@ describe('createEntity()', () => {
             _name: name,
             _version: 0,
             _publishState: EntityPublishState.Draft,
+            ...emptyBazFields,
             bars: [{ id: bar1Id }, { id: bar2Id }],
           });
         }
@@ -919,6 +952,7 @@ describe('createEntity()', () => {
                 _name: name,
                 _version: 0,
                 _publishState: EntityPublishState.Draft,
+                ...emptyBazFields,
                 bars: [{ id: bar1Id }, { id: bar2Id }],
               },
             },
@@ -935,6 +969,7 @@ describe('createEntity()', () => {
                 _name: name,
                 _version: 0,
                 _publishState: EntityPublishState.Draft,
+                ...emptyBazFields,
                 bars: [{ id: bar1Id }, { id: bar2Id }],
               },
             },
@@ -969,6 +1004,7 @@ describe('createEntity()', () => {
           _name: name,
           _version: 0,
           _publishState: EntityPublishState.Draft,
+          ...emptyBazFields,
           twoStrings: { _type: 'EntityAdminTwoStrings', one: 'First', two: 'Second' },
         });
       }
@@ -1006,6 +1042,7 @@ describe('createEntity()', () => {
           _name: name,
           _version: 0,
           _publishState: EntityPublishState.Draft,
+          ...emptyBazFields,
           twoStringsList: [
             { _type: 'EntityAdminTwoStrings', one: 'First', two: 'Second' },
             { _type: 'EntityAdminTwoStrings', one: 'Three', two: 'Four' },
@@ -1055,6 +1092,7 @@ describe('createEntity()', () => {
             _name: bazName,
             _version: 0,
             _publishState: EntityPublishState.Draft,
+            ...emptyBazFields,
             stringReference: {
               _type: 'EntityAdminStringReference',
               string: 'Hello string',
@@ -1072,6 +1110,7 @@ describe('createEntity()', () => {
               _name: bazName,
               _version: 0,
               _publishState: EntityPublishState.Draft,
+              ...emptyBazFields,
               stringReference: {
                 _type: 'EntityAdminStringReference',
                 string: 'Hello string',
@@ -1153,6 +1192,7 @@ describe('createEntity()', () => {
             _name: bazName,
             _version: 0,
             _publishState: EntityPublishState.Draft,
+            ...emptyBazFields,
             listFields: {
               _type: 'EntityAdminListFields',
               stringList: ['one', 'two', 'three'],
@@ -1235,6 +1275,7 @@ describe('createEntity()', () => {
           _name: bazName,
           _version: 0,
           _publishState: EntityPublishState.Draft,
+          ...emptyBazFields,
           nested: {
             _type: 'EntityAdminNested',
             title: 'Nested 0',
@@ -1801,7 +1842,7 @@ describe('searchEntities()', () => {
     if (expectOkResult(searchResult)) {
       expect(searchResult.value?.edges).toHaveLength(1);
       expect(searchResult.value?.edges[0].node).toEqual({
-        value: fooEntity,
+        value: { ...emptyFooFields, ...fooEntity }, //TODO ...emptyFooFields shouldn't be needed here
       });
     }
   });
@@ -1822,7 +1863,7 @@ describe('searchEntities()', () => {
     if (expectOkResult(searchResult)) {
       expect(searchResult.value?.edges).toHaveLength(1);
       expect(searchResult.value?.edges[0].node).toEqual({
-        value: bazEntities[0],
+        value: { ...emptyBazFields, ...bazEntities[0] }, //TODO ...emptyBazFields shouldn't be needed here
       });
     }
   });
@@ -1838,7 +1879,7 @@ describe('searchEntities()', () => {
     if (expectOkResult(searchResult)) {
       expect(searchResult.value?.edges).toHaveLength(1);
       expect(searchResult.value?.edges[0].node).toEqual({
-        value: bazEntity,
+        value: { ...emptyBazFields, ...bazEntity }, //TODO ...emptyBazFields shouldn't be needed here
       });
     }
   });
@@ -1975,6 +2016,7 @@ describe('searchEntities()', () => {
                 _name: bazName,
                 _version: 0,
                 _publishState: EntityPublishState.Draft,
+                ...emptyBazFields,
                 body: {
                   blocks: [
                     {
@@ -2197,6 +2239,7 @@ describe('updateEntity()', () => {
           _name: name, // original name isn't kept
           _version: 0,
           _publishState: EntityPublishState.Published,
+          ...emptyFooFields,
           title: 'Original',
         });
       }
@@ -2209,6 +2252,7 @@ describe('updateEntity()', () => {
           _name: name,
           _version: 1,
           _publishState: EntityPublishState.Published,
+          ...emptyFooFields,
           title: 'Updated title',
         });
       }
@@ -2281,6 +2325,7 @@ describe('updateEntity()', () => {
           _name: name,
           _version: 0,
           _publishState: EntityPublishState.Modified,
+          ...emptyFooFields,
           title: 'First',
         });
       }
@@ -2292,6 +2337,7 @@ describe('updateEntity()', () => {
           _name: name,
           _version: 1,
           _publishState: EntityPublishState.Modified,
+          ...emptyFooFields,
           title: 'Updated title',
         });
       }
@@ -2355,6 +2401,7 @@ describe('updateEntity()', () => {
           _name: createResult.value._name,
           _version: 0,
           _publishState: EntityPublishState.Published,
+          ...emptyFooFields,
           title: 'Original',
         });
       }
@@ -2366,6 +2413,7 @@ describe('updateEntity()', () => {
           _name: createResult.value._name,
           _version: 1,
           _publishState: EntityPublishState.Published,
+          ...emptyFooFields,
           title: 'Updated title',
         });
       }
@@ -2434,6 +2482,7 @@ describe('updateEntity()', () => {
           _name: createResult.value._name,
           _version: 0,
           _publishState: EntityPublishState.Published,
+          ...emptyFooFields,
           title: 'First title',
           summary: 'First summary',
         });
@@ -2446,6 +2495,7 @@ describe('updateEntity()', () => {
           _name: createResult.value._name,
           _version: 1,
           _publishState: EntityPublishState.Published,
+          ...emptyFooFields,
           title: 'First title',
           summary: 'Updated summary',
         });
@@ -2552,6 +2602,7 @@ describe('updateEntity()', () => {
             _name: createFooResult.value._name,
             _version: 0,
             _publishState: EntityPublishState.Published,
+            ...emptyFooFields,
             title: 'First title',
             summary: 'First summary',
           });
@@ -2644,6 +2695,7 @@ describe('updateEntity()', () => {
             _name: createBazResult.value._name,
             _version: 0,
             _publishState: EntityPublishState.Published,
+            ...emptyBazFields,
             title: 'First title',
             bar: { id: bar1Id },
             bars: [{ id: bar1Id }, { id: bar2Id }],
@@ -2657,6 +2709,7 @@ describe('updateEntity()', () => {
             _name: createBazResult.value._name,
             _version: 1,
             _publishState: EntityPublishState.Published,
+            ...emptyBazFields,
             title: 'Updated title',
             bar: { id: bar1Id },
             bars: [{ id: bar1Id }, { id: bar2Id }],
@@ -2852,6 +2905,7 @@ describe('publishEntities()', () => {
           _name: name,
           _version: 0,
           _publishState: EntityPublishState.Published,
+          ...emptyBazFields,
           title: 'Baz title 1',
         });
       }
@@ -2971,6 +3025,7 @@ describe('unpublishEntities()', () => {
           _name: name,
           _version: 0,
           _publishState: EntityPublishState.Withdrawn,
+          ...emptyBazFields,
           title: 'Baz title 1',
         });
       }
