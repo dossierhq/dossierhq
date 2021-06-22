@@ -231,9 +231,7 @@ export function resolveCreateEntity(
   }
 
   for (const fieldSpec of entitySpec.fields) {
-    if (fieldSpec.name in entity) {
-      result[fieldSpec.name] = entity[fieldSpec.name];
-    }
+    result[fieldSpec.name] = entity[fieldSpec.name] ?? null;
   }
 
   return ok(result);
