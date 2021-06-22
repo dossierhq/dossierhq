@@ -20,6 +20,21 @@ let server: Server;
 let context: SessionContext;
 let schema: GraphQLSchema;
 
+const emptyFooFields = {
+  title: null,
+  summary: null,
+  tags: null,
+  body: null,
+  location: null,
+  locations: null,
+  bar: null,
+  bars: null,
+  stringedBar: null,
+  nestedValue: null,
+  anyValueItem: null,
+  anyValueItems: null,
+};
+
 beforeAll(async () => {
   server = await createTestServer();
   context = await ensureSessionContext(server, 'test', 'mutation');
@@ -151,6 +166,7 @@ describe('create*Entity()', () => {
         _name: name,
         _version: 0,
         _publishState: EntityPublishState.Draft,
+        ...emptyFooFields,
         title: 'Foo title',
         summary: 'Foo summary',
         tags: ['one', 'two', 'three'],
@@ -283,6 +299,7 @@ describe('create*Entity()', () => {
           _name: fooName,
           _version: 0,
           _publishState: EntityPublishState.Draft,
+          ...emptyFooFields,
           title: 'Foo title',
           summary: 'Foo summary',
           body: {
@@ -362,6 +379,7 @@ describe('create*Entity()', () => {
           _name: fooName,
           _version: 0,
           _publishState: EntityPublishState.Draft,
+          ...emptyFooFields,
           title: 'Foo title',
           summary: 'Foo summary',
           bar: {
@@ -445,6 +463,7 @@ describe('create*Entity()', () => {
           _name: fooName,
           _version: 0,
           _publishState: EntityPublishState.Draft,
+          ...emptyFooFields,
           title: 'Foo title',
           summary: 'Foo summary',
           bars: [{ id: bar1Id }, { id: bar2Id }],
@@ -538,6 +557,7 @@ describe('create*Entity()', () => {
           _name: fooName,
           _version: 0,
           _publishState: EntityPublishState.Draft,
+          ...emptyFooFields,
           title: 'Foo title',
           summary: 'Foo summary',
           stringedBar: {
@@ -636,6 +656,7 @@ describe('create*Entity()', () => {
           _name: fooName,
           _version: 0,
           _publishState: EntityPublishState.Draft,
+          ...emptyFooFields,
           anyValueItem: {
             _type: 'MutationStringedBar',
             text: 'A value',
@@ -734,6 +755,7 @@ describe('create*Entity()', () => {
         _name: fooName,
         _version: 0,
         _publishState: EntityPublishState.Draft,
+        ...emptyFooFields,
         nestedValue: {
           _type: 'MutationNestedValue',
           text: 'Outer',
@@ -886,6 +908,7 @@ describe('update*Entity()', () => {
           _name: name,
           _version: 1,
           _publishState: EntityPublishState.Draft,
+          ...emptyFooFields,
           title: 'Updated title',
           summary: 'First summary',
           tags: ['one', 'two', 'three'],
@@ -1060,6 +1083,7 @@ describe('update*Entity()', () => {
             _name: name,
             _version: 1,
             _publishState: EntityPublishState.Draft,
+            ...emptyFooFields,
             title: 'Updated title',
             summary: 'Updated summary',
             tags: ['these', 'are', 'new'],
