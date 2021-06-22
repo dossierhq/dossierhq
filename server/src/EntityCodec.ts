@@ -281,11 +281,14 @@ export function resolveUpdateEntity(
   }
 
   for (const fieldSpec of entitySpec.fields) {
-    if (fieldSpec.name in entity) {
-      result[fieldSpec.name] = entity[fieldSpec.name];
-    } else if (previousValuesEncoded && fieldSpec.name in previousValuesEncoded) {
-      const encodedData = previousValuesEncoded[fieldSpec.name];
-      result[fieldSpec.name] = decodeFieldItemOrList(schema, fieldSpec, encodedData);
+    const fieldName = fieldSpec.name;
+    if (fieldName in entity) {
+      result[fieldName] = entity[fieldName];
+    } else if (previousValuesEncoded && fieldName in previousValuesEncoded) {
+      const encodedData = previousValuesEncoded[fieldName];
+      result[fieldName] = decodeFieldItemOrList(schema, fieldSpec, encodedData);
+    } else {
+      result[fieldName] = null;
     }
   }
 
