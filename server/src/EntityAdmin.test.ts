@@ -25,7 +25,6 @@ const { expectErrorResult, expectOkResult } = CoreTestUtils;
 let server: Server;
 let context: SessionContext;
 let entitiesOfTypeAdminOnlyEditBefore: AdminEntity[];
-let deletedIdsOfTypeAdminOnlyEditBefore: string[];
 
 beforeAll(async () => {
   server = await createTestServer();
@@ -162,14 +161,6 @@ beforeAll(async () => {
   await ensureEntitiesExistForAdminOnlyEditBefore(context);
   const knownIds = await getEntitiesForAdminOnlyEditBefore(context);
   entitiesOfTypeAdminOnlyEditBefore = knownIds.entities;
-  if (knownIds.deletedIds.length > 0) {
-    deletedIdsOfTypeAdminOnlyEditBefore = knownIds.deletedIds;
-  } else {
-    deletedIdsOfTypeAdminOnlyEditBefore = await deleteEntities(
-      context,
-      entitiesOfTypeAdminOnlyEditBefore.slice(0, 10).map((x) => x.id)
-    );
-  }
 });
 afterAll(async () => {
   await server.shutdown();
@@ -201,7 +192,6 @@ async function ensureEntitiesExistForAdminOnlyEditBefore(context: SessionContext
 
 async function getEntitiesForAdminOnlyEditBefore(context: SessionContext) {
   const entities: AdminEntity[] = [];
-  const deletedIds: string[] = [];
   await visitAllEntityPages(
     context,
     { entityTypes: ['AdminOnlyEditBefore'] },
@@ -211,27 +201,11 @@ async function getEntitiesForAdminOnlyEditBefore(context: SessionContext) {
         if (edge.node.isOk()) {
           const entity = edge.node.value;
           entities.push(entity);
-          if (entity._deleted) {
-            deletedIds.push(entity.id);
-          }
         }
       }
     }
   );
-  return { entities, deletedIds };
-}
-
-async function deleteEntities(context: SessionContext, idsToDelete: string[]) {
-  for (const id of idsToDelete) {
-    const deleteResult = await EntityAdmin.deleteEntity(context, id);
-    if (expectOkResult(deleteResult)) {
-      const publishResult = await EntityAdmin.publishEntities(context, [
-        { id: deleteResult.value.id, version: deleteResult.value._version },
-      ]);
-      publishResult.throwIfError();
-    }
-  }
-  return idsToDelete;
+  return { entities };
 }
 
 async function visitAllEntityPages(
@@ -352,8 +326,8 @@ describe('getEntity()', () => {
 
     if (expectOkResult(createResult)) {
       const { id } = createResult.value;
-      const deleteResult = await EntityAdmin.deleteEntity(context, id);
-      expectOkResult(deleteResult);
+      const updateResult = await EntityAdmin.updateEntity(context, { id, title: 'Updated title' });
+      expectOkResult(updateResult);
 
       const versionMaxResult = await EntityAdmin.getEntity(context, id);
       if (expectOkResult(versionMaxResult)) {
@@ -362,8 +336,8 @@ describe('getEntity()', () => {
           _type: 'EntityAdminFoo',
           _name: createResult.value._name,
           _version: 1,
-          _deleted: true,
           _publishState: EntityPublishState.Draft,
+          title: 'Updated title',
         });
       }
     }
@@ -1819,36 +1793,6 @@ describe('searchEntities()', () => {
     }
   });
 
-  test('Deleted entities are reported as such', async () => {
-    let deletedCount = 0;
-    let notDeletedCount = 0;
-
-    await visitAllEntityPages(
-      context,
-      { entityTypes: ['AdminOnlyEditBefore'] },
-      { first: 50 },
-      (connection) => {
-        for (const edge of connection.edges) {
-          if (edge.node.isOk()) {
-            const entity = edge.node.value;
-            if (entity._deleted) {
-              expect(deletedIdsOfTypeAdminOnlyEditBefore.indexOf(entity.id)).toBeGreaterThanOrEqual(
-                0
-              );
-              deletedCount += 1;
-            } else {
-              expect(deletedIdsOfTypeAdminOnlyEditBefore.indexOf(entity.id)).toBeLessThan(0);
-              notDeletedCount += 1;
-            }
-          }
-        }
-      }
-    );
-
-    expect(deletedCount).toBeGreaterThan(0);
-    expect(notDeletedCount).toBeGreaterThan(0);
-  });
-
   test('Query based on referencing, one reference', async () => {
     const { barId, fooEntities } = await createBarWithFooBazReferences(context, 1, 0);
     const [fooEntity] = fooEntities;
@@ -2854,284 +2798,6 @@ describe('updateEntity()', () => {
   });
 });
 
-describe('deleteEntity()', () => {
-  test('Delete & publish published EntityAdminFoo', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
-      _type: 'EntityAdminFoo',
-      _name: 'Delete',
-      title: 'Delete',
-    });
-    if (expectOkResult(createResult)) {
-      const { id } = createResult.value;
-      expectOkResult(await EntityAdmin.publishEntities(context, [{ id, version: 0 }]));
-
-      const deleteResult = await EntityAdmin.deleteEntity(context, id);
-      if (expectOkResult(deleteResult)) {
-        expect(deleteResult.value).toEqual({
-          id,
-          _type: 'EntityAdminFoo',
-          _name: createResult.value._name,
-          _version: 1,
-          _publishState: EntityPublishState.Modified,
-          _deleted: true,
-        });
-      }
-
-      expectOkResult(await EntityAdmin.publishEntities(context, [{ id, version: 1 }]));
-
-      const historyResult = await EntityAdmin.getEntityHistory(context, createResult.value.id);
-      if (expectOkResult(historyResult)) {
-        expectEntityHistoryVersions(historyResult.value, [
-          {
-            version: 0,
-            published: false,
-            createdBy: context.session.subjectId,
-          },
-          {
-            version: 1,
-            published: true,
-            createdBy: context.session.subjectId,
-          },
-        ]);
-      }
-
-      const version0Result = await EntityAdmin.getEntity(context, id, 0);
-      if (expectOkResult(version0Result)) {
-        expect(version0Result.value).toEqual({
-          id,
-          _type: 'EntityAdminFoo',
-          _name: createResult.value._name,
-          _version: 0,
-          _publishState: EntityPublishState.Published,
-          title: 'Delete',
-        });
-      }
-      const version1Result = await EntityAdmin.getEntity(context, id, 1);
-      if (expectOkResult(version1Result)) {
-        expect(version1Result.value).toEqual({
-          id,
-          _type: 'EntityAdminFoo',
-          _name: createResult.value._name,
-          _version: 1,
-          _publishState: EntityPublishState.Published,
-          _deleted: true,
-        });
-      }
-
-      const publishedResult = await PublishedEntity.getEntity(context, id);
-      expectErrorResult(publishedResult, ErrorType.NotFound, 'No such entity');
-    }
-  });
-
-  test('Delete & publish never published EntityAdminFoo', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
-      _type: 'EntityAdminFoo',
-      _name: 'Draft',
-      title: 'Draft',
-    });
-    if (expectOkResult(createResult)) {
-      const { id } = createResult.value;
-      const deleteResult = await EntityAdmin.deleteEntity(context, id);
-      if (expectOkResult(deleteResult)) {
-        expect(deleteResult.value).toEqual({
-          id,
-          _type: 'EntityAdminFoo',
-          _name: createResult.value._name,
-          _version: 1,
-          _publishState: EntityPublishState.Draft,
-          _deleted: true,
-        });
-      }
-
-      expectOkResult(await EntityAdmin.publishEntities(context, [{ id, version: 1 }]));
-
-      const historyResult = await EntityAdmin.getEntityHistory(context, createResult.value.id);
-      if (expectOkResult(historyResult)) {
-        expectEntityHistoryVersions(historyResult.value, [
-          {
-            version: 0,
-            published: false,
-            createdBy: context.session.subjectId,
-          },
-          {
-            version: 1,
-            published: true,
-            createdBy: context.session.subjectId,
-          },
-        ]);
-      }
-
-      const version0Result = await EntityAdmin.getEntity(context, id, 0);
-      if (expectOkResult(version0Result)) {
-        expect(version0Result.value).toEqual({
-          id,
-          _type: 'EntityAdminFoo',
-          _name: createResult.value._name,
-          _version: 0,
-          _publishState: EntityPublishState.Published,
-          title: 'Draft',
-        });
-      }
-      const version1Result = await EntityAdmin.getEntity(context, id, 1);
-      if (expectOkResult(version1Result)) {
-        expect(version1Result.value).toEqual({
-          id,
-          _type: 'EntityAdminFoo',
-          _name: createResult.value._name,
-          _version: 1,
-          _publishState: EntityPublishState.Published,
-          _deleted: true,
-        });
-      }
-
-      const publishedResult = await PublishedEntity.getEntity(context, id);
-      expectErrorResult(publishedResult, ErrorType.NotFound, 'No such entity');
-    }
-  });
-
-  test('Delete w/o publish published EntityAdminFoo', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
-      _type: 'EntityAdminFoo',
-      _name: 'Delete',
-      title: 'Delete',
-    });
-    if (expectOkResult(createResult)) {
-      const { id } = createResult.value;
-      expectOkResult(await EntityAdmin.publishEntities(context, [{ id, version: 0 }]));
-
-      const deleteResult = await EntityAdmin.deleteEntity(context, id);
-      if (expectOkResult(deleteResult)) {
-        expect(deleteResult.value).toEqual({
-          id,
-          _type: 'EntityAdminFoo',
-          _name: createResult.value._name,
-          _version: 1,
-          _publishState: EntityPublishState.Modified,
-          _deleted: true,
-        });
-      }
-
-      const historyResult = await EntityAdmin.getEntityHistory(context, createResult.value.id);
-      if (expectOkResult(historyResult)) {
-        expectEntityHistoryVersions(historyResult.value, [
-          {
-            version: 0,
-            published: true,
-            createdBy: context.session.subjectId,
-          },
-          {
-            version: 1,
-            published: false,
-            createdBy: context.session.subjectId,
-          },
-        ]);
-      }
-
-      const version0Result = await EntityAdmin.getEntity(context, id, 0);
-      if (expectOkResult(version0Result)) {
-        expect(version0Result.value).toEqual({
-          id,
-          _type: 'EntityAdminFoo',
-          _name: createResult.value._name,
-          _version: 0,
-          _publishState: EntityPublishState.Modified,
-          title: 'Delete',
-        });
-      }
-      const version1Result = await EntityAdmin.getEntity(context, id, 1);
-      if (expectOkResult(version1Result)) {
-        expect(version1Result.value).toEqual({
-          id,
-          _type: 'EntityAdminFoo',
-          _name: createResult.value._name,
-          _version: 1,
-          _publishState: EntityPublishState.Modified,
-          _deleted: true,
-        });
-      }
-
-      const publishedResult = await PublishedEntity.getEntity(context, id);
-      if (expectOkResult(publishedResult)) {
-        expect(publishedResult.value).toEqual({
-          id,
-          _type: 'EntityAdminFoo',
-          _name: createResult.value._name,
-          title: 'Delete',
-        });
-      }
-    }
-  });
-
-  test('Delete w/o publish never published EntityAdminFoo', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
-      _type: 'EntityAdminFoo',
-      _name: 'Draft',
-      title: 'Draft',
-    });
-    if (expectOkResult(createResult)) {
-      const { id } = createResult.value;
-      const deleteResult = await EntityAdmin.deleteEntity(context, id);
-      if (expectOkResult(deleteResult)) {
-        expect(deleteResult.value).toEqual({
-          id,
-          _type: 'EntityAdminFoo',
-          _name: createResult.value._name,
-          _version: 1,
-          _publishState: EntityPublishState.Draft,
-          _deleted: true,
-        });
-      }
-
-      const historyResult = await EntityAdmin.getEntityHistory(context, createResult.value.id);
-      if (expectOkResult(historyResult)) {
-        expectEntityHistoryVersions(historyResult.value, [
-          {
-            version: 0,
-            published: false,
-            createdBy: context.session.subjectId,
-          },
-          {
-            version: 1,
-            published: false,
-            createdBy: context.session.subjectId,
-          },
-        ]);
-      }
-
-      const version0Result = await EntityAdmin.getEntity(context, id, 0);
-      if (expectOkResult(version0Result)) {
-        expect(version0Result.value).toEqual({
-          id,
-          _type: 'EntityAdminFoo',
-          _name: createResult.value._name,
-          _version: 0,
-          _publishState: EntityPublishState.Draft,
-          title: 'Draft',
-        });
-      }
-      const version1Result = await EntityAdmin.getEntity(context, id, 1);
-      if (expectOkResult(version1Result)) {
-        expect(version1Result.value).toEqual({
-          id,
-          _type: 'EntityAdminFoo',
-          _name: createResult.value._name,
-          _version: 1,
-          _publishState: EntityPublishState.Draft,
-          _deleted: true,
-        });
-      }
-
-      const publishedResult = await PublishedEntity.getEntity(context, id);
-      expectErrorResult(publishedResult, ErrorType.NotFound, 'No such entity');
-    }
-  });
-
-  test('Error: Delete with invalid id', async () => {
-    const result = await EntityAdmin.deleteEntity(context, '6746350e-b38a-48ed-a8b3-9c81ca5f9d7b');
-    expectErrorResult(result, ErrorType.NotFound, 'No such entity');
-  });
-});
-
 describe('publishEntities()', () => {
   test('Two entities referencing each other', async () => {
     const createBaz1Result = await EntityAdmin.createEntity(context, {
@@ -3239,78 +2905,6 @@ describe('publishEntities()', () => {
           publishResult,
           ErrorType.BadRequest,
           `${fooId}: References unpublished entities: ${barId}`
-        );
-      }
-    }
-  });
-
-  test('Error: Reference to deleted entity', async () => {
-    const createBarResult = await EntityAdmin.createEntity(context, {
-      _type: 'EntityAdminBar',
-      _name: 'Bar name',
-      title: 'Bar title',
-    });
-    if (expectOkResult(createBarResult)) {
-      const barId = createBarResult.value.id;
-
-      expectOkResult(await EntityAdmin.deleteEntity(context, barId));
-
-      const createFooResult = await EntityAdmin.createEntity(context, {
-        _type: 'EntityAdminFoo',
-        _name: 'Foo name',
-        title: 'Foo title',
-        bar: { id: barId },
-      });
-      if (expectOkResult(createFooResult)) {
-        const { id: fooId } = createFooResult.value;
-
-        const publishResult = await EntityAdmin.publishEntities(context, [
-          { id: fooId, version: 0 },
-          { id: barId, version: 1 },
-        ]);
-        expectErrorResult(
-          publishResult,
-          ErrorType.BadRequest,
-          `${fooId}: References unpublished entities: ${barId}\n${barId}: Referenced by published entities: ${fooId}`
-        );
-      }
-    }
-  });
-
-  test('Error: Published entity reference deleted entity', async () => {
-    const createBarResult = await EntityAdmin.createEntity(context, {
-      _type: 'EntityAdminBar',
-      _name: 'Bar name',
-      title: 'Bar title',
-    });
-    if (expectOkResult(createBarResult)) {
-      const barId = createBarResult.value.id;
-
-      const createFooResult = await EntityAdmin.createEntity(context, {
-        _type: 'EntityAdminFoo',
-        _name: 'Foo name',
-        title: 'Foo title',
-        bar: { id: barId },
-      });
-      if (expectOkResult(createFooResult)) {
-        const { id: fooId } = createFooResult.value;
-
-        expectOkResult(
-          await EntityAdmin.publishEntities(context, [
-            { id: fooId, version: 0 },
-            { id: barId, version: 0 },
-          ])
-        );
-
-        expectOkResult(await EntityAdmin.deleteEntity(context, barId));
-
-        const publishResult = await EntityAdmin.publishEntities(context, [
-          { id: barId, version: 1 },
-        ]);
-        expectErrorResult(
-          publishResult,
-          ErrorType.BadRequest,
-          `${barId}: Referenced by published entities: ${fooId}`
         );
       }
     }
