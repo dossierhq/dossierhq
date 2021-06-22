@@ -124,9 +124,6 @@ export function buildResolversForAdminEntity<TContext extends SessionGraphQLCont
   }
   const result = { ...entity };
 
-  // _deleted is optional in AdminEntity, but not in GraphQL, so derive value
-  result._deleted = entity._deleted === true;
-
   resolveFields<TContext>(context, entitySpec, result, true);
 
   return result;

@@ -203,7 +203,6 @@ describe('adminEntity()', () => {
               _type
               _name
               _version
-              _deleted
               _publishState
               ... on AdminQueryAdminFoo {
                 title
@@ -233,7 +232,6 @@ describe('adminEntity()', () => {
             _version: 0,
             _type: 'QueryAdminFoo',
             _name: name,
-            _deleted: false,
             _publishState: EntityPublishState.Draft,
             title: 'Howdy title',
             summary: 'Howdy summary',
