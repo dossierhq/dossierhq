@@ -28,7 +28,7 @@ export interface EntityVersionsTable {
   version: number;
   created_at: Date;
   created_by: number;
-  data: Record<string, unknown> | null;
+  data: Record<string, unknown>;
 }
 
 export interface EntityVersionReferencesTable {

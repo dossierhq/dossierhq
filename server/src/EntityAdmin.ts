@@ -678,7 +678,6 @@ export async function getEntityHistory(
   const versions = await Db.queryMany<
     Pick<EntityVersionsTable, 'id' | 'version' | 'created_at'> & {
       created_by_uuid: string;
-      deleted: boolean;
     }
   >(
     context,
@@ -686,8 +685,7 @@ export async function getEntityHistory(
       ev.id,
       ev.version,
       ev.created_at,
-      s.uuid AS created_by_uuid,
-      ev.data IS NULL as deleted
+      s.uuid AS created_by_uuid
      FROM entity_versions ev, subjects s
      WHERE ev.entities_id = $1 AND ev.created_by = s.id
      ORDER BY ev.version`,
