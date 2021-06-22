@@ -88,10 +88,6 @@ export function logEntity(context: SessionContext, entity: AdminEntity | Entity)
   if (isAdminEntity(entity)) {
     logKeyValue('version', String(entity._version));
     logKeyValue('publish state', entity._publishState);
-    if (entity._deleted) {
-      logKeyValue('deleted', 'true');
-      return;
-    }
   }
 
   const schema = context.server.getSchema();

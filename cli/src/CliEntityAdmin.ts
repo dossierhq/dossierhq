@@ -577,7 +577,7 @@ async function editFieldList<TItem>(
       }
     } else if (item.id === '_remove') {
       const itemsToRemove = await showMultiItemSelector(
-        'Which items to delete?',
+        'Which items to remove?',
         result.map((x, index) => ({ id: String(index), name: `${index + 1}: ${formatItem(x)}` }))
       );
       for (const item of itemsToRemove.reverse()) {
@@ -686,7 +686,6 @@ export async function showEntityHistory(context: SessionContext, id: string): Pr
   logKeyValue('id', history.id);
   for (const version of history.versions) {
     const tags = [];
-    if (version.deleted) tags.push(chalk.red('deleted'));
     if (version.published) tags.push(chalk.green('published'));
     logKeyValue('version', `${version.version} ${tags.join(', ')}`);
     logKeyValue('  created by', version.createdBy);
@@ -759,7 +758,6 @@ async function selectEntityVersion(
   const versionItems = result.value.versions
     .map((version) => {
       const tags = [];
-      if (version.deleted) tags.push(chalk.red('deleted'));
       if (version.published) tags.push(chalk.green('published'));
       const tagsString = tags.join(', ');
 
