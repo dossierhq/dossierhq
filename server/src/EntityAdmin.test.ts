@@ -533,6 +533,7 @@ describe('createEntity()', () => {
           id,
           _type: 'EntityAdminFoo',
           _name: name,
+          ...emptyFooFields,
           title: 'Title',
         });
       }
@@ -663,6 +664,7 @@ describe('createEntity()', () => {
             id: fooId,
             _type: 'EntityAdminFoo',
             _name: createFooResult.value._name,
+            ...emptyFooFields,
             title: 'Foo title',
             bar: { id: barId },
           });
@@ -2263,6 +2265,7 @@ describe('updateEntity()', () => {
           id,
           _type: 'EntityAdminFoo',
           _name: name,
+          ...emptyFooFields,
           title: 'Updated title',
         });
       }
@@ -2348,6 +2351,7 @@ describe('updateEntity()', () => {
           id,
           _type: 'EntityAdminFoo',
           _name: name,
+          ...emptyFooFields,
           title: 'First',
         });
       }
@@ -2424,6 +2428,7 @@ describe('updateEntity()', () => {
           id,
           _type: 'EntityAdminFoo',
           _name: createResult.value._name,
+          ...emptyFooFields,
           title: 'Updated title',
         });
       }
@@ -2507,6 +2512,7 @@ describe('updateEntity()', () => {
           id,
           _type: 'EntityAdminFoo',
           _name: createResult.value._name,
+          ...emptyFooFields,
           title: 'First title',
           summary: 'Updated summary',
         });
@@ -2545,6 +2551,7 @@ describe('updateEntity()', () => {
           id,
           _type: 'EntityAdminFoo',
           _name: name,
+          ...emptyFooFields,
           title: 'First title',
           summary: 'First summary',
         });
@@ -2722,6 +2729,7 @@ describe('updateEntity()', () => {
             id: bazId,
             _type: 'EntityAdminBaz',
             _name: createBazResult.value._name,
+            ...emptyBazFields,
             title: 'Updated title',
             bar: { id: bar1Id },
             bars: [{ id: bar1Id }, { id: bar2Id }],
