@@ -2225,6 +2225,7 @@ describe('updateEntity()', () => {
           _name: name,
           _version: 1,
           _publishState: EntityPublishState.Draft,
+          ...emptyFooFields,
           title: 'Updated title',
         });
       }
@@ -2314,6 +2315,7 @@ describe('updateEntity()', () => {
           _name: name,
           _version: 1,
           _publishState: EntityPublishState.Modified,
+          ...emptyFooFields,
           title: 'Updated title',
         });
       }
@@ -2389,6 +2391,7 @@ describe('updateEntity()', () => {
           _name: createResult.value._name,
           _version: 1,
           _publishState: EntityPublishState.Draft,
+          ...emptyFooFields,
           title: 'Updated title',
         });
       }
@@ -2470,6 +2473,7 @@ describe('updateEntity()', () => {
           _name: createResult.value._name,
           _version: 1,
           _publishState: EntityPublishState.Draft,
+          ...emptyFooFields,
           title: 'First title',
           summary: 'Updated summary',
         });
@@ -2552,6 +2556,7 @@ describe('updateEntity()', () => {
           _name: name,
           _version: 1,
           _publishState: EntityPublishState.Draft,
+          ...emptyFooFields,
           title: 'First title',
           summary: 'First summary',
         });
@@ -2700,6 +2705,7 @@ describe('updateEntity()', () => {
             _name: createBazResult.value._name,
             _version: 1,
             _publishState: EntityPublishState.Draft,
+            ...emptyBazFields,
             title: 'Updated title',
             bar: { id: bar1Id },
             bars: [{ id: bar1Id }, { id: bar2Id }],
@@ -2776,6 +2782,7 @@ describe('updateEntity()', () => {
           _name: name,
           _version: 1,
           _publishState: EntityPublishState.Archived,
+          ...emptyFooFields,
           title: 'Updated title',
         });
       }
