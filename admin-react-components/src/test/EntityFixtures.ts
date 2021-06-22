@@ -2,7 +2,7 @@ import { PublishEventKind, RichTextBlockType } from '@datadata/core';
 import type { JsonInMemoryEntity } from '@datadata/testing-utils';
 
 export const foo1Id = 'fc66b4d7-61ff-44d4-8f68-cb7f526df046';
-export const fooDeletedId = 'fb62be03-a0a9-4689-9987-bacee0e7692d';
+export const fooArchivedId = 'fb62be03-a0a9-4689-9987-bacee0e7692d';
 export const bar1Id = 'cb228716-d3dd-444f-9a77-80443d436339';
 export const bar2Id = 'eb5732e2-b931-492b-82f1-f8fdd464f0d2';
 export const baz1Id = 'e6e928cc-e45f-452d-8bb0-73c2caad31c2';
@@ -51,15 +51,11 @@ export const entitiesFixture: JsonInMemoryEntity[] = [
     ],
   },
   {
-    id: fooDeletedId,
+    id: fooArchivedId,
     type: 'Foo',
-    name: 'Foo deleted',
-    publishedVersion: 1,
+    name: 'Foo archived',
+    archived: true,
     versions: [
-      {
-        _version: 1,
-        _deleted: true,
-      },
       {
         title: 'Hello',
         _version: 0,
@@ -71,11 +67,6 @@ export const entitiesFixture: JsonInMemoryEntity[] = [
         createdAt: '2021-03-10T18:19:39.343Z',
         createdBy: userId1,
       },
-      {
-        version: 1,
-        createdAt: '2021-03-11T20:19:39.343Z',
-        createdBy: userId1,
-      },
     ],
     publishEvents: [
       {
@@ -85,8 +76,8 @@ export const entitiesFixture: JsonInMemoryEntity[] = [
         publishedBy: userId1,
       },
       {
-        kind: PublishEventKind.Publish,
-        version: 1,
+        kind: PublishEventKind.Archive,
+        version: null,
         publishedAt: '2021-03-11T20:19:39.343Z',
         publishedBy: userId1,
       },

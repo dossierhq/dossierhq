@@ -41,11 +41,11 @@ exports[`Storyshots Domain/EntitySearch Normal 1`] = `
       onClick={[Function]}
       type="button"
     >
-      Foo: Foo deleted
+      Foo: Foo archived
       <span
-        className="dd has-background text-caption p-1 is-rounded ml-1 bg-primary"
+        className="dd has-background text-caption p-1 is-rounded ml-1 bg-danger"
       >
-        published
+        archived
       </span>
     </button>
     <button
