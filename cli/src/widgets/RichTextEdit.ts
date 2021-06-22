@@ -47,7 +47,7 @@ export async function showRichTextEdit(
       }
     } else if (item.id === '_remove') {
       const itemsToRemove = await showMultiItemSelector(
-        'Which blocks to delete?',
+        'Which blocks to remove?',
         result.map((x, index) => ({ id: String(index), name: `${index + 1}: ${formatBlock(x)}` }))
       );
       for (const item of itemsToRemove.reverse()) {
