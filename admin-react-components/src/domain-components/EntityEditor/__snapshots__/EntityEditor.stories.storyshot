@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Storyshots Domain/EntityEditor Deleted Foo 1`] = `
+exports[`Storyshots Domain/EntityEditor Archived Foo 1`] = `
 <div
   data-entityid="fb62be03-a0a9-4689-9987-bacee0e7692d"
   id="fb62be03-a0a9-4689-9987-bacee0e7692d"
@@ -25,7 +25,7 @@ exports[`Storyshots Domain/EntityEditor Deleted Foo 1`] = `
           id="fb62be03-a0a9-4689-9987-bacee0e7692d-_name"
           onChange={[Function]}
           type="text"
-          value="Foo deleted"
+          value="Foo archived"
         />
       </div>
     </div>
@@ -48,8 +48,18 @@ exports[`Storyshots Domain/EntityEditor Deleted Foo 1`] = `
             id="fb62be03-a0a9-4689-9987-bacee0e7692d-title"
             onChange={[Function]}
             type="text"
-            value=""
+            value="Hello"
           />
+          <button
+            className="dd icon-button"
+            onClick={[Function]}
+            title="Clear"
+            type="button"
+          >
+            <span
+              className="dd icon icon-remove"
+            />
+          </button>
         </div>
       </div>
     </div>

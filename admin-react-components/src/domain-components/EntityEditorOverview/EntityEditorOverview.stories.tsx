@@ -10,7 +10,7 @@ import {
   SlowInterceptor,
   TestContextAdapter,
 } from '../../test/TestContextAdapter';
-import { bar1Id, bar2Id, foo1Id, fooDeletedId } from '../../test/EntityFixtures';
+import { bar1Id, bar2Id, foo1Id, fooArchivedId } from '../../test/EntityFixtures';
 import {
   AddEntityDraftAction,
   initializeEntityEditorState,
@@ -65,11 +65,11 @@ function Wrapper({
 
 export const Normal = Template.bind({});
 Normal.args = {
-  entitySelectors: [{ id: foo1Id }, { id: bar1Id }, { id: bar2Id }, { id: fooDeletedId }],
+  entitySelectors: [{ id: foo1Id }, { id: bar1Id }, { id: bar2Id }, { id: fooArchivedId }],
 };
 
 export const Slow = Template.bind({});
 Slow.args = {
-  entitySelectors: [{ id: foo1Id }, { id: bar1Id }, { id: bar2Id }, { id: fooDeletedId }],
+  entitySelectors: [{ id: foo1Id }, { id: bar1Id }, { id: bar2Id }, { id: fooArchivedId }],
   contextAdapter: new TestContextAdapter(SlowInterceptor),
 };

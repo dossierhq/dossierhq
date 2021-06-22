@@ -14,7 +14,7 @@ import * as React from 'react';
 import * as renderer from 'react-test-renderer';
 import { TestContextAdapter } from '../../test/TestContextAdapter';
 import type { EntityEditorStoryProps } from './EntityEditor.stories';
-import { default as StoryMeta, DeletedFoo, FullFoo, NewFoo } from './EntityEditor.stories';
+import { default as StoryMeta, ArchivedFoo, FullFoo, NewFoo } from './EntityEditor.stories';
 
 jest.mock('@editorjs/editorjs');
 
@@ -445,8 +445,8 @@ describe('FullFoo', () => {
   });
 });
 
-describe('DeletedFoo', () => {
+describe('ArchivedFoo', () => {
   test('render', async () => {
-    expect(await renderStoryToJSON(DeletedFoo)).toMatchSnapshot();
+    expect(await renderStoryToJSON(ArchivedFoo)).toMatchSnapshot();
   });
 });

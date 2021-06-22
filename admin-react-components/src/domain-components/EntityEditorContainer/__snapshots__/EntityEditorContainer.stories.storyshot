@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Storyshots Domain/EntityEditorContainer Deleted Foo 1`] = `
+exports[`Storyshots Domain/EntityEditorContainer Archived Foo 1`] = `
 <div
   className="dd flex-row overflow-hidden position-fixed inset-0"
 >
@@ -34,7 +34,7 @@ exports[`Storyshots Domain/EntityEditorContainer Deleted Foo 1`] = `
       <p
         className="dd text-body"
       >
-        Foo deleted
+        Foo archived
       </p>
     </button>
   </div>
@@ -65,7 +65,7 @@ exports[`Storyshots Domain/EntityEditorContainer Deleted Foo 1`] = `
               id="fb62be03-a0a9-4689-9987-bacee0e7692d-_name"
               onChange={[Function]}
               type="text"
-              value="Foo deleted"
+              value="Foo archived"
             />
           </div>
         </div>
@@ -88,8 +88,18 @@ exports[`Storyshots Domain/EntityEditorContainer Deleted Foo 1`] = `
                 id="fb62be03-a0a9-4689-9987-bacee0e7692d-title"
                 onChange={[Function]}
                 type="text"
-                value=""
+                value="Hello"
               />
+              <button
+                className="dd icon-button"
+                onClick={[Function]}
+                title="Clear"
+                type="button"
+              >
+                <span
+                  className="dd icon icon-remove"
+                />
+              </button>
             </div>
           </div>
         </div>
@@ -378,7 +388,7 @@ exports[`Storyshots Domain/EntityEditorContainer Deleted Foo 1`] = `
         <p
           className="dd text-body1"
         >
-          Foo deleted
+          Foo archived
         </p>
       </div>
       <div
@@ -421,9 +431,9 @@ exports[`Storyshots Domain/EntityEditorContainer Deleted Foo 1`] = `
             Publish state
           </p>
           <span
-            className="dd has-background text-caption p-1 is-rounded ml-1 bg-primary"
+            className="dd has-background text-caption p-1 is-rounded ml-1 bg-danger"
           >
-            published
+            archived
           </span>
         </div>
         <div
@@ -435,8 +445,23 @@ exports[`Storyshots Domain/EntityEditorContainer Deleted Foo 1`] = `
             onClick={[Function]}
             type="button"
           >
-            Unpublish
+            Unarchive
           </button>
+          <div
+            className="dd"
+          >
+            <button
+              className="dd icon-button"
+              id="publish-button-dropdown"
+              onClick={[Function]}
+              title="Publish actions"
+              type="button"
+            >
+              <span
+                className="dd icon icon-chevron-down"
+              />
+            </button>
+          </div>
         </div>
       </div>
       <div
@@ -505,47 +530,6 @@ exports[`Storyshots Domain/EntityEditorContainer Deleted Foo 1`] = `
                 </button>
               </div>
             </div>
-          </div>
-        </div>
-        <div
-          className="dd px-2 py-1"
-        >
-          <div
-            className="dd stack"
-          >
-            <div
-              className="dd flex-column"
-            >
-              <p
-                className="dd text-subtitle2"
-              >
-                Version 
-                1
-                <span
-                  className="dd has-background text-caption p-1 is-rounded ml-1 bg-danger"
-                >
-                  Deleted
-                </span>
-                <span
-                  className="dd has-background text-caption p-1 is-rounded ml-1 bg-primary"
-                >
-                  Published
-                </span>
-              </p>
-              <p
-                className="dd text-body1"
-              >
-                3/11/2021, 9:19:39 PM
-              </p>
-              <p
-                className="dd text-body1"
-              >
-                a10e49cd-2f4e-4249-b8ee-eaca8466939b
-              </p>
-            </div>
-            <div
-              className="dd stack-layer top right"
-            />
           </div>
         </div>
       </div>

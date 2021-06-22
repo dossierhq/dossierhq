@@ -11,7 +11,7 @@ import {
   initializeEntityEditorState,
   reduceEntityEditorState,
 } from '../..';
-import { baz1Id, foo1Id, fooDeletedId } from '../../test/EntityFixtures';
+import { baz1Id, foo1Id, fooArchivedId } from '../../test/EntityFixtures';
 import {
   createContextValue,
   SlowInterceptor,
@@ -68,8 +68,8 @@ NewFoo.args = { entitySelector: { id: '82ded109-44f2-48b9-a676-43162fda3d7d', ne
 export const FullFoo = Template.bind({});
 FullFoo.args = { entitySelector: { id: foo1Id } };
 
-export const DeletedFoo = Template.bind({});
-DeletedFoo.args = { entitySelector: { id: fooDeletedId } };
+export const ArchivedFoo = Template.bind({});
+ArchivedFoo.args = { entitySelector: { id: fooArchivedId } };
 
 export const FullBaz = Template.bind({});
 FullBaz.args = { entitySelector: { id: baz1Id } };

@@ -13,7 +13,7 @@ import {
 } from '../..';
 import type { EntityMetadataProps } from './EntityMetadata';
 import { EntityLoader } from '../EntityEditor/EntityEditor';
-import { foo1Id, fooDeletedId } from '../../test/EntityFixtures';
+import { foo1Id, fooArchivedId } from '../../test/EntityFixtures';
 import {
   createContextValue,
   SlowInterceptor,
@@ -88,12 +88,12 @@ FullFoo.args = { entitySelector: { id: foo1Id } };
 export const FullFooPublishHistory = Template.bind({});
 FullFooPublishHistory.args = { entitySelector: { id: foo1Id }, initialSelectedHistory: 'publish' };
 
-export const DeletedFoo = Template.bind({});
-DeletedFoo.args = { entitySelector: { id: fooDeletedId } };
+export const ArchivedFoo = Template.bind({});
+ArchivedFoo.args = { entitySelector: { id: fooArchivedId } };
 
-export const DeletedFooPublishHistory = Template.bind({});
-DeletedFooPublishHistory.args = {
-  entitySelector: { id: fooDeletedId },
+export const ArchivedFooPublishHistory = Template.bind({});
+ArchivedFooPublishHistory.args = {
+  entitySelector: { id: fooArchivedId },
   initialSelectedHistory: 'publish',
 };
 

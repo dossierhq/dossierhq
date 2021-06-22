@@ -79,7 +79,7 @@ exports[`Storyshots Domain/EntityEditorOverview Normal 1`] = `
     <p
       className="dd text-body"
     >
-      Foo deleted
+      Foo archived
     </p>
   </button>
 </div>

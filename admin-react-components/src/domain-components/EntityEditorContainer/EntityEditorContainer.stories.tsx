@@ -14,7 +14,7 @@ import {
   SlowInterceptor,
   TestContextAdapter,
 } from '../../test/TestContextAdapter';
-import { bar1Id, bar2Id, foo1Id, fooDeletedId } from '../../test/EntityFixtures';
+import { bar1Id, bar2Id, foo1Id, fooArchivedId } from '../../test/EntityFixtures';
 import {
   AddEntityDraftAction,
   initializeEntityEditorState,
@@ -71,8 +71,8 @@ NewFoo.args = { entitySelectors: [{ id: '82ded109-44f2-48b9-a676-43162fda3d7d', 
 export const FullFoo = Template.bind({});
 FullFoo.args = { entitySelectors: [{ id: foo1Id }] };
 
-export const DeletedFoo = Template.bind({});
-DeletedFoo.args = { entitySelectors: [{ id: fooDeletedId }] };
+export const ArchivedFoo = Template.bind({});
+ArchivedFoo.args = { entitySelectors: [{ id: fooArchivedId }] };
 
 export const TwoEntities = Template.bind({});
 TwoEntities.args = { entitySelectors: [{ id: bar1Id }, { id: bar2Id }] };
