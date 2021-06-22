@@ -771,7 +771,6 @@ export async function getEntityHistory(
     id: entityMain.uuid,
     versions: versions.map<EntityVersionInfo>((v) => ({
       version: v.version,
-      deleted: v.deleted,
       published: v.id === entityMain.published_entity_versions_id,
       createdBy: v.created_by_uuid,
       createdAt: v.created_at,

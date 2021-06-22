@@ -92,7 +92,6 @@ export interface EntityHistory {
 
 export interface EntityVersionInfo {
   version: number;
-  deleted: boolean;
   published: boolean;
   createdBy: string;
   createdAt: Date;

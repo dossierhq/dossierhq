@@ -512,7 +512,6 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         name: 'EntityVersionInfo',
         fields: {
           version: { type: new GraphQLNonNull(GraphQLInt) },
-          deleted: { type: new GraphQLNonNull(GraphQLBoolean) },
           published: { type: new GraphQLNonNull(GraphQLBoolean) },
           createdBy: { type: new GraphQLNonNull(GraphQLID) },
           createdAt: { type: new GraphQLNonNull(GraphQLString) }, // TODO handle dates

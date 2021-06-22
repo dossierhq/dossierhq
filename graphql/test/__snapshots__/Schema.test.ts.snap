@@ -132,7 +132,6 @@ input AdminRichTextInput {
 
 type EntityVersionInfo {
   version: Int!
-  deleted: Boolean!
   published: Boolean!
   createdBy: ID!
   createdAt: String!
@@ -354,7 +353,6 @@ input AdminRichTextInput {
 
 type EntityVersionInfo {
   version: Int!
-  deleted: Boolean!
   published: Boolean!
   createdBy: ID!
   createdAt: String!
@@ -610,7 +608,6 @@ input AdminRichTextInput {
 
 type EntityVersionInfo {
   version: Int!
-  deleted: Boolean!
   published: Boolean!
   createdBy: ID!
   createdAt: String!
@@ -784,7 +781,6 @@ input AdminRichTextInput {
 
 type EntityVersionInfo {
   version: Int!
-  deleted: Boolean!
   published: Boolean!
   createdBy: ID!
   createdAt: String!
@@ -970,7 +966,6 @@ input AdminRichTextInput {
 
 type EntityVersionInfo {
   version: Int!
-  deleted: Boolean!
   published: Boolean!
   createdBy: ID!
   createdAt: String!
@@ -1222,7 +1217,6 @@ input AdminRichTextInput {
 
 type EntityVersionInfo {
   version: Int!
-  deleted: Boolean!
   published: Boolean!
   createdBy: ID!
   createdAt: String!
