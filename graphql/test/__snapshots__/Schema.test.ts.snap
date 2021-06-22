@@ -89,7 +89,6 @@ interface AdminEntity {
   _name: String!
   _type: EntityType!
   _version: Int!
-  _deleted: Boolean!
   _publishState: EntityPublishState!
 }
 
@@ -162,7 +161,6 @@ type AdminFoo implements AdminEntity {
   _type: EntityType!
   _name: String!
   _version: Int!
-  _deleted: Boolean!
   _publishState: EntityPublishState!
   strings: [String!]
   locations: [Location!]
@@ -192,7 +190,6 @@ type AdminBar implements AdminEntity {
   _type: EntityType!
   _name: String!
   _version: Int!
-  _deleted: Boolean!
   _publishState: EntityPublishState!
 }
 
@@ -309,7 +306,6 @@ interface AdminEntity {
   _name: String!
   _type: EntityType!
   _version: Int!
-  _deleted: Boolean!
   _publishState: EntityPublishState!
 }
 
@@ -382,7 +378,6 @@ type AdminFoo implements AdminEntity {
   _type: EntityType!
   _name: String!
   _version: Int!
-  _deleted: Boolean!
   _publishState: EntityPublishState!
   noMeansAll: AdminEntity
   bar: AdminBar
@@ -418,7 +413,6 @@ type AdminBar implements AdminEntity {
   _type: EntityType!
   _name: String!
   _version: Int!
-  _deleted: Boolean!
   _publishState: EntityPublishState!
 }
 
@@ -439,7 +433,6 @@ type AdminBaz implements AdminEntity {
   _type: EntityType!
   _name: String!
   _version: Int!
-  _deleted: Boolean!
   _publishState: EntityPublishState!
 }
 
@@ -563,7 +556,6 @@ interface AdminEntity {
   _name: String!
   _type: EntityType!
   _version: Int!
-  _deleted: Boolean!
   _publishState: EntityPublishState!
 }
 
@@ -636,7 +628,6 @@ type AdminFoo implements AdminEntity {
   _type: EntityType!
   _name: String!
   _version: Int!
-  _deleted: Boolean!
   _publishState: EntityPublishState!
 }
 
@@ -735,7 +726,6 @@ interface AdminEntity {
   _name: String!
   _type: EntityType!
   _version: Int!
-  _deleted: Boolean!
   _publishState: EntityPublishState!
 }
 
@@ -808,7 +798,6 @@ type AdminFoo implements AdminEntity {
   _type: EntityType!
   _name: String!
   _version: Int!
-  _deleted: Boolean!
   _publishState: EntityPublishState!
   body: AdminRichText
 }
@@ -919,7 +908,6 @@ interface AdminEntity {
   _name: String!
   _type: EntityType!
   _version: Int!
-  _deleted: Boolean!
   _publishState: EntityPublishState!
 }
 
@@ -992,7 +980,6 @@ type AdminFoo implements AdminEntity {
   _type: EntityType!
   _name: String!
   _version: Int!
-  _deleted: Boolean!
   _publishState: EntityPublishState!
   fooField: String
 }
@@ -1016,7 +1003,6 @@ type AdminBar implements AdminEntity {
   _type: EntityType!
   _name: String!
   _version: Int!
-  _deleted: Boolean!
   _publishState: EntityPublishState!
   barField1: String
   barField2: AdminEntity
@@ -1165,7 +1151,6 @@ interface AdminEntity {
   _name: String!
   _type: EntityType!
   _version: Int!
-  _deleted: Boolean!
   _publishState: EntityPublishState!
 }
 
@@ -1242,7 +1227,6 @@ type AdminFoo implements AdminEntity {
   _type: EntityType!
   _name: String!
   _version: Int!
-  _deleted: Boolean!
   _publishState: EntityPublishState!
   valueOne: AdminValueOne
   unspecifiedValue: AdminValue
@@ -1279,7 +1263,6 @@ type AdminBar implements AdminEntity {
   _type: EntityType!
   _name: String!
   _version: Int!
-  _deleted: Boolean!
   _publishState: EntityPublishState!
 }
 

@@ -56,7 +56,6 @@ export interface AdminEntity {
   _name: string;
   _type: string;
   _version: number;
-  _deleted?: boolean;
 
   /** The current publish state of the entity.
    *
