@@ -28,18 +28,6 @@ export async function updateEntity<TContext extends SessionGraphQLContext>(
   return buildResolversForAdminEntity(sessionContext, result.value);
 }
 
-export async function deleteEntity<TContext extends SessionGraphQLContext>(
-  context: TContext,
-  id: string
-): Promise<AdminEntity> {
-  const sessionContext = getSessionContext(context);
-  const result = await EntityAdmin.deleteEntity(sessionContext, id);
-  if (result.isError()) {
-    throw result.toError();
-  }
-  return result.value;
-}
-
 export async function publishEntities<TContext extends SessionGraphQLContext>(
   context: TContext,
   entities: {

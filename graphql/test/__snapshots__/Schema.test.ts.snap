@@ -219,7 +219,6 @@ type Query {
 }
 
 type Mutation {
-  deleteEntity(id: ID!): AdminEntity
   publishEntities(entities: [EntityVersionInput!]!): [EntityPublishPayload!]
   unpublishEntities(ids: [ID!]!): [EntityPublishPayload!]
   archiveEntity(id: ID!): EntityPublishPayload
@@ -489,7 +488,6 @@ type Query {
 }
 
 type Mutation {
-  deleteEntity(id: ID!): AdminEntity
   publishEntities(entities: [EntityVersionInput!]!): [EntityPublishPayload!]
   unpublishEntities(ids: [ID!]!): [EntityPublishPayload!]
   archiveEntity(id: ID!): EntityPublishPayload
@@ -665,7 +663,6 @@ type Query {
 }
 
 type Mutation {
-  deleteEntity(id: ID!): AdminEntity
   publishEntities(entities: [EntityVersionInput!]!): [EntityPublishPayload!]
   unpublishEntities(ids: [ID!]!): [EntityPublishPayload!]
   archiveEntity(id: ID!): EntityPublishPayload
@@ -841,7 +838,6 @@ type Query {
 }
 
 type Mutation {
-  deleteEntity(id: ID!): AdminEntity
   publishEntities(entities: [EntityVersionInput!]!): [EntityPublishPayload!]
   unpublishEntities(ids: [ID!]!): [EntityPublishPayload!]
   archiveEntity(id: ID!): EntityPublishPayload
@@ -1056,7 +1052,6 @@ type Query {
 }
 
 type Mutation {
-  deleteEntity(id: ID!): AdminEntity
   publishEntities(entities: [EntityVersionInput!]!): [EntityPublishPayload!]
   unpublishEntities(ids: [ID!]!): [EntityPublishPayload!]
   archiveEntity(id: ID!): EntityPublishPayload
@@ -1362,7 +1357,6 @@ type Query {
 }
 
 type Mutation {
-  deleteEntity(id: ID!): AdminEntity
   publishEntities(entities: [EntityVersionInput!]!): [EntityPublishPayload!]
   unpublishEntities(ids: [ID!]!): [EntityPublishPayload!]
   archiveEntity(id: ID!): EntityPublishPayload
