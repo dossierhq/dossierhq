@@ -124,8 +124,7 @@ exports[`Storyshots Domain/EntityMetadata Archived Foo 1`] = `
           <p
             className="dd text-subtitle2"
           >
-            Version 
-            0
+            Version 0
           </p>
           <p
             className="dd text-body1"
@@ -426,8 +425,7 @@ exports[`Storyshots Domain/EntityMetadata Full Foo 1`] = `
           <p
             className="dd text-subtitle2"
           >
-            Version 
-            0
+            Version 0
             <span
               className="dd has-background text-caption p-1 is-rounded ml-1 bg-primary"
             >

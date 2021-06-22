@@ -497,8 +497,7 @@ exports[`Storyshots Domain/EntityEditorContainer Archived Foo 1`] = `
               <p
                 className="dd text-subtitle2"
               >
-                Version 
-                0
+                Version 0
               </p>
               <p
                 className="dd text-body1"
@@ -1474,8 +1473,7 @@ exports[`Storyshots Domain/EntityEditorContainer Full Foo 1`] = `
               <p
                 className="dd text-subtitle2"
               >
-                Version 
-                0
+                Version 0
                 <span
                   className="dd has-background text-caption p-1 is-rounded ml-1 bg-primary"
                 >
@@ -2699,8 +2697,7 @@ exports[`Storyshots Domain/EntityEditorContainer Two Entities 1`] = `
               <p
                 className="dd text-subtitle2"
               >
-                Version 
-                0
+                Version 0
               </p>
               <p
                 className="dd text-body1"
