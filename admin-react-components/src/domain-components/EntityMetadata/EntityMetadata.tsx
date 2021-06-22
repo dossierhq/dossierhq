@@ -104,8 +104,7 @@ function EntityHistoryList({ draftState }: { draftState: EntityEditorDraftState 
               <Stack>
                 <Column>
                   <p className="dd text-subtitle2">
-                    Version {version.version}
-                    {version.deleted ? <Tag kind="danger" text="Deleted" /> : null}
+                    {`Version ${version.version}`}
                     {version.published ? <Tag kind="primary" text="Published" /> : null}
                   </p>
                   <p className="dd text-body1">{version.createdAt.toLocaleString()}</p>
