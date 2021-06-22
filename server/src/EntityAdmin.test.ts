@@ -497,6 +497,7 @@ describe('createEntity()', () => {
         _name: name,
         _version: 0,
         _publishState: EntityPublishState.Draft,
+        ...emptyFooFields,
         title: 'Title',
       });
 
@@ -556,6 +557,7 @@ describe('createEntity()', () => {
         _name: createResult.value._name,
         _version: 0,
         _publishState: EntityPublishState.Draft,
+        ...emptyFooFields,
         title: 'Draft',
       });
 
@@ -603,6 +605,7 @@ describe('createEntity()', () => {
         _name: createResult.value._name,
         _version: 0,
         _publishState: EntityPublishState.Draft,
+        ...emptyFooFields,
         title: 'Draft',
       });
     }
@@ -633,6 +636,7 @@ describe('createEntity()', () => {
           _name: createFooResult.value._name,
           _version: 0,
           _publishState: EntityPublishState.Draft,
+          ...emptyFooFields,
           title: 'Foo title',
           bar: { id: barId },
         });
@@ -687,6 +691,7 @@ describe('createEntity()', () => {
         _name: name,
         _version: 0,
         _publishState: EntityPublishState.Draft,
+        ...emptyBazFields,
         tags: ['one', 'two', 'three'],
       });
 
@@ -723,6 +728,7 @@ describe('createEntity()', () => {
         _name: name,
         _version: 0,
         _publishState: EntityPublishState.Draft,
+        ...emptyBazFields,
         body: { blocks: [{ type: 'paragraph', data: { text: 'Hello world' } }] },
         bodyList: [
           { blocks: [{ type: 'paragraph', data: { text: 'First rich text' } }] },
@@ -792,6 +798,7 @@ describe('createEntity()', () => {
           _name: bazName,
           _version: 0,
           _publishState: EntityPublishState.Draft,
+          ...emptyBazFields,
           body: {
             blocks: [
               { type: RichTextBlockType.entity, data: { id: bar1Id } },
@@ -875,6 +882,7 @@ describe('createEntity()', () => {
         _name: name,
         _version: 0,
         _publishState: EntityPublishState.Draft,
+        ...emptyBazFields,
         location: { lat: 55.60498, lng: 13.003822 },
         locations: [
           { lat: 55.60498, lng: 13.003822 },
@@ -928,6 +936,7 @@ describe('createEntity()', () => {
           _name: name,
           _version: 0,
           _publishState: EntityPublishState.Draft,
+          ...emptyBazFields,
           bars: [{ id: bar1Id }, { id: bar2Id }],
         });
 
@@ -995,6 +1004,7 @@ describe('createEntity()', () => {
         _name: name,
         _version: 0,
         _publishState: EntityPublishState.Draft,
+        ...emptyBazFields,
         twoStrings: { _type: 'EntityAdminTwoStrings', one: 'First', two: 'Second' },
       });
 
@@ -1030,6 +1040,7 @@ describe('createEntity()', () => {
         _name: name,
         _version: 0,
         _publishState: EntityPublishState.Draft,
+        ...emptyBazFields,
         twoStringsList: [
           { _type: 'EntityAdminTwoStrings', one: 'First', two: 'Second' },
           { _type: 'EntityAdminTwoStrings', one: 'Three', two: 'Four' },
@@ -1079,6 +1090,7 @@ describe('createEntity()', () => {
           _name: bazName,
           _version: 0,
           _publishState: EntityPublishState.Draft,
+          ...emptyBazFields,
           stringReference: {
             _type: 'EntityAdminStringReference',
             string: 'Hello string',
@@ -1167,6 +1179,7 @@ describe('createEntity()', () => {
           _name: bazName,
           _version: 0,
           _publishState: EntityPublishState.Draft,
+          ...emptyBazFields,
           listFields: {
             _type: 'EntityAdminListFields',
             stringList: ['one', 'two', 'three'],
@@ -1255,6 +1268,7 @@ describe('createEntity()', () => {
         _name: bazName,
         _version: 0,
         _publishState: EntityPublishState.Draft,
+        ...emptyBazFields,
         nested: {
           _type: 'EntityAdminNested',
           title: 'Nested 0',
@@ -1844,7 +1858,7 @@ describe('searchEntities()', () => {
     if (expectOkResult(searchResult)) {
       expect(searchResult.value?.edges).toHaveLength(1);
       expect(searchResult.value?.edges[0].node).toEqual({
-        value: { ...emptyFooFields, ...fooEntity }, //TODO ...emptyFooFields shouldn't be needed here
+        value: fooEntity,
       });
     }
   });
@@ -1865,7 +1879,7 @@ describe('searchEntities()', () => {
     if (expectOkResult(searchResult)) {
       expect(searchResult.value?.edges).toHaveLength(1);
       expect(searchResult.value?.edges[0].node).toEqual({
-        value: { ...emptyBazFields, ...bazEntities[0] }, //TODO ...emptyBazFields shouldn't be needed here
+        value: bazEntities[0],
       });
     }
   });
@@ -1881,7 +1895,7 @@ describe('searchEntities()', () => {
     if (expectOkResult(searchResult)) {
       expect(searchResult.value?.edges).toHaveLength(1);
       expect(searchResult.value?.edges[0].node).toEqual({
-        value: { ...emptyBazFields, ...bazEntity }, //TODO ...emptyBazFields shouldn't be needed here
+        value: bazEntity,
       });
     }
   });
