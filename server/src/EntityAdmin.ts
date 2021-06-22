@@ -370,57 +370,6 @@ export async function updateEntity(
   });
 }
 
-export async function deleteEntity(
-  context: SessionContext,
-  id: string
-): PromiseResult<AdminEntity, ErrorType.NotFound> {
-  return await context.withTransaction(async (context) => {
-    // Entity info
-    const entityInfo = await Db.queryNoneOrOne<
-      Pick<
-        EntitiesTable,
-        'id' | 'name' | 'type' | 'archived' | 'never_published' | 'published_entity_versions_id'
-      > &
-        Pick<EntityVersionsTable, 'version'>
-    >(
-      context,
-      `SELECT e.id, e.name, e.type, e.archived, e.never_published, e.published_entity_versions_id, ev.version
-        FROM entity_versions ev, entities e
-        WHERE e.uuid = $1 AND e.latest_draft_entity_versions_id = ev.id`,
-      [id]
-    );
-    if (!entityInfo) {
-      return notOk.NotFound('No such entity');
-    }
-    const { id: entityId, name, type, version: maxVersion } = entityInfo;
-
-    const version = maxVersion + 1;
-    const { id: versionsId } = await Db.queryOne<{ id: number }>(
-      context,
-      'INSERT INTO entity_versions (entities_id, created_by, version) VALUES ($1, $2, $3) RETURNING id',
-      [entityId, context.session.subjectInternalId, version]
-    );
-    await Db.queryNone(
-      context,
-      'UPDATE entities SET latest_draft_entity_versions_id = $1 WHERE id = $2',
-      [versionsId, entityId]
-    );
-    return ok(
-      decodeAdminEntity(context, {
-        uuid: id,
-        type,
-        name,
-        version,
-        data: null,
-        archived: entityInfo.archived,
-        never_published: entityInfo.never_published,
-        latest_draft_entity_versions_id: versionsId,
-        published_entity_versions_id: entityInfo.published_entity_versions_id,
-      })
-    );
-  });
-}
-
 export async function publishEntities(
   context: SessionContext,
   entities: {
