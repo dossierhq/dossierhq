@@ -176,16 +176,7 @@ export function decodeAdminEntity(context: SessionContext, values: AdminEntityVa
     throw new Error(`No entity spec for type ${values.type}`);
   }
 
-  let state: EntityPublishState;
-  if (values.archived) {
-    state = EntityPublishState.Archived;
-  } else if (values.published_entity_versions_id === null) {
-    state = values.never_published ? EntityPublishState.Draft : EntityPublishState.Withdrawn;
-  } else if (values.published_entity_versions_id === values.latest_draft_entity_versions_id) {
-    state = EntityPublishState.Published;
-  } else {
-    state = EntityPublishState.Modified;
-  }
+  const state = resolvePublishState(values, values);
 
   const entity: AdminEntity = {
     id: values.uuid,
@@ -200,6 +191,25 @@ export function decodeAdminEntity(context: SessionContext, values: AdminEntityVa
     entity[fieldName] = decodeFieldItemOrList(schema, fieldSpec, fieldValue);
   }
   return entity;
+}
+
+function resolvePublishState(
+  values: Pick<EntitiesTable, 'archived' | 'never_published' | 'published_entity_versions_id'>,
+  draft: 'is-update' | Pick<EntitiesTable, 'latest_draft_entity_versions_id'>
+) {
+  if (values.archived) {
+    return EntityPublishState.Archived;
+  }
+  if (values.published_entity_versions_id === null) {
+    return values.never_published ? EntityPublishState.Draft : EntityPublishState.Withdrawn;
+  }
+  if (
+    draft === 'is-update' ||
+    values.published_entity_versions_id !== draft.latest_draft_entity_versions_id
+  ) {
+    return EntityPublishState.Modified;
+  }
+  return EntityPublishState.Published;
 }
 
 export function resolveCreateEntity(
@@ -241,31 +251,23 @@ export function resolveUpdateEntity(
   context: SessionContext,
   entity: AdminEntityUpdate,
   type: string,
-  previousName: string,
-  archived: boolean,
-  neverPublished: boolean,
-  version: number,
-  publishedVersionId: number | null,
-  previousValuesEncoded: Record<string, unknown> | null
+  values: Pick<
+    EntitiesTable,
+    'archived' | 'name' | 'never_published' | 'published_entity_versions_id'
+  > &
+    Pick<EntityVersionsTable, 'data' | 'version'>
 ): Result<AdminEntity, ErrorType.BadRequest> {
   if (entity._type && entity._type !== type) {
     return notOk.BadRequest(`New type ${entity._type} doesn’t correspond to previous type ${type}`);
   }
 
-  let state: EntityPublishState;
-  if (archived) {
-    state = EntityPublishState.Archived;
-  } else if (publishedVersionId === null) {
-    state = neverPublished ? EntityPublishState.Draft : EntityPublishState.Withdrawn;
-  } else {
-    state = EntityPublishState.Modified;
-  }
+  const state = resolvePublishState(values, 'is-update');
 
   const result: AdminEntity = {
     id: entity.id,
-    _name: entity._name || previousName,
+    _name: entity._name || values.name,
     _type: type,
-    _version: version,
+    _version: values.version + 1,
     _publishState: state,
   };
 
@@ -284,8 +286,8 @@ export function resolveUpdateEntity(
     const fieldName = fieldSpec.name;
     if (fieldName in entity) {
       result[fieldName] = entity[fieldName];
-    } else if (previousValuesEncoded && fieldName in previousValuesEncoded) {
-      const encodedData = previousValuesEncoded[fieldName];
+    } else if (fieldName in values.data) {
+      const encodedData = values.data[fieldName];
       result[fieldName] = decodeFieldItemOrList(schema, fieldSpec, encodedData);
     } else {
       result[fieldName] = null;

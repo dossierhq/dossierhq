@@ -285,28 +285,9 @@ export async function updateEntity(
     if (!previousValues) {
       return notOk.NotFound('No such entity');
     }
-    const {
-      id: entityId,
-      data: previousDataEncoded,
-      type,
-      name: previousName,
-      archived,
-      never_published: neverPublished,
-      published_entity_versions_id: publishedVersionId,
-    } = previousValues;
-    const newVersion = previousValues.version + 1;
+    const { id: entityId, type, name: previousName } = previousValues;
 
-    const resolvedResult = resolveUpdateEntity(
-      context,
-      entity,
-      type,
-      previousName,
-      archived,
-      neverPublished,
-      newVersion,
-      publishedVersionId,
-      previousDataEncoded
-    );
+    const resolvedResult = resolveUpdateEntity(context, entity, type, previousValues);
     if (resolvedResult.isError()) {
       return resolvedResult;
     }
@@ -321,7 +302,7 @@ export async function updateEntity(
     const { id: versionsId } = await Db.queryOne<Pick<EntityVersionsTable, 'id'>>(
       context,
       'INSERT INTO entity_versions (entities_id, created_by, version, data) VALUES ($1, $2, $3, $4) RETURNING id',
-      [entityId, context.session.subjectInternalId, newVersion, data]
+      [entityId, context.session.subjectInternalId, updatedEntity._version, data]
     );
 
     if (name !== previousName) {
