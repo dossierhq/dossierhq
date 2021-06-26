@@ -1,9 +1,13 @@
 import type {
   AdminEntity,
+  AdminEntityCreate,
   AdminQuery,
+  Connection,
+  Edge,
   EntityReference,
   EntityVersionReference,
   ErrorType,
+  Paging,
   PromiseResult,
   Result,
 } from '..';
@@ -16,25 +20,42 @@ export interface AdminClient {
 
   getEntities(references: EntityReference[]): Promise<Result<AdminEntity, ErrorType.NotFound>[]>;
 
+  searchEntities(
+    query?: AdminQuery,
+    paging?: Paging
+  ): PromiseResult<Connection<Edge<AdminEntity, ErrorType>> | null, ErrorType.BadRequest>;
+
   getTotalCount(query?: AdminQuery): PromiseResult<number, ErrorType.BadRequest>;
+
+  createEntity(entity: AdminEntityCreate): PromiseResult<AdminEntity, ErrorType.BadRequest>;
 }
 
 export enum AdminClientOperationName {
-  GetEntity = 'get-entity',
+  CreateEntity = 'create-entity',
   GetEntities = 'get-entities',
+  GetEntity = 'get-entity',
   GetTotalCount = 'get-total-count',
+  SearchEntities = 'search-entities',
 }
 
+type MethodParameters<T extends keyof AdminClient> = Parameters<AdminClient[T]>;
+type MethodReturnType<T extends keyof AdminClient> = WithoutPromise<ReturnType<AdminClient[T]>>;
+type WithoutPromise<T> = T extends Promise<infer U> ? U : T;
+
 interface AdminClientOperationArguments {
-  [AdminClientOperationName.GetEntity]: { reference: EntityReference | EntityVersionReference };
-  [AdminClientOperationName.GetEntities]: { references: EntityReference[] };
-  [AdminClientOperationName.GetTotalCount]: { query?: AdminQuery };
+  [AdminClientOperationName.CreateEntity]: MethodParameters<'createEntity'>;
+  [AdminClientOperationName.GetEntities]: MethodParameters<'getEntities'>;
+  [AdminClientOperationName.GetEntity]: MethodParameters<'getEntity'>;
+  [AdminClientOperationName.GetTotalCount]: MethodParameters<'getTotalCount'>;
+  [AdminClientOperationName.SearchEntities]: MethodParameters<'searchEntities'>;
 }
 
 interface AdminClientOperationReturn {
-  [AdminClientOperationName.GetEntity]: Result<AdminEntity, ErrorType.NotFound>;
-  [AdminClientOperationName.GetEntities]: Result<AdminEntity, ErrorType.NotFound>[];
-  [AdminClientOperationName.GetTotalCount]: Result<number, ErrorType.BadRequest>;
+  [AdminClientOperationName.CreateEntity]: MethodReturnType<'createEntity'>;
+  [AdminClientOperationName.GetEntities]: MethodReturnType<'getEntities'>;
+  [AdminClientOperationName.GetEntity]: MethodReturnType<'getEntity'>;
+  [AdminClientOperationName.GetTotalCount]: MethodReturnType<'getTotalCount'>;
+  [AdminClientOperationName.SearchEntities]: MethodReturnType<'searchEntities'>;
 }
 
 export interface AdminClientOperation<TName extends AdminClientOperationName> {
@@ -67,7 +88,7 @@ class BaseAdminClient<TContext> implements AdminClient {
   ): Promise<AdminClientOperationReturn[AdminClientOperationName.GetEntity]> {
     return this.executeOperation({
       name: AdminClientOperationName.GetEntity,
-      args: { reference },
+      args: [reference],
     });
   }
 
@@ -76,7 +97,17 @@ class BaseAdminClient<TContext> implements AdminClient {
   ): Promise<AdminClientOperationReturn[AdminClientOperationName.GetEntities]> {
     return this.executeOperation({
       name: AdminClientOperationName.GetEntities,
-      args: { references },
+      args: [references],
+    });
+  }
+
+  searchEntities(
+    query?: AdminQuery,
+    paging?: Paging
+  ): Promise<AdminClientOperationReturn[AdminClientOperationName.SearchEntities]> {
+    return this.executeOperation({
+      name: AdminClientOperationName.SearchEntities,
+      args: [query, paging],
     });
   }
 
@@ -85,7 +116,16 @@ class BaseAdminClient<TContext> implements AdminClient {
   ): Promise<AdminClientOperationReturn[AdminClientOperationName.GetTotalCount]> {
     return this.executeOperation({
       name: AdminClientOperationName.GetTotalCount,
-      args: { query },
+      args: [query],
+    });
+  }
+
+  createEntity(
+    entity: AdminEntityCreate
+  ): Promise<AdminClientOperationReturn[AdminClientOperationName.CreateEntity]> {
+    return this.executeOperation({
+      name: AdminClientOperationName.CreateEntity,
+      args: [entity],
     });
   }
 
