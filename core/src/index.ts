@@ -1,3 +1,4 @@
+export type { AdminClient, AdminClientOperation } from './Client';
 export type { ErrorResult, OkResult, PromiseResult, Result } from './ErrorResult';
 export type {
   JsonConnection,
@@ -26,6 +27,7 @@ export type {
   EntityHistory,
   EntityReference,
   EntityVersionInfo,
+  EntityVersionReference,
   Location,
   PageInfo,
   Paging,
@@ -38,6 +40,7 @@ export type {
 } from './Types';
 
 export { assertIsDefined } from './Asserts';
+export { AdminClientOperationName, createBaseAdminClient } from './Client';
 export {
   createErrorResult,
   createErrorResultFromError,

@@ -7,6 +7,7 @@ import {
   RichTextBlockType,
 } from '@datadata/core';
 import type {
+  AdminClient,
   AdminEntity,
   AdminQuery,
   BoundingBox,
@@ -23,11 +24,13 @@ import {
   expectResultValue,
   expectSearchResultEntities,
 } from '../test/AdditionalTestUtils';
+import { createServerClient } from './Client';
 
 const { expectErrorResult, expectOkResult } = CoreTestUtils;
 
 let server: Server;
 let context: SessionContext;
+let client: AdminClient;
 let entitiesOfTypeAdminOnlyEditBefore: AdminEntity[];
 
 const emptyFooFields = { bar: null, summary: null, title: null };
@@ -54,6 +57,9 @@ const emptyBazFields = {
 beforeAll(async () => {
   server = await createTestServer();
   context = await ensureSessionContext(server, 'test', 'entity-admin');
+  client = createServerClient({
+    resolveContext: () => ensureSessionContext(server, 'test', 'entity-admin'),
+  });
   await updateSchema(context, {
     entityTypes: [
       {
@@ -354,7 +360,7 @@ describe('getEntity()', () => {
       const updateResult = await EntityAdmin.updateEntity(context, { id, title: 'Updated title' });
       expectOkResult(updateResult);
 
-      const versionMaxResult = await EntityAdmin.getEntity(context, id);
+      const versionMaxResult = await client.getEntity({ id });
       expectResultValue(versionMaxResult, {
         id,
         _type: 'EntityAdminFoo',
