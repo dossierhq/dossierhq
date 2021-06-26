@@ -2,7 +2,7 @@ import { EntityAdmin } from '@datadata/server';
 import Joi from 'joi';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import type { EntityUnarchiveRequest } from '../../../types/RequestTypes';
-import type { ActionResponse } from '../../../types/ResponseTypes';
+import type { PublishingResultResponse } from '../../../types/ResponseTypes';
 import { errorResultToBoom } from '../../../utils/ErrorUtils';
 import { handlePutAsync, validateRequestQuery } from '../../../utils/HandlerUtils';
 import { getServerConnection, getSessionContextForRequest } from '../../../utils/ServerUtils';
@@ -14,7 +14,10 @@ const requestSchema = Joi.object<RequestQuery>({
   id: Joi.string().required(),
 });
 
-export default async (req: NextApiRequest, res: NextApiResponse<ActionResponse>): Promise<void> => {
+export default async (
+  req: NextApiRequest,
+  res: NextApiResponse<PublishingResultResponse>
+): Promise<void> => {
   await handlePutAsync(req, res, async (_body: EntityUnarchiveRequest) => {
     const { id } = validateRequestQuery(req.query, requestSchema);
 
@@ -30,6 +33,6 @@ export default async (req: NextApiRequest, res: NextApiResponse<ActionResponse>)
       throw errorResultToBoom(unarchiveResult);
     }
 
-    return { success: true };
+    return unarchiveResult.value;
   });
 };

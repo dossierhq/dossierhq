@@ -5,6 +5,7 @@ import type {
   JsonEdge,
   JsonEntityHistory,
   JsonPublishingHistory,
+  PublishingResult,
   SchemaSpecification,
 } from '@datadata/core';
 
@@ -22,6 +23,5 @@ export interface SchemaResponse {
 
 export type SearchEntitiesResponse = JsonConnection<JsonEdge<AdminEntity, ErrorType>> | null;
 
-export interface ActionResponse {
-  success: boolean;
-}
+export type PublishingResultResponse = PublishingResult;
+export type PublishingResultListResponse = PublishingResult[];

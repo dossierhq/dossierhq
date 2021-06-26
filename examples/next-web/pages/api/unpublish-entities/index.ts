@@ -1,12 +1,15 @@
 import { EntityAdmin } from '@datadata/server';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import type { EntityUnpublishRequest } from '../../../types/RequestTypes';
-import type { ActionResponse } from '../../../types/ResponseTypes';
+import type { PublishingResultListResponse } from '../../../types/ResponseTypes';
 import { errorResultToBoom } from '../../../utils/ErrorUtils';
 import { handlePutAsync } from '../../../utils/HandlerUtils';
 import { getServerConnection, getSessionContextForRequest } from '../../../utils/ServerUtils';
 
-export default async (req: NextApiRequest, res: NextApiResponse<ActionResponse>): Promise<void> => {
+export default async (
+  req: NextApiRequest,
+  res: NextApiResponse<PublishingResultListResponse>
+): Promise<void> => {
   await handlePutAsync(req, res, async (body: EntityUnpublishRequest) => {
     const { authContext, server } = await getServerConnection();
     const authResult = await getSessionContextForRequest(server, authContext, req);
@@ -20,6 +23,6 @@ export default async (req: NextApiRequest, res: NextApiResponse<ActionResponse>)
       throw errorResultToBoom(unpublishResult);
     }
 
-    return { success: true };
+    return unpublishResult.value;
   });
 };

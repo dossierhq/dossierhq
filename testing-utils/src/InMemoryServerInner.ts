@@ -1,4 +1,10 @@
-import type { AdminEntity, EntityHistory, PublishingHistory, Schema } from '@datadata/core';
+import type {
+  AdminEntity,
+  EntityHistory,
+  PublishingHistory,
+  PublishingResult,
+  Schema,
+} from '@datadata/core';
 import { EntityPublishState, PublishingEventKind } from '@datadata/core';
 import type { JsonInMemoryEntity } from '.';
 import type { InMemoryEntity, InMemoryEntityVersion } from './InMemoryServer';
@@ -163,13 +169,14 @@ export class InMemoryServerInner {
     this.addPublishingEvent(fullEntity, PublishingEventKind.Archive, null, userId);
   }
 
-  unarchiveEntity(id: string, userId: string): void {
+  unarchiveEntity(id: string, userId: string): PublishingResult {
     const fullEntity = this.getFullEntity(id);
     if (!fullEntity) {
       throw new Error(`Can't find ${id}`);
     }
     fullEntity.archived = false;
     this.addPublishingEvent(fullEntity, PublishingEventKind.Unarchive, null, userId);
+    return { id, publishState: this.getEntityPublishState(fullEntity) };
   }
 
   private addPublishingEvent(
