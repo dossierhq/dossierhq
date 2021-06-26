@@ -1,4 +1,23 @@
-import type { EntityHistory } from '@datadata/core';
+import type {
+  AdminEntity,
+  Connection,
+  Edge,
+  EntityHistory,
+  ErrorType,
+  Result,
+} from '@datadata/core';
+import { assertIsDefined, CoreTestUtils } from '@datadata/core';
+
+const { expectOkResult } = CoreTestUtils;
+
+export function expectResultValue<TOk, TError extends ErrorType>(
+  result: Result<TOk, TError>,
+  expectedValue: TOk
+): void {
+  if (expectOkResult(result)) {
+    expect(result.value).toEqual<TOk>(expectedValue);
+  }
+}
 
 export function expectEntityHistoryVersions(
   actual: EntityHistory,
@@ -10,4 +29,17 @@ export function expectEntityHistoryVersions(
     return version;
   });
   expect(actualVersions).toEqual(expectedVersions);
+}
+
+export function expectSearchResultEntities(
+  result: Result<Connection<Edge<AdminEntity, ErrorType>> | null, ErrorType.BadRequest>,
+  actualEntities: AdminEntity[]
+): void {
+  if (expectOkResult(result)) {
+    assertIsDefined(result.value);
+    expect(result.value.edges).toHaveLength(actualEntities.length);
+    for (const [index, actualEntity] of actualEntities.entries()) {
+      expectResultValue(result.value.edges[index].node, actualEntity);
+    }
+  }
 }
