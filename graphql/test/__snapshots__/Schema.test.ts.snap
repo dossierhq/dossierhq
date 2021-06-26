@@ -154,6 +154,7 @@ type PublishingHistory {
 
 type EntityPublishPayload {
   id: ID!
+  publishState: EntityPublishState!
 }
 
 type AdminFoo implements AdminEntity {
@@ -371,6 +372,7 @@ type PublishingHistory {
 
 type EntityPublishPayload {
   id: ID!
+  publishState: EntityPublishState!
 }
 
 type AdminFoo implements AdminEntity {
@@ -621,6 +623,7 @@ type PublishingHistory {
 
 type EntityPublishPayload {
   id: ID!
+  publishState: EntityPublishState!
 }
 
 type AdminFoo implements AdminEntity {
@@ -791,6 +794,7 @@ type PublishingHistory {
 
 type EntityPublishPayload {
   id: ID!
+  publishState: EntityPublishState!
 }
 
 type AdminFoo implements AdminEntity {
@@ -973,6 +977,7 @@ type PublishingHistory {
 
 type EntityPublishPayload {
   id: ID!
+  publishState: EntityPublishState!
 }
 
 type AdminFoo implements AdminEntity {
@@ -1220,6 +1225,7 @@ type PublishingHistory {
 
 type EntityPublishPayload {
   id: ID!
+  publishState: EntityPublishState!
 }
 
 type AdminFoo implements AdminEntity {

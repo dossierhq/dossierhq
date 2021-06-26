@@ -562,6 +562,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         name: 'EntityPublishPayload',
         fields: {
           id: { type: new GraphQLNonNull(GraphQLID) },
+          publishState: { type: new GraphQLNonNull(this.getEnumType('EntityPublishState')) },
         },
       })
     );
