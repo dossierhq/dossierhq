@@ -6,6 +6,7 @@ import {
   getEntities,
   getEntity,
   getTotalCount,
+  publishEntities,
   searchEntities,
   updateEntity,
 } from './EntityAdmin';
@@ -23,29 +24,29 @@ async function terminatingMiddleware(
   operation: AdminClientOperation<AdminClientOperationName>
 ): Promise<void> {
   switch (operation.name) {
-    case AdminClientOperationName.CreateEntity: {
+    case AdminClientOperationName.createEntity: {
       const {
         args: [entity],
         resolve,
-      } = operation as AdminClientOperation<AdminClientOperationName.CreateEntity>;
+      } = operation as AdminClientOperation<AdminClientOperationName.createEntity>;
       resolve(await createEntity(context, entity));
       break;
     }
-    case AdminClientOperationName.GetEntity: {
+    case AdminClientOperationName.getEntity: {
       const {
         args: [reference],
         resolve,
-      } = operation as AdminClientOperation<AdminClientOperationName.GetEntity>;
+      } = operation as AdminClientOperation<AdminClientOperationName.getEntity>;
       resolve(
         await getEntity(context, reference.id, 'version' in reference ? reference.version : null)
       );
       break;
     }
-    case AdminClientOperationName.GetEntities: {
+    case AdminClientOperationName.getEntities: {
       const {
         args: [references],
         resolve,
-      } = operation as AdminClientOperation<AdminClientOperationName.GetEntities>;
+      } = operation as AdminClientOperation<AdminClientOperationName.getEntities>;
       resolve(
         await getEntities(
           context,
@@ -54,27 +55,35 @@ async function terminatingMiddleware(
       );
       break;
     }
-    case AdminClientOperationName.GetTotalCount: {
+    case AdminClientOperationName.getTotalCount: {
       const {
         args: [query],
         resolve,
-      } = operation as AdminClientOperation<AdminClientOperationName.GetTotalCount>;
+      } = operation as AdminClientOperation<AdminClientOperationName.getTotalCount>;
       resolve(await getTotalCount(context, query));
       break;
     }
-    case AdminClientOperationName.SearchEntities: {
+    case AdminClientOperationName.publishEntities: {
+      const {
+        args: [references],
+        resolve,
+      } = operation as AdminClientOperation<AdminClientOperationName.publishEntities>;
+      resolve(await publishEntities(context, references));
+      break;
+    }
+    case AdminClientOperationName.searchEntities: {
       const {
         args: [query, paging],
         resolve,
-      } = operation as AdminClientOperation<AdminClientOperationName.SearchEntities>;
+      } = operation as AdminClientOperation<AdminClientOperationName.searchEntities>;
       resolve(await searchEntities(context, query, paging));
       break;
     }
-    case AdminClientOperationName.UpdateEntity: {
+    case AdminClientOperationName.updateEntity: {
       const {
         args: [entity],
         resolve,
-      } = operation as AdminClientOperation<AdminClientOperationName.UpdateEntity>;
+      } = operation as AdminClientOperation<AdminClientOperationName.updateEntity>;
       resolve(await updateEntity(context, entity));
       break;
     }
