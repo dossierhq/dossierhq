@@ -39,7 +39,7 @@ export type {
   ValueItem,
 } from './Types';
 
-export { assertIsDefined } from './Asserts';
+export { assertExhaustive, assertIsDefined } from './Asserts';
 export { AdminClientOperationName, createBaseAdminClient } from './Client';
 export {
   createErrorResult,
