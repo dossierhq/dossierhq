@@ -1,4 +1,3 @@
-import { EntityAdmin } from '@datadata/server';
 import Boom from '@hapi/boom';
 import Joi from 'joi';
 import type { NextApiRequest, NextApiResponse } from 'next';
@@ -32,9 +31,11 @@ export default async (req: NextApiRequest, res: NextApiResponse<EntityResponse>)
       if (authResult.isError()) {
         throw errorResultToBoom(authResult);
       }
-      const context = authResult.value;
+      const { adminClient } = authResult.value;
 
-      const result = await EntityAdmin.getEntity(context, id, version);
+      const result = await adminClient.getEntity(
+        typeof version === 'number' ? { id, version } : { id }
+      );
       if (result.isError()) {
         throw errorResultToBoom(result);
       }
@@ -48,9 +49,9 @@ export default async (req: NextApiRequest, res: NextApiResponse<EntityResponse>)
       if (authResult.isError()) {
         throw errorResultToBoom(authResult);
       }
-      const context = authResult.value;
+      const { adminClient } = authResult.value;
 
-      const result = await EntityAdmin.updateEntity(context, body.item);
+      const result = await adminClient.updateEntity(body.item);
 
       if (result.isError()) {
         throw errorResultToBoom(result);

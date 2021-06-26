@@ -1,7 +1,7 @@
-import type { PromiseResult, SchemaSpecification } from '@datadata/core';
+import type { AdminClient, PromiseResult, SchemaSpecification } from '@datadata/core';
 import { ErrorType, ok, Schema } from '@datadata/core';
 import type { AuthContext, SessionContext } from '@datadata/server';
-import { Auth, Server } from '@datadata/server';
+import { Auth, createServerClient, Server } from '@datadata/server';
 import type { NextApiRequest } from 'next';
 import SchemaSpec from './schema.json';
 
@@ -34,10 +34,15 @@ export async function getSessionContextForRequest(
   server: Server,
   authContext: AuthContext,
   req: NextApiRequest
-): PromiseResult<SessionContext, ErrorType.NotAuthenticated> {
+): PromiseResult<
+  { adminClient: AdminClient; sessionContext: SessionContext },
+  ErrorType.NotAuthenticated
+> {
   //TODO actually authenticate
   const session = await ensureSession(authContext, 'test', 'john-smith');
-  return ok(server.createSessionContext(session));
+  const sessionContext = server.createSessionContext(session);
+  const adminClient = createServerClient({ resolveContext: () => Promise.resolve(sessionContext) });
+  return ok({ adminClient, sessionContext });
 }
 
 export async function getServerConnection(): Promise<{ server: Server; authContext: AuthContext }> {

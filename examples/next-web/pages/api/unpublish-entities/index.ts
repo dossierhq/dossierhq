@@ -1,4 +1,3 @@
-import { EntityAdmin } from '@datadata/server';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import type { EntityUnpublishRequest } from '../../../types/RequestTypes';
 import type { PublishingResultListResponse } from '../../../types/ResponseTypes';
@@ -16,9 +15,9 @@ export default async (
     if (authResult.isError()) {
       throw errorResultToBoom(authResult);
     }
-    const context = authResult.value;
+    const { adminClient } = authResult.value;
 
-    const unpublishResult = await EntityAdmin.unpublishEntities(context, body.items);
+    const unpublishResult = await adminClient.unpublishEntities(body.items.map((id) => ({ id })));
     if (unpublishResult.isError()) {
       throw errorResultToBoom(unpublishResult);
     }
