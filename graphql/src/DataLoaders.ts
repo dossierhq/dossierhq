@@ -25,7 +25,7 @@ import type { SessionContext } from '@datadata/server';
 import { EntityAdmin, PublishedEntity } from '@datadata/server';
 import type { GraphQLResolveInfo } from 'graphql';
 import type { SessionGraphQLContext } from './GraphQLSchemaGenerator';
-import { getSessionContext } from './Utils';
+import { getAdminClient, getSessionContext } from './Utils';
 
 interface Connection<T extends Edge<unknown>> {
   pageInfo: PageInfo;
@@ -250,8 +250,8 @@ export async function loadVersionHistory<TContext extends SessionGraphQLContext>
   context: TContext,
   id: string
 ): Promise<EntityHistory> {
-  const sessionContext = getSessionContext(context);
-  const result = await EntityAdmin.getEntityHistory(sessionContext, id);
+  const adminClient = getAdminClient(context);
+  const result = await adminClient.getEntityHistory({ id });
   if (result.isError()) {
     throw result.toError();
   }

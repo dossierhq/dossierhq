@@ -1,5 +1,6 @@
 import { FieldType, isRichTextField, isValueTypeField, notOk } from '@datadata/core';
 import type {
+  AdminClient,
   AdminEntity,
   AdminEntityCreate,
   AdminEntityUpdate,
@@ -54,6 +55,7 @@ import * as Mutations from './Mutations';
 
 export interface SessionGraphQLContext {
   context: Result<SessionContext, ErrorType.NotAuthenticated>;
+  adminClient: Result<AdminClient, ErrorType.NotAuthenticated>;
 }
 
 function toAdminTypeName(name: string, isAdmin = true) {

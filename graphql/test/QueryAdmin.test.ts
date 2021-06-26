@@ -1,4 +1,5 @@
 import type {
+  AdminClient,
   AdminEntity,
   AdminQuery,
   BoundingBox,
@@ -16,7 +17,7 @@ import {
   RichTextBlockType,
 } from '@datadata/core';
 import type { SessionContext, Server } from '@datadata/server';
-import { EntityAdmin, ServerTestUtils } from '@datadata/server';
+import { createServerClient, EntityAdmin, ServerTestUtils } from '@datadata/server';
 import { graphql, printError } from 'graphql';
 import type { GraphQLSchema } from 'graphql';
 import { GraphQLSchemaGenerator } from '../src/GraphQLSchemaGenerator';
@@ -26,12 +27,14 @@ const { createTestServer, ensureSessionContext, updateSchema } = ServerTestUtils
 
 let server: Server;
 let context: SessionContext;
+let adminClient: AdminClient;
 let schema: GraphQLSchema;
 let entitiesOfTypeQueryAdminOnlyEditBefore: AdminEntity[];
 
 beforeAll(async () => {
   server = await createTestServer();
   context = await ensureSessionContext(server, 'test', 'query');
+  adminClient = createServerClient({ resolveContext: () => Promise.resolve(context) });
   await updateSchema(context, {
     entityTypes: [
       {
@@ -221,7 +224,7 @@ describe('adminEntity()', () => {
           }
         `,
         undefined,
-        { context: ok(context) },
+        { adminClient: ok(adminClient), context: ok(context) },
         { id }
       );
       expect(result).toEqual({
@@ -292,7 +295,7 @@ describe('adminEntity()', () => {
           }
         `,
         undefined,
-        { context: ok(context) },
+        { adminClient: ok(adminClient), context: ok(context) },
         { id }
       );
       expect(result).toEqual({
@@ -381,7 +384,7 @@ describe('adminEntity()', () => {
           }
         `,
         undefined,
-        { context: ok(context) },
+        { adminClient: ok(adminClient), context: ok(context) },
         { id, version1: 0, version2: 1, version3: 100, version4: null }
       );
       expect(result.data).toEqual({
@@ -450,7 +453,7 @@ describe('adminEntity()', () => {
           }
         `,
         undefined,
-        { context: ok(context) },
+        { adminClient: ok(adminClient), context: ok(context) },
         { id }
       );
       expect(result.data).toEqual({
@@ -497,7 +500,7 @@ describe('adminEntity()', () => {
           }
         `,
         undefined,
-        { context: ok(context) },
+        { adminClient: ok(adminClient), context: ok(context) },
         { id: fooId }
       );
       expect(result).toEqual({
@@ -572,7 +575,7 @@ describe('adminEntity()', () => {
             }
           `,
           undefined,
-          { context: ok(context) },
+          { adminClient: ok(adminClient), context: ok(context) },
           { id: fooId }
         );
         expect(result).toEqual({
@@ -639,7 +642,7 @@ describe('adminEntity()', () => {
             }
           `,
           undefined,
-          { context: ok(context) },
+          { adminClient: ok(adminClient), context: ok(context) },
           { id: fooId }
         );
         expect(result).toEqual({
@@ -710,7 +713,7 @@ describe('adminEntity()', () => {
             }
           `,
           undefined,
-          { context: ok(context) },
+          { adminClient: ok(adminClient), context: ok(context) },
           { id: fooId }
         );
         expect(result).toEqual({
@@ -792,7 +795,7 @@ describe('adminEntity()', () => {
             }
           `,
           undefined,
-          { context: ok(context) },
+          { adminClient: ok(adminClient), context: ok(context) },
           { id: fooId }
         );
         expect(result).toEqual({
@@ -834,7 +837,7 @@ describe('adminEntity()', () => {
         }
       `,
       undefined,
-      { context: ok(context) },
+      { adminClient: ok(adminClient), context: ok(context) },
       { id: '6043cb20-50dc-43d9-8d55-fc9b892b30af' }
     );
     expect(result.data).toEqual({
@@ -912,7 +915,7 @@ describe('adminEntities()', () => {
           }
         `,
         undefined,
-        { context: ok(context) },
+        { adminClient: ok(adminClient), context: ok(context) },
         { ids: [foo1Id, foo2Id] }
       );
       expect(result).toEqual({
@@ -949,7 +952,7 @@ describe('adminEntities()', () => {
         }
       `,
       undefined,
-      { context: ok(context) },
+      { adminClient: ok(adminClient), context: ok(context) },
       { ids: ['6043cb20-50dc-43d9-8d55-fc9b892b30af'] }
     );
     expect(result.data).toEqual({
@@ -976,7 +979,7 @@ describe('searchAdminEntities()', () => {
         }
       `,
       undefined,
-      { context: ok(context) }
+      { adminClient: ok(adminClient), context: ok(context) }
     );
     expect(result.data?.adminSearchEntities.edges).toEqual(
       entitiesOfTypeQueryAdminOnlyEditBefore.slice(0, 25).map((x) => ({ node: { id: x.id } }))
@@ -1001,7 +1004,7 @@ describe('searchAdminEntities()', () => {
         }
       `,
       undefined,
-      { context: ok(context) },
+      { adminClient: ok(adminClient), context: ok(context) },
       { entityTypes: ['QueryAdminOnlyEditBefore'] }
     );
     expect(result.data?.adminSearchEntities.edges).toEqual(
@@ -1024,7 +1027,7 @@ describe('searchAdminEntities()', () => {
         }
       `,
       undefined,
-      { context: ok(context) }
+      { adminClient: ok(adminClient), context: ok(context) }
     );
     expect(result.data?.adminSearchEntities.edges).toEqual(
       entitiesOfTypeQueryAdminOnlyEditBefore.slice(0, 10).map((x) => ({ node: { id: x.id } }))
@@ -1046,7 +1049,7 @@ describe('searchAdminEntities()', () => {
         }
       `,
       undefined,
-      { context: ok(context) }
+      { adminClient: ok(adminClient), context: ok(context) }
     );
     expect(result.data?.adminSearchEntities.edges).toEqual(
       entitiesOfTypeQueryAdminOnlyEditBefore.slice(-10).map((x) => ({ node: { id: x.id } }))
@@ -1071,7 +1074,7 @@ describe('searchAdminEntities()', () => {
         }
       `,
       undefined,
-      { context: ok(context) }
+      { adminClient: ok(adminClient), context: ok(context) }
     );
     expect(result.data?.adminSearchEntities.edges).toEqual(
       [...entitiesOfTypeQueryAdminOnlyEditBefore]
@@ -1100,7 +1103,7 @@ describe('searchAdminEntities()', () => {
         }
       `,
       undefined,
-      { context: ok(context) },
+      { adminClient: ok(adminClient), context: ok(context) },
       { id: barId }
     );
 
@@ -1143,7 +1146,7 @@ describe('searchAdminEntities()', () => {
           }
         `,
         undefined,
-        { context: ok(context) },
+        { adminClient: ok(adminClient), context: ok(context) },
         { boundingBox }
       );
 
@@ -1175,7 +1178,7 @@ describe('searchAdminEntities()', () => {
         }
       `,
       undefined,
-      { context: ok(context) },
+      { adminClient: ok(adminClient), context: ok(context) },
       { text: 'Hey' } // There are at least 50 QueryAdminOnlyEditBefore entities
     );
 
@@ -1217,7 +1220,7 @@ describe('versionHistory()', () => {
           }
         `,
         undefined,
-        { context: ok(context) },
+        { adminClient: ok(adminClient), context: ok(context) },
         { id }
       );
       // Remove createdAt since it's tricky to test 🤷‍♂️
@@ -1251,7 +1254,7 @@ describe('versionHistory()', () => {
         }
       `,
       undefined,
-      { context: ok(context) },
+      { adminClient: ok(adminClient), context: ok(context) },
       { id: '6698130c-b56d-48cd-81f5-1f74bedc552e' }
     );
     expect(result).toMatchInlineSnapshot(`
@@ -1294,7 +1297,7 @@ describe('publishingHistory()', () => {
           }
         `,
         undefined,
-        { context: ok(context) },
+        { adminClient: ok(adminClient), context: ok(context) },
         { id }
       );
 
@@ -1323,7 +1326,7 @@ describe('publishingHistory()', () => {
         }
       `,
       undefined,
-      { context: ok(context) },
+      { adminClient: ok(adminClient), context: ok(context) },
       { id: '6698130c-b56d-48cd-81f5-1f74bedc552e' }
     );
     expect(result).toMatchInlineSnapshot(`
