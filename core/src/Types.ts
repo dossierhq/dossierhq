@@ -96,20 +96,20 @@ export interface EntityVersionInfo {
   createdAt: Date;
 }
 
-export interface PublishHistory {
+export interface PublishingHistory {
   id: string;
-  events: PublishEvent[];
+  events: PublishingEvent[];
 }
 
-export enum PublishEventKind {
+export enum PublishingEventKind {
   Publish = 'publish',
   Unpublish = 'unpublish',
   Archive = 'archive',
   Unarchive = 'unarchive',
 }
 
-export interface PublishEvent {
-  kind: PublishEventKind;
+export interface PublishingEvent {
+  kind: PublishingEventKind;
   version: number | null;
   publishedAt: Date;
   publishedBy: string;

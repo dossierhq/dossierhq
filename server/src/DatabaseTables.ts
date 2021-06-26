@@ -37,7 +37,7 @@ export interface EntityVersionReferencesTable {
   entities_id: number;
 }
 
-export interface EntityPublishEventsTable {
+export interface EntityPublishingEventsTable {
   id: number;
   entities_id: number;
   entity_versions_id: number | null;

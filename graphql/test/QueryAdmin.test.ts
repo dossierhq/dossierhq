@@ -1267,7 +1267,7 @@ describe('versionHistory()', () => {
   });
 });
 
-describe('publishHistory()', () => {
+describe('publishingHistory()', () => {
   test('History with published', async () => {
     const createResult = await EntityAdmin.createEntity(context, {
       _type: 'QueryAdminFoo',
@@ -1282,8 +1282,8 @@ describe('publishHistory()', () => {
       const result = await graphql(
         schema,
         `
-          query PublishHistory($id: ID!) {
-            publishHistory(id: $id) {
+          query PublishingHistory($id: ID!) {
+            publishingHistory(id: $id) {
               id
               events {
                 version
@@ -1298,10 +1298,10 @@ describe('publishHistory()', () => {
         { id }
       );
 
-      const { publishedAt } = result.data?.publishHistory.events[0];
+      const { publishedAt } = result.data?.publishingHistory.events[0];
 
       expect(result.data).toEqual({
-        publishHistory: {
+        publishingHistory: {
           id,
           events: [{ publishedBy: context.session.subjectId, publishedAt, version: 0 }],
         },
@@ -1313,8 +1313,8 @@ describe('publishHistory()', () => {
     const result = await graphql(
       schema,
       `
-        query PublishHistory($id: ID!) {
-          publishHistory(id: $id) {
+        query PublishingHistory($id: ID!) {
+          publishingHistory(id: $id) {
             id
             events {
               version
@@ -1329,7 +1329,7 @@ describe('publishHistory()', () => {
     expect(result).toMatchInlineSnapshot(`
       Object {
         "data": Object {
-          "publishHistory": null,
+          "publishingHistory": null,
         },
         "errors": Array [
           [GraphQLError: NotFound: No such entity],

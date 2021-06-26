@@ -4,7 +4,7 @@ export type {
   JsonEdge,
   JsonEntityHistory,
   JsonEntityVersionInfo,
-  JsonPublishHistory,
+  JsonPublishingHistory,
   JsonResult,
 } from './JsonUtils';
 export type {
@@ -29,8 +29,8 @@ export type {
   Location,
   PageInfo,
   Paging,
-  PublishEvent,
-  PublishHistory,
+  PublishingEvent,
+  PublishingHistory,
   PublishingResult,
   RichText,
   RichTextBlock,
@@ -73,9 +73,9 @@ export {
   convertJsonConnection,
   convertJsonEdge,
   convertJsonEntityHistory,
-  convertJsonPublishHistory,
+  convertJsonPublishingHistory,
   convertJsonResult,
 } from './JsonUtils';
 export { FieldType, RichTextBlockType, Schema } from './Schema';
-export { EntityPublishState, PublishEventKind } from './Types';
+export { EntityPublishState, PublishingEventKind } from './Types';
 export * as CoreTestUtils from './CoreTestUtils';

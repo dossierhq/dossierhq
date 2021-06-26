@@ -3,7 +3,7 @@ import {
   EntityPublishState,
   FieldType,
   ok,
-  PublishEventKind,
+  PublishingEventKind,
   RichTextBlockType,
 } from '@datadata/core';
 import { EntityAdmin, ServerTestUtils } from '@datadata/server';
@@ -1191,14 +1191,14 @@ describe('publishEntities()', () => {
         },
       });
 
-      const historyResult = await EntityAdmin.getPublishHistory(context, id);
+      const historyResult = await EntityAdmin.getPublishingHistory(context, id);
       if (expectOkResult(historyResult)) {
         const publishedAt = historyResult.value.events[0]?.publishedAt;
         expect(historyResult.value).toEqual({
           id,
           events: [
             {
-              kind: PublishEventKind.Publish,
+              kind: PublishingEventKind.Publish,
               publishedAt,
               publishedBy: context.session.subjectId,
               version: 0,
@@ -1275,7 +1275,7 @@ describe('unpublishEntities()', () => {
         },
       });
 
-      const historyResult = await EntityAdmin.getPublishHistory(context, id);
+      const historyResult = await EntityAdmin.getPublishingHistory(context, id);
       if (expectOkResult(historyResult)) {
         const publishedAt0 = historyResult.value.events[0]?.publishedAt;
         const publishedAt1 = historyResult.value.events[1]?.publishedAt;
@@ -1283,13 +1283,13 @@ describe('unpublishEntities()', () => {
           id,
           events: [
             {
-              kind: PublishEventKind.Publish,
+              kind: PublishingEventKind.Publish,
               publishedAt: publishedAt0,
               publishedBy: context.session.subjectId,
               version: 0,
             },
             {
-              kind: PublishEventKind.Unpublish,
+              kind: PublishingEventKind.Unpublish,
               publishedAt: publishedAt1,
               publishedBy: context.session.subjectId,
               version: null,
@@ -1362,14 +1362,14 @@ describe('archiveEntity()', () => {
         },
       });
 
-      const historyResult = await EntityAdmin.getPublishHistory(context, id);
+      const historyResult = await EntityAdmin.getPublishingHistory(context, id);
       if (expectOkResult(historyResult)) {
         const publishedAt = historyResult.value.events[0]?.publishedAt;
         expect(historyResult.value).toEqual({
           id,
           events: [
             {
-              kind: PublishEventKind.Archive,
+              kind: PublishingEventKind.Archive,
               publishedAt,
               publishedBy: context.session.subjectId,
               version: null,
@@ -1417,7 +1417,7 @@ describe('unarchiveEntity()', () => {
         },
       });
 
-      const historyResult = await EntityAdmin.getPublishHistory(context, id);
+      const historyResult = await EntityAdmin.getPublishingHistory(context, id);
       if (expectOkResult(historyResult)) {
         const publishedAt0 = historyResult.value.events[0]?.publishedAt;
         const publishedAt1 = historyResult.value.events[1]?.publishedAt;
@@ -1425,13 +1425,13 @@ describe('unarchiveEntity()', () => {
           id,
           events: [
             {
-              kind: PublishEventKind.Archive,
+              kind: PublishingEventKind.Archive,
               publishedAt: publishedAt0,
               publishedBy: context.session.subjectId,
               version: null,
             },
             {
-              kind: PublishEventKind.Unarchive,
+              kind: PublishingEventKind.Unarchive,
               publishedAt: publishedAt1,
               publishedBy: context.session.subjectId,
               version: null,

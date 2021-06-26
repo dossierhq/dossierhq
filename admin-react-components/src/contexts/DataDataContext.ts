@@ -10,7 +10,7 @@ import type {
   FieldSpecification,
   Paging,
   PromiseResult,
-  PublishHistory,
+  PublishingHistory,
   Schema,
 } from '@datadata/core';
 import { createErrorResultFromError, ErrorType } from '@datadata/core';
@@ -32,9 +32,9 @@ export interface DataDataContextAdapter {
   getEntityHistory(
     id: string
   ): PromiseResult<EntityHistory, ErrorType.NotFound | ErrorType.Generic>;
-  getPublishHistory(
+  getPublishingHistory(
     id: string
-  ): PromiseResult<PublishHistory, ErrorType.NotFound | ErrorType.Generic>;
+  ): PromiseResult<PublishingHistory, ErrorType.NotFound | ErrorType.Generic>;
   searchEntities(
     query?: AdminQuery,
     paging?: Paging
@@ -68,7 +68,7 @@ export interface DataDataContextAdapter {
 enum FetcherActions {
   UseEntity,
   UseEntityHistory,
-  UsePublishHistory,
+  UsePublishingHistory,
   UseSearchEntities,
 }
 
@@ -137,24 +137,24 @@ export class DataDataContextValue {
   };
 
   /** Loads the publish history for an entity. If `id` is `undefined` no data is fetched */
-  usePublishHistory = (
+  usePublishingHistory = (
     id: string | undefined
   ): {
-    publishHistory?: PublishHistory;
-    publishHistoryError?: ErrorResult<unknown, ErrorType.NotFound | ErrorType.Generic>;
+    publishingHistory?: PublishingHistory;
+    publishingHistoryError?: ErrorResult<unknown, ErrorType.NotFound | ErrorType.Generic>;
   } => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const { data, error } = useSWR(
-      id ? [this.#rootKey, FetcherActions.UsePublishHistory, id] : null,
+      id ? [this.#rootKey, FetcherActions.UsePublishingHistory, id] : null,
       this.fetcher
     );
 
-    const publishHistoryError = error
+    const publishingHistoryError = error
       ? createErrorResultFromError(error, [ErrorType.NotFound])
       : undefined;
     return {
-      publishHistory: data as PublishHistory | undefined,
-      publishHistoryError,
+      publishingHistory: data as PublishingHistory | undefined,
+      publishingHistoryError,
     };
   };
 
@@ -281,7 +281,7 @@ export class DataDataContextValue {
 
   private invalidateEntityPublished(id: string) {
     mutate([this.#rootKey, FetcherActions.UseEntityHistory, id]);
-    mutate([this.#rootKey, FetcherActions.UsePublishHistory, id]);
+    mutate([this.#rootKey, FetcherActions.UsePublishingHistory, id]);
     // for publish state
     mutate([this.#rootKey, FetcherActions.UseEntity, id, null]);
   }
@@ -308,9 +308,9 @@ export class DataDataContextValue {
         }
         return result.value;
       }
-      case FetcherActions.UsePublishHistory: {
+      case FetcherActions.UsePublishingHistory: {
         const [id] = args as [string];
-        const result = await this.#adapter.getPublishHistory(id);
+        const result = await this.#adapter.getPublishingHistory(id);
         if (result.isError()) {
           throw result.toError();
         }

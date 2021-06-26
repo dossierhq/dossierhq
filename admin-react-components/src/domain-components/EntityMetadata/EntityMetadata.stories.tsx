@@ -85,14 +85,17 @@ NewFoo.args = { entitySelector: { newType: 'Foo', id: 'e225c183-9a1d-4fd5-b259-c
 export const FullFoo = Template.bind({});
 FullFoo.args = { entitySelector: { id: foo1Id } };
 
-export const FullFooPublishHistory = Template.bind({});
-FullFooPublishHistory.args = { entitySelector: { id: foo1Id }, initialSelectedHistory: 'publish' };
+export const FullFooPublishingHistory = Template.bind({});
+FullFooPublishingHistory.args = {
+  entitySelector: { id: foo1Id },
+  initialSelectedHistory: 'publish',
+};
 
 export const ArchivedFoo = Template.bind({});
 ArchivedFoo.args = { entitySelector: { id: fooArchivedId } };
 
-export const ArchivedFooPublishHistory = Template.bind({});
-ArchivedFooPublishHistory.args = {
+export const ArchivedFooPublishingHistory = Template.bind({});
+ArchivedFooPublishingHistory.args = {
   entitySelector: { id: fooArchivedId },
   initialSelectedHistory: 'publish',
 };

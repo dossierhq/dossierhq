@@ -10,7 +10,7 @@ import type {
   Location,
   Paging,
   PromiseResult,
-  PublishHistory,
+  PublishingHistory,
 } from '@datadata/core';
 import {
   EntityPublishState,
@@ -46,11 +46,11 @@ export const InMemoryAdmin = {
     return ok(history);
   },
 
-  getPublishHistory: async (
+  getPublishingHistory: async (
     context: InMemorySessionContext,
     id: string
-  ): PromiseResult<PublishHistory, ErrorType.NotFound> => {
-    const history = context.server.getPublishHistory(id);
+  ): PromiseResult<PublishingHistory, ErrorType.NotFound> => {
+    const history = context.server.getPublishingHistory(id);
     if (!history) {
       return notOk.NotFound('No such entity');
     }

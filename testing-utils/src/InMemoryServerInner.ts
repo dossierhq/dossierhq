@@ -1,5 +1,5 @@
-import type { AdminEntity, EntityHistory, PublishHistory, Schema } from '@datadata/core';
-import { EntityPublishState, PublishEventKind } from '@datadata/core';
+import type { AdminEntity, EntityHistory, PublishingHistory, Schema } from '@datadata/core';
+import { EntityPublishState, PublishingEventKind } from '@datadata/core';
 import type { JsonInMemoryEntity } from '.';
 import type { InMemoryEntity, InMemoryEntityVersion } from './InMemoryServer';
 
@@ -86,12 +86,12 @@ export class InMemoryServerInner {
     return result;
   }
 
-  getPublishHistory(id: string): PublishHistory | null {
+  getPublishingHistory(id: string): PublishingHistory | null {
     const fullEntity = this.getFullEntity(id);
     if (!fullEntity) {
       return null;
     }
-    const result: PublishHistory = { id, events: fullEntity.publishEvents };
+    const result: PublishingHistory = { id, events: fullEntity.publishEvents };
     return result;
   }
 
@@ -145,9 +145,9 @@ export class InMemoryServerInner {
     }
     fullEntity.publishedVersion = version;
     fullEntity.archived = false;
-    this.addPublishEvent(
+    this.addPublishingEvent(
       fullEntity,
-      version === null ? PublishEventKind.Unpublish : PublishEventKind.Publish,
+      version === null ? PublishingEventKind.Unpublish : PublishingEventKind.Publish,
       version,
       userId
     );
@@ -160,7 +160,7 @@ export class InMemoryServerInner {
     }
     fullEntity.publishedVersion = null;
     fullEntity.archived = true;
-    this.addPublishEvent(fullEntity, PublishEventKind.Archive, null, userId);
+    this.addPublishingEvent(fullEntity, PublishingEventKind.Archive, null, userId);
   }
 
   unarchiveEntity(id: string, userId: string): void {
@@ -169,12 +169,12 @@ export class InMemoryServerInner {
       throw new Error(`Can't find ${id}`);
     }
     fullEntity.archived = false;
-    this.addPublishEvent(fullEntity, PublishEventKind.Unarchive, null, userId);
+    this.addPublishingEvent(fullEntity, PublishingEventKind.Unarchive, null, userId);
   }
 
-  private addPublishEvent(
+  private addPublishingEvent(
     entity: InMemoryEntity,
-    kind: PublishEventKind,
+    kind: PublishingEventKind,
     version: number | null,
     userId: string
   ) {
@@ -210,7 +210,9 @@ export class InMemoryServerInner {
         ? EntityPublishState.Modified
         : EntityPublishState.Published;
     } else {
-      const hasPublished = entity.publishEvents.some((it) => it.kind === PublishEventKind.Publish);
+      const hasPublished = entity.publishEvents.some(
+        (it) => it.kind === PublishingEventKind.Publish
+      );
       state = hasPublished ? EntityPublishState.Withdrawn : EntityPublishState.Draft;
     }
     return state;

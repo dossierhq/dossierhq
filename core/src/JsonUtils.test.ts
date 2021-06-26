@@ -5,20 +5,20 @@ import type {
   JsonConnection,
   JsonEdge,
   JsonEntityHistory,
-  JsonPublishHistory,
+  JsonPublishingHistory,
   JsonResult,
-  PublishHistory,
+  PublishingHistory,
 } from '.';
 import {
   convertJsonConnection,
   convertJsonEdge,
   convertJsonEntityHistory,
-  convertJsonPublishHistory,
+  convertJsonPublishingHistory,
   convertJsonResult,
   ErrorType,
   notOk,
   ok,
-  PublishEventKind,
+  PublishingEventKind,
 } from '.';
 import { expectErrorResult, expectOkResult } from './CoreTestUtils';
 
@@ -109,21 +109,21 @@ describe('convertJsonEntityVersion()', () => {
   });
 });
 
-describe('convertJsonPublishHistory()', () => {
+describe('convertJsonPublishingHistory()', () => {
   test('History with one version', () => {
-    const expected: PublishHistory = {
+    const expected: PublishingHistory = {
       id: '123',
       events: [
         {
-          kind: PublishEventKind.Publish,
+          kind: PublishingEventKind.Publish,
           publishedAt: new Date(),
           publishedBy: '4321',
           version: 0,
         },
       ],
     };
-    const asJson: JsonPublishHistory = JSON.parse(JSON.stringify(expected));
-    const converted = convertJsonPublishHistory(asJson);
+    const asJson: JsonPublishingHistory = JSON.parse(JSON.stringify(expected));
+    const converted = convertJsonPublishingHistory(asJson);
     expect(converted).toEqual(expected);
 
     expect(converted.events[0].publishedAt).toBeInstanceOf(Date);

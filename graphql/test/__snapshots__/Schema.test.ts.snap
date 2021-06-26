@@ -141,15 +141,15 @@ type EntityHistory {
   versions: [EntityVersionInfo]!
 }
 
-type PublishEvent {
+type PublishingEvent {
   version: Int
   publishedBy: ID!
   publishedAt: String!
 }
 
-type PublishHistory {
+type PublishingHistory {
   id: ID!
-  events: [PublishEvent]!
+  events: [PublishingEvent]!
 }
 
 type EntityPublishPayload {
@@ -212,7 +212,7 @@ type Query {
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   entityHistory(id: ID!): EntityHistory
-  publishHistory(id: ID!): PublishHistory
+  publishingHistory(id: ID!): PublishingHistory
 }
 
 type Mutation {
@@ -358,15 +358,15 @@ type EntityHistory {
   versions: [EntityVersionInfo]!
 }
 
-type PublishEvent {
+type PublishingEvent {
   version: Int
   publishedBy: ID!
   publishedAt: String!
 }
 
-type PublishHistory {
+type PublishingHistory {
   id: ID!
-  events: [PublishEvent]!
+  events: [PublishingEvent]!
 }
 
 type EntityPublishPayload {
@@ -477,7 +477,7 @@ type Query {
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   entityHistory(id: ID!): EntityHistory
-  publishHistory(id: ID!): PublishHistory
+  publishingHistory(id: ID!): PublishingHistory
 }
 
 type Mutation {
@@ -608,15 +608,15 @@ type EntityHistory {
   versions: [EntityVersionInfo]!
 }
 
-type PublishEvent {
+type PublishingEvent {
   version: Int
   publishedBy: ID!
   publishedAt: String!
 }
 
-type PublishHistory {
+type PublishingHistory {
   id: ID!
-  events: [PublishEvent]!
+  events: [PublishingEvent]!
 }
 
 type EntityPublishPayload {
@@ -650,7 +650,7 @@ type Query {
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   entityHistory(id: ID!): EntityHistory
-  publishHistory(id: ID!): PublishHistory
+  publishingHistory(id: ID!): PublishingHistory
 }
 
 type Mutation {
@@ -778,15 +778,15 @@ type EntityHistory {
   versions: [EntityVersionInfo]!
 }
 
-type PublishEvent {
+type PublishingEvent {
   version: Int
   publishedBy: ID!
   publishedAt: String!
 }
 
-type PublishHistory {
+type PublishingHistory {
   id: ID!
-  events: [PublishEvent]!
+  events: [PublishingEvent]!
 }
 
 type EntityPublishPayload {
@@ -823,7 +823,7 @@ type Query {
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   entityHistory(id: ID!): EntityHistory
-  publishHistory(id: ID!): PublishHistory
+  publishingHistory(id: ID!): PublishingHistory
 }
 
 type Mutation {
@@ -960,15 +960,15 @@ type EntityHistory {
   versions: [EntityVersionInfo]!
 }
 
-type PublishEvent {
+type PublishingEvent {
   version: Int
   publishedBy: ID!
   publishedAt: String!
 }
 
-type PublishHistory {
+type PublishingHistory {
   id: ID!
-  events: [PublishEvent]!
+  events: [PublishingEvent]!
 }
 
 type EntityPublishPayload {
@@ -1034,7 +1034,7 @@ type Query {
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   entityHistory(id: ID!): EntityHistory
-  publishHistory(id: ID!): PublishHistory
+  publishingHistory(id: ID!): PublishingHistory
 }
 
 type Mutation {
@@ -1207,15 +1207,15 @@ type EntityHistory {
   versions: [EntityVersionInfo]!
 }
 
-type PublishEvent {
+type PublishingEvent {
   version: Int
   publishedBy: ID!
   publishedAt: String!
 }
 
-type PublishHistory {
+type PublishingHistory {
   id: ID!
-  events: [PublishEvent]!
+  events: [PublishingEvent]!
 }
 
 type EntityPublishPayload {
@@ -1336,7 +1336,7 @@ type Query {
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   entityHistory(id: ID!): EntityHistory
-  publishHistory(id: ID!): PublishHistory
+  publishingHistory(id: ID!): PublishingHistory
 }
 
 type Mutation {

@@ -21,7 +21,7 @@ export const urls = {
   publishEntities: `${baseUrl}/publish-entities`,
   unpublishEntities: `${baseUrl}/unpublish-entities`,
   getEntityHistory: (id: string): string => `${baseUrl}/entity-history/${id}`,
-  getPublishHistory: (id: string): string => `${baseUrl}/publish-history/${id}`,
+  getPublishingHistory: (id: string): string => `${baseUrl}/publishing-history/${id}`,
   searchEntities: (query?: AdminQuery, paging?: Paging): string =>
     `${baseUrl}/search-entities?${encodeQuery({ query, paging })}`,
 };

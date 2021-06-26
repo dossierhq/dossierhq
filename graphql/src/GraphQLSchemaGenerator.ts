@@ -47,7 +47,7 @@ import {
   loadAdminSearchEntities,
   loadEntities,
   loadEntity,
-  loadPublishHistory,
+  loadPublishingHistory,
   loadVersionHistory,
 } from './DataLoaders';
 import * as Mutations from './Mutations';
@@ -531,10 +531,10 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       })
     );
 
-    // PublishEvent
+    // PublishingEvent
     this.addType(
       new GraphQLObjectType({
-        name: 'PublishEvent',
+        name: 'PublishingEvent',
         fields: {
           version: { type: GraphQLInt },
           publishedBy: { type: new GraphQLNonNull(GraphQLID) },
@@ -543,14 +543,14 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       })
     );
 
-    // PublishHistory
+    // PublishingHistory
     this.addType(
       new GraphQLObjectType({
-        name: 'PublishHistory',
+        name: 'PublishingHistory',
         fields: {
           id: { type: new GraphQLNonNull(GraphQLID) },
           events: {
-            type: new GraphQLNonNull(new GraphQLList(this.getType('PublishEvent'))),
+            type: new GraphQLNonNull(new GraphQLList(this.getType('PublishingEvent'))),
           },
         },
       })
@@ -818,13 +818,13 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     });
   }
 
-  buildQueryFieldPublishHistory<TSource>(): GraphQLFieldConfig<TSource, TContext> {
+  buildQueryFieldPublishingHistory<TSource>(): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<TSource, TContext, { id: string }>({
-      type: this.getOutputType('PublishHistory'),
+      type: this.getOutputType('PublishingHistory'),
       args: { id: { type: new GraphQLNonNull(GraphQLID) } },
       resolve: async (_source, args, context, _info) => {
         const { id } = args;
-        return await loadPublishHistory(context, id);
+        return await loadPublishingHistory(context, id);
       },
     });
   }
@@ -843,7 +843,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
               adminEntities: this.buildQueryFieldAdminEntities(),
               adminSearchEntities: this.buildQueryFieldAdminSearchEntities(),
               entityHistory: this.buildQueryFieldEntityHistory(),
-              publishHistory: this.buildQueryFieldPublishHistory(),
+              publishingHistory: this.buildQueryFieldPublishingHistory(),
             }
           : {}),
       },

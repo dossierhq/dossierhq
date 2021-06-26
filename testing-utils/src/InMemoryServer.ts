@@ -1,4 +1,4 @@
-import type { PublishEventKind, Schema } from '@datadata/core';
+import type { PublishingEventKind, Schema } from '@datadata/core';
 import { InMemoryServerInner } from './InMemoryServerInner';
 
 export interface InMemoryEntity {
@@ -10,7 +10,7 @@ export interface InMemoryEntity {
   publishedVersion?: number | null;
   history: { version: number; createdBy: string; createdAt: Date }[];
   publishEvents: {
-    kind: PublishEventKind;
+    kind: PublishingEventKind;
     version: number | null;
     publishedBy: string;
     publishedAt: Date;
@@ -25,7 +25,7 @@ export interface InMemoryEntityVersion {
 export interface JsonInMemoryEntity extends Omit<InMemoryEntity, 'history' | 'publishEvents'> {
   history: { version: number; createdBy: string; createdAt: string }[];
   publishEvents: {
-    kind: PublishEventKind;
+    kind: PublishingEventKind;
     version: number | null;
     publishedBy: string;
     publishedAt: string;

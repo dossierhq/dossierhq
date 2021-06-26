@@ -81,7 +81,7 @@ export function EntityMetadata({
       </ColumnItem>
       <ColumnItem as={Column} grow overflowY="scroll">
         {selectedHistory === 'entity' ? <EntityHistoryList draftState={draftState} /> : null}
-        {selectedHistory === 'publish' ? <PublishHistory draftState={draftState} /> : null}
+        {selectedHistory === 'publish' ? <PublishingHistory draftState={draftState} /> : null}
       </ColumnItem>
     </Column>
   );
@@ -165,21 +165,21 @@ function PublishButton({
   );
 }
 
-function PublishHistory({ draftState }: { draftState: EntityEditorDraftState }) {
-  const { usePublishHistory } = useContext(DataDataContext);
-  const { publishHistory, publishHistoryError } = usePublishHistory(
+function PublishingHistory({ draftState }: { draftState: EntityEditorDraftState }) {
+  const { usePublishingHistory } = useContext(DataDataContext);
+  const { publishingHistory, publishingHistoryError } = usePublishingHistory(
     draftState.exists ? draftState.id : undefined
   );
 
   if (!draftState.exists) {
     return null;
   }
-  if (!publishHistory && !publishHistoryError) {
+  if (!publishingHistory && !publishingHistoryError) {
     return <Loader />;
   }
   return (
     <>
-      {publishHistory?.events.map((event, index) => {
+      {publishingHistory?.events.map((event, index) => {
         return (
           <Column key={index} className="px-2 py-1">
             <p className="dd text-subtitle2">
@@ -190,10 +190,10 @@ function PublishHistory({ draftState }: { draftState: EntityEditorDraftState }) 
           </Column>
         );
       })}
-      {publishHistoryError ? (
+      {publishingHistoryError ? (
         <Message
           kind="danger"
-          message={`${publishHistoryError.error}: ${publishHistoryError.message}`}
+          message={`${publishingHistoryError.error}: ${publishingHistoryError.message}`}
         />
       ) : null}
     </>
