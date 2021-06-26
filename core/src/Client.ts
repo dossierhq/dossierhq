@@ -10,6 +10,7 @@ import type {
   ErrorType,
   Paging,
   PromiseResult,
+  PublishingResult,
   Result,
 } from '..';
 import { assertIsDefined } from '..';
@@ -33,15 +34,20 @@ export interface AdminClient {
   updateEntity(
     entity: AdminEntityUpdate
   ): PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.NotFound>;
+
+  publishEntities(
+    references: EntityVersionReference[]
+  ): PromiseResult<PublishingResult[], ErrorType.BadRequest | ErrorType.NotFound>;
 }
 
 export enum AdminClientOperationName {
-  CreateEntity = 'create-entity',
-  GetEntities = 'get-entities',
-  GetEntity = 'get-entity',
-  GetTotalCount = 'get-total-count',
-  SearchEntities = 'search-entities',
-  UpdateEntity = 'update-entity',
+  createEntity = 'createEntity',
+  getEntities = 'getEntities',
+  getEntity = 'getEntity',
+  getTotalCount = 'getTotalCount',
+  publishEntities = 'publishEntities',
+  searchEntities = 'searchEntities',
+  updateEntity = 'updateEntity',
 }
 
 type MethodParameters<T extends keyof AdminClient> = Parameters<AdminClient[T]>;
@@ -49,21 +55,23 @@ type MethodReturnType<T extends keyof AdminClient> = WithoutPromise<ReturnType<A
 type WithoutPromise<T> = T extends Promise<infer U> ? U : T;
 
 interface AdminClientOperationArguments {
-  [AdminClientOperationName.CreateEntity]: MethodParameters<'createEntity'>;
-  [AdminClientOperationName.GetEntities]: MethodParameters<'getEntities'>;
-  [AdminClientOperationName.GetEntity]: MethodParameters<'getEntity'>;
-  [AdminClientOperationName.GetTotalCount]: MethodParameters<'getTotalCount'>;
-  [AdminClientOperationName.SearchEntities]: MethodParameters<'searchEntities'>;
-  [AdminClientOperationName.UpdateEntity]: MethodParameters<'updateEntity'>;
+  [AdminClientOperationName.createEntity]: MethodParameters<'createEntity'>;
+  [AdminClientOperationName.getEntities]: MethodParameters<'getEntities'>;
+  [AdminClientOperationName.getEntity]: MethodParameters<'getEntity'>;
+  [AdminClientOperationName.getTotalCount]: MethodParameters<'getTotalCount'>;
+  [AdminClientOperationName.publishEntities]: MethodParameters<'publishEntities'>;
+  [AdminClientOperationName.searchEntities]: MethodParameters<'searchEntities'>;
+  [AdminClientOperationName.updateEntity]: MethodParameters<'updateEntity'>;
 }
 
 interface AdminClientOperationReturn {
-  [AdminClientOperationName.CreateEntity]: MethodReturnType<'createEntity'>;
-  [AdminClientOperationName.GetEntities]: MethodReturnType<'getEntities'>;
-  [AdminClientOperationName.GetEntity]: MethodReturnType<'getEntity'>;
-  [AdminClientOperationName.GetTotalCount]: MethodReturnType<'getTotalCount'>;
-  [AdminClientOperationName.SearchEntities]: MethodReturnType<'searchEntities'>;
-  [AdminClientOperationName.UpdateEntity]: MethodReturnType<'updateEntity'>;
+  [AdminClientOperationName.createEntity]: MethodReturnType<'createEntity'>;
+  [AdminClientOperationName.getEntities]: MethodReturnType<'getEntities'>;
+  [AdminClientOperationName.getEntity]: MethodReturnType<'getEntity'>;
+  [AdminClientOperationName.getTotalCount]: MethodReturnType<'getTotalCount'>;
+  [AdminClientOperationName.publishEntities]: MethodReturnType<'publishEntities'>;
+  [AdminClientOperationName.searchEntities]: MethodReturnType<'searchEntities'>;
+  [AdminClientOperationName.updateEntity]: MethodReturnType<'updateEntity'>;
 }
 
 export interface AdminClientOperation<TName extends AdminClientOperationName> {
@@ -93,18 +101,18 @@ class BaseAdminClient<TContext> implements AdminClient {
 
   getEntity(
     reference: EntityReference | EntityVersionReference
-  ): Promise<AdminClientOperationReturn[AdminClientOperationName.GetEntity]> {
+  ): Promise<AdminClientOperationReturn[AdminClientOperationName.getEntity]> {
     return this.executeOperation({
-      name: AdminClientOperationName.GetEntity,
+      name: AdminClientOperationName.getEntity,
       args: [reference],
     });
   }
 
   getEntities(
     references: EntityReference[]
-  ): Promise<AdminClientOperationReturn[AdminClientOperationName.GetEntities]> {
+  ): Promise<AdminClientOperationReturn[AdminClientOperationName.getEntities]> {
     return this.executeOperation({
-      name: AdminClientOperationName.GetEntities,
+      name: AdminClientOperationName.getEntities,
       args: [references],
     });
   }
@@ -112,37 +120,46 @@ class BaseAdminClient<TContext> implements AdminClient {
   searchEntities(
     query?: AdminQuery,
     paging?: Paging
-  ): Promise<AdminClientOperationReturn[AdminClientOperationName.SearchEntities]> {
+  ): Promise<AdminClientOperationReturn[AdminClientOperationName.searchEntities]> {
     return this.executeOperation({
-      name: AdminClientOperationName.SearchEntities,
+      name: AdminClientOperationName.searchEntities,
       args: [query, paging],
     });
   }
 
   getTotalCount(
     query?: AdminQuery
-  ): Promise<AdminClientOperationReturn[AdminClientOperationName.GetTotalCount]> {
+  ): Promise<AdminClientOperationReturn[AdminClientOperationName.getTotalCount]> {
     return this.executeOperation({
-      name: AdminClientOperationName.GetTotalCount,
+      name: AdminClientOperationName.getTotalCount,
       args: [query],
     });
   }
 
   createEntity(
     entity: AdminEntityCreate
-  ): Promise<AdminClientOperationReturn[AdminClientOperationName.CreateEntity]> {
+  ): Promise<AdminClientOperationReturn[AdminClientOperationName.createEntity]> {
     return this.executeOperation({
-      name: AdminClientOperationName.CreateEntity,
+      name: AdminClientOperationName.createEntity,
       args: [entity],
     });
   }
 
   updateEntity(
     entity: AdminEntityUpdate
-  ): Promise<AdminClientOperationReturn[AdminClientOperationName.UpdateEntity]> {
+  ): Promise<AdminClientOperationReturn[AdminClientOperationName.updateEntity]> {
     return this.executeOperation({
-      name: AdminClientOperationName.UpdateEntity,
+      name: AdminClientOperationName.updateEntity,
       args: [entity],
+    });
+  }
+
+  publishEntities(
+    references: EntityVersionReference[]
+  ): Promise<AdminClientOperationReturn[AdminClientOperationName.publishEntities]> {
+    return this.executeOperation({
+      name: AdminClientOperationName.publishEntities,
+      args: [references],
     });
   }
 
