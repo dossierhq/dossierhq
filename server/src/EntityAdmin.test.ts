@@ -3104,7 +3104,10 @@ describe('unpublishEntities()', () => {
         expect(publishResult.value).toEqual([{ id, publishState: EntityPublishState.Published }]);
       }
 
-      expectOkResult(await EntityAdmin.unpublishEntities(context, [id]));
+      const unpublishResult = await EntityAdmin.unpublishEntities(context, [id]);
+      if (expectOkResult(unpublishResult)) {
+        expect(unpublishResult.value).toEqual([{ id, publishState: EntityPublishState.Withdrawn }]);
+      }
 
       const getResult = await EntityAdmin.getEntity(context, id);
       if (expectOkResult(getResult)) {
@@ -3154,7 +3157,13 @@ describe('unpublishEntities()', () => {
           ]);
         }
 
-        expectOkResult(await EntityAdmin.unpublishEntities(context, [baz1Id, baz2Id]));
+        const unpublishResult = await EntityAdmin.unpublishEntities(context, [baz1Id, baz2Id]);
+        if (expectOkResult(unpublishResult)) {
+          expect(unpublishResult.value).toEqual([
+            { id: baz1Id, publishState: EntityPublishState.Withdrawn },
+            { id: baz2Id, publishState: EntityPublishState.Withdrawn },
+          ]);
+        }
       }
     }
   });
@@ -3184,7 +3193,12 @@ describe('unpublishEntities()', () => {
           ]);
         }
 
-        expectOkResult(await EntityAdmin.unpublishEntities(context, [baz1Id]));
+        const unpublishResult = await EntityAdmin.unpublishEntities(context, [baz1Id]);
+        if (expectOkResult(unpublishResult)) {
+          expect(unpublishResult.value).toEqual([
+            { id: baz1Id, publishState: EntityPublishState.Withdrawn },
+          ]);
+        }
       }
     }
   });
@@ -3480,7 +3494,10 @@ describe('unarchiveEntity()', () => {
         expect(publishResult.value).toEqual([{ id, publishState: EntityPublishState.Published }]);
       }
 
-      expectOkResult(await EntityAdmin.unpublishEntities(context, [id]));
+      const unpublishResult = await EntityAdmin.unpublishEntities(context, [id]);
+      if (expectOkResult(unpublishResult)) {
+        expect(unpublishResult.value).toEqual([{ id, publishState: EntityPublishState.Withdrawn }]);
+      }
 
       const archiveResult = await EntityAdmin.archiveEntity(context, id);
       if (expectOkResult(archiveResult)) {
@@ -3574,7 +3591,10 @@ describe('getPublishingHistory()', () => {
         expect(publishResult.value).toEqual([{ id, publishState: EntityPublishState.Published }]);
       }
 
-      expectOkResult(await EntityAdmin.unpublishEntities(context, [id]));
+      const unpublishResult = await EntityAdmin.unpublishEntities(context, [id]);
+      if (expectOkResult(unpublishResult)) {
+        expect(unpublishResult.value).toEqual([{ id, publishState: EntityPublishState.Withdrawn }]);
+      }
 
       const historyResult = await EntityAdmin.getPublishingHistory(context, id);
       if (expectOkResult(historyResult)) {

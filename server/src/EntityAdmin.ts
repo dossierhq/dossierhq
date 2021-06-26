@@ -464,7 +464,7 @@ export async function publishEntities(
 export async function unpublishEntities(
   context: SessionContext,
   entityIds: string[]
-): PromiseResult<void, ErrorType.BadRequest | ErrorType.NotFound> {
+): PromiseResult<PublishingResult[], ErrorType.BadRequest | ErrorType.NotFound> {
   const uniqueIdCheck = checkUUIDsAreUnique(entityIds);
   if (uniqueIdCheck.isError()) {
     return uniqueIdCheck;
@@ -538,7 +538,7 @@ export async function unpublishEntities(
     await Db.queryNone(context, qb.build());
 
     //
-    return ok(undefined);
+    return ok(entityIds.map((id) => ({ id, publishState: EntityPublishState.Withdrawn })));
   });
 }
 
