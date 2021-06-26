@@ -7,6 +7,7 @@ import {
   getEntities,
   getEntity,
   getEntityHistory,
+  getPublishingHistory,
   getTotalCount,
   publishEntities,
   searchEntities,
@@ -73,6 +74,14 @@ async function terminatingMiddleware(
         resolve,
       } = operation as AdminClientOperation<AdminClientOperationName.getEntityHistory>;
       resolve(await getEntityHistory(context, reference.id));
+      break;
+    }
+    case AdminClientOperationName.getPublishingHistory: {
+      const {
+        args: [reference],
+        resolve,
+      } = operation as AdminClientOperation<AdminClientOperationName.getPublishingHistory>;
+      resolve(await getPublishingHistory(context, reference.id));
       break;
     }
     case AdminClientOperationName.getTotalCount: {

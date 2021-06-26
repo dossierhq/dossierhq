@@ -1,17 +1,24 @@
+import type { AdminClient } from '@datadata/core';
 import { CoreTestUtils, ErrorType, FieldType, EntityPublishState } from '@datadata/core';
-import { EntityAdmin, PublishedEntity } from '.';
+import { PublishedEntity } from '.';
 import type { Server, SessionContext } from '.';
 import { createTestServer, ensureSessionContext, updateSchema } from './ServerTestUtils';
 import { expectResultValue } from '../test/AdditionalTestUtils';
+import { createServerClient } from './Client';
 
 const { expectErrorResult, expectOkResult } = CoreTestUtils;
 
 let server: Server;
 let context: SessionContext;
+let adminClient: AdminClient;
 
 beforeAll(async () => {
   server = await createTestServer();
   context = await ensureSessionContext(server, 'test', 'published-entity');
+  adminClient = createServerClient({
+    resolveContext: () => Promise.resolve(context),
+  });
+
   await updateSchema(context, {
     entityTypes: [
       {
@@ -27,7 +34,7 @@ afterAll(async () => {
 
 describe('getEntity()', () => {
   test('Archived then published entity', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await adminClient.createEntity({
       _type: 'PublishedEntityFoo',
       _name: 'Foo 1',
       title: 'Title 1',
@@ -35,10 +42,10 @@ describe('getEntity()', () => {
     if (expectOkResult(createResult)) {
       const { id, _name: name, _version: version } = createResult.value;
 
-      const archiveResult = await EntityAdmin.archiveEntity(context, id);
+      const archiveResult = await adminClient.archiveEntity({ id });
       expectResultValue(archiveResult, { id, publishState: EntityPublishState.Archived });
 
-      const publishResult = await EntityAdmin.publishEntities(context, [{ id, version }]);
+      const publishResult = await adminClient.publishEntities([{ id, version }]);
       expectResultValue(publishResult, [{ id, publishState: EntityPublishState.Published }]);
 
       const result = await PublishedEntity.getEntity(context, id);
@@ -52,7 +59,7 @@ describe('getEntity()', () => {
   });
 
   test('Error: Archived entity', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await adminClient.createEntity({
       _type: 'PublishedEntityFoo',
       _name: 'Foo 1',
       title: 'Title 1',
@@ -60,7 +67,7 @@ describe('getEntity()', () => {
     if (expectOkResult(createResult)) {
       const { id } = createResult.value;
 
-      const archiveResult = await EntityAdmin.archiveEntity(context, id);
+      const archiveResult = await adminClient.archiveEntity({ id });
       expectResultValue(archiveResult, { id, publishState: EntityPublishState.Archived });
 
       const result = await PublishedEntity.getEntity(context, id);
@@ -81,12 +88,12 @@ describe('getEntities()', () => {
   });
 
   test('Get two entities', async () => {
-    const createFoo1Result = await EntityAdmin.createEntity(context, {
+    const createFoo1Result = await adminClient.createEntity({
       _type: 'PublishedEntityFoo',
       _name: 'Foo 1',
       title: 'Title 1',
     });
-    const createFoo2Result = await EntityAdmin.createEntity(context, {
+    const createFoo2Result = await adminClient.createEntity({
       _type: 'PublishedEntityFoo',
       _name: 'Foo 2',
       title: 'Title 2',
@@ -95,7 +102,7 @@ describe('getEntities()', () => {
       const { id: foo1Id, _name: foo1Name } = createFoo1Result.value;
       const { id: foo2Id, _name: foo2Name } = createFoo2Result.value;
 
-      const publishResult = await EntityAdmin.publishEntities(context, [
+      const publishResult = await adminClient.publishEntities([
         { id: foo1Id, version: 0 },
         { id: foo2Id, version: 0 },
       ]);
@@ -122,7 +129,7 @@ describe('getEntities()', () => {
   });
 
   test('Get one missing, one existing entity', async () => {
-    const createFooResult = await EntityAdmin.createEntity(context, {
+    const createFooResult = await adminClient.createEntity({
       _type: 'PublishedEntityFoo',
       _name: 'Foo',
       title: 'Title',
@@ -130,9 +137,7 @@ describe('getEntities()', () => {
     if (expectOkResult(createFooResult)) {
       const { id: foo1Id, _name: foo1Name } = createFooResult.value;
 
-      const publishResult = await EntityAdmin.publishEntities(context, [
-        { id: foo1Id, version: 0 },
-      ]);
+      const publishResult = await adminClient.publishEntities([{ id: foo1Id, version: 0 }]);
       expectResultValue(publishResult, [
         { id: foo1Id, publishState: EntityPublishState.Published },
       ]);
@@ -153,7 +158,7 @@ describe('getEntities()', () => {
   });
 
   test('Error: Get archived entity', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await adminClient.createEntity({
       _type: 'PublishedEntityFoo',
       _name: 'Foo 1',
       title: 'Title 1',
@@ -161,7 +166,7 @@ describe('getEntities()', () => {
     if (expectOkResult(createResult)) {
       const { id } = createResult.value;
 
-      const archiveResult = await EntityAdmin.archiveEntity(context, id);
+      const archiveResult = await adminClient.archiveEntity({ id });
       expectResultValue(archiveResult, { id, publishState: EntityPublishState.Archived });
 
       const result = await PublishedEntity.getEntities(context, [id]);
