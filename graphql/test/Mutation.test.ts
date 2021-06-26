@@ -12,6 +12,7 @@ import { graphql } from 'graphql';
 import type { GraphQLSchema } from 'graphql';
 import { v4 as uuidv4 } from 'uuid';
 import { GraphQLSchemaGenerator } from '../src/GraphQLSchemaGenerator';
+import { expectResultValue } from './TestUtils';
 
 const { expectOkResult } = CoreTestUtils;
 const { createTestServer, ensureSessionContext, updateSchema } = ServerTestUtils;
@@ -159,24 +160,22 @@ describe('create*Entity()', () => {
     });
 
     const getResult = await EntityAdmin.getEntity(context, id);
-    if (expectOkResult(getResult)) {
-      expect(getResult.value).toEqual({
-        id,
-        _type: 'MutationFoo',
-        _name: name,
-        _version: 0,
-        _publishState: EntityPublishState.Draft,
-        ...emptyFooFields,
-        title: 'Foo title',
-        summary: 'Foo summary',
-        tags: ['one', 'two', 'three'],
-        location: { lat: 55.60498, lng: 13.003822 },
-        locations: [
-          { lat: 55.60498, lng: 13.003822 },
-          { lat: 56.381561, lng: 13.99286 },
-        ],
-      });
-    }
+    expectResultValue(getResult, {
+      id,
+      _type: 'MutationFoo',
+      _name: name,
+      _version: 0,
+      _publishState: EntityPublishState.Draft,
+      ...emptyFooFields,
+      title: 'Foo title',
+      summary: 'Foo summary',
+      tags: ['one', 'two', 'three'],
+      location: { lat: 55.60498, lng: 13.003822 },
+      locations: [
+        { lat: 55.60498, lng: 13.003822 },
+        { lat: 56.381561, lng: 13.99286 },
+      ],
+    });
   });
 
   test('Create with ID', async () => {
@@ -292,24 +291,22 @@ describe('create*Entity()', () => {
       });
 
       const getResult = await EntityAdmin.getEntity(context, fooId);
-      if (expectOkResult(getResult)) {
-        expect(getResult.value).toEqual({
-          id: fooId,
-          _type: 'MutationFoo',
-          _name: fooName,
-          _version: 0,
-          _publishState: EntityPublishState.Draft,
-          ...emptyFooFields,
-          title: 'Foo title',
-          summary: 'Foo summary',
-          body: {
-            blocks: [
-              { type: RichTextBlockType.paragraph, data: { text: 'Hello world' } },
-              { type: RichTextBlockType.entity, data: { id: barId } },
-            ],
-          },
-        });
-      }
+      expectResultValue(getResult, {
+        id: fooId,
+        _type: 'MutationFoo',
+        _name: fooName,
+        _version: 0,
+        _publishState: EntityPublishState.Draft,
+        ...emptyFooFields,
+        title: 'Foo title',
+        summary: 'Foo summary',
+        body: {
+          blocks: [
+            { type: RichTextBlockType.paragraph, data: { text: 'Hello world' } },
+            { type: RichTextBlockType.entity, data: { id: barId } },
+          ],
+        },
+      });
     }
   });
 
@@ -372,21 +369,19 @@ describe('create*Entity()', () => {
       });
 
       const getResult = await EntityAdmin.getEntity(context, fooId);
-      if (expectOkResult(getResult)) {
-        expect(getResult.value).toEqual({
-          id: fooId,
-          _type: 'MutationFoo',
-          _name: fooName,
-          _version: 0,
-          _publishState: EntityPublishState.Draft,
-          ...emptyFooFields,
-          title: 'Foo title',
-          summary: 'Foo summary',
-          bar: {
-            id: barId,
-          },
-        });
-      }
+      expectResultValue(getResult, {
+        id: fooId,
+        _type: 'MutationFoo',
+        _name: fooName,
+        _version: 0,
+        _publishState: EntityPublishState.Draft,
+        ...emptyFooFields,
+        title: 'Foo title',
+        summary: 'Foo summary',
+        bar: {
+          id: barId,
+        },
+      });
     }
   });
 
@@ -456,19 +451,17 @@ describe('create*Entity()', () => {
       });
 
       const getResult = await EntityAdmin.getEntity(context, fooId);
-      if (expectOkResult(getResult)) {
-        expect(getResult.value).toEqual({
-          id: fooId,
-          _type: 'MutationFoo',
-          _name: fooName,
-          _version: 0,
-          _publishState: EntityPublishState.Draft,
-          ...emptyFooFields,
-          title: 'Foo title',
-          summary: 'Foo summary',
-          bars: [{ id: bar1Id }, { id: bar2Id }],
-        });
-      }
+      expectResultValue(getResult, {
+        id: fooId,
+        _type: 'MutationFoo',
+        _name: fooName,
+        _version: 0,
+        _publishState: EntityPublishState.Draft,
+        ...emptyFooFields,
+        title: 'Foo title',
+        summary: 'Foo summary',
+        bars: [{ id: bar1Id }, { id: bar2Id }],
+      });
     }
   });
 
@@ -550,23 +543,21 @@ describe('create*Entity()', () => {
       });
 
       const getResult = await EntityAdmin.getEntity(context, fooId);
-      if (expectOkResult(getResult)) {
-        expect(getResult.value).toEqual({
-          id: fooId,
-          _type: 'MutationFoo',
-          _name: fooName,
-          _version: 0,
-          _publishState: EntityPublishState.Draft,
-          ...emptyFooFields,
-          title: 'Foo title',
-          summary: 'Foo summary',
-          stringedBar: {
-            _type: 'MutationStringedBar',
-            text: 'Value text',
-            bar: { id: barId },
-          },
-        });
-      }
+      expectResultValue(getResult, {
+        id: fooId,
+        _type: 'MutationFoo',
+        _name: fooName,
+        _version: 0,
+        _publishState: EntityPublishState.Draft,
+        ...emptyFooFields,
+        title: 'Foo title',
+        summary: 'Foo summary',
+        stringedBar: {
+          _type: 'MutationStringedBar',
+          text: 'Value text',
+          bar: { id: barId },
+        },
+      });
     }
   });
 
@@ -649,28 +640,26 @@ describe('create*Entity()', () => {
       });
 
       const getResult = await EntityAdmin.getEntity(context, fooId);
-      if (expectOkResult(getResult)) {
-        expect(getResult.value).toEqual({
-          id: fooId,
-          _type: 'MutationFoo',
-          _name: fooName,
-          _version: 0,
-          _publishState: EntityPublishState.Draft,
-          ...emptyFooFields,
-          anyValueItem: {
+      expectResultValue(getResult, {
+        id: fooId,
+        _type: 'MutationFoo',
+        _name: fooName,
+        _version: 0,
+        _publishState: EntityPublishState.Draft,
+        ...emptyFooFields,
+        anyValueItem: {
+          _type: 'MutationStringedBar',
+          text: 'A value',
+          bar: { id: barId },
+        },
+        anyValueItems: [
+          {
             _type: 'MutationStringedBar',
-            text: 'A value',
+            text: 'A value in a list',
             bar: { id: barId },
           },
-          anyValueItems: [
-            {
-              _type: 'MutationStringedBar',
-              text: 'A value in a list',
-              bar: { id: barId },
-            },
-          ],
-        });
-      }
+        ],
+      });
     }
   });
 
@@ -748,21 +737,19 @@ describe('create*Entity()', () => {
     });
 
     const getResult = await EntityAdmin.getEntity(context, fooId);
-    if (expectOkResult(getResult)) {
-      expect(getResult.value).toEqual({
-        id: fooId,
-        _type: 'MutationFoo',
-        _name: fooName,
-        _version: 0,
-        _publishState: EntityPublishState.Draft,
-        ...emptyFooFields,
-        nestedValue: {
-          _type: 'MutationNestedValue',
-          text: 'Outer',
-          child: { _type: 'MutationNestedValue', text: 'Inner' },
-        },
-      });
-    }
+    expectResultValue(getResult, {
+      id: fooId,
+      _type: 'MutationFoo',
+      _name: fooName,
+      _version: 0,
+      _publishState: EntityPublishState.Draft,
+      ...emptyFooFields,
+      nestedValue: {
+        _type: 'MutationNestedValue',
+        text: 'Outer',
+        child: { _type: 'MutationNestedValue', text: 'Inner' },
+      },
+    });
   });
 
   test('Create without specifying _type', async () => {
@@ -901,19 +888,17 @@ describe('update*Entity()', () => {
       });
 
       const getResult = await EntityAdmin.getEntity(context, id);
-      if (expectOkResult(getResult)) {
-        expect(getResult.value).toEqual({
-          id,
-          _type: 'MutationFoo',
-          _name: name,
-          _version: 1,
-          _publishState: EntityPublishState.Draft,
-          ...emptyFooFields,
-          title: 'Updated title',
-          summary: 'First summary',
-          tags: ['one', 'two', 'three'],
-        });
-      }
+      expectResultValue(getResult, {
+        id,
+        _type: 'MutationFoo',
+        _name: name,
+        _version: 1,
+        _publishState: EntityPublishState.Draft,
+        ...emptyFooFields,
+        title: 'Updated title',
+        summary: 'First summary',
+        tags: ['one', 'two', 'three'],
+      });
     }
   });
 
@@ -1076,38 +1061,36 @@ describe('update*Entity()', () => {
         });
 
         const getResult = await EntityAdmin.getEntity(context, fooId);
-        if (expectOkResult(getResult)) {
-          expect(getResult.value).toEqual({
-            id: fooId,
-            _type: 'MutationFoo',
-            _name: name,
-            _version: 1,
-            _publishState: EntityPublishState.Draft,
-            ...emptyFooFields,
-            title: 'Updated title',
-            summary: 'Updated summary',
-            tags: ['these', 'are', 'new'],
+        expectResultValue(getResult, {
+          id: fooId,
+          _type: 'MutationFoo',
+          _name: name,
+          _version: 1,
+          _publishState: EntityPublishState.Draft,
+          ...emptyFooFields,
+          title: 'Updated title',
+          summary: 'Updated summary',
+          tags: ['these', 'are', 'new'],
+          bar: { id: bar1Id },
+          bars: [{ id: bar1Id }, { id: bar2Id }],
+          stringedBar: {
+            _type: 'MutationStringedBar',
+            text: 'Value text',
+            bar: { id: bar2Id },
+          },
+          anyValueItem: {
+            _type: 'MutationStringedBar',
+            text: 'A value item',
             bar: { id: bar1Id },
-            bars: [{ id: bar1Id }, { id: bar2Id }],
-            stringedBar: {
+          },
+          anyValueItems: [
+            {
               _type: 'MutationStringedBar',
-              text: 'Value text',
+              text: 'A value item in a list',
               bar: { id: bar2Id },
             },
-            anyValueItem: {
-              _type: 'MutationStringedBar',
-              text: 'A value item',
-              bar: { id: bar1Id },
-            },
-            anyValueItems: [
-              {
-                _type: 'MutationStringedBar',
-                text: 'A value item in a list',
-                bar: { id: bar2Id },
-              },
-            ],
-          });
-        }
+          ],
+        });
       }
     }
   });
@@ -1194,7 +1177,7 @@ describe('publishEntities()', () => {
       const historyResult = await EntityAdmin.getPublishingHistory(context, id);
       if (expectOkResult(historyResult)) {
         const publishedAt = historyResult.value.events[0]?.publishedAt;
-        expect(historyResult.value).toEqual({
+        expectResultValue(historyResult, {
           id,
           events: [
             {
@@ -1279,7 +1262,7 @@ describe('unpublishEntities()', () => {
       if (expectOkResult(historyResult)) {
         const publishedAt0 = historyResult.value.events[0]?.publishedAt;
         const publishedAt1 = historyResult.value.events[1]?.publishedAt;
-        expect(historyResult.value).toEqual({
+        expectResultValue(historyResult, {
           id,
           events: [
             {
@@ -1365,7 +1348,7 @@ describe('archiveEntity()', () => {
       const historyResult = await EntityAdmin.getPublishingHistory(context, id);
       if (expectOkResult(historyResult)) {
         const publishedAt = historyResult.value.events[0]?.publishedAt;
-        expect(historyResult.value).toEqual({
+        expectResultValue(historyResult, {
           id,
           events: [
             {
@@ -1421,7 +1404,7 @@ describe('unarchiveEntity()', () => {
       if (expectOkResult(historyResult)) {
         const publishedAt0 = historyResult.value.events[0]?.publishedAt;
         const publishedAt1 = historyResult.value.events[1]?.publishedAt;
-        expect(historyResult.value).toEqual({
+        expectResultValue(historyResult, {
           id,
           events: [
             {
