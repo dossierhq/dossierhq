@@ -1,4 +1,3 @@
-import { EntityAdmin } from '@datadata/server';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import type { EntityCreateRequest } from '../../../types/RequestTypes';
 import type { EntityResponse } from '../../../types/ResponseTypes';
@@ -14,9 +13,9 @@ export default async (req: NextApiRequest, res: NextApiResponse<EntityResponse>)
     if (authResult.isError()) {
       throw errorResultToBoom(authResult);
     }
-    const context = authResult.value;
+    const { adminClient } = authResult.value;
 
-    const result = await EntityAdmin.createEntity(context, body.item);
+    const result = await adminClient.createEntity(body.item);
 
     if (result.isError()) {
       throw errorResultToBoom(result);

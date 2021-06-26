@@ -1,4 +1,3 @@
-import { EntityAdmin } from '@datadata/server';
 import Joi from 'joi';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import type { EntityArchiveRequest } from '../../../types/RequestTypes';
@@ -26,9 +25,9 @@ export default async (
     if (authResult.isError()) {
       throw errorResultToBoom(authResult);
     }
-    const context = authResult.value;
+    const { adminClient } = authResult.value;
 
-    const archiveResult = await EntityAdmin.archiveEntity(context, id);
+    const archiveResult = await adminClient.archiveEntity({ id });
     if (archiveResult.isError()) {
       throw errorResultToBoom(archiveResult);
     }

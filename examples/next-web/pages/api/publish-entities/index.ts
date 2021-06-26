@@ -1,4 +1,3 @@
-import { EntityAdmin } from '@datadata/server';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import type { EntityPublishRequest } from '../../../types/RequestTypes';
 import type { PublishingResultListResponse } from '../../../types/ResponseTypes';
@@ -16,9 +15,9 @@ export default async (
     if (authResult.isError()) {
       throw errorResultToBoom(authResult);
     }
-    const context = authResult.value;
+    const { adminClient } = authResult.value;
 
-    const publishResult = await EntityAdmin.publishEntities(context, body.items);
+    const publishResult = await adminClient.publishEntities(body.items);
     if (publishResult.isError()) {
       throw errorResultToBoom(publishResult);
     }

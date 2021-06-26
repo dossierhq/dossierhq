@@ -1,5 +1,4 @@
 import type { JsonPublishingHistory } from '@datadata/core';
-import { EntityAdmin } from '@datadata/server';
 import Joi from 'joi';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import type { PublishingHistoryResponse } from '../../../types/ResponseTypes';
@@ -26,9 +25,9 @@ export default async (
     if (authResult.isError()) {
       throw errorResultToBoom(authResult);
     }
-    const context = authResult.value;
+    const { adminClient } = authResult.value;
 
-    const result = await EntityAdmin.getPublishingHistory(context, id);
+    const result = await adminClient.getPublishingHistory({ id });
     if (result.isError()) {
       throw errorResultToBoom(result);
     }

@@ -1,5 +1,4 @@
 import type { AdminQuery, Paging } from '@datadata/core';
-import { EntityAdmin } from '@datadata/server';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import type { SearchEntitiesResponse } from '../../types/ResponseTypes';
 import { errorResultToBoom } from '../../utils/ErrorUtils';
@@ -17,12 +16,12 @@ export default async (
     if (authResult.isError()) {
       throw errorResultToBoom(authResult);
     }
-    const context = authResult.value;
+    const { adminClient } = authResult.value;
 
     const query = decodeQuery<AdminQuery>('query', req.query);
     const paging = decodeQuery<Paging>('paging', req.query);
 
-    const searchResult = await EntityAdmin.searchEntities(context, query, paging);
+    const searchResult = await adminClient.searchEntities(query, paging);
     if (searchResult.isError()) {
       throw errorResultToBoom(searchResult);
     }
