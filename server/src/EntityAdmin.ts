@@ -359,7 +359,7 @@ export async function publishEntities(
     id: string;
     version: number;
   }[]
-): PromiseResult<void, ErrorType.BadRequest | ErrorType.NotFound> {
+): PromiseResult<PublishingResult[], ErrorType.BadRequest | ErrorType.NotFound> {
   const uniqueIdCheck = checkUUIDsAreUnique(entities.map((it) => it.id));
   if (uniqueIdCheck.isError()) {
     return uniqueIdCheck;
@@ -457,7 +457,7 @@ export async function publishEntities(
     await Db.queryNone(context, qb.build());
 
     //
-    return ok(undefined);
+    return ok(entities.map(({ id }) => ({ id, publishState: EntityPublishState.Published })));
   });
 }
 

@@ -502,7 +502,9 @@ describe('createEntity()', () => {
       });
 
       const publishResult = await EntityAdmin.publishEntities(context, [{ id, version: 0 }]);
-      expectOkResult(publishResult);
+      if (expectOkResult(publishResult)) {
+        expect(publishResult.value).toEqual([{ id, publishState: EntityPublishState.Published }]);
+      }
 
       const historyResult = await EntityAdmin.getEntityHistory(context, id);
       if (expectOkResult(historyResult)) {
@@ -641,12 +643,17 @@ describe('createEntity()', () => {
           bar: { id: barId },
         });
 
-        expectOkResult(
-          await EntityAdmin.publishEntities(context, [
-            { id: fooId, version: 0 },
-            { id: barId, version: 0 },
-          ])
-        );
+        const publishResult = await EntityAdmin.publishEntities(context, [
+          { id: fooId, version: 0 },
+          { id: barId, version: 0 },
+        ]);
+
+        if (expectOkResult(publishResult)) {
+          expect(publishResult.value).toEqual([
+            { id: fooId, publishState: EntityPublishState.Published },
+            { id: barId, publishState: EntityPublishState.Published },
+          ]);
+        }
 
         const fooVersion0Result = await EntityAdmin.getEntity(context, fooId, 0);
         if (expectOkResult(fooVersion0Result)) {
@@ -2230,7 +2237,10 @@ describe('updateEntity()', () => {
         });
       }
 
-      expectOkResult(await EntityAdmin.publishEntities(context, [{ id, version: 1 }]));
+      const publishResult = await EntityAdmin.publishEntities(context, [{ id, version: 1 }]);
+      if (expectOkResult(publishResult)) {
+        expect(publishResult.value).toEqual([{ id, publishState: EntityPublishState.Published }]);
+      }
 
       const historyResult = await EntityAdmin.getEntityHistory(context, id);
       if (expectOkResult(historyResult)) {
@@ -2297,7 +2307,10 @@ describe('updateEntity()', () => {
       const { id } = createResult.value;
       let name = createResult.value._name;
 
-      expectOkResult(await EntityAdmin.publishEntities(context, [{ id, version: 0 }]));
+      const publishResult = await EntityAdmin.publishEntities(context, [{ id, version: 0 }]);
+      if (expectOkResult(publishResult)) {
+        expect(publishResult.value).toEqual([{ id, publishState: EntityPublishState.Published }]);
+      }
 
       const updateResult = await EntityAdmin.updateEntity(context, {
         id,
@@ -2396,7 +2409,10 @@ describe('updateEntity()', () => {
         });
       }
 
-      expectOkResult(await EntityAdmin.publishEntities(context, [{ id, version: 1 }]));
+      const publishResult = await EntityAdmin.publishEntities(context, [{ id, version: 1 }]);
+      if (expectOkResult(publishResult)) {
+        expect(publishResult.value).toEqual([{ id, publishState: EntityPublishState.Published }]);
+      }
 
       const historyResult = await EntityAdmin.getEntityHistory(context, id);
       if (expectOkResult(historyResult)) {
@@ -2479,7 +2495,10 @@ describe('updateEntity()', () => {
         });
       }
 
-      expectOkResult(await EntityAdmin.publishEntities(context, [{ id, version: 1 }]));
+      const publishResult = await EntityAdmin.publishEntities(context, [{ id, version: 1 }]);
+      if (expectOkResult(publishResult)) {
+        expect(publishResult.value).toEqual([{ id, publishState: EntityPublishState.Published }]);
+      }
 
       const historyResult = await EntityAdmin.getEntityHistory(context, id);
       if (expectOkResult(historyResult)) {
@@ -2562,7 +2581,10 @@ describe('updateEntity()', () => {
         });
       }
 
-      expectOkResult(await EntityAdmin.publishEntities(context, [{ id, version: 1 }]));
+      const publishResult = await EntityAdmin.publishEntities(context, [{ id, version: 1 }]);
+      if (expectOkResult(publishResult)) {
+        expect(publishResult.value).toEqual([{ id, publishState: EntityPublishState.Published }]);
+      }
 
       const publishedResult = await PublishedEntity.getEntity(context, id);
       if (expectOkResult(publishedResult)) {
@@ -2613,12 +2635,16 @@ describe('updateEntity()', () => {
           });
         }
 
-        expectOkResult(
-          await EntityAdmin.publishEntities(context, [
-            { id: fooId, version: 1 },
-            { id: barId, version: 0 },
-          ])
-        );
+        const publishResult = await EntityAdmin.publishEntities(context, [
+          { id: fooId, version: 1 },
+          { id: barId, version: 0 },
+        ]);
+        if (expectOkResult(publishResult)) {
+          expect(publishResult.value).toEqual([
+            { id: fooId, publishState: EntityPublishState.Published },
+            { id: barId, publishState: EntityPublishState.Published },
+          ]);
+        }
 
         const version0Result = await EntityAdmin.getEntity(context, fooId, 0);
         if (expectOkResult(version0Result)) {
@@ -2677,12 +2703,16 @@ describe('updateEntity()', () => {
       const { id: bar1Id } = createBar1Result.value;
       const { id: bar2Id } = createBar2Result.value;
 
-      expectOkResult(
-        await EntityAdmin.publishEntities(context, [
-          { id: bar1Id, version: 0 },
-          { id: bar2Id, version: 0 },
-        ])
-      );
+      const publishResult = await EntityAdmin.publishEntities(context, [
+        { id: bar1Id, version: 0 },
+        { id: bar2Id, version: 0 },
+      ]);
+      if (expectOkResult(publishResult)) {
+        expect(publishResult.value).toEqual([
+          { id: bar1Id, publishState: EntityPublishState.Published },
+          { id: bar2Id, publishState: EntityPublishState.Published },
+        ]);
+      }
 
       const createBazResult = await EntityAdmin.createEntity(context, {
         _type: 'EntityAdminBaz',
@@ -2712,7 +2742,14 @@ describe('updateEntity()', () => {
           });
         }
 
-        expectOkResult(await EntityAdmin.publishEntities(context, [{ id: bazId, version: 1 }]));
+        const publishResult = await EntityAdmin.publishEntities(context, [
+          { id: bazId, version: 1 },
+        ]);
+        if (expectOkResult(publishResult)) {
+          expect(publishResult.value).toEqual([
+            { id: bazId, publishState: EntityPublishState.Published },
+          ]);
+        }
 
         const version0Result = await EntityAdmin.getEntity(context, bazId, 0);
         if (expectOkResult(version0Result)) {
@@ -2906,12 +2943,16 @@ describe('publishEntities()', () => {
           await EntityAdmin.updateEntity(context, { id: baz1Id, baz: { id: baz2Id } })
         );
 
-        expectOkResult(
-          await EntityAdmin.publishEntities(context, [
-            { id: baz1Id, version: 1 },
-            { id: baz2Id, version: 0 },
-          ])
-        );
+        const publishResult = await EntityAdmin.publishEntities(context, [
+          { id: baz1Id, version: 1 },
+          { id: baz2Id, version: 0 },
+        ]);
+        if (expectOkResult(publishResult)) {
+          expect(publishResult.value).toEqual([
+            { id: baz1Id, publishState: EntityPublishState.Published },
+            { id: baz2Id, publishState: EntityPublishState.Published },
+          ]);
+        }
       }
     }
   });
@@ -2930,7 +2971,10 @@ describe('publishEntities()', () => {
         expect(archiveResult.value).toEqual({ id, publishState: EntityPublishState.Archived });
       }
 
-      expectOkResult(await EntityAdmin.publishEntities(context, [{ id, version }]));
+      const publishResult = await EntityAdmin.publishEntities(context, [{ id, version }]);
+      if (expectOkResult(publishResult)) {
+        expect(publishResult.value).toEqual([{ id, publishState: EntityPublishState.Published }]);
+      }
 
       const getResult = await EntityAdmin.getEntity(context, id);
       if (expectOkResult(getResult)) {
@@ -2956,7 +3000,14 @@ describe('publishEntities()', () => {
     if (expectOkResult(createBazResult)) {
       const { id: bazId } = createBazResult.value;
 
-      expectOkResult(await EntityAdmin.publishEntities(context, [{ id: bazId, version: 0 }]));
+      const firstPublishResult = await EntityAdmin.publishEntities(context, [
+        { id: bazId, version: 0 },
+      ]);
+      if (expectOkResult(firstPublishResult)) {
+        expect(firstPublishResult.value).toEqual([
+          { id: bazId, publishState: EntityPublishState.Published },
+        ]);
+      }
 
       const secondPublishResult = await EntityAdmin.publishEntities(context, [
         { id: bazId, version: 0 },
@@ -3048,7 +3099,10 @@ describe('unpublishEntities()', () => {
     if (expectOkResult(createResult)) {
       const { id, _name: name, _version: version } = createResult.value;
 
-      expectOkResult(await EntityAdmin.publishEntities(context, [{ id, version }]));
+      const publishResult = await EntityAdmin.publishEntities(context, [{ id, version }]);
+      if (expectOkResult(publishResult)) {
+        expect(publishResult.value).toEqual([{ id, publishState: EntityPublishState.Published }]);
+      }
 
       expectOkResult(await EntityAdmin.unpublishEntities(context, [id]));
 
@@ -3089,12 +3143,16 @@ describe('unpublishEntities()', () => {
           await EntityAdmin.updateEntity(context, { id: baz1Id, baz: { id: baz2Id } })
         );
 
-        expectOkResult(
-          await EntityAdmin.publishEntities(context, [
-            { id: baz1Id, version: 1 },
-            { id: baz2Id, version: 0 },
-          ])
-        );
+        const publishResult = await EntityAdmin.publishEntities(context, [
+          { id: baz1Id, version: 1 },
+          { id: baz2Id, version: 0 },
+        ]);
+        if (expectOkResult(publishResult)) {
+          expect(publishResult.value).toEqual([
+            { id: baz1Id, publishState: EntityPublishState.Published },
+            { id: baz2Id, publishState: EntityPublishState.Published },
+          ]);
+        }
 
         expectOkResult(await EntityAdmin.unpublishEntities(context, [baz1Id, baz2Id]));
       }
@@ -3117,7 +3175,14 @@ describe('unpublishEntities()', () => {
         baz: { id: baz1Id },
       });
       if (expectOkResult(createBaz2Result)) {
-        expectOkResult(await EntityAdmin.publishEntities(context, [{ id: baz1Id, version: 0 }]));
+        const publishResult = await EntityAdmin.publishEntities(context, [
+          { id: baz1Id, version: 0 },
+        ]);
+        if (expectOkResult(publishResult)) {
+          expect(publishResult.value).toEqual([
+            { id: baz1Id, publishState: EntityPublishState.Published },
+          ]);
+        }
 
         expectOkResult(await EntityAdmin.unpublishEntities(context, [baz1Id]));
       }
@@ -3153,16 +3218,20 @@ describe('unpublishEntities()', () => {
       if (expectOkResult(createFooResult)) {
         const { id: fooId } = createFooResult.value;
 
-        expectOkResult(
-          await EntityAdmin.publishEntities(context, [
-            { id: fooId, version: 0 },
-            { id: barId, version: 0 },
-          ])
-        );
+        const publishResult = await EntityAdmin.publishEntities(context, [
+          { id: fooId, version: 0 },
+          { id: barId, version: 0 },
+        ]);
+        if (expectOkResult(publishResult)) {
+          expect(publishResult.value).toEqual([
+            { id: fooId, publishState: EntityPublishState.Published },
+            { id: barId, publishState: EntityPublishState.Published },
+          ]);
+        }
 
-        const publishResult = await EntityAdmin.unpublishEntities(context, [barId]);
+        const unpublishResult = await EntityAdmin.unpublishEntities(context, [barId]);
         expectErrorResult(
-          publishResult,
+          unpublishResult,
           ErrorType.BadRequest,
           `${barId}: Published entities referencing entity: ${fooId}`
         );
@@ -3303,7 +3372,10 @@ describe('archiveEntity()', () => {
     if (expectOkResult(createResult)) {
       const { id, _version: version } = createResult.value;
 
-      expectOkResult(await EntityAdmin.publishEntities(context, [{ id, version }]));
+      const publishResult = await EntityAdmin.publishEntities(context, [{ id, version }]);
+      if (expectOkResult(publishResult)) {
+        expect(publishResult.value).toEqual([{ id, publishState: EntityPublishState.Published }]);
+      }
 
       const archiveResult = await EntityAdmin.archiveEntity(context, id);
       expectErrorResult(archiveResult, ErrorType.BadRequest, 'Entity is published');
@@ -3403,7 +3475,11 @@ describe('unarchiveEntity()', () => {
     if (expectOkResult(createResult)) {
       const { id, _version: version } = createResult.value;
 
-      expectOkResult(await EntityAdmin.publishEntities(context, [{ id, version }]));
+      const publishResult = await EntityAdmin.publishEntities(context, [{ id, version }]);
+      if (expectOkResult(publishResult)) {
+        expect(publishResult.value).toEqual([{ id, publishState: EntityPublishState.Published }]);
+      }
+
       expectOkResult(await EntityAdmin.unpublishEntities(context, [id]));
 
       const archiveResult = await EntityAdmin.archiveEntity(context, id);
@@ -3462,7 +3538,10 @@ describe('getPublishingHistory()', () => {
     if (expectOkResult(createResult)) {
       const { id } = createResult.value;
 
-      expectOkResult(await EntityAdmin.publishEntities(context, [{ id, version: 0 }]));
+      const publishResult = await EntityAdmin.publishEntities(context, [{ id, version: 0 }]);
+      if (expectOkResult(publishResult)) {
+        expect(publishResult.value).toEqual([{ id, publishState: EntityPublishState.Published }]);
+      }
 
       const historyResult = await EntityAdmin.getPublishingHistory(context, id);
       if (expectOkResult(historyResult)) {
@@ -3490,7 +3569,11 @@ describe('getPublishingHistory()', () => {
     if (expectOkResult(createResult)) {
       const { id } = createResult.value;
 
-      expectOkResult(await EntityAdmin.publishEntities(context, [{ id, version: 0 }]));
+      const publishResult = await EntityAdmin.publishEntities(context, [{ id, version: 0 }]);
+      if (expectOkResult(publishResult)) {
+        expect(publishResult.value).toEqual([{ id, publishState: EntityPublishState.Published }]);
+      }
+
       expectOkResult(await EntityAdmin.unpublishEntities(context, [id]));
 
       const historyResult = await EntityAdmin.getPublishingHistory(context, id);
