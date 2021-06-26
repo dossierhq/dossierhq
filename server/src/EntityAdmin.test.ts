@@ -206,7 +206,7 @@ async function ensureEntitiesExistForAdminOnlyEditBefore(context: SessionContext
   if (expectOkResult(entitiesOfTypeCount)) {
     for (let count = entitiesOfTypeCount.value; count < requestedCount; count += 1) {
       const random = String(Math.random()).slice(2);
-      const createResult = await EntityAdmin.createEntity(context, {
+      const createResult = await client.createEntity({
         _type: 'AdminOnlyEditBefore',
         _name: random,
         message: `Hey ${random}`,
@@ -249,7 +249,7 @@ async function visitAllEntityPages(
   const isForwards = isPagingForwards(ownPaging);
   // eslint-disable-next-line no-constant-condition
   while (true) {
-    const result = await EntityAdmin.searchEntities(context, query, ownPaging);
+    const result = await client.searchEntities(query, ownPaging);
     if (result.isError()) {
       throw result.toError();
     }
@@ -293,7 +293,7 @@ async function createBarWithFooBazReferences(
   bazCount: number,
   bazReferencesPerEntity = 1
 ) {
-  const createBarResult = await EntityAdmin.createEntity(context, {
+  const createBarResult = await client.createEntity({
     _type: 'EntityAdminBar',
     _name: 'Bar',
     title: 'Bar',
@@ -308,7 +308,7 @@ async function createBarWithFooBazReferences(
   const bazEntities: AdminEntity[] = [];
 
   for (let i = 0; i < fooCount; i += 1) {
-    const createFooResult = await EntityAdmin.createEntity(context, {
+    const createFooResult = await client.createEntity({
       _type: 'EntityAdminFoo',
       _name: 'Foo: ' + i,
       bar: { id: barId },
@@ -319,7 +319,7 @@ async function createBarWithFooBazReferences(
   }
   for (let i = 0; i < bazCount; i += 1) {
     const bars = [...new Array(bazReferencesPerEntity - 1)].map(() => ({ id: barId }));
-    const createBazResult = await EntityAdmin.createEntity(context, {
+    const createBazResult = await client.createEntity({
       _type: 'EntityAdminBaz',
       _name: 'Baz: ' + i,
       bar: { id: barId },
@@ -349,7 +349,7 @@ describe('getEntity()', () => {
   // rest is tested elsewhere
 
   test('No version means max version', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await client.createEntity({
       _type: 'EntityAdminFoo',
       _name: 'Foo',
       title: 'Title',
@@ -379,7 +379,7 @@ describe('getEntity()', () => {
   });
 
   test('Error: Get entity with invalid version', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await client.createEntity({
       _type: 'EntityAdminFoo',
       _name: 'Foo',
       title: 'Title',
@@ -404,12 +404,12 @@ describe('getEntities()', () => {
   });
 
   test('Get 2 entities', async () => {
-    const createFoo1Result = await EntityAdmin.createEntity(context, {
+    const createFoo1Result = await client.createEntity({
       _type: 'EntityAdminFoo',
       _name: 'Foo',
       title: 'Title 1',
     });
-    const createFoo2Result = await EntityAdmin.createEntity(context, {
+    const createFoo2Result = await client.createEntity({
       _type: 'EntityAdminFoo',
       _name: 'Foo',
       title: 'Title 2',
@@ -443,7 +443,7 @@ describe('getEntities()', () => {
   });
 
   test('Gets the last version', async () => {
-    const createFooResult = await EntityAdmin.createEntity(context, {
+    const createFooResult = await client.createEntity({
       _type: 'EntityAdminFoo',
       _name: 'Foo',
       title: 'First title',
@@ -483,7 +483,7 @@ describe('getEntities()', () => {
 
 describe('createEntity()', () => {
   test('Create EntityAdminFoo and publish', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await client.createEntity({
       _type: 'EntityAdminFoo',
       _name: 'Foo',
       title: 'Title',
@@ -540,7 +540,7 @@ describe('createEntity()', () => {
   });
 
   test('Create EntityAdminFoo w/o publish', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await client.createEntity({
       _type: 'EntityAdminFoo',
       _name: 'Draft',
       title: 'Draft',
@@ -588,7 +588,7 @@ describe('createEntity()', () => {
 
   test('Create EntityAdminFoo with id', async () => {
     const id = uuidv4();
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await client.createEntity({
       id,
       _type: 'EntityAdminFoo',
       _name: 'Draft',
@@ -609,7 +609,7 @@ describe('createEntity()', () => {
   });
 
   test('Create EntityAdminFoo with reference to Bar', async () => {
-    const createBarResult = await EntityAdmin.createEntity(context, {
+    const createBarResult = await client.createEntity({
       _type: 'EntityAdminBar',
       _name: 'Bar name',
       title: 'Bar title',
@@ -617,7 +617,7 @@ describe('createEntity()', () => {
     if (expectOkResult(createBarResult)) {
       const barId = createBarResult.value.id;
 
-      const createFooResult = await EntityAdmin.createEntity(context, {
+      const createFooResult = await client.createEntity({
         _type: 'EntityAdminFoo',
         _name: 'Foo name',
         title: 'Foo title',
@@ -673,7 +673,7 @@ describe('createEntity()', () => {
   });
 
   test('Create EntityAdminBaz with string list', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await client.createEntity({
       _type: 'EntityAdminBaz',
       _name: 'Baz',
       tags: ['one', 'two', 'three'],
@@ -706,7 +706,7 @@ describe('createEntity()', () => {
   });
 
   test('Create EntityAdminBaz with rich text and rich text list', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await client.createEntity({
       _type: 'EntityAdminBaz',
       _name: 'Baz',
       body: { blocks: [{ type: 'paragraph', data: { text: 'Hello world' } }] },
@@ -749,11 +749,11 @@ describe('createEntity()', () => {
   });
 
   test('Create EntityAdminBaz with rich text with value item and entity references', async () => {
-    const createBar1Result = await EntityAdmin.createEntity(context, {
+    const createBar1Result = await client.createEntity({
       _type: 'EntityAdminBar',
       _name: 'Bar 1',
     });
-    const createBar2Result = await EntityAdmin.createEntity(context, {
+    const createBar2Result = await client.createEntity({
       _type: 'EntityAdminBar',
       _name: 'Bar 2',
     });
@@ -761,7 +761,7 @@ describe('createEntity()', () => {
       const { id: bar1Id } = createBar1Result.value;
       const { id: bar2Id } = createBar2Result.value;
 
-      const createBazResult = await EntityAdmin.createEntity(context, {
+      const createBazResult = await client.createEntity({
         _type: 'EntityAdminBaz',
         _name: 'Baz',
         body: {
@@ -835,12 +835,12 @@ describe('createEntity()', () => {
           },
         });
 
-        const referencingBar1Result = await EntityAdmin.searchEntities(context, {
+        const referencingBar1Result = await client.searchEntities({
           referencing: bar1Id,
         });
         expectSearchResultEntities(referencingBar1Result, [baz]);
 
-        const referencingBar2Result = await EntityAdmin.searchEntities(context, {
+        const referencingBar2Result = await client.searchEntities({
           referencing: bar2Id,
         });
         expectSearchResultEntities(referencingBar2Result, [baz]);
@@ -849,7 +849,7 @@ describe('createEntity()', () => {
   });
 
   test('Create EntityAdminBaz with location and location list', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await client.createEntity({
       _type: 'EntityAdminBaz',
       _name: 'Baz',
       location: { lat: 55.60498, lng: 13.003822 },
@@ -892,11 +892,11 @@ describe('createEntity()', () => {
   });
 
   test('Create EntityAdminBaz with reference list', async () => {
-    const createBar1Result = await EntityAdmin.createEntity(context, {
+    const createBar1Result = await client.createEntity({
       _type: 'EntityAdminBar',
       _name: 'Bar1',
     });
-    const createBar2Result = await EntityAdmin.createEntity(context, {
+    const createBar2Result = await client.createEntity({
       _type: 'EntityAdminBar',
       _name: 'Bar2',
     });
@@ -905,7 +905,7 @@ describe('createEntity()', () => {
       const { id: bar1Id } = createBar1Result.value;
       const { id: bar2Id } = createBar2Result.value;
 
-      const createBazResult = await EntityAdmin.createEntity(context, {
+      const createBazResult = await client.createEntity({
         _type: 'EntityAdminBaz',
         _name: 'Baz',
         bars: [{ id: bar1Id }, { id: bar2Id }],
@@ -934,17 +934,17 @@ describe('createEntity()', () => {
           bars: [{ id: bar1Id }, { id: bar2Id }],
         });
 
-        const referencesTo1 = await EntityAdmin.searchEntities(context, { referencing: bar1Id });
+        const referencesTo1 = await client.searchEntities({ referencing: bar1Id });
         expectSearchResultEntities(referencesTo1, [baz]);
 
-        const referencesTo2 = await EntityAdmin.searchEntities(context, { referencing: bar2Id });
+        const referencesTo2 = await client.searchEntities({ referencing: bar2Id });
         expectSearchResultEntities(referencesTo2, [baz]);
       }
     }
   });
 
   test('Create EntityAdminBaz with EntityAdminTwoStrings value type', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await client.createEntity({
       _type: 'EntityAdminBaz',
       _name: 'Baz',
       twoStrings: { _type: 'EntityAdminTwoStrings', one: 'First', two: 'Second' },
@@ -975,7 +975,7 @@ describe('createEntity()', () => {
   });
 
   test('Create EntityAdminBaz with list of EntityAdminTwoStrings value type', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await client.createEntity({
       _type: 'EntityAdminBaz',
       _name: 'Baz',
       twoStringsList: [
@@ -1015,14 +1015,14 @@ describe('createEntity()', () => {
   });
 
   test('Create EntityAdminBaz with EntityAdminStringReference value type', async () => {
-    const createBarResult = await EntityAdmin.createEntity(context, {
+    const createBarResult = await client.createEntity({
       _type: 'EntityAdminBar',
       _name: 'Bar',
     });
     if (expectOkResult(createBarResult)) {
       const { id: barId } = createBarResult.value;
 
-      const createBazResult = await EntityAdmin.createEntity(context, {
+      const createBazResult = await client.createEntity({
         _type: 'EntityAdminBaz',
         _name: 'Baz',
         stringReference: {
@@ -1063,18 +1063,18 @@ describe('createEntity()', () => {
           },
         });
 
-        const barReferences = await EntityAdmin.searchEntities(context, { referencing: barId });
+        const barReferences = await client.searchEntities({ referencing: barId });
         expectSearchResultEntities(barReferences, [baz]);
       }
     }
   });
 
   test('Create EntityAdminBaz with EntityAdminListFields value type', async () => {
-    const createBar1Result = await EntityAdmin.createEntity(context, {
+    const createBar1Result = await client.createEntity({
       _type: 'EntityAdminBar',
       _name: 'Bar 1',
     });
-    const createBar2Result = await EntityAdmin.createEntity(context, {
+    const createBar2Result = await client.createEntity({
       _type: 'EntityAdminBar',
       _name: 'Bar 2',
     });
@@ -1082,7 +1082,7 @@ describe('createEntity()', () => {
       const { id: bar1Id } = createBar1Result.value;
       const { id: bar2Id } = createBar2Result.value;
 
-      const createBazResult = await EntityAdmin.createEntity(context, {
+      const createBazResult = await client.createEntity({
         _type: 'EntityAdminBaz',
         _name: 'Baz',
         listFields: {
@@ -1158,14 +1158,14 @@ describe('createEntity()', () => {
           ],
         });
 
-        const bar1References = await EntityAdmin.searchEntities(context, { referencing: bar1Id });
+        const bar1References = await client.searchEntities({ referencing: bar1Id });
 
         expect(
           bar1References.isOk() &&
             bar1References.value?.edges.map((x) => (x.node.isOk() ? x.node.value.id : null))
         ).toEqual([bazId]);
 
-        const bar2References = await EntityAdmin.searchEntities(context, { referencing: bar2Id });
+        const bar2References = await client.searchEntities({ referencing: bar2Id });
 
         expect(
           bar2References.isOk() &&
@@ -1176,7 +1176,7 @@ describe('createEntity()', () => {
   });
 
   test('Create EntityAdminBaz with EntityAdminNested value type', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await client.createEntity({
       _type: 'EntityAdminBaz',
       _name: 'Baz',
       nested: {
@@ -1240,7 +1240,7 @@ describe('createEntity()', () => {
   });
 
   test('Error: Create with invalid type', async () => {
-    const result = await EntityAdmin.createEntity(context, {
+    const result = await client.createEntity({
       _type: 'Invalid',
       _name: 'name',
       foo: 'title',
@@ -1250,7 +1250,7 @@ describe('createEntity()', () => {
   });
 
   test('Error: Create without _type', async () => {
-    const result = await EntityAdmin.createEntity(context, {
+    const result = await client.createEntity({
       _type: '',
       _name: 'Foo',
       foo: 'title',
@@ -1260,7 +1260,7 @@ describe('createEntity()', () => {
   });
 
   test('Error: Create without _name', async () => {
-    const result = await EntityAdmin.createEntity(context, {
+    const result = await client.createEntity({
       _type: 'EntityAdminFoo',
       _name: '',
       title: 'title',
@@ -1270,7 +1270,7 @@ describe('createEntity()', () => {
   });
 
   test('Error: Create with invalid _version', async () => {
-    const result = await EntityAdmin.createEntity(context, {
+    const result = await client.createEntity({
       _type: 'EntityAdminFoo',
       _name: 'Foo',
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -1281,7 +1281,7 @@ describe('createEntity()', () => {
   });
 
   test('Error: Create with invalid field', async () => {
-    const result = await EntityAdmin.createEntity(context, {
+    const result = await client.createEntity({
       _type: 'EntityAdminFoo',
       _name: 'Foo',
       invalid: 'hello',
@@ -1291,7 +1291,7 @@ describe('createEntity()', () => {
   });
 
   test('Error: Create EntityAdminFoo with reference to missing entity', async () => {
-    const result = await EntityAdmin.createEntity(context, {
+    const result = await client.createEntity({
       _type: 'EntityAdminFoo',
       _name: 'Foo name',
       title: 'Foo title',
@@ -1306,7 +1306,7 @@ describe('createEntity()', () => {
 
   test('Error: Create EntityAdminFoo with reference to wrong entity type', async () => {
     const referenceId = entitiesOfTypeAdminOnlyEditBefore[0].id;
-    const result = await EntityAdmin.createEntity(context, {
+    const result = await client.createEntity({
       _type: 'EntityAdminFoo',
       _name: 'Foo name',
       title: 'Foo title',
@@ -1320,7 +1320,7 @@ describe('createEntity()', () => {
   });
 
   test('Error: Set string when expecting list of string', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await client.createEntity({
       _type: 'EntityAdminBaz',
       _name: 'Baz',
       tags: 'invalid',
@@ -1329,7 +1329,7 @@ describe('createEntity()', () => {
   });
 
   test('Error: Set list of string when expecting string', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await client.createEntity({
       _type: 'EntityAdminBaz',
       _name: 'Baz',
       title: ['invalid', 'foo'],
@@ -1342,7 +1342,7 @@ describe('createEntity()', () => {
   });
 
   test('Error: Set reference when expecting list of references', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await client.createEntity({
       _type: 'EntityAdminBaz',
       _name: 'Baz',
       bars: { id: 'fcc46a9e-2097-4bd6-bb08-56d5f59db26b' },
@@ -1351,7 +1351,7 @@ describe('createEntity()', () => {
   });
 
   test('Error: Set list of references when expecting reference', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await client.createEntity({
       _type: 'EntityAdminBaz',
       _name: 'Baz',
       bar: [
@@ -1367,7 +1367,7 @@ describe('createEntity()', () => {
   });
 
   test('Error: value type missing _type', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await client.createEntity({
       _type: 'EntityAdminBaz',
       _name: 'Baz',
       twoStrings: { one: 'One', two: 'Two' },
@@ -1376,7 +1376,7 @@ describe('createEntity()', () => {
   });
 
   test('Error: value type with invalid _type', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await client.createEntity({
       _type: 'EntityAdminBaz',
       _name: 'Baz',
       twoStrings: { _type: 'Invalid' },
@@ -1389,7 +1389,7 @@ describe('createEntity()', () => {
   });
 
   test('Error: value type with wrong _type', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await client.createEntity({
       _type: 'EntityAdminBaz',
       _name: 'Baz',
       oneString: { _type: 'EntityAdminTwoStrings', one: 'One', two: 'Two' },
@@ -1402,7 +1402,7 @@ describe('createEntity()', () => {
   });
 
   test('Error: value type with invalid field', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await client.createEntity({
       _type: 'EntityAdminBaz',
       _name: 'Baz',
       oneString: { _type: 'EntityAdminOneString', one: 'One', invalid: 'value' },
@@ -1415,7 +1415,7 @@ describe('createEntity()', () => {
   });
 
   test('Error: rich text single, where list is expected', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await client.createEntity({
       _type: 'EntityAdminBaz',
       _name: 'Baz',
       bodyList: { blocks: [] },
@@ -1424,7 +1424,7 @@ describe('createEntity()', () => {
   });
 
   test('Error: rich text list, where single is expected', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await client.createEntity({
       _type: 'EntityAdminBaz',
       _name: 'Baz',
       body: [{ blocks: [] }],
@@ -1437,7 +1437,7 @@ describe('createEntity()', () => {
   });
 
   test('Error: rich text, forgotten blocks', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await client.createEntity({
       _type: 'EntityAdminBaz',
       _name: 'Baz',
       body: [{ type: RichTextBlockType.paragraph, data: { text: '' } }],
@@ -1450,7 +1450,7 @@ describe('createEntity()', () => {
   });
 
   test('Error: rich text with string', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await client.createEntity({
       _type: 'EntityAdminBaz',
       _name: 'Baz',
       body: 'Hello',
@@ -1463,7 +1463,7 @@ describe('createEntity()', () => {
   });
 
   test('Error: rich text without blocks', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await client.createEntity({
       _type: 'EntityAdminBaz',
       _name: 'Baz',
       body: {},
@@ -1472,7 +1472,7 @@ describe('createEntity()', () => {
   });
 
   test('Error: rich text, blocks as string', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await client.createEntity({
       _type: 'EntityAdminBaz',
       _name: 'Baz',
       body: { blocks: 'Hello' },
@@ -1485,7 +1485,7 @@ describe('createEntity()', () => {
   });
 
   test('Error: rich text with version and time', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await client.createEntity({
       _type: 'EntityAdminBaz',
       _name: 'Baz',
       body: { blocks: [], version: '123', time: 123123 },
@@ -1498,7 +1498,7 @@ describe('createEntity()', () => {
   });
 
   test('Error: rich text with invalid block type', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await client.createEntity({
       _type: 'EntityAdminBaz',
       _name: 'Baz',
       bodyOnlyParagraph: { blocks: [{ type: RichTextBlockType.entity, data: null }] },
@@ -1511,7 +1511,7 @@ describe('createEntity()', () => {
   });
 
   test('Error: rich text with block with invalid keys', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await client.createEntity({
       _type: 'EntityAdminBaz',
       _name: 'Baz',
       body: {
@@ -1526,7 +1526,7 @@ describe('createEntity()', () => {
   });
 
   test('Error: single location when list expected', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await client.createEntity({
       _type: 'EntityAdminBaz',
       _name: 'Baz',
       locations: { lat: 55.60498, lng: 13.003822 },
@@ -1535,7 +1535,7 @@ describe('createEntity()', () => {
   });
 
   test('Error: location list when single item expected', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await client.createEntity({
       _type: 'EntityAdminBaz',
       _name: 'Baz',
       location: [{ lat: 55.60498, lng: 13.003822 }],
@@ -1548,7 +1548,7 @@ describe('createEntity()', () => {
   });
 
   test('Error: location with empty object', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await client.createEntity({
       _type: 'EntityAdminBaz',
       _name: 'Baz',
       location: {},
@@ -1561,7 +1561,7 @@ describe('createEntity()', () => {
   });
 
   test('Error: single value type when list expected', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await client.createEntity({
       _type: 'EntityAdminBaz',
       _name: 'Baz',
       twoStringsList: { _type: 'EntityAdminTwoStrings', one: 'One', two: 'Two' },
@@ -1570,7 +1570,7 @@ describe('createEntity()', () => {
   });
 
   test('Error: list of value type when single item expected', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await client.createEntity({
       _type: 'EntityAdminBaz',
       _name: 'Baz',
       twoStrings: [
@@ -1608,7 +1608,7 @@ function expectConnectionToMatchSlice(
 
 describe('searchEntities()', () => {
   test('Default => first 25', async () => {
-    const result = await EntityAdmin.searchEntities(context, {
+    const result = await client.searchEntities({
       entityTypes: ['AdminOnlyEditBefore'],
     });
     if (expectOkResult(result)) {
@@ -1617,8 +1617,7 @@ describe('searchEntities()', () => {
   });
 
   test('First', async () => {
-    const result = await EntityAdmin.searchEntities(
-      context,
+    const result = await client.searchEntities(
       {
         entityTypes: ['AdminOnlyEditBefore'],
       },
@@ -1630,8 +1629,7 @@ describe('searchEntities()', () => {
   });
 
   test('First 0', async () => {
-    const result = await EntityAdmin.searchEntities(
-      context,
+    const result = await client.searchEntities(
       {
         entityTypes: ['AdminOnlyEditBefore'],
       },
@@ -1643,8 +1641,7 @@ describe('searchEntities()', () => {
   });
 
   test('Last 0', async () => {
-    const result = await EntityAdmin.searchEntities(
-      context,
+    const result = await client.searchEntities(
       {
         entityTypes: ['AdminOnlyEditBefore'],
       },
@@ -1656,8 +1653,7 @@ describe('searchEntities()', () => {
   });
 
   test('Last', async () => {
-    const result = await EntityAdmin.searchEntities(
-      context,
+    const result = await client.searchEntities(
       {
         entityTypes: ['AdminOnlyEditBefore'],
       },
@@ -1669,16 +1665,14 @@ describe('searchEntities()', () => {
   });
 
   test('First after', async () => {
-    const firstResult = await EntityAdmin.searchEntities(
-      context,
+    const firstResult = await client.searchEntities(
       {
         entityTypes: ['AdminOnlyEditBefore'],
       },
       { first: 10 }
     );
     if (expectOkResult(firstResult)) {
-      const secondResult = await EntityAdmin.searchEntities(
-        context,
+      const secondResult = await client.searchEntities(
         {
           entityTypes: ['AdminOnlyEditBefore'],
         },
@@ -1691,16 +1685,14 @@ describe('searchEntities()', () => {
   });
 
   test('Last before', async () => {
-    const firstResult = await EntityAdmin.searchEntities(
-      context,
+    const firstResult = await client.searchEntities(
       {
         entityTypes: ['AdminOnlyEditBefore'],
       },
       { last: 10 }
     );
     if (expectOkResult(firstResult)) {
-      const secondResult = await EntityAdmin.searchEntities(
-        context,
+      const secondResult = await client.searchEntities(
         {
           entityTypes: ['AdminOnlyEditBefore'],
         },
@@ -1713,16 +1705,14 @@ describe('searchEntities()', () => {
   });
 
   test('First between', async () => {
-    const firstResult = await EntityAdmin.searchEntities(
-      context,
+    const firstResult = await client.searchEntities(
       {
         entityTypes: ['AdminOnlyEditBefore'],
       },
       { first: 20 }
     );
     if (expectOkResult(firstResult)) {
-      const secondResult = await EntityAdmin.searchEntities(
-        context,
+      const secondResult = await client.searchEntities(
         {
           entityTypes: ['AdminOnlyEditBefore'],
         },
@@ -1739,16 +1729,14 @@ describe('searchEntities()', () => {
   });
 
   test('Last between', async () => {
-    const firstResult = await EntityAdmin.searchEntities(
-      context,
+    const firstResult = await client.searchEntities(
       {
         entityTypes: ['AdminOnlyEditBefore'],
       },
       { first: 20 }
     );
     if (expectOkResult(firstResult)) {
-      const secondResult = await EntityAdmin.searchEntities(
-        context,
+      const secondResult = await client.searchEntities(
         {
           entityTypes: ['AdminOnlyEditBefore'],
         },
@@ -1765,8 +1753,7 @@ describe('searchEntities()', () => {
   });
 
   test('First default, ordered by _name', async () => {
-    const result = await EntityAdmin.searchEntities(
-      context,
+    const result = await client.searchEntities(
       {
         entityTypes: ['AdminOnlyEditBefore'],
         order: '_name',
@@ -1784,21 +1771,21 @@ describe('searchEntities()', () => {
     const { barId, fooEntities } = await createBarWithFooBazReferences(context, 1, 0);
     const [fooEntity] = fooEntities;
 
-    const searchResult = await EntityAdmin.searchEntities(context, { referencing: barId });
+    const searchResult = await client.searchEntities({ referencing: barId });
     expectSearchResultEntities(searchResult, [fooEntity]);
   });
 
   test('Query based on referencing, no references', async () => {
     const { barId } = await createBarWithFooBazReferences(context, 0, 0);
 
-    const searchResult = await EntityAdmin.searchEntities(context, { referencing: barId });
+    const searchResult = await client.searchEntities({ referencing: barId });
     expectResultValue(searchResult, null);
   });
 
   test('Query based on referencing, two references from one entity', async () => {
     const { barId, bazEntities } = await createBarWithFooBazReferences(context, 0, 1, 2);
 
-    const searchResult = await EntityAdmin.searchEntities(context, { referencing: barId });
+    const searchResult = await client.searchEntities({ referencing: barId });
     expectSearchResultEntities(searchResult, bazEntities);
   });
 
@@ -1806,7 +1793,7 @@ describe('searchEntities()', () => {
     const { barId, bazEntities } = await createBarWithFooBazReferences(context, 1, 1);
     const [bazEntity] = bazEntities;
 
-    const searchResult = await EntityAdmin.searchEntities(context, {
+    const searchResult = await client.searchEntities({
       entityTypes: ['EntityAdminBaz'],
       referencing: barId,
     });
@@ -1819,7 +1806,7 @@ describe('searchEntities()', () => {
       lat: (boundingBox.minLat + boundingBox.maxLat) / 2,
       lng: (boundingBox.minLng + boundingBox.maxLng) / 2,
     };
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await client.createEntity({
       _type: 'EntityAdminBaz',
       _name: 'Baz',
       location: center,
@@ -1827,7 +1814,7 @@ describe('searchEntities()', () => {
 
     if (expectOkResult(createResult)) {
       const { id: fooId } = createResult.value;
-      const searchResult = await EntityAdmin.searchEntities(context, { boundingBox });
+      const searchResult = await client.searchEntities({ boundingBox });
       if (expectOkResult(searchResult)) {
         let fooIdCount = 0;
         for (const edge of searchResult.value?.edges ?? []) {
@@ -1848,7 +1835,7 @@ describe('searchEntities()', () => {
       lat: (boundingBox.minLat + boundingBox.maxLat) / 2,
       lng: boundingBox.minLng > 0 ? boundingBox.minLng - 1 : boundingBox.maxLng + 1,
     };
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await client.createEntity({
       _type: 'EntityAdminBaz',
       _name: 'Baz',
       location: outside,
@@ -1856,7 +1843,7 @@ describe('searchEntities()', () => {
 
     if (expectOkResult(createResult)) {
       const { id: fooId } = createResult.value;
-      const searchResult = await EntityAdmin.searchEntities(context, { boundingBox });
+      const searchResult = await client.searchEntities({ boundingBox });
       if (expectOkResult(searchResult)) {
         let fooIdCount = 0;
         for (const edge of searchResult.value?.edges ?? []) {
@@ -1882,7 +1869,7 @@ describe('searchEntities()', () => {
       lng: (center.lng + boundingBox.maxLng) / 2,
     };
 
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await client.createEntity({
       _type: 'EntityAdminBaz',
       _name: 'Baz',
       locations: [center, inside],
@@ -1890,7 +1877,7 @@ describe('searchEntities()', () => {
 
     if (expectOkResult(createResult)) {
       const { id: fooId } = createResult.value;
-      const searchResult = await EntityAdmin.searchEntities(context, { boundingBox });
+      const searchResult = await client.searchEntities({ boundingBox });
       if (expectOkResult(searchResult)) {
         let fooIdCount = 0;
         for (const edge of searchResult.value?.edges ?? []) {
@@ -1912,7 +1899,7 @@ describe('searchEntities()', () => {
       lng: (boundingBox.minLng + boundingBox.maxLng) / 2,
     };
 
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await client.createEntity({
       _type: 'EntityAdminBaz',
       _name: 'Baz',
       body: {
@@ -1931,7 +1918,7 @@ describe('searchEntities()', () => {
 
     if (expectOkResult(createResult)) {
       const { id: bazId, _name: bazName } = createResult.value;
-      const searchResult = await EntityAdmin.searchEntities(context, { boundingBox });
+      const searchResult = await client.searchEntities({ boundingBox });
       if (expectOkResult(searchResult)) {
         let bazIdCount = 0;
         for (const edge of searchResult.value?.edges ?? []) {
@@ -1968,7 +1955,7 @@ describe('searchEntities()', () => {
   });
 
   test('Query based on text (after creation and updating)', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await client.createEntity({
       _type: 'EntityAdminFoo',
       _name: 'Foo',
       summary: 'this is some serious summary with the best conclusion',
@@ -2073,14 +2060,14 @@ describe('getTotalCount', () => {
       lng: (center.lng + boundingBox.maxLng) / 2,
     };
 
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await client.createEntity({
       _type: 'EntityAdminBaz',
       _name: 'Baz',
       locations: [center, inside],
     });
 
     if (expectOkResult(createResult)) {
-      const searchResult = await EntityAdmin.searchEntities(context, { boundingBox });
+      const searchResult = await client.searchEntities({ boundingBox });
 
       const totalResult = await client.getTotalCount({ boundingBox });
       if (expectOkResult(searchResult) && expectOkResult(totalResult)) {
@@ -2096,7 +2083,7 @@ describe('getTotalCount', () => {
     const resultBefore = await client.getTotalCount({ text: 'sensational clown' });
     if (expectOkResult(resultBefore)) {
       expectOkResult(
-        await EntityAdmin.createEntity(context, {
+        await client.createEntity({
           _type: 'EntityAdminFoo',
           _name: 'foo',
           summary: 'That was indeed a sensational clown',
@@ -2113,7 +2100,7 @@ describe('getTotalCount', () => {
 
 describe('updateEntity()', () => {
   test('Update EntityAdminFoo and publish', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await client.createEntity({
       _type: 'EntityAdminFoo',
       _name: 'Original',
       title: 'Original',
@@ -2196,7 +2183,7 @@ describe('updateEntity()', () => {
   });
 
   test('Update EntityAdminFoo w/o publish', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await client.createEntity({
       _type: 'EntityAdminFoo',
       _name: 'First',
       title: 'First',
@@ -2279,7 +2266,7 @@ describe('updateEntity()', () => {
   });
 
   test('Update EntityAdminFoo w/o type and name', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await client.createEntity({
       _type: 'EntityAdminFoo',
       _name: 'Original',
       title: 'Original',
@@ -2351,7 +2338,7 @@ describe('updateEntity()', () => {
   });
 
   test('Update EntityAdminFoo w/o providing all fields', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await client.createEntity({
       _type: 'EntityAdminFoo',
       _name: 'First name',
       title: 'First title',
@@ -2431,7 +2418,7 @@ describe('updateEntity()', () => {
   });
 
   test('Update EntityAdminFoo with the same name', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await client.createEntity({
       _type: 'EntityAdminFoo',
       _name: 'First name',
       title: 'First title',
@@ -2468,7 +2455,7 @@ describe('updateEntity()', () => {
   });
 
   test('Update EntityAdminFoo with reference', async () => {
-    const createFooResult = await EntityAdmin.createEntity(context, {
+    const createFooResult = await client.createEntity({
       _type: 'EntityAdminFoo',
       _name: 'First name',
       title: 'First title',
@@ -2477,7 +2464,7 @@ describe('updateEntity()', () => {
     if (expectOkResult(createFooResult)) {
       const { id: fooId } = createFooResult.value;
 
-      const createBarResult = await EntityAdmin.createEntity(context, {
+      const createBarResult = await client.createEntity({
         _type: 'EntityAdminBar',
         _name: 'Bar entity',
         title: 'Bar entity',
@@ -2547,12 +2534,12 @@ describe('updateEntity()', () => {
   });
 
   test('Update EntityAdminFoo without changing a reference', async () => {
-    const createBar1Result = await EntityAdmin.createEntity(context, {
+    const createBar1Result = await client.createEntity({
       _type: 'EntityAdminBar',
       _name: 'Bar 1 entity',
       title: 'Bar 1 entity',
     });
-    const createBar2Result = await EntityAdmin.createEntity(context, {
+    const createBar2Result = await client.createEntity({
       _type: 'EntityAdminBar',
       _name: 'Bar 2 entity',
       title: 'Bar 2 entity',
@@ -2570,7 +2557,7 @@ describe('updateEntity()', () => {
         { id: bar2Id, publishState: EntityPublishState.Published },
       ]);
 
-      const createBazResult = await EntityAdmin.createEntity(context, {
+      const createBazResult = await client.createEntity({
         _type: 'EntityAdminBaz',
         _name: 'First name',
         title: 'First title',
@@ -2644,7 +2631,7 @@ describe('updateEntity()', () => {
   });
 
   test('Update archived EntityAdminFoo', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await client.createEntity({
       _type: 'EntityAdminFoo',
       _name: 'Original',
       title: 'Original',
@@ -2684,7 +2671,7 @@ describe('updateEntity()', () => {
   });
 
   test('Error: Update with different type', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await client.createEntity({
       _type: 'EntityAdminBar',
       _name: 'foo',
       title: 'foo',
@@ -2706,7 +2693,7 @@ describe('updateEntity()', () => {
   });
 
   test('Error: Update with invalid field', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await client.createEntity({
       _type: 'EntityAdminFoo',
       _name: 'Foo name',
       title: 'Foo title',
@@ -2720,7 +2707,7 @@ describe('updateEntity()', () => {
   });
 
   test('Error: Update EntityAdminFoo with reference to missing entity', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await client.createEntity({
       _type: 'EntityAdminFoo',
       _name: 'Foo name',
       title: 'Foo title',
@@ -2741,7 +2728,7 @@ describe('updateEntity()', () => {
   });
 
   test('Error: Update EntityAdminFoo with reference to wrong entity type', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await client.createEntity({
       _type: 'EntityAdminFoo',
       _name: 'Foo name',
       title: 'Foo title',
@@ -2765,7 +2752,7 @@ describe('updateEntity()', () => {
 
 describe('publishEntities()', () => {
   test('Two entities referencing each other', async () => {
-    const createBaz1Result = await EntityAdmin.createEntity(context, {
+    const createBaz1Result = await client.createEntity({
       _type: 'EntityAdminBaz',
       _name: 'Baz 1',
       title: 'Baz title 1',
@@ -2773,7 +2760,7 @@ describe('publishEntities()', () => {
     if (expectOkResult(createBaz1Result)) {
       const { id: baz1Id } = createBaz1Result.value;
 
-      const createBaz2Result = await EntityAdmin.createEntity(context, {
+      const createBaz2Result = await client.createEntity({
         _type: 'EntityAdminBaz',
         _name: 'Baz 2',
         title: 'Baz title 2',
@@ -2799,7 +2786,7 @@ describe('publishEntities()', () => {
   });
 
   test('Archived entity', async () => {
-    const createBaz1Result = await EntityAdmin.createEntity(context, {
+    const createBaz1Result = await client.createEntity({
       _type: 'EntityAdminBaz',
       _name: 'Baz 1',
       title: 'Baz title 1',
@@ -2827,7 +2814,7 @@ describe('publishEntities()', () => {
   });
 
   test('Error: Publish published version', async () => {
-    const createBazResult = await EntityAdmin.createEntity(context, {
+    const createBazResult = await client.createEntity({
       _type: 'EntityAdminBaz',
       _name: 'Baz 1',
       title: 'Baz title 1',
@@ -2854,7 +2841,7 @@ describe('publishEntities()', () => {
   });
 
   test('Error: Reference to unpublished entity', async () => {
-    const createBarResult = await EntityAdmin.createEntity(context, {
+    const createBarResult = await client.createEntity({
       _type: 'EntityAdminBar',
       _name: 'Bar name',
       title: 'Bar title',
@@ -2862,7 +2849,7 @@ describe('publishEntities()', () => {
     if (expectOkResult(createBarResult)) {
       const barId = createBarResult.value.id;
 
-      const createFooResult = await EntityAdmin.createEntity(context, {
+      const createFooResult = await client.createEntity({
         _type: 'EntityAdminFoo',
         _name: 'Foo name',
         title: 'Foo title',
@@ -2907,7 +2894,7 @@ describe('publishEntities()', () => {
   });
 
   test('Error: Published unknown version', async () => {
-    const createFooResult = await EntityAdmin.createEntity(context, {
+    const createFooResult = await client.createEntity({
       _type: 'EntityAdminFoo',
       _name: 'Foo name',
       title: 'Foo title',
@@ -2924,7 +2911,7 @@ describe('publishEntities()', () => {
 
 describe('unpublishEntities()', () => {
   test('Sets published state to withdrawn', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await client.createEntity({
       _type: 'EntityAdminBaz',
       _name: 'Baz 1',
       title: 'Baz title 1',
@@ -2952,7 +2939,7 @@ describe('unpublishEntities()', () => {
   });
 
   test('Two published entities referencing each other', async () => {
-    const createBaz1Result = await EntityAdmin.createEntity(context, {
+    const createBaz1Result = await client.createEntity({
       _type: 'EntityAdminBaz',
       _name: 'Baz 1',
       title: 'Baz title 1',
@@ -2960,7 +2947,7 @@ describe('unpublishEntities()', () => {
     if (expectOkResult(createBaz1Result)) {
       const { id: baz1Id } = createBaz1Result.value;
 
-      const createBaz2Result = await EntityAdmin.createEntity(context, {
+      const createBaz2Result = await client.createEntity({
         _type: 'EntityAdminBaz',
         _name: 'Baz 2',
         title: 'Baz title 2',
@@ -2992,7 +2979,7 @@ describe('unpublishEntities()', () => {
   });
 
   test('Unpublished entity referencing', async () => {
-    const createBaz1Result = await EntityAdmin.createEntity(context, {
+    const createBaz1Result = await client.createEntity({
       _type: 'EntityAdminBaz',
       _name: 'Baz 1',
       title: 'Baz title 1',
@@ -3000,7 +2987,7 @@ describe('unpublishEntities()', () => {
     if (expectOkResult(createBaz1Result)) {
       const { id: baz1Id } = createBaz1Result.value;
 
-      const createBaz2Result = await EntityAdmin.createEntity(context, {
+      const createBaz2Result = await client.createEntity({
         _type: 'EntityAdminBaz',
         _name: 'Baz 2',
         title: 'Baz title 2',
@@ -3034,7 +3021,7 @@ describe('unpublishEntities()', () => {
   });
 
   test('Error: Reference from published entity', async () => {
-    const createBarResult = await EntityAdmin.createEntity(context, {
+    const createBarResult = await client.createEntity({
       _type: 'EntityAdminBar',
       _name: 'Bar name',
       title: 'Bar title',
@@ -3042,7 +3029,7 @@ describe('unpublishEntities()', () => {
     if (expectOkResult(createBarResult)) {
       const { id: barId } = createBarResult.value;
 
-      const createFooResult = await EntityAdmin.createEntity(context, {
+      const createFooResult = await client.createEntity({
         _type: 'EntityAdminFoo',
         _name: 'Foo name',
         title: 'Foo title',
@@ -3071,7 +3058,7 @@ describe('unpublishEntities()', () => {
   });
 
   test('Error: Unpublished entity', async () => {
-    const createBarResult = await EntityAdmin.createEntity(context, {
+    const createBarResult = await client.createEntity({
       _type: 'EntityAdminBar',
       _name: 'Bar name',
       title: 'Bar title',
@@ -3089,7 +3076,7 @@ describe('unpublishEntities()', () => {
   });
 
   test('Error: Unpublish archived entity', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await client.createEntity({
       _type: 'EntityAdminBaz',
       _name: 'Baz 1',
       title: 'Baz title 1',
@@ -3123,7 +3110,7 @@ describe('unpublishEntities()', () => {
 
 describe('archiveEntity()', () => {
   test('Archive new entity', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await client.createEntity({
       _type: 'EntityAdminBar',
       _name: 'Bar name',
       title: 'Bar title',
@@ -3163,7 +3150,7 @@ describe('archiveEntity()', () => {
   });
 
   test('Archive archived entity', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await client.createEntity({
       _type: 'EntityAdminBar',
       _name: 'Bar name',
       title: 'Bar title',
@@ -3185,7 +3172,7 @@ describe('archiveEntity()', () => {
   });
 
   test('Error: archive published entity', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await client.createEntity({
       _type: 'EntityAdminBar',
       _name: 'Bar name',
       title: 'Bar title',
@@ -3209,7 +3196,7 @@ describe('archiveEntity()', () => {
 
 describe('unarchiveEntity()', () => {
   test('Unarchive new entity (does nothing)', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await client.createEntity({
       _type: 'EntityAdminBar',
       _name: 'Bar name',
       title: 'Bar title',
@@ -3226,7 +3213,7 @@ describe('unarchiveEntity()', () => {
   });
 
   test('Unarchive archived entity', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await client.createEntity({
       _type: 'EntityAdminBar',
       _name: 'Bar name',
       title: 'Bar title',
@@ -3276,7 +3263,7 @@ describe('unarchiveEntity()', () => {
   });
 
   test('Unarchive once published, then archived entity', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await client.createEntity({
       _type: 'EntityAdminBar',
       _name: 'Bar name',
       title: 'Bar title',
@@ -3321,7 +3308,7 @@ describe('getEntityHistory()', () => {
 
 describe('getPublishingHistory()', () => {
   test('New unpublished entity', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await client.createEntity({
       _type: 'EntityAdminBar',
       _name: 'Unpublished',
     });
@@ -3333,7 +3320,7 @@ describe('getPublishingHistory()', () => {
   });
 
   test('One published version', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await client.createEntity({
       _type: 'EntityAdminBar',
       _name: 'Published',
     });
@@ -3362,7 +3349,7 @@ describe('getPublishingHistory()', () => {
   });
 
   test('One unpublished version', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await client.createEntity({
       _type: 'EntityAdminBar',
       _name: 'Published/Unpublished',
     });
