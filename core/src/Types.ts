@@ -11,6 +11,11 @@ export interface EntityReference {
   id: string;
 }
 
+export interface EntityVersionReference {
+  id: string;
+  version: number;
+}
+
 export interface RichText {
   blocks: RichTextBlock[];
 }
