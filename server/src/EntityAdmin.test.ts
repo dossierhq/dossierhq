@@ -190,7 +190,7 @@ beforeAll(async () => {
   });
 
   await ensureEntitiesExistForAdminOnlyEditBefore(client);
-  const knownIds = await getEntitiesForAdminOnlyEditBefore(context);
+  const knownIds = await getEntitiesForAdminOnlyEditBefore(client);
   entitiesOfTypeAdminOnlyEditBefore = knownIds.entities;
 });
 afterAll(async () => {
@@ -221,10 +221,10 @@ async function ensureEntitiesExistForAdminOnlyEditBefore(client: AdminClient) {
   }
 }
 
-async function getEntitiesForAdminOnlyEditBefore(context: SessionContext) {
+async function getEntitiesForAdminOnlyEditBefore(client: AdminClient) {
   const entities: AdminEntity[] = [];
   await visitAllEntityPages(
-    context,
+    client,
     { entityTypes: ['AdminOnlyEditBefore'] },
     { first: 100 },
     (connection) => {
@@ -240,7 +240,7 @@ async function getEntitiesForAdminOnlyEditBefore(context: SessionContext) {
 }
 
 async function visitAllEntityPages(
-  context: SessionContext,
+  client: AdminClient,
   query: AdminQuery,
   paging: Paging,
   visitor: (connection: Connection<Edge<AdminEntity, ErrorType>>) => void
@@ -276,7 +276,7 @@ async function visitAllEntityPages(
 async function countSearchResultWithEntity(query: AdminQuery, entityId: string) {
   let matchCount = 0;
 
-  await visitAllEntityPages(context, query, { first: 50 }, (connection) => {
+  await visitAllEntityPages(client, query, { first: 50 }, (connection) => {
     for (const edge of connection.edges) {
       if (edge.node.isOk() && edge.node.value.id === entityId) {
         matchCount += 1;
@@ -288,7 +288,6 @@ async function countSearchResultWithEntity(query: AdminQuery, entityId: string) 
 }
 
 async function createBarWithFooBazReferences(
-  context: SessionContext,
   fooCount: number,
   bazCount: number,
   bazReferencesPerEntity = 1
@@ -504,7 +503,7 @@ describe('createEntity()', () => {
       const publishResult = await client.publishEntities([{ id, version: 0 }]);
       expectResultValue(publishResult, [{ id, publishState: EntityPublishState.Published }]);
 
-      const historyResult = await EntityAdmin.getEntityHistory(context, id);
+      const historyResult = await client.getEntityHistory({ id });
       if (expectOkResult(historyResult)) {
         expectEntityHistoryVersions(historyResult.value, [
           {
@@ -557,7 +556,7 @@ describe('createEntity()', () => {
         title: 'Draft',
       });
 
-      const historyResult = await EntityAdmin.getEntityHistory(context, id);
+      const historyResult = await client.getEntityHistory({ id });
       if (expectOkResult(historyResult)) {
         expectEntityHistoryVersions(historyResult.value, [
           {
@@ -1766,7 +1765,7 @@ describe('searchEntities()', () => {
   });
 
   test('Query based on referencing, one reference', async () => {
-    const { barId, fooEntities } = await createBarWithFooBazReferences(context, 1, 0);
+    const { barId, fooEntities } = await createBarWithFooBazReferences(1, 0);
     const [fooEntity] = fooEntities;
 
     const searchResult = await client.searchEntities({ referencing: barId });
@@ -1774,21 +1773,21 @@ describe('searchEntities()', () => {
   });
 
   test('Query based on referencing, no references', async () => {
-    const { barId } = await createBarWithFooBazReferences(context, 0, 0);
+    const { barId } = await createBarWithFooBazReferences(0, 0);
 
     const searchResult = await client.searchEntities({ referencing: barId });
     expectResultValue(searchResult, null);
   });
 
   test('Query based on referencing, two references from one entity', async () => {
-    const { barId, bazEntities } = await createBarWithFooBazReferences(context, 0, 1, 2);
+    const { barId, bazEntities } = await createBarWithFooBazReferences(0, 1, 2);
 
     const searchResult = await client.searchEntities({ referencing: barId });
     expectSearchResultEntities(searchResult, bazEntities);
   });
 
   test('Query based on referencing and entityTypes, one reference', async () => {
-    const { barId, bazEntities } = await createBarWithFooBazReferences(context, 1, 1);
+    const { barId, bazEntities } = await createBarWithFooBazReferences(1, 1);
     const [bazEntity] = bazEntities;
 
     const searchResult = await client.searchEntities({
@@ -2009,7 +2008,7 @@ describe('getTotalCount', () => {
   });
 
   test('Query based on referencing, one reference', async () => {
-    const { barId } = await createBarWithFooBazReferences(context, 1, 0);
+    const { barId } = await createBarWithFooBazReferences(1, 0);
 
     const result = await client.getTotalCount({ referencing: barId });
     if (expectOkResult(result)) {
@@ -2018,7 +2017,7 @@ describe('getTotalCount', () => {
   });
 
   test('Query based on referencing, no references', async () => {
-    const { barId } = await createBarWithFooBazReferences(context, 0, 0);
+    const { barId } = await createBarWithFooBazReferences(0, 0);
 
     const result = await client.getTotalCount({ referencing: barId });
     if (expectOkResult(result)) {
@@ -2027,7 +2026,7 @@ describe('getTotalCount', () => {
   });
 
   test('Query based on referencing and entityTypes, one reference', async () => {
-    const { barId } = await createBarWithFooBazReferences(context, 1, 1);
+    const { barId } = await createBarWithFooBazReferences(1, 1);
 
     const result = await client.getTotalCount({
       entityTypes: ['EntityAdminBaz'],
@@ -2039,7 +2038,7 @@ describe('getTotalCount', () => {
   });
 
   test('Query based on referencing, two references from one entity', async () => {
-    const { barId } = await createBarWithFooBazReferences(context, 0, 1, 2);
+    const { barId } = await createBarWithFooBazReferences(0, 1, 2);
 
     const result = await client.getTotalCount({ referencing: barId });
     if (expectOkResult(result)) {
@@ -2131,7 +2130,7 @@ describe('updateEntity()', () => {
       const publishResult = await client.publishEntities([{ id, version: 1 }]);
       expectResultValue(publishResult, [{ id, publishState: EntityPublishState.Published }]);
 
-      const historyResult = await EntityAdmin.getEntityHistory(context, id);
+      const historyResult = await client.getEntityHistory({ id });
       if (expectOkResult(historyResult)) {
         expectEntityHistoryVersions(historyResult.value, [
           {
@@ -2214,7 +2213,7 @@ describe('updateEntity()', () => {
         });
       }
 
-      const historyResult = await EntityAdmin.getEntityHistory(context, id);
+      const historyResult = await client.getEntityHistory({ id });
       if (expectOkResult(historyResult)) {
         expectEntityHistoryVersions(historyResult.value, [
           {
@@ -2286,7 +2285,7 @@ describe('updateEntity()', () => {
       const publishResult = await client.publishEntities([{ id, version: 1 }]);
       expectResultValue(publishResult, [{ id, publishState: EntityPublishState.Published }]);
 
-      const historyResult = await EntityAdmin.getEntityHistory(context, id);
+      const historyResult = await client.getEntityHistory({ id });
       if (expectOkResult(historyResult)) {
         expectEntityHistoryVersions(historyResult.value, [
           {
@@ -2363,7 +2362,7 @@ describe('updateEntity()', () => {
       const publishResult = await client.publishEntities([{ id, version: 1 }]);
       expectResultValue(publishResult, [{ id, publishState: EntityPublishState.Published }]);
 
-      const historyResult = await EntityAdmin.getEntityHistory(context, id);
+      const historyResult = await client.getEntityHistory({ id });
       if (expectOkResult(historyResult)) {
         expectEntityHistoryVersions(historyResult.value, [
           {
@@ -3186,7 +3185,7 @@ describe('unarchiveEntity()', () => {
     if (expectOkResult(createResult)) {
       const { id } = createResult.value;
 
-      const unarchiveResult = await EntityAdmin.unarchiveEntity(context, id);
+      const unarchiveResult = await client.unarchiveEntity({ id });
       expectResultValue(unarchiveResult, { id, publishState: EntityPublishState.Draft });
 
       const historyResult = await EntityAdmin.getPublishingHistory(context, id);
@@ -3206,7 +3205,7 @@ describe('unarchiveEntity()', () => {
       const archiveResult = await client.archiveEntity({ id });
       expectResultValue(archiveResult, { id, publishState: EntityPublishState.Archived });
 
-      const unarchiveResult = await EntityAdmin.unarchiveEntity(context, id);
+      const unarchiveResult = await client.unarchiveEntity({ id });
       expectResultValue(unarchiveResult, { id, publishState: EntityPublishState.Draft });
 
       const historyResult = await EntityAdmin.getPublishingHistory(context, id);
@@ -3262,16 +3261,15 @@ describe('unarchiveEntity()', () => {
       const archiveResult = await client.archiveEntity({ id });
       expectResultValue(archiveResult, { id, publishState: EntityPublishState.Archived });
 
-      const unarchiveResult = await EntityAdmin.unarchiveEntity(context, id);
+      const unarchiveResult = await client.unarchiveEntity({ id });
       expectResultValue(unarchiveResult, { id, publishState: EntityPublishState.Withdrawn });
     }
   });
 
   test('Error: unarchive with invalid id', async () => {
-    const result = await EntityAdmin.unarchiveEntity(
-      context,
-      '5b14e69f-6612-4ddb-bb42-7be273104486'
-    );
+    const result = await client.unarchiveEntity({
+      id: '5b14e69f-6612-4ddb-bb42-7be273104486',
+    });
     expectErrorResult(result, ErrorType.NotFound, 'No such entity');
   });
 });
@@ -3280,10 +3278,9 @@ describe('getEntityHistory()', () => {
   // rest is tested elsewhere
 
   test('Error: Get version history with invalid id', async () => {
-    const result = await EntityAdmin.getEntityHistory(
-      context,
-      '5b14e69f-6612-4ddb-bb42-7be273104486'
-    );
+    const result = await client.getEntityHistory({
+      id: '5b14e69f-6612-4ddb-bb42-7be273104486',
+    });
     expectErrorResult(result, ErrorType.NotFound, 'No such entity');
   });
 });

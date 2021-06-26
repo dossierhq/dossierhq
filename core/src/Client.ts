@@ -5,6 +5,7 @@ import type {
   AdminQuery,
   Connection,
   Edge,
+  EntityHistory,
   EntityReference,
   EntityVersionReference,
   ErrorType,
@@ -35,6 +36,8 @@ export interface AdminClient {
     entity: AdminEntityUpdate
   ): PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.NotFound>;
 
+  getEntityHistory(reference: EntityReference): PromiseResult<EntityHistory, ErrorType.NotFound>;
+
   publishEntities(
     references: EntityVersionReference[]
   ): PromiseResult<PublishingResult[], ErrorType.BadRequest | ErrorType.NotFound>;
@@ -46,6 +49,10 @@ export interface AdminClient {
   archiveEntity(
     reference: EntityReference
   ): PromiseResult<PublishingResult, ErrorType.BadRequest | ErrorType.NotFound>;
+
+  unarchiveEntity(
+    reference: EntityReference
+  ): PromiseResult<PublishingResult, ErrorType.BadRequest | ErrorType.NotFound>;
 }
 
 export enum AdminClientOperationName {
@@ -53,9 +60,11 @@ export enum AdminClientOperationName {
   createEntity = 'createEntity',
   getEntities = 'getEntities',
   getEntity = 'getEntity',
+  getEntityHistory = 'getEntityHistory',
   getTotalCount = 'getTotalCount',
   publishEntities = 'publishEntities',
   searchEntities = 'searchEntities',
+  unarchiveEntity = 'unarchiveEntity',
   unpublishEntities = 'unpublishEntities',
   updateEntity = 'updateEntity',
 }
@@ -69,9 +78,11 @@ interface AdminClientOperationArguments {
   [AdminClientOperationName.createEntity]: MethodParameters<'createEntity'>;
   [AdminClientOperationName.getEntities]: MethodParameters<'getEntities'>;
   [AdminClientOperationName.getEntity]: MethodParameters<'getEntity'>;
+  [AdminClientOperationName.getEntityHistory]: MethodParameters<'getEntityHistory'>;
   [AdminClientOperationName.getTotalCount]: MethodParameters<'getTotalCount'>;
   [AdminClientOperationName.publishEntities]: MethodParameters<'publishEntities'>;
   [AdminClientOperationName.searchEntities]: MethodParameters<'searchEntities'>;
+  [AdminClientOperationName.unarchiveEntity]: MethodParameters<'unarchiveEntity'>;
   [AdminClientOperationName.unpublishEntities]: MethodParameters<'unpublishEntities'>;
   [AdminClientOperationName.updateEntity]: MethodParameters<'updateEntity'>;
 }
@@ -81,9 +92,11 @@ interface AdminClientOperationReturn {
   [AdminClientOperationName.createEntity]: MethodReturnType<'createEntity'>;
   [AdminClientOperationName.getEntities]: MethodReturnType<'getEntities'>;
   [AdminClientOperationName.getEntity]: MethodReturnType<'getEntity'>;
+  [AdminClientOperationName.getEntityHistory]: MethodReturnType<'getEntityHistory'>;
   [AdminClientOperationName.getTotalCount]: MethodReturnType<'getTotalCount'>;
   [AdminClientOperationName.publishEntities]: MethodReturnType<'publishEntities'>;
   [AdminClientOperationName.searchEntities]: MethodReturnType<'searchEntities'>;
+  [AdminClientOperationName.unarchiveEntity]: MethodReturnType<'unarchiveEntity'>;
   [AdminClientOperationName.unpublishEntities]: MethodReturnType<'unpublishEntities'>;
   [AdminClientOperationName.updateEntity]: MethodReturnType<'updateEntity'>;
 }
@@ -168,6 +181,15 @@ class BaseAdminClient<TContext> implements AdminClient {
     });
   }
 
+  getEntityHistory(
+    reference: EntityReference
+  ): Promise<AdminClientOperationReturn[AdminClientOperationName.getEntityHistory]> {
+    return this.executeOperation({
+      name: AdminClientOperationName.getEntityHistory,
+      args: [reference],
+    });
+  }
+
   publishEntities(
     references: EntityVersionReference[]
   ): Promise<AdminClientOperationReturn[AdminClientOperationName.publishEntities]> {
@@ -191,6 +213,15 @@ class BaseAdminClient<TContext> implements AdminClient {
   ): Promise<AdminClientOperationReturn[AdminClientOperationName.archiveEntity]> {
     return this.executeOperation({
       name: AdminClientOperationName.archiveEntity,
+      args: [reference],
+    });
+  }
+
+  unarchiveEntity(
+    reference: EntityReference
+  ): Promise<AdminClientOperationReturn[AdminClientOperationName.unarchiveEntity]> {
+    return this.executeOperation({
+      name: AdminClientOperationName.unarchiveEntity,
       args: [reference],
     });
   }

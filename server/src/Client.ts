@@ -6,9 +6,11 @@ import {
   createEntity,
   getEntities,
   getEntity,
+  getEntityHistory,
   getTotalCount,
   publishEntities,
   searchEntities,
+  unarchiveEntity,
   unpublishEntities,
   updateEntity,
 } from './EntityAdmin';
@@ -42,16 +44,6 @@ async function terminatingMiddleware(
       resolve(await createEntity(context, entity));
       break;
     }
-    case AdminClientOperationName.getEntity: {
-      const {
-        args: [reference],
-        resolve,
-      } = operation as AdminClientOperation<AdminClientOperationName.getEntity>;
-      resolve(
-        await getEntity(context, reference.id, 'version' in reference ? reference.version : null)
-      );
-      break;
-    }
     case AdminClientOperationName.getEntities: {
       const {
         args: [references],
@@ -63,6 +55,24 @@ async function terminatingMiddleware(
           references.map(({ id }) => id)
         )
       );
+      break;
+    }
+    case AdminClientOperationName.getEntity: {
+      const {
+        args: [reference],
+        resolve,
+      } = operation as AdminClientOperation<AdminClientOperationName.getEntity>;
+      resolve(
+        await getEntity(context, reference.id, 'version' in reference ? reference.version : null)
+      );
+      break;
+    }
+    case AdminClientOperationName.getEntityHistory: {
+      const {
+        args: [reference],
+        resolve,
+      } = operation as AdminClientOperation<AdminClientOperationName.getEntityHistory>;
+      resolve(await getEntityHistory(context, reference.id));
       break;
     }
     case AdminClientOperationName.getTotalCount: {
@@ -87,6 +97,14 @@ async function terminatingMiddleware(
         resolve,
       } = operation as AdminClientOperation<AdminClientOperationName.searchEntities>;
       resolve(await searchEntities(context, query, paging));
+      break;
+    }
+    case AdminClientOperationName.unarchiveEntity: {
+      const {
+        args: [reference],
+        resolve,
+      } = operation as AdminClientOperation<AdminClientOperationName.unarchiveEntity>;
+      resolve(await unarchiveEntity(context, reference.id));
       break;
     }
     case AdminClientOperationName.unpublishEntities: {
