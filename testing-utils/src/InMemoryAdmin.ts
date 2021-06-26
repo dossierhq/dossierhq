@@ -12,6 +12,7 @@ import type {
   PromiseResult,
   PublishingHistory,
   PublishingResult,
+  Result,
 } from '@datadata/core';
 import {
   EntityPublishState,
@@ -34,6 +35,13 @@ export const InMemoryAdmin = {
       return ok(entity);
     }
     return notOk.NotFound('No such entity or version');
+  },
+
+  getEntities: async (
+    context: InMemorySessionContext,
+    ids: string[]
+  ): Promise<Result<AdminEntity, ErrorType.NotFound>[]> => {
+    return await Promise.all(ids.map((id) => InMemoryAdmin.getEntity(context, id)));
   },
 
   getEntityHistory: async (
@@ -110,6 +118,17 @@ export const InMemoryAdmin = {
       },
       edges: entities.map((entity) => ({ cursor: entity.id, node: ok(entity) })),
     });
+  },
+
+  getTotalCount: async (
+    context: InMemorySessionContext,
+    query?: AdminQuery
+  ): PromiseResult<number, ErrorType.BadRequest> => {
+    const searchResult = await InMemoryAdmin.searchEntities(context, query);
+    if (searchResult.isError()) {
+      return searchResult;
+    }
+    return ok(searchResult.value?.edges.length ?? 0);
   },
 
   createEntity: async (

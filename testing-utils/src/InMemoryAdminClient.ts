@@ -1,31 +1,33 @@
 import type { AdminClient, AdminClientOperation } from '@datadata/core';
 import { AdminClientOperationName, assertExhaustive, createBaseAdminClient } from '@datadata/core';
-import type { SessionContext } from '..';
-import {
+import { InMemoryAdmin } from '..';
+import type { InMemorySessionContext } from './InMemoryServer';
+
+const {
   archiveEntity,
   createEntity,
-  getEntities,
   getEntity,
+  updateEntity,
+  getTotalCount,
+  searchEntities,
+  getEntities,
   getEntityHistory,
   getPublishingHistory,
-  getTotalCount,
-  publishEntities,
-  searchEntities,
   unarchiveEntity,
+  publishEntities,
   unpublishEntities,
-  updateEntity,
-} from './EntityAdmin';
+} = InMemoryAdmin;
 
-export function createServerClient({
+export function createInMemoryClient({
   resolveContext,
 }: {
-  resolveContext: () => Promise<SessionContext>;
+  resolveContext: () => Promise<InMemorySessionContext>;
 }): AdminClient {
   return createBaseAdminClient({ resolveContext, pipeline: [terminatingMiddleware] });
 }
 
 async function terminatingMiddleware(
-  context: SessionContext,
+  context: InMemorySessionContext,
   operation: AdminClientOperation<AdminClientOperationName>
 ): Promise<void> {
   switch (operation.name) {
