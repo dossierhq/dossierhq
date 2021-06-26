@@ -22,7 +22,7 @@ import type {
   ValueTypeSpecification,
 } from '@datadata/core';
 import type { SessionContext } from '@datadata/server';
-import { EntityAdmin, PublishedEntity } from '@datadata/server';
+import { PublishedEntity } from '@datadata/server';
 import type { GraphQLResolveInfo } from 'graphql';
 import type { SessionGraphQLContext } from './GraphQLSchemaGenerator';
 import { getAdminClient, getSessionContext } from './Utils';
@@ -91,8 +91,11 @@ export async function loadAdminEntity<TContext extends SessionGraphQLContext>(
   id: string,
   version: number | undefined | null
 ): Promise<AdminEntity> {
+  const adminClient = getAdminClient(context);
   const sessionContext = getSessionContext(context);
-  const result = await EntityAdmin.getEntity(sessionContext, id, version);
+  const result = await adminClient.getEntity(
+    typeof version === 'number' ? { id, version } : { id }
+  );
   if (result.isError()) {
     throw result.toError();
   }
@@ -103,8 +106,9 @@ export async function loadAdminEntities<TContext extends SessionGraphQLContext>(
   context: TContext,
   ids: string[]
 ): Promise<Array<AdminEntity | null>> {
+  const adminClient = getAdminClient(context);
   const sessionContext = getSessionContext(context);
-  const results = await EntityAdmin.getEntities(sessionContext, ids);
+  const results = await adminClient.getEntities(ids.map((id) => ({ id })));
   return results.map((result) => {
     if (result.isOk()) {
       return buildResolversForAdminEntity(sessionContext, result.value);
@@ -134,8 +138,9 @@ export async function loadAdminSearchEntities<TContext extends SessionGraphQLCon
   query: AdminQuery | undefined,
   paging: Paging
 ): Promise<ConnectionWithTotalCount<Edge<AdminEntity>, TContext> | null> {
+  const adminClient = getAdminClient(context);
   const sessionContext = getSessionContext(context);
-  const result = await EntityAdmin.searchEntities(sessionContext, query, paging);
+  const result = await adminClient.searchEntities(query, paging);
   if (result.isError()) {
     throw result.toError();
   }
@@ -237,8 +242,8 @@ function buildTotalCount<TContext extends SessionGraphQLContext>(
   query: AdminQuery | undefined
 ): FieldValueOrResolver<TContext, number> {
   return async (args, context, _info) => {
-    const sessionContext = getSessionContext(context);
-    const result = await EntityAdmin.getTotalCount(sessionContext, query);
+    const adminClient = getAdminClient(context);
+    const result = await adminClient.getTotalCount(query);
     if (result.isError()) {
       throw result.toError();
     }
@@ -262,8 +267,8 @@ export async function loadPublishingHistory<TContext extends SessionGraphQLConte
   context: TContext,
   id: string
 ): Promise<PublishingHistory> {
-  const sessionContext = getSessionContext(context);
-  const result = await EntityAdmin.getPublishingHistory(sessionContext, id);
+  const adminClient = getAdminClient(context);
+  const result = await adminClient.getPublishingHistory({ id });
   if (result.isError()) {
     throw result.toError();
   }

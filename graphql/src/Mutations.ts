@@ -4,17 +4,17 @@ import type {
   AdminEntityUpdate,
   PublishingResult,
 } from '@datadata/core';
-import { EntityAdmin } from '@datadata/server';
 import type { SessionGraphQLContext } from '.';
 import { buildResolversForAdminEntity } from './DataLoaders';
-import { getSessionContext } from './Utils';
+import { getAdminClient, getSessionContext } from './Utils';
 
 export async function createEntity<TContext extends SessionGraphQLContext>(
   context: TContext,
   entity: AdminEntityCreate
 ): Promise<AdminEntity> {
   const sessionContext = getSessionContext(context);
-  const result = await EntityAdmin.createEntity(sessionContext, entity);
+  const adminClient = getAdminClient(context);
+  const result = await adminClient.createEntity(entity);
   if (result.isError()) {
     throw result.toError();
   }
@@ -26,7 +26,8 @@ export async function updateEntity<TContext extends SessionGraphQLContext>(
   entity: AdminEntityUpdate
 ): Promise<AdminEntity> {
   const sessionContext = getSessionContext(context);
-  const result = await EntityAdmin.updateEntity(sessionContext, entity);
+  const adminClient = getAdminClient(context);
+  const result = await adminClient.updateEntity(entity);
   if (result.isError()) {
     throw result.toError();
   }
@@ -40,8 +41,8 @@ export async function publishEntities<TContext extends SessionGraphQLContext>(
     version: number;
   }[]
 ): Promise<PublishingResult[]> {
-  const sessionContext = getSessionContext(context);
-  const result = await EntityAdmin.publishEntities(sessionContext, entities);
+  const adminClient = getAdminClient(context);
+  const result = await adminClient.publishEntities(entities);
   if (result.isError()) {
     throw result.toError();
   }
@@ -52,8 +53,8 @@ export async function unpublishEntities<TContext extends SessionGraphQLContext>(
   context: TContext,
   entityIds: string[]
 ): Promise<PublishingResult[]> {
-  const sessionContext = getSessionContext(context);
-  const result = await EntityAdmin.unpublishEntities(sessionContext, entityIds);
+  const adminClient = getAdminClient(context);
+  const result = await adminClient.unpublishEntities(entityIds.map((id) => ({ id })));
   if (result.isError()) {
     throw result.toError();
   }
@@ -64,8 +65,8 @@ export async function archiveEntity<TContext extends SessionGraphQLContext>(
   context: TContext,
   id: string
 ): Promise<PublishingResult> {
-  const sessionContext = getSessionContext(context);
-  const result = await EntityAdmin.archiveEntity(sessionContext, id);
+  const adminClient = getAdminClient(context);
+  const result = await adminClient.archiveEntity({ id });
   if (result.isError()) {
     throw result.toError();
   }
@@ -76,8 +77,8 @@ export async function unarchiveEntity<TContext extends SessionGraphQLContext>(
   context: TContext,
   id: string
 ): Promise<PublishingResult> {
-  const sessionContext = getSessionContext(context);
-  const result = await EntityAdmin.unarchiveEntity(sessionContext, id);
+  const adminClient = getAdminClient(context);
+  const result = await adminClient.unarchiveEntity({ id });
   if (result.isError()) {
     throw result.toError();
   }

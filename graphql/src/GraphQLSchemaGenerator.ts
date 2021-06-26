@@ -53,6 +53,7 @@ import {
 } from './DataLoaders';
 import * as Mutations from './Mutations';
 
+//TODO remove SessionGraphQLContext.content I think
 export interface SessionGraphQLContext {
   context: Result<SessionContext, ErrorType.NotAuthenticated>;
   adminClient: Result<AdminClient, ErrorType.NotAuthenticated>;
