@@ -1,8 +1,8 @@
-import type { Entity } from '@datadata/core';
 import { CoreTestUtils, ErrorType, FieldType, EntityPublishState } from '@datadata/core';
 import { EntityAdmin, PublishedEntity } from '.';
 import type { Server, SessionContext } from '.';
 import { createTestServer, ensureSessionContext, updateSchema } from './ServerTestUtils';
+import { expectResultValue } from '../test/AdditionalTestUtils';
 
 const { expectErrorResult, expectOkResult } = CoreTestUtils;
 
@@ -36,24 +36,18 @@ describe('getEntity()', () => {
       const { id, _name: name, _version: version } = createResult.value;
 
       const archiveResult = await EntityAdmin.archiveEntity(context, id);
-      if (expectOkResult(archiveResult)) {
-        expect(archiveResult.value).toEqual({ id, publishState: EntityPublishState.Archived });
-      }
+      expectResultValue(archiveResult, { id, publishState: EntityPublishState.Archived });
 
       const publishResult = await EntityAdmin.publishEntities(context, [{ id, version }]);
-      if (expectOkResult(publishResult)) {
-        expect(publishResult.value).toEqual([{ id, publishState: EntityPublishState.Published }]);
-      }
+      expectResultValue(publishResult, [{ id, publishState: EntityPublishState.Published }]);
 
       const result = await PublishedEntity.getEntity(context, id);
-      if (expectOkResult(result)) {
-        expect(result.value).toEqual<Entity>({
-          id,
-          _type: 'PublishedEntityFoo',
-          _name: name,
-          title: 'Title 1',
-        });
-      }
+      expectResultValue(result, {
+        id,
+        _type: 'PublishedEntityFoo',
+        _name: name,
+        title: 'Title 1',
+      });
     }
   });
 
@@ -67,9 +61,7 @@ describe('getEntity()', () => {
       const { id } = createResult.value;
 
       const archiveResult = await EntityAdmin.archiveEntity(context, id);
-      if (expectOkResult(archiveResult)) {
-        expect(archiveResult.value).toEqual({ id, publishState: EntityPublishState.Archived });
-      }
+      expectResultValue(archiveResult, { id, publishState: EntityPublishState.Archived });
 
       const result = await PublishedEntity.getEntity(context, id);
       expectErrorResult(result, ErrorType.NotFound, 'No such entity');
@@ -107,20 +99,24 @@ describe('getEntities()', () => {
         { id: foo1Id, version: 0 },
         { id: foo2Id, version: 0 },
       ]);
-      if (expectOkResult(publishResult)) {
-        expect(publishResult.value).toEqual([
-          { id: foo1Id, publishState: EntityPublishState.Published },
-          { id: foo2Id, publishState: EntityPublishState.Published },
-        ]);
-      }
+      expectResultValue(publishResult, [
+        { id: foo1Id, publishState: EntityPublishState.Published },
+        { id: foo2Id, publishState: EntityPublishState.Published },
+      ]);
 
       const result = await PublishedEntity.getEntities(context, [foo2Id, foo1Id]);
       expect(result).toHaveLength(2);
-      expect(result[0]).toEqual({
-        value: { _type: 'PublishedEntityFoo', id: foo2Id, _name: foo2Name, title: 'Title 2' },
+      expectResultValue(result[0], {
+        _type: 'PublishedEntityFoo',
+        id: foo2Id,
+        _name: foo2Name,
+        title: 'Title 2',
       });
-      expect(result[1]).toEqual({
-        value: { _type: 'PublishedEntityFoo', id: foo1Id, _name: foo1Name, title: 'Title 1' },
+      expectResultValue(result[1], {
+        _type: 'PublishedEntityFoo',
+        id: foo1Id,
+        _name: foo1Name,
+        title: 'Title 1',
       });
     }
   });
@@ -137,11 +133,9 @@ describe('getEntities()', () => {
       const publishResult = await EntityAdmin.publishEntities(context, [
         { id: foo1Id, version: 0 },
       ]);
-      if (expectOkResult(publishResult)) {
-        expect(publishResult.value).toEqual([
-          { id: foo1Id, publishState: EntityPublishState.Published },
-        ]);
-      }
+      expectResultValue(publishResult, [
+        { id: foo1Id, publishState: EntityPublishState.Published },
+      ]);
 
       const result = await PublishedEntity.getEntities(context, [
         'f09fdd62-4a1e-4320-afba-8dd0781799df',
@@ -149,8 +143,11 @@ describe('getEntities()', () => {
       ]);
       expect(result).toHaveLength(2);
       expectErrorResult(result[0], ErrorType.NotFound, 'No such entity');
-      expect(result[1]).toEqual({
-        value: { _type: 'PublishedEntityFoo', id: foo1Id, _name: foo1Name, title: 'Title' },
+      expectResultValue(result[1], {
+        _type: 'PublishedEntityFoo',
+        id: foo1Id,
+        _name: foo1Name,
+        title: 'Title',
       });
     }
   });
@@ -165,9 +162,7 @@ describe('getEntities()', () => {
       const { id } = createResult.value;
 
       const archiveResult = await EntityAdmin.archiveEntity(context, id);
-      if (expectOkResult(archiveResult)) {
-        expect(archiveResult.value).toEqual({ id, publishState: EntityPublishState.Archived });
-      }
+      expectResultValue(archiveResult, { id, publishState: EntityPublishState.Archived });
 
       const result = await PublishedEntity.getEntities(context, [id]);
       expect(result).toHaveLength(1);
