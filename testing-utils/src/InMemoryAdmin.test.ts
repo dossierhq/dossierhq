@@ -1,9 +1,7 @@
-import type { AdminEntity } from '@datadata/core';
-import { CoreTestUtils, EntityPublishState, PublishingEventKind, Schema } from '@datadata/core';
+import { EntityPublishState, PublishingEventKind, Schema } from '@datadata/core';
 import { v4 as uuidv4 } from 'uuid';
 import { InMemoryAdmin, InMemoryServer } from '.';
-
-const { expectOkResult } = CoreTestUtils;
+import { expectResultValue } from './TestUtils';
 
 const schema = new Schema({ entityTypes: [{ name: 'Foo', fields: [] }], valueTypes: [] });
 
@@ -31,14 +29,12 @@ describe('getEntity()', () => {
     ]);
     const context = server.createContext(uuidv4());
     const entityResult = await InMemoryAdmin.getEntity(context, id);
-    if (expectOkResult(entityResult)) {
-      expect(entityResult.value).toEqual<AdminEntity>({
-        _name: 'Foo',
-        _type: 'Foo',
-        _version: 0,
-        _publishState: EntityPublishState.Published,
-        id,
-      });
-    }
+    expectResultValue(entityResult, {
+      _name: 'Foo',
+      _type: 'Foo',
+      _version: 0,
+      _publishState: EntityPublishState.Published,
+      id,
+    });
   });
 });
