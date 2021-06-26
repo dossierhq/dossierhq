@@ -17,7 +17,7 @@ import {
   RichTextBlockType,
 } from '@datadata/core';
 import type { SessionContext, Server } from '@datadata/server';
-import { createServerClient, EntityAdmin, ServerTestUtils } from '@datadata/server';
+import { createServerClient, ServerTestUtils } from '@datadata/server';
 import { graphql, printError } from 'graphql';
 import type { GraphQLSchema } from 'graphql';
 import { GraphQLSchemaGenerator } from '../src/GraphQLSchemaGenerator';
@@ -71,17 +71,17 @@ beforeAll(async () => {
   });
   schema = new GraphQLSchemaGenerator(context.server.getSchema()).buildSchema();
 
-  await ensureTestEntitiesExist(context);
-  entitiesOfTypeQueryAdminOnlyEditBefore = await getEntitiesForAdminOnlyEditBefore(context);
+  await ensureTestEntitiesExist(adminClient);
+  entitiesOfTypeQueryAdminOnlyEditBefore = await getEntitiesForAdminOnlyEditBefore(adminClient);
 });
 
 afterAll(async () => {
   await server?.shutdown();
 });
 
-async function ensureTestEntitiesExist(context: SessionContext) {
+async function ensureTestEntitiesExist(adminClient: AdminClient) {
   const requestedCount = 50;
-  const entitiesOfTypeCount = await EntityAdmin.getTotalCount(context, {
+  const entitiesOfTypeCount = await adminClient.getTotalCount({
     entityTypes: ['QueryAdminOnlyEditBefore'],
   });
 
@@ -98,10 +98,10 @@ async function ensureTestEntitiesExist(context: SessionContext) {
   }
 }
 
-async function getEntitiesForAdminOnlyEditBefore(context: SessionContext) {
+async function getEntitiesForAdminOnlyEditBefore(adminClient: AdminClient) {
   const entities: AdminEntity[] = [];
   await visitAllEntityPages(
-    context,
+    adminClient,
     { entityTypes: ['QueryAdminOnlyEditBefore'] },
     (connection) => {
       for (const edge of connection.edges) {
@@ -115,14 +115,14 @@ async function getEntitiesForAdminOnlyEditBefore(context: SessionContext) {
 }
 
 async function visitAllEntityPages(
-  context: SessionContext,
+  adminClient: AdminClient,
   query: AdminQuery,
   visitor: (connection: Connection<Edge<AdminEntity, ErrorType>>) => void
 ) {
   const paging: Paging = {};
   // eslint-disable-next-line no-constant-condition
   while (true) {
-    const result = await EntityAdmin.searchEntities(context, query, paging);
+    const result = await adminClient.searchEntities(query, paging);
     if (result.isError()) {
       throw result.toError();
     }
@@ -138,7 +138,7 @@ async function visitAllEntityPages(
   }
 }
 
-async function createBarWithFooReferences(context: SessionContext, fooCount: number) {
+async function createBarWithFooReferences(fooCount: number) {
   const createBarResult = await adminClient.createEntity({
     _type: 'QueryAdminBar',
     _name: 'Bar',
@@ -332,7 +332,7 @@ describe('adminEntity()', () => {
       const { id } = createResult.value;
 
       expectOkResult(
-        await EntityAdmin.updateEntity(context, {
+        await adminClient.updateEntity({
           id,
           title: 'Second title',
           summary: 'Second summary',
@@ -434,7 +434,7 @@ describe('adminEntity()', () => {
     if (expectOkResult(createResult)) {
       const { id, _name: name, _version: version } = createResult.value;
 
-      expectOkResult(await EntityAdmin.publishEntities(context, [{ id, version }]));
+      expectOkResult(await adminClient.publishEntities([{ id, version }]));
 
       const result = await graphql(
         schema,
@@ -1088,7 +1088,7 @@ describe('searchAdminEntities()', () => {
   });
 
   test('Filter based on referencing, one reference', async () => {
-    const { barId, fooEntities } = await createBarWithFooReferences(context, 1);
+    const { barId, fooEntities } = await createBarWithFooReferences(1);
     const [fooEntity] = fooEntities;
 
     const result = await graphql(
@@ -1200,10 +1200,10 @@ describe('versionHistory()', () => {
     if (expectOkResult(createResult)) {
       const { id } = createResult.value;
 
-      const updateResult = await EntityAdmin.updateEntity(context, { id, title: 'Updated title' });
+      const updateResult = await adminClient.updateEntity({ id, title: 'Updated title' });
       if (expectOkResult(updateResult)) {
         expectOkResult(
-          await EntityAdmin.publishEntities(context, [{ id, version: updateResult.value._version }])
+          await adminClient.publishEntities([{ id, version: updateResult.value._version }])
         );
       }
 
@@ -1283,7 +1283,7 @@ describe('publishingHistory()', () => {
     if (expectOkResult(createResult)) {
       const { id, _version: version } = createResult.value;
 
-      expectOkResult(await EntityAdmin.publishEntities(context, [{ id, version }]));
+      expectOkResult(await adminClient.publishEntities([{ id, version }]));
 
       const result = await graphql(
         schema,
