@@ -11,6 +11,7 @@ import type {
   ErrorType,
   Paging,
   PromiseResult,
+  PublishingHistory,
   PublishingResult,
   Result,
 } from '..';
@@ -53,6 +54,10 @@ export interface AdminClient {
   unarchiveEntity(
     reference: EntityReference
   ): PromiseResult<PublishingResult, ErrorType.BadRequest | ErrorType.NotFound>;
+
+  getPublishingHistory(
+    reference: EntityReference
+  ): PromiseResult<PublishingHistory, ErrorType.NotFound>;
 }
 
 export enum AdminClientOperationName {
@@ -61,6 +66,7 @@ export enum AdminClientOperationName {
   getEntities = 'getEntities',
   getEntity = 'getEntity',
   getEntityHistory = 'getEntityHistory',
+  getPublishingHistory = 'getPublishingHistory',
   getTotalCount = 'getTotalCount',
   publishEntities = 'publishEntities',
   searchEntities = 'searchEntities',
@@ -79,6 +85,7 @@ interface AdminClientOperationArguments {
   [AdminClientOperationName.getEntities]: MethodParameters<'getEntities'>;
   [AdminClientOperationName.getEntity]: MethodParameters<'getEntity'>;
   [AdminClientOperationName.getEntityHistory]: MethodParameters<'getEntityHistory'>;
+  [AdminClientOperationName.getPublishingHistory]: MethodParameters<'getPublishingHistory'>;
   [AdminClientOperationName.getTotalCount]: MethodParameters<'getTotalCount'>;
   [AdminClientOperationName.publishEntities]: MethodParameters<'publishEntities'>;
   [AdminClientOperationName.searchEntities]: MethodParameters<'searchEntities'>;
@@ -93,6 +100,7 @@ interface AdminClientOperationReturn {
   [AdminClientOperationName.getEntities]: MethodReturnType<'getEntities'>;
   [AdminClientOperationName.getEntity]: MethodReturnType<'getEntity'>;
   [AdminClientOperationName.getEntityHistory]: MethodReturnType<'getEntityHistory'>;
+  [AdminClientOperationName.getPublishingHistory]: MethodReturnType<'getPublishingHistory'>;
   [AdminClientOperationName.getTotalCount]: MethodReturnType<'getTotalCount'>;
   [AdminClientOperationName.publishEntities]: MethodReturnType<'publishEntities'>;
   [AdminClientOperationName.searchEntities]: MethodReturnType<'searchEntities'>;
@@ -222,6 +230,15 @@ class BaseAdminClient<TContext> implements AdminClient {
   ): Promise<AdminClientOperationReturn[AdminClientOperationName.unarchiveEntity]> {
     return this.executeOperation({
       name: AdminClientOperationName.unarchiveEntity,
+      args: [reference],
+    });
+  }
+
+  getPublishingHistory(
+    reference: EntityReference
+  ): Promise<AdminClientOperationReturn[AdminClientOperationName.getPublishingHistory]> {
+    return this.executeOperation({
+      name: AdminClientOperationName.getPublishingHistory,
       args: [reference],
     });
   }

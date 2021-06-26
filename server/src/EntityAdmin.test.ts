@@ -17,7 +17,7 @@ import type {
 } from '@datadata/core';
 import { validate as validateUuid, v4 as uuidv4 } from 'uuid';
 import type { Server, SessionContext } from '.';
-import { EntityAdmin, isPagingForwards, PublishedEntity } from '.';
+import { isPagingForwards, PublishedEntity } from '.';
 import { createTestServer, ensureSessionContext, updateSchema } from './ServerTestUtils';
 import {
   expectEntityHistoryVersions,
@@ -58,7 +58,7 @@ beforeAll(async () => {
   server = await createTestServer();
   context = await ensureSessionContext(server, 'test', 'entity-admin');
   client = createServerClient({
-    resolveContext: () => ensureSessionContext(server, 'test', 'entity-admin'),
+    resolveContext: () => Promise.resolve(context),
   });
   await updateSchema(context, {
     entityTypes: [
@@ -3102,7 +3102,7 @@ describe('archiveEntity()', () => {
       const archiveResult = await client.archiveEntity({ id });
       expectResultValue(archiveResult, { id, publishState: EntityPublishState.Archived });
 
-      const historyResult = await EntityAdmin.getPublishingHistory(context, id);
+      const historyResult = await client.getPublishingHistory({ id });
       if (expectOkResult(historyResult)) {
         const { publishedAt } = historyResult.value.events[0];
         expectResultValue(historyResult, {
@@ -3145,7 +3145,7 @@ describe('archiveEntity()', () => {
       const archiveResult2 = await client.archiveEntity({ id });
       expectResultValue(archiveResult2, { id, publishState: EntityPublishState.Archived });
 
-      const historyResult = await EntityAdmin.getPublishingHistory(context, id);
+      const historyResult = await client.getPublishingHistory({ id });
       if (expectOkResult(historyResult)) {
         expect(historyResult.value.events).toHaveLength(1); // no event created by second archive
       }
@@ -3188,7 +3188,7 @@ describe('unarchiveEntity()', () => {
       const unarchiveResult = await client.unarchiveEntity({ id });
       expectResultValue(unarchiveResult, { id, publishState: EntityPublishState.Draft });
 
-      const historyResult = await EntityAdmin.getPublishingHistory(context, id);
+      const historyResult = await client.getPublishingHistory({ id });
       expectResultValue(historyResult, { id, events: [] });
     }
   });
@@ -3208,7 +3208,7 @@ describe('unarchiveEntity()', () => {
       const unarchiveResult = await client.unarchiveEntity({ id });
       expectResultValue(unarchiveResult, { id, publishState: EntityPublishState.Draft });
 
-      const historyResult = await EntityAdmin.getPublishingHistory(context, id);
+      const historyResult = await client.getPublishingHistory({ id });
       if (expectOkResult(historyResult)) {
         const { publishedAt: publishedAt0 } = historyResult.value.events[0];
         const { publishedAt: publishedAt1 } = historyResult.value.events[1];
@@ -3293,7 +3293,7 @@ describe('getPublishingHistory()', () => {
     });
     if (expectOkResult(createResult)) {
       const { id } = createResult.value;
-      const historyResult = await EntityAdmin.getPublishingHistory(context, id);
+      const historyResult = await client.getPublishingHistory({ id });
       expectResultValue(historyResult, { id, events: [] });
     }
   });
@@ -3309,7 +3309,7 @@ describe('getPublishingHistory()', () => {
       const publishResult = await client.publishEntities([{ id, version: 0 }]);
       expectResultValue(publishResult, [{ id, publishState: EntityPublishState.Published }]);
 
-      const historyResult = await EntityAdmin.getPublishingHistory(context, id);
+      const historyResult = await client.getPublishingHistory({ id });
       if (expectOkResult(historyResult)) {
         const { publishedAt } = historyResult.value.events[0];
         expectResultValue(historyResult, {
@@ -3341,7 +3341,7 @@ describe('getPublishingHistory()', () => {
       const unpublishResult = await client.unpublishEntities([{ id }]);
       expectResultValue(unpublishResult, [{ id, publishState: EntityPublishState.Withdrawn }]);
 
-      const historyResult = await EntityAdmin.getPublishingHistory(context, id);
+      const historyResult = await client.getPublishingHistory({ id });
       if (expectOkResult(historyResult)) {
         const publishedAt0 = historyResult.value.events[0]?.publishedAt;
         const publishedAt1 = historyResult.value.events[1]?.publishedAt;
@@ -3367,10 +3367,9 @@ describe('getPublishingHistory()', () => {
   });
 
   test('Error: Get publish history with invalid id', async () => {
-    const result = await EntityAdmin.getPublishingHistory(
-      context,
-      '5b14e69f-6612-4ddb-bb42-7be273104486'
-    );
+    const result = await client.getPublishingHistory({
+      id: '5b14e69f-6612-4ddb-bb42-7be273104486',
+    });
     expectErrorResult(result, ErrorType.NotFound, 'No such entity');
   });
 });
