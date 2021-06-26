@@ -1,4 +1,9 @@
-import type { AdminEntity, AdminEntityCreate, AdminEntityUpdate } from '@datadata/core';
+import type {
+  AdminEntity,
+  AdminEntityCreate,
+  AdminEntityUpdate,
+  PublishingResult,
+} from '@datadata/core';
 import { EntityAdmin } from '@datadata/server';
 import type { SessionGraphQLContext } from '.';
 import { buildResolversForAdminEntity } from './DataLoaders';
@@ -34,47 +39,47 @@ export async function publishEntities<TContext extends SessionGraphQLContext>(
     id: string;
     version: number;
   }[]
-): Promise<{ id: string }[]> {
+): Promise<PublishingResult[]> {
   const sessionContext = getSessionContext(context);
   const result = await EntityAdmin.publishEntities(sessionContext, entities);
   if (result.isError()) {
     throw result.toError();
   }
-  return entities.map(({ id }) => ({ id }));
+  return result.value;
 }
 
 export async function unpublishEntities<TContext extends SessionGraphQLContext>(
   context: TContext,
   entityIds: string[]
-): Promise<{ id: string }[]> {
+): Promise<PublishingResult[]> {
   const sessionContext = getSessionContext(context);
   const result = await EntityAdmin.unpublishEntities(sessionContext, entityIds);
   if (result.isError()) {
     throw result.toError();
   }
-  return entityIds.map((id) => ({ id }));
+  return result.value;
 }
 
 export async function archiveEntity<TContext extends SessionGraphQLContext>(
   context: TContext,
   id: string
-): Promise<{ id: string }> {
+): Promise<PublishingResult> {
   const sessionContext = getSessionContext(context);
   const result = await EntityAdmin.archiveEntity(sessionContext, id);
   if (result.isError()) {
     throw result.toError();
   }
-  return { id };
+  return result.value;
 }
 
 export async function unarchiveEntity<TContext extends SessionGraphQLContext>(
   context: TContext,
   id: string
-): Promise<{ id: string }> {
+): Promise<PublishingResult> {
   const sessionContext = getSessionContext(context);
   const result = await EntityAdmin.unarchiveEntity(sessionContext, id);
   if (result.isError()) {
     throw result.toError();
   }
-  return { id };
+  return result.value;
 }

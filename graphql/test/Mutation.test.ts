@@ -1156,6 +1156,7 @@ describe('publishEntities()', () => {
             publishEntities(entities: $entities) {
               __typename
               id
+              publishState
             }
           }
         `,
@@ -1169,6 +1170,7 @@ describe('publishEntities()', () => {
             {
               __typename: 'EntityPublishPayload',
               id,
+              publishState: EntityPublishState.Published,
             },
           ],
         },
@@ -1200,6 +1202,7 @@ describe('publishEntities()', () => {
           publishEntities(entities: $entities) {
             __typename
             id
+            publishState
           }
         }
       `,
@@ -1240,6 +1243,7 @@ describe('unpublishEntities()', () => {
             unpublishEntities(ids: $ids) {
               __typename
               id
+              publishState
             }
           }
         `,
@@ -1253,6 +1257,7 @@ describe('unpublishEntities()', () => {
             {
               __typename: 'EntityPublishPayload',
               id,
+              publishState: EntityPublishState.Withdrawn,
             },
           ],
         },
@@ -1291,6 +1296,7 @@ describe('unpublishEntities()', () => {
           unpublishEntities(ids: $ids) {
             __typename
             id
+            publishState
           }
         }
       `,
@@ -1329,6 +1335,7 @@ describe('archiveEntity()', () => {
             archiveEntity(id: $id) {
               __typename
               id
+              publishState
             }
           }
         `,
@@ -1341,6 +1348,7 @@ describe('archiveEntity()', () => {
           archiveEntity: {
             __typename: 'EntityPublishPayload',
             id,
+            publishState: EntityPublishState.Archived,
           },
         },
       });
@@ -1384,6 +1392,7 @@ describe('unarchiveEntity()', () => {
             unarchiveEntity(id: $id) {
               __typename
               id
+              publishState
             }
           }
         `,
@@ -1396,6 +1405,7 @@ describe('unarchiveEntity()', () => {
           unarchiveEntity: {
             __typename: 'EntityPublishPayload',
             id,
+            publishState: EntityPublishState.Draft,
           },
         },
       });
@@ -1477,6 +1487,7 @@ describe('Multiple', () => {
 
             publishEntities(entities: $entities) {
               id
+              publishState
             }
           }
         `,
@@ -1493,7 +1504,7 @@ describe('Multiple', () => {
       expect(result).toEqual({
         data: {
           updateMutationFooEntity: { title: 'Updated title' },
-          publishEntities: [{ id }],
+          publishEntities: [{ id, publishState: EntityPublishState.Published }],
         },
       });
 
