@@ -1,5 +1,6 @@
 import type {
   AdminEntity,
+  AdminQuery,
   EntityReference,
   EntityVersionReference,
   ErrorType,
@@ -14,21 +15,26 @@ export interface AdminClient {
   ): PromiseResult<AdminEntity, ErrorType.NotFound>;
 
   getEntities(references: EntityReference[]): Promise<Result<AdminEntity, ErrorType.NotFound>[]>;
+
+  getTotalCount(query?: AdminQuery): PromiseResult<number, ErrorType.BadRequest>;
 }
 
 export enum AdminClientOperationName {
   GetEntity = 'get-entity',
   GetEntities = 'get-entities',
+  GetTotalCount = 'get-total-count',
 }
 
 interface AdminClientOperationArguments {
   [AdminClientOperationName.GetEntity]: { reference: EntityReference | EntityVersionReference };
   [AdminClientOperationName.GetEntities]: { references: EntityReference[] };
+  [AdminClientOperationName.GetTotalCount]: { query?: AdminQuery };
 }
 
 interface AdminClientOperationReturn {
   [AdminClientOperationName.GetEntity]: Result<AdminEntity, ErrorType.NotFound>;
   [AdminClientOperationName.GetEntities]: Result<AdminEntity, ErrorType.NotFound>[];
+  [AdminClientOperationName.GetTotalCount]: Result<number, ErrorType.BadRequest>;
 }
 
 export interface AdminClientOperation<TName extends AdminClientOperationName> {
@@ -71,6 +77,15 @@ class BaseAdminClient<TContext> implements AdminClient {
     return this.executeOperation({
       name: AdminClientOperationName.GetEntities,
       args: { references },
+    });
+  }
+
+  getTotalCount(
+    query?: AdminQuery
+  ): Promise<AdminClientOperationReturn[AdminClientOperationName.GetTotalCount]> {
+    return this.executeOperation({
+      name: AdminClientOperationName.GetTotalCount,
+      args: { query },
     });
   }
 
