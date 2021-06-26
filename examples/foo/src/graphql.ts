@@ -2,7 +2,7 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
 import { ok, notOk } from '@datadata/core';
-import { Auth, Server } from '@datadata/server';
+import { Auth, createServerClient, Server } from '@datadata/server';
 import type { AuthContext } from '@datadata/server';
 import { GraphQLSchemaGenerator } from '@datadata/graphql';
 import type { SessionGraphQLContext } from '@datadata/graphql';
@@ -29,10 +29,17 @@ async function startServer(server: Server, authContext: AuthContext, port: numbe
   app.use(
     '/graphql',
     graphqlHTTP(async (request, _response, _params) => {
-      const context: SessionGraphQLContext = { context: notOk.NotAuthenticated('No session') };
+      const context: SessionGraphQLContext = {
+        adminClient: notOk.NotAuthenticated('No session'),
+        context: notOk.NotAuthenticated('No session'),
+      };
       const sessionResult = await createSessionContext(authContext, request.headers);
       if (sessionResult.isOk()) {
-        context.context = ok(server.createSessionContext(sessionResult.value));
+        const sessionContext = server.createSessionContext(sessionResult.value);
+        context.adminClient = ok(
+          createServerClient({ resolveContext: () => Promise.resolve(sessionContext) })
+        );
+        context.context = ok(sessionContext);
       }
       return {
         schema,

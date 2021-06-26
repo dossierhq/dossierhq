@@ -1,5 +1,7 @@
+import { ok } from '@datadata/core';
 import type { SessionGraphQLContext } from '@datadata/graphql';
 import { GraphQLSchemaGenerator } from '@datadata/graphql';
+import { createServerClient } from '@datadata/server';
 import { graphql } from 'graphql';
 import type { ExecutionResult, GraphQLSchema } from 'graphql';
 import type { NextApiRequest, NextApiResponse } from 'next';
@@ -19,7 +21,13 @@ export default async (
     if (authResult.isError()) {
       throw errorResultToBoom(authResult);
     }
-    const context: SessionGraphQLContext = { context: authResult };
+    const sessionContext = authResult.value;
+    const context: SessionGraphQLContext = {
+      adminClient: ok(
+        createServerClient({ resolveContext: () => Promise.resolve(sessionContext) })
+      ),
+      context: ok(sessionContext),
+    };
 
     if (!graphQLSchema) {
       graphQLSchema = new GraphQLSchemaGenerator(server.getSchema()).buildSchema();
