@@ -1,7 +1,14 @@
 import type { AdminClient, AdminClientOperation } from '@datadata/core';
 import { AdminClientOperationName, createBaseAdminClient } from '@datadata/core';
 import type { SessionContext } from '..';
-import { createEntity, getEntities, getEntity, getTotalCount, searchEntities } from './EntityAdmin';
+import {
+  createEntity,
+  getEntities,
+  getEntity,
+  getTotalCount,
+  searchEntities,
+  updateEntity,
+} from './EntityAdmin';
 
 export function createServerClient({
   resolveContext,
@@ -61,6 +68,14 @@ async function terminatingMiddleware(
         resolve,
       } = operation as AdminClientOperation<AdminClientOperationName.SearchEntities>;
       resolve(await searchEntities(context, query, paging));
+      break;
+    }
+    case AdminClientOperationName.UpdateEntity: {
+      const {
+        args: [entity],
+        resolve,
+      } = operation as AdminClientOperation<AdminClientOperationName.UpdateEntity>;
+      resolve(await updateEntity(context, entity));
       break;
     }
     default:

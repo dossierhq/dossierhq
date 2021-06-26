@@ -357,7 +357,7 @@ describe('getEntity()', () => {
 
     if (expectOkResult(createResult)) {
       const { id } = createResult.value;
-      const updateResult = await EntityAdmin.updateEntity(context, { id, title: 'Updated title' });
+      const updateResult = await client.updateEntity({ id, title: 'Updated title' });
       expectOkResult(updateResult);
 
       const versionMaxResult = await client.getEntity({ id });
@@ -452,9 +452,7 @@ describe('getEntities()', () => {
     if (expectOkResult(createFooResult)) {
       const { id: fooId, _name: fooName } = createFooResult.value;
 
-      expectOkResult(
-        await EntityAdmin.updateEntity(context, { id: fooId, title: 'Updated title' })
-      );
+      expectOkResult(await client.updateEntity({ id: fooId, title: 'Updated title' }));
 
       const result = await client.getEntities([{ id: fooId }]);
       expect(result).toHaveLength(1);
@@ -1982,7 +1980,7 @@ describe('searchEntities()', () => {
       expect(matchesBeforeUpdate).toBe(0);
 
       expectOkResult(
-        await EntityAdmin.updateEntity(context, {
+        await client.updateEntity({
           id: fooId,
           summary: "who's jumping? It it the fox",
         })
@@ -2109,7 +2107,7 @@ describe('updateEntity()', () => {
       const { id } = createResult.value;
       let name = createResult.value._name;
 
-      const updateResult = await EntityAdmin.updateEntity(context, {
+      const updateResult = await client.updateEntity({
         id,
         _type: 'EntityAdminFoo',
         _name: 'Updated name',
@@ -2195,7 +2193,7 @@ describe('updateEntity()', () => {
       const publishResult = await EntityAdmin.publishEntities(context, [{ id, version: 0 }]);
       expectResultValue(publishResult, [{ id, publishState: EntityPublishState.Published }]);
 
-      const updateResult = await EntityAdmin.updateEntity(context, {
+      const updateResult = await client.updateEntity({
         id,
         _type: 'EntityAdminFoo',
         _name: 'Updated name',
@@ -2274,7 +2272,7 @@ describe('updateEntity()', () => {
     if (expectOkResult(createResult)) {
       const { id } = createResult.value;
 
-      const updateResult = await EntityAdmin.updateEntity(context, { id, title: 'Updated title' });
+      const updateResult = await client.updateEntity({ id, title: 'Updated title' });
       expectResultValue(updateResult, {
         id,
         _type: 'EntityAdminFoo',
@@ -2347,7 +2345,7 @@ describe('updateEntity()', () => {
     if (expectOkResult(createResult)) {
       const { id } = createResult.value;
 
-      const updateResult = await EntityAdmin.updateEntity(context, {
+      const updateResult = await client.updateEntity({
         id,
         summary: 'Updated summary',
       });
@@ -2427,7 +2425,7 @@ describe('updateEntity()', () => {
     if (expectOkResult(createResult)) {
       const { id, _name: name } = createResult.value;
 
-      const updateResult = await EntityAdmin.updateEntity(context, { id, _name: name });
+      const updateResult = await client.updateEntity({ id, _name: name });
       expectResultValue(updateResult, {
         id,
         _type: 'EntityAdminFoo',
@@ -2472,7 +2470,7 @@ describe('updateEntity()', () => {
       if (expectOkResult(createBarResult)) {
         const { id: barId } = createBarResult.value;
 
-        const updateResult = await EntityAdmin.updateEntity(context, {
+        const updateResult = await client.updateEntity({
           id: fooId,
           bar: { id: barId },
         });
@@ -2567,7 +2565,7 @@ describe('updateEntity()', () => {
       if (expectOkResult(createBazResult)) {
         const { id: bazId } = createBazResult.value;
 
-        const updateResult = await EntityAdmin.updateEntity(context, {
+        const updateResult = await client.updateEntity({
           id: bazId,
           title: 'Updated title',
         });
@@ -2642,7 +2640,7 @@ describe('updateEntity()', () => {
       const archiveResult = await EntityAdmin.archiveEntity(context, id);
       expectResultValue(archiveResult, { id, publishState: EntityPublishState.Archived });
 
-      const updateResult = await EntityAdmin.updateEntity(context, {
+      const updateResult = await client.updateEntity({
         id,
         title: 'Updated title',
       });
@@ -2660,7 +2658,7 @@ describe('updateEntity()', () => {
   });
 
   test('Error: Update with invalid id', async () => {
-    const result = await EntityAdmin.updateEntity(context, {
+    const result = await client.updateEntity({
       id: 'f773ac54-37db-42df-9b55-b6da8de344c3',
       _type: 'EntityAdminFoo',
       _name: 'name',
@@ -2678,7 +2676,7 @@ describe('updateEntity()', () => {
     });
     if (expectOkResult(createResult)) {
       const { id } = createResult.value;
-      const updateResult = await EntityAdmin.updateEntity(context, {
+      const updateResult = await client.updateEntity({
         id,
         _type: 'EntityAdminFoo',
         _name: 'name',
@@ -2700,7 +2698,7 @@ describe('updateEntity()', () => {
     });
     if (expectOkResult(createResult)) {
       const { id } = createResult.value;
-      const updateResult = await EntityAdmin.updateEntity(context, { id, invalid: 'hello' });
+      const updateResult = await client.updateEntity({ id, invalid: 'hello' });
 
       expectErrorResult(updateResult, ErrorType.BadRequest, 'Unsupported field names: invalid');
     }
@@ -2714,7 +2712,7 @@ describe('updateEntity()', () => {
     });
     if (expectOkResult(createResult)) {
       const { id } = createResult.value;
-      const updateResult = await EntityAdmin.updateEntity(context, {
+      const updateResult = await client.updateEntity({
         id,
         bar: { id: '9783ca4f-f5b4-4f6a-a7bf-aae33e227841' },
       });
@@ -2737,7 +2735,7 @@ describe('updateEntity()', () => {
       const { id } = createResult.value;
       const referenceId = entitiesOfTypeAdminOnlyEditBefore[0].id;
 
-      const updateResult = await EntityAdmin.updateEntity(context, {
+      const updateResult = await client.updateEntity({
         id,
         bar: { id: referenceId },
       });
@@ -2769,9 +2767,7 @@ describe('publishEntities()', () => {
       if (expectOkResult(createBaz2Result)) {
         const { id: baz2Id } = createBaz2Result.value;
 
-        expectOkResult(
-          await EntityAdmin.updateEntity(context, { id: baz1Id, baz: { id: baz2Id } })
-        );
+        expectOkResult(await client.updateEntity({ id: baz1Id, baz: { id: baz2Id } }));
 
         const publishResult = await EntityAdmin.publishEntities(context, [
           { id: baz1Id, version: 1 },
@@ -2956,9 +2952,7 @@ describe('unpublishEntities()', () => {
       if (expectOkResult(createBaz2Result)) {
         const { id: baz2Id } = createBaz2Result.value;
 
-        expectOkResult(
-          await EntityAdmin.updateEntity(context, { id: baz1Id, baz: { id: baz2Id } })
-        );
+        expectOkResult(await client.updateEntity({ id: baz1Id, baz: { id: baz2Id } }));
 
         const publishResult = await EntityAdmin.publishEntities(context, [
           { id: baz1Id, version: 1 },

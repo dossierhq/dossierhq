@@ -1,6 +1,7 @@
 import type {
   AdminEntity,
   AdminEntityCreate,
+  AdminEntityUpdate,
   AdminQuery,
   Connection,
   Edge,
@@ -28,6 +29,10 @@ export interface AdminClient {
   getTotalCount(query?: AdminQuery): PromiseResult<number, ErrorType.BadRequest>;
 
   createEntity(entity: AdminEntityCreate): PromiseResult<AdminEntity, ErrorType.BadRequest>;
+
+  updateEntity(
+    entity: AdminEntityUpdate
+  ): PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.NotFound>;
 }
 
 export enum AdminClientOperationName {
@@ -36,6 +41,7 @@ export enum AdminClientOperationName {
   GetEntity = 'get-entity',
   GetTotalCount = 'get-total-count',
   SearchEntities = 'search-entities',
+  UpdateEntity = 'update-entity',
 }
 
 type MethodParameters<T extends keyof AdminClient> = Parameters<AdminClient[T]>;
@@ -48,6 +54,7 @@ interface AdminClientOperationArguments {
   [AdminClientOperationName.GetEntity]: MethodParameters<'getEntity'>;
   [AdminClientOperationName.GetTotalCount]: MethodParameters<'getTotalCount'>;
   [AdminClientOperationName.SearchEntities]: MethodParameters<'searchEntities'>;
+  [AdminClientOperationName.UpdateEntity]: MethodParameters<'updateEntity'>;
 }
 
 interface AdminClientOperationReturn {
@@ -56,6 +63,7 @@ interface AdminClientOperationReturn {
   [AdminClientOperationName.GetEntity]: MethodReturnType<'getEntity'>;
   [AdminClientOperationName.GetTotalCount]: MethodReturnType<'getTotalCount'>;
   [AdminClientOperationName.SearchEntities]: MethodReturnType<'searchEntities'>;
+  [AdminClientOperationName.UpdateEntity]: MethodReturnType<'updateEntity'>;
 }
 
 export interface AdminClientOperation<TName extends AdminClientOperationName> {
@@ -125,6 +133,15 @@ class BaseAdminClient<TContext> implements AdminClient {
   ): Promise<AdminClientOperationReturn[AdminClientOperationName.CreateEntity]> {
     return this.executeOperation({
       name: AdminClientOperationName.CreateEntity,
+      args: [entity],
+    });
+  }
+
+  updateEntity(
+    entity: AdminEntityUpdate
+  ): Promise<AdminClientOperationReturn[AdminClientOperationName.UpdateEntity]> {
+    return this.executeOperation({
+      name: AdminClientOperationName.UpdateEntity,
       args: [entity],
     });
   }
