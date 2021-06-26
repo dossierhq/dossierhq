@@ -38,15 +38,25 @@ export interface AdminClient {
   publishEntities(
     references: EntityVersionReference[]
   ): PromiseResult<PublishingResult[], ErrorType.BadRequest | ErrorType.NotFound>;
+
+  unpublishEntities(
+    references: EntityReference[]
+  ): PromiseResult<PublishingResult[], ErrorType.BadRequest | ErrorType.NotFound>;
+
+  archiveEntity(
+    reference: EntityReference
+  ): PromiseResult<PublishingResult, ErrorType.BadRequest | ErrorType.NotFound>;
 }
 
 export enum AdminClientOperationName {
+  archiveEntity = 'archiveEntity',
   createEntity = 'createEntity',
   getEntities = 'getEntities',
   getEntity = 'getEntity',
   getTotalCount = 'getTotalCount',
   publishEntities = 'publishEntities',
   searchEntities = 'searchEntities',
+  unpublishEntities = 'unpublishEntities',
   updateEntity = 'updateEntity',
 }
 
@@ -55,22 +65,26 @@ type MethodReturnType<T extends keyof AdminClient> = WithoutPromise<ReturnType<A
 type WithoutPromise<T> = T extends Promise<infer U> ? U : T;
 
 interface AdminClientOperationArguments {
+  [AdminClientOperationName.archiveEntity]: MethodParameters<'archiveEntity'>;
   [AdminClientOperationName.createEntity]: MethodParameters<'createEntity'>;
   [AdminClientOperationName.getEntities]: MethodParameters<'getEntities'>;
   [AdminClientOperationName.getEntity]: MethodParameters<'getEntity'>;
   [AdminClientOperationName.getTotalCount]: MethodParameters<'getTotalCount'>;
   [AdminClientOperationName.publishEntities]: MethodParameters<'publishEntities'>;
   [AdminClientOperationName.searchEntities]: MethodParameters<'searchEntities'>;
+  [AdminClientOperationName.unpublishEntities]: MethodParameters<'unpublishEntities'>;
   [AdminClientOperationName.updateEntity]: MethodParameters<'updateEntity'>;
 }
 
 interface AdminClientOperationReturn {
+  [AdminClientOperationName.archiveEntity]: MethodReturnType<'archiveEntity'>;
   [AdminClientOperationName.createEntity]: MethodReturnType<'createEntity'>;
   [AdminClientOperationName.getEntities]: MethodReturnType<'getEntities'>;
   [AdminClientOperationName.getEntity]: MethodReturnType<'getEntity'>;
   [AdminClientOperationName.getTotalCount]: MethodReturnType<'getTotalCount'>;
   [AdminClientOperationName.publishEntities]: MethodReturnType<'publishEntities'>;
   [AdminClientOperationName.searchEntities]: MethodReturnType<'searchEntities'>;
+  [AdminClientOperationName.unpublishEntities]: MethodReturnType<'unpublishEntities'>;
   [AdminClientOperationName.updateEntity]: MethodReturnType<'updateEntity'>;
 }
 
@@ -160,6 +174,24 @@ class BaseAdminClient<TContext> implements AdminClient {
     return this.executeOperation({
       name: AdminClientOperationName.publishEntities,
       args: [references],
+    });
+  }
+
+  unpublishEntities(
+    references: EntityReference[]
+  ): Promise<AdminClientOperationReturn[AdminClientOperationName.unpublishEntities]> {
+    return this.executeOperation({
+      name: AdminClientOperationName.unpublishEntities,
+      args: [references],
+    });
+  }
+
+  archiveEntity(
+    reference: EntityReference
+  ): Promise<AdminClientOperationReturn[AdminClientOperationName.archiveEntity]> {
+    return this.executeOperation({
+      name: AdminClientOperationName.archiveEntity,
+      args: [reference],
     });
   }
 

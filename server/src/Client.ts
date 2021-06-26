@@ -2,12 +2,14 @@ import type { AdminClient, AdminClientOperation } from '@datadata/core';
 import { AdminClientOperationName, createBaseAdminClient } from '@datadata/core';
 import type { SessionContext } from '..';
 import {
+  archiveEntity,
   createEntity,
   getEntities,
   getEntity,
   getTotalCount,
   publishEntities,
   searchEntities,
+  unpublishEntities,
   updateEntity,
 } from './EntityAdmin';
 
@@ -24,6 +26,14 @@ async function terminatingMiddleware(
   operation: AdminClientOperation<AdminClientOperationName>
 ): Promise<void> {
   switch (operation.name) {
+    case AdminClientOperationName.archiveEntity: {
+      const {
+        args: [reference],
+        resolve,
+      } = operation as AdminClientOperation<AdminClientOperationName.archiveEntity>;
+      resolve(await archiveEntity(context, reference.id));
+      break;
+    }
     case AdminClientOperationName.createEntity: {
       const {
         args: [entity],
@@ -77,6 +87,19 @@ async function terminatingMiddleware(
         resolve,
       } = operation as AdminClientOperation<AdminClientOperationName.searchEntities>;
       resolve(await searchEntities(context, query, paging));
+      break;
+    }
+    case AdminClientOperationName.unpublishEntities: {
+      const {
+        args: [references],
+        resolve,
+      } = operation as AdminClientOperation<AdminClientOperationName.unpublishEntities>;
+      resolve(
+        await unpublishEntities(
+          context,
+          references.map(({ id }) => id)
+        )
+      );
       break;
     }
     case AdminClientOperationName.updateEntity: {

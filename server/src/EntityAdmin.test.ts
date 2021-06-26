@@ -189,7 +189,7 @@ beforeAll(async () => {
     ],
   });
 
-  await ensureEntitiesExistForAdminOnlyEditBefore(context);
+  await ensureEntitiesExistForAdminOnlyEditBefore(client);
   const knownIds = await getEntitiesForAdminOnlyEditBefore(context);
   entitiesOfTypeAdminOnlyEditBefore = knownIds.entities;
 });
@@ -197,7 +197,7 @@ afterAll(async () => {
   await server.shutdown();
 });
 
-async function ensureEntitiesExistForAdminOnlyEditBefore(context: SessionContext) {
+async function ensureEntitiesExistForAdminOnlyEditBefore(client: AdminClient) {
   const requestedCount = 50;
   const entitiesOfTypeCount = await client.getTotalCount({
     entityTypes: ['AdminOnlyEditBefore'],
@@ -212,7 +212,7 @@ async function ensureEntitiesExistForAdminOnlyEditBefore(context: SessionContext
         message: `Hey ${random}`,
       });
       if (expectOkResult(createResult)) {
-        const publishResult = await EntityAdmin.publishEntities(context, [
+        const publishResult = await client.publishEntities([
           { id: createResult.value.id, version: createResult.value._version },
         ]);
         publishResult.throwIfError();
@@ -501,7 +501,7 @@ describe('createEntity()', () => {
         title: 'Title',
       });
 
-      const publishResult = await EntityAdmin.publishEntities(context, [{ id, version: 0 }]);
+      const publishResult = await client.publishEntities([{ id, version: 0 }]);
       expectResultValue(publishResult, [{ id, publishState: EntityPublishState.Published }]);
 
       const historyResult = await EntityAdmin.getEntityHistory(context, id);
@@ -636,7 +636,7 @@ describe('createEntity()', () => {
           bar: { id: barId },
         });
 
-        const publishResult = await EntityAdmin.publishEntities(context, [
+        const publishResult = await client.publishEntities([
           { id: fooId, version: 0 },
           { id: barId, version: 0 },
         ]);
@@ -2128,7 +2128,7 @@ describe('updateEntity()', () => {
         });
       }
 
-      const publishResult = await EntityAdmin.publishEntities(context, [{ id, version: 1 }]);
+      const publishResult = await client.publishEntities([{ id, version: 1 }]);
       expectResultValue(publishResult, [{ id, publishState: EntityPublishState.Published }]);
 
       const historyResult = await EntityAdmin.getEntityHistory(context, id);
@@ -2190,7 +2190,7 @@ describe('updateEntity()', () => {
       const { id } = createResult.value;
       let name = createResult.value._name;
 
-      const publishResult = await EntityAdmin.publishEntities(context, [{ id, version: 0 }]);
+      const publishResult = await client.publishEntities([{ id, version: 0 }]);
       expectResultValue(publishResult, [{ id, publishState: EntityPublishState.Published }]);
 
       const updateResult = await client.updateEntity({
@@ -2283,7 +2283,7 @@ describe('updateEntity()', () => {
         title: 'Updated title',
       });
 
-      const publishResult = await EntityAdmin.publishEntities(context, [{ id, version: 1 }]);
+      const publishResult = await client.publishEntities([{ id, version: 1 }]);
       expectResultValue(publishResult, [{ id, publishState: EntityPublishState.Published }]);
 
       const historyResult = await EntityAdmin.getEntityHistory(context, id);
@@ -2360,7 +2360,7 @@ describe('updateEntity()', () => {
         summary: 'Updated summary',
       });
 
-      const publishResult = await EntityAdmin.publishEntities(context, [{ id, version: 1 }]);
+      const publishResult = await client.publishEntities([{ id, version: 1 }]);
       expectResultValue(publishResult, [{ id, publishState: EntityPublishState.Published }]);
 
       const historyResult = await EntityAdmin.getEntityHistory(context, id);
@@ -2437,7 +2437,7 @@ describe('updateEntity()', () => {
         summary: 'First summary',
       });
 
-      const publishResult = await EntityAdmin.publishEntities(context, [{ id, version: 1 }]);
+      const publishResult = await client.publishEntities([{ id, version: 1 }]);
       expectResultValue(publishResult, [{ id, publishState: EntityPublishState.Published }]);
 
       const publishedResult = await PublishedEntity.getEntity(context, id);
@@ -2485,7 +2485,7 @@ describe('updateEntity()', () => {
           bar: { id: barId },
         });
 
-        const publishResult = await EntityAdmin.publishEntities(context, [
+        const publishResult = await client.publishEntities([
           { id: fooId, version: 1 },
           { id: barId, version: 0 },
         ]);
@@ -2546,7 +2546,7 @@ describe('updateEntity()', () => {
       const { id: bar1Id } = createBar1Result.value;
       const { id: bar2Id } = createBar2Result.value;
 
-      const publishResult = await EntityAdmin.publishEntities(context, [
+      const publishResult = await client.publishEntities([
         { id: bar1Id, version: 0 },
         { id: bar2Id, version: 0 },
       ]);
@@ -2581,9 +2581,7 @@ describe('updateEntity()', () => {
           bars: [{ id: bar1Id }, { id: bar2Id }],
         });
 
-        const publishResult = await EntityAdmin.publishEntities(context, [
-          { id: bazId, version: 1 },
-        ]);
+        const publishResult = await client.publishEntities([{ id: bazId, version: 1 }]);
         expectResultValue(publishResult, [
           { id: bazId, publishState: EntityPublishState.Published },
         ]);
@@ -2637,7 +2635,7 @@ describe('updateEntity()', () => {
     if (expectOkResult(createResult)) {
       const { id, _name: name } = createResult.value;
 
-      const archiveResult = await EntityAdmin.archiveEntity(context, id);
+      const archiveResult = await client.archiveEntity({ id });
       expectResultValue(archiveResult, { id, publishState: EntityPublishState.Archived });
 
       const updateResult = await client.updateEntity({
@@ -2769,7 +2767,7 @@ describe('publishEntities()', () => {
 
         expectOkResult(await client.updateEntity({ id: baz1Id, baz: { id: baz2Id } }));
 
-        const publishResult = await EntityAdmin.publishEntities(context, [
+        const publishResult = await client.publishEntities([
           { id: baz1Id, version: 1 },
           { id: baz2Id, version: 0 },
         ]);
@@ -2790,10 +2788,10 @@ describe('publishEntities()', () => {
     if (expectOkResult(createBaz1Result)) {
       const { id, _name: name, _version: version } = createBaz1Result.value;
 
-      const archiveResult = await EntityAdmin.archiveEntity(context, id);
+      const archiveResult = await client.archiveEntity({ id });
       expectResultValue(archiveResult, { id, publishState: EntityPublishState.Archived });
 
-      const publishResult = await EntityAdmin.publishEntities(context, [{ id, version }]);
+      const publishResult = await client.publishEntities([{ id, version }]);
       expectResultValue(publishResult, [{ id, publishState: EntityPublishState.Published }]);
 
       const getResult = await client.getEntity({ id });
@@ -2818,16 +2816,12 @@ describe('publishEntities()', () => {
     if (expectOkResult(createBazResult)) {
       const { id: bazId } = createBazResult.value;
 
-      const firstPublishResult = await EntityAdmin.publishEntities(context, [
-        { id: bazId, version: 0 },
-      ]);
+      const firstPublishResult = await client.publishEntities([{ id: bazId, version: 0 }]);
       expectResultValue(firstPublishResult, [
         { id: bazId, publishState: EntityPublishState.Published },
       ]);
 
-      const secondPublishResult = await EntityAdmin.publishEntities(context, [
-        { id: bazId, version: 0 },
-      ]);
+      const secondPublishResult = await client.publishEntities([{ id: bazId, version: 0 }]);
       expectErrorResult(
         secondPublishResult,
         ErrorType.BadRequest,
@@ -2854,9 +2848,7 @@ describe('publishEntities()', () => {
       if (expectOkResult(createFooResult)) {
         const { id: fooId } = createFooResult.value;
 
-        const publishResult = await EntityAdmin.publishEntities(context, [
-          { id: fooId, version: 0 },
-        ]);
+        const publishResult = await client.publishEntities([{ id: fooId, version: 0 }]);
         expectErrorResult(
           publishResult,
           ErrorType.BadRequest,
@@ -2867,7 +2859,7 @@ describe('publishEntities()', () => {
   });
 
   test('Error: Duplicate ids', async () => {
-    const publishResult = await EntityAdmin.publishEntities(context, [
+    const publishResult = await client.publishEntities([
       { id: 'b1bdcb61-e6aa-47ff-98d8-4cfe8197b290', version: 0 },
       { id: 'b1bdcb61-e6aa-47ff-98d8-4cfe8197b290', version: 1 },
     ]);
@@ -2879,7 +2871,7 @@ describe('publishEntities()', () => {
   });
 
   test('Error: Published unknown entity', async () => {
-    const publishResult = await EntityAdmin.publishEntities(context, [
+    const publishResult = await client.publishEntities([
       { id: 'b1bdcb61-e6aa-47ff-98d8-4cfe8197b290', version: 0 },
     ]);
     expectErrorResult(
@@ -2897,9 +2889,7 @@ describe('publishEntities()', () => {
     });
     if (expectOkResult(createFooResult)) {
       const { id: fooId } = createFooResult.value;
-      const publishResult = await EntityAdmin.publishEntities(context, [
-        { id: fooId, version: 100 },
-      ]);
+      const publishResult = await client.publishEntities([{ id: fooId, version: 100 }]);
       expectErrorResult(publishResult, ErrorType.NotFound, `No such entities: ${fooId}`);
     }
   });
@@ -2915,10 +2905,10 @@ describe('unpublishEntities()', () => {
     if (expectOkResult(createResult)) {
       const { id, _name: name, _version: version } = createResult.value;
 
-      const publishResult = await EntityAdmin.publishEntities(context, [{ id, version }]);
+      const publishResult = await client.publishEntities([{ id, version }]);
       expectResultValue(publishResult, [{ id, publishState: EntityPublishState.Published }]);
 
-      const unpublishResult = await EntityAdmin.unpublishEntities(context, [id]);
+      const unpublishResult = await client.unpublishEntities([{ id }]);
       expectResultValue(unpublishResult, [{ id, publishState: EntityPublishState.Withdrawn }]);
 
       const getResult = await client.getEntity({ id });
@@ -2954,7 +2944,7 @@ describe('unpublishEntities()', () => {
 
         expectOkResult(await client.updateEntity({ id: baz1Id, baz: { id: baz2Id } }));
 
-        const publishResult = await EntityAdmin.publishEntities(context, [
+        const publishResult = await client.publishEntities([
           { id: baz1Id, version: 1 },
           { id: baz2Id, version: 0 },
         ]);
@@ -2963,7 +2953,7 @@ describe('unpublishEntities()', () => {
           { id: baz2Id, publishState: EntityPublishState.Published },
         ]);
 
-        const unpublishResult = await EntityAdmin.unpublishEntities(context, [baz1Id, baz2Id]);
+        const unpublishResult = await client.unpublishEntities([{ id: baz1Id }, { id: baz2Id }]);
         expectResultValue(unpublishResult, [
           { id: baz1Id, publishState: EntityPublishState.Withdrawn },
           { id: baz2Id, publishState: EntityPublishState.Withdrawn },
@@ -2988,14 +2978,12 @@ describe('unpublishEntities()', () => {
         baz: { id: baz1Id },
       });
       if (expectOkResult(createBaz2Result)) {
-        const publishResult = await EntityAdmin.publishEntities(context, [
-          { id: baz1Id, version: 0 },
-        ]);
+        const publishResult = await client.publishEntities([{ id: baz1Id, version: 0 }]);
         expectResultValue(publishResult, [
           { id: baz1Id, publishState: EntityPublishState.Published },
         ]);
 
-        const unpublishResult = await EntityAdmin.unpublishEntities(context, [baz1Id]);
+        const unpublishResult = await client.unpublishEntities([{ id: baz1Id }]);
         expectResultValue(unpublishResult, [
           { id: baz1Id, publishState: EntityPublishState.Withdrawn },
         ]);
@@ -3004,8 +2992,8 @@ describe('unpublishEntities()', () => {
   });
 
   test('Error: invalid id', async () => {
-    const publishResult = await EntityAdmin.unpublishEntities(context, [
-      '8a678bad-fa57-4f18-a377-633f704fd0d3',
+    const publishResult = await client.unpublishEntities([
+      { id: '8a678bad-fa57-4f18-a377-633f704fd0d3' },
     ]);
     expectErrorResult(
       publishResult,
@@ -3032,7 +3020,7 @@ describe('unpublishEntities()', () => {
       if (expectOkResult(createFooResult)) {
         const { id: fooId } = createFooResult.value;
 
-        const publishResult = await EntityAdmin.publishEntities(context, [
+        const publishResult = await client.publishEntities([
           { id: fooId, version: 0 },
           { id: barId, version: 0 },
         ]);
@@ -3041,7 +3029,7 @@ describe('unpublishEntities()', () => {
           { id: barId, publishState: EntityPublishState.Published },
         ]);
 
-        const unpublishResult = await EntityAdmin.unpublishEntities(context, [barId]);
+        const unpublishResult = await client.unpublishEntities([{ id: barId }]);
         expectErrorResult(
           unpublishResult,
           ErrorType.BadRequest,
@@ -3060,7 +3048,7 @@ describe('unpublishEntities()', () => {
     if (expectOkResult(createBarResult)) {
       const { id: barId } = createBarResult.value;
 
-      const publishResult = await EntityAdmin.unpublishEntities(context, [barId]);
+      const publishResult = await client.unpublishEntities([{ id: barId }]);
       expectErrorResult(
         publishResult,
         ErrorType.BadRequest,
@@ -3078,11 +3066,11 @@ describe('unpublishEntities()', () => {
     if (expectOkResult(createResult)) {
       const { id } = createResult.value;
 
-      const archiveResult = await EntityAdmin.archiveEntity(context, id);
+      const archiveResult = await client.archiveEntity({ id });
       expectResultValue(archiveResult, { id, publishState: EntityPublishState.Archived });
 
       expectErrorResult(
-        await EntityAdmin.unpublishEntities(context, [id]),
+        await client.unpublishEntities([{ id }]),
         ErrorType.BadRequest,
         `Entities are not published: ${id}`
       );
@@ -3090,9 +3078,9 @@ describe('unpublishEntities()', () => {
   });
 
   test('Error: duplicate ids', async () => {
-    const unpublishResult = await EntityAdmin.unpublishEntities(context, [
-      'b1bdcb61-e6aa-47ff-98d8-4cfe8197b290',
-      'b1bdcb61-e6aa-47ff-98d8-4cfe8197b290',
+    const unpublishResult = await client.unpublishEntities([
+      { id: 'b1bdcb61-e6aa-47ff-98d8-4cfe8197b290' },
+      { id: 'b1bdcb61-e6aa-47ff-98d8-4cfe8197b290' },
     ]);
     expectErrorResult(
       unpublishResult,
@@ -3112,7 +3100,7 @@ describe('archiveEntity()', () => {
     if (expectOkResult(createResult)) {
       const { id, _name: name } = createResult.value;
 
-      const archiveResult = await EntityAdmin.archiveEntity(context, id);
+      const archiveResult = await client.archiveEntity({ id });
       expectResultValue(archiveResult, { id, publishState: EntityPublishState.Archived });
 
       const historyResult = await EntityAdmin.getPublishingHistory(context, id);
@@ -3152,10 +3140,10 @@ describe('archiveEntity()', () => {
     if (expectOkResult(createResult)) {
       const { id } = createResult.value;
 
-      const archiveResult1 = await EntityAdmin.archiveEntity(context, id);
+      const archiveResult1 = await client.archiveEntity({ id });
       expectResultValue(archiveResult1, { id, publishState: EntityPublishState.Archived });
 
-      const archiveResult2 = await EntityAdmin.archiveEntity(context, id);
+      const archiveResult2 = await client.archiveEntity({ id });
       expectResultValue(archiveResult2, { id, publishState: EntityPublishState.Archived });
 
       const historyResult = await EntityAdmin.getPublishingHistory(context, id);
@@ -3174,16 +3162,16 @@ describe('archiveEntity()', () => {
     if (expectOkResult(createResult)) {
       const { id, _version: version } = createResult.value;
 
-      const publishResult = await EntityAdmin.publishEntities(context, [{ id, version }]);
+      const publishResult = await client.publishEntities([{ id, version }]);
       expectResultValue(publishResult, [{ id, publishState: EntityPublishState.Published }]);
 
-      const archiveResult = await EntityAdmin.archiveEntity(context, id);
+      const archiveResult = await client.archiveEntity({ id });
       expectErrorResult(archiveResult, ErrorType.BadRequest, 'Entity is published');
     }
   });
 
   test('Error: archive with invalid id', async () => {
-    const result = await EntityAdmin.archiveEntity(context, '5b14e69f-6612-4ddb-bb42-7be273104486');
+    const result = await client.archiveEntity({ id: '5b14e69f-6612-4ddb-bb42-7be273104486' });
     expectErrorResult(result, ErrorType.NotFound, 'No such entity');
   });
 });
@@ -3215,7 +3203,7 @@ describe('unarchiveEntity()', () => {
     if (expectOkResult(createResult)) {
       const { id, _name: name } = createResult.value;
 
-      const archiveResult = await EntityAdmin.archiveEntity(context, id);
+      const archiveResult = await client.archiveEntity({ id });
       expectResultValue(archiveResult, { id, publishState: EntityPublishState.Archived });
 
       const unarchiveResult = await EntityAdmin.unarchiveEntity(context, id);
@@ -3265,13 +3253,13 @@ describe('unarchiveEntity()', () => {
     if (expectOkResult(createResult)) {
       const { id, _version: version } = createResult.value;
 
-      const publishResult = await EntityAdmin.publishEntities(context, [{ id, version }]);
+      const publishResult = await client.publishEntities([{ id, version }]);
       expectResultValue(publishResult, [{ id, publishState: EntityPublishState.Published }]);
 
-      const unpublishResult = await EntityAdmin.unpublishEntities(context, [id]);
+      const unpublishResult = await client.unpublishEntities([{ id }]);
       expectResultValue(unpublishResult, [{ id, publishState: EntityPublishState.Withdrawn }]);
 
-      const archiveResult = await EntityAdmin.archiveEntity(context, id);
+      const archiveResult = await client.archiveEntity({ id });
       expectResultValue(archiveResult, { id, publishState: EntityPublishState.Archived });
 
       const unarchiveResult = await EntityAdmin.unarchiveEntity(context, id);
@@ -3321,7 +3309,7 @@ describe('getPublishingHistory()', () => {
     if (expectOkResult(createResult)) {
       const { id } = createResult.value;
 
-      const publishResult = await EntityAdmin.publishEntities(context, [{ id, version: 0 }]);
+      const publishResult = await client.publishEntities([{ id, version: 0 }]);
       expectResultValue(publishResult, [{ id, publishState: EntityPublishState.Published }]);
 
       const historyResult = await EntityAdmin.getPublishingHistory(context, id);
@@ -3350,10 +3338,10 @@ describe('getPublishingHistory()', () => {
     if (expectOkResult(createResult)) {
       const { id } = createResult.value;
 
-      const publishResult = await EntityAdmin.publishEntities(context, [{ id, version: 0 }]);
+      const publishResult = await client.publishEntities([{ id, version: 0 }]);
       expectResultValue(publishResult, [{ id, publishState: EntityPublishState.Published }]);
 
-      const unpublishResult = await EntityAdmin.unpublishEntities(context, [id]);
+      const unpublishResult = await client.unpublishEntities([{ id }]);
       expectResultValue(unpublishResult, [{ id, publishState: EntityPublishState.Withdrawn }]);
 
       const historyResult = await EntityAdmin.getPublishingHistory(context, id);
