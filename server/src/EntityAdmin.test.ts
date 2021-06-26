@@ -199,7 +199,7 @@ afterAll(async () => {
 
 async function ensureEntitiesExistForAdminOnlyEditBefore(context: SessionContext) {
   const requestedCount = 50;
-  const entitiesOfTypeCount = await EntityAdmin.getTotalCount(context, {
+  const entitiesOfTypeCount = await client.getTotalCount({
     entityTypes: ['AdminOnlyEditBefore'],
   });
 
@@ -2015,7 +2015,7 @@ describe('searchEntities()', () => {
 
 describe('getTotalCount', () => {
   test('Check that we get the correct count', async () => {
-    const result = await EntityAdmin.getTotalCount(context, {
+    const result = await client.getTotalCount({
       entityTypes: ['AdminOnlyEditBefore'],
     });
     if (expectOkResult(result)) {
@@ -2026,7 +2026,7 @@ describe('getTotalCount', () => {
   test('Query based on referencing, one reference', async () => {
     const { barId } = await createBarWithFooBazReferences(context, 1, 0);
 
-    const result = await EntityAdmin.getTotalCount(context, { referencing: barId });
+    const result = await client.getTotalCount({ referencing: barId });
     if (expectOkResult(result)) {
       expect(result.value).toBe(1);
     }
@@ -2035,7 +2035,7 @@ describe('getTotalCount', () => {
   test('Query based on referencing, no references', async () => {
     const { barId } = await createBarWithFooBazReferences(context, 0, 0);
 
-    const result = await EntityAdmin.getTotalCount(context, { referencing: barId });
+    const result = await client.getTotalCount({ referencing: barId });
     if (expectOkResult(result)) {
       expect(result.value).toBe(0);
     }
@@ -2044,7 +2044,7 @@ describe('getTotalCount', () => {
   test('Query based on referencing and entityTypes, one reference', async () => {
     const { barId } = await createBarWithFooBazReferences(context, 1, 1);
 
-    const result = await EntityAdmin.getTotalCount(context, {
+    const result = await client.getTotalCount({
       entityTypes: ['EntityAdminBaz'],
       referencing: barId,
     });
@@ -2056,7 +2056,7 @@ describe('getTotalCount', () => {
   test('Query based on referencing, two references from one entity', async () => {
     const { barId } = await createBarWithFooBazReferences(context, 0, 1, 2);
 
-    const result = await EntityAdmin.getTotalCount(context, { referencing: barId });
+    const result = await client.getTotalCount({ referencing: barId });
     if (expectOkResult(result)) {
       expect(result.value).toBe(1);
     }
@@ -2082,7 +2082,7 @@ describe('getTotalCount', () => {
     if (expectOkResult(createResult)) {
       const searchResult = await EntityAdmin.searchEntities(context, { boundingBox });
 
-      const totalResult = await EntityAdmin.getTotalCount(context, { boundingBox });
+      const totalResult = await client.getTotalCount({ boundingBox });
       if (expectOkResult(searchResult) && expectOkResult(totalResult)) {
         // Hopefully there aren't too many entities in the bounding box
         expect(searchResult.value?.pageInfo.hasNextPage).toBeFalsy();
@@ -2093,7 +2093,7 @@ describe('getTotalCount', () => {
   });
 
   test('Query based on text', async () => {
-    const resultBefore = await EntityAdmin.getTotalCount(context, { text: 'sensational clown' });
+    const resultBefore = await client.getTotalCount({ text: 'sensational clown' });
     if (expectOkResult(resultBefore)) {
       expectOkResult(
         await EntityAdmin.createEntity(context, {
@@ -2103,7 +2103,7 @@ describe('getTotalCount', () => {
         })
       );
 
-      const resultAfter = await EntityAdmin.getTotalCount(context, { text: 'sensational clown' });
+      const resultAfter = await client.getTotalCount({ text: 'sensational clown' });
       if (expectOkResult(resultAfter)) {
         expect(resultAfter.value).toBe(resultBefore.value + 1);
       }

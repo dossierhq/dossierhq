@@ -1,7 +1,7 @@
 import type { AdminClient, AdminClientOperation } from '@datadata/core';
 import { AdminClientOperationName, createBaseAdminClient } from '@datadata/core';
 import type { SessionContext } from '..';
-import { getEntities, getEntity } from './EntityAdmin';
+import { getEntities, getEntity, getTotalCount } from './EntityAdmin';
 
 export function createServerClient({
   resolveContext,
@@ -37,6 +37,14 @@ async function terminatingMiddleware(
           references.map(({ id }) => id)
         )
       );
+      break;
+    }
+    case AdminClientOperationName.GetTotalCount: {
+      const {
+        args: { query },
+        resolve,
+      } = operation as AdminClientOperation<AdminClientOperationName.GetTotalCount>;
+      resolve(await getTotalCount(context, query));
       break;
     }
     default:
