@@ -12,18 +12,23 @@ export interface AdminClient {
   getEntity(
     reference: EntityReference | EntityVersionReference
   ): PromiseResult<AdminEntity, ErrorType.NotFound>;
+
+  getEntities(references: EntityReference[]): Promise<Result<AdminEntity, ErrorType.NotFound>[]>;
 }
 
 export enum AdminClientOperationName {
-  GetEntity,
+  GetEntity = 'get-entity',
+  GetEntities = 'get-entities',
 }
 
 interface AdminClientOperationArguments {
   [AdminClientOperationName.GetEntity]: { reference: EntityReference | EntityVersionReference };
+  [AdminClientOperationName.GetEntities]: { references: EntityReference[] };
 }
 
 interface AdminClientOperationReturn {
   [AdminClientOperationName.GetEntity]: Result<AdminEntity, ErrorType.NotFound>;
+  [AdminClientOperationName.GetEntities]: Result<AdminEntity, ErrorType.NotFound>[];
 }
 
 export interface AdminClientOperation<TName extends AdminClientOperationName> {
@@ -53,10 +58,19 @@ class BaseAdminClient<TContext> implements AdminClient {
 
   getEntity(
     reference: EntityReference | EntityVersionReference
-  ): PromiseResult<AdminEntity, ErrorType.NotFound> {
+  ): Promise<AdminClientOperationReturn[AdminClientOperationName.GetEntity]> {
     return this.executeOperation({
       name: AdminClientOperationName.GetEntity,
       args: { reference },
+    });
+  }
+
+  getEntities(
+    references: EntityReference[]
+  ): Promise<AdminClientOperationReturn[AdminClientOperationName.GetEntities]> {
+    return this.executeOperation({
+      name: AdminClientOperationName.GetEntities,
+      args: { references },
     });
   }
 
@@ -66,8 +80,12 @@ class BaseAdminClient<TContext> implements AdminClient {
     const context = await this.resolveContext();
     let result: AdminClientOperationReturn[TName] | undefined;
     const resolve = (res: AdminClientOperationReturn[TName]) => (result = res);
+    const operationWithResolve: AdminClientOperation<TName> = { ...operation, resolve };
     //TODO support pipeline
-    await this.pipeline[0](context, { ...operation, resolve });
+    await this.pipeline[0](
+      context,
+      operationWithResolve as unknown as AdminClientOperation<AdminClientOperationName>
+    );
     assertIsDefined(result);
     return result;
   }
