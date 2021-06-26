@@ -1,4 +1,4 @@
-import { PublishEventKind, RichTextBlockType } from '@datadata/core';
+import { PublishingEventKind, RichTextBlockType } from '@datadata/core';
 import type { JsonInMemoryEntity } from '@datadata/testing-utils';
 
 export const foo1Id = 'fc66b4d7-61ff-44d4-8f68-cb7f526df046';
@@ -43,7 +43,7 @@ export const entitiesFixture: JsonInMemoryEntity[] = [
     ],
     publishEvents: [
       {
-        kind: PublishEventKind.Publish,
+        kind: PublishingEventKind.Publish,
         version: 0,
         publishedAt: '2021-03-11T20:19:39.343Z',
         publishedBy: userId1,
@@ -70,13 +70,13 @@ export const entitiesFixture: JsonInMemoryEntity[] = [
     ],
     publishEvents: [
       {
-        kind: PublishEventKind.Publish,
+        kind: PublishingEventKind.Publish,
         version: 0,
         publishedAt: '2021-03-10T18:19:39.343Z',
         publishedBy: userId1,
       },
       {
-        kind: PublishEventKind.Archive,
+        kind: PublishingEventKind.Archive,
         version: null,
         publishedAt: '2021-03-11T20:19:39.343Z',
         publishedBy: userId1,

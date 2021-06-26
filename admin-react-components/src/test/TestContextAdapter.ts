@@ -47,9 +47,9 @@ export class TestContextAdapter implements DataDataContextAdapter {
     return await InMemoryAdmin.getEntityHistory(this.#context, id);
   };
 
-  getPublishHistory: DataDataContextAdapter['getPublishHistory'] = async (id) => {
+  getPublishingHistory: DataDataContextAdapter['getPublishingHistory'] = async (id) => {
     if (this.#interceptor) await this.#interceptor();
-    return await InMemoryAdmin.getPublishHistory(this.#context, id);
+    return await InMemoryAdmin.getPublishingHistory(this.#context, id);
   };
 
   searchEntities: DataDataContextAdapter['searchEntities'] = async (query, paging) => {

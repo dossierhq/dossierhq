@@ -162,7 +162,7 @@ exports[`Storyshots Domain/EntityMetadata Archived Foo 1`] = `
 </div>
 `;
 
-exports[`Storyshots Domain/EntityMetadata Archived Foo Publish History 1`] = `
+exports[`Storyshots Domain/EntityMetadata Archived Foo Publishing History 1`] = `
 <div
   className="dd flex-column has-shadow has-background py-2 g-2"
 >
@@ -452,7 +452,7 @@ exports[`Storyshots Domain/EntityMetadata Full Foo 1`] = `
 </div>
 `;
 
-exports[`Storyshots Domain/EntityMetadata Full Foo Publish History 1`] = `
+exports[`Storyshots Domain/EntityMetadata Full Foo Publishing History 1`] = `
 <div
   className="dd flex-column has-shadow has-background py-2 g-2"
 >

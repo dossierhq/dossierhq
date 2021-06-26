@@ -5,8 +5,8 @@ import type {
   EntityVersionInfo,
   ErrorType,
   PageInfo,
-  PublishEvent,
-  PublishHistory,
+  PublishingEvent,
+  PublishingHistory,
   Result,
 } from '.';
 import { createErrorResult, ok } from '.';
@@ -33,11 +33,11 @@ export interface JsonEntityVersionInfo extends Omit<EntityVersionInfo, 'createdA
   createdAt: string;
 }
 
-export interface JsonPublishHistory extends Omit<PublishHistory, 'events'> {
-  events: JsonPublishEvent[];
+export interface JsonPublishingHistory extends Omit<PublishingHistory, 'events'> {
+  events: JsonPublishingEvent[];
 }
 
-export interface JsonPublishEvent extends Omit<PublishEvent, 'publishedAt'> {
+export interface JsonPublishingEvent extends Omit<PublishingEvent, 'publishedAt'> {
   publishedAt: string;
 }
 
@@ -79,10 +79,12 @@ export function convertJsonEntityHistory(entityHistory: JsonEntityHistory): Enti
   };
 }
 
-export function convertJsonPublishHistory(publishHistory: JsonPublishHistory): PublishHistory {
+export function convertJsonPublishingHistory(
+  publishingHistory: JsonPublishingHistory
+): PublishingHistory {
   return {
-    ...publishHistory,
-    events: publishHistory.events.map((version) => ({
+    ...publishingHistory,
+    events: publishingHistory.events.map((version) => ({
       ...version,
       publishedAt: new Date(version.publishedAt),
     })),

@@ -1,5 +1,5 @@
 import type { AdminEntity } from '@datadata/core';
-import { CoreTestUtils, EntityPublishState, PublishEventKind, Schema } from '@datadata/core';
+import { CoreTestUtils, EntityPublishState, PublishingEventKind, Schema } from '@datadata/core';
 import { v4 as uuidv4 } from 'uuid';
 import { InMemoryAdmin, InMemoryServer } from '.';
 
@@ -21,7 +21,7 @@ describe('getEntity()', () => {
         publishedVersion: 0,
         publishEvents: [
           {
-            kind: PublishEventKind.Publish,
+            kind: PublishingEventKind.Publish,
             version: 0,
             publishedBy: 'user0',
             publishedAt: '2021-03-03T20:51:12.671Z',

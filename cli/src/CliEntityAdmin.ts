@@ -693,8 +693,8 @@ export async function showEntityHistory(context: SessionContext, id: string): Pr
   }
 }
 
-export async function showPublishHistory(context: SessionContext, id: string): Promise<void> {
-  const result = await EntityAdmin.getPublishHistory(context, id);
+export async function showPublishingHistory(context: SessionContext, id: string): Promise<void> {
+  const result = await EntityAdmin.getPublishingHistory(context, id);
   if (result.isError()) {
     logErrorResult('Failed retrieving history', result);
     return;

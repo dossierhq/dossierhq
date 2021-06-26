@@ -16,7 +16,7 @@ import type {
   FieldSpecification,
   PageInfo,
   Paging,
-  PublishHistory,
+  PublishingHistory,
   RichText,
   ValueItem,
   ValueTypeSpecification,
@@ -258,12 +258,12 @@ export async function loadVersionHistory<TContext extends SessionGraphQLContext>
   return result.value;
 }
 
-export async function loadPublishHistory<TContext extends SessionGraphQLContext>(
+export async function loadPublishingHistory<TContext extends SessionGraphQLContext>(
   context: TContext,
   id: string
-): Promise<PublishHistory> {
+): Promise<PublishingHistory> {
   const sessionContext = getSessionContext(context);
-  const result = await EntityAdmin.getPublishHistory(sessionContext, id);
+  const result = await EntityAdmin.getPublishingHistory(sessionContext, id);
   if (result.isError()) {
     throw result.toError();
   }

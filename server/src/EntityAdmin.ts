@@ -11,9 +11,9 @@ import type {
   ErrorType,
   Paging,
   PromiseResult,
-  PublishEvent,
-  PublishEventKind,
-  PublishHistory,
+  PublishingEvent,
+  PublishingEventKind,
+  PublishingHistory,
   PublishingResult,
   Result,
 } from '@datadata/core';
@@ -22,7 +22,7 @@ import { toOpaqueCursor } from './Connection';
 import * as Db from './Database';
 import type {
   EntitiesTable,
-  EntityPublishEventsTable,
+  EntityPublishingEventsTable,
   EntityVersionsTable,
 } from './DatabaseTables';
 import {
@@ -444,7 +444,7 @@ export async function publishEntities(
 
     // Step 4: Create publish event
     const qb = new QueryBuilder(
-      'INSERT INTO entity_publish_events (entities_id, entity_versions_id, published_by, kind) VALUES'
+      'INSERT INTO entity_publishing_events (entities_id, entity_versions_id, published_by, kind) VALUES'
     );
     const subjectValue = qb.addValue(context.session.subjectInternalId);
     for (const versionInfo of versionsInfo) {
@@ -529,7 +529,7 @@ export async function unpublishEntities(
 
     // Step 4: Create publish event
     const qb = new QueryBuilder(
-      'INSERT INTO entity_publish_events (entities_id, entity_versions_id, published_by, kind) VALUES'
+      'INSERT INTO entity_publishing_events (entities_id, entity_versions_id, published_by, kind) VALUES'
     );
     const subjectValue = qb.addValue(context.session.subjectInternalId);
     for (const entityInfo of entitiesInfo) {
@@ -571,7 +571,7 @@ export async function archiveEntity(
       Db.queryNone(context, 'UPDATE entities SET archived = TRUE WHERE id = $1', [entityId]),
       Db.queryNone(
         context,
-        "INSERT INTO entity_publish_events (entities_id, kind, published_by) VALUES ($1, 'archive', $2)",
+        "INSERT INTO entity_publishing_events (entities_id, kind, published_by) VALUES ($1, 'archive', $2)",
         [entityId, context.session.subjectInternalId]
       ),
     ]);
@@ -611,7 +611,7 @@ export async function unarchiveEntity(
         Db.queryNone(context, 'UPDATE entities SET archived = FALSE WHERE id = $1', [entityId]),
         Db.queryNone(
           context,
-          "INSERT INTO entity_publish_events (entities_id, kind, published_by) VALUES ($1, 'unarchive', $2)",
+          "INSERT INTO entity_publishing_events (entities_id, kind, published_by) VALUES ($1, 'unarchive', $2)",
           [entityId, context.session.subjectInternalId]
         ),
       ]);
@@ -698,10 +698,10 @@ export async function getEntityHistory(
   return ok(result);
 }
 
-export async function getPublishHistory(
+export async function getPublishingHistory(
   context: SessionContext,
   id: string
-): PromiseResult<PublishHistory, ErrorType.NotFound> {
+): PromiseResult<PublishingHistory, ErrorType.NotFound> {
   const entityInfo = await Db.queryNoneOrOne<Pick<EntitiesTable, 'id'>>(
     context,
     'SELECT id FROM entities WHERE uuid = $1',
@@ -713,13 +713,13 @@ export async function getPublishHistory(
 
   const publishEvents = await Db.queryMany<
     Pick<EntityVersionsTable, 'version'> &
-      Pick<EntityPublishEventsTable, 'published_at' | 'kind'> & {
+      Pick<EntityPublishingEventsTable, 'published_at' | 'kind'> & {
         published_by: string;
       }
   >(
     context,
     `SELECT ev.version, s.uuid AS published_by, epe.published_at, epe.kind
-      FROM entity_publish_events epe
+      FROM entity_publishing_events epe
         LEFT OUTER JOIN entity_versions ev ON (epe.entity_versions_id = ev.id)
         INNER JOIN subjects s ON (epe.published_by = s.id)
       WHERE epe.entities_id = $1
@@ -729,9 +729,9 @@ export async function getPublishHistory(
   return ok({
     id,
     events: publishEvents.map((it) => {
-      const event: PublishEvent = {
+      const event: PublishingEvent = {
         version: it.version,
-        kind: it.kind as PublishEventKind,
+        kind: it.kind as PublishingEventKind,
         publishedAt: it.published_at,
         publishedBy: it.published_by,
       };

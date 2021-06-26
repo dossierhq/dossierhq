@@ -1,8 +1,8 @@
-import type { JsonPublishHistory } from '@datadata/core';
+import type { JsonPublishingHistory } from '@datadata/core';
 import { EntityAdmin } from '@datadata/server';
 import Joi from 'joi';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import type { PublishHistoryResponse } from '../../../types/ResponseTypes';
+import type { PublishingHistoryResponse } from '../../../types/ResponseTypes';
 import { errorResultToBoom } from '../../../utils/ErrorUtils';
 import { handleGetAsync, validateRequestQuery } from '../../../utils/HandlerUtils';
 import { getServerConnection, getSessionContextForRequest } from '../../../utils/ServerUtils';
@@ -16,7 +16,7 @@ const requestSchema = Joi.object<RequestQuery>({
 
 export default async (
   req: NextApiRequest,
-  res: NextApiResponse<PublishHistoryResponse>
+  res: NextApiResponse<PublishingHistoryResponse>
 ): Promise<void> => {
   await handleGetAsync(req, res, async () => {
     const { id } = validateRequestQuery(req.query, requestSchema);
@@ -28,10 +28,10 @@ export default async (
     }
     const context = authResult.value;
 
-    const result = await EntityAdmin.getPublishHistory(context, id);
+    const result = await EntityAdmin.getPublishingHistory(context, id);
     if (result.isError()) {
       throw errorResultToBoom(result);
     }
-    return result.value as unknown as JsonPublishHistory;
+    return result.value as unknown as JsonPublishingHistory;
   });
 };
