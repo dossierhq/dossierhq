@@ -31,6 +31,7 @@ export type {
   Paging,
   PublishEvent,
   PublishHistory,
+  PublishingResult,
   RichText,
   RichTextBlock,
   ValueItem,

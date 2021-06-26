@@ -2768,7 +2768,10 @@ describe('updateEntity()', () => {
     if (expectOkResult(createResult)) {
       const { id, _name: name } = createResult.value;
 
-      expectOkResult(await EntityAdmin.archiveEntity(context, id));
+      const archiveResult = await EntityAdmin.archiveEntity(context, id);
+      if (expectOkResult(archiveResult)) {
+        expect(archiveResult.value).toEqual({ id, publishState: EntityPublishState.Archived });
+      }
 
       const updateResult = await EntityAdmin.updateEntity(context, {
         id,
@@ -2922,7 +2925,10 @@ describe('publishEntities()', () => {
     if (expectOkResult(createBaz1Result)) {
       const { id, _name: name, _version: version } = createBaz1Result.value;
 
-      expectOkResult(await EntityAdmin.archiveEntity(context, id));
+      const archiveResult = await EntityAdmin.archiveEntity(context, id);
+      if (expectOkResult(archiveResult)) {
+        expect(archiveResult.value).toEqual({ id, publishState: EntityPublishState.Archived });
+      }
 
       expectOkResult(await EntityAdmin.publishEntities(context, [{ id, version }]));
 
@@ -3191,7 +3197,10 @@ describe('unpublishEntities()', () => {
     if (expectOkResult(createResult)) {
       const { id } = createResult.value;
 
-      expectOkResult(await EntityAdmin.archiveEntity(context, id));
+      const archiveResult = await EntityAdmin.archiveEntity(context, id);
+      if (expectOkResult(archiveResult)) {
+        expect(archiveResult.value).toEqual({ id, publishState: EntityPublishState.Archived });
+      }
 
       expectErrorResult(
         await EntityAdmin.unpublishEntities(context, [id]),
@@ -3224,7 +3233,10 @@ describe('archiveEntity()', () => {
     if (expectOkResult(createResult)) {
       const { id, _name: name } = createResult.value;
 
-      expectOkResult(await EntityAdmin.archiveEntity(context, id));
+      const archiveResult = await EntityAdmin.archiveEntity(context, id);
+      if (expectOkResult(archiveResult)) {
+        expect(archiveResult.value).toEqual({ id, publishState: EntityPublishState.Archived });
+      }
 
       const historyResult = await EntityAdmin.getPublishHistory(context, id);
       if (expectOkResult(historyResult)) {
@@ -3265,8 +3277,15 @@ describe('archiveEntity()', () => {
     if (expectOkResult(createResult)) {
       const { id } = createResult.value;
 
-      expectOkResult(await EntityAdmin.archiveEntity(context, id));
-      expectOkResult(await EntityAdmin.archiveEntity(context, id));
+      const archiveResult1 = await EntityAdmin.archiveEntity(context, id);
+      if (expectOkResult(archiveResult1)) {
+        expect(archiveResult1.value).toEqual({ id, publishState: EntityPublishState.Archived });
+      }
+
+      const archiveResult2 = await EntityAdmin.archiveEntity(context, id);
+      if (expectOkResult(archiveResult2)) {
+        expect(archiveResult2.value).toEqual({ id, publishState: EntityPublishState.Archived });
+      }
 
       const historyResult = await EntityAdmin.getPublishHistory(context, id);
       if (expectOkResult(historyResult)) {
@@ -3307,7 +3326,10 @@ describe('unarchiveEntity()', () => {
     if (expectOkResult(createResult)) {
       const { id } = createResult.value;
 
-      expectOkResult(await EntityAdmin.unarchiveEntity(context, id));
+      const unarchiveResult = await EntityAdmin.unarchiveEntity(context, id);
+      if (expectOkResult(unarchiveResult)) {
+        expect(unarchiveResult.value).toEqual({ id, publishState: EntityPublishState.Draft });
+      }
 
       const historyResult = await EntityAdmin.getPublishHistory(context, id);
       if (expectOkResult(historyResult)) {
@@ -3325,8 +3347,15 @@ describe('unarchiveEntity()', () => {
     if (expectOkResult(createResult)) {
       const { id, _name: name } = createResult.value;
 
-      expectOkResult(await EntityAdmin.archiveEntity(context, id));
-      expectOkResult(await EntityAdmin.unarchiveEntity(context, id));
+      const archiveResult = await EntityAdmin.archiveEntity(context, id);
+      if (expectOkResult(archiveResult)) {
+        expect(archiveResult.value).toEqual({ id, publishState: EntityPublishState.Archived });
+      }
+
+      const unarchiveResult = await EntityAdmin.unarchiveEntity(context, id);
+      if (expectOkResult(unarchiveResult)) {
+        expect(unarchiveResult.value).toEqual({ id, publishState: EntityPublishState.Draft });
+      }
 
       const historyResult = await EntityAdmin.getPublishHistory(context, id);
       if (expectOkResult(historyResult)) {
@@ -3361,6 +3390,30 @@ describe('unarchiveEntity()', () => {
           _publishState: EntityPublishState.Draft,
           title: 'Bar title',
         });
+      }
+    }
+  });
+
+  test('Unarchive once published, then archived entity', async () => {
+    const createResult = await EntityAdmin.createEntity(context, {
+      _type: 'EntityAdminBar',
+      _name: 'Bar name',
+      title: 'Bar title',
+    });
+    if (expectOkResult(createResult)) {
+      const { id, _version: version } = createResult.value;
+
+      expectOkResult(await EntityAdmin.publishEntities(context, [{ id, version }]));
+      expectOkResult(await EntityAdmin.unpublishEntities(context, [id]));
+
+      const archiveResult = await EntityAdmin.archiveEntity(context, id);
+      if (expectOkResult(archiveResult)) {
+        expect(archiveResult.value).toEqual({ id, publishState: EntityPublishState.Archived });
+      }
+
+      const unarchiveResult = await EntityAdmin.unarchiveEntity(context, id);
+      if (expectOkResult(unarchiveResult)) {
+        expect(unarchiveResult.value).toEqual({ id, publishState: EntityPublishState.Withdrawn });
       }
     }
   });
