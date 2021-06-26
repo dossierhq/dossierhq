@@ -34,7 +34,11 @@ describe('getEntity()', () => {
     });
     if (expectOkResult(createResult)) {
       const { id, _name: name, _version: version } = createResult.value;
-      expectOkResult(await EntityAdmin.archiveEntity(context, id));
+
+      const archiveResult = await EntityAdmin.archiveEntity(context, id);
+      if (expectOkResult(archiveResult)) {
+        expect(archiveResult.value).toEqual({ id, publishState: EntityPublishState.Archived });
+      }
 
       const publishResult = await EntityAdmin.publishEntities(context, [{ id, version }]);
       if (expectOkResult(publishResult)) {
@@ -61,7 +65,11 @@ describe('getEntity()', () => {
     });
     if (expectOkResult(createResult)) {
       const { id } = createResult.value;
-      expectOkResult(await EntityAdmin.archiveEntity(context, id));
+
+      const archiveResult = await EntityAdmin.archiveEntity(context, id);
+      if (expectOkResult(archiveResult)) {
+        expect(archiveResult.value).toEqual({ id, publishState: EntityPublishState.Archived });
+      }
 
       const result = await PublishedEntity.getEntity(context, id);
       expectErrorResult(result, ErrorType.NotFound, 'No such entity');
@@ -155,7 +163,11 @@ describe('getEntities()', () => {
     });
     if (expectOkResult(createResult)) {
       const { id } = createResult.value;
-      expectOkResult(await EntityAdmin.archiveEntity(context, id));
+
+      const archiveResult = await EntityAdmin.archiveEntity(context, id);
+      if (expectOkResult(archiveResult)) {
+        expect(archiveResult.value).toEqual({ id, publishState: EntityPublishState.Archived });
+      }
 
       const result = await PublishedEntity.getEntities(context, [id]);
       expect(result).toHaveLength(1);
