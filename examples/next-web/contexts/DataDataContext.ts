@@ -22,10 +22,11 @@ import type {
   EntityUpdateRequest,
 } from '../types/RequestTypes';
 import type {
-  ActionResponse,
   EntityHistoryResponse,
   EntityResponse,
   PublishingHistoryResponse,
+  PublishingResultListResponse,
+  PublishingResultResponse,
   SchemaResponse,
   SearchEntitiesResponse,
 } from '../types/ResponseTypes';
@@ -160,73 +161,53 @@ class ContextAdapter implements DataDataContextAdapter {
 
   publishEntities: DataDataContextAdapter['publishEntities'] = async (entities) => {
     const body: EntityPublishRequest = { items: entities };
-    const result = await fetchJsonResult<ActionResponse, ErrorType.BadRequest | ErrorType.NotFound>(
-      [ErrorType.BadRequest, ErrorType.NotFound],
-      urls.publishEntities,
-      {
-        method: 'PUT',
-        headers: { 'content-type': 'application/json' },
-        body: JSON.stringify(body),
-      }
-    );
-
-    if (result.isOk()) {
-      return ok(undefined);
-    }
+    const result = await fetchJsonResult<
+      PublishingResultListResponse,
+      ErrorType.BadRequest | ErrorType.NotFound
+    >([ErrorType.BadRequest, ErrorType.NotFound], urls.publishEntities, {
+      method: 'PUT',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(body),
+    });
     return result;
   };
 
   unpublishEntities: DataDataContextAdapter['unpublishEntities'] = async (entityIds) => {
     const body: EntityUnpublishRequest = { items: entityIds };
-    const result = await fetchJsonResult<ActionResponse, ErrorType.BadRequest | ErrorType.NotFound>(
-      [ErrorType.BadRequest, ErrorType.NotFound],
-      urls.unpublishEntities,
-      {
-        method: 'PUT',
-        headers: { 'content-type': 'application/json' },
-        body: JSON.stringify(body),
-      }
-    );
-
-    if (result.isOk()) {
-      return ok(undefined);
-    }
+    const result = await fetchJsonResult<
+      PublishingResultListResponse,
+      ErrorType.BadRequest | ErrorType.NotFound
+    >([ErrorType.BadRequest, ErrorType.NotFound], urls.unpublishEntities, {
+      method: 'PUT',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(body),
+    });
     return result;
   };
 
   archiveEntity: DataDataContextAdapter['archiveEntity'] = async (entityId) => {
     const body: EntityArchiveRequest = {};
-    const result = await fetchJsonResult<ActionResponse, ErrorType.BadRequest | ErrorType.NotFound>(
-      [ErrorType.BadRequest, ErrorType.NotFound],
-      urls.archiveEntity(entityId),
-      {
-        method: 'PUT',
-        headers: { 'content-type': 'application/json' },
-        body: JSON.stringify(body),
-      }
-    );
-
-    if (result.isOk()) {
-      return ok(undefined);
-    }
+    const result = await fetchJsonResult<
+      PublishingResultResponse,
+      ErrorType.BadRequest | ErrorType.NotFound
+    >([ErrorType.BadRequest, ErrorType.NotFound], urls.archiveEntity(entityId), {
+      method: 'PUT',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(body),
+    });
     return result;
   };
 
   unarchiveEntity: DataDataContextAdapter['unarchiveEntity'] = async (entityId) => {
     const body: EntityUnarchiveRequest = {};
-    const result = await fetchJsonResult<ActionResponse, ErrorType.BadRequest | ErrorType.NotFound>(
-      [ErrorType.BadRequest, ErrorType.NotFound],
-      urls.unarchiveEntity(entityId),
-      {
-        method: 'PUT',
-        headers: { 'content-type': 'application/json' },
-        body: JSON.stringify(body),
-      }
-    );
-
-    if (result.isOk()) {
-      return ok(undefined);
-    }
+    const result = await fetchJsonResult<
+      PublishingResultResponse,
+      ErrorType.BadRequest | ErrorType.NotFound
+    >([ErrorType.BadRequest, ErrorType.NotFound], urls.unarchiveEntity(entityId), {
+      method: 'PUT',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(body),
+    });
     return result;
   };
 }

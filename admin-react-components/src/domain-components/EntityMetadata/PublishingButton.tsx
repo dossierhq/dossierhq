@@ -1,4 +1,4 @@
-import type { ErrorType, PromiseResult } from '@datadata/core';
+import type { ErrorType, PromiseResult, PublishingResult } from '@datadata/core';
 import { EntityPublishState } from '@datadata/core';
 import React, { useContext, useState } from 'react';
 import type { DataDataContextValue } from '../..';
@@ -6,7 +6,7 @@ import { ButtonWithDropDown, DataDataContext } from '../..';
 
 interface PublishAction {
   name: string;
-  handler: () => PromiseResult<void, ErrorType>;
+  handler: () => PromiseResult<PublishingResult | PublishingResult[], ErrorType>;
 }
 
 export function PublishingButton({

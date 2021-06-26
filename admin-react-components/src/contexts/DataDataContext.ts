@@ -11,6 +11,7 @@ import type {
   Paging,
   PromiseResult,
   PublishingHistory,
+  PublishingResult,
   Schema,
 } from '@datadata/core';
 import { createErrorResultFromError, ErrorType } from '@datadata/core';
@@ -53,16 +54,22 @@ export interface DataDataContextAdapter {
       id: string;
       version: number;
     }[]
-  ): PromiseResult<void, ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic>;
+  ): PromiseResult<
+    PublishingResult[],
+    ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic
+  >;
   unpublishEntities(
     entityIds: string[]
-  ): PromiseResult<void, ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic>;
+  ): PromiseResult<
+    PublishingResult[],
+    ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic
+  >;
   archiveEntity(
     entityId: string
-  ): PromiseResult<void, ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic>;
+  ): PromiseResult<PublishingResult, ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic>;
   unarchiveEntity(
     entityId: string
-  ): PromiseResult<void, ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic>;
+  ): PromiseResult<PublishingResult, ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic>;
 }
 
 enum FetcherActions {
@@ -216,12 +223,15 @@ export class DataDataContextValue {
       id: string;
       version: number;
     }[]
-  ): PromiseResult<void, ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic> => {
+  ): PromiseResult<
+    PublishingResult[],
+    ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic
+  > => {
     try {
       const result = await this.#adapter.publishEntities(entities);
       if (result.isOk()) {
-        for (const entity of entities) {
-          this.invalidateEntityPublished(entity.id);
+        for (const publishResult of result.value) {
+          this.invalidateAfterPublishingEvent(publishResult);
         }
       }
       return result;
@@ -232,12 +242,15 @@ export class DataDataContextValue {
 
   unpublishEntities = async (
     entityIds: string[]
-  ): PromiseResult<void, ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic> => {
+  ): PromiseResult<
+    PublishingResult[],
+    ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic
+  > => {
     try {
       const result = await this.#adapter.unpublishEntities(entityIds);
       if (result.isOk()) {
-        for (const entityId of entityIds) {
-          this.invalidateEntityPublished(entityId);
+        for (const publishResult of result.value) {
+          this.invalidateAfterPublishingEvent(publishResult);
         }
       }
       return result;
@@ -248,11 +261,14 @@ export class DataDataContextValue {
 
   archiveEntity = async (
     id: string
-  ): PromiseResult<void, ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic> => {
+  ): PromiseResult<
+    PublishingResult,
+    ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic
+  > => {
     try {
       const result = await this.#adapter.archiveEntity(id);
       if (result.isOk()) {
-        this.invalidateEntityPublished(id);
+        this.invalidateAfterPublishingEvent(result.value);
       }
       return result;
     } catch (error) {
@@ -262,11 +278,14 @@ export class DataDataContextValue {
 
   unarchiveEntity = async (
     id: string
-  ): PromiseResult<void, ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic> => {
+  ): PromiseResult<
+    PublishingResult,
+    ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic
+  > => {
     try {
       const result = await this.#adapter.unarchiveEntity(id);
       if (result.isOk()) {
-        this.invalidateEntityPublished(id);
+        this.invalidateAfterPublishingEvent(result.value);
       }
       return result;
     } catch (error) {
@@ -279,11 +298,20 @@ export class DataDataContextValue {
     mutate([this.#rootKey, FetcherActions.UseEntityHistory, entity.id]);
   }
 
-  private invalidateEntityPublished(id: string) {
+  private invalidateAfterPublishingEvent(publishingResult: PublishingResult) {
+    const { id, publishState } = publishingResult;
     mutate([this.#rootKey, FetcherActions.UseEntityHistory, id]);
     mutate([this.#rootKey, FetcherActions.UsePublishingHistory, id]);
-    // for publish state
-    mutate([this.#rootKey, FetcherActions.UseEntity, id, null]);
+    mutate(
+      [this.#rootKey, FetcherActions.UseEntity, id, null],
+      (cachedValue: AdminEntity | undefined) => {
+        if (cachedValue) {
+          const updatedValue: AdminEntity = { ...cachedValue, _publishState: publishState };
+          return updatedValue;
+        }
+        return undefined;
+      }
+    );
   }
 
   private fetcher = async (
