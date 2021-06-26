@@ -1,5 +1,4 @@
-import type { AdminEntity } from '@datadata/core';
-import { EntityPublishState } from '@datadata/core';
+import { assertIsDefined, EntityPublishState } from '@datadata/core';
 import type { SessionContext } from '@datadata/server';
 import type { ItemSelectorItem, ItemSelectorSeparator } from './widgets';
 import { showItemSelector } from './widgets';
@@ -10,7 +9,7 @@ import * as CliUtils from './CliUtils';
 
 interface State {
   readonly context: SessionContext;
-  currentEntity: AdminEntity | null;
+  currentEntity: { id: string; publishState: EntityPublishState } | null;
 }
 
 interface MainActionItem extends ItemSelectorItem {
@@ -36,7 +35,8 @@ function createMainActions(state: State): Array<MainActionItem | ItemSelectorSep
           null
         );
         if (result.isOk()) {
-          state.currentEntity = result.value;
+          const { id, _publishState: publishState } = result.value;
+          state.currentEntity = { id, publishState };
         }
       },
     },
@@ -46,7 +46,8 @@ function createMainActions(state: State): Array<MainActionItem | ItemSelectorSep
       action: async () => {
         const createdEntity = await CliEntityAdmin.createEntity(state.context);
         if (createdEntity) {
-          state.currentEntity = createdEntity;
+          const { id, _publishState: publishState } = createdEntity;
+          state.currentEntity = { id, publishState };
         }
       },
     },
@@ -64,10 +65,10 @@ function createMainActions(state: State): Array<MainActionItem | ItemSelectorSep
       name: 'Edit entity',
       enabled: !!state.currentEntity,
       action: async () => {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        const entity = await CliEntityAdmin.editEntity(state.context, state.currentEntity!.id);
+        assertIsDefined(state.currentEntity);
+        const entity = await CliEntityAdmin.editEntity(state.context, state.currentEntity.id);
         if (entity) {
-          state.currentEntity = entity;
+          state.currentEntity.publishState = entity._publishState;
         }
       },
     },
@@ -76,10 +77,13 @@ function createMainActions(state: State): Array<MainActionItem | ItemSelectorSep
       name: 'Publish entity',
       enabled: !!state.currentEntity,
       action: async () => {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        const entity = await CliEntityAdmin.publishEntity(state.context, state.currentEntity!.id);
-        if (entity) {
-          state.currentEntity = entity;
+        assertIsDefined(state.currentEntity);
+        const publishState = await CliEntityAdmin.publishEntity(
+          state.context,
+          state.currentEntity.id
+        );
+        if (publishState) {
+          state.currentEntity.publishState = publishState;
         }
       },
     },
@@ -89,13 +93,16 @@ function createMainActions(state: State): Array<MainActionItem | ItemSelectorSep
       enabled:
         !!state.currentEntity &&
         [EntityPublishState.Published, EntityPublishState.Modified].includes(
-          state.currentEntity._publishState
+          state.currentEntity.publishState
         ),
       action: async () => {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        const entity = await CliEntityAdmin.unpublishEntity(state.context, state.currentEntity!.id);
-        if (entity) {
-          state.currentEntity = entity;
+        assertIsDefined(state.currentEntity);
+        const publishState = await CliEntityAdmin.unpublishEntity(
+          state.context,
+          state.currentEntity.id
+        );
+        if (publishState) {
+          state.currentEntity.publishState = publishState;
         }
       },
     },
@@ -105,13 +112,16 @@ function createMainActions(state: State): Array<MainActionItem | ItemSelectorSep
       enabled:
         !!state.currentEntity &&
         [EntityPublishState.Draft, EntityPublishState.Withdrawn].includes(
-          state.currentEntity._publishState
+          state.currentEntity.publishState
         ),
       action: async () => {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        const entity = await CliEntityAdmin.archiveEntity(state.context, state.currentEntity!.id);
-        if (entity) {
-          state.currentEntity = entity;
+        assertIsDefined(state.currentEntity);
+        const publishState = await CliEntityAdmin.archiveEntity(
+          state.context,
+          state.currentEntity.id
+        );
+        if (publishState) {
+          state.currentEntity.publishState = publishState;
         }
       },
     },
@@ -119,12 +129,15 @@ function createMainActions(state: State): Array<MainActionItem | ItemSelectorSep
       id: 'unarchive-entity',
       name: 'Unarchive entity',
       enabled:
-        !!state.currentEntity && state.currentEntity._publishState === EntityPublishState.Archived,
+        !!state.currentEntity && state.currentEntity.publishState === EntityPublishState.Archived,
       action: async () => {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        const entity = await CliEntityAdmin.unarchiveEntity(state.context, state.currentEntity!.id);
-        if (entity) {
-          state.currentEntity = entity;
+        assertIsDefined(state.currentEntity);
+        const publishState = await CliEntityAdmin.unarchiveEntity(
+          state.context,
+          state.currentEntity.id
+        );
+        if (publishState) {
+          state.currentEntity.publishState = publishState;
         }
       },
     },

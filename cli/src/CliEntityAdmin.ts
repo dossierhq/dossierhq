@@ -16,6 +16,7 @@ import {
 import type {
   AdminEntity,
   AdminQuery,
+  EntityPublishState,
   EntityReference,
   EntityTypeSpecification,
   ErrorType,
@@ -601,7 +602,7 @@ async function editFieldList<TItem>(
 export async function publishEntity(
   context: SessionContext,
   id: string
-): Promise<AdminEntity | null> {
+): Promise<EntityPublishState | null> {
   const version = await selectEntityVersion(context, 'Which version to publish?', id, null);
 
   if (version === null) {
@@ -613,67 +614,51 @@ export async function publishEntity(
     logErrorResult('Failed publishing entity', publishResult);
     return null;
   }
+  const { publishState } = publishResult.value[0];
   console.log(`${chalk.bold('Published:')} ${id} version: ${version}`);
-  const entityResult = await EntityAdmin.getEntity(context, id);
-  if (entityResult.isError()) {
-    logErrorResult('Failed fetching entity', entityResult);
-    return null;
-  }
-  return entityResult.value;
+  return publishState;
 }
 
 export async function unpublishEntity(
   context: SessionContext,
   id: string
-): Promise<AdminEntity | null> {
+): Promise<EntityPublishState | null> {
   const unpublishResult = await EntityAdmin.unpublishEntities(context, [id]);
   if (unpublishResult.isError()) {
     logErrorResult('Failed unpublishing entity', unpublishResult);
     return null;
   }
-  console.log(`${chalk.bold('Unpublished:')} ${id}`);
-  const entityResult = await EntityAdmin.getEntity(context, id);
-  if (entityResult.isError()) {
-    logErrorResult('Failed fetching entity', entityResult);
-    return null;
-  }
-  return entityResult.value;
+  const { publishState } = unpublishResult.value[0];
+  console.log(`${chalk.bold('Unpublished:')} ${id} (${publishState})`);
+  return publishState;
 }
 
 export async function archiveEntity(
   context: SessionContext,
   id: string
-): Promise<AdminEntity | null> {
+): Promise<EntityPublishState | null> {
   const archiveResult = await EntityAdmin.archiveEntity(context, id);
   if (archiveResult.isError()) {
     logErrorResult('Failed archiving entity', archiveResult);
     return null;
   }
+  const { publishState } = archiveResult.value;
   console.log(`${chalk.bold('Archived:')} ${id}`);
-  const entityResult = await EntityAdmin.getEntity(context, id);
-  if (entityResult.isError()) {
-    logErrorResult('Failed fetching entity', entityResult);
-    return null;
-  }
-  return entityResult.value;
+  return publishState;
 }
 
 export async function unarchiveEntity(
   context: SessionContext,
   id: string
-): Promise<AdminEntity | null> {
+): Promise<EntityPublishState | null> {
   const unarchiveResult = await EntityAdmin.unarchiveEntity(context, id);
   if (unarchiveResult.isError()) {
     logErrorResult('Failed unarchiving entity', unarchiveResult);
     return null;
   }
+  const { publishState } = unarchiveResult.value;
   console.log(`${chalk.bold('Unarchived:')} ${id}`);
-  const entityResult = await EntityAdmin.getEntity(context, id);
-  if (entityResult.isError()) {
-    logErrorResult('Failed fetching entity', entityResult);
-    return null;
-  }
-  return entityResult.value;
+  return publishState;
 }
 
 export async function showEntityHistory(context: SessionContext, id: string): Promise<void> {
