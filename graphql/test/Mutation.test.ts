@@ -1,3 +1,4 @@
+import type { AdminClient } from '@datadata/core';
 import {
   CoreTestUtils,
   EntityPublishState,
@@ -6,7 +7,7 @@ import {
   PublishingEventKind,
   RichTextBlockType,
 } from '@datadata/core';
-import { EntityAdmin, ServerTestUtils } from '@datadata/server';
+import { createServerClient, ServerTestUtils } from '@datadata/server';
 import type { SessionContext, Server } from '@datadata/server';
 import { graphql } from 'graphql';
 import type { GraphQLSchema } from 'graphql';
@@ -19,6 +20,7 @@ const { createTestServer, ensureSessionContext, updateSchema } = ServerTestUtils
 
 let server: Server;
 let context: SessionContext;
+let adminClient: AdminClient;
 let schema: GraphQLSchema;
 
 const emptyFooFields = {
@@ -39,6 +41,7 @@ const emptyFooFields = {
 beforeAll(async () => {
   server = await createTestServer();
   context = await ensureSessionContext(server, 'test', 'mutation');
+  adminClient = createServerClient({ resolveContext: () => Promise.resolve(context) });
   await updateSchema(context, {
     entityTypes: [
       {
@@ -116,7 +119,7 @@ describe('create*Entity()', () => {
         }
       `,
       undefined,
-      { context: ok(context) },
+      { adminClient: ok(adminClient), context: ok(context) },
       {
         entity: {
           _type: 'MutationFoo',
@@ -159,7 +162,7 @@ describe('create*Entity()', () => {
       },
     });
 
-    const getResult = await EntityAdmin.getEntity(context, id);
+    const getResult = await adminClient.getEntity({ id });
     expectResultValue(getResult, {
       id,
       _type: 'MutationFoo',
@@ -196,7 +199,7 @@ describe('create*Entity()', () => {
         }
       `,
       undefined,
-      { context: ok(context) },
+      { adminClient: ok(adminClient), context: ok(context) },
       {
         entity: {
           id,
@@ -227,7 +230,7 @@ describe('create*Entity()', () => {
   });
 
   test('Create with rich text with reference', async () => {
-    const createBarResult = await EntityAdmin.createEntity(context, {
+    const createBarResult = await adminClient.createEntity({
       _type: 'MutationBar',
       _name: 'Bar',
     });
@@ -253,7 +256,7 @@ describe('create*Entity()', () => {
           }
         `,
         undefined,
-        { context: ok(context) },
+        { adminClient: ok(adminClient), context: ok(context) },
         {
           entity: {
             _type: 'MutationFoo',
@@ -290,7 +293,7 @@ describe('create*Entity()', () => {
         },
       });
 
-      const getResult = await EntityAdmin.getEntity(context, fooId);
+      const getResult = await adminClient.getEntity({ id: fooId });
       expectResultValue(getResult, {
         id: fooId,
         _type: 'MutationFoo',
@@ -311,7 +314,7 @@ describe('create*Entity()', () => {
   });
 
   test('Create with reference', async () => {
-    const createBarResult = await EntityAdmin.createEntity(context, {
+    const createBarResult = await adminClient.createEntity({
       _type: 'MutationBar',
       _name: 'Bar',
     });
@@ -338,7 +341,7 @@ describe('create*Entity()', () => {
           }
         `,
         undefined,
-        { context: ok(context) },
+        { adminClient: ok(adminClient), context: ok(context) },
         {
           entity: {
             _type: 'MutationFoo',
@@ -368,7 +371,7 @@ describe('create*Entity()', () => {
         },
       });
 
-      const getResult = await EntityAdmin.getEntity(context, fooId);
+      const getResult = await adminClient.getEntity({ id: fooId });
       expectResultValue(getResult, {
         id: fooId,
         _type: 'MutationFoo',
@@ -386,11 +389,11 @@ describe('create*Entity()', () => {
   });
 
   test('Create with reference list', async () => {
-    const createBar1Result = await EntityAdmin.createEntity(context, {
+    const createBar1Result = await adminClient.createEntity({
       _type: 'MutationBar',
       _name: 'Bar 1',
     });
-    const createBar2Result = await EntityAdmin.createEntity(context, {
+    const createBar2Result = await adminClient.createEntity({
       _type: 'MutationBar',
       _name: 'Bar 2',
     });
@@ -418,7 +421,7 @@ describe('create*Entity()', () => {
           }
         `,
         undefined,
-        { context: ok(context) },
+        { adminClient: ok(adminClient), context: ok(context) },
         {
           entity: {
             _type: 'MutationFoo',
@@ -450,7 +453,7 @@ describe('create*Entity()', () => {
         },
       });
 
-      const getResult = await EntityAdmin.getEntity(context, fooId);
+      const getResult = await adminClient.getEntity({ id: fooId });
       expectResultValue(getResult, {
         id: fooId,
         _type: 'MutationFoo',
@@ -466,7 +469,7 @@ describe('create*Entity()', () => {
   });
 
   test('Create with value type with reference', async () => {
-    const createBarResult = await EntityAdmin.createEntity(context, {
+    const createBarResult = await adminClient.createEntity({
       _type: 'MutationBar',
       _name: 'Bar',
     });
@@ -499,7 +502,7 @@ describe('create*Entity()', () => {
           }
         `,
         undefined,
-        { context: ok(context) },
+        { adminClient: ok(adminClient), context: ok(context) },
         {
           entity: {
             _type: 'MutationFoo',
@@ -542,7 +545,7 @@ describe('create*Entity()', () => {
         },
       });
 
-      const getResult = await EntityAdmin.getEntity(context, fooId);
+      const getResult = await adminClient.getEntity({ id: fooId });
       expectResultValue(getResult, {
         id: fooId,
         _type: 'MutationFoo',
@@ -562,7 +565,7 @@ describe('create*Entity()', () => {
   });
 
   test('Create with value JSON', async () => {
-    const createBarResult = await EntityAdmin.createEntity(context, {
+    const createBarResult = await adminClient.createEntity({
       _type: 'MutationBar',
       _name: 'Bar',
     });
@@ -592,7 +595,7 @@ describe('create*Entity()', () => {
           }
         `,
         undefined,
-        { context: ok(context) },
+        { adminClient: ok(adminClient), context: ok(context) },
         {
           entity: {
             _type: 'MutationFoo',
@@ -639,7 +642,7 @@ describe('create*Entity()', () => {
         },
       });
 
-      const getResult = await EntityAdmin.getEntity(context, fooId);
+      const getResult = await adminClient.getEntity({ id: fooId });
       expectResultValue(getResult, {
         id: fooId,
         _type: 'MutationFoo',
@@ -693,7 +696,7 @@ describe('create*Entity()', () => {
         }
       `,
       undefined,
-      { context: ok(context) },
+      { adminClient: ok(adminClient), context: ok(context) },
       {
         entity: {
           _type: 'MutationFoo',
@@ -736,7 +739,7 @@ describe('create*Entity()', () => {
       },
     });
 
-    const getResult = await EntityAdmin.getEntity(context, fooId);
+    const getResult = await adminClient.getEntity({ id: fooId });
     expectResultValue(getResult, {
       id: fooId,
       _type: 'MutationFoo',
@@ -769,7 +772,7 @@ describe('create*Entity()', () => {
         }
       `,
       undefined,
-      { context: ok(context) },
+      { adminClient: ok(adminClient), context: ok(context) },
       {
         entity: {
           _name: 'Foo name',
@@ -809,7 +812,7 @@ describe('create*Entity()', () => {
         }
       `,
       undefined,
-      { context: ok(context) },
+      { adminClient: ok(adminClient), context: ok(context) },
       {
         entity: {
           _type: 'MutationBar', // should be Foo
@@ -835,7 +838,7 @@ describe('create*Entity()', () => {
 
 describe('update*Entity()', () => {
   test('Update minimal', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await adminClient.createEntity({
       _type: 'MutationFoo',
       _name: 'First name',
       title: 'First title',
@@ -862,7 +865,7 @@ describe('update*Entity()', () => {
           }
         `,
         undefined,
-        { context: ok(context) },
+        { adminClient: ok(adminClient), context: ok(context) },
         {
           entity: {
             id,
@@ -887,7 +890,7 @@ describe('update*Entity()', () => {
         },
       });
 
-      const getResult = await EntityAdmin.getEntity(context, id);
+      const getResult = await adminClient.getEntity({ id });
       expectResultValue(getResult, {
         id,
         _type: 'MutationFoo',
@@ -903,11 +906,11 @@ describe('update*Entity()', () => {
   });
 
   test('Update with all values including references', async () => {
-    const createBar1Result = await EntityAdmin.createEntity(context, {
+    const createBar1Result = await adminClient.createEntity({
       _type: 'MutationBar',
       _name: 'Bar 1',
     });
-    const createBar2Result = await EntityAdmin.createEntity(context, {
+    const createBar2Result = await adminClient.createEntity({
       _type: 'MutationBar',
       _name: 'Bar 2',
     });
@@ -915,7 +918,7 @@ describe('update*Entity()', () => {
       const { id: bar1Id, _name: bar1Name } = createBar1Result.value;
       const { id: bar2Id, _name: bar2Name } = createBar2Result.value;
 
-      const createFooResult = await EntityAdmin.createEntity(context, {
+      const createFooResult = await adminClient.createEntity({
         _type: 'MutationFoo',
         _name: 'First name',
         title: 'First title',
@@ -970,7 +973,7 @@ describe('update*Entity()', () => {
             }
           `,
           undefined,
-          { context: ok(context) },
+          { adminClient: ok(adminClient), context: ok(context) },
           {
             entity: {
               id: fooId,
@@ -1060,7 +1063,7 @@ describe('update*Entity()', () => {
           },
         });
 
-        const getResult = await EntityAdmin.getEntity(context, fooId);
+        const getResult = await adminClient.getEntity({ id: fooId });
         expectResultValue(getResult, {
           id: fooId,
           _type: 'MutationFoo',
@@ -1096,7 +1099,7 @@ describe('update*Entity()', () => {
   });
 
   test('Error: Update with the wrong _type', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await adminClient.createEntity({
       _type: 'MutationFoo',
       _name: 'Name',
     });
@@ -1112,7 +1115,7 @@ describe('update*Entity()', () => {
           }
         `,
         undefined,
-        { context: ok(context) },
+        { adminClient: ok(adminClient), context: ok(context) },
         {
           entity: {
             id,
@@ -1140,7 +1143,7 @@ describe('update*Entity()', () => {
 
 describe('publishEntities()', () => {
   test('Publish', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await adminClient.createEntity({
       _type: 'MutationFoo',
       _name: 'Howdy name',
       title: 'Howdy title',
@@ -1161,7 +1164,7 @@ describe('publishEntities()', () => {
           }
         `,
         undefined,
-        { context: ok(context) },
+        { adminClient: ok(adminClient), context: ok(context) },
         { entities: [{ id, version: 0 }] }
       );
       expect(result).toEqual({
@@ -1176,7 +1179,7 @@ describe('publishEntities()', () => {
         },
       });
 
-      const historyResult = await EntityAdmin.getPublishingHistory(context, id);
+      const historyResult = await adminClient.getPublishingHistory({ id });
       if (expectOkResult(historyResult)) {
         const publishedAt = historyResult.value.events[0]?.publishedAt;
         expectResultValue(historyResult, {
@@ -1207,7 +1210,7 @@ describe('publishEntities()', () => {
         }
       `,
       undefined,
-      { context: ok(context) },
+      { adminClient: ok(adminClient), context: ok(context) },
       { entities: [{ id: '635d7ee9-c1c7-4ae7-bcdf-fb53f30a3cd3', version: 0 }] }
     );
     expect(result).toMatchInlineSnapshot(`
@@ -1225,7 +1228,7 @@ describe('publishEntities()', () => {
 
 describe('unpublishEntities()', () => {
   test('Unpublish', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await adminClient.createEntity({
       _type: 'MutationFoo',
       _name: 'Howdy name',
       title: 'Howdy title',
@@ -1234,7 +1237,7 @@ describe('unpublishEntities()', () => {
     if (expectOkResult(createResult)) {
       const { id } = createResult.value;
 
-      expectOkResult(await EntityAdmin.publishEntities(context, [{ id, version: 0 }]));
+      expectOkResult(await adminClient.publishEntities([{ id, version: 0 }]));
 
       const result = await graphql(
         schema,
@@ -1248,7 +1251,7 @@ describe('unpublishEntities()', () => {
           }
         `,
         undefined,
-        { context: ok(context) },
+        { adminClient: ok(adminClient), context: ok(context) },
         { ids: [id] }
       );
       expect(result).toEqual({
@@ -1263,7 +1266,7 @@ describe('unpublishEntities()', () => {
         },
       });
 
-      const historyResult = await EntityAdmin.getPublishingHistory(context, id);
+      const historyResult = await adminClient.getPublishingHistory({ id });
       if (expectOkResult(historyResult)) {
         const publishedAt0 = historyResult.value.events[0]?.publishedAt;
         const publishedAt1 = historyResult.value.events[1]?.publishedAt;
@@ -1301,7 +1304,7 @@ describe('unpublishEntities()', () => {
         }
       `,
       undefined,
-      { context: ok(context) },
+      { adminClient: ok(adminClient), context: ok(context) },
       { ids: ['635d7ee9-c1c7-4ae7-bcdf-fb53f30a3cd3'] }
     );
     expect(result).toMatchInlineSnapshot(`
@@ -1319,7 +1322,7 @@ describe('unpublishEntities()', () => {
 
 describe('archiveEntity()', () => {
   test('Archive', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await adminClient.createEntity({
       _type: 'MutationFoo',
       _name: 'Howdy name',
       title: 'Howdy title',
@@ -1340,7 +1343,7 @@ describe('archiveEntity()', () => {
           }
         `,
         undefined,
-        { context: ok(context) },
+        { adminClient: ok(adminClient), context: ok(context) },
         { id }
       );
       expect(result).toEqual({
@@ -1353,7 +1356,7 @@ describe('archiveEntity()', () => {
         },
       });
 
-      const historyResult = await EntityAdmin.getPublishingHistory(context, id);
+      const historyResult = await adminClient.getPublishingHistory({ id });
       if (expectOkResult(historyResult)) {
         const publishedAt = historyResult.value.events[0]?.publishedAt;
         expectResultValue(historyResult, {
@@ -1374,7 +1377,7 @@ describe('archiveEntity()', () => {
 
 describe('unarchiveEntity()', () => {
   test('Unarchive', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await adminClient.createEntity({
       _type: 'MutationFoo',
       _name: 'Howdy name',
       title: 'Howdy title',
@@ -1383,7 +1386,7 @@ describe('unarchiveEntity()', () => {
     if (expectOkResult(createResult)) {
       const { id } = createResult.value;
 
-      expectOkResult(await EntityAdmin.archiveEntity(context, id));
+      expectOkResult(await adminClient.archiveEntity({ id }));
 
       const result = await graphql(
         schema,
@@ -1397,7 +1400,7 @@ describe('unarchiveEntity()', () => {
           }
         `,
         undefined,
-        { context: ok(context) },
+        { adminClient: ok(adminClient), context: ok(context) },
         { id }
       );
       expect(result).toEqual({
@@ -1410,7 +1413,7 @@ describe('unarchiveEntity()', () => {
         },
       });
 
-      const historyResult = await EntityAdmin.getPublishingHistory(context, id);
+      const historyResult = await adminClient.getPublishingHistory({ id });
       if (expectOkResult(historyResult)) {
         const publishedAt0 = historyResult.value.events[0]?.publishedAt;
         const publishedAt1 = historyResult.value.events[1]?.publishedAt;
@@ -1447,7 +1450,7 @@ describe('unarchiveEntity()', () => {
         }
       `,
       undefined,
-      { context: ok(context) },
+      { adminClient: ok(adminClient), context: ok(context) },
       { id: '635d7ee9-c1c7-4ae7-bcdf-fb53f30a3cd3' }
     );
     expect(result).toMatchInlineSnapshot(`
@@ -1465,7 +1468,7 @@ describe('unarchiveEntity()', () => {
 
 describe('Multiple', () => {
   test('Update and publish', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await adminClient.createEntity({
       _type: 'MutationFoo',
       _name: 'Howdy name',
       title: 'Howdy title',
@@ -1492,7 +1495,7 @@ describe('Multiple', () => {
           }
         `,
         undefined,
-        { context: ok(context) },
+        { adminClient: ok(adminClient), context: ok(context) },
         {
           entity: {
             id,
@@ -1508,7 +1511,7 @@ describe('Multiple', () => {
         },
       });
 
-      const historyResult = await EntityAdmin.getEntityHistory(context, id);
+      const historyResult = await adminClient.getEntityHistory({ id });
       if (expectOkResult(historyResult)) {
         expect(historyResult.value.versions).toHaveLength(2);
         expect(historyResult.value.versions[1].published).toBeTruthy();

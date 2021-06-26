@@ -1,5 +1,6 @@
+import type { AdminClient } from '@datadata/core';
 import { CoreTestUtils, FieldType, notOk, ok, RichTextBlockType } from '@datadata/core';
-import { EntityAdmin, ServerTestUtils } from '@datadata/server';
+import { createServerClient, EntityAdmin, ServerTestUtils } from '@datadata/server';
 import type { Server, SessionContext } from '@datadata/server';
 import { graphql, printError } from 'graphql';
 import type { GraphQLSchema } from 'graphql';
@@ -10,11 +11,13 @@ const { createTestServer, ensureSessionContext, updateSchema } = ServerTestUtils
 
 let server: Server;
 let context: SessionContext;
+let adminClient: AdminClient;
 let schema: GraphQLSchema;
 
 beforeAll(async () => {
   server = await createTestServer();
   context = await ensureSessionContext(server, 'test', 'query');
+  adminClient = createServerClient({ resolveContext: () => Promise.resolve(context) });
   await updateSchema(context, {
     entityTypes: [
       {
@@ -52,7 +55,7 @@ afterAll(async () => {
 
 describe('node()', () => {
   test('Query all fields of created entity', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await adminClient.createEntity({
       _type: 'QueryFoo',
       _name: 'Howdy name',
       title: 'Howdy title',
@@ -118,7 +121,7 @@ describe('node()', () => {
   });
 
   test('Query null fields of created entity', async () => {
-    const createResult = await EntityAdmin.createEntity(context, {
+    const createResult = await adminClient.createEntity({
       _type: 'QueryFoo',
       _name: 'Howdy name',
     });
@@ -185,7 +188,7 @@ describe('node()', () => {
   });
 
   test('Query rich text', async () => {
-    const createFooResult = await EntityAdmin.createEntity(context, {
+    const createFooResult = await adminClient.createEntity({
       _type: 'QueryFoo',
       _name: 'Foo name',
       body: { blocks: [{ type: RichTextBlockType.paragraph, data: { text: 'Hello world' } }] },
@@ -235,7 +238,7 @@ describe('node()', () => {
   });
 
   test('Query rich text with reference', async () => {
-    const createBarResult = await EntityAdmin.createEntity(context, {
+    const createBarResult = await adminClient.createEntity({
       _type: 'QueryBar',
       _name: 'Bar name',
       title: 'Bar title',
@@ -245,7 +248,7 @@ describe('node()', () => {
 
       expectOkResult(await EntityAdmin.publishEntities(context, [{ id: barId, version: 0 }]));
 
-      const createFooResult = await EntityAdmin.createEntity(context, {
+      const createFooResult = await adminClient.createEntity({
         _type: 'QueryFoo',
         _name: 'Foo name',
         body: {
@@ -302,7 +305,7 @@ describe('node()', () => {
   });
 
   test('Query referenced entity', async () => {
-    const createBarResult = await EntityAdmin.createEntity(context, {
+    const createBarResult = await adminClient.createEntity({
       _type: 'QueryBar',
       _name: 'Bar name',
       title: 'Bar title',
@@ -312,7 +315,7 @@ describe('node()', () => {
 
       expectOkResult(await EntityAdmin.publishEntities(context, [{ id: barId, version: 0 }]));
 
-      const createFooResult = await EntityAdmin.createEntity(context, {
+      const createFooResult = await adminClient.createEntity({
         _type: 'QueryFoo',
         _name: 'Foo name',
         title: 'Foo title',
@@ -368,12 +371,12 @@ describe('node()', () => {
   });
 
   test('Query referenced entity list', async () => {
-    const createBar1Result = await EntityAdmin.createEntity(context, {
+    const createBar1Result = await adminClient.createEntity({
       _type: 'QueryBar',
       _name: 'Bar 1 name',
       title: 'Bar 1 title',
     });
-    const createBar2Result = await EntityAdmin.createEntity(context, {
+    const createBar2Result = await adminClient.createEntity({
       _type: 'QueryBar',
       _name: 'Bar 2 name',
       title: 'Bar 2 title',
@@ -389,7 +392,7 @@ describe('node()', () => {
         ])
       );
 
-      const createFooResult = await EntityAdmin.createEntity(context, {
+      const createFooResult = await adminClient.createEntity({
         _type: 'QueryFoo',
         _name: 'Foo name',
         title: 'Foo title',
@@ -453,7 +456,7 @@ describe('node()', () => {
   });
 
   test('Query value type', async () => {
-    const createBarResult = await EntityAdmin.createEntity(context, {
+    const createBarResult = await adminClient.createEntity({
       _type: 'QueryBar',
       _name: 'Bar name',
       title: 'Bar title',
@@ -463,7 +466,7 @@ describe('node()', () => {
 
       expectOkResult(await EntityAdmin.publishEntities(context, [{ id: barId, version: 0 }]));
 
-      const createFooResult = await EntityAdmin.createEntity(context, {
+      const createFooResult = await adminClient.createEntity({
         _type: 'QueryFoo',
         _name: 'Foo name',
         title: 'Foo title',
@@ -589,11 +592,11 @@ GraphQL request:3:11
 
 describe('nodes()', () => {
   test('Query 2 entities', async () => {
-    const createFoo1Result = await EntityAdmin.createEntity(context, {
+    const createFoo1Result = await adminClient.createEntity({
       _type: 'QueryFoo',
       _name: 'Howdy name 1',
     });
-    const createFoo2Result = await EntityAdmin.createEntity(context, {
+    const createFoo2Result = await adminClient.createEntity({
       _type: 'QueryFoo',
       _name: 'Howdy name 2',
     });
