@@ -14,6 +14,7 @@ import type {
   PublishEvent,
   PublishEventKind,
   PublishHistory,
+  PublishingResult,
   Result,
 } from '@datadata/core';
 import type { SessionContext } from '.';
@@ -28,6 +29,7 @@ import {
   decodeAdminEntity,
   encodeEntity,
   resolveCreateEntity,
+  resolvePublishState,
   resolveUpdateEntity,
 } from './EntityCodec';
 import type { AdminEntityValues } from './EntityCodec';
@@ -543,7 +545,7 @@ export async function unpublishEntities(
 export async function archiveEntity(
   context: SessionContext,
   id: string
-): PromiseResult<void, ErrorType.BadRequest | ErrorType.NotFound> {
+): PromiseResult<PublishingResult, ErrorType.BadRequest | ErrorType.NotFound> {
   return context.withTransaction(async (context) => {
     const entityInfo = await Db.queryNoneOrOne<
       Pick<EntitiesTable, 'id' | 'published_entity_versions_id' | 'archived'>
@@ -562,7 +564,7 @@ export async function archiveEntity(
       return notOk.BadRequest('Entity is published');
     }
     if (archived) {
-      return ok(undefined); // no change
+      return ok({ id, publishState: EntityPublishState.Archived }); // no change
     }
 
     await Promise.all([
@@ -574,18 +576,28 @@ export async function archiveEntity(
       ),
     ]);
 
-    return ok(undefined);
+    return ok({ id, publishState: EntityPublishState.Archived });
   });
 }
 
 export async function unarchiveEntity(
   context: SessionContext,
   id: string
-): PromiseResult<void, ErrorType.BadRequest | ErrorType.NotFound> {
+): PromiseResult<PublishingResult, ErrorType.BadRequest | ErrorType.NotFound> {
   return context.withTransaction(async (context) => {
-    const entityInfo = await Db.queryNoneOrOne<Pick<EntitiesTable, 'id' | 'archived'>>(
+    const entityInfo = await Db.queryNoneOrOne<
+      Pick<
+        EntitiesTable,
+        | 'id'
+        | 'archived'
+        | 'latest_draft_entity_versions_id'
+        | 'never_published'
+        | 'published_entity_versions_id'
+      >
+    >(
       context,
-      'SELECT e.id, e.archived FROM entities e WHERE e.uuid = $1',
+      `SELECT id, archived, latest_draft_entity_versions_id, never_published, published_entity_versions_id
+       FROM entities WHERE uuid = $1`,
       [id]
     );
 
@@ -594,20 +606,21 @@ export async function unarchiveEntity(
     }
     const { id: entityId, archived } = entityInfo;
 
-    if (!archived) {
-      return ok(undefined); // no change
+    if (archived) {
+      await Promise.all([
+        Db.queryNone(context, 'UPDATE entities SET archived = FALSE WHERE id = $1', [entityId]),
+        Db.queryNone(
+          context,
+          "INSERT INTO entity_publish_events (entities_id, kind, published_by) VALUES ($1, 'unarchive', $2)",
+          [entityId, context.session.subjectInternalId]
+        ),
+      ]);
     }
 
-    await Promise.all([
-      Db.queryNone(context, 'UPDATE entities SET archived = FALSE WHERE id = $1', [entityId]),
-      Db.queryNone(
-        context,
-        "INSERT INTO entity_publish_events (entities_id, kind, published_by) VALUES ($1, 'unarchive', $2)",
-        [entityId, context.session.subjectInternalId]
-      ),
-    ]);
-
-    return ok(undefined);
+    return ok({
+      id,
+      publishState: resolvePublishState({ ...entityInfo, archived: false }, entityInfo),
+    });
   });
 }
 

@@ -193,10 +193,10 @@ export function decodeAdminEntity(context: SessionContext, values: AdminEntityVa
   return entity;
 }
 
-function resolvePublishState(
+export function resolvePublishState(
   values: Pick<EntitiesTable, 'archived' | 'never_published' | 'published_entity_versions_id'>,
   draft: 'is-update' | Pick<EntitiesTable, 'latest_draft_entity_versions_id'>
-) {
+): EntityPublishState {
   if (values.archived) {
     return EntityPublishState.Archived;
   }

@@ -148,3 +148,8 @@ export interface Edge<TOk, TError extends ErrorType> {
   node: Result<TOk, TError>;
   cursor: string;
 }
+
+export interface PublishingResult {
+  id: string;
+  publishState: EntityPublishState;
+}
