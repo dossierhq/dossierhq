@@ -374,7 +374,7 @@ describe('getEntity()', () => {
   });
 
   test('Error: Get entity with invalid id', async () => {
-    const result = await EntityAdmin.getEntity(context, '13e4c7da-616e-44a3-a039-24f96f9b17da');
+    const result = await client.getEntity({ id: '13e4c7da-616e-44a3-a039-24f96f9b17da' });
     expectErrorResult(result, ErrorType.NotFound, 'No such entity');
   });
 
@@ -388,10 +388,10 @@ describe('getEntity()', () => {
     if (expectOkResult(createResult)) {
       const { id } = createResult.value;
 
-      const resultMinusOne = await EntityAdmin.getEntity(context, id, -1);
+      const resultMinusOne = await client.getEntity({ id, version: -1 });
       expectErrorResult(resultMinusOne, ErrorType.NotFound, 'No such entity or version');
 
-      const resultOne = await EntityAdmin.getEntity(context, id, 1);
+      const resultOne = await client.getEntity({ id, version: 1 });
       expectErrorResult(resultOne, ErrorType.NotFound, 'No such entity or version');
     }
   });
@@ -399,7 +399,7 @@ describe('getEntity()', () => {
 
 describe('getEntities()', () => {
   test('Get no entities', async () => {
-    const result = await EntityAdmin.getEntities(context, []);
+    const result = await client.getEntities([]);
     expect(result).toHaveLength(0);
   });
 
@@ -419,7 +419,7 @@ describe('getEntities()', () => {
       const { id: foo1Id, _name: foo1Name } = createFoo1Result.value;
       const { id: foo2Id, _name: foo2Name } = createFoo2Result.value;
 
-      const result = await EntityAdmin.getEntities(context, [foo2Id, foo1Id]);
+      const result = await client.getEntities([{ id: foo2Id }, { id: foo1Id }]);
       expect(result).toHaveLength(2);
       expectResultValue(result[0], {
         _type: 'EntityAdminFoo',
@@ -456,7 +456,7 @@ describe('getEntities()', () => {
         await EntityAdmin.updateEntity(context, { id: fooId, title: 'Updated title' })
       );
 
-      const result = await EntityAdmin.getEntities(context, [fooId]);
+      const result = await client.getEntities([{ id: fooId }]);
       expect(result).toHaveLength(1);
       expectResultValue(result[0], {
         _type: 'EntityAdminFoo',
@@ -471,9 +471,9 @@ describe('getEntities()', () => {
   });
 
   test('Error: Get entities with invalid ids', async () => {
-    const result = await EntityAdmin.getEntities(context, [
-      '13e4c7da-616e-44a3-a039-24f96f9b17da',
-      '13e4c7da-616e-44a3-44a3-24f96f9b17da',
+    const result = await client.getEntities([
+      { id: '13e4c7da-616e-44a3-a039-24f96f9b17da' },
+      { id: '13e4c7da-616e-44a3-44a3-24f96f9b17da' },
     ]);
     expect(result).toHaveLength(2);
     expectErrorResult(result[0], ErrorType.NotFound, 'No such entity');
@@ -517,7 +517,7 @@ describe('createEntity()', () => {
         ]);
       }
 
-      const version0Result = await EntityAdmin.getEntity(context, id, 0);
+      const version0Result = await client.getEntity({ id, version: 0 });
       expectResultValue(version0Result, {
         id,
         _type: 'EntityAdminFoo',
@@ -570,7 +570,7 @@ describe('createEntity()', () => {
         ]);
       }
 
-      const version0Result = await EntityAdmin.getEntity(context, id, 0);
+      const version0Result = await client.getEntity({ id, version: 0 });
       expectResultValue(version0Result, {
         id,
         _type: 'EntityAdminFoo',
@@ -647,7 +647,7 @@ describe('createEntity()', () => {
           { id: barId, publishState: EntityPublishState.Published },
         ]);
 
-        const fooVersion0Result = await EntityAdmin.getEntity(context, fooId, 0);
+        const fooVersion0Result = await client.getEntity({ id: fooId, version: 0 });
         expectResultValue(fooVersion0Result, {
           id: fooId,
           _type: 'EntityAdminFoo',
@@ -690,7 +690,7 @@ describe('createEntity()', () => {
         tags: ['one', 'two', 'three'],
       });
 
-      const getResult = await EntityAdmin.getEntity(context, id);
+      const getResult = await client.getEntity({ id });
       if (expectOkResult(getResult)) {
         expectResultValue(getResult, {
           id,
@@ -731,7 +731,7 @@ describe('createEntity()', () => {
         ],
       });
 
-      const getResult = await EntityAdmin.getEntity(context, id);
+      const getResult = await client.getEntity({ id });
       expectResultValue(getResult, {
         id,
         _type: 'EntityAdminBaz',
@@ -810,7 +810,7 @@ describe('createEntity()', () => {
           },
         });
 
-        const getResult = await EntityAdmin.getEntity(context, bazId);
+        const getResult = await client.getEntity({ id: bazId });
         expectResultValue(getResult, {
           id: bazId,
           _type: 'EntityAdminBaz',
@@ -874,7 +874,7 @@ describe('createEntity()', () => {
         ],
       });
 
-      const getResult = await EntityAdmin.getEntity(context, id);
+      const getResult = await client.getEntity({ id });
       expectResultValue(getResult, {
         id,
         _type: 'EntityAdminBaz',
@@ -923,7 +923,7 @@ describe('createEntity()', () => {
           bars: [{ id: bar1Id }, { id: bar2Id }],
         });
 
-        const getResult = await EntityAdmin.getEntity(context, id);
+        const getResult = await client.getEntity({ id });
         expectResultValue(getResult, {
           id,
           _type: 'EntityAdminBaz',
@@ -961,7 +961,7 @@ describe('createEntity()', () => {
         twoStrings: { _type: 'EntityAdminTwoStrings', one: 'First', two: 'Second' },
       });
 
-      const getResult = await EntityAdmin.getEntity(context, id);
+      const getResult = await client.getEntity({ id });
       expectResultValue(getResult, {
         id,
         _type: 'EntityAdminBaz',
@@ -998,7 +998,7 @@ describe('createEntity()', () => {
         ],
       });
 
-      const getResult = await EntityAdmin.getEntity(context, id);
+      const getResult = await client.getEntity({ id });
       expectResultValue(getResult, {
         id,
         _type: 'EntityAdminBaz',
@@ -1048,7 +1048,7 @@ describe('createEntity()', () => {
           },
         });
 
-        const getResult = await EntityAdmin.getEntity(context, bazId);
+        const getResult = await client.getEntity({ id: bazId });
         expectResultValue(getResult, {
           id: bazId,
           _type: 'EntityAdminBaz',
@@ -1131,7 +1131,7 @@ describe('createEntity()', () => {
           ],
         });
 
-        const getResult = await EntityAdmin.getEntity(context, bazId);
+        const getResult = await client.getEntity({ id: bazId });
         expectResultValue(getResult, {
           id: bazId,
           _type: 'EntityAdminBaz',
@@ -1215,7 +1215,7 @@ describe('createEntity()', () => {
         },
       });
 
-      const getResult = await EntityAdmin.getEntity(context, bazId);
+      const getResult = await client.getEntity({ id: bazId });
       expectResultValue(getResult, {
         id: bazId,
         _type: 'EntityAdminBaz',
@@ -2162,7 +2162,7 @@ describe('updateEntity()', () => {
         ]);
       }
 
-      const version0Result = await EntityAdmin.getEntity(context, id, 0);
+      const version0Result = await client.getEntity({ id, version: 0 });
       expectResultValue(version0Result, {
         id,
         _type: 'EntityAdminFoo',
@@ -2173,7 +2173,7 @@ describe('updateEntity()', () => {
         title: 'Original',
       });
 
-      const version1Result = await EntityAdmin.getEntity(context, id, 1);
+      const version1Result = await client.getEntity({ id, version: 1 });
       expectResultValue(version1Result, {
         id,
         _type: 'EntityAdminFoo',
@@ -2245,7 +2245,7 @@ describe('updateEntity()', () => {
         ]);
       }
 
-      const version0Result = await EntityAdmin.getEntity(context, id, 0);
+      const version0Result = await client.getEntity({ id, version: 0 });
       expectResultValue(version0Result, {
         id,
         _type: 'EntityAdminFoo',
@@ -2256,7 +2256,7 @@ describe('updateEntity()', () => {
         title: 'First',
       });
 
-      const version1Result = await EntityAdmin.getEntity(context, id, 1);
+      const version1Result = await client.getEntity({ id, version: 1 });
       expectResultValue(version1Result, {
         id,
         _type: 'EntityAdminFoo',
@@ -2317,7 +2317,7 @@ describe('updateEntity()', () => {
         ]);
       }
 
-      const version0Result = await EntityAdmin.getEntity(context, id, 0);
+      const version0Result = await client.getEntity({ id, version: 0 });
       expectResultValue(version0Result, {
         id,
         _type: 'EntityAdminFoo',
@@ -2328,7 +2328,7 @@ describe('updateEntity()', () => {
         title: 'Original',
       });
 
-      const version1Result = await EntityAdmin.getEntity(context, id, 1);
+      const version1Result = await client.getEntity({ id, version: 1 });
       expectResultValue(version1Result, {
         id,
         _type: 'EntityAdminFoo',
@@ -2394,7 +2394,7 @@ describe('updateEntity()', () => {
         ]);
       }
 
-      const version0Result = await EntityAdmin.getEntity(context, id, 0);
+      const version0Result = await client.getEntity({ id, version: 0 });
       expectResultValue(version0Result, {
         id,
         _type: 'EntityAdminFoo',
@@ -2406,7 +2406,7 @@ describe('updateEntity()', () => {
         summary: 'First summary',
       });
 
-      const version1Result = await EntityAdmin.getEntity(context, id, 1);
+      const version1Result = await client.getEntity({ id, version: 1 });
       expectResultValue(version1Result, {
         id,
         _type: 'EntityAdminFoo',
@@ -2509,7 +2509,7 @@ describe('updateEntity()', () => {
           { id: barId, publishState: EntityPublishState.Published },
         ]);
 
-        const version0Result = await EntityAdmin.getEntity(context, fooId, 0);
+        const version0Result = await client.getEntity({ id: fooId, version: 0 });
         expectResultValue(version0Result, {
           id: fooId,
           _type: 'EntityAdminFoo',
@@ -2521,7 +2521,7 @@ describe('updateEntity()', () => {
           summary: 'First summary',
         });
 
-        const version1Result = await EntityAdmin.getEntity(context, fooId, 1);
+        const version1Result = await client.getEntity({ id: fooId, version: 1 });
         expectResultValue(version1Result, {
           id: fooId,
           _type: 'EntityAdminFoo',
@@ -2603,7 +2603,7 @@ describe('updateEntity()', () => {
           { id: bazId, publishState: EntityPublishState.Published },
         ]);
 
-        const version0Result = await EntityAdmin.getEntity(context, bazId, 0);
+        const version0Result = await client.getEntity({ id: bazId, version: 0 });
         expectResultValue(version0Result, {
           id: bazId,
           _type: 'EntityAdminBaz',
@@ -2616,7 +2616,7 @@ describe('updateEntity()', () => {
           bars: [{ id: bar1Id }, { id: bar2Id }],
         });
 
-        const version1Result = await EntityAdmin.getEntity(context, bazId, 1);
+        const version1Result = await client.getEntity({ id: bazId, version: 1 });
         expectResultValue(version1Result, {
           id: bazId,
           _type: 'EntityAdminBaz',
@@ -2813,7 +2813,7 @@ describe('publishEntities()', () => {
       const publishResult = await EntityAdmin.publishEntities(context, [{ id, version }]);
       expectResultValue(publishResult, [{ id, publishState: EntityPublishState.Published }]);
 
-      const getResult = await EntityAdmin.getEntity(context, id);
+      const getResult = await client.getEntity({ id });
       expectResultValue(getResult, {
         id,
         _type: 'EntityAdminBaz',
@@ -2938,7 +2938,7 @@ describe('unpublishEntities()', () => {
       const unpublishResult = await EntityAdmin.unpublishEntities(context, [id]);
       expectResultValue(unpublishResult, [{ id, publishState: EntityPublishState.Withdrawn }]);
 
-      const getResult = await EntityAdmin.getEntity(context, id);
+      const getResult = await client.getEntity({ id });
       expectResultValue(getResult, {
         id,
         _type: 'EntityAdminBaz',
@@ -3150,7 +3150,7 @@ describe('archiveEntity()', () => {
         });
       }
 
-      const getResult = await EntityAdmin.getEntity(context, id);
+      const getResult = await client.getEntity({ id });
       expectResultValue(getResult, {
         id,
         _name: name,
@@ -3263,7 +3263,7 @@ describe('unarchiveEntity()', () => {
         });
       }
 
-      const getResult = await EntityAdmin.getEntity(context, id);
+      const getResult = await client.getEntity({ id });
       expectResultValue(getResult, {
         id,
         _name: name,
