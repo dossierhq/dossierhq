@@ -1,5 +1,5 @@
 import type { Entity } from '@datadata/core';
-import { CoreTestUtils, ErrorType, FieldType } from '@datadata/core';
+import { CoreTestUtils, ErrorType, FieldType, EntityPublishState } from '@datadata/core';
 import { EntityAdmin, PublishedEntity } from '.';
 import type { Server, SessionContext } from '.';
 import { createTestServer, ensureSessionContext, updateSchema } from './ServerTestUtils';
@@ -35,7 +35,11 @@ describe('getEntity()', () => {
     if (expectOkResult(createResult)) {
       const { id, _name: name, _version: version } = createResult.value;
       expectOkResult(await EntityAdmin.archiveEntity(context, id));
-      expectOkResult(await EntityAdmin.publishEntities(context, [{ id, version }]));
+
+      const publishResult = await EntityAdmin.publishEntities(context, [{ id, version }]);
+      if (expectOkResult(publishResult)) {
+        expect(publishResult.value).toEqual([{ id, publishState: EntityPublishState.Published }]);
+      }
 
       const result = await PublishedEntity.getEntity(context, id);
       if (expectOkResult(result)) {
@@ -91,10 +95,16 @@ describe('getEntities()', () => {
       const { id: foo1Id, _name: foo1Name } = createFoo1Result.value;
       const { id: foo2Id, _name: foo2Name } = createFoo2Result.value;
 
-      await EntityAdmin.publishEntities(context, [
+      const publishResult = await EntityAdmin.publishEntities(context, [
         { id: foo1Id, version: 0 },
         { id: foo2Id, version: 0 },
       ]);
+      if (expectOkResult(publishResult)) {
+        expect(publishResult.value).toEqual([
+          { id: foo1Id, publishState: EntityPublishState.Published },
+          { id: foo2Id, publishState: EntityPublishState.Published },
+        ]);
+      }
 
       const result = await PublishedEntity.getEntities(context, [foo2Id, foo1Id]);
       expect(result).toHaveLength(2);
@@ -116,7 +126,14 @@ describe('getEntities()', () => {
     if (expectOkResult(createFooResult)) {
       const { id: foo1Id, _name: foo1Name } = createFooResult.value;
 
-      await EntityAdmin.publishEntities(context, [{ id: foo1Id, version: 0 }]);
+      const publishResult = await EntityAdmin.publishEntities(context, [
+        { id: foo1Id, version: 0 },
+      ]);
+      if (expectOkResult(publishResult)) {
+        expect(publishResult.value).toEqual([
+          { id: foo1Id, publishState: EntityPublishState.Published },
+        ]);
+      }
 
       const result = await PublishedEntity.getEntities(context, [
         'f09fdd62-4a1e-4320-afba-8dd0781799df',
