@@ -5,6 +5,7 @@
 - `brew install pgcli` (optional, for Postgres access)
 - `brew install gnuplot` (for benchmarking)
 - `brew install graphviz` (for documentation)
+- Docker (for running Postgres for development)
 
 ## VS Code extensions
 
