@@ -3,15 +3,20 @@ import type {
   ErrorType,
   PublishedClient,
   Result,
-  Schema,
   SchemaSpecification,
 } from '@datadata/core';
-import { CoreTestUtils } from '@datadata/core';
+import { CoreTestUtils, Schema } from '@datadata/core';
 import {
   createServerAdminClient,
   createServerPublishedClient,
   ServerTestUtils,
 } from '@datadata/server';
+import {
+  createInMemoryAdminClient,
+  createInMemoryPublishedClient,
+  InMemoryServer,
+} from '@datadata/testing-utils';
+import { v4 as uuidv4 } from 'uuid';
 
 const { expectOkResult } = CoreTestUtils;
 const { createTestServer, ensureSessionContext, updateSchema } = ServerTestUtils;
@@ -36,6 +41,13 @@ export function expectResultValue<TOk, TError extends ErrorType>(
 export async function setUpServerWithSession(
   schemaSpecification: Partial<SchemaSpecification>
 ): Promise<TestServerWithSession> {
+  if (process.env.TEST_SERVER === 'in-memory') {
+    return await setUpInMemoryServerWithSession(schemaSpecification);
+  }
+  return await setUpRealServerWithSession(schemaSpecification);
+}
+
+async function setUpRealServerWithSession(schemaSpecification: Partial<SchemaSpecification>) {
   const server = await createTestServer();
   const context = await ensureSessionContext(server, 'test', 'identifier');
   const subjectId = context.session.subjectId;
@@ -52,5 +64,28 @@ export async function setUpServerWithSession(
     publishedClient,
     subjectId,
     tearDown: () => server.shutdown(),
+  };
+}
+
+async function setUpInMemoryServerWithSession(schemaSpecification: Partial<SchemaSpecification>) {
+  const schema = new Schema({
+    entityTypes: schemaSpecification.entityTypes ?? [],
+    valueTypes: schemaSpecification.valueTypes ?? [],
+  });
+  const server = new InMemoryServer(schema);
+
+  const context = server.createContext(uuidv4());
+  const subjectId = context.subjectId;
+  const adminClient = createInMemoryAdminClient({ resolveContext: () => Promise.resolve(context) });
+  const publishedClient = createInMemoryPublishedClient({
+    resolveContext: () => Promise.resolve(context),
+  });
+
+  return {
+    schema,
+    adminClient,
+    publishedClient,
+    subjectId,
+    tearDown: () => Promise.resolve(undefined),
   };
 }
