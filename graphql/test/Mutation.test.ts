@@ -1,4 +1,3 @@
-import type { AdminClient, PublishedClient } from '@datadata/core';
 import {
   CoreTestUtils,
   EntityPublishState,
@@ -7,26 +6,17 @@ import {
   PublishingEventKind,
   RichTextBlockType,
 } from '@datadata/core';
-import {
-  createServerAdminClient,
-  createServerPublishedClient,
-  ServerTestUtils,
-} from '@datadata/server';
-import type { Server } from '@datadata/server';
 import { graphql } from 'graphql';
 import type { GraphQLSchema } from 'graphql';
 import { v4 as uuidv4 } from 'uuid';
 import type { SessionGraphQLContext } from '..';
 import { GraphQLSchemaGenerator } from '..';
-import { expectResultValue } from './TestUtils';
+import type { TestServerWithSession } from './TestUtils';
+import { expectResultValue, setUpServerWithSession } from './TestUtils';
 
 const { expectOkResult } = CoreTestUtils;
-const { createTestServer, ensureSessionContext, updateSchema } = ServerTestUtils;
 
-let server: Server;
-let subjectId: string;
-let adminClient: AdminClient;
-let publishedClient: PublishedClient;
+let server: TestServerWithSession;
 let schema: GraphQLSchema;
 
 const emptyFooFields = {
@@ -44,71 +34,69 @@ const emptyFooFields = {
   anyValueItems: null,
 };
 
+const schemaSpecification = {
+  entityTypes: [
+    {
+      name: 'MutationFoo',
+      fields: [
+        { name: 'title', type: FieldType.String, isName: true },
+        { name: 'summary', type: FieldType.String },
+        { name: 'tags', type: FieldType.String, list: true },
+        { name: 'body', type: FieldType.RichText, entityTypes: ['MutationBar'] },
+        { name: 'location', type: FieldType.Location },
+        { name: 'locations', type: FieldType.Location, list: true },
+        { name: 'bar', type: FieldType.EntityType, entityTypes: ['MutationBar'] },
+        {
+          name: 'bars',
+          type: FieldType.EntityType,
+          list: true,
+          entityTypes: ['MutationBar'],
+        },
+        { name: 'stringedBar', type: FieldType.ValueType, valueTypes: ['MutationStringedBar'] },
+        { name: 'nestedValue', type: FieldType.ValueType, valueTypes: ['MutationNestedValue'] },
+        { name: 'anyValueItem', type: FieldType.ValueType },
+        { name: 'anyValueItems', type: FieldType.ValueType, list: true },
+      ],
+    },
+    { name: 'MutationBar', fields: [] },
+  ],
+  valueTypes: [
+    {
+      name: 'MutationStringedBar',
+      fields: [
+        { name: 'text', type: FieldType.String },
+        { name: 'bar', type: FieldType.EntityType, entityTypes: ['MutationBar'] },
+      ],
+    },
+    {
+      name: 'MutationNestedValue',
+      fields: [
+        { name: 'text', type: FieldType.String },
+        { name: 'child', type: FieldType.ValueType, valueTypes: ['MutationNestedValue'] },
+      ],
+    },
+  ],
+};
+
 beforeAll(async () => {
-  server = await createTestServer();
-  const context = await ensureSessionContext(server, 'test', 'mutation');
-  subjectId = context.session.subjectId;
-  adminClient = createServerAdminClient({ resolveContext: () => Promise.resolve(context) });
-  publishedClient = createServerPublishedClient({ resolveContext: () => Promise.resolve(context) });
-  await updateSchema(context, {
-    entityTypes: [
-      {
-        name: 'MutationFoo',
-        fields: [
-          { name: 'title', type: FieldType.String, isName: true },
-          { name: 'summary', type: FieldType.String },
-          { name: 'tags', type: FieldType.String, list: true },
-          { name: 'body', type: FieldType.RichText, entityTypes: ['MutationBar'] },
-          { name: 'location', type: FieldType.Location },
-          { name: 'locations', type: FieldType.Location, list: true },
-          { name: 'bar', type: FieldType.EntityType, entityTypes: ['MutationBar'] },
-          {
-            name: 'bars',
-            type: FieldType.EntityType,
-            list: true,
-            entityTypes: ['MutationBar'],
-          },
-          { name: 'stringedBar', type: FieldType.ValueType, valueTypes: ['MutationStringedBar'] },
-          { name: 'nestedValue', type: FieldType.ValueType, valueTypes: ['MutationNestedValue'] },
-          { name: 'anyValueItem', type: FieldType.ValueType },
-          { name: 'anyValueItems', type: FieldType.ValueType, list: true },
-        ],
-      },
-      { name: 'MutationBar', fields: [] },
-    ],
-    valueTypes: [
-      {
-        name: 'MutationStringedBar',
-        fields: [
-          { name: 'text', type: FieldType.String },
-          { name: 'bar', type: FieldType.EntityType, entityTypes: ['MutationBar'] },
-        ],
-      },
-      {
-        name: 'MutationNestedValue',
-        fields: [
-          { name: 'text', type: FieldType.String },
-          { name: 'child', type: FieldType.ValueType, valueTypes: ['MutationNestedValue'] },
-        ],
-      },
-    ],
-  });
-  schema = new GraphQLSchemaGenerator(context.server.getSchema()).buildSchema();
+  server = await setUpServerWithSession(schemaSpecification);
+  schema = new GraphQLSchemaGenerator(server.schema).buildSchema();
 });
 afterAll(async () => {
-  await server?.shutdown();
+  await server?.tearDown();
 });
 
 function createContext(): SessionGraphQLContext {
   return {
-    schema: ok(server.getSchema()),
-    adminClient: ok(adminClient),
-    publishedClient: ok(publishedClient),
+    schema: ok(server.schema),
+    adminClient: ok(server.adminClient),
+    publishedClient: ok(server.publishedClient),
   };
 }
 
 describe('create*Entity()', () => {
   test('Create', async () => {
+    const { adminClient } = server;
     const result = await graphql(
       schema,
       `
@@ -246,6 +234,7 @@ describe('create*Entity()', () => {
   });
 
   test('Create with rich text with reference', async () => {
+    const { adminClient } = server;
     const createBarResult = await adminClient.createEntity({
       _type: 'MutationBar',
       _name: 'Bar',
@@ -330,6 +319,7 @@ describe('create*Entity()', () => {
   });
 
   test('Create with reference', async () => {
+    const { adminClient } = server;
     const createBarResult = await adminClient.createEntity({
       _type: 'MutationBar',
       _name: 'Bar',
@@ -405,6 +395,7 @@ describe('create*Entity()', () => {
   });
 
   test('Create with reference list', async () => {
+    const { adminClient } = server;
     const createBar1Result = await adminClient.createEntity({
       _type: 'MutationBar',
       _name: 'Bar 1',
@@ -485,6 +476,7 @@ describe('create*Entity()', () => {
   });
 
   test('Create with value type with reference', async () => {
+    const { adminClient } = server;
     const createBarResult = await adminClient.createEntity({
       _type: 'MutationBar',
       _name: 'Bar',
@@ -581,6 +573,7 @@ describe('create*Entity()', () => {
   });
 
   test('Create with value JSON', async () => {
+    const { adminClient } = server;
     const createBarResult = await adminClient.createEntity({
       _type: 'MutationBar',
       _name: 'Bar',
@@ -683,6 +676,7 @@ describe('create*Entity()', () => {
   });
 
   test('Create nested value item with inner JSON', async () => {
+    const { adminClient } = server;
     const createResult = await graphql(
       schema,
       `
@@ -854,6 +848,7 @@ describe('create*Entity()', () => {
 
 describe('update*Entity()', () => {
   test('Update minimal', async () => {
+    const { adminClient } = server;
     const createResult = await adminClient.createEntity({
       _type: 'MutationFoo',
       _name: 'First name',
@@ -922,6 +917,7 @@ describe('update*Entity()', () => {
   });
 
   test('Update with all values including references', async () => {
+    const { adminClient } = server;
     const createBar1Result = await adminClient.createEntity({
       _type: 'MutationBar',
       _name: 'Bar 1',
@@ -1115,6 +1111,7 @@ describe('update*Entity()', () => {
   });
 
   test('Error: Update with the wrong _type', async () => {
+    const { adminClient } = server;
     const createResult = await adminClient.createEntity({
       _type: 'MutationFoo',
       _name: 'Name',
@@ -1159,6 +1156,7 @@ describe('update*Entity()', () => {
 
 describe('publishEntities()', () => {
   test('Publish', async () => {
+    const { adminClient } = server;
     const createResult = await adminClient.createEntity({
       _type: 'MutationFoo',
       _name: 'Howdy name',
@@ -1204,7 +1202,7 @@ describe('publishEntities()', () => {
             {
               kind: PublishingEventKind.Publish,
               publishedAt,
-              publishedBy: subjectId,
+              publishedBy: server.subjectId,
               version: 0,
             },
           ],
@@ -1244,6 +1242,7 @@ describe('publishEntities()', () => {
 
 describe('unpublishEntities()', () => {
   test('Unpublish', async () => {
+    const { adminClient } = server;
     const createResult = await adminClient.createEntity({
       _type: 'MutationFoo',
       _name: 'Howdy name',
@@ -1292,13 +1291,13 @@ describe('unpublishEntities()', () => {
             {
               kind: PublishingEventKind.Publish,
               publishedAt: publishedAt0,
-              publishedBy: subjectId,
+              publishedBy: server.subjectId,
               version: 0,
             },
             {
               kind: PublishingEventKind.Unpublish,
               publishedAt: publishedAt1,
-              publishedBy: subjectId,
+              publishedBy: server.subjectId,
               version: null,
             },
           ],
@@ -1338,6 +1337,7 @@ describe('unpublishEntities()', () => {
 
 describe('archiveEntity()', () => {
   test('Archive', async () => {
+    const { adminClient } = server;
     const createResult = await adminClient.createEntity({
       _type: 'MutationFoo',
       _name: 'Howdy name',
@@ -1381,7 +1381,7 @@ describe('archiveEntity()', () => {
             {
               kind: PublishingEventKind.Archive,
               publishedAt,
-              publishedBy: subjectId,
+              publishedBy: server.subjectId,
               version: null,
             },
           ],
@@ -1393,6 +1393,7 @@ describe('archiveEntity()', () => {
 
 describe('unarchiveEntity()', () => {
   test('Unarchive', async () => {
+    const { adminClient } = server;
     const createResult = await adminClient.createEntity({
       _type: 'MutationFoo',
       _name: 'Howdy name',
@@ -1439,13 +1440,13 @@ describe('unarchiveEntity()', () => {
             {
               kind: PublishingEventKind.Archive,
               publishedAt: publishedAt0,
-              publishedBy: subjectId,
+              publishedBy: server.subjectId,
               version: null,
             },
             {
               kind: PublishingEventKind.Unarchive,
               publishedAt: publishedAt1,
-              publishedBy: subjectId,
+              publishedBy: server.subjectId,
               version: null,
             },
           ],
@@ -1484,6 +1485,7 @@ describe('unarchiveEntity()', () => {
 
 describe('Multiple', () => {
   test('Update and publish', async () => {
+    const { adminClient } = server;
     const createResult = await adminClient.createEntity({
       _type: 'MutationFoo',
       _name: 'Howdy name',
