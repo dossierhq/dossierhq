@@ -17,7 +17,6 @@ import {
   toAdminEntityUpdate2,
 } from '@datadata/core';
 import type {
-  AdminEntity,
   AdminEntity2,
   AdminEntityCreate2,
   AdminQuery,
@@ -68,7 +67,7 @@ interface EditFieldSelectorItem extends ItemSelectorItem {
 interface EntitySelectorItem {
   id: string;
   name: string;
-  entity?: AdminEntity;
+  entity?: AdminEntity2;
   enabled?: boolean;
 }
 
@@ -77,7 +76,7 @@ export async function selectEntity(
   message: string,
   initialQuery: AdminQuery | null,
   _defaultValue: EntityReference | null
-): PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.NotFound> {
+): PromiseResult<AdminEntity2, ErrorType.BadRequest | ErrorType.NotFound> {
   const { adminClient } = context;
   const { query, paging } = await configureQuery(context, initialQuery);
   const isForward = isPagingForwards(paging);
@@ -103,7 +102,7 @@ export async function selectEntity(
       ...result.value.edges.map((edge) => {
         if (edge.node.isOk()) {
           const entity = edge.node.value;
-          return { id: entity.id, name: formatEntityOneLine(toAdminEntity2(entity)), entity };
+          return { id: entity.id, name: formatEntityOneLine(entity), entity };
         }
         return { id: edge.cursor, name: formatErrorResult(edge.node), enabled: false };
       }),
@@ -726,7 +725,7 @@ export async function showLatestEntity(context: CliContext, id: string): Promise
       } else if (referencesResult.value) {
         for (const edge of referencesResult.value?.edges) {
           if (edge.node.isOk()) {
-            console.log(formatEntityOneLine(toAdminEntity2(edge.node.value)));
+            console.log(formatEntityOneLine(edge.node.value));
           } else {
             logErrorResult('', edge.node);
           }

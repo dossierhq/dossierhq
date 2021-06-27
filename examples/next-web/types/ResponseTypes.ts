@@ -1,5 +1,6 @@
 import type {
   AdminEntity,
+  AdminEntity2,
   ErrorType,
   JsonConnection,
   JsonEdge,
@@ -21,7 +22,7 @@ export interface SchemaResponse {
   spec: SchemaSpecification;
 }
 
-export type SearchEntitiesResponse = JsonConnection<JsonEdge<AdminEntity, ErrorType>> | null;
+export type SearchEntitiesResponse = JsonConnection<JsonEdge<AdminEntity2, ErrorType>> | null;
 
 export type PublishingResultResponse = PublishingResult;
 export type PublishingResultListResponse = PublishingResult[];

@@ -1,6 +1,7 @@
-import { EntityPublishState, notOk, ok } from '@datadata/core';
+import { EntityPublishState, notOk, ok, toAdminEntity2 } from '@datadata/core';
 import type {
   AdminEntity,
+  AdminEntity2,
   AdminEntityCreate,
   AdminEntityUpdate,
   AdminQuery,
@@ -102,7 +103,7 @@ export async function searchEntities(
   context: SessionContext,
   query?: AdminQuery,
   paging?: Paging
-): PromiseResult<Connection<Edge<AdminEntity, ErrorType>> | null, ErrorType.BadRequest> {
+): PromiseResult<Connection<Edge<AdminEntity2, ErrorType>> | null, ErrorType.BadRequest> {
   const sqlQuery = searchAdminEntitiesQuery(context, query, paging);
   if (sqlQuery.isError()) {
     return sqlQuery;
@@ -133,7 +134,7 @@ export async function searchEntities(
     },
     edges: entities.map((entity, index) => ({
       cursor: toOpaqueCursor(cursorType, entitiesValues[index][cursorName]),
-      node: ok(entity),
+      node: ok(toAdminEntity2(entity)),
     })),
   });
 }

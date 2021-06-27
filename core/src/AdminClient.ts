@@ -29,7 +29,7 @@ export interface AdminClient {
   searchEntities(
     query?: AdminQuery,
     paging?: Paging
-  ): PromiseResult<Connection<Edge<AdminEntity, ErrorType>> | null, ErrorType.BadRequest>;
+  ): PromiseResult<Connection<Edge<AdminEntity2, ErrorType>> | null, ErrorType.BadRequest>;
 
   getTotalCount(query?: AdminQuery): PromiseResult<number, ErrorType.BadRequest>;
 

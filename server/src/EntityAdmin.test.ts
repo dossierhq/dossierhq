@@ -6,11 +6,10 @@ import {
   isPagingForwards,
   PublishingEventKind,
   RichTextBlockType,
-  toAdminEntity1,
 } from '@datadata/core';
 import type {
   AdminClient,
-  AdminEntity,
+  AdminEntity2,
   AdminQuery,
   BoundingBox,
   Connection,
@@ -34,7 +33,7 @@ let server: Server;
 let context: SessionContext;
 let client: AdminClient;
 let publishedClient: PublishedClient;
-let entitiesOfTypeAdminOnlyEditBefore: AdminEntity[];
+let entitiesOfTypeAdminOnlyEditBefore: AdminEntity2[];
 
 const emptyFooFields = { bar: null, summary: null, title: null };
 const emptyBazFields = {
@@ -225,7 +224,7 @@ async function ensureEntitiesExistForAdminOnlyEditBefore(client: AdminClient) {
 }
 
 async function getEntitiesForAdminOnlyEditBefore(client: AdminClient) {
-  const entities: AdminEntity[] = [];
+  const entities: AdminEntity2[] = [];
   await visitAllEntityPages(
     client,
     { entityTypes: ['AdminOnlyEditBefore'] },
@@ -246,7 +245,7 @@ async function visitAllEntityPages(
   client: AdminClient,
   query: AdminQuery,
   paging: Paging,
-  visitor: (connection: Connection<Edge<AdminEntity, ErrorType>>) => void
+  visitor: (connection: Connection<Edge<AdminEntity2, ErrorType>>) => void
 ) {
   const ownPaging = { ...paging };
   const isForwards = isPagingForwards(ownPaging);
@@ -305,8 +304,8 @@ async function createBarWithFooBazReferences(
 
   const { id: barId } = createBarResult.value;
 
-  const fooEntities: AdminEntity[] = [];
-  const bazEntities: AdminEntity[] = [];
+  const fooEntities: AdminEntity2[] = [];
+  const bazEntities: AdminEntity2[] = [];
 
   for (let i = 0; i < fooCount; i += 1) {
     const createFooResult = await client.createEntity({
@@ -314,7 +313,7 @@ async function createBarWithFooBazReferences(
       fields: { bar: { id: barId } },
     });
     if (expectOkResult(createFooResult)) {
-      fooEntities.push(toAdminEntity1(createFooResult.value));
+      fooEntities.push(createFooResult.value);
     }
   }
   for (let i = 0; i < bazCount; i += 1) {
@@ -324,7 +323,7 @@ async function createBarWithFooBazReferences(
       fields: { bar: { id: barId }, bars },
     });
     if (expectOkResult(createBazResult)) {
-      bazEntities.push(toAdminEntity1(createBazResult.value));
+      bazEntities.push(createBazResult.value);
     }
   }
   return { barId, fooEntities, bazEntities };
@@ -866,12 +865,12 @@ describe('createEntity()', () => {
         const referencingBar1Result = await client.searchEntities({
           referencing: bar1Id,
         });
-        expectSearchResultEntities(referencingBar1Result, [toAdminEntity1(baz)]);
+        expectSearchResultEntities(referencingBar1Result, [baz]);
 
         const referencingBar2Result = await client.searchEntities({
           referencing: bar2Id,
         });
-        expectSearchResultEntities(referencingBar2Result, [toAdminEntity1(baz)]);
+        expectSearchResultEntities(referencingBar2Result, [baz]);
       }
     }
   });
@@ -972,10 +971,10 @@ describe('createEntity()', () => {
         });
 
         const referencesTo1 = await client.searchEntities({ referencing: bar1Id });
-        expectSearchResultEntities(referencesTo1, [toAdminEntity1(baz)]);
+        expectSearchResultEntities(referencesTo1, [baz]);
 
         const referencesTo2 = await client.searchEntities({ referencing: bar2Id });
-        expectSearchResultEntities(referencesTo2, [toAdminEntity1(baz)]);
+        expectSearchResultEntities(referencesTo2, [baz]);
       }
     }
   });
@@ -1122,7 +1121,7 @@ describe('createEntity()', () => {
         });
 
         const barReferences = await client.searchEntities({ referencing: barId });
-        expectSearchResultEntities(barReferences, [toAdminEntity1(baz)]);
+        expectSearchResultEntities(barReferences, [baz]);
       }
     }
   });
@@ -1680,10 +1679,10 @@ describe('createEntity()', () => {
 });
 
 function expectConnectionToMatchSlice(
-  connection: Connection<Edge<AdminEntity, ErrorType>> | null,
+  connection: Connection<Edge<AdminEntity2, ErrorType>> | null,
   sliceStart: number,
   sliceEnd: number | undefined,
-  compareFn?: (a: AdminEntity, b: AdminEntity) => number
+  compareFn?: (a: AdminEntity2, b: AdminEntity2) => number
 ) {
   const actualIds = connection?.edges.map((edge) => ({
     id: edge.node.isOk() ? edge.node.value.id : edge.node,
@@ -1855,7 +1854,7 @@ describe('searchEntities()', () => {
     );
     if (expectOkResult(result)) {
       expectConnectionToMatchSlice(result.value, 0, 20, (a, b) => {
-        return a._name < b._name ? -1 : 1;
+        return a.info.name < b.info.name ? -1 : 1;
       });
     }
   });
@@ -2022,22 +2021,26 @@ describe('searchEntities()', () => {
 
               expectResultValue(edge.node, {
                 id: bazId,
-                _type: 'EntityAdminBaz',
-                _name: bazName,
-                _version: 0,
-                _publishState: EntityPublishState.Draft,
-                ...emptyBazFields,
-                body: {
-                  blocks: [
-                    {
-                      type: RichTextBlockType.valueItem,
-                      data: {
-                        _type: 'EntityAdminStringedLocation',
-                        string: 'Hello location',
-                        location: center,
+                info: {
+                  type: 'EntityAdminBaz',
+                  name: bazName,
+                  version: 0,
+                  publishingState: EntityPublishState.Draft,
+                },
+                fields: {
+                  ...emptyBazFields,
+                  body: {
+                    blocks: [
+                      {
+                        type: RichTextBlockType.valueItem,
+                        data: {
+                          _type: 'EntityAdminStringedLocation',
+                          string: 'Hello location',
+                          location: center,
+                        },
                       },
-                    },
-                  ],
+                    ],
+                  },
                 },
               });
             }
