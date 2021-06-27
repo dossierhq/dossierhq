@@ -1,4 +1,4 @@
-import { notOk, ok } from '@datadata/core';
+import { isPagingForwards, notOk, ok } from '@datadata/core';
 import type { Paging, Result, ErrorType } from '@datadata/core';
 import { fromOpaqueCursor } from './Connection';
 import type { CursorNativeType } from './Connection';
@@ -9,10 +9,6 @@ export interface ResolvedPaging<TCursor> {
   count: number;
   before: TCursor | null;
   after: TCursor | null;
-}
-
-export function isPagingForwards(paging?: Paging): boolean {
-  return getCount(paging, 'first') !== null || getCount(paging, 'last') === null;
 }
 
 function getCount(paging: Paging | undefined, key: 'first' | 'last') {

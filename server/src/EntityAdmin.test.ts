@@ -3,6 +3,7 @@ import {
   EntityPublishState,
   ErrorType,
   FieldType,
+  isPagingForwards,
   PublishingEventKind,
   RichTextBlockType,
 } from '@datadata/core';
@@ -18,7 +19,7 @@ import type {
 } from '@datadata/core';
 import { validate as validateUuid, v4 as uuidv4 } from 'uuid';
 import type { Server, SessionContext } from '.';
-import { createServerAdminClient, createServerPublishedClient, isPagingForwards } from '.';
+import { createServerAdminClient, createServerPublishedClient } from '.';
 import { createTestServer, ensureSessionContext, updateSchema } from './ServerTestUtils';
 import {
   expectEntityHistoryVersions,

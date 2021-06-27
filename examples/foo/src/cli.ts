@@ -3,8 +3,8 @@ import 'dotenv/config';
 import { CliAuth, CliContext, CliMain } from '@datadata/cli';
 import type { SchemaSpecification } from '@datadata/core';
 import { Schema } from '@datadata/core';
-import { createServerAdminClient, createServerPublishedClient, Session } from '@datadata/server';
-import { Server } from '@datadata/server';
+import { createServerAdminClient, createServerPublishedClient } from '@datadata/server';
+import type { Server, Session } from '@datadata/server';
 import SchemaSpec from './schema.json';
 
 async function main() {

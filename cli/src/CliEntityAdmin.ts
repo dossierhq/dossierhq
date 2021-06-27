@@ -4,6 +4,7 @@ import {
   isEntityTypeListField,
   isLocationField,
   isLocationListField,
+  isPagingForwards,
   isRichTextField,
   isRichTextListField,
   isStringField,
@@ -28,7 +29,6 @@ import type {
   ValueItem,
   ValueTypeSpecification,
 } from '@datadata/core';
-import { isPagingForwards } from '@datadata/server';
 import type { CliContext } from '..';
 import * as CliSchema from './CliSchema';
 import {

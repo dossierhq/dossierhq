@@ -81,6 +81,7 @@ export {
   convertJsonResult,
 } from './JsonUtils';
 export { createBasePublishedClient, PublishedClientOperationName } from './PublishedClient';
+export { isPagingForwards } from './QueryUtils';
 export { FieldType, RichTextBlockType, Schema } from './Schema';
 export { EntityPublishState, PublishingEventKind } from './Types';
 export * as CoreTestUtils from './CoreTestUtils';
