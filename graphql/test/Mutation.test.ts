@@ -1,3 +1,4 @@
+import type { SchemaSpecification } from '@datadata/core';
 import {
   CoreTestUtils,
   EntityPublishState,
@@ -34,7 +35,7 @@ const emptyFooFields = {
   anyValueItems: null,
 };
 
-const schemaSpecification = {
+const schemaSpecification: Partial<SchemaSpecification> = {
   entityTypes: [
     {
       name: 'MutationFoo',

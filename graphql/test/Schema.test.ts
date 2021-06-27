@@ -1,7 +1,7 @@
 import { FieldType, Schema } from '@datadata/core';
 import type { SchemaSpecification } from '@datadata/core';
 import { graphql, printSchema } from 'graphql';
-import { GraphQLSchemaGenerator } from '../src/GraphQLSchemaGenerator';
+import { GraphQLSchemaGenerator } from '..';
 
 function describeGeneratedSchema(schemaSpec: SchemaSpecification) {
   const schema = new Schema(schemaSpec);
