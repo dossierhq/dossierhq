@@ -14,8 +14,9 @@ import type {
   PublishingHistory,
   PublishingResult,
   Result,
-} from '..';
-import { assertIsDefined } from '..';
+} from '.';
+import type { Middleware, Operation } from './SharedClient';
+import { executeOperationPipeline } from './SharedClient';
 
 export interface AdminClient {
   getEntity(
@@ -109,15 +110,26 @@ interface AdminClientOperationReturn {
   [AdminClientOperationName.updateEntity]: MethodReturnType<'updateEntity'>;
 }
 
-export interface AdminClientOperation<TName extends AdminClientOperationName> {
-  readonly name: TName;
-  readonly args: AdminClientOperationArguments[TName];
-  readonly resolve: (result: AdminClientOperationReturn[TName]) => void;
-}
+export type AdminClientOperation<TName extends AdminClientOperationName> = Operation<
+  TName,
+  AdminClientOperationArguments[TName],
+  AdminClientOperationReturn[TName]
+>;
 
-export interface AdminClientMiddleware<TContext> {
-  (context: TContext, operation: AdminClientOperation<AdminClientOperationName>): Promise<void>;
-}
+export type AdminClientMiddleware<TContext> = Middleware<
+  TContext,
+  AdminClientOperation<AdminClientOperationName>
+>;
+
+// export interface AdminClientOperation<TName extends AdminClientOperationName> extends Operation<TName, {
+//   readonly name: TName;
+//   readonly args: AdminClientOperationArguments[TName];
+//   readonly resolve: (result: AdminClientOperationReturn[TName]) => void;
+// }
+
+// export interface AdminClientMiddleware<TContext> {
+//   (context: TContext, operation: AdminClientOperation<AdminClientOperationName>): Promise<void>;
+// }
 
 class BaseAdminClient<TContext> implements AdminClient {
   private readonly resolveContext: () => Promise<TContext>;
@@ -247,16 +259,8 @@ class BaseAdminClient<TContext> implements AdminClient {
     operation: Omit<AdminClientOperation<TName>, 'resolve'>
   ): Promise<AdminClientOperationReturn[TName]> {
     const context = await this.resolveContext();
-    let result: AdminClientOperationReturn[TName] | undefined;
-    const resolve = (res: AdminClientOperationReturn[TName]) => (result = res);
-    const operationWithResolve: AdminClientOperation<TName> = { ...operation, resolve };
-    //TODO support pipeline
-    await this.pipeline[0](
-      context,
-      operationWithResolve as unknown as AdminClientOperation<AdminClientOperationName>
-    );
-    assertIsDefined(result);
-    return result;
+
+    return await executeOperationPipeline(context, this.pipeline, operation);
   }
 }
 

@@ -7,7 +7,7 @@ import {
   PublishingEventKind,
   RichTextBlockType,
 } from '@datadata/core';
-import { createServerClient, ServerTestUtils } from '@datadata/server';
+import { createServerAdminClient, ServerTestUtils } from '@datadata/server';
 import type { SessionContext, Server } from '@datadata/server';
 import { graphql } from 'graphql';
 import type { GraphQLSchema } from 'graphql';
@@ -41,7 +41,7 @@ const emptyFooFields = {
 beforeAll(async () => {
   server = await createTestServer();
   context = await ensureSessionContext(server, 'test', 'mutation');
-  adminClient = createServerClient({ resolveContext: () => Promise.resolve(context) });
+  adminClient = createServerAdminClient({ resolveContext: () => Promise.resolve(context) });
   await updateSchema(context, {
     entityTypes: [
       {

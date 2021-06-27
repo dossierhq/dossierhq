@@ -1,23 +1,24 @@
-import type { AdminClient } from '@datadata/core';
+import type { AdminClient, PublishedClient } from '@datadata/core';
 import { CoreTestUtils, ErrorType, FieldType, EntityPublishState } from '@datadata/core';
-import { PublishedEntity } from '.';
+import { createServerAdminClient, createServerPublishedClient } from '.';
 import type { Server, SessionContext } from '.';
 import { createTestServer, ensureSessionContext, updateSchema } from './ServerTestUtils';
 import { expectResultValue } from '../test/AdditionalTestUtils';
-import { createServerClient } from './Client';
 
 const { expectErrorResult, expectOkResult } = CoreTestUtils;
 
 let server: Server;
 let context: SessionContext;
 let adminClient: AdminClient;
+let publishedClient: PublishedClient;
 
 beforeAll(async () => {
   server = await createTestServer();
   context = await ensureSessionContext(server, 'test', 'published-entity');
-  adminClient = createServerClient({
+  adminClient = createServerAdminClient({
     resolveContext: () => Promise.resolve(context),
   });
+  publishedClient = createServerPublishedClient({ resolveContext: () => Promise.resolve(context) });
 
   await updateSchema(context, {
     entityTypes: [
@@ -48,7 +49,7 @@ describe('getEntity()', () => {
       const publishResult = await adminClient.publishEntities([{ id, version }]);
       expectResultValue(publishResult, [{ id, publishState: EntityPublishState.Published }]);
 
-      const result = await PublishedEntity.getEntity(context, id);
+      const result = await publishedClient.getEntity({ id });
       expectResultValue(result, {
         id,
         _type: 'PublishedEntityFoo',
@@ -70,20 +71,20 @@ describe('getEntity()', () => {
       const archiveResult = await adminClient.archiveEntity({ id });
       expectResultValue(archiveResult, { id, publishState: EntityPublishState.Archived });
 
-      const result = await PublishedEntity.getEntity(context, id);
+      const result = await publishedClient.getEntity({ id });
       expectErrorResult(result, ErrorType.NotFound, 'No such entity');
     }
   });
 
   test('Error: Get missing id', async () => {
-    const result = await PublishedEntity.getEntity(context, 'f09fdd62-4a1e-4320-afba-8dd0781799df');
+    const result = await publishedClient.getEntity({ id: 'f09fdd62-4a1e-4320-afba-8dd0781799df' });
     expectErrorResult(result, ErrorType.NotFound, 'No such entity');
   });
 });
 
 describe('getEntities()', () => {
   test('No ids', async () => {
-    const result = await PublishedEntity.getEntities(context, []);
+    const result = await publishedClient.getEntities([]);
     expect(result).toHaveLength(0);
   });
 
@@ -111,7 +112,7 @@ describe('getEntities()', () => {
         { id: foo2Id, publishState: EntityPublishState.Published },
       ]);
 
-      const result = await PublishedEntity.getEntities(context, [foo2Id, foo1Id]);
+      const result = await publishedClient.getEntities([{ id: foo2Id }, { id: foo1Id }]);
       expect(result).toHaveLength(2);
       expectResultValue(result[0], {
         _type: 'PublishedEntityFoo',
@@ -142,9 +143,9 @@ describe('getEntities()', () => {
         { id: foo1Id, publishState: EntityPublishState.Published },
       ]);
 
-      const result = await PublishedEntity.getEntities(context, [
-        'f09fdd62-4a1e-4320-afba-8dd0781799df',
-        foo1Id,
+      const result = await publishedClient.getEntities([
+        { id: 'f09fdd62-4a1e-4320-afba-8dd0781799df' },
+        { id: foo1Id },
       ]);
       expect(result).toHaveLength(2);
       expectErrorResult(result[0], ErrorType.NotFound, 'No such entity');
@@ -169,16 +170,16 @@ describe('getEntities()', () => {
       const archiveResult = await adminClient.archiveEntity({ id });
       expectResultValue(archiveResult, { id, publishState: EntityPublishState.Archived });
 
-      const result = await PublishedEntity.getEntities(context, [id]);
+      const result = await publishedClient.getEntities([{ id }]);
       expect(result).toHaveLength(1);
       expectErrorResult(result[0], ErrorType.NotFound, 'No such entity');
     }
   });
 
   test('Error: Get missing ids', async () => {
-    const result = await PublishedEntity.getEntities(context, [
-      'f09fdd62-4a1e-4320-afba-8dd0781799df',
-      'f09fdd62-4a1e-4320-4320-8dd0781799df',
+    const result = await publishedClient.getEntities([
+      { id: 'f09fdd62-4a1e-4320-afba-8dd0781799df' },
+      { id: 'f09fdd62-4a1e-4320-4320-8dd0781799df' },
     ]);
     expect(result).toHaveLength(2);
     expectErrorResult(result[0], ErrorType.NotFound, 'No such entity');

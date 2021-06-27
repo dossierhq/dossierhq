@@ -14,23 +14,24 @@ import type {
   Connection,
   Edge,
   Paging,
+  PublishedClient,
 } from '@datadata/core';
 import { validate as validateUuid, v4 as uuidv4 } from 'uuid';
 import type { Server, SessionContext } from '.';
-import { isPagingForwards, PublishedEntity } from '.';
+import { createServerAdminClient, createServerPublishedClient, isPagingForwards } from '.';
 import { createTestServer, ensureSessionContext, updateSchema } from './ServerTestUtils';
 import {
   expectEntityHistoryVersions,
   expectResultValue,
   expectSearchResultEntities,
 } from '../test/AdditionalTestUtils';
-import { createServerClient } from './Client';
 
 const { expectErrorResult, expectOkResult } = CoreTestUtils;
 
 let server: Server;
 let context: SessionContext;
 let client: AdminClient;
+let publishedClient: PublishedClient;
 let entitiesOfTypeAdminOnlyEditBefore: AdminEntity[];
 
 const emptyFooFields = { bar: null, summary: null, title: null };
@@ -57,9 +58,10 @@ const emptyBazFields = {
 beforeAll(async () => {
   server = await createTestServer();
   context = await ensureSessionContext(server, 'test', 'entity-admin');
-  client = createServerClient({
+  client = createServerAdminClient({
     resolveContext: () => Promise.resolve(context),
   });
+  publishedClient = createServerPublishedClient({ resolveContext: () => Promise.resolve(context) });
   await updateSchema(context, {
     entityTypes: [
       {
@@ -525,7 +527,7 @@ describe('createEntity()', () => {
         title: 'Title',
       });
 
-      const publishedResult = await PublishedEntity.getEntity(context, id);
+      const publishedResult = await publishedClient.getEntity({ id });
       expectResultValue(publishedResult, {
         id,
         _type: 'EntityAdminFoo',
@@ -578,7 +580,7 @@ describe('createEntity()', () => {
         title: 'Draft',
       });
 
-      const publishedResult = await PublishedEntity.getEntity(context, id);
+      const publishedResult = await publishedClient.getEntity({ id });
       expectErrorResult(publishedResult, ErrorType.NotFound, 'No such entity');
     }
   });
@@ -656,7 +658,7 @@ describe('createEntity()', () => {
           bar: { id: barId },
         });
 
-        const publishedFooResult = await PublishedEntity.getEntity(context, fooId);
+        const publishedFooResult = await publishedClient.getEntity({ id: fooId });
         expectResultValue(publishedFooResult, {
           id: fooId,
           _type: 'EntityAdminFoo',
@@ -2168,7 +2170,7 @@ describe('updateEntity()', () => {
         title: 'Updated title',
       });
 
-      const publishedResult = await PublishedEntity.getEntity(context, id);
+      const publishedResult = await publishedClient.getEntity({ id });
       expectResultValue(publishedResult, {
         id,
         _type: 'EntityAdminFoo',
@@ -2251,7 +2253,7 @@ describe('updateEntity()', () => {
         title: 'Updated title',
       });
 
-      const publishedResult = await PublishedEntity.getEntity(context, id);
+      const publishedResult = await publishedClient.getEntity({ id });
       expectResultValue(publishedResult, {
         id,
         _type: 'EntityAdminFoo',
@@ -2323,7 +2325,7 @@ describe('updateEntity()', () => {
         title: 'Updated title',
       });
 
-      const publishedResult = await PublishedEntity.getEntity(context, id);
+      const publishedResult = await publishedClient.getEntity({ id });
       expectResultValue(publishedResult, {
         id,
         _type: 'EntityAdminFoo',
@@ -2402,7 +2404,7 @@ describe('updateEntity()', () => {
         summary: 'Updated summary',
       });
 
-      const publishedResult = await PublishedEntity.getEntity(context, id);
+      const publishedResult = await publishedClient.getEntity({ id });
       expectResultValue(publishedResult, {
         id,
         _type: 'EntityAdminFoo',
@@ -2439,7 +2441,7 @@ describe('updateEntity()', () => {
       const publishResult = await client.publishEntities([{ id, version: 1 }]);
       expectResultValue(publishResult, [{ id, publishState: EntityPublishState.Published }]);
 
-      const publishedResult = await PublishedEntity.getEntity(context, id);
+      const publishedResult = await publishedClient.getEntity({ id });
       expectResultValue(publishedResult, {
         id,
         _type: 'EntityAdminFoo',
@@ -2517,7 +2519,7 @@ describe('updateEntity()', () => {
           bar: { id: barId },
         });
 
-        const publishedResult = await PublishedEntity.getEntity(context, fooId);
+        const publishedResult = await publishedClient.getEntity({ id: fooId });
         expectResultValue(publishedResult, {
           id: fooId,
           _type: 'EntityAdminFoo',
@@ -2611,7 +2613,7 @@ describe('updateEntity()', () => {
           bars: [{ id: bar1Id }, { id: bar2Id }],
         });
 
-        const publishedResult = await PublishedEntity.getEntity(context, bazId);
+        const publishedResult = await publishedClient.getEntity({ id: bazId });
         expectResultValue(publishedResult, {
           id: bazId,
           _type: 'EntityAdminBaz',

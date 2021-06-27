@@ -1,6 +1,6 @@
 import type { AdminClient, AdminClientOperation } from '@datadata/core';
 import { AdminClientOperationName, assertExhaustive, createBaseAdminClient } from '@datadata/core';
-import type { SessionContext } from '..';
+import type { SessionContext } from '.';
 import {
   archiveEntity,
   createEntity,
@@ -16,7 +16,7 @@ import {
   updateEntity,
 } from './EntityAdmin';
 
-export function createServerClient({
+export function createServerAdminClient({
   resolveContext,
 }: {
   resolveContext: () => Promise<SessionContext>;

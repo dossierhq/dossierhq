@@ -1,6 +1,6 @@
 import type { AdminClient } from '@datadata/core';
 import { CoreTestUtils, FieldType, notOk, ok, RichTextBlockType } from '@datadata/core';
-import { createServerClient, ServerTestUtils } from '@datadata/server';
+import { createServerAdminClient, ServerTestUtils } from '@datadata/server';
 import type { Server, SessionContext } from '@datadata/server';
 import { graphql, printError } from 'graphql';
 import type { GraphQLSchema } from 'graphql';
@@ -17,7 +17,7 @@ let schema: GraphQLSchema;
 beforeAll(async () => {
   server = await createTestServer();
   context = await ensureSessionContext(server, 'test', 'query');
-  adminClient = createServerClient({ resolveContext: () => Promise.resolve(context) });
+  adminClient = createServerAdminClient({ resolveContext: () => Promise.resolve(context) });
   await updateSchema(context, {
     entityTypes: [
       {

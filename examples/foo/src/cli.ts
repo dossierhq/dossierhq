@@ -4,7 +4,7 @@ require('dotenv').config();
 import { CliAuth, CliContext, CliMain } from '@datadata/cli';
 import type { SchemaSpecification } from '@datadata/core';
 import { Schema } from '@datadata/core';
-import { createServerClient, Session } from '@datadata/server';
+import { createServerAdminClient, Session } from '@datadata/server';
 import { Server } from '@datadata/server';
 import SchemaSpec from './schema.json';
 
@@ -23,7 +23,7 @@ async function main() {
 
     const cliContext: CliContext = {
       schema,
-      adminClient: createServerClient({ resolveContext: () => Promise.resolve(context) }),
+      adminClient: createServerAdminClient({ resolveContext: () => Promise.resolve(context) }),
       context,
     };
 

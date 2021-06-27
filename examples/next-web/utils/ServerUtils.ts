@@ -1,7 +1,7 @@
 import type { AdminClient, PromiseResult, SchemaSpecification } from '@datadata/core';
 import { ErrorType, ok, Schema } from '@datadata/core';
 import type { AuthContext, SessionContext } from '@datadata/server';
-import { Auth, createServerClient, Server } from '@datadata/server';
+import { Auth, createServerAdminClient, Server } from '@datadata/server';
 import type { NextApiRequest } from 'next';
 import SchemaSpec from './schema.json';
 
@@ -41,7 +41,9 @@ export async function getSessionContextForRequest(
   //TODO actually authenticate
   const session = await ensureSession(authContext, 'test', 'john-smith');
   const sessionContext = server.createSessionContext(session);
-  const adminClient = createServerClient({ resolveContext: () => Promise.resolve(sessionContext) });
+  const adminClient = createServerAdminClient({
+    resolveContext: () => Promise.resolve(sessionContext),
+  });
   return ok({ adminClient, sessionContext });
 }
 

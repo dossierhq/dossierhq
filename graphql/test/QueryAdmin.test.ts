@@ -17,7 +17,7 @@ import {
   RichTextBlockType,
 } from '@datadata/core';
 import type { SessionContext, Server } from '@datadata/server';
-import { createServerClient, ServerTestUtils } from '@datadata/server';
+import { createServerAdminClient, ServerTestUtils } from '@datadata/server';
 import { graphql, printError } from 'graphql';
 import type { GraphQLSchema } from 'graphql';
 import { GraphQLSchemaGenerator } from '../src/GraphQLSchemaGenerator';
@@ -34,7 +34,7 @@ let entitiesOfTypeQueryAdminOnlyEditBefore: AdminEntity[];
 beforeAll(async () => {
   server = await createTestServer();
   context = await ensureSessionContext(server, 'test', 'query');
-  adminClient = createServerClient({ resolveContext: () => Promise.resolve(context) });
+  adminClient = createServerAdminClient({ resolveContext: () => Promise.resolve(context) });
   await updateSchema(context, {
     entityTypes: [
       {
