@@ -228,7 +228,7 @@ export async function createEntity(context: CliContext): Promise<AdminEntity | n
   const entity = {
     _type: type,
     _name: '',
-    ...(await editEntityValues(context, { _type: type })),
+    ...(await editEntityValues(context, type, {})),
   };
 
   while (!entity._name) {
@@ -259,7 +259,10 @@ export async function editEntity(context: CliContext, id: string): Promise<Admin
     return null;
   }
 
-  const entity = { id, ...(await editEntityValues(context, getResult.value)) };
+  const entity = {
+    id,
+    ...(await editEntityValues(context, getResult.value._type, getResult.value)),
+  };
   const updateResult = await adminClient.updateEntity(entity);
   if (updateResult.isError()) {
     logErrorResult('Failed updating entity', updateResult);
@@ -302,9 +305,10 @@ async function publishEntityVersion(
 
 async function editEntityValues(
   context: CliContext,
-  defaultValues: { _type: string; [fieldName: string]: unknown }
+  type: string,
+  defaultValues: Record<string, unknown>
 ): Promise<Record<string, unknown>> {
-  const entitySpec = getEntitySpec(context, defaultValues);
+  const entitySpec = getEntitySpec(context, type);
   const changedValues: Record<string, unknown> = {};
 
   let lastItemId = null;

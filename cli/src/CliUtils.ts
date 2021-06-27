@@ -33,11 +33,6 @@ import type {
 } from '@datadata/core';
 import type { CliContext } from '..';
 
-interface Entityish {
-  _type: string;
-  [fieldName: string]: unknown;
-}
-
 export function logErrorResult(
   message: string,
   errorResult: ErrorResult<unknown, ErrorType>
@@ -193,11 +188,11 @@ export function formatFieldValue(fieldSpec: FieldSpecification, value: unknown):
   throw new Error(`Unknown type (${fieldSpec.type})`);
 }
 
-export function getEntitySpec(context: CliContext, entity: Entityish): EntityTypeSpecification {
+export function getEntitySpec(context: CliContext, type: string): EntityTypeSpecification {
   const { schema } = context;
-  const entitySpec = schema.getEntityTypeSpecification(entity._type);
+  const entitySpec = schema.getEntityTypeSpecification(type);
   if (!entitySpec) {
-    throw new Error(`Couldn't find entity spec for type: ${entity._type}`);
+    throw new Error(`Couldn't find entity spec for type: ${type}`);
   }
   return entitySpec;
 }
