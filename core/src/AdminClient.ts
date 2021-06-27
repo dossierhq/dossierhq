@@ -1,7 +1,7 @@
 import type {
   AdminEntity,
   AdminEntity2,
-  AdminEntityCreate,
+  AdminEntityCreate2,
   AdminEntityUpdate2,
   AdminQuery,
   Connection,
@@ -33,7 +33,7 @@ export interface AdminClient {
 
   getTotalCount(query?: AdminQuery): PromiseResult<number, ErrorType.BadRequest>;
 
-  createEntity(entity: AdminEntityCreate): PromiseResult<AdminEntity, ErrorType.BadRequest>;
+  createEntity(entity: AdminEntityCreate2): PromiseResult<AdminEntity2, ErrorType.BadRequest>;
 
   updateEntity(
     entity: AdminEntityUpdate2
@@ -185,7 +185,7 @@ class BaseAdminClient<TContext> implements AdminClient {
   }
 
   createEntity(
-    entity: AdminEntityCreate
+    entity: AdminEntityCreate2
   ): Promise<AdminClientOperationReturn[AdminClientOperationName.createEntity]> {
     return this.executeOperation({
       name: AdminClientOperationName.createEntity,

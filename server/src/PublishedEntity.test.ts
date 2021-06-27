@@ -36,12 +36,14 @@ afterAll(async () => {
 describe('getEntity()', () => {
   test('Archived then published entity', async () => {
     const createResult = await adminClient.createEntity({
-      _type: 'PublishedEntityFoo',
-      _name: 'Foo 1',
-      title: 'Title 1',
+      info: { type: 'PublishedEntityFoo', name: 'Foo 1' },
+      fields: { title: 'Title 1' },
     });
     if (expectOkResult(createResult)) {
-      const { id, _name: name, _version: version } = createResult.value;
+      const {
+        id,
+        info: { name, version },
+      } = createResult.value;
 
       const archiveResult = await adminClient.archiveEntity({ id });
       expectResultValue(archiveResult, { id, publishState: EntityPublishState.Archived });
@@ -60,9 +62,8 @@ describe('getEntity()', () => {
 
   test('Error: Archived entity', async () => {
     const createResult = await adminClient.createEntity({
-      _type: 'PublishedEntityFoo',
-      _name: 'Foo 1',
-      title: 'Title 1',
+      info: { type: 'PublishedEntityFoo', name: 'Foo 1' },
+      fields: { title: 'Title 1' },
     });
     if (expectOkResult(createResult)) {
       const { id } = createResult.value;
@@ -89,18 +90,22 @@ describe('getEntities()', () => {
 
   test('Get two entities', async () => {
     const createFoo1Result = await adminClient.createEntity({
-      _type: 'PublishedEntityFoo',
-      _name: 'Foo 1',
-      title: 'Title 1',
+      info: { type: 'PublishedEntityFoo', name: 'Foo 1' },
+      fields: { title: 'Title 1' },
     });
     const createFoo2Result = await adminClient.createEntity({
-      _type: 'PublishedEntityFoo',
-      _name: 'Foo 2',
-      title: 'Title 2',
+      info: { type: 'PublishedEntityFoo', name: 'Foo 2' },
+      fields: { title: 'Title 2' },
     });
     if (expectOkResult(createFoo1Result) && expectOkResult(createFoo2Result)) {
-      const { id: foo1Id, _name: foo1Name } = createFoo1Result.value;
-      const { id: foo2Id, _name: foo2Name } = createFoo2Result.value;
+      const {
+        id: foo1Id,
+        info: { name: foo1Name },
+      } = createFoo1Result.value;
+      const {
+        id: foo2Id,
+        info: { name: foo2Name },
+      } = createFoo2Result.value;
 
       const publishResult = await adminClient.publishEntities([
         { id: foo1Id, version: 0 },
@@ -128,12 +133,14 @@ describe('getEntities()', () => {
 
   test('Get one missing, one existing entity', async () => {
     const createFooResult = await adminClient.createEntity({
-      _type: 'PublishedEntityFoo',
-      _name: 'Foo',
-      title: 'Title',
+      info: { type: 'PublishedEntityFoo', name: 'Foo' },
+      fields: { title: 'Title' },
     });
     if (expectOkResult(createFooResult)) {
-      const { id: foo1Id, _name: foo1Name } = createFooResult.value;
+      const {
+        id: foo1Id,
+        info: { name: foo1Name },
+      } = createFooResult.value;
 
       const publishResult = await adminClient.publishEntities([{ id: foo1Id, version: 0 }]);
       expectResultValue(publishResult, [
@@ -158,9 +165,10 @@ describe('getEntities()', () => {
 
   test('Error: Get archived entity', async () => {
     const createResult = await adminClient.createEntity({
-      _type: 'PublishedEntityFoo',
-      _name: 'Foo 1',
-      title: 'Title 1',
+      info: { type: 'PublishedEntityFoo', name: 'Foo 1' },
+      fields: {
+        title: 'Title 1',
+      },
     });
     if (expectOkResult(createResult)) {
       const { id } = createResult.value;
