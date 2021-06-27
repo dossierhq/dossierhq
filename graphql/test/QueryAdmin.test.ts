@@ -1228,7 +1228,7 @@ describe('versionHistory()', () => {
       const updateResult = await adminClient.updateEntity({ id, title: 'Updated title' });
       if (expectOkResult(updateResult)) {
         expectOkResult(
-          await adminClient.publishEntities([{ id, version: updateResult.value._version }])
+          await adminClient.publishEntities([{ id, version: updateResult.value.info.version }])
         );
       }
 

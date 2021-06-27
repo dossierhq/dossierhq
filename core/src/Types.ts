@@ -1,4 +1,5 @@
 import type { ErrorType, Result } from '.';
+import { ok } from './ErrorResult';
 
 export interface Entity {
   id: string;
@@ -89,6 +90,15 @@ export function toAdminEntity2(entity: AdminEntity): AdminEntity2 {
     info: { type, name, version, publishingState },
     fields,
   };
+}
+
+export function toAdminEntityResult2<TError extends ErrorType>(
+  entity: Result<AdminEntity, TError>
+): Result<AdminEntity2, TError> {
+  if (entity.isError()) {
+    return entity;
+  }
+  return ok(toAdminEntity2(entity.value));
 }
 
 //TODO temporary
