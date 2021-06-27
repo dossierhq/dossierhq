@@ -1,7 +1,17 @@
-import type { AdminClient, PromiseResult, SchemaSpecification } from '@datadata/core';
+import type {
+  AdminClient,
+  PromiseResult,
+  PublishedClient,
+  SchemaSpecification,
+} from '@datadata/core';
 import { ErrorType, ok, Schema } from '@datadata/core';
-import type { AuthContext, SessionContext } from '@datadata/server';
-import { Auth, createServerAdminClient, Server } from '@datadata/server';
+import type { AuthContext } from '@datadata/server';
+import {
+  Auth,
+  createServerAdminClient,
+  createServerPublishedClient,
+  Server,
+} from '@datadata/server';
 import type { NextApiRequest } from 'next';
 import SchemaSpec from './schema.json';
 
@@ -35,7 +45,7 @@ export async function getSessionContextForRequest(
   authContext: AuthContext,
   req: NextApiRequest
 ): PromiseResult<
-  { adminClient: AdminClient; sessionContext: SessionContext },
+  { adminClient: AdminClient; publishedClient: PublishedClient },
   ErrorType.NotAuthenticated
 > {
   //TODO actually authenticate
@@ -44,7 +54,10 @@ export async function getSessionContextForRequest(
   const adminClient = createServerAdminClient({
     resolveContext: () => Promise.resolve(sessionContext),
   });
-  return ok({ adminClient, sessionContext });
+  const publishedClient = createServerPublishedClient({
+    resolveContext: () => Promise.resolve(sessionContext),
+  });
+  return ok({ adminClient, publishedClient });
 }
 
 export async function getServerConnection(): Promise<{ server: Server; authContext: AuthContext }> {

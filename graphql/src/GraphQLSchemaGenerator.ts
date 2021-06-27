@@ -8,12 +8,12 @@ import type {
   Entity,
   EntityTypeSpecification,
   ErrorType,
+  PublishedClient,
   Result,
   Schema,
   ValueItem,
   ValueTypeSpecification,
 } from '@datadata/core';
-import type { SessionContext } from '@datadata/server';
 import {
   GraphQLBoolean,
   GraphQLEnumType,
@@ -53,10 +53,10 @@ import {
 } from './DataLoaders';
 import * as Mutations from './Mutations';
 
-//TODO remove SessionGraphQLContext.content I think
 export interface SessionGraphQLContext {
-  context: Result<SessionContext, ErrorType.NotAuthenticated>;
+  schema: Result<Schema, ErrorType.NotAuthenticated>;
   adminClient: Result<AdminClient, ErrorType.NotAuthenticated>;
+  publishedClient: Result<PublishedClient, ErrorType.NotAuthenticated>;
 }
 
 function toAdminTypeName(name: string, isAdmin = true) {

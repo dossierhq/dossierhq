@@ -20,10 +20,11 @@ export default async (
     if (authResult.isError()) {
       throw errorResultToBoom(authResult);
     }
-    const { adminClient, sessionContext } = authResult.value;
+    const { adminClient, publishedClient } = authResult.value;
     const context: SessionGraphQLContext = {
+      schema: ok(server.getSchema()),
       adminClient: ok(adminClient),
-      context: ok(sessionContext),
+      publishedClient: ok(publishedClient),
     };
 
     if (!graphQLSchema) {
