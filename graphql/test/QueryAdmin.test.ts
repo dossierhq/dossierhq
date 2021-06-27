@@ -7,7 +7,7 @@ import type {
   Edge,
   ErrorType,
   Paging,
-  PublishedClient,
+  SchemaSpecification,
 } from '@datadata/core';
 import {
   CoreTestUtils,
@@ -17,82 +17,72 @@ import {
   ok,
   RichTextBlockType,
 } from '@datadata/core';
-import type { Server } from '@datadata/server';
-import {
-  createServerAdminClient,
-  createServerPublishedClient,
-  ServerTestUtils,
-} from '@datadata/server';
 import { graphql, printError } from 'graphql';
 import type { GraphQLSchema } from 'graphql';
 import type { SessionGraphQLContext } from '..';
 import { GraphQLSchemaGenerator } from '..';
+import type { TestServerWithSession } from './TestUtils';
+import { setUpServerWithSession } from './TestUtils';
 
 const { expectOkResult } = CoreTestUtils;
-const { createTestServer, ensureSessionContext, updateSchema } = ServerTestUtils;
 
-let server: Server;
-let subjectId: string;
-let adminClient: AdminClient;
-let publishedClient: PublishedClient;
+let server: TestServerWithSession;
 let schema: GraphQLSchema;
 let entitiesOfTypeQueryAdminOnlyEditBefore: AdminEntity[];
 
-beforeAll(async () => {
-  server = await createTestServer();
-  const context = await ensureSessionContext(server, 'test', 'query');
-  subjectId = context.session.subjectId;
-  adminClient = createServerAdminClient({ resolveContext: () => Promise.resolve(context) });
-  publishedClient = createServerPublishedClient({ resolveContext: () => Promise.resolve(context) });
-  await updateSchema(context, {
-    entityTypes: [
-      {
-        name: 'QueryAdminFoo',
-        fields: [
-          { name: 'title', type: FieldType.String, isName: true },
-          { name: 'summary', type: FieldType.String },
-          { name: 'tags', type: FieldType.String, list: true },
-          { name: 'body', type: FieldType.RichText },
-          { name: 'location', type: FieldType.Location },
-          { name: 'locations', type: FieldType.Location, list: true },
-          { name: 'bar', type: FieldType.EntityType, entityTypes: ['QueryAdminBar'] },
-          {
-            name: 'bars',
-            type: FieldType.EntityType,
-            list: true,
-            entityTypes: ['QueryAdminBar'],
-          },
-          { name: 'stringedBar', type: FieldType.ValueType, valueTypes: ['QueryAdminStringedBar'] },
-        ],
-      },
-      { name: 'QueryAdminBar', fields: [{ name: 'title', type: FieldType.String }] },
-      { name: 'QueryAdminOnlyEditBefore', fields: [{ name: 'message', type: FieldType.String }] },
-    ],
-    valueTypes: [
-      {
-        name: 'QueryAdminStringedBar',
-        fields: [
-          { name: 'text', type: FieldType.String },
-          { name: 'bar', type: FieldType.EntityType, entityTypes: ['QueryAdminBar'] },
-        ],
-      },
-    ],
-  });
-  schema = new GraphQLSchemaGenerator(context.server.getSchema()).buildSchema();
+const schemaSpecification: Partial<SchemaSpecification> = {
+  entityTypes: [
+    {
+      name: 'QueryAdminFoo',
+      fields: [
+        { name: 'title', type: FieldType.String, isName: true },
+        { name: 'summary', type: FieldType.String },
+        { name: 'tags', type: FieldType.String, list: true },
+        { name: 'body', type: FieldType.RichText },
+        { name: 'location', type: FieldType.Location },
+        { name: 'locations', type: FieldType.Location, list: true },
+        { name: 'bar', type: FieldType.EntityType, entityTypes: ['QueryAdminBar'] },
+        {
+          name: 'bars',
+          type: FieldType.EntityType,
+          list: true,
+          entityTypes: ['QueryAdminBar'],
+        },
+        { name: 'stringedBar', type: FieldType.ValueType, valueTypes: ['QueryAdminStringedBar'] },
+      ],
+    },
+    { name: 'QueryAdminBar', fields: [{ name: 'title', type: FieldType.String }] },
+    { name: 'QueryAdminOnlyEditBefore', fields: [{ name: 'message', type: FieldType.String }] },
+  ],
+  valueTypes: [
+    {
+      name: 'QueryAdminStringedBar',
+      fields: [
+        { name: 'text', type: FieldType.String },
+        { name: 'bar', type: FieldType.EntityType, entityTypes: ['QueryAdminBar'] },
+      ],
+    },
+  ],
+};
 
+beforeAll(async () => {
+  server = await setUpServerWithSession(schemaSpecification);
+  schema = new GraphQLSchemaGenerator(server.schema).buildSchema();
+
+  const { adminClient } = server;
   await ensureTestEntitiesExist(adminClient);
   entitiesOfTypeQueryAdminOnlyEditBefore = await getEntitiesForAdminOnlyEditBefore(adminClient);
 });
 
 afterAll(async () => {
-  await server?.shutdown();
+  await server?.tearDown();
 });
 
 function createContext(): SessionGraphQLContext {
   return {
-    schema: ok(server.getSchema()),
-    adminClient: ok(adminClient),
-    publishedClient: ok(publishedClient),
+    schema: ok(server.schema),
+    adminClient: ok(server.adminClient),
+    publishedClient: ok(server.publishedClient),
   };
 }
 
@@ -164,6 +154,7 @@ async function visitAllEntityPages(
 }
 
 async function createBarWithFooReferences(fooCount: number) {
+  const { adminClient } = server;
   const createBarResult = await adminClient.createEntity({
     _type: 'QueryAdminBar',
     _name: 'Bar',
@@ -206,6 +197,7 @@ function randomBoundingBox(heightLat = 1.0, widthLng = 1.0): BoundingBox {
 
 describe('adminEntity()', () => {
   test('Query all fields of created entity', async () => {
+    const { adminClient } = server;
     const createResult = await adminClient.createEntity({
       _type: 'QueryAdminFoo',
       _name: 'Howdy name',
@@ -276,6 +268,7 @@ describe('adminEntity()', () => {
   });
 
   test('Query null fields of created entity', async () => {
+    const { adminClient } = server;
     const createResult = await adminClient.createEntity({
       _type: 'QueryAdminFoo',
       _name: 'Howdy name',
@@ -347,6 +340,7 @@ describe('adminEntity()', () => {
   });
 
   test('Query different versions of same entity created entity', async () => {
+    const { adminClient } = server;
     const createResult = await adminClient.createEntity({
       _type: 'QueryAdminFoo',
       _name: 'First name',
@@ -450,6 +444,7 @@ describe('adminEntity()', () => {
   });
 
   test('Query published entity', async () => {
+    const { adminClient } = server;
     const createResult = await adminClient.createEntity({
       _type: 'QueryAdminFoo',
       _name: 'First name',
@@ -495,6 +490,7 @@ describe('adminEntity()', () => {
   });
 
   test('Query rich text field', async () => {
+    const { adminClient } = server;
     const createFooResult = await adminClient.createEntity({
       _type: 'QueryAdminFoo',
       _name: 'Foo name',
@@ -547,6 +543,7 @@ describe('adminEntity()', () => {
   });
 
   test('Query rich text with references', async () => {
+    const { adminClient } = server;
     const createBar1Result = await adminClient.createEntity({
       _type: 'QueryAdminBar',
       _name: 'Bar name 1',
@@ -626,6 +623,7 @@ describe('adminEntity()', () => {
   });
 
   test('Query referenced entity', async () => {
+    const { adminClient } = server;
     const createBarResult = await adminClient.createEntity({
       _type: 'QueryAdminBar',
       _name: 'Bar name',
@@ -694,6 +692,7 @@ describe('adminEntity()', () => {
   });
 
   test('Query referenced entity list', async () => {
+    const { adminClient } = server;
     const createBar1Result = await adminClient.createEntity({
       _type: 'QueryAdminBar',
       _name: 'Bar 1 name',
@@ -770,6 +769,7 @@ describe('adminEntity()', () => {
   });
 
   test('Query value type', async () => {
+    const { adminClient } = server;
     const createBarResult = await adminClient.createEntity({
       _type: 'QueryAdminBar',
       _name: 'Bar name',
@@ -912,6 +912,7 @@ GraphQL request:3:11
 
 describe('adminEntities()', () => {
   test('Query 2 entities', async () => {
+    const { adminClient } = server;
     const createFoo1Result = await adminClient.createEntity({
       _type: 'QueryAdminFoo',
       _name: 'Howdy name 1',
@@ -1143,6 +1144,7 @@ describe('searchAdminEntities()', () => {
   });
 
   test('Filter based on bounding box', async () => {
+    const { adminClient } = server;
     const boundingBox = randomBoundingBox();
     const center = {
       lat: (boundingBox.minLat + boundingBox.maxLat) / 2,
@@ -1214,6 +1216,7 @@ describe('searchAdminEntities()', () => {
 
 describe('versionHistory()', () => {
   test('History with edit', async () => {
+    const { adminClient } = server;
     const createResult = await adminClient.createEntity({
       _type: 'QueryAdminFoo',
       _name: 'Foo name',
@@ -1257,8 +1260,8 @@ describe('versionHistory()', () => {
         entityHistory: {
           id,
           versions: [
-            { createdBy: subjectId, published: false, version: 0 },
-            { createdBy: subjectId, published: true, version: 1 },
+            { createdBy: server.subjectId, published: false, version: 0 },
+            { createdBy: server.subjectId, published: true, version: 1 },
           ],
         },
       });
@@ -1297,6 +1300,7 @@ describe('versionHistory()', () => {
 
 describe('publishingHistory()', () => {
   test('History with published', async () => {
+    const { adminClient } = server;
     const createResult = await adminClient.createEntity({
       _type: 'QueryAdminFoo',
       _name: 'Foo name',
@@ -1331,7 +1335,7 @@ describe('publishingHistory()', () => {
       expect(result.data).toEqual({
         publishingHistory: {
           id,
-          events: [{ publishedBy: subjectId, publishedAt, version: 0 }],
+          events: [{ publishedBy: server.subjectId, publishedAt, version: 0 }],
         },
       });
     }

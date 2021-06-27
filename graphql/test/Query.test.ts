@@ -1,70 +1,60 @@
-import type { AdminClient, PublishedClient } from '@datadata/core';
+import type { SchemaSpecification } from '@datadata/core';
 import { CoreTestUtils, FieldType, notOk, ok, RichTextBlockType } from '@datadata/core';
-import {
-  createServerAdminClient,
-  createServerPublishedClient,
-  ServerTestUtils,
-} from '@datadata/server';
-import type { Server } from '@datadata/server';
 import { graphql, printError } from 'graphql';
 import type { GraphQLSchema } from 'graphql';
 import type { SessionGraphQLContext } from '..';
 import { GraphQLSchemaGenerator } from '..';
+import type { TestServerWithSession } from './TestUtils';
+import { setUpServerWithSession } from './TestUtils';
 
 const { expectOkResult } = CoreTestUtils;
-const { createTestServer, ensureSessionContext, updateSchema } = ServerTestUtils;
 
-let server: Server;
-
-let adminClient: AdminClient;
-let publishedClient: PublishedClient;
+let server: TestServerWithSession;
 let schema: GraphQLSchema;
 
+const schemaSpecification: Partial<SchemaSpecification> = {
+  entityTypes: [
+    {
+      name: 'QueryFoo',
+      fields: [
+        { name: 'title', type: FieldType.String, isName: true },
+        { name: 'summary', type: FieldType.String },
+        { name: 'tags', type: FieldType.String, list: true },
+        { name: 'body', type: FieldType.RichText },
+        { name: 'location', type: FieldType.Location },
+        { name: 'locations', type: FieldType.Location, list: true },
+        { name: 'bar', type: FieldType.EntityType, entityTypes: ['QueryBar'] },
+        { name: 'bars', type: FieldType.EntityType, entityTypes: ['QueryBar'], list: true },
+        { name: 'stringedBar', type: FieldType.ValueType, valueTypes: ['QueryStringedBar'] },
+      ],
+    },
+    { name: 'QueryBar', fields: [{ name: 'title', type: FieldType.String }] },
+  ],
+  valueTypes: [
+    {
+      name: 'QueryStringedBar',
+      fields: [
+        { name: 'text', type: FieldType.String },
+        { name: 'bar', type: FieldType.EntityType, entityTypes: ['QueryBar'] },
+      ],
+    },
+  ],
+};
+
 beforeAll(async () => {
-  server = await createTestServer();
-  const context = await ensureSessionContext(server, 'test', 'query');
-  adminClient = createServerAdminClient({ resolveContext: () => Promise.resolve(context) });
-  publishedClient = createServerPublishedClient({ resolveContext: () => Promise.resolve(context) });
-  await updateSchema(context, {
-    entityTypes: [
-      {
-        name: 'QueryFoo',
-        fields: [
-          { name: 'title', type: FieldType.String, isName: true },
-          { name: 'summary', type: FieldType.String },
-          { name: 'tags', type: FieldType.String, list: true },
-          { name: 'body', type: FieldType.RichText },
-          { name: 'location', type: FieldType.Location },
-          { name: 'locations', type: FieldType.Location, list: true },
-          { name: 'bar', type: FieldType.EntityType, entityTypes: ['QueryBar'] },
-          { name: 'bars', type: FieldType.EntityType, entityTypes: ['QueryBar'], list: true },
-          { name: 'stringedBar', type: FieldType.ValueType, valueTypes: ['QueryStringedBar'] },
-        ],
-      },
-      { name: 'QueryBar', fields: [{ name: 'title', type: FieldType.String }] },
-    ],
-    valueTypes: [
-      {
-        name: 'QueryStringedBar',
-        fields: [
-          { name: 'text', type: FieldType.String },
-          { name: 'bar', type: FieldType.EntityType, entityTypes: ['QueryBar'] },
-        ],
-      },
-    ],
-  });
-  schema = new GraphQLSchemaGenerator(context.server.getSchema()).buildSchema();
+  server = await setUpServerWithSession(schemaSpecification);
+  schema = new GraphQLSchemaGenerator(server.schema).buildSchema();
 });
 
 afterAll(async () => {
-  await server?.shutdown();
+  await server?.tearDown();
 });
 
 function createContext(): SessionGraphQLContext {
   return {
-    schema: ok(server.getSchema()),
-    adminClient: ok(adminClient),
-    publishedClient: ok(publishedClient),
+    schema: ok(server.schema),
+    adminClient: ok(server.adminClient),
+    publishedClient: ok(server.publishedClient),
   };
 }
 
@@ -78,6 +68,7 @@ function createNotAuthenticatedContext(): SessionGraphQLContext {
 
 describe('node()', () => {
   test('Query all fields of created entity', async () => {
+    const { adminClient } = server;
     const createResult = await adminClient.createEntity({
       _type: 'QueryFoo',
       _name: 'Howdy name',
@@ -144,6 +135,7 @@ describe('node()', () => {
   });
 
   test('Query null fields of created entity', async () => {
+    const { adminClient } = server;
     const createResult = await adminClient.createEntity({
       _type: 'QueryFoo',
       _name: 'Howdy name',
@@ -211,6 +203,7 @@ describe('node()', () => {
   });
 
   test('Query rich text', async () => {
+    const { adminClient } = server;
     const createFooResult = await adminClient.createEntity({
       _type: 'QueryFoo',
       _name: 'Foo name',
@@ -261,6 +254,7 @@ describe('node()', () => {
   });
 
   test('Query rich text with reference', async () => {
+    const { adminClient } = server;
     const createBarResult = await adminClient.createEntity({
       _type: 'QueryBar',
       _name: 'Bar name',
@@ -328,6 +322,7 @@ describe('node()', () => {
   });
 
   test('Query referenced entity', async () => {
+    const { adminClient } = server;
     const createBarResult = await adminClient.createEntity({
       _type: 'QueryBar',
       _name: 'Bar name',
@@ -394,6 +389,7 @@ describe('node()', () => {
   });
 
   test('Query referenced entity list', async () => {
+    const { adminClient } = server;
     const createBar1Result = await adminClient.createEntity({
       _type: 'QueryBar',
       _name: 'Bar 1 name',
@@ -479,6 +475,7 @@ describe('node()', () => {
   });
 
   test('Query value type', async () => {
+    const { adminClient } = server;
     const createBarResult = await adminClient.createEntity({
       _type: 'QueryBar',
       _name: 'Bar name',
@@ -615,6 +612,7 @@ GraphQL request:3:11
 
 describe('nodes()', () => {
   test('Query 2 entities', async () => {
+    const { adminClient } = server;
     const createFoo1Result = await adminClient.createEntity({
       _type: 'QueryFoo',
       _name: 'Howdy name 1',
