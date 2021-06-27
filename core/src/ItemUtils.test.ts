@@ -1,4 +1,4 @@
-import type { FieldSpecification, RichText, RichTextBlock, ValueItem } from '.';
+import type { Entity, FieldSpecification, RichText, RichTextBlock, ValueItem } from '.';
 import { FieldType, RichTextBlockType, Schema, visitItemRecursively, visitorPathToString } from '.';
 
 function buildMockCallbacks<TVisitContext>() {
@@ -84,9 +84,10 @@ describe('visitItemRecursively()', () => {
   test('no fields', () => {
     const schema = new Schema({ entityTypes: [{ name: 'Foo', fields: [] }], valueTypes: [] });
     const { calls, callbacks } = buildMockCallbacks();
+    const entity: Entity = { id: 'id1', info: { type: 'Foo', name: 'hello' }, fields: {} };
     visitItemRecursively({
       schema,
-      item: { id: 'id1', _type: 'Foo', _name: 'hello' },
+      item: entity,
       ...callbacks,
       initialVisitContext: undefined,
     });
@@ -122,17 +123,22 @@ describe('visitItemRecursively()', () => {
       ],
     });
     const { calls, callbacks } = buildMockCallbacks();
-    visitItemRecursively({
-      schema,
-      item: {
-        id: 'id1',
-        _type: 'Foo',
-        _name: 'hello',
+    const entity: Entity = {
+      id: 'id1',
+      info: {
+        type: 'Foo',
+        name: 'hello',
+      },
+      fields: {
         string: 'Hello string',
         location: { lat: 55.60498, lng: 13.003822 },
         bar: { id: 'bar id 1' },
         valueOne: { _type: 'ValueOne', string: 'value string', bar: { id: 'bar id 2' } },
       },
+    };
+    visitItemRecursively({
+      schema,
+      item: entity,
       ...callbacks,
       initialVisitContext: undefined,
     });
@@ -231,12 +237,13 @@ describe('visitItemRecursively()', () => {
       ],
     });
     const { calls, callbacks } = buildMockCallbacks();
-    visitItemRecursively({
-      schema,
-      item: {
-        id: 'id1',
-        _type: 'Foo',
-        _name: 'hello',
+    const entity: Entity = {
+      id: 'id1',
+      info: {
+        type: 'Foo',
+        name: 'hello',
+      },
+      fields: {
         strings: ['Hello string', 'World string'],
         locations: [{ lat: 55.60498, lng: 13.003822 }],
         bars: [{ id: 'bar id 1' }, { id: 'bar id 2' }],
@@ -253,6 +260,10 @@ describe('visitItemRecursively()', () => {
           },
         ],
       },
+    };
+    visitItemRecursively({
+      schema,
+      item: entity,
       ...callbacks,
       initialVisitContext: undefined,
     });
@@ -489,12 +500,13 @@ describe('visitItemRecursively()', () => {
       valueTypes: [],
     });
     const { calls, callbacks } = buildMockCallbacks();
-    visitItemRecursively({
-      schema,
-      item: {
-        id: 'id1',
-        _type: 'Foo',
-        _name: 'hello',
+    const entity: Entity = {
+      id: 'id1',
+      info: {
+        type: 'Foo',
+        name: 'hello',
+      },
+      fields: {
         body: {
           blocks: [
             { type: RichTextBlockType.paragraph, data: { text: 'Hello world' } },
@@ -503,6 +515,10 @@ describe('visitItemRecursively()', () => {
           ],
         },
       },
+    };
+    visitItemRecursively({
+      schema,
+      item: entity,
       ...callbacks,
       initialVisitContext: undefined,
     });
@@ -596,12 +612,10 @@ describe('visitItemRecursively()', () => {
       ],
     });
     const { calls, callbacks } = buildMockCallbacks();
-    visitItemRecursively({
-      schema,
-      item: {
-        id: 'id1',
-        _type: 'Foo',
-        _name: 'hello',
+    const entity: Entity = {
+      id: 'id1',
+      info: { type: 'Foo', name: 'hello' },
+      fields: {
         body: {
           blocks: [
             {
@@ -617,6 +631,10 @@ describe('visitItemRecursively()', () => {
           ],
         },
       },
+    };
+    visitItemRecursively({
+      schema,
+      item: entity,
       ...callbacks,
       initialVisitContext: undefined,
     });
@@ -747,12 +765,10 @@ describe('visitItemRecursively()', () => {
       valueTypes: [],
     });
     const { calls, callbacks } = buildMockCallbacks();
-    visitItemRecursively({
-      schema,
-      item: {
-        id: 'id1',
-        _type: 'Foo',
-        _name: 'hello',
+    const entity: Entity = {
+      id: 'id1',
+      info: { type: 'Foo', name: 'hello' },
+      fields: {
         bodyList: [
           {
             blocks: [{ type: RichTextBlockType.paragraph, data: { text: 'First rich text item' } }],
@@ -768,6 +784,10 @@ describe('visitItemRecursively()', () => {
           },
         ],
       },
+    };
+    visitItemRecursively({
+      schema,
+      item: entity,
       ...callbacks,
       initialVisitContext: undefined,
     });
@@ -885,12 +905,13 @@ describe('visitItemRecursively()', () => {
       ],
     });
     const { calls, callbacks } = buildMockCallbacks();
-    visitItemRecursively({
-      schema,
-      item: {
-        id: 'id1',
-        _type: 'Foo',
-        _name: 'hello',
+    const entity: Entity = {
+      id: 'id1',
+      info: {
+        type: 'Foo',
+        name: 'hello',
+      },
+      fields: {
         valueOne: {
           _type: 'ValueOne',
           string: 'root',
@@ -901,6 +922,10 @@ describe('visitItemRecursively()', () => {
           },
         },
       },
+    };
+    visitItemRecursively({
+      schema,
+      item: entity,
       ...callbacks,
       initialVisitContext: undefined,
     });

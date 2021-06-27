@@ -13,6 +13,7 @@ import {
   isValueTypeListField,
   notOk,
   ok,
+  toAdminEntity2,
 } from '@datadata/core';
 import type {
   AdminEntity,
@@ -41,12 +42,9 @@ import {
   formatValueItemOneLine,
   getEntitySpec,
   getValueSpec,
-  isReferenceAnEntity,
   logEntity,
   logErrorResult,
   logKeyValue,
-  replaceEntityReferencesWithEntitiesGeneric,
-  replaceValueItemReferencesWithEntitiesGeneric,
 } from './CliUtils';
 import {
   showBoundingBoxEdit,
@@ -102,7 +100,7 @@ export async function selectEntity(
       ...result.value.edges.map((edge) => {
         if (edge.node.isOk()) {
           const entity = edge.node.value;
-          return { id: entity.id, name: formatEntityOneLine(entity), entity };
+          return { id: entity.id, name: formatEntityOneLine(toAdminEntity2(entity)), entity };
         }
         return { id: edge.cursor, name: formatErrorResult(edge.node), enabled: false };
       }),
@@ -243,7 +241,7 @@ export async function createEntity(context: CliContext): Promise<AdminEntity | n
     return null;
   }
   console.log(chalk.bold('Created entity'));
-  logEntity(context, createResult.value);
+  logEntity(context, toAdminEntity2(createResult.value));
 
   const publishedEntity = await publishEntityVersion(context, createResult.value);
   if (publishedEntity) {
@@ -268,7 +266,7 @@ export async function editEntity(context: CliContext, id: string): Promise<Admin
     return null;
   }
   console.log(chalk.bold('Updated'));
-  logEntity(context, updateResult.value);
+  logEntity(context, toAdminEntity2(updateResult.value));
 
   const publishedEntity = await publishEntityVersion(context, updateResult.value);
   if (publishedEntity) {
@@ -308,8 +306,6 @@ async function editEntityValues(
 ): Promise<Record<string, unknown>> {
   const entitySpec = getEntitySpec(context, defaultValues);
   const changedValues: Record<string, unknown> = {};
-
-  await replaceEntityReferencesWithEntities(context, defaultValues);
 
   let lastItemId = null;
   // eslint-disable-next-line no-constant-condition
@@ -422,11 +418,12 @@ async function editFieldReferenceList(
   fieldSpec: FieldSpecification,
   defaultValue: EntityReference[] | null
 ) {
+  // TODO display cached entity info
   return await editFieldList(
     fieldSpec,
     'Select reference item',
     defaultValue,
-    (item) => (isReferenceAnEntity(item) ? formatEntityOneLine(item) : item.id),
+    (item) => item.id,
     (item) => editFieldReference(context, fieldSpec, item)
   );
 }
@@ -441,8 +438,6 @@ export async function editFieldValueItem(
     ? { ...defaultValue }
     : { _type: await CliSchema.selectValueType(context, fieldSpec.valueTypes) };
   const valueSpec = getValueSpec(context, valueItem);
-
-  await replaceValueItemReferencesWithEntities(context, valueItem);
 
   let lastItemId = null;
   // eslint-disable-next-line no-constant-condition
@@ -711,8 +706,7 @@ export async function showLatestEntity(context: CliContext, id: string): Promise
   const result = await adminClient.getEntity({ id });
   if (result.isOk()) {
     const entity = result.value;
-    await replaceEntityReferencesWithEntities(context, entity);
-    logEntity(context, entity);
+    logEntity(context, toAdminEntity2(entity));
 
     const totalResult = await adminClient.getTotalCount({ referencing: id });
     if (totalResult.isError()) {
@@ -726,7 +720,7 @@ export async function showLatestEntity(context: CliContext, id: string): Promise
       } else if (referencesResult.value) {
         for (const edge of referencesResult.value?.edges) {
           if (edge.node.isOk()) {
-            console.log(formatEntityOneLine(edge.node.value));
+            console.log(formatEntityOneLine(toAdminEntity2(edge.node.value)));
           } else {
             logErrorResult('', edge.node);
           }
@@ -794,38 +788,9 @@ export async function showEntityVersion(context: CliContext, id: string): Promis
     }
     const result = await adminClient.getEntity({ id, version: currentVersion });
     if (result.isOk()) {
-      logEntity(context, result.value);
+      logEntity(context, toAdminEntity2(result.value));
     } else {
       logErrorResult('Failed getting entity version', result);
     }
   }
-}
-
-async function replaceEntityReferencesWithEntities(
-  context: CliContext,
-  entity: { _type: string; [fieldName: string]: unknown }
-) {
-  await replaceEntityReferencesWithEntitiesGeneric(
-    context,
-    entity,
-    async (context, id) => {
-      return await context.adminClient.getEntity({ id });
-    },
-    async (context, ids) => {
-      return await context.adminClient.getEntities(ids.map((id) => ({ id })));
-    }
-  );
-}
-
-async function replaceValueItemReferencesWithEntities(context: CliContext, valueItem: ValueItem) {
-  await replaceValueItemReferencesWithEntitiesGeneric(
-    context,
-    valueItem,
-    async (context, id) => {
-      return await context.adminClient.getEntity({ id });
-    },
-    async (context, ids) => {
-      return await context.adminClient.getEntities(ids.map((id) => ({ id })));
-    }
-  );
 }

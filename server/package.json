@@ -17,6 +17,7 @@
     "test:watch": "jest --watch",
     "test": "jest",
     "ts:check": "tsc --noEmit",
+    "ts:check:watch": "tsc --noEmit --watch",
     "upgrade-dependencies": "npx npm-check-updates -u --packageFile ./package.json",
     "upgrade-dependencies:check": "npx npm-check-updates"
   },

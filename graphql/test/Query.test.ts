@@ -94,17 +94,21 @@ describe('node()', () => {
               __typename
               id
               ... on QueryFoo {
-                _name
-                title
-                summary
-                tags
-                location {
-                  lat
-                  lng
+                info {
+                  name
                 }
-                locations {
-                  lat
-                  lng
+                fields {
+                  title
+                  summary
+                  tags
+                  location {
+                    lat
+                    lng
+                  }
+                  locations {
+                    lat
+                    lng
+                  }
                 }
               }
             }
@@ -119,15 +123,19 @@ describe('node()', () => {
           node: {
             __typename: 'QueryFoo',
             id,
-            _name: createResult.value._name,
-            title: 'Howdy title',
-            summary: 'Howdy summary',
-            tags: ['one', 'two', 'three'],
-            location: { lat: 55.60498, lng: 13.003822 },
-            locations: [
-              { lat: 55.60498, lng: 13.003822 },
-              { lat: 56.381561, lng: 13.99286 },
-            ],
+            info: {
+              name: createResult.value._name,
+            },
+            fields: {
+              title: 'Howdy title',
+              summary: 'Howdy summary',
+              tags: ['one', 'two', 'three'],
+              location: { lat: 55.60498, lng: 13.003822 },
+              locations: [
+                { lat: 55.60498, lng: 13.003822 },
+                { lat: 56.381561, lng: 13.99286 },
+              ],
+            },
           },
         },
       });
@@ -153,26 +161,30 @@ describe('node()', () => {
               __typename
               id
               ... on QueryFoo {
-                _name
-                title
-                summary
-                bar {
-                  id
+                info {
+                  name
                 }
-                bars {
-                  id
-                }
-                tags
-                location {
-                  lat
-                  lng
-                }
-                locations {
-                  lat
-                  lng
-                }
-                stringedBar {
-                  __typename
+                fields {
+                  title
+                  summary
+                  bar {
+                    id
+                  }
+                  bars {
+                    id
+                  }
+                  tags
+                  location {
+                    lat
+                    lng
+                  }
+                  locations {
+                    lat
+                    lng
+                  }
+                  stringedBar {
+                    __typename
+                  }
                 }
               }
             }
@@ -187,15 +199,19 @@ describe('node()', () => {
           node: {
             __typename: 'QueryFoo',
             id,
-            _name: createResult.value._name,
-            title: null,
-            summary: null,
-            bar: null,
-            bars: null,
-            tags: null,
-            location: null,
-            locations: null,
-            stringedBar: null,
+            info: {
+              name: createResult.value._name,
+            },
+            fields: {
+              title: null,
+              summary: null,
+              bar: null,
+              bars: null,
+              tags: null,
+              location: null,
+              locations: null,
+              stringedBar: null,
+            },
           },
         },
       });
@@ -222,11 +238,15 @@ describe('node()', () => {
               __typename
               id
               ... on QueryFoo {
-                _name
-                body {
-                  blocksJson
-                  entities {
-                    id
+                info {
+                  name
+                }
+                fields {
+                  body {
+                    blocksJson
+                    entities {
+                      id
+                    }
                   }
                 }
               }
@@ -242,10 +262,12 @@ describe('node()', () => {
           node: {
             __typename: 'QueryFoo',
             id: fooId,
-            _name: createFooResult.value._name,
-            body: {
-              blocksJson: '[{"type":"paragraph","data":{"text":"Hello world"}}]',
-              entities: [],
+            info: { name: createFooResult.value._name },
+            fields: {
+              body: {
+                blocksJson: '[{"type":"paragraph","data":{"text":"Hello world"}}]',
+                entities: [],
+              },
             },
           },
         },
@@ -288,12 +310,18 @@ describe('node()', () => {
                 __typename
                 id
                 ... on QueryFoo {
-                  _name
-                  body {
-                    blocksJson
-                    entities {
-                      id
-                      _name
+                  info {
+                    name
+                  }
+                  fields {
+                    body {
+                      blocksJson
+                      entities {
+                        id
+                        info {
+                          name
+                        }
+                      }
                     }
                   }
                 }
@@ -309,10 +337,14 @@ describe('node()', () => {
             node: {
               __typename: 'QueryFoo',
               id: fooId,
-              _name: createFooResult.value._name,
-              body: {
-                blocksJson: `[{"type":"entity","data":{"id":"${barId}"}},{"type":"paragraph","data":{"text":"Hello world"}}]`,
-                entities: [{ id: barId, _name: barName }],
+              info: {
+                name: createFooResult.value._name,
+              },
+              fields: {
+                body: {
+                  blocksJson: `[{"type":"entity","data":{"id":"${barId}"}},{"type":"paragraph","data":{"text":"Hello world"}}]`,
+                  entities: [{ id: barId, info: { name: barName } }],
+                },
               },
             },
           },
@@ -352,13 +384,21 @@ describe('node()', () => {
                 __typename
                 id
                 ... on QueryFoo {
-                  _name
-                  title
-                  bar {
-                    __typename
-                    id
-                    _name
+                  info {
+                    name
+                  }
+                  fields {
                     title
+                    bar {
+                      __typename
+                      id
+                      info {
+                        name
+                      }
+                      fields {
+                        title
+                      }
+                    }
                   }
                 }
               }
@@ -373,13 +413,21 @@ describe('node()', () => {
             node: {
               __typename: 'QueryFoo',
               id: fooId,
-              _name: createFooResult.value._name,
-              title: 'Foo title',
-              bar: {
-                __typename: 'QueryBar',
-                _name: createBarResult.value._name,
-                id: barId,
-                title: 'Bar title',
+              info: {
+                name: createFooResult.value._name,
+              },
+              fields: {
+                title: 'Foo title',
+                bar: {
+                  __typename: 'QueryBar',
+                  id: barId,
+                  info: {
+                    name: createBarResult.value._name,
+                  },
+                  fields: {
+                    title: 'Bar title',
+                  },
+                },
               },
             },
           },
@@ -430,13 +478,21 @@ describe('node()', () => {
                 __typename
                 id
                 ... on QueryFoo {
-                  _name
-                  title
-                  bars {
-                    __typename
-                    id
-                    _name
+                  info {
+                    name
+                  }
+                  fields {
                     title
+                    bars {
+                      __typename
+                      id
+                      info {
+                        name
+                      }
+                      fields {
+                        title
+                      }
+                    }
                   }
                 }
               }
@@ -451,22 +507,24 @@ describe('node()', () => {
             node: {
               __typename: 'QueryFoo',
               id: fooId,
-              _name: createFooResult.value._name,
-              title: 'Foo title',
-              bars: [
-                {
-                  __typename: 'QueryBar',
-                  _name: createBar1Result.value._name,
-                  id: bar1Id,
-                  title: 'Bar 1 title',
-                },
-                {
-                  __typename: 'QueryBar',
-                  _name: createBar2Result.value._name,
-                  id: bar2Id,
-                  title: 'Bar 2 title',
-                },
-              ],
+              info: { name: createFooResult.value._name },
+              fields: {
+                title: 'Foo title',
+                bars: [
+                  {
+                    __typename: 'QueryBar',
+                    id: bar1Id,
+                    info: { name: createBar1Result.value._name },
+                    fields: { title: 'Bar 1 title' },
+                  },
+                  {
+                    __typename: 'QueryBar',
+                    id: bar2Id,
+                    info: { name: createBar2Result.value._name },
+                    fields: { title: 'Bar 2 title' },
+                  },
+                ],
+              },
             },
           },
         });
@@ -505,17 +563,25 @@ describe('node()', () => {
                 __typename
                 id
                 ... on QueryFoo {
-                  _name
-                  title
-                  stringedBar {
-                    __typename
-                    _type
-                    text
-                    bar {
+                  info {
+                    name
+                  }
+                  fields {
+                    title
+                    stringedBar {
                       __typename
-                      id
-                      _name
-                      title
+                      _type
+                      text
+                      bar {
+                        __typename
+                        id
+                        info {
+                          name
+                        }
+                        fields {
+                          title
+                        }
+                      }
                     }
                   }
                 }
@@ -531,17 +597,19 @@ describe('node()', () => {
             node: {
               __typename: 'QueryFoo',
               id: fooId,
-              _name: createFooResult.value._name,
-              title: 'Foo title',
-              stringedBar: {
-                __typename: 'QueryStringedBar',
-                _type: 'QueryStringedBar',
-                text: 'Value text',
-                bar: {
-                  __typename: 'QueryBar',
-                  _name: createBarResult.value._name,
-                  id: barId,
-                  title: 'Bar title',
+              info: { name: createFooResult.value._name },
+              fields: {
+                title: 'Foo title',
+                stringedBar: {
+                  __typename: 'QueryStringedBar',
+                  _type: 'QueryStringedBar',
+                  text: 'Value text',
+                  bar: {
+                    __typename: 'QueryBar',
+                    id: barId,
+                    info: { name: createBarResult.value._name },
+                    fields: { title: 'Bar title' },
+                  },
                 },
               },
             },
@@ -640,7 +708,9 @@ describe('nodes()', () => {
               __typename
               id
               ... on QueryFoo {
-                _name
+                info {
+                  name
+                }
               }
             }
           }
@@ -655,12 +725,14 @@ describe('nodes()', () => {
             {
               __typename: 'QueryFoo',
               id: foo1Id,
-              _name: foo1Name,
+              info: {
+                name: foo1Name,
+              },
             },
             {
               __typename: 'QueryFoo',
               id: foo2Id,
-              _name: foo2Name,
+              info: { name: foo2Name },
             },
           ],
         },

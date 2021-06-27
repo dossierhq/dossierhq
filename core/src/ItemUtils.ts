@@ -1,5 +1,6 @@
 import type {
-  AdminEntity,
+  AdminEntity2,
+  Entity,
   EntityReference,
   FieldSpecification,
   FieldValueTypeMap,
@@ -148,6 +149,18 @@ export function isRichTextValueItemBlock(
   return block.type === RichTextBlockType.valueItem;
 }
 
+export function isItemValueItem(item: ValueItem | Entity | AdminEntity2): item is ValueItem {
+  return '_type' in item;
+}
+
+export function isItemAdminEntity(item: ValueItem | Entity | AdminEntity2): item is AdminEntity2 {
+  return !isItemValueItem(item) && 'version' in item.info;
+}
+
+export function isItemEntity(item: ValueItem | Entity | AdminEntity2): item is Entity {
+  return !isItemValueItem(item) && !isItemAdminEntity(item);
+}
+
 export function visitorPathToString(path: (string | number)[]): string {
   let result = '';
   for (const segment of path) {
@@ -215,7 +228,7 @@ export function visitItemRecursively<TVisitContext>({
   initialVisitContext,
 }: {
   schema: Schema;
-  item: AdminEntity | ValueItem;
+  item: Entity | AdminEntity2 | ValueItem;
   path?: (number | string)[];
   visitField: VisitorVisitField<TVisitContext>;
   visitRichTextBlock: VisitorVisitRichTextBlock<TVisitContext>;
@@ -228,7 +241,6 @@ export function visitItemRecursively<TVisitContext>({
     schema,
     path ?? [],
     item,
-    true,
     { visitField, visitRichTextBlock, enterValueItem, enterList, enterRichText },
     initialVisitContext
   );
@@ -270,20 +282,24 @@ export function visitFieldRecursively<TVisitContext>({
 function doVisitItemRecursively<TVisitContext>(
   schema: Schema,
   path: (string | number)[],
-  item: ValueItem | AdminEntity,
-  isEntity: boolean,
+  item: ValueItem | AdminEntity2 | Entity,
   callbacks: VisitorCallbacks<TVisitContext>,
   visitContext: TVisitContext
 ) {
   const { enterList } = callbacks;
   let fieldSpecs;
-  if (isEntity) {
-    const entitySpec = schema.getEntityTypeSpecification(item._type);
+  let fields;
+  if (!isItemValueItem(item)) {
+    fields = item.fields;
+
+    const entitySpec = schema.getEntityTypeSpecification(item.info.type);
     if (!entitySpec) {
-      throw new Error(`Couldn't find spec for entity type ${item._type}`);
+      throw new Error(`Couldn't find spec for entity type ${item.info.type}`);
     }
     fieldSpecs = entitySpec.fields;
   } else {
+    fields = item;
+
     const valueSpec = schema.getValueTypeSpecification(item._type);
     if (!valueSpec) {
       throw new Error(
@@ -294,7 +310,7 @@ function doVisitItemRecursively<TVisitContext>(
   }
 
   for (const fieldSpec of fieldSpecs) {
-    const fieldValue = item[fieldSpec.name];
+    const fieldValue = fields[fieldSpec.name];
     if (fieldValue === null || fieldValue === undefined) {
       continue;
     }
@@ -343,7 +359,6 @@ function doVisitFieldRecursively<TVisitContext>(
       schema,
       path,
       value,
-      false,
       callbacks,
       enterValueItem ? enterValueItem(path, fieldSpec, value, visitContext) : visitContext
     );
@@ -360,7 +375,6 @@ function doVisitFieldRecursively<TVisitContext>(
           schema,
           blockPath,
           block.data as ValueItem,
-          false,
           callbacks,
           enterValueItem
             ? enterValueItem(path, fieldSpec, block.data as ValueItem, richTextVisitContext)

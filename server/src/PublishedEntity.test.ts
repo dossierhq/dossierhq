@@ -52,9 +52,8 @@ describe('getEntity()', () => {
       const result = await publishedClient.getEntity({ id });
       expectResultValue(result, {
         id,
-        _type: 'PublishedEntityFoo',
-        _name: name,
-        title: 'Title 1',
+        info: { type: 'PublishedEntityFoo', name },
+        fields: { title: 'Title 1' },
       });
     }
   });
@@ -115,16 +114,14 @@ describe('getEntities()', () => {
       const result = await publishedClient.getEntities([{ id: foo2Id }, { id: foo1Id }]);
       expect(result).toHaveLength(2);
       expectResultValue(result[0], {
-        _type: 'PublishedEntityFoo',
         id: foo2Id,
-        _name: foo2Name,
-        title: 'Title 2',
+        info: { type: 'PublishedEntityFoo', name: foo2Name },
+        fields: { title: 'Title 2' },
       });
       expectResultValue(result[1], {
-        _type: 'PublishedEntityFoo',
         id: foo1Id,
-        _name: foo1Name,
-        title: 'Title 1',
+        info: { type: 'PublishedEntityFoo', name: foo1Name },
+        fields: { title: 'Title 1' },
       });
     }
   });
@@ -150,10 +147,11 @@ describe('getEntities()', () => {
       expect(result).toHaveLength(2);
       expectErrorResult(result[0], ErrorType.NotFound, 'No such entity');
       expectResultValue(result[1], {
-        _type: 'PublishedEntityFoo',
         id: foo1Id,
-        _name: foo1Name,
-        title: 'Title',
+        info: { type: 'PublishedEntityFoo', name: foo1Name },
+        fields: {
+          title: 'Title',
+        },
       });
     }
   });

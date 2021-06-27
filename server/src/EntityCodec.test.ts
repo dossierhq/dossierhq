@@ -54,7 +54,8 @@ beforeAll(async () => {
 
 describe('collectDataFromEntity', () => {
   test('empty', () => {
-    expect(collectDataFromEntity(context, { _type: 'EntityCodecFoo' })).toMatchInlineSnapshot(`
+    expect(collectDataFromEntity(context, { _type: 'EntityCodecFoo', _name: 'foo' }))
+      .toMatchInlineSnapshot(`
       Object {
         "fullTextSearchText": Array [],
         "locations": Array [],
@@ -234,6 +235,7 @@ describe('collectDataFromEntity', () => {
     expect(
       collectDataFromEntity(context, {
         _type: 'EntityCodecFoo',
+        _name: 'foo',
         bar: { id: 'barId1' },
         bars: [{ id: 'barId2' }, { id: 'barId3' }],
         reference: { id: 'unspecifiedId1' },
@@ -286,6 +288,7 @@ describe('collectDataFromEntity', () => {
     expect(
       collectDataFromEntity(context, {
         _type: 'EntityCodecFoo',
+        _name: 'foo',
         valueOne: { _type: 'EntityCodecValueOne', bar: { id: 'bar1Id' } },
       })
     ).toMatchInlineSnapshot(`
@@ -311,6 +314,7 @@ describe('collectDataFromEntity', () => {
     expect(
       collectDataFromEntity(context, {
         _type: 'EntityCodecFoo',
+        _name: 'foo',
         richText: {
           blocks: [
             { type: RichTextBlockType.entity, data: { id: 'barId1' } },

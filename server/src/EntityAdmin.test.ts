@@ -531,10 +531,8 @@ describe('createEntity()', () => {
       const publishedResult = await publishedClient.getEntity({ id });
       expectResultValue(publishedResult, {
         id,
-        _type: 'EntityAdminFoo',
-        _name: name,
-        ...emptyFooFields,
-        title: 'Title',
+        info: { type: 'EntityAdminFoo', name },
+        fields: { ...emptyFooFields, title: 'Title' },
       });
     }
   });
@@ -662,11 +660,12 @@ describe('createEntity()', () => {
         const publishedFooResult = await publishedClient.getEntity({ id: fooId });
         expectResultValue(publishedFooResult, {
           id: fooId,
-          _type: 'EntityAdminFoo',
-          _name: createFooResult.value._name,
-          ...emptyFooFields,
-          title: 'Foo title',
-          bar: { id: barId },
+          info: { type: 'EntityAdminFoo', name: createFooResult.value._name },
+          fields: {
+            ...emptyFooFields,
+            title: 'Foo title',
+            bar: { id: barId },
+          },
         });
       }
     }
@@ -2174,10 +2173,8 @@ describe('updateEntity()', () => {
       const publishedResult = await publishedClient.getEntity({ id });
       expectResultValue(publishedResult, {
         id,
-        _type: 'EntityAdminFoo',
-        _name: name,
-        ...emptyFooFields,
-        title: 'Updated title',
+        info: { type: 'EntityAdminFoo', name },
+        fields: { ...emptyFooFields, title: 'Updated title' },
       });
     }
   });
@@ -2257,10 +2254,11 @@ describe('updateEntity()', () => {
       const publishedResult = await publishedClient.getEntity({ id });
       expectResultValue(publishedResult, {
         id,
-        _type: 'EntityAdminFoo',
-        _name: name,
-        ...emptyFooFields,
-        title: 'First',
+        info: { type: 'EntityAdminFoo', name },
+        fields: {
+          ...emptyFooFields,
+          title: 'First',
+        },
       });
     }
   });
@@ -2329,10 +2327,8 @@ describe('updateEntity()', () => {
       const publishedResult = await publishedClient.getEntity({ id });
       expectResultValue(publishedResult, {
         id,
-        _type: 'EntityAdminFoo',
-        _name: createResult.value._name,
-        ...emptyFooFields,
-        title: 'Updated title',
+        info: { type: 'EntityAdminFoo', name: createResult.value._name },
+        fields: { ...emptyFooFields, title: 'Updated title' },
       });
     }
   });
@@ -2408,11 +2404,12 @@ describe('updateEntity()', () => {
       const publishedResult = await publishedClient.getEntity({ id });
       expectResultValue(publishedResult, {
         id,
-        _type: 'EntityAdminFoo',
-        _name: createResult.value._name,
-        ...emptyFooFields,
-        title: 'First title',
-        summary: 'Updated summary',
+        info: { type: 'EntityAdminFoo', name: createResult.value._name },
+        fields: {
+          ...emptyFooFields,
+          title: 'First title',
+          summary: 'Updated summary',
+        },
       });
     }
   });
@@ -2445,11 +2442,8 @@ describe('updateEntity()', () => {
       const publishedResult = await publishedClient.getEntity({ id });
       expectResultValue(publishedResult, {
         id,
-        _type: 'EntityAdminFoo',
-        _name: name,
-        ...emptyFooFields,
-        title: 'First title',
-        summary: 'First summary',
+        info: { type: 'EntityAdminFoo', name },
+        fields: { ...emptyFooFields, title: 'First title', summary: 'First summary' },
       });
     }
   });
@@ -2523,11 +2517,8 @@ describe('updateEntity()', () => {
         const publishedResult = await publishedClient.getEntity({ id: fooId });
         expectResultValue(publishedResult, {
           id: fooId,
-          _type: 'EntityAdminFoo',
-          _name: createFooResult.value._name,
-          title: 'First title',
-          summary: 'First summary',
-          bar: { id: barId },
+          info: { type: 'EntityAdminFoo', name: createFooResult.value._name },
+          fields: { title: 'First title', summary: 'First summary', bar: { id: barId } },
         });
       }
     }
@@ -2617,12 +2608,13 @@ describe('updateEntity()', () => {
         const publishedResult = await publishedClient.getEntity({ id: bazId });
         expectResultValue(publishedResult, {
           id: bazId,
-          _type: 'EntityAdminBaz',
-          _name: createBazResult.value._name,
-          ...emptyBazFields,
-          title: 'Updated title',
-          bar: { id: bar1Id },
-          bars: [{ id: bar1Id }, { id: bar2Id }],
+          info: { type: 'EntityAdminBaz', name: createBazResult.value._name },
+          fields: {
+            ...emptyBazFields,
+            title: 'Updated title',
+            bar: { id: bar1Id },
+            bars: [{ id: bar1Id }, { id: bar2Id }],
+          },
         });
       }
     }

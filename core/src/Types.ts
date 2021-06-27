@@ -2,9 +2,13 @@ import type { ErrorType, Result } from '.';
 
 export interface Entity {
   id: string;
-  _type: string;
-  _name: string;
-  [fieldName: string]: unknown;
+  info: EntityInfo;
+  fields: Record<string, unknown>;
+}
+
+export interface EntityInfo {
+  type: string;
+  name: string;
 }
 
 export interface EntityReference {
@@ -68,6 +72,53 @@ export interface AdminEntity {
    * publish state refer to the state of the latest version. */
   _publishState: EntityPublishState;
   [fieldName: string]: unknown;
+}
+
+//TODO temporary
+export function toAdminEntity2(entity: AdminEntity): AdminEntity2 {
+  const {
+    id,
+    _type: type,
+    _name: name,
+    _version: version,
+    _publishState: publishingState,
+    ...fields
+  } = entity;
+  return {
+    id,
+    info: { type, name, version, publishingState },
+    fields,
+  };
+}
+
+//TODO temporary
+export function toAdminEntity1(entity: AdminEntity2): AdminEntity {
+  const {
+    id,
+    info: { name, type, version, publishingState },
+    fields,
+  } = entity;
+  return {
+    id,
+    _name: name,
+    _type: type,
+    _version: version,
+    _publishState: publishingState,
+    ...fields,
+  };
+}
+
+export interface AdminEntity2 {
+  id: string;
+  info: AdminEntityInfo;
+  fields: Record<string, unknown>;
+}
+
+export interface AdminEntityInfo {
+  type: string;
+  name: string;
+  version: number;
+  publishingState: EntityPublishState;
 }
 
 export interface AdminEntityCreate {

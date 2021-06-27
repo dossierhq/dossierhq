@@ -1,9 +1,9 @@
 import chalk from 'chalk';
 import {
-  FieldType,
   isEntityTypeField,
   isEntityTypeItemField,
   isEntityTypeListField,
+  isItemAdminEntity,
   isLocationField,
   isLocationItemField,
   isLocationListField,
@@ -19,17 +19,14 @@ import {
   visitItemRecursively,
 } from '@datadata/core';
 import type {
-  AdminEntity,
+  AdminEntity2,
   BoundingBox,
   Entity,
-  EntityReference,
   EntityTypeSpecification,
   ErrorResult,
   ErrorType,
   FieldSpecification,
   Location,
-  PromiseResult,
-  Result,
   RichText,
   ValueItem,
   ValueTypeSpecification,
@@ -39,16 +36,6 @@ import type { CliContext } from '..';
 interface Entityish {
   _type: string;
   [fieldName: string]: unknown;
-}
-
-type EntityFetcher = (context: CliContext, id: string) => PromiseResult<Entity, ErrorType>;
-type MultipleEntitiesFetcher = (
-  context: CliContext,
-  ids: string[]
-) => Promise<Result<Entity, ErrorType>[]>;
-
-function isAdminEntity(entity: AdminEntity | Entity): entity is AdminEntity {
-  return '_version' in entity;
 }
 
 export function logErrorResult(
@@ -81,14 +68,14 @@ export function logKeyValue(key: string, value: string): void {
   console.log(`${chalk.bold(`${key}:`)} ${value}`);
 }
 
-export function logEntity(context: CliContext, entity: AdminEntity | Entity): void {
+export function logEntity(context: CliContext, entity: AdminEntity2 | Entity): void {
   const { schema } = context;
-  logKeyValue('type', entity._type);
-  logKeyValue('name', entity._name);
+  logKeyValue('type', entity.info.type);
+  logKeyValue('name', entity.info.name);
   logKeyValue('id', entity.id);
-  if (isAdminEntity(entity)) {
-    logKeyValue('version', String(entity._version));
-    logKeyValue('publish state', entity._publishState);
+  if (isItemAdminEntity(entity)) {
+    logKeyValue('version', String(entity.info.version));
+    logKeyValue('publishing state', entity.info.publishingState);
   }
 
   visitItemRecursively<{ indent: string }>({
@@ -97,11 +84,8 @@ export function logEntity(context: CliContext, entity: AdminEntity | Entity): vo
     visitField: (path, fieldSpec, data, visitContext) => {
       let value;
       if (isEntityTypeItemField(fieldSpec, data)) {
-        if (isReferenceAnEntity(data)) {
-          value = formatEntityOneLine(data);
-        } else {
-          value = data ? data.id : chalk.grey('<not set>');
-        }
+        //TODO use cached info of entity
+        value = data ? data.id : chalk.grey('<not set>');
       } else if (isValueTypeItemField(fieldSpec, data)) {
         value = data ? formatValueItemOneLine(data) : chalk.grey('<not set>');
       } else if (isStringItemField(fieldSpec, data)) {
@@ -133,11 +117,13 @@ export function logEntity(context: CliContext, entity: AdminEntity | Entity): vo
   });
 }
 
-export function formatEntityOneLine(entity: Entity | AdminEntity): string {
-  if (isAdminEntity(entity)) {
-    return `${entity._type} | ${entity._publishState} | ${chalk.bold(entity._name)} | ${entity.id}`;
+export function formatEntityOneLine(entity: Entity | AdminEntity2): string {
+  if (isItemAdminEntity(entity)) {
+    return `${entity.info.type} | ${entity.info.publishingState} | ${chalk.bold(
+      entity.info.name
+    )} | ${entity.id}`;
   }
-  return `${entity._type} | ${chalk.bold(entity._name)} | ${entity.id}`;
+  return `${entity.info.type} | ${chalk.bold(entity.info.name)} | ${entity.id}`;
 }
 
 export function formatValueItemOneLine(value: ValueItem): string {
@@ -162,18 +148,15 @@ export function formatBoundingBox({ minLat, maxLat, minLng, maxLng }: BoundingBo
 
 export function formatFieldValue(fieldSpec: FieldSpecification, value: unknown): string {
   if (isEntityTypeField(fieldSpec, value)) {
-    if (isReferenceAnEntity(value)) {
-      return formatEntityOneLine(value);
-    }
+    //TODO use cached info of entity
     return value ? value.id : chalk.grey('<not set>');
   }
   if (isEntityTypeListField(fieldSpec, value)) {
     if (!value) {
       return chalk.grey('<not set>');
     }
-    return value
-      .map((x) => (isReferenceAnEntity(x) ? formatEntityOneLine(x) : x.id))
-      .join(chalk.grey(', '));
+    //TODO use cached info of entity
+    return value.map((it) => it.id).join(chalk.grey(', '));
   }
   if (isValueTypeField(fieldSpec, value)) {
     if (!value) {
@@ -226,86 +209,4 @@ export function getValueSpec(context: CliContext, valueItem: ValueItem): ValueTy
     throw new Error(`Couldn't find value spec for type: ${valueItem._type}`);
   }
   return valueSpec;
-}
-
-export function isReferenceAnEntity(value: EntityReference | null): value is Entity {
-  return !!value && Object.keys(value).indexOf('_type') >= 0;
-}
-
-export async function replaceEntityReferencesWithEntitiesGeneric(
-  context: CliContext,
-  entity: Entityish,
-  entityFetcher: EntityFetcher,
-  multipleEntitiesFetcher: MultipleEntitiesFetcher
-): Promise<void> {
-  const entitySpec = getEntitySpec(context, entity);
-  await replaceEntityOrValueItemReferencesWithEntitiesGeneric(
-    context,
-    entitySpec,
-    entity,
-    entityFetcher,
-    multipleEntitiesFetcher
-  );
-}
-
-export async function replaceValueItemReferencesWithEntitiesGeneric(
-  context: CliContext,
-  valueItem: ValueItem,
-  entityFetcher: EntityFetcher,
-  multipleEntitiesFetcher: MultipleEntitiesFetcher
-): Promise<void> {
-  const valueSpec = getValueSpec(context, valueItem);
-  await replaceEntityOrValueItemReferencesWithEntitiesGeneric(
-    context,
-    valueSpec,
-    valueItem,
-    entityFetcher,
-    multipleEntitiesFetcher
-  );
-}
-
-async function replaceEntityOrValueItemReferencesWithEntitiesGeneric(
-  context: CliContext,
-  spec: EntityTypeSpecification | ValueTypeSpecification,
-  item: Entityish,
-  entityFetcher: EntityFetcher,
-  multipleEntitiesFetcher: MultipleEntitiesFetcher
-): Promise<void> {
-  for (const fieldSpec of spec.fields) {
-    if (!(fieldSpec.name in item)) {
-      continue;
-    }
-    const value = item[fieldSpec.name];
-    if (fieldSpec.type === FieldType.EntityType) {
-      if (isEntityTypeField(fieldSpec, value)) {
-        if (!value || isReferenceAnEntity(value)) {
-          continue;
-        }
-        const referenceResult = await entityFetcher(context, value.id);
-        if (referenceResult.isOk()) {
-          item[fieldSpec.name] = referenceResult.value.item;
-        } else {
-          logErrorResult('Failed fetching reference', referenceResult);
-        }
-      } else if (isEntityTypeListField(fieldSpec, value)) {
-        if (!value) {
-          continue;
-        }
-        const referenceIds = value.filter((x) => !isReferenceAnEntity(x)).map((x) => x.id);
-        if (referenceIds.length > 0) {
-          const entities = await multipleEntitiesFetcher(context, referenceIds);
-          item[fieldSpec.name] = value.map((reference) => {
-            if (!isReferenceAnEntity(reference)) {
-              const entityResult = entities.find((x) => x.isOk() && x.value.id === reference.id);
-              if (entityResult?.isOk()) {
-                return entityResult.value;
-              }
-              logErrorMessage('Failed fetching reference', reference.id);
-            }
-            return reference;
-          });
-        }
-      }
-    }
-  }
 }

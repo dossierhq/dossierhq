@@ -255,6 +255,17 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       })
     );
 
+    // EntityInfo
+    this.addType(
+      new GraphQLObjectType({
+        name: 'EntityInfo',
+        fields: {
+          id: { type: new GraphQLNonNull(GraphQLID) },
+          name: { type: new GraphQLNonNull(GraphQLString) },
+        },
+      })
+    );
+
     // Entity
     this.addType(
       new GraphQLInterfaceType({
@@ -262,7 +273,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         interfaces: this.getInterfaces('Node'),
         fields: {
           id: { type: new GraphQLNonNull(GraphQLID) },
-          _name: { type: new GraphQLNonNull(GraphQLString) },
+          info: { type: new GraphQLNonNull(this.getType('EntityInfo')) },
         },
       })
     );
@@ -345,17 +356,33 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
   }
 
   addEntityType(entitySpec: EntityTypeSpecification): void {
+    const fieldsTypeName = `${entitySpec.name}Fields`;
+    if (entitySpec.fields.length > 0) {
+      this.addType(
+        new GraphQLObjectType<Entity, TContext>({
+          name: fieldsTypeName,
+          fields: () => {
+            const fields: GraphQLFieldConfigMap<Entity, TContext> = {};
+            this.addTypeSpecificationOutputFields(entitySpec, fields, false);
+            return fields;
+          },
+        })
+      );
+    }
+
     this.addType(
       new GraphQLObjectType<Entity, TContext>({
         name: entitySpec.name,
         interfaces: this.getInterfaces('Node', 'Entity'),
-        isTypeOf: (source, _context, _info) => source._type === entitySpec.name,
+        isTypeOf: (source, _context, _info) => source.info.type === entitySpec.name,
         fields: () => {
           const fields: GraphQLFieldConfigMap<Entity, TContext> = {
             id: { type: new GraphQLNonNull(GraphQLID) },
-            _name: { type: new GraphQLNonNull(GraphQLString) },
+            info: { type: new GraphQLNonNull(this.getType('EntityInfo')) },
           };
-          this.addTypeSpecificationOutputFields(entitySpec, fields, false);
+          if (entitySpec.fields.length > 0) {
+            fields.fields = { type: new GraphQLNonNull(this.getType(fieldsTypeName)) };
+          }
           return fields;
         },
       })

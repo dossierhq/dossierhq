@@ -18,6 +18,7 @@ export type {
 } from './Schema';
 export type {
   AdminEntity,
+  AdminEntity2,
   AdminEntityCreate,
   AdminEntityUpdate,
   AdminQuery,
@@ -54,6 +55,9 @@ export {
   isEntityTypeField,
   isEntityTypeItemField,
   isEntityTypeListField,
+  isItemAdminEntity,
+  isItemEntity,
+  isItemValueItem,
   isLocationField,
   isLocationItemField,
   isLocationListField,
@@ -85,3 +89,5 @@ export { isPagingForwards } from './QueryUtils';
 export { FieldType, RichTextBlockType, Schema } from './Schema';
 export { EntityPublishState, PublishingEventKind } from './Types';
 export * as CoreTestUtils from './CoreTestUtils';
+
+export { toAdminEntity1, toAdminEntity2 } from './Types';
