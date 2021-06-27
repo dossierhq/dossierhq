@@ -1,6 +1,8 @@
 import 'dotenv/config';
+import type { CliContext } from '@datadata/cli';
 import { CliAuth, CliMain } from '@datadata/cli';
 import type { Session } from '@datadata/server';
+import { createServerClient } from '@datadata/server';
 import { getServerConnection } from './utils/ServerUtils';
 
 async function main() {
@@ -10,8 +12,16 @@ async function main() {
     while (!session) {
       session = await CliAuth.veryInsecureCreateSession(server, 'test', 'john-smith');
     }
+    const schema = server.getSchema();
     const context = server.createSessionContext(session);
-    await CliMain.mainMenu(context);
+    const adminClient = createServerClient({ resolveContext: () => Promise.resolve(context) });
+
+    const cliContext: CliContext = {
+      schema,
+      adminClient,
+      context,
+    };
+    await CliMain.mainMenu(cliContext);
   } finally {
     await server.shutdown();
   }

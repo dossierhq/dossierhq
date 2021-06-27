@@ -28,8 +28,8 @@ import type {
   ValueItem,
   ValueTypeSpecification,
 } from '@datadata/core';
-import type { SessionContext } from '@datadata/server';
-import { EntityAdmin, isPagingForwards } from '@datadata/server';
+import { isPagingForwards } from '@datadata/server';
+import type { CliContext } from '..';
 import * as CliSchema from './CliSchema';
 import {
   formatBoundingBox,
@@ -72,15 +72,16 @@ interface EntitySelectorItem {
 }
 
 export async function selectEntity(
-  context: SessionContext,
+  context: CliContext,
   message: string,
   initialQuery: AdminQuery | null,
   _defaultValue: EntityReference | null
 ): PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.NotFound> {
+  const { adminClient } = context;
   const { query, paging } = await configureQuery(context, initialQuery);
   const isForward = isPagingForwards(paging);
 
-  const totalCountResult = await EntityAdmin.getTotalCount(context, query);
+  const totalCountResult = await adminClient.getTotalCount(query);
   if (totalCountResult.isError()) {
     return totalCountResult;
   }
@@ -89,7 +90,7 @@ export async function selectEntity(
   let lastItemId: string | null = null;
   // eslint-disable-next-line no-constant-condition
   while (true) {
-    const result = await EntityAdmin.searchEntities(context, query, paging);
+    const result = await adminClient.searchEntities(query, paging);
     if (result.isError()) {
       return result;
     }
@@ -134,7 +135,7 @@ export async function selectEntity(
 }
 
 async function configureQuery(
-  context: SessionContext,
+  context: CliContext,
   initialQuery: AdminQuery | null
 ): Promise<{ query: AdminQuery; paging: Paging }> {
   let lastItemId = '_search';
@@ -223,7 +224,8 @@ async function selectOrder(order: string | undefined) {
   return item.id;
 }
 
-export async function createEntity(context: SessionContext): Promise<AdminEntity | null> {
+export async function createEntity(context: CliContext): Promise<AdminEntity | null> {
+  const { adminClient } = context;
   const type = await CliSchema.selectEntityType(context);
   const entity = {
     _type: type,
@@ -235,7 +237,7 @@ export async function createEntity(context: SessionContext): Promise<AdminEntity
     entity._name = await showStringEdit('What name to use for the entity?');
   }
 
-  const createResult = await EntityAdmin.createEntity(context, entity);
+  const createResult = await adminClient.createEntity(entity);
   if (createResult.isError()) {
     logErrorResult('Failed creating entity', createResult);
     return null;
@@ -251,15 +253,16 @@ export async function createEntity(context: SessionContext): Promise<AdminEntity
   return createResult.value;
 }
 
-export async function editEntity(context: SessionContext, id: string): Promise<AdminEntity | null> {
-  const getResult = await EntityAdmin.getEntity(context, id);
+export async function editEntity(context: CliContext, id: string): Promise<AdminEntity | null> {
+  const { adminClient } = context;
+  const getResult = await adminClient.getEntity({ id });
   if (getResult.isError()) {
     logErrorResult('Failed fetching entity data', getResult);
     return null;
   }
 
   const entity = { id, ...(await editEntityValues(context, getResult.value)) };
-  const updateResult = await EntityAdmin.updateEntity(context, entity);
+  const updateResult = await adminClient.updateEntity(entity);
   if (updateResult.isError()) {
     logErrorResult('Failed updating entity', updateResult);
     return null;
@@ -275,14 +278,15 @@ export async function editEntity(context: SessionContext, id: string): Promise<A
 }
 
 async function publishEntityVersion(
-  context: SessionContext,
+  context: CliContext,
   entity: AdminEntity
 ): Promise<AdminEntity | null> {
+  const { adminClient } = context;
   const publish = await showConfirm('Publish the entity?');
   if (!publish) {
     return null;
   }
-  const publishResult = await EntityAdmin.publishEntities(context, [
+  const publishResult = await adminClient.publishEntities([
     { id: entity.id, version: entity._version },
   ]);
   if (publishResult.isError()) {
@@ -290,7 +294,7 @@ async function publishEntityVersion(
     return null;
   }
 
-  const getResult = await EntityAdmin.getEntity(context, entity.id);
+  const getResult = await adminClient.getEntity({ id: entity.id });
   if (getResult.isError()) {
     logErrorResult('Failed fetching entity', getResult);
     return null;
@@ -299,7 +303,7 @@ async function publishEntityVersion(
 }
 
 async function editEntityValues(
-  context: SessionContext,
+  context: CliContext,
   defaultValues: { _type: string; [fieldName: string]: unknown }
 ): Promise<Record<string, unknown>> {
   const entitySpec = getEntitySpec(context, defaultValues);
@@ -363,7 +367,7 @@ function createEntityFieldSelectorItems(
 }
 
 async function editField(
-  context: SessionContext,
+  context: CliContext,
   fieldSpec: FieldSpecification,
   defaultValue: unknown
 ): PromiseResult<unknown, ErrorType> {
@@ -401,7 +405,7 @@ async function editField(
 }
 
 async function editFieldReference(
-  context: SessionContext,
+  context: CliContext,
   fieldSpec: FieldSpecification,
   defaultValue: EntityReference | null
 ) {
@@ -414,7 +418,7 @@ async function editFieldReference(
 }
 
 async function editFieldReferenceList(
-  context: SessionContext,
+  context: CliContext,
   fieldSpec: FieldSpecification,
   defaultValue: EntityReference[] | null
 ) {
@@ -428,7 +432,7 @@ async function editFieldReferenceList(
 }
 
 export async function editFieldValueItem(
-  context: SessionContext,
+  context: CliContext,
   fieldSpec: FieldSpecification,
   defaultValue: ValueItem | null
 ): PromiseResult<ValueItem, ErrorType.BadRequest> {
@@ -484,7 +488,7 @@ function createValueItemFieldSelectorItems(
 }
 
 async function editFieldValueTypeList(
-  context: SessionContext,
+  context: CliContext,
   fieldSpec: FieldSpecification,
   defaultValue: ValueItem[] | null
 ) {
@@ -512,7 +516,7 @@ async function editFieldStringList(fieldSpec: FieldSpecification, defaultValue: 
 }
 
 async function editFieldRichText(
-  context: SessionContext,
+  context: CliContext,
   fieldSpec: FieldSpecification,
   defaultValue: RichText | null
 ) {
@@ -520,7 +524,7 @@ async function editFieldRichText(
 }
 
 async function editFieldRichTextList(
-  context: SessionContext,
+  context: CliContext,
   fieldSpec: FieldSpecification,
   defaultValue: RichText[] | null
 ) {
@@ -600,16 +604,17 @@ async function editFieldList<TItem>(
 }
 
 export async function publishEntity(
-  context: SessionContext,
+  context: CliContext,
   id: string
 ): Promise<EntityPublishState | null> {
+  const { adminClient } = context;
   const version = await selectEntityVersion(context, 'Which version to publish?', id, null);
 
   if (version === null) {
     return null;
   }
 
-  const publishResult = await EntityAdmin.publishEntities(context, [{ id, version }]);
+  const publishResult = await adminClient.publishEntities([{ id, version }]);
   if (publishResult.isError()) {
     logErrorResult('Failed publishing entity', publishResult);
     return null;
@@ -620,10 +625,11 @@ export async function publishEntity(
 }
 
 export async function unpublishEntity(
-  context: SessionContext,
+  context: CliContext,
   id: string
 ): Promise<EntityPublishState | null> {
-  const unpublishResult = await EntityAdmin.unpublishEntities(context, [id]);
+  const { adminClient } = context;
+  const unpublishResult = await adminClient.unpublishEntities([{ id }]);
   if (unpublishResult.isError()) {
     logErrorResult('Failed unpublishing entity', unpublishResult);
     return null;
@@ -634,10 +640,11 @@ export async function unpublishEntity(
 }
 
 export async function archiveEntity(
-  context: SessionContext,
+  context: CliContext,
   id: string
 ): Promise<EntityPublishState | null> {
-  const archiveResult = await EntityAdmin.archiveEntity(context, id);
+  const { adminClient } = context;
+  const archiveResult = await adminClient.archiveEntity({ id });
   if (archiveResult.isError()) {
     logErrorResult('Failed archiving entity', archiveResult);
     return null;
@@ -648,10 +655,11 @@ export async function archiveEntity(
 }
 
 export async function unarchiveEntity(
-  context: SessionContext,
+  context: CliContext,
   id: string
 ): Promise<EntityPublishState | null> {
-  const unarchiveResult = await EntityAdmin.unarchiveEntity(context, id);
+  const { adminClient } = context;
+  const unarchiveResult = await adminClient.unarchiveEntity({ id });
   if (unarchiveResult.isError()) {
     logErrorResult('Failed unarchiving entity', unarchiveResult);
     return null;
@@ -661,8 +669,9 @@ export async function unarchiveEntity(
   return publishState;
 }
 
-export async function showEntityHistory(context: SessionContext, id: string): Promise<void> {
-  const result = await EntityAdmin.getEntityHistory(context, id);
+export async function showEntityHistory(context: CliContext, id: string): Promise<void> {
+  const { adminClient } = context;
+  const result = await adminClient.getEntityHistory({ id });
   if (result.isError()) {
     logErrorResult('Failed retrieving history', result);
     return;
@@ -678,8 +687,9 @@ export async function showEntityHistory(context: SessionContext, id: string): Pr
   }
 }
 
-export async function showPublishingHistory(context: SessionContext, id: string): Promise<void> {
-  const result = await EntityAdmin.getPublishingHistory(context, id);
+export async function showPublishingHistory(context: CliContext, id: string): Promise<void> {
+  const { adminClient } = context;
+  const result = await adminClient.getPublishingHistory({ id });
   if (result.isError()) {
     logErrorResult('Failed retrieving history', result);
     return;
@@ -696,20 +706,21 @@ export async function showPublishingHistory(context: SessionContext, id: string)
   }
 }
 
-export async function showLatestEntity(context: SessionContext, id: string): Promise<void> {
-  const result = await EntityAdmin.getEntity(context, id);
+export async function showLatestEntity(context: CliContext, id: string): Promise<void> {
+  const { adminClient } = context;
+  const result = await adminClient.getEntity({ id });
   if (result.isOk()) {
     const entity = result.value;
     await replaceEntityReferencesWithEntities(context, entity);
     logEntity(context, entity);
 
-    const totalResult = await EntityAdmin.getTotalCount(context, { referencing: id });
+    const totalResult = await adminClient.getTotalCount({ referencing: id });
     if (totalResult.isError()) {
       logErrorResult('Failed getting items referencing this entity', totalResult);
     } else if (totalResult.value > 0) {
       console.log();
       logKeyValue('Entities referencing this entity', String(totalResult.value));
-      const referencesResult = await EntityAdmin.searchEntities(context, { referencing: id });
+      const referencesResult = await adminClient.searchEntities({ referencing: id });
       if (referencesResult.isError()) {
         logErrorResult('Failed searching references', referencesResult);
       } else if (referencesResult.value) {
@@ -728,12 +739,13 @@ export async function showLatestEntity(context: SessionContext, id: string): Pro
 }
 
 async function selectEntityVersion(
-  context: SessionContext,
+  context: CliContext,
   message: string,
   id: string,
   defaultVersion: number | null
 ): Promise<number | null> {
-  const result = await EntityAdmin.getEntityHistory(context, id);
+  const { adminClient } = context;
+  const result = await adminClient.getEntityHistory({ id });
   if (result.isError()) {
     logErrorResult('Failed retrieving history', result);
     return null;
@@ -766,7 +778,8 @@ async function selectEntityVersion(
   return Number.parseInt(item.id);
 }
 
-export async function showEntityVersion(context: SessionContext, id: string): Promise<void> {
+export async function showEntityVersion(context: CliContext, id: string): Promise<void> {
+  const { adminClient } = context;
   let currentVersion: number | null = null;
   // eslint-disable-next-line no-constant-condition
   while (true) {
@@ -779,7 +792,7 @@ export async function showEntityVersion(context: SessionContext, id: string): Pr
     if (currentVersion === null) {
       return;
     }
-    const result = await EntityAdmin.getEntity(context, id, currentVersion);
+    const result = await adminClient.getEntity({ id, version: currentVersion });
     if (result.isOk()) {
       logEntity(context, result.value);
     } else {
@@ -789,33 +802,30 @@ export async function showEntityVersion(context: SessionContext, id: string): Pr
 }
 
 async function replaceEntityReferencesWithEntities(
-  context: SessionContext,
+  context: CliContext,
   entity: { _type: string; [fieldName: string]: unknown }
 ) {
   await replaceEntityReferencesWithEntitiesGeneric(
     context,
     entity,
     async (context, id) => {
-      return await EntityAdmin.getEntity(context, id);
+      return await context.adminClient.getEntity({ id });
     },
     async (context, ids) => {
-      return await EntityAdmin.getEntities(context, ids);
+      return await context.adminClient.getEntities(ids.map((id) => ({ id })));
     }
   );
 }
 
-async function replaceValueItemReferencesWithEntities(
-  context: SessionContext,
-  valueItem: ValueItem
-) {
+async function replaceValueItemReferencesWithEntities(context: CliContext, valueItem: ValueItem) {
   await replaceValueItemReferencesWithEntitiesGeneric(
     context,
     valueItem,
     async (context, id) => {
-      return await EntityAdmin.getEntity(context, id);
+      return await context.adminClient.getEntity({ id });
     },
     async (context, ids) => {
-      return await EntityAdmin.getEntities(context, ids);
+      return await context.adminClient.getEntities(ids.map((id) => ({ id })));
     }
   );
 }

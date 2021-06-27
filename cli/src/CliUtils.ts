@@ -34,16 +34,16 @@ import type {
   ValueItem,
   ValueTypeSpecification,
 } from '@datadata/core';
-import type { SessionContext } from '@datadata/server';
+import type { CliContext } from '..';
 
 interface Entityish {
   _type: string;
   [fieldName: string]: unknown;
 }
 
-type EntityFetcher = (context: SessionContext, id: string) => PromiseResult<Entity, ErrorType>;
+type EntityFetcher = (context: CliContext, id: string) => PromiseResult<Entity, ErrorType>;
 type MultipleEntitiesFetcher = (
-  context: SessionContext,
+  context: CliContext,
   ids: string[]
 ) => Promise<Result<Entity, ErrorType>[]>;
 
@@ -81,7 +81,8 @@ export function logKeyValue(key: string, value: string): void {
   console.log(`${chalk.bold(`${key}:`)} ${value}`);
 }
 
-export function logEntity(context: SessionContext, entity: AdminEntity | Entity): void {
+export function logEntity(context: CliContext, entity: AdminEntity | Entity): void {
+  const { schema } = context;
   logKeyValue('type', entity._type);
   logKeyValue('name', entity._name);
   logKeyValue('id', entity.id);
@@ -89,8 +90,6 @@ export function logEntity(context: SessionContext, entity: AdminEntity | Entity)
     logKeyValue('version', String(entity._version));
     logKeyValue('publish state', entity._publishState);
   }
-
-  const schema = context.server.getSchema();
 
   visitItemRecursively<{ indent: string }>({
     schema,
@@ -211,9 +210,8 @@ export function formatFieldValue(fieldSpec: FieldSpecification, value: unknown):
   throw new Error(`Unknown type (${fieldSpec.type})`);
 }
 
-export function getEntitySpec(context: SessionContext, entity: Entityish): EntityTypeSpecification {
-  const { server } = context;
-  const schema = server.getSchema();
+export function getEntitySpec(context: CliContext, entity: Entityish): EntityTypeSpecification {
+  const { schema } = context;
   const entitySpec = schema.getEntityTypeSpecification(entity._type);
   if (!entitySpec) {
     throw new Error(`Couldn't find entity spec for type: ${entity._type}`);
@@ -221,12 +219,8 @@ export function getEntitySpec(context: SessionContext, entity: Entityish): Entit
   return entitySpec;
 }
 
-export function getValueSpec(
-  context: SessionContext,
-  valueItem: ValueItem
-): ValueTypeSpecification {
-  const { server } = context;
-  const schema = server.getSchema();
+export function getValueSpec(context: CliContext, valueItem: ValueItem): ValueTypeSpecification {
+  const { schema } = context;
   const valueSpec = schema.getValueTypeSpecification(valueItem._type);
   if (!valueSpec) {
     throw new Error(`Couldn't find value spec for type: ${valueItem._type}`);
@@ -239,7 +233,7 @@ export function isReferenceAnEntity(value: EntityReference | null): value is Ent
 }
 
 export async function replaceEntityReferencesWithEntitiesGeneric(
-  context: SessionContext,
+  context: CliContext,
   entity: Entityish,
   entityFetcher: EntityFetcher,
   multipleEntitiesFetcher: MultipleEntitiesFetcher
@@ -255,7 +249,7 @@ export async function replaceEntityReferencesWithEntitiesGeneric(
 }
 
 export async function replaceValueItemReferencesWithEntitiesGeneric(
-  context: SessionContext,
+  context: CliContext,
   valueItem: ValueItem,
   entityFetcher: EntityFetcher,
   multipleEntitiesFetcher: MultipleEntitiesFetcher
@@ -271,7 +265,7 @@ export async function replaceValueItemReferencesWithEntitiesGeneric(
 }
 
 async function replaceEntityOrValueItemReferencesWithEntitiesGeneric(
-  context: SessionContext,
+  context: CliContext,
   spec: EntityTypeSpecification | ValueTypeSpecification,
   item: Entityish,
   entityFetcher: EntityFetcher,

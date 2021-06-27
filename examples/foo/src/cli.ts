@@ -1,10 +1,10 @@
 #!/usr/bin/env npx ts-node
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
-import { CliAuth, CliMain } from '@datadata/cli';
+import { CliAuth, CliContext, CliMain } from '@datadata/cli';
 import type { SchemaSpecification } from '@datadata/core';
 import { Schema } from '@datadata/core';
-import type { Session } from '@datadata/server';
+import { createServerClient, Session } from '@datadata/server';
 import { Server } from '@datadata/server';
 import SchemaSpec from './schema.json';
 
@@ -17,13 +17,17 @@ async function main() {
       session = await CliAuth.veryInsecureCreateSession(server, 'test', 'john-smith');
     }
     const context = server.createSessionContext(session);
-    const loadSchema = await server.setSchema(
-      context,
-      new Schema(SchemaSpec as SchemaSpecification)
-    );
+    const schema = new Schema(SchemaSpec as SchemaSpecification);
+    const loadSchema = await server.setSchema(context, schema);
     loadSchema.throwIfError();
 
-    await CliMain.mainMenu(context);
+    const cliContext: CliContext = {
+      schema,
+      adminClient: createServerClient({ resolveContext: () => Promise.resolve(context) }),
+      context,
+    };
+
+    await CliMain.mainMenu(cliContext);
   } finally {
     await server.shutdown();
   }

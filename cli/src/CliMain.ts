@@ -1,5 +1,5 @@
 import { assertIsDefined, EntityPublishState } from '@datadata/core';
-import type { SessionContext } from '@datadata/server';
+import type { CliContext } from '..';
 import type { ItemSelectorItem, ItemSelectorSeparator } from './widgets';
 import { showItemSelector } from './widgets';
 import * as CliEntityAdmin from './CliEntityAdmin';
@@ -8,7 +8,7 @@ import * as CliSchema from './CliSchema';
 import * as CliUtils from './CliUtils';
 
 interface State {
-  readonly context: SessionContext;
+  readonly context: CliContext;
   currentEntity: { id: string; publishState: EntityPublishState } | null;
 }
 
@@ -186,7 +186,7 @@ function createMainActions(state: State): Array<MainActionItem | ItemSelectorSep
   ];
 }
 
-export async function mainMenu(context: SessionContext): Promise<void> {
+export async function mainMenu(context: CliContext): Promise<void> {
   const state: State = { context, currentEntity: null };
   let lastActionId = null;
   // eslint-disable-next-line no-constant-condition

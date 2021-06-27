@@ -1,13 +1,12 @@
 import chalk from 'chalk';
 import { FieldType } from '@datadata/core';
 import type { EntityTypeSpecification, ValueTypeSpecification } from '@datadata/core';
-import type { Context } from '@datadata/server';
 import { showItemSelector, showMultiItemSelector } from './widgets';
 import { logKeyValue } from './CliUtils';
+import type { CliContext } from '..';
 
-export function showSchema(context: Context<unknown>): void {
-  const { server } = context;
-  const schema = server.getSchema();
+export function showSchema(context: CliContext): void {
+  const { schema } = context;
 
   const logTypeSpec = (typeSpec: EntityTypeSpecification | ValueTypeSpecification) => {
     console.log(chalk.bold(typeSpec.name));
@@ -43,9 +42,8 @@ export function showSchema(context: Context<unknown>): void {
   }
 }
 
-export async function selectEntityType(context: Context<unknown>): Promise<string> {
-  const { server } = context;
-  const schema = server.getSchema();
+export async function selectEntityType(context: CliContext): Promise<string> {
+  const { schema } = context;
   const types = schema.spec.entityTypes.map((x) => x.name);
   const { name: typeName } = await showItemSelector(
     'Which entity type?',
@@ -54,9 +52,8 @@ export async function selectEntityType(context: Context<unknown>): Promise<strin
   return typeName;
 }
 
-export async function selectEntityTypes(context: Context<unknown>): Promise<string[]> {
-  const { server } = context;
-  const schema = server.getSchema();
+export async function selectEntityTypes(context: CliContext): Promise<string[]> {
+  const { schema } = context;
   const types = schema.spec.entityTypes.map((x) => x.name);
   const items = await showMultiItemSelector(
     'Which entity types?',
@@ -66,11 +63,10 @@ export async function selectEntityTypes(context: Context<unknown>): Promise<stri
 }
 
 export async function selectValueType(
-  context: Context<unknown>,
+  context: CliContext,
   filterTypes?: string[]
 ): Promise<string> {
-  const { server } = context;
-  const schema = server.getSchema();
+  const { schema } = context;
 
   filterTypes?.forEach((x) => {
     if (!schema.getValueTypeSpecification(x)) {
