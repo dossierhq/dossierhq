@@ -1,8 +1,7 @@
-import type { AdminClient, Schema } from '@datadata/core';
-import type { SessionContext } from '@datadata/server';
+import type { AdminClient, PublishedClient, Schema } from '@datadata/core';
 
 export interface CliContext {
   schema: Schema;
-  context: SessionContext;
   adminClient: AdminClient;
+  publishedClient: PublishedClient;
 }
