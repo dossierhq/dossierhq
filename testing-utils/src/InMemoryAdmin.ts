@@ -1,5 +1,6 @@
 import type {
   AdminEntity,
+  AdminEntity2,
   AdminEntityCreate,
   AdminEntityUpdate,
   AdminQuery,
@@ -19,6 +20,7 @@ import {
   isLocationItemField,
   notOk,
   ok,
+  toAdminEntity2,
   visitItemRecursively,
 } from '@datadata/core';
 import { v4 as uuidv4 } from 'uuid';
@@ -70,7 +72,7 @@ export const InMemoryAdmin = {
     context: InMemorySessionContext,
     query?: AdminQuery,
     paging?: Paging
-  ): PromiseResult<Connection<Edge<AdminEntity, ErrorType>> | null, ErrorType.BadRequest> => {
+  ): PromiseResult<Connection<Edge<AdminEntity2, ErrorType>> | null, ErrorType.BadRequest> => {
     const entities = context.server.getLatestEntities().filter((entity) => {
       if (
         query?.entityTypes?.length &&
@@ -116,7 +118,7 @@ export const InMemoryAdmin = {
         startCursor: entities[0].id,
         endCursor: entities[entities.length - 1].id,
       },
-      edges: entities.map((entity) => ({ cursor: entity.id, node: ok(entity) })),
+      edges: entities.map((entity) => ({ cursor: entity.id, node: ok(toAdminEntity2(entity)) })),
     });
   },
 

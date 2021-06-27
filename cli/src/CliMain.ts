@@ -35,8 +35,11 @@ function createMainActions(state: State): Array<MainActionItem | ItemSelectorSep
           null
         );
         if (result.isOk()) {
-          const { id, _publishState: publishState } = result.value;
-          state.currentEntity = { id, publishState };
+          const {
+            id,
+            info: { publishingState },
+          } = result.value;
+          state.currentEntity = { id, publishState: publishingState };
         }
       },
     },

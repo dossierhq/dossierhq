@@ -1,6 +1,5 @@
 import type {
   AdminClient,
-  AdminEntity,
   AdminEntity2,
   AdminQuery,
   BoundingBox,
@@ -29,7 +28,7 @@ const { expectOkResult } = CoreTestUtils;
 
 let server: TestServerWithSession;
 let schema: GraphQLSchema;
-let entitiesOfTypeQueryAdminOnlyEditBefore: AdminEntity[];
+let entitiesOfTypeQueryAdminOnlyEditBefore: AdminEntity2[];
 
 const schemaSpecification: Partial<SchemaSpecification> = {
   entityTypes: [
@@ -114,7 +113,7 @@ async function ensureTestEntitiesExist(adminClient: AdminClient) {
 }
 
 async function getEntitiesForAdminOnlyEditBefore(adminClient: AdminClient) {
-  const entities: AdminEntity[] = [];
+  const entities: AdminEntity2[] = [];
   await visitAllEntityPages(
     adminClient,
     { entityTypes: ['QueryAdminOnlyEditBefore'] },
@@ -132,7 +131,7 @@ async function getEntitiesForAdminOnlyEditBefore(adminClient: AdminClient) {
 async function visitAllEntityPages(
   adminClient: AdminClient,
   query: AdminQuery,
-  visitor: (connection: Connection<Edge<AdminEntity, ErrorType>>) => void
+  visitor: (connection: Connection<Edge<AdminEntity2, ErrorType>>) => void
 ) {
   const paging: Paging = {};
   // eslint-disable-next-line no-constant-condition
@@ -1111,7 +1110,7 @@ describe('searchAdminEntities()', () => {
     );
     expect(result.data?.adminSearchEntities.edges).toEqual(
       [...entitiesOfTypeQueryAdminOnlyEditBefore]
-        .sort((a, b) => (a._name < b._name ? -1 : 1))
+        .sort((a, b) => (a.info.name < b.info.name ? -1 : 1))
         .slice(-10)
         .map((x) => ({ node: { id: x.id } }))
     );

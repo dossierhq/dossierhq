@@ -160,7 +160,9 @@ export async function loadAdminSearchEntities<TContext extends SessionGraphQLCon
     edges: result.value.edges.map((edge) => {
       return {
         cursor: edge.cursor,
-        node: edge.node.isOk() ? buildResolversForAdminEntity(schema, edge.node.value) : null, //TODO throw error if accessed?
+        node: edge.node.isOk()
+          ? buildResolversForAdminEntity(schema, toAdminEntity1(edge.node.value))
+          : null, //TODO throw error if accessed?
       };
     }),
     totalCount: buildTotalCount(query),

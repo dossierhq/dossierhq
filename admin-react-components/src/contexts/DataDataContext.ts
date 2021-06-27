@@ -1,5 +1,6 @@
 import type {
   AdminEntity,
+  AdminEntity2,
   AdminEntityCreate,
   AdminEntityUpdate,
   AdminQuery,
@@ -40,7 +41,7 @@ export interface DataDataContextAdapter {
     query?: AdminQuery,
     paging?: Paging
   ): PromiseResult<
-    Connection<Edge<AdminEntity, ErrorType>> | null,
+    Connection<Edge<AdminEntity2, ErrorType>> | null,
     ErrorType.BadRequest | ErrorType.Generic
   >;
   createEntity(
