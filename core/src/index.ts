@@ -20,6 +20,7 @@ export type {
   AdminEntity,
   AdminEntity2,
   AdminEntityCreate,
+  AdminEntityCreate2,
   AdminEntityUpdate,
   AdminEntityUpdate2,
   AdminQuery,
@@ -94,6 +95,8 @@ export * as CoreTestUtils from './CoreTestUtils';
 export {
   toAdminEntity1,
   toAdminEntity2,
+  toAdminEntityCreate1,
+  toAdminEntityCreate2,
   toAdminEntityResult2,
   toAdminEntityUpdate1,
   toAdminEntityUpdate2,

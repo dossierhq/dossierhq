@@ -46,8 +46,11 @@ function createMainActions(state: State): Array<MainActionItem | ItemSelectorSep
       action: async () => {
         const createdEntity = await CliEntityAdmin.createEntity(state.context);
         if (createdEntity) {
-          const { id, _publishState: publishState } = createdEntity;
-          state.currentEntity = { id, publishState };
+          const {
+            id,
+            info: { publishingState },
+          } = createdEntity;
+          state.currentEntity = { id, publishState: publishingState };
         }
       },
     },

@@ -140,6 +140,31 @@ export interface AdminEntityCreate {
   [fieldName: string]: unknown;
 }
 
+export interface AdminEntityCreate2 {
+  /** UUIDv4. If not provided a new id will be created */
+  id?: string;
+  info: {
+    type: string;
+    name: string;
+    version?: 0;
+  };
+  fields?: Record<string, unknown>;
+}
+
+export function toAdminEntityCreate1(create: AdminEntityCreate2): AdminEntityCreate {
+  const {
+    id,
+    info: { name, type },
+    fields,
+  } = create;
+  return { id, _type: type, _name: name, _version: create.info.version, ...fields };
+}
+
+export function toAdminEntityCreate2(create: AdminEntityCreate): AdminEntityCreate2 {
+  const { id, _type: type, _name: name, _version: version, ...fields } = create;
+  return { id, info: { type, name, version }, fields };
+}
+
 export interface AdminEntityUpdate {
   /** UUIDv4 */
   id: string;

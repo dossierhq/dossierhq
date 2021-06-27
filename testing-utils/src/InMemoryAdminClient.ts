@@ -1,14 +1,11 @@
-import {
-  AdminClient,
-  AdminClientOperation,
-  toAdminEntityUpdate1,
-  toAdminEntityUpdate2,
-} from '@datadata/core';
+import type { AdminClient, AdminClientOperation } from '@datadata/core';
 import {
   AdminClientOperationName,
   assertExhaustive,
   createBaseAdminClient,
   toAdminEntityResult2,
+  toAdminEntityUpdate1,
+  toAdminEntityCreate1,
 } from '@datadata/core';
 import { InMemoryAdmin } from '..';
 import type { InMemorySessionContext } from './InMemoryServer';
@@ -54,7 +51,7 @@ async function terminatingMiddleware(
         args: [entity],
         resolve,
       } = operation as AdminClientOperation<AdminClientOperationName.createEntity>;
-      resolve(await createEntity(context, entity));
+      resolve(toAdminEntityResult2(await createEntity(context, toAdminEntityCreate1(entity))));
       break;
     }
     case AdminClientOperationName.getEntities: {

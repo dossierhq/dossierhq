@@ -1,6 +1,7 @@
 import type {
   AdminClient,
   AdminEntity,
+  AdminEntity2,
   AdminQuery,
   BoundingBox,
   Connection,
@@ -104,9 +105,8 @@ async function ensureTestEntitiesExist(adminClient: AdminClient) {
     for (let count = entitiesOfTypeCount.value; count < requestedCount; count += 1) {
       const random = String(Math.random()).slice(2);
       const createResult = await adminClient.createEntity({
-        _type: 'QueryAdminOnlyEditBefore',
-        _name: random,
-        message: `Hey ${random}`,
+        info: { type: 'QueryAdminOnlyEditBefore', name: random },
+        fields: { message: `Hey ${random}` },
       });
       createResult.throwIfError();
     }
@@ -156,9 +156,8 @@ async function visitAllEntityPages(
 async function createBarWithFooReferences(fooCount: number) {
   const { adminClient } = server;
   const createBarResult = await adminClient.createEntity({
-    _type: 'QueryAdminBar',
-    _name: 'Bar',
-    title: 'Bar',
+    info: { type: 'QueryAdminBar', name: 'Bar' },
+    fields: { title: 'Bar' },
   });
   if (createBarResult.isError()) {
     throw createBarResult.toError();
@@ -166,13 +165,12 @@ async function createBarWithFooReferences(fooCount: number) {
 
   const { id: barId } = createBarResult.value;
 
-  const fooEntities: AdminEntity[] = [];
+  const fooEntities: AdminEntity2[] = [];
 
   for (let i = 0; i < fooCount; i += 1) {
     const createFooResult = await adminClient.createEntity({
-      _type: 'QueryAdminFoo',
-      _name: 'Foo: ' + i,
-      bar: { id: barId },
+      info: { type: 'QueryAdminFoo', name: 'Foo: ' + i },
+      fields: { bar: { id: barId } },
     });
     if (expectOkResult(createFooResult)) {
       fooEntities.push(createFooResult.value);
@@ -199,19 +197,23 @@ describe('adminEntity()', () => {
   test('Query all fields of created entity', async () => {
     const { adminClient } = server;
     const createResult = await adminClient.createEntity({
-      _type: 'QueryAdminFoo',
-      _name: 'Howdy name',
-      title: 'Howdy title',
-      summary: 'Howdy summary',
-      tags: ['one', 'two', 'three'],
-      location: { lat: 55.60498, lng: 13.003822 },
-      locations: [
-        { lat: 55.60498, lng: 13.003822 },
-        { lat: 56.381561, lng: 13.99286 },
-      ],
+      info: { type: 'QueryAdminFoo', name: 'Howdy name' },
+      fields: {
+        title: 'Howdy title',
+        summary: 'Howdy summary',
+        tags: ['one', 'two', 'three'],
+        location: { lat: 55.60498, lng: 13.003822 },
+        locations: [
+          { lat: 55.60498, lng: 13.003822 },
+          { lat: 56.381561, lng: 13.99286 },
+        ],
+      },
     });
     if (expectOkResult(createResult)) {
-      const { id, _name: name } = createResult.value;
+      const {
+        id,
+        info: { name },
+      } = createResult.value;
 
       const result = await graphql(
         schema,
@@ -270,11 +272,13 @@ describe('adminEntity()', () => {
   test('Query null fields of created entity', async () => {
     const { adminClient } = server;
     const createResult = await adminClient.createEntity({
-      _type: 'QueryAdminFoo',
-      _name: 'Howdy name',
+      info: { type: 'QueryAdminFoo', name: 'Howdy name' },
     });
     if (expectOkResult(createResult)) {
-      const { id, _name: name } = createResult.value;
+      const {
+        id,
+        info: { name },
+      } = createResult.value;
 
       const result = await graphql(
         schema,
@@ -342,10 +346,8 @@ describe('adminEntity()', () => {
   test('Query different versions of same entity created entity', async () => {
     const { adminClient } = server;
     const createResult = await adminClient.createEntity({
-      _type: 'QueryAdminFoo',
-      _name: 'First name',
-      title: 'First title',
-      summary: 'First summary',
+      info: { type: 'QueryAdminFoo', name: 'First name' },
+      fields: { title: 'First title', summary: 'First summary' },
     });
     if (expectOkResult(createResult)) {
       const { id } = createResult.value;
@@ -445,13 +447,14 @@ describe('adminEntity()', () => {
   test('Query published entity', async () => {
     const { adminClient } = server;
     const createResult = await adminClient.createEntity({
-      _type: 'QueryAdminFoo',
-      _name: 'First name',
-      title: 'First title',
-      summary: 'First summary',
+      info: { type: 'QueryAdminFoo', name: 'First name' },
+      fields: { title: 'First title', summary: 'First summary' },
     });
     if (expectOkResult(createResult)) {
-      const { id, _name: name, _version: version } = createResult.value;
+      const {
+        id,
+        info: { name, version },
+      } = createResult.value;
 
       expectOkResult(await adminClient.publishEntities([{ id, version }]));
 
@@ -491,9 +494,12 @@ describe('adminEntity()', () => {
   test('Query rich text field', async () => {
     const { adminClient } = server;
     const createFooResult = await adminClient.createEntity({
-      _type: 'QueryAdminFoo',
-      _name: 'Foo name',
-      body: { blocks: [{ type: RichTextBlockType.paragraph, data: { text: 'Hello foo world' } }] },
+      info: { type: 'QueryAdminFoo', name: 'Foo name' },
+      fields: {
+        body: {
+          blocks: [{ type: RichTextBlockType.paragraph, data: { text: 'Hello foo world' } }],
+        },
+      },
     });
     if (expectOkResult(createFooResult)) {
       const fooId = createFooResult.value.id;
@@ -529,7 +535,7 @@ describe('adminEntity()', () => {
             __typename: 'AdminQueryAdminFoo',
             id: fooId,
             _type: 'QueryAdminFoo',
-            _name: createFooResult.value._name,
+            _name: createFooResult.value.info.name,
             _version: 0,
             body: {
               blocksJson: '[{"type":"paragraph","data":{"text":"Hello foo world"}}]',
@@ -544,30 +550,35 @@ describe('adminEntity()', () => {
   test('Query rich text with references', async () => {
     const { adminClient } = server;
     const createBar1Result = await adminClient.createEntity({
-      _type: 'QueryAdminBar',
-      _name: 'Bar name 1',
-      title: 'Bar title 1',
+      info: { type: 'QueryAdminBar', name: 'Bar name 1' },
+      fields: { title: 'Bar title 1' },
     });
     const createBar2Result = await adminClient.createEntity({
-      _type: 'QueryAdminBar',
-      _name: 'Bar name 2',
-      title: 'Bar title 2',
+      info: { type: 'QueryAdminBar', name: 'Bar name 2' },
+      fields: { title: 'Bar title 2' },
     });
     if (expectOkResult(createBar1Result) && expectOkResult(createBar2Result)) {
-      const { id: bar1Id, _name: bar1Name } = createBar1Result.value;
-      const { id: bar2Id, _name: bar2Name } = createBar2Result.value;
+      const {
+        id: bar1Id,
+        info: { name: bar1Name },
+      } = createBar1Result.value;
+      const {
+        id: bar2Id,
+        info: { name: bar2Name },
+      } = createBar2Result.value;
 
       const createFooResult = await adminClient.createEntity({
-        _type: 'QueryAdminFoo',
-        _name: 'Foo name',
-        body: {
-          blocks: [
-            { type: RichTextBlockType.entity, data: { id: bar1Id } },
-            {
-              type: RichTextBlockType.valueItem,
-              data: { _type: 'QueryAdminStringedBar', text: 'Hello', bar: { id: bar2Id } },
-            },
-          ],
+        info: { type: 'QueryAdminFoo', name: 'Foo name' },
+        fields: {
+          body: {
+            blocks: [
+              { type: RichTextBlockType.entity, data: { id: bar1Id } },
+              {
+                type: RichTextBlockType.valueItem,
+                data: { _type: 'QueryAdminStringedBar', text: 'Hello', bar: { id: bar2Id } },
+              },
+            ],
+          },
         },
       });
       if (expectOkResult(createFooResult)) {
@@ -605,7 +616,7 @@ describe('adminEntity()', () => {
               __typename: 'AdminQueryAdminFoo',
               id: fooId,
               _type: 'QueryAdminFoo',
-              _name: createFooResult.value._name,
+              _name: createFooResult.value.info.name,
               _version: 0,
               body: {
                 blocksJson: `[{"type":"entity","data":{"id":"${bar1Id}"}},{"type":"valueItem","data":{"_type":"QueryAdminStringedBar","bar":{"id":"${bar2Id}"},"text":"Hello"}}]`,
@@ -624,18 +635,15 @@ describe('adminEntity()', () => {
   test('Query referenced entity', async () => {
     const { adminClient } = server;
     const createBarResult = await adminClient.createEntity({
-      _type: 'QueryAdminBar',
-      _name: 'Bar name',
-      title: 'Bar title',
+      info: { type: 'QueryAdminBar', name: 'Bar name' },
+      fields: { title: 'Bar title' },
     });
     if (expectOkResult(createBarResult)) {
       const barId = createBarResult.value.id;
 
       const createFooResult = await adminClient.createEntity({
-        _type: 'QueryAdminFoo',
-        _name: 'Foo name',
-        title: 'Foo title',
-        bar: { id: barId },
+        info: { type: 'QueryAdminFoo', name: 'Foo name' },
+        fields: { title: 'Foo title', bar: { id: barId } },
       });
       if (expectOkResult(createFooResult)) {
         const fooId = createFooResult.value.id;
@@ -673,14 +681,14 @@ describe('adminEntity()', () => {
               __typename: 'AdminQueryAdminFoo',
               id: fooId,
               _type: 'QueryAdminFoo',
-              _name: createFooResult.value._name,
+              _name: createFooResult.value.info.name,
               _version: 0,
               title: 'Foo title',
               bar: {
                 __typename: 'AdminQueryAdminBar',
                 id: barId,
                 _type: 'QueryAdminBar',
-                _name: createBarResult.value._name,
+                _name: createBarResult.value.info.name,
                 title: 'Bar title',
               },
             },
@@ -693,24 +701,20 @@ describe('adminEntity()', () => {
   test('Query referenced entity list', async () => {
     const { adminClient } = server;
     const createBar1Result = await adminClient.createEntity({
-      _type: 'QueryAdminBar',
-      _name: 'Bar 1 name',
-      title: 'Bar 1 title',
+      info: { type: 'QueryAdminBar', name: 'Bar 1 name' },
+      fields: { title: 'Bar 1 title' },
     });
     const createBar2Result = await adminClient.createEntity({
-      _type: 'QueryAdminBar',
-      _name: 'Bar 2 name',
-      title: 'Bar 2 title',
+      info: { type: 'QueryAdminBar', name: 'Bar 2 name' },
+      fields: { title: 'Bar 2 title' },
     });
     if (expectOkResult(createBar1Result) && expectOkResult(createBar2Result)) {
       const bar1Id = createBar1Result.value.id;
       const bar2Id = createBar2Result.value.id;
 
       const createFooResult = await adminClient.createEntity({
-        _type: 'QueryAdminFoo',
-        _name: 'Foo name',
-        title: 'Foo title',
-        bars: [{ id: bar1Id }, { id: bar2Id }],
+        info: { type: 'QueryAdminFoo', name: 'Foo name' },
+        fields: { title: 'Foo title', bars: [{ id: bar1Id }, { id: bar2Id }] },
       });
       if (expectOkResult(createFooResult)) {
         const fooId = createFooResult.value.id;
@@ -744,18 +748,18 @@ describe('adminEntity()', () => {
             adminEntity: {
               __typename: 'AdminQueryAdminFoo',
               id: fooId,
-              _name: createFooResult.value._name,
+              _name: createFooResult.value.info.name,
               title: 'Foo title',
               bars: [
                 {
                   __typename: 'AdminQueryAdminBar',
-                  _name: createBar1Result.value._name,
+                  _name: createBar1Result.value.info.name,
                   id: bar1Id,
                   title: 'Bar 1 title',
                 },
                 {
                   __typename: 'AdminQueryAdminBar',
-                  _name: createBar2Result.value._name,
+                  _name: createBar2Result.value.info.name,
                   id: bar2Id,
                   title: 'Bar 2 title',
                 },
@@ -770,21 +774,21 @@ describe('adminEntity()', () => {
   test('Query value type', async () => {
     const { adminClient } = server;
     const createBarResult = await adminClient.createEntity({
-      _type: 'QueryAdminBar',
-      _name: 'Bar name',
-      title: 'Bar title',
+      info: { type: 'QueryAdminBar', name: 'Bar name' },
+      fields: { title: 'Bar title' },
     });
     if (expectOkResult(createBarResult)) {
       const barId = createBarResult.value.id;
 
       const createFooResult = await adminClient.createEntity({
-        _type: 'QueryAdminFoo',
-        _name: 'Foo name',
-        title: 'Foo title',
-        stringedBar: {
-          _type: 'QueryAdminStringedBar',
-          text: 'Stringed text',
-          bar: { id: barId },
+        info: { type: 'QueryAdminFoo', name: 'Foo name' },
+        fields: {
+          title: 'Foo title',
+          stringedBar: {
+            _type: 'QueryAdminStringedBar',
+            text: 'Stringed text',
+            bar: { id: barId },
+          },
         },
       });
       if (expectOkResult(createFooResult)) {
@@ -828,7 +832,7 @@ describe('adminEntity()', () => {
               __typename: 'AdminQueryAdminFoo',
               id: fooId,
               _type: 'QueryAdminFoo',
-              _name: createFooResult.value._name,
+              _name: createFooResult.value.info.name,
               _version: 0,
               title: 'Foo title',
               stringedBar: {
@@ -839,7 +843,7 @@ describe('adminEntity()', () => {
                   __typename: 'AdminQueryAdminBar',
                   id: barId,
                   _type: 'QueryAdminBar',
-                  _name: createBarResult.value._name,
+                  _name: createBarResult.value.info.name,
                   title: 'Bar title',
                 },
               },
@@ -913,16 +917,20 @@ describe('adminEntities()', () => {
   test('Query 2 entities', async () => {
     const { adminClient } = server;
     const createFoo1Result = await adminClient.createEntity({
-      _type: 'QueryAdminFoo',
-      _name: 'Howdy name 1',
+      info: { type: 'QueryAdminFoo', name: 'Howdy name 1' },
     });
     const createFoo2Result = await adminClient.createEntity({
-      _type: 'QueryAdminFoo',
-      _name: 'Howdy name 2',
+      info: { type: 'QueryAdminFoo', name: 'Howdy name 2' },
     });
     if (expectOkResult(createFoo1Result) && expectOkResult(createFoo2Result)) {
-      const { id: foo1Id, _name: foo1Name } = createFoo1Result.value;
-      const { id: foo2Id, _name: foo2Name } = createFoo2Result.value;
+      const {
+        id: foo1Id,
+        info: { name: foo1Name },
+      } = createFoo1Result.value;
+      const {
+        id: foo2Id,
+        info: { name: foo2Name },
+      } = createFoo2Result.value;
 
       const result = await graphql(
         schema,
@@ -1150,9 +1158,8 @@ describe('searchAdminEntities()', () => {
       lng: (boundingBox.minLng + boundingBox.maxLng) / 2,
     };
     const createResult = await adminClient.createEntity({
-      _type: 'QueryAdminFoo',
-      _name: 'Howdy name',
-      location: center,
+      info: { type: 'QueryAdminFoo', name: 'Howdy name' },
+      fields: { location: center },
     });
     if (expectOkResult(createResult)) {
       const { id: fooId } = createResult.value;
@@ -1217,9 +1224,8 @@ describe('versionHistory()', () => {
   test('History with edit', async () => {
     const { adminClient } = server;
     const createResult = await adminClient.createEntity({
-      _type: 'QueryAdminFoo',
-      _name: 'Foo name',
-      title: 'First title',
+      info: { type: 'QueryAdminFoo', name: 'Foo name' },
+      fields: { title: 'First title' },
     });
     if (expectOkResult(createResult)) {
       const { id } = createResult.value;
@@ -1304,12 +1310,14 @@ describe('publishingHistory()', () => {
   test('History with published', async () => {
     const { adminClient } = server;
     const createResult = await adminClient.createEntity({
-      _type: 'QueryAdminFoo',
-      _name: 'Foo name',
-      title: 'First title',
+      info: { type: 'QueryAdminFoo', name: 'Foo name' },
+      fields: { title: 'First title' },
     });
     if (expectOkResult(createResult)) {
-      const { id, _version: version } = createResult.value;
+      const {
+        id,
+        info: { version },
+      } = createResult.value;
 
       expectOkResult(await adminClient.publishEntities([{ id, version }]));
 

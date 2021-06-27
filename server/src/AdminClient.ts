@@ -2,6 +2,7 @@ import {
   AdminClientOperationName,
   assertExhaustive,
   createBaseAdminClient,
+  toAdminEntityCreate1,
   toAdminEntityResult2,
   toAdminEntityUpdate1,
 } from '@datadata/core';
@@ -48,7 +49,7 @@ async function terminatingMiddleware(
         args: [entity],
         resolve,
       } = operation as AdminClientOperation<AdminClientOperationName.createEntity>;
-      resolve(await createEntity(context, entity));
+      resolve(toAdminEntityResult2(await createEntity(context, toAdminEntityCreate1(entity))));
       break;
     }
     case AdminClientOperationName.getEntities: {

@@ -237,8 +237,7 @@ describe('create*Entity()', () => {
   test('Create with rich text with reference', async () => {
     const { adminClient } = server;
     const createBarResult = await adminClient.createEntity({
-      _type: 'MutationBar',
-      _name: 'Bar',
+      info: { type: 'MutationBar', name: 'Bar' },
     });
     if (expectOkResult(createBarResult)) {
       const { id: barId } = createBarResult.value;
@@ -322,11 +321,13 @@ describe('create*Entity()', () => {
   test('Create with reference', async () => {
     const { adminClient } = server;
     const createBarResult = await adminClient.createEntity({
-      _type: 'MutationBar',
-      _name: 'Bar',
+      info: { type: 'MutationBar', name: 'Bar' },
     });
     if (expectOkResult(createBarResult)) {
-      const { id: barId, _name: barName } = createBarResult.value;
+      const {
+        id: barId,
+        info: { name: barName },
+      } = createBarResult.value;
       const gqlResult = await graphql(
         schema,
         `
@@ -398,16 +399,20 @@ describe('create*Entity()', () => {
   test('Create with reference list', async () => {
     const { adminClient } = server;
     const createBar1Result = await adminClient.createEntity({
-      _type: 'MutationBar',
-      _name: 'Bar 1',
+      info: { type: 'MutationBar', name: 'Bar 1' },
     });
     const createBar2Result = await adminClient.createEntity({
-      _type: 'MutationBar',
-      _name: 'Bar 2',
+      info: { type: 'MutationBar', name: 'Bar 2' },
     });
     if (expectOkResult(createBar1Result) && expectOkResult(createBar2Result)) {
-      const { id: bar1Id, _name: bar1Name } = createBar1Result.value;
-      const { id: bar2Id, _name: bar2Name } = createBar2Result.value;
+      const {
+        id: bar1Id,
+        info: { name: bar1Name },
+      } = createBar1Result.value;
+      const {
+        id: bar2Id,
+        info: { name: bar2Name },
+      } = createBar2Result.value;
 
       const gqlResult = await graphql(
         schema,
@@ -479,11 +484,13 @@ describe('create*Entity()', () => {
   test('Create with value type with reference', async () => {
     const { adminClient } = server;
     const createBarResult = await adminClient.createEntity({
-      _type: 'MutationBar',
-      _name: 'Bar',
+      info: { type: 'MutationBar', name: 'Bar' },
     });
     if (expectOkResult(createBarResult)) {
-      const { id: barId, _name: barName } = createBarResult.value;
+      const {
+        id: barId,
+        info: { name: barName },
+      } = createBarResult.value;
       const gqlResult = await graphql(
         schema,
         `
@@ -576,8 +583,7 @@ describe('create*Entity()', () => {
   test('Create with value JSON', async () => {
     const { adminClient } = server;
     const createBarResult = await adminClient.createEntity({
-      _type: 'MutationBar',
-      _name: 'Bar',
+      info: { type: 'MutationBar', name: 'Bar' },
     });
 
     if (expectOkResult(createBarResult)) {
@@ -851,14 +857,14 @@ describe('update*Entity()', () => {
   test('Update minimal', async () => {
     const { adminClient } = server;
     const createResult = await adminClient.createEntity({
-      _type: 'MutationFoo',
-      _name: 'First name',
-      title: 'First title',
-      summary: 'First summary',
-      tags: ['one', 'two', 'three'],
+      info: { type: 'MutationFoo', name: 'First name' },
+      fields: { title: 'First title', summary: 'First summary', tags: ['one', 'two', 'three'] },
     });
     if (expectOkResult(createResult)) {
-      const { id, _name: name } = createResult.value;
+      const {
+        id,
+        info: { name },
+      } = createResult.value;
       const result = await graphql(
         schema,
         `
@@ -920,23 +926,28 @@ describe('update*Entity()', () => {
   test('Update with all values including references', async () => {
     const { adminClient } = server;
     const createBar1Result = await adminClient.createEntity({
-      _type: 'MutationBar',
-      _name: 'Bar 1',
+      info: { type: 'MutationBar', name: 'Bar 1' },
     });
     const createBar2Result = await adminClient.createEntity({
-      _type: 'MutationBar',
-      _name: 'Bar 2',
+      info: { type: 'MutationBar', name: 'Bar 2' },
     });
     if (expectOkResult(createBar1Result) && expectOkResult(createBar2Result)) {
-      const { id: bar1Id, _name: bar1Name } = createBar1Result.value;
-      const { id: bar2Id, _name: bar2Name } = createBar2Result.value;
+      const {
+        id: bar1Id,
+        info: { name: bar1Name },
+      } = createBar1Result.value;
+      const {
+        id: bar2Id,
+        info: { name: bar2Name },
+      } = createBar2Result.value;
 
       const createFooResult = await adminClient.createEntity({
-        _type: 'MutationFoo',
-        _name: 'First name',
-        title: 'First title',
-        summary: 'First summary',
-        tags: ['one', 'two', 'three'],
+        info: { type: 'MutationFoo', name: 'First name' },
+        fields: {
+          title: 'First title',
+          summary: 'First summary',
+          tags: ['one', 'two', 'three'],
+        },
       });
       if (expectOkResult(createFooResult)) {
         const { id: fooId } = createFooResult.value;
@@ -1114,8 +1125,7 @@ describe('update*Entity()', () => {
   test('Error: Update with the wrong _type', async () => {
     const { adminClient } = server;
     const createResult = await adminClient.createEntity({
-      _type: 'MutationFoo',
-      _name: 'Name',
+      info: { type: 'MutationFoo', name: 'Name' },
     });
     if (expectOkResult(createResult)) {
       const { id } = createResult.value;
@@ -1159,10 +1169,8 @@ describe('publishEntities()', () => {
   test('Publish', async () => {
     const { adminClient } = server;
     const createResult = await adminClient.createEntity({
-      _type: 'MutationFoo',
-      _name: 'Howdy name',
-      title: 'Howdy title',
-      summary: 'Howdy summary',
+      info: { type: 'MutationFoo', name: 'Howdy name' },
+      fields: { title: 'Howdy title', summary: 'Howdy summary' },
     });
     if (expectOkResult(createResult)) {
       const { id } = createResult.value;
@@ -1245,10 +1253,8 @@ describe('unpublishEntities()', () => {
   test('Unpublish', async () => {
     const { adminClient } = server;
     const createResult = await adminClient.createEntity({
-      _type: 'MutationFoo',
-      _name: 'Howdy name',
-      title: 'Howdy title',
-      summary: 'Howdy summary',
+      info: { type: 'MutationFoo', name: 'Howdy name' },
+      fields: { title: 'Howdy title', summary: 'Howdy summary' },
     });
     if (expectOkResult(createResult)) {
       const { id } = createResult.value;
@@ -1340,10 +1346,8 @@ describe('archiveEntity()', () => {
   test('Archive', async () => {
     const { adminClient } = server;
     const createResult = await adminClient.createEntity({
-      _type: 'MutationFoo',
-      _name: 'Howdy name',
-      title: 'Howdy title',
-      summary: 'Howdy summary',
+      info: { type: 'MutationFoo', name: 'Howdy name' },
+      fields: { title: 'Howdy title', summary: 'Howdy summary' },
     });
     if (expectOkResult(createResult)) {
       const { id } = createResult.value;
@@ -1396,10 +1400,8 @@ describe('unarchiveEntity()', () => {
   test('Unarchive', async () => {
     const { adminClient } = server;
     const createResult = await adminClient.createEntity({
-      _type: 'MutationFoo',
-      _name: 'Howdy name',
-      title: 'Howdy title',
-      summary: 'Howdy summary',
+      info: { type: 'MutationFoo', name: 'Howdy name' },
+      fields: { title: 'Howdy title', summary: 'Howdy summary' },
     });
     if (expectOkResult(createResult)) {
       const { id } = createResult.value;
@@ -1488,10 +1490,8 @@ describe('Multiple', () => {
   test('Update and publish', async () => {
     const { adminClient } = server;
     const createResult = await adminClient.createEntity({
-      _type: 'MutationFoo',
-      _name: 'Howdy name',
-      title: 'Howdy title',
-      summary: 'Howdy summary',
+      info: { type: 'MutationFoo', name: 'Howdy name' },
+      fields: { title: 'Howdy title', summary: 'Howdy summary' },
     });
     if (expectOkResult(createResult)) {
       const { id } = createResult.value;

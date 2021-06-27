@@ -13,13 +13,13 @@ import {
   isValueTypeListField,
   notOk,
   ok,
-  toAdminEntity1,
   toAdminEntity2,
   toAdminEntityUpdate2,
 } from '@datadata/core';
 import type {
   AdminEntity,
   AdminEntity2,
+  AdminEntityCreate2,
   AdminQuery,
   EntityPublishState,
   EntityReference,
@@ -225,17 +225,16 @@ async function selectOrder(order: string | undefined) {
   return item.id;
 }
 
-export async function createEntity(context: CliContext): Promise<AdminEntity | null> {
+export async function createEntity(context: CliContext): Promise<AdminEntity2 | null> {
   const { adminClient } = context;
   const type = await CliSchema.selectEntityType(context);
-  const entity = {
-    _type: type,
-    _name: '',
-    ...(await editEntityValues(context, type, {})),
+  const entity: AdminEntityCreate2 = {
+    info: { type, name: '' },
+    fields: await editEntityValues(context, type, {}),
   };
 
-  while (!entity._name) {
-    entity._name = await showStringEdit('What name to use for the entity?');
+  while (!entity.info.name) {
+    entity.info.name = await showStringEdit('What name to use for the entity?');
   }
 
   const createResult = await adminClient.createEntity(entity);
@@ -244,11 +243,11 @@ export async function createEntity(context: CliContext): Promise<AdminEntity | n
     return null;
   }
   console.log(chalk.bold('Created entity'));
-  logEntity(context, toAdminEntity2(createResult.value));
+  logEntity(context, createResult.value);
 
-  const publishedEntity = await publishEntityVersion(context, toAdminEntity2(createResult.value));
+  const publishedEntity = await publishEntityVersion(context, createResult.value);
   if (publishedEntity) {
-    return toAdminEntity1(publishedEntity);
+    return publishedEntity;
   }
 
   return createResult.value;
