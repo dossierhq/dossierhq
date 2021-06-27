@@ -4,7 +4,7 @@ import type {
   AdminEntityUpdate,
   PublishingResult,
 } from '@datadata/core';
-import { toAdminEntity1 } from '@datadata/core';
+import { toAdminEntity1, toAdminEntityUpdate2 } from '@datadata/core';
 import type { SessionGraphQLContext } from '.';
 import { buildResolversForAdminEntity } from './DataLoaders';
 import { getAdminClient, getSchema } from './Utils';
@@ -28,7 +28,7 @@ export async function updateEntity<TContext extends SessionGraphQLContext>(
 ): Promise<AdminEntity> {
   const schema = getSchema(context);
   const adminClient = getAdminClient(context);
-  const result = await adminClient.updateEntity(entity);
+  const result = await adminClient.updateEntity(toAdminEntityUpdate2(entity));
   if (result.isError()) {
     throw result.toError();
   }

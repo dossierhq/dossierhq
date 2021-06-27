@@ -21,6 +21,7 @@ export type {
   AdminEntity2,
   AdminEntityCreate,
   AdminEntityUpdate,
+  AdminEntityUpdate2,
   AdminQuery,
   BoundingBox,
   Connection,
@@ -90,4 +91,10 @@ export { FieldType, RichTextBlockType, Schema } from './Schema';
 export { EntityPublishState, PublishingEventKind } from './Types';
 export * as CoreTestUtils from './CoreTestUtils';
 
-export { toAdminEntity1, toAdminEntity2, toAdminEntityResult2 } from './Types';
+export {
+  toAdminEntity1,
+  toAdminEntity2,
+  toAdminEntityResult2,
+  toAdminEntityUpdate1,
+  toAdminEntityUpdate2,
+} from './Types';

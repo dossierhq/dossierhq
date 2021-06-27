@@ -150,6 +150,27 @@ export interface AdminEntityUpdate {
   [fieldName: string]: unknown;
 }
 
+export interface AdminEntityUpdate2 {
+  id: string;
+  info?: {
+    name?: string;
+    /** If provided, has to be same as the entity's existing type, i.e. there's no way to change the type of an entity */
+    type?: string;
+    version?: number;
+  };
+  fields?: Record<string, unknown>;
+}
+
+export function toAdminEntityUpdate1(update: AdminEntityUpdate2): AdminEntityUpdate {
+  const { id, info, fields } = update;
+  return { id, _type: info?.type, _name: info?.name, _version: info?.version, ...fields };
+}
+
+export function toAdminEntityUpdate2(update: AdminEntityUpdate): AdminEntityUpdate2 {
+  const { id, _type: type, _name: name, _version: version, ...fields } = update;
+  return { id, info: { type, name, version }, fields };
+}
+
 export interface EntityHistory {
   id: string;
   versions: EntityVersionInfo[];

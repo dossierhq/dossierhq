@@ -2,7 +2,7 @@ import type {
   AdminEntity,
   AdminEntity2,
   AdminEntityCreate,
-  AdminEntityUpdate,
+  AdminEntityUpdate2,
   AdminQuery,
   Connection,
   Edge,
@@ -36,7 +36,7 @@ export interface AdminClient {
   createEntity(entity: AdminEntityCreate): PromiseResult<AdminEntity, ErrorType.BadRequest>;
 
   updateEntity(
-    entity: AdminEntityUpdate
+    entity: AdminEntityUpdate2
   ): PromiseResult<AdminEntity2, ErrorType.BadRequest | ErrorType.NotFound>;
 
   getEntityHistory(reference: EntityReference): PromiseResult<EntityHistory, ErrorType.NotFound>;
@@ -194,7 +194,7 @@ class BaseAdminClient<TContext> implements AdminClient {
   }
 
   updateEntity(
-    entity: AdminEntityUpdate
+    entity: AdminEntityUpdate2
   ): Promise<AdminClientOperationReturn[AdminClientOperationName.updateEntity]> {
     return this.executeOperation({
       name: AdminClientOperationName.updateEntity,

@@ -15,6 +15,7 @@ import {
   ok,
   toAdminEntity1,
   toAdminEntity2,
+  toAdminEntityUpdate2,
 } from '@datadata/core';
 import type {
   AdminEntity,
@@ -265,7 +266,7 @@ export async function editEntity(context: CliContext, id: string): Promise<Admin
     id,
     ...(await editEntityValues(context, getResult.value._type, getResult.value)),
   };
-  const updateResult = await adminClient.updateEntity(entity);
+  const updateResult = await adminClient.updateEntity(toAdminEntityUpdate2(entity));
   if (updateResult.isError()) {
     logErrorResult('Failed updating entity', updateResult);
     return null;
