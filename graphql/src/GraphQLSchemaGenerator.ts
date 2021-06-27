@@ -260,7 +260,6 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       new GraphQLObjectType({
         name: 'EntityInfo',
         fields: {
-          id: { type: new GraphQLNonNull(GraphQLID) },
           name: { type: new GraphQLNonNull(GraphQLString) },
         },
       })
