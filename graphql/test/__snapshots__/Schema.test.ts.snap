@@ -36,9 +36,14 @@ enum EntityType {
   Bar
 }
 
+type EntityInfo {
+  id: ID!
+  name: String!
+}
+
 interface Entity implements Node {
   id: ID!
-  _name: String!
+  info: EntityInfo!
 }
 
 type RichText {
@@ -63,17 +68,21 @@ input BoundingBoxInput {
   maxLng: Float!
 }
 
-type Foo implements Node & Entity {
-  id: ID!
-  _name: String!
+type FooFields {
   strings: [String!]
   locations: [Location!]
   bars: [Bar!]
 }
 
+type Foo implements Node & Entity {
+  id: ID!
+  info: EntityInfo!
+  fields: FooFields!
+}
+
 type Bar implements Node & Entity {
   id: ID!
-  _name: String!
+  info: EntityInfo!
 }
 
 enum EntityPublishState {
@@ -247,9 +256,14 @@ enum EntityType {
   Baz
 }
 
+type EntityInfo {
+  id: ID!
+  name: String!
+}
+
 interface Entity implements Node {
   id: ID!
-  _name: String!
+  info: EntityInfo!
 }
 
 type RichText {
@@ -274,9 +288,7 @@ input BoundingBoxInput {
   maxLng: Float!
 }
 
-type Foo implements Node & Entity {
-  id: ID!
-  _name: String!
+type FooFields {
   noMeansAll: Entity
   bar: Bar
   bazBar: _BarOrBaz
@@ -284,14 +296,20 @@ type Foo implements Node & Entity {
   barBarBar: Bar
 }
 
+type Foo implements Node & Entity {
+  id: ID!
+  info: EntityInfo!
+  fields: FooFields!
+}
+
 type Bar implements Node & Entity {
   id: ID!
-  _name: String!
+  info: EntityInfo!
 }
 
 type Baz implements Node & Entity {
   id: ID!
-  _name: String!
+  info: EntityInfo!
 }
 
 enum EntityPublishState {
@@ -513,9 +531,14 @@ enum EntityType {
   Foo
 }
 
+type EntityInfo {
+  id: ID!
+  name: String!
+}
+
 interface Entity implements Node {
   id: ID!
-  _name: String!
+  info: EntityInfo!
 }
 
 type RichText {
@@ -542,7 +565,7 @@ input BoundingBoxInput {
 
 type Foo implements Node & Entity {
   id: ID!
-  _name: String!
+  info: EntityInfo!
 }
 
 enum EntityPublishState {
@@ -683,9 +706,14 @@ enum EntityType {
   Foo
 }
 
+type EntityInfo {
+  id: ID!
+  name: String!
+}
+
 interface Entity implements Node {
   id: ID!
-  _name: String!
+  info: EntityInfo!
 }
 
 type RichText {
@@ -710,10 +738,14 @@ input BoundingBoxInput {
   maxLng: Float!
 }
 
+type FooFields {
+  body: RichText
+}
+
 type Foo implements Node & Entity {
   id: ID!
-  _name: String!
-  body: RichText
+  info: EntityInfo!
+  fields: FooFields!
 }
 
 enum EntityPublishState {
@@ -858,9 +890,14 @@ enum EntityType {
   Bar
 }
 
+type EntityInfo {
+  id: ID!
+  name: String!
+}
+
 interface Entity implements Node {
   id: ID!
-  _name: String!
+  info: EntityInfo!
 }
 
 type RichText {
@@ -885,18 +922,26 @@ input BoundingBoxInput {
   maxLng: Float!
 }
 
+type FooFields {
+  fooField: String
+}
+
 type Foo implements Node & Entity {
   id: ID!
-  _name: String!
-  fooField: String
+  info: EntityInfo!
+  fields: FooFields!
+}
+
+type BarFields {
+  barField1: String
+  barField2: Entity
+  barField3: Location
 }
 
 type Bar implements Node & Entity {
   id: ID!
-  _name: String!
-  barField1: String
-  barField2: Entity
-  barField3: Location
+  info: EntityInfo!
+  fields: BarFields!
 }
 
 enum EntityPublishState {
@@ -1072,9 +1117,14 @@ enum EntityType {
   Bar
 }
 
+type EntityInfo {
+  id: ID!
+  name: String!
+}
+
 interface Entity implements Node {
   id: ID!
-  _name: String!
+  info: EntityInfo!
 }
 
 enum ValueType {
@@ -1109,18 +1159,22 @@ input BoundingBoxInput {
   maxLng: Float!
 }
 
-type Foo implements Node & Entity {
-  id: ID!
-  _name: String!
+type FooFields {
   valueOne: ValueOne
   unspecifiedValue: Value
   valueOneOrList: _ValueListOrValueOne
   nestedValue: NestedValue
 }
 
+type Foo implements Node & Entity {
+  id: ID!
+  info: EntityInfo!
+  fields: FooFields!
+}
+
 type Bar implements Node & Entity {
   id: ID!
-  _name: String!
+  info: EntityInfo!
 }
 
 type ValueOne implements Value {

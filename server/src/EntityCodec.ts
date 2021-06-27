@@ -28,6 +28,7 @@ import {
   notOk,
   ok,
   RichTextBlockType,
+  toAdminEntity2,
   visitItemRecursively,
   visitorPathToString,
 } from '@datadata/core';
@@ -80,13 +81,13 @@ export function decodePublishedEntity(context: SessionContext, values: EntityVal
   }
   const entity: Entity = {
     id: values.uuid,
-    _type: values.type,
-    _name: values.name,
+    info: { type: values.type, name: values.name },
+    fields: {},
   };
   for (const fieldSpec of entitySpec.fields) {
     const { name: fieldName } = fieldSpec;
     const fieldValue = values.data[fieldName];
-    entity[fieldName] = decodeFieldItemOrList(schema, fieldSpec, fieldValue);
+    entity.fields[fieldName] = decodeFieldItemOrList(schema, fieldSpec, fieldValue);
   }
   return entity;
 }
@@ -314,7 +315,7 @@ function checkForUnsupportedFields(
 
 export async function encodeEntity(
   context: SessionContext,
-  entity: { _type: string; _name: string; [fieldName: string]: unknown }
+  entity: AdminEntity | AdminEntityCreate
 ): PromiseResult<EncodeEntityResult, ErrorType.BadRequest> {
   const assertion = ensureRequired({ 'entity._type': entity._type, 'entity._name': entity._name });
   if (assertion.isError()) {
@@ -532,7 +533,7 @@ function encodeRichTextField(
 
 function collectDataFromEntity(
   context: SessionContext,
-  entity: { _type: string; [fieldName: string]: unknown }
+  entity: AdminEntity | AdminEntityCreate
 ): {
   requestedReferences: RequestedReference[];
   locations: Location[];
@@ -544,7 +545,7 @@ function collectDataFromEntity(
 
   visitItemRecursively({
     schema: context.server.getSchema(),
-    item: entity,
+    item: toAdminEntity2(entity as AdminEntity),
     path: ['entity'],
     visitField: (path, fieldSpec, data, _visitContext) => {
       if (fieldSpec.type !== FieldType.ValueType && fieldSpec.type !== FieldType.RichText) {

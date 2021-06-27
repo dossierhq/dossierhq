@@ -1,14 +1,18 @@
 import {
   isEntityTypeField,
   isEntityTypeListField,
+  isItemValueItem,
   isRichTextEntityBlock,
   isRichTextField,
   isValueTypeField,
   isValueTypeListField,
+  toAdminEntity1,
+  toAdminEntity2,
   visitFieldRecursively,
 } from '@datadata/core';
 import type {
   AdminEntity,
+  AdminEntity2,
   AdminQuery,
   Entity,
   EntityHistory,
@@ -78,9 +82,9 @@ function buildResolversForEntity<TContext extends SessionGraphQLContext>(
   schema: Schema,
   entity: Entity
 ): Entity {
-  const entitySpec = schema.getEntityTypeSpecification(entity._type);
+  const entitySpec = schema.getEntityTypeSpecification(entity.info.type);
   if (!entitySpec) {
-    throw new Error(`Couldn't find entity spec for type: ${entity._type}`);
+    throw new Error(`Couldn't find entity spec for type: ${entity.info.type}`);
   }
   const result = { ...entity };
   resolveFields<TContext>(schema, entitySpec, result, false);
@@ -127,11 +131,11 @@ export function buildResolversForAdminEntity<TContext extends SessionGraphQLCont
   if (!entitySpec) {
     throw new Error(`Couldn't find entity spec for type: ${entity._type}`);
   }
-  const result = { ...entity };
+  const result = toAdminEntity2({ ...entity });
 
   resolveFields<TContext>(schema, entitySpec, result, true);
 
-  return result;
+  return toAdminEntity1(result);
 }
 
 export async function loadAdminSearchEntities<TContext extends SessionGraphQLContext>(
@@ -166,14 +170,15 @@ export async function loadAdminSearchEntities<TContext extends SessionGraphQLCon
 function resolveFields<TContext extends SessionGraphQLContext>(
   schema: Schema,
   spec: EntityTypeSpecification | ValueTypeSpecification,
-  item: ValueItem | Entity | AdminEntity,
+  item: ValueItem | Entity | AdminEntity2,
   isAdmin: boolean
 ) {
+  const fields = isItemValueItem(item) ? item : item.fields;
   for (const fieldSpec of spec.fields) {
-    const value = item[fieldSpec.name];
+    const value = fields[fieldSpec.name];
     if (isRichTextField(fieldSpec, value) && value) {
       const ids = extractEntityIdsForRichTextField(schema, fieldSpec, value);
-      item[fieldSpec.name] = {
+      fields[fieldSpec.name] = {
         blocksJson: JSON.stringify(value.blocks),
         entities:
           ids.length === 0
@@ -183,17 +188,17 @@ function resolveFields<TContext extends SessionGraphQLContext>(
               },
       };
     } else if (isEntityTypeField(fieldSpec, value) && value) {
-      item[fieldSpec.name] = (_args: undefined, context: TContext, _info: unknown) =>
+      fields[fieldSpec.name] = (_args: undefined, context: TContext, _info: unknown) =>
         isAdmin ? loadAdminEntity(context, value.id, null) : loadEntity(context, value.id);
     } else if (isEntityTypeListField(fieldSpec, value) && value && value.length > 0) {
-      item[fieldSpec.name] = (_args: undefined, context: TContext, _info: unknown) => {
+      fields[fieldSpec.name] = (_args: undefined, context: TContext, _info: unknown) => {
         const ids = value.map((x) => x.id);
         return isAdmin ? loadAdminEntities(context, ids) : loadEntities(context, ids);
       };
     } else if (isValueTypeField(fieldSpec, value) && value) {
-      item[fieldSpec.name] = buildResolversForValue(schema, value, isAdmin);
+      fields[fieldSpec.name] = buildResolversForValue(schema, value, isAdmin);
     } else if (isValueTypeListField(fieldSpec, value) && value && value.length > 0) {
-      item[fieldSpec.name] = value.map((x) => buildResolversForValue(schema, x, isAdmin));
+      fields[fieldSpec.name] = value.map((x) => buildResolversForValue(schema, x, isAdmin));
     }
   }
 }
