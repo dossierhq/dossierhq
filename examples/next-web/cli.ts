@@ -2,7 +2,7 @@ import 'dotenv/config';
 import type { CliContext } from '@datadata/cli';
 import { CliAuth, CliMain } from '@datadata/cli';
 import type { Session } from '@datadata/server';
-import { createServerClient } from '@datadata/server';
+import { createServerAdminClient } from '@datadata/server';
 import { getServerConnection } from './utils/ServerUtils';
 
 async function main() {
@@ -14,7 +14,7 @@ async function main() {
     }
     const schema = server.getSchema();
     const context = server.createSessionContext(session);
-    const adminClient = createServerClient({ resolveContext: () => Promise.resolve(context) });
+    const adminClient = createServerAdminClient({ resolveContext: () => Promise.resolve(context) });
 
     const cliContext: CliContext = {
       schema,

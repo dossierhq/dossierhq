@@ -2,7 +2,7 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
 import { ok, notOk } from '@datadata/core';
-import { Auth, createServerClient, Server } from '@datadata/server';
+import { Auth, createServerAdminClient, Server } from '@datadata/server';
 import type { AuthContext } from '@datadata/server';
 import { GraphQLSchemaGenerator } from '@datadata/graphql';
 import type { SessionGraphQLContext } from '@datadata/graphql';
@@ -37,7 +37,7 @@ async function startServer(server: Server, authContext: AuthContext, port: numbe
       if (sessionResult.isOk()) {
         const sessionContext = server.createSessionContext(sessionResult.value);
         context.adminClient = ok(
-          createServerClient({ resolveContext: () => Promise.resolve(sessionContext) })
+          createServerAdminClient({ resolveContext: () => Promise.resolve(sessionContext) })
         );
         context.context = ok(sessionContext);
       }

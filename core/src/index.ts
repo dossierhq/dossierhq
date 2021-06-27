@@ -1,4 +1,4 @@
-export type { AdminClient, AdminClientOperation } from './Client';
+export type { AdminClient, AdminClientOperation } from './AdminClient';
 export type { ErrorResult, OkResult, PromiseResult, Result } from './ErrorResult';
 export type {
   JsonConnection,
@@ -8,6 +8,7 @@ export type {
   JsonPublishingHistory,
   JsonResult,
 } from './JsonUtils';
+export type { PublishedClient, PublishedClientOperation } from './PublishedClient';
 export type {
   EntityTypeSpecification,
   FieldSpecification,
@@ -40,7 +41,7 @@ export type {
 } from './Types';
 
 export { assertExhaustive, assertIsDefined } from './Asserts';
-export { AdminClientOperationName, createBaseAdminClient } from './Client';
+export { AdminClientOperationName, createBaseAdminClient } from './AdminClient';
 export {
   createErrorResult,
   createErrorResultFromError,
@@ -79,6 +80,7 @@ export {
   convertJsonPublishingHistory,
   convertJsonResult,
 } from './JsonUtils';
+export { createBasePublishedClient, PublishedClientOperationName } from './PublishedClient';
 export { FieldType, RichTextBlockType, Schema } from './Schema';
 export { EntityPublishState, PublishingEventKind } from './Types';
 export * as CoreTestUtils from './CoreTestUtils';
