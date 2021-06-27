@@ -1,5 +1,6 @@
 import type {
   AdminEntity,
+  AdminEntity2,
   AdminEntityCreate,
   AdminEntityUpdate,
   AdminQuery,
@@ -36,7 +37,7 @@ export interface AdminClient {
 
   updateEntity(
     entity: AdminEntityUpdate
-  ): PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.NotFound>;
+  ): PromiseResult<AdminEntity2, ErrorType.BadRequest | ErrorType.NotFound>;
 
   getEntityHistory(reference: EntityReference): PromiseResult<EntityHistory, ErrorType.NotFound>;
 

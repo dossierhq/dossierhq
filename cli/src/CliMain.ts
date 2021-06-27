@@ -68,7 +68,7 @@ function createMainActions(state: State): Array<MainActionItem | ItemSelectorSep
         assertIsDefined(state.currentEntity);
         const entity = await CliEntityAdmin.editEntity(state.context, state.currentEntity.id);
         if (entity) {
-          state.currentEntity.publishState = entity._publishState;
+          state.currentEntity.publishState = entity.info.publishingState;
         }
       },
     },

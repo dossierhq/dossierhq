@@ -90,4 +90,4 @@ export { FieldType, RichTextBlockType, Schema } from './Schema';
 export { EntityPublishState, PublishingEventKind } from './Types';
 export * as CoreTestUtils from './CoreTestUtils';
 
-export { toAdminEntity1, toAdminEntity2 } from './Types';
+export { toAdminEntity1, toAdminEntity2, toAdminEntityResult2 } from './Types';

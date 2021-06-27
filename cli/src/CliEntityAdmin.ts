@@ -13,10 +13,12 @@ import {
   isValueTypeListField,
   notOk,
   ok,
+  toAdminEntity1,
   toAdminEntity2,
 } from '@datadata/core';
 import type {
   AdminEntity,
+  AdminEntity2,
   AdminQuery,
   EntityPublishState,
   EntityReference,
@@ -243,15 +245,15 @@ export async function createEntity(context: CliContext): Promise<AdminEntity | n
   console.log(chalk.bold('Created entity'));
   logEntity(context, toAdminEntity2(createResult.value));
 
-  const publishedEntity = await publishEntityVersion(context, createResult.value);
+  const publishedEntity = await publishEntityVersion(context, toAdminEntity2(createResult.value));
   if (publishedEntity) {
-    return publishedEntity;
+    return toAdminEntity1(publishedEntity);
   }
 
   return createResult.value;
 }
 
-export async function editEntity(context: CliContext, id: string): Promise<AdminEntity | null> {
+export async function editEntity(context: CliContext, id: string): Promise<AdminEntity2 | null> {
   const { adminClient } = context;
   const getResult = await adminClient.getEntity({ id });
   if (getResult.isError()) {
@@ -269,7 +271,7 @@ export async function editEntity(context: CliContext, id: string): Promise<Admin
     return null;
   }
   console.log(chalk.bold('Updated'));
-  logEntity(context, toAdminEntity2(updateResult.value));
+  logEntity(context, updateResult.value);
 
   const publishedEntity = await publishEntityVersion(context, updateResult.value);
   if (publishedEntity) {
@@ -280,15 +282,15 @@ export async function editEntity(context: CliContext, id: string): Promise<Admin
 
 async function publishEntityVersion(
   context: CliContext,
-  entity: AdminEntity
-): Promise<AdminEntity | null> {
+  entity: AdminEntity2
+): Promise<AdminEntity2 | null> {
   const { adminClient } = context;
   const publish = await showConfirm('Publish the entity?');
   if (!publish) {
     return null;
   }
   const publishResult = await adminClient.publishEntities([
-    { id: entity.id, version: entity._version },
+    { id: entity.id, version: entity.info.version },
   ]);
   if (publishResult.isError()) {
     logErrorResult('Failed publishing entity', publishResult);
@@ -300,7 +302,7 @@ async function publishEntityVersion(
     logErrorResult('Failed fetching entity', getResult);
     return null;
   }
-  return getResult.value;
+  return toAdminEntity2(getResult.value);
 }
 
 async function editEntityValues(
