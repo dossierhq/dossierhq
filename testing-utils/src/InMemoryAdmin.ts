@@ -142,7 +142,7 @@ export const InMemoryAdmin = {
       _name: context.server.getUniqueName(null, entity._name),
       _publishState: EntityPublishState.Draft,
     };
-    context.server.addNewEntity(newEntity, context.userId);
+    context.server.addNewEntity(newEntity, context.subjectId);
     return ok(newEntity);
   },
 
@@ -160,7 +160,7 @@ export const InMemoryAdmin = {
       _version: previousVersion._version + 1,
     };
     newEntity._name = context.server.getUniqueName(entity.id, newEntity._name);
-    context.server.addUpdatedEntity(newEntity, context.userId);
+    context.server.addUpdatedEntity(newEntity, context.subjectId);
     return ok(newEntity);
   },
 
@@ -174,7 +174,7 @@ export const InMemoryAdmin = {
         return notOk.NotFound('No such entity or version');
       }
 
-      context.server.setPublishedVersion(id, version, context.userId);
+      context.server.setPublishedVersion(id, version, context.subjectId);
     }
 
     return ok(entities.map(({ id }) => ({ id, publishState: EntityPublishState.Published })));
@@ -190,7 +190,7 @@ export const InMemoryAdmin = {
         return notOk.NotFound('No such entity or version');
       }
 
-      context.server.setPublishedVersion(id, null, context.userId);
+      context.server.setPublishedVersion(id, null, context.subjectId);
     }
 
     return ok(entityIds.map((id) => ({ id, publishState: EntityPublishState.Withdrawn })));
@@ -205,7 +205,7 @@ export const InMemoryAdmin = {
       return notOk.NotFound('No such entity or version');
     }
 
-    context.server.archiveEntity(entityId, context.userId);
+    context.server.archiveEntity(entityId, context.subjectId);
 
     return ok({ id: entityId, publishState: EntityPublishState.Archived });
   },
@@ -219,6 +219,6 @@ export const InMemoryAdmin = {
       return notOk.NotFound('No such entity or version');
     }
 
-    return ok(context.server.unarchiveEntity(entityId, context.userId));
+    return ok(context.server.unarchiveEntity(entityId, context.subjectId));
   },
 };

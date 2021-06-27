@@ -34,7 +34,7 @@ export interface JsonInMemoryEntity extends Omit<InMemoryEntity, 'history' | 'pu
 
 export interface InMemorySessionContext {
   server: InMemoryServerInner;
-  userId: string;
+  subjectId: string;
 }
 
 export class InMemoryServer {
@@ -48,8 +48,8 @@ export class InMemoryServer {
     this.#inner = new InMemoryServerInner(schema);
   }
 
-  createContext(userId: string): InMemorySessionContext {
-    return { server: this.#inner, userId };
+  createContext(subjectId: string): InMemorySessionContext {
+    return { server: this.#inner, subjectId };
   }
 
   loadEntities(entities: JsonInMemoryEntity[]): void {

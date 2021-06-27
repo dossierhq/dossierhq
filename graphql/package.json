@@ -27,6 +27,7 @@
   "devDependencies": {
     "@datadata/postgres": "1.0.0",
     "@datadata/server": "1.0.0",
+    "@datadata/testing-utils": "1.0.0",
     "@types/jest": "~26.0.23",
     "@types/uuid": "^8.3.0",
     "@typescript-eslint/eslint-plugin": "^4.24.0",

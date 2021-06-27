@@ -18,7 +18,7 @@ const {
   unpublishEntities,
 } = InMemoryAdmin;
 
-export function createInMemoryClient({
+export function createInMemoryAdminClient({
   resolveContext,
 }: {
   resolveContext: () => Promise<InMemorySessionContext>;
