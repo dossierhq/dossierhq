@@ -17,7 +17,7 @@ import {
   ok,
   RichTextBlockType,
 } from '@datadata/core';
-import type { SessionContext, Server } from '@datadata/server';
+import type { Server } from '@datadata/server';
 import {
   createServerAdminClient,
   createServerPublishedClient,
@@ -32,7 +32,7 @@ const { expectOkResult } = CoreTestUtils;
 const { createTestServer, ensureSessionContext, updateSchema } = ServerTestUtils;
 
 let server: Server;
-let context: SessionContext;
+let subjectId: string;
 let adminClient: AdminClient;
 let publishedClient: PublishedClient;
 let schema: GraphQLSchema;
@@ -40,7 +40,8 @@ let entitiesOfTypeQueryAdminOnlyEditBefore: AdminEntity[];
 
 beforeAll(async () => {
   server = await createTestServer();
-  context = await ensureSessionContext(server, 'test', 'query');
+  const context = await ensureSessionContext(server, 'test', 'query');
+  subjectId = context.session.subjectId;
   adminClient = createServerAdminClient({ resolveContext: () => Promise.resolve(context) });
   publishedClient = createServerPublishedClient({ resolveContext: () => Promise.resolve(context) });
   await updateSchema(context, {
@@ -1256,8 +1257,8 @@ describe('versionHistory()', () => {
         entityHistory: {
           id,
           versions: [
-            { createdBy: context.session.subjectId, published: false, version: 0 },
-            { createdBy: context.session.subjectId, published: true, version: 1 },
+            { createdBy: subjectId, published: false, version: 0 },
+            { createdBy: subjectId, published: true, version: 1 },
           ],
         },
       });
@@ -1330,7 +1331,7 @@ describe('publishingHistory()', () => {
       expect(result.data).toEqual({
         publishingHistory: {
           id,
-          events: [{ publishedBy: context.session.subjectId, publishedAt, version: 0 }],
+          events: [{ publishedBy: subjectId, publishedAt, version: 0 }],
         },
       });
     }

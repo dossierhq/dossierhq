@@ -12,7 +12,7 @@ import {
   createServerPublishedClient,
   ServerTestUtils,
 } from '@datadata/server';
-import type { SessionContext, Server } from '@datadata/server';
+import type { Server } from '@datadata/server';
 import { graphql } from 'graphql';
 import type { GraphQLSchema } from 'graphql';
 import { v4 as uuidv4 } from 'uuid';
@@ -24,7 +24,7 @@ const { expectOkResult } = CoreTestUtils;
 const { createTestServer, ensureSessionContext, updateSchema } = ServerTestUtils;
 
 let server: Server;
-let context: SessionContext;
+let subjectId: string;
 let adminClient: AdminClient;
 let publishedClient: PublishedClient;
 let schema: GraphQLSchema;
@@ -46,7 +46,8 @@ const emptyFooFields = {
 
 beforeAll(async () => {
   server = await createTestServer();
-  context = await ensureSessionContext(server, 'test', 'mutation');
+  const context = await ensureSessionContext(server, 'test', 'mutation');
+  subjectId = context.session.subjectId;
   adminClient = createServerAdminClient({ resolveContext: () => Promise.resolve(context) });
   publishedClient = createServerPublishedClient({ resolveContext: () => Promise.resolve(context) });
   await updateSchema(context, {
@@ -1203,7 +1204,7 @@ describe('publishEntities()', () => {
             {
               kind: PublishingEventKind.Publish,
               publishedAt,
-              publishedBy: context.session.subjectId,
+              publishedBy: subjectId,
               version: 0,
             },
           ],
@@ -1291,13 +1292,13 @@ describe('unpublishEntities()', () => {
             {
               kind: PublishingEventKind.Publish,
               publishedAt: publishedAt0,
-              publishedBy: context.session.subjectId,
+              publishedBy: subjectId,
               version: 0,
             },
             {
               kind: PublishingEventKind.Unpublish,
               publishedAt: publishedAt1,
-              publishedBy: context.session.subjectId,
+              publishedBy: subjectId,
               version: null,
             },
           ],
@@ -1380,7 +1381,7 @@ describe('archiveEntity()', () => {
             {
               kind: PublishingEventKind.Archive,
               publishedAt,
-              publishedBy: context.session.subjectId,
+              publishedBy: subjectId,
               version: null,
             },
           ],
@@ -1438,13 +1439,13 @@ describe('unarchiveEntity()', () => {
             {
               kind: PublishingEventKind.Archive,
               publishedAt: publishedAt0,
-              publishedBy: context.session.subjectId,
+              publishedBy: subjectId,
               version: null,
             },
             {
               kind: PublishingEventKind.Unarchive,
               publishedAt: publishedAt1,
-              publishedBy: context.session.subjectId,
+              publishedBy: subjectId,
               version: null,
             },
           ],
