@@ -1,14 +1,11 @@
-import type { AdminClient } from '@datadata/core';
-import type { SessionContext } from '@datadata/server';
+import type { AdminClient, PublishedClient, Schema } from '@datadata/core';
 import type { SessionGraphQLContext } from '.';
 
-export function getSessionContext<TContext extends SessionGraphQLContext>(
-  context: TContext
-): SessionContext {
-  if (context.context.isError()) {
-    throw context.context.toError();
+export function getSchema<TContext extends SessionGraphQLContext>(context: TContext): Schema {
+  if (context.schema.isError()) {
+    throw context.schema.toError();
   }
-  return context.context.value;
+  return context.schema.value;
 }
 
 export function getAdminClient<TContext extends SessionGraphQLContext>(
@@ -18,4 +15,13 @@ export function getAdminClient<TContext extends SessionGraphQLContext>(
     throw context.adminClient.toError();
   }
   return context.adminClient.value;
+}
+
+export function getPublishedClient<TContext extends SessionGraphQLContext>(
+  context: TContext
+): PublishedClient {
+  if (context.publishedClient.isError()) {
+    throw context.publishedClient.toError();
+  }
+  return context.publishedClient.value;
 }

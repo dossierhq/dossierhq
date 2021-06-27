@@ -18,14 +18,13 @@ import type {
   Paging,
   PublishingHistory,
   RichText,
+  Schema,
   ValueItem,
   ValueTypeSpecification,
 } from '@datadata/core';
-import type { SessionContext } from '@datadata/server';
-import { PublishedEntity } from '@datadata/server';
 import type { GraphQLResolveInfo } from 'graphql';
 import type { SessionGraphQLContext } from './GraphQLSchemaGenerator';
-import { getAdminClient, getSessionContext } from './Utils';
+import { getAdminClient, getPublishedClient, getSchema } from './Utils';
 
 interface Connection<T extends Edge<unknown>> {
   pageInfo: PageInfo;
@@ -50,23 +49,25 @@ export async function loadEntity<TContext extends SessionGraphQLContext>(
   context: TContext,
   id: string
 ): Promise<Entity> {
-  const sessionContext = getSessionContext(context);
-  const result = await PublishedEntity.getEntity(sessionContext, id);
+  const schema = getSchema(context);
+  const publishedClient = getPublishedClient(context);
+  const result = await publishedClient.getEntity({ id });
   if (result.isError()) {
     throw result.toError();
   }
-  return buildResolversForEntity(sessionContext, result.value);
+  return buildResolversForEntity(schema, result.value);
 }
 
 export async function loadEntities<TContext extends SessionGraphQLContext>(
   context: TContext,
   ids: string[]
 ): Promise<Array<Entity | null>> {
-  const sessionContext = getSessionContext(context);
-  const results = await PublishedEntity.getEntities(sessionContext, ids);
+  const schema = getSchema(context);
+  const publishedClient = getPublishedClient(context);
+  const results = await publishedClient.getEntities(ids.map((id) => ({ id })));
   return results.map((result) => {
     if (result.isOk()) {
-      return buildResolversForEntity(sessionContext, result.value);
+      return buildResolversForEntity(schema, result.value);
     }
     // TODO handle errors
     return null;
@@ -74,15 +75,15 @@ export async function loadEntities<TContext extends SessionGraphQLContext>(
 }
 
 function buildResolversForEntity<TContext extends SessionGraphQLContext>(
-  context: SessionContext,
+  schema: Schema,
   entity: Entity
 ): Entity {
-  const entitySpec = context.server.getSchema().getEntityTypeSpecification(entity._type);
+  const entitySpec = schema.getEntityTypeSpecification(entity._type);
   if (!entitySpec) {
     throw new Error(`Couldn't find entity spec for type: ${entity._type}`);
   }
   const result = { ...entity };
-  resolveFields<TContext>(context, entitySpec, result, false);
+  resolveFields<TContext>(schema, entitySpec, result, false);
   return result;
 }
 
@@ -91,27 +92,27 @@ export async function loadAdminEntity<TContext extends SessionGraphQLContext>(
   id: string,
   version: number | undefined | null
 ): Promise<AdminEntity> {
+  const schema = getSchema(context);
   const adminClient = getAdminClient(context);
-  const sessionContext = getSessionContext(context);
   const result = await adminClient.getEntity(
     typeof version === 'number' ? { id, version } : { id }
   );
   if (result.isError()) {
     throw result.toError();
   }
-  return buildResolversForAdminEntity(sessionContext, result.value);
+  return buildResolversForAdminEntity(schema, result.value);
 }
 
 export async function loadAdminEntities<TContext extends SessionGraphQLContext>(
   context: TContext,
   ids: string[]
 ): Promise<Array<AdminEntity | null>> {
+  const schema = getSchema(context);
   const adminClient = getAdminClient(context);
-  const sessionContext = getSessionContext(context);
   const results = await adminClient.getEntities(ids.map((id) => ({ id })));
   return results.map((result) => {
     if (result.isOk()) {
-      return buildResolversForAdminEntity(sessionContext, result.value);
+      return buildResolversForAdminEntity(schema, result.value);
     }
     // TODO handle errors
     return null;
@@ -119,16 +120,16 @@ export async function loadAdminEntities<TContext extends SessionGraphQLContext>(
 }
 
 export function buildResolversForAdminEntity<TContext extends SessionGraphQLContext>(
-  context: SessionContext,
+  schema: Schema,
   entity: AdminEntity
 ): AdminEntity {
-  const entitySpec = context.server.getSchema().getEntityTypeSpecification(entity._type);
+  const entitySpec = schema.getEntityTypeSpecification(entity._type);
   if (!entitySpec) {
     throw new Error(`Couldn't find entity spec for type: ${entity._type}`);
   }
   const result = { ...entity };
 
-  resolveFields<TContext>(context, entitySpec, result, true);
+  resolveFields<TContext>(schema, entitySpec, result, true);
 
   return result;
 }
@@ -138,8 +139,8 @@ export async function loadAdminSearchEntities<TContext extends SessionGraphQLCon
   query: AdminQuery | undefined,
   paging: Paging
 ): Promise<ConnectionWithTotalCount<Edge<AdminEntity>, TContext> | null> {
+  const schema = getSchema(context);
   const adminClient = getAdminClient(context);
-  const sessionContext = getSessionContext(context);
   const result = await adminClient.searchEntities(query, paging);
   if (result.isError()) {
     throw result.toError();
@@ -155,9 +156,7 @@ export async function loadAdminSearchEntities<TContext extends SessionGraphQLCon
     edges: result.value.edges.map((edge) => {
       return {
         cursor: edge.cursor,
-        node: edge.node.isOk()
-          ? buildResolversForAdminEntity(sessionContext, edge.node.value)
-          : null, //TODO throw error if accessed?
+        node: edge.node.isOk() ? buildResolversForAdminEntity(schema, edge.node.value) : null, //TODO throw error if accessed?
       };
     }),
     totalCount: buildTotalCount(query),
@@ -165,7 +164,7 @@ export async function loadAdminSearchEntities<TContext extends SessionGraphQLCon
 }
 
 function resolveFields<TContext extends SessionGraphQLContext>(
-  context: SessionContext,
+  schema: Schema,
   spec: EntityTypeSpecification | ValueTypeSpecification,
   item: ValueItem | Entity | AdminEntity,
   isAdmin: boolean
@@ -173,7 +172,7 @@ function resolveFields<TContext extends SessionGraphQLContext>(
   for (const fieldSpec of spec.fields) {
     const value = item[fieldSpec.name];
     if (isRichTextField(fieldSpec, value) && value) {
-      const ids = extractEntityIdsForRichTextField(context, fieldSpec, value);
+      const ids = extractEntityIdsForRichTextField(schema, fieldSpec, value);
       item[fieldSpec.name] = {
         blocksJson: JSON.stringify(value.blocks),
         entities:
@@ -192,21 +191,21 @@ function resolveFields<TContext extends SessionGraphQLContext>(
         return isAdmin ? loadAdminEntities(context, ids) : loadEntities(context, ids);
       };
     } else if (isValueTypeField(fieldSpec, value) && value) {
-      item[fieldSpec.name] = buildResolversForValue(context, value, isAdmin);
+      item[fieldSpec.name] = buildResolversForValue(schema, value, isAdmin);
     } else if (isValueTypeListField(fieldSpec, value) && value && value.length > 0) {
-      item[fieldSpec.name] = value.map((x) => buildResolversForValue(context, x, isAdmin));
+      item[fieldSpec.name] = value.map((x) => buildResolversForValue(schema, x, isAdmin));
     }
   }
 }
 
 function extractEntityIdsForRichTextField(
-  context: SessionContext,
+  schema: Schema,
   fieldSpec: FieldSpecification,
   value: RichText
 ) {
   const entityIds = new Set<string>();
   visitFieldRecursively({
-    schema: context.server.getSchema(),
+    schema,
     fieldSpec,
     value,
     visitField: (_path, fieldSpec, data, _visitContext) => {
@@ -225,16 +224,16 @@ function extractEntityIdsForRichTextField(
 }
 
 export function buildResolversForValue<TContext extends SessionGraphQLContext>(
-  context: SessionContext,
+  schema: Schema,
   valueItem: ValueItem,
   isAdmin: boolean
 ): ValueItem {
-  const valueSpec = context.server.getSchema().getValueTypeSpecification(valueItem._type);
+  const valueSpec = schema.getValueTypeSpecification(valueItem._type);
   if (!valueSpec) {
     throw new Error(`Couldn't find value spec for type: ${valueItem._type}`);
   }
   const result = { ...valueItem };
-  resolveFields<TContext>(context, valueSpec, result, isAdmin);
+  resolveFields<TContext>(schema, valueSpec, result, isAdmin);
   return result;
 }
 

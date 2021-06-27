@@ -6,32 +6,32 @@ import type {
 } from '@datadata/core';
 import type { SessionGraphQLContext } from '.';
 import { buildResolversForAdminEntity } from './DataLoaders';
-import { getAdminClient, getSessionContext } from './Utils';
+import { getAdminClient, getSchema } from './Utils';
 
 export async function createEntity<TContext extends SessionGraphQLContext>(
   context: TContext,
   entity: AdminEntityCreate
 ): Promise<AdminEntity> {
-  const sessionContext = getSessionContext(context);
+  const schema = getSchema(context);
   const adminClient = getAdminClient(context);
   const result = await adminClient.createEntity(entity);
   if (result.isError()) {
     throw result.toError();
   }
-  return buildResolversForAdminEntity(sessionContext, result.value);
+  return buildResolversForAdminEntity(schema, result.value);
 }
 
 export async function updateEntity<TContext extends SessionGraphQLContext>(
   context: TContext,
   entity: AdminEntityUpdate
 ): Promise<AdminEntity> {
-  const sessionContext = getSessionContext(context);
+  const schema = getSchema(context);
   const adminClient = getAdminClient(context);
   const result = await adminClient.updateEntity(entity);
   if (result.isError()) {
     throw result.toError();
   }
-  return buildResolversForAdminEntity(sessionContext, result.value);
+  return buildResolversForAdminEntity(schema, result.value);
 }
 
 export async function publishEntities<TContext extends SessionGraphQLContext>(

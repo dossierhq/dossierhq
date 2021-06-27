@@ -7,6 +7,7 @@ import type {
   Edge,
   ErrorType,
   Paging,
+  PublishedClient,
 } from '@datadata/core';
 import {
   CoreTestUtils,
@@ -17,10 +18,15 @@ import {
   RichTextBlockType,
 } from '@datadata/core';
 import type { SessionContext, Server } from '@datadata/server';
-import { createServerAdminClient, ServerTestUtils } from '@datadata/server';
+import {
+  createServerAdminClient,
+  createServerPublishedClient,
+  ServerTestUtils,
+} from '@datadata/server';
 import { graphql, printError } from 'graphql';
 import type { GraphQLSchema } from 'graphql';
-import { GraphQLSchemaGenerator } from '../src/GraphQLSchemaGenerator';
+import type { SessionGraphQLContext } from '..';
+import { GraphQLSchemaGenerator } from '..';
 
 const { expectOkResult } = CoreTestUtils;
 const { createTestServer, ensureSessionContext, updateSchema } = ServerTestUtils;
@@ -28,6 +34,7 @@ const { createTestServer, ensureSessionContext, updateSchema } = ServerTestUtils
 let server: Server;
 let context: SessionContext;
 let adminClient: AdminClient;
+let publishedClient: PublishedClient;
 let schema: GraphQLSchema;
 let entitiesOfTypeQueryAdminOnlyEditBefore: AdminEntity[];
 
@@ -35,6 +42,7 @@ beforeAll(async () => {
   server = await createTestServer();
   context = await ensureSessionContext(server, 'test', 'query');
   adminClient = createServerAdminClient({ resolveContext: () => Promise.resolve(context) });
+  publishedClient = createServerPublishedClient({ resolveContext: () => Promise.resolve(context) });
   await updateSchema(context, {
     entityTypes: [
       {
@@ -78,6 +86,22 @@ beforeAll(async () => {
 afterAll(async () => {
   await server?.shutdown();
 });
+
+function createContext(): SessionGraphQLContext {
+  return {
+    schema: ok(server.getSchema()),
+    adminClient: ok(adminClient),
+    publishedClient: ok(publishedClient),
+  };
+}
+
+function createNotAuthenticatedContext(): SessionGraphQLContext {
+  return {
+    schema: notOk.NotAuthenticated('No schema'),
+    adminClient: notOk.NotAuthenticated('No adminClient'),
+    publishedClient: notOk.NotAuthenticated('No publishedClient'),
+  };
+}
 
 async function ensureTestEntitiesExist(adminClient: AdminClient) {
   const requestedCount = 50;
@@ -224,7 +248,7 @@ describe('adminEntity()', () => {
           }
         `,
         undefined,
-        { adminClient: ok(adminClient), context: ok(context) },
+        createContext(),
         { id }
       );
       expect(result).toEqual({
@@ -295,7 +319,7 @@ describe('adminEntity()', () => {
           }
         `,
         undefined,
-        { adminClient: ok(adminClient), context: ok(context) },
+        createContext(),
         { id }
       );
       expect(result).toEqual({
@@ -384,7 +408,7 @@ describe('adminEntity()', () => {
           }
         `,
         undefined,
-        { adminClient: ok(adminClient), context: ok(context) },
+        createContext(),
         { id, version1: 0, version2: 1, version3: 100, version4: null }
       );
       expect(result.data).toEqual({
@@ -453,7 +477,7 @@ describe('adminEntity()', () => {
           }
         `,
         undefined,
-        { adminClient: ok(adminClient), context: ok(context) },
+        createContext(),
         { id }
       );
       expect(result.data).toEqual({
@@ -500,7 +524,7 @@ describe('adminEntity()', () => {
           }
         `,
         undefined,
-        { adminClient: ok(adminClient), context: ok(context) },
+        createContext(),
         { id: fooId }
       );
       expect(result).toEqual({
@@ -575,7 +599,7 @@ describe('adminEntity()', () => {
             }
           `,
           undefined,
-          { adminClient: ok(adminClient), context: ok(context) },
+          createContext(),
           { id: fooId }
         );
         expect(result).toEqual({
@@ -642,7 +666,7 @@ describe('adminEntity()', () => {
             }
           `,
           undefined,
-          { adminClient: ok(adminClient), context: ok(context) },
+          createContext(),
           { id: fooId }
         );
         expect(result).toEqual({
@@ -713,7 +737,7 @@ describe('adminEntity()', () => {
             }
           `,
           undefined,
-          { adminClient: ok(adminClient), context: ok(context) },
+          createContext(),
           { id: fooId }
         );
         expect(result).toEqual({
@@ -795,7 +819,7 @@ describe('adminEntity()', () => {
             }
           `,
           undefined,
-          { adminClient: ok(adminClient), context: ok(context) },
+          createContext(),
           { id: fooId }
         );
         expect(result).toEqual({
@@ -837,7 +861,7 @@ describe('adminEntity()', () => {
         }
       `,
       undefined,
-      { adminClient: ok(adminClient), context: ok(context) },
+      createContext(),
       { id: '6043cb20-50dc-43d9-8d55-fc9b892b30af' }
     );
     expect(result.data).toEqual({
@@ -866,10 +890,7 @@ GraphQL request:3:11
         }
       `,
       undefined,
-      {
-        adminClient: notOk.NotAuthenticated('No session'),
-        context: notOk.NotAuthenticated('No session'),
-      },
+      createNotAuthenticatedContext(),
       { id: '6043cb20-50dc-43d9-8d55-fc9b892b30af' }
     );
     expect(result.data).toEqual({
@@ -877,7 +898,7 @@ GraphQL request:3:11
     });
     const errorStrings = result.errors?.map(printError);
     expect(errorStrings).toEqual([
-      `NotAuthenticated: No session
+      `NotAuthenticated: No schema
 
 GraphQL request:3:11
 2 |         query AdminEntity($id: ID!) {
@@ -918,7 +939,7 @@ describe('adminEntities()', () => {
           }
         `,
         undefined,
-        { adminClient: ok(adminClient), context: ok(context) },
+        createContext(),
         { ids: [foo1Id, foo2Id] }
       );
       expect(result).toEqual({
@@ -955,7 +976,7 @@ describe('adminEntities()', () => {
         }
       `,
       undefined,
-      { adminClient: ok(adminClient), context: ok(context) },
+      createContext(),
       { ids: ['6043cb20-50dc-43d9-8d55-fc9b892b30af'] }
     );
     expect(result.data).toEqual({
@@ -982,7 +1003,7 @@ describe('searchAdminEntities()', () => {
         }
       `,
       undefined,
-      { adminClient: ok(adminClient), context: ok(context) }
+      createContext()
     );
     expect(result.data?.adminSearchEntities.edges).toEqual(
       entitiesOfTypeQueryAdminOnlyEditBefore.slice(0, 25).map((x) => ({ node: { id: x.id } }))
@@ -1007,7 +1028,7 @@ describe('searchAdminEntities()', () => {
         }
       `,
       undefined,
-      { adminClient: ok(adminClient), context: ok(context) },
+      createContext(),
       { entityTypes: ['QueryAdminOnlyEditBefore'] }
     );
     expect(result.data?.adminSearchEntities.edges).toEqual(
@@ -1030,7 +1051,7 @@ describe('searchAdminEntities()', () => {
         }
       `,
       undefined,
-      { adminClient: ok(adminClient), context: ok(context) }
+      createContext()
     );
     expect(result.data?.adminSearchEntities.edges).toEqual(
       entitiesOfTypeQueryAdminOnlyEditBefore.slice(0, 10).map((x) => ({ node: { id: x.id } }))
@@ -1052,7 +1073,7 @@ describe('searchAdminEntities()', () => {
         }
       `,
       undefined,
-      { adminClient: ok(adminClient), context: ok(context) }
+      createContext()
     );
     expect(result.data?.adminSearchEntities.edges).toEqual(
       entitiesOfTypeQueryAdminOnlyEditBefore.slice(-10).map((x) => ({ node: { id: x.id } }))
@@ -1077,7 +1098,7 @@ describe('searchAdminEntities()', () => {
         }
       `,
       undefined,
-      { adminClient: ok(adminClient), context: ok(context) }
+      createContext()
     );
     expect(result.data?.adminSearchEntities.edges).toEqual(
       [...entitiesOfTypeQueryAdminOnlyEditBefore]
@@ -1106,7 +1127,7 @@ describe('searchAdminEntities()', () => {
         }
       `,
       undefined,
-      { adminClient: ok(adminClient), context: ok(context) },
+      createContext(),
       { id: barId }
     );
 
@@ -1149,7 +1170,7 @@ describe('searchAdminEntities()', () => {
           }
         `,
         undefined,
-        { adminClient: ok(adminClient), context: ok(context) },
+        createContext(),
         { boundingBox }
       );
 
@@ -1181,7 +1202,7 @@ describe('searchAdminEntities()', () => {
         }
       `,
       undefined,
-      { adminClient: ok(adminClient), context: ok(context) },
+      createContext(),
       { text: 'Hey' } // There are at least 50 QueryAdminOnlyEditBefore entities
     );
 
@@ -1223,7 +1244,7 @@ describe('versionHistory()', () => {
           }
         `,
         undefined,
-        { adminClient: ok(adminClient), context: ok(context) },
+        createContext(),
         { id }
       );
       // Remove createdAt since it's tricky to test 🤷‍♂️
@@ -1257,7 +1278,7 @@ describe('versionHistory()', () => {
         }
       `,
       undefined,
-      { adminClient: ok(adminClient), context: ok(context) },
+      createContext(),
       { id: '6698130c-b56d-48cd-81f5-1f74bedc552e' }
     );
     expect(result).toMatchInlineSnapshot(`
@@ -1300,7 +1321,7 @@ describe('publishingHistory()', () => {
           }
         `,
         undefined,
-        { adminClient: ok(adminClient), context: ok(context) },
+        createContext(),
         { id }
       );
 
@@ -1329,7 +1350,7 @@ describe('publishingHistory()', () => {
         }
       `,
       undefined,
-      { adminClient: ok(adminClient), context: ok(context) },
+      createContext(),
       { id: '6698130c-b56d-48cd-81f5-1f74bedc552e' }
     );
     expect(result).toMatchInlineSnapshot(`

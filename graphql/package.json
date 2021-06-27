@@ -18,6 +18,7 @@
     "test:update-snapshot": "jest --updateSnapshot",
     "test:watch": "jest --watch",
     "ts:check": "tsc --noEmit",
+    "ts:check:watch": "tsc --noEmit --watch",
     "upgrade-dependencies": "npx npm-check-updates -u --packageFile ./package.json",
     "upgrade-dependencies:check": "npx npm-check-updates"
   },
@@ -25,6 +26,7 @@
   "license": "ISC",
   "devDependencies": {
     "@datadata/postgres": "1.0.0",
+    "@datadata/server": "1.0.0",
     "@types/jest": "~26.0.23",
     "@types/uuid": "^8.3.0",
     "@typescript-eslint/eslint-plugin": "^4.24.0",
@@ -38,7 +40,6 @@
   },
   "dependencies": {
     "@datadata/core": "1.0.0",
-    "@datadata/server": "1.0.0",
     "graphql": "~15.5.0"
   }
 }

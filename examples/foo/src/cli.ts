@@ -1,6 +1,5 @@
 #!/usr/bin/env npx ts-node
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-require('dotenv').config();
+import 'dotenv/config';
 import { CliAuth, CliContext, CliMain } from '@datadata/cli';
 import type { SchemaSpecification } from '@datadata/core';
 import { Schema } from '@datadata/core';

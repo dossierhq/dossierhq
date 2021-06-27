@@ -1,10 +1,15 @@
-import type { AdminClient } from '@datadata/core';
+import type { AdminClient, PublishedClient } from '@datadata/core';
 import { CoreTestUtils, FieldType, notOk, ok, RichTextBlockType } from '@datadata/core';
-import { createServerAdminClient, ServerTestUtils } from '@datadata/server';
+import {
+  createServerAdminClient,
+  createServerPublishedClient,
+  ServerTestUtils,
+} from '@datadata/server';
 import type { Server, SessionContext } from '@datadata/server';
 import { graphql, printError } from 'graphql';
 import type { GraphQLSchema } from 'graphql';
-import { GraphQLSchemaGenerator } from '../src/GraphQLSchemaGenerator';
+import type { SessionGraphQLContext } from '..';
+import { GraphQLSchemaGenerator } from '..';
 
 const { expectOkResult } = CoreTestUtils;
 const { createTestServer, ensureSessionContext, updateSchema } = ServerTestUtils;
@@ -12,12 +17,14 @@ const { createTestServer, ensureSessionContext, updateSchema } = ServerTestUtils
 let server: Server;
 let context: SessionContext;
 let adminClient: AdminClient;
+let publishedClient: PublishedClient;
 let schema: GraphQLSchema;
 
 beforeAll(async () => {
   server = await createTestServer();
   context = await ensureSessionContext(server, 'test', 'query');
   adminClient = createServerAdminClient({ resolveContext: () => Promise.resolve(context) });
+  publishedClient = createServerPublishedClient({ resolveContext: () => Promise.resolve(context) });
   await updateSchema(context, {
     entityTypes: [
       {
@@ -52,6 +59,22 @@ beforeAll(async () => {
 afterAll(async () => {
   await server?.shutdown();
 });
+
+function createContext(): SessionGraphQLContext {
+  return {
+    schema: ok(server.getSchema()),
+    adminClient: ok(adminClient),
+    publishedClient: ok(publishedClient),
+  };
+}
+
+function createNotAuthenticatedContext(): SessionGraphQLContext {
+  return {
+    schema: notOk.NotAuthenticated('No schema'),
+    adminClient: notOk.NotAuthenticated('No adminClient'),
+    publishedClient: notOk.NotAuthenticated('No publishedClient'),
+  };
+}
 
 describe('node()', () => {
   test('Query all fields of created entity', async () => {
@@ -97,7 +120,7 @@ describe('node()', () => {
           }
         `,
         undefined,
-        { context: ok(context) },
+        createContext(),
         { id }
       );
       expect(result).toEqual({
@@ -164,7 +187,7 @@ describe('node()', () => {
           }
         `,
         undefined,
-        { context: ok(context) },
+        createContext(),
         { id }
       );
       expect(result).toEqual({
@@ -218,7 +241,7 @@ describe('node()', () => {
           }
         `,
         undefined,
-        { context: ok(context) },
+        createContext(),
         { id: fooId }
       );
       expect(result).toEqual({
@@ -284,7 +307,7 @@ describe('node()', () => {
             }
           `,
           undefined,
-          { context: ok(context) },
+          createContext(),
           { id: fooId }
         );
         expect(result).toEqual({
@@ -347,7 +370,7 @@ describe('node()', () => {
             }
           `,
           undefined,
-          { context: ok(context) },
+          createContext(),
           { id: fooId }
         );
         expect(result).toEqual({
@@ -424,7 +447,7 @@ describe('node()', () => {
             }
           `,
           undefined,
-          { context: ok(context) },
+          createContext(),
           { id: fooId }
         );
         expect(result).toEqual({
@@ -503,7 +526,7 @@ describe('node()', () => {
             }
           `,
           undefined,
-          { context: ok(context) },
+          createContext(),
           { id: fooId }
         );
         expect(result).toEqual({
@@ -542,7 +565,7 @@ describe('node()', () => {
         }
       `,
       undefined,
-      { context: ok(context) },
+      createContext(),
       { id: '6043cb20-50dc-43d9-8d55-fc9b892b30af' }
     );
     expect(result.data).toEqual({
@@ -571,7 +594,7 @@ GraphQL request:3:11
         }
       `,
       undefined,
-      { context: notOk.NotAuthenticated('No session') },
+      createNotAuthenticatedContext(),
       { id: '6043cb20-50dc-43d9-8d55-fc9b892b30af' }
     );
     expect(result.data).toEqual({
@@ -579,7 +602,7 @@ GraphQL request:3:11
     });
     const errorStrings = result.errors?.map(printError);
     expect(errorStrings).toEqual([
-      `NotAuthenticated: No session
+      `NotAuthenticated: No schema
 
 GraphQL request:3:11
 2 |         query Entity($id: ID!) {
@@ -625,7 +648,7 @@ describe('nodes()', () => {
           }
         `,
         undefined,
-        { context: ok(context) },
+        createContext(),
         { ids: [foo1Id, foo2Id] }
       );
       expect(result).toEqual({
@@ -658,7 +681,7 @@ describe('nodes()', () => {
         }
       `,
       undefined,
-      { context: ok(context) },
+      createContext(),
       { ids: ['6043cb20-50dc-43d9-8d55-fc9b892b30af'] }
     );
     expect(result.data).toEqual({

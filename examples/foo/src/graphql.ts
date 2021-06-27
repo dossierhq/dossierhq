@@ -1,8 +1,12 @@
 #!/usr/bin/env npx ts-node
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-require('dotenv').config();
+import 'dotenv/config';
 import { ok, notOk } from '@datadata/core';
-import { Auth, createServerAdminClient, Server } from '@datadata/server';
+import {
+  Auth,
+  createServerAdminClient,
+  createServerPublishedClient,
+  Server,
+} from '@datadata/server';
 import type { AuthContext } from '@datadata/server';
 import { GraphQLSchemaGenerator } from '@datadata/graphql';
 import type { SessionGraphQLContext } from '@datadata/graphql';
@@ -30,16 +34,20 @@ async function startServer(server: Server, authContext: AuthContext, port: numbe
     '/graphql',
     graphqlHTTP(async (request, _response, _params) => {
       const context: SessionGraphQLContext = {
+        schema: notOk.NotAuthenticated('No session'),
         adminClient: notOk.NotAuthenticated('No session'),
-        context: notOk.NotAuthenticated('No session'),
+        publishedClient: notOk.NotAuthenticated('No session'),
       };
       const sessionResult = await createSessionContext(authContext, request.headers);
       if (sessionResult.isOk()) {
         const sessionContext = server.createSessionContext(sessionResult.value);
+        context.schema = ok(server.getSchema());
         context.adminClient = ok(
           createServerAdminClient({ resolveContext: () => Promise.resolve(sessionContext) })
         );
-        context.context = ok(sessionContext);
+        context.publishedClient = ok(
+          createServerPublishedClient({ resolveContext: () => Promise.resolve(sessionContext) })
+        );
       }
       return {
         schema,

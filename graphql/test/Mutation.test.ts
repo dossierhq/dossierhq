@@ -1,4 +1,4 @@
-import type { AdminClient } from '@datadata/core';
+import type { AdminClient, PublishedClient } from '@datadata/core';
 import {
   CoreTestUtils,
   EntityPublishState,
@@ -7,12 +7,17 @@ import {
   PublishingEventKind,
   RichTextBlockType,
 } from '@datadata/core';
-import { createServerAdminClient, ServerTestUtils } from '@datadata/server';
+import {
+  createServerAdminClient,
+  createServerPublishedClient,
+  ServerTestUtils,
+} from '@datadata/server';
 import type { SessionContext, Server } from '@datadata/server';
 import { graphql } from 'graphql';
 import type { GraphQLSchema } from 'graphql';
 import { v4 as uuidv4 } from 'uuid';
-import { GraphQLSchemaGenerator } from '../src/GraphQLSchemaGenerator';
+import type { SessionGraphQLContext } from '..';
+import { GraphQLSchemaGenerator } from '..';
 import { expectResultValue } from './TestUtils';
 
 const { expectOkResult } = CoreTestUtils;
@@ -21,6 +26,7 @@ const { createTestServer, ensureSessionContext, updateSchema } = ServerTestUtils
 let server: Server;
 let context: SessionContext;
 let adminClient: AdminClient;
+let publishedClient: PublishedClient;
 let schema: GraphQLSchema;
 
 const emptyFooFields = {
@@ -42,6 +48,7 @@ beforeAll(async () => {
   server = await createTestServer();
   context = await ensureSessionContext(server, 'test', 'mutation');
   adminClient = createServerAdminClient({ resolveContext: () => Promise.resolve(context) });
+  publishedClient = createServerPublishedClient({ resolveContext: () => Promise.resolve(context) });
   await updateSchema(context, {
     entityTypes: [
       {
@@ -91,6 +98,14 @@ afterAll(async () => {
   await server?.shutdown();
 });
 
+function createContext(): SessionGraphQLContext {
+  return {
+    schema: ok(server.getSchema()),
+    adminClient: ok(adminClient),
+    publishedClient: ok(publishedClient),
+  };
+}
+
 describe('create*Entity()', () => {
   test('Create', async () => {
     const result = await graphql(
@@ -119,7 +134,7 @@ describe('create*Entity()', () => {
         }
       `,
       undefined,
-      { adminClient: ok(adminClient), context: ok(context) },
+      createContext(),
       {
         entity: {
           _type: 'MutationFoo',
@@ -199,7 +214,7 @@ describe('create*Entity()', () => {
         }
       `,
       undefined,
-      { adminClient: ok(adminClient), context: ok(context) },
+      createContext(),
       {
         entity: {
           id,
@@ -256,7 +271,7 @@ describe('create*Entity()', () => {
           }
         `,
         undefined,
-        { adminClient: ok(adminClient), context: ok(context) },
+        createContext(),
         {
           entity: {
             _type: 'MutationFoo',
@@ -341,7 +356,7 @@ describe('create*Entity()', () => {
           }
         `,
         undefined,
-        { adminClient: ok(adminClient), context: ok(context) },
+        createContext(),
         {
           entity: {
             _type: 'MutationFoo',
@@ -421,7 +436,7 @@ describe('create*Entity()', () => {
           }
         `,
         undefined,
-        { adminClient: ok(adminClient), context: ok(context) },
+        createContext(),
         {
           entity: {
             _type: 'MutationFoo',
@@ -502,7 +517,7 @@ describe('create*Entity()', () => {
           }
         `,
         undefined,
-        { adminClient: ok(adminClient), context: ok(context) },
+        createContext(),
         {
           entity: {
             _type: 'MutationFoo',
@@ -595,7 +610,7 @@ describe('create*Entity()', () => {
           }
         `,
         undefined,
-        { adminClient: ok(adminClient), context: ok(context) },
+        createContext(),
         {
           entity: {
             _type: 'MutationFoo',
@@ -696,7 +711,7 @@ describe('create*Entity()', () => {
         }
       `,
       undefined,
-      { adminClient: ok(adminClient), context: ok(context) },
+      createContext(),
       {
         entity: {
           _type: 'MutationFoo',
@@ -772,7 +787,7 @@ describe('create*Entity()', () => {
         }
       `,
       undefined,
-      { adminClient: ok(adminClient), context: ok(context) },
+      createContext(),
       {
         entity: {
           _name: 'Foo name',
@@ -812,7 +827,7 @@ describe('create*Entity()', () => {
         }
       `,
       undefined,
-      { adminClient: ok(adminClient), context: ok(context) },
+      createContext(),
       {
         entity: {
           _type: 'MutationBar', // should be Foo
@@ -865,7 +880,7 @@ describe('update*Entity()', () => {
           }
         `,
         undefined,
-        { adminClient: ok(adminClient), context: ok(context) },
+        createContext(),
         {
           entity: {
             id,
@@ -973,7 +988,7 @@ describe('update*Entity()', () => {
             }
           `,
           undefined,
-          { adminClient: ok(adminClient), context: ok(context) },
+          createContext(),
           {
             entity: {
               id: fooId,
@@ -1115,7 +1130,7 @@ describe('update*Entity()', () => {
           }
         `,
         undefined,
-        { adminClient: ok(adminClient), context: ok(context) },
+        createContext(),
         {
           entity: {
             id,
@@ -1164,7 +1179,7 @@ describe('publishEntities()', () => {
           }
         `,
         undefined,
-        { adminClient: ok(adminClient), context: ok(context) },
+        createContext(),
         { entities: [{ id, version: 0 }] }
       );
       expect(result).toEqual({
@@ -1210,7 +1225,7 @@ describe('publishEntities()', () => {
         }
       `,
       undefined,
-      { adminClient: ok(adminClient), context: ok(context) },
+      createContext(),
       { entities: [{ id: '635d7ee9-c1c7-4ae7-bcdf-fb53f30a3cd3', version: 0 }] }
     );
     expect(result).toMatchInlineSnapshot(`
@@ -1251,7 +1266,7 @@ describe('unpublishEntities()', () => {
           }
         `,
         undefined,
-        { adminClient: ok(adminClient), context: ok(context) },
+        createContext(),
         { ids: [id] }
       );
       expect(result).toEqual({
@@ -1304,7 +1319,7 @@ describe('unpublishEntities()', () => {
         }
       `,
       undefined,
-      { adminClient: ok(adminClient), context: ok(context) },
+      createContext(),
       { ids: ['635d7ee9-c1c7-4ae7-bcdf-fb53f30a3cd3'] }
     );
     expect(result).toMatchInlineSnapshot(`
@@ -1343,7 +1358,7 @@ describe('archiveEntity()', () => {
           }
         `,
         undefined,
-        { adminClient: ok(adminClient), context: ok(context) },
+        createContext(),
         { id }
       );
       expect(result).toEqual({
@@ -1400,7 +1415,7 @@ describe('unarchiveEntity()', () => {
           }
         `,
         undefined,
-        { adminClient: ok(adminClient), context: ok(context) },
+        createContext(),
         { id }
       );
       expect(result).toEqual({
@@ -1450,7 +1465,7 @@ describe('unarchiveEntity()', () => {
         }
       `,
       undefined,
-      { adminClient: ok(adminClient), context: ok(context) },
+      createContext(),
       { id: '635d7ee9-c1c7-4ae7-bcdf-fb53f30a3cd3' }
     );
     expect(result).toMatchInlineSnapshot(`
@@ -1495,7 +1510,7 @@ describe('Multiple', () => {
           }
         `,
         undefined,
-        { adminClient: ok(adminClient), context: ok(context) },
+        createContext(),
         {
           entity: {
             id,
