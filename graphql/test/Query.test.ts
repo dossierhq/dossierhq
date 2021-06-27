@@ -5,7 +5,7 @@ import {
   createServerPublishedClient,
   ServerTestUtils,
 } from '@datadata/server';
-import type { Server, SessionContext } from '@datadata/server';
+import type { Server } from '@datadata/server';
 import { graphql, printError } from 'graphql';
 import type { GraphQLSchema } from 'graphql';
 import type { SessionGraphQLContext } from '..';
@@ -15,14 +15,14 @@ const { expectOkResult } = CoreTestUtils;
 const { createTestServer, ensureSessionContext, updateSchema } = ServerTestUtils;
 
 let server: Server;
-let context: SessionContext;
+
 let adminClient: AdminClient;
 let publishedClient: PublishedClient;
 let schema: GraphQLSchema;
 
 beforeAll(async () => {
   server = await createTestServer();
-  context = await ensureSessionContext(server, 'test', 'query');
+  const context = await ensureSessionContext(server, 'test', 'query');
   adminClient = createServerAdminClient({ resolveContext: () => Promise.resolve(context) });
   publishedClient = createServerPublishedClient({ resolveContext: () => Promise.resolve(context) });
   await updateSchema(context, {
