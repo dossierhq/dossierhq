@@ -37,7 +37,6 @@ enum EntityType {
 }
 
 type EntityInfo {
-  id: ID!
   name: String!
 }
 
@@ -257,7 +256,6 @@ enum EntityType {
 }
 
 type EntityInfo {
-  id: ID!
   name: String!
 }
 
@@ -532,7 +530,6 @@ enum EntityType {
 }
 
 type EntityInfo {
-  id: ID!
   name: String!
 }
 
@@ -707,7 +704,6 @@ enum EntityType {
 }
 
 type EntityInfo {
-  id: ID!
   name: String!
 }
 
@@ -891,7 +887,6 @@ enum EntityType {
 }
 
 type EntityInfo {
-  id: ID!
   name: String!
 }
 
@@ -1118,7 +1113,6 @@ enum EntityType {
 }
 
 type EntityInfo {
-  id: ID!
   name: String!
 }
 
