@@ -1,4 +1,9 @@
-import type { AdminClient, AdminClientOperation } from '@datadata/core';
+import {
+  AdminClient,
+  AdminClientOperation,
+  toAdminEntityUpdate1,
+  toAdminEntityUpdate2,
+} from '@datadata/core';
 import {
   AdminClientOperationName,
   assertExhaustive,
@@ -141,7 +146,7 @@ async function terminatingMiddleware(
         args: [entity],
         resolve,
       } = operation as AdminClientOperation<AdminClientOperationName.updateEntity>;
-      resolve(toAdminEntityResult2(await updateEntity(context, entity)));
+      resolve(toAdminEntityResult2(await updateEntity(context, toAdminEntityUpdate1(entity))));
       break;
     }
     default:

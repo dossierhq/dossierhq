@@ -1,3 +1,4 @@
+import { toAdminEntityUpdate2, toAdminEntity1 } from '@datadata/core';
 import Boom from '@hapi/boom';
 import Joi from 'joi';
 import type { NextApiRequest, NextApiResponse } from 'next';
@@ -51,12 +52,12 @@ export default async (req: NextApiRequest, res: NextApiResponse<EntityResponse>)
       }
       const { adminClient } = authResult.value;
 
-      const result = await adminClient.updateEntity(body.item);
+      const result = await adminClient.updateEntity(toAdminEntityUpdate2(body.item));
 
       if (result.isError()) {
         throw errorResultToBoom(result);
       }
-      return { item: result.value };
+      return { item: toAdminEntity1(result.value) };
     });
   } else {
     handleError(res, Boom.methodNotAllowed(undefined, undefined, ['GET', 'PUT']));

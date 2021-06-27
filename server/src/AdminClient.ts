@@ -1,10 +1,11 @@
 import {
-  AdminClient,
-  AdminClientOperation,
-  toAdminEntity2,
+  AdminClientOperationName,
+  assertExhaustive,
+  createBaseAdminClient,
   toAdminEntityResult2,
+  toAdminEntityUpdate1,
 } from '@datadata/core';
-import { AdminClientOperationName, assertExhaustive, createBaseAdminClient } from '@datadata/core';
+import type { AdminClient, AdminClientOperation } from '@datadata/core';
 import type { SessionContext } from '.';
 import {
   archiveEntity,
@@ -139,7 +140,7 @@ async function terminatingMiddleware(
         args: [entity],
         resolve,
       } = operation as AdminClientOperation<AdminClientOperationName.updateEntity>;
-      resolve(toAdminEntityResult2(await updateEntity(context, entity)));
+      resolve(toAdminEntityResult2(await updateEntity(context, toAdminEntityUpdate1(entity))));
       break;
     }
     default:

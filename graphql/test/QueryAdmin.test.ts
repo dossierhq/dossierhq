@@ -353,8 +353,7 @@ describe('adminEntity()', () => {
       expectOkResult(
         await adminClient.updateEntity({
           id,
-          title: 'Second title',
-          summary: 'Second summary',
+          fields: { title: 'Second title', summary: 'Second summary' },
         })
       );
 
@@ -1225,7 +1224,10 @@ describe('versionHistory()', () => {
     if (expectOkResult(createResult)) {
       const { id } = createResult.value;
 
-      const updateResult = await adminClient.updateEntity({ id, title: 'Updated title' });
+      const updateResult = await adminClient.updateEntity({
+        id,
+        fields: { title: 'Updated title' },
+      });
       if (expectOkResult(updateResult)) {
         expectOkResult(
           await adminClient.publishEntities([{ id, version: updateResult.value.info.version }])
