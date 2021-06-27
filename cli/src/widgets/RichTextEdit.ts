@@ -12,13 +12,13 @@ import type {
   RichText,
   RichTextBlock,
 } from '@datadata/core';
-import type { SessionContext } from '@datadata/server';
+import type { CliContext } from '..';
 import { editFieldValueItem, selectEntity } from '../CliEntityAdmin';
 import type { ItemSelectorItem } from '.';
 import { showJsonEdit, showStringEdit, showItemSelector, showMultiItemSelector } from '.';
 
 export async function showRichTextEdit(
-  context: SessionContext,
+  context: CliContext,
   fieldSpec: FieldSpecification,
   message: string,
   defaultValue?: RichText | null
@@ -96,7 +96,7 @@ async function selectBlockType(fieldSpec: FieldSpecification) {
 }
 
 async function editBlock(
-  context: SessionContext,
+  context: CliContext,
   message: string,
   fieldSpec: FieldSpecification,
   block: RichTextBlock | null
