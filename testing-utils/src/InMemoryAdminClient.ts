@@ -3,9 +3,7 @@ import {
   AdminClientOperationName,
   assertExhaustive,
   createBaseAdminClient,
-  toAdminEntityResult2,
   toAdminEntityUpdate1,
-  toAdminEntityCreate1,
 } from '@datadata/core';
 import { InMemoryAdmin } from '..';
 import type { InMemorySessionContext } from './InMemoryServer';
@@ -51,7 +49,7 @@ async function terminatingMiddleware(
         args: [entity],
         resolve,
       } = operation as AdminClientOperation<AdminClientOperationName.createEntity>;
-      resolve(toAdminEntityResult2(await createEntity(context, toAdminEntityCreate1(entity))));
+      resolve(await createEntity(context, entity));
       break;
     }
     case AdminClientOperationName.getEntities: {
@@ -73,9 +71,7 @@ async function terminatingMiddleware(
         resolve,
       } = operation as AdminClientOperation<AdminClientOperationName.getEntity>;
       resolve(
-        toAdminEntityResult2(
-          await getEntity(context, reference.id, 'version' in reference ? reference.version : null)
-        )
+        await getEntity(context, reference.id, 'version' in reference ? reference.version : null)
       );
       break;
     }
@@ -145,7 +141,7 @@ async function terminatingMiddleware(
         args: [entity],
         resolve,
       } = operation as AdminClientOperation<AdminClientOperationName.updateEntity>;
-      resolve(toAdminEntityResult2(await updateEntity(context, toAdminEntityUpdate1(entity))));
+      resolve(await updateEntity(context, toAdminEntityUpdate1(entity)));
       break;
     }
     default:

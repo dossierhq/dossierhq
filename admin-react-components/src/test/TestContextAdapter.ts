@@ -1,3 +1,4 @@
+import { toAdminEntityUpdate1 } from '@datadata/core';
 import { InMemoryAdmin, InMemoryServer } from '@datadata/testing-utils';
 import type { InMemorySessionContext } from '@datadata/testing-utils';
 import { v4 as uuidv4 } from 'uuid';
@@ -64,7 +65,7 @@ export class TestContextAdapter implements DataDataContextAdapter {
 
   updateEntity: DataDataContextAdapter['updateEntity'] = async (entity) => {
     if (this.#interceptor) await this.#interceptor();
-    return await InMemoryAdmin.updateEntity(this.#context, entity);
+    return await InMemoryAdmin.updateEntity(this.#context, toAdminEntityUpdate1(entity));
   };
 
   publishEntities: DataDataContextAdapter['publishEntities'] = async (entities) => {

@@ -1,8 +1,8 @@
 import type {
   AdminEntity,
   AdminEntity2,
-  AdminEntityCreate,
-  AdminEntityUpdate,
+  AdminEntityCreate2,
+  AdminEntityUpdate2,
   AdminQuery,
   Connection,
   Edge,
@@ -15,7 +15,7 @@ import type {
   PublishingResult,
   Schema,
 } from '@datadata/core';
-import { createErrorResultFromError, ErrorType } from '@datadata/core';
+import { createErrorResultFromError, ErrorType, toAdminEntity1 } from '@datadata/core';
 import { createContext } from 'react';
 import useSWR, { mutate } from 'swr';
 import type { EditorJsToolSettings } from '..';
@@ -30,7 +30,7 @@ export interface DataDataContextAdapter {
   getEntity(
     id: string,
     version?: number | null
-  ): PromiseResult<AdminEntity, ErrorType.NotFound | ErrorType.Generic>;
+  ): PromiseResult<AdminEntity2, ErrorType.NotFound | ErrorType.Generic>;
   getEntityHistory(
     id: string
   ): PromiseResult<EntityHistory, ErrorType.NotFound | ErrorType.Generic>;
@@ -45,11 +45,11 @@ export interface DataDataContextAdapter {
     ErrorType.BadRequest | ErrorType.Generic
   >;
   createEntity(
-    entity: AdminEntityCreate
-  ): PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.Generic>;
+    entity: AdminEntityCreate2
+  ): PromiseResult<AdminEntity2, ErrorType.BadRequest | ErrorType.Generic>;
   updateEntity(
-    entity: AdminEntityUpdate
-  ): PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic>;
+    entity: AdminEntityUpdate2
+  ): PromiseResult<AdminEntity2, ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic>;
   publishEntities(
     entities: {
       id: string;
@@ -118,8 +118,9 @@ export class DataDataContextValue {
       this.fetcher
     );
 
+    const entity: AdminEntity | undefined = data ? toAdminEntity1(data as AdminEntity2) : undefined;
     const entityError = error ? createErrorResultFromError(error, [ErrorType.NotFound]) : undefined;
-    return { entity: data as AdminEntity | undefined, entityError };
+    return { entity, entityError };
   };
 
   /** Loads the history for an entity. If `id` is `undefined` no data is fetched */
@@ -192,8 +193,8 @@ export class DataDataContextValue {
   };
 
   createEntity = async (
-    entity: AdminEntityCreate
-  ): PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.Generic> => {
+    entity: AdminEntityCreate2
+  ): PromiseResult<AdminEntity2, ErrorType.BadRequest | ErrorType.Generic> => {
     try {
       const result = await this.#adapter.createEntity(entity);
       if (result.isOk()) {
@@ -206,8 +207,8 @@ export class DataDataContextValue {
   };
 
   updateEntity = async (
-    entity: AdminEntityUpdate
-  ): PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic> => {
+    entity: AdminEntityUpdate2
+  ): PromiseResult<AdminEntity2, ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic> => {
     try {
       const result = await this.#adapter.updateEntity(entity);
       if (result.isOk()) {
@@ -294,7 +295,7 @@ export class DataDataContextValue {
     }
   };
 
-  private invalidateEntity(entity: AdminEntity) {
+  private invalidateEntity(entity: AdminEntity2) {
     mutate([this.#rootKey, FetcherActions.UseEntity, entity.id, null], entity, false);
     mutate([this.#rootKey, FetcherActions.UseEntityHistory, entity.id]);
   }
