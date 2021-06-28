@@ -1,5 +1,5 @@
 import type { AdminEntity, AdminQuery, BoundingBox, Location, Schema } from '@datadata/core';
-import { isLocationItemField, visitItemRecursively } from '@datadata/core';
+import { isLocationItemField, toAdminEntity1, visitItemRecursively } from '@datadata/core';
 import React, { useContext, useEffect, useState } from 'react';
 import { DataDataContext, MapContainer, PublishStateTag } from '../..';
 
@@ -28,7 +28,7 @@ export function EntityMap({ className, query, onEntityClick }: EntityMapProps): 
             if (edge.node.isError()) {
               return null;
             }
-            const entity = edge.node.value;
+            const entity = toAdminEntity1(edge.node.value);
             return (
               <EntityMarker
                 key={entity.id}

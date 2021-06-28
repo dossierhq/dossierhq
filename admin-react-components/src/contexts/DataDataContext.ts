@@ -171,7 +171,7 @@ export class DataDataContextValue {
     query?: AdminQuery,
     paging?: Paging
   ): {
-    connection?: Connection<Edge<AdminEntity, ErrorType>> | null;
+    connection?: Connection<Edge<AdminEntity2, ErrorType>> | null;
     connectionError?: ErrorResult<unknown, ErrorType.BadRequest | ErrorType.Generic>;
   } => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -186,7 +186,7 @@ export class DataDataContextValue {
       ? createErrorResultFromError(error, [ErrorType.BadRequest])
       : undefined;
     return {
-      connection: data as Connection<Edge<AdminEntity, ErrorType>> | undefined,
+      connection: data as Connection<Edge<AdminEntity2, ErrorType>> | undefined,
       connectionError,
     };
   };
