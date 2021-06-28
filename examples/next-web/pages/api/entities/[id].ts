@@ -40,7 +40,7 @@ export default async (req: NextApiRequest, res: NextApiResponse<EntityResponse>)
       if (result.isError()) {
         throw errorResultToBoom(result);
       }
-      return { item: result.value };
+      return { item: toAdminEntity1(result.value) };
     });
   } else if (req.method === 'PUT') {
     await handlePutAsync(req, res, async (body: EntityUpdateRequest) => {

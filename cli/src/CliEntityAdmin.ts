@@ -13,7 +13,6 @@ import {
   isValueTypeListField,
   notOk,
   ok,
-  toAdminEntity2,
   toAdminEntityUpdate2,
 } from '@datadata/core';
 import type {
@@ -262,7 +261,7 @@ export async function editEntity(context: CliContext, id: string): Promise<Admin
 
   const entity = {
     id,
-    ...(await editEntityValues(context, getResult.value._type, getResult.value)),
+    ...(await editEntityValues(context, getResult.value.info.type, getResult.value.fields)),
   };
   const updateResult = await adminClient.updateEntity(toAdminEntityUpdate2(entity));
   if (updateResult.isError()) {
@@ -301,7 +300,7 @@ async function publishEntityVersion(
     logErrorResult('Failed fetching entity', getResult);
     return null;
   }
-  return toAdminEntity2(getResult.value);
+  return getResult.value;
 }
 
 async function editEntityValues(
@@ -711,7 +710,7 @@ export async function showLatestEntity(context: CliContext, id: string): Promise
   const result = await adminClient.getEntity({ id });
   if (result.isOk()) {
     const entity = result.value;
-    logEntity(context, toAdminEntity2(entity));
+    logEntity(context, entity);
 
     const totalResult = await adminClient.getTotalCount({ referencing: id });
     if (totalResult.isError()) {
@@ -793,7 +792,7 @@ export async function showEntityVersion(context: CliContext, id: string): Promis
     }
     const result = await adminClient.getEntity({ id, version: currentVersion });
     if (result.isOk()) {
-      logEntity(context, toAdminEntity2(result.value));
+      logEntity(context, result.value);
     } else {
       logErrorResult('Failed getting entity version', result);
     }

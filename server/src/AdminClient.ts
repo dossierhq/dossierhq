@@ -71,7 +71,9 @@ async function terminatingMiddleware(
         resolve,
       } = operation as AdminClientOperation<AdminClientOperationName.getEntity>;
       resolve(
-        await getEntity(context, reference.id, 'version' in reference ? reference.version : null)
+        toAdminEntityResult2(
+          await getEntity(context, reference.id, 'version' in reference ? reference.version : null)
+        )
       );
       break;
     }

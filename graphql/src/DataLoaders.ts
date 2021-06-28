@@ -7,7 +7,6 @@ import {
   isValueTypeField,
   isValueTypeListField,
   toAdminEntity1,
-  toAdminEntity2,
   visitFieldRecursively,
 } from '@datadata/core';
 import type {
@@ -125,13 +124,13 @@ export async function loadAdminEntities<TContext extends SessionGraphQLContext>(
 
 export function buildResolversForAdminEntity<TContext extends SessionGraphQLContext>(
   schema: Schema,
-  entity: AdminEntity
+  entity: AdminEntity2
 ): AdminEntity {
-  const entitySpec = schema.getEntityTypeSpecification(entity._type);
+  const entitySpec = schema.getEntityTypeSpecification(entity.info.type);
   if (!entitySpec) {
-    throw new Error(`Couldn't find entity spec for type: ${entity._type}`);
+    throw new Error(`Couldn't find entity spec for type: ${entity.info.type}`);
   }
-  const result = toAdminEntity2({ ...entity });
+  const result = { ...entity };
 
   resolveFields<TContext>(schema, entitySpec, result, true);
 
@@ -160,9 +159,7 @@ export async function loadAdminSearchEntities<TContext extends SessionGraphQLCon
     edges: result.value.edges.map((edge) => {
       return {
         cursor: edge.cursor,
-        node: edge.node.isOk()
-          ? buildResolversForAdminEntity(schema, toAdminEntity1(edge.node.value))
-          : null, //TODO throw error if accessed?
+        node: edge.node.isOk() ? buildResolversForAdminEntity(schema, edge.node.value) : null, //TODO throw error if accessed?
       };
     }),
     totalCount: buildTotalCount(query),

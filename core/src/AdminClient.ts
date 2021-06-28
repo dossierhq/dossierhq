@@ -1,5 +1,4 @@
 import type {
-  AdminEntity,
   AdminEntity2,
   AdminEntityCreate2,
   AdminEntityUpdate2,
@@ -22,9 +21,9 @@ import { executeOperationPipeline } from './SharedClient';
 export interface AdminClient {
   getEntity(
     reference: EntityReference | EntityVersionReference
-  ): PromiseResult<AdminEntity, ErrorType.NotFound>;
+  ): PromiseResult<AdminEntity2, ErrorType.NotFound>;
 
-  getEntities(references: EntityReference[]): Promise<Result<AdminEntity, ErrorType.NotFound>[]>;
+  getEntities(references: EntityReference[]): Promise<Result<AdminEntity2, ErrorType.NotFound>[]>;
 
   searchEntities(
     query?: AdminQuery,

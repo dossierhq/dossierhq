@@ -4,7 +4,7 @@ import type {
   AdminEntityUpdate,
   PublishingResult,
 } from '@datadata/core';
-import { toAdminEntity1, toAdminEntityUpdate2, toAdminEntityCreate2 } from '@datadata/core';
+import { toAdminEntityUpdate2, toAdminEntityCreate2 } from '@datadata/core';
 import type { SessionGraphQLContext } from '.';
 import { buildResolversForAdminEntity } from './DataLoaders';
 import { getAdminClient, getSchema } from './Utils';
@@ -19,7 +19,7 @@ export async function createEntity<TContext extends SessionGraphQLContext>(
   if (result.isError()) {
     throw result.toError();
   }
-  return buildResolversForAdminEntity(schema, toAdminEntity1(result.value));
+  return buildResolversForAdminEntity(schema, result.value);
 }
 
 export async function updateEntity<TContext extends SessionGraphQLContext>(
@@ -32,7 +32,7 @@ export async function updateEntity<TContext extends SessionGraphQLContext>(
   if (result.isError()) {
     throw result.toError();
   }
-  return buildResolversForAdminEntity(schema, toAdminEntity1(result.value));
+  return buildResolversForAdminEntity(schema, result.value);
 }
 
 export async function publishEntities<TContext extends SessionGraphQLContext>(
