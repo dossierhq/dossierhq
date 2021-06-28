@@ -1,4 +1,5 @@
 import type { AdminEntity, AdminQuery } from '@datadata/core';
+import { toAdminEntity1 } from '@datadata/core';
 import React, { useContext } from 'react';
 import { Button, DataDataContext, Message, PublishStateTag } from '../..';
 import { joinClassNames } from '../../utils/ClassNameUtils';
@@ -22,7 +23,7 @@ export function EntityList({
       {connection &&
         connection.edges.map((edge) => {
           if (edge.node.isOk()) {
-            const entity = edge.node.value;
+            const entity = toAdminEntity1(edge.node.value);
             return (
               <Button key={edge.cursor} onClick={() => onEntityClick(entity)}>
                 {`${entity._type}: ${entity._name}`}
