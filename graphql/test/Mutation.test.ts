@@ -170,19 +170,18 @@ describe('create*Entity()', () => {
     const getResult = await adminClient.getEntity({ id });
     expectResultValue(getResult, {
       id,
-      _type: 'MutationFoo',
-      _name: name,
-      _version: 0,
-      _publishState: EntityPublishState.Draft,
-      ...emptyFooFields,
-      title: 'Foo title',
-      summary: 'Foo summary',
-      tags: ['one', 'two', 'three'],
-      location: { lat: 55.60498, lng: 13.003822 },
-      locations: [
-        { lat: 55.60498, lng: 13.003822 },
-        { lat: 56.381561, lng: 13.99286 },
-      ],
+      info: { type: 'MutationFoo', name, version: 0, publishingState: EntityPublishState.Draft },
+      fields: {
+        ...emptyFooFields,
+        title: 'Foo title',
+        summary: 'Foo summary',
+        tags: ['one', 'two', 'three'],
+        location: { lat: 55.60498, lng: 13.003822 },
+        locations: [
+          { lat: 55.60498, lng: 13.003822 },
+          { lat: 56.381561, lng: 13.99286 },
+        ],
+      },
     });
   });
 
@@ -301,18 +300,22 @@ describe('create*Entity()', () => {
       const getResult = await adminClient.getEntity({ id: fooId });
       expectResultValue(getResult, {
         id: fooId,
-        _type: 'MutationFoo',
-        _name: fooName,
-        _version: 0,
-        _publishState: EntityPublishState.Draft,
-        ...emptyFooFields,
-        title: 'Foo title',
-        summary: 'Foo summary',
-        body: {
-          blocks: [
-            { type: RichTextBlockType.paragraph, data: { text: 'Hello world' } },
-            { type: RichTextBlockType.entity, data: { id: barId } },
-          ],
+        info: {
+          type: 'MutationFoo',
+          name: fooName,
+          version: 0,
+          publishingState: EntityPublishState.Draft,
+        },
+        fields: {
+          ...emptyFooFields,
+          title: 'Foo title',
+          summary: 'Foo summary',
+          body: {
+            blocks: [
+              { type: RichTextBlockType.paragraph, data: { text: 'Hello world' } },
+              { type: RichTextBlockType.entity, data: { id: barId } },
+            ],
+          },
         },
       });
     }
@@ -382,15 +385,17 @@ describe('create*Entity()', () => {
       const getResult = await adminClient.getEntity({ id: fooId });
       expectResultValue(getResult, {
         id: fooId,
-        _type: 'MutationFoo',
-        _name: fooName,
-        _version: 0,
-        _publishState: EntityPublishState.Draft,
-        ...emptyFooFields,
-        title: 'Foo title',
-        summary: 'Foo summary',
-        bar: {
-          id: barId,
+        info: {
+          type: 'MutationFoo',
+          name: fooName,
+          version: 0,
+          publishingState: EntityPublishState.Draft,
+        },
+        fields: {
+          ...emptyFooFields,
+          title: 'Foo title',
+          summary: 'Foo summary',
+          bar: { id: barId },
         },
       });
     }
@@ -469,14 +474,18 @@ describe('create*Entity()', () => {
       const getResult = await adminClient.getEntity({ id: fooId });
       expectResultValue(getResult, {
         id: fooId,
-        _type: 'MutationFoo',
-        _name: fooName,
-        _version: 0,
-        _publishState: EntityPublishState.Draft,
-        ...emptyFooFields,
-        title: 'Foo title',
-        summary: 'Foo summary',
-        bars: [{ id: bar1Id }, { id: bar2Id }],
+        info: {
+          type: 'MutationFoo',
+          name: fooName,
+          version: 0,
+          publishingState: EntityPublishState.Draft,
+        },
+        fields: {
+          ...emptyFooFields,
+          title: 'Foo title',
+          summary: 'Foo summary',
+          bars: [{ id: bar1Id }, { id: bar2Id }],
+        },
       });
     }
   });
@@ -564,17 +573,21 @@ describe('create*Entity()', () => {
       const getResult = await adminClient.getEntity({ id: fooId });
       expectResultValue(getResult, {
         id: fooId,
-        _type: 'MutationFoo',
-        _name: fooName,
-        _version: 0,
-        _publishState: EntityPublishState.Draft,
-        ...emptyFooFields,
-        title: 'Foo title',
-        summary: 'Foo summary',
-        stringedBar: {
-          _type: 'MutationStringedBar',
-          text: 'Value text',
-          bar: { id: barId },
+        info: {
+          type: 'MutationFoo',
+          name: fooName,
+          version: 0,
+          publishingState: EntityPublishState.Draft,
+        },
+        fields: {
+          ...emptyFooFields,
+          title: 'Foo title',
+          summary: 'Foo summary',
+          stringedBar: {
+            _type: 'MutationStringedBar',
+            text: 'Value text',
+            bar: { id: barId },
+          },
         },
       });
     }
@@ -661,23 +674,27 @@ describe('create*Entity()', () => {
       const getResult = await adminClient.getEntity({ id: fooId });
       expectResultValue(getResult, {
         id: fooId,
-        _type: 'MutationFoo',
-        _name: fooName,
-        _version: 0,
-        _publishState: EntityPublishState.Draft,
-        ...emptyFooFields,
-        anyValueItem: {
-          _type: 'MutationStringedBar',
-          text: 'A value',
-          bar: { id: barId },
+        info: {
+          type: 'MutationFoo',
+          name: fooName,
+          version: 0,
+          publishingState: EntityPublishState.Draft,
         },
-        anyValueItems: [
-          {
+        fields: {
+          ...emptyFooFields,
+          anyValueItem: {
             _type: 'MutationStringedBar',
-            text: 'A value in a list',
+            text: 'A value',
             bar: { id: barId },
           },
-        ],
+          anyValueItems: [
+            {
+              _type: 'MutationStringedBar',
+              text: 'A value in a list',
+              bar: { id: barId },
+            },
+          ],
+        },
       });
     }
   });
@@ -759,20 +776,24 @@ describe('create*Entity()', () => {
     const getResult = await adminClient.getEntity({ id: fooId });
     expectResultValue(getResult, {
       id: fooId,
-      _type: 'MutationFoo',
-      _name: fooName,
-      _version: 0,
-      _publishState: EntityPublishState.Draft,
-      ...emptyFooFields,
-      nestedValue: {
-        _type: 'MutationNestedValue',
-        text: 'Outer',
-        child: { _type: 'MutationNestedValue', text: 'Inner' },
+      info: {
+        type: 'MutationFoo',
+        name: fooName,
+        version: 0,
+        publishingState: EntityPublishState.Draft,
+      },
+      fields: {
+        ...emptyFooFields,
+        nestedValue: {
+          _type: 'MutationNestedValue',
+          text: 'Outer',
+          child: { _type: 'MutationNestedValue', text: 'Inner' },
+        },
       },
     });
   });
 
-  test('Create without specifying _type', async () => {
+  test('Create without specifying type', async () => {
     const result = await graphql(
       schema,
       `
@@ -818,7 +839,7 @@ describe('create*Entity()', () => {
     });
   });
 
-  test('Error: Create with the wrong _type', async () => {
+  test('Error: Create with the wrong type', async () => {
     const result = await graphql(
       schema,
       `
@@ -885,10 +906,7 @@ describe('update*Entity()', () => {
         undefined,
         createContext(),
         {
-          entity: {
-            id,
-            title: 'Updated title',
-          },
+          entity: { id, title: 'Updated title' },
         }
       );
 
@@ -911,14 +929,13 @@ describe('update*Entity()', () => {
       const getResult = await adminClient.getEntity({ id });
       expectResultValue(getResult, {
         id,
-        _type: 'MutationFoo',
-        _name: name,
-        _version: 1,
-        _publishState: EntityPublishState.Draft,
-        ...emptyFooFields,
-        title: 'Updated title',
-        summary: 'First summary',
-        tags: ['one', 'two', 'three'],
+        info: { type: 'MutationFoo', name, version: 1, publishingState: EntityPublishState.Draft },
+        fields: {
+          ...emptyFooFields,
+          title: 'Updated title',
+          summary: 'First summary',
+          tags: ['one', 'two', 'three'],
+        },
       });
     }
   });
@@ -1090,39 +1107,43 @@ describe('update*Entity()', () => {
         const getResult = await adminClient.getEntity({ id: fooId });
         expectResultValue(getResult, {
           id: fooId,
-          _type: 'MutationFoo',
-          _name: name,
-          _version: 1,
-          _publishState: EntityPublishState.Draft,
-          ...emptyFooFields,
-          title: 'Updated title',
-          summary: 'Updated summary',
-          tags: ['these', 'are', 'new'],
-          bar: { id: bar1Id },
-          bars: [{ id: bar1Id }, { id: bar2Id }],
-          stringedBar: {
-            _type: 'MutationStringedBar',
-            text: 'Value text',
-            bar: { id: bar2Id },
+          info: {
+            type: 'MutationFoo',
+            name: name,
+            version: 1,
+            publishingState: EntityPublishState.Draft,
           },
-          anyValueItem: {
-            _type: 'MutationStringedBar',
-            text: 'A value item',
+          fields: {
+            ...emptyFooFields,
+            title: 'Updated title',
+            summary: 'Updated summary',
+            tags: ['these', 'are', 'new'],
             bar: { id: bar1Id },
-          },
-          anyValueItems: [
-            {
+            bars: [{ id: bar1Id }, { id: bar2Id }],
+            stringedBar: {
               _type: 'MutationStringedBar',
-              text: 'A value item in a list',
+              text: 'Value text',
               bar: { id: bar2Id },
             },
-          ],
+            anyValueItem: {
+              _type: 'MutationStringedBar',
+              text: 'A value item',
+              bar: { id: bar1Id },
+            },
+            anyValueItems: [
+              {
+                _type: 'MutationStringedBar',
+                text: 'A value item in a list',
+                bar: { id: bar2Id },
+              },
+            ],
+          },
         });
       }
     }
   });
 
-  test('Error: Update with the wrong _type', async () => {
+  test('Error: Update with the wrong type', async () => {
     const { adminClient } = server;
     const createResult = await adminClient.createEntity({
       info: { type: 'MutationFoo', name: 'Name' },

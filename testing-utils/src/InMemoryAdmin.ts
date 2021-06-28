@@ -21,6 +21,7 @@ import {
   notOk,
   ok,
   toAdminEntity2,
+  toAdminEntityResult2,
   visitItemRecursively,
 } from '@datadata/core';
 import { v4 as uuidv4 } from 'uuid';
@@ -42,8 +43,10 @@ export const InMemoryAdmin = {
   getEntities: async (
     context: InMemorySessionContext,
     ids: string[]
-  ): Promise<Result<AdminEntity, ErrorType.NotFound>[]> => {
-    return await Promise.all(ids.map((id) => InMemoryAdmin.getEntity(context, id)));
+  ): Promise<Result<AdminEntity2, ErrorType.NotFound>[]> => {
+    return await Promise.all(
+      ids.map(async (id) => toAdminEntityResult2(await InMemoryAdmin.getEntity(context, id)))
+    );
   },
 
   getEntityHistory: async (

@@ -74,7 +74,7 @@ export async function getEntity(
 export async function getEntities(
   context: SessionContext,
   ids: string[]
-): Promise<Result<AdminEntity, ErrorType.NotFound>[]> {
+): Promise<Result<AdminEntity2, ErrorType.NotFound>[]> {
   if (ids.length === 0) {
     return [];
   }
@@ -88,12 +88,12 @@ export async function getEntities(
     [ids]
   );
 
-  const result: Result<AdminEntity, ErrorType.NotFound>[] = ids.map((id) => {
+  const result: Result<AdminEntity2, ErrorType.NotFound>[] = ids.map((id) => {
     const entityMain = entitiesMain.find((x) => x.uuid === id);
     if (!entityMain) {
       return notOk.NotFound('No such entity');
     }
-    return ok(decodeAdminEntity(context, entityMain));
+    return ok(toAdminEntity2(decodeAdminEntity(context, entityMain)));
   });
 
   return result;
