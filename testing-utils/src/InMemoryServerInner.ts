@@ -1,5 +1,5 @@
 import type {
-  AdminEntity,
+  AdminEntity2,
   EntityHistory,
   PublishingHistory,
   PublishingResult,
@@ -42,7 +42,7 @@ export class InMemoryServerInner {
     );
   }
 
-  getEntity(id: string, version?: number | null): AdminEntity | null {
+  getEntity(id: string, version?: number | null): AdminEntity2 | null {
     const fullEntity = this.getFullEntity(id);
     if (!fullEntity) {
       return null;
@@ -62,14 +62,18 @@ export class InMemoryServerInner {
 
   private convertToAdminEntity(
     entity: InMemoryEntity,
-    version: InMemoryEntityVersion
-  ): AdminEntity {
+    entityVersion: InMemoryEntityVersion
+  ): AdminEntity2 {
+    const { _version: version, ...fields } = entityVersion;
     return {
-      ...version,
       id: entity.id,
-      _type: entity.type,
-      _name: entity.name,
-      _publishState: this.getEntityPublishState(entity),
+      info: {
+        type: entity.type,
+        name: entity.name,
+        version,
+        publishingState: this.getEntityPublishState(entity),
+      },
+      fields,
     };
   }
 
@@ -101,7 +105,7 @@ export class InMemoryServerInner {
     return result;
   }
 
-  getLatestEntities(): AdminEntity[] {
+  getLatestEntities(): AdminEntity2[] {
     return this.#entities.map((entity) =>
       this.convertToAdminEntity(entity, this.findLatestVersion(entity.versions))
     );
@@ -115,30 +119,42 @@ export class InMemoryServerInner {
     return `${name}#${Math.random().toFixed(8).slice(2)}`;
   }
 
-  addNewEntity(entity: AdminEntity, userId: string): void {
-    const { id, _type: type, _name: name, ...version } = entity;
+  addNewEntity(entity: AdminEntity2, userId: string): void {
+    const {
+      id,
+      info: { type, name, version },
+      fields,
+    } = entity;
+    const entityVersion: InMemoryEntityVersion = {
+      _version: version,
+      ...fields,
+    };
     this.#entities.push({
       id,
       type,
       name,
       archived: false,
-      versions: [version],
+      versions: [entityVersion],
       history: [{ version: 0, createdAt: new Date(), createdBy: userId }],
       publishEvents: [],
     });
   }
 
-  addUpdatedEntity(entity: AdminEntity, userId: string): void {
+  addUpdatedEntity(entity: AdminEntity2, userId: string): void {
     const fullEntity = this.getFullEntity(entity.id);
     if (!fullEntity) {
       throw new Error(`Can't find ${entity.id}`);
     }
-    const { id, _type, _name: name, ...version } = entity;
+    const {
+      info: { name, version },
+      fields,
+    } = entity;
+    const entityVersion: InMemoryEntityVersion = { _version: version, ...fields };
     fullEntity.name = name;
-    fullEntity.versions.push(version);
+    fullEntity.versions.push(entityVersion);
 
     fullEntity.history.push({
-      version: entity._version,
+      version: entity.info.version,
       createdAt: new Date(),
       createdBy: userId,
     });

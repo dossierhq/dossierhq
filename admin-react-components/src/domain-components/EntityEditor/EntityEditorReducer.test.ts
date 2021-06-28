@@ -1,3 +1,4 @@
+import { toAdminEntity1 } from '@datadata/core';
 import { v4 as uuidv4 } from 'uuid';
 import schema from '../../stories/StoryboardSchema';
 import { TestContextAdapter } from '../../test/TestContextAdapter';
@@ -44,7 +45,7 @@ async function updateEntityWithFixture(
     throw entityResult.toError();
   }
   const entity = entityResult.value;
-  return reduceEntityEditorState(state, new UpdateEntityAction(entity.id, entity));
+  return reduceEntityEditorState(state, new UpdateEntityAction(entity.id, toAdminEntity1(entity)));
 }
 
 describe('reduceEntityEditorState', () => {

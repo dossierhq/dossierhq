@@ -30,11 +30,9 @@ describe('getEntity()', () => {
     const context = server.createContext(uuidv4());
     const entityResult = await InMemoryAdmin.getEntity(context, id);
     expectResultValue(entityResult, {
-      _name: 'Foo',
-      _type: 'Foo',
-      _version: 0,
-      _publishState: EntityPublishState.Published,
       id,
+      info: { name: 'Foo', type: 'Foo', version: 0, publishingState: EntityPublishState.Published },
+      fields: {},
     });
   });
 });

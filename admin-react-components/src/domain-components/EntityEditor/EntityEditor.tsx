@@ -1,4 +1,5 @@
 import type { AdminEntityCreate, AdminEntityUpdate } from '@datadata/core';
+import { toAdminEntityCreate2 } from '@datadata/core';
 import type { Dispatch, SetStateAction } from 'react';
 import React, { useContext, useEffect, useState } from 'react';
 import {
@@ -219,7 +220,7 @@ async function submitEntity(
   const entity = createAdminEntity(draftState);
   const isNew = entity._version === 0;
   const result = await (isNew
-    ? createEntity(entity as AdminEntityCreate)
+    ? createEntity(toAdminEntityCreate2(entity as AdminEntityCreate))
     : updateEntity(entity as AdminEntityUpdate));
 
   if (result.isOk()) {

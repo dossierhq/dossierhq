@@ -1,8 +1,7 @@
 import type {
-  AdminEntity,
   AdminEntity2,
-  AdminEntityCreate,
-  AdminEntityUpdate,
+  AdminEntityCreate2,
+  AdminEntityUpdate2,
   AdminQuery,
   Connection,
   Edge,
@@ -16,12 +15,11 @@ import type {
   Result,
 } from '@datadata/core';
 import {
+  assertIsDefined,
   EntityPublishState,
   isLocationItemField,
   notOk,
   ok,
-  toAdminEntity2,
-  toAdminEntityResult2,
   visitItemRecursively,
 } from '@datadata/core';
 import { v4 as uuidv4 } from 'uuid';
@@ -32,7 +30,7 @@ export const InMemoryAdmin = {
     context: InMemorySessionContext,
     id: string,
     version?: number | null
-  ): PromiseResult<AdminEntity, ErrorType.NotFound> => {
+  ): PromiseResult<AdminEntity2, ErrorType.NotFound> => {
     const entity = context.server.getEntity(id, version);
     if (entity) {
       return ok(entity);
@@ -44,9 +42,7 @@ export const InMemoryAdmin = {
     context: InMemorySessionContext,
     ids: string[]
   ): Promise<Result<AdminEntity2, ErrorType.NotFound>[]> => {
-    return await Promise.all(
-      ids.map(async (id) => toAdminEntityResult2(await InMemoryAdmin.getEntity(context, id)))
-    );
+    return await Promise.all(ids.map(async (id) => await InMemoryAdmin.getEntity(context, id)));
   },
 
   getEntityHistory: async (
@@ -80,7 +76,7 @@ export const InMemoryAdmin = {
       if (
         query?.entityTypes?.length &&
         query.entityTypes.length > 0 &&
-        query.entityTypes.indexOf(entity._type) < 0
+        query.entityTypes.indexOf(entity.info.type) < 0
       ) {
         return false;
       }
@@ -121,7 +117,7 @@ export const InMemoryAdmin = {
         startCursor: entities[0].id,
         endCursor: entities[entities.length - 1].id,
       },
-      edges: entities.map((entity) => ({ cursor: entity.id, node: ok(toAdminEntity2(entity)) })),
+      edges: entities.map((entity) => ({ cursor: entity.id, node: ok(entity) })),
     });
   },
 
@@ -138,14 +134,17 @@ export const InMemoryAdmin = {
 
   createEntity: async (
     context: InMemorySessionContext,
-    entity: AdminEntityCreate
-  ): PromiseResult<AdminEntity, ErrorType.BadRequest> => {
-    const newEntity: AdminEntity = {
-      ...entity,
+    entity: AdminEntityCreate2
+  ): PromiseResult<AdminEntity2, ErrorType.BadRequest> => {
+    const newEntity: AdminEntity2 = {
       id: entity.id ?? uuidv4(),
-      _version: 0,
-      _name: context.server.getUniqueName(null, entity._name),
-      _publishState: EntityPublishState.Draft,
+      info: {
+        type: entity.info.type,
+        name: context.server.getUniqueName(null, entity.info.name),
+        version: 0,
+        publishingState: EntityPublishState.Draft,
+      },
+      fields: entity.fields ?? {},
     };
     context.server.addNewEntity(newEntity, context.subjectId);
     return ok(newEntity);
@@ -153,20 +152,34 @@ export const InMemoryAdmin = {
 
   updateEntity: async (
     context: InMemorySessionContext,
-    entity: AdminEntityUpdate
-  ): PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.NotFound> => {
+    entity: AdminEntityUpdate2
+  ): PromiseResult<AdminEntity2, ErrorType.BadRequest | ErrorType.NotFound> => {
     const previousVersion = context.server.getEntity(entity.id);
     if (!previousVersion) {
       return notOk.NotFound('No such entity');
     }
-    const newEntity = {
+
+    let name = previousVersion.info.name;
+    if (entity.info?.name && entity.info.name !== name) {
+      name = context.server.getUniqueName(entity.id, entity.info.name);
+    }
+    const newEntity: AdminEntity2 = {
       ...previousVersion,
-      ...entity,
-      _version: previousVersion._version + 1,
+      info: {
+        ...previousVersion.info,
+        version: previousVersion.info.version + 1,
+        name,
+      },
+      fields: {
+        ...previousVersion.fields,
+        ...entity.fields,
+      },
     };
-    newEntity._name = context.server.getUniqueName(entity.id, newEntity._name);
     context.server.addUpdatedEntity(newEntity, context.subjectId);
-    return ok(newEntity);
+
+    const afterUpdate = context.server.getEntity(entity.id);
+    assertIsDefined(afterUpdate);
+    return ok(afterUpdate);
   },
 
   publishEntities: async (
