@@ -17,7 +17,7 @@ import type {
   Paging,
   PublishedClient,
 } from '@datadata/core';
-import { validate as validateUuid, v4 as uuidv4 } from 'uuid';
+import { validate as validateUuid } from 'uuid';
 import type { Server, SessionContext } from '.';
 import { createServerAdminClient, createServerPublishedClient } from '.';
 import { createTestServer, ensureSessionContext, updateSchema } from './ServerTestUtils';
@@ -25,6 +25,7 @@ import {
   expectEntityHistoryVersions,
   expectResultValue,
   expectSearchResultEntities,
+  insecureTestUuidv4,
 } from '../test/AdditionalTestUtils';
 
 const { expectErrorResult, expectOkResult } = CoreTestUtils;
@@ -596,7 +597,7 @@ describe('createEntity()', () => {
   });
 
   test('Create EntityAdminFoo with id', async () => {
-    const id = uuidv4();
+    const id = insecureTestUuidv4();
     const createResult = await client.createEntity({
       id,
       info: { type: 'EntityAdminFoo', name: 'Draft' },
