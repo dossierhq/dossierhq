@@ -1,11 +1,11 @@
-import type { AdminEntityCreate, AdminEntityUpdate } from '@datadata/core';
+import type { AdminEntityCreate2, AdminEntityUpdate2 } from '@datadata/core';
 
 export interface EntityCreateRequest {
-  item: AdminEntityCreate;
+  item: AdminEntityCreate2;
 }
 
 export interface EntityUpdateRequest {
-  item: AdminEntityUpdate;
+  item: AdminEntityUpdate2;
 }
 
 export interface EntityPublishRequest {

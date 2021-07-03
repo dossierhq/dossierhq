@@ -225,9 +225,13 @@ describe('FullFoo', () => {
       Array [
         Array [
           Object {
-            "_name": "New name",
-            "_type": "Foo",
+            "fields": Object {},
             "id": "fc66b4d7-61ff-44d4-8f68-cb7f526df046",
+            "info": Object {
+              "name": "New name",
+              "type": "Foo",
+              "version": undefined,
+            },
           },
         ],
       ]
@@ -253,9 +257,15 @@ describe('FullFoo', () => {
       Array [
         Array [
           Object {
-            "_type": "Foo",
+            "fields": Object {
+              "title": "New title",
+            },
             "id": "fc66b4d7-61ff-44d4-8f68-cb7f526df046",
-            "title": "New title",
+            "info": Object {
+              "name": undefined,
+              "type": "Foo",
+              "version": undefined,
+            },
           },
         ],
       ]
@@ -279,9 +289,15 @@ describe('FullFoo', () => {
       Array [
         Array [
           Object {
-            "_type": "Foo",
-            "bar": null,
+            "fields": Object {
+              "bar": null,
+            },
             "id": "fc66b4d7-61ff-44d4-8f68-cb7f526df046",
+            "info": Object {
+              "name": undefined,
+              "type": "Foo",
+              "version": undefined,
+            },
           },
         ],
       ]
@@ -309,11 +325,17 @@ describe('FullFoo', () => {
       Array [
         Array [
           Object {
-            "_type": "Foo",
-            "bar": Object {
-              "id": "eb5732e2-b931-492b-82f1-f8fdd464f0d2",
+            "fields": Object {
+              "bar": Object {
+                "id": "eb5732e2-b931-492b-82f1-f8fdd464f0d2",
+              },
             },
             "id": "fc66b4d7-61ff-44d4-8f68-cb7f526df046",
+            "info": Object {
+              "name": undefined,
+              "type": "Foo",
+              "version": undefined,
+            },
           },
         ],
       ]
@@ -337,9 +359,15 @@ describe('FullFoo', () => {
       Array [
         Array [
           Object {
-            "_type": "Foo",
-            "annotatedBar": null,
+            "fields": Object {
+              "annotatedBar": null,
+            },
             "id": "fc66b4d7-61ff-44d4-8f68-cb7f526df046",
+            "info": Object {
+              "name": undefined,
+              "type": "Foo",
+              "version": undefined,
+            },
           },
         ],
       ]
@@ -365,15 +393,21 @@ describe('FullFoo', () => {
       Array [
         Array [
           Object {
-            "_type": "Foo",
-            "annotatedBar": Object {
-              "_type": "AnnotatedBar",
-              "annotation": "New annotation",
-              "bar": Object {
-                "id": "eb5732e2-b931-492b-82f1-f8fdd464f0d2",
+            "fields": Object {
+              "annotatedBar": Object {
+                "_type": "AnnotatedBar",
+                "annotation": "New annotation",
+                "bar": Object {
+                  "id": "eb5732e2-b931-492b-82f1-f8fdd464f0d2",
+                },
               },
             },
             "id": "fc66b4d7-61ff-44d4-8f68-cb7f526df046",
+            "info": Object {
+              "name": undefined,
+              "type": "Foo",
+              "version": undefined,
+            },
           },
         ],
       ]
@@ -400,15 +434,21 @@ describe('FullFoo', () => {
       Array [
         Array [
           Object {
-            "_type": "Foo",
-            "annotatedBar": Object {
-              "_type": "AnnotatedBar",
-              "annotation": "Annotation",
-              "bar": Object {
-                "id": "cb228716-d3dd-444f-9a77-80443d436339",
+            "fields": Object {
+              "annotatedBar": Object {
+                "_type": "AnnotatedBar",
+                "annotation": "Annotation",
+                "bar": Object {
+                  "id": "cb228716-d3dd-444f-9a77-80443d436339",
+                },
               },
             },
             "id": "fc66b4d7-61ff-44d4-8f68-cb7f526df046",
+            "info": Object {
+              "name": undefined,
+              "type": "Foo",
+              "version": undefined,
+            },
           },
         ],
       ]

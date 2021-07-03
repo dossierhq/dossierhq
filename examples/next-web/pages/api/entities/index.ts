@@ -1,4 +1,3 @@
-import { toAdminEntity1, toAdminEntityCreate2 } from '@datadata/core';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import type { EntityCreateRequest } from '../../../types/RequestTypes';
 import type { EntityResponse } from '../../../types/ResponseTypes';
@@ -16,14 +15,14 @@ export default async (req: NextApiRequest, res: NextApiResponse<EntityResponse>)
     }
     const { adminClient } = authResult.value;
 
-    const result = await adminClient.createEntity(toAdminEntityCreate2(body.item));
+    const result = await adminClient.createEntity(body.item);
 
     if (result.isError()) {
       throw errorResultToBoom(result);
     }
     return {
       location: BackendUtils.urls.getEntity(result.value.id),
-      body: { item: toAdminEntity1(result.value) },
+      body: { item: result.value },
     };
   });
 };
