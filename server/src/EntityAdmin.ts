@@ -1,9 +1,8 @@
-import { EntityPublishState, notOk, ok, toAdminEntity2 } from '@datadata/core';
+import { EntityPublishState, notOk, ok } from '@datadata/core';
 import type {
-  AdminEntity,
   AdminEntity2,
-  AdminEntityCreate,
-  AdminEntityUpdate,
+  AdminEntityCreate2,
+  AdminEntityUpdate2,
   AdminQuery,
   Connection,
   Edge,
@@ -42,7 +41,7 @@ export async function getEntity(
   context: SessionContext,
   id: string,
   version?: number | null
-): PromiseResult<AdminEntity, ErrorType.NotFound> {
+): PromiseResult<AdminEntity2, ErrorType.NotFound> {
   let actualVersion: number;
   if (typeof version === 'number') {
     actualVersion = version;
@@ -93,7 +92,7 @@ export async function getEntities(
     if (!entityMain) {
       return notOk.NotFound('No such entity');
     }
-    return ok(toAdminEntity2(decodeAdminEntity(context, entityMain)));
+    return ok(decodeAdminEntity(context, entityMain));
   });
 
   return result;
@@ -134,7 +133,7 @@ export async function searchEntities(
     },
     edges: entities.map((entity, index) => ({
       cursor: toOpaqueCursor(cursorType, entitiesValues[index][cursorName]),
-      node: ok(toAdminEntity2(entity)),
+      node: ok(entity),
     })),
   });
 }
@@ -187,8 +186,8 @@ async function withUniqueNameAttempt<TResult>(
 
 export async function createEntity(
   context: SessionContext,
-  entity: AdminEntityCreate
-): PromiseResult<AdminEntity, ErrorType.BadRequest> {
+  entity: AdminEntityCreate2
+): PromiseResult<AdminEntity2, ErrorType.BadRequest> {
   const resolvedResult = resolveCreateEntity(context, entity);
   if (resolvedResult.isError()) {
     return resolvedResult;
@@ -256,12 +255,15 @@ export async function createEntity(
       await Db.queryNone(context, qb.build());
     }
 
-    const result: AdminEntity = {
-      ...createEntity,
+    const result: AdminEntity2 = {
       id: uuid,
-      _name: actualName,
-      _publishState: EntityPublishState.Draft,
-      _version: 0,
+      info: {
+        ...createEntity.info,
+        name: actualName,
+        publishingState: EntityPublishState.Draft,
+        version: 0,
+      },
+      fields: createEntity.fields ?? {},
     };
     return ok(result);
   });
@@ -269,8 +271,8 @@ export async function createEntity(
 
 export async function updateEntity(
   context: SessionContext,
-  entity: AdminEntityUpdate
-): PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.NotFound> {
+  entity: AdminEntityUpdate2
+): PromiseResult<AdminEntity2, ErrorType.BadRequest | ErrorType.NotFound> {
   return await context.withTransaction(async (context) => {
     const previousValues = await Db.queryNoneOrOne<
       Pick<
@@ -305,7 +307,7 @@ export async function updateEntity(
     const { id: versionsId } = await Db.queryOne<Pick<EntityVersionsTable, 'id'>>(
       context,
       'INSERT INTO entity_versions (entities_id, created_by, version, data) VALUES ($1, $2, $3, $4) RETURNING id',
-      [entityId, context.session.subjectInternalId, updatedEntity._version, data]
+      [entityId, context.session.subjectInternalId, updatedEntity.info.version, data]
     );
 
     if (name !== previousName) {
@@ -314,7 +316,7 @@ export async function updateEntity(
           name,
           entityId,
         ]);
-        updatedEntity._name = name;
+        updatedEntity.info.name = name;
       });
     }
 

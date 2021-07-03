@@ -1379,10 +1379,10 @@ describe('createEntity()', () => {
       fields: { title: 'title' },
     });
 
-    expectErrorResult(result, ErrorType.BadRequest, 'Missing entity._name');
+    expectErrorResult(result, ErrorType.BadRequest, 'Missing entity.info.name');
   });
 
-  test('Error: Create with invalid _version', async () => {
+  test('Error: Create with invalid version', async () => {
     const result = await client.createEntity({
       info: {
         type: 'EntityAdminFoo',
@@ -1412,7 +1412,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       result,
       ErrorType.BadRequest,
-      'entity.bar: referenced entity (fcc46a9e-2097-4bd6-bb08-56d5f59db26b) doesn’t exist'
+      'entity.fields.bar: referenced entity (fcc46a9e-2097-4bd6-bb08-56d5f59db26b) doesn’t exist'
     );
   });
 
@@ -1428,7 +1428,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       result,
       ErrorType.BadRequest,
-      `entity.bar: referenced entity (${referenceId}) has an invalid type AdminOnlyEditBefore`
+      `entity.fields.bar: referenced entity (${referenceId}) has an invalid type AdminOnlyEditBefore`
     );
   });
 
@@ -1439,7 +1439,7 @@ describe('createEntity()', () => {
         tags: 'invalid',
       },
     });
-    expectErrorResult(createResult, ErrorType.BadRequest, 'entity.tags: expected list');
+    expectErrorResult(createResult, ErrorType.BadRequest, 'entity.fields.tags: expected list');
   });
 
   test('Error: Set list of string when expecting string', async () => {
@@ -1452,7 +1452,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       createResult,
       ErrorType.BadRequest,
-      'entity.title: expected string, got list'
+      'entity.fields.title: expected string, got list'
     );
   });
 
@@ -1463,7 +1463,7 @@ describe('createEntity()', () => {
         bars: { id: 'fcc46a9e-2097-4bd6-bb08-56d5f59db26b' },
       },
     });
-    expectErrorResult(createResult, ErrorType.BadRequest, 'entity.bars: expected list');
+    expectErrorResult(createResult, ErrorType.BadRequest, 'entity.fields.bars: expected list');
   });
 
   test('Error: Set list of references when expecting reference', async () => {
@@ -1479,7 +1479,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       createResult,
       ErrorType.BadRequest,
-      'entity.bar: expected reference, got list'
+      'entity.fields.bar: expected reference, got list'
     );
   });
 
@@ -1490,7 +1490,11 @@ describe('createEntity()', () => {
         twoStrings: { one: 'One', two: 'Two' },
       },
     });
-    expectErrorResult(createResult, ErrorType.BadRequest, 'entity.twoStrings: missing _type');
+    expectErrorResult(
+      createResult,
+      ErrorType.BadRequest,
+      'entity.fields.twoStrings: missing _type'
+    );
   });
 
   test('Error: value type with invalid _type', async () => {
@@ -1503,7 +1507,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       createResult,
       ErrorType.BadRequest,
-      'entity.twoStrings: value type Invalid doesn’t exist'
+      'entity.fields.twoStrings: value type Invalid doesn’t exist'
     );
   });
 
@@ -1517,7 +1521,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       createResult,
       ErrorType.BadRequest,
-      'entity.oneString: value of type EntityAdminTwoStrings is not allowed'
+      'entity.fields.oneString: value of type EntityAdminTwoStrings is not allowed'
     );
   });
 
@@ -1531,7 +1535,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       createResult,
       ErrorType.BadRequest,
-      'entity.oneString: Unsupported field names: invalid'
+      'entity.fields.oneString: Unsupported field names: invalid'
     );
   });
 
@@ -1542,7 +1546,7 @@ describe('createEntity()', () => {
         bodyList: { blocks: [] },
       },
     });
-    expectErrorResult(createResult, ErrorType.BadRequest, 'entity.bodyList: expected list');
+    expectErrorResult(createResult, ErrorType.BadRequest, 'entity.fields.bodyList: expected list');
   });
 
   test('Error: rich text list, where single is expected', async () => {
@@ -1555,7 +1559,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       createResult,
       ErrorType.BadRequest,
-      'entity.body: expected single value, got list'
+      'entity.fields.body: expected single value, got list'
     );
   });
 
@@ -1569,7 +1573,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       createResult,
       ErrorType.BadRequest,
-      'entity.body: expected single value, got list'
+      'entity.fields.body: expected single value, got list'
     );
   });
 
@@ -1583,7 +1587,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       createResult,
       ErrorType.BadRequest,
-      'entity.body: expected object, got string'
+      'entity.fields.body: expected object, got string'
     );
   });
 
@@ -1594,7 +1598,7 @@ describe('createEntity()', () => {
         body: {},
       },
     });
-    expectErrorResult(createResult, ErrorType.BadRequest, 'entity.body: missing blocks');
+    expectErrorResult(createResult, ErrorType.BadRequest, 'entity.fields.body: missing blocks');
   });
 
   test('Error: rich text, blocks as string', async () => {
@@ -1607,7 +1611,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       createResult,
       ErrorType.BadRequest,
-      'entity.body.blocks: expected array, got string'
+      'entity.fields.body.blocks: expected array, got string'
     );
   });
 
@@ -1621,7 +1625,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       createResult,
       ErrorType.BadRequest,
-      'entity.body: unexpected keys version, time'
+      'entity.fields.body: unexpected keys version, time'
     );
   });
 
@@ -1635,7 +1639,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       createResult,
       ErrorType.BadRequest,
-      'entity.bodyOnlyParagraph[0]: rich text block of type entity is not allowed'
+      'entity.fields.bodyOnlyParagraph[0]: rich text block of type entity is not allowed'
     );
   });
 
@@ -1653,7 +1657,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       createResult,
       ErrorType.BadRequest,
-      'entity.body[0]: unexpected keys invalid, unexpected'
+      'entity.fields.body[0]: unexpected keys invalid, unexpected'
     );
   });
 
@@ -1664,7 +1668,7 @@ describe('createEntity()', () => {
         locations: { lat: 55.60498, lng: 13.003822 },
       },
     });
-    expectErrorResult(createResult, ErrorType.BadRequest, 'entity.locations: expected list');
+    expectErrorResult(createResult, ErrorType.BadRequest, 'entity.fields.locations: expected list');
   });
 
   test('Error: location list when single item expected', async () => {
@@ -1677,7 +1681,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       createResult,
       ErrorType.BadRequest,
-      'entity.location: expected location, got list'
+      'entity.fields.location: expected location, got list'
     );
   });
 
@@ -1691,7 +1695,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       createResult,
       ErrorType.BadRequest,
-      'entity.location: expected {lat: number, lng: number}, got [object Object]'
+      'entity.fields.location: expected {lat: number, lng: number}, got [object Object]'
     );
   });
 
@@ -1702,7 +1706,11 @@ describe('createEntity()', () => {
         twoStringsList: { _type: 'EntityAdminTwoStrings', one: 'One', two: 'Two' },
       },
     });
-    expectErrorResult(createResult, ErrorType.BadRequest, 'entity.twoStringsList: expected list');
+    expectErrorResult(
+      createResult,
+      ErrorType.BadRequest,
+      'entity.fields.twoStringsList: expected list'
+    );
   });
 
   test('Error: list of value type when single item expected', async () => {
@@ -1718,7 +1726,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       createResult,
       ErrorType.BadRequest,
-      'entity.twoStrings: expected single value, got list'
+      'entity.fields.twoStrings: expected single value, got list'
     );
   });
 });
@@ -2889,7 +2897,7 @@ describe('updateEntity()', () => {
       expectErrorResult(
         updateResult,
         ErrorType.BadRequest,
-        'entity.bar: referenced entity (9783ca4f-f5b4-4f6a-a7bf-aae33e227841) doesn’t exist'
+        'entity.fields.bar: referenced entity (9783ca4f-f5b4-4f6a-a7bf-aae33e227841) doesn’t exist'
       );
     }
   });
@@ -2907,7 +2915,7 @@ describe('updateEntity()', () => {
       expectErrorResult(
         updateResult,
         ErrorType.BadRequest,
-        `entity.bar: referenced entity (${referenceId}) has an invalid type AdminOnlyEditBefore`
+        `entity.fields.bar: referenced entity (${referenceId}) has an invalid type AdminOnlyEditBefore`
       );
     }
   });

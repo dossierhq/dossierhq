@@ -54,7 +54,7 @@ beforeAll(async () => {
 
 describe('collectDataFromEntity', () => {
   test('empty', () => {
-    expect(collectDataFromEntity(context, { _type: 'EntityCodecFoo', _name: 'foo' }))
+    expect(collectDataFromEntity(context, { info: { type: 'EntityCodecFoo', name: 'foo' } }))
       .toMatchInlineSnapshot(`
       Object {
         "fullTextSearchText": Array [],
@@ -65,8 +65,9 @@ describe('collectDataFromEntity', () => {
   });
 
   test('name only', () => {
-    expect(collectDataFromEntity(context, { _type: 'EntityCodecFoo', _name: 'hello world' }))
-      .toMatchInlineSnapshot(`
+    expect(
+      collectDataFromEntity(context, { info: { type: 'EntityCodecFoo', name: 'hello world' } })
+    ).toMatchInlineSnapshot(`
       Object {
         "fullTextSearchText": Array [],
         "locations": Array [],
@@ -78,10 +79,11 @@ describe('collectDataFromEntity', () => {
   test('strings', () => {
     expect(
       collectDataFromEntity(context, {
-        _type: 'EntityCodecFoo',
-        _name: 'hello world',
-        string: 'Hello string world',
-        strings: ['one', 'two', 'three'],
+        info: { type: 'EntityCodecFoo', name: 'hello world' },
+        fields: {
+          string: 'Hello string world',
+          strings: ['one', 'two', 'three'],
+        },
       })
     ).toMatchInlineSnapshot(`
       Object {
@@ -100,13 +102,14 @@ describe('collectDataFromEntity', () => {
   test('value item strings', () => {
     expect(
       collectDataFromEntity(context, {
-        _type: 'EntityCodecFoo',
-        _name: 'hello world',
-        valueOne: {
-          _type: 'EntityCodecValueOne',
-          string: 'one',
-          strings: ['two', 'three'],
-          child: { _type: 'EntityCodecValueOne', string: 'four' },
+        info: { type: 'EntityCodecFoo', name: 'hello world' },
+        fields: {
+          valueOne: {
+            _type: 'EntityCodecValueOne',
+            string: 'one',
+            strings: ['two', 'three'],
+            child: { _type: 'EntityCodecValueOne', string: 'four' },
+          },
         },
       })
     ).toMatchInlineSnapshot(`
@@ -126,26 +129,27 @@ describe('collectDataFromEntity', () => {
   test('rich text strings', () => {
     expect(
       collectDataFromEntity(context, {
-        _type: 'EntityCodecFoo',
-        _name: 'hello world',
-        richText: {
-          blocks: [
-            { type: RichTextBlockType.paragraph, data: { text: 'one one' } },
-            {
-              type: RichTextBlockType.valueItem,
-              data: { _type: 'EntityCodecValueOne', string: 'one two' },
-            },
-            {
-              type: 'header',
-              data: { level: 3, text: 'Header text' },
-            },
-            {
-              type: 'random',
-              data: { foo: ['a', 'b'], bar: { z: 123 } },
-            },
-          ],
+        info: { type: 'EntityCodecFoo', name: 'hello world' },
+        fields: {
+          richText: {
+            blocks: [
+              { type: RichTextBlockType.paragraph, data: { text: 'one one' } },
+              {
+                type: RichTextBlockType.valueItem,
+                data: { _type: 'EntityCodecValueOne', string: 'one two' },
+              },
+              {
+                type: 'header',
+                data: { level: 3, text: 'Header text' },
+              },
+              {
+                type: 'random',
+                data: { foo: ['a', 'b'], bar: { z: 123 } },
+              },
+            ],
+          },
+          richTexts: [{ blocks: [{ type: RichTextBlockType.paragraph, data: { text: 'two' } }] }],
         },
-        richTexts: [{ blocks: [{ type: RichTextBlockType.paragraph, data: { text: 'two' } }] }],
       })
     ).toMatchInlineSnapshot(`
       Object {
@@ -168,13 +172,14 @@ describe('collectDataFromEntity', () => {
   test('entity locations', () => {
     expect(
       collectDataFromEntity(context, {
-        _type: 'EntityCodecFoo',
-        _name: 'hello world',
-        location: { lat: 1, lng: 2 },
-        locations: [
-          { lat: 3, lng: 4 },
-          { lat: 5, lng: 6 },
-        ],
+        info: { type: 'EntityCodecFoo', name: 'hello world' },
+        fields: {
+          location: { lat: 1, lng: 2 },
+          locations: [
+            { lat: 3, lng: 4 },
+            { lat: 5, lng: 6 },
+          ],
+        },
       })
     ).toMatchInlineSnapshot(`
       Object {
@@ -201,16 +206,17 @@ describe('collectDataFromEntity', () => {
   test('value item locations', () => {
     expect(
       collectDataFromEntity(context, {
-        _type: 'EntityCodecFoo',
-        _name: 'hello world',
-        valueOne: { _type: 'EntityCodecValueOne', location: { lat: 1, lng: 2 } },
-        richText: {
-          blocks: [
-            {
-              type: RichTextBlockType.valueItem,
-              data: { _type: 'EntityCodecValueOne', location: { lat: 3, lng: 4 } },
-            },
-          ],
+        info: { type: 'EntityCodecFoo', name: 'hello world' },
+        fields: {
+          valueOne: { _type: 'EntityCodecValueOne', location: { lat: 1, lng: 2 } },
+          richText: {
+            blocks: [
+              {
+                type: RichTextBlockType.valueItem,
+                data: { _type: 'EntityCodecValueOne', location: { lat: 3, lng: 4 } },
+              },
+            ],
+          },
         },
       })
     ).toMatchInlineSnapshot(`
@@ -234,11 +240,12 @@ describe('collectDataFromEntity', () => {
   test('entity references', () => {
     expect(
       collectDataFromEntity(context, {
-        _type: 'EntityCodecFoo',
-        _name: 'foo',
-        bar: { id: 'barId1' },
-        bars: [{ id: 'barId2' }, { id: 'barId3' }],
-        reference: { id: 'unspecifiedId1' },
+        info: { type: 'EntityCodecFoo', name: 'foo' },
+        fields: {
+          bar: { id: 'barId1' },
+          bars: [{ id: 'barId2' }, { id: 'barId3' }],
+          reference: { id: 'unspecifiedId1' },
+        },
       })
     ).toMatchInlineSnapshot(`
       Object {
@@ -249,7 +256,7 @@ describe('collectDataFromEntity', () => {
             "entityTypes": Array [
               "EntityCodecBar",
             ],
-            "prefix": "entity.bar",
+            "prefix": "entity.fields.bar",
             "uuids": Array [
               "barId1",
             ],
@@ -258,7 +265,7 @@ describe('collectDataFromEntity', () => {
             "entityTypes": Array [
               "EntityCodecBar",
             ],
-            "prefix": "entity.bars[0]",
+            "prefix": "entity.fields.bars[0]",
             "uuids": Array [
               "barId2",
             ],
@@ -267,14 +274,14 @@ describe('collectDataFromEntity', () => {
             "entityTypes": Array [
               "EntityCodecBar",
             ],
-            "prefix": "entity.bars[1]",
+            "prefix": "entity.fields.bars[1]",
             "uuids": Array [
               "barId3",
             ],
           },
           Object {
             "entityTypes": undefined,
-            "prefix": "entity.reference",
+            "prefix": "entity.fields.reference",
             "uuids": Array [
               "unspecifiedId1",
             ],
@@ -287,9 +294,10 @@ describe('collectDataFromEntity', () => {
   test('value item references', () => {
     expect(
       collectDataFromEntity(context, {
-        _type: 'EntityCodecFoo',
-        _name: 'foo',
-        valueOne: { _type: 'EntityCodecValueOne', bar: { id: 'bar1Id' } },
+        info: { type: 'EntityCodecFoo', name: 'foo' },
+        fields: {
+          valueOne: { _type: 'EntityCodecValueOne', bar: { id: 'bar1Id' } },
+        },
       })
     ).toMatchInlineSnapshot(`
       Object {
@@ -300,7 +308,7 @@ describe('collectDataFromEntity', () => {
             "entityTypes": Array [
               "EntityCodecBar",
             ],
-            "prefix": "entity.valueOne.bar",
+            "prefix": "entity.fields.valueOne.bar",
             "uuids": Array [
               "bar1Id",
             ],
@@ -313,16 +321,17 @@ describe('collectDataFromEntity', () => {
   test('rich text reference', () => {
     expect(
       collectDataFromEntity(context, {
-        _type: 'EntityCodecFoo',
-        _name: 'foo',
-        richText: {
-          blocks: [
-            { type: RichTextBlockType.entity, data: { id: 'barId1' } },
-            {
-              type: RichTextBlockType.valueItem,
-              data: { _type: 'EntityCodecValueOne', bar: { id: 'bar2Id' } },
-            },
-          ],
+        info: { type: 'EntityCodecFoo', name: 'foo' },
+        fields: {
+          richText: {
+            blocks: [
+              { type: RichTextBlockType.entity, data: { id: 'barId1' } },
+              {
+                type: RichTextBlockType.valueItem,
+                data: { _type: 'EntityCodecValueOne', bar: { id: 'bar2Id' } },
+              },
+            ],
+          },
         },
       })
     ).toMatchInlineSnapshot(`
@@ -334,7 +343,7 @@ describe('collectDataFromEntity', () => {
             "entityTypes": Array [
               "EntityCodecBar",
             ],
-            "prefix": "entity.richText[0]",
+            "prefix": "entity.fields.richText[0]",
             "uuids": Array [
               "barId1",
             ],
@@ -343,7 +352,7 @@ describe('collectDataFromEntity', () => {
             "entityTypes": Array [
               "EntityCodecBar",
             ],
-            "prefix": "entity.richText[1].bar",
+            "prefix": "entity.fields.richText[1].bar",
             "uuids": Array [
               "bar2Id",
             ],
