@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from 'uuid';
 import schema from '../../stories/StoryboardSchema';
 import { TestContextAdapter } from '../../test/TestContextAdapter';
 import { foo1Id } from '../../test/EntityFixtures';
@@ -10,6 +9,7 @@ import {
   SetNameAction,
   UpdateEntityAction,
 } from './EntityEditorReducer';
+import { insecureTestUuidv4 } from '../../test/TestUtils';
 
 function newState(): EntityEditorState {
   return initializeEntityEditorState({ schema });
@@ -56,7 +56,7 @@ describe('reduceEntityEditorState', () => {
   });
 
   test('SetNameAction new entity', () => {
-    const id = uuidv4();
+    const id = insecureTestUuidv4();
     let state = newState();
     state = reduceEntityEditorState(state, new AddEntityDraftAction({ id, newType: 'Foo' }));
     state = reduceEntityEditorState(state, new SetNameAction(id, 'New name'));
