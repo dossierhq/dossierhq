@@ -1,7 +1,7 @@
 import type {
-  AdminEntity,
-  AdminEntityCreate,
-  AdminEntityUpdate,
+  AdminEntity2,
+  AdminEntityCreate2,
+  AdminEntityUpdate2,
   Entity,
   EntityTypeSpecification,
   ErrorType,
@@ -28,7 +28,6 @@ import {
   notOk,
   ok,
   RichTextBlockType,
-  toAdminEntity2,
   visitItemRecursively,
   visitorPathToString,
 } from '@datadata/core';
@@ -170,7 +169,10 @@ function decodeRichTextField(
   return { blocks: decodedBlocks };
 }
 
-export function decodeAdminEntity(context: SessionContext, values: AdminEntityValues): AdminEntity {
+export function decodeAdminEntity(
+  context: SessionContext,
+  values: AdminEntityValues
+): AdminEntity2 {
   const schema = context.server.getSchema();
   const entitySpec = schema.getEntityTypeSpecification(values.type);
   if (!entitySpec) {
@@ -179,17 +181,20 @@ export function decodeAdminEntity(context: SessionContext, values: AdminEntityVa
 
   const state = resolvePublishState(values, values);
 
-  const entity: AdminEntity = {
+  const entity: AdminEntity2 = {
     id: values.uuid,
-    _type: values.type,
-    _name: values.name,
-    _version: values.version,
-    _publishState: state,
+    info: {
+      type: values.type,
+      name: values.name,
+      version: values.version,
+      publishingState: state,
+    },
+    fields: {},
   };
   for (const fieldSpec of entitySpec.fields) {
     const { name: fieldName } = fieldSpec;
     const fieldValue = values.data[fieldName];
-    entity[fieldName] = decodeFieldItemOrList(schema, fieldSpec, fieldValue);
+    entity.fields[fieldName] = decodeFieldItemOrList(schema, fieldSpec, fieldValue);
   }
   return entity;
 }
@@ -215,25 +220,28 @@ export function resolvePublishState(
 
 export function resolveCreateEntity(
   context: SessionContext,
-  entity: AdminEntityCreate
-): Result<AdminEntityCreate, ErrorType.BadRequest> {
-  if (!entity._type) {
+  entity: AdminEntityCreate2
+): Result<AdminEntityCreate2, ErrorType.BadRequest> {
+  if (!entity.info.type) {
     return notOk.BadRequest('Missing entity._type');
   }
-  if (entity._version && entity._version !== 0) {
-    return notOk.BadRequest(`Unsupported version for create: ${entity._version}`);
+  if (entity.info.version && entity.info.version !== 0) {
+    return notOk.BadRequest(`Unsupported version for create: ${entity.info.version}`);
   }
 
-  const result: AdminEntityCreate = {
-    _name: entity._name,
-    _type: entity._type,
-    _version: 0,
+  const result: AdminEntityCreate2 = {
+    info: {
+      name: entity.info.name,
+      type: entity.info.type,
+      version: 0,
+    },
+    fields: {},
   };
 
   const schema = context.server.getSchema();
-  const entitySpec = schema.getEntityTypeSpecification(result._type);
+  const entitySpec = schema.getEntityTypeSpecification(result.info.type);
   if (!entitySpec) {
-    return notOk.BadRequest(`Entity type ${result._type} doesn’t exist`);
+    return notOk.BadRequest(`Entity type ${result.info.type} doesn’t exist`);
   }
 
   const unsupportedFieldsResult = checkForUnsupportedFields(entitySpec, entity);
@@ -241,41 +249,48 @@ export function resolveCreateEntity(
     return unsupportedFieldsResult;
   }
 
+  const fields: Record<string, unknown> = {};
   for (const fieldSpec of entitySpec.fields) {
-    result[fieldSpec.name] = entity[fieldSpec.name] ?? null;
+    fields[fieldSpec.name] = entity.fields?.[fieldSpec.name] ?? null;
   }
+  result.fields = fields;
 
   return ok(result);
 }
 
 export function resolveUpdateEntity(
   context: SessionContext,
-  entity: AdminEntityUpdate,
+  entity: AdminEntityUpdate2,
   type: string,
   values: Pick<
     EntitiesTable,
     'archived' | 'name' | 'never_published' | 'published_entity_versions_id'
   > &
     Pick<EntityVersionsTable, 'data' | 'version'>
-): Result<AdminEntity, ErrorType.BadRequest> {
-  if (entity._type && entity._type !== type) {
-    return notOk.BadRequest(`New type ${entity._type} doesn’t correspond to previous type ${type}`);
+): Result<AdminEntity2, ErrorType.BadRequest> {
+  if (entity.info?.type && entity.info.type !== type) {
+    return notOk.BadRequest(
+      `New type ${entity.info.type} doesn’t correspond to previous type ${type}`
+    );
   }
 
   const state = resolvePublishState(values, 'is-update');
 
-  const result: AdminEntity = {
+  const result: AdminEntity2 = {
     id: entity.id,
-    _name: entity._name || values.name,
-    _type: type,
-    _version: values.version + 1,
-    _publishState: state,
+    info: {
+      name: entity.info?.name ?? values.name,
+      type: type,
+      version: values.version + 1,
+      publishingState: state,
+    },
+    fields: {},
   };
 
   const schema = context.server.getSchema();
-  const entitySpec = schema.getEntityTypeSpecification(result._type);
+  const entitySpec = schema.getEntityTypeSpecification(result.info.type);
   if (!entitySpec) {
-    return notOk.BadRequest(`Entity type ${result._type} doesn’t exist`);
+    return notOk.BadRequest(`Entity type ${result.info.type} doesn’t exist`);
   }
 
   const unsupportedFieldsResult = checkForUnsupportedFields(entitySpec, entity);
@@ -285,13 +300,13 @@ export function resolveUpdateEntity(
 
   for (const fieldSpec of entitySpec.fields) {
     const fieldName = fieldSpec.name;
-    if (fieldName in entity) {
-      result[fieldName] = entity[fieldName];
+    if (entity.fields && fieldName in entity.fields) {
+      result.fields[fieldName] = entity.fields[fieldName];
     } else if (fieldName in values.data) {
       const encodedData = values.data[fieldName];
-      result[fieldName] = decodeFieldItemOrList(schema, fieldSpec, encodedData);
+      result.fields[fieldName] = decodeFieldItemOrList(schema, fieldSpec, encodedData);
     } else {
-      result[fieldName] = null;
+      result.fields[fieldName] = null;
     }
   }
 
@@ -300,12 +315,15 @@ export function resolveUpdateEntity(
 
 function checkForUnsupportedFields(
   entitySpec: EntityTypeSpecification,
-  entity: AdminEntityCreate | AdminEntityUpdate
+  entity: AdminEntityCreate2 | AdminEntityUpdate2
 ): Result<void, ErrorType.BadRequest> {
-  const unsupportedFieldNames = new Set(Object.keys(entity));
+  if (!entity.fields) {
+    return ok(undefined);
+  }
 
-  ['id', '_name', '_type', '_version'].forEach((x) => unsupportedFieldNames.delete(x));
-  entitySpec.fields.forEach((x) => unsupportedFieldNames.delete(x.name));
+  const unsupportedFieldNames = new Set(Object.keys(entity.fields));
+
+  entitySpec.fields.forEach((it) => unsupportedFieldNames.delete(it.name));
 
   if (unsupportedFieldNames.size > 0) {
     return notOk.BadRequest(`Unsupported field names: ${[...unsupportedFieldNames].join(', ')}`);
@@ -315,14 +333,17 @@ function checkForUnsupportedFields(
 
 export async function encodeEntity(
   context: SessionContext,
-  entity: AdminEntity | AdminEntityCreate
+  entity: AdminEntity2 | AdminEntityCreate2
 ): PromiseResult<EncodeEntityResult, ErrorType.BadRequest> {
-  const assertion = ensureRequired({ 'entity._type': entity._type, 'entity._name': entity._name });
+  const assertion = ensureRequired({
+    'entity.info.type': entity.info.type,
+    'entity.info.name': entity.info.name,
+  });
   if (assertion.isError()) {
     return assertion;
   }
 
-  const { _type: type, _name: name } = entity;
+  const { type, name } = entity.info;
 
   const schema = context.server.getSchema();
   const entitySpec = schema.getEntityTypeSpecification(type);
@@ -339,12 +360,12 @@ export async function encodeEntity(
     fullTextSearchText: [],
   };
   for (const fieldSpec of entitySpec.fields) {
-    if (fieldSpec.name in entity) {
-      const data = entity[fieldSpec.name];
+    if (entity.fields && fieldSpec.name in entity.fields) {
+      const data = entity.fields[fieldSpec.name];
       if (data === null || data === undefined) {
         continue;
       }
-      const prefix = `entity.${fieldSpec.name}`;
+      const prefix = `entity.fields.${fieldSpec.name}`;
       const encodeResult = encodeFieldItemOrList(schema, fieldSpec, prefix, data);
       if (encodeResult.isError()) {
         return encodeResult;
@@ -418,7 +439,7 @@ function encodeValueItemField(
   if (typeof data !== 'object' || !data) {
     return notOk.BadRequest(`${prefix}: expected object, got ${typeof data}`);
   }
-  const value = data as { _type: string; [key: string]: unknown };
+  const value = data as ValueItem;
   const valueType = value._type;
   if (!valueType) {
     return notOk.BadRequest(`${prefix}: missing _type`);
@@ -533,7 +554,7 @@ function encodeRichTextField(
 
 function collectDataFromEntity(
   context: SessionContext,
-  entity: AdminEntity | AdminEntityCreate
+  entity: AdminEntity2 | AdminEntityCreate2
 ): {
   requestedReferences: RequestedReference[];
   locations: Location[];
@@ -545,7 +566,7 @@ function collectDataFromEntity(
 
   visitItemRecursively({
     schema: context.server.getSchema(),
-    item: toAdminEntity2(entity as AdminEntity),
+    item: entity as AdminEntity2,
     path: ['entity'],
     visitField: (path, fieldSpec, data, _visitContext) => {
       if (fieldSpec.type !== FieldType.ValueType && fieldSpec.type !== FieldType.RichText) {

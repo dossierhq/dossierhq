@@ -291,6 +291,7 @@ function doVisitItemRecursively<TVisitContext>(
   let fields;
   if (!isItemValueItem(item)) {
     fields = item.fields;
+    path = [...path, 'fields'];
 
     const entitySpec = schema.getEntityTypeSpecification(item.info.type);
     if (!entitySpec) {
@@ -310,7 +311,7 @@ function doVisitItemRecursively<TVisitContext>(
   }
 
   for (const fieldSpec of fieldSpecs) {
-    const fieldValue = fields[fieldSpec.name];
+    const fieldValue = fields?.[fieldSpec.name];
     if (fieldValue === null || fieldValue === undefined) {
       continue;
     }
