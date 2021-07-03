@@ -106,10 +106,13 @@ describe('NewFoo', () => {
       Array [
         Array [
           Object {
-            "_name": "New name",
-            "_type": "Foo",
-            "_version": 0,
+            "fields": Object {},
             "id": "82ded109-44f2-48b9-a676-43162fda3d7d",
+            "info": Object {
+              "name": "New name",
+              "type": "Foo",
+              "version": 0,
+            },
           },
         ],
       ]
@@ -134,11 +137,15 @@ describe('NewFoo', () => {
       Array [
         Array [
           Object {
-            "_name": "New name",
-            "_type": "Foo",
-            "_version": 0,
+            "fields": Object {
+              "title": "New title",
+            },
             "id": "82ded109-44f2-48b9-a676-43162fda3d7d",
-            "title": "New title",
+            "info": Object {
+              "name": "New name",
+              "type": "Foo",
+              "version": 0,
+            },
           },
         ],
       ]

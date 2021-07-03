@@ -39,8 +39,8 @@ export function EntityItemFieldEditor({
     <>
       <Row>
         <Button id={id} onClick={handleShow}>
-          {entity ? entity._name : value ? value.id : 'Select entity'}
-          {entity ? <PublishStateTag publishState={entity._publishState} /> : null}
+          {entity ? entity.info.name : value ? value.id : 'Select entity'}
+          {entity ? <PublishStateTag publishState={entity.info.publishingState} /> : null}
         </Button>
         {value ? (
           <IconButton icon="remove" title="Remove entity" onClick={() => onChange?.(null)} />
