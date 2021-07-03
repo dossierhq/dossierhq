@@ -1,11 +1,12 @@
 import type {
   AdminEntity,
+  AdminEntity2,
   EntityPublishState,
   EntityTypeSpecification,
   FieldSpecification,
   Schema,
 } from '@datadata/core';
-import { ErrorType } from '@datadata/core';
+import { ErrorType, toAdminEntity1 } from '@datadata/core';
 import isEqual from 'lodash/isEqual';
 import { v4 as uuidv4 } from 'uuid';
 import type { MessageItem } from '../../generic-components/Message/Message';
@@ -156,9 +157,9 @@ export class SetMessageLoadMessageAction extends EntityEditorDraftStateAction {
 export class UpdateEntityAction extends EntityEditorDraftStateAction {
   #entity: AdminEntity;
 
-  constructor(id: string, entity: AdminEntity) {
+  constructor(id: string, entity: AdminEntity2) {
     super(id);
-    this.#entity = entity;
+    this.#entity = toAdminEntity1(entity);
   }
 
   reduceDraft(

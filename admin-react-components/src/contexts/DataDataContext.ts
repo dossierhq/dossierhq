@@ -1,5 +1,4 @@
 import type {
-  AdminEntity,
   AdminEntity2,
   AdminEntityCreate2,
   AdminEntityUpdate2,
@@ -15,7 +14,7 @@ import type {
   PublishingResult,
   Schema,
 } from '@datadata/core';
-import { createErrorResultFromError, ErrorType, toAdminEntity1 } from '@datadata/core';
+import { assertExhaustive, createErrorResultFromError, ErrorType } from '@datadata/core';
 import { createContext } from 'react';
 import useSWR, { mutate } from 'swr';
 import type { EditorJsToolSettings } from '..';
@@ -80,6 +79,13 @@ enum FetcherActions {
   UseSearchEntities,
 }
 
+interface FetcherActionReturn {
+  [FetcherActions.UseEntity]: AdminEntity2;
+  [FetcherActions.UseEntityHistory]: EntityHistory;
+  [FetcherActions.UsePublishingHistory]: PublishingHistory;
+  [FetcherActions.UseSearchEntities]: Connection<Edge<AdminEntity2, ErrorType>> | null;
+}
+
 export class DataDataContextValue {
   #adapter: DataDataContextAdapter;
   #schema: Schema;
@@ -109,18 +115,17 @@ export class DataDataContextValue {
     id: string | undefined,
     version?: number | null
   ): {
-    entity?: AdminEntity;
+    entity?: AdminEntity2;
     entityError?: ErrorResult<unknown, ErrorType.NotFound | ErrorType.Generic>;
   } => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const { data, error } = useSWR(
+    const { data, error } = useSWR<FetcherActionReturn[FetcherActions.UseEntity]>(
       id ? [this.#rootKey, FetcherActions.UseEntity, id, version ?? null] : null,
       this.fetcher
     );
 
-    const entity: AdminEntity | undefined = data ? toAdminEntity1(data as AdminEntity2) : undefined;
     const entityError = error ? createErrorResultFromError(error, [ErrorType.NotFound]) : undefined;
-    return { entity, entityError };
+    return { entity: data, entityError };
   };
 
   /** Loads the history for an entity. If `id` is `undefined` no data is fetched */
@@ -131,7 +136,7 @@ export class DataDataContextValue {
     entityHistoryError?: ErrorResult<unknown, ErrorType.NotFound | ErrorType.Generic>;
   } => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const { data, error } = useSWR(
+    const { data, error } = useSWR<FetcherActionReturn[FetcherActions.UseEntityHistory]>(
       id ? [this.#rootKey, FetcherActions.UseEntityHistory, id] : null,
       this.fetcher
     );
@@ -153,7 +158,7 @@ export class DataDataContextValue {
     publishingHistoryError?: ErrorResult<unknown, ErrorType.NotFound | ErrorType.Generic>;
   } => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const { data, error } = useSWR(
+    const { data, error } = useSWR<FetcherActionReturn[FetcherActions.UsePublishingHistory]>(
       id ? [this.#rootKey, FetcherActions.UsePublishingHistory, id] : null,
       this.fetcher
     );
@@ -176,7 +181,7 @@ export class DataDataContextValue {
     connectionError?: ErrorResult<unknown, ErrorType.BadRequest | ErrorType.Generic>;
   } => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const { data, error } = useSWR(
+    const { data, error } = useSWR<FetcherActionReturn[FetcherActions.UseSearchEntities]>(
       query
         ? [this.#rootKey, FetcherActions.UseSearchEntities, JSON.stringify({ query, paging })]
         : null,
@@ -306,9 +311,12 @@ export class DataDataContextValue {
     mutate([this.#rootKey, FetcherActions.UsePublishingHistory, id]);
     mutate(
       [this.#rootKey, FetcherActions.UseEntity, id, null],
-      (cachedValue: AdminEntity | undefined) => {
+      (cachedValue: AdminEntity2 | undefined) => {
         if (cachedValue) {
-          const updatedValue: AdminEntity = { ...cachedValue, _publishState: publishState };
+          const updatedValue: AdminEntity2 = {
+            ...cachedValue,
+            info: { ...cachedValue.info, publishingState: publishState },
+          };
           return updatedValue;
         }
         return undefined;
@@ -316,11 +324,11 @@ export class DataDataContextValue {
     );
   }
 
-  private fetcher = async (
+  private fetcher = async <T extends FetcherActions>(
     _rootKey: string | undefined,
-    action: FetcherActions,
+    action: T,
     ...args: unknown[]
-  ) => {
+  ): Promise<FetcherActionReturn[T]> => {
     switch (action) {
       case FetcherActions.UseEntity: {
         const [id, version] = args as [string, number | null | undefined];
@@ -328,7 +336,7 @@ export class DataDataContextValue {
         if (result.isError()) {
           throw result.toError();
         }
-        return result.value;
+        return result.value as FetcherActionReturn[T];
       }
       case FetcherActions.UseEntityHistory: {
         const [id] = args as [string];
@@ -336,7 +344,7 @@ export class DataDataContextValue {
         if (result.isError()) {
           throw result.toError();
         }
-        return result.value;
+        return result.value as FetcherActionReturn[T];
       }
       case FetcherActions.UsePublishingHistory: {
         const [id] = args as [string];
@@ -344,7 +352,7 @@ export class DataDataContextValue {
         if (result.isError()) {
           throw result.toError();
         }
-        return result.value;
+        return result.value as FetcherActionReturn[T];
       }
       case FetcherActions.UseSearchEntities: {
         const [json] = args as [string];
@@ -354,10 +362,10 @@ export class DataDataContextValue {
         if (result.isError()) {
           throw result.toError();
         }
-        return result.value;
+        return result.value as FetcherActionReturn[T];
       }
       default:
-        throw new Error(`Unsupported action: ${action}`);
+        assertExhaustive(action as never);
     }
   };
 }
