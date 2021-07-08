@@ -19,8 +19,8 @@
     "docs:generate-graphviz": "dot -Tsvg -O docs/*.dot",
     "eslint:check:all": "./scripts/npm-all-projects.sh run eslint:check --if-present",
     "prettier:fix:all": "./scripts/npm-all-projects.sh run prettier:fix --if-present",
-    "test:all": "./scripts/npm-all-projects.sh run test --if-present",
-    "test:watch:all": "concurrently -n core,gql \"cd core && npm run test:watch -- --watchAll\" \"cd graphql && npm run test:watch -- --watchAll\"",
+    "test:all": "jest",
+    "test:watch:all": "jest --watch",
     "ts:check:all": "./scripts/npm-all-projects.sh run ts:check --if-present",
     "upgrade-dependencies": "npx npm-check-updates -u --packageFile ./package.json",
     "upgrade-dependencies:all": "./scripts/npm-all-projects.sh run upgrade-dependencies --if-present",
@@ -41,5 +41,7 @@
     "dotenv": "^9.0.2",
     "pg": "^8.6.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "jest": "~26.6.3"
+  }
 }
