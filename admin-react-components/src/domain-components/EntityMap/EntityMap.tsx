@@ -1,12 +1,12 @@
-import type { AdminEntity, AdminQuery, BoundingBox, Location, Schema } from '@datadata/core';
-import { isLocationItemField, toAdminEntity1, visitItemRecursively } from '@datadata/core';
+import type { AdminEntity2, AdminQuery, BoundingBox, Location, Schema } from '@datadata/core';
+import { isLocationItemField, visitItemRecursively } from '@datadata/core';
 import React, { useContext, useEffect, useState } from 'react';
 import { DataDataContext, MapContainer, PublishStateTag } from '../..';
 
 export interface EntityMapProps {
   className?: string;
   query?: AdminQuery;
-  onEntityClick: (entity: AdminEntity) => void;
+  onEntityClick: (entity: AdminEntity2) => void;
 }
 
 export function EntityMap({ className, query, onEntityClick }: EntityMapProps): JSX.Element | null {
@@ -28,7 +28,7 @@ export function EntityMap({ className, query, onEntityClick }: EntityMapProps): 
             if (edge.node.isError()) {
               return null;
             }
-            const entity = toAdminEntity1(edge.node.value);
+            const entity = edge.node.value;
             return (
               <EntityMarker
                 key={entity.id}
@@ -49,7 +49,7 @@ function EntityMarker({
   onClick,
 }: {
   schema: Schema;
-  entity: AdminEntity;
+  entity: AdminEntity2;
   onClick: () => void;
 }) {
   const entityLocations: { location: Location }[] = [];
@@ -75,8 +75,8 @@ function EntityMarker({
           location={item.location}
           tooltip={
             <>
-              {`${entity._type}: ${entity._name}`}
-              <PublishStateTag publishState={entity._publishState} />
+              {`${entity.info.type}: ${entity.info.name}`}
+              <PublishStateTag publishState={entity.info.publishingState} />
             </>
           }
           onClick={onClick}

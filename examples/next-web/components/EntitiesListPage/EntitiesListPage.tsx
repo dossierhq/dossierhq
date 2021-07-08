@@ -5,7 +5,7 @@ import {
   Loader,
   TypePicker,
 } from '@datadata/admin-react-components';
-import type { AdminEntity } from '@datadata/core';
+import type { AdminEntity2 } from '@datadata/core';
 import { useRouter } from 'next/router';
 import { useInitializeContext } from '../../contexts/DataDataContext';
 import { urls } from '../../utils/PageUtils';
@@ -14,7 +14,7 @@ export default function EntitiesListPage(): JSX.Element {
   const router = useRouter();
   const { contextValue } = useInitializeContext();
   const handleCreateEntity = (type: string) => router.push(urls.editPageNew(type));
-  const handleEntityClick = (entity: AdminEntity) => router.push(urls.editPage([entity.id]));
+  const handleEntityClick = (entity: AdminEntity2) => router.push(urls.editPage([entity.id]));
 
   if (!contextValue) {
     return <Loader />;
