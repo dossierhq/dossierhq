@@ -221,21 +221,26 @@ describe('adminEntity()', () => {
             adminEntity(id: $id) {
               __typename
               id
-              _type
-              _name
-              _version
-              _publishState
+              info {
+                __typename
+                type
+                name
+                version
+                publishingState
+              }
               ... on AdminQueryAdminFoo {
-                title
-                summary
-                tags
-                location {
-                  lat
-                  lng
-                }
-                locations {
-                  lat
-                  lng
+                fields {
+                  title
+                  summary
+                  tags
+                  location {
+                    lat
+                    lng
+                  }
+                  locations {
+                    lat
+                    lng
+                  }
                 }
               }
             }
@@ -250,18 +255,23 @@ describe('adminEntity()', () => {
           adminEntity: {
             __typename: 'AdminQueryAdminFoo',
             id,
-            _version: 0,
-            _type: 'QueryAdminFoo',
-            _name: name,
-            _publishState: EntityPublishState.Draft,
-            title: 'Howdy title',
-            summary: 'Howdy summary',
-            tags: ['one', 'two', 'three'],
-            location: { lat: 55.60498, lng: 13.003822 },
-            locations: [
-              { lat: 55.60498, lng: 13.003822 },
-              { lat: 56.381561, lng: 13.99286 },
-            ],
+            info: {
+              __typename: 'AdminEntityInfo',
+              version: 0,
+              type: 'QueryAdminFoo',
+              name,
+              publishingState: EntityPublishState.Draft,
+            },
+            fields: {
+              title: 'Howdy title',
+              summary: 'Howdy summary',
+              tags: ['one', 'two', 'three'],
+              location: { lat: 55.60498, lng: 13.003822 },
+              locations: [
+                { lat: 55.60498, lng: 13.003822 },
+                { lat: 56.381561, lng: 13.99286 },
+              ],
+            },
           },
         },
       });
@@ -286,30 +296,34 @@ describe('adminEntity()', () => {
             adminEntity(id: $id) {
               __typename
               id
-              _type
-              _name
-              _version
-              _publishState
+              info {
+                type
+                name
+                version
+                publishingState
+              }
               ... on AdminQueryAdminFoo {
-                title
-                summary
-                tags
-                bar {
-                  id
-                }
-                bars {
-                  id
-                }
-                location {
-                  lat
-                  lng
-                }
-                locations {
-                  lat
-                  lng
-                }
-                stringedBar {
-                  _type
+                fields {
+                  title
+                  summary
+                  tags
+                  bar {
+                    id
+                  }
+                  bars {
+                    id
+                  }
+                  location {
+                    lat
+                    lng
+                  }
+                  locations {
+                    lat
+                    lng
+                  }
+                  stringedBar {
+                    _type
+                  }
                 }
               }
             }
@@ -324,18 +338,22 @@ describe('adminEntity()', () => {
           adminEntity: {
             __typename: 'AdminQueryAdminFoo',
             id,
-            _type: 'QueryAdminFoo',
-            _name: name,
-            _version: 0,
-            _publishState: EntityPublishState.Draft,
-            title: null,
-            summary: null,
-            tags: null,
-            bar: null,
-            bars: null,
-            location: null,
-            locations: null,
-            stringedBar: null,
+            info: {
+              type: 'QueryAdminFoo',
+              name,
+              version: 0,
+              publishingState: EntityPublishState.Draft,
+            },
+            fields: {
+              title: null,
+              summary: null,
+              tags: null,
+              bar: null,
+              bars: null,
+              location: null,
+              locations: null,
+              stringedBar: null,
+            },
           },
         },
       });
@@ -370,34 +388,50 @@ describe('adminEntity()', () => {
           ) {
             first: adminEntity(id: $id, version: $version1) {
               id
-              _version
+              info {
+                version
+              }
               ... on AdminQueryAdminFoo {
-                title
-                summary
+                fields {
+                  title
+                  summary
+                }
               }
             }
             second: adminEntity(id: $id, version: $version2) {
               id
-              _version
+              info {
+                version
+              }
               ... on AdminQueryAdminFoo {
-                title
-                summary
+                fields {
+                  title
+                  summary
+                }
               }
             }
             third: adminEntity(id: $id, version: $version3) {
               id
-              _version
+              info {
+                version
+              }
               ... on AdminQueryAdminFoo {
-                title
-                summary
+                fields {
+                  title
+                  summary
+                }
               }
             }
             fourth: adminEntity(id: $id, version: $version4) {
               id
-              _version
+              info {
+                version
+              }
               ... on AdminQueryAdminFoo {
-                title
-                summary
+                fields {
+                  title
+                  summary
+                }
               }
             }
           }
@@ -409,23 +443,29 @@ describe('adminEntity()', () => {
       expect(result.data).toEqual({
         first: {
           id,
-          _version: 0,
-          title: 'First title',
-          summary: 'First summary',
+          info: { version: 0 },
+          fields: {
+            title: 'First title',
+            summary: 'First summary',
+          },
         },
         second: {
           id,
-          _version: 1,
-          title: 'Second title',
-          summary: 'Second summary',
+          info: { version: 1 },
+          fields: {
+            title: 'Second title',
+            summary: 'Second summary',
+          },
         },
         third: null, // invalid version
         fourth: {
           //default to max
           id,
-          _version: 1,
-          title: 'Second title',
-          summary: 'Second summary',
+          info: { version: 1 },
+          fields: {
+            title: 'Second title',
+            summary: 'Second summary',
+          },
         },
       });
       const errorStrings = result.errors?.map(printError);
@@ -433,11 +473,11 @@ describe('adminEntity()', () => {
         Array [
           "NotFound: No such entity or version
 
-        GraphQL request:25:13
-        24 |             }
-        25 |             third: adminEntity(id: $id, version: $version3) {
+        GraphQL request:33:13
+        32 |             }
+        33 |             third: adminEntity(id: $id, version: $version3) {
            |             ^
-        26 |               id",
+        34 |               id",
         ]
       `);
     }
@@ -463,12 +503,16 @@ describe('adminEntity()', () => {
           query AdminEntity($id: ID!) {
             adminEntity(id: $id) {
               id
-              _version
-              _name
-              _publishState
+              info {
+                version
+                name
+                publishingState
+              }
               ... on AdminQueryAdminFoo {
-                title
-                summary
+                fields {
+                  title
+                  summary
+                }
               }
             }
           }
@@ -477,14 +521,20 @@ describe('adminEntity()', () => {
         createContext(),
         { id }
       );
+
+      expect(result.errors).toBeUndefined();
       expect(result.data).toEqual({
         adminEntity: {
           id,
-          _version: 0,
-          _name: name,
-          _publishState: EntityPublishState.Published,
-          title: 'First title',
-          summary: 'First summary',
+          info: {
+            version: 0,
+            name,
+            publishingState: EntityPublishState.Published,
+          },
+          fields: {
+            title: 'First title',
+            summary: 'First summary',
+          },
         },
       });
     }
@@ -510,14 +560,18 @@ describe('adminEntity()', () => {
             adminEntity(id: $id) {
               __typename
               id
-              _type
-              _name
-              _version
+              info {
+                type
+                name
+                version
+              }
               ... on AdminQueryAdminFoo {
-                body {
-                  blocksJson
-                  entities {
-                    id
+                fields {
+                  body {
+                    blocksJson
+                    entities {
+                      id
+                    }
                   }
                 }
               }
@@ -528,17 +582,23 @@ describe('adminEntity()', () => {
         createContext(),
         { id: fooId }
       );
+
+      expect(result.errors).toBeUndefined();
       expect(result).toEqual({
         data: {
           adminEntity: {
             __typename: 'AdminQueryAdminFoo',
             id: fooId,
-            _type: 'QueryAdminFoo',
-            _name: createFooResult.value.info.name,
-            _version: 0,
-            body: {
-              blocksJson: '[{"type":"paragraph","data":{"text":"Hello foo world"}}]',
-              entities: [],
+            info: {
+              type: 'QueryAdminFoo',
+              name: createFooResult.value.info.name,
+              version: 0,
+            },
+            fields: {
+              body: {
+                blocksJson: '[{"type":"paragraph","data":{"text":"Hello foo world"}}]',
+                entities: [],
+              },
             },
           },
         },
@@ -590,15 +650,21 @@ describe('adminEntity()', () => {
               adminEntity(id: $id) {
                 __typename
                 id
-                _type
-                _name
-                _version
+                info {
+                  type
+                  name
+                  version
+                }
                 ... on AdminQueryAdminFoo {
-                  body {
-                    blocksJson
-                    entities {
-                      id
-                      _name
+                  fields {
+                    body {
+                      blocksJson
+                      entities {
+                        id
+                        info {
+                          name
+                        }
+                      }
                     }
                   }
                 }
@@ -614,15 +680,19 @@ describe('adminEntity()', () => {
             adminEntity: {
               __typename: 'AdminQueryAdminFoo',
               id: fooId,
-              _type: 'QueryAdminFoo',
-              _name: createFooResult.value.info.name,
-              _version: 0,
-              body: {
-                blocksJson: `[{"type":"entity","data":{"id":"${bar1Id}"}},{"type":"valueItem","data":{"_type":"QueryAdminStringedBar","bar":{"id":"${bar2Id}"},"text":"Hello"}}]`,
-                entities: [
-                  { id: bar1Id, _name: bar1Name },
-                  { id: bar2Id, _name: bar2Name },
-                ],
+              info: {
+                type: 'QueryAdminFoo',
+                name: createFooResult.value.info.name,
+                version: 0,
+              },
+              fields: {
+                body: {
+                  blocksJson: `[{"type":"entity","data":{"id":"${bar1Id}"}},{"type":"valueItem","data":{"_type":"QueryAdminStringedBar","bar":{"id":"${bar2Id}"},"text":"Hello"}}]`,
+                  entities: [
+                    { id: bar1Id, info: { name: bar1Name } },
+                    { id: bar2Id, info: { name: bar2Name } },
+                  ],
+                },
               },
             },
           },
@@ -654,17 +724,25 @@ describe('adminEntity()', () => {
               adminEntity(id: $id) {
                 __typename
                 id
-                _type
-                _name
-                _version
+                info {
+                  type
+                  name
+                  version
+                }
                 ... on AdminQueryAdminFoo {
-                  title
-                  bar {
-                    __typename
-                    id
-                    _type
-                    _name
+                  fields {
                     title
+                    bar {
+                      __typename
+                      id
+                      info {
+                        type
+                        name
+                      }
+                      fields {
+                        title
+                      }
+                    }
                   }
                 }
               }
@@ -679,16 +757,24 @@ describe('adminEntity()', () => {
             adminEntity: {
               __typename: 'AdminQueryAdminFoo',
               id: fooId,
-              _type: 'QueryAdminFoo',
-              _name: createFooResult.value.info.name,
-              _version: 0,
-              title: 'Foo title',
-              bar: {
-                __typename: 'AdminQueryAdminBar',
-                id: barId,
-                _type: 'QueryAdminBar',
-                _name: createBarResult.value.info.name,
-                title: 'Bar title',
+              info: {
+                type: 'QueryAdminFoo',
+                name: createFooResult.value.info.name,
+                version: 0,
+              },
+              fields: {
+                title: 'Foo title',
+                bar: {
+                  __typename: 'AdminQueryAdminBar',
+                  id: barId,
+                  info: {
+                    type: 'QueryAdminBar',
+                    name: createBarResult.value.info.name,
+                  },
+                  fields: {
+                    title: 'Bar title',
+                  },
+                },
               },
             },
           },
@@ -726,13 +812,21 @@ describe('adminEntity()', () => {
                 __typename
                 id
                 ... on AdminQueryAdminFoo {
-                  _name
-                  title
-                  bars {
-                    __typename
-                    id
-                    _name
+                  info {
+                    name
+                  }
+                  fields {
                     title
+                    bars {
+                      __typename
+                      id
+                      info {
+                        name
+                      }
+                      fields {
+                        title
+                      }
+                    }
                   }
                 }
               }
@@ -742,27 +836,31 @@ describe('adminEntity()', () => {
           createContext(),
           { id: fooId }
         );
+
+        expect(result.errors).toBeUndefined();
         expect(result).toEqual({
           data: {
             adminEntity: {
               __typename: 'AdminQueryAdminFoo',
               id: fooId,
-              _name: createFooResult.value.info.name,
-              title: 'Foo title',
-              bars: [
-                {
-                  __typename: 'AdminQueryAdminBar',
-                  _name: createBar1Result.value.info.name,
-                  id: bar1Id,
-                  title: 'Bar 1 title',
-                },
-                {
-                  __typename: 'AdminQueryAdminBar',
-                  _name: createBar2Result.value.info.name,
-                  id: bar2Id,
-                  title: 'Bar 2 title',
-                },
-              ],
+              info: { name: createFooResult.value.info.name },
+              fields: {
+                title: 'Foo title',
+                bars: [
+                  {
+                    __typename: 'AdminQueryAdminBar',
+                    id: bar1Id,
+                    info: { name: createBar1Result.value.info.name },
+                    fields: { title: 'Bar 1 title' },
+                  },
+                  {
+                    __typename: 'AdminQueryAdminBar',
+                    id: bar2Id,
+                    info: { name: createBar2Result.value.info.name },
+                    fields: { title: 'Bar 2 title' },
+                  },
+                ],
+              },
             },
           },
         });
@@ -800,21 +898,29 @@ describe('adminEntity()', () => {
               adminEntity(id: $id) {
                 __typename
                 id
-                _type
-                _name
-                _version
+                info {
+                  type
+                  name
+                  version
+                }
                 ... on AdminQueryAdminFoo {
-                  title
-                  stringedBar {
-                    __typename
-                    _type
-                    text
-                    bar {
+                  fields {
+                    title
+                    stringedBar {
                       __typename
-                      id
                       _type
-                      _name
-                      title
+                      text
+                      bar {
+                        __typename
+                        id
+                        info {
+                          type
+                          name
+                        }
+                        fields {
+                          title
+                        }
+                      }
                     }
                   }
                 }
@@ -825,25 +931,33 @@ describe('adminEntity()', () => {
           createContext(),
           { id: fooId }
         );
+
+        expect(result.errors).toBeUndefined();
         expect(result).toEqual({
           data: {
             adminEntity: {
               __typename: 'AdminQueryAdminFoo',
               id: fooId,
-              _type: 'QueryAdminFoo',
-              _name: createFooResult.value.info.name,
-              _version: 0,
-              title: 'Foo title',
-              stringedBar: {
-                __typename: 'AdminQueryAdminStringedBar',
-                _type: 'QueryAdminStringedBar',
-                text: 'Stringed text',
-                bar: {
-                  __typename: 'AdminQueryAdminBar',
-                  id: barId,
-                  _type: 'QueryAdminBar',
-                  _name: createBarResult.value.info.name,
-                  title: 'Bar title',
+              info: {
+                type: 'QueryAdminFoo',
+                name: createFooResult.value.info.name,
+                version: 0,
+              },
+              fields: {
+                title: 'Foo title',
+                stringedBar: {
+                  __typename: 'AdminQueryAdminStringedBar',
+                  _type: 'QueryAdminStringedBar',
+                  text: 'Stringed text',
+                  bar: {
+                    __typename: 'AdminQueryAdminBar',
+                    id: barId,
+                    info: {
+                      type: 'QueryAdminBar',
+                      name: createBarResult.value.info.name,
+                    },
+                    fields: { title: 'Bar title' },
+                  },
                 },
               },
             },
@@ -937,11 +1051,11 @@ describe('adminEntities()', () => {
           query Entities($ids: [ID!]!) {
             adminEntities(ids: $ids) {
               __typename
-              _type
               id
-              _publishState
-              ... on AdminQueryAdminFoo {
-                _name
+              info {
+                type
+                name
+                publishingState
               }
             }
           }
@@ -955,17 +1069,21 @@ describe('adminEntities()', () => {
           adminEntities: [
             {
               __typename: 'AdminQueryAdminFoo',
-              _type: 'QueryAdminFoo',
               id: foo1Id,
-              _publishState: EntityPublishState.Draft,
-              _name: foo1Name,
+              info: {
+                type: 'QueryAdminFoo',
+                publishingState: EntityPublishState.Draft,
+                name: foo1Name,
+              },
             },
             {
               __typename: 'AdminQueryAdminFoo',
-              _type: 'QueryAdminFoo',
               id: foo2Id,
-              _publishState: EntityPublishState.Draft,
-              _name: foo2Name,
+              info: {
+                type: 'QueryAdminFoo',
+                publishingState: EntityPublishState.Draft,
+                name: foo2Name,
+              },
             },
           ],
         },
