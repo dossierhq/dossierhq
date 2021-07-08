@@ -1,12 +1,11 @@
 import type {
-  AdminEntity,
   AdminEntity2,
   EntityPublishState,
   EntityTypeSpecification,
   FieldSpecification,
   Schema,
 } from '@datadata/core';
-import { ErrorType, toAdminEntity1 } from '@datadata/core';
+import { ErrorType } from '@datadata/core';
 import isEqual from 'lodash/isEqual';
 import { v4 as uuidv4 } from 'uuid';
 import type { MessageItem } from '../../generic-components/Message/Message';
@@ -155,11 +154,11 @@ export class SetMessageLoadMessageAction extends EntityEditorDraftStateAction {
 }
 
 export class UpdateEntityAction extends EntityEditorDraftStateAction {
-  #entity: AdminEntity;
+  #entity: AdminEntity2;
 
   constructor(id: string, entity: AdminEntity2) {
     super(id);
-    this.#entity = toAdminEntity1(entity);
+    this.#entity = entity;
   }
 
   reduceDraft(
@@ -167,21 +166,21 @@ export class UpdateEntityAction extends EntityEditorDraftStateAction {
     state: EntityEditorState
   ): EntityEditorDraftState {
     //TODO handle update when there are local changes
-    const entitySpec = state.schema.getEntityTypeSpecification(this.#entity._type);
+    const entitySpec = state.schema.getEntityTypeSpecification(this.#entity.info.type);
     if (!entitySpec) {
       return {
         ...draftState,
         initMessage: {
           kind: 'danger',
-          message: `Can't create entity with unsupported type: ${this.#entity._type}`,
+          message: `Can't create entity with unsupported type: ${this.#entity.info.type}`,
         },
       };
     }
 
     return {
       ...draftState,
-      publishState: this.#entity._publishState,
-      latestServerVersion: this.#entity._version,
+      publishState: this.#entity.info.publishingState,
+      latestServerVersion: this.#entity.info.version,
       entity: createEditorEntityDraftState(entitySpec, this.#entity),
     };
   }
@@ -292,17 +291,17 @@ export function initializeEntityEditorState({
 
 function createEditorEntityDraftState(
   entitySpec: EntityTypeSpecification,
-  entity: AdminEntity | null
+  entity: AdminEntity2 | null
 ): EntityEditorDraftState['entity'] {
   const fields = entitySpec.fields.map((fieldSpec) => {
-    const value = entity?.[fieldSpec.name] ?? null;
+    const value = entity?.fields[fieldSpec.name] ?? null;
     return { fieldSpec, value, initialValue: value };
   });
   return {
     entitySpec,
-    version: entity ? entity._version + 1 : 0,
-    name: entity?._name ?? '',
-    initialName: entity?._name ?? '',
+    version: entity ? entity.info.version + 1 : 0,
+    name: entity?.info.name ?? '',
+    initialName: entity?.info.name ?? '',
     fields,
   };
 }

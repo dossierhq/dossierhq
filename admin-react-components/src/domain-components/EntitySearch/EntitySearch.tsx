@@ -1,4 +1,4 @@
-import type { AdminEntity, AdminQuery } from '@datadata/core';
+import type { AdminEntity2, AdminQuery } from '@datadata/core';
 import React, { useCallback, useReducer, useState } from 'react';
 import { Button, Column, ColumnItem, EntityList, EntityMap, InputText, Row, RowItem } from '../..';
 import {
@@ -10,7 +10,7 @@ import {
 export interface EntitySearchProps {
   className?: string;
   query?: AdminQuery;
-  onEntityClick: (entity: AdminEntity) => void;
+  onEntityClick: (entity: AdminEntity2) => void;
 }
 
 export function EntitySearch({ className, query, onEntityClick }: EntitySearchProps): JSX.Element {
