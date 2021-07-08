@@ -1,9 +1,15 @@
-import { FieldType, isRichTextField, isValueTypeField, notOk } from '@datadata/core';
+import {
+  FieldType,
+  isItemValueItem,
+  isRichTextField,
+  isValueTypeField,
+  notOk,
+} from '@datadata/core';
 import type {
   AdminClient,
-  AdminEntity,
-  AdminEntityCreate,
-  AdminEntityUpdate,
+  AdminEntity2,
+  AdminEntityCreate2,
+  AdminEntityUpdate2,
   AdminQuery,
   Entity,
   EntityTypeSpecification,
@@ -429,16 +435,49 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       })
     );
 
+    // AdminEntityInfo
+    this.addType(
+      new GraphQLObjectType({
+        name: 'AdminEntityInfo',
+        fields: {
+          type: { type: new GraphQLNonNull(this.getType('EntityType')) },
+          name: { type: new GraphQLNonNull(GraphQLString) },
+          version: { type: new GraphQLNonNull(GraphQLInt) },
+          publishingState: { type: new GraphQLNonNull(this.getType('EntityPublishState')) },
+        },
+      })
+    );
+
+    // AdminEntityCreateInfo
+    this.addType(
+      new GraphQLInputObjectType({
+        name: 'AdminEntityCreateInfo',
+        fields: {
+          type: { type: this.getEnumType('EntityType') },
+          name: { type: new GraphQLNonNull(GraphQLString) },
+        },
+      })
+    );
+
+    // AdminEntityUpdateInfo
+    this.addType(
+      new GraphQLInputObjectType({
+        name: 'AdminEntityUpdateInfo',
+        fields: {
+          type: { type: this.getEnumType('EntityType') },
+          name: { type: GraphQLString },
+          //TODO version
+        },
+      })
+    );
+
     // AdminEntity
     this.addType(
       new GraphQLInterfaceType({
         name: 'AdminEntity',
         fields: {
           id: { type: new GraphQLNonNull(GraphQLID) },
-          _name: { type: new GraphQLNonNull(GraphQLString) },
-          _type: { type: new GraphQLNonNull(this.getType('EntityType')) },
-          _version: { type: new GraphQLNonNull(GraphQLInt) },
-          _publishState: { type: new GraphQLNonNull(this.getType('EntityPublishState')) },
+          info: { type: new GraphQLNonNull(this.getType('AdminEntityInfo')) },
         },
       })
     );
@@ -604,24 +643,53 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
   }
 
   addAdminEntityType(entitySpec: EntityTypeSpecification): void {
+    const fieldsName =
+      entitySpec.fields.length > 0 ? `${toAdminTypeName(entitySpec.name)}Fields` : null;
+    if (fieldsName) {
+      this.addType(
+        new GraphQLObjectType<AdminEntity2['fields'], TContext>({
+          name: fieldsName,
+          fields: () => {
+            const fields: GraphQLFieldConfigMap<AdminEntity2['fields'], TContext> = {};
+            this.addTypeSpecificationOutputFields(entitySpec, fields, true);
+            return fields;
+          },
+        })
+      );
+    }
+
     this.addType(
-      new GraphQLObjectType<AdminEntity, TContext>({
+      new GraphQLObjectType<AdminEntity2, TContext>({
         name: toAdminTypeName(entitySpec.name),
         interfaces: this.getInterfaces(toAdminTypeName('Entity')),
-        isTypeOf: (source, _context, _info) => source._type === entitySpec.name,
+        isTypeOf: (source, _context, _info) => source.info.type === entitySpec.name,
         fields: () => {
-          const fields: GraphQLFieldConfigMap<AdminEntity, TContext> = {
+          const fields: GraphQLFieldConfigMap<AdminEntity2, TContext> = {
             id: { type: new GraphQLNonNull(GraphQLID) },
-            _type: { type: new GraphQLNonNull(this.getType('EntityType')) },
-            _name: { type: new GraphQLNonNull(GraphQLString) },
-            _version: { type: new GraphQLNonNull(GraphQLInt) },
-            _publishState: { type: new GraphQLNonNull(this.getType('EntityPublishState')) },
+            info: { type: new GraphQLNonNull(this.getType('AdminEntityInfo')) },
           };
-          this.addTypeSpecificationOutputFields(entitySpec, fields, true);
+          if (fieldsName) {
+            fields.fields = { type: new GraphQLNonNull(this.getType(fieldsName)) };
+          }
           return fields;
         },
       })
     );
+
+    const inputFieldsName =
+      entitySpec.fields.length > 0 ? `${toAdminTypeName(entitySpec.name)}FieldsInput` : null;
+    if (inputFieldsName) {
+      this.addType(
+        new GraphQLInputObjectType({
+          name: inputFieldsName,
+          fields: () => {
+            const fields: GraphQLInputFieldConfigMap = {};
+            this.addTypeSpecificationInputFields(entitySpec, fields);
+            return fields;
+          },
+        })
+      );
+    }
 
     this.addType(
       new GraphQLInputObjectType({
@@ -629,10 +697,11 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         fields: () => {
           const fields: GraphQLInputFieldConfigMap = {
             id: { type: GraphQLID },
-            _type: { type: this.getEnumType('EntityType') },
-            _name: { type: new GraphQLNonNull(GraphQLString) },
+            info: { type: new GraphQLNonNull(this.getType('AdminEntityCreateInfo')) },
           };
-          this.addTypeSpecificationInputFields(entitySpec, fields);
+          if (inputFieldsName) {
+            fields.fields = { type: this.getInputType(inputFieldsName) };
+          }
           return fields;
         },
       })
@@ -644,10 +713,11 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         fields: () => {
           const fields: GraphQLInputFieldConfigMap = {
             id: { type: new GraphQLNonNull(GraphQLID) },
-            _type: { type: this.getEnumType('EntityType') },
-            _name: { type: GraphQLString },
+            info: { type: this.getInputType('AdminEntityUpdateInfo') },
           };
-          this.addTypeSpecificationInputFields(entitySpec, fields);
+          if (inputFieldsName) {
+            fields.fields = { type: this.getInputType(inputFieldsName) };
+          }
           return fields;
         },
       })
@@ -881,19 +951,21 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
   }
 
   buildMutationCreateEntity<TSource>(entityName: string): GraphQLFieldConfig<TSource, TContext> {
-    return fieldConfigWithArgs<TSource, TContext, { entity: AdminEntityCreate }>({
+    return fieldConfigWithArgs<TSource, TContext, { entity: AdminEntityCreate2 }>({
       type: this.getOutputType(toAdminTypeName(entityName)),
       args: {
         entity: { type: new GraphQLNonNull(this.getType(toAdminCreateInputTypeName(entityName))) },
       },
       resolve: async (_source, args, context, _info) => {
         const { entity } = args;
-        if (entity._type && entity._type !== entityName) {
+        if (entity.info.type && entity.info.type !== entityName) {
           throw notOk
-            .BadRequest(`Specified type (entity._type=${entity._type}) should be ${entityName}`)
+            .BadRequest(
+              `Specified type (entity.info.type=${entity.info.type}) should be ${entityName}`
+            )
             .toError();
         }
-        entity._type = entityName;
+        entity.info.type = entityName;
         this.resolveJsonInputFields(entity, entityName);
         return await Mutations.createEntity(context, entity);
       },
@@ -901,16 +973,18 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
   }
 
   buildMutationUpdateEntity<TSource>(entityName: string): GraphQLFieldConfig<TSource, TContext> {
-    return fieldConfigWithArgs<TSource, TContext, { entity: AdminEntityUpdate }>({
+    return fieldConfigWithArgs<TSource, TContext, { entity: AdminEntityUpdate2 }>({
       type: this.getOutputType(toAdminTypeName(entityName)),
       args: {
         entity: { type: new GraphQLNonNull(this.getType(toAdminUpdateInputTypeName(entityName))) },
       },
-      resolve: async (source, args, context, _info) => {
+      resolve: async (_source, args, context, _info) => {
         const { entity } = args;
-        if (entity._type && entity._type !== entityName) {
+        if (entity.info?.type && entity.info.type !== entityName) {
           throw notOk
-            .BadRequest(`Specified type (entity._type=${entity._type}) should be ${entityName}`)
+            .BadRequest(
+              `Specified type (entity.info.type=${entity.info.type}) should be ${entityName}`
+            )
             .toError();
         }
         this.resolveJsonInputFields(entity, entityName);
@@ -920,31 +994,35 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
   }
 
   resolveJsonInputFields(
-    entity: AdminEntityCreate | AdminEntityUpdate,
+    entity: AdminEntityCreate2 | AdminEntityUpdate2,
     entityTypeName: string
   ): void {
     const visitItem = (
-      item: AdminEntityCreate | AdminEntityUpdate | ValueItem,
+      item: AdminEntityCreate2 | AdminEntityUpdate2 | ValueItem,
       typeSpec: EntityTypeSpecification | ValueTypeSpecification,
       prefix: string,
       isEntity: boolean
     ) => {
-      for (const fieldName of Object.keys(item)) {
+      const isValueItem = isItemValueItem(item);
+      //TODO duplication of isItemValueItem(item) is not needed in next version of typescript
+      const fields = isItemValueItem(item) ? item : item.fields ?? {};
+      for (const fieldName of Object.keys(fields)) {
         // Skip standard fields
-        if (fieldName === '_type' || fieldName === '_name' || fieldName === 'id') {
+        if (isValueItem && fieldName === '_type') {
           continue;
         }
-
-        const fieldPrefix = `${prefix}.${fieldName}`;
-        const fieldValue = item[fieldName];
+        const fieldPrefix = isValueItem
+          ? `${prefix}.${fieldName}`
+          : `${prefix}.fields.${fieldName}`;
+        const fieldValue = fields[fieldName];
 
         // Decode JSON value item fields
         if (fieldName.endsWith('Json')) {
           const fieldNameWithoutJson = fieldName.slice(0, -'Json'.length);
           const decodedValue = this.decodeJsonInputField(fieldPrefix, fieldValue);
 
-          delete item[fieldName];
-          item[fieldNameWithoutJson] = decodedValue;
+          delete fields[fieldName];
+          fields[fieldNameWithoutJson] = decodedValue;
           continue;
         }
 
@@ -958,7 +1036,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
             throw new Error(`${fieldPrefix}: Expected object, got ${typeof fieldValue}`);
           }
           const { blocksJson, ...nonBlocks } = fieldValue as unknown as { blocksJson: string };
-          item[fieldName] = {
+          fields[fieldName] = {
             ...nonBlocks,
             blocks: this.decodeJsonInputField(fieldPrefix + '.blocksJson', blocksJson),
           };

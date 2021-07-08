@@ -1,21 +1,21 @@
 import type {
-  AdminEntity,
-  AdminEntityCreate,
-  AdminEntityUpdate,
+  AdminEntity2,
+  AdminEntityCreate2,
+  AdminEntityUpdate2,
+  EntityVersionReference,
   PublishingResult,
 } from '@datadata/core';
-import { toAdminEntityUpdate2, toAdminEntityCreate2 } from '@datadata/core';
 import type { SessionGraphQLContext } from '.';
 import { buildResolversForAdminEntity } from './DataLoaders';
 import { getAdminClient, getSchema } from './Utils';
 
 export async function createEntity<TContext extends SessionGraphQLContext>(
   context: TContext,
-  entity: AdminEntityCreate
-): Promise<AdminEntity> {
+  entity: AdminEntityCreate2
+): Promise<AdminEntity2> {
   const schema = getSchema(context);
   const adminClient = getAdminClient(context);
-  const result = await adminClient.createEntity(toAdminEntityCreate2(entity));
+  const result = await adminClient.createEntity(entity);
   if (result.isError()) {
     throw result.toError();
   }
@@ -24,11 +24,11 @@ export async function createEntity<TContext extends SessionGraphQLContext>(
 
 export async function updateEntity<TContext extends SessionGraphQLContext>(
   context: TContext,
-  entity: AdminEntityUpdate
-): Promise<AdminEntity> {
+  entity: AdminEntityUpdate2
+): Promise<AdminEntity2> {
   const schema = getSchema(context);
   const adminClient = getAdminClient(context);
-  const result = await adminClient.updateEntity(toAdminEntityUpdate2(entity));
+  const result = await adminClient.updateEntity(entity);
   if (result.isError()) {
     throw result.toError();
   }
@@ -37,10 +37,7 @@ export async function updateEntity<TContext extends SessionGraphQLContext>(
 
 export async function publishEntities<TContext extends SessionGraphQLContext>(
   context: TContext,
-  entities: {
-    id: string;
-    version: number;
-  }[]
+  entities: EntityVersionReference[]
 ): Promise<PublishingResult[]> {
   const adminClient = getAdminClient(context);
   const result = await adminClient.publishEntities(entities);

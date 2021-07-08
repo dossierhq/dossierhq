@@ -105,20 +105,24 @@ describe('create*Entity()', () => {
           createMutationFooEntity(entity: $entity) {
             __typename
             id
-            _type
-            _name
-            _version
-            _publishState
-            title
-            summary
-            tags
-            location {
-              lat
-              lng
+            info {
+              type
+              name
+              version
+              publishingState
             }
-            locations {
-              lat
-              lng
+            fields {
+              title
+              summary
+              tags
+              location {
+                lat
+                lng
+              }
+              locations {
+                lat
+                lng
+              }
             }
           }
         }
@@ -127,23 +131,24 @@ describe('create*Entity()', () => {
       createContext(),
       {
         entity: {
-          _type: 'MutationFoo',
-          _name: 'Foo name',
-          title: 'Foo title',
-          summary: 'Foo summary',
-          tags: ['one', 'two', 'three'],
-          location: { lat: 55.60498, lng: 13.003822 },
-          locations: [
-            { lat: 55.60498, lng: 13.003822 },
-            { lat: 56.381561, lng: 13.99286 },
-          ],
+          info: { type: 'MutationFoo', name: 'Foo name' },
+          fields: {
+            title: 'Foo title',
+            summary: 'Foo summary',
+            tags: ['one', 'two', 'three'],
+            location: { lat: 55.60498, lng: 13.003822 },
+            locations: [
+              { lat: 55.60498, lng: 13.003822 },
+              { lat: 56.381561, lng: 13.99286 },
+            ],
+          },
         },
       }
     );
 
     expect(result.errors).toBeUndefined();
     const id = result.data?.createMutationFooEntity.id;
-    const name = result.data?.createMutationFooEntity._name;
+    const name = result.data?.createMutationFooEntity.info.name;
     expect(name).toMatch(/^Foo name(#[0-9]+)?$/);
 
     expect(result).toEqual({
@@ -151,18 +156,22 @@ describe('create*Entity()', () => {
         createMutationFooEntity: {
           __typename: 'AdminMutationFoo',
           id,
-          _type: 'MutationFoo',
-          _name: name,
-          _version: 0,
-          _publishState: EntityPublishState.Draft,
-          title: 'Foo title',
-          summary: 'Foo summary',
-          tags: ['one', 'two', 'three'],
-          location: { lat: 55.60498, lng: 13.003822 },
-          locations: [
-            { lat: 55.60498, lng: 13.003822 },
-            { lat: 56.381561, lng: 13.99286 },
-          ],
+          info: {
+            type: 'MutationFoo',
+            name,
+            version: 0,
+            publishingState: EntityPublishState.Draft,
+          },
+          fields: {
+            title: 'Foo title',
+            summary: 'Foo summary',
+            tags: ['one', 'two', 'three'],
+            location: { lat: 55.60498, lng: 13.003822 },
+            locations: [
+              { lat: 55.60498, lng: 13.003822 },
+              { lat: 56.381561, lng: 13.99286 },
+            ],
+          },
         },
       },
     });
@@ -194,11 +203,15 @@ describe('create*Entity()', () => {
           createMutationFooEntity(entity: $entity) {
             __typename
             id
-            _type
-            _name
-            _version
-            _publishState
-            title
+            info {
+              type
+              name
+              version
+              publishingState
+            }
+            fields {
+              title
+            }
           }
         }
       `,
@@ -207,15 +220,17 @@ describe('create*Entity()', () => {
       {
         entity: {
           id,
-          _type: 'MutationFoo',
-          _name: 'Foo name',
-          title: 'Foo title',
-          summary: 'Foo summary',
+          info: { type: 'MutationFoo', name: 'Foo name' },
+          fields: {
+            title: 'Foo title',
+            summary: 'Foo summary',
+          },
         },
       }
     );
 
-    const name = result.data?.createMutationFooEntity._name;
+    expect(result.errors).toBeUndefined();
+    const name = result.data?.createMutationFooEntity.info.name;
     expect(name).toMatch(/^Foo name(#[0-9]+)?$/);
 
     expect(result).toEqual({
@@ -223,11 +238,15 @@ describe('create*Entity()', () => {
         createMutationFooEntity: {
           __typename: 'AdminMutationFoo',
           id,
-          _type: 'MutationFoo',
-          _name: name,
-          _version: 0,
-          _publishState: EntityPublishState.Draft,
-          title: 'Foo title',
+          info: {
+            type: 'MutationFoo',
+            name,
+            version: 0,
+            publishingState: EntityPublishState.Draft,
+          },
+          fields: {
+            title: 'Foo title',
+          },
         },
       },
     });
@@ -247,14 +266,18 @@ describe('create*Entity()', () => {
             createMutationFooEntity(entity: $entity) {
               __typename
               id
-              _type
-              _name
-              _version
-              _publishState
-              title
-              summary
-              body {
-                blocksJson
+              info {
+                type
+                name
+                version
+                publishingState
+              }
+              fields {
+                title
+                summary
+                body {
+                  blocksJson
+                }
               }
             }
           }
@@ -263,35 +286,40 @@ describe('create*Entity()', () => {
         createContext(),
         {
           entity: {
-            _type: 'MutationFoo',
-            _name: 'Foo name',
-            title: 'Foo title',
-            summary: 'Foo summary',
-            body: {
-              blocksJson: JSON.stringify([
-                { type: RichTextBlockType.paragraph, data: { text: 'Hello world' } },
-                { type: RichTextBlockType.entity, data: { id: barId } },
-              ]),
+            info: { type: 'MutationFoo', name: 'Foo name' },
+            fields: {
+              title: 'Foo title',
+              summary: 'Foo summary',
+              body: {
+                blocksJson: JSON.stringify([
+                  { type: RichTextBlockType.paragraph, data: { text: 'Hello world' } },
+                  { type: RichTextBlockType.entity, data: { id: barId } },
+                ]),
+              },
             },
           },
         }
       );
 
       const fooId = gqlResult.data?.createMutationFooEntity.id;
-      const fooName = gqlResult.data?.createMutationFooEntity._name;
+      const fooName = gqlResult.data?.createMutationFooEntity.info.name;
       expect(gqlResult).toEqual({
         data: {
           createMutationFooEntity: {
             __typename: 'AdminMutationFoo',
             id: fooId,
-            _type: 'MutationFoo',
-            _name: fooName,
-            _version: 0,
-            _publishState: EntityPublishState.Draft,
-            title: 'Foo title',
-            summary: 'Foo summary',
-            body: {
-              blocksJson: `[{"type":"paragraph","data":{"text":"Hello world"}},{"type":"entity","data":{"id":"${barId}"}}]`,
+            info: {
+              type: 'MutationFoo',
+              name: fooName,
+              version: 0,
+              publishingState: EntityPublishState.Draft,
+            },
+            fields: {
+              title: 'Foo title',
+              summary: 'Foo summary',
+              body: {
+                blocksJson: `[{"type":"paragraph","data":{"text":"Hello world"}},{"type":"entity","data":{"id":"${barId}"}}]`,
+              },
             },
           },
         },
@@ -338,15 +366,21 @@ describe('create*Entity()', () => {
             createMutationFooEntity(entity: $entity) {
               __typename
               id
-              _type
-              _name
-              _version
-              _publishState
-              title
-              summary
-              bar {
-                id
-                _name
+              info {
+                type
+                name
+                version
+                publishingState
+              }
+              fields {
+                title
+                summary
+                bar {
+                  id
+                  info {
+                    name
+                  }
+                }
               }
             }
           }
@@ -355,29 +389,38 @@ describe('create*Entity()', () => {
         createContext(),
         {
           entity: {
-            _type: 'MutationFoo',
-            _name: 'Foo name',
-            title: 'Foo title',
-            summary: 'Foo summary',
-            bar: { id: barId },
+            info: {
+              type: 'MutationFoo',
+              name: 'Foo name',
+            },
+            fields: {
+              title: 'Foo title',
+              summary: 'Foo summary',
+              bar: { id: barId },
+            },
           },
         }
       );
 
+      expect(gqlResult.errors).toBeUndefined();
       const fooId = gqlResult.data?.createMutationFooEntity.id;
-      const fooName = gqlResult.data?.createMutationFooEntity._name;
+      const fooName = gqlResult.data?.createMutationFooEntity.info.name;
       expect(gqlResult).toEqual({
         data: {
           createMutationFooEntity: {
             __typename: 'AdminMutationFoo',
             id: fooId,
-            _type: 'MutationFoo',
-            _name: fooName,
-            _version: 0,
-            _publishState: EntityPublishState.Draft,
-            title: 'Foo title',
-            summary: 'Foo summary',
-            bar: { id: barId, _name: barName },
+            info: {
+              type: 'MutationFoo',
+              name: fooName,
+              version: 0,
+              publishingState: EntityPublishState.Draft,
+            },
+            fields: {
+              title: 'Foo title',
+              summary: 'Foo summary',
+              bar: { id: barId, info: { name: barName } },
+            },
           },
         },
       });
@@ -426,14 +469,20 @@ describe('create*Entity()', () => {
             createMutationFooEntity(entity: $entity) {
               __typename
               id
-              _type
-              _name
-              _version
-              title
-              summary
-              bars {
-                id
-                _name
+              info {
+                type
+                name
+                version
+              }
+              fields {
+                title
+                summary
+                bars {
+                  id
+                  info {
+                    name
+                  }
+                }
               }
             }
           }
@@ -442,31 +491,40 @@ describe('create*Entity()', () => {
         createContext(),
         {
           entity: {
-            _type: 'MutationFoo',
-            _name: 'Foo name',
-            title: 'Foo title',
-            summary: 'Foo summary',
-            bars: [{ id: bar1Id }, { id: bar2Id }],
+            info: {
+              type: 'MutationFoo',
+              name: 'Foo name',
+            },
+            fields: {
+              title: 'Foo title',
+              summary: 'Foo summary',
+              bars: [{ id: bar1Id }, { id: bar2Id }],
+            },
           },
         }
       );
 
+      expect(gqlResult.errors).toBeUndefined();
       const fooId = gqlResult.data?.createMutationFooEntity.id;
-      const fooName = gqlResult.data?.createMutationFooEntity._name;
+      const fooName = gqlResult.data?.createMutationFooEntity.info.name;
       expect(gqlResult).toEqual({
         data: {
           createMutationFooEntity: {
             __typename: 'AdminMutationFoo',
             id: fooId,
-            _type: 'MutationFoo',
-            _name: fooName,
-            _version: 0,
-            title: 'Foo title',
-            summary: 'Foo summary',
-            bars: [
-              { id: bar1Id, _name: bar1Name },
-              { id: bar2Id, _name: bar2Name },
-            ],
+            info: {
+              type: 'MutationFoo',
+              name: fooName,
+              version: 0,
+            },
+            fields: {
+              title: 'Foo title',
+              summary: 'Foo summary',
+              bars: [
+                { id: bar1Id, info: { name: bar1Name } },
+                { id: bar2Id, info: { name: bar2Name } },
+              ],
+            },
           },
         },
       });
@@ -507,20 +565,26 @@ describe('create*Entity()', () => {
             createMutationFooEntity(entity: $entity) {
               __typename
               id
-              _type
-              _name
-              _version
-              title
-              summary
-              stringedBar {
-                __typename
-                _type
-                text
-                bar {
+              info {
+                type
+                name
+                version
+              }
+              fields {
+                title
+                summary
+                stringedBar {
                   __typename
                   _type
-                  id
-                  _name
+                  text
+                  bar {
+                    __typename
+                    id
+                    info {
+                      type
+                      name
+                    }
+                  }
                 }
               }
             }
@@ -530,40 +594,51 @@ describe('create*Entity()', () => {
         createContext(),
         {
           entity: {
-            _type: 'MutationFoo',
-            _name: 'Foo name',
-            title: 'Foo title',
-            summary: 'Foo summary',
-            stringedBar: {
-              _type: 'MutationStringedBar',
-              text: 'Value text',
-              bar: { id: barId },
+            info: {
+              type: 'MutationFoo',
+              name: 'Foo name',
+            },
+            fields: {
+              title: 'Foo title',
+              summary: 'Foo summary',
+              stringedBar: {
+                _type: 'MutationStringedBar',
+                text: 'Value text',
+                bar: { id: barId },
+              },
             },
           },
         }
       );
 
+      expect(gqlResult.errors).toBeUndefined();
       const fooId = gqlResult.data?.createMutationFooEntity.id;
-      const fooName = gqlResult.data?.createMutationFooEntity._name;
+      const fooName = gqlResult.data?.createMutationFooEntity.info.name;
       expect(gqlResult).toEqual({
         data: {
           createMutationFooEntity: {
             __typename: 'AdminMutationFoo',
             id: fooId,
-            _type: 'MutationFoo',
-            _name: fooName,
-            _version: 0,
-            title: 'Foo title',
-            summary: 'Foo summary',
-            stringedBar: {
-              __typename: 'AdminMutationStringedBar',
-              _type: 'MutationStringedBar',
-              text: 'Value text',
-              bar: {
-                __typename: 'AdminMutationBar',
-                _type: 'MutationBar',
-                id: barId,
-                _name: barName,
+            info: {
+              type: 'MutationFoo',
+              name: fooName,
+              version: 0,
+            },
+            fields: {
+              title: 'Foo title',
+              summary: 'Foo summary',
+              stringedBar: {
+                __typename: 'AdminMutationStringedBar',
+                _type: 'MutationStringedBar',
+                text: 'Value text',
+                bar: {
+                  __typename: 'AdminMutationBar',
+                  id: barId,
+                  info: {
+                    type: 'MutationBar',
+                    name: barName,
+                  },
+                },
               },
             },
           },
@@ -609,16 +684,20 @@ describe('create*Entity()', () => {
             createMutationFooEntity(entity: $entity) {
               __typename
               id
-              _type
-              _name
-              _version
-              anyValueItem {
-                __typename
-                _type
+              info {
+                type
+                name
+                version
               }
-              anyValueItems {
-                __typename
-                _type
+              fields {
+                anyValueItem {
+                  __typename
+                  _type
+                }
+                anyValueItems {
+                  __typename
+                  _type
+                }
               }
             }
           }
@@ -627,46 +706,54 @@ describe('create*Entity()', () => {
         createContext(),
         {
           entity: {
-            _type: 'MutationFoo',
-            _name: 'Foo name',
-            anyValueItemJson: JSON.stringify({
-              _type: 'MutationStringedBar',
-              text: 'A value',
-              bar: { id: barId },
-            }),
-            anyValueItemsJson: JSON.stringify([
-              {
+            info: {
+              type: 'MutationFoo',
+              name: 'Foo name',
+            },
+            fields: {
+              anyValueItemJson: JSON.stringify({
                 _type: 'MutationStringedBar',
-                text: 'A value in a list',
+                text: 'A value',
                 bar: { id: barId },
-              },
-            ]),
+              }),
+              anyValueItemsJson: JSON.stringify([
+                {
+                  _type: 'MutationStringedBar',
+                  text: 'A value in a list',
+                  bar: { id: barId },
+                },
+              ]),
+            },
           },
           publish: true,
         }
       );
 
       const fooId = createFooResult.data?.createMutationFooEntity.id;
-      const fooName = createFooResult.data?.createMutationFooEntity._name;
+      const fooName = createFooResult.data?.createMutationFooEntity.info.name;
 
       expect(createFooResult).toEqual({
         data: {
           createMutationFooEntity: {
             __typename: 'AdminMutationFoo',
             id: fooId,
-            _type: 'MutationFoo',
-            _name: fooName,
-            _version: 0,
-            anyValueItem: {
-              __typename: 'AdminMutationStringedBar',
-              _type: 'MutationStringedBar',
+            info: {
+              type: 'MutationFoo',
+              name: fooName,
+              version: 0,
             },
-            anyValueItems: [
-              {
+            fields: {
+              anyValueItem: {
                 __typename: 'AdminMutationStringedBar',
                 _type: 'MutationStringedBar',
               },
-            ],
+              anyValueItems: [
+                {
+                  __typename: 'AdminMutationStringedBar',
+                  _type: 'MutationStringedBar',
+                },
+              ],
+            },
           },
         },
       });
@@ -708,14 +795,13 @@ describe('create*Entity()', () => {
           createMutationFooEntity(entity: $entity) {
             __typename
             id
-            _type
-            _name
-            _version
-            nestedValue {
-              __typename
-              _type
-              text
-              child {
+            info {
+              type
+              name
+              version
+            }
+            fields {
+              nestedValue {
                 __typename
                 _type
                 text
@@ -723,6 +809,11 @@ describe('create*Entity()', () => {
                   __typename
                   _type
                   text
+                  child {
+                    __typename
+                    _type
+                    text
+                  }
                 }
               }
             }
@@ -733,40 +824,45 @@ describe('create*Entity()', () => {
       createContext(),
       {
         entity: {
-          _type: 'MutationFoo',
-          _name: 'Foo name',
-          nestedValue: {
-            _type: 'MutationNestedValue',
-            text: 'Outer',
-            childJson: JSON.stringify({
+          info: { type: 'MutationFoo', name: 'Foo name' },
+          fields: {
+            nestedValue: {
               _type: 'MutationNestedValue',
-              text: 'Inner',
-            }),
+              text: 'Outer',
+              childJson: JSON.stringify({
+                _type: 'MutationNestedValue',
+                text: 'Inner',
+              }),
+            },
           },
         },
       }
     );
 
     const fooId = createResult.data?.createMutationFooEntity.id;
-    const fooName = createResult.data?.createMutationFooEntity._name;
+    const fooName = createResult.data?.createMutationFooEntity.info.name;
 
     expect(createResult).toEqual({
       data: {
         createMutationFooEntity: {
           __typename: 'AdminMutationFoo',
           id: fooId,
-          _type: 'MutationFoo',
-          _name: fooName,
-          _version: 0,
-          nestedValue: {
-            __typename: 'AdminMutationNestedValue',
-            _type: 'MutationNestedValue',
-            text: 'Outer',
-            child: {
+          info: {
+            type: 'MutationFoo',
+            name: fooName,
+            version: 0,
+          },
+          fields: {
+            nestedValue: {
               __typename: 'AdminMutationNestedValue',
               _type: 'MutationNestedValue',
-              text: 'Inner',
-              child: null,
+              text: 'Outer',
+              child: {
+                __typename: 'AdminMutationNestedValue',
+                _type: 'MutationNestedValue',
+                text: 'Inner',
+                child: null,
+              },
             },
           },
         },
@@ -801,11 +897,15 @@ describe('create*Entity()', () => {
           createMutationFooEntity(entity: $entity) {
             __typename
             id
-            _type
-            _name
-            _version
-            title
-            summary
+            info {
+              type
+              name
+              version
+            }
+            fields {
+              title
+              summary
+            }
           }
         }
       `,
@@ -813,15 +913,20 @@ describe('create*Entity()', () => {
       createContext(),
       {
         entity: {
-          _name: 'Foo name',
-          title: 'Foo title',
-          summary: 'Foo summary',
+          info: {
+            name: 'Foo name',
+          },
+          fields: {
+            title: 'Foo title',
+            summary: 'Foo summary',
+          },
         },
       }
     );
 
+    expect(result.errors).toBeUndefined();
     const id = result.data?.createMutationFooEntity.id;
-    const name = result.data?.createMutationFooEntity._name;
+    const name = result.data?.createMutationFooEntity.info.name;
     expect(name).toMatch(/^Foo name(#[0-9]+)?$/);
 
     expect(result).toEqual({
@@ -829,11 +934,15 @@ describe('create*Entity()', () => {
         createMutationFooEntity: {
           __typename: 'AdminMutationFoo',
           id,
-          _type: 'MutationFoo',
-          _name: name,
-          _version: 0,
-          title: 'Foo title',
-          summary: 'Foo summary',
+          info: {
+            type: 'MutationFoo',
+            name,
+            version: 0,
+          },
+          fields: {
+            title: 'Foo title',
+            summary: 'Foo summary',
+          },
         },
       },
     });
@@ -853,10 +962,14 @@ describe('create*Entity()', () => {
       createContext(),
       {
         entity: {
-          _type: 'MutationBar', // should be Foo
-          _name: 'Foo name',
-          title: 'Foo title',
-          summary: 'Foo summary',
+          info: {
+            type: 'MutationBar', // should be Foo
+            name: 'Foo name',
+          },
+          fields: {
+            title: 'Foo title',
+            summary: 'Foo summary',
+          },
         },
       }
     );
@@ -867,7 +980,7 @@ describe('create*Entity()', () => {
           "createMutationFooEntity": null,
         },
         "errors": Array [
-          [GraphQLError: BadRequest: Specified type (entity._type=MutationBar) should be MutationFoo],
+          [GraphQLError: BadRequest: Specified type (entity.info.type=MutationBar) should be MutationFoo],
         ],
       }
     `);
@@ -893,20 +1006,24 @@ describe('update*Entity()', () => {
             updateMutationFooEntity(entity: $entity) {
               __typename
               id
-              _type
-              _name
-              _version
-              _publishState
-              title
-              summary
-              tags
+              info {
+                type
+                name
+                version
+                publishingState
+              }
+              fields {
+                title
+                summary
+                tags
+              }
             }
           }
         `,
         undefined,
         createContext(),
         {
-          entity: { id, title: 'Updated title' },
+          entity: { id, fields: { title: 'Updated title' } },
         }
       );
 
@@ -915,13 +1032,17 @@ describe('update*Entity()', () => {
           updateMutationFooEntity: {
             __typename: 'AdminMutationFoo',
             id,
-            _type: 'MutationFoo',
-            _name: name,
-            _version: 1,
-            _publishState: EntityPublishState.Draft,
-            title: 'Updated title',
-            summary: 'First summary',
-            tags: ['one', 'two', 'three'],
+            info: {
+              type: 'MutationFoo',
+              name,
+              version: 1,
+              publishingState: EntityPublishState.Draft,
+            },
+            fields: {
+              title: 'Updated title',
+              summary: 'First summary',
+              tags: ['one', 'two', 'three'],
+            },
           },
         },
       });
@@ -975,40 +1096,48 @@ describe('update*Entity()', () => {
               updateMutationFooEntity(entity: $entity) {
                 __typename
                 id
-                _type
-                _name
-                _version
-                title
-                summary
-                tags
-                bar {
-                  __typename
-                  id
-                  _type
-                  _name
+                info {
+                  type
+                  name
+                  version
                 }
-                bars {
-                  __typename
-                  id
-                  _type
-                  _name
-                }
-                stringedBar {
-                  __typename
-                  _type
-                  text
+                fields {
+                  title
+                  summary
+                  tags
                   bar {
                     __typename
                     id
+                    info {
+                      type
+                      name
+                    }
                   }
-                }
-                anyValueItem {
-                  __typename
-                  _type
-                }
-                anyValueItems {
-                  __typename
-                  _type
+                  bars {
+                    __typename
+                    id
+                    info {
+                      type
+                      name
+                    }
+                  }
+                  stringedBar {
+                    __typename
+                    _type
+                    text
+                    bar {
+                      __typename
+                      id
+                    }
+                  }
+                  anyValueItem {
+                    __typename
+                    _type
+                  }
+                  anyValueItems {
+                    __typename
+                    _type
+                  }
                 }
               }
             }
@@ -1018,36 +1147,40 @@ describe('update*Entity()', () => {
           {
             entity: {
               id: fooId,
-              _type: 'MutationFoo',
-              _name: 'Updated name',
-              title: 'Updated title',
-              summary: 'Updated summary',
-              tags: ['these', 'are', 'new'],
-              bar: { id: bar1Id },
-              bars: [{ id: bar1Id }, { id: bar2Id }],
-              stringedBar: {
-                _type: 'MutationStringedBar',
-                text: 'Value text',
-                bar: { id: bar2Id },
+              info: {
+                type: 'MutationFoo',
+                name: 'Updated name',
               },
-              anyValueItemJson: JSON.stringify({
-                _type: 'MutationStringedBar',
-                text: 'A value item',
+              fields: {
+                title: 'Updated title',
+                summary: 'Updated summary',
+                tags: ['these', 'are', 'new'],
                 bar: { id: bar1Id },
-              }),
-              anyValueItemsJson: JSON.stringify([
-                {
+                bars: [{ id: bar1Id }, { id: bar2Id }],
+                stringedBar: {
                   _type: 'MutationStringedBar',
-                  text: 'A value item in a list',
+                  text: 'Value text',
                   bar: { id: bar2Id },
                 },
-              ]),
+                anyValueItemJson: JSON.stringify({
+                  _type: 'MutationStringedBar',
+                  text: 'A value item',
+                  bar: { id: bar1Id },
+                }),
+                anyValueItemsJson: JSON.stringify([
+                  {
+                    _type: 'MutationStringedBar',
+                    text: 'A value item in a list',
+                    bar: { id: bar2Id },
+                  },
+                ]),
+              },
             },
           }
         );
 
         expect(result.errors).toBeFalsy();
-        const name = result.data?.updateMutationFooEntity._name;
+        const name = result.data?.updateMutationFooEntity.info.name;
         expect(name).toMatch(/^Updated name(#[0-9]+)?$/);
 
         expect(result).toEqual({
@@ -1055,51 +1188,61 @@ describe('update*Entity()', () => {
             updateMutationFooEntity: {
               __typename: 'AdminMutationFoo',
               id: fooId,
-              _type: 'MutationFoo',
-              _name: name,
-              _version: 1,
-              title: 'Updated title',
-              summary: 'Updated summary',
-              tags: ['these', 'are', 'new'],
-              bar: {
-                __typename: 'AdminMutationBar',
-                id: bar1Id,
-                _type: 'MutationBar',
-                _name: bar1Name,
+              info: {
+                type: 'MutationFoo',
+                name: name,
+                version: 1,
               },
-              bars: [
-                {
-                  __typename: 'AdminMutationBar',
-                  id: bar1Id,
-                  _type: 'MutationBar',
-                  _name: bar1Name,
-                },
-                {
-                  __typename: 'AdminMutationBar',
-                  id: bar2Id,
-                  _type: 'MutationBar',
-                  _name: bar2Name,
-                },
-              ],
-              stringedBar: {
-                __typename: 'AdminMutationStringedBar',
-                _type: 'MutationStringedBar',
-                text: 'Value text',
+              fields: {
+                title: 'Updated title',
+                summary: 'Updated summary',
+                tags: ['these', 'are', 'new'],
                 bar: {
                   __typename: 'AdminMutationBar',
-                  id: bar2Id,
+                  id: bar1Id,
+                  info: {
+                    type: 'MutationBar',
+                    name: bar1Name,
+                  },
                 },
-              },
-              anyValueItem: {
-                __typename: 'AdminMutationStringedBar',
-                _type: 'MutationStringedBar',
-              },
-              anyValueItems: [
-                {
+                bars: [
+                  {
+                    __typename: 'AdminMutationBar',
+                    id: bar1Id,
+                    info: {
+                      type: 'MutationBar',
+                      name: bar1Name,
+                    },
+                  },
+                  {
+                    __typename: 'AdminMutationBar',
+                    id: bar2Id,
+                    info: {
+                      type: 'MutationBar',
+                      name: bar2Name,
+                    },
+                  },
+                ],
+                stringedBar: {
+                  __typename: 'AdminMutationStringedBar',
+                  _type: 'MutationStringedBar',
+                  text: 'Value text',
+                  bar: {
+                    __typename: 'AdminMutationBar',
+                    id: bar2Id,
+                  },
+                },
+                anyValueItem: {
                   __typename: 'AdminMutationStringedBar',
                   _type: 'MutationStringedBar',
                 },
-              ],
+                anyValueItems: [
+                  {
+                    __typename: 'AdminMutationStringedBar',
+                    _type: 'MutationStringedBar',
+                  },
+                ],
+              },
             },
           },
         });
@@ -1164,10 +1307,14 @@ describe('update*Entity()', () => {
         {
           entity: {
             id,
-            _type: 'MutationBar', // should be Foo
-            _name: 'Foo name',
-            title: 'Foo title',
-            summary: 'Foo summary',
+            info: {
+              type: 'MutationBar', // should be Foo
+              name: 'Foo name',
+            },
+            fields: {
+              title: 'Foo title',
+              summary: 'Foo summary',
+            },
           },
         }
       );
@@ -1178,7 +1325,7 @@ describe('update*Entity()', () => {
             "updateMutationFooEntity": null,
           },
           "errors": Array [
-            [GraphQLError: BadRequest: Specified type (entity._type=MutationBar) should be MutationFoo],
+            [GraphQLError: BadRequest: Specified type (entity.info.type=MutationBar) should be MutationFoo],
           ],
         }
       `);
@@ -1525,7 +1672,9 @@ describe('Multiple', () => {
             $entities: [EntityVersionInput!]!
           ) {
             updateMutationFooEntity(entity: $entity) {
-              title
+              fields {
+                title
+              }
             }
 
             publishEntities(entities: $entities) {
@@ -1539,14 +1688,16 @@ describe('Multiple', () => {
         {
           entity: {
             id,
-            title: 'Updated title',
+            fields: {
+              title: 'Updated title',
+            },
           },
           entities: { id, version: 1 },
         }
       );
       expect(result).toEqual({
         data: {
-          updateMutationFooEntity: { title: 'Updated title' },
+          updateMutationFooEntity: { fields: { title: 'Updated title' } },
           publishEntities: [{ id, publishState: EntityPublishState.Published }],
         },
       });

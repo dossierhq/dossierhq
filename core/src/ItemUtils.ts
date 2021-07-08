@@ -1,5 +1,7 @@
 import type {
   AdminEntity2,
+  AdminEntityCreate2,
+  AdminEntityUpdate2,
   Entity,
   EntityReference,
   FieldSpecification,
@@ -149,7 +151,9 @@ export function isRichTextValueItemBlock(
   return block.type === RichTextBlockType.valueItem;
 }
 
-export function isItemValueItem(item: ValueItem | Entity | AdminEntity2): item is ValueItem {
+export function isItemValueItem(
+  item: ValueItem | Entity | AdminEntity2 | AdminEntityCreate2 | AdminEntityUpdate2
+): item is ValueItem {
   return '_type' in item;
 }
 

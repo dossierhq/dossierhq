@@ -6,11 +6,9 @@ import {
   isRichTextField,
   isValueTypeField,
   isValueTypeListField,
-  toAdminEntity1,
   visitFieldRecursively,
 } from '@datadata/core';
 import type {
-  AdminEntity,
   AdminEntity2,
   AdminQuery,
   Entity,
@@ -94,7 +92,7 @@ export async function loadAdminEntity<TContext extends SessionGraphQLContext>(
   context: TContext,
   id: string,
   version: number | undefined | null
-): Promise<AdminEntity> {
+): Promise<AdminEntity2> {
   const schema = getSchema(context);
   const adminClient = getAdminClient(context);
   const result = await adminClient.getEntity(
@@ -109,7 +107,7 @@ export async function loadAdminEntity<TContext extends SessionGraphQLContext>(
 export async function loadAdminEntities<TContext extends SessionGraphQLContext>(
   context: TContext,
   ids: string[]
-): Promise<Array<AdminEntity | null>> {
+): Promise<Array<AdminEntity2 | null>> {
   const schema = getSchema(context);
   const adminClient = getAdminClient(context);
   const results = await adminClient.getEntities(ids.map((id) => ({ id })));
@@ -125,7 +123,7 @@ export async function loadAdminEntities<TContext extends SessionGraphQLContext>(
 export function buildResolversForAdminEntity<TContext extends SessionGraphQLContext>(
   schema: Schema,
   entity: AdminEntity2
-): AdminEntity {
+): AdminEntity2 {
   const entitySpec = schema.getEntityTypeSpecification(entity.info.type);
   if (!entitySpec) {
     throw new Error(`Couldn't find entity spec for type: ${entity.info.type}`);
@@ -134,14 +132,14 @@ export function buildResolversForAdminEntity<TContext extends SessionGraphQLCont
 
   resolveFields<TContext>(schema, entitySpec, result, true);
 
-  return toAdminEntity1(result);
+  return result;
 }
 
 export async function loadAdminSearchEntities<TContext extends SessionGraphQLContext>(
   context: TContext,
   query: AdminQuery | undefined,
   paging: Paging
-): Promise<ConnectionWithTotalCount<Edge<AdminEntity>, TContext> | null> {
+): Promise<ConnectionWithTotalCount<Edge<AdminEntity2>, TContext> | null> {
   const schema = getSchema(context);
   const adminClient = getAdminClient(context);
   const result = await adminClient.searchEntities(query, paging);
