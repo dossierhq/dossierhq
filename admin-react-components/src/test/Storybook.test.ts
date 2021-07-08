@@ -30,8 +30,11 @@ async function runTest(story: any, context: any) {
   tree?.unmount();
 }
 
+process.chdir(path.resolve(__dirname, '..', '..'));
+
 initStoryshots({
   asyncJest: true,
+  framework: 'react',
   test: ({ story, context, done }) => {
     runTest(story, context).then(done);
   },

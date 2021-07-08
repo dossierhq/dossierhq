@@ -12,7 +12,7 @@ dependencies:
   '@rush-temp/benchpress': file:projects/benchpress.tgz
   '@rush-temp/cli': file:projects/cli.tgz
   '@rush-temp/core': file:projects/core.tgz
-  '@rush-temp/datadata': file:projects/datadata.tgz
+  '@rush-temp/datadata': file:projects/datadata.tgz_ts-node@9.1.1
   '@rush-temp/datadata-examples-foo': file:projects/datadata-examples-foo.tgz_graphql@15.5.0
   '@rush-temp/datadata-examples-next-web': file:projects/datadata-examples-next-web.tgz
   '@rush-temp/graphql': file:projects/graphql.tgz_ts-node@9.1.1
@@ -14539,15 +14539,19 @@ packages:
       integrity: sha512-rHzuwz8pjUXQJGgoAG8uPGQlNkrcCZCr3TgOXG+PNoF7zqJfO8pLkj6yrE5Q7PmiuSqEuJ/GU91fLrHLJM40pA==
       tarball: file:projects/datadata-examples-next-web.tgz
     version: 0.0.0
-  file:projects/datadata.tgz:
+  file:projects/datadata.tgz_ts-node@9.1.1:
     dependencies:
       concurrently: 6.1.0
       dotenv: 9.0.2
+      jest: 26.6.3_ts-node@9.1.1
       pg: 8.6.0
     dev: false
+    id: file:projects/datadata.tgz
     name: '@rush-temp/datadata'
+    peerDependencies:
+      ts-node: '*'
     resolution:
-      integrity: sha512-dMQ9k5MAJ8kpiOz1nGeJoukFIEEgPBwkI5MpqZ+w1QiGc2nRL2X4lM0LM8v7HzREiZIzk4pNPjKfhR7Ntpk7iQ==
+      integrity: sha512-pgHKd4XEvEHFngTcWMQHfQYV801bk83ovVM19OWEzbgxsz3djGnLqJpHI0etxqwOtjlxD4Ru73JPNW2wqQLphg==
       tarball: file:projects/datadata.tgz
     version: 0.0.0
   file:projects/graphql.tgz_ts-node@9.1.1:
