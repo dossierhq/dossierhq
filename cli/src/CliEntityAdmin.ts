@@ -1,5 +1,5 @@
-import chalk from 'chalk';
 import {
+  assertIsDefined,
   isEntityTypeField,
   isEntityTypeListField,
   isLocationField,
@@ -13,11 +13,11 @@ import {
   isValueTypeListField,
   notOk,
   ok,
-  toAdminEntityUpdate2,
 } from '@datadata/core';
 import type {
   AdminEntity2,
   AdminEntityCreate2,
+  AdminEntityUpdate2,
   AdminQuery,
   EntityPublishState,
   EntityReference,
@@ -31,6 +31,7 @@ import type {
   ValueItem,
   ValueTypeSpecification,
 } from '@datadata/core';
+import chalk from 'chalk';
 import type { CliContext } from '..';
 import * as CliSchema from './CliSchema';
 import {
@@ -226,12 +227,14 @@ async function selectOrder(order: string | undefined) {
 export async function createEntity(context: CliContext): Promise<AdminEntity2 | null> {
   const { adminClient } = context;
   const type = await CliSchema.selectEntityType(context);
+  const { name, fields } = await editEntityValues(context, type, {});
+
   const entity: AdminEntityCreate2 = {
-    info: { type, name: '' },
-    fields: await editEntityValues(context, type, {}),
+    info: { type, name: name ?? '' },
+    fields,
   };
 
-  while (!entity.info.name) {
+  while (entity.info.name.length === 0) {
     entity.info.name = await showStringEdit('What name to use for the entity?');
   }
 
@@ -259,11 +262,19 @@ export async function editEntity(context: CliContext, id: string): Promise<Admin
     return null;
   }
 
-  const entity = {
-    id,
-    ...(await editEntityValues(context, getResult.value.info.type, getResult.value.fields)),
-  };
-  const updateResult = await adminClient.updateEntity(toAdminEntityUpdate2(entity));
+  const { name, fields } = await editEntityValues(
+    context,
+    getResult.value.info.type,
+    getResult.value.fields
+  );
+
+  const entity: AdminEntityUpdate2 = { id, fields };
+
+  if (name) {
+    entity.info = { name };
+  }
+
+  const updateResult = await adminClient.updateEntity(entity);
   if (updateResult.isError()) {
     logErrorResult('Failed updating entity', updateResult);
     return null;
@@ -306,17 +317,17 @@ async function publishEntityVersion(
 async function editEntityValues(
   context: CliContext,
   type: string,
-  defaultValues: Record<string, unknown>
-): Promise<Record<string, unknown>> {
+  defaultFields: Record<string, unknown>
+): Promise<{ name: string | null; fields: Record<string, unknown> }> {
   const entitySpec = getEntitySpec(context, type);
-  const changedValues: Record<string, unknown> = {};
+  const fields: Record<string, unknown> = {};
 
   let lastItemId = null;
   // eslint-disable-next-line no-constant-condition
   while (true) {
     const item: EditFieldSelectorItem = await showItemSelector(
       'Which field to edit?',
-      createEntityFieldSelectorItems(entitySpec, changedValues, defaultValues),
+      createEntityFieldSelectorItems(entitySpec, fields, defaultFields),
       lastItemId
     );
     if (item.id === '_exit') {
@@ -324,25 +335,25 @@ async function editEntityValues(
     }
     lastItemId = item.id;
     const fieldName = item.id;
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const fieldSpec = entitySpec.fields.find((x) => x.name === fieldName)!;
+    const fieldSpec = entitySpec.fields.find((x) => x.name === fieldName);
+    assertIsDefined(fieldSpec);
     const result = await editField(context, fieldSpec, item.defaultValue);
     if (result.isOk()) {
-      changedValues[fieldName] = result.value;
+      fields[fieldName] = result.value;
     } else {
       logErrorResult('Failed editing field', result);
     }
   }
 
+  let name: string | null = null;
   const nameFieldSpec = entitySpec.fields.find((x) => x.isName);
   if (nameFieldSpec) {
-    const name = changedValues[nameFieldSpec.name];
-    if (name) {
-      changedValues._name = name;
+    if (fields[nameFieldSpec.name]) {
+      name = fields[nameFieldSpec.name] as string;
     }
   }
 
-  return changedValues;
+  return { name, fields };
 }
 
 function createEntityFieldSelectorItems(
