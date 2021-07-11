@@ -230,7 +230,6 @@ describe('FullFoo', () => {
             "info": Object {
               "name": "New name",
               "type": "Foo",
-              "version": undefined,
             },
           },
         ],
@@ -262,9 +261,7 @@ describe('FullFoo', () => {
             },
             "id": "fc66b4d7-61ff-44d4-8f68-cb7f526df046",
             "info": Object {
-              "name": undefined,
               "type": "Foo",
-              "version": undefined,
             },
           },
         ],
@@ -294,9 +291,7 @@ describe('FullFoo', () => {
             },
             "id": "fc66b4d7-61ff-44d4-8f68-cb7f526df046",
             "info": Object {
-              "name": undefined,
               "type": "Foo",
-              "version": undefined,
             },
           },
         ],
@@ -332,9 +327,7 @@ describe('FullFoo', () => {
             },
             "id": "fc66b4d7-61ff-44d4-8f68-cb7f526df046",
             "info": Object {
-              "name": undefined,
               "type": "Foo",
-              "version": undefined,
             },
           },
         ],
@@ -364,9 +357,7 @@ describe('FullFoo', () => {
             },
             "id": "fc66b4d7-61ff-44d4-8f68-cb7f526df046",
             "info": Object {
-              "name": undefined,
               "type": "Foo",
-              "version": undefined,
             },
           },
         ],
@@ -404,9 +395,7 @@ describe('FullFoo', () => {
             },
             "id": "fc66b4d7-61ff-44d4-8f68-cb7f526df046",
             "info": Object {
-              "name": undefined,
               "type": "Foo",
-              "version": undefined,
             },
           },
         ],
@@ -445,9 +434,7 @@ describe('FullFoo', () => {
             },
             "id": "fc66b4d7-61ff-44d4-8f68-cb7f526df046",
             "info": Object {
-              "name": undefined,
               "type": "Foo",
-              "version": undefined,
             },
           },
         ],

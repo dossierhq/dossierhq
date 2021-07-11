@@ -1,5 +1,5 @@
-import type { AdminEntityCreate, AdminEntityUpdate } from '@datadata/core';
-import { toAdminEntityCreate2, toAdminEntityUpdate2 } from '@datadata/core';
+import { assertIsDefined } from '@datadata/core';
+import type { AdminEntityCreate2, AdminEntityUpdate2 } from '@datadata/core';
 import type { Dispatch, SetStateAction } from 'react';
 import React, { useContext, useEffect, useState } from 'react';
 import {
@@ -178,33 +178,40 @@ function EntityEditorInner({
 
 function createAdminEntity(
   draftState: EntityEditorDraftState
-): AdminEntityCreate | AdminEntityUpdate {
+): AdminEntityCreate2 | AdminEntityUpdate2 {
   const entityState = draftState.entity;
   if (!entityState) throw new Error('No entity in state');
 
-  let result: AdminEntityCreate | AdminEntityUpdate;
+  let result: AdminEntityCreate2 | AdminEntityUpdate2;
   if (entityState.version === 0) {
     result = {
       id: draftState.id,
-      _type: entityState.entitySpec.name,
-      _name: entityState.name,
-      _version: entityState.version,
+      info: {
+        type: entityState.entitySpec.name,
+        name: entityState.name,
+        version: entityState.version,
+      },
     };
   } else {
     const { id } = draftState;
-    if (!id) {
-      throw new Error('Expected id');
-    }
-    result = { id, _type: entityState.entitySpec.name };
-    if (entityState.name !== entityState.initialName) {
-      result._name = entityState.name;
-    }
+    assertIsDefined(id);
+    result = {
+      id,
+      info: {
+        type: entityState.entitySpec.name,
+        ...(entityState.name !== entityState.initialName ? { name: entityState.name } : {}),
+      },
+    };
   }
+
+  const fields: Record<string, unknown> = {};
   for (const { fieldSpec, value, initialValue } of entityState.fields) {
     if (value !== initialValue) {
-      result[fieldSpec.name] = value;
+      fields[fieldSpec.name] = value;
     }
   }
+  result.fields = fields;
+
   return result;
 }
 
@@ -218,10 +225,10 @@ async function submitEntity(
 ) {
   setSubmitLoading(true);
   const entity = createAdminEntity(draftState);
-  const isNew = entity._version === 0;
+  const isNew = entity.info?.version === 0;
   const result = await (isNew
-    ? createEntity(toAdminEntityCreate2(entity as AdminEntityCreate))
-    : updateEntity(toAdminEntityUpdate2(entity as AdminEntityUpdate)));
+    ? createEntity(entity as AdminEntityCreate2)
+    : updateEntity(entity as AdminEntityUpdate2));
 
   if (result.isOk()) {
     dispatchEditorState(new EntityUpsertedAction(draftState.id));
