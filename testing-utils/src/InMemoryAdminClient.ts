@@ -1,10 +1,5 @@
 import type { AdminClient, AdminClientOperation } from '@datadata/core';
-import {
-  AdminClientOperationName,
-  assertExhaustive,
-  createBaseAdminClient,
-  toAdminEntityUpdate1,
-} from '@datadata/core';
+import { AdminClientOperationName, assertExhaustive, createBaseAdminClient } from '@datadata/core';
 import { InMemoryAdmin } from '..';
 import type { InMemorySessionContext } from './InMemoryServer';
 
@@ -141,7 +136,7 @@ async function terminatingMiddleware(
         args: [entity],
         resolve,
       } = operation as AdminClientOperation<AdminClientOperationName.updateEntity>;
-      resolve(await updateEntity(context, toAdminEntityUpdate1(entity)));
+      resolve(await updateEntity(context, entity));
       break;
     }
     default:
