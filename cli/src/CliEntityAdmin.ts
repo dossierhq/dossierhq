@@ -451,7 +451,7 @@ export async function editFieldValueItem(
   //TODO which error type
   const valueItem = defaultValue
     ? { ...defaultValue }
-    : { _type: await CliSchema.selectValueType(context, fieldSpec.valueTypes) };
+    : { type: await CliSchema.selectValueType(context, fieldSpec.valueTypes) };
   const valueSpec = getValueSpec(context, valueItem);
 
   let lastItemId = null;

@@ -230,9 +230,9 @@ export function buildResolversForValue<TContext extends SessionGraphQLContext>(
   valueItem: ValueItem,
   isAdmin: boolean
 ): ValueItem {
-  const valueSpec = schema.getValueTypeSpecification(valueItem._type);
+  const valueSpec = schema.getValueTypeSpecification(valueItem.type);
   if (!valueSpec) {
-    throw new Error(`Couldn't find value spec for type: ${valueItem._type}`);
+    throw new Error(`Couldn't find value spec for type: ${valueItem.type}`);
   }
   const result = { ...valueItem };
   resolveFields<TContext>(schema, valueSpec, result, isAdmin);

@@ -45,7 +45,7 @@ function buildMockCallbacks<TVisitContext>() {
           action: 'enterValueItem',
           fieldName: fieldSpec.name,
           path: visitorPathToString(path),
-          type: valueItem._type,
+          type: valueItem.type,
         });
         return visitContext;
       },
@@ -133,7 +133,7 @@ describe('visitItemRecursively()', () => {
         string: 'Hello string',
         location: { lat: 55.60498, lng: 13.003822 },
         bar: { id: 'bar id 1' },
-        valueOne: { _type: 'ValueOne', string: 'value string', bar: { id: 'bar id 2' } },
+        valueOne: { type: 'ValueOne', string: 'value string', bar: { id: 'bar id 2' } },
       },
     };
     visitItemRecursively({
@@ -175,11 +175,11 @@ describe('visitItemRecursively()', () => {
           "fieldName": "valueOne",
           "path": "fields.valueOne",
           "value": Object {
-            "_type": "ValueOne",
             "bar": Object {
               "id": "bar id 2",
             },
             "string": "value string",
+            "type": "ValueOne",
           },
           "visitContext": undefined,
         },
@@ -249,12 +249,12 @@ describe('visitItemRecursively()', () => {
         bars: [{ id: 'bar id 1' }, { id: 'bar id 2' }],
         valueOnes: [
           {
-            _type: 'ValueOne',
+            type: 'ValueOne',
             strings: ['One', 'Two'],
             bars: [{ id: 'bar id 3' }, { id: 'bar id 4' }],
           },
           {
-            _type: 'ValueOne',
+            type: 'ValueOne',
             strings: ['First', 'Second'],
             bars: [{ id: 'bar id 5' }, { id: 'bar id 6' }],
           },
@@ -344,7 +344,6 @@ describe('visitItemRecursively()', () => {
           "fieldName": "valueOnes",
           "path": "fields.valueOnes[0]",
           "value": Object {
-            "_type": "ValueOne",
             "bars": Array [
               Object {
                 "id": "bar id 3",
@@ -357,6 +356,7 @@ describe('visitItemRecursively()', () => {
               "One",
               "Two",
             ],
+            "type": "ValueOne",
           },
           "visitContext": undefined,
         },
@@ -417,7 +417,6 @@ describe('visitItemRecursively()', () => {
           "fieldName": "valueOnes",
           "path": "fields.valueOnes[1]",
           "value": Object {
-            "_type": "ValueOne",
             "bars": Array [
               Object {
                 "id": "bar id 5",
@@ -430,6 +429,7 @@ describe('visitItemRecursively()', () => {
               "First",
               "Second",
             ],
+            "type": "ValueOne",
           },
           "visitContext": undefined,
         },
@@ -621,11 +621,11 @@ describe('visitItemRecursively()', () => {
             {
               type: RichTextBlockType.valueItem,
               data: {
-                _type: 'ValueOne',
+                type: 'ValueOne',
                 string: 'Hello',
                 location: { lat: 55.60498, lng: 13.003822 },
                 bar: { id: 'bar id' },
-                child: { _type: 'ValueOne', string: 'Nested' },
+                child: { type: 'ValueOne', string: 'Nested' },
               },
             },
           ],
@@ -648,19 +648,19 @@ describe('visitItemRecursively()', () => {
             "blocks": Array [
               Object {
                 "data": Object {
-                  "_type": "ValueOne",
                   "bar": Object {
                     "id": "bar id",
                   },
                   "child": Object {
-                    "_type": "ValueOne",
                     "string": "Nested",
+                    "type": "ValueOne",
                   },
                   "location": Object {
                     "lat": 55.60498,
                     "lng": 13.003822,
                   },
                   "string": "Hello",
+                  "type": "ValueOne",
                 },
                 "type": "valueItem",
               },
@@ -676,19 +676,19 @@ describe('visitItemRecursively()', () => {
         Object {
           "action": "visitRichTextBlock",
           "blockData": Object {
-            "_type": "ValueOne",
             "bar": Object {
               "id": "bar id",
             },
             "child": Object {
-              "_type": "ValueOne",
               "string": "Nested",
+              "type": "ValueOne",
             },
             "location": Object {
               "lat": 55.60498,
               "lng": 13.003822,
             },
             "string": "Hello",
+            "type": "ValueOne",
           },
           "blockType": "valueItem",
           "fieldName": "body",
@@ -732,8 +732,8 @@ describe('visitItemRecursively()', () => {
           "fieldName": "child",
           "path": "fields.body[0].child",
           "value": Object {
-            "_type": "ValueOne",
             "string": "Nested",
+            "type": "ValueOne",
           },
           "visitContext": undefined,
         },
@@ -913,12 +913,12 @@ describe('visitItemRecursively()', () => {
       },
       fields: {
         valueOne: {
-          _type: 'ValueOne',
+          type: 'ValueOne',
           string: 'root',
           valueOne: {
-            _type: 'ValueOne',
+            type: 'ValueOne',
             string: 'root->valueOne',
-            valueOne: { _type: 'ValueOne', string: 'root->valueOne->valueOne' },
+            valueOne: { type: 'ValueOne', string: 'root->valueOne->valueOne' },
           },
         },
       },
@@ -936,14 +936,14 @@ describe('visitItemRecursively()', () => {
           "fieldName": "valueOne",
           "path": "fields.valueOne",
           "value": Object {
-            "_type": "ValueOne",
             "string": "root",
+            "type": "ValueOne",
             "valueOne": Object {
-              "_type": "ValueOne",
               "string": "root->valueOne",
+              "type": "ValueOne",
               "valueOne": Object {
-                "_type": "ValueOne",
                 "string": "root->valueOne->valueOne",
+                "type": "ValueOne",
               },
             },
           },
@@ -967,11 +967,11 @@ describe('visitItemRecursively()', () => {
           "fieldName": "valueOne",
           "path": "fields.valueOne.valueOne",
           "value": Object {
-            "_type": "ValueOne",
             "string": "root->valueOne",
+            "type": "ValueOne",
             "valueOne": Object {
-              "_type": "ValueOne",
               "string": "root->valueOne->valueOne",
+              "type": "ValueOne",
             },
           },
           "visitContext": undefined,
@@ -994,8 +994,8 @@ describe('visitItemRecursively()', () => {
           "fieldName": "valueOne",
           "path": "fields.valueOne.valueOne.valueOne",
           "value": Object {
-            "_type": "ValueOne",
             "string": "root->valueOne->valueOne",
+            "type": "ValueOne",
           },
           "visitContext": undefined,
         },

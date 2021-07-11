@@ -806,7 +806,7 @@ describe('createEntity()', () => {
               {
                 type: RichTextBlockType.valueItem,
                 data: {
-                  _type: 'EntityAdminStringReference',
+                  type: 'EntityAdminStringReference',
                   string: 'Hello bar 2',
                   reference: { id: bar2Id },
                 },
@@ -842,7 +842,7 @@ describe('createEntity()', () => {
                 {
                   type: RichTextBlockType.valueItem,
                   data: {
-                    _type: 'EntityAdminStringReference',
+                    type: 'EntityAdminStringReference',
                     string: 'Hello bar 2',
                     reference: { id: bar2Id },
                   },
@@ -871,7 +871,7 @@ describe('createEntity()', () => {
                 {
                   type: RichTextBlockType.valueItem,
                   data: {
-                    _type: 'EntityAdminStringReference',
+                    type: 'EntityAdminStringReference',
                     string: 'Hello bar 2',
                     reference: { id: bar2Id },
                   },
@@ -1007,7 +1007,7 @@ describe('createEntity()', () => {
   test('Create EntityAdminBaz with EntityAdminTwoStrings value type', async () => {
     const createResult = await client.createEntity({
       info: { type: 'EntityAdminBaz', name: 'Baz' },
-      fields: { twoStrings: { _type: 'EntityAdminTwoStrings', one: 'First', two: 'Second' } },
+      fields: { twoStrings: { type: 'EntityAdminTwoStrings', one: 'First', two: 'Second' } },
     });
     if (expectOkResult(createResult)) {
       const {
@@ -1024,7 +1024,7 @@ describe('createEntity()', () => {
         },
         fields: {
           ...emptyBazFields,
-          twoStrings: { _type: 'EntityAdminTwoStrings', one: 'First', two: 'Second' },
+          twoStrings: { type: 'EntityAdminTwoStrings', one: 'First', two: 'Second' },
         },
       });
 
@@ -1039,7 +1039,7 @@ describe('createEntity()', () => {
         },
         fields: {
           ...emptyBazFields,
-          twoStrings: { _type: 'EntityAdminTwoStrings', one: 'First', two: 'Second' },
+          twoStrings: { type: 'EntityAdminTwoStrings', one: 'First', two: 'Second' },
         },
       });
     }
@@ -1050,8 +1050,8 @@ describe('createEntity()', () => {
       info: { type: 'EntityAdminBaz', name: 'Baz' },
       fields: {
         twoStringsList: [
-          { _type: 'EntityAdminTwoStrings', one: 'First', two: 'Second' },
-          { _type: 'EntityAdminTwoStrings', one: 'Three', two: 'Four' },
+          { type: 'EntityAdminTwoStrings', one: 'First', two: 'Second' },
+          { type: 'EntityAdminTwoStrings', one: 'Three', two: 'Four' },
         ],
       },
     });
@@ -1071,8 +1071,8 @@ describe('createEntity()', () => {
         fields: {
           ...emptyBazFields,
           twoStringsList: [
-            { _type: 'EntityAdminTwoStrings', one: 'First', two: 'Second' },
-            { _type: 'EntityAdminTwoStrings', one: 'Three', two: 'Four' },
+            { type: 'EntityAdminTwoStrings', one: 'First', two: 'Second' },
+            { type: 'EntityAdminTwoStrings', one: 'Three', two: 'Four' },
           ],
         },
       });
@@ -1089,8 +1089,8 @@ describe('createEntity()', () => {
         fields: {
           ...emptyBazFields,
           twoStringsList: [
-            { _type: 'EntityAdminTwoStrings', one: 'First', two: 'Second' },
-            { _type: 'EntityAdminTwoStrings', one: 'Three', two: 'Four' },
+            { type: 'EntityAdminTwoStrings', one: 'First', two: 'Second' },
+            { type: 'EntityAdminTwoStrings', one: 'Three', two: 'Four' },
           ],
         },
       });
@@ -1108,7 +1108,7 @@ describe('createEntity()', () => {
         info: { type: 'EntityAdminBaz', name: 'Baz' },
         fields: {
           stringReference: {
-            _type: 'EntityAdminStringReference',
+            type: 'EntityAdminStringReference',
             string: 'Hello string',
             reference: { id: barId },
           },
@@ -1131,7 +1131,7 @@ describe('createEntity()', () => {
           fields: {
             ...emptyBazFields,
             stringReference: {
-              _type: 'EntityAdminStringReference',
+              type: 'EntityAdminStringReference',
               string: 'Hello string',
               reference: { id: barId },
             },
@@ -1150,7 +1150,7 @@ describe('createEntity()', () => {
           fields: {
             ...emptyBazFields,
             stringReference: {
-              _type: 'EntityAdminStringReference',
+              type: 'EntityAdminStringReference',
               string: 'Hello string',
               reference: { id: barId },
             },
@@ -1178,18 +1178,18 @@ describe('createEntity()', () => {
         info: { type: 'EntityAdminBaz', name: 'Baz' },
         fields: {
           listFields: {
-            _type: 'EntityAdminListFields',
+            type: 'EntityAdminListFields',
             stringList: ['one', 'two', 'three'],
             referenceList: [{ id: bar1Id }, { id: bar2Id }],
           },
           listFieldsList: [
             {
-              _type: 'EntityAdminListFields',
+              type: 'EntityAdminListFields',
               stringList: ['three', 'two', 'one'],
               referenceList: [{ id: bar2Id }, { id: bar1Id }],
             },
             {
-              _type: 'EntityAdminListFields',
+              type: 'EntityAdminListFields',
               stringList: ['one', 'two', 'three'],
               referenceList: [{ id: bar1Id }, { id: bar2Id }],
             },
@@ -1212,18 +1212,18 @@ describe('createEntity()', () => {
           fields: {
             ...emptyBazFields,
             listFields: {
-              _type: 'EntityAdminListFields',
+              type: 'EntityAdminListFields',
               stringList: ['one', 'two', 'three'],
               referenceList: [{ id: bar1Id }, { id: bar2Id }],
             },
             listFieldsList: [
               {
-                _type: 'EntityAdminListFields',
+                type: 'EntityAdminListFields',
                 stringList: ['three', 'two', 'one'],
                 referenceList: [{ id: bar2Id }, { id: bar1Id }],
               },
               {
-                _type: 'EntityAdminListFields',
+                type: 'EntityAdminListFields',
                 stringList: ['one', 'two', 'three'],
                 referenceList: [{ id: bar1Id }, { id: bar2Id }],
               },
@@ -1243,18 +1243,18 @@ describe('createEntity()', () => {
           fields: {
             ...emptyBazFields,
             listFields: {
-              _type: 'EntityAdminListFields',
+              type: 'EntityAdminListFields',
               stringList: ['one', 'two', 'three'],
               referenceList: [{ id: bar1Id }, { id: bar2Id }],
             },
             listFieldsList: [
               {
-                _type: 'EntityAdminListFields',
+                type: 'EntityAdminListFields',
                 stringList: ['three', 'two', 'one'],
                 referenceList: [{ id: bar2Id }, { id: bar1Id }],
               },
               {
-                _type: 'EntityAdminListFields',
+                type: 'EntityAdminListFields',
                 stringList: ['one', 'two', 'three'],
                 referenceList: [{ id: bar1Id }, { id: bar2Id }],
               },
@@ -1284,13 +1284,13 @@ describe('createEntity()', () => {
       info: { type: 'EntityAdminBaz', name: 'Baz' },
       fields: {
         nested: {
-          _type: 'EntityAdminNested',
+          type: 'EntityAdminNested',
           title: 'Nested 0',
           child: {
-            _type: 'EntityAdminNested',
+            type: 'EntityAdminNested',
             title: 'Nested 0.a',
             child: {
-              _type: 'EntityAdminNested',
+              type: 'EntityAdminNested',
               title: 'Nested 0.a.I',
             },
           },
@@ -1313,13 +1313,13 @@ describe('createEntity()', () => {
         fields: {
           ...emptyBazFields,
           nested: {
-            _type: 'EntityAdminNested',
+            type: 'EntityAdminNested',
             title: 'Nested 0',
             child: {
-              _type: 'EntityAdminNested',
+              type: 'EntityAdminNested',
               title: 'Nested 0.a',
               child: {
-                _type: 'EntityAdminNested',
+                type: 'EntityAdminNested',
                 title: 'Nested 0.a.I',
               },
             },
@@ -1339,13 +1339,13 @@ describe('createEntity()', () => {
         fields: {
           ...emptyBazFields,
           nested: {
-            _type: 'EntityAdminNested',
+            type: 'EntityAdminNested',
             title: 'Nested 0',
             child: {
-              _type: 'EntityAdminNested',
+              type: 'EntityAdminNested',
               title: 'Nested 0.a',
               child: {
-                _type: 'EntityAdminNested',
+                type: 'EntityAdminNested',
                 title: 'Nested 0.a.I',
               },
             },
@@ -1483,25 +1483,21 @@ describe('createEntity()', () => {
     );
   });
 
-  test('Error: value type missing _type', async () => {
+  test('Error: value type missing type', async () => {
     const createResult = await client.createEntity({
       info: { type: 'EntityAdminBaz', name: 'Baz' },
       fields: {
         twoStrings: { one: 'One', two: 'Two' },
       },
     });
-    expectErrorResult(
-      createResult,
-      ErrorType.BadRequest,
-      'entity.fields.twoStrings: missing _type'
-    );
+    expectErrorResult(createResult, ErrorType.BadRequest, 'entity.fields.twoStrings: missing type');
   });
 
-  test('Error: value type with invalid _type', async () => {
+  test('Error: value type with invalid type', async () => {
     const createResult = await client.createEntity({
       info: { type: 'EntityAdminBaz', name: 'Baz' },
       fields: {
-        twoStrings: { _type: 'Invalid' },
+        twoStrings: { type: 'Invalid' },
       },
     });
     expectErrorResult(
@@ -1511,11 +1507,11 @@ describe('createEntity()', () => {
     );
   });
 
-  test('Error: value type with wrong _type', async () => {
+  test('Error: value type with wrong type', async () => {
     const createResult = await client.createEntity({
       info: { type: 'EntityAdminBaz', name: 'Baz' },
       fields: {
-        oneString: { _type: 'EntityAdminTwoStrings', one: 'One', two: 'Two' },
+        oneString: { type: 'EntityAdminTwoStrings', one: 'One', two: 'Two' },
       },
     });
     expectErrorResult(
@@ -1529,7 +1525,7 @@ describe('createEntity()', () => {
     const createResult = await client.createEntity({
       info: { type: 'EntityAdminBaz', name: 'Baz' },
       fields: {
-        oneString: { _type: 'EntityAdminOneString', one: 'One', invalid: 'value' },
+        oneString: { type: 'EntityAdminOneString', one: 'One', invalid: 'value' },
       },
     });
     expectErrorResult(
@@ -1703,7 +1699,7 @@ describe('createEntity()', () => {
     const createResult = await client.createEntity({
       info: { type: 'EntityAdminBaz', name: 'Baz' },
       fields: {
-        twoStringsList: { _type: 'EntityAdminTwoStrings', one: 'One', two: 'Two' },
+        twoStringsList: { type: 'EntityAdminTwoStrings', one: 'One', two: 'Two' },
       },
     });
     expectErrorResult(
@@ -1718,8 +1714,8 @@ describe('createEntity()', () => {
       info: { type: 'EntityAdminBaz', name: 'Baz' },
       fields: {
         twoStrings: [
-          { _type: 'EntityAdminTwoStrings', one: 'One', two: 'Two' },
-          { _type: 'EntityAdminTwoStrings', one: 'One', two: 'Two' },
+          { type: 'EntityAdminTwoStrings', one: 'One', two: 'Two' },
+          { type: 'EntityAdminTwoStrings', one: 'One', two: 'Two' },
         ],
       },
     });
@@ -2049,7 +2045,7 @@ describe('searchEntities()', () => {
             {
               type: RichTextBlockType.valueItem,
               data: {
-                _type: 'EntityAdminStringedLocation',
+                type: 'EntityAdminStringedLocation',
                 string: 'Hello location',
                 location: center,
               },
@@ -2087,7 +2083,7 @@ describe('searchEntities()', () => {
                       {
                         type: RichTextBlockType.valueItem,
                         data: {
-                          _type: 'EntityAdminStringedLocation',
+                          type: 'EntityAdminStringedLocation',
                           string: 'Hello location',
                           location: center,
                         },

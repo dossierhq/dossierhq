@@ -575,7 +575,7 @@ describe('create*Entity()', () => {
                 summary
                 stringedBar {
                   __typename
-                  _type
+                  type
                   text
                   bar {
                     __typename
@@ -602,7 +602,7 @@ describe('create*Entity()', () => {
               title: 'Foo title',
               summary: 'Foo summary',
               stringedBar: {
-                _type: 'MutationStringedBar',
+                type: 'MutationStringedBar',
                 text: 'Value text',
                 bar: { id: barId },
               },
@@ -629,7 +629,7 @@ describe('create*Entity()', () => {
               summary: 'Foo summary',
               stringedBar: {
                 __typename: 'AdminMutationStringedBar',
-                _type: 'MutationStringedBar',
+                type: 'MutationStringedBar',
                 text: 'Value text',
                 bar: {
                   __typename: 'AdminMutationBar',
@@ -659,7 +659,7 @@ describe('create*Entity()', () => {
           title: 'Foo title',
           summary: 'Foo summary',
           stringedBar: {
-            _type: 'MutationStringedBar',
+            type: 'MutationStringedBar',
             text: 'Value text',
             bar: { id: barId },
           },
@@ -692,11 +692,11 @@ describe('create*Entity()', () => {
               fields {
                 anyValueItem {
                   __typename
-                  _type
+                  type
                 }
                 anyValueItems {
                   __typename
-                  _type
+                  type
                 }
               }
             }
@@ -712,13 +712,13 @@ describe('create*Entity()', () => {
             },
             fields: {
               anyValueItemJson: JSON.stringify({
-                _type: 'MutationStringedBar',
+                type: 'MutationStringedBar',
                 text: 'A value',
                 bar: { id: barId },
               }),
               anyValueItemsJson: JSON.stringify([
                 {
-                  _type: 'MutationStringedBar',
+                  type: 'MutationStringedBar',
                   text: 'A value in a list',
                   bar: { id: barId },
                 },
@@ -745,12 +745,12 @@ describe('create*Entity()', () => {
             fields: {
               anyValueItem: {
                 __typename: 'AdminMutationStringedBar',
-                _type: 'MutationStringedBar',
+                type: 'MutationStringedBar',
               },
               anyValueItems: [
                 {
                   __typename: 'AdminMutationStringedBar',
-                  _type: 'MutationStringedBar',
+                  type: 'MutationStringedBar',
                 },
               ],
             },
@@ -770,13 +770,13 @@ describe('create*Entity()', () => {
         fields: {
           ...emptyFooFields,
           anyValueItem: {
-            _type: 'MutationStringedBar',
+            type: 'MutationStringedBar',
             text: 'A value',
             bar: { id: barId },
           },
           anyValueItems: [
             {
-              _type: 'MutationStringedBar',
+              type: 'MutationStringedBar',
               text: 'A value in a list',
               bar: { id: barId },
             },
@@ -803,15 +803,15 @@ describe('create*Entity()', () => {
             fields {
               nestedValue {
                 __typename
-                _type
+                type
                 text
                 child {
                   __typename
-                  _type
+                  type
                   text
                   child {
                     __typename
-                    _type
+                    type
                     text
                   }
                 }
@@ -827,10 +827,10 @@ describe('create*Entity()', () => {
           info: { type: 'MutationFoo', name: 'Foo name' },
           fields: {
             nestedValue: {
-              _type: 'MutationNestedValue',
+              type: 'MutationNestedValue',
               text: 'Outer',
               childJson: JSON.stringify({
-                _type: 'MutationNestedValue',
+                type: 'MutationNestedValue',
                 text: 'Inner',
               }),
             },
@@ -855,11 +855,11 @@ describe('create*Entity()', () => {
           fields: {
             nestedValue: {
               __typename: 'AdminMutationNestedValue',
-              _type: 'MutationNestedValue',
+              type: 'MutationNestedValue',
               text: 'Outer',
               child: {
                 __typename: 'AdminMutationNestedValue',
-                _type: 'MutationNestedValue',
+                type: 'MutationNestedValue',
                 text: 'Inner',
                 child: null,
               },
@@ -881,9 +881,9 @@ describe('create*Entity()', () => {
       fields: {
         ...emptyFooFields,
         nestedValue: {
-          _type: 'MutationNestedValue',
+          type: 'MutationNestedValue',
           text: 'Outer',
-          child: { _type: 'MutationNestedValue', text: 'Inner' },
+          child: { type: 'MutationNestedValue', text: 'Inner' },
         },
       },
     });
@@ -1123,7 +1123,7 @@ describe('update*Entity()', () => {
                   }
                   stringedBar {
                     __typename
-                    _type
+                    type
                     text
                     bar {
                       __typename
@@ -1132,11 +1132,11 @@ describe('update*Entity()', () => {
                   }
                   anyValueItem {
                     __typename
-                    _type
+                    type
                   }
                   anyValueItems {
                     __typename
-                    _type
+                    type
                   }
                 }
               }
@@ -1158,18 +1158,18 @@ describe('update*Entity()', () => {
                 bar: { id: bar1Id },
                 bars: [{ id: bar1Id }, { id: bar2Id }],
                 stringedBar: {
-                  _type: 'MutationStringedBar',
+                  type: 'MutationStringedBar',
                   text: 'Value text',
                   bar: { id: bar2Id },
                 },
                 anyValueItemJson: JSON.stringify({
-                  _type: 'MutationStringedBar',
+                  type: 'MutationStringedBar',
                   text: 'A value item',
                   bar: { id: bar1Id },
                 }),
                 anyValueItemsJson: JSON.stringify([
                   {
-                    _type: 'MutationStringedBar',
+                    type: 'MutationStringedBar',
                     text: 'A value item in a list',
                     bar: { id: bar2Id },
                   },
@@ -1225,7 +1225,7 @@ describe('update*Entity()', () => {
                 ],
                 stringedBar: {
                   __typename: 'AdminMutationStringedBar',
-                  _type: 'MutationStringedBar',
+                  type: 'MutationStringedBar',
                   text: 'Value text',
                   bar: {
                     __typename: 'AdminMutationBar',
@@ -1234,12 +1234,12 @@ describe('update*Entity()', () => {
                 },
                 anyValueItem: {
                   __typename: 'AdminMutationStringedBar',
-                  _type: 'MutationStringedBar',
+                  type: 'MutationStringedBar',
                 },
                 anyValueItems: [
                   {
                     __typename: 'AdminMutationStringedBar',
-                    _type: 'MutationStringedBar',
+                    type: 'MutationStringedBar',
                   },
                 ],
               },
@@ -1264,18 +1264,18 @@ describe('update*Entity()', () => {
             bar: { id: bar1Id },
             bars: [{ id: bar1Id }, { id: bar2Id }],
             stringedBar: {
-              _type: 'MutationStringedBar',
+              type: 'MutationStringedBar',
               text: 'Value text',
               bar: { id: bar2Id },
             },
             anyValueItem: {
-              _type: 'MutationStringedBar',
+              type: 'MutationStringedBar',
               text: 'A value item',
               bar: { id: bar1Id },
             },
             anyValueItems: [
               {
-                _type: 'MutationStringedBar',
+                type: 'MutationStringedBar',
                 text: 'A value item in a list',
                 bar: { id: bar2Id },
               },
