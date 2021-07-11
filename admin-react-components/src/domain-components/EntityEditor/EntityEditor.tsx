@@ -1,5 +1,5 @@
 import { assertIsDefined } from '@datadata/core';
-import type { AdminEntityCreate2, AdminEntityUpdate2 } from '@datadata/core';
+import type { AdminEntityCreate, AdminEntityUpdate } from '@datadata/core';
 import type { Dispatch, SetStateAction } from 'react';
 import React, { useContext, useEffect, useState } from 'react';
 import {
@@ -178,11 +178,11 @@ function EntityEditorInner({
 
 function createAdminEntity(
   draftState: EntityEditorDraftState
-): AdminEntityCreate2 | AdminEntityUpdate2 {
+): AdminEntityCreate | AdminEntityUpdate {
   const entityState = draftState.entity;
   if (!entityState) throw new Error('No entity in state');
 
-  let result: AdminEntityCreate2 | AdminEntityUpdate2;
+  let result: AdminEntityCreate | AdminEntityUpdate;
   if (entityState.version === 0) {
     result = {
       id: draftState.id,
@@ -227,8 +227,8 @@ async function submitEntity(
   const entity = createAdminEntity(draftState);
   const isNew = entity.info?.version === 0;
   const result = await (isNew
-    ? createEntity(entity as AdminEntityCreate2)
-    : updateEntity(entity as AdminEntityUpdate2));
+    ? createEntity(entity as AdminEntityCreate)
+    : updateEntity(entity as AdminEntityUpdate));
 
   if (result.isOk()) {
     dispatchEditorState(new EntityUpsertedAction(draftState.id));

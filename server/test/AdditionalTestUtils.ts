@@ -1,5 +1,5 @@
 import type {
-  AdminEntity2,
+  AdminEntity,
   Connection,
   Edge,
   EntityHistory,
@@ -33,8 +33,8 @@ export function expectEntityHistoryVersions(
 }
 
 export function expectSearchResultEntities(
-  result: Result<Connection<Edge<AdminEntity2, ErrorType>> | null, ErrorType.BadRequest>,
-  actualEntities: AdminEntity2[]
+  result: Result<Connection<Edge<AdminEntity, ErrorType>> | null, ErrorType.BadRequest>,
+  actualEntities: AdminEntity[]
 ): void {
   if (expectOkResult(result)) {
     assertIsDefined(result.value);

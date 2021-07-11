@@ -1,5 +1,5 @@
 import type {
-  AdminEntity2,
+  AdminEntity,
   EntityHistory,
   PublishingHistory,
   PublishingResult,
@@ -42,7 +42,7 @@ export class InMemoryServerInner {
     );
   }
 
-  getEntity(id: string, version?: number | null): AdminEntity2 | null {
+  getEntity(id: string, version?: number | null): AdminEntity | null {
     const fullEntity = this.getFullEntity(id);
     if (!fullEntity) {
       return null;
@@ -63,7 +63,7 @@ export class InMemoryServerInner {
   private convertToAdminEntity(
     entity: InMemoryEntity,
     entityVersion: InMemoryEntityVersion
-  ): AdminEntity2 {
+  ): AdminEntity {
     const { _version: version, ...fields } = entityVersion;
     return {
       id: entity.id,
@@ -105,7 +105,7 @@ export class InMemoryServerInner {
     return result;
   }
 
-  getLatestEntities(): AdminEntity2[] {
+  getLatestEntities(): AdminEntity[] {
     return this.#entities.map((entity) =>
       this.convertToAdminEntity(entity, this.findLatestVersion(entity.versions))
     );
@@ -119,7 +119,7 @@ export class InMemoryServerInner {
     return `${name}#${Math.random().toFixed(8).slice(2)}`;
   }
 
-  addNewEntity(entity: AdminEntity2, userId: string): void {
+  addNewEntity(entity: AdminEntity, userId: string): void {
     const {
       id,
       info: { type, name, version },
@@ -140,7 +140,7 @@ export class InMemoryServerInner {
     });
   }
 
-  addUpdatedEntity(entity: AdminEntity2, userId: string): void {
+  addUpdatedEntity(entity: AdminEntity, userId: string): void {
     const fullEntity = this.getFullEntity(entity.id);
     if (!fullEntity) {
       throw new Error(`Can't find ${entity.id}`);

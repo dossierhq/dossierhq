@@ -1,5 +1,5 @@
 import type {
-  AdminEntity2,
+  AdminEntity,
   ErrorType,
   JsonConnection,
   JsonEdge,
@@ -10,7 +10,7 @@ import type {
 } from '@datadata/core';
 
 export interface EntityResponse {
-  item: AdminEntity2;
+  item: AdminEntity;
 }
 
 export type EntityHistoryResponse = JsonEntityHistory;
@@ -21,7 +21,7 @@ export interface SchemaResponse {
   spec: SchemaSpecification;
 }
 
-export type SearchEntitiesResponse = JsonConnection<JsonEdge<AdminEntity2, ErrorType>> | null;
+export type SearchEntitiesResponse = JsonConnection<JsonEdge<AdminEntity, ErrorType>> | null;
 
 export type PublishingResultResponse = PublishingResult;
 export type PublishingResultListResponse = PublishingResult[];

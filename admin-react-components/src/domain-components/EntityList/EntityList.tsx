@@ -1,4 +1,4 @@
-import type { AdminEntity2, AdminQuery } from '@datadata/core';
+import type { AdminEntity, AdminQuery } from '@datadata/core';
 import React, { useContext } from 'react';
 import { Button, DataDataContext, Message, PublishStateTag } from '../..';
 import { joinClassNames } from '../../utils/ClassNameUtils';
@@ -6,7 +6,7 @@ import { joinClassNames } from '../../utils/ClassNameUtils';
 export interface EntityListProps {
   className?: string;
   query?: AdminQuery;
-  onEntityClick: (entity: AdminEntity2) => void;
+  onEntityClick: (entity: AdminEntity) => void;
 }
 
 export function EntityList({

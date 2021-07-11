@@ -1,5 +1,5 @@
 import type {
-  AdminEntity2,
+  AdminEntity,
   EntityPublishState,
   EntityTypeSpecification,
   FieldSpecification,
@@ -154,9 +154,9 @@ export class SetMessageLoadMessageAction extends EntityEditorDraftStateAction {
 }
 
 export class UpdateEntityAction extends EntityEditorDraftStateAction {
-  #entity: AdminEntity2;
+  #entity: AdminEntity;
 
-  constructor(id: string, entity: AdminEntity2) {
+  constructor(id: string, entity: AdminEntity) {
     super(id);
     this.#entity = entity;
   }
@@ -291,7 +291,7 @@ export function initializeEntityEditorState({
 
 function createEditorEntityDraftState(
   entitySpec: EntityTypeSpecification,
-  entity: AdminEntity2 | null
+  entity: AdminEntity | null
 ): EntityEditorDraftState['entity'] {
   const fields = entitySpec.fields.map((fieldSpec) => {
     const value = entity?.fields[fieldSpec.name] ?? null;

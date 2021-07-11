@@ -1,7 +1,7 @@
 import type {
-  AdminEntity2,
-  AdminEntityCreate2,
-  AdminEntityUpdate2,
+  AdminEntity,
+  AdminEntityCreate,
+  AdminEntityUpdate,
   AdminQuery,
   Connection,
   Edge,
@@ -29,7 +29,7 @@ export interface DataDataContextAdapter {
   getEntity(
     id: string,
     version?: number | null
-  ): PromiseResult<AdminEntity2, ErrorType.NotFound | ErrorType.Generic>;
+  ): PromiseResult<AdminEntity, ErrorType.NotFound | ErrorType.Generic>;
   getEntityHistory(
     id: string
   ): PromiseResult<EntityHistory, ErrorType.NotFound | ErrorType.Generic>;
@@ -40,15 +40,15 @@ export interface DataDataContextAdapter {
     query?: AdminQuery,
     paging?: Paging
   ): PromiseResult<
-    Connection<Edge<AdminEntity2, ErrorType>> | null,
+    Connection<Edge<AdminEntity, ErrorType>> | null,
     ErrorType.BadRequest | ErrorType.Generic
   >;
   createEntity(
-    entity: AdminEntityCreate2
-  ): PromiseResult<AdminEntity2, ErrorType.BadRequest | ErrorType.Generic>;
+    entity: AdminEntityCreate
+  ): PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.Generic>;
   updateEntity(
-    entity: AdminEntityUpdate2
-  ): PromiseResult<AdminEntity2, ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic>;
+    entity: AdminEntityUpdate
+  ): PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic>;
   publishEntities(
     entities: {
       id: string;
@@ -80,10 +80,10 @@ enum FetcherActions {
 }
 
 interface FetcherActionReturn {
-  [FetcherActions.UseEntity]: AdminEntity2;
+  [FetcherActions.UseEntity]: AdminEntity;
   [FetcherActions.UseEntityHistory]: EntityHistory;
   [FetcherActions.UsePublishingHistory]: PublishingHistory;
-  [FetcherActions.UseSearchEntities]: Connection<Edge<AdminEntity2, ErrorType>> | null;
+  [FetcherActions.UseSearchEntities]: Connection<Edge<AdminEntity, ErrorType>> | null;
 }
 
 export class DataDataContextValue {
@@ -115,7 +115,7 @@ export class DataDataContextValue {
     id: string | undefined,
     version?: number | null
   ): {
-    entity?: AdminEntity2;
+    entity?: AdminEntity;
     entityError?: ErrorResult<unknown, ErrorType.NotFound | ErrorType.Generic>;
   } => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -177,7 +177,7 @@ export class DataDataContextValue {
     query?: AdminQuery,
     paging?: Paging
   ): {
-    connection?: Connection<Edge<AdminEntity2, ErrorType>> | null;
+    connection?: Connection<Edge<AdminEntity, ErrorType>> | null;
     connectionError?: ErrorResult<unknown, ErrorType.BadRequest | ErrorType.Generic>;
   } => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -192,14 +192,14 @@ export class DataDataContextValue {
       ? createErrorResultFromError(error, [ErrorType.BadRequest])
       : undefined;
     return {
-      connection: data as Connection<Edge<AdminEntity2, ErrorType>> | undefined,
+      connection: data as Connection<Edge<AdminEntity, ErrorType>> | undefined,
       connectionError,
     };
   };
 
   createEntity = async (
-    entity: AdminEntityCreate2
-  ): PromiseResult<AdminEntity2, ErrorType.BadRequest | ErrorType.Generic> => {
+    entity: AdminEntityCreate
+  ): PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.Generic> => {
     try {
       const result = await this.#adapter.createEntity(entity);
       if (result.isOk()) {
@@ -212,8 +212,8 @@ export class DataDataContextValue {
   };
 
   updateEntity = async (
-    entity: AdminEntityUpdate2
-  ): PromiseResult<AdminEntity2, ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic> => {
+    entity: AdminEntityUpdate
+  ): PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic> => {
     try {
       const result = await this.#adapter.updateEntity(entity);
       if (result.isOk()) {
@@ -300,7 +300,7 @@ export class DataDataContextValue {
     }
   };
 
-  private invalidateEntity(entity: AdminEntity2) {
+  private invalidateEntity(entity: AdminEntity) {
     mutate([this.#rootKey, FetcherActions.UseEntity, entity.id, null], entity, false);
     mutate([this.#rootKey, FetcherActions.UseEntityHistory, entity.id]);
   }
@@ -311,9 +311,9 @@ export class DataDataContextValue {
     mutate([this.#rootKey, FetcherActions.UsePublishingHistory, id]);
     mutate(
       [this.#rootKey, FetcherActions.UseEntity, id, null],
-      (cachedValue: AdminEntity2 | undefined) => {
+      (cachedValue: AdminEntity | undefined) => {
         if (cachedValue) {
-          const updatedValue: AdminEntity2 = {
+          const updatedValue: AdminEntity = {
             ...cachedValue,
             info: { ...cachedValue.info, publishingState: publishState },
           };

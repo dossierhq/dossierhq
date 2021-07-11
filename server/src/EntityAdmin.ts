@@ -1,8 +1,8 @@
 import { EntityPublishState, notOk, ok } from '@datadata/core';
 import type {
-  AdminEntity2,
-  AdminEntityCreate2,
-  AdminEntityUpdate2,
+  AdminEntity,
+  AdminEntityCreate,
+  AdminEntityUpdate,
   AdminQuery,
   Connection,
   Edge,
@@ -41,7 +41,7 @@ export async function getEntity(
   context: SessionContext,
   id: string,
   version?: number | null
-): PromiseResult<AdminEntity2, ErrorType.NotFound> {
+): PromiseResult<AdminEntity, ErrorType.NotFound> {
   let actualVersion: number;
   if (typeof version === 'number') {
     actualVersion = version;
@@ -73,7 +73,7 @@ export async function getEntity(
 export async function getEntities(
   context: SessionContext,
   ids: string[]
-): Promise<Result<AdminEntity2, ErrorType.NotFound>[]> {
+): Promise<Result<AdminEntity, ErrorType.NotFound>[]> {
   if (ids.length === 0) {
     return [];
   }
@@ -87,7 +87,7 @@ export async function getEntities(
     [ids]
   );
 
-  const result: Result<AdminEntity2, ErrorType.NotFound>[] = ids.map((id) => {
+  const result: Result<AdminEntity, ErrorType.NotFound>[] = ids.map((id) => {
     const entityMain = entitiesMain.find((x) => x.uuid === id);
     if (!entityMain) {
       return notOk.NotFound('No such entity');
@@ -102,7 +102,7 @@ export async function searchEntities(
   context: SessionContext,
   query?: AdminQuery,
   paging?: Paging
-): PromiseResult<Connection<Edge<AdminEntity2, ErrorType>> | null, ErrorType.BadRequest> {
+): PromiseResult<Connection<Edge<AdminEntity, ErrorType>> | null, ErrorType.BadRequest> {
   const sqlQuery = searchAdminEntitiesQuery(context, query, paging);
   if (sqlQuery.isError()) {
     return sqlQuery;
@@ -186,8 +186,8 @@ async function withUniqueNameAttempt<TResult>(
 
 export async function createEntity(
   context: SessionContext,
-  entity: AdminEntityCreate2
-): PromiseResult<AdminEntity2, ErrorType.BadRequest> {
+  entity: AdminEntityCreate
+): PromiseResult<AdminEntity, ErrorType.BadRequest> {
   const resolvedResult = resolveCreateEntity(context, entity);
   if (resolvedResult.isError()) {
     return resolvedResult;
@@ -255,7 +255,7 @@ export async function createEntity(
       await Db.queryNone(context, qb.build());
     }
 
-    const result: AdminEntity2 = {
+    const result: AdminEntity = {
       id: uuid,
       info: {
         ...createEntity.info,
@@ -271,8 +271,8 @@ export async function createEntity(
 
 export async function updateEntity(
   context: SessionContext,
-  entity: AdminEntityUpdate2
-): PromiseResult<AdminEntity2, ErrorType.BadRequest | ErrorType.NotFound> {
+  entity: AdminEntityUpdate
+): PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.NotFound> {
   return await context.withTransaction(async (context) => {
     const previousValues = await Db.queryNoneOrOne<
       Pick<

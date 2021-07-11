@@ -9,7 +9,7 @@ import {
 } from '@datadata/core';
 import type {
   AdminClient,
-  AdminEntity2,
+  AdminEntity,
   AdminQuery,
   BoundingBox,
   Connection,
@@ -34,7 +34,7 @@ let server: Server;
 let context: SessionContext;
 let client: AdminClient;
 let publishedClient: PublishedClient;
-let entitiesOfTypeAdminOnlyEditBefore: AdminEntity2[];
+let entitiesOfTypeAdminOnlyEditBefore: AdminEntity[];
 
 const emptyFooFields = { bar: null, summary: null, title: null };
 const emptyBazFields = {
@@ -225,7 +225,7 @@ async function ensureEntitiesExistForAdminOnlyEditBefore(client: AdminClient) {
 }
 
 async function getEntitiesForAdminOnlyEditBefore(client: AdminClient) {
-  const entities: AdminEntity2[] = [];
+  const entities: AdminEntity[] = [];
   await visitAllEntityPages(
     client,
     { entityTypes: ['AdminOnlyEditBefore'] },
@@ -246,7 +246,7 @@ async function visitAllEntityPages(
   client: AdminClient,
   query: AdminQuery,
   paging: Paging,
-  visitor: (connection: Connection<Edge<AdminEntity2, ErrorType>>) => void
+  visitor: (connection: Connection<Edge<AdminEntity, ErrorType>>) => void
 ) {
   const ownPaging = { ...paging };
   const isForwards = isPagingForwards(ownPaging);
@@ -305,8 +305,8 @@ async function createBarWithFooBazReferences(
 
   const { id: barId } = createBarResult.value;
 
-  const fooEntities: AdminEntity2[] = [];
-  const bazEntities: AdminEntity2[] = [];
+  const fooEntities: AdminEntity[] = [];
+  const bazEntities: AdminEntity[] = [];
 
   for (let i = 0; i < fooCount; i += 1) {
     const createFooResult = await client.createEntity({
@@ -1732,10 +1732,10 @@ describe('createEntity()', () => {
 });
 
 function expectConnectionToMatchSlice(
-  connection: Connection<Edge<AdminEntity2, ErrorType>> | null,
+  connection: Connection<Edge<AdminEntity, ErrorType>> | null,
   sliceStart: number,
   sliceEnd: number | undefined,
-  compareFn?: (a: AdminEntity2, b: AdminEntity2) => number
+  compareFn?: (a: AdminEntity, b: AdminEntity) => number
 ) {
   const actualIds = connection?.edges.map((edge) => ({
     id: edge.node.isOk() ? edge.node.value.id : edge.node,

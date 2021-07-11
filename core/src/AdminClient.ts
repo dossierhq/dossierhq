@@ -1,7 +1,7 @@
 import type {
-  AdminEntity2,
-  AdminEntityCreate2,
-  AdminEntityUpdate2,
+  AdminEntity,
+  AdminEntityCreate,
+  AdminEntityUpdate,
   AdminQuery,
   Connection,
   Edge,
@@ -21,22 +21,22 @@ import { executeOperationPipeline } from './SharedClient';
 export interface AdminClient {
   getEntity(
     reference: EntityReference | EntityVersionReference
-  ): PromiseResult<AdminEntity2, ErrorType.NotFound>;
+  ): PromiseResult<AdminEntity, ErrorType.NotFound>;
 
-  getEntities(references: EntityReference[]): Promise<Result<AdminEntity2, ErrorType.NotFound>[]>;
+  getEntities(references: EntityReference[]): Promise<Result<AdminEntity, ErrorType.NotFound>[]>;
 
   searchEntities(
     query?: AdminQuery,
     paging?: Paging
-  ): PromiseResult<Connection<Edge<AdminEntity2, ErrorType>> | null, ErrorType.BadRequest>;
+  ): PromiseResult<Connection<Edge<AdminEntity, ErrorType>> | null, ErrorType.BadRequest>;
 
   getTotalCount(query?: AdminQuery): PromiseResult<number, ErrorType.BadRequest>;
 
-  createEntity(entity: AdminEntityCreate2): PromiseResult<AdminEntity2, ErrorType.BadRequest>;
+  createEntity(entity: AdminEntityCreate): PromiseResult<AdminEntity, ErrorType.BadRequest>;
 
   updateEntity(
-    entity: AdminEntityUpdate2
-  ): PromiseResult<AdminEntity2, ErrorType.BadRequest | ErrorType.NotFound>;
+    entity: AdminEntityUpdate
+  ): PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.NotFound>;
 
   getEntityHistory(reference: EntityReference): PromiseResult<EntityHistory, ErrorType.NotFound>;
 
@@ -184,7 +184,7 @@ class BaseAdminClient<TContext> implements AdminClient {
   }
 
   createEntity(
-    entity: AdminEntityCreate2
+    entity: AdminEntityCreate
   ): Promise<AdminClientOperationReturn[AdminClientOperationName.createEntity]> {
     return this.executeOperation({
       name: AdminClientOperationName.createEntity,
@@ -193,7 +193,7 @@ class BaseAdminClient<TContext> implements AdminClient {
   }
 
   updateEntity(
-    entity: AdminEntityUpdate2
+    entity: AdminEntityUpdate
   ): Promise<AdminClientOperationReturn[AdminClientOperationName.updateEntity]> {
     return this.executeOperation({
       name: AdminClientOperationName.updateEntity,

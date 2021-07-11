@@ -1,4 +1,4 @@
-import type { AdminEntity2, Entity, ErrorType, PromiseResult, Result } from '@datadata/core';
+import type { AdminEntity, Entity, ErrorType, PromiseResult, Result } from '@datadata/core';
 import { notOk, ok } from '@datadata/core';
 import type { InMemorySessionContext } from '.';
 
@@ -20,7 +20,7 @@ export async function getEntities(
   return await Promise.all(ids.map((id) => getEntity(context, id)));
 }
 
-function convertAdminEntity(entity: AdminEntity2): Entity {
+function convertAdminEntity(entity: AdminEntity): Entity {
   const {
     id,
     info: { type, name },

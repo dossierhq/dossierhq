@@ -15,9 +15,9 @@ import {
   ok,
 } from '@datadata/core';
 import type {
-  AdminEntity2,
-  AdminEntityCreate2,
-  AdminEntityUpdate2,
+  AdminEntity,
+  AdminEntityCreate,
+  AdminEntityUpdate,
   AdminQuery,
   EntityPublishState,
   EntityReference,
@@ -67,7 +67,7 @@ interface EditFieldSelectorItem extends ItemSelectorItem {
 interface EntitySelectorItem {
   id: string;
   name: string;
-  entity?: AdminEntity2;
+  entity?: AdminEntity;
   enabled?: boolean;
 }
 
@@ -76,7 +76,7 @@ export async function selectEntity(
   message: string,
   initialQuery: AdminQuery | null,
   _defaultValue: EntityReference | null
-): PromiseResult<AdminEntity2, ErrorType.BadRequest | ErrorType.NotFound> {
+): PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.NotFound> {
   const { adminClient } = context;
   const { query, paging } = await configureQuery(context, initialQuery);
   const isForward = isPagingForwards(paging);
@@ -224,12 +224,12 @@ async function selectOrder(order: string | undefined) {
   return item.id;
 }
 
-export async function createEntity(context: CliContext): Promise<AdminEntity2 | null> {
+export async function createEntity(context: CliContext): Promise<AdminEntity | null> {
   const { adminClient } = context;
   const type = await CliSchema.selectEntityType(context);
   const { name, fields } = await editEntityValues(context, type, {});
 
-  const entity: AdminEntityCreate2 = {
+  const entity: AdminEntityCreate = {
     info: { type, name: name ?? '' },
     fields,
   };
@@ -254,7 +254,7 @@ export async function createEntity(context: CliContext): Promise<AdminEntity2 | 
   return createResult.value;
 }
 
-export async function editEntity(context: CliContext, id: string): Promise<AdminEntity2 | null> {
+export async function editEntity(context: CliContext, id: string): Promise<AdminEntity | null> {
   const { adminClient } = context;
   const getResult = await adminClient.getEntity({ id });
   if (getResult.isError()) {
@@ -268,7 +268,7 @@ export async function editEntity(context: CliContext, id: string): Promise<Admin
     getResult.value.fields
   );
 
-  const entity: AdminEntityUpdate2 = { id, fields };
+  const entity: AdminEntityUpdate = { id, fields };
 
   if (name) {
     entity.info = { name };
@@ -291,8 +291,8 @@ export async function editEntity(context: CliContext, id: string): Promise<Admin
 
 async function publishEntityVersion(
   context: CliContext,
-  entity: AdminEntity2
-): Promise<AdminEntity2 | null> {
+  entity: AdminEntity
+): Promise<AdminEntity | null> {
   const { adminClient } = context;
   const publish = await showConfirm('Publish the entity?');
   if (!publish) {
