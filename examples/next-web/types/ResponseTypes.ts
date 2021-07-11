@@ -22,6 +22,7 @@ export interface SchemaResponse {
 }
 
 export type SearchEntitiesResponse = JsonConnection<JsonEdge<AdminEntity, ErrorType>> | null;
+export type TotalCountResponse = { totalCount: number };
 
 export type PublishingResultResponse = PublishingResult;
 export type PublishingResultListResponse = PublishingResult[];

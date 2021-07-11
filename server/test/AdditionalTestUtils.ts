@@ -33,7 +33,10 @@ export function expectEntityHistoryVersions(
 }
 
 export function expectSearchResultEntities(
-  result: Result<Connection<Edge<AdminEntity, ErrorType>> | null, ErrorType.BadRequest>,
+  result: Result<
+    Connection<Edge<AdminEntity, ErrorType>> | null,
+    ErrorType.BadRequest | ErrorType.Generic
+  >,
   actualEntities: AdminEntity[]
 ): void {
   if (expectOkResult(result)) {

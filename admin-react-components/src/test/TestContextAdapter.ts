@@ -1,4 +1,5 @@
-import { InMemoryAdmin, InMemoryServer } from '@datadata/testing-utils';
+import type { AdminClient } from '@datadata/core';
+import { createInMemoryAdminClient, InMemoryAdmin, InMemoryServer } from '@datadata/testing-utils';
 import type { InMemorySessionContext } from '@datadata/testing-utils';
 import { v4 as uuidv4 } from 'uuid';
 import type { DataDataContextAdapter } from '..';
@@ -6,10 +7,28 @@ import { DataDataContextValue } from '..';
 import { entitiesFixture } from './EntityFixtures';
 import schema from '../stories/StoryboardSchema';
 
-export function createContextValue(adapter?: TestContextAdapter): DataDataContextValue {
+export function createContextValue(
+  adapter?: TestContextAdapter,
+  adminClient?: AdminClient
+): DataDataContextValue {
   schema.validate().throwIfError();
 
-  return new DataDataContextValue(adapter ?? new TestContextAdapter(), schema, uuidv4());
+  if (!adminClient) {
+    const userId = 'adba1452-1b89-42e9-8878-d0a2becf101f';
+    const server = new InMemoryServer(schema);
+    server.loadEntities(entitiesFixture);
+
+    adminClient = createInMemoryAdminClient({
+      resolveContext: async () => server.createContext(userId),
+    });
+  }
+
+  return new DataDataContextValue(
+    adapter ?? new TestContextAdapter(),
+    adminClient,
+    schema,
+    uuidv4()
+  );
 }
 
 export function SlowInterceptor(): Promise<void> {

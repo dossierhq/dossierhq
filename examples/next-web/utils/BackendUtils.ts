@@ -1,4 +1,10 @@
-import type { AdminQuery, Paging, PromiseResult } from '@datadata/core';
+import type {
+  AdminQuery,
+  EntityReference,
+  EntityVersionReference,
+  Paging,
+  PromiseResult,
+} from '@datadata/core';
 import { createErrorResult, ErrorType, notOk, ok } from '@datadata/core';
 import { encodeQuery } from './QueryUtils';
 
@@ -16,14 +22,17 @@ export const urls = {
   archiveEntity: (id: string): string => `${baseUrl}/archive-entity/${id}`,
   unarchiveEntity: (id: string): string => `${baseUrl}/unarchive-entity/${id}`,
   createEntity: `${baseUrl}/entities`,
-  getEntity: (id: string, version?: number | null): string =>
-    `${baseUrl}/entities/${id}${version ? `?version=${version}` : ''}`,
+  getEntity: (reference: EntityReference | EntityVersionReference): string =>
+    `${baseUrl}/entities/${reference.id}${
+      'version' in reference ? `?version=${reference.version}` : ''
+    }`,
   publishEntities: `${baseUrl}/publish-entities`,
   unpublishEntities: `${baseUrl}/unpublish-entities`,
   getEntityHistory: (id: string): string => `${baseUrl}/entity-history/${id}`,
   getPublishingHistory: (id: string): string => `${baseUrl}/publishing-history/${id}`,
   searchEntities: (query?: AdminQuery, paging?: Paging): string =>
     `${baseUrl}/search-entities?${encodeQuery({ query, paging })}`,
+  totalCount: (query?: AdminQuery): string => `${baseUrl}/total-count?${encodeQuery({ query })}`,
 };
 
 export async function fetchJson<T>(

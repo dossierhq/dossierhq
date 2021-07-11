@@ -4,14 +4,18 @@ import type {
 } from '@datadata/admin-react-components';
 import { DataDataContextValue } from '@datadata/admin-react-components';
 import {
+  AdminClientOperationName,
+  assertExhaustive,
   convertJsonConnection,
   convertJsonEdge,
   convertJsonEntityHistory,
   convertJsonPublishingHistory,
+  createBaseAdminClient,
   ErrorType,
   ok,
   Schema,
 } from '@datadata/core';
+import type { AdminClient, AdminClientOperation, AdminEntity, Result } from '@datadata/core';
 import { useEffect, useMemo, useState } from 'react';
 import type {
   EntityArchiveRequest,
@@ -29,9 +33,12 @@ import type {
   PublishingResultResponse,
   SchemaResponse,
   SearchEntitiesResponse,
+  TotalCountResponse,
 } from '../types/ResponseTypes';
 import { fetchJson, fetchJsonResult, urls } from '../utils/BackendUtils';
 import customTools from './EditorJsTools';
+
+type BackendContext = Record<never, never>;
 
 class ContextAdapter implements DataDataContextAdapter {
   getEditorJSConfig: DataDataContextAdapter['getEditorJSConfig'] = (
@@ -82,7 +89,7 @@ class ContextAdapter implements DataDataContextAdapter {
   getEntity: DataDataContextAdapter['getEntity'] = async (id, version) => {
     const result = await fetchJsonResult<EntityResponse, ErrorType.NotFound>(
       [ErrorType.NotFound],
-      urls.getEntity(id, version)
+      urls.getEntity(version !== null ? { id, version } : { id })
     );
     if (result.isOk()) {
       return ok(result.value.item);
@@ -145,7 +152,7 @@ class ContextAdapter implements DataDataContextAdapter {
     const body: EntityUpdateRequest = { item: entity };
     const result = await fetchJsonResult<EntityResponse, ErrorType.BadRequest | ErrorType.NotFound>(
       [ErrorType.BadRequest, ErrorType.NotFound],
-      urls.getEntity(entity.id), //TODO
+      urls.getEntity({ id: entity.id }), //TODO
       {
         method: 'PUT',
         headers: { 'content-type': 'application/json' },
@@ -236,9 +243,244 @@ export function useInitializeContext(): { contextValue: DataDataContextValue | n
   }, []);
 
   const contextValue = useMemo(
-    () => (schema ? new DataDataContextValue(new ContextAdapter(), schema) : null),
+    () =>
+      schema
+        ? new DataDataContextValue(new ContextAdapter(), createBackendAdminClient(), schema)
+        : null,
     [schema]
   );
 
   return { contextValue };
+}
+
+function createBackendAdminClient(): AdminClient {
+  const context: BackendContext = {};
+  return createBaseAdminClient({
+    resolveContext: () => Promise.resolve(context),
+    pipeline: [terminatingMiddleware],
+  });
+}
+
+async function terminatingMiddleware(
+  _context: BackendContext,
+  operation: AdminClientOperation<AdminClientOperationName>
+): Promise<void> {
+  switch (operation.name) {
+    case AdminClientOperationName.archiveEntity: {
+      const {
+        args: [reference],
+        resolve,
+      } = operation as AdminClientOperation<AdminClientOperationName.archiveEntity>;
+      const body: EntityArchiveRequest = {};
+      const result = await fetchJsonResult<
+        PublishingResultResponse,
+        ErrorType.BadRequest | ErrorType.NotFound
+      >([ErrorType.BadRequest, ErrorType.NotFound], urls.archiveEntity(reference.id), {
+        method: 'PUT',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+      resolve(result);
+      break;
+    }
+    case AdminClientOperationName.createEntity: {
+      const {
+        args: [entity],
+        resolve,
+      } = operation as AdminClientOperation<AdminClientOperationName.createEntity>;
+      const body: EntityCreateRequest = { item: entity };
+      const result = await fetchJsonResult<EntityResponse, ErrorType.BadRequest>(
+        [ErrorType.BadRequest],
+        urls.createEntity,
+        {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify(body),
+        }
+      );
+
+      if (result.isOk()) {
+        resolve(ok(result.value.item));
+      } else {
+        resolve(result);
+      }
+      break;
+    }
+    case AdminClientOperationName.getEntities: {
+      const {
+        args: [references],
+        resolve,
+      } = operation as AdminClientOperation<AdminClientOperationName.getEntities>;
+      //TODO add support for fetching multiple entities at once
+      const result: Result<AdminEntity, ErrorType.NotFound | ErrorType.Generic>[] = [];
+      for (const reference of references) {
+        const itemResult = await fetchJsonResult<EntityResponse, ErrorType.NotFound>(
+          [ErrorType.NotFound],
+          urls.getEntity(reference)
+        );
+        result.push(itemResult.isOk() ? ok(itemResult.value.item) : itemResult);
+      }
+      resolve(result);
+      break;
+    }
+    case AdminClientOperationName.getEntity: {
+      const {
+        args: [reference],
+        resolve,
+      } = operation as AdminClientOperation<AdminClientOperationName.getEntity>;
+      const result = await fetchJsonResult<EntityResponse, ErrorType.NotFound>(
+        [ErrorType.NotFound],
+        urls.getEntity(reference)
+      );
+      if (result.isOk()) {
+        resolve(ok(result.value.item));
+      } else {
+        resolve(result);
+      }
+      break;
+    }
+    case AdminClientOperationName.getEntityHistory: {
+      const {
+        args: [reference],
+        resolve,
+      } = operation as AdminClientOperation<AdminClientOperationName.getEntityHistory>;
+      const result = await fetchJsonResult<EntityHistoryResponse, ErrorType.NotFound>(
+        [ErrorType.NotFound],
+        urls.getEntityHistory(reference.id)
+      );
+      if (result.isOk()) {
+        resolve(ok(convertJsonEntityHistory(result.value)));
+      } else {
+        resolve(result);
+      }
+      break;
+    }
+    case AdminClientOperationName.getPublishingHistory: {
+      const {
+        args: [reference],
+        resolve,
+      } = operation as AdminClientOperation<AdminClientOperationName.getPublishingHistory>;
+      const result = await fetchJsonResult<PublishingHistoryResponse, ErrorType.NotFound>(
+        [ErrorType.NotFound],
+        urls.getPublishingHistory(reference.id)
+      );
+      if (result.isOk()) {
+        resolve(ok(convertJsonPublishingHistory(result.value)));
+      } else {
+        resolve(result);
+      }
+      break;
+    }
+    case AdminClientOperationName.getTotalCount: {
+      const {
+        args: [query],
+        resolve,
+      } = operation as AdminClientOperation<AdminClientOperationName.getTotalCount>;
+      const result = await fetchJsonResult<TotalCountResponse, ErrorType.BadRequest>(
+        [ErrorType.BadRequest],
+        urls.totalCount(query)
+      );
+      if (result.isOk()) {
+        resolve(ok(result.value.totalCount));
+      } else {
+        resolve(result);
+      }
+      break;
+    }
+    case AdminClientOperationName.publishEntities: {
+      const {
+        args: [references],
+        resolve,
+      } = operation as AdminClientOperation<AdminClientOperationName.publishEntities>;
+      const body: EntityPublishRequest = { items: references };
+      const result = await fetchJsonResult<
+        PublishingResultListResponse,
+        ErrorType.BadRequest | ErrorType.NotFound
+      >([ErrorType.BadRequest, ErrorType.NotFound], urls.publishEntities, {
+        method: 'PUT',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+      resolve(result);
+      break;
+    }
+    case AdminClientOperationName.searchEntities: {
+      const {
+        args: [query, paging],
+        resolve,
+      } = operation as AdminClientOperation<AdminClientOperationName.searchEntities>;
+      const result = await fetchJsonResult<SearchEntitiesResponse, ErrorType.BadRequest>(
+        [ErrorType.BadRequest],
+        urls.searchEntities(query, paging)
+      );
+      if (result.isOk()) {
+        resolve(ok(convertJsonConnection(result.value, convertJsonEdge)));
+      } else {
+        resolve(result);
+      }
+      break;
+    }
+    case AdminClientOperationName.unarchiveEntity: {
+      const {
+        args: [reference],
+        resolve,
+      } = operation as AdminClientOperation<AdminClientOperationName.unarchiveEntity>;
+      const body: EntityUnarchiveRequest = {};
+      const result = await fetchJsonResult<
+        PublishingResultResponse,
+        ErrorType.BadRequest | ErrorType.NotFound
+      >([ErrorType.BadRequest, ErrorType.NotFound], urls.unarchiveEntity(reference.id), {
+        method: 'PUT',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+      resolve(result);
+      break;
+    }
+    case AdminClientOperationName.unpublishEntities: {
+      const {
+        args: [references],
+        resolve,
+      } = operation as AdminClientOperation<AdminClientOperationName.unpublishEntities>;
+      const body: EntityUnpublishRequest = { items: references.map(({ id }) => id) };
+      const result = await fetchJsonResult<
+        PublishingResultListResponse,
+        ErrorType.BadRequest | ErrorType.NotFound
+      >([ErrorType.BadRequest, ErrorType.NotFound], urls.unpublishEntities, {
+        method: 'PUT',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+      resolve(result);
+      break;
+    }
+    case AdminClientOperationName.updateEntity: {
+      const {
+        args: [entity],
+        resolve,
+      } = operation as AdminClientOperation<AdminClientOperationName.updateEntity>;
+      const body: EntityUpdateRequest = { item: entity };
+      const result = await fetchJsonResult<
+        EntityResponse,
+        ErrorType.BadRequest | ErrorType.NotFound
+      >(
+        [ErrorType.BadRequest, ErrorType.NotFound],
+        urls.getEntity({ id: entity.id }), //TODO
+        {
+          method: 'PUT',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify(body),
+        }
+      );
+
+      if (result.isOk()) {
+        resolve(ok(result.value.item));
+      } else {
+        resolve(result);
+      }
+      break;
+    }
+    default:
+      assertExhaustive(operation.name);
+  }
 }
