@@ -122,7 +122,7 @@ export function formatEntityOneLine(entity: Entity | AdminEntity): string {
 }
 
 export function formatValueItemOneLine(value: ValueItem): string {
-  return `${value._type}`;
+  return `${value.type}`;
 }
 
 export function formatRichTextOneLine(value: RichText): string {
@@ -199,9 +199,9 @@ export function getEntitySpec(context: CliContext, type: string): EntityTypeSpec
 
 export function getValueSpec(context: CliContext, valueItem: ValueItem): ValueTypeSpecification {
   const { schema } = context;
-  const valueSpec = schema.getValueTypeSpecification(valueItem._type);
+  const valueSpec = schema.getValueTypeSpecification(valueItem.type);
   if (!valueSpec) {
-    throw new Error(`Couldn't find value spec for type: ${valueItem._type}`);
+    throw new Error(`Couldn't find value spec for type: ${valueItem.type}`);
   }
   return valueSpec;
 }

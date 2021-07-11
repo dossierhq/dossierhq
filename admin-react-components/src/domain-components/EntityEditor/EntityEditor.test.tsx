@@ -386,11 +386,11 @@ describe('FullFoo', () => {
           Object {
             "fields": Object {
               "annotatedBar": Object {
-                "_type": "AnnotatedBar",
                 "annotation": "New annotation",
                 "bar": Object {
                   "id": "eb5732e2-b931-492b-82f1-f8fdd464f0d2",
                 },
+                "type": "AnnotatedBar",
               },
             },
             "id": "fc66b4d7-61ff-44d4-8f68-cb7f526df046",
@@ -425,11 +425,11 @@ describe('FullFoo', () => {
           Object {
             "fields": Object {
               "annotatedBar": Object {
-                "_type": "AnnotatedBar",
                 "annotation": "Annotation",
                 "bar": Object {
                   "id": "cb228716-d3dd-444f-9a77-80443d436339",
                 },
+                "type": "AnnotatedBar",
               },
             },
             "id": "fc66b4d7-61ff-44d4-8f68-cb7f526df046",

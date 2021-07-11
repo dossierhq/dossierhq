@@ -544,7 +544,7 @@ describe('node()', () => {
         info: { type: 'QueryFoo', name: 'Foo name' },
         fields: {
           title: 'Foo title',
-          stringedBar: { _type: 'QueryStringedBar', text: 'Value text', bar: { id: barId } },
+          stringedBar: { type: 'QueryStringedBar', text: 'Value text', bar: { id: barId } },
         },
       });
       if (expectOkResult(createFooResult)) {
@@ -567,7 +567,7 @@ describe('node()', () => {
                     title
                     stringedBar {
                       __typename
-                      _type
+                      type
                       text
                       bar {
                         __typename
@@ -599,7 +599,7 @@ describe('node()', () => {
                 title: 'Foo title',
                 stringedBar: {
                   __typename: 'QueryStringedBar',
-                  _type: 'QueryStringedBar',
+                  type: 'QueryStringedBar',
                   text: 'Value text',
                   bar: {
                     __typename: 'QueryBar',

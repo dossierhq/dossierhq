@@ -301,7 +301,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         new GraphQLInterfaceType({
           name: 'Value',
           fields: {
-            _type: { type: new GraphQLNonNull(this.getEnumType('ValueType')) },
+            type: { type: new GraphQLNonNull(this.getEnumType('ValueType')) },
           },
         })
       );
@@ -405,10 +405,10 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       new GraphQLObjectType<ValueItem, TContext>({
         name: valueSpec.name,
         interfaces: this.getInterfaces('Value'),
-        isTypeOf: (source, _context, _info) => source._type === valueSpec.name,
+        isTypeOf: (source, _context, _info) => source.type === valueSpec.name,
         fields: () => {
           const fields: GraphQLFieldConfigMap<ValueItem, TContext> = {
-            _type: { type: new GraphQLNonNull(this.getEnumType('ValueType')) },
+            type: { type: new GraphQLNonNull(this.getEnumType('ValueType')) },
           };
           this.addTypeSpecificationOutputFields(valueSpec, fields, false);
           return fields;
@@ -546,7 +546,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         new GraphQLInterfaceType({
           name: 'AdminValue',
           fields: {
-            _type: { type: new GraphQLNonNull(this.getEnumType('ValueType')) },
+            type: { type: new GraphQLNonNull(this.getEnumType('ValueType')) },
           },
         })
       );
@@ -735,10 +735,10 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       new GraphQLObjectType<ValueItem, TContext>({
         name: toAdminTypeName(valueSpec.name),
         interfaces: this.getInterfaces(toAdminTypeName('Value')),
-        isTypeOf: (source, _context, _info) => source._type === valueSpec.name,
+        isTypeOf: (source, _context, _info) => source.type === valueSpec.name,
         fields: () => {
           const fields: GraphQLFieldConfigMap<ValueItem, TContext> = {
-            _type: { type: new GraphQLNonNull(this.getEnumType('ValueType')) },
+            type: { type: new GraphQLNonNull(this.getEnumType('ValueType')) },
           };
           this.addTypeSpecificationOutputFields(valueSpec, fields, true);
           return fields;
@@ -751,7 +751,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         name: toAdminValueInputTypeName(valueSpec.name),
         fields: () => {
           const fields: GraphQLInputFieldConfigMap = {
-            _type: { type: new GraphQLNonNull(this.getEnumType('ValueType')) },
+            type: { type: new GraphQLNonNull(this.getEnumType('ValueType')) },
           };
           this.addTypeSpecificationInputFields(valueSpec, fields);
           return fields;
@@ -1008,7 +1008,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       const fields = isItemValueItem(item) ? item : item.fields ?? {};
       for (const fieldName of Object.keys(fields)) {
         // Skip standard fields
-        if (isValueItem && fieldName === '_type') {
+        if (isValueItem && fieldName === 'type') {
           continue;
         }
         const fieldPrefix = isValueItem
@@ -1045,7 +1045,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
 
         // Traverse into value items
         if (fieldSpec && isValueTypeField(fieldSpec, fieldValue) && fieldValue) {
-          const type = fieldValue._type;
+          const type = fieldValue.type;
           const valueSpec = this.schema.getValueTypeSpecification(type);
           if (!valueSpec) {
             throw new Error(`${fieldPrefix}: No such type ${type}`);

@@ -168,51 +168,51 @@ Object {
           },
           Object {
             "initialValue": Object {
-              "_type": "AnnotatedBar",
               "annotation": "Annotation",
               "bar": Object {
                 "id": "eb5732e2-b931-492b-82f1-f8fdd464f0d2",
               },
+              "type": "AnnotatedBar",
             },
             "value": Object {
-              "_type": "AnnotatedBar",
               "annotation": "Annotation",
               "bar": Object {
                 "id": "eb5732e2-b931-492b-82f1-f8fdd464f0d2",
               },
+              "type": "AnnotatedBar",
             },
           },
           Object {
             "initialValue": Array [
               Object {
-                "_type": "AnnotatedBar",
                 "annotation": "First",
                 "bar": Object {
                   "id": "cb228716-d3dd-444f-9a77-80443d436339",
                 },
+                "type": "AnnotatedBar",
               },
               Object {
-                "_type": "AnnotatedBar",
                 "annotation": "Second",
                 "bar": Object {
                   "id": "eb5732e2-b931-492b-82f1-f8fdd464f0d2",
                 },
+                "type": "AnnotatedBar",
               },
             ],
             "value": Array [
               Object {
-                "_type": "AnnotatedBar",
                 "annotation": "First",
                 "bar": Object {
                   "id": "cb228716-d3dd-444f-9a77-80443d436339",
                 },
+                "type": "AnnotatedBar",
               },
               Object {
-                "_type": "AnnotatedBar",
                 "annotation": "Second",
                 "bar": Object {
                   "id": "eb5732e2-b931-492b-82f1-f8fdd464f0d2",
                 },
+                "type": "AnnotatedBar",
               },
             ],
           },

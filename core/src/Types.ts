@@ -42,7 +42,7 @@ export interface BoundingBox {
 }
 
 export interface ValueItem {
-  _type: string;
+  type: string;
   [fieldName: string]: unknown;
 }
 

@@ -25,13 +25,13 @@ export function ValueTypeFieldEditor({ id, value, fieldSpec, onChange }: Props):
           text="Add value item"
           showValueTypes
           valueTypes={fieldSpec.valueTypes}
-          onTypeSelected={(type) => onChange?.({ _type: type })}
+          onTypeSelected={(type) => onChange?.({ type })}
         />
       </Segment>
     );
   }
 
-  const type = value._type;
+  const { type } = value;
   const valueSpec = schema.getValueTypeSpecification(type);
   if (!valueSpec) {
     return <div>Error</div>;

@@ -322,7 +322,7 @@ describe('adminEntity()', () => {
                     lng
                   }
                   stringedBar {
-                    _type
+                    type
                   }
                 }
               }
@@ -634,7 +634,7 @@ describe('adminEntity()', () => {
               { type: RichTextBlockType.entity, data: { id: bar1Id } },
               {
                 type: RichTextBlockType.valueItem,
-                data: { _type: 'QueryAdminStringedBar', text: 'Hello', bar: { id: bar2Id } },
+                data: { type: 'QueryAdminStringedBar', text: 'Hello', bar: { id: bar2Id } },
               },
             ],
           },
@@ -687,7 +687,7 @@ describe('adminEntity()', () => {
               },
               fields: {
                 body: {
-                  blocksJson: `[{"type":"entity","data":{"id":"${bar1Id}"}},{"type":"valueItem","data":{"_type":"QueryAdminStringedBar","bar":{"id":"${bar2Id}"},"text":"Hello"}}]`,
+                  blocksJson: `[{"type":"entity","data":{"id":"${bar1Id}"}},{"type":"valueItem","data":{"type":"QueryAdminStringedBar","bar":{"id":"${bar2Id}"},"text":"Hello"}}]`,
                   entities: [
                     { id: bar1Id, info: { name: bar1Name } },
                     { id: bar2Id, info: { name: bar2Name } },
@@ -882,7 +882,7 @@ describe('adminEntity()', () => {
         fields: {
           title: 'Foo title',
           stringedBar: {
-            _type: 'QueryAdminStringedBar',
+            type: 'QueryAdminStringedBar',
             text: 'Stringed text',
             bar: { id: barId },
           },
@@ -908,7 +908,7 @@ describe('adminEntity()', () => {
                     title
                     stringedBar {
                       __typename
-                      _type
+                      type
                       text
                       bar {
                         __typename
@@ -947,7 +947,7 @@ describe('adminEntity()', () => {
                 title: 'Foo title',
                 stringedBar: {
                   __typename: 'AdminQueryAdminStringedBar',
-                  _type: 'QueryAdminStringedBar',
+                  type: 'QueryAdminStringedBar',
                   text: 'Stringed text',
                   bar: {
                     __typename: 'AdminQueryAdminBar',

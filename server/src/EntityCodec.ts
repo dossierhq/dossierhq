@@ -125,21 +125,21 @@ function decodeFieldItemOrList(schema: Schema, fieldSpec: FieldSpecification, fi
 function decodeValueItemField(
   schema: Schema,
   fieldSpec: FieldSpecification,
-  encodedValue: { _type: string; [key: string]: unknown }
+  encodedValue: ValueItem
 ) {
-  const valueSpec = schema.getValueTypeSpecification(encodedValue._type);
+  const valueSpec = schema.getValueTypeSpecification(encodedValue.type);
   if (!valueSpec) {
-    throw new Error(`Couldn't find spec for value type ${encodedValue._type}`);
+    throw new Error(`Couldn't find spec for value type ${encodedValue.type}`);
   }
-  const decodedValue: ValueItem = { _type: encodedValue._type };
+  const decodedValue: ValueItem = { type: encodedValue.type };
   for (const [fieldName, fieldValue] of Object.entries(encodedValue)) {
-    if (fieldName === '_type') {
+    if (fieldName === 'type') {
       continue;
     }
 
     const fieldSpec = schema.getValueFieldSpecification(valueSpec, fieldName);
     if (!fieldSpec) {
-      throw new Error(`No field spec for ${fieldName} in value spec ${encodedValue._type}`);
+      throw new Error(`No field spec for ${fieldName} in value spec ${encodedValue.type}`);
     }
     decodedValue[fieldName] = decodeFieldItemOrList(schema, fieldSpec, fieldValue);
   }
@@ -437,9 +437,9 @@ function encodeValueItemField(
     return notOk.BadRequest(`${prefix}: expected object, got ${typeof data}`);
   }
   const value = data as ValueItem;
-  const valueType = value._type;
+  const valueType = value.type;
   if (!valueType) {
-    return notOk.BadRequest(`${prefix}: missing _type`);
+    return notOk.BadRequest(`${prefix}: missing type`);
   }
   const valueSpec = schema.getValueTypeSpecification(valueType);
   if (!valueSpec) {
@@ -454,7 +454,7 @@ function encodeValueItemField(
   }
 
   const unsupportedFields = new Set(Object.keys(value));
-  unsupportedFields.delete('_type');
+  unsupportedFields.delete('type');
   valueSpec.fields.forEach((x) => unsupportedFields.delete(x.name));
   if (unsupportedFields.size > 0) {
     return notOk.BadRequest(
@@ -462,7 +462,7 @@ function encodeValueItemField(
     );
   }
 
-  const encodedValue: ValueItem = { _type: valueType };
+  const encodedValue: ValueItem = { type: valueType };
 
   for (const fieldSpec of valueSpec.fields) {
     const fieldValue = value[fieldSpec.name];

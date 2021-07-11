@@ -154,7 +154,7 @@ export function isRichTextValueItemBlock(
 export function isItemValueItem(
   item: ValueItem | Entity | AdminEntity | AdminEntityCreate | AdminEntityUpdate
 ): item is ValueItem {
-  return '_type' in item;
+  return 'type' in item;
 }
 
 export function isItemAdminEntity(item: ValueItem | Entity | AdminEntity): item is AdminEntity {
@@ -305,10 +305,10 @@ function doVisitItemRecursively<TVisitContext>(
   } else {
     fields = item;
 
-    const valueSpec = schema.getValueTypeSpecification(item._type);
+    const valueSpec = schema.getValueTypeSpecification(item.type);
     if (!valueSpec) {
       throw new Error(
-        `${visitorPathToString(path)}: Couldn't find spec for value type ${item._type}`
+        `${visitorPathToString(path)}: Couldn't find spec for value type ${item.type}`
       );
     }
     fieldSpecs = valueSpec.fields;

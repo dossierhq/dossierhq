@@ -1185,7 +1185,7 @@ enum ValueType {
 }
 
 interface Value {
-  _type: ValueType!
+  type: ValueType!
 }
 
 type RichText {
@@ -1229,21 +1229,21 @@ type Bar implements Node & Entity {
 }
 
 type ValueOne implements Value {
-  _type: ValueType!
+  type: ValueType!
   one: String
   two: Bar
   three: Location
 }
 
 type ValueList implements Value {
-  _type: ValueType!
+  type: ValueType!
   one: [String!]
   two: [Bar!]
   three: [Location!]
 }
 
 type NestedValue implements Value {
-  _type: ValueType!
+  type: ValueType!
   text: String
   child: NestedValue
 }
@@ -1307,7 +1307,7 @@ input EntityVersionInput {
 }
 
 interface AdminValue {
-  _type: ValueType!
+  type: ValueType!
 }
 
 type AdminRichText {
@@ -1397,41 +1397,41 @@ input AdminBarUpdateInput {
 }
 
 type AdminValueOne implements AdminValue {
-  _type: ValueType!
+  type: ValueType!
   one: String
   two: AdminBar
   three: Location
 }
 
 input AdminValueOneInput {
-  _type: ValueType!
+  type: ValueType!
   one: String
   two: AdminReferenceInput
   three: LocationInput
 }
 
 type AdminValueList implements AdminValue {
-  _type: ValueType!
+  type: ValueType!
   one: [String!]
   two: [AdminBar!]
   three: [Location!]
 }
 
 input AdminValueListInput {
-  _type: ValueType!
+  type: ValueType!
   one: [String!]
   two: [AdminReferenceInput!]
   three: [LocationInput!]
 }
 
 type AdminNestedValue implements AdminValue {
-  _type: ValueType!
+  type: ValueType!
   text: String
   child: AdminNestedValue
 }
 
 input AdminNestedValueInput {
-  _type: ValueType!
+  type: ValueType!
   text: String
   childJson: String
   child: AdminNestedValueInput

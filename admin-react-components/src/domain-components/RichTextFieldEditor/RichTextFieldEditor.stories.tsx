@@ -54,7 +54,7 @@ NormalWithValueItem.args = {
     blocks: [
       {
         type: 'valueItem',
-        data: { _type: 'AnnotatedBar', annotation: 'Annotation', bar: { id: bar2Id } },
+        data: { type: 'AnnotatedBar', annotation: 'Annotation', bar: { id: bar2Id } },
       },
     ],
   },

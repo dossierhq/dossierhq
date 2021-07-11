@@ -105,10 +105,10 @@ describe('collectDataFromEntity', () => {
         info: { type: 'EntityCodecFoo', name: 'hello world' },
         fields: {
           valueOne: {
-            _type: 'EntityCodecValueOne',
+            type: 'EntityCodecValueOne',
             string: 'one',
             strings: ['two', 'three'],
-            child: { _type: 'EntityCodecValueOne', string: 'four' },
+            child: { type: 'EntityCodecValueOne', string: 'four' },
           },
         },
       })
@@ -136,7 +136,7 @@ describe('collectDataFromEntity', () => {
               { type: RichTextBlockType.paragraph, data: { text: 'one one' } },
               {
                 type: RichTextBlockType.valueItem,
-                data: { _type: 'EntityCodecValueOne', string: 'one two' },
+                data: { type: 'EntityCodecValueOne', string: 'one two' },
               },
               {
                 type: 'header',
@@ -208,12 +208,12 @@ describe('collectDataFromEntity', () => {
       collectDataFromEntity(context, {
         info: { type: 'EntityCodecFoo', name: 'hello world' },
         fields: {
-          valueOne: { _type: 'EntityCodecValueOne', location: { lat: 1, lng: 2 } },
+          valueOne: { type: 'EntityCodecValueOne', location: { lat: 1, lng: 2 } },
           richText: {
             blocks: [
               {
                 type: RichTextBlockType.valueItem,
-                data: { _type: 'EntityCodecValueOne', location: { lat: 3, lng: 4 } },
+                data: { type: 'EntityCodecValueOne', location: { lat: 3, lng: 4 } },
               },
             ],
           },
@@ -296,7 +296,7 @@ describe('collectDataFromEntity', () => {
       collectDataFromEntity(context, {
         info: { type: 'EntityCodecFoo', name: 'foo' },
         fields: {
-          valueOne: { _type: 'EntityCodecValueOne', bar: { id: 'bar1Id' } },
+          valueOne: { type: 'EntityCodecValueOne', bar: { id: 'bar1Id' } },
         },
       })
     ).toMatchInlineSnapshot(`
@@ -328,7 +328,7 @@ describe('collectDataFromEntity', () => {
               { type: RichTextBlockType.entity, data: { id: 'barId1' } },
               {
                 type: RichTextBlockType.valueItem,
-                data: { _type: 'EntityCodecValueOne', bar: { id: 'bar2Id' } },
+                data: { type: 'EntityCodecValueOne', bar: { id: 'bar2Id' } },
               },
             ],
           },
