@@ -17,11 +17,8 @@ export type {
   ValueTypeSpecification,
 } from './Schema';
 export type {
-  AdminEntity,
   AdminEntity2,
-  AdminEntityCreate,
   AdminEntityCreate2,
-  AdminEntityUpdate,
   AdminEntityUpdate2,
   AdminQuery,
   BoundingBox,
@@ -91,13 +88,3 @@ export { isPagingForwards } from './QueryUtils';
 export { FieldType, RichTextBlockType, Schema } from './Schema';
 export { EntityPublishState, PublishingEventKind } from './Types';
 export * as CoreTestUtils from './CoreTestUtils';
-
-export {
-  toAdminEntity1,
-  toAdminEntity2,
-  toAdminEntityCreate1,
-  toAdminEntityCreate2,
-  toAdminEntityResult2,
-  toAdminEntityUpdate1,
-  toAdminEntityUpdate2,
-} from './Types';
