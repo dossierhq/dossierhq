@@ -391,15 +391,7 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('order by name', () => {
-    expect(
-      searchAdminEntitiesQuery(
-        context,
-        {
-          order: '_name',
-        },
-        undefined
-      )
-    ).toMatchInlineSnapshot(`
+    expect(searchAdminEntitiesQuery(context, { order: 'name' }, undefined)).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
           "cursorName": "name",

@@ -112,8 +112,8 @@ export class InMemoryServerInner {
   }
 
   getUniqueName(id: string | null, name: string): string {
-    const entityWithSameName = this.#entities.find((x) => x.versions[0]._name === name);
-    if (!entityWithSameName || entityWithSameName.versions[0].id === id) {
+    const entityWithSameName = this.#entities.find((it) => it.name === name);
+    if (!entityWithSameName || entityWithSameName.id === id) {
       return name;
     }
     return `${name}#${Math.random().toFixed(8).slice(2)}`;
