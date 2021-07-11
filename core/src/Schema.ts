@@ -65,12 +65,20 @@ export class Schema {
   validate(): Result<void, ErrorType.BadRequest> {
     const usedNames = new Set();
     for (const typeSpec of [...this.spec.entityTypes, ...this.spec.valueTypes]) {
+      const isValueType = this.spec.valueTypes.includes(typeSpec);
+
       if (usedNames.has(typeSpec.name)) {
         return notOk.BadRequest(`${typeSpec.name}: Duplicate type name`);
       }
       usedNames.add(typeSpec.name);
 
       for (const fieldSpec of typeSpec.fields) {
+        if (isValueType && fieldSpec.name === 'type') {
+          return notOk.BadRequest(
+            `${typeSpec.name}.${fieldSpec.name}: Invalid field name for a value type`
+          );
+        }
+
         if (!(fieldSpec.type in FieldType)) {
           return notOk.BadRequest(
             `${typeSpec.name}.${fieldSpec.name}: Specified type ${fieldSpec.type} doesn’t exist`

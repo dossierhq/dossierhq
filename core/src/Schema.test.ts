@@ -75,6 +75,22 @@ describe('validate()', () => {
     );
   });
 
+  test('Error: Field named type on value type', () => {
+    expectErrorResult(
+      new Schema({
+        entityTypes: [],
+        valueTypes: [
+          {
+            name: 'Foo',
+            fields: [{ name: 'type', type: FieldType.String }],
+          },
+        ],
+      }).validate(),
+      ErrorType.BadRequest,
+      'Foo.type: Invalid field name for a value type'
+    );
+  });
+
   test('Error: Reference to invalid entity type', () => {
     expectErrorResult(
       new Schema({
