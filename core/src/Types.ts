@@ -1,5 +1,4 @@
 import type { ErrorType, Result } from '.';
-import { ok } from './ErrorResult';
 
 export interface Entity {
   id: string;
@@ -60,64 +59,6 @@ export enum EntityPublishState {
   Archived = 'archived',
 }
 
-export interface AdminEntity {
-  /** UUIDv4 */
-  id: string;
-  _name: string;
-  _type: string;
-  _version: number;
-
-  /** The current publish state of the entity.
-   *
-   * It is not connected to the requested version so if you get an old version of the entity, the
-   * publish state refer to the state of the latest version. */
-  _publishState: EntityPublishState;
-  [fieldName: string]: unknown;
-}
-
-//TODO temporary
-export function toAdminEntity2(entity: AdminEntity): AdminEntity2 {
-  const {
-    id,
-    _type: type,
-    _name: name,
-    _version: version,
-    _publishState: publishingState,
-    ...fields
-  } = entity;
-  return {
-    id,
-    info: { type, name, version, publishingState },
-    fields,
-  };
-}
-
-export function toAdminEntityResult2<TError extends ErrorType>(
-  entity: Result<AdminEntity, TError>
-): Result<AdminEntity2, TError> {
-  if (entity.isError()) {
-    return entity;
-  }
-  return ok(toAdminEntity2(entity.value));
-}
-
-//TODO temporary
-export function toAdminEntity1(entity: AdminEntity2): AdminEntity {
-  const {
-    id,
-    info: { name, type, version, publishingState },
-    fields,
-  } = entity;
-  return {
-    id,
-    _name: name,
-    _type: type,
-    _version: version,
-    _publishState: publishingState,
-    ...fields,
-  };
-}
-
 export interface AdminEntity2 {
   id: string;
   info: AdminEntityInfo;
@@ -128,16 +69,11 @@ export interface AdminEntityInfo {
   type: string;
   name: string;
   version: number;
+  /** The current publish state of the entity.
+   *
+   * It is not connected to the requested version so if you get an old version of the entity, the
+   * publish state refer to the state of the latest version. */
   publishingState: EntityPublishState;
-}
-
-export interface AdminEntityCreate {
-  /** UUIDv4. If not provided a new id will be created */
-  id?: string;
-  _name: string;
-  _type: string;
-  _version?: 0;
-  [fieldName: string]: unknown;
 }
 
 export interface AdminEntityCreate2 {
@@ -151,30 +87,6 @@ export interface AdminEntityCreate2 {
   fields?: Record<string, unknown>;
 }
 
-export function toAdminEntityCreate1(create: AdminEntityCreate2): AdminEntityCreate {
-  const {
-    id,
-    info: { name, type },
-    fields,
-  } = create;
-  return { id, _type: type, _name: name, _version: create.info.version, ...fields };
-}
-
-export function toAdminEntityCreate2(create: AdminEntityCreate): AdminEntityCreate2 {
-  const { id, _type: type, _name: name, _version: version, ...fields } = create;
-  return { id, info: { type, name, version }, fields };
-}
-
-export interface AdminEntityUpdate {
-  /** UUIDv4 */
-  id: string;
-  _name?: string;
-  /** If provided, has to be same as the entity's existing type, i.e. there's no way to change the type of an entity */
-  _type?: string;
-  _version?: number;
-  [fieldName: string]: unknown;
-}
-
 export interface AdminEntityUpdate2 {
   id: string;
   info?: {
@@ -184,16 +96,6 @@ export interface AdminEntityUpdate2 {
     version?: number;
   };
   fields?: Record<string, unknown>;
-}
-
-export function toAdminEntityUpdate1(update: AdminEntityUpdate2): AdminEntityUpdate {
-  const { id, info, fields } = update;
-  return { id, _type: info?.type, _name: info?.name, _version: info?.version, ...fields };
-}
-
-export function toAdminEntityUpdate2(update: AdminEntityUpdate): AdminEntityUpdate2 {
-  const { id, _type: type, _name: name, _version: version, ...fields } = update;
-  return { id, info: { type, name, version }, fields };
 }
 
 export interface EntityHistory {
