@@ -1,4 +1,4 @@
-import type { AdminEntityCreate, AdminEntityUpdate } from '@datadata/core';
+import type { AdminEntityCreate, AdminEntityUpdate, EntityVersionReference } from '@datadata/core';
 
 export interface EntityCreateRequest {
   item: AdminEntityCreate;
@@ -9,7 +9,7 @@ export interface EntityUpdateRequest {
 }
 
 export interface EntityPublishRequest {
-  items: { id: string; version: number }[];
+  items: EntityVersionReference[];
 }
 
 export interface EntityUnpublishRequest {

@@ -21,44 +21,61 @@ import { executeOperationPipeline } from './SharedClient';
 export interface AdminClient {
   getEntity(
     reference: EntityReference | EntityVersionReference
-  ): PromiseResult<AdminEntity, ErrorType.NotFound>;
+  ): PromiseResult<AdminEntity, ErrorType.NotFound | ErrorType.Generic>;
 
-  getEntities(references: EntityReference[]): Promise<Result<AdminEntity, ErrorType.NotFound>[]>;
+  getEntities(
+    references: EntityReference[]
+  ): Promise<Result<AdminEntity, ErrorType.NotFound | ErrorType.Generic>[]>;
 
   searchEntities(
     query?: AdminQuery,
     paging?: Paging
-  ): PromiseResult<Connection<Edge<AdminEntity, ErrorType>> | null, ErrorType.BadRequest>;
+  ): PromiseResult<
+    Connection<Edge<AdminEntity, ErrorType>> | null,
+    ErrorType.BadRequest | ErrorType.Generic
+  >;
 
-  getTotalCount(query?: AdminQuery): PromiseResult<number, ErrorType.BadRequest>;
+  getTotalCount(
+    query?: AdminQuery
+  ): PromiseResult<number, ErrorType.BadRequest | ErrorType.Generic>;
 
-  createEntity(entity: AdminEntityCreate): PromiseResult<AdminEntity, ErrorType.BadRequest>;
+  createEntity(
+    entity: AdminEntityCreate
+  ): PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.Generic>;
 
   updateEntity(
     entity: AdminEntityUpdate
-  ): PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.NotFound>;
+  ): PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic>;
 
-  getEntityHistory(reference: EntityReference): PromiseResult<EntityHistory, ErrorType.NotFound>;
+  getEntityHistory(
+    reference: EntityReference
+  ): PromiseResult<EntityHistory, ErrorType.NotFound | ErrorType.Generic>;
 
   publishEntities(
     references: EntityVersionReference[]
-  ): PromiseResult<PublishingResult[], ErrorType.BadRequest | ErrorType.NotFound>;
+  ): PromiseResult<
+    PublishingResult[],
+    ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic
+  >;
 
   unpublishEntities(
     references: EntityReference[]
-  ): PromiseResult<PublishingResult[], ErrorType.BadRequest | ErrorType.NotFound>;
+  ): PromiseResult<
+    PublishingResult[],
+    ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic
+  >;
 
   archiveEntity(
     reference: EntityReference
-  ): PromiseResult<PublishingResult, ErrorType.BadRequest | ErrorType.NotFound>;
+  ): PromiseResult<PublishingResult, ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic>;
 
   unarchiveEntity(
     reference: EntityReference
-  ): PromiseResult<PublishingResult, ErrorType.BadRequest | ErrorType.NotFound>;
+  ): PromiseResult<PublishingResult, ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic>;
 
   getPublishingHistory(
     reference: EntityReference
-  ): PromiseResult<PublishingHistory, ErrorType.NotFound>;
+  ): PromiseResult<PublishingHistory, ErrorType.NotFound | ErrorType.Generic>;
 }
 
 export enum AdminClientOperationName {

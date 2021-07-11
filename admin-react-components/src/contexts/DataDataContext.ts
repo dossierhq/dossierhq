@@ -1,4 +1,5 @@
 import type {
+  AdminClient,
   AdminEntity,
   AdminEntityCreate,
   AdminEntityUpdate,
@@ -88,12 +89,19 @@ interface FetcherActionReturn {
 
 export class DataDataContextValue {
   #adapter: DataDataContextAdapter;
+  #adminClient: AdminClient;
   #schema: Schema;
   /** Used to enable different cache keys for SWR */
   #rootKey: string | undefined;
 
-  constructor(adapter: DataDataContextAdapter, schema: Schema, rootKey?: string) {
+  constructor(
+    adapter: DataDataContextAdapter,
+    adminClient: AdminClient,
+    schema: Schema,
+    rootKey?: string
+  ) {
     this.#adapter = adapter;
+    this.#adminClient = adminClient;
     this.#schema = schema;
     this.#rootKey = rootKey;
   }
