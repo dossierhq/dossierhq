@@ -214,7 +214,7 @@ async function selectOrder(order: string | undefined) {
     'How to order the results?',
     [
       { id: 'default', name: 'Default' },
-      { id: '_name', name: 'Name' },
+      { id: 'name', name: 'Name' },
     ],
     order ?? 'default'
   );

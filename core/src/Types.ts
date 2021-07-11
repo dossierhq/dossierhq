@@ -134,7 +134,7 @@ export interface AdminQuery {
   /** Entities referencing the entity (by id) */
   referencing?: string;
   boundingBox?: BoundingBox;
-  /** Valid values: _name */
+  /** Valid values: name */
   order?: string;
   text?: string;
 }

@@ -27,7 +27,7 @@ export function searchAdminEntitiesQuery(
   let cursorName: keyof SearchAdminEntitiesItem;
   let cursorType: CursorNativeType;
   switch (query?.order) {
-    case '_name':
+    case 'name':
       cursorName = 'name';
       cursorType = 'string';
       break;
@@ -101,7 +101,7 @@ export function searchAdminEntitiesQuery(
 
   // Ordering
   switch (query?.order) {
-    case '_name':
+    case 'name':
       qb.addQuery('ORDER BY e.name');
       break;
     default:

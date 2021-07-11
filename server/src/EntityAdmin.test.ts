@@ -1370,10 +1370,10 @@ describe('createEntity()', () => {
       fields: { foo: 'title' },
     });
 
-    expectErrorResult(result, ErrorType.BadRequest, 'Missing entity._type');
+    expectErrorResult(result, ErrorType.BadRequest, 'Missing entity.info.type');
   });
 
-  test('Error: Create without _name', async () => {
+  test('Error: Create without name', async () => {
     const result = await client.createEntity({
       info: { type: 'EntityAdminFoo', name: '' },
       fields: { title: 'title' },
@@ -1897,11 +1897,11 @@ describe('searchEntities()', () => {
     }
   });
 
-  test('First default, ordered by _name', async () => {
+  test('First default, ordered by name', async () => {
     const result = await client.searchEntities(
       {
         entityTypes: ['AdminOnlyEditBefore'],
-        order: '_name',
+        order: 'name',
       },
       { first: 20 }
     );

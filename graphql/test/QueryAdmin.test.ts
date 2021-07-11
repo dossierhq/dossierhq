@@ -1206,13 +1206,13 @@ describe('searchAdminEntities()', () => {
     );
   });
 
-  test('last 10, ordered by _name', async () => {
+  test('last 10, ordered by name', async () => {
     const result = await graphql(
       schema,
       `
         {
           adminSearchEntities(
-            query: { entityTypes: [QueryAdminOnlyEditBefore], order: "_name" }
+            query: { entityTypes: [QueryAdminOnlyEditBefore], order: "name" }
             last: 10
           ) {
             edges {

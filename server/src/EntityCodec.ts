@@ -223,7 +223,7 @@ export function resolveCreateEntity(
   entity: AdminEntityCreate2
 ): Result<AdminEntityCreate2, ErrorType.BadRequest> {
   if (!entity.info.type) {
-    return notOk.BadRequest('Missing entity._type');
+    return notOk.BadRequest('Missing entity.info.type');
   }
   if (entity.info.version && entity.info.version !== 0) {
     return notOk.BadRequest(`Unsupported version for create: ${entity.info.version}`);
