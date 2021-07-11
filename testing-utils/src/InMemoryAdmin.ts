@@ -1,7 +1,7 @@
 import type {
-  AdminEntity2,
-  AdminEntityCreate2,
-  AdminEntityUpdate2,
+  AdminEntity,
+  AdminEntityCreate,
+  AdminEntityUpdate,
   AdminQuery,
   Connection,
   Edge,
@@ -30,7 +30,7 @@ export const InMemoryAdmin = {
     context: InMemorySessionContext,
     id: string,
     version?: number | null
-  ): PromiseResult<AdminEntity2, ErrorType.NotFound> => {
+  ): PromiseResult<AdminEntity, ErrorType.NotFound> => {
     const entity = context.server.getEntity(id, version);
     if (entity) {
       return ok(entity);
@@ -41,7 +41,7 @@ export const InMemoryAdmin = {
   getEntities: async (
     context: InMemorySessionContext,
     ids: string[]
-  ): Promise<Result<AdminEntity2, ErrorType.NotFound>[]> => {
+  ): Promise<Result<AdminEntity, ErrorType.NotFound>[]> => {
     return await Promise.all(ids.map(async (id) => await InMemoryAdmin.getEntity(context, id)));
   },
 
@@ -71,7 +71,7 @@ export const InMemoryAdmin = {
     context: InMemorySessionContext,
     query?: AdminQuery,
     paging?: Paging
-  ): PromiseResult<Connection<Edge<AdminEntity2, ErrorType>> | null, ErrorType.BadRequest> => {
+  ): PromiseResult<Connection<Edge<AdminEntity, ErrorType>> | null, ErrorType.BadRequest> => {
     const entities = context.server.getLatestEntities().filter((entity) => {
       if (
         query?.entityTypes?.length &&
@@ -134,9 +134,9 @@ export const InMemoryAdmin = {
 
   createEntity: async (
     context: InMemorySessionContext,
-    entity: AdminEntityCreate2
-  ): PromiseResult<AdminEntity2, ErrorType.BadRequest> => {
-    const newEntity: AdminEntity2 = {
+    entity: AdminEntityCreate
+  ): PromiseResult<AdminEntity, ErrorType.BadRequest> => {
+    const newEntity: AdminEntity = {
       id: entity.id ?? uuidv4(),
       info: {
         type: entity.info.type,
@@ -152,8 +152,8 @@ export const InMemoryAdmin = {
 
   updateEntity: async (
     context: InMemorySessionContext,
-    entity: AdminEntityUpdate2
-  ): PromiseResult<AdminEntity2, ErrorType.BadRequest | ErrorType.NotFound> => {
+    entity: AdminEntityUpdate
+  ): PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.NotFound> => {
     const previousVersion = context.server.getEntity(entity.id);
     if (!previousVersion) {
       return notOk.NotFound('No such entity');
@@ -163,7 +163,7 @@ export const InMemoryAdmin = {
     if (entity.info?.name && entity.info.name !== name) {
       name = context.server.getUniqueName(entity.id, entity.info.name);
     }
-    const newEntity: AdminEntity2 = {
+    const newEntity: AdminEntity = {
       ...previousVersion,
       info: {
         ...previousVersion.info,

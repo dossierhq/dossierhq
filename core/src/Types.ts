@@ -59,7 +59,7 @@ export enum EntityPublishState {
   Archived = 'archived',
 }
 
-export interface AdminEntity2 {
+export interface AdminEntity {
   id: string;
   info: AdminEntityInfo;
   fields: Record<string, unknown>;
@@ -76,7 +76,7 @@ export interface AdminEntityInfo {
   publishingState: EntityPublishState;
 }
 
-export interface AdminEntityCreate2 {
+export interface AdminEntityCreate {
   /** UUIDv4. If not provided a new id will be created */
   id?: string;
   info: {
@@ -87,7 +87,7 @@ export interface AdminEntityCreate2 {
   fields?: Record<string, unknown>;
 }
 
-export interface AdminEntityUpdate2 {
+export interface AdminEntityUpdate {
   id: string;
   info?: {
     name?: string;

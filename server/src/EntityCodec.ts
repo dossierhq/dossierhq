@@ -1,7 +1,7 @@
 import type {
-  AdminEntity2,
-  AdminEntityCreate2,
-  AdminEntityUpdate2,
+  AdminEntity,
+  AdminEntityCreate,
+  AdminEntityUpdate,
   Entity,
   EntityTypeSpecification,
   ErrorType,
@@ -169,10 +169,7 @@ function decodeRichTextField(
   return { blocks: decodedBlocks };
 }
 
-export function decodeAdminEntity(
-  context: SessionContext,
-  values: AdminEntityValues
-): AdminEntity2 {
+export function decodeAdminEntity(context: SessionContext, values: AdminEntityValues): AdminEntity {
   const schema = context.server.getSchema();
   const entitySpec = schema.getEntityTypeSpecification(values.type);
   if (!entitySpec) {
@@ -181,7 +178,7 @@ export function decodeAdminEntity(
 
   const state = resolvePublishState(values, values);
 
-  const entity: AdminEntity2 = {
+  const entity: AdminEntity = {
     id: values.uuid,
     info: {
       type: values.type,
@@ -220,8 +217,8 @@ export function resolvePublishState(
 
 export function resolveCreateEntity(
   context: SessionContext,
-  entity: AdminEntityCreate2
-): Result<AdminEntityCreate2, ErrorType.BadRequest> {
+  entity: AdminEntityCreate
+): Result<AdminEntityCreate, ErrorType.BadRequest> {
   if (!entity.info.type) {
     return notOk.BadRequest('Missing entity.info.type');
   }
@@ -229,7 +226,7 @@ export function resolveCreateEntity(
     return notOk.BadRequest(`Unsupported version for create: ${entity.info.version}`);
   }
 
-  const result: AdminEntityCreate2 = {
+  const result: AdminEntityCreate = {
     info: {
       name: entity.info.name,
       type: entity.info.type,
@@ -260,14 +257,14 @@ export function resolveCreateEntity(
 
 export function resolveUpdateEntity(
   context: SessionContext,
-  entity: AdminEntityUpdate2,
+  entity: AdminEntityUpdate,
   type: string,
   values: Pick<
     EntitiesTable,
     'archived' | 'name' | 'never_published' | 'published_entity_versions_id'
   > &
     Pick<EntityVersionsTable, 'data' | 'version'>
-): Result<AdminEntity2, ErrorType.BadRequest> {
+): Result<AdminEntity, ErrorType.BadRequest> {
   if (entity.info?.type && entity.info.type !== type) {
     return notOk.BadRequest(
       `New type ${entity.info.type} doesn’t correspond to previous type ${type}`
@@ -276,7 +273,7 @@ export function resolveUpdateEntity(
 
   const state = resolvePublishState(values, 'is-update');
 
-  const result: AdminEntity2 = {
+  const result: AdminEntity = {
     id: entity.id,
     info: {
       name: entity.info?.name ?? values.name,
@@ -315,7 +312,7 @@ export function resolveUpdateEntity(
 
 function checkForUnsupportedFields(
   entitySpec: EntityTypeSpecification,
-  entity: AdminEntityCreate2 | AdminEntityUpdate2
+  entity: AdminEntityCreate | AdminEntityUpdate
 ): Result<void, ErrorType.BadRequest> {
   if (!entity.fields) {
     return ok(undefined);
@@ -333,7 +330,7 @@ function checkForUnsupportedFields(
 
 export async function encodeEntity(
   context: SessionContext,
-  entity: AdminEntity2 | AdminEntityCreate2
+  entity: AdminEntity | AdminEntityCreate
 ): PromiseResult<EncodeEntityResult, ErrorType.BadRequest> {
   const assertion = ensureRequired({
     'entity.info.type': entity.info.type,
@@ -554,7 +551,7 @@ function encodeRichTextField(
 
 function collectDataFromEntity(
   context: SessionContext,
-  entity: AdminEntity2 | AdminEntityCreate2
+  entity: AdminEntity | AdminEntityCreate
 ): {
   requestedReferences: RequestedReference[];
   locations: Location[];
@@ -566,7 +563,7 @@ function collectDataFromEntity(
 
   visitItemRecursively({
     schema: context.server.getSchema(),
-    item: entity as AdminEntity2,
+    item: entity as AdminEntity,
     path: ['entity'],
     visitField: (path, fieldSpec, data, _visitContext) => {
       if (fieldSpec.type !== FieldType.ValueType && fieldSpec.type !== FieldType.RichText) {

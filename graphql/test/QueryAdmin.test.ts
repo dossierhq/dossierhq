@@ -1,6 +1,6 @@
 import type {
   AdminClient,
-  AdminEntity2,
+  AdminEntity,
   AdminQuery,
   BoundingBox,
   Connection,
@@ -28,7 +28,7 @@ const { expectOkResult } = CoreTestUtils;
 
 let server: TestServerWithSession;
 let schema: GraphQLSchema;
-let entitiesOfTypeQueryAdminOnlyEditBefore: AdminEntity2[];
+let entitiesOfTypeQueryAdminOnlyEditBefore: AdminEntity[];
 
 const schemaSpecification: Partial<SchemaSpecification> = {
   entityTypes: [
@@ -113,7 +113,7 @@ async function ensureTestEntitiesExist(adminClient: AdminClient) {
 }
 
 async function getEntitiesForAdminOnlyEditBefore(adminClient: AdminClient) {
-  const entities: AdminEntity2[] = [];
+  const entities: AdminEntity[] = [];
   await visitAllEntityPages(
     adminClient,
     { entityTypes: ['QueryAdminOnlyEditBefore'] },
@@ -131,7 +131,7 @@ async function getEntitiesForAdminOnlyEditBefore(adminClient: AdminClient) {
 async function visitAllEntityPages(
   adminClient: AdminClient,
   query: AdminQuery,
-  visitor: (connection: Connection<Edge<AdminEntity2, ErrorType>>) => void
+  visitor: (connection: Connection<Edge<AdminEntity, ErrorType>>) => void
 ) {
   const paging: Paging = {};
   // eslint-disable-next-line no-constant-condition
@@ -164,7 +164,7 @@ async function createBarWithFooReferences(fooCount: number) {
 
   const { id: barId } = createBarResult.value;
 
-  const fooEntities: AdminEntity2[] = [];
+  const fooEntities: AdminEntity[] = [];
 
   for (let i = 0; i < fooCount; i += 1) {
     const createFooResult = await adminClient.createEntity({

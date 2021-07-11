@@ -1,4 +1,4 @@
-import type { AdminEntity2, AdminQuery, BoundingBox, Location, Schema } from '@datadata/core';
+import type { AdminEntity, AdminQuery, BoundingBox, Location, Schema } from '@datadata/core';
 import { isLocationItemField, visitItemRecursively } from '@datadata/core';
 import React, { useContext, useEffect, useState } from 'react';
 import { DataDataContext, MapContainer, PublishStateTag } from '../..';
@@ -6,7 +6,7 @@ import { DataDataContext, MapContainer, PublishStateTag } from '../..';
 export interface EntityMapProps {
   className?: string;
   query?: AdminQuery;
-  onEntityClick: (entity: AdminEntity2) => void;
+  onEntityClick: (entity: AdminEntity) => void;
 }
 
 export function EntityMap({ className, query, onEntityClick }: EntityMapProps): JSX.Element | null {
@@ -49,7 +49,7 @@ function EntityMarker({
   onClick,
 }: {
   schema: Schema;
-  entity: AdminEntity2;
+  entity: AdminEntity;
   onClick: () => void;
 }) {
   const entityLocations: { location: Location }[] = [];

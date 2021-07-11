@@ -1,7 +1,7 @@
 import type {
-  AdminEntity2,
-  AdminEntityCreate2,
-  AdminEntityUpdate2,
+  AdminEntity,
+  AdminEntityCreate,
+  AdminEntityUpdate,
   EntityVersionReference,
   PublishingResult,
 } from '@datadata/core';
@@ -11,8 +11,8 @@ import { getAdminClient, getSchema } from './Utils';
 
 export async function createEntity<TContext extends SessionGraphQLContext>(
   context: TContext,
-  entity: AdminEntityCreate2
-): Promise<AdminEntity2> {
+  entity: AdminEntityCreate
+): Promise<AdminEntity> {
   const schema = getSchema(context);
   const adminClient = getAdminClient(context);
   const result = await adminClient.createEntity(entity);
@@ -24,8 +24,8 @@ export async function createEntity<TContext extends SessionGraphQLContext>(
 
 export async function updateEntity<TContext extends SessionGraphQLContext>(
   context: TContext,
-  entity: AdminEntityUpdate2
-): Promise<AdminEntity2> {
+  entity: AdminEntityUpdate
+): Promise<AdminEntity> {
   const schema = getSchema(context);
   const adminClient = getAdminClient(context);
   const result = await adminClient.updateEntity(entity);

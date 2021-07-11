@@ -19,7 +19,7 @@ import {
   visitItemRecursively,
 } from '@datadata/core';
 import type {
-  AdminEntity2,
+  AdminEntity,
   BoundingBox,
   Entity,
   EntityTypeSpecification,
@@ -63,7 +63,7 @@ export function logKeyValue(key: string, value: string): void {
   console.log(`${chalk.bold(`${key}:`)} ${value}`);
 }
 
-export function logEntity(context: CliContext, entity: AdminEntity2 | Entity): void {
+export function logEntity(context: CliContext, entity: AdminEntity | Entity): void {
   const { schema } = context;
   logKeyValue('type', entity.info.type);
   logKeyValue('name', entity.info.name);
@@ -112,7 +112,7 @@ export function logEntity(context: CliContext, entity: AdminEntity2 | Entity): v
   });
 }
 
-export function formatEntityOneLine(entity: Entity | AdminEntity2): string {
+export function formatEntityOneLine(entity: Entity | AdminEntity): string {
   if (isItemAdminEntity(entity)) {
     return `${entity.info.type} | ${entity.info.publishingState} | ${chalk.bold(
       entity.info.name

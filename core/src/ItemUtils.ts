@@ -1,7 +1,7 @@
 import type {
-  AdminEntity2,
-  AdminEntityCreate2,
-  AdminEntityUpdate2,
+  AdminEntity,
+  AdminEntityCreate,
+  AdminEntityUpdate,
   Entity,
   EntityReference,
   FieldSpecification,
@@ -152,16 +152,16 @@ export function isRichTextValueItemBlock(
 }
 
 export function isItemValueItem(
-  item: ValueItem | Entity | AdminEntity2 | AdminEntityCreate2 | AdminEntityUpdate2
+  item: ValueItem | Entity | AdminEntity | AdminEntityCreate | AdminEntityUpdate
 ): item is ValueItem {
   return '_type' in item;
 }
 
-export function isItemAdminEntity(item: ValueItem | Entity | AdminEntity2): item is AdminEntity2 {
+export function isItemAdminEntity(item: ValueItem | Entity | AdminEntity): item is AdminEntity {
   return !isItemValueItem(item) && 'version' in item.info;
 }
 
-export function isItemEntity(item: ValueItem | Entity | AdminEntity2): item is Entity {
+export function isItemEntity(item: ValueItem | Entity | AdminEntity): item is Entity {
   return !isItemValueItem(item) && !isItemAdminEntity(item);
 }
 
@@ -232,7 +232,7 @@ export function visitItemRecursively<TVisitContext>({
   initialVisitContext,
 }: {
   schema: Schema;
-  item: Entity | AdminEntity2 | ValueItem;
+  item: Entity | AdminEntity | ValueItem;
   path?: (number | string)[];
   visitField: VisitorVisitField<TVisitContext>;
   visitRichTextBlock: VisitorVisitRichTextBlock<TVisitContext>;
@@ -286,7 +286,7 @@ export function visitFieldRecursively<TVisitContext>({
 function doVisitItemRecursively<TVisitContext>(
   schema: Schema,
   path: (string | number)[],
-  item: ValueItem | AdminEntity2 | Entity,
+  item: ValueItem | AdminEntity | Entity,
   callbacks: VisitorCallbacks<TVisitContext>,
   visitContext: TVisitContext
 ) {

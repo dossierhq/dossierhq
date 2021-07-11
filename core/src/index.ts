@@ -17,9 +17,9 @@ export type {
   ValueTypeSpecification,
 } from './Schema';
 export type {
-  AdminEntity2,
-  AdminEntityCreate2,
-  AdminEntityUpdate2,
+  AdminEntity,
+  AdminEntityCreate,
+  AdminEntityUpdate,
   AdminQuery,
   BoundingBox,
   Connection,

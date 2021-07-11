@@ -9,7 +9,7 @@ import {
   visitFieldRecursively,
 } from '@datadata/core';
 import type {
-  AdminEntity2,
+  AdminEntity,
   AdminQuery,
   Entity,
   EntityHistory,
@@ -92,7 +92,7 @@ export async function loadAdminEntity<TContext extends SessionGraphQLContext>(
   context: TContext,
   id: string,
   version: number | undefined | null
-): Promise<AdminEntity2> {
+): Promise<AdminEntity> {
   const schema = getSchema(context);
   const adminClient = getAdminClient(context);
   const result = await adminClient.getEntity(
@@ -107,7 +107,7 @@ export async function loadAdminEntity<TContext extends SessionGraphQLContext>(
 export async function loadAdminEntities<TContext extends SessionGraphQLContext>(
   context: TContext,
   ids: string[]
-): Promise<Array<AdminEntity2 | null>> {
+): Promise<Array<AdminEntity | null>> {
   const schema = getSchema(context);
   const adminClient = getAdminClient(context);
   const results = await adminClient.getEntities(ids.map((id) => ({ id })));
@@ -122,8 +122,8 @@ export async function loadAdminEntities<TContext extends SessionGraphQLContext>(
 
 export function buildResolversForAdminEntity<TContext extends SessionGraphQLContext>(
   schema: Schema,
-  entity: AdminEntity2
-): AdminEntity2 {
+  entity: AdminEntity
+): AdminEntity {
   const entitySpec = schema.getEntityTypeSpecification(entity.info.type);
   if (!entitySpec) {
     throw new Error(`Couldn't find entity spec for type: ${entity.info.type}`);
@@ -139,7 +139,7 @@ export async function loadAdminSearchEntities<TContext extends SessionGraphQLCon
   context: TContext,
   query: AdminQuery | undefined,
   paging: Paging
-): Promise<ConnectionWithTotalCount<Edge<AdminEntity2>, TContext> | null> {
+): Promise<ConnectionWithTotalCount<Edge<AdminEntity>, TContext> | null> {
   const schema = getSchema(context);
   const adminClient = getAdminClient(context);
   const result = await adminClient.searchEntities(query, paging);
@@ -167,7 +167,7 @@ export async function loadAdminSearchEntities<TContext extends SessionGraphQLCon
 function resolveFields<TContext extends SessionGraphQLContext>(
   schema: Schema,
   spec: EntityTypeSpecification | ValueTypeSpecification,
-  item: ValueItem | Entity | AdminEntity2,
+  item: ValueItem | Entity | AdminEntity,
   isAdmin: boolean
 ) {
   const fields = isItemValueItem(item) ? item : item.fields;
