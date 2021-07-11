@@ -1364,7 +1364,7 @@ describe('createEntity()', () => {
     expectErrorResult(result, ErrorType.BadRequest, 'Entity type Invalid doesn’t exist');
   });
 
-  test('Error: Create without _type', async () => {
+  test('Error: Create without type', async () => {
     const result = await client.createEntity({
       info: { type: '', name: 'Foo' },
       fields: { foo: 'title' },
