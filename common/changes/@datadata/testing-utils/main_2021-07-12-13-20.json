@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "packageName": "@datadata/testing-utils",
+      "comment": "Initial release",
+      "type": "none"
+    }
+  ],
+  "packageName": "@datadata/testing-utils",
+  "email": "jonas.b@gmail.com"
+}

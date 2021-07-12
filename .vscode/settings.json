@@ -18,5 +18,11 @@
     "experiments.json": "jsonc",
     "version-policies.json": "jsonc"
   },
-  "files.insertFinalNewline": true
+  "files.insertFinalNewline": true,
+  "json.schemas": [
+    {
+      "fileMatch": ["version-policies.json"],
+      "url": "https://raw.githubusercontent.com/microsoft/rushstack/master/apps/rush-lib/src/schemas/version-policies.schema.json"
+    }
+  ]
 }

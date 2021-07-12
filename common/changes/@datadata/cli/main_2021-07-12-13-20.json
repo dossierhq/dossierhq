@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "packageName": "@datadata/cli",
+      "comment": "Initial release",
+      "type": "none"
+    }
+  ],
+  "packageName": "@datadata/cli",
+  "email": "jonas.b@gmail.com"
+}

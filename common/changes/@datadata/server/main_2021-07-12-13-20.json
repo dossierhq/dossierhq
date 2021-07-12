@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "packageName": "@datadata/server",
+      "comment": "Initial release",
+      "type": "none"
+    }
+  ],
+  "packageName": "@datadata/server",
+  "email": "jonas.b@gmail.com"
+}
