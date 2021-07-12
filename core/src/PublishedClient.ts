@@ -1,5 +1,5 @@
 import type { Entity, EntityReference, ErrorType, PromiseResult, Result } from '..';
-import type { Middleware, Operation } from './SharedClient';
+import type { Middleware, Operation, OperationWithoutCallbacks } from './SharedClient';
 import { executeOperationPipeline } from './SharedClient';
 
 export interface PublishedClient {
@@ -74,7 +74,7 @@ class BasePublishedClient<TContext> implements PublishedClient {
   }
 
   private async executeOperation<TName extends PublishedClientOperationName>(
-    operation: Omit<PublishedClientOperation<TName>, 'resolve'>
+    operation: OperationWithoutCallbacks<PublishedClientOperation<TName>>
   ): Promise<PublishedClientOperationReturn[TName]> {
     const context = await this.resolveContext();
 

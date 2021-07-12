@@ -1,6 +1,7 @@
 import { EntityPublishState, PublishingEventKind, Schema } from '@datadata/core';
 import { v4 as uuidv4 } from 'uuid';
-import { InMemoryAdmin, InMemoryServer } from '.';
+import { InMemoryServer } from '.';
+import { createInMemoryAdminClient } from './InMemoryAdminClient';
 import { expectResultValue } from './TestUtils';
 
 const schema = new Schema({ entityTypes: [{ name: 'Foo', fields: [] }], valueTypes: [] });
@@ -28,7 +29,8 @@ describe('getEntity()', () => {
       },
     ]);
     const context = server.createContext(uuidv4());
-    const entityResult = await InMemoryAdmin.getEntity(context, id);
+    const client = createInMemoryAdminClient({ resolveContext: () => Promise.resolve(context) });
+    const entityResult = await client.getEntity({ id });
     expectResultValue(entityResult, {
       id,
       info: { name: 'Foo', type: 'Foo', version: 0, publishingState: EntityPublishState.Published },

@@ -1,4 +1,4 @@
-export type { AdminClient, AdminClientOperation } from './AdminClient';
+export type { AdminClient, AdminClientMiddleware, AdminClientOperation } from './AdminClient';
 export type { ErrorResult, OkResult, PromiseResult, Result } from './ErrorResult';
 export type {
   JsonConnection,
@@ -8,7 +8,11 @@ export type {
   JsonPublishingHistory,
   JsonResult,
 } from './JsonUtils';
-export type { PublishedClient, PublishedClientOperation } from './PublishedClient';
+export type {
+  PublishedClient,
+  PublishedClientMiddleware,
+  PublishedClientOperation,
+} from './PublishedClient';
 export type {
   EntityTypeSpecification,
   FieldSpecification,

@@ -26,51 +26,6 @@ export interface DataDataContextAdapter {
     standardBlockTools: { [toolName: string]: EditorJsToolSettings },
     standardInlineTools: string[]
   ): { tools: { [toolName: string]: EditorJsToolSettings }; inlineToolbar: string[] };
-
-  getEntity(
-    id: string,
-    version?: number | null
-  ): PromiseResult<AdminEntity, ErrorType.NotFound | ErrorType.Generic>;
-  getEntityHistory(
-    id: string
-  ): PromiseResult<EntityHistory, ErrorType.NotFound | ErrorType.Generic>;
-  getPublishingHistory(
-    id: string
-  ): PromiseResult<PublishingHistory, ErrorType.NotFound | ErrorType.Generic>;
-  searchEntities(
-    query?: AdminQuery,
-    paging?: Paging
-  ): PromiseResult<
-    Connection<Edge<AdminEntity, ErrorType>> | null,
-    ErrorType.BadRequest | ErrorType.Generic
-  >;
-  createEntity(
-    entity: AdminEntityCreate
-  ): PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.Generic>;
-  updateEntity(
-    entity: AdminEntityUpdate
-  ): PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic>;
-  publishEntities(
-    entities: {
-      id: string;
-      version: number;
-    }[]
-  ): PromiseResult<
-    PublishingResult[],
-    ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic
-  >;
-  unpublishEntities(
-    entityIds: string[]
-  ): PromiseResult<
-    PublishingResult[],
-    ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic
-  >;
-  archiveEntity(
-    entityId: string
-  ): PromiseResult<PublishingResult, ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic>;
-  unarchiveEntity(
-    entityId: string
-  ): PromiseResult<PublishingResult, ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic>;
 }
 
 enum FetcherActions {
@@ -209,7 +164,7 @@ export class DataDataContextValue {
     entity: AdminEntityCreate
   ): PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.Generic> => {
     try {
-      const result = await this.#adapter.createEntity(entity);
+      const result = await this.#adminClient.createEntity(entity);
       if (result.isOk()) {
         this.invalidateEntity(result.value);
       }
@@ -223,7 +178,7 @@ export class DataDataContextValue {
     entity: AdminEntityUpdate
   ): PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic> => {
     try {
-      const result = await this.#adapter.updateEntity(entity);
+      const result = await this.#adminClient.updateEntity(entity);
       if (result.isOk()) {
         this.invalidateEntity(result.value);
       }
@@ -243,7 +198,7 @@ export class DataDataContextValue {
     ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic
   > => {
     try {
-      const result = await this.#adapter.publishEntities(entities);
+      const result = await this.#adminClient.publishEntities(entities);
       if (result.isOk()) {
         for (const publishResult of result.value) {
           this.invalidateAfterPublishingEvent(publishResult);
@@ -262,7 +217,7 @@ export class DataDataContextValue {
     ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic
   > => {
     try {
-      const result = await this.#adapter.unpublishEntities(entityIds);
+      const result = await this.#adminClient.unpublishEntities(entityIds.map((id) => ({ id })));
       if (result.isOk()) {
         for (const publishResult of result.value) {
           this.invalidateAfterPublishingEvent(publishResult);
@@ -281,7 +236,7 @@ export class DataDataContextValue {
     ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic
   > => {
     try {
-      const result = await this.#adapter.archiveEntity(id);
+      const result = await this.#adminClient.archiveEntity({ id });
       if (result.isOk()) {
         this.invalidateAfterPublishingEvent(result.value);
       }
@@ -298,7 +253,7 @@ export class DataDataContextValue {
     ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic
   > => {
     try {
-      const result = await this.#adapter.unarchiveEntity(id);
+      const result = await this.#adminClient.unarchiveEntity({ id });
       if (result.isOk()) {
         this.invalidateAfterPublishingEvent(result.value);
       }
@@ -340,7 +295,9 @@ export class DataDataContextValue {
     switch (action) {
       case FetcherActions.UseEntity: {
         const [id, version] = args as [string, number | null | undefined];
-        const result = await this.#adapter.getEntity(id, version);
+        const result = await this.#adminClient.getEntity(
+          typeof version === 'number' ? { id, version } : { id }
+        );
         if (result.isError()) {
           throw result.toError();
         }
@@ -348,7 +305,7 @@ export class DataDataContextValue {
       }
       case FetcherActions.UseEntityHistory: {
         const [id] = args as [string];
-        const result = await this.#adapter.getEntityHistory(id);
+        const result = await this.#adminClient.getEntityHistory({ id });
         if (result.isError()) {
           throw result.toError();
         }
@@ -356,7 +313,7 @@ export class DataDataContextValue {
       }
       case FetcherActions.UsePublishingHistory: {
         const [id] = args as [string];
-        const result = await this.#adapter.getPublishingHistory(id);
+        const result = await this.#adminClient.getPublishingHistory({ id });
         if (result.isError()) {
           throw result.toError();
         }
@@ -366,7 +323,7 @@ export class DataDataContextValue {
         const [json] = args as [string];
         const { query, paging }: { query: AdminQuery; paging: Paging | undefined } =
           JSON.parse(json);
-        const result = await this.#adapter.searchEntities(query, paging);
+        const result = await this.#adminClient.searchEntities(query, paging);
         if (result.isError()) {
           throw result.toError();
         }

@@ -19,7 +19,7 @@ export default meta;
 
 const Template: Story<EntityItemFieldEditorProps> = (args) => {
   return (
-    <DataDataContext.Provider value={createContextValue()}>
+    <DataDataContext.Provider value={createContextValue().contextValue}>
       <EntityItemFieldEditor {...args} />
     </DataDataContext.Provider>
   );

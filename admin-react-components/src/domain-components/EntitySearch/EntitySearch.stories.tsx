@@ -17,7 +17,7 @@ export default meta;
 
 const Template: Story<EntitySearchProps> = (args) => {
   return (
-    <DataDataContext.Provider value={createContextValue()}>
+    <DataDataContext.Provider value={createContextValue().contextValue}>
       <EntitySearch {...args} />
     </DataDataContext.Provider>
   );
