@@ -23,6 +23,10 @@
   },
   "author": "",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jonasb/datadata.git"
+  },
   "devDependencies": {
     "@jonasb/datadata-postgres": "0.1.0",
     "@types/jest": "~26.0.23",

@@ -19,6 +19,10 @@
   },
   "author": "",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jonasb/datadata.git"
+  },
   "devDependencies": {
     "@types/inquirer": "^7.3.1",
     "@typescript-eslint/eslint-plugin": "^4.24.0",
