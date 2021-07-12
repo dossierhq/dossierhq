@@ -26,6 +26,10 @@
   },
   "author": "",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jonasb/datadata.git"
+  },
   "devDependencies": {
     "@babel/core": "^7.14.3",
     "@datadata/testing-utils": "1.0.0",
