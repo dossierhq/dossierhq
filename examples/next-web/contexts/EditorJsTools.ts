@@ -1,4 +1,4 @@
-import type { EditorJsToolConstructable } from '@datadata/admin-react-components';
+import type { EditorJsToolConstructable } from '@jonasb/datadata-admin-react-components';
 import Checklist from '@editorjs/checklist';
 import Header from '@editorjs/header';
 import InlineCode from '@editorjs/inline-code';

@@ -1,4 +1,4 @@
-import type { PublishingEventKind, Schema } from '@datadata/core';
+import type { PublishingEventKind, Schema } from '@jonasb/datadata-core';
 import { InMemoryServerInner } from './InMemoryServerInner';
 
 export interface InMemoryEntity {

@@ -4,8 +4,8 @@ import type {
   EntityVersionReference,
   Paging,
   PromiseResult,
-} from '@datadata/core';
-import { createErrorResult, ErrorType, notOk, ok } from '@datadata/core';
+} from '@jonasb/datadata-core';
+import { createErrorResult, ErrorType, notOk, ok } from '@jonasb/datadata-core';
 import { encodeQuery } from './QueryUtils';
 
 export enum OperationStatus {

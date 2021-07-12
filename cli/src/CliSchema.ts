@@ -1,6 +1,6 @@
 import chalk from 'chalk';
-import { FieldType } from '@datadata/core';
-import type { EntityTypeSpecification, ValueTypeSpecification } from '@datadata/core';
+import { FieldType } from '@jonasb/datadata-core';
+import type { EntityTypeSpecification, ValueTypeSpecification } from '@jonasb/datadata-core';
 import { showItemSelector, showMultiItemSelector } from './widgets';
 import { logKeyValue } from './CliUtils';
 import type { CliContext } from '..';

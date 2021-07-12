@@ -1,5 +1,5 @@
-import { notOk, ok } from '@datadata/core';
-import type { ErrorType, PromiseResult } from '@datadata/core';
+import { notOk, ok } from '@jonasb/datadata-core';
+import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
 import inquirer from 'inquirer';
 import { showConfirm } from '.';
 import { logError } from '../CliUtils';

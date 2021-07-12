@@ -1,4 +1,4 @@
-import type { RichText } from '@datadata/core';
+import type { RichText } from '@jonasb/datadata-core';
 
 interface RichTextState {
   initialized: boolean;

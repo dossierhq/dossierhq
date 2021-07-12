@@ -1,4 +1,4 @@
-import type { EntityEditorSelector } from '@datadata/admin-react-components';
+import type { EntityEditorSelector } from '@jonasb/datadata-admin-react-components';
 import {
   AddEntityDraftAction,
   DataDataContext,
@@ -8,8 +8,8 @@ import {
   initializeEntityEditorState,
   Loader,
   reduceEntityEditorState,
-} from '@datadata/admin-react-components';
-import type { Schema } from '@datadata/core';
+} from '@jonasb/datadata-admin-react-components';
+import type { Schema } from '@jonasb/datadata-core';
 import { useRouter } from 'next/router';
 import { useEffect, useReducer } from 'react';
 import { useInitializeContext } from '../../contexts/DataDataContext';

@@ -14,8 +14,8 @@ import type {
   PublishingHistory,
   PublishingResult,
   Schema,
-} from '@datadata/core';
-import { assertExhaustive, createErrorResultFromError, ErrorType } from '@datadata/core';
+} from '@jonasb/datadata-core';
+import { assertExhaustive, createErrorResultFromError, ErrorType } from '@jonasb/datadata-core';
 import { createContext } from 'react';
 import useSWR, { mutate } from 'swr';
 import type { EditorJsToolSettings } from '..';

@@ -1,5 +1,10 @@
-import { FieldType, notOk, ok } from '@datadata/core';
-import type { ErrorType, FieldSpecification, FieldValueTypeMap, Result } from '@datadata/core';
+import { FieldType, notOk, ok } from '@jonasb/datadata-core';
+import type {
+  ErrorType,
+  FieldSpecification,
+  FieldValueTypeMap,
+  Result,
+} from '@jonasb/datadata-core';
 
 export interface FieldTypeAdapter<TDecoded = unknown, TEncoded = unknown> {
   encodeData(prefix: string, decodedData: TDecoded): Result<TEncoded, ErrorType.BadRequest>;

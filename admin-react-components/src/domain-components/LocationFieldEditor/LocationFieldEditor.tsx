@@ -1,4 +1,4 @@
-import type { Location } from '@datadata/core';
+import type { Location } from '@jonasb/datadata-core';
 import React, { useCallback, useEffect, useReducer, useState } from 'react';
 import type { EntityFieldEditorProps } from '../..';
 import { Button, Column, ColumnItem, IconButton, InputText, MapContainer, Modal, Row } from '../..';

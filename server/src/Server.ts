@@ -1,4 +1,4 @@
-import type { ErrorType, PromiseResult, Schema } from '@datadata/core';
+import type { ErrorType, PromiseResult, Schema } from '@jonasb/datadata-core';
 import type { AuthContext, Context, Session, SessionContext } from '.';
 import { AuthContextImpl, SessionContextImpl } from './Context';
 import type { Pool } from './Database';

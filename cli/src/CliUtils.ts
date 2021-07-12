@@ -17,7 +17,7 @@ import {
   isValueTypeItemField,
   isValueTypeListField,
   visitItemRecursively,
-} from '@datadata/core';
+} from '@jonasb/datadata-core';
 import type {
   AdminEntity,
   BoundingBox,
@@ -30,7 +30,7 @@ import type {
   RichText,
   ValueItem,
   ValueTypeSpecification,
-} from '@datadata/core';
+} from '@jonasb/datadata-core';
 import type { CliContext } from '..';
 
 export function logErrorResult(

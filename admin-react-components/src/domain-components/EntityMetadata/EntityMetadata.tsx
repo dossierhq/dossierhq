@@ -1,5 +1,5 @@
-import type { EntityVersionInfo } from '@datadata/core';
-import { assertIsDefined } from '@datadata/core';
+import type { EntityVersionInfo } from '@jonasb/datadata-core';
+import { assertIsDefined } from '@jonasb/datadata-core';
 import React, { useContext, useState } from 'react';
 import {
   Button,

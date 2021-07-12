@@ -1,5 +1,9 @@
-import { AdminClientOperationName, assertExhaustive, createBaseAdminClient } from '@datadata/core';
-import type { AdminClient, AdminClientOperation } from '@datadata/core';
+import {
+  AdminClientOperationName,
+  assertExhaustive,
+  createBaseAdminClient,
+} from '@jonasb/datadata-core';
+import type { AdminClient, AdminClientOperation } from '@jonasb/datadata-core';
 import type { SessionContext } from '.';
 import {
   archiveEntity,

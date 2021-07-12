@@ -1,5 +1,5 @@
-import type { ErrorType, PromiseResult } from '@datadata/core';
-import { notOk, ok } from '@datadata/core';
+import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
+import { notOk, ok } from '@jonasb/datadata-core';
 import type { AuthContext } from '.';
 import { ensureRequired } from './Assertions';
 import * as Db from './Database';

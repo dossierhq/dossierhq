@@ -1,4 +1,4 @@
-import type { ErrorType, PromiseResult } from '@datadata/core';
+import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
 import type { Server, Session } from '.';
 import type { Pool, Queryable } from './Database';
 import * as Db from './Database';

@@ -1,4 +1,4 @@
-import type { Schema } from '@datadata/core';
+import type { Schema } from '@jonasb/datadata-core';
 import type { Meta, Story } from '@storybook/react/types-6-0';
 import React, { useReducer } from 'react';
 import type { DataDataContextValue, EntityEditorProps, EntityEditorSelector } from '../..';

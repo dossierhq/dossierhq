@@ -1,5 +1,5 @@
-import { FieldType, Schema } from '@datadata/core';
-import type { SchemaSpecification } from '@datadata/core';
+import { FieldType, Schema } from '@jonasb/datadata-core';
+import type { SchemaSpecification } from '@jonasb/datadata-core';
 import { graphql, printSchema } from 'graphql';
 import { GraphQLSchemaGenerator } from '..';
 

@@ -1,4 +1,4 @@
-import { CoreTestUtils, ErrorType } from '@datadata/core';
+import { CoreTestUtils, ErrorType } from '@jonasb/datadata-core';
 import { validate as validateUuid } from 'uuid';
 import type { AuthContext, Server } from '.';
 import { Auth } from '.';

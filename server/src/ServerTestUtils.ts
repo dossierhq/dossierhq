@@ -1,5 +1,5 @@
-import { CoreTestUtils, ErrorType, Schema } from '@datadata/core';
-import type { SchemaSpecification } from '@datadata/core';
+import { CoreTestUtils, ErrorType, Schema } from '@jonasb/datadata-core';
+import type { SchemaSpecification } from '@jonasb/datadata-core';
 import { Auth, Server } from '.';
 import type { SessionContext } from '.';
 

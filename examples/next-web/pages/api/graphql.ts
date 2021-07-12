@@ -1,6 +1,6 @@
-import { ok } from '@datadata/core';
-import type { SessionGraphQLContext } from '@datadata/graphql';
-import { GraphQLSchemaGenerator } from '@datadata/graphql';
+import { ok } from '@jonasb/datadata-core';
+import type { SessionGraphQLContext } from '@jonasb/datadata-graphql';
+import { GraphQLSchemaGenerator } from '@jonasb/datadata-graphql';
 import { graphql } from 'graphql';
 import type { ExecutionResult, GraphQLSchema } from 'graphql';
 import type { NextApiRequest, NextApiResponse } from 'next';

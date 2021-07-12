@@ -4,8 +4,8 @@ import type {
   EntityTypeSpecification,
   FieldSpecification,
   Schema,
-} from '@datadata/core';
-import { ErrorType } from '@datadata/core';
+} from '@jonasb/datadata-core';
+import { ErrorType } from '@jonasb/datadata-core';
 import isEqual from 'lodash/isEqual';
 import { v4 as uuidv4 } from 'uuid';
 import type { MessageItem } from '../../generic-components/Message/Message';

@@ -1,4 +1,4 @@
-import type { AdminClient, PublishedClient, Schema } from '@datadata/core';
+import type { AdminClient, PublishedClient, Schema } from '@jonasb/datadata-core';
 import type { SessionGraphQLContext } from '.';
 
 export function getSchema<TContext extends SessionGraphQLContext>(context: TContext): Schema {

@@ -1,4 +1,4 @@
-import type { Location } from '@datadata/core';
+import type { Location } from '@jonasb/datadata-core';
 
 interface State {
   onChange: ((location: Location | null) => void) | undefined;

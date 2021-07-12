@@ -1,4 +1,4 @@
-import type { ValueItem } from '@datadata/core';
+import type { ValueItem } from '@jonasb/datadata-core';
 import React, { useCallback, useContext } from 'react';
 import type { EntityFieldEditorProps } from '../..';
 import {

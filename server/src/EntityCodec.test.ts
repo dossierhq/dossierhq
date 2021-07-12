@@ -1,4 +1,4 @@
-import { FieldType, RichTextBlockType } from '@datadata/core';
+import { FieldType, RichTextBlockType } from '@jonasb/datadata-core';
 import type { Server } from '.';
 import type { SessionContext } from './Context';
 import { forTest } from './EntityCodec';

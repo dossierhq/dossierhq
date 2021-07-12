@@ -1,4 +1,4 @@
-import { CoreTestUtils, ErrorType } from '@datadata/core';
+import { CoreTestUtils, ErrorType } from '@jonasb/datadata-core';
 import { toOpaqueCursor } from './Connection';
 import { resolvePaging } from './Paging';
 

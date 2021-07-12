@@ -4,8 +4,8 @@ import {
   EntitySearch,
   Loader,
   TypePicker,
-} from '@datadata/admin-react-components';
-import type { AdminEntity } from '@datadata/core';
+} from '@jonasb/datadata-admin-react-components';
+import type { AdminEntity } from '@jonasb/datadata-core';
 import { useRouter } from 'next/router';
 import { useInitializeContext } from '../../contexts/DataDataContext';
 import { urls } from '../../utils/PageUtils';

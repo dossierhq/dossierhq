@@ -1,5 +1,5 @@
-import type { AdminEntity, Entity, ErrorType, PromiseResult, Result } from '@datadata/core';
-import { notOk, ok } from '@datadata/core';
+import type { AdminEntity, Entity, ErrorType, PromiseResult, Result } from '@jonasb/datadata-core';
+import { notOk, ok } from '@jonasb/datadata-core';
 import type { InMemorySessionContext } from '.';
 
 export async function getEntity(

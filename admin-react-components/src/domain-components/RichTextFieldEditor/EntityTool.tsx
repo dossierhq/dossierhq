@@ -1,4 +1,4 @@
-import type { EntityReference, FieldSpecification } from '@datadata/core';
+import type { EntityReference, FieldSpecification } from '@jonasb/datadata-core';
 import type {
   BlockTool,
   BlockToolConstructable,

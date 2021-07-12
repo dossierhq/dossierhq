@@ -1,4 +1,4 @@
-import type { BoundingBox, Location } from '@datadata/core';
+import type { BoundingBox, Location } from '@jonasb/datadata-core';
 import { Icon } from 'leaflet';
 import type { FunctionComponent } from 'react';
 import React, { useEffect } from 'react';

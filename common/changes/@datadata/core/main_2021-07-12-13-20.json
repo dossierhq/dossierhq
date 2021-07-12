@@ -1,11 +1,11 @@
 {
   "changes": [
     {
-      "packageName": "@datadata/core",
+      "packageName": "@jonasb/datadata-core",
       "comment": "Initial release",
       "type": "none"
     }
   ],
-  "packageName": "@datadata/core",
+  "packageName": "@jonasb/datadata-core",
   "email": "jonas.b@gmail.com"
 }

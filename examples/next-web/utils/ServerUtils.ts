@@ -3,15 +3,15 @@ import type {
   PromiseResult,
   PublishedClient,
   SchemaSpecification,
-} from '@datadata/core';
-import { ErrorType, ok, Schema } from '@datadata/core';
-import type { AuthContext } from '@datadata/server';
+} from '@jonasb/datadata-core';
+import { ErrorType, ok, Schema } from '@jonasb/datadata-core';
+import type { AuthContext } from '@jonasb/datadata-server';
 import {
   Auth,
   createServerAdminClient,
   createServerPublishedClient,
   Server,
-} from '@datadata/server';
+} from '@jonasb/datadata-server';
 import type { NextApiRequest } from 'next';
 import SchemaSpec from './schema.json';
 

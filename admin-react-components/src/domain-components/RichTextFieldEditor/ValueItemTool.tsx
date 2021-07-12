@@ -1,4 +1,4 @@
-import type { FieldSpecification, ValueItem } from '@datadata/core';
+import type { FieldSpecification, ValueItem } from '@jonasb/datadata-core';
 import type {
   BlockTool,
   BlockToolConstructable,

@@ -1,11 +1,11 @@
 {
   "changes": [
     {
-      "packageName": "@datadata/graphql",
+      "packageName": "@jonasb/datadata-graphql",
       "comment": "Initial release",
       "type": "none"
     }
   ],
-  "packageName": "@datadata/graphql",
+  "packageName": "@jonasb/datadata-graphql",
   "email": "jonas.b@gmail.com"
 }

@@ -1,4 +1,4 @@
-import type { AdminQuery } from '@datadata/core';
+import type { AdminQuery } from '@jonasb/datadata-core';
 import { encodeQuery, decodeQuery } from './QueryUtils';
 
 describe('encodeQuery()', () => {

@@ -4,8 +4,8 @@ import type {
   PublishingHistory,
   PublishingResult,
   Schema,
-} from '@datadata/core';
-import { EntityPublishState, PublishingEventKind } from '@datadata/core';
+} from '@jonasb/datadata-core';
+import { EntityPublishState, PublishingEventKind } from '@jonasb/datadata-core';
 import type { JsonInMemoryEntity } from '.';
 import type { InMemoryEntity, InMemoryEntityVersion } from './InMemoryServer';
 

@@ -1,4 +1,4 @@
-import type { AdminQuery } from '@datadata/core';
+import type { AdminQuery } from '@jonasb/datadata-core';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import type { TotalCountResponse } from '../../types/ResponseTypes';
 import { errorResultToBoom } from '../../utils/ErrorUtils';

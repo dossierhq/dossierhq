@@ -4,14 +4,14 @@ import {
   isRichTextValueItemBlock,
   ok,
   RichTextBlockType,
-} from '@datadata/core';
+} from '@jonasb/datadata-core';
 import type {
   ErrorType,
   FieldSpecification,
   PromiseResult,
   RichText,
   RichTextBlock,
-} from '@datadata/core';
+} from '@jonasb/datadata-core';
 import type { CliContext } from '..';
 import { editFieldValueItem, selectEntity } from '../CliEntityAdmin';
 import type { ItemSelectorItem } from '.';

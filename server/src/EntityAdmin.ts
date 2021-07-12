@@ -1,4 +1,4 @@
-import { EntityPublishState, notOk, ok } from '@datadata/core';
+import { EntityPublishState, notOk, ok } from '@jonasb/datadata-core';
 import type {
   AdminEntity,
   AdminEntityCreate,
@@ -16,7 +16,7 @@ import type {
   PublishingHistory,
   PublishingResult,
   Result,
-} from '@datadata/core';
+} from '@jonasb/datadata-core';
 import type { SessionContext } from '.';
 import { toOpaqueCursor } from './Connection';
 import * as Db from './Database';

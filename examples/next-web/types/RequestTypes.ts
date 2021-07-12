@@ -1,4 +1,8 @@
-import type { AdminEntityCreate, AdminEntityUpdate, EntityVersionReference } from '@datadata/core';
+import type {
+  AdminEntityCreate,
+  AdminEntityUpdate,
+  EntityVersionReference,
+} from '@jonasb/datadata-core';
 
 export interface EntityCreateRequest {
   item: AdminEntityCreate;

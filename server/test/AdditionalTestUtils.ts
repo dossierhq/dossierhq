@@ -5,8 +5,8 @@ import type {
   EntityHistory,
   ErrorType,
   Result,
-} from '@datadata/core';
-import { assertIsDefined, CoreTestUtils } from '@datadata/core';
+} from '@jonasb/datadata-core';
+import { assertIsDefined, CoreTestUtils } from '@jonasb/datadata-core';
 import { v4 as uuidv4 } from 'uuid';
 
 const { expectOkResult } = CoreTestUtils;
