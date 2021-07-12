@@ -15,7 +15,7 @@ import type {
   PublishingResult,
   Result,
 } from '.';
-import type { Middleware, Operation } from './SharedClient';
+import type { Middleware, Operation, OperationWithoutCallbacks } from './SharedClient';
 import { executeOperationPipeline } from './SharedClient';
 
 export interface AdminClient {
@@ -137,16 +137,6 @@ export type AdminClientMiddleware<TContext> = Middleware<
   TContext,
   AdminClientOperation<AdminClientOperationName>
 >;
-
-// export interface AdminClientOperation<TName extends AdminClientOperationName> extends Operation<TName, {
-//   readonly name: TName;
-//   readonly args: AdminClientOperationArguments[TName];
-//   readonly resolve: (result: AdminClientOperationReturn[TName]) => void;
-// }
-
-// export interface AdminClientMiddleware<TContext> {
-//   (context: TContext, operation: AdminClientOperation<AdminClientOperationName>): Promise<void>;
-// }
 
 class BaseAdminClient<TContext> implements AdminClient {
   private readonly resolveContext: () => Promise<TContext>;
@@ -273,7 +263,7 @@ class BaseAdminClient<TContext> implements AdminClient {
   }
 
   private async executeOperation<TName extends AdminClientOperationName>(
-    operation: Omit<AdminClientOperation<TName>, 'resolve'>
+    operation: OperationWithoutCallbacks<AdminClientOperation<TName>>
   ): Promise<AdminClientOperationReturn[TName]> {
     const context = await this.resolveContext();
 

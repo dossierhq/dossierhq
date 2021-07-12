@@ -17,7 +17,7 @@ export default meta;
 
 const Template: Story<EntityMapProps> = (args) => {
   return (
-    <DataDataContext.Provider value={createContextValue()}>
+    <DataDataContext.Provider value={createContextValue().contextValue}>
       <EntityMap {...args} />
     </DataDataContext.Provider>
   );

@@ -12,7 +12,7 @@ import {
 import userEvent from '@testing-library/user-event';
 import * as React from 'react';
 import * as renderer from 'react-test-renderer';
-import { TestContextAdapter } from '../../test/TestContextAdapter';
+import { createContextValue } from '../../test/TestContextAdapter';
 import type { EntityEditorStoryProps } from './EntityEditor.stories';
 import { default as StoryMeta, ArchivedFoo, FullFoo, NewFoo } from './EntityEditor.stories';
 
@@ -89,10 +89,10 @@ describe('NewFoo', () => {
   });
 
   test('Enter name and submit', async () => {
-    const contextAdapter = new TestContextAdapter();
-    const createEntity = jest.spyOn(contextAdapter, 'createEntity');
+    const { contextValue, adminClient } = createContextValue();
+    const createEntity = jest.spyOn(adminClient, 'createEntity');
     act(() => {
-      render(renderStory(NewFoo, { contextAdapter }));
+      render(renderStory(NewFoo, { contextValue: () => contextValue }));
     });
 
     const name = finders.nameInput();
@@ -120,10 +120,11 @@ describe('NewFoo', () => {
   });
 
   test('Enter title and submit', async () => {
-    const contextAdapter = new TestContextAdapter();
-    const createEntity = jest.spyOn(contextAdapter, 'createEntity');
+    const { contextValue, adminClient } = createContextValue();
+    const createEntity = jest.spyOn(adminClient, 'createEntity');
+
     act(() => {
-      render(renderStory(NewFoo, { contextAdapter }));
+      render(renderStory(NewFoo, { contextValue: () => contextValue }));
     });
 
     userEvent.type(finders.nameInput(), 'New name'); // TODO remove, update automatically
@@ -173,20 +174,20 @@ describe('NewFoo', () => {
   });
 
   test('getEntity is not called', async () => {
-    const contextAdapter = new TestContextAdapter();
-    const getEntity = jest.spyOn(contextAdapter, 'getEntity');
+    const { contextValue, adminClient } = createContextValue();
+    const getEntity = jest.spyOn(adminClient, 'getEntity');
     await act(async () => {
-      render(renderStory(NewFoo, { contextAdapter }));
+      render(renderStory(NewFoo, { contextValue: () => contextValue }));
     });
 
     expect(getEntity.mock.calls).toEqual([]);
   });
 
   test('getEntity is not called after create (since cached)', async () => {
-    const contextAdapter = new TestContextAdapter();
-    const getEntity = jest.spyOn(contextAdapter, 'getEntity');
+    const { contextValue, adminClient } = createContextValue();
+    const getEntity = jest.spyOn(adminClient, 'getEntity');
     act(() => {
-      render(renderStory(NewFoo, { contextAdapter }));
+      render(renderStory(NewFoo, { contextValue: () => contextValue }));
     });
 
     getEntity.mockClear();
@@ -207,10 +208,10 @@ describe('FullFoo', () => {
   });
 
   test('Enter name and submit', async () => {
-    const contextAdapter = new TestContextAdapter();
-    const updateEntity = jest.spyOn(contextAdapter, 'updateEntity');
+    const { contextValue, adminClient } = createContextValue();
+    const updateEntity = jest.spyOn(adminClient, 'updateEntity');
     await act(async () => {
-      render(renderStory(FullFoo, { contextAdapter }));
+      render(renderStory(FullFoo, { contextValue: () => contextValue }));
     });
 
     const name = finders.nameInput();
@@ -238,10 +239,10 @@ describe('FullFoo', () => {
   });
 
   test('Enter title and submit', async () => {
-    const contextAdapter = new TestContextAdapter();
-    const updateEntity = jest.spyOn(contextAdapter, 'updateEntity');
+    const { contextValue, adminClient } = createContextValue();
+    const updateEntity = jest.spyOn(adminClient, 'updateEntity');
     await act(async () => {
-      render(renderStory(FullFoo, { contextAdapter }));
+      render(renderStory(FullFoo, { contextValue: () => contextValue }));
     });
 
     const fooTitle = finders.fooTitleInput();
@@ -270,10 +271,10 @@ describe('FullFoo', () => {
   });
 
   test('Remove Bar entity and submit', async () => {
-    const contextAdapter = new TestContextAdapter();
-    const updateEntity = jest.spyOn(contextAdapter, 'updateEntity');
+    const { contextValue, adminClient } = createContextValue();
+    const updateEntity = jest.spyOn(adminClient, 'updateEntity');
     await act(async () => {
-      render(renderStory(FullFoo, { contextAdapter }));
+      render(renderStory(FullFoo, { contextValue: () => contextValue }));
     });
 
     userEvent.click(finders.fooBarRemoveButton(FullFoo));
@@ -300,10 +301,10 @@ describe('FullFoo', () => {
   });
 
   test('Select Bar entity and submit', async () => {
-    const contextAdapter = new TestContextAdapter();
-    const updateEntity = jest.spyOn(contextAdapter, 'updateEntity');
+    const { contextValue, adminClient } = createContextValue();
+    const updateEntity = jest.spyOn(adminClient, 'updateEntity');
     await act(async () => {
-      render(renderStory(FullFoo, { contextAdapter }));
+      render(renderStory(FullFoo, { contextValue: () => contextValue }));
     });
 
     const bar = finders.fooBarButton(FullFoo);
@@ -336,10 +337,11 @@ describe('FullFoo', () => {
   });
 
   test('Remove AnnotatedBar value and submit', async () => {
-    const contextAdapter = new TestContextAdapter();
-    const updateEntity = jest.spyOn(contextAdapter, 'updateEntity');
+    const { contextValue, adminClient } = createContextValue();
+    const updateEntity = jest.spyOn(adminClient, 'updateEntity');
+
     await act(async () => {
-      render(renderStory(FullFoo, { contextAdapter }));
+      render(renderStory(FullFoo, { contextValue: () => contextValue }));
     });
 
     userEvent.click(finders.fooAnnotatedBarRemoveButton(FullFoo));
@@ -366,10 +368,15 @@ describe('FullFoo', () => {
   });
 
   test('Change AnnotatedBar annotation value and submit', async () => {
-    const contextAdapter = new TestContextAdapter();
-    const updateEntity = jest.spyOn(contextAdapter, 'updateEntity');
+    const { contextValue, adminClient } = createContextValue();
+    const updateEntity = jest.spyOn(adminClient, 'updateEntity');
+
     await act(async () => {
-      render(renderStory(FullFoo, { contextAdapter }));
+      render(
+        renderStory(FullFoo, {
+          contextValue: () => contextValue,
+        })
+      );
     });
 
     const annotation = finders.fooAnnotatedBarAnnotationInput(FullFoo);
@@ -404,10 +411,10 @@ describe('FullFoo', () => {
   });
 
   test('Select AnnotatedBar bar value and submit', async () => {
-    const contextAdapter = new TestContextAdapter();
-    const updateEntity = jest.spyOn(contextAdapter, 'updateEntity');
+    const { contextValue, adminClient } = createContextValue();
+    const updateEntity = jest.spyOn(adminClient, 'updateEntity');
     await act(async () => {
-      render(renderStory(FullFoo, { contextAdapter }));
+      render(renderStory(FullFoo, { contextValue: () => contextValue }));
     });
 
     userEvent.click(finders.fooAnnotatedBarBarButton(FullFoo));
@@ -443,9 +450,8 @@ describe('FullFoo', () => {
   });
 
   test('Enter name and reset', async () => {
-    const contextAdapter = new TestContextAdapter();
     await act(async () => {
-      render(renderStory(FullFoo, { contextAdapter }));
+      render(renderStory(FullFoo));
     });
 
     const name = finders.nameInput();
@@ -461,9 +467,8 @@ describe('FullFoo', () => {
   });
 
   test('Enter title and reset', async () => {
-    const contextAdapter = new TestContextAdapter();
     await act(async () => {
-      render(renderStory(FullFoo, { contextAdapter }));
+      render(renderStory(FullFoo));
     });
 
     const fooTitle = finders.fooTitleInput();

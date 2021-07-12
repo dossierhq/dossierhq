@@ -23,7 +23,7 @@ const meta: Meta<RichTextFieldEditorStoryProps> = {
 export default meta;
 
 const Template: Story<RichTextFieldEditorStoryProps> = (args) => {
-  const contextValue = createContextValue(args.contextAdapter);
+  const contextValue = createContextValue().contextValue;
   return (
     <DataDataContext.Provider value={contextValue}>
       <Wrapper {...args} />

@@ -14,7 +14,7 @@ export default meta;
 
 const Template: Story<TypePickerProps> = (args) => {
   return (
-    <DataDataContext.Provider value={createContextValue()}>
+    <DataDataContext.Provider value={createContextValue().contextValue}>
       <TypePicker {...args} />
     </DataDataContext.Provider>
   );

@@ -1,7 +1,7 @@
 import type { Schema } from '@datadata/core';
 import type { Meta, Story } from '@storybook/react/types-6-0';
 import React, { useReducer } from 'react';
-import type { EntityEditorProps, EntityEditorSelector } from '../..';
+import type { DataDataContextValue, EntityEditorProps, EntityEditorSelector } from '../..';
 import {
   AddEntityDraftAction,
   DataDataContext,
@@ -12,15 +12,11 @@ import {
   reduceEntityEditorState,
 } from '../..';
 import { baz1Id, foo1Id, fooArchivedId } from '../../test/EntityFixtures';
-import {
-  createContextValue,
-  SlowInterceptor,
-  TestContextAdapter,
-} from '../../test/TestContextAdapter';
+import { createContextValue, SlowMiddleware } from '../../test/TestContextAdapter';
 
 export type EntityEditorStoryProps = Omit<EntityEditorProps, 'entityId'> & {
   entitySelector: EntityEditorSelector;
-  contextAdapter?: TestContextAdapter;
+  contextValue?: () => DataDataContextValue;
 };
 
 const meta: Meta<EntityEditorStoryProps> = {
@@ -31,7 +27,7 @@ const meta: Meta<EntityEditorStoryProps> = {
 export default meta;
 
 const Template: Story<EntityEditorStoryProps> = (args) => {
-  const contextValue = createContextValue(args?.contextAdapter);
+  const contextValue = args?.contextValue?.() ?? createContextValue().contextValue;
   return (
     <DataDataContext.Provider value={contextValue}>
       <Wrapper entitySelector={args.entitySelector} schema={contextValue.schema} />
@@ -77,7 +73,7 @@ FullBaz.args = { entitySelector: { id: baz1Id } };
 export const SlowFullFoo = Template.bind({});
 SlowFullFoo.args = {
   entitySelector: { id: foo1Id },
-  contextAdapter: new TestContextAdapter(SlowInterceptor),
+  contextValue: () => createContextValue({ adminClientMiddleware: [SlowMiddleware] }).contextValue,
 };
 
 export const NotFound = Template.bind({});

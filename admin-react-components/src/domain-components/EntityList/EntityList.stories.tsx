@@ -15,7 +15,7 @@ export default meta;
 
 const Template: Story<EntityListProps> = (args) => {
   return (
-    <DataDataContext.Provider value={createContextValue()}>
+    <DataDataContext.Provider value={createContextValue().contextValue}>
       <EntityList {...args} />
     </DataDataContext.Provider>
   );

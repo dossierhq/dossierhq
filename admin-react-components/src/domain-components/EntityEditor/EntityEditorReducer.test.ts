@@ -1,5 +1,6 @@
+import type { AdminClient } from '@datadata/core';
 import schema from '../../stories/StoryboardSchema';
-import { TestContextAdapter } from '../../test/TestContextAdapter';
+import { createContextValue } from '../../test/TestContextAdapter';
 import { foo1Id } from '../../test/EntityFixtures';
 import type { EntityEditorState } from './EntityEditorReducer';
 import {
@@ -35,11 +36,11 @@ function stateWithoutSchema(state: EntityEditorState) {
 }
 
 async function updateEntityWithFixture(
+  adminClient: AdminClient,
   state: EntityEditorState,
-  fixtures: TestContextAdapter,
   id: string
 ): Promise<EntityEditorState> {
-  const entityResult = await fixtures.getEntity(id);
+  const entityResult = await adminClient.getEntity({ id });
   if (entityResult.isError()) {
     throw entityResult.toError();
   }
@@ -64,10 +65,10 @@ describe('reduceEntityEditorState', () => {
   });
 
   test('UpdateEntityAction', async () => {
-    const fixtures = new TestContextAdapter();
+    const { adminClient } = createContextValue();
     let state = newState();
     state = reduceEntityEditorState(state, new AddEntityDraftAction({ id: foo1Id }));
-    state = await updateEntityWithFixture(state, fixtures, foo1Id);
+    state = await updateEntityWithFixture(adminClient, state, foo1Id);
     expect(stateWithoutSchema(state)).toMatchSnapshot();
   });
 });
