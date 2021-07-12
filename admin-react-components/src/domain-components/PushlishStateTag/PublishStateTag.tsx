@@ -1,4 +1,4 @@
-import { EntityPublishState } from '@datadata/core';
+import { EntityPublishState } from '@jonasb/datadata-core';
 import React from 'react';
 import { Tag } from '../../';
 import type { Kind } from '../../';

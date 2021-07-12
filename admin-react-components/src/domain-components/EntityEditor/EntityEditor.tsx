@@ -1,5 +1,5 @@
-import { assertIsDefined } from '@datadata/core';
-import type { AdminEntityCreate, AdminEntityUpdate } from '@datadata/core';
+import { assertIsDefined } from '@jonasb/datadata-core';
+import type { AdminEntityCreate, AdminEntityUpdate } from '@jonasb/datadata-core';
 import type { Dispatch, SetStateAction } from 'react';
 import React, { useContext, useEffect, useState } from 'react';
 import {

@@ -6,7 +6,7 @@ import {
   isPagingForwards,
   PublishingEventKind,
   RichTextBlockType,
-} from '@datadata/core';
+} from '@jonasb/datadata-core';
 import type {
   AdminClient,
   AdminEntity,
@@ -16,7 +16,7 @@ import type {
   Edge,
   Paging,
   PublishedClient,
-} from '@datadata/core';
+} from '@jonasb/datadata-core';
 import { validate as validateUuid } from 'uuid';
 import type { Server, SessionContext } from '.';
 import { createServerAdminClient, createServerPublishedClient } from '.';

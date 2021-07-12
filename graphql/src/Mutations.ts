@@ -4,7 +4,7 @@ import type {
   AdminEntityUpdate,
   EntityVersionReference,
   PublishingResult,
-} from '@datadata/core';
+} from '@jonasb/datadata-core';
 import type { SessionGraphQLContext } from '.';
 import { buildResolversForAdminEntity } from './DataLoaders';
 import { getAdminClient, getSchema } from './Utils';

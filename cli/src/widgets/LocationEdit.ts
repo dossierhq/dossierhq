@@ -1,4 +1,4 @@
-import type { Location } from '@datadata/core';
+import type { Location } from '@jonasb/datadata-core';
 import chalk from 'chalk';
 import { showItemSelector } from './ItemSelector';
 import { showFloatEdit } from './NumberEdit';

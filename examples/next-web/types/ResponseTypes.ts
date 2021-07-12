@@ -7,7 +7,7 @@ import type {
   JsonPublishingHistory,
   PublishingResult,
   SchemaSpecification,
-} from '@datadata/core';
+} from '@jonasb/datadata-core';
 
 export interface EntityResponse {
   item: AdminEntity;

@@ -1,5 +1,5 @@
-import type { AdminClient, PublishedClient } from '@datadata/core';
-import { CoreTestUtils, ErrorType, FieldType, EntityPublishState } from '@datadata/core';
+import type { AdminClient, PublishedClient } from '@jonasb/datadata-core';
+import { CoreTestUtils, ErrorType, FieldType, EntityPublishState } from '@jonasb/datadata-core';
 import { createServerAdminClient, createServerPublishedClient } from '.';
 import type { Server, SessionContext } from '.';
 import { createTestServer, ensureSessionContext, updateSchema } from './ServerTestUtils';

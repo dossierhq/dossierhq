@@ -1,5 +1,5 @@
-import type { ErrorResult } from '@datadata/core';
-import { ErrorType } from '@datadata/core';
+import type { ErrorResult } from '@jonasb/datadata-core';
+import { ErrorType } from '@jonasb/datadata-core';
 import boom, { boomify } from '@hapi/boom';
 import type { Boom } from '@hapi/boom';
 

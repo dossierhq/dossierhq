@@ -1,4 +1,4 @@
-import type { AdminQuery, Paging } from '@datadata/core';
+import type { AdminQuery, Paging } from '@jonasb/datadata-core';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import type { SearchEntitiesResponse } from '../../types/ResponseTypes';
 import { errorResultToBoom } from '../../utils/ErrorUtils';

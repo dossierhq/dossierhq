@@ -12,7 +12,7 @@ import type {
   RichText,
   Schema,
   ValueItem,
-} from '@datadata/core';
+} from '@jonasb/datadata-core';
 import {
   EntityPublishState,
   FieldType,
@@ -30,7 +30,7 @@ import {
   RichTextBlockType,
   visitItemRecursively,
   visitorPathToString,
-} from '@datadata/core';
+} from '@jonasb/datadata-core';
 import type { SessionContext } from '.';
 import { ensureRequired } from './Assertions';
 import * as Db from './Database';

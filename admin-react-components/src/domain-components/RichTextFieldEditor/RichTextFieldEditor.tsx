@@ -1,5 +1,5 @@
-import type { FieldSpecification, RichText } from '@datadata/core';
-import { RichTextBlockType } from '@datadata/core';
+import type { FieldSpecification, RichText } from '@jonasb/datadata-core';
+import { RichTextBlockType } from '@jonasb/datadata-core';
 import type { LogLevels, ToolSettings } from '@editorjs/editorjs';
 import EditorJS from '@editorjs/editorjs';
 import React, { useContext, useEffect, useReducer, useState } from 'react';

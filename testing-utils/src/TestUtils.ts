@@ -1,5 +1,5 @@
-import type { ErrorType, Result } from '@datadata/core';
-import { CoreTestUtils } from '@datadata/core';
+import type { ErrorType, Result } from '@jonasb/datadata-core';
+import { CoreTestUtils } from '@jonasb/datadata-core';
 
 const { expectOkResult } = CoreTestUtils;
 

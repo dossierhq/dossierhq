@@ -1,5 +1,5 @@
-import type { Entity, PromiseResult, Result, ErrorType } from '@datadata/core';
-import { notOk, ok } from '@datadata/core';
+import type { Entity, PromiseResult, Result, ErrorType } from '@jonasb/datadata-core';
+import { notOk, ok } from '@jonasb/datadata-core';
 import type { SessionContext } from '.';
 import * as Db from './Database';
 import type { EntitiesTable, EntityVersionsTable } from './DatabaseTables';

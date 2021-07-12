@@ -1,5 +1,5 @@
-import type { PromiseResult, ErrorType } from '@datadata/core';
-import { ok, Schema } from '@datadata/core';
+import type { PromiseResult, ErrorType } from '@jonasb/datadata-core';
+import { ok, Schema } from '@jonasb/datadata-core';
 import type { Context, SessionContext } from '.';
 import * as Db from './Database';
 import type { SchemaVersionsTable } from './DatabaseTables';

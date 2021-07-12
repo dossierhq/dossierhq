@@ -1,5 +1,5 @@
-import type { ErrorType, PromiseResult, PublishingResult } from '@datadata/core';
-import { EntityPublishState } from '@datadata/core';
+import type { ErrorType, PromiseResult, PublishingResult } from '@jonasb/datadata-core';
+import { EntityPublishState } from '@jonasb/datadata-core';
 import React, { useContext, useState } from 'react';
 import type { DataDataContextValue } from '../..';
 import { ButtonWithDropDown, DataDataContext } from '../..';

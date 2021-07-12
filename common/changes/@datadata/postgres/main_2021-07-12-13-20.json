@@ -1,11 +1,11 @@
 {
   "changes": [
     {
-      "packageName": "@datadata/postgres",
+      "packageName": "@jonasb/datadata-postgres",
       "comment": "Initial release",
       "type": "none"
     }
   ],
-  "packageName": "@datadata/postgres",
+  "packageName": "@jonasb/datadata-postgres",
   "email": "jonas.b@gmail.com"
 }

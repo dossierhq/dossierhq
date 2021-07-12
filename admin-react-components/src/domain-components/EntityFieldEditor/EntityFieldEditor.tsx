@@ -1,5 +1,5 @@
 import React from 'react';
-import type { FieldSpecification } from '@datadata/core';
+import type { FieldSpecification } from '@jonasb/datadata-core';
 import {
   isEntityTypeField,
   isEntityTypeListField,
@@ -11,7 +11,7 @@ import {
   isStringListField,
   isValueTypeField,
   isValueTypeListField,
-} from '@datadata/core';
+} from '@jonasb/datadata-core';
 import {
   EntityFieldListWrapper,
   EntityItemFieldEditor,

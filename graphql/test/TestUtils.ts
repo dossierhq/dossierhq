@@ -4,18 +4,18 @@ import type {
   PublishedClient,
   Result,
   SchemaSpecification,
-} from '@datadata/core';
-import { CoreTestUtils, Schema } from '@datadata/core';
+} from '@jonasb/datadata-core';
+import { CoreTestUtils, Schema } from '@jonasb/datadata-core';
 import {
   createServerAdminClient,
   createServerPublishedClient,
   ServerTestUtils,
-} from '@datadata/server';
+} from '@jonasb/datadata-server';
 import {
   createInMemoryAdminClient,
   createInMemoryPublishedClient,
   InMemoryServer,
-} from '@datadata/testing-utils';
+} from '@jonasb/datadata-testing-utils';
 import { v4 as uuidv4 } from 'uuid';
 
 const { expectOkResult } = CoreTestUtils;

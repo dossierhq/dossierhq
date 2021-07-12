@@ -1,4 +1,4 @@
-import { FieldType, RichTextBlockType, Schema } from '@datadata/core';
+import { FieldType, RichTextBlockType, Schema } from '@jonasb/datadata-core';
 
 const schema = new Schema({
   entityTypes: [

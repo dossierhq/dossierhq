@@ -13,7 +13,7 @@ import {
   isValueTypeListField,
   notOk,
   ok,
-} from '@datadata/core';
+} from '@jonasb/datadata-core';
 import type {
   AdminEntity,
   AdminEntityCreate,
@@ -30,7 +30,7 @@ import type {
   RichText,
   ValueItem,
   ValueTypeSpecification,
-} from '@datadata/core';
+} from '@jonasb/datadata-core';
 import chalk from 'chalk';
 import type { CliContext } from '..';
 import * as CliSchema from './CliSchema';

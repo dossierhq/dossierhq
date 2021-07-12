@@ -1,4 +1,4 @@
-import type { EntityReference } from '@datadata/core';
+import type { EntityReference } from '@jonasb/datadata-core';
 import React, { useCallback, useContext, useState } from 'react';
 import type { EntityFieldEditorProps } from '../..';
 import {

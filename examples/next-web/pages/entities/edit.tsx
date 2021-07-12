@@ -1,4 +1,4 @@
-import type { EntityEditorSelector } from '@datadata/admin-react-components';
+import type { EntityEditorSelector } from '@jonasb/datadata-admin-react-components';
 import Joi from 'joi';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';

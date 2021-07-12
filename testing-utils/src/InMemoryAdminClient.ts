@@ -1,5 +1,13 @@
-import type { AdminClient, AdminClientMiddleware, AdminClientOperation } from '@datadata/core';
-import { AdminClientOperationName, assertExhaustive, createBaseAdminClient } from '@datadata/core';
+import type {
+  AdminClient,
+  AdminClientMiddleware,
+  AdminClientOperation,
+} from '@jonasb/datadata-core';
+import {
+  AdminClientOperationName,
+  assertExhaustive,
+  createBaseAdminClient,
+} from '@jonasb/datadata-core';
 import { InMemoryAdmin } from './InMemoryAdmin';
 import type { InMemorySessionContext } from './InMemoryServer';
 

@@ -1,4 +1,4 @@
-import { CoreTestUtils, ErrorType } from '@datadata/core';
+import { CoreTestUtils, ErrorType } from '@jonasb/datadata-core';
 import type { Server, SessionContext } from '.';
 import { toOpaqueCursor } from './Connection';
 import { searchAdminEntitiesQuery, totalAdminEntitiesQuery } from './QueryGenerator';

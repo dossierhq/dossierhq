@@ -1,4 +1,4 @@
-import type { AdminEntity, AdminQuery } from '@datadata/core';
+import type { AdminEntity, AdminQuery } from '@jonasb/datadata-core';
 import React, { useCallback, useReducer, useState } from 'react';
 import { Button, Column, ColumnItem, EntityList, EntityMap, InputText, Row, RowItem } from '../..';
 import {

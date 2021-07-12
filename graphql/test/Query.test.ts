@@ -1,5 +1,5 @@
-import type { SchemaSpecification } from '@datadata/core';
-import { CoreTestUtils, FieldType, notOk, ok, RichTextBlockType } from '@datadata/core';
+import type { SchemaSpecification } from '@jonasb/datadata-core';
+import { CoreTestUtils, FieldType, notOk, ok, RichTextBlockType } from '@jonasb/datadata-core';
 import { graphql, printError } from 'graphql';
 import type { GraphQLSchema } from 'graphql';
 import type { SessionGraphQLContext } from '..';

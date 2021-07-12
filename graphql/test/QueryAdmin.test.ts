@@ -8,7 +8,7 @@ import type {
   ErrorType,
   Paging,
   SchemaSpecification,
-} from '@datadata/core';
+} from '@jonasb/datadata-core';
 import {
   CoreTestUtils,
   EntityPublishState,
@@ -16,7 +16,7 @@ import {
   notOk,
   ok,
   RichTextBlockType,
-} from '@datadata/core';
+} from '@jonasb/datadata-core';
 import { graphql, printError } from 'graphql';
 import type { GraphQLSchema } from 'graphql';
 import type { SessionGraphQLContext } from '..';

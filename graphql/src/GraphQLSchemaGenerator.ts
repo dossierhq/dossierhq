@@ -4,7 +4,7 @@ import {
   isRichTextField,
   isValueTypeField,
   notOk,
-} from '@datadata/core';
+} from '@jonasb/datadata-core';
 import type {
   AdminClient,
   AdminEntity,
@@ -19,7 +19,7 @@ import type {
   Schema,
   ValueItem,
   ValueTypeSpecification,
-} from '@datadata/core';
+} from '@jonasb/datadata-core';
 import {
   GraphQLBoolean,
   GraphQLEnumType,

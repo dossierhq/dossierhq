@@ -1,4 +1,4 @@
-import type { AdminClient } from '@datadata/core';
+import type { AdminClient } from '@jonasb/datadata-core';
 import schema from '../../stories/StoryboardSchema';
 import { createContextValue } from '../../test/TestContextAdapter';
 import { foo1Id } from '../../test/EntityFixtures';

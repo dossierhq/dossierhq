@@ -1,5 +1,5 @@
-import { PublishingEventKind, RichTextBlockType } from '@datadata/core';
-import type { JsonInMemoryEntity } from '@datadata/testing-utils';
+import { PublishingEventKind, RichTextBlockType } from '@jonasb/datadata-core';
+import type { JsonInMemoryEntity } from '@jonasb/datadata-testing-utils';
 
 export const foo1Id = 'fc66b4d7-61ff-44d4-8f68-cb7f526df046';
 export const fooArchivedId = 'fb62be03-a0a9-4689-9987-bacee0e7692d';

@@ -13,7 +13,7 @@ import type {
   PublishingHistory,
   PublishingResult,
   Result,
-} from '@datadata/core';
+} from '@jonasb/datadata-core';
 import {
   assertIsDefined,
   EntityPublishState,
@@ -21,7 +21,7 @@ import {
   notOk,
   ok,
   visitItemRecursively,
-} from '@datadata/core';
+} from '@jonasb/datadata-core';
 import { v4 as uuidv4 } from 'uuid';
 import type { InMemorySessionContext } from '.';
 

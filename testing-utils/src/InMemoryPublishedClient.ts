@@ -1,9 +1,9 @@
-import type { PublishedClient, PublishedClientOperation } from '@datadata/core';
+import type { PublishedClient, PublishedClientOperation } from '@jonasb/datadata-core';
 import {
   PublishedClientOperationName,
   assertExhaustive,
   createBasePublishedClient,
-} from '@datadata/core';
+} from '@jonasb/datadata-core';
 import { getEntities, getEntity } from './InMemoryPublished';
 import type { InMemorySessionContext } from './InMemoryServer';
 

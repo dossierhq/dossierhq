@@ -1,15 +1,15 @@
 #!/usr/bin/env npx ts-node
 import 'dotenv/config';
-import { ok, notOk } from '@datadata/core';
+import { ok, notOk } from '@jonasb/datadata-core';
 import {
   Auth,
   createServerAdminClient,
   createServerPublishedClient,
   Server,
-} from '@datadata/server';
-import type { AuthContext } from '@datadata/server';
-import { GraphQLSchemaGenerator } from '@datadata/graphql';
-import type { SessionGraphQLContext } from '@datadata/graphql';
+} from '@jonasb/datadata-server';
+import type { AuthContext } from '@jonasb/datadata-server';
+import { GraphQLSchemaGenerator } from '@jonasb/datadata-graphql';
+import type { SessionGraphQLContext } from '@jonasb/datadata-graphql';
 import express from 'express';
 import { graphqlHTTP } from 'express-graphql';
 import type { IncomingHttpHeaders } from 'http';

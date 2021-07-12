@@ -1,4 +1,4 @@
-import { EntityPublishState, PublishingEventKind, Schema } from '@datadata/core';
+import { EntityPublishState, PublishingEventKind, Schema } from '@jonasb/datadata-core';
 import { v4 as uuidv4 } from 'uuid';
 import { InMemoryServer } from '.';
 import { createInMemoryAdminClient } from './InMemoryAdminClient';

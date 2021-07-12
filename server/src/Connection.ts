@@ -1,5 +1,5 @@
-import type { ErrorType, Result } from '@datadata/core';
-import { ok, notOk } from '@datadata/core';
+import type { ErrorType, Result } from '@jonasb/datadata-core';
+import { ok, notOk } from '@jonasb/datadata-core';
 
 export type CursorNativeType = 'int' | 'string';
 

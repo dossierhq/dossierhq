@@ -1,6 +1,6 @@
-import type { AdminClient, AdminClientMiddleware } from '@datadata/core';
-import { createInMemoryAdminClient, InMemoryServer } from '@datadata/testing-utils';
-import type { InMemorySessionContext } from '@datadata/testing-utils';
+import type { AdminClient, AdminClientMiddleware } from '@jonasb/datadata-core';
+import { createInMemoryAdminClient, InMemoryServer } from '@jonasb/datadata-testing-utils';
+import type { InMemorySessionContext } from '@jonasb/datadata-testing-utils';
 import { v4 as uuidv4 } from 'uuid';
 import type { DataDataContextAdapter } from '..';
 import { DataDataContextValue } from '..';

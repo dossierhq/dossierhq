@@ -1,4 +1,4 @@
-import type { BoundingBox } from '@datadata/core';
+import type { BoundingBox } from '@jonasb/datadata-core';
 import chalk from 'chalk';
 import type { ItemSelectorItem } from './';
 import { showFloatEdit, showItemSelector } from './';

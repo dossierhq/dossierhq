@@ -1,4 +1,4 @@
-import type { AdminEntity, AdminQuery } from '@datadata/core';
+import type { AdminEntity, AdminQuery } from '@jonasb/datadata-core';
 import React, { useContext } from 'react';
 import { Button, DataDataContext, Message, PublishStateTag } from '../..';
 import { joinClassNames } from '../../utils/ClassNameUtils';

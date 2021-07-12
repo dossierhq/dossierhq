@@ -1,4 +1,4 @@
-import type { EntityTypeSpecification, ValueTypeSpecification } from '@datadata/core';
+import type { EntityTypeSpecification, ValueTypeSpecification } from '@jonasb/datadata-core';
 import React, { useContext } from 'react';
 import { DataDataContext, DropDown } from '../../';
 import type { DropDownItem } from '../../';

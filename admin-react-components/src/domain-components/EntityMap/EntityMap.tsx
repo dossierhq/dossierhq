@@ -1,5 +1,5 @@
-import type { AdminEntity, AdminQuery, BoundingBox, Location, Schema } from '@datadata/core';
-import { isLocationItemField, visitItemRecursively } from '@datadata/core';
+import type { AdminEntity, AdminQuery, BoundingBox, Location, Schema } from '@jonasb/datadata-core';
+import { isLocationItemField, visitItemRecursively } from '@jonasb/datadata-core';
 import React, { useContext, useEffect, useState } from 'react';
 import { DataDataContext, MapContainer, PublishStateTag } from '../..';
 

@@ -358,17 +358,17 @@
       "projectFolder": "benchpress"
     },
     {
-      "packageName": "@datadata/admin-react-components",
+      "packageName": "@jonasb/datadata-admin-react-components",
       "projectFolder": "admin-react-components",
       "versionPolicyName": "DataDataFramework"
     },
     {
-      "packageName": "@datadata/cli",
+      "packageName": "@jonasb/datadata-cli",
       "projectFolder": "cli",
       "versionPolicyName": "DataDataFramework"
     },
     {
-      "packageName": "@datadata/core",
+      "packageName": "@jonasb/datadata-core",
       "projectFolder": "core",
       "versionPolicyName": "DataDataFramework"
     },
@@ -381,22 +381,22 @@
       "projectFolder": "examples/next-web"
     },
     {
-      "packageName": "@datadata/graphql",
+      "packageName": "@jonasb/datadata-graphql",
       "projectFolder": "graphql",
       "versionPolicyName": "DataDataFramework"
     },
     {
-      "packageName": "@datadata/postgres",
+      "packageName": "@jonasb/datadata-postgres",
       "projectFolder": "postgres",
       "versionPolicyName": "DataDataFramework"
     },
     {
-      "packageName": "@datadata/server",
+      "packageName": "@jonasb/datadata-server",
       "projectFolder": "server",
       "versionPolicyName": "DataDataFramework"
     },
     {
-      "packageName": "@datadata/testing-utils",
+      "packageName": "@jonasb/datadata-testing-utils",
       "projectFolder": "testing-utils",
       "versionPolicyName": "DataDataFramework"
     }

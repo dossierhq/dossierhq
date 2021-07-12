@@ -1,5 +1,5 @@
-import { isPagingForwards, notOk, ok } from '@datadata/core';
-import type { Paging, Result, ErrorType } from '@datadata/core';
+import { isPagingForwards, notOk, ok } from '@jonasb/datadata-core';
+import type { Paging, Result, ErrorType } from '@jonasb/datadata-core';
 import { fromOpaqueCursor } from './Connection';
 import type { CursorNativeType } from './Connection';
 import { pagingDefaultCount } from './Constants';

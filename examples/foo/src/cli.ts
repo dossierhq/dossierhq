@@ -1,10 +1,14 @@
 #!/usr/bin/env npx ts-node
 import 'dotenv/config';
-import { CliAuth, CliContext, CliMain } from '@datadata/cli';
-import type { SchemaSpecification } from '@datadata/core';
-import { Schema } from '@datadata/core';
-import { createServerAdminClient, createServerPublishedClient, Server } from '@datadata/server';
-import type { Session } from '@datadata/server';
+import { CliAuth, CliContext, CliMain } from '@jonasb/datadata-cli';
+import type { SchemaSpecification } from '@jonasb/datadata-core';
+import { Schema } from '@jonasb/datadata-core';
+import {
+  createServerAdminClient,
+  createServerPublishedClient,
+  Server,
+} from '@jonasb/datadata-server';
+import type { Session } from '@jonasb/datadata-server';
 import SchemaSpec from './schema.json';
 
 async function main() {

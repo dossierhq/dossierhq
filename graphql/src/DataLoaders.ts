@@ -7,7 +7,7 @@ import {
   isValueTypeField,
   isValueTypeListField,
   visitFieldRecursively,
-} from '@datadata/core';
+} from '@jonasb/datadata-core';
 import type {
   AdminEntity,
   AdminQuery,
@@ -22,7 +22,7 @@ import type {
   Schema,
   ValueItem,
   ValueTypeSpecification,
-} from '@datadata/core';
+} from '@jonasb/datadata-core';
 import type { GraphQLResolveInfo } from 'graphql';
 import type { SessionGraphQLContext } from './GraphQLSchemaGenerator';
 import { getAdminClient, getPublishedClient, getSchema } from './Utils';

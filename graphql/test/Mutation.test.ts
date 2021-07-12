@@ -1,4 +1,4 @@
-import type { SchemaSpecification } from '@datadata/core';
+import type { SchemaSpecification } from '@jonasb/datadata-core';
 import {
   CoreTestUtils,
   EntityPublishState,
@@ -6,7 +6,7 @@ import {
   ok,
   PublishingEventKind,
   RichTextBlockType,
-} from '@datadata/core';
+} from '@jonasb/datadata-core';
 import { graphql } from 'graphql';
 import type { GraphQLSchema } from 'graphql';
 import { v4 as uuidv4 } from 'uuid';

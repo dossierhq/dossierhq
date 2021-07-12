@@ -1,10 +1,10 @@
 const path = require('path');
 
 const withTranspileModules = require('next-transpile-modules')([
-  '@datadata/admin-react-components',
-  '@datadata/core',
-  '@datadata/graphql',
-  '@datadata/server',
+  '@jonasb/datadata-admin-react-components',
+  '@jonasb/datadata-core',
+  '@jonasb/datadata-graphql',
+  '@jonasb/datadata-server',
 ]);
 
 module.exports = withTranspileModules({

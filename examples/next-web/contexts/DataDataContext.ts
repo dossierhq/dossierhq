@@ -1,8 +1,8 @@
 import type {
   DataDataContextAdapter,
   EditorJsToolSettings,
-} from '@datadata/admin-react-components';
-import { DataDataContextValue } from '@datadata/admin-react-components';
+} from '@jonasb/datadata-admin-react-components';
+import { DataDataContextValue } from '@jonasb/datadata-admin-react-components';
 import {
   AdminClientOperationName,
   assertExhaustive,
@@ -14,8 +14,8 @@ import {
   ErrorType,
   ok,
   Schema,
-} from '@datadata/core';
-import type { AdminClient, AdminClientOperation, AdminEntity, Result } from '@datadata/core';
+} from '@jonasb/datadata-core';
+import type { AdminClient, AdminClientOperation, AdminEntity, Result } from '@jonasb/datadata-core';
 import { useEffect, useMemo, useState } from 'react';
 import type {
   EntityArchiveRequest,

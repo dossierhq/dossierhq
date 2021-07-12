@@ -1,8 +1,8 @@
 import 'dotenv/config';
-import type { CliContext } from '@datadata/cli';
-import { CliAuth, CliMain } from '@datadata/cli';
-import type { Session } from '@datadata/server';
-import { createServerAdminClient, createServerPublishedClient } from '@datadata/server';
+import type { CliContext } from '@jonasb/datadata-cli';
+import { CliAuth, CliMain } from '@jonasb/datadata-cli';
+import type { Session } from '@jonasb/datadata-server';
+import { createServerAdminClient, createServerPublishedClient } from '@jonasb/datadata-server';
 import { getServerConnection } from './utils/ServerUtils';
 
 async function main() {

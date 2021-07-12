@@ -1,4 +1,4 @@
-import type { AdminClient, PublishedClient, Schema } from '@datadata/core';
+import type { AdminClient, PublishedClient, Schema } from '@jonasb/datadata-core';
 
 export interface CliContext {
   schema: Schema;

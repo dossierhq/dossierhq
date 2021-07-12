@@ -1,4 +1,4 @@
-import type { ErrorType, PromiseResult } from '@datadata/core';
+import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
 import type {
   QueryArrayConfig,
   QueryArrayResult,

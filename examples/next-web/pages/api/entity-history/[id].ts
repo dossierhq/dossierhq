@@ -1,4 +1,4 @@
-import type { JsonEntityHistory } from '@datadata/core';
+import type { JsonEntityHistory } from '@jonasb/datadata-core';
 import Joi from 'joi';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import type { EntityHistoryResponse } from '../../../types/ResponseTypes';
