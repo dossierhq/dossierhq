@@ -265,7 +265,7 @@
      * The default branch name. This tells "rush change" which remote branch to compare against.
      * The default value is "master"
      */
-    "defaultBranch": "main"
+    "defaultBranch": "publish"
     /**
      * The default remote. This tells "rush change" which remote to compare against if the remote URL is
      * not set or if a remote matching the provided remote URL is not found.
@@ -359,15 +359,18 @@
     },
     {
       "packageName": "@datadata/admin-react-components",
-      "projectFolder": "admin-react-components"
+      "projectFolder": "admin-react-components",
+      "versionPolicyName": "DataDataFramework"
     },
     {
       "packageName": "@datadata/cli",
-      "projectFolder": "cli"
+      "projectFolder": "cli",
+      "versionPolicyName": "DataDataFramework"
     },
     {
       "packageName": "@datadata/core",
-      "projectFolder": "core"
+      "projectFolder": "core",
+      "versionPolicyName": "DataDataFramework"
     },
     {
       "packageName": "datadata-examples-foo",
@@ -379,19 +382,23 @@
     },
     {
       "packageName": "@datadata/graphql",
-      "projectFolder": "graphql"
+      "projectFolder": "graphql",
+      "versionPolicyName": "DataDataFramework"
     },
     {
       "packageName": "@datadata/postgres",
-      "projectFolder": "postgres"
+      "projectFolder": "postgres",
+      "versionPolicyName": "DataDataFramework"
     },
     {
       "packageName": "@datadata/server",
-      "projectFolder": "server"
+      "projectFolder": "server",
+      "versionPolicyName": "DataDataFramework"
     },
     {
       "packageName": "@datadata/testing-utils",
-      "projectFolder": "testing-utils"
+      "projectFolder": "testing-utils",
+      "versionPolicyName": "DataDataFramework"
     }
     // {
     //   /**

@@ -9,6 +9,17 @@
  * to a set of projects that are specified using the "versionPolicyName" field in rush.json.
  */
 [
+  {
+    "definitionName": "lockStepVersion",
+    "policyName": "DataDataFramework",
+    "version": "0.1.0",
+    "nextBump": "prerelease"
+  },
+  {
+    "definitionName": "individualVersion",
+    "policyName": "Individual"
+  }
+
   // {
   //   /**
   //    * (Required) Indicates the kind of version policy being defined ("lockStepVersion" or "individualVersion").
