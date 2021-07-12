@@ -13,6 +13,10 @@
     "datadata-pg-migrate": "./datadata-pg-migrate.js"
   },
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jonasb/datadata.git"
+  },
   "dependencies": {
     "pg": "^8.6.0",
     "postgrator": "^4.1.1",
