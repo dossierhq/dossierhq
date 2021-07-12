@@ -42,3 +42,9 @@ Check that the same versions of dependencies are used, run `rush check`.
 - `rush ci:check`
 - Exceptions:
   - In `examples/next-web`: `"next": "~10.0.8", "next-transpile-modules": "~6.3.0"`, "Module parse failed: Unexpected token (1:7)". Reverted to `"next": "~10.0.6", "next-transpile-modules": "~6.1.0"`
+
+## Publish packages
+
+- TODO: Figure out some more, e.g. test bumping, automate, move to github action
+- `rush change`
+- `rush publish --apply --publish`

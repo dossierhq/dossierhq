@@ -1,0 +1,17 @@
+{
+  "name": "@jonasb/datadata-server",
+  "entries": [
+    {
+      "version": "0.1.0",
+      "tag": "@jonasb/datadata-server_v0.1.0",
+      "date": "Mon, 12 Jul 2021 17:25:50 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Initial release"
+          }
+        ]
+      }
+    }
+  ]
+}
