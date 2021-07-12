@@ -18,3 +18,5 @@
 #
 #   //registry.npmjs.org/:_authToken=${NPM_AUTH_TOKEN}
 #
+
+//npm.pkg.github.com/:_authToken=${NPM_GITHUB_AUTH_TOKEN}
