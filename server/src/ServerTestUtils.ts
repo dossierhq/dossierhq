@@ -1,9 +1,7 @@
-import { CoreTestUtils, ErrorType, Schema } from '@jonasb/datadata-core';
 import type { SchemaSpecification } from '@jonasb/datadata-core';
-import { Auth, Server } from '.';
+import { Schema } from '@jonasb/datadata-core';
 import type { SessionContext } from '.';
-
-const { expectErrorResult } = CoreTestUtils;
+import { Auth, Server } from '.';
 
 export async function createTestServer(): Promise<Server> {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -17,22 +15,14 @@ export async function ensureSessionContext(
   identifier: string
 ): Promise<SessionContext> {
   const authContext = server.createAuthContext();
-  const sessionResult = await Auth.createSessionForPrincipal(authContext, provider, identifier);
+  const sessionResult = await Auth.createSessionForPrincipal(authContext, provider, identifier, {
+    createPrincipalIfMissing: true,
+  });
   if (sessionResult.isOk()) {
     return server.createSessionContext(sessionResult.value);
   }
 
-  expectErrorResult(sessionResult, ErrorType.NotFound, 'Principal doesn’t exist');
-
-  const createResult = await Auth.createPrincipal(authContext, provider, identifier);
-  createResult.throwIfError();
-
-  const sessionResult2 = await Auth.createSessionForPrincipal(authContext, provider, identifier);
-  if (sessionResult2.isError()) {
-    throw sessionResult2.toError();
-  }
-
-  return server.createSessionContext(sessionResult2.value);
+  throw sessionResult.toError();
 }
 
 export async function updateSchema(

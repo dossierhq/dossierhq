@@ -1,10 +1,11 @@
 import type {
   AdminClient,
+  ErrorType,
   PromiseResult,
   PublishedClient,
   SchemaSpecification,
 } from '@jonasb/datadata-core';
-import { ErrorType, ok, Schema } from '@jonasb/datadata-core';
+import { ok, Schema } from '@jonasb/datadata-core';
 import type { AuthContext } from '@jonasb/datadata-server';
 import {
   Auth,
@@ -18,26 +19,13 @@ import SchemaSpec from './schema.json';
 let serverConnectionPromise: Promise<{ server: Server; authContext: AuthContext }> | null = null;
 
 async function ensureSession(authContext: AuthContext, provider: string, identifier: string) {
-  let sessionResult = await Auth.createSessionForPrincipal(authContext, provider, identifier);
-  if (sessionResult.isOk()) {
-    return sessionResult.value;
+  const result = await Auth.createSessionForPrincipal(authContext, provider, identifier, {
+    createPrincipalIfMissing: true,
+  });
+  if (result.isOk()) {
+    return result.value;
   }
-  if (sessionResult.error !== ErrorType.NotFound) {
-    throw sessionResult.toError();
-  }
-
-  // Create new principal
-  const createResult = await Auth.createPrincipal(authContext, provider, identifier);
-  if (createResult.isError()) {
-    throw createResult.toError();
-  }
-
-  sessionResult = await Auth.createSessionForPrincipal(authContext, provider, identifier);
-  if (sessionResult.isError()) {
-    throw sessionResult.toError();
-  }
-
-  return sessionResult.value;
+  throw result.toError();
 }
 
 export async function getSessionContextForRequest(

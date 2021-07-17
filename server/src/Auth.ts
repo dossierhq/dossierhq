@@ -7,7 +7,7 @@ import type { SubjectsTable } from './DatabaseTables';
 
 export interface Session {
   readonly subjectInternalId: number;
-  /** UUIDv4 */
+  /** UUID */
   readonly subjectId: string;
 }
 
@@ -19,7 +19,10 @@ export default {
 async function createSessionForPrincipal(
   context: AuthContext,
   provider: string,
-  identifier: string
+  identifier: string,
+  options?: {
+    createPrincipalIfMissing?: boolean;
+  }
 ): PromiseResult<Session, ErrorType.BadRequest | ErrorType.NotFound> {
   const assertion = ensureRequired({ provider, identifier });
   if (assertion.isError()) {
@@ -34,6 +37,12 @@ async function createSessionForPrincipal(
     return ok({ subjectInternalId: id, subjectId: uuid });
   } catch (error) {
     if (error instanceof Db.UnexpectedQuantityError) {
+      if (options?.createPrincipalIfMissing) {
+        const creationResult = await createPrincipal(context, provider, identifier);
+        if (creationResult.isOk()) {
+          return await createSessionForPrincipal(context, provider, identifier);
+        }
+      }
       return notOk.NotFound('Principal doesn’t exist');
     }
     throw error;
