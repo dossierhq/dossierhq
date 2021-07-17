@@ -1,6 +1,6 @@
 {
   "name": "@jonasb/datadata-graphql",
-  "version": "0.1.0",
+  "version": "0.1.1-0",
   "description": "",
   "main": "./src/index.ts",
   "exports": {
@@ -29,9 +29,9 @@
     "url": "git+https://github.com/jonasb/datadata.git"
   },
   "devDependencies": {
-    "@jonasb/datadata-postgres": "0.1.0",
-    "@jonasb/datadata-server": "0.1.0",
-    "@jonasb/datadata-testing-utils": "0.1.0",
+    "@jonasb/datadata-postgres": "0.1.1-0",
+    "@jonasb/datadata-server": "0.1.1-0",
+    "@jonasb/datadata-testing-utils": "0.1.1-0",
     "@types/jest": "~26.0.23",
     "@types/uuid": "^8.3.0",
     "@typescript-eslint/eslint-plugin": "^4.24.0",
@@ -44,7 +44,7 @@
     "uuid": "^8.3.2"
   },
   "dependencies": {
-    "@jonasb/datadata-core": "0.1.0",
+    "@jonasb/datadata-core": "0.1.1-0",
     "graphql": "~15.5.0"
   }
 }
