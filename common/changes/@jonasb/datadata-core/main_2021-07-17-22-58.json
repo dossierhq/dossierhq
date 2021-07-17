@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-core",
+      "comment": "Add OkResult.map() and ErrorType.isErrorType()",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-core",
+  "email": "jonas.b@gmail.com"
+}
