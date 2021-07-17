@@ -45,6 +45,8 @@ Check that the same versions of dependencies are used, run `rush check`.
 
 ## Publish packages
 
-- TODO: Figure out some more, e.g. test bumping, automate, move to github action
+- TODO: Figure out some more, e.g. automate, move to github action
 - `rush change`
-- `rush publish --apply --publish`
+- `rush version --bump`
+- `rush publish --apply --publish` (`--include-all` seems to be needed, why?)
+- `git push origin HEAD:publish`
