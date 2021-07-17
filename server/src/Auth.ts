@@ -1,5 +1,5 @@
-import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
-import { notOk, ok } from '@jonasb/datadata-core';
+import type { PromiseResult } from '@jonasb/datadata-core';
+import { ErrorType, notOk, ok } from '@jonasb/datadata-core';
 import type { AuthContext } from '.';
 import { ensureRequired } from './Assertions';
 import * as Db from './Database';
@@ -38,10 +38,18 @@ async function createSessionForPrincipal(
   } catch (error) {
     if (error instanceof Db.UnexpectedQuantityError) {
       if (options?.createPrincipalIfMissing) {
-        const creationResult = await createPrincipal(context, provider, identifier);
+        const creationResult = await doCreatePrincipal(context, provider, identifier);
         if (creationResult.isOk()) {
+          return creationResult.map(({ id, uuid }) => ({
+            subjectInternalId: id,
+            subjectId: uuid,
+          }));
+        }
+        if (creationResult.isErrorType(ErrorType.Conflict)) {
+          // this should only happen if the principal is created by another request after our first check
           return await createSessionForPrincipal(context, provider, identifier);
         }
+        // TODO Not sure how we could end up here. Ok to fall back to not found error?
       }
       return notOk.NotFound('Principal doesn’t exist');
     }
@@ -49,11 +57,27 @@ async function createSessionForPrincipal(
   }
 }
 
+/**
+ *
+ * @param context
+ * @param provider
+ * @param identifier
+ * @returns The uuid of the created principal
+ */
 async function createPrincipal(
   context: AuthContext,
   provider: string,
   identifier: string
 ): PromiseResult<string, ErrorType.BadRequest | ErrorType.Conflict> {
+  const result = await doCreatePrincipal(context, provider, identifier);
+  return result.isOk() ? result.map(({ uuid }) => uuid) : result;
+}
+
+async function doCreatePrincipal(
+  context: AuthContext,
+  provider: string,
+  identifier: string
+): PromiseResult<{ id: number; uuid: string }, ErrorType.BadRequest | ErrorType.Conflict> {
   const assertion = ensureRequired({ provider, identifier });
   if (assertion.isError()) {
     return assertion;
@@ -78,6 +102,6 @@ async function createPrincipal(
       }
       throw error;
     }
-    return ok(uuid);
+    return ok({ id, uuid });
   });
 }
