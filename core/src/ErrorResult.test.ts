@@ -1,6 +1,6 @@
 import type { Result } from '.';
-import { createErrorResultFromError, ErrorType, notOk } from '.';
-import { expectErrorResult } from './CoreTestUtils';
+import { createErrorResultFromError, ErrorType, notOk, ok } from '.';
+import { expectErrorResult, expectOkResult } from './CoreTestUtils';
 
 describe('createErrorResultFromError()', () => {
   test('From generic error', () => {
@@ -37,5 +37,41 @@ describe('createErrorResultFromError()', () => {
         ErrorType.Conflict,
       ]);
     expectErrorResult(actual, ErrorType.Generic, 'BadRequest: Bad request error message');
+  });
+});
+
+describe('ErrorResult', () => {
+  test('assign error results with compatible ErrorTypes but incompatible TOk types', () => {
+    const a: Result<number, ErrorType.BadRequest> = notOk.BadRequest('Hello');
+    const b: Result<{ foo: number }, ErrorType.BadRequest> = a;
+    expectErrorResult(b, ErrorType.BadRequest, 'Hello');
+  });
+
+  test('isErrorType() narrows error type union', () => {
+    const a: Result<number, ErrorType.BadRequest | ErrorType.Conflict> = notOk.Conflict('Hello');
+    if (a.isError() && a.isErrorType(ErrorType.Conflict)) {
+      const b: Result<number, ErrorType.Conflict> = a;
+      expectErrorResult(b, ErrorType.Conflict, 'Hello');
+    }
+  });
+});
+
+describe('OkResult', () => {
+  test('map(number => string)', () => {
+    const result: Result<number, ErrorType.Conflict> = ok(123);
+    const mappedResult: Result<string, ErrorType.Conflict> = result.map((value) => String(value));
+    if (expectOkResult(mappedResult)) {
+      expect(mappedResult.value).toBe('123');
+    }
+  });
+
+  test('map(object => object)', () => {
+    const result: Result<{ foo: 'bar' }, ErrorType.Conflict> = ok({ foo: 'bar' });
+    const mappedResult: Result<{ baz: string }, ErrorType.Conflict> = result.map(({ foo }) => ({
+      baz: foo.toUpperCase(),
+    }));
+    if (expectOkResult(mappedResult)) {
+      expect(mappedResult.value).toEqual({ baz: 'BAR' });
+    }
   });
 });

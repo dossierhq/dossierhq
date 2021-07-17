@@ -38,6 +38,12 @@ export class OkResult<TOk, TError extends ErrorType> {
   throwIfError(): void {
     // do nothing
   }
+
+  map<TNewOk, TNewError extends ErrorType>(
+    mapper: (value: TOk) => TNewOk
+  ): Result<TNewOk, TNewError> {
+    return ok(mapper(this.value));
+  }
 }
 
 export class ErrorResult<TOk, TError extends ErrorType> {
@@ -63,6 +69,10 @@ export class ErrorResult<TOk, TError extends ErrorType> {
 
   throwIfError(): never {
     throw new ErrorResultError(this);
+  }
+
+  isErrorType<TSubError extends TError>(errorType: TSubError): this is ErrorResult<TOk, TSubError> {
+    return this.error === errorType;
   }
 }
 
