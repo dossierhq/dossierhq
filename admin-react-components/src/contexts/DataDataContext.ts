@@ -57,6 +57,7 @@ export class DataDataContextValue {
   ) {
     this.#adapter = adapter;
     this.#adminClient = adminClient;
+    //TODO fetch schema from adminClient?
     this.#schema = schema;
     this.#rootKey = rootKey;
   }

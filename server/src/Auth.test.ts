@@ -63,6 +63,21 @@ describe('createSessionForPrincipal', () => {
     }
   });
 
+  test('createPrincipalIfMissing creates principal', async () => {
+    const identifier = randomIdentifier();
+
+    const result = await Auth.createSessionForPrincipal(context, 'test', identifier);
+    expectErrorResult(result, ErrorType.NotFound, 'Principal doesn’t exist');
+
+    const session = await Auth.createSessionForPrincipal(context, 'test', identifier, {
+      createPrincipalIfMissing: true,
+    });
+    if (expectOkResult(session)) {
+      expect(validateUuid(session.value.subjectId)).toBeTruthy();
+      expect(typeof session.value.subjectInternalId).toBe('number');
+    }
+  });
+
   test('Error: missing provider', async () => {
     const identifier = randomIdentifier();
     const session = await Auth.createSessionForPrincipal(context, '', identifier);
