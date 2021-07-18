@@ -10,7 +10,7 @@
   "scripts": {
     "build": "heft build",
     "clean": "heft clean",
-    "ci:check": "npm run build && npm run prettier:check",
+    "ci:check": "npm run test && npm run prettier:check",
     "eslint:check": "eslint .",
     "eslint:fix": "eslint --fix .",
     "prettier:check": "prettier --check .",
