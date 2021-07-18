@@ -1,6 +1,6 @@
 {
   "name": "@jonasb/datadata-admin-react-components",
-  "version": "0.1.1-0",
+  "version": "0.1.1-1",
   "description": "",
   "main": "./src/index.ts",
   "exports": {
@@ -32,7 +32,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.14.3",
-    "@jonasb/datadata-testing-utils": "0.1.1-0",
+    "@jonasb/datadata-testing-utils": "0.1.1-1",
     "@storybook/addon-actions": "^6.2.9",
     "@storybook/addon-essentials": "^6.2.9",
     "@storybook/addon-links": "^6.2.9",
@@ -61,7 +61,7 @@
     "typescript": "^4.3.5"
   },
   "dependencies": {
-    "@jonasb/datadata-core": "0.1.1-0",
+    "@jonasb/datadata-core": "0.1.1-1",
     "@editorjs/editorjs": "~2.21.0",
     "@types/leaflet": "~1.7.0",
     "@types/lodash": "~4.14.169",
