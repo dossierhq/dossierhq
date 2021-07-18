@@ -18,9 +18,16 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: 'module',
   },
-  plugins: ['@typescript-eslint', 'jest-dom', 'react', 'testing-library'],
+  plugins: [
+    '@rushstack/eslint-plugin',
+    '@typescript-eslint',
+    'jest-dom',
+    'react',
+    'testing-library',
+  ],
   reportUnusedDisableDirectives: true,
   rules: {
+    '@rushstack/hoist-jest-mock': ['error'],
     '@typescript-eslint/consistent-type-imports': ['warn'],
     '@typescript-eslint/no-parameter-properties': ['error'],
     '@typescript-eslint/no-unused-vars': [

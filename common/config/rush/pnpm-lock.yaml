@@ -2854,6 +2854,17 @@ packages:
       react-dom: ^17.0.1
     resolution:
       integrity: sha512-QbleYZTMcgujAEyWGki8Lx6cXQqWkNtQlqf5c7NImlIp8bKW66bFpez/6EVatW7+p9WKBOEOVci/9W7WW70EZg==
+  /@rushstack/eslint-plugin/0.8.0_eslint@7.26.0+typescript@4.3.5:
+    dependencies:
+      '@rushstack/tree-pattern': 0.2.1
+      '@typescript-eslint/experimental-utils': 4.28.3_eslint@7.26.0+typescript@4.3.5
+      eslint: 7.26.0
+    dev: false
+    peerDependencies:
+      eslint: ^6.0.0 || ^7.0.0
+      typescript: '*'
+    resolution:
+      integrity: sha512-75qjEio/F/m7O7+p/xNTF72xDiTPUd7KjJeEv9c5V27mQok/Ok6oG9NV3rlpd2RJ8FJndBCDeaLg3T97LzQKLw==
   /@rushstack/heft-config-file/0.6.1:
     dependencies:
       '@rushstack/node-core-library': 3.39.1
@@ -2927,6 +2938,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-qQMAFKvfb2ooaWU9DrGIK9d8QfyHy/HiuITJbWenlKgzcDXQvQgEduk57YF4Y7LLasDJ5ZzLaaXwlfX8qCRe5Q==
+  /@rushstack/tree-pattern/0.2.1:
+    dev: false
+    resolution:
+      integrity: sha512-ZRPQdV0LxUY/HRIvVKNz3Sb/qbklSthL2pY0qkNoycXKcXbCgXEP3TxL+i1/tW9g1jqft4o+pl9wx12Q6Uc0Xw==
   /@rushstack/ts-command-line/4.8.1:
     dependencies:
       '@types/argparse': 1.0.38
@@ -4569,6 +4584,23 @@ packages:
       typescript: '*'
     resolution:
       integrity: sha512-sQHBugRhrXzRCs9PaGg6rowie4i8s/iD/DpTB+EXte8OMDfdCG5TvO73XlO9Wc/zi0uyN4qOmX9hIjQEyhnbmQ==
+  /@typescript-eslint/experimental-utils/4.28.3_eslint@7.26.0+typescript@4.3.5:
+    dependencies:
+      '@types/json-schema': 7.0.7
+      '@typescript-eslint/scope-manager': 4.28.3
+      '@typescript-eslint/types': 4.28.3
+      '@typescript-eslint/typescript-estree': 4.28.3_typescript@4.3.5
+      eslint: 7.26.0
+      eslint-scope: 5.1.1
+      eslint-utils: 3.0.0_eslint@7.26.0
+    dev: false
+    engines:
+      node: ^10.12.0 || >=12.0.0
+    peerDependencies:
+      eslint: '*'
+      typescript: '*'
+    resolution:
+      integrity: sha512-zZYl9TnrxwEPi3FbyeX0ZnE8Hp7j3OCR+ELoUfbwGHGxWnHg9+OqSmkw2MoCVpZksPCZYpQzC559Ee9pJNHTQw==
   /@typescript-eslint/parser/4.26.1_eslint@7.26.0+typescript@4.3.5:
     dependencies:
       '@typescript-eslint/scope-manager': 4.26.1
@@ -4606,6 +4638,15 @@ packages:
       node: ^8.10.0 || ^10.13.0 || >=11.10.1
     resolution:
       integrity: sha512-TW1X2p62FQ8Rlne+WEShyd7ac2LA6o27S9i131W4NwDSfyeVlQWhw8ylldNNS8JG6oJB9Ha9Xyc+IUcqipvheQ==
+  /@typescript-eslint/scope-manager/4.28.3:
+    dependencies:
+      '@typescript-eslint/types': 4.28.3
+      '@typescript-eslint/visitor-keys': 4.28.3
+    dev: false
+    engines:
+      node: ^8.10.0 || ^10.13.0 || >=11.10.1
+    resolution:
+      integrity: sha512-/8lMisZ5NGIzGtJB+QizQ5eX4Xd8uxedFfMBXOKuJGP0oaBBVEMbJVddQKDXyyB0bPlmt8i6bHV89KbwOelJiQ==
   /@typescript-eslint/types/4.23.0:
     dev: false
     engines:
@@ -4618,6 +4659,12 @@ packages:
       node: ^8.10.0 || ^10.13.0 || >=11.10.1
     resolution:
       integrity: sha512-STyMPxR3cS+LaNvS8yK15rb8Y0iL0tFXq0uyl6gY45glyI7w0CsyqyEXl/Fa0JlQy+pVANeK3sbwPneCbWE7yg==
+  /@typescript-eslint/types/4.28.3:
+    dev: false
+    engines:
+      node: ^8.10.0 || ^10.13.0 || >=11.10.1
+    resolution:
+      integrity: sha512-kQFaEsQBQVtA9VGVyciyTbIg7S3WoKHNuOp/UF5RG40900KtGqfoiETWD/v0lzRXc+euVE9NXmfer9dLkUJrkA==
   /@typescript-eslint/typescript-estree/4.23.0_typescript@4.3.5:
     dependencies:
       '@typescript-eslint/types': 4.23.0
@@ -4658,6 +4705,26 @@ packages:
         optional: true
     resolution:
       integrity: sha512-l3ZXob+h0NQzz80lBGaykdScYaiEbFqznEs99uwzm8fPHhDjwaBFfQkjUC/slw6Sm7npFL8qrGEAMxcfBsBJUg==
+  /@typescript-eslint/typescript-estree/4.28.3_typescript@4.3.5:
+    dependencies:
+      '@typescript-eslint/types': 4.28.3
+      '@typescript-eslint/visitor-keys': 4.28.3
+      debug: 4.3.1
+      globby: 11.0.3
+      is-glob: 4.0.1
+      semver: 7.3.5
+      tsutils: 3.21.0_typescript@4.3.5
+      typescript: 4.3.5
+    dev: false
+    engines:
+      node: ^10.12.0 || >=12.0.0
+    peerDependencies:
+      typescript: '*'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    resolution:
+      integrity: sha512-YAb1JED41kJsqCQt1NcnX5ZdTA93vKFCMP4lQYG6CFxd0VzDJcKttRlMrlG+1qiWAw8+zowmHU1H0OzjWJzR2w==
   /@typescript-eslint/visitor-keys/4.23.0:
     dependencies:
       '@typescript-eslint/types': 4.23.0
@@ -4676,6 +4743,15 @@ packages:
       node: ^8.10.0 || ^10.13.0 || >=11.10.1
     resolution:
       integrity: sha512-IGouNSSd+6x/fHtYRyLOM6/C+QxMDzWlDtN41ea+flWuSF9g02iqcIlX8wM53JkfljoIjP0U+yp7SiTS1onEkw==
+  /@typescript-eslint/visitor-keys/4.28.3:
+    dependencies:
+      '@typescript-eslint/types': 4.28.3
+      eslint-visitor-keys: 2.0.0
+    dev: false
+    engines:
+      node: ^8.10.0 || ^10.13.0 || >=11.10.1
+    resolution:
+      integrity: sha512-ri1OzcLnk1HH4gORmr1dllxDzzrN6goUIz/P4MHFV0YZJDCADPR3RvYNp0PW2SetKTThar6wlbFTL00hV2Q+fg==
   /@webassemblyjs/ast/1.9.0:
     dependencies:
       '@webassemblyjs/helper-module-context': 1.9.0
@@ -17113,6 +17189,9 @@ packages:
     dependencies:
       '@babel/core': 7.14.3
       '@editorjs/editorjs': 2.21.0
+      '@rushstack/eslint-plugin': 0.8.0_eslint@7.26.0+typescript@4.3.5
+      '@rushstack/heft': 0.34.8
+      '@rushstack/heft-jest-plugin': 0.1.14_@rushstack+heft@0.34.8
       '@storybook/addon-actions': 6.2.9_c9b97d0291e0c7f7ae91672f3bb47b49
       '@storybook/addon-essentials': 6.2.9_c93347362feae983fb65a36fcfccf8fb
       '@storybook/addon-links': 6.2.9_react-dom@17.0.2+react@17.0.2
@@ -17121,7 +17200,7 @@ packages:
       '@testing-library/jest-dom': 5.14.1
       '@testing-library/react': 12.0.0_react-dom@17.0.2+react@17.0.2
       '@testing-library/user-event': 13.2.0
-      '@types/jest': 26.0.23
+      '@types/heft-jest': 1.0.2
       '@types/leaflet': 1.7.0
       '@types/lodash': 4.14.169
       '@types/react': 17.0.5
@@ -17139,7 +17218,6 @@ packages:
       eslint-plugin-testing-library: 4.4.0_eslint@7.26.0+typescript@4.3.5
       jest: 27.0.6_ts-node@9.1.1
       jest-environment-jsdom: 27.0.6
-      jsdom: 16.6.0
       leaflet: 1.7.1
       lodash: 4.17.21
       mini-svg-data-uri: 1.3.3
@@ -17150,7 +17228,6 @@ packages:
       react-test-renderer: 17.0.2_react@17.0.2
       svgo: 2.3.0
       swr: 0.5.6_react@17.0.2
-      ts-jest: 27.0.3_jest@27.0.6+typescript@4.3.5
       tslib: 2.3.0
       typescript: 4.3.5
       uuid: 8.3.2
@@ -17160,7 +17237,7 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-oksVu/1QJcq2Ba97vdTwQZyAmVLFqY4CBm637TolWmld/GX5BJDg9FmxC5hpkcb2iLO32tXA7NG32FPaztUZUA==
+      integrity: sha512-Tjvw93scy/2931bxUYteMNmSwAGP+WzTZEXn6q5xPY2SFvE5iwHuh5SxFDRcjCpOPEe0bALpEGs4a4OzMYwwIQ==
       tarball: file:projects/datadata-admin-react-components.tgz
     version: 0.0.0
   file:projects/datadata-cli.tgz:

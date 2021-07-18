@@ -37,7 +37,7 @@ function readPackage(packageJson, context) {
   if (packageJson.name === "@rushstack/heft") {
     if (packageJson.dependencies["node-sass"] === "5.0.0") {
       console.log(
-        "readPackage: @rushstack/heft: Replacing node-sass@5.0.0 with 6.0.1"
+        "readPackage: @rushstack/heft: Replacing node-sass@5.0.0 with 6.0.1\n"
       );
       packageJson.dependencies["node-sass"] = "6.0.1";
     }

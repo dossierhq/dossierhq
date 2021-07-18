@@ -1,9 +1,9 @@
+jest.mock('@editorjs/editorjs');
+
 import initStoryshots, { Stories2SnapsConverter } from '@storybook/addon-storyshots';
 import path from 'path';
 import type { ReactTestRenderer } from 'react-test-renderer';
 import { act, create } from 'react-test-renderer';
-
-jest.mock('@editorjs/editorjs');
 
 const converter = new Stories2SnapsConverter();
 

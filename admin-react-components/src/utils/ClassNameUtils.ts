@@ -1,4 +1,4 @@
-import type { SpacingSize } from '../..';
+import type { SpacingSize } from '..';
 
 export function joinClassNames(...classNames: Array<string | undefined>): string {
   let result = '';
