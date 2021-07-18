@@ -2,15 +2,19 @@
   "name": "benchpress",
   "version": "0.1.0",
   "description": "",
-  "main": "./src/index.ts",
+  "main": "./lib/src/index.js",
+  "types": "./lib/src/index.d.ts",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./lib/src/index.js"
   },
   "scripts": {
-    "ci:check": "npm run ts:check && npm run eslint:check && npm run prettier:check",
+    "build": "heft build",
+    "build:watch": "heft build --watch",
+    "clean": "heft clean",
+    "ci:check": "npm run test && npm run prettier:check",
     "eslint:check": "eslint .",
     "eslint:fix": "eslint --fix .",
-    "examples:timer-benchmark": "ts-node ./examples/timer-benchmark.ts",
+    "examples:timer-benchmark": "node ./lib/examples/timer-benchmark.js",
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write .",
     "ts:check": "tsc --noEmit",
@@ -20,13 +24,13 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@rushstack/heft": "~0.34.8",
     "@types/node": "^15.3.0",
     "@typescript-eslint/eslint-plugin": "^4.24.0",
     "@typescript-eslint/parser": "^4.24.0",
     "eslint": "^7.26.0",
     "prettier": "2.3.0",
-    "typescript": "^4.3.5",
-    "ts-node": "^9.1.1"
+    "typescript": "^4.3.5"
   },
   "dependencies": {
     "tslib": "~2.3.0"

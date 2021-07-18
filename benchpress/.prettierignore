@@ -1,3 +1,4 @@
+/.heft/
 /examples/output
-/package-lock.json
+/lib/
 /tsconfig.json
