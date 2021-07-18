@@ -3,7 +3,7 @@ import { CoreTestUtils, ErrorType, FieldType, EntityPublishState } from '@jonasb
 import { createServerAdminClient, createServerPublishedClient } from '.';
 import type { Server, SessionContext } from '.';
 import { createTestServer, ensureSessionContext, updateSchema } from './ServerTestUtils';
-import { expectResultValue } from '../test/AdditionalTestUtils';
+import { expectResultValue } from './test/AdditionalTestUtils';
 
 const { expectErrorResult, expectOkResult } = CoreTestUtils;
 

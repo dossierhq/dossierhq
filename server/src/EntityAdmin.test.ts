@@ -26,7 +26,7 @@ import {
   expectResultValue,
   expectSearchResultEntities,
   insecureTestUuidv4,
-} from '../test/AdditionalTestUtils';
+} from './test/AdditionalTestUtils';
 
 const { expectErrorResult, expectOkResult } = CoreTestUtils;
 
