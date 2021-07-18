@@ -17282,6 +17282,7 @@ packages:
     version: 0.0.0
   file:projects/datadata-examples-foo.tgz_graphql@15.5.0:
     dependencies:
+      '@rushstack/heft': 0.34.8
       '@types/express': 4.17.11
       '@types/node': 15.3.0
       '@typescript-eslint/eslint-plugin': 4.26.1_b829d59cb618408f515beb7196a9bea3
@@ -17299,7 +17300,7 @@ packages:
     peerDependencies:
       graphql: '*'
     resolution:
-      integrity: sha512-gMgX8nR+TNSdPZbxN2KQFCh6KVnS9GusuK4WqzqZyjEdu+iEDSYmidfND7cB9kfvO7JNcnvjyoZKhTes75GdLA==
+      integrity: sha512-6htRh/zyMBYBUOGbIxrvNXkgZseQLte99RFCYdPYQrpvctYzG491JKhRaWdDoAMa/yFaDsr+OXtk9M/euoverA==
       tarball: file:projects/datadata-examples-foo.tgz
     version: 0.0.0
   file:projects/datadata-examples-next-web.tgz:

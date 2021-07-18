@@ -1,4 +1,3 @@
-#!/usr/bin/env npx ts-node
 import 'dotenv/config';
 import { ok, notOk } from '@jonasb/datadata-core';
 import {
