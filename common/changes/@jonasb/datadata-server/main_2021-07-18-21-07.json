@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-server",
+      "comment": "Export transpiled JavaScript",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-server",
+  "email": "jonas.b@gmail.com"
+}
