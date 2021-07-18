@@ -1,6 +1,14 @@
 {
   "[javascript]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
-  "cSpell.words": ["datadata", "graphqlid", "postgres", "unpublish", "uuidv"],
+  "cSpell.words": [
+    "datadata",
+    "graphqlid",
+    "jonasb",
+    "postgres",
+    "rushstack",
+    "unpublish",
+    "uuidv"
+  ],
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
   "editor.tabSize": 2,

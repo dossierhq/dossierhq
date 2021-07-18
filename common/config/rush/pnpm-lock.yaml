@@ -15,10 +15,10 @@ dependencies:
   '@rush-temp/datadata-core': file:projects/datadata-core.tgz
   '@rush-temp/datadata-examples-foo': file:projects/datadata-examples-foo.tgz_graphql@15.5.0
   '@rush-temp/datadata-examples-next-web': file:projects/datadata-examples-next-web.tgz
-  '@rush-temp/datadata-graphql': file:projects/datadata-graphql.tgz_ts-node@9.1.1
+  '@rush-temp/datadata-graphql': file:projects/datadata-graphql.tgz
   '@rush-temp/datadata-postgres': file:projects/datadata-postgres.tgz
   '@rush-temp/datadata-server': file:projects/datadata-server.tgz
-  '@rush-temp/datadata-testing-utils': file:projects/datadata-testing-utils.tgz_ts-node@9.1.1
+  '@rush-temp/datadata-testing-utils': file:projects/datadata-testing-utils.tgz
   '@rushstack/heft': 0.34.8
   '@rushstack/heft-jest-plugin': 0.1.14_@rushstack+heft@0.34.8
   '@storybook/addon-actions': 6.2.9_c9b97d0291e0c7f7ae91672f3bb47b49
@@ -17261,26 +17261,23 @@ packages:
       integrity: sha512-2oqdXiRGc8QcJxcb6VplpySUz+CQ/+WUqoK9bj6VgBsndU78Yn/tp8pwJ3qgqyc/+bUo8CCb4Yis5OykCMqKxA==
       tarball: file:projects/datadata-examples-next-web.tgz
     version: 0.0.0
-  file:projects/datadata-graphql.tgz_ts-node@9.1.1:
+  file:projects/datadata-graphql.tgz:
     dependencies:
-      '@types/jest': 26.0.23
+      '@rushstack/heft': 0.34.8
+      '@rushstack/heft-jest-plugin': 0.1.14_@rushstack+heft@0.34.8
+      '@types/heft-jest': 1.0.2
       '@types/uuid': 8.3.0
       '@typescript-eslint/eslint-plugin': 4.26.1_b829d59cb618408f515beb7196a9bea3
       '@typescript-eslint/parser': 4.26.1_eslint@7.26.0+typescript@4.3.5
       eslint: 7.26.0
       graphql: 15.5.0
-      jest: 27.0.6_ts-node@9.1.1
       prettier: 2.3.0
-      ts-jest: 27.0.3_jest@27.0.6+typescript@4.3.5
       typescript: 4.3.5
       uuid: 8.3.2
     dev: false
-    id: file:projects/datadata-graphql.tgz
     name: '@rush-temp/datadata-graphql'
-    peerDependencies:
-      ts-node: '*'
     resolution:
-      integrity: sha512-OvEPPi69TiAu+J/tYZ+OMwkfBm5cYlkHG/9BmmSQTScZjLEuHyIG/P/LqaUdfXTaEzovv7KLTKAApbxr4wHGiA==
+      integrity: sha512-hTY8Co+Xh8dfL5iWqE4a8wpMok+jtRM2zU/4dS4qB5tDIc3JkVK5aaHsku4a7bgME1a88RcI5lqPxfZsHmTJew==
       tarball: file:projects/datadata-graphql.tgz
     version: 0.0.0
   file:projects/datadata-postgres.tgz:
@@ -17320,26 +17317,23 @@ packages:
       integrity: sha512-/id+omZQ2Yf5SOFBfxBTiJck2JWc7W3EG5jGuqQYxGKI5nR7iltmADgibvOdJsd+cmTrLrnmPRr+6+8JUIr3yQ==
       tarball: file:projects/datadata-server.tgz
     version: 0.0.0
-  file:projects/datadata-testing-utils.tgz_ts-node@9.1.1:
+  file:projects/datadata-testing-utils.tgz:
     dependencies:
-      '@types/jest': 26.0.23
+      '@rushstack/heft': 0.34.8
+      '@rushstack/heft-jest-plugin': 0.1.14_@rushstack+heft@0.34.8
+      '@types/heft-jest': 1.0.2
       '@types/uuid': 8.3.0
       '@typescript-eslint/eslint-plugin': 4.26.1_b829d59cb618408f515beb7196a9bea3
       '@typescript-eslint/parser': 4.26.1_eslint@7.26.0+typescript@4.3.5
       eslint: 7.26.0
-      jest: 27.0.6_ts-node@9.1.1
       prettier: 2.3.0
-      ts-jest: 27.0.3_jest@27.0.6+typescript@4.3.5
       tslib: 2.3.0
       typescript: 4.3.5
       uuid: 8.3.2
     dev: false
-    id: file:projects/datadata-testing-utils.tgz
     name: '@rush-temp/datadata-testing-utils'
-    peerDependencies:
-      ts-node: '*'
     resolution:
-      integrity: sha512-8B8PCI3p5NKXoQll9DGgGx2ywxD9Z0okcOO85AntfY6pUEDy52uqEC346YHRbvc+R1xA+/BYtpkzqTAIXfNIyw==
+      integrity: sha512-PdCayiHR2oAwMqMjGzTEWeAiuuSFy4OIauXPvZAhy71/BQumGIMKQ1Iw22Kzv21Lls0gySczeK33OsGMMUgrRw==
       tarball: file:projects/datadata-testing-utils.tgz
     version: 0.0.0
   file:projects/datadata.tgz_ts-node@9.1.1:

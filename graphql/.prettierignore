@@ -1,3 +1,4 @@
-/package-lock.json
-/tsconfig.json
+/.heft/
+/lib/
 /CHANGELOG.md
+/tsconfig.json

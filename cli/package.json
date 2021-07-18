@@ -9,6 +9,7 @@
   },
   "scripts": {
     "build": "heft build",
+    "build:watch": "heft build --watch",
     "clean": "heft clean",
     "ci:check": "npm run build && npm run prettier:check",
     "eslint:check": "eslint .",
