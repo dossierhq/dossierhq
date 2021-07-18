@@ -1,4 +1,4 @@
-import type { CliContext } from '..';
+import type { CliContext } from '.';
 import { logEntity, logErrorResult } from './CliUtils';
 
 export async function showEntity(context: CliContext, id: string): Promise<void> {

@@ -32,7 +32,7 @@ import type {
   ValueTypeSpecification,
 } from '@jonasb/datadata-core';
 import chalk from 'chalk';
-import type { CliContext } from '..';
+import type { CliContext } from '.';
 import * as CliSchema from './CliSchema';
 import {
   formatBoundingBox,

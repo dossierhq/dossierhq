@@ -31,7 +31,7 @@ import type {
   ValueItem,
   ValueTypeSpecification,
 } from '@jonasb/datadata-core';
-import type { CliContext } from '..';
+import type { CliContext } from '.';
 
 export function logErrorResult(
   message: string,

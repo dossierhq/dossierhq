@@ -3,7 +3,7 @@ import { FieldType } from '@jonasb/datadata-core';
 import type { EntityTypeSpecification, ValueTypeSpecification } from '@jonasb/datadata-core';
 import { showItemSelector, showMultiItemSelector } from './widgets';
 import { logKeyValue } from './CliUtils';
-import type { CliContext } from '..';
+import type { CliContext } from '.';
 
 export function showSchema(context: CliContext): void {
   const { schema } = context;
