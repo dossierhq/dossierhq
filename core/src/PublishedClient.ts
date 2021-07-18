@@ -1,4 +1,4 @@
-import type { Entity, EntityReference, ErrorType, PromiseResult, Result } from '..';
+import type { Entity, EntityReference, ErrorType, PromiseResult, Result } from '.';
 import type { Middleware, Operation, OperationWithoutCallbacks } from './SharedClient';
 import { executeOperationPipeline } from './SharedClient';
 

@@ -33,5 +33,15 @@ function readPackage(packageJson, context) {
   //  packageJson.dependencies['log4js'] = '0.6.38';
   // }
 
+  // TODO: remove when heft is no longer using node-sass < 6 (node-sass 5 doesn't support Node 16)
+  if (packageJson.name === "@rushstack/heft") {
+    if (packageJson.dependencies["node-sass"] === "5.0.0") {
+      console.log(
+        "readPackage: @rushstack/heft: Replacing node-sass@5.0.0 with 6.0.1"
+      );
+      packageJson.dependencies["node-sass"] = "6.0.1";
+    }
+  }
+
   return packageJson;
 }
