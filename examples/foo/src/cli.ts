@@ -1,4 +1,3 @@
-#!/usr/bin/env npx ts-node
 import 'dotenv/config';
 import { CliAuth, CliContext, CliMain } from '@jonasb/datadata-cli';
 import type { SchemaSpecification } from '@jonasb/datadata-core';
