@@ -75,6 +75,7 @@ dependencies:
   swr: 0.5.6_react@17.0.2
   ts-jest: 26.5.6_jest@26.6.3+typescript@4.3.5
   ts-node: 9.1.1_typescript@4.3.5
+  tslib: 2.3.0
   typescript: 4.3.5
   url-parse-lax: 4.0.0
   uuid: 8.3.2
@@ -13450,6 +13451,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-gS9GVHRU+RGn5KQM2rllAlR3dU6m7AcpJKdtH8gFvQiC4Otgk98XnmMU+nZenHt/+VhnBPWwgrJsyrdcw6i23w==
+  /tslib/2.3.0:
+    dev: false
+    resolution:
+      integrity: sha512-N82ooyxVNm6h1riLCoyS9e3fuJ3AMG2zIZs2Gd1ATcSFjSA23Q0fzjjZeh0jbJvWVDZ0cJT8yaNNaaXHzueNjg==
   /tsutils/3.21.0_typescript@4.3.5:
     dependencies:
       tslib: 1.14.1
@@ -14389,11 +14394,12 @@ packages:
       eslint: 7.26.0
       prettier: 2.3.0
       ts-node: 9.1.1_typescript@4.3.5
+      tslib: 2.3.0
       typescript: 4.3.5
     dev: false
     name: '@rush-temp/benchpress'
     resolution:
-      integrity: sha512-31cI6x4kOiLApJk0ONW50WguoMOrWGAARrDQLJQ5x8/vVG3LAkspjJ5X85RUEnC98aJtHF5Tkf2ssN39TpKbHg==
+      integrity: sha512-Far6SW4X8D5Sri/pnGCUu7mZFIQCPvVD6ndTfSkv0aMoJxGbMEKa3zzUmHanW20rS0NVh44QBS/7aoOUVyMa1g==
       tarball: file:projects/benchpress.tgz
     version: 0.0.0
   file:projects/datadata-admin-react-components.tgz_ts-node@9.1.1:
@@ -14436,6 +14442,7 @@ packages:
       svgo: 2.3.0
       swr: 0.5.6_react@17.0.2
       ts-jest: 26.5.6_jest@26.6.3+typescript@4.3.5
+      tslib: 2.3.0
       typescript: 4.3.5
       uuid: 8.3.2
     dev: false
@@ -14444,7 +14451,7 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-0enWD0VVWHyCoLLWXdDnXmdD5zBpBJkMXjy2c6YO75E41HqLJPw1A49eYp24cdHJIazn48+S5rYqfNwwcn7/jQ==
+      integrity: sha512-r04GU5dOdZk6KuIYPxUiiud0VNAkRzBLDuS/48if1sOpiavRb6I9sc9IsV460ZAwiRKEaRA58AijeNAZUbSeoQ==
       tarball: file:projects/datadata-admin-react-components.tgz
     version: 0.0.0
   file:projects/datadata-cli.tgz:
@@ -14456,11 +14463,12 @@ packages:
       eslint: 7.26.0
       inquirer: 8.0.0
       prettier: 2.3.0
+      tslib: 2.3.0
       typescript: 4.3.5
     dev: false
     name: '@rush-temp/datadata-cli'
     resolution:
-      integrity: sha512-r9rchEp58HkMYQIHfILPW4xe+fo0ZxZfxv5Fq1R6OAyX87u20rfdweUkH60qGkI2KIt0w28hAlIODCDxhYjqWQ==
+      integrity: sha512-JW97iHXJ2K4tfdSKiCF7Poa4ksI7qICZJAdWkv/2xup4lO9w4+gW2TzjolWdfDbS0JG0/3dYJ7xYpdzdvfQS9g==
       tarball: file:projects/datadata-cli.tgz
     version: 0.0.0
   file:projects/datadata-core.tgz:
@@ -14473,11 +14481,12 @@ packages:
       prettier: 2.3.0
       ts-jest: 26.5.6_jest@26.6.3+typescript@4.3.5
       ts-node: 9.1.1_typescript@4.3.5
+      tslib: 2.3.0
       typescript: 4.3.5
     dev: false
     name: '@rush-temp/datadata-core'
     resolution:
-      integrity: sha512-rICySEyugaW0PmNQzw8bWsvl+7rziKQBmJ7CgupV1zqvgMG1yZnUfGp1HqgSq1cyhNZ0UmV3uWOHRz/sRgsXTA==
+      integrity: sha512-G3UWB2Cx1pvkLEgbqpR7WgYoPANoak5gDi9Jo4k0JuCdKXzs5SZTeNrc3sz2GRm3DWeNVbYOaZighFwoC/Tdug==
       tarball: file:projects/datadata-core.tgz
     version: 0.0.0
   file:projects/datadata-examples-foo.tgz_graphql@15.5.0:
@@ -14499,7 +14508,7 @@ packages:
     peerDependencies:
       graphql: '*'
     resolution:
-      integrity: sha512-fu9vaAAoBJvzmr3vwTXjpv3GxAs7L5W6ygvleIonx8BlAQcZpr/dezoIdKVi74J0cXZB7BViacUtDmf/F/u+LQ==
+      integrity: sha512-3GXWK9O//iQCkuaaaF1oIOjd2Y5E81rvm7LE/uIAlb1mYjWb0DQIAHATfIuIbL7RVT7ml9XUG2bCkQ1evk1RFA==
       tarball: file:projects/datadata-examples-foo.tgz
     version: 0.0.0
   file:projects/datadata-examples-next-web.tgz:
@@ -14536,7 +14545,7 @@ packages:
     dev: false
     name: '@rush-temp/datadata-examples-next-web'
     resolution:
-      integrity: sha512-4sbs1vXE1u1XfASueURqOAb3RG+7XL2/5/8sz2kiyOy3yJ3h/uXQgRwN4UacSsVWhmTVCc059Ma1SawfAZb0YA==
+      integrity: sha512-ZZ3bR1LNMESgeiVA4xZMpHe9m1Hb7gAecsE8XHj2YQc18kehsVeD0MkT7Qey5+oNdWCqTXnemwVLR9797+lnnw==
       tarball: file:projects/datadata-examples-next-web.tgz
     version: 0.0.0
   file:projects/datadata-graphql.tgz_ts-node@9.1.1:
@@ -14558,7 +14567,7 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-JcA2WfK2LB2TDI+yyHKYSWffbYkSJ2hLERlQ5i/4WErVrVjHxe5i36wHrOsmq3yIMCYWTuwZMsscP6/5tEW1kQ==
+      integrity: sha512-MZphsBjZt+CFwDl9fMY1NZLvo2DjBYvAHb6IpB5mHFa9hGyX3UW48MArPbRMaBkEhIvL5EqP0hW5O4q1N+Q4lA==
       tarball: file:projects/datadata-graphql.tgz
     version: 0.0.0
   file:projects/datadata-postgres.tgz:
@@ -14586,12 +14595,13 @@ packages:
       prettier: 2.3.0
       ts-jest: 26.5.6_jest@26.6.3+typescript@4.3.5
       ts-node: 9.1.1_typescript@4.3.5
+      tslib: 2.3.0
       typescript: 4.3.5
       uuid: 8.3.2
     dev: false
     name: '@rush-temp/datadata-server'
     resolution:
-      integrity: sha512-qM4ZBNfuInsrhg3yTDKuQ6nqHGvlvPJoPO52/ZEHVxZtpi0LJRP4/rCKivfwTSu1ywx3Gufi8HnznI7cJPzheg==
+      integrity: sha512-n1w1P/x7cClZ1m5izmbMDgzyqU9fMTv6otI/Pi9dfx9lz4fWvWkFLWFqC6M3i2r0BJ98UEavDE2uzQtV9tHuvA==
       tarball: file:projects/datadata-server.tgz
     version: 0.0.0
   file:projects/datadata-testing-utils.tgz_ts-node@9.1.1:
@@ -14604,6 +14614,7 @@ packages:
       jest: 26.6.3_ts-node@9.1.1
       prettier: 2.3.0
       ts-jest: 26.5.6_jest@26.6.3+typescript@4.3.5
+      tslib: 2.3.0
       typescript: 4.3.5
       uuid: 8.3.2
     dev: false
@@ -14612,7 +14623,7 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-JCI1VtoGCJhqloW9eHIUZTBwISLlOSdllRMP8feBmjNokmPwRjuqMnWiOXAsrxL1m/1l0VDQ8AxGNxIcVh0njA==
+      integrity: sha512-O6mwcHv6HrJjF9N1p1kEcg1IARPyI2vxV38DZGiIrQwmB2TR+QMInz1ICVt6ut9puJKUEDoPVJht5Rvc2VCGuQ==
       tarball: file:projects/datadata-testing-utils.tgz
     version: 0.0.0
   file:projects/datadata.tgz_ts-node@9.1.1:
@@ -14621,13 +14632,14 @@ packages:
       dotenv: 9.0.2
       jest: 26.6.3_ts-node@9.1.1
       pg: 8.6.0
+      tslib: 2.3.0
     dev: false
     id: file:projects/datadata.tgz
     name: '@rush-temp/datadata'
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-pgHKd4XEvEHFngTcWMQHfQYV801bk83ovVM19OWEzbgxsz3djGnLqJpHI0etxqwOtjlxD4Ru73JPNW2wqQLphg==
+      integrity: sha512-phqehx2/DXqcwxg5BaYFFqqWUe0OBRp6lqHTQB5NWYwJhuVBZfY/ntOtNy5IiJsGdEJIg9gqNeZgrfq56sW/jA==
       tarball: file:projects/datadata.tgz
     version: 0.0.0
 registry: ''
@@ -14708,6 +14720,7 @@ specifiers:
   swr: ~0.5.6
   ts-jest: ~26.5.6
   ts-node: ^9.1.1
+  tslib: ~2.3.0
   typescript: ^4.3.5
   url-parse-lax: ^4.0.0
   uuid: ^8.3.2
