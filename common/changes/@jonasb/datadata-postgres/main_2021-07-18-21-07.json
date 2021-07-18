@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-postgres",
+      "comment": "Export transpiled JavaScript",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-postgres",
+  "email": "jonas.b@gmail.com"
+}
