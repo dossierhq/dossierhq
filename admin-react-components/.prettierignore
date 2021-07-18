@@ -1,3 +1,6 @@
-/tsconfig.json
+/.heft/
+/lib/
 /storybook-static/
+/temp/
 /CHANGELOG.md
+/tsconfig.json

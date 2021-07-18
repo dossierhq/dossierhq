@@ -334,6 +334,1582 @@ exports[`ArchivedFoo render 1`] = `
 </div>
 `;
 
+exports[`EntityEditor FullFoo Enter name and submit 1`] = `
+<div
+  data-entityid="fc66b4d7-61ff-44d4-8f68-cb7f526df046"
+  id="fc66b4d7-61ff-44d4-8f68-cb7f526df046"
+>
+  <form
+    className="dd flex-column p-3 is-rounded has-background has-shadow"
+    onReset={[Function]}
+    onSubmit={[Function]}
+  >
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-_name"
+      >
+        Name
+      </label>
+      <div
+        className="dd form-control"
+      >
+        <input
+          className="dd text-body1 input"
+          id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-_name"
+          onChange={[Function]}
+          type="text"
+          value="Foo 1"
+        />
+      </div>
+    </div>
+    <hr
+      className="dd divider"
+    />
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-title"
+      >
+        title
+      </label>
+      <div
+        className="dd form-control"
+      >
+        <div>
+          <input
+            className="dd text-body1 input"
+            id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-title"
+            onChange={[Function]}
+            type="text"
+            value="Hello"
+          />
+          <button
+            className="dd icon-button"
+            onClick={[Function]}
+            title="Clear"
+            type="button"
+          >
+            <span
+              className="dd icon icon-remove"
+            />
+          </button>
+        </div>
+      </div>
+    </div>
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-tags"
+      >
+        tags
+      </label>
+      <div
+        className="dd form-control"
+      >
+        <div
+          className="dd flex-column g-1"
+        >
+          <div>
+            <input
+              className="dd text-body1 input"
+              id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-tags"
+              onChange={[Function]}
+              type="text"
+              value="one"
+            />
+            <button
+              className="dd icon-button"
+              onClick={[Function]}
+              title="Remove item"
+              type="button"
+            >
+              <span
+                className="dd icon icon-remove"
+              />
+            </button>
+          </div>
+          <div>
+            <input
+              className="dd text-body1 input"
+              id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-tags-1"
+              onChange={[Function]}
+              type="text"
+              value="two"
+            />
+            <button
+              className="dd icon-button"
+              onClick={[Function]}
+              title="Remove item"
+              type="button"
+            >
+              <span
+                className="dd icon icon-remove"
+              />
+            </button>
+          </div>
+          <div>
+            <input
+              className="dd text-body1 input"
+              id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-tags-2"
+              onChange={[Function]}
+              type="text"
+              value="three"
+            />
+            <button
+              className="dd icon-button"
+              onClick={[Function]}
+              title="Remove item"
+              type="button"
+            >
+              <span
+                className="dd icon icon-remove"
+              />
+            </button>
+          </div>
+          <div>
+            <input
+              className="dd text-body1 input"
+              id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-tags-3"
+              onChange={[Function]}
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-location"
+      >
+        location
+      </label>
+      <div
+        className="dd form-control"
+      >
+        <div
+          className="dd flex-row"
+        >
+          <button
+            className="dd button has-background hoverable text-button is-rounded"
+            id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-location"
+            onClick={[Function]}
+            type="button"
+          >
+            55.60498, 13.003822
+          </button>
+          <button
+            className="dd icon-button"
+            onClick={[Function]}
+            title="Remove location"
+            type="button"
+          >
+            <span
+              className="dd icon icon-remove"
+            />
+          </button>
+        </div>
+      </div>
+    </div>
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-locations"
+      >
+        locations
+      </label>
+      <div
+        className="dd form-control"
+      >
+        <div
+          className="dd flex-column g-1"
+        >
+          <div
+            className="dd flex-row"
+          >
+            <button
+              className="dd button has-background hoverable text-button is-rounded"
+              id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-locations"
+              onClick={[Function]}
+              type="button"
+            >
+              55.60498, 13.003822
+            </button>
+            <button
+              className="dd icon-button"
+              onClick={[Function]}
+              title="Remove location"
+              type="button"
+            >
+              <span
+                className="dd icon icon-remove"
+              />
+            </button>
+          </div>
+          <div
+            className="dd flex-row"
+          >
+            <button
+              className="dd button has-background hoverable text-button is-rounded"
+              id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-locations-1"
+              onClick={[Function]}
+              type="button"
+            >
+              56.381561, 13.99286
+            </button>
+            <button
+              className="dd icon-button"
+              onClick={[Function]}
+              title="Remove location"
+              type="button"
+            >
+              <span
+                className="dd icon icon-remove"
+              />
+            </button>
+          </div>
+          <div
+            className="dd flex-row"
+          >
+            <button
+              className="dd button has-background hoverable text-button is-rounded"
+              id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-locations-2"
+              onClick={[Function]}
+              type="button"
+            >
+              Select location
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-bar"
+      >
+        bar
+      </label>
+      <div
+        className="dd form-control"
+      >
+        <div
+          className="dd flex-row"
+        >
+          <button
+            className="dd button has-background hoverable text-button is-rounded"
+            id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-bar"
+            onClick={[Function]}
+            type="button"
+          >
+            Bar 1
+            <span
+              className="dd has-background text-caption p-1 is-rounded ml-1"
+            >
+              draft
+            </span>
+          </button>
+          <button
+            className="dd icon-button"
+            onClick={[Function]}
+            title="Remove entity"
+            type="button"
+          >
+            <span
+              className="dd icon icon-remove"
+            />
+          </button>
+        </div>
+      </div>
+    </div>
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-bars"
+      >
+        bars
+      </label>
+      <div
+        className="dd form-control"
+      >
+        <div
+          className="dd flex-column g-1"
+        >
+          <div
+            className="dd flex-row"
+          >
+            <button
+              className="dd button has-background hoverable text-button is-rounded"
+              id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-bars"
+              onClick={[Function]}
+              type="button"
+            >
+              Bar 1
+              <span
+                className="dd has-background text-caption p-1 is-rounded ml-1"
+              >
+                draft
+              </span>
+            </button>
+            <button
+              className="dd icon-button"
+              onClick={[Function]}
+              title="Remove entity"
+              type="button"
+            >
+              <span
+                className="dd icon icon-remove"
+              />
+            </button>
+          </div>
+          <div
+            className="dd flex-row"
+          >
+            <button
+              className="dd button has-background hoverable text-button is-rounded"
+              id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-bars-1"
+              onClick={[Function]}
+              type="button"
+            >
+              Bar 2
+              <span
+                className="dd has-background text-caption p-1 is-rounded ml-1"
+              >
+                draft
+              </span>
+            </button>
+            <button
+              className="dd icon-button"
+              onClick={[Function]}
+              title="Remove entity"
+              type="button"
+            >
+              <span
+                className="dd icon icon-remove"
+              />
+            </button>
+          </div>
+          <div
+            className="dd flex-row"
+          >
+            <button
+              className="dd button has-background hoverable text-button is-rounded"
+              id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-bars-2"
+              onClick={[Function]}
+              type="button"
+            >
+              Select entity
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-body"
+      >
+        body
+      </label>
+      <div
+        className="dd form-control"
+      >
+        <div>
+          <div
+            className="dd flex-row"
+          >
+            <div
+              className="dd flex-grow"
+            />
+            <button
+              className="dd icon-button a"
+              onClick={[Function]}
+              title="Clear"
+              type="button"
+            >
+              <span
+                className="dd icon icon-remove"
+              />
+            </button>
+          </div>
+          <div
+            className="dd text-body1 rich-text px-1"
+            data-editorinitialized="false"
+            id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-body"
+          />
+        </div>
+      </div>
+    </div>
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBar"
+      >
+        annotatedBar
+      </label>
+      <div
+        className="dd form-control"
+      >
+        <div
+          className="dd segment has-shadow"
+        >
+          <div
+            className="dd flex-row g-2"
+          >
+            <div
+              className="dd flex-grow text-caption"
+            >
+              AnnotatedBar
+            </div>
+            <button
+              className="dd icon-button dd"
+              data-testid="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBar.remove"
+              onClick={[Function]}
+              title="Remove value item"
+              type="button"
+            >
+              <span
+                className="dd icon icon-remove"
+              />
+            </button>
+          </div>
+          <div>
+            <label
+              className="dd text-subtitle1"
+              htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBar-annotation"
+            >
+              annotation
+            </label>
+            <div
+              className="dd form-control"
+            >
+              <div>
+                <input
+                  className="dd text-body1 input"
+                  id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBar-annotation"
+                  onChange={[Function]}
+                  type="text"
+                  value="Annotation"
+                />
+                <button
+                  className="dd icon-button"
+                  onClick={[Function]}
+                  title="Clear"
+                  type="button"
+                >
+                  <span
+                    className="dd icon icon-remove"
+                  />
+                </button>
+              </div>
+            </div>
+          </div>
+          <div>
+            <label
+              className="dd text-subtitle1"
+              htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBar-bar"
+            >
+              bar
+            </label>
+            <div
+              className="dd form-control"
+            >
+              <div
+                className="dd flex-row"
+              >
+                <button
+                  className="dd button has-background hoverable text-button is-rounded"
+                  id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBar-bar"
+                  onClick={[Function]}
+                  type="button"
+                >
+                  Bar 2
+                  <span
+                    className="dd has-background text-caption p-1 is-rounded ml-1"
+                  >
+                    draft
+                  </span>
+                </button>
+                <button
+                  className="dd icon-button"
+                  onClick={[Function]}
+                  title="Remove entity"
+                  type="button"
+                >
+                  <span
+                    className="dd icon icon-remove"
+                  />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars"
+      >
+        annotatedBars
+      </label>
+      <div
+        className="dd form-control"
+      >
+        <div
+          className="dd flex-column g-1"
+        >
+          <div
+            className="dd segment has-shadow"
+          >
+            <div
+              className="dd flex-row g-2"
+            >
+              <div
+                className="dd flex-grow text-caption"
+              >
+                AnnotatedBar
+              </div>
+              <button
+                className="dd icon-button dd"
+                data-testid="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars.remove"
+                onClick={[Function]}
+                title="Remove value item"
+                type="button"
+              >
+                <span
+                  className="dd icon icon-remove"
+                />
+              </button>
+            </div>
+            <div>
+              <label
+                className="dd text-subtitle1"
+                htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-annotation"
+              >
+                annotation
+              </label>
+              <div
+                className="dd form-control"
+              >
+                <div>
+                  <input
+                    className="dd text-body1 input"
+                    id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-annotation"
+                    onChange={[Function]}
+                    type="text"
+                    value="First"
+                  />
+                  <button
+                    className="dd icon-button"
+                    onClick={[Function]}
+                    title="Clear"
+                    type="button"
+                  >
+                    <span
+                      className="dd icon icon-remove"
+                    />
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div>
+              <label
+                className="dd text-subtitle1"
+                htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-bar"
+              >
+                bar
+              </label>
+              <div
+                className="dd form-control"
+              >
+                <div
+                  className="dd flex-row"
+                >
+                  <button
+                    className="dd button has-background hoverable text-button is-rounded"
+                    id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-bar"
+                    onClick={[Function]}
+                    type="button"
+                  >
+                    Bar 1
+                    <span
+                      className="dd has-background text-caption p-1 is-rounded ml-1"
+                    >
+                      draft
+                    </span>
+                  </button>
+                  <button
+                    className="dd icon-button"
+                    onClick={[Function]}
+                    title="Remove entity"
+                    type="button"
+                  >
+                    <span
+                      className="dd icon icon-remove"
+                    />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            className="dd segment has-shadow"
+          >
+            <div
+              className="dd flex-row g-2"
+            >
+              <div
+                className="dd flex-grow text-caption"
+              >
+                AnnotatedBar
+              </div>
+              <button
+                className="dd icon-button dd"
+                data-testid="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-1.remove"
+                onClick={[Function]}
+                title="Remove value item"
+                type="button"
+              >
+                <span
+                  className="dd icon icon-remove"
+                />
+              </button>
+            </div>
+            <div>
+              <label
+                className="dd text-subtitle1"
+                htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-1-annotation"
+              >
+                annotation
+              </label>
+              <div
+                className="dd form-control"
+              >
+                <div>
+                  <input
+                    className="dd text-body1 input"
+                    id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-1-annotation"
+                    onChange={[Function]}
+                    type="text"
+                    value="Second"
+                  />
+                  <button
+                    className="dd icon-button"
+                    onClick={[Function]}
+                    title="Clear"
+                    type="button"
+                  >
+                    <span
+                      className="dd icon icon-remove"
+                    />
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div>
+              <label
+                className="dd text-subtitle1"
+                htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-1-bar"
+              >
+                bar
+              </label>
+              <div
+                className="dd form-control"
+              >
+                <div
+                  className="dd flex-row"
+                >
+                  <button
+                    className="dd button has-background hoverable text-button is-rounded"
+                    id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-1-bar"
+                    onClick={[Function]}
+                    type="button"
+                  >
+                    Bar 2
+                    <span
+                      className="dd has-background text-caption p-1 is-rounded ml-1"
+                    >
+                      draft
+                    </span>
+                  </button>
+                  <button
+                    className="dd icon-button"
+                    onClick={[Function]}
+                    title="Remove entity"
+                    type="button"
+                  >
+                    <span
+                      className="dd icon icon-remove"
+                    />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            className="dd segment has-shadow"
+          >
+            <div>
+              <button
+                className="dd button has-background hoverable text-button is-rounded"
+                id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-2"
+                onClick={[Function]}
+                type="button"
+              >
+                Add value item
+                 
+                <span
+                  className="dd icon icon-chevron-down"
+                />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-nested"
+      >
+        nested
+      </label>
+      <div
+        className="dd form-control"
+      >
+        <div
+          className="dd segment has-shadow"
+        >
+          <div>
+            <button
+              className="dd button has-background hoverable text-button is-rounded"
+              id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-nested"
+              onClick={[Function]}
+              type="button"
+            >
+              Add value item
+               
+              <span
+                className="dd icon icon-chevron-down"
+              />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="dd flex-row g-1"
+    >
+      <button
+        className="dd button has-background hoverable text-button bg-primary is-rounded"
+        disabled={false}
+        type="submit"
+      >
+        Save
+      </button>
+      <button
+        className="dd button has-background hoverable text-button is-rounded"
+        disabled={false}
+        type="reset"
+      >
+        Reset
+      </button>
+    </div>
+  </form>
+</div>
+`;
+
+exports[`FullFoo Enter name and submit 1`] = `
+<div
+  data-entityid="fc66b4d7-61ff-44d4-8f68-cb7f526df046"
+  id="fc66b4d7-61ff-44d4-8f68-cb7f526df046"
+>
+  <form
+    className="dd flex-column p-3 is-rounded has-background has-shadow"
+    onReset={[Function]}
+    onSubmit={[Function]}
+  >
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-_name"
+      >
+        Name
+      </label>
+      <div
+        className="dd form-control"
+      >
+        <input
+          className="dd text-body1 input"
+          id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-_name"
+          onChange={[Function]}
+          type="text"
+          value="Foo 1"
+        />
+      </div>
+    </div>
+    <hr
+      className="dd divider"
+    />
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-title"
+      >
+        title
+      </label>
+      <div
+        className="dd form-control"
+      >
+        <div>
+          <input
+            className="dd text-body1 input"
+            id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-title"
+            onChange={[Function]}
+            type="text"
+            value="Hello"
+          />
+          <button
+            className="dd icon-button"
+            onClick={[Function]}
+            title="Clear"
+            type="button"
+          >
+            <span
+              className="dd icon icon-remove"
+            />
+          </button>
+        </div>
+      </div>
+    </div>
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-tags"
+      >
+        tags
+      </label>
+      <div
+        className="dd form-control"
+      >
+        <div
+          className="dd flex-column g-1"
+        >
+          <div>
+            <input
+              className="dd text-body1 input"
+              id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-tags"
+              onChange={[Function]}
+              type="text"
+              value="one"
+            />
+            <button
+              className="dd icon-button"
+              onClick={[Function]}
+              title="Remove item"
+              type="button"
+            >
+              <span
+                className="dd icon icon-remove"
+              />
+            </button>
+          </div>
+          <div>
+            <input
+              className="dd text-body1 input"
+              id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-tags-1"
+              onChange={[Function]}
+              type="text"
+              value="two"
+            />
+            <button
+              className="dd icon-button"
+              onClick={[Function]}
+              title="Remove item"
+              type="button"
+            >
+              <span
+                className="dd icon icon-remove"
+              />
+            </button>
+          </div>
+          <div>
+            <input
+              className="dd text-body1 input"
+              id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-tags-2"
+              onChange={[Function]}
+              type="text"
+              value="three"
+            />
+            <button
+              className="dd icon-button"
+              onClick={[Function]}
+              title="Remove item"
+              type="button"
+            >
+              <span
+                className="dd icon icon-remove"
+              />
+            </button>
+          </div>
+          <div>
+            <input
+              className="dd text-body1 input"
+              id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-tags-3"
+              onChange={[Function]}
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-location"
+      >
+        location
+      </label>
+      <div
+        className="dd form-control"
+      >
+        <div
+          className="dd flex-row"
+        >
+          <button
+            className="dd button has-background hoverable text-button is-rounded"
+            id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-location"
+            onClick={[Function]}
+            type="button"
+          >
+            55.60498, 13.003822
+          </button>
+          <button
+            className="dd icon-button"
+            onClick={[Function]}
+            title="Remove location"
+            type="button"
+          >
+            <span
+              className="dd icon icon-remove"
+            />
+          </button>
+        </div>
+      </div>
+    </div>
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-locations"
+      >
+        locations
+      </label>
+      <div
+        className="dd form-control"
+      >
+        <div
+          className="dd flex-column g-1"
+        >
+          <div
+            className="dd flex-row"
+          >
+            <button
+              className="dd button has-background hoverable text-button is-rounded"
+              id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-locations"
+              onClick={[Function]}
+              type="button"
+            >
+              55.60498, 13.003822
+            </button>
+            <button
+              className="dd icon-button"
+              onClick={[Function]}
+              title="Remove location"
+              type="button"
+            >
+              <span
+                className="dd icon icon-remove"
+              />
+            </button>
+          </div>
+          <div
+            className="dd flex-row"
+          >
+            <button
+              className="dd button has-background hoverable text-button is-rounded"
+              id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-locations-1"
+              onClick={[Function]}
+              type="button"
+            >
+              56.381561, 13.99286
+            </button>
+            <button
+              className="dd icon-button"
+              onClick={[Function]}
+              title="Remove location"
+              type="button"
+            >
+              <span
+                className="dd icon icon-remove"
+              />
+            </button>
+          </div>
+          <div
+            className="dd flex-row"
+          >
+            <button
+              className="dd button has-background hoverable text-button is-rounded"
+              id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-locations-2"
+              onClick={[Function]}
+              type="button"
+            >
+              Select location
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-bar"
+      >
+        bar
+      </label>
+      <div
+        className="dd form-control"
+      >
+        <div
+          className="dd flex-row"
+        >
+          <button
+            className="dd button has-background hoverable text-button is-rounded"
+            id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-bar"
+            onClick={[Function]}
+            type="button"
+          >
+            Bar 1
+            <span
+              className="dd has-background text-caption p-1 is-rounded ml-1"
+            >
+              draft
+            </span>
+          </button>
+          <button
+            className="dd icon-button"
+            onClick={[Function]}
+            title="Remove entity"
+            type="button"
+          >
+            <span
+              className="dd icon icon-remove"
+            />
+          </button>
+        </div>
+      </div>
+    </div>
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-bars"
+      >
+        bars
+      </label>
+      <div
+        className="dd form-control"
+      >
+        <div
+          className="dd flex-column g-1"
+        >
+          <div
+            className="dd flex-row"
+          >
+            <button
+              className="dd button has-background hoverable text-button is-rounded"
+              id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-bars"
+              onClick={[Function]}
+              type="button"
+            >
+              Bar 1
+              <span
+                className="dd has-background text-caption p-1 is-rounded ml-1"
+              >
+                draft
+              </span>
+            </button>
+            <button
+              className="dd icon-button"
+              onClick={[Function]}
+              title="Remove entity"
+              type="button"
+            >
+              <span
+                className="dd icon icon-remove"
+              />
+            </button>
+          </div>
+          <div
+            className="dd flex-row"
+          >
+            <button
+              className="dd button has-background hoverable text-button is-rounded"
+              id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-bars-1"
+              onClick={[Function]}
+              type="button"
+            >
+              Bar 2
+              <span
+                className="dd has-background text-caption p-1 is-rounded ml-1"
+              >
+                draft
+              </span>
+            </button>
+            <button
+              className="dd icon-button"
+              onClick={[Function]}
+              title="Remove entity"
+              type="button"
+            >
+              <span
+                className="dd icon icon-remove"
+              />
+            </button>
+          </div>
+          <div
+            className="dd flex-row"
+          >
+            <button
+              className="dd button has-background hoverable text-button is-rounded"
+              id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-bars-2"
+              onClick={[Function]}
+              type="button"
+            >
+              Select entity
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-body"
+      >
+        body
+      </label>
+      <div
+        className="dd form-control"
+      >
+        <div>
+          <div
+            className="dd flex-row"
+          >
+            <div
+              className="dd flex-grow"
+            />
+            <button
+              className="dd icon-button a"
+              onClick={[Function]}
+              title="Clear"
+              type="button"
+            >
+              <span
+                className="dd icon icon-remove"
+              />
+            </button>
+          </div>
+          <div
+            className="dd text-body1 rich-text px-1"
+            data-editorinitialized="false"
+            id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-body"
+          />
+        </div>
+      </div>
+    </div>
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBar"
+      >
+        annotatedBar
+      </label>
+      <div
+        className="dd form-control"
+      >
+        <div
+          className="dd segment has-shadow"
+        >
+          <div
+            className="dd flex-row g-2"
+          >
+            <div
+              className="dd flex-grow text-caption"
+            >
+              AnnotatedBar
+            </div>
+            <button
+              className="dd icon-button dd"
+              data-testid="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBar.remove"
+              onClick={[Function]}
+              title="Remove value item"
+              type="button"
+            >
+              <span
+                className="dd icon icon-remove"
+              />
+            </button>
+          </div>
+          <div>
+            <label
+              className="dd text-subtitle1"
+              htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBar-annotation"
+            >
+              annotation
+            </label>
+            <div
+              className="dd form-control"
+            >
+              <div>
+                <input
+                  className="dd text-body1 input"
+                  id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBar-annotation"
+                  onChange={[Function]}
+                  type="text"
+                  value="Annotation"
+                />
+                <button
+                  className="dd icon-button"
+                  onClick={[Function]}
+                  title="Clear"
+                  type="button"
+                >
+                  <span
+                    className="dd icon icon-remove"
+                  />
+                </button>
+              </div>
+            </div>
+          </div>
+          <div>
+            <label
+              className="dd text-subtitle1"
+              htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBar-bar"
+            >
+              bar
+            </label>
+            <div
+              className="dd form-control"
+            >
+              <div
+                className="dd flex-row"
+              >
+                <button
+                  className="dd button has-background hoverable text-button is-rounded"
+                  id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBar-bar"
+                  onClick={[Function]}
+                  type="button"
+                >
+                  Bar 2
+                  <span
+                    className="dd has-background text-caption p-1 is-rounded ml-1"
+                  >
+                    draft
+                  </span>
+                </button>
+                <button
+                  className="dd icon-button"
+                  onClick={[Function]}
+                  title="Remove entity"
+                  type="button"
+                >
+                  <span
+                    className="dd icon icon-remove"
+                  />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars"
+      >
+        annotatedBars
+      </label>
+      <div
+        className="dd form-control"
+      >
+        <div
+          className="dd flex-column g-1"
+        >
+          <div
+            className="dd segment has-shadow"
+          >
+            <div
+              className="dd flex-row g-2"
+            >
+              <div
+                className="dd flex-grow text-caption"
+              >
+                AnnotatedBar
+              </div>
+              <button
+                className="dd icon-button dd"
+                data-testid="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars.remove"
+                onClick={[Function]}
+                title="Remove value item"
+                type="button"
+              >
+                <span
+                  className="dd icon icon-remove"
+                />
+              </button>
+            </div>
+            <div>
+              <label
+                className="dd text-subtitle1"
+                htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-annotation"
+              >
+                annotation
+              </label>
+              <div
+                className="dd form-control"
+              >
+                <div>
+                  <input
+                    className="dd text-body1 input"
+                    id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-annotation"
+                    onChange={[Function]}
+                    type="text"
+                    value="First"
+                  />
+                  <button
+                    className="dd icon-button"
+                    onClick={[Function]}
+                    title="Clear"
+                    type="button"
+                  >
+                    <span
+                      className="dd icon icon-remove"
+                    />
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div>
+              <label
+                className="dd text-subtitle1"
+                htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-bar"
+              >
+                bar
+              </label>
+              <div
+                className="dd form-control"
+              >
+                <div
+                  className="dd flex-row"
+                >
+                  <button
+                    className="dd button has-background hoverable text-button is-rounded"
+                    id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-bar"
+                    onClick={[Function]}
+                    type="button"
+                  >
+                    Bar 1
+                    <span
+                      className="dd has-background text-caption p-1 is-rounded ml-1"
+                    >
+                      draft
+                    </span>
+                  </button>
+                  <button
+                    className="dd icon-button"
+                    onClick={[Function]}
+                    title="Remove entity"
+                    type="button"
+                  >
+                    <span
+                      className="dd icon icon-remove"
+                    />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            className="dd segment has-shadow"
+          >
+            <div
+              className="dd flex-row g-2"
+            >
+              <div
+                className="dd flex-grow text-caption"
+              >
+                AnnotatedBar
+              </div>
+              <button
+                className="dd icon-button dd"
+                data-testid="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-1.remove"
+                onClick={[Function]}
+                title="Remove value item"
+                type="button"
+              >
+                <span
+                  className="dd icon icon-remove"
+                />
+              </button>
+            </div>
+            <div>
+              <label
+                className="dd text-subtitle1"
+                htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-1-annotation"
+              >
+                annotation
+              </label>
+              <div
+                className="dd form-control"
+              >
+                <div>
+                  <input
+                    className="dd text-body1 input"
+                    id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-1-annotation"
+                    onChange={[Function]}
+                    type="text"
+                    value="Second"
+                  />
+                  <button
+                    className="dd icon-button"
+                    onClick={[Function]}
+                    title="Clear"
+                    type="button"
+                  >
+                    <span
+                      className="dd icon icon-remove"
+                    />
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div>
+              <label
+                className="dd text-subtitle1"
+                htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-1-bar"
+              >
+                bar
+              </label>
+              <div
+                className="dd form-control"
+              >
+                <div
+                  className="dd flex-row"
+                >
+                  <button
+                    className="dd button has-background hoverable text-button is-rounded"
+                    id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-1-bar"
+                    onClick={[Function]}
+                    type="button"
+                  >
+                    Bar 2
+                    <span
+                      className="dd has-background text-caption p-1 is-rounded ml-1"
+                    >
+                      draft
+                    </span>
+                  </button>
+                  <button
+                    className="dd icon-button"
+                    onClick={[Function]}
+                    title="Remove entity"
+                    type="button"
+                  >
+                    <span
+                      className="dd icon icon-remove"
+                    />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            className="dd segment has-shadow"
+          >
+            <div>
+              <button
+                className="dd button has-background hoverable text-button is-rounded"
+                id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBars-2"
+                onClick={[Function]}
+                type="button"
+              >
+                Add value item
+                 
+                <span
+                  className="dd icon icon-chevron-down"
+                />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-nested"
+      >
+        nested
+      </label>
+      <div
+        className="dd form-control"
+      >
+        <div
+          className="dd segment has-shadow"
+        >
+          <div>
+            <button
+              className="dd button has-background hoverable text-button is-rounded"
+              id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-nested"
+              onClick={[Function]}
+              type="button"
+            >
+              Add value item
+               
+              <span
+                className="dd icon icon-chevron-down"
+              />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="dd flex-row g-1"
+    >
+      <button
+        className="dd button has-background hoverable text-button bg-primary is-rounded"
+        disabled={false}
+        type="submit"
+      >
+        Save
+      </button>
+      <button
+        className="dd button has-background hoverable text-button is-rounded"
+        disabled={false}
+        type="reset"
+      >
+        Reset
+      </button>
+    </div>
+  </form>
+</div>
+`;
+
 exports[`FullFoo render 1`] = `
 <div
   data-entityid="fc66b4d7-61ff-44d4-8f68-cb7f526df046"

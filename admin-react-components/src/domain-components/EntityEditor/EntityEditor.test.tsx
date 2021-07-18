@@ -1,3 +1,5 @@
+jest.mock('@editorjs/editorjs');
+
 import type { Story } from '@storybook/react/types-6-0';
 import '@testing-library/jest-dom';
 import {
@@ -15,8 +17,6 @@ import * as renderer from 'react-test-renderer';
 import { createContextValue } from '../../test/TestContextAdapter';
 import type { EntityEditorStoryProps } from './EntityEditor.stories';
 import { default as StoryMeta, ArchivedFoo, FullFoo, NewFoo } from './EntityEditor.stories';
-
-jest.mock('@editorjs/editorjs');
 
 function renderStory(
   StoryUnderTest: Story<EntityEditorStoryProps>,
