@@ -1,6 +1,6 @@
 {
   "name": "@jonasb/datadata-admin-react-components",
-  "version": "0.1.1-3",
+  "version": "0.1.1-4",
   "description": "",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.14.3",
-    "@jonasb/datadata-testing-utils": "0.1.1-3",
+    "@jonasb/datadata-testing-utils": "0.1.1-4",
     "@rushstack/eslint-plugin": "~0.8.0",
     "@rushstack/heft": "~0.34.8",
     "@rushstack/heft-jest-plugin": "~0.1.14",
@@ -67,7 +67,7 @@
     "typescript": "^4.3.5"
   },
   "dependencies": {
-    "@jonasb/datadata-core": "0.1.1-3",
+    "@jonasb/datadata-core": "0.1.1-4",
     "@editorjs/editorjs": "~2.21.0",
     "@types/leaflet": "~1.7.0",
     "@types/lodash": "~4.14.169",
