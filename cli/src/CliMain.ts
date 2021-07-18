@@ -1,5 +1,5 @@
 import { assertIsDefined, EntityPublishState } from '@jonasb/datadata-core';
-import type { CliContext } from '..';
+import type { CliContext } from '.';
 import type { ItemSelectorItem, ItemSelectorSeparator } from './widgets';
 import { showItemSelector } from './widgets';
 import * as CliEntityAdmin from './CliEntityAdmin';
