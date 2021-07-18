@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-postgres",
+      "comment": "Configure importHelpers for ts, and add tslib dependency",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-postgres",
+  "email": "jonas.b@gmail.com"
+}

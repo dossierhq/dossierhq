@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-cli",
+      "comment": "Configure importHelpers for ts, and add tslib dependency",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-cli",
+  "email": "jonas.b@gmail.com"
+}
