@@ -1,6 +1,6 @@
 {
   "name": "@jonasb/datadata-graphql",
-  "version": "0.1.1-4",
+  "version": "0.1.1-5",
   "description": "",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
@@ -33,9 +33,9 @@
     "url": "git+https://github.com/jonasb/datadata.git"
   },
   "devDependencies": {
-    "@jonasb/datadata-postgres": "0.1.1-4",
-    "@jonasb/datadata-server": "0.1.1-4",
-    "@jonasb/datadata-testing-utils": "0.1.1-4",
+    "@jonasb/datadata-postgres": "0.1.1-5",
+    "@jonasb/datadata-server": "0.1.1-5",
+    "@jonasb/datadata-testing-utils": "0.1.1-5",
     "@rushstack/heft": "~0.34.8",
     "@rushstack/heft-jest-plugin": "~0.1.14",
     "@types/heft-jest": "1.0.2",
@@ -48,7 +48,7 @@
     "uuid": "^8.3.2"
   },
   "dependencies": {
-    "@jonasb/datadata-core": "0.1.1-4",
+    "@jonasb/datadata-core": "0.1.1-5",
     "graphql": "~15.5.0"
   }
 }
