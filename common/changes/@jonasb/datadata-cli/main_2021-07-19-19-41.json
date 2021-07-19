@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-cli",
+      "comment": "Fix export configuration",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-cli",
+  "email": "jonas.b@gmail.com"
+}
