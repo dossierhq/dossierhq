@@ -6,18 +6,6 @@
       "heftEvent": "clean",
       "actionId": "defaultClean",
       "globsToDelete": ["lib", "temp", "*.build.log", "*.build.error.log"]
-    },
-    {
-      "actionKind": "copyFiles",
-      "heftEvent": "pre-compile",
-      "actionId": "copy-json-to-liv",
-      "copyOperations": [
-        {
-          "sourceFolder": "src",
-          "destinationFolders": ["lib"],
-          "fileExtensions": [".json"]
-        }
-      ]
     }
   ]
 }
