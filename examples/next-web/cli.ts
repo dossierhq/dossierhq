@@ -14,10 +14,8 @@ async function main() {
     }
     const schema = server.getSchema();
     const context = server.createSessionContext(session);
-    const adminClient = createServerAdminClient({ resolveContext: () => Promise.resolve(context) });
-    const publishedClient = createServerPublishedClient({
-      resolveContext: () => Promise.resolve(context),
-    });
+    const adminClient = createServerAdminClient({ context });
+    const publishedClient = createServerPublishedClient({ context });
 
     const cliContext: CliContext = {
       schema,

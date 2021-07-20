@@ -39,12 +39,8 @@ export async function getSessionContextForRequest(
   //TODO actually authenticate
   const session = await ensureSession(authContext, 'test', 'john-smith');
   const sessionContext = server.createSessionContext(session);
-  const adminClient = createServerAdminClient({
-    resolveContext: () => Promise.resolve(sessionContext),
-  });
-  const publishedClient = createServerPublishedClient({
-    resolveContext: () => Promise.resolve(sessionContext),
-  });
+  const adminClient = createServerAdminClient({ context: sessionContext });
+  const publishedClient = createServerPublishedClient({ context: sessionContext });
   return ok({ adminClient, publishedClient });
 }
 

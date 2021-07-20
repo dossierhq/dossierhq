@@ -27,14 +27,14 @@ const {
 } = InMemoryAdmin;
 
 export function createInMemoryAdminClient<TContext extends InMemorySessionContext>({
-  resolveContext,
+  context,
   middleware,
 }: {
-  resolveContext: () => Promise<TContext>;
+  context: TContext | (() => Promise<TContext>);
   middleware?: AdminClientMiddleware<TContext>[];
 }): AdminClient {
-  return createBaseAdminClient({
-    resolveContext,
+  return createBaseAdminClient<TContext>({
+    context,
     pipeline: [...(middleware ?? []), terminatingMiddleware],
   });
 }

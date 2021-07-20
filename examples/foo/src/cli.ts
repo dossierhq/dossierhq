@@ -25,10 +25,8 @@ async function main() {
 
     const cliContext: CliContext = {
       schema,
-      adminClient: createServerAdminClient({ resolveContext: () => Promise.resolve(context) }),
-      publishedClient: createServerPublishedClient({
-        resolveContext: () => Promise.resolve(context),
-      }),
+      adminClient: createServerAdminClient({ context }),
+      publishedClient: createServerPublishedClient({ context }),
     };
 
     await CliMain.mainMenu(cliContext);

@@ -29,7 +29,7 @@ describe('getEntity()', () => {
       },
     ]);
     const context = server.createContext(uuidv4());
-    const client = createInMemoryAdminClient({ resolveContext: () => Promise.resolve(context) });
+    const client = createInMemoryAdminClient({ context });
     const entityResult = await client.getEntity({ id });
     expectResultValue(entityResult, {
       id,

@@ -25,7 +25,7 @@ export function createContextValue({
   const context = server.createContext(userId);
 
   const adminClient = createInMemoryAdminClient({
-    resolveContext: async () => Promise.resolve(context),
+    context,
     middleware: adminClientMiddleware ?? [],
   });
 

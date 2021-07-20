@@ -41,17 +41,17 @@ export type PublishedClientMiddleware<TContext> = Middleware<
 >;
 
 class BasePublishedClient<TContext> implements PublishedClient {
-  private readonly resolveContext: () => Promise<TContext>;
+  private readonly context: TContext | (() => Promise<TContext>);
   private readonly pipeline: PublishedClientMiddleware<TContext>[];
 
   constructor({
-    resolveContext,
+    context,
     pipeline,
   }: {
-    resolveContext: () => Promise<TContext>;
+    context: TContext | (() => Promise<TContext>);
     pipeline: PublishedClientMiddleware<TContext>[];
   }) {
-    this.resolveContext = resolveContext;
+    this.context = context;
     this.pipeline = pipeline;
   }
 
@@ -76,14 +76,17 @@ class BasePublishedClient<TContext> implements PublishedClient {
   private async executeOperation<TName extends PublishedClientOperationName>(
     operation: OperationWithoutCallbacks<PublishedClientOperation<TName>>
   ): Promise<PublishedClientOperationReturn[TName]> {
-    const context = await this.resolveContext();
+    const context =
+      typeof this.context === 'function'
+        ? await (this.context as () => Promise<TContext>)()
+        : this.context;
 
     return await executeOperationPipeline(context, this.pipeline, operation);
   }
 }
 
 export function createBasePublishedClient<TContext>(option: {
-  resolveContext: () => Promise<TContext>;
+  context: TContext | (() => Promise<TContext>);
   pipeline: PublishedClientMiddleware<TContext>[];
 }): PublishedClient {
   return new BasePublishedClient(option);

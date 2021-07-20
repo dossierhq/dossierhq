@@ -21,11 +21,11 @@ import {
 } from './EntityAdmin';
 
 export function createServerAdminClient({
-  resolveContext,
+  context,
 }: {
-  resolveContext: () => Promise<SessionContext>;
+  context: SessionContext | (() => Promise<SessionContext>);
 }): AdminClient {
-  return createBaseAdminClient({ resolveContext, pipeline: [terminatingMiddleware] });
+  return createBaseAdminClient<SessionContext>({ context, pipeline: [terminatingMiddleware] });
 }
 
 async function terminatingMiddleware(

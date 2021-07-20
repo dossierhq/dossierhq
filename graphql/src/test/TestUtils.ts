@@ -51,10 +51,8 @@ async function setUpRealServerWithSession(schemaSpecification: Partial<SchemaSpe
   const server = await createTestServer();
   const context = await ensureSessionContext(server, 'test', 'identifier');
   const subjectId = context.session.subjectId;
-  const adminClient = createServerAdminClient({ resolveContext: () => Promise.resolve(context) });
-  const publishedClient = createServerPublishedClient({
-    resolveContext: () => Promise.resolve(context),
-  });
+  const adminClient = createServerAdminClient({ context });
+  const publishedClient = createServerPublishedClient({ context });
 
   await updateSchema(context, schemaSpecification);
 
@@ -76,10 +74,8 @@ async function setUpInMemoryServerWithSession(schemaSpecification: Partial<Schem
 
   const context = server.createContext(uuidv4());
   const subjectId = context.subjectId;
-  const adminClient = createInMemoryAdminClient({ resolveContext: () => Promise.resolve(context) });
-  const publishedClient = createInMemoryPublishedClient({
-    resolveContext: () => Promise.resolve(context),
-  });
+  const adminClient = createInMemoryAdminClient({ context });
+  const publishedClient = createInMemoryPublishedClient({ context });
 
   return {
     schema,
