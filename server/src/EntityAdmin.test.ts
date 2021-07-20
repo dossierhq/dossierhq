@@ -60,10 +60,8 @@ const emptyBazFields = {
 beforeAll(async () => {
   server = await createTestServer();
   context = await ensureSessionContext(server, 'test', 'entity-admin');
-  client = createServerAdminClient({
-    resolveContext: () => Promise.resolve(context),
-  });
-  publishedClient = createServerPublishedClient({ resolveContext: () => Promise.resolve(context) });
+  client = createServerAdminClient({ context });
+  publishedClient = createServerPublishedClient({ context });
   await updateSchema(context, {
     entityTypes: [
       {

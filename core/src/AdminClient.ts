@@ -139,17 +139,17 @@ export type AdminClientMiddleware<TContext> = Middleware<
 >;
 
 class BaseAdminClient<TContext> implements AdminClient {
-  private readonly resolveContext: () => Promise<TContext>;
+  private readonly context: TContext | (() => Promise<TContext>);
   private readonly pipeline: AdminClientMiddleware<TContext>[];
 
   constructor({
-    resolveContext,
+    context,
     pipeline,
   }: {
-    resolveContext: () => Promise<TContext>;
+    context: TContext | (() => Promise<TContext>);
     pipeline: AdminClientMiddleware<TContext>[];
   }) {
-    this.resolveContext = resolveContext;
+    this.context = context;
     this.pipeline = pipeline;
   }
 
@@ -265,14 +265,17 @@ class BaseAdminClient<TContext> implements AdminClient {
   private async executeOperation<TName extends AdminClientOperationName>(
     operation: OperationWithoutCallbacks<AdminClientOperation<TName>>
   ): Promise<AdminClientOperationReturn[TName]> {
-    const context = await this.resolveContext();
+    const context =
+      typeof this.context === 'function'
+        ? await (this.context as () => Promise<TContext>)()
+        : this.context;
 
     return await executeOperationPipeline(context, this.pipeline, operation);
   }
 }
 
 export function createBaseAdminClient<TContext>(option: {
-  resolveContext: () => Promise<TContext>;
+  context: TContext | (() => Promise<TContext>);
   pipeline: AdminClientMiddleware<TContext>[];
 }): AdminClient {
   return new BaseAdminClient(option);

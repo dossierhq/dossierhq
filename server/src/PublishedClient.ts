@@ -8,11 +8,11 @@ import type { SessionContext } from '.';
 import { getEntities, getEntity } from './PublishedEntity';
 
 export function createServerPublishedClient({
-  resolveContext,
+  context,
 }: {
-  resolveContext: () => Promise<SessionContext>;
+  context: SessionContext | (() => Promise<SessionContext>);
 }): PublishedClient {
-  return createBasePublishedClient({ resolveContext, pipeline: [terminatingMiddleware] });
+  return createBasePublishedClient({ context, pipeline: [terminatingMiddleware] });
 }
 
 async function terminatingMiddleware(

@@ -41,12 +41,8 @@ async function startServer(server: Server, authContext: AuthContext, port: numbe
       if (sessionResult.isOk()) {
         const sessionContext = server.createSessionContext(sessionResult.value);
         context.schema = ok(server.getSchema());
-        context.adminClient = ok(
-          createServerAdminClient({ resolveContext: () => Promise.resolve(sessionContext) })
-        );
-        context.publishedClient = ok(
-          createServerPublishedClient({ resolveContext: () => Promise.resolve(sessionContext) })
-        );
+        context.adminClient = ok(createServerAdminClient({ context: sessionContext }));
+        context.publishedClient = ok(createServerPublishedClient({ context: sessionContext }));
       }
       return {
         schema,

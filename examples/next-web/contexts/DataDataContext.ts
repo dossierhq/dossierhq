@@ -123,10 +123,7 @@ export function useInitializeContext(): { contextValue: DataDataContextValue | n
 
 function createBackendAdminClient(): AdminClient {
   const context: BackendContext = {};
-  return createBaseAdminClient({
-    resolveContext: () => Promise.resolve(context),
-    pipeline: [terminatingMiddleware],
-  });
+  return createBaseAdminClient({ context, pipeline: [terminatingMiddleware] });
 }
 
 async function terminatingMiddleware(

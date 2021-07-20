@@ -15,10 +15,8 @@ let publishedClient: PublishedClient;
 beforeAll(async () => {
   server = await createTestServer();
   context = await ensureSessionContext(server, 'test', 'published-entity');
-  adminClient = createServerAdminClient({
-    resolveContext: () => Promise.resolve(context),
-  });
-  publishedClient = createServerPublishedClient({ resolveContext: () => Promise.resolve(context) });
+  adminClient = createServerAdminClient({ context });
+  publishedClient = createServerPublishedClient({ context });
 
   await updateSchema(context, {
     entityTypes: [

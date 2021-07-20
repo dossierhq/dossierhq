@@ -8,11 +8,11 @@ import { getEntities, getEntity } from './InMemoryPublished';
 import type { InMemorySessionContext } from './InMemoryServer';
 
 export function createInMemoryPublishedClient({
-  resolveContext,
+  context,
 }: {
-  resolveContext: () => Promise<InMemorySessionContext>;
+  context: InMemorySessionContext | (() => Promise<InMemorySessionContext>);
 }): PublishedClient {
-  return createBasePublishedClient({ resolveContext, pipeline: [terminatingMiddleware] });
+  return createBasePublishedClient({ context, pipeline: [terminatingMiddleware] });
 }
 
 async function terminatingMiddleware(
