@@ -63,3 +63,4 @@ common/autoinstallers/*/.npmrc
 
 ##
 .envrc
+*.code-workspace
