@@ -1,6 +1,6 @@
 {
   "name": "@jonasb/datadata-server",
-  "version": "0.1.1-8",
+  "version": "0.1.1-9",
   "description": "",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
@@ -32,7 +32,7 @@
     "url": "git+https://github.com/jonasb/datadata.git"
   },
   "devDependencies": {
-    "@jonasb/datadata-postgres": "0.1.1-8",
+    "@jonasb/datadata-postgres": "0.1.1-9",
     "@rushstack/heft": "~0.34.8",
     "@rushstack/heft-jest-plugin": "~0.1.14",
     "@types/heft-jest": "1.0.2",
@@ -46,7 +46,7 @@
     "uuid": "^8.3.2"
   },
   "dependencies": {
-    "@jonasb/datadata-core": "0.1.1-8",
+    "@jonasb/datadata-core": "0.1.1-9",
     "@types/pg": "^7.14.11",
     "pg": "^8.6.0",
     "tslib": "~2.3.0"
