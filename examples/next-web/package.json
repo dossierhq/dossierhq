@@ -23,11 +23,11 @@
     "upgrade-dependencies:check": "npx npm-check-updates"
   },
   "dependencies": {
-    "@jonasb/datadata-admin-react-components": "0.1.1-8",
-    "@jonasb/datadata-cli": "0.1.1-8",
-    "@jonasb/datadata-core": "0.1.1-8",
-    "@jonasb/datadata-graphql": "0.1.1-8",
-    "@jonasb/datadata-server": "0.1.1-8",
+    "@jonasb/datadata-admin-react-components": "0.1.1-9",
+    "@jonasb/datadata-cli": "0.1.1-9",
+    "@jonasb/datadata-core": "0.1.1-9",
+    "@jonasb/datadata-graphql": "0.1.1-9",
+    "@jonasb/datadata-server": "0.1.1-9",
     "@editorjs/checklist": "~1.3.0",
     "@editorjs/header": "~2.6.1",
     "@editorjs/list": "~1.6.2",
@@ -45,7 +45,7 @@
     "react-dom": "~17.0.2"
   },
   "devDependencies": {
-    "@jonasb/datadata-postgres": "0.1.1-8",
+    "@jonasb/datadata-postgres": "0.1.1-9",
     "@types/debug": "~4.1.5",
     "@types/jest": "~26.0.23",
     "@types/node": "^15.3.0",
