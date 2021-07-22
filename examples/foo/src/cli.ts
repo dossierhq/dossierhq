@@ -1,13 +1,12 @@
 import 'dotenv/config';
 import { CliAuth, CliContext, CliMain } from '@jonasb/datadata-cli';
-import type { SchemaSpecification } from '@jonasb/datadata-core';
 import { Schema } from '@jonasb/datadata-core';
+import type { Session } from '@jonasb/datadata-server';
 import {
   createServerAdminClient,
   createServerPublishedClient,
   Server,
 } from '@jonasb/datadata-server';
-import type { Session } from '@jonasb/datadata-server';
 import SchemaSpec from './schema.json';
 
 async function main() {
@@ -19,7 +18,7 @@ async function main() {
       session = await CliAuth.veryInsecureCreateSession(server, 'test', 'john-smith');
     }
     const context = server.createSessionContext(session);
-    const schema = new Schema(SchemaSpec as SchemaSpecification);
+    const schema = new Schema(SchemaSpec);
     const loadSchema = await server.setSchema(context, schema);
     loadSchema.throwIfError();
 

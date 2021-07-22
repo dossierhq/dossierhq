@@ -1,10 +1,4 @@
-import type {
-  AdminClient,
-  ErrorType,
-  PromiseResult,
-  PublishedClient,
-  SchemaSpecification,
-} from '@jonasb/datadata-core';
+import type { AdminClient, ErrorType, PromiseResult, PublishedClient } from '@jonasb/datadata-core';
 import { ok, Schema } from '@jonasb/datadata-core';
 import type { AuthContext } from '@jonasb/datadata-server';
 import {
@@ -53,10 +47,7 @@ export async function getServerConnection(): Promise<{ server: Server; authConte
 
       const session = await ensureSession(authContext, 'sys', 'schemaloader');
       const context = server.createSessionContext(session);
-      const loadSchema = await server.setSchema(
-        context,
-        new Schema(SchemaSpec as SchemaSpecification)
-      );
+      const loadSchema = await server.setSchema(context, new Schema(SchemaSpec));
       loadSchema.throwIfError();
       return { server, authContext };
     })();

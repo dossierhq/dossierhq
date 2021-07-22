@@ -27,7 +27,8 @@ export enum RichTextBlockType {
 
 export interface FieldSpecification {
   name: string;
-  type: FieldType;
+  /** The type of the field, only values from {@link FieldType} as accepted. */
+  type: FieldType | string;
   list?: boolean;
   isName?: boolean;
   /** Applicable when type is EntityType or RichText */
