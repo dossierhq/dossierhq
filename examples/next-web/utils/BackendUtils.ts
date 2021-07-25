@@ -1,12 +1,5 @@
-import type {
-  AdminQuery,
-  EntityReference,
-  EntityVersionReference,
-  Paging,
-  PromiseResult,
-} from '@jonasb/datadata-core';
+import type { PromiseResult } from '@jonasb/datadata-core';
 import { createErrorResult, ErrorType, notOk, ok } from '@jonasb/datadata-core';
-import { encodeQuery } from './QueryUtils';
 
 export enum OperationStatus {
   None,
@@ -19,20 +12,7 @@ const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export const urls = {
   schema: `${baseUrl}/schema`,
-  archiveEntity: (id: string): string => `${baseUrl}/archive-entity/${id}`,
-  unarchiveEntity: (id: string): string => `${baseUrl}/unarchive-entity/${id}`,
-  createEntity: `${baseUrl}/entities`,
-  getEntity: (reference: EntityReference | EntityVersionReference): string =>
-    `${baseUrl}/entities/${reference.id}${
-      'version' in reference ? `?version=${reference.version}` : ''
-    }`,
-  publishEntities: `${baseUrl}/publish-entities`,
-  unpublishEntities: `${baseUrl}/unpublish-entities`,
-  getEntityHistory: (id: string): string => `${baseUrl}/entity-history/${id}`,
-  getPublishingHistory: (id: string): string => `${baseUrl}/publishing-history/${id}`,
-  searchEntities: (query?: AdminQuery, paging?: Paging): string =>
-    `${baseUrl}/search-entities?${encodeQuery({ query, paging })}`,
-  totalCount: (query?: AdminQuery): string => `${baseUrl}/total-count?${encodeQuery({ query })}`,
+  admin: `${baseUrl}/admin`,
 };
 
 export async function fetchJson<T>(
@@ -69,11 +49,10 @@ statusErrorMapping.set(409, ErrorType.Conflict);
 statusErrorMapping.set(401, ErrorType.NotAuthenticated);
 statusErrorMapping.set(404, ErrorType.NotFound);
 
-export async function fetchJsonResult<TOk, TError extends ErrorType | ErrorType.Generic>(
-  expectedErrors: TError[],
+export async function fetchJsonResult<TOk>(
   input: RequestInfo,
   init?: RequestInit
-): PromiseResult<TOk, TError | ErrorType.Generic> {
+): PromiseResult<TOk, ErrorType> {
   try {
     const response = await fetch(input, init);
     if (!response.ok) {
@@ -84,10 +63,7 @@ export async function fetchJsonResult<TOk, TError extends ErrorType | ErrorType.
       }
       const responseJson = JSON.parse(responseText);
       const { message } = responseJson;
-      if (!expectedErrors.includes(errorType as TError)) {
-        return notOk.Generic(`Unexpected error type: ${errorType}: ${message}`);
-      }
-      return createErrorResult(errorType as TError, message);
+      return createErrorResult(errorType, message);
     }
     const json: TOk = await response.json();
     return ok(json);

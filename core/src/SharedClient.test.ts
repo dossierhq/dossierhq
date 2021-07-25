@@ -48,7 +48,7 @@ describe('executeOperationPipeline()', () => {
             }
           },
         ],
-        { name: TestClientOperationName.foo, args: ['hello'] }
+        { name: TestClientOperationName.foo, args: ['hello'], modifies: false }
       )
     ).toEqual({ item: 'hello' });
   });
@@ -74,14 +74,18 @@ describe('executeOperationPipeline()', () => {
             }
           },
         ],
-        { name: TestClientOperationName.foo, args: ['hello'] }
+        { name: TestClientOperationName.foo, args: ['hello'], modifies: false }
       )
     ).toEqual({ item: '[[[hello]]]' });
   });
 
   test('Error: empty pipeline', async () => {
     await expect(
-      executeTestPipeline({}, [], { name: TestClientOperationName.foo, args: ['hello'] })
+      executeTestPipeline({}, [], {
+        name: TestClientOperationName.foo,
+        args: ['hello'],
+        modifies: false,
+      })
     ).rejects.toThrowError('Cannot execute an empty pipeline');
   });
 
@@ -90,7 +94,7 @@ describe('executeOperationPipeline()', () => {
       executeTestPipeline(
         {},
         [async (_context, operation) => operation.resolve(await operation.next())],
-        { name: TestClientOperationName.foo, args: ['hello'] }
+        { name: TestClientOperationName.foo, args: ['hello'], modifies: false }
       )
     ).rejects.toThrowError('The last middleware in the pipeline cannot call next()');
   });

@@ -1,7 +1,7 @@
+import type { Boom } from '@hapi/boom';
+import boom, { boomify } from '@hapi/boom';
 import type { ErrorResult } from '@jonasb/datadata-core';
 import { ErrorType } from '@jonasb/datadata-core';
-import boom, { boomify } from '@hapi/boom';
-import type { Boom } from '@hapi/boom';
 
 export function errorResultToBoom(error: ErrorResult<unknown, ErrorType>): Boom {
   switch (error.error) {

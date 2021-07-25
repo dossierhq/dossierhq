@@ -17,7 +17,7 @@ export function createServerPublishedClient({
 
 async function terminatingMiddleware(
   context: SessionContext,
-  operation: PublishedClientOperation<PublishedClientOperationName>
+  operation: PublishedClientOperation
 ): Promise<void> {
   switch (operation.name) {
     case PublishedClientOperationName.getEntities: {
