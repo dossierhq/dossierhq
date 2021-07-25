@@ -1,132 +1,98 @@
-import type { AdminClientOperation } from '.';
-import { AdminClientOperationName, createBaseAdminClient } from '.';
-import { convertAdminClientOperationToJson } from './AdminClient';
-import { assertExhaustive } from './Asserts';
-import { notOk } from './ErrorResult';
+import type { AdminClient, AdminClientMiddleware, AdminClientOperation } from '.';
+import {
+  AdminClientOperationName,
+  convertAdminClientOperationToJson,
+  convertJsonAdminClientResult,
+  convertJsonResult,
+  createBaseAdminClient,
+  EntityPublishState,
+  executeAdminClientOperationFromJson,
+  ok,
+} from '.';
+import { expectOkResult } from './CoreTestUtils';
 
-function createConvertToJsonMiddleware() {
-  const consumeJsonMock = jest.fn();
-  async function dummyMiddleware(context: null, operation: AdminClientOperation) {
-    consumeJsonMock(convertAdminClientOperationToJson(operation));
-    switch (operation.name) {
-      case AdminClientOperationName.archiveEntity: {
-        const {
-          args: [reference],
-          resolve,
-        } = operation as AdminClientOperation<AdminClientOperationName.archiveEntity>;
-        resolve(notOk.NotFound('Dummy'));
-        break;
-      }
-      case AdminClientOperationName.createEntity: {
-        const {
-          args: [entity],
-          resolve,
-        } = operation as AdminClientOperation<AdminClientOperationName.createEntity>;
-        resolve(notOk.BadRequest('Dummy'));
-        break;
-      }
-      case AdminClientOperationName.getEntities: {
-        const {
-          args: [references],
-          resolve,
-        } = operation as AdminClientOperation<AdminClientOperationName.getEntities>;
-        resolve([notOk.NotFound('Dummy')]);
-        break;
-      }
-      case AdminClientOperationName.getEntity: {
-        const {
-          args: [reference],
-          resolve,
-        } = operation as AdminClientOperation<AdminClientOperationName.getEntity>;
-        resolve(notOk.NotFound('Dummy'));
-        break;
-      }
-      case AdminClientOperationName.getEntityHistory: {
-        const {
-          args: [reference],
-          resolve,
-        } = operation as AdminClientOperation<AdminClientOperationName.getEntityHistory>;
-        resolve(notOk.NotFound('Dummy'));
-        break;
-      }
-      case AdminClientOperationName.getPublishingHistory: {
-        const {
-          args: [reference],
-          resolve,
-        } = operation as AdminClientOperation<AdminClientOperationName.getPublishingHistory>;
-        resolve(notOk.NotFound('Dummy'));
-        break;
-      }
-      case AdminClientOperationName.getTotalCount: {
-        const {
-          args: [query],
-          resolve,
-        } = operation as AdminClientOperation<AdminClientOperationName.getTotalCount>;
-        resolve(notOk.BadRequest('Dummy'));
-        break;
-      }
-      case AdminClientOperationName.publishEntities: {
-        const {
-          args: [references],
-          resolve,
-        } = operation as AdminClientOperation<AdminClientOperationName.publishEntities>;
-        resolve(notOk.BadRequest('Dummy'));
-        break;
-      }
-      case AdminClientOperationName.searchEntities: {
-        const {
-          args: [query, paging],
-          resolve,
-        } = operation as AdminClientOperation<AdminClientOperationName.searchEntities>;
-        resolve(notOk.BadRequest('Dummy'));
-        break;
-      }
-      case AdminClientOperationName.unarchiveEntity: {
-        const {
-          args: [reference],
-          resolve,
-        } = operation as AdminClientOperation<AdminClientOperationName.unarchiveEntity>;
-        resolve(notOk.BadRequest('Dummy'));
-        break;
-      }
-      case AdminClientOperationName.unpublishEntities: {
-        const {
-          args: [references],
-          resolve,
-        } = operation as AdminClientOperation<AdminClientOperationName.unpublishEntities>;
-        resolve(notOk.BadRequest('Dummy'));
-        break;
-      }
-      case AdminClientOperationName.updateEntity: {
-        const {
-          args: [entity],
-          resolve,
-        } = operation as AdminClientOperation<AdminClientOperationName.updateEntity>;
-        resolve(notOk.BadRequest('Dummy'));
-        break;
-      }
-      default:
-        assertExhaustive(operation.name);
-    }
-  }
-  const adminClient = createBaseAdminClient<null>({ context: null, pipeline: [dummyMiddleware] });
-  return { adminClient, consumeJsonMock };
+function createForwardingMiddleware<TContext>(
+  adminClient: AdminClient
+): AdminClientMiddleware<TContext> {
+  return async function (_context, operation) {
+    const operationJson = convertAdminClientOperationToJson(operation);
+    const convertedOperation = JSON.parse(JSON.stringify(operationJson));
+    // normally sent over HTTP
+    const resultJson = await executeAdminClientOperationFromJson(
+      adminClient,
+      operation.name,
+      convertedOperation
+    );
+    // normally returned over HTTP
+    const convertedResultJson = convertJsonResult(JSON.parse(JSON.stringify(resultJson)));
+    operation.resolve(convertJsonAdminClientResult(operation.name, convertedResultJson));
+  };
 }
 
-describe('convertAdminClientOperationToJson', () => {
+function createJsonConvertingAdminClientsForOperation<
+  TContext,
+  TName extends AdminClientOperationName
+>(
+  context: TContext,
+  operationName: TName,
+  operationHandlerMockImplementation: (
+    context: TContext,
+    operation: AdminClientOperation<TName>
+  ) => Promise<void>
+) {
+  const operationHandlerMock = jest.fn<Promise<void>, [TContext, AdminClientOperation<TName>]>();
+  operationHandlerMock.mockImplementation(operationHandlerMockImplementation);
+
+  const innerMiddleware: AdminClientMiddleware<TContext> = async (context, operation) => {
+    expect(operation.name).toBe(operationName);
+    await operationHandlerMock(context, operation as unknown as AdminClientOperation<TName>);
+  };
+  const innerAdminClient = createBaseAdminClient<TContext>({
+    context,
+    pipeline: [innerMiddleware],
+  });
+  const outerAdminClient = createBaseAdminClient<TContext>({
+    context,
+    pipeline: [createForwardingMiddleware(innerAdminClient)],
+  });
+  return { adminClient: outerAdminClient, operationHandlerMock };
+}
+
+//TODO test all operations
+describe('AdminClient forward operation over JSON', () => {
   test('archiveEntity', async () => {
-    const { adminClient, consumeJsonMock } = createConvertToJsonMiddleware();
-    await adminClient.archiveEntity({ id: '1234' });
-    expect(consumeJsonMock.mock.calls).toMatchInlineSnapshot(`
+    const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
+      null,
+      AdminClientOperationName.archiveEntity,
+      async (_context, operation) => {
+        const [reference] = operation.args;
+        operation.resolve(
+          ok({
+            id: reference.id,
+            publishState: EntityPublishState.Archived,
+          })
+        );
+      }
+    );
+
+    const result = await adminClient.archiveEntity({ id: '1234' });
+    expectOkResult(result) &&
+      expect(result.value).toEqual({ id: '1234', publishState: EntityPublishState.Archived });
+
+    expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
       Array [
         Array [
+          null,
           Object {
             "args": Array [
               Object {
                 "id": "1234",
               },
             ],
+            "modifies": true,
             "name": "archiveEntity",
+            "next": [Function],
+            "resolve": [Function],
           },
         ],
       ]
