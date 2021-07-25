@@ -147,9 +147,10 @@ export type AdminClientOperation<
 
 export type AdminClientMiddleware<TContext> = Middleware<TContext, AdminClientOperation>;
 
-export interface AdminClientJsonOperation {
-  name: AdminClientOperationName;
-  args: unknown;
+export interface AdminClientJsonOperation<
+  TName extends AdminClientOperationName = AdminClientOperationName
+> {
+  args: AdminClientOperationArguments[TName];
 }
 
 class BaseAdminClient<TContext> implements AdminClient {
@@ -310,7 +311,7 @@ export function createBaseAdminClient<TContext>(option: {
 export function convertAdminClientOperationToJson(
   operation: AdminClientOperation
 ): AdminClientJsonOperation {
-  const { args, name } = operation;
+  const { args } = operation;
   switch (operation.name) {
     case AdminClientOperationName.archiveEntity:
     case AdminClientOperationName.createEntity:
@@ -324,17 +325,19 @@ export function convertAdminClientOperationToJson(
     case AdminClientOperationName.unarchiveEntity:
     case AdminClientOperationName.unpublishEntities:
     case AdminClientOperationName.updateEntity:
-      return { args, name };
+      //TODO cleanup args? e.g. reference, keep only id
+      return { args };
     default:
       assertExhaustive(operation.name);
   }
 }
 
-export async function executeAdminClientOperationFromJson(
+export async function executeAdminClientOperationFromJson<TName extends AdminClientOperationName>(
   adminClient: AdminClient,
+  operationName: TName,
   operation: AdminClientJsonOperation
 ): PromiseResult<unknown, ErrorType> {
-  switch (operation.name) {
+  switch (operationName) {
     case AdminClientOperationName.archiveEntity: {
       const [reference] =
         operation.args as AdminClientOperationArguments[AdminClientOperationName.archiveEntity];
@@ -397,7 +400,7 @@ export async function executeAdminClientOperationFromJson(
       return await adminClient.updateEntity(entity);
     }
     default:
-      assertExhaustive(operation.name);
+      assertExhaustive(operationName);
   }
 }
 

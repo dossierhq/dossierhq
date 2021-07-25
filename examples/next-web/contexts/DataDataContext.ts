@@ -108,9 +108,8 @@ async function terminatingMiddleware(
   operation: AdminClientOperation
 ): Promise<void> {
   //TODO use get if !operation.modifies
-  //TODO add operation name as query param
   const body = convertAdminClientOperationToJson(operation);
-  const result = await fetchJsonResult(urls.admin, {
+  const result = await fetchJsonResult(urls.admin(operation.name), {
     method: 'PUT',
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify(body),
