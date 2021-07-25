@@ -1,4 +1,4 @@
-import type { PromiseResult } from '@jonasb/datadata-core';
+import type { AdminClientOperationName, PromiseResult } from '@jonasb/datadata-core';
 import { createErrorResult, ErrorType, notOk, ok } from '@jonasb/datadata-core';
 
 export enum OperationStatus {
@@ -12,7 +12,7 @@ const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export const urls = {
   schema: `${baseUrl}/schema`,
-  admin: `${baseUrl}/admin`,
+  admin: (operation: AdminClientOperationName): string => `${baseUrl}/admin/${operation}`,
 };
 
 export async function fetchJson<T>(
