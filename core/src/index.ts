@@ -1,59 +1,27 @@
-export type { AdminClient, AdminClientMiddleware, AdminClientOperation } from './AdminClient';
-export type { ErrorResult, OkResult, PromiseResult, Result } from './ErrorResult';
+export {
+  AdminClientOperationName,
+  convertAdminClientOperationToJson,
+  convertJsonAdminClientResult,
+  createBaseAdminClient,
+  executeAdminClientOperationFromJson,
+} from './AdminClient';
 export type {
-  JsonConnection,
-  JsonEdge,
-  JsonEntityHistory,
-  JsonEntityVersionInfo,
-  JsonPublishingHistory,
-  JsonResult,
-} from './JsonUtils';
-export type {
-  PublishedClient,
-  PublishedClientMiddleware,
-  PublishedClientOperation,
-} from './PublishedClient';
-export type {
-  EntityTypeSpecification,
-  FieldSpecification,
-  FieldValueTypeMap,
-  SchemaSpecification,
-  ValueTypeSpecification,
-} from './Schema';
-export type {
-  AdminEntity,
-  AdminEntityCreate,
-  AdminEntityUpdate,
-  AdminQuery,
-  BoundingBox,
-  Connection,
-  Edge,
-  Entity,
-  EntityHistory,
-  EntityReference,
-  EntityVersionInfo,
-  EntityVersionReference,
-  Location,
-  PageInfo,
-  Paging,
-  PublishingEvent,
-  PublishingHistory,
-  PublishingResult,
-  RichText,
-  RichTextBlock,
-  ValueItem,
-} from './Types';
-
+  AdminClient,
+  AdminClientJsonOperation,
+  AdminClientMiddleware,
+  AdminClientOperation,
+} from './AdminClient';
 export { assertExhaustive, assertIsDefined } from './Asserts';
-export { AdminClientOperationName, createBaseAdminClient } from './AdminClient';
+export * as CoreTestUtils from './CoreTestUtils';
 export {
   createErrorResult,
   createErrorResultFromError,
   ErrorResultError,
   ErrorType,
-  ok,
   notOk,
+  ok,
 } from './ErrorResult';
+export type { ErrorResult, OkResult, PromiseResult, Result } from './ErrorResult';
 export {
   isEntityTypeField,
   isEntityTypeItemField,
@@ -87,8 +55,50 @@ export {
   convertJsonPublishingHistory,
   convertJsonResult,
 } from './JsonUtils';
+export type {
+  JsonConnection,
+  JsonEdge,
+  JsonEntityHistory,
+  JsonEntityVersionInfo,
+  JsonPublishingHistory,
+  JsonResult,
+} from './JsonUtils';
 export { createBasePublishedClient, PublishedClientOperationName } from './PublishedClient';
+export type {
+  PublishedClient,
+  PublishedClientMiddleware,
+  PublishedClientOperation,
+} from './PublishedClient';
 export { isPagingForwards } from './QueryUtils';
 export { FieldType, RichTextBlockType, Schema } from './Schema';
+export type {
+  EntityTypeSpecification,
+  FieldSpecification,
+  FieldValueTypeMap,
+  SchemaSpecification,
+  ValueTypeSpecification,
+} from './Schema';
 export { EntityPublishState, PublishingEventKind } from './Types';
-export * as CoreTestUtils from './CoreTestUtils';
+export type {
+  AdminEntity,
+  AdminEntityCreate,
+  AdminEntityUpdate,
+  AdminQuery,
+  BoundingBox,
+  Connection,
+  Edge,
+  Entity,
+  EntityHistory,
+  EntityReference,
+  EntityVersionInfo,
+  EntityVersionReference,
+  Location,
+  PageInfo,
+  Paging,
+  PublishingEvent,
+  PublishingHistory,
+  PublishingResult,
+  RichText,
+  RichTextBlock,
+  ValueItem,
+} from './Types';

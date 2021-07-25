@@ -30,7 +30,7 @@ export function createServerAdminClient({
 
 async function terminatingMiddleware(
   context: SessionContext,
-  operation: AdminClientOperation<AdminClientOperationName>
+  operation: AdminClientOperation
 ): Promise<void> {
   switch (operation.name) {
     case AdminClientOperationName.archiveEntity: {

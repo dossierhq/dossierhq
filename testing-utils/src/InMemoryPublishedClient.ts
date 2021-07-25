@@ -17,7 +17,7 @@ export function createInMemoryPublishedClient({
 
 async function terminatingMiddleware(
   context: InMemorySessionContext,
-  operation: PublishedClientOperation<PublishedClientOperationName>
+  operation: PublishedClientOperation
 ): Promise<void> {
   switch (operation.name) {
     case PublishedClientOperationName.getEntities: {

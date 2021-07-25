@@ -1,4 +1,5 @@
 import type {
+  AdminClientJsonOperation,
   AdminEntityCreate,
   AdminEntityUpdate,
   EntityVersionReference,
@@ -23,3 +24,5 @@ export interface EntityUnpublishRequest {
 export type EntityArchiveRequest = Record<never, never>;
 
 export type EntityUnarchiveRequest = Record<never, never>;
+
+export type AdminOperationRequest = AdminClientJsonOperation;

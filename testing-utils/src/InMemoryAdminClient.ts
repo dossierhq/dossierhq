@@ -41,7 +41,7 @@ export function createInMemoryAdminClient<TContext extends InMemorySessionContex
 
 async function terminatingMiddleware(
   context: InMemorySessionContext,
-  operation: AdminClientOperation<AdminClientOperationName>
+  operation: AdminClientOperation
 ): Promise<void> {
   switch (operation.name) {
     case AdminClientOperationName.archiveEntity: {

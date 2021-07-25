@@ -3,6 +3,7 @@ import { assertIsDefined } from './Asserts';
 export interface Operation<TName, TArgs, TResult> {
   readonly name: TName;
   readonly args: TArgs;
+  readonly modifies: boolean;
   readonly resolve: (result: TResult) => void;
   readonly next: () => Promise<TResult>;
 }

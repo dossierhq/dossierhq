@@ -29,16 +29,15 @@ interface PublishedClientOperationReturn {
   [PublishedClientOperationName.getEntity]: MethodReturnType<'getEntity'>;
 }
 
-export type PublishedClientOperation<TName extends PublishedClientOperationName> = Operation<
+export type PublishedClientOperation<
+  TName extends PublishedClientOperationName = PublishedClientOperationName
+> = Operation<
   TName,
   PublishedClientOperationArguments[TName],
   PublishedClientOperationReturn[TName]
 >;
 
-export type PublishedClientMiddleware<TContext> = Middleware<
-  TContext,
-  PublishedClientOperation<PublishedClientOperationName>
->;
+export type PublishedClientMiddleware<TContext> = Middleware<TContext, PublishedClientOperation>;
 
 class BasePublishedClient<TContext> implements PublishedClient {
   private readonly context: TContext | (() => Promise<TContext>);
@@ -61,6 +60,7 @@ class BasePublishedClient<TContext> implements PublishedClient {
     return this.executeOperation({
       name: PublishedClientOperationName.getEntity,
       args: [reference],
+      modifies: false,
     });
   }
 
@@ -70,6 +70,7 @@ class BasePublishedClient<TContext> implements PublishedClient {
     return this.executeOperation({
       name: PublishedClientOperationName.getEntities,
       args: [references],
+      modifies: false,
     });
   }
 
