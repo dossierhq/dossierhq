@@ -27,7 +27,7 @@ export function handleError<T>(res: NextApiResponse<T>, error: Error): void {
   res.status(boomError.output.statusCode).json(boomError.output.payload as any);
 }
 
-async function handleAsync<T>(res: NextApiResponse<T>, handler: () => Promise<void>) {
+async function handleRequest<T>(res: NextApiResponse<T>, handler: () => Promise<void>) {
   try {
     await handler();
   } catch (error) {
@@ -36,12 +36,12 @@ async function handleAsync<T>(res: NextApiResponse<T>, handler: () => Promise<vo
   }
 }
 
-export async function handleGetAsync<T>(
+export async function handleGet<T>(
   req: NextApiRequest,
   res: NextApiResponse<T>,
   handler: () => Promise<T>
 ): Promise<void> {
-  await handleAsync(res, async () => {
+  await handleRequest(res, async () => {
     if (req.method !== 'GET') {
       throw Boom.methodNotAllowed(undefined, undefined, 'GET');
     }
@@ -50,12 +50,12 @@ export async function handleGetAsync<T>(
   });
 }
 
-export async function handlePostAsync<T, R>(
+export async function handlePost<T, R>(
   req: NextApiRequest,
   res: NextApiResponse<R>,
   handler: (body: T) => Promise<{ location: string; body: R }>
 ): Promise<void> {
-  await handleAsync(res, async () => {
+  await handleRequest(res, async () => {
     if (req.method !== 'POST') {
       throw Boom.methodNotAllowed(undefined, undefined, 'POST');
     }
@@ -70,7 +70,7 @@ export async function handlePostWithoutLocation<T, R>(
   res: NextApiResponse<R>,
   handler: (body: T) => Promise<R>
 ): Promise<void> {
-  await handleAsync(res, async () => {
+  await handleRequest(res, async () => {
     if (req.method !== 'POST') {
       throw Boom.methodNotAllowed(undefined, undefined, 'POST');
     }
@@ -79,12 +79,12 @@ export async function handlePostWithoutLocation<T, R>(
   });
 }
 
-export async function handlePutAsync<T, R>(
+export async function handlePut<T, R>(
   req: NextApiRequest,
   res: NextApiResponse<R>,
   handler: (body: T) => Promise<R>
 ): Promise<void> {
-  await handleAsync(res, async () => {
+  await handleRequest(res, async () => {
     if (req.method !== 'PUT') {
       throw Boom.methodNotAllowed(undefined, undefined, 'PUT');
     }

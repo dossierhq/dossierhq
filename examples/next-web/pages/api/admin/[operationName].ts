@@ -10,8 +10,8 @@ import type { AdminOperationRequest } from '../../../types/RequestTypes';
 import { errorResultToBoom } from '../../../utils/ErrorUtils';
 import {
   handleError,
-  handleGetAsync,
-  handlePutAsync,
+  handleGet,
+  handlePut,
   validateRequestQuery,
 } from '../../../utils/HandlerUtils';
 import { decodeQuery } from '../../../utils/QueryUtils';
@@ -32,7 +32,7 @@ const requestSchema = Joi.object<RequestQuery>({
 export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
   const { operationName } = validateRequestQuery(req.query, requestSchema);
   if (req.method === 'GET') {
-    await handleGetAsync(req, res, async () => {
+    await handleGet(req, res, async () => {
       const { authContext, server } = await getServerConnection();
       const authResult = await getSessionContextForRequest(server, authContext, req);
       if (authResult.isError()) {
@@ -56,7 +56,7 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
       return result.value;
     });
   } else if (req.method === 'PUT') {
-    await handlePutAsync(req, res, async (body: AdminOperationRequest) => {
+    await handlePut(req, res, async (body: AdminOperationRequest) => {
       const { authContext, server } = await getServerConnection();
       const authResult = await getSessionContextForRequest(server, authContext, req);
       if (authResult.isError()) {
