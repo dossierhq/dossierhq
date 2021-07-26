@@ -41,8 +41,8 @@ export const InMemoryAdmin = {
   getEntities: async (
     context: InMemorySessionContext,
     ids: string[]
-  ): Promise<Result<AdminEntity, ErrorType.NotFound>[]> => {
-    return await Promise.all(ids.map(async (id) => await InMemoryAdmin.getEntity(context, id)));
+  ): PromiseResult<Result<AdminEntity, ErrorType.NotFound>[], ErrorType.Generic> => {
+    return ok(await Promise.all(ids.map(async (id) => await InMemoryAdmin.getEntity(context, id))));
   },
 
   getEntityHistory: async (

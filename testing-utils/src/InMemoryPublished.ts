@@ -16,8 +16,8 @@ export async function getEntity(
 export async function getEntities(
   context: InMemorySessionContext,
   ids: string[]
-): Promise<Result<Entity, ErrorType.NotFound>[]> {
-  return await Promise.all(ids.map((id) => getEntity(context, id)));
+): PromiseResult<Result<Entity, ErrorType.NotFound>[], ErrorType.Generic> {
+  return ok(await Promise.all(ids.map((id) => getEntity(context, id))));
 }
 
 function convertAdminEntity(entity: AdminEntity): Entity {

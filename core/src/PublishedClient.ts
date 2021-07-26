@@ -5,7 +5,9 @@ import { executeOperationPipeline } from './SharedClient';
 export interface PublishedClient {
   getEntity(reference: EntityReference): PromiseResult<Entity, ErrorType.NotFound>;
 
-  getEntities(references: EntityReference[]): Promise<Result<Entity, ErrorType.NotFound>[]>;
+  getEntities(
+    references: EntityReference[]
+  ): PromiseResult<Result<Entity, ErrorType.NotFound>[], ErrorType.Generic>;
 }
 
 export enum PublishedClientOperationName {

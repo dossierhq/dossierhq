@@ -39,9 +39,9 @@ export async function getEntity(
 export async function getEntities(
   context: SessionContext,
   ids: string[]
-): Promise<Result<Entity, ErrorType.NotFound>[]> {
+): PromiseResult<Result<Entity, ErrorType.NotFound>[], ErrorType.Generic> {
   if (ids.length === 0) {
-    return [];
+    return ok([]);
   }
   const entitiesMain = await Db.queryMany<
     Pick<EntitiesTable, 'uuid' | 'type' | 'name'> & Pick<EntityVersionsTable, 'data'>
@@ -63,5 +63,5 @@ export async function getEntities(
     return ok(entity);
   });
 
-  return result;
+  return ok(result);
 }
