@@ -36,10 +36,9 @@ export interface AdminClient {
     reference: EntityReference | EntityVersionReference
   ): PromiseResult<AdminEntity, ErrorType.NotFound | ErrorType.Generic>;
 
-  //TODO add top level result
   getEntities(
     references: EntityReference[]
-  ): Promise<Result<AdminEntity, ErrorType.NotFound | ErrorType.Generic>[]>;
+  ): PromiseResult<Result<AdminEntity, ErrorType.NotFound>[], ErrorType.Generic>;
 
   searchEntities(
     query?: AdminQuery,

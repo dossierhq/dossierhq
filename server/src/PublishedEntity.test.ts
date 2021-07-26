@@ -83,7 +83,9 @@ describe('getEntity()', () => {
 describe('getEntities()', () => {
   test('No ids', async () => {
     const result = await publishedClient.getEntities([]);
-    expect(result).toHaveLength(0);
+    if (expectOkResult(result)) {
+      expect(result.value).toHaveLength(0);
+    }
   });
 
   test('Get two entities', async () => {
@@ -115,17 +117,19 @@ describe('getEntities()', () => {
       ]);
 
       const result = await publishedClient.getEntities([{ id: foo2Id }, { id: foo1Id }]);
-      expect(result).toHaveLength(2);
-      expectResultValue(result[0], {
-        id: foo2Id,
-        info: { type: 'PublishedEntityFoo', name: foo2Name },
-        fields: { title: 'Title 2' },
-      });
-      expectResultValue(result[1], {
-        id: foo1Id,
-        info: { type: 'PublishedEntityFoo', name: foo1Name },
-        fields: { title: 'Title 1' },
-      });
+      if (expectOkResult(result)) {
+        expect(result.value).toHaveLength(2);
+        expectResultValue(result.value[0], {
+          id: foo2Id,
+          info: { type: 'PublishedEntityFoo', name: foo2Name },
+          fields: { title: 'Title 2' },
+        });
+        expectResultValue(result.value[1], {
+          id: foo1Id,
+          info: { type: 'PublishedEntityFoo', name: foo1Name },
+          fields: { title: 'Title 1' },
+        });
+      }
     }
   });
 
@@ -149,15 +153,17 @@ describe('getEntities()', () => {
         { id: 'f09fdd62-4a1e-4320-afba-8dd0781799df' },
         { id: foo1Id },
       ]);
-      expect(result).toHaveLength(2);
-      expectErrorResult(result[0], ErrorType.NotFound, 'No such entity');
-      expectResultValue(result[1], {
-        id: foo1Id,
-        info: { type: 'PublishedEntityFoo', name: foo1Name },
-        fields: {
-          title: 'Title',
-        },
-      });
+      if (expectOkResult(result)) {
+        expect(result.value).toHaveLength(2);
+        expectErrorResult(result.value[0], ErrorType.NotFound, 'No such entity');
+        expectResultValue(result.value[1], {
+          id: foo1Id,
+          info: { type: 'PublishedEntityFoo', name: foo1Name },
+          fields: {
+            title: 'Title',
+          },
+        });
+      }
     }
   });
 
@@ -175,8 +181,10 @@ describe('getEntities()', () => {
       expectResultValue(archiveResult, { id, publishState: EntityPublishState.Archived });
 
       const result = await publishedClient.getEntities([{ id }]);
-      expect(result).toHaveLength(1);
-      expectErrorResult(result[0], ErrorType.NotFound, 'No such entity');
+      if (expectOkResult(result)) {
+        expect(result.value).toHaveLength(1);
+        expectErrorResult(result.value[0], ErrorType.NotFound, 'No such entity');
+      }
     }
   });
 
@@ -185,8 +193,10 @@ describe('getEntities()', () => {
       { id: 'f09fdd62-4a1e-4320-afba-8dd0781799df' },
       { id: 'f09fdd62-4a1e-4320-4320-8dd0781799df' },
     ]);
-    expect(result).toHaveLength(2);
-    expectErrorResult(result[0], ErrorType.NotFound, 'No such entity');
-    expectErrorResult(result[1], ErrorType.NotFound, 'No such entity');
+    if (expectOkResult(result)) {
+      expect(result.value).toHaveLength(2);
+      expectErrorResult(result.value[0], ErrorType.NotFound, 'No such entity');
+      expectErrorResult(result.value[1], ErrorType.NotFound, 'No such entity');
+    }
   });
 });

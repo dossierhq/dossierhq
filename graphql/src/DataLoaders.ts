@@ -66,7 +66,10 @@ export async function loadEntities<TContext extends SessionGraphQLContext>(
   const schema = getSchema(context);
   const publishedClient = getPublishedClient(context);
   const results = await publishedClient.getEntities(ids.map((id) => ({ id })));
-  return results.map((result) => {
+  if (results.isError()) {
+    throw results.toError();
+  }
+  return results.value.map((result) => {
     if (result.isOk()) {
       return buildResolversForEntity(schema, result.value);
     }
@@ -111,7 +114,10 @@ export async function loadAdminEntities<TContext extends SessionGraphQLContext>(
   const schema = getSchema(context);
   const adminClient = getAdminClient(context);
   const results = await adminClient.getEntities(ids.map((id) => ({ id })));
-  return results.map((result) => {
+  if (results.isError()) {
+    throw results.toError();
+  }
+  return results.value.map((result) => {
     if (result.isOk()) {
       return buildResolversForAdminEntity(schema, result.value);
     }

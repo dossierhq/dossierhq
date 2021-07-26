@@ -73,9 +73,9 @@ export async function getEntity(
 export async function getEntities(
   context: SessionContext,
   ids: string[]
-): Promise<Result<AdminEntity, ErrorType.NotFound>[]> {
+): PromiseResult<Result<AdminEntity, ErrorType.NotFound>[], ErrorType.Generic> {
   if (ids.length === 0) {
-    return [];
+    return ok([]);
   }
 
   const entitiesMain = await Db.queryMany<AdminEntityValues>(
@@ -95,7 +95,7 @@ export async function getEntities(
     return ok(decodeAdminEntity(context, entityMain));
   });
 
-  return result;
+  return ok(result);
 }
 
 export async function searchEntities(

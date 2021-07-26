@@ -395,7 +395,9 @@ describe('getEntity()', () => {
 describe('getEntities()', () => {
   test('Get no entities', async () => {
     const result = await client.getEntities([]);
-    expect(result).toHaveLength(0);
+    if (expectOkResult(result)) {
+      expect(result.value).toHaveLength(0);
+    }
   });
 
   test('Get 2 entities', async () => {
@@ -419,27 +421,29 @@ describe('getEntities()', () => {
       } = createFoo2Result.value;
 
       const result = await client.getEntities([{ id: foo2Id }, { id: foo1Id }]);
-      expect(result).toHaveLength(2);
-      expectResultValue(result[0], {
-        id: foo2Id,
-        info: {
-          type: 'EntityAdminFoo',
-          name: foo2Name,
-          version: 0,
-          publishingState: EntityPublishState.Draft,
-        },
-        fields: { ...emptyFooFields, title: 'Title 2' },
-      });
-      expectResultValue(result[1], {
-        id: foo1Id,
-        info: {
-          type: 'EntityAdminFoo',
-          name: foo1Name,
-          version: 0,
-          publishingState: EntityPublishState.Draft,
-        },
-        fields: { ...emptyFooFields, title: 'Title 1' },
-      });
+      if (expectOkResult(result)) {
+        expect(result.value).toHaveLength(2);
+        expectResultValue(result.value[0], {
+          id: foo2Id,
+          info: {
+            type: 'EntityAdminFoo',
+            name: foo2Name,
+            version: 0,
+            publishingState: EntityPublishState.Draft,
+          },
+          fields: { ...emptyFooFields, title: 'Title 2' },
+        });
+        expectResultValue(result.value[1], {
+          id: foo1Id,
+          info: {
+            type: 'EntityAdminFoo',
+            name: foo1Name,
+            version: 0,
+            publishingState: EntityPublishState.Draft,
+          },
+          fields: { ...emptyFooFields, title: 'Title 1' },
+        });
+      }
     }
   });
 
@@ -458,17 +462,19 @@ describe('getEntities()', () => {
       expectOkResult(await client.updateEntity({ id: fooId, fields: { title: 'Updated title' } }));
 
       const result = await client.getEntities([{ id: fooId }]);
-      expect(result).toHaveLength(1);
-      expectResultValue(result[0], {
-        id: fooId,
-        info: {
-          type: 'EntityAdminFoo',
-          name: fooName,
-          version: 1,
-          publishingState: EntityPublishState.Draft,
-        },
-        fields: { ...emptyFooFields, title: 'Updated title' },
-      });
+      if (expectOkResult(result)) {
+        expect(result.value).toHaveLength(1);
+        expectResultValue(result.value[0], {
+          id: fooId,
+          info: {
+            type: 'EntityAdminFoo',
+            name: fooName,
+            version: 1,
+            publishingState: EntityPublishState.Draft,
+          },
+          fields: { ...emptyFooFields, title: 'Updated title' },
+        });
+      }
     }
   });
 
@@ -477,9 +483,11 @@ describe('getEntities()', () => {
       { id: '13e4c7da-616e-44a3-a039-24f96f9b17da' },
       { id: '13e4c7da-616e-44a3-44a3-24f96f9b17da' },
     ]);
-    expect(result).toHaveLength(2);
-    expectErrorResult(result[0], ErrorType.NotFound, 'No such entity');
-    expectErrorResult(result[1], ErrorType.NotFound, 'No such entity');
+    if (expectOkResult(result)) {
+      expect(result.value).toHaveLength(2);
+      expectErrorResult(result.value[0], ErrorType.NotFound, 'No such entity');
+      expectErrorResult(result.value[1], ErrorType.NotFound, 'No such entity');
+    }
   });
 });
 

@@ -1,4 +1,4 @@
-import type { AdminClient, AdminClientMiddleware, AdminClientOperation } from '.';
+import type { AdminClient, AdminClientMiddleware, AdminClientOperation, AdminEntity } from '.';
 import {
   AdminClientOperationName,
   convertAdminClientOperationToJson,
@@ -58,6 +58,19 @@ function createJsonConvertingAdminClientsForOperation<
   return { adminClient: outerAdminClient, operationHandlerMock };
 }
 
+function createDummyEntity({ id }: { id: string }): AdminEntity {
+  return {
+    id,
+    info: {
+      name: 'Foo name',
+      type: 'FooType',
+      version: 0,
+      publishingState: EntityPublishState.Draft,
+    },
+    fields: {},
+  };
+}
+
 //TODO test all operations
 describe('AdminClient forward operation over JSON', () => {
   test('archiveEntity', async () => {
@@ -91,6 +104,74 @@ describe('AdminClient forward operation over JSON', () => {
             ],
             "modifies": true,
             "name": "archiveEntity",
+            "next": [Function],
+            "resolve": [Function],
+          },
+        ],
+      ]
+    `);
+  });
+
+  test('getEntities', async () => {
+    const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
+      null,
+      AdminClientOperationName.getEntities,
+      async (_context, operation) => {
+        const [references] = operation.args;
+        operation.resolve(ok(references.map(({ id }) => ok(createDummyEntity({ id })))));
+      }
+    );
+
+    const result = await adminClient.getEntities([{ id: '1234' }, { id: '5678' }]);
+    expectOkResult(result) &&
+      expect(result.value).toMatchInlineSnapshot(`
+        Object {
+          "value": Array [
+            Object {
+              "value": Object {
+                "fields": Object {},
+                "id": "1234",
+                "info": Object {
+                  "name": "Foo name",
+                  "publishingState": "draft",
+                  "type": "FooType",
+                  "version": 0,
+                },
+              },
+            },
+            Object {
+              "value": Object {
+                "fields": Object {},
+                "id": "5678",
+                "info": Object {
+                  "name": "Foo name",
+                  "publishingState": "draft",
+                  "type": "FooType",
+                  "version": 0,
+                },
+              },
+            },
+          ],
+        }
+      `);
+
+    expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
+      Array [
+        Array [
+          null,
+          Object {
+            "args": Array [
+              Array [
+                Object {
+                  "id": "1234",
+                },
+                Object {
+                  "id": "5678",
+                },
+              ],
+            ],
+            "modifies": false,
+            "name": "getEntities",
             "next": [Function],
             "resolve": [Function],
           },
