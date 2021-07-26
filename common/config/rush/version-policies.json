@@ -12,7 +12,7 @@
   {
     "definitionName": "lockStepVersion",
     "policyName": "DataDataFramework",
-    "version": "0.1.1-10",
+    "version": "0.1.1-11",
     "nextBump": "prerelease"
   },
   {
