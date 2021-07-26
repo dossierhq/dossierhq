@@ -146,11 +146,9 @@ export type AdminClientOperation<
 
 export type AdminClientMiddleware<TContext> = Middleware<TContext, AdminClientOperation>;
 
-export interface AdminClientJsonOperation<
+export type AdminClientJsonOperation<
   TName extends AdminClientOperationName = AdminClientOperationName
-> {
-  args: AdminClientOperationArguments[TName];
-}
+> = AdminClientOperationArguments[TName];
 
 class BaseAdminClient<TContext> implements AdminClient {
   private readonly context: TContext | (() => Promise<TContext>);
@@ -325,7 +323,7 @@ export function convertAdminClientOperationToJson(
     case AdminClientOperationName.unpublishEntities:
     case AdminClientOperationName.updateEntity:
       //TODO cleanup args? e.g. reference, keep only id
-      return { args };
+      return args;
     default:
       assertExhaustive(operation.name);
   }
@@ -339,63 +337,63 @@ export async function executeAdminClientOperationFromJson<TName extends AdminCli
   switch (operationName) {
     case AdminClientOperationName.archiveEntity: {
       const [reference] =
-        operation.args as AdminClientOperationArguments[AdminClientOperationName.archiveEntity];
+        operation as AdminClientOperationArguments[AdminClientOperationName.archiveEntity];
       return await adminClient.archiveEntity(reference);
     }
     case AdminClientOperationName.createEntity: {
       const [entity] =
-        operation.args as AdminClientOperationArguments[AdminClientOperationName.createEntity];
+        operation as AdminClientOperationArguments[AdminClientOperationName.createEntity];
       return await adminClient.createEntity(entity);
     }
     case AdminClientOperationName.getEntities: {
       const [references] =
-        operation.args as AdminClientOperationArguments[AdminClientOperationName.getEntities];
+        operation as AdminClientOperationArguments[AdminClientOperationName.getEntities];
       const result = await adminClient.getEntities(references);
       return ok(result);
     }
     case AdminClientOperationName.getEntity: {
       const [reference] =
-        operation.args as AdminClientOperationArguments[AdminClientOperationName.getEntity];
+        operation as AdminClientOperationArguments[AdminClientOperationName.getEntity];
       return await adminClient.getEntity(reference);
     }
     case AdminClientOperationName.getEntityHistory: {
       const [reference] =
-        operation.args as AdminClientOperationArguments[AdminClientOperationName.getEntityHistory];
+        operation as AdminClientOperationArguments[AdminClientOperationName.getEntityHistory];
       return await adminClient.getEntityHistory(reference);
     }
     case AdminClientOperationName.getPublishingHistory: {
       const [reference] =
-        operation.args as AdminClientOperationArguments[AdminClientOperationName.getPublishingHistory];
+        operation as AdminClientOperationArguments[AdminClientOperationName.getPublishingHistory];
       return await adminClient.getPublishingHistory(reference);
     }
     case AdminClientOperationName.getTotalCount: {
       const [query] =
-        operation.args as AdminClientOperationArguments[AdminClientOperationName.getTotalCount];
+        operation as AdminClientOperationArguments[AdminClientOperationName.getTotalCount];
       return await adminClient.getTotalCount(query);
     }
     case AdminClientOperationName.publishEntities: {
       const [references] =
-        operation.args as AdminClientOperationArguments[AdminClientOperationName.publishEntities];
+        operation as AdminClientOperationArguments[AdminClientOperationName.publishEntities];
       return await adminClient.publishEntities(references);
     }
     case AdminClientOperationName.searchEntities: {
       const [query, paging] =
-        operation.args as AdminClientOperationArguments[AdminClientOperationName.searchEntities];
+        operation as AdminClientOperationArguments[AdminClientOperationName.searchEntities];
       return await adminClient.searchEntities(query, paging);
     }
     case AdminClientOperationName.unarchiveEntity: {
       const [reference] =
-        operation.args as AdminClientOperationArguments[AdminClientOperationName.unarchiveEntity];
+        operation as AdminClientOperationArguments[AdminClientOperationName.unarchiveEntity];
       return await adminClient.unarchiveEntity(reference);
     }
     case AdminClientOperationName.unpublishEntities: {
       const [references] =
-        operation.args as AdminClientOperationArguments[AdminClientOperationName.unpublishEntities];
+        operation as AdminClientOperationArguments[AdminClientOperationName.unpublishEntities];
       return await adminClient.unpublishEntities(references);
     }
     case AdminClientOperationName.updateEntity: {
       const [entity] =
-        operation.args as AdminClientOperationArguments[AdminClientOperationName.updateEntity];
+        operation as AdminClientOperationArguments[AdminClientOperationName.updateEntity];
       return await adminClient.updateEntity(entity);
     }
     default:
