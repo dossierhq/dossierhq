@@ -1,0 +1,39 @@
+name: Publish new versions
+
+on: workflow_dispatch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 16
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16.1.0
+      - name: rush install
+        run: node common/scripts/install-run-rush.js install
+      - name: rush change -v
+        run: node common/scripts/install-run-rush.js change -v
+      - name: start db
+        run: |
+          npm run db:start &
+          npm run db:wait
+      - name: setup db
+        run: |
+          npm run db:ensure-dbs
+          npm run db:make-users:superuser
+          npm run db:migrate:all
+          npm run db:make-users:no-superuser
+      - name: check
+        run: node common/scripts/install-run-rush.js ci:check --verbose
+      - name: stop db
+        run: npm run db:stop
+      - name: rush version
+        run: node common/scripts/install-run-rush.js version --bump --target-branch main
+      - name: rush publish
+        run: node common/scripts/install-run-rush.js publish --apply --publish -b main --include-all
+      - name: git push origin HEAD:publish
+        run: git push origin HEAD:publish
