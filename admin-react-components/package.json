@@ -6,7 +6,8 @@
   "types": "./lib/index.d.ts",
   "exports": {
     ".": "./lib/index.js",
-    "./": "./src/"
+    "./icons.css": "./lib/icons.css",
+    "./main.css": "./lib/main.css"
   },
   "scripts": {
     "build": "heft build",
