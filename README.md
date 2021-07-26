@@ -51,4 +51,4 @@ Check that the same versions of dependencies are used, run `rush check`.
 - `git add common/changes/ && git commit`
 - `rush version --bump --target-branch main`
 - `rush publish --apply --publish -b main --include-all`
-- `git push origin HEAD:publish`
+- `git push && git push origin HEAD:publish`
