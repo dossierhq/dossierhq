@@ -1,5 +1,10 @@
-import type { AdminClientOperationName, PromiseResult } from '@jonasb/datadata-core';
+import type {
+  AdminClientJsonOperation,
+  AdminClientOperationName,
+  PromiseResult,
+} from '@jonasb/datadata-core';
 import { createErrorResult, ErrorType, notOk, ok } from '@jonasb/datadata-core';
+import { encodeQuery } from './QueryUtils';
 
 export enum OperationStatus {
   None,
@@ -12,7 +17,8 @@ const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export const urls = {
   schema: `${baseUrl}/schema`,
-  admin: (operation: AdminClientOperationName): string => `${baseUrl}/admin/${operation}`,
+  admin: (operationName: AdminClientOperationName, operation?: AdminClientJsonOperation): string =>
+    `${baseUrl}/admin/${operationName}${operation ? `?${encodeQuery({ operation })}` : ''}`,
 };
 
 export async function fetchJson<T>(

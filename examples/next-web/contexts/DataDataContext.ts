@@ -3,7 +3,7 @@ import type {
   EditorJsToolSettings,
 } from '@jonasb/datadata-admin-react-components';
 import { DataDataContextValue } from '@jonasb/datadata-admin-react-components';
-import type { AdminClient, AdminClientOperation } from '@jonasb/datadata-core';
+import type { AdminClient, AdminClientOperation, ErrorType, Result } from '@jonasb/datadata-core';
 import {
   convertAdminClientOperationToJson,
   convertJsonAdminClientResult,
@@ -107,12 +107,20 @@ async function terminatingMiddleware(
   _context: BackendContext,
   operation: AdminClientOperation
 ): Promise<void> {
-  //TODO use get if !operation.modifies
-  const body = convertAdminClientOperationToJson(operation);
-  const result = await fetchJsonResult(urls.admin(operation.name), {
-    method: 'PUT',
-    headers: { 'content-type': 'application/json' },
-    body: JSON.stringify(body),
-  });
+  const jsonOperation = convertAdminClientOperationToJson(operation);
+
+  let result: Result<unknown, ErrorType>;
+  if (operation.modifies) {
+    result = await fetchJsonResult(urls.admin(operation.name), {
+      method: 'PUT',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(jsonOperation),
+    });
+  } else {
+    result = await fetchJsonResult(urls.admin(operation.name, jsonOperation), {
+      method: 'GET',
+      headers: { 'content-type': 'application/json' },
+    });
+  }
   operation.resolve(convertJsonAdminClientResult(operation.name, result));
 }
