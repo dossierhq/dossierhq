@@ -40,7 +40,7 @@ jobs:
       # - name: rush version
       #   run: node common/scripts/install-run-rush.js version --bump --target-branch main
       - name: rush publish
-        environment:
+        env:
           NPM_GITHUB_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: node common/scripts/install-run-rush.js publish --apply --publish -b main --include-all
       - name: git push to main and publish
