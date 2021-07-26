@@ -1,6 +1,6 @@
 import Boom from '@hapi/boom';
+import type { AdminClientJsonOperation } from '@jonasb/datadata-core';
 import {
-  AdminClientJsonOperation,
   AdminClientOperationName,
   executeAdminClientOperationFromJson,
 } from '@jonasb/datadata-core';
