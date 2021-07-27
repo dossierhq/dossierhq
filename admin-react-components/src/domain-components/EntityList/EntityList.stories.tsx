@@ -18,7 +18,11 @@ const meta: Meta<EntityListStoryProps> = {
 export default meta;
 
 const Template: Story<EntityListStoryProps> = (args) => {
-  const contextValueFactory = args?.contextValue;
+  return <Wrapper {...args} />;
+};
+
+function Wrapper(props: EntityListStoryProps) {
+  const contextValueFactory = props?.contextValue;
   const [contextValue, setContextValue] = useState(
     contextValueFactory ? null : createContextValue().contextValue
   );
@@ -32,10 +36,10 @@ const Template: Story<EntityListStoryProps> = (args) => {
   }
   return (
     <DataDataContext.Provider value={contextValue}>
-      <EntityList {...args} />
+      <EntityList {...props} />
     </DataDataContext.Provider>
   );
-};
+}
 
 export const Normal = Template.bind({});
 
