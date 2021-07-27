@@ -23,3 +23,6 @@ Normal.args = {};
 
 export const Checked = Template.bind({});
 Checked.args = { checked: true };
+
+export const CheckedDisabled = Template.bind({});
+CheckedDisabled.args = { checked: true, disabled: true };
