@@ -9,8 +9,19 @@ exports[`Storyshots Generic/Checkbox Checked 1`] = `
 />
 `;
 
+exports[`Storyshots Generic/Checkbox Checked Disabled 1`] = `
+<input
+  checked={true}
+  className="dd text-body1 input"
+  disabled={true}
+  onChange={[Function]}
+  type="checkbox"
+/>
+`;
+
 exports[`Storyshots Generic/Checkbox Normal 1`] = `
 <input
+  checked={false}
   className="dd text-body1 input"
   onChange={[Function]}
   type="checkbox"

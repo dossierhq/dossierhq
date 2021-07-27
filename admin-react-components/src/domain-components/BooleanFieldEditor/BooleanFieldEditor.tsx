@@ -7,7 +7,7 @@ type Props = EntityFieldEditorProps<boolean>;
 export function BooleanFieldEditor({ id, value, fieldSpec, onChange }: Props): JSX.Element {
   return (
     <div>
-      <Checkbox {...{ id, checked: value ?? undefined, onChange }} />
+      <Checkbox {...{ id, checked: value, onChange }} />
       {value !== null ? (
         <IconButton
           title={fieldSpec.list ? 'Remove item' : 'Clear'}

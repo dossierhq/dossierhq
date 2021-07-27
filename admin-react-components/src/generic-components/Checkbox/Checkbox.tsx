@@ -5,15 +5,15 @@ export interface CheckboxProps {
   id?: string;
   className?: string;
   onChange?: (value: boolean) => void;
-  readOnly?: boolean;
-  checked?: boolean;
+  disabled?: boolean;
+  checked: boolean | null;
 }
 
 export function Checkbox({
   id,
   className,
   onChange,
-  readOnly,
+  disabled,
   checked,
 }: CheckboxProps): JSX.Element {
   //TODO set indeterminate
@@ -22,8 +22,8 @@ export function Checkbox({
       id={id}
       className={joinClassNames('dd text-body1 input', className)}
       type="checkbox"
-      checked={checked}
-      readOnly={readOnly}
+      checked={checked ?? false}
+      disabled={disabled}
       onChange={onChange ? (event) => onChange(event.target.checked) : undefined}
     />
   );
