@@ -18,12 +18,15 @@ import {
   assertIsDefined,
   EntityPublishState,
   isLocationItemField,
+  isPagingForwards,
   notOk,
   ok,
   visitItemRecursively,
 } from '@jonasb/datadata-core';
 import { v4 as uuidv4 } from 'uuid';
 import type { InMemorySessionContext } from '.';
+
+const pagingDefaultCount = 25;
 
 export const InMemoryAdmin = {
   getEntity: async (
@@ -110,14 +113,28 @@ export const InMemoryAdmin = {
     if (entities.length === 0) {
       return ok(null);
     }
+
+    //TODO order by, also use different cursors based on order
+
+    const isForwards = isPagingForwards(paging);
+    const requestedCount = (isForwards ? paging?.first : paging?.last) ?? pagingDefaultCount;
+    const startIndex = paging?.after ? entities.findIndex((it) => it.id === paging.after) + 1 : 0;
+    const endIndex = paging?.before
+      ? entities.findIndex((it) => it.id === paging.before)
+      : entities.length;
+    const resolvedCount = Math.min(requestedCount, endIndex - startIndex);
+    const resolvedEndIndex = startIndex + resolvedCount;
+
+    const page = entities.slice(startIndex, resolvedEndIndex);
+
     return ok({
       pageInfo: {
-        hasPreviousPage: false,
-        hasNextPage: false,
-        startCursor: entities[0].id,
-        endCursor: entities[entities.length - 1].id,
+        hasPreviousPage: startIndex > 0,
+        hasNextPage: resolvedEndIndex < endIndex,
+        startCursor: page[0].id,
+        endCursor: page[page.length - 1].id,
       },
-      edges: entities.map((entity) => ({ cursor: entity.id, node: ok(entity) })),
+      edges: page.map((entity) => ({ cursor: entity.id, node: ok(entity) })),
     });
   },
 

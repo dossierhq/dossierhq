@@ -506,10 +506,18 @@ ul.dd li {
   cursor: pointer;
 }
 
+.dd.button:disabled {
+  cursor: inherit;
+}
+
 .dd.icon-button {
   padding: 0.25em;
   cursor: pointer;
   border: none;
+}
+
+.dd.icon-button:disabled {
+  cursor: inherit;
 }
 
 .dd.form-control {
