@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-graphql",
+      "comment": "Support boolean type",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-graphql",
+  "email": "jonas.b@gmail.com"
+}
