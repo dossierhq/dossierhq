@@ -12,10 +12,13 @@ export interface ValueTypeSpecification {
 }
 
 export enum FieldType {
+  Boolean = 'Boolean',
+  //TODO rename to Entity?
   EntityType = 'EntityType',
   Location = 'Location',
   RichText = 'RichText',
   String = 'String',
+  //TODO rename to ValueItem?
   ValueType = 'ValueType',
 }
 
@@ -44,6 +47,7 @@ export interface FieldSpecification {
 }
 
 export interface FieldValueTypeMap {
+  [FieldType.Boolean]: boolean;
   [FieldType.EntityType]: EntityReference;
   [FieldType.Location]: Location;
   [FieldType.RichText]: RichText;

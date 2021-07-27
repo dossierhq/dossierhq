@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots Generic/Checkbox Checked 1`] = `
+<input
+  checked={true}
+  className="dd text-body1 input"
+  onChange={[Function]}
+  type="checkbox"
+/>
+`;
+
+exports[`Storyshots Generic/Checkbox Normal 1`] = `
+<input
+  className="dd text-body1 input"
+  onChange={[Function]}
+  type="checkbox"
+/>
+`;

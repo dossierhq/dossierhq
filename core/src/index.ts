@@ -23,6 +23,9 @@ export {
 } from './ErrorResult';
 export type { ErrorResult, OkResult, PromiseResult, Result } from './ErrorResult';
 export {
+  isBooleanField,
+  isBooleanItemField,
+  isBooleanListField,
   isEntityTypeField,
   isEntityTypeItemField,
   isEntityTypeListField,

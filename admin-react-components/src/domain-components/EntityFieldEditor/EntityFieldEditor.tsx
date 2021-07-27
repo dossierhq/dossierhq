@@ -1,6 +1,7 @@
-import React from 'react';
 import type { FieldSpecification } from '@jonasb/datadata-core';
 import {
+  isBooleanField,
+  isBooleanListField,
   isEntityTypeField,
   isEntityTypeListField,
   isLocationField,
@@ -12,7 +13,9 @@ import {
   isValueTypeField,
   isValueTypeListField,
 } from '@jonasb/datadata-core';
+import React from 'react';
 import {
+  BooleanFieldEditor,
   EntityFieldListWrapper,
   EntityItemFieldEditor,
   FormField,
@@ -45,7 +48,21 @@ export function EntityFieldEditor({
   const id = `${idPrefix}-${fieldSpec.name}`;
 
   let editor;
-  if (isStringField(fieldSpec, value)) {
+  if (isBooleanField(fieldSpec, value)) {
+    editor = (
+      <BooleanFieldEditor id={id} value={value} fieldSpec={fieldSpec} onChange={onValueChanged} />
+    );
+  } else if (isBooleanListField(fieldSpec, value)) {
+    editor = (
+      <EntityFieldListWrapper
+        id={id}
+        value={value}
+        fieldSpec={fieldSpec}
+        onChange={onValueChanged}
+        Editor={BooleanFieldEditor}
+      />
+    );
+  } else if (isStringField(fieldSpec, value)) {
     editor = (
       <StringFieldEditor id={id} value={value} fieldSpec={fieldSpec} onChange={onValueChanged} />
     );

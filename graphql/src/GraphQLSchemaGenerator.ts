@@ -1,10 +1,3 @@
-import {
-  FieldType,
-  isItemValueItem,
-  isRichTextField,
-  isValueTypeField,
-  notOk,
-} from '@jonasb/datadata-core';
 import type {
   AdminClient,
   AdminEntity,
@@ -20,6 +13,23 @@ import type {
   ValueItem,
   ValueTypeSpecification,
 } from '@jonasb/datadata-core';
+import {
+  FieldType,
+  isItemValueItem,
+  isRichTextField,
+  isValueTypeField,
+  notOk,
+} from '@jonasb/datadata-core';
+import type {
+  GraphQLEnumValueConfigMap,
+  GraphQLFieldConfig,
+  GraphQLFieldConfigMap,
+  GraphQLInputFieldConfigMap,
+  GraphQLInputType,
+  GraphQLNamedType,
+  GraphQLOutputType,
+  GraphQLSchemaConfig,
+} from 'graphql';
 import {
   GraphQLBoolean,
   GraphQLEnumType,
@@ -37,16 +47,6 @@ import {
   isInputType,
   isInterfaceType,
   isOutputType,
-} from 'graphql';
-import type {
-  GraphQLEnumValueConfigMap,
-  GraphQLFieldConfig,
-  GraphQLFieldConfigMap,
-  GraphQLInputFieldConfigMap,
-  GraphQLInputType,
-  GraphQLNamedType,
-  GraphQLOutputType,
-  GraphQLSchemaConfig,
 } from 'graphql';
 import {
   loadAdminEntities,
@@ -767,7 +767,10 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
   ): void {
     for (const fieldSpec of typeSpec.fields) {
       let fieldType;
-      switch (fieldSpec.type) {
+      switch (fieldSpec.type as FieldType) {
+        case FieldType.Boolean:
+          fieldType = GraphQLBoolean;
+          break;
         case FieldType.EntityType:
           fieldType = this.getOrCreateEntityUnion(isAdmin, fieldSpec.entityTypes ?? []);
           break;
@@ -800,6 +803,9 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     for (const fieldSpec of typeSpec.fields) {
       let fieldType;
       switch (fieldSpec.type) {
+        case FieldType.Boolean:
+          fieldType = GraphQLBoolean;
+          break;
         case FieldType.EntityType:
           fieldType = this.getInputType('AdminReferenceInput');
           break;

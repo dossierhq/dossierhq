@@ -19,7 +19,7 @@ type Query {
 "
 `;
 
-exports[`List of strings, locations and references schema spec Generated QL schema 1`] = `
+exports[`List of strings, booleans, locations and references schema spec Generated QL schema 1`] = `
 "interface Node {
   id: ID!
 }
@@ -69,6 +69,7 @@ input BoundingBoxInput {
 
 type FooFields {
   strings: [String!]
+  booleans: [Boolean!]
   locations: [Location!]
   bars: [Bar!]
 }
@@ -181,6 +182,7 @@ type EntityPublishPayload {
 
 type AdminFooFields {
   strings: [String!]
+  booleans: [Boolean!]
   locations: [Location!]
   bars: [AdminBar!]
 }
@@ -193,6 +195,7 @@ type AdminFoo implements AdminEntity {
 
 input AdminFooFieldsInput {
   strings: [String!]
+  booleans: [Boolean!]
   locations: [LocationInput!]
   bars: [AdminReferenceInput!]
 }
@@ -970,6 +973,7 @@ type BarFields {
   barField1: String
   barField2: Entity
   barField3: Location
+  barField4: Boolean
 }
 
 type Bar implements Node & Entity {
@@ -1103,6 +1107,7 @@ type AdminBarFields {
   barField1: String
   barField2: AdminEntity
   barField3: Location
+  barField4: Boolean
 }
 
 type AdminBar implements AdminEntity {
@@ -1115,6 +1120,7 @@ input AdminBarFieldsInput {
   barField1: String
   barField2: AdminReferenceInput
   barField3: LocationInput
+  barField4: Boolean
 }
 
 input AdminBarCreateInput {
@@ -1233,6 +1239,7 @@ type ValueOne implements Value {
   one: String
   two: Bar
   three: Location
+  four: Boolean
 }
 
 type ValueList implements Value {
@@ -1240,6 +1247,7 @@ type ValueList implements Value {
   one: [String!]
   two: [Bar!]
   three: [Location!]
+  four: [Boolean!]
 }
 
 type NestedValue implements Value {
@@ -1401,6 +1409,7 @@ type AdminValueOne implements AdminValue {
   one: String
   two: AdminBar
   three: Location
+  four: Boolean
 }
 
 input AdminValueOneInput {
@@ -1408,6 +1417,7 @@ input AdminValueOneInput {
   one: String
   two: AdminReferenceInput
   three: LocationInput
+  four: Boolean
 }
 
 type AdminValueList implements AdminValue {
@@ -1415,6 +1425,7 @@ type AdminValueList implements AdminValue {
   one: [String!]
   two: [AdminBar!]
   three: [Location!]
+  four: [Boolean!]
 }
 
 input AdminValueListInput {
@@ -1422,6 +1433,7 @@ input AdminValueListInput {
   one: [String!]
   two: [AdminReferenceInput!]
   three: [LocationInput!]
+  four: [Boolean!]
 }
 
 type AdminNestedValue implements AdminValue {
