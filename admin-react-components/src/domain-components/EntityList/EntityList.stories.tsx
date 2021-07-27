@@ -1,11 +1,15 @@
 import type { Meta, Story } from '@storybook/react/types-6-0';
-import React from 'react';
-import { DataDataContext } from '../..';
-import { EntityList } from './EntityList';
+import React, { useEffect, useState } from 'react';
+import type { DataDataContextValue } from '../..';
+import { DataDataContext, EntityList } from '../..';
+import { createContextValue, loadManyBarEntities } from '../../test/TestContextAdapter';
 import type { EntityListProps } from './EntityList';
-import { createContextValue } from '../../test/TestContextAdapter';
 
-const meta: Meta<EntityListProps> = {
+interface EntityListStoryProps extends EntityListProps {
+  contextValue?: () => Promise<DataDataContextValue>;
+}
+
+const meta: Meta<EntityListStoryProps> = {
   title: 'Domain/EntityList',
   component: EntityList,
   argTypes: { onEntityClick: { action: 'entity-click' } },
@@ -13,12 +17,33 @@ const meta: Meta<EntityListProps> = {
 };
 export default meta;
 
-const Template: Story<EntityListProps> = (args) => {
+const Template: Story<EntityListStoryProps> = (args) => {
+  const contextValueFactory = args?.contextValue;
+  const [contextValue, setContextValue] = useState(
+    contextValueFactory ? null : createContextValue().contextValue
+  );
+
+  useEffect(() => {
+    contextValueFactory?.().then(setContextValue);
+  }, [contextValueFactory]);
+
+  if (!contextValue) {
+    return <></>;
+  }
   return (
-    <DataDataContext.Provider value={createContextValue().contextValue}>
+    <DataDataContext.Provider value={contextValue}>
       <EntityList {...args} />
     </DataDataContext.Provider>
   );
 };
 
 export const Normal = Template.bind({});
+
+export const ManyItems = Template.bind({});
+ManyItems.args = {
+  contextValue: async () => {
+    const { contextValue, adminClient } = createContextValue();
+    await loadManyBarEntities(adminClient, 321);
+    return contextValue;
+  },
+};

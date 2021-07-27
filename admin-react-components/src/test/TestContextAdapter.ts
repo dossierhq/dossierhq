@@ -1,11 +1,13 @@
 import type { AdminClient, AdminClientMiddleware } from '@jonasb/datadata-core';
 import { createInMemoryAdminClient, InMemoryServer } from '@jonasb/datadata-testing-utils';
 import type { InMemorySessionContext } from '@jonasb/datadata-testing-utils';
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4, v5 as uuidv5 } from 'uuid';
 import type { DataDataContextAdapter } from '..';
 import { DataDataContextValue } from '..';
 import { entitiesFixture } from './EntityFixtures';
 import schema from '../stories/StoryboardSchema';
+
+const GENERATE_ENTITIES_UUID_NAMESPACE = '96597f34-8654-4f66-b98d-3e9f5bb7cc9a';
 
 export function createContextValue({
   adapter,
@@ -53,4 +55,19 @@ export class TestContextAdapter implements DataDataContextAdapter {
   ) => {
     return { tools: standardBlockTools, inlineToolbar: standardInlineTools };
   };
+}
+
+export async function loadManyBarEntities(
+  adminClient: AdminClient,
+  entityCount: number
+): Promise<void> {
+  for (let i = 0; i < entityCount; i += 1) {
+    const id = uuidv5(`bar-${i}`, GENERATE_ENTITIES_UUID_NAMESPACE);
+    const result = await adminClient.createEntity({
+      id,
+      info: { type: 'Bar', name: `Generated bar ${i}` },
+      fields: { title: `Generated bar ${i}` },
+    });
+    result.throwIfError();
+  }
 }
