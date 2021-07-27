@@ -13,6 +13,30 @@ import type {
 } from '.';
 import { FieldType, RichTextBlockType } from '.';
 
+/** Check if `value` with `fieldSpec` is a single boolean field */
+export function isBooleanField(
+  fieldSpec: FieldSpecification,
+  value: unknown | null
+): value is FieldValueTypeMap[FieldType.Boolean] | null {
+  return fieldSpec.type === FieldType.Boolean && !fieldSpec.list;
+}
+
+/** Check if `value` with `fieldSpec` is a list boolean field */
+export function isBooleanListField(
+  fieldSpec: FieldSpecification,
+  value: unknown | null
+): value is Array<FieldValueTypeMap[FieldType.Boolean]> | null {
+  return fieldSpec.type === FieldType.Boolean && !!fieldSpec.list;
+}
+
+/** Check if `value` with `fieldSpec` is either a single boolean field or an item in a list field */
+export function isBooleanItemField(
+  fieldSpec: FieldSpecification,
+  value: unknown | null
+): value is FieldValueTypeMap[FieldType.Boolean] | null {
+  return fieldSpec.type === FieldType.Boolean;
+}
+
 /** Check if `value` with `fieldSpec` is a single EntityType field */
 export function isEntityTypeField(
   fieldSpec: FieldSpecification,

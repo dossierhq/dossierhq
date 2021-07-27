@@ -47,6 +47,10 @@ Object {
             "initialValue": null,
             "value": null,
           },
+          Object {
+            "initialValue": null,
+            "value": null,
+          },
         ],
         "initialName": "",
         "name": "",
@@ -165,6 +169,10 @@ Object {
                 },
               ],
             },
+          },
+          Object {
+            "initialValue": null,
+            "value": null,
           },
           Object {
             "initialValue": Object {

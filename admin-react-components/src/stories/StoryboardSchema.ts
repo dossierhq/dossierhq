@@ -12,6 +12,7 @@ const schema = new Schema({
         { name: 'bar', type: FieldType.EntityType, entityTypes: ['Bar'] },
         { name: 'bars', type: FieldType.EntityType, entityTypes: ['Bar'], list: true },
         { name: 'body', type: FieldType.RichText },
+        { name: 'active', type: FieldType.Boolean },
         { name: 'annotatedBar', type: FieldType.ValueType, valueTypes: ['AnnotatedBar'] },
         {
           name: 'annotatedBars',

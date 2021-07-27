@@ -38,12 +38,15 @@ let entitiesOfTypeAdminOnlyEditBefore: AdminEntity[];
 
 const emptyFooFields = { bar: null, summary: null, title: null };
 const emptyBazFields = {
+  active: null,
+  activeList: null,
   bar: null,
   bars: null,
   baz: null,
   body: null,
   bodyList: null,
   bodyOnlyParagraph: null,
+  booleanString: null,
   listFields: null,
   listFieldsList: null,
   location: null,
@@ -80,6 +83,8 @@ beforeAll(async () => {
           { name: 'bar', type: FieldType.EntityType, entityTypes: ['EntityAdminBar'] },
           { name: 'baz', type: FieldType.EntityType, entityTypes: ['EntityAdminBaz'] },
           { name: 'tags', type: FieldType.String, list: true },
+          { name: 'active', type: FieldType.Boolean },
+          { name: 'activeList', type: FieldType.Boolean, list: true },
           { name: 'body', type: FieldType.RichText },
           {
             name: 'bodyOnlyParagraph',
@@ -110,6 +115,11 @@ beforeAll(async () => {
             type: FieldType.ValueType,
             valueTypes: ['EntityAdminTwoStrings'],
             list: true,
+          },
+          {
+            name: 'booleanString',
+            type: FieldType.ValueType,
+            valueTypes: ['EntityAdminBooleanString'],
           },
           {
             name: 'stringReference',
@@ -146,6 +156,13 @@ beforeAll(async () => {
         fields: [
           { name: 'one', type: FieldType.String },
           { name: 'two', type: FieldType.String },
+        ],
+      },
+      {
+        name: 'EntityAdminBooleanString',
+        fields: [
+          { name: 'boolean', type: FieldType.Boolean },
+          { name: 'string', type: FieldType.String },
         ],
       },
       {
@@ -736,6 +753,43 @@ describe('createEntity()', () => {
     }
   });
 
+  test('Create EntityAdminBaz with boolean and boolean list', async () => {
+    const createResult = await client.createEntity({
+      info: { type: 'EntityAdminBaz', name: 'Baz' },
+      fields: { active: true, activeList: [true, false, true] },
+    });
+    if (expectOkResult(createResult)) {
+      const {
+        id,
+        info: { name },
+      } = createResult.value;
+      expectResultValue(createResult, {
+        id,
+        info: {
+          type: 'EntityAdminBaz',
+          name,
+          version: 0,
+          publishingState: EntityPublishState.Draft,
+        },
+        fields: { ...emptyBazFields, active: true, activeList: [true, false, true] },
+      });
+
+      const getResult = await client.getEntity({ id });
+      if (expectOkResult(getResult)) {
+        expectResultValue(getResult, {
+          id,
+          info: {
+            type: 'EntityAdminBaz',
+            name,
+            version: 0,
+            publishingState: EntityPublishState.Draft,
+          },
+          fields: { ...emptyBazFields, active: true, activeList: [true, false, true] },
+        });
+      }
+    }
+  });
+
   test('Create EntityAdminBaz with rich text and rich text list', async () => {
     const createResult = await client.createEntity({
       info: { type: 'EntityAdminBaz', name: 'Baz' },
@@ -1098,6 +1152,49 @@ describe('createEntity()', () => {
             { type: 'EntityAdminTwoStrings', one: 'First', two: 'Second' },
             { type: 'EntityAdminTwoStrings', one: 'Three', two: 'Four' },
           ],
+        },
+      });
+    }
+  });
+
+  test('Create EntityAdminBaz with EntityAdminBooleanString value type', async () => {
+    const createResult = await client.createEntity({
+      info: { type: 'EntityAdminBaz', name: 'Baz' },
+      fields: {
+        booleanString: { type: 'EntityAdminBooleanString', boolean: true, string: 'String' },
+      },
+    });
+    if (expectOkResult(createResult)) {
+      const {
+        id,
+        info: { name },
+      } = createResult.value;
+      expectResultValue(createResult, {
+        id,
+        info: {
+          type: 'EntityAdminBaz',
+          name,
+          version: 0,
+          publishingState: EntityPublishState.Draft,
+        },
+        fields: {
+          ...emptyBazFields,
+          booleanString: { type: 'EntityAdminBooleanString', boolean: true, string: 'String' },
+        },
+      });
+
+      const getResult = await client.getEntity({ id });
+      expectResultValue(getResult, {
+        id,
+        info: {
+          type: 'EntityAdminBaz',
+          name,
+          version: 0,
+          publishingState: EntityPublishState.Draft,
+        },
+        fields: {
+          ...emptyBazFields,
+          booleanString: { type: 'EntityAdminBooleanString', boolean: true, string: 'String' },
         },
       });
     }

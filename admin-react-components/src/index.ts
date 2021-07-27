@@ -19,7 +19,9 @@ export type { LayoutProps, SpacingSize } from './types/LayoutTypes';
 export type { MessageItem } from './generic-components/Message/Message';
 export type { RowProps } from './generic-components/Row/Row';
 
+export { BooleanFieldEditor } from './domain-components/BooleanFieldEditor/BooleanFieldEditor';
 export { Button } from './generic-components/Button/Button';
+export { Checkbox } from './generic-components/Checkbox/Checkbox';
 export { ButtonWithDropDown } from './generic-components/ButtonWithDropDown/ButtonWithDropDown';
 export {
   Column,

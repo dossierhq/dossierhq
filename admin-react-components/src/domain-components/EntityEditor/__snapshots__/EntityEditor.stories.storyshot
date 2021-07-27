@@ -221,6 +221,26 @@ exports[`Storyshots Domain/EntityEditor Archived Foo 1`] = `
     <div>
       <label
         className="dd text-subtitle1"
+        htmlFor="fb62be03-a0a9-4689-9987-bacee0e7692d-active"
+      >
+        active
+      </label>
+      <div
+        className="dd form-control"
+      >
+        <div>
+          <input
+            className="dd text-body1 input"
+            id="fb62be03-a0a9-4689-9987-bacee0e7692d-active"
+            onChange={[Function]}
+            type="checkbox"
+          />
+        </div>
+      </div>
+    </div>
+    <div>
+      <label
+        className="dd text-subtitle1"
         htmlFor="fb62be03-a0a9-4689-9987-bacee0e7692d-annotatedBar"
       >
         annotatedBar
@@ -979,6 +999,26 @@ exports[`Storyshots Domain/EntityEditor Full Foo 1`] = `
     <div>
       <label
         className="dd text-subtitle1"
+        htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-active"
+      >
+        active
+      </label>
+      <div
+        className="dd form-control"
+      >
+        <div>
+          <input
+            className="dd text-body1 input"
+            id="fc66b4d7-61ff-44d4-8f68-cb7f526df046-active"
+            onChange={[Function]}
+            type="checkbox"
+          />
+        </div>
+      </div>
+    </div>
+    <div>
+      <label
+        className="dd text-subtitle1"
         htmlFor="fc66b4d7-61ff-44d4-8f68-cb7f526df046-annotatedBar"
       >
         annotatedBar
@@ -1576,6 +1616,26 @@ exports[`Storyshots Domain/EntityEditor New Foo 1`] = `
             className="dd text-body1 rich-text px-1"
             data-editorinitialized="false"
             id="82ded109-44f2-48b9-a676-43162fda3d7d-body"
+          />
+        </div>
+      </div>
+    </div>
+    <div>
+      <label
+        className="dd text-subtitle1"
+        htmlFor="82ded109-44f2-48b9-a676-43162fda3d7d-active"
+      >
+        active
+      </label>
+      <div
+        className="dd form-control"
+      >
+        <div>
+          <input
+            className="dd text-body1 input"
+            id="82ded109-44f2-48b9-a676-43162fda3d7d-active"
+            onChange={[Function]}
+            type="checkbox"
           />
         </div>
       </div>

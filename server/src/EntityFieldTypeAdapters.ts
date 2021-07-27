@@ -12,6 +12,17 @@ export interface FieldTypeAdapter<TDecoded = unknown, TEncoded = unknown> {
   getReferenceUUIDs(decodedData: TDecoded): null | string[];
 }
 
+const booleanCodec: FieldTypeAdapter<FieldValueTypeMap[FieldType.Boolean], boolean> = {
+  encodeData: (prefix: string, data) =>
+    typeof data === 'boolean'
+      ? ok(data)
+      : notOk.BadRequest(
+          `${prefix}: expected boolean, got ${Array.isArray(data) ? 'list' : typeof data}`
+        ),
+  decodeData: (x) => x,
+  getReferenceUUIDs: (_x) => null,
+};
+
 const entityTypeCodec: FieldTypeAdapter<FieldValueTypeMap[FieldType.EntityType], string> = {
   encodeData: (prefix: string, x) => {
     if (Array.isArray(x)) {
@@ -75,6 +86,7 @@ const invalidCodec: FieldTypeAdapter<FieldValueTypeMap[FieldType.ValueType], unk
 };
 
 const adapters: Record<FieldType, FieldTypeAdapter<unknown>> = {
+  [FieldType.Boolean]: booleanCodec,
   [FieldType.EntityType]: entityTypeCodec,
   [FieldType.Location]: locationCodec,
   [FieldType.RichText]: invalidCodec,

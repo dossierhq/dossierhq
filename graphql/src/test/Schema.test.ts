@@ -339,6 +339,7 @@ describe('Two entity types with reference schema spec', () => {
           { name: 'barField1', type: FieldType.String },
           { name: 'barField2', type: FieldType.EntityType },
           { name: 'barField3', type: FieldType.Location },
+          { name: 'barField4', type: FieldType.Boolean },
         ],
       },
     ],
@@ -382,13 +383,14 @@ describe('Multiple references with entityTypes schema spec', () => {
   });
 });
 
-describe('List of strings, locations and references schema spec', () => {
+describe('List of strings, booleans, locations and references schema spec', () => {
   const schemaSpec = {
     entityTypes: [
       {
         name: 'Foo',
         fields: [
           { name: 'strings', type: FieldType.String, list: true },
+          { name: 'booleans', type: FieldType.Boolean, list: true },
           { name: 'locations', type: FieldType.Location, list: true },
           { name: 'bars', type: FieldType.EntityType, list: true, entityTypes: ['Bar'] },
         ],
@@ -428,6 +430,7 @@ describe('Value type schema spec', () => {
           { name: 'one', type: FieldType.String },
           { name: 'two', type: FieldType.EntityType, entityTypes: ['Bar'] },
           { name: 'three', type: FieldType.Location },
+          { name: 'four', type: FieldType.Boolean },
         ],
       },
       {
@@ -436,6 +439,7 @@ describe('Value type schema spec', () => {
           { name: 'one', type: FieldType.String, list: true },
           { name: 'two', type: FieldType.EntityType, list: true, entityTypes: ['Bar'] },
           { name: 'three', type: FieldType.Location, list: true },
+          { name: 'four', type: FieldType.Boolean, list: true },
         ],
       },
       {

@@ -41,6 +41,8 @@ const schemaSpecification: Partial<SchemaSpecification> = {
         { name: 'body', type: FieldType.RichText },
         { name: 'location', type: FieldType.Location },
         { name: 'locations', type: FieldType.Location, list: true },
+        { name: 'active', type: FieldType.Boolean },
+        { name: 'activeList', type: FieldType.Boolean, list: true },
         { name: 'bar', type: FieldType.EntityType, entityTypes: ['QueryAdminBar'] },
         {
           name: 'bars',
@@ -201,6 +203,8 @@ describe('adminEntity()', () => {
         title: 'Howdy title',
         summary: 'Howdy summary',
         tags: ['one', 'two', 'three'],
+        active: true,
+        activeList: [true, false, true],
         location: { lat: 55.60498, lng: 13.003822 },
         locations: [
           { lat: 55.60498, lng: 13.003822 },
@@ -233,6 +237,8 @@ describe('adminEntity()', () => {
                   title
                   summary
                   tags
+                  active
+                  activeList
                   location {
                     lat
                     lng
@@ -266,6 +272,8 @@ describe('adminEntity()', () => {
               title: 'Howdy title',
               summary: 'Howdy summary',
               tags: ['one', 'two', 'three'],
+              active: true,
+              activeList: [true, false, true],
               location: { lat: 55.60498, lng: 13.003822 },
               locations: [
                 { lat: 55.60498, lng: 13.003822 },
@@ -307,6 +315,8 @@ describe('adminEntity()', () => {
                   title
                   summary
                   tags
+                  active
+                  activeList
                   bar {
                     id
                   }
@@ -348,6 +358,8 @@ describe('adminEntity()', () => {
               title: null,
               summary: null,
               tags: null,
+              active: null,
+              activeList: null,
               bar: null,
               bars: null,
               location: null,
