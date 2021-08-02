@@ -36,7 +36,7 @@
     "@jonasb/datadata-postgres": "0.1.1-14",
     "@jonasb/datadata-server": "0.1.1-14",
     "@jonasb/datadata-testing-utils": "0.1.1-14",
-    "@rushstack/heft": "~0.34.8",
+    "@rushstack/heft": "~0.35.0",
     "@rushstack/heft-jest-plugin": "~0.1.14",
     "@types/heft-jest": "1.0.2",
     "@types/uuid": "^8.3.0",
