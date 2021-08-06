@@ -77,7 +77,7 @@ export interface AdminEntityInfo {
 }
 
 export interface AdminEntityCreate {
-  /** UUIDv4. If not provided a new id will be created */
+  /** UUID. If not provided a new id will be created */
   id?: string;
   info: {
     type: string;
@@ -96,6 +96,20 @@ export interface AdminEntityUpdate {
     version?: number;
   };
   fields?: Record<string, unknown>;
+}
+
+export interface AdminEntityUpsert {
+  id: string;
+  info: {
+    name: string;
+    type: string;
+  };
+  fields?: Record<string, unknown>;
+}
+
+export interface AdminEntityUpsertPayload {
+  effect: 'created' | 'updated' | 'none';
+  entity: AdminEntity;
 }
 
 export interface EntityHistory {

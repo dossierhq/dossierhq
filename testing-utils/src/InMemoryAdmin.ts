@@ -2,11 +2,12 @@ import type {
   AdminEntity,
   AdminEntityCreate,
   AdminEntityUpdate,
+  AdminEntityUpsert,
+  AdminEntityUpsertPayload,
   AdminQuery,
   Connection,
   Edge,
   EntityHistory,
-  ErrorType,
   Location,
   Paging,
   PromiseResult,
@@ -17,6 +18,7 @@ import type {
 import {
   assertIsDefined,
   EntityPublishState,
+  ErrorType,
   isLocationItemField,
   isPagingForwards,
   notOk,
@@ -197,6 +199,31 @@ export const InMemoryAdmin = {
     const afterUpdate = context.server.getEntity(entity.id);
     assertIsDefined(afterUpdate);
     return ok(afterUpdate);
+  },
+
+  upsertEntity: async (
+    context: InMemorySessionContext,
+    entity: AdminEntityUpsert
+  ): PromiseResult<AdminEntityUpsertPayload, ErrorType.BadRequest | ErrorType.Generic> => {
+    const existingEntity = context.server.getEntity(entity.id);
+
+    if (!existingEntity) {
+      const createResult = await InMemoryAdmin.createEntity(context, entity);
+      return createResult.isOk()
+        ? createResult.map((entity) => ({ effect: 'created', entity }))
+        : createResult;
+      // TODO check effect of create. If conflict it could be created after we fetched entityInfo, so try to update
+    }
+
+    //TODO remove name if similar. Support none effect
+    const updateResult = await InMemoryAdmin.updateEntity(context, entity);
+    if (updateResult.isOk()) {
+      return updateResult.map((entity) => ({ effect: 'updated', entity }));
+    }
+    if (updateResult.isErrorType(ErrorType.BadRequest)) {
+      return updateResult;
+    }
+    return notOk.Generic(`Unexpected NotFound error: ${updateResult.message}`);
   },
 
   publishEntities: async (

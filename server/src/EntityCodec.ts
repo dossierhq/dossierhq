@@ -296,6 +296,7 @@ export function resolveUpdateEntity(
   }
 
   for (const fieldSpec of entitySpec.fields) {
+    //TODO check if there are any changes compared to previous version, if so create no new version
     const fieldName = fieldSpec.name;
     if (entity.fields && fieldName in entity.fields) {
       result.fields[fieldName] = entity.fields[fieldName];
