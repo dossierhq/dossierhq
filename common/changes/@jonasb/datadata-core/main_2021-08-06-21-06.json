@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-core",
+      "comment": "upsertEntity() support in AdminClient",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-core",
+  "email": "jonas.b@gmail.com"
+}
