@@ -3,6 +3,7 @@
     "Queryable",
     "SAVEPOINT",
     "Unpublish",
+    "Upsert",
     "datadata",
     "dockest",
     "jonasb",
