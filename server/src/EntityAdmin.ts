@@ -1,14 +1,14 @@
-import { EntityPublishState, notOk, ok } from '@jonasb/datadata-core';
 import type {
   AdminEntity,
   AdminEntityCreate,
   AdminEntityUpdate,
+  AdminEntityUpsert,
+  AdminEntityUpsertPayload,
   AdminQuery,
   Connection,
   Edge,
   EntityHistory,
   EntityVersionInfo,
-  ErrorType,
   Paging,
   PromiseResult,
   PublishingEvent,
@@ -17,6 +17,7 @@ import type {
   PublishingResult,
   Result,
 } from '@jonasb/datadata-core';
+import { EntityPublishState, ErrorType, notOk, ok } from '@jonasb/datadata-core';
 import type { SessionContext } from '.';
 import { toOpaqueCursor } from './Connection';
 import * as Db from './Database';
@@ -25,6 +26,7 @@ import type {
   EntityPublishingEventsTable,
   EntityVersionsTable,
 } from './DatabaseTables';
+import type { AdminEntityValues } from './EntityCodec';
 import {
   decodeAdminEntity,
   encodeEntity,
@@ -32,10 +34,9 @@ import {
   resolvePublishState,
   resolveUpdateEntity,
 } from './EntityCodec';
-import type { AdminEntityValues } from './EntityCodec';
 import QueryBuilder from './QueryBuilder';
-import { searchAdminEntitiesQuery, totalAdminEntitiesQuery } from './QueryGenerator';
 import type { SearchAdminEntitiesItem } from './QueryGenerator';
+import { searchAdminEntitiesQuery, totalAdminEntitiesQuery } from './QueryGenerator';
 
 export async function getEntity(
   context: SessionContext,
@@ -354,6 +355,35 @@ export async function updateEntity(
 
     return ok(updatedEntity);
   });
+}
+
+export async function upsertEntity(
+  context: SessionContext,
+  entity: AdminEntityUpsert
+): PromiseResult<AdminEntityUpsertPayload, ErrorType.BadRequest | ErrorType.Generic> {
+  const entityInfo = await Db.queryNoneOrOne<Pick<EntitiesTable, 'name'>>(
+    context,
+    'SELECT e.name FROM entities e WHERE e.uuid = $1',
+    [entity.id]
+  );
+
+  if (!entityInfo) {
+    const createResult = await createEntity(context, entity);
+    return createResult.isOk()
+      ? createResult.map((entity) => ({ effect: 'created', entity }))
+      : createResult;
+    // TODO check effect of create. If conflict it could be created after we fetched entityInfo, so try to update
+  }
+
+  //TODO remove name if similar. Support none effect
+  const updateResult = await updateEntity(context, entity);
+  if (updateResult.isOk()) {
+    return updateResult.map((entity) => ({ effect: 'updated', entity }));
+  }
+  if (updateResult.isErrorType(ErrorType.BadRequest)) {
+    return updateResult;
+  }
+  return notOk.Generic(`Unexpected NotFound error: ${updateResult.message}`);
 }
 
 export async function publishEntities(

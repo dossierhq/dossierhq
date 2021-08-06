@@ -14,16 +14,17 @@ import type { InMemorySessionContext } from './InMemoryServer';
 const {
   archiveEntity,
   createEntity,
-  getEntity,
-  updateEntity,
-  getTotalCount,
-  searchEntities,
   getEntities,
+  getEntity,
   getEntityHistory,
   getPublishingHistory,
-  unarchiveEntity,
+  getTotalCount,
   publishEntities,
+  searchEntities,
+  unarchiveEntity,
   unpublishEntities,
+  updateEntity,
+  upsertEntity,
 } = InMemoryAdmin;
 
 export function createInMemoryAdminClient<TContext extends InMemorySessionContext>({
@@ -150,6 +151,14 @@ async function terminatingMiddleware(
         resolve,
       } = operation as AdminClientOperation<AdminClientOperationName.updateEntity>;
       resolve(await updateEntity(context, entity));
+      break;
+    }
+    case AdminClientOperationName.upsertEntity: {
+      const {
+        args: [entity],
+        resolve,
+      } = operation as AdminClientOperation<AdminClientOperationName.upsertEntity>;
+      resolve(await upsertEntity(context, entity));
       break;
     }
     default:

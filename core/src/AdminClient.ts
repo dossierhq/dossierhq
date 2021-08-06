@@ -2,6 +2,8 @@ import type {
   AdminEntity,
   AdminEntityCreate,
   AdminEntityUpdate,
+  AdminEntityUpsert,
+  AdminEntityUpsertPayload,
   AdminQuery,
   Connection,
   Edge,
@@ -60,6 +62,10 @@ export interface AdminClient {
     entity: AdminEntityUpdate
   ): PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic>;
 
+  upsertEntity(
+    entity: AdminEntityUpsert
+  ): PromiseResult<AdminEntityUpsertPayload, ErrorType.BadRequest | ErrorType.Generic>;
+
   getEntityHistory(
     reference: EntityReference
   ): PromiseResult<EntityHistory, ErrorType.NotFound | ErrorType.Generic>;
@@ -104,6 +110,7 @@ export enum AdminClientOperationName {
   unarchiveEntity = 'unarchiveEntity',
   unpublishEntities = 'unpublishEntities',
   updateEntity = 'updateEntity',
+  upsertEntity = 'upsertEntity',
 }
 
 type MethodParameters<T extends keyof AdminClient> = Parameters<AdminClient[T]>;
@@ -123,6 +130,7 @@ interface AdminClientOperationArguments {
   [AdminClientOperationName.unarchiveEntity]: MethodParameters<'unarchiveEntity'>;
   [AdminClientOperationName.unpublishEntities]: MethodParameters<'unpublishEntities'>;
   [AdminClientOperationName.updateEntity]: MethodParameters<'updateEntity'>;
+  [AdminClientOperationName.upsertEntity]: MethodParameters<'upsertEntity'>;
 }
 
 interface AdminClientOperationReturn {
@@ -138,6 +146,7 @@ interface AdminClientOperationReturn {
   [AdminClientOperationName.unarchiveEntity]: MethodReturnType<'unarchiveEntity'>;
   [AdminClientOperationName.unpublishEntities]: MethodReturnType<'unpublishEntities'>;
   [AdminClientOperationName.updateEntity]: MethodReturnType<'updateEntity'>;
+  [AdminClientOperationName.upsertEntity]: MethodReturnType<'upsertEntity'>;
 }
 
 export type AdminClientOperation<
@@ -221,6 +230,16 @@ class BaseAdminClient<TContext> implements AdminClient {
   ): Promise<AdminClientOperationReturn[AdminClientOperationName.updateEntity]> {
     return this.executeOperation({
       name: AdminClientOperationName.updateEntity,
+      args: [entity],
+      modifies: true,
+    });
+  }
+
+  upsertEntity(
+    entity: AdminEntityUpsert
+  ): Promise<AdminClientOperationReturn[AdminClientOperationName.upsertEntity]> {
+    return this.executeOperation({
+      name: AdminClientOperationName.upsertEntity,
       args: [entity],
       modifies: true,
     });
@@ -322,6 +341,7 @@ export function convertAdminClientOperationToJson(
     case AdminClientOperationName.unarchiveEntity:
     case AdminClientOperationName.unpublishEntities:
     case AdminClientOperationName.updateEntity:
+    case AdminClientOperationName.upsertEntity:
       //TODO cleanup args? e.g. reference, keep only id
       return args;
     default:
@@ -396,6 +416,11 @@ export async function executeAdminClientOperationFromJson<TName extends AdminCli
         operation as AdminClientOperationArguments[AdminClientOperationName.updateEntity];
       return await adminClient.updateEntity(entity);
     }
+    case AdminClientOperationName.upsertEntity: {
+      const [entity] =
+        operation as AdminClientOperationArguments[AdminClientOperationName.upsertEntity];
+      return await adminClient.upsertEntity(entity);
+    }
     default:
       assertExhaustive(operationName);
   }
@@ -420,6 +445,7 @@ export function convertJsonAdminClientResult<TName extends AdminClientOperationN
     case AdminClientOperationName.unarchiveEntity:
     case AdminClientOperationName.unpublishEntities:
     case AdminClientOperationName.updateEntity:
+    case AdminClientOperationName.upsertEntity:
       return ok(value) as AdminClientOperationReturn[TName];
     case AdminClientOperationName.getEntityHistory: {
       const result: AdminClientOperationReturn[AdminClientOperationName.getEntityHistory] = ok(

@@ -1,9 +1,9 @@
+import type { AdminClient, AdminClientOperation } from '@jonasb/datadata-core';
 import {
   AdminClientOperationName,
   assertExhaustive,
   createBaseAdminClient,
 } from '@jonasb/datadata-core';
-import type { AdminClient, AdminClientOperation } from '@jonasb/datadata-core';
 import type { SessionContext } from '.';
 import {
   archiveEntity,
@@ -18,6 +18,7 @@ import {
   unarchiveEntity,
   unpublishEntities,
   updateEntity,
+  upsertEntity,
 } from './EntityAdmin';
 
 export function createServerAdminClient({
@@ -139,6 +140,14 @@ async function terminatingMiddleware(
         resolve,
       } = operation as AdminClientOperation<AdminClientOperationName.updateEntity>;
       resolve(await updateEntity(context, entity));
+      break;
+    }
+    case AdminClientOperationName.upsertEntity: {
+      const {
+        args: [entity],
+        resolve,
+      } = operation as AdminClientOperation<AdminClientOperationName.upsertEntity>;
+      resolve(await upsertEntity(context, entity));
       break;
     }
     default:

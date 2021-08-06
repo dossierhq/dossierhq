@@ -86,6 +86,8 @@ export type {
   AdminEntity,
   AdminEntityCreate,
   AdminEntityUpdate,
+  AdminEntityUpsert,
+  AdminEntityUpsertPayload,
   AdminQuery,
   BoundingBox,
   Connection,

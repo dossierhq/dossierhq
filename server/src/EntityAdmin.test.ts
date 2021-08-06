@@ -3020,6 +3020,90 @@ describe('updateEntity()', () => {
   });
 });
 
+describe('upsertEntity()', () => {
+  test('Create new entity', async () => {
+    const id = insecureTestUuidv4();
+    const upsertResult = await client.upsertEntity({
+      id,
+      info: { type: 'EntityAdminBaz', name: 'Baz' },
+    });
+    if (expectOkResult(upsertResult)) {
+      const {
+        entity: {
+          info: { name },
+        },
+      } = upsertResult.value;
+      expect(upsertResult.value).toEqual({
+        effect: 'created',
+        entity: {
+          id,
+          info: {
+            name,
+            publishingState: EntityPublishState.Draft,
+            type: 'EntityAdminBaz',
+            version: 0,
+          },
+          fields: {
+            ...emptyBazFields,
+          },
+        },
+      });
+
+      const getResult = await client.getEntity({ id });
+      if (expectOkResult(getResult)) {
+        expect(getResult.value).toEqual(upsertResult.value.entity);
+      }
+    }
+  });
+
+  test('Update existing entity', async () => {
+    const createResult = await client.createEntity({
+      info: { type: 'EntityAdminBaz', name: 'Original Baz' },
+      fields: { title: 'Original title' },
+    });
+
+    if (expectOkResult(createResult)) {
+      const { id } = createResult.value;
+
+      const upsertResult = await client.upsertEntity({
+        id,
+        info: { type: 'EntityAdminBaz', name: 'Updated Baz' },
+        fields: { title: 'Updated title' },
+      });
+      if (expectOkResult(upsertResult)) {
+        const {
+          entity: {
+            info: { name },
+          },
+        } = upsertResult.value;
+
+        expect(name).toMatch(/^Updated Baz/);
+        expect(upsertResult.value).toEqual({
+          effect: 'updated',
+          entity: {
+            id,
+            info: {
+              name,
+              publishingState: EntityPublishState.Draft,
+              type: 'EntityAdminBaz',
+              version: 1,
+            },
+            fields: {
+              ...emptyBazFields,
+              title: 'Updated title',
+            },
+          },
+        });
+
+        const getResult = await client.getEntity({ id });
+        if (expectOkResult(getResult)) {
+          expect(getResult.value).toEqual(upsertResult.value.entity);
+        }
+      }
+    }
+  });
+});
+
 describe('publishEntities()', () => {
   test('Two entities referencing each other', async () => {
     const createBaz1Result = await client.createEntity({
