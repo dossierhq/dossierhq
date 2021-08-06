@@ -104,7 +104,7 @@ export interface AdminEntityUpsert {
     name: string;
     type: string;
   };
-  fields?: Record<string, unknown>;
+  fields: Record<string, unknown>;
 }
 
 export interface AdminEntityUpsertPayload {

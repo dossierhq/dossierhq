@@ -3026,6 +3026,7 @@ describe('upsertEntity()', () => {
     const upsertResult = await client.upsertEntity({
       id,
       info: { type: 'EntityAdminBaz', name: 'Baz' },
+      fields: {},
     });
     if (expectOkResult(upsertResult)) {
       const {
