@@ -1,7 +1,8 @@
 import type {
-  AdminEntity,
   AdminEntityCreate,
+  AdminEntityCreatePayload,
   AdminEntityUpdate,
+  AdminEntityUpdatePayload,
   EntityVersionReference,
   PublishingResult,
 } from '@jonasb/datadata-core';
@@ -12,27 +13,33 @@ import { getAdminClient, getSchema } from './Utils';
 export async function createEntity<TContext extends SessionGraphQLContext>(
   context: TContext,
   entity: AdminEntityCreate
-): Promise<AdminEntity> {
+): Promise<AdminEntityCreatePayload> {
   const schema = getSchema(context);
   const adminClient = getAdminClient(context);
   const result = await adminClient.createEntity(entity);
   if (result.isError()) {
     throw result.toError();
   }
-  return buildResolversForAdminEntity(schema, result.value.entity);
+  return {
+    effect: result.value.effect,
+    entity: buildResolversForAdminEntity(schema, result.value.entity),
+  };
 }
 
 export async function updateEntity<TContext extends SessionGraphQLContext>(
   context: TContext,
   entity: AdminEntityUpdate
-): Promise<AdminEntity> {
+): Promise<AdminEntityUpdatePayload> {
   const schema = getSchema(context);
   const adminClient = getAdminClient(context);
   const result = await adminClient.updateEntity(entity);
   if (result.isError()) {
     throw result.toError();
   }
-  return buildResolversForAdminEntity(schema, result.value.entity);
+  return {
+    effect: result.value.effect,
+    entity: buildResolversForAdminEntity(schema, result.value.entity),
+  };
 }
 
 export async function publishEntities<TContext extends SessionGraphQLContext>(

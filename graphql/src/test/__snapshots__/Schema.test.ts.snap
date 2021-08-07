@@ -206,10 +206,20 @@ input AdminFooCreateInput {
   fields: AdminFooFieldsInput
 }
 
+type AdminFooCreatePayload {
+  effect: String!
+  entity: AdminFoo!
+}
+
 input AdminFooUpdateInput {
   id: ID!
   info: AdminEntityUpdateInfo
   fields: AdminFooFieldsInput
+}
+
+type AdminFooUpdatePayload {
+  effect: String!
+  entity: AdminFoo!
 }
 
 type AdminBar implements AdminEntity {
@@ -222,9 +232,19 @@ input AdminBarCreateInput {
   info: AdminEntityCreateInfo!
 }
 
+type AdminBarCreatePayload {
+  effect: String!
+  entity: AdminBar!
+}
+
 input AdminBarUpdateInput {
   id: ID!
   info: AdminEntityUpdateInfo
+}
+
+type AdminBarUpdatePayload {
+  effect: String!
+  entity: AdminBar!
 }
 
 type Query {
@@ -242,10 +262,10 @@ type Mutation {
   unpublishEntities(ids: [ID!]!): [EntityPublishPayload!]
   archiveEntity(id: ID!): EntityPublishPayload
   unarchiveEntity(id: ID!): EntityPublishPayload
-  createFooEntity(entity: AdminFooCreateInput!): AdminFoo
-  updateFooEntity(entity: AdminFooUpdateInput!): AdminFoo
-  createBarEntity(entity: AdminBarCreateInput!): AdminBar
-  updateBarEntity(entity: AdminBarUpdateInput!): AdminBar
+  createFooEntity(entity: AdminFooCreateInput!): AdminFooCreatePayload
+  updateFooEntity(entity: AdminFooUpdateInput!): AdminFooUpdatePayload
+  createBarEntity(entity: AdminBarCreateInput!): AdminBarCreatePayload
+  updateBarEntity(entity: AdminBarUpdateInput!): AdminBarUpdatePayload
 }
 "
 `;
@@ -446,10 +466,20 @@ input AdminFooCreateInput {
   fields: AdminFooFieldsInput
 }
 
+type AdminFooCreatePayload {
+  effect: String!
+  entity: AdminFoo!
+}
+
 input AdminFooUpdateInput {
   id: ID!
   info: AdminEntityUpdateInfo
   fields: AdminFooFieldsInput
+}
+
+type AdminFooUpdatePayload {
+  effect: String!
+  entity: AdminFoo!
 }
 
 type AdminBar implements AdminEntity {
@@ -462,9 +492,19 @@ input AdminBarCreateInput {
   info: AdminEntityCreateInfo!
 }
 
+type AdminBarCreatePayload {
+  effect: String!
+  entity: AdminBar!
+}
+
 input AdminBarUpdateInput {
   id: ID!
   info: AdminEntityUpdateInfo
+}
+
+type AdminBarUpdatePayload {
+  effect: String!
+  entity: AdminBar!
 }
 
 type AdminBaz implements AdminEntity {
@@ -477,9 +517,19 @@ input AdminBazCreateInput {
   info: AdminEntityCreateInfo!
 }
 
+type AdminBazCreatePayload {
+  effect: String!
+  entity: AdminBaz!
+}
+
 input AdminBazUpdateInput {
   id: ID!
   info: AdminEntityUpdateInfo
+}
+
+type AdminBazUpdatePayload {
+  effect: String!
+  entity: AdminBaz!
 }
 
 enum _BarOrBaz {
@@ -519,12 +569,12 @@ type Mutation {
   unpublishEntities(ids: [ID!]!): [EntityPublishPayload!]
   archiveEntity(id: ID!): EntityPublishPayload
   unarchiveEntity(id: ID!): EntityPublishPayload
-  createFooEntity(entity: AdminFooCreateInput!): AdminFoo
-  updateFooEntity(entity: AdminFooUpdateInput!): AdminFoo
-  createBarEntity(entity: AdminBarCreateInput!): AdminBar
-  updateBarEntity(entity: AdminBarUpdateInput!): AdminBar
-  createBazEntity(entity: AdminBazCreateInput!): AdminBaz
-  updateBazEntity(entity: AdminBazUpdateInput!): AdminBaz
+  createFooEntity(entity: AdminFooCreateInput!): AdminFooCreatePayload
+  updateFooEntity(entity: AdminFooUpdateInput!): AdminFooUpdatePayload
+  createBarEntity(entity: AdminBarCreateInput!): AdminBarCreatePayload
+  updateBarEntity(entity: AdminBarUpdateInput!): AdminBarUpdatePayload
+  createBazEntity(entity: AdminBazCreateInput!): AdminBazCreatePayload
+  updateBazEntity(entity: AdminBazUpdateInput!): AdminBazUpdatePayload
 }
 "
 `;
@@ -686,9 +736,19 @@ input AdminFooCreateInput {
   info: AdminEntityCreateInfo!
 }
 
+type AdminFooCreatePayload {
+  effect: String!
+  entity: AdminFoo!
+}
+
 input AdminFooUpdateInput {
   id: ID!
   info: AdminEntityUpdateInfo
+}
+
+type AdminFooUpdatePayload {
+  effect: String!
+  entity: AdminFoo!
 }
 
 type Query {
@@ -706,8 +766,8 @@ type Mutation {
   unpublishEntities(ids: [ID!]!): [EntityPublishPayload!]
   archiveEntity(id: ID!): EntityPublishPayload
   unarchiveEntity(id: ID!): EntityPublishPayload
-  createFooEntity(entity: AdminFooCreateInput!): AdminFoo
-  updateFooEntity(entity: AdminFooUpdateInput!): AdminFoo
+  createFooEntity(entity: AdminFooCreateInput!): AdminFooCreatePayload
+  updateFooEntity(entity: AdminFooUpdateInput!): AdminFooUpdatePayload
 }
 "
 `;
@@ -884,10 +944,20 @@ input AdminFooCreateInput {
   fields: AdminFooFieldsInput
 }
 
+type AdminFooCreatePayload {
+  effect: String!
+  entity: AdminFoo!
+}
+
 input AdminFooUpdateInput {
   id: ID!
   info: AdminEntityUpdateInfo
   fields: AdminFooFieldsInput
+}
+
+type AdminFooUpdatePayload {
+  effect: String!
+  entity: AdminFoo!
 }
 
 type Query {
@@ -905,8 +975,8 @@ type Mutation {
   unpublishEntities(ids: [ID!]!): [EntityPublishPayload!]
   archiveEntity(id: ID!): EntityPublishPayload
   unarchiveEntity(id: ID!): EntityPublishPayload
-  createFooEntity(entity: AdminFooCreateInput!): AdminFoo
-  updateFooEntity(entity: AdminFooUpdateInput!): AdminFoo
+  createFooEntity(entity: AdminFooCreateInput!): AdminFooCreatePayload
+  updateFooEntity(entity: AdminFooUpdateInput!): AdminFooUpdatePayload
 }
 "
 `;
@@ -1097,10 +1167,20 @@ input AdminFooCreateInput {
   fields: AdminFooFieldsInput
 }
 
+type AdminFooCreatePayload {
+  effect: String!
+  entity: AdminFoo!
+}
+
 input AdminFooUpdateInput {
   id: ID!
   info: AdminEntityUpdateInfo
   fields: AdminFooFieldsInput
+}
+
+type AdminFooUpdatePayload {
+  effect: String!
+  entity: AdminFoo!
 }
 
 type AdminBarFields {
@@ -1129,10 +1209,20 @@ input AdminBarCreateInput {
   fields: AdminBarFieldsInput
 }
 
+type AdminBarCreatePayload {
+  effect: String!
+  entity: AdminBar!
+}
+
 input AdminBarUpdateInput {
   id: ID!
   info: AdminEntityUpdateInfo
   fields: AdminBarFieldsInput
+}
+
+type AdminBarUpdatePayload {
+  effect: String!
+  entity: AdminBar!
 }
 
 type Query {
@@ -1150,10 +1240,10 @@ type Mutation {
   unpublishEntities(ids: [ID!]!): [EntityPublishPayload!]
   archiveEntity(id: ID!): EntityPublishPayload
   unarchiveEntity(id: ID!): EntityPublishPayload
-  createFooEntity(entity: AdminFooCreateInput!): AdminFoo
-  updateFooEntity(entity: AdminFooUpdateInput!): AdminFoo
-  createBarEntity(entity: AdminBarCreateInput!): AdminBar
-  updateBarEntity(entity: AdminBarUpdateInput!): AdminBar
+  createFooEntity(entity: AdminFooCreateInput!): AdminFooCreatePayload
+  updateFooEntity(entity: AdminFooUpdateInput!): AdminFooUpdatePayload
+  createBarEntity(entity: AdminBarCreateInput!): AdminBarCreatePayload
+  updateBarEntity(entity: AdminBarUpdateInput!): AdminBarUpdatePayload
 }
 "
 `;
@@ -1383,10 +1473,20 @@ input AdminFooCreateInput {
   fields: AdminFooFieldsInput
 }
 
+type AdminFooCreatePayload {
+  effect: String!
+  entity: AdminFoo!
+}
+
 input AdminFooUpdateInput {
   id: ID!
   info: AdminEntityUpdateInfo
   fields: AdminFooFieldsInput
+}
+
+type AdminFooUpdatePayload {
+  effect: String!
+  entity: AdminFoo!
 }
 
 type AdminBar implements AdminEntity {
@@ -1399,9 +1499,19 @@ input AdminBarCreateInput {
   info: AdminEntityCreateInfo!
 }
 
+type AdminBarCreatePayload {
+  effect: String!
+  entity: AdminBar!
+}
+
 input AdminBarUpdateInput {
   id: ID!
   info: AdminEntityUpdateInfo
+}
+
+type AdminBarUpdatePayload {
+  effect: String!
+  entity: AdminBar!
 }
 
 type AdminValueOne implements AdminValue {
@@ -1474,10 +1584,10 @@ type Mutation {
   unpublishEntities(ids: [ID!]!): [EntityPublishPayload!]
   archiveEntity(id: ID!): EntityPublishPayload
   unarchiveEntity(id: ID!): EntityPublishPayload
-  createFooEntity(entity: AdminFooCreateInput!): AdminFoo
-  updateFooEntity(entity: AdminFooUpdateInput!): AdminFoo
-  createBarEntity(entity: AdminBarCreateInput!): AdminBar
-  updateBarEntity(entity: AdminBarUpdateInput!): AdminBar
+  createFooEntity(entity: AdminFooCreateInput!): AdminFooCreatePayload
+  updateFooEntity(entity: AdminFooUpdateInput!): AdminFooUpdatePayload
+  createBarEntity(entity: AdminBarCreateInput!): AdminBarCreatePayload
+  updateBarEntity(entity: AdminBarUpdateInput!): AdminBarUpdatePayload
 }
 "
 `;
