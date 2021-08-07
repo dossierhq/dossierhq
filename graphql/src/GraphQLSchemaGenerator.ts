@@ -73,8 +73,16 @@ function toAdminCreateInputTypeName(name: string) {
   return `Admin${name}CreateInput`;
 }
 
+function toAdminCreatePayloadTypeName(name: string) {
+  return `Admin${name}CreatePayload`;
+}
+
 function toAdminUpdateInputTypeName(name: string) {
   return `Admin${name}UpdateInput`;
+}
+
+function toAdminUpdatePayloadTypeName(name: string) {
+  return `Admin${name}UpdatePayload`;
 }
 
 function toAdminValueInputTypeName(name: string) {
@@ -643,6 +651,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
   }
 
   addAdminEntityType(entitySpec: EntityTypeSpecification): void {
+    // AdminFooFields
     const fieldsName =
       entitySpec.fields.length > 0 ? `${toAdminTypeName(entitySpec.name)}Fields` : null;
     if (fieldsName) {
@@ -658,6 +667,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       );
     }
 
+    // AdminFoo
     this.addType(
       new GraphQLObjectType<AdminEntity, TContext>({
         name: toAdminTypeName(entitySpec.name),
@@ -676,6 +686,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       })
     );
 
+    // AdminFooFieldsInput
     const inputFieldsName =
       entitySpec.fields.length > 0 ? `${toAdminTypeName(entitySpec.name)}FieldsInput` : null;
     if (inputFieldsName) {
@@ -691,6 +702,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       );
     }
 
+    // AdminFooCreateInput
     this.addType(
       new GraphQLInputObjectType({
         name: toAdminCreateInputTypeName(entitySpec.name),
@@ -707,6 +719,21 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       })
     );
 
+    // AdminFooCreatePayload
+    this.addType(
+      new GraphQLObjectType({
+        name: toAdminCreatePayloadTypeName(entitySpec.name),
+        fields: () => {
+          const fields: GraphQLFieldConfigMap<AdminEntity, TContext> = {
+            effect: { type: new GraphQLNonNull(GraphQLString) },
+            entity: { type: new GraphQLNonNull(this.getType(toAdminTypeName(entitySpec.name))) },
+          };
+          return fields;
+        },
+      })
+    );
+
+    // AdminFooUpdateInput
     this.addType(
       new GraphQLInputObjectType({
         name: toAdminUpdateInputTypeName(entitySpec.name),
@@ -718,6 +745,20 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
           if (inputFieldsName) {
             fields.fields = { type: this.getInputType(inputFieldsName) };
           }
+          return fields;
+        },
+      })
+    );
+
+    // AdminFooUpdatePayload
+    this.addType(
+      new GraphQLObjectType({
+        name: toAdminUpdatePayloadTypeName(entitySpec.name),
+        fields: () => {
+          const fields: GraphQLFieldConfigMap<AdminEntity, TContext> = {
+            effect: { type: new GraphQLNonNull(GraphQLString) },
+            entity: { type: new GraphQLNonNull(this.getType(toAdminTypeName(entitySpec.name))) },
+          };
           return fields;
         },
       })
@@ -958,7 +999,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
 
   buildMutationCreateEntity<TSource>(entityName: string): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<TSource, TContext, { entity: AdminEntityCreate }>({
-      type: this.getOutputType(toAdminTypeName(entityName)),
+      type: this.getOutputType(toAdminCreatePayloadTypeName(entityName)),
       args: {
         entity: { type: new GraphQLNonNull(this.getType(toAdminCreateInputTypeName(entityName))) },
       },
@@ -980,7 +1021,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
 
   buildMutationUpdateEntity<TSource>(entityName: string): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<TSource, TContext, { entity: AdminEntityUpdate }>({
-      type: this.getOutputType(toAdminTypeName(entityName)),
+      type: this.getOutputType(toAdminUpdatePayloadTypeName(entityName)),
       args: {
         entity: { type: new GraphQLNonNull(this.getType(toAdminUpdateInputTypeName(entityName))) },
       },
