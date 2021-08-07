@@ -1,6 +1,7 @@
 import type {
   AdminEntity,
   AdminEntityCreate,
+  AdminEntityCreatePayload,
   AdminEntityUpdate,
   AdminEntityUpdatePayload,
   AdminEntityUpsert,
@@ -57,7 +58,7 @@ export interface AdminClient {
 
   createEntity(
     entity: AdminEntityCreate
-  ): PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.Generic>;
+  ): PromiseResult<AdminEntityCreatePayload, ErrorType.BadRequest | ErrorType.Generic>;
 
   updateEntity(
     entity: AdminEntityUpdate

@@ -17,8 +17,8 @@ import {
   ok,
   RichTextBlockType,
 } from '@jonasb/datadata-core';
-import { graphql, printError } from 'graphql';
 import type { GraphQLSchema } from 'graphql';
+import { graphql, printError } from 'graphql';
 import type { SessionGraphQLContext } from '..';
 import { GraphQLSchemaGenerator } from '..';
 import type { TestServerWithSession } from './TestUtils';
@@ -164,7 +164,9 @@ async function createBarWithFooReferences(fooCount: number) {
     throw createBarResult.toError();
   }
 
-  const { id: barId } = createBarResult.value;
+  const {
+    entity: { id: barId },
+  } = createBarResult.value;
 
   const fooEntities: AdminEntity[] = [];
 
@@ -174,7 +176,7 @@ async function createBarWithFooReferences(fooCount: number) {
       fields: { bar: { id: barId } },
     });
     if (expectOkResult(createFooResult)) {
-      fooEntities.push(createFooResult.value);
+      fooEntities.push(createFooResult.value.entity);
     }
   }
 
@@ -214,8 +216,10 @@ describe('adminEntity()', () => {
     });
     if (expectOkResult(createResult)) {
       const {
-        id,
-        info: { name },
+        entity: {
+          id,
+          info: { name },
+        },
       } = createResult.value;
 
       const result = await graphql(
@@ -294,8 +298,10 @@ describe('adminEntity()', () => {
     });
     if (expectOkResult(createResult)) {
       const {
-        id,
-        info: { name },
+        entity: {
+          id,
+          info: { name },
+        },
       } = createResult.value;
 
       const result = await graphql(
@@ -380,7 +386,9 @@ describe('adminEntity()', () => {
       fields: { title: 'First title', summary: 'First summary' },
     });
     if (expectOkResult(createResult)) {
-      const { id } = createResult.value;
+      const {
+        entity: { id },
+      } = createResult.value;
 
       expectOkResult(
         await adminClient.updateEntity({
@@ -504,8 +512,10 @@ describe('adminEntity()', () => {
     });
     if (expectOkResult(createResult)) {
       const {
-        id,
-        info: { name, version },
+        entity: {
+          id,
+          info: { name, version },
+        },
       } = createResult.value;
 
       expectOkResult(await adminClient.publishEntities([{ id, version }]));
@@ -564,7 +574,12 @@ describe('adminEntity()', () => {
       },
     });
     if (expectOkResult(createFooResult)) {
-      const fooId = createFooResult.value.id;
+      const {
+        entity: {
+          id: fooId,
+          info: { name: fooName },
+        },
+      } = createFooResult.value;
 
       const result = await graphql(
         schema,
@@ -604,7 +619,7 @@ describe('adminEntity()', () => {
             id: fooId,
             info: {
               type: 'QueryAdminFoo',
-              name: createFooResult.value.info.name,
+              name: fooName,
               version: 0,
             },
             fields: {
@@ -631,12 +646,16 @@ describe('adminEntity()', () => {
     });
     if (expectOkResult(createBar1Result) && expectOkResult(createBar2Result)) {
       const {
-        id: bar1Id,
-        info: { name: bar1Name },
+        entity: {
+          id: bar1Id,
+          info: { name: bar1Name },
+        },
       } = createBar1Result.value;
       const {
-        id: bar2Id,
-        info: { name: bar2Name },
+        entity: {
+          id: bar2Id,
+          info: { name: bar2Name },
+        },
       } = createBar2Result.value;
 
       const createFooResult = await adminClient.createEntity({
@@ -654,7 +673,12 @@ describe('adminEntity()', () => {
         },
       });
       if (expectOkResult(createFooResult)) {
-        const { id: fooId } = createFooResult.value;
+        const {
+          entity: {
+            id: fooId,
+            info: { name: fooName },
+          },
+        } = createFooResult.value;
 
         const result = await graphql(
           schema,
@@ -695,7 +719,7 @@ describe('adminEntity()', () => {
               id: fooId,
               info: {
                 type: 'QueryAdminFoo',
-                name: createFooResult.value.info.name,
+                name: fooName,
                 version: 0,
               },
               fields: {
@@ -721,14 +745,24 @@ describe('adminEntity()', () => {
       fields: { title: 'Bar title' },
     });
     if (expectOkResult(createBarResult)) {
-      const barId = createBarResult.value.id;
+      const {
+        entity: {
+          id: barId,
+          info: { name: barName },
+        },
+      } = createBarResult.value;
 
       const createFooResult = await adminClient.createEntity({
         info: { type: 'QueryAdminFoo', name: 'Foo name' },
         fields: { title: 'Foo title', bar: { id: barId } },
       });
       if (expectOkResult(createFooResult)) {
-        const fooId = createFooResult.value.id;
+        const {
+          entity: {
+            id: fooId,
+            info: { name: fooName },
+          },
+        } = createFooResult.value;
 
         const result = await graphql(
           schema,
@@ -772,7 +806,7 @@ describe('adminEntity()', () => {
               id: fooId,
               info: {
                 type: 'QueryAdminFoo',
-                name: createFooResult.value.info.name,
+                name: fooName,
                 version: 0,
               },
               fields: {
@@ -782,7 +816,7 @@ describe('adminEntity()', () => {
                   id: barId,
                   info: {
                     type: 'QueryAdminBar',
-                    name: createBarResult.value.info.name,
+                    name: barName,
                   },
                   fields: {
                     title: 'Bar title',
@@ -807,15 +841,30 @@ describe('adminEntity()', () => {
       fields: { title: 'Bar 2 title' },
     });
     if (expectOkResult(createBar1Result) && expectOkResult(createBar2Result)) {
-      const bar1Id = createBar1Result.value.id;
-      const bar2Id = createBar2Result.value.id;
+      const {
+        entity: {
+          id: bar1Id,
+          info: { name: bar1Name },
+        },
+      } = createBar1Result.value;
+      const {
+        entity: {
+          id: bar2Id,
+          info: { name: bar2Name },
+        },
+      } = createBar2Result.value;
 
       const createFooResult = await adminClient.createEntity({
         info: { type: 'QueryAdminFoo', name: 'Foo name' },
         fields: { title: 'Foo title', bars: [{ id: bar1Id }, { id: bar2Id }] },
       });
       if (expectOkResult(createFooResult)) {
-        const fooId = createFooResult.value.id;
+        const {
+          entity: {
+            id: fooId,
+            info: { name: fooName },
+          },
+        } = createFooResult.value;
 
         const result = await graphql(
           schema,
@@ -856,20 +905,20 @@ describe('adminEntity()', () => {
             adminEntity: {
               __typename: 'AdminQueryAdminFoo',
               id: fooId,
-              info: { name: createFooResult.value.info.name },
+              info: { name: fooName },
               fields: {
                 title: 'Foo title',
                 bars: [
                   {
                     __typename: 'AdminQueryAdminBar',
                     id: bar1Id,
-                    info: { name: createBar1Result.value.info.name },
+                    info: { name: bar1Name },
                     fields: { title: 'Bar 1 title' },
                   },
                   {
                     __typename: 'AdminQueryAdminBar',
                     id: bar2Id,
-                    info: { name: createBar2Result.value.info.name },
+                    info: { name: bar2Name },
                     fields: { title: 'Bar 2 title' },
                   },
                 ],
@@ -888,7 +937,12 @@ describe('adminEntity()', () => {
       fields: { title: 'Bar title' },
     });
     if (expectOkResult(createBarResult)) {
-      const barId = createBarResult.value.id;
+      const {
+        entity: {
+          id: barId,
+          info: { name: barName },
+        },
+      } = createBarResult.value;
 
       const createFooResult = await adminClient.createEntity({
         info: { type: 'QueryAdminFoo', name: 'Foo name' },
@@ -902,7 +956,12 @@ describe('adminEntity()', () => {
         },
       });
       if (expectOkResult(createFooResult)) {
-        const fooId = createFooResult.value.id;
+        const {
+          entity: {
+            id: fooId,
+            info: { name: fooName },
+          },
+        } = createFooResult.value;
 
         const result = await graphql(
           schema,
@@ -953,7 +1012,7 @@ describe('adminEntity()', () => {
               id: fooId,
               info: {
                 type: 'QueryAdminFoo',
-                name: createFooResult.value.info.name,
+                name: fooName,
                 version: 0,
               },
               fields: {
@@ -967,7 +1026,7 @@ describe('adminEntity()', () => {
                     id: barId,
                     info: {
                       type: 'QueryAdminBar',
-                      name: createBarResult.value.info.name,
+                      name: barName,
                     },
                     fields: { title: 'Bar title' },
                   },
@@ -1052,12 +1111,16 @@ describe('adminEntities()', () => {
     });
     if (expectOkResult(createFoo1Result) && expectOkResult(createFoo2Result)) {
       const {
-        id: foo1Id,
-        info: { name: foo1Name },
+        entity: {
+          id: foo1Id,
+          info: { name: foo1Name },
+        },
       } = createFoo1Result.value;
       const {
-        id: foo2Id,
-        info: { name: foo2Name },
+        entity: {
+          id: foo2Id,
+          info: { name: foo2Name },
+        },
       } = createFoo2Result.value;
 
       const result = await graphql(
@@ -1294,7 +1357,9 @@ describe('searchAdminEntities()', () => {
       fields: { location: center },
     });
     if (expectOkResult(createResult)) {
-      const { id: fooId } = createResult.value;
+      const {
+        entity: { id: fooId },
+      } = createResult.value;
 
       const result = await graphql(
         schema,
@@ -1360,7 +1425,9 @@ describe('versionHistory()', () => {
       fields: { title: 'First title' },
     });
     if (expectOkResult(createResult)) {
-      const { id } = createResult.value;
+      const {
+        entity: { id },
+      } = createResult.value;
 
       const updateResult = await adminClient.updateEntity({
         id,
@@ -1449,8 +1516,10 @@ describe('publishingHistory()', () => {
     });
     if (expectOkResult(createResult)) {
       const {
-        id,
-        info: { version },
+        entity: {
+          id,
+          info: { version },
+        },
       } = createResult.value;
 
       expectOkResult(await adminClient.publishEntities([{ id, version }]));

@@ -1,6 +1,7 @@
 import type {
   AdminEntity,
   AdminEntityCreate,
+  AdminEntityCreatePayload,
   AdminEntityUpdate,
   AdminEntityUpdatePayload,
   AdminEntityUpsert,
@@ -189,7 +190,7 @@ async function withUniqueNameAttempt<TResult>(
 export async function createEntity(
   context: SessionContext,
   entity: AdminEntityCreate
-): PromiseResult<AdminEntity, ErrorType.BadRequest> {
+): PromiseResult<AdminEntityCreatePayload, ErrorType.BadRequest> {
   const resolvedResult = resolveCreateEntity(context, entity);
   if (resolvedResult.isError()) {
     return resolvedResult;
@@ -267,7 +268,7 @@ export async function createEntity(
       },
       fields: createEntity.fields ?? {},
     };
-    return ok(result);
+    return ok({ effect: 'created', entity: result });
   });
 }
 
@@ -374,10 +375,7 @@ export async function upsertEntity(
   );
 
   if (!entityInfo) {
-    const createResult = await createEntity(context, entity);
-    return createResult.isOk()
-      ? createResult.map((entity) => ({ effect: 'created', entity }))
-      : createResult;
+    return await createEntity(context, entity);
     // TODO check effect of create. If conflict it could be created after we fetched entityInfo, so try to update
   }
 

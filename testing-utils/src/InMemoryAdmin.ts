@@ -1,6 +1,7 @@
 import type {
   AdminEntity,
   AdminEntityCreate,
+  AdminEntityCreatePayload,
   AdminEntityUpdate,
   AdminEntityUpdatePayload,
   AdminEntityUpsert,
@@ -155,7 +156,7 @@ export const InMemoryAdmin = {
   createEntity: async (
     context: InMemorySessionContext,
     entity: AdminEntityCreate
-  ): PromiseResult<AdminEntity, ErrorType.BadRequest> => {
+  ): PromiseResult<AdminEntityCreatePayload, ErrorType.BadRequest> => {
     const newEntity: AdminEntity = {
       id: entity.id ?? uuidv4(),
       info: {
@@ -167,7 +168,7 @@ export const InMemoryAdmin = {
       fields: entity.fields ?? {},
     };
     context.server.addNewEntity(newEntity, context.subjectId);
-    return ok(newEntity);
+    return ok({ effect: 'created', entity: newEntity });
   },
 
   updateEntity: async (
@@ -210,9 +211,7 @@ export const InMemoryAdmin = {
 
     if (!existingEntity) {
       const createResult = await InMemoryAdmin.createEntity(context, entity);
-      return createResult.isOk()
-        ? createResult.map((entity) => ({ effect: 'created', entity }))
-        : createResult;
+      return createResult;
       // TODO check effect of create. If conflict it could be created after we fetched entityInfo, so try to update
     }
 

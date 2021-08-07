@@ -259,7 +259,9 @@ describe('create*Entity()', () => {
       fields: {},
     });
     if (expectOkResult(createBarResult)) {
-      const { id: barId } = createBarResult.value;
+      const {
+        entity: { id: barId },
+      } = createBarResult.value;
       const gqlResult = await graphql(
         schema,
         `
@@ -358,8 +360,10 @@ describe('create*Entity()', () => {
     });
     if (expectOkResult(createBarResult)) {
       const {
-        id: barId,
-        info: { name: barName },
+        entity: {
+          id: barId,
+          info: { name: barName },
+        },
       } = createBarResult.value;
       const gqlResult = await graphql(
         schema,
@@ -458,12 +462,16 @@ describe('create*Entity()', () => {
     });
     if (expectOkResult(createBar1Result) && expectOkResult(createBar2Result)) {
       const {
-        id: bar1Id,
-        info: { name: bar1Name },
+        entity: {
+          id: bar1Id,
+          info: { name: bar1Name },
+        },
       } = createBar1Result.value;
       const {
-        id: bar2Id,
-        info: { name: bar2Name },
+        entity: {
+          id: bar2Id,
+          info: { name: bar2Name },
+        },
       } = createBar2Result.value;
 
       const gqlResult = await graphql(
@@ -560,8 +568,10 @@ describe('create*Entity()', () => {
     });
     if (expectOkResult(createBarResult)) {
       const {
-        id: barId,
-        info: { name: barName },
+        entity: {
+          id: barId,
+          info: { name: barName },
+        },
       } = createBarResult.value;
       const gqlResult = await graphql(
         schema,
@@ -681,7 +691,9 @@ describe('create*Entity()', () => {
     });
 
     if (expectOkResult(createBarResult)) {
-      const { id: barId } = createBarResult.value;
+      const {
+        entity: { id: barId },
+      } = createBarResult.value;
 
       const createFooResult = await graphql(
         schema,
@@ -1002,8 +1014,10 @@ describe('update*Entity()', () => {
     });
     if (expectOkResult(createResult)) {
       const {
-        id,
-        info: { name },
+        entity: {
+          id,
+          info: { name },
+        },
       } = createResult.value;
       const result = await graphql(
         schema,
@@ -1079,12 +1093,16 @@ describe('update*Entity()', () => {
     });
     if (expectOkResult(createBar1Result) && expectOkResult(createBar2Result)) {
       const {
-        id: bar1Id,
-        info: { name: bar1Name },
+        entity: {
+          id: bar1Id,
+          info: { name: bar1Name },
+        },
       } = createBar1Result.value;
       const {
-        id: bar2Id,
-        info: { name: bar2Name },
+        entity: {
+          id: bar2Id,
+          info: { name: bar2Name },
+        },
       } = createBar2Result.value;
 
       const createFooResult = await adminClient.createEntity({
@@ -1096,7 +1114,9 @@ describe('update*Entity()', () => {
         },
       });
       if (expectOkResult(createFooResult)) {
-        const { id: fooId } = createFooResult.value;
+        const {
+          entity: { id: fooId },
+        } = createFooResult.value;
         const result = await graphql(
           schema,
           `
@@ -1301,7 +1321,9 @@ describe('update*Entity()', () => {
       fields: {},
     });
     if (expectOkResult(createResult)) {
-      const { id } = createResult.value;
+      const {
+        entity: { id },
+      } = createResult.value;
       const result = await graphql(
         schema,
         `
@@ -1350,7 +1372,9 @@ describe('publishEntities()', () => {
       fields: { title: 'Howdy title', summary: 'Howdy summary' },
     });
     if (expectOkResult(createResult)) {
-      const { id } = createResult.value;
+      const {
+        entity: { id },
+      } = createResult.value;
 
       const result = await graphql(
         schema,
@@ -1434,7 +1458,9 @@ describe('unpublishEntities()', () => {
       fields: { title: 'Howdy title', summary: 'Howdy summary' },
     });
     if (expectOkResult(createResult)) {
-      const { id } = createResult.value;
+      const {
+        entity: { id },
+      } = createResult.value;
 
       expectOkResult(await adminClient.publishEntities([{ id, version: 0 }]));
 
@@ -1527,7 +1553,9 @@ describe('archiveEntity()', () => {
       fields: { title: 'Howdy title', summary: 'Howdy summary' },
     });
     if (expectOkResult(createResult)) {
-      const { id } = createResult.value;
+      const {
+        entity: { id },
+      } = createResult.value;
 
       const result = await graphql(
         schema,
@@ -1581,7 +1609,9 @@ describe('unarchiveEntity()', () => {
       fields: { title: 'Howdy title', summary: 'Howdy summary' },
     });
     if (expectOkResult(createResult)) {
-      const { id } = createResult.value;
+      const {
+        entity: { id },
+      } = createResult.value;
 
       expectOkResult(await adminClient.archiveEntity({ id }));
 
@@ -1671,7 +1701,9 @@ describe('Multiple', () => {
       fields: { title: 'Howdy title', summary: 'Howdy summary' },
     });
     if (expectOkResult(createResult)) {
-      const { id } = createResult.value;
+      const {
+        entity: { id },
+      } = createResult.value;
 
       const result = await graphql(
         schema,

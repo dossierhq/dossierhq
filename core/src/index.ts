@@ -85,6 +85,7 @@ export { EntityPublishState, PublishingEventKind } from './Types';
 export type {
   AdminEntity,
   AdminEntityCreate,
+  AdminEntityCreatePayload,
   AdminEntityUpdate,
   AdminEntityUpdatePayload,
   AdminEntityUpsert,

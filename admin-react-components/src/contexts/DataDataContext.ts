@@ -166,10 +166,11 @@ export class DataDataContextValue {
   ): PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.Generic> => {
     try {
       const result = await this.#adminClient.createEntity(entity);
-      if (result.isOk()) {
-        this.invalidateEntity(result.value);
+      if (result.isError()) {
+        return result;
       }
-      return result;
+      this.invalidateEntity(result.value.entity);
+      return result.map((payload) => payload.entity);
     } catch (error) {
       return createErrorResultFromError(error, [ErrorType.BadRequest]);
     }

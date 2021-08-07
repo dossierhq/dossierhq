@@ -19,7 +19,7 @@ export async function createEntity<TContext extends SessionGraphQLContext>(
   if (result.isError()) {
     throw result.toError();
   }
-  return buildResolversForAdminEntity(schema, result.value);
+  return buildResolversForAdminEntity(schema, result.value.entity);
 }
 
 export async function updateEntity<TContext extends SessionGraphQLContext>(
