@@ -21,8 +21,8 @@ import {
   isRichTextField,
   isRichTextItemField,
   isRichTextParagraphBlock,
-  isStringItemField,
   isRichTextValueItemBlock,
+  isStringItemField,
   isValueTypeField,
   isValueTypeItemField,
   notOk,
@@ -264,7 +264,7 @@ export function resolveUpdateEntity(
     'archived' | 'name' | 'never_published' | 'published_entity_versions_id'
   > &
     Pick<EntityVersionsTable, 'data' | 'version'>
-): Result<AdminEntity, ErrorType.BadRequest> {
+): Result<{ changed: boolean; entity: AdminEntity }, ErrorType.BadRequest> {
   if (entity.info?.type && entity.info.type !== type) {
     return notOk.BadRequest(
       `New type ${entity.info.type} doesn’t correspond to previous type ${type}`
@@ -295,20 +295,32 @@ export function resolveUpdateEntity(
     return unsupportedFieldsResult;
   }
 
+  let changed = false;
+  if (result.info.name !== values.name) {
+    changed = true;
+  }
   for (const fieldSpec of entitySpec.fields) {
-    //TODO check if there are any changes compared to previous version, if so create no new version
     const fieldName = fieldSpec.name;
+    const previousFieldValue = decodeFieldItemOrList(
+      schema,
+      fieldSpec,
+      values.data[fieldName] ?? null
+    );
+
     if (entity.fields && fieldName in entity.fields) {
-      result.fields[fieldName] = entity.fields[fieldName];
-    } else if (fieldName in values.data) {
-      const encodedData = values.data[fieldName];
-      result.fields[fieldName] = decodeFieldItemOrList(schema, fieldSpec, encodedData);
+      const newFieldValue = entity.fields[fieldName];
+      //TODO normalize fieldValue
+      //TODO deep equals
+      if (previousFieldValue !== newFieldValue) {
+        changed = true;
+      }
+      result.fields[fieldName] = newFieldValue;
     } else {
-      result.fields[fieldName] = null;
+      result.fields[fieldName] = previousFieldValue;
     }
   }
 
-  return ok(result);
+  return ok({ changed, entity: result });
 }
 
 function checkForUnsupportedFields(
