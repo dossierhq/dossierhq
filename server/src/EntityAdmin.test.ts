@@ -3091,7 +3091,7 @@ describe('upsertEntity()', () => {
         } = upsertResult.value;
 
         expect(name).toMatch(/^Updated Baz/);
-        expect(upsertResult.value).toEqual({
+        expectResultValue(upsertResult, {
           effect: 'updated',
           entity: {
             id,
@@ -3109,10 +3109,35 @@ describe('upsertEntity()', () => {
         });
 
         const getResult = await client.getEntity({ id });
-        if (expectOkResult(getResult)) {
-          expect(getResult.value).toEqual(upsertResult.value.entity);
-        }
+        expectResultValue(getResult, upsertResult.value.entity);
       }
+    }
+  });
+
+  test('Update entity without any change', async () => {
+    const createResult = await client.createEntity({
+      info: { type: 'EntityAdminBaz', name: 'Original Baz' },
+      fields: { title: 'Original title' },
+    });
+
+    if (expectOkResult(createResult)) {
+      const {
+        id,
+        info: { name },
+      } = createResult.value;
+
+      const upsertResult = await client.upsertEntity({
+        id,
+        info: { type: 'EntityAdminBaz', name },
+        fields: { title: 'Original title' },
+      });
+      expectResultValue(upsertResult, {
+        effect: 'none',
+        entity: createResult.value,
+      });
+
+      const getResult = await client.getEntity({ id });
+      expectResultValue(getResult, createResult.value);
     }
   });
 });
