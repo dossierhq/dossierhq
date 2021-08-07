@@ -39,8 +39,10 @@ describe('getEntity()', () => {
     });
     if (expectOkResult(createResult)) {
       const {
-        id,
-        info: { name, version },
+        entity: {
+          id,
+          info: { name, version },
+        },
       } = createResult.value;
 
       const archiveResult = await adminClient.archiveEntity({ id });
@@ -64,7 +66,9 @@ describe('getEntity()', () => {
       fields: { title: 'Title 1' },
     });
     if (expectOkResult(createResult)) {
-      const { id } = createResult.value;
+      const {
+        entity: { id },
+      } = createResult.value;
 
       const archiveResult = await adminClient.archiveEntity({ id });
       expectResultValue(archiveResult, { id, publishState: EntityPublishState.Archived });
@@ -99,12 +103,16 @@ describe('getEntities()', () => {
     });
     if (expectOkResult(createFoo1Result) && expectOkResult(createFoo2Result)) {
       const {
-        id: foo1Id,
-        info: { name: foo1Name },
+        entity: {
+          id: foo1Id,
+          info: { name: foo1Name },
+        },
       } = createFoo1Result.value;
       const {
-        id: foo2Id,
-        info: { name: foo2Name },
+        entity: {
+          id: foo2Id,
+          info: { name: foo2Name },
+        },
       } = createFoo2Result.value;
 
       const publishResult = await adminClient.publishEntities([
@@ -140,8 +148,10 @@ describe('getEntities()', () => {
     });
     if (expectOkResult(createFooResult)) {
       const {
-        id: foo1Id,
-        info: { name: foo1Name },
+        entity: {
+          id: foo1Id,
+          info: { name: foo1Name },
+        },
       } = createFooResult.value;
 
       const publishResult = await adminClient.publishEntities([{ id: foo1Id, version: 0 }]);
@@ -175,7 +185,9 @@ describe('getEntities()', () => {
       },
     });
     if (expectOkResult(createResult)) {
-      const { id } = createResult.value;
+      const {
+        entity: { id },
+      } = createResult.value;
 
       const archiveResult = await adminClient.archiveEntity({ id });
       expectResultValue(archiveResult, { id, publishState: EntityPublishState.Archived });

@@ -83,7 +83,12 @@ describe('node()', () => {
       },
     });
     if (expectOkResult(createResult)) {
-      const { id } = createResult.value;
+      const {
+        entity: {
+          id,
+          info: { name },
+        },
+      } = createResult.value;
 
       expectOkResult(await adminClient.publishEntities([{ id, version: 0 }]));
 
@@ -124,9 +129,7 @@ describe('node()', () => {
           node: {
             __typename: 'QueryFoo',
             id,
-            info: {
-              name: createResult.value.info.name,
-            },
+            info: { name },
             fields: {
               title: 'Howdy title',
               summary: 'Howdy summary',
@@ -150,7 +153,12 @@ describe('node()', () => {
       fields: {},
     });
     if (expectOkResult(createResult)) {
-      const { id } = createResult.value;
+      const {
+        entity: {
+          id,
+          info: { name },
+        },
+      } = createResult.value;
 
       expectOkResult(await adminClient.publishEntities([{ id, version: 0 }]));
 
@@ -200,9 +208,7 @@ describe('node()', () => {
           node: {
             __typename: 'QueryFoo',
             id,
-            info: {
-              name: createResult.value.info.name,
-            },
+            info: { name },
             fields: {
               title: null,
               summary: null,
@@ -228,7 +234,12 @@ describe('node()', () => {
       },
     });
     if (expectOkResult(createFooResult)) {
-      const fooId = createFooResult.value.id;
+      const {
+        entity: {
+          id: fooId,
+          info: { name },
+        },
+      } = createFooResult.value;
 
       expectOkResult(await adminClient.publishEntities([{ id: fooId, version: 0 }]));
 
@@ -264,7 +275,7 @@ describe('node()', () => {
           node: {
             __typename: 'QueryFoo',
             id: fooId,
-            info: { name: createFooResult.value.info.name },
+            info: { name },
             fields: {
               body: {
                 blocksJson: '[{"type":"paragraph","data":{"text":"Hello world"}}]',
@@ -285,8 +296,10 @@ describe('node()', () => {
     });
     if (expectOkResult(createBarResult)) {
       const {
-        id: barId,
-        info: { name: barName },
+        entity: {
+          id: barId,
+          info: { name: barName },
+        },
       } = createBarResult.value;
 
       expectOkResult(await adminClient.publishEntities([{ id: barId, version: 0 }]));
@@ -303,7 +316,12 @@ describe('node()', () => {
         },
       });
       if (expectOkResult(createFooResult)) {
-        const { id: fooId } = createFooResult.value;
+        const {
+          entity: {
+            id: fooId,
+            info: { name },
+          },
+        } = createFooResult.value;
 
         expectOkResult(await adminClient.publishEntities([{ id: fooId, version: 0 }]));
 
@@ -342,9 +360,7 @@ describe('node()', () => {
             node: {
               __typename: 'QueryFoo',
               id: fooId,
-              info: {
-                name: createFooResult.value.info.name,
-              },
+              info: { name },
               fields: {
                 body: {
                   blocksJson: `[{"type":"entity","data":{"id":"${barId}"}},{"type":"paragraph","data":{"text":"Hello world"}}]`,
@@ -365,7 +381,12 @@ describe('node()', () => {
       fields: { title: 'Bar title' },
     });
     if (expectOkResult(createBarResult)) {
-      const barId = createBarResult.value.id;
+      const {
+        entity: {
+          id: barId,
+          info: { name: barName },
+        },
+      } = createBarResult.value;
 
       expectOkResult(await adminClient.publishEntities([{ id: barId, version: 0 }]));
 
@@ -374,7 +395,12 @@ describe('node()', () => {
         fields: { title: 'Foo title', bar: { id: barId } },
       });
       if (expectOkResult(createFooResult)) {
-        const fooId = createFooResult.value.id;
+        const {
+          entity: {
+            id: fooId,
+            info: { name: fooName },
+          },
+        } = createFooResult.value;
 
         expectOkResult(await adminClient.publishEntities([{ id: fooId, version: 0 }]));
 
@@ -415,17 +441,13 @@ describe('node()', () => {
             node: {
               __typename: 'QueryFoo',
               id: fooId,
-              info: {
-                name: createFooResult.value.info.name,
-              },
+              info: { name: fooName },
               fields: {
                 title: 'Foo title',
                 bar: {
                   __typename: 'QueryBar',
                   id: barId,
-                  info: {
-                    name: createBarResult.value.info.name,
-                  },
+                  info: { name: barName },
                   fields: {
                     title: 'Bar title',
                   },
@@ -449,8 +471,18 @@ describe('node()', () => {
       fields: { title: 'Bar 2 title' },
     });
     if (expectOkResult(createBar1Result) && expectOkResult(createBar2Result)) {
-      const bar1Id = createBar1Result.value.id;
-      const bar2Id = createBar2Result.value.id;
+      const {
+        entity: {
+          id: bar1Id,
+          info: { name: bar1Name },
+        },
+      } = createBar1Result.value;
+      const {
+        entity: {
+          id: bar2Id,
+          info: { name: bar2Name },
+        },
+      } = createBar2Result.value;
 
       expectOkResult(
         await adminClient.publishEntities([
@@ -464,7 +496,12 @@ describe('node()', () => {
         fields: { title: 'Foo title', bars: [{ id: bar1Id }, { id: bar2Id }] },
       });
       if (expectOkResult(createFooResult)) {
-        const fooId = createFooResult.value.id;
+        const {
+          entity: {
+            id: fooId,
+            info: { name: fooName },
+          },
+        } = createFooResult.value;
 
         expectOkResult(await adminClient.publishEntities([{ id: fooId, version: 0 }]));
 
@@ -505,20 +542,20 @@ describe('node()', () => {
             node: {
               __typename: 'QueryFoo',
               id: fooId,
-              info: { name: createFooResult.value.info.name },
+              info: { name: fooName },
               fields: {
                 title: 'Foo title',
                 bars: [
                   {
                     __typename: 'QueryBar',
                     id: bar1Id,
-                    info: { name: createBar1Result.value.info.name },
+                    info: { name: bar1Name },
                     fields: { title: 'Bar 1 title' },
                   },
                   {
                     __typename: 'QueryBar',
                     id: bar2Id,
-                    info: { name: createBar2Result.value.info.name },
+                    info: { name: bar2Name },
                     fields: { title: 'Bar 2 title' },
                   },
                 ],
@@ -537,7 +574,12 @@ describe('node()', () => {
       fields: { title: 'Bar title' },
     });
     if (expectOkResult(createBarResult)) {
-      const barId = createBarResult.value.id;
+      const {
+        entity: {
+          id: barId,
+          info: { name: barName },
+        },
+      } = createBarResult.value;
 
       expectOkResult(await adminClient.publishEntities([{ id: barId, version: 0 }]));
 
@@ -549,7 +591,12 @@ describe('node()', () => {
         },
       });
       if (expectOkResult(createFooResult)) {
-        const fooId = createFooResult.value.id;
+        const {
+          entity: {
+            id: fooId,
+            info: { name: fooName },
+          },
+        } = createFooResult.value;
 
         expectOkResult(await adminClient.publishEntities([{ id: fooId, version: 0 }]));
 
@@ -595,7 +642,7 @@ describe('node()', () => {
             node: {
               __typename: 'QueryFoo',
               id: fooId,
-              info: { name: createFooResult.value.info.name },
+              info: { name: fooName },
               fields: {
                 title: 'Foo title',
                 stringedBar: {
@@ -605,7 +652,7 @@ describe('node()', () => {
                   bar: {
                     __typename: 'QueryBar',
                     id: barId,
-                    info: { name: createBarResult.value.info.name },
+                    info: { name: barName },
                     fields: { title: 'Bar title' },
                   },
                 },
@@ -689,12 +736,16 @@ describe('nodes()', () => {
     });
     if (expectOkResult(createFoo1Result) && expectOkResult(createFoo2Result)) {
       const {
-        id: foo1Id,
-        info: { name: foo1Name },
+        entity: {
+          id: foo1Id,
+          info: { name: foo1Name },
+        },
       } = createFoo1Result.value;
       const {
-        id: foo2Id,
-        info: { name: foo2Name },
+        entity: {
+          id: foo2Id,
+          info: { name: foo2Name },
+        },
       } = createFoo2Result.value;
 
       expectOkResult(

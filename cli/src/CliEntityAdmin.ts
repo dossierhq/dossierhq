@@ -243,15 +243,15 @@ export async function createEntity(context: CliContext): Promise<AdminEntity | n
     logErrorResult('Failed creating entity', createResult);
     return null;
   }
-  console.log(chalk.bold('Created entity'));
-  logEntity(context, createResult.value);
+  console.log(chalk.bold(createResult.value.effect === 'created' ? 'Created entity' : 'No change'));
+  logEntity(context, createResult.value.entity);
 
-  const publishedEntity = await publishEntityVersion(context, createResult.value);
+  const publishedEntity = await publishEntityVersion(context, createResult.value.entity);
   if (publishedEntity) {
     return publishedEntity;
   }
 
-  return createResult.value;
+  return createResult.value.entity;
 }
 
 export async function editEntity(context: CliContext, id: string): Promise<AdminEntity | null> {

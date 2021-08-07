@@ -87,6 +87,11 @@ export interface AdminEntityCreate {
   fields: Record<string, unknown>;
 }
 
+export interface AdminEntityCreatePayload {
+  effect: 'created' | 'none';
+  entity: AdminEntity;
+}
+
 export interface AdminEntityUpdate {
   id: string;
   info?: {
