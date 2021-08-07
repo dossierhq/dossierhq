@@ -191,6 +191,7 @@ function createAdminEntity(
         name: entityState.name,
         version: entityState.version,
       },
+      fields: {},
     };
   } else {
     const { id } = draftState;
@@ -201,16 +202,15 @@ function createAdminEntity(
         type: entityState.entitySpec.name,
         ...(entityState.name !== entityState.initialName ? { name: entityState.name } : {}),
       },
+      fields: {},
     };
   }
 
-  const fields: Record<string, unknown> = {};
   for (const { fieldSpec, value, initialValue } of entityState.fields) {
     if (value !== initialValue) {
-      fields[fieldSpec.name] = value;
+      result.fields[fieldSpec.name] = value;
     }
   }
-  result.fields = fields;
 
   return result;
 }

@@ -256,6 +256,7 @@ describe('create*Entity()', () => {
     const { adminClient } = server;
     const createBarResult = await adminClient.createEntity({
       info: { type: 'MutationBar', name: 'Bar' },
+      fields: {},
     });
     if (expectOkResult(createBarResult)) {
       const { id: barId } = createBarResult.value;
@@ -353,6 +354,7 @@ describe('create*Entity()', () => {
     const { adminClient } = server;
     const createBarResult = await adminClient.createEntity({
       info: { type: 'MutationBar', name: 'Bar' },
+      fields: {},
     });
     if (expectOkResult(createBarResult)) {
       const {
@@ -448,9 +450,11 @@ describe('create*Entity()', () => {
     const { adminClient } = server;
     const createBar1Result = await adminClient.createEntity({
       info: { type: 'MutationBar', name: 'Bar 1' },
+      fields: {},
     });
     const createBar2Result = await adminClient.createEntity({
       info: { type: 'MutationBar', name: 'Bar 2' },
+      fields: {},
     });
     if (expectOkResult(createBar1Result) && expectOkResult(createBar2Result)) {
       const {
@@ -552,6 +556,7 @@ describe('create*Entity()', () => {
     const { adminClient } = server;
     const createBarResult = await adminClient.createEntity({
       info: { type: 'MutationBar', name: 'Bar' },
+      fields: {},
     });
     if (expectOkResult(createBarResult)) {
       const {
@@ -672,6 +677,7 @@ describe('create*Entity()', () => {
     const { adminClient } = server;
     const createBarResult = await adminClient.createEntity({
       info: { type: 'MutationBar', name: 'Bar' },
+      fields: {},
     });
 
     if (expectOkResult(createBarResult)) {
@@ -1065,9 +1071,11 @@ describe('update*Entity()', () => {
     const { adminClient } = server;
     const createBar1Result = await adminClient.createEntity({
       info: { type: 'MutationBar', name: 'Bar 1' },
+      fields: {},
     });
     const createBar2Result = await adminClient.createEntity({
       info: { type: 'MutationBar', name: 'Bar 2' },
+      fields: {},
     });
     if (expectOkResult(createBar1Result) && expectOkResult(createBar2Result)) {
       const {
@@ -1290,6 +1298,7 @@ describe('update*Entity()', () => {
     const { adminClient } = server;
     const createResult = await adminClient.createEntity({
       info: { type: 'MutationFoo', name: 'Name' },
+      fields: {},
     });
     if (expectOkResult(createResult)) {
       const { id } = createResult.value;

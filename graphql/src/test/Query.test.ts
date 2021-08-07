@@ -147,6 +147,7 @@ describe('node()', () => {
     const { adminClient } = server;
     const createResult = await adminClient.createEntity({
       info: { type: 'QueryFoo', name: 'Howdy name' },
+      fields: {},
     });
     if (expectOkResult(createResult)) {
       const { id } = createResult.value;
@@ -680,9 +681,11 @@ describe('nodes()', () => {
     const { adminClient } = server;
     const createFoo1Result = await adminClient.createEntity({
       info: { type: 'QueryFoo', name: 'Howdy name 1' },
+      fields: {},
     });
     const createFoo2Result = await adminClient.createEntity({
       info: { type: 'QueryFoo', name: 'Howdy name 2' },
+      fields: {},
     });
     if (expectOkResult(createFoo1Result) && expectOkResult(createFoo2Result)) {
       const {

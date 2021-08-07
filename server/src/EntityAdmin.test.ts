@@ -848,9 +848,11 @@ describe('createEntity()', () => {
   test('Create EntityAdminBaz with rich text with value item and entity references', async () => {
     const createBar1Result = await client.createEntity({
       info: { type: 'EntityAdminBar', name: 'Bar 1' },
+      fields: {},
     });
     const createBar2Result = await client.createEntity({
       info: { type: 'EntityAdminBar', name: 'Bar 2' },
+      fields: {},
     });
     if (expectOkResult(createBar1Result) && expectOkResult(createBar2Result)) {
       const { id: bar1Id } = createBar1Result.value;
@@ -1013,9 +1015,11 @@ describe('createEntity()', () => {
   test('Create EntityAdminBaz with reference list', async () => {
     const createBar1Result = await client.createEntity({
       info: { type: 'EntityAdminBar', name: 'Bar1' },
+      fields: {},
     });
     const createBar2Result = await client.createEntity({
       info: { type: 'EntityAdminBar', name: 'Bar2' },
+      fields: {},
     });
 
     if (expectOkResult(createBar1Result) && expectOkResult(createBar2Result)) {
@@ -1203,6 +1207,7 @@ describe('createEntity()', () => {
   test('Create EntityAdminBaz with EntityAdminStringReference value type', async () => {
     const createBarResult = await client.createEntity({
       info: { type: 'EntityAdminBar', name: 'Bar' },
+      fields: {},
     });
     if (expectOkResult(createBarResult)) {
       const { id: barId } = createBarResult.value;
@@ -1269,9 +1274,11 @@ describe('createEntity()', () => {
   test('Create EntityAdminBaz with EntityAdminListFields value type', async () => {
     const createBar1Result = await client.createEntity({
       info: { type: 'EntityAdminBar', name: 'Bar 1' },
+      fields: {},
     });
     const createBar2Result = await client.createEntity({
       info: { type: 'EntityAdminBar', name: 'Bar 2' },
+      fields: {},
     });
     if (expectOkResult(createBar1Result) && expectOkResult(createBar2Result)) {
       const { id: bar1Id } = createBar1Result.value;
@@ -1493,6 +1500,7 @@ describe('createEntity()', () => {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         version: 1 as any,
       },
+      fields: {},
     });
 
     expectErrorResult(result, ErrorType.BadRequest, 'Unsupported version for create: 1');
@@ -2693,7 +2701,7 @@ describe('updateEntity()', () => {
         info: { name },
       } = createResult.value;
 
-      const updateResult = await client.updateEntity({ id, info: { name } });
+      const updateResult = await client.updateEntity({ id, info: { name }, fields: {} });
       expectResultValue(updateResult, {
         id,
         info: {
@@ -3664,6 +3672,7 @@ describe('getPublishingHistory()', () => {
   test('New unpublished entity', async () => {
     const createResult = await client.createEntity({
       info: { type: 'EntityAdminBar', name: 'Unpublished' },
+      fields: {},
     });
     if (expectOkResult(createResult)) {
       const { id } = createResult.value;
@@ -3675,6 +3684,7 @@ describe('getPublishingHistory()', () => {
   test('One published version', async () => {
     const createResult = await client.createEntity({
       info: { type: 'EntityAdminBar', name: 'Published' },
+      fields: {},
     });
     if (expectOkResult(createResult)) {
       const { id } = createResult.value;
@@ -3703,6 +3713,7 @@ describe('getPublishingHistory()', () => {
   test('One unpublished version', async () => {
     const createResult = await client.createEntity({
       info: { type: 'EntityAdminBar', name: 'Published/Unpublished' },
+      fields: {},
     });
     if (expectOkResult(createResult)) {
       const { id } = createResult.value;
