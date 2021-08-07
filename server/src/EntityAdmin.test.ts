@@ -2702,22 +2702,9 @@ describe('updateEntity()', () => {
       } = createResult.value;
 
       const updateResult = await client.updateEntity({ id, info: { name }, fields: {} });
-      expectResultValue(updateResult, {
-        id,
-        info: {
-          type: 'EntityAdminFoo',
-          name: name,
-          version: 1,
-          publishingState: EntityPublishState.Draft,
-        },
-        fields: {
-          ...emptyFooFields,
-          title: 'First title',
-          summary: 'First summary',
-        },
-      });
+      expectResultValue(updateResult, createResult.value);
 
-      const publishResult = await client.publishEntities([{ id, version: 1 }]);
+      const publishResult = await client.publishEntities([{ id, version: 0 }]);
       expectResultValue(publishResult, [{ id, publishState: EntityPublishState.Published }]);
 
       const publishedResult = await publishedClient.getEntity({ id });
@@ -2943,6 +2930,23 @@ describe('updateEntity()', () => {
         },
         fields: { ...emptyFooFields, title: 'Updated title' },
       });
+    }
+  });
+
+  test('Update with the same field does not create new version', async () => {
+    const createResult = await client.createEntity({
+      info: { type: 'EntityAdminFoo', name: 'Foo' },
+      fields: { title: 'Foo title' },
+    });
+    if (expectOkResult(createResult)) {
+      const { id } = createResult.value;
+      const updateResult = await client.updateEntity({ id, fields: { title: 'Foo title' } });
+      if (expectOkResult(updateResult)) {
+        const {
+          info: { version },
+        } = updateResult.value;
+        expect(version).toBe(0); // no update
+      }
     }
   });
 

@@ -98,6 +98,11 @@ export interface AdminEntityUpdate {
   fields: Record<string, unknown>;
 }
 
+export interface AdminEntityUpdatePayload {
+  effect: 'updated' | 'none';
+  entity: AdminEntity;
+}
+
 export interface AdminEntityUpsert {
   id: string;
   info: {

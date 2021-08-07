@@ -2,6 +2,7 @@ import type {
   AdminEntity,
   AdminEntityCreate,
   AdminEntityUpdate,
+  AdminEntityUpdatePayload,
   AdminEntityUpsert,
   AdminEntityUpsertPayload,
   AdminQuery,
@@ -273,7 +274,7 @@ export async function createEntity(
 export async function updateEntity(
   context: SessionContext,
   entity: AdminEntityUpdate
-): PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.NotFound> {
+): PromiseResult<AdminEntityUpdatePayload, ErrorType.BadRequest | ErrorType.NotFound> {
   return await context.withTransaction(async (context) => {
     const previousValues = await Db.queryNoneOrOne<
       Pick<
@@ -297,7 +298,12 @@ export async function updateEntity(
     if (resolvedResult.isError()) {
       return resolvedResult;
     }
-    const updatedEntity = resolvedResult.value;
+    const { changed, entity: updatedEntity } = resolvedResult.value;
+    if (!changed) {
+      updatedEntity.info.version = previousValues.version;
+      const payload: AdminEntityUpdatePayload = { effect: 'none', entity: updatedEntity };
+      return ok(payload);
+    }
 
     const encodeResult = await encodeEntity(context, updatedEntity);
     if (encodeResult.isError()) {
@@ -353,7 +359,7 @@ export async function updateEntity(
       await Db.queryNone(context, qb.build());
     }
 
-    return ok(updatedEntity);
+    return ok({ effect: 'updated', entity: updatedEntity });
   });
 }
 
@@ -375,10 +381,10 @@ export async function upsertEntity(
     // TODO check effect of create. If conflict it could be created after we fetched entityInfo, so try to update
   }
 
-  //TODO remove name if similar. Support none effect
+  //TODO remove name if similar
   const updateResult = await updateEntity(context, entity);
   if (updateResult.isOk()) {
-    return updateResult.map((entity) => ({ effect: 'updated', entity }));
+    return ok(updateResult.value);
   }
   if (updateResult.isErrorType(ErrorType.BadRequest)) {
     return updateResult;
