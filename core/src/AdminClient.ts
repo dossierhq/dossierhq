@@ -2,6 +2,7 @@ import type {
   AdminEntity,
   AdminEntityCreate,
   AdminEntityUpdate,
+  AdminEntityUpdatePayload,
   AdminEntityUpsert,
   AdminEntityUpsertPayload,
   AdminQuery,
@@ -60,7 +61,10 @@ export interface AdminClient {
 
   updateEntity(
     entity: AdminEntityUpdate
-  ): PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic>;
+  ): PromiseResult<
+    AdminEntityUpdatePayload,
+    ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic
+  >;
 
   upsertEntity(
     entity: AdminEntityUpsert

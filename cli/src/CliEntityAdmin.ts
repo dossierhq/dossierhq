@@ -279,14 +279,14 @@ export async function editEntity(context: CliContext, id: string): Promise<Admin
     logErrorResult('Failed updating entity', updateResult);
     return null;
   }
-  console.log(chalk.bold('Updated'));
-  logEntity(context, updateResult.value);
+  console.log(chalk.bold(updateResult.value.effect === 'updated' ? 'Updated' : 'Unchanged'));
+  logEntity(context, updateResult.value.entity);
 
-  const publishedEntity = await publishEntityVersion(context, updateResult.value);
+  const publishedEntity = await publishEntityVersion(context, updateResult.value.entity);
   if (publishedEntity) {
     return publishedEntity;
   }
-  return updateResult.value;
+  return updateResult.value.entity;
 }
 
 async function publishEntityVersion(

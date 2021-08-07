@@ -1,5 +1,5 @@
 {
-  "cSpell.words": ["Unpublish", "datadata", "jonasb", "rushstack", "uuidv"],
+  "cSpell.words": ["Unpublish", "datadata", "jonasb", "rushstack", "upsert", "uuidv"],
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
   "editor.tabSize": 2,

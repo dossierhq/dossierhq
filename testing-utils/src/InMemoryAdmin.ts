@@ -2,6 +2,7 @@ import type {
   AdminEntity,
   AdminEntityCreate,
   AdminEntityUpdate,
+  AdminEntityUpdatePayload,
   AdminEntityUpsert,
   AdminEntityUpsertPayload,
   AdminQuery,
@@ -172,7 +173,7 @@ export const InMemoryAdmin = {
   updateEntity: async (
     context: InMemorySessionContext,
     entity: AdminEntityUpdate
-  ): PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.NotFound> => {
+  ): PromiseResult<AdminEntityUpdatePayload, ErrorType.BadRequest | ErrorType.NotFound> => {
     const previousVersion = context.server.getEntity(entity.id);
     if (!previousVersion) {
       return notOk.NotFound('No such entity');
@@ -198,7 +199,7 @@ export const InMemoryAdmin = {
 
     const afterUpdate = context.server.getEntity(entity.id);
     assertIsDefined(afterUpdate);
-    return ok(afterUpdate);
+    return ok({ effect: 'updated', entity: afterUpdate });
   },
 
   upsertEntity: async (
@@ -215,10 +216,10 @@ export const InMemoryAdmin = {
       // TODO check effect of create. If conflict it could be created after we fetched entityInfo, so try to update
     }
 
-    //TODO remove name if similar. Support none effect
+    //TODO remove name if similar.
     const updateResult = await InMemoryAdmin.updateEntity(context, entity);
     if (updateResult.isOk()) {
-      return updateResult.map((entity) => ({ effect: 'updated', entity }));
+      return ok(updateResult.value);
     }
     if (updateResult.isErrorType(ErrorType.BadRequest)) {
       return updateResult;
