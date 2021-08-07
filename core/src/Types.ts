@@ -84,7 +84,7 @@ export interface AdminEntityCreate {
     name: string;
     version?: 0;
   };
-  fields?: Record<string, unknown>;
+  fields: Record<string, unknown>;
 }
 
 export interface AdminEntityUpdate {
@@ -95,7 +95,7 @@ export interface AdminEntityUpdate {
     type?: string;
     version?: number;
   };
-  fields?: Record<string, unknown>;
+  fields: Record<string, unknown>;
 }
 
 export interface AdminEntityUpsert {

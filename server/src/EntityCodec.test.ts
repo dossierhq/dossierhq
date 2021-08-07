@@ -54,8 +54,9 @@ beforeAll(async () => {
 
 describe('collectDataFromEntity', () => {
   test('empty', () => {
-    expect(collectDataFromEntity(context, { info: { type: 'EntityCodecFoo', name: 'foo' } }))
-      .toMatchInlineSnapshot(`
+    expect(
+      collectDataFromEntity(context, { info: { type: 'EntityCodecFoo', name: 'foo' }, fields: {} })
+    ).toMatchInlineSnapshot(`
       Object {
         "fullTextSearchText": Array [],
         "locations": Array [],
@@ -66,7 +67,10 @@ describe('collectDataFromEntity', () => {
 
   test('name only', () => {
     expect(
-      collectDataFromEntity(context, { info: { type: 'EntityCodecFoo', name: 'hello world' } })
+      collectDataFromEntity(context, {
+        info: { type: 'EntityCodecFoo', name: 'hello world' },
+        fields: {},
+      })
     ).toMatchInlineSnapshot(`
       Object {
         "fullTextSearchText": Array [],
