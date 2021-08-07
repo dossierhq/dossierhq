@@ -180,10 +180,13 @@ export class DataDataContextValue {
   ): PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic> => {
     try {
       const result = await this.#adminClient.updateEntity(entity);
-      if (result.isOk()) {
-        this.invalidateEntity(result.value);
+      if (result.isError()) {
+        return result;
       }
-      return result;
+      if (result.value.effect !== 'none') {
+        this.invalidateEntity(result.value.entity);
+      }
+      return result.map((payload) => payload.entity);
     } catch (error) {
       return createErrorResultFromError(error, [ErrorType.BadRequest, ErrorType.NotFound]);
     }

@@ -3,7 +3,6 @@ import {
   AdminClientOperationName,
   assertExhaustive,
   createBaseAdminClient,
-  ok,
 } from '@jonasb/datadata-core';
 import type { SessionContext } from '.';
 import {
@@ -140,8 +139,7 @@ async function terminatingMiddleware(
         args: [entity],
         resolve,
       } = operation as AdminClientOperation<AdminClientOperationName.updateEntity>;
-      const result = await updateEntity(context, entity);
-      resolve(result.isOk() ? ok(result.value.entity) : result);
+      resolve(await updateEntity(context, entity));
       break;
     }
     case AdminClientOperationName.upsertEntity: {

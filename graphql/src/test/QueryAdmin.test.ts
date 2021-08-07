@@ -1368,7 +1368,9 @@ describe('versionHistory()', () => {
       });
       if (expectOkResult(updateResult)) {
         expectOkResult(
-          await adminClient.publishEntities([{ id, version: updateResult.value.info.version }])
+          await adminClient.publishEntities([
+            { id, version: updateResult.value.entity.info.version },
+          ])
         );
       }
 
