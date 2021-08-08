@@ -105,9 +105,19 @@ input AdminEntityCreateInfo {
   name: String!
 }
 
+enum AdminEntityCreateEffect {
+  created
+  none
+}
+
 input AdminEntityUpdateInfo {
   type: EntityType
   name: String
+}
+
+enum AdminEntityUpdateEffect {
+  updated
+  none
 }
 
 interface AdminEntity {
@@ -207,7 +217,7 @@ input AdminFooCreateInput {
 }
 
 type AdminFooCreatePayload {
-  effect: String!
+  effect: AdminEntityCreateEffect!
   entity: AdminFoo!
 }
 
@@ -218,7 +228,7 @@ input AdminFooUpdateInput {
 }
 
 type AdminFooUpdatePayload {
-  effect: String!
+  effect: AdminEntityUpdateEffect!
   entity: AdminFoo!
 }
 
@@ -233,7 +243,7 @@ input AdminBarCreateInput {
 }
 
 type AdminBarCreatePayload {
-  effect: String!
+  effect: AdminEntityCreateEffect!
   entity: AdminBar!
 }
 
@@ -243,7 +253,7 @@ input AdminBarUpdateInput {
 }
 
 type AdminBarUpdatePayload {
-  effect: String!
+  effect: AdminEntityUpdateEffect!
   entity: AdminBar!
 }
 
@@ -363,9 +373,19 @@ input AdminEntityCreateInfo {
   name: String!
 }
 
+enum AdminEntityCreateEffect {
+  created
+  none
+}
+
 input AdminEntityUpdateInfo {
   type: EntityType
   name: String
+}
+
+enum AdminEntityUpdateEffect {
+  updated
+  none
 }
 
 interface AdminEntity {
@@ -467,7 +487,7 @@ input AdminFooCreateInput {
 }
 
 type AdminFooCreatePayload {
-  effect: String!
+  effect: AdminEntityCreateEffect!
   entity: AdminFoo!
 }
 
@@ -478,7 +498,7 @@ input AdminFooUpdateInput {
 }
 
 type AdminFooUpdatePayload {
-  effect: String!
+  effect: AdminEntityUpdateEffect!
   entity: AdminFoo!
 }
 
@@ -493,7 +513,7 @@ input AdminBarCreateInput {
 }
 
 type AdminBarCreatePayload {
-  effect: String!
+  effect: AdminEntityCreateEffect!
   entity: AdminBar!
 }
 
@@ -503,7 +523,7 @@ input AdminBarUpdateInput {
 }
 
 type AdminBarUpdatePayload {
-  effect: String!
+  effect: AdminEntityUpdateEffect!
   entity: AdminBar!
 }
 
@@ -518,7 +538,7 @@ input AdminBazCreateInput {
 }
 
 type AdminBazCreatePayload {
-  effect: String!
+  effect: AdminEntityCreateEffect!
   entity: AdminBaz!
 }
 
@@ -528,7 +548,7 @@ input AdminBazUpdateInput {
 }
 
 type AdminBazUpdatePayload {
-  effect: String!
+  effect: AdminEntityUpdateEffect!
   entity: AdminBaz!
 }
 
@@ -651,9 +671,19 @@ input AdminEntityCreateInfo {
   name: String!
 }
 
+enum AdminEntityCreateEffect {
+  created
+  none
+}
+
 input AdminEntityUpdateInfo {
   type: EntityType
   name: String
+}
+
+enum AdminEntityUpdateEffect {
+  updated
+  none
 }
 
 interface AdminEntity {
@@ -737,7 +767,7 @@ input AdminFooCreateInput {
 }
 
 type AdminFooCreatePayload {
-  effect: String!
+  effect: AdminEntityCreateEffect!
   entity: AdminFoo!
 }
 
@@ -747,7 +777,7 @@ input AdminFooUpdateInput {
 }
 
 type AdminFooUpdatePayload {
-  effect: String!
+  effect: AdminEntityUpdateEffect!
   entity: AdminFoo!
 }
 
@@ -849,9 +879,19 @@ input AdminEntityCreateInfo {
   name: String!
 }
 
+enum AdminEntityCreateEffect {
+  created
+  none
+}
+
 input AdminEntityUpdateInfo {
   type: EntityType
   name: String
+}
+
+enum AdminEntityUpdateEffect {
+  updated
+  none
 }
 
 interface AdminEntity {
@@ -945,7 +985,7 @@ input AdminFooCreateInput {
 }
 
 type AdminFooCreatePayload {
-  effect: String!
+  effect: AdminEntityCreateEffect!
   entity: AdminFoo!
 }
 
@@ -956,7 +996,7 @@ input AdminFooUpdateInput {
 }
 
 type AdminFooUpdatePayload {
-  effect: String!
+  effect: AdminEntityUpdateEffect!
   entity: AdminFoo!
 }
 
@@ -1072,9 +1112,19 @@ input AdminEntityCreateInfo {
   name: String!
 }
 
+enum AdminEntityCreateEffect {
+  created
+  none
+}
+
 input AdminEntityUpdateInfo {
   type: EntityType
   name: String
+}
+
+enum AdminEntityUpdateEffect {
+  updated
+  none
 }
 
 interface AdminEntity {
@@ -1168,7 +1218,7 @@ input AdminFooCreateInput {
 }
 
 type AdminFooCreatePayload {
-  effect: String!
+  effect: AdminEntityCreateEffect!
   entity: AdminFoo!
 }
 
@@ -1179,7 +1229,7 @@ input AdminFooUpdateInput {
 }
 
 type AdminFooUpdatePayload {
-  effect: String!
+  effect: AdminEntityUpdateEffect!
   entity: AdminFoo!
 }
 
@@ -1210,7 +1260,7 @@ input AdminBarCreateInput {
 }
 
 type AdminBarCreatePayload {
-  effect: String!
+  effect: AdminEntityCreateEffect!
   entity: AdminBar!
 }
 
@@ -1221,7 +1271,7 @@ input AdminBarUpdateInput {
 }
 
 type AdminBarUpdatePayload {
-  effect: String!
+  effect: AdminEntityUpdateEffect!
   entity: AdminBar!
 }
 
@@ -1366,9 +1416,19 @@ input AdminEntityCreateInfo {
   name: String!
 }
 
+enum AdminEntityCreateEffect {
+  created
+  none
+}
+
 input AdminEntityUpdateInfo {
   type: EntityType
   name: String
+}
+
+enum AdminEntityUpdateEffect {
+  updated
+  none
 }
 
 interface AdminEntity {
@@ -1474,7 +1534,7 @@ input AdminFooCreateInput {
 }
 
 type AdminFooCreatePayload {
-  effect: String!
+  effect: AdminEntityCreateEffect!
   entity: AdminFoo!
 }
 
@@ -1485,7 +1545,7 @@ input AdminFooUpdateInput {
 }
 
 type AdminFooUpdatePayload {
-  effect: String!
+  effect: AdminEntityUpdateEffect!
   entity: AdminFoo!
 }
 
@@ -1500,7 +1560,7 @@ input AdminBarCreateInput {
 }
 
 type AdminBarCreatePayload {
-  effect: String!
+  effect: AdminEntityCreateEffect!
   entity: AdminBar!
 }
 
@@ -1510,7 +1570,7 @@ input AdminBarUpdateInput {
 }
 
 type AdminBarUpdatePayload {
-  effect: String!
+  effect: AdminEntityUpdateEffect!
   entity: AdminBar!
 }
 
