@@ -467,6 +467,17 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       })
     );
 
+    // AdminEntityUpdateEffect
+    this.addType(
+      new GraphQLEnumType({
+        name: 'AdminEntityCreateEffect',
+        values: {
+          created: {},
+          none: {},
+        },
+      })
+    );
+
     // AdminEntityUpdateInfo
     this.addType(
       new GraphQLInputObjectType({
@@ -475,6 +486,17 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
           type: { type: this.getEnumType('EntityType') },
           name: { type: GraphQLString },
           //TODO version
+        },
+      })
+    );
+
+    // AdminEntityUpdateEffect
+    this.addType(
+      new GraphQLEnumType({
+        name: 'AdminEntityUpdateEffect',
+        values: {
+          updated: {},
+          none: {},
         },
       })
     );
@@ -725,7 +747,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         name: toAdminCreatePayloadTypeName(entitySpec.name),
         fields: () => {
           const fields: GraphQLFieldConfigMap<AdminEntity, TContext> = {
-            effect: { type: new GraphQLNonNull(GraphQLString) },
+            effect: { type: new GraphQLNonNull(this.getEnumType('AdminEntityCreateEffect')) },
             entity: { type: new GraphQLNonNull(this.getType(toAdminTypeName(entitySpec.name))) },
           };
           return fields;
@@ -756,7 +778,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         name: toAdminUpdatePayloadTypeName(entitySpec.name),
         fields: () => {
           const fields: GraphQLFieldConfigMap<AdminEntity, TContext> = {
-            effect: { type: new GraphQLNonNull(GraphQLString) },
+            effect: { type: new GraphQLNonNull(this.getEnumType('AdminEntityUpdateEffect')) },
             entity: { type: new GraphQLNonNull(this.getType(toAdminTypeName(entitySpec.name))) },
           };
           return fields;
