@@ -29,6 +29,7 @@ export {
   isEntityTypeField,
   isEntityTypeItemField,
   isEntityTypeListField,
+  isFieldValueEqual,
   isItemAdminEntity,
   isItemEntity,
   isItemValueItem,
