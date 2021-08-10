@@ -16,6 +16,7 @@ import type {
 import {
   EntityPublishState,
   FieldType,
+  isFieldValueEqual,
   isLocationItemField,
   isRichTextEntityBlock,
   isRichTextField,
@@ -310,8 +311,7 @@ export function resolveUpdateEntity(
     if (entity.fields && fieldName in entity.fields) {
       const newFieldValue = entity.fields[fieldName];
       //TODO normalize fieldValue
-      //TODO deep equals
-      if (previousFieldValue !== newFieldValue) {
+      if (!isFieldValueEqual(previousFieldValue, newFieldValue)) {
         changed = true;
       }
       result.fields[fieldName] = newFieldValue;
