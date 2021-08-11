@@ -677,6 +677,21 @@ describe('createEntity()', () => {
     }
   });
 
+  test('Create EntityAdminFoo normalizes empty string', async () => {
+    const createResult = await client.createEntity({
+      info: { type: 'EntityAdminFoo', name: 'Draft' },
+      fields: { title: '' },
+    });
+    if (expectOkResult(createResult)) {
+      const {
+        entity: {
+          fields: { title },
+        },
+      } = createResult.value;
+      expect(title).toBe(null);
+    }
+  });
+
   test('Create EntityAdminFoo with reference to Bar', async () => {
     const createBarResult = await client.createEntity({
       info: { type: 'EntityAdminBar', name: 'Bar name' },
@@ -2868,6 +2883,29 @@ describe('updateEntity()', () => {
         info: { type: 'EntityAdminFoo', name },
         fields: { ...emptyFooFields, title: 'First title', summary: 'First summary' },
       });
+    }
+  });
+
+  test('Update EntityAdminFoo normalizes empty string', async () => {
+    const createResult = await client.createEntity({
+      info: { type: 'EntityAdminFoo', name: 'Draft' },
+      fields: { title: 'Hello' },
+    });
+    if (expectOkResult(createResult)) {
+      const {
+        entity: { id },
+      } = createResult.value;
+
+      const updateResult = await client.updateEntity({ id, fields: { title: '' } });
+      if (expectOkResult(updateResult)) {
+        const {
+          entity: {
+            fields: { title },
+          },
+        } = updateResult.value;
+
+        expect(title).toBe(null);
+      }
     }
   });
 

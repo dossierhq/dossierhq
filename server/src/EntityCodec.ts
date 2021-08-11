@@ -26,6 +26,7 @@ import {
   isStringItemField,
   isValueTypeField,
   isValueTypeItemField,
+  normalizeFieldValue,
   notOk,
   ok,
   RichTextBlockType,
@@ -249,7 +250,12 @@ export function resolveCreateEntity(
 
   const fields: Record<string, unknown> = {};
   for (const fieldSpec of entitySpec.fields) {
-    fields[fieldSpec.name] = entity.fields?.[fieldSpec.name] ?? null;
+    const fieldValue = normalizeFieldValue(
+      schema,
+      fieldSpec,
+      entity.fields?.[fieldSpec.name] ?? null
+    );
+    fields[fieldSpec.name] = fieldValue;
   }
   result.fields = fields;
 
@@ -309,8 +315,7 @@ export function resolveUpdateEntity(
     );
 
     if (entity.fields && fieldName in entity.fields) {
-      const newFieldValue = entity.fields[fieldName];
-      //TODO normalize fieldValue
+      const newFieldValue = normalizeFieldValue(schema, fieldSpec, entity.fields[fieldName]);
       if (!isFieldValueEqual(previousFieldValue, newFieldValue)) {
         changed = true;
       }
