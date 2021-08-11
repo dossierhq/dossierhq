@@ -11,7 +11,7 @@ import type {
   Schema,
   ValueItem,
 } from '.';
-import { FieldType, RichTextBlockType } from '.';
+import { assertExhaustive, assertIsDefined, FieldType, RichTextBlockType } from '.';
 
 /** Check if `value` with `fieldSpec` is a single boolean field */
 export function isBooleanField(
@@ -448,4 +448,73 @@ export function isFieldValueEqual(a: unknown, b: unknown): boolean {
   }
 
   return false;
+}
+
+export function normalizeFieldValue(
+  schema: Schema,
+  fieldSpec: FieldSpecification,
+  value: unknown
+): unknown {
+  if (fieldSpec.list) {
+    if (!value) return null;
+    if (!Array.isArray(value)) throw new Error(`Expected array, got ${typeof value}: ${value}`);
+
+    let changed = false;
+    const newList = [];
+    for (let i = 0; i < value.length; i += 1) {
+      const item = value[i];
+      const normalizedItem = normalizeFieldValueItem(schema, fieldSpec, item);
+      if (item !== normalizedItem || normalizedItem === null) {
+        changed = true;
+      }
+      if (normalizedItem !== null) {
+        newList.push(normalizedItem);
+      }
+    }
+
+    if (newList.length === 0) {
+      return null;
+    }
+    return changed ? newList : value;
+  }
+
+  return normalizeFieldValueItem(schema, fieldSpec, value);
+}
+
+function normalizeFieldValueItem(schema: Schema, fieldSpec: FieldSpecification, value: unknown) {
+  if (value === null) return null;
+  const type = fieldSpec.type as FieldType;
+  switch (type) {
+    case FieldType.Boolean:
+    case FieldType.EntityType:
+    case FieldType.Location:
+    case FieldType.RichText: // TODO normalize rich text value
+      return value;
+    case FieldType.String:
+      //TODO support trimming of strings?
+      return value ? value : null;
+    case FieldType.ValueType: {
+      const valueItem = value as ValueItem;
+      const newValueItem: ValueItem = { type: valueItem.type };
+      let changed = false;
+
+      const valueSpec = schema.getValueTypeSpecification(valueItem.type);
+      assertIsDefined(valueSpec);
+      for (const [fieldName, fieldValue] of Object.entries(valueItem)) {
+        if (fieldName === 'type') continue;
+
+        const fieldFieldSpec = schema.getValueFieldSpecification(valueSpec, fieldName);
+        assertIsDefined(fieldFieldSpec);
+        const normalizedFieldValue = normalizeFieldValue(schema, fieldFieldSpec, fieldValue);
+        newValueItem[fieldName] = normalizedFieldValue;
+        if (normalizedFieldValue !== fieldValue) {
+          changed = true;
+        }
+      }
+
+      return changed ? newValueItem : valueItem;
+    }
+    default:
+      assertExhaustive(type);
+  }
 }

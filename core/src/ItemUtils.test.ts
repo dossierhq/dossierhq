@@ -1,12 +1,44 @@
 import type { Entity, FieldSpecification, RichText, RichTextBlock, ValueItem } from '.';
 import {
+  assertIsDefined,
   FieldType,
   isFieldValueEqual,
+  normalizeFieldValue,
   RichTextBlockType,
   Schema,
   visitItemRecursively,
   visitorPathToString,
 } from '.';
+
+const schema = new Schema({
+  entityTypes: [
+    {
+      name: 'Foo',
+      fields: [
+        { name: 'string', type: FieldType.String },
+        { name: 'stringList', type: FieldType.String, list: true },
+        { name: 'twoStrings', type: FieldType.ValueType, valueTypes: ['TwoStrings'] },
+      ],
+    },
+  ],
+  valueTypes: [
+    {
+      name: 'TwoStrings',
+      fields: [
+        { name: 'string1', type: FieldType.String },
+        { name: 'string2', type: FieldType.String },
+      ],
+    },
+  ],
+});
+
+function getEntityFieldSpec(schema: Schema, entityType: string, fieldName: string) {
+  const entitySpec = schema.getEntityTypeSpecification(entityType);
+  assertIsDefined(entitySpec);
+  const fieldSpec = schema.getEntityFieldSpecification(entitySpec, fieldName);
+  assertIsDefined(fieldSpec);
+  return fieldSpec;
+}
 
 function buildMockCallbacks<TVisitContext>() {
   const calls: unknown[] = [];
@@ -1072,4 +1104,46 @@ describe('isFieldValueEqual', () => {
         }
       )
     ).toBeFalsy());
+});
+
+describe('normalizeFieldValue()', () => {
+  test('"" => null', () =>
+    expect(normalizeFieldValue(schema, getEntityFieldSpec(schema, 'Foo', 'string'), '')).toEqual(
+      null
+    ));
+
+  test('[] => null', () =>
+    expect(normalizeFieldValue(schema, getEntityFieldSpec(schema, 'Foo', 'stringList'), [])).toBe(
+      null
+    ));
+  test('[string, ""] => [string]', () =>
+    expect(
+      normalizeFieldValue(schema, getEntityFieldSpec(schema, 'Foo', 'stringList'), ['hello', ''])
+    ).toEqual(['hello']));
+  test('[string] => [string] (no change)', () => {
+    const fieldValue = ['hello', 'world'];
+    expect(
+      normalizeFieldValue(schema, getEntityFieldSpec(schema, 'Foo', 'stringList'), fieldValue)
+    ).toBe(fieldValue);
+  });
+
+  test('{string1:string,string2:""} => {string1:string,string2:null}', () =>
+    expect(
+      normalizeFieldValue(schema, getEntityFieldSpec(schema, 'Foo', 'twoStrings'), {
+        type: 'TwoStrings',
+        string1: 'Hello',
+        string2: '',
+      })
+    ).toEqual({ type: 'TwoStrings', string1: 'Hello', string2: null }));
+
+  test('{string1:string,string2:string} => {string1:string,string2:string} (no change)', () => {
+    const fieldValue = {
+      type: 'TwoStrings',
+      string1: 'Hello',
+      string2: 'World',
+    };
+    expect(
+      normalizeFieldValue(schema, getEntityFieldSpec(schema, 'Foo', 'twoStrings'), fieldValue)
+    ).toBe(fieldValue);
+  });
 });
