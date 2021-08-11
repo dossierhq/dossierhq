@@ -11,7 +11,7 @@ import type {
   Schema,
   ValueItem,
 } from '.';
-import { assertExhaustive, assertIsDefined, FieldType, RichTextBlockType } from '.';
+import { FieldType, RichTextBlockType } from '.';
 
 /** Check if `value` with `fieldSpec` is a single boolean field */
 export function isBooleanField(
@@ -457,7 +457,9 @@ export function normalizeFieldValue(
 ): unknown {
   if (fieldSpec.list) {
     if (!value) return null;
-    if (!Array.isArray(value)) throw new Error(`Expected array, got ${typeof value}: ${value}`);
+    if (!Array.isArray(value)) {
+      return value; // Invalid
+    }
 
     let changed = false;
     const newList = [];
@@ -499,22 +501,29 @@ function normalizeFieldValueItem(schema: Schema, fieldSpec: FieldSpecification, 
       let changed = false;
 
       const valueSpec = schema.getValueTypeSpecification(valueItem.type);
-      assertIsDefined(valueSpec);
+      if (!valueSpec) {
+        return value; // Invalid
+      }
       for (const [fieldName, fieldValue] of Object.entries(valueItem)) {
         if (fieldName === 'type') continue;
 
         const fieldFieldSpec = schema.getValueFieldSpecification(valueSpec, fieldName);
-        assertIsDefined(fieldFieldSpec);
-        const normalizedFieldValue = normalizeFieldValue(schema, fieldFieldSpec, fieldValue);
-        newValueItem[fieldName] = normalizedFieldValue;
-        if (normalizedFieldValue !== fieldValue) {
-          changed = true;
+        if (fieldFieldSpec) {
+          const normalizedFieldValue = normalizeFieldValue(schema, fieldFieldSpec, fieldValue);
+          newValueItem[fieldName] = normalizedFieldValue;
+          if (normalizedFieldValue !== fieldValue) {
+            changed = true;
+          }
+        } else {
+          // Invalid, so just reuse initial value
+          newValueItem[fieldName] = fieldValue;
         }
       }
 
       return changed ? newValueItem : valueItem;
     }
-    default:
-      assertExhaustive(type);
+    default: {
+      const _notReached: never = type;
+    }
   }
 }
