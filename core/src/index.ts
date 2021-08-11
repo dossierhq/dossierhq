@@ -48,6 +48,7 @@ export {
   isValueTypeField,
   isValueTypeItemField,
   isValueTypeListField,
+  normalizeFieldValue,
   visitFieldRecursively,
   visitItemRecursively,
   visitorPathToString,
