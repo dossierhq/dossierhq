@@ -60,6 +60,7 @@ common/deploy/
 common/temp/
 common/autoinstallers/*/.npmrc
 **/.rush/temp/
+temp/
 
 ##
 .envrc
