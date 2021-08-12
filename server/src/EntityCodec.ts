@@ -268,7 +268,11 @@ export function resolveUpdateEntity(
   type: string,
   values: Pick<
     EntitiesTable,
-    'archived' | 'name' | 'never_published' | 'published_entity_versions_id'
+    | 'archived'
+    | 'name'
+    | 'never_published'
+    | 'published_entity_versions_id'
+    | 'latest_draft_entity_versions_id'
   > &
     Pick<EntityVersionsTable, 'data' | 'version'>
 ): Result<{ changed: boolean; entity: AdminEntity }, ErrorType.BadRequest> {
@@ -323,6 +327,11 @@ export function resolveUpdateEntity(
     } else {
       result.fields[fieldName] = previousFieldValue;
     }
+  }
+
+  if (!changed) {
+    result.info.version = values.version;
+    result.info.publishingState = resolvePublishState(values, values);
   }
 
   return ok({ changed, entity: result });

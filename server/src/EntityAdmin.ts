@@ -280,12 +280,18 @@ export async function updateEntity(
     const previousValues = await Db.queryNoneOrOne<
       Pick<
         EntitiesTable,
-        'id' | 'type' | 'name' | 'archived' | 'never_published' | 'published_entity_versions_id'
+        | 'id'
+        | 'type'
+        | 'name'
+        | 'archived'
+        | 'never_published'
+        | 'published_entity_versions_id'
+        | 'latest_draft_entity_versions_id'
       > &
         Pick<EntityVersionsTable, 'version' | 'data'>
     >(
       context,
-      `SELECT e.id, e.type, e.name, e.archived, e.never_published, e.published_entity_versions_id, ev.version, ev.data
+      `SELECT e.id, e.type, e.name, e.archived, e.never_published, e.published_entity_versions_id, e.latest_draft_entity_versions_id, ev.version, ev.data
         FROM entities e, entity_versions ev
         WHERE e.uuid = $1 AND e.latest_draft_entity_versions_id = ev.id`,
       [entity.id]
@@ -301,7 +307,6 @@ export async function updateEntity(
     }
     const { changed, entity: updatedEntity } = resolvedResult.value;
     if (!changed) {
-      updatedEntity.info.version = previousValues.version;
       const payload: AdminEntityUpdatePayload = { effect: 'none', entity: updatedEntity };
       return ok(payload);
     }
