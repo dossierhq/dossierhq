@@ -41,7 +41,7 @@
     "concurrently": "^6.1.0",
     "dotenv": "^9.0.2",
     "pg": "^8.6.0",
-    "tslib": "~2.3.0"
+    "tslib": "~2.3.1"
   },
   "devDependencies": {
     "jest": "~27.0.6"
