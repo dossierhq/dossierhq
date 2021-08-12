@@ -1146,4 +1146,9 @@ describe('normalizeFieldValue()', () => {
       normalizeFieldValue(schema, getEntityFieldSpec(schema, 'Foo', 'twoStrings'), fieldValue)
     ).toBe(fieldValue);
   });
+  test('ValueItem: undefined => undefined', () => {
+    expect(
+      normalizeFieldValue(schema, getEntityFieldSpec(schema, 'Foo', 'twoStrings'), undefined)
+    ).toBe(undefined);
+  });
 });
