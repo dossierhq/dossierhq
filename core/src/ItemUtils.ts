@@ -455,8 +455,11 @@ export function normalizeFieldValue(
   fieldSpec: FieldSpecification,
   value: unknown
 ): unknown {
+  if (value === null || value === undefined) {
+    return value;
+  }
+
   if (fieldSpec.list) {
-    if (!value) return null;
     if (!Array.isArray(value)) {
       return value; // Invalid
     }
@@ -484,8 +487,7 @@ export function normalizeFieldValue(
 }
 
 function normalizeFieldValueItem(schema: Schema, fieldSpec: FieldSpecification, value: unknown) {
-  if (value === null) return null;
-  if (value === undefined) return undefined;
+  if (value === null) return value;
 
   const type = fieldSpec.type as FieldType;
   switch (type) {

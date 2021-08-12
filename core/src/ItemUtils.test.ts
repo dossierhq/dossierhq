@@ -1146,6 +1146,15 @@ describe('normalizeFieldValue()', () => {
       normalizeFieldValue(schema, getEntityFieldSpec(schema, 'Foo', 'twoStrings'), fieldValue)
     ).toBe(fieldValue);
   });
+
+  test('string undefined => undefined', () =>
+    expect(
+      normalizeFieldValue(schema, getEntityFieldSpec(schema, 'Foo', 'string'), undefined)
+    ).toBe(undefined));
+  test('string[] undefined => undefined', () =>
+    expect(
+      normalizeFieldValue(schema, getEntityFieldSpec(schema, 'Foo', 'stringList'), undefined)
+    ).toBe(undefined));
   test('ValueItem: undefined => undefined', () => {
     expect(
       normalizeFieldValue(schema, getEntityFieldSpec(schema, 'Foo', 'twoStrings'), undefined)
