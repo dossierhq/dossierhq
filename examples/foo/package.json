@@ -25,16 +25,16 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@jonasb/datadata-cli": "0.1.1-16",
-    "@jonasb/datadata-core": "0.1.1-16",
-    "@jonasb/datadata-graphql": "0.1.1-16",
-    "@jonasb/datadata-server": "0.1.1-16",
+    "@jonasb/datadata-cli": "0.1.1-17",
+    "@jonasb/datadata-core": "0.1.1-17",
+    "@jonasb/datadata-graphql": "0.1.1-17",
+    "@jonasb/datadata-server": "0.1.1-17",
     "dotenv": "^9.0.2",
     "express": "~4.17.1",
     "express-graphql": "~0.12.0"
   },
   "devDependencies": {
-    "@jonasb/datadata-postgres": "0.1.1-16",
+    "@jonasb/datadata-postgres": "0.1.1-17",
     "@rushstack/heft": "~0.36.1",
     "@types/express": "~4.17.11",
     "@types/node": "^15.3.0",
