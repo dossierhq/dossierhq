@@ -485,6 +485,8 @@ export function normalizeFieldValue(
 
 function normalizeFieldValueItem(schema: Schema, fieldSpec: FieldSpecification, value: unknown) {
   if (value === null) return null;
+  if (value === undefined) return undefined;
+
   const type = fieldSpec.type as FieldType;
   switch (type) {
     case FieldType.Boolean:

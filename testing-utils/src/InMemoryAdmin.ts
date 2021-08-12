@@ -23,6 +23,7 @@ import {
   ErrorType,
   isLocationItemField,
   isPagingForwards,
+  normalizeFieldValue,
   notOk,
   ok,
   visitItemRecursively,
@@ -157,6 +158,21 @@ export const InMemoryAdmin = {
     context: InMemorySessionContext,
     entity: AdminEntityCreate
   ): PromiseResult<AdminEntityCreatePayload, ErrorType.BadRequest> => {
+    const schema = context.server.schema;
+    const entitySpec = schema.getEntityTypeSpecification(entity.info.type);
+    if (!entitySpec) {
+      return notOk.BadRequest(`Invalid entity type ${entity.info.type}`);
+    }
+
+    const fields: Record<string, unknown> = {};
+    for (const [fieldName, fieldValue] of Object.entries(entity.fields ?? {})) {
+      const fieldSpec = schema.getEntityFieldSpecification(entitySpec, fieldName);
+      if (!fieldSpec) {
+        return notOk.BadRequest(`Invalid field name ${fieldName}`);
+      }
+      fields[fieldName] = normalizeFieldValue(schema, fieldSpec, fieldValue);
+    }
+
     const newEntity: AdminEntity = {
       id: entity.id ?? uuidv4(),
       info: {
@@ -165,7 +181,7 @@ export const InMemoryAdmin = {
         version: 0,
         publishingState: EntityPublishState.Draft,
       },
-      fields: entity.fields ?? {},
+      fields,
     };
     context.server.addNewEntity(newEntity, context.subjectId);
     return ok({ effect: 'created', entity: newEntity });
@@ -180,6 +196,23 @@ export const InMemoryAdmin = {
       return notOk.NotFound('No such entity');
     }
 
+    const schema = context.server.schema;
+    const entitySpec = schema.getEntityTypeSpecification(previousVersion.info.type);
+    if (!entitySpec) {
+      return notOk.BadRequest(`Invalid entity type ${previousVersion.info.type}`);
+    }
+
+    const fields: Record<string, unknown> = {};
+    for (const fieldSpec of entitySpec.fields) {
+      const fieldName = fieldSpec.name;
+      let fieldValue = previousVersion.fields[fieldName];
+      if (fieldName in entity.fields) {
+        fieldValue = entity.fields[fieldName];
+      }
+      fieldValue = normalizeFieldValue(schema, fieldSpec, fieldValue);
+      fields[fieldName] = fieldValue;
+    }
+
     let name = previousVersion.info.name;
     if (entity.info?.name && entity.info.name !== name) {
       name = context.server.getUniqueName(entity.id, entity.info.name);
@@ -191,10 +224,7 @@ export const InMemoryAdmin = {
         version: previousVersion.info.version + 1,
         name,
       },
-      fields: {
-        ...previousVersion.fields,
-        ...entity.fields,
-      },
+      fields,
     };
     context.server.addUpdatedEntity(newEntity, context.subjectId);
 
