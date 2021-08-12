@@ -3167,6 +3167,30 @@ describe('updateEntity()', () => {
     }
   });
 
+  test('Update published with the same field does not create new version and returns correct publishing state', async () => {
+    const createResult = await client.createEntity({
+      info: { type: 'EntityAdminFoo', name: 'Foo' },
+      fields: { title: 'Foo title' },
+    });
+    if (expectOkResult(createResult)) {
+      const {
+        entity,
+        entity: { id },
+      } = createResult.value;
+
+      expectOkResult(await client.publishEntities([{ id, version: 0 }]));
+
+      const updateResult = await client.updateEntity({ id, fields: { title: 'Foo title' } });
+      expectResultValue(updateResult, {
+        effect: 'none',
+        entity: {
+          ...entity,
+          info: { ...entity.info, publishingState: EntityPublishState.Published },
+        },
+      });
+    }
+  });
+
   test('Error: Update with invalid id', async () => {
     const result = await client.updateEntity({
       id: 'f773ac54-37db-42df-9b55-b6da8de344c3',
