@@ -1147,6 +1147,14 @@ describe('normalizeFieldValue()', () => {
         string2: '',
       })
     ).toEqual({ type: 'TwoStrings', string1: 'Hello', string2: null }));
+  test('{string1:undefined} => {string1:null,string2:null}', () =>
+    expect(
+      normalizeFieldValue(schema, getEntityFieldSpec(schema, 'Foo', 'twoStrings'), {
+        type: 'TwoStrings',
+        string1: undefined,
+        // no string2
+      })
+    ).toEqual({ type: 'TwoStrings', string1: null, string2: null }));
 
   test('{string1:string,string2:string} => {string1:string,string2:string} (no change)', () => {
     const fieldValue = {

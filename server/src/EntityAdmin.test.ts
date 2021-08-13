@@ -1560,6 +1560,7 @@ describe('createEntity()', () => {
                 child: {
                   type: 'EntityAdminNested',
                   title: 'Nested 0.a.I',
+                  child: null,
                 },
               },
             },
