@@ -1,19 +1,19 @@
 import { ok } from '@jonasb/datadata-core';
 import type { SessionGraphQLContext } from '@jonasb/datadata-graphql';
 import { GraphQLSchemaGenerator } from '@jonasb/datadata-graphql';
-import { graphql } from 'graphql';
 import type { ExecutionResult, GraphQLSchema } from 'graphql';
+import { graphql } from 'graphql';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { getServerConnection, getSessionContextForRequest } from '../../utils/ServerUtils';
-import { handlePostWithoutLocation } from '../../utils/HandlerUtils';
 import { errorResultToBoom } from '../../utils/ErrorUtils';
+import { handlePostWithoutLocation } from '../../utils/HandlerUtils';
+import { getServerConnection, getSessionContextForRequest } from '../../utils/ServerUtils';
 
 let graphQLSchema: GraphQLSchema | null = null;
 
-export default async (
+export default async function graphQlHandler(
   req: NextApiRequest,
   res: NextApiResponse<ExecutionResult>
-): Promise<void> => {
+): Promise<void> {
   await handlePostWithoutLocation(req, res, async () => {
     const { authContext, server } = await getServerConnection();
     const authResult = await getSessionContextForRequest(server, authContext, req);
@@ -36,4 +36,4 @@ export default async (
 
     return result;
   });
-};
+}
