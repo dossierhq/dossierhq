@@ -38,3 +38,9 @@ jobs:
       - name: stop db
         run: |
           npm run db:stop
+  preventDependabotMerge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fail since dependabot changes shouldn't be merged
+        if: startsWith(github.ref, 'refs/heads/dependabot/npm_and_yarn')
+        run: exit 1
