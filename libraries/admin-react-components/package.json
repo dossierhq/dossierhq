@@ -25,7 +25,7 @@
     "ts:check": "tsc --noEmit",
     "ts:check:watch": "tsc --noEmit --watch",
     "storybook:dev": "start-storybook -p 6006",
-    "storybook:build": "build-storybook",
+    "storybook:build": "build-storybook --quiet",
     "upgrade-dependencies": "npx npm-check-updates -u --packageFile ./package.json",
     "upgrade-dependencies:check": "npx npm-check-updates"
   },
