@@ -47,8 +47,8 @@
   },
   "dependencies": {
     "@jonasb/datadata-core": "0.1.1-18",
-    "@types/pg": "^7.14.11",
-    "pg": "^8.6.0",
+    "@types/pg": "^8.6.1",
+    "pg": "^8.7.1",
     "tslib": "~2.3.1"
   }
 }

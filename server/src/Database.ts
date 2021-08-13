@@ -6,7 +6,7 @@ import type {
   QueryResult,
   QueryResultRow,
 } from 'pg';
-import { Pool as PgPool } from 'pg';
+import { DatabaseError, Pool as PgPool } from 'pg';
 import type { Context } from '.';
 
 export class UnexpectedQuantityError extends Error {
@@ -100,6 +100,15 @@ export async function withNestedTransaction<TOk, TError extends ErrorType>(
     await queryable.query('ROLLBACK');
     throw e;
   }
+}
+
+export function isUniqueViolationOfConstraint(error: unknown, constraintName: string): boolean {
+  const unique_violation = '23505';
+  return (
+    error instanceof DatabaseError &&
+    error.code === unique_violation &&
+    error.constraint === constraintName
+  );
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
