@@ -53,7 +53,7 @@ dependencies:
   dotenv: 10.0.0
   eslint: 7.32.0
   eslint-plugin-jest-dom: 3.9.0_eslint@7.32.0
-  eslint-plugin-react: 7.23.2_eslint@7.32.0
+  eslint-plugin-react: 7.24.0_eslint@7.32.0
   eslint-plugin-react-hooks: 4.2.0_eslint@7.32.0
   eslint-plugin-testing-library: 4.4.0_eslint@7.32.0+typescript@4.3.5
   express: 4.17.1
@@ -7584,6 +7584,30 @@ packages:
       node: '>= 0.4'
     resolution:
       integrity: sha512-LJzK7MrQa8TS0ja2w3YNLzUgJCGPdPOV1yVvezjNnS89D+VR08+Szt2mz3YB2Dck/+w5tfIq/RoUAFqJJGM2yw==
+  /es-abstract/1.18.5:
+    dependencies:
+      call-bind: 1.0.2
+      es-to-primitive: 1.2.1
+      function-bind: 1.1.1
+      get-intrinsic: 1.1.1
+      has: 1.0.3
+      has-symbols: 1.0.2
+      internal-slot: 1.0.3
+      is-callable: 1.2.3
+      is-negative-zero: 2.0.1
+      is-regex: 1.1.4
+      is-string: 1.0.7
+      object-inspect: 1.11.0
+      object-keys: 1.1.1
+      object.assign: 4.1.2
+      string.prototype.trimend: 1.0.4
+      string.prototype.trimstart: 1.0.4
+      unbox-primitive: 1.0.1
+    dev: false
+    engines:
+      node: '>= 0.4'
+    resolution:
+      integrity: sha512-DDggyJLoS91CkJjgauM5c0yZMjiD1uK3KcaCeAmffGwZ+ODWzOkPN4QwRbsK5DOFf06fywmyLci3ZD8jLGhVYA==
   /es-array-method-boxes-properly/1.0.0:
     dev: false
     resolution:
@@ -7706,7 +7730,7 @@ packages:
       eslint: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0
     resolution:
       integrity: sha512-623WEiZJqxR7VdxFCKLI6d6LLpwJkGPYKODnkH3D7WpOG5KM8yWueBd8TLsNAetEJNF5iJmolaAKO3F8yzyVBQ==
-  /eslint-plugin-react/7.23.2_eslint@7.32.0:
+  /eslint-plugin-react/7.24.0_eslint@7.32.0:
     dependencies:
       array-includes: 3.1.3
       array.prototype.flatmap: 1.2.4
@@ -7715,19 +7739,19 @@ packages:
       has: 1.0.3
       jsx-ast-utils: 3.2.0
       minimatch: 3.0.4
-      object.entries: 1.1.3
+      object.entries: 1.1.4
       object.fromentries: 2.0.4
-      object.values: 1.1.3
+      object.values: 1.1.4
       prop-types: 15.7.2
       resolve: 2.0.0-next.3
-      string.prototype.matchall: 4.0.4
+      string.prototype.matchall: 4.0.5
     dev: false
     engines:
       node: '>=4'
     peerDependencies:
       eslint: ^3 || ^4 || ^5 || ^6 || ^7
     resolution:
-      integrity: sha512-AfjgFQB+nYszudkxRkTFu0UR1zEQig0ArVMPloKhxwlwkzaw/fBiH0QWcBBhZONlXqQC51+nfqFrkn4EzHcGBw==
+      integrity: sha512-KJJIx2SYx7PBx3ONe/mEeMz4YE0Lcr7feJTCMyyKb/341NcjuAgim3Acgan89GfPv7nxXK2+0slu0CWXYM4x+Q==
   /eslint-plugin-testing-library/4.4.0_eslint@7.32.0+typescript@4.3.5:
     dependencies:
       '@typescript-eslint/experimental-utils': 4.23.0_eslint@7.32.0+typescript@4.3.5
@@ -8942,6 +8966,14 @@ packages:
       node: '>= 0.4'
     resolution:
       integrity: sha512-chXa79rL/UC2KlX17jo3vRGz0azaWEx5tGqZg5pO3NUyEJVB17dMruQlzCCOfUvElghKcm5194+BCRvi2Rv/Gw==
+  /has-tostringtag/1.0.0:
+    dependencies:
+      has-symbols: 1.0.2
+    dev: false
+    engines:
+      node: '>= 0.4'
+    resolution:
+      integrity: sha512-kFjcSNhnlGV1kyoGk7OXKSawH5JOb/LzUc5w9B02hOTO0dfFRjbHQKvg1d6cf3HbeUmtU9VbbV3qzZ2Teh97WQ==
   /has-unicode/2.0.1:
     dev: false
     resolution:
@@ -9786,6 +9818,15 @@ packages:
       node: '>= 0.4'
     resolution:
       integrity: sha512-axvdhb5pdhEVThqJzYXwMlVuZwC+FF2DpcOhTS+y/8jVq4trxyPgfcwIxIKiyeuLlSQYKkmUaPQJ8ZE4yNKXDg==
+  /is-regex/1.1.4:
+    dependencies:
+      call-bind: 1.0.2
+      has-tostringtag: 1.0.0
+    dev: false
+    engines:
+      node: '>= 0.4'
+    resolution:
+      integrity: sha512-kvRdxDsxZjhzUX07ZnLydzS1TU/TJlTUHHY4YLL87e37oUA49DfkLqgy+VjFocowy29cKvcSiu+kIv728jTTVg==
   /is-root/2.1.0:
     dev: false
     engines:
@@ -9814,6 +9855,14 @@ packages:
       node: '>= 0.4'
     resolution:
       integrity: sha512-buY6VNRjhQMiF1qWDouloZlQbRhDPCebwxSjxMjxgemYT46YMd2NR0/H+fBhEfWX4A/w9TBJ+ol+okqJKFE6vQ==
+  /is-string/1.0.7:
+    dependencies:
+      has-tostringtag: 1.0.0
+    dev: false
+    engines:
+      node: '>= 0.4'
+    resolution:
+      integrity: sha512-tE2UXzivje6ofPW7l23cjDOMa09gb7xlAqG6jG5ej6uPV32TlWP3NKPigtaGeHNu9fohccRYvIiZMfOOnOYUtg==
   /is-symbol/1.0.3:
     dependencies:
       has-symbols: 1.0.2
@@ -12610,6 +12659,10 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha1-fn2Fi3gb18mRpBupde04EnVOmYw=
+  /object-inspect/1.11.0:
+    dev: false
+    resolution:
+      integrity: sha512-jp7ikS6Sd3GxQfZJPyH3cjcbJF6GZPClgdV+EFygjFLQ5FmW/dRUnTd9PQ9k0JhoNDabWFbpF1yCdSWCC6gexg==
   /object-inspect/1.9.0:
     dev: false
     resolution:
@@ -12659,11 +12712,21 @@ packages:
       node: '>= 0.4'
     resolution:
       integrity: sha512-ym7h7OZebNS96hn5IJeyUmaWhaSM4SVtAPPfNLQEI2MYWCO2egsITb9nab2+i/Pwibx+R0mtn+ltKJXRSeTMGg==
+  /object.entries/1.1.4:
+    dependencies:
+      call-bind: 1.0.2
+      define-properties: 1.1.3
+      es-abstract: 1.18.5
+    dev: false
+    engines:
+      node: '>= 0.4'
+    resolution:
+      integrity: sha512-h4LWKWE+wKQGhtMjZEBud7uLGhqyLwj8fpHOarZhD2uY3C9cRtk57VQ89ke3moByLXMedqs3XCHzyb4AmA2DjA==
   /object.fromentries/2.0.4:
     dependencies:
       call-bind: 1.0.2
       define-properties: 1.1.3
-      es-abstract: 1.18.0
+      es-abstract: 1.18.5
       has: 1.0.3
     dev: false
     engines:
@@ -12699,6 +12762,16 @@ packages:
       node: '>= 0.4'
     resolution:
       integrity: sha512-nkF6PfDB9alkOUxpf1HNm/QlkeW3SReqL5WXeBLpEJJnlPSvRaDQpW3gQTksTN3fgJX4hL42RzKyOin6ff3tyw==
+  /object.values/1.1.4:
+    dependencies:
+      call-bind: 1.0.2
+      define-properties: 1.1.3
+      es-abstract: 1.18.5
+    dev: false
+    engines:
+      node: '>= 0.4'
+    resolution:
+      integrity: sha512-TnGo7j4XSnKQoK3MfvkzqKCi0nVe/D9I9IjwTNYdb/fxYHpjrluHVOgw0AF6jrRFGMPHdfuidR09tIDiIvnaSg==
   /objectorarray/1.0.4:
     dev: false
     resolution:
@@ -15116,6 +15189,19 @@ packages:
     dev: false
     resolution:
       integrity: sha512-pknFIWVachNcyqRfaQSeu/FUfpvJTe4uskUSZ9Wc1RijsPuzbZ8TyYT8WCNnntCjUEqQ3vUHMAfVj2+wLAisPQ==
+  /string.prototype.matchall/4.0.5:
+    dependencies:
+      call-bind: 1.0.2
+      define-properties: 1.1.3
+      es-abstract: 1.18.5
+      get-intrinsic: 1.1.1
+      has-symbols: 1.0.2
+      internal-slot: 1.0.3
+      regexp.prototype.flags: 1.3.1
+      side-channel: 1.0.4
+    dev: false
+    resolution:
+      integrity: sha512-Z5ZaXO0svs0M2xd/6By3qpeKpLKd9mO4v4q3oMEQrk8Ck4xOD5d5XeBOOjGrmVZZ/AHB1S0CgG4N5r1G9N3E2Q==
   /string.prototype.padend/3.1.2:
     dependencies:
       call-bind: 1.0.2
@@ -16519,7 +16605,7 @@ packages:
       is-bigint: 1.0.1
       is-boolean-object: 1.1.0
       is-number-object: 1.0.4
-      is-string: 1.0.5
+      is-string: 1.0.7
       is-symbol: 1.0.3
     dev: false
     resolution:
@@ -16808,7 +16894,7 @@ packages:
       babel-loader: 8.2.2_@babel+core@7.14.3
       eslint: 7.32.0
       eslint-plugin-jest-dom: 3.9.0_eslint@7.32.0
-      eslint-plugin-react: 7.23.2_eslint@7.32.0
+      eslint-plugin-react: 7.24.0_eslint@7.32.0
       eslint-plugin-react-hooks: 4.2.0_eslint@7.32.0
       eslint-plugin-testing-library: 4.4.0_eslint@7.32.0+typescript@4.3.5
       jest-environment-jsdom: 27.0.6
@@ -16831,7 +16917,7 @@ packages:
     peerDependencies:
       jest: '*'
     resolution:
-      integrity: sha512-Yi5fNPpIilQWkz2u/XbcQo7cn1Sr/zVxFhsGtlUud4cuNjAM8zDi6+d35wptX5RJH+WyVFdObLu7XTO+DPcfzw==
+      integrity: sha512-gU32ITyey8bGLcRWmFNJyesL7Ktb9m9mYlhGNqtxKk9oLu0gcU1DcGBhEjgpW9NsmH5WfGFZZ1wneQ9Y0cl4wA==
       tarball: file:projects/datadata-admin-react-components.tgz
     version: 0.0.0
   file:projects/datadata-cli.tgz:
@@ -16913,7 +16999,7 @@ packages:
       '@typescript-eslint/parser': 4.29.1_eslint@7.32.0+typescript@4.3.5
       debug: 4.3.1
       eslint: 7.32.0
-      eslint-plugin-react: 7.23.2_eslint@7.32.0
+      eslint-plugin-react: 7.24.0_eslint@7.32.0
       eslint-plugin-react-hooks: 4.2.0_eslint@7.32.0
       graphql: 15.5.0
       graphql-voyager: 1.0.0-rc.31_9e0c7cd05d7b0629038ef584ea3ccbe8
@@ -16930,7 +17016,7 @@ packages:
     dev: false
     name: '@rush-temp/datadata-examples-next-web'
     resolution:
-      integrity: sha512-WLzg3oWSfyTUbpaU55q5kE6d43XkazEB57+zotX5VqU0GAy3vE1b8FV6q2rWI0JjBFK4B1GlkQtl4IHRmnPFXw==
+      integrity: sha512-KK12I7+B3kx9cAXAeypvrpvgXFr9HU6nIUAUvlv50Amhr1EVXUB3j96rowS0bW7vCGFP82E890iKi5HKye9hDg==
       tarball: file:projects/datadata-examples-next-web.tgz
     version: 0.0.0
   file:projects/datadata-graphql.tgz:
@@ -17080,7 +17166,7 @@ specifiers:
   dotenv: ^10.0.0
   eslint: ^7.32.0
   eslint-plugin-jest-dom: ~3.9.0
-  eslint-plugin-react: ~7.23.2
+  eslint-plugin-react: ~7.24.0
   eslint-plugin-react-hooks: ~4.2.0
   eslint-plugin-testing-library: ~4.4.0
   express: ~4.17.1
