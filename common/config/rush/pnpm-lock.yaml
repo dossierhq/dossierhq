@@ -76,7 +76,7 @@ dependencies:
   react-dom: 17.0.2_react@17.0.2
   react-leaflet: 3.1.0_91fa1427a3331e02931dfea77720a290
   react-test-renderer: 17.0.2_react@17.0.2
-  svgo: 2.3.0
+  svgo: 2.4.0
   swr: 0.5.6_react@17.0.2
   ts-jest: 27.0.3_jest@27.0.6+typescript@4.3.5
   ts-node: 10.2.0_1ce31f93b456bf092bdcfa22c36a8430
@@ -2603,6 +2603,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-UzdX3y6XSrj9YuASUb/p4sRvfjP2klj2YgIOfMwrWoLTTPJQMh00hREB9Ftr7m7RIxjVSAaaLXIRLdxvq948GA==
+  /@next/eslint-plugin-next/11.1.0:
+    dependencies:
+      glob: 7.1.7
+    dev: false
+    resolution:
+      integrity: sha512-HjLhyshV+ANzTDCFLN1UZMQIyYwZkCdhydfIcOQQVCrqLSd0hCi+AYIGqWfDPhXmP7aeOuKQsmhRmdennQV2qw==
   /@next/polyfill-module/11.1.0:
     dev: false
     resolution:
@@ -6916,16 +6922,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-Dqk7LQKpwLoH3VovzZnkzegqNSuAziQyNZUcrdDM401iY+R5NkGBXGmtO05/yaXQziALuPogeG0b7UAgjnTJTQ==
-  /css-select/3.1.2:
-    dependencies:
-      boolbase: 1.0.0
-      css-what: 4.0.0
-      domhandler: 4.1.0
-      domutils: 2.5.2
-      nth-check: 2.0.0
-    dev: false
-    resolution:
-      integrity: sha512-qmss1EihSuBNWNNhHjxzxSfJoFBM/lERB/Q4EnsJQQC62R2evJDW481091oAdOr9uh46/0n4nrg0It5cAnj1RA==
   /css-select/4.1.3:
     dependencies:
       boolbase: 1.0.0
@@ -6957,12 +6953,6 @@ packages:
       node: '>= 6'
     resolution:
       integrity: sha512-ACUm3L0/jiZTqfzRM3Hi9Q8eZqd6IK37mMWPLz9PJxkLWllYeRf+EHUSHYEtFop2Eqytaq1FizFVh7XfBnXCDQ==
-  /css-what/4.0.0:
-    dev: false
-    engines:
-      node: '>= 6'
-    resolution:
-      integrity: sha512-teijzG7kwYfNVsUh2H/YN62xW3KK9YhXEgSlbxMlcyjPNvdKJqFx5lrwlJgoFP1ZHlB89iGDlo/JyshKeRhv5A==
   /css-what/5.0.1:
     dev: false
     engines:
@@ -7402,14 +7392,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-JiK04h0Ht5u/80fdLMCEmV4zkNh2BcoMFBmZ/91WtYZ8qVXSKjiw7fXMgFPnHcSZgOo3XdinHvmnDUeMf5R4wA==
-  /domhandler/4.1.0:
-    dependencies:
-      domelementtype: 2.2.0
-    dev: false
-    engines:
-      node: '>= 4'
-    resolution:
-      integrity: sha512-/6/kmsGlMY4Tup/nGVutdrK9yQi4YjWVcVeoQmixpzjOUK1U7pQkvAPHBJeUxOgxF0J8f8lwCJSlCfD0V4CMGQ==
   /domhandler/4.2.0:
     dependencies:
       domelementtype: 2.2.0
@@ -7425,14 +7407,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-Lgd2XcJ/NjEw+7tFvfKxOzCYKZsdct5lczQ2ZaQY8Djz7pfAD3Gbp8ySJWtreII/vDlMVmxwa6pHmdxIYgttDg==
-  /domutils/2.5.2:
-    dependencies:
-      dom-serializer: 1.3.1
-      domelementtype: 2.2.0
-      domhandler: 4.1.0
-    dev: false
-    resolution:
-      integrity: sha512-MHTthCb1zj8f1GVfRpeZUbohQf/HdBos0oX5gZcQFepOZPLLRyj6Wn7XS7EMnY7CVpwv8863u2vyE83Hfu28HQ==
   /domutils/2.7.0:
     dependencies:
       dom-serializer: 1.3.1
@@ -7843,6 +7817,30 @@ packages:
         optional: true
     resolution:
       integrity: sha512-yy63K4Bmy8amE6VMb26CZK6G99cfVX3JaMTvuvmq/LL8/b8vKHcauUZREBTAQ+2DrIvlH4YrFXrkQ1vpYDL9Eg==
+  /eslint-config-next/11.1.0_5976364cb0ac16872ff3eea1a55e5ca2:
+    dependencies:
+      '@next/eslint-plugin-next': 11.1.0
+      '@rushstack/eslint-patch': 1.0.6
+      '@typescript-eslint/parser': 4.29.1_eslint@7.32.0+typescript@4.3.5
+      eslint: 7.32.0
+      eslint-import-resolver-node: 0.3.5
+      eslint-import-resolver-typescript: 2.4.0_44936d22002d8391d694a30a93d20642
+      eslint-plugin-import: 2.24.0_eslint@7.32.0
+      eslint-plugin-jsx-a11y: 6.4.1_eslint@7.32.0
+      eslint-plugin-react: 7.24.0_eslint@7.32.0
+      eslint-plugin-react-hooks: 4.2.0_eslint@7.32.0
+      next: 11.1.0_1a3e13bbb78040af363aaff30584af31
+      typescript: 4.3.5
+    dev: false
+    peerDependencies:
+      eslint: ^7.23.0
+      next: '>=10.2.0'
+      typescript: '>=3.3.1'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    resolution:
+      integrity: sha512-8KeBg3qUEhM06vhzvs9MwZl2lsSfu3bm0wa3QVTc9kBdFxSRY6Gu/1GM0FKzWG0sQmWqzjLbynazczu/037Ibw==
   /eslint-import-resolver-node/0.3.5:
     dependencies:
       debug: 3.2.7
@@ -8994,6 +8992,17 @@ packages:
     dev: false
     resolution:
       integrity: sha512-LwaxwyZ72Lk7vZINtNNrywX0ZuLyStrdDtabefZKAY5ZGJhVtgdznluResxNmPitE0SAO+O26sWTHeKSI2wMBA==
+  /glob/7.1.7:
+    dependencies:
+      fs.realpath: 1.0.0
+      inflight: 1.0.6
+      inherits: 2.0.4
+      minimatch: 3.0.4
+      once: 1.4.0
+      path-is-absolute: 1.0.1
+    dev: false
+    resolution:
+      integrity: sha512-OvD9ENzPLbegENnYP5UUfJIirTg4+XwMWGaQfQTY0JenxNvvIKP3U3/tAQSPIu/lHxXYSZmpXlUHeqAIdKzBLQ==
   /global-modules/2.0.0:
     dependencies:
       global-prefix: 3.0.0
@@ -15826,21 +15835,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-JaKkGHHfGvRrcMPdJWkssLBeWqM+Isg/a09H7kgNNajT1cX5AztDTNs+C8UzpCxjCTRrG34WbquwaovZbmSk9g==
-  /svgo/2.3.0:
-    dependencies:
-      '@trysound/sax': 0.1.1
-      chalk: 4.1.0
-      commander: 7.2.0
-      css-select: 3.1.2
-      css-tree: 1.1.3
-      csso: 4.2.0
-      stable: 0.1.8
-    dev: false
-    engines:
-      node: '>=10.13.0'
-    hasBin: true
-    resolution:
-      integrity: sha512-fz4IKjNO6HDPgIQxu4IxwtubtbSfGEAJUq/IXyTPIkGhWck/faiiwfkvsB8LnBkKLvSoyNNIY6d13lZprJMc9Q==
   /svgo/2.4.0:
     dependencies:
       '@trysound/sax': 0.1.1
@@ -17473,7 +17467,7 @@ packages:
       '@types/react': 17.0.5
       debug: 4.3.1
       eslint: 7.32.0
-      eslint-config-next: 11.0.1_5976364cb0ac16872ff3eea1a55e5ca2
+      eslint-config-next: 11.1.0_5976364cb0ac16872ff3eea1a55e5ca2
       graphql: 15.5.0
       graphql-voyager: 1.0.0-rc.31_9e0c7cd05d7b0629038ef584ea3ccbe8
       jest: 27.0.6_ts-node@10.2.0
@@ -17491,7 +17485,7 @@ packages:
     peerDependencies:
       '@babel/core': '*'
     resolution:
-      integrity: sha512-gYQkcV1WL9KNKEI/IUWAcD5e96cHWVVsEGcMJcS/j/tz7sBeYHcrBNVM9qS6vkMj4Dckc0SyTzlXZhUYCoaDMw==
+      integrity: sha512-ccTI7Oq2ZgtqWJMj65d6QPBImfOiVv9Y+evmsHuCHNFxZWP/DWbB6chNSE9TJNXlMJzYTMn3VXy3BCks40zUrg==
       tarball: file:projects/datadata-examples-next-web.tgz
     version: 0.0.0
   file:projects/datadata-graphql.tgz:
@@ -17666,7 +17660,7 @@ specifiers:
   react-dom: ~17.0.2
   react-leaflet: ~3.1.0
   react-test-renderer: ~17.0.2
-  svgo: ~2.3.0
+  svgo: ~2.4.0
   swr: ~0.5.6
   ts-jest: ~27.0.3
   ts-node: ^10.2.0
