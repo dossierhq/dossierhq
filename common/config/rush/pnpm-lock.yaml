@@ -17166,15 +17166,17 @@ packages:
       '@types/uuid': 8.3.0
       '@typescript-eslint/eslint-plugin': 4.29.1_d4376362794b743c19f4cba25c7fc6f5
       '@typescript-eslint/parser': 4.29.1_eslint@7.32.0+typescript@4.3.5
+      dotenv: 10.0.0
       eslint: 7.32.0
       graphql: 15.5.0
       prettier: 2.3.2
+      tslib: 2.3.1
       typescript: 4.3.5
       uuid: 8.3.2
     dev: false
     name: '@rush-temp/datadata-graphql'
     resolution:
-      integrity: sha512-RAf5lMLQZXKmocTCUBVuYHEaTOPMHlgmVyWDgwxhOmkTpOQCEBnwRwLFM+SbkkgVv6DJ57aSJseZvDcbnx8lGA==
+      integrity: sha512-802x5WkFh1TbpIjfIvJXpRLnltCKD7ZgC2VvnuEyUCJXMV2HHhiZJ/ajK37t/xuuFxXZ8Focnu3HY//dHH8EtQ==
       tarball: file:projects/datadata-graphql.tgz
     version: 0.0.0
   file:projects/datadata-postgres.tgz:
