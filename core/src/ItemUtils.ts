@@ -414,6 +414,18 @@ function doVisitFieldRecursively<TVisitContext>(
   }
 }
 
+export function isEntityNameAsRequested(currentName: string, requestedName: string): boolean {
+  if (requestedName === currentName) {
+    return true;
+  }
+  const hashIndex = currentName.lastIndexOf('#');
+  if (hashIndex < 0) {
+    return false;
+  }
+  const currentWithoutUniqueNumber = currentName.slice(0, hashIndex);
+  return requestedName === currentWithoutUniqueNumber;
+}
+
 export function isFieldValueEqual(a: unknown, b: unknown): boolean {
   if (a === b) return true;
 

@@ -19,7 +19,13 @@ import type {
   PublishingResult,
   Result,
 } from '@jonasb/datadata-core';
-import { EntityPublishState, ErrorType, notOk, ok } from '@jonasb/datadata-core';
+import {
+  EntityPublishState,
+  ErrorType,
+  isEntityNameAsRequested,
+  notOk,
+  ok,
+} from '@jonasb/datadata-core';
 import type { SessionContext } from '.';
 import { toOpaqueCursor } from './Connection';
 import * as Db from './Database';
@@ -384,8 +390,13 @@ export async function upsertEntity(
     // TODO check effect of create. If conflict it could be created after we fetched entityInfo, so try to update
   }
 
-  //TODO remove name if similar
-  const updateResult = await updateEntity(context, entity);
+  let entityUpdate: AdminEntityUpdate = entity;
+  if (isEntityNameAsRequested(entityInfo.name, entity.info.name)) {
+    // Remove name since we don't to change it the current name is the same but with a #number
+    entityUpdate = { ...entity, info: { ...entity.info, name: undefined } };
+  }
+
+  const updateResult = await updateEntity(context, entityUpdate);
   if (updateResult.isOk()) {
     return ok(updateResult.value);
   }
