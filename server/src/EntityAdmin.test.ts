@@ -692,6 +692,38 @@ describe('createEntity()', () => {
     }
   });
 
+  test('Create EntityAdminFoo normalizes empty value item', async () => {
+    const createResult = await client.createEntity({
+      info: { type: 'EntityAdminBaz', name: 'Draft' },
+      fields: { twoStrings: { type: 'EntityAdminTwoStrings' } },
+    });
+    if (expectOkResult(createResult)) {
+      const {
+        entity: {
+          id,
+          info: { name },
+        },
+      } = createResult.value;
+
+      const expectedEntity = {
+        id,
+        info: {
+          type: 'EntityAdminBaz',
+          version: 0,
+          name,
+          publishingState: EntityPublishState.Draft,
+        },
+        fields: {
+          ...emptyBazFields,
+          twoStrings: { type: 'EntityAdminTwoStrings', one: null, two: null },
+        },
+      };
+
+      const getResult = await client.getEntity({ id });
+      expectResultValue(getResult, expectedEntity);
+    }
+  });
+
   test('Create EntityAdminFoo with reference to Bar', async () => {
     const createBarResult = await client.createEntity({
       info: { type: 'EntityAdminBar', name: 'Bar name' },
@@ -1588,6 +1620,7 @@ describe('createEntity()', () => {
               child: {
                 type: 'EntityAdminNested',
                 title: 'Nested 0.a.I',
+                child: null,
               },
             },
           },
@@ -2907,6 +2940,47 @@ describe('updateEntity()', () => {
 
         expect(title).toBe(null);
       }
+    }
+  });
+
+  test('Update EntityAdminFoo normalizes empty value item', async () => {
+    const createResult = await client.createEntity({
+      info: { type: 'EntityAdminBaz', name: 'Draft' },
+      fields: {},
+    });
+    if (expectOkResult(createResult)) {
+      const {
+        entity: {
+          id,
+          info: { name },
+        },
+      } = createResult.value;
+
+      const expectedEntity = {
+        id,
+        info: {
+          type: 'EntityAdminBaz',
+          version: 1,
+          name,
+          publishingState: EntityPublishState.Draft,
+        },
+        fields: {
+          ...emptyBazFields,
+          twoStrings: { type: 'EntityAdminTwoStrings', one: null, two: null },
+        },
+      };
+
+      const updateResult = await client.updateEntity({
+        id,
+        fields: { twoStrings: { type: 'EntityAdminTwoStrings' } },
+      });
+      expectResultValue(updateResult, {
+        effect: 'updated',
+        entity: expectedEntity,
+      });
+
+      const getResult = await client.getEntity({ id });
+      expectResultValue(getResult, expectedEntity);
     }
   });
 

@@ -724,7 +724,7 @@ describe('adminEntity()', () => {
               },
               fields: {
                 body: {
-                  blocksJson: `[{"type":"entity","data":{"id":"${bar1Id}"}},{"type":"valueItem","data":{"type":"QueryAdminStringedBar","bar":{"id":"${bar2Id}"},"text":"Hello"}}]`,
+                  blocksJson: `[{"type":"entity","data":{"id":"${bar1Id}"}},{"type":"valueItem","data":{"type":"QueryAdminStringedBar","text":"Hello","bar":{"id":"${bar2Id}"}}}]`,
                   entities: [
                     { id: bar1Id, info: { name: bar1Name } },
                     { id: bar2Id, info: { name: bar2Name } },

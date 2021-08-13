@@ -937,7 +937,7 @@ describe('create*Entity()', () => {
         nestedValue: {
           type: 'MutationNestedValue',
           text: 'Outer',
-          child: { type: 'MutationNestedValue', text: 'Inner' },
+          child: { type: 'MutationNestedValue', text: 'Inner', child: null },
         },
       },
     });
