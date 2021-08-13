@@ -1,12 +1,3 @@
-import {
-  CoreTestUtils,
-  EntityPublishState,
-  ErrorType,
-  FieldType,
-  isPagingForwards,
-  PublishingEventKind,
-  RichTextBlockType,
-} from '@jonasb/datadata-core';
 import type {
   AdminClient,
   AdminEntity,
@@ -16,6 +7,15 @@ import type {
   Edge,
   Paging,
   PublishedClient,
+} from '@jonasb/datadata-core';
+import {
+  CoreTestUtils,
+  EntityPublishState,
+  ErrorType,
+  FieldType,
+  isPagingForwards,
+  PublishingEventKind,
+  RichTextBlockType,
 } from '@jonasb/datadata-core';
 import { validate as validateUuid } from 'uuid';
 import type { Server, SessionContext } from '.';
@@ -3391,6 +3391,34 @@ describe('upsertEntity()', () => {
 
       const getResult = await client.getEntity({ id });
       expectResultValue(getResult, createResult.value.entity);
+    }
+  });
+
+  test('Update entity without any change and same name', async () => {
+    // Create another entity to ensure we get a non-unique name
+    expectOkResult(
+      await client.createEntity({
+        info: { type: 'EntityAdminBaz', name: 'Non-unique name' },
+        fields: { title: 'Original title' },
+      })
+    );
+
+    const id = insecureTestUuidv4();
+    const upsertEntity = {
+      id,
+      info: { type: 'EntityAdminBaz', name: 'Non-unique name' },
+      fields: { title: 'Original title' },
+    };
+
+    const createResult = await client.upsertEntity(upsertEntity);
+    if (expectOkResult(createResult)) {
+      expect(createResult.value.effect).toBe('created');
+
+      const updateResult = await client.upsertEntity(upsertEntity);
+      expectResultValue(updateResult, {
+        effect: 'none',
+        entity: createResult.value.entity,
+      });
     }
   });
 });

@@ -26,6 +26,7 @@ export {
   isBooleanField,
   isBooleanItemField,
   isBooleanListField,
+  isEntityNameAsRequested,
   isEntityTypeField,
   isEntityTypeItemField,
   isEntityTypeListField,

@@ -2,6 +2,7 @@ import type { Entity, FieldSpecification, RichText, RichTextBlock, ValueItem } f
 import {
   assertIsDefined,
   FieldType,
+  isEntityNameAsRequested,
   isFieldValueEqual,
   normalizeFieldValue,
   RichTextBlockType,
@@ -1054,6 +1055,17 @@ describe('visitItemRecursively()', () => {
       ]
     `);
   });
+});
+
+describe('isEntityNameAsRequested', () => {
+  test('hello=hello', () => expect(isEntityNameAsRequested('hello', 'hello')).toBeTruthy());
+  test('hello=hello#123', () => expect(isEntityNameAsRequested('hello', 'hello#123')).toBeTruthy());
+  test('hello#123=hello#123', () =>
+    expect(isEntityNameAsRequested('hello#123', 'hello#123')).toBeTruthy());
+
+  test('hello!=world', () => expect(isEntityNameAsRequested('hello', 'world')).toBeFalsy());
+  test('hello#456!=hello#123', () =>
+    expect(isEntityNameAsRequested('hello#456', 'hello#123')).toBeFalsy());
 });
 
 describe('isFieldValueEqual', () => {
