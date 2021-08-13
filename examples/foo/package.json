@@ -29,7 +29,7 @@
     "@jonasb/datadata-core": "0.1.1-18",
     "@jonasb/datadata-graphql": "0.1.1-18",
     "@jonasb/datadata-server": "0.1.1-18",
-    "dotenv": "^9.0.2",
+    "dotenv": "^10.0.0",
     "express": "~4.17.1",
     "express-graphql": "~0.12.0"
   },

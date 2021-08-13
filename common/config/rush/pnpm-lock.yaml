@@ -50,7 +50,7 @@ dependencies:
   chalk: 4.1.1
   concurrently: 6.1.0
   debug: 4.3.1
-  dotenv: 9.0.2
+  dotenv: 10.0.0
   eslint: 7.32.0
   eslint-plugin-jest-dom: 3.9.0_eslint@7.32.0
   eslint-plugin-react: 7.23.2_eslint@7.32.0
@@ -7348,6 +7348,12 @@ packages:
       webpack: ^1 || ^2 || ^3 || ^4
     resolution:
       integrity: sha512-o8pq6NLBehtrqA8Jv8jFQNtG9nhRtVqmoD4yWbgUyoU3+9WBlPe+c2EAiaJok9RB28QvrWvdWLZGeTT5aATDMg==
+  /dotenv/10.0.0:
+    dev: false
+    engines:
+      node: '>=10'
+    resolution:
+      integrity: sha512-rlBi9d8jpv9Sf1klPjNfFAuWDjKLwTIJJ/VxtoTwIR6hnZxcEOQCZg2oIL3MWBYw5GpUDKOEnND7LXTbIpQ03Q==
   /dotenv/6.2.0:
     dev: false
     engines:
@@ -7360,12 +7366,6 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-8sJ78ElpbDJBHNeBzUbUVLsqKdccaa/BXF1uPTw3GrvQTBgrQrtObr2mUrE38vzYd8cEv+m/JBfDLioYcfXoaw==
-  /dotenv/9.0.2:
-    dev: false
-    engines:
-      node: '>=10'
-    resolution:
-      integrity: sha512-I9OvvrHp4pIARv4+x9iuewrWycX6CcZtoAu1XrzPxc5UygMJXJZYmBsynku8IkrJwgypE5DGNjDPmPRhDCptUg==
   /downshift/6.1.2_react@17.0.2:
     dependencies:
       '@babel/runtime': 7.13.10
@@ -16831,7 +16831,7 @@ packages:
     peerDependencies:
       jest: '*'
     resolution:
-      integrity: sha512-3L+feUN9S5DcPHT/Ts3CbVYntfmoqVefOIix5LDek3DrP1huPY70XAofraQBA8YVZp7nQFcRwZADsIZWZ6RpZg==
+      integrity: sha512-7Sp1TF0MEh4lnkYBnKmZhDBCko6kfhoZggfT95+wGLMFfPsowmQQVF2vP+jtprqzdQM9XFDWGGlqzv6+tRiwrA==
       tarball: file:projects/datadata-admin-react-components.tgz
     version: 0.0.0
   file:projects/datadata-cli.tgz:
@@ -16849,7 +16849,7 @@ packages:
     dev: false
     name: '@rush-temp/datadata-cli'
     resolution:
-      integrity: sha512-DcqmCviKjB7OQFtBe/tA4NSQ+AMw/EQ5PmZKQZEGluV6lvzCKNlUYVoxqwnkHTHJHgcPiP6i6/SJLdt2GrZ8kg==
+      integrity: sha512-jEho7kNYWnyErydPblWU4oG69hUD/KUaMQWVYt1bfA8fqlM24zBXzuhoO97CxS+LSSW3PY3kIUf0E5ZZYbwgDA==
       tarball: file:projects/datadata-cli.tgz
     version: 0.0.0
   file:projects/datadata-core.tgz:
@@ -16880,7 +16880,7 @@ packages:
       '@types/node': 15.3.0
       '@typescript-eslint/eslint-plugin': 4.29.1_d4376362794b743c19f4cba25c7fc6f5
       '@typescript-eslint/parser': 4.29.1_eslint@7.32.0+typescript@4.3.5
-      dotenv: 9.0.2
+      dotenv: 10.0.0
       eslint: 7.32.0
       express: 4.17.1
       express-graphql: 0.12.0_graphql@15.5.0
@@ -16893,7 +16893,7 @@ packages:
     peerDependencies:
       graphql: '*'
     resolution:
-      integrity: sha512-qMpW6HaqS10jNTPw4ptdn+BQrZzjctyGjHScRRgeTmRmnI/t3kwwseouHZg1S9oJsNblDo/pgXmPdX2WGrfqDQ==
+      integrity: sha512-ZubxlSu+PPr4ZIkuIoG5YOSE5zrAXMkJymkUe4YgtPxsXVLHQkr7bKT6+JfS6lE8HalnqfXPT7zNBP9zxRoxdw==
       tarball: file:projects/datadata-examples-foo.tgz
     version: 0.0.0
   file:projects/datadata-examples-next-web.tgz:
@@ -16930,7 +16930,7 @@ packages:
     dev: false
     name: '@rush-temp/datadata-examples-next-web'
     resolution:
-      integrity: sha512-EkYJedA3HUlnSRaARUs0pwmsUvOO1Y2x7RRxU18fSmbiEhpwBWdma/S+E9YuVKm2Z0oroEBjkxGwnACz/8fdWA==
+      integrity: sha512-CqEuIHzd3lpFVNZ3cwG+EUic72LMm6XPgIV5NsP0Wja8qwWovfycO7coJPsVHcUWHhxo/qjeKqE/stPJE5//iA==
       tarball: file:projects/datadata-examples-next-web.tgz
     version: 0.0.0
   file:projects/datadata-graphql.tgz:
@@ -16949,7 +16949,7 @@ packages:
     dev: false
     name: '@rush-temp/datadata-graphql'
     resolution:
-      integrity: sha512-5JnlMy2tznBQiBENHM0bVOOdSNJHY/05Wemw+lzGceTvQDcJfkC6wlcWQz5D/+eG9vgfPSp7pvifXxFBDW4lKQ==
+      integrity: sha512-VnVxZcDYz8SBVXrORt6oG5vmkrU0CUO4MT/21iPX2ChFkhjYrThTRZtLRzkzkHi9rUn1Zsdnwh/hTQaufCStDA==
       tarball: file:projects/datadata-graphql.tgz
     version: 0.0.0
   file:projects/datadata-postgres.tgz:
@@ -16973,7 +16973,7 @@ packages:
       '@types/uuid': 8.3.0
       '@typescript-eslint/eslint-plugin': 4.29.1_d4376362794b743c19f4cba25c7fc6f5
       '@typescript-eslint/parser': 4.29.1_eslint@7.32.0+typescript@4.3.5
-      dotenv: 9.0.2
+      dotenv: 10.0.0
       eslint: 7.32.0
       jest: 27.0.6_ts-node@9.1.1
       pg: 8.6.0
@@ -16986,7 +16986,7 @@ packages:
     dev: false
     name: '@rush-temp/datadata-server'
     resolution:
-      integrity: sha512-HrbJW65DvXWsTtjCW6Btp6PujKHVbnpJbOQFmIGB4OMsS/6btz25iAy9+A5NbpEm2jLiaM5Pmt1AvR8LhcUEYA==
+      integrity: sha512-oYFSmP8bgqXt5xMPEQ3Vzahtn/5UuJzDbd+6jzaEso0Xwgnc6cyDBN0PtY27frZAczrdd02Ki3NkXR9UNrENLQ==
       tarball: file:projects/datadata-server.tgz
     version: 0.0.0
   file:projects/datadata-testing-utils.tgz:
@@ -17005,13 +17005,13 @@ packages:
     dev: false
     name: '@rush-temp/datadata-testing-utils'
     resolution:
-      integrity: sha512-tXCGFxqh/e6VG/qkQf28ofiZDRMKUYyvJK5losi5SmsKrljnngJFzQHIZG4tfa2eilBcflnYKO3xLz6fMJudXQ==
+      integrity: sha512-hlM5j9fJIIz4vHsl4XclmEyngCDxVgNrkDrKobd8ux5K5hZCE4NiVhr55eTlRWqBCB1B+v0uXK442RzJdqVjsw==
       tarball: file:projects/datadata-testing-utils.tgz
     version: 0.0.0
   file:projects/datadata.tgz_ts-node@9.1.1:
     dependencies:
       concurrently: 6.1.0
-      dotenv: 9.0.2
+      dotenv: 10.0.0
       jest: 27.0.6_ts-node@9.1.1
       pg: 8.6.0
       tslib: 2.3.1
@@ -17021,7 +17021,7 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-J4l/3esxu0DndOKw4rPznsI2f14VuV2Dqs6Cp6e+VDhDy6sTgBPNtC+jSroBF2xYBvVdfeglLT49p61mP8U0KA==
+      integrity: sha512-n0GtsBzkW/LZS1/hJbyoUuKcR51WO/N1NdmDwZS9u/1DzLnj86Oso0+BKn09IfFYhAtEipGld+HJ3b9dpOLVug==
       tarball: file:projects/datadata.tgz
     version: 0.0.0
 registry: ''
@@ -17077,7 +17077,7 @@ specifiers:
   chalk: ~4.1.1
   concurrently: ^6.1.0
   debug: ~4.3.1
-  dotenv: ^9.0.2
+  dotenv: ^10.0.0
   eslint: ^7.32.0
   eslint-plugin-jest-dom: ~3.9.0
   eslint-plugin-react: ~7.23.2
