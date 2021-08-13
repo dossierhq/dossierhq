@@ -1,9 +1,8 @@
 #!/usr/bin/env node
-const Postgrator = require('postgrator');
-const urlParse = require('url-parse-lax');
-const childProcess = require('child_process');
+import Postgrator from 'postgrator';
+import urlParse from 'url-parse-lax';
 
-const migrationDirectory = `${__dirname}/migrations`;
+const migrationDirectory = new URL('migrations', import.meta.url).pathname;
 
 function getConnectionDetailsFromUrl() {
   const url = urlParse(process.env.DATABASE_URL);
@@ -34,18 +33,16 @@ async function main(targetVersion) {
   } catch (error) {
     console.error(error);
     console.log(error.appliedMigrations);
-    process.exitCode = 1
+    process.exitCode = 1;
   }
 }
 
-if (require.main === module) {
-  const args = process.argv.slice(2);
-  if (args.length > 1) {
-    throw new Error(`Expected 0 or 1 arguments, got ${args.length}: ${args}`)
-  }
-  const targetVersion = args[0]; // undefined => latest
-  main(targetVersion).catch((error) => {
-    console.warn(error);
-    process.exitCode = 1;
-  });
+const args = process.argv.slice(2);
+if (args.length > 1) {
+  throw new Error(`Expected 0 or 1 arguments, got ${args.length}: ${args}`);
 }
+const targetVersion = args[0]; // undefined => latest
+main(targetVersion).catch((error) => {
+  console.warn(error);
+  process.exitCode = 1;
+});
