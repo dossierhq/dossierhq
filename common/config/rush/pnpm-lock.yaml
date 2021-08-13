@@ -6926,6 +6926,16 @@ packages:
     dev: false
     resolution:
       integrity: sha512-qmss1EihSuBNWNNhHjxzxSfJoFBM/lERB/Q4EnsJQQC62R2evJDW481091oAdOr9uh46/0n4nrg0It5cAnj1RA==
+  /css-select/4.1.3:
+    dependencies:
+      boolbase: 1.0.0
+      css-what: 5.0.1
+      domhandler: 4.2.0
+      domutils: 2.7.0
+      nth-check: 2.0.0
+    dev: false
+    resolution:
+      integrity: sha512-gT3wBNd9Nj49rAbmtFHj1cljIAOLYSX1nZ8CB7TBO3INYckygm5B7LISU/szY//YmdiSLbJvDLOx9VnMVpMBxA==
   /css-tree/1.1.3:
     dependencies:
       mdn-data: 2.0.14
@@ -6953,6 +6963,12 @@ packages:
       node: '>= 6'
     resolution:
       integrity: sha512-teijzG7kwYfNVsUh2H/YN62xW3KK9YhXEgSlbxMlcyjPNvdKJqFx5lrwlJgoFP1ZHlB89iGDlo/JyshKeRhv5A==
+  /css-what/5.0.1:
+    dev: false
+    engines:
+      node: '>= 6'
+    resolution:
+      integrity: sha512-FYDTSHb/7KXsWICVsxdmiExPjCfRC4qRFBdVwv7Ax9hMnvMmEjP9RfxTEZ3qPZGmADDn2vAKSo9UcN1jKVYscg==
   /css.escape/1.5.1:
     dev: false
     resolution:
@@ -7336,7 +7352,7 @@ packages:
   /dom-serializer/1.3.1:
     dependencies:
       domelementtype: 2.2.0
-      domhandler: 4.1.0
+      domhandler: 4.2.0
       entities: 2.2.0
     dev: false
     resolution:
@@ -7394,6 +7410,14 @@ packages:
       node: '>= 4'
     resolution:
       integrity: sha512-/6/kmsGlMY4Tup/nGVutdrK9yQi4YjWVcVeoQmixpzjOUK1U7pQkvAPHBJeUxOgxF0J8f8lwCJSlCfD0V4CMGQ==
+  /domhandler/4.2.0:
+    dependencies:
+      domelementtype: 2.2.0
+    dev: false
+    engines:
+      node: '>= 4'
+    resolution:
+      integrity: sha512-zk7sgt970kzPks2Bf+dwT/PLzghLnsivb9CcxkvR8Mzr66Olr0Ofd8neSbglHJHaHa2MadfoSdNlKYAaafmWfA==
   /domutils/1.7.0:
     dependencies:
       dom-serializer: 0.2.2
@@ -7409,6 +7433,14 @@ packages:
     dev: false
     resolution:
       integrity: sha512-MHTthCb1zj8f1GVfRpeZUbohQf/HdBos0oX5gZcQFepOZPLLRyj6Wn7XS7EMnY7CVpwv8863u2vyE83Hfu28HQ==
+  /domutils/2.7.0:
+    dependencies:
+      dom-serializer: 1.3.1
+      domelementtype: 2.2.0
+      domhandler: 4.2.0
+    dev: false
+    resolution:
+      integrity: sha512-8eaHa17IwJUPAiB+SoTYBo5mCdeMgdcAoXJ59m6DT1vw+5iLS3gNoqYaRowaBKtGVrOF1Jz4yDTgYKLK2kvfJg==
   /dot-case/3.0.4:
     dependencies:
       no-case: 3.0.4
@@ -15809,6 +15841,21 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-fz4IKjNO6HDPgIQxu4IxwtubtbSfGEAJUq/IXyTPIkGhWck/faiiwfkvsB8LnBkKLvSoyNNIY6d13lZprJMc9Q==
+  /svgo/2.4.0:
+    dependencies:
+      '@trysound/sax': 0.1.1
+      colorette: 1.2.2
+      commander: 7.2.0
+      css-select: 4.1.3
+      css-tree: 1.1.3
+      csso: 4.2.0
+      stable: 0.1.8
+    dev: false
+    engines:
+      node: '>=10.13.0'
+    hasBin: true
+    resolution:
+      integrity: sha512-W25S1UUm9Lm9VnE0TvCzL7aso/NCzDEaXLaElCUO/KaVitw0+IBicSVfM1L1c0YHK5TOFh73yQ2naCpVHEQ/OQ==
   /swr/0.5.6_react@17.0.2:
     dependencies:
       dequal: 2.0.2
@@ -17335,7 +17382,7 @@ packages:
       react-dom: 17.0.2_react@17.0.2
       react-leaflet: 3.1.0_91fa1427a3331e02931dfea77720a290
       react-test-renderer: 17.0.2_react@17.0.2
-      svgo: 2.3.0
+      svgo: 2.4.0
       swr: 0.5.6_react@17.0.2
       tslib: 2.3.1
       typescript: 4.3.5
@@ -17346,7 +17393,7 @@ packages:
     peerDependencies:
       jest: '*'
     resolution:
-      integrity: sha512-QWlEj8Gyh2Twf3f+SyUO2vAwXw87ozJfLkQBArWQEep3m/n03iZLXxO/oxsG1aXf11DaoSbKtMk6Ei7G4ZQqtQ==
+      integrity: sha512-7MPm/2oLJEWZUyXeSQtiOR5/UEDWVVOiCQwqIEMtFNjHYeRDL+auFmXuLecA4YNiYDvaN6TtPLJHvJWQ0IQ4+Q==
       tarball: file:projects/datadata-admin-react-components.tgz
     version: 0.0.0
   file:projects/datadata-cli.tgz:
