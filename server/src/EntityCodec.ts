@@ -134,16 +134,10 @@ function decodeValueItemField(
     throw new Error(`Couldn't find spec for value type ${encodedValue.type}`);
   }
   const decodedValue: ValueItem = { type: encodedValue.type };
-  for (const [fieldName, fieldValue] of Object.entries(encodedValue)) {
-    if (fieldName === 'type') {
-      continue;
-    }
-
-    const fieldSpec = schema.getValueFieldSpecification(valueSpec, fieldName);
-    if (!fieldSpec) {
-      throw new Error(`No field spec for ${fieldName} in value spec ${encodedValue.type}`);
-    }
-    decodedValue[fieldName] = decodeFieldItemOrList(schema, fieldSpec, fieldValue);
+  for (const fieldFieldSpec of valueSpec.fields) {
+    const fieldName = fieldFieldSpec.name;
+    const fieldValue = encodedValue[fieldName];
+    decodedValue[fieldName] = decodeFieldItemOrList(schema, fieldFieldSpec, fieldValue);
   }
 
   return decodedValue;
