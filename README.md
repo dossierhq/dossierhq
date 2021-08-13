@@ -15,11 +15,12 @@
 ## Getting started
 
 - `rush update` to install dependencies.
-- `npm run db:start`
-- `npm run db:ensure-dbs`
-- `npm run db:make-users:superuser`
-- `npm run db:migrate:all`
-- `npm run db:make-users:no-superuser`
+- In `tools/generic-tools/`:
+  - `npm run db:start`
+  - `npm run db:ensure-dbs`
+  - `npm run db:make-users:superuser`
+  - `npm run db:migrate:all`
+  - `npm run db:make-users:no-superuser`
 - `rush ci:check`
 
 ## Dependencies
