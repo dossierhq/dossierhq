@@ -180,10 +180,7 @@ async function withUniqueNameAttempt<TResult>(
 
       return result;
     } catch (error) {
-      if (
-        error.name === 'error' &&
-        error.message === 'duplicate key value violates unique constraint "entities_name_key"'
-      ) {
+      if (Db.isUniqueViolationOfConstraint(error, 'entities_name_key')) {
         potentiallyModifiedName = `${name}#${Math.random().toFixed(8).slice(2)}`;
         continue;
       }
