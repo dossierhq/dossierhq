@@ -14,7 +14,7 @@ jobs:
         with:
           node-version: 16.1.0
       - name: Disable ensureConsistentVersions for dependabot
-        if: startsWith(github.ref, 'dependabot/npm_and_yarn')
+        if: startsWith(github.ref, 'refs/heads/dependabot/npm_and_yarn')
         run: |
           sed -i "s/\(\"ensureConsistentVersions\"\): true,/\1: false,/" rush.json
       - name: rush install
