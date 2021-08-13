@@ -11,27 +11,22 @@ updates:
       interval: "weekly"
 
   - package-ecosystem: "npm"
-    directory: "/"
+    directory: "/libraries/admin-react-components/"
     schedule:
       interval: "weekly"
 
   - package-ecosystem: "npm"
-    directory: "/admin-react-components/"
+    directory: "/libraries/benchpress/"
     schedule:
       interval: "weekly"
 
   - package-ecosystem: "npm"
-    directory: "/benchpress/"
+    directory: "/libraries/cli/"
     schedule:
       interval: "weekly"
 
   - package-ecosystem: "npm"
-    directory: "/cli/"
-    schedule:
-      interval: "weekly"
-
-  - package-ecosystem: "npm"
-    directory: "/core/"
+    directory: "/libraries/core/"
     schedule:
       interval: "weekly"
 
@@ -46,23 +41,28 @@ updates:
       interval: "weekly"
 
   - package-ecosystem: "npm"
-    directory: "/graphql/"
+    directory: "/libraries/graphql/"
     schedule:
       interval: "weekly"
 
   - package-ecosystem: "npm"
-    directory: "/postgres/"
+    directory: "/libraries/postgres/"
     schedule:
       interval: "weekly"
 
   - package-ecosystem: "npm"
-    directory: "/server/"
+    directory: "/libraries/server/"
     schedule:
       interval: "weekly"
     ignore:
       - dependency-name: "@jonasb/*"
 
   - package-ecosystem: "npm"
-    directory: "/testing-utils/"
+    directory: "/libraries/testing-utils/"
+    schedule:
+      interval: "weekly"
+
+  - package-ecosystem: "npm"
+    directory: "/tools/generic-tools/"
     schedule:
       interval: "weekly"
