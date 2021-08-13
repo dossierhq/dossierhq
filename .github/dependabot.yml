@@ -19,3 +19,8 @@ updates:
     directory: "/core/"
     schedule:
       interval: "weekly"
+
+  - package-ecosystem: "npm"
+    directory: "/server/"
+    schedule:
+      interval: "weekly"
