@@ -34,8 +34,9 @@ Check that the same versions of dependencies are used, run `rush check`.
 - Update node version in `.nvmrc` and `.github/workflows/nodejs.yml`
 - Update `rushVersion` and `pnpmVersion` in `rush.json` (`npm show @microsoft/rush version`/`npm show pnpm version`)
 - Either upgrade individual dependencies:
-  - `./scripts/update-dependency.sh typescript "^4.3.5"`
-  - `rush check && rush update`
+  - `rush add --package typescript@latest --dev --make-consistent` in project where dependency exist, or:
+    - `./scripts/update-dependency.sh typescript "^4.3.5"`
+    - `rush check && rush update`
 - Or, upgrade all dependencies:
   - `npm run upgrade-dependencies:all`
   - `rush update --full`
