@@ -47,6 +47,7 @@ async function executeOperationMiddleware<
   pipelineIndex: number,
   operation: OperationWithoutCallbacks<TOp>
 ): Promise<TResult> {
+  // Setup callbacks
   let result: TResult | undefined;
   const resolve = (res: TResult) => (result = res);
 
@@ -65,7 +66,9 @@ async function executeOperationMiddleware<
 
   const operationWithCallbacks = { ...operation, resolve, next } as unknown as TOp;
 
+  // Execute the middleware in pipelineIndex
   await pipeline[pipelineIndex](context, operationWithCallbacks);
   assertIsDefined(result);
+
   return result;
 }
