@@ -520,17 +520,19 @@ function normalizeFieldValueItem(schema: Schema, fieldSpec: FieldSpecification, 
       if (!valueSpec) {
         return value; // Invalid
       }
-      for (const [fieldName, fieldValue] of Object.entries(valueItem)) {
-        if (fieldName === 'type') continue;
+      for (const fieldFieldSpec of valueSpec.fields) {
+        const fieldName = fieldFieldSpec.name;
+        const fieldValue = valueItem[fieldName];
+        const normalizedFieldValue =
+          normalizeFieldValue(schema, fieldFieldSpec, fieldValue) ?? null;
+        newValueItem[fieldName] = normalizedFieldValue;
+        if (normalizedFieldValue !== fieldValue) {
+          changed = true;
+        }
+      }
 
-        const fieldFieldSpec = schema.getValueFieldSpecification(valueSpec, fieldName);
-        if (fieldFieldSpec) {
-          const normalizedFieldValue = normalizeFieldValue(schema, fieldFieldSpec, fieldValue);
-          newValueItem[fieldName] = normalizedFieldValue;
-          if (normalizedFieldValue !== fieldValue) {
-            changed = true;
-          }
-        } else {
+      for (const [fieldName, fieldValue] of Object.entries(valueItem)) {
+        if (!(fieldName in newValueItem)) {
           // Invalid, so just reuse initial value
           newValueItem[fieldName] = fieldValue;
         }
