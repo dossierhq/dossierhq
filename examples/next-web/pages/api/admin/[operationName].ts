@@ -29,7 +29,10 @@ const requestSchema = Joi.object<RequestQuery>({
   operation: Joi.string().optional(),
 });
 
-export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
+export default async function adminOperationHandler(
+  req: NextApiRequest,
+  res: NextApiResponse
+): Promise<void> {
   const { operationName } = validateRequestQuery(req.query, requestSchema);
   if (req.method === 'GET') {
     await handleGet(req, res, async () => {
@@ -73,4 +76,4 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
   } else {
     handleError(res, Boom.methodNotAllowed(undefined, undefined, ['GET', 'PUT']));
   }
-};
+}
