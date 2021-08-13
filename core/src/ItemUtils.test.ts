@@ -1059,7 +1059,7 @@ describe('visitItemRecursively()', () => {
 
 describe('isEntityNameAsRequested', () => {
   test('hello=hello', () => expect(isEntityNameAsRequested('hello', 'hello')).toBeTruthy());
-  test('hello=hello#123', () => expect(isEntityNameAsRequested('hello', 'hello#123')).toBeTruthy());
+  test('hello#123=hello', () => expect(isEntityNameAsRequested('hello#123', 'hello')).toBeTruthy());
   test('hello#123=hello#123', () =>
     expect(isEntityNameAsRequested('hello#123', 'hello#123')).toBeTruthy());
 
