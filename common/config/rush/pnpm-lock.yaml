@@ -34,7 +34,7 @@ dependencies:
   '@types/express': 4.17.13
   '@types/heft-jest': 1.0.2
   '@types/inquirer': 7.3.1
-  '@types/jest': 26.0.23
+  '@types/jest': 27.0.1
   '@types/leaflet': 1.7.0
   '@types/lodash': 4.14.169
   '@types/node': 16.6.1
@@ -4280,6 +4280,13 @@ packages:
     dev: false
     resolution:
       integrity: sha512-ZHLmWMJ9jJ9PTiT58juykZpL7KjwJywFN3Rr2pTSkyQfydf/rk22yS7W8p5DaVUMQ2BQC7oYiU3FjbTM/mYrOA==
+  /@types/jest/27.0.1:
+    dependencies:
+      jest-diff: 27.0.6
+      pretty-format: 27.0.6
+    dev: false
+    resolution:
+      integrity: sha512-HTLpVXHrY69556ozYkcq47TtQJXpcWAWfkoqz+ZGz2JnmZhzlRjprCIyFnetSy8gpDWwTTGBcRVv1J1I1vBrHw==
   /@types/json-schema/7.0.7:
     dev: false
     resolution:
@@ -17124,7 +17131,7 @@ packages:
       '@editorjs/underline': 1.0.0
       '@hapi/boom': 9.1.2
       '@types/debug': 4.1.5
-      '@types/jest': 26.0.23
+      '@types/jest': 27.0.1
       '@types/node': 16.6.1
       '@types/react': 17.0.5
       '@typescript-eslint/eslint-plugin': 4.29.1_d4376362794b743c19f4cba25c7fc6f5
@@ -17148,7 +17155,7 @@ packages:
     dev: false
     name: '@rush-temp/datadata-examples-next-web'
     resolution:
-      integrity: sha512-F/mlawr/04W4w06kG5zyZDk4Jd8glKLza/nF6lVyL+NGRu8ZNHCiVWawdZz3PEguofOAeYnWwkpkTXpxXa9gLw==
+      integrity: sha512-RSR696sG+v3YbUesxzLUPXz/yGlKoYvWKgTKXVwIfo0WJ7jSr/fInBkqbEttBoTsotKux+SL/SGMUNpQTKC6+Q==
       tarball: file:projects/datadata-examples-next-web.tgz
     version: 0.0.0
   file:projects/datadata-graphql.tgz:
@@ -17279,7 +17286,7 @@ specifiers:
   '@types/express': ~4.17.13
   '@types/heft-jest': 1.0.2
   '@types/inquirer': ^7.3.1
-  '@types/jest': ~26.0.23
+  '@types/jest': ~27.0.1
   '@types/leaflet': ~1.7.0
   '@types/lodash': ~4.14.169
   '@types/node': ^16.6.1
