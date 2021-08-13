@@ -1,17 +1,31 @@
 import 'dotenv/config';
-import { ok, notOk } from '@jonasb/datadata-core';
+import { notOk, ok } from '@jonasb/datadata-core';
+import type { SessionGraphQLContext } from '@jonasb/datadata-graphql';
+import { GraphQLSchemaGenerator } from '@jonasb/datadata-graphql';
+import type { AuthContext } from '@jonasb/datadata-server';
 import {
   Auth,
   createServerAdminClient,
   createServerPublishedClient,
   Server,
 } from '@jonasb/datadata-server';
-import type { AuthContext } from '@jonasb/datadata-server';
-import { GraphQLSchemaGenerator } from '@jonasb/datadata-graphql';
-import type { SessionGraphQLContext } from '@jonasb/datadata-graphql';
+import type { Handler, NextFunction, Request, Response } from 'express';
 import express from 'express';
 import { graphqlHTTP } from 'express-graphql';
 import type { IncomingHttpHeaders } from 'http';
+
+type GraphQlMiddleware = ReturnType<typeof graphqlHTTP>;
+
+function middlewareAdapter(middleware: GraphQlMiddleware): Handler {
+  return (req: Request, res: Response, next: NextFunction): void => {
+    middleware(
+      req as unknown as Parameters<GraphQlMiddleware>[0],
+      res as unknown as Parameters<GraphQlMiddleware>[1]
+    )
+      .then(() => next())
+      .catch((error) => next(error));
+  };
+}
 
 async function createSessionContext(authContext: AuthContext, headers: IncomingHttpHeaders) {
   const provider = headers['insecure-auth-provider'];
@@ -31,27 +45,29 @@ async function startServer(server: Server, authContext: AuthContext, port: numbe
   const app = express();
   app.use(
     '/graphql',
-    graphqlHTTP(async (request, _response, _params) => {
-      const context: SessionGraphQLContext = {
-        schema: notOk.NotAuthenticated('No session'),
-        adminClient: notOk.NotAuthenticated('No session'),
-        publishedClient: notOk.NotAuthenticated('No session'),
-      };
-      const sessionResult = await createSessionContext(authContext, request.headers);
-      if (sessionResult.isOk()) {
-        const sessionContext = server.createSessionContext(sessionResult.value);
-        context.schema = ok(server.getSchema());
-        context.adminClient = ok(createServerAdminClient({ context: sessionContext }));
-        context.publishedClient = ok(createServerPublishedClient({ context: sessionContext }));
-      }
-      return {
-        schema,
-        context,
-        graphiql: {
-          headerEditorEnabled: true,
-        },
-      };
-    })
+    middlewareAdapter(
+      graphqlHTTP(async (request, _response, _params) => {
+        const context: SessionGraphQLContext = {
+          schema: notOk.NotAuthenticated('No session'),
+          adminClient: notOk.NotAuthenticated('No session'),
+          publishedClient: notOk.NotAuthenticated('No session'),
+        };
+        const sessionResult = await createSessionContext(authContext, request.headers);
+        if (sessionResult.isOk()) {
+          const sessionContext = server.createSessionContext(sessionResult.value);
+          context.schema = ok(server.getSchema());
+          context.adminClient = ok(createServerAdminClient({ context: sessionContext }));
+          context.publishedClient = ok(createServerPublishedClient({ context: sessionContext }));
+        }
+        return {
+          schema,
+          context,
+          graphiql: {
+            headerEditorEnabled: true,
+          },
+        };
+      })
+    )
   );
   app.listen(port);
   console.log(`Running a GraphQL API server at http://localhost:${port}/graphql`);

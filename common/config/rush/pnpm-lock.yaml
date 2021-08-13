@@ -31,13 +31,13 @@ dependencies:
   '@testing-library/react': 12.0.0_react-dom@17.0.2+react@17.0.2
   '@testing-library/user-event': 13.2.0
   '@types/debug': 4.1.5
-  '@types/express': 4.17.11
+  '@types/express': 4.17.13
   '@types/heft-jest': 1.0.2
   '@types/inquirer': 7.3.1
   '@types/jest': 26.0.23
   '@types/leaflet': 1.7.0
   '@types/lodash': 4.14.169
-  '@types/node': 15.3.0
+  '@types/node': 16.6.1
   '@types/pg': 8.6.1
   '@types/react': 17.0.5
   '@types/react-dom': 17.0.5
@@ -4072,7 +4072,7 @@ packages:
   /@types/body-parser/1.19.0:
     dependencies:
       '@types/connect': 3.4.34
-      '@types/node': 14.14.37
+      '@types/node': 16.6.1
     dev: false
     resolution:
       integrity: sha512-W98JrE0j2K78swW4ukqMleo8R7h/pFETjM2DQ90MF6XK2i4LO4W3gQ71Lt4w3bfm2EvVSyWHplECvB5sK22yFQ==
@@ -4092,7 +4092,7 @@ packages:
       integrity: sha512-rr+OQyAjxze7GgWrSaJwydHStIhHq2lvY3BOC2Mj7KnzI7XK0Uw1TOOdI9lDoajEbSWLiYgoo4f1R51erQfhPQ==
   /@types/connect/3.4.34:
     dependencies:
-      '@types/node': 14.14.37
+      '@types/node': 16.6.1
     dev: false
     resolution:
       integrity: sha512-ePPA/JuI+X0vb+gSWlPKOY0NdNAie/rPUqX2GUPpbZwiKTkSPhjXWuee47E4MtE54QVzGCQMQkAL6JhV2E1+cQ==
@@ -4102,13 +4102,13 @@ packages:
       integrity: sha512-Q1y515GcOdTHgagaVFhHnIFQ38ygs/kmxdNpvpou+raI9UO3YZcHDngBSYKQklcKlvA7iuQlmIKbzvmxcOE9CQ==
   /@types/express-serve-static-core/4.17.19:
     dependencies:
-      '@types/node': 14.14.37
+      '@types/node': 16.6.1
       '@types/qs': 6.9.6
       '@types/range-parser': 1.2.3
     dev: false
     resolution:
       integrity: sha512-DJOSHzX7pCiSElWaGR8kCprwibCB/3yW6vcT8VG3P0SJjnv19gnWG/AZMfM60Xj/YJIp/YCaDHyvzsFVeniARA==
-  /@types/express/4.17.11:
+  /@types/express/4.17.13:
     dependencies:
       '@types/body-parser': 1.19.0
       '@types/express-serve-static-core': 4.17.19
@@ -4116,7 +4116,7 @@ packages:
       '@types/serve-static': 1.13.9
     dev: false
     resolution:
-      integrity: sha512-no+R6rW60JEc59977wIxreQVsIEOAYwgCqldrA/vkpCnbD7MqTefO97lmoBe4WE0F156bC4uLSP1XHDOySnChg==
+      integrity: sha512-6bSZTPaTIACxn48l50SR+axgrqm6qXFIxrdAKaG6PaJk3+zuUr35hBlgT7vOmJcum+OEaIBLtHV/qloEAFITeA==
   /@types/geojson/7946.0.7:
     dev: false
     resolution:
@@ -4274,6 +4274,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-8/bnjSZD86ZfpBsDlCIkNXIvm+h6wi9g7IqL+kmFkQ+Wvu3JrasgLElfiPgoo8V8vVfnEi0QVS12gbl94h9YsQ==
+  /@types/node/16.6.1:
+    dev: false
+    resolution:
+      integrity: sha512-Sr7BhXEAer9xyGuCN3Ek9eg9xPviCF2gfu9kTfuU2HkTVAMYSDeX40fvpmo72n5nansg3nsBjuQBrsS28r+NUw==
   /@types/normalize-package-data/2.4.0:
     dev: false
     resolution:
@@ -4379,7 +4383,7 @@ packages:
   /@types/serve-static/1.13.9:
     dependencies:
       '@types/mime': 1.3.2
-      '@types/node': 14.14.37
+      '@types/node': 16.6.1
     dev: false
     resolution:
       integrity: sha512-ZFqF6qa48XsPdjXV5Gsz0Zqmux2PerNd3a/ktL45mHpa19cuMi/cL8tcxdAx497yRh+QtYPuofjT9oWw9P7nkA==
@@ -16762,7 +16766,7 @@ packages:
   file:projects/benchpress.tgz:
     dependencies:
       '@rushstack/heft': 0.36.1
-      '@types/node': 15.3.0
+      '@types/node': 16.6.1
       '@typescript-eslint/eslint-plugin': 4.29.1_d4376362794b743c19f4cba25c7fc6f5
       '@typescript-eslint/parser': 4.29.1_eslint@7.32.0+typescript@4.3.5
       eslint: 7.32.0
@@ -16773,7 +16777,7 @@ packages:
     dev: false
     name: '@rush-temp/benchpress'
     resolution:
-      integrity: sha512-bke52fEGk3ge8pdTaNXhqdtWh1ke4igEwpzv0aDZh1NkISlghkYG+mcAMJfYXhFFXBZwQGx3oebdDitp+i7xrQ==
+      integrity: sha512-ASmE8ueGp61slG/e+EZ2S5WWDPJIwHBJcyqSy7pszA1Ksb29dYZTGWmrUa+AYIv6ReXMpmCADLakgaSx9AFfoQ==
       tarball: file:projects/benchpress.tgz
     version: 0.0.0
   file:projects/datadata-admin-react-components.tgz_jest@27.0.6:
@@ -16872,8 +16876,8 @@ packages:
   file:projects/datadata-examples-foo.tgz_graphql@15.5.0:
     dependencies:
       '@rushstack/heft': 0.36.1
-      '@types/express': 4.17.11
-      '@types/node': 15.3.0
+      '@types/express': 4.17.13
+      '@types/node': 16.6.1
       '@typescript-eslint/eslint-plugin': 4.29.1_d4376362794b743c19f4cba25c7fc6f5
       '@typescript-eslint/parser': 4.29.1_eslint@7.32.0+typescript@4.3.5
       dotenv: 10.0.0
@@ -16889,7 +16893,7 @@ packages:
     peerDependencies:
       graphql: '*'
     resolution:
-      integrity: sha512-/VXmroD1MigKhmmDQwkmZ/MZfqeaLUv1hWK7a1vDi8VRnEYNi8KA16dvDLKWTEEPbkzjfwM9dwF12GJF2LERYA==
+      integrity: sha512-yrUuVN3n2w5hOl6/gNL3dMDQrckSHZsrSgjFWhzz6eK6c7zM4/goweXVUCSUgzZMyyCiU2S5L6ir6LFrbz/SNg==
       tarball: file:projects/datadata-examples-foo.tgz
     version: 0.0.0
   file:projects/datadata-examples-next-web.tgz:
@@ -16903,7 +16907,7 @@ packages:
       '@hapi/boom': 9.1.2
       '@types/debug': 4.1.5
       '@types/jest': 26.0.23
-      '@types/node': 15.3.0
+      '@types/node': 16.6.1
       '@types/react': 17.0.5
       '@typescript-eslint/eslint-plugin': 4.29.1_d4376362794b743c19f4cba25c7fc6f5
       '@typescript-eslint/parser': 4.29.1_eslint@7.32.0+typescript@4.3.5
@@ -16926,7 +16930,7 @@ packages:
     dev: false
     name: '@rush-temp/datadata-examples-next-web'
     resolution:
-      integrity: sha512-teFS6s1+N+d9myGI8L1sbMZgdr//Xj9tObcxK7SLcqHrVsZeY/gbqR9OYlDjCJp0Ol6AsWA2nlOeR1bidZFGfw==
+      integrity: sha512-WLzg3oWSfyTUbpaU55q5kE6d43XkazEB57+zotX5VqU0GAy3vE1b8FV6q2rWI0JjBFK4B1GlkQtl4IHRmnPFXw==
       tarball: file:projects/datadata-examples-next-web.tgz
     version: 0.0.0
   file:projects/datadata-graphql.tgz:
@@ -17054,13 +17058,13 @@ specifiers:
   '@testing-library/react': ~12.0.0
   '@testing-library/user-event': ~13.2.0
   '@types/debug': ~4.1.5
-  '@types/express': ~4.17.11
+  '@types/express': ~4.17.13
   '@types/heft-jest': 1.0.2
   '@types/inquirer': ^7.3.1
   '@types/jest': ~26.0.23
   '@types/leaflet': ~1.7.0
   '@types/lodash': ~4.14.169
-  '@types/node': ^15.3.0
+  '@types/node': ^16.6.1
   '@types/pg': ^8.6.1
   '@types/react': ~17.0.5
   '@types/react-dom': ~17.0.5
