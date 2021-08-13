@@ -18,4 +18,4 @@ const inlineTools: { [toolName: string]: EditorJsToolConstructable } = {
   underline: Underline,
 };
 
-export default { blockTools, inlineTools };
+export const EditorJsTools = { blockTools, inlineTools };

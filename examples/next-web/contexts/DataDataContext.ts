@@ -13,7 +13,7 @@ import {
 import { useEffect, useMemo, useState } from 'react';
 import type { SchemaResponse } from '../types/ResponseTypes';
 import { fetchJson, fetchJsonResult, urls } from '../utils/BackendUtils';
-import customTools from './EditorJsTools';
+import { EditorJsTools } from './EditorJsTools';
 
 type BackendContext = Record<never, never>;
 
@@ -23,7 +23,10 @@ class ContextAdapter implements DataDataContextAdapter {
     standardBlockTools,
     standardInlineTools
   ) => {
-    const defaultInlineToolbar = [...standardInlineTools, ...Object.keys(customTools.inlineTools)];
+    const defaultInlineToolbar = [
+      ...standardInlineTools,
+      ...Object.keys(EditorJsTools.inlineTools),
+    ];
 
     const tools: { [toolName: string]: EditorJsToolSettings } = {};
 
@@ -32,7 +35,7 @@ class ContextAdapter implements DataDataContextAdapter {
         if (standardBlockTools[type]) {
           tools[type] = standardBlockTools[type];
         } else {
-          const blockTool = customTools.blockTools[type];
+          const blockTool = EditorJsTools.blockTools[type];
           if (blockTool) {
             tools[type] = { class: blockTool, inlineToolbar: inlineTypes ?? true };
           } else {
@@ -44,7 +47,7 @@ class ContextAdapter implements DataDataContextAdapter {
       Object.entries(standardBlockTools).forEach(
         ([toolName, config]) => (tools[toolName] = config)
       );
-      Object.entries(customTools.blockTools).forEach(
+      Object.entries(EditorJsTools.blockTools).forEach(
         ([toolName, constructable]) =>
           (tools[toolName] = {
             class: constructable,
@@ -53,7 +56,7 @@ class ContextAdapter implements DataDataContextAdapter {
       );
     }
 
-    Object.entries(customTools.inlineTools).forEach(
+    Object.entries(EditorJsTools.inlineTools).forEach(
       ([toolName, constructable]) =>
         (tools[toolName] = {
           class: constructable,
