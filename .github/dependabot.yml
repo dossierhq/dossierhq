@@ -24,3 +24,5 @@ updates:
     directory: "/server/"
     schedule:
       interval: "weekly"
+    ignore:
+      - dependency-name: "@jonasb/*"
