@@ -13,6 +13,12 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 16.1.0
+      - name: Disable ensureConsistentVersions for dependabot && rush update
+        if: startsWith(github.ref, 'refs/heads/dependabot/npm_and_yarn')
+        run: |
+          sed -i "s/\(\"ensureConsistentVersions\"\): true,/\1: false,/" rush.json
+          git diff
+          node common/scripts/install-run-rush.js update
       - name: rush install
         run: |
           node common/scripts/install-run-rush.js install
@@ -32,3 +38,9 @@ jobs:
       - name: stop db
         run: |
           npm run db:stop
+  preventDependabotMerge:
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/heads/dependabot/npm_and_yarn')
+    steps:
+      - name: Fail since dependabot changes shouldn't be merged
+        run: exit 1
