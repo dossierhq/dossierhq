@@ -9,7 +9,6 @@ import {
 } from '@jonasb/datadata-core';
 import type { GraphQLSchema } from 'graphql';
 import { graphql } from 'graphql';
-import { v4 as uuidv4 } from 'uuid';
 import type { SessionGraphQLContext } from '..';
 import { GraphQLSchemaGenerator } from '..';
 import type { TestServerWithSession } from './TestUtils';
@@ -79,6 +78,38 @@ const schemaSpecification: Partial<SchemaSpecification> = {
   ],
 };
 
+const createMutationFooGqlQuery = `
+mutation CreateFooEntity($entity: AdminMutationFooCreateInput!) {
+  createMutationFooEntity(entity: $entity) {
+    __typename
+    effect
+    entity {
+      __typename
+      id
+      info {
+        type
+        name
+        version
+        publishingState
+      }
+      fields {
+        title
+        summary
+        tags
+        location {
+          lat
+          lng
+        }
+        locations {
+          lat
+          lng
+        }
+      }
+    }
+  }
+}
+`;
+
 const upsertMutationFooGqlQuery = `
 mutation UpsertFooEntity($entity: AdminMutationFooUpsertInput!) {
   upsertMutationFooEntity(entity: $entity) {
@@ -121,57 +152,21 @@ function createContext(): SessionGraphQLContext {
 describe('create*Entity()', () => {
   test('Create', async () => {
     const { adminClient } = server;
-    const result = await graphql(
-      schema,
-      `
-        mutation CreateFooEntity($entity: AdminMutationFooCreateInput!) {
-          createMutationFooEntity(entity: $entity) {
-            __typename
-            effect
-            entity {
-              __typename
-              id
-              info {
-                type
-                name
-                version
-                publishingState
-              }
-              fields {
-                title
-                summary
-                tags
-                location {
-                  lat
-                  lng
-                }
-                locations {
-                  lat
-                  lng
-                }
-              }
-            }
-          }
-        }
-      `,
-      undefined,
-      createContext(),
-      {
-        entity: {
-          info: { type: 'MutationFoo', name: 'Foo name' },
-          fields: {
-            title: 'Foo title',
-            summary: 'Foo summary',
-            tags: ['one', 'two', 'three'],
-            location: { lat: 55.60498, lng: 13.003822 },
-            locations: [
-              { lat: 55.60498, lng: 13.003822 },
-              { lat: 56.381561, lng: 13.99286 },
-            ],
-          },
+    const result = await graphql(schema, createMutationFooGqlQuery, undefined, createContext(), {
+      entity: {
+        info: { type: 'MutationFoo', name: 'Foo name' },
+        fields: {
+          title: 'Foo title',
+          summary: 'Foo summary',
+          tags: ['one', 'two', 'three'],
+          location: { lat: 55.60498, lng: 13.003822 },
+          locations: [
+            { lat: 55.60498, lng: 13.003822 },
+            { lat: 56.381561, lng: 13.99286 },
+          ],
         },
-      }
-    );
+      },
+    });
 
     expect(result.errors).toBeUndefined();
     const id = result.data?.createMutationFooEntity.entity.id;
@@ -225,42 +220,18 @@ describe('create*Entity()', () => {
     });
   });
 
-  test('Create with ID', async () => {
-    const id = uuidv4();
-    const result = await graphql(
-      schema,
-      `
-        mutation CreateFooEntity($entity: AdminMutationFooCreateInput!) {
-          createMutationFooEntity(entity: $entity) {
-            entity {
-              __typename
-              id
-              info {
-                type
-                name
-                version
-                publishingState
-              }
-              fields {
-                title
-              }
-            }
-          }
-        }
-      `,
-      undefined,
-      createContext(),
-      {
-        entity: {
-          id,
-          info: { type: 'MutationFoo', name: 'Foo name' },
-          fields: {
-            title: 'Foo title',
-            summary: 'Foo summary',
-          },
+  test('Create with ID and version=0', async () => {
+    const id = insecureTestUuidv4();
+    const result = await graphql(schema, createMutationFooGqlQuery, undefined, createContext(), {
+      entity: {
+        id,
+        info: { type: 'MutationFoo', name: 'Foo name', version: 0 },
+        fields: {
+          title: 'Foo title',
+          summary: 'Foo summary',
         },
-      }
-    );
+      },
+    });
 
     expect(result.errors).toBeUndefined();
     const name = result.data?.createMutationFooEntity.entity.info.name;
@@ -269,6 +240,8 @@ describe('create*Entity()', () => {
     expect(result).toEqual({
       data: {
         createMutationFooEntity: {
+          __typename: 'AdminMutationFooCreatePayload',
+          effect: 'created',
           entity: {
             __typename: 'AdminMutationFoo',
             id,
@@ -280,6 +253,10 @@ describe('create*Entity()', () => {
             },
             fields: {
               title: 'Foo title',
+              location: null,
+              locations: null,
+              summary: 'Foo summary',
+              tags: null,
             },
           },
         },
@@ -1030,32 +1007,18 @@ describe('create*Entity()', () => {
   });
 
   test('Error: Create with the wrong type', async () => {
-    const result = await graphql(
-      schema,
-      `
-        mutation CreateFooEntity($entity: AdminMutationFooCreateInput!) {
-          createMutationFooEntity(entity: $entity) {
-            entity {
-              id
-            }
-          }
-        }
-      `,
-      undefined,
-      createContext(),
-      {
-        entity: {
-          info: {
-            type: 'MutationBar', // should be Foo
-            name: 'Foo name',
-          },
-          fields: {
-            title: 'Foo title',
-            summary: 'Foo summary',
-          },
+    const result = await graphql(schema, createMutationFooGqlQuery, undefined, createContext(), {
+      entity: {
+        info: {
+          type: 'MutationBar', // should be Foo
+          name: 'Foo name',
         },
-      }
-    );
+        fields: {
+          title: 'Foo title',
+          summary: 'Foo summary',
+        },
+      },
+    });
 
     expect(result).toMatchInlineSnapshot(`
       Object {
@@ -1064,6 +1027,33 @@ describe('create*Entity()', () => {
         },
         "errors": Array [
           [GraphQLError: BadRequest: Specified type (entity.info.type=MutationBar) should be MutationFoo],
+        ],
+      }
+    `);
+  });
+
+  test('Error: Create with the wrong version', async () => {
+    const result = await graphql(schema, createMutationFooGqlQuery, undefined, createContext(), {
+      entity: {
+        info: {
+          type: 'MutationFoo',
+          name: 'Foo name',
+          version: 1,
+        },
+        fields: {
+          title: 'Foo title',
+          summary: 'Foo summary',
+        },
+      },
+    });
+
+    expect(result).toMatchInlineSnapshot(`
+      Object {
+        "data": Object {
+          "createMutationFooEntity": null,
+        },
+        "errors": Array [
+          [GraphQLError: BadRequest: Unsupported version for create: 1],
         ],
       }
     `);
@@ -1147,6 +1137,79 @@ describe('update*Entity()', () => {
           title: 'Updated title',
           summary: 'First summary',
           tags: ['one', 'two', 'three'],
+        },
+      });
+    }
+  });
+
+  test('Update with version', async () => {
+    const { adminClient } = server;
+    const createResult = await adminClient.createEntity({
+      info: { type: 'MutationFoo', name: 'First name' },
+      fields: { title: 'First title', summary: 'First summary', tags: ['one', 'two', 'three'] },
+    });
+    if (expectOkResult(createResult)) {
+      const {
+        entity: {
+          id,
+          info: { name },
+        },
+      } = createResult.value;
+      const result = await graphql(
+        schema,
+        `
+          mutation UpdateFooEntity($entity: AdminMutationFooUpdateInput!) {
+            updateMutationFooEntity(entity: $entity) {
+              effect
+              entity {
+                __typename
+                id
+                info {
+                  type
+                  name
+                  version
+                  publishingState
+                }
+                fields {
+                  title
+                  summary
+                  tags
+                }
+              }
+            }
+          }
+        `,
+        undefined,
+        createContext(),
+        {
+          entity: {
+            id,
+            info: { type: 'MutationFoo', version: 1 },
+            fields: { title: 'Updated title' },
+          },
+        }
+      );
+
+      expect(result).toEqual({
+        data: {
+          updateMutationFooEntity: {
+            effect: 'updated',
+            entity: {
+              __typename: 'AdminMutationFoo',
+              id,
+              info: {
+                type: 'MutationFoo',
+                name,
+                version: 1,
+                publishingState: EntityPublishState.Draft,
+              },
+              fields: {
+                title: 'Updated title',
+                summary: 'First summary',
+                tags: ['one', 'two', 'three'],
+              },
+            },
+          },
         },
       });
     }

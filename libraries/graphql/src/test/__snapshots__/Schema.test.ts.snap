@@ -103,6 +103,7 @@ type AdminEntityInfo {
 input AdminEntityCreateInfo {
   type: EntityType
   name: String!
+  version: Int
 }
 
 enum AdminEntityCreateEffect {
@@ -113,6 +114,7 @@ enum AdminEntityCreateEffect {
 input AdminEntityUpdateInfo {
   type: EntityType
   name: String
+  version: Int
 }
 
 enum AdminEntityUpdateEffect {
@@ -405,6 +407,7 @@ type AdminEntityInfo {
 input AdminEntityCreateInfo {
   type: EntityType
   name: String!
+  version: Int
 }
 
 enum AdminEntityCreateEffect {
@@ -415,6 +418,7 @@ enum AdminEntityCreateEffect {
 input AdminEntityUpdateInfo {
   type: EntityType
   name: String
+  version: Int
 }
 
 enum AdminEntityUpdateEffect {
@@ -748,6 +752,7 @@ type AdminEntityInfo {
 input AdminEntityCreateInfo {
   type: EntityType
   name: String!
+  version: Int
 }
 
 enum AdminEntityCreateEffect {
@@ -758,6 +763,7 @@ enum AdminEntityCreateEffect {
 input AdminEntityUpdateInfo {
   type: EntityType
   name: String
+  version: Int
 }
 
 enum AdminEntityUpdateEffect {
@@ -978,6 +984,7 @@ type AdminEntityInfo {
 input AdminEntityCreateInfo {
   type: EntityType
   name: String!
+  version: Int
 }
 
 enum AdminEntityCreateEffect {
@@ -988,6 +995,7 @@ enum AdminEntityCreateEffect {
 input AdminEntityUpdateInfo {
   type: EntityType
   name: String
+  version: Int
 }
 
 enum AdminEntityUpdateEffect {
@@ -1234,6 +1242,7 @@ type AdminEntityInfo {
 input AdminEntityCreateInfo {
   type: EntityType
   name: String!
+  version: Int
 }
 
 enum AdminEntityCreateEffect {
@@ -1244,6 +1253,7 @@ enum AdminEntityCreateEffect {
 input AdminEntityUpdateInfo {
   type: EntityType
   name: String
+  version: Int
 }
 
 enum AdminEntityUpdateEffect {
@@ -1573,6 +1583,7 @@ type AdminEntityInfo {
 input AdminEntityCreateInfo {
   type: EntityType
   name: String!
+  version: Int
 }
 
 enum AdminEntityCreateEffect {
@@ -1583,6 +1594,7 @@ enum AdminEntityCreateEffect {
 input AdminEntityUpdateInfo {
   type: EntityType
   name: String
+  version: Int
 }
 
 enum AdminEntityUpdateEffect {

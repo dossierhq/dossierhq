@@ -472,6 +472,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         fields: {
           type: { type: this.getEnumType('EntityType') },
           name: { type: new GraphQLNonNull(GraphQLString) },
+          version: { type: GraphQLInt },
         },
       })
     );
@@ -494,7 +495,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         fields: {
           type: { type: this.getEnumType('EntityType') },
           name: { type: GraphQLString },
-          //TODO version
+          version: { type: GraphQLInt },
         },
       })
     );
