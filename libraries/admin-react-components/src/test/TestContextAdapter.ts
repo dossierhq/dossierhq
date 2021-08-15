@@ -57,7 +57,7 @@ export class TestContextAdapter implements DataDataContextAdapter {
   };
 }
 
-export async function loadManyBarEntities(
+export async function createManyBarEntities(
   adminClient: AdminClient,
   entityCount: number
 ): Promise<void> {
