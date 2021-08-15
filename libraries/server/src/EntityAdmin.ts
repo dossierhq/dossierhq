@@ -34,7 +34,7 @@ import type {
   EntityPublishingEventsTable,
   EntityVersionsTable,
 } from './DatabaseTables';
-import type { AdminEntityValues } from './EntityCodec';
+import type { AdminEntityValues, EncodeEntityResult } from './EntityCodec';
 import {
   decodeAdminEntity,
   encodeEntity,
@@ -193,7 +193,7 @@ async function withUniqueNameAttempt<TResult>(
 export async function createEntity(
   context: SessionContext,
   entity: AdminEntityCreate
-): PromiseResult<AdminEntityCreatePayload, ErrorType.BadRequest> {
+): PromiseResult<AdminEntityCreatePayload, ErrorType.BadRequest | ErrorType.Conflict> {
   const resolvedResult = resolveCreateEntity(context, entity);
   if (resolvedResult.isError()) {
     return resolvedResult;
@@ -204,54 +204,41 @@ export async function createEntity(
   if (encodeResult.isError()) {
     return encodeResult;
   }
-  const { type, name, data, referenceIds, locations, fullTextSearchText } = encodeResult.value;
+  const encodeEntityResult = encodeResult.value;
 
   return await context.withTransaction(async (context) => {
-    const { uuid, actualName, entityId } = await withUniqueNameAttempt(
-      context,
-      name,
-      async (context, name) => {
-        const qb = new QueryBuilder('INSERT INTO entities (uuid, name, type, latest_fts)');
-        qb.addQuery(
-          `VALUES (${qb.addValueOrDefault(entity.id)}, ${qb.addValue(name)}, ${qb.addValue(
-            type
-          )}, to_tsvector(${qb.addValue(fullTextSearchText.join(' '))}))`
-        );
-        qb.addQuery('RETURNING id, uuid');
-        const { id: entityId, uuid } = await Db.queryOne<Pick<EntitiesTable, 'id' | 'uuid'>>(
-          context,
-          qb.build()
-        );
-        return { uuid, actualName: name, entityId };
-      }
-    );
+    const createEntityRowResult = await createEntityRow(context, entity.id, encodeEntityResult);
+    if (createEntityRowResult.isError()) {
+      return createEntityRowResult;
+    }
+    const { uuid, actualName, entityId } = createEntityRowResult.value;
 
     const { id: versionsId } = await Db.queryOne<{ id: number }>(
       context,
       'INSERT INTO entity_versions (entities_id, version, created_by, data) VALUES ($1, 0, $2, $3) RETURNING id',
-      [entityId, context.session.subjectInternalId, data]
+      [entityId, context.session.subjectInternalId, encodeEntityResult.data]
     );
     await Db.queryNone(
       context,
       'UPDATE entities SET latest_draft_entity_versions_id = $1 WHERE id = $2',
       [versionsId, entityId]
     );
-    if (referenceIds.length > 0) {
+    if (encodeEntityResult.referenceIds.length > 0) {
       const qb = new QueryBuilder(
         'INSERT INTO entity_version_references (entity_versions_id, entities_id) VALUES',
         [versionsId]
       );
-      for (const referenceId of referenceIds) {
+      for (const referenceId of encodeEntityResult.referenceIds) {
         qb.addQuery(`($1, ${qb.addValue(referenceId)})`);
       }
       await Db.queryNone(context, qb.build());
     }
-    if (locations.length > 0) {
+    if (encodeEntityResult.locations.length > 0) {
       const qb = new QueryBuilder(
         'INSERT INTO entity_version_locations (entity_versions_id, location) VALUES',
         [versionsId]
       );
-      for (const location of locations) {
+      for (const location of encodeEntityResult.locations) {
         qb.addQuery(
           `($1, ST_SetSRID(ST_Point(${qb.addValue(location.lng)}, ${qb.addValue(
             location.lat
@@ -273,6 +260,41 @@ export async function createEntity(
     };
     return ok({ effect: 'created', entity: result });
   });
+}
+
+async function createEntityRow(
+  context: SessionContext,
+  id: string | undefined,
+  encodeEntityResult: EncodeEntityResult
+) {
+  const { name, type, fullTextSearchText } = encodeEntityResult;
+
+  try {
+    const { uuid, actualName, entityId } = await withUniqueNameAttempt(
+      context,
+      name,
+      async (context, name) => {
+        const qb = new QueryBuilder('INSERT INTO entities (uuid, name, type, latest_fts)');
+        qb.addQuery(
+          `VALUES (${qb.addValueOrDefault(id)}, ${qb.addValue(name)}, ${qb.addValue(
+            type
+          )}, to_tsvector(${qb.addValue(fullTextSearchText.join(' '))}))`
+        );
+        qb.addQuery('RETURNING id, uuid');
+        const { id: entityId, uuid } = await Db.queryOne<Pick<EntitiesTable, 'id' | 'uuid'>>(
+          context,
+          qb.build()
+        );
+        return { uuid, actualName: name, entityId };
+      }
+    );
+    return ok({ uuid, actualName, entityId });
+  } catch (error) {
+    if (Db.isUniqueViolationOfConstraint(error, 'entities_uuid_key')) {
+      return notOk.Conflict(`Entity with id (${id}) already exist`);
+    }
+    throw error;
+  }
 }
 
 export async function updateEntity(
@@ -383,8 +405,15 @@ export async function upsertEntity(
   );
 
   if (!entityInfo) {
-    return await createEntity(context, entity);
-    // TODO check effect of create. If conflict it could be created after we fetched entityInfo, so try to update
+    const createResult = await createEntity(context, entity);
+    if (createResult.isOk()) {
+      return createResult.map((value) => value);
+    } else if (createResult.isErrorType(ErrorType.Conflict)) {
+      return upsertEntity(context, entity);
+    } else if (createResult.isErrorType(ErrorType.BadRequest)) {
+      return createResult;
+    }
+    return notOk.GenericUnexpectedError(createResult);
   }
 
   let entityUpdate: AdminEntityUpdate = entity;
@@ -396,11 +425,10 @@ export async function upsertEntity(
   const updateResult = await updateEntity(context, entityUpdate);
   if (updateResult.isOk()) {
     return ok(updateResult.value);
-  }
-  if (updateResult.isErrorType(ErrorType.BadRequest)) {
+  } else if (updateResult.isErrorType(ErrorType.BadRequest)) {
     return updateResult;
   }
-  return notOk.Generic(`Unexpected NotFound error: ${updateResult.message}`);
+  return notOk.GenericUnexpectedError(updateResult);
 }
 
 export async function publishEntities(

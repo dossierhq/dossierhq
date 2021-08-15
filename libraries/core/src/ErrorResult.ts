@@ -120,6 +120,10 @@ export const notOk = {
     createErrorResult(ErrorType.Conflict, message),
   Generic: (message: string): ErrorResult<unknown, ErrorType.Generic> =>
     createErrorResult(ErrorType.Generic, message),
+  GenericUnexpectedError: (
+    result: ErrorResult<unknown, ErrorType>
+  ): ErrorResult<unknown, ErrorType.Generic> =>
+    createErrorResult(ErrorType.Generic, `Unexpected error: ${result.error}: ${result.message}`),
   NotAuthenticated: (message: string): ErrorResult<unknown, ErrorType.NotAuthenticated> =>
     createErrorResult(ErrorType.NotAuthenticated, message),
   NotFound: (message: string): ErrorResult<unknown, ErrorType.NotFound> =>

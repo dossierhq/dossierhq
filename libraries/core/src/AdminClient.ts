@@ -58,7 +58,10 @@ export interface AdminClient {
 
   createEntity(
     entity: AdminEntityCreate
-  ): PromiseResult<AdminEntityCreatePayload, ErrorType.BadRequest | ErrorType.Generic>;
+  ): PromiseResult<
+    AdminEntityCreatePayload,
+    ErrorType.BadRequest | ErrorType.Conflict | ErrorType.Generic
+  >;
 
   updateEntity(
     entity: AdminEntityUpdate

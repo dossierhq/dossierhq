@@ -1647,6 +1647,31 @@ describe('createEntity()', () => {
     expectErrorResult(result, ErrorType.BadRequest, 'Missing entity.info.type');
   });
 
+  test('Error: Create with already existing', async () => {
+    const firstCreateResult = await client.createEntity({
+      info: { type: 'EntityAdminFoo', name: 'Foo' },
+      fields: { title: 'First' },
+    });
+
+    if (expectOkResult(firstCreateResult)) {
+      const {
+        entity: { id },
+      } = firstCreateResult.value;
+
+      const secondCreateResult = await client.createEntity({
+        id,
+        info: { type: 'EntityAdminBar', name: 'Bar' },
+        fields: { title: 'Second' },
+      });
+
+      expectErrorResult(
+        secondCreateResult,
+        ErrorType.Conflict,
+        `Entity with id (${id}) already exist`
+      );
+    }
+  });
+
   test('Error: Create without name', async () => {
     const result = await client.createEntity({
       info: { type: 'EntityAdminFoo', name: '' },
