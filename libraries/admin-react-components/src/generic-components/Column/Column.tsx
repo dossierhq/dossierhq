@@ -19,21 +19,24 @@ export type ColumnAsElementProps<Tag extends keyof JSX.IntrinsicElements> =
       as: Tag;
     };
 
-type ColumnItemProps<AsProps extends LayoutProps> = AsProps & {
-  as?: React.JSXElementConstructor<AsProps>;
+interface ColumnItemSharedProps {
   grow?: boolean;
+  height?: 0 | '100%';
+  width?: 0 | '100%';
   overflowY?: 'scroll';
-  className?: string;
-  children?: React.ReactNode;
-};
+}
 
-type ColumnElementProps<Tag extends keyof JSX.IntrinsicElements> = JSX.IntrinsicElements[Tag] & {
-  as?: Tag;
-  grow?: boolean;
-  overflowY?: 'scroll';
-  className?: string;
-  children?: React.ReactNode;
-};
+type ColumnItemProps<AsProps extends LayoutProps> = AsProps &
+  ColumnItemSharedProps & {
+    as?: React.JSXElementConstructor<AsProps>;
+    children?: React.ReactNode;
+  };
+
+type ColumnElementProps<Tag extends keyof JSX.IntrinsicElements> = JSX.IntrinsicElements[Tag] &
+  ColumnItemSharedProps & {
+    as?: Tag;
+    children?: React.ReactNode;
+  };
 
 export function Column({ className, gap, children }: ColumnProps): JSX.Element {
   return <div className={columnPropsAsClassName({ className, gap })}>{children}</div>;
@@ -85,16 +88,22 @@ function columnPropsAsClassName({
 function itemPropsAsClassName({
   className,
   grow,
+  height,
+  width,
   overflowY,
 }: {
   className: string | undefined;
   grow: boolean | undefined;
+  height: 0 | '100%' | undefined;
+  width: 0 | '100%' | undefined;
   overflowY: 'scroll' | undefined;
 }) {
   return joinClassNames(
     'dd',
     grow ? 'flex-grow' : '',
     overflowY === 'scroll' ? 'overflow-y-scroll' : '',
+    height === 0 ? 'h-0' : height === '100%' ? 'h-100' : '',
+    width === 0 ? 'w-0' : width === '100%' ? 'w-100' : '',
     className
   );
 }
@@ -103,6 +112,8 @@ export function ColumnItem<AsProps extends LayoutProps>({
   as,
   className,
   grow,
+  height,
+  width,
   overflowY,
   children,
   ...args
@@ -110,7 +121,7 @@ export function ColumnItem<AsProps extends LayoutProps>({
   const Element = as ?? 'div';
   return (
     <Element
-      className={itemPropsAsClassName({ className, grow, overflowY })}
+      className={itemPropsAsClassName({ className, grow, height, width, overflowY })}
       {...(args as AsProps)}
     >
       {children}
@@ -122,6 +133,8 @@ export function ColumnElement<Tag extends keyof JSX.IntrinsicElements>({
   as,
   className,
   grow,
+  height,
+  width,
   overflowY,
   children,
   ...args
@@ -129,7 +142,7 @@ export function ColumnElement<Tag extends keyof JSX.IntrinsicElements>({
   const Element = (as ?? 'div') as keyof JSX.IntrinsicElements;
   return (
     <Element
-      className={itemPropsAsClassName({ className, grow, overflowY })}
+      className={itemPropsAsClassName({ className, grow, height, width, overflowY })}
       {...(args as unknown)}
     >
       {children}

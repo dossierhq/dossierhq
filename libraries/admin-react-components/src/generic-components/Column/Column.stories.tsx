@@ -52,3 +52,25 @@ TwoRowsWithRows.args = {
     </>
   ),
 };
+
+export const OverflowScrollMiddleRow = Template.bind({});
+OverflowScrollMiddleRow.args = {
+  className: 'h-100',
+  children: (
+    <>
+      <ColumnElement style={{ background: 'green', width: '1em', height: '1em' }} />
+      <ColumnItem grow height={0} overflowY="scroll">
+        <RowElement style={{ background: 'red', width: '1em', height: '1em' }} />
+        <RowElement style={{ background: 'violet', width: '1em', height: '1em' }} />
+      </ColumnItem>
+      <ColumnElement style={{ background: 'blue', width: '1em', height: '1em' }} />
+    </>
+  ),
+};
+OverflowScrollMiddleRow.decorators = [
+  (Story) => (
+    <div style={{ height: '3em' }}>
+      <Story />
+    </div>
+  ),
+];
