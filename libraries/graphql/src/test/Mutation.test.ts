@@ -7,13 +7,13 @@ import {
   PublishingEventKind,
   RichTextBlockType,
 } from '@jonasb/datadata-core';
-import { graphql } from 'graphql';
 import type { GraphQLSchema } from 'graphql';
+import { graphql } from 'graphql';
 import { v4 as uuidv4 } from 'uuid';
 import type { SessionGraphQLContext } from '..';
 import { GraphQLSchemaGenerator } from '..';
 import type { TestServerWithSession } from './TestUtils';
-import { expectResultValue, setUpServerWithSession } from './TestUtils';
+import { expectResultValue, insecureTestUuidv4, setUpServerWithSession } from './TestUtils';
 
 const { expectOkResult } = CoreTestUtils;
 
@@ -78,6 +78,29 @@ const schemaSpecification: Partial<SchemaSpecification> = {
     },
   ],
 };
+
+const upsertMutationFooGqlQuery = `
+mutation UpsertFooEntity($entity: AdminMutationFooUpsertInput!) {
+  upsertMutationFooEntity(entity: $entity) {
+    effect
+    entity {
+      __typename
+      id
+      info {
+        type
+        name
+        version
+        publishingState
+      }
+      fields {
+        title
+        summary
+        tags
+      }
+    }
+  }
+}
+`;
 
 beforeAll(async () => {
   server = await setUpServerWithSession(schemaSpecification);
@@ -1419,6 +1442,188 @@ describe('update*Entity()', () => {
         }
       `);
     }
+  });
+});
+
+describe('upsert*Entity()', () => {
+  test('Create new entity', async () => {
+    const { adminClient } = server;
+    const id = insecureTestUuidv4();
+    const result = await graphql(schema, upsertMutationFooGqlQuery, undefined, createContext(), {
+      entity: {
+        id,
+        info: { type: 'MutationFoo', name: 'Name' },
+        fields: { title: 'Title', summary: 'Summary', tags: ['one', 'two', 'three'] },
+      },
+    });
+
+    const name = result.data?.upsertMutationFooEntity.entity.info.name;
+
+    expect(result).toEqual({
+      data: {
+        upsertMutationFooEntity: {
+          effect: 'created',
+          entity: {
+            __typename: 'AdminMutationFoo',
+            id,
+            info: {
+              type: 'MutationFoo',
+              name,
+              version: 0,
+              publishingState: EntityPublishState.Draft,
+            },
+            fields: {
+              title: 'Title',
+              summary: 'Summary',
+              tags: ['one', 'two', 'three'],
+            },
+          },
+        },
+      },
+    });
+
+    const getResult = await adminClient.getEntity({ id });
+    expectResultValue(getResult, {
+      id,
+      info: { type: 'MutationFoo', name, version: 0, publishingState: EntityPublishState.Draft },
+      fields: {
+        ...emptyFooFields,
+        title: 'Title',
+        summary: 'Summary',
+        tags: ['one', 'two', 'three'],
+      },
+    });
+  });
+
+  test('Update entity', async () => {
+    const { adminClient } = server;
+
+    const createResult = await adminClient.createEntity({
+      info: { type: 'MutationFoo', name: 'Foo' },
+      fields: { title: 'Title' },
+    });
+    if (expectOkResult(createResult)) {
+      const {
+        entity: { id },
+      } = createResult.value;
+      const result = await graphql(schema, upsertMutationFooGqlQuery, undefined, createContext(), {
+        entity: {
+          id,
+          info: { type: 'MutationFoo', name: 'Name' },
+          fields: { title: 'Updated title' },
+        },
+      });
+
+      const name = result.data?.upsertMutationFooEntity.entity.info.name;
+
+      expect(result).toEqual({
+        data: {
+          upsertMutationFooEntity: {
+            effect: 'updated',
+            entity: {
+              __typename: 'AdminMutationFoo',
+              id,
+              info: {
+                type: 'MutationFoo',
+                name,
+                version: 1,
+                publishingState: EntityPublishState.Draft,
+              },
+              fields: {
+                title: 'Updated title',
+                summary: null,
+                tags: null,
+              },
+            },
+          },
+        },
+      });
+
+      const getResult = await adminClient.getEntity({ id });
+      expectResultValue(getResult, {
+        id,
+        info: { type: 'MutationFoo', name, version: 1, publishingState: EntityPublishState.Draft },
+        fields: {
+          ...emptyFooFields,
+          title: 'Updated title',
+          summary: null,
+          tags: null,
+        },
+      });
+    }
+  });
+
+  test('Update entity (no change)', async () => {
+    const { adminClient } = server;
+
+    const createResult = await adminClient.createEntity({
+      info: { type: 'MutationFoo', name: 'Foo' },
+      fields: { title: 'Title' },
+    });
+    if (expectOkResult(createResult)) {
+      const {
+        entity: { id },
+      } = createResult.value;
+      const result = await graphql(schema, upsertMutationFooGqlQuery, undefined, createContext(), {
+        entity: {
+          id,
+          info: { type: 'MutationFoo', name: 'Foo' },
+          fields: { title: 'Title' },
+        },
+      });
+
+      const name = result.data?.upsertMutationFooEntity.entity.info.name;
+
+      expect(result).toEqual({
+        data: {
+          upsertMutationFooEntity: {
+            effect: 'none',
+            entity: {
+              __typename: 'AdminMutationFoo',
+              id,
+              info: {
+                type: 'MutationFoo',
+                name,
+                version: 0,
+                publishingState: EntityPublishState.Draft,
+              },
+              fields: {
+                title: 'Title',
+                summary: null,
+                tags: null,
+              },
+            },
+          },
+        },
+      });
+    }
+  });
+
+  test('Error: Upsert with the wrong type', async () => {
+    const result = await graphql(schema, upsertMutationFooGqlQuery, undefined, createContext(), {
+      entity: {
+        id: insecureTestUuidv4(),
+        info: {
+          type: 'MutationBar', // should be Foo
+          name: 'Foo name',
+        },
+        fields: {
+          title: 'Foo title',
+          summary: 'Foo summary',
+        },
+      },
+    });
+
+    expect(result).toMatchInlineSnapshot(`
+        Object {
+          "data": Object {
+            "upsertMutationFooEntity": null,
+          },
+          "errors": Array [
+            [GraphQLError: BadRequest: Specified type (entity.info.type=MutationBar) should be MutationFoo],
+          ],
+        }
+      `);
   });
 });
 

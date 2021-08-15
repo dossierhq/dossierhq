@@ -1,6 +1,7 @@
 {
   "[javascript]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
   "cSpell.words": [
+    "Upsert",
     "datadata",
     "graphqlid",
     "jonasb",

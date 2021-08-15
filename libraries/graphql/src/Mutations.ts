@@ -3,6 +3,8 @@ import type {
   AdminEntityCreatePayload,
   AdminEntityUpdate,
   AdminEntityUpdatePayload,
+  AdminEntityUpsert,
+  AdminEntityUpsertPayload,
   EntityVersionReference,
   PublishingResult,
 } from '@jonasb/datadata-core';
@@ -33,6 +35,22 @@ export async function updateEntity<TContext extends SessionGraphQLContext>(
   const schema = getSchema(context);
   const adminClient = getAdminClient(context);
   const result = await adminClient.updateEntity(entity);
+  if (result.isError()) {
+    throw result.toError();
+  }
+  return {
+    effect: result.value.effect,
+    entity: buildResolversForAdminEntity(schema, result.value.entity),
+  };
+}
+
+export async function upsertEntity<TContext extends SessionGraphQLContext>(
+  context: TContext,
+  entity: AdminEntityUpsert
+): Promise<AdminEntityUpsertPayload> {
+  const schema = getSchema(context);
+  const adminClient = getAdminClient(context);
+  const result = await adminClient.upsertEntity(entity);
   if (result.isError()) {
     throw result.toError();
   }

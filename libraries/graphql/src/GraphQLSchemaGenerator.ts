@@ -3,6 +3,7 @@ import type {
   AdminEntity,
   AdminEntityCreate,
   AdminEntityUpdate,
+  AdminEntityUpsert,
   AdminQuery,
   Entity,
   EntityTypeSpecification,
@@ -83,6 +84,14 @@ function toAdminUpdateInputTypeName(name: string) {
 
 function toAdminUpdatePayloadTypeName(name: string) {
   return `Admin${name}UpdatePayload`;
+}
+
+function toAdminUpsertInputTypeName(name: string) {
+  return `Admin${name}UpsertInput`;
+}
+
+function toAdminUpsertPayloadTypeName(name: string) {
+  return `Admin${name}UpsertPayload`;
 }
 
 function toAdminValueInputTypeName(name: string) {
@@ -467,7 +476,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       })
     );
 
-    // AdminEntityUpdateEffect
+    // AdminEntityCreateEffect
     this.addType(
       new GraphQLEnumType({
         name: 'AdminEntityCreateEffect',
@@ -495,6 +504,29 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       new GraphQLEnumType({
         name: 'AdminEntityUpdateEffect',
         values: {
+          updated: {},
+          none: {},
+        },
+      })
+    );
+
+    // AdminEntityUpsertInfo
+    this.addType(
+      new GraphQLInputObjectType({
+        name: 'AdminEntityUpsertInfo',
+        fields: {
+          type: { type: new GraphQLNonNull(this.getEnumType('EntityType')) },
+          name: { type: new GraphQLNonNull(GraphQLString) },
+        },
+      })
+    );
+
+    // AdminEntityUpsertEffect
+    this.addType(
+      new GraphQLEnumType({
+        name: 'AdminEntityUpsertEffect',
+        values: {
+          created: {},
           updated: {},
           none: {},
         },
@@ -734,7 +766,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
             info: { type: new GraphQLNonNull(this.getType('AdminEntityCreateInfo')) },
           };
           if (inputFieldsName) {
-            fields.fields = { type: this.getInputType(inputFieldsName) };
+            fields.fields = { type: new GraphQLNonNull(this.getInputType(inputFieldsName)) };
           }
           return fields;
         },
@@ -765,7 +797,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
             info: { type: this.getInputType('AdminEntityUpdateInfo') },
           };
           if (inputFieldsName) {
-            fields.fields = { type: this.getInputType(inputFieldsName) };
+            fields.fields = { type: new GraphQLNonNull(this.getInputType(inputFieldsName)) };
           }
           return fields;
         },
@@ -779,6 +811,37 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         fields: () => {
           const fields: GraphQLFieldConfigMap<AdminEntity, TContext> = {
             effect: { type: new GraphQLNonNull(this.getEnumType('AdminEntityUpdateEffect')) },
+            entity: { type: new GraphQLNonNull(this.getType(toAdminTypeName(entitySpec.name))) },
+          };
+          return fields;
+        },
+      })
+    );
+
+    // AdminFooUpsertInput
+    this.addType(
+      new GraphQLInputObjectType({
+        name: toAdminUpsertInputTypeName(entitySpec.name),
+        fields: () => {
+          const fields: GraphQLInputFieldConfigMap = {
+            id: { type: new GraphQLNonNull(GraphQLID) },
+            info: { type: new GraphQLNonNull(this.getInputType('AdminEntityUpsertInfo')) },
+          };
+          if (inputFieldsName) {
+            fields.fields = { type: new GraphQLNonNull(this.getInputType(inputFieldsName)) };
+          }
+          return fields;
+        },
+      })
+    );
+
+    // AdminFooUpsertPayload
+    this.addType(
+      new GraphQLObjectType({
+        name: toAdminUpsertPayloadTypeName(entitySpec.name),
+        fields: () => {
+          const fields: GraphQLFieldConfigMap<AdminEntity, TContext> = {
+            effect: { type: new GraphQLNonNull(this.getEnumType('AdminEntityUpsertEffect')) },
             entity: { type: new GraphQLNonNull(this.getType(toAdminTypeName(entitySpec.name))) },
           };
           return fields;
@@ -1062,6 +1125,27 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     });
   }
 
+  buildMutationUpsertEntity<TSource>(entityName: string): GraphQLFieldConfig<TSource, TContext> {
+    return fieldConfigWithArgs<TSource, TContext, { entity: AdminEntityUpsert }>({
+      type: this.getOutputType(toAdminUpsertPayloadTypeName(entityName)),
+      args: {
+        entity: { type: new GraphQLNonNull(this.getType(toAdminUpsertInputTypeName(entityName))) },
+      },
+      resolve: async (_source, args, context, _info) => {
+        const { entity } = args;
+        if (entity.info?.type && entity.info.type !== entityName) {
+          throw notOk
+            .BadRequest(
+              `Specified type (entity.info.type=${entity.info.type}) should be ${entityName}`
+            )
+            .toError();
+        }
+        this.resolveJsonInputFields(entity, entityName);
+        return await Mutations.upsertEntity(context, entity);
+      },
+    });
+  }
+
   resolveJsonInputFields(
     entity: AdminEntityCreate | AdminEntityUpdate,
     entityTypeName: string
@@ -1224,6 +1308,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     for (const entitySpec of this.schema.spec.entityTypes) {
       fields[`create${entitySpec.name}Entity`] = this.buildMutationCreateEntity(entitySpec.name);
       fields[`update${entitySpec.name}Entity`] = this.buildMutationUpdateEntity(entitySpec.name);
+      fields[`upsert${entitySpec.name}Entity`] = this.buildMutationUpsertEntity(entitySpec.name);
     }
 
     return new GraphQLObjectType<TSource, TContext>({
