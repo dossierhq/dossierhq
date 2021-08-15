@@ -54,7 +54,7 @@ export type AdminEntityValues = Pick<
 export type EntityValues = Pick<EntitiesTable, 'uuid' | 'type' | 'name'> &
   Pick<EntityVersionsTable, 'data'>;
 
-interface EncodeEntityResult {
+export interface EncodeEntityResult {
   type: string;
   name: string;
   data: Record<string, unknown>;
