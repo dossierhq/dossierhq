@@ -1,5 +1,6 @@
 import {
   Column,
+  ColumnItem,
   DataDataContext,
   EntitySearch,
   Loader,
@@ -29,7 +30,7 @@ export default function EntitiesListPage(): JSX.Element {
           showEntityTypes
           onTypeSelected={handleCreateEntity}
         />
-        <EntitySearch className="flex-grow h-0" onEntityClick={handleEntityClick} />
+        <ColumnItem as={EntitySearch} grow height={0} onEntityClick={handleEntityClick} />
       </Column>
     </DataDataContext.Provider>
   );

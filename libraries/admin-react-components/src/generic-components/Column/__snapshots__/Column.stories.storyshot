@@ -1,5 +1,64 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Storyshots Generic/Column Overflow Scroll Middle Row 1`] = `
+<div
+  style={
+    Object {
+      "height": "3em",
+    }
+  }
+>
+  <div
+    className="dd flex-column h-100"
+  >
+    <div
+      className="dd"
+      style={
+        Object {
+          "background": "green",
+          "height": "1em",
+          "width": "1em",
+        }
+      }
+    />
+    <div
+      className="dd flex-grow overflow-y-scroll h-0"
+    >
+      <div
+        className="dd"
+        style={
+          Object {
+            "background": "red",
+            "height": "1em",
+            "width": "1em",
+          }
+        }
+      />
+      <div
+        className="dd"
+        style={
+          Object {
+            "background": "violet",
+            "height": "1em",
+            "width": "1em",
+          }
+        }
+      />
+    </div>
+    <div
+      className="dd"
+      style={
+        Object {
+          "background": "blue",
+          "height": "1em",
+          "width": "1em",
+        }
+      }
+    />
+  </div>
+</div>
+`;
+
 exports[`Storyshots Generic/Column Three Rows 1`] = `
 <div
   className="dd flex-column"

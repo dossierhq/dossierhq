@@ -19,19 +19,23 @@ export type RowAsElementProps<Tag extends keyof JSX.IntrinsicElements> =
       as: Tag;
     };
 
-type RowItemProps<AsProps extends LayoutProps> = AsProps & {
-  as?: React.JSXElementConstructor<AsProps>;
+interface RowItemSharedProps {
   grow?: boolean;
-  className?: string;
-  children?: React.ReactNode;
-};
+  height?: 0 | '100%';
+  width?: 0 | '100%';
+}
 
-type RowElementProps<Tag extends keyof JSX.IntrinsicElements> = JSX.IntrinsicElements[Tag] & {
-  as?: Tag;
-  grow?: boolean;
-  className?: string;
-  children?: React.ReactNode;
-};
+type RowItemProps<AsProps extends LayoutProps> = AsProps &
+  RowItemSharedProps & {
+    as?: React.JSXElementConstructor<AsProps>;
+    children?: React.ReactNode;
+  };
+
+type RowElementProps<Tag extends keyof JSX.IntrinsicElements> = JSX.IntrinsicElements[Tag] &
+  RowItemSharedProps & {
+    as?: Tag;
+    children?: React.ReactNode;
+  };
 
 export function Row({ className, gap, children }: RowProps): JSX.Element {
   return (
@@ -78,23 +82,38 @@ export function RowAsElement<Tag extends keyof JSX.IntrinsicElements>({
 function itemPropsAsClassName({
   className,
   grow,
+  height,
+  width,
 }: {
   className: string | undefined;
   grow: boolean | undefined;
+  height: 0 | '100%' | undefined;
+  width: 0 | '100%' | undefined;
 }) {
-  return joinClassNames('dd', grow ? 'flex-grow' : '', className);
+  return joinClassNames(
+    'dd',
+    grow ? 'flex-grow' : '',
+    height === 0 ? 'h-0' : height === '100%' ? 'h-100' : '',
+    width === 0 ? 'w-0' : width === '100%' ? 'w-100' : '',
+    className
+  );
 }
 
 export function RowItem<AsProps extends LayoutProps>({
   as,
   className,
   grow,
+  height,
+  width,
   children,
   ...args
 }: RowItemProps<AsProps>): JSX.Element {
   const Element = as ?? 'div';
   return (
-    <Element className={itemPropsAsClassName({ className, grow })} {...(args as AsProps)}>
+    <Element
+      className={itemPropsAsClassName({ className, grow, height, width })}
+      {...(args as AsProps)}
+    >
       {children}
     </Element>
   );
@@ -104,12 +123,17 @@ export function RowElement<Tag extends keyof JSX.IntrinsicElements = 'div'>({
   as,
   className,
   grow,
+  height,
+  width,
   children,
   ...args
 }: RowElementProps<Tag>): JSX.Element {
   const Element = (as ?? 'div') as keyof JSX.IntrinsicElements;
   return (
-    <Element className={itemPropsAsClassName({ className, grow })} {...(args as unknown)}>
+    <Element
+      className={itemPropsAsClassName({ className, grow, height, width })}
+      {...(args as unknown)}
+    >
       {children}
     </Element>
   );
