@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-core",
+      "comment": "Add Conflict as error to createEntity(). Upgrade dependencies",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-core",
+  "email": "jonas.b@gmail.com"
+}
