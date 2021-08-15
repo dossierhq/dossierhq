@@ -29,7 +29,7 @@ export default function EntitiesListPage(): JSX.Element {
           showEntityTypes
           onTypeSelected={handleCreateEntity}
         />
-        <EntitySearch className="w-100 h-100" onEntityClick={handleEntityClick} />
+        <EntitySearch className="flex-grow h-0" onEntityClick={handleEntityClick} />
       </Column>
     </DataDataContext.Provider>
   );

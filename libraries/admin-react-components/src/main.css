@@ -462,8 +462,16 @@ ul.dd li {
   border-radius: 0.5em;
 }
 
+.dd.h-0 {
+  height: 0;
+}
+
 .dd.h-100 {
   height: 100%;
+}
+
+.dd.w-0 {
+  width: 0;
 }
 
 .dd.w-100 {

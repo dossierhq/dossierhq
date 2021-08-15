@@ -2,7 +2,7 @@ import type { Meta, Story } from '@storybook/react/types-6-0';
 import React, { useEffect, useState } from 'react';
 import type { DataDataContextValue } from '../..';
 import { DataDataContext, EntityList } from '../..';
-import { createContextValue, loadManyBarEntities } from '../../test/TestContextAdapter';
+import { createContextValue, createManyBarEntities } from '../../test/TestContextAdapter';
 import type { EntityListProps } from './EntityList';
 
 interface EntityListStoryProps extends EntityListProps {
@@ -47,7 +47,7 @@ export const ManyItems = Template.bind({});
 ManyItems.args = {
   contextValue: async () => {
     const { contextValue, adminClient } = createContextValue();
-    await loadManyBarEntities(adminClient, 321);
+    await createManyBarEntities(adminClient, 321);
     return contextValue;
   },
 };
