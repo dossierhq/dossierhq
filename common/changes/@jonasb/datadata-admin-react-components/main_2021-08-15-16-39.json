@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-admin-react-components",
+      "comment": "Add w-0 h-0 classnames",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-admin-react-components",
+  "email": "jonas.b@gmail.com"
+}
