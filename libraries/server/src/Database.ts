@@ -6,8 +6,12 @@ import type {
   QueryResult,
   QueryResultRow,
 } from 'pg';
-import { DatabaseError, Pool as PgPool } from 'pg';
+import { DatabaseError, Pool as PgPool, types as PgTypes } from 'pg';
 import type { Context } from '.';
+
+PgTypes.setTypeParser(PgTypes.builtins.INT8, BigInt);
+// 1016 = _int8 (int8 array)
+PgTypes.setTypeParser(1016, (value) => PgTypes.arrayParser(value, BigInt));
 
 export class UnexpectedQuantityError extends Error {
   readonly actual: number;
