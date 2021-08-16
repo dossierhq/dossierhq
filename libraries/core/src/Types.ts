@@ -1,3 +1,4 @@
+import type { Temporal } from '@js-temporal/polyfill';
 import type { ErrorType, Result } from '.';
 
 export interface Entity {
@@ -131,7 +132,7 @@ export interface EntityVersionInfo {
   version: number;
   published: boolean;
   createdBy: string;
-  createdAt: Date;
+  createdAt: Temporal.Instant;
 }
 
 export interface PublishingHistory {
@@ -149,7 +150,7 @@ export enum PublishingEventKind {
 export interface PublishingEvent {
   kind: PublishingEventKind;
   version: number | null;
-  publishedAt: Date;
+  publishedAt: Temporal.Instant;
   publishedBy: string;
 }
 

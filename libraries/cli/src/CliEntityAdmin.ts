@@ -692,7 +692,7 @@ export async function showEntityHistory(context: CliContext, id: string): Promis
     if (version.published) tags.push(chalk.green('published'));
     logKeyValue('version', `${version.version} ${tags.join(', ')}`);
     logKeyValue('  created by', version.createdBy);
-    logKeyValue('  created at', version.createdAt.toISOString());
+    logKeyValue('  created at', version.createdAt.toLocaleString());
   }
 }
 
@@ -711,7 +711,7 @@ export async function showPublishingHistory(context: CliContext, id: string): Pr
       logKeyValue('  version', event.version.toString());
     }
     logKeyValue('  published by', event.publishedBy);
-    logKeyValue('  published at', event.publishedAt.toISOString());
+    logKeyValue('  published at', event.publishedAt.toLocaleString());
   }
 }
 
@@ -769,7 +769,7 @@ async function selectEntityVersion(
       return {
         id: String(version.version),
         name: `${version.version} ${tagsString ? tagsString + ' ' : ''}${chalk.grey(
-          `created at ${version.createdAt.toISOString()}`
+          `created at ${version.createdAt.toLocaleString()}`
         )}`,
       };
     })

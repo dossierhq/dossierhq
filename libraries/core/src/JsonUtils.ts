@@ -1,3 +1,4 @@
+import { Temporal } from '@js-temporal/polyfill';
 import type {
   Connection,
   Edge,
@@ -74,7 +75,7 @@ export function convertJsonEntityHistory(entityHistory: JsonEntityHistory): Enti
     ...entityHistory,
     versions: entityHistory.versions.map((version) => ({
       ...version,
-      createdAt: new Date(version.createdAt),
+      createdAt: Temporal.Instant.from(version.createdAt),
     })),
   };
 }
@@ -86,7 +87,7 @@ export function convertJsonPublishingHistory(
     ...publishingHistory,
     events: publishingHistory.events.map((version) => ({
       ...version,
-      publishedAt: new Date(version.publishedAt),
+      publishedAt: Temporal.Instant.from(version.publishedAt),
     })),
   };
 }

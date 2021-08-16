@@ -12,6 +12,8 @@ type PageInfo {
   endCursor: String!
 }
 
+scalar Instant
+
 type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
@@ -30,6 +32,8 @@ type PageInfo {
   startCursor: String!
   endCursor: String!
 }
+
+scalar Instant
 
 enum EntityType {
   Foo
@@ -185,7 +189,7 @@ type EntityVersionInfo {
   version: Int!
   published: Boolean!
   createdBy: ID!
-  createdAt: String!
+  createdAt: Instant!
 }
 
 type EntityHistory {
@@ -196,7 +200,7 @@ type EntityHistory {
 type PublishingEvent {
   version: Int
   publishedBy: ID!
-  publishedAt: String!
+  publishedAt: Instant!
 }
 
 type PublishingHistory {
@@ -333,6 +337,8 @@ type PageInfo {
   startCursor: String!
   endCursor: String!
 }
+
+scalar Instant
 
 enum EntityType {
   Foo
@@ -495,7 +501,7 @@ type EntityVersionInfo {
   version: Int!
   published: Boolean!
   createdBy: ID!
-  createdAt: String!
+  createdAt: Instant!
 }
 
 type EntityHistory {
@@ -506,7 +512,7 @@ type EntityHistory {
 type PublishingEvent {
   version: Int
   publishedBy: ID!
-  publishedAt: String!
+  publishedAt: Instant!
 }
 
 type PublishingHistory {
@@ -706,6 +712,8 @@ type PageInfo {
   endCursor: String!
 }
 
+scalar Instant
+
 enum EntityType {
   Foo
 }
@@ -846,7 +854,7 @@ type EntityVersionInfo {
   version: Int!
   published: Boolean!
   createdBy: ID!
-  createdAt: String!
+  createdAt: Instant!
 }
 
 type EntityHistory {
@@ -857,7 +865,7 @@ type EntityHistory {
 type PublishingEvent {
   version: Int
   publishedBy: ID!
-  publishedAt: String!
+  publishedAt: Instant!
 }
 
 type PublishingHistory {
@@ -938,6 +946,8 @@ type PageInfo {
   startCursor: String!
   endCursor: String!
 }
+
+scalar Instant
 
 enum EntityType {
   Foo
@@ -1084,7 +1094,7 @@ type EntityVersionInfo {
   version: Int!
   published: Boolean!
   createdBy: ID!
-  createdAt: String!
+  createdAt: Instant!
 }
 
 type EntityHistory {
@@ -1095,7 +1105,7 @@ type EntityHistory {
 type PublishingEvent {
   version: Int
   publishedBy: ID!
-  publishedAt: String!
+  publishedAt: Instant!
 }
 
 type PublishingHistory {
@@ -1188,6 +1198,8 @@ type PageInfo {
   startCursor: String!
   endCursor: String!
 }
+
+scalar Instant
 
 enum EntityType {
   Foo
@@ -1348,7 +1360,7 @@ type EntityVersionInfo {
   version: Int!
   published: Boolean!
   createdBy: ID!
-  createdAt: String!
+  createdAt: Instant!
 }
 
 type EntityHistory {
@@ -1359,7 +1371,7 @@ type EntityHistory {
 type PublishingEvent {
   version: Int
   publishedBy: ID!
-  publishedAt: String!
+  publishedAt: Instant!
 }
 
 type PublishingHistory {
@@ -1508,6 +1520,8 @@ type PageInfo {
   startCursor: String!
   endCursor: String!
 }
+
+scalar Instant
 
 enum EntityType {
   Foo
@@ -1699,7 +1713,7 @@ type EntityVersionInfo {
   version: Int!
   published: Boolean!
   createdBy: ID!
-  createdAt: String!
+  createdAt: Instant!
 }
 
 type EntityHistory {
@@ -1710,7 +1724,7 @@ type EntityHistory {
 type PublishingEvent {
   version: Int
   publishedBy: ID!
-  publishedAt: String!
+  publishedAt: Instant!
 }
 
 type PublishingHistory {

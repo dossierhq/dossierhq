@@ -1461,6 +1461,8 @@ describe('versionHistory()', () => {
         createContext(),
         { id }
       );
+      expect(result.errors).toBeUndefined();
+
       // Remove createdAt since it's tricky to test 🤷‍♂️
       result.data?.entityHistory.versions.forEach(
         (x: { createdAt?: string }) => delete x.createdAt
@@ -1544,6 +1546,7 @@ describe('publishingHistory()', () => {
         { id }
       );
 
+      expect(result.errors).toBeUndefined();
       const { publishedAt } = result.data?.publishingHistory.events[0];
 
       expect(result.data).toEqual({
