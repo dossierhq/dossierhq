@@ -6,6 +6,7 @@ import type {
   Schema,
 } from '@jonasb/datadata-core';
 import { EntityPublishState, PublishingEventKind } from '@jonasb/datadata-core';
+import { Temporal } from '@js-temporal/polyfill';
 import type { JsonInMemoryEntity } from '.';
 import type { InMemoryEntity, InMemoryEntityVersion } from './InMemoryServer';
 
@@ -30,13 +31,13 @@ export class InMemoryServerInner {
         history: history.map(({ version, createdBy, createdAt }) => ({
           version,
           createdBy,
-          createdAt: new Date(createdAt),
+          createdAt: Temporal.Instant.from(createdAt),
         })),
         publishEvents: publishEvents.map(({ kind, version, publishedBy, publishedAt }) => ({
           kind,
           version,
           publishedBy,
-          publishedAt: new Date(publishedAt),
+          publishedAt: Temporal.Instant.from(publishedAt),
         })),
       })
     );
@@ -135,7 +136,7 @@ export class InMemoryServerInner {
       name,
       archived: false,
       versions: [entityVersion],
-      history: [{ version: 0, createdAt: new Date(), createdBy: userId }],
+      history: [{ version: 0, createdAt: Temporal.Now.instant(), createdBy: userId }],
       publishEvents: [],
     });
   }
@@ -155,7 +156,7 @@ export class InMemoryServerInner {
 
     fullEntity.history.push({
       version: entity.info.version,
-      createdAt: new Date(),
+      createdAt: Temporal.Now.instant(),
       createdBy: userId,
     });
   }
@@ -204,7 +205,7 @@ export class InMemoryServerInner {
     entity.publishEvents.push({
       kind,
       version,
-      publishedAt: new Date(),
+      publishedAt: Temporal.Now.instant(),
       publishedBy: userId,
     });
   }

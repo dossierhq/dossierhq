@@ -1,4 +1,5 @@
 import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
+import { Temporal } from '@js-temporal/polyfill';
 import type {
   QueryArrayConfig,
   QueryArrayResult,
@@ -12,6 +13,11 @@ import type { Context } from '.';
 PgTypes.setTypeParser(PgTypes.builtins.INT8, BigInt);
 // 1016 = _int8 (int8 array)
 PgTypes.setTypeParser(1016, (value) => PgTypes.arrayParser(value, BigInt));
+PgTypes.setTypeParser(PgTypes.builtins.TIMESTAMPTZ, (value) => {
+  if (value === '-infinity') return Number.NEGATIVE_INFINITY;
+  if (value === 'infinity') return Number.POSITIVE_INFINITY;
+  return Temporal.Instant.from(value);
+});
 
 export class UnexpectedQuantityError extends Error {
   readonly actual: number;

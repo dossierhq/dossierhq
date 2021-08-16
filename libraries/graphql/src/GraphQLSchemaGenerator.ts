@@ -21,6 +21,7 @@ import {
   isValueTypeField,
   notOk,
 } from '@jonasb/datadata-core';
+import { Temporal } from '@js-temporal/polyfill';
 import type {
   GraphQLEnumValueConfigMap,
   GraphQLFieldConfig,
@@ -42,12 +43,14 @@ import {
   GraphQLList,
   GraphQLNonNull,
   GraphQLObjectType,
+  GraphQLScalarType,
   GraphQLSchema,
   GraphQLString,
   isEnumType,
   isInputType,
   isInterfaceType,
   isOutputType,
+  Kind,
 } from 'graphql';
 import {
   loadAdminEntities,
@@ -258,6 +261,34 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
           hasPreviousPage: { type: new GraphQLNonNull(GraphQLBoolean) },
           startCursor: { type: new GraphQLNonNull(GraphQLString) },
           endCursor: { type: new GraphQLNonNull(GraphQLString) },
+        },
+      })
+    );
+
+    // Instant
+    this.addType(
+      new GraphQLScalarType({
+        name: 'Instant',
+        serialize(value: unknown) {
+          if (value instanceof Temporal.Instant) {
+            return value.toString();
+          }
+          throw new TypeError('Instant must be serialized from a Temporal.Instant.');
+        },
+        parseLiteral(ast) {
+          if (ast.kind === Kind.STRING) {
+            return Temporal.Instant.from(ast.value);
+          }
+          throw new TypeError('Instant must be represented as a string.');
+        },
+        parseValue(value: unknown) {
+          if (value instanceof Temporal.Instant) {
+            return value;
+          }
+          if (typeof value === 'string') {
+            return Temporal.Instant.from(value);
+          }
+          throw new TypeError('Instant must be represented as a Temporal.Instant or string.');
         },
       })
     );
@@ -652,7 +683,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
           version: { type: new GraphQLNonNull(GraphQLInt) },
           published: { type: new GraphQLNonNull(GraphQLBoolean) },
           createdBy: { type: new GraphQLNonNull(GraphQLID) },
-          createdAt: { type: new GraphQLNonNull(GraphQLString) }, // TODO handle dates
+          createdAt: { type: new GraphQLNonNull(this.getType('Instant')) },
         },
       })
     );
@@ -677,7 +708,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         fields: {
           version: { type: GraphQLInt },
           publishedBy: { type: new GraphQLNonNull(GraphQLID) },
-          publishedAt: { type: new GraphQLNonNull(GraphQLString) }, // TODO handle dates
+          publishedAt: { type: new GraphQLNonNull(this.getType('Instant')) },
         },
       })
     );

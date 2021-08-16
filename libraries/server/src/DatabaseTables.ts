@@ -1,4 +1,5 @@
 import type { SchemaSpecification } from '@jonasb/datadata-core';
+import type { Temporal } from '@js-temporal/polyfill';
 
 export interface SchemaVersionsTable {
   id: number;
@@ -8,7 +9,7 @@ export interface SchemaVersionsTable {
 export interface SubjectsTable {
   id: number;
   uuid: string;
-  created_at: Date;
+  created_at: Temporal.Instant;
 }
 
 export interface EntitiesTable {
@@ -16,8 +17,8 @@ export interface EntitiesTable {
   uuid: string;
   name: string;
   type: string;
-  created_at: Date;
-  updated_at: Date;
+  created_at: Temporal.Instant;
+  updated_at: Temporal.Instant;
   updated: number;
   latest_draft_entity_versions_id: number | null;
   never_published: boolean;
@@ -29,7 +30,7 @@ export interface EntityVersionsTable {
   id: number;
   entities_id: number;
   version: number;
-  created_at: Date;
+  created_at: Temporal.Instant;
   created_by: number;
   data: Record<string, unknown>;
 }
@@ -46,5 +47,5 @@ export interface EntityPublishingEventsTable {
   entity_versions_id: number | null;
   kind: 'publish' | 'unpublish' | 'archive' | 'unarchive';
   published_by: number;
-  published_at: Date;
+  published_at: Temporal.Instant;
 }

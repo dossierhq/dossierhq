@@ -1,4 +1,5 @@
 import type { PublishingEventKind, Schema } from '@jonasb/datadata-core';
+import type { Temporal } from '@js-temporal/polyfill';
 import { InMemoryServerInner } from './InMemoryServerInner';
 
 export interface InMemoryEntity {
@@ -8,12 +9,12 @@ export interface InMemoryEntity {
   versions: InMemoryEntityVersion[];
   archived?: boolean;
   publishedVersion?: number | null;
-  history: { version: number; createdBy: string; createdAt: Date }[];
+  history: { version: number; createdBy: string; createdAt: Temporal.Instant }[];
   publishEvents: {
     kind: PublishingEventKind;
     version: number | null;
     publishedBy: string;
-    publishedAt: Date;
+    publishedAt: Temporal.Instant;
   }[];
 }
 
