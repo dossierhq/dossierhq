@@ -45,7 +45,7 @@ dependencies:
   '@types/react-dom': 17.0.5
   '@types/react-test-renderer': 17.0.1
   '@types/testing-library__jest-dom': 5.14.1
-  '@types/uuid': 8.3.0
+  '@types/uuid': 8.3.1
   '@typescript-eslint/eslint-plugin': 4.29.1_d4376362794b743c19f4cba25c7fc6f5
   '@typescript-eslint/parser': 4.29.1_eslint@7.32.0+typescript@4.3.5
   babel-loader: 8.2.2_@babel+core@7.14.3
@@ -4740,10 +4740,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-FvUupuM3rlRsRtCN+fDudtmytGO6iHJuuRKS1Ss0pG5z8oX0diNEw94UEL7hgDbpN94rgaK5R7sWm6RrSkZuAQ==
-  /@types/uuid/8.3.0:
-    dev: false
-    resolution:
-      integrity: sha512-eQ9qFW/fhfGJF8WKHGEHZEyVWfZxrT+6CLIJGBcZPfxUh/+BnEj+UCGYMlr9qZuX/2AltsvwrGqp0LhEW8D0zQ==
   /@types/uuid/8.3.1:
     dev: false
     resolution:
@@ -18028,7 +18024,7 @@ packages:
     peerDependencies:
       jest: '*'
     resolution:
-      integrity: sha512-RSjV60//N5bM1w6SKQo5+bo65MwcvVMhPAAi3UoAvmfbkT7jR4Dvx2bZbPPYlW/VQzJrBvO4IlKuzQ9QG25aQQ==
+      integrity: sha512-GeA9XNAVhiWuu6dynUJB29VV2oGfQDXvW/3Jog0jJM3MrqyiqbySPl/4TvsjJ71xHjroc6CXGpQ6kY/VLZy/Fw==
       tarball: file:projects/datadata-admin-react-components.tgz
     version: 0.0.0
   file:projects/datadata-cli.tgz:
@@ -18046,7 +18042,7 @@ packages:
     dev: false
     name: '@rush-temp/datadata-cli'
     resolution:
-      integrity: sha512-9bIUl6KWtjDu4Tbwqgi3TIlrypPigBx3QLupYEfJqzU255+Oxi9Is47nf8WXowDdWTyDnvkbxamdP3Ge0rvd2w==
+      integrity: sha512-fHDmlMm811MlIXN6CDZ6JqtzIi5jtIJeihCL7XfrBYVAUeqG3UmvUW7WYV/TVlAoFxncEuNgvQzjWXJy5kAf3Q==
       tarball: file:projects/datadata-cli.tgz
     version: 0.0.0
   file:projects/datadata-core.tgz:
@@ -18083,6 +18079,7 @@ packages:
       express-graphql: 0.12.0_graphql@15.5.0
       prettier: 2.3.2
       ts-node: 9.1.1_typescript@4.3.5
+      tslib: 2.3.1
       typescript: 4.3.5
     dev: false
     id: file:projects/datadata-examples-foo.tgz
@@ -18090,7 +18087,7 @@ packages:
     peerDependencies:
       graphql: '*'
     resolution:
-      integrity: sha512-88sEAsk8odjpXqzsopk/TfTh4bHhZphqpIrWXm0Mw/nYuu56+yz73g4lBrU/EfsOYtZV3mUE/rXBc7CKcmBuJg==
+      integrity: sha512-G/RqeyUVKe6pSRI76ZodA/FvrFQwAFmOYLNZrajlqjn7EFLjPwxPznovFlVdX9OBweLQv6ZiC1FZccmSqSapVQ==
       tarball: file:projects/datadata-examples-foo.tgz
     version: 0.0.0
   file:projects/datadata-examples-next-web.tgz_@babel+core@7.14.3:
@@ -18126,7 +18123,7 @@ packages:
     peerDependencies:
       '@babel/core': '*'
     resolution:
-      integrity: sha512-ccTI7Oq2ZgtqWJMj65d6QPBImfOiVv9Y+evmsHuCHNFxZWP/DWbB6chNSE9TJNXlMJzYTMn3VXy3BCks40zUrg==
+      integrity: sha512-k3YBwYWP3MF7M0yLsajxxbpaA1RSTx69GX3lqL1GyBgTp15/XNQ4BdpqCK+eBS4a+BvvKKQ45IGPxBdsg1Vm/g==
       tarball: file:projects/datadata-examples-next-web.tgz
     version: 0.0.0
   file:projects/datadata-graphql.tgz:
@@ -18147,7 +18144,7 @@ packages:
     dev: false
     name: '@rush-temp/datadata-graphql'
     resolution:
-      integrity: sha512-dAQGy52QCJdhircisCtmyqxN90owTEyyq52UKwO6e+zkOws7h6tcxVyWB3/7ClQzU9krBi9tXK3FepJ9/peMVA==
+      integrity: sha512-uJFbH/oiIcWm8TJIaUK2ds67cF0LYOBjScXLDzfAenyL+rKjqSA/YzMbbde0D9NOBFKcJy3l0eLZ1EpKP1bBhw==
       tarball: file:projects/datadata-graphql.tgz
     version: 0.0.0
   file:projects/datadata-postgres.tgz:
@@ -18184,7 +18181,7 @@ packages:
     dev: false
     name: '@rush-temp/datadata-server'
     resolution:
-      integrity: sha512-9Y7Walf4yXyCFGqxEH39ZWfLOyjDq/Qc7MtT5O++38ahczJ0pR6FJ1n90dUzu/xE9jSAyzcC1FbMXjFzgHDB1w==
+      integrity: sha512-hJJfCZjVOjN3aNLlfrsQFSW9i+4/2oaf5OLMUEDoycAYpBL+Ty8Gl+fkX6yS75QCOikGZILXtrpRj8RmfuKQyg==
       tarball: file:projects/datadata-server.tgz
     version: 0.0.0
   file:projects/datadata-testing-utils.tgz:
@@ -18203,7 +18200,7 @@ packages:
     dev: false
     name: '@rush-temp/datadata-testing-utils'
     resolution:
-      integrity: sha512-JUBgVbcYXyfkcTTkVtWQyiJwpuyWR4A4dPt9TzzfGa0RsI91nGQgeXlp4SojI4jUL5B6S8V/OUokUnsST9Ug7A==
+      integrity: sha512-BFrtxT+rZqE+AxO3UQZem+s+OOR+Hb0vCkiYA8w6LCYcwXMiWJEH3sEqKbwzpkWtri+24rDCTjgm61GSjBdS5A==
       tarball: file:projects/datadata-testing-utils.tgz
     version: 0.0.0
   file:projects/datadata.tgz_ts-node@10.2.0:
@@ -18270,7 +18267,7 @@ specifiers:
   '@types/react-dom': ~17.0.5
   '@types/react-test-renderer': ~17.0.1
   '@types/testing-library__jest-dom': ~5.14.1
-  '@types/uuid': ^8.3.0
+  '@types/uuid': ~8.3.1
   '@typescript-eslint/eslint-plugin': ^4.29.1
   '@typescript-eslint/parser': ^4.29.1
   babel-loader: ^8.2.2
