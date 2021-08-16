@@ -349,6 +349,14 @@ exports[`Storyshots Domain/EntitySearch Many Items 1`] = `
       >
         Next
       </button>
+      <button
+        className="dd button has-background hoverable text-button is-rounded"
+        disabled={false}
+        onClick={[Function]}
+        type="button"
+      >
+        End
+      </button>
     </div>
   </div>
 </div>
@@ -714,6 +722,14 @@ exports[`Storyshots Domain/EntitySearch Many Items Small Size 1`] = `
         >
           Next
         </button>
+        <button
+          className="dd button has-background hoverable text-button is-rounded"
+          disabled={false}
+          onClick={[Function]}
+          type="button"
+        >
+          End
+        </button>
       </div>
     </div>
   </div>
@@ -827,6 +843,13 @@ exports[`Storyshots Domain/EntitySearch Normal 1`] = `
         type="button"
       >
         Next
+      </button>
+      <button
+        className="dd button has-background hoverable text-button is-rounded"
+        disabled={true}
+        type="button"
+      >
+        End
       </button>
     </div>
   </div>
