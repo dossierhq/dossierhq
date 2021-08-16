@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-postgres",
+      "comment": "Add createdAt/updatedAt/updated columns",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-postgres",
+  "email": "jonas.b@gmail.com"
+}
