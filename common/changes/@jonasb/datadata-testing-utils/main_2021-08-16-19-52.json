@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-testing-utils",
+      "comment": "Fix paging",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-testing-utils",
+  "email": "jonas.b@gmail.com"
+}
