@@ -16,6 +16,9 @@ export interface EntitiesTable {
   uuid: string;
   name: string;
   type: string;
+  created_at: Date;
+  updated_at: Date;
+  updated: number;
   latest_draft_entity_versions_id: number | null;
   never_published: boolean;
   archived: boolean;

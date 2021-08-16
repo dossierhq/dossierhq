@@ -360,7 +360,12 @@ export async function updateEntity(
 
     await Db.queryNone(
       context,
-      'UPDATE entities SET latest_draft_entity_versions_id = $1, latest_fts = to_tsvector($2) WHERE id = $3',
+      `UPDATE entities SET
+        latest_draft_entity_versions_id = $1,
+        latest_fts = to_tsvector($2),
+        updated_at = NOW(),
+        updated = nextval('entities_updated_seq')
+      WHERE id = $3`,
       [versionsId, fullTextSearchText.join(' '), entityId]
     );
 
@@ -490,7 +495,14 @@ export async function publishEntities(
     for (const { versionsId, entityId } of versionsInfo) {
       await Db.queryNone(
         context,
-        'UPDATE entities SET never_published = FALSE, archived = FALSE, published_entity_versions_id = $1 WHERE id = $2',
+        `UPDATE entities
+          SET
+            never_published = FALSE,
+            archived = FALSE,
+            published_entity_versions_id = $1,
+            updated_at = NOW(),
+            updated = nextval('entities_updated_seq')
+          WHERE id = $2`,
         [versionsId, entityId]
       );
     }
@@ -575,7 +587,12 @@ export async function unpublishEntities(
     // Step 2: Unpublish entities
     await Db.queryNone(
       context,
-      'UPDATE entities SET published_entity_versions_id = NULL WHERE id = ANY($1)',
+      `UPDATE entities
+        SET
+          published_entity_versions_id = NULL,
+          updated_at = NOW(),
+          updated = nextval('entities_updated_seq')
+        WHERE id = ANY($1)`,
       [entitiesInfo.map((it) => it.id)]
     );
 
@@ -646,7 +663,15 @@ export async function archiveEntity(
     }
 
     await Promise.all([
-      Db.queryNone(context, 'UPDATE entities SET archived = TRUE WHERE id = $1', [entityId]),
+      Db.queryNone(
+        context,
+        `UPDATE entities SET
+            archived = TRUE,
+            updated_at = NOW(),
+            updated = nextval('entities_updated_seq')
+          WHERE id = $1`,
+        [entityId]
+      ),
       Db.queryNone(
         context,
         "INSERT INTO entity_publishing_events (entities_id, kind, published_by) VALUES ($1, 'archive', $2)",
@@ -686,7 +711,15 @@ export async function unarchiveEntity(
 
     if (archived) {
       await Promise.all([
-        Db.queryNone(context, 'UPDATE entities SET archived = FALSE WHERE id = $1', [entityId]),
+        Db.queryNone(
+          context,
+          `UPDATE entities SET
+            archived = FALSE,
+            updated_at = NOW(),
+            updated = nextval('entities_updated_seq')
+          WHERE id = $1`,
+          [entityId]
+        ),
         Db.queryNone(
           context,
           "INSERT INTO entity_publishing_events (entities_id, kind, published_by) VALUES ($1, 'unarchive', $2)",
