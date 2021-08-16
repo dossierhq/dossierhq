@@ -84,7 +84,7 @@ export type {
   SchemaSpecification,
   ValueTypeSpecification,
 } from './Schema';
-export { EntityPublishState, PublishingEventKind } from './Types';
+export { EntityPublishState, PublishingEventKind, QueryOrder } from './Types';
 export type {
   AdminEntity,
   AdminEntityCreate,

@@ -15,6 +15,7 @@ import {
   FieldType,
   isPagingForwards,
   PublishingEventKind,
+  QueryOrder,
   RichTextBlockType,
 } from '@jonasb/datadata-core';
 import { validate as validateUuid } from 'uuid';
@@ -2193,11 +2194,24 @@ describe('searchEntities()', () => {
     }
   });
 
+  test('First default, ordered by createdAt', async () => {
+    const result = await client.searchEntities(
+      {
+        entityTypes: ['AdminOnlyEditBefore'],
+        order: QueryOrder.createdAt,
+      },
+      { first: 20 }
+    );
+    if (expectOkResult(result)) {
+      expectConnectionToMatchSlice(result.value, 0, 20);
+    }
+  });
+
   test('First default, ordered by name', async () => {
     const result = await client.searchEntities(
       {
         entityTypes: ['AdminOnlyEditBefore'],
-        order: 'name',
+        order: QueryOrder.name,
       },
       { first: 20 }
     );
@@ -2206,6 +2220,23 @@ describe('searchEntities()', () => {
         return a.info.name < b.info.name ? -1 : 1;
       });
     }
+  });
+
+  test('First default, ordered by updatedAt', async () => {
+    const result = await client.searchEntities(
+      {
+        entityTypes: ['AdminOnlyEditBefore'],
+        order: QueryOrder.updatedAt,
+      },
+      { first: 20 }
+    );
+    expectOkResult(result);
+    //TODO expose updatedAt
+    // if (expectOkResult(result)) {
+    //   expectConnectionToMatchSlice(result.value, 0, 20, (a, b) => {
+    //     return a.info.name < b.info.name ? -1 : 1;
+    //   });
+    // }
   });
 
   test('Query based on referencing, one reference', async () => {

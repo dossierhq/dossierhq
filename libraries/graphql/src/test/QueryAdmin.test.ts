@@ -1290,7 +1290,7 @@ describe('searchAdminEntities()', () => {
       `
         {
           adminSearchEntities(
-            query: { entityTypes: [QueryAdminOnlyEditBefore], order: "name" }
+            query: { entityTypes: [QueryAdminOnlyEditBefore], order: name }
             last: 10
           ) {
             edges {
@@ -1304,6 +1304,7 @@ describe('searchAdminEntities()', () => {
       undefined,
       createContext()
     );
+    expect(result.errors).toBeUndefined();
     expect(result.data?.adminSearchEntities.edges).toEqual(
       [...entitiesOfTypeQueryAdminOnlyEditBefore]
         .sort((a, b) => (a.info.name < b.info.name ? -1 : 1))
