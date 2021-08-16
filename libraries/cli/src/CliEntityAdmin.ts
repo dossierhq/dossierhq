@@ -1,19 +1,3 @@
-import {
-  assertIsDefined,
-  isEntityTypeField,
-  isEntityTypeListField,
-  isLocationField,
-  isLocationListField,
-  isPagingForwards,
-  isRichTextField,
-  isRichTextListField,
-  isStringField,
-  isStringListField,
-  isValueTypeField,
-  isValueTypeListField,
-  notOk,
-  ok,
-} from '@jonasb/datadata-core';
 import type {
   AdminEntity,
   AdminEntityCreate,
@@ -30,6 +14,23 @@ import type {
   RichText,
   ValueItem,
   ValueTypeSpecification,
+} from '@jonasb/datadata-core';
+import {
+  assertIsDefined,
+  isEntityTypeField,
+  isEntityTypeListField,
+  isLocationField,
+  isLocationListField,
+  isPagingForwards,
+  isRichTextField,
+  isRichTextListField,
+  isStringField,
+  isStringListField,
+  isValueTypeField,
+  isValueTypeListField,
+  notOk,
+  ok,
+  QueryOrder,
 } from '@jonasb/datadata-core';
 import chalk from 'chalk';
 import type { CliContext } from '.';
@@ -48,6 +49,7 @@ import {
   logErrorResult,
   logKeyValue,
 } from './CliUtils';
+import type { ItemSelectorItem } from './widgets';
 import {
   showBoundingBoxEdit,
   showConfirm,
@@ -58,7 +60,6 @@ import {
   showRichTextEdit,
   showStringEdit,
 } from './widgets';
-import type { ItemSelectorItem } from './widgets';
 
 interface EditFieldSelectorItem extends ItemSelectorItem {
   defaultValue?: unknown;
@@ -209,18 +210,16 @@ async function configureQuery(
   }
 }
 
-async function selectOrder(order: string | undefined) {
+async function selectOrder(order: QueryOrder | undefined) {
   const item = await showItemSelector(
     'How to order the results?',
     [
-      { id: 'default', name: 'Default' },
-      { id: 'name', name: 'Name' },
+      { id: QueryOrder.createdAt, name: 'Created at' },
+      { id: QueryOrder.updatedAt, name: 'Updated at' },
+      { id: QueryOrder.name, name: 'Name' },
     ],
-    order ?? 'default'
+    order ?? QueryOrder.createdAt
   );
-  if (item.id === 'default') {
-    return undefined;
-  }
   return item.id;
 }
 

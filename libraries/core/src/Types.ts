@@ -153,13 +153,18 @@ export interface PublishingEvent {
   publishedBy: string;
 }
 
+export enum QueryOrder {
+  createdAt = 'createdAt',
+  updatedAt = 'updatedAt',
+  name = 'name',
+}
+
 export interface AdminQuery {
   entityTypes?: string[];
   /** Entities referencing the entity (by id) */
   referencing?: string;
   boundingBox?: BoundingBox;
-  /** Valid values: name */
-  order?: string;
+  order?: QueryOrder;
   text?: string;
 }
 

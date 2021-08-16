@@ -568,6 +568,14 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       })
     );
 
+    // QueryOrder
+    this.addType(
+      new GraphQLEnumType({
+        name: 'QueryOrder',
+        values: { createdAt: {}, updatedAt: {}, name: {} },
+      })
+    );
+
     // AdminQueryInput
     this.addType(
       new GraphQLInputObjectType({
@@ -576,7 +584,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
           entityTypes: { type: new GraphQLList(this.getEnumType('EntityType')) },
           referencing: { type: GraphQLID },
           boundingBox: { type: this.getInputType('BoundingBoxInput') },
-          order: { type: GraphQLString }, // TODO should be enum?
+          order: { type: this.getEnumType('QueryOrder') },
           text: { type: GraphQLString },
         },
       })

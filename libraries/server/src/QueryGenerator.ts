@@ -1,5 +1,5 @@
-import type { AdminQuery, Paging, Result, ErrorType } from '@jonasb/datadata-core';
-import { notOk, ok } from '@jonasb/datadata-core';
+import type { AdminQuery, ErrorType, Paging, Result } from '@jonasb/datadata-core';
+import { notOk, ok, QueryOrder } from '@jonasb/datadata-core';
 import type { SessionContext } from './';
 import type { CursorNativeType } from './Connection';
 import type { EntitiesTable } from './DatabaseTables';
@@ -7,7 +7,7 @@ import type { AdminEntityValues } from './EntityCodec';
 import { resolvePaging } from './Paging';
 import QueryBuilder from './QueryBuilder';
 
-export type SearchAdminEntitiesItem = Pick<EntitiesTable, 'id'> & AdminEntityValues;
+export type SearchAdminEntitiesItem = Pick<EntitiesTable, 'id' | 'updated'> & AdminEntityValues;
 
 export function searchAdminEntitiesQuery(
   context: SessionContext,
@@ -27,10 +27,15 @@ export function searchAdminEntitiesQuery(
   let cursorName: keyof SearchAdminEntitiesItem;
   let cursorType: CursorNativeType;
   switch (query?.order) {
-    case 'name':
+    case QueryOrder.name:
       cursorName = 'name';
       cursorType = 'string';
       break;
+    case QueryOrder.updatedAt:
+      cursorName = 'updated';
+      cursorType = 'int';
+      break;
+    case QueryOrder.createdAt:
     default:
       cursorName = 'id';
       cursorType = 'int';
@@ -47,7 +52,7 @@ export function searchAdminEntitiesQuery(
   if (query?.boundingBox) {
     qb.addQuery('DISTINCT');
   }
-  qb.addQuery(`e.id, e.uuid, e.type, e.name, e.archived, e.never_published, e.latest_draft_entity_versions_id, e.published_entity_versions_id, ev.version, ev.data
+  qb.addQuery(`e.id, e.uuid, e.type, e.name, e.updated, e.archived, e.never_published, e.latest_draft_entity_versions_id, e.published_entity_versions_id, ev.version, ev.data
   FROM entities e, entity_versions ev`);
   if (query?.referencing) {
     qb.addQuery('entity_version_references evr, entities e2');
@@ -100,14 +105,7 @@ export function searchAdminEntitiesQuery(
   }
 
   // Ordering
-  switch (query?.order) {
-    case 'name':
-      qb.addQuery('ORDER BY e.name');
-      break;
-    default:
-      qb.addQuery('ORDER BY e.id');
-      break;
-  }
+  qb.addQuery(`ORDER BY e.${cursorName}`);
 
   // Paging 2/2
   const countToRequest = resolvedPaging.count + 1; // request one more to calculate hasNextPage

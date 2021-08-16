@@ -149,11 +149,17 @@ type AdminEntityConnection {
   totalCount: Int!
 }
 
+enum QueryOrder {
+  createdAt
+  updatedAt
+  name
+}
+
 input AdminQueryInput {
   entityTypes: [EntityType]
   referencing: ID
   boundingBox: BoundingBoxInput
-  order: String
+  order: QueryOrder
   text: String
 }
 
@@ -453,11 +459,17 @@ type AdminEntityConnection {
   totalCount: Int!
 }
 
+enum QueryOrder {
+  createdAt
+  updatedAt
+  name
+}
+
 input AdminQueryInput {
   entityTypes: [EntityType]
   referencing: ID
   boundingBox: BoundingBoxInput
-  order: String
+  order: QueryOrder
   text: String
 }
 
@@ -798,11 +810,17 @@ type AdminEntityConnection {
   totalCount: Int!
 }
 
+enum QueryOrder {
+  createdAt
+  updatedAt
+  name
+}
+
 input AdminQueryInput {
   entityTypes: [EntityType]
   referencing: ID
   boundingBox: BoundingBoxInput
-  order: String
+  order: QueryOrder
   text: String
 }
 
@@ -1030,11 +1048,17 @@ type AdminEntityConnection {
   totalCount: Int!
 }
 
+enum QueryOrder {
+  createdAt
+  updatedAt
+  name
+}
+
 input AdminQueryInput {
   entityTypes: [EntityType]
   referencing: ID
   boundingBox: BoundingBoxInput
-  order: String
+  order: QueryOrder
   text: String
 }
 
@@ -1288,11 +1312,17 @@ type AdminEntityConnection {
   totalCount: Int!
 }
 
+enum QueryOrder {
+  createdAt
+  updatedAt
+  name
+}
+
 input AdminQueryInput {
   entityTypes: [EntityType]
   referencing: ID
   boundingBox: BoundingBoxInput
-  order: String
+  order: QueryOrder
   text: String
 }
 
@@ -1629,11 +1659,17 @@ type AdminEntityConnection {
   totalCount: Int!
 }
 
+enum QueryOrder {
+  createdAt
+  updatedAt
+  name
+}
+
 input AdminQueryInput {
   entityTypes: [EntityType]
   referencing: ID
   boundingBox: BoundingBoxInput
-  order: String
+  order: QueryOrder
   text: String
 }
 
