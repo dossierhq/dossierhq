@@ -9,30 +9,47 @@ export interface EntityListProps {
   onEntityClick: (entity: AdminEntity) => void;
 }
 
+const defaultCount = 25;
+
 export function EntityList({
   className,
   query,
   onEntityClick,
 }: EntityListProps): JSX.Element | null {
+  const count = defaultCount;
   const { useSearchEntities } = useContext(DataDataContext);
-  const [paging, setPaging] = useState<Paging>({});
+  const [paging, setPaging] = useState<Paging>({ first: count });
   const { connection, connectionError } = useSearchEntities(query ?? {}, paging);
 
   const handleStart = useMemo(() => {
-    return paging.after || paging.before ? () => setPaging({}) : undefined;
-  }, [paging, setPaging]);
+    return paging.last || paging.after || paging.before
+      ? () => setPaging({ first: count })
+      : undefined;
+  }, [paging, setPaging, count]);
 
   const handlePrevious = useMemo(() => {
     return connection?.pageInfo.hasPreviousPage
-      ? () => setPaging({ before: connection.pageInfo.startCursor })
+      ? () =>
+          setPaging({
+            last: count,
+            before: connection.pageInfo.startCursor,
+          })
       : undefined;
-  }, [connection, setPaging]);
+  }, [connection, setPaging, count]);
 
   const handleNext = useMemo(() => {
     return connection?.pageInfo.hasNextPage
-      ? () => setPaging({ after: connection.pageInfo.endCursor })
+      ? () =>
+          setPaging({
+            first: count,
+            after: connection.pageInfo.endCursor,
+          })
       : undefined;
-  }, [connection, setPaging]);
+  }, [connection, setPaging, count]);
+
+  const handleEnd = useMemo(() => {
+    return connection?.pageInfo.hasNextPage ? () => setPaging({ last: count }) : undefined;
+  }, [connection, setPaging, count]);
 
   return (
     <div className={joinClassNames('dd list-container', className)}>
@@ -64,6 +81,9 @@ export function EntityList({
         </Button>
         <Button onClick={handleNext} disabled={!handleNext}>
           Next
+        </Button>
+        <Button onClick={handleEnd} disabled={!handleEnd}>
+          End
         </Button>
       </Row>
     </div>

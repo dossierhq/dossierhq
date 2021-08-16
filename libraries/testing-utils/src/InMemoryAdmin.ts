@@ -128,14 +128,15 @@ export const InMemoryAdmin = {
       ? entities.findIndex((it) => it.id === paging.before)
       : entities.length;
     const resolvedCount = Math.min(requestedCount, endIndex - startIndex);
-    const resolvedEndIndex = startIndex + resolvedCount;
+    const resolvedStartIndex = isForwards ? startIndex : endIndex - resolvedCount;
+    const resolvedEndIndex = isForwards ? startIndex + resolvedCount : endIndex;
 
-    const page = entities.slice(startIndex, resolvedEndIndex);
+    const page = entities.slice(resolvedStartIndex, resolvedEndIndex);
 
     return ok({
       pageInfo: {
-        hasPreviousPage: startIndex > 0,
-        hasNextPage: resolvedEndIndex < endIndex,
+        hasPreviousPage: resolvedStartIndex > 0,
+        hasNextPage: resolvedEndIndex < entities.length - 1,
         startCursor: page[0].id,
         endCursor: page[page.length - 1].id,
       },
