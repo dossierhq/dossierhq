@@ -16,7 +16,7 @@ import type {
   Paging,
   PromiseResult,
   PublishingHistory,
-  PublishingResult,
+  EntityPublishPayload,
   Result,
 } from '.';
 import { assertExhaustive, ok } from '.';
@@ -83,24 +83,30 @@ export interface AdminClient {
   publishEntities(
     references: EntityVersionReference[]
   ): PromiseResult<
-    PublishingResult[],
+    EntityPublishPayload[],
     ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic
   >;
 
   unpublishEntities(
     references: EntityReference[]
   ): PromiseResult<
-    PublishingResult[],
+    EntityPublishPayload[],
     ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic
   >;
 
   archiveEntity(
     reference: EntityReference
-  ): PromiseResult<PublishingResult, ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic>;
+  ): PromiseResult<
+    EntityPublishPayload,
+    ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic
+  >;
 
   unarchiveEntity(
     reference: EntityReference
-  ): PromiseResult<PublishingResult, ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic>;
+  ): PromiseResult<
+    EntityPublishPayload,
+    ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic
+  >;
 
   getPublishingHistory(
     reference: EntityReference

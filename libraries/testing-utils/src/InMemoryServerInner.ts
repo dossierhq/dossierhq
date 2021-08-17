@@ -1,11 +1,11 @@
 import type {
   AdminEntity,
   EntityHistory,
+  EntityPublishPayload,
   EntityReference,
   EntityVersionReference,
   ErrorType,
   PublishingHistory,
-  PublishingResult,
   Result,
   Schema,
 } from '@jonasb/datadata-core';
@@ -199,7 +199,7 @@ export class InMemoryServerInner {
   publishEntities(
     entities: EntityVersionReference[],
     userId: string
-  ): Result<PublishingResult[], ErrorType.BadRequest | ErrorType.NotFound> {
+  ): Result<EntityPublishPayload[], ErrorType.BadRequest | ErrorType.NotFound> {
     const fullEntities: InMemoryEntity[] = [];
     for (const entity of entities) {
       const fullEntity = this.getFullEntity(entity.id);
@@ -226,7 +226,7 @@ export class InMemoryServerInner {
   unpublishEntities(
     entities: EntityReference[],
     userId: string
-  ): Result<PublishingResult[], ErrorType.BadRequest | ErrorType.NotFound> {
+  ): Result<EntityPublishPayload[], ErrorType.BadRequest | ErrorType.NotFound> {
     const fullEntities: InMemoryEntity[] = [];
     for (const entity of entities) {
       const fullEntity = this.getFullEntity(entity.id);
@@ -273,7 +273,7 @@ export class InMemoryServerInner {
     );
   }
 
-  archiveEntity(id: string, userId: string): Result<PublishingResult, ErrorType.NotFound> {
+  archiveEntity(id: string, userId: string): Result<EntityPublishPayload, ErrorType.NotFound> {
     const fullEntity = this.getFullEntity(id);
     if (!fullEntity) {
       return notOk.NotFound('No such entity');
@@ -286,7 +286,7 @@ export class InMemoryServerInner {
     return ok({ id, updatedAt: publishedAt, publishState: this.getEntityPublishState(fullEntity) });
   }
 
-  unarchiveEntity(id: string, userId: string): Result<PublishingResult, ErrorType.NotFound> {
+  unarchiveEntity(id: string, userId: string): Result<EntityPublishPayload, ErrorType.NotFound> {
     const fullEntity = this.getFullEntity(id);
     if (!fullEntity) {
       return notOk.NotFound('No such entity');

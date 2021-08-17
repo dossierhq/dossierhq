@@ -10,13 +10,13 @@ import type {
   Connection,
   Edge,
   EntityHistory,
+  EntityPublishPayload,
   EntityVersionInfo,
   Paging,
   PromiseResult,
   PublishingEvent,
   PublishingEventKind,
   PublishingHistory,
-  PublishingResult,
   Result,
 } from '@jonasb/datadata-core';
 import {
@@ -455,14 +455,14 @@ export async function publishEntities(
     id: string;
     version: number;
   }[]
-): PromiseResult<PublishingResult[], ErrorType.BadRequest | ErrorType.NotFound> {
+): PromiseResult<EntityPublishPayload[], ErrorType.BadRequest | ErrorType.NotFound> {
   const uniqueIdCheck = checkUUIDsAreUnique(entities.map((it) => it.id));
   if (uniqueIdCheck.isError()) {
     return uniqueIdCheck;
   }
 
   return context.withTransaction(async (context) => {
-    const result: PublishingResult[] = [];
+    const result: EntityPublishPayload[] = [];
     // Step 1: Get version info for each entity
     const missingEntities: { id: string; version: number }[] = [];
     const alreadyPublishedEntityIds: string[] = [];
@@ -570,14 +570,14 @@ export async function publishEntities(
 export async function unpublishEntities(
   context: SessionContext,
   entityIds: string[]
-): PromiseResult<PublishingResult[], ErrorType.BadRequest | ErrorType.NotFound> {
+): PromiseResult<EntityPublishPayload[], ErrorType.BadRequest | ErrorType.NotFound> {
   const uniqueIdCheck = checkUUIDsAreUnique(entityIds);
   if (uniqueIdCheck.isError()) {
     return uniqueIdCheck;
   }
 
   return context.withTransaction(async (context) => {
-    const result: PublishingResult[] = [];
+    const result: EntityPublishPayload[] = [];
 
     // Step 1: Resolve entities and check if all entities exist
     const entitiesInfo = await Db.queryMany<
@@ -664,7 +664,7 @@ export async function unpublishEntities(
 export async function archiveEntity(
   context: SessionContext,
   id: string
-): PromiseResult<PublishingResult, ErrorType.BadRequest | ErrorType.NotFound> {
+): PromiseResult<EntityPublishPayload, ErrorType.BadRequest | ErrorType.NotFound> {
   return context.withTransaction(async (context) => {
     const entityInfo = await Db.queryNoneOrOne<
       Pick<EntitiesTable, 'id' | 'published_entity_versions_id' | 'archived' | 'updated_at'>
@@ -716,7 +716,7 @@ export async function archiveEntity(
 export async function unarchiveEntity(
   context: SessionContext,
   id: string
-): PromiseResult<PublishingResult, ErrorType.BadRequest | ErrorType.NotFound> {
+): PromiseResult<EntityPublishPayload, ErrorType.BadRequest | ErrorType.NotFound> {
   return context.withTransaction(async (context) => {
     const entityInfo = await Db.queryNoneOrOne<
       Pick<
@@ -739,7 +739,7 @@ export async function unarchiveEntity(
       return notOk.NotFound('No such entity');
     }
     const { id: entityId, archived, updated_at: previousUpdatedAt } = entityInfo;
-    const result: PublishingResult = {
+    const result: EntityPublishPayload = {
       id,
       publishState: resolvePublishState({ ...entityInfo, archived: false }, entityInfo),
       updatedAt: previousUpdatedAt,

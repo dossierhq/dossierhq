@@ -7,12 +7,12 @@ import type {
   Connection,
   Edge,
   EntityHistory,
+  EntityPublishPayload,
   ErrorResult,
   FieldSpecification,
   Paging,
   PromiseResult,
   PublishingHistory,
-  PublishingResult,
   Schema,
 } from '@jonasb/datadata-core';
 import { assertExhaustive, createErrorResultFromError, ErrorType } from '@jonasb/datadata-core';
@@ -199,7 +199,7 @@ export class DataDataContextValue {
       version: number;
     }[]
   ): PromiseResult<
-    PublishingResult[],
+    EntityPublishPayload[],
     ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic
   > => {
     try {
@@ -218,7 +218,7 @@ export class DataDataContextValue {
   unpublishEntities = async (
     entityIds: string[]
   ): PromiseResult<
-    PublishingResult[],
+    EntityPublishPayload[],
     ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic
   > => {
     try {
@@ -237,7 +237,7 @@ export class DataDataContextValue {
   archiveEntity = async (
     id: string
   ): PromiseResult<
-    PublishingResult,
+    EntityPublishPayload,
     ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic
   > => {
     try {
@@ -254,7 +254,7 @@ export class DataDataContextValue {
   unarchiveEntity = async (
     id: string
   ): PromiseResult<
-    PublishingResult,
+    EntityPublishPayload,
     ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic
   > => {
     try {
@@ -273,7 +273,7 @@ export class DataDataContextValue {
     mutate([this.#rootKey, FetcherActions.UseEntityHistory, entity.id]);
   }
 
-  private invalidateAfterPublishingEvent(publishingResult: PublishingResult) {
+  private invalidateAfterPublishingEvent(publishingResult: EntityPublishPayload) {
     const { id, publishState } = publishingResult;
     mutate([this.#rootKey, FetcherActions.UseEntityHistory, id]);
     mutate([this.#rootKey, FetcherActions.UsePublishingHistory, id]);
