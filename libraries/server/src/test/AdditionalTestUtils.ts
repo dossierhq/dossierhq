@@ -7,6 +7,7 @@ import type {
   Result,
 } from '@jonasb/datadata-core';
 import { assertIsDefined, CoreTestUtils } from '@jonasb/datadata-core';
+import { Temporal } from '@js-temporal/polyfill';
 import { v4 as uuidv4 } from 'uuid';
 
 const { expectOkResult } = CoreTestUtils;
@@ -16,7 +17,9 @@ export function expectResultValue<TOk, TError extends ErrorType>(
   expectedValue: TOk
 ): void {
   if (expectOkResult(result)) {
-    expect(result.value).toEqual<TOk>(expectedValue);
+    const actualCopy = deepCopyForIsEqual(result.value);
+    const expectedCopy = deepCopyForIsEqual(expectedValue);
+    expect(actualCopy).toEqual<TOk>(expectedCopy);
   }
 }
 
@@ -58,4 +61,21 @@ export function insecureTestUuidv4(): string {
   return uuidv4({
     random,
   });
+}
+
+function deepCopyForIsEqual<T>(obj: T): T {
+  if (obj === null || obj === undefined) return obj;
+  if (obj instanceof Temporal.Instant) {
+    // Since the epoch isn't stored as a property for Instant (but a slot), jest isn't able to compare them.
+    // Replace with string representation
+    return obj.toString() as unknown as T;
+  }
+  if (typeof obj === 'object') {
+    const copy = { ...obj };
+    for (const [key, value] of Object.entries(obj)) {
+      copy[key as keyof T] = deepCopyForIsEqual(value);
+    }
+    return copy;
+  }
+  return obj;
 }

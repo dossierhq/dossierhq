@@ -1815,6 +1815,7 @@ describe('publishEntities()', () => {
               __typename
               id
               publishState
+              updatedAt
             }
           }
         `,
@@ -1822,6 +1823,7 @@ describe('publishEntities()', () => {
         createContext(),
         { entities: [{ id, version: 0 }] }
       );
+      const updatedAt = result.data?.publishEntities[0].updatedAt;
       expect(result).toEqual({
         data: {
           publishEntities: [
@@ -1829,26 +1831,24 @@ describe('publishEntities()', () => {
               __typename: 'EntityPublishPayload',
               id,
               publishState: EntityPublishState.Published,
+              updatedAt,
             },
           ],
         },
       });
 
       const historyResult = await adminClient.getPublishingHistory({ id });
-      if (expectOkResult(historyResult)) {
-        const publishedAt = historyResult.value.events[0]?.publishedAt;
-        expectResultValue(historyResult, {
-          id,
-          events: [
-            {
-              kind: PublishingEventKind.Publish,
-              publishedAt,
-              publishedBy: server.subjectId,
-              version: 0,
-            },
-          ],
-        });
-      }
+      expectResultValue(historyResult, {
+        id,
+        events: [
+          {
+            kind: PublishingEventKind.Publish,
+            publishedAt: Temporal.Instant.from(updatedAt),
+            publishedBy: server.subjectId,
+            version: 0,
+          },
+        ],
+      });
     }
   });
 
@@ -1903,6 +1903,7 @@ describe('unpublishEntities()', () => {
               __typename
               id
               publishState
+              updatedAt
             }
           }
         `,
@@ -1910,6 +1911,7 @@ describe('unpublishEntities()', () => {
         createContext(),
         { ids: [id] }
       );
+      const updatedAt = result.data?.unpublishEntities[0].updatedAt;
       expect(result).toEqual({
         data: {
           unpublishEntities: [
@@ -1917,6 +1919,7 @@ describe('unpublishEntities()', () => {
               __typename: 'EntityPublishPayload',
               id,
               publishState: EntityPublishState.Withdrawn,
+              updatedAt,
             },
           ],
         },
@@ -1925,7 +1928,6 @@ describe('unpublishEntities()', () => {
       const historyResult = await adminClient.getPublishingHistory({ id });
       if (expectOkResult(historyResult)) {
         const publishedAt0 = historyResult.value.events[0]?.publishedAt;
-        const publishedAt1 = historyResult.value.events[1]?.publishedAt;
         expectResultValue(historyResult, {
           id,
           events: [
@@ -1937,7 +1939,7 @@ describe('unpublishEntities()', () => {
             },
             {
               kind: PublishingEventKind.Unpublish,
-              publishedAt: publishedAt1,
+              publishedAt: Temporal.Instant.from(updatedAt),
               publishedBy: server.subjectId,
               version: null,
             },
@@ -1996,6 +1998,7 @@ describe('archiveEntity()', () => {
               __typename
               id
               publishState
+              updatedAt
             }
           }
         `,
@@ -2003,31 +2006,30 @@ describe('archiveEntity()', () => {
         createContext(),
         { id }
       );
+      const updatedAt = result.data?.archiveEntity.updatedAt;
       expect(result).toEqual({
         data: {
           archiveEntity: {
             __typename: 'EntityPublishPayload',
             id,
             publishState: EntityPublishState.Archived,
+            updatedAt,
           },
         },
       });
 
       const historyResult = await adminClient.getPublishingHistory({ id });
-      if (expectOkResult(historyResult)) {
-        const publishedAt = historyResult.value.events[0]?.publishedAt;
-        expectResultValue(historyResult, {
-          id,
-          events: [
-            {
-              kind: PublishingEventKind.Archive,
-              publishedAt,
-              publishedBy: server.subjectId,
-              version: null,
-            },
-          ],
-        });
-      }
+      expectResultValue(historyResult, {
+        id,
+        events: [
+          {
+            kind: PublishingEventKind.Archive,
+            publishedAt: Temporal.Instant.from(updatedAt),
+            publishedBy: server.subjectId,
+            version: null,
+          },
+        ],
+      });
     }
   });
 });
@@ -2054,6 +2056,7 @@ describe('unarchiveEntity()', () => {
               __typename
               id
               publishState
+              updatedAt
             }
           }
         `,
@@ -2061,12 +2064,14 @@ describe('unarchiveEntity()', () => {
         createContext(),
         { id }
       );
+      const updatedAt = result.data?.unarchiveEntity.updatedAt;
       expect(result).toEqual({
         data: {
           unarchiveEntity: {
             __typename: 'EntityPublishPayload',
             id,
             publishState: EntityPublishState.Draft,
+            updatedAt,
           },
         },
       });
@@ -2074,7 +2079,6 @@ describe('unarchiveEntity()', () => {
       const historyResult = await adminClient.getPublishingHistory({ id });
       if (expectOkResult(historyResult)) {
         const publishedAt0 = historyResult.value.events[0]?.publishedAt;
-        const publishedAt1 = historyResult.value.events[1]?.publishedAt;
         expectResultValue(historyResult, {
           id,
           events: [
@@ -2086,7 +2090,7 @@ describe('unarchiveEntity()', () => {
             },
             {
               kind: PublishingEventKind.Unarchive,
-              publishedAt: publishedAt1,
+              publishedAt: Temporal.Instant.from(updatedAt),
               publishedBy: server.subjectId,
               version: null,
             },

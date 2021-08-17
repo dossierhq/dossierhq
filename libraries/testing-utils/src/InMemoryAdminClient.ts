@@ -137,12 +137,7 @@ async function terminatingMiddleware(
         args: [references],
         resolve,
       } = operation as AdminClientOperation<AdminClientOperationName.unpublishEntities>;
-      resolve(
-        await unpublishEntities(
-          context,
-          references.map(({ id }) => id)
-        )
-      );
+      resolve(await unpublishEntities(context, references));
       break;
     }
     case AdminClientOperationName.updateEntity: {

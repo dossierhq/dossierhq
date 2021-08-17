@@ -1,11 +1,21 @@
 import type {
   AdminEntity,
   EntityHistory,
+  EntityReference,
+  EntityVersionReference,
+  ErrorType,
   PublishingHistory,
   PublishingResult,
+  Result,
   Schema,
 } from '@jonasb/datadata-core';
-import { assertIsDefined, EntityPublishState, PublishingEventKind } from '@jonasb/datadata-core';
+import {
+  assertIsDefined,
+  EntityPublishState,
+  notOk,
+  ok,
+  PublishingEventKind,
+} from '@jonasb/datadata-core';
 import { Temporal } from '@js-temporal/polyfill';
 import type { JsonInMemoryEntity } from '.';
 import type { InMemoryEntity, InMemoryEntityVersion } from './InMemoryServer';
@@ -186,53 +196,122 @@ export class InMemoryServerInner {
     });
   }
 
-  setPublishedVersion(id: string, version: number | null, userId: string): void {
-    const fullEntity = this.getFullEntity(id);
-    if (!fullEntity) {
-      throw new Error(`Can't find ${id}`);
+  publishEntities(
+    entities: EntityVersionReference[],
+    userId: string
+  ): Result<PublishingResult[], ErrorType.BadRequest | ErrorType.NotFound> {
+    const fullEntities: InMemoryEntity[] = [];
+    for (const entity of entities) {
+      const fullEntity = this.getFullEntity(entity.id);
+      if (!fullEntity) {
+        return notOk.NotFound('No such entity');
+      }
+      fullEntities.push(fullEntity);
     }
+
+    const updatedAt = Temporal.Now.instant();
+    for (const entity of entities) {
+      this.setPublishedVersion(entity, userId, updatedAt);
+    }
+
+    return ok(
+      fullEntities.map((fullEntity) => ({
+        id: fullEntity.id,
+        updatedAt: fullEntity.updatedAt,
+        publishState: this.getEntityPublishState(fullEntity),
+      }))
+    );
+  }
+
+  unpublishEntities(
+    entities: EntityReference[],
+    userId: string
+  ): Result<PublishingResult[], ErrorType.BadRequest | ErrorType.NotFound> {
+    const fullEntities: InMemoryEntity[] = [];
+    for (const entity of entities) {
+      const fullEntity = this.getFullEntity(entity.id);
+      if (!fullEntity) {
+        return notOk.NotFound('No such entity');
+      }
+      fullEntities.push(fullEntity);
+    }
+
+    const updatedAt = Temporal.Now.instant();
+    for (const entity of entities) {
+      this.setPublishedVersion(entity, userId, updatedAt);
+    }
+
+    return ok(
+      fullEntities.map((fullEntity) => ({
+        id: fullEntity.id,
+        updatedAt: fullEntity.updatedAt,
+        publishState: this.getEntityPublishState(fullEntity),
+      }))
+    );
+  }
+
+  setPublishedVersion(
+    entity: EntityVersionReference | EntityReference,
+    userId: string,
+    publishedAt: Temporal.Instant
+  ): void {
+    const version = 'version' in entity ? entity.version : null;
+
+    const fullEntity = this.getFullEntity(entity.id);
+    if (!fullEntity) {
+      throw new Error(`Can't find ${entity.id}`);
+    }
+    fullEntity.updatedAt = publishedAt;
     fullEntity.publishedVersion = version;
     fullEntity.archived = false;
     this.addPublishingEvent(
       fullEntity,
       version === null ? PublishingEventKind.Unpublish : PublishingEventKind.Publish,
       version,
-      userId
+      userId,
+      publishedAt
     );
   }
 
-  archiveEntity(id: string, userId: string): void {
+  archiveEntity(id: string, userId: string): Result<PublishingResult, ErrorType.NotFound> {
     const fullEntity = this.getFullEntity(id);
     if (!fullEntity) {
-      throw new Error(`Can't find ${id}`);
+      return notOk.NotFound('No such entity');
     }
+    const publishedAt = Temporal.Now.instant();
     fullEntity.publishedVersion = null;
     fullEntity.archived = true;
-    this.addPublishingEvent(fullEntity, PublishingEventKind.Archive, null, userId);
+    fullEntity.updatedAt = publishedAt;
+    this.addPublishingEvent(fullEntity, PublishingEventKind.Archive, null, userId, publishedAt);
+    return ok({ id, updatedAt: publishedAt, publishState: this.getEntityPublishState(fullEntity) });
   }
 
-  unarchiveEntity(id: string, userId: string): PublishingResult {
+  unarchiveEntity(id: string, userId: string): Result<PublishingResult, ErrorType.NotFound> {
     const fullEntity = this.getFullEntity(id);
     if (!fullEntity) {
-      throw new Error(`Can't find ${id}`);
+      return notOk.NotFound('No such entity');
     }
+    const publishedAt = Temporal.Now.instant();
     fullEntity.archived = false;
-    this.addPublishingEvent(fullEntity, PublishingEventKind.Unarchive, null, userId);
-    return { id, publishState: this.getEntityPublishState(fullEntity) };
+    fullEntity.updatedAt = publishedAt;
+    this.addPublishingEvent(fullEntity, PublishingEventKind.Unarchive, null, userId, publishedAt);
+    return ok({ id, updatedAt: publishedAt, publishState: this.getEntityPublishState(fullEntity) });
   }
 
   private addPublishingEvent(
     entity: InMemoryEntity,
     kind: PublishingEventKind,
     version: number | null,
-    userId: string
+    userId: string,
+    publishedAt: Temporal.Instant
   ) {
     entity.publishEvents.push({
       kind,
       version,
-      publishedAt: Temporal.Now.instant(),
+      publishedAt,
       publishedBy: userId,
     });
+    return publishedAt;
   }
 
   private findLatestVersion(versions: InMemoryEntityVersion[]): InMemoryEntityVersion {

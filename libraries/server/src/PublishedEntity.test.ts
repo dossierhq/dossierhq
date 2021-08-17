@@ -46,10 +46,22 @@ describe('getEntity()', () => {
       } = createResult.value;
 
       const archiveResult = await adminClient.archiveEntity({ id });
-      expectResultValue(archiveResult, { id, publishState: EntityPublishState.Archived });
+      if (expectOkResult(archiveResult)) {
+        const { updatedAt } = archiveResult.value;
+        expectResultValue(archiveResult, {
+          id,
+          publishState: EntityPublishState.Archived,
+          updatedAt,
+        });
+      }
 
       const publishResult = await adminClient.publishEntities([{ id, version }]);
-      expectResultValue(publishResult, [{ id, publishState: EntityPublishState.Published }]);
+      if (expectOkResult(publishResult)) {
+        const [{ updatedAt }] = publishResult.value;
+        expectResultValue(publishResult, [
+          { id, publishState: EntityPublishState.Published, updatedAt },
+        ]);
+      }
 
       const result = await publishedClient.getEntity({ id });
       expectResultValue(result, {
@@ -71,7 +83,14 @@ describe('getEntity()', () => {
       } = createResult.value;
 
       const archiveResult = await adminClient.archiveEntity({ id });
-      expectResultValue(archiveResult, { id, publishState: EntityPublishState.Archived });
+      if (expectOkResult(archiveResult)) {
+        const { updatedAt } = archiveResult.value;
+        expectResultValue(archiveResult, {
+          id,
+          publishState: EntityPublishState.Archived,
+          updatedAt,
+        });
+      }
 
       const result = await publishedClient.getEntity({ id });
       expectErrorResult(result, ErrorType.NotFound, 'No such entity');
@@ -119,10 +138,13 @@ describe('getEntities()', () => {
         { id: foo1Id, version: 0 },
         { id: foo2Id, version: 0 },
       ]);
-      expectResultValue(publishResult, [
-        { id: foo1Id, publishState: EntityPublishState.Published },
-        { id: foo2Id, publishState: EntityPublishState.Published },
-      ]);
+      if (expectOkResult(publishResult)) {
+        const [{ updatedAt: updatedAt1 }, { updatedAt: updatedAt2 }] = publishResult.value;
+        expectResultValue(publishResult, [
+          { id: foo1Id, publishState: EntityPublishState.Published, updatedAt: updatedAt1 },
+          { id: foo2Id, publishState: EntityPublishState.Published, updatedAt: updatedAt2 },
+        ]);
+      }
 
       const result = await publishedClient.getEntities([{ id: foo2Id }, { id: foo1Id }]);
       if (expectOkResult(result)) {
@@ -155,9 +177,12 @@ describe('getEntities()', () => {
       } = createFooResult.value;
 
       const publishResult = await adminClient.publishEntities([{ id: foo1Id, version: 0 }]);
-      expectResultValue(publishResult, [
-        { id: foo1Id, publishState: EntityPublishState.Published },
-      ]);
+      if (expectOkResult(publishResult)) {
+        const [{ updatedAt }] = publishResult.value;
+        expectResultValue(publishResult, [
+          { id: foo1Id, publishState: EntityPublishState.Published, updatedAt },
+        ]);
+      }
 
       const result = await publishedClient.getEntities([
         { id: 'f09fdd62-4a1e-4320-afba-8dd0781799df' },
@@ -190,7 +215,14 @@ describe('getEntities()', () => {
       } = createResult.value;
 
       const archiveResult = await adminClient.archiveEntity({ id });
-      expectResultValue(archiveResult, { id, publishState: EntityPublishState.Archived });
+      if (expectOkResult(archiveResult)) {
+        const { updatedAt } = archiveResult.value;
+        expectResultValue(archiveResult, {
+          id,
+          publishState: EntityPublishState.Archived,
+          updatedAt,
+        });
+      }
 
       const result = await publishedClient.getEntities([{ id }]);
       if (expectOkResult(result)) {

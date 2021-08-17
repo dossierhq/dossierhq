@@ -1,3 +1,4 @@
+import { Temporal } from '@js-temporal/polyfill';
 import type { ErrorType, OkResult, Result } from '.';
 
 export function expectOkResult<TOk, TError extends ErrorType>(
@@ -22,4 +23,32 @@ export function expectErrorResult(
   if (actualString !== expectedString) {
     throw new Error(`Expected (${expectedString}), got ${actualString}`);
   }
+}
+
+export function expectResultValue<TOk, TError extends ErrorType>(
+  result: Result<TOk, TError>,
+  expectedValue: TOk
+): void {
+  if (expectOkResult(result)) {
+    const actualCopy = deepCopyForIsEqual(result.value);
+    const expectedCopy = deepCopyForIsEqual(expectedValue);
+    expect(actualCopy).toEqual<TOk>(expectedCopy);
+  }
+}
+
+function deepCopyForIsEqual<T>(obj: T): T {
+  if (obj === null || obj === undefined) return obj;
+  if (obj instanceof Temporal.Instant) {
+    // Since the epoch isn't stored as a property for Instant (but a slot), jest isn't able to compare them.
+    // Replace with string representation
+    return obj.toString() as unknown as T;
+  }
+  if (typeof obj === 'object') {
+    const copy = { ...obj };
+    for (const [key, value] of Object.entries(obj)) {
+      copy[key as keyof T] = deepCopyForIsEqual(value);
+    }
+    return copy;
+  }
+  return obj;
 }

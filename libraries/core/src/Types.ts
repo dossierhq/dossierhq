@@ -198,4 +198,5 @@ export interface Edge<TOk, TError extends ErrorType> {
 export interface PublishingResult {
   id: string;
   publishState: EntityPublishState;
+  updatedAt: Temporal.Instant;
 }
