@@ -8,6 +8,7 @@ import type {
   PageInfo,
   PublishingEvent,
   PublishingHistory,
+  PublishingResult,
   Result,
 } from '.';
 import { createErrorResult, ok } from '.';
@@ -25,6 +26,10 @@ export interface JsonEdge<TOk, TError extends ErrorType> {
 export type JsonResult<TOk, TError extends ErrorType> =
   | { value: TOk }
   | { error: TError; message: string };
+
+export interface JsonPublishingResult extends Omit<PublishingResult, 'updatedAt'> {
+  updatedAt: string;
+}
 
 export interface JsonEntityHistory extends Omit<EntityHistory, 'versions'> {
   versions: JsonEntityVersionInfo[];
@@ -68,6 +73,15 @@ export function convertJsonResult<TOk, TError extends ErrorType>(
     return ok(jsonResult.value);
   }
   return createErrorResult(jsonResult.error, jsonResult.message);
+}
+
+export function convertJsonPublishingResult(
+  publishingResult: JsonPublishingResult
+): PublishingResult {
+  return {
+    ...publishingResult,
+    updatedAt: Temporal.Instant.from(publishingResult.updatedAt),
+  };
 }
 
 export function convertJsonEntityHistory(entityHistory: JsonEntityHistory): EntityHistory {

@@ -10,7 +10,7 @@ import {
   executeAdminClientOperationFromJson,
   ok,
 } from '.';
-import { expectOkResult } from './CoreTestUtils';
+import { expectOkResult, expectResultValue } from './CoreTestUtils';
 
 function createForwardingMiddleware<TContext>(
   adminClient: AdminClient
@@ -86,14 +86,19 @@ describe('AdminClient forward operation over JSON', () => {
           ok({
             id: reference.id,
             publishState: EntityPublishState.Archived,
+            updatedAt: Temporal.Instant.from('2021-08-17T08:51:25.56Z'),
           })
         );
       }
     );
 
     const result = await adminClient.archiveEntity({ id: '1234' });
-    expectOkResult(result) &&
-      expect(result.value).toEqual({ id: '1234', publishState: EntityPublishState.Archived });
+    expectResultValue(result, {
+      id: '1234',
+      publishState: EntityPublishState.Archived,
+      updatedAt: Temporal.Instant.from('2021-08-17T08:51:25.56Z'),
+    });
+    expectOkResult(result) && expect(result.value.updatedAt).toBeInstanceOf(Temporal.Instant);
 
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
       Array [
@@ -179,6 +184,173 @@ describe('AdminClient forward operation over JSON', () => {
             ],
             "modifies": false,
             "name": "getEntities",
+            "next": [Function],
+            "resolve": [Function],
+          },
+        ],
+      ]
+    `);
+  });
+
+  test('publishEntities', async () => {
+    const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
+      null,
+      AdminClientOperationName.publishEntities,
+      async (_context, operation) => {
+        const [references] = operation.args;
+        operation.resolve(
+          ok(
+            references.map((it) => ({
+              id: it.id,
+              publishState: EntityPublishState.Published,
+              updatedAt: Temporal.Instant.from('2021-08-17T08:51:25.56Z'),
+            }))
+          )
+        );
+      }
+    );
+
+    const result = await adminClient.publishEntities([
+      { id: '1234', version: 0 },
+      { id: '4321', version: 1 },
+    ]);
+    expectResultValue(result, [
+      {
+        id: '1234',
+        publishState: EntityPublishState.Published,
+        updatedAt: Temporal.Instant.from('2021-08-17T08:51:25.56Z'),
+      },
+      {
+        id: '4321',
+        publishState: EntityPublishState.Published,
+        updatedAt: Temporal.Instant.from('2021-08-17T08:51:25.56Z'),
+      },
+    ]);
+    expectOkResult(result) && expect(result.value[0].updatedAt).toBeInstanceOf(Temporal.Instant);
+    expectOkResult(result) && expect(result.value[1].updatedAt).toBeInstanceOf(Temporal.Instant);
+
+    expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
+      Array [
+        Array [
+          null,
+          Object {
+            "args": Array [
+              Array [
+                Object {
+                  "id": "1234",
+                  "version": 0,
+                },
+                Object {
+                  "id": "4321",
+                  "version": 1,
+                },
+              ],
+            ],
+            "modifies": true,
+            "name": "publishEntities",
+            "next": [Function],
+            "resolve": [Function],
+          },
+        ],
+      ]
+    `);
+  });
+
+  test('unarchiveEntity', async () => {
+    const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
+      null,
+      AdminClientOperationName.unarchiveEntity,
+      async (_context, operation) => {
+        const [reference] = operation.args;
+        operation.resolve(
+          ok({
+            id: reference.id,
+            publishState: EntityPublishState.Withdrawn,
+            updatedAt: Temporal.Instant.from('2021-08-17T08:51:25.56Z'),
+          })
+        );
+      }
+    );
+
+    const result = await adminClient.unarchiveEntity({ id: '1234' });
+    expectResultValue(result, {
+      id: '1234',
+      publishState: EntityPublishState.Withdrawn,
+      updatedAt: Temporal.Instant.from('2021-08-17T08:51:25.56Z'),
+    });
+    expectOkResult(result) && expect(result.value.updatedAt).toBeInstanceOf(Temporal.Instant);
+
+    expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
+      Array [
+        Array [
+          null,
+          Object {
+            "args": Array [
+              Object {
+                "id": "1234",
+              },
+            ],
+            "modifies": true,
+            "name": "unarchiveEntity",
+            "next": [Function],
+            "resolve": [Function],
+          },
+        ],
+      ]
+    `);
+  });
+
+  test('unpublishEntities', async () => {
+    const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
+      null,
+      AdminClientOperationName.unpublishEntities,
+      async (_context, operation) => {
+        const [references] = operation.args;
+        operation.resolve(
+          ok(
+            references.map((it) => ({
+              id: it.id,
+              publishState: EntityPublishState.Withdrawn,
+              updatedAt: Temporal.Instant.from('2021-08-17T08:51:25.56Z'),
+            }))
+          )
+        );
+      }
+    );
+
+    const result = await adminClient.unpublishEntities([{ id: '1234' }, { id: '4321' }]);
+    expectResultValue(result, [
+      {
+        id: '1234',
+        publishState: EntityPublishState.Withdrawn,
+        updatedAt: Temporal.Instant.from('2021-08-17T08:51:25.56Z'),
+      },
+      {
+        id: '4321',
+        publishState: EntityPublishState.Withdrawn,
+        updatedAt: Temporal.Instant.from('2021-08-17T08:51:25.56Z'),
+      },
+    ]);
+    expectOkResult(result) && expect(result.value[0].updatedAt).toBeInstanceOf(Temporal.Instant);
+    expectOkResult(result) && expect(result.value[1].updatedAt).toBeInstanceOf(Temporal.Instant);
+
+    expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
+      Array [
+        Array [
+          null,
+          Object {
+            "args": Array [
+              Array [
+                Object {
+                  "id": "1234",
+                },
+                Object {
+                  "id": "4321",
+                },
+              ],
+            ],
+            "modifies": true,
+            "name": "unpublishEntities",
             "next": [Function],
             "resolve": [Function],
           },

@@ -25,12 +25,14 @@ import type {
   JsonEdge,
   JsonEntityHistory,
   JsonPublishingHistory,
+  JsonPublishingResult,
 } from './JsonUtils';
 import {
   convertJsonConnection,
   convertJsonEdge,
   convertJsonEntityHistory,
   convertJsonPublishingHistory,
+  convertJsonPublishingResult,
 } from './JsonUtils';
 import type { Middleware, Operation, OperationWithoutCallbacks } from './SharedClient';
 import { executeOperationPipeline } from './SharedClient';
@@ -444,17 +446,20 @@ export function convertJsonAdminClientResult<TName extends AdminClientOperationN
   }
   const { value } = jsonResult;
   switch (operationName) {
-    case AdminClientOperationName.archiveEntity:
     case AdminClientOperationName.createEntity:
     case AdminClientOperationName.getEntities:
     case AdminClientOperationName.getEntity:
     case AdminClientOperationName.getTotalCount:
-    case AdminClientOperationName.publishEntities:
-    case AdminClientOperationName.unarchiveEntity:
-    case AdminClientOperationName.unpublishEntities:
     case AdminClientOperationName.updateEntity:
     case AdminClientOperationName.upsertEntity:
+      //TODO convert Temporal.Instant in entities
       return ok(value) as AdminClientOperationReturn[TName];
+    case AdminClientOperationName.archiveEntity: {
+      const result: AdminClientOperationReturn[AdminClientOperationName.archiveEntity] = ok(
+        convertJsonPublishingResult(value as JsonPublishingResult)
+      );
+      return result as AdminClientOperationReturn[TName];
+    }
     case AdminClientOperationName.getEntityHistory: {
       const result: AdminClientOperationReturn[AdminClientOperationName.getEntityHistory] = ok(
         convertJsonEntityHistory(value as JsonEntityHistory)
@@ -467,12 +472,30 @@ export function convertJsonAdminClientResult<TName extends AdminClientOperationN
       );
       return result as AdminClientOperationReturn[TName];
     }
+    case AdminClientOperationName.publishEntities: {
+      const result: AdminClientOperationReturn[AdminClientOperationName.publishEntities] = ok(
+        (value as JsonPublishingResult[]).map(convertJsonPublishingResult)
+      );
+      return result as AdminClientOperationReturn[TName];
+    }
     case AdminClientOperationName.searchEntities: {
       const result: AdminClientOperationReturn[AdminClientOperationName.searchEntities] = ok(
         convertJsonConnection(
           value as JsonConnection<JsonEdge<AdminEntity, ErrorType>> | null,
           convertJsonEdge
         )
+      );
+      return result as AdminClientOperationReturn[TName];
+    }
+    case AdminClientOperationName.unarchiveEntity: {
+      const result: AdminClientOperationReturn[AdminClientOperationName.unarchiveEntity] = ok(
+        convertJsonPublishingResult(value as JsonPublishingResult)
+      );
+      return result as AdminClientOperationReturn[TName];
+    }
+    case AdminClientOperationName.unpublishEntities: {
+      const result: AdminClientOperationReturn[AdminClientOperationName.unpublishEntities] = ok(
+        (value as JsonPublishingResult[]).map(convertJsonPublishingResult)
       );
       return result as AdminClientOperationReturn[TName];
     }

@@ -10,6 +10,8 @@ import type {
   Connection,
   Edge,
   EntityHistory,
+  EntityReference,
+  EntityVersionReference,
   Location,
   Paging,
   PromiseResult,
@@ -263,59 +265,29 @@ export const InMemoryAdmin = {
 
   publishEntities: async (
     context: InMemorySessionContext,
-    entities: { id: string; version: number }[]
+    entities: EntityVersionReference[]
   ): PromiseResult<PublishingResult[], ErrorType.BadRequest | ErrorType.NotFound> => {
-    for (const { id, version } of entities) {
-      const entityResult = context.server.getEntity(id, version);
-      if (!entityResult) {
-        return notOk.NotFound('No such entity or version');
-      }
-
-      context.server.setPublishedVersion(id, version, context.subjectId);
-    }
-
-    return ok(entities.map(({ id }) => ({ id, publishState: EntityPublishState.Published })));
+    return context.server.publishEntities(entities, context.subjectId);
   },
 
   unpublishEntities: async (
     context: InMemorySessionContext,
-    entityIds: string[]
+    entities: EntityReference[]
   ): PromiseResult<PublishingResult[], ErrorType.BadRequest | ErrorType.NotFound> => {
-    for (const id of entityIds) {
-      const entityResult = context.server.getEntity(id);
-      if (!entityResult) {
-        return notOk.NotFound('No such entity or version');
-      }
-
-      context.server.setPublishedVersion(id, null, context.subjectId);
-    }
-
-    return ok(entityIds.map((id) => ({ id, publishState: EntityPublishState.Withdrawn })));
+    return context.server.unpublishEntities(entities, context.subjectId);
   },
 
   archiveEntity: async (
     context: InMemorySessionContext,
     entityId: string
   ): PromiseResult<PublishingResult, ErrorType.BadRequest | ErrorType.NotFound> => {
-    const entityResult = context.server.getEntity(entityId);
-    if (!entityResult) {
-      return notOk.NotFound('No such entity or version');
-    }
-
-    context.server.archiveEntity(entityId, context.subjectId);
-
-    return ok({ id: entityId, publishState: EntityPublishState.Archived });
+    return context.server.archiveEntity(entityId, context.subjectId);
   },
 
   unarchiveEntity: async (
     context: InMemorySessionContext,
     entityId: string
   ): PromiseResult<PublishingResult, ErrorType.BadRequest | ErrorType.NotFound> => {
-    const entityResult = context.server.getEntity(entityId);
-    if (!entityResult) {
-      return notOk.NotFound('No such entity or version');
-    }
-
-    return ok(context.server.unarchiveEntity(entityId, context.subjectId));
+    return context.server.unarchiveEntity(entityId, context.subjectId);
   },
 };

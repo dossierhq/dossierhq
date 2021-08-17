@@ -20,6 +20,7 @@ import type {
   Result,
 } from '@jonasb/datadata-core';
 import {
+  assertIsDefined,
   EntityPublishState,
   ErrorType,
   isEntityNameAsRequested,
@@ -461,6 +462,7 @@ export async function publishEntities(
   }
 
   return context.withTransaction(async (context) => {
+    const result: PublishingResult[] = [];
     // Step 1: Get version info for each entity
     const missingEntities: { id: string; version: number }[] = [];
     const alreadyPublishedEntityIds: string[] = [];
@@ -504,8 +506,8 @@ export async function publishEntities(
     }
 
     // Step 2: Publish entities
-    for (const { versionsId, entityId } of versionsInfo) {
-      await Db.queryNone(
+    for (const { uuid, versionsId, entityId } of versionsInfo) {
+      const { updated_at: updatedAt } = await Db.queryOne<Pick<EntitiesTable, 'updated_at'>>(
         context,
         `UPDATE entities
           SET
@@ -514,9 +516,11 @@ export async function publishEntities(
             published_entity_versions_id = $1,
             updated_at = NOW(),
             updated = nextval('entities_updated_seq')
-          WHERE id = $2`,
+          WHERE id = $2
+          RETURNING updated_at`,
         [versionsId, entityId]
       );
+      result.push({ id: uuid, publishState: EntityPublishState.Published, updatedAt });
     }
 
     // Step 3: Check if references are ok
@@ -559,7 +563,7 @@ export async function publishEntities(
     await Db.queryNone(context, qb.build());
 
     //
-    return ok(entities.map(({ id }) => ({ id, publishState: EntityPublishState.Published })));
+    return ok(result);
   });
 }
 
@@ -573,6 +577,8 @@ export async function unpublishEntities(
   }
 
   return context.withTransaction(async (context) => {
+    const result: PublishingResult[] = [];
+
     // Step 1: Resolve entities and check if all entities exist
     const entitiesInfo = await Db.queryMany<
       Pick<EntitiesTable, 'id' | 'uuid' | 'published_entity_versions_id'>
@@ -597,16 +603,22 @@ export async function unpublishEntities(
     }
 
     // Step 2: Unpublish entities
-    await Db.queryNone(
+    const unpublishRows = await Db.queryMany<Pick<EntitiesTable, 'uuid' | 'updated_at'>>(
       context,
       `UPDATE entities
         SET
           published_entity_versions_id = NULL,
           updated_at = NOW(),
           updated = nextval('entities_updated_seq')
-        WHERE id = ANY($1)`,
+        WHERE id = ANY($1)
+        RETURNING uuid, updated_at`,
       [entitiesInfo.map((it) => it.id)]
     );
+    for (const { uuid } of entitiesInfo) {
+      const updatedAt = unpublishRows.find((it) => it.uuid === uuid)?.updated_at;
+      assertIsDefined(updatedAt);
+      result.push({ id: uuid, publishState: EntityPublishState.Withdrawn, updatedAt });
+    }
 
     // Step 3: Check if references are ok
     const referenceErrorMessages: string[] = [];
@@ -645,7 +657,7 @@ export async function unpublishEntities(
     await Db.queryNone(context, qb.build());
 
     //
-    return ok(entityIds.map((id) => ({ id, publishState: EntityPublishState.Withdrawn })));
+    return ok(result);
   });
 }
 
@@ -655,33 +667,39 @@ export async function archiveEntity(
 ): PromiseResult<PublishingResult, ErrorType.BadRequest | ErrorType.NotFound> {
   return context.withTransaction(async (context) => {
     const entityInfo = await Db.queryNoneOrOne<
-      Pick<EntitiesTable, 'id' | 'published_entity_versions_id' | 'archived'>
+      Pick<EntitiesTable, 'id' | 'published_entity_versions_id' | 'archived' | 'updated_at'>
     >(
       context,
-      'SELECT e.id, e.published_entity_versions_id, e.archived FROM entities e WHERE e.uuid = $1',
+      'SELECT e.id, e.published_entity_versions_id, e.archived, e.updated_at FROM entities e WHERE e.uuid = $1',
       [id]
     );
 
     if (!entityInfo) {
       return notOk.NotFound('No such entity');
     }
-    const { id: entityId, published_entity_versions_id: publishedVersionId, archived } = entityInfo;
+    const {
+      id: entityId,
+      published_entity_versions_id: publishedVersionId,
+      archived,
+      updated_at: previousUpdatedAt,
+    } = entityInfo;
 
     if (publishedVersionId) {
       return notOk.BadRequest('Entity is published');
     }
     if (archived) {
-      return ok({ id, publishState: EntityPublishState.Archived }); // no change
+      return ok({ id, publishState: EntityPublishState.Archived, updatedAt: previousUpdatedAt }); // no change
     }
 
-    await Promise.all([
-      Db.queryNone(
+    const [{ updated_at: updatedAt }, _] = await Promise.all([
+      Db.queryOne<Pick<EntitiesTable, 'updated_at'>>(
         context,
         `UPDATE entities SET
             archived = TRUE,
             updated_at = NOW(),
             updated = nextval('entities_updated_seq')
-          WHERE id = $1`,
+          WHERE id = $1
+          RETURNING updated_at`,
         [entityId]
       ),
       Db.queryNone(
@@ -691,7 +709,7 @@ export async function archiveEntity(
       ),
     ]);
 
-    return ok({ id, publishState: EntityPublishState.Archived });
+    return ok({ id, publishState: EntityPublishState.Archived, updatedAt });
   });
 }
 
@@ -708,10 +726,11 @@ export async function unarchiveEntity(
         | 'latest_draft_entity_versions_id'
         | 'never_published'
         | 'published_entity_versions_id'
+        | 'updated_at'
       >
     >(
       context,
-      `SELECT id, archived, latest_draft_entity_versions_id, never_published, published_entity_versions_id
+      `SELECT id, archived, latest_draft_entity_versions_id, never_published, published_entity_versions_id, updated_at
        FROM entities WHERE uuid = $1`,
       [id]
     );
@@ -719,17 +738,23 @@ export async function unarchiveEntity(
     if (!entityInfo) {
       return notOk.NotFound('No such entity');
     }
-    const { id: entityId, archived } = entityInfo;
+    const { id: entityId, archived, updated_at: previousUpdatedAt } = entityInfo;
+    const result: PublishingResult = {
+      id,
+      publishState: resolvePublishState({ ...entityInfo, archived: false }, entityInfo),
+      updatedAt: previousUpdatedAt,
+    };
 
     if (archived) {
-      await Promise.all([
-        Db.queryNone(
+      const [{ updated_at: updatedAt }, _] = await Promise.all([
+        Db.queryOne<Pick<EntitiesTable, 'updated_at'>>(
           context,
           `UPDATE entities SET
             archived = FALSE,
             updated_at = NOW(),
             updated = nextval('entities_updated_seq')
-          WHERE id = $1`,
+          WHERE id = $1
+          RETURNING updated_at`,
           [entityId]
         ),
         Db.queryNone(
@@ -738,12 +763,10 @@ export async function unarchiveEntity(
           [entityId, context.session.subjectInternalId]
         ),
       ]);
+      result.updatedAt = updatedAt;
     }
 
-    return ok({
-      id,
-      publishState: resolvePublishState({ ...entityInfo, archived: false }, entityInfo),
-    });
+    return ok(result);
   });
 }
 
