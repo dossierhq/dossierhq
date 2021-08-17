@@ -614,7 +614,7 @@ export async function unpublishEntities(
         RETURNING uuid, updated_at`,
       [entitiesInfo.map((it) => it.id)]
     );
-    for (const { uuid } of entitiesInfo) {
+    for (const uuid of entityIds) {
       const updatedAt = unpublishRows.find((it) => it.uuid === uuid)?.updated_at;
       assertIsDefined(updatedAt);
       result.push({ id: uuid, publishState: EntityPublishState.Withdrawn, updatedAt });
