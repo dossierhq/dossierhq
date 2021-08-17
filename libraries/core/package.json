@@ -17,6 +17,7 @@
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write .",
     "test": "heft test",
+    "test:update-snapshot": "heft test --update-snapshots",
     "test:watch": "heft test --watch",
     "ts:check": "tsc --noEmit",
     "upgrade-dependencies": "npx npm-check-updates -u --packageFile ./package.json",

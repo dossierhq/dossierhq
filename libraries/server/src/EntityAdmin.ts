@@ -63,7 +63,7 @@ export async function getEntity(
   }
   const entityMain = await Db.queryNoneOrOne<AdminEntityValues>(
     context,
-    `SELECT e.uuid, e.type, e.name, e.archived, e.never_published, e.latest_draft_entity_versions_id, e.published_entity_versions_id, ev.version, ev.data
+    `SELECT e.uuid, e.type, e.name, e.created_at, e.updated_at, e.archived, e.never_published, e.latest_draft_entity_versions_id, e.published_entity_versions_id, ev.version, ev.data
       FROM entities e, entity_versions ev
       WHERE e.uuid = $1
       AND e.id = ev.entities_id
@@ -89,7 +89,7 @@ export async function getEntities(
 
   const entitiesMain = await Db.queryMany<AdminEntityValues>(
     context,
-    `SELECT e.uuid, e.type, e.name, e.archived, e.never_published, e.latest_draft_entity_versions_id, e.published_entity_versions_id, ev.version, ev.data
+    `SELECT e.uuid, e.type, e.name, e.created_at, e.updated_at, e.archived, e.never_published, e.latest_draft_entity_versions_id, e.published_entity_versions_id, ev.version, ev.data
       FROM entities e, entity_versions ev
       WHERE e.uuid = ANY($1)
       AND e.latest_draft_entity_versions_id = ev.id`,
@@ -211,7 +211,7 @@ export async function createEntity(
     if (createEntityRowResult.isError()) {
       return createEntityRowResult;
     }
-    const { uuid, actualName, entityId } = createEntityRowResult.value;
+    const { uuid, actualName, entityId, createdAt, updatedAt } = createEntityRowResult.value;
 
     const { id: versionsId } = await Db.queryOne<{ id: number }>(
       context,
@@ -255,6 +255,8 @@ export async function createEntity(
         name: actualName,
         publishingState: EntityPublishState.Draft,
         version: 0,
+        createdAt,
+        updatedAt,
       },
       fields: createEntity.fields ?? {},
     };
@@ -270,7 +272,7 @@ async function createEntityRow(
   const { name, type, fullTextSearchText } = encodeEntityResult;
 
   try {
-    const { uuid, actualName, entityId } = await withUniqueNameAttempt(
+    const { uuid, actualName, entityId, createdAt, updatedAt } = await withUniqueNameAttempt(
       context,
       name,
       async (context, name) => {
@@ -280,15 +282,20 @@ async function createEntityRow(
             type
           )}, to_tsvector(${qb.addValue(fullTextSearchText.join(' '))}))`
         );
-        qb.addQuery('RETURNING id, uuid');
-        const { id: entityId, uuid } = await Db.queryOne<Pick<EntitiesTable, 'id' | 'uuid'>>(
+        qb.addQuery('RETURNING id, uuid, created_at, updated_at');
+        const {
+          id: entityId,
+          uuid,
+          created_at: createdAt,
+          updated_at: updatedAt,
+        } = await Db.queryOne<Pick<EntitiesTable, 'id' | 'uuid' | 'created_at' | 'updated_at'>>(
           context,
           qb.build()
         );
-        return { uuid, actualName: name, entityId };
+        return { uuid, actualName: name, entityId, createdAt, updatedAt };
       }
     );
-    return ok({ uuid, actualName, entityId });
+    return ok({ uuid, actualName, entityId, createdAt, updatedAt });
   } catch (error) {
     if (Db.isUniqueViolationOfConstraint(error, 'entities_uuid_key')) {
       return notOk.Conflict(`Entity with id (${id}) already exist`);
@@ -308,6 +315,8 @@ export async function updateEntity(
         | 'id'
         | 'type'
         | 'name'
+        | 'created_at'
+        | 'updated_at'
         | 'archived'
         | 'never_published'
         | 'published_entity_versions_id'
@@ -316,7 +325,7 @@ export async function updateEntity(
         Pick<EntityVersionsTable, 'version' | 'data'>
     >(
       context,
-      `SELECT e.id, e.type, e.name, e.archived, e.never_published, e.published_entity_versions_id, e.latest_draft_entity_versions_id, ev.version, ev.data
+      `SELECT e.id, e.type, e.name, e.created_at, e.updated_at, e.archived, e.never_published, e.published_entity_versions_id, e.latest_draft_entity_versions_id, ev.version, ev.data
         FROM entities e, entity_versions ev
         WHERE e.uuid = $1 AND e.latest_draft_entity_versions_id = ev.id`,
       [entity.id]
@@ -358,16 +367,19 @@ export async function updateEntity(
       });
     }
 
-    await Db.queryNone(
+    const { updated_at: updatedAt } = await Db.queryOne(
       context,
       `UPDATE entities SET
         latest_draft_entity_versions_id = $1,
         latest_fts = to_tsvector($2),
         updated_at = NOW(),
         updated = nextval('entities_updated_seq')
-      WHERE id = $3`,
+      WHERE id = $3
+      RETURNING updated_at`,
       [versionsId, fullTextSearchText.join(' '), entityId]
     );
+
+    updatedEntity.info.updatedAt = updatedAt;
 
     if (referenceIds.length > 0) {
       const qb = new QueryBuilder(

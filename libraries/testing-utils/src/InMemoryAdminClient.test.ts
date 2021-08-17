@@ -1,5 +1,6 @@
 import { EntityPublishState, PublishingEventKind, Schema } from '@jonasb/datadata-core';
 import { v4 as uuidv4 } from 'uuid';
+import { Temporal } from '@js-temporal/polyfill';
 import { InMemoryServer } from '.';
 import { createInMemoryAdminClient } from './InMemoryAdminClient';
 import { expectResultValue } from './TestUtils';
@@ -33,7 +34,14 @@ describe('getEntity()', () => {
     const entityResult = await client.getEntity({ id });
     expectResultValue(entityResult, {
       id,
-      info: { name: 'Foo', type: 'Foo', version: 0, publishingState: EntityPublishState.Published },
+      info: {
+        name: 'Foo',
+        type: 'Foo',
+        version: 0,
+        publishingState: EntityPublishState.Published,
+        createdAt: Temporal.Instant.from('2021-03-03T20:51:12.671Z'),
+        updatedAt: Temporal.Instant.from('2021-03-03T20:51:12.671Z'),
+      },
       fields: {},
     });
   });
