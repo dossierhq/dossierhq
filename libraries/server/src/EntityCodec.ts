@@ -44,6 +44,8 @@ export type AdminEntityValues = Pick<
   | 'uuid'
   | 'type'
   | 'name'
+  | 'created_at'
+  | 'updated_at'
   | 'never_published'
   | 'archived'
   | 'latest_draft_entity_versions_id'
@@ -181,6 +183,8 @@ export function decodeAdminEntity(context: SessionContext, values: AdminEntityVa
       name: values.name,
       version: values.version,
       publishingState: state,
+      createdAt: values.created_at,
+      updatedAt: values.updated_at,
     },
     fields: {},
   };
@@ -263,10 +267,12 @@ export function resolveUpdateEntity(
   values: Pick<
     EntitiesTable,
     | 'archived'
+    | 'created_at'
+    | 'latest_draft_entity_versions_id'
     | 'name'
     | 'never_published'
     | 'published_entity_versions_id'
-    | 'latest_draft_entity_versions_id'
+    | 'updated_at'
   > &
     Pick<EntityVersionsTable, 'data' | 'version'>
 ): Result<{ changed: boolean; entity: AdminEntity }, ErrorType.BadRequest> {
@@ -285,6 +291,8 @@ export function resolveUpdateEntity(
       type: type,
       version: values.version + 1,
       publishingState: state,
+      createdAt: values.created_at,
+      updatedAt: values.updated_at,
     },
     fields: {},
   };

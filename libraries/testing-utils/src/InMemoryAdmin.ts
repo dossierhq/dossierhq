@@ -28,6 +28,7 @@ import {
   ok,
   visitItemRecursively,
 } from '@jonasb/datadata-core';
+import { Temporal } from '@js-temporal/polyfill';
 import { v4 as uuidv4 } from 'uuid';
 import type { InMemorySessionContext } from '.';
 
@@ -174,6 +175,7 @@ export const InMemoryAdmin = {
       fields[fieldName] = normalizeFieldValue(schema, fieldSpec, fieldValue);
     }
 
+    const now = Temporal.Now.instant();
     const newEntity: AdminEntity = {
       id: entity.id ?? uuidv4(),
       info: {
@@ -181,6 +183,8 @@ export const InMemoryAdmin = {
         name: context.server.getUniqueName(null, entity.info.name),
         version: 0,
         publishingState: EntityPublishState.Draft,
+        createdAt: now,
+        updatedAt: now,
       },
       fields,
     };

@@ -5,7 +5,7 @@ import type {
   PublishingResult,
   Schema,
 } from '@jonasb/datadata-core';
-import { EntityPublishState, PublishingEventKind } from '@jonasb/datadata-core';
+import { assertIsDefined, EntityPublishState, PublishingEventKind } from '@jonasb/datadata-core';
 import { Temporal } from '@js-temporal/polyfill';
 import type { JsonInMemoryEntity } from '.';
 import type { InMemoryEntity, InMemoryEntityVersion } from './InMemoryServer';
@@ -21,25 +21,46 @@ export class InMemoryServerInner {
   loadEntities(entities: JsonInMemoryEntity[]): void {
     const clone: JsonInMemoryEntity[] = JSON.parse(JSON.stringify(entities));
     this.#entities = clone.map(
-      ({ id, type, name, versions, publishedVersion, archived, history, publishEvents }) => ({
-        id,
-        type,
-        name,
-        versions,
-        publishedVersion,
-        archived,
-        history: history.map(({ version, createdBy, createdAt }) => ({
-          version,
-          createdBy,
-          createdAt: Temporal.Instant.from(createdAt),
-        })),
-        publishEvents: publishEvents.map(({ kind, version, publishedBy, publishedAt }) => ({
-          kind,
-          version,
-          publishedBy,
-          publishedAt: Temporal.Instant.from(publishedAt),
-        })),
-      })
+      ({ id, type, name, versions, publishedVersion, archived, history, publishEvents }) => {
+        const placeholderInstant = Temporal.Now.instant();
+        const converted: InMemoryEntity = {
+          id,
+          type,
+          name,
+          versions,
+          createdAt: placeholderInstant,
+          updatedAt: placeholderInstant,
+          publishedVersion,
+          archived,
+          history: history.map(({ version, createdBy, createdAt }) => ({
+            version,
+            createdBy,
+            createdAt: Temporal.Instant.from(createdAt),
+          })),
+          publishEvents: publishEvents.map(({ kind, version, publishedBy, publishedAt }) => ({
+            kind,
+            version,
+            publishedBy,
+            publishedAt: Temporal.Instant.from(publishedAt),
+          })),
+        };
+
+        const createdAt = converted.history.find((it) => it.version === 0)?.createdAt;
+        assertIsDefined(createdAt);
+        converted.createdAt = createdAt;
+
+        let updatedAt = converted.history.reduce(
+          (max, it) => (Temporal.Instant.compare(it.createdAt, max) > 0 ? it.createdAt : max),
+          createdAt
+        );
+        updatedAt = converted.publishEvents.reduce(
+          (max, it) => (Temporal.Instant.compare(it.publishedAt, max) > 0 ? it.publishedAt : max),
+          updatedAt
+        );
+        converted.updatedAt = updatedAt;
+
+        return converted;
+      }
     );
   }
 
@@ -73,6 +94,8 @@ export class InMemoryServerInner {
         name: entity.name,
         version,
         publishingState: this.getEntityPublishState(entity),
+        createdAt: entity.createdAt,
+        updatedAt: entity.updatedAt,
       },
       fields,
     };
@@ -134,9 +157,11 @@ export class InMemoryServerInner {
       id,
       type,
       name,
+      createdAt: entity.info.createdAt,
+      updatedAt: entity.info.updatedAt,
       archived: false,
       versions: [entityVersion],
-      history: [{ version: 0, createdAt: Temporal.Now.instant(), createdBy: userId }],
+      history: [{ version: 0, createdAt: entity.info.createdAt, createdBy: userId }],
       publishEvents: [],
     });
   }

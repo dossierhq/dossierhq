@@ -1,3 +1,4 @@
+import { Temporal } from '@js-temporal/polyfill';
 import type { AdminClient, AdminClientMiddleware, AdminClientOperation, AdminEntity } from '.';
 import {
   AdminClientOperationName,
@@ -66,6 +67,8 @@ function createDummyEntity({ id }: { id: string }): AdminEntity {
       type: 'FooType',
       version: 0,
       publishingState: EntityPublishState.Draft,
+      createdAt: Temporal.Instant.from('2021-08-17T07:51:25.56Z'),
+      updatedAt: Temporal.Instant.from('2021-08-17T07:51:25.56Z'),
     },
     fields: {},
   };
@@ -132,9 +135,11 @@ describe('AdminClient forward operation over JSON', () => {
                 "fields": Object {},
                 "id": "1234",
                 "info": Object {
+                  "createdAt": "2021-08-17T07:51:25.56Z",
                   "name": "Foo name",
                   "publishingState": "draft",
                   "type": "FooType",
+                  "updatedAt": "2021-08-17T07:51:25.56Z",
                   "version": 0,
                 },
               },
@@ -144,9 +149,11 @@ describe('AdminClient forward operation over JSON', () => {
                 "fields": Object {},
                 "id": "5678",
                 "info": Object {
+                  "createdAt": "2021-08-17T07:51:25.56Z",
                   "name": "Foo name",
                   "publishingState": "draft",
                   "type": "FooType",
+                  "updatedAt": "2021-08-17T07:51:25.56Z",
                   "version": 0,
                 },
               },

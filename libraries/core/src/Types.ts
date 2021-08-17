@@ -75,6 +75,8 @@ export interface AdminEntityInfo {
    * It is not connected to the requested version so if you get an old version of the entity, the
    * publish state refer to the state of the latest version. */
   publishingState: EntityPublishState;
+  createdAt: Temporal.Instant;
+  updatedAt: Temporal.Instant;
 }
 
 export interface AdminEntityCreate {

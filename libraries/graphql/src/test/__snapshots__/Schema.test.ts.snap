@@ -102,6 +102,8 @@ type AdminEntityInfo {
   name: String!
   version: Int!
   publishingState: EntityPublishState!
+  createdAt: Instant!
+  updatedAt: Instant!
 }
 
 input AdminEntityCreateInfo {
@@ -414,6 +416,8 @@ type AdminEntityInfo {
   name: String!
   version: Int!
   publishingState: EntityPublishState!
+  createdAt: Instant!
+  updatedAt: Instant!
 }
 
 input AdminEntityCreateInfo {
@@ -767,6 +771,8 @@ type AdminEntityInfo {
   name: String!
   version: Int!
   publishingState: EntityPublishState!
+  createdAt: Instant!
+  updatedAt: Instant!
 }
 
 input AdminEntityCreateInfo {
@@ -1007,6 +1013,8 @@ type AdminEntityInfo {
   name: String!
   version: Int!
   publishingState: EntityPublishState!
+  createdAt: Instant!
+  updatedAt: Instant!
 }
 
 input AdminEntityCreateInfo {
@@ -1273,6 +1281,8 @@ type AdminEntityInfo {
   name: String!
   version: Int!
   publishingState: EntityPublishState!
+  createdAt: Instant!
+  updatedAt: Instant!
 }
 
 input AdminEntityCreateInfo {
@@ -1622,6 +1632,8 @@ type AdminEntityInfo {
   name: String!
   version: Int!
   publishingState: EntityPublishState!
+  createdAt: Instant!
+  updatedAt: Instant!
 }
 
 input AdminEntityCreateInfo {

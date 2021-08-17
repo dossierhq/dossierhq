@@ -7,6 +7,8 @@ export interface InMemoryEntity {
   type: string;
   name: string;
   versions: InMemoryEntityVersion[];
+  createdAt: Temporal.Instant;
+  updatedAt: Temporal.Instant;
   archived?: boolean;
   publishedVersion?: number | null;
   history: { version: number; createdBy: string; createdAt: Temporal.Instant }[];
@@ -23,7 +25,8 @@ export interface InMemoryEntityVersion {
   [fieldName: string]: unknown;
 }
 
-export interface JsonInMemoryEntity extends Omit<InMemoryEntity, 'history' | 'publishEvents'> {
+export interface JsonInMemoryEntity
+  extends Omit<InMemoryEntity, 'createdAt' | 'updatedAt' | 'history' | 'publishEvents'> {
   history: { version: number; createdBy: string; createdAt: string }[];
   publishEvents: {
     kind: PublishingEventKind;

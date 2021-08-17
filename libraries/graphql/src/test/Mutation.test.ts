@@ -1,4 +1,5 @@
 import type { SchemaSpecification } from '@jonasb/datadata-core';
+import { Temporal } from '@js-temporal/polyfill';
 import {
   CoreTestUtils,
   EntityPublishState,
@@ -91,6 +92,8 @@ mutation CreateFooEntity($entity: AdminMutationFooCreateInput!) {
         name
         version
         publishingState
+        createdAt
+        updatedAt
       }
       fields {
         title
@@ -122,6 +125,8 @@ mutation UpsertFooEntity($entity: AdminMutationFooUpsertInput!) {
         name
         version
         publishingState
+        createdAt
+        updatedAt
       }
       fields {
         title
@@ -169,8 +174,10 @@ describe('create*Entity()', () => {
     });
 
     expect(result.errors).toBeUndefined();
-    const id = result.data?.createMutationFooEntity.entity.id;
-    const name = result.data?.createMutationFooEntity.entity.info.name;
+    const {
+      id,
+      info: { name, createdAt, updatedAt },
+    } = result.data?.createMutationFooEntity.entity;
     expect(name).toMatch(/^Foo name(#[0-9]+)?$/);
 
     expect(result).toEqual({
@@ -186,6 +193,8 @@ describe('create*Entity()', () => {
               name,
               version: 0,
               publishingState: EntityPublishState.Draft,
+              createdAt,
+              updatedAt,
             },
             fields: {
               title: 'Foo title',
@@ -205,7 +214,14 @@ describe('create*Entity()', () => {
     const getResult = await adminClient.getEntity({ id });
     expectResultValue(getResult, {
       id,
-      info: { type: 'MutationFoo', name, version: 0, publishingState: EntityPublishState.Draft },
+      info: {
+        type: 'MutationFoo',
+        name,
+        version: 0,
+        publishingState: EntityPublishState.Draft,
+        createdAt: Temporal.Instant.from(createdAt),
+        updatedAt: Temporal.Instant.from(updatedAt),
+      },
       fields: {
         ...emptyFooFields,
         title: 'Foo title',
@@ -234,7 +250,7 @@ describe('create*Entity()', () => {
     });
 
     expect(result.errors).toBeUndefined();
-    const name = result.data?.createMutationFooEntity.entity.info.name;
+    const { name, createdAt, updatedAt } = result.data?.createMutationFooEntity.entity.info;
     expect(name).toMatch(/^Foo name(#[0-9]+)?$/);
 
     expect(result).toEqual({
@@ -250,6 +266,8 @@ describe('create*Entity()', () => {
               name,
               version: 0,
               publishingState: EntityPublishState.Draft,
+              createdAt,
+              updatedAt,
             },
             fields: {
               title: 'Foo title',
@@ -287,6 +305,8 @@ describe('create*Entity()', () => {
                   name
                   version
                   publishingState
+                  createdAt
+                  updatedAt
                 }
                 fields {
                   title
@@ -318,8 +338,10 @@ describe('create*Entity()', () => {
         }
       );
 
-      const fooId = gqlResult.data?.createMutationFooEntity.entity.id;
-      const fooName = gqlResult.data?.createMutationFooEntity.entity.info.name;
+      const {
+        id: fooId,
+        info: { name: fooName, createdAt, updatedAt },
+      } = gqlResult.data?.createMutationFooEntity.entity;
       expect(gqlResult).toEqual({
         data: {
           createMutationFooEntity: {
@@ -331,6 +353,8 @@ describe('create*Entity()', () => {
                 name: fooName,
                 version: 0,
                 publishingState: EntityPublishState.Draft,
+                createdAt,
+                updatedAt,
               },
               fields: {
                 title: 'Foo title',
@@ -352,6 +376,8 @@ describe('create*Entity()', () => {
           name: fooName,
           version: 0,
           publishingState: EntityPublishState.Draft,
+          createdAt: Temporal.Instant.from(createdAt),
+          updatedAt: Temporal.Instant.from(updatedAt),
         },
         fields: {
           ...emptyFooFields,
@@ -394,6 +420,8 @@ describe('create*Entity()', () => {
                   name
                   version
                   publishingState
+                  createdAt
+                  updatedAt
                 }
                 fields {
                   title
@@ -427,8 +455,10 @@ describe('create*Entity()', () => {
       );
 
       expect(gqlResult.errors).toBeUndefined();
-      const fooId = gqlResult.data?.createMutationFooEntity.entity.id;
-      const fooName = gqlResult.data?.createMutationFooEntity.entity.info.name;
+      const {
+        id: fooId,
+        info: { name: fooName, createdAt, updatedAt },
+      } = gqlResult.data?.createMutationFooEntity.entity;
       expect(gqlResult).toEqual({
         data: {
           createMutationFooEntity: {
@@ -440,6 +470,8 @@ describe('create*Entity()', () => {
                 name: fooName,
                 version: 0,
                 publishingState: EntityPublishState.Draft,
+                createdAt,
+                updatedAt,
               },
               fields: {
                 title: 'Foo title',
@@ -459,6 +491,8 @@ describe('create*Entity()', () => {
           name: fooName,
           version: 0,
           publishingState: EntityPublishState.Draft,
+          createdAt: Temporal.Instant.from(createdAt),
+          updatedAt: Temporal.Instant.from(updatedAt),
         },
         fields: {
           ...emptyFooFields,
@@ -506,6 +540,8 @@ describe('create*Entity()', () => {
                   type
                   name
                   version
+                  createdAt
+                  updatedAt
                 }
                 fields {
                   title
@@ -539,8 +575,10 @@ describe('create*Entity()', () => {
       );
 
       expect(gqlResult.errors).toBeUndefined();
-      const fooId = gqlResult.data?.createMutationFooEntity.entity.id;
-      const fooName = gqlResult.data?.createMutationFooEntity.entity.info.name;
+      const {
+        id: fooId,
+        info: { name: fooName, createdAt, updatedAt },
+      } = gqlResult.data?.createMutationFooEntity.entity;
       expect(gqlResult).toEqual({
         data: {
           createMutationFooEntity: {
@@ -551,6 +589,8 @@ describe('create*Entity()', () => {
                 type: 'MutationFoo',
                 name: fooName,
                 version: 0,
+                createdAt,
+                updatedAt,
               },
               fields: {
                 title: 'Foo title',
@@ -573,6 +613,8 @@ describe('create*Entity()', () => {
           name: fooName,
           version: 0,
           publishingState: EntityPublishState.Draft,
+          createdAt: Temporal.Instant.from(createdAt),
+          updatedAt: Temporal.Instant.from(updatedAt),
         },
         fields: {
           ...emptyFooFields,
@@ -609,6 +651,8 @@ describe('create*Entity()', () => {
                   type
                   name
                   version
+                  createdAt
+                  updatedAt
                 }
                 fields {
                   title
@@ -653,8 +697,10 @@ describe('create*Entity()', () => {
       );
 
       expect(gqlResult.errors).toBeUndefined();
-      const fooId = gqlResult.data?.createMutationFooEntity.entity.id;
-      const fooName = gqlResult.data?.createMutationFooEntity.entity.info.name;
+      const {
+        id: fooId,
+        info: { name: fooName, createdAt, updatedAt },
+      } = gqlResult.data?.createMutationFooEntity.entity;
       expect(gqlResult).toEqual({
         data: {
           createMutationFooEntity: {
@@ -665,6 +711,8 @@ describe('create*Entity()', () => {
                 type: 'MutationFoo',
                 name: fooName,
                 version: 0,
+                createdAt,
+                updatedAt,
               },
               fields: {
                 title: 'Foo title',
@@ -696,6 +744,8 @@ describe('create*Entity()', () => {
           name: fooName,
           version: 0,
           publishingState: EntityPublishState.Draft,
+          createdAt: Temporal.Instant.from(createdAt),
+          updatedAt: Temporal.Instant.from(updatedAt),
         },
         fields: {
           ...emptyFooFields,
@@ -735,6 +785,8 @@ describe('create*Entity()', () => {
                   type
                   name
                   version
+                  createdAt
+                  updatedAt
                 }
                 fields {
                   anyValueItem {
@@ -777,8 +829,10 @@ describe('create*Entity()', () => {
         }
       );
 
-      const fooId = createFooResult.data?.createMutationFooEntity.entity.id;
-      const fooName = createFooResult.data?.createMutationFooEntity.entity.info.name;
+      const {
+        id: fooId,
+        info: { name: fooName, createdAt, updatedAt },
+      } = createFooResult.data?.createMutationFooEntity.entity;
 
       expect(createFooResult).toEqual({
         data: {
@@ -790,6 +844,8 @@ describe('create*Entity()', () => {
                 type: 'MutationFoo',
                 name: fooName,
                 version: 0,
+                createdAt,
+                updatedAt,
               },
               fields: {
                 anyValueItem: {
@@ -816,6 +872,8 @@ describe('create*Entity()', () => {
           name: fooName,
           version: 0,
           publishingState: EntityPublishState.Draft,
+          createdAt: Temporal.Instant.from(createdAt),
+          updatedAt: Temporal.Instant.from(updatedAt),
         },
         fields: {
           ...emptyFooFields,
@@ -850,6 +908,8 @@ describe('create*Entity()', () => {
                 type
                 name
                 version
+                createdAt
+                updatedAt
               }
               fields {
                 nestedValue {
@@ -891,8 +951,10 @@ describe('create*Entity()', () => {
       }
     );
 
-    const fooId = createResult.data?.createMutationFooEntity.entity.id;
-    const fooName = createResult.data?.createMutationFooEntity.entity.info.name;
+    const {
+      id: fooId,
+      info: { name: fooName, createdAt, updatedAt },
+    } = createResult.data?.createMutationFooEntity.entity;
 
     expect(createResult).toEqual({
       data: {
@@ -904,6 +966,8 @@ describe('create*Entity()', () => {
               type: 'MutationFoo',
               name: fooName,
               version: 0,
+              createdAt,
+              updatedAt,
             },
             fields: {
               nestedValue: {
@@ -931,6 +995,8 @@ describe('create*Entity()', () => {
         name: fooName,
         version: 0,
         publishingState: EntityPublishState.Draft,
+        createdAt: Temporal.Instant.from(createdAt),
+        updatedAt: Temporal.Instant.from(updatedAt),
       },
       fields: {
         ...emptyFooFields,
@@ -1071,7 +1137,7 @@ describe('update*Entity()', () => {
       const {
         entity: {
           id,
-          info: { name },
+          info: { name, createdAt },
         },
       } = createResult.value;
       const result = await graphql(
@@ -1088,6 +1154,8 @@ describe('update*Entity()', () => {
                   name
                   version
                   publishingState
+                  createdAt
+                  updatedAt
                 }
                 fields {
                   title
@@ -1105,6 +1173,8 @@ describe('update*Entity()', () => {
         }
       );
 
+      const { updatedAt: updatedAtString } = result.data?.updateMutationFooEntity.entity.info;
+
       expect(result).toEqual({
         data: {
           updateMutationFooEntity: {
@@ -1117,6 +1187,8 @@ describe('update*Entity()', () => {
                 name,
                 version: 1,
                 publishingState: EntityPublishState.Draft,
+                createdAt: createdAt.toString(),
+                updatedAt: updatedAtString,
               },
               fields: {
                 title: 'Updated title',
@@ -1131,7 +1203,14 @@ describe('update*Entity()', () => {
       const getResult = await adminClient.getEntity({ id });
       expectResultValue(getResult, {
         id,
-        info: { type: 'MutationFoo', name, version: 1, publishingState: EntityPublishState.Draft },
+        info: {
+          type: 'MutationFoo',
+          name,
+          version: 1,
+          publishingState: EntityPublishState.Draft,
+          createdAt,
+          updatedAt: Temporal.Instant.from(updatedAtString),
+        },
         fields: {
           ...emptyFooFields,
           title: 'Updated title',
@@ -1265,6 +1344,8 @@ describe('update*Entity()', () => {
                     type
                     name
                     version
+                    createdAt
+                    updatedAt
                   }
                   fields {
                     title
@@ -1346,7 +1427,7 @@ describe('update*Entity()', () => {
         );
 
         expect(result.errors).toBeFalsy();
-        const name = result.data?.updateMutationFooEntity.entity.info.name;
+        const { name, createdAt, updatedAt } = result.data?.updateMutationFooEntity.entity.info;
         expect(name).toMatch(/^Updated name(#[0-9]+)?$/);
 
         expect(result).toEqual({
@@ -1361,6 +1442,8 @@ describe('update*Entity()', () => {
                   type: 'MutationFoo',
                   name: name,
                   version: 1,
+                  createdAt,
+                  updatedAt,
                 },
                 fields: {
                   title: 'Updated title',
@@ -1425,6 +1508,8 @@ describe('update*Entity()', () => {
             name: name,
             version: 1,
             publishingState: EntityPublishState.Draft,
+            createdAt: Temporal.Instant.from(createdAt),
+            updatedAt: Temporal.Instant.from(updatedAt),
           },
           fields: {
             ...emptyFooFields,
@@ -1520,7 +1605,7 @@ describe('upsert*Entity()', () => {
       },
     });
 
-    const name = result.data?.upsertMutationFooEntity.entity.info.name;
+    const { name, createdAt, updatedAt } = result.data?.upsertMutationFooEntity.entity.info;
 
     expect(result).toEqual({
       data: {
@@ -1534,6 +1619,8 @@ describe('upsert*Entity()', () => {
               name,
               version: 0,
               publishingState: EntityPublishState.Draft,
+              createdAt,
+              updatedAt,
             },
             fields: {
               title: 'Title',
@@ -1548,7 +1635,14 @@ describe('upsert*Entity()', () => {
     const getResult = await adminClient.getEntity({ id });
     expectResultValue(getResult, {
       id,
-      info: { type: 'MutationFoo', name, version: 0, publishingState: EntityPublishState.Draft },
+      info: {
+        type: 'MutationFoo',
+        name,
+        version: 0,
+        publishingState: EntityPublishState.Draft,
+        createdAt: Temporal.Instant.from(createdAt),
+        updatedAt: Temporal.Instant.from(updatedAt),
+      },
       fields: {
         ...emptyFooFields,
         title: 'Title',
@@ -1577,7 +1671,7 @@ describe('upsert*Entity()', () => {
         },
       });
 
-      const name = result.data?.upsertMutationFooEntity.entity.info.name;
+      const { name, createdAt, updatedAt } = result.data?.upsertMutationFooEntity.entity.info;
 
       expect(result).toEqual({
         data: {
@@ -1591,6 +1685,8 @@ describe('upsert*Entity()', () => {
                 name,
                 version: 1,
                 publishingState: EntityPublishState.Draft,
+                createdAt,
+                updatedAt,
               },
               fields: {
                 title: 'Updated title',
@@ -1605,7 +1701,14 @@ describe('upsert*Entity()', () => {
       const getResult = await adminClient.getEntity({ id });
       expectResultValue(getResult, {
         id,
-        info: { type: 'MutationFoo', name, version: 1, publishingState: EntityPublishState.Draft },
+        info: {
+          type: 'MutationFoo',
+          name,
+          version: 1,
+          publishingState: EntityPublishState.Draft,
+          createdAt: Temporal.Instant.from(createdAt),
+          updatedAt: Temporal.Instant.from(updatedAt),
+        },
         fields: {
           ...emptyFooFields,
           title: 'Updated title',
@@ -1635,7 +1738,7 @@ describe('upsert*Entity()', () => {
         },
       });
 
-      const name = result.data?.upsertMutationFooEntity.entity.info.name;
+      const { name, createdAt, updatedAt } = result.data?.upsertMutationFooEntity.entity.info;
 
       expect(result).toEqual({
         data: {
@@ -1649,6 +1752,8 @@ describe('upsert*Entity()', () => {
                 name,
                 version: 0,
                 publishingState: EntityPublishState.Draft,
+                createdAt,
+                updatedAt,
               },
               fields: {
                 title: 'Title',
