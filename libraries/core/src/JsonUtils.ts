@@ -3,12 +3,12 @@ import type {
   Connection,
   Edge,
   EntityHistory,
+  EntityPublishPayload,
   EntityVersionInfo,
   ErrorType,
   PageInfo,
   PublishingEvent,
   PublishingHistory,
-  PublishingResult,
   Result,
 } from '.';
 import { createErrorResult, ok } from '.';
@@ -27,7 +27,7 @@ export type JsonResult<TOk, TError extends ErrorType> =
   | { value: TOk }
   | { error: TError; message: string };
 
-export interface JsonPublishingResult extends Omit<PublishingResult, 'updatedAt'> {
+export interface JsonPublishingResult extends Omit<EntityPublishPayload, 'updatedAt'> {
   updatedAt: string;
 }
 
@@ -77,7 +77,7 @@ export function convertJsonResult<TOk, TError extends ErrorType>(
 
 export function convertJsonPublishingResult(
   publishingResult: JsonPublishingResult
-): PublishingResult {
+): EntityPublishPayload {
   return {
     ...publishingResult,
     updatedAt: Temporal.Instant.from(publishingResult.updatedAt),

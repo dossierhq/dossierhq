@@ -195,7 +195,7 @@ export interface Edge<TOk, TError extends ErrorType> {
   cursor: string;
 }
 
-export interface PublishingResult {
+export interface EntityPublishPayload {
   id: string;
   publishState: EntityPublishState;
   updatedAt: Temporal.Instant;

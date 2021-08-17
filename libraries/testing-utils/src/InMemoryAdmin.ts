@@ -10,13 +10,13 @@ import type {
   Connection,
   Edge,
   EntityHistory,
+  EntityPublishPayload,
   EntityReference,
   EntityVersionReference,
   Location,
   Paging,
   PromiseResult,
   PublishingHistory,
-  PublishingResult,
   Result,
 } from '@jonasb/datadata-core';
 import {
@@ -266,28 +266,28 @@ export const InMemoryAdmin = {
   publishEntities: async (
     context: InMemorySessionContext,
     entities: EntityVersionReference[]
-  ): PromiseResult<PublishingResult[], ErrorType.BadRequest | ErrorType.NotFound> => {
+  ): PromiseResult<EntityPublishPayload[], ErrorType.BadRequest | ErrorType.NotFound> => {
     return context.server.publishEntities(entities, context.subjectId);
   },
 
   unpublishEntities: async (
     context: InMemorySessionContext,
     entities: EntityReference[]
-  ): PromiseResult<PublishingResult[], ErrorType.BadRequest | ErrorType.NotFound> => {
+  ): PromiseResult<EntityPublishPayload[], ErrorType.BadRequest | ErrorType.NotFound> => {
     return context.server.unpublishEntities(entities, context.subjectId);
   },
 
   archiveEntity: async (
     context: InMemorySessionContext,
     entityId: string
-  ): PromiseResult<PublishingResult, ErrorType.BadRequest | ErrorType.NotFound> => {
+  ): PromiseResult<EntityPublishPayload, ErrorType.BadRequest | ErrorType.NotFound> => {
     return context.server.archiveEntity(entityId, context.subjectId);
   },
 
   unarchiveEntity: async (
     context: InMemorySessionContext,
     entityId: string
-  ): PromiseResult<PublishingResult, ErrorType.BadRequest | ErrorType.NotFound> => {
+  ): PromiseResult<EntityPublishPayload, ErrorType.BadRequest | ErrorType.NotFound> => {
     return context.server.unarchiveEntity(entityId, context.subjectId);
   },
 };

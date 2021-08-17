@@ -5,8 +5,8 @@ import type {
   AdminEntityUpdatePayload,
   AdminEntityUpsert,
   AdminEntityUpsertPayload,
+  EntityPublishPayload,
   EntityVersionReference,
-  PublishingResult,
 } from '@jonasb/datadata-core';
 import type { SessionGraphQLContext } from '.';
 import { buildResolversForAdminEntity } from './DataLoaders';
@@ -63,7 +63,7 @@ export async function upsertEntity<TContext extends SessionGraphQLContext>(
 export async function publishEntities<TContext extends SessionGraphQLContext>(
   context: TContext,
   entities: EntityVersionReference[]
-): Promise<PublishingResult[]> {
+): Promise<EntityPublishPayload[]> {
   const adminClient = getAdminClient(context);
   const result = await adminClient.publishEntities(entities);
   if (result.isError()) {
@@ -75,7 +75,7 @@ export async function publishEntities<TContext extends SessionGraphQLContext>(
 export async function unpublishEntities<TContext extends SessionGraphQLContext>(
   context: TContext,
   entityIds: string[]
-): Promise<PublishingResult[]> {
+): Promise<EntityPublishPayload[]> {
   const adminClient = getAdminClient(context);
   const result = await adminClient.unpublishEntities(entityIds.map((id) => ({ id })));
   if (result.isError()) {
@@ -87,7 +87,7 @@ export async function unpublishEntities<TContext extends SessionGraphQLContext>(
 export async function archiveEntity<TContext extends SessionGraphQLContext>(
   context: TContext,
   id: string
-): Promise<PublishingResult> {
+): Promise<EntityPublishPayload> {
   const adminClient = getAdminClient(context);
   const result = await adminClient.archiveEntity({ id });
   if (result.isError()) {
@@ -99,7 +99,7 @@ export async function archiveEntity<TContext extends SessionGraphQLContext>(
 export async function unarchiveEntity<TContext extends SessionGraphQLContext>(
   context: TContext,
   id: string
-): Promise<PublishingResult> {
+): Promise<EntityPublishPayload> {
   const adminClient = getAdminClient(context);
   const result = await adminClient.unarchiveEntity({ id });
   if (result.isError()) {
