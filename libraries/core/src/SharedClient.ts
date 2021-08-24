@@ -1,4 +1,4 @@
-import { assertIsDefined } from './Asserts';
+import { assertIsDefined } from './Asserts.js';
 
 export interface Operation<TName, TArgs, TResult> {
   readonly name: TName;

@@ -1,6 +1,6 @@
 import type { Entity, EntityReference, ErrorType, PromiseResult, Result } from '.';
-import type { Middleware, Operation, OperationWithoutCallbacks } from './SharedClient';
-import { executeOperationPipeline } from './SharedClient';
+import type { Middleware, Operation, OperationWithoutCallbacks } from './SharedClient.js';
+import { executeOperationPipeline } from './SharedClient.js';
 
 export interface PublishedClient {
   getEntity(reference: EntityReference): PromiseResult<Entity, ErrorType.NotFound>;

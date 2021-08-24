@@ -1,5 +1,5 @@
 import { ErrorType, FieldType, RichTextBlockType, Schema } from '.';
-import { expectErrorResult, expectOkResult } from './CoreTestUtils';
+import { expectErrorResult, expectOkResult } from './CoreTestUtils.js';
 
 describe('validate()', () => {
   test('Empty spec validates', () => {

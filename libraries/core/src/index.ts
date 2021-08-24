@@ -4,15 +4,15 @@ export {
   convertJsonAdminClientResult,
   createBaseAdminClient,
   executeAdminClientOperationFromJson,
-} from './AdminClient';
+} from './AdminClient.js';
 export type {
   AdminClient,
   AdminClientJsonOperation,
   AdminClientMiddleware,
   AdminClientOperation,
-} from './AdminClient';
-export { assertExhaustive, assertIsDefined } from './Asserts';
-export * as CoreTestUtils from './CoreTestUtils';
+} from './AdminClient.js';
+export { assertExhaustive, assertIsDefined } from './Asserts.js';
+export * as CoreTestUtils from './CoreTestUtils.js';
 export {
   createErrorResult,
   createErrorResultFromError,
@@ -20,8 +20,8 @@ export {
   ErrorType,
   notOk,
   ok,
-} from './ErrorResult';
-export type { ErrorResult, OkResult, PromiseResult, Result } from './ErrorResult';
+} from './ErrorResult.js';
+export type { ErrorResult, OkResult, PromiseResult, Result } from './ErrorResult.js';
 export {
   copyEntity,
   isBooleanField,
@@ -54,14 +54,14 @@ export {
   visitFieldRecursively,
   visitItemRecursively,
   visitorPathToString,
-} from './ItemUtils';
+} from './ItemUtils.js';
 export {
   convertJsonConnection,
   convertJsonEdge,
   convertJsonEntityHistory,
   convertJsonPublishingHistory,
   convertJsonResult,
-} from './JsonUtils';
+} from './JsonUtils.js';
 export type {
   JsonConnection,
   JsonEdge,
@@ -69,23 +69,23 @@ export type {
   JsonEntityVersionInfo,
   JsonPublishingHistory,
   JsonResult,
-} from './JsonUtils';
-export { createBasePublishedClient, PublishedClientOperationName } from './PublishedClient';
+} from './JsonUtils.js';
+export { createBasePublishedClient, PublishedClientOperationName } from './PublishedClient.js';
 export type {
   PublishedClient,
   PublishedClientMiddleware,
   PublishedClientOperation,
-} from './PublishedClient';
-export { isPagingForwards } from './QueryUtils';
-export { FieldType, RichTextBlockType, Schema } from './Schema';
+} from './PublishedClient.js';
+export { isPagingForwards } from './QueryUtils.js';
+export { FieldType, RichTextBlockType, Schema } from './Schema.js';
 export type {
   EntityTypeSpecification,
   FieldSpecification,
   FieldValueTypeMap,
   SchemaSpecification,
   ValueTypeSpecification,
-} from './Schema';
-export { EntityPublishState, PublishingEventKind, QueryOrder } from './Types';
+} from './Schema.js';
+export { EntityPublishState, PublishingEventKind, QueryOrder } from './Types.js';
 export type {
   AdminEntity,
   AdminEntityCreate,
@@ -112,4 +112,4 @@ export type {
   RichText,
   RichTextBlock,
   ValueItem,
-} from './Types';
+} from './Types.js';

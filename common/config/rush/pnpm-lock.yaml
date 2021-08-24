@@ -262,6 +262,7 @@ importers:
       '@typescript-eslint/eslint-plugin': 4.29.2_b01b7137116ac50f0745961d9cf72d34
       '@typescript-eslint/parser': 4.29.2_eslint@7.32.0+typescript@4.3.5
       eslint: 7.32.0
+      eslint-plugin-import: 2.24.1_eslint@7.32.0
       prettier: 2.3.2
       typescript: 4.3.5
     specifiers:
@@ -272,6 +273,7 @@ importers:
       '@typescript-eslint/eslint-plugin': ^4.29.1
       '@typescript-eslint/parser': ^4.29.1
       eslint: ^7.32.0
+      eslint-plugin-import: ~2.24.1
       prettier: 2.3.2
       tslib: ~2.3.1
       typescript: ^4.3.5
