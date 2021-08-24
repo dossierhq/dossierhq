@@ -1,5 +1,5 @@
-import type { Middleware, Operation, OperationWithoutCallbacks } from './SharedClient';
-import { executeOperationPipeline } from './SharedClient';
+import type { Middleware, Operation, OperationWithoutCallbacks } from './SharedClient.js';
+import { executeOperationPipeline } from './SharedClient.js';
 
 interface TestClientOperationArguments {
   [TestClientOperationName.foo]: [string];

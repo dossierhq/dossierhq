@@ -10,7 +10,7 @@ import {
   executeAdminClientOperationFromJson,
   ok,
 } from '.';
-import { expectOkResult, expectResultValue } from './CoreTestUtils';
+import { expectOkResult, expectResultValue } from './CoreTestUtils.js';
 
 function createForwardingMiddleware<TContext>(
   adminClient: AdminClient

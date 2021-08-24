@@ -3,7 +3,12 @@ module.exports = {
     browser: true,
     es2021: true,
   },
-  extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended'],
+  extends: [
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:import/recommended',
+    'plugin:import/typescript',
+  ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 12,
@@ -24,5 +29,7 @@ module.exports = {
         argsIgnorePattern: '^_',
       },
     ],
+    'import/extensions': ['error', { js: 'always', jsx: 'always', ts: 'always', tsx: 'always' }],
+    'import/no-unresolved': ['off'],
   },
 };
