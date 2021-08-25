@@ -6,11 +6,26 @@ const ts = require('typescript');
 function rewrittenRelativeImport(moduleSpecifier) {
   if (moduleSpecifier.endsWith('.')) moduleSpecifier += '/';
   if (moduleSpecifier.endsWith('/')) moduleSpecifier += 'index.js';
+  if (!moduleSpecifier.endsWith('.js')) moduleSpecifier += '.js';
   return moduleSpecifier;
 }
 
 function rewriteNpmImport(package, version) {
   return `https://esm.sh/${package}@${version}`;
+}
+
+function rewriteImportExportModuleSpecifier(moduleSpecifier, dependencies) {
+  const isRelative = moduleSpecifier.startsWith('.');
+  let rewritten = moduleSpecifier;
+  if (isRelative) {
+    rewritten = rewrittenRelativeImport(rewritten);
+  } else {
+    const version = dependencies[moduleSpecifier];
+    if (version) {
+      rewritten = rewriteNpmImport(moduleSpecifier, version);
+    }
+  }
+  return rewritten;
 }
 
 function rewriteImports(context) {
@@ -21,16 +36,7 @@ function rewriteImports(context) {
     function visitor(node) {
       if (ts.isImportDeclaration(node)) {
         const moduleSpecifier = node.moduleSpecifier.text;
-        const isRelative = moduleSpecifier.startsWith('.');
-        let rewritten = moduleSpecifier;
-        if (isRelative) {
-          rewritten = rewrittenRelativeImport(rewritten);
-        } else {
-          const version = dependencies[moduleSpecifier];
-          if (version) {
-            rewritten = rewriteNpmImport(moduleSpecifier, version);
-          }
-        }
+        const rewritten = rewriteImportExportModuleSpecifier(moduleSpecifier, dependencies);
         if (moduleSpecifier !== rewritten) {
           return context.factory.updateImportDeclaration(
             node,
@@ -40,7 +46,23 @@ function rewriteImports(context) {
             context.factory.createStringLiteral(rewritten)
           );
         }
+      } else if (ts.isExportDeclaration(node)) {
+        const moduleSpecifier = node.moduleSpecifier?.text;
+        if (moduleSpecifier) {
+          const rewritten = rewriteImportExportModuleSpecifier(moduleSpecifier, dependencies);
+          if (moduleSpecifier !== rewritten) {
+            return context.factory.updateExportDeclaration(
+              node,
+              node.decorators,
+              node.modifiers,
+              node.isTypeOnly,
+              node.exportClause,
+              context.factory.createStringLiteral(rewritten)
+            );
+          }
+        }
       }
+
       return ts.visitEachChild(node, visitor, context);
     }
     return ts.visitNode(sourceFile, visitor);

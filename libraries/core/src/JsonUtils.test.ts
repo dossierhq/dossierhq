@@ -21,7 +21,7 @@ import {
   ok,
   PublishingEventKind,
 } from '.';
-import { expectErrorResult, expectOkResult } from './CoreTestUtils.js';
+import { expectErrorResult, expectOkResult } from './CoreTestUtils';
 
 interface CustomEdge extends Edge<{ foo: string }, ErrorType> {
   edgeProperty: string;
