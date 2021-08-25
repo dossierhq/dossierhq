@@ -29,7 +29,8 @@ module.exports = {
         argsIgnorePattern: '^_',
       },
     ],
-    'import/extensions': ['error', { js: 'always', jsx: 'always', ts: 'always', tsx: 'always' }],
-    'import/no-unresolved': ['off'],
+    //TODO figure out how to deal with imports. jest struggles with .js
+    // 'import/extensions': ['error', { js: 'always', jsx: 'always', ts: 'always', tsx: 'always' }],
+    // 'import/no-unresolved': ['off'],
   },
 };

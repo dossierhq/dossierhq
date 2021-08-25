@@ -1,6 +1,6 @@
 import type { Result } from '.';
 import { createErrorResultFromError, ErrorType, notOk, ok } from '.';
-import { expectErrorResult, expectOkResult } from './CoreTestUtils.js';
+import { expectErrorResult, expectOkResult } from './CoreTestUtils';
 
 describe('createErrorResultFromError()', () => {
   test('From generic error', () => {

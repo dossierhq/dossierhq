@@ -26,16 +26,16 @@ import type {
   JsonEntityHistory,
   JsonPublishingHistory,
   JsonPublishingResult,
-} from './JsonUtils.js';
+} from './JsonUtils';
 import {
   convertJsonConnection,
   convertJsonEdge,
   convertJsonEntityHistory,
   convertJsonPublishingHistory,
   convertJsonPublishingResult,
-} from './JsonUtils.js';
-import type { Middleware, Operation, OperationWithoutCallbacks } from './SharedClient.js';
-import { executeOperationPipeline } from './SharedClient.js';
+} from './JsonUtils';
+import type { Middleware, Operation, OperationWithoutCallbacks } from './SharedClient';
+import { executeOperationPipeline } from './SharedClient';
 
 export interface AdminClient {
   getEntity(
