@@ -256,7 +256,7 @@ describe('node()', () => {
                 }
                 fields {
                   body {
-                    blocksJson
+                    blocks
                     entities {
                       id
                     }
@@ -278,7 +278,7 @@ describe('node()', () => {
             info: { name },
             fields: {
               body: {
-                blocksJson: '[{"type":"paragraph","data":{"text":"Hello world"}}]',
+                blocks: [{ type: 'paragraph', data: { text: 'Hello world' } }],
                 entities: [],
               },
             },
@@ -338,7 +338,7 @@ describe('node()', () => {
                   }
                   fields {
                     body {
-                      blocksJson
+                      blocks
                       entities {
                         id
                         info {
@@ -363,7 +363,10 @@ describe('node()', () => {
               info: { name },
               fields: {
                 body: {
-                  blocksJson: `[{"type":"entity","data":{"id":"${barId}"}},{"type":"paragraph","data":{"text":"Hello world"}}]`,
+                  blocks: [
+                    { type: 'entity', data: { id: barId } },
+                    { type: 'paragraph', data: { text: 'Hello world' } },
+                  ],
                   entities: [{ id: barId, info: { name: barName } }],
                 },
               },

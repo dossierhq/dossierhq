@@ -182,7 +182,7 @@ function resolveFields<TContext extends SessionGraphQLContext>(
     if (isRichTextField(fieldSpec, value) && value) {
       const ids = extractEntityIdsForRichTextField(schema, fieldSpec, value);
       fields[fieldSpec.name] = {
-        blocksJson: JSON.stringify(value.blocks),
+        ...value,
         entities:
           ids.length === 0
             ? []

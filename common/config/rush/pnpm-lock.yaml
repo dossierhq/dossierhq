@@ -287,6 +287,7 @@ importers:
       '@jonasb/datadata-core': link:../core
       '@js-temporal/polyfill': 0.2.0
       graphql: 15.5.1
+      graphql-type-json: 0.3.2_graphql@15.5.1
       tslib: 2.3.1
     devDependencies:
       '@jonasb/datadata-postgres': link:../postgres
@@ -318,6 +319,7 @@ importers:
       dotenv: ^10.0.0
       eslint: ^7.32.0
       graphql: ~15.5.0
+      graphql-type-json: ~0.3.2
       prettier: 2.3.2
       tslib: ~2.3.1
       typescript: ^4.3.5
@@ -9425,6 +9427,14 @@ packages:
   /graceful-fs/4.2.8:
     resolution:
       integrity: sha512-qkIilPUYcNhJpd33n0GBXTB1MMPp14TxEsEs0pTrsSVucApsYzW5V+Q8Qxhik6KU3evy+qkAAowTByymK0avdg==
+  /graphql-type-json/0.3.2_graphql@15.5.1:
+    dependencies:
+      graphql: 15.5.1
+    dev: false
+    peerDependencies:
+      graphql: '>=0.8.0'
+    resolution:
+      integrity: sha512-J+vjof74oMlCWXSvt0DOf2APEdZOCdubEvGDUAlqH//VBYcOYsGgRW7Xzorr44LvkjiuvecWc8fChxuZZbChtg==
   /graphql-voyager/1.0.0-rc.31_028a041decaca6977558d59018476fcc:
     dependencies:
       '@f/animate': 1.0.1
