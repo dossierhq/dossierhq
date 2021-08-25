@@ -1,0 +1,14 @@
+{
+  "name": "datadata-examples-deno",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build": "deno lint -q && npm run test",
+    "test": "deno test --import-map=./config/import-map.json"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@jonasb/datadata-core": "workspace:*"
+  }
+}

@@ -5,6 +5,7 @@
     "Unpublish",
     "Upsert",
     "datadata",
+    "deno",
     "dockest",
     "jonasb",
     "postgres",
