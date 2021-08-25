@@ -13,6 +13,10 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 16.1.0
+      - name: Use deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: "1.13.2"
       - name: Disable ensureConsistentVersions for dependabot && rush update
         if: startsWith(github.ref, 'refs/heads/dependabot/npm_and_yarn')
         run: |
