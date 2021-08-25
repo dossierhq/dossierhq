@@ -1,6 +1,11 @@
 importers:
   .:
     specifiers: {}
+  ../../examples/deno:
+    devDependencies:
+      '@jonasb/datadata-core': link:../../libraries/core
+    specifiers:
+      '@jonasb/datadata-core': workspace:*
   ../../examples/foo:
     dependencies:
       '@jonasb/datadata-cli': link:../../libraries/cli

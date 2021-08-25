@@ -1,0 +1,10 @@
+{
+  "deno.enable": true,
+  "deno.importMap": "./import-map.json",
+  "deno.suggest.imports.hosts": {
+    "https://cdn.skypack.dev": false
+  },
+  "editor.defaultFormatter": "denoland.vscode-deno",
+  "cSpell.words": ["Deno", "datadata"],
+  "editor.formatOnSave": true
+}
