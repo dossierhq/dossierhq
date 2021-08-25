@@ -4,6 +4,7 @@
   "description": "",
   "scripts": {
     "build": "deno lint -q && npm run test",
+    "ci:check": "npm run build",
     "test": "deno test --import-map=./config/import-map.json"
   },
   "author": "",
