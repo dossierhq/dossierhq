@@ -14,13 +14,7 @@ import type {
   ValueItem,
   ValueTypeSpecification,
 } from '@jonasb/datadata-core';
-import {
-  FieldType,
-  isItemValueItem,
-  isRichTextField,
-  isValueTypeField,
-  notOk,
-} from '@jonasb/datadata-core';
+import { FieldType, isItemValueItem, isValueTypeField, notOk } from '@jonasb/datadata-core';
 import { Temporal } from '@js-temporal/polyfill';
 import type {
   GraphQLEnumValueConfigMap,
@@ -52,6 +46,7 @@ import {
   isOutputType,
   Kind,
 } from 'graphql';
+import { GraphQLJSON } from 'graphql-type-json';
 import {
   loadAdminEntities,
   loadAdminEntity,
@@ -360,7 +355,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       new GraphQLObjectType({
         name: 'RichText',
         fields: {
-          blocksJson: { type: new GraphQLNonNull(GraphQLString) },
+          blocks: { type: new GraphQLNonNull(GraphQLJSON) },
           entities: { type: new GraphQLList(this.getInterface('Entity')) },
         },
       })
@@ -661,7 +656,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       new GraphQLObjectType({
         name: 'AdminRichText',
         fields: {
-          blocksJson: { type: new GraphQLNonNull(GraphQLString) },
+          blocks: { type: new GraphQLNonNull(GraphQLJSON) },
           entities: { type: new GraphQLList(this.getInterface('AdminEntity')) },
         },
       })
@@ -672,7 +667,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       new GraphQLInputObjectType({
         name: 'AdminRichTextInput',
         fields: {
-          blocksJson: { type: new GraphQLNonNull(GraphQLString) },
+          blocks: { type: new GraphQLNonNull(GraphQLJSON) },
         },
       })
     );
@@ -988,6 +983,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
           fieldType = GraphQLString;
           break;
         case FieldType.ValueType: {
+          //TODO use GraphQLJSON. Is it still needed or is normal fieldType enough?
           fields[`${fieldSpec.name}Json`] = { type: GraphQLString };
 
           fieldType = this.getValueInputType(fieldSpec.valueTypes ?? []);
@@ -1225,19 +1221,6 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         const fieldSpec = isEntity
           ? this.schema.getEntityFieldSpecification(typeSpec, fieldName)
           : this.schema.getValueFieldSpecification(typeSpec, fieldName);
-
-        // Decode RichText field
-        if (fieldSpec && isRichTextField(fieldSpec, fieldValue) && fieldValue) {
-          if (typeof fieldValue !== 'object') {
-            throw new Error(`${fieldPrefix}: Expected object, got ${typeof fieldValue}`);
-          }
-          const { blocksJson, ...nonBlocks } = fieldValue as unknown as { blocksJson: string };
-          fields[fieldName] = {
-            ...nonBlocks,
-            blocks: this.decodeJsonInputField(fieldPrefix + '.blocksJson', blocksJson),
-          };
-          continue;
-        }
 
         // Traverse into value items
         if (fieldSpec && isValueTypeField(fieldSpec, fieldValue) && fieldValue) {

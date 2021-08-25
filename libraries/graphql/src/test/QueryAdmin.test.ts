@@ -596,7 +596,7 @@ describe('adminEntity()', () => {
               ... on AdminQueryAdminFoo {
                 fields {
                   body {
-                    blocksJson
+                    blocks
                     entities {
                       id
                     }
@@ -624,7 +624,7 @@ describe('adminEntity()', () => {
             },
             fields: {
               body: {
-                blocksJson: '[{"type":"paragraph","data":{"text":"Hello foo world"}}]',
+                blocks: [{ type: 'paragraph', data: { text: 'Hello foo world' } }],
                 entities: [],
               },
             },
@@ -695,7 +695,7 @@ describe('adminEntity()', () => {
                 ... on AdminQueryAdminFoo {
                   fields {
                     body {
-                      blocksJson
+                      blocks
                       entities {
                         id
                         info {
@@ -724,7 +724,17 @@ describe('adminEntity()', () => {
               },
               fields: {
                 body: {
-                  blocksJson: `[{"type":"entity","data":{"id":"${bar1Id}"}},{"type":"valueItem","data":{"type":"QueryAdminStringedBar","text":"Hello","bar":{"id":"${bar2Id}"}}}]`,
+                  blocks: [
+                    { type: 'entity', data: { id: bar1Id } },
+                    {
+                      type: 'valueItem',
+                      data: {
+                        type: 'QueryAdminStringedBar',
+                        text: 'Hello',
+                        bar: { id: bar2Id },
+                      },
+                    },
+                  ],
                   entities: [
                     { id: bar1Id, info: { name: bar1Name } },
                     { id: bar2Id, info: { name: bar2Name } },

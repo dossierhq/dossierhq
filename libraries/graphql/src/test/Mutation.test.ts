@@ -312,7 +312,7 @@ describe('create*Entity()', () => {
                   title
                   summary
                   body {
-                    blocksJson
+                    blocks
                   }
                 }
               }
@@ -328,10 +328,10 @@ describe('create*Entity()', () => {
               title: 'Foo title',
               summary: 'Foo summary',
               body: {
-                blocksJson: JSON.stringify([
+                blocks: [
                   { type: RichTextBlockType.paragraph, data: { text: 'Hello world' } },
                   { type: RichTextBlockType.entity, data: { id: barId } },
-                ]),
+                ],
               },
             },
           },
@@ -360,7 +360,10 @@ describe('create*Entity()', () => {
                 title: 'Foo title',
                 summary: 'Foo summary',
                 body: {
-                  blocksJson: `[{"type":"paragraph","data":{"text":"Hello world"}},{"type":"entity","data":{"id":"${barId}"}}]`,
+                  blocks: [
+                    { type: 'paragraph', data: { text: 'Hello world' } },
+                    { type: 'entity', data: { id: barId } },
+                  ],
                 },
               },
             },
