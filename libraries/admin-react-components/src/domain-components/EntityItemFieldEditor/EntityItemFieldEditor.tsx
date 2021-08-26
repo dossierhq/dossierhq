@@ -33,6 +33,8 @@ export function EntityItemFieldEditor({
     [onChange, handleClose]
   );
 
+  //TODO handle error
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { entity, entityError } = useEntity(value?.id);
 
   return (

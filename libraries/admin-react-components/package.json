@@ -10,7 +10,7 @@
     "./main.css": "./lib/main.css"
   },
   "scripts": {
-    "build": "heft build",
+    "build": "heft build --clean",
     "build:watch": "heft build --watch",
     "clean": "heft clean",
     "ci:check": "npm run test && npm run prettier:check && npm run storybook:build",

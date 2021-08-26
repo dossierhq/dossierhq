@@ -19,6 +19,8 @@ export function EntityList({
   const count = defaultCount;
   const { useSearchEntities } = useContext(DataDataContext);
   const [paging, setPaging] = useState<Paging>({ first: count });
+  //TODO handle error
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { connection, connectionError } = useSearchEntities(query ?? {}, paging);
 
   const handleStart = useMemo(() => {
