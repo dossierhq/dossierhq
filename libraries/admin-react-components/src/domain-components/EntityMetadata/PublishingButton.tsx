@@ -103,6 +103,8 @@ async function executeHandler(
   handler: PublishAction['handler']
 ) {
   setLoading(true);
+  //TODO handle result
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const result = await handler();
   setLoading(false);
 }

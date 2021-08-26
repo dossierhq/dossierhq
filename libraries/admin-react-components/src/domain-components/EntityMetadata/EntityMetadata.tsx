@@ -148,6 +148,8 @@ function PublishButton({
 
   const handleItemClick = async ({ key }: DropDownItem) => {
     if (key === 'publish') {
+      //TODO handle result
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const result = await publishEntities([{ id: entityId, version }]);
     }
     //TODO handle error and loading
