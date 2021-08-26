@@ -2,13 +2,13 @@
   "name": "@jonasb/datadata-server",
   "version": "0.1.1-23",
   "description": "",
-  "main": "./lib/index.js",
-  "types": "./lib/index.d.ts",
+  "main": "./lib/cjs/index.js",
+  "types": "./lib/cjs/index.d.ts",
   "exports": {
-    ".": "./lib/index.js"
+    ".": "./lib/cjs/index.js"
   },
   "scripts": {
-    "build": "heft build",
+    "build": "heft build --clean && ./deno-build.js",
     "build:watch": "heft build --watch",
     "clean": "heft clean",
     "ci:check": "npm run test && npm run prettier:check",
