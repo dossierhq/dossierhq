@@ -4,7 +4,7 @@ require("dotenv").config({
 });
 const { Pool } = require("pg");
 
-const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+const pool = new Pool({ connectionString: process.env.HOST_ROOT_DATABASE_URL ?? process.env.DOCKER_ROOT_DATABASE_URL });
 
 function shutDown() {
   return pool.end();

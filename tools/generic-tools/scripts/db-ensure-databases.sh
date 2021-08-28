@@ -5,30 +5,10 @@ set -e -u
 
 THIS_DIR="$(pushd "$(dirname "$0")" > /dev/null; pwd; popd > /dev/null)"
 
-function exec_in_container {
-  docker-compose -p "${DOCKER_PROJECT_NAME}" exec -T "${DOCKER_POSTGRES_SERVICE}" "$@"
-}
-
-function psql_in_container {
-  exec_in_container psql -d "$DOCKER_ROOT_DATABASE_URL" "$@"
-}
-
-function psql_in_host {
-  psql -d "$HOST_ROOT_DATABASE_URL" "$@"
-}
-
-function psql_somewhere {
-  if [ -n "${HOST_ROOT_DATABASE_URL+x}" ]; then
-    psql_in_host "$@"
-  else
-    psql_in_container "$@"
-  fi
-}
-
 function create_user {
   USERNAME="$1"
   PASSWORD="$2"
-  psql_somewhere <<EOF
+  "$THIS_DIR/db-psql-root.sh" <<EOF
 SELECT 'CREATE USER ${USERNAME} WITH PASSWORD ''${PASSWORD}''' WHERE NOT EXISTS (SELECT FROM pg_catalog.pg_roles WHERE rolname = '${USERNAME}')
 \gexec
 EOF
@@ -36,7 +16,7 @@ EOF
 
 function create_database {
   DATABASE_NAME="$1"
-  psql_somewhere <<EOF
+  "$THIS_DIR/db-psql-root.sh" <<EOF
 SELECT 'CREATE DATABASE "${DATABASE_NAME}"' WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = '${DATABASE_NAME}')
 \gexec
 EOF
@@ -45,7 +25,7 @@ EOF
 function grant_access_for_user {
   DATABASE_NAME="$1"
   USERNAME="$2"
-  psql_somewhere -c "GRANT CREATE ON DATABASE \"${DATABASE_NAME}\" TO ${USERNAME}"
+  "$THIS_DIR/db-psql-root.sh" -c "GRANT CREATE ON DATABASE \"${DATABASE_NAME}\" TO ${USERNAME}"
 }
 
 (
