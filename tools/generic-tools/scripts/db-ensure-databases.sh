@@ -10,13 +10,25 @@ function exec_in_container {
 }
 
 function psql_in_container {
-  exec_in_container psql -d "$DATABASE_URL" "$@"
+  exec_in_container psql -d "$DOCKER_ROOT_DATABASE_URL" "$@"
+}
+
+function psql_in_host {
+  psql -d "$HOST_ROOT_DATABASE_URL" "$@"
+}
+
+function psql_somewhere {
+  if [ -n "${HOST_ROOT_DATABASE_URL+x}" ]; then
+    psql_in_host "$@"
+  else
+    psql_in_container "$@"
+  fi
 }
 
 function create_user {
   USERNAME="$1"
   PASSWORD="$2"
-  psql_in_container <<EOF
+  psql_somewhere <<EOF
 SELECT 'CREATE USER ${USERNAME} WITH PASSWORD ''${PASSWORD}''' WHERE NOT EXISTS (SELECT FROM pg_catalog.pg_roles WHERE rolname = '${USERNAME}')
 \gexec
 EOF
@@ -24,7 +36,7 @@ EOF
 
 function create_database {
   DATABASE_NAME="$1"
-  psql_in_container <<EOF
+  psql_somewhere <<EOF
 SELECT 'CREATE DATABASE "${DATABASE_NAME}"' WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = '${DATABASE_NAME}')
 \gexec
 EOF
@@ -33,7 +45,7 @@ EOF
 function grant_access_for_user {
   DATABASE_NAME="$1"
   USERNAME="$2"
-  psql_in_container -c "GRANT CREATE ON DATABASE \"${DATABASE_NAME}\" TO ${USERNAME}"
+  psql_somewhere -c "GRANT CREATE ON DATABASE \"${DATABASE_NAME}\" TO ${USERNAME}"
 }
 
 (
@@ -44,6 +56,10 @@ function grant_access_for_user {
   create_user "servertestuser" "servertestpass"
   create_database "datadata-server"
   grant_access_for_user "datadata-server" "servertestuser"
+
+  create_user "examplesdenouser" "examplesdenopass"
+  create_database "datadata-examples-deno"
+  grant_access_for_user "datadata-examples-deno" "examplesdenouser"
 
   create_user "examplesfoouser" "examplesfoopass"
   create_database "datadata-examples-foo"
