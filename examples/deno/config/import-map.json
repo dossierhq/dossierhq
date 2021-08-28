@@ -1,6 +1,6 @@
 {
   "imports": {
-    "@jonasb/datadata-core": "../../../libraries/core/lib/deno/index.js",
+    "@jonasb/datadata-core": "../node_modules/@jonasb/datadata-core/lib/deno/index.js",
     "@js-temporal/polyfill": "https://esm.sh/@js-temporal/polyfill@~0.2.0",
     "std/": "https://deno.land/std@0.106.0/"
   }
