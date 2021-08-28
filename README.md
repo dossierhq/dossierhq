@@ -17,11 +17,13 @@
 
 - `rush update` to install dependencies.
 - In `tools/generic-tools/`:
-  - `npm run db:start`
+  - By default the databases (test and example databases on PostgreSQL) are configured in Docker. To use another db set the env variable `HOST_ROOT_DATABASE_URL`
+  - `npm run db:start` (only if running db in Docker)
   - `npm run db:ensure-dbs`
   - `npm run db:make-users:superuser`
   - `npm run db:migrate:all`
   - `npm run db:make-users:no-superuser`
+- `rush build`
 - `rush ci:check`
 
 ## Dependencies
