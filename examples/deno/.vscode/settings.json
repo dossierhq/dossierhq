@@ -1,6 +1,6 @@
 {
   "deno.enable": true,
-  "deno.importMap": "./import-map.json",
+  "deno.importMap": "./config/import-map.json",
   "deno.suggest.imports.hosts": {
     "https://cdn.skypack.dev": false
   },
