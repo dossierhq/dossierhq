@@ -4,8 +4,10 @@ importers:
   ../../examples/deno:
     devDependencies:
       '@jonasb/datadata-core': link:../../libraries/core
+      '@jonasb/datadata-server': link:../../libraries/server
     specifiers:
       '@jonasb/datadata-core': workspace:*
+      '@jonasb/datadata-server': workspace:*
   ../../examples/foo:
     dependencies:
       '@jonasb/datadata-cli': link:../../libraries/cli
