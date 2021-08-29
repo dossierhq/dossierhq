@@ -6,6 +6,7 @@ import type {
   SchemaSpecification,
 } from '@jonasb/datadata-core';
 import { CoreTestUtils, Schema } from '@jonasb/datadata-core';
+import { createPostgresAdapter } from '@jonasb/datadata-database-adapter-postgres-pg';
 import {
   createServerAdminClient,
   createServerPublishedClient,
@@ -48,7 +49,8 @@ export async function setUpServerWithSession(
 }
 
 async function setUpRealServerWithSession(schemaSpecification: Partial<SchemaSpecification>) {
-  const server = await createTestServer();
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const server = await createTestServer(createPostgresAdapter(process.env.DATABASE_URL!));
   const context = await ensureSessionContext(server, 'test', 'identifier');
   const subjectId = context.session.subjectId;
   const adminClient = createServerAdminClient({ context });

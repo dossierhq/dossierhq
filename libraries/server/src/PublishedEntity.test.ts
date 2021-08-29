@@ -1,9 +1,9 @@
 import type { AdminClient, PublishedClient } from '@jonasb/datadata-core';
-import { CoreTestUtils, ErrorType, FieldType, EntityPublishState } from '@jonasb/datadata-core';
-import { createServerAdminClient, createServerPublishedClient } from '.';
+import { CoreTestUtils, EntityPublishState, ErrorType, FieldType } from '@jonasb/datadata-core';
 import type { Server, SessionContext } from '.';
-import { createTestServer, ensureSessionContext, updateSchema } from './ServerTestUtils';
-import { expectResultValue } from './test/AdditionalTestUtils';
+import { createServerAdminClient, createServerPublishedClient } from '.';
+import { ensureSessionContext, updateSchema } from './ServerTestUtils';
+import { createPostgresTestServer, expectResultValue } from './test/AdditionalTestUtils';
 
 const { expectErrorResult, expectOkResult } = CoreTestUtils;
 
@@ -13,7 +13,7 @@ let adminClient: AdminClient;
 let publishedClient: PublishedClient;
 
 beforeAll(async () => {
-  server = await createTestServer();
+  server = await createPostgresTestServer();
   context = await ensureSessionContext(server, 'test', 'published-entity');
   adminClient = createServerAdminClient({ context });
   publishedClient = createServerPublishedClient({ context });
