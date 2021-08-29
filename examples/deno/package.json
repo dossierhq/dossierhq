@@ -5,12 +5,16 @@
   "scripts": {
     "build": "deno lint -q && (npm run test 2>&1)",
     "ci:check": "npm run build",
+    "db:cli": "./scripts/db-cli.sh",
+    "db:migrate": "./scripts/db-migrate.sh",
     "test": "deno test --import-map=./config/import-map.json"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@jonasb/datadata-core": "workspace:*",
+    "@jonasb/datadata-database-adapter-core": "workspace:*",
+    "@jonasb/datadata-postgres": "workspace:*",
     "@jonasb/datadata-server": "workspace:*"
   }
 }

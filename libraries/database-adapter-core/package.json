@@ -8,7 +8,7 @@
     ".": "./lib/cjs/index.js"
   },
   "scripts": {
-    "build": "heft build --clean",
+    "build": "heft build --clean && ./deno-build.js",
     "build:watch": "heft build --watch",
     "clean": "heft clean",
     "ci:check": "npm run build && npm run prettier:check",

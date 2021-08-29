@@ -25,6 +25,7 @@ function set_user_superuser {
   SUPER_OR_NO_SUPERUSER="$1"
 
   set_user_superuser "servertestuser" "$SUPER_OR_NO_SUPERUSER"
+  set_user_superuser "examplesdenouser" "$SUPER_OR_NO_SUPERUSER"
   set_user_superuser "examplesfoouser" "$SUPER_OR_NO_SUPERUSER"
   set_user_superuser "examplesnextwebuser" "$SUPER_OR_NO_SUPERUSER"
   set_user_superuser "graphqltestuser" "$SUPER_OR_NO_SUPERUSER"
