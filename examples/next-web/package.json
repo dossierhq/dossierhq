@@ -26,6 +26,7 @@
     "@jonasb/datadata-admin-react-components": "workspace:*",
     "@jonasb/datadata-cli": "workspace:*",
     "@jonasb/datadata-core": "workspace:*",
+    "@jonasb/datadata-database-adapter-postgres-pg": "workspace:*",
     "@jonasb/datadata-graphql": "workspace:*",
     "@jonasb/datadata-server": "workspace:*",
     "@editorjs/checklist": "~1.3.0",

@@ -1,5 +1,6 @@
 import 'dotenv/config';
 import { notOk, ok } from '@jonasb/datadata-core';
+import { createPostgresAdapter } from '@jonasb/datadata-database-adapter-postgres-pg';
 import type { SessionGraphQLContext } from '@jonasb/datadata-graphql';
 import { GraphQLSchemaGenerator } from '@jonasb/datadata-graphql';
 import type { AuthContext } from '@jonasb/datadata-server';
@@ -78,7 +79,8 @@ async function startServer(server: Server, authContext: AuthContext, port: numbe
 
 async function main(port: number) {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const server = new Server({ databaseUrl: process.env.DATABASE_URL! });
+  const databaseAdapter = createPostgresAdapter(process.env.DATABASE_URL!);
+  const server = new Server({ databaseAdapter });
   const authContext = server.createAuthContext();
   await server.reloadSchema(authContext);
   await startServer(server, authContext, port);

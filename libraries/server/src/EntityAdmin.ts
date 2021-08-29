@@ -181,7 +181,7 @@ async function withUniqueNameAttempt<TResult>(
 
       return result;
     } catch (error) {
-      if (Db.isUniqueViolationOfConstraint(error, 'entities_name_key')) {
+      if (Db.isUniqueViolationOfConstraint(context, error, 'entities_name_key')) {
         potentiallyModifiedName = `${name}#${Math.random().toFixed(8).slice(2)}`;
         continue;
       }
@@ -298,7 +298,7 @@ async function createEntityRow(
     );
     return ok({ uuid, actualName, entityId, createdAt, updatedAt });
   } catch (error) {
-    if (Db.isUniqueViolationOfConstraint(error, 'entities_uuid_key')) {
+    if (Db.isUniqueViolationOfConstraint(context, error, 'entities_uuid_key')) {
       return notOk.Conflict(`Entity with id (${id}) already exist`);
     }
     throw error;
