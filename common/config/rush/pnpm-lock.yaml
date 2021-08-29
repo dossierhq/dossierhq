@@ -4,9 +4,13 @@ importers:
   ../../examples/deno:
     devDependencies:
       '@jonasb/datadata-core': link:../../libraries/core
+      '@jonasb/datadata-database-adapter-core': link:../../libraries/database-adapter-core
+      '@jonasb/datadata-postgres': link:../../libraries/postgres
       '@jonasb/datadata-server': link:../../libraries/server
     specifiers:
       '@jonasb/datadata-core': workspace:*
+      '@jonasb/datadata-database-adapter-core': workspace:*
+      '@jonasb/datadata-postgres': workspace:*
       '@jonasb/datadata-server': workspace:*
   ../../examples/foo:
     dependencies:

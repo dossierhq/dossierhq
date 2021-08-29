@@ -134,7 +134,6 @@ function handleDiagnosticErrors(errors) {
   throw new Error();
 }
 
-// main().catch(() => process.exit(1));
 buildTypescript(process.cwd()).catch((error) => {
   console.log(error);
   process.exit(1);

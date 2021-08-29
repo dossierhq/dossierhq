@@ -1,10 +1,12 @@
 {
   "deno.enable": true,
+  "deno.lint": true,
   "deno.importMap": "./config/import-map.json",
   "deno.suggest.imports.hosts": {
     "https://cdn.skypack.dev": false
   },
   "editor.defaultFormatter": "denoland.vscode-deno",
-  "cSpell.words": ["Deno", "datadata"],
-  "editor.formatOnSave": true
+  "cSpell.words": ["Deno", "Postgres", "datadata", "queryable"],
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2
 }

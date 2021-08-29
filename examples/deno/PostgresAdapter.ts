@@ -1,0 +1,113 @@
+import type { ErrorType, PromiseResult } from "@jonasb/datadata-core";
+import type {
+  DatabaseAdapter,
+  Queryable,
+} from "@jonasb/datadata-database-adapter-core";
+import { Pool, Transaction } from "postgres";
+
+// PgTypes.setTypeParser(PgTypes.builtins.INT8, BigInt);
+// // 1016 = _int8 (int8 array)
+// PgTypes.setTypeParser(1016, (value) => PgTypes.arrayParser(value, BigInt));
+// PgTypes.setTypeParser(PgTypes.builtins.TIMESTAMPTZ, (value) => {
+//   if (value === "-infinity") return Number.NEGATIVE_INFINITY;
+//   if (value === "infinity") return Number.POSITIVE_INFINITY;
+//   return Temporal.Instant.from(value);
+// });
+
+interface QueryableWrapper extends Queryable {
+  wrapped: Transaction;
+}
+
+function getTransaction(queryable: Queryable): Transaction {
+  return (queryable as QueryableWrapper).wrapped;
+}
+
+export function createPostgresAdapter(databaseUrl: string): DatabaseAdapter {
+  const pool = new Pool(databaseUrl, 4, true);
+  const adapter: DatabaseAdapter = {
+    disconnect: () => pool.end(),
+    withRootTransaction: (callback) => withRootTransaction(pool, callback),
+    withNestedTransaction,
+    query: async (transactionQueryable, query, values) => {
+      let result: { rows: unknown[] };
+      if (transactionQueryable) {
+        result = await getTransaction(transactionQueryable).queryObject(
+          query,
+          ...(values ?? []),
+        );
+      } else {
+        const poolClient = await pool.connect();
+        try {
+          result = await poolClient.queryObject(query, ...(values ?? []));
+        } finally {
+          poolClient.release();
+        }
+      }
+      // deno-lint-ignore no-explicit-any
+      return result.rows as any[];
+    },
+    isUniqueViolationOfConstraint,
+  };
+  return adapter;
+}
+
+async function withRootTransaction<TOk, TError extends ErrorType>(
+  pool: Pool,
+  callback: (queryable: Queryable) => PromiseResult<TOk, TError>,
+): PromiseResult<TOk, TError> {
+  const client = await pool.connect();
+  const transaction = client.createTransaction("transaction name");
+  const clientWrapper: QueryableWrapper = {
+    _type: "Queryable",
+    wrapped: transaction,
+  };
+  try {
+    await transaction.begin();
+    const result = await callback(clientWrapper);
+    if (result.isOk()) {
+      await transaction.commit();
+    } else {
+      await transaction.rollback();
+    }
+    return result;
+  } catch (e) {
+    await transaction.rollback();
+    throw e;
+  } finally {
+    client.release();
+  }
+}
+
+async function withNestedTransaction<TOk, TError extends ErrorType>(
+  queryable: Queryable,
+  callback: () => PromiseResult<TOk, TError>,
+): PromiseResult<TOk, TError> {
+  const parentTransaction = getTransaction(queryable);
+  try {
+    await parentTransaction.queryArray("BEGIN");
+    const result = await callback();
+    if (result.isOk()) {
+      await parentTransaction.queryArray("COMMIT");
+    } else {
+      await parentTransaction.queryArray("ROLLBACK");
+    }
+    return result;
+  } catch (e) {
+    await parentTransaction.queryArray("ROLLBACK");
+    throw e;
+  }
+}
+
+function isUniqueViolationOfConstraint(
+  _error: unknown,
+  _constraintName: string,
+): boolean {
+  throw new Error("TODO");
+  // const unique_violation = "23505";
+  // return false;
+  //TODO   (
+  //     error instanceof DatabaseError &&
+  //     error.code === unique_violation &&
+  //     error.constraint === constraintName
+  //   );
+}
