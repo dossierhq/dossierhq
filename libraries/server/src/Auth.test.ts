@@ -2,7 +2,7 @@ import { CoreTestUtils, ErrorType } from '@jonasb/datadata-core';
 import { validate as validateUuid } from 'uuid';
 import type { AuthContext, Server } from '.';
 import { Auth } from '.';
-import { createTestServer } from './ServerTestUtils';
+import { createPostgresTestServer } from './test/AdditionalTestUtils';
 
 const { expectErrorResult, expectOkResult } = CoreTestUtils;
 
@@ -10,7 +10,7 @@ let server: Server;
 let context: AuthContext;
 
 beforeAll(async () => {
-  server = await createTestServer();
+  server = await createPostgresTestServer();
   context = server.createAuthContext();
 });
 afterAll(async () => {

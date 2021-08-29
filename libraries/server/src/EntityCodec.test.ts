@@ -2,7 +2,8 @@ import { FieldType, RichTextBlockType } from '@jonasb/datadata-core';
 import type { Server } from '.';
 import type { SessionContext } from './Context';
 import { forTest } from './EntityCodec';
-import { createTestServer, ensureSessionContext, updateSchema } from './ServerTestUtils';
+import { ensureSessionContext, updateSchema } from './ServerTestUtils';
+import { createPostgresTestServer } from './test/AdditionalTestUtils';
 
 const { collectDataFromEntity } = forTest;
 
@@ -10,7 +11,7 @@ let server: Server;
 let context: SessionContext;
 
 beforeAll(async () => {
-  server = await createTestServer();
+  server = await createPostgresTestServer();
   context = await ensureSessionContext(server, 'test', 'entity-codec');
 
   await updateSchema(context, {

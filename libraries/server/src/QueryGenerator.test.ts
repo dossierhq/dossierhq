@@ -2,7 +2,8 @@ import { CoreTestUtils, ErrorType, QueryOrder } from '@jonasb/datadata-core';
 import type { Server, SessionContext } from '.';
 import { toOpaqueCursor } from './Connection';
 import { searchAdminEntitiesQuery, totalAdminEntitiesQuery } from './QueryGenerator';
-import { createTestServer, ensureSessionContext, updateSchema } from './ServerTestUtils';
+import { ensureSessionContext, updateSchema } from './ServerTestUtils';
+import { createPostgresTestServer } from './test/AdditionalTestUtils';
 
 const { expectErrorResult } = CoreTestUtils;
 
@@ -10,7 +11,7 @@ let server: Server;
 let context: SessionContext;
 
 beforeAll(async () => {
-  server = await createTestServer();
+  server = await createPostgresTestServer();
   context = await ensureSessionContext(server, 'test', 'query-generator');
   await updateSchema(context, {
     entityTypes: [

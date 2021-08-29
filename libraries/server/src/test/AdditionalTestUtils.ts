@@ -7,10 +7,18 @@ import type {
   Result,
 } from '@jonasb/datadata-core';
 import { assertIsDefined, CoreTestUtils } from '@jonasb/datadata-core';
+import { createPostgresAdapter } from '@jonasb/datadata-database-adapter-postgres-pg';
 import { Temporal } from '@js-temporal/polyfill';
 import { v4 as uuidv4 } from 'uuid';
+import type { Server } from '..';
+import { ServerTestUtils } from '..';
 
 const { expectOkResult } = CoreTestUtils;
+
+export async function createPostgresTestServer(): Promise<Server> {
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  return await ServerTestUtils.createTestServer(createPostgresAdapter(process.env.DATABASE_URL!));
+}
 
 export function expectResultValue<TOk, TError extends ErrorType>(
   result: Result<TOk, TError>,

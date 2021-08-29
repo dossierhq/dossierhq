@@ -22,8 +22,9 @@ import {
 import { validate as validateUuid } from 'uuid';
 import type { Server, SessionContext } from '.';
 import { createServerAdminClient, createServerPublishedClient } from '.';
-import { createTestServer, ensureSessionContext, updateSchema } from './ServerTestUtils';
+import { ensureSessionContext, updateSchema } from './ServerTestUtils';
 import {
+  createPostgresTestServer,
   expectEntityHistoryVersions,
   expectResultValue,
   expectSearchResultEntities,
@@ -63,7 +64,7 @@ const emptyBazFields = {
 };
 
 beforeAll(async () => {
-  server = await createTestServer();
+  server = await createPostgresTestServer();
   context = await ensureSessionContext(server, 'test', 'entity-admin');
   client = createServerAdminClient({ context });
   publishedClient = createServerPublishedClient({ context });
