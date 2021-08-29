@@ -12,6 +12,7 @@ importers:
     dependencies:
       '@jonasb/datadata-cli': link:../../libraries/cli
       '@jonasb/datadata-core': link:../../libraries/core
+      '@jonasb/datadata-database-adapter-postgres-pg': link:../../libraries/database-adapter-postgres-pg
       '@jonasb/datadata-graphql': link:../../libraries/graphql
       '@jonasb/datadata-server': link:../../libraries/server
       dotenv: 10.0.0
@@ -31,6 +32,7 @@ importers:
     specifiers:
       '@jonasb/datadata-cli': workspace:*
       '@jonasb/datadata-core': workspace:*
+      '@jonasb/datadata-database-adapter-postgres-pg': workspace:*
       '@jonasb/datadata-graphql': workspace:*
       '@jonasb/datadata-postgres': workspace:*
       '@jonasb/datadata-server': workspace:*
@@ -58,6 +60,7 @@ importers:
       '@jonasb/datadata-admin-react-components': link:../../libraries/admin-react-components
       '@jonasb/datadata-cli': link:../../libraries/cli
       '@jonasb/datadata-core': link:../../libraries/core
+      '@jonasb/datadata-database-adapter-postgres-pg': link:../../libraries/database-adapter-postgres-pg
       '@jonasb/datadata-graphql': link:../../libraries/graphql
       '@jonasb/datadata-server': link:../../libraries/server
       debug: 4.3.2
@@ -91,6 +94,7 @@ importers:
       '@jonasb/datadata-admin-react-components': workspace:*
       '@jonasb/datadata-cli': workspace:*
       '@jonasb/datadata-core': workspace:*
+      '@jonasb/datadata-database-adapter-postgres-pg': workspace:*
       '@jonasb/datadata-graphql': workspace:*
       '@jonasb/datadata-postgres': workspace:*
       '@jonasb/datadata-server': workspace:*
@@ -233,6 +237,7 @@ importers:
   ../../libraries/cli:
     dependencies:
       '@jonasb/datadata-core': link:../core
+      '@jonasb/datadata-database-adapter-postgres-pg': link:../database-adapter-postgres-pg
       '@jonasb/datadata-server': link:../server
       chalk: 4.1.2
       inquirer: 8.1.2
@@ -247,6 +252,7 @@ importers:
       typescript: 4.3.5
     specifiers:
       '@jonasb/datadata-core': workspace:*
+      '@jonasb/datadata-database-adapter-postgres-pg': workspace:*
       '@jonasb/datadata-server': workspace:*
       '@rushstack/heft': ~0.36.1
       '@types/inquirer': ^7.3.1
@@ -284,9 +290,60 @@ importers:
       prettier: 2.3.2
       tslib: ~2.3.1
       typescript: ^4.3.5
+  ../../libraries/database-adapter-core:
+    dependencies:
+      '@jonasb/datadata-core': link:../core
+      tslib: 2.3.1
+    devDependencies:
+      '@rushstack/heft': 0.36.3
+      '@typescript-eslint/eslint-plugin': 4.29.2_b01b7137116ac50f0745961d9cf72d34
+      '@typescript-eslint/parser': 4.29.2_eslint@7.32.0+typescript@4.3.5
+      eslint: 7.32.0
+      prettier: 2.3.2
+      typescript: 4.3.5
+    specifiers:
+      '@jonasb/datadata-core': workspace:*
+      '@rushstack/heft': ~0.36.1
+      '@typescript-eslint/eslint-plugin': ^4.29.1
+      '@typescript-eslint/parser': ^4.29.1
+      eslint: ^7.32.0
+      prettier: 2.3.2
+      tslib: ~2.3.1
+      typescript: ^4.3.5
+  ../../libraries/database-adapter-postgres-pg:
+    dependencies:
+      '@jonasb/datadata-core': link:../core
+      '@jonasb/datadata-database-adapter-core': link:../database-adapter-core
+      '@js-temporal/polyfill': 0.2.0
+      pg: 8.7.1
+      tslib: 2.3.1
+    devDependencies:
+      '@rushstack/heft': 0.36.3
+      '@types/heft-jest': 1.0.2
+      '@types/pg': 8.6.1
+      '@typescript-eslint/eslint-plugin': 4.29.2_b01b7137116ac50f0745961d9cf72d34
+      '@typescript-eslint/parser': 4.29.2_eslint@7.32.0+typescript@4.3.5
+      eslint: 7.32.0
+      prettier: 2.3.2
+      typescript: 4.3.5
+    specifiers:
+      '@jonasb/datadata-core': workspace:*
+      '@jonasb/datadata-database-adapter-core': workspace:*
+      '@js-temporal/polyfill': ~0.2.0
+      '@rushstack/heft': ~0.36.1
+      '@types/heft-jest': 1.0.2
+      '@types/pg': ^8.6.1
+      '@typescript-eslint/eslint-plugin': ^4.29.1
+      '@typescript-eslint/parser': ^4.29.1
+      eslint: ^7.32.0
+      pg: ^8.7.1
+      prettier: 2.3.2
+      tslib: ~2.3.1
+      typescript: ^4.3.5
   ../../libraries/graphql:
     dependencies:
       '@jonasb/datadata-core': link:../core
+      '@jonasb/datadata-database-adapter-postgres-pg': link:../database-adapter-postgres-pg
       '@js-temporal/polyfill': 0.2.0
       graphql: 15.5.1
       graphql-type-json: 0.3.2_graphql@15.5.1
@@ -308,6 +365,7 @@ importers:
       uuid: 8.3.2
     specifiers:
       '@jonasb/datadata-core': workspace:*
+      '@jonasb/datadata-database-adapter-postgres-pg': workspace:*
       '@jonasb/datadata-postgres': workspace:*
       '@jonasb/datadata-server': workspace:*
       '@jonasb/datadata-testing-utils': workspace:*
@@ -338,11 +396,11 @@ importers:
   ../../libraries/server:
     dependencies:
       '@jonasb/datadata-core': link:../core
+      '@jonasb/datadata-database-adapter-core': link:../database-adapter-core
       '@js-temporal/polyfill': 0.2.0
-      '@types/pg': 8.6.1
-      pg: 8.7.1
       tslib: 2.3.1
     devDependencies:
+      '@jonasb/datadata-database-adapter-postgres-pg': link:../database-adapter-postgres-pg
       '@jonasb/datadata-postgres': link:../postgres
       '@rushstack/heft': 0.36.3
       '@rushstack/heft-jest-plugin': 0.1.20_@rushstack+heft@0.36.3
@@ -357,18 +415,18 @@ importers:
       uuid: 8.3.2
     specifiers:
       '@jonasb/datadata-core': workspace:*
+      '@jonasb/datadata-database-adapter-core': workspace:*
+      '@jonasb/datadata-database-adapter-postgres-pg': workspace:*
       '@jonasb/datadata-postgres': workspace:*
       '@js-temporal/polyfill': ~0.2.0
       '@rushstack/heft': ~0.36.1
       '@rushstack/heft-jest-plugin': ~0.1.18
       '@types/heft-jest': 1.0.2
-      '@types/pg': ^8.6.1
       '@types/uuid': ~8.3.1
       '@typescript-eslint/eslint-plugin': ^4.29.1
       '@typescript-eslint/parser': ^4.29.1
       dotenv: ^10.0.0
       eslint: ^7.32.0
-      pg: ^8.7.1
       prettier: 2.3.2
       tslib: ~2.3.1
       typescript: ^4.3.5
@@ -4766,7 +4824,7 @@ packages:
       '@types/node': 16.7.1
       pg-protocol: 1.5.0
       pg-types: 2.2.0
-    dev: false
+    dev: true
     resolution:
       integrity: sha512-1Kc4oAGzAl7uqUStZCDvaLFqZrW9qWSjXOmBfdgyBP5La7Us6Mg4GBvRlSoaZMhQF/zSj1C8CtKMBkoiT8eL8w==
   /@types/prettier/1.19.1:
@@ -13464,7 +13522,6 @@ packages:
     resolution:
       integrity: sha512-r5o/V/ORTA6TmUnyWZR9nCj1klXCO2CEKNRlVuJptZe85QuhFayC7WeMic7ndayT5IRIR0S0xFxFi2ousartlQ==
   /pg-int8/1.0.1:
-    dev: false
     engines:
       node: '>=4.0.0'
     resolution:
@@ -13478,7 +13535,6 @@ packages:
     resolution:
       integrity: sha512-TVHxR/gf3MeJRvchgNHxsYsTCHQ+4wm3VIHSS19z8NC0+gioEhq1okDY1sm/TYbfoP6JLFx01s0ShvZ3puP/iQ==
   /pg-protocol/1.5.0:
-    dev: false
     resolution:
       integrity: sha512-muRttij7H8TqRNu/DxrAJQITO4Ac7RmX3Klyr/9mJEOBeIpgnF8f9jAfRz5d3XwQZl5qBjF9gLsUtMPJE0vezQ==
   /pg-types/2.2.0:
@@ -13488,7 +13544,6 @@ packages:
       postgres-bytea: 1.0.0
       postgres-date: 1.0.7
       postgres-interval: 1.2.0
-    dev: false
     engines:
       node: '>=4'
     resolution:
@@ -13782,19 +13837,16 @@ packages:
     resolution:
       integrity: sha512-i19t0YozLUpxXQ+G96YlYXRGx8nX0ExTyloG5A/1HnPG6sCf0Y2hZsBBKsBcb9rouG6AUn3lwsCFD3O7FMDmBA==
   /postgres-array/2.0.0:
-    dev: false
     engines:
       node: '>=4'
     resolution:
       integrity: sha512-VpZrUqU5A69eQyW2c5CA1jtLecCsN2U/bD6VilrFDWq5+5UIEVO7nazS3TEcHf1zuPYO/sqGvUvW62g86RXZuA==
   /postgres-bytea/1.0.0:
-    dev: false
     engines:
       node: '>=0.10.0'
     resolution:
       integrity: sha1-AntTPAqokOJtFy1Hz5zOzFIazTU=
   /postgres-date/1.0.7:
-    dev: false
     engines:
       node: '>=0.10.0'
     resolution:
@@ -13802,7 +13854,6 @@ packages:
   /postgres-interval/1.2.0:
     dependencies:
       xtend: 4.0.2
-    dev: false
     engines:
       node: '>=0.10.0'
     resolution:

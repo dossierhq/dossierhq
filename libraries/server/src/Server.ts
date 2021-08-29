@@ -1,22 +1,22 @@
 import type { ErrorType, PromiseResult, Schema } from '@jonasb/datadata-core';
+import { assertIsDefined } from '@jonasb/datadata-core';
 import type { AuthContext, Context, Session, SessionContext } from '.';
+import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter-core';
 import { AuthContextImpl, SessionContextImpl } from './Context';
-import type { Pool } from './Database';
-import * as Db from './Database';
 import { getSchema, setSchema } from './Schema';
 
 export default class Server {
-  #pool: Pool | null;
+  #databaseAdapter: DatabaseAdapter | null;
   #schema: Schema | null = null;
 
-  constructor({ databaseUrl }: { databaseUrl: string }) {
-    this.#pool = Db.connect(databaseUrl);
+  constructor({ databaseAdapter }: { databaseAdapter: DatabaseAdapter }) {
+    this.#databaseAdapter = databaseAdapter;
   }
 
   async shutdown(): Promise<void> {
-    if (this.#pool) {
-      await Db.disconnect(this.#pool);
-      this.#pool = null;
+    if (this.#databaseAdapter) {
+      await this.#databaseAdapter.disconnect();
+      this.#databaseAdapter = null;
     } else {
       throw new Error('Trying to shutdown twice');
     }
@@ -45,12 +45,12 @@ export default class Server {
   }
 
   createAuthContext(): AuthContext {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    return new AuthContextImpl(this, this.#pool!);
+    assertIsDefined(this.#databaseAdapter);
+    return new AuthContextImpl(this, this.#databaseAdapter);
   }
 
   createSessionContext(session: Session): SessionContext {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    return new SessionContextImpl(this, session, this.#pool!);
+    assertIsDefined(this.#databaseAdapter);
+    return new SessionContextImpl(this, session, this.#databaseAdapter);
   }
 }

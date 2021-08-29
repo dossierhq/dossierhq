@@ -1,12 +1,11 @@
 import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
+import type { DatabaseAdapter, Queryable } from '@jonasb/datadata-database-adapter-core';
 import type { Server, Session } from '.';
-import type { Pool, Queryable } from './Database';
-import * as Db from './Database';
 
 export interface Context<TContext> {
   readonly server: Server;
-  readonly pool: Pool;
-  readonly queryable: Queryable;
+  readonly databaseAdapter: DatabaseAdapter;
+  readonly transactionQueryable: Queryable | null;
 
   withTransaction<TOk, TError extends ErrorType>(
     callback: (context: TContext) => PromiseResult<TOk, TError>
@@ -29,13 +28,13 @@ export interface SessionContext extends Context<SessionContext> {
 
 abstract class ContextImpl<TContext> implements Context<TContext> {
   readonly server: Server;
-  readonly pool: Pool;
-  readonly queryable: Queryable;
+  readonly databaseAdapter: DatabaseAdapter;
+  readonly transactionQueryable: Queryable | null;
 
-  constructor(server: Server, pool: Pool, transactionQueryable: Queryable | null) {
+  constructor(server: Server, databaseAdapter: DatabaseAdapter, queryable: Queryable | null) {
     this.server = server;
-    this.pool = pool;
-    this.queryable = transactionQueryable ?? pool;
+    this.databaseAdapter = databaseAdapter;
+    this.transactionQueryable = queryable;
   }
 
   protected abstract copyWithNewQueryable(transactionQueryable: Queryable): TContext;
@@ -43,14 +42,17 @@ abstract class ContextImpl<TContext> implements Context<TContext> {
   async withTransaction<TOk, TError extends ErrorType>(
     callback: (context: TContext) => PromiseResult<TOk, TError>
   ): PromiseResult<TOk, TError> {
-    if (this.pool !== this.queryable) {
+    if (this.transactionQueryable) {
       // Already in transaction
-      return await Db.withNestedTransaction(this, async () => {
-        return callback(this as unknown as TContext);
-      });
+      return await this.databaseAdapter.withNestedTransaction(
+        this.transactionQueryable,
+        async () => {
+          return callback(this as unknown as TContext);
+        }
+      );
     }
 
-    return await Db.withRootTransaction(this, async (client) => {
+    return await this.databaseAdapter.withRootTransaction(async (client) => {
       const context = this.copyWithNewQueryable(client);
       return callback(context);
     });
@@ -58,12 +60,16 @@ abstract class ContextImpl<TContext> implements Context<TContext> {
 }
 
 export class AuthContextImpl extends ContextImpl<AuthContext> implements AuthContext {
-  constructor(server: Server, pool: Pool, transactionQueryable: Queryable | null = null) {
-    super(server, pool, transactionQueryable);
+  constructor(
+    server: Server,
+    databaseAdapter: DatabaseAdapter,
+    transactionQueryable: Queryable | null = null
+  ) {
+    super(server, databaseAdapter, transactionQueryable);
   }
 
   protected copyWithNewQueryable(transactionQueryable: Queryable): AuthContext {
-    return new AuthContextImpl(this.server, this.pool, transactionQueryable);
+    return new AuthContextImpl(this.server, this.databaseAdapter, transactionQueryable);
   }
 }
 
@@ -73,14 +79,19 @@ export class SessionContextImpl extends ContextImpl<SessionContext> implements S
   constructor(
     server: Server,
     session: Session,
-    pool: Pool,
+    databaseAdapter: DatabaseAdapter,
     transactionQueryable: Queryable | null = null
   ) {
-    super(server, pool, transactionQueryable);
+    super(server, databaseAdapter, transactionQueryable);
     this.session = session;
   }
 
   protected copyWithNewQueryable(transactionQueryable: Queryable): SessionContext {
-    return new SessionContextImpl(this.server, this.session, this.pool, transactionQueryable);
+    return new SessionContextImpl(
+      this.server,
+      this.session,
+      this.databaseAdapter,
+      transactionQueryable
+    );
   }
 }

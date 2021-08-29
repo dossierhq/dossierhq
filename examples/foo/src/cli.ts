@@ -1,6 +1,7 @@
 import 'dotenv/config';
 import { CliAuth, CliContext, CliMain } from '@jonasb/datadata-cli';
 import { Schema } from '@jonasb/datadata-core';
+import { createPostgresAdapter } from '@jonasb/datadata-database-adapter-postgres-pg';
 import type { Session } from '@jonasb/datadata-server';
 import {
   createServerAdminClient,
@@ -11,7 +12,8 @@ import SchemaSpec from './schema.json';
 
 async function main() {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const server = new Server({ databaseUrl: process.env.DATABASE_URL! });
+  const databaseAdapter = createPostgresAdapter(process.env.DATABASE_URL!);
+  const server = new Server({ databaseAdapter });
   try {
     let session: Session | null = null;
     while (!session) {

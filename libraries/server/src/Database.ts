@@ -1,23 +1,4 @@
-import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
-import { Temporal } from '@js-temporal/polyfill';
-import type {
-  QueryArrayConfig,
-  QueryArrayResult,
-  QueryConfig,
-  QueryResult,
-  QueryResultRow,
-} from 'pg';
-import { DatabaseError, Pool as PgPool, types as PgTypes } from 'pg';
 import type { Context } from '.';
-
-PgTypes.setTypeParser(PgTypes.builtins.INT8, BigInt);
-// 1016 = _int8 (int8 array)
-PgTypes.setTypeParser(1016, (value) => PgTypes.arrayParser(value, BigInt));
-PgTypes.setTypeParser(PgTypes.builtins.TIMESTAMPTZ, (value) => {
-  if (value === '-infinity') return Number.NEGATIVE_INFINITY;
-  if (value === 'infinity') return Number.POSITIVE_INFINITY;
-  return Temporal.Instant.from(value);
-});
 
 export class UnexpectedQuantityError extends Error {
   readonly actual: number;
@@ -29,123 +10,41 @@ export class UnexpectedQuantityError extends Error {
   }
 }
 
-type PgQueryable = Pick<PgPool, 'query'>;
-
-export interface Queryable {
-  _type: 'Queryable' | 'Pool';
+interface QueryConfig {
+  text: string;
+  values: unknown[];
 }
 
-export interface Pool extends Queryable {
-  _type: 'Pool';
-}
-
-interface QueryableWrapper extends Queryable {
-  wrapped: PgQueryable;
-}
-
-interface PoolWrapper extends Pool {
-  wrapped: PgPool;
-}
-
-function getQueryable(context: Context<unknown>): PgQueryable {
-  return (context.queryable as QueryableWrapper).wrapped;
-}
-
-function getPool(context: Context<unknown>): PgPool {
-  return (context.pool as PoolWrapper).wrapped;
-}
-
-export function connect(databaseUrl: string): Pool {
-  const wrapper: PoolWrapper = {
-    _type: 'Pool',
-    wrapped: new PgPool({
-      connectionString: databaseUrl,
-    }),
-  };
-  return wrapper;
-}
-
-export function disconnect(pool: Pool): Promise<void> {
-  return (pool as PoolWrapper).wrapped.end();
-}
-
-export async function withRootTransaction<TOk, TError extends ErrorType>(
-  context: Context<unknown>,
-  callback: (queryable: Queryable) => PromiseResult<TOk, TError>
-): PromiseResult<TOk, TError> {
-  const client = await getPool(context).connect();
-  const clientWrapper: QueryableWrapper = { _type: 'Queryable', wrapped: client };
-  try {
-    await client.query('BEGIN');
-    const result = await callback(clientWrapper);
-    if (result.isOk()) {
-      await client.query('COMMIT');
-    } else {
-      await client.query('ROLLBACK');
-    }
-    return result;
-  } catch (e) {
-    await client.query('ROLLBACK');
-    throw e;
-  } finally {
-    client.release();
+function normalizeQueryArguments(
+  queryTextOrConfig: string | QueryConfig,
+  values?: unknown[]
+): [string, unknown[] | undefined] {
+  if (typeof queryTextOrConfig === 'string') {
+    return [queryTextOrConfig, values];
   }
+  return [queryTextOrConfig.text, queryTextOrConfig.values];
 }
 
-export async function withNestedTransaction<TOk, TError extends ErrorType>(
+export function isUniqueViolationOfConstraint(
   context: Context<unknown>,
-  callback: () => PromiseResult<TOk, TError>
-): PromiseResult<TOk, TError> {
-  const queryable = getQueryable(context);
-  try {
-    await queryable.query('BEGIN');
-    const result = await callback();
-    if (result.isOk()) {
-      await queryable.query('COMMIT');
-    } else {
-      await queryable.query('ROLLBACK');
-    }
-    return result;
-  } catch (e) {
-    await queryable.query('ROLLBACK');
-    throw e;
-  }
-}
-
-export function isUniqueViolationOfConstraint(error: unknown, constraintName: string): boolean {
-  const unique_violation = '23505';
-  return (
-    error instanceof DatabaseError &&
-    error.code === unique_violation &&
-    error.constraint === constraintName
-  );
-}
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function query<R extends QueryResultRow = any, I extends any[] = any[]>(
-  context: Context<unknown>,
-  queryTextOrConfig: string | QueryConfig<I>,
-  values?: I
-): Promise<QueryResult<R>> {
-  return getQueryable(context).query(queryTextOrConfig, values);
-}
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function queryArray<R extends any[] = any[], I extends any[] = any[]>(
-  context: Context<unknown>,
-  queryConfig: QueryArrayConfig<I>,
-  values?: I
-): Promise<QueryArrayResult<R>> {
-  return getQueryable(context).query(queryConfig, values);
+  error: unknown,
+  constraintName: string
+): boolean {
+  return context.databaseAdapter.isUniqueViolationOfConstraint(error, constraintName);
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function queryNone<I extends any[] = any[]>(
   context: Context<unknown>,
-  queryTextOrConfig: string | QueryConfig<I>,
+  queryTextOrConfig: string | QueryConfig,
   values?: I
 ): Promise<void> {
-  const { rows } = await getQueryable(context).query(queryTextOrConfig, values);
+  const [queryText, queryValues] = normalizeQueryArguments(queryTextOrConfig, values);
+  const rows = await context.databaseAdapter.query(
+    context.transactionQueryable,
+    queryText,
+    queryValues
+  );
   if (!rows || rows.length === 0) {
     return;
   }
@@ -153,12 +52,18 @@ export async function queryNone<I extends any[] = any[]>(
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export async function queryNoneOrOne<R extends QueryResultRow = any, I extends any[] = any[]>(
+export async function queryNoneOrOne<R = any, I extends any[] = any[]>(
   context: Context<unknown>,
-  queryTextOrConfig: string | QueryConfig<I>,
+  queryTextOrConfig: string | QueryConfig,
   values?: I
 ): Promise<R | null> {
-  const { rows } = await getQueryable(context).query(queryTextOrConfig, values);
+  const [queryText, queryValues] = normalizeQueryArguments(queryTextOrConfig, values);
+  const rows = await context.databaseAdapter.query<R>(
+    context.transactionQueryable,
+    queryText,
+    queryValues
+  );
+
   if (rows.length === 0) {
     return null;
   }
@@ -169,12 +74,17 @@ export async function queryNoneOrOne<R extends QueryResultRow = any, I extends a
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export async function queryOne<R extends QueryResultRow = any, I extends any[] = any[]>(
+export async function queryOne<R, I extends any[] = any[]>(
   context: Context<unknown>,
-  queryTextOrConfig: string | QueryConfig<I>,
+  queryTextOrConfig: string | QueryConfig,
   values?: I
 ): Promise<R> {
-  const { rows } = await getQueryable(context).query(queryTextOrConfig, values);
+  const [queryText, queryValues] = normalizeQueryArguments(queryTextOrConfig, values);
+  const rows = await context.databaseAdapter.query<R>(
+    context.transactionQueryable,
+    queryText,
+    queryValues
+  );
   if (rows.length !== 1) {
     throw new UnexpectedQuantityError(`Expected 1 row, got ${rows.length}`, rows.length);
   }
@@ -182,11 +92,16 @@ export async function queryOne<R extends QueryResultRow = any, I extends any[] =
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export async function queryMany<R extends QueryResultRow = any, I extends any[] = any[]>(
+export async function queryMany<R, I extends any[] = any[]>(
   context: Context<unknown>,
-  queryTextOrConfig: string | QueryConfig<I>,
+  queryTextOrConfig: string | QueryConfig,
   values?: I
 ): Promise<R[]> {
-  const { rows } = await getQueryable(context).query(queryTextOrConfig, values);
+  const [queryText, queryValues] = normalizeQueryArguments(queryTextOrConfig, values);
+  const rows = await context.databaseAdapter.query<R>(
+    context.transactionQueryable,
+    queryText,
+    queryValues
+  );
   return rows;
 }

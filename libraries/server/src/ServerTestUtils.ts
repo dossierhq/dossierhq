@@ -1,11 +1,13 @@
 import type { SchemaSpecification } from '@jonasb/datadata-core';
+import { createPostgresAdapter } from '@jonasb/datadata-database-adapter-postgres-pg';
 import { Schema } from '@jonasb/datadata-core';
 import type { SessionContext } from '.';
 import { Auth, Server } from '.';
 
 export async function createTestServer(): Promise<Server> {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const server = new Server({ databaseUrl: process.env.DATABASE_URL! });
+  const databaseAdapter = createPostgresAdapter(process.env.DATABASE_URL!);
+  const server = new Server({ databaseAdapter });
   return server;
 }
 

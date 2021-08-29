@@ -1,0 +1,1 @@
+export { createPostgresAdapter } from './PgDatabaseAdapter';

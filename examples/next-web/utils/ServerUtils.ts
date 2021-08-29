@@ -1,5 +1,6 @@
 import type { AdminClient, ErrorType, PromiseResult, PublishedClient } from '@jonasb/datadata-core';
 import { ok, Schema } from '@jonasb/datadata-core';
+import { createPostgresAdapter } from '@jonasb/datadata-database-adapter-postgres-pg';
 import type { AuthContext } from '@jonasb/datadata-server';
 import {
   Auth,
@@ -41,8 +42,8 @@ export async function getSessionContextForRequest(
 export async function getServerConnection(): Promise<{ server: Server; authContext: AuthContext }> {
   if (!serverConnectionPromise) {
     serverConnectionPromise = (async () => {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      const server = new Server({ databaseUrl: process.env.DATABASE_URL! });
+      const databaseAdapter = createPostgresAdapter(process.env.DATABASE_URL!);
+      const server = new Server({ databaseAdapter });
       const authContext = server.createAuthContext();
 
       const session = await ensureSession(authContext, 'sys', 'schemaloader');
