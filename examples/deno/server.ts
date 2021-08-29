@@ -16,8 +16,7 @@ const sessionResult = await Auth.createSessionForPrincipal(
   { createPrincipalIfMissing: true },
 );
 if (sessionResult.isOk()) {
-  // const context =
-  server.createSessionContext(sessionResult.value);
+  const _context = server.createSessionContext(sessionResult.value);
 }
 
 await server.shutdown();
