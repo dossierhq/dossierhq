@@ -1,5 +1,5 @@
 import { Server } from "@jonasb/datadata-server";
-import { createAuthTestSuite } from "@jonasb/datadata-database-adapter-test";
+import { createAuthTestSuite } from "@jonasb/datadata-database-adapter-test-integration";
 import { createDotenvAdapter } from "../ServerUtils.ts";
 import { registerTestSuite } from "./TestUtils.ts";
 

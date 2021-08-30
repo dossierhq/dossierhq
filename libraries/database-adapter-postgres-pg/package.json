@@ -31,7 +31,7 @@
     "url": "git+https://github.com/jonasb/datadata.git"
   },
   "devDependencies": {
-    "@jonasb/datadata-database-adapter-test": "workspace:*",
+    "@jonasb/datadata-database-adapter-test-integration": "workspace:*",
     "@jonasb/datadata-postgres": "workspace:*",
     "@rushstack/heft-jest-plugin": "~0.1.18",
     "@rushstack/heft": "~0.36.1",
