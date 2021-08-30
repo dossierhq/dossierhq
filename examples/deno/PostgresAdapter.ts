@@ -1,8 +1,8 @@
 import type { ErrorType, PromiseResult } from "@jonasb/datadata-core";
-import type { DatabaseAdapter, Queryable } from "@jonasb/datadata-server";
+import type { DatabaseAdapter, Transaction } from "@jonasb/datadata-server";
 import type { PostgresDatabaseAdapter } from "@jonasb/datadata-database-adapter-postgres-core";
 import { createPostgresDatabaseAdapterAdapter } from "@jonasb/datadata-database-adapter-postgres-core";
-import { Pool, Transaction } from "postgres";
+import { Pool, Transaction as PgTransaction } from "postgres";
 
 //TODO
 // PgTypes.setTypeParser(PgTypes.builtins.INT8, BigInt);
@@ -14,12 +14,12 @@ import { Pool, Transaction } from "postgres";
 //   return Temporal.Instant.from(value);
 // });
 
-interface QueryableWrapper extends Queryable {
-  wrapped: Transaction;
+interface TransactionWrapper extends Transaction {
+  wrapped: PgTransaction;
 }
 
-function getTransaction(queryable: Queryable): Transaction {
-  return (queryable as QueryableWrapper).wrapped;
+function getTransaction(transaction: Transaction): PgTransaction {
+  return (transaction as TransactionWrapper).wrapped;
 }
 
 export function createPostgresAdapter(databaseUrl: string): DatabaseAdapter {
@@ -28,10 +28,10 @@ export function createPostgresAdapter(databaseUrl: string): DatabaseAdapter {
     disconnect: () => pool.end(),
     withRootTransaction: (callback) => withRootTransaction(pool, callback),
     withNestedTransaction,
-    query: async (transactionQueryable, query, values) => {
+    query: async (transaction, query, values) => {
       let result: { rows: unknown[] };
-      if (transactionQueryable) {
-        result = await getTransaction(transactionQueryable).queryObject(
+      if (transaction) {
+        result = await getTransaction(transaction).queryObject(
           query,
           ...(values ?? []),
         );
@@ -53,12 +53,12 @@ export function createPostgresAdapter(databaseUrl: string): DatabaseAdapter {
 
 async function withRootTransaction<TOk, TError extends ErrorType>(
   pool: Pool,
-  callback: (queryable: Queryable) => PromiseResult<TOk, TError>,
+  callback: (transaction: Transaction) => PromiseResult<TOk, TError>,
 ): PromiseResult<TOk, TError> {
   const client = await pool.connect();
   const transaction = client.createTransaction("transaction name");
-  const clientWrapper: QueryableWrapper = {
-    _type: "Queryable",
+  const clientWrapper: TransactionWrapper = {
+    _type: "Transaction",
     wrapped: transaction,
   };
   try {
@@ -79,10 +79,10 @@ async function withRootTransaction<TOk, TError extends ErrorType>(
 }
 
 async function withNestedTransaction<TOk, TError extends ErrorType>(
-  queryable: Queryable,
+  transaction: Transaction,
   callback: () => PromiseResult<TOk, TError>,
 ): PromiseResult<TOk, TError> {
-  const parentTransaction = getTransaction(queryable);
+  const parentTransaction = getTransaction(transaction);
   try {
     await parentTransaction.queryArray("BEGIN");
     const result = await callback();

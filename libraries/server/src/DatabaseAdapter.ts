@@ -1,15 +1,19 @@
 import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
 import type { Context, Session } from '.';
 
+export interface Transaction {
+  _type: 'Transaction';
+}
+
 export interface DatabaseAdapter {
   disconnect(): Promise<void>;
 
   withRootTransaction<TOk, TError extends ErrorType>(
-    callback: (queryable: Queryable) => PromiseResult<TOk, TError>
+    callback: (transaction: Transaction) => PromiseResult<TOk, TError>
   ): PromiseResult<TOk, TError>;
 
   withNestedTransaction<TOk, TError extends ErrorType>(
-    queryable: Queryable,
+    transaction: Transaction,
     callback: () => PromiseResult<TOk, TError>
   ): PromiseResult<TOk, TError>;
 
@@ -21,15 +25,11 @@ export interface DatabaseAdapter {
 
   // TODO remove when migrated away
   queryLegacy<R = unknown>(
-    transactionQueryable: Queryable | null,
+    transaction: Transaction | null,
     query: string,
     values: unknown[] | undefined
   ): Promise<R[]>;
 
   //TODO remove when migrated away
   isUniqueViolationOfConstraint(error: unknown, constraintName: string): boolean;
-}
-
-export interface Queryable {
-  _type: 'Queryable';
 }

@@ -1,11 +1,11 @@
 import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
-import type { DatabaseAdapter, Queryable, Server, Session } from '.';
+import type { DatabaseAdapter, Transaction, Server, Session } from '.';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export interface Context<TContext extends Context<any> = Context<any>> {
   readonly server: Server;
   readonly databaseAdapter: DatabaseAdapter;
-  readonly transactionQueryable: Queryable | null;
+  readonly transaction: Transaction | null;
 
   withTransaction<TOk, TError extends ErrorType>(
     callback: (context: TContext) => PromiseResult<TOk, TError>
@@ -30,31 +30,28 @@ export interface SessionContext extends Context<SessionContext> {
 abstract class ContextImpl<TContext extends Context<any>> implements Context<TContext> {
   readonly server: Server;
   readonly databaseAdapter: DatabaseAdapter;
-  readonly transactionQueryable: Queryable | null;
+  readonly transaction: Transaction | null;
 
-  constructor(server: Server, databaseAdapter: DatabaseAdapter, queryable: Queryable | null) {
+  constructor(server: Server, databaseAdapter: DatabaseAdapter, transaction: Transaction | null) {
     this.server = server;
     this.databaseAdapter = databaseAdapter;
-    this.transactionQueryable = queryable;
+    this.transaction = transaction;
   }
 
-  protected abstract copyWithNewQueryable(transactionQueryable: Queryable): TContext;
+  protected abstract copyWithNewTransaction(transaction: Transaction): TContext;
 
   async withTransaction<TOk, TError extends ErrorType>(
     callback: (context: TContext) => PromiseResult<TOk, TError>
   ): PromiseResult<TOk, TError> {
-    if (this.transactionQueryable) {
+    if (this.transaction) {
       // Already in transaction
-      return await this.databaseAdapter.withNestedTransaction(
-        this.transactionQueryable,
-        async () => {
-          return callback(this as unknown as TContext);
-        }
-      );
+      return await this.databaseAdapter.withNestedTransaction(this.transaction, async () => {
+        return callback(this as unknown as TContext);
+      });
     }
 
     return await this.databaseAdapter.withRootTransaction(async (client) => {
-      const context = this.copyWithNewQueryable(client);
+      const context = this.copyWithNewTransaction(client);
       return callback(context);
     });
   }
@@ -64,13 +61,13 @@ export class AuthContextImpl extends ContextImpl<AuthContext> implements AuthCon
   constructor(
     server: Server,
     databaseAdapter: DatabaseAdapter,
-    transactionQueryable: Queryable | null = null
+    transaction: Transaction | null = null
   ) {
-    super(server, databaseAdapter, transactionQueryable);
+    super(server, databaseAdapter, transaction);
   }
 
-  protected copyWithNewQueryable(transactionQueryable: Queryable): AuthContext {
-    return new AuthContextImpl(this.server, this.databaseAdapter, transactionQueryable);
+  protected copyWithNewTransaction(transaction: Transaction): AuthContext {
+    return new AuthContextImpl(this.server, this.databaseAdapter, transaction);
   }
 }
 
@@ -81,18 +78,13 @@ export class SessionContextImpl extends ContextImpl<SessionContext> implements S
     server: Server,
     session: Session,
     databaseAdapter: DatabaseAdapter,
-    transactionQueryable: Queryable | null = null
+    transaction: Transaction | null = null
   ) {
-    super(server, databaseAdapter, transactionQueryable);
+    super(server, databaseAdapter, transaction);
     this.session = session;
   }
 
-  protected copyWithNewQueryable(transactionQueryable: Queryable): SessionContext {
-    return new SessionContextImpl(
-      this.server,
-      this.session,
-      this.databaseAdapter,
-      transactionQueryable
-    );
+  protected copyWithNewTransaction(transaction: Transaction): SessionContext {
+    return new SessionContextImpl(this.server, this.session, this.databaseAdapter, transaction);
   }
 }

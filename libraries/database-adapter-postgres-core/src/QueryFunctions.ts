@@ -8,7 +8,7 @@ export async function queryNone(
   query: string,
   values?: unknown[]
 ): PromiseResult<void, ErrorType.Generic> {
-  const rows = await adapter.query(context.transactionQueryable, query, values);
+  const rows = await adapter.query(context.transaction, query, values);
   if (rows.length !== 0) {
     return notOk.Generic(`Expected 0 rows, got ${rows.length}`);
   }
@@ -21,7 +21,7 @@ export async function queryOne<R>(
   query: string,
   values?: unknown[]
 ): PromiseResult<R, ErrorType.Generic> {
-  const rows = await adapter.query<R>(context.transactionQueryable, query, values);
+  const rows = await adapter.query<R>(context.transaction, query, values);
   if (rows.length !== 1) {
     return notOk.Generic(`Expected 1 row, got ${rows.length}`);
   }
