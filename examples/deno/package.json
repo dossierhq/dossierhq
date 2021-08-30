@@ -15,6 +15,7 @@
   "devDependencies": {
     "@jonasb/datadata-core": "workspace:*",
     "@jonasb/datadata-database-adapter-core": "workspace:*",
+    "@jonasb/datadata-database-adapter-test": "workspace:*",
     "@jonasb/datadata-postgres": "workspace:*",
     "@jonasb/datadata-server": "workspace:*"
   }

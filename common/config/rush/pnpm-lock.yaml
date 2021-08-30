@@ -5,11 +5,13 @@ importers:
     devDependencies:
       '@jonasb/datadata-core': link:../../libraries/core
       '@jonasb/datadata-database-adapter-core': link:../../libraries/database-adapter-core
+      '@jonasb/datadata-database-adapter-test': link:../../libraries/database-adapter-test
       '@jonasb/datadata-postgres': link:../../libraries/postgres
       '@jonasb/datadata-server': link:../../libraries/server
     specifiers:
       '@jonasb/datadata-core': workspace:*
       '@jonasb/datadata-database-adapter-core': workspace:*
+      '@jonasb/datadata-database-adapter-test': workspace:*
       '@jonasb/datadata-postgres': workspace:*
       '@jonasb/datadata-server': workspace:*
   ../../examples/foo:
@@ -323,6 +325,7 @@ importers:
       pg: 8.7.1
       tslib: 2.3.1
     devDependencies:
+      '@jonasb/datadata-database-adapter-test': link:../database-adapter-test
       '@jonasb/datadata-postgres': link:../postgres
       '@rushstack/heft': 0.36.3
       '@rushstack/heft-jest-plugin': 0.1.20_@rushstack+heft@0.36.3
@@ -339,6 +342,7 @@ importers:
     specifiers:
       '@jonasb/datadata-core': workspace:*
       '@jonasb/datadata-database-adapter-core': workspace:*
+      '@jonasb/datadata-database-adapter-test': workspace:*
       '@jonasb/datadata-postgres': workspace:*
       '@jonasb/datadata-server': workspace:*
       '@js-temporal/polyfill': ~0.2.0
@@ -356,6 +360,28 @@ importers:
       tslib: ~2.3.1
       typescript: ^4.3.5
       uuid: ^8.3.2
+  ../../libraries/database-adapter-test:
+    dependencies:
+      '@js-temporal/polyfill': 0.2.0
+      tslib: 2.3.1
+    devDependencies:
+      '@rushstack/heft': 0.36.3
+      '@typescript-eslint/eslint-plugin': 4.29.2_b01b7137116ac50f0745961d9cf72d34
+      '@typescript-eslint/parser': 4.29.2_eslint@7.32.0+typescript@4.3.5
+      eslint: 7.32.0
+      eslint-plugin-import: 2.24.1_eslint@7.32.0
+      prettier: 2.3.2
+      typescript: 4.3.5
+    specifiers:
+      '@js-temporal/polyfill': ~0.2.0
+      '@rushstack/heft': ~0.36.1
+      '@typescript-eslint/eslint-plugin': ^4.29.1
+      '@typescript-eslint/parser': ^4.29.1
+      eslint: ^7.32.0
+      eslint-plugin-import: ~2.24.1
+      prettier: 2.3.2
+      tslib: ~2.3.1
+      typescript: ^4.3.5
   ../../libraries/graphql:
     dependencies:
       '@jonasb/datadata-core': link:../core

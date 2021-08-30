@@ -383,6 +383,11 @@
       "versionPolicyName": "DataDataFramework"
     },
     {
+      "packageName": "@jonasb/datadata-database-adapter-test",
+      "projectFolder": "libraries/database-adapter-test",
+      "versionPolicyName": "DataDataFramework"
+    },
+    {
       "packageName": "datadata-examples-deno",
       "projectFolder": "examples/deno"
     },
