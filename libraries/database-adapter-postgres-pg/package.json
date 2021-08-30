@@ -48,7 +48,6 @@
   },
   "dependencies": {
     "@jonasb/datadata-core": "workspace:*",
-    "@jonasb/datadata-database-adapter-core": "workspace:*",
     "@jonasb/datadata-database-adapter-postgres-core": "workspace:*",
     "@jonasb/datadata-server": "workspace:*",
     "@js-temporal/polyfill": "~0.2.0",

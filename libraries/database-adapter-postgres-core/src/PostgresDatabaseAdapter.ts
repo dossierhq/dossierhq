@@ -1,5 +1,6 @@
 import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
-import type { DatabaseAdapter, Queryable } from '@jonasb/datadata-database-adapter-core';
+import type { DatabaseAdapter, Queryable } from '@jonasb/datadata-server';
+import { authCreatePrincipal } from './auth/createPrincipal';
 
 export interface PostgresDatabaseAdapter {
   disconnect(): Promise<void>;
@@ -13,7 +14,7 @@ export interface PostgresDatabaseAdapter {
     callback: () => PromiseResult<TOk, TError>
   ): PromiseResult<TOk, TError>;
 
-  query<R = unknown>(
+  query<R>(
     transactionQueryable: Queryable | null,
     query: string,
     values: unknown[] | undefined
@@ -32,5 +33,6 @@ export function createPostgresDatabaseAdapterAdapter(
     withNestedTransaction: databaseAdapter.withNestedTransaction,
     queryLegacy: databaseAdapter.query,
     isUniqueViolationOfConstraint: databaseAdapter.isUniqueViolationOfConstraint,
+    authCreatePrincipal: (...args) => authCreatePrincipal(databaseAdapter, ...args),
   };
 }

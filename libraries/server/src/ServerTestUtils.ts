@@ -1,7 +1,6 @@
 import type { SchemaSpecification } from '@jonasb/datadata-core';
 import { Schema } from '@jonasb/datadata-core';
-import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter-core';
-import type { SessionContext } from '.';
+import type { DatabaseAdapter, SessionContext } from '.';
 import { Auth, Server } from '.';
 
 export async function createTestServer(databaseAdapter: DatabaseAdapter): Promise<Server> {

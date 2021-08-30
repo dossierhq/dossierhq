@@ -40,10 +40,7 @@ async function createSessionForPrincipal(
       if (options?.createPrincipalIfMissing) {
         const creationResult = await doCreatePrincipal(context, provider, identifier);
         if (creationResult.isOk()) {
-          return creationResult.map(({ id, uuid }) => ({
-            subjectInternalId: id,
-            subjectId: uuid,
-          }));
+          return creationResult.map((it) => it);
         }
         if (creationResult.isErrorType(ErrorType.Conflict)) {
           // this should only happen if the principal is created by another request after our first check
@@ -68,40 +65,19 @@ async function createPrincipal(
   context: AuthContext,
   provider: string,
   identifier: string
-): PromiseResult<string, ErrorType.BadRequest | ErrorType.Conflict> {
+): PromiseResult<string, ErrorType.BadRequest | ErrorType.Conflict | ErrorType.Generic> {
   const result = await doCreatePrincipal(context, provider, identifier);
-  return result.isOk() ? result.map(({ uuid }) => uuid) : result;
+  return result.isOk() ? result.map(({ subjectId }) => subjectId) : result;
 }
 
 async function doCreatePrincipal(
   context: AuthContext,
   provider: string,
   identifier: string
-): PromiseResult<{ id: number; uuid: string }, ErrorType.BadRequest | ErrorType.Conflict> {
+): PromiseResult<Session, ErrorType.BadRequest | ErrorType.Conflict | ErrorType.Generic> {
   const assertion = ensureRequired({ provider, identifier });
   if (assertion.isError()) {
     return assertion;
   }
-  return await context.withTransaction(async (context) => {
-    const { id, uuid } = await Db.queryOne<Pick<SubjectsTable, 'id' | 'uuid'>>(
-      context,
-      'INSERT INTO subjects DEFAULT VALUES RETURNING id, uuid'
-    );
-    try {
-      await Db.queryNone(
-        context,
-        'INSERT INTO principals (provider, identifier, subjects_id) VALUES ($1, $2, $3)',
-        [provider, identifier, id]
-      );
-    } catch (error) {
-      if (
-        error.message ===
-        'duplicate key value violates unique constraint "principals_provider_identifier_key"'
-      ) {
-        return notOk.Conflict('Principal already exist');
-      }
-      throw error;
-    }
-    return ok({ id, uuid });
-  });
+  return await context.databaseAdapter.authCreatePrincipal(context, provider, identifier);
 }

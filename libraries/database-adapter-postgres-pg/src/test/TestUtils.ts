@@ -7,9 +7,8 @@ import type {
   Result,
 } from '@jonasb/datadata-core';
 import { assertIsDefined, CoreTestUtils } from '@jonasb/datadata-core';
-import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter-core';
-import type { TestSuite } from '@jonasb/datadata-database-adapter-test';
-import type { Server } from '@jonasb/datadata-server';
+import type { TestSuite } from '@jonasb/datadata-database-adapter-test-integration';
+import type { DatabaseAdapter, Server } from '@jonasb/datadata-server';
 import { ServerTestUtils } from '@jonasb/datadata-server';
 import { Temporal } from '@js-temporal/polyfill';
 import { v4 as uuidv4 } from 'uuid';
