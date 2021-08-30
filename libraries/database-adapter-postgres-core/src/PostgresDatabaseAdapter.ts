@@ -1,6 +1,7 @@
 import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
+import type { DatabaseAdapter, Queryable } from '@jonasb/datadata-database-adapter-core';
 
-export interface DatabaseAdapter {
+export interface PostgresDatabaseAdapter {
   disconnect(): Promise<void>;
 
   withRootTransaction<TOk, TError extends ErrorType>(
@@ -12,17 +13,24 @@ export interface DatabaseAdapter {
     callback: () => PromiseResult<TOk, TError>
   ): PromiseResult<TOk, TError>;
 
-  // TODO remove when migrated away
-  queryLegacy<R = unknown>(
+  query<R = unknown>(
     transactionQueryable: Queryable | null,
     query: string,
     values: unknown[] | undefined
   ): Promise<R[]>;
 
-  //TODO remove when migrated away
+  //TODO remove from everywhere
   isUniqueViolationOfConstraint(error: unknown, constraintName: string): boolean;
 }
 
-export interface Queryable {
-  _type: 'Queryable';
+export function createPostgresDatabaseAdapterAdapter(
+  databaseAdapter: PostgresDatabaseAdapter
+): DatabaseAdapter {
+  return {
+    disconnect: databaseAdapter.disconnect,
+    withRootTransaction: databaseAdapter.withRootTransaction,
+    withNestedTransaction: databaseAdapter.withNestedTransaction,
+    queryLegacy: databaseAdapter.query,
+    isUniqueViolationOfConstraint: databaseAdapter.isUniqueViolationOfConstraint,
+  };
 }

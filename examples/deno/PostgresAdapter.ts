@@ -3,8 +3,11 @@ import type {
   DatabaseAdapter,
   Queryable,
 } from "@jonasb/datadata-database-adapter-core";
+import type { PostgresDatabaseAdapter } from "@jonasb/datadata-database-adapter-postgres-core";
+import { createPostgresDatabaseAdapterAdapter } from "@jonasb/datadata-database-adapter-postgres-core";
 import { Pool, Transaction } from "postgres";
 
+//TODO
 // PgTypes.setTypeParser(PgTypes.builtins.INT8, BigInt);
 // // 1016 = _int8 (int8 array)
 // PgTypes.setTypeParser(1016, (value) => PgTypes.arrayParser(value, BigInt));
@@ -24,7 +27,7 @@ function getTransaction(queryable: Queryable): Transaction {
 
 export function createPostgresAdapter(databaseUrl: string): DatabaseAdapter {
   const pool = new Pool(databaseUrl, 4, true);
-  const adapter: DatabaseAdapter = {
+  const adapter: PostgresDatabaseAdapter = {
     disconnect: () => pool.end(),
     withRootTransaction: (callback) => withRootTransaction(pool, callback),
     withNestedTransaction,
@@ -48,7 +51,7 @@ export function createPostgresAdapter(databaseUrl: string): DatabaseAdapter {
     },
     isUniqueViolationOfConstraint,
   };
-  return adapter;
+  return createPostgresDatabaseAdapterAdapter(adapter);
 }
 
 async function withRootTransaction<TOk, TError extends ErrorType>(
