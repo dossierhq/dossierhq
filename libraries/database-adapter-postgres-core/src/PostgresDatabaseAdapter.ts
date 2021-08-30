@@ -1,21 +1,21 @@
 import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
-import type { DatabaseAdapter, Queryable } from '@jonasb/datadata-server';
+import type { DatabaseAdapter, Transaction } from '@jonasb/datadata-server';
 import { authCreatePrincipal } from './auth/createPrincipal';
 
 export interface PostgresDatabaseAdapter {
   disconnect(): Promise<void>;
 
   withRootTransaction<TOk, TError extends ErrorType>(
-    callback: (queryable: Queryable) => PromiseResult<TOk, TError>
+    callback: (transaction: Transaction) => PromiseResult<TOk, TError>
   ): PromiseResult<TOk, TError>;
 
   withNestedTransaction<TOk, TError extends ErrorType>(
-    queryable: Queryable,
+    transaction: Transaction,
     callback: () => PromiseResult<TOk, TError>
   ): PromiseResult<TOk, TError>;
 
   query<R>(
-    transactionQueryable: Queryable | null,
+    transaction: Transaction | null,
     query: string,
     values: unknown[] | undefined
   ): Promise<R[]>;

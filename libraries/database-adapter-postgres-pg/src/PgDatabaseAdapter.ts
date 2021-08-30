@@ -1,9 +1,9 @@
 import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
 import type { PostgresDatabaseAdapter } from '@jonasb/datadata-database-adapter-postgres-core';
 import { createPostgresDatabaseAdapterAdapter } from '@jonasb/datadata-database-adapter-postgres-core';
-import type { DatabaseAdapter, Queryable } from '@jonasb/datadata-server';
+import type { DatabaseAdapter, Transaction } from '@jonasb/datadata-server';
 import { Temporal } from '@js-temporal/polyfill';
-import { DatabaseError, Pool, types as PgTypes } from 'pg';
+import { DatabaseError, Pool, PoolClient, types as PgTypes } from 'pg';
 
 PgTypes.setTypeParser(PgTypes.builtins.INT8, BigInt);
 // 1016 = _int8 (int8 array)
@@ -14,14 +14,12 @@ PgTypes.setTypeParser(PgTypes.builtins.TIMESTAMPTZ, (value) => {
   return Temporal.Instant.from(value);
 });
 
-type PgQueryable = Pick<Pool, 'query'>;
-
-interface QueryableWrapper extends Queryable {
-  wrapped: PgQueryable;
+interface TransactionWrapper extends Transaction {
+  wrapped: PoolClient;
 }
 
-function getPgQueryable(queryable: Queryable): PgQueryable {
-  return (queryable as QueryableWrapper).wrapped;
+function getPoolClient(transaction: Transaction): PoolClient {
+  return (transaction as TransactionWrapper).wrapped;
 }
 
 export function createPostgresAdapter(databaseUrl: string): DatabaseAdapter {
@@ -30,9 +28,9 @@ export function createPostgresAdapter(databaseUrl: string): DatabaseAdapter {
     disconnect: () => pool.end(),
     withRootTransaction: (callback) => withRootTransaction(pool, callback),
     withNestedTransaction,
-    query: async (transactionQueryable, query, values) => {
-      const result = await (transactionQueryable
-        ? getPgQueryable(transactionQueryable).query(query, values)
+    query: async (transaction, query, values) => {
+      const result = await (transaction
+        ? getPoolClient(transaction).query(query, values)
         : pool.query(query, values));
       return result.rows;
     },
@@ -43,10 +41,10 @@ export function createPostgresAdapter(databaseUrl: string): DatabaseAdapter {
 
 async function withRootTransaction<TOk, TError extends ErrorType>(
   pool: Pool,
-  callback: (queryable: Queryable) => PromiseResult<TOk, TError>
+  callback: (transaction: Transaction) => PromiseResult<TOk, TError>
 ): PromiseResult<TOk, TError> {
   const client = await pool.connect();
-  const clientWrapper: QueryableWrapper = { _type: 'Queryable', wrapped: client };
+  const clientWrapper: TransactionWrapper = { _type: 'Transaction', wrapped: client };
   try {
     await client.query('BEGIN');
     const result = await callback(clientWrapper);
@@ -65,21 +63,21 @@ async function withRootTransaction<TOk, TError extends ErrorType>(
 }
 
 async function withNestedTransaction<TOk, TError extends ErrorType>(
-  queryable: Queryable,
+  transaction: Transaction,
   callback: () => PromiseResult<TOk, TError>
 ): PromiseResult<TOk, TError> {
-  const pgQueryable = getPgQueryable(queryable);
+  const client = getPoolClient(transaction);
   try {
-    await pgQueryable.query('BEGIN');
+    await client.query('BEGIN');
     const result = await callback();
     if (result.isOk()) {
-      await pgQueryable.query('COMMIT');
+      await client.query('COMMIT');
     } else {
-      await pgQueryable.query('ROLLBACK');
+      await client.query('ROLLBACK');
     }
     return result;
   } catch (e) {
-    await pgQueryable.query('ROLLBACK');
+    await client.query('ROLLBACK');
     throw e;
   }
 }

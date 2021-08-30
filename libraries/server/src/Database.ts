@@ -41,7 +41,7 @@ export async function queryNone<I extends any[] = any[]>(
 ): Promise<void> {
   const [queryText, queryValues] = normalizeQueryArguments(queryTextOrConfig, values);
   const rows = await context.databaseAdapter.queryLegacy(
-    context.transactionQueryable,
+    context.transaction,
     queryText,
     queryValues
   );
@@ -59,7 +59,7 @@ export async function queryNoneOrOne<R = any, I extends any[] = any[]>(
 ): Promise<R | null> {
   const [queryText, queryValues] = normalizeQueryArguments(queryTextOrConfig, values);
   const rows = await context.databaseAdapter.queryLegacy<R>(
-    context.transactionQueryable,
+    context.transaction,
     queryText,
     queryValues
   );
@@ -81,7 +81,7 @@ export async function queryOne<R, I extends any[] = any[]>(
 ): Promise<R> {
   const [queryText, queryValues] = normalizeQueryArguments(queryTextOrConfig, values);
   const rows = await context.databaseAdapter.queryLegacy<R>(
-    context.transactionQueryable,
+    context.transaction,
     queryText,
     queryValues
   );
@@ -99,7 +99,7 @@ export async function queryMany<R, I extends any[] = any[]>(
 ): Promise<R[]> {
   const [queryText, queryValues] = normalizeQueryArguments(queryTextOrConfig, values);
   const rows = await context.databaseAdapter.queryLegacy<R>(
-    context.transactionQueryable,
+    context.transaction,
     queryText,
     queryValues
   );

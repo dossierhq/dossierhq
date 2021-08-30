@@ -1,5 +1,5 @@
 {
-  "cSpell.words": ["Queryable", "datadata", "postgres", "rushstack", "uuidv"],
+  "cSpell.words": ["datadata", "postgres", "rushstack", "uuidv"],
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
   "editor.rulers": [100],
