@@ -2,6 +2,7 @@
   "imports": {
     "@jonasb/datadata-core": "../node_modules/@jonasb/datadata-core/lib/deno/index.js",
     "@jonasb/datadata-database-adapter-core": "../node_modules/@jonasb/datadata-database-adapter-core/lib/deno/index.js",
+    "@jonasb/datadata-database-adapter-test": "../node_modules/@jonasb/datadata-database-adapter-test/lib/deno/index.js",
     "@jonasb/datadata-server": "../node_modules/@jonasb/datadata-server/lib/deno/index.js",
     "@js-temporal/polyfill": "https://esm.sh/@js-temporal/polyfill@~0.2.0",
     "dotenv": "https://deno.land/x/dotenv@v2.0.0/mod.ts",
