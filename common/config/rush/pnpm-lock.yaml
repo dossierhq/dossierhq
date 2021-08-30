@@ -4,14 +4,12 @@ importers:
   ../../examples/deno:
     devDependencies:
       '@jonasb/datadata-core': link:../../libraries/core
-      '@jonasb/datadata-database-adapter-core': link:../../libraries/database-adapter-core
       '@jonasb/datadata-database-adapter-postgres-core': link:../../libraries/database-adapter-postgres-core
       '@jonasb/datadata-database-adapter-test-integration': link:../../libraries/database-adapter-test-integration
       '@jonasb/datadata-postgres': link:../../libraries/postgres
       '@jonasb/datadata-server': link:../../libraries/server
     specifiers:
       '@jonasb/datadata-core': workspace:*
-      '@jonasb/datadata-database-adapter-core': workspace:*
       '@jonasb/datadata-database-adapter-postgres-core': workspace:*
       '@jonasb/datadata-database-adapter-test-integration': workspace:*
       '@jonasb/datadata-postgres': workspace:*
@@ -298,30 +296,10 @@ importers:
       prettier: 2.3.2
       tslib: ~2.3.1
       typescript: ^4.3.5
-  ../../libraries/database-adapter-core:
-    dependencies:
-      '@jonasb/datadata-core': link:../core
-      tslib: 2.3.1
-    devDependencies:
-      '@rushstack/heft': 0.36.3
-      '@typescript-eslint/eslint-plugin': 4.29.2_b01b7137116ac50f0745961d9cf72d34
-      '@typescript-eslint/parser': 4.29.2_eslint@7.32.0+typescript@4.3.5
-      eslint: 7.32.0
-      prettier: 2.3.2
-      typescript: 4.3.5
-    specifiers:
-      '@jonasb/datadata-core': workspace:*
-      '@rushstack/heft': ~0.36.1
-      '@typescript-eslint/eslint-plugin': ^4.29.1
-      '@typescript-eslint/parser': ^4.29.1
-      eslint: ^7.32.0
-      prettier: 2.3.2
-      tslib: ~2.3.1
-      typescript: ^4.3.5
   ../../libraries/database-adapter-postgres-core:
     dependencies:
       '@jonasb/datadata-core': link:../core
-      '@jonasb/datadata-database-adapter-core': link:../database-adapter-core
+      '@jonasb/datadata-server': link:../server
       tslib: 2.3.1
     devDependencies:
       '@rushstack/heft': 0.36.3
@@ -332,7 +310,7 @@ importers:
       typescript: 4.3.5
     specifiers:
       '@jonasb/datadata-core': workspace:*
-      '@jonasb/datadata-database-adapter-core': workspace:*
+      '@jonasb/datadata-server': workspace:*
       '@rushstack/heft': ~0.36.1
       '@typescript-eslint/eslint-plugin': ^4.29.1
       '@typescript-eslint/parser': ^4.29.1
@@ -343,7 +321,6 @@ importers:
   ../../libraries/database-adapter-postgres-pg:
     dependencies:
       '@jonasb/datadata-core': link:../core
-      '@jonasb/datadata-database-adapter-core': link:../database-adapter-core
       '@jonasb/datadata-database-adapter-postgres-core': link:../database-adapter-postgres-core
       '@jonasb/datadata-server': link:../server
       '@js-temporal/polyfill': 0.2.0
@@ -366,7 +343,6 @@ importers:
       uuid: 8.3.2
     specifiers:
       '@jonasb/datadata-core': workspace:*
-      '@jonasb/datadata-database-adapter-core': workspace:*
       '@jonasb/datadata-database-adapter-postgres-core': workspace:*
       '@jonasb/datadata-database-adapter-test-integration': workspace:*
       '@jonasb/datadata-postgres': workspace:*
@@ -389,7 +365,6 @@ importers:
   ../../libraries/database-adapter-test-integration:
     dependencies:
       '@jonasb/datadata-core': link:../core
-      '@jonasb/datadata-database-adapter-core': link:../database-adapter-core
       '@jonasb/datadata-server': link:../server
       '@js-temporal/polyfill': 0.2.0
       tslib: 2.3.1
@@ -405,7 +380,6 @@ importers:
       typescript: 4.3.5
     specifiers:
       '@jonasb/datadata-core': workspace:*
-      '@jonasb/datadata-database-adapter-core': workspace:*
       '@jonasb/datadata-server': workspace:*
       '@js-temporal/polyfill': ~0.2.0
       '@rushstack/heft': ~0.36.1
@@ -474,7 +448,6 @@ importers:
   ../../libraries/server:
     dependencies:
       '@jonasb/datadata-core': link:../core
-      '@jonasb/datadata-database-adapter-core': link:../database-adapter-core
       '@js-temporal/polyfill': 0.2.0
       tslib: 2.3.1
     devDependencies:
@@ -489,7 +462,6 @@ importers:
       typescript: 4.3.5
     specifiers:
       '@jonasb/datadata-core': workspace:*
-      '@jonasb/datadata-database-adapter-core': workspace:*
       '@js-temporal/polyfill': ~0.2.0
       '@rushstack/heft': ~0.36.1
       '@rushstack/heft-jest-plugin': ~0.1.18

@@ -1,4 +1,5 @@
 import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
+import type { Context, Session } from '.';
 
 export interface DatabaseAdapter {
   disconnect(): Promise<void>;
@@ -11,6 +12,12 @@ export interface DatabaseAdapter {
     queryable: Queryable,
     callback: () => PromiseResult<TOk, TError>
   ): PromiseResult<TOk, TError>;
+
+  authCreatePrincipal(
+    context: Context,
+    provider: string,
+    identifier: string
+  ): PromiseResult<Session, ErrorType.Conflict | ErrorType.Generic>;
 
   // TODO remove when migrated away
   queryLegacy<R = unknown>(

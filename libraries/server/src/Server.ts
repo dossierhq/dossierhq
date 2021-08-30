@@ -1,7 +1,6 @@
 import type { ErrorType, PromiseResult, Schema } from '@jonasb/datadata-core';
 import { assertIsDefined } from '@jonasb/datadata-core';
-import type { AuthContext, Context, Session, SessionContext } from '.';
-import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter-core';
+import type { AuthContext, Context, DatabaseAdapter, Session, SessionContext } from '.';
 import { AuthContextImpl, SessionContextImpl } from './Context';
 import { getSchema, setSchema } from './Schema';
 
@@ -22,7 +21,7 @@ export default class Server {
     }
   }
 
-  async reloadSchema(context: Context<unknown>): Promise<void> {
+  async reloadSchema(context: Context): Promise<void> {
     this.#schema = await getSchema(context);
   }
 

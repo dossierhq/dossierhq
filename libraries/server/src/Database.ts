@@ -26,7 +26,7 @@ function normalizeQueryArguments(
 }
 
 export function isUniqueViolationOfConstraint(
-  context: Context<unknown>,
+  context: Context,
   error: unknown,
   constraintName: string
 ): boolean {
@@ -35,7 +35,7 @@ export function isUniqueViolationOfConstraint(
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function queryNone<I extends any[] = any[]>(
-  context: Context<unknown>,
+  context: Context,
   queryTextOrConfig: string | QueryConfig,
   values?: I
 ): Promise<void> {
@@ -53,7 +53,7 @@ export async function queryNone<I extends any[] = any[]>(
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function queryNoneOrOne<R = any, I extends any[] = any[]>(
-  context: Context<unknown>,
+  context: Context,
   queryTextOrConfig: string | QueryConfig,
   values?: I
 ): Promise<R | null> {
@@ -75,7 +75,7 @@ export async function queryNoneOrOne<R = any, I extends any[] = any[]>(
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function queryOne<R, I extends any[] = any[]>(
-  context: Context<unknown>,
+  context: Context,
   queryTextOrConfig: string | QueryConfig,
   values?: I
 ): Promise<R> {
@@ -93,7 +93,7 @@ export async function queryOne<R, I extends any[] = any[]>(
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function queryMany<R, I extends any[] = any[]>(
-  context: Context<unknown>,
+  context: Context,
   queryTextOrConfig: string | QueryConfig,
   values?: I
 ): Promise<R[]> {

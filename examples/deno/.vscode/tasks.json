@@ -4,10 +4,7 @@
     {
       "type": "npm",
       "script": "build",
-      "group": {
-        "kind": "build",
-        "isDefault": true
-      },
+      "group": "build",
       "problemMatcher": [],
       "label": "npm: build",
       "detail": "deno lint -q && (deno fmt --check 2>&1) && (npm run test 2>&1)"

@@ -1,8 +1,8 @@
 import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
-import type { DatabaseAdapter, Queryable } from '@jonasb/datadata-database-adapter-core';
-import type { Server, Session } from '.';
+import type { DatabaseAdapter, Queryable, Server, Session } from '.';
 
-export interface Context<TContext> {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export interface Context<TContext extends Context<any> = Context<any>> {
   readonly server: Server;
   readonly databaseAdapter: DatabaseAdapter;
   readonly transactionQueryable: Queryable | null;
@@ -26,7 +26,8 @@ export interface SessionContext extends Context<SessionContext> {
   ): PromiseResult<TOk, TError>;
 }
 
-abstract class ContextImpl<TContext> implements Context<TContext> {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+abstract class ContextImpl<TContext extends Context<any>> implements Context<TContext> {
   readonly server: Server;
   readonly databaseAdapter: DatabaseAdapter;
   readonly transactionQueryable: Queryable | null;

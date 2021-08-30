@@ -42,7 +42,6 @@
   },
   "dependencies": {
     "@jonasb/datadata-core": "workspace:*",
-    "@jonasb/datadata-database-adapter-core": "workspace:*",
     "@js-temporal/polyfill": "~0.2.0",
     "tslib": "~2.3.1"
   }

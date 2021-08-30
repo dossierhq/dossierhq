@@ -19,6 +19,7 @@
     "pnpm",
     "postgres",
     "queryable",
+    "rushstack",
     "uuidv"
   ],
   "editor.defaultFormatter": "esbenp.prettier-vscode",
