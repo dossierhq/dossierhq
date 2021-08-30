@@ -388,8 +388,8 @@
       "versionPolicyName": "DataDataFramework"
     },
     {
-      "packageName": "@jonasb/datadata-database-adapter-test",
-      "projectFolder": "libraries/database-adapter-test",
+      "packageName": "@jonasb/datadata-database-adapter-test-integration",
+      "projectFolder": "libraries/database-adapter-test-integration",
       "versionPolicyName": "DataDataFramework"
     },
     {

@@ -6,14 +6,14 @@ importers:
       '@jonasb/datadata-core': link:../../libraries/core
       '@jonasb/datadata-database-adapter-core': link:../../libraries/database-adapter-core
       '@jonasb/datadata-database-adapter-postgres-core': link:../../libraries/database-adapter-postgres-core
-      '@jonasb/datadata-database-adapter-test': link:../../libraries/database-adapter-test
+      '@jonasb/datadata-database-adapter-test-integration': link:../../libraries/database-adapter-test-integration
       '@jonasb/datadata-postgres': link:../../libraries/postgres
       '@jonasb/datadata-server': link:../../libraries/server
     specifiers:
       '@jonasb/datadata-core': workspace:*
       '@jonasb/datadata-database-adapter-core': workspace:*
       '@jonasb/datadata-database-adapter-postgres-core': workspace:*
-      '@jonasb/datadata-database-adapter-test': workspace:*
+      '@jonasb/datadata-database-adapter-test-integration': workspace:*
       '@jonasb/datadata-postgres': workspace:*
       '@jonasb/datadata-server': workspace:*
   ../../examples/foo:
@@ -350,7 +350,7 @@ importers:
       pg: 8.7.1
       tslib: 2.3.1
     devDependencies:
-      '@jonasb/datadata-database-adapter-test': link:../database-adapter-test
+      '@jonasb/datadata-database-adapter-test-integration': link:../database-adapter-test-integration
       '@jonasb/datadata-postgres': link:../postgres
       '@rushstack/heft': 0.36.3
       '@rushstack/heft-jest-plugin': 0.1.20_@rushstack+heft@0.36.3
@@ -368,7 +368,7 @@ importers:
       '@jonasb/datadata-core': workspace:*
       '@jonasb/datadata-database-adapter-core': workspace:*
       '@jonasb/datadata-database-adapter-postgres-core': workspace:*
-      '@jonasb/datadata-database-adapter-test': workspace:*
+      '@jonasb/datadata-database-adapter-test-integration': workspace:*
       '@jonasb/datadata-postgres': workspace:*
       '@jonasb/datadata-server': workspace:*
       '@js-temporal/polyfill': ~0.2.0
@@ -386,7 +386,7 @@ importers:
       tslib: ~2.3.1
       typescript: ^4.3.5
       uuid: ^8.3.2
-  ../../libraries/database-adapter-test:
+  ../../libraries/database-adapter-test-integration:
     dependencies:
       '@jonasb/datadata-core': link:../core
       '@jonasb/datadata-database-adapter-core': link:../database-adapter-core
