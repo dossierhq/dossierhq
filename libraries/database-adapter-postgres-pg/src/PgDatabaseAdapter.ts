@@ -1,5 +1,7 @@
 import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
 import type { DatabaseAdapter, Queryable } from '@jonasb/datadata-database-adapter-core';
+import type { PostgresDatabaseAdapter } from '@jonasb/datadata-database-adapter-postgres-core';
+import { createPostgresDatabaseAdapterAdapter } from '@jonasb/datadata-database-adapter-postgres-core';
 import { Temporal } from '@js-temporal/polyfill';
 import { DatabaseError, Pool, types as PgTypes } from 'pg';
 
@@ -24,7 +26,7 @@ function getPgQueryable(queryable: Queryable): PgQueryable {
 
 export function createPostgresAdapter(databaseUrl: string): DatabaseAdapter {
   const pool = new Pool({ connectionString: databaseUrl });
-  const adapter: DatabaseAdapter = {
+  const adapter: PostgresDatabaseAdapter = {
     disconnect: () => pool.end(),
     withRootTransaction: (callback) => withRootTransaction(pool, callback),
     withNestedTransaction,
@@ -36,7 +38,7 @@ export function createPostgresAdapter(databaseUrl: string): DatabaseAdapter {
     },
     isUniqueViolationOfConstraint,
   };
-  return adapter;
+  return createPostgresDatabaseAdapterAdapter(adapter);
 }
 
 async function withRootTransaction<TOk, TError extends ErrorType>(

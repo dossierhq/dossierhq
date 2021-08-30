@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "ES2020",
+    "outDir": "lib/deno",
+    "moduleResolution": "Node"
+  },
+  "exclude": ["./src/**/*.test.ts"]
+}

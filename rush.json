@@ -378,6 +378,11 @@
       "versionPolicyName": "DataDataFramework"
     },
     {
+      "packageName": "@jonasb/datadata-database-adapter-postgres-core",
+      "projectFolder": "libraries/database-adapter-postgres-core",
+      "versionPolicyName": "DataDataFramework"
+    },
+    {
       "packageName": "@jonasb/datadata-database-adapter-postgres-pg",
       "projectFolder": "libraries/database-adapter-postgres-pg",
       "versionPolicyName": "DataDataFramework"
