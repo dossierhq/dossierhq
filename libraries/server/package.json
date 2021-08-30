@@ -12,8 +12,6 @@
     "build:watch": "heft build --watch",
     "clean": "heft clean",
     "ci:check": "npm run test && npm run prettier:check",
-    "db:cli": "./scripts/db-cli.sh",
-    "db:migrate": "./scripts/db-migrate.sh",
     "eslint:check": "eslint .",
     "eslint:fix": "eslint --fix .",
     "prettier:check": "prettier --check .",
@@ -32,19 +30,15 @@
     "url": "git+https://github.com/jonasb/datadata.git"
   },
   "devDependencies": {
-    "@jonasb/datadata-database-adapter-postgres-pg": "workspace:*",
-    "@jonasb/datadata-postgres": "workspace:*",
     "@rushstack/heft": "~0.36.1",
     "@rushstack/heft-jest-plugin": "~0.1.18",
     "@types/heft-jest": "1.0.2",
-    "@types/uuid": "~8.3.1",
+    "@types/node": "^16.6.1",
     "@typescript-eslint/eslint-plugin": "^4.29.1",
     "@typescript-eslint/parser": "^4.29.1",
-    "dotenv": "^10.0.0",
     "eslint": "^7.32.0",
     "prettier": "2.3.2",
-    "typescript": "^4.3.5",
-    "uuid": "^8.3.2"
+    "typescript": "^4.3.5"
   },
   "dependencies": {
     "@jonasb/datadata-core": "workspace:*",

@@ -1,9 +1,14 @@
 import type { AdminClient, PublishedClient } from '@jonasb/datadata-core';
 import { CoreTestUtils, EntityPublishState, ErrorType, FieldType } from '@jonasb/datadata-core';
-import type { Server, SessionContext } from '.';
-import { createServerAdminClient, createServerPublishedClient } from '.';
-import { ensureSessionContext, updateSchema } from './ServerTestUtils';
-import { createPostgresTestServer, expectResultValue } from './test/AdditionalTestUtils';
+import type { Server, SessionContext } from '@jonasb/datadata-server';
+import {
+  createServerAdminClient,
+  createServerPublishedClient,
+  ServerTestUtils,
+} from '@jonasb/datadata-server';
+import { createPostgresTestServer, expectResultValue } from '../TestUtils';
+
+//TODO consider moving this test back to server or even to core
 
 const { expectErrorResult, expectOkResult } = CoreTestUtils;
 
@@ -14,11 +19,11 @@ let publishedClient: PublishedClient;
 
 beforeAll(async () => {
   server = await createPostgresTestServer();
-  context = await ensureSessionContext(server, 'test', 'published-entity');
+  context = await ServerTestUtils.ensureSessionContext(server, 'test', 'published-entity');
   adminClient = createServerAdminClient({ context });
   publishedClient = createServerPublishedClient({ context });
 
-  await updateSchema(context, {
+  await ServerTestUtils.updateSchema(context, {
     entityTypes: [
       {
         name: 'PublishedEntityFoo',

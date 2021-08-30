@@ -1,20 +1,15 @@
+import type { SchemaSpecification } from '@jonasb/datadata-core';
 import { FieldType, RichTextBlockType } from '@jonasb/datadata-core';
-import type { Server } from '.';
-import type { SessionContext } from './Context';
+import type { SessionContext } from '.';
 import { forTest } from './EntityCodec';
-import { ensureSessionContext, updateSchema } from './ServerTestUtils';
-import { createPostgresTestServer } from './test/AdditionalTestUtils';
+import { createMockSessionContext } from './test/AdditionalTestUtils';
 
 const { collectDataFromEntity } = forTest;
 
-let server: Server;
 let context: SessionContext;
 
 beforeAll(async () => {
-  server = await createPostgresTestServer();
-  context = await ensureSessionContext(server, 'test', 'entity-codec');
-
-  await updateSchema(context, {
+  const schema: SchemaSpecification = {
     entityTypes: [
       {
         name: 'EntityCodecFoo',
@@ -50,7 +45,8 @@ beforeAll(async () => {
         ],
       },
     ],
-  });
+  };
+  context = createMockSessionContext({ schema });
 });
 
 describe('collectDataFromEntity', () => {

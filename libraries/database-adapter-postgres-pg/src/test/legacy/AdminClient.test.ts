@@ -1,8 +1,9 @@
 import { CoreTestUtils, ErrorType } from '@jonasb/datadata-core';
-import type { Server, SessionContext } from '.';
-import { createServerAdminClient } from '.';
-import { ensureSessionContext } from './ServerTestUtils';
-import { createPostgresTestServer, insecureTestUuidv4 } from './test/AdditionalTestUtils';
+import type { Server, SessionContext } from '@jonasb/datadata-server';
+import { createServerAdminClient, ServerTestUtils } from '@jonasb/datadata-server';
+import { createPostgresTestServer, insecureTestUuidv4 } from '../TestUtils';
+
+//TODO consider moving this test back to server or even to core
 
 const { expectErrorResult } = CoreTestUtils;
 
@@ -11,7 +12,7 @@ let context: SessionContext;
 
 beforeAll(async () => {
   server = await createPostgresTestServer();
-  context = await ensureSessionContext(server, 'test', 'admin-client');
+  context = await ServerTestUtils.ensureSessionContext(server, 'test', 'admin-client');
 });
 afterAll(async () => {
   await server.shutdown();

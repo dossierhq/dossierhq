@@ -1,8 +1,7 @@
 import { CoreTestUtils, ErrorType } from '@jonasb/datadata-core';
-import type { Server, SessionContext } from '.';
-import { createServerPublishedClient } from '.';
-import { ensureSessionContext } from './ServerTestUtils';
-import { createPostgresTestServer, insecureTestUuidv4 } from './test/AdditionalTestUtils';
+import type { Server, SessionContext } from '@jonasb/datadata-server';
+import { createServerPublishedClient, ServerTestUtils } from '@jonasb/datadata-server';
+import { createPostgresTestServer, insecureTestUuidv4 } from '../TestUtils';
 
 const { expectErrorResult } = CoreTestUtils;
 
@@ -11,7 +10,7 @@ let context: SessionContext;
 
 beforeAll(async () => {
   server = await createPostgresTestServer();
-  context = await ensureSessionContext(server, 'test', 'admin-client');
+  context = await ServerTestUtils.ensureSessionContext(server, 'test', 'admin-client');
 });
 afterAll(async () => {
   await server.shutdown();
