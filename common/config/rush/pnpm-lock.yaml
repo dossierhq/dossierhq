@@ -318,32 +318,44 @@ importers:
     dependencies:
       '@jonasb/datadata-core': link:../core
       '@jonasb/datadata-database-adapter-core': link:../database-adapter-core
+      '@jonasb/datadata-server': link:../server
       '@js-temporal/polyfill': 0.2.0
       pg: 8.7.1
       tslib: 2.3.1
     devDependencies:
+      '@jonasb/datadata-postgres': link:../postgres
       '@rushstack/heft': 0.36.3
+      '@rushstack/heft-jest-plugin': 0.1.20_@rushstack+heft@0.36.3
       '@types/heft-jest': 1.0.2
       '@types/pg': 8.6.1
+      '@types/uuid': 8.3.1
       '@typescript-eslint/eslint-plugin': 4.29.2_b01b7137116ac50f0745961d9cf72d34
       '@typescript-eslint/parser': 4.29.2_eslint@7.32.0+typescript@4.3.5
+      dotenv: 10.0.0
       eslint: 7.32.0
       prettier: 2.3.2
       typescript: 4.3.5
+      uuid: 8.3.2
     specifiers:
       '@jonasb/datadata-core': workspace:*
       '@jonasb/datadata-database-adapter-core': workspace:*
+      '@jonasb/datadata-postgres': workspace:*
+      '@jonasb/datadata-server': workspace:*
       '@js-temporal/polyfill': ~0.2.0
       '@rushstack/heft': ~0.36.1
+      '@rushstack/heft-jest-plugin': ~0.1.18
       '@types/heft-jest': 1.0.2
       '@types/pg': ^8.6.1
+      '@types/uuid': ~8.3.1
       '@typescript-eslint/eslint-plugin': ^4.29.1
       '@typescript-eslint/parser': ^4.29.1
+      dotenv: ^10.0.0
       eslint: ^7.32.0
       pg: ^8.7.1
       prettier: 2.3.2
       tslib: ~2.3.1
       typescript: ^4.3.5
+      uuid: ^8.3.2
   ../../libraries/graphql:
     dependencies:
       '@jonasb/datadata-core': link:../core
@@ -404,37 +416,29 @@ importers:
       '@js-temporal/polyfill': 0.2.0
       tslib: 2.3.1
     devDependencies:
-      '@jonasb/datadata-database-adapter-postgres-pg': link:../database-adapter-postgres-pg
-      '@jonasb/datadata-postgres': link:../postgres
       '@rushstack/heft': 0.36.3
       '@rushstack/heft-jest-plugin': 0.1.20_@rushstack+heft@0.36.3
       '@types/heft-jest': 1.0.2
-      '@types/uuid': 8.3.1
+      '@types/node': 16.7.1
       '@typescript-eslint/eslint-plugin': 4.29.2_b01b7137116ac50f0745961d9cf72d34
       '@typescript-eslint/parser': 4.29.2_eslint@7.32.0+typescript@4.3.5
-      dotenv: 10.0.0
       eslint: 7.32.0
       prettier: 2.3.2
       typescript: 4.3.5
-      uuid: 8.3.2
     specifiers:
       '@jonasb/datadata-core': workspace:*
       '@jonasb/datadata-database-adapter-core': workspace:*
-      '@jonasb/datadata-database-adapter-postgres-pg': workspace:*
-      '@jonasb/datadata-postgres': workspace:*
       '@js-temporal/polyfill': ~0.2.0
       '@rushstack/heft': ~0.36.1
       '@rushstack/heft-jest-plugin': ~0.1.18
       '@types/heft-jest': 1.0.2
-      '@types/uuid': ~8.3.1
+      '@types/node': ^16.6.1
       '@typescript-eslint/eslint-plugin': ^4.29.1
       '@typescript-eslint/parser': ^4.29.1
-      dotenv: ^10.0.0
       eslint: ^7.32.0
       prettier: 2.3.2
       tslib: ~2.3.1
       typescript: ^4.3.5
-      uuid: ^8.3.2
   ../../libraries/testing-utils:
     dependencies:
       '@jonasb/datadata-core': link:../core

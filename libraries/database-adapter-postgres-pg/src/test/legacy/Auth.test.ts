@@ -1,8 +1,8 @@
 import { CoreTestUtils, ErrorType } from '@jonasb/datadata-core';
+import type { AuthContext, Server } from '@jonasb/datadata-server';
+import { Auth } from '@jonasb/datadata-server';
 import { validate as validateUuid } from 'uuid';
-import type { AuthContext, Server } from '.';
-import { Auth } from '.';
-import { createPostgresTestServer } from './test/AdditionalTestUtils';
+import { createPostgresTestServer } from '../TestUtils';
 
 const { expectErrorResult, expectOkResult } = CoreTestUtils;
 

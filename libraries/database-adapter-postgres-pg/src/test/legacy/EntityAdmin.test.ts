@@ -19,19 +19,23 @@ import {
   QueryOrder,
   RichTextBlockType,
 } from '@jonasb/datadata-core';
+import type { Server, SessionContext } from '@jonasb/datadata-server';
+import {
+  createServerAdminClient,
+  createServerPublishedClient,
+  ServerTestUtils,
+} from '@jonasb/datadata-server';
 import { validate as validateUuid } from 'uuid';
-import type { Server, SessionContext } from '.';
-import { createServerAdminClient, createServerPublishedClient } from '.';
-import { ensureSessionContext, updateSchema } from './ServerTestUtils';
 import {
   createPostgresTestServer,
   expectEntityHistoryVersions,
   expectResultValue,
   expectSearchResultEntities,
   insecureTestUuidv4,
-} from './test/AdditionalTestUtils';
+} from '../TestUtils';
 
 const { expectErrorResult, expectOkResult } = CoreTestUtils;
+const { ensureSessionContext, updateSchema } = ServerTestUtils;
 
 let server: Server;
 let context: SessionContext;
