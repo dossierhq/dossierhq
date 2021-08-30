@@ -1,6 +1,6 @@
 #!/usr/bin/env -S deno run --import-map=./config/import-map.json --allow-net=localhost:5432 --allow-read=.env,.env.defaults
 import { Auth, Server } from "@jonasb/datadata-server";
-import { createDotenvAdapter } from "./serverUtils.ts";
+import { createDotenvAdapter } from "./ServerUtils.ts";
 
 const server = new Server({ databaseAdapter: createDotenvAdapter() });
 const authContext = server.createAuthContext();
