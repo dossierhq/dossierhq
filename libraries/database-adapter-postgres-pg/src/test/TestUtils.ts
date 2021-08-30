@@ -7,6 +7,8 @@ import type {
   Result,
 } from '@jonasb/datadata-core';
 import { assertIsDefined, CoreTestUtils } from '@jonasb/datadata-core';
+import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter-core';
+import type { TestSuite } from '@jonasb/datadata-database-adapter-test';
 import type { Server } from '@jonasb/datadata-server';
 import { ServerTestUtils } from '@jonasb/datadata-server';
 import { Temporal } from '@js-temporal/polyfill';
@@ -15,9 +17,19 @@ import { createPostgresAdapter } from '..';
 
 const { expectOkResult } = CoreTestUtils;
 
-export async function createPostgresTestServer(): Promise<Server> {
+export function registerTestSuite(testSuite: TestSuite) {
+  for (const [testName, testFunction] of Object.entries(testSuite)) {
+    test(testName, testFunction as jest.ProvidesCallback);
+  }
+}
+
+export function createPostgresTestAdapter(): DatabaseAdapter {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  return await ServerTestUtils.createTestServer(createPostgresAdapter(process.env.DATABASE_URL!));
+  return createPostgresAdapter(process.env.DATABASE_URL!);
+}
+
+export function createPostgresTestServer(): Promise<Server> {
+  return ServerTestUtils.createTestServer(createPostgresTestAdapter());
 }
 
 export function expectResultValue<TOk, TError extends ErrorType>(

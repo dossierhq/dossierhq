@@ -362,10 +362,15 @@ importers:
       uuid: ^8.3.2
   ../../libraries/database-adapter-test:
     dependencies:
+      '@jonasb/datadata-core': link:../core
+      '@jonasb/datadata-database-adapter-core': link:../database-adapter-core
+      '@jonasb/datadata-server': link:../server
       '@js-temporal/polyfill': 0.2.0
       tslib: 2.3.1
+      uuid: 8.3.2
     devDependencies:
       '@rushstack/heft': 0.36.3
+      '@types/uuid': 8.3.1
       '@typescript-eslint/eslint-plugin': 4.29.2_b01b7137116ac50f0745961d9cf72d34
       '@typescript-eslint/parser': 4.29.2_eslint@7.32.0+typescript@4.3.5
       eslint: 7.32.0
@@ -373,8 +378,12 @@ importers:
       prettier: 2.3.2
       typescript: 4.3.5
     specifiers:
+      '@jonasb/datadata-core': workspace:*
+      '@jonasb/datadata-database-adapter-core': workspace:*
+      '@jonasb/datadata-server': workspace:*
       '@js-temporal/polyfill': ~0.2.0
       '@rushstack/heft': ~0.36.1
+      '@types/uuid': ~8.3.1
       '@typescript-eslint/eslint-plugin': ^4.29.1
       '@typescript-eslint/parser': ^4.29.1
       eslint: ^7.32.0
@@ -382,6 +391,7 @@ importers:
       prettier: 2.3.2
       tslib: ~2.3.1
       typescript: ^4.3.5
+      uuid: ^8.3.2
   ../../libraries/graphql:
     dependencies:
       '@jonasb/datadata-core': link:../core

@@ -22,13 +22,6 @@ function randomIdentifier() {
 }
 
 describe('createPrincipal', () => {
-  test('Create test/new-identifier', async () => {
-    const result = await Auth.createPrincipal(context, 'test', randomIdentifier());
-    if (expectOkResult(result)) {
-      expect(validateUuid(result.value)).toBeTruthy();
-    }
-  });
-
   test('Error: Create duplicate fails', async () => {
     const identifier = randomIdentifier();
     const firstResult = await Auth.createPrincipal(context, 'test', identifier);

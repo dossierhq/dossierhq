@@ -1,12 +1,8 @@
 #!/usr/bin/env -S deno run --import-map=./config/import-map.json --allow-net=localhost:5432 --allow-read=.env,.env.defaults
 import { Auth, Server } from "@jonasb/datadata-server";
-import { config } from "dotenv";
-import { createPostgresAdapter } from "./PostgresAdapter.ts";
+import { createDotenvAdapter } from "./serverUtils.ts";
 
-const databaseAdapter = createPostgresAdapter(
-  config().EXAMPLES_DENO_DATABASE_URL,
-);
-const server = new Server({ databaseAdapter });
+const server = new Server({ databaseAdapter: createDotenvAdapter() });
 const authContext = server.createAuthContext();
 
 const sessionResult = await Auth.createSessionForPrincipal(
