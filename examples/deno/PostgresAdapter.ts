@@ -1,8 +1,5 @@
 import type { ErrorType, PromiseResult } from "@jonasb/datadata-core";
-import type {
-  DatabaseAdapter,
-  Queryable,
-} from "@jonasb/datadata-database-adapter-core";
+import type { DatabaseAdapter, Queryable } from "@jonasb/datadata-server";
 import type { PostgresDatabaseAdapter } from "@jonasb/datadata-database-adapter-postgres-core";
 import { createPostgresDatabaseAdapterAdapter } from "@jonasb/datadata-database-adapter-postgres-core";
 import { Pool, Transaction } from "postgres";
