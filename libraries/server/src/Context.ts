@@ -27,7 +27,7 @@ export interface SessionContext extends Context<SessionContext> {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-abstract class ContextImpl<TContext extends Context<any>> implements Context<TContext> {
+export abstract class ContextImpl<TContext extends Context<any>> implements Context<TContext> {
   readonly server: Server;
   readonly databaseAdapter: DatabaseAdapter;
   readonly transaction: Transaction | null;

@@ -1,7 +1,18 @@
 import type { SchemaSpecification } from '@jonasb/datadata-core';
 import { Schema } from '@jonasb/datadata-core';
-import type { DatabaseAdapter, SessionContext } from '.';
+import type { Context, DatabaseAdapter, SessionContext, Transaction } from '.';
 import { Auth, Server } from '.';
+import { ContextImpl } from './Context';
+
+class DummyContextImpl extends ContextImpl<Context> {
+  constructor(server: Server, databaseAdapter: DatabaseAdapter, transaction: Transaction | null) {
+    super(server, databaseAdapter, transaction);
+  }
+
+  protected copyWithNewTransaction(transaction: Transaction): Context {
+    return new DummyContextImpl(this.server, this.databaseAdapter, transaction);
+  }
+}
 
 export async function createTestServer(databaseAdapter: DatabaseAdapter): Promise<Server> {
   const server = new Server({ databaseAdapter });
@@ -62,4 +73,8 @@ export async function updateSchema(
   const newSchema = new Schema(spec);
   const result = await context.server.setSchema(context, newSchema);
   result.throwIfError();
+}
+
+export function createDummyContext(server: Server, databaseAdapter: DatabaseAdapter): Context {
+  return new DummyContextImpl(server, databaseAdapter, null);
 }
