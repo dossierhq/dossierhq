@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-database-adapter-test-integration",
+      "comment": "Initial release",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-database-adapter-test-integration",
+  "email": "jonas.b@gmail.com"
+}
