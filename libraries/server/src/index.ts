@@ -1,5 +1,5 @@
 export { createServerAdminClient } from './AdminClient';
-export { default as Auth } from './Auth';
+export * as Auth from './Auth';
 export type { Session } from './Auth';
 export type { AuthContext, Context, SessionContext } from './Context';
 export type { DatabaseAdapter, Transaction as Transaction } from './DatabaseAdapter';
