@@ -8,7 +8,7 @@
     ".": "./lib/cjs/index.js"
   },
   "scripts": {
-    "build": "heft build --clean && ./deno-build.js",
+    "build": "heft test --clean && ./deno-build.js",
     "build:watch": "heft build --watch",
     "clean": "heft clean",
     "ci:check": "npm run build && npm run prettier:check",
@@ -16,6 +16,8 @@
     "eslint:fix": "eslint --fix .",
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write .",
+    "test": "heft test",
+    "test:watch": "heft test --watch",
     "ts:check": "tsc --noEmit",
     "upgrade-dependencies": "npx npm-check-updates -u --packageFile ./package.json",
     "upgrade-dependencies:check": "npx npm-check-updates"
@@ -28,6 +30,8 @@
   },
   "devDependencies": {
     "@rushstack/heft": "~0.36.1",
+    "@rushstack/heft-jest-plugin": "~0.1.18",
+    "@types/heft-jest": "1.0.2",
     "@typescript-eslint/eslint-plugin": "^4.29.1",
     "@typescript-eslint/parser": "^4.29.1",
     "eslint": "^7.32.0",

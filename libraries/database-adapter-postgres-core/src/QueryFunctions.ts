@@ -2,6 +2,7 @@ import { ErrorType, notOk, ok, PromiseResult } from '@jonasb/datadata-core';
 import type { Context } from '@jonasb/datadata-server';
 import type { PostgresDatabaseAdapter } from '.';
 
+//TODO handle all exceptions (need some extra work for unique)
 export async function queryNone(
   context: Context,
   adapter: PostgresDatabaseAdapter,
