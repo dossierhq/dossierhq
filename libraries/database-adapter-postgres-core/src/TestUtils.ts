@@ -1,6 +1,5 @@
 import type { Context, Server } from '@jonasb/datadata-server';
 import { ServerTestUtils } from '@jonasb/datadata-server';
-import type { PostgresTransaction } from '.';
 import { createPostgresDatabaseAdapterAdapter, PostgresDatabaseAdapter } from '.';
 import type { UniqueConstraints } from './DatabaseSchema';
 
@@ -8,10 +7,6 @@ type QueryFn = PostgresDatabaseAdapter['query'];
 
 interface MockedPostgresDatabaseAdapter extends PostgresDatabaseAdapter {
   query: jest.MockedFunction<QueryFn>;
-}
-
-interface TransactionWrapper extends PostgresTransaction {
-  wrapped: QueryFn;
 }
 
 export class MockUniqueViolationOfConstraintError extends Error {

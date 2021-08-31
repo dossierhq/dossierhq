@@ -11,12 +11,7 @@ export interface Session {
   readonly subjectId: string;
 }
 
-export default {
-  createSessionForPrincipal,
-  createPrincipal,
-};
-
-async function createSessionForPrincipal(
+export async function createSessionForPrincipal(
   context: AuthContext,
   provider: string,
   identifier: string,
@@ -61,7 +56,7 @@ async function createSessionForPrincipal(
  * @param identifier
  * @returns The uuid of the created principal
  */
-async function createPrincipal(
+export async function createPrincipal(
   context: AuthContext,
   provider: string,
   identifier: string
