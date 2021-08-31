@@ -33,7 +33,7 @@ export async function withNestedTransaction<TOk, TError extends ErrorType>(
   transaction: Transaction,
   callback: () => PromiseResult<TOk, TError>
 ): PromiseResult<TOk, TError> {
-  const pgTransaction = transaction as PostgresTransaction
+  const pgTransaction = transaction as PostgresTransaction;
   try {
     await databaseAdapter.query(pgTransaction, 'BEGIN', undefined);
     const result = await callback();
