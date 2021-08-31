@@ -383,6 +383,10 @@
       "versionPolicyName": "DataDataFramework"
     },
     {
+      "packageName": "@jonasb/datadata-database-adapter-sqlite",
+      "projectFolder": "libraries/database-adapter-sqlite"
+    },
+    {
       "packageName": "@jonasb/datadata-database-adapter-test-integration",
       "projectFolder": "libraries/database-adapter-test-integration",
       "versionPolicyName": "DataDataFramework"

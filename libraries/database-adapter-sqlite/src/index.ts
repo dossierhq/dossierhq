@@ -1,0 +1,1 @@
+export { createSqliteDatabaseAdapter } from './SqliteDatabaseAdapter';
