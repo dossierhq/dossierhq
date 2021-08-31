@@ -1,26 +1,19 @@
-import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
-import type { DatabaseAdapter, Transaction } from '@jonasb/datadata-server';
+import type { DatabaseAdapter } from '@jonasb/datadata-server';
+import type { PostgresTransaction } from '.';
 import { authCreatePrincipal } from './auth/createPrincipal';
+import { withNestedTransaction, withRootTransaction } from './PostgresTransaction';
 
 export interface PostgresDatabaseAdapter {
   disconnect(): Promise<void>;
 
-  withRootTransaction<TOk, TError extends ErrorType>(
-    callback: (transaction: Transaction) => PromiseResult<TOk, TError>
-  ): PromiseResult<TOk, TError>;
-
-  withNestedTransaction<TOk, TError extends ErrorType>(
-    transaction: Transaction,
-    callback: () => PromiseResult<TOk, TError>
-  ): PromiseResult<TOk, TError>;
+  createTransaction(): Promise<PostgresTransaction>;
 
   query<R>(
-    transaction: Transaction | null,
+    transaction: PostgresTransaction | null,
     query: string,
     values: unknown[] | undefined
   ): Promise<R[]>;
 
-  //TODO remove from everywhere
   isUniqueViolationOfConstraint(error: unknown, constraintName: string): boolean;
 }
 
@@ -29,8 +22,8 @@ export function createPostgresDatabaseAdapterAdapter(
 ): DatabaseAdapter {
   return {
     disconnect: databaseAdapter.disconnect,
-    withRootTransaction: databaseAdapter.withRootTransaction,
-    withNestedTransaction: databaseAdapter.withNestedTransaction,
+    withRootTransaction: (...args) => withRootTransaction(databaseAdapter, ...args),
+    withNestedTransaction: (...args) => withNestedTransaction(databaseAdapter, ...args),
     queryLegacy: databaseAdapter.query,
     isUniqueViolationOfConstraint: databaseAdapter.isUniqueViolationOfConstraint,
     authCreatePrincipal: (...args) => authCreatePrincipal(databaseAdapter, ...args),

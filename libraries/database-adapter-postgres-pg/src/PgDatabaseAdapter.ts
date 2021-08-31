@@ -1,7 +1,9 @@
-import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
-import type { PostgresDatabaseAdapter } from '@jonasb/datadata-database-adapter-postgres-core';
+import type {
+  PostgresDatabaseAdapter,
+  PostgresTransaction,
+} from '@jonasb/datadata-database-adapter-postgres-core';
 import { createPostgresDatabaseAdapterAdapter } from '@jonasb/datadata-database-adapter-postgres-core';
-import type { DatabaseAdapter, Transaction } from '@jonasb/datadata-server';
+import type { DatabaseAdapter } from '@jonasb/datadata-server';
 import { Temporal } from '@js-temporal/polyfill';
 import { DatabaseError, Pool, PoolClient, types as PgTypes } from 'pg';
 
@@ -14,20 +16,27 @@ PgTypes.setTypeParser(PgTypes.builtins.TIMESTAMPTZ, (value) => {
   return Temporal.Instant.from(value);
 });
 
-interface TransactionWrapper extends Transaction {
-  wrapped: PoolClient;
+interface TransactionWrapper extends PostgresTransaction {
+  client: PoolClient;
 }
 
-function getPoolClient(transaction: Transaction): PoolClient {
-  return (transaction as TransactionWrapper).wrapped;
+function getPoolClient(transaction: PostgresTransaction): PoolClient {
+  return (transaction as TransactionWrapper).client;
 }
 
 export function createPostgresAdapter(databaseUrl: string): DatabaseAdapter {
   const pool = new Pool({ connectionString: databaseUrl });
   const adapter: PostgresDatabaseAdapter = {
     disconnect: () => pool.end(),
-    withRootTransaction: (callback) => withRootTransaction(pool, callback),
-    withNestedTransaction,
+    createTransaction: async () => {
+      const client = await pool.connect();
+      const transaction: TransactionWrapper = {
+        _type: 'Transaction',
+        client,
+        release: () => client.release(),
+      };
+      return transaction;
+    },
     query: async (transaction, query, values) => {
       const result = await (transaction
         ? getPoolClient(transaction).query(query, values)
@@ -37,49 +46,6 @@ export function createPostgresAdapter(databaseUrl: string): DatabaseAdapter {
     isUniqueViolationOfConstraint,
   };
   return createPostgresDatabaseAdapterAdapter(adapter);
-}
-
-async function withRootTransaction<TOk, TError extends ErrorType>(
-  pool: Pool,
-  callback: (transaction: Transaction) => PromiseResult<TOk, TError>
-): PromiseResult<TOk, TError> {
-  const client = await pool.connect();
-  const clientWrapper: TransactionWrapper = { _type: 'Transaction', wrapped: client };
-  try {
-    await client.query('BEGIN');
-    const result = await callback(clientWrapper);
-    if (result.isOk()) {
-      await client.query('COMMIT');
-    } else {
-      await client.query('ROLLBACK');
-    }
-    return result;
-  } catch (e) {
-    await client.query('ROLLBACK');
-    throw e;
-  } finally {
-    client.release();
-  }
-}
-
-async function withNestedTransaction<TOk, TError extends ErrorType>(
-  transaction: Transaction,
-  callback: () => PromiseResult<TOk, TError>
-): PromiseResult<TOk, TError> {
-  const client = getPoolClient(transaction);
-  try {
-    await client.query('BEGIN');
-    const result = await callback();
-    if (result.isOk()) {
-      await client.query('COMMIT');
-    } else {
-      await client.query('ROLLBACK');
-    }
-    return result;
-  } catch (e) {
-    await client.query('ROLLBACK');
-    throw e;
-  }
 }
 
 function isUniqueViolationOfConstraint(error: unknown, constraintName: string): boolean {
