@@ -96,17 +96,22 @@ export function createErrorResult<TError extends ErrorType>(
 }
 
 export function createErrorResultFromError<TError extends ErrorType | ErrorType.Generic>(
-  error: ErrorResultError | Error,
+  error: ErrorResultError | unknown,
   expectedErrorTypes: TError[] | null = null
 ): ErrorResult<unknown, TError | ErrorType.Generic> {
-  // For some reason instanceof doesn't always work, due to Next.js compilation?
-  if (error instanceof ErrorResultError || error.constructor.name === 'ErrorResultError') {
+  // For some reason instanceof ErrorResultError doesn't always work, due to Next.js compilation?
+  if (
+    error instanceof ErrorResultError ||
+    (error instanceof Error && error.constructor.name === 'ErrorResultError')
+  ) {
     const e = error as ErrorResultError;
+    const errorResult = new ErrorResult(e.errorType, e.errorMessage);
     if (!expectedErrorTypes || expectedErrorTypes.includes(e.errorType as TError)) {
-      return new ErrorResult<unknown, TError>(e.errorType as TError, e.errorMessage);
+      return errorResult as ErrorResult<unknown, TError | ErrorType.Generic>;
     }
+    return notOk.GenericUnexpectedError(errorResult);
   }
-  return notOk.Generic(error.message);
+  return notOk.GenericUnexpectedException(error);
 }
 
 export function ok<TOk, TError extends ErrorType>(value: TOk): OkResult<TOk, TError> {
@@ -124,6 +129,15 @@ export const notOk = {
     result: ErrorResult<unknown, ErrorType>
   ): ErrorResult<unknown, ErrorType.Generic> =>
     createErrorResult(ErrorType.Generic, `Unexpected error: ${result.error}: ${result.message}`),
+  GenericUnexpectedException: (error: unknown): ErrorResult<unknown, ErrorType.Generic> => {
+    if (error instanceof Error) {
+      return createErrorResult(
+        ErrorType.Generic,
+        `Unexpected exception: ${error.name}: ${error.message}`
+      );
+    }
+    return createErrorResult(ErrorType.Generic, `Unexpected exception: ${error}`);
+  },
   NotAuthenticated: (message: string): ErrorResult<unknown, ErrorType.NotAuthenticated> =>
     createErrorResult(ErrorType.NotAuthenticated, message),
   NotFound: (message: string): ErrorResult<unknown, ErrorType.NotFound> =>

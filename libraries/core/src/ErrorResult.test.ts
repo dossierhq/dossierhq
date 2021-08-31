@@ -7,13 +7,21 @@ describe('createErrorResultFromError()', () => {
     const actual: Result<unknown, ErrorType.Generic> = createErrorResultFromError(
       new Error('Generic error message')
     );
-    expectErrorResult(actual, ErrorType.Generic, 'Generic error message');
+    expectErrorResult(
+      actual,
+      ErrorType.Generic,
+      'Unexpected exception: Error: Generic error message'
+    );
   });
 
   test('From generic error with expected types', () => {
     const actual: Result<unknown, ErrorType.NotFound | ErrorType.Generic> =
       createErrorResultFromError(new Error('Generic error message'), [ErrorType.NotFound]);
-    expectErrorResult(actual, ErrorType.Generic, 'Generic error message');
+    expectErrorResult(
+      actual,
+      ErrorType.Generic,
+      'Unexpected exception: Error: Generic error message'
+    );
   });
 
   test('From ErrorResultError without expected types', () => {
@@ -36,7 +44,11 @@ describe('createErrorResultFromError()', () => {
       createErrorResultFromError(notOk.BadRequest('Bad request error message').toError(), [
         ErrorType.Conflict,
       ]);
-    expectErrorResult(actual, ErrorType.Generic, 'BadRequest: Bad request error message');
+    expectErrorResult(
+      actual,
+      ErrorType.Generic,
+      'Unexpected error: BadRequest: Bad request error message'
+    );
   });
 });
 
@@ -73,5 +85,23 @@ describe('OkResult', () => {
     if (expectOkResult(mappedResult)) {
       expect(mappedResult.value).toEqual({ baz: 'BAR' });
     }
+  });
+});
+
+describe('notOk', () => {
+  test('GenericUnexpectedException', () => {
+    expectErrorResult(
+      notOk.GenericUnexpectedException(new Error('Hello world')),
+      ErrorType.Generic,
+      'Unexpected exception: Error: Hello world'
+    );
+  });
+
+  test('GenericUnexpectedException with non-Error', () => {
+    expectErrorResult(
+      notOk.GenericUnexpectedException(123),
+      ErrorType.Generic,
+      'Unexpected exception: 123'
+    );
   });
 });
