@@ -22,24 +22,27 @@ export async function authCreatePrincipal(
       return subjectsResult;
     }
     const { id, uuid } = subjectsResult.value;
-    try {
-      await queryNone(
-        context,
-        adapter,
-        'INSERT INTO principals (provider, identifier, subjects_id) VALUES ($1, $2, $3)',
-        [provider, identifier, id]
-      );
-    } catch (error) {
-      if (
-        adapter.isUniqueViolationOfConstraint(
-          error,
-          UniqueConstraints.principals_provider_identifier_key
-        )
-      ) {
-        return notOk.Conflict('Principal already exist');
+    const principalsResult = await queryNone(
+      context,
+      adapter,
+      'INSERT INTO principals (provider, identifier, subjects_id) VALUES ($1, $2, $3)',
+      [provider, identifier, id],
+      (error) => {
+        if (
+          adapter.isUniqueViolationOfConstraint(
+            error,
+            UniqueConstraints.principals_provider_identifier_key
+          )
+        ) {
+          return notOk.Conflict('Principal already exist');
+        }
+        return notOk.GenericUnexpectedException(error);
       }
-      throw error;
+    );
+    if (principalsResult.isError()) {
+      return principalsResult;
     }
+
     const session: Session = { subjectInternalId: id, subjectId: uuid };
     return ok(session);
   });
