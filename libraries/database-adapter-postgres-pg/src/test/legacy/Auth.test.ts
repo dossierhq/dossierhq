@@ -21,28 +21,6 @@ function randomIdentifier() {
   return Math.random().toString();
 }
 
-describe('createPrincipal', () => {
-  test('Error: Create duplicate fails', async () => {
-    const identifier = randomIdentifier();
-    const firstResult = await Auth.createPrincipal(context, 'test', identifier);
-    expectOkResult(firstResult);
-
-    const secondResult = await Auth.createPrincipal(context, 'test', identifier);
-    expectErrorResult(secondResult, ErrorType.Conflict, 'Principal already exist');
-  });
-
-  test('Error: create missing provider', async () => {
-    const identifier = randomIdentifier();
-    const result = await Auth.createPrincipal(context, '', identifier);
-    expectErrorResult(result, ErrorType.BadRequest, 'Missing provider');
-  });
-
-  test('Error: create missing identifier', async () => {
-    const result = await Auth.createPrincipal(context, 'test', '');
-    expectErrorResult(result, ErrorType.BadRequest, 'Missing identifier');
-  });
-});
-
 describe('createSessionForPrincipal', () => {
   test('Use existing principal', async () => {
     const identifier = randomIdentifier();

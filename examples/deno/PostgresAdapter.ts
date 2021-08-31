@@ -1,8 +1,11 @@
-import type { ErrorType, PromiseResult } from "@jonasb/datadata-core";
-import type { DatabaseAdapter, Transaction } from "@jonasb/datadata-server";
-import type { PostgresDatabaseAdapter } from "@jonasb/datadata-database-adapter-postgres-core";
+import type { DatabaseAdapter } from "@jonasb/datadata-server";
+import type {
+  PostgresDatabaseAdapter,
+  PostgresTransaction,
+} from "@jonasb/datadata-database-adapter-postgres-core";
 import { createPostgresDatabaseAdapterAdapter } from "@jonasb/datadata-database-adapter-postgres-core";
-import { Pool, Transaction as PgTransaction } from "postgres";
+import type { PoolClient } from "postgres";
+import { Pool, PostgresError } from "postgres";
 
 //TODO
 // PgTypes.setTypeParser(PgTypes.builtins.INT8, BigInt);
@@ -14,20 +17,29 @@ import { Pool, Transaction as PgTransaction } from "postgres";
 //   return Temporal.Instant.from(value);
 // });
 
-interface TransactionWrapper extends Transaction {
-  wrapped: PgTransaction;
+interface TransactionWrapper extends PostgresTransaction {
+  client: PoolClient;
 }
 
-function getTransaction(transaction: Transaction): PgTransaction {
-  return (transaction as TransactionWrapper).wrapped;
+function getTransaction(transaction: PostgresTransaction): PoolClient {
+  return (transaction as TransactionWrapper).client;
 }
 
 export function createPostgresAdapter(databaseUrl: string): DatabaseAdapter {
   const pool = new Pool(databaseUrl, 4, true);
   const adapter: PostgresDatabaseAdapter = {
     disconnect: () => pool.end(),
-    withRootTransaction: (callback) => withRootTransaction(pool, callback),
-    withNestedTransaction,
+    createTransaction: async () => {
+      const client = await pool.connect();
+      const transaction: TransactionWrapper = {
+        _type: "Transaction",
+        client,
+        release: () => {
+          client.release();
+        },
+      };
+      return transaction;
+    },
     query: async (transaction, query, values) => {
       let result: { rows: unknown[] };
       if (transaction) {
@@ -51,63 +63,12 @@ export function createPostgresAdapter(databaseUrl: string): DatabaseAdapter {
   return createPostgresDatabaseAdapterAdapter(adapter);
 }
 
-async function withRootTransaction<TOk, TError extends ErrorType>(
-  pool: Pool,
-  callback: (transaction: Transaction) => PromiseResult<TOk, TError>,
-): PromiseResult<TOk, TError> {
-  const client = await pool.connect();
-  const transaction = client.createTransaction("transaction name");
-  const clientWrapper: TransactionWrapper = {
-    _type: "Transaction",
-    wrapped: transaction,
-  };
-  try {
-    await transaction.begin();
-    const result = await callback(clientWrapper);
-    if (result.isOk()) {
-      await transaction.commit();
-    } else {
-      await transaction.rollback();
-    }
-    return result;
-  } catch (e) {
-    await transaction.rollback();
-    throw e;
-  } finally {
-    client.release();
-  }
-}
-
-async function withNestedTransaction<TOk, TError extends ErrorType>(
-  transaction: Transaction,
-  callback: () => PromiseResult<TOk, TError>,
-): PromiseResult<TOk, TError> {
-  const parentTransaction = getTransaction(transaction);
-  try {
-    await parentTransaction.queryArray("BEGIN");
-    const result = await callback();
-    if (result.isOk()) {
-      await parentTransaction.queryArray("COMMIT");
-    } else {
-      await parentTransaction.queryArray("ROLLBACK");
-    }
-    return result;
-  } catch (e) {
-    await parentTransaction.queryArray("ROLLBACK");
-    throw e;
-  }
-}
-
 function isUniqueViolationOfConstraint(
-  _error: unknown,
-  _constraintName: string,
+  error: unknown,
+  constraintName: string,
 ): boolean {
-  throw new Error("TODO");
-  // const unique_violation = "23505";
-  // return false;
-  //TODO   (
-  //     error instanceof DatabaseError &&
-  //     error.code === unique_violation &&
-  //     error.constraint === constraintName
-  //   );
+  const uniqueViolation = "23505";
+  return error instanceof PostgresError &&
+    error.fields.code === uniqueViolation &&
+    error.fields.constraint === constraintName;
 }
