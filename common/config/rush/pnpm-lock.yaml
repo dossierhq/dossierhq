@@ -366,6 +366,32 @@ importers:
       tslib: ~2.3.1
       typescript: ^4.3.5
       uuid: ^8.3.2
+  ../../libraries/database-adapter-sqlite:
+    dependencies:
+      '@jonasb/datadata-core': link:../core
+      '@jonasb/datadata-server': link:../server
+      tslib: 2.3.1
+    devDependencies:
+      '@rushstack/heft': 0.36.3
+      '@rushstack/heft-jest-plugin': 0.1.20_@rushstack+heft@0.36.3
+      '@types/heft-jest': 1.0.2
+      '@typescript-eslint/eslint-plugin': 4.29.2_b01b7137116ac50f0745961d9cf72d34
+      '@typescript-eslint/parser': 4.29.2_eslint@7.32.0+typescript@4.3.5
+      eslint: 7.32.0
+      prettier: 2.3.2
+      typescript: 4.3.5
+    specifiers:
+      '@jonasb/datadata-core': workspace:*
+      '@jonasb/datadata-server': workspace:*
+      '@rushstack/heft': ~0.36.1
+      '@rushstack/heft-jest-plugin': ~0.1.18
+      '@types/heft-jest': 1.0.2
+      '@typescript-eslint/eslint-plugin': ^4.29.1
+      '@typescript-eslint/parser': ^4.29.1
+      eslint: ^7.32.0
+      prettier: 2.3.2
+      tslib: ~2.3.1
+      typescript: ^4.3.5
   ../../libraries/database-adapter-test-integration:
     dependencies:
       '@jonasb/datadata-core': link:../core
