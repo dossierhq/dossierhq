@@ -370,11 +370,17 @@ importers:
     dependencies:
       '@jonasb/datadata-core': link:../core
       '@jonasb/datadata-server': link:../server
+      '@js-temporal/polyfill': 0.2.0
+      sql.js: 1.6.1
       tslib: 2.3.1
+      uuid: 8.3.2
     devDependencies:
+      '@jonasb/datadata-database-adapter-test-integration': link:../database-adapter-test-integration
       '@rushstack/heft': 0.36.3
       '@rushstack/heft-jest-plugin': 0.1.20_@rushstack+heft@0.36.3
       '@types/heft-jest': 1.0.2
+      '@types/sql.js': 1.4.2
+      '@types/uuid': 8.3.1
       '@typescript-eslint/eslint-plugin': 4.29.2_b01b7137116ac50f0745961d9cf72d34
       '@typescript-eslint/parser': 4.29.2_eslint@7.32.0+typescript@4.3.5
       eslint: 7.32.0
@@ -382,16 +388,22 @@ importers:
       typescript: 4.3.5
     specifiers:
       '@jonasb/datadata-core': workspace:*
+      '@jonasb/datadata-database-adapter-test-integration': workspace:*
       '@jonasb/datadata-server': workspace:*
+      '@js-temporal/polyfill': ~0.2.0
       '@rushstack/heft': ~0.36.1
       '@rushstack/heft-jest-plugin': ~0.1.18
       '@types/heft-jest': 1.0.2
+      '@types/sql.js': ~1.4.2
+      '@types/uuid': ~8.3.1
       '@typescript-eslint/eslint-plugin': ^4.29.1
       '@typescript-eslint/parser': ^4.29.1
       eslint: ^7.32.0
       prettier: 2.3.2
+      sql.js: ~1.6.1
       tslib: ~2.3.1
       typescript: ^4.3.5
+      uuid: ^8.3.2
   ../../libraries/database-adapter-test-integration:
     dependencies:
       '@jonasb/datadata-core': link:../core
@@ -4677,6 +4689,10 @@ packages:
     dev: true
     resolution:
       integrity: sha512-9AonUzyTjXXhEOa0DnqpzZi6VHlqKMswga9EXjpXnnqxwLtdvPPtlO8evrI5D9S6asFRCQ6v+wpiUKbw+vKqyg==
+  /@types/emscripten/1.39.5:
+    dev: true
+    resolution:
+      integrity: sha512-DIOOg+POSrYl+OlNRHQuIEqCd8DCtynG57H862UCce16nXJX7J8eWxNGgOcf8Eyge8zXeSs27mz1UcFu8L/L7g==
   /@types/eslint-scope/3.7.1:
     dependencies:
       '@types/eslint': 7.28.0
@@ -4973,6 +4989,13 @@ packages:
     dev: true
     resolution:
       integrity: sha512-K5K+yml8LTo9bWJI/rECfIPrGgxdpeNbj+d53lwN4QjW1MCwlkhUms+gtdzigTeUyBr09+u8BwOIY3MXvHdcsA==
+  /@types/sql.js/1.4.2:
+    dependencies:
+      '@types/emscripten': 1.39.5
+      '@types/node': 16.7.1
+    dev: true
+    resolution:
+      integrity: sha512-3Mq6KcJp+1qJ6FfE7c16oNZcgGrPiUZWj8DSePRRZQCPhi4vawX/thGCzwqIg59tOCjdQI1eMC+pLk9FLfTXwQ==
   /@types/stack-utils/1.0.1:
     dev: true
     resolution:
@@ -15480,6 +15503,10 @@ packages:
     dev: true
     resolution:
       integrity: sha1-BOaSb2YolTVPPdAVIDYzuFcpfiw=
+  /sql.js/1.6.1:
+    dev: false
+    resolution:
+      integrity: sha512-mQTboXfaaYsqG6leg2tYHppHPShHFDP+vtPjyTBrOCM//8XvnK/OfVYQahS3g6ArvO2a6lvBsHy8w/qZ9a12DQ==
   /sshpk/1.16.1:
     dependencies:
       asn1: 0.2.4
