@@ -1,4 +1,5 @@
-import { ErrorType, notOk, ok, Result } from '@jonasb/datadata-core';
+import type { ErrorType, PromiseResult, Result } from '@jonasb/datadata-core';
+import { notOk, ok } from '@jonasb/datadata-core';
 import type { SqliteDatabaseAdapter } from '.';
 import type { ColumnValue } from './SqliteDatabaseAdapter';
 
@@ -6,14 +7,14 @@ interface ErrorConverter<TRow, TError extends ErrorType> {
   (error: unknown): Result<TRow[], TError | ErrorType.Generic>;
 }
 
-function queryCommon<TRow extends ColumnValue[], TError extends ErrorType>(
+async function queryCommon<TRow, TError extends ErrorType>(
   adapter: SqliteDatabaseAdapter,
   query: string,
   values: ColumnValue[] | undefined,
   errorConverter: ErrorConverter<TRow, TError> | undefined
-): Result<TRow[], TError | ErrorType.Generic> {
+): PromiseResult<TRow[], TError | ErrorType.Generic> {
   try {
-    const rows = adapter.query<TRow>(query, values);
+    const rows = await adapter.query<TRow>(query, values);
     return ok(rows);
   } catch (error) {
     if (errorConverter) {
@@ -23,13 +24,13 @@ function queryCommon<TRow extends ColumnValue[], TError extends ErrorType>(
   }
 }
 
-export function queryNone<TError extends ErrorType | ErrorType.Generic = ErrorType.Generic>(
+export async function queryNone<TError extends ErrorType | ErrorType.Generic = ErrorType.Generic>(
   adapter: SqliteDatabaseAdapter,
   query: string,
   values?: ColumnValue[],
   errorConverter?: ErrorConverter<unknown, TError | ErrorType.Generic>
-): Result<void, TError | ErrorType.Generic> {
-  const result = queryCommon<[], TError>(
+): PromiseResult<void, TError | ErrorType.Generic> {
+  const result = await queryCommon<[], TError>(
     adapter,
     query,
     values,
@@ -45,13 +46,13 @@ export function queryNone<TError extends ErrorType | ErrorType.Generic = ErrorTy
   return ok(undefined);
 }
 
-export function queryOne<TRow extends ColumnValue[], TError extends ErrorType = ErrorType.Generic>(
+export async function queryOne<TRow, TError extends ErrorType = ErrorType.Generic>(
   adapter: SqliteDatabaseAdapter,
   query: string,
   values?: ColumnValue[],
   errorConverter?: ErrorConverter<TRow, TError | ErrorType.Generic>
-): Result<TRow, TError | ErrorType.Generic> {
-  const result = queryCommon<TRow, TError>(
+): PromiseResult<TRow, TError | ErrorType.Generic> {
+  const result = await queryCommon<TRow, TError>(
     adapter,
     query,
     values,

@@ -1,43 +1,26 @@
 import initSqlJs from 'sql.js';
 import type { ColumnValue, SqliteDatabaseAdapter } from '.';
+import { SCHEMA_DEFINITION } from './SchemaDefinition';
 
 export async function createSqlJsAdapter(): Promise<SqliteDatabaseAdapter> {
   const SQL = await initSqlJs();
   const db = new SQL.Database();
-  db.run(schemaSql);
+  db.run(SCHEMA_DEFINITION);
 
   const adapter: SqliteDatabaseAdapter = {
     disconnect: async () => {
       db.close();
     },
-    query: <R>(query: string, values: ColumnValue[] | undefined) => {
-      const result = db.exec(query, values);
-      if (result.length === 0) {
-        return [];
+    query: async <R>(query: string, values: ColumnValue[] | undefined) => {
+      const result: R[] = [];
+      const statement = db.prepare(query, values);
+      while (statement.step()) {
+        const row = statement.getAsObject() as unknown as R;
+        result.push(row);
       }
-      //TODO check length > 1
-      return result[0].values as unknown as R[];
+      statement.free();
+      return result;
     },
   };
   return adapter;
 }
-
-const schemaSql = `
-PRAGMA foreign_keys=TRUE;
-
-CREATE TABLE subjects (
-  id INTEGER PRIMARY KEY,
-  uuid TEXT NOT NULL,
-  created_at TEXT NOT NULL,
-  CONSTRAINT subjects_pkey UNIQUE (uuid)
-);
-
-CREATE TABLE principals (
-  id INTEGER PRIMARY KEY,
-  provider TEXT NOT NULL,
-  identifier TEXT NOT NULL,
-  subjects_id INTEGER NOT NULL,
-  CONSTRAINT principals_pkey UNIQUE (provider,identifier),
-  FOREIGN KEY (subjects_id) REFERENCES subjects(id) ON DELETE CASCADE
-);
-`;

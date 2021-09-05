@@ -1,24 +1,25 @@
-import type { ErrorType, Result } from '@jonasb/datadata-core';
+import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
 import { notOk, ok } from '@jonasb/datadata-core';
 import type { Context, Session } from '@jonasb/datadata-server';
 import { Temporal } from '@js-temporal/polyfill';
 import { v4 as uuidv4 } from 'uuid';
 import type { SqliteDatabaseAdapter } from '..';
-import { PrincipalsUniqueProviderIdentifier, SubjectsTable } from '../DatabaseSchema';
+import type { SubjectsTable } from '../DatabaseSchema';
+import { PrincipalsUniqueProviderIdentifier } from '../DatabaseSchema';
 import { isUniqueViolationOfConstraint } from '../ErrorUtils';
 import { queryNone, queryOne } from '../QueryFunctions';
-import { withSynchronousTransaction } from '../SqliteTransaction';
 
-export function authCreatePrincipal(
+export async function authCreatePrincipal(
   adapter: SqliteDatabaseAdapter,
   context: Context,
   provider: string,
   identifier: string
-): Result<Session, ErrorType.Conflict | ErrorType.Generic> {
-  return withSynchronousTransaction(adapter, () => {
+): PromiseResult<Session, ErrorType.Conflict | ErrorType.Generic> {
+  // eslint-ignore-next-line @typescript-eslint/no-unused-vars
+  return await context.withTransaction(async (context) => {
     const uuid = uuidv4();
     const now = Temporal.Now.instant();
-    const subjectsResult = queryOne<[SubjectsTable['id'], SubjectsTable['uuid']]>(
+    const subjectsResult = await queryOne<Pick<SubjectsTable, 'id'>>(
       adapter,
       'INSERT INTO subjects (uuid, created_at) VALUES ($1, $2) RETURNING id',
       [uuid, now.toString()]
@@ -26,8 +27,8 @@ export function authCreatePrincipal(
     if (subjectsResult.isError()) {
       return subjectsResult;
     }
-    const [id] = subjectsResult.value;
-    const principalsResult = queryNone(
+    const { id } = subjectsResult.value;
+    const principalsResult = await queryNone(
       adapter,
       'INSERT INTO principals (provider, identifier, subjects_id) VALUES ($1, $2, $3)',
       [provider, identifier, id],
