@@ -4,7 +4,7 @@ import type { TestSuite } from '@jonasb/datadata-database-adapter-test-integrati
 import type { Context, DatabaseAdapter, Server } from '@jonasb/datadata-server';
 import { ServerTestUtils } from '@jonasb/datadata-server';
 import type { SqliteDatabaseAdapter } from '..';
-import { createSqliteDatabaseAdapter, createSqlJsAdapter } from '..';
+import { createSqlite3Adapter, createSqliteDatabaseAdapter, createSqlJsAdapter } from '..';
 
 type QueryFn = SqliteDatabaseAdapter['query'];
 
@@ -17,6 +17,14 @@ export async function createSqlJsTestAdapter(): PromiseResult<
   ErrorType.BadRequest | ErrorType.Generic
 > {
   const adapter = await createSqlJsAdapter();
+  return createSqliteDatabaseAdapter(adapter);
+}
+
+export async function createSqlite3TestAdapter(): PromiseResult<
+  DatabaseAdapter,
+  ErrorType.BadRequest | ErrorType.Generic
+> {
+  const adapter = await createSqlite3Adapter();
   return createSqliteDatabaseAdapter(adapter);
 }
 
