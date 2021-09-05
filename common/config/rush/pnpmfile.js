@@ -33,5 +33,10 @@ function readPackage(packageJson, context) {
   //  packageJson.dependencies['log4js'] = '0.6.38';
   // }
 
+  if (packageJson.name === "sqlite3") {
+    //TODO build from source until new version is released: https://github.com/mapbox/node-sqlite3/pull/1476
+    packageJson.scripts.install = "node-pre-gyp install --build-from-source";
+  }
+
   return packageJson;
 }
