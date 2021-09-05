@@ -4,6 +4,7 @@ import type { DatabaseAdapter } from '@jonasb/datadata-server';
 import type { UniqueConstraint } from '.';
 import { authCreatePrincipal } from './auth/createPrincipal';
 import { queryOne } from './QueryFunctions';
+import { isSemVerEqualOrGreaterThan, parseSemVer } from './SemVer';
 import { withNestedTransaction, withRootTransaction } from './SqliteTransaction';
 
 export type ColumnValue = number | string | Uint8Array | null;
@@ -51,12 +52,7 @@ async function checkAdapterValidity(
     return result;
   }
   const { version } = result.value;
-  const [major, minor, patch] = version.split('.').map((it) => Number.parseInt(it));
-  const isSupported =
-    major > minimumSupportedVersion.major ||
-    (major === minimumSupportedVersion.major &&
-      (minor > minimumSupportedVersion.minor ||
-        (minor === minimumSupportedVersion.minor && patch >= minimumSupportedVersion.patch)));
+  const isSupported = isSemVerEqualOrGreaterThan(parseSemVer(version), minimumSupportedVersion);
   if (!isSupported) {
     return notOk.BadRequest(
       `Database is using sqlite ${version}, (${minimumSupportedVersion.major}.${minimumSupportedVersion.minor}.${minimumSupportedVersion.patch}+ required)`
