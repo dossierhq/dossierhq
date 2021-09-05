@@ -372,7 +372,7 @@ importers:
       '@jonasb/datadata-server': link:../server
       '@js-temporal/polyfill': 0.2.0
       sql.js: 1.6.1
-      sqlite3: github.com/Glowin/node-sqlite3/0c9eb341d3cfcc1bdd0f02caa95c829270386621
+      sqlite3: github.com/jonasb/node-sqlite3/624ce96be9c9f166c4d4b98393297bb644a03179
       tslib: 2.3.1
       uuid: 8.3.2
     devDependencies:
@@ -404,7 +404,7 @@ importers:
       eslint: ^7.32.0
       prettier: 2.3.2
       sql.js: ~1.6.1
-      sqlite3: Glowin/node-sqlite3#sqlite3-3.36.0
+      sqlite3: jonasb/node-sqlite3#3.36.0
       tslib: ~2.3.1
       typescript: ^4.3.5
       uuid: ^8.3.2
@@ -17448,7 +17448,7 @@ packages:
     dev: true
     resolution:
       integrity: sha512-V50KMwwzqJV0NpZIZFwfOD5/lyny3WlSzRiXgA0G7VUnRlqttta1L6UQIHzd6EuBY/cHGfwTIck7w1yH6Q5zUw==
-  github.com/Glowin/node-sqlite3/0c9eb341d3cfcc1bdd0f02caa95c829270386621:
+  github.com/jonasb/node-sqlite3/624ce96be9c9f166c4d4b98393297bb644a03179:
     dependencies:
       '@mapbox/node-pre-gyp': 1.0.5
       node-addon-api: 3.2.1
@@ -17461,5 +17461,5 @@ packages:
         optional: true
     requiresBuild: true
     resolution:
-      tarball: https://codeload.github.com/Glowin/node-sqlite3/tar.gz/0c9eb341d3cfcc1bdd0f02caa95c829270386621
+      tarball: https://codeload.github.com/jonasb/node-sqlite3/tar.gz/624ce96be9c9f166c4d4b98393297bb644a03179
     version: 5.0.2
