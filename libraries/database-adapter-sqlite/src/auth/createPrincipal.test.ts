@@ -5,14 +5,19 @@ import { authCreatePrincipal } from './createPrincipal';
 const { expectResultValue } = CoreTestUtils;
 
 describe('authCreatePrincipal', () => {
-  test('Create new principal', () => {
+  test('Create new principal', async () => {
     const adapter = createMockAdapter();
-    const context = createMockContext(adapter);
-    adapter.query.mockImplementation((query, _values) => {
-      if (query.startsWith('INSERT INTO subjects')) return [[123]];
+    const contextResult = await createMockContext(adapter);
+    if (contextResult.isError()) throw contextResult.toError();
+    const context = contextResult.value;
+
+    adapter.query.mockClear();
+    adapter.query.mockImplementation(async (query, _values) => {
+      if (query.startsWith('INSERT INTO subjects')) return [{ id: 123 }];
       return [];
     });
-    const result = authCreatePrincipal(adapter, context, 'test', 'hello');
+
+    const result = await authCreatePrincipal(adapter, context, 'test', 'hello');
     if (expectOkResult(result)) {
       const { subjectId } = result.value;
       expectResultValue(result, { subjectInternalId: 123, subjectId });
