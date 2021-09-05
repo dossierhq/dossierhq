@@ -1,6 +1,6 @@
 import type { UniqueConstraint } from './DatabaseSchema';
 
-export function isUniqueViolationOfConstraint<T>(
+export function isUniqueViolationOfConstraint(
   error: unknown,
   constraint: UniqueConstraint
 ): boolean {
