@@ -1,3 +1,4 @@
+import { assertIsDefined } from '@jonasb/datadata-core';
 import { createAuthTestSuite } from '@jonasb/datadata-database-adapter-test-integration';
 import type { AuthContext } from '@jonasb/datadata-server';
 import { Server } from '@jonasb/datadata-server';
@@ -24,7 +25,10 @@ afterAll(async () => {
 
 registerTestSuite(
   createAuthTestSuite({
-    before: () => [authContext!, undefined],
+    before: () => {
+      assertIsDefined(authContext);
+      return [authContext, undefined];
+    },
     after: async () => {
       //empty
     },

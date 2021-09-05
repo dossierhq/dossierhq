@@ -15,7 +15,7 @@ export async function authCreatePrincipal(
   provider: string,
   identifier: string
 ): PromiseResult<Session, ErrorType.Conflict | ErrorType.Generic> {
-  // eslint-ignore-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   return await context.withTransaction(async (context) => {
     const uuid = uuidv4();
     const now = Temporal.Now.instant();
