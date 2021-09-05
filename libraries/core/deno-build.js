@@ -10,11 +10,8 @@ function rewrittenRelativeImport(moduleSpecifier) {
   return moduleSpecifier;
 }
 
-function rewriteNpmImport(package, version) {
-  if (package.startsWith('@jonasb/')) {
-    return package;
-  }
-  return `https://esm.sh/${package}@${version}`;
+function rewriteNpmImport(package, _version) {
+  return package;
 }
 
 function rewriteImportExportModuleSpecifier(moduleSpecifier, dependencies) {
