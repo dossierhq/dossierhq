@@ -1,15 +1,19 @@
 import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
 import { notOk, ok } from '@jonasb/datadata-core';
 import type { DatabaseAdapter } from '@jonasb/datadata-server';
+import type { UniqueConstraint } from '.';
 import { authCreatePrincipal } from './auth/createPrincipal';
 import { queryOne } from './QueryFunctions';
 import { withNestedTransaction, withRootTransaction } from './SqliteTransaction';
 
 export type ColumnValue = number | string | Uint8Array | null;
 
+const minimumSupportedVersion = { major: 3, minor: 35, patch: 0 };
+
 export interface SqliteDatabaseAdapter {
   disconnect(): Promise<void>;
   query<R>(query: string, values: ColumnValue[] | undefined): Promise<R[]>;
+  isUniqueViolationOfConstraint(error: unknown, constraint: UniqueConstraint): boolean;
 }
 
 export async function createSqliteDatabaseAdapter(
@@ -47,9 +51,15 @@ async function checkAdapterValidity(
     return result;
   }
   const { version } = result.value;
-  if (version !== '3.35.0') {
+  const [major, minor, patch] = version.split('.').map((it) => Number.parseInt(it));
+  const isSupported =
+    major > minimumSupportedVersion.major ||
+    (major === minimumSupportedVersion.major &&
+      (minor > minimumSupportedVersion.minor ||
+        (minor === minimumSupportedVersion.minor && patch >= minimumSupportedVersion.patch)));
+  if (!isSupported) {
     return notOk.BadRequest(
-      `Database is using sqlite ${version}, ${'3.35.0'} or later is required`
+      `Database is using sqlite ${version}, (${minimumSupportedVersion.major}.${minimumSupportedVersion.minor}.${minimumSupportedVersion.patch}+ required)`
     );
   }
   return ok(undefined);

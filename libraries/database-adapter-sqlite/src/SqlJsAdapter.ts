@@ -1,11 +1,11 @@
 import initSqlJs from 'sql.js';
-import type { ColumnValue, SqliteDatabaseAdapter } from '.';
-import { SCHEMA_DEFINITION } from './SchemaDefinition';
+import type { ColumnValue, SqliteDatabaseAdapter, UniqueConstraint } from '.';
+import { SCHEMA_DEFINITION_STATEMENTS } from './SchemaDefinition';
 
 export async function createSqlJsAdapter(): Promise<SqliteDatabaseAdapter> {
   const SQL = await initSqlJs();
   const db = new SQL.Database();
-  db.run(SCHEMA_DEFINITION);
+  db.run(SCHEMA_DEFINITION_STATEMENTS.join(';'));
 
   const adapter: SqliteDatabaseAdapter = {
     disconnect: async () => {
@@ -21,6 +21,16 @@ export async function createSqlJsAdapter(): Promise<SqliteDatabaseAdapter> {
       statement.free();
       return result;
     },
+    isUniqueViolationOfConstraint,
   };
   return adapter;
+}
+
+function isUniqueViolationOfConstraint(error: unknown, constraint: UniqueConstraint): boolean {
+  if (error instanceof Error) {
+    const qualifiedColumns = constraint.columns.map((column) => `${constraint.table}.${column}`);
+    const expectedMessage = `UNIQUE constraint failed: ${qualifiedColumns.join(', ')}`;
+    return error.message === expectedMessage;
+  }
+  return false;
 }

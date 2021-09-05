@@ -46,7 +46,7 @@
     "@jonasb/datadata-server": "workspace:*",
     "@js-temporal/polyfill": "~0.2.0",
     "sql.js": "~1.6.1",
-    "sqlite3": "~5.0.2",
+    "sqlite3": "Glowin/node-sqlite3#sqlite3-3.36.0",
     "tslib": "~2.3.1",
     "uuid": "^8.3.2"
   }

@@ -6,7 +6,6 @@ import { v4 as uuidv4 } from 'uuid';
 import type { SqliteDatabaseAdapter } from '..';
 import type { SubjectsTable } from '../DatabaseSchema';
 import { PrincipalsUniqueProviderIdentifier } from '../DatabaseSchema';
-import { isUniqueViolationOfConstraint } from '../ErrorUtils';
 import { queryNone, queryOne } from '../QueryFunctions';
 
 export async function authCreatePrincipal(
@@ -33,7 +32,7 @@ export async function authCreatePrincipal(
       'INSERT INTO principals (provider, identifier, subjects_id) VALUES ($1, $2, $3)',
       [provider, identifier, id],
       (error) => {
-        if (isUniqueViolationOfConstraint(error, PrincipalsUniqueProviderIdentifier)) {
+        if (adapter.isUniqueViolationOfConstraint(error, PrincipalsUniqueProviderIdentifier)) {
           return notOk.Conflict('Principal already exist');
         }
         return notOk.GenericUnexpectedException(error);

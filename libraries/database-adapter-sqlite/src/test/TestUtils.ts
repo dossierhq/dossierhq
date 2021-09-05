@@ -56,6 +56,7 @@ export function createMockAdapter(): MockedSqliteDatabaseAdapter {
   return {
     disconnect: jest.fn(),
     query,
+    isUniqueViolationOfConstraint: jest.fn().mockReturnValue(false),
   };
 }
 
