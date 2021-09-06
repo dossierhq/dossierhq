@@ -1,5 +1,5 @@
 import { ErrorType, notOk, ok, PromiseResult, Result } from '@jonasb/datadata-core';
-import type { Context } from '@jonasb/datadata-server';
+import type { TransactionContext } from '@jonasb/datadata-server';
 import type { PostgresDatabaseAdapter, PostgresTransaction } from '.';
 
 interface ErrorConverter<TRow, TError extends ErrorType> {
@@ -7,7 +7,7 @@ interface ErrorConverter<TRow, TError extends ErrorType> {
 }
 
 async function queryCommon<TRow, TError extends ErrorType>(
-  context: Context,
+  context: TransactionContext,
   adapter: PostgresDatabaseAdapter,
   query: string,
   values: unknown[] | undefined,
@@ -29,7 +29,7 @@ async function queryCommon<TRow, TError extends ErrorType>(
 }
 
 export async function queryNone<TError extends ErrorType | ErrorType.Generic = ErrorType.Generic>(
-  context: Context,
+  context: TransactionContext,
   adapter: PostgresDatabaseAdapter,
   query: string,
   values?: unknown[],
@@ -53,7 +53,7 @@ export async function queryNone<TError extends ErrorType | ErrorType.Generic = E
 }
 
 export async function queryNoneOrOne<TRow, TError extends ErrorType = ErrorType.Generic>(
-  context: Context,
+  context: TransactionContext,
   adapter: PostgresDatabaseAdapter,
   query: string,
   values?: unknown[],
@@ -80,7 +80,7 @@ export async function queryNoneOrOne<TRow, TError extends ErrorType = ErrorType.
 }
 
 export async function queryOne<TRow, TError extends ErrorType = ErrorType.Generic>(
-  context: Context,
+  context: TransactionContext,
   adapter: PostgresDatabaseAdapter,
   query: string,
   values?: unknown[],

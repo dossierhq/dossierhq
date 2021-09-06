@@ -1,16 +1,20 @@
 import type { OkResult, PromiseResult } from '@jonasb/datadata-core';
 import { ErrorType, notOk, ok } from '@jonasb/datadata-core';
-import type { AuthCreateSessionPayload, Context, Session } from '@jonasb/datadata-server';
+import type {
+  AuthCreateSessionPayload,
+  Session,
+  TransactionContext,
+} from '@jonasb/datadata-server';
+import { Temporal } from '@js-temporal/polyfill';
+import { v4 as uuidv4 } from 'uuid';
 import type { SqliteDatabaseAdapter } from '..';
 import type { SubjectsTable } from '../DatabaseSchema';
 import { PrincipalsUniqueProviderIdentifier } from '../DatabaseSchema';
 import { queryNone, queryNoneOrOne, queryOne } from '../QueryFunctions';
-import { Temporal } from '@js-temporal/polyfill';
-import { v4 as uuidv4 } from 'uuid';
 
 export async function authCreateSession(
   adapter: SqliteDatabaseAdapter,
-  context: Context,
+  context: TransactionContext,
   provider: string,
   identifier: string
 ): PromiseResult<AuthCreateSessionPayload, ErrorType.Generic> {
@@ -54,7 +58,7 @@ function createPayload<TError extends ErrorType>(
 
 async function getSubject(
   adapter: SqliteDatabaseAdapter,
-  context: Context,
+  context: TransactionContext,
   provider: string,
   identifier: string
 ): PromiseResult<AuthCreateSessionPayload | null, ErrorType.Generic> {
@@ -75,7 +79,7 @@ async function getSubject(
 
 async function createSubject(
   adapter: SqliteDatabaseAdapter,
-  context: Context,
+  context: TransactionContext,
   provider: string,
   identifier: string
 ): PromiseResult<AuthCreateSessionPayload, ErrorType.Conflict | ErrorType.Generic> {

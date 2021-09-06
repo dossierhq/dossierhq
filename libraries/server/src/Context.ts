@@ -1,13 +1,16 @@
 import type { ErrorType, Logger, PromiseResult } from '@jonasb/datadata-core';
-import type { DatabaseAdapter, Transaction, Server, Session } from '.';
+import type { DatabaseAdapter, Server, Session, Transaction } from '.';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export interface Context<TContext extends Context<any> = Context<any>> {
-  //TODO remove
-  readonly server: Server;
-  //TODO remove
-  readonly databaseAdapter: DatabaseAdapter;
+const authContextSymbol = Symbol('AuthContext');
+const sessionContextSymbol = Symbol('SessionContext');
+
+export interface Context2 {
   readonly logger: Logger;
+}
+
+export interface TransactionContext<
+  TContext extends TransactionContext<any> = TransactionContext<any> // eslint-disable-line @typescript-eslint/no-explicit-any
+> extends Context2 {
   readonly transaction: Transaction | null;
 
   withTransaction<TOk, TError extends ErrorType>(
@@ -15,19 +18,25 @@ export interface Context<TContext extends Context<any> = Context<any>> {
   ): PromiseResult<TOk, TError>;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export interface Context<TContext extends Context<any> = Context<any>>
+  extends TransactionContext<TContext> {
+  //TODO remove
+  readonly server: Server;
+  //TODO remove
+  readonly databaseAdapter: DatabaseAdapter;
+  readonly logger: Logger;
+  readonly transaction: Transaction | null;
+}
+
 export interface AuthContext extends Context<AuthContext> {
-  withTransaction<TOk, TError extends ErrorType>(
-    callback: (context: AuthContext) => PromiseResult<TOk, TError>
-  ): PromiseResult<TOk, TError>;
+  [authContextSymbol]: never;
 }
 
 export interface SessionContext extends Context<SessionContext> {
   //TODO remove
   readonly session: Session;
-
-  withTransaction<TOk, TError extends ErrorType>(
-    callback: (context: SessionContext) => PromiseResult<TOk, TError>
-  ): PromiseResult<TOk, TError>;
+  [sessionContextSymbol]: never;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -69,6 +78,8 @@ export abstract class ContextImpl<TContext extends Context<any>> implements Cont
 }
 
 export class AuthContextImpl extends ContextImpl<AuthContext> implements AuthContext {
+  [authContextSymbol]: never;
+
   constructor(
     server: Server,
     databaseAdapter: DatabaseAdapter,
@@ -84,6 +95,7 @@ export class AuthContextImpl extends ContextImpl<AuthContext> implements AuthCon
 }
 
 export class SessionContextImpl extends ContextImpl<SessionContext> implements SessionContext {
+  [sessionContextSymbol]: never;
   readonly session: Session;
 
   constructor(
