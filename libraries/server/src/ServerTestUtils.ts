@@ -1,16 +1,21 @@
-import type { SchemaSpecification } from '@jonasb/datadata-core';
+import type { Logger, SchemaSpecification } from '@jonasb/datadata-core';
 import { Schema } from '@jonasb/datadata-core';
 import type { Context, DatabaseAdapter, SessionContext, Transaction } from '.';
 import { Auth, Server } from '.';
 import { ContextImpl } from './Context';
 
 class DummyContextImpl extends ContextImpl<Context> {
-  constructor(server: Server, databaseAdapter: DatabaseAdapter, transaction: Transaction | null) {
-    super(server, databaseAdapter, transaction);
+  constructor(
+    server: Server,
+    databaseAdapter: DatabaseAdapter,
+    logger: Logger,
+    transaction: Transaction | null
+  ) {
+    super(server, databaseAdapter, logger, transaction);
   }
 
   protected copyWithNewTransaction(transaction: Transaction): Context {
-    return new DummyContextImpl(this.server, this.databaseAdapter, transaction);
+    return new DummyContextImpl(this.server, this.databaseAdapter, this.logger, transaction);
   }
 }
 
@@ -75,6 +80,19 @@ export async function updateSchema(
   result.throwIfError();
 }
 
-export function createDummyContext(server: Server, databaseAdapter: DatabaseAdapter): Context {
-  return new DummyContextImpl(server, databaseAdapter, null);
+export function createDummyContext(
+  server: Server,
+  databaseAdapter: DatabaseAdapter,
+  logger?: Logger
+): Context {
+  return new DummyContextImpl(server, databaseAdapter, logger ?? createMockLogger(), null);
+}
+
+export function createMockLogger(): Logger {
+  return {
+    error: jest.fn(),
+    warn: jest.fn(),
+    info: jest.fn(),
+    debug: jest.fn(),
+  };
 }

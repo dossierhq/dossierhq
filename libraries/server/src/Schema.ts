@@ -5,14 +5,22 @@ import * as Db from './Database';
 import type { SchemaVersionsTable } from './DatabaseTables';
 
 export async function getSchema(context: Context): PromiseResult<Schema, ErrorType.Generic> {
+  const { logger } = context;
+  logger.info('Loading schema');
   const result = await Db.queryNoneOrOne<Pick<SchemaVersionsTable, 'specification'>>(
     context,
     'SELECT specification FROM schema_versions ORDER BY id DESC LIMIT 1'
   );
   if (!result) {
+    logger.info('No schema set, defaulting to empty');
     return ok(Schema.empty());
   }
   const { specification } = result;
+  logger.info(
+    'Loaded schema with %d entity types and  %d value types',
+    specification.entityTypes.length,
+    specification.valueTypes.length
+  );
   return ok(new Schema(specification));
 }
 

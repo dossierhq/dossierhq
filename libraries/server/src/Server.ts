@@ -1,29 +1,52 @@
-import type { ErrorType, PromiseResult, Schema } from '@jonasb/datadata-core';
-import { assertIsDefined, notOk, ok } from '@jonasb/datadata-core';
+import type { Logger, PromiseResult, Schema } from '@jonasb/datadata-core';
+import { assertIsDefined, ErrorType, notOk, ok } from '@jonasb/datadata-core';
 import type { AuthContext, Context, DatabaseAdapter, Session, SessionContext } from '.';
+import { Auth } from '.';
 import { AuthContextImpl, SessionContextImpl } from './Context';
 import { getSchema, setSchema } from './Schema';
 
-export interface Server2 {
-  schema: Readonly<Schema>;
-  shutdown(): PromiseResult<void, ErrorType.Generic>;
-  reloadSchema(context: Context): PromiseResult<void, ErrorType.Generic>;
+export interface CreateSessionPayload {
+  principalEffect: 'created' | 'none';
+  context: SessionContext;
+}
 
-  createAuthContext(): AuthContext;
+export interface Server2 {
+  shutdown(): PromiseResult<void, ErrorType.Generic>;
+  // TODO reloadSchema(context: Context): PromiseResult<void, ErrorType.Generic>;
+  createSession(
+    provider: string,
+    identifier: string,
+    logger?: Logger
+  ): PromiseResult<CreateSessionPayload, ErrorType.BadRequest | ErrorType.Generic>;
 }
 
 export default class Server {
   #databaseAdapter: DatabaseAdapter | null;
+  #logger: Logger;
   #schema: Schema | null = null;
 
-  constructor({ databaseAdapter }: { databaseAdapter: DatabaseAdapter }) {
+  constructor({ databaseAdapter, logger }: { databaseAdapter: DatabaseAdapter; logger?: Logger }) {
     this.#databaseAdapter = databaseAdapter;
+    if (!logger) {
+      const noop = () => {
+        //empty
+      };
+      logger = {
+        error: noop,
+        warn: noop,
+        info: noop,
+        debug: noop,
+      };
+    }
+    this.#logger = logger;
   }
 
   async shutdownResult(): PromiseResult<void, ErrorType.Generic> {
     if (this.#databaseAdapter) {
+      this.#logger.info('Shutting down database adapter');
       await this.#databaseAdapter.disconnect();
       this.#databaseAdapter = null;
+      this.#logger.info('Finished shutting server');
       return ok(undefined);
     }
     return notOk.Generic('Trying to shutdown twice');
@@ -66,40 +89,53 @@ export default class Server {
     return result;
   }
 
-  createAuthContext(): AuthContext {
+  createAuthContext(logger?: Logger): AuthContext {
     assertIsDefined(this.#databaseAdapter);
-    return new AuthContextImpl(this, this.#databaseAdapter);
+    return new AuthContextImpl(this, this.#databaseAdapter, logger ?? this.#logger);
   }
 
-  createSessionContext(session: Session): SessionContext {
+  createSessionContext(session: Session, logger?: Logger): SessionContext {
     assertIsDefined(this.#databaseAdapter);
-    return new SessionContextImpl(this, session, this.#databaseAdapter);
+    return new SessionContextImpl(this, session, this.#databaseAdapter, logger ?? this.#logger);
   }
 }
 
 export async function createServer({
   databaseAdapter,
+  logger,
 }: {
   databaseAdapter: DatabaseAdapter;
+  logger: Logger;
 }): PromiseResult<Server2, ErrorType.Generic> {
-  const server = new Server({ databaseAdapter });
+  const server = new Server({ databaseAdapter, logger });
   const authContext = server.createAuthContext();
   const loadSchemaResult = await server.reloadSchemaResult(authContext);
   if (loadSchemaResult.isError()) {
     return loadSchemaResult;
   }
   const server2: Server2 = {
-    get schema() {
-      return server.getSchema();
-    },
     shutdown() {
       return server.shutdownResult();
     },
-    reloadSchema() {
-      return server.reloadSchemaResult(authContext);
-    },
-    createAuthContext() {
-      return server.createAuthContext();
+    createSession: async (
+      provider,
+      identifier,
+      logger
+    ): PromiseResult<CreateSessionPayload, ErrorType.BadRequest | ErrorType.Generic> => {
+      const sessionResult = await Auth.createSessionForPrincipal(
+        authContext,
+        provider,
+        identifier,
+        { createPrincipalIfMissing: true }
+      );
+      if (sessionResult.isError()) {
+        if (sessionResult.isErrorType(ErrorType.BadRequest)) {
+          return sessionResult;
+        }
+        return notOk.GenericUnexpectedError(sessionResult);
+      }
+      const context = server.createSessionContext(sessionResult.value, logger);
+      return ok({ principalEffect: 'none', context });
     },
   };
 

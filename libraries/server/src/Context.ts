@@ -1,10 +1,13 @@
-import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
+import type { ErrorType, Logger, PromiseResult } from '@jonasb/datadata-core';
 import type { DatabaseAdapter, Transaction, Server, Session } from '.';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export interface Context<TContext extends Context<any> = Context<any>> {
+  //TODO remove
   readonly server: Server;
+  //TODO remove
   readonly databaseAdapter: DatabaseAdapter;
+  readonly logger: Logger;
   readonly transaction: Transaction | null;
 
   withTransaction<TOk, TError extends ErrorType>(
@@ -19,6 +22,7 @@ export interface AuthContext extends Context<AuthContext> {
 }
 
 export interface SessionContext extends Context<SessionContext> {
+  //TODO remove
   readonly session: Session;
 
   withTransaction<TOk, TError extends ErrorType>(
@@ -30,11 +34,18 @@ export interface SessionContext extends Context<SessionContext> {
 export abstract class ContextImpl<TContext extends Context<any>> implements Context<TContext> {
   readonly server: Server;
   readonly databaseAdapter: DatabaseAdapter;
+  readonly logger: Logger;
   readonly transaction: Transaction | null;
 
-  constructor(server: Server, databaseAdapter: DatabaseAdapter, transaction: Transaction | null) {
+  constructor(
+    server: Server,
+    databaseAdapter: DatabaseAdapter,
+    logger: Logger,
+    transaction: Transaction | null
+  ) {
     this.server = server;
     this.databaseAdapter = databaseAdapter;
+    this.logger = logger;
     this.transaction = transaction;
   }
 
@@ -61,13 +72,14 @@ export class AuthContextImpl extends ContextImpl<AuthContext> implements AuthCon
   constructor(
     server: Server,
     databaseAdapter: DatabaseAdapter,
+    logger: Logger,
     transaction: Transaction | null = null
   ) {
-    super(server, databaseAdapter, transaction);
+    super(server, databaseAdapter, logger, transaction);
   }
 
   protected copyWithNewTransaction(transaction: Transaction): AuthContext {
-    return new AuthContextImpl(this.server, this.databaseAdapter, transaction);
+    return new AuthContextImpl(this.server, this.databaseAdapter, this.logger, transaction);
   }
 }
 
@@ -78,13 +90,20 @@ export class SessionContextImpl extends ContextImpl<SessionContext> implements S
     server: Server,
     session: Session,
     databaseAdapter: DatabaseAdapter,
+    logger: Logger,
     transaction: Transaction | null = null
   ) {
-    super(server, databaseAdapter, transaction);
+    super(server, databaseAdapter, logger, transaction);
     this.session = session;
   }
 
   protected copyWithNewTransaction(transaction: Transaction): SessionContext {
-    return new SessionContextImpl(this.server, this.session, this.databaseAdapter, transaction);
+    return new SessionContextImpl(
+      this.server,
+      this.session,
+      this.databaseAdapter,
+      this.logger,
+      transaction
+    );
   }
 }
