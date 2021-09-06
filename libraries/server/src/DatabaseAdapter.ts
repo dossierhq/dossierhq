@@ -34,7 +34,7 @@ export interface DatabaseAdapter {
     identifier: string
   ): PromiseResult<Session, ErrorType.Conflict | ErrorType.Generic>;
 
-  schemaGet(context: Context): PromiseResult<SchemaSpecification|null, ErrorType.Generic>
+  schemaGet(context: Context): PromiseResult<SchemaSpecification | null, ErrorType.Generic>;
 
   // TODO remove when migrated away
   queryLegacy<R = unknown>(
