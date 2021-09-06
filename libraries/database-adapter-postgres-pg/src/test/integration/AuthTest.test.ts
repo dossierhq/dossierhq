@@ -1,11 +1,9 @@
 import { assertIsDefined } from '@jonasb/datadata-core';
 import { createAuthTestSuite } from '@jonasb/datadata-database-adapter-test-integration';
-import { AuthContext, createServer, Server, Server2 } from '@jonasb/datadata-server';
+import { createServer, Server2 } from '@jonasb/datadata-server';
 import { createMockLogger, createPostgresTestAdapter, registerTestSuite } from '../TestUtils';
 
-let server: Server | null = new Server({ databaseAdapter: createPostgresTestAdapter() });
-let server2: Server2 | null = null;
-let authContext: AuthContext | null = server.createAuthContext();
+let server: Server2 | null = null;
 
 beforeAll(async () => {
   const result = await createServer({
@@ -15,24 +13,20 @@ beforeAll(async () => {
   if (result.isError()) {
     throw result.toError();
   }
-  server2 = result.value;
+  server = result.value;
 });
 afterAll(async () => {
-  await server!.shutdown();
-  server = null;
-  authContext = null;
-  if (server2) {
-    (await server2.shutdown()).throwIfError();
-    server2 = null;
+  if (server) {
+    (await server.shutdown()).throwIfError();
+    server = null;
   }
 });
 
 registerTestSuite(
   createAuthTestSuite({
     before: async () => {
-      assertIsDefined(authContext);
-      assertIsDefined(server2);
-      return [{ authContext, server: server2 }, undefined];
+      assertIsDefined(server);
+      return [{ server }, undefined];
     },
     after: async () => {},
   })
