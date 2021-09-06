@@ -11,7 +11,7 @@ export function buildSuite<TContext, TCleanup>(
   const suite: TestSuite = {};
   for (const testFunction of testFunctions) {
     suite[testFunction.name] = async () => {
-      const [functionContext, cleanup] = context.before();
+      const [functionContext, cleanup] = await context.before();
       try {
         await testFunction(functionContext);
       } finally {

@@ -1,8 +1,13 @@
-import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
+import type { ErrorType, PromiseResult, SchemaSpecification } from '@jonasb/datadata-core';
 import type { Context, Session } from '.';
 
 export interface Transaction {
   _type: 'Transaction';
+}
+
+export interface AuthCreateSessionPayload {
+  principalEffect: 'created' | 'none';
+  session: Session;
 }
 
 export interface DatabaseAdapter {
@@ -17,11 +22,19 @@ export interface DatabaseAdapter {
     callback: () => PromiseResult<TOk, TError>
   ): PromiseResult<TOk, TError>;
 
+  authCreateSession(
+    context: Context,
+    provider: string,
+    identifier: string
+  ): PromiseResult<AuthCreateSessionPayload, ErrorType.Generic>;
+
   authCreatePrincipal(
     context: Context,
     provider: string,
     identifier: string
   ): PromiseResult<Session, ErrorType.Conflict | ErrorType.Generic>;
+
+  schemaGet(context: Context): PromiseResult<SchemaSpecification|null, ErrorType.Generic>
 
   // TODO remove when migrated away
   queryLegacy<R = unknown>(

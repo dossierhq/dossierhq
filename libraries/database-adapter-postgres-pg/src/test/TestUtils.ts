@@ -4,6 +4,7 @@ import type {
   Edge,
   EntityHistory,
   ErrorType,
+  Logger,
   Result,
 } from '@jonasb/datadata-core';
 import { assertIsDefined, CoreTestUtils } from '@jonasb/datadata-core';
@@ -29,6 +30,15 @@ export function createPostgresTestAdapter(): DatabaseAdapter {
 
 export function createPostgresTestServer(): Promise<Server> {
   return ServerTestUtils.createTestServer(createPostgresTestAdapter());
+}
+
+export function createMockLogger(): Logger {
+  return {
+    error: jest.fn(),
+    warn: jest.fn(),
+    info: jest.fn(),
+    debug: jest.fn(),
+  };
 }
 
 export function expectResultValue<TOk, TError extends ErrorType>(

@@ -3,6 +3,7 @@ import { notOk, ok } from '@jonasb/datadata-core';
 import type { DatabaseAdapter } from '@jonasb/datadata-server';
 import type { UniqueConstraint } from '.';
 import { authCreatePrincipal } from './auth/createPrincipal';
+import { authCreateSession } from './auth/createSession';
 import { queryOne } from './QueryFunctions';
 import { isSemVerEqualOrGreaterThan, parseSemVer } from './SemVer';
 import { withNestedTransaction, withRootTransaction } from './SqliteTransaction';
@@ -35,7 +36,12 @@ export async function createSqliteDatabaseAdapter(
     isUniqueViolationOfConstraint: () => {
       throw new Error('TODO');
     },
-    authCreatePrincipal: (...args) => Promise.resolve(authCreatePrincipal(sqliteAdapter, ...args)),
+    authCreatePrincipal: (...args) => authCreatePrincipal(sqliteAdapter, ...args),
+    authCreateSession: (...args) => authCreateSession(sqliteAdapter, ...args),
+    schemaGet: async () => {
+      //TODO actually return schema
+      return ok(null);
+    },
   };
   return ok(adapter);
 }

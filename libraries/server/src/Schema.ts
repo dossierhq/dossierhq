@@ -1,21 +1,21 @@
-import type { PromiseResult, ErrorType } from '@jonasb/datadata-core';
+import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
 import { ok, Schema } from '@jonasb/datadata-core';
 import type { Context, SessionContext } from '.';
 import * as Db from './Database';
-import type { SchemaVersionsTable } from './DatabaseTables';
 
 export async function getSchema(context: Context): PromiseResult<Schema, ErrorType.Generic> {
-  const { logger } = context;
+  const { databaseAdapter, logger } = context;
   logger.info('Loading schema');
-  const result = await Db.queryNoneOrOne<Pick<SchemaVersionsTable, 'specification'>>(
-    context,
-    'SELECT specification FROM schema_versions ORDER BY id DESC LIMIT 1'
-  );
-  if (!result) {
+  const result = await databaseAdapter.schemaGet(context);
+  if (result.isError()) {
+    return result;
+  }
+
+  const specification = result.value;
+  if (!specification) {
     logger.info('No schema set, defaulting to empty');
     return ok(Schema.empty());
   }
-  const { specification } = result;
   logger.info(
     'Loaded schema with %d entity types and  %d value types',
     specification.entityTypes.length,

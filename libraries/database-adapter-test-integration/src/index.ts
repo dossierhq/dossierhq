@@ -1,7 +1,7 @@
 export { createAuthTestSuite } from './auth/AuthTestSuite';
 
 export interface TestFunctionInitializer<TContext, TCleanup> {
-  before: () => [TContext, TCleanup];
+  before: () => Promise<[TContext, TCleanup]>;
   after: (cleanup: TCleanup) => Promise<void>;
 }
 

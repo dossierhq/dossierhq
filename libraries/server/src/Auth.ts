@@ -1,6 +1,6 @@
 import type { PromiseResult } from '@jonasb/datadata-core';
 import { ErrorType, notOk, ok } from '@jonasb/datadata-core';
-import type { AuthContext } from '.';
+import type { AuthContext, AuthCreateSessionPayload } from '.';
 import { ensureRequired } from './Assertions';
 import * as Db from './Database';
 import type { SubjectsTable } from './DatabaseTables';
@@ -9,6 +9,19 @@ export interface Session {
   readonly subjectInternalId: number;
   /** UUID */
   readonly subjectId: string;
+}
+
+export async function authCreateSession(
+  context: AuthContext,
+  provider: string,
+  identifier: string
+): PromiseResult<AuthCreateSessionPayload, ErrorType.BadRequest | ErrorType.Generic> {
+  const assertion = ensureRequired({ provider, identifier });
+  if (assertion.isError()) {
+    return assertion;
+  }
+
+  return await context.databaseAdapter.authCreateSession(context, provider, identifier);
 }
 
 export async function createSessionForPrincipal(
