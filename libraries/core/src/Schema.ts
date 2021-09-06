@@ -61,6 +61,10 @@ export interface SchemaSpecification {
 }
 
 export class Schema {
+  static empty(): Schema {
+    return new Schema({ entityTypes: [], valueTypes: [] });
+  }
+
   readonly spec: SchemaSpecification;
 
   constructor(spec: SchemaSpecification) {

@@ -4,13 +4,16 @@ import type { Context, SessionContext } from '.';
 import * as Db from './Database';
 import type { SchemaVersionsTable } from './DatabaseTables';
 
-export async function getSchema(context: Context): Promise<Schema> {
-  const { specification } = await Db.queryOne<Pick<SchemaVersionsTable, 'specification'>>(
+export async function getSchema(context: Context): PromiseResult<Schema, ErrorType.Generic> {
+  const result = await Db.queryNoneOrOne<Pick<SchemaVersionsTable, 'specification'>>(
     context,
     'SELECT specification FROM schema_versions ORDER BY id DESC LIMIT 1'
   );
-
-  return new Schema(specification);
+  if (!result) {
+    return ok(Schema.empty());
+  }
+  const { specification } = result;
+  return ok(new Schema(specification));
 }
 
 export async function setSchema(
