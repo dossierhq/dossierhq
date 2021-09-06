@@ -1,10 +1,13 @@
 import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
 import { ok, Schema } from '@jonasb/datadata-core';
-import type { Context, SessionContext } from '.';
+import type { DatabaseAdapter, SessionContext, TransactionContext } from '.';
 import * as Db from './Database';
 
-export async function getSchema(context: Context): PromiseResult<Schema, ErrorType.Generic> {
-  const { databaseAdapter, logger } = context;
+export async function getSchema(
+  databaseAdapter: DatabaseAdapter,
+  context: TransactionContext
+): PromiseResult<Schema, ErrorType.Generic> {
+  const { logger } = context;
   logger.info('Loading schema');
   const result = await databaseAdapter.schemaGet(context);
   if (result.isError()) {
