@@ -1,5 +1,6 @@
 import type { OkResult, PromiseResult } from '@jonasb/datadata-core';
 import { ErrorType, notOk, ok } from '@jonasb/datadata-core';
+import type { TransactionContext } from '@jonasb/datadata-server';
 import type { AuthCreateSessionPayload, Context, Session } from '@jonasb/datadata-server';
 import type { PostgresDatabaseAdapter } from '..';
 import type { SubjectsTable } from '../DatabaseSchema';
@@ -8,7 +9,7 @@ import { queryNone, queryNoneOrOne, queryOne } from '../QueryFunctions';
 
 export async function authCreateSession(
   adapter: PostgresDatabaseAdapter,
-  context: Context,
+  context: TransactionContext,
   provider: string,
   identifier: string
 ): PromiseResult<AuthCreateSessionPayload, ErrorType.Generic> {
@@ -52,7 +53,7 @@ function createPayload<TError extends ErrorType>(
 
 async function getSubject(
   adapter: PostgresDatabaseAdapter,
-  context: Context,
+  context: TransactionContext,
   provider: string,
   identifier: string
 ): PromiseResult<AuthCreateSessionPayload | null, ErrorType.Generic> {
@@ -74,7 +75,7 @@ async function getSubject(
 
 async function createSubject(
   adapter: PostgresDatabaseAdapter,
-  context: Context,
+  context: TransactionContext,
   provider: string,
   identifier: string
 ): PromiseResult<AuthCreateSessionPayload, ErrorType.Conflict | ErrorType.Generic> {
