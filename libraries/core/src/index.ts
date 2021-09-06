@@ -70,6 +70,7 @@ export type {
   JsonPublishingHistory,
   JsonResult,
 } from './JsonUtils';
+export type { Logger } from './Logger';
 export { createBasePublishedClient, PublishedClientOperationName } from './PublishedClient';
 export type {
   PublishedClient,
