@@ -1,6 +1,7 @@
 import type { Context, Server } from '@jonasb/datadata-server';
 import { ServerTestUtils } from '@jonasb/datadata-server';
-import { createPostgresDatabaseAdapterAdapter, PostgresDatabaseAdapter } from '.';
+import type { PostgresDatabaseAdapter } from '.';
+import { createPostgresDatabaseAdapterAdapter } from '.';
 import type { UniqueConstraints } from './DatabaseSchema';
 
 type QueryFn = PostgresDatabaseAdapter['query'];
@@ -37,7 +38,7 @@ export function createMockAdapter(): MockedPostgresDatabaseAdapter {
   };
 }
 
-export function getQueryCalls(adapter: MockedPostgresDatabaseAdapter) {
+export function getQueryCalls(adapter: MockedPostgresDatabaseAdapter): [string, ...unknown[]][] {
   return adapter.query.mock.calls.map((call) => {
     const [_transaction, query, values] = call;
     return [query, ...(values ?? [])];

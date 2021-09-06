@@ -1,7 +1,10 @@
 import type { OkResult, PromiseResult } from '@jonasb/datadata-core';
 import { ErrorType, notOk, ok } from '@jonasb/datadata-core';
-import type { TransactionContext } from '@jonasb/datadata-server';
-import type { AuthCreateSessionPayload, Context, Session } from '@jonasb/datadata-server';
+import type {
+  AuthCreateSessionPayload,
+  Session,
+  TransactionContext,
+} from '@jonasb/datadata-server';
 import type { PostgresDatabaseAdapter } from '..';
 import type { SubjectsTable } from '../DatabaseSchema';
 import { UniqueConstraints } from '../DatabaseSchema';

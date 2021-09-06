@@ -1,4 +1,5 @@
-import { ErrorType, notOk, ok, PromiseResult, Result } from '@jonasb/datadata-core';
+import type { ErrorType, PromiseResult, Result } from '@jonasb/datadata-core';
+import { notOk, ok } from '@jonasb/datadata-core';
 import type { TransactionContext } from '@jonasb/datadata-server';
 import type { PostgresDatabaseAdapter, PostgresTransaction } from '.';
 

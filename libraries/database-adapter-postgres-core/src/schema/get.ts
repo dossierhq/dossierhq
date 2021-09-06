@@ -1,4 +1,5 @@
-import { ErrorType, ok, PromiseResult, SchemaSpecification } from '@jonasb/datadata-core';
+import type { ErrorType, PromiseResult, SchemaSpecification } from '@jonasb/datadata-core';
+import { ok } from '@jonasb/datadata-core';
 import type { Context } from '@jonasb/datadata-server';
 import type { PostgresDatabaseAdapter } from '..';
 import type { SchemaVersionsTable } from '../DatabaseSchema';
