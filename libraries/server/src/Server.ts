@@ -122,7 +122,12 @@ export async function createServer({
       identifier,
       logger
     ): PromiseResult<CreateSessionPayload, ErrorType.BadRequest | ErrorType.Generic> => {
-      const sessionResult = await authCreateSession(authContext, provider, identifier);
+      const sessionResult = await authCreateSession(
+        databaseAdapter,
+        authContext,
+        provider,
+        identifier
+      );
       if (sessionResult.isError()) {
         return sessionResult;
       }
