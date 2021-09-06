@@ -1,4 +1,4 @@
-import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
+import type { ErrorType, Logger, PromiseResult } from '@jonasb/datadata-core';
 import { ok } from '@jonasb/datadata-core';
 import type { TestSuite } from '@jonasb/datadata-database-adapter-test-integration';
 import type { Context, DatabaseAdapter, Server } from '@jonasb/datadata-server';
@@ -32,6 +32,18 @@ export function registerTestSuite(testSuite: TestSuite): void {
   for (const [testName, testFunction] of Object.entries(testSuite)) {
     test(testName, testFunction as jest.ProvidesCallback);
   }
+}
+
+export function createDummyLogger(): Logger {
+  const noop = () => {
+    //empty
+  };
+  return {
+    error: noop,
+    warn: noop,
+    info: noop,
+    debug: noop,
+  };
 }
 
 export async function createMockContext(

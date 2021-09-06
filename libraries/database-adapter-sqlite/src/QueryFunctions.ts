@@ -46,6 +46,31 @@ export async function queryNone<TError extends ErrorType | ErrorType.Generic = E
   return ok(undefined);
 }
 
+export async function queryNoneOrOne<TRow, TError extends ErrorType = ErrorType.Generic>(
+  adapter: SqliteDatabaseAdapter,
+  query: string,
+  values?: ColumnValue[],
+  errorConverter?: ErrorConverter<TRow, TError | ErrorType.Generic>
+): PromiseResult<TRow | null, TError | ErrorType.Generic> {
+  const result = await queryCommon<TRow, TError>(
+    adapter,
+    query,
+    values,
+    errorConverter as ErrorConverter<TRow, TError>
+  );
+  if (result.isError()) {
+    return result;
+  }
+  const rows = result.value;
+  if (rows.length === 0) {
+    return ok(null);
+  }
+  if (rows.length !== 1) {
+    return notOk.Generic(`Expected 0-1 rows, got ${rows.length}`);
+  }
+  return ok(rows[0]);
+}
+
 export async function queryOne<TRow, TError extends ErrorType = ErrorType.Generic>(
   adapter: SqliteDatabaseAdapter,
   query: string,

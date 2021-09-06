@@ -1,7 +1,7 @@
-import type { Logger, PromiseResult, Schema } from '@jonasb/datadata-core';
-import { assertIsDefined, ErrorType, notOk, ok } from '@jonasb/datadata-core';
+import type { ErrorType, Logger, PromiseResult, Schema } from '@jonasb/datadata-core';
+import { assertIsDefined, notOk, ok } from '@jonasb/datadata-core';
 import type { AuthContext, Context, DatabaseAdapter, Session, SessionContext } from '.';
-import { Auth } from '.';
+import { authCreateSession } from './Auth';
 import { AuthContextImpl, SessionContextImpl } from './Context';
 import { getSchema, setSchema } from './Schema';
 
@@ -122,20 +122,13 @@ export async function createServer({
       identifier,
       logger
     ): PromiseResult<CreateSessionPayload, ErrorType.BadRequest | ErrorType.Generic> => {
-      const sessionResult = await Auth.createSessionForPrincipal(
-        authContext,
-        provider,
-        identifier,
-        { createPrincipalIfMissing: true }
-      );
+      const sessionResult = await authCreateSession(authContext, provider, identifier);
       if (sessionResult.isError()) {
-        if (sessionResult.isErrorType(ErrorType.BadRequest)) {
-          return sessionResult;
-        }
-        return notOk.GenericUnexpectedError(sessionResult);
+        return sessionResult;
       }
-      const context = server.createSessionContext(sessionResult.value, logger);
-      return ok({ principalEffect: 'none', context });
+      const { principalEffect, session } = sessionResult.value;
+      const context = server.createSessionContext(session, logger);
+      return ok({ principalEffect, context });
     },
   };
 

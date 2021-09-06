@@ -1,0 +1,25 @@
+import { ErrorType, ok, PromiseResult, SchemaSpecification } from '@jonasb/datadata-core';
+import type { Context } from '@jonasb/datadata-server';
+import type { PostgresDatabaseAdapter } from '..';
+import type { SchemaVersionsTable } from '../DatabaseSchema';
+import { queryNoneOrOne } from '../QueryFunctions';
+
+export async function schemaGet(
+  adapter: PostgresDatabaseAdapter,
+  context: Context
+): PromiseResult<SchemaSpecification | null, ErrorType.Generic> {
+  const result = await queryNoneOrOne<Pick<SchemaVersionsTable, 'specification'>>(
+    context,
+    adapter,
+    'SELECT specification FROM schema_versions ORDER BY id DESC LIMIT 1'
+  );
+  if (result.isError()) {
+    return result;
+  }
+
+  if (result.value) {
+    const { specification } = result.value;
+    return ok(specification);
+  }
+  return ok(null);
+}
