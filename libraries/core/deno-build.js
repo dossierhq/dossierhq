@@ -98,15 +98,27 @@ async function buildTypescript(basePath) {
     handleDiagnosticErrors(preEmitDiagnostics);
   }
 
-  const files = (await fs.readdir(compilerOptions.outDir))
-    .filter((filename) => filename.endsWith('.js'))
-    .map((filename) => `${compilerOptions.outDir}/${filename}`);
+  const files = await findFilesRecursive(compilerOptions.outDir, (filename) =>
+    filename.endsWith('.js')
+  );
   for (const outputJsFile of files) {
     let contents = await fs.readFile(outputJsFile, { encoding: 'utf-8' });
     const basename = path.basename(outputJsFile);
     contents = `/// <reference types="./${basename.slice(0, -3)}.d.ts" />\n${contents}`;
     await fs.writeFile(outputJsFile, contents);
   }
+}
+
+async function findFilesRecursive(directory, filter) {
+  const entries = (await fs.readdir(directory)).map((f) => `${directory}/${f}`);
+  const result = entries.filter(filter);
+  for (const entry of entries) {
+    const stat = await fs.stat(entry);
+    if (stat.isDirectory()) {
+      result.push(...(await findFilesRecursive(entry, filter)));
+    }
+  }
+  return result;
 }
 
 function handleDiagnosticError(error) {
@@ -131,7 +143,6 @@ function handleDiagnosticErrors(errors) {
   throw new Error();
 }
 
-// main().catch(() => process.exit(1));
 buildTypescript(process.cwd()).catch((error) => {
   console.log(error);
   process.exit(1);
