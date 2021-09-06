@@ -1,6 +1,13 @@
 import type { ErrorType, Logger, PromiseResult, Schema } from '@jonasb/datadata-core';
 import { assertIsDefined, notOk, ok } from '@jonasb/datadata-core';
-import type { AuthContext, Context, DatabaseAdapter, Session, SessionContext } from '.';
+import type {
+  AuthContext,
+  Context,
+  DatabaseAdapter,
+  Session,
+  SessionContext,
+  TransactionContext,
+} from '.';
 import { authCreateSession } from './Auth';
 import { AuthContextImpl, SessionContextImpl } from './Context';
 import { getSchema, setSchema } from './Schema';
@@ -62,8 +69,9 @@ export default class Server {
     (await this.reloadSchemaResult(context)).throwIfError();
   }
 
-  async reloadSchemaResult(context: Context): PromiseResult<void, ErrorType.Generic> {
-    const result = await getSchema(context);
+  async reloadSchemaResult(context: TransactionContext): PromiseResult<void, ErrorType.Generic> {
+    assertIsDefined(this.#databaseAdapter);
+    const result = await getSchema(this.#databaseAdapter, context);
     if (result.isError()) {
       return result;
     }

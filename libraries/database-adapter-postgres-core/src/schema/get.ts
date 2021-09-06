@@ -1,13 +1,13 @@
 import type { ErrorType, PromiseResult, SchemaSpecification } from '@jonasb/datadata-core';
 import { ok } from '@jonasb/datadata-core';
-import type { Context } from '@jonasb/datadata-server';
+import type { TransactionContext } from '@jonasb/datadata-server';
 import type { PostgresDatabaseAdapter } from '..';
 import type { SchemaVersionsTable } from '../DatabaseSchema';
 import { queryNoneOrOne } from '../QueryFunctions';
 
 export async function schemaGet(
   adapter: PostgresDatabaseAdapter,
-  context: Context
+  context: TransactionContext
 ): PromiseResult<SchemaSpecification | null, ErrorType.Generic> {
   const result = await queryNoneOrOne<Pick<SchemaVersionsTable, 'specification'>>(
     context,
