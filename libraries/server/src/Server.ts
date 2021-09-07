@@ -1,4 +1,4 @@
-import type { ErrorType, Logger, PromiseResult } from '@jonasb/datadata-core';
+import type { AdminClient, ErrorType, Logger, PromiseResult } from '@jonasb/datadata-core';
 import { assertIsDefined, notOk, ok, Schema } from '@jonasb/datadata-core';
 import type {
   AuthContext,
@@ -8,6 +8,7 @@ import type {
   SessionContext,
   TransactionContext,
 } from '.';
+import { createServerAdminClient } from '.';
 import { authCreateSession } from './Auth';
 import { AuthContextImpl, SessionContextImpl } from './Context';
 import { getSchemaSpecification, setSchema } from './Schema';
@@ -25,6 +26,7 @@ export interface Server2 {
     identifier: string,
     logger?: Logger
   ): PromiseResult<CreateSessionPayload, ErrorType.BadRequest | ErrorType.Generic>;
+  createAdminClient(context: SessionContext): AdminClient;
 }
 
 export default class Server {
@@ -143,6 +145,7 @@ export async function createServer({
       const context = server.createSessionContext(session, logger);
       return ok({ principalEffect, context });
     },
+    createAdminClient: (context) => createServerAdminClient({ context }),
   };
 
   return ok(server2);
