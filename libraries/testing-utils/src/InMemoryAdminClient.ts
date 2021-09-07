@@ -7,6 +7,7 @@ import {
   AdminClientOperationName,
   assertExhaustive,
   createBaseAdminClient,
+  ok,
 } from '@jonasb/datadata-core';
 import { InMemoryAdmin } from './InMemoryAdmin';
 import type { InMemorySessionContext } from './InMemoryServer';
@@ -98,6 +99,12 @@ async function terminatingMiddleware(
         resolve,
       } = operation as AdminClientOperation<AdminClientOperationName.getPublishingHistory>;
       resolve(await getPublishingHistory(context, reference.id));
+      break;
+    }
+    case AdminClientOperationName.getSchemaSpecification: {
+      const { resolve } =
+        operation as AdminClientOperation<AdminClientOperationName.getSchemaSpecification>;
+      resolve(ok(context.server.schema.spec));
       break;
     }
     case AdminClientOperationName.getTotalCount: {

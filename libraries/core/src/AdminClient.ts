@@ -18,6 +18,7 @@ import type {
   PublishingHistory,
   EntityPublishPayload,
   Result,
+  SchemaSpecification,
 } from '.';
 import { assertExhaustive, ok } from '.';
 import type {
@@ -38,6 +39,8 @@ import type { Middleware, Operation, OperationWithoutCallbacks } from './SharedC
 import { executeOperationPipeline } from './SharedClient';
 
 export interface AdminClient {
+  getSchemaSpecification(): PromiseResult<SchemaSpecification, ErrorType.Generic>;
+
   getEntity(
     reference: EntityReference | EntityVersionReference
   ): PromiseResult<AdminEntity, ErrorType.NotFound | ErrorType.Generic>;
@@ -120,6 +123,7 @@ export enum AdminClientOperationName {
   getEntity = 'getEntity',
   getEntityHistory = 'getEntityHistory',
   getPublishingHistory = 'getPublishingHistory',
+  getSchemaSpecification = 'getSchemaSpecification',
   getTotalCount = 'getTotalCount',
   publishEntities = 'publishEntities',
   searchEntities = 'searchEntities',
@@ -140,6 +144,7 @@ interface AdminClientOperationArguments {
   [AdminClientOperationName.getEntity]: MethodParameters<'getEntity'>;
   [AdminClientOperationName.getEntityHistory]: MethodParameters<'getEntityHistory'>;
   [AdminClientOperationName.getPublishingHistory]: MethodParameters<'getPublishingHistory'>;
+  [AdminClientOperationName.getSchemaSpecification]: MethodParameters<'getSchemaSpecification'>;
   [AdminClientOperationName.getTotalCount]: MethodParameters<'getTotalCount'>;
   [AdminClientOperationName.publishEntities]: MethodParameters<'publishEntities'>;
   [AdminClientOperationName.searchEntities]: MethodParameters<'searchEntities'>;
@@ -156,6 +161,7 @@ interface AdminClientOperationReturn {
   [AdminClientOperationName.getEntity]: MethodReturnType<'getEntity'>;
   [AdminClientOperationName.getEntityHistory]: MethodReturnType<'getEntityHistory'>;
   [AdminClientOperationName.getPublishingHistory]: MethodReturnType<'getPublishingHistory'>;
+  [AdminClientOperationName.getSchemaSpecification]: MethodReturnType<'getSchemaSpecification'>;
   [AdminClientOperationName.getTotalCount]: MethodReturnType<'getTotalCount'>;
   [AdminClientOperationName.publishEntities]: MethodReturnType<'publishEntities'>;
   [AdminClientOperationName.searchEntities]: MethodReturnType<'searchEntities'>;
@@ -188,6 +194,14 @@ class BaseAdminClient<TContext> implements AdminClient {
   }) {
     this.context = context;
     this.pipeline = pipeline;
+  }
+
+  getSchemaSpecification(): PromiseResult<SchemaSpecification, ErrorType.Generic> {
+    return this.executeOperation({
+      name: AdminClientOperationName.getSchemaSpecification,
+      args: [],
+      modifies: false,
+    });
   }
 
   getEntity(
@@ -351,6 +365,7 @@ export function convertAdminClientOperationToJson(
     case AdminClientOperationName.getEntity:
     case AdminClientOperationName.getEntityHistory:
     case AdminClientOperationName.getPublishingHistory:
+    case AdminClientOperationName.getSchemaSpecification:
     case AdminClientOperationName.getTotalCount:
     case AdminClientOperationName.publishEntities:
     case AdminClientOperationName.searchEntities:
@@ -401,6 +416,9 @@ export async function executeAdminClientOperationFromJson<TName extends AdminCli
       const [reference] =
         operation as AdminClientOperationArguments[AdminClientOperationName.getPublishingHistory];
       return await adminClient.getPublishingHistory(reference);
+    }
+    case AdminClientOperationName.getSchemaSpecification: {
+      return await adminClient.getSchemaSpecification();
     }
     case AdminClientOperationName.getTotalCount: {
       const [query] =
@@ -455,6 +473,7 @@ export function convertJsonAdminClientResult<TName extends AdminClientOperationN
     case AdminClientOperationName.createEntity:
     case AdminClientOperationName.getEntities:
     case AdminClientOperationName.getEntity:
+    case AdminClientOperationName.getSchemaSpecification:
     case AdminClientOperationName.getTotalCount:
     case AdminClientOperationName.updateEntity:
     case AdminClientOperationName.upsertEntity:

@@ -27,9 +27,9 @@
       "problemMatcher": []
     },
     {
-      "label": "rush ci:check",
+      "label": "rush build && rush ci:check",
       "type": "shell",
-      "command": "$SHELL -i -c \"rush ci:check\"",
+      "command": "$SHELL -i -c \"rush build && rush ci:check\"",
       "problemMatcher": []
     }
   ]
