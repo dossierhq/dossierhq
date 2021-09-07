@@ -1,6 +1,7 @@
 import { assertIsDefined } from '@jonasb/datadata-core';
 import { createAuthTestSuite } from '@jonasb/datadata-database-adapter-test-integration';
-import { createServer, Server2 } from '@jonasb/datadata-server';
+import type { Server2 } from '@jonasb/datadata-server';
+import { createServer } from '@jonasb/datadata-server';
 import { createMockLogger, createPostgresTestAdapter, registerTestSuite } from '../TestUtils';
 
 let server: Server2 | null = null;
@@ -28,6 +29,8 @@ registerTestSuite(
       assertIsDefined(server);
       return [{ server }, undefined];
     },
-    after: async () => {},
+    after: async () => {
+      // empty
+    },
   })
 );

@@ -1,6 +1,6 @@
 import { CoreTestUtils, ErrorType } from '@jonasb/datadata-core';
-import type { Server, Server2, SessionContext } from '@jonasb/datadata-server';
-import { createServerAdminClient, ServerTestUtils } from '@jonasb/datadata-server';
+import type { Server2, SessionContext } from '@jonasb/datadata-server';
+import { createServerAdminClient } from '@jonasb/datadata-server';
 import { createPostgresTestServerAndClient, insecureTestUuidv4 } from '../TestUtils';
 
 //TODO consider moving this test back to server or even to core
