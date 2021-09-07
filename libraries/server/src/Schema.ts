@@ -1,15 +1,15 @@
-import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
-import { ok, Schema } from '@jonasb/datadata-core';
+import type { ErrorType, PromiseResult, Schema, SchemaSpecification } from '@jonasb/datadata-core';
+import { ok } from '@jonasb/datadata-core';
 import type { DatabaseAdapter, SessionContext, TransactionContext } from '.';
 import * as Db from './Database';
 
-export async function getSchema(
+export async function getSchemaSpecification(
   databaseAdapter: DatabaseAdapter,
   context: TransactionContext
-): PromiseResult<Schema, ErrorType.Generic> {
+): PromiseResult<SchemaSpecification, ErrorType.Generic> {
   const { logger } = context;
   logger.info('Loading schema');
-  const result = await databaseAdapter.schemaGet(context);
+  const result = await databaseAdapter.schemaGetSpecification(context);
   if (result.isError()) {
     return result;
   }
@@ -17,14 +17,14 @@ export async function getSchema(
   const specification = result.value;
   if (!specification) {
     logger.info('No schema set, defaulting to empty');
-    return ok(Schema.empty());
+    return ok({ entityTypes: [], valueTypes: [] });
   }
   logger.info(
     'Loaded schema with %d entity types and  %d value types',
     specification.entityTypes.length,
     specification.valueTypes.length
   );
-  return ok(new Schema(specification));
+  return ok(specification);
 }
 
 export async function setSchema(

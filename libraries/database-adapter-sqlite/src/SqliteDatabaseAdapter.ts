@@ -38,7 +38,7 @@ export async function createSqliteDatabaseAdapter(
     },
     authCreatePrincipal: (...args) => authCreatePrincipal(sqliteAdapter, ...args),
     authCreateSession: (...args) => authCreateSession(sqliteAdapter, ...args),
-    schemaGet: async () => {
+    schemaGetSpecification: async () => {
       //TODO actually return schema
       return ok(null);
     },

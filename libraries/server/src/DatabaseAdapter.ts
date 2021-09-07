@@ -34,7 +34,7 @@ export interface DatabaseAdapter {
     identifier: string
   ): PromiseResult<Session, ErrorType.Conflict | ErrorType.Generic>;
 
-  schemaGet(
+  schemaGetSpecification(
     context: TransactionContext
   ): PromiseResult<SchemaSpecification | null, ErrorType.Generic>;
 

@@ -5,7 +5,7 @@ import type { PostgresDatabaseAdapter } from '..';
 import type { SchemaVersionsTable } from '../DatabaseSchema';
 import { queryNoneOrOne } from '../QueryFunctions';
 
-export async function schemaGet(
+export async function schemaGetSpecification(
   adapter: PostgresDatabaseAdapter,
   context: TransactionContext
 ): PromiseResult<SchemaSpecification | null, ErrorType.Generic> {
