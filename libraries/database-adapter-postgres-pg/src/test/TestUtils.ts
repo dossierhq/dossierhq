@@ -1,25 +1,24 @@
-import {
+import type {
   AdminEntity,
-  assertIsDefined,
   Connection,
-  CoreTestUtils,
   Edge,
   EntityHistory,
   ErrorType,
   Logger,
-  ok,
   PromiseResult,
   Result,
 } from '@jonasb/datadata-core';
+import { assertIsDefined, CoreTestUtils, ok } from '@jonasb/datadata-core';
 import type { TestSuite } from '@jonasb/datadata-database-adapter-test-integration';
-import { createServer, DatabaseAdapter, Server2, SessionContext } from '@jonasb/datadata-server';
+import type { DatabaseAdapter, Server2, SessionContext } from '@jonasb/datadata-server';
+import { createServer } from '@jonasb/datadata-server';
 import { Temporal } from '@js-temporal/polyfill';
 import { v4 as uuidv4 } from 'uuid';
 import { createPostgresAdapter } from '..';
 
 const { expectOkResult } = CoreTestUtils;
 
-export function registerTestSuite(testSuite: TestSuite) {
+export function registerTestSuite(testSuite: TestSuite): void {
   for (const [testName, testFunction] of Object.entries(testSuite)) {
     test(testName, testFunction as jest.ProvidesCallback);
   }

@@ -5,7 +5,8 @@ import type {
 import { createPostgresDatabaseAdapterAdapter } from '@jonasb/datadata-database-adapter-postgres-core';
 import type { DatabaseAdapter } from '@jonasb/datadata-server';
 import { Temporal } from '@js-temporal/polyfill';
-import { DatabaseError, Pool, PoolClient, types as PgTypes } from 'pg';
+import type { PoolClient } from 'pg';
+import { DatabaseError, Pool, types as PgTypes } from 'pg';
 
 PgTypes.setTypeParser(PgTypes.builtins.INT8, BigInt);
 // 1016 = _int8 (int8 array)
