@@ -1,6 +1,6 @@
 import type { SchemaSpecification } from '@jonasb/datadata-core';
-import { CoreTestUtils, ok, Schema } from '@jonasb/datadata-core';
-import { getSchema } from './Schema';
+import { CoreTestUtils, ok } from '@jonasb/datadata-core';
+import { getSchemaSpecification } from './Schema';
 import {
   createMockDatabaseAdapter,
   createMockTransactionContext,
@@ -14,16 +14,16 @@ describe('Schema getSchema', () => {
     const databaseAdapter = createMockDatabaseAdapter();
     const context = createMockTransactionContext();
 
-    databaseAdapter.schemaGet.mockReturnValueOnce(Promise.resolve(ok(null)));
-    const result = await getSchema(databaseAdapter, context);
+    databaseAdapter.schemaGetSpecification.mockReturnValueOnce(Promise.resolve(ok(null)));
+    const result = await getSchemaSpecification(databaseAdapter, context);
 
     // defaults to empty spec
-    expectResultValue(result, new Schema({ entityTypes: [], valueTypes: [] }));
+    expectResultValue(result, { entityTypes: [], valueTypes: [] });
     expect(getDatabaseAdapterMockedCallsWithoutContextAndUnordered(databaseAdapter))
       .toMatchInlineSnapshot(`
       Array [
         Array [
-          "schemaGet",
+          "schemaGetSpecification",
         ],
       ]
     `);
@@ -37,15 +37,15 @@ describe('Schema getSchema', () => {
       entityTypes: [{ name: 'Foo', fields: [] }],
       valueTypes: [{ name: 'Bar', fields: [] }],
     };
-    databaseAdapter.schemaGet.mockReturnValueOnce(Promise.resolve(ok(schemaSpec)));
-    const result = await getSchema(databaseAdapter, context);
+    databaseAdapter.schemaGetSpecification.mockReturnValueOnce(Promise.resolve(ok(schemaSpec)));
+    const result = await getSchemaSpecification(databaseAdapter, context);
 
-    expectResultValue(result, new Schema(schemaSpec));
+    expectResultValue(result, schemaSpec);
     expect(getDatabaseAdapterMockedCallsWithoutContextAndUnordered(databaseAdapter))
       .toMatchInlineSnapshot(`
       Array [
         Array [
-          "schemaGet",
+          "schemaGetSpecification",
         ],
       ]
     `);

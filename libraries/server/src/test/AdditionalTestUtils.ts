@@ -6,7 +6,7 @@ import type { AuthContext } from '../Context';
 interface MockDatabaseAdapter extends DatabaseAdapter {
   authCreatePrincipal: jest.MockedFunction<DatabaseAdapter['authCreatePrincipal']>;
   authCreateSession: jest.MockedFunction<DatabaseAdapter['authCreateSession']>;
-  schemaGet: jest.MockedFunction<DatabaseAdapter['schemaGet']>;
+  schemaGetSpecification: jest.MockedFunction<DatabaseAdapter['schemaGetSpecification']>;
   queryLegacy: jest.MockedFunction<DatabaseAdapter['queryLegacy']>;
 }
 
@@ -45,7 +45,7 @@ export function createMockDatabaseAdapter(): MockDatabaseAdapter {
     disconnect: jest.fn(),
     authCreatePrincipal: jest.fn(),
     authCreateSession: jest.fn(),
-    schemaGet: jest.fn(),
+    schemaGetSpecification: jest.fn(),
     queryLegacy: jest.fn(),
     withRootTransaction: jest.fn(),
     withNestedTransaction: jest.fn(),
@@ -61,7 +61,7 @@ export function getDatabaseAdapterMockedCallsWithoutContextAndUnordered(
   const mocksWithInitialContextArg: (keyof MockDatabaseAdapter)[] = [
     'authCreatePrincipal',
     'authCreateSession',
-    'schemaGet',
+    'schemaGetSpecification',
   ];
   for (const methodName of mocksWithInitialContextArg) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

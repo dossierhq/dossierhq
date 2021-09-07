@@ -1,5 +1,5 @@
-import type { ErrorType, Logger, PromiseResult, Schema } from '@jonasb/datadata-core';
-import { assertIsDefined, notOk, ok } from '@jonasb/datadata-core';
+import type { ErrorType, Logger, PromiseResult } from '@jonasb/datadata-core';
+import { assertIsDefined, notOk, ok, Schema } from '@jonasb/datadata-core';
 import type {
   AuthContext,
   Context,
@@ -10,7 +10,7 @@ import type {
 } from '.';
 import { authCreateSession } from './Auth';
 import { AuthContextImpl, SessionContextImpl } from './Context';
-import { getSchema, setSchema } from './Schema';
+import { getSchemaSpecification, setSchema } from './Schema';
 
 export interface CreateSessionPayload {
   principalEffect: 'created' | 'none';
@@ -71,11 +71,11 @@ export default class Server {
 
   async reloadSchemaResult(context: TransactionContext): PromiseResult<void, ErrorType.Generic> {
     assertIsDefined(this.#databaseAdapter);
-    const result = await getSchema(this.#databaseAdapter, context);
+    const result = await getSchemaSpecification(this.#databaseAdapter, context);
     if (result.isError()) {
       return result;
     }
-    this.#schema = result.value;
+    this.#schema = new Schema(result.value);
     return ok(undefined);
   }
 
