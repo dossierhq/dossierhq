@@ -20,6 +20,7 @@ import {
   updateEntity,
   upsertEntity,
 } from './EntityAdmin';
+import { getSchemaSpecification } from './Schema';
 
 export function createServerAdminClient({
   context,
@@ -87,6 +88,12 @@ async function terminatingMiddleware(
         resolve,
       } = operation as AdminClientOperation<AdminClientOperationName.getPublishingHistory>;
       resolve(await getPublishingHistory(context, reference.id));
+      break;
+    }
+    case AdminClientOperationName.getSchemaSpecification: {
+      const { resolve } =
+        operation as AdminClientOperation<AdminClientOperationName.getSchemaSpecification>;
+      resolve(await getSchemaSpecification(context.databaseAdapter, context));
       break;
     }
     case AdminClientOperationName.getTotalCount: {
