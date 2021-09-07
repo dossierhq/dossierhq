@@ -1,7 +1,6 @@
 import type { Logger, SchemaSpecification } from '@jonasb/datadata-core';
 import { Schema } from '@jonasb/datadata-core';
-import type { Context, DatabaseAdapter, SessionContext, Transaction } from '.';
-import { Auth, Server } from '.';
+import type { Context, DatabaseAdapter, Server, SessionContext, Transaction } from '.';
 import { ContextImpl } from './Context';
 
 class DummyContextImpl extends ContextImpl<Context> {
@@ -17,27 +16,6 @@ class DummyContextImpl extends ContextImpl<Context> {
   protected copyWithNewTransaction(transaction: Transaction): Context {
     return new DummyContextImpl(this.server, this.databaseAdapter, this.logger, transaction);
   }
-}
-
-export async function createTestServer(databaseAdapter: DatabaseAdapter): Promise<Server> {
-  const server = new Server({ databaseAdapter });
-  return server;
-}
-
-export async function ensureSessionContext(
-  server: Server,
-  provider: string,
-  identifier: string
-): Promise<SessionContext> {
-  const authContext = server.createAuthContext();
-  const sessionResult = await Auth.createSessionForPrincipal(authContext, provider, identifier, {
-    createPrincipalIfMissing: true,
-  });
-  if (sessionResult.isOk()) {
-    return server.createSessionContext(sessionResult.value);
-  }
-
-  throw sessionResult.toError();
 }
 
 export async function updateSchema(

@@ -1,16 +1,18 @@
-import type {
+import {
   AdminEntity,
+  assertIsDefined,
   Connection,
+  CoreTestUtils,
   Edge,
   EntityHistory,
   ErrorType,
   Logger,
+  ok,
+  PromiseResult,
   Result,
 } from '@jonasb/datadata-core';
-import { assertIsDefined, CoreTestUtils } from '@jonasb/datadata-core';
 import type { TestSuite } from '@jonasb/datadata-database-adapter-test-integration';
-import type { DatabaseAdapter, Server } from '@jonasb/datadata-server';
-import { ServerTestUtils } from '@jonasb/datadata-server';
+import { createServer, DatabaseAdapter, Server2, SessionContext } from '@jonasb/datadata-server';
 import { Temporal } from '@js-temporal/polyfill';
 import { v4 as uuidv4 } from 'uuid';
 import { createPostgresAdapter } from '..';
@@ -28,8 +30,23 @@ export function createPostgresTestAdapter(): DatabaseAdapter {
   return createPostgresAdapter(process.env.DATABASE_URL!);
 }
 
-export function createPostgresTestServer(): Promise<Server> {
-  return ServerTestUtils.createTestServer(createPostgresTestAdapter());
+export async function createPostgresTestServerAndClient(): PromiseResult<
+  { server: Server2; context: SessionContext },
+  ErrorType.BadRequest | ErrorType.Generic
+> {
+  const serverResult = await createServer({
+    databaseAdapter: createPostgresTestAdapter(),
+    logger: createMockLogger(),
+  });
+  if (serverResult.isError()) return serverResult;
+  const server = serverResult.value;
+  const sessionResult = await server.createSession('test', 'identifier');
+  if (sessionResult.isError()) {
+    await server.shutdown(); // ignore result
+    return sessionResult;
+  }
+  const { context } = sessionResult.value;
+  return ok({ server, context });
 }
 
 export function createMockLogger(): Logger {

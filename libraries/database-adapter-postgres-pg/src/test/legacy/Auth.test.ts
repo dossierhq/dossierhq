@@ -1,8 +1,8 @@
 import { CoreTestUtils, ErrorType } from '@jonasb/datadata-core';
-import type { AuthContext, Server } from '@jonasb/datadata-server';
-import { Auth } from '@jonasb/datadata-server';
+import type { AuthContext } from '@jonasb/datadata-server';
+import { Auth, Server } from '@jonasb/datadata-server';
 import { validate as validateUuid } from 'uuid';
-import { createPostgresTestServer } from '../TestUtils';
+import { createPostgresTestAdapter } from '../TestUtils';
 
 const { expectErrorResult, expectOkResult } = CoreTestUtils;
 
@@ -10,7 +10,7 @@ let server: Server;
 let context: AuthContext;
 
 beforeAll(async () => {
-  server = await createPostgresTestServer();
+  server = new Server({ databaseAdapter: createPostgresTestAdapter() });
   context = server.createAuthContext();
 });
 afterAll(async () => {

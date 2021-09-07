@@ -19,15 +19,11 @@ import {
   QueryOrder,
   RichTextBlockType,
 } from '@jonasb/datadata-core';
-import type { Server, SessionContext } from '@jonasb/datadata-server';
-import {
-  createServerAdminClient,
-  createServerPublishedClient,
-  ServerTestUtils,
-} from '@jonasb/datadata-server';
+import type { Server2, SessionContext } from '@jonasb/datadata-server';
+import { ServerTestUtils } from '@jonasb/datadata-server';
 import { validate as validateUuid } from 'uuid';
 import {
-  createPostgresTestServer,
+  createPostgresTestServerAndClient,
   expectEntityHistoryVersions,
   expectResultValue,
   expectSearchResultEntities,
@@ -35,9 +31,9 @@ import {
 } from '../TestUtils';
 
 const { expectErrorResult, expectOkResult } = CoreTestUtils;
-const { ensureSessionContext, updateSchema } = ServerTestUtils;
+const { updateSchema } = ServerTestUtils;
 
-let server: Server;
+let server: Server2;
 let context: SessionContext;
 let client: AdminClient;
 let publishedClient: PublishedClient;
@@ -68,10 +64,12 @@ const emptyBazFields = {
 };
 
 beforeAll(async () => {
-  server = await createPostgresTestServer();
-  context = await ensureSessionContext(server, 'test', 'entity-admin');
-  client = createServerAdminClient({ context });
-  publishedClient = createServerPublishedClient({ context });
+  const result = await createPostgresTestServerAndClient();
+  if (result.isError()) throw result.toError();
+  server = result.value.server;
+  context = result.value.context;
+  client = server.createAdminClient(context);
+  publishedClient = server.createPublishedClient(context);
   await updateSchema(context, {
     entityTypes: [
       {

@@ -1,17 +1,15 @@
 import type {
   AdminClient,
   ErrorType,
+  Logger,
+  PromiseResult,
   PublishedClient,
   Result,
   SchemaSpecification,
 } from '@jonasb/datadata-core';
-import { CoreTestUtils, Schema } from '@jonasb/datadata-core';
+import { assertIsDefined, CoreTestUtils, ok, Schema } from '@jonasb/datadata-core';
 import { createPostgresAdapter } from '@jonasb/datadata-database-adapter-postgres-pg';
-import {
-  createServerAdminClient,
-  createServerPublishedClient,
-  ServerTestUtils,
-} from '@jonasb/datadata-server';
+import { createServer, ServerTestUtils } from '@jonasb/datadata-server';
 import {
   createInMemoryAdminClient,
   createInMemoryPublishedClient,
@@ -20,14 +18,14 @@ import {
 import { v4 as uuidv4 } from 'uuid';
 
 const { expectOkResult } = CoreTestUtils;
-const { createTestServer, ensureSessionContext, updateSchema } = ServerTestUtils;
+const { updateSchema } = ServerTestUtils;
 
 export interface TestServerWithSession {
   schema: Schema;
   adminClient: AdminClient;
   publishedClient: PublishedClient;
   subjectId: string;
-  tearDown: () => Promise<void>;
+  tearDown: () => PromiseResult<void, ErrorType.Generic>;
 }
 
 export function expectResultValue<TOk, TError extends ErrorType>(
@@ -37,6 +35,18 @@ export function expectResultValue<TOk, TError extends ErrorType>(
   if (expectOkResult(result)) {
     expect(result.value).toEqual<TOk>(expectedValue);
   }
+}
+
+function createDummyLogger(): Logger {
+  const noop = () => {
+    /*empty*/
+  };
+  return {
+    error: noop,
+    warn: noop,
+    info: noop,
+    debug: noop,
+  };
 }
 
 export async function setUpServerWithSession(
@@ -49,17 +59,28 @@ export async function setUpServerWithSession(
 }
 
 async function setUpRealServerWithSession(schemaSpecification: Partial<SchemaSpecification>) {
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const server = await createTestServer(createPostgresAdapter(process.env.DATABASE_URL!));
-  const context = await ensureSessionContext(server, 'test', 'identifier');
+  const url = process.env.DATABASE_URL;
+  assertIsDefined(url);
+  const serverResult = await createServer({
+    databaseAdapter: createPostgresAdapter(url),
+    logger: createDummyLogger(),
+  });
+  if (serverResult.isError()) throw serverResult.toError();
+  const server = serverResult.value;
+  const sessionResult = await server.createSession('test', 'identifier');
+  if (sessionResult.isError()) throw serverResult.toError();
+  const { context } = sessionResult.value;
   const subjectId = context.session.subjectId;
-  const adminClient = createServerAdminClient({ context });
-  const publishedClient = createServerPublishedClient({ context });
+  const adminClient = server.createAdminClient(context);
+  const publishedClient = server.createPublishedClient(context);
 
   await updateSchema(context, schemaSpecification);
 
+  const schemaResult = await adminClient.getSchemaSpecification();
+  if (schemaResult.isError()) throw schemaResult.toError();
+
   return {
-    schema: server.getSchema(),
+    schema: new Schema(schemaResult.value),
     adminClient,
     publishedClient,
     subjectId,
@@ -84,7 +105,7 @@ async function setUpInMemoryServerWithSession(schemaSpecification: Partial<Schem
     adminClient,
     publishedClient,
     subjectId,
-    tearDown: () => Promise.resolve(undefined),
+    tearDown: () => Promise.resolve(ok<void, ErrorType.Generic>(undefined)),
   };
 }
 
