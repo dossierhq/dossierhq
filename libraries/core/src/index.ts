@@ -84,6 +84,8 @@ export type {
   FieldSpecification,
   FieldValueTypeMap,
   SchemaSpecification,
+  SchemaSpecificationUpdate,
+  SchemaSpecificationUpdatePayload,
   ValueTypeSpecification,
 } from './Schema';
 export { EntityPublishState, PublishingEventKind, QueryOrder } from './Types';

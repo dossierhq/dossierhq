@@ -1,5 +1,11 @@
-import type { ErrorType, PromiseResult, Schema, SchemaSpecification } from '@jonasb/datadata-core';
-import { ok } from '@jonasb/datadata-core';
+import type {
+  ErrorType,
+  PromiseResult,
+  SchemaSpecification,
+  SchemaSpecificationUpdate,
+  SchemaSpecificationUpdatePayload,
+} from '@jonasb/datadata-core';
+import { ok, Schema } from '@jonasb/datadata-core';
 import type { DatabaseAdapter, SessionContext, TransactionContext } from '.';
 import * as Db from './Database';
 
@@ -40,4 +46,32 @@ export async function setSchema(
     schema.spec,
   ]);
   return ok(undefined);
+}
+
+export async function updateSchemaSpecification(
+  databaseAdapter: DatabaseAdapter,
+  context: TransactionContext,
+  schemaSpec: SchemaSpecificationUpdate
+): PromiseResult<SchemaSpecificationUpdatePayload, ErrorType.BadRequest | ErrorType.Generic> {
+  return await context.withTransaction(async (context) => {
+    const previousSpecificationResult = await getSchemaSpecification(databaseAdapter, context);
+    if (previousSpecificationResult.isError()) {
+      return previousSpecificationResult;
+    }
+    const schema = new Schema(previousSpecificationResult.value);
+    const mergeResult = schema.mergeWith(schemaSpec);
+    if (mergeResult.isError()) {
+      return mergeResult;
+    }
+    const schemaSpecification = mergeResult.value;
+    // TODO return with 'none' if same as previous schema
+    const updateResult = await databaseAdapter.schemaUpdateSpecification(
+      context,
+      schemaSpecification
+    );
+    if (updateResult.isError()) {
+      return updateResult;
+    }
+    return ok({ effect: 'updated', schemaSpecification });
+  });
 }

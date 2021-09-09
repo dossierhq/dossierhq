@@ -7,6 +7,7 @@ interface MockDatabaseAdapter extends DatabaseAdapter {
   authCreatePrincipal: jest.MockedFunction<DatabaseAdapter['authCreatePrincipal']>;
   authCreateSession: jest.MockedFunction<DatabaseAdapter['authCreateSession']>;
   schemaGetSpecification: jest.MockedFunction<DatabaseAdapter['schemaGetSpecification']>;
+  schemaUpdateSpecification: jest.MockedFunction<DatabaseAdapter['schemaUpdateSpecification']>;
   queryLegacy: jest.MockedFunction<DatabaseAdapter['queryLegacy']>;
 }
 
@@ -46,6 +47,7 @@ export function createMockDatabaseAdapter(): MockDatabaseAdapter {
     authCreatePrincipal: jest.fn(),
     authCreateSession: jest.fn(),
     schemaGetSpecification: jest.fn(),
+    schemaUpdateSpecification: jest.fn(),
     queryLegacy: jest.fn(),
     withRootTransaction: jest.fn(),
     withNestedTransaction: jest.fn(),

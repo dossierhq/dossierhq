@@ -155,6 +155,14 @@ async function terminatingMiddleware(
       resolve(await updateEntity(context, entity));
       break;
     }
+    case AdminClientOperationName.updateSchemaSpecification: {
+      const {
+        args: [schemaSpec],
+        resolve,
+      } = operation as AdminClientOperation<AdminClientOperationName.updateSchemaSpecification>;
+      resolve(await context.server.updateSchemaSpecification(context, schemaSpec));
+      break;
+    }
     case AdminClientOperationName.upsertEntity: {
       const {
         args: [entity],

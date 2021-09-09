@@ -1,7 +1,6 @@
 import type { AdminClient, PublishedClient } from '@jonasb/datadata-core';
 import { CoreTestUtils, EntityPublishState, ErrorType, FieldType } from '@jonasb/datadata-core';
 import type { Server2, SessionContext } from '@jonasb/datadata-server';
-import { ServerTestUtils } from '@jonasb/datadata-server';
 import { createPostgresTestServerAndClient, expectResultValue } from '../TestUtils';
 
 //TODO consider moving this test back to server or even to core
@@ -21,7 +20,7 @@ beforeAll(async () => {
   adminClient = server.createAdminClient(context);
   publishedClient = server.createPublishedClient(context);
 
-  await ServerTestUtils.updateSchema(context, {
+  await adminClient.updateSchemaSpecification({
     entityTypes: [
       {
         name: 'PublishedEntityFoo',

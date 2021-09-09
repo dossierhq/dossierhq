@@ -60,11 +60,14 @@ export interface SchemaSpecification {
   valueTypes: ValueTypeSpecification[];
 }
 
-export class Schema {
-  static empty(): Schema {
-    return new Schema({ entityTypes: [], valueTypes: [] });
-  }
+export type SchemaSpecificationUpdate = Partial<SchemaSpecification>;
 
+export interface SchemaSpecificationUpdatePayload {
+  effect: 'updated' | 'none';
+  schemaSpecification: SchemaSpecification;
+}
+
+export class Schema {
   readonly spec: SchemaSpecification;
 
   constructor(spec: SchemaSpecification) {
@@ -195,5 +198,34 @@ export class Schema {
     fieldName: string
   ): FieldSpecification | null {
     return valueSpec.fields.find((x) => x.name === fieldName) ?? null;
+  }
+
+  mergeWith(other: SchemaSpecificationUpdate): Result<SchemaSpecification, ErrorType.BadRequest> {
+    const schemaSpec: SchemaSpecification = {
+      entityTypes: [...this.spec.entityTypes],
+      valueTypes: [...this.spec.valueTypes],
+    };
+    if (other.entityTypes) {
+      for (const entityType of other.entityTypes) {
+        const existingEntityType = schemaSpec.entityTypes.find((it) => it.name === entityType.name);
+        if (existingEntityType) {
+          //TODO update entity type
+        } else {
+          schemaSpec.entityTypes.push(entityType);
+        }
+      }
+    }
+    if (other.valueTypes) {
+      for (const valueType of other.valueTypes) {
+        const existingValueType = schemaSpec.valueTypes.find((it) => it.name === valueType.name);
+        if (existingValueType) {
+          //TODO update value type
+        } else {
+          schemaSpec.valueTypes.push(valueType);
+        }
+      }
+    }
+    // TODO normalize
+    return ok(schemaSpec);
   }
 }

@@ -20,7 +20,7 @@ import {
   updateEntity,
   upsertEntity,
 } from './EntityAdmin';
-import { getSchemaSpecification } from './Schema';
+import { getSchemaSpecification, updateSchemaSpecification } from './Schema';
 
 export function createServerAdminClient({
   context,
@@ -147,6 +147,14 @@ async function terminatingMiddleware(
         resolve,
       } = operation as AdminClientOperation<AdminClientOperationName.updateEntity>;
       resolve(await updateEntity(context, entity));
+      break;
+    }
+    case AdminClientOperationName.updateSchemaSpecification: {
+      const {
+        args: [schemaSpec],
+        resolve,
+      } = operation as AdminClientOperation<AdminClientOperationName.updateSchemaSpecification>;
+      resolve(await updateSchemaSpecification(context.databaseAdapter, context, schemaSpec));
       break;
     }
     case AdminClientOperationName.upsertEntity: {

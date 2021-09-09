@@ -20,7 +20,6 @@ import {
   RichTextBlockType,
 } from '@jonasb/datadata-core';
 import type { Server2, SessionContext } from '@jonasb/datadata-server';
-import { ServerTestUtils } from '@jonasb/datadata-server';
 import { validate as validateUuid } from 'uuid';
 import {
   createPostgresTestServerAndClient,
@@ -31,7 +30,6 @@ import {
 } from '../TestUtils';
 
 const { expectErrorResult, expectOkResult } = CoreTestUtils;
-const { updateSchema } = ServerTestUtils;
 
 let server: Server2;
 let context: SessionContext;
@@ -70,7 +68,7 @@ beforeAll(async () => {
   context = result.value.context;
   client = server.createAdminClient(context);
   publishedClient = server.createPublishedClient(context);
-  await updateSchema(context, {
+  await client.updateSchemaSpecification({
     entityTypes: [
       {
         name: 'EntityAdminFoo',

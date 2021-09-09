@@ -38,6 +38,11 @@ export interface DatabaseAdapter {
     context: TransactionContext
   ): PromiseResult<SchemaSpecification | null, ErrorType.Generic>;
 
+  schemaUpdateSpecification(
+    context: TransactionContext,
+    schemaSpec: SchemaSpecification
+  ): PromiseResult<void, ErrorType.Generic>;
+
   // TODO remove when migrated away
   queryLegacy<R = unknown>(
     transaction: Transaction | null,

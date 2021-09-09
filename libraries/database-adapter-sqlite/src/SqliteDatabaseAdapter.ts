@@ -42,6 +42,10 @@ export async function createSqliteDatabaseAdapter(
       //TODO actually return schema
       return ok(null);
     },
+    schemaUpdateSpecification: async () => {
+      //TODO actually store schema
+      return ok(undefined);
+    },
   };
   return ok(adapter);
 }

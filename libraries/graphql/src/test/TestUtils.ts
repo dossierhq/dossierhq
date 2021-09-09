@@ -9,7 +9,7 @@ import type {
 } from '@jonasb/datadata-core';
 import { assertIsDefined, CoreTestUtils, ok, Schema } from '@jonasb/datadata-core';
 import { createPostgresAdapter } from '@jonasb/datadata-database-adapter-postgres-pg';
-import { createServer, ServerTestUtils } from '@jonasb/datadata-server';
+import { createServer } from '@jonasb/datadata-server';
 import {
   createInMemoryAdminClient,
   createInMemoryPublishedClient,
@@ -18,7 +18,6 @@ import {
 import { v4 as uuidv4 } from 'uuid';
 
 const { expectOkResult } = CoreTestUtils;
-const { updateSchema } = ServerTestUtils;
 
 export interface TestServerWithSession {
   schema: Schema;
@@ -74,7 +73,7 @@ async function setUpRealServerWithSession(schemaSpecification: Partial<SchemaSpe
   const adminClient = server.createAdminClient(context);
   const publishedClient = server.createPublishedClient(context);
 
-  await updateSchema(context, schemaSpecification);
+  await adminClient.updateSchemaSpecification(schemaSpecification);
 
   const schemaResult = await adminClient.getSchemaSpecification();
   if (schemaResult.isError()) throw schemaResult.toError();

@@ -4,6 +4,7 @@ import { authCreatePrincipal } from './auth/createPrincipal';
 import { authCreateSession } from './auth/createSession';
 import { withNestedTransaction, withRootTransaction } from './PostgresTransaction';
 import { schemaGetSpecification } from './schema/getSpecification';
+import { schemaUpdateSpecification } from './schema/updateSpecification';
 
 export interface PostgresDatabaseAdapter {
   disconnect(): Promise<void>;
@@ -31,5 +32,6 @@ export function createPostgresDatabaseAdapterAdapter(
     authCreateSession: (...args) => authCreateSession(databaseAdapter, ...args),
     authCreatePrincipal: (...args) => authCreatePrincipal(databaseAdapter, ...args),
     schemaGetSpecification: (...args) => schemaGetSpecification(databaseAdapter, ...args),
+    schemaUpdateSpecification: (...args) => schemaUpdateSpecification(databaseAdapter, ...args),
   };
 }
