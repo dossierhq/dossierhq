@@ -1,58 +1,53 @@
 import type { SchemaSpecification } from '@jonasb/datadata-core';
-import { FieldType, RichTextBlockType } from '@jonasb/datadata-core';
-import type { SessionContext } from '.';
+import { FieldType, RichTextBlockType, Schema } from '@jonasb/datadata-core';
 import { forTest } from './EntityCodec';
-import { createMockSessionContext } from './test/AdditionalTestUtils';
 
 const { collectDataFromEntity } = forTest;
 
-let context: SessionContext;
+const schemaSpec: SchemaSpecification = {
+  entityTypes: [
+    {
+      name: 'EntityCodecFoo',
+      fields: [
+        { name: 'string', type: FieldType.String },
+        { name: 'strings', type: FieldType.String, list: true },
+        { name: 'location', type: FieldType.Location },
+        { name: 'locations', type: FieldType.Location, list: true },
+        { name: 'bar', type: FieldType.EntityType, entityTypes: ['EntityCodecBar'] },
+        { name: 'bars', type: FieldType.EntityType, list: true, entityTypes: ['EntityCodecBar'] },
+        { name: 'reference', type: FieldType.EntityType },
+        { name: 'valueOne', type: FieldType.ValueType },
+        { name: 'richText', type: FieldType.RichText, entityTypes: ['EntityCodecBar'] },
+        { name: 'richTexts', type: FieldType.RichText, list: true },
+      ],
+    },
+    {
+      name: 'EntityCodecBar',
+      fields: [],
+    },
+  ],
+  valueTypes: [
+    {
+      name: 'EntityCodecValueOne',
+      fields: [
+        { name: 'string', type: FieldType.String },
+        { name: 'strings', type: FieldType.String, list: true },
+        { name: 'location', type: FieldType.Location },
+        { name: 'locations', type: FieldType.Location, list: true },
+        { name: 'bar', type: FieldType.EntityType, entityTypes: ['EntityCodecBar'] },
+        { name: 'richText', type: FieldType.RichText, entityTypes: ['EntityCodecBar'] },
+        { name: 'child', type: FieldType.ValueType, valueTypes: ['EntityCodecValueOne'] },
+      ],
+    },
+  ],
+};
 
-beforeAll(async () => {
-  const schema: SchemaSpecification = {
-    entityTypes: [
-      {
-        name: 'EntityCodecFoo',
-        fields: [
-          { name: 'string', type: FieldType.String },
-          { name: 'strings', type: FieldType.String, list: true },
-          { name: 'location', type: FieldType.Location },
-          { name: 'locations', type: FieldType.Location, list: true },
-          { name: 'bar', type: FieldType.EntityType, entityTypes: ['EntityCodecBar'] },
-          { name: 'bars', type: FieldType.EntityType, list: true, entityTypes: ['EntityCodecBar'] },
-          { name: 'reference', type: FieldType.EntityType },
-          { name: 'valueOne', type: FieldType.ValueType },
-          { name: 'richText', type: FieldType.RichText, entityTypes: ['EntityCodecBar'] },
-          { name: 'richTexts', type: FieldType.RichText, list: true },
-        ],
-      },
-      {
-        name: 'EntityCodecBar',
-        fields: [],
-      },
-    ],
-    valueTypes: [
-      {
-        name: 'EntityCodecValueOne',
-        fields: [
-          { name: 'string', type: FieldType.String },
-          { name: 'strings', type: FieldType.String, list: true },
-          { name: 'location', type: FieldType.Location },
-          { name: 'locations', type: FieldType.Location, list: true },
-          { name: 'bar', type: FieldType.EntityType, entityTypes: ['EntityCodecBar'] },
-          { name: 'richText', type: FieldType.RichText, entityTypes: ['EntityCodecBar'] },
-          { name: 'child', type: FieldType.ValueType, valueTypes: ['EntityCodecValueOne'] },
-        ],
-      },
-    ],
-  };
-  context = createMockSessionContext({ schema });
-});
+const schema = new Schema(schemaSpec);
 
 describe('collectDataFromEntity', () => {
   test('empty', () => {
     expect(
-      collectDataFromEntity(context, { info: { type: 'EntityCodecFoo', name: 'foo' }, fields: {} })
+      collectDataFromEntity(schema, { info: { type: 'EntityCodecFoo', name: 'foo' }, fields: {} })
     ).toMatchInlineSnapshot(`
       Object {
         "fullTextSearchText": Array [],
@@ -64,7 +59,7 @@ describe('collectDataFromEntity', () => {
 
   test('name only', () => {
     expect(
-      collectDataFromEntity(context, {
+      collectDataFromEntity(schema, {
         info: { type: 'EntityCodecFoo', name: 'hello world' },
         fields: {},
       })
@@ -79,7 +74,7 @@ describe('collectDataFromEntity', () => {
 
   test('strings', () => {
     expect(
-      collectDataFromEntity(context, {
+      collectDataFromEntity(schema, {
         info: { type: 'EntityCodecFoo', name: 'hello world' },
         fields: {
           string: 'Hello string world',
@@ -102,7 +97,7 @@ describe('collectDataFromEntity', () => {
 
   test('value item strings', () => {
     expect(
-      collectDataFromEntity(context, {
+      collectDataFromEntity(schema, {
         info: { type: 'EntityCodecFoo', name: 'hello world' },
         fields: {
           valueOne: {
@@ -129,7 +124,7 @@ describe('collectDataFromEntity', () => {
 
   test('rich text strings', () => {
     expect(
-      collectDataFromEntity(context, {
+      collectDataFromEntity(schema, {
         info: { type: 'EntityCodecFoo', name: 'hello world' },
         fields: {
           richText: {
@@ -172,7 +167,7 @@ describe('collectDataFromEntity', () => {
 
   test('entity locations', () => {
     expect(
-      collectDataFromEntity(context, {
+      collectDataFromEntity(schema, {
         info: { type: 'EntityCodecFoo', name: 'hello world' },
         fields: {
           location: { lat: 1, lng: 2 },
@@ -206,7 +201,7 @@ describe('collectDataFromEntity', () => {
 
   test('value item locations', () => {
     expect(
-      collectDataFromEntity(context, {
+      collectDataFromEntity(schema, {
         info: { type: 'EntityCodecFoo', name: 'hello world' },
         fields: {
           valueOne: { type: 'EntityCodecValueOne', location: { lat: 1, lng: 2 } },
@@ -240,7 +235,7 @@ describe('collectDataFromEntity', () => {
 
   test('entity references', () => {
     expect(
-      collectDataFromEntity(context, {
+      collectDataFromEntity(schema, {
         info: { type: 'EntityCodecFoo', name: 'foo' },
         fields: {
           bar: { id: 'barId1' },
@@ -294,7 +289,7 @@ describe('collectDataFromEntity', () => {
 
   test('value item references', () => {
     expect(
-      collectDataFromEntity(context, {
+      collectDataFromEntity(schema, {
         info: { type: 'EntityCodecFoo', name: 'foo' },
         fields: {
           valueOne: { type: 'EntityCodecValueOne', bar: { id: 'bar1Id' } },
@@ -321,7 +316,7 @@ describe('collectDataFromEntity', () => {
 
   test('rich text reference', () => {
     expect(
-      collectDataFromEntity(context, {
+      collectDataFromEntity(schema, {
         info: { type: 'EntityCodecFoo', name: 'foo' },
         fields: {
           richText: {

@@ -1,4 +1,4 @@
-import type { Entity, PromiseResult, Result, ErrorType } from '@jonasb/datadata-core';
+import type { Entity, PromiseResult, Result, ErrorType, Schema } from '@jonasb/datadata-core';
 import { notOk, ok } from '@jonasb/datadata-core';
 import type { SessionContext } from '.';
 import * as Db from './Database';
@@ -6,6 +6,7 @@ import type { EntitiesTable, EntityVersionsTable } from './DatabaseTables';
 import { decodePublishedEntity } from './EntityCodec';
 
 export async function getEntity(
+  schema: Schema,
   context: SessionContext,
   id: string
 ): PromiseResult<Entity, ErrorType.NotFound> {
@@ -23,7 +24,7 @@ export async function getEntity(
     return notOk.NotFound('No such entity');
   }
 
-  const entity = decodePublishedEntity(context, entityMain);
+  const entity = decodePublishedEntity(schema, entityMain);
 
   return ok(entity);
 }
@@ -37,6 +38,7 @@ export async function getEntity(
  * @param ids The ids of the entities
  */
 export async function getEntities(
+  schema: Schema,
   context: SessionContext,
   ids: string[]
 ): PromiseResult<Result<Entity, ErrorType.NotFound>[], ErrorType.Generic> {
@@ -59,7 +61,7 @@ export async function getEntities(
     if (!entityMain) {
       return notOk.NotFound('No such entity');
     }
-    const entity = decodePublishedEntity(context, entityMain);
+    const entity = decodePublishedEntity(schema, entityMain);
     return ok(entity);
   });
 

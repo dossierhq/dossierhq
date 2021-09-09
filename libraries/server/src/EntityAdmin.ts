@@ -18,6 +18,7 @@ import type {
   PublishingEventKind,
   PublishingHistory,
   Result,
+  Schema,
 } from '@jonasb/datadata-core';
 import {
   assertIsDefined,
@@ -48,6 +49,7 @@ import type { SearchAdminEntitiesItem } from './QueryGenerator';
 import { searchAdminEntitiesQuery, totalAdminEntitiesQuery } from './QueryGenerator';
 
 export async function getEntity(
+  schema: Schema,
   context: SessionContext,
   id: string,
   version?: number | null
@@ -75,12 +77,13 @@ export async function getEntity(
     return notOk.NotFound('No such entity or version');
   }
 
-  const entity = decodeAdminEntity(context, entityMain);
+  const entity = decodeAdminEntity(schema, entityMain);
 
   return ok(entity);
 }
 
 export async function getEntities(
+  schema: Schema,
   context: SessionContext,
   ids: string[]
 ): PromiseResult<Result<AdminEntity, ErrorType.NotFound>[], ErrorType.Generic> {
@@ -102,18 +105,19 @@ export async function getEntities(
     if (!entityMain) {
       return notOk.NotFound('No such entity');
     }
-    return ok(decodeAdminEntity(context, entityMain));
+    return ok(decodeAdminEntity(schema, entityMain));
   });
 
   return ok(result);
 }
 
 export async function searchEntities(
+  schema: Schema,
   context: SessionContext,
   query?: AdminQuery,
   paging?: Paging
 ): PromiseResult<Connection<Edge<AdminEntity, ErrorType>> | null, ErrorType.BadRequest> {
-  const sqlQuery = searchAdminEntitiesQuery(context, query, paging);
+  const sqlQuery = searchAdminEntitiesQuery(schema, query, paging);
   if (sqlQuery.isError()) {
     return sqlQuery;
   }
@@ -128,7 +132,7 @@ export async function searchEntities(
     entitiesValues.reverse();
   }
 
-  const entities = entitiesValues.map((it) => decodeAdminEntity(context, it));
+  const entities = entitiesValues.map((it) => decodeAdminEntity(schema, it));
   if (entities.length === 0) {
     return ok(null);
   }
@@ -149,10 +153,11 @@ export async function searchEntities(
 }
 
 export async function getTotalCount(
+  schema: Schema,
   context: SessionContext,
   query?: AdminQuery
 ): PromiseResult<number, ErrorType.BadRequest> {
-  const sqlQuery = totalAdminEntitiesQuery(context, query);
+  const sqlQuery = totalAdminEntitiesQuery(schema, query);
   if (sqlQuery.isError()) {
     return sqlQuery;
   }
@@ -192,16 +197,17 @@ async function withUniqueNameAttempt<TResult>(
 }
 
 export async function createEntity(
+  schema: Schema,
   context: SessionContext,
   entity: AdminEntityCreate
 ): PromiseResult<AdminEntityCreatePayload, ErrorType.BadRequest | ErrorType.Conflict> {
-  const resolvedResult = resolveCreateEntity(context, entity);
+  const resolvedResult = resolveCreateEntity(schema, entity);
   if (resolvedResult.isError()) {
     return resolvedResult;
   }
   const createEntity = resolvedResult.value;
 
-  const encodeResult = await encodeEntity(context, createEntity);
+  const encodeResult = await encodeEntity(schema, context, createEntity);
   if (encodeResult.isError()) {
     return encodeResult;
   }
@@ -306,6 +312,7 @@ async function createEntityRow(
 }
 
 export async function updateEntity(
+  schema: Schema,
   context: SessionContext,
   entity: AdminEntityUpdate
 ): PromiseResult<AdminEntityUpdatePayload, ErrorType.BadRequest | ErrorType.NotFound> {
@@ -336,7 +343,7 @@ export async function updateEntity(
     }
     const { id: entityId, type, name: previousName } = previousValues;
 
-    const resolvedResult = resolveUpdateEntity(context, entity, type, previousValues);
+    const resolvedResult = resolveUpdateEntity(schema, entity, type, previousValues);
     if (resolvedResult.isError()) {
       return resolvedResult;
     }
@@ -346,7 +353,7 @@ export async function updateEntity(
       return ok(payload);
     }
 
-    const encodeResult = await encodeEntity(context, updatedEntity);
+    const encodeResult = await encodeEntity(schema, context, updatedEntity);
     if (encodeResult.isError()) {
       return encodeResult;
     }
@@ -413,6 +420,7 @@ export async function updateEntity(
 }
 
 export async function upsertEntity(
+  schema: Schema,
   context: SessionContext,
   entity: AdminEntityUpsert
 ): PromiseResult<AdminEntityUpsertPayload, ErrorType.BadRequest | ErrorType.Generic> {
@@ -423,11 +431,11 @@ export async function upsertEntity(
   );
 
   if (!entityInfo) {
-    const createResult = await createEntity(context, entity);
+    const createResult = await createEntity(schema, context, entity);
     if (createResult.isOk()) {
       return createResult.map((value) => value);
     } else if (createResult.isErrorType(ErrorType.Conflict)) {
-      return upsertEntity(context, entity);
+      return upsertEntity(schema, context, entity);
     } else if (createResult.isErrorType(ErrorType.BadRequest)) {
       return createResult;
     }
@@ -440,7 +448,7 @@ export async function upsertEntity(
     entityUpdate = { ...entity, info: { ...entity.info, name: undefined } };
   }
 
-  const updateResult = await updateEntity(context, entityUpdate);
+  const updateResult = await updateEntity(schema, context, entityUpdate);
   if (updateResult.isOk()) {
     return ok(updateResult.value);
   } else if (updateResult.isErrorType(ErrorType.BadRequest)) {

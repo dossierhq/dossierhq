@@ -120,15 +120,15 @@ export async function createServer({
   databaseAdapter: DatabaseAdapter;
   logger?: Logger;
 }): PromiseResult<Server, ErrorType.Generic> {
-  const server = new ServerImpl({ databaseAdapter, logger });
-  const authContext = server.createAuthContext();
-  const loadSchemaResult = await server.reloadSchemaResult(authContext);
+  const serverImpl = new ServerImpl({ databaseAdapter, logger });
+  const authContext = serverImpl.createAuthContext();
+  const loadSchemaResult = await serverImpl.reloadSchemaResult(authContext);
   if (loadSchemaResult.isError()) {
     return loadSchemaResult;
   }
-  const server2: Server = {
+  const server: Server = {
     shutdown() {
-      return server.shutdownResult();
+      return serverImpl.shutdownResult();
     },
     createSession: async (
       provider,
@@ -145,12 +145,12 @@ export async function createServer({
         return sessionResult;
       }
       const { principalEffect, session } = sessionResult.value;
-      const context = server.createSessionContext(session, logger);
+      const context = serverImpl.createSessionContext(session, logger);
       return ok({ principalEffect, context });
     },
-    createAdminClient: (context) => createServerAdminClient({ context }),
-    createPublishedClient: (context) => createServerPublishedClient({ context }),
+    createAdminClient: (context) => createServerAdminClient({ context, serverImpl }),
+    createPublishedClient: (context) => createServerPublishedClient({ context, serverImpl }),
   };
 
-  return ok(server2);
+  return ok(server);
 }
