@@ -23,8 +23,6 @@ export interface TransactionContext<
 export interface Context<TContext extends Context<any> = Context<any>>
   extends TransactionContext<TContext> {
   //TODO remove
-  readonly server: ServerImpl;
-  //TODO remove
   readonly databaseAdapter: DatabaseAdapter;
   readonly logger: Logger;
   readonly transaction: Transaction | null;
