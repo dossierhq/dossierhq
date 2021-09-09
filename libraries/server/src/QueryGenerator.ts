@@ -1,6 +1,5 @@
-import type { AdminQuery, ErrorType, Paging, Result } from '@jonasb/datadata-core';
+import type { AdminQuery, ErrorType, Paging, Result, Schema } from '@jonasb/datadata-core';
 import { notOk, ok, QueryOrder } from '@jonasb/datadata-core';
-import type { SessionContext } from './';
 import type { CursorNativeType } from './Connection';
 import type { EntitiesTable } from './DatabaseTables';
 import type { AdminEntityValues } from './EntityCodec';
@@ -10,7 +9,7 @@ import QueryBuilder from './QueryBuilder';
 export type SearchAdminEntitiesItem = Pick<EntitiesTable, 'id' | 'updated'> & AdminEntityValues;
 
 export function searchAdminEntitiesQuery(
-  context: SessionContext,
+  schema: Schema,
   query: AdminQuery | undefined,
   paging: Paging | undefined
 ): Result<
@@ -64,7 +63,7 @@ export function searchAdminEntitiesQuery(
   qb.addQuery('WHERE e.latest_draft_entity_versions_id = ev.id');
 
   // Filter: entityTypes
-  const entityTypesResult = getFilterEntityTypes(context, query);
+  const entityTypesResult = getFilterEntityTypes(schema, query);
   if (entityTypesResult.isError()) {
     return entityTypesResult;
   }
@@ -121,7 +120,7 @@ export function searchAdminEntitiesQuery(
 }
 
 export function totalAdminEntitiesQuery(
-  context: SessionContext,
+  schema: Schema,
   query: AdminQuery | undefined
 ): Result<{ text: string; values: unknown[] }, ErrorType.BadRequest> {
   const qb = new QueryBuilder('SELECT');
@@ -146,7 +145,7 @@ export function totalAdminEntitiesQuery(
   qb.addQuery('WHERE');
 
   // Filter: entityTypes
-  const entityTypesResult = getFilterEntityTypes(context, query);
+  const entityTypesResult = getFilterEntityTypes(schema, query);
   if (entityTypesResult.isError()) {
     return entityTypesResult;
   }
@@ -186,13 +185,12 @@ export function totalAdminEntitiesQuery(
 }
 
 function getFilterEntityTypes(
-  context: SessionContext,
+  schema: Schema,
   query: AdminQuery | undefined
 ): Result<string[], ErrorType.BadRequest> {
   if (!query?.entityTypes || query.entityTypes.length === 0) {
     return ok([]);
   }
-  const schema = context.server.getSchema();
   for (const entityType of query.entityTypes) {
     if (schema.getEntityTypeSpecification(entityType) === null) {
       return notOk.BadRequest(`Can’t find entity type in query: ${entityType}`);

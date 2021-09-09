@@ -1,23 +1,20 @@
-import { CoreTestUtils, ErrorType, QueryOrder } from '@jonasb/datadata-core';
+import { CoreTestUtils, ErrorType, QueryOrder, Schema } from '@jonasb/datadata-core';
 import { toOpaqueCursor } from './Connection';
 import { searchAdminEntitiesQuery, totalAdminEntitiesQuery } from './QueryGenerator';
-import { createMockSessionContext } from './test/AdditionalTestUtils';
 
 const { expectErrorResult } = CoreTestUtils;
 
-const context = createMockSessionContext({
-  schema: {
-    entityTypes: [
-      { name: 'QueryGeneratorFoo', fields: [] },
-      { name: 'QueryGeneratorBar', fields: [] },
-    ],
-    valueTypes: [],
-  },
+const schema = new Schema({
+  entityTypes: [
+    { name: 'QueryGeneratorFoo', fields: [] },
+    { name: 'QueryGeneratorBar', fields: [] },
+  ],
+  valueTypes: [],
 });
 
 describe('searchAdminEntitiesQuery()', () => {
   test('default paging', () => {
-    expect(searchAdminEntitiesQuery(context, undefined, undefined)).toMatchInlineSnapshot(`
+    expect(searchAdminEntitiesQuery(schema, undefined, undefined)).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
           "cursorName": "id",
@@ -35,7 +32,7 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('first 10', () => {
-    expect(searchAdminEntitiesQuery(context, undefined, { first: 10 })).toMatchInlineSnapshot(`
+    expect(searchAdminEntitiesQuery(schema, undefined, { first: 10 })).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
           "cursorName": "id",
@@ -54,7 +51,7 @@ describe('searchAdminEntitiesQuery()', () => {
 
   test('first 10 after', () => {
     expect(
-      searchAdminEntitiesQuery(context, undefined, { first: 10, after: toOpaqueCursor('int', 999) })
+      searchAdminEntitiesQuery(schema, undefined, { first: 10, after: toOpaqueCursor('int', 999) })
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
@@ -74,7 +71,7 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('last 10', () => {
-    expect(searchAdminEntitiesQuery(context, undefined, { last: 10 })).toMatchInlineSnapshot(`
+    expect(searchAdminEntitiesQuery(schema, undefined, { last: 10 })).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
           "cursorName": "id",
@@ -93,7 +90,7 @@ describe('searchAdminEntitiesQuery()', () => {
 
   test('last 10 before', () => {
     expect(
-      searchAdminEntitiesQuery(context, undefined, { last: 10, before: toOpaqueCursor('int', 456) })
+      searchAdminEntitiesQuery(schema, undefined, { last: 10, before: toOpaqueCursor('int', 456) })
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
@@ -114,7 +111,7 @@ describe('searchAdminEntitiesQuery()', () => {
 
   test('first 10 between after and before', () => {
     expect(
-      searchAdminEntitiesQuery(context, undefined, {
+      searchAdminEntitiesQuery(schema, undefined, {
         first: 10,
         after: toOpaqueCursor('int', 123),
         before: toOpaqueCursor('int', 456),
@@ -140,7 +137,7 @@ describe('searchAdminEntitiesQuery()', () => {
 
   test('last 10 between after and before', () => {
     expect(
-      searchAdminEntitiesQuery(context, undefined, {
+      searchAdminEntitiesQuery(schema, undefined, {
         last: 10,
         after: toOpaqueCursor('int', 123),
         before: toOpaqueCursor('int', 456),
@@ -165,8 +162,7 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('query no entity type, i.e. include all', () => {
-    expect(searchAdminEntitiesQuery(context, { entityTypes: [] }, undefined))
-      .toMatchInlineSnapshot(`
+    expect(searchAdminEntitiesQuery(schema, { entityTypes: [] }, undefined)).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
           "cursorName": "id",
@@ -184,7 +180,7 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('query one entity type', () => {
-    expect(searchAdminEntitiesQuery(context, { entityTypes: ['QueryGeneratorFoo'] }, undefined))
+    expect(searchAdminEntitiesQuery(schema, { entityTypes: ['QueryGeneratorFoo'] }, undefined))
       .toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
@@ -208,7 +204,7 @@ describe('searchAdminEntitiesQuery()', () => {
   test('query two entity types', () => {
     expect(
       searchAdminEntitiesQuery(
-        context,
+        schema,
         { entityTypes: ['QueryGeneratorFoo', 'QueryGeneratorBar'] },
         undefined
       )
@@ -236,7 +232,7 @@ describe('searchAdminEntitiesQuery()', () => {
   test('query two entity types, first and after', () => {
     expect(
       searchAdminEntitiesQuery(
-        context,
+        schema,
         { entityTypes: ['QueryGeneratorFoo', 'QueryGeneratorBar'] },
         { first: 10, after: toOpaqueCursor('int', 543) }
       )
@@ -265,7 +261,7 @@ describe('searchAdminEntitiesQuery()', () => {
   test('query referencing', () => {
     expect(
       searchAdminEntitiesQuery(
-        context,
+        schema,
         { referencing: '37b48706-803e-4227-a51e-8208db12d949' },
         undefined
       )
@@ -290,7 +286,7 @@ describe('searchAdminEntitiesQuery()', () => {
   test('query bounding box', () => {
     expect(
       searchAdminEntitiesQuery(
-        context,
+        schema,
         {
           boundingBox: {
             minLat: 55.07,
@@ -325,7 +321,7 @@ describe('searchAdminEntitiesQuery()', () => {
   test('query text', () => {
     expect(
       searchAdminEntitiesQuery(
-        context,
+        schema,
         {
           text: 'foo bar',
         },
@@ -352,7 +348,7 @@ describe('searchAdminEntitiesQuery()', () => {
   test('query referencing and entity types and paging', () => {
     expect(
       searchAdminEntitiesQuery(
-        context,
+        schema,
         {
           entityTypes: ['QueryGeneratorFoo', 'QueryGeneratorBar'],
           referencing: '37b48706-803e-4227-a51e-8208db12d949',
@@ -383,7 +379,7 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('order by createdAt', () => {
-    expect(searchAdminEntitiesQuery(context, { order: QueryOrder.createdAt }, undefined))
+    expect(searchAdminEntitiesQuery(schema, { order: QueryOrder.createdAt }, undefined))
       .toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
@@ -402,7 +398,7 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('order by updatedAt', () => {
-    expect(searchAdminEntitiesQuery(context, { order: QueryOrder.updatedAt }, undefined))
+    expect(searchAdminEntitiesQuery(schema, { order: QueryOrder.updatedAt }, undefined))
       .toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
@@ -421,7 +417,7 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('order by name', () => {
-    expect(searchAdminEntitiesQuery(context, { order: QueryOrder.name }, undefined))
+    expect(searchAdminEntitiesQuery(schema, { order: QueryOrder.name }, undefined))
       .toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
@@ -440,14 +436,14 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('Error: invalid entity type in query', () => {
-    const result = searchAdminEntitiesQuery(context, { entityTypes: ['Invalid'] }, undefined);
+    const result = searchAdminEntitiesQuery(schema, { entityTypes: ['Invalid'] }, undefined);
     expectErrorResult(result, ErrorType.BadRequest, 'Can’t find entity type in query: Invalid');
   });
 });
 
 describe('totalAdminEntitiesQuery()', () => {
   test('no query', () => {
-    expect(totalAdminEntitiesQuery(context, undefined)).toMatchInlineSnapshot(`
+    expect(totalAdminEntitiesQuery(schema, undefined)).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
           "text": "SELECT COUNT(e.id)::integer AS count FROM entities e",
@@ -458,7 +454,7 @@ describe('totalAdminEntitiesQuery()', () => {
   });
 
   test('no entity type => all', () => {
-    expect(totalAdminEntitiesQuery(context, { entityTypes: [] })).toMatchInlineSnapshot(`
+    expect(totalAdminEntitiesQuery(schema, { entityTypes: [] })).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
           "text": "SELECT COUNT(e.id)::integer AS count FROM entities e",
@@ -469,7 +465,7 @@ describe('totalAdminEntitiesQuery()', () => {
   });
 
   test('one entity type', () => {
-    expect(totalAdminEntitiesQuery(context, { entityTypes: ['QueryGeneratorFoo'] }))
+    expect(totalAdminEntitiesQuery(schema, { entityTypes: ['QueryGeneratorFoo'] }))
       .toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
@@ -486,7 +482,7 @@ describe('totalAdminEntitiesQuery()', () => {
 
   test('two entity types', () => {
     expect(
-      totalAdminEntitiesQuery(context, { entityTypes: ['QueryGeneratorFoo', 'QueryGeneratorBar'] })
+      totalAdminEntitiesQuery(schema, { entityTypes: ['QueryGeneratorFoo', 'QueryGeneratorBar'] })
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
@@ -503,9 +499,8 @@ describe('totalAdminEntitiesQuery()', () => {
   });
 
   test('query referencing', () => {
-    expect(
-      totalAdminEntitiesQuery(context, { referencing: '37b48706-803e-4227-a51e-8208db12d949' })
-    ).toMatchInlineSnapshot(`
+    expect(totalAdminEntitiesQuery(schema, { referencing: '37b48706-803e-4227-a51e-8208db12d949' }))
+      .toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
           "text": "SELECT COUNT(e.id)::integer AS count FROM entities e, entity_versions ev, entity_version_references evr, entities e2 WHERE e.latest_draft_entity_versions_id = ev.id AND ev.id = evr.entity_versions_id AND evr.entities_id = e2.id AND e2.uuid = $1",
@@ -519,7 +514,7 @@ describe('totalAdminEntitiesQuery()', () => {
 
   test('query referencing and entity types and paging', () => {
     expect(
-      totalAdminEntitiesQuery(context, {
+      totalAdminEntitiesQuery(schema, {
         entityTypes: ['QueryGeneratorFoo', 'QueryGeneratorBar'],
         referencing: '37b48706-803e-4227-a51e-8208db12d949',
       })
@@ -541,7 +536,7 @@ describe('totalAdminEntitiesQuery()', () => {
 
   test('query bounding box', () => {
     expect(
-      totalAdminEntitiesQuery(context, {
+      totalAdminEntitiesQuery(schema, {
         boundingBox: {
           minLat: 55.07,
           maxLat: 56.79,
@@ -566,7 +561,7 @@ describe('totalAdminEntitiesQuery()', () => {
 
   test('query text', () => {
     expect(
-      totalAdminEntitiesQuery(context, {
+      totalAdminEntitiesQuery(schema, {
         text: 'foo bar',
       })
     ).toMatchInlineSnapshot(`

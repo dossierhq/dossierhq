@@ -76,8 +76,7 @@ interface RequestedReference {
   entityTypes: string[] | undefined;
 }
 
-export function decodePublishedEntity(context: SessionContext, values: EntityValues): Entity {
-  const schema = context.server.getSchema();
+export function decodePublishedEntity(schema: Schema, values: EntityValues): Entity {
   const entitySpec = schema.getEntityTypeSpecification(values.type);
   if (!entitySpec) {
     throw new Error(`No entity spec for type ${values.type}`);
@@ -167,8 +166,7 @@ function decodeRichTextField(
   return { blocks: decodedBlocks };
 }
 
-export function decodeAdminEntity(context: SessionContext, values: AdminEntityValues): AdminEntity {
-  const schema = context.server.getSchema();
+export function decodeAdminEntity(schema: Schema, values: AdminEntityValues): AdminEntity {
   const entitySpec = schema.getEntityTypeSpecification(values.type);
   if (!entitySpec) {
     throw new Error(`No entity spec for type ${values.type}`);
@@ -216,7 +214,7 @@ export function resolvePublishState(
 }
 
 export function resolveCreateEntity(
-  context: SessionContext,
+  schema: Schema,
   entity: AdminEntityCreate
 ): Result<AdminEntityCreate, ErrorType.BadRequest> {
   if (!entity.info.type) {
@@ -235,7 +233,6 @@ export function resolveCreateEntity(
     fields: {},
   };
 
-  const schema = context.server.getSchema();
   const entitySpec = schema.getEntityTypeSpecification(result.info.type);
   if (!entitySpec) {
     return notOk.BadRequest(`Entity type ${result.info.type} doesn’t exist`);
@@ -261,7 +258,7 @@ export function resolveCreateEntity(
 }
 
 export function resolveUpdateEntity(
-  context: SessionContext,
+  schema: Schema,
   entity: AdminEntityUpdate,
   type: string,
   values: Pick<
@@ -297,7 +294,6 @@ export function resolveUpdateEntity(
     fields: {},
   };
 
-  const schema = context.server.getSchema();
   const entitySpec = schema.getEntityTypeSpecification(result.info.type);
   if (!entitySpec) {
     return notOk.BadRequest(`Entity type ${result.info.type} doesn’t exist`);
@@ -358,6 +354,7 @@ function checkForUnsupportedFields(
 }
 
 export async function encodeEntity(
+  schema: Schema,
   context: SessionContext,
   entity: AdminEntity | AdminEntityCreate
 ): PromiseResult<EncodeEntityResult, ErrorType.BadRequest> {
@@ -371,7 +368,6 @@ export async function encodeEntity(
 
   const { type, name } = entity.info;
 
-  const schema = context.server.getSchema();
   const entitySpec = schema.getEntityTypeSpecification(type);
   if (!entitySpec) {
     return notOk.BadRequest(`Entity type ${type} doesn’t exist`);
@@ -401,7 +397,7 @@ export async function encodeEntity(
   }
 
   const { requestedReferences, locations, fullTextSearchText } = collectDataFromEntity(
-    context,
+    schema,
     entity
   );
   const resolveResult = await resolveRequestedEntityReferences(context, requestedReferences);
@@ -579,7 +575,7 @@ function encodeRichTextField(
 }
 
 function collectDataFromEntity(
-  context: SessionContext,
+  schema: Schema,
   entity: AdminEntity | AdminEntityCreate
 ): {
   requestedReferences: RequestedReference[];
@@ -591,7 +587,7 @@ function collectDataFromEntity(
   const fullTextSearchText: string[] = [];
 
   visitItemRecursively({
-    schema: context.server.getSchema(),
+    schema,
     item: entity as AdminEntity,
     path: ['entity'],
     visitField: (path, fieldSpec, data, _visitContext) => {
