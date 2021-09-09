@@ -7,7 +7,7 @@ import type {
   PublishedClient,
 } from '@jonasb/datadata-core';
 import { assertIsDefined, notOk, ok, Schema } from '@jonasb/datadata-core';
-import type { Context, DatabaseAdapter, Session, SessionContext, TransactionContext } from '.';
+import type { DatabaseAdapter, Session, SessionContext } from '.';
 import { createServerAdminClient } from './AdminClient';
 import { authCreateSession } from './Auth';
 import type { AuthContext } from './Context';
@@ -69,12 +69,7 @@ export class ServerImpl {
     (await this.shutdownResult()).throwIfError();
   }
 
-  //TODO remove when migrated to Schema2
-  async reloadSchema(context: Context): Promise<void> {
-    (await this.reloadSchemaResult(context)).throwIfError();
-  }
-
-  async reloadSchemaResult(context: TransactionContext): PromiseResult<void, ErrorType.Generic> {
+  async reloadSchemaResult(context: AuthContext): PromiseResult<void, ErrorType.Generic> {
     assertIsDefined(this.#databaseAdapter);
     const result = await getSchemaSpecification(this.#databaseAdapter, context);
     if (result.isError()) {
@@ -104,7 +99,7 @@ export class ServerImpl {
 
   createAuthContext(logger?: Logger): AuthContext {
     assertIsDefined(this.#databaseAdapter);
-    return new AuthContextImpl(this, this.#databaseAdapter, logger ?? this.#logger);
+    return new AuthContextImpl(this.#databaseAdapter, logger ?? this.#logger);
   }
 
   createSessionContext(session: Session, logger?: Logger): SessionContext {
