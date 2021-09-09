@@ -36,8 +36,8 @@ export default async function adminOperationHandler(
   const { operationName } = validateRequestQuery(req.query, requestSchema);
   if (req.method === 'GET') {
     await handleGet(req, res, async () => {
-      const { authContext, server } = await getServerConnection();
-      const authResult = await getSessionContextForRequest(server, authContext, req);
+      const { server } = await getServerConnection();
+      const authResult = await getSessionContextForRequest(server, req);
       if (authResult.isError()) {
         throw errorResultToBoom(authResult);
       }
@@ -60,8 +60,8 @@ export default async function adminOperationHandler(
     });
   } else if (req.method === 'PUT') {
     await handlePut(req, res, async (body: AdminOperationRequest) => {
-      const { authContext, server } = await getServerConnection();
-      const authResult = await getSessionContextForRequest(server, authContext, req);
+      const { server } = await getServerConnection();
+      const authResult = await getSessionContextForRequest(server, req);
       if (authResult.isError()) {
         throw errorResultToBoom(authResult);
       }

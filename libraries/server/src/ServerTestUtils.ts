@@ -1,7 +1,8 @@
 import type { Logger, SchemaSpecification } from '@jonasb/datadata-core';
 import { Schema } from '@jonasb/datadata-core';
-import type { Context, DatabaseAdapter, Server, SessionContext, Transaction } from '.';
+import type { Context, DatabaseAdapter, SessionContext, Transaction } from '.';
 import { ContextImpl } from './Context';
+import type { default as Server } from './Server';
 
 class DummyContextImpl extends ContextImpl<Context> {
   constructor(

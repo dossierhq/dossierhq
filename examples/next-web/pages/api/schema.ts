@@ -8,8 +8,7 @@ export default async function schemaHandler(
   res: NextApiResponse<SchemaResponse>
 ): Promise<void> {
   await handleGet(req, res, async () => {
-    const { server } = await getServerConnection();
-    const schema = server.getSchema();
+    const { server, schema } = await getServerConnection();
     return { spec: schema.spec };
   });
 }

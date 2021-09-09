@@ -123,7 +123,7 @@ export async function createServer({
   logger,
 }: {
   databaseAdapter: DatabaseAdapter;
-  logger: Logger;
+  logger?: Logger;
 }): PromiseResult<Server2, ErrorType.Generic> {
   const server = new Server({ databaseAdapter, logger });
   const authContext = server.createAuthContext();
