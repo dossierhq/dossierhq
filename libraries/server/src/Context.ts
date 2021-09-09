@@ -2,7 +2,7 @@ import type { ErrorType, Logger, PromiseResult } from '@jonasb/datadata-core';
 import type { DatabaseAdapter, Session, Transaction } from '.';
 import type { ServerImpl } from './Server';
 
-const authContextSymbol = Symbol('AuthContext');
+const internalContextSymbol = Symbol('InternalContext');
 const sessionContextSymbol = Symbol('SessionContext');
 
 export interface Context2 {
@@ -28,8 +28,8 @@ export interface Context<TContext extends Context<any> = Context<any>>
   readonly transaction: Transaction | null;
 }
 
-export interface AuthContext extends TransactionContext<AuthContext> {
-  [authContextSymbol]: never;
+export interface InternalContext extends TransactionContext<InternalContext> {
+  [internalContextSymbol]: never;
 }
 
 export interface SessionContext extends Context<SessionContext> {
@@ -110,8 +110,11 @@ export abstract class ContextImpl<TContext extends Context<any>> implements Cont
   }
 }
 
-export class AuthContextImpl extends TransactionContextImpl<AuthContext> implements AuthContext {
-  [authContextSymbol]: never;
+export class InternalContextImpl
+  extends TransactionContextImpl<InternalContext>
+  implements InternalContext
+{
+  [internalContextSymbol]: never;
   readonly #databaseAdapter: DatabaseAdapter;
 
   constructor(
@@ -123,8 +126,8 @@ export class AuthContextImpl extends TransactionContextImpl<AuthContext> impleme
     this.#databaseAdapter = databaseAdapter;
   }
 
-  protected copyWithNewTransaction(transaction: Transaction): AuthContext {
-    return new AuthContextImpl(this.#databaseAdapter, this.logger, transaction);
+  protected copyWithNewTransaction(transaction: Transaction): InternalContext {
+    return new InternalContextImpl(this.#databaseAdapter, this.logger, transaction);
   }
 }
 

@@ -1,7 +1,6 @@
 import type { Logger, SchemaSpecification } from '@jonasb/datadata-core';
 import { Schema } from '@jonasb/datadata-core';
 import type { DatabaseAdapter, SessionContext, TransactionContext } from '..';
-import type { AuthContext } from '../Context';
 
 interface MockDatabaseAdapter extends DatabaseAdapter {
   authCreatePrincipal: jest.MockedFunction<DatabaseAdapter['authCreatePrincipal']>;
@@ -9,10 +8,6 @@ interface MockDatabaseAdapter extends DatabaseAdapter {
   schemaGetSpecification: jest.MockedFunction<DatabaseAdapter['schemaGetSpecification']>;
   schemaUpdateSpecification: jest.MockedFunction<DatabaseAdapter['schemaUpdateSpecification']>;
   queryLegacy: jest.MockedFunction<DatabaseAdapter['queryLegacy']>;
-}
-
-export function createMockAuthContext(databaseAdapter: MockDatabaseAdapter): AuthContext {
-  return { databaseAdapter } as unknown as AuthContext;
 }
 
 export function createDummyLogger(): Logger {

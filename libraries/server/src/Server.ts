@@ -10,8 +10,8 @@ import { assertIsDefined, notOk, ok, Schema } from '@jonasb/datadata-core';
 import type { DatabaseAdapter, Session, SessionContext } from '.';
 import { createServerAdminClient } from './AdminClient';
 import { authCreateSession } from './Auth';
-import type { AuthContext } from './Context';
-import { AuthContextImpl, SessionContextImpl } from './Context';
+import type { InternalContext } from './Context';
+import { InternalContextImpl, SessionContextImpl } from './Context';
 import { createServerPublishedClient } from './PublishedClient';
 import { getSchemaSpecification, setSchema } from './Schema';
 
@@ -69,7 +69,7 @@ export class ServerImpl {
     (await this.shutdownResult()).throwIfError();
   }
 
-  async reloadSchemaResult(context: AuthContext): PromiseResult<void, ErrorType.Generic> {
+  async reloadSchemaResult(context: InternalContext): PromiseResult<void, ErrorType.Generic> {
     assertIsDefined(this.#databaseAdapter);
     const result = await getSchemaSpecification(this.#databaseAdapter, context);
     if (result.isError()) {
@@ -97,9 +97,9 @@ export class ServerImpl {
     return result;
   }
 
-  createAuthContext(logger?: Logger): AuthContext {
+  createInternalContext(logger?: Logger): InternalContext {
     assertIsDefined(this.#databaseAdapter);
-    return new AuthContextImpl(this.#databaseAdapter, logger ?? this.#logger);
+    return new InternalContextImpl(this.#databaseAdapter, logger ?? this.#logger);
   }
 
   createSessionContext(session: Session, logger?: Logger): SessionContext {
@@ -116,7 +116,7 @@ export async function createServer({
   logger?: Logger;
 }): PromiseResult<Server, ErrorType.Generic> {
   const serverImpl = new ServerImpl({ databaseAdapter, logger });
-  const authContext = serverImpl.createAuthContext();
+  const authContext = serverImpl.createInternalContext();
   const loadSchemaResult = await serverImpl.reloadSchemaResult(authContext);
   if (loadSchemaResult.isError()) {
     return loadSchemaResult;
