@@ -88,6 +88,7 @@ export type {
   SchemaSpecificationUpdatePayload,
   ValueTypeSpecification,
 } from './Schema';
+export type { ContextProvider } from './SharedClient';
 export { EntityPublishState, PublishingEventKind, QueryOrder } from './Types';
 export type {
   AdminEntity,

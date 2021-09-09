@@ -1,4 +1,3 @@
-export { createServerAdminClient } from './AdminClient'; // TODO move to Server2
 export type { Session } from './Auth'; // TODO move to DatabaseAdapter
 export type { AuthContext, Context, Context2, SessionContext, TransactionContext } from './Context'; //TODO remove AuthContext
 export type { AuthCreateSessionPayload, DatabaseAdapter, Transaction } from './DatabaseAdapter';

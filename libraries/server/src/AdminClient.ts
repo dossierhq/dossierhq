@@ -1,4 +1,4 @@
-import type { AdminClient, AdminClientOperation } from '@jonasb/datadata-core';
+import type { AdminClient, AdminClientOperation, ContextProvider } from '@jonasb/datadata-core';
 import {
   AdminClientOperationName,
   assertExhaustive,
@@ -25,7 +25,7 @@ import { getSchemaSpecification, updateSchemaSpecification } from './Schema';
 export function createServerAdminClient({
   context,
 }: {
-  context: SessionContext | (() => Promise<SessionContext>);
+  context: SessionContext | ContextProvider<SessionContext>;
 }): AdminClient {
   return createBaseAdminClient<SessionContext>({ context, pipeline: [terminatingMiddleware] });
 }

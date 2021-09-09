@@ -1,5 +1,6 @@
 import type {
   AdminClient,
+  ContextProvider,
   ErrorType,
   Logger,
   PromiseResult,
@@ -33,7 +34,7 @@ export interface Server2 {
     identifier: string,
     logger?: Logger
   ): PromiseResult<CreateSessionPayload, ErrorType.BadRequest | ErrorType.Generic>;
-  createAdminClient(context: SessionContext): AdminClient;
+  createAdminClient(context: SessionContext | ContextProvider<SessionContext>): AdminClient;
   createPublishedClient(context: SessionContext): PublishedClient;
 }
 
