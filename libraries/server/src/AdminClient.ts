@@ -4,7 +4,7 @@ import {
   assertExhaustive,
   createBaseAdminClient,
 } from '@jonasb/datadata-core';
-import type { SessionContext } from '.';
+import type { DatabaseAdapter, SessionContext } from '.';
 import {
   archiveEntity,
   createEntity,
@@ -25,9 +25,11 @@ import type { ServerImpl } from './Server';
 
 export function createServerAdminClient({
   context,
+  databaseAdapter,
   serverImpl,
 }: {
   context: SessionContext | ContextProvider<SessionContext>;
+  databaseAdapter: DatabaseAdapter;
   serverImpl: ServerImpl;
 }): AdminClient {
   async function terminatingMiddleware(
@@ -99,7 +101,7 @@ export function createServerAdminClient({
       case AdminClientOperationName.getSchemaSpecification: {
         const { resolve } =
           operation as AdminClientOperation<AdminClientOperationName.getSchemaSpecification>;
-        resolve(await getSchemaSpecification(context.databaseAdapter, context));
+        resolve(await getSchemaSpecification(databaseAdapter, context));
         break;
       }
       case AdminClientOperationName.getTotalCount: {
@@ -160,7 +162,7 @@ export function createServerAdminClient({
           args: [schemaSpec],
           resolve,
         } = operation as AdminClientOperation<AdminClientOperationName.updateSchemaSpecification>;
-        resolve(await updateSchemaSpecification(context.databaseAdapter, context, schemaSpec));
+        resolve(await updateSchemaSpecification(databaseAdapter, context, schemaSpec));
         break;
       }
       case AdminClientOperationName.upsertEntity: {

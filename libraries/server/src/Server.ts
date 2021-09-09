@@ -22,7 +22,6 @@ export interface CreateSessionPayload {
 
 export interface Server {
   shutdown(): PromiseResult<void, ErrorType.Generic>;
-  // TODO reloadSchema(context: Context): PromiseResult<void, ErrorType.Generic>;
   createSession(
     provider: string,
     identifier: string,
@@ -143,7 +142,8 @@ export async function createServer({
       const context = serverImpl.createSessionContext(session, logger);
       return ok({ principalEffect, context });
     },
-    createAdminClient: (context) => createServerAdminClient({ context, serverImpl }),
+    createAdminClient: (context) =>
+      createServerAdminClient({ context, databaseAdapter, serverImpl }),
     createPublishedClient: (context) => createServerPublishedClient({ context, serverImpl }),
   };
 

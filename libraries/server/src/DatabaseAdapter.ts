@@ -1,5 +1,5 @@
 import type { ErrorType, PromiseResult, SchemaSpecification } from '@jonasb/datadata-core';
-import type { Context, Session, TransactionContext } from '.';
+import type { Session, TransactionContext } from '.';
 
 export interface Transaction {
   _type: 'Transaction';
@@ -29,7 +29,7 @@ export interface DatabaseAdapter {
   ): PromiseResult<AuthCreateSessionPayload, ErrorType.Generic>;
 
   authCreatePrincipal(
-    context: Context,
+    context: TransactionContext,
     provider: string,
     identifier: string
   ): PromiseResult<Session, ErrorType.Conflict | ErrorType.Generic>;
