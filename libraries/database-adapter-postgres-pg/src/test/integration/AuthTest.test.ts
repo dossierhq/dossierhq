@@ -1,10 +1,10 @@
 import { assertIsDefined } from '@jonasb/datadata-core';
 import { createAuthTestSuite } from '@jonasb/datadata-database-adapter-test-integration';
-import type { Server2 } from '@jonasb/datadata-server';
+import type { Server } from '@jonasb/datadata-server';
 import { createServer } from '@jonasb/datadata-server';
 import { createMockLogger, createPostgresTestAdapter, registerTestSuite } from '../TestUtils';
 
-let server: Server2 | null = null;
+let server: Server | null = null;
 
 beforeAll(async () => {
   const result = await createServer({

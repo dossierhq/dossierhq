@@ -1,10 +1,10 @@
 import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
-import type { CreateSessionPayload, Server2 } from '@jonasb/datadata-server';
+import type { CreateSessionPayload, Server } from '@jonasb/datadata-server';
 import inquirer from 'inquirer';
 import * as CliUtils from './CliUtils';
 
 export async function veryInsecureCreateSession(
-  server: Server2,
+  server: Server,
   defaultProvider: string,
   defaultIdentifier: string
 ): PromiseResult<CreateSessionPayload, ErrorType.BadRequest | ErrorType.Generic> {

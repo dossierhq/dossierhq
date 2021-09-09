@@ -1,10 +1,10 @@
 import { CoreTestUtils, ErrorType } from '@jonasb/datadata-core';
-import type { Server2, SessionContext } from '@jonasb/datadata-server';
+import type { Server, SessionContext } from '@jonasb/datadata-server';
 import { createPostgresTestServerAndClient, insecureTestUuidv4 } from '../TestUtils';
 
 const { expectErrorResult } = CoreTestUtils;
 
-let server: Server2;
+let server: Server;
 let context: SessionContext;
 
 beforeAll(async () => {

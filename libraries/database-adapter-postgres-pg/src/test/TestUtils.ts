@@ -10,7 +10,7 @@ import type {
 } from '@jonasb/datadata-core';
 import { assertIsDefined, CoreTestUtils, ok } from '@jonasb/datadata-core';
 import type { TestSuite } from '@jonasb/datadata-database-adapter-test-integration';
-import type { DatabaseAdapter, Server2, SessionContext } from '@jonasb/datadata-server';
+import type { DatabaseAdapter, Server, SessionContext } from '@jonasb/datadata-server';
 import { createServer } from '@jonasb/datadata-server';
 import { Temporal } from '@js-temporal/polyfill';
 import { v4 as uuidv4 } from 'uuid';
@@ -30,7 +30,7 @@ export function createPostgresTestAdapter(): DatabaseAdapter {
 }
 
 export async function createPostgresTestServerAndClient(): PromiseResult<
-  { server: Server2; context: SessionContext },
+  { server: Server; context: SessionContext },
   ErrorType.BadRequest | ErrorType.Generic
 > {
   const serverResult = await createServer({

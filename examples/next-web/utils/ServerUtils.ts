@@ -9,14 +9,14 @@ import {
   Schema,
 } from '@jonasb/datadata-core';
 import { createPostgresAdapter } from '@jonasb/datadata-database-adapter-postgres-pg';
-import { createServer, Server2 } from '@jonasb/datadata-server';
+import { createServer, Server } from '@jonasb/datadata-server';
 import type { NextApiRequest } from 'next';
 import SchemaSpec from './schema.json';
 
-let serverConnectionPromise: Promise<{ server: Server2; schema: Schema }> | null = null;
+let serverConnectionPromise: Promise<{ server: Server; schema: Schema }> | null = null;
 
 export async function getSessionContextForRequest(
-  server: Server2,
+  server: Server,
   req: NextApiRequest
 ): PromiseResult<
   { adminClient: AdminClient; publishedClient: PublishedClient },
@@ -35,7 +35,7 @@ export async function getSessionContextForRequest(
   return ok({ adminClient, publishedClient });
 }
 
-export async function getServerConnection(): Promise<{ server: Server2; schema: Schema }> {
+export async function getServerConnection(): Promise<{ server: Server; schema: Schema }> {
   if (!serverConnectionPromise) {
     serverConnectionPromise = (async () => {
       const databaseAdapter = createPostgresAdapter(process.env.DATABASE_URL!);

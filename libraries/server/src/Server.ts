@@ -20,7 +20,7 @@ export interface CreateSessionPayload {
   context: SessionContext;
 }
 
-export interface Server2 {
+export interface Server {
   shutdown(): PromiseResult<void, ErrorType.Generic>;
   // TODO reloadSchema(context: Context): PromiseResult<void, ErrorType.Generic>;
   createSession(
@@ -119,14 +119,14 @@ export async function createServer({
 }: {
   databaseAdapter: DatabaseAdapter;
   logger?: Logger;
-}): PromiseResult<Server2, ErrorType.Generic> {
+}): PromiseResult<Server, ErrorType.Generic> {
   const server = new ServerImpl({ databaseAdapter, logger });
   const authContext = server.createAuthContext();
   const loadSchemaResult = await server.reloadSchemaResult(authContext);
   if (loadSchemaResult.isError()) {
     return loadSchemaResult;
   }
-  const server2: Server2 = {
+  const server2: Server = {
     shutdown() {
       return server.shutdownResult();
     },

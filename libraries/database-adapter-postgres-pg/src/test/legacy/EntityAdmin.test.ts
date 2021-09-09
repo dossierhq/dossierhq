@@ -19,7 +19,7 @@ import {
   QueryOrder,
   RichTextBlockType,
 } from '@jonasb/datadata-core';
-import type { Server2, SessionContext } from '@jonasb/datadata-server';
+import type { Server, SessionContext } from '@jonasb/datadata-server';
 import { validate as validateUuid } from 'uuid';
 import {
   createPostgresTestServerAndClient,
@@ -31,7 +31,7 @@ import {
 
 const { expectErrorResult, expectOkResult } = CoreTestUtils;
 
-let server: Server2;
+let server: Server;
 let context: SessionContext;
 let client: AdminClient;
 let publishedClient: PublishedClient;
