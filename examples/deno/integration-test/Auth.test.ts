@@ -1,4 +1,4 @@
-import type { Server2 } from "@jonasb/datadata-server";
+import type { Server } from "@jonasb/datadata-server";
 import { createServer } from "@jonasb/datadata-server";
 import { createAuthTestSuite } from "@jonasb/datadata-database-adapter-test-integration";
 import { createDotenvAdapter, createDummyLogger } from "../ServerUtils.ts";
@@ -14,7 +14,7 @@ registerTestSuite(createAuthTestSuite({
     const server = serverResult.value;
     return [{ server }, { server }];
   },
-  after: async ({ server }: { server: Server2 }) => {
+  after: async ({ server }: { server: Server }) => {
     await server.shutdown();
   },
 }));

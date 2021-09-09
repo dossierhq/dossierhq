@@ -1,13 +1,13 @@
 import type { AdminClient, PublishedClient } from '@jonasb/datadata-core';
 import { CoreTestUtils, EntityPublishState, ErrorType, FieldType } from '@jonasb/datadata-core';
-import type { Server2, SessionContext } from '@jonasb/datadata-server';
+import type { Server, SessionContext } from '@jonasb/datadata-server';
 import { createPostgresTestServerAndClient, expectResultValue } from '../TestUtils';
 
 //TODO consider moving this test back to server or even to core
 
 const { expectErrorResult, expectOkResult } = CoreTestUtils;
 
-let server: Server2;
+let server: Server;
 let context: SessionContext;
 let adminClient: AdminClient;
 let publishedClient: PublishedClient;

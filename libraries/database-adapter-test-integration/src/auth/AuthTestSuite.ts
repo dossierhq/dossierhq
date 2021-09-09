@@ -1,5 +1,5 @@
 import { CoreTestUtils, ErrorType } from '@jonasb/datadata-core';
-import type { Server2 } from '@jonasb/datadata-server';
+import type { Server } from '@jonasb/datadata-server';
 import type { TestFunctionInitializer, TestSuite } from '..';
 import { assertSame } from '../Asserts';
 import { buildSuite } from '../Builder';
@@ -7,7 +7,7 @@ import { buildSuite } from '../Builder';
 const { expectErrorResult, expectOkResult } = CoreTestUtils;
 
 export function createAuthTestSuite<TCleanup>(
-  initializer: TestFunctionInitializer<{ server: Server2 }, TCleanup>
+  initializer: TestFunctionInitializer<{ server: Server }, TCleanup>
 ): TestSuite {
   return buildSuite(
     initializer,
@@ -22,7 +22,7 @@ function randomIdentifier() {
   return Math.random().toString();
 }
 
-async function createSession_create_new_identifier({ server }: { server: Server2 }) {
+async function createSession_create_new_identifier({ server }: { server: Server }) {
   const result = await server.createSession('test', randomIdentifier());
   if (expectOkResult(result)) {
     const { principalEffect } = result.value;
@@ -30,7 +30,7 @@ async function createSession_create_new_identifier({ server }: { server: Server2
   }
 }
 
-async function createSession_create_existing_identifier({ server }: { server: Server2 }) {
+async function createSession_create_existing_identifier({ server }: { server: Server }) {
   const identifier = randomIdentifier();
 
   const firstResult = await server.createSession('test', identifier);
@@ -46,12 +46,12 @@ async function createSession_create_existing_identifier({ server }: { server: Se
   }
 }
 
-async function createSession_error_missing_provider({ server }: { server: Server2 }) {
+async function createSession_error_missing_provider({ server }: { server: Server }) {
   const result = await server.createSession('', randomIdentifier());
   expectErrorResult(result, ErrorType.BadRequest, 'Missing provider');
 }
 
-async function createSession_error_create_missing_identifier({ server }: { server: Server2 }) {
+async function createSession_error_create_missing_identifier({ server }: { server: Server }) {
   const result = await server.createSession('test', '');
   expectErrorResult(result, ErrorType.BadRequest, 'Missing identifier');
 }

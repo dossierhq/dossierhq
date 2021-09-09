@@ -3,7 +3,7 @@ import { notOk, ok, Schema } from '@jonasb/datadata-core';
 import { createPostgresAdapter } from '@jonasb/datadata-database-adapter-postgres-pg';
 import type { SessionGraphQLContext } from '@jonasb/datadata-graphql';
 import { GraphQLSchemaGenerator } from '@jonasb/datadata-graphql';
-import { createServer, Server2 } from '@jonasb/datadata-server';
+import { createServer, Server } from '@jonasb/datadata-server';
 import type { Handler, NextFunction, Request, Response } from 'express';
 import express from 'express';
 import { graphqlHTTP } from 'express-graphql';
@@ -22,7 +22,7 @@ function middlewareAdapter(middleware: GraphQlMiddleware): Handler {
   };
 }
 
-async function createSessionContext(server: Server2, headers: IncomingHttpHeaders) {
+async function createSessionContext(server: Server, headers: IncomingHttpHeaders) {
   const provider = headers['insecure-auth-provider'];
   const identifier = headers['insecure-auth-identifier'];
   if (typeof provider !== 'string' || !provider) {
@@ -35,7 +35,7 @@ async function createSessionContext(server: Server2, headers: IncomingHttpHeader
   return sessionResult;
 }
 
-async function startServer(server: Server2, schema: Schema, port: number) {
+async function startServer(server: Server, schema: Schema, port: number) {
   const gqlSchema = new GraphQLSchemaGenerator(schema).buildSchema();
   const app = express();
   app.use(
