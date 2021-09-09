@@ -7,16 +7,10 @@ import type {
   PublishedClient,
 } from '@jonasb/datadata-core';
 import { assertIsDefined, notOk, ok, Schema } from '@jonasb/datadata-core';
-import type {
-  AuthContext,
-  Context,
-  DatabaseAdapter,
-  Session,
-  SessionContext,
-  TransactionContext,
-} from '.';
+import type { Context, DatabaseAdapter, Session, SessionContext, TransactionContext } from '.';
 import { createServerAdminClient } from './AdminClient';
 import { authCreateSession } from './Auth';
+import type { AuthContext } from './Context';
 import { AuthContextImpl, SessionContextImpl } from './Context';
 import { createServerPublishedClient } from './PublishedClient';
 import { getSchemaSpecification, setSchema } from './Schema';

@@ -1,7 +1,8 @@
 import type { PromiseResult } from '@jonasb/datadata-core';
 import { ErrorType, notOk, ok } from '@jonasb/datadata-core';
-import type { AuthContext, AuthCreateSessionPayload, DatabaseAdapter, TransactionContext } from '.';
+import type { AuthCreateSessionPayload, DatabaseAdapter, TransactionContext } from '.';
 import { ensureRequired } from './Assertions';
+import type { AuthContext } from './Context';
 import * as Db from './Database';
 import type { SubjectsTable } from './DatabaseTables';
 
