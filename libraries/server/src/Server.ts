@@ -104,7 +104,7 @@ export class ServerImpl {
 
   createSessionContext(session: Session, logger?: Logger): SessionContext {
     assertIsDefined(this.#databaseAdapter);
-    return new SessionContextImpl(this, session, this.#databaseAdapter, logger ?? this.#logger);
+    return new SessionContextImpl(session, this.#databaseAdapter, logger ?? this.#logger);
   }
 }
 

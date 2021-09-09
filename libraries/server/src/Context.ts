@@ -1,6 +1,5 @@
 import type { ErrorType, Logger, PromiseResult } from '@jonasb/datadata-core';
 import type { DatabaseAdapter, Session, Transaction } from '.';
-import type { ServerImpl } from './Server';
 
 const internalContextSymbol = Symbol('InternalContext');
 const sessionContextSymbol = Symbol('SessionContext');
@@ -74,18 +73,11 @@ export abstract class TransactionContextImpl<TContext extends TransactionContext
 //TODO remove, use TransactionContextImpl instead
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export abstract class ContextImpl<TContext extends Context<any>> implements Context<TContext> {
-  readonly server: ServerImpl;
   readonly databaseAdapter: DatabaseAdapter;
   readonly logger: Logger;
   readonly transaction: Transaction | null;
 
-  constructor(
-    server: ServerImpl,
-    databaseAdapter: DatabaseAdapter,
-    logger: Logger,
-    transaction: Transaction | null
-  ) {
-    this.server = server;
+  constructor(databaseAdapter: DatabaseAdapter, logger: Logger, transaction: Transaction | null) {
     this.databaseAdapter = databaseAdapter;
     this.logger = logger;
     this.transaction = transaction;
@@ -136,23 +128,16 @@ export class SessionContextImpl extends ContextImpl<SessionContext> implements S
   readonly session: Session;
 
   constructor(
-    server: ServerImpl,
     session: Session,
     databaseAdapter: DatabaseAdapter,
     logger: Logger,
     transaction: Transaction | null = null
   ) {
-    super(server, databaseAdapter, logger, transaction);
+    super(databaseAdapter, logger, transaction);
     this.session = session;
   }
 
   protected copyWithNewTransaction(transaction: Transaction): SessionContext {
-    return new SessionContextImpl(
-      this.server,
-      this.session,
-      this.databaseAdapter,
-      this.logger,
-      transaction
-    );
+    return new SessionContextImpl(this.session, this.databaseAdapter, this.logger, transaction);
   }
 }
