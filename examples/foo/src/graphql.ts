@@ -1,15 +1,9 @@
 import 'dotenv/config';
-import { notOk, ok } from '@jonasb/datadata-core';
+import { notOk, ok, Schema } from '@jonasb/datadata-core';
 import { createPostgresAdapter } from '@jonasb/datadata-database-adapter-postgres-pg';
 import type { SessionGraphQLContext } from '@jonasb/datadata-graphql';
 import { GraphQLSchemaGenerator } from '@jonasb/datadata-graphql';
-import type { AuthContext } from '@jonasb/datadata-server';
-import {
-  Auth,
-  createServerAdminClient,
-  createServerPublishedClient,
-  Server,
-} from '@jonasb/datadata-server';
+import { createServer, Server2 } from '@jonasb/datadata-server';
 import type { Handler, NextFunction, Request, Response } from 'express';
 import express from 'express';
 import { graphqlHTTP } from 'express-graphql';
@@ -28,7 +22,7 @@ function middlewareAdapter(middleware: GraphQlMiddleware): Handler {
   };
 }
 
-async function createSessionContext(authContext: AuthContext, headers: IncomingHttpHeaders) {
+async function createSessionContext(server: Server2, headers: IncomingHttpHeaders) {
   const provider = headers['insecure-auth-provider'];
   const identifier = headers['insecure-auth-identifier'];
   if (typeof provider !== 'string' || !provider) {
@@ -37,12 +31,12 @@ async function createSessionContext(authContext: AuthContext, headers: IncomingH
   if (typeof identifier !== 'string' || !identifier) {
     return notOk.BadRequest('Header insecure-auth-identifier is missing');
   }
-  const sessionResult = await Auth.createSessionForPrincipal(authContext, provider, identifier);
+  const sessionResult = await server.createSession(provider, identifier);
   return sessionResult;
 }
 
-async function startServer(server: Server, authContext: AuthContext, port: number) {
-  const schema = new GraphQLSchemaGenerator(server.getSchema()).buildSchema();
+async function startServer(server: Server2, schema: Schema, port: number) {
+  const gqlSchema = new GraphQLSchemaGenerator(schema).buildSchema();
   const app = express();
   app.use(
     '/graphql',
@@ -53,15 +47,14 @@ async function startServer(server: Server, authContext: AuthContext, port: numbe
           adminClient: notOk.NotAuthenticated('No session'),
           publishedClient: notOk.NotAuthenticated('No session'),
         };
-        const sessionResult = await createSessionContext(authContext, request.headers);
+        const sessionResult = await createSessionContext(server, request.headers);
         if (sessionResult.isOk()) {
-          const sessionContext = server.createSessionContext(sessionResult.value);
-          context.schema = ok(server.getSchema());
-          context.adminClient = ok(createServerAdminClient({ context: sessionContext }));
-          context.publishedClient = ok(createServerPublishedClient({ context: sessionContext }));
+          context.schema = ok(schema);
+          context.adminClient = ok(server.createAdminClient(sessionResult.value.context));
+          context.publishedClient = ok(server.createPublishedClient(sessionResult.value.context));
         }
         return {
-          schema,
+          schema: gqlSchema,
           context,
           graphiql: {
             headerEditorEnabled: true,
@@ -80,10 +73,20 @@ async function startServer(server: Server, authContext: AuthContext, port: numbe
 async function main(port: number) {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const databaseAdapter = createPostgresAdapter(process.env.DATABASE_URL!);
-  const server = new Server({ databaseAdapter });
-  const authContext = server.createAuthContext();
-  await server.reloadSchema(authContext);
-  await startServer(server, authContext, port);
+  const serverResult = await createServer({ databaseAdapter });
+  if (serverResult.isError()) throw serverResult.toError();
+  const server = serverResult.value;
+  try {
+    const sessionResult = await server.createSession('sys', 'schemaloader');
+    if (sessionResult.isError()) throw sessionResult.toError();
+    const schemaResult = await server
+      .createAdminClient(sessionResult.value.context)
+      .getSchemaSpecification();
+    if (schemaResult.isError()) throw schemaResult.toError();
+    await startServer(server, new Schema(schemaResult.value), port);
+  } finally {
+    await server.shutdown();
+  }
 }
 
 if (require.main === module) {

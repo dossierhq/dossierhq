@@ -15,20 +15,20 @@ export default async function graphQlHandler(
   res: NextApiResponse<ExecutionResult>
 ): Promise<void> {
   await handlePostWithoutLocation(req, res, async () => {
-    const { authContext, server } = await getServerConnection();
-    const authResult = await getSessionContextForRequest(server, authContext, req);
+    const { server, schema } = await getServerConnection();
+    const authResult = await getSessionContextForRequest(server, req);
     if (authResult.isError()) {
       throw errorResultToBoom(authResult);
     }
     const { adminClient, publishedClient } = authResult.value;
     const context: SessionGraphQLContext = {
-      schema: ok(server.getSchema()),
+      schema: ok(schema),
       adminClient: ok(adminClient),
       publishedClient: ok(publishedClient),
     };
 
     if (!graphQLSchema) {
-      graphQLSchema = new GraphQLSchemaGenerator(server.getSchema()).buildSchema();
+      graphQLSchema = new GraphQLSchemaGenerator(schema).buildSchema();
     }
 
     const { query, variables, operationName } = req.body;

@@ -1,5 +1,6 @@
 import type { ErrorType, Logger, PromiseResult } from '@jonasb/datadata-core';
-import type { DatabaseAdapter, Server, Session, Transaction } from '.';
+import type { DatabaseAdapter, Session, Transaction } from '.';
+import type { default as Server } from './Server';
 
 const authContextSymbol = Symbol('AuthContext');
 const sessionContextSymbol = Symbol('SessionContext');

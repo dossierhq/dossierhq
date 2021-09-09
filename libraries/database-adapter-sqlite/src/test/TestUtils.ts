@@ -1,7 +1,7 @@
 import type { ErrorType, Logger, PromiseResult } from '@jonasb/datadata-core';
 import { ok } from '@jonasb/datadata-core';
 import type { TestSuite } from '@jonasb/datadata-database-adapter-test-integration';
-import type { Context, DatabaseAdapter, Server } from '@jonasb/datadata-server';
+import type { Context, DatabaseAdapter } from '@jonasb/datadata-server';
 import { ServerTestUtils } from '@jonasb/datadata-server';
 import type { SqliteDatabaseAdapter } from '..';
 import { createSqlite3Adapter, createSqliteDatabaseAdapter, createSqlJsAdapter } from '..';
@@ -55,7 +55,8 @@ export async function createMockContext(
   }
   const databaseAdapter = result.value;
   //TODO server
-  return ok(ServerTestUtils.createDummyContext(jest.fn() as unknown as Server, databaseAdapter));
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return ok(ServerTestUtils.createDummyContext(jest.fn() as any, databaseAdapter));
 }
 
 export function createMockAdapter(): MockedSqliteDatabaseAdapter {

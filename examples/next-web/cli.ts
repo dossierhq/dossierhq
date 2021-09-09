@@ -1,24 +1,24 @@
 import 'dotenv/config';
 import type { CliContext } from '@jonasb/datadata-cli';
 import { CliAuth, CliMain } from '@jonasb/datadata-cli';
-import type { Session } from '@jonasb/datadata-server';
-import { createServerAdminClient, createServerPublishedClient } from '@jonasb/datadata-server';
+import { Schema } from '@jonasb/datadata-core';
 import { getServerConnection } from './utils/ServerUtils';
 
 async function main() {
   const { server } = await getServerConnection();
   try {
-    let session: Session | null = null;
-    while (!session) {
-      session = await CliAuth.veryInsecureCreateSession(server, 'test', 'john-smith');
+    const sessionResult = await CliAuth.veryInsecureCreateSession(server, 'test', 'john-smith');
+    if (sessionResult.isError()) throw sessionResult.toError();
+    const { context } = sessionResult.value;
+    const adminClient = server.createAdminClient(context);
+    const publishedClient = server.createPublishedClient(context);
+    const schemaResult = await adminClient.getSchemaSpecification();
+    if (schemaResult.isError()) {
+      throw schemaResult.toError();
     }
-    const schema = server.getSchema();
-    const context = server.createSessionContext(session);
-    const adminClient = createServerAdminClient({ context });
-    const publishedClient = createServerPublishedClient({ context });
 
     const cliContext: CliContext = {
-      schema,
+      schema: new Schema(schemaResult.value),
       adminClient,
       publishedClient,
     };

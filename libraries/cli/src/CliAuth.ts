@@ -1,30 +1,13 @@
+import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
+import type { CreateSessionPayload, Server2 } from '@jonasb/datadata-server';
 import inquirer from 'inquirer';
-import { ErrorType } from '@jonasb/datadata-core';
-import type { AuthContext, Server, Session } from '@jonasb/datadata-server';
-import { Auth } from '@jonasb/datadata-server';
 import * as CliUtils from './CliUtils';
-import { showConfirm } from './widgets';
-
-async function createPrincipalWithConfirm(
-  authContext: AuthContext,
-  provider: string,
-  identifier: string
-) {
-  if (await showConfirm('Principal doesn’t exist. Create new principal?')) {
-    const result = await Auth.createPrincipal(authContext, provider, identifier);
-    if (result.isOk()) {
-      return true;
-    }
-    CliUtils.logErrorResult('Failed creating principal', result);
-  }
-  return false;
-}
 
 export async function veryInsecureCreateSession(
-  server: Server,
+  server: Server2,
   defaultProvider: string,
   defaultIdentifier: string
-): Promise<Session | null> {
+): PromiseResult<CreateSessionPayload, ErrorType.BadRequest | ErrorType.Generic> {
   const { provider, identifier } = await inquirer.prompt([
     {
       name: 'provider',
@@ -41,27 +24,9 @@ export async function veryInsecureCreateSession(
   ]);
 
   // Try to create session (first attempt)
-  const authContext = server.createAuthContext();
-  let sessionResult = await Auth.createSessionForPrincipal(authContext, provider, identifier);
-  if (sessionResult.isOk()) {
-    return sessionResult.value;
-  }
-  if (sessionResult.error !== ErrorType.NotFound) {
+  const sessionResult = await server.createSession(provider, identifier);
+  if (sessionResult.isError()) {
     CliUtils.logErrorResult('Failed creating session', sessionResult);
-    return null;
   }
-
-  // Create new principal
-  const created = await createPrincipalWithConfirm(authContext, provider, identifier);
-  if (!created) {
-    return null;
-  }
-
-  // Create session (second attempt)
-  sessionResult = await Auth.createSessionForPrincipal(authContext, provider, identifier);
-  if (sessionResult.isOk()) {
-    return sessionResult.value;
-  }
-  CliUtils.logErrorResult('Failed creating session', sessionResult);
-  return null;
+  return sessionResult;
 }
