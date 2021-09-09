@@ -1,5 +1,14 @@
 import { ErrorType, FieldType, RichTextBlockType, Schema } from '.';
-import { expectErrorResult, expectOkResult } from './CoreTestUtils';
+import { expectErrorResult, expectOkResult, expectResultValue } from './CoreTestUtils';
+
+describe('mergeWith()', () => {
+  test('empty->empty->empty', () => {
+    expectResultValue(new Schema({ entityTypes: [], valueTypes: [] }).mergeWith({}), {
+      entityTypes: [],
+      valueTypes: [],
+    });
+  });
+});
 
 describe('validate()', () => {
   test('Empty spec validates', () => {

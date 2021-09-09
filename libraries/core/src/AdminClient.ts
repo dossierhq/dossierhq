@@ -10,15 +10,17 @@ import type {
   Connection,
   Edge,
   EntityHistory,
+  EntityPublishPayload,
   EntityReference,
   EntityVersionReference,
   ErrorType,
   Paging,
   PromiseResult,
   PublishingHistory,
-  EntityPublishPayload,
   Result,
   SchemaSpecification,
+  SchemaSpecificationUpdate,
+  SchemaSpecificationUpdatePayload,
 } from '.';
 import { assertExhaustive, ok } from '.';
 import type {
@@ -40,6 +42,9 @@ import { executeOperationPipeline } from './SharedClient';
 
 export interface AdminClient {
   getSchemaSpecification(): PromiseResult<SchemaSpecification, ErrorType.Generic>;
+  updateSchemaSpecification(
+    schemaSpec: SchemaSpecificationUpdate
+  ): PromiseResult<SchemaSpecificationUpdatePayload, ErrorType.BadRequest | ErrorType.Generic>;
 
   getEntity(
     reference: EntityReference | EntityVersionReference
@@ -130,6 +135,7 @@ export enum AdminClientOperationName {
   unarchiveEntity = 'unarchiveEntity',
   unpublishEntities = 'unpublishEntities',
   updateEntity = 'updateEntity',
+  updateSchemaSpecification = 'updateSchemaSpecification',
   upsertEntity = 'upsertEntity',
 }
 
@@ -151,6 +157,7 @@ interface AdminClientOperationArguments {
   [AdminClientOperationName.unarchiveEntity]: MethodParameters<'unarchiveEntity'>;
   [AdminClientOperationName.unpublishEntities]: MethodParameters<'unpublishEntities'>;
   [AdminClientOperationName.updateEntity]: MethodParameters<'updateEntity'>;
+  [AdminClientOperationName.updateSchemaSpecification]: MethodParameters<'updateSchemaSpecification'>;
   [AdminClientOperationName.upsertEntity]: MethodParameters<'upsertEntity'>;
 }
 
@@ -168,6 +175,7 @@ interface AdminClientOperationReturn {
   [AdminClientOperationName.unarchiveEntity]: MethodReturnType<'unarchiveEntity'>;
   [AdminClientOperationName.unpublishEntities]: MethodReturnType<'unpublishEntities'>;
   [AdminClientOperationName.updateEntity]: MethodReturnType<'updateEntity'>;
+  [AdminClientOperationName.updateSchemaSpecification]: MethodReturnType<'updateSchemaSpecification'>;
   [AdminClientOperationName.upsertEntity]: MethodReturnType<'upsertEntity'>;
 }
 
@@ -201,6 +209,16 @@ class BaseAdminClient<TContext> implements AdminClient {
       name: AdminClientOperationName.getSchemaSpecification,
       args: [],
       modifies: false,
+    });
+  }
+
+  updateSchemaSpecification(
+    schemaSpec: SchemaSpecificationUpdate
+  ): PromiseResult<SchemaSpecificationUpdatePayload, ErrorType.BadRequest | ErrorType.Generic> {
+    return this.executeOperation({
+      name: AdminClientOperationName.updateSchemaSpecification,
+      args: [schemaSpec],
+      modifies: true,
     });
   }
 
@@ -372,6 +390,7 @@ export function convertAdminClientOperationToJson(
     case AdminClientOperationName.unarchiveEntity:
     case AdminClientOperationName.unpublishEntities:
     case AdminClientOperationName.updateEntity:
+    case AdminClientOperationName.updateSchemaSpecification:
     case AdminClientOperationName.upsertEntity:
       //TODO cleanup args? e.g. reference, keep only id
       return args;
@@ -450,6 +469,11 @@ export async function executeAdminClientOperationFromJson<TName extends AdminCli
         operation as AdminClientOperationArguments[AdminClientOperationName.updateEntity];
       return await adminClient.updateEntity(entity);
     }
+    case AdminClientOperationName.updateSchemaSpecification: {
+      const [schemaSpec] =
+        operation as AdminClientOperationArguments[AdminClientOperationName.updateSchemaSpecification];
+      return await adminClient.updateSchemaSpecification(schemaSpec);
+    }
     case AdminClientOperationName.upsertEntity: {
       const [entity] =
         operation as AdminClientOperationArguments[AdminClientOperationName.upsertEntity];
@@ -476,6 +500,7 @@ export function convertJsonAdminClientResult<TName extends AdminClientOperationN
     case AdminClientOperationName.getSchemaSpecification:
     case AdminClientOperationName.getTotalCount:
     case AdminClientOperationName.updateEntity:
+    case AdminClientOperationName.updateSchemaSpecification:
     case AdminClientOperationName.upsertEntity:
       //TODO convert Temporal.Instant in entities
       return ok(value) as AdminClientOperationReturn[TName];

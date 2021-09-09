@@ -5,9 +5,11 @@ import type {
   EntityReference,
   EntityVersionReference,
   ErrorType,
+  PromiseResult,
   PublishingHistory,
   Result,
-  Schema,
+  SchemaSpecificationUpdate,
+  SchemaSpecificationUpdatePayload,
 } from '@jonasb/datadata-core';
 import {
   assertIsDefined,
@@ -15,9 +17,10 @@ import {
   notOk,
   ok,
   PublishingEventKind,
+  Schema,
 } from '@jonasb/datadata-core';
 import { Temporal } from '@js-temporal/polyfill';
-import type { JsonInMemoryEntity } from '.';
+import type { InMemorySessionContext, JsonInMemoryEntity } from '.';
 import type { InMemoryEntity, InMemoryEntityVersion } from './InMemoryServer';
 
 export class InMemoryServerInner {
@@ -26,6 +29,18 @@ export class InMemoryServerInner {
 
   constructor(schema: Schema) {
     this.schema = schema;
+  }
+
+  async updateSchemaSpecification(
+    context: InMemorySessionContext,
+    schemaSpec: SchemaSpecificationUpdate
+  ): PromiseResult<SchemaSpecificationUpdatePayload, ErrorType.BadRequest | ErrorType.Generic> {
+    const result = this.schema.mergeWith(schemaSpec);
+    if (result.isError()) {
+      return result;
+    }
+    this.schema = new Schema(result.value);
+    return ok({ effect: 'updated', schemaSpecification: result.value });
   }
 
   loadEntities(entities: JsonInMemoryEntity[]): void {
