@@ -1,4 +1,7 @@
+import type { ErrorType, PromiseResult } from '.';
 import { assertIsDefined } from './Asserts';
+
+export type ContextProvider<TContext> = () => PromiseResult<{ context: TContext }, ErrorType>;
 
 export interface Operation<TName, TArgs, TResult> {
   readonly name: TName;

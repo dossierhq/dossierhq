@@ -13,7 +13,6 @@ import type {
   EntityPublishPayload,
   EntityReference,
   EntityVersionReference,
-  ErrorType,
   Paging,
   PromiseResult,
   PublishingHistory,
@@ -22,7 +21,7 @@ import type {
   SchemaSpecificationUpdate,
   SchemaSpecificationUpdatePayload,
 } from '.';
-import { assertExhaustive, ok } from '.';
+import { assertExhaustive, ErrorType, notOk, ok } from '.';
 import type {
   JsonConnection,
   JsonEdge,
@@ -37,11 +36,17 @@ import {
   convertJsonPublishingHistory,
   convertJsonPublishingResult,
 } from './JsonUtils';
-import type { Middleware, Operation, OperationWithoutCallbacks } from './SharedClient';
+import type {
+  ContextProvider,
+  Middleware,
+  Operation,
+  OperationWithoutCallbacks,
+} from './SharedClient';
 import { executeOperationPipeline } from './SharedClient';
 
 export interface AdminClient {
   getSchemaSpecification(): PromiseResult<SchemaSpecification, ErrorType.Generic>;
+
   updateSchemaSpecification(
     schemaSpec: SchemaSpecificationUpdate
   ): PromiseResult<SchemaSpecificationUpdatePayload, ErrorType.BadRequest | ErrorType.Generic>;
@@ -190,14 +195,14 @@ export type AdminClientJsonOperation<
 > = AdminClientOperationArguments[TName];
 
 class BaseAdminClient<TContext> implements AdminClient {
-  private readonly context: TContext | (() => Promise<TContext>);
+  private readonly context: TContext | ContextProvider<TContext>;
   private readonly pipeline: AdminClientMiddleware<TContext>[];
 
   constructor({
     context,
     pipeline,
   }: {
-    context: TContext | (() => Promise<TContext>);
+    context: TContext | ContextProvider<TContext>;
     pipeline: AdminClientMiddleware<TContext>[];
   }) {
     this.context = context;
@@ -356,17 +361,27 @@ class BaseAdminClient<TContext> implements AdminClient {
   private async executeOperation<TName extends AdminClientOperationName>(
     operation: OperationWithoutCallbacks<AdminClientOperation<TName>>
   ): Promise<AdminClientOperationReturn[TName]> {
-    const context =
-      typeof this.context === 'function'
-        ? await (this.context as () => Promise<TContext>)()
-        : this.context;
+    let context: TContext;
+    if (typeof this.context === 'function') {
+      const contextResult = await (this.context as ContextProvider<TContext>)();
+      if (contextResult.isError()) {
+        if (contextResult.isErrorType(ErrorType.Generic)) {
+          return contextResult;
+        }
+        //TODO maybe operation should have a list of supported error types?
+        return notOk.GenericUnexpectedError(contextResult);
+      }
+      context = contextResult.value.context;
+    } else {
+      context = this.context;
+    }
 
     return await executeOperationPipeline(context, this.pipeline, operation);
   }
 }
 
 export function createBaseAdminClient<TContext>(option: {
-  context: TContext | (() => Promise<TContext>);
+  context: TContext | ContextProvider<TContext>;
   pipeline: AdminClientMiddleware<TContext>[];
 }): AdminClient {
   return new BaseAdminClient(option);

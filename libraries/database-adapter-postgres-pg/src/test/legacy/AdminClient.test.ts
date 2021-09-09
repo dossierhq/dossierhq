@@ -1,6 +1,5 @@
-import { CoreTestUtils, ErrorType } from '@jonasb/datadata-core';
+import { CoreTestUtils, ErrorType, ok } from '@jonasb/datadata-core';
 import type { Server2, SessionContext } from '@jonasb/datadata-server';
-import { createServerAdminClient } from '@jonasb/datadata-server';
 import { createPostgresTestServerAndClient, insecureTestUuidv4 } from '../TestUtils';
 
 //TODO consider moving this test back to server or even to core
@@ -20,16 +19,16 @@ afterAll(async () => {
   await server.shutdown();
 });
 
-describe('AdminClient createServerAdminClient()', () => {
+describe('AdminClient createAdminClient()', () => {
   test('context provided as value', async () => {
-    const client = createServerAdminClient({ context });
+    const client = server.createAdminClient(context);
     const result = await client.getEntity({ id: insecureTestUuidv4() });
     expectErrorResult(result, ErrorType.NotFound, 'No such entity');
   });
 
   test('context provided as factory, factory is called for each request', async () => {
-    const factory = jest.fn(() => Promise.resolve(context));
-    const client = createServerAdminClient({ context: factory });
+    const factory = jest.fn(() => Promise.resolve(ok({ context })));
+    const client = server.createAdminClient(factory);
 
     const firstResult = await client.getEntity({ id: insecureTestUuidv4() });
     expectErrorResult(firstResult, ErrorType.NotFound, 'No such entity');

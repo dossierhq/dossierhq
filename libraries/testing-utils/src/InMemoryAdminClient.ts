@@ -2,6 +2,7 @@ import type {
   AdminClient,
   AdminClientMiddleware,
   AdminClientOperation,
+  ContextProvider,
 } from '@jonasb/datadata-core';
 import {
   AdminClientOperationName,
@@ -32,7 +33,7 @@ export function createInMemoryAdminClient<TContext extends InMemorySessionContex
   context,
   middleware,
 }: {
-  context: TContext | (() => Promise<TContext>);
+  context: TContext | ContextProvider<TContext>;
   middleware?: AdminClientMiddleware<TContext>[];
 }): AdminClient {
   return createBaseAdminClient<TContext>({
