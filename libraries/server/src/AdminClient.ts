@@ -3,6 +3,7 @@ import {
   AdminClientOperationName,
   assertExhaustive,
   createBaseAdminClient,
+  ok,
 } from '@jonasb/datadata-core';
 import type { DatabaseAdapter, SessionContext } from '.';
 import {
@@ -20,7 +21,7 @@ import {
   updateEntity,
   upsertEntity,
 } from './EntityAdmin';
-import { getSchemaSpecification, updateSchemaSpecification } from './Schema';
+import { updateSchemaSpecification } from './Schema';
 import type { ServerImpl } from './Server';
 
 export function createServerAdminClient({
@@ -101,7 +102,8 @@ export function createServerAdminClient({
       case AdminClientOperationName.getSchemaSpecification: {
         const { resolve } =
           operation as AdminClientOperation<AdminClientOperationName.getSchemaSpecification>;
-        resolve(await getSchemaSpecification(databaseAdapter, context));
+        const schema = serverImpl.getSchema();
+        resolve(ok(schema.spec));
         break;
       }
       case AdminClientOperationName.getTotalCount: {
@@ -162,7 +164,11 @@ export function createServerAdminClient({
           args: [schemaSpec],
           resolve,
         } = operation as AdminClientOperation<AdminClientOperationName.updateSchemaSpecification>;
-        resolve(await updateSchemaSpecification(databaseAdapter, context, schemaSpec));
+        const result = await updateSchemaSpecification(databaseAdapter, context, schemaSpec);
+        if (result.isOk()) {
+          serverImpl.setSchema(result.value.schemaSpecification);
+        }
+        resolve(result);
         break;
       }
       case AdminClientOperationName.upsertEntity: {

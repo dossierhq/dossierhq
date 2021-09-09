@@ -5,6 +5,7 @@ import type {
   Logger,
   PromiseResult,
   PublishedClient,
+  SchemaSpecification,
 } from '@jonasb/datadata-core';
 import { assertIsDefined, notOk, ok, Schema } from '@jonasb/datadata-core';
 import type { DatabaseAdapter, Session, SessionContext } from '.';
@@ -13,7 +14,7 @@ import { authCreateSession } from './Auth';
 import type { InternalContext } from './Context';
 import { InternalContextImpl, SessionContextImpl } from './Context';
 import { createServerPublishedClient } from './PublishedClient';
-import { getSchemaSpecification, setSchema } from './Schema';
+import { getSchemaSpecification } from './Schema';
 
 export interface CreateSessionPayload {
   principalEffect: 'created' | 'none';
@@ -52,7 +53,7 @@ export class ServerImpl {
     this.#logger = logger;
   }
 
-  async shutdownResult(): PromiseResult<void, ErrorType.Generic> {
+  async shutdown(): PromiseResult<void, ErrorType.Generic> {
     if (this.#databaseAdapter) {
       this.#logger.info('Shutting down database adapter');
       await this.#databaseAdapter.disconnect();
@@ -63,12 +64,7 @@ export class ServerImpl {
     return notOk.Generic('Trying to shutdown twice');
   }
 
-  //TODO remove when migrated to Schema2
-  async shutdown(): Promise<void> {
-    (await this.shutdownResult()).throwIfError();
-  }
-
-  async reloadSchemaResult(context: InternalContext): PromiseResult<void, ErrorType.Generic> {
+  async reloadSchema(context: InternalContext): PromiseResult<void, ErrorType.Generic> {
     assertIsDefined(this.#databaseAdapter);
     const result = await getSchemaSpecification(this.#databaseAdapter, context);
     if (result.isError()) {
@@ -85,15 +81,8 @@ export class ServerImpl {
     return this.#schema;
   }
 
-  async setSchema(
-    context: SessionContext,
-    schema: Schema
-  ): PromiseResult<void, ErrorType.BadRequest> {
-    const result = await setSchema(context, schema);
-    if (result.isOk()) {
-      this.#schema = schema;
-    }
-    return result;
+  setSchema(schemaSpec: SchemaSpecification): void {
+    this.#schema = new Schema(schemaSpec);
   }
 
   createInternalContext(logger?: Logger): InternalContext {
@@ -116,13 +105,13 @@ export async function createServer({
 }): PromiseResult<Server, ErrorType.Generic> {
   const serverImpl = new ServerImpl({ databaseAdapter, logger });
   const authContext = serverImpl.createInternalContext();
-  const loadSchemaResult = await serverImpl.reloadSchemaResult(authContext);
+  const loadSchemaResult = await serverImpl.reloadSchema(authContext);
   if (loadSchemaResult.isError()) {
     return loadSchemaResult;
   }
   const server: Server = {
     shutdown() {
-      return serverImpl.shutdownResult();
+      return serverImpl.shutdown();
     },
     createSession: async (
       provider,
