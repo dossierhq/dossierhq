@@ -1,6 +1,6 @@
 import type { ErrorType, Logger, PromiseResult } from '@jonasb/datadata-core';
 import type { DatabaseAdapter, Session, Transaction } from '.';
-import type { default as Server } from './Server';
+import type { ServerImpl } from './Server';
 
 const authContextSymbol = Symbol('AuthContext');
 const sessionContextSymbol = Symbol('SessionContext');
@@ -23,7 +23,7 @@ export interface TransactionContext<
 export interface Context<TContext extends Context<any> = Context<any>>
   extends TransactionContext<TContext> {
   //TODO remove
-  readonly server: Server;
+  readonly server: ServerImpl;
   //TODO remove
   readonly databaseAdapter: DatabaseAdapter;
   readonly logger: Logger;
@@ -42,13 +42,13 @@ export interface SessionContext extends Context<SessionContext> {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export abstract class ContextImpl<TContext extends Context<any>> implements Context<TContext> {
-  readonly server: Server;
+  readonly server: ServerImpl;
   readonly databaseAdapter: DatabaseAdapter;
   readonly logger: Logger;
   readonly transaction: Transaction | null;
 
   constructor(
-    server: Server,
+    server: ServerImpl,
     databaseAdapter: DatabaseAdapter,
     logger: Logger,
     transaction: Transaction | null
@@ -82,7 +82,7 @@ export class AuthContextImpl extends ContextImpl<AuthContext> implements AuthCon
   [authContextSymbol]: never;
 
   constructor(
-    server: Server,
+    server: ServerImpl,
     databaseAdapter: DatabaseAdapter,
     logger: Logger,
     transaction: Transaction | null = null
@@ -100,7 +100,7 @@ export class SessionContextImpl extends ContextImpl<SessionContext> implements S
   readonly session: Session;
 
   constructor(
-    server: Server,
+    server: ServerImpl,
     session: Session,
     databaseAdapter: DatabaseAdapter,
     logger: Logger,
