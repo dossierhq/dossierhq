@@ -206,22 +206,24 @@ export class Schema {
       valueTypes: [...this.spec.valueTypes],
     };
     if (other.entityTypes) {
-      for (const entityType of other.entityTypes) {
-        const existingEntityType = schemaSpec.entityTypes.find((it) => it.name === entityType.name);
-        if (existingEntityType) {
-          //TODO update entity type
+      for (const entitySpec of other.entityTypes) {
+        const existingIndex = schemaSpec.entityTypes.findIndex((it) => it.name === entitySpec.name);
+        if (existingIndex >= 0) {
+          //TODO merge entity type
+          schemaSpec.entityTypes[existingIndex] = entitySpec;
         } else {
-          schemaSpec.entityTypes.push(entityType);
+          schemaSpec.entityTypes.push(entitySpec);
         }
       }
     }
     if (other.valueTypes) {
-      for (const valueType of other.valueTypes) {
-        const existingValueType = schemaSpec.valueTypes.find((it) => it.name === valueType.name);
-        if (existingValueType) {
-          //TODO update value type
+      for (const valueSpec of other.valueTypes) {
+        const existingIndex = schemaSpec.valueTypes.findIndex((it) => it.name === valueSpec.name);
+        if (existingIndex >= 0) {
+          //TODO merge value type
+          schemaSpec.valueTypes[existingIndex] = valueSpec;
         } else {
-          schemaSpec.valueTypes.push(valueType);
+          schemaSpec.valueTypes.push(valueSpec);
         }
       }
     }
