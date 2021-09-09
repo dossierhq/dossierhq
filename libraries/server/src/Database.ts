@@ -1,4 +1,4 @@
-import type { Context } from '.';
+import type { Context } from './Context';
 
 export class UnexpectedQuantityError extends Error {
   readonly actual: number;

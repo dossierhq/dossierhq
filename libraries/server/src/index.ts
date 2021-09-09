@@ -1,5 +1,5 @@
 export type { Session } from './Auth'; // TODO move to DatabaseAdapter
-export type { Context, Context2, SessionContext, TransactionContext } from './Context';
+export type { Context2, SessionContext, TransactionContext } from './Context';
 export type { AuthCreateSessionPayload, DatabaseAdapter, Transaction } from './DatabaseAdapter';
 export * as DatabaseTables from './DatabaseTables'; //TODO move to postgres-core
 export { createServer } from './Server';
