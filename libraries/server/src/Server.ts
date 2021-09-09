@@ -32,7 +32,7 @@ export interface Server2 {
   createPublishedClient(context: SessionContext): PublishedClient;
 }
 
-export default class Server {
+export class ServerImpl {
   #databaseAdapter: DatabaseAdapter | null;
   #logger: Logger;
   #schema: Schema | null = null;
@@ -120,7 +120,7 @@ export async function createServer({
   databaseAdapter: DatabaseAdapter;
   logger?: Logger;
 }): PromiseResult<Server2, ErrorType.Generic> {
-  const server = new Server({ databaseAdapter, logger });
+  const server = new ServerImpl({ databaseAdapter, logger });
   const authContext = server.createAuthContext();
   const loadSchemaResult = await server.reloadSchemaResult(authContext);
   if (loadSchemaResult.isError()) {

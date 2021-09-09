@@ -2,11 +2,11 @@ import type { Logger, SchemaSpecification } from '@jonasb/datadata-core';
 import { Schema } from '@jonasb/datadata-core';
 import type { Context, DatabaseAdapter, SessionContext, Transaction } from '.';
 import { ContextImpl } from './Context';
-import type { default as Server } from './Server';
+import type { ServerImpl } from './Server';
 
 class DummyContextImpl extends ContextImpl<Context> {
   constructor(
-    server: Server,
+    server: ServerImpl,
     databaseAdapter: DatabaseAdapter,
     logger: Logger,
     transaction: Transaction | null
@@ -60,7 +60,7 @@ export async function updateSchema(
 }
 
 export function createDummyContext(
-  server: Server,
+  server: ServerImpl,
   databaseAdapter: DatabaseAdapter,
   logger?: Logger
 ): Context {
