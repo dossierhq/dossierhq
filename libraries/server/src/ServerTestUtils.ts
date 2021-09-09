@@ -1,29 +1,25 @@
 import type { Logger } from '@jonasb/datadata-core';
-import type { Context, DatabaseAdapter, Transaction } from '.';
-import { ContextImpl } from './Context';
-import type { ServerImpl } from './Server';
+import type { DatabaseAdapter, Transaction, TransactionContext } from '.';
+import { TransactionContextImpl } from './Context';
 
-class DummyContextImpl extends ContextImpl<Context> {
-  constructor(
-    server: ServerImpl,
-    databaseAdapter: DatabaseAdapter,
-    logger: Logger,
-    transaction: Transaction | null
-  ) {
-    super(server, databaseAdapter, logger, transaction);
+class DummyContextImpl extends TransactionContextImpl<TransactionContext> {
+  readonly #databaseAdapter: DatabaseAdapter;
+
+  constructor(databaseAdapter: DatabaseAdapter, logger: Logger, transaction: Transaction | null) {
+    super(databaseAdapter, logger, transaction);
+    this.#databaseAdapter = databaseAdapter;
   }
 
-  protected copyWithNewTransaction(transaction: Transaction): Context {
-    return new DummyContextImpl(this.server, this.databaseAdapter, this.logger, transaction);
+  protected copyWithNewTransaction(transaction: Transaction): TransactionContext {
+    return new DummyContextImpl(this.#databaseAdapter, this.logger, transaction);
   }
 }
 
 export function createDummyContext(
-  server: ServerImpl,
   databaseAdapter: DatabaseAdapter,
   logger?: Logger
-): Context {
-  return new DummyContextImpl(server, databaseAdapter, logger ?? createMockLogger(), null);
+): TransactionContext {
+  return new DummyContextImpl(databaseAdapter, logger ?? createMockLogger(), null);
 }
 
 export function createMockLogger(): Logger {

@@ -1,6 +1,6 @@
 import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
 import { notOk, ok } from '@jonasb/datadata-core';
-import type { Context, Session } from '@jonasb/datadata-server';
+import type { Session, TransactionContext } from '@jonasb/datadata-server';
 import type { PostgresDatabaseAdapter } from '..';
 import type { SubjectsTable } from '../DatabaseSchema';
 import { UniqueConstraints } from '../DatabaseSchema';
@@ -8,7 +8,7 @@ import { queryNone, queryOne } from '../QueryFunctions';
 
 export async function authCreatePrincipal(
   adapter: PostgresDatabaseAdapter,
-  context: Context,
+  context: TransactionContext,
   provider: string,
   identifier: string
 ): PromiseResult<Session, ErrorType.Conflict | ErrorType.Generic> {

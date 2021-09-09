@@ -1,6 +1,6 @@
 import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
 import { notOk, ok } from '@jonasb/datadata-core';
-import type { Context, Session } from '@jonasb/datadata-server';
+import type { Session, TransactionContext } from '@jonasb/datadata-server';
 import { Temporal } from '@js-temporal/polyfill';
 import { v4 as uuidv4 } from 'uuid';
 import type { SqliteDatabaseAdapter } from '..';
@@ -10,7 +10,7 @@ import { queryNone, queryOne } from '../QueryFunctions';
 
 export async function authCreatePrincipal(
   adapter: SqliteDatabaseAdapter,
-  context: Context,
+  context: TransactionContext,
   provider: string,
   identifier: string
 ): PromiseResult<Session, ErrorType.Conflict | ErrorType.Generic> {

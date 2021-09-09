@@ -1,4 +1,4 @@
-import type { Context } from '@jonasb/datadata-server';
+import type { TransactionContext } from '@jonasb/datadata-server';
 import { ServerTestUtils } from '@jonasb/datadata-server';
 import type { PostgresDatabaseAdapter } from '.';
 import { createPostgresDatabaseAdapterAdapter } from '.';
@@ -20,11 +20,9 @@ export class MockUniqueViolationOfConstraintError extends Error {
   }
 }
 
-export function createMockContext(adapter: PostgresDatabaseAdapter): Context {
+export function createMockContext(adapter: PostgresDatabaseAdapter): TransactionContext {
   const databaseAdapter = createPostgresDatabaseAdapterAdapter(adapter);
-  //TODO server
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return ServerTestUtils.createDummyContext(jest.fn() as any, databaseAdapter);
+  return ServerTestUtils.createDummyContext(databaseAdapter);
 }
 
 export function createMockAdapter(): MockedPostgresDatabaseAdapter {
