@@ -21,8 +21,6 @@ export interface TransactionContext<
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export interface Context<TContext extends Context<any> = Context<any>>
   extends TransactionContext<TContext> {
-  //TODO remove
-  readonly databaseAdapter: DatabaseAdapter;
   readonly logger: Logger;
   readonly transaction: Transaction | null;
 }
