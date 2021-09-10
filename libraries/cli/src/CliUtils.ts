@@ -48,7 +48,7 @@ export function formatErrorResult(errorResult: ErrorResult<unknown, ErrorType>):
   return `${chalk.yellow(errorResult.error)} ${errorResult.message}`;
 }
 
-export function logError(error: Error): void {
+export function logError(error: Error | unknown): void {
   console.log(
     `${chalk.yellow(chalk.bold('!'))} ${chalk.bold('Caught error' + ':')} ${chalk.yellow(error)}`
   );

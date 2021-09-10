@@ -1196,8 +1196,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       isEntity: boolean
     ) => {
       const isValueItem = isItemValueItem(item);
-      //TODO duplication of isItemValueItem(item) is not needed in next version of typescript
-      const fields = isItemValueItem(item) ? item : item.fields ?? {};
+      const fields = isValueItem ? item : item.fields ?? {};
       for (const fieldName of Object.keys(fields)) {
         // Skip standard fields
         if (isValueItem && fieldName === 'type') {
@@ -1256,7 +1255,9 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     try {
       return JSON.parse(fieldValue);
     } catch (error) {
-      throw new Error(`${fieldPrefix}: Failed parsing JSON: ${error.message}`);
+      throw new Error(
+        `${fieldPrefix}: Failed parsing JSON: ${error instanceof Error ? error.message : error}`
+      );
     }
   }
 

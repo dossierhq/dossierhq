@@ -50,6 +50,6 @@ export async function fetchJsonResult<TOk>(
     const json: TOk = await response.json();
     return ok(json);
   } catch (error) {
-    return notOk.Generic(`Unexpected ${error.name}: ${error.message}`);
+    return notOk.GenericUnexpectedException(error);
   }
 }
