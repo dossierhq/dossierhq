@@ -28,12 +28,6 @@ export interface DatabaseAdapter {
     identifier: string
   ): PromiseResult<AuthCreateSessionPayload, ErrorType.Generic>;
 
-  authCreatePrincipal(
-    context: TransactionContext,
-    provider: string,
-    identifier: string
-  ): PromiseResult<Session, ErrorType.Conflict | ErrorType.Generic>;
-
   schemaGetSpecification(
     context: TransactionContext
   ): PromiseResult<SchemaSpecification | null, ErrorType.Generic>;

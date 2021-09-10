@@ -2,7 +2,6 @@ import type { Logger } from '@jonasb/datadata-core';
 import type { DatabaseAdapter, TransactionContext } from '..';
 
 interface MockDatabaseAdapter extends DatabaseAdapter {
-  authCreatePrincipal: jest.MockedFunction<DatabaseAdapter['authCreatePrincipal']>;
   authCreateSession: jest.MockedFunction<DatabaseAdapter['authCreateSession']>;
   schemaGetSpecification: jest.MockedFunction<DatabaseAdapter['schemaGetSpecification']>;
   schemaUpdateSpecification: jest.MockedFunction<DatabaseAdapter['schemaUpdateSpecification']>;
@@ -38,7 +37,6 @@ export function createMockTransactionContext(logger: Logger | null = null): Tran
 export function createMockDatabaseAdapter(): MockDatabaseAdapter {
   const adapter: MockDatabaseAdapter = {
     disconnect: jest.fn(),
-    authCreatePrincipal: jest.fn(),
     authCreateSession: jest.fn(),
     schemaGetSpecification: jest.fn(),
     schemaUpdateSpecification: jest.fn(),
@@ -55,7 +53,6 @@ export function getDatabaseAdapterMockedCallsWithoutContextAndUnordered(
 ): Array<unknown[]> {
   const calls: Array<unknown[]> = [];
   const mocksWithInitialContextArg: (keyof MockDatabaseAdapter)[] = [
-    'authCreatePrincipal',
     'authCreateSession',
     'schemaGetSpecification',
   ];

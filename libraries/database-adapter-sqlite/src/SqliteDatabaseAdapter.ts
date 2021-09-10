@@ -2,7 +2,6 @@ import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
 import { notOk, ok } from '@jonasb/datadata-core';
 import type { DatabaseAdapter } from '@jonasb/datadata-server';
 import type { UniqueConstraint } from '.';
-import { authCreatePrincipal } from './auth/createPrincipal';
 import { authCreateSession } from './auth/createSession';
 import { queryOne } from './QueryFunctions';
 import { isSemVerEqualOrGreaterThan, parseSemVer } from './SemVer';
@@ -36,7 +35,6 @@ export async function createSqliteDatabaseAdapter(
     isUniqueViolationOfConstraint: () => {
       throw new Error('TODO');
     },
-    authCreatePrincipal: (...args) => authCreatePrincipal(sqliteAdapter, ...args),
     authCreateSession: (...args) => authCreateSession(sqliteAdapter, ...args),
     schemaGetSpecification: async () => {
       //TODO actually return schema
