@@ -1,6 +1,5 @@
-import type { Logger, SchemaSpecification } from '@jonasb/datadata-core';
-import { Schema } from '@jonasb/datadata-core';
-import type { DatabaseAdapter, SessionContext, TransactionContext } from '..';
+import type { Logger } from '@jonasb/datadata-core';
+import type { DatabaseAdapter, TransactionContext } from '..';
 
 interface MockDatabaseAdapter extends DatabaseAdapter {
   authCreatePrincipal: jest.MockedFunction<DatabaseAdapter['authCreatePrincipal']>;
@@ -67,15 +66,4 @@ export function getDatabaseAdapterMockedCallsWithoutContextAndUnordered(
     }
   }
   return calls;
-}
-
-export function createMockSessionContext({
-  schema,
-}: {
-  schema?: SchemaSpecification;
-} = {}): SessionContext {
-  const actualSchema = new Schema(schema ?? { entityTypes: [], valueTypes: [] });
-  return {
-    server: { getSchema: () => actualSchema },
-  } as unknown as SessionContext; //TODO create a proper mock session context
 }

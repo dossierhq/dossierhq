@@ -4,13 +4,13 @@ import type { DatabaseAdapter, Session, Transaction } from '.';
 const internalContextSymbol = Symbol('InternalContext');
 const sessionContextSymbol = Symbol('SessionContext');
 
-export interface Context2 {
+export interface Context {
   readonly logger: Logger;
 }
 
 export interface TransactionContext<
   TContext extends TransactionContext<any> = TransactionContext<any> // eslint-disable-line @typescript-eslint/no-explicit-any
-> extends Context2 {
+> extends Context {
   readonly transaction: Transaction | null;
 
   withTransaction<TOk, TError extends ErrorType>(
