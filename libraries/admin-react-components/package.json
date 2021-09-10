@@ -76,7 +76,7 @@
     "mini-svg-data-uri": "~1.3.3",
     "prettier": "2.4.0",
     "react-test-renderer": "~17.0.2",
-    "svgo": "~2.4.0",
+    "svgo": "~2.5.0",
     "typescript": "^4.4.2"
   },
   "dependencies": {
