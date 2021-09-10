@@ -1,9 +1,9 @@
 import { CoreTestUtils } from '@jonasb/datadata-core';
 import { createMockAdapter, createMockContext, getQueryCalls } from '../TestUtils';
-import { authCreatePrincipal } from './createPrincipal';
+import { authCreateSession } from './createSession';
 const { expectResultValue } = CoreTestUtils;
 
-describe('authCreatePrincipal', () => {
+describe('authCreateSession', () => {
   test('Create new principal', async () => {
     const adapter = createMockAdapter();
     const context = createMockContext(adapter);
@@ -11,10 +11,19 @@ describe('authCreatePrincipal', () => {
       if (query.startsWith('INSERT INTO subjects')) return [{ id: 123, uuid: '4321' }];
       return [];
     });
-    const result = await authCreatePrincipal(adapter, context, 'test', 'hello');
-    expectResultValue(result, { subjectInternalId: 123, subjectId: '4321' });
+    const result = await authCreateSession(adapter, context, 'test', 'hello');
+    expectResultValue(result, {
+      principalEffect: 'created',
+      session: { subjectInternalId: 123, subjectId: '4321' },
+    });
     expect(getQueryCalls(adapter)).toMatchInlineSnapshot(`
       Array [
+        Array [
+          "SELECT s.id, s.uuid FROM subjects s, principals p
+          WHERE p.provider = $1 AND p.identifier = $2 AND p.subjects_id = s.id",
+          "test",
+          "hello",
+        ],
         Array [
           "BEGIN",
         ],

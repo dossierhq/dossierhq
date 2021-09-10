@@ -1,10 +1,10 @@
 import { CoreTestUtils } from '@jonasb/datadata-core';
 import { expectOkResult } from '@jonasb/datadata-core/lib/cjs/CoreTestUtils';
 import { createMockAdapter, createMockContext, getQueryCalls } from '../test/TestUtils';
-import { authCreatePrincipal } from './createPrincipal';
+import { authCreateSession } from './createSession';
 const { expectResultValue } = CoreTestUtils;
 
-describe('authCreatePrincipal', () => {
+describe('authCreateSession', () => {
   test('Create new principal', async () => {
     const adapter = createMockAdapter();
     const contextResult = await createMockContext(adapter);
@@ -17,12 +17,23 @@ describe('authCreatePrincipal', () => {
       return [];
     });
 
-    const result = await authCreatePrincipal(adapter, context, 'test', 'hello');
+    const result = await authCreateSession(adapter, context, 'test', 'hello');
     if (expectOkResult(result)) {
-      const { subjectId } = result.value;
-      expectResultValue(result, { subjectInternalId: 123, subjectId });
+      const {
+        session: { subjectId },
+      } = result.value;
+      expectResultValue(result, {
+        principalEffect: 'created',
+        session: { subjectInternalId: 123, subjectId },
+      });
 
       expect(getQueryCalls(adapter)).toEqual([
+        [
+          `SELECT s.id, s.uuid FROM subjects s, principals p
+    WHERE p.provider = $1 AND p.identifier = $2 AND p.subjects_id = s.id`,
+          'test',
+          'hello',
+        ],
         ['BEGIN'],
         [
           'INSERT INTO subjects (uuid, created_at) VALUES ($1, $2) RETURNING id',

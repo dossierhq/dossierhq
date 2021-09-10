@@ -1,6 +1,5 @@
 import type { DatabaseAdapter } from '@jonasb/datadata-server';
 import type { PostgresTransaction } from '.';
-import { authCreatePrincipal } from './auth/createPrincipal';
 import { authCreateSession } from './auth/createSession';
 import { withNestedTransaction, withRootTransaction } from './PostgresTransaction';
 import { schemaGetSpecification } from './schema/getSpecification';
@@ -30,7 +29,6 @@ export function createPostgresDatabaseAdapterAdapter(
     queryLegacy: databaseAdapter.query,
     isUniqueViolationOfConstraint: databaseAdapter.isUniqueViolationOfConstraint,
     authCreateSession: (...args) => authCreateSession(databaseAdapter, ...args),
-    authCreatePrincipal: (...args) => authCreatePrincipal(databaseAdapter, ...args),
     schemaGetSpecification: (...args) => schemaGetSpecification(databaseAdapter, ...args),
     schemaUpdateSpecification: (...args) => schemaUpdateSpecification(databaseAdapter, ...args),
   };
