@@ -3,15 +3,15 @@ import type { DatabaseAdapter, Transaction, TransactionContext } from '.';
 import { TransactionContextImpl } from './Context';
 
 class DummyContextImpl extends TransactionContextImpl<TransactionContext> {
-  readonly #databaseAdapter: DatabaseAdapter;
-
   constructor(databaseAdapter: DatabaseAdapter, logger: Logger, transaction: Transaction | null) {
     super(databaseAdapter, logger, transaction);
-    this.#databaseAdapter = databaseAdapter;
   }
 
-  protected copyWithNewTransaction(transaction: Transaction): TransactionContext {
-    return new DummyContextImpl(this.#databaseAdapter, this.logger, transaction);
+  protected copyWithNewTransaction(
+    databaseAdapter: DatabaseAdapter,
+    transaction: Transaction
+  ): TransactionContext {
+    return new DummyContextImpl(databaseAdapter, this.logger, transaction);
   }
 }
 
