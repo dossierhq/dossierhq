@@ -27,12 +27,8 @@ registerTestSuite(
   createSchemaTestSuite({
     before: async () => {
       assertIsDefined(server);
-      const sessionResult = await server.createSession('test', 'id');
-      if (sessionResult.isError()) {
-        throw sessionResult.toError();
-      }
-      const { context } = sessionResult.value;
-      const client = server.createAdminClient(context);
+      const resolvedServer = server;
+      const client = server.createAdminClient(() => resolvedServer.createSession('test', 'id'));
       return [{ client }, undefined];
     },
     after: async () => {
