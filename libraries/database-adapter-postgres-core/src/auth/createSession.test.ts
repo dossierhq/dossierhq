@@ -42,4 +42,28 @@ describe('authCreateSession', () => {
       ]
     `);
   });
+
+  test('Existing principal', async () => {
+    const adapter = createMockAdapter();
+    const context = createMockContext(adapter);
+    adapter.query.mockImplementation(async (_transaction, query, _values) => {
+      if (query.startsWith('SELECT s.id, s.uuid FROM')) return [{ id: 123, uuid: '4321' }];
+      return [];
+    });
+    const result = await authCreateSession(adapter, context, 'test', 'hello');
+    expectResultValue(result, {
+      principalEffect: 'none',
+      session: { subjectInternalId: 123, subjectId: '4321' },
+    });
+    expect(getQueryCalls(adapter)).toMatchInlineSnapshot(`
+      Array [
+        Array [
+          "SELECT s.id, s.uuid FROM subjects s, principals p
+          WHERE p.provider = $1 AND p.identifier = $2 AND p.subjects_id = s.id",
+          "test",
+          "hello",
+        ],
+      ]
+    `);
+  });
 });
