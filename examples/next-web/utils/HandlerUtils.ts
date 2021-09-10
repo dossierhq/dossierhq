@@ -13,13 +13,13 @@ export function validateRequestQuery<T>(
   try {
     return Joi.attempt(value, schema);
   } catch (error) {
-    debugWarn('Failed validation', error.message);
+    debugWarn('Failed validation', error instanceof Error ? error.message : error);
     throw Boom.badRequest();
   }
 }
 
-export function handleError<T>(res: NextApiResponse<T>, error: Error): void {
-  const boomError = Boom.boomify(error);
+export function handleError<T>(res: NextApiResponse<T>, error: Error | unknown): void {
+  const boomError = Boom.boomify(error instanceof Error ? error : new Error());
   for (const [name, value] of Object.entries(boomError.output.headers)) {
     res.setHeader(name, value ?? '');
   }

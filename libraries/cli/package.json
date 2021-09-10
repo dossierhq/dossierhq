@@ -28,13 +28,13 @@
     "url": "git+https://github.com/jonasb/datadata.git"
   },
   "devDependencies": {
-    "@rushstack/heft": "~0.36.1",
+    "@rushstack/heft": "~0.37.3",
     "@types/inquirer": "^7.3.1",
     "@typescript-eslint/eslint-plugin": "^4.29.1",
     "@typescript-eslint/parser": "^4.29.1",
     "eslint": "^7.32.0",
     "prettier": "2.3.2",
-    "typescript": "^4.3.5"
+    "typescript": "^4.4.2"
   },
   "dependencies": {
     "@jonasb/datadata-core": "workspace:*",

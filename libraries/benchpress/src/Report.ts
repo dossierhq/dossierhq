@@ -98,7 +98,8 @@ async function reportResultTsv(
     }
     await fs.promises.writeFile(tsvPath, `${existingData}${row}`);
   } catch (error) {
-    if (error.code !== 'ENOENT') {
+    const noSuchFile = (error as { code?: string })?.code === 'ENOENT';
+    if (!noSuchFile) {
       throw error;
     }
     await fs.promises.writeFile(tsvPath, `${header}${row}`);
