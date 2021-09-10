@@ -4,6 +4,7 @@ import type {
   AdminClientOperation,
   ErrorType,
   PromiseResult,
+  Result,
 } from '@jonasb/datadata-core';
 import {
   convertAdminClientOperationToJson,
@@ -65,8 +66,23 @@ async function terminatingMiddleware(
       }
     );
   }
-  //TODO map status to error type
-  const result = response.ok ? ok(await response.json()) : notOk.Generic(await response.text());
+
+  let result: Result<unknown, ErrorType>;
+  if (response.ok) {
+    try {
+      result = ok(JSON.parse(await response.text()));
+    } catch (error) {
+      result = notOk.Generic('Failed parsing response');
+    }
+  } else {
+    let text = 'Failed fetching response';
+    try {
+      text = await response.text();
+    } catch (error) {
+      // ignore
+    }
+    result = notOk.fromHttpStatus(response.status, text);
+  }
   operation.resolve(convertJsonAdminClientResult(operation.name, result));
 }
 

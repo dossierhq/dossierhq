@@ -24,13 +24,6 @@ export async function fetchJson<T>(input: RequestInfo, init?: RequestInit): Prom
   return json;
 }
 
-// TODO move to core
-const statusErrorMapping = new Map<number, ErrorType>();
-statusErrorMapping.set(400, ErrorType.BadRequest);
-statusErrorMapping.set(409, ErrorType.Conflict);
-statusErrorMapping.set(401, ErrorType.NotAuthenticated);
-statusErrorMapping.set(404, ErrorType.NotFound);
-
 export async function fetchJsonResult<TOk>(
   input: RequestInfo,
   init?: RequestInit
@@ -38,14 +31,16 @@ export async function fetchJsonResult<TOk>(
   try {
     const response = await fetch(input, init);
     if (!response.ok) {
-      const responseText = await response.text();
-      const errorType = statusErrorMapping.get(response.status);
-      if (!errorType) {
-        return notOk.Generic(`${response.status} ${responseText}`);
+      let errorText = await response.text();
+      try {
+        const errorTextJson = JSON.parse(errorText);
+        if (typeof errorTextJson?.message === 'string') {
+          errorText = errorTextJson.message;
+        }
+      } catch {
+        //ignore
       }
-      const responseJson = JSON.parse(responseText);
-      const { message } = responseJson;
-      return createErrorResult(errorType, message);
+      return notOk.fromHttpStatus(response.status, errorText);
     }
     const json: TOk = await response.json();
     return ok(json);
