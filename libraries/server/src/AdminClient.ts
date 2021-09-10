@@ -43,7 +43,7 @@ export function createServerAdminClient({
           args: [reference],
           resolve,
         } = operation as AdminClientOperation<AdminClientOperationName.archiveEntity>;
-        resolve(await archiveEntity(context, reference.id));
+        resolve(await archiveEntity(databaseAdapter, context, reference.id));
         break;
       }
       case AdminClientOperationName.createEntity: {
@@ -51,7 +51,7 @@ export function createServerAdminClient({
           args: [entity],
           resolve,
         } = operation as AdminClientOperation<AdminClientOperationName.createEntity>;
-        resolve(await createEntity(serverImpl.getSchema(), context, entity));
+        resolve(await createEntity(serverImpl.getSchema(), databaseAdapter, context, entity));
         break;
       }
       case AdminClientOperationName.getEntities: {
@@ -62,6 +62,7 @@ export function createServerAdminClient({
         resolve(
           await getEntities(
             serverImpl.getSchema(),
+            databaseAdapter,
             context,
             references.map(({ id }) => id)
           )
@@ -76,6 +77,7 @@ export function createServerAdminClient({
         resolve(
           await getEntity(
             serverImpl.getSchema(),
+            databaseAdapter,
             context,
             reference.id,
             'version' in reference ? reference.version : null
@@ -88,7 +90,7 @@ export function createServerAdminClient({
           args: [reference],
           resolve,
         } = operation as AdminClientOperation<AdminClientOperationName.getEntityHistory>;
-        resolve(await getEntityHistory(context, reference.id));
+        resolve(await getEntityHistory(databaseAdapter, context, reference.id));
         break;
       }
       case AdminClientOperationName.getPublishingHistory: {
@@ -96,7 +98,7 @@ export function createServerAdminClient({
           args: [reference],
           resolve,
         } = operation as AdminClientOperation<AdminClientOperationName.getPublishingHistory>;
-        resolve(await getPublishingHistory(context, reference.id));
+        resolve(await getPublishingHistory(databaseAdapter, context, reference.id));
         break;
       }
       case AdminClientOperationName.getSchemaSpecification: {
@@ -111,7 +113,7 @@ export function createServerAdminClient({
           args: [query],
           resolve,
         } = operation as AdminClientOperation<AdminClientOperationName.getTotalCount>;
-        resolve(await getTotalCount(serverImpl.getSchema(), context, query));
+        resolve(await getTotalCount(serverImpl.getSchema(), databaseAdapter, context, query));
         break;
       }
       case AdminClientOperationName.publishEntities: {
@@ -119,7 +121,7 @@ export function createServerAdminClient({
           args: [references],
           resolve,
         } = operation as AdminClientOperation<AdminClientOperationName.publishEntities>;
-        resolve(await publishEntities(context, references));
+        resolve(await publishEntities(databaseAdapter, context, references));
         break;
       }
       case AdminClientOperationName.searchEntities: {
@@ -127,7 +129,9 @@ export function createServerAdminClient({
           args: [query, paging],
           resolve,
         } = operation as AdminClientOperation<AdminClientOperationName.searchEntities>;
-        resolve(await searchEntities(serverImpl.getSchema(), context, query, paging));
+        resolve(
+          await searchEntities(serverImpl.getSchema(), databaseAdapter, context, query, paging)
+        );
         break;
       }
       case AdminClientOperationName.unarchiveEntity: {
@@ -135,7 +139,7 @@ export function createServerAdminClient({
           args: [reference],
           resolve,
         } = operation as AdminClientOperation<AdminClientOperationName.unarchiveEntity>;
-        resolve(await unarchiveEntity(context, reference.id));
+        resolve(await unarchiveEntity(databaseAdapter, context, reference.id));
         break;
       }
       case AdminClientOperationName.unpublishEntities: {
@@ -145,6 +149,7 @@ export function createServerAdminClient({
         } = operation as AdminClientOperation<AdminClientOperationName.unpublishEntities>;
         resolve(
           await unpublishEntities(
+            databaseAdapter,
             context,
             references.map(({ id }) => id)
           )
@@ -156,7 +161,7 @@ export function createServerAdminClient({
           args: [entity],
           resolve,
         } = operation as AdminClientOperation<AdminClientOperationName.updateEntity>;
-        resolve(await updateEntity(serverImpl.getSchema(), context, entity));
+        resolve(await updateEntity(serverImpl.getSchema(), databaseAdapter, context, entity));
         break;
       }
       case AdminClientOperationName.updateSchemaSpecification: {
@@ -176,7 +181,7 @@ export function createServerAdminClient({
           args: [entity],
           resolve,
         } = operation as AdminClientOperation<AdminClientOperationName.upsertEntity>;
-        resolve(await upsertEntity(serverImpl.getSchema(), context, entity));
+        resolve(await upsertEntity(serverImpl.getSchema(), databaseAdapter, context, entity));
         break;
       }
       default:

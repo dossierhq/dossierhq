@@ -4,15 +4,17 @@ import {
   createBasePublishedClient,
   PublishedClientOperationName,
 } from '@jonasb/datadata-core';
-import type { SessionContext } from '.';
+import type { DatabaseAdapter, SessionContext } from '.';
 import { getEntities, getEntity } from './PublishedEntity';
 import type { ServerImpl } from './Server';
 
 export function createServerPublishedClient({
   context,
+  databaseAdapter,
   serverImpl,
 }: {
   context: SessionContext | (() => Promise<SessionContext>);
+  databaseAdapter: DatabaseAdapter;
   serverImpl: ServerImpl;
 }): PublishedClient {
   async function terminatingMiddleware(
@@ -28,6 +30,7 @@ export function createServerPublishedClient({
         resolve(
           await getEntities(
             serverImpl.getSchema(),
+            databaseAdapter,
             context,
             references.map(({ id }) => id)
           )
@@ -39,7 +42,7 @@ export function createServerPublishedClient({
           args: [reference],
           resolve,
         } = operation as PublishedClientOperation<PublishedClientOperationName.getEntity>;
-        resolve(await getEntity(serverImpl.getSchema(), context, reference.id));
+        resolve(await getEntity(serverImpl.getSchema(), databaseAdapter, context, reference.id));
         break;
       }
       default:

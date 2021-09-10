@@ -28,7 +28,7 @@ import {
   notOk,
   ok,
 } from '@jonasb/datadata-core';
-import type { SessionContext } from '.';
+import type { DatabaseAdapter, SessionContext } from '.';
 import { toOpaqueCursor } from './Connection';
 import * as Db from './Database';
 import type {
@@ -50,6 +50,7 @@ import { searchAdminEntitiesQuery, totalAdminEntitiesQuery } from './QueryGenera
 
 export async function getEntity(
   schema: Schema,
+  databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   id: string,
   version?: number | null
@@ -58,13 +59,14 @@ export async function getEntity(
   if (typeof version === 'number') {
     actualVersion = version;
   } else {
-    const versionResult = await resolveMaxVersionForEntity(context, id);
+    const versionResult = await resolveMaxVersionForEntity(databaseAdapter, context, id);
     if (versionResult.isError()) {
       return versionResult;
     }
     actualVersion = versionResult.value.maxVersion;
   }
   const entityMain = await Db.queryNoneOrOne<AdminEntityValues>(
+    databaseAdapter,
     context,
     `SELECT e.uuid, e.type, e.name, e.created_at, e.updated_at, e.archived, e.never_published, e.latest_draft_entity_versions_id, e.published_entity_versions_id, ev.version, ev.data
       FROM entities e, entity_versions ev
@@ -84,6 +86,7 @@ export async function getEntity(
 
 export async function getEntities(
   schema: Schema,
+  databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   ids: string[]
 ): PromiseResult<Result<AdminEntity, ErrorType.NotFound>[], ErrorType.Generic> {
@@ -92,6 +95,7 @@ export async function getEntities(
   }
 
   const entitiesMain = await Db.queryMany<AdminEntityValues>(
+    databaseAdapter,
     context,
     `SELECT e.uuid, e.type, e.name, e.created_at, e.updated_at, e.archived, e.never_published, e.latest_draft_entity_versions_id, e.published_entity_versions_id, ev.version, ev.data
       FROM entities e, entity_versions ev
@@ -113,6 +117,7 @@ export async function getEntities(
 
 export async function searchEntities(
   schema: Schema,
+  databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   query?: AdminQuery,
   paging?: Paging
@@ -121,7 +126,11 @@ export async function searchEntities(
   if (sqlQuery.isError()) {
     return sqlQuery;
   }
-  const entitiesValues = await Db.queryMany<SearchAdminEntitiesItem>(context, sqlQuery.value);
+  const entitiesValues = await Db.queryMany<SearchAdminEntitiesItem>(
+    databaseAdapter,
+    context,
+    sqlQuery.value
+  );
   const hasExtraPage = entitiesValues.length > sqlQuery.value.pagingCount;
   if (hasExtraPage) {
     entitiesValues.splice(sqlQuery.value.pagingCount, 1);
@@ -154,6 +163,7 @@ export async function searchEntities(
 
 export async function getTotalCount(
   schema: Schema,
+  databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   query?: AdminQuery
 ): PromiseResult<number, ErrorType.BadRequest> {
@@ -161,11 +171,12 @@ export async function getTotalCount(
   if (sqlQuery.isError()) {
     return sqlQuery;
   }
-  const { count } = await Db.queryOne<{ count: number }>(context, sqlQuery.value);
+  const { count } = await Db.queryOne<{ count: number }>(databaseAdapter, context, sqlQuery.value);
   return ok(count);
 }
 
 async function withUniqueNameAttempt<TResult>(
+  databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   name: string,
   attempt: (context: SessionContext, name: string) => Promise<TResult>
@@ -174,6 +185,7 @@ async function withUniqueNameAttempt<TResult>(
   let first = true;
   for (let i = 0; i < 10; i += 1) {
     await Db.queryNone(
+      databaseAdapter,
       context,
       first ? 'SAVEPOINT unique_name' : 'ROLLBACK TO SAVEPOINT unique_name; SAVEPOINT unique_name'
     );
@@ -182,11 +194,11 @@ async function withUniqueNameAttempt<TResult>(
     try {
       const result = await attempt(context, potentiallyModifiedName);
       // No exception => it's all good
-      await Db.queryNone(context, 'RELEASE SAVEPOINT unique_name');
+      await Db.queryNone(databaseAdapter, context, 'RELEASE SAVEPOINT unique_name');
 
       return result;
     } catch (error) {
-      if (Db.isUniqueViolationOfConstraint(context, error, 'entities_name_key')) {
+      if (Db.isUniqueViolationOfConstraint(databaseAdapter, error, 'entities_name_key')) {
         potentiallyModifiedName = `${name}#${Math.random().toFixed(8).slice(2)}`;
         continue;
       }
@@ -198,6 +210,7 @@ async function withUniqueNameAttempt<TResult>(
 
 export async function createEntity(
   schema: Schema,
+  databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   entity: AdminEntityCreate
 ): PromiseResult<AdminEntityCreatePayload, ErrorType.BadRequest | ErrorType.Conflict> {
@@ -207,25 +220,32 @@ export async function createEntity(
   }
   const createEntity = resolvedResult.value;
 
-  const encodeResult = await encodeEntity(schema, context, createEntity);
+  const encodeResult = await encodeEntity(schema, databaseAdapter, context, createEntity);
   if (encodeResult.isError()) {
     return encodeResult;
   }
   const encodeEntityResult = encodeResult.value;
 
   return await context.withTransaction(async (context) => {
-    const createEntityRowResult = await createEntityRow(context, entity.id, encodeEntityResult);
+    const createEntityRowResult = await createEntityRow(
+      databaseAdapter,
+      context,
+      entity.id,
+      encodeEntityResult
+    );
     if (createEntityRowResult.isError()) {
       return createEntityRowResult;
     }
     const { uuid, actualName, entityId, createdAt, updatedAt } = createEntityRowResult.value;
 
     const { id: versionsId } = await Db.queryOne<{ id: number }>(
+      databaseAdapter,
       context,
       'INSERT INTO entity_versions (entities_id, version, created_by, data) VALUES ($1, 0, $2, $3) RETURNING id',
       [entityId, context.session.subjectInternalId, encodeEntityResult.data]
     );
     await Db.queryNone(
+      databaseAdapter,
       context,
       'UPDATE entities SET latest_draft_entity_versions_id = $1 WHERE id = $2',
       [versionsId, entityId]
@@ -238,7 +258,7 @@ export async function createEntity(
       for (const referenceId of encodeEntityResult.referenceIds) {
         qb.addQuery(`($1, ${qb.addValue(referenceId)})`);
       }
-      await Db.queryNone(context, qb.build());
+      await Db.queryNone(databaseAdapter, context, qb.build());
     }
     if (encodeEntityResult.locations.length > 0) {
       const qb = new QueryBuilder(
@@ -252,7 +272,7 @@ export async function createEntity(
           )}), 4326))`
         );
       }
-      await Db.queryNone(context, qb.build());
+      await Db.queryNone(databaseAdapter, context, qb.build());
     }
 
     const result: AdminEntity = {
@@ -272,6 +292,7 @@ export async function createEntity(
 }
 
 async function createEntityRow(
+  databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   id: string | undefined,
   encodeEntityResult: EncodeEntityResult
@@ -280,6 +301,7 @@ async function createEntityRow(
 
   try {
     const { uuid, actualName, entityId, createdAt, updatedAt } = await withUniqueNameAttempt(
+      databaseAdapter,
       context,
       name,
       async (context, name) => {
@@ -296,6 +318,7 @@ async function createEntityRow(
           created_at: createdAt,
           updated_at: updatedAt,
         } = await Db.queryOne<Pick<EntitiesTable, 'id' | 'uuid' | 'created_at' | 'updated_at'>>(
+          databaseAdapter,
           context,
           qb.build()
         );
@@ -304,7 +327,7 @@ async function createEntityRow(
     );
     return ok({ uuid, actualName, entityId, createdAt, updatedAt });
   } catch (error) {
-    if (Db.isUniqueViolationOfConstraint(context, error, 'entities_uuid_key')) {
+    if (Db.isUniqueViolationOfConstraint(databaseAdapter, error, 'entities_uuid_key')) {
       return notOk.Conflict(`Entity with id (${id}) already exist`);
     }
     throw error;
@@ -313,6 +336,7 @@ async function createEntityRow(
 
 export async function updateEntity(
   schema: Schema,
+  databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   entity: AdminEntityUpdate
 ): PromiseResult<AdminEntityUpdatePayload, ErrorType.BadRequest | ErrorType.NotFound> {
@@ -332,6 +356,7 @@ export async function updateEntity(
       > &
         Pick<EntityVersionsTable, 'version' | 'data'>
     >(
+      databaseAdapter,
       context,
       `SELECT e.id, e.type, e.name, e.created_at, e.updated_at, e.archived, e.never_published, e.published_entity_versions_id, e.latest_draft_entity_versions_id, ev.version, ev.data
         FROM entities e, entity_versions ev
@@ -353,29 +378,33 @@ export async function updateEntity(
       return ok(payload);
     }
 
-    const encodeResult = await encodeEntity(schema, context, updatedEntity);
+    const encodeResult = await encodeEntity(schema, databaseAdapter, context, updatedEntity);
     if (encodeResult.isError()) {
       return encodeResult;
     }
     const { data, name, referenceIds, locations, fullTextSearchText } = encodeResult.value;
 
     const { id: versionsId } = await Db.queryOne<Pick<EntityVersionsTable, 'id'>>(
+      databaseAdapter,
       context,
       'INSERT INTO entity_versions (entities_id, created_by, version, data) VALUES ($1, $2, $3, $4) RETURNING id',
       [entityId, context.session.subjectInternalId, updatedEntity.info.version, data]
     );
 
     if (name !== previousName) {
-      await withUniqueNameAttempt(context, name, async (context, name) => {
-        await Db.queryNone(context, 'UPDATE entities SET name = $1 WHERE id = $2', [
-          name,
-          entityId,
-        ]);
+      await withUniqueNameAttempt(databaseAdapter, context, name, async (context, name) => {
+        await Db.queryNone(
+          databaseAdapter,
+          context,
+          'UPDATE entities SET name = $1 WHERE id = $2',
+          [name, entityId]
+        );
         updatedEntity.info.name = name;
       });
     }
 
     const { updated_at: updatedAt } = await Db.queryOne(
+      databaseAdapter,
       context,
       `UPDATE entities SET
         latest_draft_entity_versions_id = $1,
@@ -397,7 +426,7 @@ export async function updateEntity(
       for (const referenceId of referenceIds) {
         qb.addQuery(`($1, ${qb.addValue(referenceId)})`);
       }
-      await Db.queryNone(context, qb.build());
+      await Db.queryNone(databaseAdapter, context, qb.build());
     }
 
     if (locations.length > 0) {
@@ -412,7 +441,7 @@ export async function updateEntity(
           )}), 4326))`
         );
       }
-      await Db.queryNone(context, qb.build());
+      await Db.queryNone(databaseAdapter, context, qb.build());
     }
 
     return ok({ effect: 'updated', entity: updatedEntity });
@@ -421,21 +450,23 @@ export async function updateEntity(
 
 export async function upsertEntity(
   schema: Schema,
+  databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   entity: AdminEntityUpsert
 ): PromiseResult<AdminEntityUpsertPayload, ErrorType.BadRequest | ErrorType.Generic> {
   const entityInfo = await Db.queryNoneOrOne<Pick<EntitiesTable, 'name'>>(
+    databaseAdapter,
     context,
     'SELECT e.name FROM entities e WHERE e.uuid = $1',
     [entity.id]
   );
 
   if (!entityInfo) {
-    const createResult = await createEntity(schema, context, entity);
+    const createResult = await createEntity(schema, databaseAdapter, context, entity);
     if (createResult.isOk()) {
       return createResult.map((value) => value);
     } else if (createResult.isErrorType(ErrorType.Conflict)) {
-      return upsertEntity(schema, context, entity);
+      return upsertEntity(schema, databaseAdapter, context, entity);
     } else if (createResult.isErrorType(ErrorType.BadRequest)) {
       return createResult;
     }
@@ -448,7 +479,7 @@ export async function upsertEntity(
     entityUpdate = { ...entity, info: { ...entity.info, name: undefined } };
   }
 
-  const updateResult = await updateEntity(schema, context, entityUpdate);
+  const updateResult = await updateEntity(schema, databaseAdapter, context, entityUpdate);
   if (updateResult.isOk()) {
     return ok(updateResult.value);
   } else if (updateResult.isErrorType(ErrorType.BadRequest)) {
@@ -458,6 +489,7 @@ export async function upsertEntity(
 }
 
 export async function publishEntities(
+  databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   entities: {
     id: string;
@@ -484,6 +516,7 @@ export async function publishEntities(
         Pick<EntityVersionsTable, 'id' | 'entities_id'> &
           Pick<EntitiesTable, 'published_entity_versions_id'>
       >(
+        databaseAdapter,
         context,
         `SELECT ev.id, ev.entities_id, e.published_entity_versions_id
          FROM entity_versions ev, entities e
@@ -516,6 +549,7 @@ export async function publishEntities(
     // Step 2: Publish entities
     for (const { uuid, versionsId, entityId } of versionsInfo) {
       const { updated_at: updatedAt } = await Db.queryOne<Pick<EntitiesTable, 'updated_at'>>(
+        databaseAdapter,
         context,
         `UPDATE entities
           SET
@@ -535,6 +569,7 @@ export async function publishEntities(
     const referenceErrorMessages: string[] = [];
     for (const { uuid, versionsId } of versionsInfo) {
       const unpublishedReferences = await Db.queryMany<Pick<EntitiesTable, 'uuid'>>(
+        databaseAdapter,
         context,
         `SELECT e.uuid
            FROM entity_version_references evr, entities e
@@ -568,7 +603,7 @@ export async function publishEntities(
         )}, ${subjectValue}, 'publish')`
       );
     }
-    await Db.queryNone(context, qb.build());
+    await Db.queryNone(databaseAdapter, context, qb.build());
 
     //
     return ok(result);
@@ -576,6 +611,7 @@ export async function publishEntities(
 }
 
 export async function unpublishEntities(
+  databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   entityIds: string[]
 ): PromiseResult<EntityPublishPayload[], ErrorType.BadRequest | ErrorType.NotFound> {
@@ -591,6 +627,7 @@ export async function unpublishEntities(
     const entitiesInfo = await Db.queryMany<
       Pick<EntitiesTable, 'id' | 'uuid' | 'published_entity_versions_id'>
     >(
+      databaseAdapter,
       context,
       'SELECT e.id, e.uuid, e.published_entity_versions_id FROM entities e WHERE e.uuid = ANY($1)',
       [entityIds]
@@ -612,6 +649,7 @@ export async function unpublishEntities(
 
     // Step 2: Unpublish entities
     const unpublishRows = await Db.queryMany<Pick<EntitiesTable, 'uuid' | 'updated_at'>>(
+      databaseAdapter,
       context,
       `UPDATE entities
         SET
@@ -632,6 +670,7 @@ export async function unpublishEntities(
     const referenceErrorMessages: string[] = [];
     for (const { id, uuid } of entitiesInfo) {
       const publishedIncomingReferences = await Db.queryMany<Pick<EntitiesTable, 'uuid'>>(
+        databaseAdapter,
         context,
         `SELECT e.uuid
            FROM entity_version_references evr, entity_versions ev, entities e
@@ -662,7 +701,7 @@ export async function unpublishEntities(
     for (const entityInfo of entitiesInfo) {
       qb.addQuery(`(${qb.addValue(entityInfo.id)}, NULL, ${subjectValue}, 'unpublish')`);
     }
-    await Db.queryNone(context, qb.build());
+    await Db.queryNone(databaseAdapter, context, qb.build());
 
     //
     return ok(result);
@@ -670,6 +709,7 @@ export async function unpublishEntities(
 }
 
 export async function archiveEntity(
+  databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   id: string
 ): PromiseResult<EntityPublishPayload, ErrorType.BadRequest | ErrorType.NotFound> {
@@ -677,6 +717,7 @@ export async function archiveEntity(
     const entityInfo = await Db.queryNoneOrOne<
       Pick<EntitiesTable, 'id' | 'published_entity_versions_id' | 'archived' | 'updated_at'>
     >(
+      databaseAdapter,
       context,
       'SELECT e.id, e.published_entity_versions_id, e.archived, e.updated_at FROM entities e WHERE e.uuid = $1',
       [id]
@@ -701,6 +742,7 @@ export async function archiveEntity(
 
     const [{ updated_at: updatedAt }, _] = await Promise.all([
       Db.queryOne<Pick<EntitiesTable, 'updated_at'>>(
+        databaseAdapter,
         context,
         `UPDATE entities SET
             archived = TRUE,
@@ -711,6 +753,7 @@ export async function archiveEntity(
         [entityId]
       ),
       Db.queryNone(
+        databaseAdapter,
         context,
         "INSERT INTO entity_publishing_events (entities_id, kind, published_by) VALUES ($1, 'archive', $2)",
         [entityId, context.session.subjectInternalId]
@@ -722,6 +765,7 @@ export async function archiveEntity(
 }
 
 export async function unarchiveEntity(
+  databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   id: string
 ): PromiseResult<EntityPublishPayload, ErrorType.BadRequest | ErrorType.NotFound> {
@@ -737,6 +781,7 @@ export async function unarchiveEntity(
         | 'updated_at'
       >
     >(
+      databaseAdapter,
       context,
       `SELECT id, archived, latest_draft_entity_versions_id, never_published, published_entity_versions_id, updated_at
        FROM entities WHERE uuid = $1`,
@@ -756,6 +801,7 @@ export async function unarchiveEntity(
     if (archived) {
       const [{ updated_at: updatedAt }, _] = await Promise.all([
         Db.queryOne<Pick<EntitiesTable, 'updated_at'>>(
+          databaseAdapter,
           context,
           `UPDATE entities SET
             archived = FALSE,
@@ -766,6 +812,7 @@ export async function unarchiveEntity(
           [entityId]
         ),
         Db.queryNone(
+          databaseAdapter,
           context,
           "INSERT INTO entity_publishing_events (entities_id, kind, published_by) VALUES ($1, 'unarchive', $2)",
           [entityId, context.session.subjectInternalId]
@@ -779,10 +826,12 @@ export async function unarchiveEntity(
 }
 
 async function resolveMaxVersionForEntity(
+  databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   id: string
 ): PromiseResult<{ entityId: number; maxVersion: number }, ErrorType.NotFound> {
   const result = await Db.queryNoneOrOne<Pick<EntityVersionsTable, 'entities_id' | 'version'>>(
+    databaseAdapter,
     context,
     `SELECT ev.entities_id, ev.version
       FROM entity_versions ev, entities e
@@ -807,12 +856,14 @@ function checkUUIDsAreUnique(uuids: string[]): Result<void, ErrorType.BadRequest
 }
 
 export async function getEntityHistory(
+  databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   id: string
 ): PromiseResult<EntityHistory, ErrorType.NotFound> {
   const entityMain = await Db.queryNoneOrOne<
     Pick<EntitiesTable, 'id' | 'uuid' | 'published_entity_versions_id'>
   >(
+    databaseAdapter,
     context,
     `SELECT id, uuid, published_entity_versions_id
       FROM entities e
@@ -828,6 +879,7 @@ export async function getEntityHistory(
       created_by_uuid: string;
     }
   >(
+    databaseAdapter,
     context,
     `SELECT
       ev.id,
@@ -853,10 +905,12 @@ export async function getEntityHistory(
 }
 
 export async function getPublishingHistory(
+  databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   id: string
 ): PromiseResult<PublishingHistory, ErrorType.NotFound> {
   const entityInfo = await Db.queryNoneOrOne<Pick<EntitiesTable, 'id'>>(
+    databaseAdapter,
     context,
     'SELECT id FROM entities WHERE uuid = $1',
     [id]
@@ -871,6 +925,7 @@ export async function getPublishingHistory(
         published_by: string;
       }
   >(
+    databaseAdapter,
     context,
     `SELECT ev.version, s.uuid AS published_by, epe.published_at, epe.kind
       FROM entity_publishing_events epe

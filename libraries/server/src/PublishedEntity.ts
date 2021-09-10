@@ -1,18 +1,20 @@
 import type { Entity, PromiseResult, Result, ErrorType, Schema } from '@jonasb/datadata-core';
 import { notOk, ok } from '@jonasb/datadata-core';
-import type { SessionContext } from '.';
+import type { DatabaseAdapter, SessionContext } from '.';
 import * as Db from './Database';
 import type { EntitiesTable, EntityVersionsTable } from './DatabaseTables';
 import { decodePublishedEntity } from './EntityCodec';
 
 export async function getEntity(
   schema: Schema,
+  databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   id: string
 ): PromiseResult<Entity, ErrorType.NotFound> {
   const entityMain = await Db.queryNoneOrOne<
     Pick<EntitiesTable, 'uuid' | 'type' | 'name'> & Pick<EntityVersionsTable, 'data'>
   >(
+    databaseAdapter,
     context,
     `SELECT e.uuid, e.type, e.name, ev.data
       FROM entities e, entity_versions ev
@@ -39,6 +41,7 @@ export async function getEntity(
  */
 export async function getEntities(
   schema: Schema,
+  databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   ids: string[]
 ): PromiseResult<Result<Entity, ErrorType.NotFound>[], ErrorType.Generic> {
@@ -48,6 +51,7 @@ export async function getEntities(
   const entitiesMain = await Db.queryMany<
     Pick<EntitiesTable, 'uuid' | 'type' | 'name'> & Pick<EntityVersionsTable, 'data'>
   >(
+    databaseAdapter,
     context,
     `SELECT e.uuid, e.type, e.name, ev.data
       FROM entities e, entity_versions ev

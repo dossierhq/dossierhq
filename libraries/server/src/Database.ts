@@ -1,4 +1,4 @@
-import type { Context } from './Context';
+import type { DatabaseAdapter, TransactionContext } from '.';
 
 export class UnexpectedQuantityError extends Error {
   readonly actual: number;
@@ -26,25 +26,22 @@ function normalizeQueryArguments(
 }
 
 export function isUniqueViolationOfConstraint(
-  context: Context,
+  databaseAdapter: DatabaseAdapter,
   error: unknown,
   constraintName: string
 ): boolean {
-  return context.databaseAdapter.isUniqueViolationOfConstraint(error, constraintName);
+  return databaseAdapter.isUniqueViolationOfConstraint(error, constraintName);
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function queryNone<I extends any[] = any[]>(
-  context: Context,
+  databaseAdapter: DatabaseAdapter,
+  context: TransactionContext,
   queryTextOrConfig: string | QueryConfig,
   values?: I
 ): Promise<void> {
   const [queryText, queryValues] = normalizeQueryArguments(queryTextOrConfig, values);
-  const rows = await context.databaseAdapter.queryLegacy(
-    context.transaction,
-    queryText,
-    queryValues
-  );
+  const rows = await databaseAdapter.queryLegacy(context.transaction, queryText, queryValues);
   if (!rows || rows.length === 0) {
     return;
   }
@@ -53,16 +50,13 @@ export async function queryNone<I extends any[] = any[]>(
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function queryNoneOrOne<R = any, I extends any[] = any[]>(
-  context: Context,
+  databaseAdapter: DatabaseAdapter,
+  context: TransactionContext,
   queryTextOrConfig: string | QueryConfig,
   values?: I
 ): Promise<R | null> {
   const [queryText, queryValues] = normalizeQueryArguments(queryTextOrConfig, values);
-  const rows = await context.databaseAdapter.queryLegacy<R>(
-    context.transaction,
-    queryText,
-    queryValues
-  );
+  const rows = await databaseAdapter.queryLegacy<R>(context.transaction, queryText, queryValues);
 
   if (rows.length === 0) {
     return null;
@@ -75,16 +69,13 @@ export async function queryNoneOrOne<R = any, I extends any[] = any[]>(
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function queryOne<R, I extends any[] = any[]>(
-  context: Context,
+  databaseAdapter: DatabaseAdapter,
+  context: TransactionContext,
   queryTextOrConfig: string | QueryConfig,
   values?: I
 ): Promise<R> {
   const [queryText, queryValues] = normalizeQueryArguments(queryTextOrConfig, values);
-  const rows = await context.databaseAdapter.queryLegacy<R>(
-    context.transaction,
-    queryText,
-    queryValues
-  );
+  const rows = await databaseAdapter.queryLegacy<R>(context.transaction, queryText, queryValues);
   if (rows.length !== 1) {
     throw new UnexpectedQuantityError(`Expected 1 row, got ${rows.length}`, rows.length);
   }
@@ -93,15 +84,12 @@ export async function queryOne<R, I extends any[] = any[]>(
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function queryMany<R, I extends any[] = any[]>(
-  context: Context,
+  databaseAdapter: DatabaseAdapter,
+  context: TransactionContext,
   queryTextOrConfig: string | QueryConfig,
   values?: I
 ): Promise<R[]> {
   const [queryText, queryValues] = normalizeQueryArguments(queryTextOrConfig, values);
-  const rows = await context.databaseAdapter.queryLegacy<R>(
-    context.transaction,
-    queryText,
-    queryValues
-  );
+  const rows = await databaseAdapter.queryLegacy<R>(context.transaction, queryText, queryValues);
   return rows;
 }

@@ -33,7 +33,7 @@ import {
   visitItemRecursively,
   visitorPathToString,
 } from '@jonasb/datadata-core';
-import type { SessionContext } from '.';
+import type { DatabaseAdapter, SessionContext } from '.';
 import { ensureRequired } from './Assertions';
 import * as Db from './Database';
 import type { EntitiesTable, EntityVersionsTable } from './DatabaseTables';
@@ -355,6 +355,7 @@ function checkForUnsupportedFields(
 
 export async function encodeEntity(
   schema: Schema,
+  databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   entity: AdminEntity | AdminEntityCreate
 ): PromiseResult<EncodeEntityResult, ErrorType.BadRequest> {
@@ -400,7 +401,11 @@ export async function encodeEntity(
     schema,
     entity
   );
-  const resolveResult = await resolveRequestedEntityReferences(context, requestedReferences);
+  const resolveResult = await resolveRequestedEntityReferences(
+    databaseAdapter,
+    context,
+    requestedReferences
+  );
   if (resolveResult.isError()) {
     return resolveResult;
   }
@@ -659,6 +664,7 @@ function extractFullTextValuesRecursively(node: unknown, fullTextSearchText: str
 }
 
 async function resolveRequestedEntityReferences(
+  databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   requestedReferences: RequestedReference[]
 ): PromiseResult<number[], ErrorType.BadRequest> {
@@ -670,6 +676,7 @@ async function resolveRequestedEntityReferences(
   }
 
   const items = await Db.queryMany<Pick<EntitiesTable, 'id' | 'type' | 'uuid'>>(
+    databaseAdapter,
     context,
     'SELECT id, uuid, type FROM entities WHERE uuid = ANY($1)',
     [[...allUUIDs]]

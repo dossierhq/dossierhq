@@ -133,7 +133,8 @@ export async function createServer({
     },
     createAdminClient: (context) =>
       createServerAdminClient({ context, databaseAdapter, serverImpl }),
-    createPublishedClient: (context) => createServerPublishedClient({ context, serverImpl }),
+    createPublishedClient: (context) =>
+      createServerPublishedClient({ context, databaseAdapter, serverImpl }),
   };
 
   return ok(server);
