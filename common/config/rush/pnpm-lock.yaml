@@ -136,6 +136,9 @@ importers:
       uuid: 8.3.2
     devDependencies:
       '@babel/core': 7.15.0
+      '@jonasb/datadata-database-adapter-postgres-pg': link:../database-adapter-postgres-pg
+      '@jonasb/datadata-postgres': link:../postgres
+      '@jonasb/datadata-server': link:../server
       '@jonasb/datadata-testing-utils': link:../testing-utils
       '@rushstack/eslint-plugin': 0.8.0_eslint@7.32.0+typescript@4.4.2
       '@rushstack/heft': 0.37.3
@@ -176,6 +179,9 @@ importers:
       '@babel/core': ^7.14.3
       '@editorjs/editorjs': ~2.22.2
       '@jonasb/datadata-core': workspace:*
+      '@jonasb/datadata-database-adapter-postgres-pg': workspace:*
+      '@jonasb/datadata-postgres': workspace:*
+      '@jonasb/datadata-server': workspace:*
       '@jonasb/datadata-testing-utils': workspace:*
       '@rushstack/eslint-plugin': ~0.8.0
       '@rushstack/heft': ~0.37.3

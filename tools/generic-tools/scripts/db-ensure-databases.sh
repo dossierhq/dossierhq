@@ -33,6 +33,10 @@ function grant_access_for_user {
   source "$THIS_DIR/../.env"
   set +a
 
+  create_user "arctestuser" "arctestpass"
+  create_database "datadata-admin-react-components"
+  grant_access_for_user "datadata-admin-react-components" "arctestuser"
+
   create_user "servertestuser" "servertestpass"
   create_database "datadata-server"
   grant_access_for_user "datadata-server" "servertestuser"

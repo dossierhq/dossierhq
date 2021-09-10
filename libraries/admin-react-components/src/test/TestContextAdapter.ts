@@ -1,13 +1,86 @@
-import type { AdminClient, AdminClientMiddleware } from '@jonasb/datadata-core';
-import { createInMemoryAdminClient, InMemoryServer } from '@jonasb/datadata-testing-utils';
+import type {
+  AdminClient,
+  AdminClientMiddleware,
+  AdminClientOperation,
+  ErrorType,
+  PromiseResult,
+} from '@jonasb/datadata-core';
+import {
+  convertAdminClientOperationToJson,
+  convertJsonAdminClientResult,
+  createBaseAdminClient,
+  notOk,
+  ok,
+  Schema,
+} from '@jonasb/datadata-core';
 import type { InMemorySessionContext } from '@jonasb/datadata-testing-utils';
+import { createInMemoryAdminClient, InMemoryServer } from '@jonasb/datadata-testing-utils';
 import { v4 as uuidv4, v5 as uuidv5 } from 'uuid';
 import type { DataDataContextAdapter } from '..';
 import { DataDataContextValue } from '..';
-import { entitiesFixture } from './EntityFixtures';
 import schema from '../stories/StoryboardSchema';
+import { entitiesFixture } from './EntityFixtures';
+
+type BackendContext = Record<never, never>;
 
 const GENERATE_ENTITIES_UUID_NAMESPACE = '96597f34-8654-4f66-b98d-3e9f5bb7cc9a';
+
+export async function createContextValue2(
+  middleware: AdminClientMiddleware<BackendContext>[] = []
+): PromiseResult<DataDataContextValue, ErrorType.Generic> {
+  const adminClient = createBackendAdminClient(middleware);
+  //TODO add a schema React context so we don't need to fetch here
+  const schemaResult = await adminClient.getSchemaSpecification();
+  if (schemaResult.isError()) return schemaResult;
+  const schema = new Schema(schemaResult.value);
+  return ok(new DataDataContextValue(new TestContextAdapter(), adminClient, schema));
+}
+
+function createBackendAdminClient(
+  middleware: AdminClientMiddleware<BackendContext>[]
+): AdminClient {
+  const context: BackendContext = {};
+  return createBaseAdminClient({ context, pipeline: [...middleware, terminatingMiddleware] });
+}
+
+async function terminatingMiddleware(
+  _context: BackendContext,
+  operation: AdminClientOperation
+): Promise<void> {
+  const jsonOperation = convertAdminClientOperationToJson(operation);
+
+  let response: Response;
+  if (operation.modifies) {
+    response = await fetch(`/admin?name=${operation.name}`, {
+      method: 'PUT',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(jsonOperation),
+    });
+  } else {
+    response = await fetch(
+      `admin?name=${operation.name}&${encodeQuery({ operation: jsonOperation })}`,
+      {
+        method: 'GET',
+        headers: { 'content-type': 'application/json' },
+      }
+    );
+  }
+  //TODO map status to error type
+  const result = response.ok ? ok(await response.json()) : notOk.Generic(await response.text());
+  operation.resolve(convertJsonAdminClientResult(operation.name, result));
+}
+
+function encodeQuery(entries: Record<string, unknown>): string {
+  const parts: string[] = [];
+  for (const [key, value] of Object.entries(entries)) {
+    if (value === null || value === undefined) {
+      continue;
+    }
+    const encoded = `${key}=${encodeURIComponent(JSON.stringify(value))}`;
+    parts.push(encoded);
+  }
+  return parts.join('&');
+}
 
 export function createContextValue({
   adapter,

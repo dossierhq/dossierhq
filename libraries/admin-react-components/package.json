@@ -10,10 +10,12 @@
     "./main.css": "./lib/main.css"
   },
   "scripts": {
-    "build": "heft build --clean",
+    "build": "npm run prettier:check && heft build --clean",
     "build:watch": "heft build --watch",
     "clean": "heft clean",
-    "ci:check": "npm run test && npm run prettier:check && npm run storybook:build",
+    "ci:check": "npm run storybook:build 2>&1",
+    "db:cli": "./scripts/db-cli.sh",
+    "db:migrate": "./scripts/db-migrate.sh",
     "eslint:check": "eslint .",
     "eslint:fix": "eslint --fix .",
     "icons:update": "scripts/generate-icons.mjs",
@@ -37,6 +39,9 @@
   },
   "devDependencies": {
     "@babel/core": "^7.14.3",
+    "@jonasb/datadata-database-adapter-postgres-pg": "workspace:*",
+    "@jonasb/datadata-postgres": "workspace:*",
+    "@jonasb/datadata-server": "workspace:*",
     "@jonasb/datadata-testing-utils": "workspace:*",
     "@rushstack/eslint-plugin": "~0.8.0",
     "@rushstack/heft": "~0.37.3",

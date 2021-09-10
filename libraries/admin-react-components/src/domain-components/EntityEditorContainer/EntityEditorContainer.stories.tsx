@@ -1,6 +1,6 @@
-import type { Schema } from '@jonasb/datadata-core';
+import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
 import type { Meta, Story } from '@storybook/react/types-6-0';
-import React, { useReducer } from 'react';
+import React, { useContext, useEffect, useReducer, useState } from 'react';
 import type { DataDataContextValue, EntityEditorSelector } from '../..';
 import {
   DataDataContext,
@@ -8,18 +8,18 @@ import {
   EntityEditorDispatchContext,
   EntityEditorStateContext,
 } from '../..';
-import type { EntityEditorContainerProps } from './EntityEditorContainer';
-import { createContextValue, SlowMiddleware } from '../../test/TestContextAdapter';
 import { bar1Id, bar2Id, foo1Id, fooArchivedId } from '../../test/EntityFixtures';
+import { createContextValue2, SlowMiddleware } from '../../test/TestContextAdapter';
 import {
   AddEntityDraftAction,
   initializeEntityEditorState,
   reduceEntityEditorState,
 } from '../EntityEditor/EntityEditorReducer';
+import type { EntityEditorContainerProps } from './EntityEditorContainer';
 
 interface StoryProps extends EntityEditorContainerProps {
   entitySelectors?: EntityEditorSelector[];
-  contextValue?: () => DataDataContextValue;
+  contextValue?: () => PromiseResult<DataDataContextValue, ErrorType>;
 }
 
 const meta: Meta<StoryProps> = {
@@ -30,23 +30,48 @@ const meta: Meta<StoryProps> = {
 export default meta;
 
 const Template: Story<StoryProps> = (args) => {
-  const contextValue = args.contextValue?.() ?? createContextValue().contextValue;
   return (
-    <DataDataContext.Provider value={contextValue}>
-      <Wrapper {...args} schema={contextValue.schema} />
-    </DataDataContext.Provider>
+    <LoadingContextProvider contextValue={args.contextValue}>
+      <Wrapper {...args} />
+    </LoadingContextProvider>
   );
 };
+
+function LoadingContextProvider({
+  contextValue,
+  children,
+}: {
+  contextValue?: () => PromiseResult<DataDataContextValue, ErrorType>;
+  children: React.ReactNode;
+}) {
+  const [isError, setError] = useState(false);
+  const [context, setContext] = useState<DataDataContextValue | null>(null);
+  useEffect(() => {
+    (async () => {
+      const result = await (contextValue ? contextValue() : createContextValue2());
+      if (result.isError()) {
+        setError(true);
+        return;
+      }
+      setContext(result.value);
+    })();
+  }, [contextValue]);
+
+  if (isError) {
+    return <h1>Failed initializing</h1>;
+  }
+  if (!context) return null;
+  return <DataDataContext.Provider value={context}>{children}</DataDataContext.Provider>;
+}
 
 function Wrapper({
   className,
   entitySelectors,
-  schema,
 }: {
   className?: string;
   entitySelectors?: EntityEditorSelector[];
-  schema: Schema;
 }) {
+  const { schema } = useContext(DataDataContext);
   const [editorState, dispatchEditorState] = useReducer(
     reduceEntityEditorState,
     { schema, actions: entitySelectors?.map((x) => new AddEntityDraftAction(x)) },
@@ -76,7 +101,7 @@ TwoEntities.args = { entitySelectors: [{ id: bar1Id }, { id: bar2Id }] };
 export const SlowFullFoo = Template.bind({});
 SlowFullFoo.args = {
   entitySelectors: [{ id: foo1Id }],
-  contextValue: () => createContextValue({ adminClientMiddleware: [SlowMiddleware] }).contextValue,
+  contextValue: () => createContextValue2([SlowMiddleware]),
 };
 
 export const NotFound = Template.bind({});

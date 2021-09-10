@@ -23,7 +23,6 @@ export async function withRootTransaction<TOk, TError extends ErrorType>(
     }
     return result;
   } catch (e) {
-    console.log('XXX', e);
     await databaseAdapter.query('ROLLBACK', undefined);
     throw e;
   }
