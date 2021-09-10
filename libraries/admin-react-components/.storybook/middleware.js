@@ -59,9 +59,10 @@ const expressMiddleWare = (router) => {
       }
       const server = serverResult.value;
       const adminClient = server.createAdminClient(() => server.createSession('sys', 'storybook'));
+      //TODO ensure only !modifies operations are executed for GET
       const result = await executeAdminClientOperationFromJson(adminClient, name, operation);
       if (result.isError()) {
-        res.status(500).send('Error'); //TODO map error type to status
+        res.status(result.httpStatus).send(result.message);
         return;
       }
       res.send(result.value).end();

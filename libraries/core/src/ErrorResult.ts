@@ -74,6 +74,10 @@ export class ErrorResult<TOk, TError extends ErrorType> {
   isErrorType<TSubError extends TError>(errorType: TSubError): this is ErrorResult<TOk, TSubError> {
     return this.error === errorType;
   }
+
+  get httpStatus(): number {
+    return errorTypeToHttpStatus.get(this.error) ?? 500;
+  }
 }
 
 export class ErrorResultError extends Error {
@@ -119,6 +123,10 @@ export function ok<TOk, TError extends ErrorType>(value: TOk): OkResult<TOk, TEr
 }
 
 export const notOk = {
+  fromHttpStatus: (status: number, message: string): ErrorResult<unknown, ErrorType> => {
+    const errorType = httpStatusToErrorType.get(status) ?? ErrorType.Generic;
+    return createErrorResult(errorType, message);
+  },
   BadRequest: (message: string): ErrorResult<unknown, ErrorType.BadRequest> =>
     createErrorResult(ErrorType.BadRequest, message),
   Conflict: (message: string): ErrorResult<unknown, ErrorType.Conflict> =>
@@ -143,3 +151,13 @@ export const notOk = {
   NotFound: (message: string): ErrorResult<unknown, ErrorType.NotFound> =>
     createErrorResult(ErrorType.NotFound, message),
 };
+
+const httpStatusToErrorType = new Map<number, ErrorType>();
+httpStatusToErrorType.set(400, ErrorType.BadRequest);
+httpStatusToErrorType.set(409, ErrorType.Conflict);
+httpStatusToErrorType.set(401, ErrorType.NotAuthenticated);
+httpStatusToErrorType.set(404, ErrorType.NotFound);
+httpStatusToErrorType.set(500, ErrorType.Generic);
+
+const errorTypeToHttpStatus = new Map<ErrorType, number>();
+httpStatusToErrorType.forEach((errorType, status) => errorTypeToHttpStatus.set(errorType, status));
