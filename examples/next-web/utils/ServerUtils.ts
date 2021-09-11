@@ -1,15 +1,14 @@
-import {
+import type {
   AdminClient,
   ErrorType,
   Logger,
-  notOk,
-  ok,
   PromiseResult,
   PublishedClient,
-  Schema,
 } from '@jonasb/datadata-core';
+import { notOk, ok, Schema } from '@jonasb/datadata-core';
 import { createPostgresAdapter } from '@jonasb/datadata-database-adapter-postgres-pg';
-import { createServer, Server } from '@jonasb/datadata-server';
+import type { Server } from '@jonasb/datadata-server';
+import { createServer } from '@jonasb/datadata-server';
 import type { NextApiRequest } from 'next';
 import SchemaSpec from './schema.json';
 

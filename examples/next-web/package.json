@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "ci:check": "npm run ts:check && npm run eslint:check && npm run prettier:check && npm run build",
+    "ci:check": "npm run ts:check && npm run eslint:check && npm run prettier:check",
     "db:cli": "./scripts/db-cli.sh",
     "db:migrate": "./scripts/db-migrate.sh",
     "eslint:check": "eslint .",
@@ -40,7 +40,7 @@
     "joi": "~17.4.0",
     "graphql": "~15.5.0",
     "graphql-voyager": "~1.0.0-rc.31",
-    "next": "~11.1.0",
+    "next": "~11.1.2",
     "react": "~17.0.2",
     "react-dom": "~17.0.2"
   },
@@ -50,6 +50,7 @@
     "@types/jest": "~27.0.1",
     "@types/node": "^16.6.1",
     "@types/react": "~17.0.5",
+    "@typescript-eslint/eslint-plugin": "^4.29.1",
     "eslint": "^7.32.0",
     "eslint-config-next": "~11.1.0",
     "jest": "~27.0.6",

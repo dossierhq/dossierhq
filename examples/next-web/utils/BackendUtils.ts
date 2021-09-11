@@ -1,9 +1,10 @@
 import type {
   AdminClientJsonOperation,
   AdminClientOperationName,
+  ErrorType,
   PromiseResult,
 } from '@jonasb/datadata-core';
-import { createErrorResult, ErrorType, notOk, ok } from '@jonasb/datadata-core';
+import { notOk, ok } from '@jonasb/datadata-core';
 import { encodeQuery } from './QueryUtils';
 
 const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
