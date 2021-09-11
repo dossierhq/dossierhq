@@ -446,6 +446,54 @@ importers:
       tslib: ~2.3.1
       typescript: ^4.4.2
       uuid: ^8.3.2
+  ../../libraries/design:
+    dependencies:
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+      tslib: 2.3.1
+    devDependencies:
+      '@babel/core': 7.15.0
+      '@rushstack/eslint-plugin': 0.8.0_eslint@7.32.0+typescript@4.4.2
+      '@rushstack/heft': 0.37.3
+      '@storybook/addon-actions': 6.3.7_9c6a8df88c2691f81f37725d5b4de033
+      '@storybook/addon-essentials': 6.3.7_dffc330b8997dffa03653b8a9f6c770e
+      '@storybook/addon-links': 6.3.7_react-dom@17.0.2+react@17.0.2
+      '@storybook/builder-webpack5': 6.3.7_f5b398993e9c0f41ca3c74558df182fe
+      '@storybook/manager-webpack5': 6.3.7_f5b398993e9c0f41ca3c74558df182fe
+      '@storybook/react': 6.3.7_3fb50799981913da56e740f676b4d6bd
+      '@types/react': 17.0.19
+      '@types/react-dom': 17.0.9
+      '@typescript-eslint/eslint-plugin': 4.31.0_a690ff3776b01e92cf0b93501bb5ae6a
+      '@typescript-eslint/parser': 4.31.0_eslint@7.32.0+typescript@4.4.2
+      babel-loader: 8.2.2_@babel+core@7.15.0
+      eslint: 7.32.0
+      eslint-plugin-react: 7.24.0_eslint@7.32.0
+      eslint-plugin-react-hooks: 4.2.0_eslint@7.32.0
+      prettier: 2.4.0
+      typescript: 4.4.2
+    specifiers:
+      '@babel/core': ^7.14.3
+      '@rushstack/eslint-plugin': ~0.8.0
+      '@rushstack/heft': ~0.37.3
+      '@storybook/addon-actions': ^6.3.7
+      '@storybook/addon-essentials': ^6.3.7
+      '@storybook/addon-links': ^6.3.7
+      '@storybook/builder-webpack5': ~6.3.7
+      '@storybook/manager-webpack5': ^6.3.7
+      '@storybook/react': ^6.3.7
+      '@types/react': ~17.0.5
+      '@types/react-dom': ~17.0.5
+      '@typescript-eslint/eslint-plugin': ^4.29.1
+      '@typescript-eslint/parser': ^4.29.1
+      babel-loader: ^8.2.2
+      eslint: ^7.32.0
+      eslint-plugin-react: ~7.24.0
+      eslint-plugin-react-hooks: ~4.2.0
+      prettier: 2.4.0
+      react: ~17.0.2
+      react-dom: ~17.0.2
+      tslib: ~2.3.1
+      typescript: ^4.4.2
   ../../libraries/graphql:
     dependencies:
       '@jonasb/datadata-core': link:../core
@@ -1069,7 +1117,7 @@ packages:
   /@babel/plugin-proposal-object-rest-spread/7.12.1_@babel+core@7.12.9:
     dependencies:
       '@babel/core': 7.12.9
-      '@babel/helper-plugin-utils': 7.10.4
+      '@babel/helper-plugin-utils': 7.14.5
       '@babel/plugin-syntax-object-rest-spread': 7.8.3_@babel+core@7.12.9
       '@babel/plugin-transform-parameters': 7.14.5_@babel+core@7.12.9
     dev: true
@@ -9343,7 +9391,7 @@ packages:
       integrity: sha1-+8cfDEGt6zf5bFd60e1C2P2sypE=
   /fork-ts-checker-webpack-plugin/4.1.6:
     dependencies:
-      '@babel/code-frame': 7.10.4
+      '@babel/code-frame': 7.14.5
       chalk: 2.4.2
       micromatch: 3.1.10
       minimatch: 3.0.4

@@ -392,6 +392,10 @@
       "versionPolicyName": "DataDataFramework"
     },
     {
+      "packageName": "@jonasb/datadata-design",
+      "projectFolder": "libraries/design"
+    },
+    {
       "packageName": "datadata-examples-deno",
       "projectFolder": "examples/deno"
     },
