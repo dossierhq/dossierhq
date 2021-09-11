@@ -460,16 +460,20 @@ importers:
       '@storybook/addon-links': 6.3.7_react-dom@17.0.2+react@17.0.2
       '@storybook/builder-webpack5': 6.3.7_f5b398993e9c0f41ca3c74558df182fe
       '@storybook/manager-webpack5': 6.3.7_f5b398993e9c0f41ca3c74558df182fe
+      '@storybook/preset-scss': 1.0.3_sass-loader@12.1.0
       '@storybook/react': 6.3.7_3fb50799981913da56e740f676b4d6bd
       '@types/react': 17.0.19
       '@types/react-dom': 17.0.9
       '@typescript-eslint/eslint-plugin': 4.31.0_a690ff3776b01e92cf0b93501bb5ae6a
       '@typescript-eslint/parser': 4.31.0_eslint@7.32.0+typescript@4.4.2
       babel-loader: 8.2.2_@babel+core@7.15.0
+      bulma: 0.9.3
       eslint: 7.32.0
       eslint-plugin-react: 7.24.0_eslint@7.32.0
       eslint-plugin-react-hooks: 4.2.0_eslint@7.32.0
       prettier: 2.4.0
+      sass: 1.39.2
+      sass-loader: 12.1.0_sass@1.39.2
       typescript: 4.4.2
     specifiers:
       '@babel/core': ^7.14.3
@@ -480,18 +484,22 @@ importers:
       '@storybook/addon-links': ^6.3.7
       '@storybook/builder-webpack5': ~6.3.7
       '@storybook/manager-webpack5': ^6.3.7
+      '@storybook/preset-scss': ~1.0.3
       '@storybook/react': ^6.3.7
       '@types/react': ~17.0.5
       '@types/react-dom': ~17.0.5
       '@typescript-eslint/eslint-plugin': ^4.29.1
       '@typescript-eslint/parser': ^4.29.1
       babel-loader: ^8.2.2
+      bulma: ~0.9.3
       eslint: ^7.32.0
       eslint-plugin-react: ~7.24.0
       eslint-plugin-react-hooks: ~4.2.0
       prettier: 2.4.0
       react: ~17.0.2
       react-dom: ~17.0.2
+      sass: ~1.39.2
+      sass-loader: ~12.1.0
       tslib: ~2.3.1
       typescript: ^4.4.2
   ../../libraries/graphql:
@@ -4487,6 +4495,16 @@ packages:
     dev: true
     resolution:
       integrity: sha512-HgTj7WdWo2cXrGfEhi5XYZA+G4vIzECtJHK22GEL9QxJth60Ah/dE94VqpTlyhSpzP74ZFUgr92+pP9o+j3CCw==
+  /@storybook/preset-scss/1.0.3_sass-loader@12.1.0:
+    dependencies:
+      sass-loader: 12.1.0_sass@1.39.2
+    dev: true
+    peerDependencies:
+      css-loader: '*'
+      sass-loader: '*'
+      style-loader: '*'
+    resolution:
+      integrity: sha512-o9Iz6wxPeNENrQa2mKlsDKynBfqU2uWaRP80HeWp4TkGgf7/x3DVF2O7yi9N0x/PI1qzzTTpxlQ90D62XmpiTw==
   /@storybook/react-docgen-typescript-plugin/1.0.2-canary.253f8c1.0_typescript@4.4.2+webpack@4.46.0:
     dependencies:
       debug: 4.3.2
@@ -6893,6 +6911,10 @@ packages:
   /builtin-status-codes/3.0.0:
     resolution:
       integrity: sha1-hZgoeOIbmOHGZCXgPQF0eI9Wnug=
+  /bulma/0.9.3:
+    dev: true
+    resolution:
+      integrity: sha512-0d7GNW1PY4ud8TWxdNcP6Cc8Bu7MxcntD/RRLGWuiw/s0a9P+XlH/6QoOIrmbj6o8WWJzJYhytiu9nFjTszk1g==
   /bytes/3.0.0:
     dev: true
     engines:
@@ -15387,6 +15409,37 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-hhbzAgTIX8O7SHfp2c8/kREfEn4qO/9q8C9beyY6+tvZ87EpoZ3i1RIEvp27YBswnNbY9mWd6paKVmKbAgLfZA==
+  /sass-loader/12.1.0_sass@1.39.2:
+    dependencies:
+      klona: 2.0.4
+      neo-async: 2.6.2
+      sass: 1.39.2
+    dev: true
+    engines:
+      node: '>= 12.13.0'
+    peerDependencies:
+      fibers: '>= 3.1.0'
+      node-sass: ^4.0.0 || ^5.0.0 || ^6.0.0
+      sass: ^1.3.0
+      webpack: ^5.0.0
+    peerDependenciesMeta:
+      fibers:
+        optional: true
+      node-sass:
+        optional: true
+      sass:
+        optional: true
+    resolution:
+      integrity: sha512-FVJZ9kxVRYNZTIe2xhw93n3xJNYZADr+q69/s98l9nTCrWASo+DR2Ot0s5xTKQDDEosUkatsGeHxcH4QBp5bSg==
+  /sass/1.39.2:
+    dependencies:
+      chokidar: 3.5.2
+    dev: true
+    engines:
+      node: '>=8.9.0'
+    hasBin: true
+    resolution:
+      integrity: sha512-4/6Vn2RPc+qNwSclUSKvssh7dqK1Ih3FfHBW16I/GfH47b3scbYeOw65UIrYG7PkweFiKbpJjgkf5CV8EMmvzw==
   /saxes/3.1.11:
     dependencies:
       xmlchars: 2.2.0

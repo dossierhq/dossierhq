@@ -19,7 +19,12 @@ export default meta;
 const Template: Story<ScreenProps> = (args) => {
   return (
     <Screen {...args}>
-      <h1>Hello</h1>
+      <section className="hero is-primary">
+        <div className="hero-body">
+          <p className="title">Hero title</p>
+          <p className="subtitle">Hero subtitle</p>
+        </div>
+      </section>
     </Screen>
   );
 };
