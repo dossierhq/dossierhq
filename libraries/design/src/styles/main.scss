@@ -1,7 +1,13 @@
 @import './bulma.scss';
 @import './colors.scss';
 
-.narrow-cell {
-  white-space: nowrap;
-  width: 2em;
+.sticky-row td,
+th {
+  position: sticky;
+  top: 0;
+  background-color: $white;
+}
+
+.order-header:hover {
+  background-color: $background;
 }
