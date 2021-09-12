@@ -1,30 +1,54 @@
 import type { Meta, Story } from '@storybook/react/types-6-0';
-import React from 'react';
+import React, { useReducer } from 'react';
 import type { DropdownSelectorProps } from './DropdownSelector';
 import { DropdownSelector } from './DropdownSelector';
+import type {
+  MultipleSelectorReducer,
+  MultipleSelectorStateInitializerArgs,
+} from './MultipleSelectorReducer';
+import {
+  initializeMultipleSelectorState,
+  reduceMultipleSelectorState,
+} from './MultipleSelectorReducer';
 
-const meta: Meta<DropdownSelectorProps> = {
+interface StoryItem {
+  id: string;
+  name: string;
+}
+
+export type StoryProps = Omit<DropdownSelectorProps<StoryItem>, 'state' | 'dispatch'> & {
+  initialState: MultipleSelectorStateInitializerArgs<StoryItem>;
+};
+
+const meta: Meta<StoryProps> = {
   title: 'Components/DropdownSelector',
   component: DropdownSelector,
   args: {
     label: 'Select',
+    renderItem: (item) => item.name,
   },
 };
 export default meta;
 
-const Template: Story<DropdownSelectorProps> = (args) => {
-  return <DropdownSelector {...args} />;
+const Template: Story<StoryProps> = (args) => {
+  return <Wrapper {...args} />;
 };
+
+function Wrapper({ initialState, ...args }: StoryProps) {
+  const [state, dispatch] = useReducer<
+    MultipleSelectorReducer<StoryItem>,
+    MultipleSelectorStateInitializerArgs<StoryItem>
+  >(reduceMultipleSelectorState, initialState, initializeMultipleSelectorState);
+  return <DropdownSelector dispatch={dispatch} state={state} {...args} />;
+}
 
 export const Normal = Template.bind({});
 Normal.args = {
-  children: (
-    <>
-      <DropdownSelector.Item value="one">One</DropdownSelector.Item>
-      <DropdownSelector.Item value="two" active>
-        Two
-      </DropdownSelector.Item>
-      <DropdownSelector.Item value="three">Three</DropdownSelector.Item>
-    </>
-  ),
+  initialState: {
+    items: [
+      { id: 'one', name: 'One' },
+      { id: 'two', name: 'Two' },
+      { id: 'three', name: 'Three' },
+    ],
+  },
 };
