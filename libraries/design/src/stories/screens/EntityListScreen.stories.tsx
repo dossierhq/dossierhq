@@ -31,17 +31,15 @@ import type {
 import { initializeStatusSelectorState, StatusSelector } from './StatusSelector';
 
 interface ScreenProps {
-  children: JSX.Element | JSX.Element[];
-}
-
-function Screen({ children }: ScreenProps): JSX.Element {
-  return <>{children}</>;
+  entityCount: number;
 }
 
 const meta: Meta<ScreenProps> = {
   title: 'Screens/Entity list',
   component: Screen,
-  args: {},
+  args: {
+    entityCount: 50,
+  },
   parameters: {
     layout: 'fullscreen',
   },
@@ -49,14 +47,10 @@ const meta: Meta<ScreenProps> = {
 export default meta;
 
 const Template: Story<ScreenProps> = (args) => {
-  return (
-    <Screen {...args}>
-      <Wrapper />
-    </Screen>
-  );
+  return <Screen {...args} />;
 };
 
-function Wrapper() {
+function Screen({ entityCount }: ScreenProps): JSX.Element {
   const [entityTypeFilterState, entityTypeFilterDispatch] = useReducer<
     EntityTypeSelectorReducer,
     EntityTypeSelectorInitArgs
@@ -138,7 +132,7 @@ function Wrapper() {
               </tr>
             </thead>
             <tbody>
-              {[...Array(50).keys()].map((_, index) => (
+              {[...Array(entityCount).keys()].map((_, index) => (
                 <tr key={index} className="is-clickable">
                   <td>Hello</td>
                   <td>BlogPost</td>
@@ -268,3 +262,8 @@ function StatusTagList({
 }
 
 export const Normal = Template.bind({});
+
+export const Empty = Template.bind({});
+Empty.args = {
+  entityCount: 0,
+};
