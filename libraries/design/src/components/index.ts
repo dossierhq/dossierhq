@@ -1,8 +1,9 @@
+export { Badge } from './Badge/Badge';
 export { DropdownSelector } from './DropdownSelector/DropdownSelector';
 export {
   initializeMultipleSelectorState,
-  reduceMultipleSelectorState,
   MultipleSelectorStateActions,
+  reduceMultipleSelectorState,
 } from './DropdownSelector/MultipleSelectorReducer';
 export type {
   MultipleSelectorItem,

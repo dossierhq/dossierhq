@@ -448,6 +448,7 @@ importers:
       uuid: ^8.3.2
   ../../libraries/design:
     dependencies:
+      '@creativebulma/bulma-badge': 1.0.1
       '@fortawesome/fontawesome-svg-core': 1.2.36
       '@fortawesome/free-solid-svg-icons': 5.15.4
       '@fortawesome/react-fontawesome': 0.1.15_f515edce028694561ceb456e3dba224c
@@ -481,6 +482,7 @@ importers:
       typescript: 4.4.2
     specifiers:
       '@babel/core': ^7.14.3
+      '@creativebulma/bulma-badge': ~1.0.1
       '@fortawesome/fontawesome-svg-core': ~1.2.36
       '@fortawesome/free-solid-svg-icons': ~5.15.4
       '@fortawesome/react-fontawesome': ~0.1.15
@@ -2134,6 +2136,10 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-v9kIhKwjeZThiWrLmj0y17CWoyddASLj9O2yvbZkbvw/N3rWOYy9zkV66ursAoVr0mV15bL8g0c4QZUE6cdDoQ==
+  /@creativebulma/bulma-badge/1.0.1:
+    dev: false
+    resolution:
+      integrity: sha512-cTMgxPdTOsAfPqd9wbrvKNUTvnIt+pNgwwO9Xzu6MRUIFlvGRtIVApaV51f3wt0/uI78BpKv5FPAtEJbmSTZOg==
   /@cspotcode/source-map-consumer/0.8.0:
     dev: true
     engines:

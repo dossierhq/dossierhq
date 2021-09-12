@@ -18,6 +18,7 @@ export type EntityTypeSelectorState = MultipleSelectorState<EntityTypeItem>;
 export type EntityTypeSelectorDispatch = Dispatch<MultipleSelectorStateAction<EntityTypeItem>>;
 
 interface Props {
+  label: string;
   state: EntityTypeSelectorState;
   dispatch: EntityTypeSelectorDispatch;
 }
@@ -34,10 +35,10 @@ export function initializeEntityTypeSelectorState({
   });
 }
 
-export function EntityTypeSelector({ state, dispatch }: Props): JSX.Element {
+export function EntityTypeSelector({ label, state, dispatch }: Props): JSX.Element {
   return (
     <DropdownSelector
-      label="Select entity types"
+      label={label}
       state={state}
       dispatch={dispatch}
       renderItem={(item) => item.name}
