@@ -4,7 +4,6 @@ import {
   Button,
   Columns,
   Container,
-  Dropdown,
   Icon,
   Navbar,
   Pagination,
@@ -23,6 +22,8 @@ import type {
   EntityTypeSelectorState,
 } from './EntityTypeSelector';
 import { EntityTypeSelector, initializeEntityTypeSelectorState } from './EntityTypeSelector';
+import type { StatusSelectorInitArgs, StatusSelectorReducer } from './StatusSelector';
+import { initializeStatusSelectorState, StatusSelector } from './StatusSelector';
 
 interface ScreenProps {
   children: JSX.Element | JSX.Element[];
@@ -59,6 +60,10 @@ function Wrapper() {
     { selectedIds: ['foo', 'bar'] },
     initializeEntityTypeSelectorState
   );
+  const [statusFilterState, statusFilterDispatch] = useReducer<
+    StatusSelectorReducer,
+    StatusSelectorInitArgs
+  >(reduceMultipleSelectorState, { selectedIds: ['published'] }, initializeStatusSelectorState);
   return (
     <div style={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
       <Navbar>
@@ -68,7 +73,7 @@ function Wrapper() {
         <Navbar.Item>Entities</Navbar.Item>
       </Navbar>
       <div style={{ overflowY: 'scroll', flexGrow: 1, height: '0' }}>
-        <Container className="is-flex is-flex-grow-1" flexDirection="column">
+        <Container className="is-flex is-flex-grow-1 pt-2" flexDirection="column">
           <Columns gap={1 as unknown as undefined}>
             <Columns.Column>
               <p className="control has-icons-left">
@@ -80,57 +85,17 @@ function Wrapper() {
             </Columns.Column>
             <Columns.Column narrow>
               <EntityTypeSelector
+                label="Entity type"
                 state={entityTypeFilterState}
                 dispatch={entityTypeFilterDispatch}
               />
             </Columns.Column>
             <Columns.Column narrow>
-              <Dropdown
-                label="Type"
-                icon={
-                  <Icon>
-                    <IconImage icon="chevronDown" />
-                  </Icon>
-                }
-              >
-                <Dropdown.Item renderAs="a" value="foo">
-                  Show all
-                </Dropdown.Item>
-                <Dropdown.Divider />
-                <Dropdown.Item renderAs="a" value="foo">
-                  Foo
-                </Dropdown.Item>
-              </Dropdown>
-            </Columns.Column>
-            <Columns.Column narrow>
-              <Dropdown
+              <StatusSelector
                 label="Status"
-                icon={
-                  <Icon>
-                    <IconImage icon="chevronDown" />
-                  </Icon>
-                }
-              >
-                <Dropdown.Item renderAs="a" value="foo">
-                  Show all
-                </Dropdown.Item>
-                <Dropdown.Divider />
-                <Dropdown.Item renderAs="a" value="draft">
-                  <Tag color="light">Draft</Tag>
-                </Dropdown.Item>
-                <Dropdown.Item renderAs="a" value="draft">
-                  <Tag color="success">Published</Tag>
-                </Dropdown.Item>
-                <Dropdown.Item renderAs="a" value="draft">
-                  <Tag color="warning">Modified</Tag>
-                </Dropdown.Item>
-                <Dropdown.Item renderAs="a" value="draft">
-                  <Tag color="light">Withdrawn</Tag>
-                </Dropdown.Item>
-                <Dropdown.Item renderAs="a" value="draft">
-                  <Tag color="danger">Archived</Tag>
-                </Dropdown.Item>
-              </Dropdown>
+                state={statusFilterState}
+                dispatch={statusFilterDispatch}
+              />
             </Columns.Column>
             <Columns.Column narrow>
               <Button>
@@ -146,7 +111,7 @@ function Wrapper() {
             <thead>
               <tr>
                 <th>Name</th>
-                <th>Type</th>
+                <th>Entity type</th>
                 <th className="narrow-cell">Status</th>
                 <th className="narrow-cell">Created</th>
                 <th className="narrow-cell">Updated</th>
@@ -197,16 +162,21 @@ function EntityTypesList({
             <Tag.Group hasAddons>
               <Tag>{name}</Tag>
               <Tag
+                className="is-clickable"
                 remove
-                onClick={() => {
-                  dispatch(new MultipleSelectorStateActions.ToggleItemAction(id));
-                }}
+                onClick={() => dispatch(new MultipleSelectorStateActions.ToggleItem(id))}
               />
             </Tag.Group>
           </div>
         ))}
         <Tag.Group>
-          <Tag>Show all</Tag>
+          <Tag
+            className="is-clickable"
+            color="white"
+            onClick={() => dispatch(new MultipleSelectorStateActions.ClearSelection())}
+          >
+            Clear
+          </Tag>
         </Tag.Group>
       </div>
     </>

@@ -1,7 +1,7 @@
 import type { Dispatch, ReactNode } from 'react';
 import React from 'react';
 import { Dropdown, Icon } from 'react-bulma-components';
-import { IconImage } from '..';
+import { Badge, IconImage } from '..';
 import type {
   MultipleSelectorItem,
   MultipleSelectorState,
@@ -33,9 +33,12 @@ export function DropdownSelector<TItem extends MultipleSelectorItem>({
     <Dropdown
       label={label}
       icon={
-        <Icon>
-          <IconImage icon="chevronDown" />
-        </Icon>
+        <>
+          {state.selectedIds.length > 0 ? <Badge>{state.selectedIds.length}</Badge> : null}
+          <Icon>
+            <IconImage icon="chevronDown" />
+          </Icon>
+        </>
       }
     >
       {state.items.map((item) => {
@@ -58,7 +61,7 @@ function Item<TItem extends MultipleSelectorItem>({
   const active = state.selectedIds.includes(item.id);
 
   const handleChange = () => {
-    dispatch(new MultipleSelectorStateActions.ToggleItemAction(item.id));
+    dispatch(new MultipleSelectorStateActions.ToggleItem(item.id));
   };
 
   return (

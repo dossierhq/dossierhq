@@ -42,6 +42,17 @@ export function reduceMultipleSelectorState<TItem extends MultipleSelectorItem>(
 
 // Actions
 
+class ClearSelectionAction<TItem extends MultipleSelectorItem>
+  implements MultipleSelectorStateAction<TItem>
+{
+  reduce(state: MultipleSelectorState<TItem>): MultipleSelectorState<TItem> {
+    if (state.selectedIds.length === 0) {
+      return state;
+    }
+    return { ...state, selectedIds: [] };
+  }
+}
+
 class ToggleItemAction<TItem extends MultipleSelectorItem>
   implements MultipleSelectorStateAction<TItem>
 {
@@ -65,5 +76,6 @@ class ToggleItemAction<TItem extends MultipleSelectorItem>
 }
 
 export const MultipleSelectorStateActions = {
-  ToggleItemAction,
+  ClearSelection: ClearSelectionAction,
+  ToggleItem: ToggleItemAction,
 };
