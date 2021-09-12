@@ -1,2 +1,7 @@
 @import './bulma.scss';
 @import './colors.scss';
+
+.narrow-cell {
+  white-space: nowrap;
+  width: 2em;
+}
