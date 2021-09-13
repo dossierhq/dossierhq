@@ -91,6 +91,9 @@ function Wrapper({
 export const Normal = Template.bind({});
 Normal.args = {};
 
+export const Empty = Template.bind({});
+Empty.args = { rowCount: 0 };
+
 export const StickyHeader = Template.bind({});
 StickyHeader.args = { stickyHeader: true };
 
