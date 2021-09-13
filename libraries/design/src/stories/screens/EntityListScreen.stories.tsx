@@ -77,83 +77,117 @@ function Screen({ entityCount, onMapClick, onTableRowClick }: ScreenProps): JSX.
         <Navbar.Item>Entities</Navbar.Item>
       </Navbar>
       <Container className="is-flex is-flex-grow-0 pt-2" flexDirection="column">
-        <Columns gap={1 as unknown as undefined}>
-          <Columns.Column>
-            <p className="control has-icons-left">
-              <input className="input" type="text" placeholder="Search" />
-              <BulmaIcon size="small" align="left">
-                <IconImage icon="search" />
-              </BulmaIcon>
-            </p>
-          </Columns.Column>
-          <Columns.Column narrow>
-            <EntityTypeSelector
-              label="Entity type"
-              state={entityTypeFilterState}
-              dispatch={entityTypeFilterDispatch}
-            />
-          </Columns.Column>
-          <Columns.Column narrow>
-            <StatusSelector
-              label="Status"
-              state={statusFilterState}
-              dispatch={statusFilterDispatch}
-            />
-          </Columns.Column>
-          <Columns.Column narrow>
-            <IconButton icon="map" onClick={onMapClick} />
-          </Columns.Column>
-          <Columns.Column narrow>
-            <Button>
-              <BulmaIcon size="small">
-                <IconImage icon="add" />
-              </BulmaIcon>
-              <span>Create</span>
-              <BulmaIcon size="small">
-                <IconImage icon="chevronDown" />
-              </BulmaIcon>
-            </Button>
-          </Columns.Column>
-        </Columns>
+        <SearchBar
+          {...{
+            entityTypeFilterState,
+            entityTypeFilterDispatch,
+            statusFilterState,
+            statusFilterDispatch,
+            onMapClick,
+          }}
+        />
       </Container>
       <div style={{ overflowY: 'scroll', flexGrow: 1, height: '0' }}>
         <Container className="is-flex" flexDirection="column">
           <EntityTypesList state={entityTypeFilterState} dispatch={entityTypeFilterDispatch} />
           <StatusTagList state={statusFilterState} dispatch={statusFilterDispatch} />
-          <Table>
-            <Table.Head>
-              <Table.Row sticky>
-                <Table.Header order="asc">Name</Table.Header>
-                <Table.Header order="">Entity type</Table.Header>
-                <Table.Header narrow>Status</Table.Header>
-                <Table.Header narrow order="">
-                  Created
-                </Table.Header>
-                <Table.Header narrow order="">
-                  Updated
-                </Table.Header>
-              </Table.Row>
-            </Table.Head>
-            <Table.Body>
-              {[...Array(entityCount).keys()].map((_, index) => (
-                <Table.Row key={index} clickable onClick={onTableRowClick}>
-                  <Table.Cell>Hello</Table.Cell>
-                  <Table.Cell>BlogPost</Table.Cell>
-                  <Table.Cell narrow>
-                    <Tag color="success">Published</Tag>
-                  </Table.Cell>
-                  <Table.Cell narrow>Today</Table.Cell>
-                  <Table.Cell narrow>Today</Table.Cell>
-                </Table.Row>
-              ))}
-            </Table.Body>
-          </Table>
+          <EntityTable {...{ entityCount, onTableRowClick }} />
         </Container>
       </div>
       <Container className="is-flex-grow-0">
         <Pagination current={3} showFirstLast total={5} />
       </Container>
     </div>
+  );
+}
+
+function SearchBar({
+  entityTypeFilterState,
+  entityTypeFilterDispatch,
+  statusFilterState,
+  statusFilterDispatch,
+  onMapClick,
+}: {
+  entityTypeFilterState: EntityTypeSelectorState;
+  entityTypeFilterDispatch: EntityTypeSelectorDispatch;
+  statusFilterState: StatusSelectorState;
+  statusFilterDispatch: StatusSelectorDispatch;
+  onMapClick: (event: MouseEvent) => void;
+}) {
+  return (
+    <Columns gap={1 as unknown as undefined}>
+      <Columns.Column>
+        <p className="control has-icons-left">
+          <input className="input" type="text" placeholder="Search" />
+          <BulmaIcon size="small" align="left">
+            <IconImage icon="search" />
+          </BulmaIcon>
+        </p>
+      </Columns.Column>
+      <Columns.Column narrow>
+        <EntityTypeSelector
+          label="Entity type"
+          state={entityTypeFilterState}
+          dispatch={entityTypeFilterDispatch}
+        />
+      </Columns.Column>
+      <Columns.Column narrow>
+        <StatusSelector label="Status" state={statusFilterState} dispatch={statusFilterDispatch} />
+      </Columns.Column>
+      <Columns.Column narrow>
+        <IconButton icon="map" onClick={onMapClick} />
+      </Columns.Column>
+      <Columns.Column narrow>
+        <Button>
+          <BulmaIcon size="small">
+            <IconImage icon="add" />
+          </BulmaIcon>
+          <span>Create</span>
+          <BulmaIcon size="small">
+            <IconImage icon="chevronDown" />
+          </BulmaIcon>
+        </Button>
+      </Columns.Column>
+    </Columns>
+  );
+}
+
+function EntityTable({
+  entityCount,
+  onTableRowClick,
+}: {
+  entityCount: number;
+  onTableRowClick: (event: MouseEvent) => void;
+}) {
+  return (
+    <Table>
+      <Table.Head>
+        <Table.Row sticky>
+          <Table.Header order="asc">Name</Table.Header>
+          <Table.Header order="">Entity type</Table.Header>
+          <Table.Header narrow>Status</Table.Header>
+          <Table.Header narrow order="">
+            Created
+          </Table.Header>
+          <Table.Header narrow order="">
+            Updated
+          </Table.Header>
+        </Table.Row>
+      </Table.Head>
+      <Table.Body>
+        {[...Array(entityCount).keys()].map((_, index) => (
+          <Table.Row key={index} clickable onClick={onTableRowClick}>
+            <Table.Cell>Hello</Table.Cell>
+            <Table.Cell>BlogPost</Table.Cell>
+            <Table.Cell narrow>
+              <Tag color="success">Published</Tag>
+            </Table.Cell>
+            <Table.Cell narrow>Today</Table.Cell>
+            <Table.Cell narrow>Today</Table.Cell>
+          </Table.Row>
+        ))}
+      </Table.Body>
+    </Table>
   );
 }
 
