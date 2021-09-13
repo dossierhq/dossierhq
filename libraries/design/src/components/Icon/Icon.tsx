@@ -10,6 +10,11 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
+import { Icon as BulmaIcon } from 'react-bulma-components';
+
+export interface IconProps {
+  icon?: IconName | null;
+}
 
 const icons = {
   add: faPlusSquare,
@@ -22,14 +27,9 @@ const icons = {
   orderUp: faSortUp,
 };
 
-type IconName = keyof typeof icons;
+export type IconName = keyof typeof icons;
 
-interface Props {
-  className?: string;
-  icon: IconName;
-}
-
-export function IconImage({ className, icon }: Props): JSX.Element {
-  const i = icons[icon];
-  return <FontAwesomeIcon className={className} icon={i} />;
+export function Icon({ icon }: IconProps): JSX.Element {
+  const iconImage = icon ? icons[icon] : null;
+  return <BulmaIcon>{iconImage ? <FontAwesomeIcon icon={iconImage} /> : null}</BulmaIcon>;
 }
