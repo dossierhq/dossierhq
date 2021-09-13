@@ -1,4 +1,5 @@
 import type { Meta, Story } from '@storybook/react/types-6-0';
+import type { MouseEvent } from 'react';
 import React, { useReducer } from 'react';
 import {
   Button,
@@ -10,13 +11,12 @@ import {
   Tag,
 } from 'react-bulma-components';
 import {
-  Icon,
   IconButton,
-  IconImage,
   MultipleSelectorStateActions,
   reduceMultipleSelectorState,
   Table,
-} from '../../components';
+} from '../..';
+import { IconImage } from '../../components';
 import type {
   EntityTypeSelectorDispatch,
   EntityTypeSelectorInitArgs,
@@ -34,8 +34,8 @@ import { initializeStatusSelectorState, StatusSelector } from './StatusSelector'
 
 interface ScreenProps {
   entityCount: number;
-  onMapClick: (event: unknown) => void;
-  onTableRowClick: (event: unknown) => void;
+  onMapClick: (event: MouseEvent) => void;
+  onTableRowClick: (event: MouseEvent) => void;
 }
 
 const meta: Meta<ScreenProps> = {

@@ -6,8 +6,8 @@ import type {
   MultipleSelectorReducer,
   MultipleSelectorState,
   MultipleSelectorStateAction,
-} from '../../components';
-import { DropdownSelector, initializeMultipleSelectorState } from '../../components';
+} from '../..';
+import { DropdownSelector, initializeMultipleSelectorState } from '../..';
 
 export interface StatusItem extends MultipleSelectorItem {
   name: string;
