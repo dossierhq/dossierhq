@@ -1,13 +1,13 @@
 @import './bulma.scss';
 @import './colors.scss';
 
-.sticky-row td,
+.is-sticky-row td,
 th {
   position: sticky;
   top: 0;
   background-color: $white;
 }
 
-.order-header:hover {
+.is-order-header:hover {
   background-color: $background;
 }
