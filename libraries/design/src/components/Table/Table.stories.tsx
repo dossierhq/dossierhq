@@ -1,4 +1,5 @@
 import type { Meta, Story } from '@storybook/react/types-6-0';
+import type { MouseEvent } from 'react';
 import React, { useState } from 'react';
 import type { TableProps } from './Table';
 import { Table } from './Table';
