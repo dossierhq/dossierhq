@@ -15,3 +15,4 @@ export { Icon } from './Icon/Icon';
 export type { IconName } from './Icon/Icon';
 export { IconButton } from './IconButton/IconButton';
 export { IconImage } from './IconImage';
+export { Table } from './Table/Table';

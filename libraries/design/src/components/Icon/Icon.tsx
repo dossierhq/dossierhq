@@ -14,6 +14,7 @@ import { Icon as BulmaIcon } from 'react-bulma-components';
 
 export interface IconProps {
   icon?: IconName | null;
+  text?: boolean;
 }
 
 const icons = {
@@ -23,13 +24,17 @@ const icons = {
   list: faThList,
   map: faMapMarkedAlt,
   search: faSearch,
-  orderDown: faSortDown,
-  orderUp: faSortUp,
+  orderAsc: faSortDown,
+  orderDesc: faSortUp,
 };
 
 export type IconName = keyof typeof icons;
 
-export function Icon({ icon }: IconProps): JSX.Element {
+export function Icon({ icon, text }: IconProps): JSX.Element {
   const iconImage = icon ? icons[icon] : null;
-  return <BulmaIcon>{iconImage ? <FontAwesomeIcon icon={iconImage} /> : null}</BulmaIcon>;
+  const hello = <BulmaIcon>{iconImage ? <FontAwesomeIcon icon={iconImage} /> : null}</BulmaIcon>;
+  if (text) {
+    return <span className="icon-text">{hello}</span>;
+  }
+  return hello;
 }

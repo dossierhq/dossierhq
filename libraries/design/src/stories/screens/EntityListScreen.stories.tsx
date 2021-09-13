@@ -7,7 +7,6 @@ import {
   Icon as BulmaIcon,
   Navbar,
   Pagination,
-  Table,
   Tag,
 } from 'react-bulma-components';
 import {
@@ -16,6 +15,7 @@ import {
   IconImage,
   MultipleSelectorStateActions,
   reduceMultipleSelectorState,
+  Table,
 } from '../../components';
 import type {
   EntityTypeSelectorDispatch,
@@ -34,7 +34,8 @@ import { initializeStatusSelectorState, StatusSelector } from './StatusSelector'
 
 interface ScreenProps {
   entityCount: number;
-  onMapClick: () => void;
+  onMapClick: (event: unknown) => void;
+  onTableRowClick: (event: unknown) => void;
 }
 
 const meta: Meta<ScreenProps> = {
@@ -43,6 +44,7 @@ const meta: Meta<ScreenProps> = {
   args: {
     entityCount: 50,
   },
+  argTypes: { onMapClick: { action: 'clicked' }, onTableRowClick: { action: 'clicked' } },
   parameters: {
     layout: 'fullscreen',
   },
@@ -53,7 +55,7 @@ const Template: Story<ScreenProps> = (args) => {
   return <Screen {...args} />;
 };
 
-function Screen({ entityCount, onMapClick }: ScreenProps): JSX.Element {
+function Screen({ entityCount, onMapClick, onTableRowClick }: ScreenProps): JSX.Element {
   const [entityTypeFilterState, entityTypeFilterDispatch] = useReducer<
     EntityTypeSelectorReducer,
     EntityTypeSelectorInitArgs
@@ -118,31 +120,33 @@ function Screen({ entityCount, onMapClick }: ScreenProps): JSX.Element {
         <Container className="is-flex" flexDirection="column">
           <EntityTypesList state={entityTypeFilterState} dispatch={entityTypeFilterDispatch} />
           <StatusTagList state={statusFilterState} dispatch={statusFilterDispatch} />
-          <Table size="fullwidth" hoverable>
-            <thead>
-              <tr className="sticky-row has-background-white">
-                <OrderByHeader active="down">Name</OrderByHeader>
-                <OrderByHeader active="up">Entity type</OrderByHeader>
-                <th className="is-narrow">Status</th>
-                <OrderByHeader className="is-narrow" active="up">
+          <Table>
+            <Table.Head>
+              <Table.Row sticky>
+                <Table.Header order="asc">Name</Table.Header>
+                <Table.Header order="">Entity type</Table.Header>
+                <Table.Header narrow>Status</Table.Header>
+                <Table.Header narrow order="">
                   Created
-                </OrderByHeader>
-                <OrderByHeader className="is-narrow">Updated</OrderByHeader>
-              </tr>
-            </thead>
-            <tbody>
+                </Table.Header>
+                <Table.Header narrow order="">
+                  Updated
+                </Table.Header>
+              </Table.Row>
+            </Table.Head>
+            <Table.Body>
               {[...Array(entityCount).keys()].map((_, index) => (
-                <tr key={index} className="is-clickable">
-                  <td>Hello</td>
-                  <td>BlogPost</td>
-                  <td className="is-narrow">
+                <Table.Row key={index} clickable onClick={onTableRowClick}>
+                  <Table.Cell>Hello</Table.Cell>
+                  <Table.Cell>BlogPost</Table.Cell>
+                  <Table.Cell narrow>
                     <Tag color="success">Published</Tag>
-                  </td>
-                  <td className="is-narrow">Today</td>
-                  <td className="is-narrow">Today</td>
-                </tr>
+                  </Table.Cell>
+                  <Table.Cell narrow>Today</Table.Cell>
+                  <Table.Cell narrow>Today</Table.Cell>
+                </Table.Row>
               ))}
-            </tbody>
+            </Table.Body>
           </Table>
         </Container>
       </div>
@@ -150,25 +154,6 @@ function Screen({ entityCount, onMapClick }: ScreenProps): JSX.Element {
         <Pagination current={3} showFirstLast total={5} />
       </Container>
     </div>
-  );
-}
-
-function OrderByHeader({
-  className,
-  active,
-  children,
-}: {
-  className?: string;
-  active?: 'up' | 'down';
-  children: React.ReactNode;
-}) {
-  return (
-    <th className={`is-clickable order-header ${className ?? ''}`}>
-      {children}
-      <span className="icon-text">
-        <Icon icon={active === 'down' ? 'orderDown' : active === 'up' ? 'orderUp' : null} />
-      </span>
-    </th>
   );
 }
 
