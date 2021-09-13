@@ -4,13 +4,15 @@ import {
   Button,
   Columns,
   Container,
-  Icon,
+  Icon as BulmaIcon,
   Navbar,
   Pagination,
   Table,
   Tag,
 } from 'react-bulma-components';
 import {
+  Icon,
+  IconButton,
   IconImage,
   MultipleSelectorStateActions,
   reduceMultipleSelectorState,
@@ -32,6 +34,7 @@ import { initializeStatusSelectorState, StatusSelector } from './StatusSelector'
 
 interface ScreenProps {
   entityCount: number;
+  onMapClick: () => void;
 }
 
 const meta: Meta<ScreenProps> = {
@@ -50,7 +53,7 @@ const Template: Story<ScreenProps> = (args) => {
   return <Screen {...args} />;
 };
 
-function Screen({ entityCount }: ScreenProps): JSX.Element {
+function Screen({ entityCount, onMapClick }: ScreenProps): JSX.Element {
   const [entityTypeFilterState, entityTypeFilterDispatch] = useReducer<
     EntityTypeSelectorReducer,
     EntityTypeSelectorInitArgs
@@ -76,9 +79,9 @@ function Screen({ entityCount }: ScreenProps): JSX.Element {
           <Columns.Column>
             <p className="control has-icons-left">
               <input className="input" type="text" placeholder="Search" />
-              <Icon size="small" align="left">
+              <BulmaIcon size="small" align="left">
                 <IconImage icon="search" />
-              </Icon>
+              </BulmaIcon>
             </p>
           </Columns.Column>
           <Columns.Column narrow>
@@ -96,21 +99,17 @@ function Screen({ entityCount }: ScreenProps): JSX.Element {
             />
           </Columns.Column>
           <Columns.Column narrow>
-            <Button>
-              <Icon size="small" align="left">
-                <IconImage icon="map" />
-              </Icon>
-            </Button>
+            <IconButton icon="map" onClick={onMapClick} />
           </Columns.Column>
           <Columns.Column narrow>
             <Button>
-              <Icon size="small">
+              <BulmaIcon size="small">
                 <IconImage icon="add" />
-              </Icon>
+              </BulmaIcon>
               <span>Create</span>
-              <Icon size="small">
+              <BulmaIcon size="small">
                 <IconImage icon="chevronDown" />
-              </Icon>
+              </BulmaIcon>
             </Button>
           </Columns.Column>
         </Columns>
@@ -167,9 +166,7 @@ function OrderByHeader({
     <th className={`is-clickable order-header ${className ?? ''}`}>
       {children}
       <span className="icon-text">
-        <Icon>
-          {active ? <IconImage icon={active === 'down' ? 'orderDown' : 'orderUp'} /> : null}
-        </Icon>
+        <Icon icon={active === 'down' ? 'orderDown' : active === 'up' ? 'orderUp' : null} />
       </span>
     </th>
   );
