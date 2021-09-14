@@ -11,3 +11,15 @@ th {
 .is-order-header:hover {
   background-color: $background;
 }
+
+@each $name, $value in $spacing-values {
+  .g-#{$name} {
+    #{gap}: $value !important ;
+  }
+  .gc-#{$name} {
+    #{column-gap}: $value !important ;
+  }
+  .gr-#{$name} {
+    #{row-gap}: $value !important ;
+  }
+}

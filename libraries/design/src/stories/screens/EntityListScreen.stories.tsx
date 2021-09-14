@@ -1,17 +1,10 @@
 import type { Meta, Story } from '@storybook/react/types-6-0';
 import type { MouseEvent } from 'react';
 import React, { useReducer } from 'react';
-import {
-  Button,
-  Columns,
-  Container,
-  Icon as BulmaIcon,
-  Navbar,
-  Pagination,
-  Tag,
-} from 'react-bulma-components';
+import { Button, Container, Icon as BulmaIcon, Navbar, Tag } from 'react-bulma-components';
 import {
   IconButton,
+  Input,
   MultipleSelectorStateActions,
   reduceMultipleSelectorState,
   Table,
@@ -95,7 +88,10 @@ function Screen({ entityCount, onMapClick, onTableRowClick }: ScreenProps): JSX.
         </Container>
       </div>
       <Container className="is-flex-grow-0">
-        <Pagination current={3} showFirstLast total={5} />
+        <IconButton icon="first" />
+        <IconButton icon="previous" />
+        <IconButton icon="next" />
+        <IconButton icon="last" />
       </Container>
     </div>
   );
@@ -115,40 +111,25 @@ function SearchBar({
   onMapClick: (event: MouseEvent) => void;
 }) {
   return (
-    <Columns gap={1 as unknown as undefined}>
-      <Columns.Column>
-        <p className="control has-icons-left">
-          <input className="input" type="text" placeholder="Search" />
-          <BulmaIcon size="small" align="left">
-            <IconImage icon="search" />
-          </BulmaIcon>
-        </p>
-      </Columns.Column>
-      <Columns.Column narrow>
-        <EntityTypeSelector
-          label="Entity type"
-          state={entityTypeFilterState}
-          dispatch={entityTypeFilterDispatch}
-        />
-      </Columns.Column>
-      <Columns.Column narrow>
-        <StatusSelector label="Status" state={statusFilterState} dispatch={statusFilterDispatch} />
-      </Columns.Column>
-      <Columns.Column narrow>
-        <IconButton icon="map" onClick={onMapClick} />
-      </Columns.Column>
-      <Columns.Column narrow>
-        <Button>
-          <BulmaIcon size="small">
-            <IconImage icon="add" />
-          </BulmaIcon>
-          <span>Create</span>
-          <BulmaIcon size="small">
-            <IconImage icon="chevronDown" />
-          </BulmaIcon>
-        </Button>
-      </Columns.Column>
-    </Columns>
+    <div className="is-flex is-flex-wrap-wrap g-2">
+      <Input iconLeft="search" placeholder="Search" />
+      <EntityTypeSelector
+        label="Entity type"
+        state={entityTypeFilterState}
+        dispatch={entityTypeFilterDispatch}
+      />
+      <StatusSelector label="Status" state={statusFilterState} dispatch={statusFilterDispatch} />
+      <IconButton icon="map" onClick={onMapClick} />
+      <Button>
+        <BulmaIcon size="small">
+          <IconImage icon="add" />
+        </BulmaIcon>
+        <span>Create</span>
+        <BulmaIcon size="small">
+          <IconImage icon="chevronDown" />
+        </BulmaIcon>
+      </Button>
+    </div>
   );
 }
 
