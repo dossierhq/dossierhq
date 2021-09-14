@@ -8,7 +8,7 @@ interface StoryProps extends IconProps {
   suffixText?: string;
 }
 
-const meta: Meta<IconProps> = {
+const meta: Meta<StoryProps> = {
   title: 'Components/Icon',
   component: Icon,
   args: {},

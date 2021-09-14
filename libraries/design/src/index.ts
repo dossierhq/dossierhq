@@ -2,6 +2,7 @@ export {
   DropdownSelector,
   IconButton,
   initializeMultipleSelectorState,
+  Input,
   MultipleSelectorStateActions,
   reduceMultipleSelectorState,
   Table,
