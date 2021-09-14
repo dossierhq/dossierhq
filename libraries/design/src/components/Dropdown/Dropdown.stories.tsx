@@ -1,5 +1,6 @@
 import type { Meta, Story } from '@storybook/react/types-6-0';
 import React from 'react';
+import { Icon } from '..';
 import type { DropdownProps } from './Dropdown';
 import { Dropdown } from './Dropdown';
 
@@ -13,7 +14,15 @@ type StoryProps = DropdownProps<StoryItem>;
 const meta: Meta<StoryProps> = {
   title: 'Components/Dropdown',
   component: Dropdown,
-  args: { renderItem: (item) => item.name },
+  args: {
+    children: 'Select',
+    items: [
+      { id: 'one', name: 'One' },
+      { id: 'two', name: 'Two' },
+      { id: 'three', name: 'Three' },
+    ],
+    renderItem: (item) => item.name,
+  },
   argTypes: { onItemClick: { action: 'clicked' } },
 };
 export default meta;
@@ -23,11 +32,15 @@ const Template: Story<StoryProps> = (args) => {
 };
 
 export const Normal = Template.bind({});
-Normal.args = {
-  text: 'Select',
-  items: [
-    { id: 'one', name: 'One' },
-    { id: 'two', name: 'Two' },
-    { id: 'three', name: 'Three' },
-  ],
+Normal.args = {};
+
+export const IconOnly = Template.bind({});
+IconOnly.args = {
+  iconLeft: 'add',
+  children: undefined,
+};
+
+export const IconText = Template.bind({});
+IconText.args = {
+  iconLeft: 'add',
 };
