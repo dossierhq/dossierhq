@@ -29,6 +29,7 @@ export function DropdownSelector<TItem extends MultipleSelectorItem>({
   state,
   dispatch,
 }: DropdownSelectorProps<TItem>): JSX.Element {
+  //TODO close on escape
   return (
     <Dropdown
       label={label}

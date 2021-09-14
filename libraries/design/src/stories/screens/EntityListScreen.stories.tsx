@@ -1,15 +1,15 @@
 import type { Meta, Story } from '@storybook/react/types-6-0';
 import type { MouseEvent } from 'react';
 import React, { useReducer } from 'react';
-import { Button, Container, Icon as BulmaIcon, Navbar, Tag } from 'react-bulma-components';
+import { Container, Navbar, Tag } from 'react-bulma-components';
 import {
+  Dropdown,
   IconButton,
   Input,
   MultipleSelectorStateActions,
   reduceMultipleSelectorState,
   Table,
 } from '../..';
-import { IconImage } from '../../components';
 import type {
   EntityTypeSelectorDispatch,
   EntityTypeSelectorInitArgs,
@@ -28,6 +28,7 @@ import { initializeStatusSelectorState, StatusSelector } from './StatusSelector'
 interface ScreenProps {
   entityCount: number;
   onMapClick: (event: MouseEvent) => void;
+  onCreateClick: (item: { id: string; name: string }) => void;
   onTableRowClick: (event: MouseEvent) => void;
 }
 
@@ -37,7 +38,11 @@ const meta: Meta<ScreenProps> = {
   args: {
     entityCount: 50,
   },
-  argTypes: { onMapClick: { action: 'clicked' }, onTableRowClick: { action: 'clicked' } },
+  argTypes: {
+    onCreateClick: { action: 'clicked' },
+    onMapClick: { action: 'clicked' },
+    onTableRowClick: { action: 'clicked' },
+  },
   parameters: {
     layout: 'fullscreen',
   },
@@ -48,7 +53,12 @@ const Template: Story<ScreenProps> = (args) => {
   return <Screen {...args} />;
 };
 
-function Screen({ entityCount, onMapClick, onTableRowClick }: ScreenProps): JSX.Element {
+function Screen({
+  entityCount,
+  onCreateClick,
+  onMapClick,
+  onTableRowClick,
+}: ScreenProps): JSX.Element {
   const [entityTypeFilterState, entityTypeFilterDispatch] = useReducer<
     EntityTypeSelectorReducer,
     EntityTypeSelectorInitArgs
@@ -77,6 +87,7 @@ function Screen({ entityCount, onMapClick, onTableRowClick }: ScreenProps): JSX.
             statusFilterState,
             statusFilterDispatch,
             onMapClick,
+            onCreateClick,
           }}
         />
       </Container>
@@ -105,12 +116,14 @@ function SearchBar({
   statusFilterState,
   statusFilterDispatch,
   onMapClick,
+  onCreateClick,
 }: {
   entityTypeFilterState: EntityTypeSelectorState;
   entityTypeFilterDispatch: EntityTypeSelectorDispatch;
   statusFilterState: StatusSelectorState;
   statusFilterDispatch: StatusSelectorDispatch;
   onMapClick: (event: MouseEvent) => void;
+  onCreateClick: (item: { id: string; name: string }) => void;
 }) {
   return (
     <div className="is-flex is-flex-wrap-wrap g-2">
@@ -122,15 +135,17 @@ function SearchBar({
       />
       <StatusSelector label="Status" state={statusFilterState} dispatch={statusFilterDispatch} />
       <IconButton icon="map" onClick={onMapClick} />
-      <Button>
-        <BulmaIcon size="small">
-          <IconImage icon="add" />
-        </BulmaIcon>
-        <span>Create</span>
-        <BulmaIcon size="small">
-          <IconImage icon="chevronDown" />
-        </BulmaIcon>
-      </Button>
+      <Dropdown
+        iconLeft="add"
+        items={[
+          { id: 'foo', name: 'Foo' },
+          { id: 'bar', name: 'Bar' },
+        ]}
+        renderItem={(it) => it.name}
+        onItemClick={onCreateClick}
+      >
+        Create
+      </Dropdown>
     </div>
   );
 }
