@@ -128,12 +128,12 @@ function SearchBar({
   return (
     <div className="is-flex is-flex-wrap-wrap g-2">
       <Input iconLeft="search" placeholder="Search" />
-      <EntityTypeSelector
-        label="Entity type"
-        state={entityTypeFilterState}
-        dispatch={entityTypeFilterDispatch}
-      />
-      <StatusSelector label="Status" state={statusFilterState} dispatch={statusFilterDispatch} />
+      <EntityTypeSelector state={entityTypeFilterState} dispatch={entityTypeFilterDispatch}>
+        Entity type
+      </EntityTypeSelector>
+      <StatusSelector state={statusFilterState} dispatch={statusFilterDispatch}>
+        Status
+      </StatusSelector>
       <IconButton icon="map" onClick={onMapClick} />
       <Dropdown
         iconLeft="add"

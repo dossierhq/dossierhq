@@ -1,6 +1,7 @@
 import type { Dispatch, ReactNode } from 'react';
 import React from 'react';
 import { Dropdown } from 'react-bulma-components';
+import type { IconName } from '..';
 import { Badge, Icon } from '..';
 import type {
   MultipleSelectorItem,
@@ -10,10 +11,11 @@ import type {
 import { MultipleSelectorStateActions } from './MultipleSelectorReducer';
 
 export interface DropdownSelectorProps<TItem extends MultipleSelectorItem> {
-  label: string;
+  iconLeft?: IconName;
   renderItem: (item: TItem) => ReactNode;
   state: MultipleSelectorState<TItem>;
   dispatch: Dispatch<MultipleSelectorStateAction<TItem>>;
+  children?: React.ReactNode;
 }
 
 interface DropdownSelectorItemProps<TItem extends MultipleSelectorItem> {
@@ -24,12 +26,26 @@ interface DropdownSelectorItemProps<TItem extends MultipleSelectorItem> {
 }
 
 export function DropdownSelector<TItem extends MultipleSelectorItem>({
-  label,
+  iconLeft,
   renderItem,
   state,
   dispatch,
+  children,
 }: DropdownSelectorProps<TItem>): JSX.Element {
   //TODO close on escape
+
+  const label =
+    iconLeft && children ? (
+      <>
+        <Icon icon={iconLeft} />
+        <span>{children}</span>
+      </>
+    ) : iconLeft ? (
+      <Icon icon={iconLeft} />
+    ) : (
+      children
+    );
+
   return (
     <Dropdown
       label={label}

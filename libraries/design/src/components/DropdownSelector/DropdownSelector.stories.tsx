@@ -24,7 +24,14 @@ const meta: Meta<StoryProps> = {
   title: 'Components/DropdownSelector',
   component: DropdownSelector,
   args: {
-    label: 'Select',
+    children: 'Select',
+    initialState: {
+      items: [
+        { id: 'one', name: 'One' },
+        { id: 'two', name: 'Two' },
+        { id: 'three', name: 'Three' },
+      ],
+    },
     renderItem: (item) => item.name,
   },
 };
@@ -43,12 +50,15 @@ function Wrapper({ initialState, ...args }: StoryProps) {
 }
 
 export const Normal = Template.bind({});
-Normal.args = {
-  initialState: {
-    items: [
-      { id: 'one', name: 'One' },
-      { id: 'two', name: 'Two' },
-      { id: 'three', name: 'Three' },
-    ],
-  },
+Normal.args = {};
+
+export const IconOnly = Template.bind({});
+IconOnly.args = {
+  iconLeft: 'add',
+  children: undefined,
+};
+
+export const IconText = Template.bind({});
+IconText.args = {
+  iconLeft: 'add',
 };

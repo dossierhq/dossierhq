@@ -1,6 +1,7 @@
 import React from 'react';
 import { Dropdown as BulmaDropdown } from 'react-bulma-components';
-import { Icon, IconName } from '..';
+import type { IconName } from '..';
+import { Icon } from '..';
 
 export interface DropdownProps<TItem extends DropdownItem = DropdownItem> {
   iconLeft?: IconName;
