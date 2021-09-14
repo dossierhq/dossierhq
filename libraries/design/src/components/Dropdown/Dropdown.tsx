@@ -5,6 +5,8 @@ import { Icon } from '..';
 
 export interface DropdownProps<TItem extends DropdownItem = DropdownItem> {
   iconLeft?: IconName;
+  left?: boolean;
+  up?: boolean;
   items: TItem[];
   renderItem: (item: TItem) => React.ReactNode;
   onItemClick?: (item: TItem) => void;
@@ -17,6 +19,8 @@ export interface DropdownItem {
 
 export function Dropdown<TItem extends DropdownItem>({
   iconLeft,
+  left,
+  up,
   items,
   renderItem,
   onItemClick,
@@ -43,7 +47,13 @@ export function Dropdown<TItem extends DropdownItem>({
     );
 
   return (
-    <BulmaDropdown label={label} icon={<Icon icon="chevronDown" />} onChange={handleChange}>
+    <BulmaDropdown
+      label={label}
+      right={left}
+      up={up}
+      icon={<Icon icon={up ? 'chevronUp' : 'chevronDown'} />}
+      onChange={handleChange}
+    >
       {items.map((item) => (
         <BulmaDropdown.Item key={item.id} value={item.id} renderAs="a">
           {renderItem(item)}

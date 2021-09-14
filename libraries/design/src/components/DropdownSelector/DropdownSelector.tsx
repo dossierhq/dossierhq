@@ -12,6 +12,8 @@ import { MultipleSelectorStateActions } from './MultipleSelectorReducer';
 
 export interface DropdownSelectorProps<TItem extends MultipleSelectorItem> {
   iconLeft?: IconName;
+  left?: boolean;
+  up?: boolean;
   renderItem: (item: TItem) => ReactNode;
   state: MultipleSelectorState<TItem>;
   dispatch: Dispatch<MultipleSelectorStateAction<TItem>>;
@@ -27,6 +29,8 @@ interface DropdownSelectorItemProps<TItem extends MultipleSelectorItem> {
 
 export function DropdownSelector<TItem extends MultipleSelectorItem>({
   iconLeft,
+  left,
+  up,
   renderItem,
   state,
   dispatch,
@@ -49,10 +53,12 @@ export function DropdownSelector<TItem extends MultipleSelectorItem>({
   return (
     <Dropdown
       label={label}
+      right={left}
+      up={up}
       icon={
         <>
           {state.selectedIds.length > 0 ? <Badge>{state.selectedIds.length}</Badge> : null}
-          <Icon icon="chevronDown" />
+          <Icon icon={up ? 'chevronUp' : 'chevronDown'} />
         </>
       }
     >

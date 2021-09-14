@@ -23,6 +23,7 @@ const meta: Meta<StoryProps> = {
     renderItem: (item) => item.name,
   },
   argTypes: { onItemClick: { action: 'clicked' } },
+  parameters: { layout: 'centered' },
 };
 export default meta;
 
@@ -43,3 +44,12 @@ export const IconText = Template.bind({});
 IconText.args = {
   iconLeft: 'add',
 };
+
+export const Left = Template.bind({});
+Left.args = { left: true };
+
+export const Up = Template.bind({});
+Up.args = { up: true };
+
+export const UpLeft = Template.bind({});
+UpLeft.args = { up: true, left: true };
