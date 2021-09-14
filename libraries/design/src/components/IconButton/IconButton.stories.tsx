@@ -7,6 +7,7 @@ const meta: Meta<IconButtonProps> = {
   title: 'Components/IconButton',
   component: IconButton,
   args: {},
+  argTypes: { onClick: { action: 'clicked' } },
 };
 export default meta;
 

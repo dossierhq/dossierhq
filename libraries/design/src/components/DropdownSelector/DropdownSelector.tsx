@@ -1,7 +1,7 @@
 import type { Dispatch, ReactNode } from 'react';
 import React from 'react';
-import { Dropdown, Icon } from 'react-bulma-components';
-import { Badge, IconImage } from '..';
+import { Dropdown } from 'react-bulma-components';
+import { Badge, Icon } from '..';
 import type {
   MultipleSelectorItem,
   MultipleSelectorState,
@@ -35,9 +35,7 @@ export function DropdownSelector<TItem extends MultipleSelectorItem>({
       icon={
         <>
           {state.selectedIds.length > 0 ? <Badge>{state.selectedIds.length}</Badge> : null}
-          <Icon>
-            <IconImage icon="chevronDown" />
-          </Icon>
+          <Icon icon="chevronDown" />
         </>
       }
     >

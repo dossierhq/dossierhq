@@ -1,4 +1,5 @@
 export {
+  Dropdown,
   DropdownSelector,
   IconButton,
   initializeMultipleSelectorState,

@@ -16,7 +16,7 @@ interface StoryItem {
   name: string;
 }
 
-export type StoryProps = Omit<DropdownSelectorProps<StoryItem>, 'state' | 'dispatch'> & {
+type StoryProps = Omit<DropdownSelectorProps<StoryItem>, 'state' | 'dispatch'> & {
   initialState: MultipleSelectorStateInitializerArgs<StoryItem>;
 };
 
