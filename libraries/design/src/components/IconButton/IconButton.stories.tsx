@@ -16,3 +16,6 @@ const Template: Story<IconButtonProps> = (args) => {
 
 export const Normal = Template.bind({});
 Normal.args = { icon: 'add' };
+
+export const Disabled = Template.bind({});
+Disabled.args = { disabled: true, icon: 'add' };
