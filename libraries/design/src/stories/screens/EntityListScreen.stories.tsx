@@ -88,10 +88,12 @@ function Screen({ entityCount, onMapClick, onTableRowClick }: ScreenProps): JSX.
         </Container>
       </div>
       <Container className="is-flex-grow-0">
-        <IconButton icon="first" />
-        <IconButton icon="previous" />
-        <IconButton icon="next" />
-        <IconButton icon="last" />
+        <IconButton.Group condensed>
+          <IconButton icon="first" />
+          <IconButton icon="previous" />
+          <IconButton icon="next" />
+          <IconButton icon="last" />
+        </IconButton.Group>
       </Container>
     </div>
   );
