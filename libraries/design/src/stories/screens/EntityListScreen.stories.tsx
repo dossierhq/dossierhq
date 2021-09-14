@@ -137,6 +137,7 @@ function SearchBar({
       <IconButton icon="map" onClick={onMapClick} />
       <Dropdown
         iconLeft="add"
+        left
         items={[
           { id: 'foo', name: 'Foo' },
           { id: 'bar', name: 'Bar' },
