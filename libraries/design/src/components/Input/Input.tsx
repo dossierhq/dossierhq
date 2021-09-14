@@ -16,8 +16,4 @@ export function Input({ iconLeft, placeholder }: InputProps): JSX.Element {
       {iconLeft ? <Icon className="is-left" icon={iconLeft} /> : null}
     </p>
   );
-  //   <BulmaIcon size="small" align="left">
-  //     <IconImage icon="search" />
-  //   </BulmaIcon>
-  // </p>
 }
