@@ -2,6 +2,7 @@ import type { Dispatch } from 'react';
 import React from 'react';
 import { Tag } from 'react-bulma-components';
 import type {
+  DropdownSelectorProps,
   MultipleSelectorItem,
   MultipleSelectorReducer,
   MultipleSelectorState,
@@ -19,11 +20,7 @@ export type StatusSelectorInitArgs = { selectedIds?: string[] };
 export type StatusSelectorState = MultipleSelectorState<StatusItem>;
 export type StatusSelectorDispatch = Dispatch<MultipleSelectorStateAction<StatusItem>>;
 
-interface Props {
-  label: string;
-  state: StatusSelectorState;
-  dispatch: StatusSelectorDispatch;
-}
+type Props = Omit<DropdownSelectorProps<StatusItem>, 'renderItem'>;
 
 export function initializeStatusSelectorState({
   selectedIds,
@@ -40,12 +37,10 @@ export function initializeStatusSelectorState({
   });
 }
 
-export function StatusSelector({ label, state, dispatch }: Props): JSX.Element {
+export function StatusSelector(props: Props): JSX.Element {
   return (
-    <DropdownSelector
-      label={label}
-      state={state}
-      dispatch={dispatch}
+    <DropdownSelector<StatusItem>
+      {...props}
       renderItem={(item) => <Tag color={item.color}>{item.name}</Tag>}
     />
   );

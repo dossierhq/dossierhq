@@ -9,6 +9,8 @@ export {
   Table,
 } from './components';
 export type {
+  IconName,
+  DropdownSelectorProps,
   MultipleSelectorItem,
   MultipleSelectorReducer,
   MultipleSelectorState,
