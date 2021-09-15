@@ -2,6 +2,6 @@ import dynamic from 'next/dynamic';
 
 const VoyagerPage = dynamic(() => import('../components/VoyagerPage/VoyagerPage'), { ssr: false });
 
-export default function EntitiesIndexPage(): JSX.Element {
+export default function VoyagerIndexPage(): JSX.Element {
   return <VoyagerPage />;
 }

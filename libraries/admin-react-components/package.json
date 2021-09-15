@@ -82,6 +82,7 @@
   "dependencies": {
     "@editorjs/editorjs": "~2.22.2",
     "@jonasb/datadata-core": "workspace:*",
+    "@jonasb/datadata-design": "workspace:*",
     "leaflet": "~1.7.1",
     "lodash": "~4.17.21",
     "react": "~17.0.2",

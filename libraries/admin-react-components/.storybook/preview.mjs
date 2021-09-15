@@ -1,3 +1,4 @@
+import '@jonasb/datadata-design/main.css';
 import '../src/main.css';
 import '../src/icons.css';
 import 'leaflet/dist/leaflet.css';
