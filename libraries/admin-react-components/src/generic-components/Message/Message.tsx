@@ -15,15 +15,15 @@ export interface MessageProps extends MessageItem {
 
 export function Message({ kind, title, message, onDismiss }: MessageProps): JSX.Element {
   return (
-    <div className={`dd message has-background has-shadow ${kindToClassName(kind)}`}>
+    <div className={`dd-message dd-has-background dd-has-shadow ${kindToClassName(kind)}`}>
       <Stack>
         {onDismiss ? (
           <Stack.Layer top right>
             <IconButton icon="remove" title="Close" onClick={onDismiss} />
           </Stack.Layer>
         ) : null}
-        {title ? <p className="dd text-headline5">{title}</p> : null}
-        {message ? <p className="dd text-body1">{message}</p> : null}
+        {title ? <p className="dd-text-headline5">{title}</p> : null}
+        {message ? <p className="dd-text-body1">{message}</p> : null}
       </Stack>
     </div>
   );

@@ -23,7 +23,7 @@ export default function EntitiesListPage(): JSX.Element {
 
   return (
     <DataDataContext.Provider value={contextValue}>
-      <Column className="position-fixed inset-0">
+      <Column className="dd-position-fixed dd-inset-0">
         <TypePicker
           id="create-entity"
           text="Create entity"

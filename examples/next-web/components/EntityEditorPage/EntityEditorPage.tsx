@@ -59,7 +59,7 @@ function EntityEditorPageInner({
     <EntityEditorDispatchContext.Provider value={dispatchEditorState}>
       <EntityEditorStateContext.Provider value={editorState}>
         <EntityEditorContainer
-          className="position-fixed inset-0"
+          className="dd-position-fixed dd-inset-0"
           {...{ editorState, dispatchEditorState }}
         />
       </EntityEditorStateContext.Provider>

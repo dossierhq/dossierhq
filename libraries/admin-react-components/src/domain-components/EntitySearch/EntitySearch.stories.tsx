@@ -14,7 +14,7 @@ const meta: Meta<EntitySearchStoryProps> = {
   title: 'Domain/EntitySearch',
   component: EntitySearch,
   argTypes: { onEntityClick: { action: 'entity-click' } },
-  args: { className: 'h-100' },
+  args: { className: 'dd-h-100' },
 };
 export default meta;
 

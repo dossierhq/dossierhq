@@ -12,7 +12,7 @@ export function Tag({ kind, text }: TagProps): JSX.Element {
   return (
     <span
       className={joinClassNames(
-        'dd has-background text-caption p-1 is-rounded ml-1',
+        'dd-has-background dd-text-caption dd-p-1 dd-is-rounded dd-ml-1',
         kindToClassName(kind)
       )}
     >

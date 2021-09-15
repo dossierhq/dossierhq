@@ -51,7 +51,7 @@ export function EntityItemFieldEditor({
       <Modal show={show} onClose={handleClose} size="large">
         {show ? (
           <EntitySearch
-            className="w-100 h-100"
+            className="dd-w-100 dd-h-100"
             query={{ entityTypes: fieldSpec.entityTypes }}
             onEntityClick={handleEntityClick}
           />

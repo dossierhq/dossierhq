@@ -44,8 +44,8 @@ export function EntityEditorOverview(): JSX.Element {
           rounded={false}
           onClick={() => handleEntityClick(draft.id)}
         >
-          <p className="dd text-subtitle2">{draft.entity?.entitySpec.name}</p>
-          <p className="dd text-body">{draft.entity?.name || '(Unnamed)'}</p>
+          <p className="dd-text-subtitle2">{draft.entity?.entitySpec.name}</p>
+          <p className="dd-text-body">{draft.entity?.name || '(Unnamed)'}</p>
         </Button>
       ))}
     </Column>

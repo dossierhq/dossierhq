@@ -29,7 +29,11 @@ ThreeColumns.args = {
   children: (
     <>
       <RowElement style={{ background: 'green', width: '1em', height: '1em' }} />
-      <RowItem grow className="has-background bg-danger" style={{ width: '1em', height: '1em' }} />
+      <RowItem
+        grow
+        className="dd-has-background dd-bg-danger"
+        style={{ width: '1em', height: '1em' }}
+      />
       <RowElement style={{ background: 'blue', width: '1em', height: '1em' }} />
     </>
   ),

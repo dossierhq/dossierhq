@@ -20,15 +20,15 @@ export function EntityEditorContainer({ className }: EntityEditorContainerProps)
   useEntityEditorFocused();
 
   return (
-    <div className={joinClassNames('dd flex-row overflow-hidden', className)}>
+    <div className={joinClassNames('dd-flex-row dd-overflow-hidden', className)}>
       <EntityEditorOverview />
-      <div className="dd flex-grow flex-column g-2 overflow-y-scroll px-3">
+      <div className="dd-flex-grow dd-flex-column dd-g-2 dd-overflow-y-scroll dd-px-3">
         {drafts.map((draftState) => (
           <EntityEditor key={draftState.id} entityId={draftState.id} />
         ))}
       </div>
       <div>
-        {activeEntityId ? <EntityMetadata className="h-100" entityId={activeEntityId} /> : null}
+        {activeEntityId ? <EntityMetadata className="dd-h-100" entityId={activeEntityId} /> : null}
       </div>
     </div>
   );

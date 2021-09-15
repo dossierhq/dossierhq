@@ -9,7 +9,6 @@ import {
   Tooltip,
   useMapEvents,
 } from 'react-leaflet';
-import { joinClassNames } from '../../utils/ClassNameUtils';
 
 const defaultCenter = { lat: 55.60498, lng: 13.003822 };
 
@@ -18,7 +17,7 @@ const transparentImage =
 
 const currentMarkerIcon = new Icon({
   iconUrl: transparentImage,
-  className: 'dd icon-map-marker',
+  className: 'dd-icon-map-marker',
   iconSize: [22, 28],
   iconAnchor: [11, 26],
 });
@@ -54,7 +53,7 @@ export const MapContainer: MapContainerComponent = ({
 }: MapContainerProps) => {
   return (
     <LeafletMapContainer
-      className={joinClassNames('dd', className)}
+      className={className}
       center={center ?? defaultCenter}
       zoom={13}
       scrollWheelZoom

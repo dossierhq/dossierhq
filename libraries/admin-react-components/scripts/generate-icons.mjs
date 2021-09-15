@@ -53,7 +53,7 @@ async function writeToCss(icons) {
   for (const { name, optimizedSvg, toCss } of icons) {
     if (!toCss) continue;
     if (result) result += '\n';
-    result += `.dd.icon-${name} {\n`;
+    result += `.dd-icon-${name} {\n`;
     result += `  background-image: url("${svgToDataUri(optimizedSvg)}");\n`;
     result += '}\n';
   }

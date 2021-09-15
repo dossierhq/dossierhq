@@ -39,7 +39,7 @@ type RowElementProps<Tag extends keyof JSX.IntrinsicElements> = JSX.IntrinsicEle
 
 export function Row({ className, gap, children }: RowProps): JSX.Element {
   return (
-    <div className={joinClassNames('dd flex-row', className, gapClassName(gap))}>{children}</div>
+    <div className={joinClassNames('dd-flex-row', className, gapClassName(gap))}>{children}</div>
   );
 }
 
@@ -53,7 +53,7 @@ export function RowAs<AsProps extends LayoutProps>({
   const Element = as ?? 'div';
   return (
     <Element
-      className={joinClassNames('dd flex-row', className, gapClassName(gap))}
+      className={joinClassNames('dd-flex-row', className, gapClassName(gap))}
       {...(args as unknown as AsProps)}
     >
       {children}
@@ -71,7 +71,7 @@ export function RowAsElement<Tag extends keyof JSX.IntrinsicElements>({
   const Element = as as keyof JSX.IntrinsicElements;
   return (
     <Element
-      className={joinClassNames('dd flex-row', className, gapClassName(gap))}
+      className={joinClassNames('dd-flex-row', className, gapClassName(gap))}
       {...(args as unknown)}
     >
       {children}
@@ -91,10 +91,9 @@ function itemPropsAsClassName({
   width: 0 | '100%' | undefined;
 }) {
   return joinClassNames(
-    'dd',
-    grow ? 'flex-grow' : '',
-    height === 0 ? 'h-0' : height === '100%' ? 'h-100' : '',
-    width === 0 ? 'w-0' : width === '100%' ? 'w-100' : '',
+    grow ? 'dd-flex-grow' : '',
+    height === 0 ? 'dd-h-0' : height === '100%' ? 'dd-h-100' : '',
+    width === 0 ? 'dd-w-0' : width === '100%' ? 'dd-w-100' : '',
     className
   );
 }

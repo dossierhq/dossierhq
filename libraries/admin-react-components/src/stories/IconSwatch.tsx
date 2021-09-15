@@ -4,7 +4,7 @@ import { Icon, IconTypes } from '../';
 
 export function IconSwatch({ icon }: IconProps): JSX.Element {
   return (
-    <div className="dd has-background text-body1">
+    <div className="dd-has-background dd-text-body1">
       {icon}
       <br />
       <div style={{ display: 'flex', flexDirection: 'row' }}>
@@ -17,7 +17,7 @@ export function IconSwatch({ icon }: IconProps): JSX.Element {
           <Icon icon={icon} />
         </span>
         {['blank1', 'blank2', 'primary', 'danger'].map((bg) => (
-          <div key={bg} className={`dd has-background bg-${bg}`}>
+          <div key={bg} className={`dd-has-background dd-bg-${bg}`}>
             <Icon icon={icon} />
           </div>
         ))}

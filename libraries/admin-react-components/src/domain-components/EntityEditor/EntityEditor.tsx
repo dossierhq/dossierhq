@@ -121,7 +121,7 @@ function EntityEditorInner({
     <div id={entityId} data-entityid={entityId}>
       <ColumnAs
         as={Form}
-        className="p-3 is-rounded has-background has-shadow"
+        className="dd-p-3 dd-is-rounded dd-has-background dd-has-shadow"
         onSubmit={() =>
           submitEntity(
             draftState,

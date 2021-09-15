@@ -40,7 +40,7 @@ export function ValueTypeFieldEditor({ id, value, fieldSpec, onChange }: Props):
   return (
     <Segment>
       <Row gap={2}>
-        <RowItem grow className="text-caption">
+        <RowItem grow className="dd-text-caption">
           {type}
         </RowItem>
         <RowItem

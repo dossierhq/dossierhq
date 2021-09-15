@@ -30,22 +30,22 @@ Corners.args = {
   children: (
     <>
       <Stack.Layer top left>
-        <p className="dd text-subtitle1" style={{ background: 'yellow' }}>
+        <p className="dd-text-subtitle1" style={{ background: 'yellow' }}>
           top-left
         </p>
       </Stack.Layer>
       <Stack.Layer top right>
-        <p className="dd text-subtitle1" style={{ background: 'yellow' }}>
+        <p className="dd-text-subtitle1" style={{ background: 'yellow' }}>
           top-right
         </p>
       </Stack.Layer>
       <Stack.Layer bottom left>
-        <p className="dd text-subtitle1" style={{ background: 'yellow' }}>
+        <p className="dd-text-subtitle1" style={{ background: 'yellow' }}>
           bottom-left
         </p>
       </Stack.Layer>
       <Stack.Layer bottom right>
-        <p className="dd text-subtitle1" style={{ background: 'yellow' }}>
+        <p className="dd-text-subtitle1" style={{ background: 'yellow' }}>
           bottom-right
         </p>
       </Stack.Layer>

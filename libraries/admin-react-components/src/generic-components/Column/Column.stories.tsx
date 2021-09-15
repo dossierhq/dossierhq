@@ -31,7 +31,7 @@ ThreeRows.args = {
       <ColumnElement style={{ background: 'green', width: '1em', height: '1em' }} />
       <ColumnItem
         grow
-        className="has-background bg-danger"
+        className="dd-has-background dd-bg-danger"
         style={{ width: '1em', height: '1em' }}
       />
       <ColumnElement style={{ background: 'blue', width: '1em', height: '1em' }} />
@@ -55,7 +55,7 @@ TwoRowsWithRows.args = {
 
 export const OverflowScrollMiddleRow = Template.bind({});
 OverflowScrollMiddleRow.args = {
-  className: 'h-100',
+  className: 'dd-h-100',
   children: (
     <>
       <ColumnElement style={{ background: 'green', width: '1em', height: '1em' }} />
