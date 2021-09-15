@@ -24,21 +24,21 @@ interface StackComponent extends FunctionComponent<StackProps> {
 }
 
 export const Stack: StackComponent = ({ children }: StackProps) => (
-  <div className="dd stack">{children}</div>
+  <div className="dd-stack">{children}</div>
 );
 Stack.displayName = 'Stack';
 
 Stack.Layer = ({ left, top, right, bottom, children }: StackLayerProps) => {
   const locations = [];
-  if (left) locations.push('left');
-  if (top) locations.push('top');
-  if (right) locations.push('right');
-  if (bottom) locations.push('bottom');
-  return <div className={`dd stack-layer ${locations.join(' ')}`}>{children}</div>;
+  if (left) locations.push('dd-left');
+  if (top) locations.push('dd-top');
+  if (right) locations.push('dd-right');
+  if (bottom) locations.push('dd-bottom');
+  return <div className={`dd-stack-layer ${locations.join(' ')}`}>{children}</div>;
 };
 Stack.Layer.displayName = 'Stack.Layer';
 
 Stack.CenterLayer = ({ children }: StackCenterLayerProps) => (
-  <div className="dd stack-center-layer">{children}</div>
+  <div className="dd-stack-center-layer">{children}</div>
 );
 Stack.CenterLayer.displayName = 'Stack.CenterLayer';

@@ -5,5 +5,5 @@ interface SegmentProps {
 }
 
 export function Segment({ children }: SegmentProps): JSX.Element {
-  return <div className="dd segment has-shadow">{children}</div>;
+  return <div className="dd-segment dd-has-shadow">{children}</div>;
 }

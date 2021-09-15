@@ -33,11 +33,11 @@ export function Button({
     <button
       id={id}
       className={joinClassNames(
-        'dd button has-background hoverable text-button',
+        'dd-button dd-has-background dd-hoverable dd-text-button',
         className,
         kindToClassName(kind),
-        selected ? 'is-selected' : '',
-        rounded === false ? '' : 'is-rounded'
+        selected ? 'dd-is-selected' : '',
+        rounded === false ? '' : 'dd-is-rounded'
       )}
       type={type ?? 'button'}
       onClick={disabled || loading ? undefined : onClick}
@@ -48,7 +48,7 @@ export function Button({
           <Stack.CenterLayer>
             <Loader />
           </Stack.CenterLayer>
-          <div className="dd dim">{children}</div>
+          <div className="dd-dim">{children}</div>
         </Stack>
       ) : (
         children

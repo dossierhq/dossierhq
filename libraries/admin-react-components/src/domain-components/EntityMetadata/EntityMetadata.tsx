@@ -43,22 +43,25 @@ export function EntityMetadata({
   const { entity, latestServerVersion, publishState } = draftState;
 
   return (
-    <Column className={joinClassNames('has-shadow has-background py-2', className)} gap={2}>
-      <ColumnItem className="mx-2">
-        <p className="dd text-subtitle2">Name</p>
-        <p className="dd text-body1">{entity?.name}</p>
+    <Column
+      className={joinClassNames('dd-has-shadow dd-has-background dd-py-2', className)}
+      gap={2}
+    >
+      <ColumnItem className="dd-mx-2">
+        <p className="dd-text-subtitle2">Name</p>
+        <p className="dd-text-body1">{entity?.name}</p>
       </ColumnItem>
-      <ColumnItem className="mx-2">
-        <p className="dd text-subtitle2">Type</p>
-        <p className="dd text-body1">{entity?.entitySpec.name}</p>
+      <ColumnItem className="dd-mx-2">
+        <p className="dd-text-subtitle2">Type</p>
+        <p className="dd-text-body1">{entity?.entitySpec.name}</p>
       </ColumnItem>
-      <ColumnItem className="mx-2">
-        <p className="dd text-subtitle2">ID</p>
-        <p className="dd text-body1">{entityId}</p>
+      <ColumnItem className="dd-mx-2">
+        <p className="dd-text-subtitle2">ID</p>
+        <p className="dd-text-body1">{entityId}</p>
       </ColumnItem>
-      <ColumnItem className="mx-2">
+      <ColumnItem className="dd-mx-2">
         <Row>
-          <RowElement as="p" className="text-subtitle2" grow>
+          <RowElement as="p" className="dd-text-subtitle2" grow>
             Publish state
           </RowElement>
           {publishState ? <PublishStateTag publishState={publishState} /> : null}
@@ -100,15 +103,15 @@ function EntityHistoryList({ draftState }: { draftState: EntityEditorDraftState 
           //TODO change Stack to not need outer <div>
           //TODO change drop down direction to leftwards
           return (
-            <div key={version.version} className="dd px-2 py-1">
+            <div key={version.version} className="dd-px-2 dd-py-1">
               <Stack>
                 <Column>
-                  <p className="dd text-subtitle2">
+                  <p className="dd-text-subtitle2">
                     {`Version ${version.version}`}
                     {version.published ? <Tag kind="primary" text="Published" /> : null}
                   </p>
-                  <p className="dd text-body1">{version.createdAt.toLocaleString()}</p>
-                  <p className="dd text-body1">{version.createdBy}</p>
+                  <p className="dd-text-body1">{version.createdAt.toLocaleString()}</p>
+                  <p className="dd-text-body1">{version.createdBy}</p>
                 </Column>
                 <Stack.Layer top right>
                   <PublishButton className="" entityId={draftState.id} version={version} />
@@ -183,12 +186,12 @@ function PublishingHistory({ draftState }: { draftState: EntityEditorDraftState 
     <>
       {publishingHistory?.events.map((event, index) => {
         return (
-          <Column key={index} className="px-2 py-1">
-            <p className="dd text-subtitle2">
+          <Column key={index} className="dd-px-2 dd-py-1">
+            <p className="dd-text-subtitle2">
               {`${event.kind}${event.version !== null ? ` (version ${event.version})` : ''}`}
             </p>
-            <p className="dd text-body1">{event.publishedAt.toLocaleString()}</p>
-            <p className="dd text-body1">{event.publishedBy}</p>
+            <p className="dd-text-body1">{event.publishedAt.toLocaleString()}</p>
+            <p className="dd-text-body1">{event.publishedBy}</p>
           </Column>
         );
       })}

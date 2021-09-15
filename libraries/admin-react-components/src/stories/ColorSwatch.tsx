@@ -20,7 +20,7 @@ export function ColorSwatch({ className }: ColorSwatchProps): JSX.Element {
 
   return (
     <div
-      className={`dd ${className} has-background text-body1`}
+      className={`${className} dd-has-background dd-text-body1`}
       ref={onRefChanged}
       style={{
         width: '150px',
@@ -52,10 +52,10 @@ export function ColorSwatchGroup({ className }: ColorSwatchGroupProps): JSX.Elem
   return (
     <div style={{ display: 'flex', flexDirection: 'row' }}>
       <ColorSwatch className={className} />
-      <ColorSwatch className={`${className} is-disabled`} />
-      <ColorSwatch className={`${className} is-hover`} />
-      <ColorSwatch className={`${className} is-active`} />
-      <ColorSwatch className={`${className} is-selected`} />
+      <ColorSwatch className={`${className} dd-is-disabled`} />
+      <ColorSwatch className={`${className} dd-is-hover`} />
+      <ColorSwatch className={`${className} dd-is-active`} />
+      <ColorSwatch className={`${className} dd-is-selected`} />
     </div>
   );
 }

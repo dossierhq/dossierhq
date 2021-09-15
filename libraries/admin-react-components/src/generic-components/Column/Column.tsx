@@ -82,7 +82,7 @@ function columnPropsAsClassName({
   className: string | undefined;
   gap: SpacingSize | undefined;
 }) {
-  return joinClassNames('dd flex-column', className, gapClassName(gap));
+  return joinClassNames('dd-flex-column', className, gapClassName(gap));
 }
 
 function itemPropsAsClassName({
@@ -99,11 +99,10 @@ function itemPropsAsClassName({
   overflowY: 'scroll' | undefined;
 }) {
   return joinClassNames(
-    'dd',
-    grow ? 'flex-grow' : '',
-    overflowY === 'scroll' ? 'overflow-y-scroll' : '',
-    height === 0 ? 'h-0' : height === '100%' ? 'h-100' : '',
-    width === 0 ? 'w-0' : width === '100%' ? 'w-100' : '',
+    grow ? 'dd-flex-grow' : '',
+    overflowY === 'scroll' ? 'dd-overflow-y-scroll' : '',
+    height === 0 ? 'dd-h-0' : height === '100%' ? 'dd-h-100' : '',
+    width === 0 ? 'dd-w-0' : width === '100%' ? 'dd-w-100' : '',
     className
   );
 }

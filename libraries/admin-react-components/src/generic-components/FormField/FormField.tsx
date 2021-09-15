@@ -9,10 +9,10 @@ interface Props {
 export function FormField({ htmlFor, label, children }: Props): JSX.Element {
   return (
     <div>
-      <label htmlFor={htmlFor} className="dd text-subtitle1">
+      <label htmlFor={htmlFor} className="dd-text-subtitle1">
         {label}
       </label>
-      <div className="dd form-control">{children}</div>
+      <div className="dd-form-control">{children}</div>
     </div>
   );
 }

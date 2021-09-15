@@ -16,7 +16,7 @@ export function joinClassNames(...classNames: Array<string | undefined>): string
 
 export function gapClassName(gap?: SpacingSize): string {
   if (typeof gap === 'number') {
-    return `g-${gap}`;
+    return `dd-g-${gap}`;
   }
   return '';
 }

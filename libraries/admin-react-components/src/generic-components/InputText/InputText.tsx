@@ -27,7 +27,7 @@ export function InputText({
   return (
     <input
       id={id}
-      className={joinClassNames('dd text-body1 input', className)}
+      className={joinClassNames('dd-text-body1 dd-input', className)}
       type={type ?? 'text'}
       value={value ?? ''}
       min={min}

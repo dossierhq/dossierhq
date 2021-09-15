@@ -40,11 +40,11 @@ export function DropDown<TItem extends DropDownItem>({
         <IconButton id={id} icon="chevron-down" title={text} onClick={() => setActive(!isActive)} />
       )}
       {isActive ? (
-        <ul className="dd dropdown-menu is-rounded has-background has-shadow list-container">
+        <ul className="dd-dropdown-menu dd-is-rounded dd-has-background dd-has-shadow dd-list-container">
           {items.map((item) => (
             <li
               key={item.key}
-              className="dd button text-button hoverable"
+              className="dd-button dd-text-button dd-hoverable"
               onClick={() => {
                 onItemClick(item);
                 setActive(false);

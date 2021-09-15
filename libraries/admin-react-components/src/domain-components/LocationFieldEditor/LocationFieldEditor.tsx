@@ -48,7 +48,7 @@ function LocationEditor({
   }, [onChange]);
 
   return (
-    <Column className="h-100">
+    <Column className="dd-h-100">
       <ColumnItem as={Row}>
         <InputText
           value={latString}

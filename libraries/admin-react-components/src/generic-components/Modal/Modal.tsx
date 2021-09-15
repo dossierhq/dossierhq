@@ -24,9 +24,9 @@ export function Modal({ show, size, onClose, children }: ModalProps): JSX.Elemen
   const sizeClassName = size === 'large' ? 'is-large' : '';
 
   return (
-    <div className="dd modal" role="dialog">
-      <div className="dd modal-background" onClick={onClose} />
-      <div className={`dd modal-content has-background is-rounded ${sizeClassName}`}>
+    <div className="dd-modal" role="dialog">
+      <div className="dd-modal-background" onClick={onClose} />
+      <div className={`dd-modal-content dd-has-background dd-is-rounded ${sizeClassName}`}>
         {children}
       </div>
     </div>

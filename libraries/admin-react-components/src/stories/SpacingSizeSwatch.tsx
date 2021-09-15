@@ -16,9 +16,9 @@ export function SpacingSizeSwatch({ size }: SpacingSizeSwatchProps): JSX.Element
   }, []);
 
   return (
-    <div className="dd text-body">
+    <div className="dd-text-body">
       Size {size}: {computedSize}
-      <div className={`dd ml-${size}`} ref={onRefChanged} />
+      <div className={`dd-ml-${size}`} ref={onRefChanged} />
     </div>
   );
 }

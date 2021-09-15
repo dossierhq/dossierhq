@@ -25,7 +25,7 @@ export function IconButton({
   return (
     <button
       id={id}
-      className={joinClassNames('dd icon-button', className)}
+      className={joinClassNames('dd-icon-button', className)}
       title={title}
       onClick={disabled ? undefined : onClick}
       disabled={disabled}

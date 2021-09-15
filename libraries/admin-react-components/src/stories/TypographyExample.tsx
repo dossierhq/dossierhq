@@ -33,7 +33,7 @@ export default function TypographyExample({ className, loremIpsum }: Props): JSX
       }}
     >
       <p
-        className={`dd ${className}`}
+        className={className}
         ref={onRefChanged}
         style={{ border: '1px dashed black', marginBottom: '0.5rem' }}
       >

@@ -10,7 +10,7 @@ const meta: Meta<EntityMapProps> = {
   component: EntityMap,
   argTypes: { onEntityClick: { action: 'entity-click' } },
   args: {
-    className: 'position-fixed inset-0',
+    className: 'dd-position-fixed dd-inset-0',
   },
 };
 export default meta;

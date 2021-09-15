@@ -54,7 +54,7 @@ export function EntityList({
   }, [connection, setPaging, count]);
 
   return (
-    <div className={joinClassNames('dd list-container', className)}>
+    <div className={joinClassNames('dd-list-container', className)}>
       {connection &&
         connection.edges.map((edge) => {
           if (edge.node.isOk()) {

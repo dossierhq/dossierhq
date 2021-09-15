@@ -10,7 +10,7 @@ export function MarginSwatch({ className }: MarginSwatchProps): JSX.Element {
   return (
     <div style={{ border: 'solid 1px black' }}>
       <p
-        className={joinClassNames('dd text-caption', className)}
+        className={joinClassNames('dd-text-caption', className)}
         style={{
           width: '30px',
           height: '30px',
@@ -31,14 +31,14 @@ interface MarginSwatchGroupProps {
 
 export function MarginSwatchGroup({ size }: MarginSwatchGroupProps): JSX.Element {
   return (
-    <div className="dd flex-row g-2" style={{ alignItems: 'center' }}>
-      <MarginSwatch className={`m-${size}`} />
-      <MarginSwatch className={`mx-${size}`} />
-      <MarginSwatch className={`my-${size}`} />
-      <MarginSwatch className={`ml-${size}`} />
-      <MarginSwatch className={`mt-${size}`} />
-      <MarginSwatch className={`mr-${size}`} />
-      <MarginSwatch className={`mb-${size}`} />
+    <div className="dd-flex-row dd-g-2" style={{ alignItems: 'center' }}>
+      <MarginSwatch className={`dd-m-${size}`} />
+      <MarginSwatch className={`dd-mx-${size}`} />
+      <MarginSwatch className={`dd-my-${size}`} />
+      <MarginSwatch className={`dd-ml-${size}`} />
+      <MarginSwatch className={`dd-mt-${size}`} />
+      <MarginSwatch className={`dd-mr-${size}`} />
+      <MarginSwatch className={`dd-mb-${size}`} />
     </div>
   );
 }
