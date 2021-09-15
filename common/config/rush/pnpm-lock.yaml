@@ -67,6 +67,7 @@ importers:
       '@jonasb/datadata-cli': link:../../libraries/cli
       '@jonasb/datadata-core': link:../../libraries/core
       '@jonasb/datadata-database-adapter-postgres-pg': link:../../libraries/database-adapter-postgres-pg
+      '@jonasb/datadata-design': link:../../libraries/design
       '@jonasb/datadata-graphql': link:../../libraries/graphql
       '@jonasb/datadata-server': link:../../libraries/server
       debug: 4.3.2
@@ -102,6 +103,7 @@ importers:
       '@jonasb/datadata-cli': workspace:*
       '@jonasb/datadata-core': workspace:*
       '@jonasb/datadata-database-adapter-postgres-pg': workspace:*
+      '@jonasb/datadata-design': workspace:*
       '@jonasb/datadata-graphql': workspace:*
       '@jonasb/datadata-postgres': workspace:*
       '@jonasb/datadata-server': workspace:*
@@ -128,6 +130,7 @@ importers:
     dependencies:
       '@editorjs/editorjs': 2.22.2
       '@jonasb/datadata-core': link:../core
+      '@jonasb/datadata-design': link:../design
       leaflet: 1.7.1
       lodash: 4.17.21
       react: 17.0.2
@@ -182,6 +185,7 @@ importers:
       '@editorjs/editorjs': ~2.22.2
       '@jonasb/datadata-core': workspace:*
       '@jonasb/datadata-database-adapter-postgres-pg': workspace:*
+      '@jonasb/datadata-design': workspace:*
       '@jonasb/datadata-postgres': workspace:*
       '@jonasb/datadata-server': workspace:*
       '@jonasb/datadata-testing-utils': workspace:*

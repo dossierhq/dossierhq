@@ -1,6 +1,7 @@
 import type { AdminEntity, AdminQuery, Paging } from '@jonasb/datadata-core';
+import { IconButton } from '@jonasb/datadata-design';
 import React, { useContext, useMemo, useState } from 'react';
-import { Button, DataDataContext, Message, PublishStateTag, Row } from '../..';
+import { Button, DataDataContext, Message, PublishStateTag } from '../..';
 import { joinClassNames } from '../../utils/ClassNameUtils';
 
 export interface EntityListProps {
@@ -74,20 +75,12 @@ export function EntityList({
             />
           );
         })}
-      <Row>
-        <Button onClick={handleStart} disabled={!handleStart}>
-          Start
-        </Button>
-        <Button onClick={handlePrevious} disabled={!handlePrevious}>
-          Previous
-        </Button>
-        <Button onClick={handleNext} disabled={!handleNext}>
-          Next
-        </Button>
-        <Button onClick={handleEnd} disabled={!handleEnd}>
-          End
-        </Button>
-      </Row>
+      <IconButton.Group condensed>
+        <IconButton icon="first" onClick={handleStart} disabled={!handleStart} />
+        <IconButton icon="previous" onClick={handlePrevious} disabled={!handlePrevious} />
+        <IconButton icon="next" onClick={handleNext} disabled={!handleNext} />
+        <IconButton icon="last" onClick={handleEnd} disabled={!handleEnd} />
+      </IconButton.Group>
     </div>
   );
 }
