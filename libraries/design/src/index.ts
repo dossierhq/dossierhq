@@ -7,12 +7,14 @@ export {
   MultipleSelectorStateActions,
   reduceMultipleSelectorState,
   Table,
+  Tag,
 } from './components';
 export type {
-  IconName,
   DropdownSelectorProps,
+  IconName,
   MultipleSelectorItem,
   MultipleSelectorReducer,
   MultipleSelectorState,
   MultipleSelectorStateAction,
 } from './components';
+export { StatusColor } from './config/Colors';

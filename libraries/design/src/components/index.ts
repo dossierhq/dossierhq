@@ -1,7 +1,7 @@
 export { Badge } from './Badge/Badge';
 export { Dropdown } from './Dropdown/Dropdown';
-export type { DropdownSelectorProps } from './DropdownSelector/DropdownSelector';
 export { DropdownSelector } from './DropdownSelector/DropdownSelector';
+export type { DropdownSelectorProps } from './DropdownSelector/DropdownSelector';
 export {
   initializeMultipleSelectorState,
   MultipleSelectorStateActions,
@@ -18,3 +18,4 @@ export type { IconName } from './Icon/Icon';
 export { IconButton } from './IconButton/IconButton';
 export { Input } from './Input/Input';
 export { Table } from './Table/Table';
+export { Tag } from './Tag/Tag';

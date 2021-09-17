@@ -1,7 +1,7 @@
 import type { Meta, Story } from '@storybook/react/types-6-0';
 import type { MouseEvent } from 'react';
 import React, { useReducer } from 'react';
-import { Container, Navbar, Tag } from 'react-bulma-components';
+import { Container, Navbar } from 'react-bulma-components';
 import {
   Dropdown,
   IconButton,
@@ -9,6 +9,7 @@ import {
   MultipleSelectorStateActions,
   reduceMultipleSelectorState,
   Table,
+  Tag,
 } from '../..';
 import type {
   EntityTypeSelectorDispatch,
@@ -179,7 +180,7 @@ function EntityTable({
             <Table.Cell>Hello</Table.Cell>
             <Table.Cell>BlogPost</Table.Cell>
             <Table.Cell narrow>
-              <Tag color="success">Published</Tag>
+              <Tag color="published">Published</Tag>
             </Table.Cell>
             <Table.Cell narrow>Today</Table.Cell>
             <Table.Cell narrow>Today</Table.Cell>
@@ -206,29 +207,17 @@ function EntityTypesList({
   return (
     <>
       <p className="is-size-7 has-text-weight-semibold">Show entity types:</p>
-      <div className="field is-grouped">
+      <Tag.Group>
         {types.map(({ id, name }) => (
-          <div key={id} className="control">
-            <Tag.Group hasAddons>
-              <Tag>{name}</Tag>
-              <Tag
-                className="is-clickable"
-                remove
-                onClick={() => dispatch(new MultipleSelectorStateActions.ToggleItem(id))}
-              />
-            </Tag.Group>
-          </div>
-        ))}
-        <Tag.Group>
-          <Tag
-            className="is-clickable"
-            color="white"
-            onClick={() => dispatch(new MultipleSelectorStateActions.ClearSelection())}
-          >
-            Clear
+          <Tag key={id}>
+            {name}
+            <Tag.Remove onClick={() => dispatch(new MultipleSelectorStateActions.ToggleItem(id))} />
           </Tag>
-        </Tag.Group>
-      </div>
+        ))}
+        <Tag.Clear onClick={() => dispatch(new MultipleSelectorStateActions.ClearSelection())}>
+          Clear
+        </Tag.Clear>
+      </Tag.Group>
     </>
   );
 }
@@ -249,29 +238,17 @@ function StatusTagList({
   return (
     <>
       <p className="is-size-7 has-text-weight-semibold">Show entities with status:</p>
-      <div className="field is-grouped">
+      <Tag.Group>
         {statuses.map(({ id, name, color }) => (
-          <div key={id} className="control">
-            <Tag.Group hasAddons>
-              <Tag color={color}>{name}</Tag>
-              <Tag
-                className="is-clickable"
-                remove
-                onClick={() => dispatch(new MultipleSelectorStateActions.ToggleItem(id))}
-              />
-            </Tag.Group>
-          </div>
-        ))}
-        <Tag.Group>
-          <Tag
-            className="is-clickable"
-            color="white"
-            onClick={() => dispatch(new MultipleSelectorStateActions.ClearSelection())}
-          >
-            Clear
+          <Tag key={id} color={color}>
+            {name}
+            <Tag.Remove onClick={() => dispatch(new MultipleSelectorStateActions.ToggleItem(id))} />
           </Tag>
-        </Tag.Group>
-      </div>
+        ))}
+        <Tag.Clear onClick={() => dispatch(new MultipleSelectorStateActions.ClearSelection())}>
+          Clear
+        </Tag.Clear>
+      </Tag.Group>
     </>
   );
 }
