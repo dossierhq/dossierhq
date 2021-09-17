@@ -1,9 +1,10 @@
 import type { Meta, Story } from '@storybook/react/types-6-0';
 import type { MouseEvent } from 'react';
 import React, { useReducer } from 'react';
-import { Container, Navbar } from 'react-bulma-components';
+import { Navbar } from 'react-bulma-components';
 import {
   Dropdown,
+  FullscreenContainer,
   IconButton,
   Input,
   MultipleSelectorStateActions,
@@ -73,14 +74,14 @@ function Screen({
     StatusSelectorInitArgs
   >(reduceMultipleSelectorState, { selectedIds: ['published'] }, initializeStatusSelectorState);
   return (
-    <div style={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
+    <FullscreenContainer>
       <Navbar>
         <Navbar.Brand>
           <Navbar.Item>Data data</Navbar.Item>
         </Navbar.Brand>
         <Navbar.Item>Entities</Navbar.Item>
       </Navbar>
-      <Container className="is-flex is-flex-grow-0 pt-2" flexDirection="column">
+      <FullscreenContainer.Row center>
         <SearchBar
           {...{
             entityTypeFilterState,
@@ -91,23 +92,21 @@ function Screen({
             onCreateClick,
           }}
         />
-      </Container>
-      <div style={{ overflowY: 'scroll', flexGrow: 1, height: '0' }}>
-        <Container className="is-flex" flexDirection="column">
-          <EntityTypesList state={entityTypeFilterState} dispatch={entityTypeFilterDispatch} />
-          <StatusTagList state={statusFilterState} dispatch={statusFilterDispatch} />
-          <EntityTable {...{ entityCount, onTableRowClick }} />
-        </Container>
-      </div>
-      <Container className="is-flex-grow-0">
+      </FullscreenContainer.Row>
+      <FullscreenContainer.Row scrollable>
+        <EntityTypesList state={entityTypeFilterState} dispatch={entityTypeFilterDispatch} />
+        <StatusTagList state={statusFilterState} dispatch={statusFilterDispatch} />
+        <EntityTable {...{ entityCount, onTableRowClick }} />
+      </FullscreenContainer.Row>
+      <FullscreenContainer.Row center>
         <IconButton.Group condensed>
           <IconButton icon="first" />
           <IconButton icon="previous" />
           <IconButton icon="next" />
           <IconButton icon="last" />
         </IconButton.Group>
-      </Container>
-    </div>
+      </FullscreenContainer.Row>
+    </FullscreenContainer>
   );
 }
 
@@ -127,7 +126,7 @@ function SearchBar({
   onCreateClick: (item: { id: string; name: string }) => void;
 }) {
   return (
-    <div className="is-flex is-flex-wrap-wrap g-2">
+    <div className="is-flex g-2 pt-2">
       <Input iconLeft="search" placeholder="Search" />
       <EntityTypeSelector state={entityTypeFilterState} dispatch={entityTypeFilterDispatch}>
         Entity type

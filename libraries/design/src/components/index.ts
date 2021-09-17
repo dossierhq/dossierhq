@@ -13,6 +13,7 @@ export type {
   MultipleSelectorState,
   MultipleSelectorStateAction,
 } from './DropdownSelector/MultipleSelectorReducer';
+export { FullscreenContainer } from './FullscreenContainer/FullscreenContainer';
 export { Icon } from './Icon/Icon';
 export type { IconName } from './Icon/Icon';
 export { IconButton } from './IconButton/IconButton';
