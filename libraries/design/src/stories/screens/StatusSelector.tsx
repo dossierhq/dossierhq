@@ -1,18 +1,18 @@
 import type { Dispatch } from 'react';
 import React from 'react';
-import { Tag } from 'react-bulma-components';
 import type {
   DropdownSelectorProps,
   MultipleSelectorItem,
   MultipleSelectorReducer,
   MultipleSelectorState,
   MultipleSelectorStateAction,
+  StatusColor,
 } from '../..';
-import { DropdownSelector, initializeMultipleSelectorState } from '../..';
+import { DropdownSelector, initializeMultipleSelectorState, Tag } from '../..';
 
 export interface StatusItem extends MultipleSelectorItem {
   name: string;
-  color: string;
+  color: keyof typeof StatusColor;
 }
 
 export type StatusSelectorReducer = MultipleSelectorReducer<StatusItem>;
@@ -27,11 +27,11 @@ export function initializeStatusSelectorState({
 }: StatusSelectorInitArgs): MultipleSelectorState<StatusItem> {
   return initializeMultipleSelectorState({
     items: [
-      { id: 'draft', name: 'Draft', color: 'light' },
-      { id: 'published', name: 'Published', color: 'success' },
-      { id: 'modified', name: 'Modified', color: 'warning' },
-      { id: 'withdrawn', name: 'Withdrawn', color: 'light' },
-      { id: 'archived', name: 'Archived', color: 'danger' },
+      { id: 'draft', name: 'Draft', color: 'draft' },
+      { id: 'published', name: 'Published', color: 'published' },
+      { id: 'modified', name: 'Modified', color: 'modified' },
+      { id: 'withdrawn', name: 'Withdrawn', color: 'withdrawn' },
+      { id: 'archived', name: 'Archived', color: 'archived' },
     ],
     selectedIds,
   });
