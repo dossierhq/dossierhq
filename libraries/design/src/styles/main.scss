@@ -12,6 +12,14 @@ th {
   background-color: $background;
 }
 
+.is-width-100 {
+  width: 100%;
+}
+
+.is-height-100vh {
+  height: 100vh;
+}
+
 @each $name, $value in $spacing-values {
   .g-#{$name} {
     #{gap}: $value !important ;
@@ -22,4 +30,10 @@ th {
   .gr-#{$name} {
     #{row-gap}: $value !important ;
   }
+}
+
+.is-scrollable-row {
+  overflow-y: scroll;
+  flex-grow: 1;
+  height: 0;
 }

@@ -8,6 +8,7 @@ export {
   reduceMultipleSelectorState,
   Table,
   Tag,
+  FullscreenContainer,
 } from './components';
 export type {
   DropdownSelectorProps,
