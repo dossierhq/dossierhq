@@ -1,6 +1,8 @@
 export {
   Dropdown,
   DropdownSelector,
+  Field,
+  FullscreenContainer,
   IconButton,
   initializeMultipleSelectorState,
   Input,
@@ -8,7 +10,7 @@ export {
   reduceMultipleSelectorState,
   Table,
   Tag,
-  FullscreenContainer,
+  TagSelector,
 } from './components';
 export type {
   DropdownSelectorProps,
