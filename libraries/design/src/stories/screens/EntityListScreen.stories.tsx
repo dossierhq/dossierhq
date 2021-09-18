@@ -4,13 +4,14 @@ import React, { useReducer } from 'react';
 import { Navbar } from 'react-bulma-components';
 import {
   Dropdown,
+  Field,
   FullscreenContainer,
   IconButton,
   Input,
-  MultipleSelectorStateActions,
   reduceMultipleSelectorState,
   Table,
   Tag,
+  TagSelector,
 } from '../..';
 import type {
   EntityTypeSelectorDispatch,
@@ -197,27 +198,22 @@ function EntityTypesList({
   state: EntityTypeSelectorState;
   dispatch: EntityTypeSelectorDispatch;
 }) {
-  const { items, selectedIds } = state;
-  if (selectedIds.length === 0) {
+  if (state.selectedIds.length === 0) {
     return null;
   }
 
-  const types = items.filter(({ id }) => selectedIds.includes(id));
   return (
-    <>
-      <p className="is-size-7 has-text-weight-semibold">Show entity types:</p>
-      <Tag.Group>
-        {types.map(({ id, name }) => (
-          <Tag key={id}>
-            {name}
-            <Tag.Remove onClick={() => dispatch(new MultipleSelectorStateActions.ToggleItem(id))} />
-          </Tag>
-        ))}
-        <Tag.Clear onClick={() => dispatch(new MultipleSelectorStateActions.ClearSelection())}>
-          Clear
-        </Tag.Clear>
-      </Tag.Group>
-    </>
+    <Field>
+      <Field.Label size="small">Show entity types</Field.Label>
+      <Field.Control>
+        <TagSelector
+          clearLabel="Clear"
+          itemTag={(item) => ({ tag: item.name })}
+          state={state}
+          dispatch={dispatch}
+        />
+      </Field.Control>
+    </Field>
   );
 }
 
@@ -228,27 +224,22 @@ function StatusTagList({
   state: StatusSelectorState;
   dispatch: StatusSelectorDispatch;
 }) {
-  const { items, selectedIds } = state;
-  if (selectedIds.length === 0) {
+  if (state.selectedIds.length === 0) {
     return null;
   }
 
-  const statuses = items.filter(({ id }) => selectedIds.includes(id));
   return (
-    <>
-      <p className="is-size-7 has-text-weight-semibold">Show entities with status:</p>
-      <Tag.Group>
-        {statuses.map(({ id, name, color }) => (
-          <Tag key={id} color={color}>
-            {name}
-            <Tag.Remove onClick={() => dispatch(new MultipleSelectorStateActions.ToggleItem(id))} />
-          </Tag>
-        ))}
-        <Tag.Clear onClick={() => dispatch(new MultipleSelectorStateActions.ClearSelection())}>
-          Clear
-        </Tag.Clear>
-      </Tag.Group>
-    </>
+    <Field>
+      <Field.Label size="small">Show entities with status</Field.Label>
+      <Field.Control>
+        <TagSelector
+          clearLabel="Clear"
+          itemTag={(item) => ({ tag: item.name, color: item.color })}
+          state={state}
+          dispatch={dispatch}
+        />
+      </Field.Control>
+    </Field>
   );
 }
 
