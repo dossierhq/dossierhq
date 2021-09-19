@@ -1,5 +1,6 @@
 import type { FunctionComponent } from 'react';
 import React from 'react';
+import { Scrollable } from '..';
 import { toClassName } from '../../utils/ClassNameUtils';
 
 export interface FullscreenContainerProps {
@@ -29,6 +30,10 @@ FullscreenContainer.Row = ({ center, scrollable, children }: FullscreenContainer
     !center && 'is-width-100' // .container centers by default
   );
   const container = <div className={className}>{children}</div>;
-  return scrollable ? <div className="is-scrollable-row">{container}</div> : container;
+  return scrollable ? (
+    <Scrollable className="is-flex-grow-1 is-height-0">{container}</Scrollable>
+  ) : (
+    container
+  );
 };
 FullscreenContainer.Row.displayName = 'FullscreenContainer.Row';

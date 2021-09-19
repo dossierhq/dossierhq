@@ -22,19 +22,19 @@ Normal.args = {
   children: (
     <>
       <FullscreenContainer.Row>
-        <div style={{ backgroundColor: 'burlywood', height: 100 }} />
+        <div style={{ height: 100 }} />
       </FullscreenContainer.Row>
       <FullscreenContainer.Row scrollable>
         <div
           style={{
             background:
-              'repeating-linear-gradient(45deg, burlywood, burlywood 10px, blueviolet 10px, blueviolet 40px)',
+              'repeating-linear-gradient(45deg, burlywood, burlywood 10px, transparent 10px, transparent 40px)',
             height: '300vh',
           }}
         />
       </FullscreenContainer.Row>
       <FullscreenContainer.Row>
-        <div style={{ backgroundColor: 'burlywood', height: 100 }} />
+        <div style={{ height: 100 }} />
       </FullscreenContainer.Row>
     </>
   ),
@@ -54,7 +54,7 @@ CenterRow.args = {
         <div
           style={{
             background:
-              'repeating-linear-gradient(45deg, burlywood, burlywood 10px, blueviolet 10px, blueviolet 40px)',
+              'repeating-linear-gradient(45deg, burlywood, burlywood 10px, transparent 10px, transparent 40px)',
             height: '300vh',
           }}
         />

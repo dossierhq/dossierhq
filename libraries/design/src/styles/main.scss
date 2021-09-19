@@ -16,6 +16,10 @@ th {
   width: 100%;
 }
 
+.is-height-0 {
+  height: 0;
+}
+
 .is-height-100vh {
   height: 100vh;
 }
@@ -32,8 +36,32 @@ th {
   }
 }
 
-.is-scrollable-row {
+.scrollable {
   overflow-y: scroll;
-  flex-grow: 1;
-  height: 0;
+}
+
+.sticky-top-shadow {
+  height: 5px;
+  margin-bottom: -5px;
+  &.is-obstructed {
+    box-shadow: inset 0 3px 3px rgba(0, 0, 0, 0.3);
+  }
+}
+
+.sticky-bottom-shadow {
+  height: 5px;
+  margin-top: -5px;
+  &.is-obstructed {
+    box-shadow: inset 0 -3px 3px rgba(0, 0, 0, 0.3);
+  }
+}
+
+.is-sticky-top {
+  position: sticky;
+  top: -1px;
+}
+
+.is-sticky-bottom {
+  position: sticky;
+  bottom: -1px;
 }
