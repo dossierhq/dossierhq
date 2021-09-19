@@ -8,6 +8,7 @@ export interface AdminQueryState {
 interface AdminQueryStateAction {
   reduce(state: AdminQueryState): AdminQueryState;
 }
+
 export function initializeAdminQueryState(query: AdminQuery | undefined): AdminQueryState {
   return { resolvedQuery: query || {}, text: query?.text || '' };
 }
