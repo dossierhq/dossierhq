@@ -80,7 +80,7 @@ function Screen({
         <Navbar.Brand>
           <Navbar.Item>Data data</Navbar.Item>
         </Navbar.Brand>
-        <Navbar.Item>Entities</Navbar.Item>
+        <Navbar.Item active>Entities</Navbar.Item>
       </Navbar>
       <FullscreenContainer.Row center>
         <SearchBar
