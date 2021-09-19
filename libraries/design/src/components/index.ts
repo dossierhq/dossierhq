@@ -20,6 +20,7 @@ export { Icon } from './Icon/Icon';
 export type { IconName } from './Icon/Icon';
 export { IconButton } from './IconButton/IconButton';
 export { Input } from './Input/Input';
+export { NavBar } from './NavBar/NavBar';
 export { Scrollable } from './Scrollable/Scrollable';
 export { Table } from './Table/Table';
 export { Tag } from './Tag/Tag';

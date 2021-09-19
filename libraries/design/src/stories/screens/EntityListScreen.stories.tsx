@@ -1,13 +1,13 @@
 import type { Meta, Story } from '@storybook/react/types-6-0';
 import type { MouseEvent } from 'react';
 import React, { useReducer } from 'react';
-import { Navbar } from 'react-bulma-components';
 import {
   Dropdown,
   Field,
   FullscreenContainer,
   IconButton,
   Input,
+  NavBar,
   reduceMultipleSelectorState,
   Table,
   Tag,
@@ -76,12 +76,12 @@ function Screen({
   >(reduceMultipleSelectorState, { selectedIds: ['published'] }, initializeStatusSelectorState);
   return (
     <FullscreenContainer>
-      <Navbar>
-        <Navbar.Brand>
-          <Navbar.Item>Data data</Navbar.Item>
-        </Navbar.Brand>
-        <Navbar.Item active>Entities</Navbar.Item>
-      </Navbar>
+      <NavBar>
+        <NavBar.Brand>
+          <NavBar.Item>Data data</NavBar.Item>
+        </NavBar.Brand>
+        <NavBar.Item active>Entities</NavBar.Item>
+      </NavBar>
       <FullscreenContainer.Row center flexDirection="row" gap={2} paddingVertical={2}>
         <SearchBar
           {...{
