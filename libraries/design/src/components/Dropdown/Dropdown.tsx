@@ -4,6 +4,7 @@ import type { IconName } from '..';
 import { Icon } from '..';
 
 export interface DropdownProps<TItem extends DropdownItem = DropdownItem> {
+  id?: string;
   iconLeft?: IconName;
   left?: boolean;
   up?: boolean;
@@ -18,6 +19,7 @@ export interface DropdownItem {
 }
 
 export function Dropdown<TItem extends DropdownItem>({
+  id,
   iconLeft,
   left,
   up,
@@ -48,6 +50,7 @@ export function Dropdown<TItem extends DropdownItem>({
 
   return (
     <BulmaDropdown
+      id={id}
       label={label}
       right={left}
       up={up}

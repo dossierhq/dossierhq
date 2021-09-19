@@ -1,16 +1,21 @@
 import type { EntityTypeSpecification, ValueTypeSpecification } from '@jonasb/datadata-core';
+import { Dropdown } from '@jonasb/datadata-design';
 import React, { useContext } from 'react';
-import { DataDataContext, DropDown } from '../../';
-import type { DropDownItem } from '../../';
+import { DataDataContext } from '../../';
 
 export interface TypePickerProps {
-  id: string;
+  id?: string;
   text: string;
   showEntityTypes?: boolean;
   entityTypes?: string[];
   showValueTypes?: boolean;
   valueTypes?: string[];
   onTypeSelected: (type: string) => void;
+}
+
+interface Item {
+  id: string;
+  name: string;
 }
 
 export function TypePicker({
@@ -24,7 +29,7 @@ export function TypePicker({
 }: TypePickerProps): JSX.Element {
   const { schema } = useContext(DataDataContext);
 
-  const items: DropDownItem[] = [];
+  const items: Item[] = [];
   if (showEntityTypes) {
     items.push(...gatherItems(schema.spec.entityTypes, entityTypes));
   }
@@ -33,17 +38,24 @@ export function TypePicker({
   }
 
   return (
-    <DropDown id={id} text={text} items={items} onItemClick={(item) => onTypeSelected(item.key)} />
+    <Dropdown
+      id={id}
+      items={items}
+      renderItem={(item) => item.name}
+      onItemClick={(item) => onTypeSelected(item.id)}
+    >
+      {text}
+    </Dropdown>
   );
 }
 
 function gatherItems(
   typeSpecs: (EntityTypeSpecification | ValueTypeSpecification)[],
   filterNames: string[] | undefined
-): DropDownItem[] {
+): Item[] {
   let types = typeSpecs.map((x) => x.name);
   if (filterNames && filterNames.length > 0) {
-    types = types.filter((x) => filterNames.indexOf(x) >= 0);
+    types = types.filter((it) => filterNames.indexOf(it) >= 0);
   }
-  return types.map((t) => ({ key: t, text: t }));
+  return types.map((it) => ({ id: it, name: it }));
 }
