@@ -8,7 +8,10 @@ import { createContextValue } from '../../test/TestContextAdapter';
 const meta: Meta<EntityListScreenProps> = {
   title: 'Screens/EntityListScreen',
   component: EntityListScreen,
-  argTypes: { onCreateEntity: { action: 'entity-click' } },
+  argTypes: {
+    onCreateEntity: { action: 'create-entity' },
+    onOpenEntity: { action: 'open-entity' },
+  },
   args: {},
   parameters: { layout: 'fullscreen' },
 };
