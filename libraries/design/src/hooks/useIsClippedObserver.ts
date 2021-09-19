@@ -8,7 +8,7 @@ function getObserver() {
     observerInstance = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
-          entry.target.classList.toggle('is-obstructed', entry.intersectionRatio < 1.0);
+          entry.target.classList.toggle('is-clipped', entry.intersectionRatio < 1.0);
         }
       },
       { threshold: [1.0] }
@@ -17,7 +17,7 @@ function getObserver() {
   return observerInstance;
 }
 
-export function useIsObstructedObserver(): RefCallback<HTMLElement> {
+export function useIsClippedObserver(): RefCallback<HTMLElement> {
   const [currentElement, setCurrentElement] = useState<HTMLElement | null>();
 
   useEffect(() => {

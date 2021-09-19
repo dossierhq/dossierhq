@@ -1,5 +1,5 @@
 import React from 'react';
-import { useIsObstructedObserver } from '../../hooks/useIsObstructedObserver';
+import { useIsClippedObserver } from '../../hooks/useIsClippedObserver';
 import { toClassName } from '../../utils/ClassNameUtils';
 
 export interface ScrollableProps {
@@ -10,8 +10,8 @@ export interface ScrollableProps {
 
 export function Scrollable({ className, style, children }: ScrollableProps): JSX.Element {
   const realClassName = toClassName('scrollable', className);
-  const stickyTopShadowRef = useIsObstructedObserver();
-  const stickyBottomShadowRef = useIsObstructedObserver();
+  const stickyTopShadowRef = useIsClippedObserver();
+  const stickyBottomShadowRef = useIsClippedObserver();
   return (
     <div className={realClassName} style={style}>
       <div ref={stickyTopShadowRef} className="sticky-top-shadow is-sticky-top" />
