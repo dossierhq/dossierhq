@@ -59,9 +59,11 @@ th {
 .is-sticky-top {
   position: sticky;
   top: -1px;
+  z-index: 1;
 }
 
 .is-sticky-bottom {
   position: sticky;
   bottom: -1px;
+  z-index: 1;
 }
