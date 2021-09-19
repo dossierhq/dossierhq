@@ -7,6 +7,7 @@ export {
   initializeMultipleSelectorState,
   Input,
   MultipleSelectorStateActions,
+  NavBar,
   reduceMultipleSelectorState,
   Table,
   Tag,
