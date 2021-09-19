@@ -2,19 +2,27 @@ import type { FunctionComponent } from 'react';
 import React from 'react';
 import { Scrollable } from '..';
 import { toClassName } from '../../utils/ClassNameUtils';
+import type { FlexContainerProps } from '../../utils/FlexboxUtils';
+import { toFlexContainerClassName } from '../../utils/FlexboxUtils';
+import type { GapProps, PaddingProps } from '../../utils/LayoutPropsUtils';
+import { toSpacingClassName } from '../../utils/LayoutPropsUtils';
 
 export interface FullscreenContainerProps {
   children: React.ReactNode;
 }
 
-export interface FullscreenContainerRowProps {
+export interface FullscreenContainerRowProps extends PaddingProps, GapProps, FlexContainerProps {
   center?: boolean;
-  scrollable?: boolean;
+  children: React.ReactNode;
+}
+
+export interface FullscreenContainerScrollableRowProps {
   children: React.ReactNode;
 }
 
 interface FullscreenContainerComponent extends FunctionComponent<FullscreenContainerProps> {
   Row: FunctionComponent<FullscreenContainerRowProps>;
+  ScrollableRow: FunctionComponent<FullscreenContainerScrollableRowProps>;
 }
 
 export const FullscreenContainer: FullscreenContainerComponent = ({
@@ -24,16 +32,19 @@ export const FullscreenContainer: FullscreenContainerComponent = ({
 };
 FullscreenContainer.displayName = 'FullscreenContainer';
 
-FullscreenContainer.Row = ({ center, scrollable, children }: FullscreenContainerRowProps) => {
+FullscreenContainer.Row = ({ center, children, ...props }: FullscreenContainerRowProps) => {
   const className = toClassName(
-    'is-flex-grow-0 container is-flex is-flex-direction-column',
-    !center && 'is-width-100' // .container centers by default
+    'is-flex-grow-0 container',
+    !center && 'is-width-100', // .container centers by default
+    toFlexContainerClassName(props),
+    toSpacingClassName(props)
   );
-  const container = <div className={className}>{children}</div>;
-  return scrollable ? (
-    <Scrollable className="is-flex-grow-1 is-height-0">{container}</Scrollable>
-  ) : (
-    container
-  );
+  return <div className={className}>{children}</div>;
 };
 FullscreenContainer.Row.displayName = 'FullscreenContainer.Row';
+FullscreenContainer.Row.defaultProps = { flexDirection: 'column' };
+
+FullscreenContainer.ScrollableRow = ({ children }: FullscreenContainerRowProps) => {
+  return <Scrollable className="is-flex-grow-1 is-height-0">{children}</Scrollable>;
+};
+FullscreenContainer.ScrollableRow.displayName = 'FullscreenContainer.ScrollableRow';

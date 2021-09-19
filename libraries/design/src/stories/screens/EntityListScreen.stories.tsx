@@ -82,7 +82,7 @@ function Screen({
         </Navbar.Brand>
         <Navbar.Item active>Entities</Navbar.Item>
       </Navbar>
-      <FullscreenContainer.Row center>
+      <FullscreenContainer.Row center flexDirection="row" gap={2} paddingVertical={2}>
         <SearchBar
           {...{
             entityTypeFilterState,
@@ -94,12 +94,14 @@ function Screen({
           }}
         />
       </FullscreenContainer.Row>
-      <FullscreenContainer.Row scrollable>
-        <EntityTypesList state={entityTypeFilterState} dispatch={entityTypeFilterDispatch} />
-        <StatusTagList state={statusFilterState} dispatch={statusFilterDispatch} />
-        <EntityTable {...{ entityCount, onTableRowClick }} />
-      </FullscreenContainer.Row>
-      <FullscreenContainer.Row center>
+      <FullscreenContainer.ScrollableRow>
+        <FullscreenContainer.Row paddingVertical={2}>
+          <EntityTypesList state={entityTypeFilterState} dispatch={entityTypeFilterDispatch} />
+          <StatusTagList state={statusFilterState} dispatch={statusFilterDispatch} />
+          <EntityTable {...{ entityCount, onTableRowClick }} />
+        </FullscreenContainer.Row>
+      </FullscreenContainer.ScrollableRow>
+      <FullscreenContainer.Row center paddingVertical={2}>
         <IconButton.Group condensed>
           <IconButton icon="first" />
           <IconButton icon="previous" />
@@ -127,7 +129,7 @@ function SearchBar({
   onCreateClick: (item: { id: string; name: string }) => void;
 }) {
   return (
-    <div className="is-flex g-2 pt-2">
+    <>
       <Input iconLeft="search" placeholder="Search" />
       <EntityTypeSelector state={entityTypeFilterState} dispatch={entityTypeFilterDispatch}>
         Entity type
@@ -148,7 +150,7 @@ function SearchBar({
       >
         Create
       </Dropdown>
-    </div>
+    </>
   );
 }
 
