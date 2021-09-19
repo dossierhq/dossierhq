@@ -13,6 +13,7 @@ export interface FullscreenContainerProps {
 
 export interface FullscreenContainerRowProps extends PaddingProps, GapProps, FlexContainerProps {
   center?: boolean;
+  fullWidth?: boolean;
   children: React.ReactNode;
 }
 
@@ -32,10 +33,15 @@ export const FullscreenContainer: FullscreenContainerComponent = ({
 };
 FullscreenContainer.displayName = 'FullscreenContainer';
 
-FullscreenContainer.Row = ({ center, children, ...props }: FullscreenContainerRowProps) => {
+FullscreenContainer.Row = ({
+  center,
+  fullWidth,
+  children,
+  ...props
+}: FullscreenContainerRowProps) => {
   const className = toClassName(
-    'is-flex-grow-0 container',
-    !center && 'is-width-100', // .container centers by default
+    !fullWidth && 'is-flex-grow-0 container',
+    !fullWidth && !center && 'is-width-100', // .container centers by default
     toFlexContainerClassName(props),
     toSpacingClassName(props)
   );

@@ -42,15 +42,18 @@ Normal.args = {
   ),
 };
 
-export const CenterRow = Template.bind({});
-CenterRow.args = {
+export const RowTypes = Template.bind({});
+RowTypes.args = {
   children: (
     <>
-      <FullscreenContainer.Row center>
-        <p style={{ backgroundColor: 'burlywood', height: 100, width: 100 }}>Center</p>
+      <FullscreenContainer.Row fullWidth>
+        <p style={{ backgroundColor: 'palevioletred', height: 100 }}>Full width</p>
       </FullscreenContainer.Row>
       <FullscreenContainer.Row>
         <p style={{ backgroundColor: 'burlywood', height: 100, width: 100 }}>Default</p>
+      </FullscreenContainer.Row>
+      <FullscreenContainer.Row center>
+        <p style={{ backgroundColor: 'burlywood', height: 100, width: 100 }}>Center</p>
       </FullscreenContainer.Row>
       <FullscreenContainer.ScrollableRow>
         <FullscreenContainer.Row>

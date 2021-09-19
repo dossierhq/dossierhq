@@ -36,7 +36,7 @@ interface ScreenProps {
 }
 
 const meta: Meta<ScreenProps> = {
-  title: 'Screens/Entity list',
+  title: 'Mockups/Entity list',
   component: Screen,
   args: {
     entityCount: 50,
@@ -76,12 +76,14 @@ function Screen({
   >(reduceMultipleSelectorState, { selectedIds: ['published'] }, initializeStatusSelectorState);
   return (
     <FullscreenContainer>
-      <NavBar>
-        <NavBar.Brand>
-          <NavBar.Item>Data data</NavBar.Item>
-        </NavBar.Brand>
-        <NavBar.Item active>Entities</NavBar.Item>
-      </NavBar>
+      <FullscreenContainer.Row fullWidth>
+        <NavBar>
+          <NavBar.Brand>
+            <NavBar.Item>Data data</NavBar.Item>
+          </NavBar.Brand>
+          <NavBar.Item active>Entities</NavBar.Item>
+        </NavBar>
+      </FullscreenContainer.Row>
       <FullscreenContainer.Row center flexDirection="row" gap={2} paddingVertical={2}>
         <SearchBar
           {...{
