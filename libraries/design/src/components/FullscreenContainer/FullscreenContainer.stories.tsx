@@ -24,15 +24,17 @@ Normal.args = {
       <FullscreenContainer.Row>
         <div style={{ height: 100 }} />
       </FullscreenContainer.Row>
-      <FullscreenContainer.Row scrollable>
-        <div
-          style={{
-            background:
-              'repeating-linear-gradient(45deg, burlywood, burlywood 10px, transparent 10px, transparent 40px)',
-            height: '300vh',
-          }}
-        />
-      </FullscreenContainer.Row>
+      <FullscreenContainer.ScrollableRow>
+        <FullscreenContainer.Row>
+          <div
+            style={{
+              background:
+                'repeating-linear-gradient(45deg, burlywood, burlywood 10px, transparent 10px, transparent 40px)',
+              height: '300vh',
+            }}
+          />
+        </FullscreenContainer.Row>
+      </FullscreenContainer.ScrollableRow>
       <FullscreenContainer.Row>
         <div style={{ height: 100 }} />
       </FullscreenContainer.Row>
@@ -50,14 +52,35 @@ CenterRow.args = {
       <FullscreenContainer.Row>
         <p style={{ backgroundColor: 'burlywood', height: 100, width: 100 }}>Default</p>
       </FullscreenContainer.Row>
-      <FullscreenContainer.Row scrollable>
-        <div
-          style={{
-            background:
-              'repeating-linear-gradient(45deg, burlywood, burlywood 10px, transparent 10px, transparent 40px)',
-            height: '300vh',
-          }}
-        />
+      <FullscreenContainer.ScrollableRow>
+        <FullscreenContainer.Row>
+          <div
+            style={{
+              background:
+                'repeating-linear-gradient(45deg, burlywood, burlywood 10px, transparent 10px, transparent 40px)',
+              height: '300vh',
+            }}
+          />
+        </FullscreenContainer.Row>
+      </FullscreenContainer.ScrollableRow>
+    </>
+  ),
+};
+
+export const RowLayout = Template.bind({});
+RowLayout.args = {
+  children: (
+    <>
+      <FullscreenContainer.Row paddingLeft={3}>Padding left</FullscreenContainer.Row>
+      <FullscreenContainer.Row gap={2}>
+        <p>Gap</p>
+        <div style={{ backgroundColor: 'burlywood', height: 10, width: 10 }} />
+        <div style={{ backgroundColor: 'burlywood', height: 10, width: 10 }} />
+      </FullscreenContainer.Row>
+      <FullscreenContainer.Row flexDirection="row" gap={2}>
+        <p>Row with gap</p>
+        <div style={{ backgroundColor: 'burlywood', height: 10, width: 10 }} />
+        <div style={{ backgroundColor: 'burlywood', height: 10, width: 10 }} />
       </FullscreenContainer.Row>
     </>
   ),
