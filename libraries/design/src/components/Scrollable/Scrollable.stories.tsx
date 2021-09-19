@@ -1,0 +1,90 @@
+import type { Meta, Story, StoryContext } from '@storybook/react/types-6-0';
+import React from 'react';
+import { Table } from '..';
+import type { ScrollableProps } from './Scrollable';
+import { Scrollable } from './Scrollable';
+
+type StoryProps = ScrollableProps;
+
+const meta: Meta<StoryProps> = {
+  title: 'Components/Scrollable',
+  component: Scrollable,
+  decorators: [
+    (Story: () => React.ReactElement<unknown>, _context: StoryContext): JSX.Element => (
+      <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
+        <div style={{ height: '50px' }} />
+        <Story />
+        <div style={{ height: '50px' }} />
+      </div>
+    ),
+  ],
+  args: { style: { flexGrow: 1, height: 0 } },
+  parameters: { layout: 'fullscreen' },
+};
+export default meta;
+
+const Template: Story<StoryProps> = ({ ...args }: StoryProps) => {
+  return <Scrollable {...args} />;
+};
+
+export const Normal = Template.bind({});
+Normal.args = {
+  children: (
+    <div
+      style={{
+        background:
+          'repeating-linear-gradient(45deg, burlywood, burlywood 10px, transparent 10px, transparent 40px)',
+        height: '300vh',
+      }}
+    />
+  ),
+};
+
+export const NoScroll = Template.bind({});
+NoScroll.args = {
+  children: (
+    <div
+      style={{
+        background:
+          'repeating-linear-gradient(45deg, burlywood, burlywood 10px, transparent 10px, transparent 40px)',
+        height: '30vh',
+      }}
+    />
+  ),
+};
+
+export const StickyTableHeader = Template.bind({});
+StickyTableHeader.args = {
+  children: (
+    <>
+      <div
+        style={{
+          background:
+            'repeating-linear-gradient(45deg, burlywood, burlywood 10px, transparent 10px, transparent 40px)',
+          height: '30vh',
+        }}
+      />
+      <Table>
+        <Table.Head>
+          <Table.Row sticky>
+            <Table.Header>Hello</Table.Header>
+            <Table.Header>World</Table.Header>
+          </Table.Row>
+        </Table.Head>
+        <Table.Body>
+          <Table.Row>
+            <Table.Cell>Hello</Table.Cell>
+            <Table.Cell>World</Table.Cell>
+          </Table.Row>
+        </Table.Body>
+      </Table>
+      <div
+        style={{
+          background:
+            'repeating-linear-gradient(45deg, burlywood, burlywood 10px, transparent 10px, transparent 40px)',
+          height: '120vh',
+        }}
+      />
+    </>
+  ),
+};

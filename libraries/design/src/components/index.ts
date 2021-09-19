@@ -10,9 +10,9 @@ export {
 export type {
   MultipleSelectorItem,
   MultipleSelectorReducer,
-  MultipleSelectorStateInitializerArgs,
   MultipleSelectorState,
   MultipleSelectorStateAction,
+  MultipleSelectorStateInitializerArgs,
 } from './DropdownSelector/MultipleSelectorReducer';
 export { Field } from './Field/Field';
 export { FullscreenContainer } from './FullscreenContainer/FullscreenContainer';
@@ -20,6 +20,7 @@ export { Icon } from './Icon/Icon';
 export type { IconName } from './Icon/Icon';
 export { IconButton } from './IconButton/IconButton';
 export { Input } from './Input/Input';
+export { Scrollable } from './Scrollable/Scrollable';
 export { Table } from './Table/Table';
 export { Tag } from './Tag/Tag';
 export type { TagProps } from './Tag/Tag';
