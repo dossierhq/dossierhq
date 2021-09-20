@@ -1,37 +1,22 @@
-import {
-  Column,
-  ColumnItem,
-  DataDataContext,
-  EntitySearch,
-  Loader,
-  TypePicker,
-} from '@jonasb/datadata-admin-react-components';
+import { DataDataContext, EntityListScreen } from '@jonasb/datadata-admin-react-components';
 import type { AdminEntity } from '@jonasb/datadata-core';
 import { useRouter } from 'next/router';
 import { useInitializeContext } from '../../contexts/DataDataContext';
 import { urls } from '../../utils/PageUtils';
 
-export default function EntitiesListPage(): JSX.Element {
+export default function EntitiesListPage(): JSX.Element | null {
   const router = useRouter();
   const { contextValue } = useInitializeContext();
   const handleCreateEntity = (type: string) => router.push(urls.editPageNew(type));
-  const handleEntityClick = (entity: AdminEntity) => router.push(urls.editPage([entity.id]));
+  const handleEntityOpen = (entity: AdminEntity) => router.push(urls.editPage([entity.id]));
 
   if (!contextValue) {
-    return <Loader />;
+    return null;
   }
 
   return (
     <DataDataContext.Provider value={contextValue}>
-      <Column className="dd-position-fixed dd-inset-0">
-        <TypePicker
-          id="create-entity"
-          text="Create entity"
-          showEntityTypes
-          onTypeSelected={handleCreateEntity}
-        />
-        <ColumnItem as={EntitySearch} grow height={0} onEntityClick={handleEntityClick} />
-      </Column>
+      <EntityListScreen onCreateEntity={handleCreateEntity} onOpenEntity={handleEntityOpen} />
     </DataDataContext.Provider>
   );
 }
