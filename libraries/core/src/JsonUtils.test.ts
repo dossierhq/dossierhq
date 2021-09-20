@@ -88,6 +88,15 @@ describe('convertJsonResult()', () => {
     }
   });
 
+  test('ok(null)', () => {
+    const expected = ok(null);
+    const asJson: JsonResult<null, ErrorType> = JSON.parse(JSON.stringify(expected));
+    const converted = convertJsonResult(asJson);
+    if (expectOkResult(converted)) {
+      expect(converted).toEqual(expected);
+    }
+  });
+
   test('notOk', () => {
     const expected = notOk.NotAuthenticated('Error message');
     const asJson: JsonResult<{ foo: number }, ErrorType> = JSON.parse(JSON.stringify(expected));

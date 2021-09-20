@@ -46,7 +46,11 @@ export async function handleGet<T>(
       throw Boom.methodNotAllowed(undefined, undefined, 'GET');
     }
     const body = await handler();
-    res.status(200).json(body);
+    // next.js built-in json conversion doesn't handle null (sends empty response)
+    res
+      .status(200)
+      .setHeader('Content-Type', 'application/json; charset=utf-8')
+      .send(JSON.stringify(body, null, 2) as unknown as T);
   });
 }
 
