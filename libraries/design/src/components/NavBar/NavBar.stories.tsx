@@ -19,10 +19,17 @@ Normal.args = {
   children: (
     <>
       <NavBar.Brand>
-        <NavBar.Item>Brand</NavBar.Item>
+        <NavBar.Item>{NavItemRender('Brand')}</NavBar.Item>
       </NavBar.Brand>
-      <NavBar.Item active>Active</NavBar.Item>
-      <NavBar.Item>Normal</NavBar.Item>
+      <NavBar.Item active>{NavItemRender('Active')}</NavBar.Item>
+      <NavBar.Item>{NavItemRender('Normal')}</NavBar.Item>
     </>
   ),
 };
+
+function NavItemRender(text: string) {
+  const renderer = ({ className }: { className: string }) => {
+    return <a className={className}>{text}</a>;
+  };
+  return renderer;
+}

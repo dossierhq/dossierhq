@@ -1,6 +1,7 @@
 import type { FunctionComponent } from 'react';
 import React from 'react';
 import { Navbar as BulmaNavBar } from 'react-bulma-components';
+import { toClassName } from '../../utils/ClassNameUtils';
 
 export interface NavBarProps {
   children: React.ReactNode;
@@ -12,7 +13,7 @@ export interface NavBarBrandProps {
 
 export interface NavBarItemProps {
   active?: boolean;
-  children: React.ReactNode;
+  children: ({ className }: { className: string }) => React.ReactElement;
 }
 
 interface NavBarComponent extends FunctionComponent<NavBarProps> {
@@ -31,6 +32,7 @@ NavBar.Brand = ({ children }: NavBarBrandProps) => {
 NavBar.Brand.displayName = 'NavBar.Brand';
 
 NavBar.Item = ({ active, children }: NavBarItemProps) => {
-  return <BulmaNavBar.Item active={active}>{children}</BulmaNavBar.Item>;
+  const className = toClassName('navbar-item', active && 'is-active');
+  return children({ className });
 };
 NavBar.Item.displayName = 'NavBar.Item';

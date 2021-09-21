@@ -3,6 +3,7 @@ import type { AdminEntity } from '@jonasb/datadata-core';
 import { useRouter } from 'next/router';
 import { useInitializeContext } from '../../contexts/DataDataContext';
 import { urls } from '../../utils/PageUtils';
+import { NavBar } from '../NavBar/NavBar';
 
 export default function EntitiesListPage(): JSX.Element | null {
   const router = useRouter();
@@ -16,7 +17,11 @@ export default function EntitiesListPage(): JSX.Element | null {
 
   return (
     <DataDataContext.Provider value={contextValue}>
-      <EntityListScreen onCreateEntity={handleCreateEntity} onOpenEntity={handleEntityOpen} />
+      <EntityListScreen
+        header={<NavBar current="entities" />}
+        onCreateEntity={handleCreateEntity}
+        onOpenEntity={handleEntityOpen}
+      />
     </DataDataContext.Provider>
   );
 }
