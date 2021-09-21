@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-admin-react-components",
+      "comment": "Integrate new design library",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-admin-react-components",
+  "email": "jonas.b@gmail.com"
+}
