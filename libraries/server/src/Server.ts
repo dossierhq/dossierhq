@@ -29,7 +29,7 @@ export interface Server {
     logger?: Logger
   ): PromiseResult<CreateSessionPayload, ErrorType.BadRequest | ErrorType.Generic>;
   createAdminClient(context: SessionContext | ContextProvider<SessionContext>): AdminClient;
-  createPublishedClient(context: SessionContext): PublishedClient;
+  createPublishedClient(context: SessionContext | ContextProvider<SessionContext>): PublishedClient;
 }
 
 export class ServerImpl {

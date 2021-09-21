@@ -1,4 +1,8 @@
-import type { PublishedClient, PublishedClientOperation } from '@jonasb/datadata-core';
+import type {
+  ContextProvider,
+  PublishedClient,
+  PublishedClientOperation,
+} from '@jonasb/datadata-core';
 import {
   assertExhaustive,
   createBasePublishedClient,
@@ -13,7 +17,7 @@ export function createServerPublishedClient({
   databaseAdapter,
   serverImpl,
 }: {
-  context: SessionContext | (() => Promise<SessionContext>);
+  context: SessionContext | ContextProvider<SessionContext>;
   databaseAdapter: DatabaseAdapter;
   serverImpl: ServerImpl;
 }): PublishedClient {
@@ -50,5 +54,5 @@ export function createServerPublishedClient({
     }
   }
 
-  return createBasePublishedClient({ context, pipeline: [terminatingMiddleware] });
+  return createBasePublishedClient<SessionContext>({ context, pipeline: [terminatingMiddleware] });
 }
