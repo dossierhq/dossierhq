@@ -1,3 +1,7 @@
+import { FullscreenContainer } from '@jonasb/datadata-design';
+import { Voyager } from 'graphql-voyager';
+import { NavBar } from '../components/NavBar/NavBar';
+
 export default function GraphiQLPage(): JSX.Element {
   const src = `<html>
     <head>
@@ -25,5 +29,16 @@ export default function GraphiQLPage(): JSX.Element {
       </script>
     </body>
   </html>`;
-  return <iframe srcDoc={src} frameBorder="0" style={{ width: '100vw', height: '100vh' }} />;
+  const iframe = <iframe srcDoc={src} frameBorder="0" style={{ width: '100%', height: '100%' }} />;
+
+  return (
+    <FullscreenContainer>
+      <FullscreenContainer.Row fullWidth>
+        <NavBar current="graphiql" />
+      </FullscreenContainer.Row>
+      <FullscreenContainer.Row fullWidth fillHeight>
+        {iframe}
+      </FullscreenContainer.Row>
+    </FullscreenContainer>
+  );
 }

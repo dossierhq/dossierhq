@@ -79,9 +79,9 @@ function Screen({
       <FullscreenContainer.Row fullWidth>
         <NavBar>
           <NavBar.Brand>
-            <NavBar.Item>Data data</NavBar.Item>
+            <NavBar.Item>{NavItemRender('Data data')}</NavBar.Item>
           </NavBar.Brand>
-          <NavBar.Item active>Entities</NavBar.Item>
+          <NavBar.Item active>{NavItemRender('Entities')}</NavBar.Item>
         </NavBar>
       </FullscreenContainer.Row>
       <FullscreenContainer.Row center flexDirection="row" gap={2} paddingVertical={2}>
@@ -113,6 +113,13 @@ function Screen({
       </FullscreenContainer.Row>
     </FullscreenContainer>
   );
+}
+
+function NavItemRender(text: string) {
+  const renderer = ({ className }: { className: string }) => {
+    return <a className={className}>{text}</a>;
+  };
+  return renderer;
 }
 
 function SearchBar({
