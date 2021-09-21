@@ -108,11 +108,11 @@ export function searchAdminEntitiesQuery(
 
   // Paging 2/2
   const countToRequest = resolvedPaging.count + 1; // request one more to calculate hasNextPage
-  qb.addQuery(`${resolvedPaging.isForwards ? '' : 'DESC '}LIMIT ${qb.addValue(countToRequest)}`);
+  qb.addQuery(`${resolvedPaging.forwards ? '' : 'DESC '}LIMIT ${qb.addValue(countToRequest)}`);
 
   return ok({
     ...qb.build(),
-    isForwards: resolvedPaging.isForwards,
+    isForwards: resolvedPaging.forwards,
     pagingCount: resolvedPaging.count,
     cursorName,
     cursorType,

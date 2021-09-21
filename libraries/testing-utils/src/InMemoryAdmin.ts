@@ -24,7 +24,7 @@ import {
   EntityPublishState,
   ErrorType,
   isLocationItemField,
-  isPagingForwards,
+  getPagingInfo,
   normalizeFieldValue,
   notOk,
   ok,
@@ -124,15 +124,17 @@ export const InMemoryAdmin = {
 
     //TODO order by, also use different cursors based on order
 
-    const isForwards = isPagingForwards(paging);
-    const requestedCount = (isForwards ? paging?.first : paging?.last) ?? pagingDefaultCount;
+    const pagingInfo = getPagingInfo(paging);
+    if (pagingInfo.isError()) return pagingInfo;
+    const { forwards, count } = pagingInfo.value;
+    const requestedCount = count ?? pagingDefaultCount;
     const startIndex = paging?.after ? entities.findIndex((it) => it.id === paging.after) + 1 : 0;
     const endIndex = paging?.before
       ? entities.findIndex((it) => it.id === paging.before)
       : entities.length;
     const resolvedCount = Math.min(requestedCount, endIndex - startIndex);
-    const resolvedStartIndex = isForwards ? startIndex : endIndex - resolvedCount;
-    const resolvedEndIndex = isForwards ? startIndex + resolvedCount : endIndex;
+    const resolvedStartIndex = forwards ? startIndex : endIndex - resolvedCount;
+    const resolvedEndIndex = forwards ? startIndex + resolvedCount : endIndex;
 
     const page = entities.slice(resolvedStartIndex, resolvedEndIndex);
 

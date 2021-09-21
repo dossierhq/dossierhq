@@ -1,20 +1,14 @@
-import { isPagingForwards, notOk, ok } from '@jonasb/datadata-core';
-import type { Paging, Result, ErrorType } from '@jonasb/datadata-core';
-import { fromOpaqueCursor } from './Connection';
+import type { ErrorType, Paging, Result } from '@jonasb/datadata-core';
+import { getPagingInfo, ok } from '@jonasb/datadata-core';
 import type { CursorNativeType } from './Connection';
+import { fromOpaqueCursor } from './Connection';
 import { pagingDefaultCount } from './Constants';
 
 export interface ResolvedPaging<TCursor> {
-  isForwards: boolean;
+  forwards: boolean;
   count: number;
   before: TCursor | null;
   after: TCursor | null;
-}
-
-function getCount(paging: Paging | undefined, key: 'first' | 'last') {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const count = (paging as any)?.[key];
-  return typeof count === 'number' ? count : null;
 }
 
 function getCursor(
@@ -34,21 +28,8 @@ export function resolvePaging<TCursor>(
   cursorType: CursorNativeType,
   paging?: Paging
 ): Result<ResolvedPaging<TCursor>, ErrorType.BadRequest> {
-  const first = getCount(paging, 'first');
-  const last = getCount(paging, 'last');
   const after = getCursor(cursorType, paging, 'after');
   const before = getCursor(cursorType, paging, 'before');
-
-  if (first !== null && first < 0) {
-    return notOk.BadRequest('Paging first is a negative value');
-  }
-  if (last !== null && last < 0) {
-    return notOk.BadRequest('Paging last is a negative value');
-  }
-  if (first !== null && last !== null) {
-    // Valid in spec but discouraged. How to implement?
-    return notOk.BadRequest('Both first and last are defined for paging, which is not supported');
-  }
 
   if (after?.isError()) {
     return after;
@@ -57,12 +38,15 @@ export function resolvePaging<TCursor>(
     return before;
   }
 
-  const isForwards = isPagingForwards(paging);
-  const count = (isForwards ? first : last) ?? pagingDefaultCount;
+  const pagingInfo = getPagingInfo(paging);
+  if (pagingInfo.isError()) {
+    return pagingInfo;
+  }
+  const { forwards, count } = pagingInfo.value;
 
   return ok({
-    isForwards,
-    count,
+    forwards,
+    count: count ?? pagingDefaultCount,
     before: before?.isOk() ? (before.value as TCursor) : null,
     after: after?.isOk() ? (after.value as TCursor) : null,
   });

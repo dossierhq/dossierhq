@@ -12,7 +12,7 @@ describe('resolvePaging()', () => {
           "after": null,
           "before": null,
           "count": 25,
-          "isForwards": true,
+          "forwards": true,
         },
       }
     `));
@@ -24,7 +24,7 @@ describe('resolvePaging()', () => {
           "after": null,
           "before": null,
           "count": 10,
-          "isForwards": true,
+          "forwards": true,
         },
       }
     `));
@@ -36,7 +36,7 @@ describe('resolvePaging()', () => {
           "after": 999,
           "before": null,
           "count": 25,
-          "isForwards": true,
+          "forwards": true,
         },
       }
     `));
@@ -49,7 +49,7 @@ describe('resolvePaging()', () => {
           "after": 999,
           "before": null,
           "count": 10,
-          "isForwards": true,
+          "forwards": true,
         },
       }
     `));
@@ -61,7 +61,7 @@ describe('resolvePaging()', () => {
           "after": null,
           "before": null,
           "count": 10,
-          "isForwards": false,
+          "forwards": false,
         },
       }
     `));
@@ -73,7 +73,7 @@ describe('resolvePaging()', () => {
           "after": null,
           "before": 999,
           "count": 25,
-          "isForwards": true,
+          "forwards": true,
         },
       }
     `));
@@ -86,7 +86,7 @@ describe('resolvePaging()', () => {
           "after": null,
           "before": 999,
           "count": 10,
-          "isForwards": false,
+          "forwards": false,
         },
       }
     `));
@@ -99,7 +99,7 @@ describe('resolvePaging()', () => {
           "after": null,
           "before": null,
           "count": 1,
-          "isForwards": false,
+          "forwards": false,
         },
       }
     `));
@@ -116,7 +116,7 @@ describe('resolvePaging()', () => {
           "after": 111,
           "before": 222,
           "count": 25,
-          "isForwards": true,
+          "forwards": true,
         },
       }
     `));
@@ -134,7 +134,7 @@ describe('resolvePaging()', () => {
           "after": 111,
           "before": 222,
           "count": 10,
-          "isForwards": true,
+          "forwards": true,
         },
       }
     `));
@@ -152,7 +152,7 @@ describe('resolvePaging()', () => {
           "after": 111,
           "before": 222,
           "count": 10,
-          "isForwards": false,
+          "forwards": false,
         },
       }
     `));

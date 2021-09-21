@@ -77,7 +77,7 @@ export type {
   PublishedClientMiddleware,
   PublishedClientOperation,
 } from './PublishedClient';
-export { isPagingForwards } from './QueryUtils';
+export { getPagingInfo } from './QueryUtils';
 export { FieldType, RichTextBlockType, Schema } from './Schema';
 export type {
   EntityTypeSpecification,

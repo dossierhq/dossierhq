@@ -14,7 +14,7 @@ import {
   EntityPublishState,
   ErrorType,
   FieldType,
-  isPagingForwards,
+  getPagingInfo,
   PublishingEventKind,
   QueryOrder,
   RichTextBlockType,
@@ -271,7 +271,8 @@ async function visitAllEntityPages(
   visitor: (connection: Connection<Edge<AdminEntity, ErrorType>>) => void
 ) {
   const ownPaging = { ...paging };
-  const isForwards = isPagingForwards(ownPaging);
+  const pagingInfo = getPagingInfo(paging);
+  const isForwards = pagingInfo.isOk() ? pagingInfo.value.forwards : true;
   // eslint-disable-next-line no-constant-condition
   while (true) {
     const result = await client.searchEntities(query, ownPaging);

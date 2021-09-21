@@ -21,7 +21,7 @@ import {
   isEntityTypeListField,
   isLocationField,
   isLocationListField,
-  isPagingForwards,
+  getPagingInfo,
   isRichTextField,
   isRichTextListField,
   isStringField,
@@ -80,7 +80,9 @@ export async function selectEntity(
 ): PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic> {
   const { adminClient } = context;
   const { query, paging } = await configureQuery(context, initialQuery);
-  const isForward = isPagingForwards(paging);
+  const pagingInfo = getPagingInfo(paging);
+  if (pagingInfo.isError()) return pagingInfo;
+  const isForward = pagingInfo.value.forwards;
 
   const totalCountResult = await adminClient.getTotalCount(query);
   if (totalCountResult.isError()) {
