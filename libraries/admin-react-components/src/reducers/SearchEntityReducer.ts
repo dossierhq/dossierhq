@@ -8,9 +8,12 @@ import type {
   Paging,
 } from '@jonasb/datadata-core';
 
+const defaultPagingCount = 25;
+
 export interface SearchEntityState {
   query: AdminQuery;
   paging: Paging;
+  pagingCount: number;
   text: string;
 
   connection: Connection<Edge<AdminEntity, ErrorType>> | null | undefined;
@@ -27,6 +30,7 @@ export function initializeSearchEntityState(
   return {
     query: initialQuery ?? {},
     paging: {},
+    pagingCount: defaultPagingCount,
     text: initialQuery?.text ?? '',
     connection: undefined,
     connectionError: undefined,
@@ -56,6 +60,18 @@ class SetTextAction implements SearchEntityStateAction {
   }
 }
 
+class SetPagingAction implements SearchEntityStateAction {
+  value: Paging;
+
+  constructor(value: Paging) {
+    this.value = value;
+  }
+
+  reduce(state: SearchEntityState): SearchEntityState {
+    return { ...state, paging: this.value };
+  }
+}
+
 class UpdateResultAction implements SearchEntityStateAction {
   connection: SearchEntityState['connection'];
   connectionError: SearchEntityState['connectionError'];
@@ -79,5 +95,6 @@ class UpdateResultAction implements SearchEntityStateAction {
 
 export const SearchEntityStateActions = {
   SetText: SetTextAction,
+  SetPaging: SetPagingAction,
   UpdateResult: UpdateResultAction,
 };
