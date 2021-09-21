@@ -1,8 +1,12 @@
-import type { PublishedClient, PublishedClientOperation } from '@jonasb/datadata-core';
+import type {
+  ContextProvider,
+  PublishedClient,
+  PublishedClientOperation,
+} from '@jonasb/datadata-core';
 import {
-  PublishedClientOperationName,
   assertExhaustive,
   createBasePublishedClient,
+  PublishedClientOperationName,
 } from '@jonasb/datadata-core';
 import { getEntities, getEntity } from './InMemoryPublished';
 import type { InMemorySessionContext } from './InMemoryServer';
@@ -10,7 +14,7 @@ import type { InMemorySessionContext } from './InMemoryServer';
 export function createInMemoryPublishedClient({
   context,
 }: {
-  context: InMemorySessionContext | (() => Promise<InMemorySessionContext>);
+  context: InMemorySessionContext | ContextProvider<InMemorySessionContext>;
 }): PublishedClient {
   return createBasePublishedClient({ context, pipeline: [terminatingMiddleware] });
 }

@@ -1,9 +1,12 @@
-import type { Entity, EntityReference, ErrorType, PromiseResult, Result } from '.';
+import type { ContextProvider, Entity, EntityReference, PromiseResult, Result } from '.';
+import { ErrorType, notOk } from '.';
 import type { Middleware, Operation, OperationWithoutCallbacks } from './SharedClient';
 import { executeOperationPipeline } from './SharedClient';
 
 export interface PublishedClient {
-  getEntity(reference: EntityReference): PromiseResult<Entity, ErrorType.NotFound>;
+  getEntity(
+    reference: EntityReference
+  ): PromiseResult<Entity, ErrorType.NotFound | ErrorType.Generic>;
 
   getEntities(
     references: EntityReference[]
@@ -42,14 +45,14 @@ export type PublishedClientOperation<
 export type PublishedClientMiddleware<TContext> = Middleware<TContext, PublishedClientOperation>;
 
 class BasePublishedClient<TContext> implements PublishedClient {
-  private readonly context: TContext | (() => Promise<TContext>);
+  private readonly context: TContext | ContextProvider<TContext>;
   private readonly pipeline: PublishedClientMiddleware<TContext>[];
 
   constructor({
     context,
     pipeline,
   }: {
-    context: TContext | (() => Promise<TContext>);
+    context: TContext | ContextProvider<TContext>;
     pipeline: PublishedClientMiddleware<TContext>[];
   }) {
     this.context = context;
@@ -79,17 +82,27 @@ class BasePublishedClient<TContext> implements PublishedClient {
   private async executeOperation<TName extends PublishedClientOperationName>(
     operation: OperationWithoutCallbacks<PublishedClientOperation<TName>>
   ): Promise<PublishedClientOperationReturn[TName]> {
-    const context =
-      typeof this.context === 'function'
-        ? await (this.context as () => Promise<TContext>)()
-        : this.context;
+    let context: TContext;
+    if (typeof this.context === 'function') {
+      const contextResult = await (this.context as ContextProvider<TContext>)();
+      if (contextResult.isError()) {
+        if (contextResult.isErrorType(ErrorType.Generic)) {
+          return contextResult;
+        }
+        //TODO maybe operation should have a list of supported error types?
+        return notOk.GenericUnexpectedError(contextResult);
+      }
+      context = contextResult.value.context;
+    } else {
+      context = this.context;
+    }
 
     return await executeOperationPipeline(context, this.pipeline, operation);
   }
 }
 
 export function createBasePublishedClient<TContext>(option: {
-  context: TContext | (() => Promise<TContext>);
+  context: TContext | ContextProvider<TContext>;
   pipeline: PublishedClientMiddleware<TContext>[];
 }): PublishedClient {
   return new BasePublishedClient(option);
