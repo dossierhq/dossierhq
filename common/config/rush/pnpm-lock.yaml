@@ -456,6 +456,7 @@ importers:
       '@fortawesome/fontawesome-svg-core': 1.2.36
       '@fortawesome/free-solid-svg-icons': 5.15.4
       '@fortawesome/react-fontawesome': 0.1.15_f515edce028694561ceb456e3dba224c
+      '@js-temporal/polyfill': 0.2.0
       react: 17.0.2
       react-bulma-components: 4.0.7_0f968bf7c9f2f8c00b6c1814652320de
       react-dom: 17.0.2_react@17.0.2
@@ -490,6 +491,7 @@ importers:
       '@fortawesome/fontawesome-svg-core': ~1.2.36
       '@fortawesome/free-solid-svg-icons': ~5.15.4
       '@fortawesome/react-fontawesome': ~0.1.15
+      '@js-temporal/polyfill': ~0.2.0
       '@rushstack/eslint-plugin': ~0.8.0
       '@rushstack/heft': ~0.37.3
       '@storybook/addon-actions': ^6.3.7
