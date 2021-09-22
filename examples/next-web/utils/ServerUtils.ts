@@ -38,14 +38,7 @@ export async function getServerConnection(): Promise<{ server: Server; schema: S
   if (!serverConnectionPromise) {
     serverConnectionPromise = (async () => {
       const databaseAdapter = createPostgresAdapter(process.env.DATABASE_URL!);
-      const noop = () => {};
-      const logger: Logger = {
-        error: noop,
-        warn: noop,
-        info: noop,
-        debug: noop,
-      };
-      const serverResult = await createServer({ databaseAdapter, logger });
+      const serverResult = await createServer({ databaseAdapter });
       if (serverResult.isError()) throw serverResult.toError();
       const server = serverResult.value;
 
