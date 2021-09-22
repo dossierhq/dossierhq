@@ -6,6 +6,7 @@ export {
   IconButton,
   initializeMultipleSelectorState,
   Input,
+  InstantDisplay,
   MultipleSelectorStateActions,
   NavBar,
   reduceMultipleSelectorState,
