@@ -23,6 +23,7 @@ import type {
 } from '.';
 import { assertExhaustive, ErrorType, notOk, ok } from '.';
 import type {
+  JsonAdminEntity,
   JsonConnection,
   JsonEdge,
   JsonEntityHistory,
@@ -30,6 +31,7 @@ import type {
   JsonPublishingResult,
 } from './JsonUtils';
 import {
+  convertJsonAdminEntity,
   convertJsonConnection,
   convertJsonEdge,
   convertJsonEntityHistory,
@@ -546,8 +548,8 @@ export function convertJsonAdminClientResult<TName extends AdminClientOperationN
     case AdminClientOperationName.searchEntities: {
       const result: AdminClientOperationReturn[AdminClientOperationName.searchEntities] = ok(
         convertJsonConnection(
-          value as JsonConnection<JsonEdge<AdminEntity, ErrorType>> | null,
-          convertJsonEdge
+          value as JsonConnection<JsonEdge<JsonAdminEntity, ErrorType>> | null,
+          convertJsonAdminEntityEdge
         )
       );
       return result as AdminClientOperationReturn[TName];
@@ -567,4 +569,8 @@ export function convertJsonAdminClientResult<TName extends AdminClientOperationN
     default:
       assertExhaustive(operationName);
   }
+}
+
+function convertJsonAdminEntityEdge(edge: JsonEdge<JsonAdminEntity, ErrorType>) {
+  return convertJsonEdge(edge, convertJsonAdminEntity);
 }

@@ -2,6 +2,7 @@ import { Temporal } from '@js-temporal/polyfill';
 import type { AdminClient, AdminClientMiddleware, AdminClientOperation, AdminEntity } from '.';
 import {
   AdminClientOperationName,
+  assertIsDefined,
   convertAdminClientOperationToJson,
   convertJsonAdminClientResult,
   convertJsonResult,
@@ -248,6 +249,133 @@ describe('AdminClient forward operation over JSON', () => {
             ],
             "modifies": true,
             "name": "publishEntities",
+            "next": [Function],
+            "resolve": [Function],
+          },
+        ],
+      ]
+    `);
+  });
+
+  test('searchEntities', async () => {
+    const entity1: AdminEntity = {
+      id: 'id',
+      info: {
+        type: 'Foo',
+        name: 'Name',
+        version: 2,
+        publishingState: EntityPublishState.Published,
+        createdAt: Temporal.Instant.from('2021-08-17T08:51:25.56Z'),
+        updatedAt: Temporal.Instant.from('2021-10-17T08:51:25.56Z'),
+      },
+      fields: { foo: 'Hello' },
+    };
+
+    const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
+      null,
+      AdminClientOperationName.searchEntities,
+      async (_context, operation) => {
+        const [_query, _paging] = operation.args;
+        operation.resolve(
+          ok({
+            pageInfo: {
+              hasPreviousPage: false,
+              hasNextPage: true,
+              startCursor: 'start-cursor',
+              endCursor: 'end-cursor',
+            },
+            edges: [
+              {
+                cursor: 'entity-1',
+                node: ok(entity1),
+              },
+            ],
+          })
+        );
+      }
+    );
+
+    const result = await adminClient.searchEntities(
+      { boundingBox: { minLat: 0, maxLat: 1, minLng: 20, maxLng: 21 } },
+      { first: 100, after: 'cursor' }
+    );
+    expectResultValue(result, {
+      pageInfo: {
+        hasPreviousPage: false,
+        hasNextPage: true,
+        startCursor: 'start-cursor',
+        endCursor: 'end-cursor',
+      },
+      edges: [
+        {
+          cursor: 'entity-1',
+          node: ok(entity1),
+        },
+      ],
+    });
+
+    if (expectOkResult(result)) {
+      const node = result.value?.edges[0].node;
+      assertIsDefined(node);
+      if (expectOkResult(node)) {
+        expect(node.value.info.createdAt).toBeInstanceOf(Temporal.Instant);
+        expect(node.value.info.updatedAt).toBeInstanceOf(Temporal.Instant);
+      }
+    }
+
+    expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
+      Array [
+        Array [
+          null,
+          Object {
+            "args": Array [
+              Object {
+                "boundingBox": Object {
+                  "maxLat": 1,
+                  "maxLng": 21,
+                  "minLat": 0,
+                  "minLng": 20,
+                },
+              },
+              Object {
+                "after": "cursor",
+                "first": 100,
+              },
+            ],
+            "modifies": false,
+            "name": "searchEntities",
+            "next": [Function],
+            "resolve": [Function],
+          },
+        ],
+      ]
+    `);
+  });
+
+  test('searchEntities (null)', async () => {
+    const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
+      null,
+      AdminClientOperationName.searchEntities,
+      async (_context, operation) => {
+        const [_query, _paging] = operation.args;
+        operation.resolve(ok(null));
+      }
+    );
+
+    const result = await adminClient.searchEntities();
+    expectResultValue(result, null);
+
+    expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
+      Array [
+        Array [
+          null,
+          Object {
+            "args": Array [
+              null,
+              null,
+            ],
+            "modifies": false,
+            "name": "searchEntities",
             "next": [Function],
             "resolve": [Function],
           },

@@ -1,5 +1,7 @@
 import { Temporal } from '@js-temporal/polyfill';
 import type {
+  AdminEntity,
+  AdminEntityInfo,
   Connection,
   Edge,
   EntityHistory,
@@ -26,6 +28,15 @@ export interface JsonEdge<TOk, TError extends ErrorType> {
 export type JsonResult<TOk, TError extends ErrorType> =
   | { value: TOk }
   | { error: TError; message: string };
+
+export interface JsonAdminEntityInfo extends Omit<AdminEntityInfo, 'createdAt' | 'updatedAt'> {
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface JsonAdminEntity extends Omit<AdminEntity, 'info'> {
+  info: JsonAdminEntityInfo;
+}
 
 export interface JsonPublishingResult extends Omit<EntityPublishPayload, 'updatedAt'> {
   updatedAt: string;
@@ -60,10 +71,15 @@ export function convertJsonConnection<
   return { pageInfo: jsonConnection.pageInfo, edges: jsonConnection.edges.map(edgeConverter) };
 }
 
-export function convertJsonEdge<TOk, TError extends ErrorType>(
-  jsonEdge: JsonEdge<TOk, TError>
-): Edge<TOk, TError> {
-  return { node: convertJsonResult(jsonEdge.node), cursor: jsonEdge.cursor };
+export function convertJsonEdge<TOkIn, TOkOut, TError extends ErrorType>(
+  jsonEdge: JsonEdge<TOkIn, TError>,
+  nodeConverter: (node: TOkIn) => TOkOut
+): Edge<TOkOut, TError> {
+  const nodeJson = convertJsonResult(jsonEdge.node);
+  const node: Result<TOkOut, TError> = nodeJson.isOk()
+    ? ok(nodeConverter(nodeJson.value))
+    : nodeJson;
+  return { node, cursor: jsonEdge.cursor };
 }
 
 export function convertJsonResult<TOk, TError extends ErrorType>(
@@ -73,6 +89,17 @@ export function convertJsonResult<TOk, TError extends ErrorType>(
     return ok(jsonResult.value);
   }
   return createErrorResult(jsonResult.error, jsonResult.message);
+}
+
+export function convertJsonAdminEntity(entity: JsonAdminEntity): AdminEntity {
+  return {
+    ...entity,
+    info: {
+      ...entity.info,
+      createdAt: Temporal.Instant.from(entity.info.createdAt),
+      updatedAt: Temporal.Instant.from(entity.info.updatedAt),
+    },
+  };
 }
 
 export function convertJsonPublishingResult(
