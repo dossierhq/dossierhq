@@ -94,6 +94,7 @@ export type {
   AdminEntity,
   AdminEntityCreate,
   AdminEntityCreatePayload,
+  AdminEntityInfo,
   AdminEntityUpdate,
   AdminEntityUpdatePayload,
   AdminEntityUpsert,

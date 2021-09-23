@@ -33,7 +33,7 @@ interface JsonCustomEdge extends JsonEdge<{ foo: string }, ErrorType> {
 
 function convertCustomJsonEdge(jsonEdge: JsonCustomEdge): CustomEdge {
   return {
-    ...convertJsonEdge(jsonEdge),
+    ...convertJsonEdge(jsonEdge, (node) => node),
     edgeProperty: jsonEdge.edgeProperty,
   };
 }
@@ -55,7 +55,9 @@ describe('convertJsonConnection()', () => {
     const asJson: JsonConnection<JsonEdge<{ foo: string }, ErrorType>> = JSON.parse(
       JSON.stringify(expected)
     );
-    const converted = convertJsonConnection(asJson, convertJsonEdge);
+    const converted = convertJsonConnection(asJson, (edge) =>
+      convertJsonEdge(edge, (node) => node)
+    );
     expect(converted).toEqual(expected);
   });
 
