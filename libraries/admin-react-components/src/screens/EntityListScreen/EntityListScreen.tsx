@@ -1,4 +1,5 @@
 import type { AdminEntity, EntityPublishState } from '@jonasb/datadata-core';
+import { QueryOrder } from '@jonasb/datadata-core';
 import {
   FullscreenContainer,
   IconButton,
@@ -58,7 +59,10 @@ export function EntityListScreen({
       </FullscreenContainer.Row>
       <FullscreenContainer.ScrollableRow>
         <FullscreenContainer.Row>
-          <EntityList {...{ searchEntityState }} onItemClick={onOpenEntity} />
+          <EntityList
+            {...{ searchEntityState, dispatchSearchEntityState }}
+            onItemClick={onOpenEntity}
+          />
         </FullscreenContainer.Row>
       </FullscreenContainer.ScrollableRow>
       <FullscreenContainer.Row center paddingVertical={2}>
@@ -91,21 +95,55 @@ function SearchInput({
 
 function EntityList({
   searchEntityState,
+  dispatchSearchEntityState,
   onItemClick,
 }: {
   searchEntityState: SearchEntityState;
+  dispatchSearchEntityState: Dispatch<SearchEntityStateAction>;
   onItemClick: (item: AdminEntity) => void;
 }) {
-  const { connection } = searchEntityState;
+  const {
+    connection,
+    query: { order },
+  } = searchEntityState;
   return (
     <Table>
       <Table.Head>
         <Table.Row sticky>
-          <Table.Header>Name</Table.Header>
+          <Table.Header
+            order={order === QueryOrder.name ? 'asc' : ''}
+            onClick={() =>
+              dispatchSearchEntityState(
+                new SearchEntityStateActions.SetQuery({ order: QueryOrder.name })
+              )
+            }
+          >
+            Name
+          </Table.Header>
           <Table.Header>Entity type</Table.Header>
           <Table.Header narrow>Status</Table.Header>
-          <Table.Header narrow>Created</Table.Header>
-          <Table.Header narrow>Updated</Table.Header>
+          <Table.Header
+            narrow
+            order={order === QueryOrder.createdAt ? 'asc' : ''}
+            onClick={() =>
+              dispatchSearchEntityState(
+                new SearchEntityStateActions.SetQuery({ order: QueryOrder.createdAt })
+              )
+            }
+          >
+            Created
+          </Table.Header>
+          <Table.Header
+            narrow
+            order={order === QueryOrder.updatedAt ? 'asc' : ''}
+            onClick={() =>
+              dispatchSearchEntityState(
+                new SearchEntityStateActions.SetQuery({ order: QueryOrder.updatedAt })
+              )
+            }
+          >
+            Updated
+          </Table.Header>
         </Table.Row>
       </Table.Head>
       <Table.Body>
@@ -123,9 +161,10 @@ function EntityList({
                   <InstantDisplay instant={entity.info.createdAt} />
                 </Table.Cell>
                 <Table.Cell narrow>
-                  {entity.info.updatedAt.equals(entity.info.createdAt) ? null : (
+                  {order === QueryOrder.updatedAt ||
+                  !entity.info.updatedAt.equals(entity.info.createdAt) ? (
                     <InstantDisplay instant={entity.info.updatedAt} />
-                  )}
+                  ) : null}
                 </Table.Cell>
               </Table.Row>
             );

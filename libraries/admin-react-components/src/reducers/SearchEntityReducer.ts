@@ -7,7 +7,10 @@ import type {
   ErrorType,
   Paging,
 } from '@jonasb/datadata-core';
+import { QueryOrder } from '@jonasb/datadata-core';
+import isEqual from 'lodash/isEqual';
 
+const defaultOrder = QueryOrder.name;
 const defaultPagingCount = 25;
 
 export interface SearchEntityState {
@@ -27,8 +30,12 @@ export interface SearchEntityStateAction {
 export function initializeSearchEntityState(
   initialQuery: AdminQuery | undefined
 ): SearchEntityState {
+  const query = initialQuery ?? {};
+  if (!query.order) {
+    query.order = defaultOrder;
+  }
   return {
-    query: initialQuery ?? {},
+    query,
     paging: {},
     pagingCount: defaultPagingCount,
     text: initialQuery?.text ?? '',
@@ -72,6 +79,22 @@ class SetPagingAction implements SearchEntityStateAction {
   }
 }
 
+class SetQueryAction implements SearchEntityStateAction {
+  value: AdminQuery;
+
+  constructor(value: AdminQuery) {
+    this.value = value;
+  }
+
+  reduce(state: SearchEntityState): SearchEntityState {
+    const query = { ...state.query, ...this.value };
+    if (isEqual(query, state.query)) {
+      return state;
+    }
+    return { ...state, query };
+  }
+}
+
 class UpdateResultAction implements SearchEntityStateAction {
   connection: SearchEntityState['connection'];
   connectionError: SearchEntityState['connectionError'];
@@ -96,5 +119,6 @@ class UpdateResultAction implements SearchEntityStateAction {
 export const SearchEntityStateActions = {
   SetText: SetTextAction,
   SetPaging: SetPagingAction,
+  SetQuery: SetQueryAction,
   UpdateResult: UpdateResultAction,
 };
