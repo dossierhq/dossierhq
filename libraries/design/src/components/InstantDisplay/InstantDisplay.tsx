@@ -43,6 +43,14 @@ function getRelativeTime(instant: Temporal.Instant, now: Temporal.Instant) {
     return 'a day ago';
   }
   const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-  const plainDate = instant.toZonedDateTimeISO(timeZone).toPlainDate();
-  return plainDate.toLocaleString();
+  const thenPlainDate = instant.toZonedDateTimeISO(timeZone).toPlainDate();
+  const nowPlainDate = now.toZonedDateTimeISO(timeZone).toPlainDate();
+  if (thenPlainDate.weekOfYear === nowPlainDate.weekOfYear) {
+    return thenPlainDate.toLocaleString(undefined, { weekday: 'short' });
+  }
+  return thenPlainDate.toLocaleString(undefined, {
+    day: '2-digit',
+    month: 'short',
+    year: thenPlainDate.year < nowPlainDate.year ? 'numeric' : undefined,
+  });
 }
