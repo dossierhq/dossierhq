@@ -1,16 +1,23 @@
 import type { AdminEntity, EntityPublishState } from '@jonasb/datadata-core';
 import { QueryOrder } from '@jonasb/datadata-core';
 import {
+  Field,
   FullscreenContainer,
   IconButton,
   Input,
   InstantDisplay,
   Table,
   Tag,
+  TagSelector,
 } from '@jonasb/datadata-design';
 import type { Dispatch } from 'react';
 import React, { useContext, useEffect, useMemo, useReducer } from 'react';
-import type { SearchEntityState, SearchEntityStateAction } from '../..';
+import type {
+  EntityTypeSelectorDispatch,
+  EntityTypeSelectorState,
+  SearchEntityState,
+  SearchEntityStateAction,
+} from '../..';
 import {
   DataDataContext,
   EntityTypeSelector,
@@ -67,7 +74,7 @@ export function EntityListScreen({
   return (
     <FullscreenContainer>
       {header ? <FullscreenContainer.Row fullWidth>{header}</FullscreenContainer.Row> : null}
-      <FullscreenContainer.Row center flexDirection="row" gap={2} paddingTop={2}>
+      <FullscreenContainer.Row center flexDirection="row" gap={2} paddingVertical={2}>
         <SearchInput {...{ searchEntityState, dispatchSearchEntityState }} />
         <EntityTypeSelector state={entityTypeFilterState} dispatch={dispatchEntityTypeFilter}>
           Entity type
@@ -76,6 +83,7 @@ export function EntityListScreen({
       </FullscreenContainer.Row>
       <FullscreenContainer.ScrollableRow>
         <FullscreenContainer.Row>
+          <EntityTypesList state={entityTypeFilterState} dispatch={dispatchEntityTypeFilter} />
           <EntityList
             {...{ searchEntityState, dispatchSearchEntityState }}
             onItemClick={onOpenEntity}
@@ -107,6 +115,32 @@ function SearchInput({
         dispatchSearchEntityState(new SearchEntityStateActions.SetText(e.target.value))
       }
     />
+  );
+}
+
+function EntityTypesList({
+  state,
+  dispatch,
+}: {
+  state: EntityTypeSelectorState;
+  dispatch: EntityTypeSelectorDispatch;
+}) {
+  if (state.selectedIds.length === 0) {
+    return null;
+  }
+
+  return (
+    <Field>
+      <Field.Label size="small">Show entity types</Field.Label>
+      <Field.Control>
+        <TagSelector
+          clearLabel="Clear"
+          itemTag={(item) => ({ tag: item.name })}
+          state={state}
+          dispatch={dispatch}
+        />
+      </Field.Control>
+    </Field>
   );
 }
 

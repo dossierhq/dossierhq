@@ -7,6 +7,10 @@ export {
   initializeEntityTypeSelectorState,
   reduceEntityTypeSelectorState,
 } from './components/EntityTypeSelector/EntityTypeSelector';
+export type {
+  EntityTypeSelectorDispatch,
+  EntityTypeSelectorState,
+} from './components/EntityTypeSelector/EntityTypeSelector';
 export { DataDataContext, DataDataContextValue } from './contexts/DataDataContext';
 export type { DataDataContextAdapter } from './contexts/DataDataContext';
 export {
