@@ -1,5 +1,12 @@
 import type { AdminEntity, EntityPublishState } from '@jonasb/datadata-core';
-import { FullscreenContainer, IconButton, Input, Table, Tag } from '@jonasb/datadata-design';
+import {
+  FullscreenContainer,
+  IconButton,
+  Input,
+  InstantDisplay,
+  Table,
+  Tag,
+} from '@jonasb/datadata-design';
 import type { Dispatch } from 'react';
 import React, { useContext, useEffect, useMemo, useReducer } from 'react';
 import { DataDataContext, TypePicker } from '../..';
@@ -112,8 +119,14 @@ function EntityList({
                 <Table.Cell narrow>
                   <StatusTag status={entity.info.publishingState} />
                 </Table.Cell>
-                <Table.Cell narrow>{entity.info.createdAt.toLocaleString()}</Table.Cell>
-                <Table.Cell narrow>{entity.info.updatedAt.toLocaleString()}</Table.Cell>
+                <Table.Cell narrow>
+                  <InstantDisplay instant={entity.info.createdAt} />
+                </Table.Cell>
+                <Table.Cell narrow>
+                  {entity.info.updatedAt.equals(entity.info.createdAt) ? null : (
+                    <InstantDisplay instant={entity.info.updatedAt} />
+                  )}
+                </Table.Cell>
               </Table.Row>
             );
           }
