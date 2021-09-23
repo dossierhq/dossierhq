@@ -13,13 +13,12 @@ import {
   Tag,
   TagSelector,
 } from '../..';
-import type {
-  EntityTypeSelectorDispatch,
-  EntityTypeSelectorInitArgs,
-  EntityTypeSelectorReducer,
-  EntityTypeSelectorState,
+import type { EntityTypeSelectorDispatch, EntityTypeSelectorState } from './EntityTypeSelector';
+import {
+  EntityTypeSelector,
+  initializeEntityTypeSelectorState,
+  reduceEntityTypeSelectorState,
 } from './EntityTypeSelector';
-import { EntityTypeSelector, initializeEntityTypeSelectorState } from './EntityTypeSelector';
 import type {
   StatusSelectorDispatch,
   StatusSelectorInitArgs,
@@ -62,11 +61,8 @@ function Screen({
   onMapClick,
   onTableRowClick,
 }: ScreenProps): JSX.Element {
-  const [entityTypeFilterState, entityTypeFilterDispatch] = useReducer<
-    EntityTypeSelectorReducer,
-    EntityTypeSelectorInitArgs
-  >(
-    reduceMultipleSelectorState,
+  const [entityTypeFilterState, dispatchEntityTypeFilter] = useReducer(
+    reduceEntityTypeSelectorState,
     { selectedIds: ['foo', 'bar'] },
     initializeEntityTypeSelectorState
   );
@@ -88,7 +84,7 @@ function Screen({
         <SearchBar
           {...{
             entityTypeFilterState,
-            entityTypeFilterDispatch,
+            dispatchEntityTypeFilter,
             statusFilterState,
             statusFilterDispatch,
             onMapClick,
@@ -98,7 +94,7 @@ function Screen({
       </FullscreenContainer.Row>
       <FullscreenContainer.ScrollableRow>
         <FullscreenContainer.Row paddingVertical={2}>
-          <EntityTypesList state={entityTypeFilterState} dispatch={entityTypeFilterDispatch} />
+          <EntityTypesList state={entityTypeFilterState} dispatch={dispatchEntityTypeFilter} />
           <StatusTagList state={statusFilterState} dispatch={statusFilterDispatch} />
           <EntityTable {...{ entityCount, onTableRowClick }} />
         </FullscreenContainer.Row>
@@ -124,14 +120,14 @@ function NavItemRender(text: string) {
 
 function SearchBar({
   entityTypeFilterState,
-  entityTypeFilterDispatch,
+  dispatchEntityTypeFilter,
   statusFilterState,
   statusFilterDispatch,
   onMapClick,
   onCreateClick,
 }: {
   entityTypeFilterState: EntityTypeSelectorState;
-  entityTypeFilterDispatch: EntityTypeSelectorDispatch;
+  dispatchEntityTypeFilter: EntityTypeSelectorDispatch;
   statusFilterState: StatusSelectorState;
   statusFilterDispatch: StatusSelectorDispatch;
   onMapClick: (event: MouseEvent) => void;
@@ -140,7 +136,7 @@ function SearchBar({
   return (
     <>
       <Input iconLeft="search" placeholder="Search" />
-      <EntityTypeSelector state={entityTypeFilterState} dispatch={entityTypeFilterDispatch}>
+      <EntityTypeSelector state={entityTypeFilterState} dispatch={dispatchEntityTypeFilter}>
         Entity type
       </EntityTypeSelector>
       <StatusSelector state={statusFilterState} dispatch={statusFilterDispatch}>

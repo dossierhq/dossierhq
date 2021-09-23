@@ -1,17 +1,19 @@
-import type { Dispatch } from 'react';
-import React from 'react';
 import type {
   DropdownSelectorProps,
   MultipleSelectorItem,
   MultipleSelectorReducer,
   MultipleSelectorState,
   MultipleSelectorStateAction,
-} from '../..';
+} from '@jonasb/datadata-design';
 import {
   DropdownSelector,
   initializeMultipleSelectorState,
+  MultipleSelectorStateActions,
   reduceMultipleSelectorState,
-} from '../..';
+} from '@jonasb/datadata-design';
+import type { Dispatch } from 'react';
+import React, { useContext, useEffect } from 'react';
+import { DataDataContext } from '../..';
 
 export interface EntityTypeItem extends MultipleSelectorItem {
   name: string;
@@ -28,10 +30,7 @@ export function initializeEntityTypeSelectorState({
   selectedIds,
 }: EntityTypeSelectorInitArgs): MultipleSelectorState<EntityTypeItem> {
   return initializeMultipleSelectorState({
-    items: [
-      { id: 'foo', name: 'Foo' },
-      { id: 'bar', name: 'Bar' },
-    ],
+    items: [],
     selectedIds,
   });
 }
@@ -39,5 +38,13 @@ export function initializeEntityTypeSelectorState({
 export const reduceEntityTypeSelectorState: EntityTypeSelectorReducer = reduceMultipleSelectorState;
 
 export function EntityTypeSelector(props: Props): JSX.Element {
+  const { dispatch } = props;
+  const { schema } = useContext(DataDataContext);
+
+  useEffect(() => {
+    const items = schema.spec.entityTypes.map((it) => ({ id: it.name, name: it.name }));
+    dispatch(new MultipleSelectorStateActions.UpdateItems(items));
+  }, [schema.spec.entityTypes, dispatch]);
+
   return <DropdownSelector<EntityTypeItem> {...props} renderItem={(item) => item.name} />;
 }

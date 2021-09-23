@@ -2,6 +2,11 @@ export type {
   ToolConstructable as EditorJsToolConstructable,
   ToolSettings as EditorJsToolSettings,
 } from '@editorjs/editorjs';
+export {
+  EntityTypeSelector,
+  initializeEntityTypeSelectorState,
+  reduceEntityTypeSelectorState,
+} from './components/EntityTypeSelector/EntityTypeSelector';
 export { DataDataContext, DataDataContextValue } from './contexts/DataDataContext';
 export type { DataDataContextAdapter } from './contexts/DataDataContext';
 export {
@@ -69,6 +74,12 @@ export type { RowProps } from './generic-components/Row/Row';
 export { Segment } from './generic-components/Segment/Segment';
 export { Stack } from './generic-components/Stack/Stack';
 export { Tag } from './generic-components/Tag/Tag';
+export {
+  initializeSearchEntityState,
+  reduceSearchEntityState,
+  SearchEntityStateActions,
+} from './reducers/SearchEntityReducer';
+export type { SearchEntityState, SearchEntityStateAction } from './reducers/SearchEntityReducer';
 export { EntityListScreen } from './screens/EntityListScreen/EntityListScreen';
 export type { LayoutProps, SpacingSize } from './types/LayoutTypes';
 export type { Kind } from './utils/KindUtils';

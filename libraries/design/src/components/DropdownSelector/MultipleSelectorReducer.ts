@@ -75,7 +75,23 @@ class ToggleItemAction<TItem extends MultipleSelectorItem>
   }
 }
 
+class UpdateItemsAction<TItem extends MultipleSelectorItem>
+  implements MultipleSelectorStateAction<TItem>
+{
+  private readonly items: TItem[];
+
+  constructor(items: TItem[]) {
+    this.items = items;
+  }
+
+  reduce(state: MultipleSelectorState<TItem>): MultipleSelectorState<TItem> {
+    const selectedIds = state.selectedIds.filter((id) => this.items.some((it) => it.id === id));
+    return { ...state, items: this.items, selectedIds };
+  }
+}
+
 export const MultipleSelectorStateActions = {
   ClearSelection: ClearSelectionAction,
   ToggleItem: ToggleItemAction,
+  UpdateItems: UpdateItemsAction,
 };

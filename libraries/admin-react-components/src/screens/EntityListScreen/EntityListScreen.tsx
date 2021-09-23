@@ -10,16 +10,17 @@ import {
 } from '@jonasb/datadata-design';
 import type { Dispatch } from 'react';
 import React, { useContext, useEffect, useMemo, useReducer } from 'react';
-import { DataDataContext, TypePicker } from '../..';
-import type {
-  SearchEntityState,
-  SearchEntityStateAction,
-} from '../../reducers/SearchEntityReducer';
+import type { SearchEntityState, SearchEntityStateAction } from '../..';
 import {
+  DataDataContext,
+  EntityTypeSelector,
+  initializeEntityTypeSelectorState,
   initializeSearchEntityState,
+  reduceEntityTypeSelectorState,
   reduceSearchEntityState,
   SearchEntityStateActions,
-} from '../../reducers/SearchEntityReducer';
+  TypePicker,
+} from '../..';
 
 export interface EntityListScreenProps {
   header?: React.ReactNode;
@@ -44,18 +45,34 @@ export function EntityListScreen({
     searchEntityState.query,
     searchEntityState.paging
   );
+
+  const [entityTypeFilterState, dispatchEntityTypeFilter] = useReducer(
+    reduceEntityTypeSelectorState,
+    {},
+    initializeEntityTypeSelectorState
+  );
+
   useEffect(() => {
     dispatchSearchEntityState(
       new SearchEntityStateActions.UpdateResult(connection, connectionError)
     );
   }, [connection, connectionError]);
 
+  useEffect(() => {
+    dispatchSearchEntityState(
+      new SearchEntityStateActions.SetQuery({ entityTypes: entityTypeFilterState.selectedIds })
+    );
+  }, [entityTypeFilterState.selectedIds]);
+
   return (
     <FullscreenContainer>
       {header ? <FullscreenContainer.Row fullWidth>{header}</FullscreenContainer.Row> : null}
-      <FullscreenContainer.Row center flexDirection="row" gap={2}>
+      <FullscreenContainer.Row center flexDirection="row" gap={2} paddingTop={2}>
         <SearchInput {...{ searchEntityState, dispatchSearchEntityState }} />
-        <TypePicker showEntityTypes onTypeSelected={onCreateEntity} text="Create" />
+        <EntityTypeSelector state={entityTypeFilterState} dispatch={dispatchEntityTypeFilter}>
+          Entity type
+        </EntityTypeSelector>
+        <TypePicker iconLeft="add" showEntityTypes onTypeSelected={onCreateEntity} text="Create" />
       </FullscreenContainer.Row>
       <FullscreenContainer.ScrollableRow>
         <FullscreenContainer.Row>

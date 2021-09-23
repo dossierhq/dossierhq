@@ -1,4 +1,5 @@
 import type { EntityTypeSpecification, ValueTypeSpecification } from '@jonasb/datadata-core';
+import type { IconName } from '@jonasb/datadata-design';
 import { Dropdown } from '@jonasb/datadata-design';
 import React, { useContext } from 'react';
 import { DataDataContext } from '../../';
@@ -6,6 +7,7 @@ import { DataDataContext } from '../../';
 export interface TypePickerProps {
   id?: string;
   text: string;
+  iconLeft?: IconName;
   showEntityTypes?: boolean;
   entityTypes?: string[];
   showValueTypes?: boolean;
@@ -21,6 +23,7 @@ interface Item {
 export function TypePicker({
   id,
   text,
+  iconLeft,
   showEntityTypes,
   entityTypes,
   showValueTypes,
@@ -40,6 +43,7 @@ export function TypePicker({
   return (
     <Dropdown
       id={id}
+      iconLeft={iconLeft}
       items={items}
       renderItem={(item) => item.name}
       onItemClick={(item) => onTypeSelected(item.id)}
