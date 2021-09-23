@@ -9,6 +9,7 @@ import {
   EntityEditorStateContext,
 } from '../..';
 import { bar1Id, bar2Id, foo1Id, fooArchivedId } from '../../test/EntityFixtures';
+import { LoadContextProvider } from '../../test/LoadContextProvider';
 import { createContextValue2, SlowMiddleware } from '../../test/TestContextAdapter';
 import {
   AddEntityDraftAction,
@@ -31,38 +32,11 @@ export default meta;
 
 const Template: Story<StoryProps> = (args) => {
   return (
-    <LoadingContextProvider contextValue={args.contextValue}>
+    <LoadContextProvider contextValue={args.contextValue}>
       <Wrapper {...args} />
-    </LoadingContextProvider>
+    </LoadContextProvider>
   );
 };
-
-function LoadingContextProvider({
-  contextValue,
-  children,
-}: {
-  contextValue?: () => PromiseResult<DataDataContextValue, ErrorType>;
-  children: React.ReactNode;
-}) {
-  const [isError, setError] = useState(false);
-  const [context, setContext] = useState<DataDataContextValue | null>(null);
-  useEffect(() => {
-    (async () => {
-      const result = await (contextValue ? contextValue() : createContextValue2());
-      if (result.isError()) {
-        setError(true);
-        return;
-      }
-      setContext(result.value);
-    })();
-  }, [contextValue]);
-
-  if (isError) {
-    return <h1>Failed initializing</h1>;
-  }
-  if (!context) return null;
-  return <DataDataContext.Provider value={context}>{children}</DataDataContext.Provider>;
-}
 
 function Wrapper({
   className,

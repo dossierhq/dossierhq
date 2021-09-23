@@ -1,9 +1,8 @@
 import type { Meta, Story } from '@storybook/react/types-6-0';
 import React from 'react';
-import { DataDataContext } from '../..';
-import { EntityListScreen } from './EntityListScreen';
+import { LoadContextProvider } from '../../test/LoadContextProvider';
 import type { EntityListScreenProps } from './EntityListScreen';
-import { createContextValue } from '../../test/TestContextAdapter';
+import { EntityListScreen } from './EntityListScreen';
 
 const meta: Meta<EntityListScreenProps> = {
   title: 'Screens/EntityListScreen',
@@ -19,9 +18,9 @@ export default meta;
 
 const Template: Story<EntityListScreenProps> = (args) => {
   return (
-    <DataDataContext.Provider value={createContextValue().contextValue}>
+    <LoadContextProvider>
       <EntityListScreen {...args} />
-    </DataDataContext.Provider>
+    </LoadContextProvider>
   );
 };
 
