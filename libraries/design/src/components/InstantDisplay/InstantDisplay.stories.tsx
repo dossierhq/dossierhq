@@ -20,5 +20,11 @@ const Template: Story<StoryProps> = ({ ...args }: StoryProps) => {
 export const Now = Template.bind({});
 Now.args = { instant: Temporal.Now.instant() };
 
+export const TwoDaysAgo = Template.bind({});
+TwoDaysAgo.args = { instant: Temporal.Now.instant().subtract({ hours: 24 * 2 }) };
+
 export const TenDaysAgo = Template.bind({});
 TenDaysAgo.args = { instant: Temporal.Now.instant().subtract({ hours: 24 * 10 }) };
+
+export const AYearAgo = Template.bind({});
+AYearAgo.args = { instant: Temporal.Now.instant().subtract({ hours: 24 * 365 }) };
