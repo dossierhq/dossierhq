@@ -15,6 +15,12 @@ export type Result<TOk, TError extends ErrorType> =
   | ErrorResult<unknown, TError>;
 
 export type PromiseResult<TOk, TError extends ErrorType> = Promise<Result<TOk, TError>>;
+export type OkFromPromiseResult<T> = T extends PromiseResult<infer TOk, infer _TError>
+  ? TOk
+  : never;
+export type ErrorFromPromiseResult<T> = T extends PromiseResult<infer _TOk, infer TError>
+  ? TError
+  : never;
 
 export class OkResult<TOk, TError extends ErrorType> {
   readonly value: TOk;

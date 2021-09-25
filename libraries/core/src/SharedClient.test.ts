@@ -1,3 +1,6 @@
+import type { ErrorType } from '.';
+import { ok } from '.';
+import { expectResultValue } from './CoreTestUtils';
 import type { Middleware, Operation, OperationWithoutCallbacks } from './SharedClient';
 import { executeOperationPipeline } from './SharedClient';
 
@@ -5,8 +8,12 @@ interface TestClientOperationArguments {
   [TestClientOperationName.foo]: [string];
 }
 
-interface TestClientOperationReturn {
+interface TestClientOperationReturnOk {
   [TestClientOperationName.foo]: { item: string };
+}
+
+interface TestClientOperationReturnError {
+  [TestClientOperationName.foo]: ErrorType.BadRequest | ErrorType.Generic;
 }
 
 enum TestClientOperationName {
@@ -16,7 +23,8 @@ enum TestClientOperationName {
 type TestClientOperation<TName extends TestClientOperationName> = Operation<
   TName,
   TestClientOperationArguments[TName],
-  TestClientOperationReturn[TName]
+  TestClientOperationReturnOk[TName],
+  TestClientOperationReturnError[TName]
 >;
 
 type TestClientMiddleware<TContext> = Middleware<
@@ -34,49 +42,48 @@ async function executeTestPipeline<TContext>(
 
 describe('executeOperationPipeline()', () => {
   test('One middleware returning argument', async () => {
-    expect(
-      await executeTestPipeline(
-        {},
-        [
-          async (_context, operation) => {
-            if (operation.name === TestClientOperationName.foo) {
-              const {
-                args: [firstArg],
-                resolve,
-              } = operation as TestClientOperation<TestClientOperationName.foo>;
-              resolve({ item: firstArg });
-            }
-          },
-        ],
-        { name: TestClientOperationName.foo, args: ['hello'], modifies: false }
-      )
-    ).toEqual({ item: 'hello' });
+    const result = await executeTestPipeline(
+      {},
+      [
+        async (_context, operation) => {
+          if (operation.name === TestClientOperationName.foo) {
+            const {
+              args: [firstArg],
+              resolve,
+            } = operation as TestClientOperation<TestClientOperationName.foo>;
+            resolve(ok({ item: firstArg }));
+          }
+        },
+      ],
+      { name: TestClientOperationName.foo, args: ['hello'], modifies: false }
+    );
+    expectResultValue(result, { item: 'hello' });
   });
 
   test('Two middlewares, the first modifies the second', async () => {
-    expect(
-      await executeTestPipeline(
-        {},
-        [
-          async (_context, operation) => {
-            if (operation.name === TestClientOperationName.foo) {
-              const { resolve } = operation as TestClientOperation<TestClientOperationName.foo>;
-              resolve({ item: `[[[${(await operation.next()).item}]]]` });
-            }
-          },
-          async (_context, operation) => {
-            if (operation.name === TestClientOperationName.foo) {
-              const {
-                args: [firstArg],
-                resolve,
-              } = operation as TestClientOperation<TestClientOperationName.foo>;
-              resolve({ item: firstArg });
-            }
-          },
-        ],
-        { name: TestClientOperationName.foo, args: ['hello'], modifies: false }
-      )
-    ).toEqual({ item: '[[[hello]]]' });
+    const result = await executeTestPipeline(
+      {},
+      [
+        async (_context, operation) => {
+          if (operation.name === TestClientOperationName.foo) {
+            const { resolve } = operation as TestClientOperation<TestClientOperationName.foo>;
+            const result = await operation.next();
+            resolve(ok({ item: `[[[${result.isOk() ? result.value.item : result}]]]` }));
+          }
+        },
+        async (_context, operation) => {
+          if (operation.name === TestClientOperationName.foo) {
+            const {
+              args: [firstArg],
+              resolve,
+            } = operation as TestClientOperation<TestClientOperationName.foo>;
+            resolve(ok({ item: firstArg }));
+          }
+        },
+      ],
+      { name: TestClientOperationName.foo, args: ['hello'], modifies: false }
+    );
+    expectResultValue(result, { item: '[[[hello]]]' });
   });
 
   test('Error: empty pipeline', async () => {

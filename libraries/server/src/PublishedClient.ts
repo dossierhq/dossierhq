@@ -1,6 +1,7 @@
 import type {
   ContextProvider,
   PublishedClient,
+  PublishedClientMiddleware,
   PublishedClientOperation,
 } from '@jonasb/datadata-core';
 import {
@@ -16,10 +17,12 @@ export function createServerPublishedClient({
   context,
   databaseAdapter,
   serverImpl,
+  middleware,
 }: {
   context: SessionContext | ContextProvider<SessionContext>;
   databaseAdapter: DatabaseAdapter;
   serverImpl: ServerImpl;
+  middleware: PublishedClientMiddleware<SessionContext>[];
 }): PublishedClient {
   async function terminatingMiddleware(
     context: SessionContext,
@@ -54,5 +57,8 @@ export function createServerPublishedClient({
     }
   }
 
-  return createBasePublishedClient<SessionContext>({ context, pipeline: [terminatingMiddleware] });
+  return createBasePublishedClient<SessionContext>({
+    context,
+    pipeline: [...middleware, terminatingMiddleware],
+  });
 }

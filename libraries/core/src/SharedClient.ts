@@ -1,14 +1,14 @@
-import type { ErrorType, PromiseResult } from '.';
+import type { ErrorType, Logger, PromiseResult, Result } from '.';
 import { assertIsDefined } from './Asserts';
 
 export type ContextProvider<TContext> = () => PromiseResult<{ context: TContext }, ErrorType>;
 
-export interface Operation<TName, TArgs, TResult> {
+export interface Operation<TName, TArgs, TOk, TError extends ErrorType | ErrorType.Generic> {
   readonly name: TName;
   readonly args: TArgs;
   readonly modifies: boolean;
-  readonly resolve: (result: TResult) => void;
-  readonly next: () => Promise<TResult>;
+  readonly resolve: (result: Result<TOk, TError>) => void;
+  readonly next: () => Promise<Result<TOk, TError>>;
 }
 
 export type OperationWithoutCallbacks<T> = Omit<T, 'resolve' | 'next'>;
@@ -23,13 +23,14 @@ export async function executeOperationPipeline<
   TMiddleware extends Middleware<TContext, any>,
   TName,
   TArgs,
-  TResult,
-  TOp extends Operation<TName, TArgs, TResult>
+  TOk,
+  TError extends ErrorType.Generic,
+  TOp extends Operation<TName, TArgs, TOk, TError>
 >(
   context: TContext,
   pipeline: TMiddleware[],
   operation: OperationWithoutCallbacks<TOp>
-): Promise<TResult> {
+): Promise<Result<TOk, TError>> {
   if (pipeline.length === 0) {
     throw new Error('Cannot execute an empty pipeline');
   }
@@ -42,17 +43,18 @@ async function executeOperationMiddleware<
   TMiddleware extends Middleware<TContext, any>,
   TName,
   TArgs,
-  TResult,
-  TOp extends Operation<TName, TArgs, TResult>
+  TOk,
+  TError extends ErrorType.Generic,
+  TOp extends Operation<TName, TArgs, TOk, TError>
 >(
   context: TContext,
   pipeline: TMiddleware[],
   pipelineIndex: number,
   operation: OperationWithoutCallbacks<TOp>
-): Promise<TResult> {
+): Promise<Result<TOk, TError>> {
   // Setup callbacks
-  let result: TResult | undefined;
-  const resolve = (res: TResult) => (result = res);
+  let result: Result<TOk, TError> | undefined;
+  const resolve = (res: Result<TOk, TError>) => (result = res);
 
   const next = async () => {
     if (pipelineIndex >= pipeline.length - 1) {
@@ -74,4 +76,21 @@ async function executeOperationMiddleware<
   assertIsDefined(result);
 
   return result;
+}
+
+export async function LoggingClientMiddleware<
+  TContext extends { logger: Logger },
+  TOk,
+  TError extends ErrorType.Generic,
+  TOp extends Operation<unknown, unknown, TOk, TError>
+>(context: TContext, operation: TOp): Promise<void> {
+  const { logger } = context;
+  logger.info('Executing %s', operation.name);
+  const result = await operation.next();
+  if (result.isError()) {
+    logger.warn('Result %s ok: %s', operation.name, result.isOk());
+  } else {
+    logger.info('Result %s ok: %s', operation.name, result.isOk());
+  }
+  operation.resolve(result);
 }

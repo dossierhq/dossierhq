@@ -88,6 +88,7 @@ export type {
   SchemaSpecificationUpdatePayload,
   ValueTypeSpecification,
 } from './Schema';
+export { LoggingClientMiddleware } from './SharedClient';
 export type { ContextProvider } from './SharedClient';
 export { EntityPublishState, PublishingEventKind, QueryOrder } from './Types';
 export type {
