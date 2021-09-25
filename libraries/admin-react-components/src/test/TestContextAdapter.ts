@@ -3,6 +3,7 @@ import type {
   AdminClientMiddleware,
   AdminClientOperation,
   ErrorType,
+  Logger,
   PromiseResult,
   Result,
 } from '@jonasb/datadata-core';
@@ -10,6 +11,7 @@ import {
   convertAdminClientOperationToJson,
   convertJsonAdminClientResult,
   createBaseAdminClient,
+  LoggingClientMiddleware,
   notOk,
   ok,
   Schema,
@@ -22,7 +24,9 @@ import { DataDataContextValue } from '..';
 import schema from '../stories/StoryboardSchema';
 import { entitiesFixture } from './EntityFixtures';
 
-type BackendContext = Record<never, never>;
+interface BackendContext {
+  logger: Logger;
+}
 
 const GENERATE_ENTITIES_UUID_NAMESPACE = '96597f34-8654-4f66-b98d-3e9f5bb7cc9a';
 
@@ -40,8 +44,30 @@ export async function createContextValue2(
 export function createBackendAdminClient(
   middleware: AdminClientMiddleware<BackendContext>[] = []
 ): AdminClient {
-  const context: BackendContext = {};
-  return createBaseAdminClient({ context, pipeline: [...middleware, terminatingMiddleware] });
+  const context: BackendContext = { logger: createConsoleLogger() };
+  const loggerMiddleware: AdminClientMiddleware<BackendContext> =
+    LoggingClientMiddleware as AdminClientMiddleware<BackendContext>;
+  return createBaseAdminClient<BackendContext>({
+    context,
+    pipeline: [...middleware, loggerMiddleware, terminatingMiddleware],
+  });
+}
+
+function createConsoleLogger(): Logger {
+  return {
+    error(message, ...args) {
+      console.error(`error: ${message}`, ...args);
+    },
+    warn(message, ...args) {
+      console.warn(`warn: ${message}`, ...args);
+    },
+    info(message, ...args) {
+      console.info(`info: ${message}`, ...args);
+    },
+    debug(message, ...args) {
+      console.debug(`debug: ${message}`, ...args);
+    },
+  };
 }
 
 async function terminatingMiddleware(
