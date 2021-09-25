@@ -90,7 +90,14 @@ export async function LoggingClientMiddleware<
   if (result.isError()) {
     logger.warn('Result %s error: %s: %s', operation.name, result.error, result.message);
   } else {
-    logger.info('Result %s ok', operation.name, result.isOk());
+    // Add effect to log, effect is just a convention, not a formal part of OkResult
+    const effect =
+      typeof result.value === 'object' && (result.value as { effect?: unknown }).effect;
+    if (typeof effect === 'string') {
+      logger.info('Result %s ok, effect %s', operation.name, effect);
+    } else {
+      logger.info('Result %s ok', operation.name);
+    }
   }
   operation.resolve(result);
 }
