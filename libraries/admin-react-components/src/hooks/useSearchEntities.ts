@@ -5,10 +5,10 @@ import type {
   Connection,
   Edge,
   ErrorResult,
+  ErrorType,
   Paging,
 } from '@jonasb/datadata-core';
-import { createErrorResultFromError, ErrorType } from '@jonasb/datadata-core';
-import { useCallback, useMemo } from 'react';
+import { useCallback } from 'react';
 import useSWR from 'swr';
 
 /**
@@ -39,15 +39,8 @@ export function useSearchEntities(
     query ? ['useSearchEntities', JSON.stringify({ query, paging })] : null,
     fetcher
   );
-  const connectionError = useMemo(
-    () =>
-      error
-        ? createErrorResultFromError(error, [ErrorType.BadRequest, ErrorType.Generic])
-        : undefined,
-    [error]
-  );
 
-  return { connection: data, connectionError };
+  return { connection: data, connectionError: error };
 }
 
 async function fetchSearchEntities(
@@ -57,7 +50,7 @@ async function fetchSearchEntities(
 ): Promise<Connection<Edge<AdminEntity, ErrorType>> | null> {
   const result = await adminClient.searchEntities(query, paging);
   if (result.isError()) {
-    throw result.toError();
+    throw result; // throw result, don't convert to Error
   }
   return result.value;
 }
