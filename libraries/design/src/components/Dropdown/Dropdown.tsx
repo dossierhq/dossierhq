@@ -9,6 +9,7 @@ export interface DropdownProps<TItem extends DropdownItem = DropdownItem> {
   left?: boolean;
   up?: boolean;
   items: TItem[];
+  disabled?: boolean;
   renderItem: (item: TItem) => React.ReactNode;
   onItemClick?: (item: TItem) => void;
   children?: React.ReactNode;
@@ -24,6 +25,7 @@ export function Dropdown<TItem extends DropdownItem>({
   left,
   up,
   items,
+  disabled,
   renderItem,
   onItemClick,
   children,
@@ -55,6 +57,7 @@ export function Dropdown<TItem extends DropdownItem>({
       right={left}
       up={up}
       icon={<Icon icon={up ? 'chevronUp' : 'chevronDown'} />}
+      disabled={disabled}
       onChange={handleChange}
     >
       {items.map((item) => (

@@ -19,14 +19,15 @@ import type {
   SearchEntityStateAction,
 } from '../..';
 import {
-  DataDataContext,
+  DataDataContext2,
   EntityTypeSelector,
   initializeEntityTypeSelectorState,
   initializeSearchEntityState,
   reduceEntityTypeSelectorState,
   reduceSearchEntityState,
   SearchEntityStateActions,
-  TypePicker,
+  TypePicker2,
+  useSearchEntities,
 } from '../..';
 
 export interface EntityListScreenProps {
@@ -42,13 +43,14 @@ export function EntityListScreen({
   onCreateEntity,
   onOpenEntity,
 }: EntityListScreenProps): JSX.Element | null {
-  const { useSearchEntities } = useContext(DataDataContext);
+  const { adminClient } = useContext(DataDataContext2);
   const [searchEntityState, dispatchSearchEntityState] = useReducer(
     reduceSearchEntityState,
     undefined,
     initializeSearchEntityState
   );
   const { connection, connectionError } = useSearchEntities(
+    adminClient,
     searchEntityState.query,
     searchEntityState.paging
   );
@@ -79,7 +81,9 @@ export function EntityListScreen({
         <EntityTypeSelector state={entityTypeFilterState} dispatch={dispatchEntityTypeFilter}>
           Entity type
         </EntityTypeSelector>
-        <TypePicker iconLeft="add" showEntityTypes onTypeSelected={onCreateEntity} text="Create" />
+        <TypePicker2 iconLeft="add" showEntityTypes onTypeSelected={onCreateEntity}>
+          Create
+        </TypePicker2>
       </FullscreenContainer.Row>
       <FullscreenContainer.ScrollableRow>
         <FullscreenContainer.Row>

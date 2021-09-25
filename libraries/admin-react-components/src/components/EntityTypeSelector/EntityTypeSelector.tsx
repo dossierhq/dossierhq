@@ -13,7 +13,7 @@ import {
 } from '@jonasb/datadata-design';
 import type { Dispatch } from 'react';
 import React, { useContext, useEffect } from 'react';
-import { DataDataContext } from '../..';
+import { DataDataContext2 } from '../..';
 
 export interface EntityTypeItem extends MultipleSelectorItem {
   name: string;
@@ -39,12 +39,14 @@ export const reduceEntityTypeSelectorState: EntityTypeSelectorReducer = reduceMu
 
 export function EntityTypeSelector(props: Props): JSX.Element {
   const { dispatch } = props;
-  const { schema } = useContext(DataDataContext);
+  const { schema } = useContext(DataDataContext2);
 
   useEffect(() => {
-    const items = schema.spec.entityTypes.map((it) => ({ id: it.name, name: it.name }));
-    dispatch(new MultipleSelectorStateActions.UpdateItems(items));
-  }, [schema.spec.entityTypes, dispatch]);
+    if (schema) {
+      const items = schema.spec.entityTypes.map((it) => ({ id: it.name, name: it.name }));
+      dispatch(new MultipleSelectorStateActions.UpdateItems(items));
+    }
+  }, [schema, dispatch]);
 
   return <DropdownSelector<EntityTypeItem> {...props} renderItem={(item) => item.name} />;
 }

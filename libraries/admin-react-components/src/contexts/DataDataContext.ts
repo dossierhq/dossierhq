@@ -18,15 +18,9 @@ import type {
 import { assertExhaustive, createErrorResultFromError, ErrorType } from '@jonasb/datadata-core';
 import { createContext } from 'react';
 import useSWR, { mutate } from 'swr';
-import type { EditorJsToolSettings } from '..';
+import type { DataDataContextAdapter, EditorJsToolSettings } from '..';
 
-export interface DataDataContextAdapter {
-  getEditorJSConfig(
-    fieldSpec: FieldSpecification,
-    standardBlockTools: { [toolName: string]: EditorJsToolSettings },
-    standardInlineTools: string[]
-  ): { tools: { [toolName: string]: EditorJsToolSettings }; inlineToolbar: string[] };
-}
+//TODO remove file when migrated to DataDataContext2
 
 enum FetcherActions {
   UseEntity,
@@ -45,9 +39,9 @@ interface FetcherActionReturn {
 export class DataDataContextValue {
   #adapter: DataDataContextAdapter;
   #adminClient: AdminClient;
-  #schema: Schema; // TODO remove
+  #schema: Schema;
   /** Used to enable different cache keys for SWR */
-  #rootKey: string | undefined; //TODO remove
+  #rootKey: string | undefined;
 
   constructor(
     adapter: DataDataContextAdapter,
