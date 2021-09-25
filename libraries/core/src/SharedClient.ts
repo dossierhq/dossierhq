@@ -1,7 +1,14 @@
 import type { ErrorType, Logger, PromiseResult, Result } from '.';
 import { assertIsDefined } from './Asserts';
 
-export type ContextProvider<TContext> = () => PromiseResult<{ context: TContext }, ErrorType>;
+export interface ClientContext {
+  logger: Logger;
+}
+
+export type ContextProvider<TContext extends ClientContext> = () => PromiseResult<
+  { context: TContext },
+  ErrorType
+>;
 
 export interface Operation<TName, TArgs, TOk, TError extends ErrorType | ErrorType.Generic> {
   readonly name: TName;
@@ -13,12 +20,12 @@ export interface Operation<TName, TArgs, TOk, TError extends ErrorType | ErrorTy
 
 export type OperationWithoutCallbacks<T> = Omit<T, 'resolve' | 'next'>;
 
-export interface Middleware<TContext, TOp> {
+export interface Middleware<TContext extends ClientContext, TOp> {
   (context: TContext, operation: TOp): Promise<void>;
 }
 
 export async function executeOperationPipeline<
-  TContext,
+  TContext extends ClientContext,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   TMiddleware extends Middleware<TContext, any>,
   TName,
@@ -38,7 +45,7 @@ export async function executeOperationPipeline<
 }
 
 async function executeOperationMiddleware<
-  TContext,
+  TContext extends ClientContext,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   TMiddleware extends Middleware<TContext, any>,
   TName,
@@ -79,20 +86,29 @@ async function executeOperationMiddleware<
 }
 
 export async function LoggingClientMiddleware<
-  TContext extends { logger: Logger },
+  TContext extends ClientContext,
   TOk,
   TError extends ErrorType.Generic,
   TOp extends Operation<unknown, unknown, TOk, TError>
 >(context: TContext, operation: TOp): Promise<void> {
   const { logger } = context;
-  logger.info('Executing %s: %O', operation.name, operation.args);
+  const noArgs = Array.isArray(operation.args) && operation.args.length === 0;
+  if (noArgs) {
+    logger.info('Executing %s', operation.name);
+  } else {
+    logger.info('Executing %s: %O', operation.name, operation.args);
+  }
+
   const result = await operation.next();
+
   if (result.isError()) {
     logger.warn('Result %s error: %s: %s', operation.name, result.error, result.message);
   } else {
     // Add effect to log, effect is just a convention, not a formal part of OkResult
     const effect =
-      typeof result.value === 'object' && (result.value as { effect?: unknown }).effect;
+      typeof result.value === 'object' &&
+      result.value &&
+      (result.value as { effect?: unknown }).effect;
     if (typeof effect === 'string') {
       logger.info('Result %s ok, effect %s', operation.name, effect);
     } else {

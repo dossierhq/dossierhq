@@ -1,7 +1,12 @@
 import type { ContextProvider, Entity, EntityReference, PromiseResult, Result } from '.';
 import { ErrorType, notOk } from '.';
 import type { ErrorFromPromiseResult, OkFromPromiseResult } from './ErrorResult';
-import type { Middleware, Operation, OperationWithoutCallbacks } from './SharedClient';
+import type {
+  ClientContext,
+  Middleware,
+  Operation,
+  OperationWithoutCallbacks,
+} from './SharedClient';
 import { executeOperationPipeline } from './SharedClient';
 
 export interface PublishedClient {
@@ -61,9 +66,12 @@ export type PublishedClientOperation<
   PublishedClientOperationReturnError[TName]
 >;
 
-export type PublishedClientMiddleware<TContext> = Middleware<TContext, PublishedClientOperation>;
+export type PublishedClientMiddleware<TContext extends ClientContext> = Middleware<
+  TContext,
+  PublishedClientOperation
+>;
 
-class BasePublishedClient<TContext> implements PublishedClient {
+class BasePublishedClient<TContext extends ClientContext> implements PublishedClient {
   private readonly context: TContext | ContextProvider<TContext>;
   private readonly pipeline: PublishedClientMiddleware<TContext>[];
 
@@ -123,7 +131,7 @@ class BasePublishedClient<TContext> implements PublishedClient {
   }
 }
 
-export function createBasePublishedClient<TContext>(option: {
+export function createBasePublishedClient<TContext extends ClientContext>(option: {
   context: TContext | ContextProvider<TContext>;
   pipeline: PublishedClientMiddleware<TContext>[];
 }): PublishedClient {

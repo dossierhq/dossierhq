@@ -1,7 +1,12 @@
-import type { ErrorType } from '.';
+import type { ErrorType, Logger } from '.';
 import { ok } from '.';
 import { expectResultValue } from './CoreTestUtils';
-import type { Middleware, Operation, OperationWithoutCallbacks } from './SharedClient';
+import type {
+  ClientContext,
+  Middleware,
+  Operation,
+  OperationWithoutCallbacks,
+} from './SharedClient';
 import { executeOperationPipeline } from './SharedClient';
 
 interface TestClientOperationArguments {
@@ -27,12 +32,12 @@ type TestClientOperation<TName extends TestClientOperationName> = Operation<
   TestClientOperationReturnError[TName]
 >;
 
-type TestClientMiddleware<TContext> = Middleware<
+type TestClientMiddleware<TContext extends ClientContext> = Middleware<
   TContext,
   TestClientOperation<TestClientOperationName>
 >;
 
-async function executeTestPipeline<TContext>(
+async function executeTestPipeline<TContext extends ClientContext>(
   context: TContext,
   pipeline: TestClientMiddleware<TContext>[],
   operation: OperationWithoutCallbacks<TestClientOperation<TestClientOperationName>>
@@ -40,10 +45,25 @@ async function executeTestPipeline<TContext>(
   return await executeOperationPipeline(context, pipeline, operation);
 }
 
+const noOpLogger: Logger = {
+  error: () => {
+    // no-op
+  },
+  warn: () => {
+    // no-op
+  },
+  info: () => {
+    // no-op
+  },
+  debug: () => {
+    // no-op
+  },
+};
+
 describe('executeOperationPipeline()', () => {
   test('One middleware returning argument', async () => {
     const result = await executeTestPipeline(
-      {},
+      { logger: noOpLogger },
       [
         async (_context, operation) => {
           if (operation.name === TestClientOperationName.foo) {
@@ -62,7 +82,7 @@ describe('executeOperationPipeline()', () => {
 
   test('Two middlewares, the first modifies the second', async () => {
     const result = await executeTestPipeline(
-      {},
+      { logger: noOpLogger },
       [
         async (_context, operation) => {
           if (operation.name === TestClientOperationName.foo) {
@@ -88,7 +108,7 @@ describe('executeOperationPipeline()', () => {
 
   test('Error: empty pipeline', async () => {
     await expect(
-      executeTestPipeline({}, [], {
+      executeTestPipeline({ logger: noOpLogger }, [], {
         name: TestClientOperationName.foo,
         args: ['hello'],
         modifies: false,
@@ -99,7 +119,7 @@ describe('executeOperationPipeline()', () => {
   test('Error: final middleware calling next()', async () => {
     await expect(
       executeTestPipeline(
-        {},
+        { logger: noOpLogger },
         [async (_context, operation) => operation.resolve(await operation.next())],
         { name: TestClientOperationName.foo, args: ['hello'], modifies: false }
       )

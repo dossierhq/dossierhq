@@ -1,4 +1,4 @@
-import type { PublishingEventKind, Schema } from '@jonasb/datadata-core';
+import type { Logger, PublishingEventKind, Schema } from '@jonasb/datadata-core';
 import type { Temporal } from '@js-temporal/polyfill';
 import { InMemoryServerInner } from './InMemoryServerInner';
 
@@ -37,6 +37,7 @@ export interface JsonInMemoryEntity
 }
 
 export interface InMemorySessionContext {
+  logger: Logger;
   server: InMemoryServerInner;
   subjectId: string;
 }
@@ -53,7 +54,16 @@ export class InMemoryServer {
   }
 
   createContext(subjectId: string): InMemorySessionContext {
-    return { server: this.#inner, subjectId };
+    const noop = () => {
+      // no-op
+    };
+    const logger: Logger = {
+      error: noop,
+      warn: noop,
+      info: noop,
+      debug: noop,
+    };
+    return { logger, server: this.#inner, subjectId };
   }
 
   loadEntities(entities: JsonInMemoryEntity[]): void {
