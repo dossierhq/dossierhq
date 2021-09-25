@@ -11,6 +11,7 @@ import {
 } from '../..';
 import { bar1Id, bar2Id, foo1Id, fooArchivedId } from '../../test/EntityFixtures';
 import { LoadContextProvider } from '../../test/LoadContextProvider';
+import { LoadFixtures } from '../../test/LoadFixtures';
 import { createBackendAdminClient, SlowMiddleware } from '../../test/TestContextAdapter';
 import {
   AddEntityDraftAction,
@@ -34,7 +35,9 @@ export default meta;
 const Template: Story<StoryProps> = (args) => {
   return (
     <LoadContextProvider adminClient={args.adminClient}>
-      <Wrapper {...args} />
+      <LoadFixtures>
+        <Wrapper {...args} />
+      </LoadFixtures>
     </LoadContextProvider>
   );
 };
@@ -52,6 +55,7 @@ function Wrapper({
     { schema, actions: entitySelectors?.map((x) => new AddEntityDraftAction(x)) },
     initializeEntityEditorState
   );
+
   return (
     <EntityEditorDispatchContext.Provider value={dispatchEditorState}>
       <EntityEditorStateContext.Provider value={editorState}>
@@ -62,7 +66,7 @@ function Wrapper({
 }
 
 export const NewFoo = Template.bind({});
-NewFoo.args = { entitySelectors: [{ id: '82ded109-44f2-48b9-a676-43162fda3d7d', newType: 'Foo' }] };
+NewFoo.args = { entitySelectors: [{ newType: 'Foo' }] };
 
 export const FullFoo = Template.bind({});
 FullFoo.args = { entitySelectors: [{ id: foo1Id }] };
