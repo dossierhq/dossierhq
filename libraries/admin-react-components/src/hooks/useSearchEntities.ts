@@ -40,6 +40,13 @@ export function useSearchEntities(
     fetcher
   );
 
+  // useDebugLogChangedValues('useSearchEntities updated values', {
+  //   adminClient,
+  //   query,
+  //   paging,
+  //   data,
+  //   error,
+  // });
   return { connection: data, connectionError: error };
 }
 
