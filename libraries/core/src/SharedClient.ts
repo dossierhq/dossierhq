@@ -85,12 +85,12 @@ export async function LoggingClientMiddleware<
   TOp extends Operation<unknown, unknown, TOk, TError>
 >(context: TContext, operation: TOp): Promise<void> {
   const { logger } = context;
-  logger.info('Executing %s', operation.name);
+  logger.info('Executing %s: %O', operation.name, operation.args);
   const result = await operation.next();
   if (result.isError()) {
-    logger.warn('Result %s ok: %s', operation.name, result.isOk());
+    logger.warn('Result %s error: %s: %s', operation.name, result.error, result.message);
   } else {
-    logger.info('Result %s ok: %s', operation.name, result.isOk());
+    logger.info('Result %s ok', operation.name, result.isOk());
   }
   operation.resolve(result);
 }
