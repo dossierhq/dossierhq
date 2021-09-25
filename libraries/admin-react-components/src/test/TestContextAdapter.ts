@@ -37,8 +37,8 @@ export async function createContextValue2(
   return ok(new DataDataContextValue(new TestContextAdapter(), adminClient, schema));
 }
 
-function createBackendAdminClient(
-  middleware: AdminClientMiddleware<BackendContext>[]
+export function createBackendAdminClient(
+  middleware: AdminClientMiddleware<BackendContext>[] = []
 ): AdminClient {
   const context: BackendContext = {};
   return createBaseAdminClient({ context, pipeline: [...middleware, terminatingMiddleware] });

@@ -21,12 +21,12 @@
     "icons:update": "scripts/generate-icons.mjs",
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write .",
+    "start": "start-storybook -p 6006",
     "test": "heft test",
     "test:update-snapshot": "heft test --update-snapshots",
     "test:watch": "heft test --watch",
     "ts:check": "tsc --noEmit",
     "ts:check:watch": "tsc --noEmit --watch",
-    "storybook:dev": "start-storybook -p 6006",
     "storybook:build": "build-storybook --quiet",
     "upgrade-dependencies": "npx npm-check-updates -u --packageFile ./package.json",
     "upgrade-dependencies:check": "npx npm-check-updates"
@@ -88,7 +88,7 @@
     "react": "~17.0.2",
     "react-dom": "~17.0.2",
     "react-leaflet": "~3.2.1",
-    "swr": "~0.5.6",
+    "swr": "~1.0.1",
     "tslib": "~2.3.1",
     "uuid": "^8.3.2"
   }
