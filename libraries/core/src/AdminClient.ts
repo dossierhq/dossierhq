@@ -40,6 +40,7 @@ import {
   convertJsonPublishingResult,
 } from './JsonUtils';
 import type {
+  ClientContext,
   ContextProvider,
   Middleware,
   Operation,
@@ -226,13 +227,16 @@ export type AdminClientOperation<
   AdminClientOperationReturnError[TName]
 >;
 
-export type AdminClientMiddleware<TContext> = Middleware<TContext, AdminClientOperation>;
+export type AdminClientMiddleware<TContext extends ClientContext> = Middleware<
+  TContext,
+  AdminClientOperation
+>;
 
 export type AdminClientJsonOperation<
   TName extends AdminClientOperationName = AdminClientOperationName
 > = AdminClientOperationArguments[TName];
 
-class BaseAdminClient<TContext> implements AdminClient {
+class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
   private readonly context: TContext | ContextProvider<TContext>;
   private readonly pipeline: AdminClientMiddleware<TContext>[];
 
@@ -410,7 +414,7 @@ class BaseAdminClient<TContext> implements AdminClient {
   }
 }
 
-export function createBaseAdminClient<TContext>(option: {
+export function createBaseAdminClient<TContext extends ClientContext>(option: {
   context: TContext | ContextProvider<TContext>;
   pipeline: AdminClientMiddleware<TContext>[];
 }): AdminClient {

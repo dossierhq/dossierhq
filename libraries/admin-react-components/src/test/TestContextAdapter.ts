@@ -2,6 +2,7 @@ import type {
   AdminClient,
   AdminClientMiddleware,
   AdminClientOperation,
+  ClientContext,
   ErrorType,
   Logger,
   PromiseResult,
@@ -45,11 +46,13 @@ export function createBackendAdminClient(
   middleware: AdminClientMiddleware<BackendContext>[] = []
 ): AdminClient {
   const context: BackendContext = { logger: createConsoleLogger() };
-  const loggerMiddleware: AdminClientMiddleware<BackendContext> =
-    LoggingClientMiddleware as AdminClientMiddleware<BackendContext>;
   return createBaseAdminClient<BackendContext>({
     context,
-    pipeline: [...middleware, loggerMiddleware, terminatingMiddleware],
+    pipeline: [
+      ...middleware,
+      LoggingClientMiddleware as AdminClientMiddleware<BackendContext>,
+      terminatingMiddleware,
+    ],
   });
 }
 
@@ -157,7 +160,7 @@ export function createContextValue({
   };
 }
 
-export const SlowMiddleware: AdminClientMiddleware<unknown> = async (_context, operation) => {
+export const SlowMiddleware: AdminClientMiddleware<ClientContext> = async (_context, operation) => {
   await new Promise((resolve) => setTimeout(resolve, 1000));
   operation.resolve(await operation.next());
 };

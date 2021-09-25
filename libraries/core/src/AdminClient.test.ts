@@ -1,5 +1,11 @@
 import { Temporal } from '@js-temporal/polyfill';
-import type { AdminClient, AdminClientMiddleware, AdminClientOperation, AdminEntity } from '.';
+import type {
+  AdminClient,
+  AdminClientMiddleware,
+  AdminClientOperation,
+  AdminEntity,
+  Logger,
+} from '.';
 import {
   AdminClientOperationName,
   assertIsDefined,
@@ -12,8 +18,24 @@ import {
   ok,
 } from '.';
 import { expectOkResult, expectResultValue } from './CoreTestUtils';
+import type { ClientContext } from './SharedClient';
 
-function createForwardingMiddleware<TContext>(
+const noOpLogger: Logger = {
+  error: () => {
+    // no-op
+  },
+  warn: () => {
+    // no-op
+  },
+  info: () => {
+    // no-op
+  },
+  debug: () => {
+    // no-op
+  },
+};
+
+function createForwardingMiddleware<TContext extends ClientContext>(
   adminClient: AdminClient
 ): AdminClientMiddleware<TContext> {
   return async function (_context, operation) {
@@ -32,7 +54,7 @@ function createForwardingMiddleware<TContext>(
 }
 
 function createJsonConvertingAdminClientsForOperation<
-  TContext,
+  TContext extends ClientContext,
   TName extends AdminClientOperationName
 >(
   context: TContext,
@@ -79,7 +101,7 @@ function createDummyEntity({ id }: { id: string }): AdminEntity {
 describe('AdminClient forward operation over JSON', () => {
   test('archiveEntity', async () => {
     const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
-      null,
+      { logger: noOpLogger },
       AdminClientOperationName.archiveEntity,
       async (_context, operation) => {
         const [reference] = operation.args;
@@ -104,7 +126,14 @@ describe('AdminClient forward operation over JSON', () => {
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
       Array [
         Array [
-          null,
+          Object {
+            "logger": Object {
+              "debug": [Function],
+              "error": [Function],
+              "info": [Function],
+              "warn": [Function],
+            },
+          },
           Object {
             "args": Array [
               Object {
@@ -123,7 +152,7 @@ describe('AdminClient forward operation over JSON', () => {
 
   test('getEntities', async () => {
     const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
-      null,
+      { logger: noOpLogger },
       AdminClientOperationName.getEntities,
       async (_context, operation) => {
         const [references] = operation.args;
@@ -171,7 +200,14 @@ describe('AdminClient forward operation over JSON', () => {
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
       Array [
         Array [
-          null,
+          Object {
+            "logger": Object {
+              "debug": [Function],
+              "error": [Function],
+              "info": [Function],
+              "warn": [Function],
+            },
+          },
           Object {
             "args": Array [
               Array [
@@ -195,7 +231,7 @@ describe('AdminClient forward operation over JSON', () => {
 
   test('publishEntities', async () => {
     const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
-      null,
+      { logger: noOpLogger },
       AdminClientOperationName.publishEntities,
       async (_context, operation) => {
         const [references] = operation.args;
@@ -233,7 +269,14 @@ describe('AdminClient forward operation over JSON', () => {
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
       Array [
         Array [
-          null,
+          Object {
+            "logger": Object {
+              "debug": [Function],
+              "error": [Function],
+              "info": [Function],
+              "warn": [Function],
+            },
+          },
           Object {
             "args": Array [
               Array [
@@ -272,7 +315,7 @@ describe('AdminClient forward operation over JSON', () => {
     };
 
     const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
-      null,
+      { logger: noOpLogger },
       AdminClientOperationName.searchEntities,
       async (_context, operation) => {
         const [_query, _paging] = operation.args;
@@ -326,7 +369,14 @@ describe('AdminClient forward operation over JSON', () => {
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
       Array [
         Array [
-          null,
+          Object {
+            "logger": Object {
+              "debug": [Function],
+              "error": [Function],
+              "info": [Function],
+              "warn": [Function],
+            },
+          },
           Object {
             "args": Array [
               Object {
@@ -354,7 +404,7 @@ describe('AdminClient forward operation over JSON', () => {
 
   test('searchEntities (null)', async () => {
     const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
-      null,
+      { logger: noOpLogger },
       AdminClientOperationName.searchEntities,
       async (_context, operation) => {
         const [_query, _paging] = operation.args;
@@ -368,7 +418,14 @@ describe('AdminClient forward operation over JSON', () => {
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
       Array [
         Array [
-          null,
+          Object {
+            "logger": Object {
+              "debug": [Function],
+              "error": [Function],
+              "info": [Function],
+              "warn": [Function],
+            },
+          },
           Object {
             "args": Array [
               null,
@@ -386,7 +443,7 @@ describe('AdminClient forward operation over JSON', () => {
 
   test('unarchiveEntity', async () => {
     const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
-      null,
+      { logger: noOpLogger },
       AdminClientOperationName.unarchiveEntity,
       async (_context, operation) => {
         const [reference] = operation.args;
@@ -411,7 +468,14 @@ describe('AdminClient forward operation over JSON', () => {
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
       Array [
         Array [
-          null,
+          Object {
+            "logger": Object {
+              "debug": [Function],
+              "error": [Function],
+              "info": [Function],
+              "warn": [Function],
+            },
+          },
           Object {
             "args": Array [
               Object {
@@ -430,7 +494,7 @@ describe('AdminClient forward operation over JSON', () => {
 
   test('unpublishEntities', async () => {
     const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
-      null,
+      { logger: noOpLogger },
       AdminClientOperationName.unpublishEntities,
       async (_context, operation) => {
         const [references] = operation.args;
@@ -465,7 +529,14 @@ describe('AdminClient forward operation over JSON', () => {
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
       Array [
         Array [
-          null,
+          Object {
+            "logger": Object {
+              "debug": [Function],
+              "error": [Function],
+              "info": [Function],
+              "warn": [Function],
+            },
+          },
           Object {
             "args": Array [
               Array [

@@ -3,7 +3,14 @@ import type {
   EditorJsToolSettings,
 } from '@jonasb/datadata-admin-react-components';
 import { DataDataContextValue } from '@jonasb/datadata-admin-react-components';
-import type { AdminClient, AdminClientOperation, ErrorType, Result } from '@jonasb/datadata-core';
+import type {
+  AdminClient,
+  AdminClientOperation,
+  ClientContext,
+  ErrorType,
+  Logger,
+  Result,
+} from '@jonasb/datadata-core';
 import {
   convertAdminClientOperationToJson,
   convertJsonAdminClientResult,
@@ -15,7 +22,22 @@ import type { SchemaResponse } from '../types/ResponseTypes';
 import { fetchJson, fetchJsonResult, urls } from '../utils/BackendUtils';
 import { EditorJsTools } from './EditorJsTools';
 
-type BackendContext = Record<never, never>;
+type BackendContext = ClientContext;
+
+const logger: Logger = {
+  error(message, ...args) {
+    console.error(`error: ${message}`, ...args);
+  },
+  warn(message, ...args) {
+    console.warn(`warn: ${message}`, ...args);
+  },
+  info(message, ...args) {
+    console.info(`info: ${message}`, ...args);
+  },
+  debug(message, ...args) {
+    console.debug(`debug: ${message}`, ...args);
+  },
+};
 
 class ContextAdapter implements DataDataContextAdapter {
   getEditorJSConfig: DataDataContextAdapter['getEditorJSConfig'] = (
@@ -90,19 +112,17 @@ export function useInitializeContext(): { contextValue: DataDataContextValue | n
     })();
   }, []);
 
-  const contextValue = useMemo(
-    () =>
-      schema
-        ? new DataDataContextValue(new ContextAdapter(), createBackendAdminClient(), schema)
-        : null,
-    [schema]
-  );
+  const contextValue = useMemo(() => {
+    return schema
+      ? new DataDataContextValue(new ContextAdapter(), createBackendAdminClient(), schema)
+      : null;
+  }, [schema]);
 
   return { contextValue };
 }
 
 function createBackendAdminClient(): AdminClient {
-  const context: BackendContext = {};
+  const context: BackendContext = { logger };
   return createBaseAdminClient({ context, pipeline: [terminatingMiddleware] });
 }
 
