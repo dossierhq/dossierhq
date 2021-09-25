@@ -37,7 +37,8 @@ export function reduceMultipleSelectorState<TItem extends MultipleSelectorItem>(
   state: MultipleSelectorState<TItem>,
   action: MultipleSelectorStateAction<TItem>
 ): MultipleSelectorState<TItem> {
-  return action.reduce(state);
+  const newState = action.reduce(state);
+  return newState;
 }
 
 // Actions

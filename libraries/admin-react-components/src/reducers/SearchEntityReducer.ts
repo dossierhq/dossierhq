@@ -30,25 +30,25 @@ export interface SearchEntityStateAction {
 export function initializeSearchEntityState(
   initialQuery: AdminQuery | undefined
 ): SearchEntityState {
-  const query = initialQuery ?? {};
-  if (!query.order) {
-    query.order = defaultOrder;
-  }
-  return {
-    query,
+  let state: SearchEntityState = {
+    query: {},
     paging: {},
     pagingCount: defaultPagingCount,
     text: initialQuery?.text ?? '',
     connection: undefined,
     connectionError: undefined,
   };
+  // Normalize query state
+  state = new SetQueryAction(initialQuery ?? {}).reduce(state);
+  return state;
 }
 
 export function reduceSearchEntityState(
   state: SearchEntityState,
   action: SearchEntityStateAction
 ): SearchEntityState {
-  return action.reduce(state);
+  const newState = action.reduce(state);
+  return newState;
 }
 
 class SetTextAction implements SearchEntityStateAction {
@@ -88,6 +88,15 @@ class SetQueryAction implements SearchEntityStateAction {
 
   reduce(state: SearchEntityState): SearchEntityState {
     const query = { ...state.query, ...this.value };
+    if (!query.order) {
+      query.order = defaultOrder;
+    }
+    if (query.entityTypes?.length === 0) {
+      delete query.entityTypes;
+    }
+    if (query.text?.length === 0) {
+      delete query.text;
+    }
     if (isEqual(query, state.query)) {
       return state;
     }
@@ -108,6 +117,9 @@ class UpdateResultAction implements SearchEntityStateAction {
   }
 
   reduce(state: SearchEntityState): SearchEntityState {
+    if (state.connection === this.connection && state.connectionError === this.connectionError) {
+      return state;
+    }
     return {
       ...state,
       connection: this.connection,
