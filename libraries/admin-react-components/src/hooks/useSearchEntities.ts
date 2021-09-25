@@ -8,7 +8,7 @@ import type {
   Paging,
 } from '@jonasb/datadata-core';
 import { createErrorResultFromError, ErrorType } from '@jonasb/datadata-core';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import useSWR from 'swr';
 
 /**
@@ -39,9 +39,14 @@ export function useSearchEntities(
     query ? ['useSearchEntities', JSON.stringify({ query, paging })] : null,
     fetcher
   );
-  const connectionError = error
-    ? createErrorResultFromError(error, [ErrorType.BadRequest, ErrorType.Generic])
-    : undefined;
+  const connectionError = useMemo(
+    () =>
+      error
+        ? createErrorResultFromError(error, [ErrorType.BadRequest, ErrorType.Generic])
+        : undefined,
+    [error]
+  );
+
   return { connection: data, connectionError };
 }
 
