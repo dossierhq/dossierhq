@@ -1,32 +1,40 @@
-import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
+import type { AdminClient, ErrorType, PromiseResult } from '@jonasb/datadata-core';
+import { ok } from '@jonasb/datadata-core';
 import React, { useEffect, useState } from 'react';
-import type { DataDataContextValue } from '..';
-import { DataDataContext } from '..';
-import { createContextValue2 } from './TestContextAdapter';
+import type { DataDataContextAdapter } from '..';
+import { DataDataProvider } from '..';
+import { createBackendAdminClient, TestContextAdapter } from './TestContextAdapter';
 
-export function LoadContextProvider({
-  contextValue,
-  children,
-}: {
-  contextValue?: () => PromiseResult<DataDataContextValue, ErrorType>;
+interface Props {
+  adapter?: DataDataContextAdapter;
+  adminClient?: () => PromiseResult<AdminClient, ErrorType>;
   children: React.ReactNode;
-}): JSX.Element | null {
+}
+
+export function LoadContextProvider({ adapter, adminClient, children }: Props): JSX.Element | null {
   const [isError, setError] = useState(false);
-  const [context, setContext] = useState<DataDataContextValue | null>(null);
+  const [resolvedAdminClient, setResolvedAdminClient] = useState<AdminClient | null>(null);
   useEffect(() => {
     (async () => {
-      const result = await (contextValue ? contextValue() : createContextValue2());
+      const result = await (adminClient ? adminClient() : ok(createBackendAdminClient()));
       if (result.isError()) {
         setError(true);
         return;
       }
-      setContext(result.value);
+      setResolvedAdminClient(result.value);
     })();
-  }, [contextValue]);
+  }, [adminClient]);
 
   if (isError) {
     return <h1>Failed initializing</h1>;
   }
-  if (!context) return null;
-  return <DataDataContext.Provider value={context}>{children}</DataDataContext.Provider>;
+  if (!resolvedAdminClient) return null;
+  return (
+    <DataDataProvider
+      adapter={adapter || new TestContextAdapter()}
+      adminClient={resolvedAdminClient}
+    >
+      {children}
+    </DataDataProvider>
+  );
 }

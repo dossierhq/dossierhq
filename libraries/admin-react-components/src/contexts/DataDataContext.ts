@@ -45,9 +45,9 @@ interface FetcherActionReturn {
 export class DataDataContextValue {
   #adapter: DataDataContextAdapter;
   #adminClient: AdminClient;
-  #schema: Schema;
+  #schema: Schema; // TODO remove
   /** Used to enable different cache keys for SWR */
-  #rootKey: string | undefined;
+  #rootKey: string | undefined; //TODO remove
 
   constructor(
     adapter: DataDataContextAdapter,

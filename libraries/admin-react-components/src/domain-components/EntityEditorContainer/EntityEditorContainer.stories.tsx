@@ -1,7 +1,8 @@
-import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
+import type { AdminClient, ErrorType, PromiseResult } from '@jonasb/datadata-core';
+import { ok } from '@jonasb/datadata-core';
 import type { Meta, Story } from '@storybook/react/types-6-0';
 import React, { useContext, useReducer } from 'react';
-import type { DataDataContextValue, EntityEditorSelector } from '../..';
+import type { EntityEditorSelector } from '../..';
 import {
   DataDataContext,
   EntityEditorContainer,
@@ -10,7 +11,7 @@ import {
 } from '../..';
 import { bar1Id, bar2Id, foo1Id, fooArchivedId } from '../../test/EntityFixtures';
 import { LoadContextProvider } from '../../test/LoadContextProvider';
-import { createContextValue2, SlowMiddleware } from '../../test/TestContextAdapter';
+import { createBackendAdminClient, SlowMiddleware } from '../../test/TestContextAdapter';
 import {
   AddEntityDraftAction,
   initializeEntityEditorState,
@@ -20,7 +21,7 @@ import type { EntityEditorContainerProps } from './EntityEditorContainer';
 
 interface StoryProps extends EntityEditorContainerProps {
   entitySelectors?: EntityEditorSelector[];
-  contextValue?: () => PromiseResult<DataDataContextValue, ErrorType>;
+  adminClient?: () => PromiseResult<AdminClient, ErrorType>;
 }
 
 const meta: Meta<StoryProps> = {
@@ -32,7 +33,7 @@ export default meta;
 
 const Template: Story<StoryProps> = (args) => {
   return (
-    <LoadContextProvider contextValue={args.contextValue}>
+    <LoadContextProvider adminClient={args.adminClient}>
       <Wrapper {...args} />
     </LoadContextProvider>
   );
@@ -75,7 +76,7 @@ TwoEntities.args = { entitySelectors: [{ id: bar1Id }, { id: bar2Id }] };
 export const SlowFullFoo = Template.bind({});
 SlowFullFoo.args = {
   entitySelectors: [{ id: foo1Id }],
-  contextValue: () => createContextValue2([SlowMiddleware]),
+  adminClient: async () => ok(createBackendAdminClient([SlowMiddleware])),
 };
 
 export const NotFound = Template.bind({});

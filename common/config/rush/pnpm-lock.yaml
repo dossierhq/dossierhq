@@ -136,7 +136,7 @@ importers:
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
       react-leaflet: 3.2.1_91fa1427a3331e02931dfea77720a290
-      swr: 0.5.6_react@17.0.2
+      swr: 1.0.1_react@17.0.2
       tslib: 2.3.1
       uuid: 8.3.2
     devDependencies:
@@ -228,7 +228,7 @@ importers:
       react-leaflet: ~3.2.1
       react-test-renderer: ~17.0.2
       svgo: ~2.4.0
-      swr: ~0.5.6
+      swr: ~1.0.1
       tslib: ~2.3.1
       typescript: ^4.4.2
       uuid: ^8.3.2
@@ -16364,7 +16364,7 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-W25S1UUm9Lm9VnE0TvCzL7aso/NCzDEaXLaElCUO/KaVitw0+IBicSVfM1L1c0YHK5TOFh73yQ2naCpVHEQ/OQ==
-  /swr/0.5.6_react@17.0.2:
+  /swr/1.0.1_react@17.0.2:
     dependencies:
       dequal: 2.0.2
       react: 17.0.2
@@ -16372,7 +16372,7 @@ packages:
     peerDependencies:
       react: ^16.11.0 || ^17.0.0
     resolution:
-      integrity: sha512-Bmx3L4geMZjYT5S2Z6EE6/5Cx6v1Ka0LhqZKq8d6WL2eu9y6gHWz3dUzfIK/ymZVHVfwT/EweFXiYGgfifei3w==
+      integrity: sha512-EPQAxSjoD4IaM49rpRHK0q+/NzcwoT8c0/Ylu/u3/6mFj/CWnQVjNJ0MV2Iuw/U+EJSd2TX5czdAwKPYZIG0YA==
   /symbol-observable/1.2.0:
     dev: false
     engines:

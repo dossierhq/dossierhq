@@ -2,6 +2,7 @@ export type {
   ToolConstructable as EditorJsToolConstructable,
   ToolSettings as EditorJsToolSettings,
 } from '@editorjs/editorjs';
+export { DataDataProvider } from './components/DataDataProvider/DataDataProvider';
 export {
   EntityTypeSelector,
   initializeEntityTypeSelectorState,
@@ -78,6 +79,7 @@ export type { RowProps } from './generic-components/Row/Row';
 export { Segment } from './generic-components/Segment/Segment';
 export { Stack } from './generic-components/Stack/Stack';
 export { Tag } from './generic-components/Tag/Tag';
+export { useSchema } from './hooks/useSchema';
 export {
   initializeSearchEntityState,
   reduceSearchEntityState,
