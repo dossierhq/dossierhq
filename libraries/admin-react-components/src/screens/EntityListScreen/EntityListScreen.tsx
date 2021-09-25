@@ -1,4 +1,4 @@
-import type { AdminEntity, EntityPublishState } from '@jonasb/datadata-core';
+import type { AdminEntity, AdminQuery, EntityPublishState, Paging } from '@jonasb/datadata-core';
 import { QueryOrder } from '@jonasb/datadata-core';
 import {
   Field,
@@ -43,16 +43,10 @@ export function EntityListScreen({
   onCreateEntity,
   onOpenEntity,
 }: EntityListScreenProps): JSX.Element | null {
-  const { adminClient } = useContext(DataDataContext2);
   const [searchEntityState, dispatchSearchEntityState] = useReducer(
     reduceSearchEntityState,
     undefined,
     initializeSearchEntityState
-  );
-  const { connection, connectionError } = useSearchEntities(
-    adminClient,
-    searchEntityState.query,
-    searchEntityState.paging
   );
 
   const [entityTypeFilterState, dispatchEntityTypeFilter] = useReducer(
@@ -63,18 +57,28 @@ export function EntityListScreen({
 
   useEffect(() => {
     dispatchSearchEntityState(
-      new SearchEntityStateActions.UpdateResult(connection, connectionError)
-    );
-  }, [connection, connectionError]);
-
-  useEffect(() => {
-    dispatchSearchEntityState(
       new SearchEntityStateActions.SetQuery({ entityTypes: entityTypeFilterState.selectedIds })
     );
   }, [entityTypeFilterState.selectedIds]);
 
+  // useDebugLogChangedValues('EntityList changed props', {
+  //   header,
+  //   footer,
+  //   onCreateEntity,
+  //   onOpenEntity,
+  //   searchEntityState,
+  //   dispatchSearchEntityState,
+  //   entityTypeFilterState,
+  //   dispatchEntityTypeFilter,
+  // });
+
   return (
     <FullscreenContainer>
+      <SearchLoader
+        query={searchEntityState.query}
+        paging={searchEntityState.paging}
+        dispatchSearchEntityState={dispatchSearchEntityState}
+      />
       {header ? <FullscreenContainer.Row fullWidth>{header}</FullscreenContainer.Row> : null}
       <FullscreenContainer.Row center flexDirection="row" gap={2} paddingVertical={2}>
         <SearchInput {...{ searchEntityState, dispatchSearchEntityState }} />
@@ -100,6 +104,36 @@ export function EntityListScreen({
       {footer ? <FullscreenContainer.Row fullWidth>{footer}</FullscreenContainer.Row> : null}
     </FullscreenContainer>
   );
+}
+
+function SearchLoader({
+  query,
+  paging,
+  dispatchSearchEntityState,
+}: {
+  query: AdminQuery;
+  paging: Paging;
+  dispatchSearchEntityState: Dispatch<SearchEntityStateAction>;
+}) {
+  const { adminClient } = useContext(DataDataContext2);
+  const { connection, connectionError } = useSearchEntities(adminClient, query, paging);
+
+  useEffect(() => {
+    dispatchSearchEntityState(
+      new SearchEntityStateActions.UpdateResult(connection, connectionError)
+    );
+  }, [connection, connectionError, dispatchSearchEntityState]);
+
+  // useDebugLogChangedValues('SearchLoader changed values', {
+  //   query,
+  //   paging,
+  //   dispatchSearchEntityState,
+  //   adminClient,
+  //   connection,
+  //   connectionError,
+  // });
+
+  return null;
 }
 
 function SearchInput({

@@ -48,5 +48,7 @@ export function EntityTypeSelector(props: Props): JSX.Element {
     }
   }, [schema, dispatch]);
 
+  // useDebugLogChangedValues('EntityTypeSelector changed values', { schema, dispatch });
+
   return <DropdownSelector<EntityTypeItem> {...props} renderItem={(item) => item.name} />;
 }
