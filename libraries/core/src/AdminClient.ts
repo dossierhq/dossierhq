@@ -22,6 +22,7 @@ import type {
   SchemaSpecificationUpdatePayload,
 } from '.';
 import { assertExhaustive, ErrorType, notOk, ok } from '.';
+import type { ErrorFromPromiseResult, OkFromPromiseResult } from './ErrorResult';
 import type {
   JsonAdminEntity,
   JsonConnection,
@@ -150,6 +151,13 @@ type MethodParameters<T extends keyof AdminClient> = Parameters<AdminClient[T]>;
 type MethodReturnType<T extends keyof AdminClient> = WithoutPromise<ReturnType<AdminClient[T]>>;
 type WithoutPromise<T> = T extends Promise<infer U> ? U : T;
 
+type MethodReturnTypeOk<T extends keyof AdminClient> = OkFromPromiseResult<
+  ReturnType<AdminClient[T]>
+>;
+type MethodReturnTypeError<T extends keyof AdminClient> = ErrorFromPromiseResult<
+  ReturnType<AdminClient[T]>
+>;
+
 interface AdminClientOperationArguments {
   [AdminClientOperationName.archiveEntity]: MethodParameters<'archiveEntity'>;
   [AdminClientOperationName.createEntity]: MethodParameters<'createEntity'>;
@@ -186,9 +194,50 @@ interface AdminClientOperationReturn {
   [AdminClientOperationName.upsertEntity]: MethodReturnType<'upsertEntity'>;
 }
 
+interface AdminClientOperationReturnOk {
+  [AdminClientOperationName.archiveEntity]: MethodReturnTypeOk<'archiveEntity'>;
+  [AdminClientOperationName.createEntity]: MethodReturnTypeOk<'createEntity'>;
+  [AdminClientOperationName.getEntities]: MethodReturnTypeOk<'getEntities'>;
+  [AdminClientOperationName.getEntity]: MethodReturnTypeOk<'getEntity'>;
+  [AdminClientOperationName.getEntityHistory]: MethodReturnTypeOk<'getEntityHistory'>;
+  [AdminClientOperationName.getPublishingHistory]: MethodReturnTypeOk<'getPublishingHistory'>;
+  [AdminClientOperationName.getSchemaSpecification]: MethodReturnTypeOk<'getSchemaSpecification'>;
+  [AdminClientOperationName.getTotalCount]: MethodReturnTypeOk<'getTotalCount'>;
+  [AdminClientOperationName.publishEntities]: MethodReturnTypeOk<'publishEntities'>;
+  [AdminClientOperationName.searchEntities]: MethodReturnTypeOk<'searchEntities'>;
+  [AdminClientOperationName.unarchiveEntity]: MethodReturnTypeOk<'unarchiveEntity'>;
+  [AdminClientOperationName.unpublishEntities]: MethodReturnTypeOk<'unpublishEntities'>;
+  [AdminClientOperationName.updateEntity]: MethodReturnTypeOk<'updateEntity'>;
+  [AdminClientOperationName.updateSchemaSpecification]: MethodReturnTypeOk<'updateSchemaSpecification'>;
+  [AdminClientOperationName.upsertEntity]: MethodReturnTypeOk<'upsertEntity'>;
+}
+
+interface AdminClientOperationReturnError {
+  [AdminClientOperationName.archiveEntity]: MethodReturnTypeError<'archiveEntity'>;
+  [AdminClientOperationName.createEntity]: MethodReturnTypeError<'createEntity'>;
+  [AdminClientOperationName.getEntities]: MethodReturnTypeError<'getEntities'>;
+  [AdminClientOperationName.getEntity]: MethodReturnTypeError<'getEntity'>;
+  [AdminClientOperationName.getEntityHistory]: MethodReturnTypeError<'getEntityHistory'>;
+  [AdminClientOperationName.getPublishingHistory]: MethodReturnTypeError<'getPublishingHistory'>;
+  [AdminClientOperationName.getSchemaSpecification]: MethodReturnTypeError<'getSchemaSpecification'>;
+  [AdminClientOperationName.getTotalCount]: MethodReturnTypeError<'getTotalCount'>;
+  [AdminClientOperationName.publishEntities]: MethodReturnTypeError<'publishEntities'>;
+  [AdminClientOperationName.searchEntities]: MethodReturnTypeError<'searchEntities'>;
+  [AdminClientOperationName.unarchiveEntity]: MethodReturnTypeError<'unarchiveEntity'>;
+  [AdminClientOperationName.unpublishEntities]: MethodReturnTypeError<'unpublishEntities'>;
+  [AdminClientOperationName.updateEntity]: MethodReturnTypeError<'updateEntity'>;
+  [AdminClientOperationName.updateSchemaSpecification]: MethodReturnTypeError<'updateSchemaSpecification'>;
+  [AdminClientOperationName.upsertEntity]: MethodReturnTypeError<'upsertEntity'>;
+}
+
 export type AdminClientOperation<
   TName extends AdminClientOperationName = AdminClientOperationName
-> = Operation<TName, AdminClientOperationArguments[TName], AdminClientOperationReturn[TName]>;
+> = Operation<
+  TName,
+  AdminClientOperationArguments[TName],
+  AdminClientOperationReturnOk[TName],
+  AdminClientOperationReturnError[TName]
+>;
 
 export type AdminClientMiddleware<TContext> = Middleware<TContext, AdminClientOperation>;
 
@@ -362,7 +411,7 @@ class BaseAdminClient<TContext> implements AdminClient {
 
   private async executeOperation<TName extends AdminClientOperationName>(
     operation: OperationWithoutCallbacks<AdminClientOperation<TName>>
-  ): Promise<AdminClientOperationReturn[TName]> {
+  ): PromiseResult<AdminClientOperationReturnOk[TName], AdminClientOperationReturnError[TName]> {
     let context: TContext;
     if (typeof this.context === 'function') {
       const contextResult = await (this.context as ContextProvider<TContext>)();

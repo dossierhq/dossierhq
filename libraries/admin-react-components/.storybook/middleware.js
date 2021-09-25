@@ -1,5 +1,8 @@
 // @ts-check
-const { executeAdminClientOperationFromJson } = require('@jonasb/datadata-core');
+const {
+  executeAdminClientOperationFromJson,
+  LoggingClientMiddleware,
+} = require('@jonasb/datadata-core');
 const { createServer } = require('@jonasb/datadata-server');
 const { createPostgresAdapter } = require('@jonasb/datadata-database-adapter-postgres-pg');
 // @ts-ignore
@@ -15,7 +18,22 @@ async function getServer() {
       process.env.STORYBOOK_ADMIN_REACT_COMPONENTS_DATABASE_URL
     );
 
-    const result = await createServer({ databaseAdapter });
+    const logger = {
+      error(message, ...args) {
+        console.error(`error: ${message}`, ...args);
+      },
+      warn(message, ...args) {
+        console.warn(`warn: ${message}`, ...args);
+      },
+      info(message, ...args) {
+        console.info(`info: ${message}`, ...args);
+      },
+      debug(message, ...args) {
+        console.debug(`debug: ${message}`, ...args);
+      },
+    };
+
+    const result = await createServer({ databaseAdapter, logger });
     serverResultSingleton = result;
 
     if (result.isOk()) {
@@ -59,7 +77,10 @@ const expressMiddleWare = (router) => {
         return;
       }
       const server = serverResult.value;
-      const adminClient = server.createAdminClient(() => server.createSession('sys', 'storybook'));
+      const adminClient = server.createAdminClient(
+        () => server.createSession('sys', 'storybook'),
+        [LoggingClientMiddleware]
+      );
       //TODO ensure only !modifies operations are executed for GET
       const result = await executeAdminClientOperationFromJson(adminClient, name, operation);
       if (result.isError()) {

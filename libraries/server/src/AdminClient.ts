@@ -1,4 +1,9 @@
-import type { AdminClient, AdminClientOperation, ContextProvider } from '@jonasb/datadata-core';
+import type {
+  AdminClient,
+  AdminClientMiddleware,
+  AdminClientOperation,
+  ContextProvider,
+} from '@jonasb/datadata-core';
 import {
   AdminClientOperationName,
   assertExhaustive,
@@ -28,10 +33,12 @@ export function createServerAdminClient({
   context,
   databaseAdapter,
   serverImpl,
+  middleware,
 }: {
   context: SessionContext | ContextProvider<SessionContext>;
   databaseAdapter: DatabaseAdapter;
   serverImpl: ServerImpl;
+  middleware: AdminClientMiddleware<SessionContext>[];
 }): AdminClient {
   async function terminatingMiddleware(
     context: SessionContext,
@@ -188,5 +195,9 @@ export function createServerAdminClient({
         assertExhaustive(operation.name);
     }
   }
-  return createBaseAdminClient<SessionContext>({ context, pipeline: [terminatingMiddleware] });
+
+  return createBaseAdminClient<SessionContext>({
+    context,
+    pipeline: [...middleware, terminatingMiddleware],
+  });
 }

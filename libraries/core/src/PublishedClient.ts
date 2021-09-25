@@ -1,5 +1,6 @@
 import type { ContextProvider, Entity, EntityReference, PromiseResult, Result } from '.';
 import { ErrorType, notOk } from '.';
+import type { ErrorFromPromiseResult, OkFromPromiseResult } from './ErrorResult';
 import type { Middleware, Operation, OperationWithoutCallbacks } from './SharedClient';
 import { executeOperationPipeline } from './SharedClient';
 
@@ -22,6 +23,13 @@ type MethodParameters<T extends keyof PublishedClient> = Parameters<PublishedCli
 type MethodReturnType<T extends keyof PublishedClient> = WithoutPromise<
   ReturnType<PublishedClient[T]>
 >;
+type MethodReturnTypeOk<T extends keyof PublishedClient> = OkFromPromiseResult<
+  ReturnType<PublishedClient[T]>
+>;
+type MethodReturnTypeError<T extends keyof PublishedClient> = ErrorFromPromiseResult<
+  ReturnType<PublishedClient[T]>
+>;
+
 type WithoutPromise<T> = T extends Promise<infer U> ? U : T;
 
 interface PublishedClientOperationArguments {
@@ -34,12 +42,23 @@ interface PublishedClientOperationReturn {
   [PublishedClientOperationName.getEntity]: MethodReturnType<'getEntity'>;
 }
 
+interface PublishedClientOperationReturnOk {
+  [PublishedClientOperationName.getEntities]: MethodReturnTypeOk<'getEntities'>;
+  [PublishedClientOperationName.getEntity]: MethodReturnTypeOk<'getEntity'>;
+}
+
+interface PublishedClientOperationReturnError {
+  [PublishedClientOperationName.getEntities]: MethodReturnTypeError<'getEntities'>;
+  [PublishedClientOperationName.getEntity]: MethodReturnTypeError<'getEntity'>;
+}
+
 export type PublishedClientOperation<
   TName extends PublishedClientOperationName = PublishedClientOperationName
 > = Operation<
   TName,
   PublishedClientOperationArguments[TName],
-  PublishedClientOperationReturn[TName]
+  PublishedClientOperationReturnOk[TName],
+  PublishedClientOperationReturnError[TName]
 >;
 
 export type PublishedClientMiddleware<TContext> = Middleware<TContext, PublishedClientOperation>;
@@ -81,7 +100,10 @@ class BasePublishedClient<TContext> implements PublishedClient {
 
   private async executeOperation<TName extends PublishedClientOperationName>(
     operation: OperationWithoutCallbacks<PublishedClientOperation<TName>>
-  ): Promise<PublishedClientOperationReturn[TName]> {
+  ): PromiseResult<
+    PublishedClientOperationReturnOk[TName],
+    PublishedClientOperationReturnError[TName]
+  > {
     let context: TContext;
     if (typeof this.context === 'function') {
       const contextResult = await (this.context as ContextProvider<TContext>)();

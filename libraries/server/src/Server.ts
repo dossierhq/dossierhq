@@ -1,10 +1,12 @@
 import type {
   AdminClient,
+  AdminClientMiddleware,
   ContextProvider,
   ErrorType,
   Logger,
   PromiseResult,
   PublishedClient,
+  PublishedClientMiddleware,
   SchemaSpecification,
 } from '@jonasb/datadata-core';
 import { assertIsDefined, notOk, ok, Schema } from '@jonasb/datadata-core';
@@ -28,8 +30,14 @@ export interface Server {
     identifier: string,
     logger?: Logger
   ): PromiseResult<CreateSessionPayload, ErrorType.BadRequest | ErrorType.Generic>;
-  createAdminClient(context: SessionContext | ContextProvider<SessionContext>): AdminClient;
-  createPublishedClient(context: SessionContext | ContextProvider<SessionContext>): PublishedClient;
+  createAdminClient(
+    context: SessionContext | ContextProvider<SessionContext>,
+    middleware?: AdminClientMiddleware<SessionContext>[]
+  ): AdminClient;
+  createPublishedClient(
+    context: SessionContext | ContextProvider<SessionContext>,
+    middleware?: PublishedClientMiddleware<SessionContext>[]
+  ): PublishedClient;
 }
 
 export class ServerImpl {
@@ -131,10 +139,20 @@ export async function createServer({
       const context = serverImpl.createSessionContext(session, logger);
       return ok({ principalEffect, context });
     },
-    createAdminClient: (context) =>
-      createServerAdminClient({ context, databaseAdapter, serverImpl }),
-    createPublishedClient: (context) =>
-      createServerPublishedClient({ context, databaseAdapter, serverImpl }),
+    createAdminClient: (context, middleware) =>
+      createServerAdminClient({
+        context,
+        databaseAdapter,
+        serverImpl,
+        middleware: middleware ?? [],
+      }),
+    createPublishedClient: (context, middleware) =>
+      createServerPublishedClient({
+        context,
+        databaseAdapter,
+        serverImpl,
+        middleware: middleware ?? [],
+      }),
   };
 
   return ok(server);
