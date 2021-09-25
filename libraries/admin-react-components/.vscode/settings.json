@@ -15,6 +15,7 @@
     "testid",
     "unmount",
     "unpublish",
+    "upsert",
     "upserted",
     "uuidv"
   ],

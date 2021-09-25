@@ -128,7 +128,6 @@ export const entitiesFixture: JsonInMemoryEntity[] = [
     versions: [
       {
         _version: 0,
-        title: 'Baz 1',
         body: { blocks: [{ type: RichTextBlockType.paragraph, data: { text: 'Hello world' } }] },
         bodyBar: { blocks: [{ type: RichTextBlockType.entity, data: { id: bar2Id } }] },
         bodyNested: {
