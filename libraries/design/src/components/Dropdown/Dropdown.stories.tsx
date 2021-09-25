@@ -34,6 +34,9 @@ const Template: Story<StoryProps> = (args) => {
 export const Normal = Template.bind({});
 Normal.args = {};
 
+export const Disabled = Template.bind({});
+Disabled.args = { disabled: true };
+
 export const IconOnly = Template.bind({});
 IconOnly.args = {
   iconLeft: 'add',

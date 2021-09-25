@@ -7,7 +7,7 @@ export function useSchema(adminClient: AdminClient): {
   schema: Schema | undefined;
   schemaError: ErrorResult<unknown, ErrorType.Generic> | undefined;
 } {
-  const fetcher = useCallback((_key: string) => fetchSchema(adminClient), [adminClient]);
+  const fetcher = useCallback((_action: string) => fetchSchema(adminClient), [adminClient]);
   const { data, error } = useSWR('useSchema', fetcher);
   const schema = useMemo(() => (data ? new Schema(data) : undefined), [data]);
 

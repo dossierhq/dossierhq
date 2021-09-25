@@ -12,8 +12,10 @@ export type {
   EntityTypeSelectorDispatch,
   EntityTypeSelectorState,
 } from './components/EntityTypeSelector/EntityTypeSelector';
+export { TypePicker2 } from './components/TypePicker2/TypePicker2';
 export { DataDataContext, DataDataContextValue } from './contexts/DataDataContext';
-export type { DataDataContextAdapter } from './contexts/DataDataContext';
+export { DataDataContext2 } from './contexts/DataDataContext2';
+export type { DataDataContextAdapter, DataDataContextValue2 } from './contexts/DataDataContext2';
 export {
   EntityEditorDispatchContext,
   EntityEditorStateContext,
@@ -80,6 +82,7 @@ export { Segment } from './generic-components/Segment/Segment';
 export { Stack } from './generic-components/Stack/Stack';
 export { Tag } from './generic-components/Tag/Tag';
 export { useSchema } from './hooks/useSchema';
+export { useSearchEntities } from './hooks/useSearchEntities';
 export {
   initializeSearchEntityState,
   reduceSearchEntityState,

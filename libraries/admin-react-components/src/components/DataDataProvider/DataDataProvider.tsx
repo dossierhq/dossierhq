@@ -1,7 +1,7 @@
 import type { AdminClient } from '@jonasb/datadata-core';
 import React, { useMemo } from 'react';
-import type { DataDataContextAdapter } from '../..';
-import { DataDataContext, DataDataContextValue, useSchema } from '../..';
+import type { DataDataContextAdapter, DataDataContextValue2 } from '../..';
+import { DataDataContext, DataDataContext2, DataDataContextValue, useSchema } from '../..';
 
 interface Props {
   adapter: DataDataContextAdapter;
@@ -15,8 +15,18 @@ export function DataDataProvider({ adapter, adminClient, children }: Props): JSX
     () => (schema ? new DataDataContextValue(adapter, adminClient, schema) : null),
     [adapter, adminClient, schema]
   );
-  if (!value) {
-    return null;
-  }
-  return <DataDataContext.Provider value={value}>{children}</DataDataContext.Provider>;
+  const value2: DataDataContextValue2 = useMemo(
+    () => ({ adapter, adminClient, schema, schemaError }),
+    [adapter, adminClient, schema, schemaError]
+  );
+
+  return (
+    <DataDataContext2.Provider value={value2}>
+      {value ? (
+        <DataDataContext.Provider value={value}>{children}</DataDataContext.Provider>
+      ) : (
+        children
+      )}
+    </DataDataContext2.Provider>
+  );
 }
