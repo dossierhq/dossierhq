@@ -11,6 +11,7 @@ let serverResultSingleton = null;
 async function getServer() {
   if (!serverResultSingleton) {
     const databaseAdapter = createPostgresAdapter(
+      // @ts-ignore
       process.env.STORYBOOK_ADMIN_REACT_COMPONENTS_DATABASE_URL
     );
 
@@ -65,7 +66,9 @@ const expressMiddleWare = (router) => {
         res.status(result.httpStatus).send(result.message);
         return;
       }
-      res.send(result.value).end();
+      // Express built-in json conversion doesn't handle null (sends empty response)
+      res.setHeader('Content-Type', 'application/json; charset=utf-8');
+      res.send(JSON.stringify(result.value, null, 2)).end();
     })();
   });
 };
