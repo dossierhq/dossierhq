@@ -8,9 +8,9 @@
     ".": "./lib/index.js"
   },
   "scripts": {
-    "build": "heft build",
+    "build": "heft build && npm run prettier:check",
     "build:watch": "heft build --watch",
-    "ci:check": "npm run test && npm run prettier:check",
+    "ci:check": "npm run test",
     "clean": "heft clean",
     "db:cli": "./scripts/db-cli.sh",
     "db:migrate": "./scripts/db-migrate.sh",
