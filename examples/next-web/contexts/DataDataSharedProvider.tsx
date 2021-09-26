@@ -2,6 +2,7 @@ import type {
   DataDataContextAdapter,
   EditorJsToolSettings,
 } from '@jonasb/datadata-admin-react-components';
+import { DataDataProvider } from '@jonasb/datadata-admin-react-components';
 import type {
   AdminClient,
   AdminClientOperation,
@@ -15,6 +16,7 @@ import {
   convertJsonAdminClientResult,
   createBaseAdminClient,
 } from '@jonasb/datadata-core';
+import { useMemo } from 'react';
 import { fetchJsonResult, urls } from '../utils/BackendUtils';
 import { EditorJsTools } from './EditorJsTools';
 
@@ -85,7 +87,15 @@ export class ContextAdapter implements DataDataContextAdapter {
   };
 }
 
-export function createBackendAdminClient(): AdminClient {
+export function DataDataSharedProvider({ children }: { children: React.ReactNode }) {
+  const args = useMemo(
+    () => ({ adminClient: createBackendAdminClient(), adapter: new ContextAdapter() }),
+    []
+  );
+  return <DataDataProvider {...args}>{children}</DataDataProvider>;
+}
+
+function createBackendAdminClient(): AdminClient {
   const context: BackendContext = { logger };
   return createBaseAdminClient({ context, pipeline: [terminatingMiddleware] });
 }

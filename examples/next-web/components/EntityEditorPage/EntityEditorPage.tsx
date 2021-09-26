@@ -10,7 +10,7 @@ import {
 } from '@jonasb/datadata-admin-react-components';
 import { useRouter } from 'next/router';
 import { useContext, useEffect, useReducer } from 'react';
-import { DataDataInitializedProvider } from '../../contexts/DataDataInitializedProvider';
+import { DataDataSharedProvider } from '../../contexts/DataDataSharedProvider';
 import { urls } from '../../utils/PageUtils';
 
 export interface EntityEditorPageProps {
@@ -19,9 +19,9 @@ export interface EntityEditorPageProps {
 
 export function EntityEditorPage({ entitySelectors }: EntityEditorPageProps): JSX.Element {
   return (
-    <DataDataInitializedProvider>
+    <DataDataSharedProvider>
       <EntityEditorPageInner entitySelectors={entitySelectors} />
-    </DataDataInitializedProvider>
+    </DataDataSharedProvider>
   );
 }
 
