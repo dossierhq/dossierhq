@@ -70,8 +70,8 @@ export type {
   JsonPublishingHistory,
   JsonResult,
 } from './JsonUtils';
+export { createConsoleLogger, NoOpLogger } from './Logger';
 export type { Logger } from './Logger';
-export { NoOpLogger } from './Logger';
 export { createBasePublishedClient, PublishedClientOperationName } from './PublishedClient';
 export type {
   PublishedClient,

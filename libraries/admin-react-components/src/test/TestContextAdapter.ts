@@ -12,6 +12,7 @@ import {
   convertAdminClientOperationToJson,
   convertJsonAdminClientResult,
   createBaseAdminClient,
+  createConsoleLogger,
   LoggingClientMiddleware,
   notOk,
   ok,
@@ -41,7 +42,7 @@ export async function createContextValue2(
 export function createBackendAdminClient(
   middleware: AdminClientMiddleware<BackendContext>[] = []
 ): AdminClient {
-  const context: BackendContext = { logger: createConsoleLogger() };
+  const context: BackendContext = { logger: createConsoleLogger(console) };
   return createBaseAdminClient<BackendContext>({
     context,
     pipeline: [
@@ -50,23 +51,6 @@ export function createBackendAdminClient(
       terminatingMiddleware,
     ],
   });
-}
-
-function createConsoleLogger(): Logger {
-  return {
-    error(message, ...args) {
-      console.error(`error: ${message}`, ...args);
-    },
-    warn(message, ...args) {
-      console.warn(`warn: ${message}`, ...args);
-    },
-    info(message, ...args) {
-      console.info(`info: ${message}`, ...args);
-    },
-    debug(message, ...args) {
-      console.debug(`debug: ${message}`, ...args);
-    },
-  };
 }
 
 async function terminatingMiddleware(

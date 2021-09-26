@@ -1,5 +1,6 @@
 // @ts-check
 const {
+  createConsoleLogger,
   executeAdminClientOperationFromJson,
   LoggingClientMiddleware,
 } = require('@jonasb/datadata-core');
@@ -18,21 +19,7 @@ async function getServer() {
       process.env.STORYBOOK_ADMIN_REACT_COMPONENTS_DATABASE_URL
     );
 
-    const logger = {
-      error(message, ...args) {
-        console.error(`error: ${message}`, ...args);
-      },
-      warn(message, ...args) {
-        console.warn(`warn: ${message}`, ...args);
-      },
-      info(message, ...args) {
-        console.info(`info: ${message}`, ...args);
-      },
-      debug(message, ...args) {
-        console.debug(`debug: ${message}`, ...args);
-      },
-    };
-
+    const logger = createConsoleLogger(console);
     const result = await createServer({ databaseAdapter, logger });
     serverResultSingleton = result;
 
