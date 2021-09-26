@@ -1,4 +1,5 @@
 import type { Logger } from '@jonasb/datadata-core';
+import { NoOpLogger } from '@jonasb/datadata-core';
 import type { DatabaseAdapter, TransactionContext } from '..';
 
 interface MockDatabaseAdapter extends DatabaseAdapter {
@@ -8,20 +9,8 @@ interface MockDatabaseAdapter extends DatabaseAdapter {
   queryLegacy: jest.MockedFunction<DatabaseAdapter['queryLegacy']>;
 }
 
-export function createDummyLogger(): Logger {
-  const noop = () => {
-    //empty
-  };
-  return {
-    error: noop,
-    warn: noop,
-    info: noop,
-    debug: noop,
-  };
-}
-
 export function createMockTransactionContext(logger: Logger | null = null): TransactionContext {
-  const resolvedLogger = logger || createDummyLogger();
+  const resolvedLogger = logger || NoOpLogger;
   const context: TransactionContext = {
     get logger() {
       return resolvedLogger;

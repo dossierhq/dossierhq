@@ -2,7 +2,7 @@ import { assertIsDefined } from '@jonasb/datadata-core';
 import { createAuthTestSuite } from '@jonasb/datadata-database-adapter-test-integration';
 import type { Server } from '@jonasb/datadata-server';
 import { createServer } from '@jonasb/datadata-server';
-import { createDummyLogger, createSqlJsTestAdapter, registerTestSuite } from '../../TestUtils';
+import { createSqlJsTestAdapter, registerTestSuite } from '../../TestUtils';
 
 let server: Server | null = null;
 
@@ -14,7 +14,6 @@ beforeAll(async () => {
 
   const createServerResult = await createServer({
     databaseAdapter: databaseAdapterResult.value,
-    logger: createDummyLogger(),
   });
   if (createServerResult.isError()) {
     return createServerResult;

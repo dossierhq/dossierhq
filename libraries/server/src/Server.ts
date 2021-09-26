@@ -9,7 +9,7 @@ import type {
   PublishedClientMiddleware,
   SchemaSpecification,
 } from '@jonasb/datadata-core';
-import { assertIsDefined, notOk, ok, Schema } from '@jonasb/datadata-core';
+import { assertIsDefined, NoOpLogger, notOk, ok, Schema } from '@jonasb/datadata-core';
 import type { DatabaseAdapter, Session, SessionContext } from '.';
 import { createServerAdminClient } from './AdminClient';
 import { authCreateSession } from './Auth';
@@ -47,18 +47,7 @@ export class ServerImpl {
 
   constructor({ databaseAdapter, logger }: { databaseAdapter: DatabaseAdapter; logger?: Logger }) {
     this.#databaseAdapter = databaseAdapter;
-    if (!logger) {
-      const noop = () => {
-        //empty
-      };
-      logger = {
-        error: noop,
-        warn: noop,
-        info: noop,
-        debug: noop,
-      };
-    }
-    this.#logger = logger;
+    this.#logger = logger ?? NoOpLogger;
   }
 
   async shutdown(): PromiseResult<void, ErrorType.Generic> {

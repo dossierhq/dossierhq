@@ -24,3 +24,13 @@ export interface Logger {
    */
   debug(message: string, ...args: unknown[]): void;
 }
+
+const noop = (): void => {
+  // no-op
+};
+export const NoOpLogger: Logger = {
+  error: noop,
+  warn: noop,
+  info: noop,
+  debug: noop,
+};
