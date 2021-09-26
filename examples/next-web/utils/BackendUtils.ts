@@ -10,7 +10,6 @@ import { encodeQuery } from './QueryUtils';
 const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export const urls = {
-  schema: `${baseUrl}/schema`,
   admin: (operationName: AdminClientOperationName, operation?: AdminClientJsonOperation): string =>
     `${baseUrl}/admin/${operationName}${operation ? `?${encodeQuery({ operation })}` : ''}`,
 };
