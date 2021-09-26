@@ -2,7 +2,10 @@ export type {
   ToolConstructable as EditorJsToolConstructable,
   ToolSettings as EditorJsToolSettings,
 } from '@editorjs/editorjs';
-export { DataDataProvider } from './components/DataDataProvider/DataDataProvider';
+export {
+  DataDataProvider,
+  WaitForDataDataContext,
+} from './components/DataDataProvider/DataDataProvider';
 export {
   EntityTypeSelector,
   initializeEntityTypeSelectorState,
