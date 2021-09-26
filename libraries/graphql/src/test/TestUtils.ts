@@ -7,14 +7,9 @@ import type {
   Result,
   SchemaSpecification,
 } from '@jonasb/datadata-core';
-import { assertIsDefined, CoreTestUtils, ok, Schema } from '@jonasb/datadata-core';
+import { assertIsDefined, CoreTestUtils, Schema } from '@jonasb/datadata-core';
 import { createPostgresAdapter } from '@jonasb/datadata-database-adapter-postgres-pg';
 import { createServer } from '@jonasb/datadata-server';
-import {
-  createInMemoryAdminClient,
-  createInMemoryPublishedClient,
-  InMemoryServer,
-} from '@jonasb/datadata-testing-utils';
 import { v4 as uuidv4 } from 'uuid';
 
 const { expectOkResult } = CoreTestUtils;
@@ -51,9 +46,6 @@ function createDummyLogger(): Logger {
 export async function setUpServerWithSession(
   schemaSpecification: Partial<SchemaSpecification>
 ): Promise<TestServerWithSession> {
-  if (process.env.TEST_SERVER === 'in-memory') {
-    return await setUpInMemoryServerWithSession(schemaSpecification);
-  }
   return await setUpRealServerWithSession(schemaSpecification);
 }
 
@@ -84,27 +76,6 @@ async function setUpRealServerWithSession(schemaSpecification: Partial<SchemaSpe
     publishedClient,
     subjectId,
     tearDown: () => server.shutdown(),
-  };
-}
-
-async function setUpInMemoryServerWithSession(schemaSpecification: Partial<SchemaSpecification>) {
-  const schema = new Schema({
-    entityTypes: schemaSpecification.entityTypes ?? [],
-    valueTypes: schemaSpecification.valueTypes ?? [],
-  });
-  const server = new InMemoryServer(schema);
-
-  const context = server.createContext(uuidv4());
-  const subjectId = context.subjectId;
-  const adminClient = createInMemoryAdminClient({ context });
-  const publishedClient = createInMemoryPublishedClient({ context });
-
-  return {
-    schema,
-    adminClient,
-    publishedClient,
-    subjectId,
-    tearDown: () => Promise.resolve(ok<void, ErrorType.Generic>(undefined)),
   };
 }
 

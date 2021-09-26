@@ -527,7 +527,6 @@ importers:
     devDependencies:
       '@jonasb/datadata-postgres': link:../postgres
       '@jonasb/datadata-server': link:../server
-      '@jonasb/datadata-testing-utils': link:../testing-utils
       '@rushstack/heft': 0.39.2
       '@rushstack/heft-jest-plugin': 0.1.20_@rushstack+heft@0.39.2
       '@types/heft-jest': 1.0.2
@@ -544,7 +543,6 @@ importers:
       '@jonasb/datadata-database-adapter-postgres-pg': workspace:*
       '@jonasb/datadata-postgres': workspace:*
       '@jonasb/datadata-server': workspace:*
-      '@jonasb/datadata-testing-utils': workspace:*
       '@js-temporal/polyfill': ~0.2.0
       '@rushstack/heft': ~0.39.2
       '@rushstack/heft-jest-plugin': ~0.1.18
