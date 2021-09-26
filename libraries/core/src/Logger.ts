@@ -2,6 +2,13 @@
 // https://nodejs.org/api/util.html#util_util_format_format_args
 // https://github.com/pinojs/pino/blob/master/docs/api.md#message
 
+interface ConsoleLike {
+  error: (...args: unknown[]) => void;
+  warn: (...args: unknown[]) => void;
+  info: (...args: unknown[]) => void;
+  debug: (...args: unknown[]) => void;
+}
+
 export interface Logger {
   /**
    * @param message Message with printf formatting (%s, %d, %O)
@@ -34,3 +41,20 @@ export const NoOpLogger: Logger = {
   info: noop,
   debug: noop,
 };
+
+export function createConsoleLogger(console: ConsoleLike): Logger {
+  return {
+    error(message, ...args) {
+      console.error(`error: ${message}`, ...args);
+    },
+    warn(message, ...args) {
+      console.warn(`warn: ${message}`, ...args);
+    },
+    info(message, ...args) {
+      console.info(`info: ${message}`, ...args);
+    },
+    debug(message, ...args) {
+      console.debug(`debug: ${message}`, ...args);
+    },
+  };
+}
