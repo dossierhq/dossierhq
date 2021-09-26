@@ -1,7 +1,6 @@
 import type {
   AdminClient,
   ErrorType,
-  Logger,
   PromiseResult,
   PublishedClient,
   Result,
@@ -31,18 +30,6 @@ export function expectResultValue<TOk, TError extends ErrorType>(
   }
 }
 
-function createDummyLogger(): Logger {
-  const noop = () => {
-    /*empty*/
-  };
-  return {
-    error: noop,
-    warn: noop,
-    info: noop,
-    debug: noop,
-  };
-}
-
 export async function setUpServerWithSession(
   schemaSpecification: Partial<SchemaSpecification>
 ): Promise<TestServerWithSession> {
@@ -54,7 +41,6 @@ async function setUpRealServerWithSession(schemaSpecification: Partial<SchemaSpe
   assertIsDefined(url);
   const serverResult = await createServer({
     databaseAdapter: createPostgresAdapter(url),
-    logger: createDummyLogger(),
   });
   if (serverResult.isError()) throw serverResult.toError();
   const server = serverResult.value;
