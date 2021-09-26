@@ -1,6 +1,6 @@
 import type { AdminClient, Logger } from '@jonasb/datadata-core';
 import { NoOpLogger } from '@jonasb/datadata-core';
-import React, { useMemo } from 'react';
+import React, { useContext, useMemo } from 'react';
 import type { DataDataContextAdapter, DataDataContextValue2 } from '../..';
 import { DataDataContext, DataDataContext2, DataDataContextValue, useSchema } from '../..';
 
@@ -35,4 +35,15 @@ export function DataDataProvider({
       )}
     </DataDataContext2.Provider>
   );
+}
+
+//TODO remove when migrated to DataDataContext2
+export function WaitForDataDataContext({
+  children,
+}: {
+  children: React.ReactNode;
+}): JSX.Element | null {
+  const context = useContext(DataDataContext);
+  if ('defaultContextValue' in context) return null;
+  return <>{children}</>;
 }

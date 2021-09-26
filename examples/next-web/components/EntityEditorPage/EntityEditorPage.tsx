@@ -7,6 +7,7 @@ import {
   EntityEditorStateContext,
   initializeEntityEditorState,
   reduceEntityEditorState,
+  WaitForDataDataContext,
 } from '@jonasb/datadata-admin-react-components';
 import { useRouter } from 'next/router';
 import { useContext, useEffect, useReducer } from 'react';
@@ -20,7 +21,9 @@ export interface EntityEditorPageProps {
 export function EntityEditorPage({ entitySelectors }: EntityEditorPageProps): JSX.Element {
   return (
     <DataDataSharedProvider>
-      <EntityEditorPageInner entitySelectors={entitySelectors} />
+      <WaitForDataDataContext>
+        <EntityEditorPageInner entitySelectors={entitySelectors} />
+      </WaitForDataDataContext>
     </DataDataSharedProvider>
   );
 }
