@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-admin-react-components",
+      "comment": "Improve design, introduce DataDataContext2/DataDataProvider",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-admin-react-components",
+  "email": "jonas.b@gmail.com"
+}
