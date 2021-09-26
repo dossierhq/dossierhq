@@ -4,6 +4,7 @@ import type { ErrorResult } from '@jonasb/datadata-core';
 import { ErrorType } from '@jonasb/datadata-core';
 
 export function errorResultToBoom(error: ErrorResult<unknown, ErrorType>): Boom {
+  //TODO use error.httpStatus
   switch (error.error) {
     case ErrorType.BadRequest:
       return boom.badRequest(error.message);
