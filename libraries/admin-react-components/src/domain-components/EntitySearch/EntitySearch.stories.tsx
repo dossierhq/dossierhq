@@ -1,13 +1,14 @@
+import type { AdminClient, ErrorType, PromiseResult } from '@jonasb/datadata-core';
+import { ok } from '@jonasb/datadata-core';
 import type { Meta, Story } from '@storybook/react/types-6-0';
-import React, { useEffect, useState } from 'react';
-import type { DataDataContextValue } from '../..';
-import { DataDataContext } from '../..';
-import { createContextValue, createManyBarEntities } from '../../test/TestContextAdapter';
+import React from 'react';
+import { LoadContextProvider } from '../../test/LoadContextProvider';
+import { createBackendAdminClient, ensureManyBarEntities } from '../../test/TestContextAdapter';
 import type { EntitySearchProps } from './EntitySearch';
 import { EntitySearch } from './EntitySearch';
 
 interface EntitySearchStoryProps extends EntitySearchProps {
-  contextValue?: () => Promise<DataDataContextValue>;
+  adminClient?: () => PromiseResult<AdminClient, ErrorType>;
 }
 
 const meta: Meta<EntitySearchStoryProps> = {
@@ -19,46 +20,36 @@ const meta: Meta<EntitySearchStoryProps> = {
 export default meta;
 
 const Template: Story<EntitySearchStoryProps> = (args) => {
-  return <Wrapper {...args} />;
+  return (
+    <LoadContextProvider adminClient={args.adminClient}>
+      <Wrapper {...args} />
+    </LoadContextProvider>
+  );
 };
 
 function Wrapper(props: EntitySearchStoryProps) {
-  const contextValueFactory = props?.contextValue;
-  const [contextValue, setContextValue] = useState(
-    contextValueFactory ? null : createContextValue().contextValue
-  );
-
-  useEffect(() => {
-    contextValueFactory?.().then(setContextValue);
-  }, [contextValueFactory]);
-
-  if (!contextValue) {
-    return <></>;
-  }
-  return (
-    <DataDataContext.Provider value={contextValue}>
-      <EntitySearch {...props} />
-    </DataDataContext.Provider>
-  );
+  return <EntitySearch {...props} />;
 }
 
 export const Normal = Template.bind({});
 
 export const ManyItems = Template.bind({});
 ManyItems.args = {
-  contextValue: async () => {
-    const { contextValue, adminClient } = createContextValue();
-    await createManyBarEntities(adminClient, 321);
-    return contextValue;
+  adminClient: async () => {
+    const adminClient = createBackendAdminClient();
+    const result = await ensureManyBarEntities(adminClient, 321);
+    if (result.isError()) return result;
+    return ok(adminClient);
   },
 };
 
 export const ManyItemsSmallSize = Template.bind({});
 ManyItemsSmallSize.args = {
-  contextValue: async () => {
-    const { contextValue, adminClient } = createContextValue();
-    await createManyBarEntities(adminClient, 321);
-    return contextValue;
+  adminClient: async () => {
+    const adminClient = createBackendAdminClient();
+    const result = await ensureManyBarEntities(adminClient, 321);
+    if (result.isError()) return result;
+    return ok(adminClient);
   },
 };
 ManyItemsSmallSize.decorators = [

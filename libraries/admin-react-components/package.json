@@ -42,7 +42,6 @@
     "@jonasb/datadata-database-adapter-postgres-pg": "workspace:*",
     "@jonasb/datadata-postgres": "workspace:*",
     "@jonasb/datadata-server": "workspace:*",
-    "@jonasb/datadata-testing-utils": "workspace:*",
     "@rushstack/eslint-plugin": "~0.8.0",
     "@rushstack/heft": "~0.39.2",
     "@rushstack/heft-jest-plugin": "~0.1.18",

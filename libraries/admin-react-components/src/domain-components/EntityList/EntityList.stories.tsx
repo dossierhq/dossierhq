@@ -1,12 +1,14 @@
+import type { AdminClient, ErrorType, PromiseResult } from '@jonasb/datadata-core';
+import { ok } from '@jonasb/datadata-core';
 import type { Meta, Story } from '@storybook/react/types-6-0';
-import React, { useEffect, useState } from 'react';
-import type { DataDataContextValue } from '../..';
-import { DataDataContext, EntityList } from '../..';
-import { createContextValue, createManyBarEntities } from '../../test/TestContextAdapter';
+import React from 'react';
+import { EntityList } from '../..';
+import { LoadContextProvider } from '../../test/LoadContextProvider';
+import { createBackendAdminClient, ensureManyBarEntities } from '../../test/TestContextAdapter';
 import type { EntityListProps } from './EntityList';
 
 interface EntityListStoryProps extends EntityListProps {
-  contextValue?: () => Promise<DataDataContextValue>;
+  adminClient?: () => PromiseResult<AdminClient, ErrorType>;
 }
 
 const meta: Meta<EntityListStoryProps> = {
@@ -18,36 +20,25 @@ const meta: Meta<EntityListStoryProps> = {
 export default meta;
 
 const Template: Story<EntityListStoryProps> = (args) => {
-  return <Wrapper {...args} />;
+  return (
+    <LoadContextProvider adminClient={args.adminClient}>
+      <Wrapper {...args} />
+    </LoadContextProvider>
+  );
 };
 
 function Wrapper(props: EntityListStoryProps) {
-  const contextValueFactory = props?.contextValue;
-  const [contextValue, setContextValue] = useState(
-    contextValueFactory ? null : createContextValue().contextValue
-  );
-
-  useEffect(() => {
-    contextValueFactory?.().then(setContextValue);
-  }, [contextValueFactory]);
-
-  if (!contextValue) {
-    return <></>;
-  }
-  return (
-    <DataDataContext.Provider value={contextValue}>
-      <EntityList {...props} />
-    </DataDataContext.Provider>
-  );
+  return <EntityList {...props} />;
 }
 
 export const Normal = Template.bind({});
 
 export const ManyItems = Template.bind({});
 ManyItems.args = {
-  contextValue: async () => {
-    const { contextValue, adminClient } = createContextValue();
-    await createManyBarEntities(adminClient, 321);
-    return contextValue;
+  adminClient: async () => {
+    const adminClient = createBackendAdminClient();
+    const result = await ensureManyBarEntities(adminClient, 321);
+    if (result.isError()) return result;
+    return ok(adminClient);
   },
 };

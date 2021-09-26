@@ -1,7 +1,8 @@
-import type { Schema } from '@jonasb/datadata-core';
+import type { AdminClient, ErrorType, PromiseResult } from '@jonasb/datadata-core';
+import { ok } from '@jonasb/datadata-core';
 import type { Meta, Story } from '@storybook/react/types-6-0';
-import React, { useReducer } from 'react';
-import type { DataDataContextValue, EntityEditorSelector } from '../..';
+import React, { useContext, useReducer } from 'react';
+import type { EntityEditorSelector } from '../..';
 import {
   AddEntityDraftAction,
   DataDataContext,
@@ -11,14 +12,15 @@ import {
   initializeEntityEditorState,
   reduceEntityEditorState,
 } from '../..';
-import type { EntityMetadataProps } from './EntityMetadata';
-import { EntityLoader } from '../EntityEditor/EntityEditor';
 import { foo1Id, fooArchivedId } from '../../test/EntityFixtures';
-import { createContextValue, SlowMiddleware } from '../../test/TestContextAdapter';
+import { LoadContextProvider } from '../../test/LoadContextProvider';
+import { createBackendAdminClient, SlowMiddleware } from '../../test/TestContextAdapter';
+import { EntityLoader } from '../EntityEditor/EntityEditor';
+import type { EntityMetadataProps } from './EntityMetadata';
 
 export type EntityMetadataStoryProps = Omit<EntityMetadataProps, 'entityId'> & {
   entitySelector: EntityEditorSelector;
-  contextValue?: () => DataDataContextValue;
+  adminClient?: () => PromiseResult<AdminClient, ErrorType>;
 };
 
 const meta: Meta<EntityMetadataProps> = {
@@ -29,16 +31,14 @@ const meta: Meta<EntityMetadataProps> = {
 export default meta;
 
 const Template: Story<EntityMetadataStoryProps> = (args) => {
-  const contextValue = args.contextValue?.() ?? createContextValue().contextValue;
   return (
-    <DataDataContext.Provider value={contextValue}>
+    <LoadContextProvider adminClient={args.adminClient}>
       <Wrapper
         className={args.className}
         entitySelector={args.entitySelector}
         initialSelectedHistory={args.initialSelectedHistory}
-        schema={contextValue.schema}
       />
-    </DataDataContext.Provider>
+    </LoadContextProvider>
   );
 };
 
@@ -46,13 +46,12 @@ function Wrapper({
   className,
   entitySelector,
   initialSelectedHistory,
-  schema,
 }: {
   className?: string;
   entitySelector: EntityEditorSelector;
   initialSelectedHistory?: 'entity' | 'publish';
-  schema: Schema;
 }) {
+  const { schema } = useContext(DataDataContext);
   const [editorState, dispatchEditorState] = useReducer(
     reduceEntityEditorState,
     { schema, actions: [new AddEntityDraftAction(entitySelector)] },
@@ -99,5 +98,5 @@ ArchivedFooPublishingHistory.args = {
 export const SlowFullFoo = Template.bind({});
 SlowFullFoo.args = {
   entitySelector: { id: foo1Id },
-  contextValue: () => createContextValue({ adminClientMiddleware: [SlowMiddleware] }).contextValue,
+  adminClient: async () => ok(createBackendAdminClient([SlowMiddleware])),
 };

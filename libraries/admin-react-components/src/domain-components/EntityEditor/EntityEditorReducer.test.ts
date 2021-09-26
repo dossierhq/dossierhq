@@ -1,7 +1,8 @@
 import type { AdminClient } from '@jonasb/datadata-core';
 import schema from '../../stories/StoryboardSchema';
-import { createContextValue } from '../../test/TestContextAdapter';
 import { foo1Id } from '../../test/EntityFixtures';
+import { createBackendAdminClient } from '../../test/TestContextAdapter';
+import { insecureTestUuidv4 } from '../../test/TestUtils';
 import type { EntityEditorState } from './EntityEditorReducer';
 import {
   AddEntityDraftAction,
@@ -10,7 +11,6 @@ import {
   SetNameAction,
   UpdateEntityAction,
 } from './EntityEditorReducer';
-import { insecureTestUuidv4 } from '../../test/TestUtils';
 
 function newState(): EntityEditorState {
   return initializeEntityEditorState({ schema });
@@ -65,7 +65,7 @@ describe('reduceEntityEditorState', () => {
   });
 
   test('UpdateEntityAction', async () => {
-    const { adminClient } = createContextValue();
+    const adminClient = createBackendAdminClient();
     let state = newState();
     state = reduceEntityEditorState(state, new AddEntityDraftAction({ id: foo1Id }));
     state = await updateEntityWithFixture(adminClient, state, foo1Id);

@@ -1,16 +1,13 @@
 import type { Meta, Story } from '@storybook/react/types-6-0';
 import React, { useState } from 'react';
-import { DataDataContext } from '../../';
-import { RichTextFieldEditor } from './RichTextFieldEditor';
-import type { RichTextFieldEditorProps } from './RichTextFieldEditor';
 import schema from '../../stories/StoryboardSchema';
 import { bar2Id, foo1Id } from '../../test/EntityFixtures';
-import type { TestContextAdapter } from '../../test/TestContextAdapter';
-import { createContextValue } from '../../test/TestContextAdapter';
+import { LoadContextProvider } from '../../test/LoadContextProvider';
+import { LoadFixtures } from '../../test/LoadFixtures';
+import type { RichTextFieldEditorProps } from './RichTextFieldEditor';
+import { RichTextFieldEditor } from './RichTextFieldEditor';
 
-export type RichTextFieldEditorStoryProps = Omit<RichTextFieldEditorProps, 'onChange'> & {
-  contextAdapter?: TestContextAdapter;
-};
+export type RichTextFieldEditorStoryProps = Omit<RichTextFieldEditorProps, 'onChange'>;
 
 const meta: Meta<RichTextFieldEditorStoryProps> = {
   title: 'Domain/RichTextFieldEditor',
@@ -23,11 +20,12 @@ const meta: Meta<RichTextFieldEditorStoryProps> = {
 export default meta;
 
 const Template: Story<RichTextFieldEditorStoryProps> = (args) => {
-  const contextValue = createContextValue().contextValue;
   return (
-    <DataDataContext.Provider value={contextValue}>
-      <Wrapper {...args} />
-    </DataDataContext.Provider>
+    <LoadContextProvider>
+      <LoadFixtures>
+        <Wrapper {...args} />
+      </LoadFixtures>
+    </LoadContextProvider>
   );
 };
 

@@ -1,9 +1,8 @@
 import type { Meta, Story } from '@storybook/react/types-6-0';
 import React from 'react';
-import { TypePicker } from './TypePicker';
+import { LoadContextProvider } from '../../test/LoadContextProvider';
 import type { TypePickerProps } from './TypePicker';
-import { DataDataContext } from '../..';
-import { createContextValue } from '../../test/TestContextAdapter';
+import { TypePicker } from './TypePicker';
 
 const meta: Meta<TypePickerProps> = {
   title: 'Domain/TypePicker',
@@ -14,9 +13,9 @@ export default meta;
 
 const Template: Story<TypePickerProps> = (args) => {
   return (
-    <DataDataContext.Provider value={createContextValue().contextValue}>
+    <LoadContextProvider>
       <TypePicker {...args} />
-    </DataDataContext.Provider>
+    </LoadContextProvider>
   );
 };
 

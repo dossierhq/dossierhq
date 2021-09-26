@@ -1,11 +1,11 @@
 import type { Meta, Story } from '@storybook/react/types-6-0';
 import React from 'react';
-import { DataDataContext } from '../..';
-import { EntityItemFieldEditor } from './EntityItemFieldEditor';
-import type { EntityItemFieldEditorProps } from './EntityItemFieldEditor';
-import { createContextValue } from '../../test/TestContextAdapter';
 import schema from '../../stories/StoryboardSchema';
 import { bar2Id } from '../../test/EntityFixtures';
+import { LoadContextProvider } from '../../test/LoadContextProvider';
+import { LoadFixtures } from '../../test/LoadFixtures';
+import type { EntityItemFieldEditorProps } from './EntityItemFieldEditor';
+import { EntityItemFieldEditor } from './EntityItemFieldEditor';
 
 const meta: Meta<EntityItemFieldEditorProps> = {
   title: 'Domain/EntityItemFieldEditor',
@@ -19,9 +19,11 @@ export default meta;
 
 const Template: Story<EntityItemFieldEditorProps> = (args) => {
   return (
-    <DataDataContext.Provider value={createContextValue().contextValue}>
-      <EntityItemFieldEditor {...args} />
-    </DataDataContext.Provider>
+    <LoadContextProvider>
+      <LoadFixtures>
+        <EntityItemFieldEditor {...args} />
+      </LoadFixtures>
+    </LoadContextProvider>
   );
 };
 
