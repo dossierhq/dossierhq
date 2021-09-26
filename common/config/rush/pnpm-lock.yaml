@@ -144,7 +144,6 @@ importers:
       '@jonasb/datadata-database-adapter-postgres-pg': link:../database-adapter-postgres-pg
       '@jonasb/datadata-postgres': link:../postgres
       '@jonasb/datadata-server': link:../server
-      '@jonasb/datadata-testing-utils': link:../testing-utils
       '@rushstack/eslint-plugin': 0.8.0_eslint@7.32.0+typescript@4.4.2
       '@rushstack/heft': 0.39.2
       '@rushstack/heft-jest-plugin': 0.1.20_@rushstack+heft@0.39.2
@@ -188,7 +187,6 @@ importers:
       '@jonasb/datadata-design': workspace:*
       '@jonasb/datadata-postgres': workspace:*
       '@jonasb/datadata-server': workspace:*
-      '@jonasb/datadata-testing-utils': workspace:*
       '@rushstack/eslint-plugin': ~0.8.0
       '@rushstack/heft': ~0.39.2
       '@rushstack/heft-jest-plugin': ~0.1.18

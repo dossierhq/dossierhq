@@ -1,5 +1,17 @@
-import { PublishingEventKind, RichTextBlockType } from '@jonasb/datadata-core';
-import type { JsonInMemoryEntity } from '@jonasb/datadata-testing-utils';
+import { RichTextBlockType } from '@jonasb/datadata-core';
+
+interface FixtureEntity {
+  id: string;
+  type: string;
+  name: string;
+  versions: InMemoryEntityVersion[];
+  archived?: boolean;
+  publishedVersion?: number | null;
+}
+
+interface InMemoryEntityVersion {
+  [fieldName: string]: unknown;
+}
 
 export const foo1Id = 'fc66b4d7-61ff-44d4-8f68-cb7f526df046';
 export const fooArchivedId = 'fb62be03-a0a9-4689-9987-bacee0e7692d';
@@ -8,7 +20,7 @@ export const bar2Id = 'eb5732e2-b931-492b-82f1-f8fdd464f0d2';
 export const baz1Id = 'e6e928cc-e45f-452d-8bb0-73c2caad31c2';
 export const userId1 = 'a10e49cd-2f4e-4249-b8ee-eaca8466939b';
 
-export const entitiesFixture: JsonInMemoryEntity[] = [
+export const entitiesFixture: FixtureEntity[] = [
   {
     id: foo1Id,
     type: 'Foo',
@@ -16,7 +28,6 @@ export const entitiesFixture: JsonInMemoryEntity[] = [
     publishedVersion: 0,
     versions: [
       {
-        _version: 0,
         title: 'Hello',
         tags: ['one', 'two', 'three'],
         location: { lat: 55.60498, lng: 13.003822 },
@@ -34,21 +45,6 @@ export const entitiesFixture: JsonInMemoryEntity[] = [
         ],
       },
     ],
-    history: [
-      {
-        version: 0,
-        createdAt: '2021-03-11T20:19:39.343Z',
-        createdBy: userId1,
-      },
-    ],
-    publishEvents: [
-      {
-        kind: PublishingEventKind.Publish,
-        version: 0,
-        publishedAt: '2021-03-11T20:19:39.343Z',
-        publishedBy: userId1,
-      },
-    ],
   },
   {
     id: fooArchivedId,
@@ -58,28 +54,6 @@ export const entitiesFixture: JsonInMemoryEntity[] = [
     versions: [
       {
         title: 'Hello',
-        _version: 0,
-      },
-    ],
-    history: [
-      {
-        version: 0,
-        createdAt: '2021-03-10T18:19:39.343Z',
-        createdBy: userId1,
-      },
-    ],
-    publishEvents: [
-      {
-        kind: PublishingEventKind.Publish,
-        version: 0,
-        publishedAt: '2021-03-10T18:19:39.343Z',
-        publishedBy: userId1,
-      },
-      {
-        kind: PublishingEventKind.Archive,
-        version: null,
-        publishedAt: '2021-03-11T20:19:39.343Z',
-        publishedBy: userId1,
       },
     ],
   },
@@ -89,18 +63,9 @@ export const entitiesFixture: JsonInMemoryEntity[] = [
     name: 'Bar 1',
     versions: [
       {
-        _version: 0,
         title: 'Bar 1',
       },
     ],
-    history: [
-      {
-        version: 0,
-        createdAt: '2021-03-11T20:19:39.343Z',
-        createdBy: userId1,
-      },
-    ],
-    publishEvents: [],
   },
   {
     id: bar2Id,
@@ -108,18 +73,9 @@ export const entitiesFixture: JsonInMemoryEntity[] = [
     name: 'Bar 2',
     versions: [
       {
-        _version: 0,
         title: 'Bar 2',
       },
     ],
-    history: [
-      {
-        version: 0,
-        createdAt: '2021-03-11T20:19:39.343Z',
-        createdBy: userId1,
-      },
-    ],
-    publishEvents: [],
   },
   {
     id: baz1Id,
@@ -127,7 +83,6 @@ export const entitiesFixture: JsonInMemoryEntity[] = [
     name: 'Baz 1',
     versions: [
       {
-        _version: 0,
         body: { blocks: [{ type: RichTextBlockType.paragraph, data: { text: 'Hello world' } }] },
         bodyBar: { blocks: [{ type: RichTextBlockType.entity, data: { id: bar2Id } }] },
         bodyNested: {
@@ -150,13 +105,5 @@ export const entitiesFixture: JsonInMemoryEntity[] = [
         },
       },
     ],
-    history: [
-      {
-        version: 0,
-        createdAt: '2021-03-11T20:19:39.343Z',
-        createdBy: userId1,
-      },
-    ],
-    publishEvents: [],
   },
 ];

@@ -1,9 +1,8 @@
 import type { Meta, Story } from '@storybook/react/types-6-0';
 import React from 'react';
-import { DataDataContext } from '../..';
-import { EntityMap } from './EntityMap';
+import { LoadContextProvider } from '../../test/LoadContextProvider';
 import type { EntityMapProps } from './EntityMap';
-import { createContextValue } from '../../test/TestContextAdapter';
+import { EntityMap } from './EntityMap';
 
 const meta: Meta<EntityMapProps> = {
   title: 'Domain/EntityMap',
@@ -17,9 +16,9 @@ export default meta;
 
 const Template: Story<EntityMapProps> = (args) => {
   return (
-    <DataDataContext.Provider value={createContextValue().contextValue}>
+    <LoadContextProvider>
       <EntityMap {...args} />
-    </DataDataContext.Provider>
+    </LoadContextProvider>
   );
 };
 
