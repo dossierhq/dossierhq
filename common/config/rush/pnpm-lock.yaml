@@ -177,7 +177,7 @@ importers:
       mini-svg-data-uri: 1.3.3
       prettier: 2.4.1
       react-test-renderer: 17.0.2_react@17.0.2
-      svgo: 2.4.0
+      svgo: 2.7.0
       typescript: 4.4.2
     specifiers:
       '@babel/core': ^7.14.3
@@ -225,7 +225,7 @@ importers:
       react-dom: ~17.0.2
       react-leaflet: ~3.2.1
       react-test-renderer: ~17.0.2
-      svgo: ~2.4.0
+      svgo: ~2.7.0
       swr: ~1.0.1
       tslib: ~2.3.1
       typescript: ^4.4.2
@@ -4814,12 +4814,12 @@ packages:
       node: '>= 6'
     resolution:
       integrity: sha512-RbzJvlNzmRq5c3O09UipeuXno4tA1FE6ikOjxZK0tuxVv3412l64l5t1W5pj4+rJq9vpkm/kwiR07aZXnsKPxw==
-  /@trysound/sax/0.1.1:
+  /@trysound/sax/0.2.0:
     dev: true
     engines:
       node: '>=10.13.0'
     resolution:
-      integrity: sha512-Z6DoceYb/1xSg5+e+ZlPZ9v0N16ZvZ+wYMraFue4HYrE4ttONKtsvruIRf6t9TBR0YvSOfi1hUU0fJfBLCDYow==
+      integrity: sha512-L7z9BgrNEcYyUYtF+HaEfiS5ebkh9jXqbszz7pC0hRBPaatV0XjSD3+eHrpqFemQfgwiFF0QPIarnIihIDn7OA==
   /@tsconfig/node10/1.0.8:
     dev: true
     resolution:
@@ -13139,6 +13139,10 @@ packages:
     optional: true
     resolution:
       integrity: sha512-8ZtvEnA2c5aYCZYd1cvgdnU6cqwixRoYg70xPLWUws5ORTa/lnw+u4amixRS/Ac5U5mQVgp9pnlSUnbNWFaWZQ==
+  /nanocolors/0.1.12:
+    dev: true
+    resolution:
+      integrity: sha512-2nMHqg1x5PU+unxX7PGY7AuYxl2qDx7PSrTRjizr8sxdd3l/3hBuWWaki62qmtYm2U5i4Z5E7GbjlyDFhs9/EQ==
   /nanoid/3.1.25:
     engines:
       node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1
@@ -16350,21 +16354,21 @@ packages:
     dev: false
     resolution:
       integrity: sha512-JaKkGHHfGvRrcMPdJWkssLBeWqM+Isg/a09H7kgNNajT1cX5AztDTNs+C8UzpCxjCTRrG34WbquwaovZbmSk9g==
-  /svgo/2.4.0:
+  /svgo/2.7.0:
     dependencies:
-      '@trysound/sax': 0.1.1
-      colorette: 1.3.0
+      '@trysound/sax': 0.2.0
       commander: 7.2.0
       css-select: 4.1.3
       css-tree: 1.1.3
       csso: 4.2.0
+      nanocolors: 0.1.12
       stable: 0.1.8
     dev: true
     engines:
       node: '>=10.13.0'
     hasBin: true
     resolution:
-      integrity: sha512-W25S1UUm9Lm9VnE0TvCzL7aso/NCzDEaXLaElCUO/KaVitw0+IBicSVfM1L1c0YHK5TOFh73yQ2naCpVHEQ/OQ==
+      integrity: sha512-aDLsGkre4fTDCWvolyW+fs8ZJFABpzLXbtdK1y71CKnHzAnpDxKXPj2mNKj+pyOXUCzFHzuxRJ94XOFygOWV3w==
   /swr/1.0.1_react@17.0.2:
     dependencies:
       dequal: 2.0.2
