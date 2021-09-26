@@ -8,10 +8,9 @@
     ".": "./lib/index.js"
   },
   "scripts": {
-    "build": "heft build",
+    "build": "heft build && npm run prettier:check",
     "build:watch": "heft build --watch",
     "clean": "heft clean",
-    "ci:check": "npm run build && npm run prettier:check",
     "eslint:check": "eslint .",
     "eslint:fix": "eslint --fix .",
     "prettier:check": "prettier --check .",

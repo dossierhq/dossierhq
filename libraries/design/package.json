@@ -12,7 +12,6 @@
     "build": "npm run prettier:check && heft build --clean && (npm run css:build 2>&1)",
     "build:watch": "heft build --watch",
     "clean": "heft clean",
-    "ci:check": "npm run storybook:build 2>&1",
     "css:build": "sass src/styles/main.scss lib/main.css",
     "eslint:check": "eslint .",
     "eslint:fix": "eslint --fix .",
