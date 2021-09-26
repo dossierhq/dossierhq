@@ -2,7 +2,7 @@ import Boom from '@hapi/boom';
 import debug from 'debug';
 import type { ObjectSchema } from 'joi';
 import Joi from 'joi';
-import type { NextApiResponse, NextApiRequest } from 'next';
+import type { NextApiRequest, NextApiResponse } from 'next';
 
 const debugWarn = debug('app:w:handler');
 
@@ -51,21 +51,6 @@ export async function handleGet<T>(
       .status(200)
       .setHeader('Content-Type', 'application/json; charset=utf-8')
       .send(JSON.stringify(body, null, 2) as unknown as T);
-  });
-}
-
-export async function handlePost<T, R>(
-  req: NextApiRequest,
-  res: NextApiResponse<R>,
-  handler: (body: T) => Promise<{ location: string; body: R }>
-): Promise<void> {
-  await handleRequest(res, async () => {
-    if (req.method !== 'POST') {
-      throw Boom.methodNotAllowed(undefined, undefined, 'POST');
-    }
-    const { location, body: responseBody } = await handler(req.body);
-    res.setHeader('Location', location);
-    res.status(201).json(responseBody);
   });
 }
 

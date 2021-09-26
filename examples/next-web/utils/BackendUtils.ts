@@ -14,16 +14,6 @@ export const urls = {
     `${baseUrl}/admin/${operationName}${operation ? `?${encodeQuery({ operation })}` : ''}`,
 };
 
-export async function fetchJson<T>(input: RequestInfo, init?: RequestInit): Promise<T> {
-  const response = await fetch(input, init);
-  if (!response.ok) {
-    const responseText = await response.text();
-    throw Error(`Failed request (${response.status}), ${responseText}`);
-  }
-  const json = await response.json();
-  return json;
-}
-
 export async function fetchJsonResult<TOk>(
   input: RequestInfo,
   init?: RequestInit
