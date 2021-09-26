@@ -5,6 +5,5 @@ module.exports = {
     "<rootDir>/examples/next-web/",
     "<rootDir>/graphql/",
     "<rootDir>/server/",
-    "<rootDir>/testing-utils/",
   ]
 }
