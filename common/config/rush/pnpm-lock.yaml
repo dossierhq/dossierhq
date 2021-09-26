@@ -595,36 +595,6 @@ importers:
       prettier: 2.4.1
       tslib: ~2.3.1
       typescript: ^4.4.2
-  ../../libraries/testing-utils:
-    dependencies:
-      '@jonasb/datadata-core': link:../core
-      '@js-temporal/polyfill': 0.2.0
-      tslib: 2.3.1
-      uuid: 8.3.2
-    devDependencies:
-      '@rushstack/heft': 0.39.2
-      '@rushstack/heft-jest-plugin': 0.1.20_@rushstack+heft@0.39.2
-      '@types/heft-jest': 1.0.2
-      '@types/uuid': 8.3.1
-      '@typescript-eslint/eslint-plugin': 4.29.2_90d5bd4576f5f69606bb7e2c316e9b61
-      '@typescript-eslint/parser': 4.29.2_eslint@7.32.0+typescript@4.4.2
-      eslint: 7.32.0
-      prettier: 2.4.1
-      typescript: 4.4.2
-    specifiers:
-      '@jonasb/datadata-core': workspace:*
-      '@js-temporal/polyfill': ~0.2.0
-      '@rushstack/heft': ~0.39.2
-      '@rushstack/heft-jest-plugin': ~0.1.18
-      '@types/heft-jest': 1.0.2
-      '@types/uuid': ~8.3.1
-      '@typescript-eslint/eslint-plugin': ^4.29.1
-      '@typescript-eslint/parser': ^4.29.1
-      eslint: ^7.32.0
-      prettier: 2.4.1
-      tslib: ~2.3.1
-      typescript: ^4.4.2
-      uuid: ^8.3.2
   ../../tools/generic-tools:
     dependencies:
       concurrently: 6.2.1

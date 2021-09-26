@@ -422,11 +422,6 @@
       "packageName": "@jonasb/datadata-server",
       "projectFolder": "libraries/server",
       "versionPolicyName": "DataDataFramework"
-    },
-    {
-      "packageName": "@jonasb/datadata-testing-utils",
-      "projectFolder": "libraries/testing-utils",
-      "versionPolicyName": "DataDataFramework"
     }
     // {
     //   /**
