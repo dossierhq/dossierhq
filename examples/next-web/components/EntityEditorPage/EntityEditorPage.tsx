@@ -6,13 +6,11 @@ import {
   EntityEditorDispatchContext,
   EntityEditorStateContext,
   initializeEntityEditorState,
-  Loader,
   reduceEntityEditorState,
 } from '@jonasb/datadata-admin-react-components';
-import type { Schema } from '@jonasb/datadata-core';
 import { useRouter } from 'next/router';
-import { useEffect, useReducer } from 'react';
-import { useInitializeContext } from '../../contexts/DataDataContext';
+import { useContext, useEffect, useReducer } from 'react';
+import { DataDataInitializedProvider } from '../../contexts/DataDataInitializedProvider';
 import { urls } from '../../utils/PageUtils';
 
 export interface EntityEditorPageProps {
@@ -20,26 +18,15 @@ export interface EntityEditorPageProps {
 }
 
 export function EntityEditorPage({ entitySelectors }: EntityEditorPageProps): JSX.Element {
-  const { contextValue } = useInitializeContext();
-
-  if (!contextValue) {
-    return <Loader />;
-  }
-
   return (
-    <DataDataContext.Provider value={contextValue}>
-      <EntityEditorPageInner schema={contextValue.schema} entitySelectors={entitySelectors} />
-    </DataDataContext.Provider>
+    <DataDataInitializedProvider>
+      <EntityEditorPageInner entitySelectors={entitySelectors} />
+    </DataDataInitializedProvider>
   );
 }
 
-function EntityEditorPageInner({
-  schema,
-  entitySelectors,
-}: {
-  schema: Schema;
-  entitySelectors: EntityEditorSelector[];
-}) {
+function EntityEditorPageInner({ entitySelectors }: { entitySelectors: EntityEditorSelector[] }) {
+  const { schema } = useContext(DataDataContext);
   const router = useRouter();
   const [editorState, dispatchEditorState] = useReducer(
     reduceEntityEditorState,

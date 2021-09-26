@@ -2,7 +2,6 @@ import type {
   DataDataContextAdapter,
   EditorJsToolSettings,
 } from '@jonasb/datadata-admin-react-components';
-import { DataDataContextValue } from '@jonasb/datadata-admin-react-components';
 import type {
   AdminClient,
   AdminClientOperation,
@@ -15,11 +14,8 @@ import {
   convertAdminClientOperationToJson,
   convertJsonAdminClientResult,
   createBaseAdminClient,
-  Schema,
 } from '@jonasb/datadata-core';
-import { useEffect, useMemo, useState } from 'react';
-import type { SchemaResponse } from '../types/ResponseTypes';
-import { fetchJson, fetchJsonResult, urls } from '../utils/BackendUtils';
+import { fetchJsonResult, urls } from '../utils/BackendUtils';
 import { EditorJsTools } from './EditorJsTools';
 
 type BackendContext = ClientContext;
@@ -39,7 +35,7 @@ const logger: Logger = {
   },
 };
 
-class ContextAdapter implements DataDataContextAdapter {
+export class ContextAdapter implements DataDataContextAdapter {
   getEditorJSConfig: DataDataContextAdapter['getEditorJSConfig'] = (
     fieldSpec,
     standardBlockTools,
@@ -89,39 +85,7 @@ class ContextAdapter implements DataDataContextAdapter {
   };
 }
 
-async function loadSchema() {
-  //TODO swr? Move to adminClient
-
-  const schemaResponse = await fetchJson<SchemaResponse>(urls.schema);
-  const schema = new Schema(schemaResponse.spec);
-  return schema;
-}
-
-export function useInitializeContext(): { contextValue: DataDataContextValue | null } {
-  const [schema, setSchema] = useState<Schema | null>(null);
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const s = await loadSchema();
-        setSchema(s);
-      } catch (error) {
-        //TODO handle error, support retry
-        console.warn(error);
-      }
-    })();
-  }, []);
-
-  const contextValue = useMemo(() => {
-    return schema
-      ? new DataDataContextValue(new ContextAdapter(), createBackendAdminClient(), schema)
-      : null;
-  }, [schema]);
-
-  return { contextValue };
-}
-
-function createBackendAdminClient(): AdminClient {
+export function createBackendAdminClient(): AdminClient {
   const context: BackendContext = { logger };
   return createBaseAdminClient({ context, pipeline: [terminatingMiddleware] });
 }
