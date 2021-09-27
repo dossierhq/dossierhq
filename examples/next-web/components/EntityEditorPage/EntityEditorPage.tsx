@@ -9,10 +9,12 @@ import {
   reduceEntityEditorState,
   WaitForDataDataContext,
 } from '@jonasb/datadata-admin-react-components';
+import { FullscreenContainer } from '@jonasb/datadata-design';
 import { useRouter } from 'next/router';
 import { useContext, useEffect, useReducer } from 'react';
 import { DataDataSharedProvider } from '../../contexts/DataDataSharedProvider';
 import { urls } from '../../utils/PageUtils';
+import { NavBar } from '../NavBar/NavBar';
 
 export interface EntityEditorPageProps {
   entitySelectors: EntityEditorSelector[];
@@ -48,10 +50,14 @@ function EntityEditorPageInner({ entitySelectors }: { entitySelectors: EntityEdi
   return (
     <EntityEditorDispatchContext.Provider value={dispatchEditorState}>
       <EntityEditorStateContext.Provider value={editorState}>
-        <EntityEditorContainer
-          className="dd-position-fixed dd-inset-0"
-          {...{ editorState, dispatchEditorState }}
-        />
+        <FullscreenContainer>
+          <FullscreenContainer.Row fullWidth>
+            <NavBar current="entities" />
+          </FullscreenContainer.Row>
+          <FullscreenContainer.Row fillHeight fullWidth>
+            <EntityEditorContainer />
+          </FullscreenContainer.Row>
+        </FullscreenContainer>
       </EntityEditorStateContext.Provider>
     </EntityEditorDispatchContext.Provider>
   );
