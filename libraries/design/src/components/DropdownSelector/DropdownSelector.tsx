@@ -1,6 +1,7 @@
 import type { Dispatch, ReactNode } from 'react';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { useKeyHandler } from '../../hooks/useKeyHandler.js';
+import { useWindowClick } from '../../hooks/useWindowClick.js';
 import type {
   IconName,
   MultipleSelectorItem,
@@ -37,6 +38,8 @@ export function DropdownSelector<TItem extends MultipleSelectorItem>({
 }: DropdownSelectorProps<TItem>): JSX.Element {
   const [active, setActive] = useState(false);
   const handleClose = useCallback(() => setActive(false), [setActive]);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  useWindowClick(triggerRef, handleClose, active);
   useKeyHandler(['Escape'], handleClose, active);
 
   return (
@@ -46,6 +49,7 @@ export function DropdownSelector<TItem extends MultipleSelectorItem>({
       left={left}
       trigger={
         <Button
+          ref={triggerRef}
           iconLeft={iconLeft}
           iconRight={up ? 'chevronUp' : 'chevronDown'}
           onClick={() => setActive((it) => !it)}
