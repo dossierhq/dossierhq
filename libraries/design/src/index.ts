@@ -1,6 +1,7 @@
 export {
   Button,
   Dropdown,
+  DropdownDisplay,
   DropdownSelector,
   Field,
   FullscreenContainer,

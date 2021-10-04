@@ -1,14 +1,12 @@
 import type { Dispatch, ReactNode } from 'react';
-import React from 'react';
-import { Dropdown } from 'react-bulma-components';
-import type { IconName } from '../index.js';
-import { Badge, Icon } from '../index.js';
+import React, { useState } from 'react';
 import type {
+  IconName,
   MultipleSelectorItem,
   MultipleSelectorState,
   MultipleSelectorStateAction,
-} from './MultipleSelectorReducer.js';
-import { MultipleSelectorStateActions } from './MultipleSelectorReducer.js';
+} from '../index.js';
+import { Badge, Button, DropdownDisplay, MultipleSelectorStateActions } from '../index.js';
 
 export interface DropdownSelectorProps<TItem extends MultipleSelectorItem> {
   iconLeft?: IconName;
@@ -37,29 +35,22 @@ export function DropdownSelector<TItem extends MultipleSelectorItem>({
   children,
 }: DropdownSelectorProps<TItem>): JSX.Element {
   //TODO close on escape
-
-  const label =
-    iconLeft && children ? (
-      <>
-        <Icon icon={iconLeft} />
-        <span>{children}</span>
-      </>
-    ) : iconLeft ? (
-      <Icon icon={iconLeft} />
-    ) : (
-      children
-    );
+  const [active, setActive] = useState(false);
 
   return (
-    <Dropdown
-      label={label}
-      right={left}
+    <DropdownDisplay
+      active={active}
       up={up}
-      icon={
-        <>
+      left={left}
+      trigger={
+        <Button
+          iconLeft={iconLeft}
+          iconRight={up ? 'chevronUp' : 'chevronDown'}
+          onClick={() => setActive((it) => !it)}
+        >
+          {children}
           {state.selectedIds.length > 0 ? <Badge>{state.selectedIds.length}</Badge> : null}
-          <Icon icon={up ? 'chevronUp' : 'chevronDown'} />
-        </>
+        </Button>
       }
     >
       {state.items.map((item) => {
@@ -69,7 +60,7 @@ export function DropdownSelector<TItem extends MultipleSelectorItem>({
           </Item>
         );
       })}
-    </Dropdown>
+    </DropdownDisplay>
   );
 }
 
@@ -86,9 +77,8 @@ function Item<TItem extends MultipleSelectorItem>({
   };
 
   return (
-    // @ts-expect-error active is missing from the type
-    <Dropdown.Item active={active} onClick={handleChange} value={undefined} renderAs="a">
+    <DropdownDisplay.Item active={active} onClick={handleChange}>
       {children}
-    </Dropdown.Item>
+    </DropdownDisplay.Item>
   );
 }
