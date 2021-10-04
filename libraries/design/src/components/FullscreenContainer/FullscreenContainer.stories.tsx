@@ -1,7 +1,7 @@
-import type { Meta, Story } from '@storybook/react/types-6-0';
+import type { Meta, Story } from '@storybook/react/types-6-0.js';
 import React from 'react';
-import type { FullscreenContainerProps } from './FullscreenContainer';
-import { FullscreenContainer } from './FullscreenContainer';
+import type { FullscreenContainerProps } from './FullscreenContainer.js';
+import { FullscreenContainer } from './FullscreenContainer.js';
 
 const meta: Meta<FullscreenContainerProps> = {
   title: 'Components/FullscreenContainer',

@@ -1,7 +1,7 @@
 import { EntityPublishState } from '@jonasb/datadata-core';
 import React from 'react';
-import { Tag } from '../../';
-import type { Kind } from '../../';
+import { Tag } from '../../index.js';
+import type { Kind } from '../../index.js';
 
 const LOOKUP: Record<EntityPublishState, Kind> = {
   [EntityPublishState.Archived]: 'danger',

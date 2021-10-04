@@ -13,7 +13,7 @@ export {
   Table,
   Tag,
   TagSelector,
-} from './components';
+} from './components/index.js';
 export type {
   DropdownSelectorProps,
   IconName,
@@ -21,5 +21,5 @@ export type {
   MultipleSelectorReducer,
   MultipleSelectorState,
   MultipleSelectorStateAction,
-} from './components';
-export { StatusColor } from './config/Colors';
+} from './components/index.js';
+export { StatusColor } from './config/Colors.js';

@@ -1,11 +1,11 @@
 import type { AdminClient, ErrorType, PromiseResult } from '@jonasb/datadata-core';
 import { ok } from '@jonasb/datadata-core';
-import type { Meta, Story } from '@storybook/react/types-6-0';
+import type { Meta, Story } from '@storybook/react/types-6-0.js';
 import React from 'react';
-import { EntityList } from '../..';
-import { LoadContextProvider } from '../../test/LoadContextProvider';
-import { createBackendAdminClient, ensureManyBarEntities } from '../../test/TestContextAdapter';
-import type { EntityListProps } from './EntityList';
+import { EntityList } from '../../index.js';
+import { LoadContextProvider } from '../../test/LoadContextProvider.js';
+import { createBackendAdminClient, ensureManyBarEntities } from '../../test/TestContextAdapter.js';
+import type { EntityListProps } from './EntityList.js';
 
 interface EntityListStoryProps extends EntityListProps {
   adminClient?: () => PromiseResult<AdminClient, ErrorType>;

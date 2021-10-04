@@ -1,7 +1,7 @@
 jest.mock('@editorjs/editorjs');
 
 import { ok } from '@jonasb/datadata-core';
-import type { Story } from '@storybook/react/types-6-0';
+import type { Story } from '@storybook/react/types-6-0.js';
 import '@testing-library/jest-dom';
 import {
   act,
@@ -15,9 +15,9 @@ import {
 import userEvent from '@testing-library/user-event';
 import * as React from 'react';
 import * as renderer from 'react-test-renderer';
-import { createBackendAdminClient } from '../../test/TestContextAdapter';
-import type { EntityEditorStoryProps } from './EntityEditor.stories';
-import { default as StoryMeta, ArchivedFoo, FullFoo, NewFoo } from './EntityEditor.stories';
+import { createBackendAdminClient } from '../../test/TestContextAdapter.js';
+import type { EntityEditorStoryProps } from './EntityEditor.stories.js';
+import { default as StoryMeta, ArchivedFoo, FullFoo, NewFoo } from './EntityEditor.stories.js';
 
 function renderStory(
   StoryUnderTest: Story<EntityEditorStoryProps>,

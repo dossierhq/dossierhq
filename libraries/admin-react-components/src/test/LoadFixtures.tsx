@@ -2,7 +2,7 @@ import type { AdminClient, ErrorType, PromiseResult, Result } from '@jonasb/data
 import { EntityPublishState, notOk, ok } from '@jonasb/datadata-core';
 import React, { useContext, useEffect, useState } from 'react';
 import { DataDataContext2 } from '..';
-import { entitiesFixture } from './EntityFixtures';
+import { entitiesFixture } from './EntityFixtures.js';
 
 interface Props {
   children: React.ReactNode;

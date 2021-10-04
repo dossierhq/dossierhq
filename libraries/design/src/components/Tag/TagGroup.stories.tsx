@@ -1,7 +1,7 @@
-import type { Meta, Story } from '@storybook/react/types-6-0';
+import type { Meta, Story } from '@storybook/react/types-6-0.js';
 import React from 'react';
-import { Tag } from './Tag';
-import type { TagGroupProps } from './Tag';
+import { Tag } from './Tag.js';
+import type { TagGroupProps } from './Tag.js';
 
 const meta: Meta<TagGroupProps> = {
   title: 'Components/Tag.Group',

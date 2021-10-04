@@ -1,11 +1,11 @@
 import type { AdminClient, ErrorType, PromiseResult } from '@jonasb/datadata-core';
 import { ok } from '@jonasb/datadata-core';
-import type { Meta, Story } from '@storybook/react/types-6-0';
+import type { Meta, Story } from '@storybook/react/types-6-0.js';
 import React from 'react';
-import { LoadContextProvider } from '../../test/LoadContextProvider';
-import { createBackendAdminClient, ensureManyBarEntities } from '../../test/TestContextAdapter';
-import type { EntitySearchProps } from './EntitySearch';
-import { EntitySearch } from './EntitySearch';
+import { LoadContextProvider } from '../../test/LoadContextProvider.js';
+import { createBackendAdminClient, ensureManyBarEntities } from '../../test/TestContextAdapter.js';
+import type { EntitySearchProps } from './EntitySearch.js';
+import { EntitySearch } from './EntitySearch.js';
 
 interface EntitySearchStoryProps extends EntitySearchProps {
   adminClient?: () => PromiseResult<AdminClient, ErrorType>;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { joinClassNames } from '../../utils/ClassNameUtils';
+import { joinClassNames } from '../../utils/ClassNameUtils.js';
 
 export interface CheckboxProps {
   id?: string;

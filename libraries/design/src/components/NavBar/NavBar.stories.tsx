@@ -1,7 +1,7 @@
-import type { Meta, Story } from '@storybook/react/types-6-0';
+import type { Meta, Story } from '@storybook/react/types-6-0.js';
 import React from 'react';
-import type { NavBarProps } from './NavBar';
-import { NavBar } from './NavBar';
+import type { NavBarProps } from './NavBar.js';
+import { NavBar } from './NavBar.js';
 
 const meta: Meta<NavBarProps> = {
   title: 'Components/NavBar',

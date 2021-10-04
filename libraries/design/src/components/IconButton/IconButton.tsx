@@ -3,7 +3,7 @@ import React from 'react';
 import { Button } from 'react-bulma-components';
 import type { IconName } from '..';
 import { Icon } from '..';
-import { toClassName } from '../../utils/ClassNameUtils';
+import { toClassName } from '../../utils/ClassNameUtils.js';
 
 export interface IconButtonProps {
   disabled?: boolean;

@@ -17,7 +17,7 @@ import type {
   EntityTypeSelectorState,
   SearchEntityState,
   SearchEntityStateAction,
-} from '../..';
+} from '../../index.js';
 import {
   DataDataContext2,
   EntityTypeSelector,
@@ -28,7 +28,7 @@ import {
   SearchEntityStateActions,
   TypePicker2,
   useSearchEntities,
-} from '../..';
+} from '../../index.js';
 
 export interface EntityListScreenProps {
   header?: React.ReactNode;

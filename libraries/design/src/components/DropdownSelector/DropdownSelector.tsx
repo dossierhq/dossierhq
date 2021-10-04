@@ -7,8 +7,8 @@ import type {
   MultipleSelectorItem,
   MultipleSelectorState,
   MultipleSelectorStateAction,
-} from './MultipleSelectorReducer';
-import { MultipleSelectorStateActions } from './MultipleSelectorReducer';
+} from './MultipleSelectorReducer.js';
+import { MultipleSelectorStateActions } from './MultipleSelectorReducer.js';
 
 export interface DropdownSelectorProps<TItem extends MultipleSelectorItem> {
   iconLeft?: IconName;

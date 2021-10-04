@@ -1,8 +1,8 @@
-import type { Meta, Story } from '@storybook/react/types-6-0';
+import type { Meta, Story } from '@storybook/react/types-6-0.js';
 import type { MouseEvent } from 'react';
 import React, { useState } from 'react';
-import type { TableProps } from './Table';
-import { Table } from './Table';
+import type { TableProps } from './Table.js';
+import { Table } from './Table.js';
 
 type ColumnName = 'one' | 'two' | 'three';
 export interface StoryProps extends TableProps {

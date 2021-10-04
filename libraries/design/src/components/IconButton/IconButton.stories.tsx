@@ -1,7 +1,7 @@
-import type { Meta, Story } from '@storybook/react/types-6-0';
+import type { Meta, Story } from '@storybook/react/types-6-0.js';
 import React from 'react';
-import type { IconButtonProps } from './IconButton';
-import { IconButton } from './IconButton';
+import type { IconButtonProps } from './IconButton.js';
+import { IconButton } from './IconButton.js';
 
 const meta: Meta<IconButtonProps> = {
   title: 'Components/IconButton',

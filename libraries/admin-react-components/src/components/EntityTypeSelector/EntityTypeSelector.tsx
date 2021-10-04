@@ -13,7 +13,7 @@ import {
 } from '@jonasb/datadata-design';
 import type { Dispatch } from 'react';
 import React, { useContext, useEffect } from 'react';
-import { DataDataContext2 } from '../..';
+import { DataDataContext2 } from '../../index.js';
 
 export interface EntityTypeItem extends MultipleSelectorItem {
   name: string;

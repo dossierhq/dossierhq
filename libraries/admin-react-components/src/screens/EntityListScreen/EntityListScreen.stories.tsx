@@ -1,8 +1,8 @@
-import type { Meta, Story } from '@storybook/react/types-6-0';
+import type { Meta, Story } from '@storybook/react/types-6-0.js';
 import React from 'react';
-import { LoadContextProvider } from '../../test/LoadContextProvider';
-import type { EntityListScreenProps } from './EntityListScreen';
-import { EntityListScreen } from './EntityListScreen';
+import { LoadContextProvider } from '../../test/LoadContextProvider.js';
+import type { EntityListScreenProps } from './EntityListScreen.js';
+import { EntityListScreen } from './EntityListScreen.js';
 
 const meta: Meta<EntityListScreenProps> = {
   title: 'Screens/EntityListScreen',

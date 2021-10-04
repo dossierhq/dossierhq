@@ -1,6 +1,6 @@
 import type { ValueItem } from '@jonasb/datadata-core';
 import React, { useCallback, useContext } from 'react';
-import type { EntityFieldEditorProps } from '../..';
+import type { EntityFieldEditorProps } from '../../index.js';
 import {
   DataDataContext,
   EntityFieldEditor,
@@ -9,7 +9,7 @@ import {
   RowItem,
   Segment,
   TypePicker,
-} from '../..';
+} from '../../index.js';
 
 type Props = EntityFieldEditorProps<ValueItem>;
 

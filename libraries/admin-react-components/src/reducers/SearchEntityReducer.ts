@@ -8,7 +8,7 @@ import type {
   Paging,
 } from '@jonasb/datadata-core';
 import { QueryOrder } from '@jonasb/datadata-core';
-import isEqual from 'lodash/isEqual';
+import isEqual from 'lodash/isEqual.js';
 
 const defaultOrder = QueryOrder.name;
 const defaultPagingCount = 25;

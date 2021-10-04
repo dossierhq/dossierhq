@@ -15,11 +15,11 @@ import {
   RowElement,
   Stack,
   Tag,
-} from '../..';
-import type { DropDownItem } from '../..';
-import { joinClassNames } from '../../utils/ClassNameUtils';
-import type { EntityEditorDraftState } from '../EntityEditor/EntityEditorReducer';
-import { PublishingButton } from './PublishingButton';
+} from '../../index.js';
+import type { DropDownItem } from '../../index.js';
+import { joinClassNames } from '../../utils/ClassNameUtils.js';
+import type { EntityEditorDraftState } from '../EntityEditor/EntityEditorReducer.js';
+import { PublishingButton } from './PublishingButton.js';
 
 export interface EntityMetadataProps {
   entityId: string;

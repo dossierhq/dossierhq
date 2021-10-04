@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useKeyHandler } from '../../utils/KeyboardUtils';
+import { useKeyHandler } from '../../utils/KeyboardUtils.js';
 
 interface ModalProps {
   show: boolean;

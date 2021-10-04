@@ -1,7 +1,7 @@
-import type { Meta, Story } from '@storybook/react/types-6-0';
+import type { Meta, Story } from '@storybook/react/types-6-0.js';
 import React from 'react';
-import type { InputProps } from './Input';
-import { Input } from './Input';
+import type { InputProps } from './Input.js';
+import { Input } from './Input.js';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface StoryProps extends InputProps {}

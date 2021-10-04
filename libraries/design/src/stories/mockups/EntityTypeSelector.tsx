@@ -6,12 +6,12 @@ import type {
   MultipleSelectorReducer,
   MultipleSelectorState,
   MultipleSelectorStateAction,
-} from '../..';
+} from '../../index.js';
 import {
   DropdownSelector,
   initializeMultipleSelectorState,
   reduceMultipleSelectorState,
-} from '../..';
+} from '../../index.js';
 
 export interface EntityTypeItem extends MultipleSelectorItem {
   name: string;

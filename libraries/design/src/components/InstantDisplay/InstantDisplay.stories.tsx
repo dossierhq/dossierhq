@@ -1,8 +1,8 @@
 import { Temporal } from '@js-temporal/polyfill';
-import type { Meta, Story } from '@storybook/react/types-6-0';
+import type { Meta, Story } from '@storybook/react/types-6-0.js';
 import React from 'react';
-import type { InstantDisplayProps } from './InstantDisplay';
-import { InstantDisplay } from './InstantDisplay';
+import type { InstantDisplayProps } from './InstantDisplay.js';
+import { InstantDisplay } from './InstantDisplay.js';
 
 type StoryProps = InstantDisplayProps;
 

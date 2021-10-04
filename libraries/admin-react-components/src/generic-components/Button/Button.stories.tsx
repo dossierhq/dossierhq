@@ -1,8 +1,8 @@
-import type { Meta, Story } from '@storybook/react/types-6-0';
+import type { Meta, Story } from '@storybook/react/types-6-0.js';
 import React from 'react';
-import { Button } from './Button';
-import type { ButtonProps } from './Button';
-import { Icon } from '../..';
+import { Button } from './Button.js';
+import type { ButtonProps } from './Button.js';
+import { Icon } from '../../index.js';
 
 const meta: Meta<ButtonProps> = {
   title: 'Generic/Button',

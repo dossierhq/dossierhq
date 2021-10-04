@@ -1,21 +1,25 @@
 import type { AdminClient, ErrorType, PromiseResult } from '@jonasb/datadata-core';
 import { ok } from '@jonasb/datadata-core';
-import type { Meta, Story } from '@storybook/react/types-6-0';
+import type { Meta, Story } from '@storybook/react/types-6-0.js';
 import React, { useContext, useReducer } from 'react';
-import type { EntityEditorSelector } from '../..';
-import { DataDataContext, EntityEditorDispatchContext, EntityEditorStateContext } from '../..';
-import { bar1Id, bar2Id, foo1Id, fooArchivedId } from '../../test/EntityFixtures';
-import { LoadContextProvider } from '../../test/LoadContextProvider';
-import { LoadFixtures } from '../../test/LoadFixtures';
-import { createBackendAdminClient, SlowMiddleware } from '../../test/TestContextAdapter';
-import { EntityLoader } from '../EntityEditor/EntityEditor';
+import type { EntityEditorSelector } from '../../index.js';
+import {
+  DataDataContext,
+  EntityEditorDispatchContext,
+  EntityEditorStateContext,
+} from '../../index.js';
+import { bar1Id, bar2Id, foo1Id, fooArchivedId } from '../../test/EntityFixtures.js';
+import { LoadContextProvider } from '../../test/LoadContextProvider.js';
+import { LoadFixtures } from '../../test/LoadFixtures.js';
+import { createBackendAdminClient, SlowMiddleware } from '../../test/TestContextAdapter.js';
+import { EntityLoader } from '../EntityEditor/EntityEditor.js';
 import {
   AddEntityDraftAction,
   initializeEntityEditorState,
   reduceEntityEditorState,
-} from '../EntityEditor/EntityEditorReducer';
-import type { EntityEditorOverviewProps } from './EntityEditorOverview';
-import { EntityEditorOverview } from './EntityEditorOverview';
+} from '../EntityEditor/EntityEditorReducer.js';
+import type { EntityEditorOverviewProps } from './EntityEditorOverview.js';
+import { EntityEditorOverview } from './EntityEditorOverview.js';
 
 interface StoryProps extends EntityEditorOverviewProps {
   entitySelectors?: EntityEditorSelector[];

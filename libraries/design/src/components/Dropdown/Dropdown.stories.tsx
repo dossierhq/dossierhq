@@ -1,7 +1,7 @@
-import type { Meta, Story } from '@storybook/react/types-6-0';
+import type { Meta, Story } from '@storybook/react/types-6-0.js';
 import React from 'react';
-import type { DropdownProps } from './Dropdown';
-import { Dropdown } from './Dropdown';
+import type { DropdownProps } from './Dropdown.js';
+import { Dropdown } from './Dropdown.js';
 
 interface StoryItem {
   id: string;

@@ -169,6 +169,7 @@ importers:
       '@typescript-eslint/parser': 4.29.2_eslint@7.32.0+typescript@4.4.2
       babel-loader: 8.2.2_@babel+core@7.15.0
       eslint: 7.32.0
+      eslint-plugin-import: 2.24.1_eslint@7.32.0
       eslint-plugin-jest-dom: 3.9.0_eslint@7.32.0
       eslint-plugin-react: 7.24.0_eslint@7.32.0
       eslint-plugin-react-hooks: 4.2.0_eslint@7.32.0
@@ -212,6 +213,7 @@ importers:
       '@typescript-eslint/parser': ^4.29.1
       babel-loader: ^8.2.2
       eslint: ^7.32.0
+      eslint-plugin-import: ~2.24.1
       eslint-plugin-jest-dom: ~3.9.0
       eslint-plugin-react: ~7.24.0
       eslint-plugin-react-hooks: ~4.2.0
@@ -477,8 +479,11 @@ importers:
       babel-loader: 8.2.2_@babel+core@7.15.0
       bulma: 0.9.3
       eslint: 7.32.0
+      eslint-plugin-import: 2.24.1_eslint@7.32.0
+      eslint-plugin-jest-dom: 3.9.0_eslint@7.32.0
       eslint-plugin-react: 7.24.0_eslint@7.32.0
       eslint-plugin-react-hooks: 4.2.0_eslint@7.32.0
+      eslint-plugin-testing-library: 4.11.0_eslint@7.32.0+typescript@4.4.2
       prettier: 2.4.1
       sass: 1.39.2
       sass-loader: 12.1.0_sass@1.39.2
@@ -506,8 +511,11 @@ importers:
       babel-loader: ^8.2.2
       bulma: ~0.9.3
       eslint: ^7.32.0
+      eslint-plugin-import: ~2.24.1
+      eslint-plugin-jest-dom: ~3.9.0
       eslint-plugin-react: ~7.24.0
       eslint-plugin-react-hooks: ~4.2.0
+      eslint-plugin-testing-library: ~4.11.0
       prettier: 2.4.1
       react: ~17.0.2
       react-bulma-components: ~4.0.7
@@ -3257,10 +3265,10 @@ packages:
       react-dom: ^17.0.1
     resolution:
       integrity: sha512-zFxMHgfjCi7khRVB7o7H8NoJl36NaezvfcaeEurVXx22lAGHFlTHiSuLOGA4tOiHj+Ep+Lo3uwUGJ3YM9BGkHg==
-  /@rushstack/eslint-patch/1.0.6:
+  /@rushstack/eslint-patch/1.0.7:
     dev: true
     resolution:
-      integrity: sha512-Myxw//kzromB9yWgS8qYGuGVf91oBUUJpNvy5eM50sqvmKLbKjwLxohJnkWGTeeI9v9IBMtPLxz5Gc60FIfvCA==
+      integrity: sha512-3Zi2LGbCLDz4IIL7ir6wD0u/ggHotLkK5SlVzFzTcYaNgPR4MAt/9JYZqXWKcofPWEoptfpnCJU8Bq9sxw8QUg==
   /@rushstack/eslint-plugin/0.8.0_eslint@7.32.0+typescript@4.4.2:
     dependencies:
       '@rushstack/tree-pattern': 0.2.1
@@ -8706,7 +8714,7 @@ packages:
   /eslint-config-next/11.1.0_1a4cc63bb962be0c1c6a016cd2486bf8:
     dependencies:
       '@next/eslint-plugin-next': 11.1.0
-      '@rushstack/eslint-patch': 1.0.6
+      '@rushstack/eslint-patch': 1.0.7
       '@typescript-eslint/parser': 4.29.2_eslint@7.32.0+typescript@4.4.2
       eslint: 7.32.0
       eslint-import-resolver-node: 0.3.6
@@ -8855,7 +8863,7 @@ packages:
       integrity: sha512-KJJIx2SYx7PBx3ONe/mEeMz4YE0Lcr7feJTCMyyKb/341NcjuAgim3Acgan89GfPv7nxXK2+0slu0CWXYM4x+Q==
   /eslint-plugin-testing-library/4.11.0_eslint@7.32.0+typescript@4.4.2:
     dependencies:
-      '@typescript-eslint/experimental-utils': 4.29.2_eslint@7.32.0+typescript@4.4.2
+      '@typescript-eslint/experimental-utils': 4.31.0_eslint@7.32.0+typescript@4.4.2
       eslint: 7.32.0
     dev: true
     engines:

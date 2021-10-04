@@ -1,6 +1,6 @@
 import React from 'react';
-import { Button, DropDown, Row, RowItem } from '../../';
-import type { ButtonProps, DropDownItem, DropDownProps } from '../..';
+import { Button, DropDown, Row, RowItem } from '../../index.js';
+import type { ButtonProps, DropDownItem, DropDownProps } from '../../index.js';
 
 export interface ButtonWithDropDownProps<TDropDownItem extends DropDownItem = DropDownItem>
   extends ButtonProps {

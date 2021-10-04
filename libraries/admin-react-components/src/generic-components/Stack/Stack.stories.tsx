@@ -1,7 +1,7 @@
-import type { Meta, Story } from '@storybook/react/types-6-0';
+import type { Meta, Story } from '@storybook/react/types-6-0.js';
 import React from 'react';
-import type { StackProps } from './Stack';
-import { Stack } from './Stack';
+import type { StackProps } from './Stack.js';
+import { Stack } from './Stack.js';
 
 const meta: Meta<StackProps> = {
   title: 'Generic/Stack',

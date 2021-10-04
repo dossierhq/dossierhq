@@ -1,11 +1,20 @@
 import type { AdminEntity, AdminQuery } from '@jonasb/datadata-core';
 import React, { useCallback, useReducer, useState } from 'react';
-import { Button, Column, ColumnItem, EntityList, EntityMap, InputText, Row, RowItem } from '../..';
+import {
+  Button,
+  Column,
+  ColumnItem,
+  EntityList,
+  EntityMap,
+  InputText,
+  Row,
+  RowItem,
+} from '../../index.js';
 import {
   initializeAdminQueryState,
   reduceAdminQueryState,
   SetAdminQueryTextAction,
-} from './AdminQueryReducer';
+} from './AdminQueryReducer.js';
 
 export interface EntitySearchProps {
   className?: string;

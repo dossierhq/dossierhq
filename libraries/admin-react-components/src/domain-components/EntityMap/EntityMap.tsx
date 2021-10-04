@@ -1,7 +1,7 @@
 import type { AdminEntity, AdminQuery, BoundingBox, Location, Schema } from '@jonasb/datadata-core';
 import { isLocationItemField, visitItemRecursively } from '@jonasb/datadata-core';
 import React, { useContext, useEffect, useState } from 'react';
-import { DataDataContext, MapContainer, PublishStateTag } from '../..';
+import { DataDataContext, MapContainer, PublishStateTag } from '../../index.js';
 
 export interface EntityMapProps {
   className?: string;

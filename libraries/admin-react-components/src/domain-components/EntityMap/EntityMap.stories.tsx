@@ -1,8 +1,8 @@
-import type { Meta, Story } from '@storybook/react/types-6-0';
+import type { Meta, Story } from '@storybook/react/types-6-0.js';
 import React from 'react';
-import { LoadContextProvider } from '../../test/LoadContextProvider';
-import type { EntityMapProps } from './EntityMap';
-import { EntityMap } from './EntityMap';
+import { LoadContextProvider } from '../../test/LoadContextProvider.js';
+import type { EntityMapProps } from './EntityMap.js';
+import { EntityMap } from './EntityMap.js';
 
 const meta: Meta<EntityMapProps> = {
   title: 'Domain/EntityMap',

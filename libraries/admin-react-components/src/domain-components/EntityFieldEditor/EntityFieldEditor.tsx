@@ -23,7 +23,7 @@ import {
   RichTextFieldEditor,
   StringFieldEditor,
   ValueTypeFieldEditor,
-} from '../..';
+} from '../../index.js';
 
 interface Props {
   idPrefix: string;

@@ -1,7 +1,7 @@
-import type { Meta, Story } from '@storybook/react/types-6-0';
+import type { Meta, Story } from '@storybook/react/types-6-0.js';
 import React, { useState } from 'react';
-import type { CheckboxProps } from './Checkbox';
-import { Checkbox } from './Checkbox';
+import type { CheckboxProps } from './Checkbox.js';
+import { Checkbox } from './Checkbox.js';
 
 const meta: Meta<CheckboxProps> = {
   title: 'Generic/Checkbox',

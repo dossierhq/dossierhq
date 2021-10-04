@@ -1,11 +1,11 @@
 import type { FunctionComponent } from 'react';
 import React from 'react';
 import { Scrollable } from '..';
-import { toClassName } from '../../utils/ClassNameUtils';
-import type { FlexContainerProps } from '../../utils/FlexboxUtils';
-import { toFlexContainerClassName } from '../../utils/FlexboxUtils';
-import type { GapProps, PaddingProps } from '../../utils/LayoutPropsUtils';
-import { toSpacingClassName } from '../../utils/LayoutPropsUtils';
+import { toClassName } from '../../utils/ClassNameUtils.js';
+import type { FlexContainerProps } from '../../utils/FlexboxUtils.js';
+import { toFlexContainerClassName } from '../../utils/FlexboxUtils.js';
+import type { GapProps, PaddingProps } from '../../utils/LayoutPropsUtils.js';
+import { toSpacingClassName } from '../../utils/LayoutPropsUtils.js';
 
 export interface FullscreenContainerProps {
   children: React.ReactNode;

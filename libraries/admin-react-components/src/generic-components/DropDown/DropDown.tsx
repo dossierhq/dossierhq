@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
-import { Button, Icon, IconButton } from '../..';
-import { useKeyHandler } from '../../utils/KeyboardUtils';
-import { useWindowClick } from '../../utils/MouseUtils';
+import { Button, Icon, IconButton } from '../../index.js';
+import { useKeyHandler } from '../../utils/KeyboardUtils.js';
+import { useWindowClick } from '../../utils/MouseUtils.js';
 
 export interface DropDownProps<TItem extends DropDownItem = DropDownItem> {
   id: string;
