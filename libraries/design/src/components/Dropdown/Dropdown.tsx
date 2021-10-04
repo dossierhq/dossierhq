@@ -1,10 +1,8 @@
-import React from 'react';
-import { Dropdown as BulmaDropdown } from 'react-bulma-components';
+import React, { useState } from 'react';
 import type { IconName } from '../index.js';
-import { Icon } from '../index.js';
+import { Button, DropdownDisplay } from '../index.js';
 
 export interface DropdownProps<TItem extends DropdownItem = DropdownItem> {
-  id?: string;
   iconLeft?: IconName;
   left?: boolean;
   up?: boolean;
@@ -20,7 +18,6 @@ export interface DropdownItem {
 }
 
 export function Dropdown<TItem extends DropdownItem>({
-  id,
   iconLeft,
   left,
   up,
@@ -31,40 +28,29 @@ export function Dropdown<TItem extends DropdownItem>({
   children,
 }: DropdownProps<TItem>): JSX.Element {
   //TODO close on escape
-  const handleChange = onItemClick
-    ? (value: string) => {
-        const item = items.find((it) => it.id === value);
-        if (item) onItemClick(item);
-      }
-    : undefined;
-
-  const label =
-    iconLeft && children ? (
-      <>
-        <Icon icon={iconLeft} />
-        <span>{children}</span>
-      </>
-    ) : iconLeft ? (
-      <Icon icon={iconLeft} />
-    ) : (
-      children
-    );
+  const [active, setActive] = useState(false);
 
   return (
-    <BulmaDropdown
-      id={id}
-      label={label}
-      right={left}
+    <DropdownDisplay
+      active={active}
       up={up}
-      icon={<Icon icon={up ? 'chevronUp' : 'chevronDown'} />}
-      disabled={disabled}
-      onChange={handleChange}
+      left={left}
+      trigger={
+        <Button
+          iconLeft={iconLeft}
+          iconRight={up ? 'chevronUp' : 'chevronDown'}
+          disabled={disabled}
+          onClick={() => setActive((it) => !it)}
+        >
+          {children}
+        </Button>
+      }
     >
       {items.map((item) => (
-        <BulmaDropdown.Item key={item.id} value={item.id} renderAs="a">
+        <DropdownDisplay.Item key={item.id} onClick={() => onItemClick?.(item)}>
           {renderItem(item)}
-        </BulmaDropdown.Item>
+        </DropdownDisplay.Item>
       ))}
-    </BulmaDropdown>
+    </DropdownDisplay>
   );
 }
