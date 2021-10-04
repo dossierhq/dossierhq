@@ -1,7 +1,7 @@
 import type { FunctionComponent, MouseEventHandler } from 'react';
 import React from 'react';
 import { Table as BulmaTable } from 'react-bulma-components';
-import { Icon } from '..';
+import { Icon } from '../index.js';
 import { toClassName } from '../../utils/ClassNameUtils.js';
 
 export interface TableProps {

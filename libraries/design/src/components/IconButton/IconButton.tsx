@@ -1,8 +1,8 @@
 import type { FunctionComponent, MouseEventHandler } from 'react';
 import React from 'react';
 import { Button } from 'react-bulma-components';
-import type { IconName } from '..';
-import { Icon } from '..';
+import type { IconName } from '../index.js';
+import { Icon } from '../index.js';
 import { toClassName } from '../../utils/ClassNameUtils.js';
 
 export interface IconButtonProps {

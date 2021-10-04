@@ -1,6 +1,6 @@
 import React from 'react';
-import type { IconName } from '..';
-import { Icon } from '..';
+import type { IconName } from '../index.js';
+import { Icon } from '../index.js';
 import { toClassName } from '../../utils/ClassNameUtils.js';
 
 export interface InputProps {

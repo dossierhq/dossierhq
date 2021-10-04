@@ -1,8 +1,8 @@
 import type { Dispatch, ReactNode } from 'react';
 import React from 'react';
 import { Dropdown } from 'react-bulma-components';
-import type { IconName } from '..';
-import { Badge, Icon } from '..';
+import type { IconName } from '../index.js';
+import { Badge, Icon } from '../index.js';
 import type {
   MultipleSelectorItem,
   MultipleSelectorState,
