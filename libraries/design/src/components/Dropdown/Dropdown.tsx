@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
+import { useKeyHandler } from '../../hooks/useKeyHandler.js';
 import type { IconName } from '../index.js';
 import { Button, DropdownDisplay } from '../index.js';
 
@@ -27,8 +28,9 @@ export function Dropdown<TItem extends DropdownItem>({
   onItemClick,
   children,
 }: DropdownProps<TItem>): JSX.Element {
-  //TODO close on escape
   const [active, setActive] = useState(false);
+  const handleClose = useCallback(() => setActive(false), [setActive]);
+  useKeyHandler(['Escape'], handleClose, active);
 
   return (
     <DropdownDisplay
