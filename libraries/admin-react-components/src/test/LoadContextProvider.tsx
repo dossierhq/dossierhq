@@ -3,7 +3,7 @@ import { ok } from '@jonasb/datadata-core';
 import React, { useEffect, useState } from 'react';
 import type { DataDataContextAdapter } from '..';
 import { DataDataProvider } from '..';
-import { createBackendAdminClient, TestContextAdapter } from './TestContextAdapter';
+import { createBackendAdminClient, TestContextAdapter } from './TestContextAdapter.js';
 
 interface Props {
   adapter?: DataDataContextAdapter;

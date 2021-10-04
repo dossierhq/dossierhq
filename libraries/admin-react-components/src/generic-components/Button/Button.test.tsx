@@ -1,10 +1,10 @@
-import type { Story } from '@storybook/react/types-6-0';
+import type { Story } from '@storybook/react/types-6-0.js';
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import * as React from 'react';
-import type { ButtonProps } from './Button';
-import { default as Default, Normal, Disabled, SubmitLoading } from './Button.stories';
+import type { ButtonProps } from './Button.js';
+import { default as Default, Normal, Disabled, SubmitLoading } from './Button.stories.js';
 
 function renderStory(StoryUnderTest: Story<ButtonProps>, overrideArgs?: Partial<ButtonProps>) {
   const args = { ...Default.args, ...StoryUnderTest.args, ...overrideArgs } as ButtonProps;

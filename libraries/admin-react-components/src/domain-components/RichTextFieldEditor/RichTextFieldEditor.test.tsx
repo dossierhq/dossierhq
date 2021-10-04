@@ -1,9 +1,9 @@
-import type { Story } from '@storybook/react/types-6-0';
+import type { Story } from '@storybook/react/types-6-0.js';
 import '@testing-library/jest-dom';
 import { act, render } from '@testing-library/react';
 import React from 'react';
-import type { RichTextFieldEditorStoryProps } from './RichTextFieldEditor.stories';
-import { default as StoryMeta, Normal } from './RichTextFieldEditor.stories';
+import type { RichTextFieldEditorStoryProps } from './RichTextFieldEditor.stories.js';
+import { default as StoryMeta, Normal } from './RichTextFieldEditor.stories.js';
 
 function renderStory(
   StoryUnderTest: Story<RichTextFieldEditorStoryProps>,

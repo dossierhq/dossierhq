@@ -1,7 +1,7 @@
 import type { FunctionComponent } from 'react';
 import React from 'react';
 import { Navbar as BulmaNavBar } from 'react-bulma-components';
-import { toClassName } from '../../utils/ClassNameUtils';
+import { toClassName } from '../../utils/ClassNameUtils.js';
 
 export interface NavBarProps {
   children: React.ReactNode;

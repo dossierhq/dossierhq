@@ -1,7 +1,8 @@
-import { assertIsDefined } from '@jonasb/datadata-core';
 import type { AdminEntityCreate, AdminEntityUpdate } from '@jonasb/datadata-core';
+import { assertIsDefined } from '@jonasb/datadata-core';
 import type { Dispatch, SetStateAction } from 'react';
 import React, { useContext, useEffect, useState } from 'react';
+import type { DataDataContextValue, MessageItem } from '../../index.js';
 import {
   Button,
   ColumnAs,
@@ -16,9 +17,8 @@ import {
   Loader,
   Message,
   Row,
-} from '../..';
-import type { DataDataContextValue, MessageItem } from '../..';
-import type { EntityEditorDraftState, EntityEditorStateAction } from './EntityEditorReducer';
+} from '../../index.js';
+import type { EntityEditorDraftState, EntityEditorStateAction } from './EntityEditorReducer.js';
 import {
   EntityUpsertedAction,
   ResetEntityAction,
@@ -26,7 +26,7 @@ import {
   SetMessageLoadMessageAction,
   SetNameAction,
   UpdateEntityAction,
-} from './EntityEditorReducer';
+} from './EntityEditorReducer.js';
 
 export interface EntityEditorProps {
   entityId: string;

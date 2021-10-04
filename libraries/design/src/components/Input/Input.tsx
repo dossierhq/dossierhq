@@ -1,7 +1,7 @@
 import React from 'react';
 import type { IconName } from '..';
 import { Icon } from '..';
-import { toClassName } from '../../utils/ClassNameUtils';
+import { toClassName } from '../../utils/ClassNameUtils.js';
 
 export interface InputProps {
   iconLeft?: IconName;

@@ -1,4 +1,4 @@
-import { toClassName } from './ClassNameUtils';
+import { toClassName } from './ClassNameUtils.js';
 
 type SpacingValue = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 

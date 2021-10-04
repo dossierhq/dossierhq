@@ -1,7 +1,7 @@
-import type { Meta, Story } from '@storybook/react/types-6-0';
+import type { Meta, Story } from '@storybook/react/types-6-0.js';
 import React from 'react';
-import type { LoaderProps } from './Loader';
-import { Loader } from './Loader';
+import type { LoaderProps } from './Loader.js';
+import { Loader } from './Loader.js';
 
 const meta: Meta<LoaderProps> = {
   title: 'Generic/Loader',

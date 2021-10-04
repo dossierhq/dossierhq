@@ -1,4 +1,4 @@
-import type { Meta, Story } from '@storybook/react/types-6-0';
+import type { Meta, Story } from '@storybook/react/types-6-0.js';
 import type { MouseEvent } from 'react';
 import React, { useReducer } from 'react';
 import {
@@ -12,20 +12,20 @@ import {
   Table,
   Tag,
   TagSelector,
-} from '../..';
-import type { EntityTypeSelectorDispatch, EntityTypeSelectorState } from './EntityTypeSelector';
+} from '../../index.js';
+import type { EntityTypeSelectorDispatch, EntityTypeSelectorState } from './EntityTypeSelector.js';
 import {
   EntityTypeSelector,
   initializeEntityTypeSelectorState,
   reduceEntityTypeSelectorState,
-} from './EntityTypeSelector';
+} from './EntityTypeSelector.js';
 import type {
   StatusSelectorDispatch,
   StatusSelectorInitArgs,
   StatusSelectorReducer,
   StatusSelectorState,
-} from './StatusSelector';
-import { initializeStatusSelectorState, StatusSelector } from './StatusSelector';
+} from './StatusSelector.js';
+import { initializeStatusSelectorState, StatusSelector } from './StatusSelector.js';
 
 interface ScreenProps {
   entityCount: number;

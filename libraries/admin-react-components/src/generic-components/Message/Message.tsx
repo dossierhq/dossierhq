@@ -1,7 +1,7 @@
 import React from 'react';
-import type { Kind } from '../..';
-import { kindToClassName } from '../../utils/KindUtils';
-import { IconButton, Stack } from '../..';
+import type { Kind } from '../../index.js';
+import { IconButton, Stack } from '../../index.js';
+import { kindToClassName } from '../../utils/KindUtils.js';
 
 export interface MessageItem {
   kind?: Kind;

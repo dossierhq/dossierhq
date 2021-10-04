@@ -1,4 +1,4 @@
-import { toClassName } from './ClassNameUtils';
+import { toClassName } from './ClassNameUtils.js';
 
 export interface FlexContainerProps {
   flexDirection?: 'column' | 'row';

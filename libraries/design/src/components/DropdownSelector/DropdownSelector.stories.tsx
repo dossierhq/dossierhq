@@ -1,15 +1,15 @@
-import type { Meta, Story } from '@storybook/react/types-6-0';
+import type { Meta, Story } from '@storybook/react/types-6-0.js';
 import React, { useReducer } from 'react';
-import type { DropdownSelectorProps } from './DropdownSelector';
-import { DropdownSelector } from './DropdownSelector';
+import type { DropdownSelectorProps } from './DropdownSelector.js';
+import { DropdownSelector } from './DropdownSelector.js';
 import type {
   MultipleSelectorReducer,
   MultipleSelectorStateInitializerArgs,
-} from './MultipleSelectorReducer';
+} from './MultipleSelectorReducer.js';
 import {
   initializeMultipleSelectorState,
   reduceMultipleSelectorState,
-} from './MultipleSelectorReducer';
+} from './MultipleSelectorReducer.js';
 
 interface StoryItem {
   id: string;

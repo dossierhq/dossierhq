@@ -1,8 +1,8 @@
 import type { EntityPublishPayload, ErrorType, PromiseResult } from '@jonasb/datadata-core';
 import { EntityPublishState } from '@jonasb/datadata-core';
 import React, { useContext, useState } from 'react';
-import type { DataDataContextValue } from '../..';
-import { ButtonWithDropDown, DataDataContext } from '../..';
+import type { DataDataContextValue } from '../../index.js';
+import { ButtonWithDropDown, DataDataContext } from '../../index.js';
 
 interface PublishAction {
   name: string;

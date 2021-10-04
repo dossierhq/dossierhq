@@ -1,5 +1,4 @@
-import { useContext } from 'react';
-import React, { useCallback } from 'react';
+import React, { useCallback, useContext } from 'react';
 import {
   AddEntityDraftAction,
   Button,
@@ -8,7 +7,7 @@ import {
   EntityEditorStateContext,
   SetActiveEntityAction,
   TypePicker,
-} from '../..';
+} from '../../index.js';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface EntityEditorOverviewProps {}

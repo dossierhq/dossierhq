@@ -1,7 +1,7 @@
-import type { Meta, Story } from '@storybook/react/types-6-0';
+import type { Meta, Story } from '@storybook/react/types-6-0.js';
 import React, { useState } from 'react';
-import { InputText } from './InputText';
-import type { InputTextProps } from './InputText';
+import { InputText } from './InputText.js';
+import type { InputTextProps } from './InputText.js';
 
 const meta: Meta<InputTextProps> = {
   title: 'Generic/InputText',

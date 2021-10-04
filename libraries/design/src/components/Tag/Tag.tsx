@@ -1,8 +1,8 @@
 import type { FunctionComponent, MouseEventHandler, ReactElement } from 'react';
 import React from 'react';
 import { Tag as BulmaTag } from 'react-bulma-components';
-import type { StatusColor } from '../..';
-import { resolveBulmaColor } from '../../config/Colors';
+import type { StatusColor } from '../../index.js';
+import { resolveBulmaColor } from '../../config/Colors.js';
 
 export interface TagProps {
   color?: keyof typeof StatusColor;

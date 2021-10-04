@@ -7,8 +7,8 @@ import type {
   MultipleSelectorState,
   MultipleSelectorStateAction,
   StatusColor,
-} from '../..';
-import { DropdownSelector, initializeMultipleSelectorState, Tag } from '../..';
+} from '../../index.js';
+import { DropdownSelector, initializeMultipleSelectorState, Tag } from '../../index.js';
 
 export interface StatusItem extends MultipleSelectorItem {
   name: string;

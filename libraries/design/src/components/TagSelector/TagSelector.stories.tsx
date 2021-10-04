@@ -1,9 +1,9 @@
-import type { Meta, Story } from '@storybook/react/types-6-0';
+import type { Meta, Story } from '@storybook/react/types-6-0.js';
 import React, { useReducer } from 'react';
 import type { MultipleSelectorReducer, MultipleSelectorStateInitializerArgs, TagProps } from '..';
 import { initializeMultipleSelectorState, reduceMultipleSelectorState } from '..';
-import type { TagSelectorProps } from './TagSelector';
-import { TagSelector } from './TagSelector';
+import type { TagSelectorProps } from './TagSelector.js';
+import { TagSelector } from './TagSelector.js';
 
 interface StoryItem {
   id: string;

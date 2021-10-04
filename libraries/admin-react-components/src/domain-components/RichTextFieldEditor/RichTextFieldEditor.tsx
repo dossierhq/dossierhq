@@ -3,18 +3,18 @@ import { RichTextBlockType } from '@jonasb/datadata-core';
 import type { LogLevels, ToolSettings } from '@editorjs/editorjs';
 import EditorJS from '@editorjs/editorjs';
 import React, { useContext, useEffect, useReducer, useState } from 'react';
-import type { DataDataContextValue, EntityFieldEditorProps } from '../..';
-import { DataDataContext, IconButton, Row, RowItem } from '../..';
-import type { EntityToolConfig } from './EntityTool';
-import { createEntityToolFactory } from './EntityTool';
+import type { DataDataContextValue, EntityFieldEditorProps } from '../../index.js';
+import { DataDataContext, IconButton, Row, RowItem } from '../../index.js';
+import type { EntityToolConfig } from './EntityTool.js';
+import { createEntityToolFactory } from './EntityTool.js';
 import {
   initializeRichTextState,
   reduceRichTextState,
   SetDataAction,
   SetInitializedAction,
-} from './RichTextFieldReducer';
-import type { ValueItemToolConfig } from './ValueItemTool';
-import { createValueItemToolFactory } from './ValueItemTool';
+} from './RichTextFieldReducer.js';
+import type { ValueItemToolConfig } from './ValueItemTool.js';
+import { createValueItemToolFactory } from './ValueItemTool.js';
 
 export type RichTextFieldEditorProps = EntityFieldEditorProps<RichText>;
 

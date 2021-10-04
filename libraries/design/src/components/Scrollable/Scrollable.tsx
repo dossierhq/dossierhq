@@ -1,6 +1,6 @@
 import React from 'react';
-import { useIsClippedObserver } from '../../hooks/useIsClippedObserver';
-import { toClassName } from '../../utils/ClassNameUtils';
+import { useIsClippedObserver } from '../../hooks/useIsClippedObserver.js';
+import { toClassName } from '../../utils/ClassNameUtils.js';
 
 export interface ScrollableProps {
   className?: string;

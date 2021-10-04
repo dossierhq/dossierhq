@@ -1,7 +1,7 @@
-import type { Meta, Story } from '@storybook/react/types-6-0';
+import type { Meta, Story } from '@storybook/react/types-6-0.js';
 import React from 'react';
-import type { MessageProps } from './Message';
-import { Message } from './Message';
+import type { MessageProps } from './Message.js';
+import { Message } from './Message.js';
 
 const meta: Meta<MessageProps> = {
   title: 'Generic/Message',

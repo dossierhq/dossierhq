@@ -7,9 +7,9 @@ import type {
 } from '@editorjs/editorjs';
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import type { DataDataContextValue } from '../..';
-import { DataDataContext, EntityItemFieldEditor } from '../..';
-import icons from '../../icons';
+import type { DataDataContextValue } from '../../index.js';
+import { DataDataContext, EntityItemFieldEditor } from '../../index.js';
+import icons from '../../icons.js';
 
 export interface EntityToolConfig {
   id: string;

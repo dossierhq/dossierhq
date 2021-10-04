@@ -1,11 +1,11 @@
-import type { Meta, Story } from '@storybook/react/types-6-0';
+import type { Meta, Story } from '@storybook/react/types-6-0.js';
 import React from 'react';
-import schema from '../../stories/StoryboardSchema';
-import { bar2Id } from '../../test/EntityFixtures';
-import { LoadContextProvider } from '../../test/LoadContextProvider';
-import { LoadFixtures } from '../../test/LoadFixtures';
-import type { EntityItemFieldEditorProps } from './EntityItemFieldEditor';
-import { EntityItemFieldEditor } from './EntityItemFieldEditor';
+import schema from '../../stories/StoryboardSchema.js';
+import { bar2Id } from '../../test/EntityFixtures.js';
+import { LoadContextProvider } from '../../test/LoadContextProvider.js';
+import { LoadFixtures } from '../../test/LoadFixtures.js';
+import type { EntityItemFieldEditorProps } from './EntityItemFieldEditor.js';
+import { EntityItemFieldEditor } from './EntityItemFieldEditor.js';
 
 const meta: Meta<EntityItemFieldEditorProps> = {
   title: 'Domain/EntityItemFieldEditor',

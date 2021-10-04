@@ -1,8 +1,8 @@
-import type { Meta, Story } from '@storybook/react/types-6-0';
+import type { Meta, Story } from '@storybook/react/types-6-0.js';
 import React from 'react';
-import { LoadContextProvider } from '../../test/LoadContextProvider';
-import type { TypePicker2Props } from './TypePicker2';
-import { TypePicker2 } from './TypePicker2';
+import { LoadContextProvider } from '../../test/LoadContextProvider.js';
+import type { TypePicker2Props } from './TypePicker2.js';
+import { TypePicker2 } from './TypePicker2.js';
 
 const meta: Meta<TypePicker2Props> = {
   title: 'Components/TypePicker2',

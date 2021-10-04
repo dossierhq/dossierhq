@@ -2,7 +2,7 @@ import type { EntityTypeSpecification, ValueTypeSpecification } from '@jonasb/da
 import type { IconName } from '@jonasb/datadata-design';
 import { Dropdown } from '@jonasb/datadata-design';
 import React, { useContext } from 'react';
-import { DataDataContext2 } from '../..';
+import { DataDataContext2 } from '../../index.js';
 
 export interface TypePicker2Props {
   iconLeft?: IconName;

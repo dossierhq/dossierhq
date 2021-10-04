@@ -1,8 +1,8 @@
-import type { Meta, Story } from '@storybook/react/types-6-0';
+import type { Meta, Story } from '@storybook/react/types-6-0.js';
 import React from 'react';
 import { Input } from '..';
-import type { FieldProps } from './Field';
-import { Field } from './Field';
+import type { FieldProps } from './Field.js';
+import { Field } from './Field.js';
 
 const meta: Meta<FieldProps> = {
   title: 'Components/Field',
