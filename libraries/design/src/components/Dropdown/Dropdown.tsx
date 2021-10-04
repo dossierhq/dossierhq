@@ -1,5 +1,6 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { useKeyHandler } from '../../hooks/useKeyHandler.js';
+import { useWindowClick } from '../../hooks/useWindowClick.js';
 import type { IconName } from '../index.js';
 import { Button, DropdownDisplay } from '../index.js';
 
@@ -30,6 +31,8 @@ export function Dropdown<TItem extends DropdownItem>({
 }: DropdownProps<TItem>): JSX.Element {
   const [active, setActive] = useState(false);
   const handleClose = useCallback(() => setActive(false), [setActive]);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  useWindowClick(triggerRef, handleClose, active);
   useKeyHandler(['Escape'], handleClose, active);
 
   return (
@@ -39,6 +42,7 @@ export function Dropdown<TItem extends DropdownItem>({
       left={left}
       trigger={
         <Button
+          ref={triggerRef}
           iconLeft={iconLeft}
           iconRight={up ? 'chevronUp' : 'chevronDown'}
           disabled={disabled}
