@@ -5,8 +5,8 @@ import type {
   MultipleSelectorState,
   MultipleSelectorStateAction,
   TagProps,
-} from '..';
-import { MultipleSelectorStateActions, Tag } from '..';
+} from '../index.js';
+import { MultipleSelectorStateActions, Tag } from '../index.js';
 
 export interface TagSelectorProps<TItem extends MultipleSelectorItem> {
   clearLabel: string;

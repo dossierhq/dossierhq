@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-design",
+      "comment": "Fix imports'",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-design",
+  "email": "jonas.b@gmail.com"
+}

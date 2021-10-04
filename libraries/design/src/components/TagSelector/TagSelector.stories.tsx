@@ -1,7 +1,11 @@
 import type { Meta, Story } from '@storybook/react/types-6-0.js';
 import React, { useReducer } from 'react';
-import type { MultipleSelectorReducer, MultipleSelectorStateInitializerArgs, TagProps } from '..';
-import { initializeMultipleSelectorState, reduceMultipleSelectorState } from '..';
+import type {
+  MultipleSelectorReducer,
+  MultipleSelectorStateInitializerArgs,
+  TagProps,
+} from '../index.js';
+import { initializeMultipleSelectorState, reduceMultipleSelectorState } from '../index.js';
 import type { TagSelectorProps } from './TagSelector.js';
 import { TagSelector } from './TagSelector.js';
 

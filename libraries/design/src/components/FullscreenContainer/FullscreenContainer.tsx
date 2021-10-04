@@ -1,6 +1,6 @@
 import type { FunctionComponent } from 'react';
 import React from 'react';
-import { Scrollable } from '..';
+import { Scrollable } from '../index.js';
 import { toClassName } from '../../utils/ClassNameUtils.js';
 import type { FlexContainerProps } from '../../utils/FlexboxUtils.js';
 import { toFlexContainerClassName } from '../../utils/FlexboxUtils.js';
