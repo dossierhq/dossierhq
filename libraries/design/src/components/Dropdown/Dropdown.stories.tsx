@@ -37,6 +37,9 @@ Normal.args = {};
 export const Disabled = Template.bind({});
 Disabled.args = { disabled: true };
 
+export const ActiveItem = Template.bind({});
+ActiveItem.args = { activeItemId: 'two' };
+
 export const IconOnly = Template.bind({});
 IconOnly.args = {
   iconLeft: 'add',
