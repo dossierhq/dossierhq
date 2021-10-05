@@ -68,3 +68,10 @@ th {
   bottom: -1px;
   z-index: 2;
 }
+
+.buttons.no-bottom-margin {
+  margin-bottom: 0 !important;
+  .button {
+    margin-bottom: 0 !important;
+  }
+}

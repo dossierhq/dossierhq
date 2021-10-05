@@ -12,6 +12,7 @@ export interface IconButtonProps {
 
 export interface IconButtonGroupProps {
   condensed?: boolean;
+  skipBottomMargin?: boolean;
   children: React.ReactNode;
 }
 
@@ -28,8 +29,12 @@ export const IconButton: IconButtonComponent = ({ disabled, icon, onClick }: Ico
 };
 IconButton.displayName = 'IconButton';
 
-IconButton.Group = ({ condensed, children }: IconButtonGroupProps) => {
-  const className = toClassName('buttons', condensed && 'has-addons');
+IconButton.Group = ({ condensed, skipBottomMargin, children }: IconButtonGroupProps) => {
+  const className = toClassName(
+    'buttons',
+    condensed && 'has-addons',
+    skipBottomMargin && 'no-bottom-margin'
+  );
   return <div className={className}>{children}</div>;
 };
 IconButton.Group.displayName = 'IconButton.Group';
