@@ -13,8 +13,9 @@ export function useWindowClick(
       if (enabled === false) {
         return;
       }
-      if (event.target instanceof HTMLElement) {
-        if (findAscendantElement(event.target, (it) => it === ignoreRef.current)) {
+      const ignoreElement = ignoreRef.current;
+      if (ignoreElement && event.target instanceof HTMLElement) {
+        if (findAscendantElement(event.target, (it) => it === ignoreElement)) {
           return;
         }
       }
