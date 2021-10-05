@@ -14,6 +14,7 @@ export interface DropdownSelectorProps<TItem extends MultipleSelectorItem> {
   iconLeft?: IconName;
   left?: boolean;
   up?: boolean;
+  sneaky?: boolean;
   renderItem: (item: TItem) => ReactNode;
   state: MultipleSelectorState<TItem>;
   dispatch: Dispatch<MultipleSelectorStateAction<TItem>>;
@@ -31,6 +32,7 @@ export function DropdownSelector<TItem extends MultipleSelectorItem>({
   iconLeft,
   left,
   up,
+  sneaky,
   renderItem,
   state,
   dispatch,
@@ -51,7 +53,8 @@ export function DropdownSelector<TItem extends MultipleSelectorItem>({
         <Button
           ref={triggerRef}
           iconLeft={iconLeft}
-          iconRight={up ? 'chevronUp' : 'chevronDown'}
+          iconRight={sneaky ? undefined : up ? 'chevronUp' : 'chevronDown'}
+          light={sneaky}
           onClick={(event) => {
             event.preventDefault();
             setActive((it) => !it);

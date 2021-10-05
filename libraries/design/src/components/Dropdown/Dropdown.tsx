@@ -10,6 +10,7 @@ export interface DropdownProps<TItem extends DropdownItem = DropdownItem> {
   up?: boolean;
   items: TItem[];
   disabled?: boolean;
+  sneaky?: boolean;
   renderItem: (item: TItem) => React.ReactNode;
   onItemClick?: (item: TItem) => void;
   children?: React.ReactNode;
@@ -24,6 +25,7 @@ export function Dropdown<TItem extends DropdownItem>({
   left,
   up,
   items,
+  sneaky,
   disabled,
   renderItem,
   onItemClick,
@@ -44,7 +46,8 @@ export function Dropdown<TItem extends DropdownItem>({
         <Button
           ref={triggerRef}
           iconLeft={iconLeft}
-          iconRight={up ? 'chevronUp' : 'chevronDown'}
+          iconRight={sneaky ? undefined : up ? 'chevronUp' : 'chevronDown'}
+          light={sneaky}
           disabled={disabled}
           onClick={(event) => {
             event.preventDefault();
