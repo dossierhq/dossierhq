@@ -34,3 +34,6 @@ WithBadge.args = {
     </>
   ),
 };
+
+export const Light = Template.bind({});
+Light.args = { light: true };
