@@ -21,7 +21,7 @@ export function Modal({ show, size, onClose, children }: ModalProps): JSX.Elemen
     return null;
   }
 
-  const sizeClassName = size === 'large' ? 'is-large' : '';
+  const sizeClassName = size === 'large' ? 'dd-is-large' : '';
 
   return (
     <div className="dd-modal" role="dialog">
