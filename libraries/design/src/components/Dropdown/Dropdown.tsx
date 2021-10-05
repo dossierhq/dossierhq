@@ -9,6 +9,7 @@ export interface DropdownProps<TItem extends DropdownItem = DropdownItem> {
   left?: boolean;
   up?: boolean;
   items: TItem[];
+  activeItemId?: string;
   disabled?: boolean;
   sneaky?: boolean;
   renderItem: (item: TItem) => React.ReactNode;
@@ -25,6 +26,7 @@ export function Dropdown<TItem extends DropdownItem>({
   left,
   up,
   items,
+  activeItemId,
   sneaky,
   disabled,
   renderItem,
@@ -59,7 +61,11 @@ export function Dropdown<TItem extends DropdownItem>({
       }
     >
       {items.map((item) => (
-        <DropdownDisplay.Item key={item.id} onClick={() => onItemClick?.(item)}>
+        <DropdownDisplay.Item
+          key={item.id}
+          active={item.id === activeItemId}
+          onClick={() => onItemClick?.(item)}
+        >
           {renderItem(item)}
         </DropdownDisplay.Item>
       ))}

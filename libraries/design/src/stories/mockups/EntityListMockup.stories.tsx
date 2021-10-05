@@ -106,8 +106,8 @@ function Screen({
         alignItems="center"
       >
         <IconButton.Group condensed skipBottomMargin>
-          <IconButton icon="first" />
-          <IconButton icon="previous" />
+          <IconButton icon="first" disabled />
+          <IconButton icon="previous" disabled />
           <IconButton icon="next" />
           <IconButton icon="last" />
         </IconButton.Group>
@@ -115,6 +115,7 @@ function Screen({
           up
           sneaky
           items={[{ id: '25' }, { id: '50' }, { id: '100' }]}
+          activeItemId="25"
           renderItem={(it) => it.id}
         >
           1&thinsp;–&thinsp;25 of 240
