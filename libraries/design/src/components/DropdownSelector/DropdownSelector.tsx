@@ -52,7 +52,10 @@ export function DropdownSelector<TItem extends MultipleSelectorItem>({
           ref={triggerRef}
           iconLeft={iconLeft}
           iconRight={up ? 'chevronUp' : 'chevronDown'}
-          onClick={() => setActive((it) => !it)}
+          onClick={(event) => {
+            event.preventDefault();
+            setActive((it) => !it);
+          }}
         >
           {children}
           {state.selectedIds.length > 0 ? <Badge>{state.selectedIds.length}</Badge> : null}
