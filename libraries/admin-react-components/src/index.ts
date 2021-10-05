@@ -86,6 +86,7 @@ export { Stack } from './generic-components/Stack/Stack.js';
 export { Tag } from './generic-components/Tag/Tag.js';
 export { useSchema } from './hooks/useSchema.js';
 export { useSearchEntities } from './hooks/useSearchEntities.js';
+export { useTotalCount } from './hooks/useTotalCount.js';
 export {
   initializeSearchEntityState,
   reduceSearchEntityState,

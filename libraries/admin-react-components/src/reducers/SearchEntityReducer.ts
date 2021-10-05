@@ -7,7 +7,7 @@ import type {
   ErrorType,
   Paging,
 } from '@jonasb/datadata-core';
-import { QueryOrder } from '@jonasb/datadata-core';
+import { getPagingInfo, QueryOrder } from '@jonasb/datadata-core';
 import isEqual from 'lodash/isEqual.js';
 
 const defaultOrder = QueryOrder.name;
@@ -21,6 +21,7 @@ export interface SearchEntityState {
 
   connection: Connection<Edge<AdminEntity, ErrorType>> | null | undefined;
   connectionError: ErrorResult<unknown, ErrorType.BadRequest | ErrorType.Generic> | undefined;
+  totalCount: number | null;
 }
 
 export interface SearchEntityStateAction {
@@ -37,6 +38,7 @@ export function initializeSearchEntityState(
     text: initialQuery?.text ?? '',
     connection: undefined,
     connectionError: undefined,
+    totalCount: null,
   };
   // Normalize query state
   state = new SetQueryAction(initialQuery ?? {}).reduce(state);
@@ -75,7 +77,10 @@ class SetPagingAction implements SearchEntityStateAction {
   }
 
   reduce(state: SearchEntityState): SearchEntityState {
-    return { ...state, paging: this.value };
+    if (isEqual(this.value, state.paging)) return state;
+    const result = getPagingInfo(this.value);
+    if (result.isError()) throw result.toError();
+    return { ...state, paging: this.value, pagingCount: result.value.count || state.pagingCount };
   }
 }
 
@@ -128,9 +133,28 @@ class UpdateResultAction implements SearchEntityStateAction {
   }
 }
 
+class UpdateTotalCountAction implements SearchEntityStateAction {
+  totalCount: number | null;
+
+  constructor(totalCount: number | null) {
+    this.totalCount = totalCount;
+  }
+
+  reduce(state: SearchEntityState): SearchEntityState {
+    if (state.totalCount === this.totalCount) {
+      return state;
+    }
+    return {
+      ...state,
+      totalCount: this.totalCount,
+    };
+  }
+}
+
 export const SearchEntityStateActions = {
   SetText: SetTextAction,
   SetPaging: SetPagingAction,
   SetQuery: SetQueryAction,
   UpdateResult: UpdateResultAction,
+  UpdateTotalCount: UpdateTotalCountAction,
 };

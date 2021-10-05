@@ -1,6 +1,7 @@
 import type { AdminEntity, AdminQuery, EntityPublishState, Paging } from '@jonasb/datadata-core';
 import { QueryOrder } from '@jonasb/datadata-core';
 import {
+  Dropdown,
   Field,
   FullscreenContainer,
   IconButton,
@@ -28,6 +29,7 @@ import {
   SearchEntityStateActions,
   TypePicker2,
   useSearchEntities,
+  useTotalCount,
 } from '../../index.js';
 
 export interface EntityListScreenProps {
@@ -61,16 +63,7 @@ export function EntityListScreen({
     );
   }, [entityTypeFilterState.selectedIds]);
 
-  // useDebugLogChangedValues('EntityList changed props', {
-  //   header,
-  //   footer,
-  //   onCreateEntity,
-  //   onOpenEntity,
-  //   searchEntityState,
-  //   dispatchSearchEntityState,
-  //   entityTypeFilterState,
-  //   dispatchEntityTypeFilter,
-  // });
+  // useDebugLogChangedValues('EntityList changed props', { header, footer, onCreateEntity, onOpenEntity, searchEntityState, dispatchSearchEntityState, entityTypeFilterState, dispatchEntityTypeFilter, });
 
   return (
     <FullscreenContainer>
@@ -98,8 +91,14 @@ export function EntityListScreen({
           />
         </FullscreenContainer.Row>
       </FullscreenContainer.ScrollableRow>
-      <FullscreenContainer.Row center paddingVertical={2}>
+      <FullscreenContainer.Row
+        paddingVertical={2}
+        columnGap={2}
+        flexDirection="row"
+        alignItems="center"
+      >
         <PagingButtons {...{ searchEntityState, dispatchSearchEntityState }} />
+        <PagingCount {...{ searchEntityState, dispatchSearchEntityState }} />
       </FullscreenContainer.Row>
       {footer ? <FullscreenContainer.Row fullWidth>{footer}</FullscreenContainer.Row> : null}
     </FullscreenContainer>
@@ -117,6 +116,7 @@ function SearchLoader({
 }) {
   const { adminClient } = useContext(DataDataContext2);
   const { connection, connectionError } = useSearchEntities(adminClient, query, paging);
+  const { totalCount } = useTotalCount(adminClient, query);
 
   useEffect(() => {
     dispatchSearchEntityState(
@@ -124,14 +124,11 @@ function SearchLoader({
     );
   }, [connection, connectionError, dispatchSearchEntityState]);
 
-  // useDebugLogChangedValues('SearchLoader changed values', {
-  //   query,
-  //   paging,
-  //   dispatchSearchEntityState,
-  //   adminClient,
-  //   connection,
-  //   connectionError,
-  // });
+  useEffect(() => {
+    dispatchSearchEntityState(new SearchEntityStateActions.UpdateTotalCount(totalCount ?? null));
+  }, [totalCount, dispatchSearchEntityState]);
+
+  // useDebugLogChangedValues('SearchLoader changed values', { query, paging, dispatchSearchEntityState, adminClient, connection, connectionError, totalCount, });
 
   return null;
 }
@@ -322,12 +319,45 @@ function PagingButtons({
   }, [connection?.pageInfo.hasNextPage, dispatchSearchEntityState, pagingCount]);
 
   return (
-    <IconButton.Group condensed>
+    <IconButton.Group condensed skipBottomMargin>
       <IconButton icon="first" disabled={!handleStart} onClick={handleStart} />
       <IconButton icon="previous" disabled={!handlePrevious} onClick={handlePrevious} />
       <IconButton icon="next" disabled={!handleNext} onClick={handleNext} />
       <IconButton icon="last" disabled={!handleEnd} onClick={handleEnd} />
     </IconButton.Group>
+  );
+}
+
+function PagingCount({
+  searchEntityState,
+  dispatchSearchEntityState,
+}: {
+  searchEntityState: SearchEntityState;
+  dispatchSearchEntityState: Dispatch<SearchEntityStateAction>;
+}) {
+  const { connection, pagingCount, totalCount } = searchEntityState;
+  const currentPage = `${connection?.edges.length ?? pagingCount} of ${totalCount}`;
+
+  const items = [
+    { id: '25', count: 25 },
+    { id: '50', count: 50 },
+    { id: '75', count: 75 },
+    { id: '100', count: 100 },
+  ];
+
+  return (
+    <Dropdown
+      up
+      sneaky
+      activeItemId={String(pagingCount)}
+      items={items}
+      renderItem={(item) => item.count}
+      onItemClick={({ count }) =>
+        dispatchSearchEntityState(new SearchEntityStateActions.SetPaging({ first: count }))
+      }
+    >
+      {currentPage}
+    </Dropdown>
   );
 }
 
