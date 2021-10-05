@@ -21,7 +21,6 @@ export function ValueTypeFieldEditor({ id, value, fieldSpec, onChange }: Props):
     return (
       <Segment>
         <TypePicker
-          id={id}
           text="Add value item"
           showValueTypes
           valueTypes={fieldSpec.valueTypes}

@@ -5,7 +5,6 @@ import React, { useContext } from 'react';
 import { DataDataContext } from '../../index.js';
 
 export interface TypePickerProps {
-  id?: string;
   text: string;
   iconLeft?: IconName;
   showEntityTypes?: boolean;
@@ -21,7 +20,6 @@ interface Item {
 }
 
 export function TypePicker({
-  id,
   text,
   iconLeft,
   showEntityTypes,
@@ -42,7 +40,6 @@ export function TypePicker({
 
   return (
     <Dropdown
-      id={id}
       iconLeft={iconLeft}
       items={items}
       renderItem={(item) => item.name}

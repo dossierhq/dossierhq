@@ -7,7 +7,6 @@ import { TypePicker } from './TypePicker.js';
 const meta: Meta<TypePickerProps> = {
   title: 'Domain/TypePicker',
   component: TypePicker,
-  args: { id: 'type-picker' },
 };
 export default meta;
 

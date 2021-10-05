@@ -30,12 +30,7 @@ export function EntityEditorOverview(): JSX.Element {
 
   return (
     <Column>
-      <TypePicker
-        id="create-entity-picker"
-        text="Create"
-        showEntityTypes
-        onTypeSelected={handleCreateEntity}
-      />
+      <TypePicker text="Create" showEntityTypes onTypeSelected={handleCreateEntity} />
       {drafts.map((draft) => (
         <Button
           key={draft.id}
