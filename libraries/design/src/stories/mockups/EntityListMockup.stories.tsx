@@ -99,13 +99,26 @@ function Screen({
           <EntityTable {...{ entityCount, onTableRowClick }} />
         </FullscreenContainer.Row>
       </FullscreenContainer.ScrollableRow>
-      <FullscreenContainer.Row center paddingVertical={2}>
-        <IconButton.Group condensed>
+      <FullscreenContainer.Row
+        paddingVertical={2}
+        columnGap={2}
+        flexDirection="row"
+        alignItems="center"
+      >
+        <IconButton.Group condensed skipBottomMargin>
           <IconButton icon="first" />
           <IconButton icon="previous" />
           <IconButton icon="next" />
           <IconButton icon="last" />
         </IconButton.Group>
+        <Dropdown
+          up
+          sneaky
+          items={[{ id: '25' }, { id: '50' }, { id: '100' }]}
+          renderItem={(it) => it.id}
+        >
+          1&thinsp;–&thinsp;25 of 240
+        </Dropdown>
       </FullscreenContainer.Row>
     </FullscreenContainer>
   );
