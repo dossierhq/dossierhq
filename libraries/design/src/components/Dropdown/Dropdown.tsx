@@ -46,7 +46,10 @@ export function Dropdown<TItem extends DropdownItem>({
           iconLeft={iconLeft}
           iconRight={up ? 'chevronUp' : 'chevronDown'}
           disabled={disabled}
-          onClick={() => setActive((it) => !it)}
+          onClick={(event) => {
+            event.preventDefault();
+            setActive((it) => !it);
+          }}
         >
           {children}
         </Button>
