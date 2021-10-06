@@ -1,14 +1,15 @@
 {
   "cSpell.words": [
-    "Unpublish",
-    "Upsert",
     "datadata",
     "deno",
     "jonasb",
+    "middlewares",
     "postgres",
     "rushstack",
     "testpass",
-    "testuser"
+    "testuser",
+    "Unpublish",
+    "Upsert"
   ],
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
