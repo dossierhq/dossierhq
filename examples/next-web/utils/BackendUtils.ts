@@ -4,14 +4,16 @@ import type {
   ErrorType,
   PromiseResult,
 } from '@jonasb/datadata-core';
-import { notOk, ok } from '@jonasb/datadata-core';
-import { encodeQuery } from './QueryUtils';
+import { buildUrlWithUrlQuery, notOk, ok, stringifyUrlQueryParams } from '@jonasb/datadata-core';
 
 const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export const urls = {
   admin: (operationName: AdminClientOperationName, operation?: AdminClientJsonOperation): string =>
-    `${baseUrl}/admin/${operationName}${operation ? `?${encodeQuery({ operation })}` : ''}`,
+    buildUrlWithUrlQuery(
+      `${baseUrl}/admin/${operationName}`,
+      stringifyUrlQueryParams({ operation }, { keepEmptyObjects: true })
+    ),
 };
 
 export async function fetchJsonResult<TOk>(

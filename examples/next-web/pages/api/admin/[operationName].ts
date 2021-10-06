@@ -2,6 +2,7 @@ import Boom from '@hapi/boom';
 import type { AdminClientJsonOperation } from '@jonasb/datadata-core';
 import {
   AdminClientOperationName,
+  decodeUrlQueryStringifiedParam,
   executeAdminClientOperationFromJson,
 } from '@jonasb/datadata-core';
 import Joi from 'joi';
@@ -14,7 +15,6 @@ import {
   handlePut,
   validateRequestQuery,
 } from '../../../utils/HandlerUtils';
-import { decodeQuery } from '../../../utils/QueryUtils';
 import { getServerConnection, getSessionContextForRequest } from '../../../utils/ServerUtils';
 
 interface RequestQuery {
@@ -43,7 +43,10 @@ export default async function adminOperationHandler(
       }
       const { adminClient } = authResult.value;
 
-      const operation = decodeQuery<AdminClientJsonOperation>('operation', req.query);
+      const operation: AdminClientJsonOperation | undefined = decodeUrlQueryStringifiedParam(
+        'operation',
+        req.query
+      );
       if (!operation) {
         throw Boom.badRequest('Missing operation query');
       }

@@ -120,3 +120,8 @@ export type {
   RichTextBlock,
   ValueItem,
 } from './Types';
+export {
+  buildUrlWithUrlQuery,
+  decodeUrlQueryStringifiedParam,
+  stringifyUrlQueryParams,
+} from './UrlQueryUtils';
