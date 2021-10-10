@@ -72,7 +72,10 @@ export function EntityListScreen({
 
   useEffect(() => {
     dispatchSearchEntityState(
-      new SearchEntityStateActions.SetQuery({ entityTypes: entityTypeFilterState.selectedIds })
+      new SearchEntityStateActions.SetQuery(
+        { entityTypes: entityTypeFilterState.selectedIds },
+        true
+      )
     );
   }, [entityTypeFilterState.selectedIds]);
 
@@ -132,7 +135,7 @@ function initializeSearchEntityStateFromUrlQuery(
   if (urlQuery) {
     const decodedQuery: AdminQuery = decodeUrlQueryStringifiedParam('query', urlQuery) ?? {};
     if (decodedQuery) {
-      actions.push(new SearchEntityStateActions.SetQuery(decodedQuery));
+      actions.push(new SearchEntityStateActions.SetQuery(decodedQuery, false));
     }
     const decodedPaging: Paging | undefined =
       decodeUrlQueryStringifiedParam('paging', urlQuery) ?? {};
@@ -163,7 +166,7 @@ function useSynchronizeUrlQueryState(
     if (!urlQuery) return;
     const decodedQuery: AdminQuery = decodeUrlQueryStringifiedParam('query', urlQuery) ?? {};
     const decodedPaging: Paging = decodeUrlQueryStringifiedParam('paging', urlQuery) ?? {};
-    dispatchSearchEntityState(new SearchEntityStateActions.SetQuery(decodedQuery));
+    dispatchSearchEntityState(new SearchEntityStateActions.SetQuery(decodedQuery, false));
     dispatchSearchEntityState(new SearchEntityStateActions.SetPaging(decodedPaging));
   }, [dispatchSearchEntityState, urlQuery]);
 }
@@ -263,7 +266,7 @@ function EntityList({
             order={order === QueryOrder.name ? 'asc' : ''}
             onClick={() =>
               dispatchSearchEntityState(
-                new SearchEntityStateActions.SetQuery({ order: QueryOrder.name })
+                new SearchEntityStateActions.SetQuery({ order: QueryOrder.name }, true)
               )
             }
           >
@@ -276,7 +279,7 @@ function EntityList({
             order={order === QueryOrder.createdAt ? 'asc' : ''}
             onClick={() =>
               dispatchSearchEntityState(
-                new SearchEntityStateActions.SetQuery({ order: QueryOrder.createdAt })
+                new SearchEntityStateActions.SetQuery({ order: QueryOrder.createdAt }, true)
               )
             }
           >
@@ -287,7 +290,7 @@ function EntityList({
             order={order === QueryOrder.updatedAt ? 'asc' : ''}
             onClick={() =>
               dispatchSearchEntityState(
-                new SearchEntityStateActions.SetQuery({ order: QueryOrder.updatedAt })
+                new SearchEntityStateActions.SetQuery({ order: QueryOrder.updatedAt }, true)
               )
             }
           >

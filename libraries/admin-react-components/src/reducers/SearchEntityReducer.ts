@@ -39,7 +39,7 @@ export function initializeSearchEntityState(actions: SearchEntityStateAction[]):
     totalCount: null,
   };
   // Normalize query state
-  state = new SetQueryAction({}).reduce(state);
+  state = reduceSearchEntityState(state, new SetQueryAction({}, true));
   for (const action of actions) {
     state = reduceSearchEntityState(state, action);
   }
@@ -86,14 +86,16 @@ class SetPagingAction implements SearchEntityStateAction {
 }
 
 class SetQueryAction implements SearchEntityStateAction {
-  value: AdminQuery;
+  readonly value: AdminQuery;
+  readonly partial: boolean;
 
-  constructor(value: AdminQuery) {
+  constructor(value: AdminQuery, partial: boolean) {
     this.value = value;
+    this.partial = partial;
   }
 
   reduce(state: SearchEntityState): SearchEntityState {
-    const query = { ...state.query, ...this.value };
+    const query: AdminQuery = this.partial ? { ...state.query, ...this.value } : { ...this.value };
     if (!query.order) {
       query.order = defaultOrder;
     }
