@@ -131,19 +131,20 @@ export function EntityListScreen({
 function initializeSearchEntityStateFromUrlQuery(
   urlQuery: EntityListScreenUrlQuery | undefined
 ): SearchEntityState {
+  const actions = urlQueryToSearchEntityStateActions(urlQuery);
+  return initializeSearchEntityState(actions);
+}
+
+function urlQueryToSearchEntityStateActions(urlQuery: EntityListScreenUrlQuery | undefined) {
   const actions = [];
   if (urlQuery) {
     const decodedQuery: AdminQuery = decodeUrlQueryStringifiedParam('query', urlQuery) ?? {};
-    if (decodedQuery) {
-      actions.push(new SearchEntityStateActions.SetQuery(decodedQuery, false));
-    }
+    actions.push(new SearchEntityStateActions.SetQuery(decodedQuery, false));
     const decodedPaging: Paging | undefined =
       decodeUrlQueryStringifiedParam('paging', urlQuery) ?? {};
-    if (decodedPaging) {
-      actions.push(new SearchEntityStateActions.SetPaging(decodedPaging));
-    }
+    actions.push(new SearchEntityStateActions.SetPaging(decodedPaging));
   }
-  return initializeSearchEntityState(actions);
+  return actions;
 }
 
 function useSynchronizeUrlQueryState(
@@ -164,11 +165,11 @@ function useSynchronizeUrlQueryState(
 
   useEffect(() => {
     if (!urlQuery) return;
-    const decodedQuery: AdminQuery = decodeUrlQueryStringifiedParam('query', urlQuery) ?? {};
-    const decodedPaging: Paging = decodeUrlQueryStringifiedParam('paging', urlQuery) ?? {};
-    dispatchSearchEntityState(new SearchEntityStateActions.SetQuery(decodedQuery, false));
-    dispatchSearchEntityState(new SearchEntityStateActions.SetPaging(decodedPaging));
+    const actions = urlQueryToSearchEntityStateActions(urlQuery);
+    actions.forEach((action) => dispatchSearchEntityState(action));
   }, [dispatchSearchEntityState, urlQuery]);
+
+  // useDebugLogChangedValues('useSynchronizeUrlQueryState', { query, paging, urlQuery });
 }
 
 function SearchLoader({
