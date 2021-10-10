@@ -28,20 +28,21 @@ export interface SearchEntityStateAction {
   reduce(state: SearchEntityState): SearchEntityState;
 }
 
-export function initializeSearchEntityState(
-  initialQuery: AdminQuery | undefined
-): SearchEntityState {
+export function initializeSearchEntityState(actions: SearchEntityStateAction[]): SearchEntityState {
   let state: SearchEntityState = {
     query: {},
     paging: {},
     pagingCount: defaultPagingCount,
-    text: initialQuery?.text ?? '',
+    text: '',
     connection: undefined,
     connectionError: undefined,
     totalCount: null,
   };
   // Normalize query state
-  state = new SetQueryAction(initialQuery ?? {}).reduce(state);
+  state = new SetQueryAction({}).reduce(state);
+  for (const action of actions) {
+    state = reduceSearchEntityState(state, action);
+  }
   return state;
 }
 
@@ -105,7 +106,7 @@ class SetQueryAction implements SearchEntityStateAction {
     if (isEqual(query, state.query)) {
       return state;
     }
-    return { ...state, query };
+    return { ...state, query, text: query.text ?? '' };
   }
 }
 

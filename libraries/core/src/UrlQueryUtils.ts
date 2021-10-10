@@ -55,6 +55,6 @@ export function decodeUrlQueryStringifiedParam<TReturn, TKey extends string>(
   if (encoded === undefined) {
     return undefined;
   }
-  const value = JSON.parse(decodeURIComponent(encoded));
+  const value = JSON.parse(encoded);
   return value as unknown as TReturn;
 }
