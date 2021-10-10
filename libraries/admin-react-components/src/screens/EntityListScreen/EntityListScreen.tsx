@@ -1,5 +1,9 @@
 import type { AdminEntity, AdminQuery, EntityPublishState, Paging } from '@jonasb/datadata-core';
-import { QueryOrder } from '@jonasb/datadata-core';
+import {
+  decodeUrlQueryStringifiedParam,
+  QueryOrder,
+  stringifyUrlQueryParams,
+} from '@jonasb/datadata-core';
 import {
   Dropdown,
   Field,
@@ -32,9 +36,16 @@ import {
   useTotalCount,
 } from '../../index.js';
 
+export interface EntityListScreenUrlQuery {
+  query?: string;
+  paging?: string;
+}
+
 export interface EntityListScreenProps {
   header?: React.ReactNode;
   footer?: React.ReactNode;
+  urlQuery?: EntityListScreenUrlQuery;
+  onUrlQueryChanged?: (urlQuery: EntityListScreenUrlQuery) => void;
   onCreateEntity: (entityType: string) => void;
   onOpenEntity: (entity: AdminEntity) => void;
 }
@@ -42,18 +53,20 @@ export interface EntityListScreenProps {
 export function EntityListScreen({
   header,
   footer,
+  urlQuery,
+  onUrlQueryChanged,
   onCreateEntity,
   onOpenEntity,
 }: EntityListScreenProps): JSX.Element | null {
   const [searchEntityState, dispatchSearchEntityState] = useReducer(
     reduceSearchEntityState,
-    undefined,
-    initializeSearchEntityState
+    urlQuery,
+    initializeSearchEntityStateFromUrlQuery
   );
 
   const [entityTypeFilterState, dispatchEntityTypeFilter] = useReducer(
     reduceEntityTypeSelectorState,
-    {},
+    { selectedIds: searchEntityState.query.entityTypes },
     initializeEntityTypeSelectorState
   );
 
@@ -62,6 +75,13 @@ export function EntityListScreen({
       new SearchEntityStateActions.SetQuery({ entityTypes: entityTypeFilterState.selectedIds })
     );
   }, [entityTypeFilterState.selectedIds]);
+
+  useSynchronizeUrlQueryState(
+    urlQuery,
+    onUrlQueryChanged,
+    searchEntityState,
+    dispatchSearchEntityState
+  );
 
   // useDebugLogChangedValues('EntityList changed props', { header, footer, onCreateEntity, onOpenEntity, searchEntityState, dispatchSearchEntityState, entityTypeFilterState, dispatchEntityTypeFilter, });
 
@@ -103,6 +123,49 @@ export function EntityListScreen({
       {footer ? <FullscreenContainer.Row fullWidth>{footer}</FullscreenContainer.Row> : null}
     </FullscreenContainer>
   );
+}
+
+function initializeSearchEntityStateFromUrlQuery(
+  urlQuery: EntityListScreenUrlQuery | undefined
+): SearchEntityState {
+  const actions = [];
+  if (urlQuery) {
+    const decodedQuery: AdminQuery = decodeUrlQueryStringifiedParam('query', urlQuery) ?? {};
+    if (decodedQuery) {
+      actions.push(new SearchEntityStateActions.SetQuery(decodedQuery));
+    }
+    const decodedPaging: Paging | undefined =
+      decodeUrlQueryStringifiedParam('paging', urlQuery) ?? {};
+    if (decodedPaging) {
+      actions.push(new SearchEntityStateActions.SetPaging(decodedPaging));
+    }
+  }
+  return initializeSearchEntityState(actions);
+}
+
+function useSynchronizeUrlQueryState(
+  urlQuery: EntityListScreenUrlQuery | undefined,
+  onUrlQueryChanged: ((urlQuery: EntityListScreenUrlQuery) => void) | undefined,
+  searchEntityState: SearchEntityState,
+  dispatchSearchEntityState: Dispatch<SearchEntityStateAction>
+) {
+  const { query, paging } = searchEntityState;
+  useEffect(() => {
+    if (!onUrlQueryChanged || !urlQuery) return;
+    const result: EntityListScreenUrlQuery = stringifyUrlQueryParams({ query, paging });
+    if (result.paging !== urlQuery.paging || result.query !== urlQuery.query) {
+      onUrlQueryChanged(result);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [query, paging]);
+
+  useEffect(() => {
+    if (!urlQuery) return;
+    const decodedQuery: AdminQuery = decodeUrlQueryStringifiedParam('query', urlQuery) ?? {};
+    const decodedPaging: Paging = decodeUrlQueryStringifiedParam('paging', urlQuery) ?? {};
+    dispatchSearchEntityState(new SearchEntityStateActions.SetQuery(decodedQuery));
+    dispatchSearchEntityState(new SearchEntityStateActions.SetPaging(decodedPaging));
+  }, [dispatchSearchEntityState, urlQuery]);
 }
 
 function SearchLoader({

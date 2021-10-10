@@ -1,8 +1,12 @@
 import type { Meta, Story } from '@storybook/react/types-6-0.js';
-import React from 'react';
+import React, { useState } from 'react';
 import { LoadContextProvider } from '../../test/LoadContextProvider.js';
-import type { EntityListScreenProps } from './EntityListScreen.js';
+import type { EntityListScreenProps, EntityListScreenUrlQuery } from './EntityListScreen.js';
 import { EntityListScreen } from './EntityListScreen.js';
+
+type StoryProps = Omit<EntityListScreenProps, 'urlQuery' | 'onUrlQueryChanged'> & {
+  initialUrlQuery?: EntityListScreenUrlQuery;
+};
 
 const meta: Meta<EntityListScreenProps> = {
   title: 'Screens/EntityListScreen',
@@ -16,13 +20,18 @@ const meta: Meta<EntityListScreenProps> = {
 };
 export default meta;
 
-const Template: Story<EntityListScreenProps> = (args) => {
+const Template: Story<StoryProps> = (args) => {
+  return Wrapper(args);
+};
+
+function Wrapper({ initialUrlQuery, ...props }: StoryProps) {
+  const [urlQuery, setUrlQuery] = useState<EntityListScreenUrlQuery>(initialUrlQuery ?? {});
   return (
     <LoadContextProvider>
-      <EntityListScreen {...args} />
+      <EntityListScreen {...props} urlQuery={urlQuery} onUrlQueryChanged={setUrlQuery} />
     </LoadContextProvider>
   );
-};
+}
 
 export const Normal = Template.bind({});
 
@@ -30,4 +39,9 @@ export const HeaderFooter = Template.bind({});
 HeaderFooter.args = {
   header: <div style={{ height: 50, backgroundColor: 'papayawhip' }} />,
   footer: <div style={{ height: 50, backgroundColor: 'papayawhip' }} />,
+};
+
+export const InitialQuery = Template.bind({});
+InitialQuery.args = {
+  initialUrlQuery: { query: '{"order":"name","text":"hello"}' },
 };
