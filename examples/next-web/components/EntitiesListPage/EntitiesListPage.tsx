@@ -1,5 +1,6 @@
 import { EntityListScreen } from '@jonasb/datadata-admin-react-components';
 import type { AdminEntity } from '@jonasb/datadata-core';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useCallback } from 'react';
 import { DataDataSharedProvider } from '../../contexts/DataDataSharedProvider';
@@ -25,6 +26,9 @@ export default function EntitiesListPage(): JSX.Element | null {
 
   return (
     <DataDataSharedProvider>
+      <Head>
+        <title>Entities</title>
+      </Head>
       <EntityListScreen
         header={<NavBar current="entities" />}
         urlQuery={router.query}
