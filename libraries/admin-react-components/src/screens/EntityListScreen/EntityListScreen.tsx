@@ -1,6 +1,7 @@
 import type { AdminEntity, AdminQuery, EntityPublishState, Paging } from '@jonasb/datadata-core';
 import {
   decodeUrlQueryStringifiedParam,
+  getPagingInfo,
   QueryOrder,
   stringifyUrlQueryParams,
 } from '@jonasb/datadata-core';
@@ -406,7 +407,7 @@ function PagingCount({
   searchEntityState: SearchEntityState;
   dispatchSearchEntityState: Dispatch<SearchEntityStateAction>;
 }) {
-  const { connection, pagingCount, totalCount } = searchEntityState;
+  const { connection, paging, pagingCount, totalCount } = searchEntityState;
   const currentPage = `${connection?.edges.length ?? pagingCount} of ${totalCount}`;
 
   const items = [
@@ -423,9 +424,16 @@ function PagingCount({
       activeItemId={String(pagingCount)}
       items={items}
       renderItem={(item) => item.count}
-      onItemClick={({ count }) =>
-        dispatchSearchEntityState(new SearchEntityStateActions.SetPaging({ first: count }))
-      }
+      onItemClick={({ count }) => {
+        const pagingInfo = getPagingInfo(paging);
+        const newPaging = { ...paging };
+        if (pagingInfo.isOk() && !pagingInfo.value.forwards) {
+          newPaging.last = count;
+        } else {
+          newPaging.first = count;
+        }
+        dispatchSearchEntityState(new SearchEntityStateActions.SetPaging(newPaging));
+      }}
     >
       {currentPage}
     </Dropdown>
