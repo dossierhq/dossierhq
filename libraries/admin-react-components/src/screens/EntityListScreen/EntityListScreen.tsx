@@ -35,6 +35,7 @@ import {
   useSearchEntities,
   useTotalCount,
 } from '../../index.js';
+import { queryWithoutDefaults } from '../../reducers/SearchEntityReducer.js';
 
 export interface EntityListScreenUrlQuery {
   query?: string;
@@ -156,7 +157,10 @@ function useSynchronizeUrlQueryState(
   const { query, paging } = searchEntityState;
   useEffect(() => {
     if (!onUrlQueryChanged || !urlQuery) return;
-    const result: EntityListScreenUrlQuery = stringifyUrlQueryParams({ query, paging });
+    const result: EntityListScreenUrlQuery = stringifyUrlQueryParams({
+      query: queryWithoutDefaults(query),
+      paging,
+    });
     if (result.paging !== urlQuery.paging || result.query !== urlQuery.query) {
       onUrlQueryChanged(result);
     }

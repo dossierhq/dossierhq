@@ -161,3 +161,11 @@ export const SearchEntityStateActions = {
   UpdateResult: UpdateResultAction,
   UpdateTotalCount: UpdateTotalCountAction,
 };
+
+export function queryWithoutDefaults(query: AdminQuery): AdminQuery {
+  if (query.order === defaultOrder) {
+    const { order, ...queryWithoutOrder } = query;
+    return queryWithoutOrder;
+  }
+  return query;
+}
