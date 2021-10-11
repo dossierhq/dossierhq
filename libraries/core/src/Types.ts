@@ -156,7 +156,7 @@ export interface PublishingEvent {
   publishedBy: string;
 }
 
-export enum QueryOrder {
+export enum AdminQueryOrder {
   createdAt = 'createdAt',
   updatedAt = 'updatedAt',
   name = 'name',
@@ -167,7 +167,7 @@ export interface AdminQuery {
   /** Entities referencing the entity (by id) */
   referencing?: string;
   boundingBox?: BoundingBox;
-  order?: QueryOrder;
+  order?: AdminQueryOrder;
   text?: string;
 }
 
@@ -176,7 +176,7 @@ export interface Query {
   /** Entities referencing the entity (by id) */
   referencing?: string;
   boundingBox?: BoundingBox;
-  order?: QueryOrder;
+  order?: AdminQueryOrder;
   text?: string;
 }
 

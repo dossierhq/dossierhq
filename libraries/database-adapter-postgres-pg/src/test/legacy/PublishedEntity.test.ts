@@ -711,3 +711,5 @@ describe('searchEntities() boundingBox', () => {
     }
   });
 });
+
+// TODO searchEntities text

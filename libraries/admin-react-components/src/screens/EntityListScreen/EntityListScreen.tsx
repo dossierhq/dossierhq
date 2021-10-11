@@ -1,8 +1,8 @@
 import type { AdminEntity, AdminQuery, EntityPublishState, Paging } from '@jonasb/datadata-core';
 import {
+  AdminQueryOrder,
   decodeUrlQueryStringifiedParam,
   getPagingInfo,
-  QueryOrder,
   stringifyUrlQueryParams,
 } from '@jonasb/datadata-core';
 import {
@@ -269,10 +269,10 @@ function EntityList({
       <Table.Head>
         <Table.Row sticky>
           <Table.Header
-            order={order === QueryOrder.name ? 'asc' : ''}
+            order={order === AdminQueryOrder.name ? 'asc' : ''}
             onClick={() =>
               dispatchSearchEntityState(
-                new SearchEntityStateActions.SetQuery({ order: QueryOrder.name }, true)
+                new SearchEntityStateActions.SetQuery({ order: AdminQueryOrder.name }, true)
               )
             }
           >
@@ -282,10 +282,10 @@ function EntityList({
           <Table.Header narrow>Status</Table.Header>
           <Table.Header
             narrow
-            order={order === QueryOrder.createdAt ? 'asc' : ''}
+            order={order === AdminQueryOrder.createdAt ? 'asc' : ''}
             onClick={() =>
               dispatchSearchEntityState(
-                new SearchEntityStateActions.SetQuery({ order: QueryOrder.createdAt }, true)
+                new SearchEntityStateActions.SetQuery({ order: AdminQueryOrder.createdAt }, true)
               )
             }
           >
@@ -293,10 +293,10 @@ function EntityList({
           </Table.Header>
           <Table.Header
             narrow
-            order={order === QueryOrder.updatedAt ? 'asc' : ''}
+            order={order === AdminQueryOrder.updatedAt ? 'asc' : ''}
             onClick={() =>
               dispatchSearchEntityState(
-                new SearchEntityStateActions.SetQuery({ order: QueryOrder.updatedAt }, true)
+                new SearchEntityStateActions.SetQuery({ order: AdminQueryOrder.updatedAt }, true)
               )
             }
           >
@@ -319,7 +319,7 @@ function EntityList({
                   <InstantDisplay instant={entity.info.createdAt} />
                 </Table.Cell>
                 <Table.Cell narrow>
-                  {order === QueryOrder.updatedAt ||
+                  {order === AdminQueryOrder.updatedAt ||
                   !entity.info.updatedAt.equals(entity.info.createdAt) ? (
                     <InstantDisplay instant={entity.info.updatedAt} />
                   ) : null}

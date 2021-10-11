@@ -1,5 +1,5 @@
 import type { AdminQuery, ErrorType, Paging, Query, Result, Schema } from '@jonasb/datadata-core';
-import { notOk, ok, QueryOrder } from '@jonasb/datadata-core';
+import { AdminQueryOrder, notOk, ok } from '@jonasb/datadata-core';
 import type { CursorNativeType } from './Connection';
 import type { EntitiesTable } from './DatabaseTables';
 import type { AdminEntityValues, EntityValues } from './EntityCodec';
@@ -45,15 +45,15 @@ function sharedSearchEntitiesQuery(
   let cursorName: CursorName;
   let cursorType: CursorNativeType;
   switch (query?.order) {
-    case QueryOrder.name:
+    case AdminQueryOrder.name:
       cursorName = 'name';
       cursorType = 'string';
       break;
-    case QueryOrder.updatedAt:
+    case AdminQueryOrder.updatedAt:
       cursorName = 'updated';
       cursorType = 'int';
       break;
-    case QueryOrder.createdAt:
+    case AdminQueryOrder.createdAt:
     default:
       cursorName = 'id';
       cursorType = 'int';

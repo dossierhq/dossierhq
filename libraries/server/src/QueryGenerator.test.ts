@@ -1,4 +1,4 @@
-import { CoreTestUtils, ErrorType, QueryOrder, Schema } from '@jonasb/datadata-core';
+import { AdminQueryOrder, CoreTestUtils, ErrorType, Schema } from '@jonasb/datadata-core';
 import { toOpaqueCursor } from './Connection';
 import {
   searchAdminEntitiesQuery,
@@ -383,7 +383,7 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('order by createdAt', () => {
-    expect(searchAdminEntitiesQuery(schema, { order: QueryOrder.createdAt }, undefined))
+    expect(searchAdminEntitiesQuery(schema, { order: AdminQueryOrder.createdAt }, undefined))
       .toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
@@ -402,7 +402,7 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('order by updatedAt', () => {
-    expect(searchAdminEntitiesQuery(schema, { order: QueryOrder.updatedAt }, undefined))
+    expect(searchAdminEntitiesQuery(schema, { order: AdminQueryOrder.updatedAt }, undefined))
       .toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
@@ -421,7 +421,7 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('order by name', () => {
-    expect(searchAdminEntitiesQuery(schema, { order: QueryOrder.name }, undefined))
+    expect(searchAdminEntitiesQuery(schema, { order: AdminQueryOrder.name }, undefined))
       .toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
@@ -804,7 +804,7 @@ describe('searchPublishedEntitiesQuery()', () => {
   });
 
   test('order by createdAt', () => {
-    expect(searchPublishedEntitiesQuery(schema, { order: QueryOrder.createdAt }, undefined))
+    expect(searchPublishedEntitiesQuery(schema, { order: AdminQueryOrder.createdAt }, undefined))
       .toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
@@ -822,7 +822,7 @@ describe('searchPublishedEntitiesQuery()', () => {
   });
 
   test('order by updatedAt', () => {
-    expect(searchPublishedEntitiesQuery(schema, { order: QueryOrder.updatedAt }, undefined))
+    expect(searchPublishedEntitiesQuery(schema, { order: AdminQueryOrder.updatedAt }, undefined))
       .toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
@@ -840,7 +840,7 @@ describe('searchPublishedEntitiesQuery()', () => {
   });
 
   test('order by name', () => {
-    expect(searchPublishedEntitiesQuery(schema, { order: QueryOrder.name }, undefined))
+    expect(searchPublishedEntitiesQuery(schema, { order: AdminQueryOrder.name }, undefined))
       .toMatchInlineSnapshot(`
       OkResult {
         "value": Object {

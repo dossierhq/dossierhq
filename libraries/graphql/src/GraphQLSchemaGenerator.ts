@@ -596,10 +596,10 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       })
     );
 
-    // QueryOrder
+    // AdminQueryOrder
     this.addType(
       new GraphQLEnumType({
-        name: 'QueryOrder',
+        name: 'AdminQueryOrder',
         values: { createdAt: {}, updatedAt: {}, name: {} },
       })
     );
@@ -612,7 +612,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
           entityTypes: { type: new GraphQLList(this.getEnumType('EntityType')) },
           referencing: { type: GraphQLID },
           boundingBox: { type: this.getInputType('BoundingBoxInput') },
-          order: { type: this.getEnumType('QueryOrder') },
+          order: { type: this.getEnumType('AdminQueryOrder') },
           text: { type: GraphQLString },
         },
       })

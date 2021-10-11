@@ -16,12 +16,13 @@ import type {
   ValueTypeSpecification,
 } from '@jonasb/datadata-core';
 import {
+  AdminQueryOrder,
   assertIsDefined,
+  getPagingInfo,
   isEntityTypeField,
   isEntityTypeListField,
   isLocationField,
   isLocationListField,
-  getPagingInfo,
   isRichTextField,
   isRichTextListField,
   isStringField,
@@ -30,7 +31,6 @@ import {
   isValueTypeListField,
   notOk,
   ok,
-  QueryOrder,
 } from '@jonasb/datadata-core';
 import chalk from 'chalk';
 import type { CliContext } from '.';
@@ -212,15 +212,15 @@ async function configureQuery(
   }
 }
 
-async function selectOrder(order: QueryOrder | undefined) {
+async function selectOrder(order: AdminQueryOrder | undefined) {
   const item = await showItemSelector(
     'How to order the results?',
     [
-      { id: QueryOrder.createdAt, name: 'Created at' },
-      { id: QueryOrder.updatedAt, name: 'Updated at' },
-      { id: QueryOrder.name, name: 'Name' },
+      { id: AdminQueryOrder.createdAt, name: 'Created at' },
+      { id: AdminQueryOrder.updatedAt, name: 'Updated at' },
+      { id: AdminQueryOrder.name, name: 'Name' },
     ],
-    order ?? QueryOrder.createdAt
+    order ?? AdminQueryOrder.createdAt
   );
   return item.id;
 }
