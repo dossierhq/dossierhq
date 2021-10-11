@@ -40,7 +40,7 @@ function sharedSearchEntitiesQuery(
   schema: Schema,
   query: Query | AdminQuery | undefined,
   paging: Paging | undefined,
-  _published: boolean
+  published: boolean
 ): Result<SharedEntitiesQuery, ErrorType.BadRequest> {
   let cursorName: CursorName;
   let cursorType: CursorNativeType;
@@ -70,8 +70,12 @@ function sharedSearchEntitiesQuery(
   if (query?.boundingBox) {
     qb.addQuery('DISTINCT');
   }
-  qb.addQuery(`e.id, e.uuid, e.type, e.name, e.created_at, e.updated_at, e.updated, e.archived, e.never_published, e.latest_draft_entity_versions_id, e.published_entity_versions_id, ev.version, ev.data
+  if (published) {
+    qb.addQuery('e.uuid, e.type, e.name, ev.data FROM entities e, entity_versions ev');
+  } else {
+    qb.addQuery(`e.id, e.uuid, e.type, e.name, e.created_at, e.updated_at, e.updated, e.archived, e.never_published, e.latest_draft_entity_versions_id, e.published_entity_versions_id, ev.version, ev.data
   FROM entities e, entity_versions ev`);
+  }
   if (query?.referencing) {
     qb.addQuery('entity_version_references evr, entities e2');
   }
@@ -79,7 +83,11 @@ function sharedSearchEntitiesQuery(
     qb.addQuery('entity_version_locations evl');
   }
 
-  qb.addQuery('WHERE e.latest_draft_entity_versions_id = ev.id');
+  if (published) {
+    qb.addQuery('WHERE e.published_entity_versions_id = ev.id');
+  } else {
+    qb.addQuery('WHERE e.latest_draft_entity_versions_id = ev.id');
+  }
 
   // Filter: entityTypes
   const entityTypesResult = getFilterEntityTypes(schema, query);
@@ -92,6 +100,7 @@ function sharedSearchEntitiesQuery(
 
   // Filter: referencing
   if (query?.referencing) {
+    //TODO evr published?
     qb.addQuery(
       `AND ev.id = evr.entity_versions_id AND evr.entities_id = e2.id AND e2.uuid = ${qb.addValue(
         query.referencing
@@ -111,6 +120,7 @@ function sharedSearchEntitiesQuery(
 
   // Filter: text
   if (query?.text) {
+    //TODO published
     qb.addQuery(`AND e.latest_fts @@ websearch_to_tsquery(${qb.addValue(query.text)})`);
   }
 

@@ -72,13 +72,13 @@ export type {
 } from './JsonUtils';
 export { createConsoleLogger, NoOpLogger } from './Logger';
 export type { Logger } from './Logger';
+export { getAllPagesForConnection, getPagingInfo } from './PagingUtils';
 export { createBasePublishedClient, PublishedClientOperationName } from './PublishedClient';
 export type {
   PublishedClient,
   PublishedClientMiddleware,
   PublishedClientOperation,
 } from './PublishedClient';
-export { getPagingInfo } from './QueryUtils';
 export { FieldType, RichTextBlockType, Schema } from './Schema';
 export type {
   EntityTypeSpecification,

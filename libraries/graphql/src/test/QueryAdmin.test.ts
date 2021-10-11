@@ -1,18 +1,14 @@
 import type {
   AdminClient,
   AdminEntity,
-  AdminQuery,
   BoundingBox,
-  Connection,
-  Edge,
-  ErrorType,
-  Paging,
   SchemaSpecification,
 } from '@jonasb/datadata-core';
 import {
   CoreTestUtils,
   EntityPublishState,
   FieldType,
+  getAllPagesForConnection,
   notOk,
   ok,
   RichTextBlockType,
@@ -115,43 +111,22 @@ async function ensureTestEntitiesExist(adminClient: AdminClient) {
 }
 
 async function getEntitiesForAdminOnlyEditBefore(adminClient: AdminClient) {
+  const query = { entityTypes: ['QueryAdminOnlyEditBefore'] };
   const entities: AdminEntity[] = [];
-  await visitAllEntityPages(
-    adminClient,
-    { entityTypes: ['QueryAdminOnlyEditBefore'] },
-    (connection) => {
-      for (const edge of connection.edges) {
-        if (edge.node.isOk()) {
-          entities.push(edge.node.value);
-        }
+  for await (const pageResult of getAllPagesForConnection({}, (currentPaging) =>
+    adminClient.searchEntities(query, currentPaging)
+  )) {
+    if (pageResult.isError()) {
+      throw pageResult.toError();
+    }
+    for (const edge of pageResult.value.edges) {
+      if (edge.node.isOk()) {
+        entities.push(edge.node.value);
       }
     }
-  );
-  return entities;
-}
-
-async function visitAllEntityPages(
-  adminClient: AdminClient,
-  query: AdminQuery,
-  visitor: (connection: Connection<Edge<AdminEntity, ErrorType>>) => void
-) {
-  const paging: Paging = {};
-  // eslint-disable-next-line no-constant-condition
-  while (true) {
-    const result = await adminClient.searchEntities(query, paging);
-    if (result.isError()) {
-      throw result.toError();
-    }
-    if (result.value === null) {
-      return;
-    }
-
-    visitor(result.value);
-    paging.after = result.value.pageInfo.endCursor;
-    if (!result.value.pageInfo.hasNextPage) {
-      return;
-    }
   }
+
+  return entities;
 }
 
 async function createBarWithFooReferences(fooCount: number) {

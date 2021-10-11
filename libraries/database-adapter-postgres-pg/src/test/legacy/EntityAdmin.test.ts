@@ -5,7 +5,6 @@ import type {
   BoundingBox,
   Connection,
   Edge,
-  Paging,
   PublishedClient,
 } from '@jonasb/datadata-core';
 import {
@@ -14,7 +13,7 @@ import {
   EntityPublishState,
   ErrorType,
   FieldType,
-  getPagingInfo,
+  getAllPagesForConnection,
   PublishingEventKind,
   QueryOrder,
   RichTextBlockType,
@@ -247,68 +246,40 @@ async function ensureEntitiesExistForAdminOnlyEditBefore(client: AdminClient) {
 }
 
 async function getEntitiesForAdminOnlyEditBefore(client: AdminClient) {
+  const query = { entityTypes: ['AdminOnlyEditBefore'] };
   const entities: AdminEntity[] = [];
-  await visitAllEntityPages(
-    client,
-    { entityTypes: ['AdminOnlyEditBefore'] },
-    { first: 100 },
-    (connection) => {
-      for (const edge of connection.edges) {
-        if (edge.node.isOk()) {
-          const entity = edge.node.value;
-          entities.push(entity);
-        }
-      }
-    }
-  );
-  return { entities };
-}
-
-async function visitAllEntityPages(
-  client: AdminClient,
-  query: AdminQuery,
-  paging: Paging,
-  visitor: (connection: Connection<Edge<AdminEntity, ErrorType>>) => void
-) {
-  const ownPaging = { ...paging };
-  const pagingInfo = getPagingInfo(paging);
-  const isForwards = pagingInfo.isOk() ? pagingInfo.value.forwards : true;
-  // eslint-disable-next-line no-constant-condition
-  while (true) {
-    const result = await client.searchEntities(query, ownPaging);
-    if (result.isError()) {
-      throw result.toError();
-    }
-    if (result.value === null) {
-      return;
+  for await (const pageResult of getAllPagesForConnection({ first: 100 }, (currentPaging) =>
+    client.searchEntities(query, currentPaging)
+  )) {
+    if (pageResult.isError()) {
+      throw pageResult.toError();
     }
 
-    visitor(result.value);
-
-    if (isForwards) {
-      ownPaging.after = result.value.pageInfo.endCursor;
-      if (!result.value.pageInfo.hasNextPage) {
-        return;
-      }
-    } else {
-      ownPaging.before = result.value.pageInfo.startCursor;
-      if (!result.value.pageInfo.hasPreviousPage) {
-        return;
+    for (const edge of pageResult.value.edges) {
+      if (edge.node.isOk()) {
+        const entity = edge.node.value;
+        entities.push(entity);
       }
     }
   }
+  return { entities };
 }
 
 async function countSearchResultWithEntity(query: AdminQuery, entityId: string) {
   let matchCount = 0;
 
-  await visitAllEntityPages(client, query, { first: 50 }, (connection) => {
-    for (const edge of connection.edges) {
+  for await (const pageResult of getAllPagesForConnection({ first: 50 }, (currentPaging) =>
+    client.searchEntities(query, currentPaging)
+  )) {
+    if (pageResult.isError()) {
+      throw pageResult.toError();
+    }
+    for (const edge of pageResult.value.edges) {
       if (edge.node.isOk() && edge.node.value.id === entityId) {
         matchCount += 1;
       }
     }
-  });
+  }
 
   return matchCount;
 }
