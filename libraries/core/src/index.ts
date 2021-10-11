@@ -91,7 +91,7 @@ export type {
 } from './Schema';
 export { LoggingClientMiddleware } from './SharedClient';
 export type { ClientContext, ContextProvider } from './SharedClient';
-export { AdminQueryOrder, EntityPublishState, PublishingEventKind } from './Types';
+export { AdminQueryOrder, EntityPublishState, PublishingEventKind, QueryOrder } from './Types';
 export type {
   AdminEntity,
   AdminEntityCreate,

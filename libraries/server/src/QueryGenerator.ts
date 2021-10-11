@@ -1,30 +1,30 @@
 import type { AdminQuery, ErrorType, Paging, Query, Result, Schema } from '@jonasb/datadata-core';
-import { AdminQueryOrder, notOk, ok } from '@jonasb/datadata-core';
+import { AdminQueryOrder, notOk, ok, QueryOrder } from '@jonasb/datadata-core';
 import type { CursorNativeType } from './Connection';
+import { toOpaqueCursor } from './Connection';
 import type { EntitiesTable } from './DatabaseTables';
 import type { AdminEntityValues, EntityValues } from './EntityCodec';
 import { resolvePaging } from './Paging';
 import QueryBuilder from './QueryBuilder';
 
 export type SearchAdminEntitiesItem = Pick<EntitiesTable, 'id' | 'updated'> & AdminEntityValues;
-export type SearchPublishedEntitiesItem = Pick<EntitiesTable, 'id' | 'updated'> & EntityValues;
+export type SearchPublishedEntitiesItem = Pick<EntitiesTable, 'id'> & EntityValues;
 
 type CursorName = 'name' | 'updated' | 'id';
 
-export interface SharedEntitiesQuery {
+export interface SharedEntitiesQuery<TItem> {
   text: string;
   values: unknown[];
   isForwards: boolean;
   pagingCount: number;
-  cursorName: CursorName;
-  cursorType: CursorNativeType;
+  cursorExtractor: (item: TItem) => string;
 }
 
 export function searchPublishedEntitiesQuery(
   schema: Schema,
   query: Query | undefined,
   paging: Paging | undefined
-): Result<SharedEntitiesQuery, ErrorType.BadRequest> {
+): Result<SharedEntitiesQuery<SearchPublishedEntitiesItem>, ErrorType.BadRequest> {
   return sharedSearchEntitiesQuery(schema, query, paging, true);
 }
 
@@ -32,33 +32,22 @@ export function searchAdminEntitiesQuery(
   schema: Schema,
   query: AdminQuery | undefined,
   paging: Paging | undefined
-): Result<SharedEntitiesQuery, ErrorType.BadRequest> {
+): Result<SharedEntitiesQuery<SearchAdminEntitiesItem>, ErrorType.BadRequest> {
   return sharedSearchEntitiesQuery(schema, query, paging, false);
 }
 
-function sharedSearchEntitiesQuery(
+function sharedSearchEntitiesQuery<
+  TItem extends SearchAdminEntitiesItem | SearchPublishedEntitiesItem
+>(
   schema: Schema,
   query: Query | AdminQuery | undefined,
   paging: Paging | undefined,
   published: boolean
-): Result<SharedEntitiesQuery, ErrorType.BadRequest> {
-  let cursorName: CursorName;
-  let cursorType: CursorNativeType;
-  switch (query?.order) {
-    case AdminQueryOrder.name:
-      cursorName = 'name';
-      cursorType = 'string';
-      break;
-    case AdminQueryOrder.updatedAt:
-      cursorName = 'updated';
-      cursorType = 'int';
-      break;
-    case AdminQueryOrder.createdAt:
-    default:
-      cursorName = 'id';
-      cursorType = 'int';
-      break;
-  }
+): Result<SharedEntitiesQuery<TItem>, ErrorType.BadRequest> {
+  const { cursorType, cursorName, cursorExtractor } = queryOrderToCursor<TItem>(
+    query?.order,
+    published
+  );
 
   const pagingResult = resolvePaging(cursorType, paging);
   if (pagingResult.isError()) {
@@ -143,9 +132,72 @@ function sharedSearchEntitiesQuery(
     ...qb.build(),
     isForwards: resolvedPaging.forwards,
     pagingCount: resolvedPaging.count,
-    cursorName,
-    cursorType,
+    cursorExtractor,
   });
+}
+
+function queryOrderToCursor<TItem extends SearchAdminEntitiesItem | SearchPublishedEntitiesItem>(
+  order: QueryOrder | AdminQueryOrder | undefined,
+  published: boolean
+): {
+  cursorName: CursorName;
+  cursorType: CursorNativeType;
+  cursorExtractor: (item: TItem) => string;
+} {
+  if (published) {
+    switch (order) {
+      case QueryOrder.name: {
+        const cursorType = 'string';
+        const cursorName = 'name';
+        return {
+          cursorType,
+          cursorName,
+          cursorExtractor: (item: TItem) => toOpaqueCursor(cursorType, item[cursorName]),
+        };
+      }
+      case QueryOrder.createdAt:
+      default: {
+        const cursorType = 'int';
+        const cursorName = 'id';
+        return {
+          cursorType,
+          cursorName,
+          cursorExtractor: (item: TItem) => toOpaqueCursor(cursorType, item[cursorName]),
+        };
+      }
+    }
+  }
+  switch (order) {
+    case AdminQueryOrder.name: {
+      const cursorType = 'string';
+      const cursorName = 'name';
+      return {
+        cursorType,
+        cursorName,
+        cursorExtractor: (item: TItem) => toOpaqueCursor(cursorType, item[cursorName]),
+      };
+    }
+    case AdminQueryOrder.updatedAt: {
+      const cursorType = 'int';
+      const cursorName = 'updated';
+      return {
+        cursorType,
+        cursorName,
+        cursorExtractor: (item: TItem) =>
+          toOpaqueCursor(cursorType, (item as SearchAdminEntitiesItem)[cursorName]),
+      };
+    }
+    case AdminQueryOrder.createdAt:
+    default: {
+      const cursorType = 'int';
+      const cursorName = 'id';
+      return {
+        cursorType,
+        cursorName,
+        cursorExtractor: (item: TItem) => toOpaqueCursor(cursorType, item[cursorName]),
+      };
+    }
+  }
 }
 
 export function totalAdminEntitiesQuery(
@@ -215,7 +267,7 @@ export function totalAdminEntitiesQuery(
 
 function getFilterEntityTypes(
   schema: Schema,
-  query: AdminQuery | undefined
+  query: Query | AdminQuery | undefined
 ): Result<string[], ErrorType.BadRequest> {
   if (!query?.entityTypes || query.entityTypes.length === 0) {
     return ok([]);
