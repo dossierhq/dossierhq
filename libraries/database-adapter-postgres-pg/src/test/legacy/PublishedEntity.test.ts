@@ -1,9 +1,27 @@
-import type { AdminClient, PublishedClient } from '@jonasb/datadata-core';
+import type { AdminClient, AdminEntity, PublishedClient } from '@jonasb/datadata-core';
 import { CoreTestUtils, EntityPublishState, ErrorType, FieldType } from '@jonasb/datadata-core';
 import type { Server, SessionContext } from '@jonasb/datadata-server';
 import { createPostgresTestServerAndClient, expectResultValue } from '../TestUtils';
+import {
+  ensureEntityCount,
+  expectConnectionToMatchSlice,
+  getAllEntities,
+} from './EntitySearchTestUtils';
 
 //TODO consider moving this test back to server or even to core
+
+const SCHEMA = {
+  entityTypes: [
+    {
+      name: 'PublishedEntityFoo',
+      fields: [{ name: 'title', type: FieldType.String, isName: true }],
+    },
+    {
+      name: 'PublishedEntityOnlyEditBefore',
+      fields: [{ name: 'message', type: FieldType.String }],
+    },
+  ],
+};
 
 const { expectErrorResult, expectOkResult } = CoreTestUtils;
 
@@ -11,6 +29,7 @@ let server: Server;
 let context: SessionContext;
 let adminClient: AdminClient;
 let publishedClient: PublishedClient;
+let entitiesOfTypePublishedEntityOnlyEditBefore: AdminEntity[];
 
 beforeAll(async () => {
   const result = await createPostgresTestServerAndClient();
@@ -20,18 +39,35 @@ beforeAll(async () => {
   adminClient = server.createAdminClient(context);
   publishedClient = server.createPublishedClient(context);
 
-  await adminClient.updateSchemaSpecification({
-    entityTypes: [
-      {
-        name: 'PublishedEntityFoo',
-        fields: [{ name: 'title', type: FieldType.String, isName: true }],
-      },
-    ],
-  });
+  await adminClient.updateSchemaSpecification(SCHEMA);
+
+  await ensureEntitiesExistForPublishedEntityOnlyEditBefore(adminClient);
+  entitiesOfTypePublishedEntityOnlyEditBefore = await getEntitiesForPublishedEntityOnlyEditBefore(
+    adminClient
+  );
 });
 afterAll(async () => {
   await server.shutdown();
 });
+
+async function ensureEntitiesExistForPublishedEntityOnlyEditBefore(client: AdminClient) {
+  const result = await ensureEntityCount(client, 50, 'PublishedEntityOnlyEditBefore', (random) => ({
+    message: `Hey ${random}`,
+  }));
+  result.throwIfError();
+}
+
+async function getEntitiesForPublishedEntityOnlyEditBefore(client: AdminClient) {
+  //TODO add query support for entity status
+  const result = await getAllEntities(client, { entityTypes: ['PublishedEntityOnlyEditBefore'] });
+  if (result.isError()) {
+    throw result.toError();
+  }
+  const publishedEntities = result.value.filter((it) =>
+    [EntityPublishState.Published, EntityPublishState.Modified].includes(it.info.publishingState)
+  );
+  return publishedEntities;
+}
 
 describe('getEntity()', () => {
   test('Archived then published entity', async () => {
@@ -243,6 +279,22 @@ describe('getEntities()', () => {
       expect(result.value).toHaveLength(2);
       expectErrorResult(result.value[0], ErrorType.NotFound, 'No such entity');
       expectErrorResult(result.value[1], ErrorType.NotFound, 'No such entity');
+    }
+  });
+});
+
+describe('searchEntities()', () => {
+  test('Default => first 25', async () => {
+    const result = await publishedClient.searchEntities({
+      entityTypes: ['PublishedEntityOnlyEditBefore'],
+    });
+    if (expectOkResult(result)) {
+      expectConnectionToMatchSlice(
+        entitiesOfTypePublishedEntityOnlyEditBefore,
+        result.value,
+        0,
+        25
+      );
     }
   });
 });
