@@ -1,5 +1,13 @@
 {
-  "cSpell.words": ["TIMESTAMPTZ", "builtins", "datadata", "postgres", "rushstack", "uuidv"],
+  "cSpell.words": [
+    "builtins",
+    "datadata",
+    "postgres",
+    "rushstack",
+    "TIMESTAMPTZ",
+    "upsert",
+    "uuidv"
+  ],
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
   "editor.rulers": [100],
