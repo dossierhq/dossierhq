@@ -1,7 +1,6 @@
 import type { Connection, Edge, ErrorType, PromiseResult, Schema } from '@jonasb/datadata-core';
 import { ok } from '@jonasb/datadata-core';
 import type { DatabaseAdapter, SessionContext } from '.';
-import { toOpaqueCursor } from './Connection';
 import { queryMany } from './Database';
 import type {
   SearchAdminEntitiesItem,
@@ -16,7 +15,7 @@ export async function sharedSearchEntities<
   schema: Schema,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  sqlQuery: SharedEntitiesQuery,
+  sqlQuery: SharedEntitiesQuery<TDbItem>,
   decoder: (schema: Schema, rowValues: TDbItem) => TEntity
 ): PromiseResult<Connection<Edge<TEntity, ErrorType>> | null, ErrorType.BadRequest> {
   const entitiesValues = await queryMany<TDbItem>(databaseAdapter, context, sqlQuery);
@@ -35,16 +34,16 @@ export async function sharedSearchEntities<
     return ok(null);
   }
 
-  const { cursorName, cursorType } = sqlQuery;
+  const { cursorExtractor } = sqlQuery;
   return ok({
     pageInfo: {
       hasNextPage: sqlQuery.isForwards ? hasExtraPage : false,
       hasPreviousPage: sqlQuery.isForwards ? false : hasExtraPage,
-      startCursor: toOpaqueCursor(cursorType, entitiesValues[0][cursorName]),
-      endCursor: toOpaqueCursor(cursorType, entitiesValues[entitiesValues.length - 1][cursorName]),
+      startCursor: cursorExtractor(entitiesValues[0]),
+      endCursor: cursorExtractor(entitiesValues[entitiesValues.length - 1]),
     },
     edges: entities.map((entity, index) => ({
-      cursor: toOpaqueCursor(cursorType, entitiesValues[index][cursorName]),
+      cursor: cursorExtractor(entitiesValues[index]),
       node: ok(entity),
     })),
   });

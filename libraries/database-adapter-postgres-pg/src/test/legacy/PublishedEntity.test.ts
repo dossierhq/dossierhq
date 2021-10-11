@@ -13,6 +13,7 @@ import {
   ErrorType,
   FieldType,
   ok,
+  QueryOrder,
   RichTextBlockType,
 } from '@jonasb/datadata-core';
 import type { Server, SessionContext } from '@jonasb/datadata-server';
@@ -532,7 +533,46 @@ describe('searchEntities() paging', () => {
   });
 });
 
-// TODO searchEntities order
+describe('searchEntities() order', () => {
+  test('First default, ordered by createdAt', async () => {
+    const result = await publishedClient.searchEntities(
+      {
+        entityTypes: ['PublishedEntityOnlyEditBefore'],
+        order: QueryOrder.createdAt,
+      },
+      { first: 20 }
+    );
+    if (expectOkResult(result)) {
+      expectConnectionToMatchSlice(
+        entitiesOfTypePublishedEntityOnlyEditBefore,
+        result.value,
+        0,
+        20
+      );
+    }
+  });
+
+  test('First default, ordered by name', async () => {
+    const result = await publishedClient.searchEntities(
+      {
+        entityTypes: ['PublishedEntityOnlyEditBefore'],
+        order: QueryOrder.name,
+      },
+      { first: 20 }
+    );
+    if (expectOkResult(result)) {
+      expectConnectionToMatchSlice(
+        entitiesOfTypePublishedEntityOnlyEditBefore,
+        result.value,
+        0,
+        20,
+        (a, b) => {
+          return a.info.name < b.info.name ? -1 : 1;
+        }
+      );
+    }
+  });
+});
 
 // TODO searchEntities referencing
 

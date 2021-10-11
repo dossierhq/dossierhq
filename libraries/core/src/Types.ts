@@ -171,12 +171,17 @@ export interface AdminQuery {
   text?: string;
 }
 
+export enum QueryOrder {
+  createdAt = 'createdAt',
+  name = 'name',
+}
+
 export interface Query {
   entityTypes?: string[];
   /** Entities referencing the entity (by id) */
   referencing?: string;
   boundingBox?: BoundingBox;
-  order?: AdminQueryOrder;
+  order?: QueryOrder;
   text?: string;
 }
 
