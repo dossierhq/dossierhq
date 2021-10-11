@@ -17,6 +17,7 @@ import {
   RichTextBlockType,
 } from '@jonasb/datadata-core';
 import type { Server, SessionContext } from '@jonasb/datadata-server';
+import { Temporal } from '@js-temporal/polyfill';
 import { validate as validateUuid } from 'uuid';
 import {
   createPostgresTestServerAndClient,
@@ -2052,12 +2053,17 @@ describe('searchEntities()', () => {
       { first: 20 }
     );
     expectOkResult(result);
-    //TODO expose updatedAt
-    // if (expectOkResult(result)) {
-    //   expectConnectionToMatchSlice(entitiesOfTypeAdminOnlyEditBefore, result.value, 0, 20, (a, b) => {
-    //     return a.info.name < b.info.name ? -1 : 1;
-    //   });
-    // }
+    if (expectOkResult(result)) {
+      expectConnectionToMatchSlice(
+        entitiesOfTypeAdminOnlyEditBefore,
+        result.value,
+        0,
+        20,
+        (a, b) => {
+          return Temporal.Instant.compare(a.info.updatedAt, b.info.updatedAt);
+        }
+      );
+    }
   });
 
   test('Query based on referencing, one reference', async () => {
