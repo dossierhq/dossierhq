@@ -1,27 +1,59 @@
-import type { AdminClient, AdminEntity, PublishedClient } from '@jonasb/datadata-core';
-import { CoreTestUtils, EntityPublishState, ErrorType, FieldType } from '@jonasb/datadata-core';
+import type {
+  AdminClient,
+  AdminEntity,
+  AdminEntityCreate,
+  AdminEntityCreatePayload,
+  PromiseResult,
+  PublishedClient,
+  SchemaSpecificationUpdate,
+} from '@jonasb/datadata-core';
+import {
+  CoreTestUtils,
+  EntityPublishState,
+  ErrorType,
+  FieldType,
+  ok,
+  RichTextBlockType,
+} from '@jonasb/datadata-core';
 import type { Server, SessionContext } from '@jonasb/datadata-server';
 import { createPostgresTestServerAndClient, expectResultValue } from '../TestUtils';
 import {
   ensureEntityCount,
   expectConnectionToMatchSlice,
   getAllEntities,
+  randomBoundingBox,
 } from './EntitySearchTestUtils';
 
 //TODO consider moving this test back to server or even to core
 
-const SCHEMA = {
+const SCHEMA: SchemaSpecificationUpdate = {
   entityTypes: [
     {
       name: 'PublishedEntityFoo',
-      fields: [{ name: 'title', type: FieldType.String, isName: true }],
+      fields: [
+        { name: 'title', type: FieldType.String, isName: true },
+        { name: 'location', type: 'Location' },
+        { name: 'locations', type: 'Location', list: true },
+        { name: 'body', type: 'RichText' },
+      ],
     },
     {
       name: 'PublishedEntityOnlyEditBefore',
       fields: [{ name: 'message', type: FieldType.String }],
     },
   ],
+  valueTypes: [
+    {
+      name: 'PublishedEntityStringedLocation',
+      fields: [
+        { name: 'string', type: 'String' },
+        { name: 'location', type: 'Location' },
+      ],
+    },
+  ],
 };
+
+const emptyFooFields = { body: null, location: null, locations: null, title: null };
 
 const { expectErrorResult, expectOkResult } = CoreTestUtils;
 
@@ -69,6 +101,40 @@ async function getEntitiesForPublishedEntityOnlyEditBefore(client: AdminClient) 
   return publishedEntities;
 }
 
+async function createAndPublishEntities(
+  adminClient: AdminClient,
+  ...entities: AdminEntityCreate[]
+): PromiseResult<
+  AdminEntityCreatePayload[],
+  ErrorType.BadRequest | ErrorType.Conflict | ErrorType.NotFound | ErrorType.Generic
+> {
+  //TODO use transaction when supported in client
+  //TODO consider adding this kind of operation to AdminClient
+  const result: AdminEntityCreatePayload[] = [];
+  for (const entity of entities) {
+    const createResult = await adminClient.createEntity(entity);
+    if (createResult.isError()) {
+      return createResult;
+    }
+    result.push(createResult.value);
+  }
+
+  const publishResult = await adminClient.publishEntities(
+    result.map((it) => ({ id: it.entity.id, version: it.entity.info.version }))
+  );
+  if (publishResult.isError()) {
+    return publishResult;
+  }
+  for (let i = 0; i < result.length; i += 1) {
+    const entityInfo = result[i].entity.info;
+    const { publishState, updatedAt } = publishResult.value[i];
+    entityInfo.publishingState = publishState;
+    entityInfo.updatedAt = updatedAt;
+  }
+
+  return ok(result);
+}
+
 describe('getEntity()', () => {
   test('Archived then published entity', async () => {
     const createResult = await adminClient.createEntity({
@@ -105,7 +171,7 @@ describe('getEntity()', () => {
       expectResultValue(result, {
         id,
         info: { type: 'PublishedEntityFoo', name },
-        fields: { title: 'Title 1' },
+        fields: { ...emptyFooFields, title: 'Title 1' },
       });
     }
   });
@@ -190,12 +256,12 @@ describe('getEntities()', () => {
         expectResultValue(result.value[0], {
           id: foo2Id,
           info: { type: 'PublishedEntityFoo', name: foo2Name },
-          fields: { title: 'Title 2' },
+          fields: { ...emptyFooFields, title: 'Title 2' },
         });
         expectResultValue(result.value[1], {
           id: foo1Id,
           info: { type: 'PublishedEntityFoo', name: foo1Name },
-          fields: { title: 'Title 1' },
+          fields: { ...emptyFooFields, title: 'Title 1' },
         });
       }
     }
@@ -233,6 +299,7 @@ describe('getEntities()', () => {
           id: foo1Id,
           info: { type: 'PublishedEntityFoo', name: foo1Name },
           fields: {
+            ...emptyFooFields,
             title: 'Title',
           },
         });
@@ -283,7 +350,7 @@ describe('getEntities()', () => {
   });
 });
 
-describe('searchEntities()', () => {
+describe('searchEntities() paging', () => {
   test('Default => first 25', async () => {
     const result = await publishedClient.searchEntities({
       entityTypes: ['PublishedEntityOnlyEditBefore'],
@@ -460,6 +527,186 @@ describe('searchEntities()', () => {
           3 /*inclusive*/,
           8 /*exclusive*/
         );
+      }
+    }
+  });
+});
+
+// TODO searchEntities order
+
+// TODO searchEntities referencing
+
+describe('searchEntities() boundingBox', () => {
+  test('Query based on bounding box', async () => {
+    const boundingBox = randomBoundingBox();
+    const center = {
+      lat: (boundingBox.minLat + boundingBox.maxLat) / 2,
+      lng: (boundingBox.minLng + boundingBox.maxLng) / 2,
+    };
+    const createAndPublishResult = await createAndPublishEntities(adminClient, {
+      info: { type: 'PublishedEntityFoo', name: 'Foo' },
+      fields: { location: center },
+    });
+
+    if (expectOkResult(createAndPublishResult)) {
+      const [
+        {
+          entity: { id },
+        },
+      ] = createAndPublishResult.value;
+
+      const searchResult = await publishedClient.searchEntities({ boundingBox });
+      if (expectOkResult(searchResult)) {
+        let fooIdCount = 0;
+        for (const edge of searchResult.value?.edges ?? []) {
+          if (expectOkResult(edge.node)) {
+            if (edge.node.value.id === id) {
+              fooIdCount += 1;
+            }
+          }
+        }
+        expect(fooIdCount).toBe(1);
+      }
+    }
+  });
+
+  test('Query based on bounding box (outside)', async () => {
+    const boundingBox = randomBoundingBox();
+    const outside = {
+      lat: (boundingBox.minLat + boundingBox.maxLat) / 2,
+      lng: boundingBox.minLng > 0 ? boundingBox.minLng - 1 : boundingBox.maxLng + 1,
+    };
+    const createAndPublishResult = await createAndPublishEntities(adminClient, {
+      info: { type: 'PublishedEntityFoo', name: 'Foo' },
+      fields: { location: outside },
+    });
+
+    if (expectOkResult(createAndPublishResult)) {
+      const [
+        {
+          entity: { id },
+        },
+      ] = createAndPublishResult.value;
+      const searchResult = await publishedClient.searchEntities({ boundingBox });
+      if (expectOkResult(searchResult)) {
+        let fooIdCount = 0;
+        for (const edge of searchResult.value?.edges ?? []) {
+          if (expectOkResult(edge.node)) {
+            if (edge.node.value.id === id) {
+              fooIdCount += 1;
+            }
+          }
+        }
+        expect(fooIdCount).toBe(0);
+      }
+    }
+  });
+
+  test('Query based on bounding box with two locations inside', async () => {
+    const boundingBox = randomBoundingBox();
+    const center = {
+      lat: (boundingBox.minLat + boundingBox.maxLat) / 2,
+      lng: (boundingBox.minLng + boundingBox.maxLng) / 2,
+    };
+    const inside = {
+      lat: center.lat,
+      lng: (center.lng + boundingBox.maxLng) / 2,
+    };
+
+    const createAndPublishResult = await createAndPublishEntities(adminClient, {
+      info: { type: 'PublishedEntityFoo', name: 'Foo' },
+      fields: { locations: [center, inside] },
+    });
+
+    if (expectOkResult(createAndPublishResult)) {
+      const [
+        {
+          entity: { id },
+        },
+      ] = createAndPublishResult.value;
+      const searchResult = await publishedClient.searchEntities({ boundingBox });
+      if (expectOkResult(searchResult)) {
+        let fooIdCount = 0;
+        for (const edge of searchResult.value?.edges ?? []) {
+          if (expectOkResult(edge.node)) {
+            if (edge.node.value.id === id) {
+              fooIdCount += 1;
+            }
+          }
+        }
+        expect(fooIdCount).toBe(1);
+      }
+    }
+  });
+
+  test('Query based on bounding box for rich text', async () => {
+    const boundingBox = randomBoundingBox();
+    const center = {
+      lat: (boundingBox.minLat + boundingBox.maxLat) / 2,
+      lng: (boundingBox.minLng + boundingBox.maxLng) / 2,
+    };
+
+    const createAndPublishResult = await createAndPublishEntities(adminClient, {
+      info: { type: 'PublishedEntityFoo', name: 'Foo' },
+      fields: {
+        body: {
+          blocks: [
+            {
+              type: RichTextBlockType.valueItem,
+              data: {
+                type: 'PublishedEntityStringedLocation',
+                string: 'Hello location',
+                location: center,
+              },
+            },
+          ],
+        },
+      },
+    });
+
+    if (expectOkResult(createAndPublishResult)) {
+      const [
+        {
+          entity: {
+            id: bazId,
+            info: { name },
+          },
+        },
+      ] = createAndPublishResult.value;
+      const searchResult = await publishedClient.searchEntities({ boundingBox });
+      if (expectOkResult(searchResult)) {
+        let bazIdCount = 0;
+        for (const edge of searchResult.value?.edges ?? []) {
+          if (expectOkResult(edge.node)) {
+            if (edge.node.value.id === bazId) {
+              bazIdCount += 1;
+
+              expectResultValue(edge.node, {
+                id: bazId,
+                info: {
+                  type: 'PublishedEntityFoo',
+                  name,
+                },
+                fields: {
+                  ...emptyFooFields,
+                  body: {
+                    blocks: [
+                      {
+                        type: RichTextBlockType.valueItem,
+                        data: {
+                          type: 'PublishedEntityStringedLocation',
+                          string: 'Hello location',
+                          location: center,
+                        },
+                      },
+                    ],
+                  },
+                },
+              });
+            }
+          }
+        }
+        expect(bazIdCount).toBe(1);
       }
     }
   });

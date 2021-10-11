@@ -1,10 +1,4 @@
-import type {
-  AdminClient,
-  AdminEntity,
-  AdminQuery,
-  BoundingBox,
-  PublishedClient,
-} from '@jonasb/datadata-core';
+import type { AdminClient, AdminEntity, AdminQuery, PublishedClient } from '@jonasb/datadata-core';
 import {
   copyEntity,
   CoreTestUtils,
@@ -30,6 +24,7 @@ import {
   ensureEntityCount,
   expectConnectionToMatchSlice,
   getAllEntities,
+  randomBoundingBox,
 } from './EntitySearchTestUtils';
 
 const { expectErrorResult, expectOkResult } = CoreTestUtils;
@@ -295,19 +290,6 @@ async function createBarWithFooBazReferences(
     }
   }
   return { barId, fooEntities, bazEntities };
-}
-
-/** Random bounding box (which doesn't wrap 180/-180 longitude) */
-function randomBoundingBox(heightLat = 1.0, widthLng = 1.0): BoundingBox {
-  function randomInRange(min: number, max: number) {
-    return min + Math.random() * (max - min);
-  }
-
-  const minLat = randomInRange(-90, 90 - heightLat);
-  const minLng = randomInRange(-180, 180 - widthLng);
-  const maxLat = minLat + heightLat;
-  const maxLng = minLng + widthLng;
-  return { minLat, maxLat, minLng, maxLng };
 }
 
 describe('getEntity()', () => {
@@ -1844,7 +1826,7 @@ describe('createEntity()', () => {
   });
 });
 
-describe('searchEntities()', () => {
+describe('searchEntities() paging', () => {
   test('Default => first 25', async () => {
     const result = await client.searchEntities({
       entityTypes: ['AdminOnlyEditBefore'],
@@ -2009,7 +1991,9 @@ describe('searchEntities()', () => {
       }
     }
   });
+});
 
+describe('searchEntities() order', () => {
   test('First default, ordered by createdAt', async () => {
     const result = await client.searchEntities(
       {
@@ -2065,7 +2049,9 @@ describe('searchEntities()', () => {
       );
     }
   });
+});
 
+describe('searchEntities() referencing', () => {
   test('Query based on referencing, one reference', async () => {
     const { barId, fooEntities } = await createBarWithFooBazReferences(1, 0);
     const [fooEntity] = fooEntities;
@@ -2098,7 +2084,9 @@ describe('searchEntities()', () => {
     });
     expectSearchResultEntities(searchResult, [bazEntity]);
   });
+});
 
+describe('searchEntities() boundingBox', () => {
   test('Query based on bounding box', async () => {
     const boundingBox = randomBoundingBox();
     const center = {
@@ -2267,7 +2255,9 @@ describe('searchEntities()', () => {
       }
     }
   });
+});
 
+describe('searchEntities() text', () => {
   test('Query based on text (after creation and updating)', async () => {
     const createResult = await client.createEntity({
       info: { type: 'EntityAdminFoo', name: 'Foo' },
