@@ -3,8 +3,6 @@ import type {
   AdminEntity,
   AdminQuery,
   BoundingBox,
-  Connection,
-  Edge,
   PublishedClient,
 } from '@jonasb/datadata-core';
 import {
@@ -27,6 +25,11 @@ import {
   expectSearchResultEntities,
   insecureTestUuidv4,
 } from '../TestUtils';
+import {
+  ensureEntityCount,
+  expectConnectionToMatchSlice,
+  getAllEntities,
+} from './EntitySearchTestUtils';
 
 const { expectErrorResult, expectOkResult } = CoreTestUtils;
 
@@ -211,58 +214,25 @@ beforeAll(async () => {
   });
 
   await ensureEntitiesExistForAdminOnlyEditBefore(client);
-  const knownIds = await getEntitiesForAdminOnlyEditBefore(client);
-  entitiesOfTypeAdminOnlyEditBefore = knownIds.entities;
+  entitiesOfTypeAdminOnlyEditBefore = await getEntitiesForAdminOnlyEditBefore(client);
 });
 afterAll(async () => {
   await server.shutdown();
 });
 
 async function ensureEntitiesExistForAdminOnlyEditBefore(client: AdminClient) {
-  const requestedCount = 50;
-  const entitiesOfTypeCount = await client.getTotalCount({
-    entityTypes: ['AdminOnlyEditBefore'],
-  });
-
-  if (expectOkResult(entitiesOfTypeCount)) {
-    for (let count = entitiesOfTypeCount.value; count < requestedCount; count += 1) {
-      const random = String(Math.random()).slice(2);
-      const createResult = await client.createEntity({
-        info: { type: 'AdminOnlyEditBefore', name: random },
-        fields: { message: `Hey ${random}` },
-      });
-      if (expectOkResult(createResult)) {
-        const {
-          entity: {
-            id,
-            info: { version },
-          },
-        } = createResult.value;
-        const publishResult = await client.publishEntities([{ id, version }]);
-        publishResult.throwIfError();
-      }
-    }
-  }
+  const result = await ensureEntityCount(client, 50, 'AdminOnlyEditBefore', (random) => ({
+    message: `Hey ${random}`,
+  }));
+  result.throwIfError();
 }
 
 async function getEntitiesForAdminOnlyEditBefore(client: AdminClient) {
-  const query = { entityTypes: ['AdminOnlyEditBefore'] };
-  const entities: AdminEntity[] = [];
-  for await (const pageResult of getAllPagesForConnection({ first: 100 }, (currentPaging) =>
-    client.searchEntities(query, currentPaging)
-  )) {
-    if (pageResult.isError()) {
-      throw pageResult.toError();
-    }
-
-    for (const edge of pageResult.value.edges) {
-      if (edge.node.isOk()) {
-        const entity = edge.node.value;
-        entities.push(entity);
-      }
-    }
+  const result = await getAllEntities(client, { entityTypes: ['AdminOnlyEditBefore'] });
+  if (result.isError()) {
+    throw result.toError();
   }
-  return { entities };
+  return result.value;
 }
 
 async function countSearchResultWithEntity(query: AdminQuery, entityId: string) {
@@ -1873,33 +1843,13 @@ describe('createEntity()', () => {
   });
 });
 
-function expectConnectionToMatchSlice(
-  connection: Connection<Edge<AdminEntity, ErrorType>> | null,
-  sliceStart: number,
-  sliceEnd: number | undefined,
-  compareFn?: (a: AdminEntity, b: AdminEntity) => number
-) {
-  const actualIds = connection?.edges.map((edge) => ({
-    id: edge.node.isOk() ? edge.node.value.id : edge.node,
-  }));
-
-  let expectedEntities = entitiesOfTypeAdminOnlyEditBefore;
-  if (compareFn) {
-    expectedEntities = [...entitiesOfTypeAdminOnlyEditBefore].sort(compareFn);
-  }
-
-  const expectedIds = expectedEntities.slice(sliceStart, sliceEnd).map((x) => ({ id: x.id }));
-
-  expect(actualIds).toEqual(expectedIds);
-}
-
 describe('searchEntities()', () => {
   test('Default => first 25', async () => {
     const result = await client.searchEntities({
       entityTypes: ['AdminOnlyEditBefore'],
     });
     if (expectOkResult(result)) {
-      expectConnectionToMatchSlice(result.value, 0, 25);
+      expectConnectionToMatchSlice(entitiesOfTypeAdminOnlyEditBefore, result.value, 0, 25);
     }
   });
 
@@ -1911,7 +1861,7 @@ describe('searchEntities()', () => {
       { first: 10 }
     );
     if (expectOkResult(result)) {
-      expectConnectionToMatchSlice(result.value, 0, 10);
+      expectConnectionToMatchSlice(entitiesOfTypeAdminOnlyEditBefore, result.value, 0, 10);
     }
   });
 
@@ -1947,7 +1897,7 @@ describe('searchEntities()', () => {
       { last: 10 }
     );
     if (expectOkResult(result)) {
-      expectConnectionToMatchSlice(result.value, -10, undefined);
+      expectConnectionToMatchSlice(entitiesOfTypeAdminOnlyEditBefore, result.value, -10, undefined);
     }
   });
 
@@ -1966,7 +1916,12 @@ describe('searchEntities()', () => {
         { first: 20, after: firstResult.value?.pageInfo.endCursor }
       );
       if (expectOkResult(secondResult)) {
-        expectConnectionToMatchSlice(secondResult.value, 10, 10 + 20);
+        expectConnectionToMatchSlice(
+          entitiesOfTypeAdminOnlyEditBefore,
+          secondResult.value,
+          10,
+          10 + 20
+        );
       }
     }
   });
@@ -1986,7 +1941,12 @@ describe('searchEntities()', () => {
         { last: 20, before: firstResult.value?.pageInfo.startCursor }
       );
       if (expectOkResult(secondResult)) {
-        expectConnectionToMatchSlice(secondResult.value, -10 - 20, -10);
+        expectConnectionToMatchSlice(
+          entitiesOfTypeAdminOnlyEditBefore,
+          secondResult.value,
+          -10 - 20,
+          -10
+        );
       }
     }
   });
@@ -2010,7 +1970,12 @@ describe('searchEntities()', () => {
         }
       );
       if (expectOkResult(secondResult)) {
-        expectConnectionToMatchSlice(secondResult.value, 3 /*inclusive*/, 8 /*exclusive*/);
+        expectConnectionToMatchSlice(
+          entitiesOfTypeAdminOnlyEditBefore,
+          secondResult.value,
+          3 /*inclusive*/,
+          8 /*exclusive*/
+        );
       }
     }
   });
@@ -2034,7 +1999,12 @@ describe('searchEntities()', () => {
         }
       );
       if (expectOkResult(secondResult)) {
-        expectConnectionToMatchSlice(secondResult.value, 3 /*inclusive*/, 8 /*exclusive*/);
+        expectConnectionToMatchSlice(
+          entitiesOfTypeAdminOnlyEditBefore,
+          secondResult.value,
+          3 /*inclusive*/,
+          8 /*exclusive*/
+        );
       }
     }
   });
@@ -2048,7 +2018,7 @@ describe('searchEntities()', () => {
       { first: 20 }
     );
     if (expectOkResult(result)) {
-      expectConnectionToMatchSlice(result.value, 0, 20);
+      expectConnectionToMatchSlice(entitiesOfTypeAdminOnlyEditBefore, result.value, 0, 20);
     }
   });
 
@@ -2061,9 +2031,15 @@ describe('searchEntities()', () => {
       { first: 20 }
     );
     if (expectOkResult(result)) {
-      expectConnectionToMatchSlice(result.value, 0, 20, (a, b) => {
-        return a.info.name < b.info.name ? -1 : 1;
-      });
+      expectConnectionToMatchSlice(
+        entitiesOfTypeAdminOnlyEditBefore,
+        result.value,
+        0,
+        20,
+        (a, b) => {
+          return a.info.name < b.info.name ? -1 : 1;
+        }
+      );
     }
   });
 
@@ -2078,7 +2054,7 @@ describe('searchEntities()', () => {
     expectOkResult(result);
     //TODO expose updatedAt
     // if (expectOkResult(result)) {
-    //   expectConnectionToMatchSlice(result.value, 0, 20, (a, b) => {
+    //   expectConnectionToMatchSlice(entitiesOfTypeAdminOnlyEditBefore, result.value, 0, 20, (a, b) => {
     //     return a.info.name < b.info.name ? -1 : 1;
     //   });
     // }
