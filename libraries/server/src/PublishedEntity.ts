@@ -1,9 +1,22 @@
-import type { Entity, PromiseResult, Result, ErrorType, Schema } from '@jonasb/datadata-core';
+import type {
+  Connection,
+  Edge,
+  Entity,
+  ErrorType,
+  Paging,
+  PromiseResult,
+  Query,
+  Result,
+  Schema,
+} from '@jonasb/datadata-core';
 import { notOk, ok } from '@jonasb/datadata-core';
 import type { DatabaseAdapter, SessionContext } from '.';
 import * as Db from './Database';
 import type { EntitiesTable, EntityVersionsTable } from './DatabaseTables';
 import { decodePublishedEntity } from './EntityCodec';
+import { sharedSearchEntities } from './EntitySearcher';
+import type { SearchPublishedEntitiesItem } from './QueryGenerator';
+import { searchPublishedEntitiesQuery } from './QueryGenerator';
 
 export async function getEntity(
   schema: Schema,
@@ -70,4 +83,25 @@ export async function getEntities(
   });
 
   return ok(result);
+}
+
+export async function searchEntities(
+  schema: Schema,
+  databaseAdapter: DatabaseAdapter,
+  context: SessionContext,
+  query: Query | undefined,
+  paging: Paging | undefined
+): PromiseResult<Connection<Edge<Entity, ErrorType>> | null, ErrorType.BadRequest> {
+  const sqlQueryResult = searchPublishedEntitiesQuery(schema, query, paging);
+  if (sqlQueryResult.isError()) {
+    return sqlQueryResult;
+  }
+
+  return await sharedSearchEntities<Entity, SearchPublishedEntitiesItem>(
+    schema,
+    databaseAdapter,
+    context,
+    sqlQueryResult.value,
+    decodePublishedEntity
+  );
 }

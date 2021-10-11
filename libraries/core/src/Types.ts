@@ -171,6 +171,15 @@ export interface AdminQuery {
   text?: string;
 }
 
+export interface Query {
+  entityTypes?: string[];
+  /** Entities referencing the entity (by id) */
+  referencing?: string;
+  boundingBox?: BoundingBox;
+  order?: QueryOrder;
+  text?: string;
+}
+
 export interface Paging {
   first?: number;
   after?: string;

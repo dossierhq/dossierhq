@@ -29,7 +29,6 @@ import {
   ok,
 } from '@jonasb/datadata-core';
 import type { DatabaseAdapter, SessionContext } from '.';
-import { toOpaqueCursor } from './Connection';
 import * as Db from './Database';
 import type {
   EntitiesTable,
@@ -44,6 +43,7 @@ import {
   resolvePublishState,
   resolveUpdateEntity,
 } from './EntityCodec';
+import { sharedSearchEntities } from './EntitySearcher';
 import QueryBuilder from './QueryBuilder';
 import type { SearchAdminEntitiesItem } from './QueryGenerator';
 import { searchAdminEntitiesQuery, totalAdminEntitiesQuery } from './QueryGenerator';
@@ -119,53 +119,28 @@ export async function searchEntities(
   schema: Schema,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  query?: AdminQuery,
-  paging?: Paging
+  query: AdminQuery | undefined,
+  paging: Paging | undefined
 ): PromiseResult<Connection<Edge<AdminEntity, ErrorType>> | null, ErrorType.BadRequest> {
-  const sqlQuery = searchAdminEntitiesQuery(schema, query, paging);
-  if (sqlQuery.isError()) {
-    return sqlQuery;
+  const sqlQueryResult = searchAdminEntitiesQuery(schema, query, paging);
+  if (sqlQueryResult.isError()) {
+    return sqlQueryResult;
   }
-  const entitiesValues = await Db.queryMany<SearchAdminEntitiesItem>(
+
+  return await sharedSearchEntities<AdminEntity, SearchAdminEntitiesItem>(
+    schema,
     databaseAdapter,
     context,
-    sqlQuery.value
+    sqlQueryResult.value,
+    decodeAdminEntity
   );
-  const hasExtraPage = entitiesValues.length > sqlQuery.value.pagingCount;
-  if (hasExtraPage) {
-    entitiesValues.splice(sqlQuery.value.pagingCount, 1);
-  }
-
-  if (!sqlQuery.value.isForwards) {
-    // Reverse since DESC order returns the rows in the wrong order, we want them in the same order as for forwards pagination
-    entitiesValues.reverse();
-  }
-
-  const entities = entitiesValues.map((it) => decodeAdminEntity(schema, it));
-  if (entities.length === 0) {
-    return ok(null);
-  }
-
-  const { cursorName, cursorType } = sqlQuery.value;
-  return ok({
-    pageInfo: {
-      hasNextPage: sqlQuery.value.isForwards ? hasExtraPage : false,
-      hasPreviousPage: sqlQuery.value.isForwards ? false : hasExtraPage,
-      startCursor: toOpaqueCursor(cursorType, entitiesValues[0][cursorName]),
-      endCursor: toOpaqueCursor(cursorType, entitiesValues[entitiesValues.length - 1][cursorName]),
-    },
-    edges: entities.map((entity, index) => ({
-      cursor: toOpaqueCursor(cursorType, entitiesValues[index][cursorName]),
-      node: ok(entity),
-    })),
-  });
 }
 
 export async function getTotalCount(
   schema: Schema,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  query?: AdminQuery
+  query: AdminQuery | undefined
 ): PromiseResult<number, ErrorType.BadRequest> {
   const sqlQuery = totalAdminEntitiesQuery(schema, query);
   if (sqlQuery.isError()) {
