@@ -7,10 +7,10 @@ import type {
   ErrorType,
   Paging,
 } from '@jonasb/datadata-core';
-import { getPagingInfo, QueryOrder } from '@jonasb/datadata-core';
+import { AdminQueryOrder, getPagingInfo } from '@jonasb/datadata-core';
 import isEqual from 'lodash/isEqual.js';
 
-const defaultOrder = QueryOrder.name;
+const defaultOrder = AdminQueryOrder.name;
 const defaultPagingCount = 25;
 
 export interface SearchEntityState {

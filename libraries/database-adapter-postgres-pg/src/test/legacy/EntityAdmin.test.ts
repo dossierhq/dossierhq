@@ -1,5 +1,6 @@
 import type { AdminClient, AdminEntity, AdminQuery, PublishedClient } from '@jonasb/datadata-core';
 import {
+  AdminQueryOrder,
   copyEntity,
   CoreTestUtils,
   EntityPublishState,
@@ -7,7 +8,6 @@ import {
   FieldType,
   getAllPagesForConnection,
   PublishingEventKind,
-  QueryOrder,
   RichTextBlockType,
 } from '@jonasb/datadata-core';
 import type { Server, SessionContext } from '@jonasb/datadata-server';
@@ -1998,7 +1998,7 @@ describe('searchEntities() order', () => {
     const result = await client.searchEntities(
       {
         entityTypes: ['AdminOnlyEditBefore'],
-        order: QueryOrder.createdAt,
+        order: AdminQueryOrder.createdAt,
       },
       { first: 20 }
     );
@@ -2011,7 +2011,7 @@ describe('searchEntities() order', () => {
     const result = await client.searchEntities(
       {
         entityTypes: ['AdminOnlyEditBefore'],
-        order: QueryOrder.name,
+        order: AdminQueryOrder.name,
       },
       { first: 20 }
     );
@@ -2032,7 +2032,7 @@ describe('searchEntities() order', () => {
     const result = await client.searchEntities(
       {
         entityTypes: ['AdminOnlyEditBefore'],
-        order: QueryOrder.updatedAt,
+        order: AdminQueryOrder.updatedAt,
       },
       { first: 20 }
     );
