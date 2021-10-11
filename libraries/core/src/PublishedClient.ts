@@ -1,4 +1,14 @@
-import type { ContextProvider, Entity, EntityReference, PromiseResult, Result } from '.';
+import type {
+  Connection,
+  ContextProvider,
+  Edge,
+  Entity,
+  EntityReference,
+  Paging,
+  PromiseResult,
+  Query,
+  Result,
+} from '.';
 import { ErrorType, notOk } from '.';
 import type { ErrorFromPromiseResult, OkFromPromiseResult } from './ErrorResult';
 import type {
@@ -17,11 +27,20 @@ export interface PublishedClient {
   getEntities(
     references: EntityReference[]
   ): PromiseResult<Result<Entity, ErrorType.NotFound>[], ErrorType.Generic>;
+
+  searchEntities(
+    query?: Query,
+    paging?: Paging
+  ): PromiseResult<
+    Connection<Edge<Entity, ErrorType>> | null,
+    ErrorType.BadRequest | ErrorType.Generic
+  >;
 }
 
 export enum PublishedClientOperationName {
   getEntities = 'getEntities',
   getEntity = 'getEntity',
+  searchEntities = 'searchEntities',
 }
 
 type MethodParameters<T extends keyof PublishedClient> = Parameters<PublishedClient[T]>;
@@ -40,21 +59,25 @@ type WithoutPromise<T> = T extends Promise<infer U> ? U : T;
 interface PublishedClientOperationArguments {
   [PublishedClientOperationName.getEntities]: MethodParameters<'getEntities'>;
   [PublishedClientOperationName.getEntity]: MethodParameters<'getEntity'>;
+  [PublishedClientOperationName.searchEntities]: MethodParameters<'searchEntities'>;
 }
 
 interface PublishedClientOperationReturn {
   [PublishedClientOperationName.getEntities]: MethodReturnType<'getEntities'>;
   [PublishedClientOperationName.getEntity]: MethodReturnType<'getEntity'>;
+  [PublishedClientOperationName.searchEntities]: MethodReturnType<'searchEntities'>;
 }
 
 interface PublishedClientOperationReturnOk {
   [PublishedClientOperationName.getEntities]: MethodReturnTypeOk<'getEntities'>;
   [PublishedClientOperationName.getEntity]: MethodReturnTypeOk<'getEntity'>;
+  [PublishedClientOperationName.searchEntities]: MethodReturnTypeOk<'searchEntities'>;
 }
 
 interface PublishedClientOperationReturnError {
   [PublishedClientOperationName.getEntities]: MethodReturnTypeError<'getEntities'>;
   [PublishedClientOperationName.getEntity]: MethodReturnTypeError<'getEntity'>;
+  [PublishedClientOperationName.searchEntities]: MethodReturnTypeError<'searchEntities'>;
 }
 
 export type PublishedClientOperation<
@@ -102,6 +125,17 @@ class BasePublishedClient<TContext extends ClientContext> implements PublishedCl
     return this.executeOperation({
       name: PublishedClientOperationName.getEntities,
       args: [references],
+      modifies: false,
+    });
+  }
+
+  searchEntities(
+    query?: Query,
+    paging?: Paging
+  ): Promise<PublishedClientOperationReturn[PublishedClientOperationName.searchEntities]> {
+    return this.executeOperation({
+      name: PublishedClientOperationName.searchEntities,
+      args: [query, paging],
       modifies: false,
     });
   }

@@ -1,29 +1,48 @@
-import type { AdminQuery, ErrorType, Paging, Result, Schema } from '@jonasb/datadata-core';
+import type { AdminQuery, ErrorType, Paging, Query, Result, Schema } from '@jonasb/datadata-core';
 import { notOk, ok, QueryOrder } from '@jonasb/datadata-core';
 import type { CursorNativeType } from './Connection';
 import type { EntitiesTable } from './DatabaseTables';
-import type { AdminEntityValues } from './EntityCodec';
+import type { AdminEntityValues, EntityValues } from './EntityCodec';
 import { resolvePaging } from './Paging';
 import QueryBuilder from './QueryBuilder';
 
 export type SearchAdminEntitiesItem = Pick<EntitiesTable, 'id' | 'updated'> & AdminEntityValues;
+export type SearchPublishedEntitiesItem = Pick<EntitiesTable, 'id' | 'updated'> & EntityValues;
+
+type CursorName = 'name' | 'updated' | 'id';
+
+export interface SharedEntitiesQuery {
+  text: string;
+  values: unknown[];
+  isForwards: boolean;
+  pagingCount: number;
+  cursorName: CursorName;
+  cursorType: CursorNativeType;
+}
+
+export function searchPublishedEntitiesQuery(
+  schema: Schema,
+  query: Query | undefined,
+  paging: Paging | undefined
+): Result<SharedEntitiesQuery, ErrorType.BadRequest> {
+  return sharedSearchEntitiesQuery(schema, query, paging, true);
+}
 
 export function searchAdminEntitiesQuery(
   schema: Schema,
   query: AdminQuery | undefined,
   paging: Paging | undefined
-): Result<
-  {
-    text: string;
-    values: unknown[];
-    isForwards: boolean;
-    pagingCount: number;
-    cursorName: keyof SearchAdminEntitiesItem;
-    cursorType: CursorNativeType;
-  },
-  ErrorType.BadRequest
-> {
-  let cursorName: keyof SearchAdminEntitiesItem;
+): Result<SharedEntitiesQuery, ErrorType.BadRequest> {
+  return sharedSearchEntitiesQuery(schema, query, paging, false);
+}
+
+function sharedSearchEntitiesQuery(
+  schema: Schema,
+  query: Query | AdminQuery | undefined,
+  paging: Paging | undefined,
+  _published: boolean
+): Result<SharedEntitiesQuery, ErrorType.BadRequest> {
+  let cursorName: CursorName;
   let cursorType: CursorNativeType;
   switch (query?.order) {
     case QueryOrder.name:

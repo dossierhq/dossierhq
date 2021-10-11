@@ -10,7 +10,7 @@ import {
   PublishedClientOperationName,
 } from '@jonasb/datadata-core';
 import type { DatabaseAdapter, SessionContext } from '.';
-import { getEntities, getEntity } from './PublishedEntity';
+import { getEntities, getEntity, searchEntities } from './PublishedEntity';
 import type { ServerImpl } from './Server';
 
 export function createServerPublishedClient({
@@ -50,6 +50,16 @@ export function createServerPublishedClient({
           resolve,
         } = operation as PublishedClientOperation<PublishedClientOperationName.getEntity>;
         resolve(await getEntity(serverImpl.getSchema(), databaseAdapter, context, reference.id));
+        break;
+      }
+      case PublishedClientOperationName.searchEntities: {
+        const {
+          args: [query, paging],
+          resolve,
+        } = operation as PublishedClientOperation<PublishedClientOperationName.searchEntities>;
+        resolve(
+          await searchEntities(serverImpl.getSchema(), databaseAdapter, context, query, paging)
+        );
         break;
       }
       default:

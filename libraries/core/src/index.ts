@@ -116,6 +116,7 @@ export type {
   Paging,
   PublishingEvent,
   PublishingHistory,
+  Query,
   RichText,
   RichTextBlock,
   ValueItem,
