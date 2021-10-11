@@ -71,7 +71,7 @@ function sharedSearchEntitiesQuery(
     qb.addQuery('DISTINCT');
   }
   if (published) {
-    qb.addQuery('e.uuid, e.type, e.name, ev.data FROM entities e, entity_versions ev');
+    qb.addQuery('e.id, e.uuid, e.type, e.name, ev.data FROM entities e, entity_versions ev');
   } else {
     qb.addQuery(`e.id, e.uuid, e.type, e.name, e.created_at, e.updated_at, e.updated, e.archived, e.never_published, e.latest_draft_entity_versions_id, e.published_entity_versions_id, ev.version, ev.data
   FROM entities e, entity_versions ev`);

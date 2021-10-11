@@ -297,4 +297,170 @@ describe('searchEntities()', () => {
       );
     }
   });
+
+  test('First', async () => {
+    const result = await publishedClient.searchEntities(
+      {
+        entityTypes: ['PublishedEntityOnlyEditBefore'],
+      },
+      { first: 10 }
+    );
+    if (expectOkResult(result)) {
+      expectConnectionToMatchSlice(
+        entitiesOfTypePublishedEntityOnlyEditBefore,
+        result.value,
+        0,
+        10
+      );
+    }
+  });
+
+  test('First 0', async () => {
+    const result = await publishedClient.searchEntities(
+      {
+        entityTypes: ['PublishedEntityOnlyEditBefore'],
+      },
+      { first: 0 }
+    );
+    if (expectOkResult(result)) {
+      expect(result.value).toBeNull();
+    }
+  });
+
+  test('Last 0', async () => {
+    const result = await publishedClient.searchEntities(
+      {
+        entityTypes: ['PublishedEntityOnlyEditBefore'],
+      },
+      { last: 0 }
+    );
+    if (expectOkResult(result)) {
+      expect(result.value).toBeNull();
+    }
+  });
+
+  test('Last', async () => {
+    const result = await publishedClient.searchEntities(
+      {
+        entityTypes: ['PublishedEntityOnlyEditBefore'],
+      },
+      { last: 10 }
+    );
+    if (expectOkResult(result)) {
+      expectConnectionToMatchSlice(
+        entitiesOfTypePublishedEntityOnlyEditBefore,
+        result.value,
+        -10,
+        undefined
+      );
+    }
+  });
+
+  test('First after', async () => {
+    const firstResult = await publishedClient.searchEntities(
+      {
+        entityTypes: ['PublishedEntityOnlyEditBefore'],
+      },
+      { first: 10 }
+    );
+    if (expectOkResult(firstResult)) {
+      const secondResult = await publishedClient.searchEntities(
+        {
+          entityTypes: ['PublishedEntityOnlyEditBefore'],
+        },
+        { first: 20, after: firstResult.value?.pageInfo.endCursor }
+      );
+      if (expectOkResult(secondResult)) {
+        expectConnectionToMatchSlice(
+          entitiesOfTypePublishedEntityOnlyEditBefore,
+          secondResult.value,
+          10,
+          10 + 20
+        );
+      }
+    }
+  });
+
+  test('Last before', async () => {
+    const firstResult = await publishedClient.searchEntities(
+      {
+        entityTypes: ['PublishedEntityOnlyEditBefore'],
+      },
+      { last: 10 }
+    );
+    if (expectOkResult(firstResult)) {
+      const secondResult = await publishedClient.searchEntities(
+        {
+          entityTypes: ['PublishedEntityOnlyEditBefore'],
+        },
+        { last: 20, before: firstResult.value?.pageInfo.startCursor }
+      );
+      if (expectOkResult(secondResult)) {
+        expectConnectionToMatchSlice(
+          entitiesOfTypePublishedEntityOnlyEditBefore,
+          secondResult.value,
+          -10 - 20,
+          -10
+        );
+      }
+    }
+  });
+
+  test('First between', async () => {
+    const firstResult = await publishedClient.searchEntities(
+      {
+        entityTypes: ['PublishedEntityOnlyEditBefore'],
+      },
+      { first: 20 }
+    );
+    if (expectOkResult(firstResult)) {
+      const secondResult = await publishedClient.searchEntities(
+        {
+          entityTypes: ['PublishedEntityOnlyEditBefore'],
+        },
+        {
+          first: 20,
+          after: firstResult.value?.edges[2].cursor,
+          before: firstResult.value?.edges[8].cursor,
+        }
+      );
+      if (expectOkResult(secondResult)) {
+        expectConnectionToMatchSlice(
+          entitiesOfTypePublishedEntityOnlyEditBefore,
+          secondResult.value,
+          3 /*inclusive*/,
+          8 /*exclusive*/
+        );
+      }
+    }
+  });
+
+  test('Last between', async () => {
+    const firstResult = await publishedClient.searchEntities(
+      {
+        entityTypes: ['PublishedEntityOnlyEditBefore'],
+      },
+      { first: 20 }
+    );
+    if (expectOkResult(firstResult)) {
+      const secondResult = await publishedClient.searchEntities(
+        {
+          entityTypes: ['PublishedEntityOnlyEditBefore'],
+        },
+        {
+          last: 20,
+          after: firstResult.value?.edges[2].cursor,
+          before: firstResult.value?.edges[8].cursor,
+        }
+      );
+      if (expectOkResult(secondResult)) {
+        expectConnectionToMatchSlice(
+          entitiesOfTypePublishedEntityOnlyEditBefore,
+          secondResult.value,
+          3 /*inclusive*/,
+          8 /*exclusive*/
+        );
+      }
+    }
+  });
 });
