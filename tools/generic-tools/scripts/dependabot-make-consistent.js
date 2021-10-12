@@ -54,6 +54,7 @@ async function makeDependencyConsistent(
     "install-run-rush.js"
   );
   const args = [
+    "node",
     installRunRush,
     "add",
     "-p",
@@ -63,7 +64,7 @@ async function makeDependencyConsistent(
     "--skip-update",
   ];
   console.log(`Executing: ${node} ${args.join(" ")} (in ${directory})`);
-  spawnSync("node", args, { cwd: directory, stdio: "inherit" });
+  spawnSync("/usr/bin/env", args, { cwd: directory, stdio: "inherit" });
 }
 
 if (require.main === module) {
