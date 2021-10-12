@@ -2083,18 +2083,8 @@ describe('searchEntities() boundingBox', () => {
       const {
         entity: { id: fooId },
       } = createResult.value;
-      const searchResult = await client.searchEntities({ boundingBox });
-      if (expectOkResult(searchResult)) {
-        let fooIdCount = 0;
-        for (const edge of searchResult.value?.edges ?? []) {
-          if (expectOkResult(edge.node)) {
-            if (edge.node.value.id === fooId) {
-              fooIdCount += 1;
-            }
-          }
-        }
-        expect(fooIdCount).toBe(1);
-      }
+      const matches = await countSearchResultWithEntity(client, { boundingBox }, fooId);
+      expectResultValue(matches, 1);
     }
   });
 
@@ -2113,18 +2103,8 @@ describe('searchEntities() boundingBox', () => {
       const {
         entity: { id: fooId },
       } = createResult.value;
-      const searchResult = await client.searchEntities({ boundingBox });
-      if (expectOkResult(searchResult)) {
-        let fooIdCount = 0;
-        for (const edge of searchResult.value?.edges ?? []) {
-          if (expectOkResult(edge.node)) {
-            if (edge.node.value.id === fooId) {
-              fooIdCount += 1;
-            }
-          }
-        }
-        expect(fooIdCount).toBe(0);
-      }
+      const matches = await countSearchResultWithEntity(client, { boundingBox }, fooId);
+      expectResultValue(matches, 0);
     }
   });
 
@@ -2148,18 +2128,8 @@ describe('searchEntities() boundingBox', () => {
       const {
         entity: { id: fooId },
       } = createResult.value;
-      const searchResult = await client.searchEntities({ boundingBox });
-      if (expectOkResult(searchResult)) {
-        let fooIdCount = 0;
-        for (const edge of searchResult.value?.edges ?? []) {
-          if (expectOkResult(edge.node)) {
-            if (edge.node.value.id === fooId) {
-              fooIdCount += 1;
-            }
-          }
-        }
-        expect(fooIdCount).toBe(1);
-      }
+      const matches = await countSearchResultWithEntity(client, { boundingBox }, fooId);
+      expectResultValue(matches, 1);
     }
   });
 
@@ -2190,50 +2160,10 @@ describe('searchEntities() boundingBox', () => {
 
     if (expectOkResult(createResult)) {
       const {
-        entity: {
-          id: bazId,
-          info: { name: bazName, createdAt, updatedAt },
-        },
+        entity: { id: bazId },
       } = createResult.value;
-      const searchResult = await client.searchEntities({ boundingBox });
-      if (expectOkResult(searchResult)) {
-        let bazIdCount = 0;
-        for (const edge of searchResult.value?.edges ?? []) {
-          if (expectOkResult(edge.node)) {
-            if (edge.node.value.id === bazId) {
-              bazIdCount += 1;
-
-              expectResultValue(edge.node, {
-                id: bazId,
-                info: {
-                  type: 'EntityAdminBaz',
-                  name: bazName,
-                  version: 0,
-                  publishingState: EntityPublishState.Draft,
-                  createdAt,
-                  updatedAt,
-                },
-                fields: {
-                  ...emptyBazFields,
-                  body: {
-                    blocks: [
-                      {
-                        type: RichTextBlockType.valueItem,
-                        data: {
-                          type: 'EntityAdminStringedLocation',
-                          string: 'Hello location',
-                          location: center,
-                        },
-                      },
-                    ],
-                  },
-                },
-              });
-            }
-          }
-        }
-        expect(bazIdCount).toBe(1);
-      }
+      const matches = await countSearchResultWithEntity(client, { boundingBox }, bazId);
+      expectResultValue(matches, 1);
     }
   });
 });
@@ -2257,7 +2187,7 @@ describe('searchEntities() text', () => {
         },
         fooId
       );
-      expect(matchesInitial).toBe(1);
+      expectResultValue(matchesInitial, 1);
 
       const matchesBeforeUpdate = await countSearchResultWithEntity(
         client,
@@ -2267,7 +2197,7 @@ describe('searchEntities() text', () => {
         },
         fooId
       );
-      expect(matchesBeforeUpdate).toBe(0);
+      expectResultValue(matchesBeforeUpdate, 0);
 
       expectOkResult(
         await client.updateEntity({
@@ -2284,7 +2214,7 @@ describe('searchEntities() text', () => {
         },
         fooId
       );
-      expect(matchesAfterUpdate).toBe(1);
+      expectResultValue(matchesAfterUpdate, 1);
     }
   });
 });

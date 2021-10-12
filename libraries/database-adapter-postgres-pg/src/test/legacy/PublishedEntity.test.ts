@@ -707,18 +707,8 @@ describe('searchEntities() boundingBox', () => {
         },
       ] = createAndPublishResult.value;
 
-      const searchResult = await publishedClient.searchEntities({ boundingBox });
-      if (expectOkResult(searchResult)) {
-        let fooIdCount = 0;
-        for (const edge of searchResult.value?.edges ?? []) {
-          if (expectOkResult(edge.node)) {
-            if (edge.node.value.id === id) {
-              fooIdCount += 1;
-            }
-          }
-        }
-        expect(fooIdCount).toBe(1);
-      }
+      const matches = await countSearchResultWithEntity(publishedClient, { boundingBox }, id);
+      expectResultValue(matches, 1);
     }
   });
 
@@ -739,18 +729,8 @@ describe('searchEntities() boundingBox', () => {
           entity: { id },
         },
       ] = createAndPublishResult.value;
-      const searchResult = await publishedClient.searchEntities({ boundingBox });
-      if (expectOkResult(searchResult)) {
-        let fooIdCount = 0;
-        for (const edge of searchResult.value?.edges ?? []) {
-          if (expectOkResult(edge.node)) {
-            if (edge.node.value.id === id) {
-              fooIdCount += 1;
-            }
-          }
-        }
-        expect(fooIdCount).toBe(0);
-      }
+      const matches = await countSearchResultWithEntity(publishedClient, { boundingBox }, id);
+      expectResultValue(matches, 0);
     }
   });
 
@@ -776,18 +756,8 @@ describe('searchEntities() boundingBox', () => {
           entity: { id },
         },
       ] = createAndPublishResult.value;
-      const searchResult = await publishedClient.searchEntities({ boundingBox });
-      if (expectOkResult(searchResult)) {
-        let fooIdCount = 0;
-        for (const edge of searchResult.value?.edges ?? []) {
-          if (expectOkResult(edge.node)) {
-            if (edge.node.value.id === id) {
-              fooIdCount += 1;
-            }
-          }
-        }
-        expect(fooIdCount).toBe(1);
-      }
+      const matches = await countSearchResultWithEntity(publishedClient, { boundingBox }, id);
+      expectResultValue(matches, 1);
     }
   });
 
@@ -819,47 +789,11 @@ describe('searchEntities() boundingBox', () => {
     if (expectOkResult(createAndPublishResult)) {
       const [
         {
-          entity: {
-            id: bazId,
-            info: { name },
-          },
+          entity: { id: bazId },
         },
       ] = createAndPublishResult.value;
-      const searchResult = await publishedClient.searchEntities({ boundingBox });
-      if (expectOkResult(searchResult)) {
-        let bazIdCount = 0;
-        for (const edge of searchResult.value?.edges ?? []) {
-          if (expectOkResult(edge.node)) {
-            if (edge.node.value.id === bazId) {
-              bazIdCount += 1;
-
-              expectResultValue(edge.node, {
-                id: bazId,
-                info: {
-                  type: 'PublishedEntityFoo',
-                  name,
-                },
-                fields: {
-                  ...emptyFooFields,
-                  body: {
-                    blocks: [
-                      {
-                        type: RichTextBlockType.valueItem,
-                        data: {
-                          type: 'PublishedEntityStringedLocation',
-                          string: 'Hello location',
-                          location: center,
-                        },
-                      },
-                    ],
-                  },
-                },
-              });
-            }
-          }
-        }
-        expect(bazIdCount).toBe(1);
-      }
+      const matches = await countSearchResultWithEntity(publishedClient, { boundingBox }, bazId);
+      expectResultValue(matches, 1);
     }
   });
 });
@@ -877,7 +811,7 @@ describe('searchEntities() text', () => {
         },
       ] = createResult.value;
 
-      const matchesInitial = await countSearchResultWithEntity(
+      const matches = await countSearchResultWithEntity(
         publishedClient,
         {
           entityTypes: ['PublishedEntityFoo'],
@@ -885,7 +819,7 @@ describe('searchEntities() text', () => {
         },
         id
       );
-      expect(matchesInitial).toBe(1);
+      expectResultValue(matches, 1);
     }
   });
 });
