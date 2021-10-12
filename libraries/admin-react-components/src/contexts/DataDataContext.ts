@@ -76,7 +76,6 @@ export class DataDataContextValue {
     entity?: AdminEntity;
     entityError?: ErrorResult<unknown, ErrorType.NotFound | ErrorType.Generic>;
   } => {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
     const { data, error } = useSWR<FetcherActionReturn[FetcherActions.UseEntity]>(
       id ? [this.#rootKey, FetcherActions.UseEntity, id, version ?? null] : null,
       this.fetcher
@@ -93,7 +92,6 @@ export class DataDataContextValue {
     entityHistory?: EntityHistory;
     entityHistoryError?: ErrorResult<unknown, ErrorType.NotFound | ErrorType.Generic>;
   } => {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
     const { data, error } = useSWR<FetcherActionReturn[FetcherActions.UseEntityHistory]>(
       id ? [this.#rootKey, FetcherActions.UseEntityHistory, id] : null,
       this.fetcher
@@ -115,7 +113,6 @@ export class DataDataContextValue {
     publishingHistory?: PublishingHistory;
     publishingHistoryError?: ErrorResult<unknown, ErrorType.NotFound | ErrorType.Generic>;
   } => {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
     const { data, error } = useSWR<FetcherActionReturn[FetcherActions.UsePublishingHistory]>(
       id ? [this.#rootKey, FetcherActions.UsePublishingHistory, id] : null,
       this.fetcher
@@ -138,7 +135,6 @@ export class DataDataContextValue {
     connection?: Connection<Edge<AdminEntity, ErrorType>> | null;
     connectionError?: ErrorResult<unknown, ErrorType.BadRequest | ErrorType.Generic>;
   } => {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
     const { data, error } = useSWR<FetcherActionReturn[FetcherActions.UseSearchEntities]>(
       query
         ? [this.#rootKey, FetcherActions.UseSearchEntities, JSON.stringify({ query, paging })]
