@@ -222,7 +222,7 @@ export function totalPublishedEntitiesQuery(
 function totalCountQuery(
   schema: Schema,
   query: AdminQuery | Query | undefined,
-  _published: boolean
+  published: boolean
 ): Result<{ text: string; values: unknown[] }, ErrorType.BadRequest> {
   const qb = new QueryBuilder('SELECT');
   // Convert count to ::integer since count() is bigint (js doesn't support 64 bit numbers so pg return it as string)
@@ -245,6 +245,10 @@ function totalCountQuery(
 
   qb.addQuery('WHERE');
 
+  if (published) {
+    qb.addQuery('AND e.published_entity_versions_id IS NOT NULL');
+  }
+
   // Filter: entityTypes
   const entityTypesResult = getFilterEntityTypes(schema, query);
   if (entityTypesResult.isError()) {
@@ -255,7 +259,11 @@ function totalCountQuery(
   }
 
   if (query?.referencing || query?.boundingBox) {
-    qb.addQuery('AND e.latest_draft_entity_versions_id = ev.id');
+    if (published) {
+      qb.addQuery('AND e.published_entity_versions_id = ev.id');
+    } else {
+      qb.addQuery('AND e.latest_draft_entity_versions_id = ev.id');
+    }
   }
 
   // Filter: referencing
@@ -265,6 +273,9 @@ function totalCountQuery(
         query.referencing
       )}`
     );
+    if (published) {
+      qb.addQuery('AND e2.published_entity_versions_id IS NOT NULL');
+    }
   }
 
   // Filter: bounding box
@@ -279,7 +290,11 @@ function totalCountQuery(
 
   // Filter: text
   if (query?.text) {
-    qb.addQuery(`AND e.latest_fts @@ websearch_to_tsquery(${qb.addValue(query.text)})`);
+    if (published) {
+      qb.addQuery(`AND e.published_fts @@ websearch_to_tsquery(${qb.addValue(query.text)})`);
+    } else {
+      qb.addQuery(`AND e.latest_fts @@ websearch_to_tsquery(${qb.addValue(query.text)})`);
+    }
   }
 
   return ok(qb.build());
