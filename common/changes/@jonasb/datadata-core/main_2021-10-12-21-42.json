@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-core",
+      "comment": "Add JSON support to PublishedClient",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-core",
+  "email": "jonas.b@gmail.com"
+}
