@@ -12,6 +12,7 @@ import type {
   Result,
 } from '@jonasb/datadata-core';
 import {
+  buildUrlWithUrlQuery,
   convertAdminClientOperationToJson,
   convertJsonAdminClientResult,
   convertJsonPublishedClientResult,
@@ -23,6 +24,7 @@ import {
   notOk,
   ok,
   Schema,
+  stringifyUrlQueryParams,
 } from '@jonasb/datadata-core';
 import { v5 as uuidv5 } from 'uuid';
 import type { DataDataContextAdapter } from '..';
@@ -88,7 +90,10 @@ async function terminatingAdminMiddleware(
     });
   } else {
     response = await fetch(
-      `admin?name=${operation.name}&${encodeQuery({ operation: jsonOperation })}`,
+      buildUrlWithUrlQuery(
+        `/admin?name=${operation.name}`,
+        stringifyUrlQueryParams({ operation: jsonOperation }, { keepEmptyObjects: true })
+      ),
       {
         method: 'GET',
         headers: { 'content-type': 'application/json' },
@@ -130,7 +135,10 @@ async function terminatingPublishedMiddleware(
     });
   } else {
     response = await fetch(
-      `published?name=${operation.name}&${encodeQuery({ operation: jsonOperation })}`,
+      buildUrlWithUrlQuery(
+        `/published?name=${operation.name}`,
+        stringifyUrlQueryParams({ operation: jsonOperation }, { keepEmptyObjects: true })
+      ),
       {
         method: 'GET',
         headers: { 'content-type': 'application/json' },
@@ -155,19 +163,6 @@ async function terminatingPublishedMiddleware(
     result = notOk.fromHttpStatus(response.status, text);
   }
   operation.resolve(convertJsonPublishedClientResult(operation.name, result));
-}
-
-//TODO use core encodeQuery
-function encodeQuery(entries: Record<string, unknown>): string {
-  const parts: string[] = [];
-  for (const [key, value] of Object.entries(entries)) {
-    if (value === null || value === undefined) {
-      continue;
-    }
-    const encoded = `${key}=${encodeURIComponent(JSON.stringify(value))}`;
-    parts.push(encoded);
-  }
-  return parts.join('&');
 }
 
 export const SlowMiddleware: AdminClientMiddleware<ClientContext> = async (_context, operation) => {
