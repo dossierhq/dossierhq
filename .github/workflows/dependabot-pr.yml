@@ -5,8 +5,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Use Node.js 16
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16.1.0
       - name: Make dependencies consistent
         run: |
+          which node
           ./tools/generic-tools/scripts/dependabot-make-consistent.js "${{ github.event.pull_request.title }}"
       - name: Git status
         run: |
