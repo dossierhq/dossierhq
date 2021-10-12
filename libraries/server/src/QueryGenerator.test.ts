@@ -958,7 +958,7 @@ describe('totalPublishedEntitiesQuery()', () => {
     expect(totalPublishedEntitiesQuery(schema, undefined)).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
-          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e",
+          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.published_entity_versions_id IS NOT NULL",
           "values": Array [],
         },
       }
@@ -969,7 +969,7 @@ describe('totalPublishedEntitiesQuery()', () => {
     expect(totalPublishedEntitiesQuery(schema, { entityTypes: [] })).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
-          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e",
+          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.published_entity_versions_id IS NOT NULL",
           "values": Array [],
         },
       }
@@ -981,7 +981,7 @@ describe('totalPublishedEntitiesQuery()', () => {
       .toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
-          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.type = ANY($1)",
+          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.published_entity_versions_id IS NOT NULL AND e.type = ANY($1)",
           "values": Array [
             Array [
               "QueryGeneratorFoo",
@@ -1000,7 +1000,7 @@ describe('totalPublishedEntitiesQuery()', () => {
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
-          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.type = ANY($1)",
+          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.published_entity_versions_id IS NOT NULL AND e.type = ANY($1)",
           "values": Array [
             Array [
               "QueryGeneratorFoo",
@@ -1018,7 +1018,7 @@ describe('totalPublishedEntitiesQuery()', () => {
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
-          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e, entity_versions ev, entity_version_references evr, entities e2 WHERE e.latest_draft_entity_versions_id = ev.id AND ev.id = evr.entity_versions_id AND evr.entities_id = e2.id AND e2.uuid = $1",
+          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e, entity_versions ev, entity_version_references evr, entities e2 WHERE e.published_entity_versions_id IS NOT NULL AND e.published_entity_versions_id = ev.id AND ev.id = evr.entity_versions_id AND evr.entities_id = e2.id AND e2.uuid = $1 AND e2.published_entity_versions_id IS NOT NULL",
           "values": Array [
             "37b48706-803e-4227-a51e-8208db12d949",
           ],
@@ -1036,7 +1036,7 @@ describe('totalPublishedEntitiesQuery()', () => {
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
-          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e, entity_versions ev, entity_version_references evr, entities e2 WHERE e.type = ANY($1) AND e.latest_draft_entity_versions_id = ev.id AND ev.id = evr.entity_versions_id AND evr.entities_id = e2.id AND e2.uuid = $2",
+          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e, entity_versions ev, entity_version_references evr, entities e2 WHERE e.published_entity_versions_id IS NOT NULL AND e.type = ANY($1) AND e.published_entity_versions_id = ev.id AND ev.id = evr.entity_versions_id AND evr.entities_id = e2.id AND e2.uuid = $2 AND e2.published_entity_versions_id IS NOT NULL",
           "values": Array [
             Array [
               "QueryGeneratorFoo",
@@ -1062,7 +1062,7 @@ describe('totalPublishedEntitiesQuery()', () => {
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
-          "text": "SELECT COUNT(DISTINCT e.id)::integer AS count FROM entities e, entity_versions ev, entity_version_locations evl WHERE e.latest_draft_entity_versions_id = ev.id AND ev.id = evl.entity_versions_id AND evl.location && ST_MakeEnvelope($1, $2, $3, $4, 4326)",
+          "text": "SELECT COUNT(DISTINCT e.id)::integer AS count FROM entities e, entity_versions ev, entity_version_locations evl WHERE e.published_entity_versions_id IS NOT NULL AND e.published_entity_versions_id = ev.id AND ev.id = evl.entity_versions_id AND evl.location && ST_MakeEnvelope($1, $2, $3, $4, 4326)",
           "values": Array [
             11.62,
             55.07,
@@ -1082,7 +1082,7 @@ describe('totalPublishedEntitiesQuery()', () => {
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
-          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.latest_fts @@ websearch_to_tsquery($1)",
+          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.published_entity_versions_id IS NOT NULL AND e.published_fts @@ websearch_to_tsquery($1)",
           "values": Array [
             "foo bar",
           ],
