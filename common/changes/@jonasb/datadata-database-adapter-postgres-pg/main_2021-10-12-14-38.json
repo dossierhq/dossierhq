@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-database-adapter-postgres-pg",
+      "comment": "Add searchEntities and getTotalCount to PublishedClient",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-database-adapter-postgres-pg",
+  "email": "jonas.b@gmail.com"
+}
