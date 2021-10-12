@@ -10,7 +10,7 @@ import {
   PublishedClientOperationName,
 } from '@jonasb/datadata-core';
 import type { DatabaseAdapter, SessionContext } from '.';
-import { getEntities, getEntity, searchEntities } from './PublishedEntity';
+import { getEntities, getEntity, getTotalCount, searchEntities } from './PublishedEntity';
 import type { ServerImpl } from './Server';
 
 export function createServerPublishedClient({
@@ -50,6 +50,14 @@ export function createServerPublishedClient({
           resolve,
         } = operation as PublishedClientOperation<PublishedClientOperationName.getEntity>;
         resolve(await getEntity(serverImpl.getSchema(), databaseAdapter, context, reference.id));
+        break;
+      }
+      case PublishedClientOperationName.getTotalCount: {
+        const {
+          args: [query],
+          resolve,
+        } = operation as PublishedClientOperation<PublishedClientOperationName.getTotalCount>;
+        resolve(await getTotalCount(serverImpl.getSchema(), databaseAdapter, context, query));
         break;
       }
       case PublishedClientOperationName.searchEntities: {

@@ -35,11 +35,14 @@ export interface PublishedClient {
     Connection<Edge<Entity, ErrorType>> | null,
     ErrorType.BadRequest | ErrorType.Generic
   >;
+
+  getTotalCount(query?: Query): PromiseResult<number, ErrorType.BadRequest | ErrorType.Generic>;
 }
 
 export enum PublishedClientOperationName {
   getEntities = 'getEntities',
   getEntity = 'getEntity',
+  getTotalCount = 'getTotalCount',
   searchEntities = 'searchEntities',
 }
 
@@ -59,24 +62,28 @@ type WithoutPromise<T> = T extends Promise<infer U> ? U : T;
 interface PublishedClientOperationArguments {
   [PublishedClientOperationName.getEntities]: MethodParameters<'getEntities'>;
   [PublishedClientOperationName.getEntity]: MethodParameters<'getEntity'>;
+  [PublishedClientOperationName.getTotalCount]: MethodParameters<'getTotalCount'>;
   [PublishedClientOperationName.searchEntities]: MethodParameters<'searchEntities'>;
 }
 
 interface PublishedClientOperationReturn {
   [PublishedClientOperationName.getEntities]: MethodReturnType<'getEntities'>;
   [PublishedClientOperationName.getEntity]: MethodReturnType<'getEntity'>;
+  [PublishedClientOperationName.getTotalCount]: MethodReturnType<'getTotalCount'>;
   [PublishedClientOperationName.searchEntities]: MethodReturnType<'searchEntities'>;
 }
 
 interface PublishedClientOperationReturnOk {
   [PublishedClientOperationName.getEntities]: MethodReturnTypeOk<'getEntities'>;
   [PublishedClientOperationName.getEntity]: MethodReturnTypeOk<'getEntity'>;
+  [PublishedClientOperationName.getTotalCount]: MethodReturnTypeOk<'getTotalCount'>;
   [PublishedClientOperationName.searchEntities]: MethodReturnTypeOk<'searchEntities'>;
 }
 
 interface PublishedClientOperationReturnError {
   [PublishedClientOperationName.getEntities]: MethodReturnTypeError<'getEntities'>;
   [PublishedClientOperationName.getEntity]: MethodReturnTypeError<'getEntity'>;
+  [PublishedClientOperationName.getTotalCount]: MethodReturnTypeError<'getTotalCount'>;
   [PublishedClientOperationName.searchEntities]: MethodReturnTypeError<'searchEntities'>;
 }
 
@@ -125,6 +132,16 @@ class BasePublishedClient<TContext extends ClientContext> implements PublishedCl
     return this.executeOperation({
       name: PublishedClientOperationName.getEntities,
       args: [references],
+      modifies: false,
+    });
+  }
+
+  getTotalCount(
+    query?: Query
+  ): Promise<PublishedClientOperationReturn[PublishedClientOperationName.getTotalCount]> {
+    return this.executeOperation({
+      name: PublishedClientOperationName.getTotalCount,
+      args: [query],
       modifies: false,
     });
   }
