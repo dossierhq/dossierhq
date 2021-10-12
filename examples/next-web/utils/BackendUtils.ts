@@ -21,7 +21,7 @@ export const urls = {
     operation?: PublishedClientJsonOperation
   ): string =>
     buildUrlWithUrlQuery(
-      `${baseUrl}/admin/${operationName}`,
+      `${baseUrl}/published/${operationName}`,
       stringifyUrlQueryParams({ operation }, { keepEmptyObjects: true })
     ),
 };
