@@ -89,12 +89,14 @@ function sharedSearchEntitiesQuery<
 
   // Filter: referencing
   if (query?.referencing) {
-    //TODO evr published?
     qb.addQuery(
       `AND ev.id = evr.entity_versions_id AND evr.entities_id = e2.id AND e2.uuid = ${qb.addValue(
         query.referencing
       )}`
     );
+    if (published) {
+      qb.addQuery('AND e2.published_entity_versions_id IS NOT NULL');
+    }
   }
 
   // Filter: bounding box
