@@ -17,14 +17,14 @@ jobs:
         uses: denoland/setup-deno@v1
         with:
           deno-version: "1.13.2"
-      - name: Debug github event
-        run: echo "${{toJSON(github.event)}}"
-      - name: Make dependencies consistent for dependabot
-        if: startsWith(github.ref, 'refs/heads/dependabot/npm_and_yarn')
-        run: |
-          ./tools/generic-tools/scripts/dependabot-make-consistent.js "${{ github.event.head_commit.message }}"
-          node common/scripts/install-run-rush.js check
-          node common/scripts/install-run-rush.js update
+      # - name: Debug github event
+      #   run: echo "${{toJSON(github.event)}}"
+      # - name: Make dependencies consistent for dependabot
+      #   if: startsWith(github.ref, 'refs/heads/dependabot/npm_and_yarn')
+      #   run: |
+      #     ./tools/generic-tools/scripts/dependabot-make-consistent.js "${{ github.event.head_commit.message }}"
+      #     node common/scripts/install-run-rush.js check
+      #     node common/scripts/install-run-rush.js update
       - name: rush install
         run: |
           node common/scripts/install-run-rush.js install
@@ -50,6 +50,6 @@ jobs:
         run: |
           cd tools/generic-tools/
           npm run db:stop
-      - name: Add and commit changes for dependabot
-        uses: EndBug/add-and-commit@v7
-        if: startsWith(github.ref, 'refs/heads/dependabot/npm_and_yarn')
+      # - name: Add and commit changes for dependabot
+      #   uses: EndBug/add-and-commit@v7
+      #   if: startsWith(github.ref, 'refs/heads/dependabot/npm_and_yarn')
