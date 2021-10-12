@@ -110,17 +110,17 @@ export async function countSearchResultWithEntity(
   client: AdminClient,
   query: AdminQuery,
   entityId: string
-): Promise<number>;
+): PromiseResult<number, ErrorType.BadRequest | ErrorType.Generic>;
 export async function countSearchResultWithEntity(
   client: PublishedClient,
   query: Query,
   entityId: string
-): Promise<number>;
+): PromiseResult<number, ErrorType.BadRequest | ErrorType.Generic>;
 export async function countSearchResultWithEntity(
   client: AdminClient | PublishedClient,
   query: AdminQuery | Query,
   entityId: string
-): Promise<number> {
+): PromiseResult<number, ErrorType.BadRequest | ErrorType.Generic> {
   let matchCount = 0;
 
   for await (const pageResult of getAllPagesForConnection({ first: 50 }, (currentPaging) =>
@@ -128,7 +128,7 @@ export async function countSearchResultWithEntity(
     client.searchEntities(query as any, currentPaging)
   )) {
     if (pageResult.isError()) {
-      throw pageResult.toError();
+      return pageResult;
     }
     for (const edge of pageResult.value.edges) {
       if (edge.node.isOk() && edge.node.value.id === entityId) {
@@ -137,5 +137,5 @@ export async function countSearchResultWithEntity(
     }
   }
 
-  return matchCount;
+  return ok(matchCount);
 }
