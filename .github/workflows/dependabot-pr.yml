@@ -8,6 +8,11 @@ jobs:
       - name: Make dependencies consistent
         run: |
           ./tools/generic-tools/scripts/dependabot-make-consistent.js "${{ github.event.pull_request.title }}"
+      - name: Git status
+        run: |
+          git status
+      - name: rush check && rush update
+        run: |
           node common/scripts/install-run-rush.js check
           node common/scripts/install-run-rush.js update
       - name: Git status
