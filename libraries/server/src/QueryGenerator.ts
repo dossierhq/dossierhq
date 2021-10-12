@@ -111,8 +111,11 @@ function sharedSearchEntitiesQuery<
 
   // Filter: text
   if (query?.text) {
-    //TODO published
-    qb.addQuery(`AND e.latest_fts @@ websearch_to_tsquery(${qb.addValue(query.text)})`);
+    if (published) {
+      qb.addQuery(`AND e.published_fts @@ websearch_to_tsquery(${qb.addValue(query.text)})`);
+    } else {
+      qb.addQuery(`AND e.latest_fts @@ websearch_to_tsquery(${qb.addValue(query.text)})`);
+    }
   }
 
   // Paging 1/2

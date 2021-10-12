@@ -37,7 +37,9 @@ import type {
 } from './DatabaseTables';
 import type { AdminEntityValues, EncodeEntityResult } from './EntityCodec';
 import {
+  collectDataFromEntity,
   decodeAdminEntity,
+  decodeAdminEntityFields,
   encodeEntity,
   resolveCreateEntity,
   resolvePublishState,
@@ -464,13 +466,17 @@ export async function upsertEntity(
 }
 
 export async function publishEntities(
+  schema: Schema,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   entities: {
     id: string;
     version: number;
   }[]
-): PromiseResult<EntityPublishPayload[], ErrorType.BadRequest | ErrorType.NotFound> {
+): PromiseResult<
+  EntityPublishPayload[],
+  ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic
+> {
   const uniqueIdCheck = checkUUIDsAreUnique(entities.map((it) => it.id));
   if (uniqueIdCheck.isError()) {
     return uniqueIdCheck;
@@ -485,15 +491,16 @@ export async function publishEntities(
       uuid: string;
       versionsId: number;
       entityId: number;
+      fullTextSearchText: string;
     }[] = [];
     for (const { id, version } of entities) {
       const versionInfo = await Db.queryNoneOrOne<
-        Pick<EntityVersionsTable, 'id' | 'entities_id'> &
-          Pick<EntitiesTable, 'published_entity_versions_id'>
+        Pick<EntityVersionsTable, 'id' | 'entities_id' | 'data'> &
+          Pick<EntitiesTable, 'type' | 'name' | 'published_entity_versions_id'>
       >(
         databaseAdapter,
         context,
-        `SELECT ev.id, ev.entities_id, e.published_entity_versions_id
+        `SELECT ev.id, ev.entities_id, ev.data, e.type, e.name, e.published_entity_versions_id
          FROM entity_versions ev, entities e
          WHERE e.uuid = $1 AND e.id = ev.entities_id
            AND ev.version = $2`,
@@ -505,10 +512,21 @@ export async function publishEntities(
       } else if (versionInfo.published_entity_versions_id === versionInfo.id) {
         alreadyPublishedEntityIds.push(id);
       } else {
+        const entitySpec = schema.getEntityTypeSpecification(versionInfo.type);
+        if (!entitySpec) {
+          return notOk.Generic(`No entity spec for type ${versionInfo.type}`);
+        }
+        const entityFields = decodeAdminEntityFields(schema, entitySpec, versionInfo);
+        const { fullTextSearchText } = collectDataFromEntity(schema, {
+          info: { type: versionInfo.type, name: versionInfo.name },
+          fields: entityFields,
+        });
+
         versionsInfo.push({
           uuid: id,
           versionsId: versionInfo.id,
           entityId: versionInfo.entities_id,
+          fullTextSearchText: fullTextSearchText.join(' '),
         });
       }
     }
@@ -522,7 +540,7 @@ export async function publishEntities(
     }
 
     // Step 2: Publish entities
-    for (const { uuid, versionsId, entityId } of versionsInfo) {
+    for (const { uuid, versionsId, entityId, fullTextSearchText } of versionsInfo) {
       const { updated_at: updatedAt } = await Db.queryOne<Pick<EntitiesTable, 'updated_at'>>(
         databaseAdapter,
         context,
@@ -531,11 +549,12 @@ export async function publishEntities(
             never_published = FALSE,
             archived = FALSE,
             published_entity_versions_id = $1,
+            published_fts = to_tsvector($2),
             updated_at = NOW(),
             updated = nextval('entities_updated_seq')
-          WHERE id = $2
+          WHERE id = $3
           RETURNING updated_at`,
-        [versionsId, entityId]
+        [versionsId, fullTextSearchText, entityId]
       );
       result.push({ id: uuid, publishState: EntityPublishState.Published, updatedAt });
     }
@@ -629,6 +648,7 @@ export async function unpublishEntities(
       `UPDATE entities
         SET
           published_entity_versions_id = NULL,
+          published_fts = NULL,
           updated_at = NOW(),
           updated = nextval('entities_updated_seq')
         WHERE id = ANY($1)

@@ -24,6 +24,7 @@ import {
   expectSearchResultEntities,
 } from '../TestUtils';
 import {
+  countSearchResultWithEntity,
   ensureEntityCount,
   expectConnectionToMatchSlice,
   getAllEntities,
@@ -863,4 +864,28 @@ describe('searchEntities() boundingBox', () => {
   });
 });
 
-// TODO searchEntities text
+describe('searchEntities() text', () => {
+  test('Query based on text (after creation and updating)', async () => {
+    const createResult = await createAndPublishEntities(adminClient, {
+      info: { type: 'PublishedEntityFoo', name: 'Foo' },
+      fields: { title: 'this is some serious summary with the best conclusion' },
+    });
+    if (expectOkResult(createResult)) {
+      const [
+        {
+          entity: { id },
+        },
+      ] = createResult.value;
+
+      const matchesInitial = await countSearchResultWithEntity(
+        publishedClient,
+        {
+          entityTypes: ['PublishedEntityFoo'],
+          text: 'serious conclusion',
+        },
+        id
+      );
+      expect(matchesInitial).toBe(1);
+    }
+  });
+});

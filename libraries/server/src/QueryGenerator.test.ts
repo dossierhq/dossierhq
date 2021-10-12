@@ -735,7 +735,7 @@ describe('searchPublishedEntitiesQuery()', () => {
           "cursorExtractor": [Function],
           "isForwards": true,
           "pagingCount": 25,
-          "text": "SELECT e.id, e.uuid, e.type, e.name, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.latest_fts @@ websearch_to_tsquery($1) ORDER BY e.id LIMIT $2",
+          "text": "SELECT e.id, e.uuid, e.type, e.name, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.published_fts @@ websearch_to_tsquery($1) ORDER BY e.id LIMIT $2",
           "values": Array [
             "foo bar",
             26,

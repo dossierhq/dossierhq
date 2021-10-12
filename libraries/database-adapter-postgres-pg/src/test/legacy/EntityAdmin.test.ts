@@ -1,4 +1,4 @@
-import type { AdminClient, AdminEntity, AdminQuery, PublishedClient } from '@jonasb/datadata-core';
+import type { AdminClient, AdminEntity, PublishedClient } from '@jonasb/datadata-core';
 import {
   AdminQueryOrder,
   copyEntity,
@@ -6,7 +6,6 @@ import {
   EntityPublishState,
   ErrorType,
   FieldType,
-  getAllPagesForConnection,
   PublishingEventKind,
   RichTextBlockType,
 } from '@jonasb/datadata-core';
@@ -21,6 +20,7 @@ import {
   insecureTestUuidv4,
 } from '../TestUtils';
 import {
+  countSearchResultWithEntity,
   ensureEntityCount,
   expectConnectionToMatchSlice,
   getAllEntities,
@@ -229,25 +229,6 @@ async function getEntitiesForAdminOnlyEditBefore(client: AdminClient) {
     throw result.toError();
   }
   return result.value;
-}
-
-async function countSearchResultWithEntity(query: AdminQuery, entityId: string) {
-  let matchCount = 0;
-
-  for await (const pageResult of getAllPagesForConnection({ first: 50 }, (currentPaging) =>
-    client.searchEntities(query, currentPaging)
-  )) {
-    if (pageResult.isError()) {
-      throw pageResult.toError();
-    }
-    for (const edge of pageResult.value.edges) {
-      if (edge.node.isOk() && edge.node.value.id === entityId) {
-        matchCount += 1;
-      }
-    }
-  }
-
-  return matchCount;
 }
 
 async function createBarWithFooBazReferences(
@@ -2269,6 +2250,7 @@ describe('searchEntities() text', () => {
       } = createResult.value;
 
       const matchesInitial = await countSearchResultWithEntity(
+        client,
         {
           entityTypes: ['EntityAdminFoo'],
           text: 'serious conclusion',
@@ -2278,6 +2260,7 @@ describe('searchEntities() text', () => {
       expect(matchesInitial).toBe(1);
 
       const matchesBeforeUpdate = await countSearchResultWithEntity(
+        client,
         {
           entityTypes: ['EntityAdminFoo'],
           text: 'fox jumping',
@@ -2294,6 +2277,7 @@ describe('searchEntities() text', () => {
       );
 
       const matchesAfterUpdate = await countSearchResultWithEntity(
+        client,
         {
           entityTypes: ['EntityAdminFoo'],
           text: 'fox jumping',
