@@ -1,7 +1,11 @@
 import { NavBar as DesignNavBar } from '@jonasb/datadata-design';
 import Link from 'next/link';
 
-export function NavBar({ current }: { current: 'home' | 'entities' | 'graphiql' | 'voyager' }) {
+export function NavBar({
+  current,
+}: {
+  current: 'home' | 'entities' | 'published-entities' | 'graphiql' | 'voyager';
+}) {
   return (
     <DesignNavBar>
       <DesignNavBar.Brand>
@@ -11,6 +15,9 @@ export function NavBar({ current }: { current: 'home' | 'entities' | 'graphiql' 
       </DesignNavBar.Brand>
       <DesignNavBar.Item active={current === 'entities'}>
         {NavItemRender('Entities', '/entities')}
+      </DesignNavBar.Item>
+      <DesignNavBar.Item active={current === 'published-entities'}>
+        {NavItemRender('Published entities', '/published-entities')}
       </DesignNavBar.Item>
       <DesignNavBar.Item active={current === 'graphiql'}>
         {NavItemRender('GraphiQL', '/graphiql')}
