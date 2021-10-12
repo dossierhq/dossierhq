@@ -1,15 +1,10 @@
 name: Dependabot Pull Request
-on: pull_request_target
+on: pull_request
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Fetch Dependabot metadata
-        id: dependabot-metadata
-        uses: dependabot/fetch-metadata@v1.1.1
-        with:
-          github-token: "${{ secrets.GITHUB_TOKEN }}"
       - name: Make dependencies consistent
         run: |
-          echo "${{ steps.dependabot-metadata.outputs.updated-dependencies-json }}"
           echo "${{ github.event.head_commit.message }}"
+          echo "${{toJSON(github.event)}}"
