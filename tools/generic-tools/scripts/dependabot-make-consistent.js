@@ -6,65 +6,40 @@ const { promisify } = require("util");
 
 const ROOT_DIR = path.resolve(path.join(__dirname, "..", "..", ".."));
 
-async function main() {
-  const result = await extractNewDependencyVersionsFromLastCommit();
+async function main(prTitle) {
+  const { dependency, directory } = extractInfoFromPrTitle(prTitle);
 
-  for (const { filename, dependency, version } of result) {
-    const packageJsonPath = path.join(ROOT_DIR, filename);
-    const packageJson = JSON.parse(await fs.readFile(packageJsonPath));
-    const isDependency = !!packageJson.dependencies?.[dependency];
-    const isDevDependency = !!packageJson.devDependencies?.[dependency];
-    if (!isDependency && !isDevDependency) {
-      throw new Error(`Can't find dependency ${dependency} in ${filename}`);
-    } else if (isDependency && isDevDependency) {
-      throw new Error(
-        `Dependency ${dependency} is in both dependencies and devDependencies in ${filename}`
-      );
-    }
-    await makeDependencyConsistent(
-      path.dirname(packageJsonPath),
-      dependency,
-      version,
-      isDevDependency
+  const projectDirectory = path.join(ROOT_DIR, directory);
+  const packageJsonPath = path.join(projectDirectory, "package.json");
+  const packageJson = JSON.parse(await fs.readFile(packageJsonPath));
+  const dependencyVersion = packageJson.dependencies?.[dependency];
+  const devDependencyVersion = packageJson.devDependencies?.[dependency];
+  if (!dependencyVersion && !devDependencyVersion) {
+    throw new Error(
+      `Can't find dependency ${dependency} in ${packageJsonPath}`
+    );
+  } else if (dependencyVersion && devDependencyVersion) {
+    throw new Error(
+      `Dependency ${dependency} is in both dependencies and devDependencies in ${filename}`
     );
   }
+  const version = dependencyVersion ?? devDependencyVersion;
+
+  await makeDependencyConsistent(
+    projectDirectory,
+    dependency,
+    version,
+    devDependencyVersion
+  );
 }
 
-async function extractNewDependencyVersionsFromLastCommit() {
-  console.log(`Executing: git show`);
-  const { stdout: gitShow } = await promisify(exec)("git show");
-
-  const result = [];
-  let currentPackageJson = "";
-  for (const line of gitShow.split("\n")) {
-    const diffFileHeaderMatch = line.match(/^diff --git a\/(.+) b\/(.+)$/);
-    if (diffFileHeaderMatch) {
-      const [, aFilename, bFileName] = diffFileHeaderMatch;
-      if (aFilename !== bFileName) {
-        throw new Error(
-          `Unexpected different filenames (${aFilename}) != (${bFileName})`
-        );
-      }
-      if (!aFilename.endsWith("package.json")) {
-        throw new Error(
-          `Unexpected filename (only expects package.json): ${aFilename}`
-        );
-      }
-      currentPackageJson = aFilename;
-      console.log("Found diff for file", currentPackageJson);
-    }
-
-    const newDependencyMatch = line.match(/^\+\s*"([^"]+)"\s*:\s*"([^"]+)",?$/);
-    if (newDependencyMatch) {
-      const [, dependency, version] = newDependencyMatch;
-      console.log(`Found new dependency version ${dependency}@${version}`);
-      if (!currentPackageJson) {
-        throw new Error("No filename specified for diff");
-      }
-      result.push({ filename: currentPackageJson, dependency, version });
-    }
+// e.g. build(deps-dev): bump @typescript-eslint/eslint-plugin from 4.33.0 to 5.0.0 in /libraries/graphql
+function extractInfoFromPrTitle(prTitle) {
+  const match = prTitle.match(/^.*bump (\S+).* in (\S+)$/);
+  if (!match) {
+    throw new Error(`PR title (${prTitle}) doesn't match expected format`);
   }
-  return result;
+  return { dependency: match[1], directory: match[2] };
 }
 
 async function makeDependencyConsistent(
@@ -93,7 +68,12 @@ async function makeDependencyConsistent(
 }
 
 if (require.main === module) {
-  main().catch((error) => {
+  const argv = process.argv.slice(2);
+  if (argv.length !== 1) {
+    console.warn(`Expected PR title as argument, got arguments`, argv);
+    process.exit(1);
+  }
+  main(argv[0]).catch((error) => {
     console.warn(error);
     process.exitCode = 1;
   });

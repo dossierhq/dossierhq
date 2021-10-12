@@ -6,5 +6,11 @@ jobs:
     steps:
       - name: Make dependencies consistent
         run: |
-          echo "${{ github.event.head_commit.message }}"
-          echo "${{toJSON(github.event)}}"
+          ./tools/generic-tools/scripts/dependabot-make-consistent.js "${{ github.event.pull_request.title }}"
+          node common/scripts/install-run-rush.js check
+          node common/scripts/install-run-rush.js update
+      - name: Make dependencies consistent
+        run: |
+          git status
+      - name: Add and commit changes for dependabot
+        uses: EndBug/add-and-commit@v7
