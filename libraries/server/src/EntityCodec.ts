@@ -184,14 +184,24 @@ export function decodeAdminEntity(schema: Schema, values: AdminEntityValues): Ad
       createdAt: values.created_at,
       updatedAt: values.updated_at,
     },
-    fields: {},
+    fields: decodeAdminEntityFields(schema, entitySpec, values),
   };
+
+  return entity;
+}
+
+export function decodeAdminEntityFields(
+  schema: Schema,
+  entitySpec: EntityTypeSpecification,
+  values: Pick<EntityVersionsTable, 'data'>
+): AdminEntity['fields'] {
+  const fields: AdminEntity['fields'] = {};
   for (const fieldSpec of entitySpec.fields) {
     const { name: fieldName } = fieldSpec;
     const fieldValue = values.data[fieldName];
-    entity.fields[fieldName] = decodeFieldItemOrList(schema, fieldSpec, fieldValue);
+    fields[fieldName] = decodeFieldItemOrList(schema, fieldSpec, fieldValue);
   }
-  return entity;
+  return fields;
 }
 
 export function resolvePublishState(
@@ -579,7 +589,7 @@ function encodeRichTextField(
   return ok(encodedBlocks);
 }
 
-function collectDataFromEntity(
+export function collectDataFromEntity(
   schema: Schema,
   entity: AdminEntity | AdminEntityCreate
 ): {

@@ -128,7 +128,9 @@ export function createServerAdminClient({
           args: [references],
           resolve,
         } = operation as AdminClientOperation<AdminClientOperationName.publishEntities>;
-        resolve(await publishEntities(databaseAdapter, context, references));
+        resolve(
+          await publishEntities(serverImpl.getSchema(), databaseAdapter, context, references)
+        );
         break;
       }
       case AdminClientOperationName.searchEntities: {

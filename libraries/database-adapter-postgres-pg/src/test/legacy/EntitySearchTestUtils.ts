@@ -8,6 +8,8 @@ import type {
   Entity,
   ErrorType,
   PromiseResult,
+  PublishedClient,
+  Query,
 } from '@jonasb/datadata-core';
 import { getAllPagesForConnection, ok } from '@jonasb/datadata-core';
 
@@ -102,4 +104,38 @@ export function randomBoundingBox(heightLat = 1.0, widthLng = 1.0): BoundingBox 
   const maxLat = minLat + heightLat;
   const maxLng = minLng + widthLng;
   return { minLat, maxLat, minLng, maxLng };
+}
+
+export async function countSearchResultWithEntity(
+  client: AdminClient,
+  query: AdminQuery,
+  entityId: string
+): Promise<number>;
+export async function countSearchResultWithEntity(
+  client: PublishedClient,
+  query: Query,
+  entityId: string
+): Promise<number>;
+export async function countSearchResultWithEntity(
+  client: AdminClient | PublishedClient,
+  query: AdminQuery | Query,
+  entityId: string
+): Promise<number> {
+  let matchCount = 0;
+
+  for await (const pageResult of getAllPagesForConnection({ first: 50 }, (currentPaging) =>
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    client.searchEntities(query as any, currentPaging)
+  )) {
+    if (pageResult.isError()) {
+      throw pageResult.toError();
+    }
+    for (const edge of pageResult.value.edges) {
+      if (edge.node.isOk() && edge.node.value.id === entityId) {
+        matchCount += 1;
+      }
+    }
+  }
+
+  return matchCount;
 }
