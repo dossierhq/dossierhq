@@ -9,6 +9,10 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 16.1.0
+      - name: Use deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: "1.13.2"
       - name: Make dependencies consistent
         run: |
           which node
