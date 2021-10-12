@@ -823,3 +823,93 @@ describe('searchEntities() text', () => {
     }
   });
 });
+
+describe('getTotalCount', () => {
+  test('Check that we get the correct count', async () => {
+    const result = await publishedClient.getTotalCount({
+      entityTypes: ['AdminOnlyEditBefore'],
+    });
+    expectResultValue(result, entitiesOfTypePublishedEntityOnlyEditBefore.length);
+  });
+
+  test('Query based on referencing, one reference', async () => {
+    const { barId } = await createBarWithFooReferences(1);
+
+    const result = await publishedClient.getTotalCount({ referencing: barId });
+    expectResultValue(result, 1);
+  });
+
+  test('Query based on referencing, no references', async () => {
+    const { barId } = await createBarWithFooReferences(0);
+
+    const result = await publishedClient.getTotalCount({ referencing: barId });
+    expectResultValue(result, 0);
+  });
+
+  test('Query based on referencing and entityTypes, one reference', async () => {
+    const { barId } = await createBarWithFooReferences(1, 1);
+
+    const anotherBarCreateResult = await createAndPublishEntities(adminClient, {
+      info: { type: 'PublishedEntityBar', name: 'Another Bar' },
+      fields: { entity: { id: barId } },
+    });
+    if (expectOkResult(anotherBarCreateResult)) {
+      const result = await publishedClient.getTotalCount({
+        entityTypes: ['PublishedEntityFoo'],
+        referencing: barId,
+      });
+      expectResultValue(result, 1);
+    }
+  });
+
+  test('Query based on referencing, two references from one entity', async () => {
+    const { barId } = await createBarWithFooReferences(1, 2);
+
+    const result = await publishedClient.getTotalCount({ referencing: barId });
+    expectResultValue(result, 1);
+  });
+
+  test('Query based on bounding box with two locations inside', async () => {
+    const boundingBox = randomBoundingBox();
+    const center = {
+      lat: (boundingBox.minLat + boundingBox.maxLat) / 2,
+      lng: (boundingBox.minLng + boundingBox.maxLng) / 2,
+    };
+    const inside = {
+      lat: center.lat,
+      lng: (center.lng + boundingBox.maxLng) / 2,
+    };
+
+    const createResult = await createAndPublishEntities(adminClient, {
+      info: { type: 'PublishedEntityFoo', name: 'Foo' },
+      fields: { locations: [center, inside] },
+    });
+
+    if (expectOkResult(createResult)) {
+      const searchResult = await publishedClient.searchEntities({ boundingBox });
+
+      const totalResult = await publishedClient.getTotalCount({ boundingBox });
+      if (expectOkResult(searchResult) && expectOkResult(totalResult)) {
+        // Hopefully there aren't too many entities in the bounding box
+        expect(searchResult.value?.pageInfo.hasNextPage).toBeFalsy();
+
+        expect(totalResult.value).toBe(searchResult.value?.edges.length);
+      }
+    }
+  });
+
+  test('Query based on text', async () => {
+    const resultBefore = await publishedClient.getTotalCount({ text: 'sensational clown' });
+    if (expectOkResult(resultBefore)) {
+      expectOkResult(
+        await createAndPublishEntities(adminClient, {
+          info: { type: 'PublishedEntityFoo', name: 'Foo' },
+          fields: { title: 'That was indeed a sensational clown' },
+        })
+      );
+
+      const resultAfter = await publishedClient.getTotalCount({ text: 'sensational clown' });
+      expectResultValue(resultAfter, resultBefore.value + 1);
+    }
+  });
+});
