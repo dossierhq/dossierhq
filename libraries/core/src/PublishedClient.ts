@@ -4,13 +4,17 @@ import type {
   Edge,
   Entity,
   EntityReference,
+  JsonConnection,
+  JsonEdge,
   Paging,
   PromiseResult,
   Query,
   Result,
 } from '.';
-import { ErrorType, notOk } from '.';
+import { assertExhaustive, convertJsonConnection, convertJsonEdge, ErrorType, notOk, ok } from '.';
 import type { ErrorFromPromiseResult, OkFromPromiseResult } from './ErrorResult';
+import type { JsonEntity } from './JsonUtils';
+import { convertJsonEntity } from './JsonUtils';
 import type {
   ClientContext,
   Middleware,
@@ -49,6 +53,9 @@ export enum PublishedClientOperationName {
 type MethodParameters<T extends keyof PublishedClient> = Parameters<PublishedClient[T]>;
 type MethodReturnType<T extends keyof PublishedClient> = WithoutPromise<
   ReturnType<PublishedClient[T]>
+>;
+type MethodReturnTypeWithoutPromise<T extends keyof PublishedClient> = WithoutPromise<
+  PromiseResult<MethodReturnTypeOk<T>, MethodReturnTypeError<T>>
 >;
 type MethodReturnTypeOk<T extends keyof PublishedClient> = OkFromPromiseResult<
   ReturnType<PublishedClient[T]>
@@ -100,6 +107,10 @@ export type PublishedClientMiddleware<TContext extends ClientContext> = Middlewa
   TContext,
   PublishedClientOperation
 >;
+
+export type PublishedClientJsonOperation<
+  TName extends PublishedClientOperationName = PublishedClientOperationName
+> = PublishedClientOperationArguments[TName];
 
 class BasePublishedClient<TContext extends ClientContext> implements PublishedClient {
   private readonly context: TContext | ContextProvider<TContext>;
@@ -187,4 +198,87 @@ export function createBasePublishedClient<TContext extends ClientContext>(option
   pipeline: PublishedClientMiddleware<TContext>[];
 }): PublishedClient {
   return new BasePublishedClient(option);
+}
+
+export function convertPublishedClientOperationToJson(
+  operation: PublishedClientOperation
+): PublishedClientJsonOperation {
+  const { args } = operation;
+  switch (operation.name) {
+    case PublishedClientOperationName.getEntities:
+    case PublishedClientOperationName.getEntity:
+    case PublishedClientOperationName.searchEntities:
+    case PublishedClientOperationName.getTotalCount:
+      //TODO cleanup args? e.g. reference, keep only id
+      return args;
+    default:
+      assertExhaustive(operation.name);
+  }
+}
+
+export async function executePublishedClientOperationFromJson<
+  TName extends PublishedClientOperationName
+>(
+  publishedClient: PublishedClient,
+  operationName: TName,
+  operation: PublishedClientJsonOperation
+): PromiseResult<unknown, ErrorType> {
+  switch (operationName) {
+    case PublishedClientOperationName.getEntities: {
+      const [references] =
+        operation as PublishedClientOperationArguments[PublishedClientOperationName.getEntities];
+      const result = await publishedClient.getEntities(references);
+      return ok(result);
+    }
+    case PublishedClientOperationName.getEntity: {
+      const [reference] =
+        operation as PublishedClientOperationArguments[PublishedClientOperationName.getEntity];
+      return await publishedClient.getEntity(reference);
+    }
+    case PublishedClientOperationName.getTotalCount: {
+      const [query] =
+        operation as PublishedClientOperationArguments[PublishedClientOperationName.getTotalCount];
+      return await publishedClient.getTotalCount(query);
+    }
+    case PublishedClientOperationName.searchEntities: {
+      const [query, paging] =
+        operation as PublishedClientOperationArguments[PublishedClientOperationName.searchEntities];
+      return await publishedClient.searchEntities(query, paging);
+    }
+    default:
+      assertExhaustive(operationName);
+  }
+}
+
+export function convertJsonPublishedClientResult<TName extends PublishedClientOperationName>(
+  operationName: TName,
+  jsonResult: Result<unknown, ErrorType>
+): MethodReturnTypeWithoutPromise<TName> {
+  if (jsonResult.isError()) {
+    //TODO check expected types
+    return jsonResult as MethodReturnTypeWithoutPromise<TName>;
+  }
+  const { value } = jsonResult;
+  switch (operationName) {
+    case PublishedClientOperationName.getEntities:
+    case PublishedClientOperationName.getEntity:
+    case PublishedClientOperationName.getTotalCount:
+      return ok(value) as MethodReturnTypeWithoutPromise<TName>;
+    case PublishedClientOperationName.searchEntities: {
+      const result: MethodReturnTypeWithoutPromise<PublishedClientOperationName.searchEntities> =
+        ok(
+          convertJsonConnection(
+            value as JsonConnection<JsonEdge<JsonEntity, ErrorType>> | null,
+            convertJsonEntityEdge
+          )
+        );
+      return result as MethodReturnTypeWithoutPromise<TName>;
+    }
+    default:
+      assertExhaustive(operationName);
+  }
+}
+
+function convertJsonEntityEdge(edge: JsonEdge<JsonEntity, ErrorType>) {
+  return convertJsonEdge(edge, convertJsonEntity);
 }

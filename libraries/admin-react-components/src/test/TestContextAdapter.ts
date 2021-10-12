@@ -6,12 +6,18 @@ import type {
   ErrorType,
   Logger,
   PromiseResult,
+  PublishedClient,
+  PublishedClientMiddleware,
+  PublishedClientOperation,
   Result,
 } from '@jonasb/datadata-core';
 import {
   convertAdminClientOperationToJson,
   convertJsonAdminClientResult,
+  convertJsonPublishedClientResult,
+  convertPublishedClientOperationToJson,
   createBaseAdminClient,
+  createBasePublishedClient,
   createConsoleLogger,
   LoggingClientMiddleware,
   notOk,
@@ -48,12 +54,26 @@ export function createBackendAdminClient(
     pipeline: [
       ...middleware,
       LoggingClientMiddleware as AdminClientMiddleware<BackendContext>,
-      terminatingMiddleware,
+      terminatingAdminMiddleware,
     ],
   });
 }
 
-async function terminatingMiddleware(
+export function createBackendPublishedClient(
+  middleware: PublishedClientMiddleware<BackendContext>[] = []
+): PublishedClient {
+  const context: BackendContext = { logger: createConsoleLogger(console) };
+  return createBasePublishedClient<BackendContext>({
+    context,
+    pipeline: [
+      ...middleware,
+      LoggingClientMiddleware as PublishedClientMiddleware<BackendContext>,
+      terminatingPublishedMiddleware,
+    ],
+  });
+}
+
+async function terminatingAdminMiddleware(
   _context: BackendContext,
   operation: AdminClientOperation
 ): Promise<void> {
@@ -95,6 +115,49 @@ async function terminatingMiddleware(
   operation.resolve(convertJsonAdminClientResult(operation.name, result));
 }
 
+async function terminatingPublishedMiddleware(
+  _context: BackendContext,
+  operation: PublishedClientOperation
+): Promise<void> {
+  const jsonOperation = convertPublishedClientOperationToJson(operation);
+
+  let response: Response;
+  if (operation.modifies) {
+    response = await fetch(`/published?name=${operation.name}`, {
+      method: 'PUT',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(jsonOperation),
+    });
+  } else {
+    response = await fetch(
+      `published?name=${operation.name}&${encodeQuery({ operation: jsonOperation })}`,
+      {
+        method: 'GET',
+        headers: { 'content-type': 'application/json' },
+      }
+    );
+  }
+
+  let result: Result<unknown, ErrorType>;
+  if (response.ok) {
+    try {
+      result = ok(JSON.parse(await response.text()));
+    } catch (error) {
+      result = notOk.Generic('Failed parsing response');
+    }
+  } else {
+    let text = 'Failed fetching response';
+    try {
+      text = await response.text();
+    } catch (error) {
+      // ignore
+    }
+    result = notOk.fromHttpStatus(response.status, text);
+  }
+  operation.resolve(convertJsonPublishedClientResult(operation.name, result));
+}
+
+//TODO use core encodeQuery
 function encodeQuery(entries: Record<string, unknown>): string {
   const parts: string[] = [];
   for (const [key, value] of Object.entries(entries)) {

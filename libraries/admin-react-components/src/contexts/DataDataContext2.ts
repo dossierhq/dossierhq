@@ -4,6 +4,7 @@ import type {
   ErrorType,
   FieldSpecification,
   Logger,
+  PublishedClient,
   Schema,
 } from '@jonasb/datadata-core';
 import { createContext } from 'react';
@@ -20,6 +21,7 @@ export interface DataDataContextAdapter {
 export interface DataDataContextValue2 {
   adapter: DataDataContextAdapter;
   adminClient: AdminClient;
+  publishedClient: PublishedClient;
   logger: Logger;
   schema: Schema | undefined;
   schemaError: ErrorResult<unknown, ErrorType.Generic> | undefined;

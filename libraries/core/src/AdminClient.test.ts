@@ -1,11 +1,5 @@
 import { Temporal } from '@js-temporal/polyfill';
-import type {
-  AdminClient,
-  AdminClientMiddleware,
-  AdminClientOperation,
-  AdminEntity,
-  Logger,
-} from '.';
+import type { AdminClient, AdminClientMiddleware, AdminClientOperation, AdminEntity } from '.';
 import {
   AdminClientOperationName,
   assertIsDefined,
@@ -15,25 +9,11 @@ import {
   createBaseAdminClient,
   EntityPublishState,
   executeAdminClientOperationFromJson,
+  NoOpLogger,
   ok,
 } from '.';
 import { expectOkResult, expectResultValue } from './CoreTestUtils';
 import type { ClientContext } from './SharedClient';
-
-const noOpLogger: Logger = {
-  error: () => {
-    // no-op
-  },
-  warn: () => {
-    // no-op
-  },
-  info: () => {
-    // no-op
-  },
-  debug: () => {
-    // no-op
-  },
-};
 
 function createForwardingMiddleware<TContext extends ClientContext>(
   adminClient: AdminClient
@@ -101,7 +81,7 @@ function createDummyEntity({ id }: { id: string }): AdminEntity {
 describe('AdminClient forward operation over JSON', () => {
   test('archiveEntity', async () => {
     const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
-      { logger: noOpLogger },
+      { logger: NoOpLogger },
       AdminClientOperationName.archiveEntity,
       async (_context, operation) => {
         const [reference] = operation.args;
@@ -152,7 +132,7 @@ describe('AdminClient forward operation over JSON', () => {
 
   test('getEntities', async () => {
     const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
-      { logger: noOpLogger },
+      { logger: NoOpLogger },
       AdminClientOperationName.getEntities,
       async (_context, operation) => {
         const [references] = operation.args;
@@ -231,7 +211,7 @@ describe('AdminClient forward operation over JSON', () => {
 
   test('publishEntities', async () => {
     const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
-      { logger: noOpLogger },
+      { logger: NoOpLogger },
       AdminClientOperationName.publishEntities,
       async (_context, operation) => {
         const [references] = operation.args;
@@ -315,7 +295,7 @@ describe('AdminClient forward operation over JSON', () => {
     };
 
     const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
-      { logger: noOpLogger },
+      { logger: NoOpLogger },
       AdminClientOperationName.searchEntities,
       async (_context, operation) => {
         const [_query, _paging] = operation.args;
@@ -404,7 +384,7 @@ describe('AdminClient forward operation over JSON', () => {
 
   test('searchEntities (null)', async () => {
     const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
-      { logger: noOpLogger },
+      { logger: NoOpLogger },
       AdminClientOperationName.searchEntities,
       async (_context, operation) => {
         const [_query, _paging] = operation.args;
@@ -443,7 +423,7 @@ describe('AdminClient forward operation over JSON', () => {
 
   test('unarchiveEntity', async () => {
     const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
-      { logger: noOpLogger },
+      { logger: NoOpLogger },
       AdminClientOperationName.unarchiveEntity,
       async (_context, operation) => {
         const [reference] = operation.args;
@@ -494,7 +474,7 @@ describe('AdminClient forward operation over JSON', () => {
 
   test('unpublishEntities', async () => {
     const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
-      { logger: noOpLogger },
+      { logger: NoOpLogger },
       AdminClientOperationName.unpublishEntities,
       async (_context, operation) => {
         const [references] = operation.args;
