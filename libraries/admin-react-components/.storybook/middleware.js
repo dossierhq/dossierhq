@@ -1,6 +1,7 @@
 // @ts-check
 const {
   createConsoleLogger,
+  decodeUrlQueryStringifiedParam,
   executeAdminClientOperationFromJson,
   executePublishedClientOperationFromJson,
   LoggingClientMiddleware,
@@ -65,7 +66,7 @@ function handleClientOperation(req, res, executeOperation) {
   const { name } = req.query;
   let operation = null;
   if (req.method === 'GET') {
-    operation = decodeQuery('operation', req.query);
+    operation = decodeUrlQueryStringifiedParam('operation', req.query);
   } else if (req.method === 'PUT') {
     operation = req.body;
   } else {
@@ -96,18 +97,6 @@ function handleClientOperation(req, res, executeOperation) {
     res.setHeader('Content-Type', 'application/json; charset=utf-8');
     res.send(JSON.stringify(result.value, null, 2)).end();
   })();
-}
-
-//TODO use facilities in core
-function decodeQuery(name, query) {
-  const encoded = query[name];
-  if (encoded === undefined) {
-    return undefined;
-  }
-  if (Array.isArray(encoded)) {
-    throw new Error(`Did not expect an array for ${name}`);
-  }
-  return JSON.parse(decodeURIComponent(encoded));
 }
 
 module.exports = expressMiddleWare;
