@@ -1,13 +1,3 @@
-import {
-  isEntityTypeField,
-  isEntityTypeListField,
-  isItemValueItem,
-  isRichTextEntityBlock,
-  isRichTextField,
-  isValueTypeField,
-  isValueTypeListField,
-  visitFieldRecursively,
-} from '@jonasb/datadata-core';
 import type {
   AdminEntity,
   AdminQuery,
@@ -18,10 +8,21 @@ import type {
   PageInfo,
   Paging,
   PublishingHistory,
+  Query,
   RichText,
   Schema,
   ValueItem,
   ValueTypeSpecification,
+} from '@jonasb/datadata-core';
+import {
+  isEntityTypeField,
+  isEntityTypeListField,
+  isItemValueItem,
+  isRichTextEntityBlock,
+  isRichTextField,
+  isValueTypeField,
+  isValueTypeListField,
+  visitFieldRecursively,
 } from '@jonasb/datadata-core';
 import type { GraphQLResolveInfo } from 'graphql';
 import type { SessionGraphQLContext } from './GraphQLSchemaGenerator';
@@ -76,6 +77,48 @@ export async function loadEntities<TContext extends SessionGraphQLContext>(
     // TODO handle errors
     return null;
   });
+}
+
+export async function loadSearchEntities<TContext extends SessionGraphQLContext>(
+  context: TContext,
+  query: Query | undefined,
+  paging: Paging
+): Promise<ConnectionWithTotalCount<Edge<Entity>, TContext> | null> {
+  const schema = getSchema(context);
+  const publishedClient = getPublishedClient(context);
+  const result = await publishedClient.searchEntities(query, paging);
+  if (result.isError()) {
+    throw result.toError();
+  }
+
+  if (result.value === null) {
+    // No results
+    return null;
+  }
+
+  return {
+    pageInfo: result.value.pageInfo,
+    edges: result.value.edges.map((edge) => {
+      return {
+        cursor: edge.cursor,
+        node: edge.node.isOk() ? buildResolversForEntity(schema, edge.node.value) : null, //TODO throw error if accessed?
+      };
+    }),
+    totalCount: buildTotalCount(query),
+  };
+}
+
+function buildTotalCount<TContext extends SessionGraphQLContext>(
+  query: Query | undefined
+): FieldValueOrResolver<TContext, number> {
+  return async (args, context, _info) => {
+    const publishedClient = getPublishedClient(context);
+    const result = await publishedClient.getTotalCount(query);
+    if (result.isError()) {
+      throw result.toError();
+    }
+    return result.value;
+  };
 }
 
 function buildResolversForEntity<TContext extends SessionGraphQLContext>(
@@ -166,7 +209,7 @@ export async function loadAdminSearchEntities<TContext extends SessionGraphQLCon
         node: edge.node.isOk() ? buildResolversForAdminEntity(schema, edge.node.value) : null, //TODO throw error if accessed?
       };
     }),
-    totalCount: buildTotalCount(query),
+    totalCount: buildAdminTotalCount(query),
   };
 }
 
@@ -245,7 +288,7 @@ export function buildResolversForValue<TContext extends SessionGraphQLContext>(
   return result;
 }
 
-function buildTotalCount<TContext extends SessionGraphQLContext>(
+function buildAdminTotalCount<TContext extends SessionGraphQLContext>(
   query: AdminQuery | undefined
 ): FieldValueOrResolver<TContext, number> {
   return async (args, context, _info) => {
