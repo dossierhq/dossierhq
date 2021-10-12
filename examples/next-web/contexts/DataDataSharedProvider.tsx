@@ -9,12 +9,17 @@ import type {
   ClientContext,
   ErrorType,
   Logger,
+  PublishedClient,
+  PublishedClientOperation,
   Result,
 } from '@jonasb/datadata-core';
 import {
   convertAdminClientOperationToJson,
   convertJsonAdminClientResult,
+  convertJsonPublishedClientResult,
+  convertPublishedClientOperationToJson,
   createBaseAdminClient,
+  createBasePublishedClient,
 } from '@jonasb/datadata-core';
 import { useMemo } from 'react';
 import { fetchJsonResult, urls } from '../utils/BackendUtils';
@@ -89,7 +94,11 @@ export class ContextAdapter implements DataDataContextAdapter {
 
 export function DataDataSharedProvider({ children }: { children: React.ReactNode }) {
   const args = useMemo(
-    () => ({ adminClient: createBackendAdminClient(), adapter: new ContextAdapter() }),
+    () => ({
+      adminClient: createBackendAdminClient(),
+      publishedClient: createBackendPublishedClient(),
+      adapter: new ContextAdapter(),
+    }),
     []
   );
   return <DataDataProvider {...args}>{children}</DataDataProvider>;
@@ -97,10 +106,15 @@ export function DataDataSharedProvider({ children }: { children: React.ReactNode
 
 function createBackendAdminClient(): AdminClient {
   const context: BackendContext = { logger };
-  return createBaseAdminClient({ context, pipeline: [terminatingMiddleware] });
+  return createBaseAdminClient({ context, pipeline: [terminatingAdminMiddleware] });
 }
 
-async function terminatingMiddleware(
+function createBackendPublishedClient(): PublishedClient {
+  const context: BackendContext = { logger };
+  return createBasePublishedClient({ context, pipeline: [terminatingPublishedMiddleware] });
+}
+
+async function terminatingAdminMiddleware(
   _context: BackendContext,
   operation: AdminClientOperation
 ): Promise<void> {
@@ -120,4 +134,26 @@ async function terminatingMiddleware(
     });
   }
   operation.resolve(convertJsonAdminClientResult(operation.name, result));
+}
+
+async function terminatingPublishedMiddleware(
+  _context: BackendContext,
+  operation: PublishedClientOperation
+): Promise<void> {
+  const jsonOperation = convertPublishedClientOperationToJson(operation);
+
+  let result: Result<unknown, ErrorType>;
+  if (operation.modifies) {
+    result = await fetchJsonResult(urls.published(operation.name), {
+      method: 'PUT',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(jsonOperation),
+    });
+  } else {
+    result = await fetchJsonResult(urls.published(operation.name, jsonOperation), {
+      method: 'GET',
+      headers: { 'content-type': 'application/json' },
+    });
+  }
+  operation.resolve(convertJsonPublishedClientResult(operation.name, result));
 }

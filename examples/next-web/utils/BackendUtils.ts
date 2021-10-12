@@ -3,6 +3,8 @@ import type {
   AdminClientOperationName,
   ErrorType,
   PromiseResult,
+  PublishedClientJsonOperation,
+  PublishedClientOperationName,
 } from '@jonasb/datadata-core';
 import { buildUrlWithUrlQuery, notOk, ok, stringifyUrlQueryParams } from '@jonasb/datadata-core';
 
@@ -10,6 +12,14 @@ const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export const urls = {
   admin: (operationName: AdminClientOperationName, operation?: AdminClientJsonOperation): string =>
+    buildUrlWithUrlQuery(
+      `${baseUrl}/admin/${operationName}`,
+      stringifyUrlQueryParams({ operation }, { keepEmptyObjects: true })
+    ),
+  published: (
+    operationName: PublishedClientOperationName,
+    operation?: PublishedClientJsonOperation
+  ): string =>
     buildUrlWithUrlQuery(
       `${baseUrl}/admin/${operationName}`,
       stringifyUrlQueryParams({ operation }, { keepEmptyObjects: true })

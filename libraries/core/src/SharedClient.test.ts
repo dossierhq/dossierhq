@@ -1,5 +1,5 @@
-import type { ErrorType, Logger } from '.';
-import { ok } from '.';
+import type { ErrorType } from '.';
+import { NoOpLogger, ok } from '.';
 import { expectResultValue } from './CoreTestUtils';
 import type {
   ClientContext,
@@ -45,25 +45,10 @@ async function executeTestPipeline<TContext extends ClientContext>(
   return await executeOperationPipeline(context, pipeline, operation);
 }
 
-const noOpLogger: Logger = {
-  error: () => {
-    // no-op
-  },
-  warn: () => {
-    // no-op
-  },
-  info: () => {
-    // no-op
-  },
-  debug: () => {
-    // no-op
-  },
-};
-
 describe('executeOperationPipeline()', () => {
   test('One middleware returning argument', async () => {
     const result = await executeTestPipeline(
-      { logger: noOpLogger },
+      { logger: NoOpLogger },
       [
         async (_context, operation) => {
           if (operation.name === TestClientOperationName.foo) {
@@ -82,7 +67,7 @@ describe('executeOperationPipeline()', () => {
 
   test('Two middlewares, the first modifies the second', async () => {
     const result = await executeTestPipeline(
-      { logger: noOpLogger },
+      { logger: NoOpLogger },
       [
         async (_context, operation) => {
           if (operation.name === TestClientOperationName.foo) {
@@ -108,7 +93,7 @@ describe('executeOperationPipeline()', () => {
 
   test('Error: empty pipeline', async () => {
     await expect(
-      executeTestPipeline({ logger: noOpLogger }, [], {
+      executeTestPipeline({ logger: NoOpLogger }, [], {
         name: TestClientOperationName.foo,
         args: ['hello'],
         modifies: false,
@@ -119,7 +104,7 @@ describe('executeOperationPipeline()', () => {
   test('Error: final middleware calling next()', async () => {
     await expect(
       executeTestPipeline(
-        { logger: noOpLogger },
+        { logger: NoOpLogger },
         [async (_context, operation) => operation.resolve(await operation.next())],
         { name: TestClientOperationName.foo, args: ['hello'], modifies: false }
       )

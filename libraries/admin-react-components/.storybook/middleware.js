@@ -2,6 +2,7 @@
 const {
   createConsoleLogger,
   executeAdminClientOperationFromJson,
+  executePublishedClientOperationFromJson,
   LoggingClientMiddleware,
 } = require('@jonasb/datadata-core');
 const { createServer } = require('@jonasb/datadata-server');
@@ -40,47 +41,64 @@ async function getServer() {
 const expressMiddleWare = (router) => {
   router.use(bodyParser.json());
   router.use('/admin', (req, res) => {
-    const { name } = req.query;
-    let operation = null;
-    if (req.method === 'GET') {
-      operation = decodeQuery('operation', req.query);
-    } else if (req.method === 'PUT') {
-      operation = req.body;
-    } else {
-      res.status(405).send('Only GET and PUT allowed');
-      return;
-    }
-    if (!name) {
-      throw new Error('No operation name');
-    }
-    if (!operation) {
-      throw new Error('No operation');
-    }
-
-    (async () => {
-      const serverResult = await getServer();
-      if (serverResult.isError()) {
-        res.status(500).send(serverResult.toString()).end();
-        return;
-      }
-      const server = serverResult.value;
+    handleClientOperation(req, res, async (server, name, operation) => {
       const adminClient = server.createAdminClient(
         () => server.createSession('sys', 'storybook'),
         [LoggingClientMiddleware]
       );
       //TODO ensure only !modifies operations are executed for GET
-      const result = await executeAdminClientOperationFromJson(adminClient, name, operation);
-      if (result.isError()) {
-        res.status(result.httpStatus).send(result.message);
-        return;
-      }
-      // Express built-in json conversion doesn't handle null (sends empty response)
-      res.setHeader('Content-Type', 'application/json; charset=utf-8');
-      res.send(JSON.stringify(result.value, null, 2)).end();
-    })();
+      return await executeAdminClientOperationFromJson(adminClient, name, operation);
+    });
+  });
+  router.use('/published', (req, res) => {
+    handleClientOperation(req, res, async (server, name, operation) => {
+      const adminClient = server.createPublishedClient(
+        () => server.createSession('sys', 'storybook'),
+        [LoggingClientMiddleware]
+      );
+      return await executePublishedClientOperationFromJson(adminClient, name, operation);
+    });
   });
 };
 
+function handleClientOperation(req, res, executeOperation) {
+  const { name } = req.query;
+  let operation = null;
+  if (req.method === 'GET') {
+    operation = decodeQuery('operation', req.query);
+  } else if (req.method === 'PUT') {
+    operation = req.body;
+  } else {
+    res.status(405).send('Only GET and PUT allowed');
+    return;
+  }
+  if (!name) {
+    throw new Error('No operation name');
+  }
+  if (!operation) {
+    throw new Error('No operation');
+  }
+
+  (async () => {
+    const serverResult = await getServer();
+    if (serverResult.isError()) {
+      res.status(500).send(serverResult.toString()).end();
+      return;
+    }
+    const server = serverResult.value;
+
+    const result = await executeOperation(server, name, operation);
+    if (result.isError()) {
+      res.status(result.httpStatus).send(result.message);
+      return;
+    }
+    // Express built-in json conversion doesn't handle null (sends empty response)
+    res.setHeader('Content-Type', 'application/json; charset=utf-8');
+    res.send(JSON.stringify(result.value, null, 2)).end();
+  })();
+}
+
+//TODO use facilities in core
 function decodeQuery(name, query) {
   const encoded = query[name];
   if (encoded === undefined) {

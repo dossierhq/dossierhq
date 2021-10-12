@@ -1,4 +1,4 @@
-import type { AdminClient, Logger } from '@jonasb/datadata-core';
+import type { AdminClient, Logger, PublishedClient } from '@jonasb/datadata-core';
 import { NoOpLogger } from '@jonasb/datadata-core';
 import React, { useContext, useMemo } from 'react';
 import type { DataDataContextAdapter, DataDataContextValue2 } from '../../index.js';
@@ -7,6 +7,7 @@ import { DataDataContext, DataDataContext2, DataDataContextValue, useSchema } fr
 interface Props {
   adapter: DataDataContextAdapter;
   adminClient: AdminClient;
+  publishedClient: PublishedClient;
   logger?: Logger;
   children: React.ReactNode;
 }
@@ -14,6 +15,7 @@ interface Props {
 export function DataDataProvider({
   adapter,
   adminClient,
+  publishedClient,
   logger,
   children,
 }: Props): JSX.Element | null {
@@ -23,8 +25,15 @@ export function DataDataProvider({
     [adapter, adminClient, schema]
   );
   const value2: DataDataContextValue2 = useMemo(() => {
-    return { adapter, adminClient, logger: logger ?? NoOpLogger, schema, schemaError };
-  }, [adapter, adminClient, logger, schema, schemaError]);
+    return {
+      adapter,
+      adminClient,
+      publishedClient,
+      logger: logger ?? NoOpLogger,
+      schema,
+      schemaError,
+    };
+  }, [adapter, adminClient, publishedClient, logger, schema, schemaError]);
 
   return (
     <DataDataContext2.Provider value={value2}>

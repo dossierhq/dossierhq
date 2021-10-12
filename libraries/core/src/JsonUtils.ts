@@ -4,6 +4,7 @@ import type {
   AdminEntityInfo,
   Connection,
   Edge,
+  Entity,
   EntityHistory,
   EntityPublishPayload,
   EntityVersionInfo,
@@ -37,6 +38,8 @@ export interface JsonAdminEntityInfo extends Omit<AdminEntityInfo, 'createdAt' |
 export interface JsonAdminEntity extends Omit<AdminEntity, 'info'> {
   info: JsonAdminEntityInfo;
 }
+
+export type JsonEntity = Entity;
 
 export interface JsonPublishingResult extends Omit<EntityPublishPayload, 'updatedAt'> {
   updatedAt: string;
@@ -100,6 +103,10 @@ export function convertJsonAdminEntity(entity: JsonAdminEntity): AdminEntity {
       updatedAt: Temporal.Instant.from(entity.info.updatedAt),
     },
   };
+}
+
+export function convertJsonEntity(entity: JsonEntity): Entity {
+  return entity;
 }
 
 export function convertJsonPublishingResult(

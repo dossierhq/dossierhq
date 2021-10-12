@@ -73,9 +73,16 @@ export type {
 export { createConsoleLogger, NoOpLogger } from './Logger';
 export type { Logger } from './Logger';
 export { getAllPagesForConnection, getPagingInfo } from './PagingUtils';
-export { createBasePublishedClient, PublishedClientOperationName } from './PublishedClient';
+export {
+  convertJsonPublishedClientResult,
+  convertPublishedClientOperationToJson,
+  createBasePublishedClient,
+  executePublishedClientOperationFromJson,
+  PublishedClientOperationName,
+} from './PublishedClient';
 export type {
   PublishedClient,
+  PublishedClientJsonOperation,
   PublishedClientMiddleware,
   PublishedClientOperation,
 } from './PublishedClient';
