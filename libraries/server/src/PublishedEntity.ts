@@ -16,7 +16,7 @@ import type { EntitiesTable, EntityVersionsTable } from './DatabaseTables';
 import { decodePublishedEntity } from './EntityCodec';
 import { sharedSearchEntities } from './EntitySearcher';
 import type { SearchPublishedEntitiesItem } from './QueryGenerator';
-import { searchPublishedEntitiesQuery } from './QueryGenerator';
+import { searchPublishedEntitiesQuery, totalPublishedEntitiesQuery } from './QueryGenerator';
 
 export async function getEntity(
   schema: Schema,
@@ -83,6 +83,21 @@ export async function getEntities(
   });
 
   return ok(result);
+}
+
+export async function getTotalCount(
+  schema: Schema,
+  databaseAdapter: DatabaseAdapter,
+  context: SessionContext,
+  query: Query | undefined
+): PromiseResult<number, ErrorType.BadRequest> {
+  const sqlQuery = totalPublishedEntitiesQuery(schema, query);
+  if (sqlQuery.isError()) {
+    return sqlQuery;
+  }
+
+  const { count } = await Db.queryOne<{ count: number }>(databaseAdapter, context, sqlQuery.value);
+  return ok(count);
 }
 
 export async function searchEntities(

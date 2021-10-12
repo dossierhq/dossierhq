@@ -209,6 +209,21 @@ export function totalAdminEntitiesQuery(
   schema: Schema,
   query: AdminQuery | undefined
 ): Result<{ text: string; values: unknown[] }, ErrorType.BadRequest> {
+  return totalCountQuery(schema, query, false);
+}
+
+export function totalPublishedEntitiesQuery(
+  schema: Schema,
+  query: Query | undefined
+): Result<{ text: string; values: unknown[] }, ErrorType.BadRequest> {
+  return totalCountQuery(schema, query, true);
+}
+
+function totalCountQuery(
+  schema: Schema,
+  query: AdminQuery | Query | undefined,
+  _published: boolean
+): Result<{ text: string; values: unknown[] }, ErrorType.BadRequest> {
   const qb = new QueryBuilder('SELECT');
   // Convert count to ::integer since count() is bigint (js doesn't support 64 bit numbers so pg return it as string)
   if (query?.boundingBox) {

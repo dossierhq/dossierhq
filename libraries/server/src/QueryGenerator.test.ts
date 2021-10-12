@@ -10,6 +10,7 @@ import {
   searchAdminEntitiesQuery,
   searchPublishedEntitiesQuery,
   totalAdminEntitiesQuery,
+  totalPublishedEntitiesQuery,
 } from './QueryGenerator';
 
 const { expectErrorResult } = CoreTestUtils;
@@ -937,6 +938,145 @@ describe('totalAdminEntitiesQuery()', () => {
   test('query text', () => {
     expect(
       totalAdminEntitiesQuery(schema, {
+        text: 'foo bar',
+      })
+    ).toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.latest_fts @@ websearch_to_tsquery($1)",
+          "values": Array [
+            "foo bar",
+          ],
+        },
+      }
+    `);
+  });
+});
+
+describe('totalPublishedEntitiesQuery()', () => {
+  test('no query', () => {
+    expect(totalPublishedEntitiesQuery(schema, undefined)).toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e",
+          "values": Array [],
+        },
+      }
+    `);
+  });
+
+  test('no entity type => all', () => {
+    expect(totalPublishedEntitiesQuery(schema, { entityTypes: [] })).toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e",
+          "values": Array [],
+        },
+      }
+    `);
+  });
+
+  test('one entity type', () => {
+    expect(totalPublishedEntitiesQuery(schema, { entityTypes: ['QueryGeneratorFoo'] }))
+      .toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.type = ANY($1)",
+          "values": Array [
+            Array [
+              "QueryGeneratorFoo",
+            ],
+          ],
+        },
+      }
+    `);
+  });
+
+  test('two entity types', () => {
+    expect(
+      totalPublishedEntitiesQuery(schema, {
+        entityTypes: ['QueryGeneratorFoo', 'QueryGeneratorBar'],
+      })
+    ).toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.type = ANY($1)",
+          "values": Array [
+            Array [
+              "QueryGeneratorFoo",
+              "QueryGeneratorBar",
+            ],
+          ],
+        },
+      }
+    `);
+  });
+
+  test('query referencing', () => {
+    expect(
+      totalPublishedEntitiesQuery(schema, { referencing: '37b48706-803e-4227-a51e-8208db12d949' })
+    ).toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e, entity_versions ev, entity_version_references evr, entities e2 WHERE e.latest_draft_entity_versions_id = ev.id AND ev.id = evr.entity_versions_id AND evr.entities_id = e2.id AND e2.uuid = $1",
+          "values": Array [
+            "37b48706-803e-4227-a51e-8208db12d949",
+          ],
+        },
+      }
+    `);
+  });
+
+  test('query referencing and entity types and paging', () => {
+    expect(
+      totalPublishedEntitiesQuery(schema, {
+        entityTypes: ['QueryGeneratorFoo', 'QueryGeneratorBar'],
+        referencing: '37b48706-803e-4227-a51e-8208db12d949',
+      })
+    ).toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e, entity_versions ev, entity_version_references evr, entities e2 WHERE e.type = ANY($1) AND e.latest_draft_entity_versions_id = ev.id AND ev.id = evr.entity_versions_id AND evr.entities_id = e2.id AND e2.uuid = $2",
+          "values": Array [
+            Array [
+              "QueryGeneratorFoo",
+              "QueryGeneratorBar",
+            ],
+            "37b48706-803e-4227-a51e-8208db12d949",
+          ],
+        },
+      }
+    `);
+  });
+
+  test('query bounding box', () => {
+    expect(
+      totalPublishedEntitiesQuery(schema, {
+        boundingBox: {
+          minLat: 55.07,
+          maxLat: 56.79,
+          minLng: 11.62,
+          maxLng: 16.25,
+        },
+      })
+    ).toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "text": "SELECT COUNT(DISTINCT e.id)::integer AS count FROM entities e, entity_versions ev, entity_version_locations evl WHERE e.latest_draft_entity_versions_id = ev.id AND ev.id = evl.entity_versions_id AND evl.location && ST_MakeEnvelope($1, $2, $3, $4, 4326)",
+          "values": Array [
+            11.62,
+            55.07,
+            16.25,
+            56.79,
+          ],
+        },
+      }
+    `);
+  });
+
+  test('query text', () => {
+    expect(
+      totalPublishedEntitiesQuery(schema, {
         text: 'foo bar',
       })
     ).toMatchInlineSnapshot(`
