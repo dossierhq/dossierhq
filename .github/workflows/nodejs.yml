@@ -17,11 +17,11 @@ jobs:
         uses: denoland/setup-deno@v1
         with:
           deno-version: "1.13.2"
-      - name: Disable ensureConsistentVersions for dependabot && rush update
+      - name: Make dependencies consistent for dependabot
         if: startsWith(github.ref, 'refs/heads/dependabot/npm_and_yarn')
         run: |
-          sed -i "s/\(\"ensureConsistentVersions\"\): true,/\1: false,/" rush.json
-          git diff
+          ./tools/generic-tools/scripts/dependabot-make-consistent.js
+          node common/scripts/install-run-rush.js check
           node common/scripts/install-run-rush.js update
       - name: rush install
         run: |
@@ -48,9 +48,6 @@ jobs:
         run: |
           cd tools/generic-tools/
           npm run db:stop
-  preventDependabotMerge:
-    runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/heads/dependabot/npm_and_yarn')
-    steps:
-      - name: Fail since dependabot changes shouldn't be merged
-        run: exit 1
+      - name: Add and commit changes for dependabot
+        uses: EndBug/add-and-commit@v7
+        if: startsWith(github.ref, 'refs/heads/dependabot/npm_and_yarn')
