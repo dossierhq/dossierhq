@@ -2,6 +2,7 @@ import type {
   AdminEntity,
   Connection,
   Edge,
+  Entity,
   EntityHistory,
   ErrorType,
   Logger,
@@ -80,18 +81,22 @@ export function expectEntityHistoryVersions(
   expect(actualVersions).toEqual(expectedVersions);
 }
 
-export function expectSearchResultEntities(
+export function expectSearchResultEntities<TItem extends AdminEntity | Entity>(
   result: Result<
-    Connection<Edge<AdminEntity, ErrorType>> | null,
+    Connection<Edge<TItem, ErrorType>> | null,
     ErrorType.BadRequest | ErrorType.Generic
   >,
-  actualEntities: AdminEntity[]
+  actualEntities: TItem[]
 ): void {
   if (expectOkResult(result)) {
-    assertIsDefined(result.value);
-    expect(result.value.edges).toHaveLength(actualEntities.length);
-    for (const [index, actualEntity] of actualEntities.entries()) {
-      expectResultValue(result.value.edges[index].node, actualEntity);
+    if (actualEntities.length === 0) {
+      expect(result.value).toBeNull();
+    } else {
+      assertIsDefined(result.value);
+      expect(result.value.edges).toHaveLength(actualEntities.length);
+      for (const [index, actualEntity] of actualEntities.entries()) {
+        expectResultValue(result.value.edges[index].node, actualEntity);
+      }
     }
   }
 }

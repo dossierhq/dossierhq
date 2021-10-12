@@ -3,6 +3,7 @@ import type {
   AdminEntity,
   AdminEntityCreate,
   AdminEntityCreatePayload,
+  Entity,
   PromiseResult,
   PublishedClient,
   SchemaSpecificationUpdate,
@@ -17,7 +18,11 @@ import {
   RichTextBlockType,
 } from '@jonasb/datadata-core';
 import type { Server, SessionContext } from '@jonasb/datadata-server';
-import { createPostgresTestServerAndClient, expectResultValue } from '../TestUtils';
+import {
+  createPostgresTestServerAndClient,
+  expectResultValue,
+  expectSearchResultEntities,
+} from '../TestUtils';
 import {
   ensureEntityCount,
   expectConnectionToMatchSlice,
@@ -33,9 +38,23 @@ const SCHEMA: SchemaSpecificationUpdate = {
       name: 'PublishedEntityFoo',
       fields: [
         { name: 'title', type: FieldType.String, isName: true },
-        { name: 'location', type: 'Location' },
-        { name: 'locations', type: 'Location', list: true },
-        { name: 'body', type: 'RichText' },
+        { name: 'location', type: FieldType.Location },
+        { name: 'locations', type: FieldType.Location, list: true },
+        { name: 'body', type: FieldType.RichText },
+        { name: 'bar', type: FieldType.EntityType, entityTypes: ['PublishedEntityBar'] },
+        {
+          name: 'bars',
+          type: FieldType.EntityType,
+          entityTypes: ['PublishedEntityBar'],
+          list: true,
+        },
+      ],
+    },
+    {
+      name: 'PublishedEntityBar',
+      fields: [
+        { name: 'title', type: FieldType.String, isName: true },
+        { name: 'entity', type: FieldType.EntityType },
       ],
     },
     {
@@ -47,14 +66,21 @@ const SCHEMA: SchemaSpecificationUpdate = {
     {
       name: 'PublishedEntityStringedLocation',
       fields: [
-        { name: 'string', type: 'String' },
-        { name: 'location', type: 'Location' },
+        { name: 'string', type: FieldType.String },
+        { name: 'location', type: FieldType.Location },
       ],
     },
   ],
 };
 
-const emptyFooFields = { body: null, location: null, locations: null, title: null };
+const emptyFooFields = {
+  bar: null,
+  bars: null,
+  body: null,
+  location: null,
+  locations: null,
+  title: null,
+};
 
 const { expectErrorResult, expectOkResult } = CoreTestUtils;
 
@@ -134,6 +160,41 @@ async function createAndPublishEntities(
   }
 
   return ok(result);
+}
+
+async function createBarWithFooReferences(fooCount: number, referencesPerFoo = 1) {
+  const createBarResult = await createAndPublishEntities(adminClient, {
+    info: { type: 'PublishedEntityBar', name: 'Bar' },
+    fields: { title: 'Bar' },
+  });
+  if (createBarResult.isError()) {
+    throw createBarResult.toError();
+  }
+
+  const [
+    {
+      entity: { id: barId },
+    },
+  ] = createBarResult.value;
+
+  const fooEntities: Entity[] = [];
+
+  for (let i = 0; i < fooCount; i += 1) {
+    const bars = [...new Array(referencesPerFoo - 1)].map(() => ({ id: barId }));
+    const createFooResult = await createAndPublishEntities(adminClient, {
+      info: { type: 'PublishedEntityFoo', name: 'Foo: ' + i },
+      fields: { bar: { id: barId }, bars },
+    });
+    if (expectOkResult(createFooResult)) {
+      const publishedEntityResult = await publishedClient.getEntity({
+        id: createFooResult.value[0].entity.id,
+      });
+      if (expectOkResult(publishedEntityResult)) {
+        fooEntities.push(publishedEntityResult.value);
+      }
+    }
+  }
+  return { barId, fooEntities };
 }
 
 describe('getEntity()', () => {
@@ -574,7 +635,57 @@ describe('searchEntities() order', () => {
   });
 });
 
-// TODO searchEntities referencing
+describe('searchEntities() referencing', () => {
+  test('One reference', async () => {
+    const { barId, fooEntities } = await createBarWithFooReferences(1);
+    const [fooEntity] = fooEntities;
+
+    const searchResult = await publishedClient.searchEntities({ referencing: barId });
+    expectSearchResultEntities(searchResult, [fooEntity]);
+  });
+
+  test('No references', async () => {
+    const { barId } = await createBarWithFooReferences(0);
+
+    const searchResult = await publishedClient.searchEntities({ referencing: barId });
+    expectResultValue(searchResult, null);
+  });
+
+  test('Two references from one entity', async () => {
+    const { barId, fooEntities } = await createBarWithFooReferences(1, 2);
+
+    const searchResult = await publishedClient.searchEntities({ referencing: barId });
+    expectSearchResultEntities(searchResult, fooEntities);
+  });
+
+  test('Two references, filter on entityType', async () => {
+    const { barId, fooEntities } = await createBarWithFooReferences(1);
+
+    const anotherBarCreateResult = await createAndPublishEntities(adminClient, {
+      info: { type: 'PublishedEntityBar', name: 'Another Bar' },
+      fields: { entity: { id: barId } },
+    });
+    if (expectOkResult(anotherBarCreateResult)) {
+      const searchResult = await publishedClient.searchEntities({
+        entityTypes: ['PublishedEntityFoo'],
+        referencing: barId,
+      });
+      expectSearchResultEntities(searchResult, fooEntities);
+    }
+  });
+
+  test('One reference, unpublished', async () => {
+    const { barId, fooEntities } = await createBarWithFooReferences(1);
+
+    const unpublishResult = await adminClient.unpublishEntities([{ id: fooEntities[0].id }]);
+    expectOkResult(unpublishResult);
+
+    const searchResult = await publishedClient.searchEntities({
+      referencing: barId,
+    });
+    expectSearchResultEntities(searchResult, []);
+  });
+});
 
 describe('searchEntities() boundingBox', () => {
   test('Query based on bounding box', async () => {
