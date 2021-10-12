@@ -1,8 +1,8 @@
-import type { AdminEntity, AdminQuery, EntityPublishState, Paging } from '@jonasb/datadata-core';
+import type { Entity, Paging, Query } from '@jonasb/datadata-core';
 import {
-  AdminQueryOrder,
   decodeUrlQueryStringifiedParam,
   getPagingInfo,
+  QueryOrder,
   stringifyUrlQueryParams,
 } from '@jonasb/datadata-core';
 import {
@@ -11,13 +11,13 @@ import {
   FullscreenContainer,
   IconButton,
   Input,
-  InstantDisplay,
   Table,
-  Tag,
   TagSelector,
 } from '@jonasb/datadata-design';
 import type { Dispatch } from 'react';
 import React, { useContext, useEffect, useMemo, useReducer } from 'react';
+import { usePublishedSearchEntities } from '../../hooks/usePublishedSearchEntities.js';
+import { usePublishedTotalCount } from '../../hooks/usePublishedTotalCount.js';
 import type {
   EntityTypeSelectorDispatch,
   EntityTypeSelectorState,
@@ -32,34 +32,29 @@ import {
   reduceEntityTypeSelectorState,
   reduceSearchEntityState,
   SearchEntityStateActions,
-  TypePicker2,
-  useSearchEntities,
-  useTotalCount,
 } from '../../index.js';
 import { queryWithoutDefaults } from '../../reducers/SearchEntityReducer.js';
 
-export interface EntityListScreenUrlQuery {
+export interface PublishedEntityListScreenUrlQuery {
   query?: string;
   paging?: string;
 }
 
-export interface EntityListScreenProps {
+export interface PublishedEntityListScreenProps {
   header?: React.ReactNode;
   footer?: React.ReactNode;
-  urlQuery?: EntityListScreenUrlQuery;
-  onUrlQueryChanged?: (urlQuery: EntityListScreenUrlQuery) => void;
-  onCreateEntity: (entityType: string) => void;
-  onOpenEntity: (entity: AdminEntity) => void;
+  urlQuery?: PublishedEntityListScreenUrlQuery;
+  onUrlQueryChanged?: (urlQuery: PublishedEntityListScreenUrlQuery) => void;
+  onOpenEntity: (entity: Entity) => void;
 }
 
-export function EntityListScreen({
+export function PublishedEntityListScreen({
   header,
   footer,
   urlQuery,
   onUrlQueryChanged,
-  onCreateEntity,
   onOpenEntity,
-}: EntityListScreenProps): JSX.Element | null {
+}: PublishedEntityListScreenProps): JSX.Element | null {
   const [searchEntityState, dispatchSearchEntityState] = useReducer(
     reduceSearchEntityState,
     urlQuery,
@@ -93,7 +88,7 @@ export function EntityListScreen({
   return (
     <FullscreenContainer>
       <SearchLoader
-        query={searchEntityState.query as AdminQuery}
+        query={searchEntityState.query as Query}
         paging={searchEntityState.paging}
         dispatchSearchEntityState={dispatchSearchEntityState}
       />
@@ -103,9 +98,6 @@ export function EntityListScreen({
         <EntityTypeSelector state={entityTypeFilterState} dispatch={dispatchEntityTypeFilter}>
           Entity type
         </EntityTypeSelector>
-        <TypePicker2 iconLeft="add" showEntityTypes onTypeSelected={onCreateEntity}>
-          Create
-        </TypePicker2>
       </FullscreenContainer.Row>
       <FullscreenContainer.ScrollableRow>
         <FullscreenContainer.Row>
@@ -131,16 +123,18 @@ export function EntityListScreen({
 }
 
 function initializeSearchEntityStateFromUrlQuery(
-  urlQuery: EntityListScreenUrlQuery | undefined
+  urlQuery: PublishedEntityListScreenUrlQuery | undefined
 ): SearchEntityState {
   const actions = urlQueryToSearchEntityStateActions(urlQuery);
   return initializeSearchEntityState(actions);
 }
 
-function urlQueryToSearchEntityStateActions(urlQuery: EntityListScreenUrlQuery | undefined) {
+function urlQueryToSearchEntityStateActions(
+  urlQuery: PublishedEntityListScreenUrlQuery | undefined
+) {
   const actions = [];
   if (urlQuery) {
-    const decodedQuery: AdminQuery = decodeUrlQueryStringifiedParam('query', urlQuery) ?? {};
+    const decodedQuery: Query = decodeUrlQueryStringifiedParam('query', urlQuery) ?? {};
     actions.push(new SearchEntityStateActions.SetQuery(decodedQuery, false));
     const decodedPaging: Paging | undefined =
       decodeUrlQueryStringifiedParam('paging', urlQuery) ?? {};
@@ -150,15 +144,15 @@ function urlQueryToSearchEntityStateActions(urlQuery: EntityListScreenUrlQuery |
 }
 
 function useSynchronizeUrlQueryState(
-  urlQuery: EntityListScreenUrlQuery | undefined,
-  onUrlQueryChanged: ((urlQuery: EntityListScreenUrlQuery) => void) | undefined,
+  urlQuery: PublishedEntityListScreenUrlQuery | undefined,
+  onUrlQueryChanged: ((urlQuery: PublishedEntityListScreenUrlQuery) => void) | undefined,
   searchEntityState: SearchEntityState,
   dispatchSearchEntityState: Dispatch<SearchEntityStateAction>
 ) {
   const { query, paging } = searchEntityState;
   useEffect(() => {
     if (!onUrlQueryChanged || !urlQuery) return;
-    const result: EntityListScreenUrlQuery = stringifyUrlQueryParams({
+    const result: PublishedEntityListScreenUrlQuery = stringifyUrlQueryParams({
       query: queryWithoutDefaults(query),
       paging,
     });
@@ -182,13 +176,17 @@ function SearchLoader({
   paging,
   dispatchSearchEntityState,
 }: {
-  query: AdminQuery;
+  query: Query;
   paging: Paging;
   dispatchSearchEntityState: Dispatch<SearchEntityStateAction>;
 }) {
-  const { adminClient } = useContext(DataDataContext2);
-  const { connection, connectionError } = useSearchEntities(adminClient, query, paging);
-  const { totalCount } = useTotalCount(adminClient, query);
+  const { publishedClient } = useContext(DataDataContext2);
+  const { connection, connectionError } = usePublishedSearchEntities(
+    publishedClient,
+    query,
+    paging
+  );
+  const { totalCount } = usePublishedTotalCount(publishedClient, query);
 
   useEffect(() => {
     dispatchSearchEntityState(
@@ -258,7 +256,7 @@ function EntityList({
 }: {
   searchEntityState: SearchEntityState;
   dispatchSearchEntityState: Dispatch<SearchEntityStateAction>;
-  onItemClick: (item: AdminEntity) => void;
+  onItemClick: (item: Entity) => void;
 }) {
   const {
     connection,
@@ -269,61 +267,26 @@ function EntityList({
       <Table.Head>
         <Table.Row sticky>
           <Table.Header
-            order={order === AdminQueryOrder.name ? 'asc' : ''}
+            order={order === QueryOrder.name ? 'asc' : ''}
             onClick={() =>
               dispatchSearchEntityState(
-                new SearchEntityStateActions.SetQuery({ order: AdminQueryOrder.name }, true)
+                new SearchEntityStateActions.SetQuery({ order: QueryOrder.name }, true)
               )
             }
           >
             Name
           </Table.Header>
           <Table.Header>Entity type</Table.Header>
-          <Table.Header narrow>Status</Table.Header>
-          <Table.Header
-            narrow
-            order={order === AdminQueryOrder.createdAt ? 'asc' : ''}
-            onClick={() =>
-              dispatchSearchEntityState(
-                new SearchEntityStateActions.SetQuery({ order: AdminQueryOrder.createdAt }, true)
-              )
-            }
-          >
-            Created
-          </Table.Header>
-          <Table.Header
-            narrow
-            order={order === AdminQueryOrder.updatedAt ? 'asc' : ''}
-            onClick={() =>
-              dispatchSearchEntityState(
-                new SearchEntityStateActions.SetQuery({ order: AdminQueryOrder.updatedAt }, true)
-              )
-            }
-          >
-            Updated
-          </Table.Header>
         </Table.Row>
       </Table.Head>
       <Table.Body>
         {connection?.edges.map((edge) => {
           if (edge.node.isOk()) {
-            const entity = edge.node.value as AdminEntity;
+            const entity = edge.node.value;
             return (
               <Table.Row key={entity.id} clickable onClick={() => onItemClick(entity)}>
                 <Table.Cell>{entity.info.name}</Table.Cell>
                 <Table.Cell>{entity.info.type}</Table.Cell>
-                <Table.Cell narrow>
-                  <StatusTag status={entity.info.publishingState} />
-                </Table.Cell>
-                <Table.Cell narrow>
-                  <InstantDisplay instant={entity.info.createdAt} />
-                </Table.Cell>
-                <Table.Cell narrow>
-                  {order === AdminQueryOrder.updatedAt ||
-                  !entity.info.updatedAt.equals(entity.info.createdAt) ? (
-                    <InstantDisplay instant={entity.info.updatedAt} />
-                  ) : null}
-                </Table.Cell>
               </Table.Row>
             );
           }
@@ -438,8 +401,4 @@ function PagingCount({
       {currentPage}
     </Dropdown>
   );
-}
-
-function StatusTag({ status }: { status: EntityPublishState }) {
-  return <Tag color={status}>{status.slice(0, 1).toUpperCase() + status.slice(1)}</Tag>;
 }
