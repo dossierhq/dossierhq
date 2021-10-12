@@ -94,5 +94,6 @@ export {
 } from './reducers/SearchEntityReducer.js';
 export type { SearchEntityState, SearchEntityStateAction } from './reducers/SearchEntityReducer.js';
 export { EntityListScreen } from './screens/EntityListScreen/EntityListScreen.js';
+export { PublishedEntityListScreen } from './screens/PublishedEntityListScreen/PublishedEntityListScreen.js';
 export type { LayoutProps, SpacingSize } from './types/LayoutTypes.js';
 export type { Kind } from './utils/KindUtils.js';

@@ -1,0 +1,57 @@
+import type {
+  Connection,
+  Edge,
+  Entity,
+  ErrorResult,
+  ErrorType,
+  Paging,
+  PublishedClient,
+  Query,
+} from '@jonasb/datadata-core';
+import { useCallback } from 'react';
+import useSWR from 'swr';
+
+/**
+ * @param publishedClient
+ * @param query If `undefined`, no data is fetched
+ * @param paging
+ * @returns If no result, `connection` is `undefined`. If there are no matches, `connection` is `null`
+ */
+export function usePublishedSearchEntities(
+  publishedClient: PublishedClient,
+  query: Query | undefined,
+  paging?: Paging
+): {
+  connection: Connection<Edge<Entity, ErrorType>> | null | undefined;
+  connectionError: ErrorResult<unknown, ErrorType.BadRequest | ErrorType.Generic> | undefined;
+} {
+  const fetcher = useCallback(
+    (_action: string, paramsJson: string) => {
+      const { query, paging } = JSON.parse(paramsJson) as {
+        query: Query;
+        paging: Paging | undefined;
+      };
+      return fetchSearchEntities(publishedClient, query, paging);
+    },
+    [publishedClient]
+  );
+  const { data, error } = useSWR(
+    query ? ['usePublishedSearchEntities', JSON.stringify({ query, paging })] : null,
+    fetcher
+  );
+
+  // useDebugLogChangedValues('usePublishedSearchEntities updated values', { publishedClient, query, paging, data, error, });
+  return { connection: data, connectionError: error };
+}
+
+async function fetchSearchEntities(
+  publishedClient: PublishedClient,
+  query: Query,
+  paging: Paging | undefined
+): Promise<Connection<Edge<Entity, ErrorType>> | null> {
+  const result = await publishedClient.searchEntities(query, paging);
+  if (result.isError()) {
+    throw result; // throw result, don't convert to Error
+  }
+  return result.value;
+}
