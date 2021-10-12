@@ -9,6 +9,7 @@ import type {
   EntityTypeSpecification,
   ErrorType,
   PublishedClient,
+  Query,
   Result,
   Schema,
   ValueItem,
@@ -54,6 +55,7 @@ import {
   loadEntities,
   loadEntity,
   loadPublishingHistory,
+  loadSearchEntities,
   loadVersionHistory,
 } from './DataLoaders';
 import * as Mutations from './Mutations';
@@ -392,6 +394,51 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
           maxLat: { type: new GraphQLNonNull(GraphQLFloat) },
           minLng: { type: new GraphQLNonNull(GraphQLFloat) },
           maxLng: { type: new GraphQLNonNull(GraphQLFloat) },
+        },
+      })
+    );
+
+    // EntityEdge
+    this.addType(
+      new GraphQLObjectType({
+        name: 'EntityEdge',
+        fields: {
+          node: { type: this.getOutputType('Entity') },
+          cursor: { type: new GraphQLNonNull(GraphQLString) },
+        },
+      })
+    );
+
+    // EntityConnection
+    this.addType(
+      new GraphQLObjectType({
+        name: 'EntityConnection',
+        fields: {
+          pageInfo: { type: new GraphQLNonNull(this.getType('PageInfo')) },
+          edges: { type: new GraphQLList(this.getType('EntityEdge')) },
+          totalCount: { type: new GraphQLNonNull(GraphQLInt) },
+        },
+      })
+    );
+
+    // QueryOrder
+    this.addType(
+      new GraphQLEnumType({
+        name: 'QueryOrder',
+        values: { createdAt: {}, name: {} },
+      })
+    );
+
+    // QueryInput
+    this.addType(
+      new GraphQLInputObjectType({
+        name: 'QueryInput',
+        fields: {
+          entityTypes: { type: new GraphQLList(this.getEnumType('EntityType')) },
+          referencing: { type: GraphQLID },
+          boundingBox: { type: this.getInputType('BoundingBoxInput') },
+          order: { type: this.getEnumType('QueryOrder') },
+          text: { type: GraphQLString },
         },
       })
     );
@@ -1078,6 +1125,34 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     });
   }
 
+  buildQueryFieldSearchEntities<TSource>(): GraphQLFieldConfig<TSource, TContext> {
+    return fieldConfigWithArgs<
+      TSource,
+      TContext,
+      {
+        query?: Query;
+        first?: number;
+        after?: string;
+        last?: number;
+        before?: string;
+      }
+    >({
+      type: this.getOutputType('EntityConnection'),
+      args: {
+        query: { type: this.getInputType('QueryInput') },
+        first: { type: GraphQLInt },
+        after: { type: GraphQLString },
+        last: { type: GraphQLInt },
+        before: { type: GraphQLString },
+      },
+      resolve: async (_source, args, context, _info) => {
+        const { query, first, after, last, before } = args;
+        const paging = { first, after, last, before };
+        return await loadSearchEntities(context, query, paging);
+      },
+    });
+  }
+
   buildQueryFieldEntityHistory<TSource>(): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<TSource, TContext, { id: string }>({
       type: this.getOutputType('EntityHistory'),
@@ -1110,6 +1185,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         nodes: this.buildQueryFieldNodes(),
         ...(includeEntities
           ? {
+              searchEntities: this.buildQueryFieldSearchEntities(),
               adminEntity: this.buildQueryFieldAdminEntity(),
               adminEntities: this.buildQueryFieldAdminEntities(),
               adminSearchEntities: this.buildQueryFieldAdminSearchEntities(),

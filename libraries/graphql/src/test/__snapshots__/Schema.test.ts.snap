@@ -76,6 +76,30 @@ input BoundingBoxInput {
   maxLng: Float!
 }
 
+type EntityEdge {
+  node: Entity
+  cursor: String!
+}
+
+type EntityConnection {
+  pageInfo: PageInfo!
+  edges: [EntityEdge]
+  totalCount: Int!
+}
+
+enum QueryOrder {
+  createdAt
+  name
+}
+
+input QueryInput {
+  entityTypes: [EntityType]
+  referencing: ID
+  boundingBox: BoundingBoxInput
+  order: QueryOrder
+  text: String
+}
+
 type FooFields {
   strings: [String!]
   booleans: [Boolean!]
@@ -312,6 +336,7 @@ type AdminBarUpsertPayload {
 type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
+  searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
@@ -388,6 +413,30 @@ input BoundingBoxInput {
   maxLat: Float!
   minLng: Float!
   maxLng: Float!
+}
+
+type EntityEdge {
+  node: Entity
+  cursor: String!
+}
+
+type EntityConnection {
+  pageInfo: PageInfo!
+  edges: [EntityEdge]
+  totalCount: Int!
+}
+
+enum QueryOrder {
+  createdAt
+  name
+}
+
+input QueryInput {
+  entityTypes: [EntityType]
+  referencing: ID
+  boundingBox: BoundingBoxInput
+  order: QueryOrder
+  text: String
 }
 
 type FooFields {
@@ -691,6 +740,7 @@ enum _AdminBarOrBazOrFoo {
 type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
+  searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
@@ -768,6 +818,30 @@ input BoundingBoxInput {
   maxLat: Float!
   minLng: Float!
   maxLng: Float!
+}
+
+type EntityEdge {
+  node: Entity
+  cursor: String!
+}
+
+type EntityConnection {
+  pageInfo: PageInfo!
+  edges: [EntityEdge]
+  totalCount: Int!
+}
+
+enum QueryOrder {
+  createdAt
+  name
+}
+
+input QueryInput {
+  entityTypes: [EntityType]
+  referencing: ID
+  boundingBox: BoundingBoxInput
+  order: QueryOrder
+  text: String
 }
 
 type Foo implements Node & Entity {
@@ -940,6 +1014,7 @@ type AdminFooUpsertPayload {
 type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
+  searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
@@ -1011,6 +1086,30 @@ input BoundingBoxInput {
   maxLat: Float!
   minLng: Float!
   maxLng: Float!
+}
+
+type EntityEdge {
+  node: Entity
+  cursor: String!
+}
+
+type EntityConnection {
+  pageInfo: PageInfo!
+  edges: [EntityEdge]
+  totalCount: Int!
+}
+
+enum QueryOrder {
+  createdAt
+  name
+}
+
+input QueryInput {
+  entityTypes: [EntityType]
+  referencing: ID
+  boundingBox: BoundingBoxInput
+  order: QueryOrder
+  text: String
 }
 
 type FooFields {
@@ -1200,6 +1299,7 @@ type AdminFooUpsertPayload {
 type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
+  searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
@@ -1272,6 +1372,30 @@ input BoundingBoxInput {
   maxLat: Float!
   minLng: Float!
   maxLng: Float!
+}
+
+type EntityEdge {
+  node: Entity
+  cursor: String!
+}
+
+type EntityConnection {
+  pageInfo: PageInfo!
+  edges: [EntityEdge]
+  totalCount: Int!
+}
+
+enum QueryOrder {
+  createdAt
+  name
+}
+
+input QueryInput {
+  entityTypes: [EntityType]
+  referencing: ID
+  boundingBox: BoundingBoxInput
+  order: QueryOrder
+  text: String
 }
 
 type FooFields {
@@ -1527,6 +1651,7 @@ type AdminBarUpsertPayload {
 type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
+  searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
@@ -1612,6 +1737,30 @@ input BoundingBoxInput {
   maxLat: Float!
   minLng: Float!
   maxLng: Float!
+}
+
+type EntityEdge {
+  node: Entity
+  cursor: String!
+}
+
+type EntityConnection {
+  pageInfo: PageInfo!
+  edges: [EntityEdge]
+  totalCount: Int!
+}
+
+enum QueryOrder {
+  createdAt
+  name
+}
+
+input QueryInput {
+  entityTypes: [EntityType]
+  referencing: ID
+  boundingBox: BoundingBoxInput
+  order: QueryOrder
+  text: String
 }
 
 type FooFields {
@@ -1933,6 +2082,7 @@ enum _AdminValueListOrValueOne {
 type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
+  searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
