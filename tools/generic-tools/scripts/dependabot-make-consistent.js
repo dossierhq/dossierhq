@@ -1,8 +1,7 @@
 #!/usr/bin/env node
-const { exec } = require("child_process");
+const { spawnSync } = require("child_process");
 const fs = require("fs/promises");
 const path = require("path");
-const { promisify } = require("util");
 
 const ROOT_DIR = path.resolve(path.join(__dirname, "..", "..", ".."));
 
@@ -54,17 +53,17 @@ async function makeDependencyConsistent(
     "scripts",
     "install-run-rush.js"
   );
-  const cmd = `node ${installRunRush} add -p "${dependency}@${version}" ${
-    isDevDependency ? "--dev" : ""
-  } --make-consistent`;
-  console.log(`Executing: ${cmd} (in ${directory})`);
-  const { stdout, stderr } = await promisify(exec)(cmd, { cwd: directory });
-  if (stdout) {
-    console.log(stdout);
-  }
-  if (stderr) {
-    console.warn(stderr);
-  }
+  const args = [
+    installRunRush,
+    "add",
+    "-p",
+    `${dependency}@${version}`,
+    isDevDependency ? "--dev" : "",
+    "--make-consistent",
+    "--skip-update",
+  ];
+  console.log(`Executing: ${node} ${args.join(" ")} (in ${directory})`);
+  spawnSync("node", args, { cwd: directory, stdio: "inherit" });
 }
 
 if (require.main === module) {
