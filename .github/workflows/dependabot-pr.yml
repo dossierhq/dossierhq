@@ -33,3 +33,25 @@ jobs:
         uses: EndBug/add-and-commit@v7
         with:
           default_author: github_actions
+            - name: start db
+        run: |
+          cd tools/generic-tools/
+          npm run db:start &
+          npm run db:wait
+      - name: setup db
+        run: |
+          cd tools/generic-tools/
+          npm run db:ensure-dbs
+          npm run db:make-users:superuser
+          npm run db:migrate:all
+          npm run db:make-users:no-superuser
+      - name: rush build
+        run: |
+          node common/scripts/install-run-rush.js build --verbose
+      - name: ci:check
+        run: |
+          node common/scripts/install-run-rush.js ci:check --verbose
+      - name: stop db
+        run: |
+          cd tools/generic-tools/
+          npm run db:stop
