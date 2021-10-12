@@ -17,6 +17,8 @@ jobs:
         uses: denoland/setup-deno@v1
         with:
           deno-version: "1.13.2"
+      - name: Debug github event
+        run: echo "${{toJSON(github.event)}}"
       - name: Make dependencies consistent for dependabot
         if: startsWith(github.ref, 'refs/heads/dependabot/npm_and_yarn')
         run: |
