@@ -4,12 +4,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - name: Make dependencies consistent
         run: |
           ./tools/generic-tools/scripts/dependabot-make-consistent.js "${{ github.event.pull_request.title }}"
           node common/scripts/install-run-rush.js check
           node common/scripts/install-run-rush.js update
-      - name: Make dependencies consistent
+      - name: Git status
         run: |
           git status
       - name: Add and commit changes for dependabot
