@@ -13,6 +13,7 @@ import type {
   EntityPublishPayload,
   EntityReference,
   EntityVersionReference,
+  JsonResult,
   Paging,
   PromiseResult,
   PublishingHistory,
@@ -21,7 +22,7 @@ import type {
   SchemaSpecificationUpdate,
   SchemaSpecificationUpdatePayload,
 } from '.';
-import { assertExhaustive, ErrorType, notOk, ok } from '.';
+import { assertExhaustive, convertJsonResult, ErrorType, notOk, ok } from '.';
 import type { ErrorFromPromiseResult, OkFromPromiseResult } from './ErrorResult';
 import type {
   JsonAdminEntity,
@@ -467,8 +468,7 @@ export async function executeAdminClientOperationFromJson<TName extends AdminCli
     case AdminClientOperationName.getEntities: {
       const [references] =
         operation as AdminClientOperationArguments[AdminClientOperationName.getEntities];
-      const result = await adminClient.getEntities(references);
-      return ok(result);
+      return await adminClient.getEntities(references);
     }
     case AdminClientOperationName.getEntity: {
       const [reference] =
@@ -544,7 +544,6 @@ export function convertJsonAdminClientResult<TName extends AdminClientOperationN
   const { value } = jsonResult;
   switch (operationName) {
     case AdminClientOperationName.createEntity:
-    case AdminClientOperationName.getEntities:
     case AdminClientOperationName.getEntity:
     case AdminClientOperationName.getSchemaSpecification:
     case AdminClientOperationName.getTotalCount:
@@ -556,6 +555,15 @@ export function convertJsonAdminClientResult<TName extends AdminClientOperationN
     case AdminClientOperationName.archiveEntity: {
       const result: MethodReturnTypeWithoutPromise<AdminClientOperationName.archiveEntity> = ok(
         convertJsonPublishingResult(value as JsonPublishingResult)
+      );
+      return result as MethodReturnTypeWithoutPromise<TName>;
+    }
+    case AdminClientOperationName.getEntities: {
+      const result: MethodReturnTypeWithoutPromise<AdminClientOperationName.getEntities> = ok(
+        (value as JsonResult<JsonAdminEntity, ErrorType.NotFound>[]).map((jsonItemResult) => {
+          const itemResult = convertJsonResult(jsonItemResult);
+          return itemResult.isOk() ? itemResult.map(convertJsonAdminEntity) : itemResult;
+        })
       );
       return result as MethodReturnTypeWithoutPromise<TName>;
     }
