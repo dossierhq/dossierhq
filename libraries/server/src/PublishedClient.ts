@@ -7,6 +7,7 @@ import type {
 import {
   assertExhaustive,
   createBasePublishedClient,
+  ok,
   PublishedClientOperationName,
 } from '@jonasb/datadata-core';
 import type { DatabaseAdapter, SessionContext } from '.';
@@ -50,6 +51,13 @@ export function createServerPublishedClient({
           resolve,
         } = operation as PublishedClientOperation<PublishedClientOperationName.getEntity>;
         resolve(await getEntity(serverImpl.getSchema(), databaseAdapter, context, reference.id));
+        break;
+      }
+      case PublishedClientOperationName.getSchemaSpecification: {
+        const { resolve } =
+          operation as PublishedClientOperation<PublishedClientOperationName.getSchemaSpecification>;
+        const schema = serverImpl.getSchema();
+        resolve(ok(schema.spec));
         break;
       }
       case PublishedClientOperationName.getTotalCount: {
