@@ -91,33 +91,35 @@ describe('PublishedClient forward operation over JSON', () => {
       );
 
     const result = await publishedClient.getEntities([{ id: '1234' }, { id: '5678' }]);
-    expectOkResult(result) &&
+    if (expectOkResult(result)) {
+      expect(result.value[0].isOk()).toBeTruthy();
+      expect(result.value[1].isOk()).toBeTruthy();
+
       expect(result.value).toMatchInlineSnapshot(`
-        Object {
-          "value": Array [
-            Object {
-              "value": Object {
-                "fields": Object {},
-                "id": "1234",
-                "info": Object {
-                  "name": "Foo name",
-                  "type": "FooType",
-                },
+        Array [
+          OkResult {
+            "value": Object {
+              "fields": Object {},
+              "id": "1234",
+              "info": Object {
+                "name": "Foo name",
+                "type": "FooType",
               },
             },
-            Object {
-              "value": Object {
-                "fields": Object {},
-                "id": "5678",
-                "info": Object {
-                  "name": "Foo name",
-                  "type": "FooType",
-                },
+          },
+          OkResult {
+            "value": Object {
+              "fields": Object {},
+              "id": "5678",
+              "info": Object {
+                "name": "Foo name",
+                "type": "FooType",
               },
             },
-          ],
-        }
+          },
+        ]
       `);
+    }
 
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
       Array [

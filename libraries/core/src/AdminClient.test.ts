@@ -141,41 +141,48 @@ describe('AdminClient forward operation over JSON', () => {
     );
 
     const result = await adminClient.getEntities([{ id: '1234' }, { id: '5678' }]);
-    expectOkResult(result) &&
+    if (expectOkResult(result)) {
+      expect(result.value[0].isOk()).toBeTruthy();
+      expect(result.value[1].isOk()).toBeTruthy();
+
+      if (expectOkResult(result.value[0])) {
+        expect(result.value[0].value.info.createdAt).toBeInstanceOf(Temporal.Instant);
+        expect(result.value[0].value.info.updatedAt).toBeInstanceOf(Temporal.Instant);
+      }
+
       expect(result.value).toMatchInlineSnapshot(`
-        Object {
-          "value": Array [
-            Object {
-              "value": Object {
-                "fields": Object {},
-                "id": "1234",
-                "info": Object {
-                  "createdAt": "2021-08-17T07:51:25.56Z",
-                  "name": "Foo name",
-                  "publishingState": "draft",
-                  "type": "FooType",
-                  "updatedAt": "2021-08-17T07:51:25.56Z",
-                  "version": 0,
-                },
+        Array [
+          OkResult {
+            "value": Object {
+              "fields": Object {},
+              "id": "1234",
+              "info": Object {
+                "createdAt": "2021-08-17T07:51:25.56Z",
+                "name": "Foo name",
+                "publishingState": "draft",
+                "type": "FooType",
+                "updatedAt": "2021-08-17T07:51:25.56Z",
+                "version": 0,
               },
             },
-            Object {
-              "value": Object {
-                "fields": Object {},
-                "id": "5678",
-                "info": Object {
-                  "createdAt": "2021-08-17T07:51:25.56Z",
-                  "name": "Foo name",
-                  "publishingState": "draft",
-                  "type": "FooType",
-                  "updatedAt": "2021-08-17T07:51:25.56Z",
-                  "version": 0,
-                },
+          },
+          OkResult {
+            "value": Object {
+              "fields": Object {},
+              "id": "5678",
+              "info": Object {
+                "createdAt": "2021-08-17T07:51:25.56Z",
+                "name": "Foo name",
+                "publishingState": "draft",
+                "type": "FooType",
+                "updatedAt": "2021-08-17T07:51:25.56Z",
+                "version": 0,
               },
             },
-          ],
-        }
+          },
+        ]
       `);
+    }
 
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
       Array [

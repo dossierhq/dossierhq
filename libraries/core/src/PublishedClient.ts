@@ -6,13 +6,22 @@ import type {
   EntityReference,
   JsonConnection,
   JsonEdge,
+  JsonResult,
   Paging,
   PromiseResult,
   Query,
   Result,
   SchemaSpecification,
 } from '.';
-import { assertExhaustive, convertJsonConnection, convertJsonEdge, ErrorType, notOk, ok } from '.';
+import {
+  assertExhaustive,
+  convertJsonConnection,
+  convertJsonEdge,
+  convertJsonResult,
+  ErrorType,
+  notOk,
+  ok,
+} from '.';
 import type { ErrorFromPromiseResult, OkFromPromiseResult } from './ErrorResult';
 import type { JsonEntity } from './JsonUtils';
 import { convertJsonEntity } from './JsonUtils';
@@ -246,8 +255,7 @@ export async function executePublishedClientOperationFromJson<
     case PublishedClientOperationName.getEntities: {
       const [references] =
         operation as PublishedClientOperationArguments[PublishedClientOperationName.getEntities];
-      const result = await publishedClient.getEntities(references);
-      return ok(result);
+      return await publishedClient.getEntities(references);
     }
     case PublishedClientOperationName.getEntity: {
       const [reference] =
@@ -282,9 +290,23 @@ export function convertJsonPublishedClientResult<TName extends PublishedClientOp
   }
   const { value } = jsonResult;
   switch (operationName) {
-    case PublishedClientOperationName.getEntities:
-    case PublishedClientOperationName.getEntity:
+    case PublishedClientOperationName.getEntities: {
+      const result: MethodReturnTypeWithoutPromise<PublishedClientOperationName.getEntities> = ok(
+        (value as JsonResult<JsonEntity, ErrorType.NotFound>[]).map((jsonItemResult) => {
+          const itemResult = convertJsonResult(jsonItemResult);
+          return itemResult.isOk() ? itemResult.map(convertJsonEntity) : itemResult;
+        })
+      );
+      return result as MethodReturnTypeWithoutPromise<TName>;
+    }
+    case PublishedClientOperationName.getEntity: {
+      const result: MethodReturnTypeWithoutPromise<PublishedClientOperationName.getEntity> = ok(
+        convertJsonEntity(value as JsonEntity)
+      );
+      return result as MethodReturnTypeWithoutPromise<TName>;
+    }
     case PublishedClientOperationName.getSchemaSpecification:
+      return ok(value) as MethodReturnTypeWithoutPromise<TName>;
     case PublishedClientOperationName.getTotalCount:
       return ok(value) as MethodReturnTypeWithoutPromise<TName>;
     case PublishedClientOperationName.searchEntities: {

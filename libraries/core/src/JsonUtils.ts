@@ -79,9 +79,7 @@ export function convertJsonEdge<TOkIn, TOkOut, TError extends ErrorType>(
   nodeConverter: (node: TOkIn) => TOkOut
 ): Edge<TOkOut, TError> {
   const nodeJson = convertJsonResult(jsonEdge.node);
-  const node: Result<TOkOut, TError> = nodeJson.isOk()
-    ? ok(nodeConverter(nodeJson.value))
-    : nodeJson;
+  const node: Result<TOkOut, TError> = nodeJson.isOk() ? nodeJson.map(nodeConverter) : nodeJson;
   return { node, cursor: jsonEdge.cursor };
 }
 
