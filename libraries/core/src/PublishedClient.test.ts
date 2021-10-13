@@ -244,6 +244,54 @@ describe('PublishedClient forward operation over JSON', () => {
     `);
   });
 
+  test('getTotalCount', async () => {
+    const { publishedClient, operationHandlerMock } =
+      createJsonConvertingPublishedClientsForOperation(
+        { logger: NoOpLogger },
+        PublishedClientOperationName.getTotalCount,
+        async (_context, operation) => {
+          const [_query] = operation.args;
+          operation.resolve(ok(123));
+        }
+      );
+
+    const result = await publishedClient.getTotalCount({
+      boundingBox: { minLat: 0, maxLat: 1, minLng: 20, maxLng: 21 },
+    });
+    expectResultValue(result, 123);
+
+    expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
+      Array [
+        Array [
+          Object {
+            "logger": Object {
+              "debug": [Function],
+              "error": [Function],
+              "info": [Function],
+              "warn": [Function],
+            },
+          },
+          Object {
+            "args": Array [
+              Object {
+                "boundingBox": Object {
+                  "maxLat": 1,
+                  "maxLng": 21,
+                  "minLat": 0,
+                  "minLng": 20,
+                },
+              },
+            ],
+            "modifies": false,
+            "name": "getTotalCount",
+            "next": [Function],
+            "resolve": [Function],
+          },
+        ],
+      ]
+    `);
+  });
+
   test('searchEntities', async () => {
     const entity1: Entity = {
       id: 'id',
