@@ -10,6 +10,7 @@ import type {
   PromiseResult,
   Query,
   Result,
+  SchemaSpecification,
 } from '.';
 import { assertExhaustive, convertJsonConnection, convertJsonEdge, ErrorType, notOk, ok } from '.';
 import type { ErrorFromPromiseResult, OkFromPromiseResult } from './ErrorResult';
@@ -24,6 +25,8 @@ import type {
 import { executeOperationPipeline } from './SharedClient';
 
 export interface PublishedClient {
+  getSchemaSpecification(): PromiseResult<SchemaSpecification, ErrorType.Generic>;
+
   getEntity(
     reference: EntityReference
   ): PromiseResult<Entity, ErrorType.NotFound | ErrorType.Generic>;
@@ -46,6 +49,7 @@ export interface PublishedClient {
 export enum PublishedClientOperationName {
   getEntities = 'getEntities',
   getEntity = 'getEntity',
+  getSchemaSpecification = 'getSchemaSpecification',
   getTotalCount = 'getTotalCount',
   searchEntities = 'searchEntities',
 }
@@ -69,6 +73,7 @@ type WithoutPromise<T> = T extends Promise<infer U> ? U : T;
 interface PublishedClientOperationArguments {
   [PublishedClientOperationName.getEntities]: MethodParameters<'getEntities'>;
   [PublishedClientOperationName.getEntity]: MethodParameters<'getEntity'>;
+  [PublishedClientOperationName.getSchemaSpecification]: MethodParameters<'getSchemaSpecification'>;
   [PublishedClientOperationName.getTotalCount]: MethodParameters<'getTotalCount'>;
   [PublishedClientOperationName.searchEntities]: MethodParameters<'searchEntities'>;
 }
@@ -76,6 +81,7 @@ interface PublishedClientOperationArguments {
 interface PublishedClientOperationReturn {
   [PublishedClientOperationName.getEntities]: MethodReturnType<'getEntities'>;
   [PublishedClientOperationName.getEntity]: MethodReturnType<'getEntity'>;
+  [PublishedClientOperationName.getSchemaSpecification]: MethodReturnType<'getSchemaSpecification'>;
   [PublishedClientOperationName.getTotalCount]: MethodReturnType<'getTotalCount'>;
   [PublishedClientOperationName.searchEntities]: MethodReturnType<'searchEntities'>;
 }
@@ -83,6 +89,7 @@ interface PublishedClientOperationReturn {
 interface PublishedClientOperationReturnOk {
   [PublishedClientOperationName.getEntities]: MethodReturnTypeOk<'getEntities'>;
   [PublishedClientOperationName.getEntity]: MethodReturnTypeOk<'getEntity'>;
+  [PublishedClientOperationName.getSchemaSpecification]: MethodReturnTypeOk<'getSchemaSpecification'>;
   [PublishedClientOperationName.getTotalCount]: MethodReturnTypeOk<'getTotalCount'>;
   [PublishedClientOperationName.searchEntities]: MethodReturnTypeOk<'searchEntities'>;
 }
@@ -90,6 +97,7 @@ interface PublishedClientOperationReturnOk {
 interface PublishedClientOperationReturnError {
   [PublishedClientOperationName.getEntities]: MethodReturnTypeError<'getEntities'>;
   [PublishedClientOperationName.getEntity]: MethodReturnTypeError<'getEntity'>;
+  [PublishedClientOperationName.getSchemaSpecification]: MethodReturnTypeError<'getSchemaSpecification'>;
   [PublishedClientOperationName.getTotalCount]: MethodReturnTypeError<'getTotalCount'>;
   [PublishedClientOperationName.searchEntities]: MethodReturnTypeError<'searchEntities'>;
 }
@@ -143,6 +151,16 @@ class BasePublishedClient<TContext extends ClientContext> implements PublishedCl
     return this.executeOperation({
       name: PublishedClientOperationName.getEntities,
       args: [references],
+      modifies: false,
+    });
+  }
+
+  getSchemaSpecification(): Promise<
+    PublishedClientOperationReturn[PublishedClientOperationName.getSchemaSpecification]
+  > {
+    return this.executeOperation({
+      name: PublishedClientOperationName.getSchemaSpecification,
+      args: [],
       modifies: false,
     });
   }
@@ -207,6 +225,7 @@ export function convertPublishedClientOperationToJson(
   switch (operation.name) {
     case PublishedClientOperationName.getEntities:
     case PublishedClientOperationName.getEntity:
+    case PublishedClientOperationName.getSchemaSpecification:
     case PublishedClientOperationName.searchEntities:
     case PublishedClientOperationName.getTotalCount:
       //TODO cleanup args? e.g. reference, keep only id
@@ -235,6 +254,9 @@ export async function executePublishedClientOperationFromJson<
         operation as PublishedClientOperationArguments[PublishedClientOperationName.getEntity];
       return await publishedClient.getEntity(reference);
     }
+    case PublishedClientOperationName.getSchemaSpecification: {
+      return await publishedClient.getSchemaSpecification();
+    }
     case PublishedClientOperationName.getTotalCount: {
       const [query] =
         operation as PublishedClientOperationArguments[PublishedClientOperationName.getTotalCount];
@@ -262,6 +284,7 @@ export function convertJsonPublishedClientResult<TName extends PublishedClientOp
   switch (operationName) {
     case PublishedClientOperationName.getEntities:
     case PublishedClientOperationName.getEntity:
+    case PublishedClientOperationName.getSchemaSpecification:
     case PublishedClientOperationName.getTotalCount:
       return ok(value) as MethodReturnTypeWithoutPromise<TName>;
     case PublishedClientOperationName.searchEntities: {

@@ -202,6 +202,48 @@ describe('PublishedClient forward operation over JSON', () => {
     `);
   });
 
+  test('getSchemaSpecification', async () => {
+    const { publishedClient, operationHandlerMock } =
+      createJsonConvertingPublishedClientsForOperation(
+        { logger: NoOpLogger },
+        PublishedClientOperationName.getSchemaSpecification,
+        async (_context, operation) => {
+          operation.resolve(ok({ entityTypes: [], valueTypes: [] }));
+        }
+      );
+
+    const result = await publishedClient.getSchemaSpecification();
+    expectOkResult(result) &&
+      expect(result.value).toMatchInlineSnapshot(`
+        Object {
+          "entityTypes": Array [],
+          "valueTypes": Array [],
+        }
+      `);
+
+    expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
+      Array [
+        Array [
+          Object {
+            "logger": Object {
+              "debug": [Function],
+              "error": [Function],
+              "info": [Function],
+              "warn": [Function],
+            },
+          },
+          Object {
+            "args": Array [],
+            "modifies": false,
+            "name": "getSchemaSpecification",
+            "next": [Function],
+            "resolve": [Function],
+          },
+        ],
+      ]
+    `);
+  });
+
   test('searchEntities', async () => {
     const entity1: Entity = {
       id: 'id',
