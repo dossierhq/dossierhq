@@ -1,14 +1,14 @@
-export { ConnectionPagingButtons } from './components/ConnectionPagingButtons.js';
+export { ConnectionPagingButtons } from './components/ConnectionPagingButtons/ConnectionPagingButtons.js';
 export {
   EntityTypeSelector,
   initializeEntityTypeSelectorState,
   reduceEntityTypeSelectorState,
-} from './components/EntityTypeSelector.js';
+} from './components/EntityTypeSelector/EntityTypeSelector.js';
 export type {
   EntityTypeSelectorDispatch,
   EntityTypeSelectorState,
-} from './components/EntityTypeSelector.js';
-export { SearchEntityPagingButtons } from './components/SearchEntityPagingButtons.js';
+} from './components/EntityTypeSelector/EntityTypeSelector.js';
+export { SearchEntityPagingButtons } from './components/SearchEntityPagingButtons/SearchEntityPagingButtons.js';
 export {
   getQueryWithoutDefaults,
   initializeSearchEntityState,
