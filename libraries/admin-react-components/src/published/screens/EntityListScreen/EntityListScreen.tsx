@@ -4,7 +4,7 @@ import {
   QueryOrder,
   stringifyUrlQueryParams,
 } from '@jonasb/datadata-core';
-import { Field, FullscreenContainer, Input, Table, TagSelector } from '@jonasb/datadata-design';
+import { Field, FullscreenContainer, Table, TagSelector } from '@jonasb/datadata-design';
 import type { Dispatch } from 'react';
 import React, { useContext, useEffect, useReducer } from 'react';
 import type {
@@ -23,6 +23,7 @@ import {
   reduceSearchEntityState,
   SearchEntityPagingButtons,
   SearchEntityPagingCount,
+  SearchEntitySearchInput,
   SearchEntityStateActions,
   useSearchEntities,
   useTotalCount,
@@ -88,7 +89,7 @@ export function EntityListScreen({
       />
       {header ? <FullscreenContainer.Row fullWidth>{header}</FullscreenContainer.Row> : null}
       <FullscreenContainer.Row center flexDirection="row" gap={2} paddingVertical={2}>
-        <SearchInput {...{ searchEntityState, dispatchSearchEntityState }} />
+        <SearchEntitySearchInput {...{ searchEntityState, dispatchSearchEntityState }} />
         <EntityTypeSelector
           schema={schema}
           state={entityTypeFilterState}
@@ -193,26 +194,6 @@ function SearchLoader({
   // useDebugLogChangedValues('SearchLoader changed values', { query, paging, dispatchSearchEntityState, adminClient, connection, connectionError, totalCount, });
 
   return null;
-}
-
-function SearchInput({
-  searchEntityState,
-  dispatchSearchEntityState,
-}: {
-  searchEntityState: SearchEntityState;
-  dispatchSearchEntityState: Dispatch<SearchEntityStateAction>;
-}) {
-  const { text } = searchEntityState;
-  return (
-    <Input
-      iconLeft="search"
-      value={text}
-      placeholder="Search"
-      onChange={(e) =>
-        dispatchSearchEntityState(new SearchEntityStateActions.SetText(e.target.value))
-      }
-    />
-  );
 }
 
 function EntityTypesList({
