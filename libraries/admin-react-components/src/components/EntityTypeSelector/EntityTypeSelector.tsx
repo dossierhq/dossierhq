@@ -1,3 +1,4 @@
+import type { Schema } from '@jonasb/datadata-core';
 import type {
   DropdownSelectorProps,
   MultipleSelectorItem,
@@ -12,8 +13,7 @@ import {
   reduceMultipleSelectorState,
 } from '@jonasb/datadata-design';
 import type { Dispatch } from 'react';
-import React, { useContext, useEffect } from 'react';
-import { DataDataContext2 } from '../../index.js';
+import React, { useEffect } from 'react';
 
 export interface EntityTypeItem extends MultipleSelectorItem {
   name: string;
@@ -24,7 +24,9 @@ export type EntityTypeSelectorInitArgs = { selectedIds?: string[] };
 export type EntityTypeSelectorState = MultipleSelectorState<EntityTypeItem>;
 export type EntityTypeSelectorDispatch = Dispatch<MultipleSelectorStateAction<EntityTypeItem>>;
 
-type Props = Omit<DropdownSelectorProps<EntityTypeItem>, 'renderItem'>;
+type Props = Omit<DropdownSelectorProps<EntityTypeItem>, 'renderItem'> & {
+  schema: Schema | undefined;
+};
 
 export function initializeEntityTypeSelectorState({
   selectedIds,
@@ -37,9 +39,8 @@ export function initializeEntityTypeSelectorState({
 
 export const reduceEntityTypeSelectorState: EntityTypeSelectorReducer = reduceMultipleSelectorState;
 
-export function EntityTypeSelector(props: Props): JSX.Element {
+export function EntityTypeSelector({ schema, ...props }: Props): JSX.Element {
   const { dispatch } = props;
-  const { schema } = useContext(DataDataContext2);
 
   useEffect(() => {
     if (schema) {

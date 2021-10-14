@@ -23,7 +23,6 @@ import type {
   SearchEntityStateAction,
 } from '../../../index.js';
 import {
-  DataDataContext2,
   EntityTypeSelector,
   initializeEntityTypeSelectorState,
   initializeSearchEntityState,
@@ -32,7 +31,7 @@ import {
   SearchEntityStateActions,
 } from '../../../index.js';
 import { queryWithoutDefaults } from '../../../reducers/SearchEntityReducer.js';
-import { useSearchEntities, useTotalCount } from '../../index.js';
+import { useSearchEntities, useTotalCount, PublishedDataDataContext } from '../../index.js';
 
 export interface EntityListScreenUrlQuery {
   query?: string;
@@ -54,6 +53,7 @@ export function EntityListScreen({
   onUrlQueryChanged,
   onOpenEntity,
 }: EntityListScreenProps): JSX.Element | null {
+  const { schema } = useContext(PublishedDataDataContext);
   const [searchEntityState, dispatchSearchEntityState] = useReducer(
     reduceSearchEntityState,
     urlQuery,
@@ -94,7 +94,11 @@ export function EntityListScreen({
       {header ? <FullscreenContainer.Row fullWidth>{header}</FullscreenContainer.Row> : null}
       <FullscreenContainer.Row center flexDirection="row" gap={2} paddingVertical={2}>
         <SearchInput {...{ searchEntityState, dispatchSearchEntityState }} />
-        <EntityTypeSelector state={entityTypeFilterState} dispatch={dispatchEntityTypeFilter}>
+        <EntityTypeSelector
+          schema={schema}
+          state={entityTypeFilterState}
+          dispatch={dispatchEntityTypeFilter}
+        >
           Entity type
         </EntityTypeSelector>
       </FullscreenContainer.Row>
@@ -177,7 +181,7 @@ function SearchLoader({
   paging: Paging;
   dispatchSearchEntityState: Dispatch<SearchEntityStateAction>;
 }) {
-  const { publishedClient } = useContext(DataDataContext2);
+  const { publishedClient } = useContext(PublishedDataDataContext);
   const { connection, connectionError } = useSearchEntities(publishedClient, query, paging);
   const { totalCount } = useTotalCount(publishedClient, query);
 
