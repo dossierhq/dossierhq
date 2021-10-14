@@ -87,6 +87,7 @@ export { Tag } from './generic-components/Tag/Tag.js';
 export { useSchema } from './hooks/useSchema.js';
 export { useSearchEntities } from './hooks/useSearchEntities.js';
 export { useTotalCount } from './hooks/useTotalCount.js';
+export * as published from './published/index.js';
 export {
   initializeSearchEntityState,
   reduceSearchEntityState,
@@ -94,6 +95,5 @@ export {
 } from './reducers/SearchEntityReducer.js';
 export type { SearchEntityState, SearchEntityStateAction } from './reducers/SearchEntityReducer.js';
 export { EntityListScreen } from './screens/EntityListScreen/EntityListScreen.js';
-export { PublishedEntityListScreen } from './screens/PublishedEntityListScreen/PublishedEntityListScreen.js';
 export type { LayoutProps, SpacingSize } from './types/LayoutTypes.js';
 export type { Kind } from './utils/KindUtils.js';

@@ -1,19 +1,16 @@
 import type { Meta, Story } from '@storybook/react/types-6-0.js';
 import React, { useState } from 'react';
-import { LoadContextProvider } from '../../test/LoadContextProvider.js';
-import type {
-  PublishedEntityListScreenProps,
-  PublishedEntityListScreenUrlQuery,
-} from './PublishedEntityListScreen.js';
-import { PublishedEntityListScreen } from './PublishedEntityListScreen.js';
+import { LoadContextProvider } from '../../../test/LoadContextProvider.js';
+import type { EntityListScreenProps, EntityListScreenUrlQuery } from './EntityListScreen.js';
+import { EntityListScreen } from './EntityListScreen.js';
 
-type StoryProps = Omit<PublishedEntityListScreenProps, 'urlQuery' | 'onUrlQueryChanged'> & {
-  initialUrlQuery?: PublishedEntityListScreenUrlQuery;
+type StoryProps = Omit<EntityListScreenProps, 'urlQuery' | 'onUrlQueryChanged'> & {
+  initialUrlQuery?: EntityListScreenUrlQuery;
 };
 
-const meta: Meta<PublishedEntityListScreenProps> = {
-  title: 'Screens/PublishedEntityListScreen',
-  component: PublishedEntityListScreen,
+const meta: Meta<EntityListScreenProps> = {
+  title: 'Published/Screens/EntityListScreen',
+  component: EntityListScreen,
   argTypes: {
     onOpenEntity: { action: 'open-entity' },
   },
@@ -27,12 +24,10 @@ const Template: Story<StoryProps> = (args) => {
 };
 
 function Wrapper({ initialUrlQuery, ...props }: StoryProps) {
-  const [urlQuery, setUrlQuery] = useState<PublishedEntityListScreenUrlQuery>(
-    initialUrlQuery ?? {}
-  );
+  const [urlQuery, setUrlQuery] = useState<EntityListScreenUrlQuery>(initialUrlQuery ?? {});
   return (
     <LoadContextProvider>
-      <PublishedEntityListScreen {...props} urlQuery={urlQuery} onUrlQueryChanged={setUrlQuery} />
+      <EntityListScreen {...props} urlQuery={urlQuery} onUrlQueryChanged={setUrlQuery} />
     </LoadContextProvider>
   );
 }

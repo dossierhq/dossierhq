@@ -17,7 +17,7 @@ import useSWR from 'swr';
  * @param paging
  * @returns If no result, `connection` is `undefined`. If there are no matches, `connection` is `null`
  */
-export function usePublishedSearchEntities(
+export function useSearchEntities(
   publishedClient: PublishedClient,
   query: Query | undefined,
   paging?: Paging
@@ -36,11 +36,13 @@ export function usePublishedSearchEntities(
     [publishedClient]
   );
   const { data, error } = useSWR(
-    query ? ['usePublishedSearchEntities', JSON.stringify({ query, paging })] : null,
+    query
+      ? ['datadata/published/usePublishedSearchEntities', JSON.stringify({ query, paging })]
+      : null,
     fetcher
   );
 
-  // useDebugLogChangedValues('usePublishedSearchEntities updated values', { publishedClient, query, paging, data, error, });
+  // useDebugLogChangedValues('useSearchEntities updated values', { publishedClient, query, paging, data, error, });
   return { connection: data, connectionError: error };
 }
 

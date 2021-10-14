@@ -36,7 +36,7 @@ export function useSearchEntities(
     [adminClient]
   );
   const { data, error } = useSWR(
-    query ? ['useSearchEntities', JSON.stringify({ query, paging })] : null,
+    query ? ['datadata/admin/useSearchEntities', JSON.stringify({ query, paging })] : null,
     fetcher
   );
 
