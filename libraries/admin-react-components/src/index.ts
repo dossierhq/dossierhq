@@ -6,15 +6,6 @@ export {
   DataDataProvider,
   WaitForDataDataContext,
 } from './components/DataDataProvider/DataDataProvider.js';
-export {
-  EntityTypeSelector,
-  initializeEntityTypeSelectorState,
-  reduceEntityTypeSelectorState,
-} from './components/EntityTypeSelector/EntityTypeSelector.js';
-export type {
-  EntityTypeSelectorDispatch,
-  EntityTypeSelectorState,
-} from './components/EntityTypeSelector/EntityTypeSelector.js';
 export { TypePicker2 } from './components/TypePicker2/TypePicker2.js';
 export { DataDataContext, DataDataContextValue } from './contexts/DataDataContext.js';
 export { DataDataContext2 } from './contexts/DataDataContext2.js';
@@ -95,5 +86,6 @@ export {
 } from './reducers/SearchEntityReducer.js';
 export type { SearchEntityState, SearchEntityStateAction } from './reducers/SearchEntityReducer.js';
 export { EntityListScreen } from './screens/EntityListScreen/EntityListScreen.js';
+export * from './shared/index.js';
 export type { LayoutProps, SpacingSize } from './types/LayoutTypes.js';
 export type { Kind } from './utils/KindUtils.js';
