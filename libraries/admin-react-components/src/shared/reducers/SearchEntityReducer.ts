@@ -11,6 +11,8 @@ import type {
 } from '@jonasb/datadata-core';
 import { AdminQueryOrder, getPagingInfo } from '@jonasb/datadata-core';
 import isEqual from 'lodash/isEqual.js';
+import type { Dispatch } from 'react';
+import { useEffect } from 'react';
 
 const defaultOrder = AdminQueryOrder.name;
 const defaultPagingCount = 25;
@@ -172,4 +174,23 @@ export function getQueryWithoutDefaults(query: AdminQuery | Query): AdminQuery |
     return queryWithoutOrder;
   }
   return query;
+}
+
+export function useUpdateSearchEntityStateWithResponse(
+  connection: Connection<Edge<AdminEntity | Entity, ErrorType>> | null | undefined,
+  connectionError: ErrorResult<unknown, ErrorType.BadRequest | ErrorType.Generic> | undefined,
+  totalCount: number | undefined,
+  dispatchSearchEntityState: Dispatch<SearchEntityStateAction>
+) {
+  useEffect(() => {
+    dispatchSearchEntityState(
+      new SearchEntityStateActions.UpdateResult(connection, connectionError)
+    );
+  }, [connection, connectionError, dispatchSearchEntityState]);
+
+  useEffect(() => {
+    dispatchSearchEntityState(new SearchEntityStateActions.UpdateTotalCount(totalCount ?? null));
+  }, [totalCount, dispatchSearchEntityState]);
+
+  // useDebugLogChangedValues('useUpdateSearchEntityStateWithResponse changed values', { dispatchSearchEntityState, connection, connectionError, totalCount, });
 }
