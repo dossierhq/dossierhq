@@ -16,19 +16,21 @@ import {
 } from '@jonasb/datadata-design';
 import type { Dispatch } from 'react';
 import React, { useContext, useEffect, useMemo, useReducer } from 'react';
-import type { SearchEntityState, SearchEntityStateAction } from '../../../index.js';
-import {
-  initializeSearchEntityState,
-  reduceSearchEntityState,
-  SearchEntityStateActions,
-} from '../../../index.js';
-import { queryWithoutDefaults } from '../../../reducers/SearchEntityReducer.js';
-import type { EntityTypeSelectorDispatch, EntityTypeSelectorState } from '../../index.js';
+import type {
+  EntityTypeSelectorDispatch,
+  EntityTypeSelectorState,
+  SearchEntityState,
+  SearchEntityStateAction,
+} from '../../index.js';
 import {
   EntityTypeSelector,
+  getQueryWithoutDefaults,
   initializeEntityTypeSelectorState,
+  initializeSearchEntityState,
   PublishedDataDataContext,
   reduceEntityTypeSelectorState,
+  reduceSearchEntityState,
+  SearchEntityStateActions,
   useSearchEntities,
   useTotalCount,
 } from '../../index.js';
@@ -154,7 +156,7 @@ function useSynchronizeUrlQueryState(
   useEffect(() => {
     if (!onUrlQueryChanged || !urlQuery) return;
     const result: EntityListScreenUrlQuery = stringifyUrlQueryParams({
-      query: queryWithoutDefaults(query),
+      query: getQueryWithoutDefaults(query),
       paging,
     });
     if (result.paging !== urlQuery.paging || result.query !== urlQuery.query) {

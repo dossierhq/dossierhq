@@ -166,7 +166,7 @@ export const SearchEntityStateActions = {
   UpdateTotalCount: UpdateTotalCountAction,
 };
 
-export function queryWithoutDefaults(query: AdminQuery | Query): AdminQuery | Query {
+export function getQueryWithoutDefaults(query: AdminQuery | Query): AdminQuery | Query {
   if (query.order === defaultOrder) {
     const { order, ...queryWithoutOrder } = query;
     return queryWithoutOrder;
