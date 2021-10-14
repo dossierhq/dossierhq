@@ -4,24 +4,14 @@ import {
   decodeUrlQueryStringifiedParam,
   stringifyUrlQueryParams,
 } from '@jonasb/datadata-core';
-import {
-  Field,
-  FullscreenContainer,
-  InstantDisplay,
-  Table,
-  TagSelector,
-} from '@jonasb/datadata-design';
+import { FullscreenContainer, InstantDisplay, Table } from '@jonasb/datadata-design';
 import type { Dispatch } from 'react';
 import React, { useContext, useEffect, useReducer } from 'react';
-import type {
-  EntityTypeSelectorDispatch,
-  EntityTypeSelectorState,
-  SearchEntityState,
-  SearchEntityStateAction,
-} from '../../index.js';
+import type { SearchEntityState, SearchEntityStateAction } from '../../index.js';
 import {
   DataDataContext2,
   EntityTypeSelector,
+  EntityTypeTagSelector,
   getQueryWithoutDefaults,
   initializeEntityTypeSelectorState,
   initializeSearchEntityState,
@@ -113,7 +103,10 @@ export function EntityListScreen({
       </FullscreenContainer.Row>
       <FullscreenContainer.ScrollableRow>
         <FullscreenContainer.Row>
-          <EntityTypesList state={entityTypeFilterState} dispatch={dispatchEntityTypeFilter} />
+          <EntityTypeTagSelector
+            state={entityTypeFilterState}
+            dispatch={dispatchEntityTypeFilter}
+          />
           <EntityList
             {...{ searchEntityState, dispatchSearchEntityState }}
             onItemClick={onOpenEntity}
@@ -207,32 +200,6 @@ function SearchLoader({
   // useDebugLogChangedValues('SearchLoader changed values', { query, paging, dispatchSearchEntityState, adminClient, connection, connectionError, totalCount, });
 
   return null;
-}
-
-function EntityTypesList({
-  state,
-  dispatch,
-}: {
-  state: EntityTypeSelectorState;
-  dispatch: EntityTypeSelectorDispatch;
-}) {
-  if (state.selectedIds.length === 0) {
-    return null;
-  }
-
-  return (
-    <Field>
-      <Field.Label size="small">Show entity types</Field.Label>
-      <Field.Control>
-        <TagSelector
-          clearLabel="Clear"
-          itemTag={(item) => ({ tag: item.name })}
-          state={state}
-          dispatch={dispatch}
-        />
-      </Field.Control>
-    </Field>
-  );
 }
 
 function EntityList({
