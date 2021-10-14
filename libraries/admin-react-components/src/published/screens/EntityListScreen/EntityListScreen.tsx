@@ -16,22 +16,22 @@ import {
 } from '@jonasb/datadata-design';
 import type { Dispatch } from 'react';
 import React, { useContext, useEffect, useMemo, useReducer } from 'react';
-import type {
-  EntityTypeSelectorDispatch,
-  EntityTypeSelectorState,
-  SearchEntityState,
-  SearchEntityStateAction,
-} from '../../../index.js';
+import type { SearchEntityState, SearchEntityStateAction } from '../../../index.js';
 import {
-  EntityTypeSelector,
-  initializeEntityTypeSelectorState,
   initializeSearchEntityState,
-  reduceEntityTypeSelectorState,
   reduceSearchEntityState,
   SearchEntityStateActions,
 } from '../../../index.js';
 import { queryWithoutDefaults } from '../../../reducers/SearchEntityReducer.js';
-import { useSearchEntities, useTotalCount, PublishedDataDataContext } from '../../index.js';
+import type { EntityTypeSelectorDispatch, EntityTypeSelectorState } from '../../index.js';
+import {
+  EntityTypeSelector,
+  initializeEntityTypeSelectorState,
+  PublishedDataDataContext,
+  reduceEntityTypeSelectorState,
+  useSearchEntities,
+  useTotalCount,
+} from '../../index.js';
 
 export interface EntityListScreenUrlQuery {
   query?: string;

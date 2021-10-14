@@ -1,3 +1,4 @@
+export * from '../shared/index.js';
 export { PublishedDataDataProvider } from './components/PublishedDataDataProvider/PublishedDataDataProvider.js';
 export { PublishedDataDataContext } from './contexts/PublishedDataDataContext.js';
 export type { PublishedDataDataContextValue } from './contexts/PublishedDataDataContext.js';
