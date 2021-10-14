@@ -1,18 +1,10 @@
 import type { Entity, Paging, Query } from '@jonasb/datadata-core';
 import {
   decodeUrlQueryStringifiedParam,
-  getPagingInfo,
   QueryOrder,
   stringifyUrlQueryParams,
 } from '@jonasb/datadata-core';
-import {
-  Dropdown,
-  Field,
-  FullscreenContainer,
-  Input,
-  Table,
-  TagSelector,
-} from '@jonasb/datadata-design';
+import { Field, FullscreenContainer, Input, Table, TagSelector } from '@jonasb/datadata-design';
 import type { Dispatch } from 'react';
 import React, { useContext, useEffect, useReducer } from 'react';
 import type {
@@ -30,6 +22,7 @@ import {
   reduceEntityTypeSelectorState,
   reduceSearchEntityState,
   SearchEntityPagingButtons,
+  SearchEntityPagingCount,
   SearchEntityStateActions,
   useSearchEntities,
   useTotalCount,
@@ -120,7 +113,7 @@ export function EntityListScreen({
         alignItems="center"
       >
         <SearchEntityPagingButtons {...{ searchEntityState, dispatchSearchEntityState }} />
-        <PagingCount {...{ searchEntityState, dispatchSearchEntityState }} />
+        <SearchEntityPagingCount {...{ searchEntityState, dispatchSearchEntityState }} />
       </FullscreenContainer.Row>
       {footer ? <FullscreenContainer.Row fullWidth>{footer}</FullscreenContainer.Row> : null}
     </FullscreenContainer>
@@ -292,46 +285,5 @@ function EntityList({
         })}
       </Table.Body>
     </Table>
-  );
-}
-
-//TODO extract these and other duplicates from (EntityListScreen)
-function PagingCount({
-  searchEntityState,
-  dispatchSearchEntityState,
-}: {
-  searchEntityState: SearchEntityState;
-  dispatchSearchEntityState: Dispatch<SearchEntityStateAction>;
-}) {
-  const { connection, paging, pagingCount, totalCount } = searchEntityState;
-  const currentPage = `${connection?.edges.length ?? pagingCount} of ${totalCount}`;
-
-  const items = [
-    { id: '25', count: 25 },
-    { id: '50', count: 50 },
-    { id: '75', count: 75 },
-    { id: '100', count: 100 },
-  ];
-
-  return (
-    <Dropdown
-      up
-      sneaky
-      activeItemId={String(pagingCount)}
-      items={items}
-      renderItem={(item) => item.count}
-      onItemClick={({ count }) => {
-        const pagingInfo = getPagingInfo(paging);
-        const newPaging = { ...paging };
-        if (pagingInfo.isOk() && !pagingInfo.value.forwards) {
-          newPaging.last = count;
-        } else {
-          newPaging.first = count;
-        }
-        dispatchSearchEntityState(new SearchEntityStateActions.SetPaging(newPaging));
-      }}
-    >
-      {currentPage}
-    </Dropdown>
   );
 }

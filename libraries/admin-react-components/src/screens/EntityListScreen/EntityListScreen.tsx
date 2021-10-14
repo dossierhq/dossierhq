@@ -2,11 +2,9 @@ import type { AdminEntity, AdminQuery, Paging } from '@jonasb/datadata-core';
 import {
   AdminQueryOrder,
   decodeUrlQueryStringifiedParam,
-  getPagingInfo,
   stringifyUrlQueryParams,
 } from '@jonasb/datadata-core';
 import {
-  Dropdown,
   Field,
   FullscreenContainer,
   Input,
@@ -31,6 +29,7 @@ import {
   reduceEntityTypeSelectorState,
   reduceSearchEntityState,
   SearchEntityPagingButtons,
+  SearchEntityPagingCount,
   SearchEntityStateActions,
   StatusTag,
   TypePicker2,
@@ -128,7 +127,7 @@ export function EntityListScreen({
         alignItems="center"
       >
         <SearchEntityPagingButtons {...{ searchEntityState, dispatchSearchEntityState }} />
-        <PagingCount {...{ searchEntityState, dispatchSearchEntityState }} />
+        <SearchEntityPagingCount {...{ searchEntityState, dispatchSearchEntityState }} />
       </FullscreenContainer.Row>
       {footer ? <FullscreenContainer.Row fullWidth>{footer}</FullscreenContainer.Row> : null}
     </FullscreenContainer>
@@ -335,45 +334,5 @@ function EntityList({
         })}
       </Table.Body>
     </Table>
-  );
-}
-
-function PagingCount({
-  searchEntityState,
-  dispatchSearchEntityState,
-}: {
-  searchEntityState: SearchEntityState;
-  dispatchSearchEntityState: Dispatch<SearchEntityStateAction>;
-}) {
-  const { connection, paging, pagingCount, totalCount } = searchEntityState;
-  const currentPage = `${connection?.edges.length ?? pagingCount} of ${totalCount}`;
-
-  const items = [
-    { id: '25', count: 25 },
-    { id: '50', count: 50 },
-    { id: '75', count: 75 },
-    { id: '100', count: 100 },
-  ];
-
-  return (
-    <Dropdown
-      up
-      sneaky
-      activeItemId={String(pagingCount)}
-      items={items}
-      renderItem={(item) => item.count}
-      onItemClick={({ count }) => {
-        const pagingInfo = getPagingInfo(paging);
-        const newPaging = { ...paging };
-        if (pagingInfo.isOk() && !pagingInfo.value.forwards) {
-          newPaging.last = count;
-        } else {
-          newPaging.first = count;
-        }
-        dispatchSearchEntityState(new SearchEntityStateActions.SetPaging(newPaging));
-      }}
-    >
-      {currentPage}
-    </Dropdown>
   );
 }

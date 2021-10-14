@@ -2,17 +2,19 @@ import type { Connection, Edge, ErrorType, Paging } from '@jonasb/datadata-core'
 import { IconButton } from '@jonasb/datadata-design';
 import React, { useMemo } from 'react';
 
+interface Props {
+  connection: Connection<Edge<unknown, ErrorType>> | null | undefined;
+  paging: Paging;
+  pagingCount: number;
+  onPagingChange: (paging: Paging) => void;
+}
+
 export function ConnectionPagingButtons({
   connection,
   paging,
   pagingCount,
   onPagingChange,
-}: {
-  connection: Connection<Edge<unknown, ErrorType>> | null | undefined;
-  paging: Paging;
-  pagingCount: number;
-  onPagingChange: (paging: Paging) => void;
-}) {
+}: Props) {
   const handleStart = useMemo(() => {
     return paging.last || paging.after || paging.before
       ? () => onPagingChange({ first: pagingCount })
