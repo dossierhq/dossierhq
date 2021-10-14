@@ -27,6 +27,7 @@ import type {
 import {
   DataDataContext2,
   EntityTypeSelector,
+  getQueryWithoutDefaults,
   initializeEntityTypeSelectorState,
   initializeSearchEntityState,
   reduceEntityTypeSelectorState,
@@ -36,7 +37,6 @@ import {
   useSearchEntities,
   useTotalCount,
 } from '../../index.js';
-import { queryWithoutDefaults } from '../../reducers/SearchEntityReducer.js';
 
 export interface EntityListScreenUrlQuery {
   query?: string;
@@ -164,7 +164,7 @@ function useSynchronizeUrlQueryState(
   useEffect(() => {
     if (!onUrlQueryChanged || !urlQuery) return;
     const result: EntityListScreenUrlQuery = stringifyUrlQueryParams({
-      query: queryWithoutDefaults(query),
+      query: getQueryWithoutDefaults(query),
       paging,
     });
     if (result.paging !== urlQuery.paging || result.query !== urlQuery.query) {

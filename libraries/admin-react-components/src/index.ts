@@ -79,12 +79,6 @@ export { useSchema } from './hooks/useSchema.js';
 export { useSearchEntities } from './hooks/useSearchEntities.js';
 export { useTotalCount } from './hooks/useTotalCount.js';
 export * as published from './published/index.js';
-export {
-  initializeSearchEntityState,
-  reduceSearchEntityState,
-  SearchEntityStateActions,
-} from './reducers/SearchEntityReducer.js';
-export type { SearchEntityState, SearchEntityStateAction } from './reducers/SearchEntityReducer.js';
 export { EntityListScreen } from './screens/EntityListScreen/EntityListScreen.js';
 export * from './shared/index.js';
 export type { LayoutProps, SpacingSize } from './types/LayoutTypes.js';
