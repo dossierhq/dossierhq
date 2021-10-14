@@ -9,13 +9,12 @@ import {
   Dropdown,
   Field,
   FullscreenContainer,
-  IconButton,
   Input,
   Table,
   TagSelector,
 } from '@jonasb/datadata-design';
 import type { Dispatch } from 'react';
-import React, { useContext, useEffect, useMemo, useReducer } from 'react';
+import React, { useContext, useEffect, useReducer } from 'react';
 import type {
   EntityTypeSelectorDispatch,
   EntityTypeSelectorState,
@@ -30,6 +29,7 @@ import {
   PublishedDataDataContext,
   reduceEntityTypeSelectorState,
   reduceSearchEntityState,
+  SearchEntityPagingButtons,
   SearchEntityStateActions,
   useSearchEntities,
   useTotalCount,
@@ -119,7 +119,7 @@ export function EntityListScreen({
         flexDirection="row"
         alignItems="center"
       >
-        <PagingButtons {...{ searchEntityState, dispatchSearchEntityState }} />
+        <SearchEntityPagingButtons {...{ searchEntityState, dispatchSearchEntityState }} />
         <PagingCount {...{ searchEntityState, dispatchSearchEntityState }} />
       </FullscreenContainer.Row>
       {footer ? <FullscreenContainer.Row fullWidth>{footer}</FullscreenContainer.Row> : null}
@@ -292,73 +292,6 @@ function EntityList({
         })}
       </Table.Body>
     </Table>
-  );
-}
-
-function PagingButtons({
-  searchEntityState,
-  dispatchSearchEntityState,
-}: {
-  searchEntityState: SearchEntityState;
-  dispatchSearchEntityState: Dispatch<SearchEntityStateAction>;
-}) {
-  const { connection, paging, pagingCount } = searchEntityState;
-
-  const handleStart = useMemo(() => {
-    return paging.last || paging.after || paging.before
-      ? () =>
-          dispatchSearchEntityState(new SearchEntityStateActions.SetPaging({ first: pagingCount }))
-      : undefined;
-  }, [paging.last, paging.after, paging.before, dispatchSearchEntityState, pagingCount]);
-
-  const handlePrevious = useMemo(() => {
-    return connection?.pageInfo.hasPreviousPage
-      ? () =>
-          dispatchSearchEntityState(
-            new SearchEntityStateActions.SetPaging({
-              last: pagingCount,
-              before: connection.pageInfo.startCursor,
-            })
-          )
-      : undefined;
-  }, [
-    connection?.pageInfo.hasPreviousPage,
-    connection?.pageInfo.startCursor,
-    dispatchSearchEntityState,
-    pagingCount,
-  ]);
-
-  const handleNext = useMemo(() => {
-    return connection?.pageInfo.hasNextPage
-      ? () =>
-          dispatchSearchEntityState(
-            new SearchEntityStateActions.SetPaging({
-              first: pagingCount,
-              after: connection.pageInfo.endCursor,
-            })
-          )
-      : undefined;
-  }, [
-    connection?.pageInfo.endCursor,
-    connection?.pageInfo.hasNextPage,
-    dispatchSearchEntityState,
-    pagingCount,
-  ]);
-
-  const handleEnd = useMemo(() => {
-    return connection?.pageInfo.hasNextPage
-      ? () =>
-          dispatchSearchEntityState(new SearchEntityStateActions.SetPaging({ last: pagingCount }))
-      : undefined;
-  }, [connection?.pageInfo.hasNextPage, dispatchSearchEntityState, pagingCount]);
-
-  return (
-    <IconButton.Group condensed skipBottomMargin>
-      <IconButton icon="first" disabled={!handleStart} onClick={handleStart} />
-      <IconButton icon="previous" disabled={!handlePrevious} onClick={handlePrevious} />
-      <IconButton icon="next" disabled={!handleNext} onClick={handleNext} />
-      <IconButton icon="last" disabled={!handleEnd} onClick={handleEnd} />
-    </IconButton.Group>
   );
 }
 

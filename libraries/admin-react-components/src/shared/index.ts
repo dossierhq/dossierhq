@@ -1,3 +1,4 @@
+export { ConnectionPagingButtons } from './components/ConnectionPagingButtons.js';
 export {
   EntityTypeSelector,
   initializeEntityTypeSelectorState,
@@ -7,6 +8,7 @@ export type {
   EntityTypeSelectorDispatch,
   EntityTypeSelectorState,
 } from './components/EntityTypeSelector.js';
+export { SearchEntityPagingButtons } from './components/SearchEntityPagingButtons.js';
 export {
   getQueryWithoutDefaults,
   initializeSearchEntityState,
