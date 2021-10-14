@@ -98,7 +98,6 @@ export function DataDataSharedProvider({ children }: { children: React.ReactNode
   const args = useMemo(
     () => ({
       adminClient: createBackendAdminClient(),
-      publishedClient: createBackendPublishedClient(),
       adapter: new ContextAdapter(),
     }),
     []
