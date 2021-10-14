@@ -1,4 +1,4 @@
-import type { AdminEntity, AdminQuery, EntityPublishState, Paging } from '@jonasb/datadata-core';
+import type { AdminEntity, AdminQuery, Paging } from '@jonasb/datadata-core';
 import {
   AdminQueryOrder,
   decodeUrlQueryStringifiedParam,
@@ -12,7 +12,6 @@ import {
   Input,
   InstantDisplay,
   Table,
-  Tag,
   TagSelector,
 } from '@jonasb/datadata-design';
 import type { Dispatch } from 'react';
@@ -33,6 +32,7 @@ import {
   reduceSearchEntityState,
   SearchEntityPagingButtons,
   SearchEntityStateActions,
+  StatusTag,
   TypePicker2,
   useSearchEntities,
   useTotalCount,
@@ -376,8 +376,4 @@ function PagingCount({
       {currentPage}
     </Dropdown>
   );
-}
-
-function StatusTag({ status }: { status: EntityPublishState }) {
-  return <Tag color={status}>{status.slice(0, 1).toUpperCase() + status.slice(1)}</Tag>;
 }
