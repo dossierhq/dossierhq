@@ -23,8 +23,7 @@ import {
   SearchEntityStateActions,
   StatusTag,
   TypePicker2,
-  useSearchEntities,
-  useTotalCount,
+  useLoadSearchEntity,
 } from '../../index.js';
 
 export interface EntityListScreenUrlQuery {
@@ -78,15 +77,16 @@ export function EntityListScreen({
     dispatchSearchEntityState
   );
 
+  useLoadSearchEntity(
+    searchEntityState.query as AdminQuery,
+    searchEntityState.paging,
+    dispatchSearchEntityState
+  );
+
   // useDebugLogChangedValues('EntityList changed props', { header, footer, onCreateEntity, onOpenEntity, searchEntityState, dispatchSearchEntityState, entityTypeFilterState, dispatchEntityTypeFilter, });
 
   return (
     <FullscreenContainer>
-      <SearchLoader
-        query={searchEntityState.query as AdminQuery}
-        paging={searchEntityState.paging}
-        dispatchSearchEntityState={dispatchSearchEntityState}
-      />
       {header ? <FullscreenContainer.Row fullWidth>{header}</FullscreenContainer.Row> : null}
       <FullscreenContainer.Row center flexDirection="row" gap={2} paddingVertical={2}>
         <SearchEntitySearchInput {...{ searchEntityState, dispatchSearchEntityState }} />
@@ -172,34 +172,6 @@ function useSynchronizeUrlQueryState(
   }, [dispatchSearchEntityState, urlQuery]);
 
   // useDebugLogChangedValues('useSynchronizeUrlQueryState', { query, paging, urlQuery });
-}
-
-function SearchLoader({
-  query,
-  paging,
-  dispatchSearchEntityState,
-}: {
-  query: AdminQuery;
-  paging: Paging;
-  dispatchSearchEntityState: Dispatch<SearchEntityStateAction>;
-}) {
-  const { adminClient } = useContext(DataDataContext2);
-  const { connection, connectionError } = useSearchEntities(adminClient, query, paging);
-  const { totalCount } = useTotalCount(adminClient, query);
-
-  useEffect(() => {
-    dispatchSearchEntityState(
-      new SearchEntityStateActions.UpdateResult(connection, connectionError)
-    );
-  }, [connection, connectionError, dispatchSearchEntityState]);
-
-  useEffect(() => {
-    dispatchSearchEntityState(new SearchEntityStateActions.UpdateTotalCount(totalCount ?? null));
-  }, [totalCount, dispatchSearchEntityState]);
-
-  // useDebugLogChangedValues('SearchLoader changed values', { query, paging, dispatchSearchEntityState, adminClient, connection, connectionError, totalCount, });
-
-  return null;
 }
 
 function EntityList({

@@ -79,6 +79,7 @@ export { Tag } from './generic-components/Tag/Tag.js';
 export { useSchema } from './hooks/useSchema.js';
 export { useSearchEntities } from './hooks/useSearchEntities.js';
 export { useTotalCount } from './hooks/useTotalCount.js';
+export { useLoadSearchEntity } from './hooks/useLoadSearchEntity.js';
 export * as published from './published/index.js';
 export { EntityListScreen } from './screens/EntityListScreen/EntityListScreen.js';
 export * from './shared/index.js';
