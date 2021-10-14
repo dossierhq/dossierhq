@@ -16,14 +16,12 @@ import {
 } from '@jonasb/datadata-design';
 import type { Dispatch } from 'react';
 import React, { useContext, useEffect, useMemo, useReducer } from 'react';
-import { usePublishedSearchEntities } from '../../hooks/usePublishedSearchEntities.js';
-import { usePublishedTotalCount } from '../../hooks/usePublishedTotalCount.js';
 import type {
   EntityTypeSelectorDispatch,
   EntityTypeSelectorState,
   SearchEntityState,
   SearchEntityStateAction,
-} from '../../index.js';
+} from '../../../index.js';
 import {
   DataDataContext2,
   EntityTypeSelector,
@@ -32,29 +30,30 @@ import {
   reduceEntityTypeSelectorState,
   reduceSearchEntityState,
   SearchEntityStateActions,
-} from '../../index.js';
-import { queryWithoutDefaults } from '../../reducers/SearchEntityReducer.js';
+} from '../../../index.js';
+import { queryWithoutDefaults } from '../../../reducers/SearchEntityReducer.js';
+import { useSearchEntities, useTotalCount } from '../../index.js';
 
-export interface PublishedEntityListScreenUrlQuery {
+export interface EntityListScreenUrlQuery {
   query?: string;
   paging?: string;
 }
 
-export interface PublishedEntityListScreenProps {
+export interface EntityListScreenProps {
   header?: React.ReactNode;
   footer?: React.ReactNode;
-  urlQuery?: PublishedEntityListScreenUrlQuery;
-  onUrlQueryChanged?: (urlQuery: PublishedEntityListScreenUrlQuery) => void;
+  urlQuery?: EntityListScreenUrlQuery;
+  onUrlQueryChanged?: (urlQuery: EntityListScreenUrlQuery) => void;
   onOpenEntity: (entity: Entity) => void;
 }
 
-export function PublishedEntityListScreen({
+export function EntityListScreen({
   header,
   footer,
   urlQuery,
   onUrlQueryChanged,
   onOpenEntity,
-}: PublishedEntityListScreenProps): JSX.Element | null {
+}: EntityListScreenProps): JSX.Element | null {
   const [searchEntityState, dispatchSearchEntityState] = useReducer(
     reduceSearchEntityState,
     urlQuery,
@@ -123,15 +122,13 @@ export function PublishedEntityListScreen({
 }
 
 function initializeSearchEntityStateFromUrlQuery(
-  urlQuery: PublishedEntityListScreenUrlQuery | undefined
+  urlQuery: EntityListScreenUrlQuery | undefined
 ): SearchEntityState {
   const actions = urlQueryToSearchEntityStateActions(urlQuery);
   return initializeSearchEntityState(actions);
 }
 
-function urlQueryToSearchEntityStateActions(
-  urlQuery: PublishedEntityListScreenUrlQuery | undefined
-) {
+function urlQueryToSearchEntityStateActions(urlQuery: EntityListScreenUrlQuery | undefined) {
   const actions = [];
   if (urlQuery) {
     const decodedQuery: Query = decodeUrlQueryStringifiedParam('query', urlQuery) ?? {};
@@ -144,15 +141,15 @@ function urlQueryToSearchEntityStateActions(
 }
 
 function useSynchronizeUrlQueryState(
-  urlQuery: PublishedEntityListScreenUrlQuery | undefined,
-  onUrlQueryChanged: ((urlQuery: PublishedEntityListScreenUrlQuery) => void) | undefined,
+  urlQuery: EntityListScreenUrlQuery | undefined,
+  onUrlQueryChanged: ((urlQuery: EntityListScreenUrlQuery) => void) | undefined,
   searchEntityState: SearchEntityState,
   dispatchSearchEntityState: Dispatch<SearchEntityStateAction>
 ) {
   const { query, paging } = searchEntityState;
   useEffect(() => {
     if (!onUrlQueryChanged || !urlQuery) return;
-    const result: PublishedEntityListScreenUrlQuery = stringifyUrlQueryParams({
+    const result: EntityListScreenUrlQuery = stringifyUrlQueryParams({
       query: queryWithoutDefaults(query),
       paging,
     });
@@ -181,12 +178,8 @@ function SearchLoader({
   dispatchSearchEntityState: Dispatch<SearchEntityStateAction>;
 }) {
   const { publishedClient } = useContext(DataDataContext2);
-  const { connection, connectionError } = usePublishedSearchEntities(
-    publishedClient,
-    query,
-    paging
-  );
-  const { totalCount } = usePublishedTotalCount(publishedClient, query);
+  const { connection, connectionError } = useSearchEntities(publishedClient, query, paging);
+  const { totalCount } = useTotalCount(publishedClient, query);
 
   useEffect(() => {
     dispatchSearchEntityState(
@@ -363,6 +356,7 @@ function PagingButtons({
   );
 }
 
+//TODO extract these and other duplicates from (EntityListScreen)
 function PagingCount({
   searchEntityState,
   dispatchSearchEntityState,

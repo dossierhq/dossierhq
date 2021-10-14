@@ -22,7 +22,7 @@ export function useTotalCount(
     [adminClient]
   );
   const { data: totalCount, error: totalCountError } = useSWR(
-    query ? ['useTotalCount', JSON.stringify(query)] : null,
+    query ? ['datadata/admin/useTotalCount', JSON.stringify(query)] : null,
     fetcher
   );
 

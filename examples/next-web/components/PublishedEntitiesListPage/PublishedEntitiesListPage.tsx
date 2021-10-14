@@ -1,4 +1,4 @@
-import { PublishedEntityListScreen } from '@jonasb/datadata-admin-react-components';
+import { published } from '@jonasb/datadata-admin-react-components';
 import type { Entity } from '@jonasb/datadata-core';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -6,6 +6,8 @@ import { useCallback } from 'react';
 import { DataDataSharedProvider } from '../../contexts/DataDataSharedProvider';
 import { urls } from '../../utils/PageUtils';
 import { NavBar } from '../NavBar/NavBar';
+
+const { EntityListScreen } = published;
 
 export default function PublishedEntitiesListPage(): JSX.Element | null {
   const router = useRouter();
@@ -25,7 +27,7 @@ export default function PublishedEntitiesListPage(): JSX.Element | null {
       <Head>
         <title>Entities</title>
       </Head>
-      <PublishedEntityListScreen
+      <EntityListScreen
         header={<NavBar current="published-entities" />}
         urlQuery={router.query}
         onUrlQueryChanged={handleUrlQueryChanged}

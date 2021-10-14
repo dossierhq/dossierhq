@@ -8,7 +8,7 @@ export function useSchema(adminClient: AdminClient): {
   schemaError: ErrorResult<unknown, ErrorType.Generic> | undefined;
 } {
   const fetcher = useCallback((_action: string) => fetchSchema(adminClient), [adminClient]);
-  const { data, error } = useSWR('useSchema', fetcher);
+  const { data, error } = useSWR('datadata/admin/useSchema', fetcher);
 
   // useDebugLogChangedValues('useSchema changed values', { data, error });
 
