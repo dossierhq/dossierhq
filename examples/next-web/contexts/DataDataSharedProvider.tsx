@@ -2,7 +2,7 @@ import type {
   DataDataContextAdapter,
   EditorJsToolSettings,
 } from '@jonasb/datadata-admin-react-components';
-import { DataDataProvider } from '@jonasb/datadata-admin-react-components';
+import { DataDataProvider, published } from '@jonasb/datadata-admin-react-components';
 import type {
   AdminClient,
   AdminClientOperation,
@@ -24,6 +24,8 @@ import {
 import { useMemo } from 'react';
 import { fetchJsonResult, urls } from '../utils/BackendUtils';
 import { EditorJsTools } from './EditorJsTools';
+
+const { PublishedDataDataProvider } = published;
 
 type BackendContext = ClientContext;
 
@@ -102,6 +104,16 @@ export function DataDataSharedProvider({ children }: { children: React.ReactNode
     []
   );
   return <DataDataProvider {...args}>{children}</DataDataProvider>;
+}
+
+export function PublishedDataDataSharedProvider({ children }: { children: React.ReactNode }) {
+  const args = useMemo(
+    () => ({
+      publishedClient: createBackendPublishedClient(),
+    }),
+    []
+  );
+  return <PublishedDataDataProvider {...args}>{children}</PublishedDataDataProvider>;
 }
 
 function createBackendAdminClient(): AdminClient {

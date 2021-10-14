@@ -60,6 +60,7 @@ export function EntityListScreen({
   onCreateEntity,
   onOpenEntity,
 }: EntityListScreenProps): JSX.Element | null {
+  const { schema } = useContext(DataDataContext2);
   const [searchEntityState, dispatchSearchEntityState] = useReducer(
     reduceSearchEntityState,
     urlQuery,
@@ -100,7 +101,11 @@ export function EntityListScreen({
       {header ? <FullscreenContainer.Row fullWidth>{header}</FullscreenContainer.Row> : null}
       <FullscreenContainer.Row center flexDirection="row" gap={2} paddingVertical={2}>
         <SearchInput {...{ searchEntityState, dispatchSearchEntityState }} />
-        <EntityTypeSelector state={entityTypeFilterState} dispatch={dispatchEntityTypeFilter}>
+        <EntityTypeSelector
+          schema={schema}
+          state={entityTypeFilterState}
+          dispatch={dispatchEntityTypeFilter}
+        >
           Entity type
         </EntityTypeSelector>
         <TypePicker2 iconLeft="add" showEntityTypes onTypeSelected={onCreateEntity}>

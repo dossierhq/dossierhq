@@ -1,6 +1,6 @@
 import type { Meta, Story } from '@storybook/react/types-6-0.js';
 import React, { useState } from 'react';
-import { LoadContextProvider } from '../../../test/LoadContextProvider.js';
+import { LoadContextProvider } from '../../test/LoadContextProvider.js';
 import type { EntityListScreenProps, EntityListScreenUrlQuery } from './EntityListScreen.js';
 import { EntityListScreen } from './EntityListScreen.js';
 
