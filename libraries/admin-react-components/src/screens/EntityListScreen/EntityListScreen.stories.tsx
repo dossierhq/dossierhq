@@ -1,11 +1,12 @@
 import type { Meta, Story } from '@storybook/react/types-6-0.js';
 import React, { useState } from 'react';
+import type { EntitySearchStateUrlQuery } from '../../index.js';
 import { LoadContextProvider } from '../../test/LoadContextProvider.js';
-import type { EntityListScreenProps, EntityListScreenUrlQuery } from './EntityListScreen.js';
+import type { EntityListScreenProps } from './EntityListScreen.js';
 import { EntityListScreen } from './EntityListScreen.js';
 
 type StoryProps = Omit<EntityListScreenProps, 'urlQuery' | 'onUrlQueryChanged'> & {
-  initialUrlQuery?: EntityListScreenUrlQuery;
+  initialUrlQuery?: EntitySearchStateUrlQuery;
 };
 
 const meta: Meta<EntityListScreenProps> = {
@@ -25,7 +26,7 @@ const Template: Story<StoryProps> = (args) => {
 };
 
 function Wrapper({ initialUrlQuery, ...props }: StoryProps) {
-  const [urlQuery, setUrlQuery] = useState<EntityListScreenUrlQuery>(initialUrlQuery ?? {});
+  const [urlQuery, setUrlQuery] = useState<EntitySearchStateUrlQuery>(initialUrlQuery ?? {});
   return (
     <LoadContextProvider>
       <EntityListScreen {...props} urlQuery={urlQuery} onUrlQueryChanged={setUrlQuery} />
