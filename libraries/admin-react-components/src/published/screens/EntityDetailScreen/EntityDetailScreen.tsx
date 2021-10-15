@@ -1,21 +1,27 @@
 import type { EntityReference } from '@jonasb/datadata-core';
 import { FullscreenContainer } from '@jonasb/datadata-design';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { PublishedDataDataContext, useEntity } from '../../index.js';
 
 export interface EntityDetailScreenProps {
   header?: React.ReactNode;
   footer?: React.ReactNode;
   reference: EntityReference;
+  onTitleChange?: (title: string) => void;
 }
 
 export function EntityDetailScreen({
   header,
   footer,
   reference,
+  onTitleChange,
 }: EntityDetailScreenProps): JSX.Element | null {
-  const { publishedClient, schema } = useContext(PublishedDataDataContext);
-  const { entity } = useEntity(publishedClient, reference);
+  const { publishedClient, schema: _1 } = useContext(PublishedDataDataContext);
+  const { entity, entityError: _2 } = useEntity(publishedClient, reference);
+
+  useEffect(() => {
+    if (entity && onTitleChange) onTitleChange(entity.info.name);
+  }, [entity, onTitleChange]);
 
   return (
     <FullscreenContainer>
