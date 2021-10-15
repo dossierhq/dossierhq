@@ -12,7 +12,7 @@ const { EntityListScreen } = published;
 export default function PublishedEntitiesListPage(): JSX.Element | null {
   const router = useRouter();
   const handleEntityOpen = useCallback(
-    (entity: Entity) => router.push(urls.editPage([entity.id])),
+    (entity: Entity) => router.push(urls.publishedEntityDetail(entity)),
     [router]
   );
   const handleUrlQueryChanged = useCallback(
