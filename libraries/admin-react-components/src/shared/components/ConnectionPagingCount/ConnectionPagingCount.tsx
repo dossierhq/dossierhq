@@ -18,7 +18,9 @@ export function ConnectionPagingCount({
   totalCount,
   onPagingChange,
 }: Props) {
-  const currentPage = `${connection?.edges.length ?? pagingCount} of ${totalCount}`;
+  const currentPage = connection?.edges.length
+    ? `${connection.edges.length} of ${totalCount}`
+    : pagingCount;
 
   const items = [
     { id: '25', count: 25 },
