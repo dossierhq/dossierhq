@@ -1,15 +1,12 @@
 import type { AdminEntity, AdminQuery, Paging } from '@jonasb/datadata-core';
-import {
-  AdminQueryOrder,
-  decodeUrlQueryStringifiedParam,
-  stringifyUrlQueryParams,
-} from '@jonasb/datadata-core';
-import { FullscreenContainer, InstantDisplay, Table } from '@jonasb/datadata-design';
+import { decodeUrlQueryStringifiedParam, stringifyUrlQueryParams } from '@jonasb/datadata-core';
+import { FullscreenContainer } from '@jonasb/datadata-design';
 import type { Dispatch } from 'react';
 import React, { useContext, useEffect, useReducer } from 'react';
 import type { SearchEntityState, SearchEntityStateAction } from '../../index.js';
 import {
   DataDataContext2,
+  EntityList2,
   EntityTypeSelector,
   EntityTypeTagSelector,
   getQueryWithoutDefaults,
@@ -21,7 +18,6 @@ import {
   SearchEntityPagingCount,
   SearchEntitySearchInput,
   SearchEntityStateActions,
-  StatusTag,
   TypePicker2,
   useLoadSearchEntity,
 } from '../../index.js';
@@ -107,7 +103,7 @@ export function EntityListScreen({
             state={entityTypeFilterState}
             dispatch={dispatchEntityTypeFilter}
           />
-          <EntityList
+          <EntityList2
             {...{ searchEntityState, dispatchSearchEntityState }}
             onItemClick={onOpenEntity}
           />
@@ -172,86 +168,4 @@ function useSynchronizeUrlQueryState(
   }, [dispatchSearchEntityState, urlQuery]);
 
   // useDebugLogChangedValues('useSynchronizeUrlQueryState', { query, paging, urlQuery });
-}
-
-function EntityList({
-  searchEntityState,
-  dispatchSearchEntityState,
-  onItemClick,
-}: {
-  searchEntityState: SearchEntityState;
-  dispatchSearchEntityState: Dispatch<SearchEntityStateAction>;
-  onItemClick: (item: AdminEntity) => void;
-}) {
-  const {
-    connection,
-    query: { order },
-  } = searchEntityState;
-  return (
-    <Table>
-      <Table.Head>
-        <Table.Row sticky>
-          <Table.Header
-            order={order === AdminQueryOrder.name ? 'asc' : ''}
-            onClick={() =>
-              dispatchSearchEntityState(
-                new SearchEntityStateActions.SetQuery({ order: AdminQueryOrder.name }, true)
-              )
-            }
-          >
-            Name
-          </Table.Header>
-          <Table.Header>Entity type</Table.Header>
-          <Table.Header narrow>Status</Table.Header>
-          <Table.Header
-            narrow
-            order={order === AdminQueryOrder.createdAt ? 'asc' : ''}
-            onClick={() =>
-              dispatchSearchEntityState(
-                new SearchEntityStateActions.SetQuery({ order: AdminQueryOrder.createdAt }, true)
-              )
-            }
-          >
-            Created
-          </Table.Header>
-          <Table.Header
-            narrow
-            order={order === AdminQueryOrder.updatedAt ? 'asc' : ''}
-            onClick={() =>
-              dispatchSearchEntityState(
-                new SearchEntityStateActions.SetQuery({ order: AdminQueryOrder.updatedAt }, true)
-              )
-            }
-          >
-            Updated
-          </Table.Header>
-        </Table.Row>
-      </Table.Head>
-      <Table.Body>
-        {connection?.edges.map((edge) => {
-          if (edge.node.isOk()) {
-            const entity = edge.node.value as AdminEntity;
-            return (
-              <Table.Row key={entity.id} clickable onClick={() => onItemClick(entity)}>
-                <Table.Cell>{entity.info.name}</Table.Cell>
-                <Table.Cell>{entity.info.type}</Table.Cell>
-                <Table.Cell narrow>
-                  <StatusTag status={entity.info.publishingState} />
-                </Table.Cell>
-                <Table.Cell narrow>
-                  <InstantDisplay instant={entity.info.createdAt} />
-                </Table.Cell>
-                <Table.Cell narrow>
-                  {order === AdminQueryOrder.updatedAt ||
-                  !entity.info.updatedAt.equals(entity.info.createdAt) ? (
-                    <InstantDisplay instant={entity.info.updatedAt} />
-                  ) : null}
-                </Table.Cell>
-              </Table.Row>
-            );
-          }
-        })}
-      </Table.Body>
-    </Table>
-  );
 }

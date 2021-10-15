@@ -1,14 +1,11 @@
 import type { Entity, Paging, Query } from '@jonasb/datadata-core';
-import {
-  decodeUrlQueryStringifiedParam,
-  QueryOrder,
-  stringifyUrlQueryParams,
-} from '@jonasb/datadata-core';
-import { FullscreenContainer, Table } from '@jonasb/datadata-design';
+import { decodeUrlQueryStringifiedParam, stringifyUrlQueryParams } from '@jonasb/datadata-core';
+import { FullscreenContainer } from '@jonasb/datadata-design';
 import type { Dispatch } from 'react';
 import React, { useContext, useEffect, useReducer } from 'react';
 import type { SearchEntityState, SearchEntityStateAction } from '../../index.js';
 import {
+  EntityList,
   EntityTypeSelector,
   EntityTypeTagSelector,
   getQueryWithoutDefaults,
@@ -165,51 +162,4 @@ function useSynchronizeUrlQueryState(
   }, [dispatchSearchEntityState, urlQuery]);
 
   // useDebugLogChangedValues('useSynchronizeUrlQueryState', { query, paging, urlQuery });
-}
-
-function EntityList({
-  searchEntityState,
-  dispatchSearchEntityState,
-  onItemClick,
-}: {
-  searchEntityState: SearchEntityState;
-  dispatchSearchEntityState: Dispatch<SearchEntityStateAction>;
-  onItemClick: (item: Entity) => void;
-}) {
-  const {
-    connection,
-    query: { order },
-  } = searchEntityState;
-  return (
-    <Table>
-      <Table.Head>
-        <Table.Row sticky>
-          <Table.Header
-            order={order === QueryOrder.name ? 'asc' : ''}
-            onClick={() =>
-              dispatchSearchEntityState(
-                new SearchEntityStateActions.SetQuery({ order: QueryOrder.name }, true)
-              )
-            }
-          >
-            Name
-          </Table.Header>
-          <Table.Header>Entity type</Table.Header>
-        </Table.Row>
-      </Table.Head>
-      <Table.Body>
-        {connection?.edges.map((edge) => {
-          if (edge.node.isOk()) {
-            const entity = edge.node.value;
-            return (
-              <Table.Row key={entity.id} clickable onClick={() => onItemClick(entity)}>
-                <Table.Cell>{entity.info.name}</Table.Cell>
-                <Table.Cell>{entity.info.type}</Table.Cell>
-              </Table.Row>
-            );
-          }
-        })}
-      </Table.Body>
-    </Table>
-  );
 }
