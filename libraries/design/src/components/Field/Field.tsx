@@ -23,7 +23,7 @@ interface FieldComponent extends FunctionComponent<FieldProps> {
 export const Field: FieldComponent = ({ children }: FieldProps) => {
   return <Form.Field>{children}</Form.Field>;
 };
-Field.displayName = 'Field.js';
+Field.displayName = 'Field';
 
 Field.Label = ({ size, children }: FieldLabelProps) => {
   return <Form.Label size={size}>{children}</Form.Label>;

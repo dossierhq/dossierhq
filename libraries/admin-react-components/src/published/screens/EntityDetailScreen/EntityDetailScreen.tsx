@@ -1,5 +1,5 @@
 import type { EntityReference } from '@jonasb/datadata-core';
-import { FullscreenContainer } from '@jonasb/datadata-design';
+import { FullscreenContainer, Text } from '@jonasb/datadata-design';
 import React, { useContext, useEffect } from 'react';
 import { PublishedDataDataContext, useEntity } from '../../index.js';
 
@@ -27,7 +27,9 @@ export function EntityDetailScreen({
     <FullscreenContainer>
       {header ? <FullscreenContainer.Row fullWidth>{header}</FullscreenContainer.Row> : null}
       <FullscreenContainer.Row center flexDirection="row" gap={2} paddingVertical={2}>
-        {entity?.info.name}
+        <Text as="h1" textStyle="headline4">
+          {entity?.info.name}
+        </Text>
       </FullscreenContainer.Row>
       <FullscreenContainer.ScrollableRow>
         <FullscreenContainer.Row>

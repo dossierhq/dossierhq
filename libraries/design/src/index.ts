@@ -15,6 +15,7 @@ export {
   Table,
   Tag,
   TagSelector,
+  Text,
 } from './components/index.js';
 export type {
   DropdownSelectorProps,
@@ -23,5 +24,6 @@ export type {
   MultipleSelectorReducer,
   MultipleSelectorState,
   MultipleSelectorStateAction,
+  TextStyle,
 } from './components/index.js';
 export { StatusColor } from './config/Colors.js';
