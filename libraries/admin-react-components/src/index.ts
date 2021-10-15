@@ -7,6 +7,7 @@ export {
   WaitForDataDataContext,
 } from './components/DataDataProvider/DataDataProvider.js';
 export { StatusTag } from './components/StatusTag/StatusTag.js';
+export { EntityList2 } from './components/EntityList2/EntityList2.js';
 export { TypePicker2 } from './components/TypePicker2/TypePicker2.js';
 export { DataDataContext, DataDataContextValue } from './contexts/DataDataContext.js';
 export { DataDataContext2 } from './contexts/DataDataContext2.js';

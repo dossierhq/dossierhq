@@ -1,4 +1,5 @@
 export * from '../shared/index.js';
+export { EntityList } from './components/EntityList/EntityList.js';
 export { PublishedDataDataProvider } from './components/PublishedDataDataProvider/PublishedDataDataProvider.js';
 export { PublishedDataDataContext } from './contexts/PublishedDataDataContext.js';
 export type { PublishedDataDataContextValue } from './contexts/PublishedDataDataContext.js';
