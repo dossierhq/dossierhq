@@ -1,15 +1,21 @@
 import { FullscreenContainer } from '@jonasb/datadata-design';
 import { Voyager } from 'graphql-voyager';
+import Head from 'next/head';
 import { NavBar } from '../NavBar/NavBar';
 
 export default function VoyagerPage(): JSX.Element {
   return (
-    <FullscreenContainer>
-      <FullscreenContainer.Row fullWidth>
-        <NavBar current="voyager" />
-      </FullscreenContainer.Row>
-      <Voyager introspection={introspectionProvider} />
-    </FullscreenContainer>
+    <>
+      <Head>
+        <title>Voyager</title>
+      </Head>
+      <FullscreenContainer>
+        <FullscreenContainer.Row fullWidth>
+          <NavBar current="voyager" />
+        </FullscreenContainer.Row>
+        <Voyager introspection={introspectionProvider} />
+      </FullscreenContainer>
+    </>
   );
 }
 

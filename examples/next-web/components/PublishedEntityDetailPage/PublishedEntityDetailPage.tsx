@@ -1,7 +1,7 @@
 import { published } from '@jonasb/datadata-admin-react-components';
 import type { EntityReference } from '@jonasb/datadata-core';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
+import { useState } from 'react';
 import { PublishedDataDataSharedProvider } from '../../contexts/DataDataSharedProvider';
 import { NavBar } from '../NavBar/NavBar';
 
@@ -12,14 +12,18 @@ export default function PublishedEntityDetailPage({
 }: {
   reference: EntityReference;
 }): JSX.Element | null {
-  const router = useRouter();
+  const [title, setTitle] = useState('Entity');
 
   return (
     <PublishedDataDataSharedProvider>
       <Head>
-        <title>Entity</title>
+        <title>{title}</title>
       </Head>
-      <EntityDetailScreen header={<NavBar current="published-entities" />} reference={reference} />
+      <EntityDetailScreen
+        header={<NavBar current="published-entities" />}
+        reference={reference}
+        onTitleChange={setTitle}
+      />
     </PublishedDataDataSharedProvider>
   );
 }

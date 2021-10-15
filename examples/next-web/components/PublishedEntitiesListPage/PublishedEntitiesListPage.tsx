@@ -25,7 +25,7 @@ export default function PublishedEntitiesListPage(): JSX.Element | null {
   return (
     <PublishedDataDataSharedProvider>
       <Head>
-        <title>Entities</title>
+        <title>Published entities</title>
       </Head>
       <EntityListScreen
         header={<NavBar current="published-entities" />}

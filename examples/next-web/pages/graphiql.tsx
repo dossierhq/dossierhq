@@ -1,5 +1,5 @@
 import { FullscreenContainer } from '@jonasb/datadata-design';
-import { Voyager } from 'graphql-voyager';
+import Head from 'next/head';
 import { NavBar } from '../components/NavBar/NavBar';
 
 export default function GraphiQLPage(): JSX.Element {
@@ -32,13 +32,18 @@ export default function GraphiQLPage(): JSX.Element {
   const iframe = <iframe srcDoc={src} frameBorder="0" style={{ width: '100%', height: '100%' }} />;
 
   return (
-    <FullscreenContainer>
-      <FullscreenContainer.Row fullWidth>
-        <NavBar current="graphiql" />
-      </FullscreenContainer.Row>
-      <FullscreenContainer.Row fullWidth fillHeight>
-        {iframe}
-      </FullscreenContainer.Row>
-    </FullscreenContainer>
+    <>
+      <Head>
+        <title>GraphiQL</title>
+      </Head>
+      <FullscreenContainer>
+        <FullscreenContainer.Row fullWidth>
+          <NavBar current="graphiql" />
+        </FullscreenContainer.Row>
+        <FullscreenContainer.Row fullWidth fillHeight>
+          {iframe}
+        </FullscreenContainer.Row>
+      </FullscreenContainer>
+    </>
   );
 }
