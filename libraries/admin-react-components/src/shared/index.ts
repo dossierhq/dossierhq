@@ -19,5 +19,13 @@ export {
   reduceSearchEntityState,
   SearchEntityStateActions,
   useUpdateSearchEntityStateWithResponse,
-} from './reducers/SearchEntityReducer.js';
-export type { SearchEntityState, SearchEntityStateAction } from './reducers/SearchEntityReducer.js';
+} from './reducers/SearchEnittyReducer/SearchEntityReducer.js';
+export type {
+  SearchEntityState,
+  SearchEntityStateAction,
+} from './reducers/SearchEnittyReducer/SearchEntityReducer.js';
+export {
+  initializeSearchEntityStateFromUrlQuery,
+  useSynchronizeUrlQueryAndSearchEntityState,
+} from './reducers/SearchEnittyReducer/SearchEntityUrlSynchronizer.js';
+export type { EntitySearchStateUrlQuery } from './reducers/SearchEnittyReducer/SearchEntityUrlSynchronizer.js';

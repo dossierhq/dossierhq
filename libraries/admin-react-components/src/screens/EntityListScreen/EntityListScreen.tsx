@@ -1,17 +1,14 @@
-import type { AdminEntity, AdminQuery, Paging } from '@jonasb/datadata-core';
-import { decodeUrlQueryStringifiedParam, stringifyUrlQueryParams } from '@jonasb/datadata-core';
+import type { AdminEntity, AdminQuery } from '@jonasb/datadata-core';
 import { FullscreenContainer } from '@jonasb/datadata-design';
-import type { Dispatch } from 'react';
 import React, { useContext, useEffect, useReducer } from 'react';
-import type { SearchEntityState, SearchEntityStateAction } from '../../index.js';
+import type { EntitySearchStateUrlQuery } from '../../index.js';
 import {
   DataDataContext2,
   EntityList2,
   EntityTypeSelector,
   EntityTypeTagSelector,
-  getQueryWithoutDefaults,
   initializeEntityTypeSelectorState,
-  initializeSearchEntityState,
+  initializeSearchEntityStateFromUrlQuery,
   reduceEntityTypeSelectorState,
   reduceSearchEntityState,
   SearchEntityPagingButtons,
@@ -20,18 +17,14 @@ import {
   SearchEntityStateActions,
   TypePicker2,
   useLoadSearchEntity,
+  useSynchronizeUrlQueryAndSearchEntityState,
 } from '../../index.js';
-
-export interface EntityListScreenUrlQuery {
-  query?: string;
-  paging?: string;
-}
 
 export interface EntityListScreenProps {
   header?: React.ReactNode;
   footer?: React.ReactNode;
-  urlQuery?: EntityListScreenUrlQuery;
-  onUrlQueryChanged?: (urlQuery: EntityListScreenUrlQuery) => void;
+  urlQuery?: EntitySearchStateUrlQuery;
+  onUrlQueryChanged?: (urlQuery: EntitySearchStateUrlQuery) => void;
   onCreateEntity: (entityType: string) => void;
   onOpenEntity: (entity: AdminEntity) => void;
 }
@@ -57,6 +50,7 @@ export function EntityListScreen({
     initializeEntityTypeSelectorState
   );
 
+  // sync entity type filter -> search state
   useEffect(() => {
     dispatchSearchEntityState(
       new SearchEntityStateActions.SetQuery(
@@ -66,7 +60,8 @@ export function EntityListScreen({
     );
   }, [entityTypeFilterState.selectedIds]);
 
-  useSynchronizeUrlQueryState(
+  // sync url <-> search entity state
+  useSynchronizeUrlQueryAndSearchEntityState(
     urlQuery,
     onUrlQueryChanged,
     searchEntityState,
@@ -121,51 +116,4 @@ export function EntityListScreen({
       {footer ? <FullscreenContainer.Row fullWidth>{footer}</FullscreenContainer.Row> : null}
     </FullscreenContainer>
   );
-}
-
-function initializeSearchEntityStateFromUrlQuery(
-  urlQuery: EntityListScreenUrlQuery | undefined
-): SearchEntityState {
-  const actions = urlQueryToSearchEntityStateActions(urlQuery);
-  return initializeSearchEntityState(actions);
-}
-
-function urlQueryToSearchEntityStateActions(urlQuery: EntityListScreenUrlQuery | undefined) {
-  const actions = [];
-  if (urlQuery) {
-    const decodedQuery: AdminQuery = decodeUrlQueryStringifiedParam('query', urlQuery) ?? {};
-    actions.push(new SearchEntityStateActions.SetQuery(decodedQuery, false));
-    const decodedPaging: Paging | undefined =
-      decodeUrlQueryStringifiedParam('paging', urlQuery) ?? {};
-    actions.push(new SearchEntityStateActions.SetPaging(decodedPaging));
-  }
-  return actions;
-}
-
-function useSynchronizeUrlQueryState(
-  urlQuery: EntityListScreenUrlQuery | undefined,
-  onUrlQueryChanged: ((urlQuery: EntityListScreenUrlQuery) => void) | undefined,
-  searchEntityState: SearchEntityState,
-  dispatchSearchEntityState: Dispatch<SearchEntityStateAction>
-) {
-  const { query, paging } = searchEntityState;
-  useEffect(() => {
-    if (!onUrlQueryChanged || !urlQuery) return;
-    const result: EntityListScreenUrlQuery = stringifyUrlQueryParams({
-      query: getQueryWithoutDefaults(query),
-      paging,
-    });
-    if (result.paging !== urlQuery.paging || result.query !== urlQuery.query) {
-      onUrlQueryChanged(result);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [query, paging]);
-
-  useEffect(() => {
-    if (!urlQuery) return;
-    const actions = urlQueryToSearchEntityStateActions(urlQuery);
-    actions.forEach((action) => dispatchSearchEntityState(action));
-  }, [dispatchSearchEntityState, urlQuery]);
-
-  // useDebugLogChangedValues('useSynchronizeUrlQueryState', { query, paging, urlQuery });
 }
