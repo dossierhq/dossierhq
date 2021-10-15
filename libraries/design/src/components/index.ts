@@ -29,3 +29,5 @@ export { Table } from './Table/Table.js';
 export { Tag } from './Tag/Tag.js';
 export type { TagProps } from './Tag/Tag.js';
 export { TagSelector } from './TagSelector/TagSelector.js';
+export { Text } from './Text/Text.js';
+export type { TextStyle } from './Text/Text.js';
