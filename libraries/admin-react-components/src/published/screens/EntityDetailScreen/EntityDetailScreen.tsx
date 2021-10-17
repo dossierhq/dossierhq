@@ -28,7 +28,7 @@ export function EntityDetailScreen({
   return (
     <FullscreenContainer>
       {header ? <FullscreenContainer.Row fullWidth>{header}</FullscreenContainer.Row> : null}
-      <FullscreenContainer.Row flexDirection="row" gap={2} paddingVertical={2}>
+      <FullscreenContainer.Row flexDirection="row">
         {entity ? (
           <Text as="h1" textStyle="headline4">
             {entity.info.name}{' '}
@@ -39,10 +39,9 @@ export function EntityDetailScreen({
         ) : null}
       </FullscreenContainer.Row>
       <FullscreenContainer.ScrollableRow>
-        <FullscreenContainer.Row>
+        <FullscreenContainer.Row paddingVertical={2}>
           {entity && typeSpec ? (
             <>
-              <EntityMetadata entity={entity} />
               <EntityFields entity={entity} typeSpec={typeSpec} />
             </>
           ) : null}
@@ -50,15 +49,6 @@ export function EntityDetailScreen({
       </FullscreenContainer.ScrollableRow>
       {footer ? <FullscreenContainer.Row fullWidth>{footer}</FullscreenContainer.Row> : null}
     </FullscreenContainer>
-  );
-}
-
-function EntityMetadata({ entity }: { entity: Entity }) {
-  return (
-    <Field>
-      <Field.Label>ID</Field.Label>
-      <Field.Control>{entity.id}</Field.Control>
-    </Field>
   );
 }
 
