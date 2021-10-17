@@ -42,7 +42,7 @@
     "@jonasb/datadata-postgres": "workspace:*",
     "@jonasb/datadata-server": "workspace:*",
     "@rushstack/eslint-plugin": "~0.8.0",
-    "@rushstack/heft": "~0.39.2",
+    "@rushstack/heft": "~0.41.7",
     "@rushstack/heft-jest-plugin": "~0.1.18",
     "@storybook/addon-actions": "^6.3.9",
     "@storybook/addon-essentials": "^6.3.9",
