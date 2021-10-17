@@ -8,8 +8,6 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:jest-dom/recommended',
     'plugin:react-hooks/recommended',
-    'plugin:import/recommended',
-    'plugin:import/typescript',
     'plugin:react/recommended',
     'plugin:testing-library/dom',
     'plugin:testing-library/react',
@@ -42,10 +40,6 @@ module.exports = {
         argsIgnorePattern: '^_',
       },
     ],
-    // For ECMA script module, we need to always import with file extension (which should be .js, not .ts)
-    'import/extensions': ['error', { js: 'always', jsx: 'always', ts: 'always', tsx: 'always' }],
-    // The typescript import rule gets confused when we import with .js file extension to a .ts file (even though it's valid)
-    'import/no-unresolved': ['off'],
   },
   settings: { react: { version: 'detect' } },
 };
