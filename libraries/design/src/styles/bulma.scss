@@ -1,2 +1,6 @@
+// leaflet is using z-index: 1000
+$base-z-index: 1001;
+$dropdown-content-z: $base-z-index + 20;
+
 @import '../../node_modules/bulma/bulma.sass';
 @import '../../node_modules/@creativebulma/bulma-badge/src/sass/index.sass';
