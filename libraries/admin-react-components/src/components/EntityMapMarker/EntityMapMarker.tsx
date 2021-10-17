@@ -1,4 +1,5 @@
 import type { AdminEntity, Location } from '@jonasb/datadata-core';
+import { Column, Text } from '@jonasb/datadata-design';
 import React from 'react';
 import { MapContainer, StatusTag } from '../../index.js';
 
@@ -15,10 +16,12 @@ export function EntityMapMarker({
     <MapContainer.Marker
       location={location}
       tooltip={
-        <>
-          {`${entity.info.type}: ${entity.info.name}`}{' '}
-          <StatusTag status={entity.info.publishingState} />
-        </>
+        <Column>
+          <Text textStyle="subtitle1">{entity.info.name}</Text>
+          <Text textStyle="body1">
+            {entity.info.type} <StatusTag status={entity.info.publishingState} />
+          </Text>
+        </Column>
       }
       onClick={onClick}
     />
