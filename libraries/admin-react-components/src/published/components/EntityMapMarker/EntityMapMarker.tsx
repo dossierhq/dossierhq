@@ -1,4 +1,5 @@
 import type { Entity, Location } from '@jonasb/datadata-core';
+import { Column, Text } from '@jonasb/datadata-design';
 import React from 'react';
 import { MapContainer } from '../../../index.js';
 
@@ -14,7 +15,12 @@ export function EntityMapMarker({
   return (
     <MapContainer.Marker
       location={location}
-      tooltip={<>{`${entity.info.type}: ${entity.info.name}`}</>}
+      tooltip={
+        <Column>
+          <Text textStyle="subtitle1">{entity.info.name}</Text>
+          <Text textStyle="body1">{entity.info.type}</Text>
+        </Column>
+      }
       onClick={onClick}
     />
   );
