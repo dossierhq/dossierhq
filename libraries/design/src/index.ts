@@ -1,5 +1,6 @@
 export {
   Button,
+  Column,
   Dropdown,
   DropdownDisplay,
   DropdownSelector,

@@ -1,5 +1,6 @@
 export { Badge } from './Badge/Badge.js';
 export { Button } from './Button/Button.js';
+export { Column } from './Column/Column.js';
 export { Dropdown } from './Dropdown/Dropdown.js';
 export { DropdownDisplay } from './DropdownDisplay/DropdownDisplay.js';
 export { DropdownSelector } from './DropdownSelector/DropdownSelector.js';
