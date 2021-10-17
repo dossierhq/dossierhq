@@ -22,6 +22,28 @@ export const userId1 = 'a10e49cd-2f4e-4249-b8ee-eaca8466939b';
 
 export const entitiesFixture: FixtureEntity[] = [
   {
+    id: bar1Id,
+    type: 'Bar',
+    name: 'Bar 1',
+    publishedVersion: 0,
+    versions: [
+      {
+        title: 'Bar 1',
+      },
+    ],
+  },
+  {
+    id: bar2Id,
+    type: 'Bar',
+    name: 'Bar 2',
+    publishedVersion: 0,
+    versions: [
+      {
+        title: 'Bar 2',
+      },
+    ],
+  },
+  {
     id: foo1Id,
     type: 'Foo',
     name: 'Foo 1',
@@ -54,26 +76,6 @@ export const entitiesFixture: FixtureEntity[] = [
     versions: [
       {
         title: 'Hello',
-      },
-    ],
-  },
-  {
-    id: bar1Id,
-    type: 'Bar',
-    name: 'Bar 1',
-    versions: [
-      {
-        title: 'Bar 1',
-      },
-    ],
-  },
-  {
-    id: bar2Id,
-    type: 'Bar',
-    name: 'Bar 2',
-    versions: [
-      {
-        title: 'Bar 2',
       },
     ],
   },
