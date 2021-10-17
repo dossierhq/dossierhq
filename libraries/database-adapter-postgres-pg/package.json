@@ -34,7 +34,7 @@
     "@jonasb/datadata-database-adapter-test-integration": "workspace:*",
     "@jonasb/datadata-postgres": "workspace:*",
     "@rushstack/heft-jest-plugin": "~0.1.18",
-    "@rushstack/heft": "~0.39.2",
+    "@rushstack/heft": "~0.41.7",
     "@types/heft-jest": "1.0.2",
     "@types/pg": "^8.6.1",
     "@types/uuid": "~8.3.1",
