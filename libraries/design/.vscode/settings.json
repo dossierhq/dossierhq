@@ -1,6 +1,14 @@
 {
   "editor.formatOnSave": true,
-  "cSpell.words": ["bulma", "creativebulma", "datadata", "fontawesome", "fortawesome", "rushstack"],
+  "cSpell.words": [
+    "bulma",
+    "creativebulma",
+    "datadata",
+    "Flexbox",
+    "fontawesome",
+    "fortawesome",
+    "rushstack"
+  ],
   "files.insertFinalNewline": true,
   "editor.tabSize": 2,
   "editor.defaultFormatter": "esbenp.prettier-vscode"
