@@ -27,3 +27,4 @@ export type {
   TextStyle,
 } from './components/index.js';
 export { StatusColor } from './config/Colors.js';
+export { toSizeClassName } from './utils/LayoutPropsUtils.js';

@@ -1,4 +1,5 @@
 export { ConnectionPagingButtons } from './components/ConnectionPagingButtons/ConnectionPagingButtons.js';
+export { EntityMap2 } from './components/EntityMap2/EntityMap2.js';
 export { ConnectionPagingCount } from './components/ConnectionPagingCount/ConnectionPagingCount.js';
 export {
   EntityTypeSelector,
