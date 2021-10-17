@@ -1,11 +1,12 @@
 import type { FunctionComponent } from 'react';
 import React from 'react';
-import { Scrollable } from '../index.js';
+import { toSizeClassName } from '../../index.js';
 import { toClassName } from '../../utils/ClassNameUtils.js';
 import type { FlexContainerProps } from '../../utils/FlexboxUtils.js';
 import { toFlexContainerClassName } from '../../utils/FlexboxUtils.js';
 import type { GapProps, PaddingProps } from '../../utils/LayoutPropsUtils.js';
 import { toSpacingClassName } from '../../utils/LayoutPropsUtils.js';
+import { Scrollable } from '../index.js';
 
 export interface FullscreenContainerProps {
   children: React.ReactNode;
@@ -30,7 +31,16 @@ interface FullscreenContainerComponent extends FunctionComponent<FullscreenConta
 export const FullscreenContainer: FullscreenContainerComponent = ({
   children,
 }: FullscreenContainerProps) => {
-  return <div className="is-flex is-flex-direction-column is-height-100vh">{children}</div>;
+  return (
+    <div
+      className={toClassName(
+        'is-flex is-flex-direction-column',
+        toSizeClassName({ height: '100vh' })
+      )}
+    >
+      {children}
+    </div>
+  );
 };
 FullscreenContainer.displayName = 'FullscreenContainer';
 
@@ -41,10 +51,13 @@ FullscreenContainer.Row = ({
   children,
   ...props
 }: FullscreenContainerRowProps) => {
+  const width = !fullWidth && !center ? '100%' : undefined; // .container centers by default
+  const height = fillHeight ? 0 : undefined;
+
   const className = toClassName(
     !fullWidth && 'is-flex-grow-0 container',
-    !fullWidth && !center && 'is-width-100', // .container centers by default
-    fillHeight && 'is-flex-grow-1 is-height-0',
+    fillHeight && 'is-flex-grow-1',
+    toSizeClassName({ width, height }),
     toFlexContainerClassName(props),
     toSpacingClassName(props)
   );
@@ -54,6 +67,10 @@ FullscreenContainer.Row.displayName = 'FullscreenContainer.Row';
 FullscreenContainer.Row.defaultProps = { flexDirection: 'column' };
 
 FullscreenContainer.ScrollableRow = ({ children }: FullscreenContainerRowProps) => {
-  return <Scrollable className="is-flex-grow-1 is-height-0">{children}</Scrollable>;
+  return (
+    <Scrollable className={toClassName('is-flex-grow-1', toSizeClassName({ height: 0 }))}>
+      {children}
+    </Scrollable>
+  );
 };
 FullscreenContainer.ScrollableRow.displayName = 'FullscreenContainer.ScrollableRow';

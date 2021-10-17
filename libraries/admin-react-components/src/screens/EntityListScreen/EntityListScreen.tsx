@@ -1,10 +1,11 @@
-import type { AdminEntity, AdminQuery } from '@jonasb/datadata-core';
-import { FullscreenContainer } from '@jonasb/datadata-design';
-import React, { useContext, useEffect, useReducer } from 'react';
+import type { AdminEntity, AdminQuery, Entity } from '@jonasb/datadata-core';
+import { FullscreenContainer, IconButton, toSizeClassName } from '@jonasb/datadata-design';
+import React, { useCallback, useContext, useEffect, useReducer, useState } from 'react';
 import type { EntitySearchStateUrlQuery } from '../../index.js';
 import {
   DataDataContext2,
   EntityList2,
+  EntityMap2,
   EntityTypeSelector,
   EntityTypeTagSelector,
   initializeEntityTypeSelectorState,
@@ -50,6 +51,17 @@ export function EntityListScreen({
     initializeEntityTypeSelectorState
   );
 
+  const [showMap, setShowMap] = useState(!!searchEntityState.query.boundingBox);
+
+  const handleToggleShowMap = useCallback(() => {
+    if (showMap) {
+      dispatchSearchEntityState(
+        new SearchEntityStateActions.SetQuery({ boundingBox: undefined }, true)
+      );
+    }
+    setShowMap(!showMap);
+  }, [showMap]);
+
   // sync entity type filter -> search state
   useEffect(() => {
     dispatchSearchEntityState(
@@ -88,22 +100,33 @@ export function EntityListScreen({
         >
           Entity type
         </EntityTypeSelector>
+        <IconButton icon={showMap ? 'map' : 'list'} onClick={handleToggleShowMap} />
         <TypePicker2 iconLeft="add" showEntityTypes onTypeSelected={onCreateEntity}>
           Create
         </TypePicker2>
       </FullscreenContainer.Row>
-      <FullscreenContainer.ScrollableRow>
-        <FullscreenContainer.Row>
-          <EntityTypeTagSelector
-            state={entityTypeFilterState}
-            dispatch={dispatchEntityTypeFilter}
-          />
-          <EntityList2
+      {showMap ? (
+        <FullscreenContainer.Row fillHeight fullWidth>
+          <EntityMap2
+            className={toSizeClassName({ height: '100%' })}
             {...{ searchEntityState, dispatchSearchEntityState }}
-            onItemClick={onOpenEntity}
+            onItemClick={onOpenEntity as (item: AdminEntity | Entity) => void}
           />
         </FullscreenContainer.Row>
-      </FullscreenContainer.ScrollableRow>
+      ) : (
+        <FullscreenContainer.ScrollableRow>
+          <FullscreenContainer.Row>
+            <EntityTypeTagSelector
+              state={entityTypeFilterState}
+              dispatch={dispatchEntityTypeFilter}
+            />
+            <EntityList2
+              {...{ searchEntityState, dispatchSearchEntityState }}
+              onItemClick={onOpenEntity}
+            />
+          </FullscreenContainer.Row>
+        </FullscreenContainer.ScrollableRow>
+      )}
       <FullscreenContainer.Row
         paddingVertical={2}
         columnGap={2}

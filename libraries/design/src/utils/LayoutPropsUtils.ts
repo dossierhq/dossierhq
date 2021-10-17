@@ -30,6 +30,21 @@ export interface GapProps {
   rowGap?: SpacingValue;
 }
 
+const heightToClassNameMap = {
+  0: 'is-height-0',
+  '100%': 'is-height-100',
+  '100vh': 'is-height-100vh',
+};
+
+const widthToClassNameMap = {
+  '100%': 'is-width-100',
+};
+
+export interface SpaceProps {
+  width?: keyof typeof widthToClassNameMap;
+  height?: keyof typeof heightToClassNameMap;
+}
+
 export function toSpacingClassName({
   margin,
   marginLeft,
@@ -72,4 +87,11 @@ export function toSpacingClassName({
 
 function valueClassName(prefix: string, value: SpacingValue | undefined) {
   return typeof value === 'number' ? prefix + value : undefined;
+}
+
+export function toSizeClassName({ width, height }: SpaceProps): string {
+  return toClassName(
+    width !== undefined && widthToClassNameMap[width],
+    height !== undefined && heightToClassNameMap[height]
+  );
 }

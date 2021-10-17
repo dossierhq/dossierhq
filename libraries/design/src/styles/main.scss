@@ -25,6 +25,10 @@ th {
   height: 100vh;
 }
 
+.is-height-100 {
+  height: 100%;
+}
+
 @each $name, $value in $spacing-values {
   .g-#{$name} {
     #{gap}: $value !important ;
