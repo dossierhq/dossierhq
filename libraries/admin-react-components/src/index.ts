@@ -6,8 +6,9 @@ export {
   DataDataProvider,
   WaitForDataDataContext,
 } from './components/DataDataProvider/DataDataProvider.js';
-export { StatusTag } from './components/StatusTag/StatusTag.js';
 export { EntityList2 } from './components/EntityList2/EntityList2.js';
+export { EntityMapMarker } from './components/EntityMapMarker/EntityMapMarker.js';
+export { StatusTag } from './components/StatusTag/StatusTag.js';
 export { TypePicker2 } from './components/TypePicker2/TypePicker2.js';
 export { DataDataContext, DataDataContextValue } from './contexts/DataDataContext.js';
 export { DataDataContext2 } from './contexts/DataDataContext2.js';
@@ -77,10 +78,10 @@ export type { RowProps } from './generic-components/Row/Row.js';
 export { Segment } from './generic-components/Segment/Segment.js';
 export { Stack } from './generic-components/Stack/Stack.js';
 export { Tag } from './generic-components/Tag/Tag.js';
+export { useLoadSearchEntity } from './hooks/useLoadSearchEntity.js';
 export { useSchema } from './hooks/useSchema.js';
 export { useSearchEntities } from './hooks/useSearchEntities.js';
 export { useTotalCount } from './hooks/useTotalCount.js';
-export { useLoadSearchEntity } from './hooks/useLoadSearchEntity.js';
 export * as published from './published/index.js';
 export { EntityListScreen } from './screens/EntityListScreen/EntityListScreen.js';
 export * from './shared/index.js';

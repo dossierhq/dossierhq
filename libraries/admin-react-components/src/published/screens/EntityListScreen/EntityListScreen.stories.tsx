@@ -45,3 +45,11 @@ export const InitialQuery = Template.bind({});
 InitialQuery.args = {
   initialUrlQuery: { query: '{"order":"name","text":"hello"}' },
 };
+
+export const InitialBoundingBoxQuery = Template.bind({});
+InitialBoundingBoxQuery.args = {
+  initialUrlQuery: {
+    query:
+      '{"boundingBox":{"minLat":55.59004909705666,"maxLat":55.63212782260112,"minLng":12.938149496912958,"maxLng":13.074276968836786}}',
+  },
+};
