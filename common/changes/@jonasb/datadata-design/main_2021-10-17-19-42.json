@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-design",
+      "comment": "Tweak z-index",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-design",
+  "email": "jonas.b@gmail.com"
+}
