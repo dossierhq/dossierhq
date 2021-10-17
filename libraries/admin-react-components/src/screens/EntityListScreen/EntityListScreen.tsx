@@ -1,4 +1,4 @@
-import type { AdminEntity, AdminQuery, Entity } from '@jonasb/datadata-core';
+import type { AdminEntity, AdminQuery } from '@jonasb/datadata-core';
 import { FullscreenContainer, IconButton, toSizeClassName } from '@jonasb/datadata-design';
 import React, { useCallback, useContext, useEffect, useReducer, useState } from 'react';
 import type { EntitySearchStateUrlQuery } from '../../index.js';
@@ -6,6 +6,7 @@ import {
   DataDataContext2,
   EntityList2,
   EntityMap2,
+  EntityMapMarker,
   EntityTypeSelector,
   EntityTypeTagSelector,
   initializeEntityTypeSelectorState,
@@ -100,17 +101,24 @@ export function EntityListScreen({
         >
           Entity type
         </EntityTypeSelector>
-        <IconButton icon={showMap ? 'map' : 'list'} onClick={handleToggleShowMap} />
+        <IconButton icon={showMap ? 'list' : 'map'} onClick={handleToggleShowMap} />
         <TypePicker2 iconLeft="add" showEntityTypes onTypeSelected={onCreateEntity}>
           Create
         </TypePicker2>
       </FullscreenContainer.Row>
       {showMap ? (
         <FullscreenContainer.Row fillHeight fullWidth>
-          <EntityMap2
+          <EntityMap2<AdminEntity>
             className={toSizeClassName({ height: '100%' })}
-            {...{ searchEntityState, dispatchSearchEntityState }}
-            onItemClick={onOpenEntity as (item: AdminEntity | Entity) => void}
+            {...{ schema, searchEntityState, dispatchSearchEntityState }}
+            renderEntityMarker={(key, entity, location) => (
+              <EntityMapMarker
+                key={key}
+                entity={entity}
+                location={location}
+                onClick={() => onOpenEntity(entity)}
+              />
+            )}
           />
         </FullscreenContainer.Row>
       ) : (

@@ -65,7 +65,7 @@ function EntityFields({
     const fieldValue = entity.fields[name];
     if (fieldValue) {
       fieldComponents.push(
-        <Field>
+        <Field key={name}>
           <Field.Label>{name}</Field.Label>
           <Field.Control>{JSON.stringify(fieldValue)}</Field.Control>
         </Field>

@@ -1,9 +1,11 @@
 import type { Entity, Query } from '@jonasb/datadata-core';
-import { FullscreenContainer } from '@jonasb/datadata-design';
-import React, { useContext, useEffect, useReducer } from 'react';
+import { FullscreenContainer, IconButton, toSizeClassName } from '@jonasb/datadata-design';
+import React, { useCallback, useContext, useEffect, useReducer, useState } from 'react';
 import type { EntitySearchStateUrlQuery } from '../../index.js';
 import {
   EntityList,
+  EntityMap2,
+  EntityMapMarker,
   EntityTypeSelector,
   EntityTypeTagSelector,
   initializeEntityTypeSelectorState,
@@ -47,6 +49,17 @@ export function EntityListScreen({
     initializeEntityTypeSelectorState
   );
 
+  const [showMap, setShowMap] = useState(!!searchEntityState.query.boundingBox);
+
+  const handleToggleShowMap = useCallback(() => {
+    if (showMap) {
+      dispatchSearchEntityState(
+        new SearchEntityStateActions.SetQuery({ boundingBox: undefined }, true)
+      );
+    }
+    setShowMap(!showMap);
+  }, [showMap]);
+
   // sync entity type filter -> search state
   useEffect(() => {
     dispatchSearchEntityState(
@@ -85,19 +98,37 @@ export function EntityListScreen({
         >
           Entity type
         </EntityTypeSelector>
+        <IconButton icon={showMap ? 'list' : 'map'} onClick={handleToggleShowMap} />
       </FullscreenContainer.Row>
-      <FullscreenContainer.ScrollableRow>
-        <FullscreenContainer.Row>
-          <EntityTypeTagSelector
-            state={entityTypeFilterState}
-            dispatch={dispatchEntityTypeFilter}
-          />
-          <EntityList
-            {...{ searchEntityState, dispatchSearchEntityState }}
-            onItemClick={onOpenEntity}
+      {showMap ? (
+        <FullscreenContainer.Row fillHeight fullWidth>
+          <EntityMap2<Entity>
+            className={toSizeClassName({ height: '100%' })}
+            {...{ schema, searchEntityState, dispatchSearchEntityState }}
+            renderEntityMarker={(key, entity, location) => (
+              <EntityMapMarker
+                key={key}
+                entity={entity}
+                location={location}
+                onClick={() => onOpenEntity(entity)}
+              />
+            )}
           />
         </FullscreenContainer.Row>
-      </FullscreenContainer.ScrollableRow>
+      ) : (
+        <FullscreenContainer.ScrollableRow>
+          <FullscreenContainer.Row>
+            <EntityTypeTagSelector
+              state={entityTypeFilterState}
+              dispatch={dispatchEntityTypeFilter}
+            />
+            <EntityList
+              {...{ searchEntityState, dispatchSearchEntityState }}
+              onItemClick={onOpenEntity}
+            />
+          </FullscreenContainer.Row>
+        </FullscreenContainer.ScrollableRow>
+      )}
       <FullscreenContainer.Row
         paddingVertical={2}
         columnGap={2}
