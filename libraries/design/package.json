@@ -34,7 +34,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.14.3",
-    "@rushstack/eslint-plugin": "~0.8.0",
+    "@rushstack/eslint-plugin": "~0.8.2",
     "@rushstack/heft": "~0.41.7",
     "@storybook/addon-actions": "^6.3.9",
     "@storybook/addon-essentials": "^6.3.9",
@@ -49,16 +49,15 @@
     "@typescript-eslint/parser": "^5.0.0",
     "babel-loader": "^8.2.2",
     "bulma": "~0.9.3",
-    "eslint-plugin-import": "~2.25.2",
+    "eslint-plugin-jest-dom": "~3.9.0",
     "eslint-plugin-react-hooks": "~4.2.0",
     "eslint-plugin-react": "~7.26.1",
+    "eslint-plugin-testing-library": "~4.11.0",
     "eslint": "^7.32.0",
     "prettier": "2.4.1",
     "sass-loader": "~12.1.0",
     "sass": "~1.39.2",
-    "typescript": "^4.4.2",
-    "eslint-plugin-jest-dom": "~3.9.0",
-    "eslint-plugin-testing-library": "~4.11.0"
+    "typescript": "^4.4.2"
   },
   "dependencies": {
     "@creativebulma/bulma-badge": "~1.0.1",
