@@ -77,7 +77,7 @@ function LocationEditor({
         />
       </ColumnItem>
       <ColumnItem as={MapContainer} grow center={value}>
-        <MapContainer.CurrentLocationMarker value={value} onChange={(x) => onChange?.(x)} />
+        <MapContainer.EditLocationMarker value={value} onChange={(x) => onChange?.(x)} />
       </ColumnItem>
     </Column>
   );
