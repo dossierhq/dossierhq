@@ -1,6 +1,6 @@
 export { ConnectionPagingButtons } from './components/ConnectionPagingButtons/ConnectionPagingButtons.js';
-export { EntityMap2 } from './components/EntityMap2/EntityMap2.js';
 export { ConnectionPagingCount } from './components/ConnectionPagingCount/ConnectionPagingCount.js';
+export { EntityMap2 } from './components/EntityMap2/EntityMap2.js';
 export {
   EntityTypeSelector,
   initializeEntityTypeSelectorState,
@@ -11,6 +11,7 @@ export type {
   EntityTypeSelectorState,
 } from './components/EntityTypeSelector/EntityTypeSelector.js';
 export { EntityTypeTagSelector } from './components/EntityTypeTagSelector/EntityTypeTagSelector.js';
+export { MapContainer } from './components/MapContainer/MapContainer.js';
 export { SearchEntityPagingButtons } from './components/SearchEntityPagingButtons/SearchEntityPagingButtons.js';
 export { SearchEntityPagingCount } from './components/SearchEntityPagingCount/SearchEntityPagingCount.js';
 export { SearchEntitySearchInput } from './components/SearchEntitySearchInput/SearchEntitySearchInput.js';

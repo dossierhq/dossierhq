@@ -42,7 +42,7 @@ interface EditLocationMarkerProps {
 
 interface MapContainerComponent extends FunctionComponent<MapContainerProps> {
   Marker: FunctionComponent<MarkerProps>;
-  CurrentLocationMarker: FunctionComponent<EditLocationMarkerProps>;
+  EditLocationMarker: FunctionComponent<EditLocationMarkerProps>;
 }
 
 export const MapContainer: MapContainerComponent = ({
@@ -126,5 +126,5 @@ function EditLocationMarker({ value, onChange }: EditLocationMarkerProps): JSX.E
   });
   return value ? <Marker position={[value.lat, value.lng]} icon={currentMarkerIcon} /> : null;
 }
-MapContainer.CurrentLocationMarker = EditLocationMarker;
-MapContainer.CurrentLocationMarker.displayName = 'MapContainer.CurrentLocationMarker';
+MapContainer.EditLocationMarker = EditLocationMarker;
+MapContainer.EditLocationMarker.displayName = 'MapContainer.EditLocationMarker';

@@ -69,7 +69,7 @@ export type { IconProps, IconType } from './generic-components/Icon/Icon.js';
 export { IconButton } from './generic-components/IconButton/IconButton.js';
 export { InputText } from './generic-components/InputText/InputText.js';
 export { Loader } from './generic-components/Loader/Loader.js';
-export { MapContainer } from './generic-components/MapContainer/MapContainer.js';
+export { MapContainer } from './shared/components/MapContainer/MapContainer.js';
 export { Message } from './generic-components/Message/Message.js';
 export type { MessageItem } from './generic-components/Message/Message.js';
 export { Modal } from './generic-components/Modal/Modal.js';

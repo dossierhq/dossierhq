@@ -4,11 +4,12 @@ import type { MapContainerProps } from './MapContainer.js';
 import { MapContainer } from './MapContainer.js';
 
 const meta: Meta<MapContainerProps> = {
-  title: 'Generic/MapContainer',
+  title: 'Shared/MapContainer',
   component: MapContainer,
   args: {
-    className: 'dd-position-fixed dd-inset-0',
+    className: 'dd-position-fixed dd-inset-0', //TODO switch to new design class name
   },
+  parameters: { layout: 'fullscreen' },
 };
 export default meta;
 
