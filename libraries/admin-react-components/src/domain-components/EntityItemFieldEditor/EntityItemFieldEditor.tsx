@@ -4,12 +4,14 @@ import type { EntityFieldEditorProps } from '../../index.js';
 import {
   Button,
   DataDataContext,
+  EntityEditorDispatchContext,
   EntitySearch,
   IconButton,
   Modal,
   PublishStateTag,
   Row,
 } from '../../index.js';
+import { AddEntityDraftAction } from '../EntityEditor/EntityEditorReducer.js';
 
 export type EntityItemFieldEditorProps = EntityFieldEditorProps<EntityReference>;
 
@@ -20,6 +22,7 @@ export function EntityItemFieldEditor({
   onChange,
 }: EntityItemFieldEditorProps): JSX.Element | null {
   const { useEntity } = useContext(DataDataContext);
+  const dispatchEditorState = useContext(EntityEditorDispatchContext);
   const [show, setShow] = useState(false);
   const handleShow = useCallback(() => setShow(true), [setShow]);
   const handleClose = useCallback(() => setShow(false), [setShow]);
@@ -32,6 +35,9 @@ export function EntityItemFieldEditor({
     },
     [onChange, handleClose]
   );
+  const handleEditEntity = useCallback(() => {
+    if (value?.id) dispatchEditorState(new AddEntityDraftAction({ id: value.id }));
+  }, [dispatchEditorState, value]);
 
   //TODO handle error
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -44,6 +50,7 @@ export function EntityItemFieldEditor({
           {entity ? entity.info.name : value ? value.id : 'Select entity'}
           {entity ? <PublishStateTag publishState={entity.info.publishingState} /> : null}
         </Button>
+        {entity ? <Button onClick={handleEditEntity}>Edit</Button> : null}
         {value ? (
           <IconButton icon="remove" title="Remove entity" onClick={() => onChange?.(null)} />
         ) : null}
