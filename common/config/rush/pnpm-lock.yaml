@@ -567,11 +567,11 @@ importers:
   ../../libraries/postgres:
     dependencies:
       pg: 8.7.1
-      postgrator: 4.2.0
+      postgrator: 5.0.0
       url-parse-lax: 5.0.0
     specifiers:
       pg: ^8.7.1
-      postgrator: ^4.1.1
+      postgrator: ^5.0.0
       url-parse-lax: ^5.0.0
   ../../libraries/server:
     dependencies:
@@ -9987,6 +9987,17 @@ packages:
       path-is-absolute: 1.0.1
     resolution:
       integrity: sha512-OvD9ENzPLbegENnYP5UUfJIirTg4+XwMWGaQfQTY0JenxNvvIKP3U3/tAQSPIu/lHxXYSZmpXlUHeqAIdKzBLQ==
+  /glob/7.2.0:
+    dependencies:
+      fs.realpath: 1.0.0
+      inflight: 1.0.6
+      inherits: 2.0.4
+      minimatch: 3.0.4
+      once: 1.4.0
+      path-is-absolute: 1.0.1
+    dev: false
+    resolution:
+      integrity: sha512-lmLf6gtyrPq8tTjSmrO94wBeQbFR3HbLHbuyD69wuyQkImp2hWqMGB47OX65FBkPffO641IP9jWa1z4ivqG26Q==
   /global-modules/2.0.0:
     dependencies:
       global-prefix: 3.0.0
@@ -13438,10 +13449,6 @@ packages:
     dev: true
     resolution:
       integrity: sha512-AO81vsIO1k1sM4Zrd6Hu7regmJN1NSiAja10gc4bX3F0wd+9rQmcuHQaHVQCYIEC8iFXnE+mavh23GOt7wBgug==
-  /newline/0.0.3:
-    dev: false
-    resolution:
-      integrity: sha1-D2p0STIj26BP59v7bNyAS/fkbdA=
   /next/11.1.2_01b6e46c81e6fda6a6d233df547d9171:
     dependencies:
       '@babel/runtime': 7.15.3
@@ -13559,7 +13566,7 @@ packages:
   /node-gyp/7.1.2:
     dependencies:
       env-paths: 2.2.1
-      glob: 7.1.7
+      glob: 7.2.0
       graceful-fs: 4.2.8
       nopt: 5.0.0
       npmlog: 4.1.2
@@ -14530,15 +14537,14 @@ packages:
       node: ^10 || ^12 || >=14
     resolution:
       integrity: sha512-wG1cc/JhRgdqB6WHEuyLTedf3KIRuD0hG6ldkFEZNCjRxiC+3i6kkWUUbiJQayP28iwG35cEmAbe98585BYV0A==
-  /postgrator/4.2.0:
+  /postgrator/5.0.0:
     dependencies:
-      glob: 7.1.7
-      newline: 0.0.3
+      glob: 7.2.0
     dev: false
     engines:
-      node: '>=10.0.0'
+      node: '>=12.0.0'
     resolution:
-      integrity: sha512-i19t0YozLUpxXQ+G96YlYXRGx8nX0ExTyloG5A/1HnPG6sCf0Y2hZsBBKsBcb9rouG6AUn3lwsCFD3O7FMDmBA==
+      integrity: sha512-8ngKQcNBvWRULmH5/Utp/Vy4yGsl1WDJbf04bBCR9mTxCoIxY5SIwm9Ys0zqlwppd6/aB6H5otgs5TnYahTNxQ==
   /postgres-array/2.0.0:
     engines:
       node: '>=4'
