@@ -51,6 +51,9 @@ export class AddEntityDraftAction implements EntityEditorStateAction {
   }
 
   reduce(state: EntityEditorState): EntityEditorState {
+    if (this.#entitySelector.id && state.drafts.some((it) => it.id === this.#entitySelector.id)) {
+      return state;
+    }
     const id = this.#entitySelector.id ?? uuidv4();
     let message: MessageItem | null = null;
     let entity: EntityEditorDraftState['entity'] = null;
