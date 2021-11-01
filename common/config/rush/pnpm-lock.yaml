@@ -85,7 +85,7 @@ importers:
       '@types/react': 17.0.19
       '@typescript-eslint/eslint-plugin': 5.0.0_eslint@7.32.0+typescript@4.4.2
       eslint: 7.32.0
-      eslint-config-next: 11.1.0_1a4cc63bb962be0c1c6a016cd2486bf8
+      eslint-config-next: 12.0.2_1a4cc63bb962be0c1c6a016cd2486bf8
       jest: 27.2.2_ts-node@10.2.1
       prettier: 2.4.1
       ts-jest: 27.0.5_2ed9e42bdce85c7dc35a27347bb55dc9
@@ -114,7 +114,7 @@ importers:
       '@typescript-eslint/eslint-plugin': ^5.0.0
       debug: ~4.3.1
       eslint: ^7.32.0
-      eslint-config-next: ~11.1.0
+      eslint-config-next: ~12.0.2
       graphql: ~15.6.0
       graphql-voyager: ~1.0.0-rc.31
       jest: ~27.2.2
@@ -3082,12 +3082,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-+fteyVdQ7C/OoulfcF6vd1Yk0FEli4453gr8kSFbU8sKseNSizYq6df5MKz/AjwLptsxrUeIkgBdAzbziyJ3mA==
-  /@next/eslint-plugin-next/11.1.0:
+  /@next/eslint-plugin-next/12.0.2:
     dependencies:
       glob: 7.1.7
     dev: true
     resolution:
-      integrity: sha512-HjLhyshV+ANzTDCFLN1UZMQIyYwZkCdhydfIcOQQVCrqLSd0hCi+AYIGqWfDPhXmP7aeOuKQsmhRmdennQV2qw==
+      integrity: sha512-mmMlik6cuTkcHFi6CTdLeX0aPUceBi6gP3/k9dxjMjpiTBL5qXO+zwsGmGyg01MeeSC3tJpUEqOZVnxaFvKccA==
   /@next/polyfill-module/11.1.2:
     dev: false
     resolution:
@@ -5579,7 +5579,7 @@ packages:
       '@typescript-eslint/visitor-keys': 4.29.2
       debug: 4.3.2
       globby: 11.0.4
-      is-glob: 4.0.1
+      is-glob: 4.0.3
       semver: 7.3.5
       tsutils: 3.21.0_typescript@4.4.2
       typescript: 4.4.2
@@ -8809,9 +8809,9 @@ packages:
       source-map: 0.6.1
     resolution:
       integrity: sha512-mmHKys/C8BFUGI+MAWNcSYoORYLMdPzjrknd2Vc+bUsjN5bXcr8EhrNB+UTqfL1y3I9c4fw2ihgtMPQLBRiQxw==
-  /eslint-config-next/11.1.0_1a4cc63bb962be0c1c6a016cd2486bf8:
+  /eslint-config-next/12.0.2_1a4cc63bb962be0c1c6a016cd2486bf8:
     dependencies:
-      '@next/eslint-plugin-next': 11.1.0
+      '@next/eslint-plugin-next': 12.0.2
       '@rushstack/eslint-patch': 1.0.7
       '@typescript-eslint/parser': 4.29.2_eslint@7.32.0+typescript@4.4.2
       eslint: 7.32.0
@@ -8832,7 +8832,7 @@ packages:
       typescript:
         optional: true
     resolution:
-      integrity: sha512-8KeBg3qUEhM06vhzvs9MwZl2lsSfu3bm0wa3QVTc9kBdFxSRY6Gu/1GM0FKzWG0sQmWqzjLbynazczu/037Ibw==
+      integrity: sha512-Tck3Ga3IQ+/6ziTraLc1CTQ9kw2jWzjgZtB6wsBOAvMauK25a/ociCW8SFXsYWVFb899tdqPemrTZEeXjXjrvQ==
   /eslint-import-resolver-node/0.3.6:
     dependencies:
       debug: 3.2.7
@@ -8846,9 +8846,9 @@ packages:
       eslint: 7.32.0
       eslint-plugin-import: 2.25.2_eslint@7.32.0
       glob: 7.1.7
-      is-glob: 4.0.1
+      is-glob: 4.0.3
       resolve: 1.20.0
-      tsconfig-paths: 3.10.1
+      tsconfig-paths: 3.11.0
     dev: true
     engines:
       node: '>=4'
@@ -8909,7 +8909,7 @@ packages:
     dependencies:
       '@babel/runtime': 7.15.3
       aria-query: 4.2.2
-      array-includes: 3.1.3
+      array-includes: 3.1.4
       ast-types-flow: 0.0.7
       axe-core: 4.3.2
       axobject-query: 2.2.0
@@ -17051,14 +17051,6 @@ packages:
         optional: true
     resolution:
       integrity: sha512-csd+vJOb/gkzvcCHgTGSChYpy5f1/XKNsmvBGO4JXS+z1v2HobugDz4s1IeFXM3wZB44uczs+eazB5Q/ccdhQw==
-  /tsconfig-paths/3.10.1:
-    dependencies:
-      json5: 2.2.0
-      minimist: 1.2.5
-      strip-bom: 3.0.0
-    dev: true
-    resolution:
-      integrity: sha512-rETidPDgCpltxF7MjBZlAFPUHv5aHH2MymyPvh+vEyWAED4Eb/WeMbsnD/JDr4OKPOA1TssDHgIcpTN5Kh0p6Q==
   /tsconfig-paths/3.11.0:
     dependencies:
       '@types/json5': 0.0.29
