@@ -35,7 +35,7 @@
   "devDependencies": {
     "@jonasb/datadata-postgres": "workspace:*",
     "@jonasb/datadata-server": "workspace:*",
-    "@rushstack/heft": "~0.41.7",
+    "@rushstack/heft": "~0.42.0",
     "@rushstack/heft-jest-plugin": "~0.1.18",
     "@types/heft-jest": "1.0.2",
     "@types/uuid": "~8.3.1",
