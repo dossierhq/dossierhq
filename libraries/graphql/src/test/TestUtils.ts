@@ -40,7 +40,7 @@ async function setUpRealServerWithSession(schemaSpecification: Partial<SchemaSpe
   const url = process.env.DATABASE_URL;
   assertIsDefined(url);
   const serverResult = await createServer({
-    databaseAdapter: createPostgresAdapter(url),
+    databaseAdapter: createPostgresAdapter({ connectionString: url }),
   });
   if (serverResult.isError()) throw serverResult.toError();
   const server = serverResult.value;

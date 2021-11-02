@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-database-adapter-postgres-pg",
+      "comment": "Enable full pool config",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-database-adapter-postgres-pg",
+  "email": "jonas.b@gmail.com"
+}
