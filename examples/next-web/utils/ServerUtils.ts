@@ -37,7 +37,9 @@ export async function getSessionContextForRequest(
 export async function getServerConnection(): Promise<{ server: Server; schema: Schema }> {
   if (!serverConnectionPromise) {
     serverConnectionPromise = (async () => {
-      const databaseAdapter = createPostgresAdapter(process.env.DATABASE_URL!);
+      const databaseAdapter = createPostgresAdapter({
+        connectionString: process.env.DATABASE_URL!,
+      });
       const serverResult = await createServer({ databaseAdapter });
       if (serverResult.isError()) throw serverResult.toError();
       const server = serverResult.value;

@@ -27,7 +27,7 @@ export function registerTestSuite(testSuite: TestSuite): void {
 
 export function createPostgresTestAdapter(): DatabaseAdapter {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  return createPostgresAdapter(process.env.DATABASE_URL!);
+  return createPostgresAdapter({ connectionString: process.env.DATABASE_URL! });
 }
 
 export async function createPostgresTestServerAndClient(): PromiseResult<

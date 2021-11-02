@@ -7,7 +7,7 @@ import SchemaSpec from './schema.json';
 
 async function main() {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const databaseAdapter = createPostgresAdapter(process.env.DATABASE_URL!);
+  const databaseAdapter = createPostgresAdapter({ connectionString: process.env.DATABASE_URL! });
   const serverResult = await createServer({ databaseAdapter });
   if (serverResult.isError()) throw serverResult.toError();
   const server = serverResult.value;

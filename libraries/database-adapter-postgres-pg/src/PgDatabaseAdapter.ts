@@ -5,7 +5,7 @@ import type {
 import { createPostgresDatabaseAdapterAdapter } from '@jonasb/datadata-database-adapter-postgres-core';
 import type { DatabaseAdapter } from '@jonasb/datadata-server';
 import { Temporal } from '@js-temporal/polyfill';
-import type { PoolClient } from 'pg';
+import type { PoolClient, PoolConfig } from 'pg';
 import { DatabaseError, Pool, types as PgTypes } from 'pg';
 
 PgTypes.setTypeParser(PgTypes.builtins.INT8, BigInt);
@@ -25,8 +25,8 @@ function getPoolClient(transaction: PostgresTransaction): PoolClient {
   return (transaction as TransactionWrapper).client;
 }
 
-export function createPostgresAdapter(databaseUrl: string): DatabaseAdapter {
-  const pool = new Pool({ connectionString: databaseUrl });
+export function createPostgresAdapter(poolConfig: PoolConfig): DatabaseAdapter {
+  const pool = new Pool(poolConfig);
   const adapter: PostgresDatabaseAdapter = {
     disconnect: () => pool.end(),
     createTransaction: async () => {

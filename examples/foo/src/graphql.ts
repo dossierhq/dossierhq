@@ -72,7 +72,7 @@ async function startServer(server: Server, schema: Schema, port: number) {
 
 async function main(port: number) {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const databaseAdapter = createPostgresAdapter(process.env.DATABASE_URL!);
+  const databaseAdapter = createPostgresAdapter({ connectionString: process.env.DATABASE_URL! });
   const serverResult = await createServer({ databaseAdapter });
   if (serverResult.isError()) throw serverResult.toError();
   const server = serverResult.value;
