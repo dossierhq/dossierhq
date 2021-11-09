@@ -106,10 +106,14 @@ function fieldConfigWithArgs<TSource, TContext, TArgs>(
 
 export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
   #types: GraphQLNamedType[] = [];
-  readonly schema: Schema;
+  private readonly schema: Schema;
+  private readonly includePublished: boolean;
+  private readonly includeAdmin: boolean;
 
-  constructor(schema: Schema) {
+  constructor(schema: Schema, options?: { published: boolean; admin: boolean }) {
     this.schema = schema;
+    this.includePublished = options?.published ?? true;
+    this.includeAdmin = options?.admin ?? true;
   }
 
   addType(type: GraphQLNamedType): void {
@@ -238,7 +242,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     return this.getInputType(toAdminValueInputTypeName(uniqueNames[0]));
   }
 
-  addSupportingTypes(): void {
+  addSharedSupportingTypes(): void {
     // Node
     this.addType(
       new GraphQLInterfaceType({
@@ -306,28 +310,6 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       })
     );
 
-    // EntityInfo
-    this.addType(
-      new GraphQLObjectType({
-        name: 'EntityInfo',
-        fields: {
-          name: { type: new GraphQLNonNull(GraphQLString) },
-        },
-      })
-    );
-
-    // Entity
-    this.addType(
-      new GraphQLInterfaceType({
-        name: 'Entity',
-        interfaces: this.getInterfaces('Node'),
-        fields: {
-          id: { type: new GraphQLNonNull(GraphQLID) },
-          info: { type: new GraphQLNonNull(this.getType('EntityInfo')) },
-        },
-      })
-    );
-
     if (this.schema.getValueTypeCount() > 0) {
       // ValueType
       const valueTypeEnumValues: GraphQLEnumValueConfigMap = {};
@@ -340,28 +322,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
           values: valueTypeEnumValues,
         })
       );
-
-      // Value
-      this.addType(
-        new GraphQLInterfaceType({
-          name: 'Value',
-          fields: {
-            type: { type: new GraphQLNonNull(this.getEnumType('ValueType')) },
-          },
-        })
-      );
     }
-
-    // RichText
-    this.addType(
-      new GraphQLObjectType({
-        name: 'RichText',
-        fields: {
-          blocks: { type: new GraphQLNonNull(GraphQLJSON) },
-          entities: { type: new GraphQLList(this.getInterface('Entity')) },
-        },
-      })
-    );
 
     // Location
     this.addType(
@@ -394,6 +355,57 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
           maxLat: { type: new GraphQLNonNull(GraphQLFloat) },
           minLng: { type: new GraphQLNonNull(GraphQLFloat) },
           maxLng: { type: new GraphQLNonNull(GraphQLFloat) },
+        },
+      })
+    );
+  }
+
+  addPublishedSupportingTypes(): void {
+    if (this.schema.getEntityTypeCount() === 0) {
+      return;
+    }
+
+    // EntityInfo
+    this.addType(
+      new GraphQLObjectType({
+        name: 'EntityInfo',
+        fields: {
+          name: { type: new GraphQLNonNull(GraphQLString) },
+        },
+      })
+    );
+
+    // Entity
+    this.addType(
+      new GraphQLInterfaceType({
+        name: 'Entity',
+        interfaces: this.getInterfaces('Node'),
+        fields: {
+          id: { type: new GraphQLNonNull(GraphQLID) },
+          info: { type: new GraphQLNonNull(this.getType('EntityInfo')) },
+        },
+      })
+    );
+
+    if (this.schema.getValueTypeCount() > 0) {
+      // Value
+      this.addType(
+        new GraphQLInterfaceType({
+          name: 'Value',
+          fields: {
+            type: { type: new GraphQLNonNull(this.getEnumType('ValueType')) },
+          },
+        })
+      );
+    }
+
+    // RichText
+    this.addType(
+      new GraphQLObjectType({
+        name: 'RichText',
+        fields: {
+          blocks: { type: new GraphQLNonNull(GraphQLJSON) },
+          entities: { type: new GraphQLList(this.getInterface('Entity')) },
         },
       })
     );
@@ -1183,9 +1195,11 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       fields: {
         node: this.buildQueryFieldNode(),
         nodes: this.buildQueryFieldNodes(),
-        ...(includeEntities
+        ...(includeEntities && this.includePublished
+          ? { searchEntities: this.buildQueryFieldSearchEntities() }
+          : {}),
+        ...(includeEntities && this.includeAdmin
           ? {
-              searchEntities: this.buildQueryFieldSearchEntities(),
               adminEntity: this.buildQueryFieldAdminEntity(),
               adminEntities: this.buildQueryFieldAdminEntities(),
               adminSearchEntities: this.buildQueryFieldAdminSearchEntities(),
@@ -1347,7 +1361,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
           ),
         },
       },
-      resolve: async (source, args, context, _info) => {
+      resolve: async (_source, args, context, _info) => {
         const { entities } = args;
         return await Mutations.publishEntities(context, entities);
       },
@@ -1423,15 +1437,24 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
   buildSchemaConfig<TSource>(): GraphQLSchemaConfig {
     this.schema.validate().throwIfError();
 
-    this.addSupportingTypes();
-    this.addEntityTypes();
-    this.addValueTypes();
-    this.addAdminSupportingTypes();
-    this.addAdminEntityTypes();
-    this.addAdminValueTypes();
+    this.addSharedSupportingTypes();
+
+    if (this.includePublished) {
+      this.addPublishedSupportingTypes();
+      this.addEntityTypes();
+      this.addValueTypes();
+    }
+    if (this.includeAdmin) {
+      this.addAdminSupportingTypes();
+      this.addAdminEntityTypes();
+      this.addAdminValueTypes();
+    }
 
     const queryType = this.buildQueryType<TSource>();
-    const mutationType = this.buildMutationType<TSource>();
+    let mutationType: GraphQLObjectType | null = null;
+    if (this.includeAdmin) {
+      mutationType = this.buildMutationType<TSource>();
+    }
 
     return { query: queryType, mutation: mutationType, types: this.#types };
   }
