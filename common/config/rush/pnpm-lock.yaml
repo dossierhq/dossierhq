@@ -174,7 +174,7 @@ importers:
       eslint-plugin-react: 7.26.1_eslint@7.32.0
       eslint-plugin-react-hooks: 4.2.0_eslint@7.32.0
       eslint-plugin-testing-library: 5.0.0_eslint@7.32.0+typescript@4.4.2
-      jest-environment-jsdom: 27.2.5
+      jest-environment-jsdom: 27.3.1
       mini-svg-data-uri: 1.4.3
       prettier: 2.4.1
       react-test-renderer: 17.0.2_react@17.0.2
@@ -218,7 +218,7 @@ importers:
       eslint-plugin-react: ~7.26.1
       eslint-plugin-react-hooks: ~4.2.0
       eslint-plugin-testing-library: ~5.0.0
-      jest-environment-jsdom: ~27.2.5
+      jest-environment-jsdom: ~27.3.1
       leaflet: ~1.7.1
       lodash: ~4.17.21
       mini-svg-data-uri: ~1.4.3
@@ -2518,17 +2518,6 @@ packages:
       node: '>= 8.3'
     resolution:
       integrity: sha512-U2VXPEqL07E/V7pSZMSQCvV5Ea4lqOlT+0ZFijl/i316cRMHvZ4qC+jBdryd+lmRetjQo0YIQr6cVPNxxK87mA==
-  /@jest/environment/27.2.5:
-    dependencies:
-      '@jest/fake-timers': 27.2.5
-      '@jest/types': 27.2.5
-      '@types/node': 16.7.1
-      jest-mock: 27.2.5
-    dev: true
-    engines:
-      node: ^10.13.0 || ^12.13.0 || ^14.15.0 || >=15.0.0
-    resolution:
-      integrity: sha512-XvUW3q6OUF+54SYFCgbbfCd/BKTwm5b2MGLoc2jINXQLKQDTCS2P2IrpPOtQ08WWZDGzbhAzVhOYta3J2arubg==
   /@jest/environment/27.3.1:
     dependencies:
       '@jest/fake-timers': 27.3.1
@@ -2552,19 +2541,6 @@ packages:
       node: '>= 8.3'
     resolution:
       integrity: sha512-9y2+uGnESw/oyOI3eww9yaxdZyHq7XvprfP/eeoCsjqKYts2yRlsHS/SgjPDV8FyMfn2nbMy8YzUk6nyvdLOpQ==
-  /@jest/fake-timers/27.2.5:
-    dependencies:
-      '@jest/types': 27.2.5
-      '@sinonjs/fake-timers': 8.0.1
-      '@types/node': 16.7.1
-      jest-message-util: 27.2.5
-      jest-mock: 27.2.5
-      jest-util: 27.2.5
-    dev: true
-    engines:
-      node: ^10.13.0 || ^12.13.0 || ^14.15.0 || >=15.0.0
-    resolution:
-      integrity: sha512-ZGUb6jg7BgwY+nmO0TW10bc7z7Hl2G/UTAvmxEyZ/GgNFoa31tY9/cgXmqcxnnZ7o5Xs7RAOz3G1SKIj8IVDlg==
   /@jest/fake-timers/27.3.1:
     dependencies:
       '@jest/types': 27.2.5
@@ -11373,20 +11349,6 @@ packages:
       node: '>= 8.3'
     resolution:
       integrity: sha512-7Jr02ydaq4jaWMZLY+Skn8wL5nVIYpWvmeatOHL3tOcV3Zw8sjnPpx+ZdeBfc457p8jCR9J6YCc+Lga0oIy62A==
-  /jest-environment-jsdom/27.2.5:
-    dependencies:
-      '@jest/environment': 27.2.5
-      '@jest/fake-timers': 27.2.5
-      '@jest/types': 27.2.5
-      '@types/node': 16.7.1
-      jest-mock: 27.2.5
-      jest-util: 27.2.5
-      jsdom: 16.7.0
-    dev: true
-    engines:
-      node: ^10.13.0 || ^12.13.0 || ^14.15.0 || >=15.0.0
-    resolution:
-      integrity: sha512-QtRpOh/RQKuXniaWcoFE2ElwP6tQcyxHu0hlk32880g0KczdonCs5P1sk5+weu/OVzh5V4Bt1rXuQthI01mBLg==
   /jest-environment-jsdom/27.3.1:
     dependencies:
       '@jest/environment': 27.3.1
@@ -11646,22 +11608,6 @@ packages:
       node: '>= 10.14.2'
     resolution:
       integrity: sha512-rGiLePzQ3AzwUshu2+Rn+UMFk0pHN58sOG+IaJbk5Jxuqo3NYO1U2/MIR4S1sKgsoYSXSzdtSa0TgrmtUwEbmA==
-  /jest-message-util/27.2.5:
-    dependencies:
-      '@babel/code-frame': 7.14.5
-      '@jest/types': 27.2.5
-      '@types/stack-utils': 2.0.1
-      chalk: 4.1.2
-      graceful-fs: 4.2.8
-      micromatch: 4.0.4
-      pretty-format: 27.2.5
-      slash: 3.0.0
-      stack-utils: 2.0.3
-    dev: true
-    engines:
-      node: ^10.13.0 || ^12.13.0 || ^14.15.0 || >=15.0.0
-    resolution:
-      integrity: sha512-ggXSLoPfIYcbmZ8glgEJZ8b+e0Msw/iddRmgkoO7lDAr9SmI65IIfv7VnvTnV4FGnIIUIjzM+fHRHO5RBvyAbQ==
   /jest-message-util/27.3.1:
     dependencies:
       '@babel/code-frame': 7.14.5
@@ -11686,15 +11632,6 @@ packages:
       node: '>= 8.3'
     resolution:
       integrity: sha512-eXWuTV8mKzp/ovHc5+3USJMYsTBhyQ+5A1Mak35dey/RG8GlM4YWVylZuGgVXinaW6tpvk/RSecmF37FKUlpXA==
-  /jest-mock/27.2.5:
-    dependencies:
-      '@jest/types': 27.2.5
-      '@types/node': 16.7.1
-    dev: true
-    engines:
-      node: ^10.13.0 || ^12.13.0 || ^14.15.0 || >=15.0.0
-    resolution:
-      integrity: sha512-HiMB3LqE9RzmeMzZARi2Bz3NoymxyP0gCid4y42ca1djffNtYFKgI220aC1VP1mUZ8rbpqZbHZOJ15093bZV/Q==
   /jest-mock/27.3.0:
     dependencies:
       '@jest/types': 27.2.5
@@ -12120,19 +12057,6 @@ packages:
       node: ^10.13.0 || ^12.13.0 || ^14.15.0 || >=15.0.0
     resolution:
       integrity: sha512-1JjlaIh+C65H/F7D11GNkGDDZtDfMEM8EBXsvd+l/cxtgQ6QhxuloOaiayt89DxUvDarbVhqI98HhgrM1yliFQ==
-  /jest-util/27.2.5:
-    dependencies:
-      '@jest/types': 27.2.5
-      '@types/node': 16.7.1
-      chalk: 4.1.2
-      graceful-fs: 4.2.8
-      is-ci: 3.0.0
-      picomatch: 2.3.0
-    dev: true
-    engines:
-      node: ^10.13.0 || ^12.13.0 || ^14.15.0 || >=15.0.0
-    resolution:
-      integrity: sha512-QRhDC6XxISntMzFRd/OQ6TGsjbzA5ONO0tlAj2ElHs155x1aEr0rkYJBEysG6H/gZVH3oGFzCdAB/GA8leh8NQ==
   /jest-util/27.3.1:
     dependencies:
       '@jest/types': 27.2.5
