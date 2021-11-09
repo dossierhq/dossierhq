@@ -20,8 +20,6 @@
     "docs:generate-graphviz": "dot -Tsvg -O docs/*.dot",
     "eslint:check:all": "./scripts/npm-all-projects.sh run eslint:check --if-present",
     "prettier:fix:all": "./scripts/npm-all-projects.sh run prettier:fix --if-present",
-    "test:all": "jest",
-    "test:watch:all": "jest --watch",
     "ts:check:all": "./scripts/npm-all-projects.sh run ts:check --if-present",
     "upgrade-dependencies": "npx npm-check-updates -u --packageFile ./package.json",
     "upgrade-dependencies:all": "./scripts/npm-all-projects.sh run upgrade-dependencies --if-present",
@@ -42,8 +40,5 @@
     "dotenv": "^10.0.0",
     "pg": "^8.7.1",
     "tslib": "~2.3.1"
-  },
-  "devDependencies": {
-    "jest": "~27.2.2"
   }
 }
