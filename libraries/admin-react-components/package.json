@@ -52,7 +52,7 @@
     "@storybook/manager-webpack5": "^6.3.9",
     "@storybook/react": "^6.3.9",
     "@testing-library/jest-dom": "~5.14.1",
-    "@testing-library/react": "~12.0.0",
+    "@testing-library/react": "~12.1.2",
     "@testing-library/user-event": "~13.2.0",
     "@types/heft-jest": "1.0.2",
     "@types/leaflet": "~1.7.4",
