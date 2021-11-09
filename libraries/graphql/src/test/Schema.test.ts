@@ -3,10 +3,13 @@ import type { SchemaSpecification } from '@jonasb/datadata-core';
 import { graphql, printSchema } from 'graphql';
 import { GraphQLSchemaGenerator } from '..';
 
-function describeGeneratedSchema(schemaSpec: SchemaSpecification) {
+function describeGeneratedSchema(
+  schemaSpec: SchemaSpecification,
+  options?: { published: boolean; admin: boolean }
+) {
   const schema = new Schema(schemaSpec);
   schema.validate().throwIfError();
-  const generator = new GraphQLSchemaGenerator(schema);
+  const generator = new GraphQLSchemaGenerator(schema, options);
   const graphQLSchema = generator.buildSchema();
   return printSchema(graphQLSchema);
 }
@@ -25,12 +28,33 @@ describe('Empty schema spec', () => {
     const result = describeGeneratedSchema(schemaSpec);
     expect(result).toMatchSnapshot();
   });
+
+  test('Generated QL schema (admin only)', () => {
+    const result = describeGeneratedSchema(schemaSpec, { admin: true, published: false });
+    expect(result).toMatchSnapshot();
+  });
+
+  test('Generated QL schema (published only)', () => {
+    const result = describeGeneratedSchema(schemaSpec, { admin: false, published: true });
+    expect(result).toMatchSnapshot();
+  });
 });
 
 describe('One empty entity type schema spec', () => {
   const schemaSpec = { entityTypes: [{ name: 'Foo', fields: [] }], valueTypes: [] };
+
   test('Generated QL schema', () => {
     const result = describeGeneratedSchema(schemaSpec);
+    expect(result).toMatchSnapshot();
+  });
+
+  test('Generated QL schema (admin only)', () => {
+    const result = describeGeneratedSchema(schemaSpec, { admin: true, published: false });
+    expect(result).toMatchSnapshot();
+  });
+
+  test('Generated QL schema (published only)', () => {
+    const result = describeGeneratedSchema(schemaSpec, { admin: false, published: true });
     expect(result).toMatchSnapshot();
   });
 
@@ -349,6 +373,16 @@ describe('Two entity types with reference schema spec', () => {
     const result = describeGeneratedSchema(schemaSpec);
     expect(result).toMatchSnapshot();
   });
+
+  test('Generated QL schema (admin only)', () => {
+    const result = describeGeneratedSchema(schemaSpec, { admin: true, published: false });
+    expect(result).toMatchSnapshot();
+  });
+
+  test('Generated QL schema (published only)', () => {
+    const result = describeGeneratedSchema(schemaSpec, { admin: false, published: true });
+    expect(result).toMatchSnapshot();
+  });
 });
 
 describe('Multiple references with entityTypes schema spec', () => {
@@ -381,6 +415,16 @@ describe('Multiple references with entityTypes schema spec', () => {
     const result = describeGeneratedSchema(schemaSpec);
     expect(result).toMatchSnapshot();
   });
+
+  test('Generated QL schema (admin only)', () => {
+    const result = describeGeneratedSchema(schemaSpec, { admin: true, published: false });
+    expect(result).toMatchSnapshot();
+  });
+
+  test('Generated QL schema (published only)', () => {
+    const result = describeGeneratedSchema(schemaSpec, { admin: false, published: true });
+    expect(result).toMatchSnapshot();
+  });
 });
 
 describe('List of strings, booleans, locations and references schema spec', () => {
@@ -401,6 +445,16 @@ describe('List of strings, booleans, locations and references schema spec', () =
   };
   test('Generated QL schema', () => {
     const result = describeGeneratedSchema(schemaSpec);
+    expect(result).toMatchSnapshot();
+  });
+
+  test('Generated QL schema (admin only)', () => {
+    const result = describeGeneratedSchema(schemaSpec, { admin: true, published: false });
+    expect(result).toMatchSnapshot();
+  });
+
+  test('Generated QL schema (published only)', () => {
+    const result = describeGeneratedSchema(schemaSpec, { admin: false, published: true });
     expect(result).toMatchSnapshot();
   });
 });
@@ -455,6 +509,16 @@ describe('Value type schema spec', () => {
     const result = describeGeneratedSchema(schemaSpec);
     expect(result).toMatchSnapshot();
   });
+
+  test('Generated QL schema (admin only)', () => {
+    const result = describeGeneratedSchema(schemaSpec, { admin: true, published: false });
+    expect(result).toMatchSnapshot();
+  });
+
+  test('Generated QL schema (published only)', () => {
+    const result = describeGeneratedSchema(schemaSpec, { admin: false, published: true });
+    expect(result).toMatchSnapshot();
+  });
 });
 
 describe('Rich text schema spec', () => {
@@ -469,6 +533,16 @@ describe('Rich text schema spec', () => {
   };
   test('Generated QL schema', () => {
     const result = describeGeneratedSchema(schemaSpec);
+    expect(result).toMatchSnapshot();
+  });
+
+  test('Generated QL schema (admin only)', () => {
+    const result = describeGeneratedSchema(schemaSpec, { admin: true, published: false });
+    expect(result).toMatchSnapshot();
+  });
+
+  test('Generated QL schema (published only)', () => {
+    const result = describeGeneratedSchema(schemaSpec, { admin: false, published: true });
     expect(result).toMatchSnapshot();
   });
 });
