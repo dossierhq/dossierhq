@@ -10,6 +10,7 @@ import {
   useMapEvents,
 } from 'react-leaflet';
 
+//TODO make configurable through a context. also maxbounds
 const defaultCenter = { lat: 55.60498, lng: 13.003822 };
 
 const transparentImage =
@@ -62,7 +63,7 @@ export const MapContainer: MapContainerComponent = ({
         <MapEventListener onBoundingBoxChanged={onBoundingBoxChanged} />
       ) : null}
       <TileLayer
-        attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        attribution='&copy; <a href="http://osm.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       {children}
