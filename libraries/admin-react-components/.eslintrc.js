@@ -40,6 +40,8 @@ module.exports = {
         argsIgnorePattern: '^_',
       },
     ],
+    // TODO reevaluate when actually running tests
+    'testing-library/no-unnecessary-act': ['off'],
   },
   settings: { react: { version: 'detect' } },
 };
