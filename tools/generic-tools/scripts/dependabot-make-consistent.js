@@ -61,7 +61,7 @@ async function makeDependencyConsistent(
     isDevDependency ? "--dev" : "",
     "--make-consistent",
     "--skip-update",
-  ];
+  ].filter((it) => it);
   console.log(`Executing: node ${args.join(" ")} (in ${directory})`);
   spawnSync("node", args, { cwd: directory, stdio: "inherit" });
 }
