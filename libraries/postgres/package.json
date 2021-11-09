@@ -1,6 +1,6 @@
 {
   "name": "@jonasb/datadata-postgres",
-  "version": "0.1.1-43",
+  "version": "0.1.1-44",
   "description": "",
   "main": "index.js",
   "type": "module",
