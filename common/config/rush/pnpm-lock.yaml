@@ -154,7 +154,7 @@ importers:
       '@storybook/builder-webpack5': 6.3.9_f5b398993e9c0f41ca3c74558df182fe
       '@storybook/manager-webpack5': 6.3.9_f5b398993e9c0f41ca3c74558df182fe
       '@storybook/react': 6.3.9_8a4e5d1a1548d655ea6887be2b7a39e3
-      '@testing-library/jest-dom': 5.14.1
+      '@testing-library/jest-dom': 5.15.0
       '@testing-library/react': 12.1.2_react-dom@17.0.2+react@17.0.2
       '@testing-library/user-event': 13.2.1
       '@types/heft-jest': 1.0.2
@@ -198,7 +198,7 @@ importers:
       '@storybook/builder-webpack5': ^6.3.9
       '@storybook/manager-webpack5': ^6.3.9
       '@storybook/react': ^6.3.9
-      '@testing-library/jest-dom': ~5.14.1
+      '@testing-library/jest-dom': ~5.15.0
       '@testing-library/react': ~12.1.2
       '@testing-library/user-event': ~13.2.0
       '@types/heft-jest': 1.0.2
@@ -4770,7 +4770,7 @@ packages:
       node: '>=12'
     resolution:
       integrity: sha512-kmW9alndr19qd6DABzQ978zKQ+J65gU2Rzkl8hriIetPnwpesRaK4//jEQyYh8fEALmGhomD/LBQqt+o+DL95Q==
-  /@testing-library/jest-dom/5.14.1:
+  /@testing-library/jest-dom/5.15.0:
     dependencies:
       '@babel/runtime': 7.15.3
       '@types/testing-library__jest-dom': 5.14.1
@@ -4787,7 +4787,7 @@ packages:
       npm: '>=6'
       yarn: '>=1'
     resolution:
-      integrity: sha512-dfB7HVIgTNCxH22M1+KU6viG5of2ldoA5ly8Ar8xkezKHKXjRvznCdbMbqjYGgO2xjRbwnR+rR8MLUIqF3kKbQ==
+      integrity: sha512-lOMuQidnL1tWHLEWIhL6UvSZC1Qt3OkNe1khvi2h6xFiqpe5O8arYs46OU0qyUGq0cSTbroQyMktYNXu3a7sAA==
   /@testing-library/react/12.1.2_react-dom@17.0.2+react@17.0.2:
     dependencies:
       '@babel/runtime': 7.15.3
