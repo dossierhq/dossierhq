@@ -30,7 +30,7 @@
   },
   "devDependencies": {
     "@jonasb/datadata-database-adapter-test-integration": "workspace:*",
-    "@rushstack/heft": "~0.41.7",
+    "@rushstack/heft": "~0.42.2",
     "@rushstack/heft-jest-plugin": "~0.1.18",
     "@types/heft-jest": "1.0.2",
     "@types/sql.js": "~1.4.2",
