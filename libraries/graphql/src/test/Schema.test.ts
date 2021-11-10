@@ -19,7 +19,7 @@ async function querySchema(schemaSpec: SchemaSpecification, query: string) {
   schema.validate().throwIfError();
   const generator = new GraphQLSchemaGenerator(schema);
   const graphQLSchema = generator.buildSchema();
-  return await graphql(graphQLSchema, query);
+  return await graphql({ schema: graphQLSchema, source: query });
 }
 
 describe('Empty schema spec', () => {
@@ -158,8 +158,9 @@ describe('One empty entity type schema spec', () => {
     const result = await querySchema(schemaSpec, query);
 
     // remove all fields except 'node'
-    const queryType = result.data?.__schema.queryType as { fields: { name: string }[] };
-    queryType.fields = queryType.fields.filter((x) => x.name === 'node');
+    const queryType = (result.data as { __schema: { queryType: { fields: { name: string }[] } } })
+      .__schema.queryType;
+    queryType.fields = queryType.fields.filter((it) => it.name === 'node');
 
     expect(result).toEqual(expected);
   });
@@ -340,12 +341,14 @@ describe('One empty entity type schema spec', () => {
         },
       },
     };
-    const result = await querySchema(schemaSpec, query);
+    const result = (await querySchema(schemaSpec, query)) as {
+      data: { __type: { fields: { name: string }[] } };
+    };
 
     if (result.data) {
       // Remove fields that are not in the spec
       result.data.__type.fields = result.data.__type.fields.filter(
-        (x: { name: string }) => x.name !== 'totalCount'
+        (it: { name: string }) => it.name !== 'totalCount'
       );
     }
 

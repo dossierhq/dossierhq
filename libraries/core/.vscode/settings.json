@@ -4,6 +4,7 @@
     "deno",
     "jonasb",
     "middlewares",
+    "pino",
     "postgres",
     "rushstack",
     "testpass",
