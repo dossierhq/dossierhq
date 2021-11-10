@@ -1,7 +1,7 @@
 import type { SchemaSpecification } from '@jonasb/datadata-core';
 import { CoreTestUtils, FieldType, notOk, ok, RichTextBlockType } from '@jonasb/datadata-core';
-import { graphql, printError } from 'graphql';
 import type { GraphQLSchema } from 'graphql';
+import { graphql, printError } from 'graphql';
 import type { SessionGraphQLContext } from '..';
 import { GraphQLSchemaGenerator } from '..';
 import type { TestServerWithSession } from './TestUtils';
@@ -92,9 +92,9 @@ describe('node()', () => {
 
       expectOkResult(await adminClient.publishEntities([{ id, version: 0 }]));
 
-      const result = await graphql(
+      const result = await graphql({
         schema,
-        `
+        source: `
           query Entity($id: ID!) {
             node(id: $id) {
               __typename
@@ -120,10 +120,9 @@ describe('node()', () => {
             }
           }
         `,
-        undefined,
-        createContext(),
-        { id }
-      );
+        contextValue: createContext(),
+        variableValues: { id },
+      });
       expect(result).toEqual({
         data: {
           node: {
@@ -162,9 +161,9 @@ describe('node()', () => {
 
       expectOkResult(await adminClient.publishEntities([{ id, version: 0 }]));
 
-      const result = await graphql(
+      const result = await graphql({
         schema,
-        `
+        source: `
           query Entity($id: ID!) {
             node(id: $id) {
               __typename
@@ -199,10 +198,9 @@ describe('node()', () => {
             }
           }
         `,
-        undefined,
-        createContext(),
-        { id }
-      );
+        contextValue: createContext(),
+        variableValues: { id },
+      });
       expect(result).toEqual({
         data: {
           node: {
@@ -243,9 +241,9 @@ describe('node()', () => {
 
       expectOkResult(await adminClient.publishEntities([{ id: fooId, version: 0 }]));
 
-      const result = await graphql(
+      const result = await graphql({
         schema,
-        `
+        source: `
           query Entity($id: ID!) {
             node(id: $id) {
               __typename
@@ -266,10 +264,9 @@ describe('node()', () => {
             }
           }
         `,
-        undefined,
-        createContext(),
-        { id: fooId }
-      );
+        contextValue: createContext(),
+        variableValues: { id: fooId },
+      });
       expect(result).toEqual({
         data: {
           node: {
@@ -325,9 +322,9 @@ describe('node()', () => {
 
         expectOkResult(await adminClient.publishEntities([{ id: fooId, version: 0 }]));
 
-        const result = await graphql(
+        const result = await graphql({
           schema,
-          `
+          source: `
             query Entity($id: ID!) {
               node(id: $id) {
                 __typename
@@ -351,10 +348,9 @@ describe('node()', () => {
               }
             }
           `,
-          undefined,
-          createContext(),
-          { id: fooId }
-        );
+          contextValue: createContext(),
+          variableValues: { id: fooId },
+        });
         expect(result).toEqual({
           data: {
             node: {
@@ -407,9 +403,9 @@ describe('node()', () => {
 
         expectOkResult(await adminClient.publishEntities([{ id: fooId, version: 0 }]));
 
-        const result = await graphql(
+        const result = await graphql({
           schema,
-          `
+          source: `
             query Entity($id: ID!) {
               node(id: $id) {
                 __typename
@@ -435,10 +431,9 @@ describe('node()', () => {
               }
             }
           `,
-          undefined,
-          createContext(),
-          { id: fooId }
-        );
+          contextValue: createContext(),
+          variableValues: { id: fooId },
+        });
         expect(result).toEqual({
           data: {
             node: {
@@ -508,9 +503,9 @@ describe('node()', () => {
 
         expectOkResult(await adminClient.publishEntities([{ id: fooId, version: 0 }]));
 
-        const result = await graphql(
+        const result = await graphql({
           schema,
-          `
+          source: `
             query Entity($id: ID!) {
               node(id: $id) {
                 __typename
@@ -536,10 +531,9 @@ describe('node()', () => {
               }
             }
           `,
-          undefined,
-          createContext(),
-          { id: fooId }
-        );
+          contextValue: createContext(),
+          variableValues: { id: fooId },
+        });
         expect(result).toEqual({
           data: {
             node: {
@@ -603,9 +597,9 @@ describe('node()', () => {
 
         expectOkResult(await adminClient.publishEntities([{ id: fooId, version: 0 }]));
 
-        const result = await graphql(
+        const result = await graphql({
           schema,
-          `
+          source: `
             query Entity($id: ID!) {
               node(id: $id) {
                 __typename
@@ -636,10 +630,9 @@ describe('node()', () => {
               }
             }
           `,
-          undefined,
-          createContext(),
-          { id: fooId }
-        );
+          contextValue: createContext(),
+          variableValues: { id: fooId },
+        });
         expect(result).toEqual({
           data: {
             node: {
@@ -668,19 +661,18 @@ describe('node()', () => {
   });
 
   test('Error: Query invalid id', async () => {
-    const result = await graphql(
+    const result = await graphql({
       schema,
-      `
+      source: `
         query Entity($id: ID!) {
           node(id: $id) {
             id
           }
         }
       `,
-      undefined,
-      createContext(),
-      { id: '6043cb20-50dc-43d9-8d55-fc9b892b30af' }
-    );
+      contextValue: createContext(),
+      variableValues: { id: '6043cb20-50dc-43d9-8d55-fc9b892b30af' },
+    });
     expect(result.data).toEqual({
       node: null,
     });
@@ -697,19 +689,18 @@ GraphQL request:3:11
   });
 
   test('Error: No session', async () => {
-    const result = await graphql(
+    const result = await graphql({
       schema,
-      `
+      source: `
         query Entity($id: ID!) {
           node(id: $id) {
             id
           }
         }
       `,
-      undefined,
-      createNotAuthenticatedContext(),
-      { id: '6043cb20-50dc-43d9-8d55-fc9b892b30af' }
-    );
+      contextValue: createNotAuthenticatedContext(),
+      variableValues: { id: '6043cb20-50dc-43d9-8d55-fc9b892b30af' },
+    });
     expect(result.data).toEqual({
       node: null,
     });
@@ -758,9 +749,9 @@ describe('nodes()', () => {
         ])
       );
 
-      const result = await graphql(
+      const result = await graphql({
         schema,
-        `
+        source: `
           query Entities($ids: [ID!]!) {
             nodes(ids: $ids) {
               __typename
@@ -773,10 +764,9 @@ describe('nodes()', () => {
             }
           }
         `,
-        undefined,
-        createContext(),
-        { ids: [foo1Id, foo2Id] }
-      );
+        contextValue: createContext(),
+        variableValues: { ids: [foo1Id, foo2Id] },
+      });
       expect(result).toEqual({
         data: {
           nodes: [
@@ -799,19 +789,18 @@ describe('nodes()', () => {
   });
 
   test('Error: Query invalid id', async () => {
-    const result = await graphql(
+    const result = await graphql({
       schema,
-      `
+      source: `
         query Entities($ids: [ID!]!) {
           nodes(ids: $ids) {
             id
           }
         }
       `,
-      undefined,
-      createContext(),
-      { ids: ['6043cb20-50dc-43d9-8d55-fc9b892b30af'] }
-    );
+      contextValue: createContext(),
+      variableValues: { ids: ['6043cb20-50dc-43d9-8d55-fc9b892b30af'] },
+    });
     expect(result.data).toEqual({
       nodes: [null],
     });

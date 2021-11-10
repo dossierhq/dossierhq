@@ -197,9 +197,9 @@ describe('adminEntity()', () => {
         },
       } = createResult.value;
 
-      const result = await graphql(
+      const result = await graphql({
         schema,
-        `
+        source: `
           query AdminEntity($id: ID!) {
             adminEntity(id: $id) {
               __typename
@@ -231,10 +231,10 @@ describe('adminEntity()', () => {
             }
           }
         `,
-        undefined,
-        createContext(),
-        { id }
-      );
+
+        contextValue: createContext(),
+        variableValues: { id },
+      });
       expect(result).toEqual({
         data: {
           adminEntity: {
@@ -279,9 +279,9 @@ describe('adminEntity()', () => {
         },
       } = createResult.value;
 
-      const result = await graphql(
+      const result = await graphql({
         schema,
-        `
+        source: `
           query AdminEntity($id: ID!) {
             adminEntity(id: $id) {
               __typename
@@ -321,10 +321,9 @@ describe('adminEntity()', () => {
             }
           }
         `,
-        undefined,
-        createContext(),
-        { id }
-      );
+        contextValue: createContext(),
+        variableValues: { id },
+      });
       expect(result).toEqual({
         data: {
           adminEntity: {
@@ -372,9 +371,9 @@ describe('adminEntity()', () => {
         })
       );
 
-      const result = await graphql(
+      const result = await graphql({
         schema,
-        `
+        source: `
           query FourVersionsOfAdminEntity(
             $id: ID!
             $version1: Int!
@@ -432,10 +431,9 @@ describe('adminEntity()', () => {
             }
           }
         `,
-        undefined,
-        createContext(),
-        { id, version1: 0, version2: 1, version3: 100, version4: null }
-      );
+        contextValue: createContext(),
+        variableValues: { id, version1: 0, version2: 1, version3: 100, version4: null },
+      });
       expect(result.data).toEqual({
         first: {
           id,
@@ -495,9 +493,9 @@ describe('adminEntity()', () => {
 
       expectOkResult(await adminClient.publishEntities([{ id, version }]));
 
-      const result = await graphql(
+      const result = await graphql({
         schema,
-        `
+        source: `
           query AdminEntity($id: ID!) {
             adminEntity(id: $id) {
               id
@@ -515,10 +513,9 @@ describe('adminEntity()', () => {
             }
           }
         `,
-        undefined,
-        createContext(),
-        { id }
-      );
+        contextValue: createContext(),
+        variableValues: { id },
+      });
 
       expect(result.errors).toBeUndefined();
       expect(result.data).toEqual({
@@ -556,9 +553,9 @@ describe('adminEntity()', () => {
         },
       } = createFooResult.value;
 
-      const result = await graphql(
+      const result = await graphql({
         schema,
-        `
+        source: `
           query Entity($id: ID!) {
             adminEntity(id: $id) {
               __typename
@@ -581,10 +578,9 @@ describe('adminEntity()', () => {
             }
           }
         `,
-        undefined,
-        createContext(),
-        { id: fooId }
-      );
+        contextValue: createContext(),
+        variableValues: { id: fooId },
+      });
 
       expect(result.errors).toBeUndefined();
       expect(result).toEqual({
@@ -655,9 +651,9 @@ describe('adminEntity()', () => {
           },
         } = createFooResult.value;
 
-        const result = await graphql(
+        const result = await graphql({
           schema,
-          `
+          source: `
             query Entity($id: ID!) {
               adminEntity(id: $id) {
                 __typename
@@ -683,10 +679,9 @@ describe('adminEntity()', () => {
               }
             }
           `,
-          undefined,
-          createContext(),
-          { id: fooId }
-        );
+          contextValue: createContext(),
+          variableValues: { id: fooId },
+        });
         expect(result).toEqual({
           data: {
             adminEntity: {
@@ -749,9 +744,9 @@ describe('adminEntity()', () => {
           },
         } = createFooResult.value;
 
-        const result = await graphql(
+        const result = await graphql({
           schema,
-          `
+          source: `
             query Entity($id: ID!) {
               adminEntity(id: $id) {
                 __typename
@@ -780,10 +775,9 @@ describe('adminEntity()', () => {
               }
             }
           `,
-          undefined,
-          createContext(),
-          { id: fooId }
-        );
+          contextValue: createContext(),
+          variableValues: { id: fooId },
+        });
         expect(result).toEqual({
           data: {
             adminEntity: {
@@ -851,9 +845,9 @@ describe('adminEntity()', () => {
           },
         } = createFooResult.value;
 
-        const result = await graphql(
+        const result = await graphql({
           schema,
-          `
+          source: `
             query Entity($id: ID!) {
               adminEntity(id: $id) {
                 __typename
@@ -879,10 +873,9 @@ describe('adminEntity()', () => {
               }
             }
           `,
-          undefined,
-          createContext(),
-          { id: fooId }
-        );
+          contextValue: createContext(),
+          variableValues: { id: fooId },
+        });
 
         expect(result.errors).toBeUndefined();
         expect(result).toEqual({
@@ -948,9 +941,9 @@ describe('adminEntity()', () => {
           },
         } = createFooResult.value;
 
-        const result = await graphql(
+        const result = await graphql({
           schema,
-          `
+          source: `
             query Entity($id: ID!) {
               adminEntity(id: $id) {
                 __typename
@@ -984,10 +977,9 @@ describe('adminEntity()', () => {
               }
             }
           `,
-          undefined,
-          createContext(),
-          { id: fooId }
-        );
+          contextValue: createContext(),
+          variableValues: { id: fooId },
+        });
 
         expect(result.errors).toBeUndefined();
         expect(result).toEqual({
@@ -1025,19 +1017,18 @@ describe('adminEntity()', () => {
   });
 
   test('Error: Query invalid id', async () => {
-    const result = await graphql(
+    const result = await graphql({
       schema,
-      `
+      source: `
         query AdminEntity($id: ID!) {
           adminEntity(id: $id) {
             id
           }
         }
       `,
-      undefined,
-      createContext(),
-      { id: '6043cb20-50dc-43d9-8d55-fc9b892b30af' }
-    );
+      contextValue: createContext(),
+      variableValues: { id: '6043cb20-50dc-43d9-8d55-fc9b892b30af' },
+    });
     expect(result.data).toEqual({
       adminEntity: null,
     });
@@ -1054,19 +1045,18 @@ GraphQL request:3:11
   });
 
   test('Error: No session', async () => {
-    const result = await graphql(
+    const result = await graphql({
       schema,
-      `
+      source: `
         query AdminEntity($id: ID!) {
           adminEntity(id: $id) {
             id
           }
         }
       `,
-      undefined,
-      createNotAuthenticatedContext(),
-      { id: '6043cb20-50dc-43d9-8d55-fc9b892b30af' }
-    );
+      contextValue: createNotAuthenticatedContext(),
+      variableValues: { id: '6043cb20-50dc-43d9-8d55-fc9b892b30af' },
+    });
     expect(result.data).toEqual({
       adminEntity: null,
     });
@@ -1108,9 +1098,9 @@ describe('adminEntities()', () => {
         },
       } = createFoo2Result.value;
 
-      const result = await graphql(
+      const result = await graphql({
         schema,
-        `
+        source: `
           query Entities($ids: [ID!]!) {
             adminEntities(ids: $ids) {
               __typename
@@ -1123,10 +1113,9 @@ describe('adminEntities()', () => {
             }
           }
         `,
-        undefined,
-        createContext(),
-        { ids: [foo1Id, foo2Id] }
-      );
+        contextValue: createContext(),
+        variableValues: { ids: [foo1Id, foo2Id] },
+      });
       expect(result).toEqual({
         data: {
           adminEntities: [
@@ -1155,19 +1144,18 @@ describe('adminEntities()', () => {
   });
 
   test('Error: Query invalid id', async () => {
-    const result = await graphql(
+    const result = await graphql({
       schema,
-      `
+      source: `
         query Entities($ids: [ID!]!) {
           adminEntities(ids: $ids) {
             id
           }
         }
       `,
-      undefined,
-      createContext(),
-      { ids: ['6043cb20-50dc-43d9-8d55-fc9b892b30af'] }
-    );
+      contextValue: createContext(),
+      variableValues: { ids: ['6043cb20-50dc-43d9-8d55-fc9b892b30af'] },
+    });
     expect(result.data).toEqual({
       adminEntities: [null],
     });
@@ -1177,9 +1165,9 @@ describe('adminEntities()', () => {
 
 describe('searchAdminEntities()', () => {
   test('Default => 25', async () => {
-    const result = await graphql(
+    const result = (await graphql({
       schema,
-      `
+      source: `
         {
           adminSearchEntities(query: { entityTypes: [QueryAdminOnlyEditBefore] }) {
             totalCount
@@ -1191,9 +1179,8 @@ describe('searchAdminEntities()', () => {
           }
         }
       `,
-      undefined,
-      createContext()
-    );
+      contextValue: createContext(),
+    })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
     expect(result.data?.adminSearchEntities.edges).toEqual(
       entitiesOfTypeQueryAdminOnlyEditBefore.slice(0, 25).map((x) => ({ node: { id: x.id } }))
     );
@@ -1203,9 +1190,9 @@ describe('searchAdminEntities()', () => {
   });
 
   test('Default => 25, filter type as argument', async () => {
-    const result = await graphql(
+    const result = (await graphql({
       schema,
-      `
+      source: `
         query Search($entityTypes: [EntityType]) {
           adminSearchEntities(query: { entityTypes: $entityTypes }) {
             edges {
@@ -1216,19 +1203,18 @@ describe('searchAdminEntities()', () => {
           }
         }
       `,
-      undefined,
-      createContext(),
-      { entityTypes: ['QueryAdminOnlyEditBefore'] }
-    );
+      contextValue: createContext(),
+      variableValues: { entityTypes: ['QueryAdminOnlyEditBefore'] },
+    })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
     expect(result.data?.adminSearchEntities.edges).toEqual(
       entitiesOfTypeQueryAdminOnlyEditBefore.slice(0, 25).map((x) => ({ node: { id: x.id } }))
     );
   });
 
   test('first 10', async () => {
-    const result = await graphql(
+    const result = (await graphql({
       schema,
-      `
+      source: `
         {
           adminSearchEntities(query: { entityTypes: [QueryAdminOnlyEditBefore] }, first: 10) {
             edges {
@@ -1239,18 +1225,17 @@ describe('searchAdminEntities()', () => {
           }
         }
       `,
-      undefined,
-      createContext()
-    );
+      contextValue: createContext(),
+    })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
     expect(result.data?.adminSearchEntities.edges).toEqual(
       entitiesOfTypeQueryAdminOnlyEditBefore.slice(0, 10).map((x) => ({ node: { id: x.id } }))
     );
   });
 
   test('last 10', async () => {
-    const result = await graphql(
+    const result = (await graphql({
       schema,
-      `
+      source: `
         {
           adminSearchEntities(query: { entityTypes: [QueryAdminOnlyEditBefore] }, last: 10) {
             edges {
@@ -1261,18 +1246,17 @@ describe('searchAdminEntities()', () => {
           }
         }
       `,
-      undefined,
-      createContext()
-    );
+      contextValue: createContext(),
+    })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
     expect(result.data?.adminSearchEntities.edges).toEqual(
       entitiesOfTypeQueryAdminOnlyEditBefore.slice(-10).map((x) => ({ node: { id: x.id } }))
     );
   });
 
   test('last 10, ordered by name', async () => {
-    const result = await graphql(
+    const result = (await graphql({
       schema,
-      `
+      source: `
         {
           adminSearchEntities(
             query: { entityTypes: [QueryAdminOnlyEditBefore], order: name }
@@ -1286,9 +1270,8 @@ describe('searchAdminEntities()', () => {
           }
         }
       `,
-      undefined,
-      createContext()
-    );
+      contextValue: createContext(),
+    })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
     expect(result.errors).toBeUndefined();
     expect(result.data?.adminSearchEntities.edges).toEqual(
       [...entitiesOfTypeQueryAdminOnlyEditBefore]
@@ -1302,9 +1285,9 @@ describe('searchAdminEntities()', () => {
     const { barId, fooEntities } = await createBarWithFooReferences(1);
     const [fooEntity] = fooEntities;
 
-    const result = await graphql(
+    const result = await graphql({
       schema,
-      `
+      source: `
         query QueryReferencing($id: ID!) {
           adminSearchEntities(query: { referencing: $id }) {
             edges {
@@ -1316,10 +1299,9 @@ describe('searchAdminEntities()', () => {
           }
         }
       `,
-      undefined,
-      createContext(),
-      { id: barId }
-    );
+      contextValue: createContext(),
+      variableValues: { id: barId },
+    });
 
     expect(result).toEqual({
       data: {
@@ -1347,9 +1329,9 @@ describe('searchAdminEntities()', () => {
         entity: { id: fooId },
       } = createResult.value;
 
-      const result = await graphql(
+      const result = (await graphql({
         schema,
-        `
+        source: `
           query QueryBoundingBox($boundingBox: BoundingBoxInput!) {
             adminSearchEntities(query: { boundingBox: $boundingBox }) {
               edges {
@@ -1361,10 +1343,9 @@ describe('searchAdminEntities()', () => {
             }
           }
         `,
-        undefined,
-        createContext(),
-        { boundingBox }
-      );
+        contextValue: createContext(),
+        variableValues: { boundingBox },
+      })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
       expect(result?.data?.adminSearchEntities.totalCount).toBeGreaterThanOrEqual(1);
 
@@ -1379,9 +1360,9 @@ describe('searchAdminEntities()', () => {
   });
 
   test('Filter based on text', async () => {
-    const result = await graphql(
+    const result = (await graphql({
       schema,
-      `
+      source: `
         query QueryBoundingBox($text: String!) {
           adminSearchEntities(query: { text: $text }) {
             edges {
@@ -1393,10 +1374,9 @@ describe('searchAdminEntities()', () => {
           }
         }
       `,
-      undefined,
-      createContext(),
-      { text: 'Hey' } // There are at least 50 QueryAdminOnlyEditBefore entities
-    );
+      contextValue: createContext(),
+      variableValues: { text: 'Hey' }, // There are at least 50 QueryAdminOnlyEditBefore entities
+    })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
     expect(result?.data?.adminSearchEntities.totalCount).toBeGreaterThanOrEqual(50);
     expect(result?.data?.adminSearchEntities.edges.length).toBe(25);
@@ -1427,9 +1407,9 @@ describe('versionHistory()', () => {
         );
       }
 
-      const result = await graphql(
+      const result = (await graphql({
         schema,
-        `
+        source: `
           query EntityHistory($id: ID!) {
             entityHistory(id: $id) {
               id
@@ -1442,10 +1422,9 @@ describe('versionHistory()', () => {
             }
           }
         `,
-        undefined,
-        createContext(),
-        { id }
-      );
+        contextValue: createContext(),
+        variableValues: { id },
+      })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
       expect(result.errors).toBeUndefined();
 
       // Remove createdAt since it's tricky to test 🤷‍♂️
@@ -1466,9 +1445,9 @@ describe('versionHistory()', () => {
   });
 
   test('Error: invalid id', async () => {
-    const result = await graphql(
+    const result = await graphql({
       schema,
-      `
+      source: `
         query EntityHistory($id: ID!) {
           entityHistory(id: $id) {
             id
@@ -1478,10 +1457,9 @@ describe('versionHistory()', () => {
           }
         }
       `,
-      undefined,
-      createContext(),
-      { id: '6698130c-b56d-48cd-81f5-1f74bedc552e' }
-    );
+      contextValue: createContext(),
+      variableValues: { id: '6698130c-b56d-48cd-81f5-1f74bedc552e' },
+    });
     expect(result).toMatchInlineSnapshot(`
       Object {
         "data": Object {
@@ -1512,9 +1490,9 @@ describe('publishingHistory()', () => {
 
       expectOkResult(await adminClient.publishEntities([{ id, version }]));
 
-      const result = await graphql(
+      const result = (await graphql({
         schema,
-        `
+        source: `
           query PublishingHistory($id: ID!) {
             publishingHistory(id: $id) {
               id
@@ -1526,10 +1504,9 @@ describe('publishingHistory()', () => {
             }
           }
         `,
-        undefined,
-        createContext(),
-        { id }
-      );
+        contextValue: createContext(),
+        variableValues: { id },
+      })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
       expect(result.errors).toBeUndefined();
       const { publishedAt } = result.data?.publishingHistory.events[0];
@@ -1544,9 +1521,9 @@ describe('publishingHistory()', () => {
   });
 
   test('Error: invalid id', async () => {
-    const result = await graphql(
+    const result = await graphql({
       schema,
-      `
+      source: `
         query PublishingHistory($id: ID!) {
           publishingHistory(id: $id) {
             id
@@ -1556,10 +1533,9 @@ describe('publishingHistory()', () => {
           }
         }
       `,
-      undefined,
-      createContext(),
-      { id: '6698130c-b56d-48cd-81f5-1f74bedc552e' }
-    );
+      contextValue: createContext(),
+      variableValues: { id: '6698130c-b56d-48cd-81f5-1f74bedc552e' },
+    });
     expect(result).toMatchInlineSnapshot(`
       Object {
         "data": Object {

@@ -382,7 +382,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         interfaces: this.getInterfaces('Node'),
         fields: {
           id: { type: new GraphQLNonNull(GraphQLID) },
-          info: { type: new GraphQLNonNull(this.getType('EntityInfo')) },
+          info: { type: new GraphQLNonNull(this.getOutputType('EntityInfo')) },
         },
       })
     );
@@ -426,8 +426,8 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       new GraphQLObjectType({
         name: 'EntityConnection',
         fields: {
-          pageInfo: { type: new GraphQLNonNull(this.getType('PageInfo')) },
-          edges: { type: new GraphQLList(this.getType('EntityEdge')) },
+          pageInfo: { type: new GraphQLNonNull(this.getOutputType('PageInfo')) },
+          edges: { type: new GraphQLList(this.getOutputType('EntityEdge')) },
           totalCount: { type: new GraphQLNonNull(GraphQLInt) },
         },
       })
@@ -485,10 +485,10 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         fields: () => {
           const fields: GraphQLFieldConfigMap<Entity, TContext> = {
             id: { type: new GraphQLNonNull(GraphQLID) },
-            info: { type: new GraphQLNonNull(this.getType('EntityInfo')) },
+            info: { type: new GraphQLNonNull(this.getOutputType('EntityInfo')) },
           };
           if (entitySpec.fields.length > 0) {
-            fields.fields = { type: new GraphQLNonNull(this.getType(fieldsTypeName)) };
+            fields.fields = { type: new GraphQLNonNull(this.getOutputType(fieldsTypeName)) };
           }
           return fields;
         },
@@ -542,12 +542,12 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       new GraphQLObjectType({
         name: 'AdminEntityInfo',
         fields: {
-          type: { type: new GraphQLNonNull(this.getType('EntityType')) },
+          type: { type: new GraphQLNonNull(this.getOutputType('EntityType')) },
           name: { type: new GraphQLNonNull(GraphQLString) },
           version: { type: new GraphQLNonNull(GraphQLInt) },
-          publishingState: { type: new GraphQLNonNull(this.getType('EntityPublishState')) },
-          createdAt: { type: new GraphQLNonNull(this.getType('Instant')) },
-          updatedAt: { type: new GraphQLNonNull(this.getType('Instant')) },
+          publishingState: { type: new GraphQLNonNull(this.getOutputType('EntityPublishState')) },
+          createdAt: { type: new GraphQLNonNull(this.getOutputType('Instant')) },
+          updatedAt: { type: new GraphQLNonNull(this.getOutputType('Instant')) },
         },
       })
     );
@@ -627,7 +627,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         name: 'AdminEntity',
         fields: {
           id: { type: new GraphQLNonNull(GraphQLID) },
-          info: { type: new GraphQLNonNull(this.getType('AdminEntityInfo')) },
+          info: { type: new GraphQLNonNull(this.getOutputType('AdminEntityInfo')) },
         },
       })
     );
@@ -648,8 +648,8 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       new GraphQLObjectType({
         name: 'AdminEntityConnection',
         fields: {
-          pageInfo: { type: new GraphQLNonNull(this.getType('PageInfo')) },
-          edges: { type: new GraphQLList(this.getType('AdminEntityEdge')) },
+          pageInfo: { type: new GraphQLNonNull(this.getOutputType('PageInfo')) },
+          edges: { type: new GraphQLList(this.getOutputType('AdminEntityEdge')) },
           totalCount: { type: new GraphQLNonNull(GraphQLInt) },
         },
       })
@@ -739,7 +739,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
           version: { type: new GraphQLNonNull(GraphQLInt) },
           published: { type: new GraphQLNonNull(GraphQLBoolean) },
           createdBy: { type: new GraphQLNonNull(GraphQLID) },
-          createdAt: { type: new GraphQLNonNull(this.getType('Instant')) },
+          createdAt: { type: new GraphQLNonNull(this.getOutputType('Instant')) },
         },
       })
     );
@@ -751,7 +751,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         fields: {
           id: { type: new GraphQLNonNull(GraphQLID) },
           versions: {
-            type: new GraphQLNonNull(new GraphQLList(this.getType('EntityVersionInfo'))),
+            type: new GraphQLNonNull(new GraphQLList(this.getOutputType('EntityVersionInfo'))),
           },
         },
       })
@@ -764,7 +764,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         fields: {
           version: { type: GraphQLInt },
           publishedBy: { type: new GraphQLNonNull(GraphQLID) },
-          publishedAt: { type: new GraphQLNonNull(this.getType('Instant')) },
+          publishedAt: { type: new GraphQLNonNull(this.getOutputType('Instant')) },
         },
       })
     );
@@ -776,7 +776,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         fields: {
           id: { type: new GraphQLNonNull(GraphQLID) },
           events: {
-            type: new GraphQLNonNull(new GraphQLList(this.getType('PublishingEvent'))),
+            type: new GraphQLNonNull(new GraphQLList(this.getOutputType('PublishingEvent'))),
           },
         },
       })
@@ -789,7 +789,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         fields: {
           id: { type: new GraphQLNonNull(GraphQLID) },
           publishState: { type: new GraphQLNonNull(this.getEnumType('EntityPublishState')) },
-          updatedAt: { type: new GraphQLNonNull(this.getType('Instant')) },
+          updatedAt: { type: new GraphQLNonNull(this.getOutputType('Instant')) },
         },
       })
     );
@@ -827,10 +827,10 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         fields: () => {
           const fields: GraphQLFieldConfigMap<AdminEntity, TContext> = {
             id: { type: new GraphQLNonNull(GraphQLID) },
-            info: { type: new GraphQLNonNull(this.getType('AdminEntityInfo')) },
+            info: { type: new GraphQLNonNull(this.getOutputType('AdminEntityInfo')) },
           };
           if (fieldsName) {
-            fields.fields = { type: new GraphQLNonNull(this.getType(fieldsName)) };
+            fields.fields = { type: new GraphQLNonNull(this.getOutputType(fieldsName)) };
           }
           return fields;
         },
@@ -860,7 +860,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         fields: () => {
           const fields: GraphQLInputFieldConfigMap = {
             id: { type: GraphQLID },
-            info: { type: new GraphQLNonNull(this.getType('AdminEntityCreateInfo')) },
+            info: { type: new GraphQLNonNull(this.getInputType('AdminEntityCreateInfo')) },
           };
           if (inputFieldsName) {
             fields.fields = { type: new GraphQLNonNull(this.getInputType(inputFieldsName)) };
@@ -877,7 +877,9 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         fields: () => {
           const fields: GraphQLFieldConfigMap<AdminEntity, TContext> = {
             effect: { type: new GraphQLNonNull(this.getEnumType('AdminEntityCreateEffect')) },
-            entity: { type: new GraphQLNonNull(this.getType(toAdminTypeName(entitySpec.name))) },
+            entity: {
+              type: new GraphQLNonNull(this.getOutputType(toAdminTypeName(entitySpec.name))),
+            },
           };
           return fields;
         },
@@ -908,7 +910,9 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         fields: () => {
           const fields: GraphQLFieldConfigMap<AdminEntity, TContext> = {
             effect: { type: new GraphQLNonNull(this.getEnumType('AdminEntityUpdateEffect')) },
-            entity: { type: new GraphQLNonNull(this.getType(toAdminTypeName(entitySpec.name))) },
+            entity: {
+              type: new GraphQLNonNull(this.getOutputType(toAdminTypeName(entitySpec.name))),
+            },
           };
           return fields;
         },
@@ -939,7 +943,9 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         fields: () => {
           const fields: GraphQLFieldConfigMap<AdminEntity, TContext> = {
             effect: { type: new GraphQLNonNull(this.getEnumType('AdminEntityUpsertEffect')) },
-            entity: { type: new GraphQLNonNull(this.getType(toAdminTypeName(entitySpec.name))) },
+            entity: {
+              type: new GraphQLNonNull(this.getOutputType(toAdminTypeName(entitySpec.name))),
+            },
           };
           return fields;
         },
@@ -1215,7 +1221,9 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     return fieldConfigWithArgs<TSource, TContext, { entity: AdminEntityCreate }>({
       type: this.getOutputType(toAdminCreatePayloadTypeName(entityName)),
       args: {
-        entity: { type: new GraphQLNonNull(this.getType(toAdminCreateInputTypeName(entityName))) },
+        entity: {
+          type: new GraphQLNonNull(this.getInputType(toAdminCreateInputTypeName(entityName))),
+        },
       },
       resolve: async (_source, args, context, _info) => {
         const { entity } = args;
@@ -1237,7 +1245,9 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     return fieldConfigWithArgs<TSource, TContext, { entity: AdminEntityUpdate }>({
       type: this.getOutputType(toAdminUpdatePayloadTypeName(entityName)),
       args: {
-        entity: { type: new GraphQLNonNull(this.getType(toAdminUpdateInputTypeName(entityName))) },
+        entity: {
+          type: new GraphQLNonNull(this.getInputType(toAdminUpdateInputTypeName(entityName))),
+        },
       },
       resolve: async (_source, args, context, _info) => {
         const { entity } = args;
@@ -1258,7 +1268,9 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     return fieldConfigWithArgs<TSource, TContext, { entity: AdminEntityUpsert }>({
       type: this.getOutputType(toAdminUpsertPayloadTypeName(entityName)),
       args: {
-        entity: { type: new GraphQLNonNull(this.getType(toAdminUpsertInputTypeName(entityName))) },
+        entity: {
+          type: new GraphQLNonNull(this.getInputType(toAdminUpsertInputTypeName(entityName))),
+        },
       },
       resolve: async (_source, args, context, _info) => {
         const { entity } = args;

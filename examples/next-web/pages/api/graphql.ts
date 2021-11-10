@@ -32,7 +32,13 @@ export default async function graphQlHandler(
     }
 
     const { query, variables, operationName } = req.body;
-    const result = await graphql(graphQLSchema, query, null, context, variables, operationName);
+    const result = await graphql({
+      schema: graphQLSchema,
+      source: query,
+      contextValue: context,
+      variableValues: variables,
+      operationName,
+    });
 
     return result;
   });

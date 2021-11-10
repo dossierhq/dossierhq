@@ -1,5 +1,4 @@
 import type { SchemaSpecification } from '@jonasb/datadata-core';
-import { Temporal } from '@js-temporal/polyfill';
 import {
   CoreTestUtils,
   EntityPublishState,
@@ -8,6 +7,7 @@ import {
   PublishingEventKind,
   RichTextBlockType,
 } from '@jonasb/datadata-core';
+import { Temporal } from '@js-temporal/polyfill';
 import type { GraphQLSchema } from 'graphql';
 import { graphql } from 'graphql';
 import type { SessionGraphQLContext } from '..';
@@ -157,21 +157,26 @@ function createContext(): SessionGraphQLContext {
 describe('create*Entity()', () => {
   test('Create', async () => {
     const { adminClient } = server;
-    const result = await graphql(schema, createMutationFooGqlQuery, undefined, createContext(), {
-      entity: {
-        info: { type: 'MutationFoo', name: 'Foo name' },
-        fields: {
-          title: 'Foo title',
-          summary: 'Foo summary',
-          tags: ['one', 'two', 'three'],
-          location: { lat: 55.60498, lng: 13.003822 },
-          locations: [
-            { lat: 55.60498, lng: 13.003822 },
-            { lat: 56.381561, lng: 13.99286 },
-          ],
+    const result = (await graphql({
+      schema,
+      source: createMutationFooGqlQuery,
+      contextValue: createContext(),
+      variableValues: {
+        entity: {
+          info: { type: 'MutationFoo', name: 'Foo name' },
+          fields: {
+            title: 'Foo title',
+            summary: 'Foo summary',
+            tags: ['one', 'two', 'three'],
+            location: { lat: 55.60498, lng: 13.003822 },
+            locations: [
+              { lat: 55.60498, lng: 13.003822 },
+              { lat: 56.381561, lng: 13.99286 },
+            ],
+          },
         },
       },
-    });
+    })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
     expect(result.errors).toBeUndefined();
     const {
@@ -238,16 +243,21 @@ describe('create*Entity()', () => {
 
   test('Create with ID and version=0', async () => {
     const id = insecureTestUuidv4();
-    const result = await graphql(schema, createMutationFooGqlQuery, undefined, createContext(), {
-      entity: {
-        id,
-        info: { type: 'MutationFoo', name: 'Foo name', version: 0 },
-        fields: {
-          title: 'Foo title',
-          summary: 'Foo summary',
+    const result = (await graphql({
+      schema,
+      source: createMutationFooGqlQuery,
+      contextValue: createContext(),
+      variableValues: {
+        entity: {
+          id,
+          info: { type: 'MutationFoo', name: 'Foo name', version: 0 },
+          fields: {
+            title: 'Foo title',
+            summary: 'Foo summary',
+          },
         },
       },
-    });
+    })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
     expect(result.errors).toBeUndefined();
     const { name, createdAt, updatedAt } = result.data?.createMutationFooEntity.entity.info;
@@ -292,9 +302,9 @@ describe('create*Entity()', () => {
       const {
         entity: { id: barId },
       } = createBarResult.value;
-      const gqlResult = await graphql(
+      const gqlResult = (await graphql({
         schema,
-        `
+        source: `
           mutation CreateFooEntity($entity: AdminMutationFooCreateInput!) {
             createMutationFooEntity(entity: $entity) {
               entity {
@@ -319,9 +329,8 @@ describe('create*Entity()', () => {
             }
           }
         `,
-        undefined,
-        createContext(),
-        {
+        contextValue: createContext(),
+        variableValues: {
           entity: {
             info: { type: 'MutationFoo', name: 'Foo name' },
             fields: {
@@ -335,8 +344,8 @@ describe('create*Entity()', () => {
               },
             },
           },
-        }
-      );
+        },
+      })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
       const {
         id: fooId,
@@ -410,9 +419,9 @@ describe('create*Entity()', () => {
           info: { name: barName },
         },
       } = createBarResult.value;
-      const gqlResult = await graphql(
+      const gqlResult = (await graphql({
         schema,
-        `
+        source: `
           mutation CreateFooEntity($entity: AdminMutationFooCreateInput!) {
             createMutationFooEntity(entity: $entity) {
               entity {
@@ -440,9 +449,8 @@ describe('create*Entity()', () => {
             }
           }
         `,
-        undefined,
-        createContext(),
-        {
+        contextValue: createContext(),
+        variableValues: {
           entity: {
             info: {
               type: 'MutationFoo',
@@ -454,8 +462,8 @@ describe('create*Entity()', () => {
               bar: { id: barId },
             },
           },
-        }
-      );
+        },
+      })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
       expect(gqlResult.errors).toBeUndefined();
       const {
@@ -531,9 +539,9 @@ describe('create*Entity()', () => {
         },
       } = createBar2Result.value;
 
-      const gqlResult = await graphql(
+      const gqlResult = (await graphql({
         schema,
-        `
+        source: `
           mutation CreateFooEntity($entity: AdminMutationFooCreateInput!) {
             createMutationFooEntity(entity: $entity) {
               entity {
@@ -560,9 +568,8 @@ describe('create*Entity()', () => {
             }
           }
         `,
-        undefined,
-        createContext(),
-        {
+        contextValue: createContext(),
+        variableValues: {
           entity: {
             info: {
               type: 'MutationFoo',
@@ -574,8 +581,8 @@ describe('create*Entity()', () => {
               bars: [{ id: bar1Id }, { id: bar2Id }],
             },
           },
-        }
-      );
+        },
+      })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
       expect(gqlResult.errors).toBeUndefined();
       const {
@@ -642,9 +649,9 @@ describe('create*Entity()', () => {
           info: { name: barName },
         },
       } = createBarResult.value;
-      const gqlResult = await graphql(
+      const gqlResult = (await graphql({
         schema,
-        `
+        source: `
           mutation CreateFooEntity($entity: AdminMutationFooCreateInput!) {
             createMutationFooEntity(entity: $entity) {
               entity {
@@ -678,9 +685,8 @@ describe('create*Entity()', () => {
             }
           }
         `,
-        undefined,
-        createContext(),
-        {
+        contextValue: createContext(),
+        variableValues: {
           entity: {
             info: {
               type: 'MutationFoo',
@@ -696,8 +702,8 @@ describe('create*Entity()', () => {
               },
             },
           },
-        }
-      );
+        },
+      })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
       expect(gqlResult.errors).toBeUndefined();
       const {
@@ -776,9 +782,9 @@ describe('create*Entity()', () => {
         entity: { id: barId },
       } = createBarResult.value;
 
-      const createFooResult = await graphql(
+      const createFooResult = (await graphql({
         schema,
-        `
+        source: `
           mutation CreateFooEntity($entity: AdminMutationFooCreateInput!) {
             createMutationFooEntity(entity: $entity) {
               entity {
@@ -805,9 +811,8 @@ describe('create*Entity()', () => {
             }
           }
         `,
-        undefined,
-        createContext(),
-        {
+        contextValue: createContext(),
+        variableValues: {
           entity: {
             info: {
               type: 'MutationFoo',
@@ -829,8 +834,8 @@ describe('create*Entity()', () => {
             },
           },
           publish: true,
-        }
-      );
+        },
+      })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
       const {
         id: fooId,
@@ -899,9 +904,9 @@ describe('create*Entity()', () => {
 
   test('Create nested value item with inner JSON', async () => {
     const { adminClient } = server;
-    const createResult = await graphql(
+    const createResult = (await graphql({
       schema,
-      `
+      source: `
         mutation CreateFooEntity($entity: AdminMutationFooCreateInput!) {
           createMutationFooEntity(entity: $entity) {
             entity {
@@ -935,9 +940,8 @@ describe('create*Entity()', () => {
           }
         }
       `,
-      undefined,
-      createContext(),
-      {
+      contextValue: createContext(),
+      variableValues: {
         entity: {
           info: { type: 'MutationFoo', name: 'Foo name' },
           fields: {
@@ -951,8 +955,8 @@ describe('create*Entity()', () => {
             },
           },
         },
-      }
-    );
+      },
+    })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
     const {
       id: fooId,
@@ -1013,9 +1017,9 @@ describe('create*Entity()', () => {
   });
 
   test('Create without specifying type', async () => {
-    const result = await graphql(
+    const result = (await graphql({
       schema,
-      `
+      source: `
         mutation CreateFooEntity($entity: AdminMutationFooCreateInput!) {
           createMutationFooEntity(entity: $entity) {
             entity {
@@ -1034,9 +1038,8 @@ describe('create*Entity()', () => {
           }
         }
       `,
-      undefined,
-      createContext(),
-      {
+      contextValue: createContext(),
+      variableValues: {
         entity: {
           info: {
             name: 'Foo name',
@@ -1046,8 +1049,8 @@ describe('create*Entity()', () => {
             summary: 'Foo summary',
           },
         },
-      }
-    );
+      },
+    })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
     expect(result.errors).toBeUndefined();
     const id = result.data?.createMutationFooEntity.entity.id;
@@ -1076,15 +1079,20 @@ describe('create*Entity()', () => {
   });
 
   test('Error: Create with the wrong type', async () => {
-    const result = await graphql(schema, createMutationFooGqlQuery, undefined, createContext(), {
-      entity: {
-        info: {
-          type: 'MutationBar', // should be Foo
-          name: 'Foo name',
-        },
-        fields: {
-          title: 'Foo title',
-          summary: 'Foo summary',
+    const result = await graphql({
+      schema,
+      source: createMutationFooGqlQuery,
+      contextValue: createContext(),
+      variableValues: {
+        entity: {
+          info: {
+            type: 'MutationBar', // should be Foo
+            name: 'Foo name',
+          },
+          fields: {
+            title: 'Foo title',
+            summary: 'Foo summary',
+          },
         },
       },
     });
@@ -1102,16 +1110,21 @@ describe('create*Entity()', () => {
   });
 
   test('Error: Create with the wrong version', async () => {
-    const result = await graphql(schema, createMutationFooGqlQuery, undefined, createContext(), {
-      entity: {
-        info: {
-          type: 'MutationFoo',
-          name: 'Foo name',
-          version: 1,
-        },
-        fields: {
-          title: 'Foo title',
-          summary: 'Foo summary',
+    const result = await graphql({
+      schema,
+      source: createMutationFooGqlQuery,
+      contextValue: createContext(),
+      variableValues: {
+        entity: {
+          info: {
+            type: 'MutationFoo',
+            name: 'Foo name',
+            version: 1,
+          },
+          fields: {
+            title: 'Foo title',
+            summary: 'Foo summary',
+          },
         },
       },
     });
@@ -1143,9 +1156,9 @@ describe('update*Entity()', () => {
           info: { name, createdAt },
         },
       } = createResult.value;
-      const result = await graphql(
+      const result = (await graphql({
         schema,
-        `
+        source: `
           mutation UpdateFooEntity($entity: AdminMutationFooUpdateInput!) {
             updateMutationFooEntity(entity: $entity) {
               effect
@@ -1169,12 +1182,11 @@ describe('update*Entity()', () => {
             }
           }
         `,
-        undefined,
-        createContext(),
-        {
+        contextValue: createContext(),
+        variableValues: {
           entity: { id, fields: { title: 'Updated title' } },
-        }
-      );
+        },
+      })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
       const { updatedAt: updatedAtString } = result.data?.updateMutationFooEntity.entity.info;
 
@@ -1237,9 +1249,9 @@ describe('update*Entity()', () => {
           info: { name },
         },
       } = createResult.value;
-      const result = await graphql(
+      const result = await graphql({
         schema,
-        `
+        source: `
           mutation UpdateFooEntity($entity: AdminMutationFooUpdateInput!) {
             updateMutationFooEntity(entity: $entity) {
               effect
@@ -1261,16 +1273,15 @@ describe('update*Entity()', () => {
             }
           }
         `,
-        undefined,
-        createContext(),
-        {
+        contextValue: createContext(),
+        variableValues: {
           entity: {
             id,
             info: { type: 'MutationFoo', version: 1 },
             fields: { title: 'Updated title' },
           },
-        }
-      );
+        },
+      });
 
       expect(result).toEqual({
         data: {
@@ -1333,9 +1344,9 @@ describe('update*Entity()', () => {
         const {
           entity: { id: fooId },
         } = createFooResult.value;
-        const result = await graphql(
+        const result = (await graphql({
           schema,
-          `
+          source: `
             mutation UpdateFooEntity($entity: AdminMutationFooUpdateInput!) {
               updateMutationFooEntity(entity: $entity) {
                 __typename
@@ -1392,9 +1403,8 @@ describe('update*Entity()', () => {
               }
             }
           `,
-          undefined,
-          createContext(),
-          {
+          contextValue: createContext(),
+          variableValues: {
             entity: {
               id: fooId,
               info: {
@@ -1426,8 +1436,8 @@ describe('update*Entity()', () => {
                 ]),
               },
             },
-          }
-        );
+          },
+        })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
         expect(result.errors).toBeFalsy();
         const { name, createdAt, updatedAt } = result.data?.updateMutationFooEntity.entity.info;
@@ -1554,9 +1564,9 @@ describe('update*Entity()', () => {
       const {
         entity: { id },
       } = createResult.value;
-      const result = await graphql(
+      const result = await graphql({
         schema,
-        `
+        source: `
           mutation UpdateFooEntity($entity: AdminMutationFooUpdateInput!) {
             updateMutationFooEntity(entity: $entity) {
               entity {
@@ -1565,9 +1575,8 @@ describe('update*Entity()', () => {
             }
           }
         `,
-        undefined,
-        createContext(),
-        {
+        contextValue: createContext(),
+        variableValues: {
           entity: {
             id,
             info: {
@@ -1579,8 +1588,8 @@ describe('update*Entity()', () => {
               summary: 'Foo summary',
             },
           },
-        }
-      );
+        },
+      });
 
       expect(result).toMatchInlineSnapshot(`
         Object {
@@ -1600,13 +1609,18 @@ describe('upsert*Entity()', () => {
   test('Create new entity', async () => {
     const { adminClient } = server;
     const id = insecureTestUuidv4();
-    const result = await graphql(schema, upsertMutationFooGqlQuery, undefined, createContext(), {
-      entity: {
-        id,
-        info: { type: 'MutationFoo', name: 'Name' },
-        fields: { title: 'Title', summary: 'Summary', tags: ['one', 'two', 'three'] },
+    const result = (await graphql({
+      schema,
+      source: upsertMutationFooGqlQuery,
+      contextValue: createContext(),
+      variableValues: {
+        entity: {
+          id,
+          info: { type: 'MutationFoo', name: 'Name' },
+          fields: { title: 'Title', summary: 'Summary', tags: ['one', 'two', 'three'] },
+        },
       },
-    });
+    })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
     const { name, createdAt, updatedAt } = result.data?.upsertMutationFooEntity.entity.info;
 
@@ -1666,13 +1680,18 @@ describe('upsert*Entity()', () => {
       const {
         entity: { id },
       } = createResult.value;
-      const result = await graphql(schema, upsertMutationFooGqlQuery, undefined, createContext(), {
-        entity: {
-          id,
-          info: { type: 'MutationFoo', name: 'Name' },
-          fields: { title: 'Updated title' },
+      const result = (await graphql({
+        schema,
+        source: upsertMutationFooGqlQuery,
+        contextValue: createContext(),
+        variableValues: {
+          entity: {
+            id,
+            info: { type: 'MutationFoo', name: 'Name' },
+            fields: { title: 'Updated title' },
+          },
         },
-      });
+      })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
       const { name, createdAt, updatedAt } = result.data?.upsertMutationFooEntity.entity.info;
 
@@ -1733,13 +1752,18 @@ describe('upsert*Entity()', () => {
       const {
         entity: { id },
       } = createResult.value;
-      const result = await graphql(schema, upsertMutationFooGqlQuery, undefined, createContext(), {
-        entity: {
-          id,
-          info: { type: 'MutationFoo', name: 'Foo' },
-          fields: { title: 'Title' },
+      const result = (await graphql({
+        schema,
+        source: upsertMutationFooGqlQuery,
+        contextValue: createContext(),
+        variableValues: {
+          entity: {
+            id,
+            info: { type: 'MutationFoo', name: 'Foo' },
+            fields: { title: 'Title' },
+          },
         },
-      });
+      })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
       const { name, createdAt, updatedAt } = result.data?.upsertMutationFooEntity.entity.info;
 
@@ -1771,16 +1795,21 @@ describe('upsert*Entity()', () => {
   });
 
   test('Error: Upsert with the wrong type', async () => {
-    const result = await graphql(schema, upsertMutationFooGqlQuery, undefined, createContext(), {
-      entity: {
-        id: insecureTestUuidv4(),
-        info: {
-          type: 'MutationBar', // should be Foo
-          name: 'Foo name',
-        },
-        fields: {
-          title: 'Foo title',
-          summary: 'Foo summary',
+    const result = await graphql({
+      schema,
+      source: upsertMutationFooGqlQuery,
+      contextValue: createContext(),
+      variableValues: {
+        entity: {
+          id: insecureTestUuidv4(),
+          info: {
+            type: 'MutationBar', // should be Foo
+            name: 'Foo name',
+          },
+          fields: {
+            title: 'Foo title',
+            summary: 'Foo summary',
+          },
         },
       },
     });
@@ -1810,9 +1839,9 @@ describe('publishEntities()', () => {
         entity: { id },
       } = createResult.value;
 
-      const result = await graphql(
+      const result = (await graphql({
         schema,
-        `
+        source: `
           mutation PublishEntities($entities: [EntityVersionInput!]!) {
             publishEntities(entities: $entities) {
               __typename
@@ -1822,10 +1851,9 @@ describe('publishEntities()', () => {
             }
           }
         `,
-        undefined,
-        createContext(),
-        { entities: [{ id, version: 0 }] }
-      );
+        contextValue: createContext(),
+        variableValues: { entities: [{ id, version: 0 }] },
+      })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
       const updatedAt = result.data?.publishEntities[0].updatedAt;
       expect(result).toEqual({
         data: {
@@ -1856,9 +1884,9 @@ describe('publishEntities()', () => {
   });
 
   test('Error: not found', async () => {
-    const result = await graphql(
+    const result = await graphql({
       schema,
-      `
+      source: `
         mutation PublishEntities($entities: [EntityVersionInput!]!) {
           publishEntities(entities: $entities) {
             __typename
@@ -1867,10 +1895,9 @@ describe('publishEntities()', () => {
           }
         }
       `,
-      undefined,
-      createContext(),
-      { entities: [{ id: '635d7ee9-c1c7-4ae7-bcdf-fb53f30a3cd3', version: 0 }] }
-    );
+      contextValue: createContext(),
+      variableValues: { entities: [{ id: '635d7ee9-c1c7-4ae7-bcdf-fb53f30a3cd3', version: 0 }] },
+    });
     expect(result).toMatchInlineSnapshot(`
       Object {
         "data": Object {
@@ -1898,9 +1925,9 @@ describe('unpublishEntities()', () => {
 
       expectOkResult(await adminClient.publishEntities([{ id, version: 0 }]));
 
-      const result = await graphql(
+      const result = (await graphql({
         schema,
-        `
+        source: `
           mutation UnpublishEntities($ids: [ID!]!) {
             unpublishEntities(ids: $ids) {
               __typename
@@ -1910,10 +1937,9 @@ describe('unpublishEntities()', () => {
             }
           }
         `,
-        undefined,
-        createContext(),
-        { ids: [id] }
-      );
+        contextValue: createContext(),
+        variableValues: { ids: [id] },
+      })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
       const updatedAt = result.data?.unpublishEntities[0].updatedAt;
       expect(result).toEqual({
         data: {
@@ -1953,9 +1979,9 @@ describe('unpublishEntities()', () => {
   });
 
   test('Error: not found', async () => {
-    const result = await graphql(
+    const result = await graphql({
       schema,
-      `
+      source: `
         mutation UnpublishEntities($ids: [ID!]!) {
           unpublishEntities(ids: $ids) {
             __typename
@@ -1964,10 +1990,9 @@ describe('unpublishEntities()', () => {
           }
         }
       `,
-      undefined,
-      createContext(),
-      { ids: ['635d7ee9-c1c7-4ae7-bcdf-fb53f30a3cd3'] }
-    );
+      contextValue: createContext(),
+      variableValues: { ids: ['635d7ee9-c1c7-4ae7-bcdf-fb53f30a3cd3'] },
+    });
     expect(result).toMatchInlineSnapshot(`
       Object {
         "data": Object {
@@ -1993,9 +2018,9 @@ describe('archiveEntity()', () => {
         entity: { id },
       } = createResult.value;
 
-      const result = await graphql(
+      const result = (await graphql({
         schema,
-        `
+        source: `
           mutation ArchiveEntity($id: ID!) {
             archiveEntity(id: $id) {
               __typename
@@ -2005,10 +2030,9 @@ describe('archiveEntity()', () => {
             }
           }
         `,
-        undefined,
-        createContext(),
-        { id }
-      );
+        contextValue: createContext(),
+        variableValues: { id },
+      })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
       const updatedAt = result.data?.archiveEntity.updatedAt;
       expect(result).toEqual({
         data: {
@@ -2051,9 +2075,9 @@ describe('unarchiveEntity()', () => {
 
       expectOkResult(await adminClient.archiveEntity({ id }));
 
-      const result = await graphql(
+      const result = (await graphql({
         schema,
-        `
+        source: `
           mutation UnarchiveEntity($id: ID!) {
             unarchiveEntity(id: $id) {
               __typename
@@ -2063,10 +2087,9 @@ describe('unarchiveEntity()', () => {
             }
           }
         `,
-        undefined,
-        createContext(),
-        { id }
-      );
+        contextValue: createContext(),
+        variableValues: { id },
+      })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
       const updatedAt = result.data?.unarchiveEntity.updatedAt;
       expect(result).toEqual({
         data: {
@@ -2104,9 +2127,9 @@ describe('unarchiveEntity()', () => {
   });
 
   test('Error: not found', async () => {
-    const result = await graphql(
+    const result = await graphql({
       schema,
-      `
+      source: `
         mutation UnarchiveEntity($id: ID!) {
           unarchiveEntity(id: $id) {
             __typename
@@ -2114,10 +2137,9 @@ describe('unarchiveEntity()', () => {
           }
         }
       `,
-      undefined,
-      createContext(),
-      { id: '635d7ee9-c1c7-4ae7-bcdf-fb53f30a3cd3' }
-    );
+      contextValue: createContext(),
+      variableValues: { id: '635d7ee9-c1c7-4ae7-bcdf-fb53f30a3cd3' },
+    });
     expect(result).toMatchInlineSnapshot(`
       Object {
         "data": Object {
@@ -2143,9 +2165,9 @@ describe('Multiple', () => {
         entity: { id },
       } = createResult.value;
 
-      const result = await graphql(
+      const result = await graphql({
         schema,
-        `
+        source: `
           mutation UpdateAndPublishFooEntity(
             $entity: AdminMutationFooUpdateInput!
             $entities: [EntityVersionInput!]!
@@ -2165,9 +2187,8 @@ describe('Multiple', () => {
             }
           }
         `,
-        undefined,
-        createContext(),
-        {
+        contextValue: createContext(),
+        variableValues: {
           entity: {
             id,
             fields: {
@@ -2175,8 +2196,8 @@ describe('Multiple', () => {
             },
           },
           entities: { id, version: 1 },
-        }
-      );
+        },
+      });
       expect(result).toEqual({
         data: {
           updateMutationFooEntity: {

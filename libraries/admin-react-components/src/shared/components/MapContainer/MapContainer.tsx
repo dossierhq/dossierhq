@@ -10,7 +10,7 @@ import {
   useMapEvents,
 } from 'react-leaflet';
 
-//TODO make configurable through a context. also maxbounds
+//TODO make configurable through a context. also max bounds
 const defaultCenter = { lat: 55.60498, lng: 13.003822 };
 
 const transparentImage =
