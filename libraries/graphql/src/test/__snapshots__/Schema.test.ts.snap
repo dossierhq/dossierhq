@@ -17,8 +17,7 @@ scalar Instant
 type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
-}
-"
+}"
 `;
 
 exports[`Empty schema spec Generated QL schema (published only) 1`] = `
@@ -38,8 +37,7 @@ scalar Instant
 type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
-}
-"
+}"
 `;
 
 exports[`Empty schema spec Generated QL schema 1`] = `
@@ -59,8 +57,7 @@ scalar Instant
 type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
-}
-"
+}"
 `;
 
 exports[`List of strings, booleans, locations and references schema spec Generated QL schema (admin only) 1`] = `
@@ -196,7 +193,7 @@ type AdminRichText {
 \\"\\"\\"
 The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 \\"\\"\\"
-scalar JSON @specifiedBy(url: \\"http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf\\")
+scalar JSON
 
 input AdminRichTextInput {
   blocks: JSON!
@@ -340,8 +337,7 @@ type Mutation {
   createBarEntity(entity: AdminBarCreateInput!): AdminBarCreatePayload
   updateBarEntity(entity: AdminBarUpdateInput!): AdminBarUpdatePayload
   upsertBarEntity(entity: AdminBarUpsertInput!): AdminBarUpsertPayload
-}
-"
+}"
 `;
 
 exports[`List of strings, booleans, locations and references schema spec Generated QL schema (published only) 1`] = `
@@ -397,7 +393,7 @@ type RichText {
 \\"\\"\\"
 The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 \\"\\"\\"
-scalar JSON @specifiedBy(url: \\"http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf\\")
+scalar JSON
 
 type EntityEdge {
   node: Entity
@@ -445,8 +441,7 @@ type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
   searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
-}
-"
+}"
 `;
 
 exports[`List of strings, booleans, locations and references schema spec Generated QL schema 1`] = `
@@ -502,7 +497,7 @@ type RichText {
 \\"\\"\\"
 The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 \\"\\"\\"
-scalar JSON @specifiedBy(url: \\"http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf\\")
+scalar JSON
 
 type EntityEdge {
   node: Entity
@@ -783,8 +778,7 @@ type Mutation {
   createBarEntity(entity: AdminBarCreateInput!): AdminBarCreatePayload
   updateBarEntity(entity: AdminBarUpdateInput!): AdminBarUpdatePayload
   upsertBarEntity(entity: AdminBarUpsertInput!): AdminBarUpsertPayload
-}
-"
+}"
 `;
 
 exports[`Multiple references with entityTypes schema spec Generated QL schema (admin only) 1`] = `
@@ -921,7 +915,7 @@ type AdminRichText {
 \\"\\"\\"
 The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 \\"\\"\\"
-scalar JSON @specifiedBy(url: \\"http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf\\")
+scalar JSON
 
 input AdminRichTextInput {
   blocks: JSON!
@@ -1116,8 +1110,7 @@ type Mutation {
   createBazEntity(entity: AdminBazCreateInput!): AdminBazCreatePayload
   updateBazEntity(entity: AdminBazUpdateInput!): AdminBazUpdatePayload
   upsertBazEntity(entity: AdminBazUpsertInput!): AdminBazUpsertPayload
-}
-"
+}"
 `;
 
 exports[`Multiple references with entityTypes schema spec Generated QL schema (published only) 1`] = `
@@ -1174,7 +1167,7 @@ type RichText {
 \\"\\"\\"
 The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 \\"\\"\\"
-scalar JSON @specifiedBy(url: \\"http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf\\")
+scalar JSON
 
 type EntityEdge {
   node: Entity
@@ -1239,8 +1232,7 @@ type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
   searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
-}
-"
+}"
 `;
 
 exports[`Multiple references with entityTypes schema spec Generated QL schema 1`] = `
@@ -1297,7 +1289,7 @@ type RichText {
 \\"\\"\\"
 The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 \\"\\"\\"
-scalar JSON @specifiedBy(url: \\"http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf\\")
+scalar JSON
 
 type EntityEdge {
   node: Entity
@@ -1646,8 +1638,7 @@ type Mutation {
   createBazEntity(entity: AdminBazCreateInput!): AdminBazCreatePayload
   updateBazEntity(entity: AdminBazUpdateInput!): AdminBazUpdatePayload
   upsertBazEntity(entity: AdminBazUpsertInput!): AdminBazUpsertPayload
-}
-"
+}"
 `;
 
 exports[`One empty entity type schema spec Generated QL schema (admin only) 1`] = `
@@ -1782,7 +1773,7 @@ type AdminRichText {
 \\"\\"\\"
 The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 \\"\\"\\"
-scalar JSON @specifiedBy(url: \\"http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf\\")
+scalar JSON
 
 input AdminRichTextInput {
   blocks: JSON!
@@ -1870,8 +1861,7 @@ type Mutation {
   createFooEntity(entity: AdminFooCreateInput!): AdminFooCreatePayload
   updateFooEntity(entity: AdminFooUpdateInput!): AdminFooUpdatePayload
   upsertFooEntity(entity: AdminFooUpsertInput!): AdminFooUpsertPayload
-}
-"
+}"
 `;
 
 exports[`One empty entity type schema spec Generated QL schema (published only) 1`] = `
@@ -1926,7 +1916,7 @@ type RichText {
 \\"\\"\\"
 The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 \\"\\"\\"
-scalar JSON @specifiedBy(url: \\"http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf\\")
+scalar JSON
 
 type EntityEdge {
   node: Entity
@@ -1961,8 +1951,7 @@ type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
   searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
-}
-"
+}"
 `;
 
 exports[`One empty entity type schema spec Generated QL schema 1`] = `
@@ -2017,7 +2006,7 @@ type RichText {
 \\"\\"\\"
 The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 \\"\\"\\"
-scalar JSON @specifiedBy(url: \\"http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf\\")
+scalar JSON
 
 type EntityEdge {
   node: Entity
@@ -2229,8 +2218,7 @@ type Mutation {
   createFooEntity(entity: AdminFooCreateInput!): AdminFooCreatePayload
   updateFooEntity(entity: AdminFooUpdateInput!): AdminFooUpdatePayload
   upsertFooEntity(entity: AdminFooUpsertInput!): AdminFooUpsertPayload
-}
-"
+}"
 `;
 
 exports[`Rich text schema spec Generated QL schema (admin only) 1`] = `
@@ -2365,7 +2353,7 @@ type AdminRichText {
 \\"\\"\\"
 The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 \\"\\"\\"
-scalar JSON @specifiedBy(url: \\"http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf\\")
+scalar JSON
 
 input AdminRichTextInput {
   blocks: JSON!
@@ -2465,8 +2453,7 @@ type Mutation {
   createFooEntity(entity: AdminFooCreateInput!): AdminFooCreatePayload
   updateFooEntity(entity: AdminFooUpdateInput!): AdminFooUpdatePayload
   upsertFooEntity(entity: AdminFooUpsertInput!): AdminFooUpsertPayload
-}
-"
+}"
 `;
 
 exports[`Rich text schema spec Generated QL schema (published only) 1`] = `
@@ -2521,7 +2508,7 @@ type RichText {
 \\"\\"\\"
 The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 \\"\\"\\"
-scalar JSON @specifiedBy(url: \\"http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf\\")
+scalar JSON
 
 type EntityEdge {
   node: Entity
@@ -2561,8 +2548,7 @@ type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
   searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
-}
-"
+}"
 `;
 
 exports[`Rich text schema spec Generated QL schema 1`] = `
@@ -2617,7 +2603,7 @@ type RichText {
 \\"\\"\\"
 The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 \\"\\"\\"
-scalar JSON @specifiedBy(url: \\"http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf\\")
+scalar JSON
 
 type EntityEdge {
   node: Entity
@@ -2846,8 +2832,7 @@ type Mutation {
   createFooEntity(entity: AdminFooCreateInput!): AdminFooCreatePayload
   updateFooEntity(entity: AdminFooUpdateInput!): AdminFooUpdatePayload
   upsertFooEntity(entity: AdminFooUpsertInput!): AdminFooUpsertPayload
-}
-"
+}"
 `;
 
 exports[`Two entity types with reference schema spec Generated QL schema (admin only) 1`] = `
@@ -2983,7 +2968,7 @@ type AdminRichText {
 \\"\\"\\"
 The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 \\"\\"\\"
-scalar JSON @specifiedBy(url: \\"http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf\\")
+scalar JSON
 
 input AdminRichTextInput {
   blocks: JSON!
@@ -3139,8 +3124,7 @@ type Mutation {
   createBarEntity(entity: AdminBarCreateInput!): AdminBarCreatePayload
   updateBarEntity(entity: AdminBarUpdateInput!): AdminBarUpdatePayload
   upsertBarEntity(entity: AdminBarUpsertInput!): AdminBarUpsertPayload
-}
-"
+}"
 `;
 
 exports[`Two entity types with reference schema spec Generated QL schema (published only) 1`] = `
@@ -3196,7 +3180,7 @@ type RichText {
 \\"\\"\\"
 The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 \\"\\"\\"
-scalar JSON @specifiedBy(url: \\"http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf\\")
+scalar JSON
 
 type EntityEdge {
   node: Entity
@@ -3249,8 +3233,7 @@ type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
   searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
-}
-"
+}"
 `;
 
 exports[`Two entity types with reference schema spec Generated QL schema 1`] = `
@@ -3306,7 +3289,7 @@ type RichText {
 \\"\\"\\"
 The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 \\"\\"\\"
-scalar JSON @specifiedBy(url: \\"http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf\\")
+scalar JSON
 
 type EntityEdge {
   node: Entity
@@ -3604,8 +3587,7 @@ type Mutation {
   createBarEntity(entity: AdminBarCreateInput!): AdminBarCreatePayload
   updateBarEntity(entity: AdminBarUpdateInput!): AdminBarUpdatePayload
   upsertBarEntity(entity: AdminBarUpsertInput!): AdminBarUpsertPayload
-}
-"
+}"
 `;
 
 exports[`Value type schema spec Generated QL schema (admin only) 1`] = `
@@ -3751,7 +3733,7 @@ type AdminRichText {
 \\"\\"\\"
 The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 \\"\\"\\"
-scalar JSON @specifiedBy(url: \\"http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf\\")
+scalar JSON
 
 input AdminRichTextInput {
   blocks: JSON!
@@ -3947,8 +3929,7 @@ type Mutation {
   createBarEntity(entity: AdminBarCreateInput!): AdminBarCreatePayload
   updateBarEntity(entity: AdminBarUpdateInput!): AdminBarUpdatePayload
   upsertBarEntity(entity: AdminBarUpsertInput!): AdminBarUpsertPayload
-}
-"
+}"
 `;
 
 exports[`Value type schema spec Generated QL schema (published only) 1`] = `
@@ -4014,7 +3995,7 @@ type RichText {
 \\"\\"\\"
 The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 \\"\\"\\"
-scalar JSON @specifiedBy(url: \\"http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf\\")
+scalar JSON
 
 type EntityEdge {
   node: Entity
@@ -4089,8 +4070,7 @@ type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
   searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
-}
-"
+}"
 `;
 
 exports[`Value type schema spec Generated QL schema 1`] = `
@@ -4156,7 +4136,7 @@ type RichText {
 \\"\\"\\"
 The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 \\"\\"\\"
-scalar JSON @specifiedBy(url: \\"http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf\\")
+scalar JSON
 
 type EntityEdge {
   node: Entity
@@ -4520,6 +4500,5 @@ type Mutation {
   createBarEntity(entity: AdminBarCreateInput!): AdminBarCreatePayload
   updateBarEntity(entity: AdminBarUpdateInput!): AdminBarUpdatePayload
   upsertBarEntity(entity: AdminBarUpsertInput!): AdminBarUpsertPayload
-}
-"
+}"
 `;
