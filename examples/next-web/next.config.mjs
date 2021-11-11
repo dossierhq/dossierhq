@@ -1,6 +1,4 @@
-const path = require('path');
-
-module.exports = {
+const config = {
   reactStrictMode: true,
   webpack: (config, { webpack }) => {
     // https://github.com/brianc/node-postgres/issues/838
@@ -8,3 +6,5 @@ module.exports = {
     return config;
   },
 };
+
+export default config;
