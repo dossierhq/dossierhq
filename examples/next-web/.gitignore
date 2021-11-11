@@ -36,3 +36,4 @@ yarn-error.log*
 
 #
 public/voyager.worker.js
+tsconfig.tsbuildinfo
