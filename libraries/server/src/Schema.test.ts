@@ -34,8 +34,8 @@ describe('AdminSchema getSchema', () => {
     const context = createMockTransactionContext();
 
     const schemaSpec: AdminSchemaSpecification = {
-      entityTypes: [{ name: 'Foo', fields: [] }],
-      valueTypes: [{ name: 'Bar', fields: [] }],
+      entityTypes: [{ name: 'Foo', adminOnly: false, fields: [] }],
+      valueTypes: [{ name: 'Bar', adminOnly: false, fields: [] }],
     };
     databaseAdapter.schemaGetSpecification.mockReturnValueOnce(Promise.resolve(ok(schemaSpec)));
     const result = await getSchemaSpecification(databaseAdapter, context);

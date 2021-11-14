@@ -1,8 +1,8 @@
 import type {
   AdminClient,
   AdminEntity,
+  AdminSchemaSpecificationUpdate,
   BoundingBox,
-  AdminSchemaSpecification,
 } from '@jonasb/datadata-core';
 import {
   CoreTestUtils,
@@ -26,7 +26,7 @@ let server: TestServerWithSession;
 let schema: GraphQLSchema;
 let entitiesOfTypeQueryAdminOnlyEditBefore: AdminEntity[];
 
-const schemaSpecification: Partial<AdminSchemaSpecification> = {
+const schemaSpecification: AdminSchemaSpecificationUpdate = {
   entityTypes: [
     {
       name: 'QueryAdminFoo',

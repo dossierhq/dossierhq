@@ -8,6 +8,7 @@ const schemaSpec: AdminSchemaSpecification = {
   entityTypes: [
     {
       name: 'EntityCodecFoo',
+      adminOnly: false,
       fields: [
         { name: 'string', type: FieldType.String },
         { name: 'strings', type: FieldType.String, list: true },
@@ -23,12 +24,14 @@ const schemaSpec: AdminSchemaSpecification = {
     },
     {
       name: 'EntityCodecBar',
+      adminOnly: false,
       fields: [],
     },
   ],
   valueTypes: [
     {
       name: 'EntityCodecValueOne',
+      adminOnly: false,
       fields: [
         { name: 'string', type: FieldType.String },
         { name: 'strings', type: FieldType.String, list: true },

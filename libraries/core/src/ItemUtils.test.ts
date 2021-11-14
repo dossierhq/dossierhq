@@ -15,6 +15,7 @@ const schema = new AdminSchema({
   entityTypes: [
     {
       name: 'Foo',
+      adminOnly: false,
       fields: [
         { name: 'string', type: FieldType.String },
         { name: 'stringList', type: FieldType.String, list: true },
@@ -25,6 +26,7 @@ const schema = new AdminSchema({
   valueTypes: [
     {
       name: 'TwoStrings',
+      adminOnly: false,
       fields: [
         { name: 'string1', type: FieldType.String },
         { name: 'string2', type: FieldType.String },
@@ -122,7 +124,10 @@ function buildMockCallbacks<TVisitContext>() {
 
 describe('visitItemRecursively()', () => {
   test('no fields', () => {
-    const schema = new AdminSchema({ entityTypes: [{ name: 'Foo', fields: [] }], valueTypes: [] });
+    const schema = new AdminSchema({
+      entityTypes: [{ name: 'Foo', adminOnly: false, fields: [] }],
+      valueTypes: [],
+    });
     const { calls, callbacks } = buildMockCallbacks();
     const entity: Entity = { id: 'id1', info: { type: 'Foo', name: 'hello' }, fields: {} };
     visitItemRecursively({
@@ -139,6 +144,7 @@ describe('visitItemRecursively()', () => {
       entityTypes: [
         {
           name: 'Foo',
+          adminOnly: false,
           fields: [
             { name: 'string', type: FieldType.String },
             { name: 'bar', type: FieldType.EntityType },
@@ -148,12 +154,14 @@ describe('visitItemRecursively()', () => {
         },
         {
           name: 'Bar',
+          adminOnly: false,
           fields: [],
         },
       ],
       valueTypes: [
         {
           name: 'ValueOne',
+          adminOnly: false,
           fields: [
             { name: 'string', type: FieldType.String },
             { name: 'location', type: FieldType.Location },
@@ -254,6 +262,7 @@ describe('visitItemRecursively()', () => {
       entityTypes: [
         {
           name: 'Foo',
+          adminOnly: false,
           fields: [
             { name: 'strings', type: FieldType.String, list: true },
             { name: 'locations', type: FieldType.Location, list: true },
@@ -263,12 +272,14 @@ describe('visitItemRecursively()', () => {
         },
         {
           name: 'Bar',
+          adminOnly: false,
           fields: [],
         },
       ],
       valueTypes: [
         {
           name: 'ValueOne',
+          adminOnly: false,
           fields: [
             { name: 'strings', type: FieldType.String, list: true },
             { name: 'bars', type: FieldType.EntityType, list: true },
@@ -534,6 +545,7 @@ describe('visitItemRecursively()', () => {
       entityTypes: [
         {
           name: 'Foo',
+          adminOnly: false,
           fields: [{ name: 'body', type: FieldType.RichText }],
         },
       ],
@@ -636,12 +648,14 @@ describe('visitItemRecursively()', () => {
       entityTypes: [
         {
           name: 'Foo',
+          adminOnly: false,
           fields: [{ name: 'body', type: FieldType.RichText }],
         },
       ],
       valueTypes: [
         {
           name: 'ValueOne',
+          adminOnly: false,
           fields: [
             { name: 'string', type: FieldType.String },
             { name: 'location', type: FieldType.Location },
@@ -799,6 +813,7 @@ describe('visitItemRecursively()', () => {
       entityTypes: [
         {
           name: 'Foo',
+          adminOnly: false,
           fields: [{ name: 'bodyList', type: FieldType.RichText, list: true }],
         },
       ],
@@ -927,6 +942,7 @@ describe('visitItemRecursively()', () => {
       entityTypes: [
         {
           name: 'Foo',
+          adminOnly: false,
           fields: [
             { name: 'string', type: FieldType.String },
             { name: 'bar', type: FieldType.EntityType },
@@ -937,6 +953,7 @@ describe('visitItemRecursively()', () => {
       valueTypes: [
         {
           name: 'ValueOne',
+          adminOnly: false,
           fields: [
             { name: 'string', type: FieldType.String },
             { name: 'valueOne', type: FieldType.ValueType },

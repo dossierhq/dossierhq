@@ -41,7 +41,10 @@ describe('Empty schema spec', () => {
 });
 
 describe('One empty entity type schema spec', () => {
-  const schemaSpec = { entityTypes: [{ name: 'Foo', fields: [] }], valueTypes: [] };
+  const schemaSpec = {
+    entityTypes: [{ name: 'Foo', adminOnly: false, fields: [] }],
+    valueTypes: [],
+  };
 
   test('Generated QL schema', () => {
     const result = describeGeneratedSchema(schemaSpec);
@@ -359,9 +362,10 @@ describe('One empty entity type schema spec', () => {
 describe('Two entity types with reference schema spec', () => {
   const schemaSpec = {
     entityTypes: [
-      { name: 'Foo', fields: [{ name: 'fooField', type: FieldType.String }] },
+      { name: 'Foo', adminOnly: false, fields: [{ name: 'fooField', type: FieldType.String }] },
       {
         name: 'Bar',
+        adminOnly: false,
         fields: [
           { name: 'barField1', type: FieldType.String },
           { name: 'barField2', type: FieldType.EntityType },
@@ -393,6 +397,7 @@ describe('Multiple references with entityTypes schema spec', () => {
     entityTypes: [
       {
         name: 'Foo',
+        adminOnly: false,
         fields: [
           { name: 'noMeansAll', type: FieldType.EntityType, entityTypes: [] },
           { name: 'bar', type: FieldType.EntityType, entityTypes: ['Bar'] },
@@ -409,8 +414,8 @@ describe('Multiple references with entityTypes schema spec', () => {
           },
         ],
       },
-      { name: 'Bar', fields: [] },
-      { name: 'Baz', fields: [] },
+      { name: 'Bar', adminOnly: false, fields: [] },
+      { name: 'Baz', adminOnly: false, fields: [] },
     ],
     valueTypes: [],
   };
@@ -435,6 +440,7 @@ describe('List of strings, booleans, locations and references schema spec', () =
     entityTypes: [
       {
         name: 'Foo',
+        adminOnly: false,
         fields: [
           { name: 'strings', type: FieldType.String, list: true },
           { name: 'booleans', type: FieldType.Boolean, list: true },
@@ -442,7 +448,7 @@ describe('List of strings, booleans, locations and references schema spec', () =
           { name: 'bars', type: FieldType.EntityType, list: true, entityTypes: ['Bar'] },
         ],
       },
-      { name: 'Bar', fields: [] },
+      { name: 'Bar', adminOnly: false, fields: [] },
     ],
     valueTypes: [],
   };
@@ -467,6 +473,7 @@ describe('Value type schema spec', () => {
     entityTypes: [
       {
         name: 'Foo',
+        adminOnly: false,
         fields: [
           { name: 'valueOne', type: FieldType.ValueType, valueTypes: ['ValueOne'] },
           { name: 'unspecifiedValue', type: FieldType.ValueType },
@@ -478,11 +485,12 @@ describe('Value type schema spec', () => {
           { name: 'nestedValue', type: FieldType.ValueType, valueTypes: ['NestedValue'] },
         ],
       },
-      { name: 'Bar', fields: [] },
+      { name: 'Bar', adminOnly: false, fields: [] },
     ],
     valueTypes: [
       {
         name: 'ValueOne',
+        adminOnly: false,
         fields: [
           { name: 'one', type: FieldType.String },
           { name: 'two', type: FieldType.EntityType, entityTypes: ['Bar'] },
@@ -492,6 +500,7 @@ describe('Value type schema spec', () => {
       },
       {
         name: 'ValueList',
+        adminOnly: false,
         fields: [
           { name: 'one', type: FieldType.String, list: true },
           { name: 'two', type: FieldType.EntityType, list: true, entityTypes: ['Bar'] },
@@ -501,6 +510,7 @@ describe('Value type schema spec', () => {
       },
       {
         name: 'NestedValue',
+        adminOnly: false,
         fields: [
           { name: 'text', type: FieldType.String },
           { name: 'child', type: FieldType.ValueType, valueTypes: ['NestedValue'] },
@@ -529,6 +539,7 @@ describe('Rich text schema spec', () => {
     entityTypes: [
       {
         name: 'Foo',
+        adminOnly: false,
         fields: [{ name: 'body', type: FieldType.RichText }],
       },
     ],
