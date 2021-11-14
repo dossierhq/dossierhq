@@ -6,7 +6,7 @@ import type {
   Entity,
   PromiseResult,
   PublishedClient,
-  SchemaSpecificationUpdate,
+  AdminSchemaSpecificationUpdate,
 } from '@jonasb/datadata-core';
 import {
   CoreTestUtils,
@@ -33,7 +33,7 @@ import {
 
 //TODO consider moving this test back to server or even to core
 
-const SCHEMA: SchemaSpecificationUpdate = {
+const SCHEMA: AdminSchemaSpecificationUpdate = {
   entityTypes: [
     {
       name: 'PublishedEntityFoo',

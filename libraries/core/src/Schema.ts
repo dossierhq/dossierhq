@@ -55,22 +55,22 @@ export interface FieldValueTypeMap {
   [FieldType.ValueType]: ValueItem;
 }
 
-export interface SchemaSpecification {
+export interface AdminSchemaSpecification {
   entityTypes: EntityTypeSpecification[];
   valueTypes: ValueTypeSpecification[];
 }
 
-export type SchemaSpecificationUpdate = Partial<SchemaSpecification>;
+export type AdminSchemaSpecificationUpdate = Partial<AdminSchemaSpecification>;
 
 export interface SchemaSpecificationUpdatePayload {
   effect: 'updated' | 'none';
-  schemaSpecification: SchemaSpecification;
+  schemaSpecification: AdminSchemaSpecification;
 }
 
 export class Schema {
-  readonly spec: SchemaSpecification;
+  readonly spec: AdminSchemaSpecification;
 
-  constructor(spec: SchemaSpecification) {
+  constructor(spec: AdminSchemaSpecification) {
     this.spec = spec;
   }
 
@@ -200,8 +200,10 @@ export class Schema {
     return valueSpec.fields.find((x) => x.name === fieldName) ?? null;
   }
 
-  mergeWith(other: SchemaSpecificationUpdate): Result<SchemaSpecification, ErrorType.BadRequest> {
-    const schemaSpec: SchemaSpecification = {
+  mergeWith(
+    other: AdminSchemaSpecificationUpdate
+  ): Result<AdminSchemaSpecification, ErrorType.BadRequest> {
+    const schemaSpec: AdminSchemaSpecification = {
       entityTypes: [...this.spec.entityTypes],
       valueTypes: [...this.spec.valueTypes],
     };

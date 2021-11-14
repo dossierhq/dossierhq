@@ -1,4 +1,4 @@
-import type { SchemaSpecification } from '@jonasb/datadata-core';
+import type { AdminSchemaSpecification } from '@jonasb/datadata-core';
 import { CoreTestUtils, ok } from '@jonasb/datadata-core';
 import { getSchemaSpecification } from './Schema';
 import {
@@ -33,7 +33,7 @@ describe('Schema getSchema', () => {
     const databaseAdapter = createMockDatabaseAdapter();
     const context = createMockTransactionContext();
 
-    const schemaSpec: SchemaSpecification = {
+    const schemaSpec: AdminSchemaSpecification = {
       entityTypes: [{ name: 'Foo', fields: [] }],
       valueTypes: [{ name: 'Bar', fields: [] }],
     };

@@ -1,10 +1,10 @@
-import type { SchemaSpecification } from '@jonasb/datadata-core';
+import type { AdminSchemaSpecification } from '@jonasb/datadata-core';
 import type { Temporal } from '@js-temporal/polyfill';
 
 //TODO move to datadata-database-adapter-postgres-core
 export interface SchemaVersionsTable {
   id: number;
-  specification: SchemaSpecification;
+  specification: AdminSchemaSpecification;
 }
 
 export interface SubjectsTable {

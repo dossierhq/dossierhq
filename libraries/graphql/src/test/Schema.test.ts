@@ -1,10 +1,10 @@
 import { FieldType, Schema } from '@jonasb/datadata-core';
-import type { SchemaSpecification } from '@jonasb/datadata-core';
+import type { AdminSchemaSpecification } from '@jonasb/datadata-core';
 import { graphql, printSchema } from 'graphql';
 import { GraphQLSchemaGenerator } from '..';
 
 function describeGeneratedSchema(
-  schemaSpec: SchemaSpecification,
+  schemaSpec: AdminSchemaSpecification,
   options?: { published: boolean; admin: boolean }
 ) {
   const schema = new Schema(schemaSpec);
@@ -14,7 +14,7 @@ function describeGeneratedSchema(
   return printSchema(graphQLSchema);
 }
 
-async function querySchema(schemaSpec: SchemaSpecification, query: string) {
+async function querySchema(schemaSpec: AdminSchemaSpecification, query: string) {
   const schema = new Schema(schemaSpec);
   schema.validate().throwIfError();
   const generator = new GraphQLSchemaGenerator(schema);

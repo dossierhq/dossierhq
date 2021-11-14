@@ -1,8 +1,8 @@
 import type {
   ErrorType,
   PromiseResult,
-  SchemaSpecification,
-  SchemaSpecificationUpdate,
+  AdminSchemaSpecification,
+  AdminSchemaSpecificationUpdate,
   SchemaSpecificationUpdatePayload,
 } from '@jonasb/datadata-core';
 import { ok, Schema } from '@jonasb/datadata-core';
@@ -11,7 +11,7 @@ import type { DatabaseAdapter, TransactionContext } from '.';
 export async function getSchemaSpecification(
   databaseAdapter: DatabaseAdapter,
   context: TransactionContext
-): PromiseResult<SchemaSpecification, ErrorType.Generic> {
+): PromiseResult<AdminSchemaSpecification, ErrorType.Generic> {
   const { logger } = context;
   logger.info('Loading schema');
   const result = await databaseAdapter.schemaGetSpecification(context);
@@ -35,7 +35,7 @@ export async function getSchemaSpecification(
 export async function updateSchemaSpecification(
   databaseAdapter: DatabaseAdapter,
   context: TransactionContext,
-  schemaSpec: SchemaSpecificationUpdate
+  schemaSpec: AdminSchemaSpecificationUpdate
 ): PromiseResult<SchemaSpecificationUpdatePayload, ErrorType.BadRequest | ErrorType.Generic> {
   return await context.withTransaction(async (context) => {
     const previousSpecificationResult = await getSchemaSpecification(databaseAdapter, context);

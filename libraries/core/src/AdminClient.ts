@@ -18,8 +18,8 @@ import type {
   PromiseResult,
   PublishingHistory,
   Result,
-  SchemaSpecification,
-  SchemaSpecificationUpdate,
+  AdminSchemaSpecification,
+  AdminSchemaSpecificationUpdate,
   SchemaSpecificationUpdatePayload,
 } from '.';
 import { assertExhaustive, convertJsonResult, ErrorType, notOk, ok } from '.';
@@ -50,10 +50,10 @@ import type {
 import { executeOperationPipeline } from './SharedClient';
 
 export interface AdminClient {
-  getSchemaSpecification(): PromiseResult<SchemaSpecification, ErrorType.Generic>;
+  getSchemaSpecification(): PromiseResult<AdminSchemaSpecification, ErrorType.Generic>;
 
   updateSchemaSpecification(
-    schemaSpec: SchemaSpecificationUpdate
+    schemaSpec: AdminSchemaSpecificationUpdate
   ): PromiseResult<SchemaSpecificationUpdatePayload, ErrorType.BadRequest | ErrorType.Generic>;
 
   getEntity(
@@ -252,7 +252,7 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
     this.pipeline = pipeline;
   }
 
-  getSchemaSpecification(): PromiseResult<SchemaSpecification, ErrorType.Generic> {
+  getSchemaSpecification(): PromiseResult<AdminSchemaSpecification, ErrorType.Generic> {
     return this.executeOperation({
       name: AdminClientOperationName.getSchemaSpecification,
       args: [],
@@ -261,7 +261,7 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
   }
 
   updateSchemaSpecification(
-    schemaSpec: SchemaSpecificationUpdate
+    schemaSpec: AdminSchemaSpecificationUpdate
   ): PromiseResult<SchemaSpecificationUpdatePayload, ErrorType.BadRequest | ErrorType.Generic> {
     return this.executeOperation({
       name: AdminClientOperationName.updateSchemaSpecification,
