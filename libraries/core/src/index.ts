@@ -88,13 +88,13 @@ export type {
 } from './PublishedClient';
 export { FieldType, RichTextBlockType, AdminSchema } from './Schema';
 export type {
-  EntityTypeSpecification,
+  AdminEntityTypeSpecification,
   FieldSpecification,
   FieldValueTypeMap,
   AdminSchemaSpecification,
   AdminSchemaSpecificationUpdate,
   SchemaSpecificationUpdatePayload,
-  ValueTypeSpecification,
+  AdminValueTypeSpecification,
 } from './Schema';
 export { LoggingClientMiddleware } from './SharedClient';
 export type { ClientContext, ContextProvider } from './SharedClient';

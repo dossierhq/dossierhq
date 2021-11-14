@@ -1,12 +1,12 @@
 import type { EntityReference, Result, ErrorType, Location, RichText, ValueItem } from '.';
 import { notOk, ok } from '.';
 
-export interface EntityTypeSpecification {
+export interface AdminEntityTypeSpecification {
   name: string;
   fields: FieldSpecification[];
 }
 
-export interface ValueTypeSpecification {
+export interface AdminValueTypeSpecification {
   name: string;
   fields: FieldSpecification[];
 }
@@ -55,9 +55,14 @@ export interface FieldValueTypeMap {
   [FieldType.ValueType]: ValueItem;
 }
 
+export interface SchemaSpecification {
+  entityTypes: AdminEntityTypeSpecification[];
+  valueTypes: AdminValueTypeSpecification[];
+}
+
 export interface AdminSchemaSpecification {
-  entityTypes: EntityTypeSpecification[];
-  valueTypes: ValueTypeSpecification[];
+  entityTypes: AdminEntityTypeSpecification[];
+  valueTypes: AdminValueTypeSpecification[];
 }
 
 export type AdminSchemaSpecificationUpdate = Partial<AdminSchemaSpecification>;
@@ -174,12 +179,12 @@ export class AdminSchema {
     return this.spec.entityTypes.length;
   }
 
-  getEntityTypeSpecification(type: string): EntityTypeSpecification | null {
+  getEntityTypeSpecification(type: string): AdminEntityTypeSpecification | null {
     return this.spec.entityTypes.find((x) => x.name === type) ?? null;
   }
 
   getEntityFieldSpecification(
-    entitySpec: EntityTypeSpecification,
+    entitySpec: AdminEntityTypeSpecification,
     fieldName: string
   ): FieldSpecification | null {
     return entitySpec.fields.find((x) => x.name === fieldName) ?? null;
@@ -189,12 +194,12 @@ export class AdminSchema {
     return this.spec.valueTypes.length;
   }
 
-  getValueTypeSpecification(type: string): ValueTypeSpecification | null {
+  getValueTypeSpecification(type: string): AdminValueTypeSpecification | null {
     return this.spec.valueTypes.find((x) => x.name === type) ?? null;
   }
 
   getValueFieldSpecification(
-    valueSpec: ValueTypeSpecification,
+    valueSpec: AdminValueTypeSpecification,
     fieldName: string
   ): FieldSpecification | null {
     return valueSpec.fields.find((x) => x.name === fieldName) ?? null;

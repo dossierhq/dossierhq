@@ -3,7 +3,7 @@ import type {
   AdminQuery,
   Entity,
   EntityHistory,
-  EntityTypeSpecification,
+  AdminEntityTypeSpecification,
   FieldSpecification,
   PageInfo,
   Paging,
@@ -12,7 +12,7 @@ import type {
   RichText,
   AdminSchema,
   ValueItem,
-  ValueTypeSpecification,
+  AdminValueTypeSpecification,
 } from '@jonasb/datadata-core';
 import {
   isEntityTypeField,
@@ -215,7 +215,7 @@ export async function loadAdminSearchEntities<TContext extends SessionGraphQLCon
 
 function resolveFields<TContext extends SessionGraphQLContext>(
   schema: AdminSchema,
-  spec: EntityTypeSpecification | ValueTypeSpecification,
+  spec: AdminEntityTypeSpecification | AdminValueTypeSpecification,
   item: ValueItem | Entity | AdminEntity,
   isAdmin: boolean
 ) {

@@ -5,7 +5,7 @@ import type {
   AdminQuery,
   EntityPublishState,
   EntityReference,
-  EntityTypeSpecification,
+  AdminEntityTypeSpecification,
   ErrorType,
   FieldSpecification,
   Location,
@@ -13,7 +13,7 @@ import type {
   PromiseResult,
   RichText,
   ValueItem,
-  ValueTypeSpecification,
+  AdminValueTypeSpecification,
 } from '@jonasb/datadata-core';
 import {
   AdminQueryOrder,
@@ -358,7 +358,7 @@ async function editEntityValues(
 }
 
 function createEntityFieldSelectorItems(
-  entitySpec: EntityTypeSpecification,
+  entitySpec: AdminEntityTypeSpecification,
   currentValues: Record<string, unknown>,
   defaultValues: Record<string, unknown>
 ): EditFieldSelectorItem[] {
@@ -482,7 +482,7 @@ export async function editFieldValueItem(
 }
 
 function createValueItemFieldSelectorItems(
-  valueSpec: ValueTypeSpecification,
+  valueSpec: AdminValueTypeSpecification,
   valueItem: ValueItem
 ): EditFieldSelectorItem[] {
   const items: EditFieldSelectorItem[] = [];

@@ -22,14 +22,14 @@ import type {
   AdminEntity,
   BoundingBox,
   Entity,
-  EntityTypeSpecification,
+  AdminEntityTypeSpecification,
   ErrorResult,
   ErrorType,
   FieldSpecification,
   Location,
   RichText,
   ValueItem,
-  ValueTypeSpecification,
+  AdminValueTypeSpecification,
 } from '@jonasb/datadata-core';
 import type { CliContext } from '.';
 
@@ -188,7 +188,7 @@ export function formatFieldValue(fieldSpec: FieldSpecification, value: unknown):
   throw new Error(`Unknown type (${fieldSpec.type})`);
 }
 
-export function getEntitySpec(context: CliContext, type: string): EntityTypeSpecification {
+export function getEntitySpec(context: CliContext, type: string): AdminEntityTypeSpecification {
   const { schema } = context;
   const entitySpec = schema.getEntityTypeSpecification(type);
   if (!entitySpec) {
@@ -197,7 +197,10 @@ export function getEntitySpec(context: CliContext, type: string): EntityTypeSpec
   return entitySpec;
 }
 
-export function getValueSpec(context: CliContext, valueItem: ValueItem): ValueTypeSpecification {
+export function getValueSpec(
+  context: CliContext,
+  valueItem: ValueItem
+): AdminValueTypeSpecification {
   const { schema } = context;
   const valueSpec = schema.getValueTypeSpecification(valueItem.type);
   if (!valueSpec) {
