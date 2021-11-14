@@ -1,4 +1,4 @@
-import type { SchemaSpecification } from '@jonasb/datadata-core';
+import type { AdminSchemaSpecification } from '@jonasb/datadata-core';
 import {
   CoreTestUtils,
   EntityPublishState,
@@ -35,7 +35,7 @@ const emptyFooFields = {
   anyValueItems: null,
 };
 
-const schemaSpecification: Partial<SchemaSpecification> = {
+const schemaSpecification: Partial<AdminSchemaSpecification> = {
   entityTypes: [
     {
       name: 'MutationFoo',

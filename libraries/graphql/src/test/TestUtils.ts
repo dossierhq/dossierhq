@@ -4,7 +4,7 @@ import type {
   PromiseResult,
   PublishedClient,
   Result,
-  SchemaSpecification,
+  AdminSchemaSpecification,
 } from '@jonasb/datadata-core';
 import { assertIsDefined, CoreTestUtils, Schema } from '@jonasb/datadata-core';
 import { createPostgresAdapter } from '@jonasb/datadata-database-adapter-postgres-pg';
@@ -31,12 +31,12 @@ export function expectResultValue<TOk, TError extends ErrorType>(
 }
 
 export async function setUpServerWithSession(
-  schemaSpecification: Partial<SchemaSpecification>
+  schemaSpecification: Partial<AdminSchemaSpecification>
 ): Promise<TestServerWithSession> {
   return await setUpRealServerWithSession(schemaSpecification);
 }
 
-async function setUpRealServerWithSession(schemaSpecification: Partial<SchemaSpecification>) {
+async function setUpRealServerWithSession(schemaSpecification: Partial<AdminSchemaSpecification>) {
   const url = process.env.DATABASE_URL;
   assertIsDefined(url);
   const serverResult = await createServer({

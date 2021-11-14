@@ -1,4 +1,4 @@
-import type { SchemaSpecification } from '@jonasb/datadata-core';
+import type { AdminSchemaSpecification } from '@jonasb/datadata-core';
 import { CoreTestUtils, FieldType, notOk, ok, RichTextBlockType } from '@jonasb/datadata-core';
 import type { GraphQLSchema } from 'graphql';
 import { graphql, printError } from 'graphql';
@@ -12,7 +12,7 @@ const { expectOkResult } = CoreTestUtils;
 let server: TestServerWithSession;
 let schema: GraphQLSchema;
 
-const schemaSpecification: Partial<SchemaSpecification> = {
+const schemaSpecification: Partial<AdminSchemaSpecification> = {
   entityTypes: [
     {
       name: 'QueryFoo',

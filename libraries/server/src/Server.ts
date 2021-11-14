@@ -7,7 +7,7 @@ import type {
   PromiseResult,
   PublishedClient,
   PublishedClientMiddleware,
-  SchemaSpecification,
+  AdminSchemaSpecification,
 } from '@jonasb/datadata-core';
 import { assertIsDefined, NoOpLogger, notOk, ok, Schema } from '@jonasb/datadata-core';
 import type { DatabaseAdapter, Session, SessionContext } from '.';
@@ -78,7 +78,7 @@ export class ServerImpl {
     return this.#schema;
   }
 
-  setSchema(schemaSpec: SchemaSpecification): void {
+  setSchema(schemaSpec: AdminSchemaSpecification): void {
     this.#schema = new Schema(schemaSpec);
   }
 

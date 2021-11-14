@@ -11,7 +11,7 @@ import type {
   PromiseResult,
   Query,
   Result,
-  SchemaSpecification,
+  AdminSchemaSpecification,
 } from '.';
 import {
   assertExhaustive,
@@ -34,7 +34,7 @@ import type {
 import { executeOperationPipeline } from './SharedClient';
 
 export interface PublishedClient {
-  getSchemaSpecification(): PromiseResult<SchemaSpecification, ErrorType.Generic>;
+  getSchemaSpecification(): PromiseResult<AdminSchemaSpecification, ErrorType.Generic>;
 
   getEntity(
     reference: EntityReference

@@ -1,4 +1,4 @@
-import type { ErrorType, PromiseResult, SchemaSpecification } from '@jonasb/datadata-core';
+import type { ErrorType, PromiseResult, AdminSchemaSpecification } from '@jonasb/datadata-core';
 import type { Session, TransactionContext } from '.';
 
 export interface Transaction {
@@ -30,11 +30,11 @@ export interface DatabaseAdapter {
 
   schemaGetSpecification(
     context: TransactionContext
-  ): PromiseResult<SchemaSpecification | null, ErrorType.Generic>;
+  ): PromiseResult<AdminSchemaSpecification | null, ErrorType.Generic>;
 
   schemaUpdateSpecification(
     context: TransactionContext,
-    schemaSpec: SchemaSpecification
+    schemaSpec: AdminSchemaSpecification
   ): PromiseResult<void, ErrorType.Generic>;
 
   // TODO remove when migrated away

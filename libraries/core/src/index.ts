@@ -91,8 +91,8 @@ export type {
   EntityTypeSpecification,
   FieldSpecification,
   FieldValueTypeMap,
-  SchemaSpecification,
-  SchemaSpecificationUpdate,
+  AdminSchemaSpecification,
+  AdminSchemaSpecificationUpdate,
   SchemaSpecificationUpdatePayload,
   ValueTypeSpecification,
 } from './Schema';

@@ -1,10 +1,10 @@
-import type { SchemaSpecification } from '@jonasb/datadata-core';
+import type { AdminSchemaSpecification } from '@jonasb/datadata-core';
 import { FieldType, RichTextBlockType, Schema } from '@jonasb/datadata-core';
 import { forTest } from './EntityCodec';
 
 const { collectDataFromEntity } = forTest;
 
-const schemaSpec: SchemaSpecification = {
+const schemaSpec: AdminSchemaSpecification = {
   entityTypes: [
     {
       name: 'EntityCodecFoo',

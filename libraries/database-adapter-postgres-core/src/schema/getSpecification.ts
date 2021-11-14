@@ -1,4 +1,4 @@
-import type { ErrorType, PromiseResult, SchemaSpecification } from '@jonasb/datadata-core';
+import type { ErrorType, PromiseResult, AdminSchemaSpecification } from '@jonasb/datadata-core';
 import { ok } from '@jonasb/datadata-core';
 import type { TransactionContext } from '@jonasb/datadata-server';
 import type { PostgresDatabaseAdapter } from '..';
@@ -8,7 +8,7 @@ import { queryNoneOrOne } from '../QueryFunctions';
 export async function schemaGetSpecification(
   adapter: PostgresDatabaseAdapter,
   context: TransactionContext
-): PromiseResult<SchemaSpecification | null, ErrorType.Generic> {
+): PromiseResult<AdminSchemaSpecification | null, ErrorType.Generic> {
   const result = await queryNoneOrOne<Pick<SchemaVersionsTable, 'specification'>>(
     context,
     adapter,
