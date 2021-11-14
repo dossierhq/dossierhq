@@ -1,7 +1,7 @@
 import type {
   AdminEntity,
   EntityPublishState,
-  EntityTypeSpecification,
+  AdminEntityTypeSpecification,
   FieldSpecification,
   AdminSchema,
 } from '@jonasb/datadata-core';
@@ -27,7 +27,7 @@ export interface EntityEditorDraftState {
   latestServerVersion: number | null;
   entity: null | {
     version: number;
-    entitySpec: EntityTypeSpecification;
+    entitySpec: AdminEntityTypeSpecification;
     name: string;
     initialName: string;
     fields: FieldEditorState[];
@@ -293,7 +293,7 @@ export function initializeEntityEditorState({
 }
 
 function createEditorEntityDraftState(
-  entitySpec: EntityTypeSpecification,
+  entitySpec: AdminEntityTypeSpecification,
   entity: AdminEntity | null
 ): EntityEditorDraftState['entity'] {
   const fields = entitySpec.fields.map((fieldSpec) => {

@@ -6,14 +6,14 @@ import type {
   AdminEntityUpsert,
   AdminQuery,
   Entity,
-  EntityTypeSpecification,
+  AdminEntityTypeSpecification,
   ErrorType,
   PublishedClient,
   Query,
   Result,
   AdminSchema,
   ValueItem,
-  ValueTypeSpecification,
+  AdminValueTypeSpecification,
 } from '@jonasb/datadata-core';
 import { FieldType, isItemValueItem, isValueTypeField, notOk } from '@jonasb/datadata-core';
 import { Temporal } from '@js-temporal/polyfill';
@@ -462,7 +462,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     }
   }
 
-  addEntityType(entitySpec: EntityTypeSpecification): void {
+  addEntityType(entitySpec: AdminEntityTypeSpecification): void {
     const fieldsTypeName = `${entitySpec.name}Fields`;
     if (entitySpec.fields.length > 0) {
       this.addType(
@@ -502,7 +502,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     }
   }
 
-  addValueType(valueSpec: ValueTypeSpecification): void {
+  addValueType(valueSpec: AdminValueTypeSpecification): void {
     this.addType(
       new GraphQLObjectType<ValueItem, TContext>({
         name: valueSpec.name,
@@ -801,7 +801,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     }
   }
 
-  addAdminEntityType(entitySpec: EntityTypeSpecification): void {
+  addAdminEntityType(entitySpec: AdminEntityTypeSpecification): void {
     // AdminFooFields
     const fieldsName =
       entitySpec.fields.length > 0 ? `${toAdminTypeName(entitySpec.name)}Fields` : null;
@@ -959,7 +959,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     }
   }
 
-  addAdminValueType(valueSpec: ValueTypeSpecification): void {
+  addAdminValueType(valueSpec: AdminValueTypeSpecification): void {
     this.addType(
       new GraphQLObjectType<ValueItem, TContext>({
         name: toAdminTypeName(valueSpec.name),
@@ -990,7 +990,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
   }
 
   addTypeSpecificationOutputFields<TSource>(
-    typeSpec: EntityTypeSpecification | ValueTypeSpecification,
+    typeSpec: AdminEntityTypeSpecification | AdminValueTypeSpecification,
     fields: GraphQLFieldConfigMap<TSource, TContext>,
     isAdmin: boolean
   ): void {
@@ -1026,7 +1026,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
   }
 
   addTypeSpecificationInputFields(
-    typeSpec: EntityTypeSpecification | ValueTypeSpecification,
+    typeSpec: AdminEntityTypeSpecification | AdminValueTypeSpecification,
     fields: GraphQLInputFieldConfigMap
   ): void {
     for (const fieldSpec of typeSpec.fields) {
@@ -1293,7 +1293,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
   ): void {
     const visitItem = (
       item: AdminEntityCreate | AdminEntityUpdate | ValueItem,
-      typeSpec: EntityTypeSpecification | ValueTypeSpecification,
+      typeSpec: AdminEntityTypeSpecification | AdminValueTypeSpecification,
       prefix: string,
       isEntity: boolean
     ) => {

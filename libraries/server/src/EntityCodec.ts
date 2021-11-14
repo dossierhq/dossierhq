@@ -3,7 +3,7 @@ import type {
   AdminEntityCreate,
   AdminEntityUpdate,
   Entity,
-  EntityTypeSpecification,
+  AdminEntityTypeSpecification,
   ErrorType,
   FieldSpecification,
   Location,
@@ -196,7 +196,7 @@ export function decodeAdminEntity(schema: AdminSchema, values: AdminEntityValues
 
 export function decodeAdminEntityFields(
   schema: AdminSchema,
-  entitySpec: EntityTypeSpecification,
+  entitySpec: AdminEntityTypeSpecification,
   values: Pick<EntityVersionsTable, 'data'>
 ): AdminEntity['fields'] {
   const fields: AdminEntity['fields'] = {};
@@ -350,7 +350,7 @@ export function resolveUpdateEntity(
 }
 
 function checkForUnsupportedFields(
-  entitySpec: EntityTypeSpecification,
+  entitySpec: AdminEntityTypeSpecification,
   entity: AdminEntityCreate | AdminEntityUpdate
 ): Result<void, ErrorType.BadRequest> {
   if (!entity.fields) {

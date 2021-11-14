@@ -1,4 +1,7 @@
-import type { EntityTypeSpecification, ValueTypeSpecification } from '@jonasb/datadata-core';
+import type {
+  AdminEntityTypeSpecification,
+  AdminValueTypeSpecification,
+} from '@jonasb/datadata-core';
 import type { IconName } from '@jonasb/datadata-design';
 import { Dropdown } from '@jonasb/datadata-design';
 import React, { useContext } from 'react';
@@ -54,7 +57,7 @@ export function TypePicker2({
 }
 
 function gatherItems(
-  typeSpecs: (EntityTypeSpecification | ValueTypeSpecification)[],
+  typeSpecs: (AdminEntityTypeSpecification | AdminValueTypeSpecification)[],
   filterNames: string[] | undefined
 ): Item[] {
   let types = typeSpecs.map((x) => x.name);

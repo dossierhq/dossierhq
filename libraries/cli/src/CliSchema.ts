@@ -1,6 +1,9 @@
 import chalk from 'chalk';
 import { FieldType } from '@jonasb/datadata-core';
-import type { EntityTypeSpecification, ValueTypeSpecification } from '@jonasb/datadata-core';
+import type {
+  AdminEntityTypeSpecification,
+  AdminValueTypeSpecification,
+} from '@jonasb/datadata-core';
 import { showItemSelector, showMultiItemSelector } from './widgets';
 import { logKeyValue } from './CliUtils';
 import type { CliContext } from '.';
@@ -8,7 +11,7 @@ import type { CliContext } from '.';
 export function showSchema(context: CliContext): void {
   const { schema } = context;
 
-  const logTypeSpec = (typeSpec: EntityTypeSpecification | ValueTypeSpecification) => {
+  const logTypeSpec = (typeSpec: AdminEntityTypeSpecification | AdminValueTypeSpecification) => {
     console.log(chalk.bold(typeSpec.name));
     for (const fieldSpec of typeSpec.fields) {
       let type: string = fieldSpec.type;
