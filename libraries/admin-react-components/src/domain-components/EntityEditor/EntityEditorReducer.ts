@@ -3,7 +3,7 @@ import type {
   EntityPublishState,
   EntityTypeSpecification,
   FieldSpecification,
-  Schema,
+  AdminSchema,
 } from '@jonasb/datadata-core';
 import { ErrorType } from '@jonasb/datadata-core';
 import isEqual from 'lodash/isEqual.js';
@@ -13,7 +13,7 @@ import type { MessageItem } from '../../generic-components/Message/Message.js';
 export type EntityEditorSelector = { id: string } | { id?: string; newType: string };
 
 export interface EntityEditorState {
-  schema: Schema;
+  schema: AdminSchema;
   drafts: EntityEditorDraftState[];
   activeEntityId: string | null;
 }
@@ -280,7 +280,7 @@ export function initializeEntityEditorState({
   schema,
   actions,
 }: {
-  schema: Schema;
+  schema: AdminSchema;
   actions?: EntityEditorStateAction[];
 }): EntityEditorState {
   let state: EntityEditorState = { schema, drafts: [], activeEntityId: null };

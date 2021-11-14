@@ -18,7 +18,7 @@ import type {
   PublishingEventKind,
   PublishingHistory,
   Result,
-  Schema,
+  AdminSchema,
 } from '@jonasb/datadata-core';
 import {
   assertIsDefined,
@@ -51,7 +51,7 @@ import type { SearchAdminEntitiesItem } from './QueryGenerator';
 import { searchAdminEntitiesQuery, totalAdminEntitiesQuery } from './QueryGenerator';
 
 export async function getEntity(
-  schema: Schema,
+  schema: AdminSchema,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   id: string,
@@ -87,7 +87,7 @@ export async function getEntity(
 }
 
 export async function getEntities(
-  schema: Schema,
+  schema: AdminSchema,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   ids: string[]
@@ -118,7 +118,7 @@ export async function getEntities(
 }
 
 export async function searchEntities(
-  schema: Schema,
+  schema: AdminSchema,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   query: AdminQuery | undefined,
@@ -139,7 +139,7 @@ export async function searchEntities(
 }
 
 export async function getTotalCount(
-  schema: Schema,
+  schema: AdminSchema,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   query: AdminQuery | undefined
@@ -186,7 +186,7 @@ async function withUniqueNameAttempt<TResult>(
 }
 
 export async function createEntity(
-  schema: Schema,
+  schema: AdminSchema,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   entity: AdminEntityCreate
@@ -312,7 +312,7 @@ async function createEntityRow(
 }
 
 export async function updateEntity(
-  schema: Schema,
+  schema: AdminSchema,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   entity: AdminEntityUpdate
@@ -426,7 +426,7 @@ export async function updateEntity(
 }
 
 export async function upsertEntity(
-  schema: Schema,
+  schema: AdminSchema,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   entity: AdminEntityUpsert
@@ -466,7 +466,7 @@ export async function upsertEntity(
 }
 
 export async function publishEntities(
-  schema: Schema,
+  schema: AdminSchema,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   entities: {

@@ -8,7 +8,7 @@ import type {
   FieldValueTypeMap,
   RichText,
   RichTextBlock,
-  Schema,
+  AdminSchema,
   ValueItem,
 } from '.';
 import { FieldType, RichTextBlockType } from '.';
@@ -255,7 +255,7 @@ export function visitItemRecursively<TVisitContext>({
   enterRichText = undefined,
   initialVisitContext,
 }: {
-  schema: Schema;
+  schema: AdminSchema;
   item: Entity | AdminEntity | ValueItem;
   path?: (number | string)[];
   visitField: VisitorVisitField<TVisitContext>;
@@ -286,7 +286,7 @@ export function visitFieldRecursively<TVisitContext>({
   enterRichText = undefined,
   visitContext,
 }: {
-  schema: Schema;
+  schema: AdminSchema;
   path?: (string | number)[];
   fieldSpec: FieldSpecification;
   value: unknown;
@@ -308,7 +308,7 @@ export function visitFieldRecursively<TVisitContext>({
 }
 
 function doVisitItemRecursively<TVisitContext>(
-  schema: Schema,
+  schema: AdminSchema,
   path: (string | number)[],
   item: ValueItem | AdminEntity | Entity,
   callbacks: VisitorCallbacks<TVisitContext>,
@@ -373,7 +373,7 @@ function doVisitItemRecursively<TVisitContext>(
 }
 
 function doVisitFieldRecursively<TVisitContext>(
-  schema: Schema,
+  schema: AdminSchema,
   path: (string | number)[],
   fieldSpec: FieldSpecification,
   value: unknown,
@@ -486,7 +486,7 @@ export function isFieldValueEqual(a: unknown, b: unknown): boolean {
 }
 
 export function normalizeFieldValue(
-  schema: Schema,
+  schema: AdminSchema,
   fieldSpec: FieldSpecification,
   value: unknown
 ): unknown {
@@ -521,7 +521,11 @@ export function normalizeFieldValue(
   return normalizeFieldValueItem(schema, fieldSpec, value);
 }
 
-function normalizeFieldValueItem(schema: Schema, fieldSpec: FieldSpecification, value: unknown) {
+function normalizeFieldValueItem(
+  schema: AdminSchema,
+  fieldSpec: FieldSpecification,
+  value: unknown
+) {
   if (value === null) return value;
 
   const type = fieldSpec.type as FieldType;

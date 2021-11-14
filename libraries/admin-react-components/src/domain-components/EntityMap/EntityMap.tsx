@@ -1,4 +1,10 @@
-import type { AdminEntity, AdminQuery, BoundingBox, Location, Schema } from '@jonasb/datadata-core';
+import type {
+  AdminEntity,
+  AdminQuery,
+  BoundingBox,
+  Location,
+  AdminSchema,
+} from '@jonasb/datadata-core';
 import { isLocationItemField, visitItemRecursively } from '@jonasb/datadata-core';
 import React, { useContext, useEffect, useState } from 'react';
 import { DataDataContext, MapContainer, PublishStateTag } from '../../index.js';
@@ -50,7 +56,7 @@ function EntityMarker({
   entity,
   onClick,
 }: {
-  schema: Schema;
+  schema: AdminSchema;
   entity: AdminEntity;
   onClick: () => void;
 }) {

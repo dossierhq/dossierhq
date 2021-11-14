@@ -1,4 +1,11 @@
-import type { AdminQuery, ErrorType, Paging, Query, Result, Schema } from '@jonasb/datadata-core';
+import type {
+  AdminQuery,
+  ErrorType,
+  Paging,
+  Query,
+  Result,
+  AdminSchema,
+} from '@jonasb/datadata-core';
 import { AdminQueryOrder, notOk, ok, QueryOrder } from '@jonasb/datadata-core';
 import type { CursorNativeType } from './Connection';
 import { toOpaqueCursor } from './Connection';
@@ -21,7 +28,7 @@ export interface SharedEntitiesQuery<TItem> {
 }
 
 export function searchPublishedEntitiesQuery(
-  schema: Schema,
+  schema: AdminSchema,
   query: Query | undefined,
   paging: Paging | undefined
 ): Result<SharedEntitiesQuery<SearchPublishedEntitiesItem>, ErrorType.BadRequest> {
@@ -29,7 +36,7 @@ export function searchPublishedEntitiesQuery(
 }
 
 export function searchAdminEntitiesQuery(
-  schema: Schema,
+  schema: AdminSchema,
   query: AdminQuery | undefined,
   paging: Paging | undefined
 ): Result<SharedEntitiesQuery<SearchAdminEntitiesItem>, ErrorType.BadRequest> {
@@ -39,7 +46,7 @@ export function searchAdminEntitiesQuery(
 function sharedSearchEntitiesQuery<
   TItem extends SearchAdminEntitiesItem | SearchPublishedEntitiesItem
 >(
-  schema: Schema,
+  schema: AdminSchema,
   query: Query | AdminQuery | undefined,
   paging: Paging | undefined,
   published: boolean
@@ -206,21 +213,21 @@ function queryOrderToCursor<TItem extends SearchAdminEntitiesItem | SearchPublis
 }
 
 export function totalAdminEntitiesQuery(
-  schema: Schema,
+  schema: AdminSchema,
   query: AdminQuery | undefined
 ): Result<{ text: string; values: unknown[] }, ErrorType.BadRequest> {
   return totalCountQuery(schema, query, false);
 }
 
 export function totalPublishedEntitiesQuery(
-  schema: Schema,
+  schema: AdminSchema,
   query: Query | undefined
 ): Result<{ text: string; values: unknown[] }, ErrorType.BadRequest> {
   return totalCountQuery(schema, query, true);
 }
 
 function totalCountQuery(
-  schema: Schema,
+  schema: AdminSchema,
   query: AdminQuery | Query | undefined,
   published: boolean
 ): Result<{ text: string; values: unknown[] }, ErrorType.BadRequest> {
@@ -301,7 +308,7 @@ function totalCountQuery(
 }
 
 function getFilterEntityTypes(
-  schema: Schema,
+  schema: AdminSchema,
   query: Query | AdminQuery | undefined
 ): Result<string[], ErrorType.BadRequest> {
   if (!query?.entityTypes || query.entityTypes.length === 0) {

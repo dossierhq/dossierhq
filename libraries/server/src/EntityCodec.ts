@@ -10,7 +10,7 @@ import type {
   PromiseResult,
   Result,
   RichText,
-  Schema,
+  AdminSchema,
   ValueItem,
 } from '@jonasb/datadata-core';
 import {
@@ -76,7 +76,7 @@ interface RequestedReference {
   entityTypes: string[] | undefined;
 }
 
-export function decodePublishedEntity(schema: Schema, values: EntityValues): Entity {
+export function decodePublishedEntity(schema: AdminSchema, values: EntityValues): Entity {
   const entitySpec = schema.getEntityTypeSpecification(values.type);
   if (!entitySpec) {
     throw new Error(`No entity spec for type ${values.type}`);
@@ -94,7 +94,11 @@ export function decodePublishedEntity(schema: Schema, values: EntityValues): Ent
   return entity;
 }
 
-function decodeFieldItemOrList(schema: Schema, fieldSpec: FieldSpecification, fieldValue: unknown) {
+function decodeFieldItemOrList(
+  schema: AdminSchema,
+  fieldSpec: FieldSpecification,
+  fieldValue: unknown
+) {
   if (fieldValue === null || fieldValue === undefined) {
     return null;
   }
@@ -126,7 +130,7 @@ function decodeFieldItemOrList(schema: Schema, fieldSpec: FieldSpecification, fi
 }
 
 function decodeValueItemField(
-  schema: Schema,
+  schema: AdminSchema,
   fieldSpec: FieldSpecification,
   encodedValue: ValueItem
 ) {
@@ -145,7 +149,7 @@ function decodeValueItemField(
 }
 
 function decodeRichTextField(
-  schema: Schema,
+  schema: AdminSchema,
   fieldSpec: FieldSpecification,
   encodedValue: EncodedRichTextBlock[]
 ): RichText {
@@ -166,7 +170,7 @@ function decodeRichTextField(
   return { blocks: decodedBlocks };
 }
 
-export function decodeAdminEntity(schema: Schema, values: AdminEntityValues): AdminEntity {
+export function decodeAdminEntity(schema: AdminSchema, values: AdminEntityValues): AdminEntity {
   const entitySpec = schema.getEntityTypeSpecification(values.type);
   if (!entitySpec) {
     throw new Error(`No entity spec for type ${values.type}`);
@@ -191,7 +195,7 @@ export function decodeAdminEntity(schema: Schema, values: AdminEntityValues): Ad
 }
 
 export function decodeAdminEntityFields(
-  schema: Schema,
+  schema: AdminSchema,
   entitySpec: EntityTypeSpecification,
   values: Pick<EntityVersionsTable, 'data'>
 ): AdminEntity['fields'] {
@@ -224,7 +228,7 @@ export function resolvePublishState(
 }
 
 export function resolveCreateEntity(
-  schema: Schema,
+  schema: AdminSchema,
   entity: AdminEntityCreate
 ): Result<AdminEntityCreate, ErrorType.BadRequest> {
   if (!entity.info.type) {
@@ -268,7 +272,7 @@ export function resolveCreateEntity(
 }
 
 export function resolveUpdateEntity(
-  schema: Schema,
+  schema: AdminSchema,
   entity: AdminEntityUpdate,
   type: string,
   values: Pick<
@@ -364,7 +368,7 @@ function checkForUnsupportedFields(
 }
 
 export async function encodeEntity(
-  schema: Schema,
+  schema: AdminSchema,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   entity: AdminEntity | AdminEntityCreate
@@ -428,7 +432,7 @@ export async function encodeEntity(
 }
 
 function encodeFieldItemOrList(
-  schema: Schema,
+  schema: AdminSchema,
   fieldSpec: FieldSpecification,
   prefix: string,
   data: unknown
@@ -465,7 +469,7 @@ function encodeFieldItemOrList(
 }
 
 function encodeValueItemField(
-  schema: Schema,
+  schema: AdminSchema,
   fieldSpec: FieldSpecification,
   prefix: string,
   data: ValueItem | null
@@ -525,7 +529,7 @@ function encodeValueItemField(
 }
 
 function encodeRichTextField(
-  schema: Schema,
+  schema: AdminSchema,
   fieldSpec: FieldSpecification,
   prefix: string,
   data: RichText | null
@@ -590,7 +594,7 @@ function encodeRichTextField(
 }
 
 export function collectDataFromEntity(
-  schema: Schema,
+  schema: AdminSchema,
   entity: AdminEntity | AdminEntityCreate
 ): {
   requestedReferences: RequestedReference[];

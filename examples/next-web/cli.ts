@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import type { CliContext } from '@jonasb/datadata-cli';
 import { CliAuth, CliMain } from '@jonasb/datadata-cli';
-import { Schema } from '@jonasb/datadata-core';
+import { AdminSchema } from '@jonasb/datadata-core';
 import { getServerConnection } from './utils/ServerUtils';
 
 async function main() {
@@ -18,7 +18,7 @@ async function main() {
     }
 
     const cliContext: CliContext = {
-      schema: new Schema(schemaResult.value),
+      schema: new AdminSchema(schemaResult.value),
       adminClient,
       publishedClient,
     };

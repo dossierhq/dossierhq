@@ -11,7 +11,7 @@ import type {
   PublishedClient,
   Query,
   Result,
-  Schema,
+  AdminSchema,
   ValueItem,
   ValueTypeSpecification,
 } from '@jonasb/datadata-core';
@@ -61,7 +61,7 @@ import {
 import * as Mutations from './Mutations';
 
 export interface SessionGraphQLContext {
-  schema: Result<Schema, ErrorType.NotAuthenticated>;
+  schema: Result<AdminSchema, ErrorType.NotAuthenticated>;
   adminClient: Result<AdminClient, ErrorType.NotAuthenticated>;
   publishedClient: Result<PublishedClient, ErrorType.NotAuthenticated>;
 }
@@ -106,11 +106,11 @@ function fieldConfigWithArgs<TSource, TContext, TArgs>(
 
 export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
   #types: GraphQLNamedType[] = [];
-  private readonly schema: Schema;
+  private readonly schema: AdminSchema;
   private readonly includePublished: boolean;
   private readonly includeAdmin: boolean;
 
-  constructor(schema: Schema, options?: { published: boolean; admin: boolean }) {
+  constructor(schema: AdminSchema, options?: { published: boolean; admin: boolean }) {
     this.schema = schema;
     this.includePublished = options?.published ?? true;
     this.includeAdmin = options?.admin ?? true;

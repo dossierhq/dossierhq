@@ -5,14 +5,14 @@ import type {
   PromiseResult,
   PublishedClient,
 } from '@jonasb/datadata-core';
-import { notOk, ok, Schema } from '@jonasb/datadata-core';
+import { notOk, ok, AdminSchema } from '@jonasb/datadata-core';
 import { createPostgresAdapter } from '@jonasb/datadata-database-adapter-postgres-pg';
 import type { Server } from '@jonasb/datadata-server';
 import { createServer } from '@jonasb/datadata-server';
 import type { NextApiRequest } from 'next';
 import SchemaSpec from './schema.json';
 
-let serverConnectionPromise: Promise<{ server: Server; schema: Schema }> | null = null;
+let serverConnectionPromise: Promise<{ server: Server; schema: AdminSchema }> | null = null;
 
 export async function getSessionContextForRequest(
   server: Server,
@@ -34,7 +34,7 @@ export async function getSessionContextForRequest(
   return ok({ adminClient, publishedClient });
 }
 
-export async function getServerConnection(): Promise<{ server: Server; schema: Schema }> {
+export async function getServerConnection(): Promise<{ server: Server; schema: AdminSchema }> {
   if (!serverConnectionPromise) {
     serverConnectionPromise = (async () => {
       const databaseAdapter = createPostgresAdapter({
@@ -51,7 +51,7 @@ export async function getServerConnection(): Promise<{ server: Server; schema: S
       if (updateSchemaResult.isError()) {
         throw updateSchemaResult.toError();
       }
-      return { server, schema: new Schema(updateSchemaResult.value.schemaSpecification) };
+      return { server, schema: new AdminSchema(updateSchemaResult.value.schemaSpecification) };
     })();
   }
 

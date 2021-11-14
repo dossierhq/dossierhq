@@ -86,7 +86,7 @@ export type {
   PublishedClientMiddleware,
   PublishedClientOperation,
 } from './PublishedClient';
-export { FieldType, RichTextBlockType, Schema } from './Schema';
+export { FieldType, RichTextBlockType, AdminSchema } from './Schema';
 export type {
   EntityTypeSpecification,
   FieldSpecification,

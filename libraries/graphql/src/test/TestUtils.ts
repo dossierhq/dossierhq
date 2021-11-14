@@ -6,7 +6,7 @@ import type {
   Result,
   AdminSchemaSpecification,
 } from '@jonasb/datadata-core';
-import { assertIsDefined, CoreTestUtils, Schema } from '@jonasb/datadata-core';
+import { assertIsDefined, CoreTestUtils, AdminSchema } from '@jonasb/datadata-core';
 import { createPostgresAdapter } from '@jonasb/datadata-database-adapter-postgres-pg';
 import { createServer } from '@jonasb/datadata-server';
 import { v4 as uuidv4 } from 'uuid';
@@ -14,7 +14,7 @@ import { v4 as uuidv4 } from 'uuid';
 const { expectOkResult } = CoreTestUtils;
 
 export interface TestServerWithSession {
-  schema: Schema;
+  schema: AdminSchema;
   adminClient: AdminClient;
   publishedClient: PublishedClient;
   subjectId: string;
@@ -57,7 +57,7 @@ async function setUpRealServerWithSession(schemaSpecification: Partial<AdminSche
   if (schemaResult.isError()) throw schemaResult.toError();
 
   return {
-    schema: new Schema(schemaResult.value),
+    schema: new AdminSchema(schemaResult.value),
     adminClient,
     publishedClient,
     subjectId,

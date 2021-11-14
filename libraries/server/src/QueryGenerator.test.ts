@@ -3,7 +3,7 @@ import {
   CoreTestUtils,
   ErrorType,
   QueryOrder,
-  Schema,
+  AdminSchema,
 } from '@jonasb/datadata-core';
 import { toOpaqueCursor } from './Connection';
 import {
@@ -15,7 +15,7 @@ import {
 
 const { expectErrorResult } = CoreTestUtils;
 
-const schema = new Schema({
+const schema = new AdminSchema({
   entityTypes: [
     { name: 'QueryGeneratorFoo', fields: [] },
     { name: 'QueryGeneratorBar', fields: [] },

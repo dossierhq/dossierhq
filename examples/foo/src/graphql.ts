@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import { notOk, ok, Schema } from '@jonasb/datadata-core';
+import { notOk, ok, AdminSchema } from '@jonasb/datadata-core';
 import { createPostgresAdapter } from '@jonasb/datadata-database-adapter-postgres-pg';
 import type { SessionGraphQLContext } from '@jonasb/datadata-graphql';
 import { GraphQLSchemaGenerator } from '@jonasb/datadata-graphql';
@@ -35,7 +35,7 @@ async function createSessionContext(server: Server, headers: IncomingHttpHeaders
   return sessionResult;
 }
 
-async function startServer(server: Server, schema: Schema, port: number) {
+async function startServer(server: Server, schema: AdminSchema, port: number) {
   const gqlSchema = new GraphQLSchemaGenerator(schema).buildSchema();
   const app = express();
   app.use(
@@ -83,7 +83,7 @@ async function main(port: number) {
       .createAdminClient(sessionResult.value.context)
       .getSchemaSpecification();
     if (schemaResult.isError()) throw schemaResult.toError();
-    await startServer(server, new Schema(schemaResult.value), port);
+    await startServer(server, new AdminSchema(schemaResult.value), port);
   } finally {
     await server.shutdown();
   }

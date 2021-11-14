@@ -9,7 +9,7 @@ import {
 
 const { expectResultValue } = CoreTestUtils;
 
-describe('Schema getSchema', () => {
+describe('AdminSchema getSchema', () => {
   test('No schema', async () => {
     const databaseAdapter = createMockDatabaseAdapter();
     const context = createMockTransactionContext();

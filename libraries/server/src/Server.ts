@@ -9,7 +9,7 @@ import type {
   PublishedClientMiddleware,
   AdminSchemaSpecification,
 } from '@jonasb/datadata-core';
-import { assertIsDefined, NoOpLogger, notOk, ok, Schema } from '@jonasb/datadata-core';
+import { assertIsDefined, NoOpLogger, notOk, ok, AdminSchema } from '@jonasb/datadata-core';
 import type { DatabaseAdapter, Session, SessionContext } from '.';
 import { createServerAdminClient } from './AdminClient';
 import { authCreateSession } from './Auth';
@@ -43,7 +43,7 @@ export interface Server {
 export class ServerImpl {
   #databaseAdapter: DatabaseAdapter | null;
   #logger: Logger;
-  #schema: Schema | null = null;
+  #schema: AdminSchema | null = null;
 
   constructor({ databaseAdapter, logger }: { databaseAdapter: DatabaseAdapter; logger?: Logger }) {
     this.#databaseAdapter = databaseAdapter;
@@ -67,19 +67,19 @@ export class ServerImpl {
     if (result.isError()) {
       return result;
     }
-    this.#schema = new Schema(result.value);
+    this.#schema = new AdminSchema(result.value);
     return ok(undefined);
   }
 
-  getSchema(): Schema {
+  getSchema(): AdminSchema {
     if (!this.#schema) {
-      throw new Error('Schema is not set');
+      throw new Error('AdminSchema is not set');
     }
     return this.#schema;
   }
 
   setSchema(schemaSpec: AdminSchemaSpecification): void {
-    this.#schema = new Schema(schemaSpec);
+    this.#schema = new AdminSchema(schemaSpec);
   }
 
   createInternalContext(logger?: Logger): InternalContext {
