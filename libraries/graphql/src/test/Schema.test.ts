@@ -1,31 +1,43 @@
-import { FieldType, AdminSchema } from '@jonasb/datadata-core';
+import { FieldType, AdminSchema, Schema } from '@jonasb/datadata-core';
 import type { AdminSchemaSpecification } from '@jonasb/datadata-core';
 import { graphql, printSchema } from 'graphql';
 import { GraphQLSchemaGenerator } from '..';
 
+function buildSchema(
+  schemaSpec: AdminSchemaSpecification,
+  { published, admin }: { published: boolean; admin: boolean }
+) {
+  const adminSchema = new AdminSchema(schemaSpec);
+  adminSchema.validate().throwIfError();
+
+  const generator = new GraphQLSchemaGenerator({
+    adminSchema: admin ? adminSchema : null,
+    publishedSchema: published ? new Schema(adminSchema.toPublishedSchema()) : null,
+  });
+  return generator.buildSchema();
+}
+
 function describeGeneratedSchema(
   schemaSpec: AdminSchemaSpecification,
-  options?: { published: boolean; admin: boolean }
+  options: { published: boolean; admin: boolean }
 ) {
-  const schema = new AdminSchema(schemaSpec);
-  schema.validate().throwIfError();
-  const generator = new GraphQLSchemaGenerator(schema, options);
-  const graphQLSchema = generator.buildSchema();
+  const graphQLSchema = buildSchema(schemaSpec, options);
   return printSchema(graphQLSchema);
 }
 
-async function querySchema(schemaSpec: AdminSchemaSpecification, query: string) {
-  const schema = new AdminSchema(schemaSpec);
-  schema.validate().throwIfError();
-  const generator = new GraphQLSchemaGenerator(schema);
-  const graphQLSchema = generator.buildSchema();
+async function querySchema(
+  schemaSpec: AdminSchemaSpecification,
+  options: { published: boolean; admin: boolean },
+  query: string
+) {
+  const graphQLSchema = buildSchema(schemaSpec, options);
   return await graphql({ schema: graphQLSchema, source: query });
 }
 
 describe('Empty schema spec', () => {
   const schemaSpec = { entityTypes: [], valueTypes: [] };
   test('Generated QL schema', () => {
-    const result = describeGeneratedSchema(schemaSpec);
+    const result = describeGeneratedSchema(schemaSpec, { admin: true, published: true });
     expect(result).toMatchSnapshot();
   });
 
@@ -47,7 +59,7 @@ describe('One empty entity type schema spec', () => {
   };
 
   test('Generated QL schema', () => {
-    const result = describeGeneratedSchema(schemaSpec);
+    const result = describeGeneratedSchema(schemaSpec, { admin: true, published: true });
     expect(result).toMatchSnapshot();
   });
 
@@ -99,7 +111,7 @@ describe('One empty entity type schema spec', () => {
         },
       },
     };
-    const result = await querySchema(schemaSpec, query);
+    const result = await querySchema(schemaSpec, { admin: true, published: true }, query);
     expect(result).toEqual(expected);
   });
 
@@ -158,7 +170,7 @@ describe('One empty entity type schema spec', () => {
         },
       },
     };
-    const result = await querySchema(schemaSpec, query);
+    const result = await querySchema(schemaSpec, { admin: true, published: true }, query);
 
     // remove all fields except 'node'
     const queryType = (result.data as { __schema: { queryType: { fields: { name: string }[] } } })
@@ -238,7 +250,7 @@ describe('One empty entity type schema spec', () => {
         },
       },
     };
-    const result = await querySchema(schemaSpec, query);
+    const result = await querySchema(schemaSpec, { admin: true, published: true }, query);
 
     expect(result).toEqual(expected);
   });
@@ -290,7 +302,7 @@ describe('One empty entity type schema spec', () => {
         },
       },
     };
-    const result = await querySchema(schemaSpec, query);
+    const result = await querySchema(schemaSpec, { admin: true, published: true }, query);
 
     expect(result).toEqual(expected);
   });
@@ -344,7 +356,7 @@ describe('One empty entity type schema spec', () => {
         },
       },
     };
-    const result = (await querySchema(schemaSpec, query)) as {
+    const result = (await querySchema(schemaSpec, { admin: true, published: true }, query)) as {
       data: { __type: { fields: { name: string }[] } };
     };
 
@@ -377,7 +389,7 @@ describe('Two entity types with reference schema spec', () => {
     valueTypes: [],
   };
   test('Generated QL schema', () => {
-    const result = describeGeneratedSchema(schemaSpec);
+    const result = describeGeneratedSchema(schemaSpec, { admin: true, published: true });
     expect(result).toMatchSnapshot();
   });
 
@@ -420,7 +432,7 @@ describe('Multiple references with entityTypes schema spec', () => {
     valueTypes: [],
   };
   test('Generated QL schema', () => {
-    const result = describeGeneratedSchema(schemaSpec);
+    const result = describeGeneratedSchema(schemaSpec, { admin: true, published: true });
     expect(result).toMatchSnapshot();
   });
 
@@ -453,7 +465,7 @@ describe('List of strings, booleans, locations and references schema spec', () =
     valueTypes: [],
   };
   test('Generated QL schema', () => {
-    const result = describeGeneratedSchema(schemaSpec);
+    const result = describeGeneratedSchema(schemaSpec, { admin: true, published: true });
     expect(result).toMatchSnapshot();
   });
 
@@ -519,7 +531,7 @@ describe('Value type schema spec', () => {
     ],
   };
   test('Generated QL schema', () => {
-    const result = describeGeneratedSchema(schemaSpec);
+    const result = describeGeneratedSchema(schemaSpec, { admin: true, published: true });
     expect(result).toMatchSnapshot();
   });
 
@@ -546,7 +558,50 @@ describe('Rich text schema spec', () => {
     valueTypes: [],
   };
   test('Generated QL schema', () => {
-    const result = describeGeneratedSchema(schemaSpec);
+    const result = describeGeneratedSchema(schemaSpec, { admin: true, published: true });
+    expect(result).toMatchSnapshot();
+  });
+
+  test('Generated QL schema (admin only)', () => {
+    const result = describeGeneratedSchema(schemaSpec, { admin: true, published: false });
+    expect(result).toMatchSnapshot();
+  });
+
+  test('Generated QL schema (published only)', () => {
+    const result = describeGeneratedSchema(schemaSpec, { admin: false, published: true });
+    expect(result).toMatchSnapshot();
+  });
+});
+
+describe('Admin only entity and value schema spec', () => {
+  const schemaSpec = {
+    entityTypes: [
+      {
+        name: 'Foo',
+        adminOnly: true,
+        fields: [{ name: 'body', type: FieldType.String }],
+      },
+      {
+        name: 'Bar',
+        adminOnly: false,
+        fields: [{ name: 'body', type: FieldType.String }],
+      },
+    ],
+    valueTypes: [
+      {
+        name: 'ValueOne',
+        adminOnly: true,
+        fields: [{ name: 'body', type: FieldType.String }],
+      },
+      {
+        name: 'ValueTwo',
+        adminOnly: false,
+        fields: [{ name: 'body', type: FieldType.String }],
+      },
+    ],
+  };
+  test('Generated QL schema', () => {
+    const result = describeGeneratedSchema(schemaSpec, { admin: true, published: true });
     expect(result).toMatchSnapshot();
   });
 

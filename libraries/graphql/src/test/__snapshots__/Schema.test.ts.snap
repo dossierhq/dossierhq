@@ -1,5 +1,809 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Admin only entity and value schema spec Generated QL schema (admin only) 1`] = `
+"interface Node {
+  id: ID!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String!
+  endCursor: String!
+}
+
+scalar Instant
+
+type Location {
+  lat: Float!
+  lng: Float!
+}
+
+input LocationInput {
+  lat: Float!
+  lng: Float!
+}
+
+input BoundingBoxInput {
+  minLat: Float!
+  maxLat: Float!
+  minLng: Float!
+  maxLng: Float!
+}
+
+enum AdminEntityType {
+  Foo
+  Bar
+}
+
+enum AdminValueType {
+  ValueOne
+  ValueTwo
+}
+
+enum EntityPublishState {
+  draft
+  published
+  modified
+  withdrawn
+  archived
+}
+
+type AdminEntityInfo {
+  type: AdminEntityType!
+  name: String!
+  version: Int!
+  publishingState: EntityPublishState!
+  createdAt: Instant!
+  updatedAt: Instant!
+}
+
+input AdminEntityCreateInfo {
+  type: AdminEntityType
+  name: String!
+  version: Int
+}
+
+enum AdminEntityCreateEffect {
+  created
+  none
+}
+
+input AdminEntityUpdateInfo {
+  type: AdminEntityType
+  name: String
+  version: Int
+}
+
+enum AdminEntityUpdateEffect {
+  updated
+  none
+}
+
+input AdminEntityUpsertInfo {
+  type: AdminEntityType!
+  name: String!
+}
+
+enum AdminEntityUpsertEffect {
+  created
+  updated
+  none
+}
+
+interface AdminEntity {
+  id: ID!
+  info: AdminEntityInfo!
+}
+
+type AdminEntityEdge {
+  node: AdminEntity
+  cursor: String!
+}
+
+type AdminEntityConnection {
+  pageInfo: PageInfo!
+  edges: [AdminEntityEdge]
+  totalCount: Int!
+}
+
+enum AdminQueryOrder {
+  createdAt
+  updatedAt
+  name
+}
+
+input AdminQueryInput {
+  entityTypes: [AdminEntityType]
+  referencing: ID
+  boundingBox: BoundingBoxInput
+  order: AdminQueryOrder
+  text: String
+}
+
+input AdminReferenceInput {
+  id: ID!
+}
+
+input EntityVersionInput {
+  id: ID!
+  version: Int!
+}
+
+interface AdminValue {
+  type: AdminValueType!
+}
+
+type AdminRichText {
+  blocks: JSON!
+  entities: [AdminEntity]
+}
+
+\\"\\"\\"
+The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+\\"\\"\\"
+scalar JSON
+
+input AdminRichTextInput {
+  blocks: JSON!
+}
+
+type EntityVersionInfo {
+  version: Int!
+  published: Boolean!
+  createdBy: ID!
+  createdAt: Instant!
+}
+
+type EntityHistory {
+  id: ID!
+  versions: [EntityVersionInfo]!
+}
+
+type PublishingEvent {
+  version: Int
+  publishedBy: ID!
+  publishedAt: Instant!
+}
+
+type PublishingHistory {
+  id: ID!
+  events: [PublishingEvent]!
+}
+
+type EntityPublishPayload {
+  id: ID!
+  publishState: EntityPublishState!
+  updatedAt: Instant!
+}
+
+type AdminFooFields {
+  body: String
+}
+
+type AdminFoo implements AdminEntity {
+  id: ID!
+  info: AdminEntityInfo!
+  fields: AdminFooFields!
+}
+
+input AdminFooFieldsInput {
+  body: String
+}
+
+input AdminFooCreateInput {
+  id: ID
+  info: AdminEntityCreateInfo!
+  fields: AdminFooFieldsInput!
+}
+
+type AdminFooCreatePayload {
+  effect: AdminEntityCreateEffect!
+  entity: AdminFoo!
+}
+
+input AdminFooUpdateInput {
+  id: ID!
+  info: AdminEntityUpdateInfo
+  fields: AdminFooFieldsInput!
+}
+
+type AdminFooUpdatePayload {
+  effect: AdminEntityUpdateEffect!
+  entity: AdminFoo!
+}
+
+input AdminFooUpsertInput {
+  id: ID!
+  info: AdminEntityUpsertInfo!
+  fields: AdminFooFieldsInput!
+}
+
+type AdminFooUpsertPayload {
+  effect: AdminEntityUpsertEffect!
+  entity: AdminFoo!
+}
+
+type AdminBarFields {
+  body: String
+}
+
+type AdminBar implements AdminEntity {
+  id: ID!
+  info: AdminEntityInfo!
+  fields: AdminBarFields!
+}
+
+input AdminBarFieldsInput {
+  body: String
+}
+
+input AdminBarCreateInput {
+  id: ID
+  info: AdminEntityCreateInfo!
+  fields: AdminBarFieldsInput!
+}
+
+type AdminBarCreatePayload {
+  effect: AdminEntityCreateEffect!
+  entity: AdminBar!
+}
+
+input AdminBarUpdateInput {
+  id: ID!
+  info: AdminEntityUpdateInfo
+  fields: AdminBarFieldsInput!
+}
+
+type AdminBarUpdatePayload {
+  effect: AdminEntityUpdateEffect!
+  entity: AdminBar!
+}
+
+input AdminBarUpsertInput {
+  id: ID!
+  info: AdminEntityUpsertInfo!
+  fields: AdminBarFieldsInput!
+}
+
+type AdminBarUpsertPayload {
+  effect: AdminEntityUpsertEffect!
+  entity: AdminBar!
+}
+
+type AdminValueOne implements AdminValue {
+  type: AdminValueType!
+  body: String
+}
+
+input AdminValueOneInput {
+  type: AdminValueType!
+  body: String
+}
+
+type AdminValueTwo implements AdminValue {
+  type: AdminValueType!
+  body: String
+}
+
+input AdminValueTwoInput {
+  type: AdminValueType!
+  body: String
+}
+
+type Query {
+  node(id: ID!): Node
+  nodes(ids: [ID!]!): [Node]
+  adminEntity(id: ID!, version: Int): AdminEntity
+  adminEntities(ids: [ID!]!): [AdminEntity]
+  adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  entityHistory(id: ID!): EntityHistory
+  publishingHistory(id: ID!): PublishingHistory
+}
+
+type Mutation {
+  publishEntities(entities: [EntityVersionInput!]!): [EntityPublishPayload!]
+  unpublishEntities(ids: [ID!]!): [EntityPublishPayload!]
+  archiveEntity(id: ID!): EntityPublishPayload
+  unarchiveEntity(id: ID!): EntityPublishPayload
+  createFooEntity(entity: AdminFooCreateInput!): AdminFooCreatePayload
+  updateFooEntity(entity: AdminFooUpdateInput!): AdminFooUpdatePayload
+  upsertFooEntity(entity: AdminFooUpsertInput!): AdminFooUpsertPayload
+  createBarEntity(entity: AdminBarCreateInput!): AdminBarCreatePayload
+  updateBarEntity(entity: AdminBarUpdateInput!): AdminBarUpdatePayload
+  upsertBarEntity(entity: AdminBarUpsertInput!): AdminBarUpsertPayload
+}"
+`;
+
+exports[`Admin only entity and value schema spec Generated QL schema (published only) 1`] = `
+"interface Node {
+  id: ID!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String!
+  endCursor: String!
+}
+
+scalar Instant
+
+type Location {
+  lat: Float!
+  lng: Float!
+}
+
+input LocationInput {
+  lat: Float!
+  lng: Float!
+}
+
+input BoundingBoxInput {
+  minLat: Float!
+  maxLat: Float!
+  minLng: Float!
+  maxLng: Float!
+}
+
+enum EntityType {
+  Bar
+}
+
+enum ValueType {
+  ValueTwo
+}
+
+type EntityInfo {
+  name: String!
+}
+
+interface Entity implements Node {
+  id: ID!
+  info: EntityInfo!
+}
+
+interface Value {
+  type: ValueType!
+}
+
+type RichText {
+  blocks: JSON!
+  entities: [Entity]
+}
+
+\\"\\"\\"
+The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+\\"\\"\\"
+scalar JSON
+
+type EntityEdge {
+  node: Entity
+  cursor: String!
+}
+
+type EntityConnection {
+  pageInfo: PageInfo!
+  edges: [EntityEdge]
+  totalCount: Int!
+}
+
+enum QueryOrder {
+  createdAt
+  name
+}
+
+input QueryInput {
+  entityTypes: [EntityType]
+  referencing: ID
+  boundingBox: BoundingBoxInput
+  order: QueryOrder
+  text: String
+}
+
+type BarFields {
+  body: String
+}
+
+type Bar implements Node & Entity {
+  id: ID!
+  info: EntityInfo!
+  fields: BarFields!
+}
+
+type ValueTwo implements Value {
+  type: ValueType!
+  body: String
+}
+
+type Query {
+  node(id: ID!): Node
+  nodes(ids: [ID!]!): [Node]
+  searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
+}"
+`;
+
+exports[`Admin only entity and value schema spec Generated QL schema 1`] = `
+"interface Node {
+  id: ID!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String!
+  endCursor: String!
+}
+
+scalar Instant
+
+type Location {
+  lat: Float!
+  lng: Float!
+}
+
+input LocationInput {
+  lat: Float!
+  lng: Float!
+}
+
+input BoundingBoxInput {
+  minLat: Float!
+  maxLat: Float!
+  minLng: Float!
+  maxLng: Float!
+}
+
+enum EntityType {
+  Bar
+}
+
+enum ValueType {
+  ValueTwo
+}
+
+type EntityInfo {
+  name: String!
+}
+
+interface Entity implements Node {
+  id: ID!
+  info: EntityInfo!
+}
+
+interface Value {
+  type: ValueType!
+}
+
+type RichText {
+  blocks: JSON!
+  entities: [Entity]
+}
+
+\\"\\"\\"
+The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+\\"\\"\\"
+scalar JSON
+
+type EntityEdge {
+  node: Entity
+  cursor: String!
+}
+
+type EntityConnection {
+  pageInfo: PageInfo!
+  edges: [EntityEdge]
+  totalCount: Int!
+}
+
+enum QueryOrder {
+  createdAt
+  name
+}
+
+input QueryInput {
+  entityTypes: [EntityType]
+  referencing: ID
+  boundingBox: BoundingBoxInput
+  order: QueryOrder
+  text: String
+}
+
+type BarFields {
+  body: String
+}
+
+type Bar implements Node & Entity {
+  id: ID!
+  info: EntityInfo!
+  fields: BarFields!
+}
+
+type ValueTwo implements Value {
+  type: ValueType!
+  body: String
+}
+
+enum AdminEntityType {
+  Foo
+  Bar
+}
+
+enum AdminValueType {
+  ValueOne
+  ValueTwo
+}
+
+enum EntityPublishState {
+  draft
+  published
+  modified
+  withdrawn
+  archived
+}
+
+type AdminEntityInfo {
+  type: AdminEntityType!
+  name: String!
+  version: Int!
+  publishingState: EntityPublishState!
+  createdAt: Instant!
+  updatedAt: Instant!
+}
+
+input AdminEntityCreateInfo {
+  type: AdminEntityType
+  name: String!
+  version: Int
+}
+
+enum AdminEntityCreateEffect {
+  created
+  none
+}
+
+input AdminEntityUpdateInfo {
+  type: AdminEntityType
+  name: String
+  version: Int
+}
+
+enum AdminEntityUpdateEffect {
+  updated
+  none
+}
+
+input AdminEntityUpsertInfo {
+  type: AdminEntityType!
+  name: String!
+}
+
+enum AdminEntityUpsertEffect {
+  created
+  updated
+  none
+}
+
+interface AdminEntity {
+  id: ID!
+  info: AdminEntityInfo!
+}
+
+type AdminEntityEdge {
+  node: AdminEntity
+  cursor: String!
+}
+
+type AdminEntityConnection {
+  pageInfo: PageInfo!
+  edges: [AdminEntityEdge]
+  totalCount: Int!
+}
+
+enum AdminQueryOrder {
+  createdAt
+  updatedAt
+  name
+}
+
+input AdminQueryInput {
+  entityTypes: [AdminEntityType]
+  referencing: ID
+  boundingBox: BoundingBoxInput
+  order: AdminQueryOrder
+  text: String
+}
+
+input AdminReferenceInput {
+  id: ID!
+}
+
+input EntityVersionInput {
+  id: ID!
+  version: Int!
+}
+
+interface AdminValue {
+  type: AdminValueType!
+}
+
+type AdminRichText {
+  blocks: JSON!
+  entities: [AdminEntity]
+}
+
+input AdminRichTextInput {
+  blocks: JSON!
+}
+
+type EntityVersionInfo {
+  version: Int!
+  published: Boolean!
+  createdBy: ID!
+  createdAt: Instant!
+}
+
+type EntityHistory {
+  id: ID!
+  versions: [EntityVersionInfo]!
+}
+
+type PublishingEvent {
+  version: Int
+  publishedBy: ID!
+  publishedAt: Instant!
+}
+
+type PublishingHistory {
+  id: ID!
+  events: [PublishingEvent]!
+}
+
+type EntityPublishPayload {
+  id: ID!
+  publishState: EntityPublishState!
+  updatedAt: Instant!
+}
+
+type AdminFooFields {
+  body: String
+}
+
+type AdminFoo implements AdminEntity {
+  id: ID!
+  info: AdminEntityInfo!
+  fields: AdminFooFields!
+}
+
+input AdminFooFieldsInput {
+  body: String
+}
+
+input AdminFooCreateInput {
+  id: ID
+  info: AdminEntityCreateInfo!
+  fields: AdminFooFieldsInput!
+}
+
+type AdminFooCreatePayload {
+  effect: AdminEntityCreateEffect!
+  entity: AdminFoo!
+}
+
+input AdminFooUpdateInput {
+  id: ID!
+  info: AdminEntityUpdateInfo
+  fields: AdminFooFieldsInput!
+}
+
+type AdminFooUpdatePayload {
+  effect: AdminEntityUpdateEffect!
+  entity: AdminFoo!
+}
+
+input AdminFooUpsertInput {
+  id: ID!
+  info: AdminEntityUpsertInfo!
+  fields: AdminFooFieldsInput!
+}
+
+type AdminFooUpsertPayload {
+  effect: AdminEntityUpsertEffect!
+  entity: AdminFoo!
+}
+
+type AdminBarFields {
+  body: String
+}
+
+type AdminBar implements AdminEntity {
+  id: ID!
+  info: AdminEntityInfo!
+  fields: AdminBarFields!
+}
+
+input AdminBarFieldsInput {
+  body: String
+}
+
+input AdminBarCreateInput {
+  id: ID
+  info: AdminEntityCreateInfo!
+  fields: AdminBarFieldsInput!
+}
+
+type AdminBarCreatePayload {
+  effect: AdminEntityCreateEffect!
+  entity: AdminBar!
+}
+
+input AdminBarUpdateInput {
+  id: ID!
+  info: AdminEntityUpdateInfo
+  fields: AdminBarFieldsInput!
+}
+
+type AdminBarUpdatePayload {
+  effect: AdminEntityUpdateEffect!
+  entity: AdminBar!
+}
+
+input AdminBarUpsertInput {
+  id: ID!
+  info: AdminEntityUpsertInfo!
+  fields: AdminBarFieldsInput!
+}
+
+type AdminBarUpsertPayload {
+  effect: AdminEntityUpsertEffect!
+  entity: AdminBar!
+}
+
+type AdminValueOne implements AdminValue {
+  type: AdminValueType!
+  body: String
+}
+
+input AdminValueOneInput {
+  type: AdminValueType!
+  body: String
+}
+
+type AdminValueTwo implements AdminValue {
+  type: AdminValueType!
+  body: String
+}
+
+input AdminValueTwoInput {
+  type: AdminValueType!
+  body: String
+}
+
+type Query {
+  node(id: ID!): Node
+  nodes(ids: [ID!]!): [Node]
+  searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
+  adminEntity(id: ID!, version: Int): AdminEntity
+  adminEntities(ids: [ID!]!): [AdminEntity]
+  adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  entityHistory(id: ID!): EntityHistory
+  publishingHistory(id: ID!): PublishingHistory
+}
+
+type Mutation {
+  publishEntities(entities: [EntityVersionInput!]!): [EntityPublishPayload!]
+  unpublishEntities(ids: [ID!]!): [EntityPublishPayload!]
+  archiveEntity(id: ID!): EntityPublishPayload
+  unarchiveEntity(id: ID!): EntityPublishPayload
+  createFooEntity(entity: AdminFooCreateInput!): AdminFooCreatePayload
+  updateFooEntity(entity: AdminFooUpdateInput!): AdminFooUpdatePayload
+  upsertFooEntity(entity: AdminFooUpsertInput!): AdminFooUpsertPayload
+  createBarEntity(entity: AdminBarCreateInput!): AdminBarCreatePayload
+  updateBarEntity(entity: AdminBarUpdateInput!): AdminBarUpdatePayload
+  upsertBarEntity(entity: AdminBarUpsertInput!): AdminBarUpsertPayload
+}"
+`;
+
 exports[`Empty schema spec Generated QL schema (admin only) 1`] = `
 "interface Node {
   id: ID!
@@ -74,11 +878,6 @@ type PageInfo {
 
 scalar Instant
 
-enum EntityType {
-  Foo
-  Bar
-}
-
 type Location {
   lat: Float!
   lng: Float!
@@ -96,6 +895,11 @@ input BoundingBoxInput {
   maxLng: Float!
 }
 
+enum AdminEntityType {
+  Foo
+  Bar
+}
+
 enum EntityPublishState {
   draft
   published
@@ -105,7 +909,7 @@ enum EntityPublishState {
 }
 
 type AdminEntityInfo {
-  type: EntityType!
+  type: AdminEntityType!
   name: String!
   version: Int!
   publishingState: EntityPublishState!
@@ -114,7 +918,7 @@ type AdminEntityInfo {
 }
 
 input AdminEntityCreateInfo {
-  type: EntityType
+  type: AdminEntityType
   name: String!
   version: Int
 }
@@ -125,7 +929,7 @@ enum AdminEntityCreateEffect {
 }
 
 input AdminEntityUpdateInfo {
-  type: EntityType
+  type: AdminEntityType
   name: String
   version: Int
 }
@@ -136,7 +940,7 @@ enum AdminEntityUpdateEffect {
 }
 
 input AdminEntityUpsertInfo {
-  type: EntityType!
+  type: AdminEntityType!
   name: String!
 }
 
@@ -169,7 +973,7 @@ enum AdminQueryOrder {
 }
 
 input AdminQueryInput {
-  entityTypes: [EntityType]
+  entityTypes: [AdminEntityType]
   referencing: ID
   boundingBox: BoundingBoxInput
   order: AdminQueryOrder
@@ -354,11 +1158,6 @@ type PageInfo {
 
 scalar Instant
 
-enum EntityType {
-  Foo
-  Bar
-}
-
 type Location {
   lat: Float!
   lng: Float!
@@ -374,6 +1173,11 @@ input BoundingBoxInput {
   maxLat: Float!
   minLng: Float!
   maxLng: Float!
+}
+
+enum EntityType {
+  Foo
+  Bar
 }
 
 type EntityInfo {
@@ -458,11 +1262,6 @@ type PageInfo {
 
 scalar Instant
 
-enum EntityType {
-  Foo
-  Bar
-}
-
 type Location {
   lat: Float!
   lng: Float!
@@ -478,6 +1277,11 @@ input BoundingBoxInput {
   maxLat: Float!
   minLng: Float!
   maxLng: Float!
+}
+
+enum EntityType {
+  Foo
+  Bar
 }
 
 type EntityInfo {
@@ -541,6 +1345,11 @@ type Bar implements Node & Entity {
   info: EntityInfo!
 }
 
+enum AdminEntityType {
+  Foo
+  Bar
+}
+
 enum EntityPublishState {
   draft
   published
@@ -550,7 +1359,7 @@ enum EntityPublishState {
 }
 
 type AdminEntityInfo {
-  type: EntityType!
+  type: AdminEntityType!
   name: String!
   version: Int!
   publishingState: EntityPublishState!
@@ -559,7 +1368,7 @@ type AdminEntityInfo {
 }
 
 input AdminEntityCreateInfo {
-  type: EntityType
+  type: AdminEntityType
   name: String!
   version: Int
 }
@@ -570,7 +1379,7 @@ enum AdminEntityCreateEffect {
 }
 
 input AdminEntityUpdateInfo {
-  type: EntityType
+  type: AdminEntityType
   name: String
   version: Int
 }
@@ -581,7 +1390,7 @@ enum AdminEntityUpdateEffect {
 }
 
 input AdminEntityUpsertInfo {
-  type: EntityType!
+  type: AdminEntityType!
   name: String!
 }
 
@@ -614,7 +1423,7 @@ enum AdminQueryOrder {
 }
 
 input AdminQueryInput {
-  entityTypes: [EntityType]
+  entityTypes: [AdminEntityType]
   referencing: ID
   boundingBox: BoundingBoxInput
   order: AdminQueryOrder
@@ -795,12 +1604,6 @@ type PageInfo {
 
 scalar Instant
 
-enum EntityType {
-  Foo
-  Bar
-  Baz
-}
-
 type Location {
   lat: Float!
   lng: Float!
@@ -818,6 +1621,12 @@ input BoundingBoxInput {
   maxLng: Float!
 }
 
+enum AdminEntityType {
+  Foo
+  Bar
+  Baz
+}
+
 enum EntityPublishState {
   draft
   published
@@ -827,7 +1636,7 @@ enum EntityPublishState {
 }
 
 type AdminEntityInfo {
-  type: EntityType!
+  type: AdminEntityType!
   name: String!
   version: Int!
   publishingState: EntityPublishState!
@@ -836,7 +1645,7 @@ type AdminEntityInfo {
 }
 
 input AdminEntityCreateInfo {
-  type: EntityType
+  type: AdminEntityType
   name: String!
   version: Int
 }
@@ -847,7 +1656,7 @@ enum AdminEntityCreateEffect {
 }
 
 input AdminEntityUpdateInfo {
-  type: EntityType
+  type: AdminEntityType
   name: String
   version: Int
 }
@@ -858,7 +1667,7 @@ enum AdminEntityUpdateEffect {
 }
 
 input AdminEntityUpsertInfo {
-  type: EntityType!
+  type: AdminEntityType!
   name: String!
 }
 
@@ -891,7 +1700,7 @@ enum AdminQueryOrder {
 }
 
 input AdminQueryInput {
-  entityTypes: [EntityType]
+  entityTypes: [AdminEntityType]
   referencing: ID
   boundingBox: BoundingBoxInput
   order: AdminQueryOrder
@@ -1127,12 +1936,6 @@ type PageInfo {
 
 scalar Instant
 
-enum EntityType {
-  Foo
-  Bar
-  Baz
-}
-
 type Location {
   lat: Float!
   lng: Float!
@@ -1148,6 +1951,12 @@ input BoundingBoxInput {
   maxLat: Float!
   minLng: Float!
   maxLng: Float!
+}
+
+enum EntityType {
+  Foo
+  Bar
+  Baz
 }
 
 type EntityInfo {
@@ -1249,12 +2058,6 @@ type PageInfo {
 
 scalar Instant
 
-enum EntityType {
-  Foo
-  Bar
-  Baz
-}
-
 type Location {
   lat: Float!
   lng: Float!
@@ -1270,6 +2073,12 @@ input BoundingBoxInput {
   maxLat: Float!
   minLng: Float!
   maxLng: Float!
+}
+
+enum EntityType {
+  Foo
+  Bar
+  Baz
 }
 
 type EntityInfo {
@@ -1339,6 +2148,12 @@ type Baz implements Node & Entity {
   info: EntityInfo!
 }
 
+enum AdminEntityType {
+  Foo
+  Bar
+  Baz
+}
+
 enum EntityPublishState {
   draft
   published
@@ -1348,7 +2163,7 @@ enum EntityPublishState {
 }
 
 type AdminEntityInfo {
-  type: EntityType!
+  type: AdminEntityType!
   name: String!
   version: Int!
   publishingState: EntityPublishState!
@@ -1357,7 +2172,7 @@ type AdminEntityInfo {
 }
 
 input AdminEntityCreateInfo {
-  type: EntityType
+  type: AdminEntityType
   name: String!
   version: Int
 }
@@ -1368,7 +2183,7 @@ enum AdminEntityCreateEffect {
 }
 
 input AdminEntityUpdateInfo {
-  type: EntityType
+  type: AdminEntityType
   name: String
   version: Int
 }
@@ -1379,7 +2194,7 @@ enum AdminEntityUpdateEffect {
 }
 
 input AdminEntityUpsertInfo {
-  type: EntityType!
+  type: AdminEntityType!
   name: String!
 }
 
@@ -1412,7 +2227,7 @@ enum AdminQueryOrder {
 }
 
 input AdminQueryInput {
-  entityTypes: [EntityType]
+  entityTypes: [AdminEntityType]
   referencing: ID
   boundingBox: BoundingBoxInput
   order: AdminQueryOrder
@@ -1655,10 +2470,6 @@ type PageInfo {
 
 scalar Instant
 
-enum EntityType {
-  Foo
-}
-
 type Location {
   lat: Float!
   lng: Float!
@@ -1676,6 +2487,10 @@ input BoundingBoxInput {
   maxLng: Float!
 }
 
+enum AdminEntityType {
+  Foo
+}
+
 enum EntityPublishState {
   draft
   published
@@ -1685,7 +2500,7 @@ enum EntityPublishState {
 }
 
 type AdminEntityInfo {
-  type: EntityType!
+  type: AdminEntityType!
   name: String!
   version: Int!
   publishingState: EntityPublishState!
@@ -1694,7 +2509,7 @@ type AdminEntityInfo {
 }
 
 input AdminEntityCreateInfo {
-  type: EntityType
+  type: AdminEntityType
   name: String!
   version: Int
 }
@@ -1705,7 +2520,7 @@ enum AdminEntityCreateEffect {
 }
 
 input AdminEntityUpdateInfo {
-  type: EntityType
+  type: AdminEntityType
   name: String
   version: Int
 }
@@ -1716,7 +2531,7 @@ enum AdminEntityUpdateEffect {
 }
 
 input AdminEntityUpsertInfo {
-  type: EntityType!
+  type: AdminEntityType!
   name: String!
 }
 
@@ -1749,7 +2564,7 @@ enum AdminQueryOrder {
 }
 
 input AdminQueryInput {
-  entityTypes: [EntityType]
+  entityTypes: [AdminEntityType]
   referencing: ID
   boundingBox: BoundingBoxInput
   order: AdminQueryOrder
@@ -1878,10 +2693,6 @@ type PageInfo {
 
 scalar Instant
 
-enum EntityType {
-  Foo
-}
-
 type Location {
   lat: Float!
   lng: Float!
@@ -1897,6 +2708,10 @@ input BoundingBoxInput {
   maxLat: Float!
   minLng: Float!
   maxLng: Float!
+}
+
+enum EntityType {
+  Foo
 }
 
 type EntityInfo {
@@ -1968,10 +2783,6 @@ type PageInfo {
 
 scalar Instant
 
-enum EntityType {
-  Foo
-}
-
 type Location {
   lat: Float!
   lng: Float!
@@ -1987,6 +2798,10 @@ input BoundingBoxInput {
   maxLat: Float!
   minLng: Float!
   maxLng: Float!
+}
+
+enum EntityType {
+  Foo
 }
 
 type EntityInfo {
@@ -2037,6 +2852,10 @@ type Foo implements Node & Entity {
   info: EntityInfo!
 }
 
+enum AdminEntityType {
+  Foo
+}
+
 enum EntityPublishState {
   draft
   published
@@ -2046,7 +2865,7 @@ enum EntityPublishState {
 }
 
 type AdminEntityInfo {
-  type: EntityType!
+  type: AdminEntityType!
   name: String!
   version: Int!
   publishingState: EntityPublishState!
@@ -2055,7 +2874,7 @@ type AdminEntityInfo {
 }
 
 input AdminEntityCreateInfo {
-  type: EntityType
+  type: AdminEntityType
   name: String!
   version: Int
 }
@@ -2066,7 +2885,7 @@ enum AdminEntityCreateEffect {
 }
 
 input AdminEntityUpdateInfo {
-  type: EntityType
+  type: AdminEntityType
   name: String
   version: Int
 }
@@ -2077,7 +2896,7 @@ enum AdminEntityUpdateEffect {
 }
 
 input AdminEntityUpsertInfo {
-  type: EntityType!
+  type: AdminEntityType!
   name: String!
 }
 
@@ -2110,7 +2929,7 @@ enum AdminQueryOrder {
 }
 
 input AdminQueryInput {
-  entityTypes: [EntityType]
+  entityTypes: [AdminEntityType]
   referencing: ID
   boundingBox: BoundingBoxInput
   order: AdminQueryOrder
@@ -2235,10 +3054,6 @@ type PageInfo {
 
 scalar Instant
 
-enum EntityType {
-  Foo
-}
-
 type Location {
   lat: Float!
   lng: Float!
@@ -2256,6 +3071,10 @@ input BoundingBoxInput {
   maxLng: Float!
 }
 
+enum AdminEntityType {
+  Foo
+}
+
 enum EntityPublishState {
   draft
   published
@@ -2265,7 +3084,7 @@ enum EntityPublishState {
 }
 
 type AdminEntityInfo {
-  type: EntityType!
+  type: AdminEntityType!
   name: String!
   version: Int!
   publishingState: EntityPublishState!
@@ -2274,7 +3093,7 @@ type AdminEntityInfo {
 }
 
 input AdminEntityCreateInfo {
-  type: EntityType
+  type: AdminEntityType
   name: String!
   version: Int
 }
@@ -2285,7 +3104,7 @@ enum AdminEntityCreateEffect {
 }
 
 input AdminEntityUpdateInfo {
-  type: EntityType
+  type: AdminEntityType
   name: String
   version: Int
 }
@@ -2296,7 +3115,7 @@ enum AdminEntityUpdateEffect {
 }
 
 input AdminEntityUpsertInfo {
-  type: EntityType!
+  type: AdminEntityType!
   name: String!
 }
 
@@ -2329,7 +3148,7 @@ enum AdminQueryOrder {
 }
 
 input AdminQueryInput {
-  entityTypes: [EntityType]
+  entityTypes: [AdminEntityType]
   referencing: ID
   boundingBox: BoundingBoxInput
   order: AdminQueryOrder
@@ -2470,10 +3289,6 @@ type PageInfo {
 
 scalar Instant
 
-enum EntityType {
-  Foo
-}
-
 type Location {
   lat: Float!
   lng: Float!
@@ -2489,6 +3304,10 @@ input BoundingBoxInput {
   maxLat: Float!
   minLng: Float!
   maxLng: Float!
+}
+
+enum EntityType {
+  Foo
 }
 
 type EntityInfo {
@@ -2565,10 +3384,6 @@ type PageInfo {
 
 scalar Instant
 
-enum EntityType {
-  Foo
-}
-
 type Location {
   lat: Float!
   lng: Float!
@@ -2584,6 +3399,10 @@ input BoundingBoxInput {
   maxLat: Float!
   minLng: Float!
   maxLng: Float!
+}
+
+enum EntityType {
+  Foo
 }
 
 type EntityInfo {
@@ -2639,6 +3458,10 @@ type Foo implements Node & Entity {
   fields: FooFields!
 }
 
+enum AdminEntityType {
+  Foo
+}
+
 enum EntityPublishState {
   draft
   published
@@ -2648,7 +3471,7 @@ enum EntityPublishState {
 }
 
 type AdminEntityInfo {
-  type: EntityType!
+  type: AdminEntityType!
   name: String!
   version: Int!
   publishingState: EntityPublishState!
@@ -2657,7 +3480,7 @@ type AdminEntityInfo {
 }
 
 input AdminEntityCreateInfo {
-  type: EntityType
+  type: AdminEntityType
   name: String!
   version: Int
 }
@@ -2668,7 +3491,7 @@ enum AdminEntityCreateEffect {
 }
 
 input AdminEntityUpdateInfo {
-  type: EntityType
+  type: AdminEntityType
   name: String
   version: Int
 }
@@ -2679,7 +3502,7 @@ enum AdminEntityUpdateEffect {
 }
 
 input AdminEntityUpsertInfo {
-  type: EntityType!
+  type: AdminEntityType!
   name: String!
 }
 
@@ -2712,7 +3535,7 @@ enum AdminQueryOrder {
 }
 
 input AdminQueryInput {
-  entityTypes: [EntityType]
+  entityTypes: [AdminEntityType]
   referencing: ID
   boundingBox: BoundingBoxInput
   order: AdminQueryOrder
@@ -2849,11 +3672,6 @@ type PageInfo {
 
 scalar Instant
 
-enum EntityType {
-  Foo
-  Bar
-}
-
 type Location {
   lat: Float!
   lng: Float!
@@ -2871,6 +3689,11 @@ input BoundingBoxInput {
   maxLng: Float!
 }
 
+enum AdminEntityType {
+  Foo
+  Bar
+}
+
 enum EntityPublishState {
   draft
   published
@@ -2880,7 +3703,7 @@ enum EntityPublishState {
 }
 
 type AdminEntityInfo {
-  type: EntityType!
+  type: AdminEntityType!
   name: String!
   version: Int!
   publishingState: EntityPublishState!
@@ -2889,7 +3712,7 @@ type AdminEntityInfo {
 }
 
 input AdminEntityCreateInfo {
-  type: EntityType
+  type: AdminEntityType
   name: String!
   version: Int
 }
@@ -2900,7 +3723,7 @@ enum AdminEntityCreateEffect {
 }
 
 input AdminEntityUpdateInfo {
-  type: EntityType
+  type: AdminEntityType
   name: String
   version: Int
 }
@@ -2911,7 +3734,7 @@ enum AdminEntityUpdateEffect {
 }
 
 input AdminEntityUpsertInfo {
-  type: EntityType!
+  type: AdminEntityType!
   name: String!
 }
 
@@ -2944,7 +3767,7 @@ enum AdminQueryOrder {
 }
 
 input AdminQueryInput {
-  entityTypes: [EntityType]
+  entityTypes: [AdminEntityType]
   referencing: ID
   boundingBox: BoundingBoxInput
   order: AdminQueryOrder
@@ -3141,11 +3964,6 @@ type PageInfo {
 
 scalar Instant
 
-enum EntityType {
-  Foo
-  Bar
-}
-
 type Location {
   lat: Float!
   lng: Float!
@@ -3161,6 +3979,11 @@ input BoundingBoxInput {
   maxLat: Float!
   minLng: Float!
   maxLng: Float!
+}
+
+enum EntityType {
+  Foo
+  Bar
 }
 
 type EntityInfo {
@@ -3250,11 +4073,6 @@ type PageInfo {
 
 scalar Instant
 
-enum EntityType {
-  Foo
-  Bar
-}
-
 type Location {
   lat: Float!
   lng: Float!
@@ -3270,6 +4088,11 @@ input BoundingBoxInput {
   maxLat: Float!
   minLng: Float!
   maxLng: Float!
+}
+
+enum EntityType {
+  Foo
+  Bar
 }
 
 type EntityInfo {
@@ -3338,6 +4161,11 @@ type Bar implements Node & Entity {
   fields: BarFields!
 }
 
+enum AdminEntityType {
+  Foo
+  Bar
+}
+
 enum EntityPublishState {
   draft
   published
@@ -3347,7 +4175,7 @@ enum EntityPublishState {
 }
 
 type AdminEntityInfo {
-  type: EntityType!
+  type: AdminEntityType!
   name: String!
   version: Int!
   publishingState: EntityPublishState!
@@ -3356,7 +4184,7 @@ type AdminEntityInfo {
 }
 
 input AdminEntityCreateInfo {
-  type: EntityType
+  type: AdminEntityType
   name: String!
   version: Int
 }
@@ -3367,7 +4195,7 @@ enum AdminEntityCreateEffect {
 }
 
 input AdminEntityUpdateInfo {
-  type: EntityType
+  type: AdminEntityType
   name: String
   version: Int
 }
@@ -3378,7 +4206,7 @@ enum AdminEntityUpdateEffect {
 }
 
 input AdminEntityUpsertInfo {
-  type: EntityType!
+  type: AdminEntityType!
   name: String!
 }
 
@@ -3411,7 +4239,7 @@ enum AdminQueryOrder {
 }
 
 input AdminQueryInput {
-  entityTypes: [EntityType]
+  entityTypes: [AdminEntityType]
   referencing: ID
   boundingBox: BoundingBoxInput
   order: AdminQueryOrder
@@ -3604,17 +4432,6 @@ type PageInfo {
 
 scalar Instant
 
-enum EntityType {
-  Foo
-  Bar
-}
-
-enum ValueType {
-  ValueOne
-  ValueList
-  NestedValue
-}
-
 type Location {
   lat: Float!
   lng: Float!
@@ -3632,6 +4449,17 @@ input BoundingBoxInput {
   maxLng: Float!
 }
 
+enum AdminEntityType {
+  Foo
+  Bar
+}
+
+enum AdminValueType {
+  ValueOne
+  ValueList
+  NestedValue
+}
+
 enum EntityPublishState {
   draft
   published
@@ -3641,7 +4469,7 @@ enum EntityPublishState {
 }
 
 type AdminEntityInfo {
-  type: EntityType!
+  type: AdminEntityType!
   name: String!
   version: Int!
   publishingState: EntityPublishState!
@@ -3650,7 +4478,7 @@ type AdminEntityInfo {
 }
 
 input AdminEntityCreateInfo {
-  type: EntityType
+  type: AdminEntityType
   name: String!
   version: Int
 }
@@ -3661,7 +4489,7 @@ enum AdminEntityCreateEffect {
 }
 
 input AdminEntityUpdateInfo {
-  type: EntityType
+  type: AdminEntityType
   name: String
   version: Int
 }
@@ -3672,7 +4500,7 @@ enum AdminEntityUpdateEffect {
 }
 
 input AdminEntityUpsertInfo {
-  type: EntityType!
+  type: AdminEntityType!
   name: String!
 }
 
@@ -3705,7 +4533,7 @@ enum AdminQueryOrder {
 }
 
 input AdminQueryInput {
-  entityTypes: [EntityType]
+  entityTypes: [AdminEntityType]
   referencing: ID
   boundingBox: BoundingBoxInput
   order: AdminQueryOrder
@@ -3722,7 +4550,7 @@ input EntityVersionInput {
 }
 
 interface AdminValue {
-  type: ValueType!
+  type: AdminValueType!
 }
 
 type AdminRichText {
@@ -3859,7 +4687,7 @@ type AdminBarUpsertPayload {
 }
 
 type AdminValueOne implements AdminValue {
-  type: ValueType!
+  type: AdminValueType!
   one: String
   two: AdminBar
   three: Location
@@ -3867,7 +4695,7 @@ type AdminValueOne implements AdminValue {
 }
 
 input AdminValueOneInput {
-  type: ValueType!
+  type: AdminValueType!
   one: String
   two: AdminReferenceInput
   three: LocationInput
@@ -3875,7 +4703,7 @@ input AdminValueOneInput {
 }
 
 type AdminValueList implements AdminValue {
-  type: ValueType!
+  type: AdminValueType!
   one: [String!]
   two: [AdminBar!]
   three: [Location!]
@@ -3883,7 +4711,7 @@ type AdminValueList implements AdminValue {
 }
 
 input AdminValueListInput {
-  type: ValueType!
+  type: AdminValueType!
   one: [String!]
   two: [AdminReferenceInput!]
   three: [LocationInput!]
@@ -3891,13 +4719,13 @@ input AdminValueListInput {
 }
 
 type AdminNestedValue implements AdminValue {
-  type: ValueType!
+  type: AdminValueType!
   text: String
   child: AdminNestedValue
 }
 
 input AdminNestedValueInput {
-  type: ValueType!
+  type: AdminValueType!
   text: String
   childJson: String
   child: AdminNestedValueInput
@@ -3946,17 +4774,6 @@ type PageInfo {
 
 scalar Instant
 
-enum EntityType {
-  Foo
-  Bar
-}
-
-enum ValueType {
-  ValueOne
-  ValueList
-  NestedValue
-}
-
 type Location {
   lat: Float!
   lng: Float!
@@ -3972,6 +4789,17 @@ input BoundingBoxInput {
   maxLat: Float!
   minLng: Float!
   maxLng: Float!
+}
+
+enum EntityType {
+  Foo
+  Bar
+}
+
+enum ValueType {
+  ValueOne
+  ValueList
+  NestedValue
 }
 
 type EntityInfo {
@@ -4087,17 +4915,6 @@ type PageInfo {
 
 scalar Instant
 
-enum EntityType {
-  Foo
-  Bar
-}
-
-enum ValueType {
-  ValueOne
-  ValueList
-  NestedValue
-}
-
 type Location {
   lat: Float!
   lng: Float!
@@ -4113,6 +4930,17 @@ input BoundingBoxInput {
   maxLat: Float!
   minLng: Float!
   maxLng: Float!
+}
+
+enum EntityType {
+  Foo
+  Bar
+}
+
+enum ValueType {
+  ValueOne
+  ValueList
+  NestedValue
 }
 
 type EntityInfo {
@@ -4202,6 +5030,17 @@ type NestedValue implements Value {
   child: NestedValue
 }
 
+enum AdminEntityType {
+  Foo
+  Bar
+}
+
+enum AdminValueType {
+  ValueOne
+  ValueList
+  NestedValue
+}
+
 enum EntityPublishState {
   draft
   published
@@ -4211,7 +5050,7 @@ enum EntityPublishState {
 }
 
 type AdminEntityInfo {
-  type: EntityType!
+  type: AdminEntityType!
   name: String!
   version: Int!
   publishingState: EntityPublishState!
@@ -4220,7 +5059,7 @@ type AdminEntityInfo {
 }
 
 input AdminEntityCreateInfo {
-  type: EntityType
+  type: AdminEntityType
   name: String!
   version: Int
 }
@@ -4231,7 +5070,7 @@ enum AdminEntityCreateEffect {
 }
 
 input AdminEntityUpdateInfo {
-  type: EntityType
+  type: AdminEntityType
   name: String
   version: Int
 }
@@ -4242,7 +5081,7 @@ enum AdminEntityUpdateEffect {
 }
 
 input AdminEntityUpsertInfo {
-  type: EntityType!
+  type: AdminEntityType!
   name: String!
 }
 
@@ -4275,7 +5114,7 @@ enum AdminQueryOrder {
 }
 
 input AdminQueryInput {
-  entityTypes: [EntityType]
+  entityTypes: [AdminEntityType]
   referencing: ID
   boundingBox: BoundingBoxInput
   order: AdminQueryOrder
@@ -4292,7 +5131,7 @@ input EntityVersionInput {
 }
 
 interface AdminValue {
-  type: ValueType!
+  type: AdminValueType!
 }
 
 type AdminRichText {
@@ -4424,7 +5263,7 @@ type AdminBarUpsertPayload {
 }
 
 type AdminValueOne implements AdminValue {
-  type: ValueType!
+  type: AdminValueType!
   one: String
   two: AdminBar
   three: Location
@@ -4432,7 +5271,7 @@ type AdminValueOne implements AdminValue {
 }
 
 input AdminValueOneInput {
-  type: ValueType!
+  type: AdminValueType!
   one: String
   two: AdminReferenceInput
   three: LocationInput
@@ -4440,7 +5279,7 @@ input AdminValueOneInput {
 }
 
 type AdminValueList implements AdminValue {
-  type: ValueType!
+  type: AdminValueType!
   one: [String!]
   two: [AdminBar!]
   three: [Location!]
@@ -4448,7 +5287,7 @@ type AdminValueList implements AdminValue {
 }
 
 input AdminValueListInput {
-  type: ValueType!
+  type: AdminValueType!
   one: [String!]
   two: [AdminReferenceInput!]
   three: [LocationInput!]
@@ -4456,13 +5295,13 @@ input AdminValueListInput {
 }
 
 type AdminNestedValue implements AdminValue {
-  type: ValueType!
+  type: AdminValueType!
   text: String
   child: AdminNestedValue
 }
 
 input AdminNestedValueInput {
-  type: ValueType!
+  type: AdminValueType!
   text: String
   childJson: String
   child: AdminNestedValueInput

@@ -97,6 +97,7 @@ export type {
   FieldValueTypeMap,
   SchemaSpecification,
   SchemaSpecificationUpdatePayload,
+  ValueTypeSpecification,
 } from './Schema';
 export { LoggingClientMiddleware } from './SharedClient';
 export type { ClientContext, ContextProvider } from './SharedClient';
