@@ -1,10 +1,11 @@
 import type {
   AdminQuery,
+  AdminSchema,
   ErrorType,
   Paging,
   Query,
   Result,
-  AdminSchema,
+  Schema,
 } from '@jonasb/datadata-core';
 import { AdminQueryOrder, notOk, ok, QueryOrder } from '@jonasb/datadata-core';
 import type { CursorNativeType } from './Connection';
@@ -28,7 +29,7 @@ export interface SharedEntitiesQuery<TItem> {
 }
 
 export function searchPublishedEntitiesQuery(
-  schema: AdminSchema,
+  schema: Schema,
   query: Query | undefined,
   paging: Paging | undefined
 ): Result<SharedEntitiesQuery<SearchPublishedEntitiesItem>, ErrorType.BadRequest> {
@@ -46,7 +47,7 @@ export function searchAdminEntitiesQuery(
 function sharedSearchEntitiesQuery<
   TItem extends SearchAdminEntitiesItem | SearchPublishedEntitiesItem
 >(
-  schema: AdminSchema,
+  schema: AdminSchema | Schema,
   query: Query | AdminQuery | undefined,
   paging: Paging | undefined,
   published: boolean
@@ -220,14 +221,14 @@ export function totalAdminEntitiesQuery(
 }
 
 export function totalPublishedEntitiesQuery(
-  schema: AdminSchema,
+  schema: Schema,
   query: Query | undefined
 ): Result<{ text: string; values: unknown[] }, ErrorType.BadRequest> {
   return totalCountQuery(schema, query, true);
 }
 
 function totalCountQuery(
-  schema: AdminSchema,
+  schema: AdminSchema | Schema,
   query: AdminQuery | Query | undefined,
   published: boolean
 ): Result<{ text: string; values: unknown[] }, ErrorType.BadRequest> {
@@ -308,7 +309,7 @@ function totalCountQuery(
 }
 
 function getFilterEntityTypes(
-  schema: AdminSchema,
+  schema: Schema | AdminSchema,
   query: Query | AdminQuery | undefined
 ): Result<string[], ErrorType.BadRequest> {
   if (!query?.entityTypes || query.entityTypes.length === 0) {

@@ -58,7 +58,7 @@ export function createServerAdminClient({
           args: [entity],
           resolve,
         } = operation as AdminClientOperation<AdminClientOperationName.createEntity>;
-        resolve(await createEntity(serverImpl.getSchema(), databaseAdapter, context, entity));
+        resolve(await createEntity(serverImpl.getAdminSchema(), databaseAdapter, context, entity));
         break;
       }
       case AdminClientOperationName.getEntities: {
@@ -68,7 +68,7 @@ export function createServerAdminClient({
         } = operation as AdminClientOperation<AdminClientOperationName.getEntities>;
         resolve(
           await getEntities(
-            serverImpl.getSchema(),
+            serverImpl.getAdminSchema(),
             databaseAdapter,
             context,
             references.map(({ id }) => id)
@@ -83,7 +83,7 @@ export function createServerAdminClient({
         } = operation as AdminClientOperation<AdminClientOperationName.getEntity>;
         resolve(
           await getEntity(
-            serverImpl.getSchema(),
+            serverImpl.getAdminSchema(),
             databaseAdapter,
             context,
             reference.id,
@@ -111,7 +111,7 @@ export function createServerAdminClient({
       case AdminClientOperationName.getSchemaSpecification: {
         const { resolve } =
           operation as AdminClientOperation<AdminClientOperationName.getSchemaSpecification>;
-        const schema = serverImpl.getSchema();
+        const schema = serverImpl.getAdminSchema();
         resolve(ok(schema.spec));
         break;
       }
@@ -120,7 +120,7 @@ export function createServerAdminClient({
           args: [query],
           resolve,
         } = operation as AdminClientOperation<AdminClientOperationName.getTotalCount>;
-        resolve(await getTotalCount(serverImpl.getSchema(), databaseAdapter, context, query));
+        resolve(await getTotalCount(serverImpl.getAdminSchema(), databaseAdapter, context, query));
         break;
       }
       case AdminClientOperationName.publishEntities: {
@@ -129,7 +129,7 @@ export function createServerAdminClient({
           resolve,
         } = operation as AdminClientOperation<AdminClientOperationName.publishEntities>;
         resolve(
-          await publishEntities(serverImpl.getSchema(), databaseAdapter, context, references)
+          await publishEntities(serverImpl.getAdminSchema(), databaseAdapter, context, references)
         );
         break;
       }
@@ -139,7 +139,7 @@ export function createServerAdminClient({
           resolve,
         } = operation as AdminClientOperation<AdminClientOperationName.searchEntities>;
         resolve(
-          await searchEntities(serverImpl.getSchema(), databaseAdapter, context, query, paging)
+          await searchEntities(serverImpl.getAdminSchema(), databaseAdapter, context, query, paging)
         );
         break;
       }
@@ -170,7 +170,7 @@ export function createServerAdminClient({
           args: [entity],
           resolve,
         } = operation as AdminClientOperation<AdminClientOperationName.updateEntity>;
-        resolve(await updateEntity(serverImpl.getSchema(), databaseAdapter, context, entity));
+        resolve(await updateEntity(serverImpl.getAdminSchema(), databaseAdapter, context, entity));
         break;
       }
       case AdminClientOperationName.updateSchemaSpecification: {
@@ -180,7 +180,7 @@ export function createServerAdminClient({
         } = operation as AdminClientOperation<AdminClientOperationName.updateSchemaSpecification>;
         const result = await updateSchemaSpecification(databaseAdapter, context, schemaSpec);
         if (result.isOk()) {
-          serverImpl.setSchema(result.value.schemaSpecification);
+          serverImpl.setAdminSchema(result.value.schemaSpecification);
         }
         resolve(result);
         break;
@@ -190,7 +190,7 @@ export function createServerAdminClient({
           args: [entity],
           resolve,
         } = operation as AdminClientOperation<AdminClientOperationName.upsertEntity>;
-        resolve(await upsertEntity(serverImpl.getSchema(), databaseAdapter, context, entity));
+        resolve(await upsertEntity(serverImpl.getAdminSchema(), databaseAdapter, context, entity));
         break;
       }
       default:

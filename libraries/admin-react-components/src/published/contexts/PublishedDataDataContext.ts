@@ -3,14 +3,14 @@ import type {
   ErrorType,
   Logger,
   PublishedClient,
-  AdminSchema,
+  Schema,
 } from '@jonasb/datadata-core';
 import { createContext } from 'react';
 
 export interface PublishedDataDataContextValue {
   publishedClient: PublishedClient;
   logger: Logger;
-  schema: AdminSchema | undefined;
+  schema: Schema | undefined;
   schemaError: ErrorResult<unknown, ErrorType.Generic> | undefined;
 }
 

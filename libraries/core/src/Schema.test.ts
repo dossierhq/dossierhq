@@ -277,3 +277,44 @@ describe('validate()', () => {
     );
   });
 });
+
+describe('AdminSchema.toPublishedSchema()', () => {
+  test('empty->empty', () => {
+    expect(new AdminSchema({ entityTypes: [], valueTypes: [] }).toPublishedSchema()).toEqual({
+      entityTypes: [],
+      valueTypes: [],
+    });
+  });
+
+  test('1 entity type and 1 value type', () => {
+    expect(
+      new AdminSchema({
+        entityTypes: [
+          { name: 'Foo', adminOnly: false, fields: [{ name: 'field1', type: FieldType.String }] },
+        ],
+        valueTypes: [
+          { name: 'Bar', adminOnly: false, fields: [{ name: 'field1', type: FieldType.Location }] },
+        ],
+      }).toPublishedSchema()
+    ).toEqual({
+      entityTypes: [{ name: 'Foo', fields: [{ name: 'field1', type: FieldType.String }] }],
+      valueTypes: [{ name: 'Bar', fields: [{ name: 'field1', type: FieldType.Location }] }],
+    });
+  });
+
+  test('1 adminOnly entity type and 1 adminOnly value type', () => {
+    expect(
+      new AdminSchema({
+        entityTypes: [
+          { name: 'Foo', adminOnly: true, fields: [{ name: 'field1', type: FieldType.String }] },
+        ],
+        valueTypes: [
+          { name: 'Bar', adminOnly: true, fields: [{ name: 'field1', type: FieldType.Location }] },
+        ],
+      }).toPublishedSchema()
+    ).toEqual({
+      entityTypes: [],
+      valueTypes: [],
+    });
+  });
+});

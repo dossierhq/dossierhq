@@ -276,4 +276,64 @@ export class AdminSchema {
     // TODO normalize
     return ok(schemaSpec);
   }
+
+  toPublishedSchema(): SchemaSpecification {
+    const spec: SchemaSpecification = {
+      entityTypes: [],
+      valueTypes: [],
+    };
+
+    for (const entitySpec of this.spec.entityTypes) {
+      if (entitySpec.adminOnly) {
+        continue;
+      }
+      spec.entityTypes.push({ name: entitySpec.name, fields: entitySpec.fields });
+    }
+    for (const valueSpec of this.spec.valueTypes) {
+      if (valueSpec.adminOnly) {
+        continue;
+      }
+      spec.valueTypes.push({ name: valueSpec.name, fields: valueSpec.fields });
+    }
+
+    return spec;
+  }
+}
+
+export class Schema {
+  readonly spec: SchemaSpecification;
+
+  constructor(spec: SchemaSpecification) {
+    this.spec = spec;
+  }
+
+  getEntityTypeCount(): number {
+    return this.spec.entityTypes.length;
+  }
+
+  getEntityTypeSpecification(type: string): EntityTypeSpecification | null {
+    return this.spec.entityTypes.find((it) => it.name === type) ?? null;
+  }
+
+  getEntityFieldSpecification(
+    entitySpec: EntityTypeSpecification,
+    fieldName: string
+  ): FieldSpecification | null {
+    return entitySpec.fields.find((it) => it.name === fieldName) ?? null;
+  }
+
+  getValueTypeCount(): number {
+    return this.spec.valueTypes.length;
+  }
+
+  getValueTypeSpecification(type: string): ValueTypeSpecification | null {
+    return this.spec.valueTypes.find((it) => it.name === type) ?? null;
+  }
+
+  getValueFieldSpecification(
+    valueSpec: ValueTypeSpecification,
+    fieldName: string
+  ): FieldSpecification | null {
+    return valueSpec.fields.find((it) => it.name === fieldName) ?? null;
+  }
 }

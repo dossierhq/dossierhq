@@ -1,9 +1,10 @@
 import type {
+  AdminSchema,
   Connection,
   Edge,
   ErrorType,
   PromiseResult,
-  AdminSchema,
+  Schema,
 } from '@jonasb/datadata-core';
 import { ok } from '@jonasb/datadata-core';
 import type { DatabaseAdapter, SessionContext } from '.';
@@ -18,11 +19,11 @@ export async function sharedSearchEntities<
   TEntity,
   TDbItem extends SearchAdminEntitiesItem | SearchPublishedEntitiesItem
 >(
-  schema: AdminSchema,
+  schema: AdminSchema | Schema,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   sqlQuery: SharedEntitiesQuery<TDbItem>,
-  decoder: (schema: AdminSchema, rowValues: TDbItem) => TEntity
+  decoder: (schema: AdminSchema | Schema, rowValues: TDbItem) => TEntity
 ): PromiseResult<Connection<Edge<TEntity, ErrorType>> | null, ErrorType.BadRequest> {
   const entitiesValues = await queryMany<TDbItem>(databaseAdapter, context, sqlQuery);
   const hasExtraPage = entitiesValues.length > sqlQuery.pagingCount;

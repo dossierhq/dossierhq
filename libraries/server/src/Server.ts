@@ -1,15 +1,15 @@
 import type {
   AdminClient,
   AdminClientMiddleware,
+  AdminSchemaSpecification,
   ContextProvider,
   ErrorType,
   Logger,
   PromiseResult,
   PublishedClient,
   PublishedClientMiddleware,
-  AdminSchemaSpecification,
 } from '@jonasb/datadata-core';
-import { assertIsDefined, NoOpLogger, notOk, ok, AdminSchema } from '@jonasb/datadata-core';
+import { AdminSchema, assertIsDefined, NoOpLogger, notOk, ok, Schema } from '@jonasb/datadata-core';
 import type { DatabaseAdapter, Session, SessionContext } from '.';
 import { createServerAdminClient } from './AdminClient';
 import { authCreateSession } from './Auth';
@@ -43,7 +43,8 @@ export interface Server {
 export class ServerImpl {
   #databaseAdapter: DatabaseAdapter | null;
   #logger: Logger;
-  #schema: AdminSchema | null = null;
+  #adminSchema: AdminSchema | null = null;
+  #schema: Schema | null = null;
 
   constructor({ databaseAdapter, logger }: { databaseAdapter: DatabaseAdapter; logger?: Logger }) {
     this.#databaseAdapter = databaseAdapter;
@@ -67,19 +68,27 @@ export class ServerImpl {
     if (result.isError()) {
       return result;
     }
-    this.#schema = new AdminSchema(result.value);
+    this.setAdminSchema(result.value);
     return ok(undefined);
   }
 
-  getSchema(): AdminSchema {
-    if (!this.#schema) {
+  getAdminSchema(): AdminSchema {
+    if (!this.#adminSchema) {
       throw new Error('AdminSchema is not set');
+    }
+    return this.#adminSchema;
+  }
+
+  getSchema(): Schema {
+    if (!this.#schema) {
+      throw new Error('Schema is not set');
     }
     return this.#schema;
   }
 
-  setSchema(schemaSpec: AdminSchemaSpecification): void {
-    this.#schema = new AdminSchema(schemaSpec);
+  setAdminSchema(schemaSpec: AdminSchemaSpecification): void {
+    this.#adminSchema = new AdminSchema(schemaSpec);
+    this.#schema = new Schema(this.#adminSchema.toPublishedSchema());
   }
 
   createInternalContext(logger?: Logger): InternalContext {
