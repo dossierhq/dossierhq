@@ -7,7 +7,7 @@ import type {
   PromiseResult,
   Query,
   Result,
-  AdminSchema,
+  Schema,
 } from '@jonasb/datadata-core';
 import { notOk, ok } from '@jonasb/datadata-core';
 import type { DatabaseAdapter, SessionContext } from '.';
@@ -19,7 +19,7 @@ import type { SearchPublishedEntitiesItem } from './QueryGenerator';
 import { searchPublishedEntitiesQuery, totalPublishedEntitiesQuery } from './QueryGenerator';
 
 export async function getEntity(
-  schema: AdminSchema,
+  schema: Schema,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   id: string
@@ -53,7 +53,7 @@ export async function getEntity(
  * @param ids The ids of the entities
  */
 export async function getEntities(
-  schema: AdminSchema,
+  schema: Schema,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   ids: string[]
@@ -86,7 +86,7 @@ export async function getEntities(
 }
 
 export async function getTotalCount(
-  schema: AdminSchema,
+  schema: Schema,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   query: Query | undefined
@@ -101,7 +101,7 @@ export async function getTotalCount(
 }
 
 export async function searchEntities(
-  schema: AdminSchema,
+  schema: Schema,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   query: Query | undefined,

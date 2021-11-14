@@ -1,16 +1,18 @@
 import type {
   AdminEntity,
   AdminEntityCreate,
-  AdminEntityUpdate,
-  Entity,
   AdminEntityTypeSpecification,
+  AdminEntityUpdate,
+  AdminSchema,
+  Entity,
+  EntityTypeSpecification,
   ErrorType,
   FieldSpecification,
   Location,
   PromiseResult,
   Result,
   RichText,
-  AdminSchema,
+  Schema,
   ValueItem,
 } from '@jonasb/datadata-core';
 import {
@@ -76,7 +78,7 @@ interface RequestedReference {
   entityTypes: string[] | undefined;
 }
 
-export function decodePublishedEntity(schema: AdminSchema, values: EntityValues): Entity {
+export function decodePublishedEntity(schema: Schema, values: EntityValues): Entity {
   const entitySpec = schema.getEntityTypeSpecification(values.type);
   if (!entitySpec) {
     throw new Error(`No entity spec for type ${values.type}`);
@@ -95,7 +97,7 @@ export function decodePublishedEntity(schema: AdminSchema, values: EntityValues)
 }
 
 function decodeFieldItemOrList(
-  schema: AdminSchema,
+  schema: AdminSchema | Schema,
   fieldSpec: FieldSpecification,
   fieldValue: unknown
 ) {
@@ -130,7 +132,7 @@ function decodeFieldItemOrList(
 }
 
 function decodeValueItemField(
-  schema: AdminSchema,
+  schema: AdminSchema | Schema,
   fieldSpec: FieldSpecification,
   encodedValue: ValueItem
 ) {
@@ -149,7 +151,7 @@ function decodeValueItemField(
 }
 
 function decodeRichTextField(
-  schema: AdminSchema,
+  schema: AdminSchema | Schema,
   fieldSpec: FieldSpecification,
   encodedValue: EncodedRichTextBlock[]
 ): RichText {
@@ -170,7 +172,10 @@ function decodeRichTextField(
   return { blocks: decodedBlocks };
 }
 
-export function decodeAdminEntity(schema: AdminSchema, values: AdminEntityValues): AdminEntity {
+export function decodeAdminEntity(
+  schema: AdminSchema | Schema,
+  values: AdminEntityValues
+): AdminEntity {
   const entitySpec = schema.getEntityTypeSpecification(values.type);
   if (!entitySpec) {
     throw new Error(`No entity spec for type ${values.type}`);
@@ -195,8 +200,8 @@ export function decodeAdminEntity(schema: AdminSchema, values: AdminEntityValues
 }
 
 export function decodeAdminEntityFields(
-  schema: AdminSchema,
-  entitySpec: AdminEntityTypeSpecification,
+  schema: AdminSchema | Schema,
+  entitySpec: AdminEntityTypeSpecification | EntityTypeSpecification,
   values: Pick<EntityVersionsTable, 'data'>
 ): AdminEntity['fields'] {
   const fields: AdminEntity['fields'] = {};

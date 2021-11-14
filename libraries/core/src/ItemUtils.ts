@@ -2,13 +2,14 @@ import type {
   AdminEntity,
   AdminEntityCreate,
   AdminEntityUpdate,
+  AdminSchema,
   Entity,
   EntityReference,
   FieldSpecification,
   FieldValueTypeMap,
   RichText,
   RichTextBlock,
-  AdminSchema,
+  Schema,
   ValueItem,
 } from '.';
 import { FieldType, RichTextBlockType } from '.';
@@ -255,7 +256,7 @@ export function visitItemRecursively<TVisitContext>({
   enterRichText = undefined,
   initialVisitContext,
 }: {
-  schema: AdminSchema;
+  schema: AdminSchema | Schema;
   item: Entity | AdminEntity | ValueItem;
   path?: (number | string)[];
   visitField: VisitorVisitField<TVisitContext>;
@@ -286,7 +287,7 @@ export function visitFieldRecursively<TVisitContext>({
   enterRichText = undefined,
   visitContext,
 }: {
-  schema: AdminSchema;
+  schema: AdminSchema | Schema;
   path?: (string | number)[];
   fieldSpec: FieldSpecification;
   value: unknown;
@@ -308,7 +309,7 @@ export function visitFieldRecursively<TVisitContext>({
 }
 
 function doVisitItemRecursively<TVisitContext>(
-  schema: AdminSchema,
+  schema: AdminSchema | Schema,
   path: (string | number)[],
   item: ValueItem | AdminEntity | Entity,
   callbacks: VisitorCallbacks<TVisitContext>,
@@ -373,7 +374,7 @@ function doVisitItemRecursively<TVisitContext>(
 }
 
 function doVisitFieldRecursively<TVisitContext>(
-  schema: AdminSchema,
+  schema: AdminSchema | Schema,
   path: (string | number)[],
   fieldSpec: FieldSpecification,
   value: unknown,

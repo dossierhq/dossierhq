@@ -1,4 +1,4 @@
-import type { Entity, EntityReference, AdminEntityTypeSpecification } from '@jonasb/datadata-core';
+import type { Entity, EntityReference, EntityTypeSpecification } from '@jonasb/datadata-core';
 import { Field, FullscreenContainer, Text } from '@jonasb/datadata-design';
 import React, { useContext, useEffect } from 'react';
 import { PublishedDataDataContext, useEntity } from '../../index.js';
@@ -57,7 +57,7 @@ function EntityFields({
   typeSpec,
 }: {
   entity: Entity;
-  typeSpec: AdminEntityTypeSpecification;
+  typeSpec: EntityTypeSpecification;
 }): JSX.Element {
   const fieldComponents = [];
   for (const fieldSpec of typeSpec.fields) {
