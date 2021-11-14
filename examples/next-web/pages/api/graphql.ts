@@ -1,4 +1,4 @@
-import { ok } from '@jonasb/datadata-core';
+import { ok, Schema } from '@jonasb/datadata-core';
 import type { SessionGraphQLContext } from '@jonasb/datadata-graphql';
 import { GraphQLSchemaGenerator } from '@jonasb/datadata-graphql';
 import type { ExecutionResult, GraphQLSchema } from 'graphql';
@@ -28,7 +28,10 @@ export default async function graphQlHandler(
     };
 
     if (!graphQLSchema) {
-      graphQLSchema = new GraphQLSchemaGenerator(schema).buildSchema();
+      graphQLSchema = new GraphQLSchemaGenerator({
+        adminSchema: schema,
+        publishedSchema: new Schema(schema.toPublishedSchema()),
+      }).buildSchema();
     }
 
     const { query, variables, operationName } = req.body;

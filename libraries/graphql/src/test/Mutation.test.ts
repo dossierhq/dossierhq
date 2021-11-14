@@ -140,7 +140,10 @@ mutation UpsertFooEntity($entity: AdminMutationFooUpsertInput!) {
 
 beforeAll(async () => {
   server = await setUpServerWithSession(schemaSpecification);
-  schema = new GraphQLSchemaGenerator(server.schema).buildSchema();
+  schema = new GraphQLSchemaGenerator({
+    adminSchema: server.schema,
+    publishedSchema: null,
+  }).buildSchema();
 });
 afterAll(async () => {
   await server?.tearDown();

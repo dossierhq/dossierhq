@@ -1,5 +1,12 @@
 import type { AdminSchemaSpecificationUpdate } from '@jonasb/datadata-core';
-import { CoreTestUtils, FieldType, notOk, ok, RichTextBlockType } from '@jonasb/datadata-core';
+import {
+  CoreTestUtils,
+  FieldType,
+  notOk,
+  ok,
+  RichTextBlockType,
+  Schema,
+} from '@jonasb/datadata-core';
 import type { GraphQLSchema } from 'graphql';
 import { graphql, printError } from 'graphql';
 import type { SessionGraphQLContext } from '..';
@@ -43,7 +50,10 @@ const schemaSpecification: AdminSchemaSpecificationUpdate = {
 
 beforeAll(async () => {
   server = await setUpServerWithSession(schemaSpecification);
-  schema = new GraphQLSchemaGenerator(server.schema).buildSchema();
+  schema = new GraphQLSchemaGenerator({
+    adminSchema: null,
+    publishedSchema: new Schema(server.schema.toPublishedSchema()),
+  }).buildSchema();
 });
 
 afterAll(async () => {

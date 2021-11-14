@@ -65,7 +65,10 @@ const schemaSpecification: AdminSchemaSpecificationUpdate = {
 
 beforeAll(async () => {
   server = await setUpServerWithSession(schemaSpecification);
-  schema = new GraphQLSchemaGenerator(server.schema).buildSchema();
+  schema = new GraphQLSchemaGenerator({
+    adminSchema: server.schema,
+    publishedSchema: null,
+  }).buildSchema();
 
   const { adminClient } = server;
   await ensureTestEntitiesExist(adminClient);
@@ -1193,7 +1196,7 @@ describe('searchAdminEntities()', () => {
     const result = (await graphql({
       schema,
       source: `
-        query Search($entityTypes: [EntityType]) {
+        query Search($entityTypes: [AdminEntityType]) {
           adminSearchEntities(query: { entityTypes: $entityTypes }) {
             edges {
               node {
