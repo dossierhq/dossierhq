@@ -3,10 +3,34 @@ import { notOk, ok } from '.';
 
 export interface AdminEntityTypeSpecification {
   name: string;
+  adminOnly: boolean;
   fields: FieldSpecification[];
 }
 
 export interface AdminValueTypeSpecification {
+  name: string;
+  adminOnly: boolean;
+  fields: FieldSpecification[];
+}
+
+export interface AdminEntityTypeSpecificationUpdate {
+  name: string;
+  adminOnly?: boolean;
+  fields: FieldSpecification[];
+}
+
+export interface AdminValueTypeSpecificationUpdate {
+  name: string;
+  adminOnly?: boolean;
+  fields: FieldSpecification[];
+}
+
+export interface EntityTypeSpecification {
+  name: string;
+  fields: FieldSpecification[];
+}
+
+export interface ValueTypeSpecification {
   name: string;
   fields: FieldSpecification[];
 }
@@ -56,8 +80,8 @@ export interface FieldValueTypeMap {
 }
 
 export interface SchemaSpecification {
-  entityTypes: AdminEntityTypeSpecification[];
-  valueTypes: AdminValueTypeSpecification[];
+  entityTypes: EntityTypeSpecification[];
+  valueTypes: ValueTypeSpecification[];
 }
 
 export interface AdminSchemaSpecification {
@@ -65,7 +89,10 @@ export interface AdminSchemaSpecification {
   valueTypes: AdminValueTypeSpecification[];
 }
 
-export type AdminSchemaSpecificationUpdate = Partial<AdminSchemaSpecification>;
+export interface AdminSchemaSpecificationUpdate {
+  entityTypes?: AdminEntityTypeSpecificationUpdate[];
+  valueTypes?: AdminValueTypeSpecificationUpdate[];
+}
 
 export interface SchemaSpecificationUpdatePayload {
   effect: 'updated' | 'none';
@@ -213,8 +240,15 @@ export class AdminSchema {
       valueTypes: [...this.spec.valueTypes],
     };
     if (other.entityTypes) {
-      for (const entitySpec of other.entityTypes) {
-        const existingIndex = schemaSpec.entityTypes.findIndex((it) => it.name === entitySpec.name);
+      for (const entitySpecUpdate of other.entityTypes) {
+        const entitySpec = {
+          name: entitySpecUpdate.name,
+          adminOnly: entitySpecUpdate.adminOnly ?? false,
+          fields: entitySpecUpdate.fields,
+        };
+        const existingIndex = schemaSpec.entityTypes.findIndex(
+          (it) => it.name === entitySpecUpdate.name
+        );
         if (existingIndex >= 0) {
           //TODO merge entity type
           schemaSpec.entityTypes[existingIndex] = entitySpec;
@@ -224,7 +258,12 @@ export class AdminSchema {
       }
     }
     if (other.valueTypes) {
-      for (const valueSpec of other.valueTypes) {
+      for (const valueSpecUpdate of other.valueTypes) {
+        const valueSpec = {
+          name: valueSpecUpdate.name,
+          adminOnly: valueSpecUpdate.adminOnly ?? false,
+          fields: valueSpecUpdate.fields,
+        };
         const existingIndex = schemaSpec.valueTypes.findIndex((it) => it.name === valueSpec.name);
         if (existingIndex >= 0) {
           //TODO merge value type

@@ -17,8 +17,8 @@ const { expectErrorResult } = CoreTestUtils;
 
 const schema = new AdminSchema({
   entityTypes: [
-    { name: 'QueryGeneratorFoo', fields: [] },
-    { name: 'QueryGeneratorBar', fields: [] },
+    { name: 'QueryGeneratorFoo', adminOnly: false, fields: [] },
+    { name: 'QueryGeneratorBar', adminOnly: false, fields: [] },
   ],
   valueTypes: [],
 });

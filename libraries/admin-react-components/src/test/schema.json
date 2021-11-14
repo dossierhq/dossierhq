@@ -2,6 +2,7 @@
   "entityTypes": [
     {
       "name": "Foo",
+      "adminOnly": false,
       "fields": [
         { "name": "title", "type": "String", "isName": true },
         { "name": "tags", "type": "String", "list": true },
@@ -21,9 +22,14 @@
         { "name": "nested", "type": "ValueType", "valueTypes": ["NestedValueItem"] }
       ]
     },
-    { "name": "Bar", "fields": [{ "name": "title", "type": "String", "isName": true }] },
+    {
+      "name": "Bar",
+      "adminOnly": false,
+      "fields": [{ "name": "title", "type": "String", "isName": true }]
+    },
     {
       "name": "Baz",
+      "adminOnly": false,
       "fields": [
         { "name": "body", "type": "RichText" },
         {
@@ -54,6 +60,7 @@
   "valueTypes": [
     {
       "name": "AnnotatedBar",
+      "adminOnly": false,
       "fields": [
         {
           "name": "annotation",
@@ -68,6 +75,7 @@
     },
     {
       "name": "NestedValueItem",
+      "adminOnly": false,
       "fields": [
         { "name": "text", "type": "String" },
         { "name": "child", "type": "ValueType", "valueTypes": ["NestedValueItem"] }

@@ -21,6 +21,7 @@ describe('validate()', () => {
         entityTypes: [
           {
             name: 'Foo',
+            adminOnly: false,
             fields: [
               {
                 name: 'bar',
@@ -34,6 +35,7 @@ describe('validate()', () => {
         valueTypes: [
           {
             name: 'Value',
+            adminOnly: false,
             fields: [
               {
                 name: 'bar',
@@ -51,7 +53,13 @@ describe('validate()', () => {
   test('Error: Invalid field type', () => {
     expectErrorResult(
       new AdminSchema({
-        entityTypes: [{ name: 'Foo', fields: [{ name: 'bar', type: 'Invalid' as FieldType }] }],
+        entityTypes: [
+          {
+            name: 'Foo',
+            adminOnly: false,
+            fields: [{ name: 'bar', type: 'Invalid' as FieldType }],
+          },
+        ],
         valueTypes: [],
       }).validate(),
       ErrorType.BadRequest,
@@ -63,8 +71,8 @@ describe('validate()', () => {
     expectErrorResult(
       new AdminSchema({
         entityTypes: [
-          { name: 'Foo', fields: [] },
-          { name: 'Foo', fields: [] },
+          { name: 'Foo', adminOnly: false, fields: [] },
+          { name: 'Foo', adminOnly: false, fields: [] },
         ],
         valueTypes: [],
       }).validate(),
@@ -76,8 +84,8 @@ describe('validate()', () => {
   test('Error: Duplicate entity and value type names', () => {
     expectErrorResult(
       new AdminSchema({
-        entityTypes: [{ name: 'Foo', fields: [] }],
-        valueTypes: [{ name: 'Foo', fields: [] }],
+        entityTypes: [{ name: 'Foo', adminOnly: false, fields: [] }],
+        valueTypes: [{ name: 'Foo', adminOnly: false, fields: [] }],
       }).validate(),
       ErrorType.BadRequest,
       'Foo: Duplicate type name'
@@ -91,6 +99,7 @@ describe('validate()', () => {
         valueTypes: [
           {
             name: 'Foo',
+            adminOnly: false,
             fields: [{ name: 'type', type: FieldType.String }],
           },
         ],
@@ -106,6 +115,7 @@ describe('validate()', () => {
         entityTypes: [
           {
             name: 'Foo',
+            adminOnly: false,
             fields: [{ name: 'bar', type: FieldType.EntityType, entityTypes: ['Invalid'] }],
           },
         ],
@@ -120,8 +130,12 @@ describe('validate()', () => {
     expectErrorResult(
       new AdminSchema({
         entityTypes: [
-          { name: 'Foo', fields: [{ name: 'bar', type: FieldType.String, entityTypes: ['Bar'] }] },
-          { name: 'Bar', fields: [] },
+          {
+            name: 'Foo',
+            adminOnly: false,
+            fields: [{ name: 'bar', type: FieldType.String, entityTypes: ['Bar'] }],
+          },
+          { name: 'Bar', adminOnly: false, fields: [] },
         ],
         valueTypes: [],
       }).validate(),
@@ -136,6 +150,7 @@ describe('validate()', () => {
         entityTypes: [
           {
             name: 'Foo',
+            adminOnly: false,
             fields: [{ name: 'bar', type: FieldType.ValueType, valueTypes: ['Invalid'] }],
           },
         ],
@@ -150,8 +165,12 @@ describe('validate()', () => {
     expectErrorResult(
       new AdminSchema({
         entityTypes: [
-          { name: 'Foo', fields: [{ name: 'bar', type: FieldType.String, valueTypes: ['Bar'] }] },
-          { name: 'Bar', fields: [] },
+          {
+            name: 'Foo',
+            adminOnly: false,
+            fields: [{ name: 'bar', type: FieldType.String, valueTypes: ['Bar'] }],
+          },
+          { name: 'Bar', adminOnly: false, fields: [] },
         ],
         valueTypes: [],
       }).validate(),
@@ -166,6 +185,7 @@ describe('validate()', () => {
         entityTypes: [
           {
             name: 'Foo',
+            adminOnly: false,
             fields: [
               {
                 name: 'bar',
@@ -188,6 +208,7 @@ describe('validate()', () => {
         entityTypes: [
           {
             name: 'Foo',
+            adminOnly: false,
             fields: [
               {
                 name: 'bar',
@@ -213,6 +234,7 @@ describe('validate()', () => {
         entityTypes: [
           {
             name: 'Foo',
+            adminOnly: false,
             fields: [
               {
                 name: 'bar',
@@ -235,6 +257,7 @@ describe('validate()', () => {
         entityTypes: [
           {
             name: 'Foo',
+            adminOnly: false,
             fields: [
               {
                 name: 'bar',

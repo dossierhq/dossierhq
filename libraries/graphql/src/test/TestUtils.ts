@@ -1,12 +1,12 @@
 import type {
   AdminClient,
+  AdminSchemaSpecificationUpdate,
   ErrorType,
   PromiseResult,
   PublishedClient,
   Result,
-  AdminSchemaSpecification,
 } from '@jonasb/datadata-core';
-import { assertIsDefined, CoreTestUtils, AdminSchema } from '@jonasb/datadata-core';
+import { AdminSchema, assertIsDefined, CoreTestUtils } from '@jonasb/datadata-core';
 import { createPostgresAdapter } from '@jonasb/datadata-database-adapter-postgres-pg';
 import { createServer } from '@jonasb/datadata-server';
 import { v4 as uuidv4 } from 'uuid';
@@ -31,12 +31,12 @@ export function expectResultValue<TOk, TError extends ErrorType>(
 }
 
 export async function setUpServerWithSession(
-  schemaSpecification: Partial<AdminSchemaSpecification>
+  schemaSpecification: AdminSchemaSpecificationUpdate
 ): Promise<TestServerWithSession> {
   return await setUpRealServerWithSession(schemaSpecification);
 }
 
-async function setUpRealServerWithSession(schemaSpecification: Partial<AdminSchemaSpecification>) {
+async function setUpRealServerWithSession(schemaSpecification: AdminSchemaSpecificationUpdate) {
   const url = process.env.DATABASE_URL;
   assertIsDefined(url);
   const serverResult = await createServer({
