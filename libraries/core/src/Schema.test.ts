@@ -276,6 +276,62 @@ describe('validate()', () => {
       'Foo.bar: richTextBlocks with type entity shouldn’t specify inlineTypes'
     );
   });
+
+  test('Error: referencing adminOnly entity from non-adminOnly', () => {
+    expectErrorResult(
+      new AdminSchema({
+        entityTypes: [
+          {
+            name: 'Foo',
+            adminOnly: false,
+            fields: [
+              {
+                name: 'bar',
+                type: FieldType.EntityType,
+                entityTypes: ['Bar'],
+              },
+            ],
+          },
+          {
+            name: 'Bar',
+            adminOnly: true,
+            fields: [],
+          },
+        ],
+        valueTypes: [],
+      }).validate(),
+      ErrorType.BadRequest,
+      'Foo.bar: Referenced entity type in entityTypes (Bar) is adminOnly, but Foo isn’t'
+    );
+  });
+
+  test('Error: referencing adminOnly value type from non-adminOnly', () => {
+    expectErrorResult(
+      new AdminSchema({
+        entityTypes: [],
+        valueTypes: [
+          {
+            name: 'Foo',
+            adminOnly: false,
+            fields: [
+              {
+                name: 'bar',
+                type: FieldType.ValueType,
+                valueTypes: ['Bar'],
+              },
+            ],
+          },
+          {
+            name: 'Bar',
+            adminOnly: true,
+            fields: [],
+          },
+        ],
+      }).validate(),
+      ErrorType.BadRequest,
+      'Foo.bar: Referenced value type in valueTypes (Bar) is adminOnly, but Foo isn’t'
+    );
+  });
 });
 
 describe('AdminSchema.toPublishedSchema()', () => {

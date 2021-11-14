@@ -136,9 +136,15 @@ export class AdminSchema {
             );
           }
           for (const referencedTypeName of fieldSpec.entityTypes) {
-            if (this.spec.entityTypes.findIndex((x) => x.name === referencedTypeName) < 0) {
+            const referencedEntityType = this.getEntityTypeSpecification(referencedTypeName);
+            if (!referencedEntityType) {
               return notOk.BadRequest(
                 `${typeSpec.name}.${fieldSpec.name}: Referenced entity type in entityTypes ${referencedTypeName} doesn’t exist`
+              );
+            }
+            if (referencedEntityType.adminOnly && !typeSpec.adminOnly) {
+              return notOk.BadRequest(
+                `${typeSpec.name}.${fieldSpec.name}: Referenced entity type in entityTypes (${referencedTypeName}) is adminOnly, but ${typeSpec.name} isn’t`
               );
             }
           }
@@ -151,9 +157,15 @@ export class AdminSchema {
             );
           }
           for (const referencedTypeName of fieldSpec.valueTypes) {
-            if (this.spec.valueTypes.findIndex((x) => x.name === referencedTypeName) < 0) {
+            const referencedValueType = this.getValueTypeSpecification(referencedTypeName);
+            if (!referencedValueType) {
               return notOk.BadRequest(
                 `${typeSpec.name}.${fieldSpec.name}: Value type in valueTypes ${referencedTypeName} doesn’t exist`
+              );
+            }
+            if (referencedValueType.adminOnly && !typeSpec.adminOnly) {
+              return notOk.BadRequest(
+                `${typeSpec.name}.${fieldSpec.name}: Referenced value type in valueTypes (${referencedTypeName}) is adminOnly, but ${typeSpec.name} isn’t`
               );
             }
           }
