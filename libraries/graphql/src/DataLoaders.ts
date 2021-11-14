@@ -10,7 +10,7 @@ import type {
   PublishingHistory,
   Query,
   RichText,
-  Schema,
+  AdminSchema,
   ValueItem,
   ValueTypeSpecification,
 } from '@jonasb/datadata-core';
@@ -122,7 +122,7 @@ function buildTotalCount<TContext extends SessionGraphQLContext>(
 }
 
 function buildResolversForEntity<TContext extends SessionGraphQLContext>(
-  schema: Schema,
+  schema: AdminSchema,
   entity: Entity
 ): Entity {
   const entitySpec = schema.getEntityTypeSpecification(entity.info.type);
@@ -170,7 +170,7 @@ export async function loadAdminEntities<TContext extends SessionGraphQLContext>(
 }
 
 export function buildResolversForAdminEntity<TContext extends SessionGraphQLContext>(
-  schema: Schema,
+  schema: AdminSchema,
   entity: AdminEntity
 ): AdminEntity {
   const entitySpec = schema.getEntityTypeSpecification(entity.info.type);
@@ -214,7 +214,7 @@ export async function loadAdminSearchEntities<TContext extends SessionGraphQLCon
 }
 
 function resolveFields<TContext extends SessionGraphQLContext>(
-  schema: Schema,
+  schema: AdminSchema,
   spec: EntityTypeSpecification | ValueTypeSpecification,
   item: ValueItem | Entity | AdminEntity,
   isAdmin: boolean
@@ -250,7 +250,7 @@ function resolveFields<TContext extends SessionGraphQLContext>(
 }
 
 function extractEntityIdsForRichTextField(
-  schema: Schema,
+  schema: AdminSchema,
   fieldSpec: FieldSpecification,
   value: RichText
 ) {
@@ -275,7 +275,7 @@ function extractEntityIdsForRichTextField(
 }
 
 export function buildResolversForValue<TContext extends SessionGraphQLContext>(
-  schema: Schema,
+  schema: AdminSchema,
   valueItem: ValueItem,
   isAdmin: boolean
 ): ValueItem {

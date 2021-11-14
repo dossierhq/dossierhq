@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import { CliAuth, CliContext, CliMain } from '@jonasb/datadata-cli';
-import { Schema } from '@jonasb/datadata-core';
+import { AdminSchema } from '@jonasb/datadata-core';
 import { createPostgresAdapter } from '@jonasb/datadata-database-adapter-postgres-pg';
 import { createServer } from '@jonasb/datadata-server';
 import SchemaSpec from './schema.json';
@@ -20,7 +20,7 @@ async function main() {
     if (schemaResult.isError()) throw schemaResult.toError();
 
     const cliContext: CliContext = {
-      schema: new Schema(schemaResult.value.schemaSpecification),
+      schema: new AdminSchema(schemaResult.value.schemaSpecification),
       adminClient,
       publishedClient: server.createPublishedClient(context),
     };

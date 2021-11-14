@@ -1,5 +1,5 @@
 import type { AdminSchemaSpecification } from '@jonasb/datadata-core';
-import { FieldType, RichTextBlockType, Schema } from '@jonasb/datadata-core';
+import { FieldType, RichTextBlockType, AdminSchema } from '@jonasb/datadata-core';
 import { forTest } from './EntityCodec';
 
 const { collectDataFromEntity } = forTest;
@@ -42,7 +42,7 @@ const schemaSpec: AdminSchemaSpecification = {
   ],
 };
 
-const schema = new Schema(schemaSpec);
+const schema = new AdminSchema(schemaSpec);
 
 describe('collectDataFromEntity', () => {
   test('empty', () => {

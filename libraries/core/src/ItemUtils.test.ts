@@ -6,12 +6,12 @@ import {
   isFieldValueEqual,
   normalizeFieldValue,
   RichTextBlockType,
-  Schema,
+  AdminSchema,
   visitItemRecursively,
   visitorPathToString,
 } from '.';
 
-const schema = new Schema({
+const schema = new AdminSchema({
   entityTypes: [
     {
       name: 'Foo',
@@ -33,7 +33,7 @@ const schema = new Schema({
   ],
 });
 
-function getEntityFieldSpec(schema: Schema, entityType: string, fieldName: string) {
+function getEntityFieldSpec(schema: AdminSchema, entityType: string, fieldName: string) {
   const entitySpec = schema.getEntityTypeSpecification(entityType);
   assertIsDefined(entitySpec);
   const fieldSpec = schema.getEntityFieldSpecification(entitySpec, fieldName);
@@ -122,7 +122,7 @@ function buildMockCallbacks<TVisitContext>() {
 
 describe('visitItemRecursively()', () => {
   test('no fields', () => {
-    const schema = new Schema({ entityTypes: [{ name: 'Foo', fields: [] }], valueTypes: [] });
+    const schema = new AdminSchema({ entityTypes: [{ name: 'Foo', fields: [] }], valueTypes: [] });
     const { calls, callbacks } = buildMockCallbacks();
     const entity: Entity = { id: 'id1', info: { type: 'Foo', name: 'hello' }, fields: {} };
     visitItemRecursively({
@@ -135,7 +135,7 @@ describe('visitItemRecursively()', () => {
   });
 
   test('all field types', () => {
-    const schema = new Schema({
+    const schema = new AdminSchema({
       entityTypes: [
         {
           name: 'Foo',
@@ -250,7 +250,7 @@ describe('visitItemRecursively()', () => {
   });
 
   test('all list types', () => {
-    const schema = new Schema({
+    const schema = new AdminSchema({
       entityTypes: [
         {
           name: 'Foo',
@@ -530,7 +530,7 @@ describe('visitItemRecursively()', () => {
   });
 
   test('rich text', () => {
-    const schema = new Schema({
+    const schema = new AdminSchema({
       entityTypes: [
         {
           name: 'Foo',
@@ -632,7 +632,7 @@ describe('visitItemRecursively()', () => {
   });
 
   test('rich text with nested value item', () => {
-    const schema = new Schema({
+    const schema = new AdminSchema({
       entityTypes: [
         {
           name: 'Foo',
@@ -795,7 +795,7 @@ describe('visitItemRecursively()', () => {
   });
 
   test('rich text list', () => {
-    const schema = new Schema({
+    const schema = new AdminSchema({
       entityTypes: [
         {
           name: 'Foo',
@@ -923,7 +923,7 @@ describe('visitItemRecursively()', () => {
   });
 
   test('recursive value items', () => {
-    const schema = new Schema({
+    const schema = new AdminSchema({
       entityTypes: [
         {
           name: 'Foo',

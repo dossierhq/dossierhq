@@ -1,9 +1,9 @@
-import { ErrorType, FieldType, RichTextBlockType, Schema } from '.';
+import { ErrorType, FieldType, RichTextBlockType, AdminSchema } from '.';
 import { expectErrorResult, expectOkResult, expectResultValue } from './CoreTestUtils';
 
 describe('mergeWith()', () => {
   test('empty->empty->empty', () => {
-    expectResultValue(new Schema({ entityTypes: [], valueTypes: [] }).mergeWith({}), {
+    expectResultValue(new AdminSchema({ entityTypes: [], valueTypes: [] }).mergeWith({}), {
       entityTypes: [],
       valueTypes: [],
     });
@@ -12,12 +12,12 @@ describe('mergeWith()', () => {
 
 describe('validate()', () => {
   test('Empty spec validates', () => {
-    expectOkResult(new Schema({ entityTypes: [], valueTypes: [] }).validate());
+    expectOkResult(new AdminSchema({ entityTypes: [], valueTypes: [] }).validate());
   });
 
   test('Limit value and entity types on rich text', () => {
     expectOkResult(
-      new Schema({
+      new AdminSchema({
         entityTypes: [
           {
             name: 'Foo',
@@ -50,7 +50,7 @@ describe('validate()', () => {
 
   test('Error: Invalid field type', () => {
     expectErrorResult(
-      new Schema({
+      new AdminSchema({
         entityTypes: [{ name: 'Foo', fields: [{ name: 'bar', type: 'Invalid' as FieldType }] }],
         valueTypes: [],
       }).validate(),
@@ -61,7 +61,7 @@ describe('validate()', () => {
 
   test('Error: Duplicate entity type names', () => {
     expectErrorResult(
-      new Schema({
+      new AdminSchema({
         entityTypes: [
           { name: 'Foo', fields: [] },
           { name: 'Foo', fields: [] },
@@ -75,7 +75,7 @@ describe('validate()', () => {
 
   test('Error: Duplicate entity and value type names', () => {
     expectErrorResult(
-      new Schema({
+      new AdminSchema({
         entityTypes: [{ name: 'Foo', fields: [] }],
         valueTypes: [{ name: 'Foo', fields: [] }],
       }).validate(),
@@ -86,7 +86,7 @@ describe('validate()', () => {
 
   test('Error: Field named type on value type', () => {
     expectErrorResult(
-      new Schema({
+      new AdminSchema({
         entityTypes: [],
         valueTypes: [
           {
@@ -102,7 +102,7 @@ describe('validate()', () => {
 
   test('Error: Reference to invalid entity type', () => {
     expectErrorResult(
-      new Schema({
+      new AdminSchema({
         entityTypes: [
           {
             name: 'Foo',
@@ -118,7 +118,7 @@ describe('validate()', () => {
 
   test('Error: entityTypes specified on String field', () => {
     expectErrorResult(
-      new Schema({
+      new AdminSchema({
         entityTypes: [
           { name: 'Foo', fields: [{ name: 'bar', type: FieldType.String, entityTypes: ['Bar'] }] },
           { name: 'Bar', fields: [] },
@@ -132,7 +132,7 @@ describe('validate()', () => {
 
   test('Error: Value type with invalid value type', () => {
     expectErrorResult(
-      new Schema({
+      new AdminSchema({
         entityTypes: [
           {
             name: 'Foo',
@@ -148,7 +148,7 @@ describe('validate()', () => {
 
   test('Error: valueTypes specified on String field', () => {
     expectErrorResult(
-      new Schema({
+      new AdminSchema({
         entityTypes: [
           { name: 'Foo', fields: [{ name: 'bar', type: FieldType.String, valueTypes: ['Bar'] }] },
           { name: 'Bar', fields: [] },
@@ -162,7 +162,7 @@ describe('validate()', () => {
 
   test('Error: richTextBlocks specified on String field', () => {
     expectErrorResult(
-      new Schema({
+      new AdminSchema({
         entityTypes: [
           {
             name: 'Foo',
@@ -184,7 +184,7 @@ describe('validate()', () => {
 
   test('Error: richTextBlocks with duplicate type', () => {
     expectErrorResult(
-      new Schema({
+      new AdminSchema({
         entityTypes: [
           {
             name: 'Foo',
@@ -209,7 +209,7 @@ describe('validate()', () => {
 
   test('Error: richTextBlocks without paragraph', () => {
     expectErrorResult(
-      new Schema({
+      new AdminSchema({
         entityTypes: [
           {
             name: 'Foo',
@@ -231,7 +231,7 @@ describe('validate()', () => {
 
   test('Error: richTextBlock for entity with inlineTypes', () => {
     expectErrorResult(
-      new Schema({
+      new AdminSchema({
         entityTypes: [
           {
             name: 'Foo',

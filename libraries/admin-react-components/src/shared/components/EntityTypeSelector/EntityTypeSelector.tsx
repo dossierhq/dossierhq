@@ -1,4 +1,4 @@
-import type { Schema } from '@jonasb/datadata-core';
+import type { AdminSchema } from '@jonasb/datadata-core';
 import type {
   DropdownSelectorProps,
   MultipleSelectorItem,
@@ -25,7 +25,7 @@ export type EntityTypeSelectorState = MultipleSelectorState<EntityTypeItem>;
 export type EntityTypeSelectorDispatch = Dispatch<MultipleSelectorStateAction<EntityTypeItem>>;
 
 type Props = Omit<DropdownSelectorProps<EntityTypeItem>, 'renderItem'> & {
-  schema: Schema | undefined;
+  schema: AdminSchema | undefined;
 };
 
 export function initializeEntityTypeSelectorState({

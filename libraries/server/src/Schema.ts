@@ -5,7 +5,7 @@ import type {
   AdminSchemaSpecificationUpdate,
   SchemaSpecificationUpdatePayload,
 } from '@jonasb/datadata-core';
-import { ok, Schema } from '@jonasb/datadata-core';
+import { ok, AdminSchema } from '@jonasb/datadata-core';
 import type { DatabaseAdapter, TransactionContext } from '.';
 
 export async function getSchemaSpecification(
@@ -42,7 +42,7 @@ export async function updateSchemaSpecification(
     if (previousSpecificationResult.isError()) {
       return previousSpecificationResult;
     }
-    const schema = new Schema(previousSpecificationResult.value);
+    const schema = new AdminSchema(previousSpecificationResult.value);
     const mergeResult = schema.mergeWith(schemaSpec);
     if (mergeResult.isError()) {
       return mergeResult;

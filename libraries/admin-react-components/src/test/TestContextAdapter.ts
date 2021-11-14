@@ -23,7 +23,7 @@ import {
   LoggingClientMiddleware,
   notOk,
   ok,
-  Schema,
+  AdminSchema,
   stringifyUrlQueryParams,
 } from '@jonasb/datadata-core';
 import { v5 as uuidv5 } from 'uuid';
@@ -43,7 +43,7 @@ export async function createContextValue2(
   //TODO add a schema React context so we don't need to fetch here
   const schemaResult = await adminClient.getSchemaSpecification();
   if (schemaResult.isError()) return schemaResult;
-  const schema = new Schema(schemaResult.value);
+  const schema = new AdminSchema(schemaResult.value);
   return ok(new DataDataContextValue(new TestContextAdapter(), adminClient, schema));
 }
 

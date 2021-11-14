@@ -67,7 +67,7 @@ export interface SchemaSpecificationUpdatePayload {
   schemaSpecification: AdminSchemaSpecification;
 }
 
-export class Schema {
+export class AdminSchema {
   readonly spec: AdminSchemaSpecification;
 
   constructor(spec: AdminSchemaSpecification) {

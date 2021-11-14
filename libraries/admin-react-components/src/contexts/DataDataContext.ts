@@ -13,7 +13,7 @@ import type {
   Paging,
   PromiseResult,
   PublishingHistory,
-  Schema,
+  AdminSchema,
 } from '@jonasb/datadata-core';
 import { assertExhaustive, createErrorResultFromError, ErrorType } from '@jonasb/datadata-core';
 import { createContext } from 'react';
@@ -39,14 +39,14 @@ interface FetcherActionReturn {
 export class DataDataContextValue {
   #adapter: DataDataContextAdapter;
   #adminClient: AdminClient;
-  #schema: Schema;
+  #schema: AdminSchema;
   /** Used to enable different cache keys for SWR */
   #rootKey: string | undefined;
 
   constructor(
     adapter: DataDataContextAdapter,
     adminClient: AdminClient,
-    schema: Schema,
+    schema: AdminSchema,
     rootKey?: string
   ) {
     this.#adapter = adapter;
@@ -64,7 +64,7 @@ export class DataDataContextValue {
     return this.#adapter.getEditorJSConfig(fieldSpec, standardBlockTools, standardInlineTools);
   };
 
-  get schema(): Schema {
+  get schema(): AdminSchema {
     return this.#schema;
   }
 

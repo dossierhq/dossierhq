@@ -4,7 +4,7 @@ import type {
   ErrorType,
   FieldSpecification,
   Logger,
-  Schema,
+  AdminSchema,
 } from '@jonasb/datadata-core';
 import { createContext } from 'react';
 import type { EditorJsToolSettings } from '..';
@@ -21,7 +21,7 @@ export interface DataDataContextValue2 {
   adapter: DataDataContextAdapter;
   adminClient: AdminClient;
   logger: Logger;
-  schema: Schema | undefined;
+  schema: AdminSchema | undefined;
   schemaError: ErrorResult<unknown, ErrorType.Generic> | undefined;
 }
 
