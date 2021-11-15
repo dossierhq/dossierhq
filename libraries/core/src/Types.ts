@@ -164,6 +164,7 @@ export enum AdminQueryOrder {
 
 export interface AdminQuery {
   entityTypes?: string[];
+  status?: EntityPublishState[];
   /** Entities referencing the entity (by id) */
   referencing?: string;
   boundingBox?: BoundingBox;

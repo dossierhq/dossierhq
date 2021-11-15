@@ -1,9 +1,10 @@
 import {
   AdminQueryOrder,
+  AdminSchema,
   CoreTestUtils,
+  EntityPublishState,
   ErrorType,
   QueryOrder,
-  AdminSchema,
 } from '@jonasb/datadata-core';
 import { toOpaqueCursor } from './Connection';
 import {
@@ -252,6 +253,113 @@ describe('searchAdminEntitiesQuery()', () => {
             ],
             543,
             11,
+          ],
+        },
+      }
+    `);
+  });
+
+  test('query status empty list', () => {
+    expect(searchAdminEntitiesQuery(schema, { status: [] }, undefined)).toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "cursorExtractor": [Function],
+          "isForwards": true,
+          "pagingCount": 25,
+          "text": "SELECT e.id, e.uuid, e.type, e.name, e.created_at, e.updated_at, e.updated, e.archived, e.never_published, e.latest_draft_entity_versions_id, e.published_entity_versions_id, ev.version, ev.data
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id ORDER BY e.id LIMIT $1",
+          "values": Array [
+            26,
+          ],
+        },
+      }
+    `);
+  });
+
+  test('query status draft', () => {
+    expect(searchAdminEntitiesQuery(schema, { status: [EntityPublishState.Draft] }, undefined))
+      .toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "cursorExtractor": [Function],
+          "isForwards": true,
+          "pagingCount": 25,
+          "text": "SELECT e.id, e.uuid, e.type, e.name, e.created_at, e.updated_at, e.updated, e.archived, e.never_published, e.latest_draft_entity_versions_id, e.published_entity_versions_id, ev.version, ev.data
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND NOT e.archived AND e.published_entity_versions_id IS NULL AND e.never_published ORDER BY e.id LIMIT $1",
+          "values": Array [
+            26,
+          ],
+        },
+      }
+    `);
+  });
+
+  test('query status published', () => {
+    expect(searchAdminEntitiesQuery(schema, { status: [EntityPublishState.Published] }, undefined))
+      .toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "cursorExtractor": [Function],
+          "isForwards": true,
+          "pagingCount": 25,
+          "text": "SELECT e.id, e.uuid, e.type, e.name, e.created_at, e.updated_at, e.updated, e.archived, e.never_published, e.latest_draft_entity_versions_id, e.published_entity_versions_id, ev.version, ev.data
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.published_entity_versions_id IS NOT NULL AND e.published_entity_versions_id = e.latest_draft_entity_versions_id ORDER BY e.id LIMIT $1",
+          "values": Array [
+            26,
+          ],
+        },
+      }
+    `);
+  });
+
+  test('query status modified', () => {
+    expect(searchAdminEntitiesQuery(schema, { status: [EntityPublishState.Modified] }, undefined))
+      .toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "cursorExtractor": [Function],
+          "isForwards": true,
+          "pagingCount": 25,
+          "text": "SELECT e.id, e.uuid, e.type, e.name, e.created_at, e.updated_at, e.updated, e.archived, e.never_published, e.latest_draft_entity_versions_id, e.published_entity_versions_id, ev.version, ev.data
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.published_entity_versions_id IS NOT NULL AND e.published_entity_versions_id <> e.latest_draft_entity_versions_id ORDER BY e.id LIMIT $1",
+          "values": Array [
+            26,
+          ],
+        },
+      }
+    `);
+  });
+
+  test('query status withdrawn', () => {
+    expect(searchAdminEntitiesQuery(schema, { status: [EntityPublishState.Withdrawn] }, undefined))
+      .toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "cursorExtractor": [Function],
+          "isForwards": true,
+          "pagingCount": 25,
+          "text": "SELECT e.id, e.uuid, e.type, e.name, e.created_at, e.updated_at, e.updated, e.archived, e.never_published, e.latest_draft_entity_versions_id, e.published_entity_versions_id, ev.version, ev.data
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND NOT e.archived AND e.published_entity_versions_id IS NULL AND NOT e.never_published ORDER BY e.id LIMIT $1",
+          "values": Array [
+            26,
+          ],
+        },
+      }
+    `);
+  });
+
+  test('query status archived', () => {
+    expect(searchAdminEntitiesQuery(schema, { status: [EntityPublishState.Archived] }, undefined))
+      .toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "cursorExtractor": [Function],
+          "isForwards": true,
+          "pagingCount": 25,
+          "text": "SELECT e.id, e.uuid, e.type, e.name, e.created_at, e.updated_at, e.updated, e.archived, e.never_published, e.latest_draft_entity_versions_id, e.published_entity_versions_id, ev.version, ev.data
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.archived ORDER BY e.id LIMIT $1",
+          "values": Array [
+            26,
           ],
         },
       }
