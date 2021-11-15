@@ -20,6 +20,7 @@ import {
   SearchEntitySearchInput,
   SearchEntityStateActions,
   StatusSelector,
+  StatusTagSelector,
   TypePicker2,
   useLoadSearchEntity,
   useSynchronizeUrlQueryAndSearchEntityState,
@@ -149,6 +150,7 @@ export function EntityListScreen({
               state={entityTypeFilterState}
               dispatch={dispatchEntityTypeFilterState}
             />
+            <StatusTagSelector state={statusFilterState} dispatch={dispatchStatusFilterState} />
             <EntityList2
               {...{ searchEntityState, dispatchSearchEntityState }}
               onItemClick={onOpenEntity}
