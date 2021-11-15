@@ -96,35 +96,8 @@ function sharedSearchEntitiesQuery<
   }
 
   // Filter: status
-  if (!published && query && 'status' in query && query.status && query.status.length > 0) {
-    //TODO support multiple statuses
-    for (const status of query.status) {
-      switch (status) {
-        case EntityPublishState.Draft:
-          qb.addQuery(
-            'AND NOT e.archived AND e.published_entity_versions_id IS NULL AND e.never_published'
-          );
-          break;
-        case EntityPublishState.Published:
-          qb.addQuery(
-            'AND e.published_entity_versions_id IS NOT NULL AND e.published_entity_versions_id = e.latest_draft_entity_versions_id'
-          );
-          break;
-        case EntityPublishState.Modified:
-          qb.addQuery(
-            'AND e.published_entity_versions_id IS NOT NULL AND e.published_entity_versions_id <> e.latest_draft_entity_versions_id'
-          );
-          break;
-        case EntityPublishState.Withdrawn:
-          qb.addQuery(
-            'AND NOT e.archived AND e.published_entity_versions_id IS NULL AND NOT e.never_published'
-          );
-          break;
-        case EntityPublishState.Archived:
-          qb.addQuery('AND e.archived');
-          break;
-      }
-    }
+  if (!published && query && 'status' in query) {
+    addFilterStatusSqlSegment(query, qb);
   }
 
   // Filter: referencing
@@ -245,6 +218,40 @@ function queryOrderToCursor<TItem extends SearchAdminEntitiesItem | SearchPublis
   }
 }
 
+function addFilterStatusSqlSegment(query: AdminQuery, qb: QueryBuilder) {
+  if (!query.status || query.status.length === 0) {
+    return;
+  }
+  //TODO support multiple statuses
+  for (const status of query.status) {
+    switch (status) {
+      case EntityPublishState.Draft:
+        qb.addQuery(
+          'AND NOT e.archived AND e.published_entity_versions_id IS NULL AND e.never_published'
+        );
+        break;
+      case EntityPublishState.Published:
+        qb.addQuery(
+          'AND e.published_entity_versions_id IS NOT NULL AND e.published_entity_versions_id = e.latest_draft_entity_versions_id'
+        );
+        break;
+      case EntityPublishState.Modified:
+        qb.addQuery(
+          'AND e.published_entity_versions_id IS NOT NULL AND e.published_entity_versions_id <> e.latest_draft_entity_versions_id'
+        );
+        break;
+      case EntityPublishState.Withdrawn:
+        qb.addQuery(
+          'AND NOT e.archived AND e.published_entity_versions_id IS NULL AND NOT e.never_published'
+        );
+        break;
+      case EntityPublishState.Archived:
+        qb.addQuery('AND e.archived');
+        break;
+    }
+  }
+}
+
 export function totalAdminEntitiesQuery(
   schema: AdminSchema,
   query: AdminQuery | undefined
@@ -296,6 +303,11 @@ function totalCountQuery(
   }
   if (entityTypesResult.value.length > 0) {
     qb.addQuery(`AND e.type = ANY(${qb.addValue(entityTypesResult.value)})`);
+  }
+
+  // Filter: status
+  if (!published && query && 'status' in query) {
+    addFilterStatusSqlSegment(query, qb);
   }
 
   if (query?.referencing || query?.boundingBox) {
