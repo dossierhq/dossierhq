@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-server",
+      "comment": "Upgrade dependencies. Support adminOnly.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-server"
+}
