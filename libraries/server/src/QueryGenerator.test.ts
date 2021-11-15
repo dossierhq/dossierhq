@@ -982,6 +982,77 @@ describe('totalAdminEntitiesQuery()', () => {
     `);
   });
 
+  test('query status empty list', () => {
+    expect(totalAdminEntitiesQuery(schema, { status: [] })).toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e",
+          "values": Array [],
+        },
+      }
+    `);
+  });
+
+  test('query status draft', () => {
+    expect(totalAdminEntitiesQuery(schema, { status: [EntityPublishState.Draft] }))
+      .toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE NOT e.archived AND e.published_entity_versions_id IS NULL AND e.never_published",
+          "values": Array [],
+        },
+      }
+    `);
+  });
+
+  test('query status published', () => {
+    expect(totalAdminEntitiesQuery(schema, { status: [EntityPublishState.Published] }))
+      .toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.published_entity_versions_id IS NOT NULL AND e.published_entity_versions_id = e.latest_draft_entity_versions_id",
+          "values": Array [],
+        },
+      }
+    `);
+  });
+
+  test('query status modified', () => {
+    expect(totalAdminEntitiesQuery(schema, { status: [EntityPublishState.Modified] }))
+      .toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.published_entity_versions_id IS NOT NULL AND e.published_entity_versions_id <> e.latest_draft_entity_versions_id",
+          "values": Array [],
+        },
+      }
+    `);
+  });
+
+  test('query status withdrawn', () => {
+    expect(totalAdminEntitiesQuery(schema, { status: [EntityPublishState.Withdrawn] }))
+      .toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE NOT e.archived AND e.published_entity_versions_id IS NULL AND NOT e.never_published",
+          "values": Array [],
+        },
+      }
+    `);
+  });
+
+  test('query status archived', () => {
+    expect(totalAdminEntitiesQuery(schema, { status: [EntityPublishState.Archived] }))
+      .toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.archived",
+          "values": Array [],
+        },
+      }
+    `);
+  });
+
   test('query referencing', () => {
     expect(totalAdminEntitiesQuery(schema, { referencing: '37b48706-803e-4227-a51e-8208db12d949' }))
       .toMatchInlineSnapshot(`
