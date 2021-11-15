@@ -62,7 +62,6 @@ afterAll(async () => {
 
 function createContext(): SessionGraphQLContext {
   return {
-    schema: ok(server.schema),
     adminClient: ok(server.adminClient),
     publishedClient: ok(server.publishedClient),
   };
@@ -70,7 +69,6 @@ function createContext(): SessionGraphQLContext {
 
 function createNotAuthenticatedContext(): SessionGraphQLContext {
   return {
-    schema: notOk.NotAuthenticated('No schema'),
     adminClient: notOk.NotAuthenticated('No adminClient'),
     publishedClient: notOk.NotAuthenticated('No publishedClient'),
   };
@@ -716,7 +714,7 @@ GraphQL request:3:11
     });
     const errorStrings = result.errors?.map(printError);
     expect(errorStrings).toEqual([
-      `NotAuthenticated: No schema
+      `NotAuthenticated: No publishedClient
 
 GraphQL request:3:11
 2 |         query Entity($id: ID!) {

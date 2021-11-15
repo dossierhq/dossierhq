@@ -22,7 +22,6 @@ export default async function graphQlHandler(
     }
     const { adminClient, publishedClient } = authResult.value;
     const context: SessionGraphQLContext = {
-      schema: ok(schema),
       adminClient: ok(adminClient),
       publishedClient: ok(publishedClient),
     };

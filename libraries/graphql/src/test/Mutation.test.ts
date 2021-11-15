@@ -151,7 +151,6 @@ afterAll(async () => {
 
 function createContext(): SessionGraphQLContext {
   return {
-    schema: ok(server.schema),
     adminClient: ok(server.adminClient),
     publishedClient: ok(server.publishedClient),
   };

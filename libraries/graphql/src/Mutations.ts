@@ -5,18 +5,19 @@ import type {
   AdminEntityUpdatePayload,
   AdminEntityUpsert,
   AdminEntityUpsertPayload,
+  AdminSchema,
   EntityPublishPayload,
   EntityVersionReference,
 } from '@jonasb/datadata-core';
 import type { SessionGraphQLContext } from '.';
 import { buildResolversForAdminEntity } from './DataLoaders';
-import { getAdminClient, getSchema } from './Utils';
+import { getAdminClient } from './Utils';
 
 export async function createEntity<TContext extends SessionGraphQLContext>(
+  schema: AdminSchema,
   context: TContext,
   entity: AdminEntityCreate
 ): Promise<AdminEntityCreatePayload> {
-  const schema = getSchema(context);
   const adminClient = getAdminClient(context);
   const result = await adminClient.createEntity(entity);
   if (result.isError()) {
@@ -29,10 +30,10 @@ export async function createEntity<TContext extends SessionGraphQLContext>(
 }
 
 export async function updateEntity<TContext extends SessionGraphQLContext>(
+  schema: AdminSchema,
   context: TContext,
   entity: AdminEntityUpdate
 ): Promise<AdminEntityUpdatePayload> {
-  const schema = getSchema(context);
   const adminClient = getAdminClient(context);
   const result = await adminClient.updateEntity(entity);
   if (result.isError()) {
@@ -45,10 +46,10 @@ export async function updateEntity<TContext extends SessionGraphQLContext>(
 }
 
 export async function upsertEntity<TContext extends SessionGraphQLContext>(
+  schema: AdminSchema,
   context: TContext,
   entity: AdminEntityUpsert
 ): Promise<AdminEntityUpsertPayload> {
-  const schema = getSchema(context);
   const adminClient = getAdminClient(context);
   const result = await adminClient.upsertEntity(entity);
   if (result.isError()) {
