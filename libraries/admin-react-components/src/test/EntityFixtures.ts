@@ -18,6 +18,7 @@ export const fooArchivedId = 'fb62be03-a0a9-4689-9987-bacee0e7692d';
 export const bar1Id = 'cb228716-d3dd-444f-9a77-80443d436339';
 export const bar2Id = 'eb5732e2-b931-492b-82f1-f8fdd464f0d2';
 export const baz1Id = 'e6e928cc-e45f-452d-8bb0-73c2caad31c2';
+export const qux1Id = '26e04f2c-8ede-43ac-a17d-99a32b8bb2a4';
 export const userId1 = 'a10e49cd-2f4e-4249-b8ee-eaca8466939b';
 
 export const entitiesFixture: FixtureEntity[] = [
@@ -105,6 +106,16 @@ export const entitiesFixture: FixtureEntity[] = [
             { type: RichTextBlockType.paragraph, data: { text: 'Text with no inline styles' } },
           ],
         },
+      },
+    ],
+  },
+  {
+    id: qux1Id,
+    type: 'Qux',
+    name: 'Qux 1',
+    versions: [
+      {
+        title: 'Qux 1',
       },
     ],
   },

@@ -55,6 +55,11 @@
           "richTextBlocks": [{ "type": "paragraph", "inlineTypes": [] }]
         }
       ]
+    },
+    {
+      "name": "Qux",
+      "adminOnly": true,
+      "fields": [{ "name": "title", "type": "String", "isName": true }]
     }
   ],
   "valueTypes": [

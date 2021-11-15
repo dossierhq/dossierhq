@@ -66,7 +66,14 @@ export function EntityMetadata({
           </RowElement>
           {publishState ? <PublishStateTag publishState={publishState} /> : null}
         </Row>
-        <PublishingButton {...{ entityId, latestServerVersion, publishState }} />
+        <PublishingButton
+          {...{
+            entityId,
+            entitySpec: entity?.entitySpec ?? null,
+            latestServerVersion,
+            publishState,
+          }}
+        />
       </ColumnItem>
       <ColumnItem as={Row} gap={2}>
         <Button

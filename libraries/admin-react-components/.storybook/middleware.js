@@ -16,10 +16,9 @@ let serverResultSingleton = null;
 
 async function getServer() {
   if (!serverResultSingleton) {
-    const databaseAdapter = createPostgresAdapter(
-      // @ts-ignore
-      process.env.STORYBOOK_ADMIN_REACT_COMPONENTS_DATABASE_URL
-    );
+    const databaseAdapter = createPostgresAdapter({
+      connectionString: process.env.STORYBOOK_ADMIN_REACT_COMPONENTS_DATABASE_URL,
+    });
 
     const logger = createConsoleLogger(console);
     const result = await createServer({ databaseAdapter, logger });

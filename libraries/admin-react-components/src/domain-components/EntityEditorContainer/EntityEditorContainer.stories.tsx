@@ -9,7 +9,7 @@ import {
   EntityEditorDispatchContext,
   EntityEditorStateContext,
 } from '../../index.js';
-import { bar1Id, bar2Id, foo1Id, fooArchivedId } from '../../test/EntityFixtures.js';
+import { bar1Id, bar2Id, foo1Id, fooArchivedId, qux1Id } from '../../test/EntityFixtures.js';
 import { LoadContextProvider } from '../../test/LoadContextProvider.js';
 import { LoadFixtures } from '../../test/LoadFixtures.js';
 import { createBackendAdminClient, SlowMiddleware } from '../../test/TestContextAdapter.js';
@@ -70,6 +70,9 @@ NewFoo.args = { entitySelectors: [{ newType: 'Foo' }] };
 
 export const FullFoo = Template.bind({});
 FullFoo.args = { entitySelectors: [{ id: foo1Id }] };
+
+export const AdminOnlyQux = Template.bind({});
+AdminOnlyQux.args = { entitySelectors: [{ id: qux1Id }] };
 
 export const ArchivedFoo = Template.bind({});
 ArchivedFoo.args = { entitySelectors: [{ id: fooArchivedId }] };
