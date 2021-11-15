@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-server",
+      "comment": "Status filter",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-server"
+}
