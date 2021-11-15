@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-design",
+      "comment": "Cleanup types",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-design"
+}
