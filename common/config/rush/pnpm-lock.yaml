@@ -169,7 +169,7 @@ importers:
       eslint: ^7.32.0
       eslint-plugin-import: ~2.25.2
       eslint-plugin-jest-dom: ~3.9.0
-      eslint-plugin-react: ~7.26.1
+      eslint-plugin-react: ~7.27.0
       eslint-plugin-react-hooks: ~4.3.0
       eslint-plugin-testing-library: ~5.0.0
       jest-environment-jsdom: ~27.3.1
@@ -230,7 +230,7 @@ importers:
       eslint: 7.32.0
       eslint-plugin-import: 2.25.3_eslint@7.32.0
       eslint-plugin-jest-dom: 3.9.2_eslint@7.32.0
-      eslint-plugin-react: 7.26.1_eslint@7.32.0
+      eslint-plugin-react: 7.27.0_eslint@7.32.0
       eslint-plugin-react-hooks: 4.3.0_eslint@7.32.0
       eslint-plugin-testing-library: 5.0.0_eslint@7.32.0+typescript@4.4.4
       jest-environment-jsdom: 27.3.1
@@ -490,7 +490,7 @@ importers:
       bulma: ~0.9.3
       eslint: ^7.32.0
       eslint-plugin-jest-dom: ~3.9.0
-      eslint-plugin-react: ~7.26.1
+      eslint-plugin-react: ~7.27.0
       eslint-plugin-react-hooks: ~4.3.0
       eslint-plugin-testing-library: ~5.0.0
       prettier: 2.4.1
@@ -530,7 +530,7 @@ importers:
       bulma: 0.9.3
       eslint: 7.32.0
       eslint-plugin-jest-dom: 3.9.2_eslint@7.32.0
-      eslint-plugin-react: 7.26.1_eslint@7.32.0
+      eslint-plugin-react: 7.27.0_eslint@7.32.0
       eslint-plugin-react-hooks: 4.3.0_eslint@7.32.0
       eslint-plugin-testing-library: 5.0.0_eslint@7.32.0+typescript@4.4.4
       prettier: 2.4.1
@@ -8573,7 +8573,7 @@ packages:
       eslint-import-resolver-typescript: 2.5.0_a820dc868cc8cd66d8297be6779b9035
       eslint-plugin-import: 2.25.3_eslint@7.32.0
       eslint-plugin-jsx-a11y: 6.5.1_eslint@7.32.0
-      eslint-plugin-react: 7.26.1_eslint@7.32.0
+      eslint-plugin-react: 7.27.0_eslint@7.32.0
       eslint-plugin-react-hooks: 4.3.0_eslint@7.32.0
       next: 12.0.3_react-dom@17.0.2+react@17.0.2
       typescript: 4.4.4
@@ -8679,11 +8679,11 @@ packages:
       eslint: 7.32.0
     dev: true
 
-  /eslint-plugin-react/7.26.1_eslint@7.32.0:
-    resolution: {integrity: sha512-Lug0+NOFXeOE+ORZ5pbsh6mSKjBKXDXItUD2sQoT+5Yl0eoT82DqnXeTMfUare4QVCn9QwXbfzO/dBLjLXwVjQ==}
+  /eslint-plugin-react/7.27.0_eslint@7.32.0:
+    resolution: {integrity: sha512-0Ut+CkzpppgFtoIhdzi2LpdpxxBvgFf99eFqWxJnUrO7mMe0eOiNpou6rvNYeVVV6lWZvTah0BFne7k5xHjARg==}
     engines: {node: '>=4'}
     peerDependencies:
-      eslint: ^3 || ^4 || ^5 || ^6 || ^7
+      eslint: ^3 || ^4 || ^5 || ^6 || ^7 || ^8
     dependencies:
       array-includes: 3.1.4
       array.prototype.flatmap: 1.2.5
