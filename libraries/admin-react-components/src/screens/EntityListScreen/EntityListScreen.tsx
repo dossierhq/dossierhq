@@ -11,12 +11,15 @@ import {
   EntityTypeTagSelector,
   initializeEntityTypeSelectorState,
   initializeSearchEntityStateFromUrlQuery,
+  initializeStatusSelectorState,
   reduceEntityTypeSelectorState,
   reduceSearchEntityState,
+  reduceStatusSelectorState,
   SearchEntityPagingButtons,
   SearchEntityPagingCount,
   SearchEntitySearchInput,
   SearchEntityStateActions,
+  StatusSelector,
   TypePicker2,
   useLoadSearchEntity,
   useSynchronizeUrlQueryAndSearchEntityState,
@@ -46,10 +49,18 @@ export function EntityListScreen({
     initializeSearchEntityStateFromUrlQuery
   );
 
-  const [entityTypeFilterState, dispatchEntityTypeFilter] = useReducer(
+  const [entityTypeFilterState, dispatchEntityTypeFilterState] = useReducer(
     reduceEntityTypeSelectorState,
     { selectedIds: searchEntityState.query.entityTypes },
     initializeEntityTypeSelectorState
+  );
+
+  const [statusFilterState, dispatchStatusFilterState] = useReducer(
+    reduceStatusSelectorState,
+    {
+      selectedIds: (searchEntityState.query as AdminQuery).status,
+    },
+    initializeStatusSelectorState
   );
 
   const [showMap, setShowMap] = useState(!!searchEntityState.query.boundingBox);
@@ -72,6 +83,13 @@ export function EntityListScreen({
       )
     );
   }, [entityTypeFilterState.selectedIds]);
+
+  // sync status filter -> search state
+  useEffect(() => {
+    dispatchSearchEntityState(
+      new SearchEntityStateActions.SetQuery({ status: statusFilterState.selectedIds }, true)
+    );
+  }, [statusFilterState.selectedIds]);
 
   // sync url <-> search entity state
   useSynchronizeUrlQueryAndSearchEntityState(
@@ -97,10 +115,13 @@ export function EntityListScreen({
         <EntityTypeSelector
           schema={schema}
           state={entityTypeFilterState}
-          dispatch={dispatchEntityTypeFilter}
+          dispatch={dispatchEntityTypeFilterState}
         >
           Entity type
         </EntityTypeSelector>
+        <StatusSelector state={statusFilterState} dispatch={dispatchStatusFilterState}>
+          Status
+        </StatusSelector>
         <IconButton icon={showMap ? 'list' : 'map'} onClick={handleToggleShowMap} />
         <TypePicker2 iconLeft="add" showEntityTypes onTypeSelected={onCreateEntity}>
           Create
@@ -126,7 +147,7 @@ export function EntityListScreen({
           <FullscreenContainer.Row>
             <EntityTypeTagSelector
               state={entityTypeFilterState}
-              dispatch={dispatchEntityTypeFilter}
+              dispatch={dispatchEntityTypeFilterState}
             />
             <EntityList2
               {...{ searchEntityState, dispatchSearchEntityState }}

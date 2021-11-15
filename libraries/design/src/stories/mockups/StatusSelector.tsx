@@ -25,14 +25,15 @@ type Props = Omit<DropdownSelectorProps<StatusItem>, 'renderItem'>;
 export function initializeStatusSelectorState({
   selectedIds,
 }: StatusSelectorInitArgs): MultipleSelectorState<StatusItem> {
+  const items: StatusItem[] = [
+    { id: 'draft', name: 'Draft', color: 'draft' },
+    { id: 'published', name: 'Published', color: 'published' },
+    { id: 'modified', name: 'Modified', color: 'modified' },
+    { id: 'withdrawn', name: 'Withdrawn', color: 'withdrawn' },
+    { id: 'archived', name: 'Archived', color: 'archived' },
+  ];
   return initializeMultipleSelectorState({
-    items: [
-      { id: 'draft', name: 'Draft', color: 'draft' },
-      { id: 'published', name: 'Published', color: 'published' },
-      { id: 'modified', name: 'Modified', color: 'modified' },
-      { id: 'withdrawn', name: 'Withdrawn', color: 'withdrawn' },
-      { id: 'archived', name: 'Archived', color: 'archived' },
-    ],
+    items,
     selectedIds,
   });
 }

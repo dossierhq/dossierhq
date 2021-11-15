@@ -10,25 +10,34 @@ import type {
 } from '../index.js';
 import { Badge, Button, DropdownDisplay, MultipleSelectorStateActions } from '../index.js';
 
-export interface DropdownSelectorProps<TItem extends MultipleSelectorItem> {
+export interface DropdownSelectorProps<
+  TItem extends MultipleSelectorItem<TId>,
+  TId extends string = string
+> {
   iconLeft?: IconName;
   left?: boolean;
   up?: boolean;
   sneaky?: boolean;
   renderItem: (item: TItem) => ReactNode;
-  state: MultipleSelectorState<TItem>;
-  dispatch: Dispatch<MultipleSelectorStateAction<TItem>>;
+  state: MultipleSelectorState<TItem, TId>;
+  dispatch: Dispatch<MultipleSelectorStateAction<TItem, TId>>;
   children?: React.ReactNode;
 }
 
-interface DropdownSelectorItemProps<TItem extends MultipleSelectorItem> {
+interface DropdownSelectorItemProps<
+  TItem extends MultipleSelectorItem<TId>,
+  TId extends string = string
+> {
   item: TItem;
   state: MultipleSelectorState<TItem>;
-  dispatch: Dispatch<MultipleSelectorStateAction<TItem>>;
+  dispatch: Dispatch<MultipleSelectorStateAction<TItem, TId>>;
   children: React.ReactNode;
 }
 
-export function DropdownSelector<TItem extends MultipleSelectorItem>({
+export function DropdownSelector<
+  TItem extends MultipleSelectorItem<TId>,
+  TId extends string = string
+>({
   iconLeft,
   left,
   up,
@@ -37,7 +46,7 @@ export function DropdownSelector<TItem extends MultipleSelectorItem>({
   state,
   dispatch,
   children,
-}: DropdownSelectorProps<TItem>): JSX.Element {
+}: DropdownSelectorProps<TItem, TId>): JSX.Element {
   const [active, setActive] = useState(false);
   const handleClose = useCallback(() => setActive(false), [setActive]);
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -76,12 +85,12 @@ export function DropdownSelector<TItem extends MultipleSelectorItem>({
   );
 }
 
-function Item<TItem extends MultipleSelectorItem>({
+function Item<TItem extends MultipleSelectorItem<TId>, TId extends string = string>({
   item,
   state,
   dispatch,
   children,
-}: DropdownSelectorItemProps<TItem>) {
+}: DropdownSelectorItemProps<TItem, TId>) {
   const active = state.selectedIds.includes(item.id);
 
   const handleChange = () => {

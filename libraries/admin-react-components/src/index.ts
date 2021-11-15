@@ -8,6 +8,11 @@ export {
 } from './components/DataDataProvider/DataDataProvider.js';
 export { EntityList2 } from './components/EntityList2/EntityList2.js';
 export { EntityMapMarker } from './components/EntityMapMarker/EntityMapMarker.js';
+export {
+  initializeStatusSelectorState,
+  reduceStatusSelectorState,
+  StatusSelector,
+} from './components/StatusSelector/StatusSelector.js';
 export { StatusTag } from './components/StatusTag/StatusTag.js';
 export { TypePicker2 } from './components/TypePicker2/TypePicker2.js';
 export { DataDataContext, DataDataContextValue } from './contexts/DataDataContext.js';
@@ -69,7 +74,6 @@ export type { IconProps, IconType } from './generic-components/Icon/Icon.js';
 export { IconButton } from './generic-components/IconButton/IconButton.js';
 export { InputText } from './generic-components/InputText/InputText.js';
 export { Loader } from './generic-components/Loader/Loader.js';
-export { MapContainer } from './shared/components/MapContainer/MapContainer.js';
 export { Message } from './generic-components/Message/Message.js';
 export type { MessageItem } from './generic-components/Message/Message.js';
 export { Modal } from './generic-components/Modal/Modal.js';
@@ -84,6 +88,7 @@ export { useSearchEntities } from './hooks/useSearchEntities.js';
 export { useTotalCount } from './hooks/useTotalCount.js';
 export * as published from './published/index.js';
 export { EntityListScreen } from './screens/EntityListScreen/EntityListScreen.js';
+export { MapContainer } from './shared/components/MapContainer/MapContainer.js';
 export * from './shared/index.js';
 export type { LayoutProps, SpacingSize } from './types/LayoutTypes.js';
 export type { Kind } from './utils/KindUtils.js';
