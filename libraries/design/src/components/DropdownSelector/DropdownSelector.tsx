@@ -10,17 +10,14 @@ import type {
 } from '../index.js';
 import { Badge, Button, DropdownDisplay, MultipleSelectorStateActions } from '../index.js';
 
-export interface DropdownSelectorProps<
-  TItem extends MultipleSelectorItem<TId>,
-  TId extends string = string
-> {
+export interface DropdownSelectorProps<TItem extends MultipleSelectorItem> {
   iconLeft?: IconName;
   left?: boolean;
   up?: boolean;
   sneaky?: boolean;
   renderItem: (item: TItem) => ReactNode;
-  state: MultipleSelectorState<TItem, TId>;
-  dispatch: Dispatch<MultipleSelectorStateAction<TItem, TId>>;
+  state: MultipleSelectorState<TItem>;
+  dispatch: Dispatch<MultipleSelectorStateAction<TItem>>;
   children?: React.ReactNode;
 }
 
@@ -30,14 +27,11 @@ interface DropdownSelectorItemProps<
 > {
   item: TItem;
   state: MultipleSelectorState<TItem>;
-  dispatch: Dispatch<MultipleSelectorStateAction<TItem, TId>>;
+  dispatch: Dispatch<MultipleSelectorStateAction<TItem>>;
   children: React.ReactNode;
 }
 
-export function DropdownSelector<
-  TItem extends MultipleSelectorItem<TId>,
-  TId extends string = string
->({
+export function DropdownSelector<TItem extends MultipleSelectorItem>({
   iconLeft,
   left,
   up,
@@ -46,7 +40,7 @@ export function DropdownSelector<
   state,
   dispatch,
   children,
-}: DropdownSelectorProps<TItem, TId>): JSX.Element {
+}: DropdownSelectorProps<TItem>): JSX.Element {
   const [active, setActive] = useState(false);
   const handleClose = useCallback(() => setActive(false), [setActive]);
   const triggerRef = useRef<HTMLButtonElement>(null);

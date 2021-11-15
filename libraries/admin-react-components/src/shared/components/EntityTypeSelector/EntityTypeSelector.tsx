@@ -31,8 +31,9 @@ type Props = Omit<DropdownSelectorProps<EntityTypeItem>, 'renderItem'> & {
 export function initializeEntityTypeSelectorState({
   selectedIds,
 }: EntityTypeSelectorInitArgs): MultipleSelectorState<EntityTypeItem> {
+  const items: EntityTypeItem[] = [];
   return initializeMultipleSelectorState({
-    items: [],
+    items,
     selectedIds,
   });
 }

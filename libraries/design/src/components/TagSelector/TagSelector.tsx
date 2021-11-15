@@ -11,8 +11,8 @@ import { MultipleSelectorStateActions, Tag } from '../index.js';
 export interface TagSelectorProps<TItem extends MultipleSelectorItem> {
   clearLabel: string;
   itemTag: (item: TItem) => { tag: string; color?: TagProps['color'] };
-  state: MultipleSelectorState<TItem, TItem['id']>;
-  dispatch: Dispatch<MultipleSelectorStateAction<TItem, TItem['id']>>;
+  state: MultipleSelectorState<TItem>;
+  dispatch: Dispatch<MultipleSelectorStateAction<TItem>>;
 }
 
 export function TagSelector<TItem extends MultipleSelectorItem>({
