@@ -1,4 +1,9 @@
-import type { EntityPublishPayload, ErrorType, PromiseResult } from '@jonasb/datadata-core';
+import type {
+  AdminEntityTypeSpecification,
+  EntityPublishPayload,
+  ErrorType,
+  PromiseResult,
+} from '@jonasb/datadata-core';
 import { EntityPublishState } from '@jonasb/datadata-core';
 import React, { useContext, useState } from 'react';
 import type { DataDataContextValue } from '../../index.js';
@@ -11,23 +16,26 @@ interface PublishAction {
 
 export function PublishingButton({
   entityId,
+  entitySpec,
   publishState,
   latestServerVersion,
 }: {
   entityId: string;
+  entitySpec: AdminEntityTypeSpecification | null;
   publishState: EntityPublishState | null;
   latestServerVersion: number | null;
 }): JSX.Element | null {
   const context = useContext(DataDataContext);
   const [loading, setLoading] = useState(false);
 
-  if (publishState === null || latestServerVersion === null) {
+  if (publishState === null || entitySpec === null || latestServerVersion === null) {
     return null;
   }
 
   const [buttonAction, ...dropdownActions] = createPublishActions(
     context,
     entityId,
+    entitySpec,
     latestServerVersion,
     publishState
   );
@@ -55,6 +63,7 @@ export function PublishingButton({
 function createPublishActions(
   context: DataDataContextValue,
   entityId: string,
+  entitySpec: AdminEntityTypeSpecification,
   latestServerVersion: number,
   publishState: EntityPublishState
 ) {
@@ -69,6 +78,10 @@ function createPublishActions(
     publishActionsIds = ['publish', 'unpublish'];
   } else if (publishState === EntityPublishState.Archived) {
     publishActionsIds = ['unarchive', 'publish'];
+  }
+
+  if (entitySpec.adminOnly) {
+    publishActionsIds = publishActionsIds.filter((it) => it !== 'publish');
   }
 
   const publishActions: PublishAction[] = publishActionsIds.map((action) => {
