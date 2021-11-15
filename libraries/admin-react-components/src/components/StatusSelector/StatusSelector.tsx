@@ -17,14 +17,12 @@ import { StatusTag } from '../..';
 
 export type StatusItem = MultipleSelectorItem<EntityPublishState>;
 
-export type StatusSelectorReducer = MultipleSelectorReducer<StatusItem, EntityPublishState>;
+export type StatusSelectorReducer = MultipleSelectorReducer<StatusItem>;
 export type StatusSelectorInitArgs = { selectedIds?: EntityPublishState[] | undefined };
-export type StatusSelectorState = MultipleSelectorState<StatusItem, EntityPublishState>;
-export type StatusSelectorDispatch = Dispatch<
-  MultipleSelectorStateAction<StatusItem, EntityPublishState>
->;
+export type StatusSelectorState = MultipleSelectorState<StatusItem>;
+export type StatusSelectorDispatch = Dispatch<MultipleSelectorStateAction<StatusItem>>;
 
-type Props = Omit<DropdownSelectorProps<StatusItem, EntityPublishState>, 'renderItem'>;
+type Props = Omit<DropdownSelectorProps<StatusItem>, 'renderItem'>;
 
 export function initializeStatusSelectorState({
   selectedIds,
@@ -36,7 +34,7 @@ export function initializeStatusSelectorState({
     { id: EntityPublishState.Withdrawn },
     { id: EntityPublishState.Archived },
   ];
-  return initializeMultipleSelectorState<StatusItem, EntityPublishState>({
+  return initializeMultipleSelectorState<StatusItem>({
     items,
     selectedIds,
   });
@@ -46,7 +44,7 @@ export const reduceStatusSelectorState: StatusSelectorReducer = reduceMultipleSe
 
 export function StatusSelector(props: Props): JSX.Element {
   return (
-    <DropdownSelector<StatusItem, EntityPublishState>
+    <DropdownSelector<StatusItem>
       {...props}
       renderItem={(item) => <StatusTag status={item.id} />}
     />

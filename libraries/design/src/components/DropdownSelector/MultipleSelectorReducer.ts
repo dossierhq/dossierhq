@@ -4,61 +4,46 @@ export interface MultipleSelectorItem<TId extends string = string> {
   id: TId;
 }
 
-export type MultipleSelectorReducer<
-  TItem extends MultipleSelectorItem<TId>,
-  TId extends string = string
-> = Reducer<MultipleSelectorState<TItem, TId>, MultipleSelectorStateAction<TItem, TId>>;
+export type MultipleSelectorReducer<TItem extends MultipleSelectorItem> = Reducer<
+  MultipleSelectorState<TItem>,
+  MultipleSelectorStateAction<TItem>
+>;
 
-export interface MultipleSelectorStateInitializerArgs<
-  TItem extends MultipleSelectorItem<TId>,
-  TId extends string = string
-> {
+export interface MultipleSelectorStateInitializerArgs<TItem extends MultipleSelectorItem> {
   items: TItem[];
-  selectedIds?: TId[];
+  selectedIds?: Array<TItem['id']>;
 }
 
-export interface MultipleSelectorState<
-  TItem extends MultipleSelectorItem<TId>,
-  TId extends string = string
-> {
+export interface MultipleSelectorState<TItem extends MultipleSelectorItem> {
   items: TItem[];
-  selectedIds: TId[];
+  selectedIds: Array<TItem['id']>;
 }
 
-export interface MultipleSelectorStateAction<
-  TItem extends MultipleSelectorItem<TId>,
-  TId extends string = string
-> {
-  reduce(state: MultipleSelectorState<TItem, TId>): MultipleSelectorState<TItem, TId>;
+export interface MultipleSelectorStateAction<TItem extends MultipleSelectorItem> {
+  reduce(state: MultipleSelectorState<TItem>): MultipleSelectorState<TItem>;
 }
 
-export function initializeMultipleSelectorState<
-  TItem extends MultipleSelectorItem<TId>,
-  TId extends string = string
->({
+export function initializeMultipleSelectorState<TItem extends MultipleSelectorItem>({
   items,
   selectedIds,
-}: MultipleSelectorStateInitializerArgs<TItem, TId>): MultipleSelectorState<TItem, TId> {
+}: MultipleSelectorStateInitializerArgs<TItem>): MultipleSelectorState<TItem> {
   return {
     items,
     selectedIds: selectedIds ?? [],
   };
 }
 
-export function reduceMultipleSelectorState<
-  TItem extends MultipleSelectorItem<TId>,
-  TId extends string = string
->(
-  state: MultipleSelectorState<TItem, TId>,
-  action: MultipleSelectorStateAction<TItem, TId>
-): MultipleSelectorState<TItem, TId> {
+export function reduceMultipleSelectorState<TItem extends MultipleSelectorItem>(
+  state: MultipleSelectorState<TItem>,
+  action: MultipleSelectorStateAction<TItem>
+): MultipleSelectorState<TItem> {
   const newState = action.reduce(state);
   return newState;
 }
 
 // Actions
 
-class ClearSelectionAction<TItem extends MultipleSelectorItem<TId>, TId extends string = string>
+class ClearSelectionAction<TItem extends MultipleSelectorItem>
   implements MultipleSelectorStateAction<TItem>
 {
   reduce(state: MultipleSelectorState<TItem>): MultipleSelectorState<TItem> {
@@ -69,16 +54,16 @@ class ClearSelectionAction<TItem extends MultipleSelectorItem<TId>, TId extends 
   }
 }
 
-class ToggleItemAction<TItem extends MultipleSelectorItem<TId>, TId extends string = string>
-  implements MultipleSelectorStateAction<TItem, TId>
+class ToggleItemAction<TItem extends MultipleSelectorItem>
+  implements MultipleSelectorStateAction<TItem>
 {
-  private readonly id: TId;
+  private readonly id: TItem['id'];
 
-  constructor(id: TId) {
+  constructor(id: TItem['id']) {
     this.id = id;
   }
 
-  reduce(state: MultipleSelectorState<TItem, TId>): MultipleSelectorState<TItem, TId> {
+  reduce(state: MultipleSelectorState<TItem>): MultipleSelectorState<TItem> {
     const index = state.selectedIds.indexOf(this.id);
     const selectedIds = [...state.selectedIds];
     if (index < 0) {
