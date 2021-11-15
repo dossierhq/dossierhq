@@ -64,7 +64,6 @@ import {
 import * as Mutations from './Mutations';
 
 export interface SessionGraphQLContext {
-  schema: Result<AdminSchema, ErrorType.NotAuthenticated>;
   adminClient: Result<AdminClient, ErrorType.NotAuthenticated>;
   publishedClient: Result<PublishedClient, ErrorType.NotAuthenticated>;
 }
@@ -1103,31 +1102,33 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     }
   }
 
-  buildQueryFieldNode<TSource>(): GraphQLFieldConfig<TSource, TContext> {
+  buildQueryFieldNode<TSource>(publishedSchema: Schema): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<TSource, TContext, { id: string }>({
       type: this.getInterface('Node'),
       args: {
         id: { type: new GraphQLNonNull(GraphQLID) },
       },
-      resolve: async (source, args, context, _info) => {
-        return await loadEntity(context, args.id);
+      resolve: async (_source, args, context, _info) => {
+        return await loadEntity(publishedSchema, context, args.id);
       },
     });
   }
 
-  buildQueryFieldNodes<TSource>(): GraphQLFieldConfig<TSource, TContext> {
+  buildQueryFieldNodes<TSource>(publishedSchema: Schema): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<TSource, TContext, { ids: string[] }>({
       type: new GraphQLList(this.getInterface('Node')),
       args: {
         ids: { type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(GraphQLID))) },
       },
       resolve: async (_source, args, context, _info) => {
-        return await loadEntities(context, args.ids);
+        return await loadEntities(publishedSchema, context, args.ids);
       },
     });
   }
 
-  buildQueryFieldAdminEntity<TSource>(): GraphQLFieldConfig<TSource, TContext> {
+  buildQueryFieldAdminEntity<TSource>(
+    adminSchema: AdminSchema
+  ): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<TSource, TContext, { id: string; version: number | null }>({
       type: this.getInterface('AdminEntity'),
       args: {
@@ -1135,24 +1136,28 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         version: { type: GraphQLInt },
       },
       resolve: async (_source, args, context, _info) => {
-        return await loadAdminEntity(context, args.id, args.version);
+        return await loadAdminEntity(adminSchema, context, args.id, args.version);
       },
     });
   }
 
-  buildQueryFieldAdminEntities<TSource>(): GraphQLFieldConfig<TSource, TContext> {
+  buildQueryFieldAdminEntities<TSource>(
+    adminSchema: AdminSchema
+  ): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<TSource, TContext, { ids: string[] }>({
       type: new GraphQLList(this.getInterface('AdminEntity')),
       args: {
         ids: { type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(GraphQLID))) },
       },
       resolve: async (_source, args, context, _info) => {
-        return await loadAdminEntities(context, args.ids);
+        return await loadAdminEntities(adminSchema, context, args.ids);
       },
     });
   }
 
-  buildQueryFieldAdminSearchEntities<TSource>(): GraphQLFieldConfig<TSource, TContext> {
+  buildQueryFieldAdminSearchEntities<TSource>(
+    adminSchema: AdminSchema
+  ): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<
       TSource,
       TContext,
@@ -1175,12 +1180,14 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       resolve: async (_source, args, context, _info) => {
         const { query, first, after, last, before } = args;
         const paging = { first, after, last, before };
-        return await loadAdminSearchEntities(context, query, paging);
+        return await loadAdminSearchEntities(adminSchema, context, query, paging);
       },
     });
   }
 
-  buildQueryFieldSearchEntities<TSource>(): GraphQLFieldConfig<TSource, TContext> {
+  buildQueryFieldSearchEntities<TSource>(
+    publishedSchema: Schema
+  ): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<
       TSource,
       TContext,
@@ -1203,7 +1210,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       resolve: async (_source, args, context, _info) => {
         const { query, first, after, last, before } = args;
         const paging = { first, after, last, before };
-        return await loadSearchEntities(context, query, paging);
+        return await loadSearchEntities(publishedSchema, context, query, paging);
       },
     });
   }
@@ -1234,16 +1241,18 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     return new GraphQLObjectType<TSource, TContext>({
       name: 'Query',
       fields: {
-        node: this.buildQueryFieldNode(),
-        nodes: this.buildQueryFieldNodes(),
         ...(this.publishedSchema && this.publishedSchema.getEntityTypeCount() > 0
-          ? { searchEntities: this.buildQueryFieldSearchEntities() }
+          ? {
+              node: this.buildQueryFieldNode(this.publishedSchema),
+              nodes: this.buildQueryFieldNodes(this.publishedSchema),
+              searchEntities: this.buildQueryFieldSearchEntities(this.publishedSchema),
+            }
           : {}),
         ...(this.adminSchema && this.adminSchema.getEntityTypeCount() > 0
           ? {
-              adminEntity: this.buildQueryFieldAdminEntity(),
-              adminEntities: this.buildQueryFieldAdminEntities(),
-              adminSearchEntities: this.buildQueryFieldAdminSearchEntities(),
+              adminEntity: this.buildQueryFieldAdminEntity(this.adminSchema),
+              adminEntities: this.buildQueryFieldAdminEntities(this.adminSchema),
+              adminSearchEntities: this.buildQueryFieldAdminSearchEntities(this.adminSchema),
               entityHistory: this.buildQueryFieldEntityHistory(),
               publishingHistory: this.buildQueryFieldPublishingHistory(),
             }
@@ -1274,7 +1283,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         }
         entity.info.type = entityName;
         this.resolveJsonInputFields(adminSchema, entity, entityName);
-        return await Mutations.createEntity(context, entity);
+        return await Mutations.createEntity(adminSchema, context, entity);
       },
     });
   }
@@ -1300,7 +1309,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
             .toError();
         }
         this.resolveJsonInputFields(adminSchema, entity, entityName);
-        return await Mutations.updateEntity(context, entity);
+        return await Mutations.updateEntity(adminSchema, context, entity);
       },
     });
   }
@@ -1326,7 +1335,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
             .toError();
         }
         this.resolveJsonInputFields(adminSchema, entity, entityName);
-        return await Mutations.upsertEntity(context, entity);
+        return await Mutations.upsertEntity(adminSchema, context, entity);
       },
     });
   }

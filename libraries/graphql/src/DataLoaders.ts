@@ -1,18 +1,21 @@
 import type {
   AdminEntity,
+  AdminEntityTypeSpecification,
   AdminQuery,
+  AdminSchema,
+  AdminValueTypeSpecification,
   Entity,
   EntityHistory,
-  AdminEntityTypeSpecification,
+  EntityTypeSpecification,
   FieldSpecification,
   PageInfo,
   Paging,
   PublishingHistory,
   Query,
   RichText,
-  AdminSchema,
+  Schema,
   ValueItem,
-  AdminValueTypeSpecification,
+  ValueTypeSpecification,
 } from '@jonasb/datadata-core';
 import {
   isEntityTypeField,
@@ -26,7 +29,7 @@ import {
 } from '@jonasb/datadata-core';
 import type { GraphQLResolveInfo } from 'graphql';
 import type { SessionGraphQLContext } from './GraphQLSchemaGenerator';
-import { getAdminClient, getPublishedClient, getSchema } from './Utils';
+import { getAdminClient, getPublishedClient } from './Utils';
 
 interface Connection<T extends Edge<unknown>> {
   pageInfo: PageInfo;
@@ -48,10 +51,10 @@ interface Edge<T> {
 }
 
 export async function loadEntity<TContext extends SessionGraphQLContext>(
+  schema: Schema,
   context: TContext,
   id: string
 ): Promise<Entity> {
-  const schema = getSchema(context);
   const publishedClient = getPublishedClient(context);
   const result = await publishedClient.getEntity({ id });
   if (result.isError()) {
@@ -61,10 +64,10 @@ export async function loadEntity<TContext extends SessionGraphQLContext>(
 }
 
 export async function loadEntities<TContext extends SessionGraphQLContext>(
+  schema: Schema,
   context: TContext,
   ids: string[]
 ): Promise<Array<Entity | null>> {
-  const schema = getSchema(context);
   const publishedClient = getPublishedClient(context);
   const results = await publishedClient.getEntities(ids.map((id) => ({ id })));
   if (results.isError()) {
@@ -80,11 +83,11 @@ export async function loadEntities<TContext extends SessionGraphQLContext>(
 }
 
 export async function loadSearchEntities<TContext extends SessionGraphQLContext>(
+  schema: Schema,
   context: TContext,
   query: Query | undefined,
   paging: Paging
 ): Promise<ConnectionWithTotalCount<Edge<Entity>, TContext> | null> {
-  const schema = getSchema(context);
   const publishedClient = getPublishedClient(context);
   const result = await publishedClient.searchEntities(query, paging);
   if (result.isError()) {
@@ -122,7 +125,7 @@ function buildTotalCount<TContext extends SessionGraphQLContext>(
 }
 
 function buildResolversForEntity<TContext extends SessionGraphQLContext>(
-  schema: AdminSchema,
+  schema: Schema,
   entity: Entity
 ): Entity {
   const entitySpec = schema.getEntityTypeSpecification(entity.info.type);
@@ -135,11 +138,11 @@ function buildResolversForEntity<TContext extends SessionGraphQLContext>(
 }
 
 export async function loadAdminEntity<TContext extends SessionGraphQLContext>(
+  schema: AdminSchema,
   context: TContext,
   id: string,
   version: number | undefined | null
 ): Promise<AdminEntity> {
-  const schema = getSchema(context);
   const adminClient = getAdminClient(context);
   const result = await adminClient.getEntity(
     typeof version === 'number' ? { id, version } : { id }
@@ -151,10 +154,10 @@ export async function loadAdminEntity<TContext extends SessionGraphQLContext>(
 }
 
 export async function loadAdminEntities<TContext extends SessionGraphQLContext>(
+  schema: AdminSchema,
   context: TContext,
   ids: string[]
 ): Promise<Array<AdminEntity | null>> {
-  const schema = getSchema(context);
   const adminClient = getAdminClient(context);
   const results = await adminClient.getEntities(ids.map((id) => ({ id })));
   if (results.isError()) {
@@ -185,11 +188,11 @@ export function buildResolversForAdminEntity<TContext extends SessionGraphQLCont
 }
 
 export async function loadAdminSearchEntities<TContext extends SessionGraphQLContext>(
+  schema: AdminSchema,
   context: TContext,
   query: AdminQuery | undefined,
   paging: Paging
 ): Promise<ConnectionWithTotalCount<Edge<AdminEntity>, TContext> | null> {
-  const schema = getSchema(context);
   const adminClient = getAdminClient(context);
   const result = await adminClient.searchEntities(query, paging);
   if (result.isError()) {
@@ -214,8 +217,12 @@ export async function loadAdminSearchEntities<TContext extends SessionGraphQLCon
 }
 
 function resolveFields<TContext extends SessionGraphQLContext>(
-  schema: AdminSchema,
-  spec: AdminEntityTypeSpecification | AdminValueTypeSpecification,
+  schema: AdminSchema | Schema,
+  spec:
+    | AdminEntityTypeSpecification
+    | EntityTypeSpecification
+    | AdminValueTypeSpecification
+    | ValueTypeSpecification,
   item: ValueItem | Entity | AdminEntity,
   isAdmin: boolean
 ) {
@@ -230,16 +237,22 @@ function resolveFields<TContext extends SessionGraphQLContext>(
           ids.length === 0
             ? []
             : (_args: undefined, context: TContext, _info: unknown) => {
-                return isAdmin ? loadAdminEntities(context, ids) : loadEntities(context, ids);
+                return isAdmin
+                  ? loadAdminEntities(schema as AdminSchema, context, ids)
+                  : loadEntities(schema, context, ids);
               },
       };
     } else if (isEntityTypeField(fieldSpec, value) && value) {
       fields[fieldSpec.name] = (_args: undefined, context: TContext, _info: unknown) =>
-        isAdmin ? loadAdminEntity(context, value.id, null) : loadEntity(context, value.id);
+        isAdmin
+          ? loadAdminEntity(schema as AdminSchema, context, value.id, null)
+          : loadEntity(schema, context, value.id);
     } else if (isEntityTypeListField(fieldSpec, value) && value && value.length > 0) {
       fields[fieldSpec.name] = (_args: undefined, context: TContext, _info: unknown) => {
         const ids = value.map((x) => x.id);
-        return isAdmin ? loadAdminEntities(context, ids) : loadEntities(context, ids);
+        return isAdmin
+          ? loadAdminEntities(schema as AdminSchema, context, ids)
+          : loadEntities(schema, context, ids);
       };
     } else if (isValueTypeField(fieldSpec, value) && value) {
       fields[fieldSpec.name] = buildResolversForValue(schema, value, isAdmin);
@@ -250,7 +263,7 @@ function resolveFields<TContext extends SessionGraphQLContext>(
 }
 
 function extractEntityIdsForRichTextField(
-  schema: AdminSchema,
+  schema: AdminSchema | Schema,
   fieldSpec: FieldSpecification,
   value: RichText
 ) {
@@ -275,7 +288,7 @@ function extractEntityIdsForRichTextField(
 }
 
 export function buildResolversForValue<TContext extends SessionGraphQLContext>(
-  schema: AdminSchema,
+  schema: AdminSchema | Schema,
   valueItem: ValueItem,
   isAdmin: boolean
 ): ValueItem {

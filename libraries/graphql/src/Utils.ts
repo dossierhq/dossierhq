@@ -1,12 +1,5 @@
-import type { AdminClient, PublishedClient, AdminSchema } from '@jonasb/datadata-core';
+import type { AdminClient, PublishedClient } from '@jonasb/datadata-core';
 import type { SessionGraphQLContext } from '.';
-
-export function getSchema<TContext extends SessionGraphQLContext>(context: TContext): AdminSchema {
-  if (context.schema.isError()) {
-    throw context.schema.toError();
-  }
-  return context.schema.value;
-}
 
 export function getAdminClient<TContext extends SessionGraphQLContext>(
   context: TContext

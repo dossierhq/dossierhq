@@ -292,8 +292,6 @@ input AdminValueTwoInput {
 }
 
 type Query {
-  node(id: ID!): Node
-  nodes(ids: [ID!]!): [Node]
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
@@ -818,10 +816,7 @@ type PageInfo {
 
 scalar Instant
 
-type Query {
-  node(id: ID!): Node
-  nodes(ids: [ID!]!): [Node]
-}"
+type Query"
 `;
 
 exports[`Empty schema spec Generated QL schema (published only) 1`] = `
@@ -838,10 +833,7 @@ type PageInfo {
 
 scalar Instant
 
-type Query {
-  node(id: ID!): Node
-  nodes(ids: [ID!]!): [Node]
-}"
+type Query"
 `;
 
 exports[`Empty schema spec Generated QL schema 1`] = `
@@ -858,10 +850,7 @@ type PageInfo {
 
 scalar Instant
 
-type Query {
-  node(id: ID!): Node
-  nodes(ids: [ID!]!): [Node]
-}"
+type Query"
 `;
 
 exports[`List of strings, booleans, locations and references schema spec Generated QL schema (admin only) 1`] = `
@@ -1121,8 +1110,6 @@ type AdminBarUpsertPayload {
 }
 
 type Query {
-  node(id: ID!): Node
-  nodes(ids: [ID!]!): [Node]
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
@@ -1896,8 +1883,6 @@ enum _AdminBarOrBazOrFoo {
 }
 
 type Query {
-  node(id: ID!): Node
-  nodes(ids: [ID!]!): [Node]
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
@@ -2659,8 +2644,6 @@ type AdminFooUpsertPayload {
 }
 
 type Query {
-  node(id: ID!): Node
-  nodes(ids: [ID!]!): [Node]
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
@@ -3255,8 +3238,6 @@ type AdminFooUpsertPayload {
 }
 
 type Query {
-  node(id: ID!): Node
-  nodes(ids: [ID!]!): [Node]
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
@@ -3927,8 +3908,6 @@ type AdminBarUpsertPayload {
 }
 
 type Query {
-  node(id: ID!): Node
-  nodes(ids: [ID!]!): [Node]
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
@@ -4737,8 +4716,6 @@ enum _AdminValueListOrValueOne {
 }
 
 type Query {
-  node(id: ID!): Node
-  nodes(ids: [ID!]!): [Node]
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection

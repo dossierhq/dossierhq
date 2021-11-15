@@ -46,13 +46,11 @@ async function startServer(server: Server, schema: AdminSchema, port: number) {
     middlewareAdapter(
       graphqlHTTP(async (request, _response, _params) => {
         const context: SessionGraphQLContext = {
-          schema: notOk.NotAuthenticated('No session'),
           adminClient: notOk.NotAuthenticated('No session'),
           publishedClient: notOk.NotAuthenticated('No session'),
         };
         const sessionResult = await createSessionContext(server, request.headers);
         if (sessionResult.isOk()) {
-          context.schema = ok(schema);
           context.adminClient = ok(server.createAdminClient(sessionResult.value.context));
           context.publishedClient = ok(server.createPublishedClient(sessionResult.value.context));
         }
