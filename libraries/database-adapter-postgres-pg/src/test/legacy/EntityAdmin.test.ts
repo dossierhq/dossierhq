@@ -145,6 +145,11 @@ beforeAll(async () => {
           },
         ],
       },
+      {
+        name: 'EntityAdminQux',
+        adminOnly: true,
+        fields: [{ name: 'title', type: FieldType.String }],
+      },
       { name: 'AdminOnlyEditBefore', fields: [{ name: 'message', type: FieldType.String }] },
     ],
     valueTypes: [
@@ -3456,6 +3461,23 @@ describe('publishEntities()', () => {
       ErrorType.BadRequest,
       'Duplicate ids: b1bdcb61-e6aa-47ff-98d8-4cfe8197b290'
     );
+  });
+
+  test('Error: adminOnly type', async () => {
+    const createQuxResult = await client.createEntity({
+      info: { type: 'EntityAdminQux', name: 'Qux name' },
+      fields: {
+        title: 'Qux title',
+      },
+    });
+    if (expectOkResult(createQuxResult)) {
+      const {
+        entity: { id: quxId },
+      } = createQuxResult.value;
+
+      const publishResult = await client.publishEntities([{ id: quxId, version: 0 }]);
+      expectErrorResult(publishResult, ErrorType.BadRequest, `Entity type is adminOnly: ${quxId}`);
+    }
   });
 
   test('Error: Published unknown entity', async () => {

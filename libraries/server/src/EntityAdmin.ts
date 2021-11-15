@@ -487,6 +487,7 @@ export async function publishEntities(
     // Step 1: Get version info for each entity
     const missingEntities: { id: string; version: number }[] = [];
     const alreadyPublishedEntityIds: string[] = [];
+    const adminOnlyEntityIds: string[] = [];
     const versionsInfo: {
       uuid: string;
       versionsId: number;
@@ -509,13 +510,19 @@ export async function publishEntities(
 
       if (!versionInfo) {
         missingEntities.push({ id, version });
-      } else if (versionInfo.published_entity_versions_id === versionInfo.id) {
+        continue;
+      }
+
+      const entitySpec = schema.getEntityTypeSpecification(versionInfo.type);
+      if (!entitySpec) {
+        return notOk.Generic(`No entity spec for type ${versionInfo.type}`);
+      }
+
+      if (versionInfo.published_entity_versions_id === versionInfo.id) {
         alreadyPublishedEntityIds.push(id);
+      } else if (entitySpec.adminOnly) {
+        adminOnlyEntityIds.push(id);
       } else {
-        const entitySpec = schema.getEntityTypeSpecification(versionInfo.type);
-        if (!entitySpec) {
-          return notOk.Generic(`No entity spec for type ${versionInfo.type}`);
-        }
         const entityFields = decodeAdminEntityFields(schema, entitySpec, versionInfo);
         const { fullTextSearchText } = collectDataFromEntity(schema, {
           info: { type: versionInfo.type, name: versionInfo.name },
@@ -537,6 +544,9 @@ export async function publishEntities(
       return notOk.BadRequest(
         `Entity versions are already published: ${alreadyPublishedEntityIds.join(', ')}`
       );
+    }
+    if (adminOnlyEntityIds.length > 0) {
+      return notOk.BadRequest(`Entity type is adminOnly: ${adminOnlyEntityIds.join(', ')}`);
     }
 
     // Step 2: Publish entities
