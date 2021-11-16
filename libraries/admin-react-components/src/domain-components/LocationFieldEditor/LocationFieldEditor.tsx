@@ -104,6 +104,7 @@ function LocationEditor({
         grow
         center={value}
         zoom={value ? 18 : null}
+        paging={{ first: 100 }}
         filterEntityLocations={filterEntityLocations}
         onEntityClick={() => {
           // empty
