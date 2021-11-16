@@ -35,6 +35,7 @@ export {
   isItemAdminEntity,
   isItemEntity,
   isItemValueItem,
+  isItemValuePathEqual,
   isLocationField,
   isLocationItemField,
   isLocationListField,
@@ -55,6 +56,7 @@ export {
   visitItemRecursively,
   visitorPathToString,
 } from './ItemUtils';
+export type { ItemValuePath } from './ItemUtils';
 export {
   convertJsonConnection,
   convertJsonEdge,

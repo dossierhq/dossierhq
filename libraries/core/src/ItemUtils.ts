@@ -190,7 +190,17 @@ export function isItemEntity(item: ValueItem | Entity | AdminEntity): item is En
   return !isItemValueItem(item) && !isItemAdminEntity(item);
 }
 
-export function visitorPathToString(path: (string | number)[]): string {
+export type ItemValuePath = (string | number)[];
+
+export function isItemValuePathEqual(a: ItemValuePath, b: ItemValuePath): boolean {
+  if (a.length !== b.length) return false;
+  for (let i = 0; i < a.length; i += 1) {
+    if (a[i] !== b[i]) return false;
+  }
+  return true;
+}
+
+export function visitorPathToString(path: ItemValuePath): string {
   let result = '';
   for (const segment of path) {
     if (Number.isInteger(segment)) {
@@ -258,7 +268,7 @@ export function visitItemRecursively<TVisitContext>({
 }: {
   schema: AdminSchema | Schema;
   item: Entity | AdminEntity | ValueItem;
-  path?: (number | string)[];
+  path?: ItemValuePath;
   visitField: VisitorVisitField<TVisitContext>;
   visitRichTextBlock: VisitorVisitRichTextBlock<TVisitContext>;
   enterValueItem?: VisitorEnterValueItem<TVisitContext>;
@@ -288,7 +298,7 @@ export function visitFieldRecursively<TVisitContext>({
   visitContext,
 }: {
   schema: AdminSchema | Schema;
-  path?: (string | number)[];
+  path?: ItemValuePath;
   fieldSpec: FieldSpecification;
   value: unknown;
   visitField: VisitorVisitField<TVisitContext>;
@@ -310,7 +320,7 @@ export function visitFieldRecursively<TVisitContext>({
 
 function doVisitItemRecursively<TVisitContext>(
   schema: AdminSchema | Schema,
-  path: (string | number)[],
+  path: ItemValuePath,
   item: ValueItem | AdminEntity | Entity,
   callbacks: VisitorCallbacks<TVisitContext>,
   visitContext: TVisitContext
@@ -375,7 +385,7 @@ function doVisitItemRecursively<TVisitContext>(
 
 function doVisitFieldRecursively<TVisitContext>(
   schema: AdminSchema | Schema,
-  path: (string | number)[],
+  path: ItemValuePath,
   fieldSpec: FieldSpecification,
   value: unknown,
   callbacks: VisitorCallbacks<TVisitContext>,
