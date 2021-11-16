@@ -1,4 +1,5 @@
-import type { Location } from '@jonasb/datadata-core';
+import type { AdminEntity, ItemValuePath, Location } from '@jonasb/datadata-core';
+import { isItemValuePathEqual } from '@jonasb/datadata-core';
 import React, { useCallback, useEffect, useReducer, useState } from 'react';
 import type { EntityFieldEditorProps } from '../../index.js';
 import {
@@ -11,11 +12,20 @@ import {
   Modal,
   Row,
 } from '../../index.js';
+import type { EntityEditorDraftState } from '../EntityEditor/EntityEditorReducer.js';
+import { EntityMap } from '../EntityMap/EntityMap.js';
 import { initializeLocationState, reduceLocation } from './LocationReducer.js';
 
 type Props = EntityFieldEditorProps<Location>;
 
-export function LocationFieldEditor({ id, value, fieldSpec: _, onChange }: Props): JSX.Element {
+export function LocationFieldEditor({
+  id,
+  value,
+  draftState,
+  valuePath,
+  fieldSpec: _,
+  onChange,
+}: Props): JSX.Element {
   const [show, setShow] = useState(false);
   const handleShow = useCallback(() => setShow(true), [setShow]);
   const handleClose = useCallback(() => setShow(false), [setShow]);
@@ -31,7 +41,7 @@ export function LocationFieldEditor({ id, value, fieldSpec: _, onChange }: Props
         ) : null}
       </Row>
       <Modal show={show} onClose={handleClose} size="large">
-        {show ? <LocationEditor value={value} onChange={onChange} /> : null}
+        {show ? <LocationEditor {...{ value, draftState, valuePath, onChange }} /> : null}
       </Modal>
     </>
   );
@@ -39,9 +49,13 @@ export function LocationFieldEditor({ id, value, fieldSpec: _, onChange }: Props
 
 function LocationEditor({
   value,
+  draftState,
+  valuePath,
   onChange,
 }: {
   value: Location | null;
+  draftState: EntityEditorDraftState;
+  valuePath: ItemValuePath;
   onChange: ((location: Location | null) => void) | undefined;
 }) {
   const [{ latString, lngString }, dispatch] = useReducer(
@@ -55,6 +69,15 @@ function LocationEditor({
   useEffect(() => {
     dispatch({ type: 'onChange', onChange });
   }, [onChange]);
+
+  // TODO filter out all draft locations and add all draft locations
+  const filterEntityLocations = useCallback(
+    (e: AdminEntity, path: ItemValuePath) => {
+      const currentLocation = e.id === draftState.id && isItemValuePathEqual(valuePath, path);
+      return !currentLocation;
+    },
+    [draftState, valuePath]
+  );
 
   return (
     <Column className="dd-h-100">
@@ -76,7 +99,16 @@ function LocationEditor({
           step={0.000001}
         />
       </ColumnItem>
-      <ColumnItem as={MapContainer} grow center={value} zoom={value ? 18 : null}>
+      <ColumnItem
+        as={EntityMap}
+        grow
+        center={value}
+        zoom={value ? 18 : null}
+        filterEntityLocations={filterEntityLocations}
+        onEntityClick={() => {
+          // empty
+        }}
+      >
         <MapContainer.EditLocationMarker value={value} onChange={(x) => onChange?.(x)} />
       </ColumnItem>
     </Column>

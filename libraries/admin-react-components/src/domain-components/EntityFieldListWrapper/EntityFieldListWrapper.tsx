@@ -10,6 +10,8 @@ export function EntityFieldListWrapper<Item>({
   id,
   value,
   fieldSpec,
+  draftState,
+  valuePath,
   onChange,
   Editor,
 }: Props<Item>): JSX.Element {
@@ -32,13 +34,15 @@ export function EntityFieldListWrapper<Item>({
 
   return (
     <Column gap={1}>
-      {itemsAndNew.map((x, index) => {
+      {itemsAndNew.map((it, index) => {
         return (
           <Editor
             key={index}
             id={index === 0 ? id : `${id}-${index}`}
-            value={x}
+            value={it}
             fieldSpec={fieldSpec}
+            draftState={draftState}
+            valuePath={[...valuePath, index]}
             onChange={(newItemValue) => handleItemChange(newItemValue, index)}
           />
         );

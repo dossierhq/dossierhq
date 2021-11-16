@@ -1,10 +1,11 @@
-import type { FieldSpecification, RichText } from '@jonasb/datadata-core';
-import { RichTextBlockType } from '@jonasb/datadata-core';
 import type { LogLevels, ToolSettings } from '@editorjs/editorjs';
 import EditorJS from '@editorjs/editorjs';
+import type { FieldSpecification, ItemValuePath, RichText } from '@jonasb/datadata-core';
+import { RichTextBlockType } from '@jonasb/datadata-core';
 import React, { useContext, useEffect, useReducer, useState } from 'react';
 import type { DataDataContextValue, EntityFieldEditorProps } from '../../index.js';
 import { DataDataContext, IconButton, Row, RowItem } from '../../index.js';
+import type { EntityEditorDraftState } from '../EntityEditor/EntityEditorReducer.js';
 import type { EntityToolConfig } from './EntityTool.js';
 import { createEntityToolFactory } from './EntityTool.js';
 import {
@@ -44,6 +45,8 @@ function RichTextEditor({
   id,
   value,
   fieldSpec,
+  draftState,
+  valuePath,
   context,
   onChange,
 }: RichTextFieldEditorProps & { context: DataDataContextValue }) {
@@ -55,7 +58,7 @@ function RichTextEditor({
   );
 
   useEffect(() => {
-    const { tools, inlineToolbar } = initializeTools(context, fieldSpec, id);
+    const { tools, inlineToolbar } = initializeTools(context, fieldSpec, id, draftState, valuePath);
     setEditor(
       new EditorJS({
         holder: id,
@@ -104,7 +107,13 @@ function RichTextEditor({
   );
 }
 
-function initializeTools(context: DataDataContextValue, fieldSpec: FieldSpecification, id: string) {
+function initializeTools(
+  context: DataDataContextValue,
+  fieldSpec: FieldSpecification,
+  id: string,
+  draftState: EntityEditorDraftState,
+  valuePath: ItemValuePath
+) {
   const standardTools: { [toolName: string]: ToolSettings } = {};
   const includeAll = !fieldSpec.richTextBlocks || fieldSpec.richTextBlocks.length === 0;
 
@@ -116,7 +125,7 @@ function initializeTools(context: DataDataContextValue, fieldSpec: FieldSpecific
   } as ToolSettings;
 
   if (includeAll || fieldSpec.richTextBlocks?.find((x) => x.type === RichTextBlockType.entity)) {
-    const config: EntityToolConfig = { id, fieldSpec };
+    const config: EntityToolConfig = { id, fieldSpec, draftState, valuePath };
     standardTools[RichTextBlockType.entity] = {
       class: createEntityToolFactory(context),
       config,
@@ -124,7 +133,7 @@ function initializeTools(context: DataDataContextValue, fieldSpec: FieldSpecific
   }
 
   if (includeAll || fieldSpec.richTextBlocks?.find((x) => x.type === RichTextBlockType.valueItem)) {
-    const config: ValueItemToolConfig = { id, fieldSpec };
+    const config: ValueItemToolConfig = { id, fieldSpec, draftState, valuePath };
     standardTools[RichTextBlockType.valueItem] = {
       class: createValueItemToolFactory(context),
       config,

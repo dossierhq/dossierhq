@@ -154,6 +154,8 @@ function EntityEditorInner({
               idPrefix={entityId}
               key={fieldSpec.name}
               fieldSpec={fieldSpec}
+              draftState={draftState}
+              valuePath={['fields', fieldSpec.name]}
               value={value}
               onValueChanged={handleFieldChanged}
             />

@@ -1,19 +1,22 @@
-import type { EntityReference, FieldSpecification } from '@jonasb/datadata-core';
 import type {
   BlockTool,
   BlockToolConstructable,
   BlockToolConstructorOptions,
   BlockToolData,
 } from '@editorjs/editorjs';
+import type { EntityReference, FieldSpecification, ItemValuePath } from '@jonasb/datadata-core';
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
+import icons from '../../icons.js';
 import type { DataDataContextValue } from '../../index.js';
 import { DataDataContext, EntityItemFieldEditor } from '../../index.js';
-import icons from '../../icons.js';
+import type { EntityEditorDraftState } from '../EntityEditor/EntityEditorReducer.js';
 
 export interface EntityToolConfig {
   id: string;
   fieldSpec: FieldSpecification;
+  draftState: EntityEditorDraftState;
+  valuePath: ItemValuePath;
 }
 
 export function createEntityToolFactory(context: DataDataContextValue): BlockToolConstructable {
@@ -75,12 +78,16 @@ function Wrapper({
   context,
   id,
   fieldSpec,
+  draftState,
+  valuePath,
   initialData,
   onDataChange,
 }: {
   context: DataDataContextValue;
   id: string;
   fieldSpec: FieldSpecification;
+  draftState: EntityEditorDraftState;
+  valuePath: ItemValuePath;
   initialData: EntityReference | null;
   onDataChange: (data: EntityReference | null) => void;
 }) {
@@ -90,7 +97,7 @@ function Wrapper({
   return (
     <DataDataContext.Provider value={context}>
       <EntityItemFieldEditor
-        {...{ id, fieldSpec, schema: context.schema }}
+        {...{ id, fieldSpec, draftState, valuePath }}
         value={value}
         onChange={setValue}
       />
