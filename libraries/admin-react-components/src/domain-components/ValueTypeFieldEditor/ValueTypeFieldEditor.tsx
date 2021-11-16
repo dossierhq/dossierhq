@@ -13,7 +13,14 @@ import {
 
 type Props = EntityFieldEditorProps<ValueItem>;
 
-export function ValueTypeFieldEditor({ id, value, fieldSpec, onChange }: Props): JSX.Element {
+export function ValueTypeFieldEditor({
+  id,
+  value,
+  draftState,
+  valuePath,
+  fieldSpec,
+  onChange,
+}: Props): JSX.Element {
   const { schema } = useContext(DataDataContext);
   const handleRemove = useCallback(() => onChange?.(null), [onChange]);
 
@@ -57,11 +64,15 @@ export function ValueTypeFieldEditor({ id, value, fieldSpec, onChange }: Props):
           onChange?.(newValue);
         };
 
+        const fieldValuePath = [...valuePath, valueFieldSpec.name];
+
         return (
           <EntityFieldEditor
             idPrefix={id}
             key={valueFieldSpec.name}
             fieldSpec={valueFieldSpec}
+            draftState={draftState}
+            valuePath={fieldValuePath}
             value={value[valueFieldSpec.name]}
             onValueChanged={handleFieldChanged}
           />

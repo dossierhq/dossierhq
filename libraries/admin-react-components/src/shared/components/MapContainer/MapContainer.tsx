@@ -26,7 +26,7 @@ const currentMarkerIcon = new Icon({
 
 export interface MapContainerProps {
   className?: string;
-  center: Location | null;
+  center?: Location | null;
   zoom?: number | null;
   onBoundingBoxChanged?: (boundingBox: BoundingBox) => void;
   children: React.ReactNode;
