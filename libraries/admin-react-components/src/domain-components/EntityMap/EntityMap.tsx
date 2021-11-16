@@ -5,6 +5,7 @@ import type {
   BoundingBox,
   ItemValuePath,
   Location,
+  Paging,
 } from '@jonasb/datadata-core';
 import { isLocationItemField, visitItemRecursively } from '@jonasb/datadata-core';
 import type { ReactNode } from 'react';
@@ -16,6 +17,7 @@ export interface EntityMapProps {
   center?: Location | null;
   zoom?: number | null;
   query?: AdminQuery;
+  paging?: Paging;
   filterEntityLocations?: (entity: AdminEntity, valuePath: ItemValuePath) => boolean;
   onEntityClick: (entity: AdminEntity) => void;
   children?: ReactNode;
@@ -26,6 +28,7 @@ export function EntityMap({
   center,
   zoom,
   query,
+  paging,
   filterEntityLocations,
   onEntityClick,
   children,
@@ -35,7 +38,7 @@ export function EntityMap({
   const [boundingBox, setBoundingBox] = useState<BoundingBox | null>(null);
   //TODO handle error
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { connection, connectionError } = useSearchEntities(currentQuery);
+  const { connection, connectionError } = useSearchEntities(currentQuery, paging);
 
   useEffect(() => {
     if (boundingBox) {
