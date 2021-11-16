@@ -11,7 +11,8 @@ import {
 } from 'react-leaflet';
 
 //TODO make configurable through a context. also max bounds
-const defaultCenter = { lat: 55.60498, lng: 13.003822 };
+const defaultCenter = { lat: 55.60498, lng: 13.003822 } as const;
+const defaultZoom = 13;
 
 const transparentImage =
   'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
@@ -26,6 +27,7 @@ const currentMarkerIcon = new Icon({
 export interface MapContainerProps {
   className?: string;
   center: Location | null;
+  zoom?: number | null;
   onBoundingBoxChanged?: (boundingBox: BoundingBox) => void;
   children: React.ReactNode;
 }
@@ -49,6 +51,7 @@ interface MapContainerComponent extends FunctionComponent<MapContainerProps> {
 export const MapContainer: MapContainerComponent = ({
   className,
   center,
+  zoom,
   onBoundingBoxChanged,
   children,
 }: MapContainerProps) => {
@@ -56,7 +59,7 @@ export const MapContainer: MapContainerComponent = ({
     <LeafletMapContainer
       className={className}
       center={center ?? defaultCenter}
-      zoom={13}
+      zoom={zoom ?? defaultZoom}
       scrollWheelZoom
     >
       {onBoundingBoxChanged ? (
