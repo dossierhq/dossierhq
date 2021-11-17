@@ -130,6 +130,78 @@ describe('AdminClient forward operation over JSON', () => {
     `);
   });
 
+  test('createEntity', async () => {
+    const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
+      { logger: NoOpLogger },
+      AdminClientOperationName.createEntity,
+      async (_context, operation) => {
+        const [entity] = operation.args;
+        operation.resolve(
+          ok({ effect: 'created', entity: createDummyEntity({ id: entity.id ?? '4321' }) })
+        );
+      }
+    );
+
+    const result = await adminClient.createEntity({
+      id: '1234',
+      info: { name: 'Name', type: 'FooType' },
+      fields: {},
+    });
+    if (expectOkResult(result)) {
+      expect(result.value.entity.info.createdAt).toBeInstanceOf(Temporal.Instant);
+      expect(result.value.entity.info.updatedAt).toBeInstanceOf(Temporal.Instant);
+
+      expect(result.value).toMatchInlineSnapshot(`
+        Object {
+          "effect": "created",
+          "entity": Object {
+            "fields": Object {},
+            "id": "1234",
+            "info": Object {
+              "createdAt": "2021-08-17T07:51:25.56Z",
+              "name": "Foo name",
+              "publishingState": "draft",
+              "type": "FooType",
+              "updatedAt": "2021-08-17T07:51:25.56Z",
+              "version": 0,
+            },
+          },
+        }
+      `);
+    }
+
+    expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
+      Array [
+        Array [
+          Object {
+            "logger": Object {
+              "debug": [Function],
+              "error": [Function],
+              "info": [Function],
+              "warn": [Function],
+            },
+          },
+          Object {
+            "args": Array [
+              Object {
+                "fields": Object {},
+                "id": "1234",
+                "info": Object {
+                  "name": "Name",
+                  "type": "FooType",
+                },
+              },
+            ],
+            "modifies": true,
+            "name": "createEntity",
+            "next": [Function],
+            "resolve": [Function],
+          },
+        ],
+      ]
+    `);
+  });
+
   test('getEntities', async () => {
     const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
       { logger: NoOpLogger },
@@ -208,6 +280,152 @@ describe('AdminClient forward operation over JSON', () => {
             ],
             "modifies": false,
             "name": "getEntities",
+            "next": [Function],
+            "resolve": [Function],
+          },
+        ],
+      ]
+    `);
+  });
+
+  test('getEntity', async () => {
+    const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
+      { logger: NoOpLogger },
+      AdminClientOperationName.getEntity,
+      async (_context, operation) => {
+        const [reference] = operation.args;
+        operation.resolve(ok(createDummyEntity({ id: reference.id })));
+      }
+    );
+
+    const result = await adminClient.getEntity({ id: '1234' });
+    if (expectOkResult(result)) {
+      expect(result.value.info.createdAt).toBeInstanceOf(Temporal.Instant);
+      expect(result.value.info.updatedAt).toBeInstanceOf(Temporal.Instant);
+
+      expect(result.value).toMatchInlineSnapshot(`
+        Object {
+          "fields": Object {},
+          "id": "1234",
+          "info": Object {
+            "createdAt": "2021-08-17T07:51:25.56Z",
+            "name": "Foo name",
+            "publishingState": "draft",
+            "type": "FooType",
+            "updatedAt": "2021-08-17T07:51:25.56Z",
+            "version": 0,
+          },
+        }
+      `);
+    }
+
+    expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
+      Array [
+        Array [
+          Object {
+            "logger": Object {
+              "debug": [Function],
+              "error": [Function],
+              "info": [Function],
+              "warn": [Function],
+            },
+          },
+          Object {
+            "args": Array [
+              Object {
+                "id": "1234",
+              },
+            ],
+            "modifies": false,
+            "name": "getEntity",
+            "next": [Function],
+            "resolve": [Function],
+          },
+        ],
+      ]
+    `);
+  });
+
+  test('getSchemaSpecification', async () => {
+    const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
+      { logger: NoOpLogger },
+      AdminClientOperationName.getSchemaSpecification,
+      async (_context, operation) => {
+        operation.resolve(ok({ entityTypes: [], valueTypes: [] }));
+      }
+    );
+
+    const result = await adminClient.getSchemaSpecification();
+    expectOkResult(result) &&
+      expect(result.value).toMatchInlineSnapshot(`
+        Object {
+          "entityTypes": Array [],
+          "valueTypes": Array [],
+        }
+      `);
+
+    expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
+      Array [
+        Array [
+          Object {
+            "logger": Object {
+              "debug": [Function],
+              "error": [Function],
+              "info": [Function],
+              "warn": [Function],
+            },
+          },
+          Object {
+            "args": Array [],
+            "modifies": false,
+            "name": "getSchemaSpecification",
+            "next": [Function],
+            "resolve": [Function],
+          },
+        ],
+      ]
+    `);
+  });
+
+  test('getTotalCount', async () => {
+    const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
+      { logger: NoOpLogger },
+      AdminClientOperationName.getTotalCount,
+      async (_context, operation) => {
+        const [_query] = operation.args;
+        operation.resolve(ok(123));
+      }
+    );
+
+    const result = await adminClient.getTotalCount({
+      boundingBox: { minLat: 0, maxLat: 1, minLng: 20, maxLng: 21 },
+    });
+    expectResultValue(result, 123);
+
+    expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
+      Array [
+        Array [
+          Object {
+            "logger": Object {
+              "debug": [Function],
+              "error": [Function],
+              "info": [Function],
+              "warn": [Function],
+            },
+          },
+          Object {
+            "args": Array [
+              Object {
+                "boundingBox": Object {
+                  "maxLat": 1,
+                  "maxLng": 21,
+                  "minLat": 0,
+                  "minLng": 20,
+                },
+              },
+            ],
+            "modifies": false,
+            "name": "getTotalCount",
             "next": [Function],
             "resolve": [Function],
           },
@@ -537,6 +755,196 @@ describe('AdminClient forward operation over JSON', () => {
             ],
             "modifies": true,
             "name": "unpublishEntities",
+            "next": [Function],
+            "resolve": [Function],
+          },
+        ],
+      ]
+    `);
+  });
+
+  test('updateEntity', async () => {
+    const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
+      { logger: NoOpLogger },
+      AdminClientOperationName.updateEntity,
+      async (_context, operation) => {
+        const [entity] = operation.args;
+        operation.resolve(
+          ok({ effect: 'updated', entity: createDummyEntity({ id: entity.id ?? '4321' }) })
+        );
+      }
+    );
+
+    const result = await adminClient.updateEntity({
+      id: '1234',
+      fields: {},
+    });
+    if (expectOkResult(result)) {
+      expect(result.value.entity.info.createdAt).toBeInstanceOf(Temporal.Instant);
+      expect(result.value.entity.info.updatedAt).toBeInstanceOf(Temporal.Instant);
+
+      expect(result.value).toMatchInlineSnapshot(`
+        Object {
+          "effect": "updated",
+          "entity": Object {
+            "fields": Object {},
+            "id": "1234",
+            "info": Object {
+              "createdAt": "2021-08-17T07:51:25.56Z",
+              "name": "Foo name",
+              "publishingState": "draft",
+              "type": "FooType",
+              "updatedAt": "2021-08-17T07:51:25.56Z",
+              "version": 0,
+            },
+          },
+        }
+      `);
+    }
+
+    expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
+      Array [
+        Array [
+          Object {
+            "logger": Object {
+              "debug": [Function],
+              "error": [Function],
+              "info": [Function],
+              "warn": [Function],
+            },
+          },
+          Object {
+            "args": Array [
+              Object {
+                "fields": Object {},
+                "id": "1234",
+              },
+            ],
+            "modifies": true,
+            "name": "updateEntity",
+            "next": [Function],
+            "resolve": [Function],
+          },
+        ],
+      ]
+    `);
+  });
+
+  test('updateSchemaSpecification', async () => {
+    const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
+      { logger: NoOpLogger },
+      AdminClientOperationName.updateSchemaSpecification,
+      async (_context, operation) => {
+        operation.resolve(
+          ok({ effect: 'updated', schemaSpecification: { entityTypes: [], valueTypes: [] } })
+        );
+      }
+    );
+
+    const result = await adminClient.updateSchemaSpecification({ entityTypes: [], valueTypes: [] });
+    expectOkResult(result) &&
+      expect(result.value).toMatchInlineSnapshot(`
+        Object {
+          "effect": "updated",
+          "schemaSpecification": Object {
+            "entityTypes": Array [],
+            "valueTypes": Array [],
+          },
+        }
+      `);
+
+    expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
+      Array [
+        Array [
+          Object {
+            "logger": Object {
+              "debug": [Function],
+              "error": [Function],
+              "info": [Function],
+              "warn": [Function],
+            },
+          },
+          Object {
+            "args": Array [
+              Object {
+                "entityTypes": Array [],
+                "valueTypes": Array [],
+              },
+            ],
+            "modifies": true,
+            "name": "updateSchemaSpecification",
+            "next": [Function],
+            "resolve": [Function],
+          },
+        ],
+      ]
+    `);
+  });
+
+  test('upsertEntity', async () => {
+    const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
+      { logger: NoOpLogger },
+      AdminClientOperationName.upsertEntity,
+      async (_context, operation) => {
+        const [entity] = operation.args;
+        operation.resolve(
+          ok({ effect: 'created', entity: createDummyEntity({ id: entity.id ?? '4321' }) })
+        );
+      }
+    );
+
+    const result = await adminClient.upsertEntity({
+      id: '1234',
+      info: { name: 'Name', type: 'FooType' },
+      fields: {},
+    });
+    if (expectOkResult(result)) {
+      expect(result.value.entity.info.createdAt).toBeInstanceOf(Temporal.Instant);
+      expect(result.value.entity.info.updatedAt).toBeInstanceOf(Temporal.Instant);
+
+      expect(result.value).toMatchInlineSnapshot(`
+        Object {
+          "effect": "created",
+          "entity": Object {
+            "fields": Object {},
+            "id": "1234",
+            "info": Object {
+              "createdAt": "2021-08-17T07:51:25.56Z",
+              "name": "Foo name",
+              "publishingState": "draft",
+              "type": "FooType",
+              "updatedAt": "2021-08-17T07:51:25.56Z",
+              "version": 0,
+            },
+          },
+        }
+      `);
+    }
+
+    expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
+      Array [
+        Array [
+          Object {
+            "logger": Object {
+              "debug": [Function],
+              "error": [Function],
+              "info": [Function],
+              "warn": [Function],
+            },
+          },
+          Object {
+            "args": Array [
+              Object {
+                "fields": Object {},
+                "id": "1234",
+                "info": Object {
+                  "name": "Name",
+                  "type": "FooType",
+                },
+              },
+            ],
+            "modifies": true,
+            "name": "upsertEntity",
             "next": [Function],
             "resolve": [Function],
           },

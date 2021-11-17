@@ -1,7 +1,10 @@
 import { Temporal } from '@js-temporal/polyfill';
 import type {
   AdminEntity,
+  AdminEntityCreatePayload,
   AdminEntityInfo,
+  AdminEntityUpdatePayload,
+  AdminEntityUpsertPayload,
   Connection,
   Edge,
   Entity,
@@ -40,6 +43,18 @@ export interface JsonAdminEntity extends Omit<AdminEntity, 'info'> {
 }
 
 export type JsonEntity = Entity;
+
+export interface JsonAdminEntityCreatePayload extends Omit<AdminEntityCreatePayload, 'entity'> {
+  entity: JsonAdminEntity;
+}
+
+export interface JsonAdminEntityUpdatePayload extends Omit<AdminEntityUpdatePayload, 'entity'> {
+  entity: JsonAdminEntity;
+}
+
+export interface JsonAdminEntityUpsertPayload extends Omit<AdminEntityUpsertPayload, 'entity'> {
+  entity: JsonAdminEntity;
+}
 
 export interface JsonPublishingResult extends Omit<EntityPublishPayload, 'updatedAt'> {
   updatedAt: string;
