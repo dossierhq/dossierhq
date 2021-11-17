@@ -26,6 +26,9 @@ import { assertExhaustive, convertJsonResult, ErrorType, notOk, ok } from '.';
 import type { ErrorFromPromiseResult, OkFromPromiseResult } from './ErrorResult';
 import type {
   JsonAdminEntity,
+  JsonAdminEntityCreatePayload,
+  JsonAdminEntityUpdatePayload,
+  JsonAdminEntityUpsertPayload,
   JsonConnection,
   JsonEdge,
   JsonEntityHistory,
@@ -543,19 +546,18 @@ export function convertJsonAdminClientResult<TName extends AdminClientOperationN
   }
   const { value } = jsonResult;
   switch (operationName) {
-    case AdminClientOperationName.createEntity:
-    case AdminClientOperationName.getEntity:
-    case AdminClientOperationName.getSchemaSpecification:
-    case AdminClientOperationName.getTotalCount:
-    case AdminClientOperationName.updateEntity:
-    case AdminClientOperationName.updateSchemaSpecification:
-    case AdminClientOperationName.upsertEntity:
-      //TODO convert Temporal.Instant in entities
-      return ok(value) as MethodReturnTypeWithoutPromise<TName>;
     case AdminClientOperationName.archiveEntity: {
       const result: MethodReturnTypeWithoutPromise<AdminClientOperationName.archiveEntity> = ok(
         convertJsonPublishingResult(value as JsonPublishingResult)
       );
+      return result as MethodReturnTypeWithoutPromise<TName>;
+    }
+    case AdminClientOperationName.createEntity: {
+      const valueTyped = value as JsonAdminEntityCreatePayload;
+      const result: MethodReturnTypeWithoutPromise<AdminClientOperationName.createEntity> = ok({
+        ...valueTyped,
+        entity: convertJsonAdminEntity(valueTyped.entity),
+      });
       return result as MethodReturnTypeWithoutPromise<TName>;
     }
     case AdminClientOperationName.getEntities: {
@@ -564,6 +566,12 @@ export function convertJsonAdminClientResult<TName extends AdminClientOperationN
           const itemResult = convertJsonResult(jsonItemResult);
           return itemResult.isOk() ? itemResult.map(convertJsonAdminEntity) : itemResult;
         })
+      );
+      return result as MethodReturnTypeWithoutPromise<TName>;
+    }
+    case AdminClientOperationName.getEntity: {
+      const result: MethodReturnTypeWithoutPromise<AdminClientOperationName.getEntity> = ok(
+        convertJsonAdminEntity(value as JsonAdminEntity)
       );
       return result as MethodReturnTypeWithoutPromise<TName>;
     }
@@ -578,12 +586,16 @@ export function convertJsonAdminClientResult<TName extends AdminClientOperationN
         ok(convertJsonPublishingHistory(value as JsonPublishingHistory));
       return result as MethodReturnTypeWithoutPromise<TName>;
     }
+    case AdminClientOperationName.getSchemaSpecification:
+      return ok(value) as MethodReturnTypeWithoutPromise<TName>;
     case AdminClientOperationName.publishEntities: {
       const result: MethodReturnTypeWithoutPromise<AdminClientOperationName.publishEntities> = ok(
         (value as JsonPublishingResult[]).map(convertJsonPublishingResult)
       );
       return result as MethodReturnTypeWithoutPromise<TName>;
     }
+    case AdminClientOperationName.getTotalCount:
+      return ok(value) as MethodReturnTypeWithoutPromise<TName>;
     case AdminClientOperationName.searchEntities: {
       const result: MethodReturnTypeWithoutPromise<AdminClientOperationName.searchEntities> = ok(
         convertJsonConnection(
@@ -603,6 +615,24 @@ export function convertJsonAdminClientResult<TName extends AdminClientOperationN
       const result: MethodReturnTypeWithoutPromise<AdminClientOperationName.unpublishEntities> = ok(
         (value as JsonPublishingResult[]).map(convertJsonPublishingResult)
       );
+      return result as MethodReturnTypeWithoutPromise<TName>;
+    }
+    case AdminClientOperationName.updateEntity: {
+      const valueTyped = value as JsonAdminEntityUpdatePayload;
+      const result: MethodReturnTypeWithoutPromise<AdminClientOperationName.updateEntity> = ok({
+        ...valueTyped,
+        entity: convertJsonAdminEntity(valueTyped.entity),
+      });
+      return result as MethodReturnTypeWithoutPromise<TName>;
+    }
+    case AdminClientOperationName.updateSchemaSpecification:
+      return ok(value) as MethodReturnTypeWithoutPromise<TName>;
+    case AdminClientOperationName.upsertEntity: {
+      const valueTyped = value as JsonAdminEntityUpsertPayload;
+      const result: MethodReturnTypeWithoutPromise<AdminClientOperationName.upsertEntity> = ok({
+        ...valueTyped,
+        entity: convertJsonAdminEntity(valueTyped.entity),
+      });
       return result as MethodReturnTypeWithoutPromise<TName>;
     }
     default:
