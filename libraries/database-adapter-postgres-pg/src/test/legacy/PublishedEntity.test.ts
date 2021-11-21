@@ -118,7 +118,7 @@ async function ensureEntitiesExistForPublishedEntityOnlyEditBefore(client: Admin
 }
 
 async function getEntitiesForPublishedEntityOnlyEditBefore(client: AdminClient) {
-  //TODO add query support for entity status
+  //TODO add query support for multiple entity status
   const result = await getAllEntities(client, { entityTypes: ['PublishedEntityOnlyEditBefore'] });
   if (result.isError()) {
     throw result.toError();
