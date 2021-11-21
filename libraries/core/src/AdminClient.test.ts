@@ -78,7 +78,6 @@ function createDummyEntity({ id }: { id: string }): AdminEntity {
   };
 }
 
-//TODO test all operations
 describe('AdminClient forward operation over JSON', () => {
   test('archiveEntity', async () => {
     const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
