@@ -1,0 +1,139 @@
+import type { AdminEntity, ItemTraverseNode } from '.';
+import { AdminSchema, FieldType, ItemTraverseNodeType, traverseItem, visitorPathToString } from '.';
+
+const schema = new AdminSchema({
+  entityTypes: [
+    {
+      name: 'Foo',
+      adminOnly: false,
+      fields: [
+        { name: 'string', type: FieldType.String },
+        { name: 'stringList', type: FieldType.String, list: true },
+        { name: 'twoStrings', type: FieldType.ValueType, valueTypes: ['TwoStrings'] },
+      ],
+    },
+  ],
+  valueTypes: [
+    {
+      name: 'TwoStrings',
+      adminOnly: false,
+      fields: [
+        { name: 'string1', type: FieldType.String },
+        { name: 'string2', type: FieldType.String },
+      ],
+    },
+  ],
+});
+
+function collectTraverseNodes(generator: Generator<ItemTraverseNode>) {
+  const result = [];
+  for (const node of generator) {
+    const path = visitorPathToString(node.path);
+    switch (node.type) {
+      case ItemTraverseNodeType.error:
+        result.push({ type: node.type, path, error: node.error });
+        break;
+      case ItemTraverseNodeType.field:
+        result.push({ type: node.type, path, value: node.value });
+        break;
+      default: {
+        result.push(node);
+      }
+    }
+  }
+  return result;
+}
+
+describe('traverseItem', () => {
+  test('Empty Foo entity', () => {
+    const nodes = collectTraverseNodes(
+      traverseItem(schema, ['entity'], { info: { type: 'Foo' }, fields: {} } as AdminEntity)
+    );
+    expect(nodes).toMatchInlineSnapshot(`
+      Array [
+        Object {
+          "path": "entity.fields.string",
+          "type": "field",
+          "value": undefined,
+        },
+        Object {
+          "path": "entity.fields.stringList",
+          "type": "field",
+          "value": undefined,
+        },
+        Object {
+          "path": "entity.fields.twoStrings",
+          "type": "field",
+          "value": undefined,
+        },
+      ]
+    `);
+  });
+
+  test('Empty TwoStrings value item', () => {
+    const nodes = collectTraverseNodes(traverseItem(schema, ['valueItem'], { type: 'TwoStrings' }));
+    expect(nodes).toMatchInlineSnapshot(`
+      Array [
+        Object {
+          "path": "valueItem.string1",
+          "type": "field",
+          "value": undefined,
+        },
+        Object {
+          "path": "valueItem.string2",
+          "type": "field",
+          "value": undefined,
+        },
+      ]
+    `);
+  });
+
+  test('Foo entity with TwoStrings value item', () => {
+    const nodes = collectTraverseNodes(
+      traverseItem(schema, ['entity'], {
+        info: { type: 'Foo' },
+        fields: {
+          string: 'string1',
+          stringList: ['string2.1', 'string2.2'],
+          twoStrings: { type: 'TwoStrings', string1: 'two-1', string2: 'two-2' },
+        },
+      } as unknown as AdminEntity)
+    );
+    expect(nodes).toMatchInlineSnapshot(`
+      Array [
+        Object {
+          "path": "entity.fields.string",
+          "type": "field",
+          "value": "string1",
+        },
+        Object {
+          "path": "entity.fields.stringList",
+          "type": "field",
+          "value": Array [
+            "string2.1",
+            "string2.2",
+          ],
+        },
+        Object {
+          "path": "entity.fields.twoStrings",
+          "type": "field",
+          "value": Object {
+            "string1": "two-1",
+            "string2": "two-2",
+            "type": "TwoStrings",
+          },
+        },
+        Object {
+          "path": "entity.fields.twoStrings.string1",
+          "type": "field",
+          "value": "two-1",
+        },
+        Object {
+          "path": "entity.fields.twoStrings.string2",
+          "type": "field",
+          "value": "two-2",
+        },
+      ]
+    `);
+  });
+});
