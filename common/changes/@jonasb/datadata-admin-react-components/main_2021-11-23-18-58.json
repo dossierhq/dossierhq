@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-admin-react-components",
+      "comment": "Show required fields",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-admin-react-components"
+}
