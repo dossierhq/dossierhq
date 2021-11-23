@@ -1055,9 +1055,14 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
           throw new Error(`Unexpected type (${fieldSpec.type})`);
       }
 
-      fields[fieldSpec.name] = {
-        type: fieldSpec.list ? new GraphQLList(new GraphQLNonNull(fieldType)) : fieldType,
-      };
+      if (fieldSpec.list) {
+        fieldType = new GraphQLList(new GraphQLNonNull(fieldType));
+      }
+      if (fieldSpec.required && !isAdmin) {
+        fieldType = new GraphQLNonNull(fieldType);
+      }
+
+      fields[fieldSpec.name] = { type: fieldType };
     }
   }
 

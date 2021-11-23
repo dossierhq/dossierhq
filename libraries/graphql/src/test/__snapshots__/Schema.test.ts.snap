@@ -3023,6 +3023,698 @@ type Mutation {
 }"
 `;
 
+exports[`Required fields schema spec Generated QL schema (admin only) 1`] = `
+"interface Node {
+  id: ID!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String!
+  endCursor: String!
+}
+
+scalar Instant
+
+type Location {
+  lat: Float!
+  lng: Float!
+}
+
+input LocationInput {
+  lat: Float!
+  lng: Float!
+}
+
+input BoundingBoxInput {
+  minLat: Float!
+  maxLat: Float!
+  minLng: Float!
+  maxLng: Float!
+}
+
+enum AdminEntityType {
+  Foo
+}
+
+enum AdminValueType {
+  ValueOne
+}
+
+enum EntityPublishState {
+  draft
+  published
+  modified
+  withdrawn
+  archived
+}
+
+type AdminEntityInfo {
+  type: AdminEntityType!
+  name: String!
+  version: Int!
+  publishingState: EntityPublishState!
+  createdAt: Instant!
+  updatedAt: Instant!
+}
+
+input AdminEntityCreateInfo {
+  type: AdminEntityType
+  name: String!
+  version: Int
+}
+
+enum AdminEntityCreateEffect {
+  created
+  none
+}
+
+input AdminEntityUpdateInfo {
+  type: AdminEntityType
+  name: String
+  version: Int
+}
+
+enum AdminEntityUpdateEffect {
+  updated
+  none
+}
+
+input AdminEntityUpsertInfo {
+  type: AdminEntityType!
+  name: String!
+}
+
+enum AdminEntityUpsertEffect {
+  created
+  updated
+  none
+}
+
+interface AdminEntity {
+  id: ID!
+  info: AdminEntityInfo!
+}
+
+type AdminEntityEdge {
+  node: AdminEntity
+  cursor: String!
+}
+
+type AdminEntityConnection {
+  pageInfo: PageInfo!
+  edges: [AdminEntityEdge]
+  totalCount: Int!
+}
+
+enum AdminQueryOrder {
+  createdAt
+  updatedAt
+  name
+}
+
+input AdminQueryInput {
+  entityTypes: [AdminEntityType]
+  referencing: ID
+  boundingBox: BoundingBoxInput
+  order: AdminQueryOrder
+  text: String
+}
+
+input AdminReferenceInput {
+  id: ID!
+}
+
+input EntityVersionInput {
+  id: ID!
+  version: Int!
+}
+
+interface AdminValue {
+  type: AdminValueType!
+}
+
+type AdminRichText {
+  blocks: JSON!
+  entities: [AdminEntity]
+}
+
+\\"\\"\\"
+The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+\\"\\"\\"
+scalar JSON
+
+input AdminRichTextInput {
+  blocks: JSON!
+}
+
+type EntityVersionInfo {
+  version: Int!
+  published: Boolean!
+  createdBy: ID!
+  createdAt: Instant!
+}
+
+type EntityHistory {
+  id: ID!
+  versions: [EntityVersionInfo]!
+}
+
+type PublishingEvent {
+  version: Int
+  publishedBy: ID!
+  publishedAt: Instant!
+}
+
+type PublishingHistory {
+  id: ID!
+  events: [PublishingEvent]!
+}
+
+type EntityPublishPayload {
+  id: ID!
+  publishState: EntityPublishState!
+  updatedAt: Instant!
+}
+
+type AdminFooFields {
+  body: String
+  tags: [String!]
+  valueOne: AdminValueOne
+}
+
+type AdminFoo implements AdminEntity {
+  id: ID!
+  info: AdminEntityInfo!
+  fields: AdminFooFields!
+}
+
+input AdminFooFieldsInput {
+  body: String
+  tags: [String!]
+  valueOneJson: String
+  valueOne: AdminValueOneInput
+}
+
+input AdminFooCreateInput {
+  id: ID
+  info: AdminEntityCreateInfo!
+  fields: AdminFooFieldsInput!
+}
+
+type AdminFooCreatePayload {
+  effect: AdminEntityCreateEffect!
+  entity: AdminFoo!
+}
+
+input AdminFooUpdateInput {
+  id: ID!
+  info: AdminEntityUpdateInfo
+  fields: AdminFooFieldsInput!
+}
+
+type AdminFooUpdatePayload {
+  effect: AdminEntityUpdateEffect!
+  entity: AdminFoo!
+}
+
+input AdminFooUpsertInput {
+  id: ID!
+  info: AdminEntityUpsertInfo!
+  fields: AdminFooFieldsInput!
+}
+
+type AdminFooUpsertPayload {
+  effect: AdminEntityUpsertEffect!
+  entity: AdminFoo!
+}
+
+type AdminValueOne implements AdminValue {
+  type: AdminValueType!
+  body: String
+}
+
+input AdminValueOneInput {
+  type: AdminValueType!
+  body: String
+}
+
+type Query {
+  adminEntity(id: ID!, version: Int): AdminEntity
+  adminEntities(ids: [ID!]!): [AdminEntity]
+  adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  entityHistory(id: ID!): EntityHistory
+  publishingHistory(id: ID!): PublishingHistory
+}
+
+type Mutation {
+  publishEntities(entities: [EntityVersionInput!]!): [EntityPublishPayload!]
+  unpublishEntities(ids: [ID!]!): [EntityPublishPayload!]
+  archiveEntity(id: ID!): EntityPublishPayload
+  unarchiveEntity(id: ID!): EntityPublishPayload
+  createFooEntity(entity: AdminFooCreateInput!): AdminFooCreatePayload
+  updateFooEntity(entity: AdminFooUpdateInput!): AdminFooUpdatePayload
+  upsertFooEntity(entity: AdminFooUpsertInput!): AdminFooUpsertPayload
+}"
+`;
+
+exports[`Required fields schema spec Generated QL schema (published only) 1`] = `
+"interface Node {
+  id: ID!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String!
+  endCursor: String!
+}
+
+scalar Instant
+
+type Location {
+  lat: Float!
+  lng: Float!
+}
+
+input LocationInput {
+  lat: Float!
+  lng: Float!
+}
+
+input BoundingBoxInput {
+  minLat: Float!
+  maxLat: Float!
+  minLng: Float!
+  maxLng: Float!
+}
+
+enum EntityType {
+  Foo
+}
+
+enum ValueType {
+  ValueOne
+}
+
+type EntityInfo {
+  name: String!
+}
+
+interface Entity implements Node {
+  id: ID!
+  info: EntityInfo!
+}
+
+interface Value {
+  type: ValueType!
+}
+
+type RichText {
+  blocks: JSON!
+  entities: [Entity]
+}
+
+\\"\\"\\"
+The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+\\"\\"\\"
+scalar JSON
+
+type EntityEdge {
+  node: Entity
+  cursor: String!
+}
+
+type EntityConnection {
+  pageInfo: PageInfo!
+  edges: [EntityEdge]
+  totalCount: Int!
+}
+
+enum QueryOrder {
+  createdAt
+  name
+}
+
+input QueryInput {
+  entityTypes: [EntityType]
+  referencing: ID
+  boundingBox: BoundingBoxInput
+  order: QueryOrder
+  text: String
+}
+
+type FooFields {
+  body: String!
+  tags: [String!]!
+  valueOne: ValueOne!
+}
+
+type Foo implements Node & Entity {
+  id: ID!
+  info: EntityInfo!
+  fields: FooFields!
+}
+
+type ValueOne implements Value {
+  type: ValueType!
+  body: String!
+}
+
+type Query {
+  node(id: ID!): Node
+  nodes(ids: [ID!]!): [Node]
+  searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
+}"
+`;
+
+exports[`Required fields schema spec Generated QL schema 1`] = `
+"interface Node {
+  id: ID!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String!
+  endCursor: String!
+}
+
+scalar Instant
+
+type Location {
+  lat: Float!
+  lng: Float!
+}
+
+input LocationInput {
+  lat: Float!
+  lng: Float!
+}
+
+input BoundingBoxInput {
+  minLat: Float!
+  maxLat: Float!
+  minLng: Float!
+  maxLng: Float!
+}
+
+enum EntityType {
+  Foo
+}
+
+enum ValueType {
+  ValueOne
+}
+
+type EntityInfo {
+  name: String!
+}
+
+interface Entity implements Node {
+  id: ID!
+  info: EntityInfo!
+}
+
+interface Value {
+  type: ValueType!
+}
+
+type RichText {
+  blocks: JSON!
+  entities: [Entity]
+}
+
+\\"\\"\\"
+The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+\\"\\"\\"
+scalar JSON
+
+type EntityEdge {
+  node: Entity
+  cursor: String!
+}
+
+type EntityConnection {
+  pageInfo: PageInfo!
+  edges: [EntityEdge]
+  totalCount: Int!
+}
+
+enum QueryOrder {
+  createdAt
+  name
+}
+
+input QueryInput {
+  entityTypes: [EntityType]
+  referencing: ID
+  boundingBox: BoundingBoxInput
+  order: QueryOrder
+  text: String
+}
+
+type FooFields {
+  body: String!
+  tags: [String!]!
+  valueOne: ValueOne!
+}
+
+type Foo implements Node & Entity {
+  id: ID!
+  info: EntityInfo!
+  fields: FooFields!
+}
+
+type ValueOne implements Value {
+  type: ValueType!
+  body: String!
+}
+
+enum AdminEntityType {
+  Foo
+}
+
+enum AdminValueType {
+  ValueOne
+}
+
+enum EntityPublishState {
+  draft
+  published
+  modified
+  withdrawn
+  archived
+}
+
+type AdminEntityInfo {
+  type: AdminEntityType!
+  name: String!
+  version: Int!
+  publishingState: EntityPublishState!
+  createdAt: Instant!
+  updatedAt: Instant!
+}
+
+input AdminEntityCreateInfo {
+  type: AdminEntityType
+  name: String!
+  version: Int
+}
+
+enum AdminEntityCreateEffect {
+  created
+  none
+}
+
+input AdminEntityUpdateInfo {
+  type: AdminEntityType
+  name: String
+  version: Int
+}
+
+enum AdminEntityUpdateEffect {
+  updated
+  none
+}
+
+input AdminEntityUpsertInfo {
+  type: AdminEntityType!
+  name: String!
+}
+
+enum AdminEntityUpsertEffect {
+  created
+  updated
+  none
+}
+
+interface AdminEntity {
+  id: ID!
+  info: AdminEntityInfo!
+}
+
+type AdminEntityEdge {
+  node: AdminEntity
+  cursor: String!
+}
+
+type AdminEntityConnection {
+  pageInfo: PageInfo!
+  edges: [AdminEntityEdge]
+  totalCount: Int!
+}
+
+enum AdminQueryOrder {
+  createdAt
+  updatedAt
+  name
+}
+
+input AdminQueryInput {
+  entityTypes: [AdminEntityType]
+  referencing: ID
+  boundingBox: BoundingBoxInput
+  order: AdminQueryOrder
+  text: String
+}
+
+input AdminReferenceInput {
+  id: ID!
+}
+
+input EntityVersionInput {
+  id: ID!
+  version: Int!
+}
+
+interface AdminValue {
+  type: AdminValueType!
+}
+
+type AdminRichText {
+  blocks: JSON!
+  entities: [AdminEntity]
+}
+
+input AdminRichTextInput {
+  blocks: JSON!
+}
+
+type EntityVersionInfo {
+  version: Int!
+  published: Boolean!
+  createdBy: ID!
+  createdAt: Instant!
+}
+
+type EntityHistory {
+  id: ID!
+  versions: [EntityVersionInfo]!
+}
+
+type PublishingEvent {
+  version: Int
+  publishedBy: ID!
+  publishedAt: Instant!
+}
+
+type PublishingHistory {
+  id: ID!
+  events: [PublishingEvent]!
+}
+
+type EntityPublishPayload {
+  id: ID!
+  publishState: EntityPublishState!
+  updatedAt: Instant!
+}
+
+type AdminFooFields {
+  body: String
+  tags: [String!]
+  valueOne: AdminValueOne
+}
+
+type AdminFoo implements AdminEntity {
+  id: ID!
+  info: AdminEntityInfo!
+  fields: AdminFooFields!
+}
+
+input AdminFooFieldsInput {
+  body: String
+  tags: [String!]
+  valueOneJson: String
+  valueOne: AdminValueOneInput
+}
+
+input AdminFooCreateInput {
+  id: ID
+  info: AdminEntityCreateInfo!
+  fields: AdminFooFieldsInput!
+}
+
+type AdminFooCreatePayload {
+  effect: AdminEntityCreateEffect!
+  entity: AdminFoo!
+}
+
+input AdminFooUpdateInput {
+  id: ID!
+  info: AdminEntityUpdateInfo
+  fields: AdminFooFieldsInput!
+}
+
+type AdminFooUpdatePayload {
+  effect: AdminEntityUpdateEffect!
+  entity: AdminFoo!
+}
+
+input AdminFooUpsertInput {
+  id: ID!
+  info: AdminEntityUpsertInfo!
+  fields: AdminFooFieldsInput!
+}
+
+type AdminFooUpsertPayload {
+  effect: AdminEntityUpsertEffect!
+  entity: AdminFoo!
+}
+
+type AdminValueOne implements AdminValue {
+  type: AdminValueType!
+  body: String
+}
+
+input AdminValueOneInput {
+  type: AdminValueType!
+  body: String
+}
+
+type Query {
+  node(id: ID!): Node
+  nodes(ids: [ID!]!): [Node]
+  searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
+  adminEntity(id: ID!, version: Int): AdminEntity
+  adminEntities(ids: [ID!]!): [AdminEntity]
+  adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  entityHistory(id: ID!): EntityHistory
+  publishingHistory(id: ID!): PublishingHistory
+}
+
+type Mutation {
+  publishEntities(entities: [EntityVersionInput!]!): [EntityPublishPayload!]
+  unpublishEntities(ids: [ID!]!): [EntityPublishPayload!]
+  archiveEntity(id: ID!): EntityPublishPayload
+  unarchiveEntity(id: ID!): EntityPublishPayload
+  createFooEntity(entity: AdminFooCreateInput!): AdminFooCreatePayload
+  updateFooEntity(entity: AdminFooUpdateInput!): AdminFooUpdatePayload
+  upsertFooEntity(entity: AdminFooUpsertInput!): AdminFooUpsertPayload
+}"
+`;
+
 exports[`Rich text schema spec Generated QL schema (admin only) 1`] = `
 "interface Node {
   id: ID!
