@@ -6,15 +6,20 @@ import type {
   ItemValuePath,
   Schema,
   ValueItem,
+  ValueTypeSpecification,
 } from '.';
 import { isItemValueItem, isRichTextItemField, isValueTypeItemField, RichTextBlockType } from '.';
 
 export enum ItemTraverseNodeType {
   error = 'error',
   field = 'field',
+  valueItem = 'valueItem',
 }
 
-export type ItemTraverseNode = ItemTraverseNodeError | ItemTraverseNodeField;
+export type ItemTraverseNode =
+  | ItemTraverseNodeError
+  | ItemTraverseNodeField
+  | ItemTraverseNodeValueItem;
 
 interface ItemTraverseNodeError {
   path: ItemValuePath;
@@ -27,6 +32,13 @@ interface ItemTraverseNodeField {
   type: ItemTraverseNodeType.field;
   fieldSpec: FieldSpecification;
   value: unknown;
+}
+
+interface ItemTraverseNodeValueItem {
+  path: ItemValuePath;
+  type: ItemTraverseNodeType.valueItem;
+  valueSpec: ValueTypeSpecification;
+  valueItem: ValueItem;
 }
 
 export function* traverseItem(
@@ -61,6 +73,14 @@ export function* traverseItem(
       yield errorNode;
       return;
     }
+
+    const valueItemNode: ItemTraverseNodeValueItem = {
+      type: ItemTraverseNodeType.valueItem,
+      path,
+      valueSpec,
+      valueItem: item,
+    };
+    yield valueItemNode;
 
     fields = item;
     fieldSpecs = valueSpec.fields;
