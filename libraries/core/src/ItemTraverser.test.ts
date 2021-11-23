@@ -44,6 +44,9 @@ function collectTraverseNodes(generator: Generator<ItemTraverseNode>) {
       case ItemTraverseNodeType.field:
         result.push({ type: node.type, path, value: node.value });
         break;
+      case ItemTraverseNodeType.valueItem:
+        result.push({ type: node.type, path, valueItem: node.valueItem });
+        break;
       default: {
         result.push(node);
       }
@@ -88,6 +91,13 @@ describe('traverseItem', () => {
     expect(nodes).toMatchInlineSnapshot(`
       Array [
         Object {
+          "path": "valueItem",
+          "type": "valueItem",
+          "valueItem": Object {
+            "type": "TwoStrings",
+          },
+        },
+        Object {
           "path": "valueItem.string1",
           "type": "field",
           "value": undefined,
@@ -131,6 +141,15 @@ describe('traverseItem', () => {
           "path": "entity.fields.twoStrings",
           "type": "field",
           "value": Object {
+            "string1": "two-1",
+            "string2": "two-2",
+            "type": "TwoStrings",
+          },
+        },
+        Object {
+          "path": "entity.fields.twoStrings",
+          "type": "valueItem",
+          "valueItem": Object {
             "string1": "two-1",
             "string2": "two-2",
             "type": "TwoStrings",
@@ -202,6 +221,15 @@ describe('traverseItem', () => {
                 "type": "valueItem",
               },
             ],
+          },
+        },
+        Object {
+          "path": "entity.fields.richText.blocks[0].data",
+          "type": "valueItem",
+          "valueItem": Object {
+            "string1": "two-1",
+            "string2": "two-2",
+            "type": "TwoStrings",
           },
         },
         Object {
