@@ -57,6 +57,7 @@ export interface FieldSpecification {
   /** The type of the field, only values from {@link FieldType} as accepted. */
   type: FieldType | string;
   list?: boolean;
+  required?: boolean;
   isName?: boolean;
   /** Applicable when type is EntityType or RichText */
   entityTypes?: string[];
