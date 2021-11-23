@@ -21,14 +21,14 @@ import type {
   Result,
 } from '@jonasb/datadata-core';
 import {
+  AdminItemTraverseNodeType,
   assertIsDefined,
   EntityPublishState,
   ErrorType,
   isEntityNameAsRequested,
-  ItemTraverseNodeType,
   notOk,
   ok,
-  traverseItem,
+  traverseAdminItem,
   visitorPathToString,
 } from '@jonasb/datadata-core';
 import type { DatabaseAdapter, SessionContext } from '.';
@@ -534,18 +534,18 @@ export async function publishEntities(
         };
         const { fullTextSearchText } = collectDataFromEntity(schema, entity);
 
-        for (const node of traverseItem(schema, [`entity(${id})`], entity as AdminEntity)) {
+        for (const node of traverseAdminItem(schema, [`entity(${id})`], entity as AdminEntity)) {
           switch (node.type) {
-            case ItemTraverseNodeType.error:
+            case AdminItemTraverseNodeType.error:
               return notOk.Generic(`${visitorPathToString(node.path)}: ${node.message}`);
-            case ItemTraverseNodeType.field:
+            case AdminItemTraverseNodeType.field:
               if ((node.fieldSpec.required && node.value === null) || node.value === undefined) {
                 return notOk.BadRequest(
                   `${visitorPathToString(node.path)}: Required field is empty`
                 );
               }
               break;
-            case ItemTraverseNodeType.valueItem:
+            case AdminItemTraverseNodeType.valueItem:
               if (node.valueSpec.adminOnly) {
                 return notOk.BadRequest(
                   `${visitorPathToString(node.path)}: Value item of type ${

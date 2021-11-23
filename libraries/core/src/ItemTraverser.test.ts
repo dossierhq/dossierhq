@@ -1,10 +1,10 @@
-import type { AdminEntity, ItemTraverseNode } from '.';
+import type { AdminEntity, AdminItemTraverseNode } from '.';
 import {
+  AdminItemTraverseNodeType,
   AdminSchema,
   FieldType,
-  ItemTraverseNodeType,
   RichTextBlockType,
-  traverseItem,
+  traverseAdminItem,
   visitorPathToString,
 } from '.';
 
@@ -33,18 +33,18 @@ const schema = new AdminSchema({
   ],
 });
 
-function collectTraverseNodes(generator: Generator<ItemTraverseNode>) {
+function collectTraverseNodes(generator: Generator<AdminItemTraverseNode>) {
   const result = [];
   for (const node of generator) {
     const path = visitorPathToString(node.path);
     switch (node.type) {
-      case ItemTraverseNodeType.error:
+      case AdminItemTraverseNodeType.error:
         result.push({ type: node.type, path, message: node.message });
         break;
-      case ItemTraverseNodeType.field:
+      case AdminItemTraverseNodeType.field:
         result.push({ type: node.type, path, value: node.value });
         break;
-      case ItemTraverseNodeType.valueItem:
+      case AdminItemTraverseNodeType.valueItem:
         result.push({ type: node.type, path, valueItem: node.valueItem });
         break;
       default: {
@@ -58,7 +58,7 @@ function collectTraverseNodes(generator: Generator<ItemTraverseNode>) {
 describe('traverseItem', () => {
   test('Empty Foo entity', () => {
     const nodes = collectTraverseNodes(
-      traverseItem(schema, ['entity'], { info: { type: 'Foo' }, fields: {} } as AdminEntity)
+      traverseAdminItem(schema, ['entity'], { info: { type: 'Foo' }, fields: {} } as AdminEntity)
     );
     expect(nodes).toMatchInlineSnapshot(`
       Array [
@@ -87,7 +87,9 @@ describe('traverseItem', () => {
   });
 
   test('Empty TwoStrings value item', () => {
-    const nodes = collectTraverseNodes(traverseItem(schema, ['valueItem'], { type: 'TwoStrings' }));
+    const nodes = collectTraverseNodes(
+      traverseAdminItem(schema, ['valueItem'], { type: 'TwoStrings' })
+    );
     expect(nodes).toMatchInlineSnapshot(`
       Array [
         Object {
@@ -113,7 +115,7 @@ describe('traverseItem', () => {
 
   test('Foo entity with TwoStrings value item', () => {
     const nodes = collectTraverseNodes(
-      traverseItem(schema, ['entity'], {
+      traverseAdminItem(schema, ['entity'], {
         info: { type: 'Foo' },
         fields: {
           string: 'string1',
@@ -176,7 +178,7 @@ describe('traverseItem', () => {
 
   test('Foo entity with rich text with TwoStrings value item', () => {
     const nodes = collectTraverseNodes(
-      traverseItem(schema, ['entity'], {
+      traverseAdminItem(schema, ['entity'], {
         info: { type: 'Foo' },
         fields: {
           richText: {
