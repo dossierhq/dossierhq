@@ -1,12 +1,10 @@
 import type {
   AdminEntity,
   AdminSchema,
-  Entity,
+  AdminValueTypeSpecification,
   FieldSpecification,
   ItemValuePath,
-  Schema,
   ValueItem,
-  ValueTypeSpecification,
 } from '.';
 import { isItemValueItem, isRichTextItemField, isValueTypeItemField, RichTextBlockType } from '.';
 
@@ -37,14 +35,14 @@ interface ItemTraverseNodeField {
 interface ItemTraverseNodeValueItem {
   path: ItemValuePath;
   type: ItemTraverseNodeType.valueItem;
-  valueSpec: ValueTypeSpecification;
+  valueSpec: AdminValueTypeSpecification;
   valueItem: ValueItem;
 }
 
 export function* traverseItem(
-  schema: Schema | AdminSchema,
+  schema: AdminSchema,
   path: ItemValuePath,
-  item: Entity | AdminEntity | ValueItem
+  item: AdminEntity | ValueItem
 ): Generator<ItemTraverseNode> {
   let fieldSpecs;
   let fields;
@@ -122,7 +120,7 @@ export function* traverseItem(
 }
 
 function* traverseItemFieldValue(
-  schema: AdminSchema | Schema,
+  schema: AdminSchema,
   path: ItemValuePath,
   fieldSpec: FieldSpecification,
   itemValue: unknown
