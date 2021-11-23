@@ -8,49 +8,49 @@ import type {
 } from '.';
 import { isItemValueItem, isRichTextItemField, isValueTypeItemField, RichTextBlockType } from '.';
 
-export enum ItemTraverseNodeType {
+export enum AdminItemTraverseNodeType {
   error = 'error',
   field = 'field',
   valueItem = 'valueItem',
 }
 
-export type ItemTraverseNode =
-  | ItemTraverseNodeError
-  | ItemTraverseNodeField
-  | ItemTraverseNodeValueItem;
+export type AdminItemTraverseNode =
+  | AdminItemTraverseNodeError
+  | AdminItemTraverseNodeField
+  | AdminItemTraverseNodeValueItem;
 
-interface ItemTraverseNodeError {
+interface AdminItemTraverseNodeError {
   path: ItemValuePath;
-  type: ItemTraverseNodeType.error;
+  type: AdminItemTraverseNodeType.error;
   message: string;
 }
 
-interface ItemTraverseNodeField {
+interface AdminItemTraverseNodeField {
   path: ItemValuePath;
-  type: ItemTraverseNodeType.field;
+  type: AdminItemTraverseNodeType.field;
   fieldSpec: FieldSpecification;
   value: unknown;
 }
 
-interface ItemTraverseNodeValueItem {
+interface AdminItemTraverseNodeValueItem {
   path: ItemValuePath;
-  type: ItemTraverseNodeType.valueItem;
+  type: AdminItemTraverseNodeType.valueItem;
   valueSpec: AdminValueTypeSpecification;
   valueItem: ValueItem;
 }
 
-export function* traverseItem(
+export function* traverseAdminItem(
   schema: AdminSchema,
   path: ItemValuePath,
   item: AdminEntity | ValueItem
-): Generator<ItemTraverseNode> {
+): Generator<AdminItemTraverseNode> {
   let fieldSpecs;
   let fields;
   if (!isItemValueItem(item)) {
     const entitySpec = schema.getEntityTypeSpecification(item.info.type);
     if (!entitySpec) {
-      const errorNode: ItemTraverseNodeError = {
-        type: ItemTraverseNodeType.error,
+      const errorNode: AdminItemTraverseNodeError = {
+        type: AdminItemTraverseNodeType.error,
         path,
         message: `Couldn't find spec for entity type ${item.info.type}`,
       };
@@ -63,8 +63,8 @@ export function* traverseItem(
   } else {
     const valueSpec = schema.getValueTypeSpecification(item.type);
     if (!valueSpec) {
-      const errorNode: ItemTraverseNodeError = {
-        type: ItemTraverseNodeType.error,
+      const errorNode: AdminItemTraverseNodeError = {
+        type: AdminItemTraverseNodeType.error,
         path,
         message: `Couldn't find spec for value type ${item.type}`,
       };
@@ -72,8 +72,8 @@ export function* traverseItem(
       return;
     }
 
-    const valueItemNode: ItemTraverseNodeValueItem = {
-      type: ItemTraverseNodeType.valueItem,
+    const valueItemNode: AdminItemTraverseNodeValueItem = {
+      type: AdminItemTraverseNodeType.valueItem,
       path,
       valueSpec,
       valueItem: item,
@@ -87,8 +87,8 @@ export function* traverseItem(
   for (const fieldSpec of fieldSpecs) {
     const fieldPath = [...path, fieldSpec.name];
     const fieldValue = fields?.[fieldSpec.name];
-    const fieldNode: ItemTraverseNodeField = {
-      type: ItemTraverseNodeType.field,
+    const fieldNode: AdminItemTraverseNodeField = {
+      type: AdminItemTraverseNodeType.field,
       path: fieldPath,
       fieldSpec,
       value: fieldValue,
@@ -99,8 +99,8 @@ export function* traverseItem(
         continue;
       }
       if (!Array.isArray(fieldValue)) {
-        const errorNode: ItemTraverseNodeError = {
-          type: ItemTraverseNodeType.error,
+        const errorNode: AdminItemTraverseNodeError = {
+          type: AdminItemTraverseNodeType.error,
           path,
           message: `Expected list got ${typeof fieldValue}`,
         };
@@ -126,13 +126,13 @@ function* traverseItemFieldValue(
   itemValue: unknown
 ) {
   if (isValueTypeItemField(fieldSpec, itemValue) && itemValue) {
-    yield* traverseItem(schema, path, itemValue);
+    yield* traverseAdminItem(schema, path, itemValue);
   } else if (isRichTextItemField(fieldSpec, itemValue) && itemValue) {
     for (let i = 0; i < itemValue.blocks.length; i += 1) {
       const blockPath = [...path, 'blocks', i];
       const block = itemValue.blocks[i];
       if (block.type === RichTextBlockType.valueItem && block.data) {
-        yield* traverseItem(schema, [...blockPath, 'data'], block.data as ValueItem);
+        yield* traverseAdminItem(schema, [...blockPath, 'data'], block.data as ValueItem);
       }
     }
   }

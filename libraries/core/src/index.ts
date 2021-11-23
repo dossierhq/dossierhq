@@ -22,8 +22,8 @@ export {
   ok,
 } from './ErrorResult';
 export type { ErrorResult, OkResult, PromiseResult, Result } from './ErrorResult';
-export { ItemTraverseNodeType, traverseItem } from './ItemTraverser';
-export type { ItemTraverseNode } from './ItemTraverser';
+export { AdminItemTraverseNodeType, traverseAdminItem } from './ItemTraverser';
+export type { AdminItemTraverseNode } from './ItemTraverser';
 export {
   copyEntity,
   isBooleanField,
