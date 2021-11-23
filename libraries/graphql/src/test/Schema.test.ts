@@ -615,3 +615,41 @@ describe('Admin only entity and value schema spec', () => {
     expect(result).toMatchSnapshot();
   });
 });
+
+describe('Required fields schema spec', () => {
+  const schemaSpec = {
+    entityTypes: [
+      {
+        name: 'Foo',
+        adminOnly: false,
+        fields: [
+          { name: 'body', type: FieldType.String, required: true },
+          { name: 'tags', type: FieldType.String, list: true, required: true },
+          { name: 'valueOne', type: FieldType.ValueType, required: true, valueTypes: ['ValueOne'] },
+        ],
+      },
+    ],
+    valueTypes: [
+      {
+        name: 'ValueOne',
+        adminOnly: false,
+        fields: [{ name: 'body', type: FieldType.String, required: true }],
+      },
+    ],
+  };
+
+  test('Generated QL schema', () => {
+    const result = describeGeneratedSchema(schemaSpec, { admin: true, published: true });
+    expect(result).toMatchSnapshot();
+  });
+
+  test('Generated QL schema (admin only)', () => {
+    const result = describeGeneratedSchema(schemaSpec, { admin: true, published: false });
+    expect(result).toMatchSnapshot();
+  });
+
+  test('Generated QL schema (published only)', () => {
+    const result = describeGeneratedSchema(schemaSpec, { admin: false, published: true });
+    expect(result).toMatchSnapshot();
+  });
+});
