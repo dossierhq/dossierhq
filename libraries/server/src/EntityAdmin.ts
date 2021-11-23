@@ -7,6 +7,7 @@ import type {
   AdminEntityUpsert,
   AdminEntityUpsertPayload,
   AdminQuery,
+  AdminSchema,
   Connection,
   Edge,
   EntityHistory,
@@ -18,15 +19,17 @@ import type {
   PublishingEventKind,
   PublishingHistory,
   Result,
-  AdminSchema,
 } from '@jonasb/datadata-core';
 import {
   assertIsDefined,
   EntityPublishState,
   ErrorType,
   isEntityNameAsRequested,
+  ItemTraverseNodeType,
   notOk,
   ok,
+  traverseItem,
+  visitorPathToString,
 } from '@jonasb/datadata-core';
 import type { DatabaseAdapter, SessionContext } from '.';
 import * as Db from './Database';
@@ -524,10 +527,20 @@ export async function publishEntities(
         adminOnlyEntityIds.push(id);
       } else {
         const entityFields = decodeAdminEntityFields(schema, entitySpec, versionInfo);
-        const { fullTextSearchText } = collectDataFromEntity(schema, {
+        // Not entirely the correct type but close enough
+        const entity: AdminEntityCreate = {
           info: { type: versionInfo.type, name: versionInfo.name },
           fields: entityFields,
-        });
+        };
+        const { fullTextSearchText } = collectDataFromEntity(schema, entity);
+
+        for (const node of traverseItem(schema, [`entity(${id})`], entity as AdminEntity)) {
+          if (node.type === ItemTraverseNodeType.field) {
+            if ((node.fieldSpec.required && node.value === null) || node.value === undefined) {
+              return notOk.BadRequest(`${visitorPathToString(node.path)}: Required field is empty`);
+            }
+          }
+        }
 
         versionsInfo.push({
           uuid: id,

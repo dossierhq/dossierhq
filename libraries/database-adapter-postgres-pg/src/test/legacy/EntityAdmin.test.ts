@@ -71,7 +71,7 @@ beforeAll(async () => {
       {
         name: 'EntityAdminFoo',
         fields: [
-          { name: 'title', type: FieldType.String, isName: true },
+          { name: 'title', type: FieldType.String, required: true, isName: true },
           { name: 'summary', type: FieldType.String },
           { name: 'bar', type: FieldType.EntityType, entityTypes: ['EntityAdminBar'] },
         ],
@@ -155,7 +155,7 @@ beforeAll(async () => {
     valueTypes: [
       {
         name: 'EntityAdminOneString',
-        fields: [{ name: 'one', type: FieldType.String }],
+        fields: [{ name: 'one', type: FieldType.String, required: true }],
       },
       {
         name: 'EntityAdminTwoStrings',
@@ -3477,6 +3477,48 @@ describe('publishEntities()', () => {
 
       const publishResult = await client.publishEntities([{ id: quxId, version: 0 }]);
       expectErrorResult(publishResult, ErrorType.BadRequest, `Entity type is adminOnly: ${quxId}`);
+    }
+  });
+
+  test('Error: missing value for required field in entity', async () => {
+    const createFooResult = await client.createEntity({
+      info: { type: 'EntityAdminFoo', name: 'Foo name' },
+      fields: {
+        // no title
+      },
+    });
+    if (expectOkResult(createFooResult)) {
+      const {
+        entity: { id: fooId },
+      } = createFooResult.value;
+
+      const publishResult = await client.publishEntities([{ id: fooId, version: 0 }]);
+      expectErrorResult(
+        publishResult,
+        ErrorType.BadRequest,
+        `entity(${fooId}).fields.title: Required field is empty`
+      );
+    }
+  });
+
+  test('Error: missing value for required field in value item', async () => {
+    const createBazResult = await client.createEntity({
+      info: { type: 'EntityAdminBaz', name: 'Baz name' },
+      fields: {
+        oneString: { type: 'EntityAdminOneString', one: null },
+      },
+    });
+    if (expectOkResult(createBazResult)) {
+      const {
+        entity: { id: bazId },
+      } = createBazResult.value;
+
+      const publishResult = await client.publishEntities([{ id: bazId, version: 0 }]);
+      expectErrorResult(
+        publishResult,
+        ErrorType.BadRequest,
+        `entity(${bazId}).fields.oneString.one: Required field is empty`
+      );
     }
   });
 
