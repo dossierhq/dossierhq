@@ -2,21 +2,12 @@ import type {
   AdminEntity,
   AdminSchema,
   Entity,
-  ErrorResult,
-  ErrorType,
   FieldSpecification,
   ItemValuePath,
   Schema,
   ValueItem,
 } from '.';
-import {
-  isItemValueItem,
-  isRichTextItemField,
-  isValueTypeItemField,
-  notOk,
-  RichTextBlockType,
-  visitorPathToString,
-} from '.';
+import { isItemValueItem, isRichTextItemField, isValueTypeItemField, RichTextBlockType } from '.';
 
 export enum ItemTraverseNodeType {
   error = 'error',
@@ -28,7 +19,7 @@ export type ItemTraverseNode = ItemTraverseNodeError | ItemTraverseNodeField;
 interface ItemTraverseNodeError {
   path: ItemValuePath;
   type: ItemTraverseNodeType.error;
-  error: ErrorResult<unknown, ErrorType.Generic>;
+  message: string;
 }
 
 interface ItemTraverseNodeField {
@@ -51,9 +42,7 @@ export function* traverseItem(
       const errorNode: ItemTraverseNodeError = {
         type: ItemTraverseNodeType.error,
         path,
-        error: notOk.Generic(
-          `${visitorPathToString(path)}: Couldn't find spec for entity type ${item.info.type}`
-        ),
+        message: `Couldn't find spec for entity type ${item.info.type}`,
       };
       yield errorNode;
       return;
@@ -67,9 +56,7 @@ export function* traverseItem(
       const errorNode: ItemTraverseNodeError = {
         type: ItemTraverseNodeType.error,
         path,
-        error: notOk.Generic(
-          `${visitorPathToString(path)}: Couldn't find spec for value type ${item.type}`
-        ),
+        message: `Couldn't find spec for value type ${item.type}`,
       };
       yield errorNode;
       return;
@@ -97,9 +84,7 @@ export function* traverseItem(
         const errorNode: ItemTraverseNodeError = {
           type: ItemTraverseNodeType.error,
           path,
-          error: notOk.Generic(
-            `${visitorPathToString(path)}: Expected list got ${typeof fieldValue}`
-          ),
+          message: `Expected list got ${typeof fieldValue}`,
         };
         yield errorNode;
         continue;
