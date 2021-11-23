@@ -39,7 +39,7 @@ function collectTraverseNodes(generator: Generator<ItemTraverseNode>) {
     const path = visitorPathToString(node.path);
     switch (node.type) {
       case ItemTraverseNodeType.error:
-        result.push({ type: node.type, path, error: node.error });
+        result.push({ type: node.type, path, message: node.message });
         break;
       case ItemTraverseNodeType.field:
         result.push({ type: node.type, path, value: node.value });
