@@ -12,7 +12,7 @@ import type {
   Schema,
   ValueItem,
 } from '.';
-import { FieldType, RichTextBlockType } from '.';
+import { assertExhaustive, FieldType, RichTextBlockType } from '.';
 
 /** Check if `value` with `fieldSpec` is a single boolean field */
 export function isBooleanField(
@@ -579,7 +579,7 @@ function normalizeFieldValueItem(
       return changed ? newValueItem : valueItem;
     }
     default: {
-      const _notReached: never = type;
+      assertExhaustive(type);
     }
   }
 }

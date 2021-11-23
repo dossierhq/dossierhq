@@ -3522,6 +3522,34 @@ describe('publishEntities()', () => {
     }
   });
 
+  test('Error: missing value for required field in value item in rich text', async () => {
+    const createBazResult = await client.createEntity({
+      info: { type: 'EntityAdminBaz', name: 'Baz name' },
+      fields: {
+        body: {
+          blocks: [
+            {
+              type: RichTextBlockType.valueItem,
+              data: { type: 'EntityAdminOneString', one: null },
+            },
+          ],
+        },
+      },
+    });
+    if (expectOkResult(createBazResult)) {
+      const {
+        entity: { id: bazId },
+      } = createBazResult.value;
+
+      const publishResult = await client.publishEntities([{ id: bazId, version: 0 }]);
+      expectErrorResult(
+        publishResult,
+        ErrorType.BadRequest,
+        `entity(${bazId}).fields.body.blocks[0].data.one: Required field is empty`
+      );
+    }
+  });
+
   test('Error: Published unknown entity', async () => {
     const publishResult = await client.publishEntities([
       { id: 'b1bdcb61-e6aa-47ff-98d8-4cfe8197b290', version: 0 },

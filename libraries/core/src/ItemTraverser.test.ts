@@ -1,5 +1,12 @@
 import type { AdminEntity, ItemTraverseNode } from '.';
-import { AdminSchema, FieldType, ItemTraverseNodeType, traverseItem, visitorPathToString } from '.';
+import {
+  AdminSchema,
+  FieldType,
+  ItemTraverseNodeType,
+  RichTextBlockType,
+  traverseItem,
+  visitorPathToString,
+} from '.';
 
 const schema = new AdminSchema({
   entityTypes: [
@@ -10,6 +17,7 @@ const schema = new AdminSchema({
         { name: 'string', type: FieldType.String },
         { name: 'stringList', type: FieldType.String, list: true },
         { name: 'twoStrings', type: FieldType.ValueType, valueTypes: ['TwoStrings'] },
+        { name: 'richText', type: FieldType.RichText },
       ],
     },
   ],
@@ -63,6 +71,11 @@ describe('traverseItem', () => {
         },
         Object {
           "path": "entity.fields.twoStrings",
+          "type": "field",
+          "value": undefined,
+        },
+        Object {
+          "path": "entity.fields.richText",
           "type": "field",
           "value": undefined,
         },
@@ -130,6 +143,74 @@ describe('traverseItem', () => {
         },
         Object {
           "path": "entity.fields.twoStrings.string2",
+          "type": "field",
+          "value": "two-2",
+        },
+        Object {
+          "path": "entity.fields.richText",
+          "type": "field",
+          "value": undefined,
+        },
+      ]
+    `);
+  });
+
+  test('Foo entity with rich text with TwoStrings value item', () => {
+    const nodes = collectTraverseNodes(
+      traverseItem(schema, ['entity'], {
+        info: { type: 'Foo' },
+        fields: {
+          richText: {
+            blocks: [
+              {
+                type: RichTextBlockType.valueItem,
+                data: { type: 'TwoStrings', string1: 'two-1', string2: 'two-2' },
+              },
+            ],
+          },
+        },
+      } as unknown as AdminEntity)
+    );
+    expect(nodes).toMatchInlineSnapshot(`
+      Array [
+        Object {
+          "path": "entity.fields.string",
+          "type": "field",
+          "value": undefined,
+        },
+        Object {
+          "path": "entity.fields.stringList",
+          "type": "field",
+          "value": undefined,
+        },
+        Object {
+          "path": "entity.fields.twoStrings",
+          "type": "field",
+          "value": undefined,
+        },
+        Object {
+          "path": "entity.fields.richText",
+          "type": "field",
+          "value": Object {
+            "blocks": Array [
+              Object {
+                "data": Object {
+                  "string1": "two-1",
+                  "string2": "two-2",
+                  "type": "TwoStrings",
+                },
+                "type": "valueItem",
+              },
+            ],
+          },
+        },
+        Object {
+          "path": "entity.fields.richText.blocks[0].data.string1",
+          "type": "field",
+          "value": "two-1",
+        },
+        Object {
+          "path": "entity.fields.richText.blocks[0].data.string2",
           "type": "field",
           "value": "two-2",
         },

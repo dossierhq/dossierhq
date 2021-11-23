@@ -9,7 +9,14 @@ import type {
   Schema,
   ValueItem,
 } from '.';
-import { isItemValueItem, isValueTypeItemField, notOk, visitorPathToString } from '.';
+import {
+  isItemValueItem,
+  isRichTextItemField,
+  isValueTypeItemField,
+  notOk,
+  RichTextBlockType,
+  visitorPathToString,
+} from '.';
 
 export enum ItemTraverseNodeType {
   error = 'error',
@@ -117,6 +124,13 @@ function* traverseItemFieldValue(
 ) {
   if (isValueTypeItemField(fieldSpec, itemValue) && itemValue) {
     yield* traverseItem(schema, path, itemValue);
+  } else if (isRichTextItemField(fieldSpec, itemValue) && itemValue) {
+    for (let i = 0; i < itemValue.blocks.length; i += 1) {
+      const blockPath = [...path, 'blocks', i];
+      const block = itemValue.blocks[i];
+      if (block.type === RichTextBlockType.valueItem && block.data) {
+        yield* traverseItem(schema, [...blockPath, 'data'], block.data as ValueItem);
+      }
+    }
   }
-  //TODO rich text
 }
