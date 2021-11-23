@@ -4,7 +4,7 @@
       "name": "Foo",
       "adminOnly": false,
       "fields": [
-        { "name": "title", "type": "String", "isName": true },
+        { "name": "title", "type": "String", "isName": true, "required": true },
         { "name": "tags", "type": "String", "list": true },
         { "name": "location", "type": "Location" },
         { "name": "locations", "type": "Location", "list": true },
