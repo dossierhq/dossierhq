@@ -535,10 +535,25 @@ export async function publishEntities(
         const { fullTextSearchText } = collectDataFromEntity(schema, entity);
 
         for (const node of traverseItem(schema, [`entity(${id})`], entity as AdminEntity)) {
-          if (node.type === ItemTraverseNodeType.field) {
-            if ((node.fieldSpec.required && node.value === null) || node.value === undefined) {
-              return notOk.BadRequest(`${visitorPathToString(node.path)}: Required field is empty`);
-            }
+          switch (node.type) {
+            case ItemTraverseNodeType.error:
+              return notOk.Generic(`${visitorPathToString(node.path)}: ${node.message}`);
+            case ItemTraverseNodeType.field:
+              if ((node.fieldSpec.required && node.value === null) || node.value === undefined) {
+                return notOk.BadRequest(
+                  `${visitorPathToString(node.path)}: Required field is empty`
+                );
+              }
+              break;
+            case ItemTraverseNodeType.valueItem:
+              if (node.valueSpec.adminOnly) {
+                return notOk.BadRequest(
+                  `${visitorPathToString(node.path)}: Value item of type ${
+                    node.valueSpec.name
+                  } is adminOnly`
+                );
+              }
+              break;
           }
         }
 

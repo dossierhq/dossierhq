@@ -57,6 +57,7 @@ const emptyBazFields = {
   title: null,
   twoStrings: null,
   twoStringsList: null,
+  valueItem: null,
 };
 
 beforeAll(async () => {
@@ -143,6 +144,10 @@ beforeAll(async () => {
             type: FieldType.ValueType,
             valueTypes: ['EntityAdminNested'],
           },
+          {
+            name: 'valueItem',
+            type: FieldType.ValueType,
+          },
         ],
       },
       {
@@ -210,6 +215,11 @@ beforeAll(async () => {
             valueTypes: ['EntityAdminNested'],
           },
         ],
+      },
+      {
+        name: 'EntityAdminOneStringAdminOnly',
+        adminOnly: true,
+        fields: [{ name: 'one', type: FieldType.String, required: true }],
       },
     ],
   });
@@ -3463,7 +3473,7 @@ describe('publishEntities()', () => {
     );
   });
 
-  test('Error: adminOnly type', async () => {
+  test('Error: adminOnly entity type', async () => {
     const createQuxResult = await client.createEntity({
       info: { type: 'EntityAdminQux', name: 'Qux name' },
       fields: {
@@ -3477,6 +3487,28 @@ describe('publishEntities()', () => {
 
       const publishResult = await client.publishEntities([{ id: quxId, version: 0 }]);
       expectErrorResult(publishResult, ErrorType.BadRequest, `Entity type is adminOnly: ${quxId}`);
+    }
+  });
+
+  test('Error: adminOnly value type', async () => {
+    const createBazResult = await client.createEntity({
+      info: { type: 'EntityAdminBaz', name: 'Baz name' },
+      fields: {
+        title: 'Baz title',
+        valueItem: { type: 'EntityAdminOneStringAdminOnly', one: 'String' },
+      },
+    });
+    if (expectOkResult(createBazResult)) {
+      const {
+        entity: { id: bazId },
+      } = createBazResult.value;
+
+      const publishResult = await client.publishEntities([{ id: bazId, version: 0 }]);
+      expectErrorResult(
+        publishResult,
+        ErrorType.BadRequest,
+        `entity(${bazId}).fields.valueItem: Value item of type EntityAdminOneStringAdminOnly is adminOnly`
+      );
     }
   });
 
