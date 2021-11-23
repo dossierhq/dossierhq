@@ -117,8 +117,10 @@ export function EntityFieldEditor({
     editor = <div>{`${fieldSpec.type} (list: ${!!fieldSpec.list})`} is not supported</div>;
   }
 
+  const label = fieldSpec.required ? `${fieldSpec.name} (required)` : fieldSpec.name;
+
   return (
-    <FormField htmlFor={id} label={fieldSpec.name}>
+    <FormField htmlFor={id} label={label}>
       {editor}
     </FormField>
   );
