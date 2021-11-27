@@ -328,23 +328,12 @@ export async function updateEntity(
 ): PromiseResult<AdminEntityUpdatePayload, ErrorType.BadRequest | ErrorType.NotFound> {
   return await context.withTransaction(async (context) => {
     const previousValues = await Db.queryNoneOrOne<
-      Pick<
-        EntitiesTable,
-        | 'id'
-        | 'type'
-        | 'name'
-        | 'created_at'
-        | 'updated_at'
-        | 'archived'
-        | 'never_published'
-        | 'published_entity_versions_id'
-        | 'latest_draft_entity_versions_id'
-      > &
+      Pick<EntitiesTable, 'id' | 'type' | 'name' | 'created_at' | 'updated_at' | 'status'> &
         Pick<EntityVersionsTable, 'version' | 'data'>
     >(
       databaseAdapter,
       context,
-      `SELECT e.id, e.type, e.name, e.created_at, e.updated_at, e.archived, e.never_published, e.published_entity_versions_id, e.latest_draft_entity_versions_id, ev.version, ev.data
+      `SELECT e.id, e.type, e.name, e.created_at, e.updated_at, e.status, ev.version, ev.data
         FROM entities e, entity_versions ev
         WHERE e.uuid = $1 AND e.latest_draft_entity_versions_id = ev.id`,
       [entity.id]
