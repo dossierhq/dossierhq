@@ -10,13 +10,18 @@ import type {
 import { AdminQueryOrder, notOk, ok, QueryOrder } from '@jonasb/datadata-core';
 import type { CursorNativeType } from './Connection';
 import { toOpaqueCursor } from './Connection';
-import type { EntitiesTable } from './DatabaseTables';
-import type { AdminEntityValues, EntityValues } from './EntityCodec';
+import type { EntitiesTable, EntityVersionsTable } from './DatabaseTables';
 import { resolvePaging } from './Paging';
 import QueryBuilder from './QueryBuilder';
 
-export type SearchAdminEntitiesItem = Pick<EntitiesTable, 'id' | 'updated'> & AdminEntityValues;
-export type SearchPublishedEntitiesItem = Pick<EntitiesTable, 'id'> & EntityValues;
+// id and updated are included for order by
+export type SearchAdminEntitiesItem = Pick<
+  EntitiesTable,
+  'id' | 'uuid' | 'type' | 'name' | 'created_at' | 'updated_at' | 'updated' | 'status'
+> &
+  Pick<EntityVersionsTable, 'version' | 'data'>;
+export type SearchPublishedEntitiesItem = Pick<EntitiesTable, 'id' | 'uuid' | 'type' | 'name'> &
+  Pick<EntityVersionsTable, 'data'>;
 
 type CursorName = 'name' | 'updated' | 'id';
 
@@ -70,7 +75,7 @@ function sharedSearchEntitiesQuery<
   if (published) {
     qb.addQuery('e.id, e.uuid, e.type, e.name, ev.data FROM entities e, entity_versions ev');
   } else {
-    qb.addQuery(`e.id, e.uuid, e.type, e.name, e.created_at, e.updated_at, e.updated, e.archived, e.never_published, e.latest_draft_entity_versions_id, e.published_entity_versions_id, ev.version, ev.data
+    qb.addQuery(`e.id, e.uuid, e.type, e.name, e.created_at, e.updated_at, e.updated, e.status, ev.version, ev.data
   FROM entities e, entity_versions ev`);
   }
   if (query?.referencing) {

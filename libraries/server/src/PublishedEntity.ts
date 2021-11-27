@@ -112,7 +112,7 @@ export async function searchEntities(
     return sqlQueryResult;
   }
 
-  return await sharedSearchEntities<Entity, SearchPublishedEntitiesItem>(
+  return await sharedSearchEntities<Schema, Entity, SearchPublishedEntitiesItem>(
     schema,
     databaseAdapter,
     context,
