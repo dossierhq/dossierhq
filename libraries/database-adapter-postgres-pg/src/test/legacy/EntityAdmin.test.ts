@@ -3637,6 +3637,49 @@ describe('publishEntities()', () => {
     }
   });
 
+  test('Older version entity means status modified', async () => {
+    const createBaz1Result = await client.createEntity({
+      info: { type: 'EntityAdminBaz', name: 'Baz 1' },
+      fields: { title: 'Baz title 1' },
+    });
+    if (expectOkResult(createBaz1Result)) {
+      const {
+        entity: {
+          id,
+          info: { name, createdAt },
+        },
+      } = createBaz1Result.value;
+
+      const updateResult = await client.updateEntity({ id, fields: { title: 'Baz title 2' } });
+      expectOkResult(updateResult);
+
+      const publishResult = await client.publishEntities([{ id, version: 0 }]);
+
+      if (expectOkResult(publishResult)) {
+        const [{ updatedAt }] = publishResult.value;
+        expectResultValue(publishResult, [
+          { id, publishState: EntityPublishState.Modified, updatedAt },
+        ]);
+
+        const getResult = await client.getEntity({ id });
+        if (expectOkResult(getResult)) {
+          expectResultValue(getResult, {
+            id,
+            info: {
+              type: 'EntityAdminBaz',
+              name,
+              version: 1,
+              publishingState: EntityPublishState.Modified,
+              createdAt,
+              updatedAt,
+            },
+            fields: { ...emptyBazFields, title: 'Baz title 2' },
+          });
+        }
+      }
+    }
+  });
+
   test('Error: Publish published version', async () => {
     const createBazResult = await client.createEntity({
       info: { type: 'EntityAdminBaz', name: 'Baz 1' },

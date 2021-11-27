@@ -239,6 +239,42 @@ describe('getEntity()', () => {
     }
   });
 
+  test('Publish old version', async () => {
+    const createFooResult = await adminClient.createEntity({
+      info: { type: 'PublishedEntityFoo', name: 'Foo 1' },
+      fields: { title: 'Foo title 1' },
+    });
+    if (expectOkResult(createFooResult)) {
+      const {
+        entity: {
+          id,
+          info: { name },
+        },
+      } = createFooResult.value;
+
+      const updateResult = await adminClient.updateEntity({ id, fields: { title: 'Foo title 2' } });
+      expectOkResult(updateResult);
+
+      const publishResult = await adminClient.publishEntities([{ id, version: 0 }]);
+
+      if (expectOkResult(publishResult)) {
+        const [{ updatedAt }] = publishResult.value;
+        expectResultValue(publishResult, [
+          { id, publishState: EntityPublishState.Modified, updatedAt },
+        ]);
+
+        const getResult = await publishedClient.getEntity({ id });
+        if (expectOkResult(getResult)) {
+          expectResultValue(getResult, {
+            id,
+            info: { type: 'PublishedEntityFoo', name },
+            fields: { ...emptyFooFields, title: 'Foo title 1' },
+          });
+        }
+      }
+    }
+  });
+
   test('Error: Archived entity', async () => {
     const createResult = await adminClient.createEntity({
       info: { type: 'PublishedEntityFoo', name: 'Foo 1' },
