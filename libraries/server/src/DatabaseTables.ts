@@ -25,6 +25,7 @@ export interface EntitiesTable {
   never_published: boolean;
   archived: boolean;
   published_entity_versions_id: number | null;
+  status: 'draft' | 'published' | 'modified' | 'withdrawn' | 'archived';
 }
 
 export interface EntityVersionsTable {

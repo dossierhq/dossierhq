@@ -2400,6 +2400,75 @@ describe('searchEntities() status', () => {
       });
     }
   });
+
+  test('Filter on draft+archived', async () => {
+    const statusesResult = await countSearchResultStatuses(client, {
+      entityTypes: ['AdminOnlyEditBefore'],
+      status: [EntityPublishState.Draft, EntityPublishState.Archived],
+    });
+    if (expectOkResult(statusesResult)) {
+      const {
+        [EntityPublishState.Draft]: draft,
+        [EntityPublishState.Archived]: archived,
+        ...statuses
+      } = statusesResult.value;
+      expect(draft).toBeGreaterThan(0);
+      expect(archived).toBeGreaterThan(0);
+      expect(statuses).toEqual({
+        [EntityPublishState.Published]: 0,
+        [EntityPublishState.Modified]: 0,
+        [EntityPublishState.Withdrawn]: 0,
+      });
+    }
+  });
+
+  test('Filter on modified+published', async () => {
+    const statusesResult = await countSearchResultStatuses(client, {
+      entityTypes: ['AdminOnlyEditBefore'],
+      status: [EntityPublishState.Modified, EntityPublishState.Published],
+    });
+    if (expectOkResult(statusesResult)) {
+      const {
+        [EntityPublishState.Modified]: modified,
+        [EntityPublishState.Published]: published,
+        ...statuses
+      } = statusesResult.value;
+      expect(modified).toBeGreaterThan(0);
+      expect(published).toBeGreaterThan(0);
+      expect(statuses).toEqual({
+        [EntityPublishState.Draft]: 0,
+        [EntityPublishState.Withdrawn]: 0,
+        [EntityPublishState.Archived]: 0,
+      });
+    }
+  });
+
+  test('Filter on all statuses', async () => {
+    const statusesResult = await countSearchResultStatuses(client, {
+      entityTypes: ['AdminOnlyEditBefore'],
+      status: [
+        EntityPublishState.Draft,
+        EntityPublishState.Published,
+        EntityPublishState.Modified,
+        EntityPublishState.Archived,
+        EntityPublishState.Withdrawn,
+      ],
+    });
+    if (expectOkResult(statusesResult)) {
+      const {
+        [EntityPublishState.Draft]: draft,
+        [EntityPublishState.Archived]: archived,
+        [EntityPublishState.Published]: published,
+        [EntityPublishState.Modified]: modified,
+        [EntityPublishState.Withdrawn]: withdrawn,
+      } = statusesResult.value;
+      expect(draft).toBeGreaterThan(0);
+      expect(archived).toBeGreaterThan(0);
+      expect(published).toBeGreaterThan(0);
+      expect(modified).toBeGreaterThan(0);
+      expect(withdrawn).toBeGreaterThan(0);
+    }
+  });
 });
 
 describe('getTotalCount', () => {

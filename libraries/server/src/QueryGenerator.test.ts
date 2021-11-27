@@ -308,8 +308,9 @@ describe('searchAdminEntitiesQuery()', () => {
           "isForwards": true,
           "pagingCount": 25,
           "text": "SELECT e.id, e.uuid, e.type, e.name, e.created_at, e.updated_at, e.updated, e.archived, e.never_published, e.latest_draft_entity_versions_id, e.published_entity_versions_id, ev.version, ev.data
-        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND NOT e.archived AND e.published_entity_versions_id IS NULL AND e.never_published ORDER BY e.id LIMIT $1",
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND status = $1 ORDER BY e.id LIMIT $2",
           "values": Array [
+            "draft",
             26,
           ],
         },
@@ -326,8 +327,9 @@ describe('searchAdminEntitiesQuery()', () => {
           "isForwards": true,
           "pagingCount": 25,
           "text": "SELECT e.id, e.uuid, e.type, e.name, e.created_at, e.updated_at, e.updated, e.archived, e.never_published, e.latest_draft_entity_versions_id, e.published_entity_versions_id, ev.version, ev.data
-        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.published_entity_versions_id IS NOT NULL AND e.published_entity_versions_id = e.latest_draft_entity_versions_id ORDER BY e.id LIMIT $1",
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND status = $1 ORDER BY e.id LIMIT $2",
           "values": Array [
+            "published",
             26,
           ],
         },
@@ -344,8 +346,9 @@ describe('searchAdminEntitiesQuery()', () => {
           "isForwards": true,
           "pagingCount": 25,
           "text": "SELECT e.id, e.uuid, e.type, e.name, e.created_at, e.updated_at, e.updated, e.archived, e.never_published, e.latest_draft_entity_versions_id, e.published_entity_versions_id, ev.version, ev.data
-        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.published_entity_versions_id IS NOT NULL AND e.published_entity_versions_id <> e.latest_draft_entity_versions_id ORDER BY e.id LIMIT $1",
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND status = $1 ORDER BY e.id LIMIT $2",
           "values": Array [
+            "modified",
             26,
           ],
         },
@@ -362,8 +365,9 @@ describe('searchAdminEntitiesQuery()', () => {
           "isForwards": true,
           "pagingCount": 25,
           "text": "SELECT e.id, e.uuid, e.type, e.name, e.created_at, e.updated_at, e.updated, e.archived, e.never_published, e.latest_draft_entity_versions_id, e.published_entity_versions_id, ev.version, ev.data
-        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND NOT e.archived AND e.published_entity_versions_id IS NULL AND NOT e.never_published ORDER BY e.id LIMIT $1",
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND status = $1 ORDER BY e.id LIMIT $2",
           "values": Array [
+            "withdrawn",
             26,
           ],
         },
@@ -380,8 +384,101 @@ describe('searchAdminEntitiesQuery()', () => {
           "isForwards": true,
           "pagingCount": 25,
           "text": "SELECT e.id, e.uuid, e.type, e.name, e.created_at, e.updated_at, e.updated, e.archived, e.never_published, e.latest_draft_entity_versions_id, e.published_entity_versions_id, ev.version, ev.data
-        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.archived ORDER BY e.id LIMIT $1",
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND status = $1 ORDER BY e.id LIMIT $2",
           "values": Array [
+            "archived",
+            26,
+          ],
+        },
+      }
+    `);
+  });
+
+  test('query status draft+published', () => {
+    expect(
+      searchAdminEntitiesQuery(
+        schema,
+        { status: [EntityPublishState.Draft, EntityPublishState.Published] },
+        undefined
+      )
+    ).toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "cursorExtractor": [Function],
+          "isForwards": true,
+          "pagingCount": 25,
+          "text": "SELECT e.id, e.uuid, e.type, e.name, e.created_at, e.updated_at, e.updated, e.archived, e.never_published, e.latest_draft_entity_versions_id, e.published_entity_versions_id, ev.version, ev.data
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND status = ANY($1) ORDER BY e.id LIMIT $2",
+          "values": Array [
+            Array [
+              "draft",
+              "published",
+            ],
+            26,
+          ],
+        },
+      }
+    `);
+  });
+
+  test('query status draft+archived', () => {
+    expect(
+      searchAdminEntitiesQuery(
+        schema,
+        { status: [EntityPublishState.Draft, EntityPublishState.Archived] },
+        undefined
+      )
+    ).toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "cursorExtractor": [Function],
+          "isForwards": true,
+          "pagingCount": 25,
+          "text": "SELECT e.id, e.uuid, e.type, e.name, e.created_at, e.updated_at, e.updated, e.archived, e.never_published, e.latest_draft_entity_versions_id, e.published_entity_versions_id, ev.version, ev.data
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND status = ANY($1) ORDER BY e.id LIMIT $2",
+          "values": Array [
+            Array [
+              "draft",
+              "archived",
+            ],
+            26,
+          ],
+        },
+      }
+    `);
+  });
+
+  test('query status all', () => {
+    expect(
+      searchAdminEntitiesQuery(
+        schema,
+        {
+          status: [
+            EntityPublishState.Draft,
+            EntityPublishState.Published,
+            EntityPublishState.Modified,
+            EntityPublishState.Archived,
+            EntityPublishState.Withdrawn,
+          ],
+        },
+        undefined
+      )
+    ).toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "cursorExtractor": [Function],
+          "isForwards": true,
+          "pagingCount": 25,
+          "text": "SELECT e.id, e.uuid, e.type, e.name, e.created_at, e.updated_at, e.updated, e.archived, e.never_published, e.latest_draft_entity_versions_id, e.published_entity_versions_id, ev.version, ev.data
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND status = ANY($1) ORDER BY e.id LIMIT $2",
+          "values": Array [
+            Array [
+              "draft",
+              "published",
+              "modified",
+              "archived",
+              "withdrawn",
+            ],
             26,
           ],
         },
@@ -1097,8 +1194,10 @@ describe('totalAdminEntitiesQuery()', () => {
       .toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
-          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE NOT e.archived AND e.published_entity_versions_id IS NULL AND e.never_published",
-          "values": Array [],
+          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE status = $1",
+          "values": Array [
+            "draft",
+          ],
         },
       }
     `);
@@ -1109,8 +1208,10 @@ describe('totalAdminEntitiesQuery()', () => {
       .toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
-          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.published_entity_versions_id IS NOT NULL AND e.published_entity_versions_id = e.latest_draft_entity_versions_id",
-          "values": Array [],
+          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE status = $1",
+          "values": Array [
+            "published",
+          ],
         },
       }
     `);
@@ -1121,8 +1222,10 @@ describe('totalAdminEntitiesQuery()', () => {
       .toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
-          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.published_entity_versions_id IS NOT NULL AND e.published_entity_versions_id <> e.latest_draft_entity_versions_id",
-          "values": Array [],
+          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE status = $1",
+          "values": Array [
+            "modified",
+          ],
         },
       }
     `);
@@ -1133,8 +1236,10 @@ describe('totalAdminEntitiesQuery()', () => {
       .toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
-          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE NOT e.archived AND e.published_entity_versions_id IS NULL AND NOT e.never_published",
-          "values": Array [],
+          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE status = $1",
+          "values": Array [
+            "withdrawn",
+          ],
         },
       }
     `);
@@ -1145,8 +1250,10 @@ describe('totalAdminEntitiesQuery()', () => {
       .toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
-          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.archived",
-          "values": Array [],
+          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE status = $1",
+          "values": Array [
+            "archived",
+          ],
         },
       }
     `);
