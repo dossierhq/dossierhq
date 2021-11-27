@@ -18,7 +18,7 @@ jobs:
       - name: Use deno
         uses: denoland/setup-deno@v1
         with:
-          deno-version: "1.13.2"
+          deno-version: "1.16.3"
       - name: rush install
         run: node common/scripts/install-run-rush.js install
       - name: rush change -v
