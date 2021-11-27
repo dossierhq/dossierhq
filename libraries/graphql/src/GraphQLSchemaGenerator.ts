@@ -459,6 +459,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
           referencing: { type: GraphQLID },
           boundingBox: { type: this.getInputType('BoundingBoxInput') },
           order: { type: this.getEnumType('QueryOrder') },
+          reverse: { type: GraphQLBoolean },
           text: { type: GraphQLString },
         },
       })
@@ -708,6 +709,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
           referencing: { type: GraphQLID },
           boundingBox: { type: this.getInputType('BoundingBoxInput') },
           order: { type: this.getEnumType('AdminQueryOrder') },
+          reverse: { type: GraphQLBoolean },
           text: { type: GraphQLString },
         },
       })

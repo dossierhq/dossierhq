@@ -1233,6 +1233,30 @@ describe('searchAdminEntities()', () => {
     );
   });
 
+  test('first 10 reversed', async () => {
+    const result = (await graphql({
+      schema,
+      source: `
+        {
+          adminSearchEntities(query: { entityTypes: [QueryAdminOnlyEditBefore], reverse: true }, first: 10) {
+            edges {
+              node {
+                id
+              }
+            }
+          }
+        }
+      `,
+      contextValue: createContext(),
+    })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
+    expect(result.data?.adminSearchEntities.edges).toEqual(
+      [...entitiesOfTypeQueryAdminOnlyEditBefore]
+        .reverse()
+        .slice(0, 10)
+        .map((x) => ({ node: { id: x.id } }))
+    );
+  });
+
   test('last 10', async () => {
     const result = (await graphql({
       schema,
