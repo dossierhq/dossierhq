@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-graphql",
+      "comment": "Support reverse order",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-graphql"
+}
