@@ -285,11 +285,11 @@ async function createEntityRow(
       context,
       name,
       async (context, name) => {
-        const qb = new QueryBuilder('INSERT INTO entities (uuid, name, type, latest_fts)');
+        const qb = new QueryBuilder('INSERT INTO entities (uuid, name, type, latest_fts, status)');
         qb.addQuery(
           `VALUES (${qb.addValueOrDefault(id)}, ${qb.addValue(name)}, ${qb.addValue(
             type
-          )}, to_tsvector(${qb.addValue(fullTextSearchText.join(' '))}))`
+          )}, to_tsvector(${qb.addValue(fullTextSearchText.join(' '))}), 'draft')`
         );
         qb.addQuery('RETURNING id, uuid, created_at, updated_at');
         const {
@@ -390,10 +390,11 @@ export async function updateEntity(
         latest_draft_entity_versions_id = $1,
         latest_fts = to_tsvector($2),
         updated_at = NOW(),
-        updated = nextval('entities_updated_seq')
-      WHERE id = $3
+        updated = nextval('entities_updated_seq'),
+        status = $3
+      WHERE id = $4
       RETURNING updated_at`,
-      [versionsId, fullTextSearchText.join(' '), entityId]
+      [versionsId, fullTextSearchText.join(' '), updatedEntity.info.publishingState, entityId]
     );
 
     updatedEntity.info.updatedAt = updatedAt;
@@ -589,11 +590,14 @@ export async function publishEntities(
             published_entity_versions_id = $1,
             published_fts = to_tsvector($2),
             updated_at = NOW(),
-            updated = nextval('entities_updated_seq')
+            updated = nextval('entities_updated_seq'),
+            status = 'published'
           WHERE id = $3
           RETURNING updated_at`,
+        //TODO can be modified if not publishing the latest version
         [versionsId, fullTextSearchText, entityId]
       );
+      //TODO can be modified if not publishing the latest version
       result.push({ id: uuid, publishState: EntityPublishState.Published, updatedAt });
     }
 
@@ -688,7 +692,8 @@ export async function unpublishEntities(
           published_entity_versions_id = NULL,
           published_fts = NULL,
           updated_at = NOW(),
-          updated = nextval('entities_updated_seq')
+          updated = nextval('entities_updated_seq'),
+          status = 'withdrawn'
         WHERE id = ANY($1)
         RETURNING uuid, updated_at`,
       [entitiesInfo.map((it) => it.id)]
@@ -780,7 +785,8 @@ export async function archiveEntity(
         `UPDATE entities SET
             archived = TRUE,
             updated_at = NOW(),
-            updated = nextval('entities_updated_seq')
+            updated = nextval('entities_updated_seq'),
+            status = 'archived'
           WHERE id = $1
           RETURNING updated_at`,
         [entityId]
@@ -839,10 +845,11 @@ export async function unarchiveEntity(
           `UPDATE entities SET
             archived = FALSE,
             updated_at = NOW(),
-            updated = nextval('entities_updated_seq')
-          WHERE id = $1
+            updated = nextval('entities_updated_seq'),
+            status = $1
+          WHERE id = $2
           RETURNING updated_at`,
-          [entityId]
+          [result.publishState, entityId]
         ),
         Db.queryNone(
           databaseAdapter,

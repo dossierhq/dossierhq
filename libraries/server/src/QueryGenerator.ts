@@ -7,7 +7,7 @@ import type {
   Result,
   Schema,
 } from '@jonasb/datadata-core';
-import { AdminQueryOrder, EntityPublishState, notOk, ok, QueryOrder } from '@jonasb/datadata-core';
+import { AdminQueryOrder, notOk, ok, QueryOrder } from '@jonasb/datadata-core';
 import type { CursorNativeType } from './Connection';
 import { toOpaqueCursor } from './Connection';
 import type { EntitiesTable } from './DatabaseTables';
@@ -228,33 +228,10 @@ function addFilterStatusSqlSegment(query: AdminQuery, qb: QueryBuilder) {
   if (!query.status || query.status.length === 0) {
     return;
   }
-  //TODO support multiple statuses
-  for (const status of query.status) {
-    switch (status) {
-      case EntityPublishState.Draft:
-        qb.addQuery(
-          'AND NOT e.archived AND e.published_entity_versions_id IS NULL AND e.never_published'
-        );
-        break;
-      case EntityPublishState.Published:
-        qb.addQuery(
-          'AND e.published_entity_versions_id IS NOT NULL AND e.published_entity_versions_id = e.latest_draft_entity_versions_id'
-        );
-        break;
-      case EntityPublishState.Modified:
-        qb.addQuery(
-          'AND e.published_entity_versions_id IS NOT NULL AND e.published_entity_versions_id <> e.latest_draft_entity_versions_id'
-        );
-        break;
-      case EntityPublishState.Withdrawn:
-        qb.addQuery(
-          'AND NOT e.archived AND e.published_entity_versions_id IS NULL AND NOT e.never_published'
-        );
-        break;
-      case EntityPublishState.Archived:
-        qb.addQuery('AND e.archived');
-        break;
-    }
+  if (query.status.length === 1) {
+    qb.addQuery(`AND status = ${qb.addValue(query.status[0])}`);
+  } else {
+    qb.addQuery(`AND status = ANY(${qb.addValue(query.status)})`);
   }
 }
 
