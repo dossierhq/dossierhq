@@ -20,8 +20,10 @@ import {
   insecureTestUuidv4,
 } from '../TestUtils';
 import {
+  countSearchResultStatuses,
   countSearchResultWithEntity,
   ensureEntityCount,
+  ensureEntityWithStatus,
   expectConnectionToMatchSlice,
   getAllEntities,
   randomBoundingBox,
@@ -232,10 +234,25 @@ afterAll(async () => {
 });
 
 async function ensureEntitiesExistForAdminOnlyEditBefore(client: AdminClient) {
-  const result = await ensureEntityCount(client, 50, 'AdminOnlyEditBefore', (random) => ({
-    message: `Hey ${random}`,
-  }));
-  result.throwIfError();
+  (
+    await ensureEntityCount(client, 50, 'AdminOnlyEditBefore', (random) => ({
+      message: `Hey ${random}`,
+    }))
+  ).throwIfError();
+
+  for (const status of [
+    EntityPublishState.Draft,
+    EntityPublishState.Published,
+    EntityPublishState.Modified,
+    EntityPublishState.Withdrawn,
+    EntityPublishState.Archived,
+  ]) {
+    (
+      await ensureEntityWithStatus(client, 'AdminOnlyEditBefore', status, (random) => ({
+        message: `Hey ${random}`,
+      }))
+    ).throwIfError();
+  }
 }
 
 async function getEntitiesForAdminOnlyEditBefore(client: AdminClient) {
@@ -2294,6 +2311,93 @@ describe('searchEntities() text', () => {
         fooId
       );
       expectResultValue(matchesAfterUpdate, 1);
+    }
+  });
+});
+
+describe('searchEntities() status', () => {
+  test('Filter on draft', async () => {
+    const statusesResult = await countSearchResultStatuses(client, {
+      entityTypes: ['AdminOnlyEditBefore'],
+      status: [EntityPublishState.Draft],
+    });
+    if (expectOkResult(statusesResult)) {
+      const { [EntityPublishState.Draft]: draft, ...statuses } = statusesResult.value;
+      expect(draft).toBeGreaterThan(0);
+      expect(statuses).toEqual({
+        [EntityPublishState.Published]: 0,
+        [EntityPublishState.Modified]: 0,
+        [EntityPublishState.Withdrawn]: 0,
+        [EntityPublishState.Archived]: 0,
+      });
+    }
+  });
+
+  test('Filter on published', async () => {
+    const statusesResult = await countSearchResultStatuses(client, {
+      entityTypes: ['AdminOnlyEditBefore'],
+      status: [EntityPublishState.Published],
+    });
+    if (expectOkResult(statusesResult)) {
+      const { [EntityPublishState.Published]: published, ...statuses } = statusesResult.value;
+      expect(published).toBeGreaterThan(0);
+      expect(statuses).toEqual({
+        [EntityPublishState.Draft]: 0,
+        [EntityPublishState.Modified]: 0,
+        [EntityPublishState.Withdrawn]: 0,
+        [EntityPublishState.Archived]: 0,
+      });
+    }
+  });
+
+  test('Filter on modified', async () => {
+    const statusesResult = await countSearchResultStatuses(client, {
+      entityTypes: ['AdminOnlyEditBefore'],
+      status: [EntityPublishState.Modified],
+    });
+    if (expectOkResult(statusesResult)) {
+      const { [EntityPublishState.Modified]: modified, ...statuses } = statusesResult.value;
+      expect(modified).toBeGreaterThan(0);
+      expect(statuses).toEqual({
+        [EntityPublishState.Draft]: 0,
+        [EntityPublishState.Published]: 0,
+        [EntityPublishState.Withdrawn]: 0,
+        [EntityPublishState.Archived]: 0,
+      });
+    }
+  });
+
+  test('Filter on withdrawn', async () => {
+    const statusesResult = await countSearchResultStatuses(client, {
+      entityTypes: ['AdminOnlyEditBefore'],
+      status: [EntityPublishState.Withdrawn],
+    });
+    if (expectOkResult(statusesResult)) {
+      const { [EntityPublishState.Withdrawn]: withdrawn, ...statuses } = statusesResult.value;
+      expect(withdrawn).toBeGreaterThan(0);
+      expect(statuses).toEqual({
+        [EntityPublishState.Draft]: 0,
+        [EntityPublishState.Published]: 0,
+        [EntityPublishState.Modified]: 0,
+        [EntityPublishState.Archived]: 0,
+      });
+    }
+  });
+
+  test('Filter on archived', async () => {
+    const statusesResult = await countSearchResultStatuses(client, {
+      entityTypes: ['AdminOnlyEditBefore'],
+      status: [EntityPublishState.Archived],
+    });
+    if (expectOkResult(statusesResult)) {
+      const { [EntityPublishState.Archived]: archived, ...statuses } = statusesResult.value;
+      expect(archived).toBeGreaterThan(0);
+      expect(statuses).toEqual({
+        [EntityPublishState.Draft]: 0,
+        [EntityPublishState.Published]: 0,
+        [EntityPublishState.Modified]: 0,
+        [EntityPublishState.Withdrawn]: 0,
+      });
     }
   });
 });
