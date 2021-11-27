@@ -16,6 +16,7 @@ import type {
   ValueItem,
 } from '@jonasb/datadata-core';
 import {
+  assertExhaustive,
   EntityPublishState,
   FieldType,
   isFieldValueEqual,
@@ -199,6 +200,34 @@ export function decodeAdminEntity(
   return entity;
 }
 
+export function decodeAdminEntity2(
+  schema: AdminSchema,
+  values: Pick<EntitiesTable, 'uuid' | 'type' | 'name' | 'created_at' | 'updated_at' | 'status'> &
+    Pick<EntityVersionsTable, 'version' | 'data'>
+): AdminEntity {
+  const entitySpec = schema.getEntityTypeSpecification(values.type);
+  if (!entitySpec) {
+    throw new Error(`No entity spec for type ${values.type}`);
+  }
+
+  const state = resolveEntityStatus(values.status);
+
+  const entity: AdminEntity = {
+    id: values.uuid,
+    info: {
+      type: values.type,
+      name: values.name,
+      version: values.version,
+      publishingState: state,
+      createdAt: values.created_at,
+      updatedAt: values.updated_at,
+    },
+    fields: decodeAdminEntityFields(schema, entitySpec, values),
+  };
+
+  return entity;
+}
+
 export function decodeAdminEntityFields(
   schema: AdminSchema | Schema,
   entitySpec: AdminEntityTypeSpecification | EntityTypeSpecification,
@@ -211,6 +240,23 @@ export function decodeAdminEntityFields(
     fields[fieldName] = decodeFieldItemOrList(schema, fieldSpec, fieldValue);
   }
   return fields;
+}
+
+export function resolveEntityStatus(status: EntitiesTable['status']): EntityPublishState {
+  switch (status) {
+    case 'draft':
+      return EntityPublishState.Draft;
+    case 'published':
+      return EntityPublishState.Published;
+    case 'modified':
+      return EntityPublishState.Modified;
+    case 'withdrawn':
+      return EntityPublishState.Withdrawn;
+    case 'archived':
+      return EntityPublishState.Archived;
+    default:
+      assertExhaustive(status);
+  }
 }
 
 export function resolvePublishState(
