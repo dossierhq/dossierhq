@@ -42,23 +42,6 @@ import * as Db from './Database';
 import type { EntitiesTable, EntityVersionsTable } from './DatabaseTables';
 import * as EntityFieldTypeAdapters from './EntityFieldTypeAdapters';
 
-export type AdminEntityValues = Pick<
-  EntitiesTable,
-  | 'uuid'
-  | 'type'
-  | 'name'
-  | 'created_at'
-  | 'updated_at'
-  | 'never_published'
-  | 'archived'
-  | 'latest_draft_entity_versions_id'
-  | 'published_entity_versions_id'
-> &
-  Pick<EntityVersionsTable, 'data' | 'version'>;
-
-export type EntityValues = Pick<EntitiesTable, 'uuid' | 'type' | 'name'> &
-  Pick<EntityVersionsTable, 'data'>;
-
 export interface EncodeEntityResult {
   type: string;
   name: string;
@@ -79,7 +62,10 @@ interface RequestedReference {
   entityTypes: string[] | undefined;
 }
 
-export function decodePublishedEntity(schema: Schema, values: EntityValues): Entity {
+export function decodePublishedEntity(
+  schema: Schema,
+  values: Pick<EntitiesTable, 'uuid' | 'type' | 'name'> & Pick<EntityVersionsTable, 'data'>
+): Entity {
   const entitySpec = schema.getEntityTypeSpecification(values.type);
   if (!entitySpec) {
     throw new Error(`No entity spec for type ${values.type}`);
@@ -174,33 +160,6 @@ function decodeRichTextField(
 }
 
 export function decodeAdminEntity(
-  schema: AdminSchema | Schema,
-  values: AdminEntityValues
-): AdminEntity {
-  const entitySpec = schema.getEntityTypeSpecification(values.type);
-  if (!entitySpec) {
-    throw new Error(`No entity spec for type ${values.type}`);
-  }
-
-  const state = resolvePublishState(values, values);
-
-  const entity: AdminEntity = {
-    id: values.uuid,
-    info: {
-      type: values.type,
-      name: values.name,
-      version: values.version,
-      publishingState: state,
-      createdAt: values.created_at,
-      updatedAt: values.updated_at,
-    },
-    fields: decodeAdminEntityFields(schema, entitySpec, values),
-  };
-
-  return entity;
-}
-
-export function decodeAdminEntity2(
   schema: AdminSchema,
   values: Pick<EntitiesTable, 'uuid' | 'type' | 'name' | 'created_at' | 'updated_at' | 'status'> &
     Pick<EntityVersionsTable, 'version' | 'data'>

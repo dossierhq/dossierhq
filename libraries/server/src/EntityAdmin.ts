@@ -42,7 +42,6 @@ import type { EncodeEntityResult } from './EntityCodec';
 import {
   collectDataFromEntity,
   decodeAdminEntity,
-  decodeAdminEntity2,
   decodeAdminEntityFields,
   encodeEntity,
   resolveCreateEntity,
@@ -88,7 +87,7 @@ export async function getEntity(
     return notOk.NotFound('No such entity or version');
   }
 
-  const entity = decodeAdminEntity2(schema, entityMain);
+  const entity = decodeAdminEntity(schema, entityMain);
 
   return ok(entity);
 }
@@ -121,7 +120,7 @@ export async function getEntities(
     if (!entityMain) {
       return notOk.NotFound('No such entity');
     }
-    return ok(decodeAdminEntity2(schema, entityMain));
+    return ok(decodeAdminEntity(schema, entityMain));
   });
 
   return ok(result);
@@ -139,7 +138,7 @@ export async function searchEntities(
     return sqlQueryResult;
   }
 
-  return await sharedSearchEntities<AdminEntity, SearchAdminEntitiesItem>(
+  return await sharedSearchEntities<AdminSchema, AdminEntity, SearchAdminEntitiesItem>(
     schema,
     databaseAdapter,
     context,
