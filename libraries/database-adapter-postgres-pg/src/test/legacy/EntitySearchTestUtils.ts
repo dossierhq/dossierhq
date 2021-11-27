@@ -11,7 +11,7 @@ import type {
   PublishedClient,
   Query,
 } from '@jonasb/datadata-core';
-import { getAllPagesForConnection, ok } from '@jonasb/datadata-core';
+import { EntityPublishState, getAllPagesForConnection, ok } from '@jonasb/datadata-core';
 
 export async function ensureEntityCount(
   client: AdminClient,
@@ -47,6 +47,73 @@ export async function ensureEntityCount(
       return publishResult;
     }
   }
+  return ok(undefined);
+}
+
+export async function ensureEntityWithStatus(
+  client: AdminClient,
+  entityType: string,
+  status: EntityPublishState,
+  fieldProvider: (random: string) => Record<string, unknown>
+): PromiseResult<
+  void,
+  ErrorType.BadRequest | ErrorType.Conflict | ErrorType.NotFound | ErrorType.Generic
+> {
+  const countResult = await client.getTotalCount({
+    entityTypes: [entityType],
+    status: [status],
+  });
+  if (countResult.isError()) return countResult;
+  if (countResult.value > 0) return ok(undefined);
+
+  const random = String(Math.random()).slice(2);
+  const createResult = await client.createEntity({
+    info: { type: entityType, name: random },
+    fields: fieldProvider(random),
+  });
+  if (createResult.isError()) {
+    return createResult;
+  }
+  const { entity } = createResult.value;
+  switch (status) {
+    case EntityPublishState.Draft:
+      break;
+    case EntityPublishState.Published: {
+      const publishResult = await client.publishEntities([
+        { id: entity.id, version: entity.info.version },
+      ]);
+      if (publishResult.isError()) return publishResult;
+      break;
+    }
+    case EntityPublishState.Modified: {
+      const publishResult = await client.publishEntities([
+        { id: entity.id, version: entity.info.version },
+      ]);
+      if (publishResult.isError()) return publishResult;
+      const updateResult = await client.updateEntity({
+        id: entity.id,
+        info: { name: String(Math.random()).slice(2) },
+        fields: {},
+      });
+      if (updateResult.isError()) return updateResult;
+      break;
+    }
+    case EntityPublishState.Withdrawn: {
+      const publishResult = await client.publishEntities([
+        { id: entity.id, version: entity.info.version },
+      ]);
+      if (publishResult.isError()) return publishResult;
+      const updateResult = await client.unpublishEntities([{ id: entity.id }]);
+      if (updateResult.isError()) return updateResult;
+      break;
+    }
+    case EntityPublishState.Archived: {
+      const archiveResult = await client.archiveEntity({ id: entity.id });
+      if (archiveResult.isError()) return archiveResult;
+      break;
+    }
+  }
+
   return ok(undefined);
 }
 
@@ -138,4 +205,33 @@ export async function countSearchResultWithEntity(
   }
 
   return ok(matchCount);
+}
+
+export async function countSearchResultStatuses(
+  client: AdminClient,
+  query: AdminQuery
+): PromiseResult<Record<EntityPublishState, number>, ErrorType.BadRequest | ErrorType.Generic> {
+  const result = {
+    [EntityPublishState.Draft]: 0,
+    [EntityPublishState.Published]: 0,
+    [EntityPublishState.Modified]: 0,
+    [EntityPublishState.Withdrawn]: 0,
+    [EntityPublishState.Archived]: 0,
+  };
+
+  for await (const pageResult of getAllPagesForConnection({ first: 50 }, (currentPaging) =>
+    client.searchEntities(query, currentPaging)
+  )) {
+    if (pageResult.isError()) {
+      return pageResult;
+    }
+    for (const edge of pageResult.value.edges) {
+      if (edge.node.isOk()) {
+        const entity = edge.node.value;
+        result[entity.info.publishingState] += 1;
+      }
+    }
+  }
+
+  return ok(result);
 }

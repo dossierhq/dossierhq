@@ -890,7 +890,7 @@ describe('searchEntities() text', () => {
 describe('getTotalCount', () => {
   test('Check that we get the correct count', async () => {
     const result = await publishedClient.getTotalCount({
-      entityTypes: ['AdminOnlyEditBefore'],
+      entityTypes: ['PublishedEntityOnlyEditBefore'],
     });
     expectResultValue(result, entitiesOfTypePublishedEntityOnlyEditBefore.length);
   });
