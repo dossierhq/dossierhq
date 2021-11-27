@@ -169,6 +169,7 @@ export interface AdminQuery {
   referencing?: string;
   boundingBox?: BoundingBox;
   order?: AdminQueryOrder;
+  reverse?: boolean;
   text?: string;
 }
 
@@ -183,6 +184,7 @@ export interface Query {
   referencing?: string;
   boundingBox?: BoundingBox;
   order?: QueryOrder;
+  reverse?: boolean;
   text?: string;
 }
 

@@ -133,18 +133,24 @@ function sharedSearchEntitiesQuery<
 
   // Paging 1/2
   if (resolvedPaging.after !== null) {
-    qb.addQuery(`AND e.${cursorName} > ${qb.addValue(resolvedPaging.after)}`);
+    qb.addQuery(
+      `AND e.${cursorName} ${query?.reverse ? '<' : '>'} ${qb.addValue(resolvedPaging.after)}`
+    );
   }
   if (resolvedPaging.before !== null) {
-    qb.addQuery(`AND e.${cursorName} < ${qb.addValue(resolvedPaging.before)}`);
+    qb.addQuery(
+      `AND e.${cursorName} ${query?.reverse ? '>' : '<'} ${qb.addValue(resolvedPaging.before)}`
+    );
   }
 
   // Ordering
   qb.addQuery(`ORDER BY e.${cursorName}`);
+  let ascending = !query?.reverse;
 
   // Paging 2/2
+  if (!resolvedPaging.forwards) ascending = !ascending;
   const countToRequest = resolvedPaging.count + 1; // request one more to calculate hasNextPage
-  qb.addQuery(`${resolvedPaging.forwards ? '' : 'DESC '}LIMIT ${qb.addValue(countToRequest)}`);
+  qb.addQuery(`${ascending ? '' : 'DESC '}LIMIT ${qb.addValue(countToRequest)}`);
 
   return ok({
     ...qb.build(),

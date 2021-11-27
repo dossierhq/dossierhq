@@ -2003,6 +2003,25 @@ describe('searchEntities() order', () => {
     }
   });
 
+  test('First default, ordered by createdAt reversed', async () => {
+    const result = await client.searchEntities(
+      {
+        entityTypes: ['AdminOnlyEditBefore'],
+        order: AdminQueryOrder.createdAt,
+        reverse: true,
+      },
+      { first: 20 }
+    );
+    if (expectOkResult(result)) {
+      expectConnectionToMatchSlice(
+        [...entitiesOfTypeAdminOnlyEditBefore].reverse(),
+        result.value,
+        0,
+        20
+      );
+    }
+  });
+
   test('First default, ordered by name', async () => {
     const result = await client.searchEntities(
       {
@@ -2019,6 +2038,28 @@ describe('searchEntities() order', () => {
         20,
         (a, b) => {
           return a.info.name < b.info.name ? -1 : 1;
+        }
+      );
+    }
+  });
+
+  test('First default, ordered by name reversed', async () => {
+    const result = await client.searchEntities(
+      {
+        entityTypes: ['AdminOnlyEditBefore'],
+        order: AdminQueryOrder.name,
+        reverse: true,
+      },
+      { first: 20 }
+    );
+    if (expectOkResult(result)) {
+      expectConnectionToMatchSlice(
+        entitiesOfTypeAdminOnlyEditBefore,
+        result.value,
+        0,
+        20,
+        (a, b) => {
+          return b.info.name < a.info.name ? -1 : 1;
         }
       );
     }
@@ -2041,6 +2082,29 @@ describe('searchEntities() order', () => {
         20,
         (a, b) => {
           return Temporal.Instant.compare(a.info.updatedAt, b.info.updatedAt);
+        }
+      );
+    }
+  });
+
+  test('First default, ordered by updatedAt reversed', async () => {
+    const result = await client.searchEntities(
+      {
+        entityTypes: ['AdminOnlyEditBefore'],
+        order: AdminQueryOrder.updatedAt,
+        reverse: true,
+      },
+      { first: 20 }
+    );
+    expectOkResult(result);
+    if (expectOkResult(result)) {
+      expectConnectionToMatchSlice(
+        entitiesOfTypeAdminOnlyEditBefore,
+        result.value,
+        0,
+        20,
+        (a, b) => {
+          return Temporal.Instant.compare(b.info.updatedAt, a.info.updatedAt);
         }
       );
     }

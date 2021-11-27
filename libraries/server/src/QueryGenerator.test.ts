@@ -166,6 +166,29 @@ describe('searchAdminEntitiesQuery()', () => {
     `);
   });
 
+  test('order by createdAt, reversed', () => {
+    expect(
+      searchAdminEntitiesQuery(
+        schema,
+        { order: AdminQueryOrder.createdAt, reverse: true },
+        undefined
+      )
+    ).toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "cursorExtractor": [Function],
+          "isForwards": true,
+          "pagingCount": 25,
+          "text": "SELECT e.id, e.uuid, e.type, e.name, e.created_at, e.updated_at, e.updated, e.archived, e.never_published, e.latest_draft_entity_versions_id, e.published_entity_versions_id, ev.version, ev.data
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id ORDER BY e.id DESC LIMIT $1",
+          "values": Array [
+            26,
+          ],
+        },
+      }
+    `);
+  });
+
   test('query no entity type, i.e. include all', () => {
     expect(searchAdminEntitiesQuery(schema, { entityTypes: [] }, undefined)).toMatchInlineSnapshot(`
       OkResult {
@@ -597,6 +620,32 @@ describe('searchPublishedEntitiesQuery()', () => {
     `);
   });
 
+  test('first 10 after reversed', () => {
+    expect(
+      searchPublishedEntitiesQuery(
+        schema,
+        { reverse: true },
+        {
+          first: 10,
+          after: toOpaqueCursor('int', 999),
+        }
+      )
+    ).toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "cursorExtractor": [Function],
+          "isForwards": true,
+          "pagingCount": 10,
+          "text": "SELECT e.id, e.uuid, e.type, e.name, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.id < $1 ORDER BY e.id DESC LIMIT $2",
+          "values": Array [
+            999,
+            11,
+          ],
+        },
+      }
+    `);
+  });
+
   test('last 10', () => {
     expect(searchPublishedEntitiesQuery(schema, undefined, { last: 10 })).toMatchInlineSnapshot(`
       OkResult {
@@ -659,6 +708,34 @@ describe('searchPublishedEntitiesQuery()', () => {
     `);
   });
 
+  test('first 10 between after and before reversed', () => {
+    expect(
+      searchPublishedEntitiesQuery(
+        schema,
+        { reverse: true },
+        {
+          first: 10,
+          after: toOpaqueCursor('int', 123),
+          before: toOpaqueCursor('int', 456),
+        }
+      )
+    ).toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "cursorExtractor": [Function],
+          "isForwards": true,
+          "pagingCount": 10,
+          "text": "SELECT e.id, e.uuid, e.type, e.name, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.id < $1 AND e.id > $2 ORDER BY e.id DESC LIMIT $3",
+          "values": Array [
+            123,
+            456,
+            11,
+          ],
+        },
+      }
+    `);
+  });
+
   test('last 10 between after and before', () => {
     expect(
       searchPublishedEntitiesQuery(schema, undefined, {
@@ -677,6 +754,28 @@ describe('searchPublishedEntitiesQuery()', () => {
             123,
             456,
             11,
+          ],
+        },
+      }
+    `);
+  });
+
+  test('order by createdAt, reversed', () => {
+    expect(
+      searchPublishedEntitiesQuery(
+        schema,
+        { order: QueryOrder.createdAt, reverse: true },
+        undefined
+      )
+    ).toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "cursorExtractor": [Function],
+          "isForwards": true,
+          "pagingCount": 25,
+          "text": "SELECT e.id, e.uuid, e.type, e.name, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id ORDER BY e.id DESC LIMIT $1",
+          "values": Array [
+            26,
           ],
         },
       }
