@@ -492,15 +492,19 @@ export async function publishEntities(
       versionsId: number;
       entityId: number;
       fullTextSearchText: string;
+      status: EntityPublishState;
     }[] = [];
     for (const { id, version } of entities) {
       const versionInfo = await Db.queryNoneOrOne<
         Pick<EntityVersionsTable, 'id' | 'entities_id' | 'data'> &
-          Pick<EntitiesTable, 'type' | 'name' | 'published_entity_versions_id'>
+          Pick<
+            EntitiesTable,
+            'type' | 'name' | 'published_entity_versions_id' | 'latest_draft_entity_versions_id'
+          >
       >(
         databaseAdapter,
         context,
-        `SELECT ev.id, ev.entities_id, ev.data, e.type, e.name, e.published_entity_versions_id
+        `SELECT ev.id, ev.entities_id, ev.data, e.type, e.name, e.published_entity_versions_id, e.latest_draft_entity_versions_id
          FROM entity_versions ev, entities e
          WHERE e.uuid = $1 AND e.id = ev.entities_id
            AND ev.version = $2`,
@@ -553,11 +557,17 @@ export async function publishEntities(
           }
         }
 
+        const status =
+          versionInfo.latest_draft_entity_versions_id === versionInfo.id
+            ? EntityPublishState.Published
+            : EntityPublishState.Modified;
+
         versionsInfo.push({
           uuid: id,
           versionsId: versionInfo.id,
           entityId: versionInfo.entities_id,
           fullTextSearchText: fullTextSearchText.join(' '),
+          status,
         });
       }
     }
@@ -574,7 +584,7 @@ export async function publishEntities(
     }
 
     // Step 2: Publish entities
-    for (const { uuid, versionsId, entityId, fullTextSearchText } of versionsInfo) {
+    for (const { uuid, versionsId, entityId, fullTextSearchText, status } of versionsInfo) {
       const { updated_at: updatedAt } = await Db.queryOne<Pick<EntitiesTable, 'updated_at'>>(
         databaseAdapter,
         context,
@@ -586,14 +596,12 @@ export async function publishEntities(
             published_fts = to_tsvector($2),
             updated_at = NOW(),
             updated = nextval('entities_updated_seq'),
-            status = 'published'
-          WHERE id = $3
+            status = $3
+          WHERE id = $4
           RETURNING updated_at`,
-        //TODO can be modified if not publishing the latest version
-        [versionsId, fullTextSearchText, entityId]
+        [versionsId, fullTextSearchText, status, entityId]
       );
-      //TODO can be modified if not publishing the latest version
-      result.push({ id: uuid, publishState: EntityPublishState.Published, updatedAt });
+      result.push({ id: uuid, publishState: status, updatedAt });
     }
 
     // Step 3: Check if references are ok
