@@ -285,17 +285,8 @@ export function resolveUpdateEntity(
   schema: AdminSchema,
   entity: AdminEntityUpdate,
   type: string,
-  values: Pick<
-    EntitiesTable,
-    | 'archived'
-    | 'created_at'
-    | 'latest_draft_entity_versions_id'
-    | 'name'
-    | 'never_published'
-    | 'published_entity_versions_id'
-    | 'updated_at'
-  > &
-    Pick<EntityVersionsTable, 'data' | 'version'>
+  values: Pick<EntitiesTable, 'id' | 'type' | 'name' | 'created_at' | 'updated_at' | 'status'> &
+    Pick<EntityVersionsTable, 'version' | 'data'>
 ): Result<{ changed: boolean; entity: AdminEntity }, ErrorType.BadRequest> {
   if (entity.info?.type && entity.info.type !== type) {
     return notOk.BadRequest(
@@ -303,7 +294,9 @@ export function resolveUpdateEntity(
     );
   }
 
-  const state = resolvePublishState(values, 'is-update');
+  const currentState = resolveEntityStatus(values.status);
+  const newState =
+    currentState === EntityPublishState.Published ? EntityPublishState.Modified : currentState;
 
   const result: AdminEntity = {
     id: entity.id,
@@ -311,7 +304,7 @@ export function resolveUpdateEntity(
       name: entity.info?.name ?? values.name,
       type: type,
       version: values.version + 1,
-      publishingState: state,
+      publishingState: newState,
       createdAt: values.created_at,
       updatedAt: values.updated_at,
     },
@@ -353,7 +346,7 @@ export function resolveUpdateEntity(
 
   if (!changed) {
     result.info.version = values.version;
-    result.info.publishingState = resolvePublishState(values, values);
+    result.info.publishingState = currentState;
   }
 
   return ok({ changed, entity: result });
