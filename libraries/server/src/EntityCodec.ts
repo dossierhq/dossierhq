@@ -218,25 +218,6 @@ export function resolveEntityStatus(status: EntitiesTable['status']): EntityPubl
   }
 }
 
-export function resolvePublishState(
-  values: Pick<EntitiesTable, 'archived' | 'never_published' | 'published_entity_versions_id'>,
-  draft: 'is-update' | Pick<EntitiesTable, 'latest_draft_entity_versions_id'>
-): EntityPublishState {
-  if (values.archived) {
-    return EntityPublishState.Archived;
-  }
-  if (values.published_entity_versions_id === null) {
-    return values.never_published ? EntityPublishState.Draft : EntityPublishState.Withdrawn;
-  }
-  if (
-    draft === 'is-update' ||
-    values.published_entity_versions_id !== draft.latest_draft_entity_versions_id
-  ) {
-    return EntityPublishState.Modified;
-  }
-  return EntityPublishState.Published;
-}
-
 export function resolveCreateEntity(
   schema: AdminSchema,
   entity: AdminEntityCreate
