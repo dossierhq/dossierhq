@@ -1,4 +1,4 @@
-import type { Entity } from '@jonasb/datadata-core';
+import type { AdminQueryOrder, Entity } from '@jonasb/datadata-core';
 import { QueryOrder } from '@jonasb/datadata-core';
 import { Table } from '@jonasb/datadata-design';
 import type { Dispatch } from 'react';
@@ -15,18 +15,17 @@ interface Props {
 export function EntityList({ searchEntityState, dispatchSearchEntityState, onItemClick }: Props) {
   const {
     connection,
-    query: { order },
+    query: { order, reverse },
   } = searchEntityState;
+  const direction = reverse ? 'desc' : 'asc';
   return (
     <Table>
       <Table.Head>
         <Table.Row sticky>
           <Table.Header
-            order={order === QueryOrder.name ? 'asc' : ''}
+            order={order === QueryOrder.name ? direction : ''}
             onClick={() =>
-              dispatchSearchEntityState(
-                new SearchEntityStateActions.SetQuery({ order: QueryOrder.name }, true)
-              )
+              handleHeaderClick(dispatchSearchEntityState, order, reverse, QueryOrder.name)
             }
           >
             Name
@@ -48,5 +47,20 @@ export function EntityList({ searchEntityState, dispatchSearchEntityState, onIte
         })}
       </Table.Body>
     </Table>
+  );
+}
+
+function handleHeaderClick(
+  dispatchSearchEntityState: Dispatch<SearchEntityStateAction>,
+  order: AdminQueryOrder | QueryOrder | undefined,
+  reverse: boolean | undefined,
+  headerOrder: QueryOrder
+) {
+  let newReverse = false;
+  if (order === headerOrder) {
+    newReverse = !reverse;
+  }
+  dispatchSearchEntityState(
+    new SearchEntityStateActions.SetQuery({ order: headerOrder, reverse: newReverse }, true)
   );
 }

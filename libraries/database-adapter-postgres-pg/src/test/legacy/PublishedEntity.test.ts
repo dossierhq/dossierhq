@@ -593,6 +593,28 @@ describe('searchEntities() paging', () => {
       }
     }
   });
+
+  test('Reversed: First after', async () => {
+    const query = {
+      entityTypes: ['PublishedEntityOnlyEditBefore'],
+      reverse: true,
+    };
+    const firstResult = await publishedClient.searchEntities(query, { first: 10 });
+    if (expectOkResult(firstResult)) {
+      const secondResult = await publishedClient.searchEntities(query, {
+        first: 20,
+        after: firstResult.value?.pageInfo.endCursor,
+      });
+      if (expectOkResult(secondResult)) {
+        expectConnectionToMatchSlice(
+          [...entitiesOfTypePublishedEntityOnlyEditBefore].reverse(),
+          secondResult.value,
+          10,
+          10 + 20
+        );
+      }
+    }
+  });
 });
 
 describe('searchEntities() order', () => {
@@ -607,6 +629,25 @@ describe('searchEntities() order', () => {
     if (expectOkResult(result)) {
       expectConnectionToMatchSlice(
         entitiesOfTypePublishedEntityOnlyEditBefore,
+        result.value,
+        0,
+        20
+      );
+    }
+  });
+
+  test('First default, ordered by createdAt reversed', async () => {
+    const result = await publishedClient.searchEntities(
+      {
+        entityTypes: ['PublishedEntityOnlyEditBefore'],
+        order: QueryOrder.createdAt,
+        reverse: true,
+      },
+      { first: 20 }
+    );
+    if (expectOkResult(result)) {
+      expectConnectionToMatchSlice(
+        [...entitiesOfTypePublishedEntityOnlyEditBefore].reverse(),
         result.value,
         0,
         20
@@ -630,6 +671,28 @@ describe('searchEntities() order', () => {
         20,
         (a, b) => {
           return a.info.name < b.info.name ? -1 : 1;
+        }
+      );
+    }
+  });
+
+  test('First default, ordered by name reversed', async () => {
+    const result = await publishedClient.searchEntities(
+      {
+        entityTypes: ['PublishedEntityOnlyEditBefore'],
+        order: QueryOrder.name,
+        reverse: true,
+      },
+      { first: 20 }
+    );
+    if (expectOkResult(result)) {
+      expectConnectionToMatchSlice(
+        entitiesOfTypePublishedEntityOnlyEditBefore,
+        result.value,
+        0,
+        20,
+        (a, b) => {
+          return b.info.name < a.info.name ? -1 : 1;
         }
       );
     }

@@ -172,11 +172,17 @@ export const SearchEntityStateActions = {
 };
 
 export function getQueryWithoutDefaults(query: AdminQuery | Query): AdminQuery | Query {
+  let changed = false;
+  const newQuery = { ...query };
   if (query.order === defaultOrder) {
-    const { order, ...queryWithoutOrder } = query;
-    return queryWithoutOrder;
+    delete newQuery.order;
+    changed = true;
   }
-  return query;
+  if (query.reverse === false) {
+    delete newQuery.reverse;
+    changed = true;
+  }
+  return changed ? newQuery : query;
 }
 
 export function useUpdateSearchEntityStateWithResponse(

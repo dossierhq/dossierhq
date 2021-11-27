@@ -1,4 +1,4 @@
-import type { AdminEntity } from '@jonasb/datadata-core';
+import type { AdminEntity, QueryOrder } from '@jonasb/datadata-core';
 import { AdminQueryOrder } from '@jonasb/datadata-core';
 import { InstantDisplay, Table } from '@jonasb/datadata-design';
 import type { Dispatch } from 'react';
@@ -15,18 +15,17 @@ interface Props {
 export function EntityList2({ searchEntityState, dispatchSearchEntityState, onItemClick }: Props) {
   const {
     connection,
-    query: { order },
+    query: { order, reverse },
   } = searchEntityState;
+  const direction = reverse ? 'desc' : 'asc';
   return (
     <Table>
       <Table.Head>
         <Table.Row sticky>
           <Table.Header
-            order={order === AdminQueryOrder.name ? 'asc' : ''}
+            order={order === AdminQueryOrder.name ? direction : ''}
             onClick={() =>
-              dispatchSearchEntityState(
-                new SearchEntityStateActions.SetQuery({ order: AdminQueryOrder.name }, true)
-              )
+              handleHeaderClick(dispatchSearchEntityState, order, reverse, AdminQueryOrder.name)
             }
           >
             Name
@@ -35,10 +34,13 @@ export function EntityList2({ searchEntityState, dispatchSearchEntityState, onIt
           <Table.Header narrow>Status</Table.Header>
           <Table.Header
             narrow
-            order={order === AdminQueryOrder.createdAt ? 'asc' : ''}
+            order={order === AdminQueryOrder.createdAt ? direction : ''}
             onClick={() =>
-              dispatchSearchEntityState(
-                new SearchEntityStateActions.SetQuery({ order: AdminQueryOrder.createdAt }, true)
+              handleHeaderClick(
+                dispatchSearchEntityState,
+                order,
+                reverse,
+                AdminQueryOrder.createdAt
               )
             }
           >
@@ -46,10 +48,13 @@ export function EntityList2({ searchEntityState, dispatchSearchEntityState, onIt
           </Table.Header>
           <Table.Header
             narrow
-            order={order === AdminQueryOrder.updatedAt ? 'asc' : ''}
+            order={order === AdminQueryOrder.updatedAt ? direction : ''}
             onClick={() =>
-              dispatchSearchEntityState(
-                new SearchEntityStateActions.SetQuery({ order: AdminQueryOrder.updatedAt }, true)
+              handleHeaderClick(
+                dispatchSearchEntityState,
+                order,
+                reverse,
+                AdminQueryOrder.updatedAt
               )
             }
           >
@@ -83,5 +88,20 @@ export function EntityList2({ searchEntityState, dispatchSearchEntityState, onIt
         })}
       </Table.Body>
     </Table>
+  );
+}
+
+function handleHeaderClick(
+  dispatchSearchEntityState: Dispatch<SearchEntityStateAction>,
+  order: AdminQueryOrder | QueryOrder | undefined,
+  reverse: boolean | undefined,
+  headerOrder: AdminQueryOrder
+) {
+  let newReverse = false;
+  if (order === headerOrder) {
+    newReverse = !reverse;
+  }
+  dispatchSearchEntityState(
+    new SearchEntityStateActions.SetQuery({ order: headerOrder, reverse: newReverse }, true)
   );
 }
