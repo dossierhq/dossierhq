@@ -42,6 +42,7 @@ import type { AdminEntityValues, EncodeEntityResult } from './EntityCodec';
 import {
   collectDataFromEntity,
   decodeAdminEntity,
+  decodeAdminEntity2,
   decodeAdminEntityFields,
   encodeEntity,
   resolveCreateEntity,
@@ -70,10 +71,13 @@ export async function getEntity(
     }
     actualVersion = versionResult.value.maxVersion;
   }
-  const entityMain = await Db.queryNoneOrOne<AdminEntityValues>(
+  const entityMain = await Db.queryNoneOrOne<
+    Pick<EntitiesTable, 'uuid' | 'type' | 'name' | 'created_at' | 'updated_at' | 'status'> &
+      Pick<EntityVersionsTable, 'version' | 'data'>
+  >(
     databaseAdapter,
     context,
-    `SELECT e.uuid, e.type, e.name, e.created_at, e.updated_at, e.archived, e.never_published, e.latest_draft_entity_versions_id, e.published_entity_versions_id, ev.version, ev.data
+    `SELECT e.uuid, e.type, e.name, e.created_at, e.updated_at, e.status, ev.version, ev.data
       FROM entities e, entity_versions ev
       WHERE e.uuid = $1
       AND e.id = ev.entities_id
@@ -84,7 +88,7 @@ export async function getEntity(
     return notOk.NotFound('No such entity or version');
   }
 
-  const entity = decodeAdminEntity(schema, entityMain);
+  const entity = decodeAdminEntity2(schema, entityMain);
 
   return ok(entity);
 }
