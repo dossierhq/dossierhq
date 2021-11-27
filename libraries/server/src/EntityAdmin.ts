@@ -38,7 +38,7 @@ import type {
   EntityPublishingEventsTable,
   EntityVersionsTable,
 } from './DatabaseTables';
-import type { AdminEntityValues, EncodeEntityResult } from './EntityCodec';
+import type { EncodeEntityResult } from './EntityCodec';
 import {
   collectDataFromEntity,
   decodeAdminEntity,
@@ -103,10 +103,13 @@ export async function getEntities(
     return ok([]);
   }
 
-  const entitiesMain = await Db.queryMany<AdminEntityValues>(
+  const entitiesMain = await Db.queryMany<
+    Pick<EntitiesTable, 'uuid' | 'type' | 'name' | 'created_at' | 'updated_at' | 'status'> &
+      Pick<EntityVersionsTable, 'version' | 'data'>
+  >(
     databaseAdapter,
     context,
-    `SELECT e.uuid, e.type, e.name, e.created_at, e.updated_at, e.archived, e.never_published, e.latest_draft_entity_versions_id, e.published_entity_versions_id, ev.version, ev.data
+    `SELECT e.uuid, e.type, e.name, e.created_at, e.updated_at, e.status, ev.version, ev.data
       FROM entities e, entity_versions ev
       WHERE e.uuid = ANY($1)
       AND e.latest_draft_entity_versions_id = ev.id`,
@@ -118,7 +121,7 @@ export async function getEntities(
     if (!entityMain) {
       return notOk.NotFound('No such entity');
     }
-    return ok(decodeAdminEntity(schema, entityMain));
+    return ok(decodeAdminEntity2(schema, entityMain));
   });
 
   return ok(result);
