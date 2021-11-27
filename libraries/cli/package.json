@@ -39,7 +39,7 @@
     "@jonasb/datadata-core": "workspace:*",
     "@jonasb/datadata-database-adapter-postgres-pg": "workspace:*",
     "@jonasb/datadata-server": "workspace:*",
-    "chalk": "~4.1.1",
+    "chalk": "~5.0.0",
     "inquirer": "^8.0.0",
     "tslib": "~2.3.1"
   }
