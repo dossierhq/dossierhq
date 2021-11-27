@@ -45,7 +45,7 @@ import {
   decodeAdminEntityFields,
   encodeEntity,
   resolveCreateEntity,
-  resolvePublishState,
+  resolveEntityStatus,
   resolveUpdateEntity,
 } from './EntityCodec';
 import { sharedSearchEntities } from './EntitySearcher';
@@ -805,19 +805,11 @@ export async function unarchiveEntity(
 ): PromiseResult<EntityPublishPayload, ErrorType.BadRequest | ErrorType.NotFound> {
   return context.withTransaction(async (context) => {
     const entityInfo = await Db.queryNoneOrOne<
-      Pick<
-        EntitiesTable,
-        | 'id'
-        | 'archived'
-        | 'latest_draft_entity_versions_id'
-        | 'never_published'
-        | 'published_entity_versions_id'
-        | 'updated_at'
-      >
+      Pick<EntitiesTable, 'id' | 'never_published' | 'updated_at' | 'status'>
     >(
       databaseAdapter,
       context,
-      `SELECT id, archived, latest_draft_entity_versions_id, never_published, published_entity_versions_id, updated_at
+      `SELECT id, never_published, updated_at, status
        FROM entities WHERE uuid = $1`,
       [id]
     );
@@ -825,14 +817,22 @@ export async function unarchiveEntity(
     if (!entityInfo) {
       return notOk.NotFound('No such entity');
     }
-    const { id: entityId, archived, updated_at: previousUpdatedAt } = entityInfo;
+    const {
+      id: entityId,
+      never_published: neverPublished,
+      updated_at: previousUpdatedAt,
+    } = entityInfo;
     const result: EntityPublishPayload = {
       id,
-      publishState: resolvePublishState({ ...entityInfo, archived: false }, entityInfo),
+      publishState: resolveEntityStatus(entityInfo.status),
       updatedAt: previousUpdatedAt,
     };
 
-    if (archived) {
+    if (result.publishState === EntityPublishState.Archived) {
+      result.publishState = neverPublished
+        ? EntityPublishState.Draft
+        : EntityPublishState.Withdrawn;
+
       const [{ updated_at: updatedAt }, _] = await Promise.all([
         Db.queryOne<Pick<EntitiesTable, 'updated_at'>>(
           databaseAdapter,
