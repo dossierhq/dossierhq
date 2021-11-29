@@ -1,3 +1,5 @@
+import type { Logger } from '.';
+
 export enum ErrorType {
   /** Corresponds to 400 Bad Request */
   BadRequest = 'BadRequest',
@@ -108,6 +110,7 @@ export function createErrorResult<TError extends ErrorType>(
 }
 
 export function createErrorResultFromError<TError extends ErrorType | ErrorType.Generic>(
+  context: { logger: Logger },
   error: ErrorResultError | unknown,
   expectedErrorTypes: TError[] | null = null
 ): ErrorResult<unknown, TError | ErrorType.Generic> {
@@ -123,7 +126,7 @@ export function createErrorResultFromError<TError extends ErrorType | ErrorType.
     }
     return notOk.GenericUnexpectedError(errorResult);
   }
-  return notOk.GenericUnexpectedException(error);
+  return notOk.GenericUnexpectedException(context, error);
 }
 
 export function ok<TOk, TError extends ErrorType>(value: TOk): OkResult<TOk, TError> {
@@ -145,8 +148,13 @@ export const notOk = {
     result: ErrorResult<unknown, ErrorType>
   ): ErrorResult<unknown, ErrorType.Generic> =>
     createErrorResult(ErrorType.Generic, `Unexpected error: ${result.error}: ${result.message}`),
-  GenericUnexpectedException: (error: unknown): ErrorResult<unknown, ErrorType.Generic> => {
+  GenericUnexpectedException: (
+    context: { logger: Logger },
+    error: unknown
+  ): ErrorResult<unknown, ErrorType.Generic> => {
     if (error instanceof Error) {
+      //TODO need to decide how to pass errors to Logger
+      context.logger.error('Unexpected error', error);
       return createErrorResult(
         ErrorType.Generic,
         `Unexpected exception: ${error.name}: ${error.message}`

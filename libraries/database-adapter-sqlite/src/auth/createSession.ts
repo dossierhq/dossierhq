@@ -63,6 +63,7 @@ async function getSubject(
   identifier: string
 ): PromiseResult<AuthCreateSessionPayload | null, ErrorType.Generic> {
   const result = await queryNoneOrOne<Pick<SubjectsTable, 'id' | 'uuid'>>(
+    context,
     adapter,
     `SELECT s.id, s.uuid FROM subjects s, principals p
     WHERE p.provider = $1 AND p.identifier = $2 AND p.subjects_id = s.id`,
@@ -83,11 +84,11 @@ async function createSubject(
   provider: string,
   identifier: string
 ): PromiseResult<AuthCreateSessionPayload, ErrorType.Conflict | ErrorType.Generic> {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   return await context.withTransaction(async (context) => {
     const uuid = uuidv4();
     const now = Temporal.Now.instant();
     const subjectsResult = await queryOne<Pick<SubjectsTable, 'id'>>(
+      context,
       adapter,
       'INSERT INTO subjects (uuid, created_at) VALUES ($1, $2) RETURNING id',
       [uuid, now.toString()]
@@ -97,6 +98,7 @@ async function createSubject(
     }
     const { id } = subjectsResult.value;
     const principalsResult = await queryNone(
+      context,
       adapter,
       'INSERT INTO principals (provider, identifier, subjects_id) VALUES ($1, $2, $3)',
       [provider, identifier, id],
@@ -104,7 +106,7 @@ async function createSubject(
         if (adapter.isUniqueViolationOfConstraint(error, PrincipalsUniqueProviderIdentifier)) {
           return notOk.Conflict('Principal already exist');
         }
-        return notOk.GenericUnexpectedException(error);
+        return notOk.GenericUnexpectedException(context, error);
       }
     );
     if (principalsResult.isError()) {

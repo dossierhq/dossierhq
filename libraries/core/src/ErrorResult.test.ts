@@ -1,10 +1,12 @@
 import type { Result } from '.';
 import { createErrorResultFromError, ErrorType, notOk, ok } from '.';
-import { expectErrorResult, expectOkResult } from './CoreTestUtils';
+import { createMockLogger, expectErrorResult, expectOkResult } from './CoreTestUtils';
 
 describe('createErrorResultFromError()', () => {
   test('From generic error', () => {
+    const logger = createMockLogger();
     const actual: Result<unknown, ErrorType.Generic> = createErrorResultFromError(
+      { logger },
       new Error('Generic error message')
     );
     expectErrorResult(
@@ -12,43 +14,71 @@ describe('createErrorResultFromError()', () => {
       ErrorType.Generic,
       'Unexpected exception: Error: Generic error message'
     );
+    expect(logger.error.mock.calls).toMatchInlineSnapshot(`
+      Array [
+        Array [
+          "Unexpected error",
+          [Error: Generic error message],
+        ],
+      ]
+    `);
   });
 
   test('From generic error with expected types', () => {
+    const logger = createMockLogger();
     const actual: Result<unknown, ErrorType.NotFound | ErrorType.Generic> =
-      createErrorResultFromError(new Error('Generic error message'), [ErrorType.NotFound]);
+      createErrorResultFromError({ logger }, new Error('Generic error message'), [
+        ErrorType.NotFound,
+      ]);
     expectErrorResult(
       actual,
       ErrorType.Generic,
       'Unexpected exception: Error: Generic error message'
     );
+    expect(logger.error.mock.calls).toMatchInlineSnapshot(`
+      Array [
+        Array [
+          "Unexpected error",
+          [Error: Generic error message],
+        ],
+      ]
+    `);
   });
 
   test('From ErrorResultError without expected types', () => {
+    const logger = createMockLogger();
     const actual: Result<unknown, ErrorType> = createErrorResultFromError(
+      { logger },
       notOk.Conflict('Conflict error message').toError()
     );
     expectErrorResult(actual, ErrorType.Conflict, 'Conflict error message');
+    expect(logger.error.mock.calls).toMatchInlineSnapshot(`Array []`);
   });
 
   test('From ErrorResultError with supported type', () => {
+    const logger = createMockLogger();
     const actual: Result<unknown, ErrorType.Conflict | ErrorType.Generic> =
-      createErrorResultFromError(notOk.Conflict('Conflict error message').toError(), [
+      createErrorResultFromError({ logger }, notOk.Conflict('Conflict error message').toError(), [
         ErrorType.Conflict,
       ]);
     expectErrorResult(actual, ErrorType.Conflict, 'Conflict error message');
+    expect(logger.error.mock.calls).toMatchInlineSnapshot(`Array []`);
   });
 
   test('From ErrorResultError with unsupported type', () => {
+    const logger = createMockLogger();
     const actual: Result<unknown, ErrorType.Conflict | ErrorType.Generic> =
-      createErrorResultFromError(notOk.BadRequest('Bad request error message').toError(), [
-        ErrorType.Conflict,
-      ]);
+      createErrorResultFromError(
+        { logger },
+        notOk.BadRequest('Bad request error message').toError(),
+        [ErrorType.Conflict]
+      );
     expectErrorResult(
       actual,
       ErrorType.Generic,
       'Unexpected error: BadRequest: Bad request error message'
     );
+    expect(logger.error.mock.calls).toMatchInlineSnapshot(`Array []`);
   });
 });
 
@@ -90,18 +120,29 @@ describe('OkResult', () => {
 
 describe('notOk', () => {
   test('GenericUnexpectedException', () => {
+    const logger = createMockLogger();
     expectErrorResult(
-      notOk.GenericUnexpectedException(new Error('Hello world')),
+      notOk.GenericUnexpectedException({ logger }, new Error('Hello world')),
       ErrorType.Generic,
       'Unexpected exception: Error: Hello world'
     );
+    expect(logger.error.mock.calls).toMatchInlineSnapshot(`
+      Array [
+        Array [
+          "Unexpected error",
+          [Error: Hello world],
+        ],
+      ]
+    `);
   });
 
   test('GenericUnexpectedException with non-Error', () => {
+    const logger = createMockLogger();
     expectErrorResult(
-      notOk.GenericUnexpectedException(123),
+      notOk.GenericUnexpectedException({ logger }, 123),
       ErrorType.Generic,
       'Unexpected exception: 123'
     );
+    expect(logger.error.mock.calls).toMatchInlineSnapshot(`Array []`);
   });
 });

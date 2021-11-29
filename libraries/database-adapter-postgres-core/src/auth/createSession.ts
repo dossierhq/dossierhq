@@ -106,7 +106,7 @@ async function createSubject(
         ) {
           return notOk.Conflict('Principal already exist');
         }
-        return notOk.GenericUnexpectedException(error);
+        return notOk.GenericUnexpectedException(context, error);
       }
     );
     if (principalsResult.isError()) {
