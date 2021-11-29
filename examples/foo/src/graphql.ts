@@ -1,13 +1,13 @@
 import 'dotenv/config';
 import { AdminSchema, notOk, ok, Schema } from '@jonasb/datadata-core';
-import { createPostgresAdapter } from '@jonasb/datadata-database-adapter-postgres-pg';
 import type { SessionGraphQLContext } from '@jonasb/datadata-graphql';
 import { GraphQLSchemaGenerator } from '@jonasb/datadata-graphql';
-import { createServer, Server } from '@jonasb/datadata-server';
+import type { Server } from '@jonasb/datadata-server';
 import type { Handler, NextFunction, Request, Response } from 'express';
 import express from 'express';
 import { graphqlHTTP } from 'express-graphql';
 import type { IncomingHttpHeaders } from 'http';
+import { initializeServer } from './server';
 
 type GraphQlMiddleware = ReturnType<typeof graphqlHTTP>;
 
@@ -72,9 +72,7 @@ async function startServer(server: Server, schema: AdminSchema, port: number) {
 }
 
 async function main(port: number) {
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const databaseAdapter = createPostgresAdapter({ connectionString: process.env.DATABASE_URL! });
-  const serverResult = await createServer({ databaseAdapter });
+  const serverResult = await initializeServer();
   if (serverResult.isError()) throw serverResult.toError();
   const server = serverResult.value;
   try {

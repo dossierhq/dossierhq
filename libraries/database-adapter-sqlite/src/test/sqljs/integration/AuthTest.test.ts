@@ -1,5 +1,8 @@
 import { assertIsDefined } from '@jonasb/datadata-core';
-import { createAuthTestSuite } from '@jonasb/datadata-database-adapter-test-integration';
+import {
+  createAuthTestSuite,
+  createTestAuthenticationAdapter,
+} from '@jonasb/datadata-database-adapter-test-integration';
 import type { Server } from '@jonasb/datadata-server';
 import { createServer } from '@jonasb/datadata-server';
 import { createSqlJsTestAdapter, registerTestSuite } from '../../TestUtils';
@@ -14,6 +17,7 @@ beforeAll(async () => {
 
   const createServerResult = await createServer({
     databaseAdapter: databaseAdapterResult.value,
+    authenticationAdapter: createTestAuthenticationAdapter(),
   });
   if (createServerResult.isError()) {
     return createServerResult;

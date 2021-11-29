@@ -10,7 +10,7 @@ import type {
   PublishedClientMiddleware,
 } from '@jonasb/datadata-core';
 import { AdminSchema, assertIsDefined, NoOpLogger, notOk, ok, Schema } from '@jonasb/datadata-core';
-import type { DatabaseAdapter, Session, SessionContext } from '.';
+import type { AuthenticationAdapter, DatabaseAdapter, Session, SessionContext } from '.';
 import { createServerAdminClient } from './AdminClient';
 import { authCreateSession } from './Auth';
 import type { InternalContext } from './Context';
@@ -42,12 +42,22 @@ export interface Server {
 
 export class ServerImpl {
   #databaseAdapter: DatabaseAdapter | null;
+  #authenticationAdapter: AuthenticationAdapter;
   #logger: Logger;
   #adminSchema: AdminSchema | null = null;
   #schema: Schema | null = null;
 
-  constructor({ databaseAdapter, logger }: { databaseAdapter: DatabaseAdapter; logger?: Logger }) {
+  constructor({
+    databaseAdapter,
+    authenticationAdapter,
+    logger,
+  }: {
+    databaseAdapter: DatabaseAdapter;
+    authenticationAdapter: AuthenticationAdapter;
+    logger?: Logger;
+  }) {
     this.#databaseAdapter = databaseAdapter;
+    this.#authenticationAdapter = authenticationAdapter;
     this.#logger = logger ?? NoOpLogger;
   }
 
@@ -104,12 +114,14 @@ export class ServerImpl {
 
 export async function createServer({
   databaseAdapter,
+  authenticationAdapter,
   logger,
 }: {
   databaseAdapter: DatabaseAdapter;
+  authenticationAdapter: AuthenticationAdapter;
   logger?: Logger;
 }): PromiseResult<Server, ErrorType.Generic> {
-  const serverImpl = new ServerImpl({ databaseAdapter, logger });
+  const serverImpl = new ServerImpl({ databaseAdapter, authenticationAdapter, logger });
   const authContext = serverImpl.createInternalContext();
   const loadSchemaResult = await serverImpl.reloadSchema(authContext);
   if (loadSchemaResult.isError()) {
