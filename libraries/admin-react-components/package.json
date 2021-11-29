@@ -1,6 +1,6 @@
 {
   "name": "@jonasb/datadata-admin-react-components",
-  "version": "0.1.1-52",
+  "version": "0.1.1-53",
   "description": "",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
@@ -71,7 +71,7 @@
     "eslint-plugin-react": "~7.27.0",
     "eslint-plugin-react-hooks": "~4.3.0",
     "eslint-plugin-testing-library": "~5.0.0",
-    "jest-environment-jsdom": "~27.3.1",
+    "jest-environment-jsdom": "~27.4.0",
     "mini-svg-data-uri": "~1.4.3",
     "prettier": "2.4.1",
     "react-test-renderer": "~17.0.2",
