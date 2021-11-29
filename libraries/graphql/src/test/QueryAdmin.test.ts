@@ -210,6 +210,7 @@ describe('adminEntity()', () => {
                 type
                 name
                 version
+                authKey
                 publishingState
               }
               ... on AdminQueryAdminFoo {
@@ -246,6 +247,7 @@ describe('adminEntity()', () => {
               version: 0,
               type: 'QueryAdminFoo',
               name,
+              authKey: 'none',
               publishingState: EntityPublishState.Draft,
             },
             fields: {
@@ -291,6 +293,7 @@ describe('adminEntity()', () => {
                 type
                 name
                 version
+                authKey
                 publishingState
               }
               ... on AdminQueryAdminFoo {
@@ -334,6 +337,7 @@ describe('adminEntity()', () => {
               type: 'QueryAdminFoo',
               name,
               version: 0,
+              authKey: 'none',
               publishingState: EntityPublishState.Draft,
             },
             fields: {
@@ -503,6 +507,7 @@ describe('adminEntity()', () => {
               info {
                 version
                 name
+                authKey
                 publishingState
               }
               ... on AdminQueryAdminFoo {
@@ -525,6 +530,7 @@ describe('adminEntity()', () => {
           info: {
             version: 0,
             name,
+            authKey: 'none',
             publishingState: EntityPublishState.Published,
           },
           fields: {
@@ -1109,6 +1115,7 @@ describe('adminEntities()', () => {
               info {
                 type
                 name
+                authKey
                 publishingState
               }
             }
@@ -1125,6 +1132,7 @@ describe('adminEntities()', () => {
               id: foo1Id,
               info: {
                 type: 'QueryAdminFoo',
+                authKey: 'none',
                 publishingState: EntityPublishState.Draft,
                 name: foo1Name,
               },
@@ -1134,6 +1142,7 @@ describe('adminEntities()', () => {
               id: foo2Id,
               info: {
                 type: 'QueryAdminFoo',
+                authKey: 'none',
                 publishingState: EntityPublishState.Draft,
                 name: foo2Name,
               },

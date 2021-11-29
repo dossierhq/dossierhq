@@ -74,12 +74,15 @@ export async function getEntity(
     actualVersion = versionResult.value.maxVersion;
   }
   const entityMain = await Db.queryNoneOrOne<
-    Pick<EntitiesTable, 'uuid' | 'type' | 'name' | 'created_at' | 'updated_at' | 'status'> &
+    Pick<
+      EntitiesTable,
+      'uuid' | 'type' | 'name' | 'auth_key' | 'created_at' | 'updated_at' | 'status'
+    > &
       Pick<EntityVersionsTable, 'version' | 'data'>
   >(
     databaseAdapter,
     context,
-    `SELECT e.uuid, e.type, e.name, e.created_at, e.updated_at, e.status, ev.version, ev.data
+    `SELECT e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.status, ev.version, ev.data
       FROM entities e, entity_versions ev
       WHERE e.uuid = $1
       AND e.id = ev.entities_id
@@ -106,12 +109,15 @@ export async function getEntities(
   }
 
   const entitiesMain = await Db.queryMany<
-    Pick<EntitiesTable, 'uuid' | 'type' | 'name' | 'created_at' | 'updated_at' | 'status'> &
+    Pick<
+      EntitiesTable,
+      'uuid' | 'type' | 'name' | 'auth_key' | 'created_at' | 'updated_at' | 'status'
+    > &
       Pick<EntityVersionsTable, 'version' | 'data'>
   >(
     databaseAdapter,
     context,
-    `SELECT e.uuid, e.type, e.name, e.created_at, e.updated_at, e.status, ev.version, ev.data
+    `SELECT e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.status, ev.version, ev.data
       FROM entities e, entity_versions ev
       WHERE e.uuid = ANY($1)
       AND e.latest_draft_entity_versions_id = ev.id`,
@@ -350,12 +356,15 @@ export async function updateEntity(
 ): PromiseResult<AdminEntityUpdatePayload, ErrorType.BadRequest | ErrorType.NotFound> {
   return await context.withTransaction(async (context) => {
     const previousValues = await Db.queryNoneOrOne<
-      Pick<EntitiesTable, 'id' | 'type' | 'name' | 'created_at' | 'updated_at' | 'status'> &
+      Pick<
+        EntitiesTable,
+        'id' | 'type' | 'name' | 'auth_key' | 'created_at' | 'updated_at' | 'status'
+      > &
         Pick<EntityVersionsTable, 'version' | 'data'>
     >(
       databaseAdapter,
       context,
-      `SELECT e.id, e.type, e.name, e.created_at, e.updated_at, e.status, ev.version, ev.data
+      `SELECT e.id, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.status, ev.version, ev.data
         FROM entities e, entity_versions ev
         WHERE e.uuid = $1 AND e.latest_draft_entity_versions_id = ev.id`,
       [entity.id]
