@@ -1,7 +1,7 @@
 import type { AdminClient, ErrorType, PromiseResult, PublishedClient } from '@jonasb/datadata-core';
 import { AdminSchema, notOk, ok } from '@jonasb/datadata-core';
 import { createPostgresAdapter } from '@jonasb/datadata-database-adapter-postgres-pg';
-import type { AuthenticationAdapter, Server } from '@jonasb/datadata-server';
+import type { AuthorizationAdapter, Server } from '@jonasb/datadata-server';
 import { createServer } from '@jonasb/datadata-server';
 import type { NextApiRequest } from 'next';
 import SchemaSpec from './schema.json';
@@ -38,7 +38,7 @@ export async function getServerConnection(): Promise<{ server: Server; schema: A
       });
       const serverResult = await createServer({
         databaseAdapter,
-        authenticationAdapter: createAuthenticationAdapter(),
+        authorizationAdapter: createAuthenticationAdapter(),
       });
       if (serverResult.isError()) throw serverResult.toError();
       const server = serverResult.value;
@@ -60,9 +60,9 @@ export async function getServerConnection(): Promise<{ server: Server; schema: A
   return serverConnectionPromise;
 }
 
-function createAuthenticationAdapter(): AuthenticationAdapter {
+function createAuthenticationAdapter(): AuthorizationAdapter {
   return {
-    async resolveAuthenticationKeys<T extends string>(authKeys: T[]) {
+    async resolveAuthorizationKeys<T extends string>(authKeys: T[]) {
       const result = {} as Record<T, string>;
       for (const key of authKeys) {
         if (!validKeys.includes(key)) {

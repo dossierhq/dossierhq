@@ -10,7 +10,7 @@ import type {
   PublishedClientMiddleware,
 } from '@jonasb/datadata-core';
 import { AdminSchema, assertIsDefined, NoOpLogger, notOk, ok, Schema } from '@jonasb/datadata-core';
-import type { AuthenticationAdapter, DatabaseAdapter, Session, SessionContext } from '.';
+import type { AuthorizationAdapter, DatabaseAdapter, Session, SessionContext } from '.';
 import { createServerAdminClient } from './AdminClient';
 import { authCreateSession } from './Auth';
 import type { InternalContext } from './Context';
@@ -43,22 +43,22 @@ export interface Server {
 
 export class ServerImpl {
   #databaseAdapter: DatabaseAdapter | null;
-  #authenticationAdapter: AuthenticationAdapter;
+  #authorizationAdapter: AuthorizationAdapter;
   #logger: Logger;
   #adminSchema: AdminSchema | null = null;
   #schema: Schema | null = null;
 
   constructor({
     databaseAdapter,
-    authenticationAdapter,
+    authorizationAdapter,
     logger,
   }: {
     databaseAdapter: DatabaseAdapter;
-    authenticationAdapter: AuthenticationAdapter;
+    authorizationAdapter: AuthorizationAdapter;
     logger?: Logger;
   }) {
     this.#databaseAdapter = databaseAdapter;
-    this.#authenticationAdapter = authenticationAdapter;
+    this.#authorizationAdapter = authorizationAdapter;
     this.#logger = logger ?? NoOpLogger;
   }
 
@@ -124,16 +124,16 @@ export class ServerImpl {
 
 export async function createServer({
   databaseAdapter,
-  authenticationAdapter,
+  authorizationAdapter,
   logger: serverLogger,
 }: {
   databaseAdapter: DatabaseAdapter;
-  authenticationAdapter: AuthenticationAdapter;
+  authorizationAdapter: AuthorizationAdapter;
   logger?: Logger;
 }): PromiseResult<Server, ErrorType.Generic> {
   const serverImpl = new ServerImpl({
     databaseAdapter,
-    authenticationAdapter,
+    authorizationAdapter: authorizationAdapter,
     logger: serverLogger,
   });
   const authContext = serverImpl.createInternalContext();
@@ -171,6 +171,7 @@ export async function createServer({
     createAdminClient: (context, middleware) =>
       createServerAdminClient({
         context,
+        authorizationAdapter,
         databaseAdapter,
         serverImpl,
         middleware: middleware ?? [],

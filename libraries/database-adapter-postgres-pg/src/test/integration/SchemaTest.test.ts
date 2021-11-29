@@ -1,7 +1,7 @@
 import { assertIsDefined } from '@jonasb/datadata-core';
 import {
   createSchemaTestSuite,
-  createTestAuthenticationAdapter,
+  createTestAuthorizationAdapter,
 } from '@jonasb/datadata-database-adapter-test-integration';
 import type { Server } from '@jonasb/datadata-server';
 import { createServer } from '@jonasb/datadata-server';
@@ -12,7 +12,7 @@ let server: Server | null = null;
 beforeAll(async () => {
   const result = await createServer({
     databaseAdapter: createPostgresTestAdapter(),
-    authenticationAdapter: createTestAuthenticationAdapter(),
+    authorizationAdapter: createTestAuthorizationAdapter(),
     logger: createMockLogger(),
   });
   if (result.isError()) {

@@ -1,6 +1,6 @@
 export { createAuthTestSuite } from './auth/AuthTestSuite';
 export { createSchemaTestSuite } from './schema/SchemaTestSuite';
-export { createTestAuthenticationAdapter } from './TestAuthenticationAdapter';
+export { createTestAuthorizationAdapter } from './TestAuthorizationAdapter';
 
 export interface TestFunctionInitializer<TContext, TCleanup> {
   before: () => Promise<[TContext, TCleanup]>;

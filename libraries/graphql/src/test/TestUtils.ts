@@ -8,7 +8,7 @@ import type {
 } from '@jonasb/datadata-core';
 import { AdminSchema, assertIsDefined, CoreTestUtils, ok } from '@jonasb/datadata-core';
 import { createPostgresAdapter } from '@jonasb/datadata-database-adapter-postgres-pg';
-import type { AuthenticationAdapter } from '@jonasb/datadata-server';
+import type { AuthorizationAdapter } from '@jonasb/datadata-server';
 import { createServer } from '@jonasb/datadata-server';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -42,7 +42,7 @@ async function setUpRealServerWithSession(schemaSpecification: AdminSchemaSpecif
   assertIsDefined(url);
   const serverResult = await createServer({
     databaseAdapter: createPostgresAdapter({ connectionString: url }),
-    authenticationAdapter: createTestAuthenticationAdapter(),
+    authorizationAdapter: createTestAuthorizationAdapter(),
   });
   if (serverResult.isError()) throw serverResult.toError();
   const server = serverResult.value;
@@ -67,9 +67,9 @@ async function setUpRealServerWithSession(schemaSpecification: AdminSchemaSpecif
   };
 }
 
-function createTestAuthenticationAdapter(): AuthenticationAdapter {
+function createTestAuthorizationAdapter(): AuthorizationAdapter {
   return {
-    async resolveAuthenticationKeys<T extends string>(authKeys: T[]) {
+    async resolveAuthorizationKeys<T extends string>(authKeys: T[]) {
       const result = {} as Record<T, string>;
       for (const key of authKeys) {
         result[key] = key;

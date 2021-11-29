@@ -11,7 +11,7 @@ import type {
 } from '@jonasb/datadata-core';
 import { assertIsDefined, CoreTestUtils, ok } from '@jonasb/datadata-core';
 import type { TestSuite } from '@jonasb/datadata-database-adapter-test-integration';
-import { createTestAuthenticationAdapter } from '@jonasb/datadata-database-adapter-test-integration';
+import { createTestAuthorizationAdapter } from '@jonasb/datadata-database-adapter-test-integration';
 import type { DatabaseAdapter, Server, SessionContext } from '@jonasb/datadata-server';
 import { createServer } from '@jonasb/datadata-server';
 import { Temporal } from '@js-temporal/polyfill';
@@ -37,7 +37,7 @@ export async function createPostgresTestServerAndClient(): PromiseResult<
 > {
   const serverResult = await createServer({
     databaseAdapter: createPostgresTestAdapter(),
-    authenticationAdapter: createTestAuthenticationAdapter(),
+    authorizationAdapter: createTestAuthorizationAdapter(),
     logger: createMockLogger(),
   });
   if (serverResult.isError()) return serverResult;
