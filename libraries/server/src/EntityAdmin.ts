@@ -32,7 +32,7 @@ import {
   traverseAdminItem,
   visitorPathToString,
 } from '@jonasb/datadata-core';
-import type { DatabaseAdapter, SessionContext } from '.';
+import type { AuthorizationAdapter, DatabaseAdapter, SessionContext } from '.';
 import * as Db from './Database';
 import type {
   EntitiesTable,
@@ -197,6 +197,7 @@ async function withUniqueNameAttempt<TResult>(
 
 export async function createEntity(
   schema: AdminSchema,
+  authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   entity: AdminEntityCreate
@@ -427,6 +428,7 @@ export async function updateEntity(
 
 export async function upsertEntity(
   schema: AdminSchema,
+  authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   entity: AdminEntityUpsert
@@ -439,11 +441,17 @@ export async function upsertEntity(
   );
 
   if (!entityInfo) {
-    const createResult = await createEntity(schema, databaseAdapter, context, entity);
+    const createResult = await createEntity(
+      schema,
+      authorizationAdapter,
+      databaseAdapter,
+      context,
+      entity
+    );
     if (createResult.isOk()) {
       return createResult.map((value) => value);
     } else if (createResult.isErrorType(ErrorType.Conflict)) {
-      return upsertEntity(schema, databaseAdapter, context, entity);
+      return upsertEntity(schema, authorizationAdapter, databaseAdapter, context, entity);
     } else if (createResult.isErrorType(ErrorType.BadRequest)) {
       return createResult;
     }

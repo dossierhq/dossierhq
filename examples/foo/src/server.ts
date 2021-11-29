@@ -1,6 +1,6 @@
 import { notOk, ok } from '@jonasb/datadata-core';
 import { createPostgresAdapter } from '@jonasb/datadata-database-adapter-postgres-pg';
-import { AuthenticationAdapter, createServer } from '@jonasb/datadata-server';
+import { AuthorizationAdapter, createServer } from '@jonasb/datadata-server';
 
 const validAuthorizationKeys: readonly string[] = ['none'];
 
@@ -9,14 +9,14 @@ export async function initializeServer() {
   const databaseAdapter = createPostgresAdapter({ connectionString: process.env.DATABASE_URL! });
   const serverResult = await createServer({
     databaseAdapter,
-    authenticationAdapter: createAuthenticationAdapter(),
+    authorizationAdapter: createAuthenticationAdapter(),
   });
   return serverResult;
 }
 
-function createAuthenticationAdapter(): AuthenticationAdapter {
+function createAuthenticationAdapter(): AuthorizationAdapter {
   return {
-    async resolveAuthenticationKeys<T extends string>(authKeys: T[]) {
+    async resolveAuthorizationKeys<T extends string>(authKeys: T[]) {
       const result = {} as Record<T, string>;
       for (const key of authKeys) {
         if (!validAuthorizationKeys.includes(key)) {

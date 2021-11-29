@@ -10,7 +10,7 @@ import {
   createBaseAdminClient,
   ok,
 } from '@jonasb/datadata-core';
-import type { DatabaseAdapter, SessionContext } from '.';
+import type { AuthorizationAdapter, DatabaseAdapter, SessionContext } from '.';
 import {
   archiveEntity,
   createEntity,
@@ -31,11 +31,13 @@ import type { ServerImpl } from './Server';
 
 export function createServerAdminClient({
   context,
+  authorizationAdapter,
   databaseAdapter,
   serverImpl,
   middleware,
 }: {
   context: SessionContext | ContextProvider<SessionContext>;
+  authorizationAdapter: AuthorizationAdapter;
   databaseAdapter: DatabaseAdapter;
   serverImpl: ServerImpl;
   middleware: AdminClientMiddleware<SessionContext>[];
@@ -58,7 +60,15 @@ export function createServerAdminClient({
           args: [entity],
           resolve,
         } = operation as AdminClientOperation<AdminClientOperationName.createEntity>;
-        resolve(await createEntity(serverImpl.getAdminSchema(), databaseAdapter, context, entity));
+        resolve(
+          await createEntity(
+            serverImpl.getAdminSchema(),
+            authorizationAdapter,
+            databaseAdapter,
+            context,
+            entity
+          )
+        );
         break;
       }
       case AdminClientOperationName.getEntities: {
@@ -190,7 +200,15 @@ export function createServerAdminClient({
           args: [entity],
           resolve,
         } = operation as AdminClientOperation<AdminClientOperationName.upsertEntity>;
-        resolve(await upsertEntity(serverImpl.getAdminSchema(), databaseAdapter, context, entity));
+        resolve(
+          await upsertEntity(
+            serverImpl.getAdminSchema(),
+            authorizationAdapter,
+            databaseAdapter,
+            context,
+            entity
+          )
+        );
         break;
       }
       default:
