@@ -32,7 +32,9 @@ registerTestSuite(
     before: async () => {
       assertIsDefined(server);
       const resolvedServer = server;
-      const client = server.createAdminClient(() => resolvedServer.createSession('test', 'id'));
+      const client = server.createAdminClient(() =>
+        resolvedServer.createSession({ provider: 'test', identifier: 'id' })
+      );
       return [{ client }, undefined];
     },
     after: async () => {

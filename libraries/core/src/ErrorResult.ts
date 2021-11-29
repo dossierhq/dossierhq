@@ -166,7 +166,7 @@ const httpStatusToErrorType = new Map<number, ErrorType>();
 httpStatusToErrorType.set(400, ErrorType.BadRequest);
 httpStatusToErrorType.set(409, ErrorType.Conflict);
 httpStatusToErrorType.set(401, ErrorType.NotAuthenticated);
-httpStatusToErrorType.set(401, ErrorType.NotAuthorized);
+httpStatusToErrorType.set(403, ErrorType.NotAuthorized);
 httpStatusToErrorType.set(404, ErrorType.NotFound);
 httpStatusToErrorType.set(500, ErrorType.Generic);
 

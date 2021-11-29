@@ -18,7 +18,7 @@ export async function getSessionContextForRequest(
   ErrorType.NotAuthenticated
 > {
   //TODO actually authenticate
-  const sessionResult = await server.createSession('test', 'john-smith');
+  const sessionResult = await server.createSession({ provider: 'test', identifier: 'john-smith' });
   if (sessionResult.isError()) {
     return notOk.NotAuthenticated(
       `Failed authentication: ${sessionResult.error}: ${sessionResult.message}`
@@ -43,7 +43,10 @@ export async function getServerConnection(): Promise<{ server: Server; schema: A
       if (serverResult.isError()) throw serverResult.toError();
       const server = serverResult.value;
 
-      const schemaLoaderSession = await server.createSession('sys', 'schemaloader');
+      const schemaLoaderSession = await server.createSession({
+        provider: 'sys',
+        identifier: 'schemaloader',
+      });
       if (schemaLoaderSession.isError()) throw schemaLoaderSession.toError();
       const client = server.createAdminClient(schemaLoaderSession.value.context);
       const updateSchemaResult = await client.updateSchemaSpecification(SchemaSpec);
