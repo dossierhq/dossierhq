@@ -168,6 +168,7 @@ export async function createServer({
     createPublishedClient: (context, middleware) =>
       createServerPublishedClient({
         context,
+        authorizationAdapter,
         databaseAdapter,
         serverImpl,
         middleware: middleware ?? [],
