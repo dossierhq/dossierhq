@@ -19,8 +19,9 @@ export function DataDataProvider({
 }: Props): JSX.Element | null {
   const { schema, schemaError } = useSchema(adminClient);
   const value = useMemo(
-    () => (schema ? new DataDataContextValue(adapter, adminClient, schema) : null),
-    [adapter, adminClient, schema]
+    () =>
+      schema ? new DataDataContextValue(adapter, adminClient, schema, logger ?? NoOpLogger) : null,
+    [adapter, adminClient, schema, logger]
   );
   const value2: DataDataContextValue2 = useMemo(() => {
     return {

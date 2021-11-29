@@ -4,16 +4,17 @@ import type {
   AdminEntityCreate,
   AdminEntityUpdate,
   AdminQuery,
+  AdminSchema,
   Connection,
   Edge,
   EntityHistory,
   EntityPublishPayload,
   ErrorResult,
   FieldSpecification,
+  Logger,
   Paging,
   PromiseResult,
   PublishingHistory,
-  AdminSchema,
 } from '@jonasb/datadata-core';
 import { assertExhaustive, createErrorResultFromError, ErrorType } from '@jonasb/datadata-core';
 import { createContext } from 'react';
@@ -40,6 +41,7 @@ export class DataDataContextValue {
   #adapter: DataDataContextAdapter;
   #adminClient: AdminClient;
   #schema: AdminSchema;
+  #logger: Logger;
   /** Used to enable different cache keys for SWR */
   #rootKey: string | undefined;
 
@@ -47,12 +49,14 @@ export class DataDataContextValue {
     adapter: DataDataContextAdapter,
     adminClient: AdminClient,
     schema: AdminSchema,
+    logger: Logger,
     rootKey?: string
   ) {
     this.#adapter = adapter;
     this.#adminClient = adminClient;
     //TODO fetch schema from adminClient?
     this.#schema = schema;
+    this.#logger = logger;
     this.#rootKey = rootKey;
   }
 
@@ -81,7 +85,9 @@ export class DataDataContextValue {
       this.fetcher
     );
 
-    const entityError = error ? createErrorResultFromError(error, [ErrorType.NotFound]) : undefined;
+    const entityError = error
+      ? createErrorResultFromError({ logger: this.#logger }, error, [ErrorType.NotFound])
+      : undefined;
     return { entity: data, entityError };
   };
 
@@ -98,7 +104,7 @@ export class DataDataContextValue {
     );
 
     const entityHistoryError = error
-      ? createErrorResultFromError(error, [ErrorType.NotFound])
+      ? createErrorResultFromError({ logger: this.#logger }, error, [ErrorType.NotFound])
       : undefined;
     return {
       entityHistory: data as EntityHistory | undefined,
@@ -119,7 +125,7 @@ export class DataDataContextValue {
     );
 
     const publishingHistoryError = error
-      ? createErrorResultFromError(error, [ErrorType.NotFound])
+      ? createErrorResultFromError({ logger: this.#logger }, error, [ErrorType.NotFound])
       : undefined;
     return {
       publishingHistory: data as PublishingHistory | undefined,
@@ -143,7 +149,7 @@ export class DataDataContextValue {
     );
 
     const connectionError = error
-      ? createErrorResultFromError(error, [ErrorType.BadRequest])
+      ? createErrorResultFromError({ logger: this.#logger }, error, [ErrorType.BadRequest])
       : undefined;
     return {
       connection: data as Connection<Edge<AdminEntity, ErrorType>> | undefined,
@@ -162,7 +168,7 @@ export class DataDataContextValue {
       this.invalidateEntity(result.value.entity);
       return result.map((payload) => payload.entity);
     } catch (error) {
-      return createErrorResultFromError(error, [ErrorType.BadRequest]);
+      return createErrorResultFromError({ logger: this.#logger }, error, [ErrorType.BadRequest]);
     }
   };
 
@@ -179,7 +185,10 @@ export class DataDataContextValue {
       }
       return result.map((payload) => payload.entity);
     } catch (error) {
-      return createErrorResultFromError(error, [ErrorType.BadRequest, ErrorType.NotFound]);
+      return createErrorResultFromError({ logger: this.#logger }, error, [
+        ErrorType.BadRequest,
+        ErrorType.NotFound,
+      ]);
     }
   };
 
@@ -201,7 +210,10 @@ export class DataDataContextValue {
       }
       return result;
     } catch (error) {
-      return createErrorResultFromError(error, [ErrorType.BadRequest, ErrorType.NotFound]);
+      return createErrorResultFromError({ logger: this.#logger }, error, [
+        ErrorType.BadRequest,
+        ErrorType.NotFound,
+      ]);
     }
   };
 
@@ -220,7 +232,10 @@ export class DataDataContextValue {
       }
       return result;
     } catch (error) {
-      return createErrorResultFromError(error, [ErrorType.BadRequest, ErrorType.NotFound]);
+      return createErrorResultFromError({ logger: this.#logger }, error, [
+        ErrorType.BadRequest,
+        ErrorType.NotFound,
+      ]);
     }
   };
 
@@ -237,7 +252,10 @@ export class DataDataContextValue {
       }
       return result;
     } catch (error) {
-      return createErrorResultFromError(error, [ErrorType.BadRequest, ErrorType.NotFound]);
+      return createErrorResultFromError({ logger: this.#logger }, error, [
+        ErrorType.BadRequest,
+        ErrorType.NotFound,
+      ]);
     }
   };
 
@@ -254,7 +272,10 @@ export class DataDataContextValue {
       }
       return result;
     } catch (error) {
-      return createErrorResultFromError(error, [ErrorType.BadRequest, ErrorType.NotFound]);
+      return createErrorResultFromError({ logger: this.#logger }, error, [
+        ErrorType.BadRequest,
+        ErrorType.NotFound,
+      ]);
     }
   };
 

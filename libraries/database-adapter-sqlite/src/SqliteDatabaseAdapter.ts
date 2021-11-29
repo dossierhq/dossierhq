@@ -1,6 +1,6 @@
 import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
 import { notOk, ok } from '@jonasb/datadata-core';
-import type { DatabaseAdapter } from '@jonasb/datadata-server';
+import type { Context, DatabaseAdapter } from '@jonasb/datadata-server';
 import type { UniqueConstraint } from '.';
 import { authCreateSession } from './auth/createSession';
 import { queryOne } from './QueryFunctions';
@@ -18,9 +18,10 @@ export interface SqliteDatabaseAdapter {
 }
 
 export async function createSqliteDatabaseAdapter(
+  context: Context,
   sqliteAdapter: SqliteDatabaseAdapter
 ): PromiseResult<DatabaseAdapter, ErrorType.BadRequest | ErrorType.Generic> {
-  const validityResult = await checkAdapterValidity(sqliteAdapter);
+  const validityResult = await checkAdapterValidity(context, sqliteAdapter);
   if (validityResult.isError()) {
     return validityResult;
   }
@@ -49,9 +50,11 @@ export async function createSqliteDatabaseAdapter(
 }
 
 async function checkAdapterValidity(
+  context: Context,
   adapter: SqliteDatabaseAdapter
 ): PromiseResult<void, ErrorType.Generic | ErrorType.BadRequest> {
   const result = await queryOne<{ version: string }>(
+    context,
     adapter,
     'SELECT sqlite_version() AS version',
     undefined

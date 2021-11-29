@@ -1,5 +1,5 @@
 import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
-import { ok } from '@jonasb/datadata-core';
+import { NoOpLogger, ok } from '@jonasb/datadata-core';
 import type { TestSuite } from '@jonasb/datadata-database-adapter-test-integration';
 import type { DatabaseAdapter, TransactionContext } from '@jonasb/datadata-server';
 import { ServerTestUtils } from '@jonasb/datadata-server';
@@ -17,7 +17,7 @@ export async function createSqlJsTestAdapter(): PromiseResult<
   ErrorType.BadRequest | ErrorType.Generic
 > {
   const adapter = await createSqlJsAdapter();
-  return createSqliteDatabaseAdapter(adapter);
+  return createSqliteDatabaseAdapter({ logger: NoOpLogger }, adapter);
 }
 
 export async function createSqlite3TestAdapter(): PromiseResult<
@@ -25,7 +25,7 @@ export async function createSqlite3TestAdapter(): PromiseResult<
   ErrorType.BadRequest | ErrorType.Generic
 > {
   const adapter = await createSqlite3Adapter();
-  return createSqliteDatabaseAdapter(adapter);
+  return createSqliteDatabaseAdapter({ logger: NoOpLogger }, adapter);
 }
 
 export function registerTestSuite(testSuite: TestSuite): void {
@@ -37,7 +37,7 @@ export function registerTestSuite(testSuite: TestSuite): void {
 export async function createMockContext(
   adapter: SqliteDatabaseAdapter
 ): PromiseResult<TransactionContext, ErrorType.BadRequest | ErrorType.Generic> {
-  const result = await createSqliteDatabaseAdapter(adapter);
+  const result = await createSqliteDatabaseAdapter({ logger: NoOpLogger }, adapter);
   if (result.isError()) {
     return result;
   }

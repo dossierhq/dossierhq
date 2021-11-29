@@ -25,7 +25,7 @@ async function queryCommon<TRow, TError extends ErrorType>(
     if (errorConverter) {
       return errorConverter(error);
     }
-    return notOk.GenericUnexpectedException(error);
+    return notOk.GenericUnexpectedException(context, error);
   }
 }
 

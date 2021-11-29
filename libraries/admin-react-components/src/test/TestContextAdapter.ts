@@ -12,6 +12,7 @@ import type {
   Result,
 } from '@jonasb/datadata-core';
 import {
+  AdminSchema,
   buildUrlWithUrlQuery,
   convertAdminClientOperationToJson,
   convertJsonAdminClientResult,
@@ -21,9 +22,9 @@ import {
   createBasePublishedClient,
   createConsoleLogger,
   LoggingClientMiddleware,
+  NoOpLogger,
   notOk,
   ok,
-  AdminSchema,
   stringifyUrlQueryParams,
 } from '@jonasb/datadata-core';
 import { v5 as uuidv5 } from 'uuid';
@@ -44,7 +45,7 @@ export async function createContextValue2(
   const schemaResult = await adminClient.getSchemaSpecification();
   if (schemaResult.isError()) return schemaResult;
   const schema = new AdminSchema(schemaResult.value);
-  return ok(new DataDataContextValue(new TestContextAdapter(), adminClient, schema));
+  return ok(new DataDataContextValue(new TestContextAdapter(), adminClient, schema, NoOpLogger));
 }
 
 export function createBackendAdminClient(

@@ -1,5 +1,6 @@
 import type { ErrorType, PromiseResult, Result } from '@jonasb/datadata-core';
 import { notOk, ok } from '@jonasb/datadata-core';
+import type { Context } from '@jonasb/datadata-server';
 import type { SqliteDatabaseAdapter } from '.';
 import type { ColumnValue } from './SqliteDatabaseAdapter';
 
@@ -8,6 +9,7 @@ interface ErrorConverter<TRow, TError extends ErrorType> {
 }
 
 async function queryCommon<TRow, TError extends ErrorType>(
+  context: Context,
   adapter: SqliteDatabaseAdapter,
   query: string,
   values: ColumnValue[] | undefined,
@@ -20,17 +22,19 @@ async function queryCommon<TRow, TError extends ErrorType>(
     if (errorConverter) {
       return errorConverter(error);
     }
-    return notOk.GenericUnexpectedException(error);
+    return notOk.GenericUnexpectedException(context, error);
   }
 }
 
 export async function queryNone<TError extends ErrorType | ErrorType.Generic = ErrorType.Generic>(
+  context: Context,
   adapter: SqliteDatabaseAdapter,
   query: string,
   values?: ColumnValue[],
   errorConverter?: ErrorConverter<unknown, TError | ErrorType.Generic>
 ): PromiseResult<void, TError | ErrorType.Generic> {
   const result = await queryCommon<[], TError>(
+    context,
     adapter,
     query,
     values,
@@ -47,12 +51,14 @@ export async function queryNone<TError extends ErrorType | ErrorType.Generic = E
 }
 
 export async function queryNoneOrOne<TRow, TError extends ErrorType = ErrorType.Generic>(
+  context: Context,
   adapter: SqliteDatabaseAdapter,
   query: string,
   values?: ColumnValue[],
   errorConverter?: ErrorConverter<TRow, TError | ErrorType.Generic>
 ): PromiseResult<TRow | null, TError | ErrorType.Generic> {
   const result = await queryCommon<TRow, TError>(
+    context,
     adapter,
     query,
     values,
@@ -72,12 +78,14 @@ export async function queryNoneOrOne<TRow, TError extends ErrorType = ErrorType.
 }
 
 export async function queryOne<TRow, TError extends ErrorType = ErrorType.Generic>(
+  context: Context,
   adapter: SqliteDatabaseAdapter,
   query: string,
   values?: ColumnValue[],
   errorConverter?: ErrorConverter<TRow, TError | ErrorType.Generic>
 ): PromiseResult<TRow, TError | ErrorType.Generic> {
   const result = await queryCommon<TRow, TError>(
+    context,
     adapter,
     query,
     values,

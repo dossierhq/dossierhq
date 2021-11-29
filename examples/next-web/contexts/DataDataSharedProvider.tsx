@@ -126,20 +126,20 @@ function createBackendPublishedClient(): PublishedClient {
 }
 
 async function terminatingAdminMiddleware(
-  _context: BackendContext,
+  context: BackendContext,
   operation: AdminClientOperation
 ): Promise<void> {
   const jsonOperation = convertAdminClientOperationToJson(operation);
 
   let result: Result<unknown, ErrorType>;
   if (operation.modifies) {
-    result = await fetchJsonResult(urls.admin(operation.name), {
+    result = await fetchJsonResult(context, urls.admin(operation.name), {
       method: 'PUT',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(jsonOperation),
     });
   } else {
-    result = await fetchJsonResult(urls.admin(operation.name, jsonOperation), {
+    result = await fetchJsonResult(context, urls.admin(operation.name, jsonOperation), {
       method: 'GET',
       headers: { 'content-type': 'application/json' },
     });
@@ -148,20 +148,20 @@ async function terminatingAdminMiddleware(
 }
 
 async function terminatingPublishedMiddleware(
-  _context: BackendContext,
+  context: BackendContext,
   operation: PublishedClientOperation
 ): Promise<void> {
   const jsonOperation = convertPublishedClientOperationToJson(operation);
 
   let result: Result<unknown, ErrorType>;
   if (operation.modifies) {
-    result = await fetchJsonResult(urls.published(operation.name), {
+    result = await fetchJsonResult(context, urls.published(operation.name), {
       method: 'PUT',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(jsonOperation),
     });
   } else {
-    result = await fetchJsonResult(urls.published(operation.name, jsonOperation), {
+    result = await fetchJsonResult(context, urls.published(operation.name, jsonOperation), {
       method: 'GET',
       headers: { 'content-type': 'application/json' },
     });

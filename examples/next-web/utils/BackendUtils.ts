@@ -2,6 +2,7 @@ import type {
   AdminClientJsonOperation,
   AdminClientOperationName,
   ErrorType,
+  Logger,
   PromiseResult,
   PublishedClientJsonOperation,
   PublishedClientOperationName,
@@ -27,6 +28,7 @@ export const urls = {
 };
 
 export async function fetchJsonResult<TOk>(
+  context: { logger: Logger },
   input: RequestInfo,
   init?: RequestInit
 ): PromiseResult<TOk, ErrorType> {
@@ -47,6 +49,6 @@ export async function fetchJsonResult<TOk>(
     const json: TOk = await response.json();
     return ok(json);
   } catch (error) {
-    return notOk.GenericUnexpectedException(error);
+    return notOk.GenericUnexpectedException(context, error);
   }
 }

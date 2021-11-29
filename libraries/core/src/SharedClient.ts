@@ -86,7 +86,7 @@ async function executeOperationMiddleware<
 
     return result;
   } catch (error) {
-    return notOk.GenericUnexpectedException(error) as Result<TOk, TError>;
+    return notOk.GenericUnexpectedException(context, error) as Result<TOk, TError>;
   }
 }
 

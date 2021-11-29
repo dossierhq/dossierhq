@@ -1,5 +1,5 @@
 import { Temporal } from '@js-temporal/polyfill';
-import type { ErrorType, OkResult, Result } from '.';
+import type { ErrorType, Logger, OkResult, Result } from '.';
 
 export function expectOkResult<TOk, TError extends ErrorType>(
   actual: Result<unknown, ErrorType>
@@ -51,4 +51,18 @@ function deepCopyForIsEqual<T>(obj: T): T {
     return copy;
   }
   return obj;
+}
+
+export function createMockLogger(): {
+  error: jest.MockedFunction<Logger['error']>;
+  warn: jest.MockedFunction<Logger['warn']>;
+  info: jest.MockedFunction<Logger['info']>;
+  debug: jest.MockedFunction<Logger['debug']>;
+} {
+  return {
+    error: jest.fn(),
+    warn: jest.fn(),
+    info: jest.fn(),
+    debug: jest.fn(),
+  };
 }
