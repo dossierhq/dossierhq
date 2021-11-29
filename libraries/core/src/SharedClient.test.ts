@@ -1,6 +1,5 @@
-import type { ErrorType } from '.';
-import { NoOpLogger, ok } from '.';
-import { expectResultValue } from './CoreTestUtils';
+import { ErrorType, NoOpLogger, ok } from '.';
+import { expectErrorResult, expectResultValue } from './CoreTestUtils';
 import type {
   ClientContext,
   Middleware,
@@ -91,23 +90,38 @@ describe('executeOperationPipeline()', () => {
     expectResultValue(result, { item: '[[[hello]]]' });
   });
 
+  test('Error: Middleware throwing exception', async () => {
+    const result = await executeTestPipeline(
+      { logger: NoOpLogger },
+      [
+        async (_context, _operation) => {
+          throw new Error('Error message');
+        },
+      ],
+      { name: TestClientOperationName.foo, args: ['hello'], modifies: false }
+    );
+    expectErrorResult(result, ErrorType.Generic, 'Unexpected exception: Error: Error message');
+  });
+
   test('Error: empty pipeline', async () => {
-    await expect(
-      executeTestPipeline({ logger: NoOpLogger }, [], {
-        name: TestClientOperationName.foo,
-        args: ['hello'],
-        modifies: false,
-      })
-    ).rejects.toThrowError('Cannot execute an empty pipeline');
+    const result = await executeTestPipeline({ logger: NoOpLogger }, [], {
+      name: TestClientOperationName.foo,
+      args: ['hello'],
+      modifies: false,
+    });
+    expectErrorResult(result, ErrorType.Generic, 'Cannot execute an empty pipeline');
   });
 
   test('Error: final middleware calling next()', async () => {
-    await expect(
-      executeTestPipeline(
-        { logger: NoOpLogger },
-        [async (_context, operation) => operation.resolve(await operation.next())],
-        { name: TestClientOperationName.foo, args: ['hello'], modifies: false }
-      )
-    ).rejects.toThrowError('The last middleware in the pipeline cannot call next()');
+    const result = await executeTestPipeline(
+      { logger: NoOpLogger },
+      [async (_context, operation) => operation.resolve(await operation.next())],
+      { name: TestClientOperationName.foo, args: ['hello'], modifies: false }
+    );
+    expectErrorResult(
+      result,
+      ErrorType.Generic,
+      'The last middleware in the pipeline cannot call next()'
+    );
   });
 });
