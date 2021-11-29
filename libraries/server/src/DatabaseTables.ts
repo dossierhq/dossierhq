@@ -23,9 +23,11 @@ export interface EntitiesTable {
   updated: number;
   latest_draft_entity_versions_id: number | null;
   never_published: boolean;
-  archived: boolean;
+  archived: boolean; // TODO remove and rely on status instead
   published_entity_versions_id: number | null;
   status: 'draft' | 'published' | 'modified' | 'withdrawn' | 'archived';
+  auth_key: string;
+  resolved_auth_key: string;
 }
 
 export interface EntityVersionsTable {

@@ -134,7 +134,11 @@ async function createAndPublishEntities(
   ...entities: AdminEntityCreate[]
 ): PromiseResult<
   AdminEntityCreatePayload[],
-  ErrorType.BadRequest | ErrorType.Conflict | ErrorType.NotFound | ErrorType.Generic
+  | ErrorType.BadRequest
+  | ErrorType.Conflict
+  | ErrorType.NotFound
+  | ErrorType.NotAuthorized
+  | ErrorType.Generic
 > {
   //TODO use transaction when supported in client
   //TODO consider adding this kind of operation to AdminClient

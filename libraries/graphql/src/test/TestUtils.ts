@@ -8,7 +8,7 @@ import type {
 } from '@jonasb/datadata-core';
 import { AdminSchema, assertIsDefined, CoreTestUtils, ok } from '@jonasb/datadata-core';
 import { createPostgresAdapter } from '@jonasb/datadata-database-adapter-postgres-pg';
-import type { AuthorizationAdapter } from '@jonasb/datadata-server';
+import type { AuthorizationAdapter, SessionContext } from '@jonasb/datadata-server';
 import { createServer } from '@jonasb/datadata-server';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -69,7 +69,7 @@ async function setUpRealServerWithSession(schemaSpecification: AdminSchemaSpecif
 
 function createTestAuthorizationAdapter(): AuthorizationAdapter {
   return {
-    async resolveAuthorizationKeys<T extends string>(authKeys: T[]) {
+    async resolveAuthorizationKeys<T extends string>(context: SessionContext, authKeys: T[]) {
       const result = {} as Record<T, string>;
       for (const key of authKeys) {
         result[key] = key;
