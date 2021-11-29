@@ -159,7 +159,10 @@ export class DataDataContextValue {
 
   createEntity = async (
     entity: AdminEntityCreate
-  ): PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.Conflict | ErrorType.Generic> => {
+  ): PromiseResult<
+    AdminEntity,
+    ErrorType.BadRequest | ErrorType.Conflict | ErrorType.NotAuthorized | ErrorType.Generic
+  > => {
     try {
       const result = await this.#adminClient.createEntity(entity);
       if (result.isError()) {

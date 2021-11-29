@@ -20,7 +20,11 @@ export async function ensureEntityCount(
   fieldProvider: (random: string) => Record<string, unknown>
 ): PromiseResult<
   void,
-  ErrorType.BadRequest | ErrorType.Conflict | ErrorType.NotFound | ErrorType.Generic
+  | ErrorType.BadRequest
+  | ErrorType.Conflict
+  | ErrorType.NotFound
+  | ErrorType.NotAuthorized
+  | ErrorType.Generic
 > {
   const countResult = await client.getTotalCount({
     entityTypes: [entityType],
@@ -57,7 +61,11 @@ export async function ensureEntityWithStatus(
   fieldProvider: (random: string) => Record<string, unknown>
 ): PromiseResult<
   void,
-  ErrorType.BadRequest | ErrorType.Conflict | ErrorType.NotFound | ErrorType.Generic
+  | ErrorType.BadRequest
+  | ErrorType.Conflict
+  | ErrorType.NotFound
+  | ErrorType.NotAuthorized
+  | ErrorType.Generic
 > {
   const countResult = await client.getTotalCount({
     entityTypes: [entityType],

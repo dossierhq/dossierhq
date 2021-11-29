@@ -33,6 +33,8 @@ import {
   visitorPathToString,
 } from '@jonasb/datadata-core';
 import type { AuthorizationAdapter, DatabaseAdapter, SessionContext } from '.';
+import type { ResolvedAuthKey } from './Auth';
+import { authResolveAuthorizationKey } from './Auth';
 import * as Db from './Database';
 import type {
   EntitiesTable,
@@ -201,12 +203,24 @@ export async function createEntity(
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   entity: AdminEntityCreate
-): PromiseResult<AdminEntityCreatePayload, ErrorType.BadRequest | ErrorType.Conflict> {
+): PromiseResult<
+  AdminEntityCreatePayload,
+  ErrorType.BadRequest | ErrorType.Conflict | ErrorType.NotAuthorized | ErrorType.Generic
+> {
   const resolvedResult = resolveCreateEntity(schema, entity);
   if (resolvedResult.isError()) {
     return resolvedResult;
   }
   const createEntity = resolvedResult.value;
+
+  const resolvedAuthKeyResult = await authResolveAuthorizationKey(
+    authorizationAdapter,
+    context,
+    entity.info.authKey
+  );
+  if (resolvedAuthKeyResult.isError()) {
+    return resolvedAuthKeyResult;
+  }
 
   const encodeResult = await encodeEntity(schema, databaseAdapter, context, createEntity);
   if (encodeResult.isError()) {
@@ -219,6 +233,7 @@ export async function createEntity(
       databaseAdapter,
       context,
       entity.id,
+      resolvedAuthKeyResult.value,
       encodeEntityResult
     );
     if (createEntityRowResult.isError()) {
@@ -283,6 +298,7 @@ async function createEntityRow(
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   id: string | undefined,
+  authKey: ResolvedAuthKey,
   encodeEntityResult: EncodeEntityResult
 ) {
   const { name, type, fullTextSearchText } = encodeEntityResult;
@@ -293,10 +309,14 @@ async function createEntityRow(
       context,
       name,
       async (context, name) => {
-        const qb = new QueryBuilder('INSERT INTO entities (uuid, name, type, latest_fts, status)');
+        const qb = new QueryBuilder(
+          'INSERT INTO entities (uuid, name, type, auth_key, resolved_auth_key, latest_fts, status)'
+        );
         qb.addQuery(
           `VALUES (${qb.addValueOrDefault(id)}, ${qb.addValue(name)}, ${qb.addValue(
             type
+          )}, ${qb.addValue(authKey.authKey)}, ${qb.addValue(
+            authKey.resolvedAuthKey
           )}, to_tsvector(${qb.addValue(fullTextSearchText.join(' '))}), 'draft')`
         );
         qb.addQuery('RETURNING id, uuid, created_at, updated_at');

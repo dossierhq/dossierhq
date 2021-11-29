@@ -7,6 +7,8 @@ import type {
   AdminEntityUpsert,
   AdminEntityUpsertPayload,
   AdminQuery,
+  AdminSchemaSpecification,
+  AdminSchemaSpecificationUpdate,
   Connection,
   Edge,
   EntityHistory,
@@ -18,8 +20,6 @@ import type {
   PromiseResult,
   PublishingHistory,
   Result,
-  AdminSchemaSpecification,
-  AdminSchemaSpecificationUpdate,
   SchemaSpecificationUpdatePayload,
 } from '.';
 import { assertExhaustive, convertJsonResult, ErrorType, notOk, ok } from '.';
@@ -83,7 +83,7 @@ export interface AdminClient {
     entity: AdminEntityCreate
   ): PromiseResult<
     AdminEntityCreatePayload,
-    ErrorType.BadRequest | ErrorType.Conflict | ErrorType.Generic
+    ErrorType.BadRequest | ErrorType.Conflict | ErrorType.NotAuthorized | ErrorType.Generic
   >;
 
   updateEntity(
