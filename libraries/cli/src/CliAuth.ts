@@ -24,7 +24,7 @@ export async function veryInsecureCreateSession(
   ]);
 
   // Try to create session (first attempt)
-  const sessionResult = await server.createSession(provider, identifier);
+  const sessionResult = await server.createSession({ provider, identifier });
   if (sessionResult.isError()) {
     CliUtils.logErrorResult('Failed creating session', sessionResult);
   }

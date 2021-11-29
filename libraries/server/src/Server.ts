@@ -25,11 +25,12 @@ export interface CreateSessionPayload {
 
 export interface Server {
   shutdown(): PromiseResult<void, ErrorType.Generic>;
-  createSession(
-    provider: string,
-    identifier: string,
-    logger?: Logger
-  ): PromiseResult<CreateSessionPayload, ErrorType.BadRequest | ErrorType.Generic>;
+  createSession(params: {
+    provider: string;
+    identifier: string;
+    defaultAuthorizationKeys?: string[];
+    logger?: Logger;
+  }): PromiseResult<CreateSessionPayload, ErrorType.BadRequest | ErrorType.Generic>;
   createAdminClient(
     context: SessionContext | ContextProvider<SessionContext>,
     middleware?: AdminClientMiddleware<SessionContext>[]
@@ -106,22 +107,35 @@ export class ServerImpl {
     return new InternalContextImpl(this.#databaseAdapter, logger ?? this.#logger);
   }
 
-  createSessionContext(session: Session, logger?: Logger): SessionContext {
+  createSessionContext(
+    session: Session,
+    defaultAuthorizationKeys: string[],
+    logger: Logger | undefined
+  ): SessionContext {
     assertIsDefined(this.#databaseAdapter);
-    return new SessionContextImpl(session, this.#databaseAdapter, logger ?? this.#logger);
+    return new SessionContextImpl(
+      session,
+      defaultAuthorizationKeys,
+      this.#databaseAdapter,
+      logger ?? this.#logger
+    );
   }
 }
 
 export async function createServer({
   databaseAdapter,
   authenticationAdapter,
-  logger,
+  logger: serverLogger,
 }: {
   databaseAdapter: DatabaseAdapter;
   authenticationAdapter: AuthenticationAdapter;
   logger?: Logger;
 }): PromiseResult<Server, ErrorType.Generic> {
-  const serverImpl = new ServerImpl({ databaseAdapter, authenticationAdapter, logger });
+  const serverImpl = new ServerImpl({
+    databaseAdapter,
+    authenticationAdapter,
+    logger: serverLogger,
+  });
   const authContext = serverImpl.createInternalContext();
   const loadSchemaResult = await serverImpl.reloadSchema(authContext);
   if (loadSchemaResult.isError()) {
@@ -131,11 +145,12 @@ export async function createServer({
     shutdown() {
       return serverImpl.shutdown();
     },
-    createSession: async (
+    createSession: async ({
       provider,
       identifier,
-      logger
-    ): PromiseResult<CreateSessionPayload, ErrorType.BadRequest | ErrorType.Generic> => {
+      defaultAuthorizationKeys,
+      logger: sessionLogger,
+    }): PromiseResult<CreateSessionPayload, ErrorType.BadRequest | ErrorType.Generic> => {
       const sessionResult = await authCreateSession(
         databaseAdapter,
         authContext,
@@ -146,7 +161,11 @@ export async function createServer({
         return sessionResult;
       }
       const { principalEffect, session } = sessionResult.value;
-      const context = serverImpl.createSessionContext(session, logger);
+      const context = serverImpl.createSessionContext(
+        session,
+        defaultAuthorizationKeys ?? [],
+        sessionLogger ?? serverLogger
+      );
       return ok({ principalEffect, context });
     },
     createAdminClient: (context, middleware) =>
