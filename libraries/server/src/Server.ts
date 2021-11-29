@@ -28,7 +28,7 @@ export interface Server {
   createSession(params: {
     provider: string;
     identifier: string;
-    defaultAuthorizationKeys?: string[];
+    defaultAuthKeys?: string[];
     logger?: Logger;
   }): PromiseResult<CreateSessionPayload, ErrorType.BadRequest | ErrorType.Generic>;
   createAdminClient(
@@ -43,22 +43,12 @@ export interface Server {
 
 export class ServerImpl {
   #databaseAdapter: DatabaseAdapter | null;
-  #authorizationAdapter: AuthorizationAdapter;
   #logger: Logger;
   #adminSchema: AdminSchema | null = null;
   #schema: Schema | null = null;
 
-  constructor({
-    databaseAdapter,
-    authorizationAdapter,
-    logger,
-  }: {
-    databaseAdapter: DatabaseAdapter;
-    authorizationAdapter: AuthorizationAdapter;
-    logger?: Logger;
-  }) {
+  constructor({ databaseAdapter, logger }: { databaseAdapter: DatabaseAdapter; logger?: Logger }) {
     this.#databaseAdapter = databaseAdapter;
-    this.#authorizationAdapter = authorizationAdapter;
     this.#logger = logger ?? NoOpLogger;
   }
 
@@ -109,13 +99,13 @@ export class ServerImpl {
 
   createSessionContext(
     session: Session,
-    defaultAuthorizationKeys: string[],
+    defaultAuthKeys: string[],
     logger: Logger | undefined
   ): SessionContext {
     assertIsDefined(this.#databaseAdapter);
     return new SessionContextImpl(
       session,
-      defaultAuthorizationKeys,
+      defaultAuthKeys,
       this.#databaseAdapter,
       logger ?? this.#logger
     );
@@ -133,7 +123,6 @@ export async function createServer({
 }): PromiseResult<Server, ErrorType.Generic> {
   const serverImpl = new ServerImpl({
     databaseAdapter,
-    authorizationAdapter: authorizationAdapter,
     logger: serverLogger,
   });
   const authContext = serverImpl.createInternalContext();
@@ -148,7 +137,7 @@ export async function createServer({
     createSession: async ({
       provider,
       identifier,
-      defaultAuthorizationKeys,
+      defaultAuthKeys,
       logger: sessionLogger,
     }): PromiseResult<CreateSessionPayload, ErrorType.BadRequest | ErrorType.Generic> => {
       const sessionResult = await authCreateSession(
@@ -163,7 +152,7 @@ export async function createServer({
       const { principalEffect, session } = sessionResult.value;
       const context = serverImpl.createSessionContext(
         session,
-        defaultAuthorizationKeys ?? [],
+        defaultAuthKeys ?? [],
         sessionLogger ?? serverLogger
       );
       return ok({ principalEffect, context });

@@ -60,8 +60,12 @@ export interface AdminClient {
   ): PromiseResult<SchemaSpecificationUpdatePayload, ErrorType.BadRequest | ErrorType.Generic>;
 
   getEntity(
-    reference: EntityReference | EntityVersionReference
-  ): PromiseResult<AdminEntity, ErrorType.NotFound | ErrorType.Generic>;
+    reference: EntityReference | EntityVersionReference,
+    options?: { authKeys: string[] }
+  ): PromiseResult<
+    AdminEntity,
+    ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
+  >;
 
   getEntities(
     references: EntityReference[]

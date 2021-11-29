@@ -24,7 +24,7 @@ export interface InternalContext extends TransactionContext<InternalContext> {
 
 export interface SessionContext extends TransactionContext<SessionContext> {
   readonly session: Session;
-  readonly defaultAuthorizationKeys: string[];
+  readonly defaultAuthKeys: string[];
   [sessionContextSymbol]: never;
 }
 
@@ -92,18 +92,18 @@ export class SessionContextImpl
 {
   [sessionContextSymbol]: never;
   readonly session: Session;
-  readonly defaultAuthorizationKeys: string[];
+  readonly defaultAuthKeys: string[];
 
   constructor(
     session: Session,
-    defaultAuthorizationKeys: string[],
+    defaultAuthKeys: string[],
     databaseAdapter: DatabaseAdapter,
     logger: Logger,
     transaction: Transaction | null = null
   ) {
     super(databaseAdapter, logger, transaction);
     this.session = session;
-    this.defaultAuthorizationKeys = defaultAuthorizationKeys;
+    this.defaultAuthKeys = defaultAuthKeys;
   }
 
   protected copyWithNewTransaction(
@@ -112,7 +112,7 @@ export class SessionContextImpl
   ): SessionContext {
     return new SessionContextImpl(
       this.session,
-      this.defaultAuthorizationKeys,
+      this.defaultAuthKeys,
       databaseAdapter,
       this.logger,
       transaction
