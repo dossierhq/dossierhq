@@ -1,4 +1,8 @@
-import type { AdminSchemaSpecificationUpdate } from '@jonasb/datadata-core';
+import type {
+  AdminEntityCreate,
+  AdminEntityUpsert,
+  AdminSchemaSpecificationUpdate,
+} from '@jonasb/datadata-core';
 import {
   CoreTestUtils,
   EntityPublishState,
@@ -159,25 +163,25 @@ function createContext(): SessionGraphQLContext {
 describe('create*Entity()', () => {
   test('Create', async () => {
     const { adminClient } = server;
+    const entity: AdminEntityCreate = {
+      info: { type: 'MutationFoo', name: 'Foo name', authKey: 'none' },
+      fields: {
+        title: 'Foo title',
+        summary: 'Foo summary',
+        tags: ['one', 'two', 'three'],
+        location: { lat: 55.60498, lng: 13.003822 },
+        locations: [
+          { lat: 55.60498, lng: 13.003822 },
+          { lat: 56.381561, lng: 13.99286 },
+        ],
+      },
+    };
+
     const result = (await graphql({
       schema,
       source: createMutationFooGqlQuery,
       contextValue: createContext(),
-      variableValues: {
-        entity: {
-          info: { type: 'MutationFoo', name: 'Foo name' },
-          fields: {
-            title: 'Foo title',
-            summary: 'Foo summary',
-            tags: ['one', 'two', 'three'],
-            location: { lat: 55.60498, lng: 13.003822 },
-            locations: [
-              { lat: 55.60498, lng: 13.003822 },
-              { lat: 56.381561, lng: 13.99286 },
-            ],
-          },
-        },
-      },
+      variableValues: { entity },
     })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
     expect(result.errors).toBeUndefined();
@@ -245,19 +249,20 @@ describe('create*Entity()', () => {
 
   test('Create with ID and version=0', async () => {
     const id = insecureTestUuidv4();
+    const entity: AdminEntityCreate = {
+      id,
+      info: { type: 'MutationFoo', name: 'Foo name', version: 0, authKey: 'none' },
+      fields: {
+        title: 'Foo title',
+        summary: 'Foo summary',
+      },
+    };
     const result = (await graphql({
       schema,
       source: createMutationFooGqlQuery,
       contextValue: createContext(),
       variableValues: {
-        entity: {
-          id,
-          info: { type: 'MutationFoo', name: 'Foo name', version: 0 },
-          fields: {
-            title: 'Foo title',
-            summary: 'Foo summary',
-          },
-        },
+        entity,
       },
     })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
@@ -297,13 +302,28 @@ describe('create*Entity()', () => {
   test('Create with rich text with reference', async () => {
     const { adminClient } = server;
     const createBarResult = await adminClient.createEntity({
-      info: { type: 'MutationBar', name: 'Bar' },
+      info: { type: 'MutationBar', name: 'Bar', authKey: 'none' },
       fields: {},
     });
     if (expectOkResult(createBarResult)) {
       const {
         entity: { id: barId },
       } = createBarResult.value;
+
+      const entity: AdminEntityCreate = {
+        info: { type: 'MutationFoo', name: 'Foo name', authKey: 'none' },
+        fields: {
+          title: 'Foo title',
+          summary: 'Foo summary',
+          body: {
+            blocks: [
+              { type: RichTextBlockType.paragraph, data: { text: 'Hello world' } },
+              { type: RichTextBlockType.entity, data: { id: barId } },
+            ],
+          },
+        },
+      };
+
       const gqlResult = (await graphql({
         schema,
         source: `
@@ -332,21 +352,7 @@ describe('create*Entity()', () => {
           }
         `,
         contextValue: createContext(),
-        variableValues: {
-          entity: {
-            info: { type: 'MutationFoo', name: 'Foo name' },
-            fields: {
-              title: 'Foo title',
-              summary: 'Foo summary',
-              body: {
-                blocks: [
-                  { type: RichTextBlockType.paragraph, data: { text: 'Hello world' } },
-                  { type: RichTextBlockType.entity, data: { id: barId } },
-                ],
-              },
-            },
-          },
-        },
+        variableValues: { entity },
       })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
       const {
@@ -411,7 +417,7 @@ describe('create*Entity()', () => {
   test('Create with reference', async () => {
     const { adminClient } = server;
     const createBarResult = await adminClient.createEntity({
-      info: { type: 'MutationBar', name: 'Bar' },
+      info: { type: 'MutationBar', name: 'Bar', authKey: 'none' },
       fields: {},
     });
     if (expectOkResult(createBarResult)) {
@@ -421,6 +427,20 @@ describe('create*Entity()', () => {
           info: { name: barName },
         },
       } = createBarResult.value;
+
+      const entity: AdminEntityCreate = {
+        info: {
+          type: 'MutationFoo',
+          name: 'Foo name',
+          authKey: 'none',
+        },
+        fields: {
+          title: 'Foo title',
+          summary: 'Foo summary',
+          bar: { id: barId },
+        },
+      };
+
       const gqlResult = (await graphql({
         schema,
         source: `
@@ -452,19 +472,7 @@ describe('create*Entity()', () => {
           }
         `,
         contextValue: createContext(),
-        variableValues: {
-          entity: {
-            info: {
-              type: 'MutationFoo',
-              name: 'Foo name',
-            },
-            fields: {
-              title: 'Foo title',
-              summary: 'Foo summary',
-              bar: { id: barId },
-            },
-          },
-        },
+        variableValues: { entity },
       })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
       expect(gqlResult.errors).toBeUndefined();
@@ -520,11 +528,11 @@ describe('create*Entity()', () => {
   test('Create with reference list', async () => {
     const { adminClient } = server;
     const createBar1Result = await adminClient.createEntity({
-      info: { type: 'MutationBar', name: 'Bar 1' },
+      info: { type: 'MutationBar', name: 'Bar 1', authKey: 'none' },
       fields: {},
     });
     const createBar2Result = await adminClient.createEntity({
-      info: { type: 'MutationBar', name: 'Bar 2' },
+      info: { type: 'MutationBar', name: 'Bar 2', authKey: 'none' },
       fields: {},
     });
     if (expectOkResult(createBar1Result) && expectOkResult(createBar2Result)) {
@@ -540,6 +548,19 @@ describe('create*Entity()', () => {
           info: { name: bar2Name },
         },
       } = createBar2Result.value;
+
+      const entity: AdminEntityCreate = {
+        info: {
+          type: 'MutationFoo',
+          name: 'Foo name',
+          authKey: 'none',
+        },
+        fields: {
+          title: 'Foo title',
+          summary: 'Foo summary',
+          bars: [{ id: bar1Id }, { id: bar2Id }],
+        },
+      };
 
       const gqlResult = (await graphql({
         schema,
@@ -571,19 +592,7 @@ describe('create*Entity()', () => {
           }
         `,
         contextValue: createContext(),
-        variableValues: {
-          entity: {
-            info: {
-              type: 'MutationFoo',
-              name: 'Foo name',
-            },
-            fields: {
-              title: 'Foo title',
-              summary: 'Foo summary',
-              bars: [{ id: bar1Id }, { id: bar2Id }],
-            },
-          },
-        },
+        variableValues: { entity },
       })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
       expect(gqlResult.errors).toBeUndefined();
@@ -641,7 +650,7 @@ describe('create*Entity()', () => {
   test('Create with value type with reference', async () => {
     const { adminClient } = server;
     const createBarResult = await adminClient.createEntity({
-      info: { type: 'MutationBar', name: 'Bar' },
+      info: { type: 'MutationBar', name: 'Bar', authKey: 'none' },
       fields: {},
     });
     if (expectOkResult(createBarResult)) {
@@ -651,6 +660,24 @@ describe('create*Entity()', () => {
           info: { name: barName },
         },
       } = createBarResult.value;
+
+      const entity: AdminEntityCreate = {
+        info: {
+          type: 'MutationFoo',
+          name: 'Foo name',
+          authKey: 'none',
+        },
+        fields: {
+          title: 'Foo title',
+          summary: 'Foo summary',
+          stringedBar: {
+            type: 'MutationStringedBar',
+            text: 'Value text',
+            bar: { id: barId },
+          },
+        },
+      };
+
       const gqlResult = (await graphql({
         schema,
         source: `
@@ -688,23 +715,7 @@ describe('create*Entity()', () => {
           }
         `,
         contextValue: createContext(),
-        variableValues: {
-          entity: {
-            info: {
-              type: 'MutationFoo',
-              name: 'Foo name',
-            },
-            fields: {
-              title: 'Foo title',
-              summary: 'Foo summary',
-              stringedBar: {
-                type: 'MutationStringedBar',
-                text: 'Value text',
-                bar: { id: barId },
-              },
-            },
-          },
-        },
+        variableValues: { entity },
       })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
       expect(gqlResult.errors).toBeUndefined();
@@ -775,7 +786,7 @@ describe('create*Entity()', () => {
   test('Create with value JSON', async () => {
     const { adminClient } = server;
     const createBarResult = await adminClient.createEntity({
-      info: { type: 'MutationBar', name: 'Bar' },
+      info: { type: 'MutationBar', name: 'Bar', authKey: 'none' },
       fields: {},
     });
 
@@ -783,6 +794,28 @@ describe('create*Entity()', () => {
       const {
         entity: { id: barId },
       } = createBarResult.value;
+
+      const entity: AdminEntityCreate = {
+        info: {
+          type: 'MutationFoo',
+          name: 'Foo name',
+          authKey: 'none',
+        },
+        fields: {
+          anyValueItemJson: JSON.stringify({
+            type: 'MutationStringedBar',
+            text: 'A value',
+            bar: { id: barId },
+          }),
+          anyValueItemsJson: JSON.stringify([
+            {
+              type: 'MutationStringedBar',
+              text: 'A value in a list',
+              bar: { id: barId },
+            },
+          ]),
+        },
+      };
 
       const createFooResult = (await graphql({
         schema,
@@ -815,26 +848,7 @@ describe('create*Entity()', () => {
         `,
         contextValue: createContext(),
         variableValues: {
-          entity: {
-            info: {
-              type: 'MutationFoo',
-              name: 'Foo name',
-            },
-            fields: {
-              anyValueItemJson: JSON.stringify({
-                type: 'MutationStringedBar',
-                text: 'A value',
-                bar: { id: barId },
-              }),
-              anyValueItemsJson: JSON.stringify([
-                {
-                  type: 'MutationStringedBar',
-                  text: 'A value in a list',
-                  bar: { id: barId },
-                },
-              ]),
-            },
-          },
+          entity,
           publish: true,
         },
       })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
@@ -906,6 +920,20 @@ describe('create*Entity()', () => {
 
   test('Create nested value item with inner JSON', async () => {
     const { adminClient } = server;
+    const entity: AdminEntityCreate = {
+      info: { type: 'MutationFoo', name: 'Foo name', authKey: 'none' },
+      fields: {
+        nestedValue: {
+          type: 'MutationNestedValue',
+          text: 'Outer',
+          childJson: JSON.stringify({
+            type: 'MutationNestedValue',
+            text: 'Inner',
+          }),
+        },
+      },
+    };
+
     const createResult = (await graphql({
       schema,
       source: `
@@ -943,21 +971,7 @@ describe('create*Entity()', () => {
         }
       `,
       contextValue: createContext(),
-      variableValues: {
-        entity: {
-          info: { type: 'MutationFoo', name: 'Foo name' },
-          fields: {
-            nestedValue: {
-              type: 'MutationNestedValue',
-              text: 'Outer',
-              childJson: JSON.stringify({
-                type: 'MutationNestedValue',
-                text: 'Inner',
-              }),
-            },
-          },
-        },
-      },
+      variableValues: { entity },
     })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
     const {
@@ -1019,6 +1033,17 @@ describe('create*Entity()', () => {
   });
 
   test('Create without specifying type', async () => {
+    const entity = {
+      info: {
+        name: 'Foo name',
+        authKey: 'none',
+      },
+      fields: {
+        title: 'Foo title',
+        summary: 'Foo summary',
+      },
+    };
+
     const result = (await graphql({
       schema,
       source: `
@@ -1041,17 +1066,7 @@ describe('create*Entity()', () => {
         }
       `,
       contextValue: createContext(),
-      variableValues: {
-        entity: {
-          info: {
-            name: 'Foo name',
-          },
-          fields: {
-            title: 'Foo title',
-            summary: 'Foo summary',
-          },
-        },
-      },
+      variableValues: { entity },
     })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
     expect(result.errors).toBeUndefined();
@@ -1090,6 +1105,7 @@ describe('create*Entity()', () => {
           info: {
             type: 'MutationBar', // should be Foo
             name: 'Foo name',
+            authKey: 'none',
           },
           fields: {
             title: 'Foo title',
@@ -1122,6 +1138,7 @@ describe('create*Entity()', () => {
             type: 'MutationFoo',
             name: 'Foo name',
             version: 1,
+            authKey: 'none',
           },
           fields: {
             title: 'Foo title',
@@ -1148,7 +1165,7 @@ describe('update*Entity()', () => {
   test('Update minimal', async () => {
     const { adminClient } = server;
     const createResult = await adminClient.createEntity({
-      info: { type: 'MutationFoo', name: 'First name' },
+      info: { type: 'MutationFoo', name: 'First name', authKey: 'none' },
       fields: { title: 'First title', summary: 'First summary', tags: ['one', 'two', 'three'] },
     });
     if (expectOkResult(createResult)) {
@@ -1241,7 +1258,7 @@ describe('update*Entity()', () => {
   test('Update with version', async () => {
     const { adminClient } = server;
     const createResult = await adminClient.createEntity({
-      info: { type: 'MutationFoo', name: 'First name' },
+      info: { type: 'MutationFoo', name: 'First name', authKey: 'none' },
       fields: { title: 'First title', summary: 'First summary', tags: ['one', 'two', 'three'] },
     });
     if (expectOkResult(createResult)) {
@@ -1313,11 +1330,11 @@ describe('update*Entity()', () => {
   test('Update with all values including references', async () => {
     const { adminClient } = server;
     const createBar1Result = await adminClient.createEntity({
-      info: { type: 'MutationBar', name: 'Bar 1' },
+      info: { type: 'MutationBar', name: 'Bar 1', authKey: 'none' },
       fields: {},
     });
     const createBar2Result = await adminClient.createEntity({
-      info: { type: 'MutationBar', name: 'Bar 2' },
+      info: { type: 'MutationBar', name: 'Bar 2', authKey: 'none' },
       fields: {},
     });
     if (expectOkResult(createBar1Result) && expectOkResult(createBar2Result)) {
@@ -1335,7 +1352,7 @@ describe('update*Entity()', () => {
       } = createBar2Result.value;
 
       const createFooResult = await adminClient.createEntity({
-        info: { type: 'MutationFoo', name: 'First name' },
+        info: { type: 'MutationFoo', name: 'First name', authKey: 'none' },
         fields: {
           title: 'First title',
           summary: 'First summary',
@@ -1559,7 +1576,7 @@ describe('update*Entity()', () => {
   test('Error: Update with the wrong type', async () => {
     const { adminClient } = server;
     const createResult = await adminClient.createEntity({
-      info: { type: 'MutationFoo', name: 'Name' },
+      info: { type: 'MutationFoo', name: 'Name', authKey: 'none' },
       fields: {},
     });
     if (expectOkResult(createResult)) {
@@ -1611,16 +1628,17 @@ describe('upsert*Entity()', () => {
   test('Create new entity', async () => {
     const { adminClient } = server;
     const id = insecureTestUuidv4();
+    const entity: AdminEntityUpsert = {
+      id,
+      info: { type: 'MutationFoo', name: 'Name', authKey: 'none' },
+      fields: { title: 'Title', summary: 'Summary', tags: ['one', 'two', 'three'] },
+    };
     const result = (await graphql({
       schema,
       source: upsertMutationFooGqlQuery,
       contextValue: createContext(),
       variableValues: {
-        entity: {
-          id,
-          info: { type: 'MutationFoo', name: 'Name' },
-          fields: { title: 'Title', summary: 'Summary', tags: ['one', 'two', 'three'] },
-        },
+        entity,
       },
     })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
@@ -1675,7 +1693,7 @@ describe('upsert*Entity()', () => {
     const { adminClient } = server;
 
     const createResult = await adminClient.createEntity({
-      info: { type: 'MutationFoo', name: 'Foo' },
+      info: { type: 'MutationFoo', name: 'Foo', authKey: 'none' },
       fields: { title: 'Title' },
     });
     if (expectOkResult(createResult)) {
@@ -1747,7 +1765,7 @@ describe('upsert*Entity()', () => {
     const { adminClient } = server;
 
     const createResult = await adminClient.createEntity({
-      info: { type: 'MutationFoo', name: 'Foo' },
+      info: { type: 'MutationFoo', name: 'Foo', authKey: 'none' },
       fields: { title: 'Title' },
     });
     if (expectOkResult(createResult)) {
@@ -1807,6 +1825,7 @@ describe('upsert*Entity()', () => {
           info: {
             type: 'MutationBar', // should be Foo
             name: 'Foo name',
+            authKey: 'none',
           },
           fields: {
             title: 'Foo title',
@@ -1817,15 +1836,15 @@ describe('upsert*Entity()', () => {
     });
 
     expect(result).toMatchInlineSnapshot(`
-        Object {
-          "data": Object {
-            "upsertMutationFooEntity": null,
-          },
-          "errors": Array [
-            [GraphQLError: BadRequest: Specified type (entity.info.type=MutationBar) should be MutationFoo],
-          ],
-        }
-      `);
+      Object {
+        "data": Object {
+          "upsertMutationFooEntity": null,
+        },
+        "errors": Array [
+          [GraphQLError: BadRequest: Specified type (entity.info.type=MutationBar) should be MutationFoo],
+        ],
+      }
+    `);
   });
 });
 
@@ -1833,7 +1852,7 @@ describe('publishEntities()', () => {
   test('Publish', async () => {
     const { adminClient } = server;
     const createResult = await adminClient.createEntity({
-      info: { type: 'MutationFoo', name: 'Howdy name' },
+      info: { type: 'MutationFoo', name: 'Howdy name', authKey: 'none' },
       fields: { title: 'Howdy title', summary: 'Howdy summary' },
     });
     if (expectOkResult(createResult)) {
@@ -1917,7 +1936,7 @@ describe('unpublishEntities()', () => {
   test('Unpublish', async () => {
     const { adminClient } = server;
     const createResult = await adminClient.createEntity({
-      info: { type: 'MutationFoo', name: 'Howdy name' },
+      info: { type: 'MutationFoo', name: 'Howdy name', authKey: 'none' },
       fields: { title: 'Howdy title', summary: 'Howdy summary' },
     });
     if (expectOkResult(createResult)) {
@@ -2012,7 +2031,7 @@ describe('archiveEntity()', () => {
   test('Archive', async () => {
     const { adminClient } = server;
     const createResult = await adminClient.createEntity({
-      info: { type: 'MutationFoo', name: 'Howdy name' },
+      info: { type: 'MutationFoo', name: 'Howdy name', authKey: 'none' },
       fields: { title: 'Howdy title', summary: 'Howdy summary' },
     });
     if (expectOkResult(createResult)) {
@@ -2067,7 +2086,7 @@ describe('unarchiveEntity()', () => {
   test('Unarchive', async () => {
     const { adminClient } = server;
     const createResult = await adminClient.createEntity({
-      info: { type: 'MutationFoo', name: 'Howdy name' },
+      info: { type: 'MutationFoo', name: 'Howdy name', authKey: 'none' },
       fields: { title: 'Howdy title', summary: 'Howdy summary' },
     });
     if (expectOkResult(createResult)) {
@@ -2159,7 +2178,7 @@ describe('Multiple', () => {
   test('Update and publish', async () => {
     const { adminClient } = server;
     const createResult = await adminClient.createEntity({
-      info: { type: 'MutationFoo', name: 'Howdy name' },
+      info: { type: 'MutationFoo', name: 'Howdy name', authKey: 'none' },
       fields: { title: 'Howdy title', summary: 'Howdy summary' },
     });
     if (expectOkResult(createResult)) {

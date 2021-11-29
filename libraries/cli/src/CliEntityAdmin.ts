@@ -231,7 +231,7 @@ export async function createEntity(context: CliContext): Promise<AdminEntity | n
   const { name, fields } = await editEntityValues(context, type, {});
 
   const entity: AdminEntityCreate = {
-    info: { type, name: name ?? '' },
+    info: { type, name: name ?? '', authKey: 'none' },
     fields,
   };
 

@@ -37,7 +37,11 @@ async function loadFixtures(adminClient: AdminClient): PromiseResult<void, Error
     if (!latestVersion) return notOk.BadRequest(`Fixture is missing version: ${id}`);
 
     const { _version, ...fields } = latestVersion;
-    const upsertResult = await adminClient.upsertEntity({ id, info: { type, name }, fields });
+    const upsertResult = await adminClient.upsertEntity({
+      id,
+      info: { type, name, authKey: 'none' },
+      fields,
+    });
     if (upsertResult.isError()) {
       return upsertResult;
     }

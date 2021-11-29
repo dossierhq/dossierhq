@@ -49,9 +49,8 @@ const schema = new AdminSchema(schemaSpec);
 
 describe('collectDataFromEntity', () => {
   test('empty', () => {
-    expect(
-      collectDataFromEntity(schema, { info: { type: 'EntityCodecFoo', name: 'foo' }, fields: {} })
-    ).toMatchInlineSnapshot(`
+    expect(collectDataFromEntity(schema, { info: { type: 'EntityCodecFoo' }, fields: {} }))
+      .toMatchInlineSnapshot(`
       Object {
         "fullTextSearchText": Array [],
         "locations": Array [],
@@ -63,7 +62,7 @@ describe('collectDataFromEntity', () => {
   test('name only', () => {
     expect(
       collectDataFromEntity(schema, {
-        info: { type: 'EntityCodecFoo', name: 'hello world' },
+        info: { type: 'EntityCodecFoo' },
         fields: {},
       })
     ).toMatchInlineSnapshot(`
@@ -78,7 +77,7 @@ describe('collectDataFromEntity', () => {
   test('strings', () => {
     expect(
       collectDataFromEntity(schema, {
-        info: { type: 'EntityCodecFoo', name: 'hello world' },
+        info: { type: 'EntityCodecFoo' },
         fields: {
           string: 'Hello string world',
           strings: ['one', 'two', 'three'],
@@ -101,7 +100,7 @@ describe('collectDataFromEntity', () => {
   test('value item strings', () => {
     expect(
       collectDataFromEntity(schema, {
-        info: { type: 'EntityCodecFoo', name: 'hello world' },
+        info: { type: 'EntityCodecFoo' },
         fields: {
           valueOne: {
             type: 'EntityCodecValueOne',
@@ -128,7 +127,7 @@ describe('collectDataFromEntity', () => {
   test('rich text strings', () => {
     expect(
       collectDataFromEntity(schema, {
-        info: { type: 'EntityCodecFoo', name: 'hello world' },
+        info: { type: 'EntityCodecFoo' },
         fields: {
           richText: {
             blocks: [
@@ -171,7 +170,7 @@ describe('collectDataFromEntity', () => {
   test('entity locations', () => {
     expect(
       collectDataFromEntity(schema, {
-        info: { type: 'EntityCodecFoo', name: 'hello world' },
+        info: { type: 'EntityCodecFoo' },
         fields: {
           location: { lat: 1, lng: 2 },
           locations: [
@@ -205,7 +204,7 @@ describe('collectDataFromEntity', () => {
   test('value item locations', () => {
     expect(
       collectDataFromEntity(schema, {
-        info: { type: 'EntityCodecFoo', name: 'hello world' },
+        info: { type: 'EntityCodecFoo' },
         fields: {
           valueOne: { type: 'EntityCodecValueOne', location: { lat: 1, lng: 2 } },
           richText: {
@@ -239,7 +238,7 @@ describe('collectDataFromEntity', () => {
   test('entity references', () => {
     expect(
       collectDataFromEntity(schema, {
-        info: { type: 'EntityCodecFoo', name: 'foo' },
+        info: { type: 'EntityCodecFoo' },
         fields: {
           bar: { id: 'barId1' },
           bars: [{ id: 'barId2' }, { id: 'barId3' }],
@@ -293,7 +292,7 @@ describe('collectDataFromEntity', () => {
   test('value item references', () => {
     expect(
       collectDataFromEntity(schema, {
-        info: { type: 'EntityCodecFoo', name: 'foo' },
+        info: { type: 'EntityCodecFoo' },
         fields: {
           valueOne: { type: 'EntityCodecValueOne', bar: { id: 'bar1Id' } },
         },
@@ -320,7 +319,7 @@ describe('collectDataFromEntity', () => {
   test('rich text reference', () => {
     expect(
       collectDataFromEntity(schema, {
-        info: { type: 'EntityCodecFoo', name: 'foo' },
+        info: { type: 'EntityCodecFoo' },
         fields: {
           richText: {
             blocks: [

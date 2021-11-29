@@ -11,6 +11,7 @@ import type {
   Connection,
   Edge,
   EntityHistory,
+  EntityLike,
   EntityPublishPayload,
   EntityVersionInfo,
   Paging,
@@ -527,9 +528,8 @@ export async function publishEntities(
         adminOnlyEntityIds.push(id);
       } else {
         const entityFields = decodeAdminEntityFields(schema, entitySpec, versionInfo);
-        // Not entirely the correct type but close enough
-        const entity: AdminEntityCreate = {
-          info: { type: versionInfo.type, name: versionInfo.name },
+        const entity: EntityLike = {
+          info: { type: versionInfo.type },
           fields: entityFields,
         };
         const { fullTextSearchText } = collectDataFromEntity(schema, entity);

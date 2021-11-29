@@ -30,7 +30,7 @@ export async function ensureEntityCount(
   for (let count = countResult.value; count < requestedCount; count += 1) {
     const random = String(Math.random()).slice(2);
     const createResult = await client.createEntity({
-      info: { type: entityType, name: random },
+      info: { type: entityType, name: random, authKey: 'none' },
       fields: fieldProvider(random),
     });
     if (createResult.isError()) {
@@ -68,7 +68,7 @@ export async function ensureEntityWithStatus(
 
   const random = String(Math.random()).slice(2);
   const createResult = await client.createEntity({
-    info: { type: entityType, name: random },
+    info: { type: entityType, name: random, authKey: 'none' },
     fields: fieldProvider(random),
   });
   if (createResult.isError()) {

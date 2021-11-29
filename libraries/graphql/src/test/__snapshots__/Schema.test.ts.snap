@@ -62,6 +62,7 @@ input AdminEntityCreateInfo {
   type: AdminEntityType
   name: String!
   version: Int
+  authKey: String!
 }
 
 enum AdminEntityCreateEffect {
@@ -83,6 +84,7 @@ enum AdminEntityUpdateEffect {
 input AdminEntityUpsertInfo {
   type: AdminEntityType!
   name: String!
+  authKey: String!
 }
 
 enum AdminEntityUpsertEffect {
@@ -556,6 +558,7 @@ input AdminEntityCreateInfo {
   type: AdminEntityType
   name: String!
   version: Int
+  authKey: String!
 }
 
 enum AdminEntityCreateEffect {
@@ -577,6 +580,7 @@ enum AdminEntityUpdateEffect {
 input AdminEntityUpsertInfo {
   type: AdminEntityType!
   name: String!
+  authKey: String!
 }
 
 enum AdminEntityUpsertEffect {
@@ -914,6 +918,7 @@ input AdminEntityCreateInfo {
   type: AdminEntityType
   name: String!
   version: Int
+  authKey: String!
 }
 
 enum AdminEntityCreateEffect {
@@ -935,6 +940,7 @@ enum AdminEntityUpdateEffect {
 input AdminEntityUpsertInfo {
   type: AdminEntityType!
   name: String!
+  authKey: String!
 }
 
 enum AdminEntityUpsertEffect {
@@ -1365,6 +1371,7 @@ input AdminEntityCreateInfo {
   type: AdminEntityType
   name: String!
   version: Int
+  authKey: String!
 }
 
 enum AdminEntityCreateEffect {
@@ -1386,6 +1393,7 @@ enum AdminEntityUpdateEffect {
 input AdminEntityUpsertInfo {
   type: AdminEntityType!
   name: String!
+  authKey: String!
 }
 
 enum AdminEntityUpsertEffect {
@@ -1643,6 +1651,7 @@ input AdminEntityCreateInfo {
   type: AdminEntityType
   name: String!
   version: Int
+  authKey: String!
 }
 
 enum AdminEntityCreateEffect {
@@ -1664,6 +1673,7 @@ enum AdminEntityUpdateEffect {
 input AdminEntityUpsertInfo {
   type: AdminEntityType!
   name: String!
+  authKey: String!
 }
 
 enum AdminEntityUpsertEffect {
@@ -2171,6 +2181,7 @@ input AdminEntityCreateInfo {
   type: AdminEntityType
   name: String!
   version: Int
+  authKey: String!
 }
 
 enum AdminEntityCreateEffect {
@@ -2192,6 +2203,7 @@ enum AdminEntityUpdateEffect {
 input AdminEntityUpsertInfo {
   type: AdminEntityType!
   name: String!
+  authKey: String!
 }
 
 enum AdminEntityUpsertEffect {
@@ -2509,6 +2521,7 @@ input AdminEntityCreateInfo {
   type: AdminEntityType
   name: String!
   version: Int
+  authKey: String!
 }
 
 enum AdminEntityCreateEffect {
@@ -2530,6 +2543,7 @@ enum AdminEntityUpdateEffect {
 input AdminEntityUpsertInfo {
   type: AdminEntityType!
   name: String!
+  authKey: String!
 }
 
 enum AdminEntityUpsertEffect {
@@ -2875,6 +2889,7 @@ input AdminEntityCreateInfo {
   type: AdminEntityType
   name: String!
   version: Int
+  authKey: String!
 }
 
 enum AdminEntityCreateEffect {
@@ -2896,6 +2911,7 @@ enum AdminEntityUpdateEffect {
 input AdminEntityUpsertInfo {
   type: AdminEntityType!
   name: String!
+  authKey: String!
 }
 
 enum AdminEntityUpsertEffect {
@@ -3099,6 +3115,7 @@ input AdminEntityCreateInfo {
   type: AdminEntityType
   name: String!
   version: Int
+  authKey: String!
 }
 
 enum AdminEntityCreateEffect {
@@ -3120,6 +3137,7 @@ enum AdminEntityUpdateEffect {
 input AdminEntityUpsertInfo {
   type: AdminEntityType!
   name: String!
+  authKey: String!
 }
 
 enum AdminEntityUpsertEffect {
@@ -3540,6 +3558,7 @@ input AdminEntityCreateInfo {
   type: AdminEntityType
   name: String!
   version: Int
+  authKey: String!
 }
 
 enum AdminEntityCreateEffect {
@@ -3561,6 +3580,7 @@ enum AdminEntityUpdateEffect {
 input AdminEntityUpsertInfo {
   type: AdminEntityType!
   name: String!
+  authKey: String!
 }
 
 enum AdminEntityUpsertEffect {
@@ -3791,6 +3811,7 @@ input AdminEntityCreateInfo {
   type: AdminEntityType
   name: String!
   version: Int
+  authKey: String!
 }
 
 enum AdminEntityCreateEffect {
@@ -3812,6 +3833,7 @@ enum AdminEntityUpdateEffect {
 input AdminEntityUpsertInfo {
   type: AdminEntityType!
   name: String!
+  authKey: String!
 }
 
 enum AdminEntityUpsertEffect {
@@ -4179,6 +4201,7 @@ input AdminEntityCreateInfo {
   type: AdminEntityType
   name: String!
   version: Int
+  authKey: String!
 }
 
 enum AdminEntityCreateEffect {
@@ -4200,6 +4223,7 @@ enum AdminEntityUpdateEffect {
 input AdminEntityUpsertInfo {
   type: AdminEntityType!
   name: String!
+  authKey: String!
 }
 
 enum AdminEntityUpsertEffect {
@@ -4412,6 +4436,7 @@ input AdminEntityCreateInfo {
   type: AdminEntityType
   name: String!
   version: Int
+  authKey: String!
 }
 
 enum AdminEntityCreateEffect {
@@ -4433,6 +4458,7 @@ enum AdminEntityUpdateEffect {
 input AdminEntityUpsertInfo {
   type: AdminEntityType!
   name: String!
+  authKey: String!
 }
 
 enum AdminEntityUpsertEffect {
@@ -4885,6 +4911,7 @@ input AdminEntityCreateInfo {
   type: AdminEntityType
   name: String!
   version: Int
+  authKey: String!
 }
 
 enum AdminEntityCreateEffect {
@@ -4906,6 +4933,7 @@ enum AdminEntityUpdateEffect {
 input AdminEntityUpsertInfo {
   type: AdminEntityType!
   name: String!
+  authKey: String!
 }
 
 enum AdminEntityUpsertEffect {
@@ -5180,6 +5208,7 @@ input AdminEntityCreateInfo {
   type: AdminEntityType
   name: String!
   version: Int
+  authKey: String!
 }
 
 enum AdminEntityCreateEffect {
@@ -5201,6 +5230,7 @@ enum AdminEntityUpdateEffect {
 input AdminEntityUpsertInfo {
   type: AdminEntityType!
   name: String!
+  authKey: String!
 }
 
 enum AdminEntityUpsertEffect {
@@ -5762,6 +5792,7 @@ input AdminEntityCreateInfo {
   type: AdminEntityType
   name: String!
   version: Int
+  authKey: String!
 }
 
 enum AdminEntityCreateEffect {
@@ -5783,6 +5814,7 @@ enum AdminEntityUpdateEffect {
 input AdminEntityUpsertInfo {
   type: AdminEntityType!
   name: String!
+  authKey: String!
 }
 
 enum AdminEntityUpsertEffect {
