@@ -144,7 +144,7 @@ describe('AdminClient forward operation over JSON', () => {
 
     const result = await adminClient.createEntity({
       id: '1234',
-      info: { name: 'Name', type: 'FooType' },
+      info: { name: 'Name', type: 'FooType', authKey: 'none' },
       fields: {},
     });
     if (expectOkResult(result)) {
@@ -187,6 +187,7 @@ describe('AdminClient forward operation over JSON', () => {
                 "fields": Object {},
                 "id": "1234",
                 "info": Object {
+                  "authKey": "none",
                   "name": "Name",
                   "type": "FooType",
                 },
@@ -1031,7 +1032,7 @@ describe('AdminClient forward operation over JSON', () => {
 
     const result = await adminClient.upsertEntity({
       id: '1234',
-      info: { name: 'Name', type: 'FooType' },
+      info: { name: 'Name', type: 'FooType', authKey: 'none' },
       fields: {},
     });
     if (expectOkResult(result)) {
@@ -1074,6 +1075,7 @@ describe('AdminClient forward operation over JSON', () => {
                 "fields": Object {},
                 "id": "1234",
                 "info": Object {
+                  "authKey": "none",
                   "name": "Name",
                   "type": "FooType",
                 },

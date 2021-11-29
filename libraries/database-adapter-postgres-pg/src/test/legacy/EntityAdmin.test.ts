@@ -269,7 +269,7 @@ async function createBarWithFooBazReferences(
   bazReferencesPerEntity = 1
 ) {
   const createBarResult = await client.createEntity({
-    info: { type: 'EntityAdminBar', name: 'Bar' },
+    info: { type: 'EntityAdminBar', name: 'Bar', authKey: 'none' },
     fields: { title: 'Bar' },
   });
   if (createBarResult.isError()) {
@@ -285,7 +285,7 @@ async function createBarWithFooBazReferences(
 
   for (let i = 0; i < fooCount; i += 1) {
     const createFooResult = await client.createEntity({
-      info: { type: 'EntityAdminFoo', name: 'Foo: ' + i },
+      info: { type: 'EntityAdminFoo', name: 'Foo: ' + i, authKey: 'none' },
       fields: { bar: { id: barId } },
     });
     if (expectOkResult(createFooResult)) {
@@ -295,7 +295,7 @@ async function createBarWithFooBazReferences(
   for (let i = 0; i < bazCount; i += 1) {
     const bars = [...new Array(bazReferencesPerEntity - 1)].map(() => ({ id: barId }));
     const createBazResult = await client.createEntity({
-      info: { type: 'EntityAdminBaz', name: 'Baz: ' + i },
+      info: { type: 'EntityAdminBaz', name: 'Baz: ' + i, authKey: 'none' },
       fields: { bar: { id: barId }, bars },
     });
     if (expectOkResult(createBazResult)) {
@@ -310,7 +310,7 @@ describe('getEntity()', () => {
 
   test('No version means max version', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminFoo', name: 'Foo' },
+      info: { type: 'EntityAdminFoo', name: 'Foo', authKey: 'none' },
       fields: { title: 'Title' },
     });
 
@@ -353,7 +353,7 @@ describe('getEntity()', () => {
 
   test('Error: Get entity with invalid version', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminFoo', name: 'Foo' },
+      info: { type: 'EntityAdminFoo', name: 'Foo', authKey: 'none' },
       fields: { title: 'Title' },
     });
 
@@ -381,11 +381,11 @@ describe('getEntities()', () => {
 
   test('Get 2 entities', async () => {
     const createFoo1Result = await client.createEntity({
-      info: { type: 'EntityAdminFoo', name: 'Foo' },
+      info: { type: 'EntityAdminFoo', name: 'Foo', authKey: 'none' },
       fields: { title: 'Title 1' },
     });
     const createFoo2Result = await client.createEntity({
-      info: { type: 'EntityAdminFoo', name: 'Foo' },
+      info: { type: 'EntityAdminFoo', name: 'Foo', authKey: 'none' },
       fields: { title: 'Title 2' },
     });
 
@@ -436,7 +436,7 @@ describe('getEntities()', () => {
 
   test('Gets the last version', async () => {
     const createFooResult = await client.createEntity({
-      info: { type: 'EntityAdminFoo', name: 'Foo' },
+      info: { type: 'EntityAdminFoo', name: 'Foo', authKey: 'none' },
       fields: { title: 'First title' },
     });
 
@@ -495,7 +495,7 @@ describe('getEntities()', () => {
 describe('createEntity()', () => {
   test('Create EntityAdminFoo and publish', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminFoo', name: 'Foo' },
+      info: { type: 'EntityAdminFoo', name: 'Foo', authKey: 'none' },
       fields: { title: 'Title' },
     });
     if (expectOkResult(createResult)) {
@@ -559,7 +559,7 @@ describe('createEntity()', () => {
 
   test('Create EntityAdminFoo w/o publish', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminFoo', name: 'Draft' },
+      info: { type: 'EntityAdminFoo', name: 'Draft', authKey: 'none' },
       fields: { title: 'Draft' },
     });
     if (expectOkResult(createResult)) {
@@ -621,7 +621,7 @@ describe('createEntity()', () => {
     const id = insecureTestUuidv4();
     const createResult = await client.createEntity({
       id,
-      info: { type: 'EntityAdminFoo', name: 'Draft' },
+      info: { type: 'EntityAdminFoo', name: 'Draft', authKey: 'none' },
       fields: { title: 'Draft' },
     });
     if (expectOkResult(createResult)) {
@@ -650,7 +650,7 @@ describe('createEntity()', () => {
 
   test('Create EntityAdminFoo normalizes empty string', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminFoo', name: 'Draft' },
+      info: { type: 'EntityAdminFoo', name: 'Draft', authKey: 'none' },
       fields: { title: '' },
     });
     if (expectOkResult(createResult)) {
@@ -665,7 +665,7 @@ describe('createEntity()', () => {
 
   test('Create EntityAdminFoo normalizes empty value item', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBaz', name: 'Draft' },
+      info: { type: 'EntityAdminBaz', name: 'Draft', authKey: 'none' },
       fields: { twoStrings: { type: 'EntityAdminTwoStrings' } },
     });
     if (expectOkResult(createResult)) {
@@ -699,7 +699,7 @@ describe('createEntity()', () => {
 
   test('Create EntityAdminFoo with reference to Bar', async () => {
     const createBarResult = await client.createEntity({
-      info: { type: 'EntityAdminBar', name: 'Bar name' },
+      info: { type: 'EntityAdminBar', name: 'Bar name', authKey: 'none' },
       fields: { title: 'Bar title' },
     });
     if (expectOkResult(createBarResult)) {
@@ -708,7 +708,7 @@ describe('createEntity()', () => {
       } = createBarResult.value;
 
       const createFooResult = await client.createEntity({
-        info: { type: 'EntityAdminFoo', name: 'Foo name' },
+        info: { type: 'EntityAdminFoo', name: 'Foo name', authKey: 'none' },
         fields: { title: 'Foo title', bar: { id: barId } },
       });
       if (expectOkResult(createFooResult)) {
@@ -776,7 +776,7 @@ describe('createEntity()', () => {
 
   test('Create EntityAdminBaz with string list', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBaz', name: 'Baz' },
+      info: { type: 'EntityAdminBaz', name: 'Baz', authKey: 'none' },
       fields: { tags: ['one', 'two', 'three'] },
     });
     if (expectOkResult(createResult)) {
@@ -814,7 +814,7 @@ describe('createEntity()', () => {
 
   test('Create EntityAdminBaz with boolean and boolean list', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBaz', name: 'Baz' },
+      info: { type: 'EntityAdminBaz', name: 'Baz', authKey: 'none' },
       fields: { active: true, activeList: [true, false, true] },
     });
     if (expectOkResult(createResult)) {
@@ -850,7 +850,7 @@ describe('createEntity()', () => {
 
   test('Create EntityAdminBaz with rich text and rich text list', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBaz', name: 'Baz' },
+      info: { type: 'EntityAdminBaz', name: 'Baz', authKey: 'none' },
       fields: {
         body: { blocks: [{ type: 'paragraph', data: { text: 'Hello world' } }] },
         bodyList: [
@@ -899,11 +899,11 @@ describe('createEntity()', () => {
 
   test('Create EntityAdminBaz with rich text with value item and entity references', async () => {
     const createBar1Result = await client.createEntity({
-      info: { type: 'EntityAdminBar', name: 'Bar 1' },
+      info: { type: 'EntityAdminBar', name: 'Bar 1', authKey: 'none' },
       fields: {},
     });
     const createBar2Result = await client.createEntity({
-      info: { type: 'EntityAdminBar', name: 'Bar 2' },
+      info: { type: 'EntityAdminBar', name: 'Bar 2', authKey: 'none' },
       fields: {},
     });
     if (expectOkResult(createBar1Result) && expectOkResult(createBar2Result)) {
@@ -915,7 +915,7 @@ describe('createEntity()', () => {
       } = createBar2Result.value;
 
       const createBazResult = await client.createEntity({
-        info: { type: 'EntityAdminBaz', name: 'Baz' },
+        info: { type: 'EntityAdminBaz', name: 'Baz', authKey: 'none' },
         fields: {
           body: {
             blocks: [
@@ -996,7 +996,7 @@ describe('createEntity()', () => {
 
   test('Create EntityAdminBaz with location and location list', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBaz', name: 'Baz' },
+      info: { type: 'EntityAdminBaz', name: 'Baz', authKey: 'none' },
       fields: {
         location: { lat: 55.60498, lng: 13.003822 },
         locations: [
@@ -1042,11 +1042,11 @@ describe('createEntity()', () => {
 
   test('Create EntityAdminBaz with reference list', async () => {
     const createBar1Result = await client.createEntity({
-      info: { type: 'EntityAdminBar', name: 'Bar1' },
+      info: { type: 'EntityAdminBar', name: 'Bar1', authKey: 'none' },
       fields: {},
     });
     const createBar2Result = await client.createEntity({
-      info: { type: 'EntityAdminBar', name: 'Bar2' },
+      info: { type: 'EntityAdminBar', name: 'Bar2', authKey: 'none' },
       fields: {},
     });
 
@@ -1059,7 +1059,7 @@ describe('createEntity()', () => {
       } = createBar2Result.value;
 
       const createBazResult = await client.createEntity({
-        info: { type: 'EntityAdminBaz', name: 'Baz' },
+        info: { type: 'EntityAdminBaz', name: 'Baz', authKey: 'none' },
         fields: { bars: [{ id: bar1Id }, { id: bar2Id }] },
       });
       if (expectOkResult(createBazResult)) {
@@ -1100,7 +1100,7 @@ describe('createEntity()', () => {
 
   test('Create EntityAdminBaz with EntityAdminTwoStrings value type', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBaz', name: 'Baz' },
+      info: { type: 'EntityAdminBaz', name: 'Baz', authKey: 'none' },
       fields: { twoStrings: { type: 'EntityAdminTwoStrings', one: 'First', two: 'Second' } },
     });
     if (expectOkResult(createResult)) {
@@ -1136,7 +1136,7 @@ describe('createEntity()', () => {
 
   test('Create EntityAdminBaz with list of EntityAdminTwoStrings value type', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBaz', name: 'Baz' },
+      info: { type: 'EntityAdminBaz', name: 'Baz', authKey: 'none' },
       fields: {
         twoStringsList: [
           { type: 'EntityAdminTwoStrings', one: 'First', two: 'Second' },
@@ -1180,7 +1180,7 @@ describe('createEntity()', () => {
 
   test('Create EntityAdminBaz with EntityAdminBooleanString value type', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBaz', name: 'Baz' },
+      info: { type: 'EntityAdminBaz', name: 'Baz', authKey: 'none' },
       fields: {
         booleanString: { type: 'EntityAdminBooleanString', boolean: true, string: 'String' },
       },
@@ -1218,7 +1218,7 @@ describe('createEntity()', () => {
 
   test('Create EntityAdminBaz with EntityAdminStringReference value type', async () => {
     const createBarResult = await client.createEntity({
-      info: { type: 'EntityAdminBar', name: 'Bar' },
+      info: { type: 'EntityAdminBar', name: 'Bar', authKey: 'none' },
       fields: {},
     });
     if (expectOkResult(createBarResult)) {
@@ -1227,7 +1227,7 @@ describe('createEntity()', () => {
       } = createBarResult.value;
 
       const createBazResult = await client.createEntity({
-        info: { type: 'EntityAdminBaz', name: 'Baz' },
+        info: { type: 'EntityAdminBaz', name: 'Baz', authKey: 'none' },
         fields: {
           stringReference: {
             type: 'EntityAdminStringReference',
@@ -1278,11 +1278,11 @@ describe('createEntity()', () => {
 
   test('Create EntityAdminBaz with EntityAdminListFields value type', async () => {
     const createBar1Result = await client.createEntity({
-      info: { type: 'EntityAdminBar', name: 'Bar 1' },
+      info: { type: 'EntityAdminBar', name: 'Bar 1', authKey: 'none' },
       fields: {},
     });
     const createBar2Result = await client.createEntity({
-      info: { type: 'EntityAdminBar', name: 'Bar 2' },
+      info: { type: 'EntityAdminBar', name: 'Bar 2', authKey: 'none' },
       fields: {},
     });
     if (expectOkResult(createBar1Result) && expectOkResult(createBar2Result)) {
@@ -1294,7 +1294,7 @@ describe('createEntity()', () => {
       } = createBar2Result.value;
 
       const createBazResult = await client.createEntity({
-        info: { type: 'EntityAdminBaz', name: 'Baz' },
+        info: { type: 'EntityAdminBaz', name: 'Baz', authKey: 'none' },
         fields: {
           listFields: {
             type: 'EntityAdminListFields',
@@ -1379,7 +1379,7 @@ describe('createEntity()', () => {
 
   test('Create EntityAdminBaz with EntityAdminNested value type', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBaz', name: 'Baz' },
+      info: { type: 'EntityAdminBaz', name: 'Baz', authKey: 'none' },
       fields: {
         nested: {
           type: 'EntityAdminNested',
@@ -1443,7 +1443,7 @@ describe('createEntity()', () => {
 
   test('Error: Create with invalid type', async () => {
     const result = await client.createEntity({
-      info: { type: 'Invalid', name: 'name' },
+      info: { type: 'Invalid', name: 'name', authKey: 'none' },
       fields: { foo: 'title' },
     });
 
@@ -1452,7 +1452,7 @@ describe('createEntity()', () => {
 
   test('Error: Create without type', async () => {
     const result = await client.createEntity({
-      info: { type: '', name: 'Foo' },
+      info: { type: '', name: 'Foo', authKey: 'none' },
       fields: { foo: 'title' },
     });
 
@@ -1461,7 +1461,7 @@ describe('createEntity()', () => {
 
   test('Error: Create with already existing', async () => {
     const firstCreateResult = await client.createEntity({
-      info: { type: 'EntityAdminFoo', name: 'Foo' },
+      info: { type: 'EntityAdminFoo', name: 'Foo', authKey: 'none' },
       fields: { title: 'First' },
     });
 
@@ -1472,7 +1472,7 @@ describe('createEntity()', () => {
 
       const secondCreateResult = await client.createEntity({
         id,
-        info: { type: 'EntityAdminBar', name: 'Bar' },
+        info: { type: 'EntityAdminBar', name: 'Bar', authKey: 'none' },
         fields: { title: 'Second' },
       });
 
@@ -1486,7 +1486,7 @@ describe('createEntity()', () => {
 
   test('Error: Create without name', async () => {
     const result = await client.createEntity({
-      info: { type: 'EntityAdminFoo', name: '' },
+      info: { type: 'EntityAdminFoo', name: '', authKey: 'none' },
       fields: { title: 'title' },
     });
 
@@ -1498,6 +1498,7 @@ describe('createEntity()', () => {
       info: {
         type: 'EntityAdminFoo',
         name: 'Foo',
+        authKey: 'none',
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         version: 1 as any,
       },
@@ -1509,7 +1510,7 @@ describe('createEntity()', () => {
 
   test('Error: Create with invalid field', async () => {
     const result = await client.createEntity({
-      info: { type: 'EntityAdminFoo', name: 'Foo' },
+      info: { type: 'EntityAdminFoo', name: 'Foo', authKey: 'none' },
       fields: { invalid: 'hello' },
     });
 
@@ -1518,7 +1519,7 @@ describe('createEntity()', () => {
 
   test('Error: Create EntityAdminFoo with reference to missing entity', async () => {
     const result = await client.createEntity({
-      info: { type: 'EntityAdminFoo', name: 'Foo name' },
+      info: { type: 'EntityAdminFoo', name: 'Foo name', authKey: 'none' },
       fields: { title: 'Foo title', bar: { id: 'fcc46a9e-2097-4bd6-bb08-56d5f59db26b' } },
     });
     expectErrorResult(
@@ -1531,7 +1532,7 @@ describe('createEntity()', () => {
   test('Error: Create EntityAdminFoo with reference to wrong entity type', async () => {
     const referenceId = entitiesOfTypeAdminOnlyEditBefore[0].id;
     const result = await client.createEntity({
-      info: { type: 'EntityAdminFoo', name: 'Foo name' },
+      info: { type: 'EntityAdminFoo', name: 'Foo name', authKey: 'none' },
       fields: {
         title: 'Foo title',
         bar: { id: referenceId },
@@ -1546,7 +1547,7 @@ describe('createEntity()', () => {
 
   test('Error: Set string when expecting list of string', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBaz', name: 'Baz' },
+      info: { type: 'EntityAdminBaz', name: 'Baz', authKey: 'none' },
       fields: {
         tags: 'invalid',
       },
@@ -1556,7 +1557,7 @@ describe('createEntity()', () => {
 
   test('Error: Set list of string when expecting string', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBaz', name: 'Baz' },
+      info: { type: 'EntityAdminBaz', name: 'Baz', authKey: 'none' },
       fields: {
         title: ['invalid', 'foo'],
       },
@@ -1570,7 +1571,7 @@ describe('createEntity()', () => {
 
   test('Error: Set reference when expecting list of references', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBaz', name: 'Baz' },
+      info: { type: 'EntityAdminBaz', name: 'Baz', authKey: 'none' },
       fields: {
         bars: { id: 'fcc46a9e-2097-4bd6-bb08-56d5f59db26b' },
       },
@@ -1580,7 +1581,7 @@ describe('createEntity()', () => {
 
   test('Error: Set list of references when expecting reference', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBaz', name: 'Baz' },
+      info: { type: 'EntityAdminBaz', name: 'Baz', authKey: 'none' },
       fields: {
         bar: [
           { id: 'fcc46a9e-2097-4bd6-bb08-56d5f59db26b' },
@@ -1597,7 +1598,7 @@ describe('createEntity()', () => {
 
   test('Error: value type missing type', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBaz', name: 'Baz' },
+      info: { type: 'EntityAdminBaz', name: 'Baz', authKey: 'none' },
       fields: {
         twoStrings: { one: 'One', two: 'Two' },
       },
@@ -1607,7 +1608,7 @@ describe('createEntity()', () => {
 
   test('Error: value type with invalid type', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBaz', name: 'Baz' },
+      info: { type: 'EntityAdminBaz', name: 'Baz', authKey: 'none' },
       fields: {
         twoStrings: { type: 'Invalid' },
       },
@@ -1621,7 +1622,7 @@ describe('createEntity()', () => {
 
   test('Error: value type with wrong type', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBaz', name: 'Baz' },
+      info: { type: 'EntityAdminBaz', name: 'Baz', authKey: 'none' },
       fields: {
         oneString: { type: 'EntityAdminTwoStrings', one: 'One', two: 'Two' },
       },
@@ -1635,7 +1636,7 @@ describe('createEntity()', () => {
 
   test('Error: value type with invalid field', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBaz', name: 'Baz' },
+      info: { type: 'EntityAdminBaz', name: 'Baz', authKey: 'none' },
       fields: {
         oneString: { type: 'EntityAdminOneString', one: 'One', invalid: 'value' },
       },
@@ -1649,7 +1650,7 @@ describe('createEntity()', () => {
 
   test('Error: rich text single, where list is expected', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBaz', name: 'Baz' },
+      info: { type: 'EntityAdminBaz', name: 'Baz', authKey: 'none' },
       fields: {
         bodyList: { blocks: [] },
       },
@@ -1659,7 +1660,7 @@ describe('createEntity()', () => {
 
   test('Error: rich text list, where single is expected', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBaz', name: 'Baz' },
+      info: { type: 'EntityAdminBaz', name: 'Baz', authKey: 'none' },
       fields: {
         body: [{ blocks: [] }],
       },
@@ -1673,7 +1674,7 @@ describe('createEntity()', () => {
 
   test('Error: rich text, forgotten blocks', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBaz', name: 'Baz' },
+      info: { type: 'EntityAdminBaz', name: 'Baz', authKey: 'none' },
       fields: {
         body: [{ type: RichTextBlockType.paragraph, data: { text: '' } }],
       },
@@ -1687,7 +1688,7 @@ describe('createEntity()', () => {
 
   test('Error: rich text with string', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBaz', name: 'Baz' },
+      info: { type: 'EntityAdminBaz', name: 'Baz', authKey: 'none' },
       fields: {
         body: 'Hello',
       },
@@ -1701,7 +1702,7 @@ describe('createEntity()', () => {
 
   test('Error: rich text without blocks', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBaz', name: 'Baz' },
+      info: { type: 'EntityAdminBaz', name: 'Baz', authKey: 'none' },
       fields: {
         body: {},
       },
@@ -1711,7 +1712,7 @@ describe('createEntity()', () => {
 
   test('Error: rich text, blocks as string', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBaz', name: 'Baz' },
+      info: { type: 'EntityAdminBaz', name: 'Baz', authKey: 'none' },
       fields: {
         body: { blocks: 'Hello' },
       },
@@ -1725,7 +1726,7 @@ describe('createEntity()', () => {
 
   test('Error: rich text with version and time', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBaz', name: 'Baz' },
+      info: { type: 'EntityAdminBaz', name: 'Baz', authKey: 'none' },
       fields: {
         body: { blocks: [], version: '123', time: 123123 },
       },
@@ -1739,7 +1740,7 @@ describe('createEntity()', () => {
 
   test('Error: rich text with invalid block type', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBaz', name: 'Baz' },
+      info: { type: 'EntityAdminBaz', name: 'Baz', authKey: 'none' },
       fields: {
         bodyOnlyParagraph: { blocks: [{ type: RichTextBlockType.entity, data: null }] },
       },
@@ -1753,7 +1754,7 @@ describe('createEntity()', () => {
 
   test('Error: rich text with block with invalid keys', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBaz', name: 'Baz' },
+      info: { type: 'EntityAdminBaz', name: 'Baz', authKey: 'none' },
       fields: {
         body: {
           blocks: [
@@ -1771,7 +1772,7 @@ describe('createEntity()', () => {
 
   test('Error: single location when list expected', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBaz', name: 'Baz' },
+      info: { type: 'EntityAdminBaz', name: 'Baz', authKey: 'none' },
       fields: {
         locations: { lat: 55.60498, lng: 13.003822 },
       },
@@ -1781,7 +1782,7 @@ describe('createEntity()', () => {
 
   test('Error: location list when single item expected', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBaz', name: 'Baz' },
+      info: { type: 'EntityAdminBaz', name: 'Baz', authKey: 'none' },
       fields: {
         location: [{ lat: 55.60498, lng: 13.003822 }],
       },
@@ -1795,7 +1796,7 @@ describe('createEntity()', () => {
 
   test('Error: location with empty object', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBaz', name: 'Baz' },
+      info: { type: 'EntityAdminBaz', name: 'Baz', authKey: 'none' },
       fields: {
         location: {},
       },
@@ -1809,7 +1810,7 @@ describe('createEntity()', () => {
 
   test('Error: single value type when list expected', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBaz', name: 'Baz' },
+      info: { type: 'EntityAdminBaz', name: 'Baz', authKey: 'none' },
       fields: {
         twoStringsList: { type: 'EntityAdminTwoStrings', one: 'One', two: 'Two' },
       },
@@ -1823,7 +1824,7 @@ describe('createEntity()', () => {
 
   test('Error: list of value type when single item expected', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBaz', name: 'Baz' },
+      info: { type: 'EntityAdminBaz', name: 'Baz', authKey: 'none' },
       fields: {
         twoStrings: [
           { type: 'EntityAdminTwoStrings', one: 'One', two: 'Two' },
@@ -2171,7 +2172,7 @@ describe('searchEntities() boundingBox', () => {
       lng: (boundingBox.minLng + boundingBox.maxLng) / 2,
     };
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBaz', name: 'Baz' },
+      info: { type: 'EntityAdminBaz', name: 'Baz', authKey: 'none' },
       fields: { location: center },
     });
 
@@ -2191,7 +2192,7 @@ describe('searchEntities() boundingBox', () => {
       lng: boundingBox.minLng > 0 ? boundingBox.minLng - 1 : boundingBox.maxLng + 1,
     };
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBaz', name: 'Baz' },
+      info: { type: 'EntityAdminBaz', name: 'Baz', authKey: 'none' },
       fields: { location: outside },
     });
 
@@ -2216,7 +2217,7 @@ describe('searchEntities() boundingBox', () => {
     };
 
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBaz', name: 'Baz' },
+      info: { type: 'EntityAdminBaz', name: 'Baz', authKey: 'none' },
       fields: { locations: [center, inside] },
     });
 
@@ -2237,7 +2238,7 @@ describe('searchEntities() boundingBox', () => {
     };
 
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBaz', name: 'Baz' },
+      info: { type: 'EntityAdminBaz', name: 'Baz', authKey: 'none' },
       fields: {
         body: {
           blocks: [
@@ -2267,7 +2268,7 @@ describe('searchEntities() boundingBox', () => {
 describe('searchEntities() text', () => {
   test('Query based on text (after creation and updating)', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminFoo', name: 'Foo' },
+      info: { type: 'EntityAdminFoo', name: 'Foo', authKey: 'none' },
       fields: { summary: 'this is some serious summary with the best conclusion' },
     });
     if (expectOkResult(createResult)) {
@@ -2532,7 +2533,7 @@ describe('getTotalCount', () => {
     };
 
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBaz', name: 'Baz' },
+      info: { type: 'EntityAdminBaz', name: 'Baz', authKey: 'none' },
       fields: { locations: [center, inside] },
     });
 
@@ -2554,7 +2555,7 @@ describe('getTotalCount', () => {
     if (expectOkResult(resultBefore)) {
       expectOkResult(
         await client.createEntity({
-          info: { type: 'EntityAdminFoo', name: 'foo' },
+          info: { type: 'EntityAdminFoo', name: 'foo', authKey: 'none' },
           fields: { summary: 'That was indeed a sensational clown' },
         })
       );
@@ -2570,7 +2571,7 @@ describe('getTotalCount', () => {
 describe('updateEntity()', () => {
   test('Update EntityAdminFoo and publish', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminFoo', name: 'Original' },
+      info: { type: 'EntityAdminFoo', name: 'Original', authKey: 'none' },
       fields: { title: 'Original' },
     });
     if (expectOkResult(createResult)) {
@@ -2664,7 +2665,7 @@ describe('updateEntity()', () => {
 
   test('Update EntityAdminFoo w/o publish', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminFoo', name: 'First' },
+      info: { type: 'EntityAdminFoo', name: 'First', authKey: 'none' },
       fields: { title: 'First' },
     });
     if (expectOkResult(createResult)) {
@@ -2761,7 +2762,7 @@ describe('updateEntity()', () => {
 
   test('Update EntityAdminFoo w/o type and name', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminFoo', name: 'Original' },
+      info: { type: 'EntityAdminFoo', name: 'Original', authKey: 'none' },
       fields: { title: 'Original' },
     });
     if (expectOkResult(createResult)) {
@@ -2839,7 +2840,7 @@ describe('updateEntity()', () => {
 
   test('Update EntityAdminFoo w/o providing all fields', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminFoo', name: 'First name' },
+      info: { type: 'EntityAdminFoo', name: 'First name', authKey: 'none' },
       fields: { title: 'First title', summary: 'First summary' },
     });
     if (expectOkResult(createResult)) {
@@ -2928,7 +2929,7 @@ describe('updateEntity()', () => {
 
   test('Update EntityAdminFoo with the same name', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminFoo', name: 'First name' },
+      info: { type: 'EntityAdminFoo', name: 'First name', authKey: 'none' },
       fields: { title: 'First title', summary: 'First summary' },
     });
     if (expectOkResult(createResult)) {
@@ -2961,7 +2962,7 @@ describe('updateEntity()', () => {
 
   test('Update EntityAdminFoo normalizes empty string', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminFoo', name: 'Draft' },
+      info: { type: 'EntityAdminFoo', name: 'Draft', authKey: 'none' },
       fields: { title: 'Hello' },
     });
     if (expectOkResult(createResult)) {
@@ -2984,7 +2985,7 @@ describe('updateEntity()', () => {
 
   test('Update EntityAdminFoo normalizes empty value item', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBaz', name: 'Draft' },
+      info: { type: 'EntityAdminBaz', name: 'Draft', authKey: 'none' },
       fields: {},
     });
     if (expectOkResult(createResult)) {
@@ -3025,7 +3026,7 @@ describe('updateEntity()', () => {
 
   test('Update EntityAdminFoo with reference', async () => {
     const createFooResult = await client.createEntity({
-      info: { type: 'EntityAdminFoo', name: 'First name' },
+      info: { type: 'EntityAdminFoo', name: 'First name', authKey: 'none' },
       fields: { title: 'First title', summary: 'First summary' },
     });
     if (expectOkResult(createFooResult)) {
@@ -3049,7 +3050,7 @@ describe('updateEntity()', () => {
       expectResultValue(createFooResult, { effect: 'created', entity: expectedEntity });
 
       const createBarResult = await client.createEntity({
-        info: { type: 'EntityAdminBar', name: 'Bar entity' },
+        info: { type: 'EntityAdminBar', name: 'Bar entity', authKey: 'none' },
         fields: { title: 'Bar entity' },
       });
       if (expectOkResult(createBarResult)) {
@@ -3105,11 +3106,11 @@ describe('updateEntity()', () => {
 
   test('Update EntityAdminFoo without changing a reference', async () => {
     const createBar1Result = await client.createEntity({
-      info: { type: 'EntityAdminBar', name: 'Bar 1 entity' },
+      info: { type: 'EntityAdminBar', name: 'Bar 1 entity', authKey: 'none' },
       fields: { title: 'Bar 1 entity' },
     });
     const createBar2Result = await client.createEntity({
-      info: { type: 'EntityAdminBar', name: 'Bar 2 entity' },
+      info: { type: 'EntityAdminBar', name: 'Bar 2 entity', authKey: 'none' },
       fields: { title: 'Bar 2 entity' },
     });
     if (expectOkResult(createBar1Result) && expectOkResult(createBar2Result)) {
@@ -3133,7 +3134,7 @@ describe('updateEntity()', () => {
       }
 
       const createBazResult = await client.createEntity({
-        info: { type: 'EntityAdminBaz', name: 'First name' },
+        info: { type: 'EntityAdminBaz', name: 'First name', authKey: 'none' },
         fields: {
           title: 'First title',
           bar: { id: bar1Id },
@@ -3213,7 +3214,7 @@ describe('updateEntity()', () => {
 
   test('Update archived EntityAdminFoo', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminFoo', name: 'Original' },
+      info: { type: 'EntityAdminFoo', name: 'Original', authKey: 'none' },
       fields: { title: 'Original' },
     });
     if (expectOkResult(createResult)) {
@@ -3263,7 +3264,7 @@ describe('updateEntity()', () => {
 
   test('Update with the same field does not create new version', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminFoo', name: 'Foo' },
+      info: { type: 'EntityAdminFoo', name: 'Foo', authKey: 'none' },
       fields: { title: 'Foo title' },
     });
     if (expectOkResult(createResult)) {
@@ -3277,7 +3278,7 @@ describe('updateEntity()', () => {
 
   test('Update published with the same field does not create new version and returns correct publishing state', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminFoo', name: 'Foo' },
+      info: { type: 'EntityAdminFoo', name: 'Foo', authKey: 'none' },
       fields: { title: 'Foo title' },
     });
     if (expectOkResult(createResult)) {
@@ -3317,7 +3318,7 @@ describe('updateEntity()', () => {
 
   test('Error: Update with different type', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBar', name: 'foo' },
+      info: { type: 'EntityAdminBar', name: 'foo', authKey: 'none' },
       fields: { title: 'foo' },
     });
     if (expectOkResult(createResult)) {
@@ -3339,7 +3340,7 @@ describe('updateEntity()', () => {
 
   test('Error: Update with invalid field', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminFoo', name: 'Foo name' },
+      info: { type: 'EntityAdminFoo', name: 'Foo name', authKey: 'none' },
       fields: { title: 'Foo title' },
     });
     if (expectOkResult(createResult)) {
@@ -3354,7 +3355,7 @@ describe('updateEntity()', () => {
 
   test('Error: Update EntityAdminFoo with reference to missing entity', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminFoo', name: 'Foo name' },
+      info: { type: 'EntityAdminFoo', name: 'Foo name', authKey: 'none' },
       fields: { title: 'Foo title' },
     });
     if (expectOkResult(createResult)) {
@@ -3376,7 +3377,7 @@ describe('updateEntity()', () => {
 
   test('Error: Update EntityAdminFoo with reference to wrong entity type', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminFoo', name: 'Foo name' },
+      info: { type: 'EntityAdminFoo', name: 'Foo name', authKey: 'none' },
       fields: { title: 'Foo title' },
     });
     if (expectOkResult(createResult)) {
@@ -3400,7 +3401,7 @@ describe('upsertEntity()', () => {
     const id = insecureTestUuidv4();
     const upsertResult = await client.upsertEntity({
       id,
-      info: { type: 'EntityAdminBaz', name: 'Baz' },
+      info: { type: 'EntityAdminBaz', name: 'Baz', authKey: 'none' },
       fields: {},
     });
     if (expectOkResult(upsertResult)) {
@@ -3434,7 +3435,7 @@ describe('upsertEntity()', () => {
 
   test('Update existing entity', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBaz', name: 'Original Baz' },
+      info: { type: 'EntityAdminBaz', name: 'Original Baz', authKey: 'none' },
       fields: { title: 'Original title' },
     });
 
@@ -3448,7 +3449,7 @@ describe('upsertEntity()', () => {
 
       const upsertResult = await client.upsertEntity({
         id,
-        info: { type: 'EntityAdminBaz', name: 'Updated Baz' },
+        info: { type: 'EntityAdminBaz', name: 'Updated Baz', authKey: 'none' },
         fields: { title: 'Updated title' },
       });
       if (expectOkResult(upsertResult)) {
@@ -3486,7 +3487,7 @@ describe('upsertEntity()', () => {
 
   test('Update entity without any change', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBaz', name: 'Original Baz' },
+      info: { type: 'EntityAdminBaz', name: 'Original Baz', authKey: 'none' },
       fields: { title: 'Original title' },
     });
 
@@ -3500,7 +3501,7 @@ describe('upsertEntity()', () => {
 
       const upsertResult = await client.upsertEntity({
         id,
-        info: { type: 'EntityAdminBaz', name },
+        info: { type: 'EntityAdminBaz', name, authKey: 'none' },
         fields: { title: 'Original title' },
       });
       expectResultValue(upsertResult, {
@@ -3517,7 +3518,7 @@ describe('upsertEntity()', () => {
     // Create another entity to ensure we get a non-unique name
     expectOkResult(
       await client.createEntity({
-        info: { type: 'EntityAdminBaz', name: 'Non-unique name' },
+        info: { type: 'EntityAdminBaz', name: 'Non-unique name', authKey: 'none' },
         fields: { title: 'Original title' },
       })
     );
@@ -3525,7 +3526,7 @@ describe('upsertEntity()', () => {
     const id = insecureTestUuidv4();
     const upsertEntity = {
       id,
-      info: { type: 'EntityAdminBaz', name: 'Non-unique name' },
+      info: { type: 'EntityAdminBaz', name: 'Non-unique name', authKey: 'none' },
       fields: { title: 'Original title' },
     };
 
@@ -3545,7 +3546,7 @@ describe('upsertEntity()', () => {
 describe('publishEntities()', () => {
   test('Two entities referencing each other', async () => {
     const createBaz1Result = await client.createEntity({
-      info: { type: 'EntityAdminBaz', name: 'Baz 1' },
+      info: { type: 'EntityAdminBaz', name: 'Baz 1', authKey: 'none' },
       fields: {
         title: 'Baz title 1',
       },
@@ -3556,7 +3557,7 @@ describe('publishEntities()', () => {
       } = createBaz1Result.value;
 
       const createBaz2Result = await client.createEntity({
-        info: { type: 'EntityAdminBaz', name: 'Baz 2' },
+        info: { type: 'EntityAdminBaz', name: 'Baz 2', authKey: 'none' },
         fields: {
           title: 'Baz title 2',
           baz: { id: baz1Id },
@@ -3586,7 +3587,7 @@ describe('publishEntities()', () => {
 
   test('Archived entity', async () => {
     const createBaz1Result = await client.createEntity({
-      info: { type: 'EntityAdminBaz', name: 'Baz 1' },
+      info: { type: 'EntityAdminBaz', name: 'Baz 1', authKey: 'none' },
       fields: { title: 'Baz title 1' },
     });
     if (expectOkResult(createBaz1Result)) {
@@ -3639,7 +3640,7 @@ describe('publishEntities()', () => {
 
   test('Older version entity means status modified', async () => {
     const createBaz1Result = await client.createEntity({
-      info: { type: 'EntityAdminBaz', name: 'Baz 1' },
+      info: { type: 'EntityAdminBaz', name: 'Baz 1', authKey: 'none' },
       fields: { title: 'Baz title 1' },
     });
     if (expectOkResult(createBaz1Result)) {
@@ -3682,7 +3683,7 @@ describe('publishEntities()', () => {
 
   test('Error: Publish published version', async () => {
     const createBazResult = await client.createEntity({
-      info: { type: 'EntityAdminBaz', name: 'Baz 1' },
+      info: { type: 'EntityAdminBaz', name: 'Baz 1', authKey: 'none' },
       fields: { title: 'Baz title 1' },
     });
     if (expectOkResult(createBazResult)) {
@@ -3709,7 +3710,7 @@ describe('publishEntities()', () => {
 
   test('Error: Reference to unpublished entity', async () => {
     const createBarResult = await client.createEntity({
-      info: { type: 'EntityAdminBar', name: 'Bar name' },
+      info: { type: 'EntityAdminBar', name: 'Bar name', authKey: 'none' },
       fields: {
         title: 'Bar title',
       },
@@ -3720,7 +3721,7 @@ describe('publishEntities()', () => {
       } = createBarResult.value;
 
       const createFooResult = await client.createEntity({
-        info: { type: 'EntityAdminFoo', name: 'Foo name' },
+        info: { type: 'EntityAdminFoo', name: 'Foo name', authKey: 'none' },
         fields: {
           title: 'Foo title',
           bar: { id: barId },
@@ -3755,7 +3756,7 @@ describe('publishEntities()', () => {
 
   test('Error: adminOnly entity type', async () => {
     const createQuxResult = await client.createEntity({
-      info: { type: 'EntityAdminQux', name: 'Qux name' },
+      info: { type: 'EntityAdminQux', name: 'Qux name', authKey: 'none' },
       fields: {
         title: 'Qux title',
       },
@@ -3772,7 +3773,7 @@ describe('publishEntities()', () => {
 
   test('Error: adminOnly value type', async () => {
     const createBazResult = await client.createEntity({
-      info: { type: 'EntityAdminBaz', name: 'Baz name' },
+      info: { type: 'EntityAdminBaz', name: 'Baz name', authKey: 'none' },
       fields: {
         title: 'Baz title',
         valueItem: { type: 'EntityAdminOneStringAdminOnly', one: 'String' },
@@ -3794,7 +3795,7 @@ describe('publishEntities()', () => {
 
   test('Error: missing value for required field in entity', async () => {
     const createFooResult = await client.createEntity({
-      info: { type: 'EntityAdminFoo', name: 'Foo name' },
+      info: { type: 'EntityAdminFoo', name: 'Foo name', authKey: 'none' },
       fields: {
         // no title
       },
@@ -3815,7 +3816,7 @@ describe('publishEntities()', () => {
 
   test('Error: missing value for required field in value item', async () => {
     const createBazResult = await client.createEntity({
-      info: { type: 'EntityAdminBaz', name: 'Baz name' },
+      info: { type: 'EntityAdminBaz', name: 'Baz name', authKey: 'none' },
       fields: {
         oneString: { type: 'EntityAdminOneString', one: null },
       },
@@ -3836,7 +3837,7 @@ describe('publishEntities()', () => {
 
   test('Error: missing value for required field in value item in rich text', async () => {
     const createBazResult = await client.createEntity({
-      info: { type: 'EntityAdminBaz', name: 'Baz name' },
+      info: { type: 'EntityAdminBaz', name: 'Baz name', authKey: 'none' },
       fields: {
         body: {
           blocks: [
@@ -3875,7 +3876,7 @@ describe('publishEntities()', () => {
 
   test('Error: Published unknown version', async () => {
     const createFooResult = await client.createEntity({
-      info: { type: 'EntityAdminFoo', name: 'Foo name' },
+      info: { type: 'EntityAdminFoo', name: 'Foo name', authKey: 'none' },
       fields: { title: 'Foo title' },
     });
     if (expectOkResult(createFooResult)) {
@@ -3891,7 +3892,7 @@ describe('publishEntities()', () => {
 describe('unpublishEntities()', () => {
   test('Sets published state to withdrawn', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBaz', name: 'Baz 1' },
+      info: { type: 'EntityAdminBaz', name: 'Baz 1', authKey: 'none' },
       fields: { title: 'Baz title 1' },
     });
     if (expectOkResult(createResult)) {
@@ -3942,7 +3943,7 @@ describe('unpublishEntities()', () => {
 
   test('Two published entities referencing each other', async () => {
     const createBaz1Result = await client.createEntity({
-      info: { type: 'EntityAdminBaz', name: 'Baz 1' },
+      info: { type: 'EntityAdminBaz', name: 'Baz 1', authKey: 'none' },
       fields: { title: 'Baz title 1' },
     });
     if (expectOkResult(createBaz1Result)) {
@@ -3951,7 +3952,7 @@ describe('unpublishEntities()', () => {
       } = createBaz1Result.value;
 
       const createBaz2Result = await client.createEntity({
-        info: { type: 'EntityAdminBaz', name: 'Baz 2' },
+        info: { type: 'EntityAdminBaz', name: 'Baz 2', authKey: 'none' },
         fields: { title: 'Baz title 2', baz: { id: baz1Id } },
       });
       if (expectOkResult(createBaz2Result)) {
@@ -3987,7 +3988,7 @@ describe('unpublishEntities()', () => {
 
   test('Unpublished entity referencing', async () => {
     const createBaz1Result = await client.createEntity({
-      info: { type: 'EntityAdminBaz', name: 'Baz 1' },
+      info: { type: 'EntityAdminBaz', name: 'Baz 1', authKey: 'none' },
       fields: {
         title: 'Baz title 1',
       },
@@ -3998,7 +3999,7 @@ describe('unpublishEntities()', () => {
       } = createBaz1Result.value;
 
       const createBaz2Result = await client.createEntity({
-        info: { type: 'EntityAdminBaz', name: 'Baz 2' },
+        info: { type: 'EntityAdminBaz', name: 'Baz 2', authKey: 'none' },
         fields: {
           title: 'Baz title 2',
           baz: { id: baz1Id },
@@ -4037,7 +4038,7 @@ describe('unpublishEntities()', () => {
 
   test('Error: Reference from published entity', async () => {
     const createBarResult = await client.createEntity({
-      info: { type: 'EntityAdminBar', name: 'Bar name' },
+      info: { type: 'EntityAdminBar', name: 'Bar name', authKey: 'none' },
       fields: { title: 'Bar title' },
     });
     if (expectOkResult(createBarResult)) {
@@ -4046,7 +4047,7 @@ describe('unpublishEntities()', () => {
       } = createBarResult.value;
 
       const createFooResult = await client.createEntity({
-        info: { type: 'EntityAdminFoo', name: 'Foo name' },
+        info: { type: 'EntityAdminFoo', name: 'Foo name', authKey: 'none' },
         fields: {
           title: 'Foo title',
           bar: { id: barId },
@@ -4081,7 +4082,7 @@ describe('unpublishEntities()', () => {
 
   test('Error: Unpublished entity', async () => {
     const createBarResult = await client.createEntity({
-      info: { type: 'EntityAdminBar', name: 'Bar name' },
+      info: { type: 'EntityAdminBar', name: 'Bar name', authKey: 'none' },
       fields: { title: 'Bar title' },
     });
     if (expectOkResult(createBarResult)) {
@@ -4100,7 +4101,7 @@ describe('unpublishEntities()', () => {
 
   test('Error: Unpublish archived entity', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBaz', name: 'Baz 1' },
+      info: { type: 'EntityAdminBaz', name: 'Baz 1', authKey: 'none' },
       fields: { title: 'Baz title 1' },
     });
     if (expectOkResult(createResult)) {
@@ -4142,7 +4143,7 @@ describe('unpublishEntities()', () => {
 describe('archiveEntity()', () => {
   test('Archive new entity', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBar', name: 'Bar name' },
+      info: { type: 'EntityAdminBar', name: 'Bar name', authKey: 'none' },
       fields: { title: 'Bar title' },
     });
     if (expectOkResult(createResult)) {
@@ -4203,7 +4204,7 @@ describe('archiveEntity()', () => {
 
   test('Archive archived entity', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBar', name: 'Bar name' },
+      info: { type: 'EntityAdminBar', name: 'Bar name', authKey: 'none' },
       fields: { title: 'Bar title' },
     });
     if (expectOkResult(createResult)) {
@@ -4240,7 +4241,7 @@ describe('archiveEntity()', () => {
 
   test('Error: archive published entity', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBar', name: 'Bar name' },
+      info: { type: 'EntityAdminBar', name: 'Bar name', authKey: 'none' },
       fields: { title: 'Bar title' },
     });
     if (expectOkResult(createResult)) {
@@ -4273,7 +4274,7 @@ describe('archiveEntity()', () => {
 describe('unarchiveEntity()', () => {
   test('Unarchive new entity (does nothing)', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBar', name: 'Bar name' },
+      info: { type: 'EntityAdminBar', name: 'Bar name', authKey: 'none' },
       fields: { title: 'Bar title' },
     });
     if (expectOkResult(createResult)) {
@@ -4298,7 +4299,7 @@ describe('unarchiveEntity()', () => {
 
   test('Unarchive archived entity', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBar', name: 'Bar name' },
+      info: { type: 'EntityAdminBar', name: 'Bar name', authKey: 'none' },
       fields: { title: 'Bar title' },
     });
     if (expectOkResult(createResult)) {
@@ -4376,7 +4377,7 @@ describe('unarchiveEntity()', () => {
 
   test('Unarchive once published, then archived entity', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBar', name: 'Bar name' },
+      info: { type: 'EntityAdminBar', name: 'Bar name', authKey: 'none' },
       fields: { title: 'Bar title' },
     });
     if (expectOkResult(createResult)) {
@@ -4447,7 +4448,7 @@ describe('getEntityHistory()', () => {
 describe('getPublishingHistory()', () => {
   test('New unpublished entity', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBar', name: 'Unpublished' },
+      info: { type: 'EntityAdminBar', name: 'Unpublished', authKey: 'none' },
       fields: {},
     });
     if (expectOkResult(createResult)) {
@@ -4461,7 +4462,7 @@ describe('getPublishingHistory()', () => {
 
   test('One published version', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBar', name: 'Published' },
+      info: { type: 'EntityAdminBar', name: 'Published', authKey: 'none' },
       fields: {},
     });
     if (expectOkResult(createResult)) {
@@ -4497,7 +4498,7 @@ describe('getPublishingHistory()', () => {
 
   test('One unpublished version', async () => {
     const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBar', name: 'Published/Unpublished' },
+      info: { type: 'EntityAdminBar', name: 'Published/Unpublished', authKey: 'none' },
       fields: {},
     });
     if (expectOkResult(createResult)) {

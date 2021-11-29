@@ -4,6 +4,7 @@ import type {
   AdminEntityUpdate,
   AdminSchema,
   Entity,
+  EntityLike,
   EntityReference,
   FieldSpecification,
   FieldValueTypeMap,
@@ -177,7 +178,7 @@ export function isRichTextValueItemBlock(
 }
 
 export function isItemValueItem(
-  item: ValueItem | Entity | AdminEntity | AdminEntityCreate | AdminEntityUpdate
+  item: ValueItem | Entity | AdminEntity | AdminEntityCreate | AdminEntityUpdate | EntityLike
 ): item is ValueItem {
   return 'type' in item;
 }
@@ -267,7 +268,7 @@ export function visitItemRecursively<TVisitContext>({
   initialVisitContext,
 }: {
   schema: AdminSchema | Schema;
-  item: Entity | AdminEntity | ValueItem;
+  item: EntityLike | ValueItem;
   path?: ItemValuePath;
   visitField: VisitorVisitField<TVisitContext>;
   visitRichTextBlock: VisitorVisitRichTextBlock<TVisitContext>;
@@ -321,7 +322,7 @@ export function visitFieldRecursively<TVisitContext>({
 function doVisitItemRecursively<TVisitContext>(
   schema: AdminSchema | Schema,
   path: ItemValuePath,
-  item: ValueItem | AdminEntity | Entity,
+  item: ValueItem | EntityLike,
   callbacks: VisitorCallbacks<TVisitContext>,
   visitContext: TVisitContext
 ) {

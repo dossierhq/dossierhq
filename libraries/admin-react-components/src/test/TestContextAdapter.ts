@@ -192,7 +192,7 @@ export async function ensureManyBarEntities(
     const id = uuidv5(`bar-${i}`, GENERATE_ENTITIES_UUID_NAMESPACE);
     const result = await adminClient.createEntity({
       id,
-      info: { type: 'Bar', name: `Generated bar ${i}` },
+      info: { type: 'Bar', name: `Generated bar ${i}`, authKey: 'none' },
       fields: { title: `Generated bar ${i}` },
     });
     if (result.isError()) {

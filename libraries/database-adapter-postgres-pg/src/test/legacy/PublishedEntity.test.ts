@@ -165,7 +165,7 @@ async function createAndPublishEntities(
 
 async function createBarWithFooReferences(fooCount: number, referencesPerFoo = 1) {
   const createBarResult = await createAndPublishEntities(adminClient, {
-    info: { type: 'PublishedEntityBar', name: 'Bar' },
+    info: { type: 'PublishedEntityBar', name: 'Bar', authKey: 'none' },
     fields: { title: 'Bar' },
   });
   if (createBarResult.isError()) {
@@ -183,7 +183,7 @@ async function createBarWithFooReferences(fooCount: number, referencesPerFoo = 1
   for (let i = 0; i < fooCount; i += 1) {
     const bars = [...new Array(referencesPerFoo - 1)].map(() => ({ id: barId }));
     const createFooResult = await createAndPublishEntities(adminClient, {
-      info: { type: 'PublishedEntityFoo', name: 'Foo: ' + i },
+      info: { type: 'PublishedEntityFoo', name: 'Foo: ' + i, authKey: 'none' },
       fields: { bar: { id: barId }, bars },
     });
     if (expectOkResult(createFooResult)) {
@@ -201,7 +201,7 @@ async function createBarWithFooReferences(fooCount: number, referencesPerFoo = 1
 describe('getEntity()', () => {
   test('Archived then published entity', async () => {
     const createResult = await adminClient.createEntity({
-      info: { type: 'PublishedEntityFoo', name: 'Foo 1' },
+      info: { type: 'PublishedEntityFoo', name: 'Foo 1', authKey: 'none' },
       fields: { title: 'Title 1' },
     });
     if (expectOkResult(createResult)) {
@@ -241,7 +241,7 @@ describe('getEntity()', () => {
 
   test('Publish old version', async () => {
     const createFooResult = await adminClient.createEntity({
-      info: { type: 'PublishedEntityFoo', name: 'Foo 1' },
+      info: { type: 'PublishedEntityFoo', name: 'Foo 1', authKey: 'none' },
       fields: { title: 'Foo title 1' },
     });
     if (expectOkResult(createFooResult)) {
@@ -277,7 +277,7 @@ describe('getEntity()', () => {
 
   test('Error: Archived entity', async () => {
     const createResult = await adminClient.createEntity({
-      info: { type: 'PublishedEntityFoo', name: 'Foo 1' },
+      info: { type: 'PublishedEntityFoo', name: 'Foo 1', authKey: 'none' },
       fields: { title: 'Title 1' },
     });
     if (expectOkResult(createResult)) {
@@ -316,11 +316,11 @@ describe('getEntities()', () => {
 
   test('Get two entities', async () => {
     const createFoo1Result = await adminClient.createEntity({
-      info: { type: 'PublishedEntityFoo', name: 'Foo 1' },
+      info: { type: 'PublishedEntityFoo', name: 'Foo 1', authKey: 'none' },
       fields: { title: 'Title 1' },
     });
     const createFoo2Result = await adminClient.createEntity({
-      info: { type: 'PublishedEntityFoo', name: 'Foo 2' },
+      info: { type: 'PublishedEntityFoo', name: 'Foo 2', authKey: 'none' },
       fields: { title: 'Title 2' },
     });
     if (expectOkResult(createFoo1Result) && expectOkResult(createFoo2Result)) {
@@ -368,7 +368,7 @@ describe('getEntities()', () => {
 
   test('Get one missing, one existing entity', async () => {
     const createFooResult = await adminClient.createEntity({
-      info: { type: 'PublishedEntityFoo', name: 'Foo' },
+      info: { type: 'PublishedEntityFoo', name: 'Foo', authKey: 'none' },
       fields: { title: 'Title' },
     });
     if (expectOkResult(createFooResult)) {
@@ -408,7 +408,7 @@ describe('getEntities()', () => {
 
   test('Error: Get archived entity', async () => {
     const createResult = await adminClient.createEntity({
-      info: { type: 'PublishedEntityFoo', name: 'Foo 1' },
+      info: { type: 'PublishedEntityFoo', name: 'Foo 1', authKey: 'none' },
       fields: {
         title: 'Title 1',
       },
@@ -762,7 +762,7 @@ describe('searchEntities() referencing', () => {
     const { barId, fooEntities } = await createBarWithFooReferences(1);
 
     const anotherBarCreateResult = await createAndPublishEntities(adminClient, {
-      info: { type: 'PublishedEntityBar', name: 'Another Bar' },
+      info: { type: 'PublishedEntityBar', name: 'Another Bar', authKey: 'none' },
       fields: { entity: { id: barId } },
     });
     if (expectOkResult(anotherBarCreateResult)) {
@@ -795,7 +795,7 @@ describe('searchEntities() boundingBox', () => {
       lng: (boundingBox.minLng + boundingBox.maxLng) / 2,
     };
     const createAndPublishResult = await createAndPublishEntities(adminClient, {
-      info: { type: 'PublishedEntityFoo', name: 'Foo' },
+      info: { type: 'PublishedEntityFoo', name: 'Foo', authKey: 'none' },
       fields: { location: center },
     });
 
@@ -818,7 +818,7 @@ describe('searchEntities() boundingBox', () => {
       lng: boundingBox.minLng > 0 ? boundingBox.minLng - 1 : boundingBox.maxLng + 1,
     };
     const createAndPublishResult = await createAndPublishEntities(adminClient, {
-      info: { type: 'PublishedEntityFoo', name: 'Foo' },
+      info: { type: 'PublishedEntityFoo', name: 'Foo', authKey: 'none' },
       fields: { location: outside },
     });
 
@@ -845,7 +845,7 @@ describe('searchEntities() boundingBox', () => {
     };
 
     const createAndPublishResult = await createAndPublishEntities(adminClient, {
-      info: { type: 'PublishedEntityFoo', name: 'Foo' },
+      info: { type: 'PublishedEntityFoo', name: 'Foo', authKey: 'none' },
       fields: { locations: [center, inside] },
     });
 
@@ -868,7 +868,7 @@ describe('searchEntities() boundingBox', () => {
     };
 
     const createAndPublishResult = await createAndPublishEntities(adminClient, {
-      info: { type: 'PublishedEntityFoo', name: 'Foo' },
+      info: { type: 'PublishedEntityFoo', name: 'Foo', authKey: 'none' },
       fields: {
         body: {
           blocks: [
@@ -900,7 +900,7 @@ describe('searchEntities() boundingBox', () => {
 describe('searchEntities() text', () => {
   test('Query based on text (after creation and updating)', async () => {
     const createResult = await createAndPublishEntities(adminClient, {
-      info: { type: 'PublishedEntityFoo', name: 'Foo' },
+      info: { type: 'PublishedEntityFoo', name: 'Foo', authKey: 'none' },
       fields: { title: 'this is some serious summary with the best conclusion' },
     });
     if (expectOkResult(createResult)) {
@@ -949,7 +949,7 @@ describe('getTotalCount', () => {
     const { barId } = await createBarWithFooReferences(1, 1);
 
     const anotherBarCreateResult = await createAndPublishEntities(adminClient, {
-      info: { type: 'PublishedEntityBar', name: 'Another Bar' },
+      info: { type: 'PublishedEntityBar', name: 'Another Bar', authKey: 'none' },
       fields: { entity: { id: barId } },
     });
     if (expectOkResult(anotherBarCreateResult)) {
@@ -980,7 +980,7 @@ describe('getTotalCount', () => {
     };
 
     const createResult = await createAndPublishEntities(adminClient, {
-      info: { type: 'PublishedEntityFoo', name: 'Foo' },
+      info: { type: 'PublishedEntityFoo', name: 'Foo', authKey: 'none' },
       fields: { locations: [center, inside] },
     });
 
@@ -1002,7 +1002,7 @@ describe('getTotalCount', () => {
     if (expectOkResult(resultBefore)) {
       expectOkResult(
         await createAndPublishEntities(adminClient, {
-          info: { type: 'PublishedEntityFoo', name: 'Foo' },
+          info: { type: 'PublishedEntityFoo', name: 'Foo', authKey: 'none' },
           fields: { title: 'That was indeed a sensational clown' },
         })
       );

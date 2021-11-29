@@ -5,6 +5,7 @@ import type {
   AdminEntityUpdate,
   AdminSchema,
   Entity,
+  EntityLike,
   EntityTypeSpecification,
   ErrorType,
   FieldSpecification,
@@ -234,6 +235,7 @@ export function resolveCreateEntity(
       name: entity.info.name,
       type: entity.info.type,
       version: 0,
+      authKey: entity.info.authKey,
     },
     fields: {},
   };
@@ -579,7 +581,7 @@ function encodeRichTextField(
 
 export function collectDataFromEntity(
   schema: AdminSchema,
-  entity: AdminEntity | AdminEntityCreate
+  entity: EntityLike
 ): {
   requestedReferences: RequestedReference[];
   locations: Location[];
@@ -591,7 +593,7 @@ export function collectDataFromEntity(
 
   visitItemRecursively({
     schema,
-    item: entity as AdminEntity,
+    item: entity,
     path: ['entity'],
     visitField: (path, fieldSpec, data, _visitContext) => {
       if (fieldSpec.type !== FieldType.ValueType && fieldSpec.type !== FieldType.RichText) {

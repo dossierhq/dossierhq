@@ -1,7 +1,7 @@
 import type {
-  AdminEntity,
   AdminSchema,
   AdminValueTypeSpecification,
+  EntityLike,
   FieldSpecification,
   ItemValuePath,
   ValueItem,
@@ -42,7 +42,7 @@ interface AdminItemTraverseNodeValueItem {
 export function* traverseAdminItem(
   schema: AdminSchema,
   path: ItemValuePath,
-  item: AdminEntity | ValueItem
+  item: EntityLike | ValueItem
 ): Generator<AdminItemTraverseNode> {
   let fieldSpecs;
   let fields;

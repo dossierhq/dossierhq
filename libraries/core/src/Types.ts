@@ -12,6 +12,11 @@ export interface EntityInfo {
   name: string;
 }
 
+export interface EntityLike {
+  info: { type: string };
+  fields: Record<string, unknown>;
+}
+
 export interface EntityReference {
   id: string;
 }
@@ -86,6 +91,7 @@ export interface AdminEntityCreate {
     type: string;
     name: string;
     version?: 0;
+    authKey: string;
   };
   fields: Record<string, unknown>;
 }
@@ -116,6 +122,7 @@ export interface AdminEntityUpsert {
   info: {
     name: string;
     type: string;
+    authKey: string;
   };
   fields: Record<string, unknown>;
 }

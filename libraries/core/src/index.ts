@@ -120,6 +120,7 @@ export type {
   Connection,
   Edge,
   Entity,
+  EntityLike,
   EntityHistory,
   EntityPublishPayload,
   EntityReference,
