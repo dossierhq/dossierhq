@@ -73,6 +73,7 @@ function createDummyEntity({ id }: { id: string }): Entity {
     info: {
       name: 'Foo name',
       type: 'FooType',
+      authKey: 'none',
     },
     fields: {},
   };
@@ -102,6 +103,7 @@ describe('PublishedClient forward operation over JSON', () => {
               "fields": Object {},
               "id": "1234",
               "info": Object {
+                "authKey": "none",
                 "name": "Foo name",
                 "type": "FooType",
               },
@@ -112,6 +114,7 @@ describe('PublishedClient forward operation over JSON', () => {
               "fields": Object {},
               "id": "5678",
               "info": Object {
+                "authKey": "none",
                 "name": "Foo name",
                 "type": "FooType",
               },
@@ -171,6 +174,7 @@ describe('PublishedClient forward operation over JSON', () => {
           "fields": Object {},
           "id": "1234",
           "info": Object {
+            "authKey": "none",
             "name": "Foo name",
             "type": "FooType",
           },
@@ -300,6 +304,7 @@ describe('PublishedClient forward operation over JSON', () => {
       info: {
         type: 'Foo',
         name: 'Name',
+        authKey: 'none',
       },
       fields: { foo: 'Hello' },
     };

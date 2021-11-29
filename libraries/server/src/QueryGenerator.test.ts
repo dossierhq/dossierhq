@@ -670,7 +670,7 @@ describe('searchPublishedEntitiesQuery()', () => {
           "cursorExtractor": [Function],
           "isForwards": true,
           "pagingCount": 25,
-          "text": "SELECT e.id, e.uuid, e.type, e.name, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id ORDER BY e.id LIMIT $1",
+          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id ORDER BY e.id LIMIT $1",
           "values": Array [
             26,
           ],
@@ -686,7 +686,7 @@ describe('searchPublishedEntitiesQuery()', () => {
           "cursorExtractor": [Function],
           "isForwards": true,
           "pagingCount": 10,
-          "text": "SELECT e.id, e.uuid, e.type, e.name, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id ORDER BY e.id LIMIT $1",
+          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id ORDER BY e.id LIMIT $1",
           "values": Array [
             11,
           ],
@@ -707,7 +707,7 @@ describe('searchPublishedEntitiesQuery()', () => {
           "cursorExtractor": [Function],
           "isForwards": true,
           "pagingCount": 10,
-          "text": "SELECT e.id, e.uuid, e.type, e.name, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.id > $1 ORDER BY e.id LIMIT $2",
+          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.id > $1 ORDER BY e.id LIMIT $2",
           "values": Array [
             999,
             11,
@@ -733,7 +733,7 @@ describe('searchPublishedEntitiesQuery()', () => {
           "cursorExtractor": [Function],
           "isForwards": true,
           "pagingCount": 10,
-          "text": "SELECT e.id, e.uuid, e.type, e.name, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.id < $1 ORDER BY e.id DESC LIMIT $2",
+          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.id < $1 ORDER BY e.id DESC LIMIT $2",
           "values": Array [
             999,
             11,
@@ -750,7 +750,7 @@ describe('searchPublishedEntitiesQuery()', () => {
           "cursorExtractor": [Function],
           "isForwards": false,
           "pagingCount": 10,
-          "text": "SELECT e.id, e.uuid, e.type, e.name, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id ORDER BY e.id DESC LIMIT $1",
+          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id ORDER BY e.id DESC LIMIT $1",
           "values": Array [
             11,
           ],
@@ -771,7 +771,7 @@ describe('searchPublishedEntitiesQuery()', () => {
           "cursorExtractor": [Function],
           "isForwards": false,
           "pagingCount": 10,
-          "text": "SELECT e.id, e.uuid, e.type, e.name, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.id < $1 ORDER BY e.id DESC LIMIT $2",
+          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.id < $1 ORDER BY e.id DESC LIMIT $2",
           "values": Array [
             456,
             11,
@@ -794,7 +794,7 @@ describe('searchPublishedEntitiesQuery()', () => {
           "cursorExtractor": [Function],
           "isForwards": true,
           "pagingCount": 10,
-          "text": "SELECT e.id, e.uuid, e.type, e.name, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.id > $1 AND e.id < $2 ORDER BY e.id LIMIT $3",
+          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.id > $1 AND e.id < $2 ORDER BY e.id LIMIT $3",
           "values": Array [
             123,
             456,
@@ -822,7 +822,7 @@ describe('searchPublishedEntitiesQuery()', () => {
           "cursorExtractor": [Function],
           "isForwards": true,
           "pagingCount": 10,
-          "text": "SELECT e.id, e.uuid, e.type, e.name, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.id < $1 AND e.id > $2 ORDER BY e.id DESC LIMIT $3",
+          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.id < $1 AND e.id > $2 ORDER BY e.id DESC LIMIT $3",
           "values": Array [
             123,
             456,
@@ -846,7 +846,7 @@ describe('searchPublishedEntitiesQuery()', () => {
           "cursorExtractor": [Function],
           "isForwards": false,
           "pagingCount": 10,
-          "text": "SELECT e.id, e.uuid, e.type, e.name, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.id > $1 AND e.id < $2 ORDER BY e.id DESC LIMIT $3",
+          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.id > $1 AND e.id < $2 ORDER BY e.id DESC LIMIT $3",
           "values": Array [
             123,
             456,
@@ -870,7 +870,7 @@ describe('searchPublishedEntitiesQuery()', () => {
           "cursorExtractor": [Function],
           "isForwards": true,
           "pagingCount": 25,
-          "text": "SELECT e.id, e.uuid, e.type, e.name, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id ORDER BY e.id DESC LIMIT $1",
+          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id ORDER BY e.id DESC LIMIT $1",
           "values": Array [
             26,
           ],
@@ -887,7 +887,7 @@ describe('searchPublishedEntitiesQuery()', () => {
           "cursorExtractor": [Function],
           "isForwards": true,
           "pagingCount": 25,
-          "text": "SELECT e.id, e.uuid, e.type, e.name, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id ORDER BY e.id LIMIT $1",
+          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id ORDER BY e.id LIMIT $1",
           "values": Array [
             26,
           ],
@@ -904,7 +904,7 @@ describe('searchPublishedEntitiesQuery()', () => {
           "cursorExtractor": [Function],
           "isForwards": true,
           "pagingCount": 25,
-          "text": "SELECT e.id, e.uuid, e.type, e.name, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.type = ANY($1) ORDER BY e.id LIMIT $2",
+          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.type = ANY($1) ORDER BY e.id LIMIT $2",
           "values": Array [
             Array [
               "QueryGeneratorFoo",
@@ -929,7 +929,7 @@ describe('searchPublishedEntitiesQuery()', () => {
           "cursorExtractor": [Function],
           "isForwards": true,
           "pagingCount": 25,
-          "text": "SELECT e.id, e.uuid, e.type, e.name, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.type = ANY($1) ORDER BY e.id LIMIT $2",
+          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.type = ANY($1) ORDER BY e.id LIMIT $2",
           "values": Array [
             Array [
               "QueryGeneratorFoo",
@@ -955,7 +955,7 @@ describe('searchPublishedEntitiesQuery()', () => {
           "cursorExtractor": [Function],
           "isForwards": true,
           "pagingCount": 10,
-          "text": "SELECT e.id, e.uuid, e.type, e.name, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.type = ANY($1) AND e.id > $2 ORDER BY e.id LIMIT $3",
+          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.type = ANY($1) AND e.id > $2 ORDER BY e.id LIMIT $3",
           "values": Array [
             Array [
               "QueryGeneratorFoo",
@@ -982,7 +982,7 @@ describe('searchPublishedEntitiesQuery()', () => {
           "cursorExtractor": [Function],
           "isForwards": true,
           "pagingCount": 25,
-          "text": "SELECT e.id, e.uuid, e.type, e.name, ev.data FROM entities e, entity_versions ev, entity_version_references evr, entities e2 WHERE e.published_entity_versions_id = ev.id AND ev.id = evr.entity_versions_id AND evr.entities_id = e2.id AND e2.uuid = $1 AND e2.published_entity_versions_id IS NOT NULL ORDER BY e.id LIMIT $2",
+          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, ev.data FROM entities e, entity_versions ev, entity_version_references evr, entities e2 WHERE e.published_entity_versions_id = ev.id AND ev.id = evr.entity_versions_id AND evr.entities_id = e2.id AND e2.uuid = $1 AND e2.published_entity_versions_id IS NOT NULL ORDER BY e.id LIMIT $2",
           "values": Array [
             "37b48706-803e-4227-a51e-8208db12d949",
             26,
@@ -1012,7 +1012,7 @@ describe('searchPublishedEntitiesQuery()', () => {
           "cursorExtractor": [Function],
           "isForwards": true,
           "pagingCount": 25,
-          "text": "SELECT DISTINCT e.id, e.uuid, e.type, e.name, ev.data FROM entities e, entity_versions ev, entity_version_locations evl WHERE e.published_entity_versions_id = ev.id AND ev.id = evl.entity_versions_id AND evl.location && ST_MakeEnvelope($1, $2, $3, $4, 4326) ORDER BY e.id LIMIT $5",
+          "text": "SELECT DISTINCT e.id, e.uuid, e.type, e.name, e.auth_key, ev.data FROM entities e, entity_versions ev, entity_version_locations evl WHERE e.published_entity_versions_id = ev.id AND ev.id = evl.entity_versions_id AND evl.location && ST_MakeEnvelope($1, $2, $3, $4, 4326) ORDER BY e.id LIMIT $5",
           "values": Array [
             11.62,
             55.07,
@@ -1040,7 +1040,7 @@ describe('searchPublishedEntitiesQuery()', () => {
           "cursorExtractor": [Function],
           "isForwards": true,
           "pagingCount": 25,
-          "text": "SELECT e.id, e.uuid, e.type, e.name, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.published_fts @@ websearch_to_tsquery($1) ORDER BY e.id LIMIT $2",
+          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.published_fts @@ websearch_to_tsquery($1) ORDER BY e.id LIMIT $2",
           "values": Array [
             "foo bar",
             26,
@@ -1066,7 +1066,7 @@ describe('searchPublishedEntitiesQuery()', () => {
           "cursorExtractor": [Function],
           "isForwards": true,
           "pagingCount": 10,
-          "text": "SELECT e.id, e.uuid, e.type, e.name, ev.data FROM entities e, entity_versions ev, entity_version_references evr, entities e2 WHERE e.published_entity_versions_id = ev.id AND e.type = ANY($1) AND ev.id = evr.entity_versions_id AND evr.entities_id = e2.id AND e2.uuid = $2 AND e2.published_entity_versions_id IS NOT NULL AND e.id > $3 ORDER BY e.id LIMIT $4",
+          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, ev.data FROM entities e, entity_versions ev, entity_version_references evr, entities e2 WHERE e.published_entity_versions_id = ev.id AND e.type = ANY($1) AND ev.id = evr.entity_versions_id AND evr.entities_id = e2.id AND e2.uuid = $2 AND e2.published_entity_versions_id IS NOT NULL AND e.id > $3 ORDER BY e.id LIMIT $4",
           "values": Array [
             Array [
               "QueryGeneratorFoo",
@@ -1089,7 +1089,7 @@ describe('searchPublishedEntitiesQuery()', () => {
           "cursorExtractor": [Function],
           "isForwards": true,
           "pagingCount": 25,
-          "text": "SELECT e.id, e.uuid, e.type, e.name, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id ORDER BY e.id LIMIT $1",
+          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id ORDER BY e.id LIMIT $1",
           "values": Array [
             26,
           ],
@@ -1106,7 +1106,7 @@ describe('searchPublishedEntitiesQuery()', () => {
           "cursorExtractor": [Function],
           "isForwards": true,
           "pagingCount": 25,
-          "text": "SELECT e.id, e.uuid, e.type, e.name, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id ORDER BY e.name LIMIT $1",
+          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id ORDER BY e.name LIMIT $1",
           "values": Array [
             26,
           ],

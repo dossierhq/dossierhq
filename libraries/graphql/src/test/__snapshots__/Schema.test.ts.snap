@@ -358,6 +358,7 @@ enum ValueType {
 
 type EntityInfo {
   name: String!
+  authKey: String!
 }
 
 interface Entity implements Node {
@@ -467,6 +468,7 @@ enum ValueType {
 
 type EntityInfo {
   name: String!
+  authKey: String!
 }
 
 interface Entity implements Node {
@@ -1183,6 +1185,7 @@ enum EntityType {
 
 type EntityInfo {
   name: String!
+  authKey: String!
 }
 
 interface Entity implements Node {
@@ -1288,6 +1291,7 @@ enum EntityType {
 
 type EntityInfo {
   name: String!
+  authKey: String!
 }
 
 interface Entity implements Node {
@@ -1970,6 +1974,7 @@ enum EntityType {
 
 type EntityInfo {
   name: String!
+  authKey: String!
 }
 
 interface Entity implements Node {
@@ -2093,6 +2098,7 @@ enum EntityType {
 
 type EntityInfo {
   name: String!
+  authKey: String!
 }
 
 interface Entity implements Node {
@@ -2733,6 +2739,7 @@ enum EntityType {
 
 type EntityInfo {
   name: String!
+  authKey: String!
 }
 
 interface Entity implements Node {
@@ -2824,6 +2831,7 @@ enum EntityType {
 
 type EntityInfo {
   name: String!
+  authKey: String!
 }
 
 interface Entity implements Node {
@@ -3364,6 +3372,7 @@ enum ValueType {
 
 type EntityInfo {
   name: String!
+  authKey: String!
 }
 
 interface Entity implements Node {
@@ -3475,6 +3484,7 @@ enum ValueType {
 
 type EntityInfo {
   name: String!
+  authKey: String!
 }
 
 interface Entity implements Node {
@@ -4039,6 +4049,7 @@ enum EntityType {
 
 type EntityInfo {
   name: String!
+  authKey: String!
 }
 
 interface Entity implements Node {
@@ -4135,6 +4146,7 @@ enum EntityType {
 
 type EntityInfo {
   name: String!
+  authKey: String!
 }
 
 interface Entity implements Node {
@@ -4723,6 +4735,7 @@ enum EntityType {
 
 type EntityInfo {
   name: String!
+  authKey: String!
 }
 
 interface Entity implements Node {
@@ -4833,6 +4846,7 @@ enum EntityType {
 
 type EntityInfo {
   name: String!
+  authKey: String!
 }
 
 interface Entity implements Node {
@@ -5547,6 +5561,7 @@ enum ValueType {
 
 type EntityInfo {
   name: String!
+  authKey: String!
 }
 
 interface Entity implements Node {
@@ -5689,6 +5704,7 @@ enum ValueType {
 
 type EntityInfo {
   name: String!
+  authKey: String!
 }
 
 interface Entity implements Node {

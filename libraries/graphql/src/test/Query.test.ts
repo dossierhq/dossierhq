@@ -110,6 +110,7 @@ describe('node()', () => {
               ... on QueryFoo {
                 info {
                   name
+                  authKey
                 }
                 fields {
                   title
@@ -136,7 +137,7 @@ describe('node()', () => {
           node: {
             __typename: 'QueryFoo',
             id,
-            info: { name },
+            info: { name, authKey: 'none' },
             fields: {
               title: 'Howdy title',
               summary: 'Howdy summary',
@@ -179,6 +180,7 @@ describe('node()', () => {
               ... on QueryFoo {
                 info {
                   name
+                  authKey
                 }
                 fields {
                   title
@@ -214,7 +216,7 @@ describe('node()', () => {
           node: {
             __typename: 'QueryFoo',
             id,
-            info: { name },
+            info: { name, authKey: 'none' },
             fields: {
               title: null,
               summary: null,
@@ -259,6 +261,7 @@ describe('node()', () => {
               ... on QueryFoo {
                 info {
                   name
+                  authKey
                 }
                 fields {
                   body {
@@ -280,7 +283,7 @@ describe('node()', () => {
           node: {
             __typename: 'QueryFoo',
             id: fooId,
-            info: { name },
+            info: { name, authKey: 'none' },
             fields: {
               body: {
                 blocks: [{ type: 'paragraph', data: { text: 'Hello world' } }],
@@ -340,6 +343,7 @@ describe('node()', () => {
                 ... on QueryFoo {
                   info {
                     name
+                    authKey
                   }
                   fields {
                     body {
@@ -364,7 +368,7 @@ describe('node()', () => {
             node: {
               __typename: 'QueryFoo',
               id: fooId,
-              info: { name },
+              info: { name, authKey: 'none' },
               fields: {
                 body: {
                   blocks: [
@@ -421,6 +425,7 @@ describe('node()', () => {
                 ... on QueryFoo {
                   info {
                     name
+                    authKey
                   }
                   fields {
                     title
@@ -429,6 +434,7 @@ describe('node()', () => {
                       id
                       info {
                         name
+                        authKey
                       }
                       fields {
                         title
@@ -447,13 +453,13 @@ describe('node()', () => {
             node: {
               __typename: 'QueryFoo',
               id: fooId,
-              info: { name: fooName },
+              info: { name: fooName, authKey: 'none' },
               fields: {
                 title: 'Foo title',
                 bar: {
                   __typename: 'QueryBar',
                   id: barId,
-                  info: { name: barName },
+                  info: { name: barName, authKey: 'none' },
                   fields: {
                     title: 'Bar title',
                   },
@@ -521,6 +527,7 @@ describe('node()', () => {
                 ... on QueryFoo {
                   info {
                     name
+                    authKey
                   }
                   fields {
                     title
@@ -529,6 +536,7 @@ describe('node()', () => {
                       id
                       info {
                         name
+                        authKey
                       }
                       fields {
                         title
@@ -547,20 +555,20 @@ describe('node()', () => {
             node: {
               __typename: 'QueryFoo',
               id: fooId,
-              info: { name: fooName },
+              info: { name: fooName, authKey: 'none' },
               fields: {
                 title: 'Foo title',
                 bars: [
                   {
                     __typename: 'QueryBar',
                     id: bar1Id,
-                    info: { name: bar1Name },
+                    info: { name: bar1Name, authKey: 'none' },
                     fields: { title: 'Bar 1 title' },
                   },
                   {
                     __typename: 'QueryBar',
                     id: bar2Id,
-                    info: { name: bar2Name },
+                    info: { name: bar2Name, authKey: 'none' },
                     fields: { title: 'Bar 2 title' },
                   },
                 ],
@@ -615,6 +623,7 @@ describe('node()', () => {
                 ... on QueryFoo {
                   info {
                     name
+                    authKey
                   }
                   fields {
                     title
@@ -627,6 +636,7 @@ describe('node()', () => {
                         id
                         info {
                           name
+                          authKey
                         }
                         fields {
                           title
@@ -646,7 +656,7 @@ describe('node()', () => {
             node: {
               __typename: 'QueryFoo',
               id: fooId,
-              info: { name: fooName },
+              info: { name: fooName, authKey: 'none' },
               fields: {
                 title: 'Foo title',
                 stringedBar: {
@@ -656,7 +666,7 @@ describe('node()', () => {
                   bar: {
                     __typename: 'QueryBar',
                     id: barId,
-                    info: { name: barName },
+                    info: { name: barName, authKey: 'none' },
                     fields: { title: 'Bar title' },
                   },
                 },
@@ -767,6 +777,7 @@ describe('nodes()', () => {
               ... on QueryFoo {
                 info {
                   name
+                  authKey
                 }
               }
             }
@@ -781,14 +792,12 @@ describe('nodes()', () => {
             {
               __typename: 'QueryFoo',
               id: foo1Id,
-              info: {
-                name: foo1Name,
-              },
+              info: { name: foo1Name, authKey: 'none' },
             },
             {
               __typename: 'QueryFoo',
               id: foo2Id,
-              info: { name: foo2Name },
+              info: { name: foo2Name, authKey: 'none' },
             },
           ],
         },
