@@ -10,6 +10,7 @@ export interface Entity {
 export interface EntityInfo {
   type: string;
   name: string;
+  authKey: string;
 }
 
 export interface EntityLike {

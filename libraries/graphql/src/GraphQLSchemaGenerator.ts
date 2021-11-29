@@ -380,6 +380,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         name: 'EntityInfo',
         fields: {
           name: { type: new GraphQLNonNull(GraphQLString) },
+          authKey: { type: new GraphQLNonNull(GraphQLString) },
         },
       })
     );

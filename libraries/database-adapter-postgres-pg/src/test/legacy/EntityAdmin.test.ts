@@ -556,7 +556,7 @@ describe('createEntity()', () => {
       const publishedResult = await publishedClient.getEntity({ id });
       expectResultValue(publishedResult, {
         id,
-        info: { type: 'EntityAdminFoo', name },
+        info: { type: 'EntityAdminFoo', name, authKey: 'none' },
         fields: { ...emptyFooFields, title: 'Title' },
       });
     }
@@ -773,7 +773,7 @@ describe('createEntity()', () => {
         const publishedFooResult = await publishedClient.getEntity({ id: fooId });
         expectResultValue(publishedFooResult, {
           id: fooId,
-          info: { type: 'EntityAdminFoo', name },
+          info: { type: 'EntityAdminFoo', name, authKey: 'none' },
           fields: {
             ...emptyFooFields,
             title: 'Foo title',
@@ -2679,7 +2679,7 @@ describe('updateEntity()', () => {
         const publishedResult = await publishedClient.getEntity({ id });
         expectResultValue(publishedResult, {
           id,
-          info: { type: 'EntityAdminFoo', name: expectedEntity.info.name },
+          info: { type: 'EntityAdminFoo', name: expectedEntity.info.name, authKey: 'none' },
           fields: { ...emptyFooFields, title: 'Updated title' },
         });
       }
@@ -2774,7 +2774,7 @@ describe('updateEntity()', () => {
         const publishedResult = await publishedClient.getEntity({ id });
         expectResultValue(publishedResult, {
           id,
-          info: { type: 'EntityAdminFoo', name },
+          info: { type: 'EntityAdminFoo', name, authKey: 'none' },
           fields: {
             ...emptyFooFields,
             title: 'First',
@@ -2857,7 +2857,7 @@ describe('updateEntity()', () => {
       const publishedResult = await publishedClient.getEntity({ id });
       expectResultValue(publishedResult, {
         id,
-        info: { type: 'EntityAdminFoo', name: expectedEntity.info.name },
+        info: { type: 'EntityAdminFoo', name: expectedEntity.info.name, authKey: 'none' },
         fields: { ...emptyFooFields, title: 'Updated title' },
       });
     }
@@ -2943,7 +2943,7 @@ describe('updateEntity()', () => {
       const publishedResult = await publishedClient.getEntity({ id });
       expectResultValue(publishedResult, {
         id,
-        info: { type: 'EntityAdminFoo', name: expectedEntity.info.name },
+        info: { type: 'EntityAdminFoo', name: expectedEntity.info.name, authKey: 'none' },
         fields: {
           ...emptyFooFields,
           title: 'First title',
@@ -2980,7 +2980,7 @@ describe('updateEntity()', () => {
       const publishedResult = await publishedClient.getEntity({ id });
       expectResultValue(publishedResult, {
         id,
-        info: { type: 'EntityAdminFoo', name },
+        info: { type: 'EntityAdminFoo', name, authKey: 'none' },
         fields: { ...emptyFooFields, title: 'First title', summary: 'First summary' },
       });
     }
@@ -3125,7 +3125,7 @@ describe('updateEntity()', () => {
         const publishedResult = await publishedClient.getEntity({ id: fooId });
         expectResultValue(publishedResult, {
           id: fooId,
-          info: { type: 'EntityAdminFoo', name: expectedEntity.info.name },
+          info: { type: 'EntityAdminFoo', name: expectedEntity.info.name, authKey: 'none' },
           fields: { title: 'First title', summary: 'First summary', bar: { id: barId } },
         });
       }
@@ -3229,7 +3229,7 @@ describe('updateEntity()', () => {
         const publishedResult = await publishedClient.getEntity({ id: bazId });
         expectResultValue(publishedResult, {
           id: bazId,
-          info: { type: 'EntityAdminBaz', name: expectedEntity.info.name },
+          info: { type: 'EntityAdminBaz', name: expectedEntity.info.name, authKey: 'none' },
           fields: {
             ...emptyBazFields,
             title: 'Updated title',

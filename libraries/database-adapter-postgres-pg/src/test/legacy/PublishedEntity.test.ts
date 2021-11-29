@@ -237,7 +237,7 @@ describe('getEntity()', () => {
       const result = await publishedClient.getEntity({ id });
       expectResultValue(result, {
         id,
-        info: { type: 'PublishedEntityFoo', name },
+        info: { type: 'PublishedEntityFoo', name, authKey: 'none' },
         fields: { ...emptyFooFields, title: 'Title 1' },
       });
     }
@@ -271,7 +271,7 @@ describe('getEntity()', () => {
         if (expectOkResult(getResult)) {
           expectResultValue(getResult, {
             id,
-            info: { type: 'PublishedEntityFoo', name },
+            info: { type: 'PublishedEntityFoo', name, authKey: 'none' },
             fields: { ...emptyFooFields, title: 'Foo title 1' },
           });
         }
@@ -358,12 +358,12 @@ describe('getEntities()', () => {
         expect(result.value).toHaveLength(2);
         expectResultValue(result.value[0], {
           id: foo2Id,
-          info: { type: 'PublishedEntityFoo', name: foo2Name },
+          info: { type: 'PublishedEntityFoo', name: foo2Name, authKey: 'none' },
           fields: { ...emptyFooFields, title: 'Title 2' },
         });
         expectResultValue(result.value[1], {
           id: foo1Id,
-          info: { type: 'PublishedEntityFoo', name: foo1Name },
+          info: { type: 'PublishedEntityFoo', name: foo1Name, authKey: 'none' },
           fields: { ...emptyFooFields, title: 'Title 1' },
         });
       }
@@ -400,7 +400,7 @@ describe('getEntities()', () => {
         expectErrorResult(result.value[0], ErrorType.NotFound, 'No such entity');
         expectResultValue(result.value[1], {
           id: foo1Id,
-          info: { type: 'PublishedEntityFoo', name: foo1Name },
+          info: { type: 'PublishedEntityFoo', name: foo1Name, authKey: 'none' },
           fields: {
             ...emptyFooFields,
             title: 'Title',

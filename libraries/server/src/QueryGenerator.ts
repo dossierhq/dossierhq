@@ -20,7 +20,10 @@ export type SearchAdminEntitiesItem = Pick<
   'id' | 'uuid' | 'type' | 'name' | 'auth_key' | 'created_at' | 'updated_at' | 'updated' | 'status'
 > &
   Pick<EntityVersionsTable, 'version' | 'data'>;
-export type SearchPublishedEntitiesItem = Pick<EntitiesTable, 'id' | 'uuid' | 'type' | 'name'> &
+export type SearchPublishedEntitiesItem = Pick<
+  EntitiesTable,
+  'id' | 'uuid' | 'type' | 'name' | 'auth_key'
+> &
   Pick<EntityVersionsTable, 'data'>;
 
 type CursorName = 'name' | 'updated' | 'id';
@@ -73,7 +76,9 @@ function sharedSearchEntitiesQuery<
     qb.addQuery('DISTINCT');
   }
   if (published) {
-    qb.addQuery('e.id, e.uuid, e.type, e.name, ev.data FROM entities e, entity_versions ev');
+    qb.addQuery(
+      'e.id, e.uuid, e.type, e.name, e.auth_key, ev.data FROM entities e, entity_versions ev'
+    );
   } else {
     qb.addQuery(`e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, ev.version, ev.data
   FROM entities e, entity_versions ev`);
