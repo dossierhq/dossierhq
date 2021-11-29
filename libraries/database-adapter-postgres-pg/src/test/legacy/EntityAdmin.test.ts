@@ -1,4 +1,10 @@
-import type { AdminClient, AdminEntity, PublishedClient } from '@jonasb/datadata-core';
+import type {
+  AdminClient,
+  AdminEntity,
+  AdminEntityCreate,
+  AdminEntityUpsert,
+  PublishedClient,
+} from '@jonasb/datadata-core';
 import {
   AdminQueryOrder,
   copyEntity,
@@ -1528,6 +1534,35 @@ describe('createEntity()', () => {
     });
 
     expectErrorResult(result, ErrorType.BadRequest, 'Unsupported version for create: 1');
+  });
+
+  test('Error: Create without authKey', async () => {
+    const result = await client.createEntity({
+      info: {
+        type: 'EntityAdminFoo',
+        name: 'Foo',
+      },
+      fields: {},
+    } as AdminEntityCreate);
+
+    expectErrorResult(result, ErrorType.BadRequest, 'Missing entity.info.authKey');
+  });
+
+  test('Error: Using authKey where adapter returns error', async () => {
+    const result = await client.createEntity({
+      info: {
+        type: 'EntityAdminFoo',
+        name: 'Foo',
+        authKey: 'unauthorized',
+      },
+      fields: {},
+    });
+
+    expectErrorResult(
+      result,
+      ErrorType.NotAuthorized,
+      'User not authorized to use authKey unauthorized'
+    );
   });
 
   test('Error: Create with invalid field', async () => {
@@ -3572,6 +3607,18 @@ describe('upsertEntity()', () => {
         entity: createResult.value.entity,
       });
     }
+  });
+
+  test('Error: Upsert without authKey', async () => {
+    const result = await client.upsertEntity({
+      info: {
+        type: 'EntityAdminFoo',
+        name: 'Foo',
+      },
+      fields: {},
+    } as AdminEntityUpsert);
+
+    expectErrorResult(result, ErrorType.BadRequest, 'Missing entity.info.authKey');
   });
 });
 

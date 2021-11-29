@@ -231,6 +231,9 @@ export function resolveCreateEntity(
   if (!entity.info.type) {
     return notOk.BadRequest('Missing entity.info.type');
   }
+  if (!entity.info.authKey) {
+    return notOk.BadRequest('Missing entity.info.authKey');
+  }
   if (entity.info.version && entity.info.version !== 0) {
     return notOk.BadRequest(`Unsupported version for create: ${entity.info.version}`);
   }
