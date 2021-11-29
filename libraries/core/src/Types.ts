@@ -75,6 +75,7 @@ export interface AdminEntityInfo {
   type: string;
   name: string;
   version: number;
+  authKey: string;
   /** The current publish state of the entity.
    *
    * It is not connected to the requested version so if you get an old version of the entity, the

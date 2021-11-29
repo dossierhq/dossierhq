@@ -162,7 +162,10 @@ function decodeRichTextField(
 
 export function decodeAdminEntity(
   schema: AdminSchema,
-  values: Pick<EntitiesTable, 'uuid' | 'type' | 'name' | 'created_at' | 'updated_at' | 'status'> &
+  values: Pick<
+    EntitiesTable,
+    'uuid' | 'type' | 'name' | 'auth_key' | 'created_at' | 'updated_at' | 'status'
+  > &
     Pick<EntityVersionsTable, 'version' | 'data'>
 ): AdminEntity {
   const entitySpec = schema.getEntityTypeSpecification(values.type);
@@ -178,6 +181,7 @@ export function decodeAdminEntity(
       type: values.type,
       name: values.name,
       version: values.version,
+      authKey: values.auth_key,
       publishingState: state,
       createdAt: values.created_at,
       updatedAt: values.updated_at,
@@ -268,7 +272,10 @@ export function resolveUpdateEntity(
   schema: AdminSchema,
   entity: AdminEntityUpdate,
   type: string,
-  values: Pick<EntitiesTable, 'id' | 'type' | 'name' | 'created_at' | 'updated_at' | 'status'> &
+  values: Pick<
+    EntitiesTable,
+    'id' | 'type' | 'name' | 'auth_key' | 'created_at' | 'updated_at' | 'status'
+  > &
     Pick<EntityVersionsTable, 'version' | 'data'>
 ): Result<{ changed: boolean; entity: AdminEntity }, ErrorType.BadRequest> {
   if (entity.info?.type && entity.info.type !== type) {
@@ -287,6 +294,7 @@ export function resolveUpdateEntity(
       name: entity.info?.name ?? values.name,
       type: type,
       version: values.version + 1,
+      authKey: values.auth_key,
       publishingState: newState,
       createdAt: values.created_at,
       updatedAt: values.updated_at,

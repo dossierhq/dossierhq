@@ -70,6 +70,7 @@ function createDummyEntity({ id }: { id: string }): AdminEntity {
       name: 'Foo name',
       type: 'FooType',
       version: 0,
+      authKey: 'none',
       publishingState: EntityPublishState.Draft,
       createdAt: Temporal.Instant.from('2021-08-17T07:51:25.56Z'),
       updatedAt: Temporal.Instant.from('2021-08-17T07:51:25.56Z'),
@@ -158,6 +159,7 @@ describe('AdminClient forward operation over JSON', () => {
             "fields": Object {},
             "id": "1234",
             "info": Object {
+              "authKey": "none",
               "createdAt": "2021-08-17T07:51:25.56Z",
               "name": "Foo name",
               "publishingState": "draft",
@@ -230,6 +232,7 @@ describe('AdminClient forward operation over JSON', () => {
               "fields": Object {},
               "id": "1234",
               "info": Object {
+                "authKey": "none",
                 "createdAt": "2021-08-17T07:51:25.56Z",
                 "name": "Foo name",
                 "publishingState": "draft",
@@ -244,6 +247,7 @@ describe('AdminClient forward operation over JSON', () => {
               "fields": Object {},
               "id": "5678",
               "info": Object {
+                "authKey": "none",
                 "createdAt": "2021-08-17T07:51:25.56Z",
                 "name": "Foo name",
                 "publishingState": "draft",
@@ -309,6 +313,7 @@ describe('AdminClient forward operation over JSON', () => {
           "fields": Object {},
           "id": "1234",
           "info": Object {
+            "authKey": "none",
             "createdAt": "2021-08-17T07:51:25.56Z",
             "name": "Foo name",
             "publishingState": "draft",
@@ -649,6 +654,7 @@ describe('AdminClient forward operation over JSON', () => {
         type: 'Foo',
         name: 'Name',
         version: 2,
+        authKey: 'none',
         publishingState: EntityPublishState.Published,
         createdAt: Temporal.Instant.from('2021-08-17T08:51:25.56Z'),
         updatedAt: Temporal.Instant.from('2021-10-17T08:51:25.56Z'),
@@ -927,6 +933,7 @@ describe('AdminClient forward operation over JSON', () => {
             "fields": Object {},
             "id": "1234",
             "info": Object {
+              "authKey": "none",
               "createdAt": "2021-08-17T07:51:25.56Z",
               "name": "Foo name",
               "publishingState": "draft",
@@ -1046,6 +1053,7 @@ describe('AdminClient forward operation over JSON', () => {
             "fields": Object {},
             "id": "1234",
             "info": Object {
+              "authKey": "none",
               "createdAt": "2021-08-17T07:51:25.56Z",
               "name": "Foo name",
               "publishingState": "draft",
