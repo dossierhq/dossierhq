@@ -1,4 +1,5 @@
 import type { ErrorType, Logger, PromiseResult, Result } from '.';
+import { notOk } from '.';
 import { assertIsDefined } from './Asserts';
 
 export interface ClientContext {
@@ -37,9 +38,9 @@ export async function executeOperationPipeline<
   context: TContext,
   pipeline: TMiddleware[],
   operation: OperationWithoutCallbacks<TOp>
-): Promise<Result<TOk, TError>> {
+): PromiseResult<TOk, TError> {
   if (pipeline.length === 0) {
-    throw new Error('Cannot execute an empty pipeline');
+    return notOk.Generic('Cannot execute an empty pipeline') as Result<TOk, TError>;
   }
   return await executeOperationMiddleware(context, pipeline, 0, operation);
 }
@@ -58,14 +59,14 @@ async function executeOperationMiddleware<
   pipeline: TMiddleware[],
   pipelineIndex: number,
   operation: OperationWithoutCallbacks<TOp>
-): Promise<Result<TOk, TError>> {
+): PromiseResult<TOk, TError> {
   // Setup callbacks
   let result: Result<TOk, TError> | undefined;
   const resolve = (res: Result<TOk, TError>) => (result = res);
 
   const next = async () => {
     if (pipelineIndex >= pipeline.length - 1) {
-      throw new Error('The last middleware in the pipeline cannot call next()');
+      return notOk.Generic('The last middleware in the pipeline cannot call next()');
     }
     const nextResult = await executeOperationMiddleware(
       context,
@@ -79,10 +80,14 @@ async function executeOperationMiddleware<
   const operationWithCallbacks = { ...operation, resolve, next } as unknown as TOp;
 
   // Execute the middleware in pipelineIndex
-  await pipeline[pipelineIndex](context, operationWithCallbacks);
-  assertIsDefined(result);
+  try {
+    await pipeline[pipelineIndex](context, operationWithCallbacks);
+    assertIsDefined(result);
 
-  return result;
+    return result;
+  } catch (error) {
+    return notOk.GenericUnexpectedException(error) as Result<TOk, TError>;
+  }
 }
 
 export async function LoggingClientMiddleware<
