@@ -2,6 +2,7 @@ import type {
   Connection,
   Edge,
   Entity,
+  EntityReference,
   ErrorType,
   Paging,
   PromiseResult,
@@ -10,7 +11,8 @@ import type {
   Schema,
 } from '@jonasb/datadata-core';
 import { notOk, ok } from '@jonasb/datadata-core';
-import type { DatabaseAdapter, SessionContext } from '.';
+import type { AuthorizationAdapter, DatabaseAdapter, SessionContext } from '.';
+import { authVerifyAuthorizationKey } from './Auth';
 import * as Db from './Database';
 import type { EntitiesTable, EntityVersionsTable } from './DatabaseTables';
 import { decodePublishedEntity } from './EntityCodec';
@@ -20,23 +22,39 @@ import { searchPublishedEntitiesQuery, totalPublishedEntitiesQuery } from './Que
 
 export async function getEntity(
   schema: Schema,
+  authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  id: string
-): PromiseResult<Entity, ErrorType.NotFound> {
+  reference: EntityReference,
+  options: { authKeys: string[] } | undefined
+): PromiseResult<
+  Entity,
+  ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
+> {
   const entityMain = await Db.queryNoneOrOne<
-    Pick<EntitiesTable, 'uuid' | 'type' | 'name' | 'auth_key'> & Pick<EntityVersionsTable, 'data'>
+    Pick<EntitiesTable, 'uuid' | 'type' | 'name' | 'auth_key' | 'resolved_auth_key'> &
+      Pick<EntityVersionsTable, 'data'>
   >(
     databaseAdapter,
     context,
-    `SELECT e.uuid, e.type, e.name, e,auth_key, ev.data
+    `SELECT e.uuid, e.type, e.name, e,auth_key, e.resolved_auth_key, ev.data
       FROM entities e, entity_versions ev
       WHERE e.uuid = $1
       AND e.published_entity_versions_id = ev.id`,
-    [id]
+    [reference.id]
   );
   if (!entityMain) {
     return notOk.NotFound('No such entity');
+  }
+
+  const authResult = await authVerifyAuthorizationKey(
+    authorizationAdapter,
+    context,
+    options?.authKeys,
+    { authKey: entityMain.auth_key, resolvedAuthKey: entityMain.resolved_auth_key }
+  );
+  if (authResult.isError()) {
+    return authResult;
   }
 
   const entity = decodePublishedEntity(schema, entityMain);

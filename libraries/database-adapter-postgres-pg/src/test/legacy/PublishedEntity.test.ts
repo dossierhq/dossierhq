@@ -308,6 +308,24 @@ describe('getEntity()', () => {
     const result = await publishedClient.getEntity({ id: 'f09fdd62-4a1e-4320-afba-8dd0781799df' });
     expectErrorResult(result, ErrorType.NotFound, 'No such entity');
   });
+
+  test('Error: Using wrong authKey', async () => {
+    const createResult = await adminClient.createEntity({
+      info: { type: 'EntityAdminFoo', name: 'Foo', authKey: 'subject' },
+      fields: { title: 'Title' },
+    });
+
+    if (expectOkResult(createResult)) {
+      const {
+        entity: { id },
+      } = createResult.value;
+
+      expectOkResult(await adminClient.publishEntities([{ id, version: 0 }]));
+
+      const getResult = await publishedClient.getEntity({ id }, { authKeys: ['none'] });
+      expectErrorResult(getResult, ErrorType.NotAuthorized, 'Wrong authKey provided');
+    }
+  });
 });
 
 describe('getEntities()', () => {

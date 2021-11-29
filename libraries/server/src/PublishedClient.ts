@@ -10,17 +10,19 @@ import {
   ok,
   PublishedClientOperationName,
 } from '@jonasb/datadata-core';
-import type { DatabaseAdapter, SessionContext } from '.';
+import type { AuthorizationAdapter, DatabaseAdapter, SessionContext } from '.';
 import { getEntities, getEntity, getTotalCount, searchEntities } from './PublishedEntity';
 import type { ServerImpl } from './Server';
 
 export function createServerPublishedClient({
   context,
+  authorizationAdapter,
   databaseAdapter,
   serverImpl,
   middleware,
 }: {
   context: SessionContext | ContextProvider<SessionContext>;
+  authorizationAdapter: AuthorizationAdapter;
   databaseAdapter: DatabaseAdapter;
   serverImpl: ServerImpl;
   middleware: PublishedClientMiddleware<SessionContext>[];
@@ -47,10 +49,19 @@ export function createServerPublishedClient({
       }
       case PublishedClientOperationName.getEntity: {
         const {
-          args: [reference],
+          args: [reference, options],
           resolve,
         } = operation as PublishedClientOperation<PublishedClientOperationName.getEntity>;
-        resolve(await getEntity(serverImpl.getSchema(), databaseAdapter, context, reference.id));
+        resolve(
+          await getEntity(
+            serverImpl.getSchema(),
+            authorizationAdapter,
+            databaseAdapter,
+            context,
+            reference,
+            options
+          )
+        );
         break;
       }
       case PublishedClientOperationName.getSchemaSpecification: {
