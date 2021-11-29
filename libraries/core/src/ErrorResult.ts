@@ -5,6 +5,8 @@ export enum ErrorType {
   Conflict = 'Conflict',
   /** Corresponds to 401 Unauthenticated */
   NotAuthenticated = 'NotAuthenticated',
+  /** Corresponds to 403 Forbidden */
+  NotAuthorized = 'NotAuthorized',
   /** Corresponds to 404 Not Found */
   NotFound = 'NotFound',
   Generic = 'Generic',
@@ -154,6 +156,8 @@ export const notOk = {
   },
   NotAuthenticated: (message: string): ErrorResult<unknown, ErrorType.NotAuthenticated> =>
     createErrorResult(ErrorType.NotAuthenticated, message),
+  NotAuthorized: (message: string): ErrorResult<unknown, ErrorType.NotAuthorized> =>
+    createErrorResult(ErrorType.NotAuthorized, message),
   NotFound: (message: string): ErrorResult<unknown, ErrorType.NotFound> =>
     createErrorResult(ErrorType.NotFound, message),
 };
@@ -162,6 +166,7 @@ const httpStatusToErrorType = new Map<number, ErrorType>();
 httpStatusToErrorType.set(400, ErrorType.BadRequest);
 httpStatusToErrorType.set(409, ErrorType.Conflict);
 httpStatusToErrorType.set(401, ErrorType.NotAuthenticated);
+httpStatusToErrorType.set(401, ErrorType.NotAuthorized);
 httpStatusToErrorType.set(404, ErrorType.NotFound);
 httpStatusToErrorType.set(500, ErrorType.Generic);
 

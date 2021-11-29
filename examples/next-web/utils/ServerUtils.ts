@@ -1,16 +1,12 @@
-import type {
-  AdminClient,
-  ErrorType,
-  Logger,
-  PromiseResult,
-  PublishedClient,
-} from '@jonasb/datadata-core';
-import { notOk, ok, AdminSchema } from '@jonasb/datadata-core';
+import type { AdminClient, ErrorType, PromiseResult, PublishedClient } from '@jonasb/datadata-core';
+import { AdminSchema, notOk, ok } from '@jonasb/datadata-core';
 import { createPostgresAdapter } from '@jonasb/datadata-database-adapter-postgres-pg';
-import type { Server } from '@jonasb/datadata-server';
+import type { AuthenticationAdapter, Server } from '@jonasb/datadata-server';
 import { createServer } from '@jonasb/datadata-server';
 import type { NextApiRequest } from 'next';
 import SchemaSpec from './schema.json';
+
+const validKeys: readonly string[] = ['none'];
 
 let serverConnectionPromise: Promise<{ server: Server; schema: AdminSchema }> | null = null;
 
@@ -40,7 +36,10 @@ export async function getServerConnection(): Promise<{ server: Server; schema: A
       const databaseAdapter = createPostgresAdapter({
         connectionString: process.env.DATABASE_URL!,
       });
-      const serverResult = await createServer({ databaseAdapter });
+      const serverResult = await createServer({
+        databaseAdapter,
+        authenticationAdapter: createAuthenticationAdapter(),
+      });
       if (serverResult.isError()) throw serverResult.toError();
       const server = serverResult.value;
 
@@ -56,4 +55,19 @@ export async function getServerConnection(): Promise<{ server: Server; schema: A
   }
 
   return serverConnectionPromise;
+}
+
+function createAuthenticationAdapter(): AuthenticationAdapter {
+  return {
+    async resolveAuthenticationKeys<T extends string>(authKeys: T[]) {
+      const result = {} as Record<T, string>;
+      for (const key of authKeys) {
+        if (!validKeys.includes(key)) {
+          return notOk.BadRequest(`Invalid authorization key ${key}`);
+        }
+        result[key] = key;
+      }
+      return ok(result);
+    },
+  };
 }

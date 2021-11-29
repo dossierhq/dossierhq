@@ -1,14 +1,11 @@
 import 'dotenv/config';
 import { CliAuth, CliContext, CliMain } from '@jonasb/datadata-cli';
 import { AdminSchema } from '@jonasb/datadata-core';
-import { createPostgresAdapter } from '@jonasb/datadata-database-adapter-postgres-pg';
-import { createServer } from '@jonasb/datadata-server';
 import SchemaSpec from './schema.json';
+import { initializeServer } from './server';
 
 async function main() {
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const databaseAdapter = createPostgresAdapter({ connectionString: process.env.DATABASE_URL! });
-  const serverResult = await createServer({ databaseAdapter });
+  const serverResult = await initializeServer();
   if (serverResult.isError()) throw serverResult.toError();
   const server = serverResult.value;
   try {
