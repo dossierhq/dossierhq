@@ -13,7 +13,9 @@ import type {
   EntityHistory,
   EntityLike,
   EntityPublishPayload,
+  EntityReference,
   EntityVersionInfo,
+  EntityVersionReference,
   Paging,
   PromiseResult,
   PublishingEvent,
@@ -34,7 +36,7 @@ import {
 } from '@jonasb/datadata-core';
 import type { AuthorizationAdapter, DatabaseAdapter, SessionContext } from '.';
 import type { ResolvedAuthKey } from './Auth';
-import { authResolveAuthorizationKey } from './Auth';
+import { authResolveAuthorizationKey, authVerifyAuthorizationKey } from './Auth';
 import * as Db from './Database';
 import type {
   EntitiesTable,
@@ -58,16 +60,20 @@ import { searchAdminEntitiesQuery, totalAdminEntitiesQuery } from './QueryGenera
 
 export async function getEntity(
   schema: AdminSchema,
+  authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  id: string,
-  version?: number | null
-): PromiseResult<AdminEntity, ErrorType.NotFound> {
+  reference: EntityReference | EntityVersionReference,
+  options: { authKeys: string[] } | undefined
+): PromiseResult<
+  AdminEntity,
+  ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
+> {
   let actualVersion: number;
-  if (typeof version === 'number') {
-    actualVersion = version;
+  if ('version' in reference) {
+    actualVersion = reference.version;
   } else {
-    const versionResult = await resolveMaxVersionForEntity(databaseAdapter, context, id);
+    const versionResult = await resolveMaxVersionForEntity(databaseAdapter, context, reference.id);
     if (versionResult.isError()) {
       return versionResult;
     }
@@ -76,21 +82,38 @@ export async function getEntity(
   const entityMain = await Db.queryNoneOrOne<
     Pick<
       EntitiesTable,
-      'uuid' | 'type' | 'name' | 'auth_key' | 'created_at' | 'updated_at' | 'status'
+      | 'uuid'
+      | 'type'
+      | 'name'
+      | 'auth_key'
+      | 'resolved_auth_key'
+      | 'created_at'
+      | 'updated_at'
+      | 'status'
     > &
       Pick<EntityVersionsTable, 'version' | 'data'>
   >(
     databaseAdapter,
     context,
-    `SELECT e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.status, ev.version, ev.data
+    `SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, ev.version, ev.data
       FROM entities e, entity_versions ev
       WHERE e.uuid = $1
       AND e.id = ev.entities_id
       AND ev.version = $2`,
-    [id, actualVersion]
+    [reference.id, actualVersion]
   );
   if (!entityMain) {
     return notOk.NotFound('No such entity or version');
+  }
+
+  const authResult = await authVerifyAuthorizationKey(
+    authorizationAdapter,
+    context,
+    options?.authKeys,
+    { authKey: entityMain.auth_key, resolvedAuthKey: entityMain.resolved_auth_key }
+  );
+  if (authResult.isError()) {
+    return authResult;
   }
 
   const entity = decodeAdminEntity(schema, entityMain);

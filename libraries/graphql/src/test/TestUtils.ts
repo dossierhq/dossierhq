@@ -46,7 +46,11 @@ async function setUpRealServerWithSession(schemaSpecification: AdminSchemaSpecif
   });
   if (serverResult.isError()) throw serverResult.toError();
   const server = serverResult.value;
-  const sessionResult = await server.createSession({ provider: 'test', identifier: 'identifier' });
+  const sessionResult = await server.createSession({
+    provider: 'test',
+    identifier: 'identifier',
+    defaultAuthKeys: ['none'],
+  });
   if (sessionResult.isError()) throw serverResult.toError();
   const { context } = sessionResult.value;
   const subjectId = context.session.subjectId;

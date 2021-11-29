@@ -88,16 +88,17 @@ export function createServerAdminClient({
       }
       case AdminClientOperationName.getEntity: {
         const {
-          args: [reference],
+          args: [reference, options],
           resolve,
         } = operation as AdminClientOperation<AdminClientOperationName.getEntity>;
         resolve(
           await getEntity(
             serverImpl.getAdminSchema(),
+            authorizationAdapter,
             databaseAdapter,
             context,
-            reference.id,
-            'version' in reference ? reference.version : null
+            reference,
+            options
           )
         );
         break;

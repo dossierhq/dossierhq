@@ -42,7 +42,11 @@ export async function createPostgresTestServerAndClient(): PromiseResult<
   });
   if (serverResult.isError()) return serverResult;
   const server = serverResult.value;
-  const sessionResult = await server.createSession({ provider: 'test', identifier: 'identifier' });
+  const sessionResult = await server.createSession({
+    provider: 'test',
+    identifier: 'identifier',
+    defaultAuthKeys: ['none'],
+  });
   if (sessionResult.isError()) {
     await server.shutdown(); // ignore result
     return sessionResult;

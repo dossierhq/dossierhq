@@ -62,3 +62,39 @@ export async function authResolveAuthorizationKey(
     resolvedAuthKey,
   });
 }
+
+export async function authVerifyAuthorizationKey(
+  authorizationAdapter: AuthorizationAdapter,
+  context: SessionContext,
+  requestedAuthKeys: string[] | undefined,
+  actualAuthKey: ResolvedAuthKey
+): PromiseResult<void, ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic> {
+  const expectedAuthKeys =
+    requestedAuthKeys && requestedAuthKeys.length > 0 ? requestedAuthKeys : context.defaultAuthKeys;
+  if (expectedAuthKeys.length === 0) {
+    return notOk.BadRequest('No authKey provided');
+  }
+
+  if (!expectedAuthKeys.includes(actualAuthKey.authKey)) {
+    return notOk.NotAuthorized('Wrong authKey provided');
+  }
+
+  const resolvedResult = await authResolveAuthorizationKey(
+    authorizationAdapter,
+    context,
+    actualAuthKey.authKey
+  );
+  if (resolvedResult.isError()) {
+    return resolvedResult;
+  }
+  const expectedAuthKey = resolvedResult.value;
+
+  if (
+    expectedAuthKey.authKey !== actualAuthKey.authKey ||
+    expectedAuthKey.resolvedAuthKey !== actualAuthKey.resolvedAuthKey
+  ) {
+    return notOk.NotAuthorized('Wrong authKey provided');
+  }
+
+  return ok(undefined);
+}
