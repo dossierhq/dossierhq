@@ -28,7 +28,7 @@ export interface Server {
   createSession(params: {
     provider: string;
     identifier: string;
-    defaultAuthKeys?: readonly string[];
+    defaultAuthKeys: readonly string[];
     logger?: Logger;
   }): PromiseResult<CreateSessionPayload, ErrorType.BadRequest | ErrorType.Generic>;
   createAdminClient(

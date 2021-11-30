@@ -33,7 +33,11 @@ registerTestSuite(
       assertIsDefined(server);
       const resolvedServer = server;
       const client = server.createAdminClient(() =>
-        resolvedServer.createSession({ provider: 'test', identifier: 'id' })
+        resolvedServer.createSession({
+          provider: 'test',
+          identifier: 'id',
+          defaultAuthKeys: ['none'],
+        })
       );
       return [{ client }, undefined];
     },

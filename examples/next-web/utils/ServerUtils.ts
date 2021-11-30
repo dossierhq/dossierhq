@@ -62,6 +62,7 @@ export async function getServerConnection(): Promise<{ server: Server; schema: A
       const schemaLoaderSession = await server.createSession({
         provider: 'sys',
         identifier: 'schemaloader',
+        defaultAuthKeys: [],
       });
       if (schemaLoaderSession.isError()) throw schemaLoaderSession.toError();
       const client = server.createAdminClient(schemaLoaderSession.value.context);
