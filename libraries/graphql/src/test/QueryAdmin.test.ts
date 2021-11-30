@@ -1078,6 +1078,45 @@ GraphQL request:3:11
 4 |             id`,
     ]);
   });
+
+  test('Error: Query using the wrong authKey', async () => {
+    const { adminClient } = server;
+    const createResult = await adminClient.createEntity({
+      info: { type: 'QueryAdminFoo', name: 'First name', authKey: 'none' },
+      fields: { title: 'First title', summary: 'First summary' },
+    });
+    if (expectOkResult(createResult)) {
+      const {
+        entity: { id },
+      } = createResult.value;
+
+      const result = await graphql({
+        schema,
+        source: `
+        query AdminEntity($id: ID!, $authKeys: [String!]) {
+          adminEntity(id: $id, authKeys: $authKeys) {
+            id
+          }
+        }
+      `,
+        contextValue: createContext(),
+        variableValues: { id, authKeys: ['subject'] },
+      });
+      expect(result.data).toEqual({
+        adminEntity: null,
+      });
+      const errorStrings = result.errors?.map(printError);
+      expect(errorStrings).toEqual([
+        `NotAuthorized: Wrong authKey provided
+
+GraphQL request:3:11
+2 |         query AdminEntity($id: ID!, $authKeys: [String!]) {
+3 |           adminEntity(id: $id, authKeys: $authKeys) {
+  |           ^
+4 |             id`,
+      ]);
+    }
+  });
 });
 
 describe('adminEntities()', () => {
