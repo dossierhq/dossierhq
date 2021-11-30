@@ -1,6 +1,11 @@
 import type { AdminEntity, AdminQuery } from '@jonasb/datadata-core';
 import { FullscreenContainer, IconButton, toSizeClassName } from '@jonasb/datadata-design';
 import React, { useCallback, useContext, useEffect, useReducer, useState } from 'react';
+import {
+  AuthKeySelector,
+  initializeAuthKeySelectorState,
+  reduceAuthKeySelectorState,
+} from '../../components/AuthKeySelector/AuthKeySelector.js';
 import type { EntitySearchStateUrlQuery } from '../../index.js';
 import {
   DataDataContext2,
@@ -43,7 +48,7 @@ export function EntityListScreen({
   onCreateEntity,
   onOpenEntity,
 }: EntityListScreenProps): JSX.Element | null {
-  const { schema } = useContext(DataDataContext2);
+  const { schema, authKeys } = useContext(DataDataContext2);
   const [searchEntityState, dispatchSearchEntityState] = useReducer(
     reduceSearchEntityState,
     urlQuery,
@@ -62,6 +67,15 @@ export function EntityListScreen({
       selectedIds: (searchEntityState.query as AdminQuery).status,
     },
     initializeStatusSelectorState
+  );
+
+  const [authKeyFilterState, dispatchAuthKeyFilterState] = useReducer(
+    reduceAuthKeySelectorState,
+    {
+      authKeys,
+      selectedIds: searchEntityState.query.authKeys,
+    },
+    initializeAuthKeySelectorState
   );
 
   const [showMap, setShowMap] = useState(!!searchEntityState.query.boundingBox);
@@ -91,6 +105,13 @@ export function EntityListScreen({
       new SearchEntityStateActions.SetQuery({ status: statusFilterState.selectedIds }, true)
     );
   }, [statusFilterState.selectedIds]);
+
+  // sync auth key filter -> search state
+  useEffect(() => {
+    dispatchSearchEntityState(
+      new SearchEntityStateActions.SetQuery({ authKeys: authKeyFilterState.selectedIds }, true)
+    );
+  }, [authKeyFilterState.selectedIds]);
 
   // sync url <-> search entity state
   useSynchronizeUrlQueryAndSearchEntityState(
@@ -123,6 +144,9 @@ export function EntityListScreen({
         <StatusSelector state={statusFilterState} dispatch={dispatchStatusFilterState}>
           Status
         </StatusSelector>
+        <AuthKeySelector state={authKeyFilterState} dispatch={dispatchAuthKeyFilterState}>
+          Auth keys
+        </AuthKeySelector>
         <IconButton icon={showMap ? 'list' : 'map'} onClick={handleToggleShowMap} />
         <TypePicker2 iconLeft="add" showEntityTypes onTypeSelected={onCreateEntity}>
           Create

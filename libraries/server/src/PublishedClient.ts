@@ -73,7 +73,7 @@ export function createServerPublishedClient({
       }
       case PublishedClientOperationName.getTotalCount: {
         const {
-          args: [query, options],
+          args: [query],
           resolve,
         } = operation as PublishedClientOperation<PublishedClientOperationName.getTotalCount>;
         resolve(
@@ -82,15 +82,14 @@ export function createServerPublishedClient({
             authorizationAdapter,
             databaseAdapter,
             context,
-            query,
-            options
+            query
           )
         );
         break;
       }
       case PublishedClientOperationName.searchEntities: {
         const {
-          args: [query, paging, options],
+          args: [query, paging],
           resolve,
         } = operation as PublishedClientOperation<PublishedClientOperationName.searchEntities>;
         resolve(
@@ -100,8 +99,7 @@ export function createServerPublishedClient({
             databaseAdapter,
             context,
             query,
-            paging,
-            options
+            paging
           )
         );
         break;

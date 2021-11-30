@@ -102,6 +102,9 @@ class SetQueryAction implements SearchEntityStateAction {
     const query: AdminQuery | Query = this.partial
       ? { ...state.query, ...this.value }
       : { ...this.value };
+    if (query.authKeys?.length === 0) {
+      delete query.authKeys;
+    }
     if (!query.order) {
       query.order = defaultOrder;
     }
