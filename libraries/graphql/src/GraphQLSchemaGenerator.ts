@@ -1049,6 +1049,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
           fieldType = GraphQLBoolean;
           break;
         case FieldType.EntityType:
+          //TODO ability to specify authKeys?
           fieldType = this.getOrCreateEntityUnion(isAdmin, fieldSpec.entityTypes ?? []);
           break;
         case FieldType.Location:
@@ -1146,14 +1147,19 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
   buildQueryFieldAdminEntity<TSource>(
     adminSchema: AdminSchema
   ): GraphQLFieldConfig<TSource, TContext> {
-    return fieldConfigWithArgs<TSource, TContext, { id: string; version: number | null }>({
+    return fieldConfigWithArgs<
+      TSource,
+      TContext,
+      { id: string; version: number | null; authKeys: string[] | null }
+    >({
       type: this.getInterface('AdminEntity'),
       args: {
         id: { type: new GraphQLNonNull(GraphQLID) },
         version: { type: GraphQLInt },
+        authKeys: { type: new GraphQLList(new GraphQLNonNull(GraphQLString)) },
       },
       resolve: async (_source, args, context, _info) => {
-        return await loadAdminEntity(adminSchema, context, args.id, args.version);
+        return await loadAdminEntity(adminSchema, context, args.id, args.version, args.authKeys);
       },
     });
   }
