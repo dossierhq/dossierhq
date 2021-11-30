@@ -456,7 +456,10 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       new GraphQLInputObjectType({
         name: 'QueryInput',
         fields: {
-          entityTypes: { type: new GraphQLList(this.getEnumType('EntityType')) },
+          authKeys: { type: new GraphQLList(new GraphQLNonNull(GraphQLString)) },
+          entityTypes: {
+            type: new GraphQLList(new GraphQLNonNull(this.getEnumType('EntityType'))),
+          },
           referencing: { type: GraphQLID },
           boundingBox: { type: this.getInputType('BoundingBoxInput') },
           order: { type: this.getEnumType('QueryOrder') },
@@ -709,7 +712,10 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       new GraphQLInputObjectType({
         name: 'AdminQueryInput',
         fields: {
-          entityTypes: { type: new GraphQLList(this.getEnumType('AdminEntityType')) },
+          authKeys: { type: new GraphQLList(new GraphQLNonNull(GraphQLString)) },
+          entityTypes: {
+            type: new GraphQLList(new GraphQLNonNull(this.getEnumType('AdminEntityType'))),
+          },
           referencing: { type: GraphQLID },
           boundingBox: { type: this.getInputType('BoundingBoxInput') },
           order: { type: this.getEnumType('AdminQueryOrder') },
