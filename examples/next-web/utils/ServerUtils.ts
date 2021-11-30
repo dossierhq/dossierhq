@@ -6,7 +6,7 @@ import { createServer } from '@jonasb/datadata-server';
 import type { NextApiRequest } from 'next';
 import SchemaSpec from './schema.json';
 
-const validKeys: readonly string[] = ['none'];
+const validKeys: readonly string[] = ['none', 'subject'];
 
 let serverConnectionPromise: Promise<{ server: Server; schema: AdminSchema }> | null = null;
 
@@ -18,7 +18,12 @@ export async function getSessionContextForRequest(
   ErrorType.NotAuthenticated
 > {
   //TODO actually authenticate
-  const sessionResult = await server.createSession({ provider: 'test', identifier: 'john-smith' });
+  const defaultAuthKeys = getDefaultAuthKeysFromHeaders(req);
+  const sessionResult = await server.createSession({
+    provider: 'test',
+    identifier: 'john-smith',
+    defaultAuthKeys,
+  });
   if (sessionResult.isError()) {
     return notOk.NotAuthenticated(
       `Failed authentication: ${sessionResult.error}: ${sessionResult.message}`
@@ -28,6 +33,17 @@ export async function getSessionContextForRequest(
   const adminClient = server.createAdminClient(context);
   const publishedClient = server.createPublishedClient(context);
   return ok({ adminClient, publishedClient });
+}
+
+function getDefaultAuthKeysFromHeaders(req: NextApiRequest) {
+  const value = req.headers['datadata-default-auth-keys'];
+  const defaultAuthKeys: string[] = [];
+  if (typeof value === 'string') {
+    defaultAuthKeys.push(...value.split(',').map((it) => it.trim()));
+  } else if (Array.isArray(value)) {
+    defaultAuthKeys.push(...value.flatMap((it) => it.split(',')).map((it) => it.trim()));
+  }
+  return defaultAuthKeys;
 }
 
 export async function getServerConnection(): Promise<{ server: Server; schema: AdminSchema }> {
@@ -66,7 +82,7 @@ function createAuthenticationAdapter(): AuthorizationAdapter {
       const result = {} as Record<T, string>;
       for (const key of authKeys) {
         if (!validKeys.includes(key)) {
-          return notOk.BadRequest(`Invalid authorization key ${key}`);
+          return notOk.BadRequest(`Invalid authorization key (${key})`);
         }
         result[key] = key;
       }

@@ -32,6 +32,9 @@ const DISPLAY_AUTH_KEYS: DisplayAuthKey[] = [
   { authKey: 'none', displayName: 'None' },
   { authKey: 'subject', displayName: 'User private' },
 ];
+const AUTH_KEYS_HEADER = {
+  'DataData-Default-Auth-Keys': DISPLAY_AUTH_KEYS.map((it) => it.authKey).join(', '),
+};
 
 type BackendContext = ClientContext;
 
@@ -143,13 +146,13 @@ async function terminatingAdminMiddleware(
   if (operation.modifies) {
     result = await fetchJsonResult(context, urls.admin(operation.name), {
       method: 'PUT',
-      headers: { 'content-type': 'application/json' },
+      headers: { ...AUTH_KEYS_HEADER, 'content-type': 'application/json' },
       body: JSON.stringify(jsonOperation),
     });
   } else {
     result = await fetchJsonResult(context, urls.admin(operation.name, jsonOperation), {
       method: 'GET',
-      headers: { 'content-type': 'application/json' },
+      headers: { ...AUTH_KEYS_HEADER, 'content-type': 'application/json' },
     });
   }
   operation.resolve(convertJsonAdminClientResult(operation.name, result));
@@ -165,13 +168,13 @@ async function terminatingPublishedMiddleware(
   if (operation.modifies) {
     result = await fetchJsonResult(context, urls.published(operation.name), {
       method: 'PUT',
-      headers: { 'content-type': 'application/json' },
+      headers: { ...AUTH_KEYS_HEADER, 'content-type': 'application/json' },
       body: JSON.stringify(jsonOperation),
     });
   } else {
     result = await fetchJsonResult(context, urls.published(operation.name, jsonOperation), {
       method: 'GET',
-      headers: { 'content-type': 'application/json' },
+      headers: { ...AUTH_KEYS_HEADER, 'content-type': 'application/json' },
     });
   }
   operation.resolve(convertJsonPublishedClientResult(operation.name, result));
