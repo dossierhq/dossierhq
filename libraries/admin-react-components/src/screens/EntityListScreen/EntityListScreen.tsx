@@ -1,22 +1,21 @@
 import type { AdminEntity, AdminQuery } from '@jonasb/datadata-core';
 import { FullscreenContainer, IconButton, toSizeClassName } from '@jonasb/datadata-design';
 import React, { useCallback, useContext, useEffect, useReducer, useState } from 'react';
-import {
-  AuthKeySelector,
-  initializeAuthKeySelectorState,
-  reduceAuthKeySelectorState,
-} from '../../components/AuthKeySelector/AuthKeySelector.js';
 import type { EntitySearchStateUrlQuery } from '../../index.js';
 import {
+  AuthKeySelector,
+  AuthKeyTagSelector,
   DataDataContext2,
   EntityList2,
   EntityMap2,
   EntityMapMarker,
   EntityTypeSelector,
   EntityTypeTagSelector,
+  initializeAuthKeySelectorState,
   initializeEntityTypeSelectorState,
   initializeSearchEntityStateFromUrlQuery,
   initializeStatusSelectorState,
+  reduceAuthKeySelectorState,
   reduceEntityTypeSelectorState,
   reduceSearchEntityState,
   reduceStatusSelectorState,
@@ -175,6 +174,7 @@ export function EntityListScreen({
               dispatch={dispatchEntityTypeFilterState}
             />
             <StatusTagSelector state={statusFilterState} dispatch={dispatchStatusFilterState} />
+            <AuthKeyTagSelector state={authKeyFilterState} dispatch={dispatchAuthKeyFilterState} />
             <EntityList2
               {...{ searchEntityState, dispatchSearchEntityState }}
               onItemClick={onOpenEntity}

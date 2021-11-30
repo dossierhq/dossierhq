@@ -3,6 +3,16 @@ export type {
   ToolSettings as EditorJsToolSettings,
 } from '@editorjs/editorjs';
 export {
+  AuthKeySelector,
+  initializeAuthKeySelectorState,
+  reduceAuthKeySelectorState,
+} from './components/AuthKeySelector/AuthKeySelector.js';
+export type {
+  AuthKeySelectorDispatch,
+  AuthKeySelectorState,
+} from './components/AuthKeySelector/AuthKeySelector.js';
+export { AuthKeyTagSelector } from './components/AuthKeyTagSelector/AuthKeyTagSelector.js';
+export {
   DataDataProvider,
   WaitForDataDataContext,
 } from './components/DataDataProvider/DataDataProvider.js';
@@ -17,7 +27,6 @@ export type {
   StatusSelectorDispatch,
   StatusSelectorState,
 } from './components/StatusSelector/StatusSelector.js';
-export type { DisplayAuthKey } from './types/DisplayAuthKey.js';
 export { StatusTag } from './components/StatusTag/StatusTag.js';
 export { StatusTagSelector } from './components/StatusTagSelector/StatusTagSelector.js';
 export { TypePicker2 } from './components/TypePicker2/TypePicker2.js';
@@ -96,5 +105,6 @@ export * as published from './published/index.js';
 export { EntityListScreen } from './screens/EntityListScreen/EntityListScreen.js';
 export { MapContainer } from './shared/components/MapContainer/MapContainer.js';
 export * from './shared/index.js';
+export type { DisplayAuthKey } from './types/DisplayAuthKey.js';
 export type { LayoutProps, SpacingSize } from './types/LayoutTypes.js';
 export type { Kind } from './utils/KindUtils.js';
