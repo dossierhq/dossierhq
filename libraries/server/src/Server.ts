@@ -28,7 +28,7 @@ export interface Server {
   createSession(params: {
     provider: string;
     identifier: string;
-    defaultAuthKeys?: string[];
+    defaultAuthKeys?: readonly string[];
     logger?: Logger;
   }): PromiseResult<CreateSessionPayload, ErrorType.BadRequest | ErrorType.Generic>;
   createAdminClient(
@@ -99,7 +99,7 @@ export class ServerImpl {
 
   createSessionContext(
     session: Session,
-    defaultAuthKeys: string[],
+    defaultAuthKeys: readonly string[],
     logger: Logger | undefined
   ): SessionContext {
     assertIsDefined(this.#databaseAdapter);
