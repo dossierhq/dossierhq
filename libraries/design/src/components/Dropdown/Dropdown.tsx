@@ -5,6 +5,7 @@ import type { IconName } from '../index.js';
 import { Button, DropdownDisplay } from '../index.js';
 
 export interface DropdownProps<TItem extends DropdownItem = DropdownItem> {
+  id?: string;
   iconLeft?: IconName;
   left?: boolean;
   up?: boolean;
@@ -22,6 +23,7 @@ export interface DropdownItem {
 }
 
 export function Dropdown<TItem extends DropdownItem>({
+  id,
   iconLeft,
   left,
   up,
@@ -41,6 +43,7 @@ export function Dropdown<TItem extends DropdownItem>({
 
   return (
     <DropdownDisplay
+      id={id}
       active={active}
       up={up}
       left={left}

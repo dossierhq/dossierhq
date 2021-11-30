@@ -19,7 +19,7 @@ import type {
 import { assertExhaustive, createErrorResultFromError, ErrorType } from '@jonasb/datadata-core';
 import { createContext } from 'react';
 import useSWR, { mutate } from 'swr';
-import type { DataDataContextAdapter, EditorJsToolSettings } from '..';
+import type { DataDataContextAdapter, DisplayAuthKey, EditorJsToolSettings } from '..';
 
 //TODO remove file when migrated to DataDataContext2
 
@@ -41,6 +41,7 @@ export class DataDataContextValue {
   #adapter: DataDataContextAdapter;
   #adminClient: AdminClient;
   #schema: AdminSchema;
+  #authKeys: DisplayAuthKey[];
   #logger: Logger;
   /** Used to enable different cache keys for SWR */
   #rootKey: string | undefined;
@@ -50,12 +51,14 @@ export class DataDataContextValue {
     adminClient: AdminClient,
     schema: AdminSchema,
     logger: Logger,
+    authKeys: DisplayAuthKey[],
     rootKey?: string
   ) {
     this.#adapter = adapter;
     this.#adminClient = adminClient;
     //TODO fetch schema from adminClient?
     this.#schema = schema;
+    this.#authKeys = authKeys;
     this.#logger = logger;
     this.#rootKey = rootKey;
   }
@@ -70,6 +73,10 @@ export class DataDataContextValue {
 
   get schema(): AdminSchema {
     return this.#schema;
+  }
+
+  get authKeys(): DisplayAuthKey[] {
+    return this.#authKeys;
   }
 
   /** Loads an entity. If `id` is `undefined` no data is fetched */

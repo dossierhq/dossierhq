@@ -17,6 +17,7 @@ export type {
   StatusSelectorDispatch,
   StatusSelectorState,
 } from './components/StatusSelector/StatusSelector.js';
+export type { DisplayAuthKey } from './types/DisplayAuthKey.js';
 export { StatusTag } from './components/StatusTag/StatusTag.js';
 export { StatusTagSelector } from './components/StatusTagSelector/StatusTagSelector.js';
 export { TypePicker2 } from './components/TypePicker2/TypePicker2.js';

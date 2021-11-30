@@ -37,6 +37,11 @@ interface BackendContext {
 
 const GENERATE_ENTITIES_UUID_NAMESPACE = '96597f34-8654-4f66-b98d-3e9f5bb7cc9a';
 
+export const DISPLAY_AUTH_KEYS = [
+  { authKey: 'none', displayName: 'None' },
+  { authKey: 'subject', displayName: 'User private' },
+];
+
 export async function createContextValue2(
   middleware: AdminClientMiddleware<BackendContext>[] = []
 ): PromiseResult<DataDataContextValue, ErrorType.Generic> {
@@ -45,7 +50,15 @@ export async function createContextValue2(
   const schemaResult = await adminClient.getSchemaSpecification();
   if (schemaResult.isError()) return schemaResult;
   const schema = new AdminSchema(schemaResult.value);
-  return ok(new DataDataContextValue(new TestContextAdapter(), adminClient, schema, NoOpLogger));
+  return ok(
+    new DataDataContextValue(
+      new TestContextAdapter(),
+      adminClient,
+      schema,
+      NoOpLogger,
+      DISPLAY_AUTH_KEYS
+    )
+  );
 }
 
 export function createBackendAdminClient(

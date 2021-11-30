@@ -1,13 +1,13 @@
 import type {
   AdminClient,
+  AdminSchema,
   ErrorResult,
   ErrorType,
   FieldSpecification,
   Logger,
-  AdminSchema,
 } from '@jonasb/datadata-core';
 import { createContext } from 'react';
-import type { EditorJsToolSettings } from '..';
+import type { DisplayAuthKey, EditorJsToolSettings } from '..';
 
 export interface DataDataContextAdapter {
   getEditorJSConfig(
@@ -23,6 +23,7 @@ export interface DataDataContextValue2 {
   logger: Logger;
   schema: AdminSchema | undefined;
   schemaError: ErrorResult<unknown, ErrorType.Generic> | undefined;
+  authKeys: DisplayAuthKey[];
 }
 
 export const DataDataContext2 = createContext<DataDataContextValue2>({

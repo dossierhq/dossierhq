@@ -73,12 +73,13 @@ const expressMiddleWare = (router) => {
   router.use(bodyParser.json());
   router.use('/admin', (req, res) => {
     handleClientOperation(req, res, async (server, name, operation) => {
+      //TODO get auth keys from header
       const adminClient = server.createAdminClient(
         () =>
           server.createSession({
             provider: 'sys',
             identifier: 'storybook',
-            defaultAuthKeys: ['none'],
+            defaultAuthKeys: ['none', 'subject'],
           }),
         [LoggingClientMiddleware]
       );
@@ -88,6 +89,7 @@ const expressMiddleWare = (router) => {
   });
   router.use('/published', (req, res) => {
     handleClientOperation(req, res, async (server, name, operation) => {
+      //TODO get auth keys from header
       const adminClient = server.createPublishedClient(
         () =>
           server.createSession({
