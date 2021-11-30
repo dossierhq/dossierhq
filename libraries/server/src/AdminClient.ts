@@ -79,9 +79,10 @@ export function createServerAdminClient({
         resolve(
           await getEntities(
             serverImpl.getAdminSchema(),
+            authorizationAdapter,
             databaseAdapter,
             context,
-            references.map(({ id }) => id)
+            references
           )
         );
         break;

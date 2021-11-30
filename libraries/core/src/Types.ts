@@ -22,6 +22,11 @@ export interface EntityReference {
   id: string;
 }
 
+export interface EntityReferenceWithAuthKeys {
+  id: string;
+  authKeys?: string[];
+}
+
 export interface EntityVersionReference {
   id: string;
   version: number;

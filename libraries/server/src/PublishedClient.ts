@@ -40,9 +40,10 @@ export function createServerPublishedClient({
         resolve(
           await getEntities(
             serverImpl.getSchema(),
+            authorizationAdapter,
             databaseAdapter,
             context,
-            references.map(({ id }) => id)
+            references
           )
         );
         break;
