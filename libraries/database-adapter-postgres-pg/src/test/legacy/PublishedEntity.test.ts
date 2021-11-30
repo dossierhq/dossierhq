@@ -322,7 +322,7 @@ describe('getEntity()', () => {
 
       expectOkResult(await adminClient.publishEntities([{ id, version: 0 }]));
 
-      const getResult = await publishedClient.getEntity({ id }, { authKeys: ['none'] });
+      const getResult = await publishedClient.getEntity({ id, authKeys: ['none'] });
       expectErrorResult(getResult, ErrorType.NotAuthorized, 'Wrong authKey provided');
     }
   });

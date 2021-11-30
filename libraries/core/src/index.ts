@@ -127,6 +127,7 @@ export type {
   EntityReferenceWithAuthKeys,
   EntityVersionInfo,
   EntityVersionReference,
+  EntityVersionReferenceWithAuthKeys,
   Location,
   PageInfo,
   Paging,

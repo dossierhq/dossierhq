@@ -364,7 +364,7 @@ describe('getEntity()', () => {
         entity: { id },
       } = createResult.value;
 
-      const getResult = await client.getEntity({ id }, { authKeys: ['none'] });
+      const getResult = await client.getEntity({ id, authKeys: ['none'] });
       expectErrorResult(getResult, ErrorType.NotAuthorized, 'Wrong authKey provided');
     }
   });

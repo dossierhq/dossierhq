@@ -13,10 +13,9 @@ import type {
   EntityHistory,
   EntityLike,
   EntityPublishPayload,
-  EntityReference,
   EntityReferenceWithAuthKeys,
   EntityVersionInfo,
-  EntityVersionReference,
+  EntityVersionReferenceWithAuthKeys,
   Paging,
   PromiseResult,
   PublishingEvent,
@@ -68,8 +67,7 @@ export async function getEntity(
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  reference: EntityReference | EntityVersionReference,
-  options: { authKeys: string[] } | undefined
+  reference: EntityReferenceWithAuthKeys | EntityVersionReferenceWithAuthKeys
 ): PromiseResult<
   AdminEntity,
   ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
@@ -114,7 +112,7 @@ export async function getEntity(
   const authResult = await authVerifyAuthorizationKey(
     authorizationAdapter,
     context,
-    options?.authKeys,
+    reference?.authKeys,
     { authKey: entityMain.auth_key, resolvedAuthKey: entityMain.resolved_auth_key }
   );
   if (authResult.isError()) {

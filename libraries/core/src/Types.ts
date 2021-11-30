@@ -22,14 +22,17 @@ export interface EntityReference {
   id: string;
 }
 
-export interface EntityReferenceWithAuthKeys {
-  id: string;
+export interface EntityReferenceWithAuthKeys extends EntityReference {
   authKeys?: string[];
 }
 
 export interface EntityVersionReference {
   id: string;
   version: number;
+}
+
+export interface EntityVersionReferenceWithAuthKeys extends EntityVersionReference {
+  authKeys?: string[];
 }
 
 export interface RichText {
