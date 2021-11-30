@@ -24,7 +24,7 @@ export interface InternalContext extends TransactionContext<InternalContext> {
 
 export interface SessionContext extends TransactionContext<SessionContext> {
   readonly session: Session;
-  readonly defaultAuthKeys: string[];
+  readonly defaultAuthKeys: readonly string[];
   [sessionContextSymbol]: never;
 }
 
@@ -92,11 +92,11 @@ export class SessionContextImpl
 {
   [sessionContextSymbol]: never;
   readonly session: Session;
-  readonly defaultAuthKeys: string[];
+  readonly defaultAuthKeys: readonly string[];
 
   constructor(
     session: Session,
-    defaultAuthKeys: string[],
+    defaultAuthKeys: readonly string[],
     databaseAdapter: DatabaseAdapter,
     logger: Logger,
     transaction: Transaction | null = null
