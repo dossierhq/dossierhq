@@ -1,3 +1,13 @@
+export {
+  AuthKeySelector,
+  initializeAuthKeySelectorState,
+  reduceAuthKeySelectorState,
+} from './components/AuthKeySelector/AuthKeySelector.js';
+export type {
+  AuthKeySelectorDispatch,
+  AuthKeySelectorState,
+} from './components/AuthKeySelector/AuthKeySelector.js';
+export { AuthKeyTagSelector } from './components/AuthKeyTagSelector/AuthKeyTagSelector.js';
 export { ConnectionPagingButtons } from './components/ConnectionPagingButtons/ConnectionPagingButtons.js';
 export { ConnectionPagingCount } from './components/ConnectionPagingCount/ConnectionPagingCount.js';
 export { EntityMap2 } from './components/EntityMap2/EntityMap2.js';
@@ -31,3 +41,4 @@ export {
   useSynchronizeUrlQueryAndSearchEntityState,
 } from './reducers/SearchEnittyReducer/SearchEntityUrlSynchronizer.js';
 export type { EntitySearchStateUrlQuery } from './reducers/SearchEnittyReducer/SearchEntityUrlSynchronizer.js';
+export type { DisplayAuthKey } from './types/DisplayAuthKey.js';

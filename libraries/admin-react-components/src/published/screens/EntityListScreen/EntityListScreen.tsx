@@ -3,14 +3,18 @@ import { FullscreenContainer, IconButton, toSizeClassName } from '@jonasb/datada
 import React, { useCallback, useContext, useEffect, useReducer, useState } from 'react';
 import type { EntitySearchStateUrlQuery } from '../../index.js';
 import {
+  AuthKeySelector,
+  AuthKeyTagSelector,
   EntityList,
   EntityMap2,
   EntityMapMarker,
   EntityTypeSelector,
   EntityTypeTagSelector,
+  initializeAuthKeySelectorState,
   initializeEntityTypeSelectorState,
   initializeSearchEntityStateFromUrlQuery,
   PublishedDataDataContext,
+  reduceAuthKeySelectorState,
   reduceEntityTypeSelectorState,
   reduceSearchEntityState,
   SearchEntityPagingButtons,
@@ -36,7 +40,7 @@ export function EntityListScreen({
   onUrlQueryChanged,
   onOpenEntity,
 }: EntityListScreenProps): JSX.Element | null {
-  const { schema } = useContext(PublishedDataDataContext);
+  const { schema, authKeys } = useContext(PublishedDataDataContext);
   const [searchEntityState, dispatchSearchEntityState] = useReducer(
     reduceSearchEntityState,
     urlQuery,
@@ -47,6 +51,15 @@ export function EntityListScreen({
     reduceEntityTypeSelectorState,
     { selectedIds: searchEntityState.query.entityTypes },
     initializeEntityTypeSelectorState
+  );
+
+  const [authKeyFilterState, dispatchAuthKeyFilterState] = useReducer(
+    reduceAuthKeySelectorState,
+    {
+      authKeys,
+      selectedIds: searchEntityState.query.authKeys,
+    },
+    initializeAuthKeySelectorState
   );
 
   const [showMap, setShowMap] = useState(!!searchEntityState.query.boundingBox);
@@ -69,6 +82,13 @@ export function EntityListScreen({
       )
     );
   }, [entityTypeFilterState.selectedIds]);
+
+  // sync auth key filter -> search state
+  useEffect(() => {
+    dispatchSearchEntityState(
+      new SearchEntityStateActions.SetQuery({ authKeys: authKeyFilterState.selectedIds }, true)
+    );
+  }, [authKeyFilterState.selectedIds]);
 
   // sync url <-> search entity state
   useSynchronizeUrlQueryAndSearchEntityState(
@@ -98,6 +118,9 @@ export function EntityListScreen({
         >
           Entity type
         </EntityTypeSelector>
+        <AuthKeySelector state={authKeyFilterState} dispatch={dispatchAuthKeyFilterState}>
+          Auth keys
+        </AuthKeySelector>
         <IconButton icon={showMap ? 'list' : 'map'} onClick={handleToggleShowMap} />
       </FullscreenContainer.Row>
       {showMap ? (
@@ -122,6 +145,7 @@ export function EntityListScreen({
               state={entityTypeFilterState}
               dispatch={dispatchEntityTypeFilter}
             />
+            <AuthKeyTagSelector state={authKeyFilterState} dispatch={dispatchAuthKeyFilterState} />
             <EntityList
               {...{ searchEntityState, dispatchSearchEntityState }}
               onItemClick={onOpenEntity}

@@ -1,7 +1,7 @@
 import type { ErrorType, PromiseResult, PublishedClient } from '@jonasb/datadata-core';
 import { ok } from '@jonasb/datadata-core';
 import React, { useEffect, useState } from 'react';
-import { createBackendPublishedClient } from '../../test/TestContextAdapter.js';
+import { createBackendPublishedClient, DISPLAY_AUTH_KEYS } from '../../test/TestContextAdapter.js';
 import { PublishedDataDataProvider } from '../index.js';
 
 interface Props {
@@ -33,7 +33,10 @@ export function LoadContextProvider({ publishedClient, children }: Props): JSX.E
   }
   if (!resolvedPublishedClient) return null;
   return (
-    <PublishedDataDataProvider publishedClient={resolvedPublishedClient}>
+    <PublishedDataDataProvider
+      publishedClient={resolvedPublishedClient}
+      authKeys={DISPLAY_AUTH_KEYS}
+    >
       {children}
     </PublishedDataDataProvider>
   );
