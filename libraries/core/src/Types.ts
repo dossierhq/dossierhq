@@ -172,6 +172,7 @@ export enum AdminQueryOrder {
 }
 
 export interface AdminQuery {
+  authKeys?: string[];
   entityTypes?: string[];
   status?: EntityPublishState[];
   /** Entities referencing the entity (by id) */
@@ -188,6 +189,7 @@ export enum QueryOrder {
 }
 
 export interface Query {
+  authKeys?: string[];
   entityTypes?: string[];
   /** Entities referencing the entity (by id) */
   referencing?: string;

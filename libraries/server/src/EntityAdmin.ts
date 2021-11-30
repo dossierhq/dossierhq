@@ -168,8 +168,7 @@ export async function searchEntities(
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   query: AdminQuery | undefined,
-  paging: Paging | undefined,
-  options: { authKeys: string[] } | undefined
+  paging: Paging | undefined
 ): PromiseResult<
   Connection<Edge<AdminEntity, ErrorType>> | null,
   ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
@@ -177,7 +176,7 @@ export async function searchEntities(
   const authKeysResult = await authResolveAuthorizationKeys(
     authorizationAdapter,
     context,
-    options?.authKeys
+    query?.authKeys
   );
   if (authKeysResult.isError()) {
     return authKeysResult;
@@ -202,13 +201,12 @@ export async function getTotalCount(
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  query: AdminQuery | undefined,
-  options: { authKeys: string[] } | undefined
+  query: AdminQuery | undefined
 ): PromiseResult<number, ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic> {
   const authKeysResult = await authResolveAuthorizationKeys(
     authorizationAdapter,
     context,
-    options?.authKeys
+    query?.authKeys
   );
   if (authKeysResult.isError()) {
     return authKeysResult;

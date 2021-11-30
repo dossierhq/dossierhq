@@ -128,7 +128,7 @@ export function createServerAdminClient({
       }
       case AdminClientOperationName.getTotalCount: {
         const {
-          args: [query, options],
+          args: [query],
           resolve,
         } = operation as AdminClientOperation<AdminClientOperationName.getTotalCount>;
         resolve(
@@ -137,8 +137,7 @@ export function createServerAdminClient({
             authorizationAdapter,
             databaseAdapter,
             context,
-            query,
-            options
+            query
           )
         );
         break;
@@ -155,7 +154,7 @@ export function createServerAdminClient({
       }
       case AdminClientOperationName.searchEntities: {
         const {
-          args: [query, paging, options],
+          args: [query, paging],
           resolve,
         } = operation as AdminClientOperation<AdminClientOperationName.searchEntities>;
         resolve(
@@ -165,8 +164,7 @@ export function createServerAdminClient({
             databaseAdapter,
             context,
             query,
-            paging,
-            options
+            paging
           )
         );
         break;
