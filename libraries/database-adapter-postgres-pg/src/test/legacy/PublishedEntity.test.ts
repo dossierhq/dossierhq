@@ -311,7 +311,7 @@ describe('getEntity()', () => {
 
   test('Error: Using wrong authKey', async () => {
     const createResult = await adminClient.createEntity({
-      info: { type: 'EntityAdminFoo', name: 'Foo', authKey: 'subject' },
+      info: { type: 'PublishedEntityFoo', name: 'Foo', authKey: 'subject' },
       fields: { title: 'Title' },
     });
 
@@ -419,6 +419,53 @@ describe('getEntities()', () => {
         expectResultValue(result.value[1], {
           id: foo1Id,
           info: { type: 'PublishedEntityFoo', name: foo1Name, authKey: 'none' },
+          fields: {
+            ...emptyFooFields,
+            title: 'Title',
+          },
+        });
+      }
+    }
+  });
+
+  test('One with correct authKey, one with wrong authKey', async () => {
+    const createOneResult = await adminClient.createEntity({
+      info: { type: 'PublishedEntityFoo', name: 'Foo 1', authKey: 'subject' },
+      fields: { title: 'Title' },
+    });
+    const createTwoResult = await adminClient.createEntity({
+      info: { type: 'PublishedEntityFoo', name: 'Foo 2', authKey: 'subject' },
+      fields: { title: 'Title' },
+    });
+
+    if (expectOkResult(createOneResult) && expectOkResult(createTwoResult)) {
+      const {
+        entity: { id: foo1Id },
+      } = createOneResult.value;
+      const {
+        entity: {
+          id: foo2Id,
+          info: { name: foo2Name },
+        },
+      } = createTwoResult.value;
+
+      expectOkResult(
+        await adminClient.publishEntities([
+          { id: foo1Id, version: 0 },
+          { id: foo2Id, version: 0 },
+        ])
+      );
+
+      const getResult = await publishedClient.getEntities([
+        { id: foo1Id, authKeys: ['none'] },
+        { id: foo2Id, authKeys: ['subject'] },
+      ]);
+      if (expectOkResult(getResult)) {
+        expect(getResult.value).toHaveLength(2);
+        expectErrorResult(getResult.value[0], ErrorType.NotAuthorized, 'Wrong authKey provided');
+        expectResultValue(getResult.value[1], {
+          id: foo2Id,
+          info: { type: 'PublishedEntityFoo', name: foo2Name, authKey: 'subject' },
           fields: {
             ...emptyFooFields,
             title: 'Title',

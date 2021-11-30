@@ -3,6 +3,7 @@ import type {
   Edge,
   Entity,
   EntityReference,
+  EntityReferenceWithAuthKeys,
   ErrorType,
   Paging,
   PromiseResult,
@@ -72,33 +73,66 @@ export async function getEntity(
  */
 export async function getEntities(
   schema: Schema,
+  authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  ids: string[]
-): PromiseResult<Result<Entity, ErrorType.NotFound>[], ErrorType.Generic> {
-  if (ids.length === 0) {
+  references: EntityReferenceWithAuthKeys[]
+): PromiseResult<
+  Result<
+    Entity,
+    ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
+  >[],
+  ErrorType.Generic
+> {
+  if (references.length === 0) {
     return ok([]);
   }
   const entitiesMain = await Db.queryMany<
-    Pick<EntitiesTable, 'uuid' | 'type' | 'name' | 'auth_key'> & Pick<EntityVersionsTable, 'data'>
+    Pick<EntitiesTable, 'uuid' | 'type' | 'name' | 'auth_key' | 'resolved_auth_key'> &
+      Pick<EntityVersionsTable, 'data'>
   >(
     databaseAdapter,
     context,
-    `SELECT e.uuid, e.type, e.name, e.auth_key, ev.data
+    `SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, ev.data
       FROM entities e, entity_versions ev
       WHERE e.uuid = ANY($1)
       AND e.published_entity_versions_id = ev.id`,
-    [ids]
+    [references.map((it) => it.id)]
   );
 
-  const result: Result<Entity, ErrorType.NotFound>[] = ids.map((id) => {
-    const entityMain = entitiesMain.find((x) => x.uuid === id);
+  async function mapItem(
+    reference: EntityReferenceWithAuthKeys,
+    entityMain: typeof entitiesMain[0] | undefined
+  ): PromiseResult<
+    Entity,
+    ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
+  > {
     if (!entityMain) {
       return notOk.NotFound('No such entity');
     }
+
+    const authResult = await authVerifyAuthorizationKey(
+      authorizationAdapter,
+      context,
+      reference.authKeys,
+      { authKey: entityMain.auth_key, resolvedAuthKey: entityMain.resolved_auth_key }
+    );
+    if (authResult.isError()) {
+      return authResult;
+    }
+
     const entity = decodePublishedEntity(schema, entityMain);
     return ok(entity);
-  });
+  }
+
+  const result: Result<
+    Entity,
+    ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
+  >[] = [];
+  for (const reference of references) {
+    const entityMain = entitiesMain.find((it) => it.uuid === reference.id);
+    result.push(await mapItem(reference, entityMain));
+  }
 
   return ok(result);
 }

@@ -505,6 +505,54 @@ describe('getEntities()', () => {
     }
   });
 
+  test('One with correct authKey, one with wrong authKey', async () => {
+    const createOneResult = await client.createEntity({
+      info: { type: 'EntityAdminFoo', name: 'Foo 1', authKey: 'subject' },
+      fields: { title: 'Title' },
+    });
+    const createTwoResult = await client.createEntity({
+      info: { type: 'EntityAdminFoo', name: 'Foo 2', authKey: 'subject' },
+      fields: { title: 'Title' },
+    });
+
+    if (expectOkResult(createOneResult) && expectOkResult(createTwoResult)) {
+      const {
+        entity: { id: foo1Id },
+      } = createOneResult.value;
+      const {
+        entity: {
+          id: foo2Id,
+          info: { name: foo2Name, createdAt, updatedAt },
+        },
+      } = createTwoResult.value;
+
+      const getResult = await client.getEntities([
+        { id: foo1Id, authKeys: ['none'] },
+        { id: foo2Id, authKeys: ['subject'] },
+      ]);
+      if (expectOkResult(getResult)) {
+        expect(getResult.value).toHaveLength(2);
+        expectErrorResult(getResult.value[0], ErrorType.NotAuthorized, 'Wrong authKey provided');
+        expectResultValue(getResult.value[1], {
+          id: foo2Id,
+          info: {
+            type: 'EntityAdminFoo',
+            name: foo2Name,
+            authKey: 'subject',
+            version: 0,
+            publishingState: EntityPublishState.Draft,
+            createdAt,
+            updatedAt,
+          },
+          fields: {
+            ...emptyFooFields,
+            title: 'Title',
+          },
+        });
+      }
+    }
+  });
+
   test('Error: Get entities with invalid ids', async () => {
     const result = await client.getEntities([
       { id: '13e4c7da-616e-44a3-a039-24f96f9b17da' },

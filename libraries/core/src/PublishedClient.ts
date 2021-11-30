@@ -4,6 +4,7 @@ import type {
   Edge,
   Entity,
   EntityReference,
+  EntityReferenceWithAuthKeys,
   JsonConnection,
   JsonEdge,
   JsonResult,
@@ -45,8 +46,14 @@ export interface PublishedClient {
   >;
 
   getEntities(
-    references: EntityReference[]
-  ): PromiseResult<Result<Entity, ErrorType.NotFound>[], ErrorType.Generic>;
+    references: EntityReferenceWithAuthKeys[]
+  ): PromiseResult<
+    Result<
+      Entity,
+      ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
+    >[],
+    ErrorType.Generic
+  >;
 
   searchEntities(
     query?: Query,

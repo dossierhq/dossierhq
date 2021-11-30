@@ -14,6 +14,7 @@ import type {
   EntityHistory,
   EntityPublishPayload,
   EntityReference,
+  EntityReferenceWithAuthKeys,
   EntityVersionReference,
   JsonResult,
   Paging,
@@ -68,8 +69,14 @@ export interface AdminClient {
   >;
 
   getEntities(
-    references: EntityReference[]
-  ): PromiseResult<Result<AdminEntity, ErrorType.NotFound>[], ErrorType.Generic>;
+    references: EntityReferenceWithAuthKeys[]
+  ): PromiseResult<
+    Result<
+      AdminEntity,
+      ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
+    >[],
+    ErrorType.Generic
+  >;
 
   searchEntities(
     query?: AdminQuery,
