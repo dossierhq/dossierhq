@@ -3,7 +3,11 @@ import { ok } from '@jonasb/datadata-core';
 import React, { useEffect, useState } from 'react';
 import type { DataDataContextAdapter } from '..';
 import { DataDataProvider } from '..';
-import { createBackendAdminClient, TestContextAdapter } from './TestContextAdapter.js';
+import {
+  createBackendAdminClient,
+  DISPLAY_AUTH_KEYS,
+  TestContextAdapter,
+} from './TestContextAdapter.js';
 
 interface Props {
   adapter?: DataDataContextAdapter;
@@ -34,6 +38,7 @@ export function LoadContextProvider({ adapter, adminClient, children }: Props): 
     <DataDataProvider
       adapter={adapter || new TestContextAdapter()}
       adminClient={resolvedAdminClient}
+      authKeys={DISPLAY_AUTH_KEYS}
     >
       {children}
     </DataDataProvider>

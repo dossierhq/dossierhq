@@ -99,6 +99,10 @@ export function DataDataSharedProvider({ children }: { children: React.ReactNode
     () => ({
       adminClient: createBackendAdminClient(),
       adapter: new ContextAdapter(),
+      authKeys: [
+        { authKey: 'none', displayName: 'None' },
+        { authKey: 'subject', displayName: 'User private' },
+      ],
     }),
     []
   );

@@ -1,5 +1,6 @@
 import type { AdminEntityCreate, AdminEntityUpdate } from '@jonasb/datadata-core';
 import { assertIsDefined } from '@jonasb/datadata-core';
+import { Dropdown } from '@jonasb/datadata-design';
 import type { Dispatch, SetStateAction } from 'react';
 import React, { useContext, useEffect, useState } from 'react';
 import type { DataDataContextValue, MessageItem } from '../../index.js';
@@ -22,6 +23,7 @@ import type { EntityEditorDraftState, EntityEditorStateAction } from './EntityEd
 import {
   EntityUpsertedAction,
   ResetEntityAction,
+  SetAuthKeyAction,
   SetFieldAction,
   SetMessageLoadMessageAction,
   SetNameAction,
@@ -116,6 +118,7 @@ function EntityEditorInner({
   }
 
   const nameId = `${draftState.id}-_name`;
+  const authKeyId = `${draftState.id}-_authKey`;
 
   return (
     <div id={entityId} data-entityid={entityId}>
@@ -162,8 +165,23 @@ function EntityEditorInner({
           );
         })}
 
+        {!draftState.exists ? (
+          <FormField htmlFor={authKeyId} label="Authorization key">
+            <AuthKeyPicker
+              id={authKeyId}
+              value={entity.authKey}
+              onValueChanged={(value) => dispatchEditorState(new SetAuthKeyAction(entityId, value))}
+            />
+          </FormField>
+        ) : null}
+
         <Row gap={1}>
-          <Button kind="primary" type="submit" disabled={!entity.name} loading={submitLoading}>
+          <Button
+            kind="primary"
+            type="submit"
+            disabled={!entity.name || !entity.authKey}
+            loading={submitLoading}
+          >
             Save
           </Button>
           <Button type="reset" disabled={!entity}>
@@ -178,6 +196,36 @@ function EntityEditorInner({
   );
 }
 
+function AuthKeyPicker({
+  id,
+  value,
+  onValueChanged,
+}: {
+  id: string;
+  value: string | null;
+  onValueChanged: (value: string) => void;
+}) {
+  const { authKeys } = useContext(DataDataContext);
+
+  const items = authKeys.map((it) => ({ id: it.authKey, displayName: it.displayName }));
+  let text = 'Select authorization key';
+  if (value) {
+    const key = authKeys.find((it) => it.authKey === value);
+    text = key ? key.displayName : value;
+  }
+
+  return (
+    <Dropdown
+      id={id}
+      items={items}
+      renderItem={(item) => item.displayName}
+      onItemClick={(item) => onValueChanged(item.id)}
+    >
+      {text}
+    </Dropdown>
+  );
+}
+
 function createAdminEntity(
   draftState: EntityEditorDraftState
 ): AdminEntityCreate | AdminEntityUpdate {
@@ -186,19 +234,22 @@ function createAdminEntity(
 
   let result: AdminEntityCreate | AdminEntityUpdate;
   if (entityState.version === 0) {
-    result = {
+    assertIsDefined(entityState.authKey);
+    const createResult: AdminEntityCreate = {
       id: draftState.id,
       info: {
         type: entityState.entitySpec.name,
         name: entityState.name,
+        authKey: entityState.authKey,
         version: entityState.version,
       },
       fields: {},
     };
+    result = createResult;
   } else {
     const { id } = draftState;
     assertIsDefined(id);
-    result = {
+    const updateResult: AdminEntityUpdate = {
       id,
       info: {
         type: entityState.entitySpec.name,
@@ -206,6 +257,7 @@ function createAdminEntity(
       },
       fields: {},
     };
+    result = updateResult;
   }
 
   for (const { fieldSpec, value, initialValue } of entityState.fields) {

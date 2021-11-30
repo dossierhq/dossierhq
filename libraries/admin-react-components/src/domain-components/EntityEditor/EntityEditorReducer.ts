@@ -28,6 +28,7 @@ export interface EntityEditorDraftState {
   entity: null | {
     version: number;
     entitySpec: AdminEntityTypeSpecification;
+    authKey: string | null;
     name: string;
     initialName: string;
     fields: FieldEditorState[];
@@ -189,6 +190,26 @@ export class UpdateEntityAction extends EntityEditorDraftStateAction {
   }
 }
 
+export class SetAuthKeyAction extends EntityEditorDraftStateAction {
+  #authKey: string;
+
+  constructor(id: string, authKey: string) {
+    super(id);
+    this.#authKey = authKey;
+  }
+
+  reduceDraft(
+    draftState: EntityEditorDraftState,
+    _state: EntityEditorState
+  ): EntityEditorDraftState {
+    const { entity } = draftState;
+    if (!entity) {
+      throw new Error('Unexpected state, no entity');
+    }
+    return { ...draftState, entity: { ...entity, authKey: this.#authKey } };
+  }
+}
+
 export class SetNameAction extends EntityEditorDraftStateAction {
   #name: string;
 
@@ -302,6 +323,7 @@ function createEditorEntityDraftState(
   });
   return {
     entitySpec,
+    authKey: entity?.info.authKey ?? null,
     version: entity ? entity.info.version + 1 : 0,
     name: entity?.info.name ?? '',
     initialName: entity?.info.name ?? '',
