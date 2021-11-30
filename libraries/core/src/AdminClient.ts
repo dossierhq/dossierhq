@@ -16,6 +16,7 @@ import type {
   EntityReference,
   EntityReferenceWithAuthKeys,
   EntityVersionReference,
+  EntityVersionReferenceWithAuthKeys,
   JsonResult,
   Paging,
   PromiseResult,
@@ -61,8 +62,7 @@ export interface AdminClient {
   ): PromiseResult<SchemaSpecificationUpdatePayload, ErrorType.BadRequest | ErrorType.Generic>;
 
   getEntity(
-    reference: EntityReference | EntityVersionReference,
-    options?: { authKeys: string[] }
+    reference: EntityReferenceWithAuthKeys | EntityVersionReferenceWithAuthKeys
   ): PromiseResult<
     AdminEntity,
     ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic

@@ -2,7 +2,6 @@ import type {
   Connection,
   Edge,
   Entity,
-  EntityReference,
   EntityReferenceWithAuthKeys,
   ErrorType,
   Paging,
@@ -26,8 +25,7 @@ export async function getEntity(
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  reference: EntityReference,
-  options: { authKeys: string[] } | undefined
+  reference: EntityReferenceWithAuthKeys
 ): PromiseResult<
   Entity,
   ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
@@ -51,7 +49,7 @@ export async function getEntity(
   const authResult = await authVerifyAuthorizationKey(
     authorizationAdapter,
     context,
-    options?.authKeys,
+    reference?.authKeys,
     { authKey: entityMain.auth_key, resolvedAuthKey: entityMain.resolved_auth_key }
   );
   if (authResult.isError()) {

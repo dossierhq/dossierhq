@@ -50,7 +50,7 @@ export function createServerPublishedClient({
       }
       case PublishedClientOperationName.getEntity: {
         const {
-          args: [reference, options],
+          args: [reference],
           resolve,
         } = operation as PublishedClientOperation<PublishedClientOperationName.getEntity>;
         resolve(
@@ -59,8 +59,7 @@ export function createServerPublishedClient({
             authorizationAdapter,
             databaseAdapter,
             context,
-            reference,
-            options
+            reference
           )
         );
         break;
