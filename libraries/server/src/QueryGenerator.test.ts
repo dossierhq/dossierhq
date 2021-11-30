@@ -24,17 +24,21 @@ const schema = new AdminSchema({
   valueTypes: [],
 });
 
+const authKeysNone = [{ authKey: 'none', resolvedAuthKey: 'none' }];
+
 describe('searchAdminEntitiesQuery()', () => {
   test('default paging', () => {
-    expect(searchAdminEntitiesQuery(schema, undefined, undefined)).toMatchInlineSnapshot(`
+    expect(searchAdminEntitiesQuery(schema, undefined, undefined, authKeysNone))
+      .toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
           "cursorExtractor": [Function],
           "isForwards": true,
           "pagingCount": 25,
           "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, ev.version, ev.data
-        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id ORDER BY e.id LIMIT $1",
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 ORDER BY e.id LIMIT $2",
           "values": Array [
+            "none",
             26,
           ],
         },
@@ -43,15 +47,17 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('first 10', () => {
-    expect(searchAdminEntitiesQuery(schema, undefined, { first: 10 })).toMatchInlineSnapshot(`
+    expect(searchAdminEntitiesQuery(schema, undefined, { first: 10 }, authKeysNone))
+      .toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
           "cursorExtractor": [Function],
           "isForwards": true,
           "pagingCount": 10,
           "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, ev.version, ev.data
-        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id ORDER BY e.id LIMIT $1",
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 ORDER BY e.id LIMIT $2",
           "values": Array [
+            "none",
             11,
           ],
         },
@@ -61,7 +67,12 @@ describe('searchAdminEntitiesQuery()', () => {
 
   test('first 10 after', () => {
     expect(
-      searchAdminEntitiesQuery(schema, undefined, { first: 10, after: toOpaqueCursor('int', 999) })
+      searchAdminEntitiesQuery(
+        schema,
+        undefined,
+        { first: 10, after: toOpaqueCursor('int', 999) },
+        authKeysNone
+      )
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
@@ -69,8 +80,9 @@ describe('searchAdminEntitiesQuery()', () => {
           "isForwards": true,
           "pagingCount": 10,
           "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, ev.version, ev.data
-        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.id > $1 ORDER BY e.id LIMIT $2",
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.id > $2 ORDER BY e.id LIMIT $3",
           "values": Array [
+            "none",
             999,
             11,
           ],
@@ -80,15 +92,17 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('last 10', () => {
-    expect(searchAdminEntitiesQuery(schema, undefined, { last: 10 })).toMatchInlineSnapshot(`
+    expect(searchAdminEntitiesQuery(schema, undefined, { last: 10 }, authKeysNone))
+      .toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
           "cursorExtractor": [Function],
           "isForwards": false,
           "pagingCount": 10,
           "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, ev.version, ev.data
-        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id ORDER BY e.id DESC LIMIT $1",
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 ORDER BY e.id DESC LIMIT $2",
           "values": Array [
+            "none",
             11,
           ],
         },
@@ -98,7 +112,12 @@ describe('searchAdminEntitiesQuery()', () => {
 
   test('last 10 before', () => {
     expect(
-      searchAdminEntitiesQuery(schema, undefined, { last: 10, before: toOpaqueCursor('int', 456) })
+      searchAdminEntitiesQuery(
+        schema,
+        undefined,
+        { last: 10, before: toOpaqueCursor('int', 456) },
+        authKeysNone
+      )
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
@@ -106,8 +125,9 @@ describe('searchAdminEntitiesQuery()', () => {
           "isForwards": false,
           "pagingCount": 10,
           "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, ev.version, ev.data
-        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.id < $1 ORDER BY e.id DESC LIMIT $2",
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.id < $2 ORDER BY e.id DESC LIMIT $3",
           "values": Array [
+            "none",
             456,
             11,
           ],
@@ -118,11 +138,16 @@ describe('searchAdminEntitiesQuery()', () => {
 
   test('first 10 between after and before', () => {
     expect(
-      searchAdminEntitiesQuery(schema, undefined, {
-        first: 10,
-        after: toOpaqueCursor('int', 123),
-        before: toOpaqueCursor('int', 456),
-      })
+      searchAdminEntitiesQuery(
+        schema,
+        undefined,
+        {
+          first: 10,
+          after: toOpaqueCursor('int', 123),
+          before: toOpaqueCursor('int', 456),
+        },
+        authKeysNone
+      )
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
@@ -130,8 +155,9 @@ describe('searchAdminEntitiesQuery()', () => {
           "isForwards": true,
           "pagingCount": 10,
           "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, ev.version, ev.data
-        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.id > $1 AND e.id < $2 ORDER BY e.id LIMIT $3",
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.id > $2 AND e.id < $3 ORDER BY e.id LIMIT $4",
           "values": Array [
+            "none",
             123,
             456,
             11,
@@ -143,11 +169,16 @@ describe('searchAdminEntitiesQuery()', () => {
 
   test('last 10 between after and before', () => {
     expect(
-      searchAdminEntitiesQuery(schema, undefined, {
-        last: 10,
-        after: toOpaqueCursor('int', 123),
-        before: toOpaqueCursor('int', 456),
-      })
+      searchAdminEntitiesQuery(
+        schema,
+        undefined,
+        {
+          last: 10,
+          after: toOpaqueCursor('int', 123),
+          before: toOpaqueCursor('int', 456),
+        },
+        authKeysNone
+      )
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
@@ -155,8 +186,9 @@ describe('searchAdminEntitiesQuery()', () => {
           "isForwards": false,
           "pagingCount": 10,
           "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, ev.version, ev.data
-        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.id > $1 AND e.id < $2 ORDER BY e.id DESC LIMIT $3",
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.id > $2 AND e.id < $3 ORDER BY e.id DESC LIMIT $4",
           "values": Array [
+            "none",
             123,
             456,
             11,
@@ -171,7 +203,8 @@ describe('searchAdminEntitiesQuery()', () => {
       searchAdminEntitiesQuery(
         schema,
         { order: AdminQueryOrder.createdAt, reverse: true },
-        undefined
+        undefined,
+        authKeysNone
       )
     ).toMatchInlineSnapshot(`
       OkResult {
@@ -180,8 +213,9 @@ describe('searchAdminEntitiesQuery()', () => {
           "isForwards": true,
           "pagingCount": 25,
           "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, ev.version, ev.data
-        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id ORDER BY e.id DESC LIMIT $1",
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 ORDER BY e.id DESC LIMIT $2",
           "values": Array [
+            "none",
             26,
           ],
         },
@@ -190,15 +224,17 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('query no entity type, i.e. include all', () => {
-    expect(searchAdminEntitiesQuery(schema, { entityTypes: [] }, undefined)).toMatchInlineSnapshot(`
+    expect(searchAdminEntitiesQuery(schema, { entityTypes: [] }, undefined, authKeysNone))
+      .toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
           "cursorExtractor": [Function],
           "isForwards": true,
           "pagingCount": 25,
           "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, ev.version, ev.data
-        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id ORDER BY e.id LIMIT $1",
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 ORDER BY e.id LIMIT $2",
           "values": Array [
+            "none",
             26,
           ],
         },
@@ -207,16 +243,23 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('query one entity type', () => {
-    expect(searchAdminEntitiesQuery(schema, { entityTypes: ['QueryGeneratorFoo'] }, undefined))
-      .toMatchInlineSnapshot(`
+    expect(
+      searchAdminEntitiesQuery(
+        schema,
+        { entityTypes: ['QueryGeneratorFoo'] },
+        undefined,
+        authKeysNone
+      )
+    ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
           "cursorExtractor": [Function],
           "isForwards": true,
           "pagingCount": 25,
           "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, ev.version, ev.data
-        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.type = ANY($1) ORDER BY e.id LIMIT $2",
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.type = ANY($2) ORDER BY e.id LIMIT $3",
           "values": Array [
+            "none",
             Array [
               "QueryGeneratorFoo",
             ],
@@ -232,7 +275,8 @@ describe('searchAdminEntitiesQuery()', () => {
       searchAdminEntitiesQuery(
         schema,
         { entityTypes: ['QueryGeneratorFoo', 'QueryGeneratorBar'] },
-        undefined
+        undefined,
+        authKeysNone
       )
     ).toMatchInlineSnapshot(`
       OkResult {
@@ -241,8 +285,9 @@ describe('searchAdminEntitiesQuery()', () => {
           "isForwards": true,
           "pagingCount": 25,
           "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, ev.version, ev.data
-        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.type = ANY($1) ORDER BY e.id LIMIT $2",
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.type = ANY($2) ORDER BY e.id LIMIT $3",
           "values": Array [
+            "none",
             Array [
               "QueryGeneratorFoo",
               "QueryGeneratorBar",
@@ -259,7 +304,8 @@ describe('searchAdminEntitiesQuery()', () => {
       searchAdminEntitiesQuery(
         schema,
         { entityTypes: ['QueryGeneratorFoo', 'QueryGeneratorBar'] },
-        { first: 10, after: toOpaqueCursor('int', 543) }
+        { first: 10, after: toOpaqueCursor('int', 543) },
+        authKeysNone
       )
     ).toMatchInlineSnapshot(`
       OkResult {
@@ -268,8 +314,9 @@ describe('searchAdminEntitiesQuery()', () => {
           "isForwards": true,
           "pagingCount": 10,
           "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, ev.version, ev.data
-        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.type = ANY($1) AND e.id > $2 ORDER BY e.id LIMIT $3",
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.type = ANY($2) AND e.id > $3 ORDER BY e.id LIMIT $4",
           "values": Array [
+            "none",
             Array [
               "QueryGeneratorFoo",
               "QueryGeneratorBar",
@@ -283,15 +330,17 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('query status empty list', () => {
-    expect(searchAdminEntitiesQuery(schema, { status: [] }, undefined)).toMatchInlineSnapshot(`
+    expect(searchAdminEntitiesQuery(schema, { status: [] }, undefined, authKeysNone))
+      .toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
           "cursorExtractor": [Function],
           "isForwards": true,
           "pagingCount": 25,
           "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, ev.version, ev.data
-        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id ORDER BY e.id LIMIT $1",
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 ORDER BY e.id LIMIT $2",
           "values": Array [
+            "none",
             26,
           ],
         },
@@ -300,16 +349,23 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('query status draft', () => {
-    expect(searchAdminEntitiesQuery(schema, { status: [EntityPublishState.Draft] }, undefined))
-      .toMatchInlineSnapshot(`
+    expect(
+      searchAdminEntitiesQuery(
+        schema,
+        { status: [EntityPublishState.Draft] },
+        undefined,
+        authKeysNone
+      )
+    ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
           "cursorExtractor": [Function],
           "isForwards": true,
           "pagingCount": 25,
           "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, ev.version, ev.data
-        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND status = $1 ORDER BY e.id LIMIT $2",
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND status = $2 ORDER BY e.id LIMIT $3",
           "values": Array [
+            "none",
             "draft",
             26,
           ],
@@ -319,16 +375,23 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('query status published', () => {
-    expect(searchAdminEntitiesQuery(schema, { status: [EntityPublishState.Published] }, undefined))
-      .toMatchInlineSnapshot(`
+    expect(
+      searchAdminEntitiesQuery(
+        schema,
+        { status: [EntityPublishState.Published] },
+        undefined,
+        authKeysNone
+      )
+    ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
           "cursorExtractor": [Function],
           "isForwards": true,
           "pagingCount": 25,
           "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, ev.version, ev.data
-        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND status = $1 ORDER BY e.id LIMIT $2",
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND status = $2 ORDER BY e.id LIMIT $3",
           "values": Array [
+            "none",
             "published",
             26,
           ],
@@ -338,16 +401,23 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('query status modified', () => {
-    expect(searchAdminEntitiesQuery(schema, { status: [EntityPublishState.Modified] }, undefined))
-      .toMatchInlineSnapshot(`
+    expect(
+      searchAdminEntitiesQuery(
+        schema,
+        { status: [EntityPublishState.Modified] },
+        undefined,
+        authKeysNone
+      )
+    ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
           "cursorExtractor": [Function],
           "isForwards": true,
           "pagingCount": 25,
           "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, ev.version, ev.data
-        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND status = $1 ORDER BY e.id LIMIT $2",
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND status = $2 ORDER BY e.id LIMIT $3",
           "values": Array [
+            "none",
             "modified",
             26,
           ],
@@ -357,16 +427,23 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('query status withdrawn', () => {
-    expect(searchAdminEntitiesQuery(schema, { status: [EntityPublishState.Withdrawn] }, undefined))
-      .toMatchInlineSnapshot(`
+    expect(
+      searchAdminEntitiesQuery(
+        schema,
+        { status: [EntityPublishState.Withdrawn] },
+        undefined,
+        authKeysNone
+      )
+    ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
           "cursorExtractor": [Function],
           "isForwards": true,
           "pagingCount": 25,
           "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, ev.version, ev.data
-        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND status = $1 ORDER BY e.id LIMIT $2",
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND status = $2 ORDER BY e.id LIMIT $3",
           "values": Array [
+            "none",
             "withdrawn",
             26,
           ],
@@ -376,16 +453,23 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('query status archived', () => {
-    expect(searchAdminEntitiesQuery(schema, { status: [EntityPublishState.Archived] }, undefined))
-      .toMatchInlineSnapshot(`
+    expect(
+      searchAdminEntitiesQuery(
+        schema,
+        { status: [EntityPublishState.Archived] },
+        undefined,
+        authKeysNone
+      )
+    ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
           "cursorExtractor": [Function],
           "isForwards": true,
           "pagingCount": 25,
           "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, ev.version, ev.data
-        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND status = $1 ORDER BY e.id LIMIT $2",
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND status = $2 ORDER BY e.id LIMIT $3",
           "values": Array [
+            "none",
             "archived",
             26,
           ],
@@ -399,7 +483,8 @@ describe('searchAdminEntitiesQuery()', () => {
       searchAdminEntitiesQuery(
         schema,
         { status: [EntityPublishState.Draft, EntityPublishState.Published] },
-        undefined
+        undefined,
+        authKeysNone
       )
     ).toMatchInlineSnapshot(`
       OkResult {
@@ -408,8 +493,9 @@ describe('searchAdminEntitiesQuery()', () => {
           "isForwards": true,
           "pagingCount": 25,
           "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, ev.version, ev.data
-        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND status = ANY($1) ORDER BY e.id LIMIT $2",
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND status = ANY($2) ORDER BY e.id LIMIT $3",
           "values": Array [
+            "none",
             Array [
               "draft",
               "published",
@@ -426,7 +512,8 @@ describe('searchAdminEntitiesQuery()', () => {
       searchAdminEntitiesQuery(
         schema,
         { status: [EntityPublishState.Draft, EntityPublishState.Archived] },
-        undefined
+        undefined,
+        authKeysNone
       )
     ).toMatchInlineSnapshot(`
       OkResult {
@@ -435,8 +522,9 @@ describe('searchAdminEntitiesQuery()', () => {
           "isForwards": true,
           "pagingCount": 25,
           "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, ev.version, ev.data
-        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND status = ANY($1) ORDER BY e.id LIMIT $2",
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND status = ANY($2) ORDER BY e.id LIMIT $3",
           "values": Array [
+            "none",
             Array [
               "draft",
               "archived",
@@ -461,7 +549,8 @@ describe('searchAdminEntitiesQuery()', () => {
             EntityPublishState.Withdrawn,
           ],
         },
-        undefined
+        undefined,
+        authKeysNone
       )
     ).toMatchInlineSnapshot(`
       OkResult {
@@ -470,8 +559,9 @@ describe('searchAdminEntitiesQuery()', () => {
           "isForwards": true,
           "pagingCount": 25,
           "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, ev.version, ev.data
-        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND status = ANY($1) ORDER BY e.id LIMIT $2",
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND status = ANY($2) ORDER BY e.id LIMIT $3",
           "values": Array [
+            "none",
             Array [
               "draft",
               "published",
@@ -491,7 +581,8 @@ describe('searchAdminEntitiesQuery()', () => {
       searchAdminEntitiesQuery(
         schema,
         { referencing: '37b48706-803e-4227-a51e-8208db12d949' },
-        undefined
+        undefined,
+        authKeysNone
       )
     ).toMatchInlineSnapshot(`
       OkResult {
@@ -500,8 +591,9 @@ describe('searchAdminEntitiesQuery()', () => {
           "isForwards": true,
           "pagingCount": 25,
           "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, ev.version, ev.data
-        FROM entities e, entity_versions ev, entity_version_references evr, entities e2 WHERE e.latest_draft_entity_versions_id = ev.id AND ev.id = evr.entity_versions_id AND evr.entities_id = e2.id AND e2.uuid = $1 ORDER BY e.id LIMIT $2",
+        FROM entities e, entity_versions ev, entity_version_references evr, entities e2 WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND ev.id = evr.entity_versions_id AND evr.entities_id = e2.id AND e2.uuid = $2 ORDER BY e.id LIMIT $3",
           "values": Array [
+            "none",
             "37b48706-803e-4227-a51e-8208db12d949",
             26,
           ],
@@ -522,7 +614,8 @@ describe('searchAdminEntitiesQuery()', () => {
             maxLng: 16.25,
           },
         },
-        undefined
+        undefined,
+        authKeysNone
       )
     ).toMatchInlineSnapshot(`
       OkResult {
@@ -531,8 +624,9 @@ describe('searchAdminEntitiesQuery()', () => {
           "isForwards": true,
           "pagingCount": 25,
           "text": "SELECT DISTINCT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, ev.version, ev.data
-        FROM entities e, entity_versions ev, entity_version_locations evl WHERE e.latest_draft_entity_versions_id = ev.id AND ev.id = evl.entity_versions_id AND evl.location && ST_MakeEnvelope($1, $2, $3, $4, 4326) ORDER BY e.id LIMIT $5",
+        FROM entities e, entity_versions ev, entity_version_locations evl WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND ev.id = evl.entity_versions_id AND evl.location && ST_MakeEnvelope($2, $3, $4, $5, 4326) ORDER BY e.id LIMIT $6",
           "values": Array [
+            "none",
             11.62,
             55.07,
             16.25,
@@ -551,7 +645,8 @@ describe('searchAdminEntitiesQuery()', () => {
         {
           text: 'foo bar',
         },
-        {}
+        {},
+        authKeysNone
       )
     ).toMatchInlineSnapshot(`
       OkResult {
@@ -560,8 +655,9 @@ describe('searchAdminEntitiesQuery()', () => {
           "isForwards": true,
           "pagingCount": 25,
           "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, ev.version, ev.data
-        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.latest_fts @@ websearch_to_tsquery($1) ORDER BY e.id LIMIT $2",
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.latest_fts @@ websearch_to_tsquery($2) ORDER BY e.id LIMIT $3",
           "values": Array [
+            "none",
             "foo bar",
             26,
           ],
@@ -578,7 +674,8 @@ describe('searchAdminEntitiesQuery()', () => {
           entityTypes: ['QueryGeneratorFoo', 'QueryGeneratorBar'],
           referencing: '37b48706-803e-4227-a51e-8208db12d949',
         },
-        { first: 10, after: toOpaqueCursor('int', 123) }
+        { first: 10, after: toOpaqueCursor('int', 123) },
+        authKeysNone
       )
     ).toMatchInlineSnapshot(`
       OkResult {
@@ -587,8 +684,9 @@ describe('searchAdminEntitiesQuery()', () => {
           "isForwards": true,
           "pagingCount": 10,
           "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, ev.version, ev.data
-        FROM entities e, entity_versions ev, entity_version_references evr, entities e2 WHERE e.latest_draft_entity_versions_id = ev.id AND e.type = ANY($1) AND ev.id = evr.entity_versions_id AND evr.entities_id = e2.id AND e2.uuid = $2 AND e.id > $3 ORDER BY e.id LIMIT $4",
+        FROM entities e, entity_versions ev, entity_version_references evr, entities e2 WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.type = ANY($2) AND ev.id = evr.entity_versions_id AND evr.entities_id = e2.id AND e2.uuid = $3 AND e.id > $4 ORDER BY e.id LIMIT $5",
           "values": Array [
+            "none",
             Array [
               "QueryGeneratorFoo",
               "QueryGeneratorBar",
@@ -603,16 +701,23 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('order by createdAt', () => {
-    expect(searchAdminEntitiesQuery(schema, { order: AdminQueryOrder.createdAt }, undefined))
-      .toMatchInlineSnapshot(`
+    expect(
+      searchAdminEntitiesQuery(
+        schema,
+        { order: AdminQueryOrder.createdAt },
+        undefined,
+        authKeysNone
+      )
+    ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
           "cursorExtractor": [Function],
           "isForwards": true,
           "pagingCount": 25,
           "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, ev.version, ev.data
-        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id ORDER BY e.id LIMIT $1",
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 ORDER BY e.id LIMIT $2",
           "values": Array [
+            "none",
             26,
           ],
         },
@@ -621,16 +726,23 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('order by updatedAt', () => {
-    expect(searchAdminEntitiesQuery(schema, { order: AdminQueryOrder.updatedAt }, undefined))
-      .toMatchInlineSnapshot(`
+    expect(
+      searchAdminEntitiesQuery(
+        schema,
+        { order: AdminQueryOrder.updatedAt },
+        undefined,
+        authKeysNone
+      )
+    ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
           "cursorExtractor": [Function],
           "isForwards": true,
           "pagingCount": 25,
           "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, ev.version, ev.data
-        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id ORDER BY e.updated LIMIT $1",
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 ORDER BY e.updated LIMIT $2",
           "values": Array [
+            "none",
             26,
           ],
         },
@@ -639,16 +751,18 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('order by name', () => {
-    expect(searchAdminEntitiesQuery(schema, { order: AdminQueryOrder.name }, undefined))
-      .toMatchInlineSnapshot(`
+    expect(
+      searchAdminEntitiesQuery(schema, { order: AdminQueryOrder.name }, undefined, authKeysNone)
+    ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
           "cursorExtractor": [Function],
           "isForwards": true,
           "pagingCount": 25,
           "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, ev.version, ev.data
-        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id ORDER BY e.name LIMIT $1",
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 ORDER BY e.name LIMIT $2",
           "values": Array [
+            "none",
             26,
           ],
         },
@@ -657,21 +771,28 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('Error: invalid entity type in query', () => {
-    const result = searchAdminEntitiesQuery(schema, { entityTypes: ['Invalid'] }, undefined);
+    const result = searchAdminEntitiesQuery(
+      schema,
+      { entityTypes: ['Invalid'] },
+      undefined,
+      authKeysNone
+    );
     expectErrorResult(result, ErrorType.BadRequest, 'Can’t find entity type in query: Invalid');
   });
 });
 
 describe('searchPublishedEntitiesQuery()', () => {
   test('default paging', () => {
-    expect(searchPublishedEntitiesQuery(schema, undefined, undefined)).toMatchInlineSnapshot(`
+    expect(searchPublishedEntitiesQuery(schema, undefined, undefined, authKeysNone))
+      .toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
           "cursorExtractor": [Function],
           "isForwards": true,
           "pagingCount": 25,
-          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id ORDER BY e.id LIMIT $1",
+          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 ORDER BY e.id LIMIT $2",
           "values": Array [
+            "none",
             26,
           ],
         },
@@ -680,14 +801,16 @@ describe('searchPublishedEntitiesQuery()', () => {
   });
 
   test('first 10', () => {
-    expect(searchPublishedEntitiesQuery(schema, undefined, { first: 10 })).toMatchInlineSnapshot(`
+    expect(searchPublishedEntitiesQuery(schema, undefined, { first: 10 }, authKeysNone))
+      .toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
           "cursorExtractor": [Function],
           "isForwards": true,
           "pagingCount": 10,
-          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id ORDER BY e.id LIMIT $1",
+          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 ORDER BY e.id LIMIT $2",
           "values": Array [
+            "none",
             11,
           ],
         },
@@ -697,18 +820,24 @@ describe('searchPublishedEntitiesQuery()', () => {
 
   test('first 10 after', () => {
     expect(
-      searchPublishedEntitiesQuery(schema, undefined, {
-        first: 10,
-        after: toOpaqueCursor('int', 999),
-      })
+      searchPublishedEntitiesQuery(
+        schema,
+        undefined,
+        {
+          first: 10,
+          after: toOpaqueCursor('int', 999),
+        },
+        authKeysNone
+      )
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
           "cursorExtractor": [Function],
           "isForwards": true,
           "pagingCount": 10,
-          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.id > $1 ORDER BY e.id LIMIT $2",
+          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.id > $2 ORDER BY e.id LIMIT $3",
           "values": Array [
+            "none",
             999,
             11,
           ],
@@ -725,7 +854,8 @@ describe('searchPublishedEntitiesQuery()', () => {
         {
           first: 10,
           after: toOpaqueCursor('int', 999),
-        }
+        },
+        authKeysNone
       )
     ).toMatchInlineSnapshot(`
       OkResult {
@@ -733,8 +863,9 @@ describe('searchPublishedEntitiesQuery()', () => {
           "cursorExtractor": [Function],
           "isForwards": true,
           "pagingCount": 10,
-          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.id < $1 ORDER BY e.id DESC LIMIT $2",
+          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.id < $2 ORDER BY e.id DESC LIMIT $3",
           "values": Array [
+            "none",
             999,
             11,
           ],
@@ -744,14 +875,16 @@ describe('searchPublishedEntitiesQuery()', () => {
   });
 
   test('last 10', () => {
-    expect(searchPublishedEntitiesQuery(schema, undefined, { last: 10 })).toMatchInlineSnapshot(`
+    expect(searchPublishedEntitiesQuery(schema, undefined, { last: 10 }, authKeysNone))
+      .toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
           "cursorExtractor": [Function],
           "isForwards": false,
           "pagingCount": 10,
-          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id ORDER BY e.id DESC LIMIT $1",
+          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 ORDER BY e.id DESC LIMIT $2",
           "values": Array [
+            "none",
             11,
           ],
         },
@@ -761,18 +894,24 @@ describe('searchPublishedEntitiesQuery()', () => {
 
   test('last 10 before', () => {
     expect(
-      searchPublishedEntitiesQuery(schema, undefined, {
-        last: 10,
-        before: toOpaqueCursor('int', 456),
-      })
+      searchPublishedEntitiesQuery(
+        schema,
+        undefined,
+        {
+          last: 10,
+          before: toOpaqueCursor('int', 456),
+        },
+        authKeysNone
+      )
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
           "cursorExtractor": [Function],
           "isForwards": false,
           "pagingCount": 10,
-          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.id < $1 ORDER BY e.id DESC LIMIT $2",
+          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.id < $2 ORDER BY e.id DESC LIMIT $3",
           "values": Array [
+            "none",
             456,
             11,
           ],
@@ -783,19 +922,25 @@ describe('searchPublishedEntitiesQuery()', () => {
 
   test('first 10 between after and before', () => {
     expect(
-      searchPublishedEntitiesQuery(schema, undefined, {
-        first: 10,
-        after: toOpaqueCursor('int', 123),
-        before: toOpaqueCursor('int', 456),
-      })
+      searchPublishedEntitiesQuery(
+        schema,
+        undefined,
+        {
+          first: 10,
+          after: toOpaqueCursor('int', 123),
+          before: toOpaqueCursor('int', 456),
+        },
+        authKeysNone
+      )
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
           "cursorExtractor": [Function],
           "isForwards": true,
           "pagingCount": 10,
-          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.id > $1 AND e.id < $2 ORDER BY e.id LIMIT $3",
+          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.id > $2 AND e.id < $3 ORDER BY e.id LIMIT $4",
           "values": Array [
+            "none",
             123,
             456,
             11,
@@ -814,7 +959,8 @@ describe('searchPublishedEntitiesQuery()', () => {
           first: 10,
           after: toOpaqueCursor('int', 123),
           before: toOpaqueCursor('int', 456),
-        }
+        },
+        authKeysNone
       )
     ).toMatchInlineSnapshot(`
       OkResult {
@@ -822,8 +968,9 @@ describe('searchPublishedEntitiesQuery()', () => {
           "cursorExtractor": [Function],
           "isForwards": true,
           "pagingCount": 10,
-          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.id < $1 AND e.id > $2 ORDER BY e.id DESC LIMIT $3",
+          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.id < $2 AND e.id > $3 ORDER BY e.id DESC LIMIT $4",
           "values": Array [
+            "none",
             123,
             456,
             11,
@@ -835,19 +982,25 @@ describe('searchPublishedEntitiesQuery()', () => {
 
   test('last 10 between after and before', () => {
     expect(
-      searchPublishedEntitiesQuery(schema, undefined, {
-        last: 10,
-        after: toOpaqueCursor('int', 123),
-        before: toOpaqueCursor('int', 456),
-      })
+      searchPublishedEntitiesQuery(
+        schema,
+        undefined,
+        {
+          last: 10,
+          after: toOpaqueCursor('int', 123),
+          before: toOpaqueCursor('int', 456),
+        },
+        authKeysNone
+      )
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
           "cursorExtractor": [Function],
           "isForwards": false,
           "pagingCount": 10,
-          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.id > $1 AND e.id < $2 ORDER BY e.id DESC LIMIT $3",
+          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.id > $2 AND e.id < $3 ORDER BY e.id DESC LIMIT $4",
           "values": Array [
+            "none",
             123,
             456,
             11,
@@ -862,7 +1015,8 @@ describe('searchPublishedEntitiesQuery()', () => {
       searchPublishedEntitiesQuery(
         schema,
         { order: QueryOrder.createdAt, reverse: true },
-        undefined
+        undefined,
+        authKeysNone
       )
     ).toMatchInlineSnapshot(`
       OkResult {
@@ -870,8 +1024,9 @@ describe('searchPublishedEntitiesQuery()', () => {
           "cursorExtractor": [Function],
           "isForwards": true,
           "pagingCount": 25,
-          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id ORDER BY e.id DESC LIMIT $1",
+          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 ORDER BY e.id DESC LIMIT $2",
           "values": Array [
+            "none",
             26,
           ],
         },
@@ -880,15 +1035,16 @@ describe('searchPublishedEntitiesQuery()', () => {
   });
 
   test('query no entity type, i.e. include all', () => {
-    expect(searchPublishedEntitiesQuery(schema, { entityTypes: [] }, undefined))
+    expect(searchPublishedEntitiesQuery(schema, { entityTypes: [] }, undefined, authKeysNone))
       .toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
           "cursorExtractor": [Function],
           "isForwards": true,
           "pagingCount": 25,
-          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id ORDER BY e.id LIMIT $1",
+          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 ORDER BY e.id LIMIT $2",
           "values": Array [
+            "none",
             26,
           ],
         },
@@ -897,15 +1053,22 @@ describe('searchPublishedEntitiesQuery()', () => {
   });
 
   test('query one entity type', () => {
-    expect(searchPublishedEntitiesQuery(schema, { entityTypes: ['QueryGeneratorFoo'] }, undefined))
-      .toMatchInlineSnapshot(`
+    expect(
+      searchPublishedEntitiesQuery(
+        schema,
+        { entityTypes: ['QueryGeneratorFoo'] },
+        undefined,
+        authKeysNone
+      )
+    ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
           "cursorExtractor": [Function],
           "isForwards": true,
           "pagingCount": 25,
-          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.type = ANY($1) ORDER BY e.id LIMIT $2",
+          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.type = ANY($2) ORDER BY e.id LIMIT $3",
           "values": Array [
+            "none",
             Array [
               "QueryGeneratorFoo",
             ],
@@ -921,7 +1084,8 @@ describe('searchPublishedEntitiesQuery()', () => {
       searchPublishedEntitiesQuery(
         schema,
         { entityTypes: ['QueryGeneratorFoo', 'QueryGeneratorBar'] },
-        undefined
+        undefined,
+        authKeysNone
       )
     ).toMatchInlineSnapshot(`
       OkResult {
@@ -929,8 +1093,9 @@ describe('searchPublishedEntitiesQuery()', () => {
           "cursorExtractor": [Function],
           "isForwards": true,
           "pagingCount": 25,
-          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.type = ANY($1) ORDER BY e.id LIMIT $2",
+          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.type = ANY($2) ORDER BY e.id LIMIT $3",
           "values": Array [
+            "none",
             Array [
               "QueryGeneratorFoo",
               "QueryGeneratorBar",
@@ -947,7 +1112,8 @@ describe('searchPublishedEntitiesQuery()', () => {
       searchPublishedEntitiesQuery(
         schema,
         { entityTypes: ['QueryGeneratorFoo', 'QueryGeneratorBar'] },
-        { first: 10, after: toOpaqueCursor('int', 543) }
+        { first: 10, after: toOpaqueCursor('int', 543) },
+        authKeysNone
       )
     ).toMatchInlineSnapshot(`
       OkResult {
@@ -955,8 +1121,9 @@ describe('searchPublishedEntitiesQuery()', () => {
           "cursorExtractor": [Function],
           "isForwards": true,
           "pagingCount": 10,
-          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.type = ANY($1) AND e.id > $2 ORDER BY e.id LIMIT $3",
+          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.type = ANY($2) AND e.id > $3 ORDER BY e.id LIMIT $4",
           "values": Array [
+            "none",
             Array [
               "QueryGeneratorFoo",
               "QueryGeneratorBar",
@@ -974,7 +1141,8 @@ describe('searchPublishedEntitiesQuery()', () => {
       searchPublishedEntitiesQuery(
         schema,
         { referencing: '37b48706-803e-4227-a51e-8208db12d949' },
-        undefined
+        undefined,
+        authKeysNone
       )
     ).toMatchInlineSnapshot(`
       OkResult {
@@ -982,8 +1150,9 @@ describe('searchPublishedEntitiesQuery()', () => {
           "cursorExtractor": [Function],
           "isForwards": true,
           "pagingCount": 25,
-          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, ev.data FROM entities e, entity_versions ev, entity_version_references evr, entities e2 WHERE e.published_entity_versions_id = ev.id AND ev.id = evr.entity_versions_id AND evr.entities_id = e2.id AND e2.uuid = $1 AND e2.published_entity_versions_id IS NOT NULL ORDER BY e.id LIMIT $2",
+          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, ev.data FROM entities e, entity_versions ev, entity_version_references evr, entities e2 WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND ev.id = evr.entity_versions_id AND evr.entities_id = e2.id AND e2.uuid = $2 AND e2.published_entity_versions_id IS NOT NULL ORDER BY e.id LIMIT $3",
           "values": Array [
+            "none",
             "37b48706-803e-4227-a51e-8208db12d949",
             26,
           ],
@@ -1004,7 +1173,8 @@ describe('searchPublishedEntitiesQuery()', () => {
             maxLng: 16.25,
           },
         },
-        undefined
+        undefined,
+        authKeysNone
       )
     ).toMatchInlineSnapshot(`
       OkResult {
@@ -1012,8 +1182,9 @@ describe('searchPublishedEntitiesQuery()', () => {
           "cursorExtractor": [Function],
           "isForwards": true,
           "pagingCount": 25,
-          "text": "SELECT DISTINCT e.id, e.uuid, e.type, e.name, e.auth_key, ev.data FROM entities e, entity_versions ev, entity_version_locations evl WHERE e.published_entity_versions_id = ev.id AND ev.id = evl.entity_versions_id AND evl.location && ST_MakeEnvelope($1, $2, $3, $4, 4326) ORDER BY e.id LIMIT $5",
+          "text": "SELECT DISTINCT e.id, e.uuid, e.type, e.name, e.auth_key, ev.data FROM entities e, entity_versions ev, entity_version_locations evl WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND ev.id = evl.entity_versions_id AND evl.location && ST_MakeEnvelope($2, $3, $4, $5, 4326) ORDER BY e.id LIMIT $6",
           "values": Array [
+            "none",
             11.62,
             55.07,
             16.25,
@@ -1032,7 +1203,8 @@ describe('searchPublishedEntitiesQuery()', () => {
         {
           text: 'foo bar',
         },
-        {}
+        {},
+        authKeysNone
       )
     ).toMatchInlineSnapshot(`
       OkResult {
@@ -1040,8 +1212,9 @@ describe('searchPublishedEntitiesQuery()', () => {
           "cursorExtractor": [Function],
           "isForwards": true,
           "pagingCount": 25,
-          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.published_fts @@ websearch_to_tsquery($1) ORDER BY e.id LIMIT $2",
+          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.published_fts @@ websearch_to_tsquery($2) ORDER BY e.id LIMIT $3",
           "values": Array [
+            "none",
             "foo bar",
             26,
           ],
@@ -1058,7 +1231,8 @@ describe('searchPublishedEntitiesQuery()', () => {
           entityTypes: ['QueryGeneratorFoo', 'QueryGeneratorBar'],
           referencing: '37b48706-803e-4227-a51e-8208db12d949',
         },
-        { first: 10, after: toOpaqueCursor('int', 123) }
+        { first: 10, after: toOpaqueCursor('int', 123) },
+        authKeysNone
       )
     ).toMatchInlineSnapshot(`
       OkResult {
@@ -1066,8 +1240,9 @@ describe('searchPublishedEntitiesQuery()', () => {
           "cursorExtractor": [Function],
           "isForwards": true,
           "pagingCount": 10,
-          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, ev.data FROM entities e, entity_versions ev, entity_version_references evr, entities e2 WHERE e.published_entity_versions_id = ev.id AND e.type = ANY($1) AND ev.id = evr.entity_versions_id AND evr.entities_id = e2.id AND e2.uuid = $2 AND e2.published_entity_versions_id IS NOT NULL AND e.id > $3 ORDER BY e.id LIMIT $4",
+          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, ev.data FROM entities e, entity_versions ev, entity_version_references evr, entities e2 WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.type = ANY($2) AND ev.id = evr.entity_versions_id AND evr.entities_id = e2.id AND e2.uuid = $3 AND e2.published_entity_versions_id IS NOT NULL AND e.id > $4 ORDER BY e.id LIMIT $5",
           "values": Array [
+            "none",
             Array [
               "QueryGeneratorFoo",
               "QueryGeneratorBar",
@@ -1082,15 +1257,17 @@ describe('searchPublishedEntitiesQuery()', () => {
   });
 
   test('order by createdAt', () => {
-    expect(searchPublishedEntitiesQuery(schema, { order: QueryOrder.createdAt }, undefined))
-      .toMatchInlineSnapshot(`
+    expect(
+      searchPublishedEntitiesQuery(schema, { order: QueryOrder.createdAt }, undefined, authKeysNone)
+    ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
           "cursorExtractor": [Function],
           "isForwards": true,
           "pagingCount": 25,
-          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id ORDER BY e.id LIMIT $1",
+          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 ORDER BY e.id LIMIT $2",
           "values": Array [
+            "none",
             26,
           ],
         },
@@ -1099,15 +1276,17 @@ describe('searchPublishedEntitiesQuery()', () => {
   });
 
   test('order by name', () => {
-    expect(searchPublishedEntitiesQuery(schema, { order: QueryOrder.name }, undefined))
-      .toMatchInlineSnapshot(`
+    expect(
+      searchPublishedEntitiesQuery(schema, { order: QueryOrder.name }, undefined, authKeysNone)
+    ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
           "cursorExtractor": [Function],
           "isForwards": true,
           "pagingCount": 25,
-          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id ORDER BY e.name LIMIT $1",
+          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 ORDER BY e.name LIMIT $2",
           "values": Array [
+            "none",
             26,
           ],
         },
@@ -1116,41 +1295,52 @@ describe('searchPublishedEntitiesQuery()', () => {
   });
 
   test('Error: invalid entity type in query', () => {
-    const result = searchPublishedEntitiesQuery(schema, { entityTypes: ['Invalid'] }, undefined);
+    const result = searchPublishedEntitiesQuery(
+      schema,
+      { entityTypes: ['Invalid'] },
+      undefined,
+      authKeysNone
+    );
     expectErrorResult(result, ErrorType.BadRequest, 'Can’t find entity type in query: Invalid');
   });
 });
 
 describe('totalAdminEntitiesQuery()', () => {
   test('no query', () => {
-    expect(totalAdminEntitiesQuery(schema, undefined)).toMatchInlineSnapshot(`
+    expect(totalAdminEntitiesQuery(schema, authKeysNone, undefined)).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
-          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e",
-          "values": Array [],
+          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.resolved_auth_key = $1",
+          "values": Array [
+            "none",
+          ],
         },
       }
     `);
   });
 
   test('no entity type => all', () => {
-    expect(totalAdminEntitiesQuery(schema, { entityTypes: [] })).toMatchInlineSnapshot(`
+    expect(totalAdminEntitiesQuery(schema, authKeysNone, { entityTypes: [] }))
+      .toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
-          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e",
-          "values": Array [],
+          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.resolved_auth_key = $1",
+          "values": Array [
+            "none",
+          ],
         },
       }
     `);
   });
 
   test('one entity type', () => {
-    expect(totalAdminEntitiesQuery(schema, { entityTypes: ['QueryGeneratorFoo'] }))
+    expect(totalAdminEntitiesQuery(schema, authKeysNone, { entityTypes: ['QueryGeneratorFoo'] }))
       .toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
-          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.type = ANY($1)",
+          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.resolved_auth_key = $1 AND e.type = ANY($2)",
           "values": Array [
+            "none",
             Array [
               "QueryGeneratorFoo",
             ],
@@ -1162,12 +1352,15 @@ describe('totalAdminEntitiesQuery()', () => {
 
   test('two entity types', () => {
     expect(
-      totalAdminEntitiesQuery(schema, { entityTypes: ['QueryGeneratorFoo', 'QueryGeneratorBar'] })
+      totalAdminEntitiesQuery(schema, authKeysNone, {
+        entityTypes: ['QueryGeneratorFoo', 'QueryGeneratorBar'],
+      })
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
-          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.type = ANY($1)",
+          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.resolved_auth_key = $1 AND e.type = ANY($2)",
           "values": Array [
+            "none",
             Array [
               "QueryGeneratorFoo",
               "QueryGeneratorBar",
@@ -1179,23 +1372,26 @@ describe('totalAdminEntitiesQuery()', () => {
   });
 
   test('query status empty list', () => {
-    expect(totalAdminEntitiesQuery(schema, { status: [] })).toMatchInlineSnapshot(`
+    expect(totalAdminEntitiesQuery(schema, authKeysNone, { status: [] })).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
-          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e",
-          "values": Array [],
+          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.resolved_auth_key = $1",
+          "values": Array [
+            "none",
+          ],
         },
       }
     `);
   });
 
   test('query status draft', () => {
-    expect(totalAdminEntitiesQuery(schema, { status: [EntityPublishState.Draft] }))
+    expect(totalAdminEntitiesQuery(schema, authKeysNone, { status: [EntityPublishState.Draft] }))
       .toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
-          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE status = $1",
+          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.resolved_auth_key = $1 AND status = $2",
           "values": Array [
+            "none",
             "draft",
           ],
         },
@@ -1204,12 +1400,14 @@ describe('totalAdminEntitiesQuery()', () => {
   });
 
   test('query status published', () => {
-    expect(totalAdminEntitiesQuery(schema, { status: [EntityPublishState.Published] }))
-      .toMatchInlineSnapshot(`
+    expect(
+      totalAdminEntitiesQuery(schema, authKeysNone, { status: [EntityPublishState.Published] })
+    ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
-          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE status = $1",
+          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.resolved_auth_key = $1 AND status = $2",
           "values": Array [
+            "none",
             "published",
           ],
         },
@@ -1218,12 +1416,13 @@ describe('totalAdminEntitiesQuery()', () => {
   });
 
   test('query status modified', () => {
-    expect(totalAdminEntitiesQuery(schema, { status: [EntityPublishState.Modified] }))
+    expect(totalAdminEntitiesQuery(schema, authKeysNone, { status: [EntityPublishState.Modified] }))
       .toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
-          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE status = $1",
+          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.resolved_auth_key = $1 AND status = $2",
           "values": Array [
+            "none",
             "modified",
           ],
         },
@@ -1232,12 +1431,14 @@ describe('totalAdminEntitiesQuery()', () => {
   });
 
   test('query status withdrawn', () => {
-    expect(totalAdminEntitiesQuery(schema, { status: [EntityPublishState.Withdrawn] }))
-      .toMatchInlineSnapshot(`
+    expect(
+      totalAdminEntitiesQuery(schema, authKeysNone, { status: [EntityPublishState.Withdrawn] })
+    ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
-          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE status = $1",
+          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.resolved_auth_key = $1 AND status = $2",
           "values": Array [
+            "none",
             "withdrawn",
           ],
         },
@@ -1246,12 +1447,13 @@ describe('totalAdminEntitiesQuery()', () => {
   });
 
   test('query status archived', () => {
-    expect(totalAdminEntitiesQuery(schema, { status: [EntityPublishState.Archived] }))
+    expect(totalAdminEntitiesQuery(schema, authKeysNone, { status: [EntityPublishState.Archived] }))
       .toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
-          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE status = $1",
+          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.resolved_auth_key = $1 AND status = $2",
           "values": Array [
+            "none",
             "archived",
           ],
         },
@@ -1260,12 +1462,16 @@ describe('totalAdminEntitiesQuery()', () => {
   });
 
   test('query referencing', () => {
-    expect(totalAdminEntitiesQuery(schema, { referencing: '37b48706-803e-4227-a51e-8208db12d949' }))
-      .toMatchInlineSnapshot(`
+    expect(
+      totalAdminEntitiesQuery(schema, authKeysNone, {
+        referencing: '37b48706-803e-4227-a51e-8208db12d949',
+      })
+    ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
-          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e, entity_versions ev, entity_version_references evr, entities e2 WHERE e.latest_draft_entity_versions_id = ev.id AND ev.id = evr.entity_versions_id AND evr.entities_id = e2.id AND e2.uuid = $1",
+          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e, entity_versions ev, entity_version_references evr, entities e2 WHERE e.resolved_auth_key = $1 AND e.latest_draft_entity_versions_id = ev.id AND ev.id = evr.entity_versions_id AND evr.entities_id = e2.id AND e2.uuid = $2",
           "values": Array [
+            "none",
             "37b48706-803e-4227-a51e-8208db12d949",
           ],
         },
@@ -1275,15 +1481,16 @@ describe('totalAdminEntitiesQuery()', () => {
 
   test('query referencing and entity types and paging', () => {
     expect(
-      totalAdminEntitiesQuery(schema, {
+      totalAdminEntitiesQuery(schema, authKeysNone, {
         entityTypes: ['QueryGeneratorFoo', 'QueryGeneratorBar'],
         referencing: '37b48706-803e-4227-a51e-8208db12d949',
       })
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
-          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e, entity_versions ev, entity_version_references evr, entities e2 WHERE e.type = ANY($1) AND e.latest_draft_entity_versions_id = ev.id AND ev.id = evr.entity_versions_id AND evr.entities_id = e2.id AND e2.uuid = $2",
+          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e, entity_versions ev, entity_version_references evr, entities e2 WHERE e.resolved_auth_key = $1 AND e.type = ANY($2) AND e.latest_draft_entity_versions_id = ev.id AND ev.id = evr.entity_versions_id AND evr.entities_id = e2.id AND e2.uuid = $3",
           "values": Array [
+            "none",
             Array [
               "QueryGeneratorFoo",
               "QueryGeneratorBar",
@@ -1297,7 +1504,7 @@ describe('totalAdminEntitiesQuery()', () => {
 
   test('query bounding box', () => {
     expect(
-      totalAdminEntitiesQuery(schema, {
+      totalAdminEntitiesQuery(schema, authKeysNone, {
         boundingBox: {
           minLat: 55.07,
           maxLat: 56.79,
@@ -1308,8 +1515,9 @@ describe('totalAdminEntitiesQuery()', () => {
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
-          "text": "SELECT COUNT(DISTINCT e.id)::integer AS count FROM entities e, entity_versions ev, entity_version_locations evl WHERE e.latest_draft_entity_versions_id = ev.id AND ev.id = evl.entity_versions_id AND evl.location && ST_MakeEnvelope($1, $2, $3, $4, 4326)",
+          "text": "SELECT COUNT(DISTINCT e.id)::integer AS count FROM entities e, entity_versions ev, entity_version_locations evl WHERE e.resolved_auth_key = $1 AND e.latest_draft_entity_versions_id = ev.id AND ev.id = evl.entity_versions_id AND evl.location && ST_MakeEnvelope($2, $3, $4, $5, 4326)",
           "values": Array [
+            "none",
             11.62,
             55.07,
             16.25,
@@ -1322,14 +1530,15 @@ describe('totalAdminEntitiesQuery()', () => {
 
   test('query text', () => {
     expect(
-      totalAdminEntitiesQuery(schema, {
+      totalAdminEntitiesQuery(schema, authKeysNone, {
         text: 'foo bar',
       })
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
-          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.latest_fts @@ websearch_to_tsquery($1)",
+          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.resolved_auth_key = $1 AND e.latest_fts @@ websearch_to_tsquery($2)",
           "values": Array [
+            "none",
             "foo bar",
           ],
         },
@@ -1340,34 +1549,41 @@ describe('totalAdminEntitiesQuery()', () => {
 
 describe('totalPublishedEntitiesQuery()', () => {
   test('no query', () => {
-    expect(totalPublishedEntitiesQuery(schema, undefined)).toMatchInlineSnapshot(`
+    expect(totalPublishedEntitiesQuery(schema, authKeysNone, undefined)).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
-          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.published_entity_versions_id IS NOT NULL",
-          "values": Array [],
+          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.published_entity_versions_id IS NOT NULL AND e.resolved_auth_key = $1",
+          "values": Array [
+            "none",
+          ],
         },
       }
     `);
   });
 
   test('no entity type => all', () => {
-    expect(totalPublishedEntitiesQuery(schema, { entityTypes: [] })).toMatchInlineSnapshot(`
+    expect(totalPublishedEntitiesQuery(schema, authKeysNone, { entityTypes: [] }))
+      .toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
-          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.published_entity_versions_id IS NOT NULL",
-          "values": Array [],
+          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.published_entity_versions_id IS NOT NULL AND e.resolved_auth_key = $1",
+          "values": Array [
+            "none",
+          ],
         },
       }
     `);
   });
 
   test('one entity type', () => {
-    expect(totalPublishedEntitiesQuery(schema, { entityTypes: ['QueryGeneratorFoo'] }))
-      .toMatchInlineSnapshot(`
+    expect(
+      totalPublishedEntitiesQuery(schema, authKeysNone, { entityTypes: ['QueryGeneratorFoo'] })
+    ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
-          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.published_entity_versions_id IS NOT NULL AND e.type = ANY($1)",
+          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.published_entity_versions_id IS NOT NULL AND e.resolved_auth_key = $1 AND e.type = ANY($2)",
           "values": Array [
+            "none",
             Array [
               "QueryGeneratorFoo",
             ],
@@ -1379,14 +1595,15 @@ describe('totalPublishedEntitiesQuery()', () => {
 
   test('two entity types', () => {
     expect(
-      totalPublishedEntitiesQuery(schema, {
+      totalPublishedEntitiesQuery(schema, authKeysNone, {
         entityTypes: ['QueryGeneratorFoo', 'QueryGeneratorBar'],
       })
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
-          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.published_entity_versions_id IS NOT NULL AND e.type = ANY($1)",
+          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.published_entity_versions_id IS NOT NULL AND e.resolved_auth_key = $1 AND e.type = ANY($2)",
           "values": Array [
+            "none",
             Array [
               "QueryGeneratorFoo",
               "QueryGeneratorBar",
@@ -1399,12 +1616,15 @@ describe('totalPublishedEntitiesQuery()', () => {
 
   test('query referencing', () => {
     expect(
-      totalPublishedEntitiesQuery(schema, { referencing: '37b48706-803e-4227-a51e-8208db12d949' })
+      totalPublishedEntitiesQuery(schema, authKeysNone, {
+        referencing: '37b48706-803e-4227-a51e-8208db12d949',
+      })
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
-          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e, entity_versions ev, entity_version_references evr, entities e2 WHERE e.published_entity_versions_id IS NOT NULL AND e.published_entity_versions_id = ev.id AND ev.id = evr.entity_versions_id AND evr.entities_id = e2.id AND e2.uuid = $1 AND e2.published_entity_versions_id IS NOT NULL",
+          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e, entity_versions ev, entity_version_references evr, entities e2 WHERE e.published_entity_versions_id IS NOT NULL AND e.resolved_auth_key = $1 AND e.published_entity_versions_id = ev.id AND ev.id = evr.entity_versions_id AND evr.entities_id = e2.id AND e2.uuid = $2 AND e2.published_entity_versions_id IS NOT NULL",
           "values": Array [
+            "none",
             "37b48706-803e-4227-a51e-8208db12d949",
           ],
         },
@@ -1414,15 +1634,16 @@ describe('totalPublishedEntitiesQuery()', () => {
 
   test('query referencing and entity types and paging', () => {
     expect(
-      totalPublishedEntitiesQuery(schema, {
+      totalPublishedEntitiesQuery(schema, authKeysNone, {
         entityTypes: ['QueryGeneratorFoo', 'QueryGeneratorBar'],
         referencing: '37b48706-803e-4227-a51e-8208db12d949',
       })
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
-          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e, entity_versions ev, entity_version_references evr, entities e2 WHERE e.published_entity_versions_id IS NOT NULL AND e.type = ANY($1) AND e.published_entity_versions_id = ev.id AND ev.id = evr.entity_versions_id AND evr.entities_id = e2.id AND e2.uuid = $2 AND e2.published_entity_versions_id IS NOT NULL",
+          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e, entity_versions ev, entity_version_references evr, entities e2 WHERE e.published_entity_versions_id IS NOT NULL AND e.resolved_auth_key = $1 AND e.type = ANY($2) AND e.published_entity_versions_id = ev.id AND ev.id = evr.entity_versions_id AND evr.entities_id = e2.id AND e2.uuid = $3 AND e2.published_entity_versions_id IS NOT NULL",
           "values": Array [
+            "none",
             Array [
               "QueryGeneratorFoo",
               "QueryGeneratorBar",
@@ -1436,7 +1657,7 @@ describe('totalPublishedEntitiesQuery()', () => {
 
   test('query bounding box', () => {
     expect(
-      totalPublishedEntitiesQuery(schema, {
+      totalPublishedEntitiesQuery(schema, authKeysNone, {
         boundingBox: {
           minLat: 55.07,
           maxLat: 56.79,
@@ -1447,8 +1668,9 @@ describe('totalPublishedEntitiesQuery()', () => {
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
-          "text": "SELECT COUNT(DISTINCT e.id)::integer AS count FROM entities e, entity_versions ev, entity_version_locations evl WHERE e.published_entity_versions_id IS NOT NULL AND e.published_entity_versions_id = ev.id AND ev.id = evl.entity_versions_id AND evl.location && ST_MakeEnvelope($1, $2, $3, $4, 4326)",
+          "text": "SELECT COUNT(DISTINCT e.id)::integer AS count FROM entities e, entity_versions ev, entity_version_locations evl WHERE e.published_entity_versions_id IS NOT NULL AND e.resolved_auth_key = $1 AND e.published_entity_versions_id = ev.id AND ev.id = evl.entity_versions_id AND evl.location && ST_MakeEnvelope($2, $3, $4, $5, 4326)",
           "values": Array [
+            "none",
             11.62,
             55.07,
             16.25,
@@ -1461,14 +1683,15 @@ describe('totalPublishedEntitiesQuery()', () => {
 
   test('query text', () => {
     expect(
-      totalPublishedEntitiesQuery(schema, {
+      totalPublishedEntitiesQuery(schema, authKeysNone, {
         text: 'foo bar',
       })
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
-          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.published_entity_versions_id IS NOT NULL AND e.published_fts @@ websearch_to_tsquery($1)",
+          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.published_entity_versions_id IS NOT NULL AND e.resolved_auth_key = $1 AND e.published_fts @@ websearch_to_tsquery($2)",
           "values": Array [
+            "none",
             "foo bar",
           ],
         },

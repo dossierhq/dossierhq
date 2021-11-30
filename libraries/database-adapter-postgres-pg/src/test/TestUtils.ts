@@ -90,7 +90,7 @@ export function expectEntityHistoryVersions(
 export function expectSearchResultEntities<TItem extends AdminEntity | Entity>(
   result: Result<
     Connection<Edge<TItem, ErrorType>> | null,
-    ErrorType.BadRequest | ErrorType.Generic
+    ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
   >,
   actualEntities: TItem[]
 ): void {

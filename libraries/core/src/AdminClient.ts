@@ -73,15 +73,17 @@ export interface AdminClient {
 
   searchEntities(
     query?: AdminQuery,
-    paging?: Paging
+    paging?: Paging,
+    options?: { authKeys: string[] }
   ): PromiseResult<
     Connection<Edge<AdminEntity, ErrorType>> | null,
-    ErrorType.BadRequest | ErrorType.Generic
+    ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
   >;
 
   getTotalCount(
-    query?: AdminQuery
-  ): PromiseResult<number, ErrorType.BadRequest | ErrorType.Generic>;
+    query?: AdminQuery,
+    options?: { authKeys: string[] }
+  ): PromiseResult<number, ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic>;
 
   createEntity(
     entity: AdminEntityCreate

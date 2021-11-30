@@ -63,6 +63,41 @@ export async function authResolveAuthorizationKey(
   });
 }
 
+export async function authResolveAuthorizationKeys(
+  authorizationAdapter: AuthorizationAdapter,
+  context: SessionContext,
+  requestedAuthKeys: string[] | undefined
+): PromiseResult<
+  ResolvedAuthKey[],
+  ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
+> {
+  const expectedAuthKeys =
+    requestedAuthKeys && requestedAuthKeys.length > 0 ? requestedAuthKeys : context.defaultAuthKeys;
+  if (expectedAuthKeys.length === 0) {
+    return notOk.BadRequest('No authKeys provided');
+  }
+
+  const resolvedResult = await authorizationAdapter.resolveAuthorizationKeys(
+    context,
+    expectedAuthKeys
+  );
+  if (resolvedResult.isError()) {
+    return resolvedResult;
+  }
+
+  const result: ResolvedAuthKey[] = [];
+  for (const authKey of expectedAuthKeys) {
+    const resolvedAuthKey = resolvedResult.value[authKey];
+    if (!resolvedAuthKey) {
+      return notOk.Generic(
+        `Authorization adapter didn't return a key when resolving authKey (${authKey})`
+      );
+    }
+    result.push({ authKey, resolvedAuthKey });
+  }
+  return ok(result);
+}
+
 export async function authVerifyAuthorizationKey(
   authorizationAdapter: AuthorizationAdapter,
   context: SessionContext,

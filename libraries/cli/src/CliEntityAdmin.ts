@@ -77,7 +77,10 @@ export async function selectEntity(
   message: string,
   initialQuery: AdminQuery | null,
   _defaultValue: EntityReference | null
-): PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic> {
+): PromiseResult<
+  AdminEntity,
+  ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
+> {
   const { adminClient } = context;
   const { query, paging } = await configureQuery(context, initialQuery);
   const pagingInfo = getPagingInfo(paging);

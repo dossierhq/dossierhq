@@ -36,7 +36,11 @@ import {
 } from '@jonasb/datadata-core';
 import type { AuthorizationAdapter, DatabaseAdapter, SessionContext } from '.';
 import type { ResolvedAuthKey } from './Auth';
-import { authResolveAuthorizationKey, authVerifyAuthorizationKey } from './Auth';
+import {
+  authResolveAuthorizationKey,
+  authResolveAuthorizationKeys,
+  authVerifyAuthorizationKey,
+} from './Auth';
 import * as Db from './Database';
 import type {
   EntitiesTable,
@@ -160,12 +164,26 @@ export async function getEntities(
 
 export async function searchEntities(
   schema: AdminSchema,
+  authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   query: AdminQuery | undefined,
-  paging: Paging | undefined
-): PromiseResult<Connection<Edge<AdminEntity, ErrorType>> | null, ErrorType.BadRequest> {
-  const sqlQueryResult = searchAdminEntitiesQuery(schema, query, paging);
+  paging: Paging | undefined,
+  options: { authKeys: string[] } | undefined
+): PromiseResult<
+  Connection<Edge<AdminEntity, ErrorType>> | null,
+  ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
+> {
+  const authKeysResult = await authResolveAuthorizationKeys(
+    authorizationAdapter,
+    context,
+    options?.authKeys
+  );
+  if (authKeysResult.isError()) {
+    return authKeysResult;
+  }
+
+  const sqlQueryResult = searchAdminEntitiesQuery(schema, query, paging, authKeysResult.value);
   if (sqlQueryResult.isError()) {
     return sqlQueryResult;
   }
@@ -181,11 +199,22 @@ export async function searchEntities(
 
 export async function getTotalCount(
   schema: AdminSchema,
+  authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  query: AdminQuery | undefined
-): PromiseResult<number, ErrorType.BadRequest> {
-  const sqlQuery = totalAdminEntitiesQuery(schema, query);
+  query: AdminQuery | undefined,
+  options: { authKeys: string[] } | undefined
+): PromiseResult<number, ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic> {
+  const authKeysResult = await authResolveAuthorizationKeys(
+    authorizationAdapter,
+    context,
+    options?.authKeys
+  );
+  if (authKeysResult.isError()) {
+    return authKeysResult;
+  }
+
+  const sqlQuery = totalAdminEntitiesQuery(schema, authKeysResult.value, query);
   if (sqlQuery.isError()) {
     return sqlQuery;
   }
