@@ -2,6 +2,7 @@ import type {
   DataDataContextAdapter,
   EditorJsToolSettings,
 } from '@jonasb/datadata-admin-react-components';
+import type { DisplayAuthKey } from '@jonasb/datadata-admin-react-components';
 import { DataDataProvider, published } from '@jonasb/datadata-admin-react-components';
 import type {
   AdminClient,
@@ -26,6 +27,11 @@ import { fetchJsonResult, urls } from '../utils/BackendUtils';
 import { EditorJsTools } from './EditorJsTools';
 
 const { PublishedDataDataProvider } = published;
+
+const DISPLAY_AUTH_KEYS: DisplayAuthKey[] = [
+  { authKey: 'none', displayName: 'None' },
+  { authKey: 'subject', displayName: 'User private' },
+];
 
 type BackendContext = ClientContext;
 
@@ -99,10 +105,7 @@ export function DataDataSharedProvider({ children }: { children: React.ReactNode
     () => ({
       adminClient: createBackendAdminClient(),
       adapter: new ContextAdapter(),
-      authKeys: [
-        { authKey: 'none', displayName: 'None' },
-        { authKey: 'subject', displayName: 'User private' },
-      ],
+      authKeys: DISPLAY_AUTH_KEYS,
     }),
     []
   );
@@ -113,6 +116,7 @@ export function PublishedDataDataSharedProvider({ children }: { children: React.
   const args = useMemo(
     () => ({
       publishedClient: createBackendPublishedClient(),
+      authKeys: DISPLAY_AUTH_KEYS,
     }),
     []
   );
