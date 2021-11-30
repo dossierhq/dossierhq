@@ -1,6 +1,7 @@
 import type { Result } from '.';
 import { createErrorResultFromError, ErrorType, notOk, ok } from '.';
-import { createMockLogger, expectErrorResult, expectOkResult } from './CoreTestUtils';
+import { expectErrorResult, expectOkResult } from './CoreTestUtils';
+import { createMockLogger } from './test/MockLogger';
 
 describe('createErrorResultFromError()', () => {
   test('From generic error', () => {
