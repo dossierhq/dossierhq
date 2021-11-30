@@ -28,6 +28,7 @@ export async function ensureEntityCount(
   | ErrorType.Generic
 > {
   const countResult = await client.getTotalCount({
+    authKeys: [authKey],
     entityTypes: [entityType],
   });
   if (countResult.isError()) return countResult;
