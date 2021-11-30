@@ -89,7 +89,8 @@ let server: Server;
 let context: SessionContext;
 let adminClient: AdminClient;
 let publishedClient: PublishedClient;
-let entitiesOfTypePublishedEntityOnlyEditBefore: AdminEntity[];
+let entitiesOfTypePublishedEntityOnlyEditBeforeNone: AdminEntity[];
+let entitiesOfTypePublishedEntityOnlyEditBeforeSubject: AdminEntity[];
 
 beforeAll(async () => {
   const result = await createPostgresTestServerAndClient();
@@ -101,32 +102,44 @@ beforeAll(async () => {
 
   await adminClient.updateSchemaSpecification(SCHEMA);
 
-  await ensureEntitiesExistForPublishedEntityOnlyEditBefore(adminClient);
-  entitiesOfTypePublishedEntityOnlyEditBefore = await getEntitiesForPublishedEntityOnlyEditBefore(
-    adminClient
-  );
+  await ensureEntitiesExistForPublishedEntityOnlyEditBefore(adminClient, 'none');
+  entitiesOfTypePublishedEntityOnlyEditBeforeNone =
+    await getEntitiesForPublishedEntityOnlyEditBefore(adminClient, 'none');
+
+  await ensureEntitiesExistForPublishedEntityOnlyEditBefore(adminClient, 'subject');
+  entitiesOfTypePublishedEntityOnlyEditBeforeSubject =
+    await getEntitiesForPublishedEntityOnlyEditBefore(adminClient, 'subject');
 });
 afterAll(async () => {
   await server.shutdown();
 });
 
-async function ensureEntitiesExistForPublishedEntityOnlyEditBefore(client: AdminClient) {
-  const result = await ensureEntityCount(client, 50, 'PublishedEntityOnlyEditBefore', (random) => ({
-    message: `Hey ${random}`,
-  }));
+async function ensureEntitiesExistForPublishedEntityOnlyEditBefore(
+  client: AdminClient,
+  authKey: string
+) {
+  const result = await ensureEntityCount(
+    client,
+    50,
+    'PublishedEntityOnlyEditBefore',
+    authKey,
+    (random) => ({
+      message: `Hey ${random}`,
+    })
+  );
   result.throwIfError();
 }
 
-async function getEntitiesForPublishedEntityOnlyEditBefore(client: AdminClient) {
-  //TODO add query support for multiple entity status
-  const result = await getAllEntities(client, { entityTypes: ['PublishedEntityOnlyEditBefore'] });
+async function getEntitiesForPublishedEntityOnlyEditBefore(client: AdminClient, authKey: string) {
+  const result = await getAllEntities(client, {
+    authKeys: [authKey],
+    entityTypes: ['PublishedEntityOnlyEditBefore'],
+    status: [EntityPublishState.Published, EntityPublishState.Modified],
+  });
   if (result.isError()) {
     throw result.toError();
   }
-  const publishedEntities = result.value.filter((it) =>
-    [EntityPublishState.Published, EntityPublishState.Modified].includes(it.info.publishingState)
-  );
-  return publishedEntities;
+  return result.value;
 }
 
 async function createAndPublishEntities(
@@ -525,7 +538,7 @@ describe('searchEntities() paging', () => {
     });
     if (expectOkResult(result)) {
       expectConnectionToMatchSlice(
-        entitiesOfTypePublishedEntityOnlyEditBefore,
+        entitiesOfTypePublishedEntityOnlyEditBeforeNone,
         result.value,
         0,
         25
@@ -542,7 +555,7 @@ describe('searchEntities() paging', () => {
     );
     if (expectOkResult(result)) {
       expectConnectionToMatchSlice(
-        entitiesOfTypePublishedEntityOnlyEditBefore,
+        entitiesOfTypePublishedEntityOnlyEditBeforeNone,
         result.value,
         0,
         10
@@ -583,7 +596,7 @@ describe('searchEntities() paging', () => {
     );
     if (expectOkResult(result)) {
       expectConnectionToMatchSlice(
-        entitiesOfTypePublishedEntityOnlyEditBefore,
+        entitiesOfTypePublishedEntityOnlyEditBeforeNone,
         result.value,
         -10,
         undefined
@@ -607,7 +620,7 @@ describe('searchEntities() paging', () => {
       );
       if (expectOkResult(secondResult)) {
         expectConnectionToMatchSlice(
-          entitiesOfTypePublishedEntityOnlyEditBefore,
+          entitiesOfTypePublishedEntityOnlyEditBeforeNone,
           secondResult.value,
           10,
           10 + 20
@@ -632,7 +645,7 @@ describe('searchEntities() paging', () => {
       );
       if (expectOkResult(secondResult)) {
         expectConnectionToMatchSlice(
-          entitiesOfTypePublishedEntityOnlyEditBefore,
+          entitiesOfTypePublishedEntityOnlyEditBeforeNone,
           secondResult.value,
           -10 - 20,
           -10
@@ -661,7 +674,7 @@ describe('searchEntities() paging', () => {
       );
       if (expectOkResult(secondResult)) {
         expectConnectionToMatchSlice(
-          entitiesOfTypePublishedEntityOnlyEditBefore,
+          entitiesOfTypePublishedEntityOnlyEditBeforeNone,
           secondResult.value,
           3 /*inclusive*/,
           8 /*exclusive*/
@@ -690,7 +703,7 @@ describe('searchEntities() paging', () => {
       );
       if (expectOkResult(secondResult)) {
         expectConnectionToMatchSlice(
-          entitiesOfTypePublishedEntityOnlyEditBefore,
+          entitiesOfTypePublishedEntityOnlyEditBeforeNone,
           secondResult.value,
           3 /*inclusive*/,
           8 /*exclusive*/
@@ -712,7 +725,7 @@ describe('searchEntities() paging', () => {
       });
       if (expectOkResult(secondResult)) {
         expectConnectionToMatchSlice(
-          [...entitiesOfTypePublishedEntityOnlyEditBefore].reverse(),
+          [...entitiesOfTypePublishedEntityOnlyEditBeforeNone].reverse(),
           secondResult.value,
           10,
           10 + 20
@@ -733,7 +746,7 @@ describe('searchEntities() order', () => {
     );
     if (expectOkResult(result)) {
       expectConnectionToMatchSlice(
-        entitiesOfTypePublishedEntityOnlyEditBefore,
+        entitiesOfTypePublishedEntityOnlyEditBeforeNone,
         result.value,
         0,
         20
@@ -752,7 +765,7 @@ describe('searchEntities() order', () => {
     );
     if (expectOkResult(result)) {
       expectConnectionToMatchSlice(
-        [...entitiesOfTypePublishedEntityOnlyEditBefore].reverse(),
+        [...entitiesOfTypePublishedEntityOnlyEditBeforeNone].reverse(),
         result.value,
         0,
         20
@@ -770,7 +783,7 @@ describe('searchEntities() order', () => {
     );
     if (expectOkResult(result)) {
       expectConnectionToMatchSlice(
-        entitiesOfTypePublishedEntityOnlyEditBefore,
+        entitiesOfTypePublishedEntityOnlyEditBeforeNone,
         result.value,
         0,
         20,
@@ -792,7 +805,7 @@ describe('searchEntities() order', () => {
     );
     if (expectOkResult(result)) {
       expectConnectionToMatchSlice(
-        entitiesOfTypePublishedEntityOnlyEditBefore,
+        entitiesOfTypePublishedEntityOnlyEditBeforeNone,
         result.value,
         0,
         20,
@@ -997,7 +1010,27 @@ describe('getTotalCount', () => {
     const result = await publishedClient.getTotalCount({
       entityTypes: ['PublishedEntityOnlyEditBefore'],
     });
-    expectResultValue(result, entitiesOfTypePublishedEntityOnlyEditBefore.length);
+    expectResultValue(result, entitiesOfTypePublishedEntityOnlyEditBeforeNone.length);
+  });
+
+  test('Check that we get the correct count (subject)', async () => {
+    const result = await publishedClient.getTotalCount({
+      authKeys: ['subject'],
+      entityTypes: ['PublishedEntityOnlyEditBefore'],
+    });
+    expectResultValue(result, entitiesOfTypePublishedEntityOnlyEditBeforeSubject.length);
+  });
+
+  test('Check that we get the correct count (none+subject)', async () => {
+    const result = await publishedClient.getTotalCount({
+      authKeys: ['none', 'subject'],
+      entityTypes: ['PublishedEntityOnlyEditBefore'],
+    });
+    expectResultValue(
+      result,
+      entitiesOfTypePublishedEntityOnlyEditBeforeNone.length +
+        entitiesOfTypePublishedEntityOnlyEditBeforeSubject.length
+    );
   });
 
   test('Query based on referencing, one reference', async () => {

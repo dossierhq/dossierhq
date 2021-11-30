@@ -17,6 +17,7 @@ export async function ensureEntityCount(
   client: AdminClient,
   requestedCount: number,
   entityType: string,
+  authKey: string,
   fieldProvider: (random: string) => Record<string, unknown>
 ): PromiseResult<
   void,
@@ -34,7 +35,7 @@ export async function ensureEntityCount(
   for (let count = countResult.value; count < requestedCount; count += 1) {
     const random = String(Math.random()).slice(2);
     const createResult = await client.createEntity({
-      info: { type: entityType, name: random, authKey: 'none' },
+      info: { type: entityType, name: random, authKey },
       fields: fieldProvider(random),
     });
     if (createResult.isError()) {
@@ -57,6 +58,7 @@ export async function ensureEntityCount(
 export async function ensureEntityWithStatus(
   client: AdminClient,
   entityType: string,
+  authKey: string,
   status: EntityPublishState,
   fieldProvider: (random: string) => Record<string, unknown>
 ): PromiseResult<
@@ -76,7 +78,7 @@ export async function ensureEntityWithStatus(
 
   const random = String(Math.random()).slice(2);
   const createResult = await client.createEntity({
-    info: { type: entityType, name: random, authKey: 'none' },
+    info: { type: entityType, name: random, authKey },
     fields: fieldProvider(random),
   });
   if (createResult.isError()) {
