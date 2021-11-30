@@ -41,7 +41,8 @@ let server: Server;
 let context: SessionContext;
 let client: AdminClient;
 let publishedClient: PublishedClient;
-let entitiesOfTypeAdminOnlyEditBefore: AdminEntity[];
+let entitiesOfTypeAdminOnlyEditBeforeNone: AdminEntity[];
+let entitiesOfTypeAdminOnlyEditBeforeSubject: AdminEntity[];
 
 const emptyFooFields = { bar: null, summary: null, title: null };
 const emptyBazFields = {
@@ -232,16 +233,22 @@ beforeAll(async () => {
     ],
   });
 
-  await ensureEntitiesExistForAdminOnlyEditBefore(client);
-  entitiesOfTypeAdminOnlyEditBefore = await getEntitiesForAdminOnlyEditBefore(client);
+  await ensureEntitiesExistForAdminOnlyEditBefore(client, 'none');
+  entitiesOfTypeAdminOnlyEditBeforeNone = await getEntitiesForAdminOnlyEditBefore(client, 'none');
+
+  await ensureEntitiesExistForAdminOnlyEditBefore(client, 'subject');
+  entitiesOfTypeAdminOnlyEditBeforeSubject = await getEntitiesForAdminOnlyEditBefore(
+    client,
+    'subject'
+  );
 });
 afterAll(async () => {
   await server.shutdown();
 });
 
-async function ensureEntitiesExistForAdminOnlyEditBefore(client: AdminClient) {
+async function ensureEntitiesExistForAdminOnlyEditBefore(client: AdminClient, authKey: string) {
   (
-    await ensureEntityCount(client, 50, 'AdminOnlyEditBefore', (random) => ({
+    await ensureEntityCount(client, 50, 'AdminOnlyEditBefore', authKey, (random) => ({
       message: `Hey ${random}`,
     }))
   ).throwIfError();
@@ -254,15 +261,18 @@ async function ensureEntitiesExistForAdminOnlyEditBefore(client: AdminClient) {
     EntityPublishState.Archived,
   ]) {
     (
-      await ensureEntityWithStatus(client, 'AdminOnlyEditBefore', status, (random) => ({
+      await ensureEntityWithStatus(client, 'AdminOnlyEditBefore', authKey, status, (random) => ({
         message: `Hey ${random}`,
       }))
     ).throwIfError();
   }
 }
 
-async function getEntitiesForAdminOnlyEditBefore(client: AdminClient) {
-  const result = await getAllEntities(client, { entityTypes: ['AdminOnlyEditBefore'] });
+async function getEntitiesForAdminOnlyEditBefore(client: AdminClient, authKey: string) {
+  const result = await getAllEntities(client, {
+    authKeys: [authKey],
+    entityTypes: ['AdminOnlyEditBefore'],
+  });
   if (result.isError()) {
     throw result.toError();
   }
@@ -1651,7 +1661,7 @@ describe('createEntity()', () => {
   });
 
   test('Error: Create EntityAdminFoo with reference to wrong entity type', async () => {
-    const referenceId = entitiesOfTypeAdminOnlyEditBefore[0].id;
+    const referenceId = entitiesOfTypeAdminOnlyEditBeforeNone[0].id;
     const result = await client.createEntity({
       info: { type: 'EntityAdminFoo', name: 'Foo name', authKey: 'none' },
       fields: {
@@ -1967,7 +1977,7 @@ describe('searchEntities() paging', () => {
       entityTypes: ['AdminOnlyEditBefore'],
     });
     if (expectOkResult(result)) {
-      expectConnectionToMatchSlice(entitiesOfTypeAdminOnlyEditBefore, result.value, 0, 25);
+      expectConnectionToMatchSlice(entitiesOfTypeAdminOnlyEditBeforeNone, result.value, 0, 25);
     }
   });
 
@@ -1979,7 +1989,7 @@ describe('searchEntities() paging', () => {
       { first: 10 }
     );
     if (expectOkResult(result)) {
-      expectConnectionToMatchSlice(entitiesOfTypeAdminOnlyEditBefore, result.value, 0, 10);
+      expectConnectionToMatchSlice(entitiesOfTypeAdminOnlyEditBeforeNone, result.value, 0, 10);
     }
   });
 
@@ -2015,7 +2025,12 @@ describe('searchEntities() paging', () => {
       { last: 10 }
     );
     if (expectOkResult(result)) {
-      expectConnectionToMatchSlice(entitiesOfTypeAdminOnlyEditBefore, result.value, -10, undefined);
+      expectConnectionToMatchSlice(
+        entitiesOfTypeAdminOnlyEditBeforeNone,
+        result.value,
+        -10,
+        undefined
+      );
     }
   });
 
@@ -2035,7 +2050,7 @@ describe('searchEntities() paging', () => {
       );
       if (expectOkResult(secondResult)) {
         expectConnectionToMatchSlice(
-          entitiesOfTypeAdminOnlyEditBefore,
+          entitiesOfTypeAdminOnlyEditBeforeNone,
           secondResult.value,
           10,
           10 + 20
@@ -2060,7 +2075,7 @@ describe('searchEntities() paging', () => {
       );
       if (expectOkResult(secondResult)) {
         expectConnectionToMatchSlice(
-          entitiesOfTypeAdminOnlyEditBefore,
+          entitiesOfTypeAdminOnlyEditBeforeNone,
           secondResult.value,
           -10 - 20,
           -10
@@ -2089,7 +2104,7 @@ describe('searchEntities() paging', () => {
       );
       if (expectOkResult(secondResult)) {
         expectConnectionToMatchSlice(
-          entitiesOfTypeAdminOnlyEditBefore,
+          entitiesOfTypeAdminOnlyEditBeforeNone,
           secondResult.value,
           3 /*inclusive*/,
           8 /*exclusive*/
@@ -2118,7 +2133,7 @@ describe('searchEntities() paging', () => {
       );
       if (expectOkResult(secondResult)) {
         expectConnectionToMatchSlice(
-          entitiesOfTypeAdminOnlyEditBefore,
+          entitiesOfTypeAdminOnlyEditBeforeNone,
           secondResult.value,
           3 /*inclusive*/,
           8 /*exclusive*/
@@ -2138,7 +2153,7 @@ describe('searchEntities() order', () => {
       { first: 20 }
     );
     if (expectOkResult(result)) {
-      expectConnectionToMatchSlice(entitiesOfTypeAdminOnlyEditBefore, result.value, 0, 20);
+      expectConnectionToMatchSlice(entitiesOfTypeAdminOnlyEditBeforeNone, result.value, 0, 20);
     }
   });
 
@@ -2153,7 +2168,7 @@ describe('searchEntities() order', () => {
     );
     if (expectOkResult(result)) {
       expectConnectionToMatchSlice(
-        [...entitiesOfTypeAdminOnlyEditBefore].reverse(),
+        [...entitiesOfTypeAdminOnlyEditBeforeNone].reverse(),
         result.value,
         0,
         20
@@ -2171,7 +2186,7 @@ describe('searchEntities() order', () => {
     );
     if (expectOkResult(result)) {
       expectConnectionToMatchSlice(
-        entitiesOfTypeAdminOnlyEditBefore,
+        entitiesOfTypeAdminOnlyEditBeforeNone,
         result.value,
         0,
         20,
@@ -2193,7 +2208,7 @@ describe('searchEntities() order', () => {
     );
     if (expectOkResult(result)) {
       expectConnectionToMatchSlice(
-        entitiesOfTypeAdminOnlyEditBefore,
+        entitiesOfTypeAdminOnlyEditBeforeNone,
         result.value,
         0,
         20,
@@ -2215,7 +2230,7 @@ describe('searchEntities() order', () => {
     expectOkResult(result);
     if (expectOkResult(result)) {
       expectConnectionToMatchSlice(
-        entitiesOfTypeAdminOnlyEditBefore,
+        entitiesOfTypeAdminOnlyEditBeforeNone,
         result.value,
         0,
         20,
@@ -2238,7 +2253,7 @@ describe('searchEntities() order', () => {
     expectOkResult(result);
     if (expectOkResult(result)) {
       expectConnectionToMatchSlice(
-        entitiesOfTypeAdminOnlyEditBefore,
+        entitiesOfTypeAdminOnlyEditBeforeNone,
         result.value,
         0,
         20,
@@ -2599,7 +2614,30 @@ describe('getTotalCount', () => {
       entityTypes: ['AdminOnlyEditBefore'],
     });
     if (expectOkResult(result)) {
-      expect(result.value).toBe(entitiesOfTypeAdminOnlyEditBefore.length);
+      expect(result.value).toBe(entitiesOfTypeAdminOnlyEditBeforeNone.length);
+    }
+  });
+
+  test('Check that we get the correct count (subject)', async () => {
+    const result = await client.getTotalCount({
+      authKeys: ['subject'],
+      entityTypes: ['AdminOnlyEditBefore'],
+    });
+    if (expectOkResult(result)) {
+      expect(result.value).toBe(entitiesOfTypeAdminOnlyEditBeforeSubject.length);
+    }
+  });
+
+  test('Check that we get the correct count (none+subject)', async () => {
+    const result = await client.getTotalCount({
+      authKeys: ['none', 'subject'],
+      entityTypes: ['AdminOnlyEditBefore'],
+    });
+    if (expectOkResult(result)) {
+      expect(result.value).toBe(
+        entitiesOfTypeAdminOnlyEditBeforeNone.length +
+          entitiesOfTypeAdminOnlyEditBeforeSubject.length
+      );
     }
   });
 
@@ -3513,7 +3551,7 @@ describe('updateEntity()', () => {
       const {
         entity: { id },
       } = createResult.value;
-      const referenceId = entitiesOfTypeAdminOnlyEditBefore[0].id;
+      const referenceId = entitiesOfTypeAdminOnlyEditBeforeNone[0].id;
 
       const updateResult = await client.updateEntity({ id, fields: { bar: { id: referenceId } } });
       expectErrorResult(
