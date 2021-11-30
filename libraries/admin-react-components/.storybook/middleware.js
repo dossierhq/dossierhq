@@ -5,6 +5,8 @@ const {
   executeAdminClientOperationFromJson,
   executePublishedClientOperationFromJson,
   LoggingClientMiddleware,
+  notOk,
+  ok,
 } = require('@jonasb/datadata-core');
 const { createServer } = require('@jonasb/datadata-server');
 const { createPostgresAdapter } = require('@jonasb/datadata-database-adapter-postgres-pg');
@@ -21,13 +23,21 @@ async function getServer() {
     });
 
     const logger = createConsoleLogger(console);
-    const result = await createServer({ databaseAdapter, logger });
+    const result = await createServer({
+      databaseAdapter,
+      logger,
+      authorizationAdapter: createAuthorizationAdapter(),
+    });
     serverResultSingleton = result;
 
     if (result.isOk()) {
       const server = result.value;
       const adminClient = server.createAdminClient(() =>
-        server.createSession('sys', 'schemaLoader')
+        server.createSession({
+          provider: 'sys',
+          identifier: 'schemaLoader',
+          defaultAuthKeys: ['none'],
+        })
       );
       const schemaResult = await adminClient.updateSchemaSpecification(schemaJson);
       if (schemaResult.isError()) {
@@ -38,12 +48,38 @@ async function getServer() {
   return serverResultSingleton;
 }
 
+function createAuthorizationAdapter() {
+  const adapter = {
+    async resolveAuthorizationKeys(context, authKeys) {
+      const result = {};
+      for (const key of authKeys) {
+        let resolved = key;
+        if (key === 'subject') {
+          resolved = `subject:${context.session.subjectId}`;
+        } else if (key === 'unauthorized') {
+          return notOk.NotAuthorized(`User not authorized to use authKey ${key}`);
+        } else if (key === 'non-existing') {
+          return notOk.BadRequest(`The authKey ${key} doesn't exist`);
+        }
+        result[key] = resolved;
+      }
+      return ok(result);
+    },
+  };
+  return /** @type {import('@jonasb/datadata-server').AuthorizationAdapter} */ (adapter);
+}
+
 const expressMiddleWare = (router) => {
   router.use(bodyParser.json());
   router.use('/admin', (req, res) => {
     handleClientOperation(req, res, async (server, name, operation) => {
       const adminClient = server.createAdminClient(
-        () => server.createSession('sys', 'storybook'),
+        () =>
+          server.createSession({
+            provider: 'sys',
+            identifier: 'storybook',
+            defaultAuthKeys: ['none'],
+          }),
         [LoggingClientMiddleware]
       );
       //TODO ensure only !modifies operations are executed for GET
@@ -53,7 +89,12 @@ const expressMiddleWare = (router) => {
   router.use('/published', (req, res) => {
     handleClientOperation(req, res, async (server, name, operation) => {
       const adminClient = server.createPublishedClient(
-        () => server.createSession('sys', 'storybook'),
+        () =>
+          server.createSession({
+            provider: 'sys',
+            identifier: 'storybook',
+            defaultAuthKeys: ['none'],
+          }),
         [LoggingClientMiddleware]
       );
       return await executePublishedClientOperationFromJson(adminClient, name, operation);
