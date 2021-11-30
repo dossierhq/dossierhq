@@ -13,6 +13,7 @@ Deno.test("copyEntity()", () => {
       type: "Foo",
       name: "Hello",
       version: 0,
+      authKey: "none",
       publishingState: EntityPublishState.Draft,
       createdAt: Temporal.Now.instant(),
       updatedAt: Temporal.Now.instant(),
