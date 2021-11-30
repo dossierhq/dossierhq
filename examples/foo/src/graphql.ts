@@ -31,7 +31,11 @@ async function createSessionContext(server: Server, headers: IncomingHttpHeaders
   if (typeof identifier !== 'string' || !identifier) {
     return notOk.BadRequest('Header insecure-auth-identifier is missing');
   }
-  const sessionResult = await server.createSession({ provider, identifier });
+  const sessionResult = await server.createSession({
+    provider,
+    identifier,
+    defaultAuthKeys: ['none'],
+  });
   return sessionResult;
 }
 
@@ -79,6 +83,7 @@ async function main(port: number) {
     const sessionResult = await server.createSession({
       provider: 'sys',
       identifier: 'schemaloader',
+      defaultAuthKeys: [],
     });
     if (sessionResult.isError()) throw sessionResult.toError();
     const schemaResult = await server

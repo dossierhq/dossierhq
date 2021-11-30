@@ -22,8 +22,16 @@ function randomIdentifier() {
   return Math.random().toString();
 }
 
+async function createSession(server: Server, options?: { provider?: string; identifier?: string }) {
+  return await server.createSession({
+    provider: options?.provider ?? 'test',
+    identifier: options?.identifier ?? randomIdentifier(),
+    defaultAuthKeys: ['none'],
+  });
+}
+
 async function createSession_create_new_identifier({ server }: { server: Server }) {
-  const result = await server.createSession({ provider: 'test', identifier: randomIdentifier() });
+  const result = await createSession(server);
   if (expectOkResult(result)) {
     const { principalEffect } = result.value;
     assertSame(principalEffect, 'created');
@@ -33,13 +41,13 @@ async function createSession_create_new_identifier({ server }: { server: Server 
 async function createSession_create_existing_identifier({ server }: { server: Server }) {
   const identifier = randomIdentifier();
 
-  const firstResult = await server.createSession({ provider: 'test', identifier });
+  const firstResult = await createSession(server, { identifier });
   if (expectOkResult(firstResult)) {
     const { principalEffect } = firstResult.value;
     assertSame(principalEffect, 'created');
   }
 
-  const secondResult = await server.createSession({ provider: 'test', identifier });
+  const secondResult = await createSession(server, { identifier });
   if (expectOkResult(secondResult)) {
     const { principalEffect } = secondResult.value;
     assertSame(principalEffect, 'none');
@@ -47,11 +55,11 @@ async function createSession_create_existing_identifier({ server }: { server: Se
 }
 
 async function createSession_error_missing_provider({ server }: { server: Server }) {
-  const result = await server.createSession({ provider: '', identifier: randomIdentifier() });
+  const result = await createSession(server, { provider: '' });
   expectErrorResult(result, ErrorType.BadRequest, 'Missing provider');
 }
 
 async function createSession_error_create_missing_identifier({ server }: { server: Server }) {
-  const result = await server.createSession({ provider: 'test', identifier: '' });
+  const result = await createSession(server, { identifier: '' });
   expectErrorResult(result, ErrorType.BadRequest, 'Missing identifier');
 }

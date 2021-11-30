@@ -35,7 +35,11 @@ registerTestSuite(
   createSchemaTestSuite({
     before: async () => {
       assertIsDefined(server);
-      const sessionResult = await server.createSession({ provider: 'test', identifier: 'id' });
+      const sessionResult = await server.createSession({
+        provider: 'test',
+        identifier: 'id',
+        defaultAuthKeys: ['none'],
+      });
       if (sessionResult.isError()) {
         throw sessionResult.toError();
       }
