@@ -50,13 +50,17 @@ export interface PublishedClient {
 
   searchEntities(
     query?: Query,
-    paging?: Paging
+    paging?: Paging,
+    options?: { authKeys: string[] }
   ): PromiseResult<
     Connection<Edge<Entity, ErrorType>> | null,
-    ErrorType.BadRequest | ErrorType.Generic
+    ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
   >;
 
-  getTotalCount(query?: Query): PromiseResult<number, ErrorType.BadRequest | ErrorType.Generic>;
+  getTotalCount(
+    query?: Query,
+    options?: { authKeys: string[] }
+  ): PromiseResult<number, ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic>;
 }
 
 export enum PublishedClientOperationName {

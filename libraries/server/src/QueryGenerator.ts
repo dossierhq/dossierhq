@@ -8,6 +8,7 @@ import type {
   Schema,
 } from '@jonasb/datadata-core';
 import { AdminQueryOrder, notOk, ok, QueryOrder } from '@jonasb/datadata-core';
+import type { ResolvedAuthKey } from './Auth';
 import type { CursorNativeType } from './Connection';
 import { toOpaqueCursor } from './Connection';
 import type { EntitiesTable, EntityVersionsTable } from './DatabaseTables';
@@ -39,17 +40,19 @@ export interface SharedEntitiesQuery<TItem> {
 export function searchPublishedEntitiesQuery(
   schema: Schema,
   query: Query | undefined,
-  paging: Paging | undefined
+  paging: Paging | undefined,
+  authKeys: ResolvedAuthKey[]
 ): Result<SharedEntitiesQuery<SearchPublishedEntitiesItem>, ErrorType.BadRequest> {
-  return sharedSearchEntitiesQuery(schema, query, paging, true);
+  return sharedSearchEntitiesQuery(schema, query, paging, authKeys, true);
 }
 
 export function searchAdminEntitiesQuery(
   schema: AdminSchema,
   query: AdminQuery | undefined,
-  paging: Paging | undefined
+  paging: Paging | undefined,
+  authKeys: ResolvedAuthKey[]
 ): Result<SharedEntitiesQuery<SearchAdminEntitiesItem>, ErrorType.BadRequest> {
-  return sharedSearchEntitiesQuery(schema, query, paging, false);
+  return sharedSearchEntitiesQuery(schema, query, paging, authKeys, false);
 }
 
 function sharedSearchEntitiesQuery<
@@ -58,6 +61,7 @@ function sharedSearchEntitiesQuery<
   schema: AdminSchema | Schema,
   query: Query | AdminQuery | undefined,
   paging: Paging | undefined,
+  authKeys: ResolvedAuthKey[],
   published: boolean
 ): Result<SharedEntitiesQuery<TItem>, ErrorType.BadRequest> {
   const { cursorType, cursorName, cursorExtractor } = queryOrderToCursor<TItem>(
@@ -94,6 +98,17 @@ function sharedSearchEntitiesQuery<
     qb.addQuery('WHERE e.published_entity_versions_id = ev.id');
   } else {
     qb.addQuery('WHERE e.latest_draft_entity_versions_id = ev.id');
+  }
+
+  // Filter: authKeys
+  if (authKeys.length === 0) {
+    return notOk.BadRequest('No authKeys provided');
+  } else if (authKeys.length === 1) {
+    qb.addQuery(`AND e.resolved_auth_key = ${qb.addValue(authKeys[0].resolvedAuthKey)}`);
+  } else {
+    qb.addQuery(
+      `AND e.resolved_auth_key = ANY(${qb.addValue(authKeys.map((it) => it.resolvedAuthKey))})`
+    );
   }
 
   // Filter: entityTypes
@@ -247,20 +262,23 @@ function addFilterStatusSqlSegment(query: AdminQuery, qb: QueryBuilder) {
 
 export function totalAdminEntitiesQuery(
   schema: AdminSchema,
+  authKeys: ResolvedAuthKey[],
   query: AdminQuery | undefined
 ): Result<{ text: string; values: unknown[] }, ErrorType.BadRequest> {
-  return totalCountQuery(schema, query, false);
+  return totalCountQuery(schema, authKeys, query, false);
 }
 
 export function totalPublishedEntitiesQuery(
   schema: Schema,
+  authKeys: ResolvedAuthKey[],
   query: Query | undefined
 ): Result<{ text: string; values: unknown[] }, ErrorType.BadRequest> {
-  return totalCountQuery(schema, query, true);
+  return totalCountQuery(schema, authKeys, query, true);
 }
 
 function totalCountQuery(
   schema: AdminSchema | Schema,
+  authKeys: ResolvedAuthKey[],
   query: AdminQuery | Query | undefined,
   published: boolean
 ): Result<{ text: string; values: unknown[] }, ErrorType.BadRequest> {
@@ -287,6 +305,17 @@ function totalCountQuery(
 
   if (published) {
     qb.addQuery('AND e.published_entity_versions_id IS NOT NULL');
+  }
+
+  // Filter: authKeys
+  if (authKeys.length === 0) {
+    return notOk.BadRequest('No authKeys provided');
+  } else if (authKeys.length === 1) {
+    qb.addQuery(`AND e.resolved_auth_key = ${qb.addValue(authKeys[0].resolvedAuthKey)}`);
+  } else {
+    qb.addQuery(
+      `AND e.resolved_auth_key = ANY(${qb.addValue(authKeys.map((it) => it.resolvedAuthKey))})`
+    );
   }
 
   // Filter: entityTypes

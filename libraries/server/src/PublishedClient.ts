@@ -73,19 +73,36 @@ export function createServerPublishedClient({
       }
       case PublishedClientOperationName.getTotalCount: {
         const {
-          args: [query],
+          args: [query, options],
           resolve,
         } = operation as PublishedClientOperation<PublishedClientOperationName.getTotalCount>;
-        resolve(await getTotalCount(serverImpl.getSchema(), databaseAdapter, context, query));
+        resolve(
+          await getTotalCount(
+            serverImpl.getSchema(),
+            authorizationAdapter,
+            databaseAdapter,
+            context,
+            query,
+            options
+          )
+        );
         break;
       }
       case PublishedClientOperationName.searchEntities: {
         const {
-          args: [query, paging],
+          args: [query, paging, options],
           resolve,
         } = operation as PublishedClientOperation<PublishedClientOperationName.searchEntities>;
         resolve(
-          await searchEntities(serverImpl.getSchema(), databaseAdapter, context, query, paging)
+          await searchEntities(
+            serverImpl.getSchema(),
+            authorizationAdapter,
+            databaseAdapter,
+            context,
+            query,
+            paging,
+            options
+          )
         );
         break;
       }

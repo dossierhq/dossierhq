@@ -128,10 +128,19 @@ export function createServerAdminClient({
       }
       case AdminClientOperationName.getTotalCount: {
         const {
-          args: [query],
+          args: [query, options],
           resolve,
         } = operation as AdminClientOperation<AdminClientOperationName.getTotalCount>;
-        resolve(await getTotalCount(serverImpl.getAdminSchema(), databaseAdapter, context, query));
+        resolve(
+          await getTotalCount(
+            serverImpl.getAdminSchema(),
+            authorizationAdapter,
+            databaseAdapter,
+            context,
+            query,
+            options
+          )
+        );
         break;
       }
       case AdminClientOperationName.publishEntities: {
@@ -146,11 +155,19 @@ export function createServerAdminClient({
       }
       case AdminClientOperationName.searchEntities: {
         const {
-          args: [query, paging],
+          args: [query, paging, options],
           resolve,
         } = operation as AdminClientOperation<AdminClientOperationName.searchEntities>;
         resolve(
-          await searchEntities(serverImpl.getAdminSchema(), databaseAdapter, context, query, paging)
+          await searchEntities(
+            serverImpl.getAdminSchema(),
+            authorizationAdapter,
+            databaseAdapter,
+            context,
+            query,
+            paging,
+            options
+          )
         );
         break;
       }

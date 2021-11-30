@@ -12,7 +12,7 @@ import type {
 } from '@jonasb/datadata-core';
 import { notOk, ok } from '@jonasb/datadata-core';
 import type { AuthorizationAdapter, DatabaseAdapter, SessionContext } from '.';
-import { authVerifyAuthorizationKey } from './Auth';
+import { authResolveAuthorizationKeys, authVerifyAuthorizationKey } from './Auth';
 import * as Db from './Database';
 import type { EntitiesTable, EntityVersionsTable } from './DatabaseTables';
 import { decodePublishedEntity } from './EntityCodec';
@@ -105,11 +105,22 @@ export async function getEntities(
 
 export async function getTotalCount(
   schema: Schema,
+  authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  query: Query | undefined
-): PromiseResult<number, ErrorType.BadRequest> {
-  const sqlQuery = totalPublishedEntitiesQuery(schema, query);
+  query: Query | undefined,
+  options: { authKeys: string[] } | undefined
+): PromiseResult<number, ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic> {
+  const authKeysResult = await authResolveAuthorizationKeys(
+    authorizationAdapter,
+    context,
+    options?.authKeys
+  );
+  if (authKeysResult.isError()) {
+    return authKeysResult;
+  }
+
+  const sqlQuery = totalPublishedEntitiesQuery(schema, authKeysResult.value, query);
   if (sqlQuery.isError()) {
     return sqlQuery;
   }
@@ -120,12 +131,26 @@ export async function getTotalCount(
 
 export async function searchEntities(
   schema: Schema,
+  authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   query: Query | undefined,
-  paging: Paging | undefined
-): PromiseResult<Connection<Edge<Entity, ErrorType>> | null, ErrorType.BadRequest> {
-  const sqlQueryResult = searchPublishedEntitiesQuery(schema, query, paging);
+  paging: Paging | undefined,
+  options: { authKeys: string[] } | undefined
+): PromiseResult<
+  Connection<Edge<Entity, ErrorType>> | null,
+  ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
+> {
+  const authKeysResult = await authResolveAuthorizationKeys(
+    authorizationAdapter,
+    context,
+    options?.authKeys
+  );
+  if (authKeysResult.isError()) {
+    return authKeysResult;
+  }
+
+  const sqlQueryResult = searchPublishedEntitiesQuery(schema, query, paging, authKeysResult.value);
   if (sqlQueryResult.isError()) {
     return sqlQueryResult;
   }
