@@ -41,6 +41,9 @@ export const DISPLAY_AUTH_KEYS = [
   { authKey: 'none', displayName: 'None' },
   { authKey: 'subject', displayName: 'User private' },
 ];
+const AUTH_KEYS_HEADER = {
+  'DataData-Default-Auth-Keys': DISPLAY_AUTH_KEYS.map((it) => it.authKey).join(', '),
+};
 
 export async function createContextValue2(
   middleware: AdminClientMiddleware<BackendContext>[] = []
@@ -99,7 +102,7 @@ async function terminatingAdminMiddleware(
   if (operation.modifies) {
     response = await fetch(`/admin?name=${operation.name}`, {
       method: 'PUT',
-      headers: { 'content-type': 'application/json' },
+      headers: { ...AUTH_KEYS_HEADER, 'content-type': 'application/json' },
       body: JSON.stringify(jsonOperation),
     });
   } else {
@@ -110,7 +113,7 @@ async function terminatingAdminMiddleware(
       ),
       {
         method: 'GET',
-        headers: { 'content-type': 'application/json' },
+        headers: { ...AUTH_KEYS_HEADER, 'content-type': 'application/json' },
       }
     );
   }
@@ -144,7 +147,7 @@ async function terminatingPublishedMiddleware(
   if (operation.modifies) {
     response = await fetch(`/published?name=${operation.name}`, {
       method: 'PUT',
-      headers: { 'content-type': 'application/json' },
+      headers: { ...AUTH_KEYS_HEADER, 'content-type': 'application/json' },
       body: JSON.stringify(jsonOperation),
     });
   } else {
@@ -155,7 +158,7 @@ async function terminatingPublishedMiddleware(
       ),
       {
         method: 'GET',
-        headers: { 'content-type': 'application/json' },
+        headers: { ...AUTH_KEYS_HEADER, 'content-type': 'application/json' },
       }
     );
   }
