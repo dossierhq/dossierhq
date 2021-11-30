@@ -117,7 +117,8 @@ enum AdminQueryOrder {
 }
 
 input AdminQueryInput {
-  entityTypes: [AdminEntityType]
+  authKeys: [String!]
+  entityTypes: [AdminEntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
   order: AdminQueryOrder
@@ -397,7 +398,8 @@ enum QueryOrder {
 }
 
 input QueryInput {
-  entityTypes: [EntityType]
+  authKeys: [String!]
+  entityTypes: [EntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
   order: QueryOrder
@@ -507,7 +509,8 @@ enum QueryOrder {
 }
 
 input QueryInput {
-  entityTypes: [EntityType]
+  authKeys: [String!]
+  entityTypes: [EntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
   order: QueryOrder
@@ -616,7 +619,8 @@ enum AdminQueryOrder {
 }
 
 input AdminQueryInput {
-  entityTypes: [AdminEntityType]
+  authKeys: [String!]
+  entityTypes: [AdminEntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
   order: AdminQueryOrder
@@ -977,7 +981,8 @@ enum AdminQueryOrder {
 }
 
 input AdminQueryInput {
-  entityTypes: [AdminEntityType]
+  authKeys: [String!]
+  entityTypes: [AdminEntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
   order: AdminQueryOrder
@@ -1220,7 +1225,8 @@ enum QueryOrder {
 }
 
 input QueryInput {
-  entityTypes: [EntityType]
+  authKeys: [String!]
+  entityTypes: [EntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
   order: QueryOrder
@@ -1326,7 +1332,8 @@ enum QueryOrder {
 }
 
 input QueryInput {
-  entityTypes: [EntityType]
+  authKeys: [String!]
+  entityTypes: [EntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
   order: QueryOrder
@@ -1433,7 +1440,8 @@ enum AdminQueryOrder {
 }
 
 input AdminQueryInput {
-  entityTypes: [AdminEntityType]
+  authKeys: [String!]
+  entityTypes: [AdminEntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
   order: AdminQueryOrder
@@ -1714,7 +1722,8 @@ enum AdminQueryOrder {
 }
 
 input AdminQueryInput {
-  entityTypes: [AdminEntityType]
+  authKeys: [String!]
+  entityTypes: [AdminEntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
   order: AdminQueryOrder
@@ -2009,7 +2018,8 @@ enum QueryOrder {
 }
 
 input QueryInput {
-  entityTypes: [EntityType]
+  authKeys: [String!]
+  entityTypes: [EntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
   order: QueryOrder
@@ -2133,7 +2143,8 @@ enum QueryOrder {
 }
 
 input QueryInput {
-  entityTypes: [EntityType]
+  authKeys: [String!]
+  entityTypes: [EntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
   order: QueryOrder
@@ -2247,7 +2258,8 @@ enum AdminQueryOrder {
 }
 
 input AdminQueryInput {
-  entityTypes: [AdminEntityType]
+  authKeys: [String!]
+  entityTypes: [AdminEntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
   order: AdminQueryOrder
@@ -2588,7 +2600,8 @@ enum AdminQueryOrder {
 }
 
 input AdminQueryInput {
-  entityTypes: [AdminEntityType]
+  authKeys: [String!]
+  entityTypes: [AdminEntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
   order: AdminQueryOrder
@@ -2774,7 +2787,8 @@ enum QueryOrder {
 }
 
 input QueryInput {
-  entityTypes: [EntityType]
+  authKeys: [String!]
+  entityTypes: [EntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
   order: QueryOrder
@@ -2866,7 +2880,8 @@ enum QueryOrder {
 }
 
 input QueryInput {
-  entityTypes: [EntityType]
+  authKeys: [String!]
+  entityTypes: [EntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
   order: QueryOrder
@@ -2959,7 +2974,8 @@ enum AdminQueryOrder {
 }
 
 input AdminQueryInput {
-  entityTypes: [AdminEntityType]
+  authKeys: [String!]
+  entityTypes: [AdminEntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
   order: AdminQueryOrder
@@ -3186,7 +3202,8 @@ enum AdminQueryOrder {
 }
 
 input AdminQueryInput {
-  entityTypes: [AdminEntityType]
+  authKeys: [String!]
+  entityTypes: [AdminEntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
   order: AdminQueryOrder
@@ -3411,7 +3428,8 @@ enum QueryOrder {
 }
 
 input QueryInput {
-  entityTypes: [EntityType]
+  authKeys: [String!]
+  entityTypes: [EntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
   order: QueryOrder
@@ -3523,7 +3541,8 @@ enum QueryOrder {
 }
 
 input QueryInput {
-  entityTypes: [EntityType]
+  authKeys: [String!]
+  entityTypes: [EntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
   order: QueryOrder
@@ -3632,7 +3651,8 @@ enum AdminQueryOrder {
 }
 
 input AdminQueryInput {
-  entityTypes: [AdminEntityType]
+  authKeys: [String!]
+  entityTypes: [AdminEntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
   order: AdminQueryOrder
@@ -3886,7 +3906,8 @@ enum AdminQueryOrder {
 }
 
 input AdminQueryInput {
-  entityTypes: [AdminEntityType]
+  authKeys: [String!]
+  entityTypes: [AdminEntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
   order: AdminQueryOrder
@@ -4084,7 +4105,8 @@ enum QueryOrder {
 }
 
 input QueryInput {
-  entityTypes: [EntityType]
+  authKeys: [String!]
+  entityTypes: [EntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
   order: QueryOrder
@@ -4181,7 +4203,8 @@ enum QueryOrder {
 }
 
 input QueryInput {
-  entityTypes: [EntityType]
+  authKeys: [String!]
+  entityTypes: [EntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
   order: QueryOrder
@@ -4279,7 +4302,8 @@ enum AdminQueryOrder {
 }
 
 input AdminQueryInput {
-  entityTypes: [AdminEntityType]
+  authKeys: [String!]
+  entityTypes: [AdminEntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
   order: AdminQueryOrder
@@ -4515,7 +4539,8 @@ enum AdminQueryOrder {
 }
 
 input AdminQueryInput {
-  entityTypes: [AdminEntityType]
+  authKeys: [String!]
+  entityTypes: [AdminEntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
   order: AdminQueryOrder
@@ -4770,7 +4795,8 @@ enum QueryOrder {
 }
 
 input QueryInput {
-  entityTypes: [EntityType]
+  authKeys: [String!]
+  entityTypes: [EntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
   order: QueryOrder
@@ -4881,7 +4907,8 @@ enum QueryOrder {
 }
 
 input QueryInput {
-  entityTypes: [EntityType]
+  authKeys: [String!]
+  entityTypes: [EntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
   order: QueryOrder
@@ -4993,7 +5020,8 @@ enum AdminQueryOrder {
 }
 
 input AdminQueryInput {
-  entityTypes: [AdminEntityType]
+  authKeys: [String!]
+  entityTypes: [AdminEntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
   order: AdminQueryOrder
@@ -5291,7 +5319,8 @@ enum AdminQueryOrder {
 }
 
 input AdminQueryInput {
-  entityTypes: [AdminEntityType]
+  authKeys: [String!]
+  entityTypes: [AdminEntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
   order: AdminQueryOrder
@@ -5600,7 +5629,8 @@ enum QueryOrder {
 }
 
 input QueryInput {
-  entityTypes: [EntityType]
+  authKeys: [String!]
+  entityTypes: [EntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
   order: QueryOrder
@@ -5743,7 +5773,8 @@ enum QueryOrder {
 }
 
 input QueryInput {
-  entityTypes: [EntityType]
+  authKeys: [String!]
+  entityTypes: [EntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
   order: QueryOrder
@@ -5878,7 +5909,8 @@ enum AdminQueryOrder {
 }
 
 input AdminQueryInput {
-  entityTypes: [AdminEntityType]
+  authKeys: [String!]
+  entityTypes: [AdminEntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
   order: AdminQueryOrder

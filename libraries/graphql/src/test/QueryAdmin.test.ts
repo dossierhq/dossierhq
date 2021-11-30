@@ -1203,7 +1203,7 @@ describe('searchAdminEntities()', () => {
     const result = (await graphql({
       schema,
       source: `
-        query Search($entityTypes: [AdminEntityType]) {
+        query Search($entityTypes: [AdminEntityType!]) {
           adminSearchEntities(query: { entityTypes: $entityTypes }) {
             edges {
               node {
