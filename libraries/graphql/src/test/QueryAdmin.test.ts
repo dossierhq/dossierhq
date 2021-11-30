@@ -24,7 +24,8 @@ const { expectOkResult } = CoreTestUtils;
 
 let server: TestServerWithSession;
 let schema: GraphQLSchema;
-let entitiesOfTypeQueryAdminOnlyEditBefore: AdminEntity[];
+let entitiesOfTypeQueryAdminOnlyEditBeforeNone: AdminEntity[];
+let entitiesOfTypeQueryAdminOnlyEditBeforeSubject: AdminEntity[];
 
 const schemaSpecification: AdminSchemaSpecificationUpdate = {
   entityTypes: [
@@ -71,8 +72,18 @@ beforeAll(async () => {
   }).buildSchema();
 
   const { adminClient } = server;
-  await ensureTestEntitiesExist(adminClient);
-  entitiesOfTypeQueryAdminOnlyEditBefore = await getEntitiesForAdminOnlyEditBefore(adminClient);
+
+  await ensureTestEntitiesExist(adminClient, 'none');
+  entitiesOfTypeQueryAdminOnlyEditBeforeNone = await getEntitiesForAdminOnlyEditBefore(
+    adminClient,
+    'none'
+  );
+
+  await ensureTestEntitiesExist(adminClient, 'subject');
+  entitiesOfTypeQueryAdminOnlyEditBeforeSubject = await getEntitiesForAdminOnlyEditBefore(
+    adminClient,
+    'subject'
+  );
 });
 
 afterAll(async () => {
@@ -93,9 +104,10 @@ function createNotAuthenticatedContext(): SessionGraphQLContext {
   };
 }
 
-async function ensureTestEntitiesExist(adminClient: AdminClient) {
+async function ensureTestEntitiesExist(adminClient: AdminClient, authKey: string) {
   const requestedCount = 50;
   const entitiesOfTypeCount = await adminClient.getTotalCount({
+    authKeys: [authKey],
     entityTypes: ['QueryAdminOnlyEditBefore'],
   });
 
@@ -103,7 +115,7 @@ async function ensureTestEntitiesExist(adminClient: AdminClient) {
     for (let count = entitiesOfTypeCount.value; count < requestedCount; count += 1) {
       const random = String(Math.random()).slice(2);
       const createResult = await adminClient.createEntity({
-        info: { type: 'QueryAdminOnlyEditBefore', name: random, authKey: 'none' },
+        info: { type: 'QueryAdminOnlyEditBefore', name: random, authKey },
         fields: { message: `Hey ${random}` },
       });
       createResult.throwIfError();
@@ -111,8 +123,8 @@ async function ensureTestEntitiesExist(adminClient: AdminClient) {
   }
 }
 
-async function getEntitiesForAdminOnlyEditBefore(adminClient: AdminClient) {
-  const query = { entityTypes: ['QueryAdminOnlyEditBefore'] };
+async function getEntitiesForAdminOnlyEditBefore(adminClient: AdminClient, authKey: string) {
+  const query = { authKeys: [authKey], entityTypes: ['QueryAdminOnlyEditBefore'] };
   const entities: AdminEntity[] = [];
   for await (const pageResult of getAllPagesForConnection({}, (currentPaging) =>
     adminClient.searchEntities(query, currentPaging)
@@ -1231,10 +1243,10 @@ describe('searchAdminEntities()', () => {
       contextValue: createContext(),
     })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
     expect(result.data?.adminSearchEntities.edges).toEqual(
-      entitiesOfTypeQueryAdminOnlyEditBefore.slice(0, 25).map((x) => ({ node: { id: x.id } }))
+      entitiesOfTypeQueryAdminOnlyEditBeforeNone.slice(0, 25).map((x) => ({ node: { id: x.id } }))
     );
     expect(result.data?.adminSearchEntities.totalCount).toEqual(
-      entitiesOfTypeQueryAdminOnlyEditBefore.length
+      entitiesOfTypeQueryAdminOnlyEditBeforeNone.length
     );
   });
 
@@ -1256,7 +1268,7 @@ describe('searchAdminEntities()', () => {
       variableValues: { entityTypes: ['QueryAdminOnlyEditBefore'] },
     })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
     expect(result.data?.adminSearchEntities.edges).toEqual(
-      entitiesOfTypeQueryAdminOnlyEditBefore.slice(0, 25).map((x) => ({ node: { id: x.id } }))
+      entitiesOfTypeQueryAdminOnlyEditBeforeNone.slice(0, 25).map((x) => ({ node: { id: x.id } }))
     );
   });
 
@@ -1277,7 +1289,7 @@ describe('searchAdminEntities()', () => {
       contextValue: createContext(),
     })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
     expect(result.data?.adminSearchEntities.edges).toEqual(
-      entitiesOfTypeQueryAdminOnlyEditBefore.slice(0, 10).map((x) => ({ node: { id: x.id } }))
+      entitiesOfTypeQueryAdminOnlyEditBeforeNone.slice(0, 10).map((x) => ({ node: { id: x.id } }))
     );
   });
 
@@ -1298,7 +1310,7 @@ describe('searchAdminEntities()', () => {
       contextValue: createContext(),
     })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
     expect(result.data?.adminSearchEntities.edges).toEqual(
-      [...entitiesOfTypeQueryAdminOnlyEditBefore]
+      [...entitiesOfTypeQueryAdminOnlyEditBeforeNone]
         .reverse()
         .slice(0, 10)
         .map((x) => ({ node: { id: x.id } }))
@@ -1322,7 +1334,7 @@ describe('searchAdminEntities()', () => {
       contextValue: createContext(),
     })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
     expect(result.data?.adminSearchEntities.edges).toEqual(
-      entitiesOfTypeQueryAdminOnlyEditBefore.slice(-10).map((x) => ({ node: { id: x.id } }))
+      entitiesOfTypeQueryAdminOnlyEditBeforeNone.slice(-10).map((x) => ({ node: { id: x.id } }))
     );
   });
 
@@ -1347,10 +1359,40 @@ describe('searchAdminEntities()', () => {
     })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
     expect(result.errors).toBeUndefined();
     expect(result.data?.adminSearchEntities.edges).toEqual(
-      [...entitiesOfTypeQueryAdminOnlyEditBefore]
+      [...entitiesOfTypeQueryAdminOnlyEditBeforeNone]
         .sort((a, b) => (a.info.name < b.info.name ? -1 : 1))
         .slice(-10)
         .map((x) => ({ node: { id: x.id } }))
+    );
+  });
+
+  test('Filter based on authKey (subject)', async () => {
+    const result = (await graphql({
+      schema,
+      source: `
+        {
+          adminSearchEntities(query: { authKeys: ["subject"] entityTypes: [QueryAdminOnlyEditBefore] }) {
+            totalCount
+            edges {
+              node {
+                id
+                info {
+                  authKey
+                }
+              }
+            }
+          }
+        }
+      `,
+      contextValue: createContext(),
+    })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
+    expect(result.data?.adminSearchEntities.edges).toEqual(
+      entitiesOfTypeQueryAdminOnlyEditBeforeSubject
+        .slice(0, 25)
+        .map((it) => ({ node: { id: it.id, info: { authKey: 'subject' } } }))
+    );
+    expect(result.data?.adminSearchEntities.totalCount).toEqual(
+      entitiesOfTypeQueryAdminOnlyEditBeforeSubject.length
     );
   });
 
