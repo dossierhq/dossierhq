@@ -817,6 +817,45 @@ describe('searchEntities() order', () => {
   });
 });
 
+describe('searchEntities() authKeys', () => {
+  test('Entities with subject authKey', async () => {
+    const result = await publishedClient.searchEntities({
+      authKeys: ['subject'],
+      entityTypes: ['PublishedEntityOnlyEditBefore'],
+    });
+    if (expectOkResult(result)) {
+      expectConnectionToMatchSlice(
+        entitiesOfTypePublishedEntityOnlyEditBeforeSubject,
+        result.value,
+        0,
+        25
+      );
+    }
+  });
+
+  test('Entities with none or subject authKey', async () => {
+    const result = await publishedClient.searchEntities({
+      authKeys: ['none', 'subject'],
+      entityTypes: ['PublishedEntityOnlyEditBefore'],
+      order: QueryOrder.name,
+    });
+    if (expectOkResult(result)) {
+      expectConnectionToMatchSlice(
+        [
+          ...entitiesOfTypePublishedEntityOnlyEditBeforeNone,
+          ...entitiesOfTypePublishedEntityOnlyEditBeforeSubject,
+        ],
+        result.value,
+        0,
+        25,
+        (a, b) => {
+          return a.info.name < b.info.name ? -1 : 1;
+        }
+      );
+    }
+  });
+});
+
 describe('searchEntities() referencing', () => {
   test('One reference', async () => {
     const { barId, fooEntities } = await createBarWithFooReferences(1);
