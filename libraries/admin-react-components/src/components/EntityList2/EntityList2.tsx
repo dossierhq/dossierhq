@@ -1,10 +1,15 @@
 import type { AdminEntity, QueryOrder } from '@jonasb/datadata-core';
 import { AdminQueryOrder } from '@jonasb/datadata-core';
 import { InstantDisplay, Table } from '@jonasb/datadata-design';
-import type { Dispatch } from 'react';
+import { Dispatch, useContext } from 'react';
 import React from 'react';
-import type { SearchEntityState, SearchEntityStateAction } from '../../index.js';
-import { SearchEntityStateActions, StatusTag } from '../../index.js';
+import {
+  AuthKeyTag,
+  DataDataContext2,
+  SearchEntityState,
+  SearchEntityStateAction,
+} from '../../index.js';
+import { AuthKey, SearchEntityStateActions, StatusTag } from '../../index.js';
 
 interface Props {
   searchEntityState: SearchEntityState;
@@ -17,6 +22,8 @@ export function EntityList2({ searchEntityState, dispatchSearchEntityState, onIt
     connection,
     query: { order, reverse },
   } = searchEntityState;
+  const { authKeys } = useContext(DataDataContext2);
+
   const direction = reverse ? 'desc' : 'asc';
   return (
     <Table>
@@ -32,6 +39,7 @@ export function EntityList2({ searchEntityState, dispatchSearchEntityState, onIt
           </Table.Header>
           <Table.Header>Entity type</Table.Header>
           <Table.Header narrow>Status</Table.Header>
+          <Table.Header narrow>Auth key</Table.Header>
           <Table.Header
             narrow
             order={order === AdminQueryOrder.createdAt ? direction : ''}
@@ -72,6 +80,14 @@ export function EntityList2({ searchEntityState, dispatchSearchEntityState, onIt
                 <Table.Cell>{entity.info.type}</Table.Cell>
                 <Table.Cell narrow>
                   <StatusTag status={entity.info.publishingState} />
+                </Table.Cell>
+                <Table.Cell narrow>
+                  <AuthKeyTag
+                    authKey={entity.info.authKey}
+                    displayName={
+                      authKeys.find((it) => it.authKey === entity.info.authKey)?.displayName ?? null
+                    }
+                  />
                 </Table.Cell>
                 <Table.Cell narrow>
                   <InstantDisplay instant={entity.info.createdAt} />

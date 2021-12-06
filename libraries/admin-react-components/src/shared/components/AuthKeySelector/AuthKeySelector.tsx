@@ -13,6 +13,7 @@ import {
 import type { Dispatch } from 'react';
 import React from 'react';
 import type { DisplayAuthKey } from '../../index.js';
+import { AuthKeyTag } from '../AuthKeyTag/AuthKeyTag.js';
 
 export interface AuthKeyItem extends MultipleSelectorItem {
   displayName: string;
@@ -45,5 +46,10 @@ export function initializeAuthKeySelectorState({
 export const reduceAuthKeySelectorState: AuthKeySelectorReducer = reduceMultipleSelectorState;
 
 export function AuthKeySelector(props: Props): JSX.Element {
-  return <DropdownSelector<AuthKeyItem> {...props} renderItem={(item) => item.displayName} />;
+  return (
+    <DropdownSelector<AuthKeyItem>
+      {...props}
+      renderItem={(item) => <AuthKeyTag authKey={item.id} displayName={item.displayName} />}
+    />
+  );
 }

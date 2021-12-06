@@ -1,9 +1,14 @@
 import type { AdminQueryOrder, Entity } from '@jonasb/datadata-core';
 import { QueryOrder } from '@jonasb/datadata-core';
 import { Table } from '@jonasb/datadata-design';
-import type { Dispatch } from 'react';
+import { Dispatch, useContext } from 'react';
 import React from 'react';
-import type { SearchEntityState, SearchEntityStateAction } from '../../index.js';
+import {
+  AuthKeyTag,
+  PublishedDataDataContext,
+  SearchEntityState,
+  SearchEntityStateAction,
+} from '../../index.js';
 import { SearchEntityStateActions } from '../../index.js';
 
 interface Props {
@@ -17,6 +22,7 @@ export function EntityList({ searchEntityState, dispatchSearchEntityState, onIte
     connection,
     query: { order, reverse },
   } = searchEntityState;
+  const { authKeys } = useContext(PublishedDataDataContext);
   const direction = reverse ? 'desc' : 'asc';
   return (
     <Table>
@@ -31,6 +37,7 @@ export function EntityList({ searchEntityState, dispatchSearchEntityState, onIte
             Name
           </Table.Header>
           <Table.Header>Entity type</Table.Header>
+          <Table.Header narrow>Auth key</Table.Header>
         </Table.Row>
       </Table.Head>
       <Table.Body>
@@ -41,6 +48,14 @@ export function EntityList({ searchEntityState, dispatchSearchEntityState, onIte
               <Table.Row key={entity.id} clickable onClick={() => onItemClick(entity)}>
                 <Table.Cell>{entity.info.name}</Table.Cell>
                 <Table.Cell>{entity.info.type}</Table.Cell>
+                <Table.Cell narrow>
+                  <AuthKeyTag
+                    authKey={entity.info.authKey}
+                    displayName={
+                      authKeys.find((it) => it.authKey === entity.info.authKey)?.displayName ?? null
+                    }
+                  />
+                </Table.Cell>
               </Table.Row>
             );
           }
