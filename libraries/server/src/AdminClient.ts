@@ -174,7 +174,7 @@ export function createServerAdminClient({
           args: [reference],
           resolve,
         } = operation as AdminClientOperation<AdminClientOperationName.unarchiveEntity>;
-        resolve(await unarchiveEntity(databaseAdapter, context, reference.id));
+        resolve(await unarchiveEntity(databaseAdapter, authorizationAdapter, context, reference));
         break;
       }
       case AdminClientOperationName.unpublishEntities: {

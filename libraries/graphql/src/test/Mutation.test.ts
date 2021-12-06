@@ -2284,6 +2284,42 @@ describe('unarchiveEntity()', () => {
       }
     `);
   });
+
+  test('Error: Wrong authKey', async () => {
+    const { adminClient } = server;
+    const createResult = await adminClient.createEntity({
+      info: { type: 'MutationFoo', name: 'Howdy name', authKey: 'subject' },
+      fields: { title: 'Howdy title', summary: 'Howdy summary' },
+    });
+    if (expectOkResult(createResult)) {
+      const {
+        entity: { id },
+      } = createResult.value;
+
+      const result = (await graphql({
+        schema,
+        source: `
+          mutation UnarchiveEntity($id: ID!, $authKeys: [String!]) {
+            unarchiveEntity(id: $id, authKeys: $authKeys) {
+              id
+            }
+          }
+        `,
+        contextValue: createContext(),
+        variableValues: { id, authKeys: ['none'] },
+      })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
+      expect(result).toMatchInlineSnapshot(`
+        Object {
+          "data": Object {
+            "unarchiveEntity": null,
+          },
+          "errors": Array [
+            [GraphQLError: NotAuthorized: Wrong authKey provided],
+          ],
+        }
+      `);
+    }
+  });
 });
 
 describe('Multiple', () => {
