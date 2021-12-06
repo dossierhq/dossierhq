@@ -196,7 +196,15 @@ export function createServerAdminClient({
           args: [entity],
           resolve,
         } = operation as AdminClientOperation<AdminClientOperationName.updateEntity>;
-        resolve(await updateEntity(serverImpl.getAdminSchema(), databaseAdapter, context, entity));
+        resolve(
+          await updateEntity(
+            serverImpl.getAdminSchema(),
+            authorizationAdapter,
+            databaseAdapter,
+            context,
+            entity
+          )
+        );
         break;
       }
       case AdminClientOperationName.updateSchemaSpecification: {

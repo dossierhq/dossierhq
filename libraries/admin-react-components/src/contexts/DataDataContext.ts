@@ -184,7 +184,10 @@ export class DataDataContextValue {
 
   updateEntity = async (
     entity: AdminEntityUpdate
-  ): PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic> => {
+  ): PromiseResult<
+    AdminEntity,
+    ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
+  > => {
     try {
       const result = await this.#adminClient.updateEntity(entity);
       if (result.isError()) {

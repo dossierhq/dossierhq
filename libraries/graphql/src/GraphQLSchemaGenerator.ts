@@ -626,6 +626,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
           type: { type: this.getEnumType('AdminEntityType') },
           name: { type: GraphQLString },
           version: { type: GraphQLInt },
+          authKey: { type: GraphQLString },
         },
       })
     );

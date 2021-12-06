@@ -75,6 +75,7 @@ input AdminEntityUpdateInfo {
   type: AdminEntityType
   name: String
   version: Int
+  authKey: String
 }
 
 enum AdminEntityUpdateEffect {
@@ -577,6 +578,7 @@ input AdminEntityUpdateInfo {
   type: AdminEntityType
   name: String
   version: Int
+  authKey: String
 }
 
 enum AdminEntityUpdateEffect {
@@ -939,6 +941,7 @@ input AdminEntityUpdateInfo {
   type: AdminEntityType
   name: String
   version: Int
+  authKey: String
 }
 
 enum AdminEntityUpdateEffect {
@@ -1398,6 +1401,7 @@ input AdminEntityUpdateInfo {
   type: AdminEntityType
   name: String
   version: Int
+  authKey: String
 }
 
 enum AdminEntityUpdateEffect {
@@ -1680,6 +1684,7 @@ input AdminEntityUpdateInfo {
   type: AdminEntityType
   name: String
   version: Int
+  authKey: String
 }
 
 enum AdminEntityUpdateEffect {
@@ -2216,6 +2221,7 @@ input AdminEntityUpdateInfo {
   type: AdminEntityType
   name: String
   version: Int
+  authKey: String
 }
 
 enum AdminEntityUpdateEffect {
@@ -2558,6 +2564,7 @@ input AdminEntityUpdateInfo {
   type: AdminEntityType
   name: String
   version: Int
+  authKey: String
 }
 
 enum AdminEntityUpdateEffect {
@@ -2932,6 +2939,7 @@ input AdminEntityUpdateInfo {
   type: AdminEntityType
   name: String
   version: Int
+  authKey: String
 }
 
 enum AdminEntityUpdateEffect {
@@ -3160,6 +3168,7 @@ input AdminEntityUpdateInfo {
   type: AdminEntityType
   name: String
   version: Int
+  authKey: String
 }
 
 enum AdminEntityUpdateEffect {
@@ -3609,6 +3618,7 @@ input AdminEntityUpdateInfo {
   type: AdminEntityType
   name: String
   version: Int
+  authKey: String
 }
 
 enum AdminEntityUpdateEffect {
@@ -3864,6 +3874,7 @@ input AdminEntityUpdateInfo {
   type: AdminEntityType
   name: String
   version: Int
+  authKey: String
 }
 
 enum AdminEntityUpdateEffect {
@@ -4260,6 +4271,7 @@ input AdminEntityUpdateInfo {
   type: AdminEntityType
   name: String
   version: Int
+  authKey: String
 }
 
 enum AdminEntityUpdateEffect {
@@ -4497,6 +4509,7 @@ input AdminEntityUpdateInfo {
   type: AdminEntityType
   name: String
   version: Int
+  authKey: String
 }
 
 enum AdminEntityUpdateEffect {
@@ -4978,6 +4991,7 @@ input AdminEntityUpdateInfo {
   type: AdminEntityType
   name: String
   version: Int
+  authKey: String
 }
 
 enum AdminEntityUpdateEffect {
@@ -5277,6 +5291,7 @@ input AdminEntityUpdateInfo {
   type: AdminEntityType
   name: String
   version: Int
+  authKey: String
 }
 
 enum AdminEntityUpdateEffect {
@@ -5867,6 +5882,7 @@ input AdminEntityUpdateInfo {
   type: AdminEntityType
   name: String
   version: Int
+  authKey: String
 }
 
 enum AdminEntityUpdateEffect {
