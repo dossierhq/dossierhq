@@ -104,32 +104,23 @@ export async function authVerifyAuthorizationKey(
   requestedAuthKeys: string[] | undefined,
   actualAuthKey: ResolvedAuthKey
 ): PromiseResult<void, ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic> {
-  const expectedAuthKeys =
-    requestedAuthKeys && requestedAuthKeys.length > 0 ? requestedAuthKeys : context.defaultAuthKeys;
-  if (expectedAuthKeys.length === 0) {
-    return notOk.BadRequest('No authKey provided');
-  }
-
-  if (!expectedAuthKeys.includes(actualAuthKey.authKey)) {
-    return notOk.NotAuthorized('Wrong authKey provided');
-  }
-
-  const resolvedResult = await authResolveAuthorizationKey(
+  // Resolve all keys to ensure they are correct, even if only one at most is needed to verify
+  const resolveResult = await authResolveAuthorizationKeys(
     authorizationAdapter,
     context,
-    actualAuthKey.authKey
+    requestedAuthKeys
   );
-  if (resolvedResult.isError()) {
-    return resolvedResult;
-  }
-  const expectedAuthKey = resolvedResult.value;
-
-  if (
-    expectedAuthKey.authKey !== actualAuthKey.authKey ||
-    expectedAuthKey.resolvedAuthKey !== actualAuthKey.resolvedAuthKey
-  ) {
-    return notOk.NotAuthorized('Wrong authKey provided');
+  if (resolveResult.isError()) {
+    return resolveResult;
   }
 
-  return ok(undefined);
+  for (const expectedAuthKey of resolveResult.value) {
+    if (
+      expectedAuthKey.authKey === actualAuthKey.authKey ||
+      expectedAuthKey.resolvedAuthKey === actualAuthKey.resolvedAuthKey
+    ) {
+      return ok(undefined);
+    }
+  }
+  return notOk.NotAuthorized('Wrong authKey provided');
 }
