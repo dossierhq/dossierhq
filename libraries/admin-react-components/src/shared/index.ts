@@ -7,6 +7,7 @@ export type {
   AuthKeySelectorDispatch,
   AuthKeySelectorState,
 } from './components/AuthKeySelector/AuthKeySelector.js';
+export { AuthKeyTag } from './components/AuthKeyTag/AuthKeyTag.js';
 export { AuthKeyTagSelector } from './components/AuthKeyTagSelector/AuthKeyTagSelector.js';
 export { ConnectionPagingButtons } from './components/ConnectionPagingButtons/ConnectionPagingButtons.js';
 export { ConnectionPagingCount } from './components/ConnectionPagingCount/ConnectionPagingCount.js';
