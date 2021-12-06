@@ -9,7 +9,9 @@ import type {
   AdminSchema,
   AdminValueTypeSpecification,
   Entity,
+  EntityReferenceWithAuthKeys,
   EntityTypeSpecification,
+  EntityVersionReferenceWithAuthKeys,
   ErrorType,
   PublishedClient,
   Query,
@@ -736,13 +738,25 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       })
     );
 
-    // EntityVersionInput
+    // EntityReferenceWithAuthKeysInput
     this.addType(
       new GraphQLInputObjectType({
-        name: 'EntityVersionInput',
+        name: 'EntityReferenceWithAuthKeysInput',
+        fields: {
+          id: { type: new GraphQLNonNull(GraphQLID) },
+          authKeys: { type: new GraphQLList(new GraphQLNonNull(GraphQLString)) },
+        },
+      })
+    );
+
+    // EntityVersionReferenceWithAuthKeysInput
+    this.addType(
+      new GraphQLInputObjectType({
+        name: 'EntityVersionReferenceWithAuthKeysInput',
         fields: {
           id: { type: new GraphQLNonNull(GraphQLID) },
           version: { type: new GraphQLNonNull(GraphQLInt) },
+          authKeys: { type: new GraphQLList(new GraphQLNonNull(GraphQLString)) },
         },
       })
     );
@@ -1448,33 +1462,43 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
   }
 
   buildMutationPublishEntities<TSource>(): GraphQLFieldConfig<TSource, TContext> {
-    return fieldConfigWithArgs<TSource, TContext, { entities: { id: string; version: number }[] }>({
+    return fieldConfigWithArgs<
+      TSource,
+      TContext,
+      { references: EntityVersionReferenceWithAuthKeys[] }
+    >({
       type: new GraphQLList(new GraphQLNonNull(this.getOutputType('EntityPublishPayload'))),
       args: {
-        entities: {
+        references: {
           type: new GraphQLNonNull(
-            new GraphQLList(new GraphQLNonNull(this.getInputType('EntityVersionInput')))
+            new GraphQLList(
+              new GraphQLNonNull(this.getInputType('EntityVersionReferenceWithAuthKeysInput'))
+            )
           ),
         },
       },
       resolve: async (_source, args, context, _info) => {
-        const { entities } = args;
-        return await Mutations.publishEntities(context, entities);
+        const { references } = args;
+        return await Mutations.publishEntities(context, references);
       },
     });
   }
 
   buildMutationUnpublishEntities<TSource>(): GraphQLFieldConfig<TSource, TContext> {
-    return fieldConfigWithArgs<TSource, TContext, { ids: string[] }>({
+    return fieldConfigWithArgs<TSource, TContext, { references: EntityReferenceWithAuthKeys[] }>({
       type: new GraphQLList(new GraphQLNonNull(this.getOutputType('EntityPublishPayload'))),
       args: {
-        ids: {
-          type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(GraphQLID))),
+        references: {
+          type: new GraphQLNonNull(
+            new GraphQLList(
+              new GraphQLNonNull(this.getInputType('EntityReferenceWithAuthKeysInput'))
+            )
+          ),
         },
       },
       resolve: async (_source, args, context, _info) => {
-        const { ids } = args;
-        return await Mutations.unpublishEntities(context, ids);
+        const { references } = args;
+        return await Mutations.unpublishEntities(context, references);
       },
     });
   }

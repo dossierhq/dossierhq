@@ -119,17 +119,17 @@ export interface AdminClient {
   >;
 
   publishEntities(
-    references: EntityVersionReference[]
+    references: EntityVersionReferenceWithAuthKeys[]
   ): PromiseResult<
     EntityPublishPayload[],
-    ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic
+    ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
   >;
 
   unpublishEntities(
-    references: EntityReference[]
+    references: EntityReferenceWithAuthKeys[]
   ): PromiseResult<
     EntityPublishPayload[],
-    ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic
+    ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
   >;
 
   archiveEntity(

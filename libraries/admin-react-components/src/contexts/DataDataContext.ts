@@ -9,6 +9,7 @@ import type {
   Edge,
   EntityHistory,
   EntityPublishPayload,
+  EntityVersionReferenceWithAuthKeys,
   ErrorResult,
   FieldSpecification,
   Logger,
@@ -206,13 +207,10 @@ export class DataDataContextValue {
   };
 
   publishEntities = async (
-    entities: {
-      id: string;
-      version: number;
-    }[]
+    entities: EntityVersionReferenceWithAuthKeys[]
   ): PromiseResult<
     EntityPublishPayload[],
-    ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic
+    ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
   > => {
     try {
       const result = await this.#adminClient.publishEntities(entities);
@@ -234,7 +232,7 @@ export class DataDataContextValue {
     entityIds: string[]
   ): PromiseResult<
     EntityPublishPayload[],
-    ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic
+    ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
   > => {
     try {
       const result = await this.#adminClient.unpublishEntities(entityIds.map((id) => ({ id })));

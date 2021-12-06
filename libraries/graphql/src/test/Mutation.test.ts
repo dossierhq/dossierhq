@@ -1939,8 +1939,8 @@ describe('publishEntities()', () => {
       const result = (await graphql({
         schema,
         source: `
-          mutation PublishEntities($entities: [EntityVersionInput!]!) {
-            publishEntities(entities: $entities) {
+          mutation PublishEntities($references: [EntityVersionReferenceWithAuthKeysInput!]!) {
+            publishEntities(references: $references) {
               __typename
               id
               publishState
@@ -1949,7 +1949,7 @@ describe('publishEntities()', () => {
           }
         `,
         contextValue: createContext(),
-        variableValues: { entities: [{ id, version: 0 }] },
+        variableValues: { references: [{ id, version: 0 }] },
       })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
       const updatedAt = result.data?.publishEntities[0].updatedAt;
       expect(result).toEqual({
@@ -1984,8 +1984,8 @@ describe('publishEntities()', () => {
     const result = await graphql({
       schema,
       source: `
-        mutation PublishEntities($entities: [EntityVersionInput!]!) {
-          publishEntities(entities: $entities) {
+        mutation PublishEntities($references: [EntityVersionReferenceWithAuthKeysInput!]!) {
+          publishEntities(references: $references) {
             __typename
             id
             publishState
@@ -1993,7 +1993,7 @@ describe('publishEntities()', () => {
         }
       `,
       contextValue: createContext(),
-      variableValues: { entities: [{ id: '635d7ee9-c1c7-4ae7-bcdf-fb53f30a3cd3', version: 0 }] },
+      variableValues: { references: [{ id: '635d7ee9-c1c7-4ae7-bcdf-fb53f30a3cd3', version: 0 }] },
     });
     expect(result).toMatchInlineSnapshot(`
       Object {
@@ -2005,6 +2005,38 @@ describe('publishEntities()', () => {
         ],
       }
     `);
+  });
+
+  test('Error: using the wrong authKey', async () => {
+    const { adminClient } = server;
+    const createResult = await adminClient.createEntity({
+      info: { type: 'MutationFoo', name: 'Howdy name', authKey: 'subject' },
+      fields: { title: 'Howdy title', summary: 'Howdy summary' },
+    });
+    if (expectOkResult(createResult)) {
+      const {
+        entity: { id },
+      } = createResult.value;
+
+      const result = (await graphql({
+        schema,
+        source: `
+          mutation PublishEntities($references: [EntityVersionReferenceWithAuthKeysInput!]!) {
+            publishEntities(references: $references) {
+              id
+            }
+          }
+        `,
+        contextValue: createContext(),
+        variableValues: { references: [{ id, version: 0, authKeys: ['none'] }] },
+      })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
+      expect(result).toEqual({
+        data: {
+          publishEntities: null,
+        },
+        errors: [new Error(`NotAuthorized: entity(${id}): Wrong authKey provided`)],
+      });
+    }
   });
 });
 
@@ -2025,8 +2057,8 @@ describe('unpublishEntities()', () => {
       const result = (await graphql({
         schema,
         source: `
-          mutation UnpublishEntities($ids: [ID!]!) {
-            unpublishEntities(ids: $ids) {
+          mutation UnpublishEntities($references: [EntityReferenceWithAuthKeysInput!]!) {
+            unpublishEntities(references: $references) {
               __typename
               id
               publishState
@@ -2035,7 +2067,7 @@ describe('unpublishEntities()', () => {
           }
         `,
         contextValue: createContext(),
-        variableValues: { ids: [id] },
+        variableValues: { references: [{ id }] },
       })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
       const updatedAt = result.data?.unpublishEntities[0].updatedAt;
       expect(result).toEqual({
@@ -2079,8 +2111,8 @@ describe('unpublishEntities()', () => {
     const result = await graphql({
       schema,
       source: `
-        mutation UnpublishEntities($ids: [ID!]!) {
-          unpublishEntities(ids: $ids) {
+        mutation UnpublishEntities($references: [EntityReferenceWithAuthKeysInput!]!) {
+          unpublishEntities(references: $references) {
             __typename
             id
             publishState
@@ -2088,7 +2120,7 @@ describe('unpublishEntities()', () => {
         }
       `,
       contextValue: createContext(),
-      variableValues: { ids: ['635d7ee9-c1c7-4ae7-bcdf-fb53f30a3cd3'] },
+      variableValues: { references: [{ id: '635d7ee9-c1c7-4ae7-bcdf-fb53f30a3cd3' }] },
     });
     expect(result).toMatchInlineSnapshot(`
       Object {
@@ -2100,6 +2132,38 @@ describe('unpublishEntities()', () => {
         ],
       }
     `);
+  });
+
+  test('Error: using the wrong authKey', async () => {
+    const { adminClient } = server;
+    const createResult = await adminClient.createEntity({
+      info: { type: 'MutationFoo', name: 'Howdy name', authKey: 'subject' },
+      fields: { title: 'Howdy title', summary: 'Howdy summary' },
+    });
+    if (expectOkResult(createResult)) {
+      const {
+        entity: { id },
+      } = createResult.value;
+
+      const result = (await graphql({
+        schema,
+        source: `
+          mutation UnpublishEntities($references: [EntityReferenceWithAuthKeysInput!]!) {
+            unpublishEntities(references: $references) {
+              id
+            }
+          }
+        `,
+        contextValue: createContext(),
+        variableValues: { references: [{ id, authKeys: ['none'] }] },
+      })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
+      expect(result).toEqual({
+        data: {
+          unpublishEntities: null,
+        },
+        errors: [new Error(`NotAuthorized: entity(${id}): Wrong authKey provided`)],
+      });
+    }
   });
 });
 
@@ -2339,7 +2403,7 @@ describe('Multiple', () => {
         source: `
           mutation UpdateAndPublishFooEntity(
             $entity: AdminMutationFooUpdateInput!
-            $entities: [EntityVersionInput!]!
+            $references: [EntityVersionReferenceWithAuthKeysInput!]!
           ) {
             updateMutationFooEntity(entity: $entity) {
               effect
@@ -2350,7 +2414,7 @@ describe('Multiple', () => {
               }
             }
 
-            publishEntities(entities: $entities) {
+            publishEntities(references: $references) {
               id
               publishState
             }
@@ -2364,7 +2428,7 @@ describe('Multiple', () => {
               title: 'Updated title',
             },
           },
-          entities: { id, version: 1 },
+          references: { id, version: 1 },
         },
       });
       expect(result).toEqual({

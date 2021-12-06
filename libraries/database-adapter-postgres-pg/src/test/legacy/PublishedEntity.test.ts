@@ -333,7 +333,9 @@ describe('getEntity()', () => {
         entity: { id },
       } = createResult.value;
 
-      expectOkResult(await adminClient.publishEntities([{ id, version: 0 }]));
+      expectOkResult(
+        await adminClient.publishEntities([{ id, version: 0, authKeys: ['subject'] }])
+      );
 
       const getResult = await publishedClient.getEntity({ id, authKeys: ['none'] });
       expectErrorResult(getResult, ErrorType.NotAuthorized, 'Wrong authKey provided');
@@ -464,8 +466,8 @@ describe('getEntities()', () => {
 
       expectOkResult(
         await adminClient.publishEntities([
-          { id: foo1Id, version: 0 },
-          { id: foo2Id, version: 0 },
+          { id: foo1Id, version: 0, authKeys: ['subject'] },
+          { id: foo2Id, version: 0, authKeys: ['subject'] },
         ])
       );
 
