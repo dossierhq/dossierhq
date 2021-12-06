@@ -1488,14 +1488,15 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
   }
 
   buildMutationUnarchiveEntity<TSource>(): GraphQLFieldConfig<TSource, TContext> {
-    return fieldConfigWithArgs<TSource, TContext, { id: string }>({
+    return fieldConfigWithArgs<TSource, TContext, { id: string; authKeys: string[] | null }>({
       type: this.getOutputType('EntityPublishPayload'),
       args: {
         id: { type: new GraphQLNonNull(GraphQLID) },
+        authKeys: { type: new GraphQLList(new GraphQLNonNull(GraphQLString)) },
       },
       resolve: async (_source, args, context, _info) => {
-        const { id } = args;
-        return await Mutations.unarchiveEntity(context, id);
+        const { id, authKeys } = args;
+        return await Mutations.unarchiveEntity(context, { id, authKeys: authKeys ?? undefined });
       },
     });
   }

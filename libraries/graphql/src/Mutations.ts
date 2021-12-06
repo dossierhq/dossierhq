@@ -100,10 +100,10 @@ export async function archiveEntity<TContext extends SessionGraphQLContext>(
 
 export async function unarchiveEntity<TContext extends SessionGraphQLContext>(
   context: TContext,
-  id: string
+  reference: EntityReferenceWithAuthKeys
 ): Promise<EntityPublishPayload> {
   const adminClient = getAdminClient(context);
-  const result = await adminClient.unarchiveEntity({ id });
+  const result = await adminClient.unarchiveEntity(reference);
   if (result.isError()) {
     throw result.toError();
   }

@@ -998,30 +998,48 @@ export async function archiveEntity(
 
 export async function unarchiveEntity(
   databaseAdapter: DatabaseAdapter,
+  authorizationAdapter: AuthorizationAdapter,
   context: SessionContext,
-  id: string
-): PromiseResult<EntityPublishPayload, ErrorType.BadRequest | ErrorType.NotFound> {
+  reference: EntityReferenceWithAuthKeys
+): PromiseResult<
+  EntityPublishPayload,
+  ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.NotFound | ErrorType.Generic
+> {
   return context.withTransaction(async (context) => {
     const entityInfo = await Db.queryNoneOrOne<
-      Pick<EntitiesTable, 'id' | 'never_published' | 'updated_at' | 'status'>
+      Pick<
+        EntitiesTable,
+        'id' | 'never_published' | 'updated_at' | 'status' | 'auth_key' | 'resolved_auth_key'
+      >
     >(
       databaseAdapter,
       context,
-      `SELECT id, never_published, updated_at, status
+      `SELECT id, never_published, updated_at, status, auth_key, resolved_auth_key
        FROM entities WHERE uuid = $1`,
-      [id]
+      [reference.id]
     );
 
     if (!entityInfo) {
       return notOk.NotFound('No such entity');
     }
+
+    const authResult = await authVerifyAuthorizationKey(
+      authorizationAdapter,
+      context,
+      reference?.authKeys,
+      { authKey: entityInfo.auth_key, resolvedAuthKey: entityInfo.resolved_auth_key }
+    );
+    if (authResult.isError()) {
+      return authResult;
+    }
+
     const {
       id: entityId,
       never_published: neverPublished,
       updated_at: previousUpdatedAt,
     } = entityInfo;
     const result: EntityPublishPayload = {
-      id,
+      id: reference.id,
       publishState: resolveEntityStatus(entityInfo.status),
       updatedAt: previousUpdatedAt,
     };
