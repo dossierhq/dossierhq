@@ -4786,7 +4786,7 @@ describe('unarchiveEntity()', () => {
     }
   });
 
-  test('Error: archive with wrong authKey', async () => {
+  test('Error: unarchive with wrong authKey', async () => {
     const createResult = await client.createEntity({
       info: { type: 'EntityAdminBar', name: 'Bar name', authKey: 'subject' },
       fields: { title: 'Bar title' },
@@ -4836,6 +4836,40 @@ describe('getEntityHistory()', () => {
       id: '5b14e69f-6612-4ddb-bb42-7be273104486',
     });
     expectErrorResult(result, ErrorType.NotFound, 'No such entity');
+  });
+
+  test('Error: With wrong authKey', async () => {
+    const createResult = await client.createEntity({
+      info: { type: 'EntityAdminBar', name: 'Bar name', authKey: 'subject' },
+      fields: { title: 'Bar title' },
+    });
+    if (expectOkResult(createResult)) {
+      const {
+        entity: { id },
+      } = createResult.value;
+
+      const archiveResult = await client.getEntityHistory({ id, authKeys: ['none'] });
+      expectErrorResult(archiveResult, ErrorType.NotAuthorized, 'Wrong authKey provided');
+    }
+  });
+
+  test('Error: Using authKey where adapter returns error', async () => {
+    const createResult = await client.createEntity({
+      info: { type: 'EntityAdminBar', name: 'Bar name', authKey: 'subject' },
+      fields: { title: 'Bar title' },
+    });
+    if (expectOkResult(createResult)) {
+      const {
+        entity: { id },
+      } = createResult.value;
+
+      const archiveResult = await client.getEntityHistory({ id, authKeys: ['unauthorized'] });
+      expectErrorResult(
+        archiveResult,
+        ErrorType.NotAuthorized,
+        'User not authorized to use authKey unauthorized'
+      );
+    }
   });
 });
 
@@ -4946,5 +4980,39 @@ describe('getPublishingHistory()', () => {
       id: '5b14e69f-6612-4ddb-bb42-7be273104486',
     });
     expectErrorResult(result, ErrorType.NotFound, 'No such entity');
+  });
+
+  test('Error: With wrong authKey', async () => {
+    const createResult = await client.createEntity({
+      info: { type: 'EntityAdminBar', name: 'Bar name', authKey: 'subject' },
+      fields: { title: 'Bar title' },
+    });
+    if (expectOkResult(createResult)) {
+      const {
+        entity: { id },
+      } = createResult.value;
+
+      const archiveResult = await client.getPublishingHistory({ id, authKeys: ['none'] });
+      expectErrorResult(archiveResult, ErrorType.NotAuthorized, 'Wrong authKey provided');
+    }
+  });
+
+  test('Error: Using authKey where adapter returns error', async () => {
+    const createResult = await client.createEntity({
+      info: { type: 'EntityAdminBar', name: 'Bar name', authKey: 'subject' },
+      fields: { title: 'Bar title' },
+    });
+    if (expectOkResult(createResult)) {
+      const {
+        entity: { id },
+      } = createResult.value;
+
+      const archiveResult = await client.getPublishingHistory({ id, authKeys: ['unauthorized'] });
+      expectErrorResult(
+        archiveResult,
+        ErrorType.NotAuthorized,
+        'User not authorized to use authKey unauthorized'
+      );
+    }
   });
 });

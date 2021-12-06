@@ -1240,23 +1240,29 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
   }
 
   buildQueryFieldEntityHistory<TSource>(): GraphQLFieldConfig<TSource, TContext> {
-    return fieldConfigWithArgs<TSource, TContext, { id: string }>({
+    return fieldConfigWithArgs<TSource, TContext, { id: string; authKeys: string[] | null }>({
       type: this.getOutputType('EntityHistory'),
-      args: { id: { type: new GraphQLNonNull(GraphQLID) } },
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLID) },
+        authKeys: { type: new GraphQLList(new GraphQLNonNull(GraphQLString)) },
+      },
       resolve: async (source, args, context, _info) => {
-        const { id } = args;
-        return await loadVersionHistory(context, id);
+        const { id, authKeys } = args;
+        return await loadVersionHistory(context, { id, authKeys: authKeys ?? undefined });
       },
     });
   }
 
   buildQueryFieldPublishingHistory<TSource>(): GraphQLFieldConfig<TSource, TContext> {
-    return fieldConfigWithArgs<TSource, TContext, { id: string }>({
+    return fieldConfigWithArgs<TSource, TContext, { id: string; authKeys: string[] | null }>({
       type: this.getOutputType('PublishingHistory'),
-      args: { id: { type: new GraphQLNonNull(GraphQLID) } },
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLID) },
+        authKeys: { type: new GraphQLList(new GraphQLNonNull(GraphQLString)) },
+      },
       resolve: async (_source, args, context, _info) => {
-        const { id } = args;
-        return await loadPublishingHistory(context, id);
+        const { id, authKeys } = args;
+        return await loadPublishingHistory(context, { id, authKeys: authKeys ?? undefined });
       },
     });
   }

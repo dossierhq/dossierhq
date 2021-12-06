@@ -108,7 +108,7 @@ export function createServerAdminClient({
           args: [reference],
           resolve,
         } = operation as AdminClientOperation<AdminClientOperationName.getEntityHistory>;
-        resolve(await getEntityHistory(databaseAdapter, context, reference.id));
+        resolve(await getEntityHistory(databaseAdapter, authorizationAdapter, context, reference));
         break;
       }
       case AdminClientOperationName.getPublishingHistory: {
@@ -116,7 +116,9 @@ export function createServerAdminClient({
           args: [reference],
           resolve,
         } = operation as AdminClientOperation<AdminClientOperationName.getPublishingHistory>;
-        resolve(await getPublishingHistory(databaseAdapter, context, reference.id));
+        resolve(
+          await getPublishingHistory(databaseAdapter, authorizationAdapter, context, reference)
+        );
         break;
       }
       case AdminClientOperationName.getSchemaSpecification: {

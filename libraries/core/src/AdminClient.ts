@@ -112,8 +112,11 @@ export interface AdminClient {
   >;
 
   getEntityHistory(
-    reference: EntityReference
-  ): PromiseResult<EntityHistory, ErrorType.NotFound | ErrorType.Generic>;
+    reference: EntityReferenceWithAuthKeys
+  ): PromiseResult<
+    EntityHistory,
+    ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
+  >;
 
   publishEntities(
     references: EntityVersionReference[]
@@ -144,8 +147,11 @@ export interface AdminClient {
   >;
 
   getPublishingHistory(
-    reference: EntityReference
-  ): PromiseResult<PublishingHistory, ErrorType.NotFound | ErrorType.Generic>;
+    reference: EntityReferenceWithAuthKeys
+  ): PromiseResult<
+    PublishingHistory,
+    ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
+  >;
 }
 
 export enum AdminClientOperationName {

@@ -301,8 +301,8 @@ type Query {
   adminEntity(id: ID!, version: Int, authKeys: [String!]): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
-  entityHistory(id: ID!): EntityHistory
-  publishingHistory(id: ID!): PublishingHistory
+  entityHistory(id: ID!, authKeys: [String!]): EntityHistory
+  publishingHistory(id: ID!, authKeys: [String!]): PublishingHistory
 }
 
 type Mutation {
@@ -802,8 +802,8 @@ type Query {
   adminEntity(id: ID!, version: Int, authKeys: [String!]): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
-  entityHistory(id: ID!): EntityHistory
-  publishingHistory(id: ID!): PublishingHistory
+  entityHistory(id: ID!, authKeys: [String!]): EntityHistory
+  publishingHistory(id: ID!, authKeys: [String!]): PublishingHistory
 }
 
 type Mutation {
@@ -1137,8 +1137,8 @@ type Query {
   adminEntity(id: ID!, version: Int, authKeys: [String!]): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
-  entityHistory(id: ID!): EntityHistory
-  publishingHistory(id: ID!): PublishingHistory
+  entityHistory(id: ID!, authKeys: [String!]): EntityHistory
+  publishingHistory(id: ID!, authKeys: [String!]): PublishingHistory
 }
 
 type Mutation {
@@ -1595,8 +1595,8 @@ type Query {
   adminEntity(id: ID!, version: Int, authKeys: [String!]): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
-  entityHistory(id: ID!): EntityHistory
-  publishingHistory(id: ID!): PublishingHistory
+  entityHistory(id: ID!, authKeys: [String!]): EntityHistory
+  publishingHistory(id: ID!, authKeys: [String!]): PublishingHistory
 }
 
 type Mutation {
@@ -1928,8 +1928,8 @@ type Query {
   adminEntity(id: ID!, version: Int, authKeys: [String!]): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
-  entityHistory(id: ID!): EntityHistory
-  publishingHistory(id: ID!): PublishingHistory
+  entityHistory(id: ID!, authKeys: [String!]): EntityHistory
+  publishingHistory(id: ID!, authKeys: [String!]): PublishingHistory
 }
 
 type Mutation {
@@ -2474,8 +2474,8 @@ type Query {
   adminEntity(id: ID!, version: Int, authKeys: [String!]): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
-  entityHistory(id: ID!): EntityHistory
-  publishingHistory(id: ID!): PublishingHistory
+  entityHistory(id: ID!, authKeys: [String!]): EntityHistory
+  publishingHistory(id: ID!, authKeys: [String!]): PublishingHistory
 }
 
 type Mutation {
@@ -2707,8 +2707,8 @@ type Query {
   adminEntity(id: ID!, version: Int, authKeys: [String!]): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
-  entityHistory(id: ID!): EntityHistory
-  publishingHistory(id: ID!): PublishingHistory
+  entityHistory(id: ID!, authKeys: [String!]): EntityHistory
+  publishingHistory(id: ID!, authKeys: [String!]): PublishingHistory
 }
 
 type Mutation {
@@ -3080,8 +3080,8 @@ type Query {
   adminEntity(id: ID!, version: Int, authKeys: [String!]): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
-  entityHistory(id: ID!): EntityHistory
-  publishingHistory(id: ID!): PublishingHistory
+  entityHistory(id: ID!, authKeys: [String!]): EntityHistory
+  publishingHistory(id: ID!, authKeys: [String!]): PublishingHistory
 }
 
 type Mutation {
@@ -3342,8 +3342,8 @@ type Query {
   adminEntity(id: ID!, version: Int, authKeys: [String!]): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
-  entityHistory(id: ID!): EntityHistory
-  publishingHistory(id: ID!): PublishingHistory
+  entityHistory(id: ID!, authKeys: [String!]): EntityHistory
+  publishingHistory(id: ID!, authKeys: [String!]): PublishingHistory
 }
 
 type Mutation {
@@ -3790,8 +3790,8 @@ type Query {
   adminEntity(id: ID!, version: Int, authKeys: [String!]): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
-  entityHistory(id: ID!): EntityHistory
-  publishingHistory(id: ID!): PublishingHistory
+  entityHistory(id: ID!, authKeys: [String!]): EntityHistory
+  publishingHistory(id: ID!, authKeys: [String!]): PublishingHistory
 }
 
 type Mutation {
@@ -4029,8 +4029,8 @@ type Query {
   adminEntity(id: ID!, version: Int, authKeys: [String!]): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
-  entityHistory(id: ID!): EntityHistory
-  publishingHistory(id: ID!): PublishingHistory
+  entityHistory(id: ID!, authKeys: [String!]): EntityHistory
+  publishingHistory(id: ID!, authKeys: [String!]): PublishingHistory
 }
 
 type Mutation {
@@ -4424,8 +4424,8 @@ type Query {
   adminEntity(id: ID!, version: Int, authKeys: [String!]): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
-  entityHistory(id: ID!): EntityHistory
-  publishingHistory(id: ID!): PublishingHistory
+  entityHistory(id: ID!, authKeys: [String!]): EntityHistory
+  publishingHistory(id: ID!, authKeys: [String!]): PublishingHistory
 }
 
 type Mutation {
@@ -4717,8 +4717,8 @@ type Query {
   adminEntity(id: ID!, version: Int, authKeys: [String!]): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
-  entityHistory(id: ID!): EntityHistory
-  publishingHistory(id: ID!): PublishingHistory
+  entityHistory(id: ID!, authKeys: [String!]): EntityHistory
+  publishingHistory(id: ID!, authKeys: [String!]): PublishingHistory
 }
 
 type Mutation {
@@ -5197,8 +5197,8 @@ type Query {
   adminEntity(id: ID!, version: Int, authKeys: [String!]): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
-  entityHistory(id: ID!): EntityHistory
-  publishingHistory(id: ID!): PublishingHistory
+  entityHistory(id: ID!, authKeys: [String!]): EntityHistory
+  publishingHistory(id: ID!, authKeys: [String!]): PublishingHistory
 }
 
 type Mutation {
@@ -5543,8 +5543,8 @@ type Query {
   adminEntity(id: ID!, version: Int, authKeys: [String!]): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
-  entityHistory(id: ID!): EntityHistory
-  publishingHistory(id: ID!): PublishingHistory
+  entityHistory(id: ID!, authKeys: [String!]): EntityHistory
+  publishingHistory(id: ID!, authKeys: [String!]): PublishingHistory
 }
 
 type Mutation {
@@ -6137,8 +6137,8 @@ type Query {
   adminEntity(id: ID!, version: Int, authKeys: [String!]): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
-  entityHistory(id: ID!): EntityHistory
-  publishingHistory(id: ID!): PublishingHistory
+  entityHistory(id: ID!, authKeys: [String!]): EntityHistory
+  publishingHistory(id: ID!, authKeys: [String!]): PublishingHistory
 }
 
 type Mutation {
