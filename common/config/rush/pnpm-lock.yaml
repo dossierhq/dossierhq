@@ -36,7 +36,7 @@ importers:
       eslint: ^7.32.0
       express: ~4.17.1
       express-graphql: ~0.12.0
-      prettier: 2.4.1
+      prettier: 2.5.1
       tslib: ~2.3.1
       typescript: ^4.5.2
     dependencies:
@@ -57,7 +57,7 @@ importers:
       '@typescript-eslint/eslint-plugin': 5.3.1_f336bb02fd310e906e240953c890b615
       '@typescript-eslint/parser': 5.3.1_eslint@7.32.0+typescript@4.5.2
       eslint: 7.32.0
-      prettier: 2.4.1
+      prettier: 2.5.1
       typescript: 4.5.2
 
   ../../examples/next-web:
@@ -90,7 +90,7 @@ importers:
       jest: ~27.3.0
       joi: ~17.4.0
       next: ~12.0.3
-      prettier: 2.4.1
+      prettier: 2.5.1
       react: ~17.0.2
       react-dom: ~17.0.2
       ts-jest: ~27.0.3
@@ -128,7 +128,7 @@ importers:
       eslint: 7.32.0
       eslint-config-next: 12.0.3_21fe7237b06f73f3e82f85b23149e1ad
       jest: 27.3.1_ts-node@10.4.0
-      prettier: 2.4.1
+      prettier: 2.5.1
       ts-jest: 27.0.7_013ef332172517e974c4b270e59f55f5
       ts-node: 10.4.0_822df8cc64711c2db8d43ce90a8558a3
       typescript: 4.5.2
@@ -176,7 +176,7 @@ importers:
       leaflet: ~1.7.1
       lodash: ~4.17.21
       mini-svg-data-uri: ~1.4.3
-      prettier: 2.4.1
+      prettier: 2.5.1
       react: ~17.0.2
       react-dom: ~17.0.2
       react-leaflet: ~3.2.1
@@ -235,7 +235,7 @@ importers:
       eslint-plugin-testing-library: 5.0.0_eslint@7.32.0+typescript@4.5.2
       jest-environment-jsdom: 27.4.0
       mini-svg-data-uri: 1.4.3
-      prettier: 2.4.1
+      prettier: 2.5.1
       react-test-renderer: 17.0.2_react@17.0.2
       svgo: 2.8.0
       typescript: 4.5.2
@@ -247,7 +247,7 @@ importers:
       '@typescript-eslint/eslint-plugin': ^5.0.0
       '@typescript-eslint/parser': ^5.0.0
       eslint: ^7.32.0
-      prettier: 2.4.1
+      prettier: 2.5.1
       tslib: ~2.3.1
       typescript: ^4.5.2
     dependencies:
@@ -258,7 +258,7 @@ importers:
       '@typescript-eslint/eslint-plugin': 5.3.1_f336bb02fd310e906e240953c890b615
       '@typescript-eslint/parser': 5.3.1_eslint@7.32.0+typescript@4.5.2
       eslint: 7.32.0
-      prettier: 2.4.1
+      prettier: 2.5.1
       typescript: 4.5.2
 
   ../../libraries/cli:
@@ -273,7 +273,7 @@ importers:
       chalk: ~5.0.0
       eslint: ^7.32.0
       inquirer: ^8.0.0
-      prettier: 2.4.1
+      prettier: 2.5.1
       tslib: ~2.3.1
       typescript: ^4.5.2
     dependencies:
@@ -289,7 +289,7 @@ importers:
       '@typescript-eslint/eslint-plugin': 5.3.1_f336bb02fd310e906e240953c890b615
       '@typescript-eslint/parser': 5.3.1_eslint@7.32.0+typescript@4.5.2
       eslint: 7.32.0
-      prettier: 2.4.1
+      prettier: 2.5.1
       typescript: 4.5.2
 
   ../../libraries/core:
@@ -302,7 +302,7 @@ importers:
       '@typescript-eslint/parser': ^5.0.0
       eslint: ^7.32.0
       eslint-plugin-import: ~2.25.2
-      prettier: 2.4.1
+      prettier: 2.5.1
       tslib: ~2.3.1
       typescript: ^4.5.2
     dependencies:
@@ -316,7 +316,7 @@ importers:
       '@typescript-eslint/parser': 5.3.1_eslint@7.32.0+typescript@4.5.2
       eslint: 7.32.0
       eslint-plugin-import: 2.25.3_eslint@7.32.0
-      prettier: 2.4.1
+      prettier: 2.5.1
       typescript: 4.5.2
 
   ../../libraries/database-adapter-postgres-core:
@@ -329,7 +329,7 @@ importers:
       '@typescript-eslint/eslint-plugin': ^5.0.0
       '@typescript-eslint/parser': ^5.0.0
       eslint: ^7.32.0
-      prettier: 2.4.1
+      prettier: 2.5.1
       tslib: ~2.3.1
       typescript: ^4.5.2
     dependencies:
@@ -343,7 +343,7 @@ importers:
       '@typescript-eslint/eslint-plugin': 5.3.1_f336bb02fd310e906e240953c890b615
       '@typescript-eslint/parser': 5.3.1_eslint@7.32.0+typescript@4.5.2
       eslint: 7.32.0
-      prettier: 2.4.1
+      prettier: 2.5.1
       typescript: 4.5.2
 
   ../../libraries/database-adapter-postgres-pg:
@@ -364,7 +364,7 @@ importers:
       dotenv: ^10.0.0
       eslint: ^7.32.0
       pg: ^8.7.1
-      prettier: 2.4.1
+      prettier: 2.5.1
       tslib: ~2.3.1
       typescript: ^4.5.2
       uuid: ^8.3.2
@@ -387,7 +387,7 @@ importers:
       '@typescript-eslint/parser': 5.3.1_eslint@7.32.0+typescript@4.5.2
       dotenv: 10.0.0
       eslint: 7.32.0
-      prettier: 2.4.1
+      prettier: 2.5.1
       typescript: 4.5.2
       uuid: 8.3.2
 
@@ -406,7 +406,7 @@ importers:
       '@typescript-eslint/eslint-plugin': ^5.0.0
       '@typescript-eslint/parser': ^5.0.0
       eslint: ^7.32.0
-      prettier: 2.4.1
+      prettier: 2.5.1
       sql.js: ~1.6.1
       sqlite3: jonasb/node-sqlite3#3.36.0
       tslib: ~2.3.1
@@ -431,7 +431,7 @@ importers:
       '@typescript-eslint/eslint-plugin': 5.3.1_f336bb02fd310e906e240953c890b615
       '@typescript-eslint/parser': 5.3.1_eslint@7.32.0+typescript@4.5.2
       eslint: 7.32.0
-      prettier: 2.4.1
+      prettier: 2.5.1
       typescript: 4.5.2
 
   ../../libraries/database-adapter-test-integration:
@@ -445,7 +445,7 @@ importers:
       '@typescript-eslint/parser': ^5.0.0
       eslint: ^7.32.0
       eslint-plugin-import: ~2.25.2
-      prettier: 2.4.1
+      prettier: 2.5.1
       tslib: ~2.3.1
       typescript: ^4.5.2
       uuid: ^8.3.2
@@ -462,7 +462,7 @@ importers:
       '@typescript-eslint/parser': 5.3.1_eslint@7.32.0+typescript@4.5.2
       eslint: 7.32.0
       eslint-plugin-import: 2.25.3_eslint@7.32.0
-      prettier: 2.4.1
+      prettier: 2.5.1
       typescript: 4.5.2
 
   ../../libraries/design:
@@ -493,7 +493,7 @@ importers:
       eslint-plugin-react: ~7.27.0
       eslint-plugin-react-hooks: ~4.3.0
       eslint-plugin-testing-library: ~5.0.0
-      prettier: 2.4.1
+      prettier: 2.5.1
       react: ~17.0.2
       react-bulma-components: ~4.0.7
       react-dom: ~17.0.2
@@ -533,7 +533,7 @@ importers:
       eslint-plugin-react: 7.27.0_eslint@7.32.0
       eslint-plugin-react-hooks: 4.3.0_eslint@7.32.0
       eslint-plugin-testing-library: 5.0.0_eslint@7.32.0+typescript@4.5.2
-      prettier: 2.4.1
+      prettier: 2.5.1
       sass: 1.39.2
       sass-loader: 12.1.0_sass@1.39.2
       typescript: 4.5.2
@@ -555,7 +555,7 @@ importers:
       eslint: ^7.32.0
       graphql: ~16.0.1
       graphql-type-json: ~0.3.2
-      prettier: 2.4.1
+      prettier: 2.5.1
       tslib: ~2.3.1
       typescript: ^4.5.2
       uuid: ^8.3.2
@@ -577,7 +577,7 @@ importers:
       '@typescript-eslint/parser': 5.3.1_eslint@7.32.0+typescript@4.5.2
       dotenv: 10.0.0
       eslint: 7.32.0
-      prettier: 2.4.1
+      prettier: 2.5.1
       typescript: 4.5.2
       uuid: 8.3.2
 
@@ -602,7 +602,7 @@ importers:
       '@typescript-eslint/eslint-plugin': ^5.0.0
       '@typescript-eslint/parser': ^5.0.0
       eslint: ^7.32.0
-      prettier: 2.4.1
+      prettier: 2.5.1
       tslib: ~2.3.1
       typescript: ^4.5.2
     dependencies:
@@ -617,7 +617,7 @@ importers:
       '@typescript-eslint/eslint-plugin': 5.3.1_f336bb02fd310e906e240953c890b615
       '@typescript-eslint/parser': 5.3.1_eslint@7.32.0+typescript@4.5.2
       eslint: 7.32.0
-      prettier: 2.4.1
+      prettier: 2.5.1
       typescript: 4.5.2
 
   ../../tools/generic-tools:
@@ -14057,8 +14057,8 @@ packages:
     hasBin: true
     dev: true
 
-  /prettier/2.4.1:
-    resolution: {integrity: sha512-9fbDAXSBcc6Bs1mZrDYb3XKzDLm4EXXL9sC1LqKP5rZkT6KRr/rf9amVUcODVXgguK/isJz0d0hP72WeaKWsvA==}
+  /prettier/2.5.1:
+    resolution: {integrity: sha512-vBZcPRUR5MZJwoyi3ZoyQlc1rXeEck8KgeC9AwwOn+exuxLxq5toTRDTSaVrXHxelDMHy9zlicw8u66yxoSUFg==}
     engines: {node: '>=10.13.0'}
     hasBin: true
     dev: true
