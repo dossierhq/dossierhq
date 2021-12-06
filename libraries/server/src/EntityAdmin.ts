@@ -1108,21 +1108,38 @@ function checkUUIDsAreUnique(uuids: string[]): Result<void, ErrorType.BadRequest
 
 export async function getEntityHistory(
   databaseAdapter: DatabaseAdapter,
+  authorizationAdapter: AuthorizationAdapter,
   context: SessionContext,
-  id: string
-): PromiseResult<EntityHistory, ErrorType.NotFound> {
+  reference: EntityReferenceWithAuthKeys
+): PromiseResult<
+  EntityHistory,
+  ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
+> {
   const entityMain = await Db.queryNoneOrOne<
-    Pick<EntitiesTable, 'id' | 'uuid' | 'published_entity_versions_id'>
+    Pick<
+      EntitiesTable,
+      'id' | 'uuid' | 'published_entity_versions_id' | 'auth_key' | 'resolved_auth_key'
+    >
   >(
     databaseAdapter,
     context,
-    `SELECT id, uuid, published_entity_versions_id
+    `SELECT id, uuid, published_entity_versions_id, auth_key, resolved_auth_key
       FROM entities e
       WHERE uuid = $1`,
-    [id]
+    [reference.id]
   );
   if (!entityMain) {
     return notOk.NotFound('No such entity');
+  }
+
+  const authResult = await authVerifyAuthorizationKey(
+    authorizationAdapter,
+    context,
+    reference?.authKeys,
+    { authKey: entityMain.auth_key, resolvedAuthKey: entityMain.resolved_auth_key }
+  );
+  if (authResult.isError()) {
+    return authResult;
   }
 
   const versions = await Db.queryMany<
@@ -1157,17 +1174,33 @@ export async function getEntityHistory(
 
 export async function getPublishingHistory(
   databaseAdapter: DatabaseAdapter,
+  authorizationAdapter: AuthorizationAdapter,
   context: SessionContext,
-  id: string
-): PromiseResult<PublishingHistory, ErrorType.NotFound> {
-  const entityInfo = await Db.queryNoneOrOne<Pick<EntitiesTable, 'id'>>(
+  reference: EntityReferenceWithAuthKeys
+): PromiseResult<
+  PublishingHistory,
+  ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
+> {
+  const entityInfo = await Db.queryNoneOrOne<
+    Pick<EntitiesTable, 'id' | 'auth_key' | 'resolved_auth_key'>
+  >(
     databaseAdapter,
     context,
-    'SELECT id FROM entities WHERE uuid = $1',
-    [id]
+    'SELECT id, auth_key, resolved_auth_key FROM entities WHERE uuid = $1',
+    [reference.id]
   );
   if (!entityInfo) {
     return notOk.NotFound('No such entity');
+  }
+
+  const authResult = await authVerifyAuthorizationKey(
+    authorizationAdapter,
+    context,
+    reference?.authKeys,
+    { authKey: entityInfo.auth_key, resolvedAuthKey: entityInfo.resolved_auth_key }
+  );
+  if (authResult.isError()) {
+    return authResult;
   }
 
   const publishEvents = await Db.queryMany<
@@ -1187,7 +1220,7 @@ export async function getPublishingHistory(
     [entityInfo.id]
   );
   return ok({
-    id,
+    id: reference.id,
     events: publishEvents.map((it) => {
       const event: PublishingEvent = {
         version: it.version,

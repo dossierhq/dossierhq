@@ -6,6 +6,7 @@ import type {
   AdminValueTypeSpecification,
   Entity,
   EntityHistory,
+  EntityReferenceWithAuthKeys,
   EntityTypeSpecification,
   FieldSpecification,
   PageInfo,
@@ -321,10 +322,10 @@ function buildAdminTotalCount<TContext extends SessionGraphQLContext>(
 
 export async function loadVersionHistory<TContext extends SessionGraphQLContext>(
   context: TContext,
-  id: string
+  reference: EntityReferenceWithAuthKeys
 ): Promise<EntityHistory> {
   const adminClient = getAdminClient(context);
-  const result = await adminClient.getEntityHistory({ id });
+  const result = await adminClient.getEntityHistory(reference);
   if (result.isError()) {
     throw result.toError();
   }
@@ -333,10 +334,10 @@ export async function loadVersionHistory<TContext extends SessionGraphQLContext>
 
 export async function loadPublishingHistory<TContext extends SessionGraphQLContext>(
   context: TContext,
-  id: string
+  reference: EntityReferenceWithAuthKeys
 ): Promise<PublishingHistory> {
   const adminClient = getAdminClient(context);
-  const result = await adminClient.getPublishingHistory({ id });
+  const result = await adminClient.getPublishingHistory(reference);
   if (result.isError()) {
     throw result.toError();
   }

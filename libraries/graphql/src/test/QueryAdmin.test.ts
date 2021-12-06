@@ -1498,7 +1498,7 @@ describe('searchAdminEntities()', () => {
   });
 });
 
-describe('versionHistory()', () => {
+describe('entityHistory()', () => {
   test('History with edit', async () => {
     const { adminClient } = server;
     const createResult = await adminClient.createEntity({
@@ -1586,6 +1586,42 @@ describe('versionHistory()', () => {
       }
     `);
   });
+
+  test('Error: Wrong authKey', async () => {
+    const { adminClient } = server;
+    const createResult = await adminClient.createEntity({
+      info: { type: 'QueryAdminFoo', name: 'Howdy name', authKey: 'subject' },
+      fields: { title: 'Howdy title', summary: 'Howdy summary' },
+    });
+    if (expectOkResult(createResult)) {
+      const {
+        entity: { id },
+      } = createResult.value;
+
+      const result = (await graphql({
+        schema,
+        source: `
+          query EntityHistory($id: ID!, $authKeys: [String!]) {
+            entityHistory(id: $id, authKeys: $authKeys) {
+              id
+            }
+          }
+        `,
+        contextValue: createContext(),
+        variableValues: { id, authKeys: ['none'] },
+      })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
+      expect(result).toMatchInlineSnapshot(`
+        Object {
+          "data": Object {
+            "entityHistory": null,
+          },
+          "errors": Array [
+            [GraphQLError: NotAuthorized: Wrong authKey provided],
+          ],
+        }
+      `);
+    }
+  });
 });
 
 describe('publishingHistory()', () => {
@@ -1661,5 +1697,41 @@ describe('publishingHistory()', () => {
         ],
       }
     `);
+  });
+
+  test('Error: Wrong authKey', async () => {
+    const { adminClient } = server;
+    const createResult = await adminClient.createEntity({
+      info: { type: 'QueryAdminFoo', name: 'Howdy name', authKey: 'subject' },
+      fields: { title: 'Howdy title', summary: 'Howdy summary' },
+    });
+    if (expectOkResult(createResult)) {
+      const {
+        entity: { id },
+      } = createResult.value;
+
+      const result = (await graphql({
+        schema,
+        source: `
+          query PublishingHistory($id: ID!, $authKeys: [String!]) {
+            publishingHistory(id: $id, authKeys: $authKeys) {
+              id
+            }
+          }
+        `,
+        contextValue: createContext(),
+        variableValues: { id, authKeys: ['none'] },
+      })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
+      expect(result).toMatchInlineSnapshot(`
+        Object {
+          "data": Object {
+            "publishingHistory": null,
+          },
+          "errors": Array [
+            [GraphQLError: NotAuthorized: Wrong authKey provided],
+          ],
+        }
+      `);
+    }
   });
 });
