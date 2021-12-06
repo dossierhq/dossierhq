@@ -48,7 +48,7 @@ export async function ensureEntityCount(
         info: { version },
       },
     } = createResult.value;
-    const publishResult = await client.publishEntities([{ id, version }]);
+    const publishResult = await client.publishEntities([{ id, version, authKeys: [authKey] }]);
     if (publishResult.isError()) {
       return publishResult;
     }
