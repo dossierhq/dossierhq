@@ -7,6 +7,7 @@ import type {
   AdminEntityUpsertPayload,
   AdminSchema,
   EntityPublishPayload,
+  EntityReferenceWithAuthKeys,
   EntityVersionReference,
 } from '@jonasb/datadata-core';
 import type { SessionGraphQLContext } from '.';
@@ -87,10 +88,10 @@ export async function unpublishEntities<TContext extends SessionGraphQLContext>(
 
 export async function archiveEntity<TContext extends SessionGraphQLContext>(
   context: TContext,
-  id: string
+  reference: EntityReferenceWithAuthKeys
 ): Promise<EntityPublishPayload> {
   const adminClient = getAdminClient(context);
-  const result = await adminClient.archiveEntity({ id });
+  const result = await adminClient.archiveEntity(reference);
   if (result.isError()) {
     throw result.toError();
   }

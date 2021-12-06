@@ -52,7 +52,7 @@ export function createServerAdminClient({
           args: [reference],
           resolve,
         } = operation as AdminClientOperation<AdminClientOperationName.archiveEntity>;
-        resolve(await archiveEntity(databaseAdapter, context, reference.id));
+        resolve(await archiveEntity(databaseAdapter, authorizationAdapter, context, reference));
         break;
       }
       case AdminClientOperationName.createEntity: {
