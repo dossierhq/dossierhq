@@ -1,15 +1,10 @@
 import type { AdminQueryOrder, Entity } from '@jonasb/datadata-core';
 import { QueryOrder } from '@jonasb/datadata-core';
 import { Table } from '@jonasb/datadata-design';
-import { Dispatch, useContext } from 'react';
-import React from 'react';
-import {
-  AuthKeyTag,
-  PublishedDataDataContext,
-  SearchEntityState,
-  SearchEntityStateAction,
-} from '../../index.js';
-import { SearchEntityStateActions } from '../../index.js';
+import type { Dispatch } from 'react';
+import React, { useContext } from 'react';
+import type { SearchEntityState, SearchEntityStateAction } from '../../index.js';
+import { AuthKeyTag, PublishedDataDataContext, SearchEntityStateActions } from '../../index.js';
 
 interface Props {
   searchEntityState: SearchEntityState;
