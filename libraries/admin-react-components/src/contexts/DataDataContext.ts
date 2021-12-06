@@ -256,7 +256,7 @@ export class DataDataContextValue {
     id: string
   ): PromiseResult<
     EntityPublishPayload,
-    ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic
+    ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
   > => {
     try {
       const result = await this.#adminClient.archiveEntity({ id });

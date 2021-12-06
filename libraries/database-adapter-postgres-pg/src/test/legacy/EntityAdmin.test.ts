@@ -4490,43 +4490,39 @@ describe('archiveEntity()', () => {
           publishState: EntityPublishState.Archived,
           updatedAt,
         });
-      }
 
-      const historyResult = await client.getPublishingHistory({ id });
-      if (expectOkResult(historyResult)) {
-        const { publishedAt } = historyResult.value.events[0];
-        expectResultValue(historyResult, {
-          id,
-          events: [
-            {
-              kind: PublishingEventKind.Archive,
-              publishedAt,
-              publishedBy: context.session.subjectId,
-              version: null,
+        const historyResult = await client.getPublishingHistory({ id });
+        if (expectOkResult(historyResult)) {
+          const { publishedAt } = historyResult.value.events[0];
+          expectResultValue(historyResult, {
+            id,
+            events: [
+              {
+                kind: PublishingEventKind.Archive,
+                publishedAt,
+                publishedBy: context.session.subjectId,
+                version: null,
+              },
+            ],
+          });
+        }
+
+        const getResult = await client.getEntity({ id });
+        if (expectOkResult(getResult)) {
+          expectResultValue(getResult, {
+            id,
+            info: {
+              name,
+              type: 'EntityAdminBar',
+              version: 0,
+              authKey: 'none',
+              publishingState: EntityPublishState.Archived,
+              createdAt,
+              updatedAt,
             },
-          ],
-        });
-      }
-
-      const getResult = await client.getEntity({ id });
-      if (expectOkResult(getResult)) {
-        //TODO should archiveEntity return updatedAt?
-        const {
-          info: { updatedAt },
-        } = getResult.value;
-        expectResultValue(getResult, {
-          id,
-          info: {
-            name,
-            type: 'EntityAdminBar',
-            version: 0,
-            authKey: 'none',
-            publishingState: EntityPublishState.Archived,
-            createdAt,
-            updatedAt,
-          },
-          fields: { title: 'Bar title' },
-        });
+            fields: { title: 'Bar title' },
+          });
+        }
       }
     }
   });
@@ -4591,6 +4587,40 @@ describe('archiveEntity()', () => {
 
       const archiveResult = await client.archiveEntity({ id });
       expectErrorResult(archiveResult, ErrorType.BadRequest, 'Entity is published');
+    }
+  });
+
+  test('Error: archive with wrong authKey', async () => {
+    const createResult = await client.createEntity({
+      info: { type: 'EntityAdminBar', name: 'Bar name', authKey: 'subject' },
+      fields: { title: 'Bar title' },
+    });
+    if (expectOkResult(createResult)) {
+      const {
+        entity: { id },
+      } = createResult.value;
+
+      const archiveResult = await client.archiveEntity({ id, authKeys: ['none'] });
+      expectErrorResult(archiveResult, ErrorType.NotAuthorized, 'Wrong authKey provided');
+    }
+  });
+
+  test('Error: Using authKey where adapter returns error', async () => {
+    const createResult = await client.createEntity({
+      info: { type: 'EntityAdminBar', name: 'Bar name', authKey: 'subject' },
+      fields: { title: 'Bar title' },
+    });
+    if (expectOkResult(createResult)) {
+      const {
+        entity: { id },
+      } = createResult.value;
+
+      const archiveResult = await client.archiveEntity({ id, authKeys: ['unauthorized'] });
+      expectErrorResult(
+        archiveResult,
+        ErrorType.NotAuthorized,
+        'User not authorized to use authKey unauthorized'
+      );
     }
   });
 

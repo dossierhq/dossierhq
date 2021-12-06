@@ -914,22 +914,45 @@ export async function unpublishEntities(
 
 export async function archiveEntity(
   databaseAdapter: DatabaseAdapter,
+  authorizationAdapter: AuthorizationAdapter,
   context: SessionContext,
-  id: string
-): PromiseResult<EntityPublishPayload, ErrorType.BadRequest | ErrorType.NotFound> {
+  reference: EntityReferenceWithAuthKeys
+): PromiseResult<
+  EntityPublishPayload,
+  ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
+> {
   return context.withTransaction(async (context) => {
     const entityInfo = await Db.queryNoneOrOne<
-      Pick<EntitiesTable, 'id' | 'published_entity_versions_id' | 'archived' | 'updated_at'>
+      Pick<
+        EntitiesTable,
+        | 'id'
+        | 'published_entity_versions_id'
+        | 'archived'
+        | 'updated_at'
+        | 'auth_key'
+        | 'resolved_auth_key'
+      >
     >(
       databaseAdapter,
       context,
-      'SELECT e.id, e.published_entity_versions_id, e.archived, e.updated_at FROM entities e WHERE e.uuid = $1',
-      [id]
+      'SELECT e.id, e.published_entity_versions_id, e.archived, e.updated_at, e.auth_key, e.resolved_auth_key FROM entities e WHERE e.uuid = $1',
+      [reference.id]
     );
 
     if (!entityInfo) {
       return notOk.NotFound('No such entity');
     }
+
+    const authResult = await authVerifyAuthorizationKey(
+      authorizationAdapter,
+      context,
+      reference?.authKeys,
+      { authKey: entityInfo.auth_key, resolvedAuthKey: entityInfo.resolved_auth_key }
+    );
+    if (authResult.isError()) {
+      return authResult;
+    }
+
     const {
       id: entityId,
       published_entity_versions_id: publishedVersionId,
@@ -941,7 +964,11 @@ export async function archiveEntity(
       return notOk.BadRequest('Entity is published');
     }
     if (archived) {
-      return ok({ id, publishState: EntityPublishState.Archived, updatedAt: previousUpdatedAt }); // no change
+      return ok({
+        id: reference.id,
+        publishState: EntityPublishState.Archived,
+        updatedAt: previousUpdatedAt,
+      }); // no change
     }
 
     const [{ updated_at: updatedAt }, _] = await Promise.all([
@@ -965,7 +992,7 @@ export async function archiveEntity(
       ),
     ]);
 
-    return ok({ id, publishState: EntityPublishState.Archived, updatedAt });
+    return ok({ id: reference.id, publishState: EntityPublishState.Archived, updatedAt });
   });
 }
 

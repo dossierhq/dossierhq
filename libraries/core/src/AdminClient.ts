@@ -130,10 +130,10 @@ export interface AdminClient {
   >;
 
   archiveEntity(
-    reference: EntityReference
+    reference: EntityReferenceWithAuthKeys
   ): PromiseResult<
     EntityPublishPayload,
-    ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic
+    ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
   >;
 
   unarchiveEntity(
