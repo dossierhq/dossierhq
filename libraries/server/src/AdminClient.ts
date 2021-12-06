@@ -150,7 +150,13 @@ export function createServerAdminClient({
           resolve,
         } = operation as AdminClientOperation<AdminClientOperationName.publishEntities>;
         resolve(
-          await publishEntities(serverImpl.getAdminSchema(), databaseAdapter, context, references)
+          await publishEntities(
+            serverImpl.getAdminSchema(),
+            authorizationAdapter,
+            databaseAdapter,
+            context,
+            references
+          )
         );
         break;
       }
@@ -185,11 +191,7 @@ export function createServerAdminClient({
           resolve,
         } = operation as AdminClientOperation<AdminClientOperationName.unpublishEntities>;
         resolve(
-          await unpublishEntities(
-            databaseAdapter,
-            context,
-            references.map(({ id }) => id)
-          )
+          await unpublishEntities(databaseAdapter, authorizationAdapter, context, references)
         );
         break;
       }

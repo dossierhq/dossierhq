@@ -8,7 +8,7 @@ import type {
   AdminSchema,
   EntityPublishPayload,
   EntityReferenceWithAuthKeys,
-  EntityVersionReference,
+  EntityVersionReferenceWithAuthKeys,
 } from '@jonasb/datadata-core';
 import type { SessionGraphQLContext } from '.';
 import { buildResolversForAdminEntity } from './DataLoaders';
@@ -64,10 +64,10 @@ export async function upsertEntity<TContext extends SessionGraphQLContext>(
 
 export async function publishEntities<TContext extends SessionGraphQLContext>(
   context: TContext,
-  entities: EntityVersionReference[]
+  references: EntityVersionReferenceWithAuthKeys[]
 ): Promise<EntityPublishPayload[]> {
   const adminClient = getAdminClient(context);
-  const result = await adminClient.publishEntities(entities);
+  const result = await adminClient.publishEntities(references);
   if (result.isError()) {
     throw result.toError();
   }
@@ -76,10 +76,10 @@ export async function publishEntities<TContext extends SessionGraphQLContext>(
 
 export async function unpublishEntities<TContext extends SessionGraphQLContext>(
   context: TContext,
-  entityIds: string[]
+  references: EntityReferenceWithAuthKeys[]
 ): Promise<EntityPublishPayload[]> {
   const adminClient = getAdminClient(context);
-  const result = await adminClient.unpublishEntities(entityIds.map((id) => ({ id })));
+  const result = await adminClient.unpublishEntities(references);
   if (result.isError()) {
     throw result.toError();
   }

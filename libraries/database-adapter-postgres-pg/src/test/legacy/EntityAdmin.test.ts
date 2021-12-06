@@ -3939,27 +3939,26 @@ describe('publishEntities()', () => {
         expectResultValue(publishResult, [
           { id, publishState: EntityPublishState.Published, updatedAt },
         ]);
-      }
 
-      const getResult = await client.getEntity({ id });
-      if (expectOkResult(getResult)) {
-        const {
-          info: { updatedAt },
-        } = getResult.value;
-        //TODO should publishEntities return updatedAt?
-        expectResultValue(getResult, {
-          id,
-          info: {
-            type: 'EntityAdminBaz',
-            name,
-            version: 0,
-            authKey: 'none',
-            publishingState: EntityPublishState.Published,
-            createdAt,
-            updatedAt,
-          },
-          fields: { ...emptyBazFields, title: 'Baz title 1' },
-        });
+        const getResult = await client.getEntity({ id });
+        if (expectOkResult(getResult)) {
+          const {
+            info: { updatedAt },
+          } = getResult.value;
+          expectResultValue(getResult, {
+            id,
+            info: {
+              type: 'EntityAdminBaz',
+              name,
+              version: 0,
+              authKey: 'none',
+              publishingState: EntityPublishState.Published,
+              createdAt,
+              updatedAt,
+            },
+            fields: { ...emptyBazFields, title: 'Baz title 1' },
+          });
+        }
       }
     }
   });
@@ -4031,6 +4030,27 @@ describe('publishEntities()', () => {
         secondPublishResult,
         ErrorType.BadRequest,
         `Entity versions are already published: ${bazId}`
+      );
+    }
+  });
+
+  test('Error: Publish using the wrong authKey', async () => {
+    const createBazResult = await client.createEntity({
+      info: { type: 'EntityAdminBaz', name: 'Baz 1', authKey: 'subject' },
+      fields: { title: 'Baz title 1' },
+    });
+    if (expectOkResult(createBazResult)) {
+      const {
+        entity: { id: bazId },
+      } = createBazResult.value;
+
+      const publishResult = await client.publishEntities([
+        { id: bazId, version: 0, authKeys: ['none'] },
+      ]);
+      expectErrorResult(
+        publishResult,
+        ErrorType.NotAuthorized,
+        `entity(${bazId}): Wrong authKey provided`
       );
     }
   });
@@ -4362,6 +4382,25 @@ describe('unpublishEntities()', () => {
       ErrorType.NotFound,
       `No such entities: 8a678bad-fa57-4f18-a377-633f704fd0d3`
     );
+  });
+
+  test('Error: Unpublish using the wrong authKey', async () => {
+    const createBazResult = await client.createEntity({
+      info: { type: 'EntityAdminBaz', name: 'Baz 1', authKey: 'subject' },
+      fields: { title: 'Baz title 1' },
+    });
+    if (expectOkResult(createBazResult)) {
+      const {
+        entity: { id: bazId },
+      } = createBazResult.value;
+
+      const unpublishResult = await client.unpublishEntities([{ id: bazId, authKeys: ['none'] }]);
+      expectErrorResult(
+        unpublishResult,
+        ErrorType.NotAuthorized,
+        `entity(${bazId}): Wrong authKey provided`
+      );
+    }
   });
 
   test('Error: Reference from published entity', async () => {
