@@ -1,6 +1,6 @@
 {
   "name": "@jonasb/datadata-database-adapter-postgres-pg",
-  "version": "0.1.1-53",
+  "version": "0.1.1-54",
   "description": "",
   "main": "./lib/cjs/index.js",
   "types": "./lib/cjs/index.d.ts",
