@@ -152,7 +152,7 @@ importers:
       '@storybook/builder-webpack5': ^6.3.9
       '@storybook/manager-webpack5': ^6.3.9
       '@storybook/react': ^6.3.9
-      '@testing-library/jest-dom': ~5.15.0
+      '@testing-library/jest-dom': ~5.16.0
       '@testing-library/react': ~12.1.2
       '@testing-library/user-event': ~13.5.0
       '@types/heft-jest': 1.0.2
@@ -213,7 +213,7 @@ importers:
       '@storybook/builder-webpack5': 6.3.12_9eacdfe80a5f688823cb46a35d44a1c5
       '@storybook/manager-webpack5': 6.3.12_9eacdfe80a5f688823cb46a35d44a1c5
       '@storybook/react': 6.3.12_3d7a0ccef0bd6de3a146db0c33912f2c
-      '@testing-library/jest-dom': 5.15.0
+      '@testing-library/jest-dom': 5.16.0
       '@testing-library/react': 12.1.2_react-dom@17.0.2+react@17.0.2
       '@testing-library/user-event': 13.5.0
       '@types/heft-jest': 1.0.2
@@ -4852,13 +4852,13 @@ packages:
       pretty-format: 27.3.1
     dev: true
 
-  /@testing-library/jest-dom/5.15.0:
-    resolution: {integrity: sha512-lOMuQidnL1tWHLEWIhL6UvSZC1Qt3OkNe1khvi2h6xFiqpe5O8arYs46OU0qyUGq0cSTbroQyMktYNXu3a7sAA==}
+  /@testing-library/jest-dom/5.16.0:
+    resolution: {integrity: sha512-ECygvCL6ufPfHna4fsk7o24+3PVNhRbioDpFbfSVEZaglT6EjuRP+w8I5tzigFz1fobpvCrVRoKyR4qx2QUCxw==}
     engines: {node: '>=8', npm: '>=6', yarn: '>=1'}
     dependencies:
       '@babel/runtime': 7.16.3
       '@types/testing-library__jest-dom': 5.14.1
-      aria-query: 4.2.2
+      aria-query: 5.0.0
       chalk: 3.0.0
       css: 3.0.0
       css.escape: 1.5.1
