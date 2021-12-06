@@ -118,6 +118,8 @@ export interface AdminEntityUpdate {
     /** If provided, has to be same as the entity's existing type, i.e. there's no way to change the type of an entity */
     type?: string;
     version?: number;
+    /** If provided, has to be the same as the existing authKey, i.e. there's no way to change the authKey of an entity */
+    authKey?: string;
   };
   fields: Record<string, unknown>;
 }

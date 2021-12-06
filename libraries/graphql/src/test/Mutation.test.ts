@@ -1643,6 +1643,56 @@ describe('update*Entity()', () => {
       `);
     }
   });
+
+  test('Error: Update with the wrong authKey', async () => {
+    const { adminClient } = server;
+    const createResult = await adminClient.createEntity({
+      info: { type: 'MutationFoo', name: 'Name', authKey: 'subject' },
+      fields: {},
+    });
+    if (expectOkResult(createResult)) {
+      const {
+        entity: { id },
+      } = createResult.value;
+      const result = await graphql({
+        schema,
+        source: `
+          mutation UpdateFooEntity($entity: AdminMutationFooUpdateInput!) {
+            updateMutationFooEntity(entity: $entity) {
+              entity {
+                id
+              }
+            }
+          }
+        `,
+        contextValue: createContext(),
+        variableValues: {
+          entity: {
+            id,
+            info: {
+              name: 'Foo name',
+              authKey: 'none', // Shouldn't be specified or be 'subject'
+            },
+            fields: {
+              title: 'Foo title',
+              summary: 'Foo summary',
+            },
+          },
+        },
+      });
+
+      expect(result).toMatchInlineSnapshot(`
+        Object {
+          "data": Object {
+            "updateMutationFooEntity": null,
+          },
+          "errors": Array [
+            [GraphQLError: NotAuthorized: Wrong authKey provided],
+          ],
+        }
+      `);
+    }
+  });
 });
 
 describe('upsert*Entity()', () => {

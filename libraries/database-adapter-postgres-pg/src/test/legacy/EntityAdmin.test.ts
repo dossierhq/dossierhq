@@ -2854,6 +2854,39 @@ describe('updateEntity()', () => {
     }
   });
 
+  test('Update with same authKey', async () => {
+    const createResult = await client.createEntity({
+      info: { type: 'EntityAdminFoo', name: 'Original', authKey: 'subject' },
+      fields: { title: 'Original' },
+    });
+    if (expectOkResult(createResult)) {
+      const {
+        entity: { id },
+      } = createResult.value;
+
+      const updateResult = await client.updateEntity({
+        id,
+        info: { type: 'EntityAdminFoo', name: 'Updated name', authKey: 'subject' },
+        fields: { title: 'Updated title' },
+      });
+      if (expectOkResult(updateResult)) {
+        const {
+          entity: {
+            info: { name, updatedAt },
+          },
+        } = updateResult.value;
+
+        expectResultValue(updateResult, {
+          effect: 'updated',
+          entity: copyEntity(createResult.value.entity, {
+            info: { name, updatedAt, version: 1 },
+            fields: { title: 'Updated title' },
+          }),
+        });
+      }
+    }
+  });
+
   test('Update EntityAdminFoo w/o publish', async () => {
     const createResult = await client.createEntity({
       info: { type: 'EntityAdminFoo', name: 'First', authKey: 'none' },
@@ -3590,6 +3623,44 @@ describe('updateEntity()', () => {
         ErrorType.BadRequest,
         `entity.fields.bar: referenced entity (${referenceId}) has an invalid type AdminOnlyEditBefore`
       );
+    }
+  });
+
+  test('Error: Using authKey where adapter returns error', async () => {
+    const createResult = await client.createEntity({
+      info: { type: 'EntityAdminFoo', name: 'Foo name', authKey: 'none' },
+      fields: { title: 'Foo title' },
+    });
+    if (expectOkResult(createResult)) {
+      const {
+        entity: { id },
+      } = createResult.value;
+
+      const updateResult = await client.updateEntity({
+        id,
+        info: { authKey: 'unauthorized' },
+        fields: {},
+      });
+      expectErrorResult(updateResult, ErrorType.NotAuthorized, `Wrong authKey provided`);
+    }
+  });
+
+  test('Error: Using wrong authKey', async () => {
+    const createResult = await client.createEntity({
+      info: { type: 'EntityAdminFoo', name: 'Foo name', authKey: 'subject' },
+      fields: { title: 'Foo title' },
+    });
+    if (expectOkResult(createResult)) {
+      const {
+        entity: { id },
+      } = createResult.value;
+
+      const updateResult = await client.updateEntity({
+        id,
+        info: { authKey: 'none' },
+        fields: {},
+      });
+      expectErrorResult(updateResult, ErrorType.NotAuthorized, `Wrong authKey provided`);
     }
   });
 });

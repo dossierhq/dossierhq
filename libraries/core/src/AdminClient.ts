@@ -101,12 +101,15 @@ export interface AdminClient {
     entity: AdminEntityUpdate
   ): PromiseResult<
     AdminEntityUpdatePayload,
-    ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic
+    ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
   >;
 
   upsertEntity(
     entity: AdminEntityUpsert
-  ): PromiseResult<AdminEntityUpsertPayload, ErrorType.BadRequest | ErrorType.Generic>;
+  ): PromiseResult<
+    AdminEntityUpsertPayload,
+    ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
+  >;
 
   getEntityHistory(
     reference: EntityReference

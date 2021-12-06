@@ -438,21 +438,32 @@ async function createEntityRow(
 
 export async function updateEntity(
   schema: AdminSchema,
+  authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   entity: AdminEntityUpdate
-): PromiseResult<AdminEntityUpdatePayload, ErrorType.BadRequest | ErrorType.NotFound> {
+): PromiseResult<
+  AdminEntityUpdatePayload,
+  ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
+> {
   return await context.withTransaction(async (context) => {
     const previousValues = await Db.queryNoneOrOne<
       Pick<
         EntitiesTable,
-        'id' | 'type' | 'name' | 'auth_key' | 'created_at' | 'updated_at' | 'status'
+        | 'id'
+        | 'type'
+        | 'name'
+        | 'auth_key'
+        | 'resolved_auth_key'
+        | 'created_at'
+        | 'updated_at'
+        | 'status'
       > &
         Pick<EntityVersionsTable, 'version' | 'data'>
     >(
       databaseAdapter,
       context,
-      `SELECT e.id, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.status, ev.version, ev.data
+      `SELECT e.id, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, ev.version, ev.data
         FROM entities e, entity_versions ev
         WHERE e.uuid = $1 AND e.latest_draft_entity_versions_id = ev.id`,
       [entity.id]
@@ -461,6 +472,16 @@ export async function updateEntity(
       return notOk.NotFound('No such entity');
     }
     const { id: entityId, type, name: previousName } = previousValues;
+
+    const authResult = await authVerifyAuthorizationKey(
+      authorizationAdapter,
+      context,
+      entity?.info?.authKey ? [entity.info.authKey] : undefined,
+      { authKey: previousValues.auth_key, resolvedAuthKey: previousValues.resolved_auth_key }
+    );
+    if (authResult.isError()) {
+      return authResult;
+    }
 
     const resolvedResult = resolveUpdateEntity(schema, entity, type, previousValues);
     if (resolvedResult.isError()) {
@@ -549,7 +570,10 @@ export async function upsertEntity(
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   entity: AdminEntityUpsert
-): PromiseResult<AdminEntityUpsertPayload, ErrorType.BadRequest | ErrorType.Generic> {
+): PromiseResult<
+  AdminEntityUpsertPayload,
+  ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
+> {
   const entityInfo = await Db.queryNoneOrOne<Pick<EntitiesTable, 'name'>>(
     databaseAdapter,
     context,
@@ -569,7 +593,11 @@ export async function upsertEntity(
       return createResult.map((value) => value);
     } else if (createResult.isErrorType(ErrorType.Conflict)) {
       return upsertEntity(schema, authorizationAdapter, databaseAdapter, context, entity);
-    } else if (createResult.isErrorType(ErrorType.BadRequest)) {
+    } else if (
+      createResult.isErrorType(ErrorType.BadRequest) ||
+      createResult.isErrorType(ErrorType.NotAuthorized) ||
+      createResult.isErrorType(ErrorType.Generic)
+    ) {
       return createResult;
     }
     return notOk.GenericUnexpectedError(createResult);
@@ -581,10 +609,20 @@ export async function upsertEntity(
     entityUpdate = { ...entity, info: { ...entity.info, name: undefined } };
   }
 
-  const updateResult = await updateEntity(schema, databaseAdapter, context, entityUpdate);
+  const updateResult = await updateEntity(
+    schema,
+    authorizationAdapter,
+    databaseAdapter,
+    context,
+    entityUpdate
+  );
   if (updateResult.isOk()) {
     return ok(updateResult.value);
-  } else if (updateResult.isErrorType(ErrorType.BadRequest)) {
+  } else if (
+    updateResult.isErrorType(ErrorType.BadRequest) ||
+    updateResult.isErrorType(ErrorType.NotAuthorized) ||
+    updateResult.isErrorType(ErrorType.Generic)
+  ) {
     return updateResult;
   }
   return notOk.GenericUnexpectedError(updateResult);
