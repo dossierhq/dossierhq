@@ -2,6 +2,7 @@ import type { EntityVersionInfo } from '@jonasb/datadata-core';
 import { assertIsDefined } from '@jonasb/datadata-core';
 import React, { useContext, useState } from 'react';
 import {
+  AuthKeyTag,
   Button,
   Column,
   ColumnItem,
@@ -33,6 +34,7 @@ export function EntityMetadata({
   initialSelectedHistory,
 }: EntityMetadataProps): JSX.Element {
   const { drafts } = useContext(EntityEditorStateContext);
+  const { authKeys } = useContext(DataDataContext);
   const draftState = drafts.find((x) => x.id === entityId);
   assertIsDefined(draftState);
 
@@ -41,6 +43,10 @@ export function EntityMetadata({
   );
 
   const { entity, latestServerVersion, publishState } = draftState;
+
+  const authKeyDisplayName = entity?.authKey
+    ? authKeys.find((it) => it.authKey === entity.authKey)?.displayName ?? null
+    : null;
 
   return (
     <Column
@@ -60,6 +66,14 @@ export function EntityMetadata({
         <p className="dd-text-body1">{entityId}</p>
       </ColumnItem>
       <ColumnItem className="dd-mx-2">
+        <Row>
+          <RowElement as="p" className="dd-text-subtitle2" grow>
+            Auth key
+          </RowElement>
+          {entity?.authKey ? (
+            <AuthKeyTag authKey={entity.authKey} displayName={authKeyDisplayName} />
+          ) : null}
+        </Row>
         <Row>
           <RowElement as="p" className="dd-text-subtitle2" grow>
             Publish state
