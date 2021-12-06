@@ -3641,7 +3641,7 @@ describe('updateEntity()', () => {
         info: { authKey: 'unauthorized' },
         fields: {},
       });
-      expectErrorResult(updateResult, ErrorType.NotAuthorized, `Wrong authKey provided`);
+      expectErrorResult(updateResult, ErrorType.NotAuthorized, 'Wrong authKey provided');
     }
   });
 
@@ -3660,7 +3660,7 @@ describe('updateEntity()', () => {
         info: { authKey: 'none' },
         fields: {},
       });
-      expectErrorResult(updateResult, ErrorType.NotAuthorized, `Wrong authKey provided`);
+      expectErrorResult(updateResult, ErrorType.NotAuthorized, 'Wrong authKey provided');
     }
   });
 });
@@ -3815,6 +3815,7 @@ describe('upsertEntity()', () => {
 
   test('Error: Upsert without authKey', async () => {
     const result = await client.upsertEntity({
+      id: insecureTestUuidv4(),
       info: {
         type: 'EntityAdminFoo',
         name: 'Foo',
@@ -3823,6 +3824,43 @@ describe('upsertEntity()', () => {
     } as AdminEntityUpsert);
 
     expectErrorResult(result, ErrorType.BadRequest, 'Missing entity.info.authKey');
+  });
+
+  test('Error: Using authKey where adapter returns error', async () => {
+    const result = await client.upsertEntity({
+      id: insecureTestUuidv4(),
+      info: {
+        type: 'EntityAdminFoo',
+        name: 'Foo',
+        authKey: 'unauthorized',
+      },
+      fields: {},
+    });
+
+    expectErrorResult(
+      result,
+      ErrorType.NotAuthorized,
+      'User not authorized to use authKey unauthorized'
+    );
+  });
+
+  test('Error: Update Using wrong authKey', async () => {
+    const createResult = await client.createEntity({
+      info: { type: 'EntityAdminFoo', name: 'Foo name', authKey: 'subject' },
+      fields: { title: 'Foo title' },
+    });
+    if (expectOkResult(createResult)) {
+      const {
+        entity: { id },
+      } = createResult.value;
+
+      const updateResult = await client.upsertEntity({
+        id,
+        info: { type: 'EntityAdminFoo', name: 'Foo name', authKey: 'none' },
+        fields: {},
+      });
+      expectErrorResult(updateResult, ErrorType.NotAuthorized, 'Wrong authKey provided');
+    }
   });
 });
 
