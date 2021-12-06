@@ -3641,7 +3641,11 @@ describe('updateEntity()', () => {
         info: { authKey: 'unauthorized' },
         fields: {},
       });
-      expectErrorResult(updateResult, ErrorType.NotAuthorized, 'Wrong authKey provided');
+      expectErrorResult(
+        updateResult,
+        ErrorType.NotAuthorized,
+        'User not authorized to use authKey unauthorized'
+      );
     }
   });
 
