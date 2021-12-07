@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-core",
+      "comment": "Add createdAt to EntityInfo",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-core"
+}
