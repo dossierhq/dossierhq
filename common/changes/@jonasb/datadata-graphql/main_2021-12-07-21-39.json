@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-graphql",
+      "comment": "Add createdAt to EntityInfo",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-graphql"
+}

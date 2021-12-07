@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-database-adapter-postgres-pg",
+      "comment": "Add createdAt to EntityInfo",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-database-adapter-postgres-pg"
+}
