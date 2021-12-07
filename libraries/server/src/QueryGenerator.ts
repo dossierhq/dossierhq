@@ -23,7 +23,7 @@ export type SearchAdminEntitiesItem = Pick<
   Pick<EntityVersionsTable, 'version' | 'data'>;
 export type SearchPublishedEntitiesItem = Pick<
   EntitiesTable,
-  'id' | 'uuid' | 'type' | 'name' | 'auth_key'
+  'id' | 'uuid' | 'type' | 'name' | 'auth_key' | 'created_at'
 > &
   Pick<EntityVersionsTable, 'data'>;
 
@@ -81,7 +81,7 @@ function sharedSearchEntitiesQuery<
   }
   if (published) {
     qb.addQuery(
-      'e.id, e.uuid, e.type, e.name, e.auth_key, ev.data FROM entities e, entity_versions ev'
+      'e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, ev.data FROM entities e, entity_versions ev'
     );
   } else {
     qb.addQuery(`e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, ev.version, ev.data

@@ -9,6 +9,7 @@ import type {
   Edge,
   Entity,
   EntityHistory,
+  EntityInfo,
   EntityPublishPayload,
   EntityVersionInfo,
   ErrorType,
@@ -42,7 +43,13 @@ export interface JsonAdminEntity extends Omit<AdminEntity, 'info'> {
   info: JsonAdminEntityInfo;
 }
 
-export type JsonEntity = Entity;
+export interface JsonEntityInfo extends Omit<EntityInfo, 'createdAt'> {
+  createdAt: string;
+}
+
+export interface JsonEntity extends Omit<Entity, 'info'> {
+  info: JsonEntityInfo;
+}
 
 export interface JsonAdminEntityCreatePayload extends Omit<AdminEntityCreatePayload, 'entity'> {
   entity: JsonAdminEntity;
@@ -119,7 +126,13 @@ export function convertJsonAdminEntity(entity: JsonAdminEntity): AdminEntity {
 }
 
 export function convertJsonEntity(entity: JsonEntity): Entity {
-  return entity;
+  return {
+    ...entity,
+    info: {
+      ...entity.info,
+      createdAt: Temporal.Instant.from(entity.info.createdAt),
+    },
+  };
 }
 
 export function convertJsonPublishingResult(

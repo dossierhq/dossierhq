@@ -383,6 +383,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         fields: {
           name: { type: new GraphQLNonNull(GraphQLString) },
           authKey: { type: new GraphQLNonNull(GraphQLString) },
+          createdAt: { type: new GraphQLNonNull(this.getOutputType('Instant')) },
         },
       })
     );

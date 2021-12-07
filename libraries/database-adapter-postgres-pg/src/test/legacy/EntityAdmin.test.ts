@@ -636,7 +636,7 @@ describe('createEntity()', () => {
       const publishedResult = await publishedClient.getEntity({ id });
       expectResultValue(publishedResult, {
         id,
-        info: { type: 'EntityAdminFoo', name, authKey: 'none' },
+        info: { type: 'EntityAdminFoo', name, authKey: 'none', createdAt },
         fields: { ...emptyFooFields, title: 'Title' },
       });
     }
@@ -853,7 +853,7 @@ describe('createEntity()', () => {
         const publishedFooResult = await publishedClient.getEntity({ id: fooId });
         expectResultValue(publishedFooResult, {
           id: fooId,
-          info: { type: 'EntityAdminFoo', name, authKey: 'none' },
+          info: { type: 'EntityAdminFoo', name, authKey: 'none', createdAt },
           fields: {
             ...emptyFooFields,
             title: 'Foo title',
@@ -2766,7 +2766,10 @@ describe('updateEntity()', () => {
     });
     if (expectOkResult(createResult)) {
       const {
-        entity: { id },
+        entity: {
+          id,
+          info: { createdAt },
+        },
       } = createResult.value;
 
       const expectedEntity: AdminEntity = {
@@ -2777,7 +2780,7 @@ describe('updateEntity()', () => {
           version: 0,
           authKey: 'none',
           publishingState: EntityPublishState.Draft,
-          createdAt: createResult.value.entity.info.createdAt,
+          createdAt,
           updatedAt: createResult.value.entity.info.updatedAt,
         },
         fields: {
@@ -2847,7 +2850,12 @@ describe('updateEntity()', () => {
         const publishedResult = await publishedClient.getEntity({ id });
         expectResultValue(publishedResult, {
           id,
-          info: { type: 'EntityAdminFoo', name: expectedEntity.info.name, authKey: 'none' },
+          info: {
+            type: 'EntityAdminFoo',
+            name: expectedEntity.info.name,
+            authKey: 'none',
+            createdAt,
+          },
           fields: { ...emptyFooFields, title: 'Updated title' },
         });
       }
@@ -2894,7 +2902,10 @@ describe('updateEntity()', () => {
     });
     if (expectOkResult(createResult)) {
       const {
-        entity: { id },
+        entity: {
+          id,
+          info: { createdAt },
+        },
       } = createResult.value;
 
       const expectedEntity: AdminEntity = {
@@ -2905,7 +2916,7 @@ describe('updateEntity()', () => {
           version: 0,
           authKey: 'none',
           publishingState: EntityPublishState.Draft,
-          createdAt: createResult.value.entity.info.createdAt,
+          createdAt,
           updatedAt: createResult.value.entity.info.updatedAt,
         },
         fields: {
@@ -2975,7 +2986,7 @@ describe('updateEntity()', () => {
         const publishedResult = await publishedClient.getEntity({ id });
         expectResultValue(publishedResult, {
           id,
-          info: { type: 'EntityAdminFoo', name, authKey: 'none' },
+          info: { type: 'EntityAdminFoo', name, authKey: 'none', createdAt },
           fields: {
             ...emptyFooFields,
             title: 'First',
@@ -2992,7 +3003,10 @@ describe('updateEntity()', () => {
     });
     if (expectOkResult(createResult)) {
       const {
-        entity: { id },
+        entity: {
+          id,
+          info: { createdAt },
+        },
       } = createResult.value;
 
       const expectedEntity: AdminEntity = {
@@ -3003,7 +3017,7 @@ describe('updateEntity()', () => {
           version: 1,
           authKey: 'none',
           publishingState: EntityPublishState.Draft,
-          createdAt: createResult.value.entity.info.createdAt,
+          createdAt,
           updatedAt: createResult.value.entity.info.updatedAt,
         },
         fields: {
@@ -3058,7 +3072,12 @@ describe('updateEntity()', () => {
       const publishedResult = await publishedClient.getEntity({ id });
       expectResultValue(publishedResult, {
         id,
-        info: { type: 'EntityAdminFoo', name: expectedEntity.info.name, authKey: 'none' },
+        info: {
+          type: 'EntityAdminFoo',
+          name: expectedEntity.info.name,
+          authKey: 'none',
+          createdAt,
+        },
         fields: { ...emptyFooFields, title: 'Updated title' },
       });
     }
@@ -3071,7 +3090,10 @@ describe('updateEntity()', () => {
     });
     if (expectOkResult(createResult)) {
       const {
-        entity: { id },
+        entity: {
+          id,
+          info: { createdAt },
+        },
       } = createResult.value;
 
       const expectedEntity: AdminEntity = {
@@ -3082,7 +3104,7 @@ describe('updateEntity()', () => {
           version: 0,
           authKey: 'none',
           publishingState: EntityPublishState.Draft,
-          createdAt: createResult.value.entity.info.createdAt,
+          createdAt,
           updatedAt: createResult.value.entity.info.updatedAt,
         },
         fields: {
@@ -3144,7 +3166,12 @@ describe('updateEntity()', () => {
       const publishedResult = await publishedClient.getEntity({ id });
       expectResultValue(publishedResult, {
         id,
-        info: { type: 'EntityAdminFoo', name: expectedEntity.info.name, authKey: 'none' },
+        info: {
+          type: 'EntityAdminFoo',
+          name: expectedEntity.info.name,
+          authKey: 'none',
+          createdAt,
+        },
         fields: {
           ...emptyFooFields,
           title: 'First title',
@@ -3163,7 +3190,7 @@ describe('updateEntity()', () => {
       const {
         entity: {
           id,
-          info: { name },
+          info: { name, createdAt },
         },
       } = createResult.value;
 
@@ -3181,7 +3208,7 @@ describe('updateEntity()', () => {
       const publishedResult = await publishedClient.getEntity({ id });
       expectResultValue(publishedResult, {
         id,
-        info: { type: 'EntityAdminFoo', name, authKey: 'none' },
+        info: { type: 'EntityAdminFoo', name, authKey: 'none', createdAt },
         fields: { ...emptyFooFields, title: 'First title', summary: 'First summary' },
       });
     }
@@ -3259,7 +3286,10 @@ describe('updateEntity()', () => {
     });
     if (expectOkResult(createFooResult)) {
       const {
-        entity: { id: fooId },
+        entity: {
+          id: fooId,
+          info: { createdAt },
+        },
       } = createFooResult.value;
 
       const expectedEntity: AdminEntity = {
@@ -3270,7 +3300,7 @@ describe('updateEntity()', () => {
           version: 0,
           authKey: 'none',
           publishingState: EntityPublishState.Draft,
-          createdAt: createFooResult.value.entity.info.createdAt,
+          createdAt,
           updatedAt: createFooResult.value.entity.info.updatedAt,
         },
         fields: { ...emptyFooFields, title: 'First title', summary: 'First summary' },
@@ -3326,7 +3356,12 @@ describe('updateEntity()', () => {
         const publishedResult = await publishedClient.getEntity({ id: fooId });
         expectResultValue(publishedResult, {
           id: fooId,
-          info: { type: 'EntityAdminFoo', name: expectedEntity.info.name, authKey: 'none' },
+          info: {
+            type: 'EntityAdminFoo',
+            name: expectedEntity.info.name,
+            authKey: 'none',
+            createdAt,
+          },
           fields: { title: 'First title', summary: 'First summary', bar: { id: barId } },
         });
       }
@@ -3372,7 +3407,10 @@ describe('updateEntity()', () => {
       });
       if (expectOkResult(createBazResult)) {
         const {
-          entity: { id: bazId },
+          entity: {
+            id: bazId,
+            info: { createdAt: bazCreatedAt },
+          },
         } = createBazResult.value;
 
         const expectedEntity: AdminEntity = {
@@ -3430,7 +3468,12 @@ describe('updateEntity()', () => {
         const publishedResult = await publishedClient.getEntity({ id: bazId });
         expectResultValue(publishedResult, {
           id: bazId,
-          info: { type: 'EntityAdminBaz', name: expectedEntity.info.name, authKey: 'none' },
+          info: {
+            type: 'EntityAdminBaz',
+            name: expectedEntity.info.name,
+            authKey: 'none',
+            createdAt: bazCreatedAt,
+          },
           fields: {
             ...emptyBazFields,
             title: 'Updated title',

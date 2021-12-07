@@ -121,6 +121,7 @@ export type {
   Edge,
   Entity,
   EntityHistory,
+  EntityInfo,
   EntityLike,
   EntityPublishPayload,
   EntityReference,

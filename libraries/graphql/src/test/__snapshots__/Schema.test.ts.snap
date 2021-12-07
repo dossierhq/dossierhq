@@ -367,6 +367,7 @@ enum ValueType {
 type EntityInfo {
   name: String!
   authKey: String!
+  createdAt: Instant!
 }
 
 interface Entity implements Node {
@@ -478,6 +479,7 @@ enum ValueType {
 type EntityInfo {
   name: String!
   authKey: String!
+  createdAt: Instant!
 }
 
 interface Entity implements Node {
@@ -1212,6 +1214,7 @@ enum EntityType {
 type EntityInfo {
   name: String!
   authKey: String!
+  createdAt: Instant!
 }
 
 interface Entity implements Node {
@@ -1319,6 +1322,7 @@ enum EntityType {
 type EntityInfo {
   name: String!
   authKey: String!
+  createdAt: Instant!
 }
 
 interface Entity implements Node {
@@ -2019,6 +2023,7 @@ enum EntityType {
 type EntityInfo {
   name: String!
   authKey: String!
+  createdAt: Instant!
 }
 
 interface Entity implements Node {
@@ -2144,6 +2149,7 @@ enum EntityType {
 type EntityInfo {
   name: String!
   authKey: String!
+  createdAt: Instant!
 }
 
 interface Entity implements Node {
@@ -2802,6 +2808,7 @@ enum EntityType {
 type EntityInfo {
   name: String!
   authKey: String!
+  createdAt: Instant!
 }
 
 interface Entity implements Node {
@@ -2895,6 +2902,7 @@ enum EntityType {
 type EntityInfo {
   name: String!
   authKey: String!
+  createdAt: Instant!
 }
 
 interface Entity implements Node {
@@ -3453,6 +3461,7 @@ enum ValueType {
 type EntityInfo {
   name: String!
   authKey: String!
+  createdAt: Instant!
 }
 
 interface Entity implements Node {
@@ -3566,6 +3575,7 @@ enum ValueType {
 type EntityInfo {
   name: String!
   authKey: String!
+  createdAt: Instant!
 }
 
 interface Entity implements Node {
@@ -4148,6 +4158,7 @@ enum EntityType {
 type EntityInfo {
   name: String!
   authKey: String!
+  createdAt: Instant!
 }
 
 interface Entity implements Node {
@@ -4246,6 +4257,7 @@ enum EntityType {
 type EntityInfo {
   name: String!
   authKey: String!
+  createdAt: Instant!
 }
 
 interface Entity implements Node {
@@ -4852,6 +4864,7 @@ enum EntityType {
 type EntityInfo {
   name: String!
   authKey: String!
+  createdAt: Instant!
 }
 
 interface Entity implements Node {
@@ -4964,6 +4977,7 @@ enum EntityType {
 type EntityInfo {
   name: String!
   authKey: String!
+  createdAt: Instant!
 }
 
 interface Entity implements Node {
@@ -5696,6 +5710,7 @@ enum ValueType {
 type EntityInfo {
   name: String!
   authKey: String!
+  createdAt: Instant!
 }
 
 interface Entity implements Node {
@@ -5840,6 +5855,7 @@ enum ValueType {
 type EntityInfo {
   name: String!
   authKey: String!
+  createdAt: Instant!
 }
 
 interface Entity implements Node {

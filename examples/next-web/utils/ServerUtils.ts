@@ -36,7 +36,7 @@ export async function getSessionContextForRequest(
 }
 
 function getDefaultAuthKeysFromHeaders(req: NextApiRequest) {
-  const value = req.headers['datadata-default-auth-keys'];
+  const value = req.headers['DataData-Default-Auth-Keys'.toLowerCase()];
   const defaultAuthKeys: string[] = [];
   if (typeof value === 'string') {
     defaultAuthKeys.push(...value.split(',').map((it) => it.trim()));
