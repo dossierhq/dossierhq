@@ -11,6 +11,7 @@ export interface EntityInfo {
   type: string;
   name: string;
   authKey: string;
+  createdAt: Temporal.Instant;
 }
 
 export interface EntityLike {

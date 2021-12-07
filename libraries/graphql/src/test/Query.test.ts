@@ -94,7 +94,7 @@ describe('node()', () => {
       const {
         entity: {
           id,
-          info: { name },
+          info: { name, createdAt },
         },
       } = createResult.value;
 
@@ -111,6 +111,7 @@ describe('node()', () => {
                 info {
                   name
                   authKey
+                  createdAt
                 }
                 fields {
                   title
@@ -137,7 +138,7 @@ describe('node()', () => {
           node: {
             __typename: 'QueryFoo',
             id,
-            info: { name, authKey: 'none' },
+            info: { name, authKey: 'none', createdAt: createdAt.toString() },
             fields: {
               title: 'Howdy title',
               summary: 'Howdy summary',
@@ -164,7 +165,7 @@ describe('node()', () => {
       const {
         entity: {
           id,
-          info: { name },
+          info: { name, createdAt },
         },
       } = createResult.value;
 
@@ -181,6 +182,7 @@ describe('node()', () => {
                 info {
                   name
                   authKey
+                  createdAt
                 }
                 fields {
                   title
@@ -216,7 +218,7 @@ describe('node()', () => {
           node: {
             __typename: 'QueryFoo',
             id,
-            info: { name, authKey: 'none' },
+            info: { name, authKey: 'none', createdAt: createdAt.toString() },
             fields: {
               title: null,
               summary: null,
@@ -750,13 +752,13 @@ describe('nodes()', () => {
       const {
         entity: {
           id: foo1Id,
-          info: { name: foo1Name },
+          info: { name: foo1Name, createdAt: foo1CreatedAt },
         },
       } = createFoo1Result.value;
       const {
         entity: {
           id: foo2Id,
-          info: { name: foo2Name },
+          info: { name: foo2Name, createdAt: foo2CreatedAt },
         },
       } = createFoo2Result.value;
 
@@ -778,6 +780,7 @@ describe('nodes()', () => {
                 info {
                   name
                   authKey
+                  createdAt
                 }
               }
             }
@@ -792,12 +795,12 @@ describe('nodes()', () => {
             {
               __typename: 'QueryFoo',
               id: foo1Id,
-              info: { name: foo1Name, authKey: 'none' },
+              info: { name: foo1Name, authKey: 'none', createdAt: foo1CreatedAt.toString() },
             },
             {
               __typename: 'QueryFoo',
               id: foo2Id,
-              info: { name: foo2Name, authKey: 'none' },
+              info: { name: foo2Name, authKey: 'none', createdAt: foo2CreatedAt.toString() },
             },
           ],
         },

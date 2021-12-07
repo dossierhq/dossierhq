@@ -31,12 +31,15 @@ export async function getEntity(
   ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
 > {
   const entityMain = await Db.queryNoneOrOne<
-    Pick<EntitiesTable, 'uuid' | 'type' | 'name' | 'auth_key' | 'resolved_auth_key'> &
+    Pick<
+      EntitiesTable,
+      'uuid' | 'type' | 'name' | 'auth_key' | 'resolved_auth_key' | 'created_at'
+    > &
       Pick<EntityVersionsTable, 'data'>
   >(
     databaseAdapter,
     context,
-    `SELECT e.uuid, e.type, e.name, e,auth_key, e.resolved_auth_key, ev.data
+    `SELECT e.uuid, e.type, e.name, e,auth_key, e.resolved_auth_key, e.created_at, ev.data
       FROM entities e, entity_versions ev
       WHERE e.uuid = $1
       AND e.published_entity_versions_id = ev.id`,
@@ -86,12 +89,15 @@ export async function getEntities(
     return ok([]);
   }
   const entitiesMain = await Db.queryMany<
-    Pick<EntitiesTable, 'uuid' | 'type' | 'name' | 'auth_key' | 'resolved_auth_key'> &
+    Pick<
+      EntitiesTable,
+      'uuid' | 'type' | 'name' | 'auth_key' | 'resolved_auth_key' | 'created_at'
+    > &
       Pick<EntityVersionsTable, 'data'>
   >(
     databaseAdapter,
     context,
-    `SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, ev.data
+    `SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, ev.data
       FROM entities e, entity_versions ev
       WHERE e.uuid = ANY($1)
       AND e.published_entity_versions_id = ev.id`,

@@ -1,3 +1,4 @@
+import { Temporal } from '@js-temporal/polyfill';
 import type {
   Entity,
   PublishedClient,
@@ -74,6 +75,7 @@ function createDummyEntity({ id }: { id: string }): Entity {
       name: 'Foo name',
       type: 'FooType',
       authKey: 'none',
+      createdAt: Temporal.Instant.from('2021-08-17T07:51:25.56Z'),
     },
     fields: {},
   };
@@ -93,8 +95,12 @@ describe('PublishedClient forward operation over JSON', () => {
 
     const result = await publishedClient.getEntities([{ id: '1234' }, { id: '5678' }]);
     if (expectOkResult(result)) {
-      expect(result.value[0].isOk()).toBeTruthy();
-      expect(result.value[1].isOk()).toBeTruthy();
+      if (expectOkResult(result.value[0])) {
+        expect(result.value[0].value.info.createdAt).toBeInstanceOf(Temporal.Instant);
+      }
+      if (expectOkResult(result.value[1])) {
+        expect(result.value[1].value.info.createdAt).toBeInstanceOf(Temporal.Instant);
+      }
 
       expect(result.value).toMatchInlineSnapshot(`
         Array [
@@ -104,6 +110,7 @@ describe('PublishedClient forward operation over JSON', () => {
               "id": "1234",
               "info": Object {
                 "authKey": "none",
+                "createdAt": "2021-08-17T07:51:25.56Z",
                 "name": "Foo name",
                 "type": "FooType",
               },
@@ -115,6 +122,7 @@ describe('PublishedClient forward operation over JSON', () => {
               "id": "5678",
               "info": Object {
                 "authKey": "none",
+                "createdAt": "2021-08-17T07:51:25.56Z",
                 "name": "Foo name",
                 "type": "FooType",
               },
@@ -168,18 +176,21 @@ describe('PublishedClient forward operation over JSON', () => {
       );
 
     const result = await publishedClient.getEntity({ id: '1234' });
-    expectOkResult(result) &&
+    if (expectOkResult(result)) {
+      expect(result.value.info.createdAt).toBeInstanceOf(Temporal.Instant);
       expect(result.value).toMatchInlineSnapshot(`
         Object {
           "fields": Object {},
           "id": "1234",
           "info": Object {
             "authKey": "none",
+            "createdAt": "2021-08-17T07:51:25.56Z",
             "name": "Foo name",
             "type": "FooType",
           },
         }
       `);
+    }
 
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
       Array [
@@ -305,6 +316,7 @@ describe('PublishedClient forward operation over JSON', () => {
         type: 'Foo',
         name: 'Name',
         authKey: 'none',
+        createdAt: Temporal.Now.instant(),
       },
       fields: { foo: 'Hello' },
     };
@@ -352,6 +364,11 @@ describe('PublishedClient forward operation over JSON', () => {
         },
       ],
     });
+
+    expectOkResult(result) &&
+      result.value?.edges[0].node &&
+      expectOkResult(result.value.edges[0].node) &&
+      expect(result.value?.edges[0].node.value.info.createdAt).toBeInstanceOf(Temporal.Instant);
 
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
       Array [

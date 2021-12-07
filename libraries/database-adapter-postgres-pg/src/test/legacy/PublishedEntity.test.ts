@@ -225,7 +225,7 @@ describe('getEntity()', () => {
       const {
         entity: {
           id,
-          info: { name, version },
+          info: { name, version, createdAt },
         },
       } = createResult.value;
 
@@ -250,7 +250,7 @@ describe('getEntity()', () => {
       const result = await publishedClient.getEntity({ id });
       expectResultValue(result, {
         id,
-        info: { type: 'PublishedEntityFoo', name, authKey: 'none' },
+        info: { type: 'PublishedEntityFoo', name, authKey: 'none', createdAt },
         fields: { ...emptyFooFields, title: 'Title 1' },
       });
     }
@@ -265,7 +265,7 @@ describe('getEntity()', () => {
       const {
         entity: {
           id,
-          info: { name },
+          info: { name, createdAt },
         },
       } = createFooResult.value;
 
@@ -284,7 +284,7 @@ describe('getEntity()', () => {
         if (expectOkResult(getResult)) {
           expectResultValue(getResult, {
             id,
-            info: { type: 'PublishedEntityFoo', name, authKey: 'none' },
+            info: { type: 'PublishedEntityFoo', name, authKey: 'none', createdAt },
             fields: { ...emptyFooFields, title: 'Foo title 1' },
           });
         }
@@ -364,13 +364,13 @@ describe('getEntities()', () => {
       const {
         entity: {
           id: foo1Id,
-          info: { name: foo1Name },
+          info: { name: foo1Name, createdAt: foo1CreatedAt },
         },
       } = createFoo1Result.value;
       const {
         entity: {
           id: foo2Id,
-          info: { name: foo2Name },
+          info: { name: foo2Name, createdAt: foo2CreatedAt },
         },
       } = createFoo2Result.value;
 
@@ -391,12 +391,22 @@ describe('getEntities()', () => {
         expect(result.value).toHaveLength(2);
         expectResultValue(result.value[0], {
           id: foo2Id,
-          info: { type: 'PublishedEntityFoo', name: foo2Name, authKey: 'none' },
+          info: {
+            type: 'PublishedEntityFoo',
+            name: foo2Name,
+            authKey: 'none',
+            createdAt: foo2CreatedAt,
+          },
           fields: { ...emptyFooFields, title: 'Title 2' },
         });
         expectResultValue(result.value[1], {
           id: foo1Id,
-          info: { type: 'PublishedEntityFoo', name: foo1Name, authKey: 'none' },
+          info: {
+            type: 'PublishedEntityFoo',
+            name: foo1Name,
+            authKey: 'none',
+            createdAt: foo1CreatedAt,
+          },
           fields: { ...emptyFooFields, title: 'Title 1' },
         });
       }
@@ -412,7 +422,7 @@ describe('getEntities()', () => {
       const {
         entity: {
           id: foo1Id,
-          info: { name: foo1Name },
+          info: { name: foo1Name, createdAt },
         },
       } = createFooResult.value;
 
@@ -433,7 +443,7 @@ describe('getEntities()', () => {
         expectErrorResult(result.value[0], ErrorType.NotFound, 'No such entity');
         expectResultValue(result.value[1], {
           id: foo1Id,
-          info: { type: 'PublishedEntityFoo', name: foo1Name, authKey: 'none' },
+          info: { type: 'PublishedEntityFoo', name: foo1Name, authKey: 'none', createdAt },
           fields: {
             ...emptyFooFields,
             title: 'Title',
@@ -460,7 +470,7 @@ describe('getEntities()', () => {
       const {
         entity: {
           id: foo2Id,
-          info: { name: foo2Name },
+          info: { name: foo2Name, createdAt: foo2CreatedAt },
         },
       } = createTwoResult.value;
 
@@ -480,7 +490,12 @@ describe('getEntities()', () => {
         expectErrorResult(getResult.value[0], ErrorType.NotAuthorized, 'Wrong authKey provided');
         expectResultValue(getResult.value[1], {
           id: foo2Id,
-          info: { type: 'PublishedEntityFoo', name: foo2Name, authKey: 'subject' },
+          info: {
+            type: 'PublishedEntityFoo',
+            name: foo2Name,
+            authKey: 'subject',
+            createdAt: foo2CreatedAt,
+          },
           fields: {
             ...emptyFooFields,
             title: 'Title',

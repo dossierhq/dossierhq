@@ -65,7 +65,7 @@ interface RequestedReference {
 
 export function decodePublishedEntity(
   schema: Schema,
-  values: Pick<EntitiesTable, 'uuid' | 'type' | 'name' | 'auth_key'> &
+  values: Pick<EntitiesTable, 'uuid' | 'type' | 'name' | 'auth_key' | 'created_at'> &
     Pick<EntityVersionsTable, 'data'>
 ): Entity {
   const entitySpec = schema.getEntityTypeSpecification(values.type);
@@ -74,7 +74,12 @@ export function decodePublishedEntity(
   }
   const entity: Entity = {
     id: values.uuid,
-    info: { type: values.type, name: values.name, authKey: values.auth_key },
+    info: {
+      type: values.type,
+      name: values.name,
+      authKey: values.auth_key,
+      createdAt: values.created_at,
+    },
     fields: {},
   };
   for (const fieldSpec of entitySpec.fields) {
