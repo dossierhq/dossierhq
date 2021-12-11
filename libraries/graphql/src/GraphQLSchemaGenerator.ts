@@ -64,6 +64,7 @@ import {
   loadVersionHistory,
 } from './DataLoaders';
 import * as Mutations from './Mutations';
+import { seemsLikeATemporalInstant } from './Utils';
 
 export interface SessionGraphQLContext {
   adminClient: Result<AdminClient, ErrorType.NotAuthenticated>;
@@ -279,7 +280,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       new GraphQLScalarType({
         name: 'Instant',
         serialize(value: unknown) {
-          if (value instanceof Temporal.Instant) {
+          if (seemsLikeATemporalInstant(value)) {
             return value.toString();
           }
           throw new TypeError('Instant must be serialized from a Temporal.Instant.');
@@ -291,7 +292,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
           throw new TypeError('Instant must be represented as a string.');
         },
         parseValue(value: unknown) {
-          if (value instanceof Temporal.Instant) {
+          if (seemsLikeATemporalInstant(value)) {
             return value;
           }
           if (typeof value === 'string') {
