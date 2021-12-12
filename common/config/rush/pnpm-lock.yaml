@@ -182,7 +182,7 @@ importers:
       react-leaflet: ~3.2.1
       react-test-renderer: ~17.0.2
       svgo: ~2.8.0
-      swr: ~1.0.1
+      swr: ~1.1.1
       tslib: ~2.3.1
       typescript: ^4.5.2
       uuid: ^8.3.2
@@ -195,7 +195,7 @@ importers:
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
       react-leaflet: 3.2.2_91fa1427a3331e02931dfea77720a290
-      swr: 1.0.1_react@17.0.2
+      swr: 1.1.1_react@17.0.2
       tslib: 2.3.1
       uuid: 8.3.2
     devDependencies:
@@ -8088,11 +8088,6 @@ packages:
   /depd/2.0.0:
     resolution: {integrity: sha512-g7nH6P6dyDioJogAAGprGpCtVImJhpPk/roCzdb3fIh61/s/nPsfR6onyMwkCAR/OlC3yBC0lESvUoQEAssIrw==}
     engines: {node: '>= 0.8'}
-    dev: false
-
-  /dequal/2.0.2:
-    resolution: {integrity: sha512-q9K8BlJVxK7hQYqa6XISGmBZbtQQWVXSrRrWreHC94rMt1QL/Impruc+7p2CYSYuVIUr+YCt6hjrs1kkdJRTug==}
-    engines: {node: '>=6'}
     dev: false
 
   /des.js/1.0.1:
@@ -16125,12 +16120,11 @@ packages:
       stable: 0.1.8
     dev: true
 
-  /swr/1.0.1_react@17.0.2:
-    resolution: {integrity: sha512-EPQAxSjoD4IaM49rpRHK0q+/NzcwoT8c0/Ylu/u3/6mFj/CWnQVjNJ0MV2Iuw/U+EJSd2TX5czdAwKPYZIG0YA==}
+  /swr/1.1.1_react@17.0.2:
+    resolution: {integrity: sha512-ZpUHyU3N3snj2QGFeE2Fd3BXl1CVS6YQIQGb1ttPAkTmvwZqDyV3GRMNPsaeAYCBM74tfn4XbKx28FVQR0mS7Q==}
     peerDependencies:
-      react: ^16.11.0 || ^17.0.0
+      react: ^16.11.0 || ^17.0.0 || ^18.0.0
     dependencies:
-      dequal: 2.0.2
       react: 17.0.2
     dev: false
 
