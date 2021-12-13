@@ -85,7 +85,7 @@ importers:
       debug: ~4.3.1
       eslint: ^7.32.0
       eslint-config-next: ~12.0.3
-      graphql: ~16.0.1
+      graphql: ~16.1.0
       graphql-voyager: ~1.0.0-rc.31
       jest: ~27.3.0
       joi: ~17.5.0
@@ -112,8 +112,8 @@ importers:
       '@jonasb/datadata-graphql': link:../../libraries/graphql
       '@jonasb/datadata-server': link:../../libraries/server
       debug: 4.3.2
-      graphql: 16.0.1
-      graphql-voyager: 1.0.0-rc.31_8e47a5611831d60159602d881f58b5c7
+      graphql: 16.1.0
+      graphql-voyager: 1.0.0-rc.31_19969e1aded1aed2c3cd574c426aab9b
       joi: 17.5.0
       next: 12.0.3_react-dom@17.0.2+react@17.0.2
       react: 17.0.2
@@ -553,7 +553,7 @@ importers:
       '@typescript-eslint/parser': ^5.0.0
       dotenv: ^10.0.0
       eslint: ^7.32.0
-      graphql: ~16.0.1
+      graphql: ~16.1.0
       graphql-type-json: ~0.3.2
       prettier: 2.4.1
       tslib: ~2.3.1
@@ -563,8 +563,8 @@ importers:
       '@jonasb/datadata-core': link:../core
       '@jonasb/datadata-database-adapter-postgres-pg': link:../database-adapter-postgres-pg
       '@js-temporal/polyfill': 0.2.0
-      graphql: 16.0.1
-      graphql-type-json: 0.3.2_graphql@16.0.1
+      graphql: 16.1.0
+      graphql-type-json: 0.3.2_graphql@16.1.0
       tslib: 2.3.1
     devDependencies:
       '@jonasb/datadata-postgres': link:../postgres
@@ -10008,15 +10008,15 @@ packages:
   /graceful-fs/4.2.8:
     resolution: {integrity: sha512-qkIilPUYcNhJpd33n0GBXTB1MMPp14TxEsEs0pTrsSVucApsYzW5V+Q8Qxhik6KU3evy+qkAAowTByymK0avdg==}
 
-  /graphql-type-json/0.3.2_graphql@16.0.1:
+  /graphql-type-json/0.3.2_graphql@16.1.0:
     resolution: {integrity: sha512-J+vjof74oMlCWXSvt0DOf2APEdZOCdubEvGDUAlqH//VBYcOYsGgRW7Xzorr44LvkjiuvecWc8fChxuZZbChtg==}
     peerDependencies:
       graphql: '>=0.8.0'
     dependencies:
-      graphql: 16.0.1
+      graphql: 16.1.0
     dev: false
 
-  /graphql-voyager/1.0.0-rc.31_8e47a5611831d60159602d881f58b5c7:
+  /graphql-voyager/1.0.0-rc.31_19969e1aded1aed2c3cd574c426aab9b:
     resolution: {integrity: sha512-eCaFL8niR3DZo1LUcFV8txwR+MDVIQsrFPmFC7Zwab8UyH5x3SLhx3aDrt998RVJRmY5aFP4q79RY2F3QtGRqA==}
     peerDependencies:
       graphql: '>=14.0.0'
@@ -10028,7 +10028,7 @@ packages:
       classnames: 2.3.1
       clipboard: 2.0.8
       commonmark: 0.29.3
-      graphql: 16.0.1
+      graphql: 16.1.0
       lodash: 4.17.21
       prop-types: 15.7.2
       react: 17.0.2
@@ -10037,8 +10037,8 @@ packages:
       viz.js: 2.1.2
     dev: false
 
-  /graphql/16.0.1:
-    resolution: {integrity: sha512-oPvCuu6dlLdiz8gZupJ47o1clgb72r1u8NDBcQYjcV6G/iEdmE11B1bBlkhXRvV0LisP/SXRFP7tT6AgaTjpzg==}
+  /graphql/16.1.0:
+    resolution: {integrity: sha512-+PIjmhqGHMIxtnlEirRXDHIzs0cAHAozKG5M2w2N4TnS8VzCxO3bbv1AW9UTeycBfl2QsPduxcVrBvANFKQhiw==}
     engines: {node: ^12.22.0 || ^14.16.0 || >=16.0.0}
     dev: false
 
