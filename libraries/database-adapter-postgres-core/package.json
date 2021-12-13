@@ -29,7 +29,7 @@
     "url": "git+https://github.com/jonasb/datadata.git"
   },
   "devDependencies": {
-    "@rushstack/heft": "~0.42.2",
+    "@rushstack/heft": "~0.43.2",
     "@rushstack/heft-jest-plugin": "~0.1.18",
     "@types/heft-jest": "1.0.2",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
