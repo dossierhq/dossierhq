@@ -45,7 +45,7 @@
   "dependencies": {
     "@jonasb/datadata-core": "workspace:*",
     "@jonasb/datadata-server": "workspace:*",
-    "@js-temporal/polyfill": "~0.2.0",
+    "@js-temporal/polyfill": "~0.3.0",
     "sql.js": "~1.6.1",
     "sqlite3": "jonasb/node-sqlite3#3.36.0",
     "tslib": "~2.3.1",
