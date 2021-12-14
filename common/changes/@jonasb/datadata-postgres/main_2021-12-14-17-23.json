@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-postgres",
+      "comment": "Support DATABASE_CERTIFICATE_AUTHORITY for migration",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-postgres"
+}
