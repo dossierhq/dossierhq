@@ -1,26 +1,19 @@
 #!/usr/bin/env node
-import Postgrator from 'postgrator';
 import pg from 'pg';
-
-const migrationDirectory = new URL('migrations', import.meta.url).pathname;
+import { migrateDatabaseSchema } from './src/migrate.js';
 
 async function main(connection, targetVersion) {
   const client = new pg.Client({
     connectionString: connection.connectionString,
-    ssl: connection.certificateAuthority ? { ca: connection.certificateAuthority } : undefined,
   });
 
   await client.connect();
 
-  const postgrator = new Postgrator({
-    migrationPattern: `${migrationDirectory}/*`,
-    driver: 'pg',
-    schemaTable: 'schemaversion',
-    execQuery: (query) => client.query(query),
-  });
-
   try {
-    const appliedMigrations = await postgrator.migrate(targetVersion);
+    const { appliedMigrations } = await migrateDatabaseSchema(
+      { execQuery: (query) => client.query(query) },
+      targetVersion
+    );
     console.log('Applied migrations', appliedMigrations);
   } catch (error) {
     console.error(error);
@@ -33,7 +26,6 @@ async function main(connection, targetVersion) {
 
 const connection = {
   connectionString: process.env.DATABASE_URL,
-  certificateAuthority: process.env.DATABASE_CERTIFICATE_AUTHORITY,
 };
 if (!connection.connectionString) {
   throw new Error(`No DATABASE_URL specified`);

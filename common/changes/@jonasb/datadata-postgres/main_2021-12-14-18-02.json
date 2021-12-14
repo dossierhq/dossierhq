@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-postgres",
+      "comment": "Export migration function as a library",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-postgres"
+}
