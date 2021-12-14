@@ -13,8 +13,7 @@ async function main(connection, targetVersion) {
   await client.connect();
 
   const postgrator = new Postgrator({
-    ...connectionDetails,
-    migrationDirectory,
+    migrationPattern: `${migrationDirectory}/*`,
     driver: 'pg',
     schemaTable: 'schemaversion',
     execQuery: (query) => client.query(query),
