@@ -584,12 +584,10 @@ importers:
   ../../libraries/postgres:
     specifiers:
       pg: ^8.7.1
-      postgrator: ^4.1.1
-      url-parse-lax: ^5.0.0
+      postgrator: ^5.0.0
     dependencies:
       pg: 8.7.1
-      postgrator: 4.3.1
-      url-parse-lax: 5.0.0
+      postgrator: 5.0.0
 
   ../../libraries/server:
     specifiers:
@@ -8085,11 +8083,6 @@ packages:
     resolution: {integrity: sha1-m81S4UwJd2PnSbJ0xDRu0uVgtak=}
     engines: {node: '>= 0.6'}
 
-  /depd/2.0.0:
-    resolution: {integrity: sha512-g7nH6P6dyDioJogAAGprGpCtVImJhpPk/roCzdb3fIh61/s/nPsfR6onyMwkCAR/OlC3yBC0lESvUoQEAssIrw==}
-    engines: {node: '>= 0.8'}
-    dev: false
-
   /dequal/2.0.2:
     resolution: {integrity: sha512-q9K8BlJVxK7hQYqa6XISGmBZbtQQWVXSrRrWreHC94rMt1QL/Impruc+7p2CYSYuVIUr+YCt6hjrs1kkdJRTug==}
     engines: {node: '>=6'}
@@ -13106,10 +13099,6 @@ packages:
     resolution: {integrity: sha512-AO81vsIO1k1sM4Zrd6Hu7regmJN1NSiAja10gc4bX3F0wd+9rQmcuHQaHVQCYIEC8iFXnE+mavh23GOt7wBgug==}
     dev: true
 
-  /newline/0.0.3:
-    resolution: {integrity: sha1-D2p0STIj26BP59v7bNyAS/fkbdA=}
-    dev: false
-
   /next/12.0.3_react-dom@17.0.2+react@17.0.2:
     resolution: {integrity: sha512-GGdhTBcerdMZbitrO67IVetmB+AHa2X69xrkXKClUT8SRu8pEVto/2QMSnfI+uYc5czCUWPsVtVY3aMoMRMaCA==}
     engines: {node: '>=12.22.0'}
@@ -14138,13 +14127,11 @@ packages:
       source-map-js: 0.6.2
     dev: true
 
-  /postgrator/4.3.1:
-    resolution: {integrity: sha512-rGV6nVWGNAbb0NgrntPHr7qeiPNTlhpMgeh8wJR2DPXrNOLhH4ioLFOKwd9/e1ukn1IZ+as90lji/OGhIXcYOw==}
-    engines: {node: '>=10.0.0'}
+  /postgrator/5.0.0:
+    resolution: {integrity: sha512-8ngKQcNBvWRULmH5/Utp/Vy4yGsl1WDJbf04bBCR9mTxCoIxY5SIwm9Ys0zqlwppd6/aB6H5otgs5TnYahTNxQ==}
+    engines: {node: '>=12.0.0'}
     dependencies:
-      depd: 2.0.0
       glob: 7.2.0
-      newline: 0.0.3
     dev: false
 
   /postgres-array/2.0.0:
@@ -14182,11 +14169,6 @@ packages:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
     engines: {node: '>= 0.8.0'}
     dev: true
-
-  /prepend-http/4.0.0:
-    resolution: {integrity: sha512-s6SRDuOuRo7JXWh7115pmJdh53sX0Azuk/3znjVxSoD4GusXzzBDrLQgH0rspeHNs5f+Yihz7JIT3UBMwFEn6Q==}
-    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
-    dev: false
 
   /prettier/2.2.1:
     resolution: {integrity: sha512-PqyhM2yCjg/oKkFPtTGUojv7gnZAoG80ttl45O6x2Ug/rMJw4wcc9k6aaf2hibP7BGVCCM33gZoGjyvt9mm16Q==}
@@ -16857,13 +16839,6 @@ packages:
       schema-utils: 3.1.1
       webpack: 5.63.0
     dev: true
-
-  /url-parse-lax/5.0.0:
-    resolution: {integrity: sha512-nb/3+jhgBfN5r9RAGTDzHAXLjmFsAJjPfwaLeI3GOlMj0iUT8wlxNw7KEDfUpoZGdTquT3jDEBxay3fKvkKc6w==}
-    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
-    dependencies:
-      prepend-http: 4.0.0
-    dev: false
 
   /url/0.11.0:
     resolution: {integrity: sha1-ODjpfPxgUh63PFJajlW/3Z4uKPE=}
