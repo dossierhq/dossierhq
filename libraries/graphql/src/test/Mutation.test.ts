@@ -187,10 +187,11 @@ describe('create*Entity()', () => {
     })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
     expect(result.errors).toBeUndefined();
+    expect(result.data).toBeDefined();
     const {
       id,
       info: { name, createdAt, updatedAt },
-    } = result.data?.createMutationFooEntity.entity;
+    } = result.data.createMutationFooEntity.entity;
     expect(name).toMatch(/^Foo name(#[0-9]+)?$/);
 
     expect(result).toEqual({
@@ -271,7 +272,7 @@ describe('create*Entity()', () => {
     })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
     expect(result.errors).toBeUndefined();
-    const { name, createdAt, updatedAt } = result.data?.createMutationFooEntity.entity.info;
+    const { name, createdAt, updatedAt } = result.data.createMutationFooEntity.entity.info;
     expect(name).toMatch(/^Foo name(#[0-9]+)?$/);
 
     expect(result).toEqual({
@@ -364,7 +365,7 @@ describe('create*Entity()', () => {
       const {
         id: fooId,
         info: { name: fooName, createdAt, updatedAt },
-      } = gqlResult.data?.createMutationFooEntity.entity;
+      } = gqlResult.data.createMutationFooEntity.entity;
       expect(gqlResult).toEqual({
         data: {
           createMutationFooEntity: {
@@ -488,7 +489,7 @@ describe('create*Entity()', () => {
       const {
         id: fooId,
         info: { name: fooName, createdAt, updatedAt },
-      } = gqlResult.data?.createMutationFooEntity.entity;
+      } = gqlResult.data.createMutationFooEntity.entity;
       expect(gqlResult).toEqual({
         data: {
           createMutationFooEntity: {
@@ -610,7 +611,7 @@ describe('create*Entity()', () => {
       const {
         id: fooId,
         info: { name: fooName, createdAt, updatedAt },
-      } = gqlResult.data?.createMutationFooEntity.entity;
+      } = gqlResult.data.createMutationFooEntity.entity;
       expect(gqlResult).toEqual({
         data: {
           createMutationFooEntity: {
@@ -734,7 +735,7 @@ describe('create*Entity()', () => {
       const {
         id: fooId,
         info: { name: fooName, createdAt, updatedAt },
-      } = gqlResult.data?.createMutationFooEntity.entity;
+      } = gqlResult.data.createMutationFooEntity.entity;
       expect(gqlResult).toEqual({
         data: {
           createMutationFooEntity: {
@@ -869,7 +870,7 @@ describe('create*Entity()', () => {
       const {
         id: fooId,
         info: { name: fooName, createdAt, updatedAt },
-      } = createFooResult.data?.createMutationFooEntity.entity;
+      } = createFooResult.data.createMutationFooEntity.entity;
 
       expect(createFooResult).toEqual({
         data: {
@@ -991,7 +992,7 @@ describe('create*Entity()', () => {
     const {
       id: fooId,
       info: { name: fooName, createdAt, updatedAt },
-    } = createResult.data?.createMutationFooEntity.entity;
+    } = createResult.data.createMutationFooEntity.entity;
 
     expect(createResult).toEqual({
       data: {
@@ -1223,7 +1224,7 @@ describe('update*Entity()', () => {
         },
       })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
-      const { updatedAt: updatedAtString } = result.data?.updateMutationFooEntity.entity.info;
+      const { updatedAt: updatedAtString } = result.data.updateMutationFooEntity.entity.info;
 
       expect(result).toEqual({
         data: {
@@ -1479,7 +1480,7 @@ describe('update*Entity()', () => {
         })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
         expect(result.errors).toBeFalsy();
-        const { name, createdAt, updatedAt } = result.data?.updateMutationFooEntity.entity.info;
+        const { name, createdAt, updatedAt } = result.data.updateMutationFooEntity.entity.info;
         expect(name).toMatch(/^Updated name(#[0-9]+)?$/);
 
         expect(result).toEqual({
@@ -1713,7 +1714,7 @@ describe('upsert*Entity()', () => {
       },
     })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
-    const { name, createdAt, updatedAt } = result.data?.upsertMutationFooEntity.entity.info;
+    const { name, createdAt, updatedAt } = result.data.upsertMutationFooEntity.entity.info;
 
     expect(result).toEqual({
       data: {
@@ -1786,7 +1787,7 @@ describe('upsert*Entity()', () => {
         },
       })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
-      const { name, createdAt, updatedAt } = result.data?.upsertMutationFooEntity.entity.info;
+      const { name, createdAt, updatedAt } = result.data.upsertMutationFooEntity.entity.info;
 
       expect(result).toEqual({
         data: {
@@ -1860,7 +1861,7 @@ describe('upsert*Entity()', () => {
         },
       })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
-      const { name, createdAt, updatedAt } = result.data?.upsertMutationFooEntity.entity.info;
+      const { name, createdAt, updatedAt } = result.data.upsertMutationFooEntity.entity.info;
 
       expect(result).toEqual({
         data: {
