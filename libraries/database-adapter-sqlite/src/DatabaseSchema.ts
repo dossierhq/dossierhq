@@ -11,6 +11,11 @@ export interface PrincipalsTable {
   subjects_id: number;
 }
 
+export interface SchemaVersionsTable {
+  id: number;
+  specification: string;
+}
+
 export interface UniqueConstraint {
   table: string;
   columns: string[];
