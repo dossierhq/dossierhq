@@ -182,7 +182,7 @@ importers:
       react-leaflet: ~3.2.1
       react-test-renderer: ~17.0.2
       svgo: ~2.8.0
-      swr: ~1.0.1
+      swr: ~1.1.1
       tslib: ~2.3.1
       typescript: ^4.5.4
       uuid: ^8.3.2
@@ -195,7 +195,7 @@ importers:
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
       react-leaflet: 3.2.2_91fa1427a3331e02931dfea77720a290
-      swr: 1.0.1_react@17.0.2
+      swr: 1.1.1_react@17.0.2
       tslib: 2.3.1
       uuid: 8.3.2
     devDependencies:
@@ -7824,11 +7824,6 @@ packages:
     resolution: {integrity: sha1-m81S4UwJd2PnSbJ0xDRu0uVgtak=}
     engines: {node: '>= 0.6'}
 
-  /dequal/2.0.2:
-    resolution: {integrity: sha512-q9K8BlJVxK7hQYqa6XISGmBZbtQQWVXSrRrWreHC94rMt1QL/Impruc+7p2CYSYuVIUr+YCt6hjrs1kkdJRTug==}
-    engines: {node: '>=6'}
-    dev: false
-
   /des.js/1.0.1:
     resolution: {integrity: sha512-Q0I4pfFrv2VPd34/vfLrFOoRmlYj3OV50i7fskps1jZWK1kApMWWT9G6RRUeYedLcBDIhnSDaUvJMb3AhUlaEA==}
     dependencies:
@@ -8483,7 +8478,7 @@ packages:
       eslint-import-resolver-typescript: 2.5.0_f385d671d5f1c72a868db745a891bc1f
       eslint-plugin-import: 2.25.3_eslint@8.5.0
       eslint-plugin-jsx-a11y: 6.5.1_eslint@8.5.0
-      eslint-plugin-react: 7.27.0_eslint@8.5.0
+      eslint-plugin-react: 7.28.0_eslint@8.5.0
       eslint-plugin-react-hooks: 4.3.0_eslint@8.5.0
       next: 12.0.3_react-dom@17.0.2+react@17.0.2
       typescript: 4.5.4
@@ -8587,29 +8582,6 @@ packages:
       eslint: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0
     dependencies:
       eslint: 8.5.0
-    dev: true
-
-  /eslint-plugin-react/7.27.0_eslint@8.5.0:
-    resolution: {integrity: sha512-0Ut+CkzpppgFtoIhdzi2LpdpxxBvgFf99eFqWxJnUrO7mMe0eOiNpou6rvNYeVVV6lWZvTah0BFne7k5xHjARg==}
-    engines: {node: '>=4'}
-    peerDependencies:
-      eslint: ^3 || ^4 || ^5 || ^6 || ^7 || ^8
-    dependencies:
-      array-includes: 3.1.4
-      array.prototype.flatmap: 1.2.5
-      doctrine: 2.1.0
-      eslint: 8.5.0
-      estraverse: 5.3.0
-      jsx-ast-utils: 3.2.1
-      minimatch: 3.0.4
-      object.entries: 1.1.5
-      object.fromentries: 2.0.5
-      object.hasown: 1.1.0
-      object.values: 1.1.5
-      prop-types: 15.7.2
-      resolve: 2.0.0-next.3
-      semver: 6.3.0
-      string.prototype.matchall: 4.0.6
     dev: true
 
   /eslint-plugin-react/7.28.0_eslint@8.5.0:
@@ -15334,12 +15306,11 @@ packages:
       stable: 0.1.8
     dev: true
 
-  /swr/1.0.1_react@17.0.2:
-    resolution: {integrity: sha512-EPQAxSjoD4IaM49rpRHK0q+/NzcwoT8c0/Ylu/u3/6mFj/CWnQVjNJ0MV2Iuw/U+EJSd2TX5czdAwKPYZIG0YA==}
+  /swr/1.1.1_react@17.0.2:
+    resolution: {integrity: sha512-ZpUHyU3N3snj2QGFeE2Fd3BXl1CVS6YQIQGb1ttPAkTmvwZqDyV3GRMNPsaeAYCBM74tfn4XbKx28FVQR0mS7Q==}
     peerDependencies:
-      react: ^16.11.0 || ^17.0.0
+      react: ^16.11.0 || ^17.0.0 || ^18.0.0
     dependencies:
-      dequal: 2.0.2
       react: 17.0.2
     dev: false
 
