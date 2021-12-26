@@ -3,12 +3,7 @@ module.exports = {
     browser: true,
     es2021: true,
   },
-  extends: [
-    'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:import/recommended',
-    'plugin:import/typescript',
-  ],
+  extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 12,
@@ -29,8 +24,5 @@ module.exports = {
         argsIgnorePattern: '^_',
       },
     ],
-    //TODO figure out how to deal with imports. jest struggles with .js
-    // 'import/extensions': ['error', { js: 'always', jsx: 'always', ts: 'always', tsx: 'always' }],
-    // 'import/no-unresolved': ['off'],
   },
 };

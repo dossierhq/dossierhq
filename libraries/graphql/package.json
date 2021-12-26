@@ -50,7 +50,7 @@
   "dependencies": {
     "@jonasb/datadata-core": "workspace:*",
     "@jonasb/datadata-database-adapter-postgres-pg": "workspace:*",
-    "@js-temporal/polyfill": "~0.2.0",
+    "@js-temporal/polyfill": "~0.3.0",
     "graphql": "~16.0.1",
     "graphql-type-json": "~0.3.2",
     "tslib": "~2.3.1"

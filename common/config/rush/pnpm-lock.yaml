@@ -167,7 +167,7 @@ importers:
       '@typescript-eslint/parser': ^5.8.0
       babel-loader: ^8.2.2
       eslint: ^8.5.0
-      eslint-plugin-import: ~2.25.2
+      eslint-plugin-import: ~2.25.3
       eslint-plugin-jest-dom: ~3.9.0
       eslint-plugin-react: ~7.27.0
       eslint-plugin-react-hooks: ~4.3.0
@@ -294,19 +294,18 @@ importers:
 
   ../../libraries/core:
     specifiers:
-      '@js-temporal/polyfill': ~0.2.0
+      '@js-temporal/polyfill': ~0.3.0
       '@rushstack/heft': ~0.44.0
       '@rushstack/heft-jest-plugin': ~0.2.0
       '@types/heft-jest': 1.0.2
       '@typescript-eslint/eslint-plugin': ^5.8.0
       '@typescript-eslint/parser': ^5.8.0
       eslint: ^8.5.0
-      eslint-plugin-import: ~2.25.2
       prettier: 2.5.1
       tslib: ~2.3.1
       typescript: ^4.5.2
     dependencies:
-      '@js-temporal/polyfill': 0.2.0
+      '@js-temporal/polyfill': 0.3.0
       tslib: 2.3.1
     devDependencies:
       '@rushstack/heft': 0.44.0
@@ -315,7 +314,6 @@ importers:
       '@typescript-eslint/eslint-plugin': 5.8.0_ce2ce5999ee3163e702c2b4deec3988a
       '@typescript-eslint/parser': 5.8.0_eslint@8.5.0+typescript@4.5.2
       eslint: 8.5.0
-      eslint-plugin-import: 2.25.3_eslint@8.5.0
       prettier: 2.5.1
       typescript: 4.5.2
 
@@ -353,7 +351,7 @@ importers:
       '@jonasb/datadata-database-adapter-test-integration': workspace:*
       '@jonasb/datadata-postgres': workspace:*
       '@jonasb/datadata-server': workspace:*
-      '@js-temporal/polyfill': ~0.2.0
+      '@js-temporal/polyfill': ~0.3.0
       '@rushstack/heft': ~0.44.0
       '@rushstack/heft-jest-plugin': ~0.2.0
       '@types/heft-jest': 1.0.2
@@ -372,7 +370,7 @@ importers:
       '@jonasb/datadata-core': link:../core
       '@jonasb/datadata-database-adapter-postgres-core': link:../database-adapter-postgres-core
       '@jonasb/datadata-server': link:../server
-      '@js-temporal/polyfill': 0.2.0
+      '@js-temporal/polyfill': 0.3.0
       pg: 8.7.1
       tslib: 2.3.1
     devDependencies:
@@ -396,7 +394,7 @@ importers:
       '@jonasb/datadata-core': workspace:*
       '@jonasb/datadata-database-adapter-test-integration': workspace:*
       '@jonasb/datadata-server': workspace:*
-      '@js-temporal/polyfill': ~0.2.0
+      '@js-temporal/polyfill': ~0.3.0
       '@rushstack/heft': ~0.44.0
       '@rushstack/heft-jest-plugin': ~0.2.0
       '@types/heft-jest': 1.0.2
@@ -415,7 +413,7 @@ importers:
     dependencies:
       '@jonasb/datadata-core': link:../core
       '@jonasb/datadata-server': link:../server
-      '@js-temporal/polyfill': 0.2.0
+      '@js-temporal/polyfill': 0.3.0
       sql.js: 1.6.2
       sqlite3: github.com/jonasb/node-sqlite3/624ce96be9c9f166c4d4b98393297bb644a03179
       tslib: 2.3.1
@@ -438,13 +436,13 @@ importers:
     specifiers:
       '@jonasb/datadata-core': workspace:*
       '@jonasb/datadata-server': workspace:*
-      '@js-temporal/polyfill': ~0.2.0
+      '@js-temporal/polyfill': ~0.3.0
       '@rushstack/heft': ~0.44.0
       '@types/uuid': ~8.3.1
       '@typescript-eslint/eslint-plugin': ^5.8.0
       '@typescript-eslint/parser': ^5.8.0
       eslint: ^8.5.0
-      eslint-plugin-import: ~2.25.2
+      eslint-plugin-import: ~2.25.3
       prettier: 2.5.1
       tslib: ~2.3.1
       typescript: ^4.5.2
@@ -452,7 +450,7 @@ importers:
     dependencies:
       '@jonasb/datadata-core': link:../core
       '@jonasb/datadata-server': link:../server
-      '@js-temporal/polyfill': 0.2.0
+      '@js-temporal/polyfill': 0.3.0
       tslib: 2.3.1
       uuid: 8.3.2
     devDependencies:
@@ -472,7 +470,7 @@ importers:
       '@fortawesome/fontawesome-svg-core': ~1.2.36
       '@fortawesome/free-solid-svg-icons': ~5.15.4
       '@fortawesome/react-fontawesome': ~0.1.15
-      '@js-temporal/polyfill': ~0.2.0
+      '@js-temporal/polyfill': ~0.3.0
       '@rushstack/eslint-plugin': ~0.8.4
       '@rushstack/heft': ~0.44.0
       '@storybook/addon-actions': ^6.3.9
@@ -506,7 +504,7 @@ importers:
       '@fortawesome/fontawesome-svg-core': 1.2.36
       '@fortawesome/free-solid-svg-icons': 5.15.4
       '@fortawesome/react-fontawesome': 0.1.16_f515edce028694561ceb456e3dba224c
-      '@js-temporal/polyfill': 0.2.0
+      '@js-temporal/polyfill': 0.3.0
       react: 17.0.2
       react-bulma-components: 4.0.7_0f968bf7c9f2f8c00b6c1814652320de
       react-dom: 17.0.2_react@17.0.2
@@ -544,7 +542,7 @@ importers:
       '@jonasb/datadata-database-adapter-postgres-pg': workspace:*
       '@jonasb/datadata-postgres': workspace:*
       '@jonasb/datadata-server': workspace:*
-      '@js-temporal/polyfill': ~0.2.0
+      '@js-temporal/polyfill': ~0.3.0
       '@rushstack/heft': ~0.44.0
       '@rushstack/heft-jest-plugin': ~0.2.0
       '@types/heft-jest': 1.0.2
@@ -562,7 +560,7 @@ importers:
     dependencies:
       '@jonasb/datadata-core': link:../core
       '@jonasb/datadata-database-adapter-postgres-pg': link:../database-adapter-postgres-pg
-      '@js-temporal/polyfill': 0.2.0
+      '@js-temporal/polyfill': 0.3.0
       graphql: 16.0.1
       graphql-type-json: 0.3.2_graphql@16.0.1
       tslib: 2.3.1
@@ -592,7 +590,7 @@ importers:
   ../../libraries/server:
     specifiers:
       '@jonasb/datadata-core': workspace:*
-      '@js-temporal/polyfill': ~0.2.0
+      '@js-temporal/polyfill': ~0.3.0
       '@rushstack/heft': ~0.44.0
       '@rushstack/heft-jest-plugin': ~0.2.0
       '@types/heft-jest': 1.0.2
@@ -605,7 +603,7 @@ importers:
       typescript: ^4.5.2
     dependencies:
       '@jonasb/datadata-core': link:../core
-      '@js-temporal/polyfill': 0.2.0
+      '@js-temporal/polyfill': 0.3.0
       tslib: 2.3.1
     devDependencies:
       '@rushstack/heft': 0.44.0
@@ -2848,12 +2846,12 @@ packages:
       chalk: 4.1.2
     dev: true
 
-  /@js-temporal/polyfill/0.2.0:
-    resolution: {integrity: sha512-GyjuWEUpK2i+hGIfFOEdA8iVS4xPNLupwCgU9CiQFbMH+QW8De/4egT1MSod3ZmPDLyuxvFJ1285Cg3QuZOVBQ==}
+  /@js-temporal/polyfill/0.3.0:
+    resolution: {integrity: sha512-cxxxis19j0WvK3+kUwKrXeXaDBaWxLeRfKqlVz7g50Cly6UgGs2p3wovH9zjtZ4TtjYHDR4De/880+aalduDZQ==}
     engines: {node: '>=12'}
     dependencies:
       big-integer: 1.6.51
-      es-abstract: 1.19.1
+      tslib: 2.3.1
     dev: false
 
   /@mapbox/node-pre-gyp/1.0.6:
