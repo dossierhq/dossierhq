@@ -4,6 +4,8 @@ import type { Context, DatabaseAdapter } from '@jonasb/datadata-server';
 import type { UniqueConstraint } from '.';
 import { authCreateSession } from './auth/createSession';
 import { queryOne } from './QueryFunctions';
+import { schemaGetSpecification } from './schema/getSpecification';
+import { schemaUpdateSpecification } from './schema/updateSpecification';
 import { isSemVerEqualOrGreaterThan, parseSemVer } from './SemVer';
 import { withNestedTransaction, withRootTransaction } from './SqliteTransaction';
 
@@ -37,14 +39,8 @@ export async function createSqliteDatabaseAdapter(
       throw new Error('TODO');
     },
     authCreateSession: (...args) => authCreateSession(sqliteAdapter, ...args),
-    schemaGetSpecification: async () => {
-      //TODO actually return schema
-      return ok(null);
-    },
-    schemaUpdateSpecification: async () => {
-      //TODO actually store schema
-      return ok(undefined);
-    },
+    schemaGetSpecification: async (...args) => schemaGetSpecification(sqliteAdapter, ...args),
+    schemaUpdateSpecification: async (...args) => schemaUpdateSpecification(sqliteAdapter, ...args),
   };
   return ok(adapter);
 }

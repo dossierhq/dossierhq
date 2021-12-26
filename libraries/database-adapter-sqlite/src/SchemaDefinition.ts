@@ -14,4 +14,8 @@ export const SCHEMA_DEFINITION_STATEMENTS = [
     CONSTRAINT principals_pkey UNIQUE (provider,identifier),
     FOREIGN KEY (subjects_id) REFERENCES subjects(id) ON DELETE CASCADE
   )`,
+  `CREATE TABLE schema_versions (
+    id INTEGER PRIMARY KEY,
+    specification TEXT NOT NULL
+  )`,
 ];
