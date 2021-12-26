@@ -34,7 +34,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.14.3",
-    "@rushstack/eslint-plugin": "~0.8.2",
+    "@rushstack/eslint-plugin": "~0.8.4",
     "@rushstack/heft": "~0.44.0",
     "@storybook/addon-actions": "^6.3.9",
     "@storybook/addon-essentials": "^6.3.9",
@@ -53,7 +53,7 @@
     "eslint-plugin-react-hooks": "~4.3.0",
     "eslint-plugin-react": "~7.27.0",
     "eslint-plugin-testing-library": "~5.0.0",
-    "eslint": "^7.32.0",
+    "eslint": "^8.5.0",
     "prettier": "2.5.1",
     "sass-loader": "~12.1.0",
     "sass": "~1.39.2",

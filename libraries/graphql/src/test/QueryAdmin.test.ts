@@ -1465,7 +1465,7 @@ describe('searchAdminEntities()', () => {
       expect(result?.data?.adminSearchEntities.totalCount).toBeGreaterThanOrEqual(1);
 
       let fooIdCount = 0;
-      for (const edge of result?.data?.adminSearchEntities.edges) {
+      for (const edge of result.data.adminSearchEntities.edges) {
         if (edge.node.id === fooId) {
           fooIdCount += 1;
         }
@@ -1660,7 +1660,7 @@ describe('publishingHistory()', () => {
       })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
       expect(result.errors).toBeUndefined();
-      const { publishedAt } = result.data?.publishingHistory.events[0];
+      const { publishedAt } = result.data.publishingHistory.events[0];
 
       expect(result.data).toEqual({
         publishingHistory: {

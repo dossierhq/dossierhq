@@ -737,7 +737,7 @@ export async function showLatestEntity(context: CliContext, id: string): Promise
       if (referencesResult.isError()) {
         logErrorResult('Failed searching references', referencesResult);
       } else if (referencesResult.value) {
-        for (const edge of referencesResult.value?.edges) {
+        for (const edge of referencesResult.value?.edges ?? []) {
           if (edge.node.isOk()) {
             console.log(formatEntityOneLine(edge.node.value));
           } else {
