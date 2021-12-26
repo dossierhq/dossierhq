@@ -33,7 +33,7 @@
   "devDependencies": {
     "@jonasb/datadata-database-adapter-test-integration": "workspace:*",
     "@jonasb/datadata-postgres": "workspace:*",
-    "@rushstack/heft-jest-plugin": "~0.1.18",
+    "@rushstack/heft-jest-plugin": "~0.2.0",
     "@rushstack/heft": "~0.44.0",
     "@types/heft-jest": "1.0.2",
     "@types/pg": "^8.6.1",
