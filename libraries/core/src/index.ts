@@ -4,9 +4,9 @@ export {
   convertJsonAdminClientResult,
   createBaseAdminClient,
   executeAdminClientOperationFromJson,
+  type AdminClient,
 } from './AdminClient';
 export type {
-  AdminClient,
   AdminClientJsonOperation,
   AdminClientMiddleware,
   AdminClientOperation,
