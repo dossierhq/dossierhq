@@ -29,7 +29,7 @@ importers:
       '@jonasb/datadata-server': workspace:*
       '@rushstack/heft': ~0.44.0
       '@types/express': ~4.17.13
-      '@types/node': ^16.6.1
+      '@types/node': ^17.0.5
       '@typescript-eslint/eslint-plugin': ^5.8.0
       '@typescript-eslint/parser': ^5.8.0
       dotenv: ^10.0.0
@@ -53,7 +53,7 @@ importers:
       '@jonasb/datadata-postgres': link:../../libraries/postgres
       '@rushstack/heft': 0.44.0
       '@types/express': 4.17.13
-      '@types/node': 16.11.7
+      '@types/node': 17.0.5
       '@typescript-eslint/eslint-plugin': 5.8.0_836011a006f4f5d67178564baf2b6d34
       '@typescript-eslint/parser': 5.8.0_eslint@8.5.0+typescript@4.5.4
       eslint: 8.5.0
@@ -79,7 +79,7 @@ importers:
       '@jonasb/datadata-server': workspace:*
       '@types/debug': ~4.1.5
       '@types/jest': ~27.0.1
-      '@types/node': ^16.6.1
+      '@types/node': ^17.0.5
       '@types/react': ~17.0.5
       '@typescript-eslint/eslint-plugin': ^5.8.0
       debug: ~4.3.1
@@ -122,7 +122,7 @@ importers:
       '@jonasb/datadata-postgres': link:../../libraries/postgres
       '@types/debug': 4.1.7
       '@types/jest': 27.0.2
-      '@types/node': 16.11.7
+      '@types/node': 17.0.5
       '@types/react': 17.0.34
       '@typescript-eslint/eslint-plugin': 5.8.0_eslint@8.5.0+typescript@4.5.4
       eslint: 8.5.0
@@ -130,7 +130,7 @@ importers:
       jest: 27.3.1_ts-node@10.4.0
       prettier: 2.5.1
       ts-jest: 27.1.0_99eb87da190d843fb53ed214aa475e35
-      ts-node: 10.4.0_eefad272baeacd5b28bb97fe86355678
+      ts-node: 10.4.0_bad060d5f9aca5284661d88d739ba15b
       typescript: 4.5.4
 
   ../../libraries/admin-react-components:
@@ -243,7 +243,7 @@ importers:
   ../../libraries/benchpress:
     specifiers:
       '@rushstack/heft': ~0.44.0
-      '@types/node': ^16.6.1
+      '@types/node': ^17.0.5
       '@typescript-eslint/eslint-plugin': ^5.8.0
       '@typescript-eslint/parser': ^5.8.0
       eslint: ^8.5.0
@@ -254,7 +254,7 @@ importers:
       tslib: 2.3.1
     devDependencies:
       '@rushstack/heft': 0.44.0
-      '@types/node': 16.11.7
+      '@types/node': 17.0.5
       '@typescript-eslint/eslint-plugin': 5.8.0_836011a006f4f5d67178564baf2b6d34
       '@typescript-eslint/parser': 5.8.0_eslint@8.5.0+typescript@4.5.4
       eslint: 8.5.0
@@ -594,7 +594,7 @@ importers:
       '@rushstack/heft': ~0.44.0
       '@rushstack/heft-jest-plugin': ~0.2.0
       '@types/heft-jest': 1.0.2
-      '@types/node': ^16.6.1
+      '@types/node': ^17.0.5
       '@typescript-eslint/eslint-plugin': ^5.8.0
       '@typescript-eslint/parser': ^5.8.0
       eslint: ^8.5.0
@@ -609,7 +609,7 @@ importers:
       '@rushstack/heft': 0.44.0
       '@rushstack/heft-jest-plugin': 0.2.0_@rushstack+heft@0.44.0
       '@types/heft-jest': 1.0.2
-      '@types/node': 16.11.7
+      '@types/node': 17.0.5
       '@typescript-eslint/eslint-plugin': 5.8.0_836011a006f4f5d67178564baf2b6d34
       '@typescript-eslint/parser': 5.8.0_eslint@8.5.0+typescript@4.5.4
       eslint: 8.5.0
@@ -5168,6 +5168,10 @@ packages:
 
   /@types/node/16.11.7:
     resolution: {integrity: sha512-QB5D2sqfSjCmTuWcBWyJ+/44bcjO7VbjSbOE0ucoVbAsSNQc4Lt6QkgkVXkTDwkL4z/beecZNDvVX15D4P8Jbw==}
+
+  /@types/node/17.0.5:
+    resolution: {integrity: sha512-w3mrvNXLeDYV1GKTZorGJQivK6XLCoGwpnyJFbJVK/aTBQUxOCaa/GlFAAN3OTDFcb7h5tiFG+YXCO2By+riZw==}
+    dev: true
 
   /@types/normalize-package-data/2.4.1:
     resolution: {integrity: sha512-Gj7cI7z+98M282Tqmp2K5EIsoouUEzbBJhQQzDE3jSIRk6r9gsz0oUokqIUR4u1R3dMHo0pDHM7sNOHyhulypw==}
@@ -11079,7 +11083,7 @@ packages:
       jest-validate: 27.3.1
       micromatch: 4.0.4
       pretty-format: 27.3.1
-      ts-node: 10.4.0_eefad272baeacd5b28bb97fe86355678
+      ts-node: 10.4.0_bad060d5f9aca5284661d88d739ba15b
     transitivePeerDependencies:
       - bufferutil
       - canvas
@@ -16190,7 +16194,7 @@ packages:
       yargs-parser: 20.2.9
     dev: true
 
-  /ts-node/10.4.0_eefad272baeacd5b28bb97fe86355678:
+  /ts-node/10.4.0_bad060d5f9aca5284661d88d739ba15b:
     resolution: {integrity: sha512-g0FlPvvCXSIO1JDF6S232P5jPYqBkRL9qly81ZgAOSU7rwI0stphCgd2kLiCrU9DjQCrJMWEqcNSjQL02s6d8A==}
     hasBin: true
     peerDependencies:
@@ -16209,7 +16213,7 @@ packages:
       '@tsconfig/node12': 1.0.9
       '@tsconfig/node14': 1.0.1
       '@tsconfig/node16': 1.0.2
-      '@types/node': 16.11.7
+      '@types/node': 17.0.5
       acorn: 8.5.0
       acorn-walk: 8.2.0
       arg: 4.1.3
