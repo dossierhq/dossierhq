@@ -1,9 +1,9 @@
 import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
 import { notOk, ok } from '@jonasb/datadata-core';
 import type {
-  AuthCreateSessionPayload,
   AuthorizationAdapter,
   DatabaseAdapter,
+  DatabaseAuthCreateSessionPayload,
   SessionContext,
   TransactionContext,
 } from '.';
@@ -27,7 +27,7 @@ export async function authCreateSession(
   context: TransactionContext,
   provider: string,
   identifier: string
-): PromiseResult<AuthCreateSessionPayload, ErrorType.BadRequest | ErrorType.Generic> {
+): PromiseResult<DatabaseAuthCreateSessionPayload, ErrorType.BadRequest | ErrorType.Generic> {
   const assertion = ensureRequired({ provider, identifier });
   if (assertion.isError()) {
     return assertion;

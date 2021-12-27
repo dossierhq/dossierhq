@@ -1,5 +1,6 @@
 import type { DatabaseAdapter } from '@jonasb/datadata-server';
 import type { PostgresTransaction } from '.';
+import { createEntity } from './admin-entity/createEntity';
 import { authCreateSession } from './auth/createSession';
 import { withNestedTransaction, withRootTransaction } from './PostgresTransaction';
 import { schemaGetSpecification } from './schema/getSpecification';
@@ -31,5 +32,6 @@ export function createPostgresDatabaseAdapterAdapter(
     authCreateSession: (...args) => authCreateSession(databaseAdapter, ...args),
     schemaGetSpecification: (...args) => schemaGetSpecification(databaseAdapter, ...args),
     schemaUpdateSpecification: (...args) => schemaUpdateSpecification(databaseAdapter, ...args),
+    adminEntityCreate: (...args) => createEntity(databaseAdapter, ...args),
   };
 }

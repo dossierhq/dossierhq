@@ -1,7 +1,7 @@
 /** This is not a general purpose SQL query builder, please ensure that the resulting SQL is what you're after.
  *
  */
-export default class QueryBuilder {
+export class QueryBuilder {
   #query: string;
   #values: unknown[] = [];
   constructor(query: string, values?: unknown[]) {

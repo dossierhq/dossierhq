@@ -1,7 +1,7 @@
 import type { OkResult, PromiseResult } from '@jonasb/datadata-core';
 import { ErrorType, notOk, ok } from '@jonasb/datadata-core';
 import type {
-  AuthCreateSessionPayload,
+  DatabaseAuthCreateSessionPayload,
   Session,
   TransactionContext,
 } from '@jonasb/datadata-server';
@@ -17,7 +17,7 @@ export async function authCreateSession(
   context: TransactionContext,
   provider: string,
   identifier: string
-): PromiseResult<AuthCreateSessionPayload, ErrorType.Generic> {
+): PromiseResult<DatabaseAuthCreateSessionPayload, ErrorType.Generic> {
   const firstGetResult = await getSubject(adapter, context, provider, identifier);
   if (firstGetResult.isError()) {
     return firstGetResult;
@@ -51,7 +51,7 @@ export async function authCreateSession(
 function createPayload<TError extends ErrorType>(
   principalEffect: 'created' | 'none',
   { id, uuid }: Pick<SubjectsTable, 'id' | 'uuid'>
-): OkResult<AuthCreateSessionPayload, TError> {
+): OkResult<DatabaseAuthCreateSessionPayload, TError> {
   const session: Session = { subjectInternalId: id, subjectId: uuid };
   return ok({ principalEffect, session });
 }
@@ -61,7 +61,7 @@ async function getSubject(
   context: TransactionContext,
   provider: string,
   identifier: string
-): PromiseResult<AuthCreateSessionPayload | null, ErrorType.Generic> {
+): PromiseResult<DatabaseAuthCreateSessionPayload | null, ErrorType.Generic> {
   const result = await queryNoneOrOne<Pick<SubjectsTable, 'id' | 'uuid'>>(
     context,
     adapter,
@@ -83,7 +83,7 @@ async function createSubject(
   context: TransactionContext,
   provider: string,
   identifier: string
-): PromiseResult<AuthCreateSessionPayload, ErrorType.Conflict | ErrorType.Generic> {
+): PromiseResult<DatabaseAuthCreateSessionPayload, ErrorType.Conflict | ErrorType.Generic> {
   return await context.withTransaction(async (context) => {
     const uuid = uuidv4();
     const now = Temporal.Now.instant();

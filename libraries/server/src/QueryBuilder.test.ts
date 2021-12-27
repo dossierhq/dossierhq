@@ -1,4 +1,4 @@
-import QueryBuilder from './QueryBuilder';
+import { QueryBuilder } from './QueryBuilder';
 
 test('Only original query', () => {
   const qb = new QueryBuilder('SELECT * FROM foo WHERE a = $1', ['first']);

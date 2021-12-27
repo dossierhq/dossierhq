@@ -29,6 +29,7 @@ export function createMockDatabaseAdapter(): MockDatabaseAdapter {
     authCreateSession: jest.fn(),
     schemaGetSpecification: jest.fn(),
     schemaUpdateSpecification: jest.fn(),
+    adminEntityCreate: jest.fn(),
     queryLegacy: jest.fn(),
     withRootTransaction: jest.fn(),
     withNestedTransaction: jest.fn(),

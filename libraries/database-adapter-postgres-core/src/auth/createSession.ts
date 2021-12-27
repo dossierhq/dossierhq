@@ -1,7 +1,7 @@
 import type { OkResult, PromiseResult } from '@jonasb/datadata-core';
 import { ErrorType, notOk, ok } from '@jonasb/datadata-core';
 import type {
-  AuthCreateSessionPayload,
+  DatabaseAuthCreateSessionPayload,
   Session,
   TransactionContext,
 } from '@jonasb/datadata-server';
@@ -15,7 +15,7 @@ export async function authCreateSession(
   context: TransactionContext,
   provider: string,
   identifier: string
-): PromiseResult<AuthCreateSessionPayload, ErrorType.Generic> {
+): PromiseResult<DatabaseAuthCreateSessionPayload, ErrorType.Generic> {
   const firstGetResult = await getSubject(adapter, context, provider, identifier);
   if (firstGetResult.isError()) {
     return firstGetResult;
@@ -49,7 +49,7 @@ export async function authCreateSession(
 function createPayload<TError extends ErrorType>(
   principalEffect: 'created' | 'none',
   { id, uuid }: Pick<SubjectsTable, 'id' | 'uuid'>
-): OkResult<AuthCreateSessionPayload, TError> {
+): OkResult<DatabaseAuthCreateSessionPayload, TError> {
   const session: Session = { subjectInternalId: id, subjectId: uuid };
   return ok({ principalEffect, session });
 }
@@ -59,14 +59,12 @@ async function getSubject(
   context: TransactionContext,
   provider: string,
   identifier: string
-): PromiseResult<AuthCreateSessionPayload | null, ErrorType.Generic> {
-  const result = await queryNoneOrOne<Pick<SubjectsTable, 'id' | 'uuid'>>(
-    context,
-    adapter,
-    `SELECT s.id, s.uuid FROM subjects s, principals p
+): PromiseResult<DatabaseAuthCreateSessionPayload | null, ErrorType.Generic> {
+  const result = await queryNoneOrOne<Pick<SubjectsTable, 'id' | 'uuid'>>(adapter, context, {
+    text: `SELECT s.id, s.uuid FROM subjects s, principals p
     WHERE p.provider = $1 AND p.identifier = $2 AND p.subjects_id = s.id`,
-    [provider, identifier]
-  );
+    values: [provider, identifier],
+  });
   if (result.isError()) {
     return result;
   }
@@ -81,11 +79,11 @@ async function createSubject(
   context: TransactionContext,
   provider: string,
   identifier: string
-): PromiseResult<AuthCreateSessionPayload, ErrorType.Conflict | ErrorType.Generic> {
+): PromiseResult<DatabaseAuthCreateSessionPayload, ErrorType.Conflict | ErrorType.Generic> {
   return await context.withTransaction(async (context) => {
     const subjectsResult = await queryOne<Pick<SubjectsTable, 'id' | 'uuid'>>(
-      context,
       adapter,
+      context,
       'INSERT INTO subjects DEFAULT VALUES RETURNING id, uuid'
     );
     if (subjectsResult.isError()) {
@@ -93,10 +91,12 @@ async function createSubject(
     }
     const { id } = subjectsResult.value;
     const principalsResult = await queryNone(
-      context,
       adapter,
-      'INSERT INTO principals (provider, identifier, subjects_id) VALUES ($1, $2, $3)',
-      [provider, identifier, id],
+      context,
+      {
+        text: 'INSERT INTO principals (provider, identifier, subjects_id) VALUES ($1, $2, $3)',
+        values: [provider, identifier, id],
+      },
       (error) => {
         if (
           adapter.isUniqueViolationOfConstraint(
