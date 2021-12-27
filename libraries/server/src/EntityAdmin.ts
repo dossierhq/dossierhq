@@ -38,7 +38,6 @@ import {
   visitorPathToString,
 } from '@jonasb/datadata-core';
 import type { AuthorizationAdapter, DatabaseAdapter, SessionContext } from '.';
-import type { ResolvedAuthKey } from './Auth';
 import {
   authResolveAuthorizationKey,
   authResolveAuthorizationKeys,
@@ -50,7 +49,6 @@ import type {
   EntityPublishingEventsTable,
   EntityVersionsTable,
 } from './DatabaseTables';
-import type { EncodeEntityResult } from './EntityCodec';
 import {
   collectDataFromEntity,
   decodeAdminEntity,
@@ -61,7 +59,7 @@ import {
   resolveUpdateEntity,
 } from './EntityCodec';
 import { sharedSearchEntities } from './EntitySearcher';
-import QueryBuilder from './QueryBuilder';
+import { QueryBuilder } from './QueryBuilder';
 import type { SearchAdminEntitiesItem } from './QueryGenerator';
 import { searchAdminEntitiesQuery, totalAdminEntitiesQuery } from './QueryGenerator';
 
@@ -265,11 +263,13 @@ async function withUniqueNameAttempt<TResult>(
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   name: string,
+  randomNameGenerator: (name: string) => string,
   attempt: (context: SessionContext, name: string) => Promise<TResult>
 ) {
   let potentiallyModifiedName = name;
   let first = true;
   for (let i = 0; i < 10; i += 1) {
+    // TODO Add support for savepoint to context or databasecontext?
     await Db.queryNone(
       databaseAdapter,
       context,
@@ -285,13 +285,17 @@ async function withUniqueNameAttempt<TResult>(
       return result;
     } catch (error) {
       if (Db.isUniqueViolationOfConstraint(databaseAdapter, error, 'entities_name_key')) {
-        potentiallyModifiedName = `${name}#${Math.random().toFixed(8).slice(2)}`;
+        potentiallyModifiedName = randomNameGenerator(name);
         continue;
       }
       throw error;
     }
   }
   throw new Error(`Failed creating a unique name for ${name}`);
+}
+
+function randomNameGenerator(name: string) {
+  return `${name}#${Math.random().toFixed(8).slice(2)}`;
 }
 
 export async function createEntity(
@@ -326,60 +330,28 @@ export async function createEntity(
   const encodeEntityResult = encodeResult.value;
 
   return await context.withTransaction(async (context) => {
-    const createEntityRowResult = await createEntityRow(
-      databaseAdapter,
-      context,
-      entity.id,
-      resolvedAuthKeyResult.value,
-      encodeEntityResult
-    );
-    if (createEntityRowResult.isError()) {
-      return createEntityRowResult;
+    const createResult = await databaseAdapter.adminEntityCreate(context, randomNameGenerator, {
+      id: entity.id ?? null,
+      type: encodeEntityResult.type,
+      name: encodeEntityResult.name,
+      creator: context.session,
+      resolvedAuthKey: resolvedAuthKeyResult.value,
+      fullTextSearchText: encodeEntityResult.fullTextSearchText.join(' '),
+      referenceIds: encodeEntityResult.referenceIds,
+      locations: encodeEntityResult.locations,
+      fieldsData: encodeEntityResult.data,
+    });
+    if (createResult.isError()) {
+      return createResult;
     }
-    const { uuid, actualName, entityId, createdAt, updatedAt } = createEntityRowResult.value;
 
-    const { id: versionsId } = await Db.queryOne<{ id: number }>(
-      databaseAdapter,
-      context,
-      'INSERT INTO entity_versions (entities_id, version, created_by, data) VALUES ($1, 0, $2, $3) RETURNING id',
-      [entityId, context.session.subjectInternalId, encodeEntityResult.data]
-    );
-    await Db.queryNone(
-      databaseAdapter,
-      context,
-      'UPDATE entities SET latest_draft_entity_versions_id = $1 WHERE id = $2',
-      [versionsId, entityId]
-    );
-    if (encodeEntityResult.referenceIds.length > 0) {
-      const qb = new QueryBuilder(
-        'INSERT INTO entity_version_references (entity_versions_id, entities_id) VALUES',
-        [versionsId]
-      );
-      for (const referenceId of encodeEntityResult.referenceIds) {
-        qb.addQuery(`($1, ${qb.addValue(referenceId)})`);
-      }
-      await Db.queryNone(databaseAdapter, context, qb.build());
-    }
-    if (encodeEntityResult.locations.length > 0) {
-      const qb = new QueryBuilder(
-        'INSERT INTO entity_version_locations (entity_versions_id, location) VALUES',
-        [versionsId]
-      );
-      for (const location of encodeEntityResult.locations) {
-        qb.addQuery(
-          `($1, ST_SetSRID(ST_Point(${qb.addValue(location.lng)}, ${qb.addValue(
-            location.lat
-          )}), 4326))`
-        );
-      }
-      await Db.queryNone(databaseAdapter, context, qb.build());
-    }
+    const { id, name, createdAt, updatedAt } = createResult.value;
 
     const result: AdminEntity = {
-      id: uuid,
+      id,
       info: {
         ...createEntity.info,
-        name: actualName,
+        name,
         publishingState: EntityPublishState.Draft,
         version: 0,
         createdAt,
@@ -389,54 +361,6 @@ export async function createEntity(
     };
     return ok({ effect: 'created', entity: result });
   });
-}
-
-async function createEntityRow(
-  databaseAdapter: DatabaseAdapter,
-  context: SessionContext,
-  id: string | undefined,
-  authKey: ResolvedAuthKey,
-  encodeEntityResult: EncodeEntityResult
-) {
-  const { name, type, fullTextSearchText } = encodeEntityResult;
-
-  try {
-    const { uuid, actualName, entityId, createdAt, updatedAt } = await withUniqueNameAttempt(
-      databaseAdapter,
-      context,
-      name,
-      async (context, name) => {
-        const qb = new QueryBuilder(
-          'INSERT INTO entities (uuid, name, type, auth_key, resolved_auth_key, latest_fts, status)'
-        );
-        qb.addQuery(
-          `VALUES (${qb.addValueOrDefault(id)}, ${qb.addValue(name)}, ${qb.addValue(
-            type
-          )}, ${qb.addValue(authKey.authKey)}, ${qb.addValue(
-            authKey.resolvedAuthKey
-          )}, to_tsvector(${qb.addValue(fullTextSearchText.join(' '))}), 'draft')`
-        );
-        qb.addQuery('RETURNING id, uuid, created_at, updated_at');
-        const {
-          id: entityId,
-          uuid,
-          created_at: createdAt,
-          updated_at: updatedAt,
-        } = await Db.queryOne<Pick<EntitiesTable, 'id' | 'uuid' | 'created_at' | 'updated_at'>>(
-          databaseAdapter,
-          context,
-          qb.build()
-        );
-        return { uuid, actualName: name, entityId, createdAt, updatedAt };
-      }
-    );
-    return ok({ uuid, actualName, entityId, createdAt, updatedAt });
-  } catch (error) {
-    if (Db.isUniqueViolationOfConstraint(databaseAdapter, error, 'entities_uuid_key')) {
-      return notOk.Conflict(`Entity with id (${id}) already exist`);
-    }
-    throw error;
-  }
 }
 
 export async function updateEntity(
@@ -510,15 +434,21 @@ export async function updateEntity(
     );
 
     if (name !== previousName) {
-      await withUniqueNameAttempt(databaseAdapter, context, name, async (context, name) => {
-        await Db.queryNone(
-          databaseAdapter,
-          context,
-          'UPDATE entities SET name = $1 WHERE id = $2',
-          [name, entityId]
-        );
-        updatedEntity.info.name = name;
-      });
+      await withUniqueNameAttempt(
+        databaseAdapter,
+        context,
+        name,
+        randomNameGenerator,
+        async (context, name) => {
+          await Db.queryNone(
+            databaseAdapter,
+            context,
+            'UPDATE entities SET name = $1 WHERE id = $2',
+            [name, entityId]
+          );
+          updatedEntity.info.name = name;
+        }
+      );
     }
 
     const { updated_at: updatedAt } = await Db.queryOne(

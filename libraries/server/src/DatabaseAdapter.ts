@@ -1,13 +1,38 @@
-import type { ErrorType, PromiseResult, AdminSchemaSpecification } from '@jonasb/datadata-core';
-import type { Session, TransactionContext } from '.';
+import type { Temporal } from '@js-temporal/polyfill';
+import type {
+  ErrorType,
+  PromiseResult,
+  AdminSchemaSpecification,
+  Location,
+} from '@jonasb/datadata-core';
+import type { ResolvedAuthKey, Session, TransactionContext } from '.';
 
 export interface Transaction {
   _type: 'Transaction';
 }
 
-export interface AuthCreateSessionPayload {
+export interface DatabaseAuthCreateSessionPayload {
   principalEffect: 'created' | 'none';
   session: Session;
+}
+
+export interface DatabaseAdminEntityCreateEntityArg {
+  id: string | null;
+  type: string;
+  name: string;
+  creator: Session;
+  resolvedAuthKey: ResolvedAuthKey;
+  fullTextSearchText: string;
+  locations: Location[];
+  referenceIds: number[];
+  fieldsData: Record<string, unknown>;
+}
+
+export interface DatabaseAdminEntityCreatePayload {
+  id: string;
+  name: string;
+  createdAt: Temporal.Instant;
+  updatedAt: Temporal.Instant;
 }
 
 export interface DatabaseAdapter {
@@ -26,7 +51,7 @@ export interface DatabaseAdapter {
     context: TransactionContext,
     provider: string,
     identifier: string
-  ): PromiseResult<AuthCreateSessionPayload, ErrorType.Generic>;
+  ): PromiseResult<DatabaseAuthCreateSessionPayload, ErrorType.Generic>;
 
   schemaGetSpecification(
     context: TransactionContext
@@ -36,6 +61,12 @@ export interface DatabaseAdapter {
     context: TransactionContext,
     schemaSpec: AdminSchemaSpecification
   ): PromiseResult<void, ErrorType.Generic>;
+
+  adminEntityCreate(
+    context: TransactionContext,
+    randomNameGenerator: (name: string) => string,
+    entity: DatabaseAdminEntityCreateEntityArg
+  ): PromiseResult<DatabaseAdminEntityCreatePayload, ErrorType.Conflict | ErrorType.Generic>;
 
   // TODO remove when migrated away
   queryLegacy<R = unknown>(

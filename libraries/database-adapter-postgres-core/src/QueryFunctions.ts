@@ -7,17 +7,23 @@ interface ErrorConverter<TRow, TError extends ErrorType> {
   (error: unknown): Result<TRow[], TError | ErrorType.Generic>;
 }
 
+type QueryOrQueryAndValues = string | { text: string; values?: unknown[] };
+
 async function queryCommon<TRow, TError extends ErrorType>(
-  context: TransactionContext,
   adapter: PostgresDatabaseAdapter,
-  query: string,
-  values: unknown[] | undefined,
+  context: TransactionContext,
+  queryOrQueryAndValues: QueryOrQueryAndValues,
   errorConverter: ErrorConverter<TRow, TError> | undefined
 ): PromiseResult<TRow[], TError | ErrorType.Generic> {
+  const { text, values } =
+    typeof queryOrQueryAndValues === 'string'
+      ? { text: queryOrQueryAndValues, values: undefined }
+      : queryOrQueryAndValues;
+
   try {
     const rows = await adapter.query<TRow>(
       context.transaction as PostgresTransaction,
-      query,
+      text,
       values
     );
     return ok(rows);
@@ -30,41 +36,37 @@ async function queryCommon<TRow, TError extends ErrorType>(
 }
 
 export async function queryNone<TError extends ErrorType | ErrorType.Generic = ErrorType.Generic>(
-  context: TransactionContext,
   adapter: PostgresDatabaseAdapter,
-  query: string,
-  values?: unknown[],
+  context: TransactionContext,
+  query: QueryOrQueryAndValues,
   errorConverter?: ErrorConverter<unknown, TError | ErrorType.Generic>
 ): PromiseResult<void, TError | ErrorType.Generic> {
   const result = await queryCommon<unknown, TError>(
-    context,
     adapter,
+    context,
     query,
-    values,
     errorConverter as ErrorConverter<unknown, TError>
   );
   if (result.isError()) {
     return result;
   }
   const rows = result.value;
-  if (rows.length !== 0) {
+  if (rows && rows.length !== 0) {
     return notOk.Generic(`Expected 0 rows, got ${rows.length}`);
   }
   return ok(undefined);
 }
 
 export async function queryNoneOrOne<TRow, TError extends ErrorType = ErrorType.Generic>(
-  context: TransactionContext,
   adapter: PostgresDatabaseAdapter,
-  query: string,
-  values?: unknown[],
+  context: TransactionContext,
+  query: QueryOrQueryAndValues,
   errorConverter?: ErrorConverter<TRow, TError | ErrorType.Generic>
 ): PromiseResult<TRow | null, TError | ErrorType.Generic> {
   const result = await queryCommon<TRow, TError>(
-    context,
     adapter,
+    context,
     query,
-    values,
     errorConverter as ErrorConverter<TRow, TError>
   );
   if (result.isError()) {
@@ -81,17 +83,15 @@ export async function queryNoneOrOne<TRow, TError extends ErrorType = ErrorType.
 }
 
 export async function queryOne<TRow, TError extends ErrorType = ErrorType.Generic>(
-  context: TransactionContext,
   adapter: PostgresDatabaseAdapter,
-  query: string,
-  values?: unknown[],
+  context: TransactionContext,
+  query: QueryOrQueryAndValues,
   errorConverter?: ErrorConverter<TRow, TError | ErrorType.Generic>
 ): PromiseResult<TRow, TError | ErrorType.Generic> {
   const result = await queryCommon<TRow, TError>(
-    context,
     adapter,
+    context,
     query,
-    values,
     errorConverter as ErrorConverter<TRow, TError>
   );
   if (result.isError()) {

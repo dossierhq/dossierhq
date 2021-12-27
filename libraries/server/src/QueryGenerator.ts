@@ -13,7 +13,7 @@ import type { CursorNativeType } from './Connection';
 import { toOpaqueCursor } from './Connection';
 import type { EntitiesTable, EntityVersionsTable } from './DatabaseTables';
 import { resolvePaging } from './Paging';
-import QueryBuilder from './QueryBuilder';
+import { QueryBuilder } from './QueryBuilder';
 
 // id and updated are included for order by
 export type SearchAdminEntitiesItem = Pick<
