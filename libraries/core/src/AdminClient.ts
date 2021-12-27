@@ -177,7 +177,7 @@ type MethodReturnType<T extends keyof AdminClient> = PromiseResult<
   MethodReturnTypeOk<T>,
   MethodReturnTypeError<T>
 >;
-type MethodReturnTypeWithoutPromise<T extends keyof AdminClient> = WithoutPromise<
+type MethodReturnTypeWithoutPromise<T extends keyof AdminClient> = Awaited<
   PromiseResult<MethodReturnTypeOk<T>, MethodReturnTypeError<T>>
 >;
 type MethodReturnTypeOk<T extends keyof AdminClient> = OkFromPromiseResult<
@@ -186,8 +186,6 @@ type MethodReturnTypeOk<T extends keyof AdminClient> = OkFromPromiseResult<
 type MethodReturnTypeError<T extends keyof AdminClient> = ErrorFromPromiseResult<
   ReturnType<AdminClient[T]>
 >;
-//TODO replace with Awaited when deno supports TS 4.5
-type WithoutPromise<T> = T extends Promise<infer U> ? U : T;
 
 interface AdminClientOperationArguments {
   [AdminClientOperationName.archiveEntity]: MethodParameters<'archiveEntity'>;
