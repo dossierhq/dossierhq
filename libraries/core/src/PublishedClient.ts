@@ -76,10 +76,8 @@ export enum PublishedClientOperationName {
 }
 
 type MethodParameters<T extends keyof PublishedClient> = Parameters<PublishedClient[T]>;
-type MethodReturnType<T extends keyof PublishedClient> = WithoutPromise<
-  ReturnType<PublishedClient[T]>
->;
-type MethodReturnTypeWithoutPromise<T extends keyof PublishedClient> = WithoutPromise<
+type MethodReturnType<T extends keyof PublishedClient> = Awaited<ReturnType<PublishedClient[T]>>;
+type MethodReturnTypeWithoutPromise<T extends keyof PublishedClient> = Awaited<
   PromiseResult<MethodReturnTypeOk<T>, MethodReturnTypeError<T>>
 >;
 type MethodReturnTypeOk<T extends keyof PublishedClient> = OkFromPromiseResult<
@@ -88,8 +86,6 @@ type MethodReturnTypeOk<T extends keyof PublishedClient> = OkFromPromiseResult<
 type MethodReturnTypeError<T extends keyof PublishedClient> = ErrorFromPromiseResult<
   ReturnType<PublishedClient[T]>
 >;
-//TODO replace with Awaited when deno supports TS 4.5
-type WithoutPromise<T> = T extends Promise<infer U> ? U : T;
 
 interface PublishedClientOperationArguments {
   [PublishedClientOperationName.getEntities]: MethodParameters<'getEntities'>;
