@@ -1,3 +1,4 @@
+import type { AdminEntity } from '@jonasb/datadata-core';
 import { CoreTestUtils, EntityPublishState } from '@jonasb/datadata-core';
 import { assertNotSame, assertTruthy } from '../Asserts';
 import type { UnboundTestFunction } from '../Builder';
@@ -11,7 +12,7 @@ export const CreateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
 ];
 
 async function createEntity_minimal({ client }: AdminEntityTestContext) {
-  const result = await client.createEntity({
+  const createResult = await client.createEntity({
     info: {
       type: 'TitleOnly',
       name: 'TitleOnly name',
@@ -19,29 +20,35 @@ async function createEntity_minimal({ client }: AdminEntityTestContext) {
     },
     fields: {},
   });
-  if (expectOkResult(result)) {
+  if (expectOkResult(createResult)) {
     const {
       entity: {
         id,
         info: { name, createdAt, updatedAt },
       },
-    } = result.value;
-    expectResultValue(result, {
-      effect: 'created',
-      entity: {
-        id,
-        info: {
-          type: 'TitleOnly',
-          name,
-          version: 0,
-          authKey: 'none',
-          publishingState: EntityPublishState.Draft,
-          createdAt,
-          updatedAt,
-        },
-        fields: { title: null },
+    } = createResult.value;
+
+    const expectedEntity: AdminEntity = {
+      id,
+      info: {
+        type: 'TitleOnly',
+        name,
+        version: 0,
+        authKey: 'none',
+        publishingState: EntityPublishState.Draft,
+        createdAt,
+        updatedAt,
       },
+      fields: { title: null },
+    };
+
+    expectResultValue(createResult, {
+      effect: 'created',
+      entity: expectedEntity,
     });
+
+    const getResult = await client.getEntity({ id });
+    expectResultValue(getResult, expectedEntity);
   }
 }
 

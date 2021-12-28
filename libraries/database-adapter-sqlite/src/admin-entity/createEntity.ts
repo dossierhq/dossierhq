@@ -13,7 +13,7 @@ import { EntitiesUniqueNameConstraint, EntitiesUniqueUuidConstraint } from '../D
 import { queryNone, queryOne } from '../QueryFunctions';
 import { withUniqueNameAttempt } from '../utils/withUniqueNameAttempt';
 
-export async function adminEntityCreate(
+export async function adminCreateEntity(
   databaseAdapter: SqliteDatabaseAdapter,
   context: TransactionContext,
   randomNameGenerator: (name: string) => string,
