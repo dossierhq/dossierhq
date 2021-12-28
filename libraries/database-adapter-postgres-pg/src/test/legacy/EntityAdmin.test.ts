@@ -362,22 +362,6 @@ describe('getEntity()', () => {
       }
     }
   });
-
-  test('Error: Using wrong authKey', async () => {
-    const createResult = await client.createEntity({
-      info: { type: 'EntityAdminFoo', name: 'Foo', authKey: 'subject' },
-      fields: { title: 'Title' },
-    });
-
-    if (expectOkResult(createResult)) {
-      const {
-        entity: { id },
-      } = createResult.value;
-
-      const getResult = await client.getEntity({ id, authKeys: ['none'] });
-      expectErrorResult(getResult, ErrorType.NotAuthorized, 'Wrong authKey provided');
-    }
-  });
 });
 
 describe('getEntities()', () => {
