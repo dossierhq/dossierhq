@@ -40,6 +40,9 @@ export async function createSqliteDatabaseAdapter(
       throw new Error('TODO');
     },
     adminEntityCreate: (...args) => adminEntityCreate(sqliteAdapter, ...args),
+    adminEntityGetOne: () => {
+      throw new Error('TODO');
+    },
     authCreateSession: (...args) => authCreateSession(sqliteAdapter, ...args),
     schemaGetSpecification: (...args) => schemaGetSpecification(sqliteAdapter, ...args),
     schemaUpdateSpecification: (...args) => schemaUpdateSpecification(sqliteAdapter, ...args),

@@ -37,7 +37,7 @@ import {
   visitItemRecursively,
   visitorPathToString,
 } from '@jonasb/datadata-core';
-import type { DatabaseAdapter, SessionContext } from '.';
+import type { DatabaseAdapter, DatabaseAdminEntityGetOnePayload, SessionContext } from '.';
 import { ensureRequired } from './Assertions';
 import * as Db from './Database';
 import type { EntitiesTable, EntityVersionsTable } from './DatabaseTables';
@@ -198,6 +198,32 @@ export function decodeAdminEntity(
   return entity;
 }
 
+export function decodeAdminEntity2(
+  schema: AdminSchema,
+  values: DatabaseAdminEntityGetOnePayload
+): AdminEntity {
+  const entitySpec = schema.getEntityTypeSpecification(values.type);
+  if (!entitySpec) {
+    throw new Error(`No entity spec for type ${values.type}`);
+  }
+
+  const entity: AdminEntity = {
+    id: values.id,
+    info: {
+      type: values.type,
+      name: values.name,
+      version: values.version,
+      authKey: values.authKey,
+      publishingState: values.status,
+      createdAt: values.createdAt,
+      updatedAt: values.updatedAt,
+    },
+    fields: decodeAdminEntityFields2(schema, entitySpec, values.fieldValues),
+  };
+
+  return entity;
+}
+
 export function decodeAdminEntityFields(
   schema: AdminSchema | Schema,
   entitySpec: AdminEntityTypeSpecification | EntityTypeSpecification,
@@ -207,6 +233,20 @@ export function decodeAdminEntityFields(
   for (const fieldSpec of entitySpec.fields) {
     const { name: fieldName } = fieldSpec;
     const fieldValue = values.data[fieldName];
+    fields[fieldName] = decodeFieldItemOrList(schema, fieldSpec, fieldValue);
+  }
+  return fields;
+}
+
+export function decodeAdminEntityFields2(
+  schema: AdminSchema | Schema,
+  entitySpec: AdminEntityTypeSpecification | EntityTypeSpecification,
+  fieldValues: Record<string, unknown>
+): AdminEntity['fields'] {
+  const fields: AdminEntity['fields'] = {};
+  for (const fieldSpec of entitySpec.fields) {
+    const { name: fieldName } = fieldSpec;
+    const fieldValue = fieldValues[fieldName];
     fields[fieldName] = decodeFieldItemOrList(schema, fieldSpec, fieldValue);
   }
   return fields;

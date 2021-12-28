@@ -62,6 +62,7 @@ export function createMockSessionContext({
 export function createMockDatabaseAdapter(): MockDatabaseAdapter {
   const adapter: MockDatabaseAdapter = {
     disconnect: jest.fn(),
+    adminEntityGetOne: jest.fn(),
     authCreateSession: jest.fn(),
     schemaGetSpecification: jest.fn(),
     schemaUpdateSpecification: jest.fn(),
