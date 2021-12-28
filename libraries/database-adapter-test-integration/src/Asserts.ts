@@ -19,3 +19,9 @@ export function assertSame<T>(actual: T, expected: T): void {
     throw new AssertionError(actual, `Expected same, got ${actual} !== ${expected}`);
   }
 }
+
+export function assertNotSame<T>(actual: T, expected: T): void {
+  if (actual === expected) {
+    throw new AssertionError(actual, `Expected not same, got ${actual} === ${expected}`);
+  }
+}
