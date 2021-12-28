@@ -1,28 +1,15 @@
 import { assertIsDefined } from '@jonasb/datadata-core';
-import {
-  createSchemaTestSuite,
-  createTestAuthorizationAdapter,
-} from '@jonasb/datadata-database-adapter-test-integration';
+import { createSchemaTestSuite } from '@jonasb/datadata-database-adapter-test-integration';
 import type { Server } from '@jonasb/datadata-server';
-import { createServer } from '@jonasb/datadata-server';
-import { createSqlJsTestAdapter, registerTestSuite } from '../../TestUtils';
+import { registerTestSuite } from '../../TestUtils';
+import { initializeSqlJsServer } from './SqlJsTestUtils';
 
 let server: Server | null = null;
 
 beforeAll(async () => {
-  const databaseAdapterResult = await createSqlJsTestAdapter();
-  if (databaseAdapterResult.isError()) {
-    throw databaseAdapterResult.toError();
-  }
-
-  const createServerResult = await createServer({
-    databaseAdapter: databaseAdapterResult.value,
-    authorizationAdapter: createTestAuthorizationAdapter(),
-  });
-  if (createServerResult.isError()) {
-    return createServerResult;
-  }
-  server = createServerResult.value;
+  const result = await initializeSqlJsServer();
+  if (result.isError()) throw result.toError();
+  server = result.value;
 });
 afterAll(async () => {
   if (server) {

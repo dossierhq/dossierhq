@@ -8,15 +8,21 @@ interface ErrorConverter<TRow, TError extends ErrorType> {
   (error: unknown): Result<TRow[], TError | ErrorType.Generic>;
 }
 
+type QueryOrQueryAndValues = string | { text: string; values?: ColumnValue[] };
+
 async function queryCommon<TRow, TError extends ErrorType>(
-  context: Context,
   adapter: SqliteDatabaseAdapter,
-  query: string,
-  values: ColumnValue[] | undefined,
+  context: Context,
+  queryOrQueryAndValues: QueryOrQueryAndValues,
   errorConverter: ErrorConverter<TRow, TError> | undefined
 ): PromiseResult<TRow[], TError | ErrorType.Generic> {
+  const { text, values } =
+    typeof queryOrQueryAndValues === 'string'
+      ? { text: queryOrQueryAndValues, values: undefined }
+      : queryOrQueryAndValues;
+
   try {
-    const rows = await adapter.query<TRow>(query, values);
+    const rows = await adapter.query<TRow>(text, values);
     return ok(rows);
   } catch (error) {
     if (errorConverter) {
@@ -27,17 +33,15 @@ async function queryCommon<TRow, TError extends ErrorType>(
 }
 
 export async function queryNone<TError extends ErrorType | ErrorType.Generic = ErrorType.Generic>(
-  context: Context,
   adapter: SqliteDatabaseAdapter,
-  query: string,
-  values?: ColumnValue[],
+  context: Context,
+  query: QueryOrQueryAndValues,
   errorConverter?: ErrorConverter<unknown, TError | ErrorType.Generic>
 ): PromiseResult<void, TError | ErrorType.Generic> {
   const result = await queryCommon<[], TError>(
-    context,
     adapter,
+    context,
     query,
-    values,
     errorConverter as ErrorConverter<[], TError>
   );
   if (result.isError()) {
@@ -51,17 +55,15 @@ export async function queryNone<TError extends ErrorType | ErrorType.Generic = E
 }
 
 export async function queryNoneOrOne<TRow, TError extends ErrorType = ErrorType.Generic>(
-  context: Context,
   adapter: SqliteDatabaseAdapter,
-  query: string,
-  values?: ColumnValue[],
+  context: Context,
+  query: QueryOrQueryAndValues,
   errorConverter?: ErrorConverter<TRow, TError | ErrorType.Generic>
 ): PromiseResult<TRow | null, TError | ErrorType.Generic> {
   const result = await queryCommon<TRow, TError>(
-    context,
     adapter,
+    context,
     query,
-    values,
     errorConverter as ErrorConverter<TRow, TError>
   );
   if (result.isError()) {
@@ -78,17 +80,15 @@ export async function queryNoneOrOne<TRow, TError extends ErrorType = ErrorType.
 }
 
 export async function queryOne<TRow, TError extends ErrorType = ErrorType.Generic>(
-  context: Context,
   adapter: SqliteDatabaseAdapter,
-  query: string,
-  values?: ColumnValue[],
+  context: Context,
+  query: QueryOrQueryAndValues,
   errorConverter?: ErrorConverter<TRow, TError | ErrorType.Generic>
 ): PromiseResult<TRow, TError | ErrorType.Generic> {
   const result = await queryCommon<TRow, TError>(
-    context,
     adapter,
+    context,
     query,
-    values,
     errorConverter as ErrorConverter<TRow, TError>
   );
   if (result.isError()) {

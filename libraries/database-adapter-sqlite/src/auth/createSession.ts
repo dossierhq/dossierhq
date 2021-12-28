@@ -9,7 +9,7 @@ import { Temporal } from '@js-temporal/polyfill';
 import { v4 as uuidv4 } from 'uuid';
 import type { SqliteDatabaseAdapter } from '..';
 import type { SubjectsTable } from '../DatabaseSchema';
-import { PrincipalsUniqueProviderIdentifier } from '../DatabaseSchema';
+import { PrincipalsUniqueProviderIdentifierConstraint } from '../DatabaseSchema';
 import { queryNone, queryNoneOrOne, queryOne } from '../QueryFunctions';
 
 export async function authCreateSession(
@@ -62,13 +62,11 @@ async function getSubject(
   provider: string,
   identifier: string
 ): PromiseResult<DatabaseAuthCreateSessionPayload | null, ErrorType.Generic> {
-  const result = await queryNoneOrOne<Pick<SubjectsTable, 'id' | 'uuid'>>(
-    context,
-    adapter,
-    `SELECT s.id, s.uuid FROM subjects s, principals p
+  const result = await queryNoneOrOne<Pick<SubjectsTable, 'id' | 'uuid'>>(adapter, context, {
+    text: `SELECT s.id, s.uuid FROM subjects s, principals p
     WHERE p.provider = $1 AND p.identifier = $2 AND p.subjects_id = s.id`,
-    [provider, identifier]
-  );
+    values: [provider, identifier],
+  });
   if (result.isError()) {
     return result;
   }
@@ -87,23 +85,25 @@ async function createSubject(
   return await context.withTransaction(async (context) => {
     const uuid = uuidv4();
     const now = Temporal.Now.instant();
-    const subjectsResult = await queryOne<Pick<SubjectsTable, 'id'>>(
-      context,
-      adapter,
-      'INSERT INTO subjects (uuid, created_at) VALUES ($1, $2) RETURNING id',
-      [uuid, now.toString()]
-    );
+    const subjectsResult = await queryOne<Pick<SubjectsTable, 'id'>>(adapter, context, {
+      text: 'INSERT INTO subjects (uuid, created_at) VALUES ($1, $2) RETURNING id',
+      values: [uuid, now.toString()],
+    });
     if (subjectsResult.isError()) {
       return subjectsResult;
     }
     const { id } = subjectsResult.value;
     const principalsResult = await queryNone(
-      context,
       adapter,
-      'INSERT INTO principals (provider, identifier, subjects_id) VALUES ($1, $2, $3)',
-      [provider, identifier, id],
+      context,
+      {
+        text: 'INSERT INTO principals (provider, identifier, subjects_id) VALUES ($1, $2, $3)',
+        values: [provider, identifier, id],
+      },
       (error) => {
-        if (adapter.isUniqueViolationOfConstraint(error, PrincipalsUniqueProviderIdentifier)) {
+        if (
+          adapter.isUniqueViolationOfConstraint(error, PrincipalsUniqueProviderIdentifierConstraint)
+        ) {
           return notOk.Conflict('Principal already exist');
         }
         return notOk.GenericUnexpectedException(context, error);
