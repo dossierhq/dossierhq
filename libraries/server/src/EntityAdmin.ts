@@ -52,6 +52,7 @@ import type {
 import {
   collectDataFromEntity,
   decodeAdminEntity,
+  decodeAdminEntity2,
   decodeAdminEntityFields,
   encodeEntity,
   resolveCreateEntity,
@@ -63,7 +64,7 @@ import { QueryBuilder } from './QueryBuilder';
 import type { SearchAdminEntitiesItem } from './QueryGenerator';
 import { searchAdminEntitiesQuery, totalAdminEntitiesQuery } from './QueryGenerator';
 
-export async function getEntity(
+export async function adminGetEntity(
   schema: AdminSchema,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
@@ -73,54 +74,23 @@ export async function getEntity(
   AdminEntity,
   ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
 > {
-  let actualVersion: number;
-  if ('version' in reference) {
-    actualVersion = reference.version;
-  } else {
-    const versionResult = await resolveMaxVersionForEntity(databaseAdapter, context, reference.id);
-    if (versionResult.isError()) {
-      return versionResult;
-    }
-    actualVersion = versionResult.value.maxVersion;
+  const getResult = await databaseAdapter.adminEntityGetOne(context, reference);
+  if (getResult.isError()) {
+    return getResult;
   }
-  const entityMain = await Db.queryNoneOrOne<
-    Pick<
-      EntitiesTable,
-      | 'uuid'
-      | 'type'
-      | 'name'
-      | 'auth_key'
-      | 'resolved_auth_key'
-      | 'created_at'
-      | 'updated_at'
-      | 'status'
-    > &
-      Pick<EntityVersionsTable, 'version' | 'data'>
-  >(
-    databaseAdapter,
-    context,
-    `SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, ev.version, ev.data
-      FROM entities e, entity_versions ev
-      WHERE e.uuid = $1
-      AND e.id = ev.entities_id
-      AND ev.version = $2`,
-    [reference.id, actualVersion]
-  );
-  if (!entityMain) {
-    return notOk.NotFound('No such entity or version');
-  }
+  const entityValues = getResult.value;
 
   const authResult = await authVerifyAuthorizationKey(
     authorizationAdapter,
     context,
     reference?.authKeys,
-    { authKey: entityMain.auth_key, resolvedAuthKey: entityMain.resolved_auth_key }
+    { authKey: entityValues.authKey, resolvedAuthKey: entityValues.resolvedAuthKey }
   );
   if (authResult.isError()) {
     return authResult;
   }
 
-  const entity = decodeAdminEntity(schema, entityMain);
+  const entity = decodeAdminEntity2(schema, entityValues);
 
   return ok(entity);
 }
@@ -1050,25 +1020,6 @@ export async function unarchiveEntity(
 
     return ok(result);
   });
-}
-
-async function resolveMaxVersionForEntity(
-  databaseAdapter: DatabaseAdapter,
-  context: SessionContext,
-  id: string
-): PromiseResult<{ entityId: number; maxVersion: number }, ErrorType.NotFound> {
-  const result = await Db.queryNoneOrOne<Pick<EntityVersionsTable, 'entities_id' | 'version'>>(
-    databaseAdapter,
-    context,
-    `SELECT ev.entities_id, ev.version
-      FROM entity_versions ev, entities e
-      WHERE e.uuid = $1 AND e.latest_draft_entity_versions_id = ev.id`,
-    [id]
-  );
-  if (!result) {
-    return notOk.NotFound('No such entity');
-  }
-  return ok({ entityId: result.entities_id, maxVersion: result.version });
 }
 
 function checkUUIDsAreUnique(references: EntityReference[]): Result<void, ErrorType.BadRequest> {

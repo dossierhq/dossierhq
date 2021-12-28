@@ -1,6 +1,7 @@
 import type { DatabaseAdapter } from '@jonasb/datadata-server';
 import type { PostgresTransaction } from '.';
-import { createEntity } from './admin-entity/createEntity';
+import { adminCreateEntity } from './admin-entity/createEntity';
+import { adminGetEntity } from './admin-entity/getEntity';
 import { authCreateSession } from './auth/createSession';
 import { withNestedTransaction, withRootTransaction } from './PostgresTransaction';
 import { schemaGetSpecification } from './schema/getSpecification';
@@ -29,9 +30,10 @@ export function createPostgresDatabaseAdapterAdapter(
     withNestedTransaction: (...args) => withNestedTransaction(databaseAdapter, ...args),
     queryLegacy: databaseAdapter.query,
     isUniqueViolationOfConstraint: databaseAdapter.isUniqueViolationOfConstraint,
+    adminEntityCreate: (...args) => adminCreateEntity(databaseAdapter, ...args),
+    adminEntityGetOne: (...args) => adminGetEntity(databaseAdapter, ...args),
     authCreateSession: (...args) => authCreateSession(databaseAdapter, ...args),
     schemaGetSpecification: (...args) => schemaGetSpecification(databaseAdapter, ...args),
     schemaUpdateSpecification: (...args) => schemaUpdateSpecification(databaseAdapter, ...args),
-    adminEntityCreate: (...args) => createEntity(databaseAdapter, ...args),
   };
 }

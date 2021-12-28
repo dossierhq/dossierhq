@@ -10,7 +10,7 @@ import { UniqueConstraints, type EntitiesTable, type EntityVersionsTable } from 
 import { queryNone, queryOne } from '../QueryFunctions';
 import { withUniqueNameAttempt } from '../utils/withUniqueNameAttempt';
 
-export async function createEntity(
+export async function adminCreateEntity(
   databaseAdapter: PostgresDatabaseAdapter,
   context: TransactionContext,
   randomNameGenerator: (name: string) => string,

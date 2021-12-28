@@ -5,6 +5,7 @@ export type {
   DatabaseAdapter,
   DatabaseAdminEntityCreateEntityArg,
   DatabaseAdminEntityCreatePayload,
+  DatabaseAdminEntityGetOnePayload,
   DatabaseAuthCreateSessionPayload,
   Transaction,
 } from './DatabaseAdapter';

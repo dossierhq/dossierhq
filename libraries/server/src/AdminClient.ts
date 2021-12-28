@@ -13,9 +13,9 @@ import {
 import type { AuthorizationAdapter, DatabaseAdapter, SessionContext } from '.';
 import {
   adminCreateEntity,
+  adminGetEntity,
   archiveEntity,
   getEntities,
-  getEntity,
   getEntityHistory,
   getPublishingHistory,
   getTotalCount,
@@ -93,7 +93,7 @@ export function createServerAdminClient({
           resolve,
         } = operation as AdminClientOperation<AdminClientOperationName.getEntity>;
         resolve(
-          await getEntity(
+          await adminGetEntity(
             serverImpl.getAdminSchema(),
             authorizationAdapter,
             databaseAdapter,

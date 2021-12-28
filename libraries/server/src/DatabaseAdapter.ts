@@ -1,19 +1,17 @@
-import type { Temporal } from '@js-temporal/polyfill';
 import type {
-  ErrorType,
-  PromiseResult,
   AdminSchemaSpecification,
+  EntityPublishState,
+  EntityReference,
+  EntityVersionReference,
+  ErrorType,
   Location,
+  PromiseResult,
 } from '@jonasb/datadata-core';
+import type { Temporal } from '@js-temporal/polyfill';
 import type { ResolvedAuthKey, Session, TransactionContext } from '.';
 
 export interface Transaction {
   _type: 'Transaction';
-}
-
-export interface DatabaseAuthCreateSessionPayload {
-  principalEffect: 'created' | 'none';
-  session: Session;
 }
 
 export interface DatabaseAdminEntityCreateEntityArg {
@@ -35,6 +33,24 @@ export interface DatabaseAdminEntityCreatePayload {
   updatedAt: Temporal.Instant;
 }
 
+export interface DatabaseAdminEntityGetOnePayload {
+  id: string;
+  type: string;
+  name: string;
+  version: number;
+  authKey: string;
+  resolvedAuthKey: string;
+  status: EntityPublishState;
+  createdAt: Temporal.Instant;
+  updatedAt: Temporal.Instant;
+  fieldValues: Record<string, unknown>;
+}
+
+export interface DatabaseAuthCreateSessionPayload {
+  principalEffect: 'created' | 'none';
+  session: Session;
+}
+
 export interface DatabaseAdapter {
   disconnect(): Promise<void>;
 
@@ -46,6 +62,17 @@ export interface DatabaseAdapter {
     transaction: Transaction,
     callback: () => PromiseResult<TOk, TError>
   ): PromiseResult<TOk, TError>;
+
+  adminEntityCreate(
+    context: TransactionContext,
+    randomNameGenerator: (name: string) => string,
+    entity: DatabaseAdminEntityCreateEntityArg
+  ): PromiseResult<DatabaseAdminEntityCreatePayload, ErrorType.Conflict | ErrorType.Generic>;
+
+  adminEntityGetOne(
+    context: TransactionContext,
+    reference: EntityReference | EntityVersionReference
+  ): PromiseResult<DatabaseAdminEntityGetOnePayload, ErrorType.NotFound | ErrorType.Generic>;
 
   authCreateSession(
     context: TransactionContext,
@@ -61,12 +88,6 @@ export interface DatabaseAdapter {
     context: TransactionContext,
     schemaSpec: AdminSchemaSpecification
   ): PromiseResult<void, ErrorType.Generic>;
-
-  adminEntityCreate(
-    context: TransactionContext,
-    randomNameGenerator: (name: string) => string,
-    entity: DatabaseAdminEntityCreateEntityArg
-  ): PromiseResult<DatabaseAdminEntityCreatePayload, ErrorType.Conflict | ErrorType.Generic>;
 
   // TODO remove when migrated away
   queryLegacy<R = unknown>(
