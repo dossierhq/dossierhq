@@ -1,5 +1,5 @@
 import { CoreTestUtils, EntityPublishState } from '@jonasb/datadata-core';
-import { createMockAdapter, createMockContext, getQueryCalls } from '../TestUtils';
+import { createMockAdapter, createMockContext, getQueryCalls } from '../test/TestUtils';
 import { adminGetEntity } from './getEntity';
 import { Temporal } from '@js-temporal/polyfill';
 const { expectResultValue } = CoreTestUtils;
