@@ -378,30 +378,6 @@ describe('getEntity()', () => {
       expectErrorResult(getResult, ErrorType.NotAuthorized, 'Wrong authKey provided');
     }
   });
-
-  test('Error: Get entity with invalid id', async () => {
-    const result = await client.getEntity({ id: '13e4c7da-616e-44a3-a039-24f96f9b17da' });
-    expectErrorResult(result, ErrorType.NotFound, 'No such entity');
-  });
-
-  test('Error: Get entity with invalid version', async () => {
-    const createResult = await client.createEntity({
-      info: { type: 'EntityAdminFoo', name: 'Foo', authKey: 'none' },
-      fields: { title: 'Title' },
-    });
-
-    if (expectOkResult(createResult)) {
-      const {
-        entity: { id },
-      } = createResult.value;
-
-      const resultMinusOne = await client.getEntity({ id, version: -1 });
-      expectErrorResult(resultMinusOne, ErrorType.NotFound, 'No such entity or version');
-
-      const resultOne = await client.getEntity({ id, version: 1 });
-      expectErrorResult(resultOne, ErrorType.NotFound, 'No such entity or version');
-    }
-  });
 });
 
 describe('getEntities()', () => {
