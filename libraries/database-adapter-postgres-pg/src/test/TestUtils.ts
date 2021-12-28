@@ -10,8 +10,11 @@ import type {
   Result,
 } from '@jonasb/datadata-core';
 import { assertIsDefined, CoreTestUtils, ok } from '@jonasb/datadata-core';
-import type { TestSuite } from '@jonasb/datadata-database-adapter-test-integration';
-import { createTestAuthorizationAdapter } from '@jonasb/datadata-database-adapter-test-integration';
+import {
+  createTestAuthorizationAdapter,
+  IntegrationTestSchemaSpecifciationUpdate,
+  type TestSuite,
+} from '@jonasb/datadata-database-adapter-test-integration';
 import type { DatabaseAdapter, Server, SessionContext } from '@jonasb/datadata-server';
 import { createServer } from '@jonasb/datadata-server';
 import { Temporal } from '@js-temporal/polyfill';
@@ -53,6 +56,34 @@ export async function createPostgresTestServerAndClient(): PromiseResult<
   }
   const { context } = sessionResult.value;
   return ok({ server, context });
+}
+
+export async function initializeIntegrationTestServer() {
+  const serverResult = await createServer({
+    databaseAdapter: createPostgresTestAdapter(),
+    authorizationAdapter: createTestAuthorizationAdapter(),
+    logger: createMockLogger(),
+  });
+  if (serverResult.isError()) {
+    return serverResult;
+  }
+  const server = serverResult.value;
+
+  const client = server.createAdminClient(() =>
+    server.createSession({
+      provider: 'test',
+      identifier: 'schema-loader',
+      defaultAuthKeys: ['none'],
+    })
+  );
+  const schemaResult = await client.updateSchemaSpecification(
+    IntegrationTestSchemaSpecifciationUpdate
+  );
+  if (schemaResult.isError()) {
+    return schemaResult;
+  }
+
+  return serverResult;
 }
 
 export function createMockLogger(): Logger {
