@@ -15,42 +15,12 @@ export async function adminGetEntity(
   context: TransactionContext,
   reference: EntityReference | EntityVersionReference
 ): PromiseResult<DatabaseAdminEntityGetOnePayload, ErrorType.NotFound | ErrorType.Generic> {
-  let actualVersion: number;
-  if ('version' in reference) {
-    actualVersion = reference.version;
-  } else {
-    const versionResult = await resolveMaxVersionForEntity(databaseAdapter, context, reference.id);
-    if (versionResult.isError()) {
-      return versionResult;
-    }
-    actualVersion = versionResult.value.maxVersion;
-  }
-  const result = await queryNoneOrOne<
-    Pick<
-      EntitiesTable,
-      | 'uuid'
-      | 'type'
-      | 'name'
-      | 'auth_key'
-      | 'resolved_auth_key'
-      | 'created_at'
-      | 'updated_at'
-      | 'status'
-    > &
-      Pick<EntityVersionsTable, 'version' | 'data'>
-  >(databaseAdapter, context, {
-    text: `SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, ev.version, ev.data
-      FROM entities e, entity_versions ev
-      WHERE e.uuid = $1
-      AND e.id = ev.entities_id
-      AND ev.version = $2`,
-    values: [reference.id, actualVersion],
-  });
+  const result =
+    'version' in reference
+      ? await getEntityWithVersion(databaseAdapter, context, reference)
+      : await getEntityWithLatestVersion(databaseAdapter, context, reference);
   if (result.isError()) {
     return result;
-  }
-  if (!result.value) {
-    return notOk.NotFound('No such entity or version');
   }
 
   const {
@@ -80,32 +50,76 @@ export async function adminGetEntity(
   });
 }
 
-async function resolveMaxVersionForEntity(
+async function getEntityWithLatestVersion(
   databaseAdapter: PostgresDatabaseAdapter,
   context: TransactionContext,
-  id: string
-): PromiseResult<{ entityId: number; maxVersion: number }, ErrorType.NotFound | ErrorType.Generic> {
-  const result = await queryNoneOrOne<Pick<EntityVersionsTable, 'entities_id' | 'version'>>(
-    databaseAdapter,
-    context,
-    {
-      text: `SELECT ev.entities_id, ev.version
-      FROM entity_versions ev, entities e
-      WHERE e.uuid = $1 AND e.latest_draft_entity_versions_id = ev.id`,
-      values: [id],
-    }
-  );
+  reference: EntityReference
+) {
+  const result = await queryNoneOrOne<
+    Pick<
+      EntitiesTable,
+      | 'uuid'
+      | 'type'
+      | 'name'
+      | 'auth_key'
+      | 'resolved_auth_key'
+      | 'created_at'
+      | 'updated_at'
+      | 'status'
+    > &
+      Pick<EntityVersionsTable, 'version' | 'data'>
+  >(databaseAdapter, context, {
+    text: `SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, ev.version, ev.data
+    FROM entities e, entity_versions ev
+    WHERE e.uuid = $1
+    AND e.latest_draft_entity_versions_id = ev.id`,
+    values: [reference.id],
+  });
   if (result.isError()) {
     return result;
   }
   if (!result.value) {
     return notOk.NotFound('No such entity');
   }
-  const { entities_id: entityId, version: maxVersion } = result.value;
-  return ok({ entityId, maxVersion });
+  return ok(result.value);
 }
 
-export function resolveEntityStatus(status: EntitiesTable['status']): EntityPublishState {
+async function getEntityWithVersion(
+  databaseAdapter: PostgresDatabaseAdapter,
+  context: TransactionContext,
+  reference: EntityVersionReference
+) {
+  const result = await queryNoneOrOne<
+    Pick<
+      EntitiesTable,
+      | 'uuid'
+      | 'type'
+      | 'name'
+      | 'auth_key'
+      | 'resolved_auth_key'
+      | 'created_at'
+      | 'updated_at'
+      | 'status'
+    > &
+      Pick<EntityVersionsTable, 'version' | 'data'>
+  >(databaseAdapter, context, {
+    text: `SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, ev.version, ev.data
+    FROM entities e, entity_versions ev
+    WHERE e.uuid = $1
+    AND e.id = ev.entities_id
+    AND ev.version = $2`,
+    values: [reference.id, reference.version],
+  });
+  if (result.isError()) {
+    return result;
+  }
+  if (!result.value) {
+    return notOk.NotFound('No such entity or version');
+  }
+  return ok(result.value);
+}
+
+function resolveEntityStatus(status: EntitiesTable['status']): EntityPublishState {
   switch (status) {
     case 'draft':
       return EntityPublishState.Draft;
