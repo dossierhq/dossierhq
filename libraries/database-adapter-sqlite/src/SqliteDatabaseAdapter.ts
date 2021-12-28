@@ -2,7 +2,8 @@ import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
 import { notOk, ok } from '@jonasb/datadata-core';
 import type { Context, DatabaseAdapter } from '@jonasb/datadata-server';
 import type { UniqueConstraint } from '.';
-import { adminEntityCreate } from './admin-entity/createEntity';
+import { adminCreateEntity } from './admin-entity/createEntity';
+import { adminGetEntity } from './admin-entity/getEntity';
 import { authCreateSession } from './auth/createSession';
 import { queryOne } from './QueryFunctions';
 import { schemaGetSpecification } from './schema/getSpecification';
@@ -39,10 +40,8 @@ export async function createSqliteDatabaseAdapter(
     isUniqueViolationOfConstraint: () => {
       throw new Error('TODO');
     },
-    adminEntityCreate: (...args) => adminEntityCreate(sqliteAdapter, ...args),
-    adminEntityGetOne: () => {
-      throw new Error('TODO');
-    },
+    adminEntityCreate: (...args) => adminCreateEntity(sqliteAdapter, ...args),
+    adminEntityGetOne: (...args) => adminGetEntity(sqliteAdapter, ...args),
     authCreateSession: (...args) => authCreateSession(sqliteAdapter, ...args),
     schemaGetSpecification: (...args) => schemaGetSpecification(sqliteAdapter, ...args),
     schemaUpdateSpecification: (...args) => schemaUpdateSpecification(sqliteAdapter, ...args),
