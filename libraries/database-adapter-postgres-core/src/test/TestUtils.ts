@@ -1,8 +1,8 @@
 import type { TransactionContext } from '@jonasb/datadata-server';
 import { ServerTestUtils } from '@jonasb/datadata-server';
-import type { PostgresDatabaseAdapter } from '.';
-import { createPostgresDatabaseAdapterAdapter } from '.';
-import type { UniqueConstraints } from './DatabaseSchema';
+import type { PostgresDatabaseAdapter } from '..';
+import { createPostgresDatabaseAdapterAdapter } from '..';
+import type { UniqueConstraints } from '../DatabaseSchema';
 
 type QueryFn = PostgresDatabaseAdapter['query'];
 
