@@ -12,8 +12,8 @@ import {
 } from '@jonasb/datadata-core';
 import type { AuthorizationAdapter, DatabaseAdapter, SessionContext } from '.';
 import {
+  adminCreateEntity,
   archiveEntity,
-  createEntity,
   getEntities,
   getEntity,
   getEntityHistory,
@@ -61,7 +61,7 @@ export function createServerAdminClient({
           resolve,
         } = operation as AdminClientOperation<AdminClientOperationName.createEntity>;
         resolve(
-          await createEntity(
+          await adminCreateEntity(
             serverImpl.getAdminSchema(),
             authorizationAdapter,
             databaseAdapter,

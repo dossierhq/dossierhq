@@ -298,7 +298,7 @@ function randomNameGenerator(name: string) {
   return `${name}#${Math.random().toFixed(8).slice(2)}`;
 }
 
-export async function createEntity(
+export async function adminCreateEntity(
   schema: AdminSchema,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
@@ -515,7 +515,7 @@ export async function upsertEntity(
   );
 
   if (!entityInfo) {
-    const createResult = await createEntity(
+    const createResult = await adminCreateEntity(
       schema,
       authorizationAdapter,
       databaseAdapter,
