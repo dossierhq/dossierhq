@@ -321,6 +321,7 @@ importers:
     specifiers:
       '@jonasb/datadata-core': workspace:*
       '@jonasb/datadata-server': workspace:*
+      '@js-temporal/polyfill': ~0.3.0
       '@rushstack/heft': ~0.44.0
       '@rushstack/heft-jest-plugin': ~0.2.0
       '@types/heft-jest': 1.0.2
@@ -335,6 +336,7 @@ importers:
       '@jonasb/datadata-server': link:../server
       tslib: 2.3.1
     devDependencies:
+      '@js-temporal/polyfill': 0.3.0
       '@rushstack/heft': 0.44.0
       '@rushstack/heft-jest-plugin': 0.2.0_@rushstack+heft@0.44.0
       '@types/heft-jest': 1.0.2
@@ -2717,7 +2719,6 @@ packages:
     dependencies:
       big-integer: 1.6.51
       tslib: 2.3.1
-    dev: false
 
   /@mapbox/node-pre-gyp/1.0.6:
     resolution: {integrity: sha512-qK1ECws8UxuPqOA8F5LFD90vyVU33W7N3hGfgsOVfrJaRVc8McC3JClTDHpeSbL9CBrOHly/4GsNPAvIgNZE+g==}
@@ -6503,7 +6504,6 @@ packages:
   /big-integer/1.6.51:
     resolution: {integrity: sha512-GPEid2Y9QU1Exl1rpO9B2IPJGHPSupF5GnVIP0blYvNOMer2bTvSWs1jGOUg04hTmu67nmLsQ9TBo1puaotBHg==}
     engines: {node: '>=0.6'}
-    dev: false
 
   /big.js/5.2.2:
     resolution: {integrity: sha512-vyL2OymJxmarO8gxMr0mhChsO9QGwhynfuu4+MHTAW6czfq9humCB7rKpUjDd9YUiDPU4mzpyupFSvOClAwbmQ==}
