@@ -2,6 +2,7 @@ import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
 import { notOk, ok } from '@jonasb/datadata-core';
 import type { Context, DatabaseAdapter } from '@jonasb/datadata-server';
 import type { UniqueConstraint } from '.';
+import { adminEntityCreate } from './admin-entity/createEntity';
 import { authCreateSession } from './auth/createSession';
 import { queryOne } from './QueryFunctions';
 import { schemaGetSpecification } from './schema/getSpecification';
@@ -38,12 +39,10 @@ export async function createSqliteDatabaseAdapter(
     isUniqueViolationOfConstraint: () => {
       throw new Error('TODO');
     },
+    adminEntityCreate: (...args) => adminEntityCreate(sqliteAdapter, ...args),
     authCreateSession: (...args) => authCreateSession(sqliteAdapter, ...args),
-    schemaGetSpecification: async (...args) => schemaGetSpecification(sqliteAdapter, ...args),
-    schemaUpdateSpecification: async (...args) => schemaUpdateSpecification(sqliteAdapter, ...args),
-    adminEntityCreate: () => {
-      throw new Error('TODO');
-    },
+    schemaGetSpecification: (...args) => schemaGetSpecification(sqliteAdapter, ...args),
+    schemaUpdateSpecification: (...args) => schemaUpdateSpecification(sqliteAdapter, ...args),
   };
   return ok(adapter);
 }
@@ -53,8 +52,8 @@ async function checkAdapterValidity(
   adapter: SqliteDatabaseAdapter
 ): PromiseResult<void, ErrorType.Generic | ErrorType.BadRequest> {
   const result = await queryOne<{ version: string }>(
-    context,
     adapter,
+    context,
     'SELECT sqlite_version() AS version',
     undefined
   );

@@ -1,5 +1,5 @@
 import { assertIsDefined } from '@jonasb/datadata-core';
-import { createAuthTestSuite } from '@jonasb/datadata-database-adapter-test-integration';
+import { createAdminEntityTestSuite } from '@jonasb/datadata-database-adapter-test-integration';
 import type { Server } from '@jonasb/datadata-server';
 import { registerTestSuite } from '../../TestUtils';
 import { initializeSqlite3Server } from './Sqlite3TestUtils';
@@ -19,10 +19,19 @@ afterAll(async () => {
 });
 
 registerTestSuite(
-  createAuthTestSuite({
+  createAdminEntityTestSuite({
     before: async () => {
       assertIsDefined(server);
-      return [{ server }, undefined];
+      const resolvedServer = server;
+      const client = server.createAdminClient(() =>
+        resolvedServer.createSession({
+          provider: 'test',
+          identifier: 'id',
+          defaultAuthKeys: ['none'],
+        })
+      );
+
+      return [{ client }, undefined];
     },
     after: async () => {
       //empty

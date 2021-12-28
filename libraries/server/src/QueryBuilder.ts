@@ -1,17 +1,18 @@
 /** This is not a general purpose SQL query builder, please ensure that the resulting SQL is what you're after.
  *
  */
-export class QueryBuilder {
+export class QueryBuilder<TValue = unknown> {
   #query: string;
-  #values: unknown[] = [];
-  constructor(query: string, values?: unknown[]) {
+  #values: TValue[] = [];
+
+  constructor(query: string, values?: TValue[]) {
     this.#query = query;
     if (values) {
       this.#values.push(...values);
     }
   }
 
-  build(): { text: string; values: unknown[] } {
+  build(): { text: string; values: TValue[] } {
     let text = this.#query;
     if (this.#query.endsWith('WHERE')) {
       text = text.slice(0, -'WHERE'.length).trimEnd();
@@ -41,12 +42,12 @@ export class QueryBuilder {
     this.#query += separator + segmentToAdd;
   }
 
-  addValue(value: unknown): string {
+  addValue(value: TValue): string {
     this.#values.push(value);
     return '$' + this.#values.length;
   }
 
-  addValueOrDefault(value: unknown): string {
+  addValueOrDefault(value: TValue | null | undefined): string {
     if (value === null || value === undefined) {
       return 'DEFAULT';
     }

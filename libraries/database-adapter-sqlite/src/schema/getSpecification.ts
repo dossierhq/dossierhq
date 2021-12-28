@@ -14,8 +14,8 @@ export async function schemaGetSpecification(
   context: TransactionContext
 ): PromiseResult<AdminSchemaSpecification | null, ErrorType.Generic> {
   const result = await queryNoneOrOne<Pick<SchemaVersionsTable, 'specification'>>(
-    context,
     adapter,
+    context,
     'SELECT specification FROM schema_versions ORDER BY id DESC LIMIT 1'
   );
   if (result.isError()) {
