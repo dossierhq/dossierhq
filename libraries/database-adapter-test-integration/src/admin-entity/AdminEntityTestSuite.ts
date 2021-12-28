@@ -1,46 +1,14 @@
-import { CoreTestUtils, EntityPublishState, type AdminClient } from '@jonasb/datadata-core';
+import type { AdminClient } from '@jonasb/datadata-core';
 import type { TestFunctionInitializer, TestSuite } from '..';
 import { buildSuite } from '../Builder';
+import { CreateEntitySubSuite } from './AdminEntityCreateEntitySubSuite';
 
-const { expectOkResult, expectResultValue } = CoreTestUtils;
-
-export function createAdminEntityTestSuite<TCleanup>(
-  initializer: TestFunctionInitializer<{ client: AdminClient }, TCleanup>
-): TestSuite {
-  return buildSuite(initializer, createEntity_minimal);
+export interface AdminEntityTestContext {
+  client: AdminClient;
 }
 
-async function createEntity_minimal({ client }: { client: AdminClient }) {
-  const result = await client.createEntity({
-    info: {
-      type: 'TitleOnly',
-      name: 'TitleOnly name',
-      authKey: 'none',
-    },
-    fields: {},
-  });
-  if (expectOkResult(result)) {
-    const {
-      entity: {
-        id,
-        info: { name, createdAt, updatedAt },
-      },
-    } = result.value;
-    expectResultValue(result, {
-      effect: 'created',
-      entity: {
-        id,
-        info: {
-          type: 'TitleOnly',
-          name,
-          version: 0,
-          authKey: 'none',
-          publishingState: EntityPublishState.Draft,
-          createdAt,
-          updatedAt,
-        },
-        fields: { title: null },
-      },
-    });
-  }
+export function createAdminEntityTestSuite<TCleanup>(
+  initializer: TestFunctionInitializer<AdminEntityTestContext, TCleanup>
+): TestSuite {
+  return buildSuite(initializer, ...CreateEntitySubSuite);
 }
