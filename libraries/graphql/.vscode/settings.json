@@ -1,14 +1,15 @@
 {
   "[javascript]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
   "cSpell.words": [
-    "QLJSON",
-    "Upsert",
     "datadata",
     "graphqlid",
     "jonasb",
     "postgres",
+    "QLJSON",
     "rushstack",
+    "unarchived",
     "unpublish",
+    "Upsert",
     "uuidv"
   ],
   "editor.defaultFormatter": "esbenp.prettier-vscode",

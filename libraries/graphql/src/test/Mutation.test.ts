@@ -1945,6 +1945,7 @@ describe('publishEntities()', () => {
               __typename
               id
               status
+              effect
               updatedAt
             }
           }
@@ -1957,9 +1958,10 @@ describe('publishEntities()', () => {
         data: {
           publishEntities: [
             {
-              __typename: 'AdminEntityPublishingPayload',
+              __typename: 'AdminEntityPublishPayload',
               id,
               status: AdminEntityStatus.published,
+              effect: 'published',
               updatedAt,
             },
           ],
@@ -2063,6 +2065,7 @@ describe('unpublishEntities()', () => {
               __typename
               id
               status
+              effect
               updatedAt
             }
           }
@@ -2075,9 +2078,10 @@ describe('unpublishEntities()', () => {
         data: {
           unpublishEntities: [
             {
-              __typename: 'AdminEntityPublishingPayload',
+              __typename: 'AdminEntityUnpublishPayload',
               id,
               status: AdminEntityStatus.withdrawn,
+              effect: 'unpublished',
               updatedAt,
             },
           ],
@@ -2188,6 +2192,7 @@ describe('archiveEntity()', () => {
               __typename
               id
               status
+              effect
               updatedAt
             }
           }
@@ -2199,9 +2204,10 @@ describe('archiveEntity()', () => {
       expect(result).toEqual({
         data: {
           archiveEntity: {
-            __typename: 'AdminEntityPublishingPayload',
+            __typename: 'AdminEntityArchivePayload',
             id,
             status: AdminEntityStatus.archived,
+            effect: 'archived',
             updatedAt,
           },
         },
@@ -2281,6 +2287,7 @@ describe('unarchiveEntity()', () => {
               __typename
               id
               status
+              effect
               updatedAt
             }
           }
@@ -2292,9 +2299,10 @@ describe('unarchiveEntity()', () => {
       expect(result).toEqual({
         data: {
           unarchiveEntity: {
-            __typename: 'AdminEntityPublishingPayload',
+            __typename: 'AdminEntityUnarchivePayload',
             id,
             status: AdminEntityStatus.draft,
+            effect: 'unarchived',
             updatedAt,
           },
         },
