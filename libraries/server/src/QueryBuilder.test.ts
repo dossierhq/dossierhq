@@ -1,7 +1,7 @@
-import { QueryBuilder } from './QueryBuilder';
+import { PostgresQueryBuilder } from './QueryBuilder';
 
 test('Only original query', () => {
-  const qb = new QueryBuilder('SELECT * FROM foo WHERE a = $1', ['first']);
+  const qb = new PostgresQueryBuilder('SELECT * FROM foo WHERE a = $1', ['first']);
   expect(qb.build()).toMatchInlineSnapshot(`
     Object {
       "text": "SELECT * FROM foo WHERE a = $1",
@@ -13,7 +13,7 @@ test('Only original query', () => {
 });
 
 test('SELECT * FROM foo + WHERE a = $1', () => {
-  const qb = new QueryBuilder('SELECT * FROM foo');
+  const qb = new PostgresQueryBuilder('SELECT * FROM foo');
   qb.addQuery(`WHERE a = ${qb.addValue('first')}`);
   expect(qb.build()).toMatchInlineSnapshot(`
     Object {
@@ -26,7 +26,7 @@ test('SELECT * FROM foo + WHERE a = $1', () => {
 });
 
 test('Trailing WHERE is removed', () => {
-  const qb = new QueryBuilder('SELECT * FROM foo WHERE');
+  const qb = new PostgresQueryBuilder('SELECT * FROM foo WHERE');
   expect(qb.build()).toMatchInlineSnapshot(`
     Object {
       "text": "SELECT * FROM foo",
@@ -36,7 +36,7 @@ test('Trailing WHERE is removed', () => {
 });
 
 test('Starting AND is removed when adding to trailing WHERE', () => {
-  const qb = new QueryBuilder('SELECT * FROM foo WHERE');
+  const qb = new PostgresQueryBuilder('SELECT * FROM foo WHERE');
   qb.addQuery('AND bar = 1');
   expect(qb.build()).toMatchInlineSnapshot(`
     Object {
@@ -47,7 +47,7 @@ test('Starting AND is removed when adding to trailing WHERE', () => {
 });
 
 test('Insert multiple values', () => {
-  const qb = new QueryBuilder('INSERT INTO foo (a) VALUES');
+  const qb = new PostgresQueryBuilder('INSERT INTO foo (a) VALUES');
   qb.addQuery(`(${qb.addValue(1)})`);
   qb.addQuery(`(${qb.addValue(2)})`);
   qb.addQuery(`(${qb.addValue(3)})`);
@@ -64,7 +64,7 @@ test('Insert multiple values', () => {
 });
 
 test('Insert default value', () => {
-  const qb = new QueryBuilder('INSERT INTO foo (a) VALUES');
+  const qb = new PostgresQueryBuilder('INSERT INTO foo (a) VALUES');
   qb.addQuery(`(${qb.addValueOrDefault(null)})`);
   expect(qb.build()).toMatchInlineSnapshot(`
     Object {

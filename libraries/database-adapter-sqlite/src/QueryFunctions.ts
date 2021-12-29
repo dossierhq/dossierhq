@@ -100,3 +100,18 @@ export async function queryOne<TRow, TError extends ErrorType = ErrorType.Generi
   }
   return ok(rows[0]);
 }
+
+export async function queryMany<TRow, TError extends ErrorType = ErrorType.Generic>(
+  adapter: SqliteDatabaseAdapter,
+  context: Context,
+  query: QueryOrQueryAndValues,
+  errorConverter?: ErrorConverter<TRow, TError | ErrorType.Generic>
+): PromiseResult<TRow[], TError | ErrorType.Generic> {
+  const result = await queryCommon<TRow, TError>(
+    adapter,
+    context,
+    query,
+    errorConverter as ErrorConverter<TRow, TError>
+  );
+  return result;
+}

@@ -7,12 +7,12 @@ import type {
 } from '@jonasb/datadata-core';
 import { notOk, ok } from '@jonasb/datadata-core';
 import type { AuthorizationAdapter, DatabaseAdapter, SessionContext } from '..';
+import { PostgresQueryBuilder } from '..';
 import { authVerifyAuthorizationKey } from '../Auth';
 import * as Db from '../Database';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseTables';
-import { randomNameGenerator } from './AdminEntityMutationUtils';
 import { encodeEntity, resolveUpdateEntity } from '../EntityCodec';
-import { QueryBuilder } from '../QueryBuilder';
+import { randomNameGenerator } from './AdminEntityMutationUtils';
 
 export async function adminUpdateEntity(
   schema: AdminSchema,
@@ -119,7 +119,7 @@ export async function adminUpdateEntity(
     updatedEntity.info.updatedAt = updatedAt;
 
     if (referenceIds.length > 0) {
-      const qb = new QueryBuilder(
+      const qb = new PostgresQueryBuilder(
         'INSERT INTO entity_version_references (entity_versions_id, entities_id) VALUES',
         [versionsId]
       );
@@ -130,7 +130,7 @@ export async function adminUpdateEntity(
     }
 
     if (locations.length > 0) {
-      const qb = new QueryBuilder(
+      const qb = new PostgresQueryBuilder(
         'INSERT INTO entity_version_locations (entity_versions_id, location) VALUES',
         [versionsId]
       );

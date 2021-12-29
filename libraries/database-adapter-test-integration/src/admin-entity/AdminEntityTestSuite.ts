@@ -3,6 +3,7 @@ import type { TestFunctionInitializer, TestSuite } from '..';
 import { buildSuite } from '../Builder';
 import { CreateEntitySubSuite } from './AdminEntityCreateEntitySubSuite';
 import { GetEntitySubSuite } from './AdminEntityGetEntitySubSuite';
+import { PublishEntitiesSubSuite } from './AdminEntityPublishEntitiesSubSuite';
 
 export interface AdminEntityTestContext {
   client: AdminClient;
@@ -11,5 +12,10 @@ export interface AdminEntityTestContext {
 export function createAdminEntityTestSuite<TCleanup>(
   initializer: TestFunctionInitializer<AdminEntityTestContext, TCleanup>
 ): TestSuite {
-  return buildSuite(initializer, ...CreateEntitySubSuite, ...GetEntitySubSuite);
+  return buildSuite(
+    initializer,
+    ...CreateEntitySubSuite,
+    ...GetEntitySubSuite,
+    ...PublishEntitiesSubSuite
+  );
 }

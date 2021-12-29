@@ -9,6 +9,7 @@ export interface EntitiesTable {
   created_at: string;
   updated_at: string;
   latest_entity_versions_id: number | null;
+  published_entity_versions_id: number | null;
 }
 
 export interface EntityVersionsTable {

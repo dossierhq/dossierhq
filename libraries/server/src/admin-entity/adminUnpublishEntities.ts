@@ -12,12 +12,12 @@ import {
   ok,
 } from '@jonasb/datadata-core';
 import type { AuthorizationAdapter, DatabaseAdapter, SessionContext } from '..';
+import { PostgresQueryBuilder } from '..';
 import { authVerifyAuthorizationKey } from '../Auth';
 import * as Db from '../Database';
 import type { EntitiesTable } from '../DatabaseTables';
-import { checkUUIDsAreUnique } from './AdminEntityMutationUtils';
 import { resolveEntityStatus } from '../EntityCodec';
-import { QueryBuilder } from '../QueryBuilder';
+import { checkUUIDsAreUnique } from './AdminEntityMutationUtils';
 
 export async function adminUnpublishEntities(
   databaseAdapter: DatabaseAdapter,
@@ -150,7 +150,7 @@ export async function adminUnpublishEntities(
 
     // Step 4: Create publish event
     if (publishedEntitiesInfo.length > 0) {
-      const qb = new QueryBuilder(
+      const qb = new PostgresQueryBuilder(
         'INSERT INTO entity_publishing_events (entities_id, entity_versions_id, published_by, kind) VALUES'
       );
       const subjectValue = qb.addValue(context.session.subjectInternalId);

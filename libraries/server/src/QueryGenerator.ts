@@ -8,12 +8,12 @@ import type {
   Schema,
 } from '@jonasb/datadata-core';
 import { AdminQueryOrder, notOk, ok, QueryOrder } from '@jonasb/datadata-core';
+import { PostgresQueryBuilder } from '.';
 import type { ResolvedAuthKey } from './Auth';
 import type { CursorNativeType } from './Connection';
 import { toOpaqueCursor } from './Connection';
 import type { EntitiesTable, EntityVersionsTable } from './DatabaseTables';
 import { resolvePaging } from './Paging';
-import { QueryBuilder } from './QueryBuilder';
 
 // id and updated are included for order by
 export type SearchAdminEntitiesItem = Pick<
@@ -75,7 +75,7 @@ function sharedSearchEntitiesQuery<
   }
   const resolvedPaging = pagingResult.value;
 
-  const qb = new QueryBuilder('SELECT');
+  const qb = new PostgresQueryBuilder('SELECT');
   if (query?.boundingBox) {
     qb.addQuery('DISTINCT');
   }
@@ -249,7 +249,7 @@ function queryOrderToCursor<TItem extends SearchAdminEntitiesItem | SearchPublis
   }
 }
 
-function addFilterStatusSqlSegment(query: AdminQuery, qb: QueryBuilder) {
+function addFilterStatusSqlSegment(query: AdminQuery, qb: PostgresQueryBuilder) {
   if (!query.status || query.status.length === 0) {
     return;
   }
@@ -282,7 +282,7 @@ function totalCountQuery(
   query: AdminQuery | Query | undefined,
   published: boolean
 ): Result<{ text: string; values: unknown[] }, ErrorType.BadRequest> {
-  const qb = new QueryBuilder('SELECT');
+  const qb = new PostgresQueryBuilder('SELECT');
   // Convert count to ::integer since count() is bigint (js doesn't support 64 bit numbers so pg return it as string)
   if (query?.boundingBox) {
     qb.addQuery('COUNT(DISTINCT e.id)::integer');

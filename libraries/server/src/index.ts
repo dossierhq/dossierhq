@@ -14,7 +14,7 @@ export type {
   Transaction,
 } from './DatabaseAdapter';
 export * as DatabaseTables from './DatabaseTables'; //TODO move to postgres-core
-export { QueryBuilder } from './QueryBuilder'; //TODO move?
+export { SqliteQueryBuilder, PostgresQueryBuilder } from './QueryBuilder'; //TODO move?
 export { createServer } from './Server';
 export type { CreateSessionPayload, Server } from './Server';
 export * as ServerTestUtils from './ServerTestUtils';

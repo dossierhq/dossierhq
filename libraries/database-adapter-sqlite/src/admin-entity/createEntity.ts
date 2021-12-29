@@ -1,6 +1,6 @@
 import { notOk, ok, type ErrorType, type PromiseResult } from '@jonasb/datadata-core';
 import {
-  QueryBuilder,
+  SqliteQueryBuilder,
   type DatabaseAdminEntityCreateEntityArg,
   type DatabaseAdminEntityCreatePayload,
   type TransactionContext,
@@ -35,7 +35,7 @@ export async function adminCreateEntity(
     databaseAdapter,
     context,
     {
-      text: 'INSERT INTO entity_versions (entities_id, version, created_by, fields) VALUES ($1, 0, $2, $3) RETURNING id',
+      text: 'INSERT INTO entity_versions (entities_id, version, created_by, fields) VALUES (?1, 0, ?2, ?3) RETURNING id',
       values: [entityId, entity.creator.subjectInternalId, JSON.stringify(entity.fieldsData)],
     }
   );
@@ -45,7 +45,7 @@ export async function adminCreateEntity(
   const { id: versionsId } = createEntityVersionResult.value;
 
   const updateLatestDraftIdResult = await queryNone(databaseAdapter, context, {
-    text: 'UPDATE entities SET latest_entity_versions_id = $1 WHERE id = $2',
+    text: 'UPDATE entities SET latest_entity_versions_id = ?1 WHERE id = ?2',
     values: [versionsId, entityId],
   });
   if (updateLatestDraftIdResult.isError()) {
@@ -53,24 +53,24 @@ export async function adminCreateEntity(
   }
 
   if (entity.referenceIds.length > 0) {
-    const qb = new QueryBuilder(
+    const qb = new SqliteQueryBuilder(
       'INSERT INTO entity_version_references (entity_versions_id, entities_id) VALUES',
       [versionsId]
     );
     for (const referenceId of entity.referenceIds) {
-      qb.addQuery(`($1, ${qb.addValue(referenceId)})`);
+      qb.addQuery(`(?1, ${qb.addValue(referenceId)})`);
     }
     //TODO check result
     await queryNone(databaseAdapter, context, qb.build());
   }
   if (entity.locations.length > 0) {
-    const qb = new QueryBuilder(
+    const qb = new SqliteQueryBuilder(
       'INSERT INTO entity_version_locations (entity_versions_id, location) VALUES',
       [versionsId]
     );
     for (const location of entity.locations) {
       qb.addQuery(
-        `($1, ST_SetSRID(ST_Point(${qb.addValue(location.lng)}, ${qb.addValue(
+        `(?1, ST_SetSRID(ST_Point(${qb.addValue(location.lng)}, ${qb.addValue(
           location.lat
         )}), 4326))`
       );
@@ -103,7 +103,7 @@ async function createEntityRow(
         context,
         {
           text: `INSERT INTO entities (uuid, name, type, auth_key, resolved_auth_key, status, created_at, updated_at)
-                 VALUES ($1, $2, $3, $4, $5, $6, $7, $7) RETURNING id`,
+                 VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?7) RETURNING id`,
           values: [
             uuid,
             name,

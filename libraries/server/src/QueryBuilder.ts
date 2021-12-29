@@ -2,10 +2,12 @@
  *
  */
 export class QueryBuilder<TValue = unknown> {
+  #valueIndexPrefix: string;
   #query: string;
   #values: TValue[] = [];
 
-  constructor(query: string, values?: TValue[]) {
+  constructor(valueIndexPrefix: string, query: string, values?: TValue[]) {
+    this.#valueIndexPrefix = valueIndexPrefix;
     this.#query = query;
     if (values) {
       this.#values.push(...values);
@@ -44,7 +46,7 @@ export class QueryBuilder<TValue = unknown> {
 
   addValue(value: TValue): string {
     this.#values.push(value);
-    return '$' + this.#values.length;
+    return this.#valueIndexPrefix + this.#values.length;
   }
 
   addValueOrDefault(value: TValue | null | undefined): string {
@@ -52,6 +54,19 @@ export class QueryBuilder<TValue = unknown> {
       return 'DEFAULT';
     }
     return this.addValue(value);
+  }
+}
+
+type SqliteColumnValue = number | string | Uint8Array | null;
+export class SqliteQueryBuilder extends QueryBuilder<SqliteColumnValue> {
+  constructor(query: string, values?: SqliteColumnValue[]) {
+    super('?', query, values);
+  }
+}
+
+export class PostgresQueryBuilder extends QueryBuilder<unknown> {
+  constructor(query: string, values?: unknown[]) {
+    super('$', query, values);
   }
 }
 

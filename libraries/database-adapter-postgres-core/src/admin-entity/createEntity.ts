@@ -1,6 +1,6 @@
 import { notOk, ok, type ErrorType, type PromiseResult } from '@jonasb/datadata-core';
 import {
-  QueryBuilder,
+  PostgresQueryBuilder,
   type DatabaseAdminEntityCreateEntityArg,
   type DatabaseAdminEntityCreatePayload,
   type TransactionContext,
@@ -50,7 +50,7 @@ export async function adminCreateEntity(
   }
 
   if (entity.referenceIds.length > 0) {
-    const qb = new QueryBuilder(
+    const qb = new PostgresQueryBuilder(
       'INSERT INTO entity_version_references (entity_versions_id, entities_id) VALUES',
       [versionsId]
     );
@@ -61,7 +61,7 @@ export async function adminCreateEntity(
     await queryNone(databaseAdapter, context, qb.build());
   }
   if (entity.locations.length > 0) {
-    const qb = new QueryBuilder(
+    const qb = new PostgresQueryBuilder(
       'INSERT INTO entity_version_locations (entity_versions_id, location) VALUES',
       [versionsId]
     );
@@ -91,7 +91,7 @@ async function createEntityRow(
     entity.name,
     randomNameGenerator,
     async (context, name, nameConflictErrorMessage) => {
-      const qb = new QueryBuilder(
+      const qb = new PostgresQueryBuilder(
         'INSERT INTO entities (uuid, name, type, auth_key, resolved_auth_key, latest_fts, status)'
       );
       qb.addQuery(
