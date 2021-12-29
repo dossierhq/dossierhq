@@ -112,7 +112,7 @@ function EntityMarker({
           tooltip={
             <>
               {`${entity.info.type}: ${entity.info.name}`}
-              <PublishStateTag publishState={entity.info.publishingState} />
+              <PublishStateTag publishState={entity.info.status} />
             </>
           }
           onClick={onClick}

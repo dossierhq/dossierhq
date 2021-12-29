@@ -14,7 +14,7 @@ Deno.test("copyEntity()", () => {
       name: "Hello",
       version: 0,
       authKey: "none",
-      publishingState: EntityPublishState.Draft,
+      status: EntityPublishState.Draft,
       createdAt: Temporal.Now.instant(),
       updatedAt: Temporal.Now.instant(),
     },

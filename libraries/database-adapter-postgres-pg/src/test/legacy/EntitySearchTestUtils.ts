@@ -245,7 +245,7 @@ export async function countSearchResultStatuses(
     for (const edge of pageResult.value.edges) {
       if (edge.node.isOk()) {
         const entity = edge.node.value;
-        result[entity.info.publishingState] += 1;
+        result[entity.info.status] += 1;
       }
     }
   }

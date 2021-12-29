@@ -323,7 +323,7 @@ export async function adminCreateEntity(
       info: {
         ...createEntity.info,
         name,
-        publishingState: EntityPublishState.Draft,
+        status: EntityPublishState.Draft,
         version: 0,
         createdAt,
         updatedAt,
@@ -433,7 +433,7 @@ export async function updateEntity(
         status = $3
       WHERE id = $4
       RETURNING updated_at`,
-      [versionsId, fullTextSearchText.join(' '), updatedEntity.info.publishingState, entityId]
+      [versionsId, fullTextSearchText.join(' '), updatedEntity.info.status, entityId]
     );
 
     updatedEntity.info.updatedAt = updatedAt;

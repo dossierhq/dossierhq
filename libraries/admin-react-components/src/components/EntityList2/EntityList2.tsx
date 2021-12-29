@@ -74,7 +74,7 @@ export function EntityList2({ searchEntityState, dispatchSearchEntityState, onIt
                 <Table.Cell>{entity.info.name}</Table.Cell>
                 <Table.Cell>{entity.info.type}</Table.Cell>
                 <Table.Cell narrow>
-                  <StatusTag status={entity.info.publishingState} />
+                  <StatusTag status={entity.info.status} />
                 </Table.Cell>
                 <Table.Cell narrow>
                   <AuthKeyTag

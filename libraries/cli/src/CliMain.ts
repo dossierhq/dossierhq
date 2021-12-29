@@ -37,9 +37,9 @@ function createMainActions(state: State): Array<MainActionItem | ItemSelectorSep
         if (result.isOk()) {
           const {
             id,
-            info: { publishingState },
+            info: { status },
           } = result.value;
-          state.currentEntity = { id, publishState: publishingState };
+          state.currentEntity = { id, publishState: status };
         }
       },
     },
@@ -51,9 +51,9 @@ function createMainActions(state: State): Array<MainActionItem | ItemSelectorSep
         if (createdEntity) {
           const {
             id,
-            info: { publishingState },
+            info: { status },
           } = createdEntity;
-          state.currentEntity = { id, publishState: publishingState };
+          state.currentEntity = { id, publishState: status };
         }
       },
     },
@@ -74,7 +74,7 @@ function createMainActions(state: State): Array<MainActionItem | ItemSelectorSep
         assertIsDefined(state.currentEntity);
         const entity = await CliEntityAdmin.editEntity(state.context, state.currentEntity.id);
         if (entity) {
-          state.currentEntity.publishState = entity.info.publishingState;
+          state.currentEntity.publishState = entity.info.status;
         }
       },
     },

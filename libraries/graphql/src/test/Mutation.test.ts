@@ -96,7 +96,7 @@ mutation CreateFooEntity($entity: AdminMutationFooCreateInput!) {
         name
         version
         authKey
-        publishingState
+        status
         createdAt
         updatedAt
       }
@@ -130,7 +130,7 @@ mutation UpsertFooEntity($entity: AdminMutationFooUpsertInput!) {
         name
         version
         authKey
-        publishingState
+        status
         createdAt
         updatedAt
       }
@@ -207,7 +207,7 @@ describe('create*Entity()', () => {
               name,
               version: 0,
               authKey: 'none',
-              publishingState: EntityPublishState.Draft,
+              status: EntityPublishState.Draft,
               createdAt,
               updatedAt,
             },
@@ -234,7 +234,7 @@ describe('create*Entity()', () => {
         name,
         version: 0,
         authKey: 'none',
-        publishingState: EntityPublishState.Draft,
+        status: EntityPublishState.Draft,
         createdAt: Temporal.Instant.from(createdAt),
         updatedAt: Temporal.Instant.from(updatedAt),
       },
@@ -288,7 +288,7 @@ describe('create*Entity()', () => {
               name,
               version: 0,
               authKey: 'none',
-              publishingState: EntityPublishState.Draft,
+              status: EntityPublishState.Draft,
               createdAt,
               updatedAt,
             },
@@ -343,7 +343,7 @@ describe('create*Entity()', () => {
                   name
                   version
                   authKey
-                  publishingState
+                  status
                   createdAt
                   updatedAt
                 }
@@ -377,7 +377,7 @@ describe('create*Entity()', () => {
                 name: fooName,
                 version: 0,
                 authKey: 'none',
-                publishingState: EntityPublishState.Draft,
+                status: EntityPublishState.Draft,
                 createdAt,
                 updatedAt,
               },
@@ -404,7 +404,7 @@ describe('create*Entity()', () => {
           name: fooName,
           version: 0,
           authKey: 'none',
-          publishingState: EntityPublishState.Draft,
+          status: EntityPublishState.Draft,
           createdAt: Temporal.Instant.from(createdAt),
           updatedAt: Temporal.Instant.from(updatedAt),
         },
@@ -463,7 +463,7 @@ describe('create*Entity()', () => {
                   name
                   version
                   authKey
-                  publishingState
+                  status
                   createdAt
                   updatedAt
                 }
@@ -501,7 +501,7 @@ describe('create*Entity()', () => {
                 name: fooName,
                 version: 0,
                 authKey: 'none',
-                publishingState: EntityPublishState.Draft,
+                status: EntityPublishState.Draft,
                 createdAt,
                 updatedAt,
               },
@@ -523,7 +523,7 @@ describe('create*Entity()', () => {
           name: fooName,
           version: 0,
           authKey: 'none',
-          publishingState: EntityPublishState.Draft,
+          status: EntityPublishState.Draft,
           createdAt: Temporal.Instant.from(createdAt),
           updatedAt: Temporal.Instant.from(updatedAt),
         },
@@ -646,7 +646,7 @@ describe('create*Entity()', () => {
           name: fooName,
           version: 0,
           authKey: 'none',
-          publishingState: EntityPublishState.Draft,
+          status: EntityPublishState.Draft,
           createdAt: Temporal.Instant.from(createdAt),
           updatedAt: Temporal.Instant.from(updatedAt),
         },
@@ -779,7 +779,7 @@ describe('create*Entity()', () => {
           name: fooName,
           version: 0,
           authKey: 'none',
-          publishingState: EntityPublishState.Draft,
+          status: EntityPublishState.Draft,
           createdAt: Temporal.Instant.from(createdAt),
           updatedAt: Temporal.Instant.from(updatedAt),
         },
@@ -910,7 +910,7 @@ describe('create*Entity()', () => {
           name: fooName,
           version: 0,
           authKey: 'none',
-          publishingState: EntityPublishState.Draft,
+          status: EntityPublishState.Draft,
           createdAt: Temporal.Instant.from(createdAt),
           updatedAt: Temporal.Instant.from(updatedAt),
         },
@@ -1033,7 +1033,7 @@ describe('create*Entity()', () => {
         name: fooName,
         version: 0,
         authKey: 'none',
-        publishingState: EntityPublishState.Draft,
+        status: EntityPublishState.Draft,
         createdAt: Temporal.Instant.from(createdAt),
         updatedAt: Temporal.Instant.from(updatedAt),
       },
@@ -1205,7 +1205,7 @@ describe('update*Entity()', () => {
                   name
                   version
                   authKey
-                  publishingState
+                  status
                   createdAt
                   updatedAt
                 }
@@ -1238,7 +1238,7 @@ describe('update*Entity()', () => {
                 name,
                 version: 1,
                 authKey: 'none',
-                publishingState: EntityPublishState.Draft,
+                status: EntityPublishState.Draft,
                 createdAt: createdAt.toString(),
                 updatedAt: updatedAtString,
               },
@@ -1260,7 +1260,7 @@ describe('update*Entity()', () => {
           name,
           version: 1,
           authKey: 'none',
-          publishingState: EntityPublishState.Draft,
+          status: EntityPublishState.Draft,
           createdAt,
           updatedAt: Temporal.Instant.from(updatedAtString),
         },
@@ -1301,7 +1301,7 @@ describe('update*Entity()', () => {
                   name
                   version
                   authKey
-                  publishingState
+                  status
                 }
                 fields {
                   title
@@ -1334,7 +1334,7 @@ describe('update*Entity()', () => {
                 name,
                 version: 1,
                 authKey: 'none',
-                publishingState: EntityPublishState.Draft,
+                status: EntityPublishState.Draft,
               },
               fields: {
                 title: 'Updated title',
@@ -1561,7 +1561,7 @@ describe('update*Entity()', () => {
             name: name,
             version: 1,
             authKey: 'none',
-            publishingState: EntityPublishState.Draft,
+            status: EntityPublishState.Draft,
             createdAt: Temporal.Instant.from(createdAt),
             updatedAt: Temporal.Instant.from(updatedAt),
           },
@@ -1728,7 +1728,7 @@ describe('upsert*Entity()', () => {
               name,
               version: 0,
               authKey: 'none',
-              publishingState: EntityPublishState.Draft,
+              status: EntityPublishState.Draft,
               createdAt,
               updatedAt,
             },
@@ -1750,7 +1750,7 @@ describe('upsert*Entity()', () => {
         name,
         version: 0,
         authKey: 'none',
-        publishingState: EntityPublishState.Draft,
+        status: EntityPublishState.Draft,
         createdAt: Temporal.Instant.from(createdAt),
         updatedAt: Temporal.Instant.from(updatedAt),
       },
@@ -1801,7 +1801,7 @@ describe('upsert*Entity()', () => {
                 name,
                 version: 1,
                 authKey: 'none',
-                publishingState: EntityPublishState.Draft,
+                status: EntityPublishState.Draft,
                 createdAt,
                 updatedAt,
               },
@@ -1823,7 +1823,7 @@ describe('upsert*Entity()', () => {
           name,
           version: 1,
           authKey: 'none',
-          publishingState: EntityPublishState.Draft,
+          status: EntityPublishState.Draft,
           createdAt: Temporal.Instant.from(createdAt),
           updatedAt: Temporal.Instant.from(updatedAt),
         },
@@ -1875,7 +1875,7 @@ describe('upsert*Entity()', () => {
                 name,
                 version: 0,
                 authKey: 'none',
-                publishingState: EntityPublishState.Draft,
+                status: EntityPublishState.Draft,
                 createdAt,
                 updatedAt,
               },

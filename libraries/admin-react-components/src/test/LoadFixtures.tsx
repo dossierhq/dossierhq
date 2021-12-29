@@ -50,7 +50,7 @@ async function loadFixtures(adminClient: AdminClient): PromiseResult<void, Error
     if (
       typeof publishedVersion === 'number' &&
       ![EntityPublishState.Published, EntityPublishState.Modified].includes(
-        upsertResult.value.entity.info.publishingState
+        upsertResult.value.entity.info.status
       )
     ) {
       const publishResult = await adminClient.publishEntities([{ id, version: publishedVersion }]);

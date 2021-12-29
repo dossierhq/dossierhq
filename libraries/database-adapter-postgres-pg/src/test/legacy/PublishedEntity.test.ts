@@ -173,7 +173,7 @@ async function createAndPublishEntities(
   for (let i = 0; i < result.length; i += 1) {
     const entityInfo = result[i].entity.info;
     const { publishState, updatedAt } = publishResult.value[i];
-    entityInfo.publishingState = publishState;
+    entityInfo.status = publishState;
     entityInfo.updatedAt = updatedAt;
   }
 

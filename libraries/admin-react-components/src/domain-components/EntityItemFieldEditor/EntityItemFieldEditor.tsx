@@ -48,7 +48,7 @@ export function EntityItemFieldEditor({
       <Row>
         <Button id={id} onClick={handleShow}>
           {entity ? entity.info.name : value ? value.id : 'Select entity'}
-          {entity ? <PublishStateTag publishState={entity.info.publishingState} /> : null}
+          {entity ? <PublishStateTag publishState={entity.info.status} /> : null}
         </Button>
         {entity ? <Button onClick={handleEditEntity}>Edit</Button> : null}
         {value ? (

@@ -353,7 +353,7 @@ describe('getEntity()', () => {
             name,
             version: 1,
             authKey: 'none',
-            publishingState: EntityPublishState.Draft,
+            status: EntityPublishState.Draft,
             createdAt,
             updatedAt,
           },
@@ -406,7 +406,7 @@ describe('getEntities()', () => {
             name: foo2Name,
             version: 0,
             authKey: 'none',
-            publishingState: EntityPublishState.Draft,
+            status: EntityPublishState.Draft,
             createdAt: createdAt2,
             updatedAt: updatedAt2,
           },
@@ -419,7 +419,7 @@ describe('getEntities()', () => {
             name: foo1Name,
             version: 0,
             authKey: 'none',
-            publishingState: EntityPublishState.Draft,
+            status: EntityPublishState.Draft,
             createdAt: createdAt1,
             updatedAt: updatedAt1,
           },
@@ -464,7 +464,7 @@ describe('getEntities()', () => {
               name: fooName,
               version: 1,
               authKey: 'none',
-              publishingState: EntityPublishState.Draft,
+              status: EntityPublishState.Draft,
               createdAt,
               updatedAt,
             },
@@ -510,7 +510,7 @@ describe('getEntities()', () => {
             name: foo2Name,
             authKey: 'subject',
             version: 0,
-            publishingState: EntityPublishState.Draft,
+            status: EntityPublishState.Draft,
             createdAt,
             updatedAt,
           },
@@ -559,7 +559,7 @@ describe('createEntity()', () => {
           name,
           version: 0,
           authKey: 'none',
-          publishingState: EntityPublishState.Draft,
+          status: EntityPublishState.Draft,
           createdAt,
           updatedAt,
         },
@@ -575,7 +575,7 @@ describe('createEntity()', () => {
           { id, publishState: EntityPublishState.Published, updatedAt },
         ]);
 
-        expectedEntity.info.publishingState = EntityPublishState.Published;
+        expectedEntity.info.status = EntityPublishState.Published;
         expectedEntity.info.updatedAt = updatedAt;
       }
 
@@ -625,7 +625,7 @@ describe('createEntity()', () => {
             name,
             version: 0,
             authKey: 'none',
-            publishingState: EntityPublishState.Draft,
+            status: EntityPublishState.Draft,
             createdAt,
             updatedAt,
           },
@@ -652,7 +652,7 @@ describe('createEntity()', () => {
           name,
           version: 0,
           authKey: 'none',
-          publishingState: EntityPublishState.Draft,
+          status: EntityPublishState.Draft,
           createdAt,
           updatedAt,
         },
@@ -686,7 +686,7 @@ describe('createEntity()', () => {
             name,
             version: 0,
             authKey: 'none',
-            publishingState: EntityPublishState.Draft,
+            status: EntityPublishState.Draft,
             createdAt,
             updatedAt,
           },
@@ -731,7 +731,7 @@ describe('createEntity()', () => {
           version: 0,
           name,
           authKey: 'none',
-          publishingState: EntityPublishState.Draft,
+          status: EntityPublishState.Draft,
           createdAt,
           updatedAt,
         },
@@ -776,7 +776,7 @@ describe('createEntity()', () => {
             name,
             version: 0,
             authKey: 'none',
-            publishingState: EntityPublishState.Draft,
+            status: EntityPublishState.Draft,
             createdAt,
             updatedAt,
           },
@@ -803,7 +803,7 @@ describe('createEntity()', () => {
             { id: barId, publishState: EntityPublishState.Published, updatedAt: barUpdatedAt },
           ]);
 
-          expectedFooEntity.info.publishingState = EntityPublishState.Published;
+          expectedFooEntity.info.status = EntityPublishState.Published;
           expectedFooEntity.info.updatedAt = fooUpdatedAt;
         }
 
@@ -844,7 +844,7 @@ describe('createEntity()', () => {
           name,
           version: 0,
           authKey: 'none',
-          publishingState: EntityPublishState.Draft,
+          status: EntityPublishState.Draft,
           createdAt,
           updatedAt,
         },
@@ -883,7 +883,7 @@ describe('createEntity()', () => {
           name,
           version: 0,
           authKey: 'none',
-          publishingState: EntityPublishState.Draft,
+          status: EntityPublishState.Draft,
           createdAt,
           updatedAt,
         },
@@ -926,7 +926,7 @@ describe('createEntity()', () => {
           name,
           version: 0,
           authKey: 'none',
-          publishingState: EntityPublishState.Draft,
+          status: EntityPublishState.Draft,
           createdAt,
           updatedAt,
         },
@@ -1006,7 +1006,7 @@ describe('createEntity()', () => {
             name: bazName,
             version: 0,
             authKey: 'none',
-            publishingState: EntityPublishState.Draft,
+            status: EntityPublishState.Draft,
             createdAt,
             updatedAt,
           },
@@ -1074,7 +1074,7 @@ describe('createEntity()', () => {
           name,
           version: 0,
           authKey: 'none',
-          publishingState: EntityPublishState.Draft,
+          status: EntityPublishState.Draft,
           createdAt,
           updatedAt,
         },
@@ -1133,7 +1133,7 @@ describe('createEntity()', () => {
             name: name,
             version: 0,
             authKey: 'none',
-            publishingState: EntityPublishState.Draft,
+            status: EntityPublishState.Draft,
             createdAt,
             updatedAt,
           },
@@ -1174,7 +1174,7 @@ describe('createEntity()', () => {
           name,
           version: 0,
           authKey: 'none',
-          publishingState: EntityPublishState.Draft,
+          status: EntityPublishState.Draft,
           createdAt,
           updatedAt,
         },
@@ -1216,7 +1216,7 @@ describe('createEntity()', () => {
           name,
           version: 0,
           authKey: 'none',
-          publishingState: EntityPublishState.Draft,
+          status: EntityPublishState.Draft,
           createdAt,
           updatedAt,
         },
@@ -1258,7 +1258,7 @@ describe('createEntity()', () => {
           name,
           version: 0,
           authKey: 'none',
-          publishingState: EntityPublishState.Draft,
+          status: EntityPublishState.Draft,
           createdAt,
           updatedAt,
         },
@@ -1311,7 +1311,7 @@ describe('createEntity()', () => {
             name: bazName,
             version: 0,
             authKey: 'none',
-            publishingState: EntityPublishState.Draft,
+            status: EntityPublishState.Draft,
             createdAt,
             updatedAt,
           },
@@ -1390,7 +1390,7 @@ describe('createEntity()', () => {
             name: bazName,
             version: 0,
             authKey: 'none',
-            publishingState: EntityPublishState.Draft,
+            status: EntityPublishState.Draft,
             createdAt,
             updatedAt,
           },
@@ -1471,7 +1471,7 @@ describe('createEntity()', () => {
           name: bazName,
           version: 0,
           authKey: 'none',
-          publishingState: EntityPublishState.Draft,
+          status: EntityPublishState.Draft,
           createdAt,
           updatedAt,
         },
@@ -2739,7 +2739,7 @@ describe('updateEntity()', () => {
           name: createResult.value.entity.info.name,
           version: 0,
           authKey: 'none',
-          publishingState: EntityPublishState.Draft,
+          status: EntityPublishState.Draft,
           createdAt,
           updatedAt: createResult.value.entity.info.updatedAt,
         },
@@ -2778,7 +2778,7 @@ describe('updateEntity()', () => {
             { id, publishState: EntityPublishState.Published, updatedAt },
           ]);
 
-          expectedEntity.info.publishingState = EntityPublishState.Published;
+          expectedEntity.info.status = EntityPublishState.Published;
           expectedEntity.info.updatedAt = updatedAt;
         }
 
@@ -2875,7 +2875,7 @@ describe('updateEntity()', () => {
           name: createResult.value.entity.info.name,
           version: 0,
           authKey: 'none',
-          publishingState: EntityPublishState.Draft,
+          status: EntityPublishState.Draft,
           createdAt,
           updatedAt: createResult.value.entity.info.updatedAt,
         },
@@ -2894,7 +2894,7 @@ describe('updateEntity()', () => {
           { id, publishState: EntityPublishState.Published, updatedAt },
         ]);
 
-        expectedEntity.info.publishingState = EntityPublishState.Published;
+        expectedEntity.info.status = EntityPublishState.Published;
       }
 
       const updateResult = await client.updateEntity({
@@ -2912,7 +2912,7 @@ describe('updateEntity()', () => {
 
         expectedEntity.info.name = name;
         expectedEntity.info.updatedAt = updateResult.value.entity.info.updatedAt;
-        expectedEntity.info.publishingState = EntityPublishState.Modified;
+        expectedEntity.info.status = EntityPublishState.Modified;
         expectedEntity.info.version = 1;
         expectedEntity.fields.title = 'Updated title';
 
@@ -2976,7 +2976,7 @@ describe('updateEntity()', () => {
           name: createResult.value.entity.info.name,
           version: 1,
           authKey: 'none',
-          publishingState: EntityPublishState.Draft,
+          status: EntityPublishState.Draft,
           createdAt,
           updatedAt: createResult.value.entity.info.updatedAt,
         },
@@ -3000,7 +3000,7 @@ describe('updateEntity()', () => {
           { id, publishState: EntityPublishState.Published, updatedAt },
         ]);
 
-        expectedEntity.info.publishingState = EntityPublishState.Published;
+        expectedEntity.info.status = EntityPublishState.Published;
         expectedEntity.info.updatedAt = updatedAt;
       }
 
@@ -3063,7 +3063,7 @@ describe('updateEntity()', () => {
           name: createResult.value.entity.info.name,
           version: 0,
           authKey: 'none',
-          publishingState: EntityPublishState.Draft,
+          status: EntityPublishState.Draft,
           createdAt,
           updatedAt: createResult.value.entity.info.updatedAt,
         },
@@ -3094,7 +3094,7 @@ describe('updateEntity()', () => {
           { id, publishState: EntityPublishState.Published, updatedAt },
         ]);
 
-        expectedEntity.info.publishingState = EntityPublishState.Published;
+        expectedEntity.info.status = EntityPublishState.Published;
         expectedEntity.info.updatedAt = updatedAt;
       }
 
@@ -3214,7 +3214,7 @@ describe('updateEntity()', () => {
           version: 0,
           name: createResult.value.entity.info.name,
           authKey: 'none',
-          publishingState: EntityPublishState.Draft,
+          status: EntityPublishState.Draft,
           createdAt: createResult.value.entity.info.createdAt,
           updatedAt: createResult.value.entity.info.updatedAt,
         },
@@ -3259,7 +3259,7 @@ describe('updateEntity()', () => {
           name: createFooResult.value.entity.info.name,
           version: 0,
           authKey: 'none',
-          publishingState: EntityPublishState.Draft,
+          status: EntityPublishState.Draft,
           createdAt,
           updatedAt: createFooResult.value.entity.info.updatedAt,
         },
@@ -3300,7 +3300,7 @@ describe('updateEntity()', () => {
             { id: fooId, publishState: EntityPublishState.Published, updatedAt: fooUpdatedAt },
             { id: barId, publishState: EntityPublishState.Published, updatedAt: barUpdatedAt },
           ]);
-          expectedEntity.info.publishingState = EntityPublishState.Published;
+          expectedEntity.info.status = EntityPublishState.Published;
           expectedEntity.info.updatedAt = fooUpdatedAt;
         }
 
@@ -3380,7 +3380,7 @@ describe('updateEntity()', () => {
             name: createBazResult.value.entity.info.name,
             version: 0,
             authKey: 'none',
-            publishingState: EntityPublishState.Draft,
+            status: EntityPublishState.Draft,
             createdAt: createBazResult.value.entity.info.createdAt,
             updatedAt: createBazResult.value.entity.info.updatedAt,
           },
@@ -3412,7 +3412,7 @@ describe('updateEntity()', () => {
           expectResultValue(publishResult, [
             { id: bazId, publishState: EntityPublishState.Published, updatedAt },
           ]);
-          expectedEntity.info.publishingState = EntityPublishState.Published;
+          expectedEntity.info.status = EntityPublishState.Published;
           expectedEntity.info.updatedAt = updatedAt;
         }
 
@@ -3485,7 +3485,7 @@ describe('updateEntity()', () => {
               name,
               version: 1,
               authKey: 'none',
-              publishingState: EntityPublishState.Archived,
+              status: EntityPublishState.Archived,
               createdAt,
               updatedAt,
             },
@@ -3533,7 +3533,7 @@ describe('updateEntity()', () => {
         expectResultValue(updateResult, {
           effect: 'none',
           entity: copyEntity(entity, {
-            info: { authKey: 'none', publishingState: EntityPublishState.Published, updatedAt },
+            info: { authKey: 'none', status: EntityPublishState.Published, updatedAt },
           }),
         });
       }
@@ -3692,7 +3692,7 @@ describe('upsertEntity()', () => {
         info: {
           name,
           authKey: 'none',
-          publishingState: EntityPublishState.Draft,
+          status: EntityPublishState.Draft,
           type: 'EntityAdminBaz',
           version: 0,
           createdAt,
@@ -3744,7 +3744,7 @@ describe('upsertEntity()', () => {
             info: {
               name,
               authKey: 'none',
-              publishingState: EntityPublishState.Draft,
+              status: EntityPublishState.Draft,
               type: 'EntityAdminBaz',
               version: 1,
               createdAt,
@@ -3955,7 +3955,7 @@ describe('publishEntities()', () => {
               name,
               version: 0,
               authKey: 'none',
-              publishingState: EntityPublishState.Published,
+              status: EntityPublishState.Published,
               createdAt,
               updatedAt,
             },
@@ -3999,7 +3999,7 @@ describe('publishEntities()', () => {
               name,
               version: 1,
               authKey: 'none',
-              publishingState: EntityPublishState.Modified,
+              status: EntityPublishState.Modified,
               createdAt,
               updatedAt,
             },
@@ -4282,7 +4282,7 @@ describe('unpublishEntities()', () => {
             name,
             version: 0,
             authKey: 'none',
-            publishingState: EntityPublishState.Withdrawn,
+            status: EntityPublishState.Withdrawn,
             createdAt,
             updatedAt,
           },
@@ -4558,7 +4558,7 @@ describe('archiveEntity()', () => {
               type: 'EntityAdminBar',
               version: 0,
               authKey: 'none',
-              publishingState: EntityPublishState.Archived,
+              status: EntityPublishState.Archived,
               createdAt,
               updatedAt,
             },
@@ -4767,7 +4767,7 @@ describe('unarchiveEntity()', () => {
             type: 'EntityAdminBar',
             version: 0,
             authKey: 'none',
-            publishingState: EntityPublishState.Draft,
+            status: EntityPublishState.Draft,
             createdAt,
             updatedAt,
           },
