@@ -1,5 +1,5 @@
 import type { AdminClient, ErrorType, PromiseResult, Result } from '@jonasb/datadata-core';
-import { EntityPublishState, notOk, ok } from '@jonasb/datadata-core';
+import { AdminEntityStatus, notOk, ok } from '@jonasb/datadata-core';
 import React, { useContext, useEffect, useState } from 'react';
 import { DataDataContext2 } from '..';
 import { entitiesFixture } from './EntityFixtures.js';
@@ -49,7 +49,7 @@ async function loadFixtures(adminClient: AdminClient): PromiseResult<void, Error
     //TODO how do I check the published version?
     if (
       typeof publishedVersion === 'number' &&
-      ![EntityPublishState.Published, EntityPublishState.Modified].includes(
+      ![AdminEntityStatus.Published, AdminEntityStatus.Modified].includes(
         upsertResult.value.entity.info.status
       )
     ) {

@@ -41,7 +41,7 @@ enum AdminValueType {
   ValueTwo
 }
 
-enum EntityPublishState {
+enum AdminEntityStatus {
   draft
   published
   modified
@@ -54,7 +54,7 @@ type AdminEntityInfo {
   name: String!
   version: Int!
   authKey: String!
-  status: EntityPublishState!
+  status: AdminEntityStatus!
   createdAt: Instant!
   updatedAt: Instant!
 }
@@ -185,7 +185,7 @@ type PublishingHistory {
 
 type EntityPublishPayload {
   id: ID!
-  publishState: EntityPublishState!
+  publishState: AdminEntityStatus!
   updatedAt: Instant!
 }
 
@@ -552,7 +552,7 @@ enum AdminValueType {
   ValueTwo
 }
 
-enum EntityPublishState {
+enum AdminEntityStatus {
   draft
   published
   modified
@@ -565,7 +565,7 @@ type AdminEntityInfo {
   name: String!
   version: Int!
   authKey: String!
-  status: EntityPublishState!
+  status: AdminEntityStatus!
   createdAt: Instant!
   updatedAt: Instant!
 }
@@ -691,7 +691,7 @@ type PublishingHistory {
 
 type EntityPublishPayload {
   id: ID!
-  publishState: EntityPublishState!
+  publishState: AdminEntityStatus!
   updatedAt: Instant!
 }
 
@@ -921,7 +921,7 @@ enum AdminEntityType {
   Bar
 }
 
-enum EntityPublishState {
+enum AdminEntityStatus {
   draft
   published
   modified
@@ -934,7 +934,7 @@ type AdminEntityInfo {
   name: String!
   version: Int!
   authKey: String!
-  status: EntityPublishState!
+  status: AdminEntityStatus!
   createdAt: Instant!
   updatedAt: Instant!
 }
@@ -1061,7 +1061,7 @@ type PublishingHistory {
 
 type EntityPublishPayload {
   id: ID!
-  publishState: EntityPublishState!
+  publishState: AdminEntityStatus!
   updatedAt: Instant!
 }
 
@@ -1389,7 +1389,7 @@ enum AdminEntityType {
   Bar
 }
 
-enum EntityPublishState {
+enum AdminEntityStatus {
   draft
   published
   modified
@@ -1402,7 +1402,7 @@ type AdminEntityInfo {
   name: String!
   version: Int!
   authKey: String!
-  status: EntityPublishState!
+  status: AdminEntityStatus!
   createdAt: Instant!
   updatedAt: Instant!
 }
@@ -1524,7 +1524,7 @@ type PublishingHistory {
 
 type EntityPublishPayload {
   id: ID!
-  publishState: EntityPublishState!
+  publishState: AdminEntityStatus!
   updatedAt: Instant!
 }
 
@@ -1678,7 +1678,7 @@ enum AdminEntityType {
   Baz
 }
 
-enum EntityPublishState {
+enum AdminEntityStatus {
   draft
   published
   modified
@@ -1691,7 +1691,7 @@ type AdminEntityInfo {
   name: String!
   version: Int!
   authKey: String!
-  status: EntityPublishState!
+  status: AdminEntityStatus!
   createdAt: Instant!
   updatedAt: Instant!
 }
@@ -1818,7 +1818,7 @@ type PublishingHistory {
 
 type EntityPublishPayload {
   id: ID!
-  publishState: EntityPublishState!
+  publishState: AdminEntityStatus!
   updatedAt: Instant!
 }
 
@@ -2223,7 +2223,7 @@ enum AdminEntityType {
   Baz
 }
 
-enum EntityPublishState {
+enum AdminEntityStatus {
   draft
   published
   modified
@@ -2236,7 +2236,7 @@ type AdminEntityInfo {
   name: String!
   version: Int!
   authKey: String!
-  status: EntityPublishState!
+  status: AdminEntityStatus!
   createdAt: Instant!
   updatedAt: Instant!
 }
@@ -2358,7 +2358,7 @@ type PublishingHistory {
 
 type EntityPublishPayload {
   id: ID!
-  publishState: EntityPublishState!
+  publishState: AdminEntityStatus!
   updatedAt: Instant!
 }
 
@@ -2572,7 +2572,7 @@ enum AdminEntityType {
   Foo
 }
 
-enum EntityPublishState {
+enum AdminEntityStatus {
   draft
   published
   modified
@@ -2585,7 +2585,7 @@ type AdminEntityInfo {
   name: String!
   version: Int!
   authKey: String!
-  status: EntityPublishState!
+  status: AdminEntityStatus!
   createdAt: Instant!
   updatedAt: Instant!
 }
@@ -2712,7 +2712,7 @@ type PublishingHistory {
 
 type EntityPublishPayload {
   id: ID!
-  publishState: EntityPublishState!
+  publishState: AdminEntityStatus!
   updatedAt: Instant!
 }
 
@@ -2955,7 +2955,7 @@ enum AdminEntityType {
   Foo
 }
 
-enum EntityPublishState {
+enum AdminEntityStatus {
   draft
   published
   modified
@@ -2968,7 +2968,7 @@ type AdminEntityInfo {
   name: String!
   version: Int!
   authKey: String!
-  status: EntityPublishState!
+  status: AdminEntityStatus!
   createdAt: Instant!
   updatedAt: Instant!
 }
@@ -3090,7 +3090,7 @@ type PublishingHistory {
 
 type EntityPublishPayload {
   id: ID!
-  publishState: EntityPublishState!
+  publishState: AdminEntityStatus!
   updatedAt: Instant!
 }
 
@@ -3190,7 +3190,7 @@ enum AdminValueType {
   ValueOne
 }
 
-enum EntityPublishState {
+enum AdminEntityStatus {
   draft
   published
   modified
@@ -3203,7 +3203,7 @@ type AdminEntityInfo {
   name: String!
   version: Int!
   authKey: String!
-  status: EntityPublishState!
+  status: AdminEntityStatus!
   createdAt: Instant!
   updatedAt: Instant!
 }
@@ -3334,7 +3334,7 @@ type PublishingHistory {
 
 type EntityPublishPayload {
   id: ID!
-  publishState: EntityPublishState!
+  publishState: AdminEntityStatus!
   updatedAt: Instant!
 }
 
@@ -3648,7 +3648,7 @@ enum AdminValueType {
   ValueOne
 }
 
-enum EntityPublishState {
+enum AdminEntityStatus {
   draft
   published
   modified
@@ -3661,7 +3661,7 @@ type AdminEntityInfo {
   name: String!
   version: Int!
   authKey: String!
-  status: EntityPublishState!
+  status: AdminEntityStatus!
   createdAt: Instant!
   updatedAt: Instant!
 }
@@ -3787,7 +3787,7 @@ type PublishingHistory {
 
 type EntityPublishPayload {
   id: ID!
-  publishState: EntityPublishState!
+  publishState: AdminEntityStatus!
   updatedAt: Instant!
 }
 
@@ -3910,7 +3910,7 @@ enum AdminEntityType {
   Foo
 }
 
-enum EntityPublishState {
+enum AdminEntityStatus {
   draft
   published
   modified
@@ -3923,7 +3923,7 @@ type AdminEntityInfo {
   name: String!
   version: Int!
   authKey: String!
-  status: EntityPublishState!
+  status: AdminEntityStatus!
   createdAt: Instant!
   updatedAt: Instant!
 }
@@ -4050,7 +4050,7 @@ type PublishingHistory {
 
 type EntityPublishPayload {
   id: ID!
-  publishState: EntityPublishState!
+  publishState: AdminEntityStatus!
   updatedAt: Instant!
 }
 
@@ -4315,7 +4315,7 @@ enum AdminEntityType {
   Foo
 }
 
-enum EntityPublishState {
+enum AdminEntityStatus {
   draft
   published
   modified
@@ -4328,7 +4328,7 @@ type AdminEntityInfo {
   name: String!
   version: Int!
   authKey: String!
-  status: EntityPublishState!
+  status: AdminEntityStatus!
   createdAt: Instant!
   updatedAt: Instant!
 }
@@ -4450,7 +4450,7 @@ type PublishingHistory {
 
 type EntityPublishPayload {
   id: ID!
-  publishState: EntityPublishState!
+  publishState: AdminEntityStatus!
   updatedAt: Instant!
 }
 
@@ -4559,7 +4559,7 @@ enum AdminEntityType {
   Bar
 }
 
-enum EntityPublishState {
+enum AdminEntityStatus {
   draft
   published
   modified
@@ -4572,7 +4572,7 @@ type AdminEntityInfo {
   name: String!
   version: Int!
   authKey: String!
-  status: EntityPublishState!
+  status: AdminEntityStatus!
   createdAt: Instant!
   updatedAt: Instant!
 }
@@ -4699,7 +4699,7 @@ type PublishingHistory {
 
 type EntityPublishPayload {
   id: ID!
-  publishState: EntityPublishState!
+  publishState: AdminEntityStatus!
   updatedAt: Instant!
 }
 
@@ -5049,7 +5049,7 @@ enum AdminEntityType {
   Bar
 }
 
-enum EntityPublishState {
+enum AdminEntityStatus {
   draft
   published
   modified
@@ -5062,7 +5062,7 @@ type AdminEntityInfo {
   name: String!
   version: Int!
   authKey: String!
-  status: EntityPublishState!
+  status: AdminEntityStatus!
   createdAt: Instant!
   updatedAt: Instant!
 }
@@ -5184,7 +5184,7 @@ type PublishingHistory {
 
 type EntityPublishPayload {
   id: ID!
-  publishState: EntityPublishState!
+  publishState: AdminEntityStatus!
   updatedAt: Instant!
 }
 
@@ -5355,7 +5355,7 @@ enum AdminValueType {
   NestedValue
 }
 
-enum EntityPublishState {
+enum AdminEntityStatus {
   draft
   published
   modified
@@ -5368,7 +5368,7 @@ type AdminEntityInfo {
   name: String!
   version: Int!
   authKey: String!
-  status: EntityPublishState!
+  status: AdminEntityStatus!
   createdAt: Instant!
   updatedAt: Instant!
 }
@@ -5499,7 +5499,7 @@ type PublishingHistory {
 
 type EntityPublishPayload {
   id: ID!
-  publishState: EntityPublishState!
+  publishState: AdminEntityStatus!
   updatedAt: Instant!
 }
 
@@ -5954,7 +5954,7 @@ enum AdminValueType {
   NestedValue
 }
 
-enum EntityPublishState {
+enum AdminEntityStatus {
   draft
   published
   modified
@@ -5967,7 +5967,7 @@ type AdminEntityInfo {
   name: String!
   version: Int!
   authKey: String!
-  status: EntityPublishState!
+  status: AdminEntityStatus!
   createdAt: Instant!
   updatedAt: Instant!
 }
@@ -6093,7 +6093,7 @@ type PublishingHistory {
 
 type EntityPublishPayload {
   id: ID!
-  publishState: EntityPublishState!
+  publishState: AdminEntityStatus!
   updatedAt: Instant!
 }
 

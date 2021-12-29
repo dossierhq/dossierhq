@@ -1,6 +1,6 @@
 import type {
   AdminEntity,
-  EntityPublishState,
+  AdminEntityStatus,
   AdminEntityTypeSpecification,
   FieldSpecification,
   AdminSchema,
@@ -23,7 +23,7 @@ export interface EntityEditorDraftState {
   initMessage: MessageItem | null;
   entityLoadMessage: MessageItem | null;
   exists: boolean;
-  publishState: EntityPublishState | null;
+  publishState: AdminEntityStatus | null;
   latestServerVersion: number | null;
   entity: null | {
     version: number;

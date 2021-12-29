@@ -1,5 +1,5 @@
 import type { AdminEntity } from '@jonasb/datadata-core';
-import { CoreTestUtils, EntityPublishState } from '@jonasb/datadata-core';
+import { CoreTestUtils, AdminEntityStatus } from '@jonasb/datadata-core';
 import { assertNotSame, assertTruthy } from '../Asserts';
 import type { UnboundTestFunction } from '../Builder';
 import type { AdminEntityTestContext } from './AdminEntityTestSuite';
@@ -35,7 +35,7 @@ async function createEntity_minimal({ client }: AdminEntityTestContext) {
         name,
         version: 0,
         authKey: 'none',
-        status: EntityPublishState.Draft,
+        status: AdminEntityStatus.Draft,
         createdAt,
         updatedAt,
       },

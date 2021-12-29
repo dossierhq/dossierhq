@@ -4,7 +4,7 @@ import type {
   ErrorType,
   PromiseResult,
 } from '@jonasb/datadata-core';
-import { assertExhaustive, EntityPublishState, notOk, ok } from '@jonasb/datadata-core';
+import { assertExhaustive, AdminEntityStatus, notOk, ok } from '@jonasb/datadata-core';
 import type { DatabaseAdminEntityGetOnePayload, TransactionContext } from '@jonasb/datadata-server';
 import type { PostgresDatabaseAdapter } from '..';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema';
@@ -119,18 +119,18 @@ async function getEntityWithVersion(
   return ok(result.value);
 }
 
-function resolveEntityStatus(status: EntitiesTable['status']): EntityPublishState {
+function resolveEntityStatus(status: EntitiesTable['status']): AdminEntityStatus {
   switch (status) {
     case 'draft':
-      return EntityPublishState.Draft;
+      return AdminEntityStatus.Draft;
     case 'published':
-      return EntityPublishState.Published;
+      return AdminEntityStatus.Published;
     case 'modified':
-      return EntityPublishState.Modified;
+      return AdminEntityStatus.Modified;
     case 'withdrawn':
-      return EntityPublishState.Withdrawn;
+      return AdminEntityStatus.Withdrawn;
     case 'archived':
-      return EntityPublishState.Archived;
+      return AdminEntityStatus.Archived;
     default:
       assertExhaustive(status);
   }

@@ -18,7 +18,7 @@ import type {
 } from '@jonasb/datadata-core';
 import {
   assertExhaustive,
-  EntityPublishState,
+  AdminEntityStatus,
   FieldType,
   isFieldValueEqual,
   isLocationItemField,
@@ -252,18 +252,18 @@ export function decodeAdminEntityFields2(
   return fields;
 }
 
-export function resolveEntityStatus(status: EntitiesTable['status']): EntityPublishState {
+export function resolveEntityStatus(status: EntitiesTable['status']): AdminEntityStatus {
   switch (status) {
     case 'draft':
-      return EntityPublishState.Draft;
+      return AdminEntityStatus.Draft;
     case 'published':
-      return EntityPublishState.Published;
+      return AdminEntityStatus.Published;
     case 'modified':
-      return EntityPublishState.Modified;
+      return AdminEntityStatus.Modified;
     case 'withdrawn':
-      return EntityPublishState.Withdrawn;
+      return AdminEntityStatus.Withdrawn;
     case 'archived':
-      return EntityPublishState.Archived;
+      return AdminEntityStatus.Archived;
     default:
       assertExhaustive(status);
   }
@@ -335,7 +335,7 @@ export function resolveUpdateEntity(
 
   const currentState = resolveEntityStatus(values.status);
   const newState =
-    currentState === EntityPublishState.Published ? EntityPublishState.Modified : currentState;
+    currentState === AdminEntityStatus.Published ? AdminEntityStatus.Modified : currentState;
 
   const result: AdminEntity = {
     id: entity.id,

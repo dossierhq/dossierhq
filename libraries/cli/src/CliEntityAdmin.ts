@@ -3,7 +3,7 @@ import type {
   AdminEntityCreate,
   AdminEntityUpdate,
   AdminQuery,
-  EntityPublishState,
+  AdminEntityStatus,
   EntityReference,
   AdminEntityTypeSpecification,
   ErrorType,
@@ -620,7 +620,7 @@ async function editFieldList<TItem>(
 export async function publishEntity(
   context: CliContext,
   id: string
-): Promise<EntityPublishState | null> {
+): Promise<AdminEntityStatus | null> {
   const { adminClient } = context;
   const version = await selectEntityVersion(context, 'Which version to publish?', id, null);
 
@@ -641,7 +641,7 @@ export async function publishEntity(
 export async function unpublishEntity(
   context: CliContext,
   id: string
-): Promise<EntityPublishState | null> {
+): Promise<AdminEntityStatus | null> {
   const { adminClient } = context;
   const unpublishResult = await adminClient.unpublishEntities([{ id }]);
   if (unpublishResult.isError()) {
@@ -656,7 +656,7 @@ export async function unpublishEntity(
 export async function archiveEntity(
   context: CliContext,
   id: string
-): Promise<EntityPublishState | null> {
+): Promise<AdminEntityStatus | null> {
   const { adminClient } = context;
   const archiveResult = await adminClient.archiveEntity({ id });
   if (archiveResult.isError()) {
@@ -671,7 +671,7 @@ export async function archiveEntity(
 export async function unarchiveEntity(
   context: CliContext,
   id: string
-): Promise<EntityPublishState | null> {
+): Promise<AdminEntityStatus | null> {
   const { adminClient } = context;
   const unarchiveResult = await adminClient.unarchiveEntity({ id });
   if (unarchiveResult.isError()) {

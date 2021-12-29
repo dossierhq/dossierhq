@@ -6,7 +6,7 @@ import type {
 } from '@jonasb/datadata-core';
 import {
   CoreTestUtils,
-  EntityPublishState,
+  AdminEntityStatus,
   FieldType,
   getAllPagesForConnection,
   notOk,
@@ -260,7 +260,7 @@ describe('adminEntity()', () => {
               type: 'QueryAdminFoo',
               name,
               authKey: 'none',
-              status: EntityPublishState.Draft,
+              status: AdminEntityStatus.Draft,
             },
             fields: {
               title: 'Howdy title',
@@ -350,7 +350,7 @@ describe('adminEntity()', () => {
               name,
               version: 0,
               authKey: 'none',
-              status: EntityPublishState.Draft,
+              status: AdminEntityStatus.Draft,
             },
             fields: {
               title: null,
@@ -543,7 +543,7 @@ describe('adminEntity()', () => {
             version: 0,
             name,
             authKey: 'none',
-            status: EntityPublishState.Published,
+            status: AdminEntityStatus.Published,
           },
           fields: {
             title: 'First title',
@@ -1184,7 +1184,7 @@ describe('adminEntities()', () => {
               info: {
                 type: 'QueryAdminFoo',
                 authKey: 'none',
-                status: EntityPublishState.Draft,
+                status: AdminEntityStatus.Draft,
                 name: foo1Name,
               },
             },
@@ -1194,7 +1194,7 @@ describe('adminEntities()', () => {
               info: {
                 type: 'QueryAdminFoo',
                 authKey: 'none',
-                status: EntityPublishState.Draft,
+                status: AdminEntityStatus.Draft,
                 name: foo2Name,
               },
             },

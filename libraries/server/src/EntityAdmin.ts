@@ -29,7 +29,7 @@ import {
   AdminItemTraverseNodeType,
   assertIsDefined,
   createErrorResult,
-  EntityPublishState,
+  AdminEntityStatus,
   ErrorType,
   isEntityNameAsRequested,
   notOk,
@@ -323,7 +323,7 @@ export async function adminCreateEntity(
       info: {
         ...createEntity.info,
         name,
-        status: EntityPublishState.Draft,
+        status: AdminEntityStatus.Draft,
         version: 0,
         createdAt,
         updatedAt,
@@ -558,7 +558,7 @@ export async function publishEntities(
       versionsId: number;
       entityId: number;
       fullTextSearchText: string;
-      status: EntityPublishState;
+      status: AdminEntityStatus;
     }[] = [];
     for (const reference of references) {
       const versionInfo = await Db.queryNoneOrOne<
@@ -642,8 +642,8 @@ export async function publishEntities(
 
         const status =
           versionInfo.latest_draft_entity_versions_id === versionInfo.id
-            ? EntityPublishState.Published
-            : EntityPublishState.Modified;
+            ? AdminEntityStatus.Published
+            : AdminEntityStatus.Modified;
 
         versionsInfo.push({
           uuid: reference.id,
@@ -814,7 +814,7 @@ export async function unpublishEntities(
     for (const reference of references) {
       const updatedAt = unpublishRows.find((it) => it.uuid === reference.id)?.updated_at;
       assertIsDefined(updatedAt);
-      result.push({ id: reference.id, publishState: EntityPublishState.Withdrawn, updatedAt });
+      result.push({ id: reference.id, publishState: AdminEntityStatus.Withdrawn, updatedAt });
     }
 
     // Step 3: Check if references are ok
@@ -913,7 +913,7 @@ export async function archiveEntity(
     if (archived) {
       return ok({
         id: reference.id,
-        publishState: EntityPublishState.Archived,
+        publishState: AdminEntityStatus.Archived,
         updatedAt: previousUpdatedAt,
       }); // no change
     }
@@ -939,7 +939,7 @@ export async function archiveEntity(
       ),
     ]);
 
-    return ok({ id: reference.id, publishState: EntityPublishState.Archived, updatedAt });
+    return ok({ id: reference.id, publishState: AdminEntityStatus.Archived, updatedAt });
   });
 }
 
@@ -991,10 +991,8 @@ export async function unarchiveEntity(
       updatedAt: previousUpdatedAt,
     };
 
-    if (result.publishState === EntityPublishState.Archived) {
-      result.publishState = neverPublished
-        ? EntityPublishState.Draft
-        : EntityPublishState.Withdrawn;
+    if (result.publishState === AdminEntityStatus.Archived) {
+      result.publishState = neverPublished ? AdminEntityStatus.Draft : AdminEntityStatus.Withdrawn;
 
       const [{ updated_at: updatedAt }, _] = await Promise.all([
         Db.queryOne<Pick<EntitiesTable, 'updated_at'>>(

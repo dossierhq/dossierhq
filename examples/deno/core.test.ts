@@ -1,7 +1,7 @@
 import {
   AdminEntity,
+  AdminEntityStatus,
   copyEntity,
-  EntityPublishState,
 } from "@jonasb/datadata-core";
 import { Temporal } from "@js-temporal/polyfill";
 import { assertEquals } from "std/testing/asserts.ts";
@@ -14,7 +14,7 @@ Deno.test("copyEntity()", () => {
       name: "Hello",
       version: 0,
       authKey: "none",
-      status: EntityPublishState.Draft,
+      status: AdminEntityStatus.Draft,
       createdAt: Temporal.Now.instant(),
       updatedAt: Temporal.Now.instant(),
     },

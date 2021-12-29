@@ -10,7 +10,7 @@ import type {
 } from '@jonasb/datadata-core';
 import {
   CoreTestUtils,
-  EntityPublishState,
+  AdminEntityStatus,
   ErrorType,
   FieldType,
   ok,
@@ -134,7 +134,7 @@ async function getEntitiesForPublishedEntityOnlyEditBefore(client: AdminClient, 
   const result = await getAllEntities(client, {
     authKeys: [authKey],
     entityTypes: ['PublishedEntityOnlyEditBefore'],
-    status: [EntityPublishState.Published, EntityPublishState.Modified],
+    status: [AdminEntityStatus.Published, AdminEntityStatus.Modified],
   });
   if (result.isError()) {
     throw result.toError();
@@ -234,7 +234,7 @@ describe('getEntity()', () => {
         const { updatedAt } = archiveResult.value;
         expectResultValue(archiveResult, {
           id,
-          publishState: EntityPublishState.Archived,
+          publishState: AdminEntityStatus.Archived,
           updatedAt,
         });
       }
@@ -243,7 +243,7 @@ describe('getEntity()', () => {
       if (expectOkResult(publishResult)) {
         const [{ updatedAt }] = publishResult.value;
         expectResultValue(publishResult, [
-          { id, publishState: EntityPublishState.Published, updatedAt },
+          { id, publishState: AdminEntityStatus.Published, updatedAt },
         ]);
       }
 
@@ -277,7 +277,7 @@ describe('getEntity()', () => {
       if (expectOkResult(publishResult)) {
         const [{ updatedAt }] = publishResult.value;
         expectResultValue(publishResult, [
-          { id, publishState: EntityPublishState.Modified, updatedAt },
+          { id, publishState: AdminEntityStatus.Modified, updatedAt },
         ]);
 
         const getResult = await publishedClient.getEntity({ id });
@@ -307,7 +307,7 @@ describe('getEntity()', () => {
         const { updatedAt } = archiveResult.value;
         expectResultValue(archiveResult, {
           id,
-          publishState: EntityPublishState.Archived,
+          publishState: AdminEntityStatus.Archived,
           updatedAt,
         });
       }
@@ -381,8 +381,8 @@ describe('getEntities()', () => {
       if (expectOkResult(publishResult)) {
         const [{ updatedAt: updatedAt1 }, { updatedAt: updatedAt2 }] = publishResult.value;
         expectResultValue(publishResult, [
-          { id: foo1Id, publishState: EntityPublishState.Published, updatedAt: updatedAt1 },
-          { id: foo2Id, publishState: EntityPublishState.Published, updatedAt: updatedAt2 },
+          { id: foo1Id, publishState: AdminEntityStatus.Published, updatedAt: updatedAt1 },
+          { id: foo2Id, publishState: AdminEntityStatus.Published, updatedAt: updatedAt2 },
         ]);
       }
 
@@ -430,7 +430,7 @@ describe('getEntities()', () => {
       if (expectOkResult(publishResult)) {
         const [{ updatedAt }] = publishResult.value;
         expectResultValue(publishResult, [
-          { id: foo1Id, publishState: EntityPublishState.Published, updatedAt },
+          { id: foo1Id, publishState: AdminEntityStatus.Published, updatedAt },
         ]);
       }
 
@@ -522,7 +522,7 @@ describe('getEntities()', () => {
         const { updatedAt } = archiveResult.value;
         expectResultValue(archiveResult, {
           id,
-          publishState: EntityPublishState.Archived,
+          publishState: AdminEntityStatus.Archived,
           updatedAt,
         });
       }

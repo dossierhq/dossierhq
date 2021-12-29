@@ -1,4 +1,4 @@
-import { EntityPublishState } from '@jonasb/datadata-core';
+import { AdminEntityStatus } from '@jonasb/datadata-core';
 import type {
   DropdownSelectorProps,
   MultipleSelectorItem,
@@ -15,10 +15,10 @@ import type { Dispatch } from 'react';
 import React from 'react';
 import { StatusTag } from '../..';
 
-export type StatusItem = MultipleSelectorItem<EntityPublishState>;
+export type StatusItem = MultipleSelectorItem<AdminEntityStatus>;
 
 export type StatusSelectorReducer = MultipleSelectorReducer<StatusItem>;
-export type StatusSelectorInitArgs = { selectedIds?: EntityPublishState[] | undefined };
+export type StatusSelectorInitArgs = { selectedIds?: AdminEntityStatus[] | undefined };
 export type StatusSelectorState = MultipleSelectorState<StatusItem>;
 export type StatusSelectorDispatch = Dispatch<MultipleSelectorStateAction<StatusItem>>;
 
@@ -28,11 +28,11 @@ export function initializeStatusSelectorState({
   selectedIds,
 }: StatusSelectorInitArgs): StatusSelectorState {
   const items: StatusItem[] = [
-    { id: EntityPublishState.Draft },
-    { id: EntityPublishState.Published },
-    { id: EntityPublishState.Modified },
-    { id: EntityPublishState.Withdrawn },
-    { id: EntityPublishState.Archived },
+    { id: AdminEntityStatus.Draft },
+    { id: AdminEntityStatus.Published },
+    { id: AdminEntityStatus.Modified },
+    { id: AdminEntityStatus.Withdrawn },
+    { id: AdminEntityStatus.Archived },
   ];
   return initializeMultipleSelectorState<StatusItem>({
     items,
