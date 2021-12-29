@@ -1,6 +1,6 @@
 import { CoreTestUtils, AdminEntityStatus, ok } from '@jonasb/datadata-core';
 import { Temporal } from '@js-temporal/polyfill';
-import { adminGetEntity } from './getEntity';
+import { adminGetEntity } from './adminGetEntity';
 import {
   createMockAuthorizationAdapter,
   createMockDatabaseAdapter,

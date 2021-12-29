@@ -11,12 +11,12 @@ import type {
 } from '@jonasb/datadata-core';
 import { AdminSchema, assertIsDefined, NoOpLogger, notOk, ok, Schema } from '@jonasb/datadata-core';
 import type { AuthorizationAdapter, DatabaseAdapter, Session, SessionContext } from '.';
-import { createServerAdminClient } from './AdminClient';
 import { authCreateSession } from './Auth';
 import type { InternalContext } from './Context';
 import { InternalContextImpl, SessionContextImpl } from './Context';
-import { createServerPublishedClient } from './PublishedClient';
 import { getSchemaSpecification } from './Schema';
+import { createServerAdminClient } from './ServerAdminClient';
+import { createServerPublishedClient } from './ServerPublishedClient';
 
 export interface CreateSessionPayload {
   principalEffect: 'created' | 'none';

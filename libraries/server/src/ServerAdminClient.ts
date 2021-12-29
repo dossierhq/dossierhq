@@ -11,21 +11,19 @@ import {
   ok,
 } from '@jonasb/datadata-core';
 import type { AuthorizationAdapter, DatabaseAdapter, SessionContext } from '.';
-import { adminGetEntity } from './admin-entity/getEntity';
-import {
-  adminCreateEntity,
-  archiveEntity,
-  getEntities,
-  getEntityHistory,
-  getPublishingHistory,
-  getTotalCount,
-  publishEntities,
-  searchEntities,
-  unarchiveEntity,
-  unpublishEntities,
-  updateEntity,
-  upsertEntity,
-} from './EntityAdmin';
+import { adminArchiveEntity } from './admin-entity/adminArchiveEntity';
+import { adminCreateEntity } from './admin-entity/adminCreateEntity';
+import { adminGetEntities } from './admin-entity/adminGetEntities';
+import { adminGetEntity } from './admin-entity/adminGetEntity';
+import { adminGetEntityHistory } from './admin-entity/adminGetEntityHistory';
+import { adminGetPublishingHistory } from './admin-entity/adminGetPublishingHistory';
+import { adminGetTotalCount } from './admin-entity/adminGetTotalCount';
+import { adminPublishEntities } from './admin-entity/adminPublishEntities';
+import { adminSearchEntities } from './admin-entity/adminSearchEntities';
+import { adminUnarchiveEntity } from './admin-entity/adminUnarchiveEntity';
+import { adminUnpublishEntities } from './admin-entity/adminUnpublishEntities';
+import { adminUpdateEntity } from './admin-entity/adminUpdateEntity';
+import { adminUpsertEntity } from './admin-entity/adminUpsertEntity';
 import { updateSchemaSpecification } from './Schema';
 import type { ServerImpl } from './Server';
 
@@ -52,7 +50,9 @@ export function createServerAdminClient({
           args: [reference],
           resolve,
         } = operation as AdminClientOperation<AdminClientOperationName.archiveEntity>;
-        resolve(await archiveEntity(databaseAdapter, authorizationAdapter, context, reference));
+        resolve(
+          await adminArchiveEntity(databaseAdapter, authorizationAdapter, context, reference)
+        );
         break;
       }
       case AdminClientOperationName.createEntity: {
@@ -77,7 +77,7 @@ export function createServerAdminClient({
           resolve,
         } = operation as AdminClientOperation<AdminClientOperationName.getEntities>;
         resolve(
-          await getEntities(
+          await adminGetEntities(
             serverImpl.getAdminSchema(),
             authorizationAdapter,
             databaseAdapter,
@@ -108,7 +108,9 @@ export function createServerAdminClient({
           args: [reference],
           resolve,
         } = operation as AdminClientOperation<AdminClientOperationName.getEntityHistory>;
-        resolve(await getEntityHistory(databaseAdapter, authorizationAdapter, context, reference));
+        resolve(
+          await adminGetEntityHistory(databaseAdapter, authorizationAdapter, context, reference)
+        );
         break;
       }
       case AdminClientOperationName.getPublishingHistory: {
@@ -117,7 +119,7 @@ export function createServerAdminClient({
           resolve,
         } = operation as AdminClientOperation<AdminClientOperationName.getPublishingHistory>;
         resolve(
-          await getPublishingHistory(databaseAdapter, authorizationAdapter, context, reference)
+          await adminGetPublishingHistory(databaseAdapter, authorizationAdapter, context, reference)
         );
         break;
       }
@@ -134,7 +136,7 @@ export function createServerAdminClient({
           resolve,
         } = operation as AdminClientOperation<AdminClientOperationName.getTotalCount>;
         resolve(
-          await getTotalCount(
+          await adminGetTotalCount(
             serverImpl.getAdminSchema(),
             authorizationAdapter,
             databaseAdapter,
@@ -150,7 +152,7 @@ export function createServerAdminClient({
           resolve,
         } = operation as AdminClientOperation<AdminClientOperationName.publishEntities>;
         resolve(
-          await publishEntities(
+          await adminPublishEntities(
             serverImpl.getAdminSchema(),
             authorizationAdapter,
             databaseAdapter,
@@ -166,7 +168,7 @@ export function createServerAdminClient({
           resolve,
         } = operation as AdminClientOperation<AdminClientOperationName.searchEntities>;
         resolve(
-          await searchEntities(
+          await adminSearchEntities(
             serverImpl.getAdminSchema(),
             authorizationAdapter,
             databaseAdapter,
@@ -182,7 +184,9 @@ export function createServerAdminClient({
           args: [reference],
           resolve,
         } = operation as AdminClientOperation<AdminClientOperationName.unarchiveEntity>;
-        resolve(await unarchiveEntity(databaseAdapter, authorizationAdapter, context, reference));
+        resolve(
+          await adminUnarchiveEntity(databaseAdapter, authorizationAdapter, context, reference)
+        );
         break;
       }
       case AdminClientOperationName.unpublishEntities: {
@@ -191,7 +195,7 @@ export function createServerAdminClient({
           resolve,
         } = operation as AdminClientOperation<AdminClientOperationName.unpublishEntities>;
         resolve(
-          await unpublishEntities(databaseAdapter, authorizationAdapter, context, references)
+          await adminUnpublishEntities(databaseAdapter, authorizationAdapter, context, references)
         );
         break;
       }
@@ -201,7 +205,7 @@ export function createServerAdminClient({
           resolve,
         } = operation as AdminClientOperation<AdminClientOperationName.updateEntity>;
         resolve(
-          await updateEntity(
+          await adminUpdateEntity(
             serverImpl.getAdminSchema(),
             authorizationAdapter,
             databaseAdapter,
@@ -229,7 +233,7 @@ export function createServerAdminClient({
           resolve,
         } = operation as AdminClientOperation<AdminClientOperationName.upsertEntity>;
         resolve(
-          await upsertEntity(
+          await adminUpsertEntity(
             serverImpl.getAdminSchema(),
             authorizationAdapter,
             databaseAdapter,
