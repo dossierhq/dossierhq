@@ -1,14 +1,18 @@
 import type {
   AdminClient,
   AdminEntity,
+  AdminEntityArchivePayload,
   AdminEntityCreate,
+  AdminEntityPublishingPayload,
+  AdminEntityPublishPayload,
+  AdminEntityUnarchivePayload,
+  AdminEntityUnpublishPayload,
   AdminEntityUpdate,
   AdminQuery,
   AdminSchema,
   Connection,
   Edge,
   EntityHistory,
-  AdminEntityPublishingPayload,
   EntityVersionReferenceWithAuthKeys,
   ErrorResult,
   FieldSpecification,
@@ -209,7 +213,7 @@ export class DataDataContextValue {
   publishEntities = async (
     entities: EntityVersionReferenceWithAuthKeys[]
   ): PromiseResult<
-    AdminEntityPublishingPayload[],
+    AdminEntityPublishPayload[],
     ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
   > => {
     try {
@@ -231,7 +235,7 @@ export class DataDataContextValue {
   unpublishEntities = async (
     entityIds: string[]
   ): PromiseResult<
-    AdminEntityPublishingPayload[],
+    AdminEntityUnpublishPayload[],
     ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
   > => {
     try {
@@ -253,7 +257,7 @@ export class DataDataContextValue {
   archiveEntity = async (
     id: string
   ): PromiseResult<
-    AdminEntityPublishingPayload,
+    AdminEntityArchivePayload,
     ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
   > => {
     try {
@@ -273,7 +277,7 @@ export class DataDataContextValue {
   unarchiveEntity = async (
     id: string
   ): PromiseResult<
-    AdminEntityPublishingPayload,
+    AdminEntityUnarchivePayload,
     ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
   > => {
     try {
@@ -295,7 +299,7 @@ export class DataDataContextValue {
     mutate([this.#rootKey, FetcherActions.UseEntityHistory, entity.id]);
   }
 
-  private invalidateAfterPublishingEvent(publishingResult: AdminEntityPublishingPayload) {
+  private invalidateAfterPublishingEvent(publishingResult: AdminEntityPublishingPayload<string>) {
     const { id, status } = publishingResult;
     mutate([this.#rootKey, FetcherActions.UseEntityHistory, id]);
     mutate([this.#rootKey, FetcherActions.UsePublishingHistory, id]);

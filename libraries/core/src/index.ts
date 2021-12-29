@@ -105,12 +105,17 @@ export type {
 } from './Schema';
 export { LoggingClientMiddleware } from './SharedClient';
 export type { ClientContext, ContextProvider } from './SharedClient';
-export { AdminQueryOrder, AdminEntityStatus, PublishingEventKind, QueryOrder } from './Types';
+export { AdminEntityStatus, AdminQueryOrder, PublishingEventKind, QueryOrder } from './Types';
 export type {
   AdminEntity,
+  AdminEntityArchivePayload,
   AdminEntityCreate,
   AdminEntityCreatePayload,
   AdminEntityInfo,
+  AdminEntityPublishingPayload,
+  AdminEntityPublishPayload,
+  AdminEntityUnarchivePayload,
+  AdminEntityUnpublishPayload,
   AdminEntityUpdate,
   AdminEntityUpdatePayload,
   AdminEntityUpsert,
@@ -123,7 +128,6 @@ export type {
   EntityHistory,
   EntityInfo,
   EntityLike,
-  AdminEntityPublishingPayload,
   EntityReference,
   EntityReferenceWithAuthKeys,
   EntityVersionInfo,

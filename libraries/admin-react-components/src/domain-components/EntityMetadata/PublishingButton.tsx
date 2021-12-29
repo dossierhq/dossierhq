@@ -1,6 +1,6 @@
 import type {
-  AdminEntityTypeSpecification,
   AdminEntityPublishingPayload,
+  AdminEntityTypeSpecification,
   ErrorType,
   PromiseResult,
 } from '@jonasb/datadata-core';
@@ -12,7 +12,7 @@ import { ButtonWithDropDown, DataDataContext } from '../../index.js';
 interface PublishAction {
   name: string;
   handler: () => PromiseResult<
-    AdminEntityPublishingPayload | AdminEntityPublishingPayload[],
+    AdminEntityPublishingPayload<string> | AdminEntityPublishingPayload<string>[],
     ErrorType
   >;
 }

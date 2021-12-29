@@ -63,7 +63,8 @@ export interface JsonAdminEntityUpsertPayload extends Omit<AdminEntityUpsertPayl
   entity: JsonAdminEntity;
 }
 
-export interface JsonPublishingResult extends Omit<AdminEntityPublishingPayload, 'updatedAt'> {
+export interface JsonPublishingResult<TEffect>
+  extends Omit<AdminEntityPublishingPayload<TEffect>, 'updatedAt'> {
   updatedAt: string;
 }
 
@@ -135,9 +136,9 @@ export function convertJsonEntity(entity: JsonEntity): Entity {
   };
 }
 
-export function convertJsonPublishingResult(
-  publishingResult: JsonPublishingResult
-): AdminEntityPublishingPayload {
+export function convertJsonPublishingResult<TEffect>(
+  publishingResult: JsonPublishingResult<TEffect>
+): AdminEntityPublishingPayload<TEffect> {
   return {
     ...publishingResult,
     updatedAt: Temporal.Instant.from(publishingResult.updatedAt),
