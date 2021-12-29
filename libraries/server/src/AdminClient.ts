@@ -11,9 +11,9 @@ import {
   ok,
 } from '@jonasb/datadata-core';
 import type { AuthorizationAdapter, DatabaseAdapter, SessionContext } from '.';
+import { adminGetEntity } from './admin-entity/getEntity';
 import {
   adminCreateEntity,
-  adminGetEntity,
   archiveEntity,
   getEntities,
   getEntityHistory,
