@@ -240,8 +240,8 @@ export interface Edge<TOk, TError extends ErrorType> {
   cursor: string;
 }
 
-export interface EntityPublishPayload {
+export interface AdminEntityPublishingPayload {
   id: string;
-  publishState: AdminEntityStatus;
+  status: AdminEntityStatus;
   updatedAt: Temporal.Instant;
 }

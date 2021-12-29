@@ -1944,7 +1944,7 @@ describe('publishEntities()', () => {
             publishEntities(references: $references) {
               __typename
               id
-              publishState
+              status
               updatedAt
             }
           }
@@ -1957,9 +1957,9 @@ describe('publishEntities()', () => {
         data: {
           publishEntities: [
             {
-              __typename: 'EntityPublishPayload',
+              __typename: 'AdminEntityPublishingPayload',
               id,
-              publishState: AdminEntityStatus.published,
+              status: AdminEntityStatus.published,
               updatedAt,
             },
           ],
@@ -1989,7 +1989,7 @@ describe('publishEntities()', () => {
           publishEntities(references: $references) {
             __typename
             id
-            publishState
+            status
           }
         }
       `,
@@ -2062,7 +2062,7 @@ describe('unpublishEntities()', () => {
             unpublishEntities(references: $references) {
               __typename
               id
-              publishState
+              status
               updatedAt
             }
           }
@@ -2075,9 +2075,9 @@ describe('unpublishEntities()', () => {
         data: {
           unpublishEntities: [
             {
-              __typename: 'EntityPublishPayload',
+              __typename: 'AdminEntityPublishingPayload',
               id,
-              publishState: AdminEntityStatus.withdrawn,
+              status: AdminEntityStatus.withdrawn,
               updatedAt,
             },
           ],
@@ -2116,7 +2116,7 @@ describe('unpublishEntities()', () => {
           unpublishEntities(references: $references) {
             __typename
             id
-            publishState
+            status
           }
         }
       `,
@@ -2187,7 +2187,7 @@ describe('archiveEntity()', () => {
             archiveEntity(id: $id) {
               __typename
               id
-              publishState
+              status
               updatedAt
             }
           }
@@ -2199,9 +2199,9 @@ describe('archiveEntity()', () => {
       expect(result).toEqual({
         data: {
           archiveEntity: {
-            __typename: 'EntityPublishPayload',
+            __typename: 'AdminEntityPublishingPayload',
             id,
-            publishState: AdminEntityStatus.archived,
+            status: AdminEntityStatus.archived,
             updatedAt,
           },
         },
@@ -2280,7 +2280,7 @@ describe('unarchiveEntity()', () => {
             unarchiveEntity(id: $id) {
               __typename
               id
-              publishState
+              status
               updatedAt
             }
           }
@@ -2292,9 +2292,9 @@ describe('unarchiveEntity()', () => {
       expect(result).toEqual({
         data: {
           unarchiveEntity: {
-            __typename: 'EntityPublishPayload',
+            __typename: 'AdminEntityPublishingPayload',
             id,
-            publishState: AdminEntityStatus.draft,
+            status: AdminEntityStatus.draft,
             updatedAt,
           },
         },
@@ -2417,7 +2417,7 @@ describe('Multiple', () => {
 
             publishEntities(references: $references) {
               id
-              publishState
+              status
             }
           }
         `,
@@ -2438,7 +2438,7 @@ describe('Multiple', () => {
             effect: 'updated',
             entity: { fields: { title: 'Updated title' } },
           },
-          publishEntities: [{ id, publishState: AdminEntityStatus.published }],
+          publishEntities: [{ id, status: AdminEntityStatus.published }],
         },
       });
 

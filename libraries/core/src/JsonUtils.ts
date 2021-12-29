@@ -10,7 +10,7 @@ import type {
   Entity,
   EntityHistory,
   EntityInfo,
-  EntityPublishPayload,
+  AdminEntityPublishingPayload,
   EntityVersionInfo,
   ErrorType,
   PageInfo,
@@ -63,7 +63,7 @@ export interface JsonAdminEntityUpsertPayload extends Omit<AdminEntityUpsertPayl
   entity: JsonAdminEntity;
 }
 
-export interface JsonPublishingResult extends Omit<EntityPublishPayload, 'updatedAt'> {
+export interface JsonPublishingResult extends Omit<AdminEntityPublishingPayload, 'updatedAt'> {
   updatedAt: string;
 }
 
@@ -137,7 +137,7 @@ export function convertJsonEntity(entity: JsonEntity): Entity {
 
 export function convertJsonPublishingResult(
   publishingResult: JsonPublishingResult
-): EntityPublishPayload {
+): AdminEntityPublishingPayload {
   return {
     ...publishingResult,
     updatedAt: Temporal.Instant.from(publishingResult.updatedAt),

@@ -8,7 +8,7 @@ import type {
   Connection,
   Edge,
   EntityHistory,
-  EntityPublishPayload,
+  AdminEntityPublishingPayload,
   EntityVersionReferenceWithAuthKeys,
   ErrorResult,
   FieldSpecification,
@@ -209,7 +209,7 @@ export class DataDataContextValue {
   publishEntities = async (
     entities: EntityVersionReferenceWithAuthKeys[]
   ): PromiseResult<
-    EntityPublishPayload[],
+    AdminEntityPublishingPayload[],
     ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
   > => {
     try {
@@ -231,7 +231,7 @@ export class DataDataContextValue {
   unpublishEntities = async (
     entityIds: string[]
   ): PromiseResult<
-    EntityPublishPayload[],
+    AdminEntityPublishingPayload[],
     ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
   > => {
     try {
@@ -253,7 +253,7 @@ export class DataDataContextValue {
   archiveEntity = async (
     id: string
   ): PromiseResult<
-    EntityPublishPayload,
+    AdminEntityPublishingPayload,
     ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
   > => {
     try {
@@ -273,7 +273,7 @@ export class DataDataContextValue {
   unarchiveEntity = async (
     id: string
   ): PromiseResult<
-    EntityPublishPayload,
+    AdminEntityPublishingPayload,
     ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
   > => {
     try {
@@ -295,8 +295,8 @@ export class DataDataContextValue {
     mutate([this.#rootKey, FetcherActions.UseEntityHistory, entity.id]);
   }
 
-  private invalidateAfterPublishingEvent(publishingResult: EntityPublishPayload) {
-    const { id, publishState } = publishingResult;
+  private invalidateAfterPublishingEvent(publishingResult: AdminEntityPublishingPayload) {
+    const { id, status } = publishingResult;
     mutate([this.#rootKey, FetcherActions.UseEntityHistory, id]);
     mutate([this.#rootKey, FetcherActions.UsePublishingHistory, id]);
     mutate(
@@ -305,7 +305,7 @@ export class DataDataContextValue {
         if (cachedValue) {
           const updatedValue: AdminEntity = {
             ...cachedValue,
-            info: { ...cachedValue.info, status: publishState },
+            info: { ...cachedValue.info, status },
           };
           return updatedValue;
         }

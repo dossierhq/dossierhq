@@ -633,9 +633,9 @@ export async function publishEntity(
     logErrorResult('Failed publishing entity', publishResult);
     return null;
   }
-  const { publishState } = publishResult.value[0];
+  const { status } = publishResult.value[0];
   console.log(`${chalk.bold('Published:')} ${id} version: ${version}`);
-  return publishState;
+  return status;
 }
 
 export async function unpublishEntity(
@@ -648,9 +648,9 @@ export async function unpublishEntity(
     logErrorResult('Failed unpublishing entity', unpublishResult);
     return null;
   }
-  const { publishState } = unpublishResult.value[0];
-  console.log(`${chalk.bold('Unpublished:')} ${id} (${publishState})`);
-  return publishState;
+  const { status } = unpublishResult.value[0];
+  console.log(`${chalk.bold('Unpublished:')} ${id} (${status})`);
+  return status;
 }
 
 export async function archiveEntity(
@@ -663,9 +663,9 @@ export async function archiveEntity(
     logErrorResult('Failed archiving entity', archiveResult);
     return null;
   }
-  const { publishState } = archiveResult.value;
+  const { status } = archiveResult.value;
   console.log(`${chalk.bold('Archived:')} ${id}`);
-  return publishState;
+  return status;
 }
 
 export async function unarchiveEntity(
@@ -678,9 +678,9 @@ export async function unarchiveEntity(
     logErrorResult('Failed unarchiving entity', unarchiveResult);
     return null;
   }
-  const { publishState } = unarchiveResult.value;
+  const { status } = unarchiveResult.value;
   console.log(`${chalk.bold('Unarchived:')} ${id}`);
-  return publishState;
+  return status;
 }
 
 export async function showEntityHistory(context: CliContext, id: string): Promise<void> {

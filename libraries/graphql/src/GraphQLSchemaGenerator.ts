@@ -847,13 +847,13 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       })
     );
 
-    // EntityPublishPayload
+    // AdminEntityPublishingPayload
     this.addType(
       new GraphQLObjectType({
-        name: 'EntityPublishPayload',
+        name: 'AdminEntityPublishingPayload',
         fields: {
           id: { type: new GraphQLNonNull(GraphQLID) },
-          publishState: { type: new GraphQLNonNull(this.getEnumType('AdminEntityStatus')) },
+          status: { type: new GraphQLNonNull(this.getEnumType('AdminEntityStatus')) },
           updatedAt: { type: new GraphQLNonNull(this.getOutputType('Instant')) },
         },
       })
@@ -1469,7 +1469,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       TContext,
       { references: EntityVersionReferenceWithAuthKeys[] }
     >({
-      type: new GraphQLList(new GraphQLNonNull(this.getOutputType('EntityPublishPayload'))),
+      type: new GraphQLList(new GraphQLNonNull(this.getOutputType('AdminEntityPublishingPayload'))),
       args: {
         references: {
           type: new GraphQLNonNull(
@@ -1488,7 +1488,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
 
   buildMutationUnpublishEntities<TSource>(): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<TSource, TContext, { references: EntityReferenceWithAuthKeys[] }>({
-      type: new GraphQLList(new GraphQLNonNull(this.getOutputType('EntityPublishPayload'))),
+      type: new GraphQLList(new GraphQLNonNull(this.getOutputType('AdminEntityPublishingPayload'))),
       args: {
         references: {
           type: new GraphQLNonNull(
@@ -1507,7 +1507,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
 
   buildMutationArchiveEntity<TSource>(): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<TSource, TContext, { id: string; authKeys: string[] | null }>({
-      type: this.getOutputType('EntityPublishPayload'),
+      type: this.getOutputType('AdminEntityPublishingPayload'),
       args: {
         id: { type: new GraphQLNonNull(GraphQLID) },
         authKeys: { type: new GraphQLList(new GraphQLNonNull(GraphQLString)) },
@@ -1521,7 +1521,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
 
   buildMutationUnarchiveEntity<TSource>(): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<TSource, TContext, { id: string; authKeys: string[] | null }>({
-      type: this.getOutputType('EntityPublishPayload'),
+      type: this.getOutputType('AdminEntityPublishingPayload'),
       args: {
         id: { type: new GraphQLNonNull(GraphQLID) },
         authKeys: { type: new GraphQLList(new GraphQLNonNull(GraphQLString)) },

@@ -12,7 +12,7 @@ import type {
   Connection,
   Edge,
   EntityHistory,
-  EntityPublishPayload,
+  AdminEntityPublishingPayload,
   EntityReference,
   EntityReferenceWithAuthKeys,
   EntityVersionReference,
@@ -121,28 +121,28 @@ export interface AdminClient {
   publishEntities(
     references: EntityVersionReferenceWithAuthKeys[]
   ): PromiseResult<
-    EntityPublishPayload[],
+    AdminEntityPublishingPayload[],
     ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
   >;
 
   unpublishEntities(
     references: EntityReferenceWithAuthKeys[]
   ): PromiseResult<
-    EntityPublishPayload[],
+    AdminEntityPublishingPayload[],
     ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
   >;
 
   archiveEntity(
     reference: EntityReferenceWithAuthKeys
   ): PromiseResult<
-    EntityPublishPayload,
+    AdminEntityPublishingPayload,
     ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
   >;
 
   unarchiveEntity(
     reference: EntityReferenceWithAuthKeys
   ): PromiseResult<
-    EntityPublishPayload,
+    AdminEntityPublishingPayload,
     ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
   >;
 

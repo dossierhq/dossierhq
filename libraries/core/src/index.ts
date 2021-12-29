@@ -123,7 +123,7 @@ export type {
   EntityHistory,
   EntityInfo,
   EntityLike,
-  EntityPublishPayload,
+  AdminEntityPublishingPayload,
   EntityReference,
   EntityReferenceWithAuthKeys,
   EntityVersionInfo,
