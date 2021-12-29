@@ -42,7 +42,7 @@ export function EntityMetadata({
     initialSelectedHistory ?? 'entity'
   );
 
-  const { entity, latestServerVersion, publishState } = draftState;
+  const { entity, latestServerVersion, status } = draftState;
 
   const authKeyDisplayName = entity?.authKey
     ? authKeys.find((it) => it.authKey === entity.authKey)?.displayName ?? null
@@ -78,14 +78,14 @@ export function EntityMetadata({
           <RowElement as="p" className="dd-text-subtitle2" grow>
             Publish state
           </RowElement>
-          {publishState ? <PublishStateTag publishState={publishState} /> : null}
+          {status ? <PublishStateTag publishState={status} /> : null}
         </Row>
         <PublishingButton
           {...{
             entityId,
             entitySpec: entity?.entitySpec ?? null,
             latestServerVersion,
-            publishState,
+            status,
           }}
         />
       </ColumnItem>

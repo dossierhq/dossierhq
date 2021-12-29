@@ -20,18 +20,18 @@ interface PublishAction {
 export function PublishingButton({
   entityId,
   entitySpec,
-  publishState,
+  status,
   latestServerVersion,
 }: {
   entityId: string;
   entitySpec: AdminEntityTypeSpecification | null;
-  publishState: AdminEntityStatus | null;
+  status: AdminEntityStatus | null;
   latestServerVersion: number | null;
 }): JSX.Element | null {
   const context = useContext(DataDataContext);
   const [loading, setLoading] = useState(false);
 
-  if (publishState === null || entitySpec === null || latestServerVersion === null) {
+  if (status === null || entitySpec === null || latestServerVersion === null) {
     return null;
   }
 
@@ -40,7 +40,7 @@ export function PublishingButton({
     entityId,
     entitySpec,
     latestServerVersion,
-    publishState
+    status
   );
   const dropDownItems = dropdownActions.map(({ name, handler }) => ({
     key: name,
@@ -68,18 +68,18 @@ function createPublishActions(
   entityId: string,
   entitySpec: AdminEntityTypeSpecification,
   latestServerVersion: number,
-  publishState: AdminEntityStatus
+  status: AdminEntityStatus
 ) {
   const { archiveEntity, publishEntities, unarchiveEntity, unpublishEntities } = context;
 
   let publishActionsIds: Array<'publish' | 'unpublish' | 'archive' | 'unarchive'> = [];
-  if ([AdminEntityStatus.draft, AdminEntityStatus.withdrawn].includes(publishState)) {
+  if ([AdminEntityStatus.draft, AdminEntityStatus.withdrawn].includes(status)) {
     publishActionsIds = ['publish', 'archive'];
-  } else if (publishState === AdminEntityStatus.published) {
+  } else if (status === AdminEntityStatus.published) {
     publishActionsIds = ['unpublish'];
-  } else if (publishState === AdminEntityStatus.modified) {
+  } else if (status === AdminEntityStatus.modified) {
     publishActionsIds = ['publish', 'unpublish'];
-  } else if (publishState === AdminEntityStatus.archived) {
+  } else if (status === AdminEntityStatus.archived) {
     publishActionsIds = ['unarchive', 'publish'];
   }
 
