@@ -1,7 +1,13 @@
 import type { DatabaseAdapter } from '@jonasb/datadata-server';
 import type { PostgresTransaction } from '.';
 import { adminCreateEntity } from './admin-entity/createEntity';
+import { adminEntityPublishingCreateEvents } from './admin-entity/createPublishingEvents';
 import { adminGetEntity } from './admin-entity/getEntity';
+import {
+  adminEntityPublishGetUnpublishedReferencedEntities,
+  adminEntityPublishGetVersionInfo,
+  adminEntityPublishUpdateEntity,
+} from './admin-entity/publishEntities';
 import { authCreateSession } from './auth/createSession';
 import { withNestedTransaction, withRootTransaction } from './PostgresTransaction';
 import { schemaGetSpecification } from './schema/getSpecification';
@@ -25,15 +31,23 @@ export function createPostgresDatabaseAdapterAdapter(
   databaseAdapter: PostgresDatabaseAdapter
 ): DatabaseAdapter {
   return {
-    disconnect: databaseAdapter.disconnect,
-    withRootTransaction: (...args) => withRootTransaction(databaseAdapter, ...args),
-    withNestedTransaction: (...args) => withNestedTransaction(databaseAdapter, ...args),
-    queryLegacy: databaseAdapter.query,
-    isUniqueViolationOfConstraint: databaseAdapter.isUniqueViolationOfConstraint,
     adminEntityCreate: (...args) => adminCreateEntity(databaseAdapter, ...args),
     adminEntityGetOne: (...args) => adminGetEntity(databaseAdapter, ...args),
+    adminEntityPublishGetUnpublishedReferencedEntities: (...args) =>
+      adminEntityPublishGetUnpublishedReferencedEntities(databaseAdapter, ...args),
+    adminEntityPublishGetVersionInfo: (...args) =>
+      adminEntityPublishGetVersionInfo(databaseAdapter, ...args),
+    adminEntityPublishingCreateEvents: (...args) =>
+      adminEntityPublishingCreateEvents(databaseAdapter, ...args),
+    adminEntityPublishUpdateEntity: (...args) =>
+      adminEntityPublishUpdateEntity(databaseAdapter, ...args),
     authCreateSession: (...args) => authCreateSession(databaseAdapter, ...args),
+    disconnect: databaseAdapter.disconnect,
+    isUniqueViolationOfConstraint: databaseAdapter.isUniqueViolationOfConstraint,
+    queryLegacy: databaseAdapter.query,
     schemaGetSpecification: (...args) => schemaGetSpecification(databaseAdapter, ...args),
     schemaUpdateSpecification: (...args) => schemaUpdateSpecification(databaseAdapter, ...args),
+    withNestedTransaction: (...args) => withNestedTransaction(databaseAdapter, ...args),
+    withRootTransaction: (...args) => withRootTransaction(databaseAdapter, ...args),
   };
 }
