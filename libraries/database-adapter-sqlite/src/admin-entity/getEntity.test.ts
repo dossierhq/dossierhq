@@ -51,7 +51,7 @@ describe('adminGetEntity', () => {
         Array [
           "SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, ev.version, ev.fields
           FROM entities e, entity_versions ev
-          WHERE e.uuid = $1
+          WHERE e.uuid = ?1
           AND e.latest_entity_versions_id = ev.id",
           "123",
         ],
@@ -105,9 +105,9 @@ describe('adminGetEntity', () => {
         Array [
           "SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, ev.version, ev.fields
           FROM entities e, entity_versions ev
-          WHERE e.uuid = $1
+          WHERE e.uuid = ?1
           AND e.id = ev.entities_id
-          AND ev.version = $2",
+          AND ev.version = ?2",
           "123",
           5,
         ],

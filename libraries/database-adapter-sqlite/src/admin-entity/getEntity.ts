@@ -4,12 +4,13 @@ import type {
   ErrorType,
   PromiseResult,
 } from '@jonasb/datadata-core';
-import { assertExhaustive, AdminEntityStatus, notOk, ok } from '@jonasb/datadata-core';
+import { notOk, ok } from '@jonasb/datadata-core';
 import type { DatabaseAdminEntityGetOnePayload, TransactionContext } from '@jonasb/datadata-server';
 import { Temporal } from '@js-temporal/polyfill';
 import type { SqliteDatabaseAdapter } from '..';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema';
 import { queryNoneOrOne } from '../QueryFunctions';
+import { resolveEntityStatus } from '../utils/CodecUtils';
 
 export async function adminGetEntity(
   databaseAdapter: SqliteDatabaseAdapter,
@@ -72,7 +73,7 @@ async function getEntityWithLatestVersion(
   >(databaseAdapter, context, {
     text: `SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, ev.version, ev.fields
     FROM entities e, entity_versions ev
-    WHERE e.uuid = $1
+    WHERE e.uuid = ?1
     AND e.latest_entity_versions_id = ev.id`,
     values: [reference.id],
   });
@@ -106,9 +107,9 @@ async function getEntityWithVersion(
   >(databaseAdapter, context, {
     text: `SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, ev.version, ev.fields
     FROM entities e, entity_versions ev
-    WHERE e.uuid = $1
+    WHERE e.uuid = ?1
     AND e.id = ev.entities_id
-    AND ev.version = $2`,
+    AND ev.version = ?2`,
     values: [reference.id, reference.version],
   });
   if (result.isError()) {
@@ -118,21 +119,4 @@ async function getEntityWithVersion(
     return notOk.NotFound('No such entity or version');
   }
   return ok(result.value);
-}
-
-function resolveEntityStatus(status: EntitiesTable['status']): AdminEntityStatus {
-  switch (status) {
-    case 'draft':
-      return AdminEntityStatus.draft;
-    case 'published':
-      return AdminEntityStatus.published;
-    case 'modified':
-      return AdminEntityStatus.modified;
-    case 'withdrawn':
-      return AdminEntityStatus.withdrawn;
-    case 'archived':
-      return AdminEntityStatus.archived;
-    default:
-      assertExhaustive(status);
-  }
 }

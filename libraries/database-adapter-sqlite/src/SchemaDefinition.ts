@@ -31,9 +31,11 @@ export const SCHEMA_DEFINITION_STATEMENTS = [
     created_at TEXT NOT NULL,
     updated_at TEXT NOT NULL,
     latest_entity_versions_id INTEGER,
+    published_entity_versions_id INTEGER,
     CONSTRAINT entities_uuid UNIQUE (uuid),
-    CONSTRAINT entities_name UNIQUE (name)
-    FOREIGN KEY (latest_entity_versions_id) REFERENCES entity_versions(id)
+    CONSTRAINT entities_name UNIQUE (name),
+    FOREIGN KEY (latest_entity_versions_id) REFERENCES entity_versions(id),
+    FOREIGN KEY (published_entity_versions_id) REFERENCES entity_versions(id)
   )`,
   `CREATE TABLE entity_versions (
     id INTEGER PRIMARY KEY,
@@ -43,5 +45,23 @@ export const SCHEMA_DEFINITION_STATEMENTS = [
     fields TEXT NOT NULL,
     FOREIGN KEY (entities_id) REFERENCES entities(id) ON DELETE CASCADE,
     FOREIGN KEY (created_by) REFERENCES subjects(id)
+  )`,
+  `CREATE TABLE entity_version_references (
+    id INTEGER PRIMARY KEY,
+    entities_id INTEGER NOT NULL,
+    entity_versions_id INTEGER NOT NULL,
+    FOREIGN KEY (entities_id) REFERENCES entities(id) ON DELETE CASCADE,
+    FOREIGN KEY (entity_versions_id) REFERENCES entity_versions(id) ON DELETE CASCADE
+  )`,
+  `CREATE TABLE entity_publishing_events (
+    id INTEGER PRIMARY KEY,
+    entities_id INTEGER NOT NULL,
+    entity_versions_id INTEGER,
+    published_by INTEGER NOT NULL,
+    published_at TEXT NOT NULL,
+    kind TEXT NOT NULL,
+    FOREIGN KEY (entities_id) REFERENCES entities(id) ON DELETE CASCADE,
+    FOREIGN KEY (entity_versions_id) REFERENCES entity_versions(id) ON DELETE CASCADE,
+    FOREIGN KEY (published_by) REFERENCES subjects(id)
   )`,
 ];

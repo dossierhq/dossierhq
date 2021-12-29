@@ -30,18 +30,18 @@ describe('authCreateSession', () => {
       expect(getQueryCalls(adapter)).toEqual([
         [
           `SELECT s.id, s.uuid FROM subjects s, principals p
-    WHERE p.provider = $1 AND p.identifier = $2 AND p.subjects_id = s.id`,
+    WHERE p.provider = ?1 AND p.identifier = ?2 AND p.subjects_id = s.id`,
           'test',
           'hello',
         ],
         ['BEGIN'],
         [
-          'INSERT INTO subjects (uuid, created_at) VALUES ($1, $2) RETURNING id',
+          'INSERT INTO subjects (uuid, created_at) VALUES (?1, ?2) RETURNING id',
           subjectId,
           expect.anything(),
         ],
         [
-          'INSERT INTO principals (provider, identifier, subjects_id) VALUES ($1, $2, $3)',
+          'INSERT INTO principals (provider, identifier, subjects_id) VALUES (?1, ?2, ?3)',
           'test',
           'hello',
           123,
@@ -73,14 +73,16 @@ describe('authCreateSession', () => {
         session: { subjectInternalId: 123, subjectId },
       });
 
-      expect(getQueryCalls(adapter)).toEqual([
-        [
-          `SELECT s.id, s.uuid FROM subjects s, principals p
-    WHERE p.provider = $1 AND p.identifier = $2 AND p.subjects_id = s.id`,
-          'test',
-          'hello',
-        ],
-      ]);
+      expect(getQueryCalls(adapter)).toMatchInlineSnapshot(`
+        Array [
+          Array [
+            "SELECT s.id, s.uuid FROM subjects s, principals p
+            WHERE p.provider = ?1 AND p.identifier = ?2 AND p.subjects_id = s.id",
+            "test",
+            "hello",
+          ],
+        ]
+      `);
     }
   });
 });

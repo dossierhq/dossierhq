@@ -3,7 +3,13 @@ import { notOk, ok } from '@jonasb/datadata-core';
 import type { Context, DatabaseAdapter } from '@jonasb/datadata-server';
 import type { UniqueConstraint } from '.';
 import { adminCreateEntity } from './admin-entity/createEntity';
+import { adminEntityPublishingCreateEvents } from './admin-entity/createPublishingEvents';
 import { adminGetEntity } from './admin-entity/getEntity';
+import {
+  adminEntityPublishGetUnpublishedReferencedEntities,
+  adminEntityPublishGetVersionInfo,
+  adminEntityPublishUpdateEntity,
+} from './admin-entity/publishEntities';
 import { authCreateSession } from './auth/createSession';
 import { queryOne } from './QueryFunctions';
 import { schemaGetSpecification } from './schema/getSpecification';
@@ -33,18 +39,14 @@ export async function createSqliteDatabaseAdapter(
   const adapter: DatabaseAdapter = {
     adminEntityCreate: (...args) => adminCreateEntity(sqliteAdapter, ...args),
     adminEntityGetOne: (...args) => adminGetEntity(sqliteAdapter, ...args),
-    adminEntityPublishGetUnpublishedReferencedEntities: () => {
-      throw new Error('TODO');
-    },
-    adminEntityPublishGetVersionInfo: () => {
-      throw new Error('TODO');
-    },
-    adminEntityPublishingCreateEvents: () => {
-      throw new Error('TODO');
-    },
-    adminEntityPublishUpdateEntity: () => {
-      throw new Error('TODO');
-    },
+    adminEntityPublishGetUnpublishedReferencedEntities: (...args) =>
+      adminEntityPublishGetUnpublishedReferencedEntities(sqliteAdapter, ...args),
+    adminEntityPublishGetVersionInfo: (...args) =>
+      adminEntityPublishGetVersionInfo(sqliteAdapter, ...args),
+    adminEntityPublishingCreateEvents: (...args) =>
+      adminEntityPublishingCreateEvents(sqliteAdapter, ...args),
+    adminEntityPublishUpdateEntity: (...args) =>
+      adminEntityPublishUpdateEntity(sqliteAdapter, ...args),
     authCreateSession: (...args) => authCreateSession(sqliteAdapter, ...args),
     disconnect: sqliteAdapter.disconnect,
     isUniqueViolationOfConstraint: () => {

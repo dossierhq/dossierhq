@@ -64,7 +64,7 @@ async function getSubject(
 ): PromiseResult<DatabaseAuthCreateSessionPayload | null, ErrorType.Generic> {
   const result = await queryNoneOrOne<Pick<SubjectsTable, 'id' | 'uuid'>>(adapter, context, {
     text: `SELECT s.id, s.uuid FROM subjects s, principals p
-    WHERE p.provider = $1 AND p.identifier = $2 AND p.subjects_id = s.id`,
+    WHERE p.provider = ?1 AND p.identifier = ?2 AND p.subjects_id = s.id`,
     values: [provider, identifier],
   });
   if (result.isError()) {
@@ -86,7 +86,7 @@ async function createSubject(
     const uuid = uuidv4();
     const now = Temporal.Now.instant();
     const subjectsResult = await queryOne<Pick<SubjectsTable, 'id'>>(adapter, context, {
-      text: 'INSERT INTO subjects (uuid, created_at) VALUES ($1, $2) RETURNING id',
+      text: 'INSERT INTO subjects (uuid, created_at) VALUES (?1, ?2) RETURNING id',
       values: [uuid, now.toString()],
     });
     if (subjectsResult.isError()) {
@@ -97,7 +97,7 @@ async function createSubject(
       adapter,
       context,
       {
-        text: 'INSERT INTO principals (provider, identifier, subjects_id) VALUES ($1, $2, $3)',
+        text: 'INSERT INTO principals (provider, identifier, subjects_id) VALUES (?1, ?2, ?3)',
         values: [provider, identifier, id],
       },
       (error) => {
