@@ -54,7 +54,6 @@ export async function adminPublishEntities(
   }
 
   return context.withTransaction(async (context) => {
-    const result: AdminEntityPublishPayload[] = [];
     // Step 1: Get version info for each entity
     const missingReferences: EntityVersionReference[] = [];
     const adminOnlyEntityIds: string[] = [];
@@ -166,73 +165,119 @@ export async function adminPublishEntities(
       return notOk.BadRequest(`Entity type is adminOnly: ${adminOnlyEntityIds.join(', ')}`);
     }
 
-    // Step 2: Publish entities
-    for (const versionInfo of versionsInfo) {
-      const { status } = versionInfo;
-      let updatedAt: Temporal.Instant;
-      if (versionInfo.effect === 'none') {
-        updatedAt = versionInfo.updatedAt;
-      } else {
-        const { entityVersionInternalId, fullTextSearchText, entityInternalId } = versionInfo;
-        const updateResult = await databaseAdapter.adminEntityPublishUpdateEntity(context, {
-          entityVersionInternalId,
-          fullTextSearchText,
-          status,
-          entityInternalId,
-        });
-        if (updateResult.isError()) {
-          return updateResult;
-        }
-        updatedAt = updateResult.value.updatedAt;
-      }
-      result.push({ id: versionInfo.uuid, status, effect: versionInfo.effect, updatedAt });
-    }
-
     const publishVersionsInfo = versionsInfo.filter(
       ({ effect }) => effect === 'published'
     ) as VersionInfoToBePublished[];
 
-    // Step 3: Check if references are ok
-    const referenceErrorMessages: string[] = [];
-    for (const { uuid, entityInternalId, entityVersionInternalId } of publishVersionsInfo) {
-      const unpublishedReferencesResult =
-        await databaseAdapter.adminEntityPublishGetUnpublishedReferencedEntities(context, {
-          entityInternalId,
-          entityVersionInternalId,
-        });
-      if (unpublishedReferencesResult.isError()) {
-        return unpublishedReferencesResult;
-      }
-      const unpublishedReferences = unpublishedReferencesResult.value;
-      if (unpublishedReferences.length > 0) {
-        referenceErrorMessages.push(
-          `${uuid}: References unpublished entities: ${unpublishedReferences
-            .map(({ id }) => id)
-            .join(', ')}`
-        );
-      }
+    // Step 2: Publish entities
+    const publishEntityResult = await publishEntitiesAndCollectResult(
+      databaseAdapter,
+      context,
+      versionsInfo
+    );
+    if (publishEntityResult.isError()) {
+      return publishEntityResult;
     }
 
-    if (referenceErrorMessages.length > 0) {
-      return notOk.BadRequest(referenceErrorMessages.join('\n'));
+    // Step 3: Check if references are ok
+    const ensureReferencePublishedResult = await ensureReferencedEntitiesArePublished(
+      databaseAdapter,
+      context,
+      publishVersionsInfo
+    );
+    if (ensureReferencePublishedResult.isError()) {
+      return ensureReferencePublishedResult;
     }
 
     // Step 4: Create publish event
-    if (publishVersionsInfo.length > 0) {
-      const eventsResult = await databaseAdapter.adminEntityPublishingCreateEvents(context, {
-        session: context.session,
-        kind: 'publish',
-        references: publishVersionsInfo.map(({ entityInternalId, entityVersionInternalId }) => ({
-          entityInternalId,
-          entityVersionInternalId,
-        })),
-      });
-      if (eventsResult.isError()) {
-        return eventsResult;
-      }
+    const publishEventResult = await createPublishEvents(
+      databaseAdapter,
+      context,
+      publishVersionsInfo
+    );
+    if (publishEventResult.isError()) {
+      return publishEventResult;
     }
 
     //
-    return ok(result);
+    return publishEntityResult;
+  });
+}
+
+async function publishEntitiesAndCollectResult(
+  databaseAdapter: DatabaseAdapter,
+  context: SessionContext,
+  versionsInfo: (VersionInfoToBePublished | VersionInfoAlreadyPublished)[]
+): PromiseResult<AdminEntityPublishPayload[], ErrorType.Generic> {
+  const result: AdminEntityPublishPayload[] = [];
+  for (const versionInfo of versionsInfo) {
+    const { status } = versionInfo;
+    let updatedAt: Temporal.Instant;
+    if (versionInfo.effect === 'none') {
+      updatedAt = versionInfo.updatedAt;
+    } else {
+      const { entityVersionInternalId, fullTextSearchText, entityInternalId } = versionInfo;
+      const updateResult = await databaseAdapter.adminEntityPublishUpdateEntity(context, {
+        entityVersionInternalId,
+        fullTextSearchText,
+        status,
+        entityInternalId,
+      });
+      if (updateResult.isError()) {
+        return updateResult;
+      }
+      updatedAt = updateResult.value.updatedAt;
+    }
+    result.push({ id: versionInfo.uuid, status, effect: versionInfo.effect, updatedAt });
+  }
+  return ok(result);
+}
+
+async function ensureReferencedEntitiesArePublished(
+  databaseAdapter: DatabaseAdapter,
+  context: SessionContext,
+  publishVersionsInfo: VersionInfoToBePublished[]
+): PromiseResult<void, ErrorType.BadRequest | ErrorType.Generic> {
+  const referenceErrorMessages: string[] = [];
+  for (const { uuid, entityInternalId, entityVersionInternalId } of publishVersionsInfo) {
+    const unpublishedReferencesResult =
+      await databaseAdapter.adminEntityPublishGetUnpublishedReferencedEntities(context, {
+        entityInternalId,
+        entityVersionInternalId,
+      });
+    if (unpublishedReferencesResult.isError()) {
+      return unpublishedReferencesResult;
+    }
+    const unpublishedReferences = unpublishedReferencesResult.value;
+    if (unpublishedReferences.length > 0) {
+      referenceErrorMessages.push(
+        `${uuid}: References unpublished entities: ${unpublishedReferences
+          .map(({ id }) => id)
+          .join(', ')}`
+      );
+    }
+  }
+
+  if (referenceErrorMessages.length > 0) {
+    return notOk.BadRequest(referenceErrorMessages.join('\n'));
+  }
+  return ok(undefined);
+}
+
+async function createPublishEvents(
+  databaseAdapter: DatabaseAdapter,
+  context: SessionContext,
+  publishVersionsInfo: VersionInfoToBePublished[]
+): PromiseResult<void, ErrorType.Generic> {
+  if (publishVersionsInfo.length === 0) {
+    return ok(undefined);
+  }
+  return await databaseAdapter.adminEntityPublishingCreateEvents(context, {
+    session: context.session,
+    kind: 'publish',
+    references: publishVersionsInfo.map(({ entityInternalId, entityVersionInternalId }) => ({
+      entityInternalId,
+      entityVersionInternalId,
+    })),
   });
 }

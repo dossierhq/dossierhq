@@ -12,6 +12,18 @@ import { SessionContextImpl } from '../Context';
 interface MockDatabaseAdapter extends DatabaseAdapter {
   adminEntityCreate: jest.MockedFunction<DatabaseAdapter['adminEntityCreate']>;
   adminEntityGetOne: jest.MockedFunction<DatabaseAdapter['adminEntityGetOne']>;
+  adminEntityPublishGetUnpublishedReferencedEntities: jest.MockedFunction<
+    DatabaseAdapter['adminEntityPublishGetUnpublishedReferencedEntities']
+  >;
+  adminEntityPublishGetVersionInfo: jest.MockedFunction<
+    DatabaseAdapter['adminEntityPublishGetVersionInfo']
+  >;
+  adminEntityPublishingCreateEvents: jest.MockedFunction<
+    DatabaseAdapter['adminEntityPublishingCreateEvents']
+  >;
+  adminEntityPublishUpdateEntity: jest.MockedFunction<
+    DatabaseAdapter['adminEntityPublishUpdateEntity']
+  >;
   authCreateSession: jest.MockedFunction<DatabaseAdapter['authCreateSession']>;
   queryLegacy: jest.MockedFunction<DatabaseAdapter['queryLegacy']>;
   schemaGetSpecification: jest.MockedFunction<DatabaseAdapter['schemaGetSpecification']>;
@@ -98,16 +110,10 @@ export function getDatabaseAdapterMockedCallsWithoutContextAndUnordered(
   databaseAdapter: MockDatabaseAdapter
 ): Array<unknown[]> {
   const calls: Array<unknown[]> = [];
-  const mocksWithInitialContextArg: (keyof MockDatabaseAdapter)[] = [
-    'adminEntityCreate',
-    'adminEntityGetOne',
-    'authCreateSession',
-    'schemaGetSpecification',
-    'withRootTransaction',
-  ];
-  for (const methodName of mocksWithInitialContextArg) {
+  for (const methodName of Object.keys(databaseAdapter).sort() as (keyof MockDatabaseAdapter)[]) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     for (const args of (databaseAdapter[methodName] as jest.MockedFunction<any>).mock.calls) {
+      // remove first arg (normally context)
       calls.push([methodName, ...args.slice(1)]);
     }
   }
