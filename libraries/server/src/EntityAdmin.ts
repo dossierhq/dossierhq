@@ -12,7 +12,7 @@ import type {
   Edge,
   EntityHistory,
   EntityLike,
-  EntityPublishPayload,
+  AdminEntityPublishingPayload,
   EntityReference,
   EntityReferenceWithAuthKeys,
   EntityVersionInfo,
@@ -539,7 +539,7 @@ export async function publishEntities(
   context: SessionContext,
   references: EntityVersionReferenceWithAuthKeys[]
 ): PromiseResult<
-  EntityPublishPayload[],
+  AdminEntityPublishingPayload[],
   ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
 > {
   const uniqueIdCheck = checkUUIDsAreUnique(references);
@@ -548,7 +548,7 @@ export async function publishEntities(
   }
 
   return context.withTransaction(async (context) => {
-    const result: EntityPublishPayload[] = [];
+    const result: AdminEntityPublishingPayload[] = [];
     // Step 1: Get version info for each entity
     const missingReferences: EntityVersionReference[] = [];
     const alreadyPublishedEntityIds: string[] = [];
@@ -686,7 +686,7 @@ export async function publishEntities(
           RETURNING updated_at`,
         [versionsId, fullTextSearchText, status, entityId]
       );
-      result.push({ id: uuid, publishState: status, updatedAt });
+      result.push({ id: uuid, status, updatedAt });
     }
 
     // Step 3: Check if references are ok
@@ -740,7 +740,7 @@ export async function unpublishEntities(
   context: SessionContext,
   references: EntityReferenceWithAuthKeys[]
 ): PromiseResult<
-  EntityPublishPayload[],
+  AdminEntityPublishingPayload[],
   ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
 > {
   const uniqueIdCheck = checkUUIDsAreUnique(references);
@@ -749,7 +749,7 @@ export async function unpublishEntities(
   }
 
   return context.withTransaction(async (context) => {
-    const result: EntityPublishPayload[] = [];
+    const result: AdminEntityPublishingPayload[] = [];
 
     // Step 1: Resolve entities and check if all entities exist
     const entitiesInfo = await Db.queryMany<
@@ -814,7 +814,7 @@ export async function unpublishEntities(
     for (const reference of references) {
       const updatedAt = unpublishRows.find((it) => it.uuid === reference.id)?.updated_at;
       assertIsDefined(updatedAt);
-      result.push({ id: reference.id, publishState: AdminEntityStatus.withdrawn, updatedAt });
+      result.push({ id: reference.id, status: AdminEntityStatus.withdrawn, updatedAt });
     }
 
     // Step 3: Check if references are ok
@@ -865,7 +865,7 @@ export async function archiveEntity(
   context: SessionContext,
   reference: EntityReferenceWithAuthKeys
 ): PromiseResult<
-  EntityPublishPayload,
+  AdminEntityPublishingPayload,
   ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
 > {
   return context.withTransaction(async (context) => {
@@ -913,7 +913,7 @@ export async function archiveEntity(
     if (archived) {
       return ok({
         id: reference.id,
-        publishState: AdminEntityStatus.archived,
+        status: AdminEntityStatus.archived,
         updatedAt: previousUpdatedAt,
       }); // no change
     }
@@ -939,7 +939,7 @@ export async function archiveEntity(
       ),
     ]);
 
-    return ok({ id: reference.id, publishState: AdminEntityStatus.archived, updatedAt });
+    return ok({ id: reference.id, status: AdminEntityStatus.archived, updatedAt });
   });
 }
 
@@ -949,7 +949,7 @@ export async function unarchiveEntity(
   context: SessionContext,
   reference: EntityReferenceWithAuthKeys
 ): PromiseResult<
-  EntityPublishPayload,
+  AdminEntityPublishingPayload,
   ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.NotFound | ErrorType.Generic
 > {
   return context.withTransaction(async (context) => {
@@ -985,14 +985,14 @@ export async function unarchiveEntity(
       never_published: neverPublished,
       updated_at: previousUpdatedAt,
     } = entityInfo;
-    const result: EntityPublishPayload = {
+    const result: AdminEntityPublishingPayload = {
       id: reference.id,
-      publishState: resolveEntityStatus(entityInfo.status),
+      status: resolveEntityStatus(entityInfo.status),
       updatedAt: previousUpdatedAt,
     };
 
-    if (result.publishState === AdminEntityStatus.archived) {
-      result.publishState = neverPublished ? AdminEntityStatus.draft : AdminEntityStatus.withdrawn;
+    if (result.status === AdminEntityStatus.archived) {
+      result.status = neverPublished ? AdminEntityStatus.draft : AdminEntityStatus.withdrawn;
 
       const [{ updated_at: updatedAt }, _] = await Promise.all([
         Db.queryOne<Pick<EntitiesTable, 'updated_at'>>(
@@ -1005,7 +1005,7 @@ export async function unarchiveEntity(
             status = $1
           WHERE id = $2
           RETURNING updated_at`,
-          [result.publishState, entityId]
+          [result.status, entityId]
         ),
         Db.queryNone(
           databaseAdapter,

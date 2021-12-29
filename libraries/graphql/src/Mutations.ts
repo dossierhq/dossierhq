@@ -6,7 +6,7 @@ import type {
   AdminEntityUpsert,
   AdminEntityUpsertPayload,
   AdminSchema,
-  EntityPublishPayload,
+  AdminEntityPublishingPayload,
   EntityReferenceWithAuthKeys,
   EntityVersionReferenceWithAuthKeys,
 } from '@jonasb/datadata-core';
@@ -65,7 +65,7 @@ export async function upsertEntity<TContext extends SessionGraphQLContext>(
 export async function publishEntities<TContext extends SessionGraphQLContext>(
   context: TContext,
   references: EntityVersionReferenceWithAuthKeys[]
-): Promise<EntityPublishPayload[]> {
+): Promise<AdminEntityPublishingPayload[]> {
   const adminClient = getAdminClient(context);
   const result = await adminClient.publishEntities(references);
   if (result.isError()) {
@@ -77,7 +77,7 @@ export async function publishEntities<TContext extends SessionGraphQLContext>(
 export async function unpublishEntities<TContext extends SessionGraphQLContext>(
   context: TContext,
   references: EntityReferenceWithAuthKeys[]
-): Promise<EntityPublishPayload[]> {
+): Promise<AdminEntityPublishingPayload[]> {
   const adminClient = getAdminClient(context);
   const result = await adminClient.unpublishEntities(references);
   if (result.isError()) {
@@ -89,7 +89,7 @@ export async function unpublishEntities<TContext extends SessionGraphQLContext>(
 export async function archiveEntity<TContext extends SessionGraphQLContext>(
   context: TContext,
   reference: EntityReferenceWithAuthKeys
-): Promise<EntityPublishPayload> {
+): Promise<AdminEntityPublishingPayload> {
   const adminClient = getAdminClient(context);
   const result = await adminClient.archiveEntity(reference);
   if (result.isError()) {
@@ -101,7 +101,7 @@ export async function archiveEntity<TContext extends SessionGraphQLContext>(
 export async function unarchiveEntity<TContext extends SessionGraphQLContext>(
   context: TContext,
   reference: EntityReferenceWithAuthKeys
-): Promise<EntityPublishPayload> {
+): Promise<AdminEntityPublishingPayload> {
   const adminClient = getAdminClient(context);
   const result = await adminClient.unarchiveEntity(reference);
   if (result.isError()) {

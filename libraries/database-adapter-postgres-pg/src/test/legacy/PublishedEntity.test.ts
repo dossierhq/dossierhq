@@ -3,14 +3,14 @@ import type {
   AdminEntity,
   AdminEntityCreate,
   AdminEntityCreatePayload,
+  AdminSchemaSpecificationUpdate,
   Entity,
   PromiseResult,
   PublishedClient,
-  AdminSchemaSpecificationUpdate,
 } from '@jonasb/datadata-core';
 import {
-  CoreTestUtils,
   AdminEntityStatus,
+  CoreTestUtils,
   ErrorType,
   FieldType,
   ok,
@@ -172,8 +172,8 @@ async function createAndPublishEntities(
   }
   for (let i = 0; i < result.length; i += 1) {
     const entityInfo = result[i].entity.info;
-    const { publishState, updatedAt } = publishResult.value[i];
-    entityInfo.status = publishState;
+    const { status, updatedAt } = publishResult.value[i];
+    entityInfo.status = status;
     entityInfo.updatedAt = updatedAt;
   }
 
@@ -234,7 +234,7 @@ describe('getEntity()', () => {
         const { updatedAt } = archiveResult.value;
         expectResultValue(archiveResult, {
           id,
-          publishState: AdminEntityStatus.archived,
+          status: AdminEntityStatus.archived,
           updatedAt,
         });
       }
@@ -242,9 +242,7 @@ describe('getEntity()', () => {
       const publishResult = await adminClient.publishEntities([{ id, version }]);
       if (expectOkResult(publishResult)) {
         const [{ updatedAt }] = publishResult.value;
-        expectResultValue(publishResult, [
-          { id, publishState: AdminEntityStatus.published, updatedAt },
-        ]);
+        expectResultValue(publishResult, [{ id, status: AdminEntityStatus.published, updatedAt }]);
       }
 
       const result = await publishedClient.getEntity({ id });
@@ -276,9 +274,7 @@ describe('getEntity()', () => {
 
       if (expectOkResult(publishResult)) {
         const [{ updatedAt }] = publishResult.value;
-        expectResultValue(publishResult, [
-          { id, publishState: AdminEntityStatus.modified, updatedAt },
-        ]);
+        expectResultValue(publishResult, [{ id, status: AdminEntityStatus.modified, updatedAt }]);
 
         const getResult = await publishedClient.getEntity({ id });
         if (expectOkResult(getResult)) {
@@ -307,7 +303,7 @@ describe('getEntity()', () => {
         const { updatedAt } = archiveResult.value;
         expectResultValue(archiveResult, {
           id,
-          publishState: AdminEntityStatus.archived,
+          status: AdminEntityStatus.archived,
           updatedAt,
         });
       }
@@ -381,8 +377,8 @@ describe('getEntities()', () => {
       if (expectOkResult(publishResult)) {
         const [{ updatedAt: updatedAt1 }, { updatedAt: updatedAt2 }] = publishResult.value;
         expectResultValue(publishResult, [
-          { id: foo1Id, publishState: AdminEntityStatus.published, updatedAt: updatedAt1 },
-          { id: foo2Id, publishState: AdminEntityStatus.published, updatedAt: updatedAt2 },
+          { id: foo1Id, status: AdminEntityStatus.published, updatedAt: updatedAt1 },
+          { id: foo2Id, status: AdminEntityStatus.published, updatedAt: updatedAt2 },
         ]);
       }
 
@@ -430,7 +426,7 @@ describe('getEntities()', () => {
       if (expectOkResult(publishResult)) {
         const [{ updatedAt }] = publishResult.value;
         expectResultValue(publishResult, [
-          { id: foo1Id, publishState: AdminEntityStatus.published, updatedAt },
+          { id: foo1Id, status: AdminEntityStatus.published, updatedAt },
         ]);
       }
 
@@ -522,7 +518,7 @@ describe('getEntities()', () => {
         const { updatedAt } = archiveResult.value;
         expectResultValue(archiveResult, {
           id,
-          publishState: AdminEntityStatus.archived,
+          status: AdminEntityStatus.archived,
           updatedAt,
         });
       }
