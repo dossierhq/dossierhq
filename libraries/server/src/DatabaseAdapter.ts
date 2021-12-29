@@ -1,6 +1,6 @@
 import type {
   AdminSchemaSpecification,
-  EntityPublishState,
+  AdminEntityStatus,
   EntityReference,
   EntityVersionReference,
   ErrorType,
@@ -40,7 +40,7 @@ export interface DatabaseAdminEntityGetOnePayload {
   version: number;
   authKey: string;
   resolvedAuthKey: string;
-  status: EntityPublishState;
+  status: AdminEntityStatus;
   createdAt: Temporal.Instant;
   updatedAt: Temporal.Instant;
   fieldValues: Record<string, unknown>;

@@ -62,7 +62,7 @@ export interface ValueItem {
   [fieldName: string]: unknown;
 }
 
-export enum EntityPublishState {
+export enum AdminEntityStatus {
   /** The entity has never been published. */
   Draft = 'draft',
   /** The entity is currently published and has no pending changes. */
@@ -91,7 +91,7 @@ export interface AdminEntityInfo {
    *
    * It is not connected to the requested version so if you get an old version of the entity, the
    * status refer to the latest version. */
-  status: EntityPublishState;
+  status: AdminEntityStatus;
   createdAt: Temporal.Instant;
   updatedAt: Temporal.Instant;
 }
@@ -191,7 +191,7 @@ export enum AdminQueryOrder {
 export interface AdminQuery {
   authKeys?: string[];
   entityTypes?: string[];
-  status?: EntityPublishState[];
+  status?: AdminEntityStatus[];
   /** Entities referencing the entity (by id) */
   referencing?: string;
   boundingBox?: BoundingBox;
@@ -242,6 +242,6 @@ export interface Edge<TOk, TError extends ErrorType> {
 
 export interface EntityPublishPayload {
   id: string;
-  publishState: EntityPublishState;
+  publishState: AdminEntityStatus;
   updatedAt: Temporal.Instant;
 }

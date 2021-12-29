@@ -11,7 +11,7 @@ import type {
   PublishedClient,
   Query,
 } from '@jonasb/datadata-core';
-import { EntityPublishState, getAllPagesForConnection, ok } from '@jonasb/datadata-core';
+import { AdminEntityStatus, getAllPagesForConnection, ok } from '@jonasb/datadata-core';
 
 export async function ensureEntityCount(
   client: AdminClient,
@@ -60,7 +60,7 @@ export async function ensureEntityWithStatus(
   client: AdminClient,
   entityType: string,
   authKey: string,
-  status: EntityPublishState,
+  status: AdminEntityStatus,
   fieldProvider: (random: string) => Record<string, unknown>
 ): PromiseResult<
   void,
@@ -87,16 +87,16 @@ export async function ensureEntityWithStatus(
   }
   const { entity } = createResult.value;
   switch (status) {
-    case EntityPublishState.Draft:
+    case AdminEntityStatus.Draft:
       break;
-    case EntityPublishState.Published: {
+    case AdminEntityStatus.Published: {
       const publishResult = await client.publishEntities([
         { id: entity.id, version: entity.info.version },
       ]);
       if (publishResult.isError()) return publishResult;
       break;
     }
-    case EntityPublishState.Modified: {
+    case AdminEntityStatus.Modified: {
       const publishResult = await client.publishEntities([
         { id: entity.id, version: entity.info.version },
       ]);
@@ -109,7 +109,7 @@ export async function ensureEntityWithStatus(
       if (updateResult.isError()) return updateResult;
       break;
     }
-    case EntityPublishState.Withdrawn: {
+    case AdminEntityStatus.Withdrawn: {
       const publishResult = await client.publishEntities([
         { id: entity.id, version: entity.info.version },
       ]);
@@ -118,7 +118,7 @@ export async function ensureEntityWithStatus(
       if (updateResult.isError()) return updateResult;
       break;
     }
-    case EntityPublishState.Archived: {
+    case AdminEntityStatus.Archived: {
       const archiveResult = await client.archiveEntity({ id: entity.id });
       if (archiveResult.isError()) return archiveResult;
       break;
@@ -225,15 +225,15 @@ export async function countSearchResultStatuses(
   client: AdminClient,
   query: AdminQuery
 ): PromiseResult<
-  Record<EntityPublishState, number>,
+  Record<AdminEntityStatus, number>,
   ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
 > {
   const result = {
-    [EntityPublishState.Draft]: 0,
-    [EntityPublishState.Published]: 0,
-    [EntityPublishState.Modified]: 0,
-    [EntityPublishState.Withdrawn]: 0,
-    [EntityPublishState.Archived]: 0,
+    [AdminEntityStatus.Draft]: 0,
+    [AdminEntityStatus.Published]: 0,
+    [AdminEntityStatus.Modified]: 0,
+    [AdminEntityStatus.Withdrawn]: 0,
+    [AdminEntityStatus.Archived]: 0,
   };
 
   for await (const pageResult of getAllPagesForConnection({ first: 50 }, (currentPaging) =>

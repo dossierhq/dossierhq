@@ -1,4 +1,4 @@
-import { assertIsDefined, EntityPublishState } from '@jonasb/datadata-core';
+import { assertIsDefined, AdminEntityStatus } from '@jonasb/datadata-core';
 import type { CliContext } from '.';
 import type { ItemSelectorItem, ItemSelectorSeparator } from './widgets';
 import { showItemSelector } from './widgets';
@@ -9,7 +9,7 @@ import * as CliUtils from './CliUtils';
 
 interface State {
   readonly context: CliContext;
-  currentEntity: { id: string; publishState: EntityPublishState } | null;
+  currentEntity: { id: string; publishState: AdminEntityStatus } | null;
 }
 
 interface MainActionItem extends ItemSelectorItem {
@@ -98,7 +98,7 @@ function createMainActions(state: State): Array<MainActionItem | ItemSelectorSep
       name: 'Unpublish entity',
       enabled:
         !!state.currentEntity &&
-        [EntityPublishState.Published, EntityPublishState.Modified].includes(
+        [AdminEntityStatus.Published, AdminEntityStatus.Modified].includes(
           state.currentEntity.publishState
         ),
       action: async () => {
@@ -117,7 +117,7 @@ function createMainActions(state: State): Array<MainActionItem | ItemSelectorSep
       name: 'Archive entity',
       enabled:
         !!state.currentEntity &&
-        [EntityPublishState.Draft, EntityPublishState.Withdrawn].includes(
+        [AdminEntityStatus.Draft, AdminEntityStatus.Withdrawn].includes(
           state.currentEntity.publishState
         ),
       action: async () => {
@@ -135,7 +135,7 @@ function createMainActions(state: State): Array<MainActionItem | ItemSelectorSep
       id: 'unarchive-entity',
       name: 'Unarchive entity',
       enabled:
-        !!state.currentEntity && state.currentEntity.publishState === EntityPublishState.Archived,
+        !!state.currentEntity && state.currentEntity.publishState === AdminEntityStatus.Archived,
       action: async () => {
         assertIsDefined(state.currentEntity);
         const publishState = await CliEntityAdmin.unarchiveEntity(

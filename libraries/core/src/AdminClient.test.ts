@@ -7,7 +7,7 @@ import {
   convertJsonAdminClientResult,
   convertJsonResult,
   createBaseAdminClient,
-  EntityPublishState,
+  AdminEntityStatus,
   executeAdminClientOperationFromJson,
   NoOpLogger,
   ok,
@@ -71,7 +71,7 @@ function createDummyEntity({ id }: { id: string }): AdminEntity {
       type: 'FooType',
       version: 0,
       authKey: 'none',
-      status: EntityPublishState.Draft,
+      status: AdminEntityStatus.Draft,
       createdAt: Temporal.Instant.from('2021-08-17T07:51:25.56Z'),
       updatedAt: Temporal.Instant.from('2021-08-17T07:51:25.56Z'),
     },
@@ -89,7 +89,7 @@ describe('AdminClient forward operation over JSON', () => {
         operation.resolve(
           ok({
             id: reference.id,
-            publishState: EntityPublishState.Archived,
+            publishState: AdminEntityStatus.Archived,
             updatedAt: Temporal.Instant.from('2021-08-17T08:51:25.56Z'),
           })
         );
@@ -99,7 +99,7 @@ describe('AdminClient forward operation over JSON', () => {
     const result = await adminClient.archiveEntity({ id: '1234' });
     expectResultValue(result, {
       id: '1234',
-      publishState: EntityPublishState.Archived,
+      publishState: AdminEntityStatus.Archived,
       updatedAt: Temporal.Instant.from('2021-08-17T08:51:25.56Z'),
     });
     expectOkResult(result) && expect(result.value.updatedAt).toBeInstanceOf(Temporal.Instant);
@@ -586,7 +586,7 @@ describe('AdminClient forward operation over JSON', () => {
           ok(
             references.map((it) => ({
               id: it.id,
-              publishState: EntityPublishState.Published,
+              publishState: AdminEntityStatus.Published,
               updatedAt: Temporal.Instant.from('2021-08-17T08:51:25.56Z'),
             }))
           )
@@ -601,12 +601,12 @@ describe('AdminClient forward operation over JSON', () => {
     expectResultValue(result, [
       {
         id: '1234',
-        publishState: EntityPublishState.Published,
+        publishState: AdminEntityStatus.Published,
         updatedAt: Temporal.Instant.from('2021-08-17T08:51:25.56Z'),
       },
       {
         id: '4321',
-        publishState: EntityPublishState.Published,
+        publishState: AdminEntityStatus.Published,
         updatedAt: Temporal.Instant.from('2021-08-17T08:51:25.56Z'),
       },
     ]);
@@ -655,7 +655,7 @@ describe('AdminClient forward operation over JSON', () => {
         name: 'Name',
         version: 2,
         authKey: 'none',
-        status: EntityPublishState.Published,
+        status: AdminEntityStatus.Published,
         createdAt: Temporal.Instant.from('2021-08-17T08:51:25.56Z'),
         updatedAt: Temporal.Instant.from('2021-10-17T08:51:25.56Z'),
       },
@@ -798,7 +798,7 @@ describe('AdminClient forward operation over JSON', () => {
         operation.resolve(
           ok({
             id: reference.id,
-            publishState: EntityPublishState.Withdrawn,
+            publishState: AdminEntityStatus.Withdrawn,
             updatedAt: Temporal.Instant.from('2021-08-17T08:51:25.56Z'),
           })
         );
@@ -808,7 +808,7 @@ describe('AdminClient forward operation over JSON', () => {
     const result = await adminClient.unarchiveEntity({ id: '1234' });
     expectResultValue(result, {
       id: '1234',
-      publishState: EntityPublishState.Withdrawn,
+      publishState: AdminEntityStatus.Withdrawn,
       updatedAt: Temporal.Instant.from('2021-08-17T08:51:25.56Z'),
     });
     expectOkResult(result) && expect(result.value.updatedAt).toBeInstanceOf(Temporal.Instant);
@@ -850,7 +850,7 @@ describe('AdminClient forward operation over JSON', () => {
           ok(
             references.map((it) => ({
               id: it.id,
-              publishState: EntityPublishState.Withdrawn,
+              publishState: AdminEntityStatus.Withdrawn,
               updatedAt: Temporal.Instant.from('2021-08-17T08:51:25.56Z'),
             }))
           )
@@ -862,12 +862,12 @@ describe('AdminClient forward operation over JSON', () => {
     expectResultValue(result, [
       {
         id: '1234',
-        publishState: EntityPublishState.Withdrawn,
+        publishState: AdminEntityStatus.Withdrawn,
         updatedAt: Temporal.Instant.from('2021-08-17T08:51:25.56Z'),
       },
       {
         id: '4321',
-        publishState: EntityPublishState.Withdrawn,
+        publishState: AdminEntityStatus.Withdrawn,
         updatedAt: Temporal.Instant.from('2021-08-17T08:51:25.56Z'),
       },
     ]);

@@ -568,10 +568,10 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       );
     }
 
-    // EntityPublishState
+    // AdminEntityStatus
     this.addType(
       new GraphQLEnumType({
-        name: 'EntityPublishState',
+        name: 'AdminEntityStatus',
         values: {
           draft: {},
           published: {},
@@ -591,7 +591,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
           name: { type: new GraphQLNonNull(GraphQLString) },
           version: { type: new GraphQLNonNull(GraphQLInt) },
           authKey: { type: new GraphQLNonNull(GraphQLString) },
-          status: { type: new GraphQLNonNull(this.getOutputType('EntityPublishState')) },
+          status: { type: new GraphQLNonNull(this.getOutputType('AdminEntityStatus')) },
           createdAt: { type: new GraphQLNonNull(this.getOutputType('Instant')) },
           updatedAt: { type: new GraphQLNonNull(this.getOutputType('Instant')) },
         },
@@ -853,7 +853,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         name: 'EntityPublishPayload',
         fields: {
           id: { type: new GraphQLNonNull(GraphQLID) },
-          publishState: { type: new GraphQLNonNull(this.getEnumType('EntityPublishState')) },
+          publishState: { type: new GraphQLNonNull(this.getEnumType('AdminEntityStatus')) },
           updatedAt: { type: new GraphQLNonNull(this.getOutputType('Instant')) },
         },
       })

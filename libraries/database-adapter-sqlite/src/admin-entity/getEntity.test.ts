@@ -1,4 +1,4 @@
-import { CoreTestUtils, EntityPublishState } from '@jonasb/datadata-core';
+import { CoreTestUtils, AdminEntityStatus } from '@jonasb/datadata-core';
 import { createMockAdapter, createMockContext, getQueryCalls } from '../test/TestUtils';
 import { adminGetEntity } from './getEntity';
 import { Temporal } from '@js-temporal/polyfill';
@@ -39,7 +39,7 @@ describe('adminGetEntity', () => {
       name: 'Name',
       type: 'TitleOnly',
       version: 2,
-      status: EntityPublishState.Modified,
+      status: AdminEntityStatus.Modified,
       authKey: 'authKey-123',
       resolvedAuthKey: 'resolvedAuthKey-123',
       createdAt: now,
@@ -93,7 +93,7 @@ describe('adminGetEntity', () => {
       name: 'Name',
       type: 'TitleOnly',
       version: 5,
-      status: EntityPublishState.Modified,
+      status: AdminEntityStatus.Modified,
       authKey: 'authKey-123',
       resolvedAuthKey: 'resolvedAuthKey-123',
       createdAt: now,

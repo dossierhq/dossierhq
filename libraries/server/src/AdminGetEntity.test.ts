@@ -1,4 +1,4 @@
-import { CoreTestUtils, EntityPublishState, ok } from '@jonasb/datadata-core';
+import { CoreTestUtils, AdminEntityStatus, ok } from '@jonasb/datadata-core';
 import { Temporal } from '@js-temporal/polyfill';
 import { adminGetEntity } from './EntityAdmin';
 import {
@@ -27,7 +27,7 @@ describe('Admin adminGetEntity', () => {
           authKey: 'none',
           resolvedAuthKey: 'none',
           version: 1,
-          status: EntityPublishState.Modified,
+          status: AdminEntityStatus.Modified,
           createdAt: now,
           updatedAt: now,
           fieldValues: { title: 'Title' },
@@ -55,7 +55,7 @@ describe('Admin adminGetEntity', () => {
         version: 1,
         createdAt: now,
         updatedAt: now,
-        status: EntityPublishState.Modified,
+        status: AdminEntityStatus.Modified,
       },
       fields: {
         title: 'Title',

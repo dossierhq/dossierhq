@@ -1,4 +1,4 @@
-import { CoreTestUtils, EntityPublishState, ok } from '@jonasb/datadata-core';
+import { CoreTestUtils, AdminEntityStatus, ok } from '@jonasb/datadata-core';
 import { Temporal } from '@js-temporal/polyfill';
 import { adminCreateEntity } from './EntityAdmin';
 import {
@@ -47,7 +47,7 @@ describe('Admin adminCreateEntity', () => {
           version: 0,
           createdAt: now,
           updatedAt: now,
-          status: EntityPublishState.Draft,
+          status: AdminEntityStatus.Draft,
         },
         fields: {
           title: 'Title',

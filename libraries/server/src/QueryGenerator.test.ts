@@ -2,7 +2,7 @@ import {
   AdminQueryOrder,
   AdminSchema,
   CoreTestUtils,
-  EntityPublishState,
+  AdminEntityStatus,
   ErrorType,
   QueryOrder,
 } from '@jonasb/datadata-core';
@@ -352,7 +352,7 @@ describe('searchAdminEntitiesQuery()', () => {
     expect(
       searchAdminEntitiesQuery(
         schema,
-        { status: [EntityPublishState.Draft] },
+        { status: [AdminEntityStatus.Draft] },
         undefined,
         authKeysNone
       )
@@ -378,7 +378,7 @@ describe('searchAdminEntitiesQuery()', () => {
     expect(
       searchAdminEntitiesQuery(
         schema,
-        { status: [EntityPublishState.Published] },
+        { status: [AdminEntityStatus.Published] },
         undefined,
         authKeysNone
       )
@@ -404,7 +404,7 @@ describe('searchAdminEntitiesQuery()', () => {
     expect(
       searchAdminEntitiesQuery(
         schema,
-        { status: [EntityPublishState.Modified] },
+        { status: [AdminEntityStatus.Modified] },
         undefined,
         authKeysNone
       )
@@ -430,7 +430,7 @@ describe('searchAdminEntitiesQuery()', () => {
     expect(
       searchAdminEntitiesQuery(
         schema,
-        { status: [EntityPublishState.Withdrawn] },
+        { status: [AdminEntityStatus.Withdrawn] },
         undefined,
         authKeysNone
       )
@@ -456,7 +456,7 @@ describe('searchAdminEntitiesQuery()', () => {
     expect(
       searchAdminEntitiesQuery(
         schema,
-        { status: [EntityPublishState.Archived] },
+        { status: [AdminEntityStatus.Archived] },
         undefined,
         authKeysNone
       )
@@ -482,7 +482,7 @@ describe('searchAdminEntitiesQuery()', () => {
     expect(
       searchAdminEntitiesQuery(
         schema,
-        { status: [EntityPublishState.Draft, EntityPublishState.Published] },
+        { status: [AdminEntityStatus.Draft, AdminEntityStatus.Published] },
         undefined,
         authKeysNone
       )
@@ -511,7 +511,7 @@ describe('searchAdminEntitiesQuery()', () => {
     expect(
       searchAdminEntitiesQuery(
         schema,
-        { status: [EntityPublishState.Draft, EntityPublishState.Archived] },
+        { status: [AdminEntityStatus.Draft, AdminEntityStatus.Archived] },
         undefined,
         authKeysNone
       )
@@ -542,11 +542,11 @@ describe('searchAdminEntitiesQuery()', () => {
         schema,
         {
           status: [
-            EntityPublishState.Draft,
-            EntityPublishState.Published,
-            EntityPublishState.Modified,
-            EntityPublishState.Archived,
-            EntityPublishState.Withdrawn,
+            AdminEntityStatus.Draft,
+            AdminEntityStatus.Published,
+            AdminEntityStatus.Modified,
+            AdminEntityStatus.Archived,
+            AdminEntityStatus.Withdrawn,
           ],
         },
         undefined,
@@ -1385,7 +1385,7 @@ describe('totalAdminEntitiesQuery()', () => {
   });
 
   test('query status draft', () => {
-    expect(totalAdminEntitiesQuery(schema, authKeysNone, { status: [EntityPublishState.Draft] }))
+    expect(totalAdminEntitiesQuery(schema, authKeysNone, { status: [AdminEntityStatus.Draft] }))
       .toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
@@ -1400,9 +1400,8 @@ describe('totalAdminEntitiesQuery()', () => {
   });
 
   test('query status published', () => {
-    expect(
-      totalAdminEntitiesQuery(schema, authKeysNone, { status: [EntityPublishState.Published] })
-    ).toMatchInlineSnapshot(`
+    expect(totalAdminEntitiesQuery(schema, authKeysNone, { status: [AdminEntityStatus.Published] }))
+      .toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
           "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.resolved_auth_key = $1 AND status = $2",
@@ -1416,7 +1415,7 @@ describe('totalAdminEntitiesQuery()', () => {
   });
 
   test('query status modified', () => {
-    expect(totalAdminEntitiesQuery(schema, authKeysNone, { status: [EntityPublishState.Modified] }))
+    expect(totalAdminEntitiesQuery(schema, authKeysNone, { status: [AdminEntityStatus.Modified] }))
       .toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
@@ -1431,9 +1430,8 @@ describe('totalAdminEntitiesQuery()', () => {
   });
 
   test('query status withdrawn', () => {
-    expect(
-      totalAdminEntitiesQuery(schema, authKeysNone, { status: [EntityPublishState.Withdrawn] })
-    ).toMatchInlineSnapshot(`
+    expect(totalAdminEntitiesQuery(schema, authKeysNone, { status: [AdminEntityStatus.Withdrawn] }))
+      .toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
           "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.resolved_auth_key = $1 AND status = $2",
@@ -1447,7 +1445,7 @@ describe('totalAdminEntitiesQuery()', () => {
   });
 
   test('query status archived', () => {
-    expect(totalAdminEntitiesQuery(schema, authKeysNone, { status: [EntityPublishState.Archived] }))
+    expect(totalAdminEntitiesQuery(schema, authKeysNone, { status: [AdminEntityStatus.Archived] }))
       .toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
