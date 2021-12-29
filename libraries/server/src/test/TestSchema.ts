@@ -1,6 +1,8 @@
-import { AdminSchema } from '@jonasb/datadata-core';
+import { AdminSchema, FieldType } from '@jonasb/datadata-core';
 
 export const adminTestSchema = new AdminSchema({
-  entityTypes: [{ name: 'Foo', adminOnly: false, fields: [] }],
+  entityTypes: [
+    { name: 'TitleOnly', adminOnly: false, fields: [{ name: 'title', type: FieldType.String }] },
+  ],
   valueTypes: [],
 });

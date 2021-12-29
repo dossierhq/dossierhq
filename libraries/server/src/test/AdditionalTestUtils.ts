@@ -11,10 +11,11 @@ import { SessionContextImpl } from '../Context';
 
 interface MockDatabaseAdapter extends DatabaseAdapter {
   adminEntityCreate: jest.MockedFunction<DatabaseAdapter['adminEntityCreate']>;
+  adminEntityGetOne: jest.MockedFunction<DatabaseAdapter['adminEntityGetOne']>;
   authCreateSession: jest.MockedFunction<DatabaseAdapter['authCreateSession']>;
+  queryLegacy: jest.MockedFunction<DatabaseAdapter['queryLegacy']>;
   schemaGetSpecification: jest.MockedFunction<DatabaseAdapter['schemaGetSpecification']>;
   schemaUpdateSpecification: jest.MockedFunction<DatabaseAdapter['schemaUpdateSpecification']>;
-  queryLegacy: jest.MockedFunction<DatabaseAdapter['queryLegacy']>;
   withRootTransaction: jest.MockedFunction<DatabaseAdapter['withRootTransaction']>;
 }
 
@@ -62,15 +63,15 @@ export function createMockSessionContext({
 export function createMockDatabaseAdapter(): MockDatabaseAdapter {
   const adapter: MockDatabaseAdapter = {
     disconnect: jest.fn(),
-    adminEntityGetOne: jest.fn(),
-    authCreateSession: jest.fn(),
-    schemaGetSpecification: jest.fn(),
-    schemaUpdateSpecification: jest.fn(),
-    adminEntityCreate: jest.fn(),
-    queryLegacy: jest.fn(),
     withRootTransaction: jest.fn(),
     withNestedTransaction: jest.fn(),
+    adminEntityCreate: jest.fn(),
+    adminEntityGetOne: jest.fn(),
+    authCreateSession: jest.fn(),
     isUniqueViolationOfConstraint: jest.fn(),
+    queryLegacy: jest.fn(),
+    schemaGetSpecification: jest.fn(),
+    schemaUpdateSpecification: jest.fn(),
   };
 
   adapter.withRootTransaction.mockImplementation((callback) => {
@@ -95,6 +96,7 @@ export function getDatabaseAdapterMockedCallsWithoutContextAndUnordered(
   const calls: Array<unknown[]> = [];
   const mocksWithInitialContextArg: (keyof MockDatabaseAdapter)[] = [
     'adminEntityCreate',
+    'adminEntityGetOne',
     'authCreateSession',
     'schemaGetSpecification',
     'withRootTransaction',

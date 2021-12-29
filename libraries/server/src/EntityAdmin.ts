@@ -74,7 +74,8 @@ export async function adminGetEntity(
   AdminEntity,
   ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
 > {
-  const getResult = await databaseAdapter.adminEntityGetOne(context, reference);
+  const { authKeys, ...referenceWithoutAuthKeys } = reference;
+  const getResult = await databaseAdapter.adminEntityGetOne(context, referenceWithoutAuthKeys);
   if (getResult.isError()) {
     return getResult;
   }
