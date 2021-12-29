@@ -1,7 +1,11 @@
 import type {
   AdminEntity,
+  AdminEntityArchivePayload,
   AdminEntityCreate,
   AdminEntityCreatePayload,
+  AdminEntityPublishPayload,
+  AdminEntityUnarchivePayload,
+  AdminEntityUnpublishPayload,
   AdminEntityUpdate,
   AdminEntityUpdatePayload,
   AdminEntityUpsert,
@@ -12,7 +16,6 @@ import type {
   Connection,
   Edge,
   EntityHistory,
-  AdminEntityPublishingPayload,
   EntityReference,
   EntityReferenceWithAuthKeys,
   EntityVersionReference,
@@ -121,28 +124,28 @@ export interface AdminClient {
   publishEntities(
     references: EntityVersionReferenceWithAuthKeys[]
   ): PromiseResult<
-    AdminEntityPublishingPayload[],
+    AdminEntityPublishPayload[],
     ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
   >;
 
   unpublishEntities(
     references: EntityReferenceWithAuthKeys[]
   ): PromiseResult<
-    AdminEntityPublishingPayload[],
+    AdminEntityUnpublishPayload[],
     ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
   >;
 
   archiveEntity(
     reference: EntityReferenceWithAuthKeys
   ): PromiseResult<
-    AdminEntityPublishingPayload,
+    AdminEntityArchivePayload,
     ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
   >;
 
   unarchiveEntity(
     reference: EntityReferenceWithAuthKeys
   ): PromiseResult<
-    AdminEntityPublishingPayload,
+    AdminEntityUnarchivePayload,
     ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
   >;
 
@@ -567,7 +570,9 @@ export function convertJsonAdminClientResult<TName extends AdminClientOperationN
   switch (operationName) {
     case AdminClientOperationName.archiveEntity: {
       const result: MethodReturnTypeWithoutPromise<AdminClientOperationName.archiveEntity> = ok(
-        convertJsonPublishingResult(value as JsonPublishingResult)
+        convertJsonPublishingResult(
+          value as JsonPublishingResult<AdminEntityArchivePayload['effect']>
+        )
       );
       return result as MethodReturnTypeWithoutPromise<TName>;
     }
@@ -609,7 +614,9 @@ export function convertJsonAdminClientResult<TName extends AdminClientOperationN
       return ok(value) as MethodReturnTypeWithoutPromise<TName>;
     case AdminClientOperationName.publishEntities: {
       const result: MethodReturnTypeWithoutPromise<AdminClientOperationName.publishEntities> = ok(
-        (value as JsonPublishingResult[]).map(convertJsonPublishingResult)
+        (value as JsonPublishingResult<AdminEntityPublishPayload['effect']>[]).map(
+          convertJsonPublishingResult
+        )
       );
       return result as MethodReturnTypeWithoutPromise<TName>;
     }
@@ -626,13 +633,17 @@ export function convertJsonAdminClientResult<TName extends AdminClientOperationN
     }
     case AdminClientOperationName.unarchiveEntity: {
       const result: MethodReturnTypeWithoutPromise<AdminClientOperationName.unarchiveEntity> = ok(
-        convertJsonPublishingResult(value as JsonPublishingResult)
+        convertJsonPublishingResult(
+          value as JsonPublishingResult<AdminEntityUnarchivePayload['effect']>
+        )
       );
       return result as MethodReturnTypeWithoutPromise<TName>;
     }
     case AdminClientOperationName.unpublishEntities: {
       const result: MethodReturnTypeWithoutPromise<AdminClientOperationName.unpublishEntities> = ok(
-        (value as JsonPublishingResult[]).map(convertJsonPublishingResult)
+        (value as JsonPublishingResult<AdminEntityUnpublishPayload['effect']>[]).map(
+          convertJsonPublishingResult
+        )
       );
       return result as MethodReturnTypeWithoutPromise<TName>;
     }

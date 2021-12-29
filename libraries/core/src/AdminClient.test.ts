@@ -90,6 +90,7 @@ describe('AdminClient forward operation over JSON', () => {
           ok({
             id: reference.id,
             status: AdminEntityStatus.archived,
+            effect: 'archived',
             updatedAt: Temporal.Instant.from('2021-08-17T08:51:25.56Z'),
           })
         );
@@ -100,6 +101,7 @@ describe('AdminClient forward operation over JSON', () => {
     expectResultValue(result, {
       id: '1234',
       status: AdminEntityStatus.archived,
+      effect: 'archived',
       updatedAt: Temporal.Instant.from('2021-08-17T08:51:25.56Z'),
     });
     expectOkResult(result) && expect(result.value.updatedAt).toBeInstanceOf(Temporal.Instant);
@@ -587,6 +589,7 @@ describe('AdminClient forward operation over JSON', () => {
             references.map((it) => ({
               id: it.id,
               status: AdminEntityStatus.published,
+              effect: 'published',
               updatedAt: Temporal.Instant.from('2021-08-17T08:51:25.56Z'),
             }))
           )
@@ -602,11 +605,13 @@ describe('AdminClient forward operation over JSON', () => {
       {
         id: '1234',
         status: AdminEntityStatus.published,
+        effect: 'published',
         updatedAt: Temporal.Instant.from('2021-08-17T08:51:25.56Z'),
       },
       {
         id: '4321',
         status: AdminEntityStatus.published,
+        effect: 'published',
         updatedAt: Temporal.Instant.from('2021-08-17T08:51:25.56Z'),
       },
     ]);
@@ -799,6 +804,7 @@ describe('AdminClient forward operation over JSON', () => {
           ok({
             id: reference.id,
             status: AdminEntityStatus.withdrawn,
+            effect: 'unarchived',
             updatedAt: Temporal.Instant.from('2021-08-17T08:51:25.56Z'),
           })
         );
@@ -809,6 +815,7 @@ describe('AdminClient forward operation over JSON', () => {
     expectResultValue(result, {
       id: '1234',
       status: AdminEntityStatus.withdrawn,
+      effect: 'unarchived',
       updatedAt: Temporal.Instant.from('2021-08-17T08:51:25.56Z'),
     });
     expectOkResult(result) && expect(result.value.updatedAt).toBeInstanceOf(Temporal.Instant);
@@ -851,6 +858,7 @@ describe('AdminClient forward operation over JSON', () => {
             references.map((it) => ({
               id: it.id,
               status: AdminEntityStatus.withdrawn,
+              effect: 'unpublished',
               updatedAt: Temporal.Instant.from('2021-08-17T08:51:25.56Z'),
             }))
           )
@@ -863,11 +871,13 @@ describe('AdminClient forward operation over JSON', () => {
       {
         id: '1234',
         status: AdminEntityStatus.withdrawn,
+        effect: 'unpublished',
         updatedAt: Temporal.Instant.from('2021-08-17T08:51:25.56Z'),
       },
       {
         id: '4321',
         status: AdminEntityStatus.withdrawn,
+        effect: 'unpublished',
         updatedAt: Temporal.Instant.from('2021-08-17T08:51:25.56Z'),
       },
     ]);

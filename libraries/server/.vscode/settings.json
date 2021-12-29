@@ -1,6 +1,5 @@
 {
   "cSpell.words": [
-    "TIMESTAMPTZ",
     "builtins",
     "datadata",
     "dockest",
@@ -12,8 +11,10 @@
     "srid",
     "testpass",
     "testuser",
+    "TIMESTAMPTZ",
     "tsquery",
     "tsvector",
+    "unarchived",
     "unpublish",
     "upsert",
     "uuidv",

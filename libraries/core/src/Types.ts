@@ -182,6 +182,18 @@ export interface PublishingEvent {
   publishedBy: string;
 }
 
+export interface AdminEntityPublishingPayload<TEffect> {
+  id: string;
+  status: AdminEntityStatus;
+  effect: TEffect;
+  updatedAt: Temporal.Instant;
+}
+
+export type AdminEntityArchivePayload = AdminEntityPublishingPayload<'archived' | 'none'>;
+export type AdminEntityUnarchivePayload = AdminEntityPublishingPayload<'unarchived' | 'none'>;
+export type AdminEntityPublishPayload = AdminEntityPublishingPayload<'published' | 'none'>;
+export type AdminEntityUnpublishPayload = AdminEntityPublishingPayload<'unpublished' | 'none'>;
+
 export enum AdminQueryOrder {
   createdAt = 'createdAt',
   updatedAt = 'updatedAt',
@@ -238,10 +250,4 @@ export interface Connection<T extends Edge<unknown, ErrorType>> {
 export interface Edge<TOk, TError extends ErrorType> {
   node: Result<TOk, TError>;
   cursor: string;
-}
-
-export interface AdminEntityPublishingPayload {
-  id: string;
-  status: AdminEntityStatus;
-  updatedAt: Temporal.Instant;
 }

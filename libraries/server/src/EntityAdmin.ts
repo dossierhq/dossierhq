@@ -1,7 +1,11 @@
 import type {
   AdminEntity,
+  AdminEntityArchivePayload,
   AdminEntityCreate,
   AdminEntityCreatePayload,
+  AdminEntityPublishPayload,
+  AdminEntityUnarchivePayload,
+  AdminEntityUnpublishPayload,
   AdminEntityUpdate,
   AdminEntityUpdatePayload,
   AdminEntityUpsert,
@@ -12,7 +16,6 @@ import type {
   Edge,
   EntityHistory,
   EntityLike,
-  AdminEntityPublishingPayload,
   EntityReference,
   EntityReferenceWithAuthKeys,
   EntityVersionInfo,
@@ -26,10 +29,10 @@ import type {
   Result,
 } from '@jonasb/datadata-core';
 import {
+  AdminEntityStatus,
   AdminItemTraverseNodeType,
   assertIsDefined,
   createErrorResult,
-  AdminEntityStatus,
   ErrorType,
   isEntityNameAsRequested,
   notOk,
@@ -37,6 +40,7 @@ import {
   traverseAdminItem,
   visitorPathToString,
 } from '@jonasb/datadata-core';
+import type { Temporal } from '@js-temporal/polyfill';
 import type { AuthorizationAdapter, DatabaseAdapter, SessionContext } from '.';
 import {
   authResolveAuthorizationKey,
@@ -539,7 +543,7 @@ export async function publishEntities(
   context: SessionContext,
   references: EntityVersionReferenceWithAuthKeys[]
 ): PromiseResult<
-  AdminEntityPublishingPayload[],
+  AdminEntityPublishPayload[],
   ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
 > {
   const uniqueIdCheck = checkUUIDsAreUnique(references);
@@ -548,18 +552,26 @@ export async function publishEntities(
   }
 
   return context.withTransaction(async (context) => {
-    const result: AdminEntityPublishingPayload[] = [];
+    const result: AdminEntityPublishPayload[] = [];
     // Step 1: Get version info for each entity
     const missingReferences: EntityVersionReference[] = [];
-    const alreadyPublishedEntityIds: string[] = [];
     const adminOnlyEntityIds: string[] = [];
-    const versionsInfo: {
-      uuid: string;
-      versionsId: number;
-      entityId: number;
-      fullTextSearchText: string;
-      status: AdminEntityStatus;
-    }[] = [];
+    const versionsInfo: (
+      | {
+          effect: 'published';
+          uuid: string;
+          versionsId: number;
+          entityId: number;
+          status: AdminEntityStatus;
+          fullTextSearchText: string;
+        }
+      | {
+          effect: 'none';
+          uuid: string;
+          status: AdminEntityStatus;
+          updatedAt: Temporal.Instant;
+        }
+    )[] = [];
     for (const reference of references) {
       const versionInfo = await Db.queryNoneOrOne<
         Pick<EntityVersionsTable, 'id' | 'entities_id' | 'data'> &
@@ -569,13 +581,15 @@ export async function publishEntities(
             | 'name'
             | 'auth_key'
             | 'resolved_auth_key'
+            | 'status'
+            | 'updated_at'
             | 'published_entity_versions_id'
             | 'latest_draft_entity_versions_id'
           >
       >(
         databaseAdapter,
         context,
-        `SELECT ev.id, ev.entities_id, ev.data, e.type, e.name, e.auth_key, e.resolved_auth_key, e.published_entity_versions_id, e.latest_draft_entity_versions_id
+        `SELECT ev.id, ev.entities_id, ev.data, e.type, e.name, e.auth_key, e.resolved_auth_key, e.status, e.updated_at, e.published_entity_versions_id, e.latest_draft_entity_versions_id
          FROM entity_versions ev, entities e
          WHERE e.uuid = $1 AND e.id = ev.entities_id
            AND ev.version = $2`,
@@ -606,7 +620,12 @@ export async function publishEntities(
       }
 
       if (versionInfo.published_entity_versions_id === versionInfo.id) {
-        alreadyPublishedEntityIds.push(reference.id);
+        versionsInfo.push({
+          effect: 'none',
+          uuid: reference.id,
+          status: resolveEntityStatus(versionInfo.status),
+          updatedAt: versionInfo.updated_at,
+        });
       } else if (entitySpec.adminOnly) {
         adminOnlyEntityIds.push(reference.id);
       } else {
@@ -646,6 +665,7 @@ export async function publishEntities(
             : AdminEntityStatus.modified;
 
         versionsInfo.push({
+          effect: 'published',
           uuid: reference.id,
           versionsId: versionInfo.id,
           entityId: versionInfo.entities_id,
@@ -659,21 +679,22 @@ export async function publishEntities(
         `No such entities: ${missingReferences.map(({ id }) => id).join(', ')}`
       );
     }
-    if (alreadyPublishedEntityIds.length > 0) {
-      return notOk.BadRequest(
-        `Entity versions are already published: ${alreadyPublishedEntityIds.join(', ')}`
-      );
-    }
     if (adminOnlyEntityIds.length > 0) {
       return notOk.BadRequest(`Entity type is adminOnly: ${adminOnlyEntityIds.join(', ')}`);
     }
 
     // Step 2: Publish entities
-    for (const { uuid, versionsId, entityId, fullTextSearchText, status } of versionsInfo) {
-      const { updated_at: updatedAt } = await Db.queryOne<Pick<EntitiesTable, 'updated_at'>>(
-        databaseAdapter,
-        context,
-        `UPDATE entities
+    for (const versionInfo of versionsInfo) {
+      const { status } = versionInfo;
+      let updatedAt;
+      if (versionInfo.effect === 'none') {
+        updatedAt = versionInfo.updatedAt;
+      } else {
+        const { versionsId, fullTextSearchText, entityId } = versionInfo;
+        const updateResult = await Db.queryOne<Pick<EntitiesTable, 'updated_at'>>(
+          databaseAdapter,
+          context,
+          `UPDATE entities
           SET
             never_published = FALSE,
             archived = FALSE,
@@ -684,14 +705,25 @@ export async function publishEntities(
             status = $3
           WHERE id = $4
           RETURNING updated_at`,
-        [versionsId, fullTextSearchText, status, entityId]
-      );
-      result.push({ id: uuid, status, updatedAt });
+          [versionsId, fullTextSearchText, status, entityId]
+        );
+        updatedAt = updateResult.updated_at;
+      }
+      result.push({ id: versionInfo.uuid, status, effect: versionInfo.effect, updatedAt });
     }
+
+    const publishVersionsInfo = versionsInfo.filter(({ effect }) => effect === 'published') as {
+      effect: 'published';
+      uuid: string;
+      versionsId: number;
+      entityId: number;
+      status: AdminEntityStatus;
+      fullTextSearchText: string;
+    }[];
 
     // Step 3: Check if references are ok
     const referenceErrorMessages: string[] = [];
-    for (const { uuid, versionsId } of versionsInfo) {
+    for (const { uuid, versionsId } of publishVersionsInfo) {
       const unpublishedReferences = await Db.queryMany<Pick<EntitiesTable, 'uuid'>>(
         databaseAdapter,
         context,
@@ -716,18 +748,20 @@ export async function publishEntities(
     }
 
     // Step 4: Create publish event
-    const qb = new QueryBuilder(
-      'INSERT INTO entity_publishing_events (entities_id, entity_versions_id, published_by, kind) VALUES'
-    );
-    const subjectValue = qb.addValue(context.session.subjectInternalId);
-    for (const versionInfo of versionsInfo) {
-      qb.addQuery(
-        `(${qb.addValue(versionInfo.entityId)}, ${qb.addValue(
-          versionInfo.versionsId
-        )}, ${subjectValue}, 'publish')`
+    if (publishVersionsInfo.length > 0) {
+      const qb = new QueryBuilder(
+        'INSERT INTO entity_publishing_events (entities_id, entity_versions_id, published_by, kind) VALUES'
       );
+      const subjectValue = qb.addValue(context.session.subjectInternalId);
+      for (const versionInfo of publishVersionsInfo) {
+        qb.addQuery(
+          `(${qb.addValue(versionInfo.entityId)}, ${qb.addValue(
+            versionInfo.versionsId
+          )}, ${subjectValue}, 'publish')`
+        );
+      }
+      await Db.queryNone(databaseAdapter, context, qb.build());
     }
-    await Db.queryNone(databaseAdapter, context, qb.build());
 
     //
     return ok(result);
@@ -740,7 +774,7 @@ export async function unpublishEntities(
   context: SessionContext,
   references: EntityReferenceWithAuthKeys[]
 ): PromiseResult<
-  AdminEntityPublishingPayload[],
+  AdminEntityUnpublishPayload[],
   ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
 > {
   const uniqueIdCheck = checkUUIDsAreUnique(references);
@@ -749,7 +783,7 @@ export async function unpublishEntities(
   }
 
   return context.withTransaction(async (context) => {
-    const result: AdminEntityPublishingPayload[] = [];
+    const result: AdminEntityUnpublishPayload[] = [];
 
     // Step 1: Resolve entities and check if all entities exist
     const entitiesInfo = await Db.queryMany<
@@ -814,7 +848,12 @@ export async function unpublishEntities(
     for (const reference of references) {
       const updatedAt = unpublishRows.find((it) => it.uuid === reference.id)?.updated_at;
       assertIsDefined(updatedAt);
-      result.push({ id: reference.id, status: AdminEntityStatus.withdrawn, updatedAt });
+      result.push({
+        id: reference.id,
+        status: AdminEntityStatus.withdrawn,
+        effect: 'unpublished',
+        updatedAt,
+      });
     }
 
     // Step 3: Check if references are ok
@@ -865,7 +904,7 @@ export async function archiveEntity(
   context: SessionContext,
   reference: EntityReferenceWithAuthKeys
 ): PromiseResult<
-  AdminEntityPublishingPayload,
+  AdminEntityArchivePayload,
   ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
 > {
   return context.withTransaction(async (context) => {
@@ -914,6 +953,7 @@ export async function archiveEntity(
       return ok({
         id: reference.id,
         status: AdminEntityStatus.archived,
+        effect: 'none',
         updatedAt: previousUpdatedAt,
       }); // no change
     }
@@ -939,7 +979,13 @@ export async function archiveEntity(
       ),
     ]);
 
-    return ok({ id: reference.id, status: AdminEntityStatus.archived, updatedAt });
+    const value: AdminEntityArchivePayload = {
+      id: reference.id,
+      status: AdminEntityStatus.archived,
+      effect: 'archived',
+      updatedAt,
+    };
+    return ok(value);
   });
 }
 
@@ -949,7 +995,7 @@ export async function unarchiveEntity(
   context: SessionContext,
   reference: EntityReferenceWithAuthKeys
 ): PromiseResult<
-  AdminEntityPublishingPayload,
+  AdminEntityUnarchivePayload,
   ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.NotFound | ErrorType.Generic
 > {
   return context.withTransaction(async (context) => {
@@ -985,14 +1031,16 @@ export async function unarchiveEntity(
       never_published: neverPublished,
       updated_at: previousUpdatedAt,
     } = entityInfo;
-    const result: AdminEntityPublishingPayload = {
+    const result: AdminEntityUnarchivePayload = {
       id: reference.id,
       status: resolveEntityStatus(entityInfo.status),
+      effect: 'none',
       updatedAt: previousUpdatedAt,
     };
 
     if (result.status === AdminEntityStatus.archived) {
       result.status = neverPublished ? AdminEntityStatus.draft : AdminEntityStatus.withdrawn;
+      result.effect = 'unarchived';
 
       const [{ updated_at: updatedAt }, _] = await Promise.all([
         Db.queryOne<Pick<EntitiesTable, 'updated_at'>>(
