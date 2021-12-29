@@ -56,7 +56,6 @@ import type {
 import {
   collectDataFromEntity,
   decodeAdminEntity,
-  decodeAdminEntity2,
   decodeAdminEntityFields,
   encodeEntity,
   resolveCreateEntity,
@@ -67,38 +66,6 @@ import { sharedSearchEntities } from './EntitySearcher';
 import { QueryBuilder } from './QueryBuilder';
 import type { SearchAdminEntitiesItem } from './QueryGenerator';
 import { searchAdminEntitiesQuery, totalAdminEntitiesQuery } from './QueryGenerator';
-
-export async function adminGetEntity(
-  schema: AdminSchema,
-  authorizationAdapter: AuthorizationAdapter,
-  databaseAdapter: DatabaseAdapter,
-  context: SessionContext,
-  reference: EntityReferenceWithAuthKeys | EntityVersionReferenceWithAuthKeys
-): PromiseResult<
-  AdminEntity,
-  ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
-> {
-  const { authKeys, ...referenceWithoutAuthKeys } = reference;
-  const getResult = await databaseAdapter.adminEntityGetOne(context, referenceWithoutAuthKeys);
-  if (getResult.isError()) {
-    return getResult;
-  }
-  const entityValues = getResult.value;
-
-  const authResult = await authVerifyAuthorizationKey(
-    authorizationAdapter,
-    context,
-    reference?.authKeys,
-    { authKey: entityValues.authKey, resolvedAuthKey: entityValues.resolvedAuthKey }
-  );
-  if (authResult.isError()) {
-    return authResult;
-  }
-
-  const entity = decodeAdminEntity2(schema, entityValues);
-
-  return ok(entity);
-}
 
 export async function getEntities(
   schema: AdminSchema,

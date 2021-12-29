@@ -1,13 +1,13 @@
 import { CoreTestUtils, AdminEntityStatus, ok } from '@jonasb/datadata-core';
 import { Temporal } from '@js-temporal/polyfill';
-import { adminGetEntity } from './EntityAdmin';
+import { adminGetEntity } from './getEntity';
 import {
   createMockAuthorizationAdapter,
   createMockDatabaseAdapter,
   createMockSessionContext,
   getDatabaseAdapterMockedCallsWithoutContextAndUnordered,
-} from './test/AdditionalTestUtils';
-import { adminTestSchema } from './test/TestSchema';
+} from '../test/AdditionalTestUtils';
+import { adminTestSchema } from '../test/TestSchema';
 
 const { expectResultValue } = CoreTestUtils;
 
