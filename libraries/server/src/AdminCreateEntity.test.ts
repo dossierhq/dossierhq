@@ -22,7 +22,7 @@ describe('Admin adminCreateEntity', () => {
       Promise.resolve(ok({ none: 'none' }))
     );
     databaseAdapter.adminEntityCreate.mockReturnValueOnce(
-      Promise.resolve(ok({ id: '123', name: 'Foo name', createdAt: now, updatedAt: now }))
+      Promise.resolve(ok({ id: '123', name: 'TitleOnly name', createdAt: now, updatedAt: now }))
     );
 
     const result = await adminCreateEntity(
@@ -30,7 +30,10 @@ describe('Admin adminCreateEntity', () => {
       authorizationAdapter,
       databaseAdapter,
       context,
-      { info: { name: 'Foo name', authKey: 'none', type: 'Foo' }, fields: {} }
+      {
+        info: { name: 'TitleOnly name', authKey: 'none', type: 'TitleOnly' },
+        fields: { title: 'Title' },
+      }
     );
 
     expectResultValue(result, {
@@ -38,15 +41,17 @@ describe('Admin adminCreateEntity', () => {
       entity: {
         id: '123',
         info: {
-          type: 'Foo',
-          name: 'Foo name',
+          type: 'TitleOnly',
+          name: 'TitleOnly name',
           authKey: 'none',
           version: 0,
           createdAt: now,
           updatedAt: now,
           publishingState: EntityPublishState.Draft,
         },
-        fields: {},
+        fields: {
+          title: 'Title',
+        },
       },
     });
     expect(getDatabaseAdapterMockedCallsWithoutContextAndUnordered(databaseAdapter))
@@ -60,17 +65,19 @@ describe('Admin adminCreateEntity', () => {
               "subjectId": "subject-id",
               "subjectInternalId": 123,
             },
-            "fieldsData": Object {},
-            "fullTextSearchText": "",
+            "fieldsData": Object {
+              "title": "Title",
+            },
+            "fullTextSearchText": "Title",
             "id": null,
             "locations": Array [],
-            "name": "Foo name",
+            "name": "TitleOnly name",
             "referenceIds": Array [],
             "resolvedAuthKey": Object {
               "authKey": "none",
               "resolvedAuthKey": "none",
             },
-            "type": "Foo",
+            "type": "TitleOnly",
           },
         ],
         Array [
