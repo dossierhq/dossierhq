@@ -4446,6 +4446,59 @@ describe('unpublishEntities()', () => {
     }
   });
 
+  test('Unpublished entity', async () => {
+    const createBarResult = await client.createEntity({
+      info: { type: 'EntityAdminBar', name: 'Bar name', authKey: 'none' },
+      fields: { title: 'Bar title' },
+    });
+    if (expectOkResult(createBarResult)) {
+      const {
+        entity: {
+          id,
+          info: { updatedAt },
+        },
+      } = createBarResult.value;
+
+      const publishResult = await client.unpublishEntities([{ id }]);
+      expectResultValue(publishResult, [
+        { id, status: AdminEntityStatus.draft, effect: 'none', updatedAt },
+      ]);
+    }
+  });
+
+  test('Unpublish archived entity', async () => {
+    const createResult = await client.createEntity({
+      info: { type: 'EntityAdminBaz', name: 'Baz 1', authKey: 'none' },
+      fields: { title: 'Baz title 1' },
+    });
+    if (expectOkResult(createResult)) {
+      const {
+        entity: { id },
+      } = createResult.value;
+
+      const archiveResult = await client.archiveEntity({ id });
+      if (expectOkResult(archiveResult)) {
+        const { updatedAt } = archiveResult.value;
+        expectResultValue(archiveResult, {
+          id,
+          status: AdminEntityStatus.archived,
+          effect: 'archived',
+          updatedAt,
+        });
+
+        const unpublishResult = await client.unpublishEntities([{ id }]);
+        expectResultValue(unpublishResult, [
+          {
+            id,
+            status: AdminEntityStatus.archived,
+            effect: 'none',
+            updatedAt,
+          },
+        ]);
+      }
+    }
+  });
+
   test('Error: invalid id', async () => {
     const publishResult = await client.unpublishEntities([
       { id: '8a678bad-fa57-4f18-a377-633f704fd0d3' },
@@ -4527,54 +4580,6 @@ describe('unpublishEntities()', () => {
           `${barId}: Published entities referencing entity: ${fooId}`
         );
       }
-    }
-  });
-
-  test('Error: Unpublished entity', async () => {
-    const createBarResult = await client.createEntity({
-      info: { type: 'EntityAdminBar', name: 'Bar name', authKey: 'none' },
-      fields: { title: 'Bar title' },
-    });
-    if (expectOkResult(createBarResult)) {
-      const {
-        entity: { id: barId },
-      } = createBarResult.value;
-
-      const publishResult = await client.unpublishEntities([{ id: barId }]);
-      expectErrorResult(
-        publishResult,
-        ErrorType.BadRequest,
-        `Entities are not published: ${barId}`
-      );
-    }
-  });
-
-  test('Error: Unpublish archived entity', async () => {
-    const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBaz', name: 'Baz 1', authKey: 'none' },
-      fields: { title: 'Baz title 1' },
-    });
-    if (expectOkResult(createResult)) {
-      const {
-        entity: { id },
-      } = createResult.value;
-
-      const archiveResult = await client.archiveEntity({ id });
-      if (expectOkResult(archiveResult)) {
-        const { updatedAt } = archiveResult.value;
-        expectResultValue(archiveResult, {
-          id,
-          status: AdminEntityStatus.archived,
-          effect: 'archived',
-          updatedAt,
-        });
-      }
-
-      expectErrorResult(
-        await client.unpublishEntities([{ id }]),
-        ErrorType.BadRequest,
-        `Entities are not published: ${id}`
-      );
     }
   });
 

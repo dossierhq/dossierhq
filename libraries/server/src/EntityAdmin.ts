@@ -789,12 +789,18 @@ export async function unpublishEntities(
     const entitiesInfo = await Db.queryMany<
       Pick<
         EntitiesTable,
-        'id' | 'uuid' | 'auth_key' | 'resolved_auth_key' | 'published_entity_versions_id'
+        | 'id'
+        | 'uuid'
+        | 'auth_key'
+        | 'resolved_auth_key'
+        | 'status'
+        | 'updated_at'
+        | 'published_entity_versions_id'
       >
     >(
       databaseAdapter,
       context,
-      'SELECT e.id, e.uuid, e.auth_key, e.resolved_auth_key, e.published_entity_versions_id FROM entities e WHERE e.uuid = ANY($1)',
+      'SELECT e.id, e.uuid, e.auth_key, e.resolved_auth_key, e.status, e.updated_at, e.published_entity_versions_id FROM entities e WHERE e.uuid = ANY($1)',
       [references.map((it) => it.id)]
     );
 
@@ -823,12 +829,9 @@ export async function unpublishEntities(
       }
     }
 
-    const unpublishedEntities = entitiesInfo
-      .filter((it) => it.published_entity_versions_id === null)
-      .map((it) => it.uuid);
-    if (unpublishedEntities.length > 0) {
-      return notOk.BadRequest(`Entities are not published: ${unpublishedEntities.join(', ')}`);
-    }
+    const publishedEntitiesInfo = entitiesInfo.filter(
+      (it) => it.published_entity_versions_id !== null
+    );
 
     // Step 2: Unpublish entities
     const unpublishRows = await Db.queryMany<Pick<EntitiesTable, 'uuid' | 'updated_at'>>(
@@ -843,22 +846,33 @@ export async function unpublishEntities(
           status = 'withdrawn'
         WHERE id = ANY($1)
         RETURNING uuid, updated_at`,
-      [entitiesInfo.map((it) => it.id)]
+      [publishedEntitiesInfo.map((it) => it.id)]
     );
     for (const reference of references) {
-      const updatedAt = unpublishRows.find((it) => it.uuid === reference.id)?.updated_at;
-      assertIsDefined(updatedAt);
-      result.push({
-        id: reference.id,
-        status: AdminEntityStatus.withdrawn,
-        effect: 'unpublished',
-        updatedAt,
-      });
+      const entityInfo = entitiesInfo.find((it) => it.uuid === reference.id);
+      assertIsDefined(entityInfo);
+      if (entityInfo.published_entity_versions_id) {
+        const updatedAt = unpublishRows.find((it) => it.uuid === reference.id)?.updated_at;
+        assertIsDefined(updatedAt);
+        result.push({
+          id: reference.id,
+          status: AdminEntityStatus.withdrawn,
+          effect: 'unpublished',
+          updatedAt,
+        });
+      } else {
+        result.push({
+          id: reference.id,
+          status: resolveEntityStatus(entityInfo.status),
+          effect: 'none',
+          updatedAt: entityInfo.updated_at,
+        });
+      }
     }
 
     // Step 3: Check if references are ok
     const referenceErrorMessages: string[] = [];
-    for (const { id, uuid } of entitiesInfo) {
+    for (const { id, uuid } of publishedEntitiesInfo) {
       const publishedIncomingReferences = await Db.queryMany<Pick<EntitiesTable, 'uuid'>>(
         databaseAdapter,
         context,
@@ -884,14 +898,16 @@ export async function unpublishEntities(
     }
 
     // Step 4: Create publish event
-    const qb = new QueryBuilder(
-      'INSERT INTO entity_publishing_events (entities_id, entity_versions_id, published_by, kind) VALUES'
-    );
-    const subjectValue = qb.addValue(context.session.subjectInternalId);
-    for (const entityInfo of entitiesInfo) {
-      qb.addQuery(`(${qb.addValue(entityInfo.id)}, NULL, ${subjectValue}, 'unpublish')`);
+    if (publishedEntitiesInfo.length > 0) {
+      const qb = new QueryBuilder(
+        'INSERT INTO entity_publishing_events (entities_id, entity_versions_id, published_by, kind) VALUES'
+      );
+      const subjectValue = qb.addValue(context.session.subjectInternalId);
+      for (const entityInfo of entitiesInfo) {
+        qb.addQuery(`(${qb.addValue(entityInfo.id)}, NULL, ${subjectValue}, 'unpublish')`);
+      }
+      await Db.queryNone(databaseAdapter, context, qb.build());
     }
-    await Db.queryNone(databaseAdapter, context, qb.build());
 
     //
     return ok(result);
