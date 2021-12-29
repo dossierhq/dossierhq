@@ -28,11 +28,11 @@ export function initializeStatusSelectorState({
   selectedIds,
 }: StatusSelectorInitArgs): StatusSelectorState {
   const items: StatusItem[] = [
-    { id: AdminEntityStatus.Draft },
-    { id: AdminEntityStatus.Published },
-    { id: AdminEntityStatus.Modified },
-    { id: AdminEntityStatus.Withdrawn },
-    { id: AdminEntityStatus.Archived },
+    { id: AdminEntityStatus.draft },
+    { id: AdminEntityStatus.published },
+    { id: AdminEntityStatus.modified },
+    { id: AdminEntityStatus.withdrawn },
+    { id: AdminEntityStatus.archived },
   ];
   return initializeMultipleSelectorState<StatusItem>({
     items,

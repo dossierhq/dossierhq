@@ -70,13 +70,13 @@ function createPublishActions(
   const { archiveEntity, publishEntities, unarchiveEntity, unpublishEntities } = context;
 
   let publishActionsIds: Array<'publish' | 'unpublish' | 'archive' | 'unarchive'> = [];
-  if ([AdminEntityStatus.Draft, AdminEntityStatus.Withdrawn].includes(publishState)) {
+  if ([AdminEntityStatus.draft, AdminEntityStatus.withdrawn].includes(publishState)) {
     publishActionsIds = ['publish', 'archive'];
-  } else if (publishState === AdminEntityStatus.Published) {
+  } else if (publishState === AdminEntityStatus.published) {
     publishActionsIds = ['unpublish'];
-  } else if (publishState === AdminEntityStatus.Modified) {
+  } else if (publishState === AdminEntityStatus.modified) {
     publishActionsIds = ['publish', 'unpublish'];
-  } else if (publishState === AdminEntityStatus.Archived) {
+  } else if (publishState === AdminEntityStatus.archived) {
     publishActionsIds = ['unarchive', 'publish'];
   }
 

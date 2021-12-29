@@ -255,15 +255,15 @@ export function decodeAdminEntityFields2(
 export function resolveEntityStatus(status: EntitiesTable['status']): AdminEntityStatus {
   switch (status) {
     case 'draft':
-      return AdminEntityStatus.Draft;
+      return AdminEntityStatus.draft;
     case 'published':
-      return AdminEntityStatus.Published;
+      return AdminEntityStatus.published;
     case 'modified':
-      return AdminEntityStatus.Modified;
+      return AdminEntityStatus.modified;
     case 'withdrawn':
-      return AdminEntityStatus.Withdrawn;
+      return AdminEntityStatus.withdrawn;
     case 'archived':
-      return AdminEntityStatus.Archived;
+      return AdminEntityStatus.archived;
     default:
       assertExhaustive(status);
   }
@@ -335,7 +335,7 @@ export function resolveUpdateEntity(
 
   const currentState = resolveEntityStatus(values.status);
   const newState =
-    currentState === AdminEntityStatus.Published ? AdminEntityStatus.Modified : currentState;
+    currentState === AdminEntityStatus.published ? AdminEntityStatus.modified : currentState;
 
   const result: AdminEntity = {
     id: entity.id,
