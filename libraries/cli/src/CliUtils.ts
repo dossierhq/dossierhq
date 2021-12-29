@@ -70,7 +70,7 @@ export function logEntity(context: CliContext, entity: AdminEntity | Entity): vo
   logKeyValue('id', entity.id);
   if (isItemAdminEntity(entity)) {
     logKeyValue('version', String(entity.info.version));
-    logKeyValue('publishing state', entity.info.publishingState);
+    logKeyValue('publishing state', entity.info.status);
   }
 
   visitItemRecursively<{ indent: string }>({
@@ -114,9 +114,9 @@ export function logEntity(context: CliContext, entity: AdminEntity | Entity): vo
 
 export function formatEntityOneLine(entity: Entity | AdminEntity): string {
   if (isItemAdminEntity(entity)) {
-    return `${entity.info.type} | ${entity.info.publishingState} | ${chalk.bold(
-      entity.info.name
-    )} | ${entity.id}`;
+    return `${entity.info.type} | ${entity.info.status} | ${chalk.bold(entity.info.name)} | ${
+      entity.id
+    }`;
   }
   return `${entity.info.type} | ${chalk.bold(entity.info.name)} | ${entity.id}`;
 }

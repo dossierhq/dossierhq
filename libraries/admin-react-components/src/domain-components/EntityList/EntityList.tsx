@@ -63,7 +63,7 @@ export function EntityList({
             return (
               <Button key={edge.cursor} onClick={() => onEntityClick(entity)}>
                 {`${entity.info.type}: ${entity.info.name}`}
-                <PublishStateTag publishState={entity.info.publishingState} />
+                <PublishStateTag publishState={entity.info.status} />
               </Button>
             );
           }

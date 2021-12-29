@@ -305,7 +305,7 @@ export class DataDataContextValue {
         if (cachedValue) {
           const updatedValue: AdminEntity = {
             ...cachedValue,
-            info: { ...cachedValue.info, publishingState: publishState },
+            info: { ...cachedValue.info, status: publishState },
           };
           return updatedValue;
         }

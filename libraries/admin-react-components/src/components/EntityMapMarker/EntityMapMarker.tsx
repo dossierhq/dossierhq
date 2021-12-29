@@ -19,7 +19,7 @@ export function EntityMapMarker({
         <Column>
           <Text textStyle="subtitle1">{entity.info.name}</Text>
           <Text textStyle="body1">
-            {entity.info.type} <StatusTag status={entity.info.publishingState} />
+            {entity.info.type} <StatusTag status={entity.info.status} />
           </Text>
         </Column>
       }

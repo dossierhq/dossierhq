@@ -223,7 +223,7 @@ describe('adminEntity()', () => {
                 name
                 version
                 authKey
-                publishingState
+                status
               }
               ... on AdminQueryAdminFoo {
                 fields {
@@ -260,7 +260,7 @@ describe('adminEntity()', () => {
               type: 'QueryAdminFoo',
               name,
               authKey: 'none',
-              publishingState: EntityPublishState.Draft,
+              status: EntityPublishState.Draft,
             },
             fields: {
               title: 'Howdy title',
@@ -306,7 +306,7 @@ describe('adminEntity()', () => {
                 name
                 version
                 authKey
-                publishingState
+                status
               }
               ... on AdminQueryAdminFoo {
                 fields {
@@ -350,7 +350,7 @@ describe('adminEntity()', () => {
               name,
               version: 0,
               authKey: 'none',
-              publishingState: EntityPublishState.Draft,
+              status: EntityPublishState.Draft,
             },
             fields: {
               title: null,
@@ -520,7 +520,7 @@ describe('adminEntity()', () => {
                 version
                 name
                 authKey
-                publishingState
+                status
               }
               ... on AdminQueryAdminFoo {
                 fields {
@@ -543,7 +543,7 @@ describe('adminEntity()', () => {
             version: 0,
             name,
             authKey: 'none',
-            publishingState: EntityPublishState.Published,
+            status: EntityPublishState.Published,
           },
           fields: {
             title: 'First title',
@@ -1167,7 +1167,7 @@ describe('adminEntities()', () => {
                 type
                 name
                 authKey
-                publishingState
+                status
               }
             }
           }
@@ -1184,7 +1184,7 @@ describe('adminEntities()', () => {
               info: {
                 type: 'QueryAdminFoo',
                 authKey: 'none',
-                publishingState: EntityPublishState.Draft,
+                status: EntityPublishState.Draft,
                 name: foo1Name,
               },
             },
@@ -1194,7 +1194,7 @@ describe('adminEntities()', () => {
               info: {
                 type: 'QueryAdminFoo',
                 authKey: 'none',
-                publishingState: EntityPublishState.Draft,
+                status: EntityPublishState.Draft,
                 name: foo2Name,
               },
             },

@@ -188,7 +188,7 @@ export function decodeAdminEntity(
       name: values.name,
       version: values.version,
       authKey: values.auth_key,
-      publishingState: state,
+      status: state,
       createdAt: values.created_at,
       updatedAt: values.updated_at,
     },
@@ -214,7 +214,7 @@ export function decodeAdminEntity2(
       name: values.name,
       version: values.version,
       authKey: values.authKey,
-      publishingState: values.status,
+      status: values.status,
       createdAt: values.createdAt,
       updatedAt: values.updatedAt,
     },
@@ -344,7 +344,7 @@ export function resolveUpdateEntity(
       type: type,
       version: values.version + 1,
       authKey: values.auth_key,
-      publishingState: newState,
+      status: newState,
       createdAt: values.created_at,
       updatedAt: values.updated_at,
     },
@@ -386,7 +386,7 @@ export function resolveUpdateEntity(
 
   if (!changed) {
     result.info.version = values.version;
-    result.info.publishingState = currentState;
+    result.info.status = currentState;
   }
 
   return ok({ changed, entity: result });

@@ -76,6 +76,7 @@ export enum EntityPublishState {
 }
 
 export interface AdminEntity {
+  /** UUID */
   id: string;
   info: AdminEntityInfo;
   fields: Record<string, unknown>;
@@ -86,20 +87,25 @@ export interface AdminEntityInfo {
   name: string;
   version: number;
   authKey: string;
-  /** The current publish state of the entity.
+  /** The current status of the entity.
    *
    * It is not connected to the requested version so if you get an old version of the entity, the
-   * publish state refer to the state of the latest version. */
-  publishingState: EntityPublishState;
+   * status refer to the latest version. */
+  status: EntityPublishState;
   createdAt: Temporal.Instant;
   updatedAt: Temporal.Instant;
 }
 
 export interface AdminEntityCreate {
-  /** UUID. If not provided a new id will be created */
+  /** UUID. If not provided a new random id will be created */
   id?: string;
   info: {
+    /** The entity type */
     type: string;
+    /** The name of the entity.
+     *
+     * The name needs to be unique, so if it clashes with an existing entity a random suffix will be
+     * appended to the name. */
     name: string;
     version?: 0;
     authKey: string;

@@ -55,7 +55,7 @@ describe('Admin adminGetEntity', () => {
         version: 1,
         createdAt: now,
         updatedAt: now,
-        publishingState: EntityPublishState.Modified,
+        status: EntityPublishState.Modified,
       },
       fields: {
         title: 'Title',

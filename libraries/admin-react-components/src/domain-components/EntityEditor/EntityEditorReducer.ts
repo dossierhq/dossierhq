@@ -183,7 +183,7 @@ export class UpdateEntityAction extends EntityEditorDraftStateAction {
 
     return {
       ...draftState,
-      publishState: this.#entity.info.publishingState,
+      publishState: this.#entity.info.status,
       latestServerVersion: this.#entity.info.version,
       entity: createEditorEntityDraftState(entitySpec, this.#entity),
     };

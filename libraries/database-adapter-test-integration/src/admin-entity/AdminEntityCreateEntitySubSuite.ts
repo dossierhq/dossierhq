@@ -35,7 +35,7 @@ async function createEntity_minimal({ client }: AdminEntityTestContext) {
         name,
         version: 0,
         authKey: 'none',
-        publishingState: EntityPublishState.Draft,
+        status: EntityPublishState.Draft,
         createdAt,
         updatedAt,
       },

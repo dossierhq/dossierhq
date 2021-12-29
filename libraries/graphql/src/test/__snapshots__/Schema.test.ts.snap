@@ -54,7 +54,7 @@ type AdminEntityInfo {
   name: String!
   version: Int!
   authKey: String!
-  publishingState: EntityPublishState!
+  status: EntityPublishState!
   createdAt: Instant!
   updatedAt: Instant!
 }
@@ -565,7 +565,7 @@ type AdminEntityInfo {
   name: String!
   version: Int!
   authKey: String!
-  publishingState: EntityPublishState!
+  status: EntityPublishState!
   createdAt: Instant!
   updatedAt: Instant!
 }
@@ -934,7 +934,7 @@ type AdminEntityInfo {
   name: String!
   version: Int!
   authKey: String!
-  publishingState: EntityPublishState!
+  status: EntityPublishState!
   createdAt: Instant!
   updatedAt: Instant!
 }
@@ -1402,7 +1402,7 @@ type AdminEntityInfo {
   name: String!
   version: Int!
   authKey: String!
-  publishingState: EntityPublishState!
+  status: EntityPublishState!
   createdAt: Instant!
   updatedAt: Instant!
 }
@@ -1691,7 +1691,7 @@ type AdminEntityInfo {
   name: String!
   version: Int!
   authKey: String!
-  publishingState: EntityPublishState!
+  status: EntityPublishState!
   createdAt: Instant!
   updatedAt: Instant!
 }
@@ -2236,7 +2236,7 @@ type AdminEntityInfo {
   name: String!
   version: Int!
   authKey: String!
-  publishingState: EntityPublishState!
+  status: EntityPublishState!
   createdAt: Instant!
   updatedAt: Instant!
 }
@@ -2585,7 +2585,7 @@ type AdminEntityInfo {
   name: String!
   version: Int!
   authKey: String!
-  publishingState: EntityPublishState!
+  status: EntityPublishState!
   createdAt: Instant!
   updatedAt: Instant!
 }
@@ -2968,7 +2968,7 @@ type AdminEntityInfo {
   name: String!
   version: Int!
   authKey: String!
-  publishingState: EntityPublishState!
+  status: EntityPublishState!
   createdAt: Instant!
   updatedAt: Instant!
 }
@@ -3203,7 +3203,7 @@ type AdminEntityInfo {
   name: String!
   version: Int!
   authKey: String!
-  publishingState: EntityPublishState!
+  status: EntityPublishState!
   createdAt: Instant!
   updatedAt: Instant!
 }
@@ -3661,7 +3661,7 @@ type AdminEntityInfo {
   name: String!
   version: Int!
   authKey: String!
-  publishingState: EntityPublishState!
+  status: EntityPublishState!
   createdAt: Instant!
   updatedAt: Instant!
 }
@@ -3923,7 +3923,7 @@ type AdminEntityInfo {
   name: String!
   version: Int!
   authKey: String!
-  publishingState: EntityPublishState!
+  status: EntityPublishState!
   createdAt: Instant!
   updatedAt: Instant!
 }
@@ -4328,7 +4328,7 @@ type AdminEntityInfo {
   name: String!
   version: Int!
   authKey: String!
-  publishingState: EntityPublishState!
+  status: EntityPublishState!
   createdAt: Instant!
   updatedAt: Instant!
 }
@@ -4572,7 +4572,7 @@ type AdminEntityInfo {
   name: String!
   version: Int!
   authKey: String!
-  publishingState: EntityPublishState!
+  status: EntityPublishState!
   createdAt: Instant!
   updatedAt: Instant!
 }
@@ -5062,7 +5062,7 @@ type AdminEntityInfo {
   name: String!
   version: Int!
   authKey: String!
-  publishingState: EntityPublishState!
+  status: EntityPublishState!
   createdAt: Instant!
   updatedAt: Instant!
 }
@@ -5368,7 +5368,7 @@ type AdminEntityInfo {
   name: String!
   version: Int!
   authKey: String!
-  publishingState: EntityPublishState!
+  status: EntityPublishState!
   createdAt: Instant!
   updatedAt: Instant!
 }
@@ -5967,7 +5967,7 @@ type AdminEntityInfo {
   name: String!
   version: Int!
   authKey: String!
-  publishingState: EntityPublishState!
+  status: EntityPublishState!
   createdAt: Instant!
   updatedAt: Instant!
 }

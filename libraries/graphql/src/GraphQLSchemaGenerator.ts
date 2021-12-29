@@ -591,7 +591,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
           name: { type: new GraphQLNonNull(GraphQLString) },
           version: { type: new GraphQLNonNull(GraphQLInt) },
           authKey: { type: new GraphQLNonNull(GraphQLString) },
-          publishingState: { type: new GraphQLNonNull(this.getOutputType('EntityPublishState')) },
+          status: { type: new GraphQLNonNull(this.getOutputType('EntityPublishState')) },
           createdAt: { type: new GraphQLNonNull(this.getOutputType('Instant')) },
           updatedAt: { type: new GraphQLNonNull(this.getOutputType('Instant')) },
         },
