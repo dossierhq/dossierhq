@@ -31,20 +31,32 @@ export async function createSqliteDatabaseAdapter(
   }
 
   const adapter: DatabaseAdapter = {
-    disconnect: sqliteAdapter.disconnect,
-    withRootTransaction: (...args) => withRootTransaction(sqliteAdapter, ...args),
-    withNestedTransaction: (...args) => withNestedTransaction(sqliteAdapter, ...args),
-    queryLegacy: () => {
+    adminEntityCreate: (...args) => adminCreateEntity(sqliteAdapter, ...args),
+    adminEntityGetOne: (...args) => adminGetEntity(sqliteAdapter, ...args),
+    adminEntityPublishGetUnpublishedReferencedEntities: () => {
       throw new Error('TODO');
     },
+    adminEntityPublishGetVersionInfo: () => {
+      throw new Error('TODO');
+    },
+    adminEntityPublishingCreateEvents: () => {
+      throw new Error('TODO');
+    },
+    adminEntityPublishUpdateEntity: () => {
+      throw new Error('TODO');
+    },
+    authCreateSession: (...args) => authCreateSession(sqliteAdapter, ...args),
+    disconnect: sqliteAdapter.disconnect,
     isUniqueViolationOfConstraint: () => {
       throw new Error('TODO');
     },
-    adminEntityCreate: (...args) => adminCreateEntity(sqliteAdapter, ...args),
-    adminEntityGetOne: (...args) => adminGetEntity(sqliteAdapter, ...args),
-    authCreateSession: (...args) => authCreateSession(sqliteAdapter, ...args),
+    queryLegacy: () => {
+      throw new Error('TODO');
+    },
     schemaGetSpecification: (...args) => schemaGetSpecification(sqliteAdapter, ...args),
     schemaUpdateSpecification: (...args) => schemaUpdateSpecification(sqliteAdapter, ...args),
+    withNestedTransaction: (...args) => withNestedTransaction(sqliteAdapter, ...args),
+    withRootTransaction: (...args) => withRootTransaction(sqliteAdapter, ...args),
   };
   return ok(adapter);
 }

@@ -224,7 +224,7 @@ export function decodeAdminEntity2(
   return entity;
 }
 
-export function decodeAdminEntityFields(
+function decodeAdminEntityFields(
   schema: AdminSchema | Schema,
   entitySpec: AdminEntityTypeSpecification | EntityTypeSpecification,
   values: Pick<EntityVersionsTable, 'data'>

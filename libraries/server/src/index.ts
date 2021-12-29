@@ -6,6 +6,10 @@ export type {
   DatabaseAdminEntityCreateEntityArg,
   DatabaseAdminEntityCreatePayload,
   DatabaseAdminEntityGetOnePayload,
+  DatabaseAdminEntityPublishGetVersionInfoPayload,
+  DatabaseAdminEntityPublishingCreateEventArg,
+  DatabaseAdminEntityPublishUpdateEntityArg,
+  DatabaseAdminEntityPublishUpdateEntityPayload,
   DatabaseAuthCreateSessionPayload,
   Transaction,
 } from './DatabaseAdapter';

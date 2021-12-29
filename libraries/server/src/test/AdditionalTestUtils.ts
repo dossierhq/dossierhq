@@ -62,16 +62,20 @@ export function createMockSessionContext({
 
 export function createMockDatabaseAdapter(): MockDatabaseAdapter {
   const adapter: MockDatabaseAdapter = {
-    disconnect: jest.fn(),
-    withRootTransaction: jest.fn(),
-    withNestedTransaction: jest.fn(),
     adminEntityCreate: jest.fn(),
     adminEntityGetOne: jest.fn(),
+    adminEntityPublishGetUnpublishedReferencedEntities: jest.fn(),
+    adminEntityPublishGetVersionInfo: jest.fn(),
+    adminEntityPublishingCreateEvents: jest.fn(),
+    adminEntityPublishUpdateEntity: jest.fn(),
     authCreateSession: jest.fn(),
+    disconnect: jest.fn(),
     isUniqueViolationOfConstraint: jest.fn(),
     queryLegacy: jest.fn(),
     schemaGetSpecification: jest.fn(),
     schemaUpdateSpecification: jest.fn(),
+    withNestedTransaction: jest.fn(),
+    withRootTransaction: jest.fn(),
   };
 
   adapter.withRootTransaction.mockImplementation((callback) => {

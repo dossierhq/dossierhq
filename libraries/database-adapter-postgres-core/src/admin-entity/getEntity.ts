@@ -4,11 +4,12 @@ import type {
   ErrorType,
   PromiseResult,
 } from '@jonasb/datadata-core';
-import { assertExhaustive, AdminEntityStatus, notOk, ok } from '@jonasb/datadata-core';
+import { notOk, ok } from '@jonasb/datadata-core';
 import type { DatabaseAdminEntityGetOnePayload, TransactionContext } from '@jonasb/datadata-server';
 import type { PostgresDatabaseAdapter } from '..';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema';
 import { queryNoneOrOne } from '../QueryFunctions';
+import { resolveEntityStatus } from '../utils/CodecUtils';
 
 export async function adminGetEntity(
   databaseAdapter: PostgresDatabaseAdapter,
@@ -117,21 +118,4 @@ async function getEntityWithVersion(
     return notOk.NotFound('No such entity or version');
   }
   return ok(result.value);
-}
-
-function resolveEntityStatus(status: EntitiesTable['status']): AdminEntityStatus {
-  switch (status) {
-    case 'draft':
-      return AdminEntityStatus.draft;
-    case 'published':
-      return AdminEntityStatus.published;
-    case 'modified':
-      return AdminEntityStatus.modified;
-    case 'withdrawn':
-      return AdminEntityStatus.withdrawn;
-    case 'archived':
-      return AdminEntityStatus.archived;
-    default:
-      assertExhaustive(status);
-  }
 }

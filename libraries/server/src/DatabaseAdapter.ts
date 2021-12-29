@@ -1,6 +1,6 @@
 import type {
-  AdminSchemaSpecification,
   AdminEntityStatus,
+  AdminSchemaSpecification,
   EntityReference,
   EntityVersionReference,
   ErrorType,
@@ -12,6 +12,15 @@ import type { ResolvedAuthKey, Session, TransactionContext } from '.';
 
 export interface Transaction {
   _type: 'Transaction';
+}
+
+export interface DatabaseResolvedEntityReference {
+  entityInternalId: unknown;
+}
+
+export interface DatabaseResolvedEntityVersionReference {
+  entityInternalId: unknown;
+  entityVersionInternalId: unknown;
 }
 
 export interface DatabaseAdminEntityCreateEntityArg {
@@ -46,6 +55,34 @@ export interface DatabaseAdminEntityGetOnePayload {
   fieldValues: Record<string, unknown>;
 }
 
+export interface DatabaseAdminEntityPublishGetVersionInfoPayload
+  extends DatabaseResolvedEntityVersionReference {
+  versionIsPublished: boolean;
+  versionIsLatest: boolean;
+  type: string;
+  authKey: string;
+  resolvedAuthKey: string;
+  status: AdminEntityStatus;
+  updatedAt: Temporal.Instant;
+  fieldValues: Record<string, unknown>;
+}
+
+export interface DatabaseAdminEntityPublishUpdateEntityArg
+  extends DatabaseResolvedEntityVersionReference {
+  status: AdminEntityStatus;
+  fullTextSearchText: string;
+}
+
+export interface DatabaseAdminEntityPublishUpdateEntityPayload {
+  updatedAt: Temporal.Instant;
+}
+
+export interface DatabaseAdminEntityPublishingCreateEventArg {
+  session: Session;
+  kind: 'publish';
+  references: DatabaseResolvedEntityVersionReference[];
+}
+
 export interface DatabaseAuthCreateSessionPayload {
   principalEffect: 'created' | 'none';
   session: Session;
@@ -73,6 +110,29 @@ export interface DatabaseAdapter {
     context: TransactionContext,
     reference: EntityReference | EntityVersionReference
   ): PromiseResult<DatabaseAdminEntityGetOnePayload, ErrorType.NotFound | ErrorType.Generic>;
+
+  adminEntityPublishGetVersionInfo(
+    context: TransactionContext,
+    reference: EntityVersionReference
+  ): PromiseResult<
+    DatabaseAdminEntityPublishGetVersionInfoPayload,
+    ErrorType.NotFound | ErrorType.Generic
+  >;
+
+  adminEntityPublishUpdateEntity(
+    context: TransactionContext,
+    values: DatabaseAdminEntityPublishUpdateEntityArg
+  ): PromiseResult<DatabaseAdminEntityPublishUpdateEntityPayload, ErrorType.Generic>;
+
+  adminEntityPublishGetUnpublishedReferencedEntities(
+    context: TransactionContext,
+    reference: DatabaseResolvedEntityVersionReference
+  ): PromiseResult<EntityReference[], ErrorType.Generic>;
+
+  adminEntityPublishingCreateEvents(
+    context: TransactionContext,
+    event: DatabaseAdminEntityPublishingCreateEventArg
+  ): PromiseResult<void, ErrorType.Generic>;
 
   authCreateSession(
     context: TransactionContext,
