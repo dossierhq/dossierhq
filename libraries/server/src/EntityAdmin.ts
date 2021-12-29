@@ -323,7 +323,7 @@ export async function adminCreateEntity(
       info: {
         ...createEntity.info,
         name,
-        status: AdminEntityStatus.Draft,
+        status: AdminEntityStatus.draft,
         version: 0,
         createdAt,
         updatedAt,
@@ -642,8 +642,8 @@ export async function publishEntities(
 
         const status =
           versionInfo.latest_draft_entity_versions_id === versionInfo.id
-            ? AdminEntityStatus.Published
-            : AdminEntityStatus.Modified;
+            ? AdminEntityStatus.published
+            : AdminEntityStatus.modified;
 
         versionsInfo.push({
           uuid: reference.id,
@@ -814,7 +814,7 @@ export async function unpublishEntities(
     for (const reference of references) {
       const updatedAt = unpublishRows.find((it) => it.uuid === reference.id)?.updated_at;
       assertIsDefined(updatedAt);
-      result.push({ id: reference.id, publishState: AdminEntityStatus.Withdrawn, updatedAt });
+      result.push({ id: reference.id, publishState: AdminEntityStatus.withdrawn, updatedAt });
     }
 
     // Step 3: Check if references are ok
@@ -913,7 +913,7 @@ export async function archiveEntity(
     if (archived) {
       return ok({
         id: reference.id,
-        publishState: AdminEntityStatus.Archived,
+        publishState: AdminEntityStatus.archived,
         updatedAt: previousUpdatedAt,
       }); // no change
     }
@@ -939,7 +939,7 @@ export async function archiveEntity(
       ),
     ]);
 
-    return ok({ id: reference.id, publishState: AdminEntityStatus.Archived, updatedAt });
+    return ok({ id: reference.id, publishState: AdminEntityStatus.archived, updatedAt });
   });
 }
 
@@ -991,8 +991,8 @@ export async function unarchiveEntity(
       updatedAt: previousUpdatedAt,
     };
 
-    if (result.publishState === AdminEntityStatus.Archived) {
-      result.publishState = neverPublished ? AdminEntityStatus.Draft : AdminEntityStatus.Withdrawn;
+    if (result.publishState === AdminEntityStatus.archived) {
+      result.publishState = neverPublished ? AdminEntityStatus.draft : AdminEntityStatus.withdrawn;
 
       const [{ updated_at: updatedAt }, _] = await Promise.all([
         Db.queryOne<Pick<EntitiesTable, 'updated_at'>>(

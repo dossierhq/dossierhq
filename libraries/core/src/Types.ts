@@ -64,15 +64,15 @@ export interface ValueItem {
 
 export enum AdminEntityStatus {
   /** The entity has never been published. */
-  Draft = 'draft',
+  draft = 'draft',
   /** The entity is currently published and has no pending changes. */
-  Published = 'published',
+  published = 'published',
   /** The entity is currently published but has changes that are not published. */
-  Modified = 'modified',
+  modified = 'modified',
   /** The entity has previously been published, but is unpublished. */
-  Withdrawn = 'withdrawn',
+  withdrawn = 'withdrawn',
   /** The entity is archived. */
-  Archived = 'archived',
+  archived = 'archived',
 }
 
 export interface AdminEntity {

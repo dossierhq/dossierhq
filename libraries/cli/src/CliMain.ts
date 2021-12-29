@@ -98,7 +98,7 @@ function createMainActions(state: State): Array<MainActionItem | ItemSelectorSep
       name: 'Unpublish entity',
       enabled:
         !!state.currentEntity &&
-        [AdminEntityStatus.Published, AdminEntityStatus.Modified].includes(
+        [AdminEntityStatus.published, AdminEntityStatus.modified].includes(
           state.currentEntity.publishState
         ),
       action: async () => {
@@ -117,7 +117,7 @@ function createMainActions(state: State): Array<MainActionItem | ItemSelectorSep
       name: 'Archive entity',
       enabled:
         !!state.currentEntity &&
-        [AdminEntityStatus.Draft, AdminEntityStatus.Withdrawn].includes(
+        [AdminEntityStatus.draft, AdminEntityStatus.withdrawn].includes(
           state.currentEntity.publishState
         ),
       action: async () => {
@@ -135,7 +135,7 @@ function createMainActions(state: State): Array<MainActionItem | ItemSelectorSep
       id: 'unarchive-entity',
       name: 'Unarchive entity',
       enabled:
-        !!state.currentEntity && state.currentEntity.publishState === AdminEntityStatus.Archived,
+        !!state.currentEntity && state.currentEntity.publishState === AdminEntityStatus.archived,
       action: async () => {
         assertIsDefined(state.currentEntity);
         const publishState = await CliEntityAdmin.unarchiveEntity(

@@ -4,11 +4,11 @@ import { Tag } from '../../index.js';
 import type { Kind } from '../../index.js';
 
 const LOOKUP: Record<AdminEntityStatus, Kind> = {
-  [AdminEntityStatus.Archived]: 'danger',
-  [AdminEntityStatus.Draft]: '',
-  [AdminEntityStatus.Modified]: 'primary',
-  [AdminEntityStatus.Published]: 'primary',
-  [AdminEntityStatus.Withdrawn]: '',
+  [AdminEntityStatus.archived]: 'danger',
+  [AdminEntityStatus.draft]: '',
+  [AdminEntityStatus.modified]: 'primary',
+  [AdminEntityStatus.published]: 'primary',
+  [AdminEntityStatus.withdrawn]: '',
 };
 
 interface Props {

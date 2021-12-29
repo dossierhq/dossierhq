@@ -27,7 +27,7 @@ describe('Admin adminGetEntity', () => {
           authKey: 'none',
           resolvedAuthKey: 'none',
           version: 1,
-          status: AdminEntityStatus.Modified,
+          status: AdminEntityStatus.modified,
           createdAt: now,
           updatedAt: now,
           fieldValues: { title: 'Title' },
@@ -55,7 +55,7 @@ describe('Admin adminGetEntity', () => {
         version: 1,
         createdAt: now,
         updatedAt: now,
-        status: AdminEntityStatus.Modified,
+        status: AdminEntityStatus.modified,
       },
       fields: {
         title: 'Title',

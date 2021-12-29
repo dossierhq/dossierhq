@@ -47,7 +47,7 @@ describe('Admin adminCreateEntity', () => {
           version: 0,
           createdAt: now,
           updatedAt: now,
-          status: AdminEntityStatus.Draft,
+          status: AdminEntityStatus.draft,
         },
         fields: {
           title: 'Title',

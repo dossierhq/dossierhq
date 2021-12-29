@@ -49,7 +49,7 @@ async function loadFixtures(adminClient: AdminClient): PromiseResult<void, Error
     //TODO how do I check the published version?
     if (
       typeof publishedVersion === 'number' &&
-      ![AdminEntityStatus.Published, AdminEntityStatus.Modified].includes(
+      ![AdminEntityStatus.published, AdminEntityStatus.modified].includes(
         upsertResult.value.entity.info.status
       )
     ) {

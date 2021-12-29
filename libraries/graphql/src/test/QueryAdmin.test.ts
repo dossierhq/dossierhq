@@ -260,7 +260,7 @@ describe('adminEntity()', () => {
               type: 'QueryAdminFoo',
               name,
               authKey: 'none',
-              status: AdminEntityStatus.Draft,
+              status: AdminEntityStatus.draft,
             },
             fields: {
               title: 'Howdy title',
@@ -350,7 +350,7 @@ describe('adminEntity()', () => {
               name,
               version: 0,
               authKey: 'none',
-              status: AdminEntityStatus.Draft,
+              status: AdminEntityStatus.draft,
             },
             fields: {
               title: null,
@@ -543,7 +543,7 @@ describe('adminEntity()', () => {
             version: 0,
             name,
             authKey: 'none',
-            status: AdminEntityStatus.Published,
+            status: AdminEntityStatus.published,
           },
           fields: {
             title: 'First title',
@@ -1184,7 +1184,7 @@ describe('adminEntities()', () => {
               info: {
                 type: 'QueryAdminFoo',
                 authKey: 'none',
-                status: AdminEntityStatus.Draft,
+                status: AdminEntityStatus.draft,
                 name: foo1Name,
               },
             },
@@ -1194,7 +1194,7 @@ describe('adminEntities()', () => {
               info: {
                 type: 'QueryAdminFoo',
                 authKey: 'none',
-                status: AdminEntityStatus.Draft,
+                status: AdminEntityStatus.draft,
                 name: foo2Name,
               },
             },

@@ -87,16 +87,16 @@ export async function ensureEntityWithStatus(
   }
   const { entity } = createResult.value;
   switch (status) {
-    case AdminEntityStatus.Draft:
+    case AdminEntityStatus.draft:
       break;
-    case AdminEntityStatus.Published: {
+    case AdminEntityStatus.published: {
       const publishResult = await client.publishEntities([
         { id: entity.id, version: entity.info.version },
       ]);
       if (publishResult.isError()) return publishResult;
       break;
     }
-    case AdminEntityStatus.Modified: {
+    case AdminEntityStatus.modified: {
       const publishResult = await client.publishEntities([
         { id: entity.id, version: entity.info.version },
       ]);
@@ -109,7 +109,7 @@ export async function ensureEntityWithStatus(
       if (updateResult.isError()) return updateResult;
       break;
     }
-    case AdminEntityStatus.Withdrawn: {
+    case AdminEntityStatus.withdrawn: {
       const publishResult = await client.publishEntities([
         { id: entity.id, version: entity.info.version },
       ]);
@@ -118,7 +118,7 @@ export async function ensureEntityWithStatus(
       if (updateResult.isError()) return updateResult;
       break;
     }
-    case AdminEntityStatus.Archived: {
+    case AdminEntityStatus.archived: {
       const archiveResult = await client.archiveEntity({ id: entity.id });
       if (archiveResult.isError()) return archiveResult;
       break;
@@ -229,11 +229,11 @@ export async function countSearchResultStatuses(
   ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
 > {
   const result = {
-    [AdminEntityStatus.Draft]: 0,
-    [AdminEntityStatus.Published]: 0,
-    [AdminEntityStatus.Modified]: 0,
-    [AdminEntityStatus.Withdrawn]: 0,
-    [AdminEntityStatus.Archived]: 0,
+    [AdminEntityStatus.draft]: 0,
+    [AdminEntityStatus.published]: 0,
+    [AdminEntityStatus.modified]: 0,
+    [AdminEntityStatus.withdrawn]: 0,
+    [AdminEntityStatus.archived]: 0,
   };
 
   for await (const pageResult of getAllPagesForConnection({ first: 50 }, (currentPaging) =>
