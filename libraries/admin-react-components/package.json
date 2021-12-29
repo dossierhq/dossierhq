@@ -67,7 +67,7 @@
     "babel-loader": "^8.2.2",
     "eslint": "^8.5.0",
     "eslint-plugin-import": "~2.25.3",
-    "eslint-plugin-jest-dom": "~3.9.0",
+    "eslint-plugin-jest-dom": "~4.0.0",
     "eslint-plugin-react": "~7.28.0",
     "eslint-plugin-react-hooks": "~4.3.0",
     "eslint-plugin-testing-library": "~5.0.0",
