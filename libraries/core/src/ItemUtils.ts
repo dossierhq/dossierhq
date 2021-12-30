@@ -426,7 +426,7 @@ function doVisitFieldRecursively<TVisitContext>(
   }
 }
 
-export function copyEntity<T extends AdminEntity>(
+export function copyEntity<T extends AdminEntity | AdminEntityCreate>(
   entity: T,
   changes: { id?: string; info?: Partial<T['info']>; fields?: Partial<T['fields']> }
 ): T {

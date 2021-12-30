@@ -444,7 +444,6 @@ importers:
       '@typescript-eslint/eslint-plugin': ^5.8.0
       '@typescript-eslint/parser': ^5.8.0
       eslint: ^8.5.0
-      eslint-plugin-import: ~2.25.3
       prettier: 2.5.1
       tslib: ~2.3.1
       typescript: ^4.5.4
@@ -461,7 +460,6 @@ importers:
       '@typescript-eslint/eslint-plugin': 5.8.0_836011a006f4f5d67178564baf2b6d34
       '@typescript-eslint/parser': 5.8.0_eslint@8.5.0+typescript@4.5.4
       eslint: 8.5.0
-      eslint-plugin-import: 2.25.3_eslint@8.5.0
       prettier: 2.5.1
       typescript: 4.5.4
 
