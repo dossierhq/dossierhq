@@ -4,6 +4,7 @@ import { buildSuite } from '../Builder';
 import { CreateEntitySubSuite } from './AdminEntityCreateEntitySubSuite';
 import { GetEntitySubSuite } from './AdminEntityGetEntitySubSuite';
 import { PublishEntitiesSubSuite } from './AdminEntityPublishEntitiesSubSuite';
+import { UpdateEntitySubSuite } from './AdminEntityUpdateEntitySubSuite';
 
 export interface AdminEntityTestContext {
   client: AdminClient;
@@ -16,6 +17,7 @@ export function createAdminEntityTestSuite<TCleanup>(
     initializer,
     ...CreateEntitySubSuite,
     ...GetEntitySubSuite,
-    ...PublishEntitiesSubSuite
+    ...PublishEntitiesSubSuite,
+    ...UpdateEntitySubSuite
   );
 }

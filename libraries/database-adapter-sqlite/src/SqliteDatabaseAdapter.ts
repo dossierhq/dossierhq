@@ -10,6 +10,10 @@ import {
   adminEntityPublishGetVersionInfo,
   adminEntityPublishUpdateEntity,
 } from './admin-entity/publishEntities';
+import {
+  adminEntityUpdateEntity,
+  adminEntityUpdateGetEntityInfo,
+} from './admin-entity/updateEntity';
 import { authCreateSession } from './auth/createSession';
 import { queryOne } from './QueryFunctions';
 import { schemaGetSpecification } from './schema/getSpecification';
@@ -50,12 +54,9 @@ export async function createSqliteDatabaseAdapter(
       adminEntityPublishingCreateEvents(sqliteAdapter, ...args),
     adminEntityPublishUpdateEntity: (...args) =>
       adminEntityPublishUpdateEntity(sqliteAdapter, ...args),
-    adminEntityUpdateEntity: () => {
-      throw new Error('TODO');
-    },
-    adminEntityUpdateGetEntityInfo: () => {
-      throw new Error('TODO');
-    },
+    adminEntityUpdateEntity: (...args) => adminEntityUpdateEntity(sqliteAdapter, ...args),
+    adminEntityUpdateGetEntityInfo: (...args) =>
+      adminEntityUpdateGetEntityInfo(sqliteAdapter, ...args),
     authCreateSession: (...args) => authCreateSession(sqliteAdapter, ...args),
     disconnect: sqliteAdapter.disconnect,
     queryLegacy: () => {
