@@ -47,11 +47,14 @@ export async function createSqliteDatabaseAdapter(
       adminEntityPublishingCreateEvents(sqliteAdapter, ...args),
     adminEntityPublishUpdateEntity: (...args) =>
       adminEntityPublishUpdateEntity(sqliteAdapter, ...args),
-    authCreateSession: (...args) => authCreateSession(sqliteAdapter, ...args),
-    disconnect: sqliteAdapter.disconnect,
-    isUniqueViolationOfConstraint: () => {
+    adminEntityUpdateEntity: () => {
       throw new Error('TODO');
     },
+    adminEntityUpdateGetEntityInfo: () => {
+      throw new Error('TODO');
+    },
+    authCreateSession: (...args) => authCreateSession(sqliteAdapter, ...args),
+    disconnect: sqliteAdapter.disconnect,
     queryLegacy: () => {
       throw new Error('TODO');
     },

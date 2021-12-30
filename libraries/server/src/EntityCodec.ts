@@ -17,8 +17,8 @@ import type {
   ValueItem,
 } from '@jonasb/datadata-core';
 import {
-  assertExhaustive,
   AdminEntityStatus,
+  assertExhaustive,
   FieldType,
   isFieldValueEqual,
   isLocationItemField,
@@ -40,6 +40,7 @@ import {
 import type { DatabaseAdapter, DatabaseAdminEntityGetOnePayload, SessionContext } from '.';
 import { ensureRequired } from './Assertions';
 import * as Db from './Database';
+import type { DatabaseEntityUpdateGetEntityInfoPayload } from './DatabaseAdapter';
 import type { EntitiesTable, EntityVersionsTable } from './DatabaseTables';
 import * as EntityFieldTypeAdapters from './EntityFieldTypeAdapters';
 
@@ -320,33 +321,29 @@ export function resolveCreateEntity(
 export function resolveUpdateEntity(
   schema: AdminSchema,
   entity: AdminEntityUpdate,
-  type: string,
-  values: Pick<
-    EntitiesTable,
-    'id' | 'type' | 'name' | 'auth_key' | 'created_at' | 'updated_at' | 'status'
-  > &
-    Pick<EntityVersionsTable, 'version' | 'data'>
+  entityInfo: DatabaseEntityUpdateGetEntityInfoPayload
 ): Result<{ changed: boolean; entity: AdminEntity }, ErrorType.BadRequest> {
-  if (entity.info?.type && entity.info.type !== type) {
+  if (entity.info?.type && entity.info.type !== entityInfo.type) {
     return notOk.BadRequest(
-      `New type ${entity.info.type} doesn’t correspond to previous type ${type}`
+      `New type ${entity.info.type} doesn’t correspond to previous type ${entityInfo.type}`
     );
   }
 
-  const currentState = resolveEntityStatus(values.status);
-  const newState =
-    currentState === AdminEntityStatus.published ? AdminEntityStatus.modified : currentState;
+  const status =
+    entityInfo.status === AdminEntityStatus.published
+      ? AdminEntityStatus.modified
+      : entityInfo.status;
 
   const result: AdminEntity = {
     id: entity.id,
     info: {
-      name: entity.info?.name ?? values.name,
-      type: type,
-      version: values.version + 1,
-      authKey: values.auth_key,
-      status: newState,
-      createdAt: values.created_at,
-      updatedAt: values.updated_at,
+      name: entity.info?.name ?? entityInfo.name,
+      type: entityInfo.type,
+      version: entityInfo.version + 1,
+      authKey: entityInfo.authKey,
+      status,
+      createdAt: entityInfo.createdAt,
+      updatedAt: entityInfo.updatedAt,
     },
     fields: {},
   };
@@ -362,7 +359,7 @@ export function resolveUpdateEntity(
   }
 
   let changed = false;
-  if (result.info.name !== values.name) {
+  if (result.info.name !== entityInfo.name) {
     changed = true;
   }
   for (const fieldSpec of entitySpec.fields) {
@@ -370,7 +367,7 @@ export function resolveUpdateEntity(
     const previousFieldValue = decodeFieldItemOrList(
       schema,
       fieldSpec,
-      values.data[fieldName] ?? null
+      entityInfo.fieldValues[fieldName] ?? null
     );
 
     if (entity.fields && fieldName in entity.fields) {
@@ -385,8 +382,8 @@ export function resolveUpdateEntity(
   }
 
   if (!changed) {
-    result.info.version = values.version;
-    result.info.status = currentState;
+    result.info.version = entityInfo.version;
+    result.info.status = entityInfo.status;
   }
 
   return ok({ changed, entity: result });

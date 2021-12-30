@@ -8,6 +8,10 @@ import {
   adminEntityPublishGetVersionInfo,
   adminEntityPublishUpdateEntity,
 } from './admin-entity/publishEntities';
+import {
+  adminEntityUpdateEntity,
+  adminEntityUpdateGetEntityInfo,
+} from './admin-entity/updateEntity';
 import { authCreateSession } from './auth/createSession';
 import { withNestedTransaction, withRootTransaction } from './PostgresTransaction';
 import { schemaGetSpecification } from './schema/getSpecification';
@@ -41,9 +45,11 @@ export function createPostgresDatabaseAdapterAdapter(
       adminEntityPublishingCreateEvents(databaseAdapter, ...args),
     adminEntityPublishUpdateEntity: (...args) =>
       adminEntityPublishUpdateEntity(databaseAdapter, ...args),
+    adminEntityUpdateGetEntityInfo: (...args) =>
+      adminEntityUpdateGetEntityInfo(databaseAdapter, ...args),
+    adminEntityUpdateEntity: (...args) => adminEntityUpdateEntity(databaseAdapter, ...args),
     authCreateSession: (...args) => authCreateSession(databaseAdapter, ...args),
     disconnect: databaseAdapter.disconnect,
-    isUniqueViolationOfConstraint: databaseAdapter.isUniqueViolationOfConstraint,
     queryLegacy: databaseAdapter.query,
     schemaGetSpecification: (...args) => schemaGetSpecification(databaseAdapter, ...args),
     schemaUpdateSpecification: (...args) => schemaUpdateSpecification(databaseAdapter, ...args),

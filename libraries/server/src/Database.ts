@@ -25,14 +25,6 @@ function normalizeQueryArguments(
   return [queryTextOrConfig.text, queryTextOrConfig.values];
 }
 
-export function isUniqueViolationOfConstraint(
-  databaseAdapter: DatabaseAdapter,
-  error: unknown,
-  constraintName: string
-): boolean {
-  return databaseAdapter.isUniqueViolationOfConstraint(error, constraintName);
-}
-
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function queryNone<I extends any[] = any[]>(
   databaseAdapter: DatabaseAdapter,

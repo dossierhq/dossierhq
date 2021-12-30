@@ -328,7 +328,6 @@ describe('create*Entity()', () => {
       id,
       info: { name, createdAt, updatedAt },
     } = result.data.createMutationFooEntity.entity;
-    expect(name).toMatch(/^Foo name(#[0-9]+)?$/);
 
     expect(result).toEqual({
       data: {

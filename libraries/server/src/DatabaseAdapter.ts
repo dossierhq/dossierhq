@@ -83,6 +83,35 @@ export interface DatabaseAdminEntityPublishingCreateEventArg {
   references: DatabaseResolvedEntityVersionReference[];
 }
 
+export interface DatabaseEntityUpdateGetEntityInfoPayload extends DatabaseResolvedEntityReference {
+  type: string;
+  name: string;
+  authKey: string;
+  resolvedAuthKey: string;
+  status: AdminEntityStatus;
+  version: number;
+  createdAt: Temporal.Instant;
+  updatedAt: Temporal.Instant;
+  fieldValues: Record<string, unknown>;
+}
+
+export interface DatabaseEntityUpdateEntityArg extends DatabaseResolvedEntityReference {
+  name: string;
+  changeName: boolean;
+  version: number;
+  status: AdminEntityStatus;
+  session: Session;
+  fieldValues: Record<string, unknown>;
+  fullTextSearchText: string;
+  referenceIds: number[];
+  locations: Location[];
+}
+
+export interface DatabaseEntityUpdateEntityPayload {
+  name: string;
+  updatedAt: Temporal.Instant;
+}
+
 export interface DatabaseAuthCreateSessionPayload {
   principalEffect: 'created' | 'none';
   session: Session;
@@ -134,6 +163,20 @@ export interface DatabaseAdapter {
     event: DatabaseAdminEntityPublishingCreateEventArg
   ): PromiseResult<void, ErrorType.Generic>;
 
+  adminEntityUpdateGetEntityInfo(
+    context: TransactionContext,
+    reference: EntityReference
+  ): PromiseResult<
+    DatabaseEntityUpdateGetEntityInfoPayload,
+    ErrorType.NotFound | ErrorType.Generic
+  >;
+
+  adminEntityUpdateEntity(
+    context: TransactionContext,
+    randomNameGenerator: (name: string) => string,
+    entity: DatabaseEntityUpdateEntityArg
+  ): PromiseResult<DatabaseEntityUpdateEntityPayload, ErrorType.Generic>;
+
   authCreateSession(
     context: TransactionContext,
     provider: string,
@@ -155,7 +198,4 @@ export interface DatabaseAdapter {
     query: string,
     values: unknown[] | undefined
   ): Promise<R[]>;
-
-  //TODO remove when migrated away
-  isUniqueViolationOfConstraint(error: unknown, constraintName: string): boolean;
 }
