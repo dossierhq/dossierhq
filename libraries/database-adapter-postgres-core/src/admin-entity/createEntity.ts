@@ -57,8 +57,10 @@ export async function adminCreateEntity(
     for (const referenceId of entity.referenceIds) {
       qb.addQuery(`($1, ${qb.addValue(referenceId)})`);
     }
-    //TODO check result
-    await queryNone(databaseAdapter, context, qb.build());
+    const insertReferencesResult = await queryNone(databaseAdapter, context, qb.build());
+    if (insertReferencesResult.isError()) {
+      return insertReferencesResult;
+    }
   }
   if (entity.locations.length > 0) {
     const qb = new PostgresQueryBuilder(
@@ -72,8 +74,10 @@ export async function adminCreateEntity(
         )}), 4326))`
       );
     }
-    //TODO check result
-    await queryNone(databaseAdapter, context, qb.build());
+    const insertLocationsResult = await queryNone(databaseAdapter, context, qb.build());
+    if (insertLocationsResult.isError()) {
+      return insertLocationsResult;
+    }
   }
 
   return ok({ id: uuid, name: actualName, createdAt, updatedAt });
