@@ -5,6 +5,7 @@ import { CreateEntitySubSuite } from './AdminEntityCreateEntitySubSuite';
 import { GetEntitySubSuite } from './AdminEntityGetEntitySubSuite';
 import { PublishEntitiesSubSuite } from './AdminEntityPublishEntitiesSubSuite';
 import { UpdateEntitySubSuite } from './AdminEntityUpdateEntitySubSuite';
+import { UpsertEntitySubSuite } from './AdminEntityUpsertEntitySubSuite';
 
 export interface AdminEntityTestContext {
   client: AdminClient;
@@ -18,6 +19,7 @@ export function createAdminEntityTestSuite<TCleanup>(
     ...CreateEntitySubSuite,
     ...GetEntitySubSuite,
     ...PublishEntitiesSubSuite,
-    ...UpdateEntitySubSuite
+    ...UpdateEntitySubSuite,
+    ...UpsertEntitySubSuite
   );
 }

@@ -1,8 +1,18 @@
-import type { AdminEntity, AdminEntityCreate } from '@jonasb/datadata-core';
+import type { AdminEntity, AdminEntityCreate, AdminEntityUpsert } from '@jonasb/datadata-core';
 import { AdminEntityStatus } from '@jonasb/datadata-core';
 import { Temporal } from '@js-temporal/polyfill';
 
 export const TITLE_ONLY_CREATE: Readonly<AdminEntityCreate> = {
+  info: {
+    type: 'TitleOnly',
+    name: 'TitleOnly name',
+    authKey: 'none',
+  },
+  fields: { title: 'Title' },
+};
+
+export const TITLE_ONLY_UPSERT: Readonly<AdminEntityUpsert> = {
+  id: 'REPLACE',
   info: {
     type: 'TitleOnly',
     name: 'TitleOnly name',
