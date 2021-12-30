@@ -33,6 +33,7 @@ const TITLE_ONLY_ENTITY: Readonly<AdminEntity> = {
 
 export const CreateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
   createEntity_minimal,
+  createEntity_withId,
   createEntity_duplicateName,
   createEntity_publishMinimal,
   createEntity_errorPublishWithoutRequiredTitle,
@@ -44,6 +45,35 @@ async function createEntity_minimal({ client }: AdminEntityTestContext) {
     const {
       entity: {
         id,
+        info: { name, createdAt, updatedAt },
+      },
+    } = createResult.value;
+
+    const expectedEntity = copyEntity(TITLE_ONLY_ENTITY, {
+      id,
+      info: {
+        name,
+        createdAt,
+        updatedAt,
+      },
+    });
+
+    expectResultValue(createResult, {
+      effect: 'created',
+      entity: expectedEntity,
+    });
+
+    const getResult = await client.getEntity({ id });
+    expectResultValue(getResult, expectedEntity);
+  }
+}
+
+async function createEntity_withId({ client }: AdminEntityTestContext) {
+  const id = uuidv4();
+  const createResult = await client.createEntity(copyEntity(TITLE_ONLY_CREATE, { id }));
+  if (expectOkResult(createResult)) {
+    const {
+      entity: {
         info: { name, createdAt, updatedAt },
       },
     } = createResult.value;
