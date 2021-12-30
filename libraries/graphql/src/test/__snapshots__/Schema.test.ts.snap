@@ -68,6 +68,7 @@ input AdminEntityCreateInfo {
 
 enum AdminEntityCreateEffect {
   created
+  createdAndPublished
   none
 }
 
@@ -91,6 +92,7 @@ input AdminEntityUpsertInfo {
 
 enum AdminEntityUpsertEffect {
   created
+  createdAndPublished
   updated
   none
 }
@@ -621,6 +623,7 @@ input AdminEntityCreateInfo {
 
 enum AdminEntityCreateEffect {
   created
+  createdAndPublished
   none
 }
 
@@ -644,6 +647,7 @@ input AdminEntityUpsertInfo {
 
 enum AdminEntityUpsertEffect {
   created
+  createdAndPublished
   updated
   none
 }
@@ -1032,6 +1036,7 @@ input AdminEntityCreateInfo {
 
 enum AdminEntityCreateEffect {
   created
+  createdAndPublished
   none
 }
 
@@ -1055,6 +1060,7 @@ input AdminEntityUpsertInfo {
 
 enum AdminEntityUpsertEffect {
   created
+  createdAndPublished
   updated
   none
 }
@@ -1542,6 +1548,7 @@ input AdminEntityCreateInfo {
 
 enum AdminEntityCreateEffect {
   created
+  createdAndPublished
   none
 }
 
@@ -1565,6 +1572,7 @@ input AdminEntityUpsertInfo {
 
 enum AdminEntityUpsertEffect {
   created
+  createdAndPublished
   updated
   none
 }
@@ -1873,6 +1881,7 @@ input AdminEntityCreateInfo {
 
 enum AdminEntityCreateEffect {
   created
+  createdAndPublished
   none
 }
 
@@ -1896,6 +1905,7 @@ input AdminEntityUpsertInfo {
 
 enum AdminEntityUpsertEffect {
   created
+  createdAndPublished
   updated
   none
 }
@@ -2460,6 +2470,7 @@ input AdminEntityCreateInfo {
 
 enum AdminEntityCreateEffect {
   created
+  createdAndPublished
   none
 }
 
@@ -2483,6 +2494,7 @@ input AdminEntityUpsertInfo {
 
 enum AdminEntityUpsertEffect {
   created
+  createdAndPublished
   updated
   none
 }
@@ -2851,6 +2863,7 @@ input AdminEntityCreateInfo {
 
 enum AdminEntityCreateEffect {
   created
+  createdAndPublished
   none
 }
 
@@ -2874,6 +2887,7 @@ input AdminEntityUpsertInfo {
 
 enum AdminEntityUpsertEffect {
   created
+  createdAndPublished
   updated
   none
 }
@@ -3276,6 +3290,7 @@ input AdminEntityCreateInfo {
 
 enum AdminEntityCreateEffect {
   created
+  createdAndPublished
   none
 }
 
@@ -3299,6 +3314,7 @@ input AdminEntityUpsertInfo {
 
 enum AdminEntityUpsertEffect {
   created
+  createdAndPublished
   updated
   none
 }
@@ -3553,6 +3569,7 @@ input AdminEntityCreateInfo {
 
 enum AdminEntityCreateEffect {
   created
+  createdAndPublished
   none
 }
 
@@ -3576,6 +3593,7 @@ input AdminEntityUpsertInfo {
 
 enum AdminEntityUpsertEffect {
   created
+  createdAndPublished
   updated
   none
 }
@@ -4053,6 +4071,7 @@ input AdminEntityCreateInfo {
 
 enum AdminEntityCreateEffect {
   created
+  createdAndPublished
   none
 }
 
@@ -4076,6 +4095,7 @@ input AdminEntityUpsertInfo {
 
 enum AdminEntityUpsertEffect {
   created
+  createdAndPublished
   updated
   none
 }
@@ -4357,6 +4377,7 @@ input AdminEntityCreateInfo {
 
 enum AdminEntityCreateEffect {
   created
+  createdAndPublished
   none
 }
 
@@ -4380,6 +4401,7 @@ input AdminEntityUpsertInfo {
 
 enum AdminEntityUpsertEffect {
   created
+  createdAndPublished
   updated
   none
 }
@@ -4804,6 +4826,7 @@ input AdminEntityCreateInfo {
 
 enum AdminEntityCreateEffect {
   created
+  createdAndPublished
   none
 }
 
@@ -4827,6 +4850,7 @@ input AdminEntityUpsertInfo {
 
 enum AdminEntityUpsertEffect {
   created
+  createdAndPublished
   updated
   none
 }
@@ -5090,6 +5114,7 @@ input AdminEntityCreateInfo {
 
 enum AdminEntityCreateEffect {
   created
+  createdAndPublished
   none
 }
 
@@ -5113,6 +5138,7 @@ input AdminEntityUpsertInfo {
 
 enum AdminEntityUpsertEffect {
   created
+  createdAndPublished
   updated
   none
 }
@@ -5622,6 +5648,7 @@ input AdminEntityCreateInfo {
 
 enum AdminEntityCreateEffect {
   created
+  createdAndPublished
   none
 }
 
@@ -5645,6 +5672,7 @@ input AdminEntityUpsertInfo {
 
 enum AdminEntityUpsertEffect {
   created
+  createdAndPublished
   updated
   none
 }
@@ -5970,6 +5998,7 @@ input AdminEntityCreateInfo {
 
 enum AdminEntityCreateEffect {
   created
+  createdAndPublished
   none
 }
 
@@ -5993,6 +6022,7 @@ input AdminEntityUpsertInfo {
 
 enum AdminEntityUpsertEffect {
   created
+  createdAndPublished
   updated
   none
 }
@@ -6611,6 +6641,7 @@ input AdminEntityCreateInfo {
 
 enum AdminEntityCreateEffect {
   created
+  createdAndPublished
   none
 }
 
@@ -6634,6 +6665,7 @@ input AdminEntityUpsertInfo {
 
 enum AdminEntityUpsertEffect {
   created
+  createdAndPublished
   updated
   none
 }
