@@ -63,6 +63,7 @@ export async function adminCreateEntity(
 
     const { id, name, createdAt, updatedAt } = createResult.value;
 
+    let effect: AdminEntityCreatePayload['effect'] = 'created';
     const result: AdminEntity = {
       id,
       info: {
@@ -95,10 +96,11 @@ export async function adminCreateEntity(
         // NotFound
         return notOk.GenericUnexpectedError(publishResult);
       }
+      effect = 'createdAndPublished';
       result.info.status = publishResult.value[0].status;
       result.info.updatedAt = publishResult.value[0].updatedAt;
     }
 
-    return ok({ effect: 'created', entity: result });
+    return ok({ effect, entity: result });
   });
 }

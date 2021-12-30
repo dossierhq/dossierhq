@@ -118,7 +118,7 @@ async function createEntity_publishMinimal({ client }: AdminEntityTestContext) {
     });
 
     expectResultValue(createResult, {
-      effect: 'created',
+      effect: 'createdAndPublished',
       entity: expectedEntity,
     });
 
@@ -152,7 +152,7 @@ async function createEntity_publishWithSubjectAuthKey({ client }: AdminEntityTes
     });
 
     expectResultValue(createResult, {
-      effect: 'created',
+      effect: 'createdAndPublished',
       entity: expectedEntity,
     });
 

@@ -617,6 +617,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         name: 'AdminEntityCreateEffect',
         values: {
           created: {},
+          createdAndPublished: {},
           none: {},
         },
       })
@@ -664,6 +665,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         name: 'AdminEntityUpsertEffect',
         values: {
           created: {},
+          createdAndPublished: {},
           updated: {},
           none: {},
         },
