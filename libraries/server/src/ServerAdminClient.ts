@@ -57,7 +57,7 @@ export function createServerAdminClient({
       }
       case AdminClientOperationName.createEntity: {
         const {
-          args: [entity],
+          args: [entity, options],
           resolve,
         } = operation as AdminClientOperation<AdminClientOperationName.createEntity>;
         resolve(
@@ -66,7 +66,8 @@ export function createServerAdminClient({
             authorizationAdapter,
             databaseAdapter,
             context,
-            entity
+            entity,
+            options
           )
         );
         break;

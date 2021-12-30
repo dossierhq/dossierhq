@@ -4052,7 +4052,7 @@ describe('publishEntities()', () => {
     }
   });
 
-  test('Error: Publish published version', async () => {
+  test('Publish published version', async () => {
     const createBazResult = await client.createEntity({
       info: { type: 'EntityAdminBaz', name: 'Baz 1', authKey: 'none' },
       fields: { title: 'Baz title 1' },

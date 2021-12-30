@@ -7,7 +7,7 @@ import { createPostgresDatabaseAdapterAdapter } from "@jonasb/datadata-database-
 import type { PoolClient } from "postgres";
 import { Pool, PostgresError } from "postgres";
 
-//TODO
+//TODO configure type parser for deno
 // PgTypes.setTypeParser(PgTypes.builtins.INT8, BigInt);
 // // 1016 = _int8 (int8 array)
 // PgTypes.setTypeParser(1016, (value) => PgTypes.arrayParser(value, BigInt));

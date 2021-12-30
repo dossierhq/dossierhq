@@ -1,11 +1,8 @@
 import type {
   AdminClient,
   AdminEntity,
-  AdminEntityCreate,
-  AdminEntityCreatePayload,
   AdminSchemaSpecificationUpdate,
   Entity,
-  PromiseResult,
   PublishedClient,
 } from '@jonasb/datadata-core';
 import {
@@ -13,7 +10,6 @@ import {
   CoreTestUtils,
   ErrorType,
   FieldType,
-  ok,
   QueryOrder,
   RichTextBlockType,
 } from '@jonasb/datadata-core';
@@ -142,70 +138,36 @@ async function getEntitiesForPublishedEntityOnlyEditBefore(client: AdminClient, 
   return result.value;
 }
 
-async function createAndPublishEntities(
-  adminClient: AdminClient,
-  ...entities: AdminEntityCreate[]
-): PromiseResult<
-  AdminEntityCreatePayload[],
-  | ErrorType.BadRequest
-  | ErrorType.Conflict
-  | ErrorType.NotFound
-  | ErrorType.NotAuthorized
-  | ErrorType.Generic
-> {
-  //TODO use transaction when supported in client
-  //TODO consider adding this kind of operation to AdminClient
-  const result: AdminEntityCreatePayload[] = [];
-  for (const entity of entities) {
-    const createResult = await adminClient.createEntity(entity);
-    if (createResult.isError()) {
-      return createResult;
-    }
-    result.push(createResult.value);
-  }
-
-  const publishResult = await adminClient.publishEntities(
-    result.map((it) => ({ id: it.entity.id, version: it.entity.info.version }))
-  );
-  if (publishResult.isError()) {
-    return publishResult;
-  }
-  for (let i = 0; i < result.length; i += 1) {
-    const entityInfo = result[i].entity.info;
-    const { status, updatedAt } = publishResult.value[i];
-    entityInfo.status = status;
-    entityInfo.updatedAt = updatedAt;
-  }
-
-  return ok(result);
-}
-
 async function createBarWithFooReferences(fooCount: number, referencesPerFoo = 1) {
-  const createBarResult = await createAndPublishEntities(adminClient, {
-    info: { type: 'PublishedEntityBar', name: 'Bar', authKey: 'none' },
-    fields: { title: 'Bar' },
-  });
+  const createBarResult = await adminClient.createEntity(
+    {
+      info: { type: 'PublishedEntityBar', name: 'Bar', authKey: 'none' },
+      fields: { title: 'Bar' },
+    },
+    { publish: true }
+  );
   if (createBarResult.isError()) {
     throw createBarResult.toError();
   }
 
-  const [
-    {
-      entity: { id: barId },
-    },
-  ] = createBarResult.value;
+  const {
+    entity: { id: barId },
+  } = createBarResult.value;
 
   const fooEntities: Entity[] = [];
 
   for (let i = 0; i < fooCount; i += 1) {
     const bars = [...new Array(referencesPerFoo - 1)].map(() => ({ id: barId }));
-    const createFooResult = await createAndPublishEntities(adminClient, {
-      info: { type: 'PublishedEntityFoo', name: 'Foo: ' + i, authKey: 'none' },
-      fields: { bar: { id: barId }, bars },
-    });
+    const createFooResult = await adminClient.createEntity(
+      {
+        info: { type: 'PublishedEntityFoo', name: 'Foo: ' + i, authKey: 'none' },
+        fields: { bar: { id: barId }, bars },
+      },
+      { publish: true }
+    );
     if (expectOkResult(createFooResult)) {
       const publishedEntityResult = await publishedClient.getEntity({
-        id: createFooResult.value[0].entity.id,
+        id: createFooResult.value.entity.id,
       });
       if (expectOkResult(publishedEntityResult)) {
         fooEntities.push(publishedEntityResult.value);
@@ -912,10 +874,13 @@ describe('searchEntities() referencing', () => {
   test('Two references, filter on entityType', async () => {
     const { barId, fooEntities } = await createBarWithFooReferences(1);
 
-    const anotherBarCreateResult = await createAndPublishEntities(adminClient, {
-      info: { type: 'PublishedEntityBar', name: 'Another Bar', authKey: 'none' },
-      fields: { entity: { id: barId } },
-    });
+    const anotherBarCreateResult = await adminClient.createEntity(
+      {
+        info: { type: 'PublishedEntityBar', name: 'Another Bar', authKey: 'none' },
+        fields: { entity: { id: barId } },
+      },
+      { publish: true }
+    );
     if (expectOkResult(anotherBarCreateResult)) {
       const searchResult = await publishedClient.searchEntities({
         entityTypes: ['PublishedEntityFoo'],
@@ -945,17 +910,18 @@ describe('searchEntities() boundingBox', () => {
       lat: (boundingBox.minLat + boundingBox.maxLat) / 2,
       lng: (boundingBox.minLng + boundingBox.maxLng) / 2,
     };
-    const createAndPublishResult = await createAndPublishEntities(adminClient, {
-      info: { type: 'PublishedEntityFoo', name: 'Foo', authKey: 'none' },
-      fields: { location: center },
-    });
+    const createAndPublishResult = await adminClient.createEntity(
+      {
+        info: { type: 'PublishedEntityFoo', name: 'Foo', authKey: 'none' },
+        fields: { location: center },
+      },
+      { publish: true }
+    );
 
     if (expectOkResult(createAndPublishResult)) {
-      const [
-        {
-          entity: { id },
-        },
-      ] = createAndPublishResult.value;
+      const {
+        entity: { id },
+      } = createAndPublishResult.value;
 
       const matches = await countSearchResultWithEntity(publishedClient, { boundingBox }, id);
       expectResultValue(matches, 1);
@@ -968,17 +934,18 @@ describe('searchEntities() boundingBox', () => {
       lat: (boundingBox.minLat + boundingBox.maxLat) / 2,
       lng: boundingBox.minLng > 0 ? boundingBox.minLng - 1 : boundingBox.maxLng + 1,
     };
-    const createAndPublishResult = await createAndPublishEntities(adminClient, {
-      info: { type: 'PublishedEntityFoo', name: 'Foo', authKey: 'none' },
-      fields: { location: outside },
-    });
+    const createAndPublishResult = await adminClient.createEntity(
+      {
+        info: { type: 'PublishedEntityFoo', name: 'Foo', authKey: 'none' },
+        fields: { location: outside },
+      },
+      { publish: true }
+    );
 
     if (expectOkResult(createAndPublishResult)) {
-      const [
-        {
-          entity: { id },
-        },
-      ] = createAndPublishResult.value;
+      const {
+        entity: { id },
+      } = createAndPublishResult.value;
       const matches = await countSearchResultWithEntity(publishedClient, { boundingBox }, id);
       expectResultValue(matches, 0);
     }
@@ -995,17 +962,18 @@ describe('searchEntities() boundingBox', () => {
       lng: (center.lng + boundingBox.maxLng) / 2,
     };
 
-    const createAndPublishResult = await createAndPublishEntities(adminClient, {
-      info: { type: 'PublishedEntityFoo', name: 'Foo', authKey: 'none' },
-      fields: { locations: [center, inside] },
-    });
+    const createAndPublishResult = await adminClient.createEntity(
+      {
+        info: { type: 'PublishedEntityFoo', name: 'Foo', authKey: 'none' },
+        fields: { locations: [center, inside] },
+      },
+      { publish: true }
+    );
 
     if (expectOkResult(createAndPublishResult)) {
-      const [
-        {
-          entity: { id },
-        },
-      ] = createAndPublishResult.value;
+      const {
+        entity: { id },
+      } = createAndPublishResult.value;
       const matches = await countSearchResultWithEntity(publishedClient, { boundingBox }, id);
       expectResultValue(matches, 1);
     }
@@ -1018,30 +986,31 @@ describe('searchEntities() boundingBox', () => {
       lng: (boundingBox.minLng + boundingBox.maxLng) / 2,
     };
 
-    const createAndPublishResult = await createAndPublishEntities(adminClient, {
-      info: { type: 'PublishedEntityFoo', name: 'Foo', authKey: 'none' },
-      fields: {
-        body: {
-          blocks: [
-            {
-              type: RichTextBlockType.valueItem,
-              data: {
-                type: 'PublishedEntityStringedLocation',
-                string: 'Hello location',
-                location: center,
+    const createAndPublishResult = await adminClient.createEntity(
+      {
+        info: { type: 'PublishedEntityFoo', name: 'Foo', authKey: 'none' },
+        fields: {
+          body: {
+            blocks: [
+              {
+                type: RichTextBlockType.valueItem,
+                data: {
+                  type: 'PublishedEntityStringedLocation',
+                  string: 'Hello location',
+                  location: center,
+                },
               },
-            },
-          ],
+            ],
+          },
         },
       },
-    });
+      { publish: true }
+    );
 
     if (expectOkResult(createAndPublishResult)) {
-      const [
-        {
-          entity: { id: bazId },
-        },
-      ] = createAndPublishResult.value;
+      const {
+        entity: { id: bazId },
+      } = createAndPublishResult.value;
       const matches = await countSearchResultWithEntity(publishedClient, { boundingBox }, bazId);
       expectResultValue(matches, 1);
     }
@@ -1050,16 +1019,17 @@ describe('searchEntities() boundingBox', () => {
 
 describe('searchEntities() text', () => {
   test('Query based on text (after creation and updating)', async () => {
-    const createResult = await createAndPublishEntities(adminClient, {
-      info: { type: 'PublishedEntityFoo', name: 'Foo', authKey: 'none' },
-      fields: { title: 'this is some serious summary with the best conclusion' },
-    });
+    const createResult = await adminClient.createEntity(
+      {
+        info: { type: 'PublishedEntityFoo', name: 'Foo', authKey: 'none' },
+        fields: { title: 'this is some serious summary with the best conclusion' },
+      },
+      { publish: true }
+    );
     if (expectOkResult(createResult)) {
-      const [
-        {
-          entity: { id },
-        },
-      ] = createResult.value;
+      const {
+        entity: { id },
+      } = createResult.value;
 
       const matches = await countSearchResultWithEntity(
         publishedClient,
@@ -1119,10 +1089,13 @@ describe('getTotalCount', () => {
   test('Query based on referencing and entityTypes, one reference', async () => {
     const { barId } = await createBarWithFooReferences(1, 1);
 
-    const anotherBarCreateResult = await createAndPublishEntities(adminClient, {
-      info: { type: 'PublishedEntityBar', name: 'Another Bar', authKey: 'none' },
-      fields: { entity: { id: barId } },
-    });
+    const anotherBarCreateResult = await adminClient.createEntity(
+      {
+        info: { type: 'PublishedEntityBar', name: 'Another Bar', authKey: 'none' },
+        fields: { entity: { id: barId } },
+      },
+      { publish: true }
+    );
     if (expectOkResult(anotherBarCreateResult)) {
       const result = await publishedClient.getTotalCount({
         entityTypes: ['PublishedEntityFoo'],
@@ -1150,10 +1123,13 @@ describe('getTotalCount', () => {
       lng: (center.lng + boundingBox.maxLng) / 2,
     };
 
-    const createResult = await createAndPublishEntities(adminClient, {
-      info: { type: 'PublishedEntityFoo', name: 'Foo', authKey: 'none' },
-      fields: { locations: [center, inside] },
-    });
+    const createResult = await adminClient.createEntity(
+      {
+        info: { type: 'PublishedEntityFoo', name: 'Foo', authKey: 'none' },
+        fields: { locations: [center, inside] },
+      },
+      { publish: true }
+    );
 
     if (expectOkResult(createResult)) {
       const searchResult = await publishedClient.searchEntities({ boundingBox });
@@ -1172,10 +1148,13 @@ describe('getTotalCount', () => {
     const resultBefore = await publishedClient.getTotalCount({ text: 'sensational clown' });
     if (expectOkResult(resultBefore)) {
       expectOkResult(
-        await createAndPublishEntities(adminClient, {
-          info: { type: 'PublishedEntityFoo', name: 'Foo', authKey: 'none' },
-          fields: { title: 'That was indeed a sensational clown' },
-        })
+        await adminClient.createEntity(
+          {
+            info: { type: 'PublishedEntityFoo', name: 'Foo', authKey: 'none' },
+            fields: { title: 'That was indeed a sensational clown' },
+          },
+          { publish: true }
+        )
       );
 
       const resultAfter = await publishedClient.getTotalCount({ text: 'sensational clown' });

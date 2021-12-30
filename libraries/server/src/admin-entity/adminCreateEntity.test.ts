@@ -33,7 +33,8 @@ describe('Admin adminCreateEntity', () => {
       {
         info: { name: 'TitleOnly name', authKey: 'none', type: 'TitleOnly' },
         fields: { title: 'Title' },
-      }
+      },
+      undefined
     );
 
     expectResultValue(result, {

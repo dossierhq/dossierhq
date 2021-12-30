@@ -2,22 +2,24 @@ import type {
   AdminEntity,
   AdminEntityCreate,
   AdminEntityCreatePayload,
+  AdminEntityMutationOptions,
   AdminSchema,
-  ErrorType,
   PromiseResult,
 } from '@jonasb/datadata-core';
-import { AdminEntityStatus, ok } from '@jonasb/datadata-core';
+import { AdminEntityStatus, ErrorType, notOk, ok } from '@jonasb/datadata-core';
 import type { AuthorizationAdapter, DatabaseAdapter, SessionContext } from '..';
 import { authResolveAuthorizationKey } from '../Auth';
-import { randomNameGenerator } from './AdminEntityMutationUtils';
 import { encodeEntity, resolveCreateEntity } from '../EntityCodec';
+import { randomNameGenerator } from './AdminEntityMutationUtils';
+import { adminPublishEntities } from './adminPublishEntities';
 
 export async function adminCreateEntity(
   schema: AdminSchema,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  entity: AdminEntityCreate
+  entity: AdminEntityCreate,
+  options: AdminEntityMutationOptions | undefined
 ): PromiseResult<
   AdminEntityCreatePayload,
   ErrorType.BadRequest | ErrorType.Conflict | ErrorType.NotAuthorized | ErrorType.Generic
@@ -73,6 +75,31 @@ export async function adminCreateEntity(
       },
       fields: createEntity.fields ?? {},
     };
+
+    if (options?.publish) {
+      //TODO pass authkey along
+      const publishResult = await adminPublishEntities(
+        schema,
+        authorizationAdapter,
+        databaseAdapter,
+        context,
+        [{ id, version: result.info.version }]
+      );
+      if (publishResult.isError()) {
+        if (
+          publishResult.isErrorType(ErrorType.BadRequest) ||
+          publishResult.isErrorType(ErrorType.NotAuthorized) ||
+          publishResult.isErrorType(ErrorType.Generic)
+        ) {
+          return publishResult;
+        }
+        // NotFound
+        return notOk.GenericUnexpectedError(publishResult);
+      }
+      result.info.status = publishResult.value[0].status;
+      result.info.updatedAt = publishResult.value[0].updatedAt;
+    }
+
     return ok({ effect: 'created', entity: result });
   });
 }

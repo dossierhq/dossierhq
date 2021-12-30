@@ -7,6 +7,7 @@ import {
   convertAdminClientOperationToJson,
   convertJsonAdminClientResult,
   convertJsonResult,
+  copyEntity,
   createBaseAdminClient,
   executeAdminClientOperationFromJson,
   NoOpLogger,
@@ -63,20 +64,23 @@ function createJsonConvertingAdminClientsForOperation<
   return { adminClient: outerAdminClient, operationHandlerMock };
 }
 
-function createDummyEntity({ id }: { id: string }): AdminEntity {
-  return {
-    id,
-    info: {
-      name: 'Foo name',
-      type: 'FooType',
-      version: 0,
-      authKey: 'none',
-      status: AdminEntityStatus.draft,
-      createdAt: Temporal.Instant.from('2021-08-17T07:51:25.56Z'),
-      updatedAt: Temporal.Instant.from('2021-08-17T07:51:25.56Z'),
+function createDummyEntity(changes: Parameters<typeof copyEntity>[1]): AdminEntity {
+  return copyEntity<AdminEntity>(
+    {
+      id: '123',
+      info: {
+        name: 'Foo name',
+        type: 'FooType',
+        version: 0,
+        authKey: 'none',
+        status: AdminEntityStatus.draft,
+        createdAt: Temporal.Instant.from('2021-08-17T07:51:25.56Z'),
+        updatedAt: Temporal.Instant.from('2021-08-17T07:51:25.56Z'),
+      },
+      fields: {},
     },
-    fields: {},
-  };
+    changes
+  );
 }
 
 describe('AdminClient forward operation over JSON', () => {
@@ -138,18 +142,29 @@ describe('AdminClient forward operation over JSON', () => {
       { logger: NoOpLogger },
       AdminClientOperationName.createEntity,
       async (_context, operation) => {
-        const [entity] = operation.args;
+        const [entity, options] = operation.args;
         operation.resolve(
-          ok({ effect: 'created', entity: createDummyEntity({ id: entity.id ?? '4321' }) })
+          ok({
+            effect: 'created',
+            entity: createDummyEntity({
+              id: entity.id ?? '4321',
+              info: {
+                status: options?.publish ? AdminEntityStatus.published : AdminEntityStatus.draft,
+              },
+            }),
+          })
         );
       }
     );
 
-    const result = await adminClient.createEntity({
-      id: '1234',
-      info: { name: 'Name', type: 'FooType', authKey: 'none' },
-      fields: {},
-    });
+    const result = await adminClient.createEntity(
+      {
+        id: '1234',
+        info: { name: 'Name', type: 'FooType', authKey: 'none' },
+        fields: {},
+      },
+      { publish: true }
+    );
     if (expectOkResult(result)) {
       expect(result.value.entity.info.createdAt).toBeInstanceOf(Temporal.Instant);
       expect(result.value.entity.info.updatedAt).toBeInstanceOf(Temporal.Instant);
@@ -164,7 +179,7 @@ describe('AdminClient forward operation over JSON', () => {
               "authKey": "none",
               "createdAt": "2021-08-17T07:51:25.56Z",
               "name": "Foo name",
-              "status": "draft",
+              "status": "published",
               "type": "FooType",
               "updatedAt": "2021-08-17T07:51:25.56Z",
               "version": 0,
@@ -195,6 +210,9 @@ describe('AdminClient forward operation over JSON', () => {
                   "name": "Name",
                   "type": "FooType",
                 },
+              },
+              Object {
+                "publish": true,
               },
             ],
             "modifies": true,
