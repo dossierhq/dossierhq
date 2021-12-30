@@ -5,6 +5,7 @@ import type { UniqueConstraint } from '.';
 import { adminCreateEntity } from './admin-entity/createEntity';
 import { adminEntityPublishingCreateEvents } from './admin-entity/createPublishingEvents';
 import { adminGetEntity } from './admin-entity/getEntity';
+import { adminEntityGetEntityName } from './admin-entity/getEntityName';
 import {
   adminEntityPublishGetUnpublishedReferencedEntities,
   adminEntityPublishGetVersionInfo,
@@ -43,9 +44,7 @@ export async function createSqliteDatabaseAdapter(
   const adapter: DatabaseAdapter = {
     adminEntityCreate: (...args) => adminCreateEntity(sqliteAdapter, ...args),
     adminEntityGetOne: (...args) => adminGetEntity(sqliteAdapter, ...args),
-    adminEntityGetEntityName: () => {
-      throw new Error('TODO');
-    },
+    adminEntityGetEntityName: (...args) => adminEntityGetEntityName(sqliteAdapter, ...args),
     adminEntityPublishGetUnpublishedReferencedEntities: (...args) =>
       adminEntityPublishGetUnpublishedReferencedEntities(sqliteAdapter, ...args),
     adminEntityPublishGetVersionInfo: (...args) =>
