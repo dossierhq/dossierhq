@@ -3,6 +3,7 @@ import type { PostgresTransaction } from '.';
 import { adminCreateEntity } from './admin-entity/createEntity';
 import { adminEntityPublishingCreateEvents } from './admin-entity/createPublishingEvents';
 import { adminGetEntity } from './admin-entity/getEntity';
+import { adminEntityGetEntityName } from './admin-entity/getEntityName';
 import {
   adminEntityPublishGetUnpublishedReferencedEntities,
   adminEntityPublishGetVersionInfo,
@@ -37,6 +38,7 @@ export function createPostgresDatabaseAdapterAdapter(
   return {
     adminEntityCreate: (...args) => adminCreateEntity(databaseAdapter, ...args),
     adminEntityGetOne: (...args) => adminGetEntity(databaseAdapter, ...args),
+    adminEntityGetEntityName: (...args) => adminEntityGetEntityName(databaseAdapter, ...args),
     adminEntityPublishGetUnpublishedReferencedEntities: (...args) =>
       adminEntityPublishGetUnpublishedReferencedEntities(databaseAdapter, ...args),
     adminEntityPublishGetVersionInfo: (...args) =>

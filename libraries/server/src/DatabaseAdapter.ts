@@ -135,6 +135,11 @@ export interface DatabaseAdapter {
     entity: DatabaseAdminEntityCreateEntityArg
   ): PromiseResult<DatabaseAdminEntityCreatePayload, ErrorType.Conflict | ErrorType.Generic>;
 
+  adminEntityGetEntityName(
+    context: TransactionContext,
+    reference: EntityReference
+  ): PromiseResult<string, ErrorType.NotFound | ErrorType.Generic>;
+
   adminEntityGetOne(
     context: TransactionContext,
     reference: EntityReference | EntityVersionReference
