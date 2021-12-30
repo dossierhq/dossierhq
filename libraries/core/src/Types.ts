@@ -96,6 +96,10 @@ export interface AdminEntityInfo {
   updatedAt: Temporal.Instant;
 }
 
+export interface AdminEntityMutationOptions {
+  publish?: boolean;
+}
+
 export interface AdminEntityCreate {
   /** UUID. If not provided a new random id will be created */
   id?: string;

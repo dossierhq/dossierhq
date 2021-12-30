@@ -35,7 +35,8 @@ export async function adminUpsertEntity(
       authorizationAdapter,
       databaseAdapter,
       context,
-      entity
+      entity,
+      undefined //TODO pass along options
     );
     if (createResult.isOk()) {
       return createResult.map((value) => value);

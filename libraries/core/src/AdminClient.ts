@@ -3,6 +3,7 @@ import type {
   AdminEntityArchivePayload,
   AdminEntityCreate,
   AdminEntityCreatePayload,
+  AdminEntityMutationOptions,
   AdminEntityPublishPayload,
   AdminEntityUnarchivePayload,
   AdminEntityUnpublishPayload,
@@ -94,7 +95,8 @@ export interface AdminClient {
   ): PromiseResult<number, ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic>;
 
   createEntity(
-    entity: AdminEntityCreate
+    entity: AdminEntityCreate,
+    options?: AdminEntityMutationOptions
   ): PromiseResult<
     AdminEntityCreatePayload,
     ErrorType.BadRequest | ErrorType.Conflict | ErrorType.NotAuthorized | ErrorType.Generic
@@ -334,10 +336,13 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
     });
   }
 
-  createEntity(entity: AdminEntityCreate): MethodReturnType<AdminClientOperationName.createEntity> {
+  createEntity(
+    entity: AdminEntityCreate,
+    options: AdminEntityMutationOptions | undefined
+  ): MethodReturnType<AdminClientOperationName.createEntity> {
     return this.executeOperation({
       name: AdminClientOperationName.createEntity,
-      args: [entity],
+      args: [entity, options],
       modifies: true,
     });
   }
@@ -486,9 +491,9 @@ export async function executeAdminClientOperationFromJson<TName extends AdminCli
       return await adminClient.archiveEntity(reference);
     }
     case AdminClientOperationName.createEntity: {
-      const [entity] =
+      const [entity, options] =
         operation as AdminClientOperationArguments[AdminClientOperationName.createEntity];
-      return await adminClient.createEntity(entity);
+      return await adminClient.createEntity(entity, options);
     }
     case AdminClientOperationName.getEntities: {
       const [references] =

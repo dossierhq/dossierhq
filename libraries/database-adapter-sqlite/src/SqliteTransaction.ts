@@ -5,14 +5,19 @@ import type { SqliteDatabaseAdapter } from './SqliteDatabaseAdapter';
 const sqliteTransactionSymbol = Symbol('SqliteTransaction');
 export interface SqliteTransaction extends Transaction {
   [sqliteTransactionSymbol]: true;
+  savePointCount: number;
 }
 
 export async function withRootTransaction<TOk, TError extends ErrorType>(
   databaseAdapter: SqliteDatabaseAdapter,
   callback: (transaction: Transaction) => PromiseResult<TOk, TError>
 ): PromiseResult<TOk, TError> {
-  //TODO create mutex
-  const transaction: SqliteTransaction = { _type: 'Transaction', [sqliteTransactionSymbol]: true };
+  //TODO create mutex, probably the same mutex needs to be run in queryCommon for queries outside of transaction
+  const transaction: SqliteTransaction = {
+    _type: 'Transaction',
+    [sqliteTransactionSymbol]: true,
+    savePointCount: 0,
+  };
   try {
     await databaseAdapter.query('BEGIN', undefined);
     const result = await callback(transaction);
@@ -33,14 +38,15 @@ export async function withNestedTransaction<TOk, TError extends ErrorType>(
   transaction: Transaction,
   callback: () => PromiseResult<TOk, TError>
 ): PromiseResult<TOk, TError> {
-  const _sqliteTransaction = transaction as SqliteTransaction;
+  const sqliteTransaction = transaction as SqliteTransaction;
+  const savePointName = `nested${sqliteTransaction.savePointCount++}`;
   try {
-    await databaseAdapter.query('BEGIN', undefined);
+    await databaseAdapter.query(`SAVEPOINT ${savePointName}`, undefined);
     const result = await callback();
     if (result.isOk()) {
-      await databaseAdapter.query('COMMIT', undefined);
+      await databaseAdapter.query(`RELEASE ${savePointName}`, undefined);
     } else {
-      await databaseAdapter.query('ROLLBACK', undefined);
+      await databaseAdapter.query(`ROLLBACK TO ${savePointName}`, undefined);
     }
     return result;
   } catch (e) {
