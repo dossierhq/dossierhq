@@ -1397,15 +1397,20 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     adminSchema: AdminSchema,
     entityName: string
   ): GraphQLFieldConfig<TSource, TContext> {
-    return fieldConfigWithArgs<TSource, TContext, { entity: AdminEntityCreate }>({
+    return fieldConfigWithArgs<
+      TSource,
+      TContext,
+      { entity: AdminEntityCreate; publish: boolean | null }
+    >({
       type: this.getOutputType(toAdminCreatePayloadTypeName(entityName)),
       args: {
         entity: {
           type: new GraphQLNonNull(this.getInputType(toAdminCreateInputTypeName(entityName))),
         },
+        publish: { type: GraphQLBoolean },
       },
       resolve: async (_source, args, context, _info) => {
-        const { entity } = args;
+        const { entity, publish } = args;
         if (entity.info.type && entity.info.type !== entityName) {
           throw notOk
             .BadRequest(
@@ -1415,7 +1420,9 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         }
         entity.info.type = entityName;
         this.resolveJsonInputFields(adminSchema, entity, entityName);
-        return await Mutations.createEntity(adminSchema, context, entity);
+        return await Mutations.createEntity(adminSchema, context, entity, {
+          publish: publish ?? undefined,
+        });
       },
     });
   }

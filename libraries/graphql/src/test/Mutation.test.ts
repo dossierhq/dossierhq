@@ -84,8 +84,8 @@ const schemaSpecification: AdminSchemaSpecificationUpdate = {
 };
 
 const createMutationFooGqlQuery = `
-mutation CreateFooEntity($entity: AdminMutationFooCreateInput!) {
-  createMutationFooEntity(entity: $entity) {
+mutation CreateFooEntity($entity: AdminMutationFooCreateInput!, $publish: Boolean) {
+  createMutationFooEntity(entity: $entity, publish: $publish) {
     __typename
     effect
     entity {
@@ -289,6 +289,61 @@ describe('create*Entity()', () => {
               version: 0,
               authKey: 'none',
               status: AdminEntityStatus.draft,
+              createdAt,
+              updatedAt,
+            },
+            fields: {
+              title: 'Foo title',
+              location: null,
+              locations: null,
+              summary: 'Foo summary',
+              tags: null,
+            },
+          },
+        },
+      },
+    });
+  });
+
+  test('Create and publish', async () => {
+    const entity: AdminEntityCreate = {
+      info: { type: 'MutationFoo', name: 'Foo name', authKey: 'none' },
+      fields: {
+        title: 'Foo title',
+        summary: 'Foo summary',
+      },
+    };
+    const result = (await graphql({
+      schema,
+      source: createMutationFooGqlQuery,
+      contextValue: createContext(),
+      variableValues: {
+        entity,
+        publish: true,
+      },
+    })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
+
+    expect(result.errors).toBeUndefined();
+    const {
+      id,
+      info: { name, createdAt, updatedAt },
+    } = result.data.createMutationFooEntity.entity;
+    expect(name).toMatch(/^Foo name(#[0-9]+)?$/);
+
+    expect(result).toEqual({
+      data: {
+        createMutationFooEntity: {
+          __typename: 'AdminMutationFooCreatePayload',
+          effect: 'createdAndPublished',
+          entity: {
+            __typename: 'AdminMutationFoo',
+            id,
+            info: {
+              type: 'MutationFoo',
+              name,
+              version: 0,
+              authKey: 'none',
+              status: AdminEntityStatus.published,
               createdAt,
               updatedAt,
             },

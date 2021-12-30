@@ -2,6 +2,7 @@ import type {
   AdminEntityArchivePayload,
   AdminEntityCreate,
   AdminEntityCreatePayload,
+  AdminEntityMutationOptions,
   AdminEntityPublishPayload,
   AdminEntityUnarchivePayload,
   AdminEntityUnpublishPayload,
@@ -20,10 +21,11 @@ import { getAdminClient } from './Utils';
 export async function createEntity<TContext extends SessionGraphQLContext>(
   schema: AdminSchema,
   context: TContext,
-  entity: AdminEntityCreate
+  entity: AdminEntityCreate,
+  options: AdminEntityMutationOptions
 ): Promise<AdminEntityCreatePayload> {
   const adminClient = getAdminClient(context);
-  const result = await adminClient.createEntity(entity);
+  const result = await adminClient.createEntity(entity, options);
   if (result.isError()) {
     throw result.toError();
   }
