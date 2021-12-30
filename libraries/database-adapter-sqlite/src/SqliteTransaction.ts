@@ -50,7 +50,7 @@ export async function withNestedTransaction<TOk, TError extends ErrorType>(
     }
     return result;
   } catch (e) {
-    await databaseAdapter.query('ROLLBACK', undefined);
+    await databaseAdapter.query(`ROLLBACK TO ${savePointName}`, undefined);
     throw e;
   }
 }
