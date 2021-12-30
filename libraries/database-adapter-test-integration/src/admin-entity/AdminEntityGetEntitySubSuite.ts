@@ -1,6 +1,7 @@
-import { CoreTestUtils, ErrorType } from '@jonasb/datadata-core';
+import { copyEntity, CoreTestUtils, ErrorType } from '@jonasb/datadata-core';
 import type { UnboundTestFunction } from '../Builder';
 import type { AdminEntityTestContext } from './AdminEntityTestSuite';
+import { TITLE_ONLY_CREATE } from './Fixtures';
 
 const { expectErrorResult, expectOkResult } = CoreTestUtils;
 
@@ -16,10 +17,7 @@ async function getEntity_errorInvalidId({ client }: AdminEntityTestContext) {
 }
 
 async function getEntity_errorInvalidVersion({ client }: AdminEntityTestContext) {
-  const createResult = await client.createEntity({
-    info: { type: 'TitleOnly', name: 'TitleOnly name', authKey: 'none' },
-    fields: { title: 'Title' },
-  });
+  const createResult = await client.createEntity(TITLE_ONLY_CREATE);
 
   if (expectOkResult(createResult)) {
     const {
@@ -35,10 +33,11 @@ async function getEntity_errorInvalidVersion({ client }: AdminEntityTestContext)
 }
 
 async function getEntity_errorWrongAuthKey({ client }: AdminEntityTestContext) {
-  const createResult = await client.createEntity({
-    info: { type: 'TitleOnly', name: 'Name', authKey: 'subject' },
-    fields: { title: 'Title' },
-  });
+  const createResult = await client.createEntity(
+    copyEntity(TITLE_ONLY_CREATE, {
+      info: { authKey: 'subject' },
+    })
+  );
 
   if (expectOkResult(createResult)) {
     const {

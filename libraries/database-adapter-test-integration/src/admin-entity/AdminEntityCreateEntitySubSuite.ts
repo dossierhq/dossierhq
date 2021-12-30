@@ -1,35 +1,11 @@
-import type { AdminEntity, AdminEntityCreate } from '@jonasb/datadata-core';
 import { AdminEntityStatus, copyEntity, CoreTestUtils, ErrorType } from '@jonasb/datadata-core';
-import { Temporal } from '@js-temporal/polyfill';
 import { v4 as uuidv4 } from 'uuid';
 import { assertNotSame, assertTruthy } from '../Asserts';
 import type { UnboundTestFunction } from '../Builder';
 import type { AdminEntityTestContext } from './AdminEntityTestSuite';
+import { TITLE_ONLY_CREATE, TITLE_ONLY_ENTITY } from './Fixtures';
 
 const { expectErrorResult, expectOkResult, expectResultValue } = CoreTestUtils;
-
-const TITLE_ONLY_CREATE: Readonly<AdminEntityCreate> = {
-  info: {
-    type: 'TitleOnly',
-    name: 'TitleOnly name',
-    authKey: 'none',
-  },
-  fields: { title: 'Title' },
-};
-
-const TITLE_ONLY_ENTITY: Readonly<AdminEntity> = {
-  id: 'REPLACE',
-  info: {
-    type: 'TitleOnly',
-    name: 'TitleOnly name',
-    version: 0,
-    authKey: 'none',
-    status: AdminEntityStatus.draft,
-    createdAt: Temporal.Instant.from('2021-08-17T07:51:25.56Z'),
-    updatedAt: Temporal.Instant.from('2021-08-17T07:51:25.56Z'),
-  },
-  fields: { title: 'Title' },
-};
 
 export const CreateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
   createEntity_minimal,

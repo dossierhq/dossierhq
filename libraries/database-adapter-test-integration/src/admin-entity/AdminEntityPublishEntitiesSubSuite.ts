@@ -1,22 +1,17 @@
-import { AdminEntityStatus, copyEntity, CoreTestUtils } from '@jonasb/datadata-core';
+import { AdminEntityStatus, copyEntity, CoreTestUtils, ErrorType } from '@jonasb/datadata-core';
 import type { UnboundTestFunction } from '../Builder';
 import type { AdminEntityTestContext } from './AdminEntityTestSuite';
+import { TITLE_ONLY_CREATE } from './Fixtures';
 
-const { expectOkResult, expectResultValue } = CoreTestUtils;
+const { expectErrorResult, expectOkResult, expectResultValue } = CoreTestUtils;
 
 export const PublishEntitiesSubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
   publishEntities_minimal,
+  publishEntities_errorMissingRequiredTitle,
 ];
 
 async function publishEntities_minimal({ client }: AdminEntityTestContext) {
-  const createResult = await client.createEntity({
-    info: {
-      type: 'TitleOnly',
-      name: 'TitleOnly name',
-      authKey: 'none',
-    },
-    fields: { title: 'Hello' },
-  });
+  const createResult = await client.createEntity(TITLE_ONLY_CREATE);
   if (expectOkResult(createResult)) {
     const {
       entity: {
@@ -44,5 +39,26 @@ async function publishEntities_minimal({ client }: AdminEntityTestContext) {
       const getResult = await client.getEntity({ id });
       expectResultValue(getResult, expectedEntity);
     }
+  }
+}
+
+async function publishEntities_errorMissingRequiredTitle({ client }: AdminEntityTestContext) {
+  const createResult = await client.createEntity(
+    copyEntity(TITLE_ONLY_CREATE, { fields: { title: null } })
+  );
+  if (expectOkResult(createResult)) {
+    const {
+      entity: {
+        id,
+        info: { version },
+      },
+    } = createResult.value;
+
+    const publishResult = await client.publishEntities([{ id, version }]);
+    expectErrorResult(
+      publishResult,
+      ErrorType.BadRequest,
+      `entity(${id}).fields.title: Required field is empty`
+    );
   }
 }
