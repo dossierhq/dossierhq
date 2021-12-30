@@ -3,12 +3,11 @@ import type {
   AdminEntityUpsert,
   AdminEntityUpsertPayload,
   AdminSchema,
+  ErrorResult,
   PromiseResult,
 } from '@jonasb/datadata-core';
 import { ErrorType, isEntityNameAsRequested, notOk, ok } from '@jonasb/datadata-core';
 import type { AuthorizationAdapter, DatabaseAdapter, SessionContext } from '..';
-import * as Db from '../Database';
-import type { EntitiesTable } from '../DatabaseTables';
 import { adminCreateEntity } from './adminCreateEntity';
 import { adminUpdateEntity } from './adminUpdateEntity';
 
@@ -22,38 +21,16 @@ export async function adminUpsertEntity(
   AdminEntityUpsertPayload,
   ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
 > {
-  const entityInfo = await Db.queryNoneOrOne<Pick<EntitiesTable, 'name'>>(
-    databaseAdapter,
-    context,
-    'SELECT e.name FROM entities e WHERE e.uuid = $1',
-    [entity.id]
-  );
+  const nameResult = await databaseAdapter.adminEntityGetEntityName(context, { id: entity.id });
 
-  if (!entityInfo) {
-    const createResult = await adminCreateEntity(
-      schema,
-      authorizationAdapter,
-      databaseAdapter,
-      context,
-      entity,
-      undefined //TODO pass along options
-    );
-    if (createResult.isOk()) {
-      return createResult.map((value) => value);
-    } else if (createResult.isErrorType(ErrorType.Conflict)) {
-      return adminUpsertEntity(schema, authorizationAdapter, databaseAdapter, context, entity);
-    } else if (
-      createResult.isErrorType(ErrorType.BadRequest) ||
-      createResult.isErrorType(ErrorType.NotAuthorized) ||
-      createResult.isErrorType(ErrorType.Generic)
-    ) {
-      return createResult;
-    }
-    return notOk.GenericUnexpectedError(createResult);
+  if (nameResult.isError() && nameResult.isErrorType(ErrorType.NotFound)) {
+    return await createNewEntity(schema, authorizationAdapter, databaseAdapter, context, entity);
+  } else if (nameResult.isError()) {
+    return nameResult as ErrorResult<unknown, ErrorType.Generic>;
   }
 
   let entityUpdate: AdminEntityUpdate = entity;
-  if (isEntityNameAsRequested(entityInfo.name, entity.info.name)) {
+  if (isEntityNameAsRequested(nameResult.value, entity.info.name)) {
     // Remove name since we don't to change it the current name is the same but with a #number
     entityUpdate = { ...entity, info: { ...entity.info, name: undefined } };
   }
@@ -75,4 +52,36 @@ export async function adminUpsertEntity(
     return updateResult;
   }
   return notOk.GenericUnexpectedError(updateResult);
+}
+
+async function createNewEntity(
+  schema: AdminSchema,
+  authorizationAdapter: AuthorizationAdapter,
+  databaseAdapter: DatabaseAdapter,
+  context: SessionContext,
+  entity: AdminEntityUpsert
+): PromiseResult<
+  AdminEntityUpsertPayload,
+  ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
+> {
+  const createResult = await adminCreateEntity(
+    schema,
+    authorizationAdapter,
+    databaseAdapter,
+    context,
+    entity,
+    undefined //TODO pass along options
+  );
+  if (createResult.isOk()) {
+    return createResult.map((value) => value);
+  } else if (createResult.isErrorType(ErrorType.Conflict)) {
+    return adminUpsertEntity(schema, authorizationAdapter, databaseAdapter, context, entity);
+  } else if (
+    createResult.isErrorType(ErrorType.BadRequest) ||
+    createResult.isErrorType(ErrorType.NotAuthorized) ||
+    createResult.isErrorType(ErrorType.Generic)
+  ) {
+    return createResult;
+  }
+  return notOk.GenericUnexpectedError(createResult);
 }

@@ -39,6 +39,9 @@ export async function createSqliteDatabaseAdapter(
   const adapter: DatabaseAdapter = {
     adminEntityCreate: (...args) => adminCreateEntity(sqliteAdapter, ...args),
     adminEntityGetOne: (...args) => adminGetEntity(sqliteAdapter, ...args),
+    adminEntityGetEntityName: () => {
+      throw new Error('TODO');
+    },
     adminEntityPublishGetUnpublishedReferencedEntities: (...args) =>
       adminEntityPublishGetUnpublishedReferencedEntities(sqliteAdapter, ...args),
     adminEntityPublishGetVersionInfo: (...args) =>
