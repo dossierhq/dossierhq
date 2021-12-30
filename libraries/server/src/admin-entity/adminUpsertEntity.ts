@@ -1,4 +1,5 @@
 import type {
+  AdminEntityMutationOptions,
   AdminEntityUpdate,
   AdminEntityUpsert,
   AdminEntityUpsertPayload,
@@ -16,7 +17,8 @@ export async function adminUpsertEntity(
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  entity: AdminEntityUpsert
+  entity: AdminEntityUpsert,
+  options: AdminEntityMutationOptions | undefined
 ): PromiseResult<
   AdminEntityUpsertPayload,
   ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
@@ -24,7 +26,14 @@ export async function adminUpsertEntity(
   const nameResult = await databaseAdapter.adminEntityGetEntityName(context, { id: entity.id });
 
   if (nameResult.isError() && nameResult.isErrorType(ErrorType.NotFound)) {
-    return await createNewEntity(schema, authorizationAdapter, databaseAdapter, context, entity);
+    return await createNewEntity(
+      schema,
+      authorizationAdapter,
+      databaseAdapter,
+      context,
+      entity,
+      options
+    );
   } else if (nameResult.isError()) {
     return nameResult as ErrorResult<unknown, ErrorType.Generic>;
   }
@@ -40,7 +49,8 @@ export async function adminUpsertEntity(
     authorizationAdapter,
     databaseAdapter,
     context,
-    entityUpdate
+    entityUpdate,
+    options
   );
   if (updateResult.isOk()) {
     return ok(updateResult.value);
@@ -59,7 +69,8 @@ async function createNewEntity(
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  entity: AdminEntityUpsert
+  entity: AdminEntityUpsert,
+  options: AdminEntityMutationOptions | undefined
 ): PromiseResult<
   AdminEntityUpsertPayload,
   ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
@@ -70,12 +81,19 @@ async function createNewEntity(
     databaseAdapter,
     context,
     entity,
-    undefined //TODO pass along options
+    options
   );
   if (createResult.isOk()) {
     return createResult.map((value) => value);
   } else if (createResult.isErrorType(ErrorType.Conflict)) {
-    return adminUpsertEntity(schema, authorizationAdapter, databaseAdapter, context, entity);
+    return adminUpsertEntity(
+      schema,
+      authorizationAdapter,
+      databaseAdapter,
+      context,
+      entity,
+      options
+    );
   } else if (
     createResult.isErrorType(ErrorType.BadRequest) ||
     createResult.isErrorType(ErrorType.NotAuthorized) ||

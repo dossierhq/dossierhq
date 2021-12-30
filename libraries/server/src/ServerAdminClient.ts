@@ -202,7 +202,7 @@ export function createServerAdminClient({
       }
       case AdminClientOperationName.updateEntity: {
         const {
-          args: [entity],
+          args: [entity, options],
           resolve,
         } = operation as AdminClientOperation<AdminClientOperationName.updateEntity>;
         resolve(
@@ -211,7 +211,8 @@ export function createServerAdminClient({
             authorizationAdapter,
             databaseAdapter,
             context,
-            entity
+            entity,
+            options
           )
         );
         break;
@@ -230,7 +231,7 @@ export function createServerAdminClient({
       }
       case AdminClientOperationName.upsertEntity: {
         const {
-          args: [entity],
+          args: [entity, options],
           resolve,
         } = operation as AdminClientOperation<AdminClientOperationName.upsertEntity>;
         resolve(
@@ -239,7 +240,8 @@ export function createServerAdminClient({
             authorizationAdapter,
             databaseAdapter,
             context,
-            entity
+            entity,
+            options
           )
         );
         break;

@@ -136,7 +136,7 @@ export interface AdminEntityUpdate {
 }
 
 export interface AdminEntityUpdatePayload {
-  effect: 'updated' | 'none';
+  effect: 'updated' | 'updatedAndPublished' | 'published' | 'none';
   entity: AdminEntity;
 }
 
@@ -151,7 +151,13 @@ export interface AdminEntityUpsert {
 }
 
 export interface AdminEntityUpsertPayload {
-  effect: 'created' | 'createdAndPublished' | 'updated' | 'none';
+  effect:
+    | 'created'
+    | 'createdAndPublished'
+    | 'updated'
+    | 'updatedAndPublished'
+    | 'published'
+    | 'none';
   entity: AdminEntity;
 }
 

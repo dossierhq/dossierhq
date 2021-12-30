@@ -145,7 +145,7 @@ describe('AdminClient forward operation over JSON', () => {
         const [entity, options] = operation.args;
         operation.resolve(
           ok({
-            effect: 'created',
+            effect: options?.publish ? 'createdAndPublished' : 'created',
             entity: createDummyEntity({
               id: entity.id ?? '4321',
               info: {
@@ -171,7 +171,7 @@ describe('AdminClient forward operation over JSON', () => {
 
       expect(result.value).toMatchInlineSnapshot(`
         Object {
-          "effect": "created",
+          "effect": "createdAndPublished",
           "entity": Object {
             "fields": Object {},
             "id": "1234",
@@ -939,24 +939,35 @@ describe('AdminClient forward operation over JSON', () => {
       { logger: NoOpLogger },
       AdminClientOperationName.updateEntity,
       async (_context, operation) => {
-        const [entity] = operation.args;
+        const [entity, options] = operation.args;
         operation.resolve(
-          ok({ effect: 'updated', entity: createDummyEntity({ id: entity.id ?? '4321' }) })
+          ok({
+            effect: options?.publish ? 'updatedAndPublished' : 'updated',
+            entity: createDummyEntity({
+              id: entity.id ?? '4321',
+              info: {
+                status: options?.publish ? AdminEntityStatus.published : AdminEntityStatus.draft,
+              },
+            }),
+          })
         );
       }
     );
 
-    const result = await adminClient.updateEntity({
-      id: '1234',
-      fields: {},
-    });
+    const result = await adminClient.updateEntity(
+      {
+        id: '1234',
+        fields: {},
+      },
+      { publish: true }
+    );
     if (expectOkResult(result)) {
       expect(result.value.entity.info.createdAt).toBeInstanceOf(Temporal.Instant);
       expect(result.value.entity.info.updatedAt).toBeInstanceOf(Temporal.Instant);
 
       expect(result.value).toMatchInlineSnapshot(`
         Object {
-          "effect": "updated",
+          "effect": "updatedAndPublished",
           "entity": Object {
             "fields": Object {},
             "id": "1234",
@@ -964,7 +975,7 @@ describe('AdminClient forward operation over JSON', () => {
               "authKey": "none",
               "createdAt": "2021-08-17T07:51:25.56Z",
               "name": "Foo name",
-              "status": "draft",
+              "status": "published",
               "type": "FooType",
               "updatedAt": "2021-08-17T07:51:25.56Z",
               "version": 0,
@@ -990,6 +1001,9 @@ describe('AdminClient forward operation over JSON', () => {
               Object {
                 "fields": Object {},
                 "id": "1234",
+              },
+              Object {
+                "publish": true,
               },
             ],
             "modifies": true,
@@ -1058,18 +1072,29 @@ describe('AdminClient forward operation over JSON', () => {
       { logger: NoOpLogger },
       AdminClientOperationName.upsertEntity,
       async (_context, operation) => {
-        const [entity] = operation.args;
+        const [entity, options] = operation.args;
         operation.resolve(
-          ok({ effect: 'created', entity: createDummyEntity({ id: entity.id ?? '4321' }) })
+          ok({
+            effect: options?.publish ? 'created' : 'createdAndPublished',
+            entity: createDummyEntity({
+              id: entity.id ?? '4321',
+              info: {
+                status: options?.publish ? AdminEntityStatus.published : AdminEntityStatus.draft,
+              },
+            }),
+          })
         );
       }
     );
 
-    const result = await adminClient.upsertEntity({
-      id: '1234',
-      info: { name: 'Name', type: 'FooType', authKey: 'none' },
-      fields: {},
-    });
+    const result = await adminClient.upsertEntity(
+      {
+        id: '1234',
+        info: { name: 'Name', type: 'FooType', authKey: 'none' },
+        fields: {},
+      },
+      { publish: true }
+    );
     if (expectOkResult(result)) {
       expect(result.value.entity.info.createdAt).toBeInstanceOf(Temporal.Instant);
       expect(result.value.entity.info.updatedAt).toBeInstanceOf(Temporal.Instant);
@@ -1084,7 +1109,7 @@ describe('AdminClient forward operation over JSON', () => {
               "authKey": "none",
               "createdAt": "2021-08-17T07:51:25.56Z",
               "name": "Foo name",
-              "status": "draft",
+              "status": "published",
               "type": "FooType",
               "updatedAt": "2021-08-17T07:51:25.56Z",
               "version": 0,
@@ -1115,6 +1140,9 @@ describe('AdminClient forward operation over JSON', () => {
                   "name": "Name",
                   "type": "FooType",
                 },
+              },
+              Object {
+                "publish": true,
               },
             ],
             "modifies": true,

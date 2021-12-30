@@ -1,4 +1,4 @@
-import { AdminEntityStatus, CoreTestUtils, ok } from '@jonasb/datadata-core';
+import { AdminEntityStatus, CoreTestUtils, ok, ErrorType } from '@jonasb/datadata-core';
 import { Temporal } from '@js-temporal/polyfill';
 import {
   createMockAuthorizationAdapter,
@@ -9,7 +9,7 @@ import {
 import { adminTestSchema } from '../test/TestSchema';
 import { adminCreateEntity } from './adminCreateEntity';
 
-const { expectResultValue } = CoreTestUtils;
+const { expectErrorResult, expectResultValue } = CoreTestUtils;
 
 describe('Admin adminCreateEntity', () => {
   test('Minimal', async () => {
@@ -86,5 +86,51 @@ describe('Admin adminCreateEntity', () => {
         ],
       ]
     `);
+  });
+
+  test('Error: Create with invalid type', async () => {
+    const databaseAdapter = createMockDatabaseAdapter();
+    const authorizationAdapter = createMockAuthorizationAdapter();
+    const context = createMockSessionContext({ databaseAdapter });
+
+    const result = await adminCreateEntity(
+      adminTestSchema,
+      authorizationAdapter,
+      databaseAdapter,
+      context,
+      {
+        info: { type: 'Invalid', name: 'name', authKey: 'none' },
+        fields: { foo: 'title' },
+      },
+      undefined
+    );
+
+    expectErrorResult(result, ErrorType.BadRequest, 'Entity type Invalid doesn’t exist');
+    expect(
+      getDatabaseAdapterMockedCallsWithoutContextAndUnordered(databaseAdapter)
+    ).toMatchInlineSnapshot(`Array []`);
+  });
+
+  test('Error: Create without type', async () => {
+    const databaseAdapter = createMockDatabaseAdapter();
+    const authorizationAdapter = createMockAuthorizationAdapter();
+    const context = createMockSessionContext({ databaseAdapter });
+
+    const result = await adminCreateEntity(
+      adminTestSchema,
+      authorizationAdapter,
+      databaseAdapter,
+      context,
+      {
+        info: { type: '', name: 'Foo', authKey: 'none' },
+        fields: { foo: 'title' },
+      },
+      undefined
+    );
+
+    expectErrorResult(result, ErrorType.BadRequest, 'Missing entity.info.type');
+    expect(
+      getDatabaseAdapterMockedCallsWithoutContextAndUnordered(databaseAdapter)
+    ).toMatchInlineSnapshot(`Array []`);
   });
 });
