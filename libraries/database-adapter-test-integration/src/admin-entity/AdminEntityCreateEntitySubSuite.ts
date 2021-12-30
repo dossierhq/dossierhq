@@ -12,6 +12,7 @@ export const CreateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
   createEntity_withId,
   createEntity_duplicateName,
   createEntity_publishMinimal,
+  createEntity_publishWithSubjectAuthKey,
   createEntity_errorPublishWithoutRequiredTitle,
 ];
 
@@ -122,6 +123,40 @@ async function createEntity_publishMinimal({ client }: AdminEntityTestContext) {
     });
 
     const getResult = await client.getEntity({ id });
+    expectResultValue(getResult, expectedEntity);
+  }
+}
+
+async function createEntity_publishWithSubjectAuthKey({ client }: AdminEntityTestContext) {
+  const createResult = await client.createEntity(
+    copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } }),
+    { publish: true }
+  );
+  if (expectOkResult(createResult)) {
+    const {
+      entity: {
+        id,
+        info: { name, createdAt, updatedAt },
+      },
+    } = createResult.value;
+
+    const expectedEntity = copyEntity(TITLE_ONLY_ENTITY, {
+      id,
+      info: {
+        name,
+        status: AdminEntityStatus.published,
+        authKey: 'subject',
+        createdAt,
+        updatedAt,
+      },
+    });
+
+    expectResultValue(createResult, {
+      effect: 'created',
+      entity: expectedEntity,
+    });
+
+    const getResult = await client.getEntity({ id, authKeys: ['subject'] });
     expectResultValue(getResult, expectedEntity);
   }
 }

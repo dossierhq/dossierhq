@@ -77,13 +77,12 @@ export async function adminCreateEntity(
     };
 
     if (options?.publish) {
-      //TODO pass authkey along
       const publishResult = await adminPublishEntities(
         schema,
         authorizationAdapter,
         databaseAdapter,
         context,
-        [{ id, version: result.info.version }]
+        [{ id, version: result.info.version, authKeys: [result.info.authKey] }]
       );
       if (publishResult.isError()) {
         if (
