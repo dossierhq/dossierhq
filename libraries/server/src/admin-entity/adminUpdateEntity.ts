@@ -1,22 +1,25 @@
 import type {
+  AdminEntityMutationOptions,
   AdminEntityUpdate,
   AdminEntityUpdatePayload,
   AdminSchema,
   ErrorType,
   PromiseResult,
 } from '@jonasb/datadata-core';
-import { ok } from '@jonasb/datadata-core';
+import { AdminEntityStatus, ok } from '@jonasb/datadata-core';
 import type { AuthorizationAdapter, DatabaseAdapter, SessionContext } from '..';
 import { authVerifyAuthorizationKey } from '../Auth';
 import { encodeEntity, resolveUpdateEntity } from '../EntityCodec';
 import { randomNameGenerator } from './AdminEntityMutationUtils';
+import { publishEntityAfterMutation } from './publishEntityAfterMutation';
 
 export async function adminUpdateEntity(
   schema: AdminSchema,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  entity: AdminEntityUpdate
+  entity: AdminEntityUpdate,
+  options: AdminEntityMutationOptions | undefined
 ): PromiseResult<
   AdminEntityUpdatePayload,
   ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
@@ -52,6 +55,26 @@ export async function adminUpdateEntity(
     const { changed, entity: updatedEntity } = resolvedResult.value;
     if (!changed) {
       const payload: AdminEntityUpdatePayload = { effect: 'none', entity: updatedEntity };
+      if (options?.publish && updatedEntity.info.status !== AdminEntityStatus.published) {
+        const publishResult = await publishEntityAfterMutation(
+          schema,
+          authorizationAdapter,
+          databaseAdapter,
+          context,
+          {
+            id: updatedEntity.id,
+            version: updatedEntity.info.version,
+            authKeys: [updatedEntity.info.authKey],
+          }
+        );
+        if (publishResult.isError()) {
+          return publishResult;
+        }
+        payload.effect = 'published';
+        updatedEntity.info.status = publishResult.value.status;
+        updatedEntity.info.updatedAt = publishResult.value.updatedAt;
+      }
+
       return ok(payload);
     }
 
@@ -81,9 +104,30 @@ export async function adminUpdateEntity(
       return updateResult;
     }
 
+    let effect: AdminEntityUpdatePayload['effect'] = 'updated';
     updatedEntity.info.name = updateResult.value.name;
     updatedEntity.info.updatedAt = updateResult.value.updatedAt;
 
-    return ok({ effect: 'updated', entity: updatedEntity });
+    if (options?.publish) {
+      const publishResult = await publishEntityAfterMutation(
+        schema,
+        authorizationAdapter,
+        databaseAdapter,
+        context,
+        {
+          id: updatedEntity.id,
+          version: updatedEntity.info.version,
+          authKeys: [updatedEntity.info.authKey],
+        }
+      );
+      if (publishResult.isError()) {
+        return publishResult;
+      }
+      effect = 'updatedAndPublished';
+      updatedEntity.info.status = publishResult.value.status;
+      updatedEntity.info.updatedAt = publishResult.value.updatedAt;
+    }
+
+    return ok({ effect, entity: updatedEntity });
   });
 }

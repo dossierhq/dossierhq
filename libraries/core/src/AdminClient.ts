@@ -103,14 +103,16 @@ export interface AdminClient {
   >;
 
   updateEntity(
-    entity: AdminEntityUpdate
+    entity: AdminEntityUpdate,
+    options?: AdminEntityMutationOptions
   ): PromiseResult<
     AdminEntityUpdatePayload,
     ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
   >;
 
   upsertEntity(
-    entity: AdminEntityUpsert
+    entity: AdminEntityUpsert,
+    options?: AdminEntityMutationOptions
   ): PromiseResult<
     AdminEntityUpsertPayload,
     ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
@@ -347,18 +349,24 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
     });
   }
 
-  updateEntity(entity: AdminEntityUpdate): MethodReturnType<AdminClientOperationName.updateEntity> {
+  updateEntity(
+    entity: AdminEntityUpdate,
+    options: AdminEntityMutationOptions | undefined
+  ): MethodReturnType<AdminClientOperationName.updateEntity> {
     return this.executeOperation({
       name: AdminClientOperationName.updateEntity,
-      args: [entity],
+      args: [entity, options],
       modifies: true,
     });
   }
 
-  upsertEntity(entity: AdminEntityUpsert): MethodReturnType<AdminClientOperationName.upsertEntity> {
+  upsertEntity(
+    entity: AdminEntityUpsert,
+    options: AdminEntityMutationOptions | undefined
+  ): MethodReturnType<AdminClientOperationName.upsertEntity> {
     return this.executeOperation({
       name: AdminClientOperationName.upsertEntity,
-      args: [entity],
+      args: [entity, options],
       modifies: true,
     });
   }
@@ -544,9 +552,9 @@ export async function executeAdminClientOperationFromJson<TName extends AdminCli
       return await adminClient.unpublishEntities(references);
     }
     case AdminClientOperationName.updateEntity: {
-      const [entity] =
+      const [entity, options] =
         operation as AdminClientOperationArguments[AdminClientOperationName.updateEntity];
-      return await adminClient.updateEntity(entity);
+      return await adminClient.updateEntity(entity, options);
     }
     case AdminClientOperationName.updateSchemaSpecification: {
       const [schemaSpec] =
@@ -554,9 +562,9 @@ export async function executeAdminClientOperationFromJson<TName extends AdminCli
       return await adminClient.updateSchemaSpecification(schemaSpec);
     }
     case AdminClientOperationName.upsertEntity: {
-      const [entity] =
+      const [entity, options] =
         operation as AdminClientOperationArguments[AdminClientOperationName.upsertEntity];
-      return await adminClient.upsertEntity(entity);
+      return await adminClient.upsertEntity(entity, options);
     }
     default:
       assertExhaustive(operationName);

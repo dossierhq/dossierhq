@@ -4,14 +4,15 @@ import type {
   AdminEntityCreatePayload,
   AdminEntityMutationOptions,
   AdminSchema,
+  ErrorType,
   PromiseResult,
 } from '@jonasb/datadata-core';
-import { AdminEntityStatus, ErrorType, notOk, ok } from '@jonasb/datadata-core';
+import { AdminEntityStatus, ok } from '@jonasb/datadata-core';
 import type { AuthorizationAdapter, DatabaseAdapter, SessionContext } from '..';
 import { authResolveAuthorizationKey } from '../Auth';
 import { encodeEntity, resolveCreateEntity } from '../EntityCodec';
 import { randomNameGenerator } from './AdminEntityMutationUtils';
-import { adminPublishEntities } from './adminPublishEntities';
+import { publishEntityAfterMutation } from './publishEntityAfterMutation';
 
 export async function adminCreateEntity(
   schema: AdminSchema,
@@ -78,27 +79,19 @@ export async function adminCreateEntity(
     };
 
     if (options?.publish) {
-      const publishResult = await adminPublishEntities(
+      const publishResult = await publishEntityAfterMutation(
         schema,
         authorizationAdapter,
         databaseAdapter,
         context,
-        [{ id, version: result.info.version, authKeys: [result.info.authKey] }]
+        { id, version: result.info.version, authKeys: [result.info.authKey] }
       );
       if (publishResult.isError()) {
-        if (
-          publishResult.isErrorType(ErrorType.BadRequest) ||
-          publishResult.isErrorType(ErrorType.NotAuthorized) ||
-          publishResult.isErrorType(ErrorType.Generic)
-        ) {
-          return publishResult;
-        }
-        // NotFound
-        return notOk.GenericUnexpectedError(publishResult);
+        return publishResult;
       }
       effect = 'createdAndPublished';
-      result.info.status = publishResult.value[0].status;
-      result.info.updatedAt = publishResult.value[0].updatedAt;
+      result.info.status = publishResult.value.status;
+      result.info.updatedAt = publishResult.value.updatedAt;
     }
 
     return ok({ effect, entity: result });

@@ -321,49 +321,6 @@ async function createBarWithFooBazReferences(
   return { barId, fooEntities, bazEntities };
 }
 
-describe('getEntity()', () => {
-  // rest is tested elsewhere
-
-  test('No version means max version', async () => {
-    const createResult = await client.createEntity({
-      info: { type: 'EntityAdminFoo', name: 'Foo', authKey: 'none' },
-      fields: { title: 'Title' },
-    });
-
-    if (expectOkResult(createResult)) {
-      const {
-        entity: {
-          id,
-          info: { name, createdAt },
-        },
-      } = createResult.value;
-      const updateResult = await client.updateEntity({ id, fields: { title: 'Updated title' } });
-      if (expectOkResult(updateResult)) {
-        const {
-          entity: {
-            info: { updatedAt },
-          },
-        } = updateResult.value;
-
-        const versionMaxResult = await client.getEntity({ id });
-        expectResultValue(versionMaxResult, {
-          id,
-          info: {
-            type: 'EntityAdminFoo',
-            name,
-            version: 1,
-            authKey: 'none',
-            status: AdminEntityStatus.draft,
-            createdAt,
-            updatedAt,
-          },
-          fields: { ...emptyFooFields, title: 'Updated title' },
-        });
-      }
-    }
-  });
-});
-
 describe('getEntities()', () => {
   test('Get no entities', async () => {
     const result = await client.getEntities([]);
@@ -1511,24 +1468,6 @@ describe('createEntity()', () => {
       const getResult = await client.getEntity({ id: bazId });
       expectResultValue(getResult, expectedEntity);
     }
-  });
-
-  test('Error: Create with invalid type', async () => {
-    const result = await client.createEntity({
-      info: { type: 'Invalid', name: 'name', authKey: 'none' },
-      fields: { foo: 'title' },
-    });
-
-    expectErrorResult(result, ErrorType.BadRequest, 'Entity type Invalid doesn’t exist');
-  });
-
-  test('Error: Create without type', async () => {
-    const result = await client.createEntity({
-      info: { type: '', name: 'Foo', authKey: 'none' },
-      fields: { foo: 'title' },
-    });
-
-    expectErrorResult(result, ErrorType.BadRequest, 'Missing entity.info.type');
   });
 
   test('Error: Create with already existing', async () => {
@@ -2827,39 +2766,6 @@ describe('updateEntity()', () => {
             createdAt,
           },
           fields: { ...emptyFooFields, title: 'Updated title' },
-        });
-      }
-    }
-  });
-
-  test('Update with same authKey', async () => {
-    const createResult = await client.createEntity({
-      info: { type: 'EntityAdminFoo', name: 'Original', authKey: 'subject' },
-      fields: { title: 'Original' },
-    });
-    if (expectOkResult(createResult)) {
-      const {
-        entity: { id },
-      } = createResult.value;
-
-      const updateResult = await client.updateEntity({
-        id,
-        info: { type: 'EntityAdminFoo', name: 'Updated name', authKey: 'subject' },
-        fields: { title: 'Updated title' },
-      });
-      if (expectOkResult(updateResult)) {
-        const {
-          entity: {
-            info: { name, updatedAt },
-          },
-        } = updateResult.value;
-
-        expectResultValue(updateResult, {
-          effect: 'updated',
-          entity: copyEntity(createResult.value.entity, {
-            info: { name, updatedAt, version: 1 },
-            fields: { title: 'Updated title' },
-          }),
         });
       }
     }
