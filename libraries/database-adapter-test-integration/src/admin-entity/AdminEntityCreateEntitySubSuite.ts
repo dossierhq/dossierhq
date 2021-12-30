@@ -1,26 +1,45 @@
-import type { AdminEntity } from '@jonasb/datadata-core';
-import { CoreTestUtils, AdminEntityStatus } from '@jonasb/datadata-core';
+import type { AdminEntity, AdminEntityCreate } from '@jonasb/datadata-core';
+import { AdminEntityStatus, copyEntity, CoreTestUtils, ErrorType } from '@jonasb/datadata-core';
+import { Temporal } from '@js-temporal/polyfill';
+import { v4 as uuidv4 } from 'uuid';
 import { assertNotSame, assertTruthy } from '../Asserts';
 import type { UnboundTestFunction } from '../Builder';
 import type { AdminEntityTestContext } from './AdminEntityTestSuite';
 
-const { expectOkResult, expectResultValue } = CoreTestUtils;
+const { expectErrorResult, expectOkResult, expectResultValue } = CoreTestUtils;
+
+const TITLE_ONLY_CREATE: Readonly<AdminEntityCreate> = {
+  info: {
+    type: 'TitleOnly',
+    name: 'TitleOnly name',
+    authKey: 'none',
+  },
+  fields: { title: 'Title' },
+};
+
+const TITLE_ONLY_ENTITY: Readonly<AdminEntity> = {
+  id: 'REPLACE',
+  info: {
+    type: 'TitleOnly',
+    name: 'TitleOnly name',
+    version: 0,
+    authKey: 'none',
+    status: AdminEntityStatus.draft,
+    createdAt: Temporal.Instant.from('2021-08-17T07:51:25.56Z'),
+    updatedAt: Temporal.Instant.from('2021-08-17T07:51:25.56Z'),
+  },
+  fields: { title: 'Title' },
+};
 
 export const CreateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
   createEntity_minimal,
   createEntity_duplicateName,
   createEntity_publishMinimal,
+  createEntity_errorPublishWithoutRequiredTitle,
 ];
 
 async function createEntity_minimal({ client }: AdminEntityTestContext) {
-  const createResult = await client.createEntity({
-    info: {
-      type: 'TitleOnly',
-      name: 'TitleOnly name',
-      authKey: 'none',
-    },
-    fields: {},
-  });
+  const createResult = await client.createEntity(TITLE_ONLY_CREATE);
   if (expectOkResult(createResult)) {
     const {
       entity: {
@@ -29,19 +48,14 @@ async function createEntity_minimal({ client }: AdminEntityTestContext) {
       },
     } = createResult.value;
 
-    const expectedEntity: AdminEntity = {
+    const expectedEntity = copyEntity(TITLE_ONLY_ENTITY, {
       id,
       info: {
-        type: 'TitleOnly',
         name,
-        version: 0,
-        authKey: 'none',
-        status: AdminEntityStatus.draft,
         createdAt,
         updatedAt,
       },
-      fields: { title: null },
-    };
+    });
 
     expectResultValue(createResult, {
       effect: 'created',
@@ -54,22 +68,8 @@ async function createEntity_minimal({ client }: AdminEntityTestContext) {
 }
 
 async function createEntity_duplicateName({ client }: AdminEntityTestContext) {
-  const firstResult = await client.createEntity({
-    info: {
-      type: 'TitleOnly',
-      name: 'Name of first entity',
-      authKey: 'none',
-    },
-    fields: {},
-  });
-  const secondResult = await client.createEntity({
-    info: {
-      type: 'TitleOnly',
-      name: 'Name of first entity',
-      authKey: 'none',
-    },
-    fields: {},
-  });
+  const firstResult = await client.createEntity(TITLE_ONLY_CREATE);
+  const secondResult = await client.createEntity(TITLE_ONLY_CREATE);
   if (expectOkResult(firstResult) && expectOkResult(secondResult)) {
     const {
       entity: {
@@ -86,22 +86,12 @@ async function createEntity_duplicateName({ client }: AdminEntityTestContext) {
     assertNotSame(firstId, secondId);
     assertNotSame(firstName, secondName);
 
-    assertTruthy(secondName.match(/^Name of first entity#\d{8}$/));
+    assertTruthy(secondName.match(/^TitleOnly name#\d{8}$/));
   }
 }
 
 async function createEntity_publishMinimal({ client }: AdminEntityTestContext) {
-  const createResult = await client.createEntity(
-    {
-      info: {
-        type: 'TitleOnly',
-        name: 'TitleOnly name',
-        authKey: 'none',
-      },
-      fields: { title: 'Title' },
-    },
-    { publish: true }
-  );
+  const createResult = await client.createEntity(TITLE_ONLY_CREATE, { publish: true });
   if (expectOkResult(createResult)) {
     const {
       entity: {
@@ -110,19 +100,15 @@ async function createEntity_publishMinimal({ client }: AdminEntityTestContext) {
       },
     } = createResult.value;
 
-    const expectedEntity: AdminEntity = {
+    const expectedEntity = copyEntity(TITLE_ONLY_ENTITY, {
       id,
       info: {
-        type: 'TitleOnly',
         name,
-        version: 0,
-        authKey: 'none',
         status: AdminEntityStatus.published,
         createdAt,
         updatedAt,
       },
-      fields: { title: 'Title' },
-    };
+    });
 
     expectResultValue(createResult, {
       effect: 'created',
@@ -132,4 +118,20 @@ async function createEntity_publishMinimal({ client }: AdminEntityTestContext) {
     const getResult = await client.getEntity({ id });
     expectResultValue(getResult, expectedEntity);
   }
+}
+
+async function createEntity_errorPublishWithoutRequiredTitle({ client }: AdminEntityTestContext) {
+  const id = uuidv4();
+  const createResult = await client.createEntity(
+    copyEntity(TITLE_ONLY_CREATE, { id, fields: { title: null } }),
+    { publish: true }
+  );
+  expectErrorResult(
+    createResult,
+    ErrorType.BadRequest,
+    `entity(${id}).fields.title: Required field is empty`
+  );
+
+  const getResult = await client.getEntity({ id });
+  expectErrorResult(getResult, ErrorType.NotFound, 'No such entity');
 }
