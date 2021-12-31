@@ -119,8 +119,8 @@ mutation CreateFooEntity($entity: AdminMutationFooCreateInput!, $publish: Boolea
 `;
 
 const upsertMutationFooGqlQuery = `
-mutation UpsertFooEntity($entity: AdminMutationFooUpsertInput!) {
-  upsertMutationFooEntity(entity: $entity) {
+mutation UpsertFooEntity($entity: AdminMutationFooUpsertInput!, $publish: Boolean) {
+  upsertMutationFooEntity(entity: $entity, publish: $publish) {
     effect
     entity {
       __typename
@@ -1649,6 +1649,102 @@ describe('update*Entity()', () => {
     }
   });
 
+  test('Update and publish', async () => {
+    const { adminClient } = server;
+    const createResult = await adminClient.createEntity({
+      info: { type: 'MutationFoo', name: 'First name', authKey: 'none' },
+      fields: { title: 'First title', summary: 'First summary', tags: ['one', 'two', 'three'] },
+    });
+    if (expectOkResult(createResult)) {
+      const {
+        entity: {
+          id,
+          info: { name, createdAt },
+        },
+      } = createResult.value;
+      const result = (await graphql({
+        schema,
+        source: `
+          mutation UpdateFooEntity($entity: AdminMutationFooUpdateInput!) {
+            updateMutationFooEntity(entity: $entity, publish: true) {
+              effect
+              entity {
+                __typename
+                id
+                info {
+                  type
+                  name
+                  version
+                  authKey
+                  status
+                  createdAt
+                  updatedAt
+                }
+                fields {
+                  title
+                  summary
+                  tags
+                }
+              }
+            }
+          }
+        `,
+        contextValue: createContext(),
+        variableValues: {
+          entity: { id, fields: { title: 'Updated title' } },
+        },
+      })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
+
+      const { updatedAt: updatedAtString } = result.data.updateMutationFooEntity.entity.info;
+
+      expect(result).toEqual({
+        data: {
+          updateMutationFooEntity: {
+            effect: 'updatedAndPublished',
+            entity: {
+              __typename: 'AdminMutationFoo',
+              id,
+              info: {
+                type: 'MutationFoo',
+                name,
+                version: 1,
+                authKey: 'none',
+                status: AdminEntityStatus.published,
+                createdAt: createdAt.toString(),
+                updatedAt: updatedAtString,
+              },
+              fields: {
+                title: 'Updated title',
+                summary: 'First summary',
+                tags: ['one', 'two', 'three'],
+              },
+            },
+          },
+        },
+      });
+
+      const getResult = await adminClient.getEntity({ id });
+      expectResultValue(getResult, {
+        id,
+        info: {
+          type: 'MutationFoo',
+          name,
+          version: 1,
+          authKey: 'none',
+          status: AdminEntityStatus.published,
+          createdAt,
+          updatedAt: Temporal.Instant.from(updatedAtString),
+        },
+        fields: {
+          ...emptyFooFields,
+          title: 'Updated title',
+          summary: 'First summary',
+          tags: ['one', 'two', 'three'],
+        },
+      });
+    }
+  });
+
   test('Error: Update with the wrong type', async () => {
     const { adminClient } = server;
     const createResult = await adminClient.createEntity({
@@ -1943,6 +2039,73 @@ describe('upsert*Entity()', () => {
         },
       });
     }
+  });
+
+  test('Create new entity and publish', async () => {
+    const { adminClient } = server;
+    const id = insecureTestUuidv4();
+    const entity: AdminEntityUpsert = {
+      id,
+      info: { type: 'MutationFoo', name: 'Name', authKey: 'none' },
+      fields: { title: 'Title', summary: 'Summary', tags: ['one', 'two', 'three'] },
+    };
+    const result = (await graphql({
+      schema,
+      source: upsertMutationFooGqlQuery,
+      contextValue: createContext(),
+      variableValues: {
+        entity,
+        publish: true,
+      },
+    })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
+
+    const { name, createdAt, updatedAt } = result.data.upsertMutationFooEntity.entity.info;
+
+    expect(result).toEqual({
+      data: {
+        upsertMutationFooEntity: {
+          effect: 'createdAndPublished',
+          entity: {
+            __typename: 'AdminMutationFoo',
+            id,
+            info: {
+              type: 'MutationFoo',
+              name,
+              version: 0,
+              authKey: 'none',
+              status: AdminEntityStatus.published,
+              createdAt,
+              updatedAt,
+            },
+            fields: {
+              title: 'Title',
+              summary: 'Summary',
+              tags: ['one', 'two', 'three'],
+            },
+          },
+        },
+      },
+    });
+
+    const getResult = await adminClient.getEntity({ id });
+    expectResultValue(getResult, {
+      id,
+      info: {
+        type: 'MutationFoo',
+        name,
+        version: 0,
+        authKey: 'none',
+        status: AdminEntityStatus.published,
+        createdAt: Temporal.Instant.from(createdAt),
+        updatedAt: Temporal.Instant.from(updatedAt),
+      },
+      fields: {
+        ...emptyFooFields,
+        title: 'Title',
+        summary: 'Summary',
+        tags: ['one', 'two', 'three'],
+      },
+    });
   });
 
   test('Error: Upsert with the wrong type', async () => {
