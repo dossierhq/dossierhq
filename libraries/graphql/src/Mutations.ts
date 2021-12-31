@@ -38,10 +38,11 @@ export async function createEntity<TContext extends SessionGraphQLContext>(
 export async function updateEntity<TContext extends SessionGraphQLContext>(
   schema: AdminSchema,
   context: TContext,
-  entity: AdminEntityUpdate
+  entity: AdminEntityUpdate,
+  options: AdminEntityMutationOptions
 ): Promise<AdminEntityUpdatePayload> {
   const adminClient = getAdminClient(context);
-  const result = await adminClient.updateEntity(entity);
+  const result = await adminClient.updateEntity(entity, options);
   if (result.isError()) {
     throw result.toError();
   }
@@ -54,10 +55,11 @@ export async function updateEntity<TContext extends SessionGraphQLContext>(
 export async function upsertEntity<TContext extends SessionGraphQLContext>(
   schema: AdminSchema,
   context: TContext,
-  entity: AdminEntityUpsert
+  entity: AdminEntityUpsert,
+  options: AdminEntityMutationOptions
 ): Promise<AdminEntityUpsertPayload> {
   const adminClient = getAdminClient(context);
-  const result = await adminClient.upsertEntity(entity);
+  const result = await adminClient.upsertEntity(entity, options);
   if (result.isError()) {
     throw result.toError();
   }

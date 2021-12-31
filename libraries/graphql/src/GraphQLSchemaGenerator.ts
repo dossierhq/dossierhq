@@ -642,6 +642,8 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         name: 'AdminEntityUpdateEffect',
         values: {
           updated: {},
+          updatedAndPublished: {},
+          published: {},
           none: {},
         },
       })
@@ -667,6 +669,8 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
           created: {},
           createdAndPublished: {},
           updated: {},
+          updatedAndPublished: {},
+          published: {},
           none: {},
         },
       })
@@ -1431,15 +1435,20 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     adminSchema: AdminSchema,
     entityName: string
   ): GraphQLFieldConfig<TSource, TContext> {
-    return fieldConfigWithArgs<TSource, TContext, { entity: AdminEntityUpdate }>({
+    return fieldConfigWithArgs<
+      TSource,
+      TContext,
+      { entity: AdminEntityUpdate; publish: boolean | null }
+    >({
       type: this.getOutputType(toAdminUpdatePayloadTypeName(entityName)),
       args: {
         entity: {
           type: new GraphQLNonNull(this.getInputType(toAdminUpdateInputTypeName(entityName))),
         },
+        publish: { type: GraphQLBoolean },
       },
       resolve: async (_source, args, context, _info) => {
-        const { entity } = args;
+        const { entity, publish } = args;
         if (entity.info?.type && entity.info.type !== entityName) {
           throw notOk
             .BadRequest(
@@ -1448,7 +1457,9 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
             .toError();
         }
         this.resolveJsonInputFields(adminSchema, entity, entityName);
-        return await Mutations.updateEntity(adminSchema, context, entity);
+        return await Mutations.updateEntity(adminSchema, context, entity, {
+          publish: publish ?? undefined,
+        });
       },
     });
   }
@@ -1457,15 +1468,20 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     adminSchema: AdminSchema,
     entityName: string
   ): GraphQLFieldConfig<TSource, TContext> {
-    return fieldConfigWithArgs<TSource, TContext, { entity: AdminEntityUpsert }>({
+    return fieldConfigWithArgs<
+      TSource,
+      TContext,
+      { entity: AdminEntityUpsert; publish: boolean | null }
+    >({
       type: this.getOutputType(toAdminUpsertPayloadTypeName(entityName)),
       args: {
         entity: {
           type: new GraphQLNonNull(this.getInputType(toAdminUpsertInputTypeName(entityName))),
         },
+        publish: { type: GraphQLBoolean },
       },
       resolve: async (_source, args, context, _info) => {
-        const { entity } = args;
+        const { entity, publish } = args;
         if (entity.info?.type && entity.info.type !== entityName) {
           throw notOk
             .BadRequest(
@@ -1474,7 +1490,9 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
             .toError();
         }
         this.resolveJsonInputFields(adminSchema, entity, entityName);
-        return await Mutations.upsertEntity(adminSchema, context, entity);
+        return await Mutations.upsertEntity(adminSchema, context, entity, {
+          publish: publish ?? undefined,
+        });
       },
     });
   }

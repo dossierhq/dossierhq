@@ -81,6 +81,8 @@ input AdminEntityUpdateInfo {
 
 enum AdminEntityUpdateEffect {
   updated
+  updatedAndPublished
+  published
   none
 }
 
@@ -94,6 +96,8 @@ enum AdminEntityUpsertEffect {
   created
   createdAndPublished
   updated
+  updatedAndPublished
+  published
   none
 }
 
@@ -361,11 +365,11 @@ type Mutation {
   archiveEntity(id: ID!, authKeys: [String!]): AdminEntityArchivePayload
   unarchiveEntity(id: ID!, authKeys: [String!]): AdminEntityUnarchivePayload
   createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
-  updateFooEntity(entity: AdminFooUpdateInput!): AdminFooUpdatePayload
-  upsertFooEntity(entity: AdminFooUpsertInput!): AdminFooUpsertPayload
+  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
+  upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
   createBarEntity(entity: AdminBarCreateInput!, publish: Boolean): AdminBarCreatePayload
-  updateBarEntity(entity: AdminBarUpdateInput!): AdminBarUpdatePayload
-  upsertBarEntity(entity: AdminBarUpsertInput!): AdminBarUpsertPayload
+  updateBarEntity(entity: AdminBarUpdateInput!, publish: Boolean): AdminBarUpdatePayload
+  upsertBarEntity(entity: AdminBarUpsertInput!, publish: Boolean): AdminBarUpsertPayload
 }"
 `;
 
@@ -636,6 +640,8 @@ input AdminEntityUpdateInfo {
 
 enum AdminEntityUpdateEffect {
   updated
+  updatedAndPublished
+  published
   none
 }
 
@@ -649,6 +655,8 @@ enum AdminEntityUpsertEffect {
   created
   createdAndPublished
   updated
+  updatedAndPublished
+  published
   none
 }
 
@@ -914,11 +922,11 @@ type Mutation {
   archiveEntity(id: ID!, authKeys: [String!]): AdminEntityArchivePayload
   unarchiveEntity(id: ID!, authKeys: [String!]): AdminEntityUnarchivePayload
   createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
-  updateFooEntity(entity: AdminFooUpdateInput!): AdminFooUpdatePayload
-  upsertFooEntity(entity: AdminFooUpsertInput!): AdminFooUpsertPayload
+  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
+  upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
   createBarEntity(entity: AdminBarCreateInput!, publish: Boolean): AdminBarCreatePayload
-  updateBarEntity(entity: AdminBarUpdateInput!): AdminBarUpdatePayload
-  upsertBarEntity(entity: AdminBarUpsertInput!): AdminBarUpsertPayload
+  updateBarEntity(entity: AdminBarUpdateInput!, publish: Boolean): AdminBarUpdatePayload
+  upsertBarEntity(entity: AdminBarUpsertInput!, publish: Boolean): AdminBarUpsertPayload
 }"
 `;
 
@@ -1049,6 +1057,8 @@ input AdminEntityUpdateInfo {
 
 enum AdminEntityUpdateEffect {
   updated
+  updatedAndPublished
+  published
   none
 }
 
@@ -1062,6 +1072,8 @@ enum AdminEntityUpsertEffect {
   created
   createdAndPublished
   updated
+  updatedAndPublished
+  published
   none
 }
 
@@ -1299,11 +1311,11 @@ type Mutation {
   archiveEntity(id: ID!, authKeys: [String!]): AdminEntityArchivePayload
   unarchiveEntity(id: ID!, authKeys: [String!]): AdminEntityUnarchivePayload
   createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
-  updateFooEntity(entity: AdminFooUpdateInput!): AdminFooUpdatePayload
-  upsertFooEntity(entity: AdminFooUpsertInput!): AdminFooUpsertPayload
+  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
+  upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
   createBarEntity(entity: AdminBarCreateInput!, publish: Boolean): AdminBarCreatePayload
-  updateBarEntity(entity: AdminBarUpdateInput!): AdminBarUpdatePayload
-  upsertBarEntity(entity: AdminBarUpsertInput!): AdminBarUpsertPayload
+  updateBarEntity(entity: AdminBarUpdateInput!, publish: Boolean): AdminBarUpdatePayload
+  upsertBarEntity(entity: AdminBarUpsertInput!, publish: Boolean): AdminBarUpsertPayload
 }"
 `;
 
@@ -1561,6 +1573,8 @@ input AdminEntityUpdateInfo {
 
 enum AdminEntityUpdateEffect {
   updated
+  updatedAndPublished
+  published
   none
 }
 
@@ -1574,6 +1588,8 @@ enum AdminEntityUpsertEffect {
   created
   createdAndPublished
   updated
+  updatedAndPublished
+  published
   none
 }
 
@@ -1809,11 +1825,11 @@ type Mutation {
   archiveEntity(id: ID!, authKeys: [String!]): AdminEntityArchivePayload
   unarchiveEntity(id: ID!, authKeys: [String!]): AdminEntityUnarchivePayload
   createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
-  updateFooEntity(entity: AdminFooUpdateInput!): AdminFooUpdatePayload
-  upsertFooEntity(entity: AdminFooUpsertInput!): AdminFooUpsertPayload
+  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
+  upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
   createBarEntity(entity: AdminBarCreateInput!, publish: Boolean): AdminBarCreatePayload
-  updateBarEntity(entity: AdminBarUpdateInput!): AdminBarUpdatePayload
-  upsertBarEntity(entity: AdminBarUpsertInput!): AdminBarUpsertPayload
+  updateBarEntity(entity: AdminBarUpdateInput!, publish: Boolean): AdminBarUpdatePayload
+  upsertBarEntity(entity: AdminBarUpsertInput!, publish: Boolean): AdminBarUpsertPayload
 }"
 `;
 
@@ -1894,6 +1910,8 @@ input AdminEntityUpdateInfo {
 
 enum AdminEntityUpdateEffect {
   updated
+  updatedAndPublished
+  published
   none
 }
 
@@ -1907,6 +1925,8 @@ enum AdminEntityUpsertEffect {
   created
   createdAndPublished
   updated
+  updatedAndPublished
+  published
   none
 }
 
@@ -2192,14 +2212,14 @@ type Mutation {
   archiveEntity(id: ID!, authKeys: [String!]): AdminEntityArchivePayload
   unarchiveEntity(id: ID!, authKeys: [String!]): AdminEntityUnarchivePayload
   createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
-  updateFooEntity(entity: AdminFooUpdateInput!): AdminFooUpdatePayload
-  upsertFooEntity(entity: AdminFooUpsertInput!): AdminFooUpsertPayload
+  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
+  upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
   createBarEntity(entity: AdminBarCreateInput!, publish: Boolean): AdminBarCreatePayload
-  updateBarEntity(entity: AdminBarUpdateInput!): AdminBarUpdatePayload
-  upsertBarEntity(entity: AdminBarUpsertInput!): AdminBarUpsertPayload
+  updateBarEntity(entity: AdminBarUpdateInput!, publish: Boolean): AdminBarUpdatePayload
+  upsertBarEntity(entity: AdminBarUpsertInput!, publish: Boolean): AdminBarUpsertPayload
   createBazEntity(entity: AdminBazCreateInput!, publish: Boolean): AdminBazCreatePayload
-  updateBazEntity(entity: AdminBazUpdateInput!): AdminBazUpdatePayload
-  upsertBazEntity(entity: AdminBazUpsertInput!): AdminBazUpsertPayload
+  updateBazEntity(entity: AdminBazUpdateInput!, publish: Boolean): AdminBazUpdatePayload
+  upsertBazEntity(entity: AdminBazUpsertInput!, publish: Boolean): AdminBazUpsertPayload
 }"
 `;
 
@@ -2483,6 +2503,8 @@ input AdminEntityUpdateInfo {
 
 enum AdminEntityUpdateEffect {
   updated
+  updatedAndPublished
+  published
   none
 }
 
@@ -2496,6 +2518,8 @@ enum AdminEntityUpsertEffect {
   created
   createdAndPublished
   updated
+  updatedAndPublished
+  published
   none
 }
 
@@ -2790,14 +2814,14 @@ type Mutation {
   archiveEntity(id: ID!, authKeys: [String!]): AdminEntityArchivePayload
   unarchiveEntity(id: ID!, authKeys: [String!]): AdminEntityUnarchivePayload
   createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
-  updateFooEntity(entity: AdminFooUpdateInput!): AdminFooUpdatePayload
-  upsertFooEntity(entity: AdminFooUpsertInput!): AdminFooUpsertPayload
+  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
+  upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
   createBarEntity(entity: AdminBarCreateInput!, publish: Boolean): AdminBarCreatePayload
-  updateBarEntity(entity: AdminBarUpdateInput!): AdminBarUpdatePayload
-  upsertBarEntity(entity: AdminBarUpsertInput!): AdminBarUpsertPayload
+  updateBarEntity(entity: AdminBarUpdateInput!, publish: Boolean): AdminBarUpdatePayload
+  upsertBarEntity(entity: AdminBarUpsertInput!, publish: Boolean): AdminBarUpsertPayload
   createBazEntity(entity: AdminBazCreateInput!, publish: Boolean): AdminBazCreatePayload
-  updateBazEntity(entity: AdminBazUpdateInput!): AdminBazUpdatePayload
-  upsertBazEntity(entity: AdminBazUpsertInput!): AdminBazUpsertPayload
+  updateBazEntity(entity: AdminBazUpdateInput!, publish: Boolean): AdminBazUpdatePayload
+  upsertBazEntity(entity: AdminBazUpsertInput!, publish: Boolean): AdminBazUpsertPayload
 }"
 `;
 
@@ -2876,6 +2900,8 @@ input AdminEntityUpdateInfo {
 
 enum AdminEntityUpdateEffect {
   updated
+  updatedAndPublished
+  published
   none
 }
 
@@ -2889,6 +2915,8 @@ enum AdminEntityUpsertEffect {
   created
   createdAndPublished
   updated
+  updatedAndPublished
+  published
   none
 }
 
@@ -3073,8 +3101,8 @@ type Mutation {
   archiveEntity(id: ID!, authKeys: [String!]): AdminEntityArchivePayload
   unarchiveEntity(id: ID!, authKeys: [String!]): AdminEntityUnarchivePayload
   createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
-  updateFooEntity(entity: AdminFooUpdateInput!): AdminFooUpdatePayload
-  upsertFooEntity(entity: AdminFooUpsertInput!): AdminFooUpsertPayload
+  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
+  upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
 }"
 `;
 
@@ -3303,6 +3331,8 @@ input AdminEntityUpdateInfo {
 
 enum AdminEntityUpdateEffect {
   updated
+  updatedAndPublished
+  published
   none
 }
 
@@ -3316,6 +3346,8 @@ enum AdminEntityUpsertEffect {
   created
   createdAndPublished
   updated
+  updatedAndPublished
+  published
   none
 }
 
@@ -3498,8 +3530,8 @@ type Mutation {
   archiveEntity(id: ID!, authKeys: [String!]): AdminEntityArchivePayload
   unarchiveEntity(id: ID!, authKeys: [String!]): AdminEntityUnarchivePayload
   createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
-  updateFooEntity(entity: AdminFooUpdateInput!): AdminFooUpdatePayload
-  upsertFooEntity(entity: AdminFooUpsertInput!): AdminFooUpsertPayload
+  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
+  upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
 }"
 `;
 
@@ -3582,6 +3614,8 @@ input AdminEntityUpdateInfo {
 
 enum AdminEntityUpdateEffect {
   updated
+  updatedAndPublished
+  published
   none
 }
 
@@ -3595,6 +3629,8 @@ enum AdminEntityUpsertEffect {
   created
   createdAndPublished
   updated
+  updatedAndPublished
+  published
   none
 }
 
@@ -3810,8 +3846,8 @@ type Mutation {
   archiveEntity(id: ID!, authKeys: [String!]): AdminEntityArchivePayload
   unarchiveEntity(id: ID!, authKeys: [String!]): AdminEntityUnarchivePayload
   createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
-  updateFooEntity(entity: AdminFooUpdateInput!): AdminFooUpdatePayload
-  upsertFooEntity(entity: AdminFooUpsertInput!): AdminFooUpsertPayload
+  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
+  upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
 }"
 `;
 
@@ -4084,6 +4120,8 @@ input AdminEntityUpdateInfo {
 
 enum AdminEntityUpdateEffect {
   updated
+  updatedAndPublished
+  published
   none
 }
 
@@ -4097,6 +4135,8 @@ enum AdminEntityUpsertEffect {
   created
   createdAndPublished
   updated
+  updatedAndPublished
+  published
   none
 }
 
@@ -4310,8 +4350,8 @@ type Mutation {
   archiveEntity(id: ID!, authKeys: [String!]): AdminEntityArchivePayload
   unarchiveEntity(id: ID!, authKeys: [String!]): AdminEntityUnarchivePayload
   createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
-  updateFooEntity(entity: AdminFooUpdateInput!): AdminFooUpdatePayload
-  upsertFooEntity(entity: AdminFooUpsertInput!): AdminFooUpsertPayload
+  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
+  upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
 }"
 `;
 
@@ -4390,6 +4430,8 @@ input AdminEntityUpdateInfo {
 
 enum AdminEntityUpdateEffect {
   updated
+  updatedAndPublished
+  published
   none
 }
 
@@ -4403,6 +4445,8 @@ enum AdminEntityUpsertEffect {
   created
   createdAndPublished
   updated
+  updatedAndPublished
+  published
   none
 }
 
@@ -4599,8 +4643,8 @@ type Mutation {
   archiveEntity(id: ID!, authKeys: [String!]): AdminEntityArchivePayload
   unarchiveEntity(id: ID!, authKeys: [String!]): AdminEntityUnarchivePayload
   createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
-  updateFooEntity(entity: AdminFooUpdateInput!): AdminFooUpdatePayload
-  upsertFooEntity(entity: AdminFooUpsertInput!): AdminFooUpsertPayload
+  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
+  upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
 }"
 `;
 
@@ -4839,6 +4883,8 @@ input AdminEntityUpdateInfo {
 
 enum AdminEntityUpdateEffect {
   updated
+  updatedAndPublished
+  published
   none
 }
 
@@ -4852,6 +4898,8 @@ enum AdminEntityUpsertEffect {
   created
   createdAndPublished
   updated
+  updatedAndPublished
+  published
   none
 }
 
@@ -5046,8 +5094,8 @@ type Mutation {
   archiveEntity(id: ID!, authKeys: [String!]): AdminEntityArchivePayload
   unarchiveEntity(id: ID!, authKeys: [String!]): AdminEntityUnarchivePayload
   createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
-  updateFooEntity(entity: AdminFooUpdateInput!): AdminFooUpdatePayload
-  upsertFooEntity(entity: AdminFooUpsertInput!): AdminFooUpsertPayload
+  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
+  upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
 }"
 `;
 
@@ -5127,6 +5175,8 @@ input AdminEntityUpdateInfo {
 
 enum AdminEntityUpdateEffect {
   updated
+  updatedAndPublished
+  published
   none
 }
 
@@ -5140,6 +5190,8 @@ enum AdminEntityUpsertEffect {
   created
   createdAndPublished
   updated
+  updatedAndPublished
+  published
   none
 }
 
@@ -5389,11 +5441,11 @@ type Mutation {
   archiveEntity(id: ID!, authKeys: [String!]): AdminEntityArchivePayload
   unarchiveEntity(id: ID!, authKeys: [String!]): AdminEntityUnarchivePayload
   createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
-  updateFooEntity(entity: AdminFooUpdateInput!): AdminFooUpdatePayload
-  upsertFooEntity(entity: AdminFooUpsertInput!): AdminFooUpsertPayload
+  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
+  upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
   createBarEntity(entity: AdminBarCreateInput!, publish: Boolean): AdminBarCreatePayload
-  updateBarEntity(entity: AdminBarUpdateInput!): AdminBarUpdatePayload
-  upsertBarEntity(entity: AdminBarUpsertInput!): AdminBarUpsertPayload
+  updateBarEntity(entity: AdminBarUpdateInput!, publish: Boolean): AdminBarUpdatePayload
+  upsertBarEntity(entity: AdminBarUpsertInput!, publish: Boolean): AdminBarUpsertPayload
 }"
 `;
 
@@ -5661,6 +5713,8 @@ input AdminEntityUpdateInfo {
 
 enum AdminEntityUpdateEffect {
   updated
+  updatedAndPublished
+  published
   none
 }
 
@@ -5674,6 +5728,8 @@ enum AdminEntityUpsertEffect {
   created
   createdAndPublished
   updated
+  updatedAndPublished
+  published
   none
 }
 
@@ -5921,11 +5977,11 @@ type Mutation {
   archiveEntity(id: ID!, authKeys: [String!]): AdminEntityArchivePayload
   unarchiveEntity(id: ID!, authKeys: [String!]): AdminEntityUnarchivePayload
   createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
-  updateFooEntity(entity: AdminFooUpdateInput!): AdminFooUpdatePayload
-  upsertFooEntity(entity: AdminFooUpsertInput!): AdminFooUpsertPayload
+  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
+  upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
   createBarEntity(entity: AdminBarCreateInput!, publish: Boolean): AdminBarCreatePayload
-  updateBarEntity(entity: AdminBarUpdateInput!): AdminBarUpdatePayload
-  upsertBarEntity(entity: AdminBarUpsertInput!): AdminBarUpsertPayload
+  updateBarEntity(entity: AdminBarUpdateInput!, publish: Boolean): AdminBarUpdatePayload
+  upsertBarEntity(entity: AdminBarUpsertInput!, publish: Boolean): AdminBarUpsertPayload
 }"
 `;
 
@@ -6011,6 +6067,8 @@ input AdminEntityUpdateInfo {
 
 enum AdminEntityUpdateEffect {
   updated
+  updatedAndPublished
+  published
   none
 }
 
@@ -6024,6 +6082,8 @@ enum AdminEntityUpsertEffect {
   created
   createdAndPublished
   updated
+  updatedAndPublished
+  published
   none
 }
 
@@ -6317,11 +6377,11 @@ type Mutation {
   archiveEntity(id: ID!, authKeys: [String!]): AdminEntityArchivePayload
   unarchiveEntity(id: ID!, authKeys: [String!]): AdminEntityUnarchivePayload
   createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
-  updateFooEntity(entity: AdminFooUpdateInput!): AdminFooUpdatePayload
-  upsertFooEntity(entity: AdminFooUpsertInput!): AdminFooUpsertPayload
+  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
+  upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
   createBarEntity(entity: AdminBarCreateInput!, publish: Boolean): AdminBarCreatePayload
-  updateBarEntity(entity: AdminBarUpdateInput!): AdminBarUpdatePayload
-  upsertBarEntity(entity: AdminBarUpsertInput!): AdminBarUpsertPayload
+  updateBarEntity(entity: AdminBarUpdateInput!, publish: Boolean): AdminBarUpdatePayload
+  upsertBarEntity(entity: AdminBarUpsertInput!, publish: Boolean): AdminBarUpsertPayload
 }"
 `;
 
@@ -6654,6 +6714,8 @@ input AdminEntityUpdateInfo {
 
 enum AdminEntityUpdateEffect {
   updated
+  updatedAndPublished
+  published
   none
 }
 
@@ -6667,6 +6729,8 @@ enum AdminEntityUpsertEffect {
   created
   createdAndPublished
   updated
+  updatedAndPublished
+  published
   none
 }
 
@@ -6963,10 +7027,10 @@ type Mutation {
   archiveEntity(id: ID!, authKeys: [String!]): AdminEntityArchivePayload
   unarchiveEntity(id: ID!, authKeys: [String!]): AdminEntityUnarchivePayload
   createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
-  updateFooEntity(entity: AdminFooUpdateInput!): AdminFooUpdatePayload
-  upsertFooEntity(entity: AdminFooUpsertInput!): AdminFooUpsertPayload
+  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
+  upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
   createBarEntity(entity: AdminBarCreateInput!, publish: Boolean): AdminBarCreatePayload
-  updateBarEntity(entity: AdminBarUpdateInput!): AdminBarUpdatePayload
-  upsertBarEntity(entity: AdminBarUpsertInput!): AdminBarUpsertPayload
+  updateBarEntity(entity: AdminBarUpdateInput!, publish: Boolean): AdminBarUpdatePayload
+  upsertBarEntity(entity: AdminBarUpsertInput!, publish: Boolean): AdminBarUpsertPayload
 }"
 `;
