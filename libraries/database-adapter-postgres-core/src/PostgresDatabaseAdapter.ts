@@ -10,6 +10,11 @@ import {
   adminEntityPublishUpdateEntity,
 } from './admin-entity/publishEntities';
 import {
+  adminEntityUnpublishEntities,
+  adminEntityUnpublishGetEntitiesInfo,
+  adminEntityUnpublishGetPublishedReferencedEntities,
+} from './admin-entity/unpublishEntities';
+import {
   adminEntityUpdateEntity,
   adminEntityUpdateGetEntityInfo,
 } from './admin-entity/updateEntity';
@@ -50,6 +55,12 @@ export function createPostgresDatabaseAdapterAdapter(
     adminEntityUpdateGetEntityInfo: (...args) =>
       adminEntityUpdateGetEntityInfo(databaseAdapter, ...args),
     adminEntityUpdateEntity: (...args) => adminEntityUpdateEntity(databaseAdapter, ...args),
+    adminEntityUnpublishGetEntitiesInfo: (...args) =>
+      adminEntityUnpublishGetEntitiesInfo(databaseAdapter, ...args),
+    adminEntityUnpublishEntities: (...args) =>
+      adminEntityUnpublishEntities(databaseAdapter, ...args),
+    adminEntityUnpublishGetPublishedReferencedEntities: (...args) =>
+      adminEntityUnpublishGetPublishedReferencedEntities(databaseAdapter, ...args),
     authCreateSession: (...args) => authCreateSession(databaseAdapter, ...args),
     disconnect: databaseAdapter.disconnect,
     queryLegacy: databaseAdapter.query,
