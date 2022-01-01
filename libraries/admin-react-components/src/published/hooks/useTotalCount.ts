@@ -1,4 +1,9 @@
-import type { ErrorResult, ErrorType, PublishedClient, Query } from '@jonasb/datadata-core';
+import type {
+  ErrorResult,
+  ErrorType,
+  PublishedClient,
+  PublishedQuery,
+} from '@jonasb/datadata-core';
 import { useCallback } from 'react';
 import useSWR from 'swr';
 
@@ -9,14 +14,14 @@ import useSWR from 'swr';
  */
 export function useTotalCount(
   publishedClient: PublishedClient,
-  query: Query | undefined
+  query: PublishedQuery | undefined
 ): {
   totalCount: number | undefined;
   totalCountError: ErrorResult<unknown, ErrorType.BadRequest | ErrorType.Generic> | undefined;
 } {
   const fetcher = useCallback(
     (_action: string, paramsJson: string) => {
-      const query = JSON.parse(paramsJson) as Query;
+      const query = JSON.parse(paramsJson) as PublishedQuery;
       return fetchTotalCount(publishedClient, query);
     },
     [publishedClient]
@@ -31,7 +36,10 @@ export function useTotalCount(
   return { totalCount, totalCountError };
 }
 
-async function fetchTotalCount(publishedClient: PublishedClient, query: Query): Promise<number> {
+async function fetchTotalCount(
+  publishedClient: PublishedClient,
+  query: PublishedQuery
+): Promise<number> {
   const result = await publishedClient.getTotalCount(query);
   if (result.isError()) {
     throw result; // throw result, don't convert to Error

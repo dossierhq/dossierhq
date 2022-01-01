@@ -1,4 +1,4 @@
-import type { PublishedEntity, Query } from '@jonasb/datadata-core';
+import type { PublishedEntity, PublishedQuery } from '@jonasb/datadata-core';
 import { FullscreenContainer, IconButton, toSizeClassName } from '@jonasb/datadata-design';
 import React, { useCallback, useContext, useEffect, useReducer, useState } from 'react';
 import type { EntitySearchStateUrlQuery } from '../../index.js';
@@ -99,7 +99,7 @@ export function EntityListScreen({
   );
 
   useLoadSearchEntity(
-    searchEntityState.query as Query,
+    searchEntityState.query as PublishedQuery,
     searchEntityState.paging,
     dispatchSearchEntityState
   );

@@ -222,18 +222,18 @@ export interface AdminQuery {
   text?: string;
 }
 
-export enum QueryOrder {
+export enum PublishedQueryOrder {
   createdAt = 'createdAt',
   name = 'name',
 }
 
-export interface Query {
+export interface PublishedQuery {
   authKeys?: string[];
   entityTypes?: string[];
   /** Entities referencing the entity (by id) */
   referencing?: string;
   boundingBox?: BoundingBox;
-  order?: QueryOrder;
+  order?: PublishedQueryOrder;
   reverse?: boolean;
   text?: string;
 }

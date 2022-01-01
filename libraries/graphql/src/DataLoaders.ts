@@ -11,8 +11,8 @@ import type {
   PageInfo,
   Paging,
   PublishedEntity,
+  PublishedQuery,
   PublishingHistory,
-  Query,
   RichText,
   Schema,
   ValueItem,
@@ -86,7 +86,7 @@ export async function loadEntities<TContext extends SessionGraphQLContext>(
 export async function loadSearchEntities<TContext extends SessionGraphQLContext>(
   schema: Schema,
   context: TContext,
-  query: Query | undefined,
+  query: PublishedQuery | undefined,
   paging: Paging
 ): Promise<ConnectionWithTotalCount<Edge<PublishedEntity>, TContext> | null> {
   const publishedClient = getPublishedClient(context);
@@ -113,7 +113,7 @@ export async function loadSearchEntities<TContext extends SessionGraphQLContext>
 }
 
 function buildTotalCount<TContext extends SessionGraphQLContext>(
-  query: Query | undefined
+  query: PublishedQuery | undefined
 ): FieldValueOrResolver<TContext, number> {
   return async (args, context, _info) => {
     const publishedClient = getPublishedClient(context);

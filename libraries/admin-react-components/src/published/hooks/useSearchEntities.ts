@@ -6,7 +6,7 @@ import type {
   Paging,
   PublishedClient,
   PublishedEntity,
-  Query,
+  PublishedQuery,
 } from '@jonasb/datadata-core';
 import { useCallback } from 'react';
 import useSWR from 'swr';
@@ -19,7 +19,7 @@ import useSWR from 'swr';
  */
 export function useSearchEntities(
   publishedClient: PublishedClient,
-  query: Query | undefined,
+  query: PublishedQuery | undefined,
   paging?: Paging
 ): {
   connection: Connection<Edge<PublishedEntity, ErrorType>> | null | undefined;
@@ -28,7 +28,7 @@ export function useSearchEntities(
   const fetcher = useCallback(
     (_action: string, paramsJson: string) => {
       const { query, paging } = JSON.parse(paramsJson) as {
-        query: Query;
+        query: PublishedQuery;
         paging: Paging | undefined;
       };
       return fetchSearchEntities(publishedClient, query, paging);
@@ -48,7 +48,7 @@ export function useSearchEntities(
 
 async function fetchSearchEntities(
   publishedClient: PublishedClient,
-  query: Query,
+  query: PublishedQuery,
   paging: Paging | undefined
 ): Promise<Connection<Edge<PublishedEntity, ErrorType>> | null> {
   const result = await publishedClient.searchEntities(query, paging);

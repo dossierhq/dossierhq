@@ -2,15 +2,15 @@ import type {
   AdminClient,
   AdminEntity,
   AdminSchemaSpecificationUpdate,
-  PublishedEntity,
   PublishedClient,
+  PublishedEntity,
 } from '@jonasb/datadata-core';
 import {
   AdminEntityStatus,
   CoreTestUtils,
   ErrorType,
   FieldType,
-  QueryOrder,
+  PublishedQueryOrder,
   RichTextBlockType,
 } from '@jonasb/datadata-core';
 import type { Server, SessionContext } from '@jonasb/datadata-server';
@@ -732,7 +732,7 @@ describe('searchEntities() order', () => {
     const result = await publishedClient.searchEntities(
       {
         entityTypes: ['PublishedEntityOnlyEditBefore'],
-        order: QueryOrder.createdAt,
+        order: PublishedQueryOrder.createdAt,
       },
       { first: 20 }
     );
@@ -750,7 +750,7 @@ describe('searchEntities() order', () => {
     const result = await publishedClient.searchEntities(
       {
         entityTypes: ['PublishedEntityOnlyEditBefore'],
-        order: QueryOrder.createdAt,
+        order: PublishedQueryOrder.createdAt,
         reverse: true,
       },
       { first: 20 }
@@ -769,7 +769,7 @@ describe('searchEntities() order', () => {
     const result = await publishedClient.searchEntities(
       {
         entityTypes: ['PublishedEntityOnlyEditBefore'],
-        order: QueryOrder.name,
+        order: PublishedQueryOrder.name,
       },
       { first: 20 }
     );
@@ -790,7 +790,7 @@ describe('searchEntities() order', () => {
     const result = await publishedClient.searchEntities(
       {
         entityTypes: ['PublishedEntityOnlyEditBefore'],
-        order: QueryOrder.name,
+        order: PublishedQueryOrder.name,
         reverse: true,
       },
       { first: 20 }
@@ -829,7 +829,7 @@ describe('searchEntities() authKeys', () => {
     const result = await publishedClient.searchEntities({
       authKeys: ['none', 'subject'],
       entityTypes: ['PublishedEntityOnlyEditBefore'],
-      order: QueryOrder.name,
+      order: PublishedQueryOrder.name,
     });
     if (expectOkResult(result)) {
       expectConnectionToMatchSlice(

@@ -9,7 +9,7 @@ import type {
   PromiseResult,
   PublishedClient,
   PublishedEntity,
-  Query,
+  PublishedQuery,
 } from '@jonasb/datadata-core';
 import { AdminEntityStatus, getAllPagesForConnection, ok } from '@jonasb/datadata-core';
 
@@ -194,12 +194,12 @@ export async function countSearchResultWithEntity(
 ): PromiseResult<number, ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic>;
 export async function countSearchResultWithEntity(
   client: PublishedClient,
-  query: Query,
+  query: PublishedQuery,
   entityId: string
 ): PromiseResult<number, ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic>;
 export async function countSearchResultWithEntity(
   client: AdminClient | PublishedClient,
-  query: AdminQuery | Query,
+  query: AdminQuery | PublishedQuery,
   entityId: string
 ): PromiseResult<number, ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic> {
   let matchCount = 0;

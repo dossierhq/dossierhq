@@ -1,5 +1,5 @@
 import type { AdminQueryOrder, PublishedEntity } from '@jonasb/datadata-core';
-import { QueryOrder } from '@jonasb/datadata-core';
+import { PublishedQueryOrder } from '@jonasb/datadata-core';
 import { Table } from '@jonasb/datadata-design';
 import type { Dispatch } from 'react';
 import React, { useContext } from 'react';
@@ -24,9 +24,9 @@ export function EntityList({ searchEntityState, dispatchSearchEntityState, onIte
       <Table.Head>
         <Table.Row sticky>
           <Table.Header
-            order={order === QueryOrder.name ? direction : ''}
+            order={order === PublishedQueryOrder.name ? direction : ''}
             onClick={() =>
-              handleHeaderClick(dispatchSearchEntityState, order, reverse, QueryOrder.name)
+              handleHeaderClick(dispatchSearchEntityState, order, reverse, PublishedQueryOrder.name)
             }
           >
             Name
@@ -62,9 +62,9 @@ export function EntityList({ searchEntityState, dispatchSearchEntityState, onIte
 
 function handleHeaderClick(
   dispatchSearchEntityState: Dispatch<SearchEntityStateAction>,
-  order: AdminQueryOrder | QueryOrder | undefined,
+  order: AdminQueryOrder | PublishedQueryOrder | undefined,
   reverse: boolean | undefined,
-  headerOrder: QueryOrder
+  headerOrder: PublishedQueryOrder
 ) {
   let newReverse = false;
   if (order === headerOrder) {

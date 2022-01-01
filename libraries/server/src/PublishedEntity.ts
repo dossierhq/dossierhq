@@ -6,7 +6,7 @@ import type {
   Paging,
   PromiseResult,
   PublishedEntity,
-  Query,
+  PublishedQuery,
   Result,
   Schema,
 } from '@jonasb/datadata-core';
@@ -146,7 +146,7 @@ export async function getTotalCount(
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  query: Query | undefined
+  query: PublishedQuery | undefined
 ): PromiseResult<number, ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic> {
   const authKeysResult = await authResolveAuthorizationKeys(
     authorizationAdapter,
@@ -171,7 +171,7 @@ export async function searchEntities(
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  query: Query | undefined,
+  query: PublishedQuery | undefined,
   paging: Paging | undefined
 ): PromiseResult<
   Connection<Edge<PublishedEntity, ErrorType>> | null,

@@ -3,11 +3,11 @@ import type {
   AdminSchema,
   ErrorType,
   Paging,
-  Query,
+  PublishedQuery,
   Result,
   Schema,
 } from '@jonasb/datadata-core';
-import { AdminQueryOrder, notOk, ok, QueryOrder } from '@jonasb/datadata-core';
+import { AdminQueryOrder, notOk, ok, PublishedQueryOrder } from '@jonasb/datadata-core';
 import { PostgresQueryBuilder } from '.';
 import type { ResolvedAuthKey } from './Auth';
 import type { CursorNativeType } from './Connection';
@@ -39,7 +39,7 @@ export interface SharedEntitiesQuery<TItem> {
 
 export function searchPublishedEntitiesQuery(
   schema: Schema,
-  query: Query | undefined,
+  query: PublishedQuery | undefined,
   paging: Paging | undefined,
   authKeys: ResolvedAuthKey[]
 ): Result<SharedEntitiesQuery<SearchPublishedEntitiesItem>, ErrorType.BadRequest> {
@@ -59,7 +59,7 @@ function sharedSearchEntitiesQuery<
   TItem extends SearchAdminEntitiesItem | SearchPublishedEntitiesItem
 >(
   schema: AdminSchema | Schema,
-  query: Query | AdminQuery | undefined,
+  query: PublishedQuery | AdminQuery | undefined,
   paging: Paging | undefined,
   authKeys: ResolvedAuthKey[],
   published: boolean
@@ -186,7 +186,7 @@ function sharedSearchEntitiesQuery<
 }
 
 function queryOrderToCursor<TItem extends SearchAdminEntitiesItem | SearchPublishedEntitiesItem>(
-  order: QueryOrder | AdminQueryOrder | undefined,
+  order: PublishedQueryOrder | AdminQueryOrder | undefined,
   published: boolean
 ): {
   cursorName: CursorName;
@@ -195,7 +195,7 @@ function queryOrderToCursor<TItem extends SearchAdminEntitiesItem | SearchPublis
 } {
   if (published) {
     switch (order) {
-      case QueryOrder.name: {
+      case PublishedQueryOrder.name: {
         const cursorType = 'string';
         const cursorName = 'name';
         return {
@@ -204,7 +204,7 @@ function queryOrderToCursor<TItem extends SearchAdminEntitiesItem | SearchPublis
           cursorExtractor: (item: TItem) => toOpaqueCursor(cursorType, item[cursorName]),
         };
       }
-      case QueryOrder.createdAt:
+      case PublishedQueryOrder.createdAt:
       default: {
         const cursorType = 'int';
         const cursorName = 'id';
@@ -271,7 +271,7 @@ export function totalAdminEntitiesQuery(
 export function totalPublishedEntitiesQuery(
   schema: Schema,
   authKeys: ResolvedAuthKey[],
-  query: Query | undefined
+  query: PublishedQuery | undefined
 ): Result<{ text: string; values: unknown[] }, ErrorType.BadRequest> {
   return totalCountQuery(schema, authKeys, query, true);
 }
@@ -279,7 +279,7 @@ export function totalPublishedEntitiesQuery(
 function totalCountQuery(
   schema: AdminSchema | Schema,
   authKeys: ResolvedAuthKey[],
-  query: AdminQuery | Query | undefined,
+  query: AdminQuery | PublishedQuery | undefined,
   published: boolean
 ): Result<{ text: string; values: unknown[] }, ErrorType.BadRequest> {
   const qb = new PostgresQueryBuilder('SELECT');
@@ -376,7 +376,7 @@ function totalCountQuery(
 
 function getFilterEntityTypes(
   schema: Schema | AdminSchema,
-  query: Query | AdminQuery | undefined
+  query: PublishedQuery | AdminQuery | undefined
 ): Result<string[], ErrorType.BadRequest> {
   if (!query?.entityTypes || query.entityTypes.length === 0) {
     return ok([]);
