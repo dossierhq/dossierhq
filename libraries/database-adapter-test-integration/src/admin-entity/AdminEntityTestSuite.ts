@@ -4,6 +4,7 @@ import { buildSuite } from '../Builder';
 import { CreateEntitySubSuite } from './AdminEntityCreateEntitySubSuite';
 import { GetEntitySubSuite } from './AdminEntityGetEntitySubSuite';
 import { PublishEntitiesSubSuite } from './AdminEntityPublishEntitiesSubSuite';
+import { UnpublishEntitiesSubSuite } from './AdminEntityUnpublishEntitiesSubSuite';
 import { UpdateEntitySubSuite } from './AdminEntityUpdateEntitySubSuite';
 import { UpsertEntitySubSuite } from './AdminEntityUpsertEntitySubSuite';
 
@@ -19,6 +20,7 @@ export function createAdminEntityTestSuite<TCleanup>(
     ...CreateEntitySubSuite,
     ...GetEntitySubSuite,
     ...PublishEntitiesSubSuite,
+    ...UnpublishEntitiesSubSuite,
     ...UpdateEntitySubSuite,
     ...UpsertEntitySubSuite
   );

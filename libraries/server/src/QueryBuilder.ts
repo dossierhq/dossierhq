@@ -28,11 +28,15 @@ export class QueryBuilder<TValue = unknown> {
       segmentToAdd = segmentToAdd.slice('AND'.length).trimStart();
     }
 
+    const currentEndsWithBracket = endsWithBracket(this.#query);
+    const newStartsWithBracket = startsWithBracket(segmentToAdd);
     const currentEndsWithKeyword = endsWithKeyword(this.#query);
     const newStartsWithKeyword = startsWithKeyword(segmentToAdd);
 
     let separator = '';
-    if (currentEndsWithKeyword && !newStartsWithKeyword) {
+    if (currentEndsWithBracket || newStartsWithBracket) {
+      separator = '';
+    } else if (currentEndsWithKeyword && !newStartsWithKeyword) {
       separator = ' ';
     } else if (!currentEndsWithKeyword && !newStartsWithKeyword) {
       separator = ', ';
@@ -68,6 +72,14 @@ export class PostgresQueryBuilder extends QueryBuilder<unknown> {
   constructor(query: string, values?: unknown[]) {
     super('$', query, values);
   }
+}
+
+function startsWithBracket(query: string) {
+  return query.startsWith(')');
+}
+
+function endsWithBracket(query: string) {
+  return query.endsWith('(');
 }
 
 function startsWithKeyword(query: string) {

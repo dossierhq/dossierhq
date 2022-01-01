@@ -63,6 +63,24 @@ test('Insert multiple values', () => {
   `);
 });
 
+test('Insert multiple values in one ()', () => {
+  const qb = new PostgresQueryBuilder('INSERT INTO foo (a, b, c) VALUES (');
+  qb.addQuery(qb.addValue(1));
+  qb.addQuery(qb.addValue(2));
+  qb.addQuery(qb.addValue(3));
+  qb.addQuery(')');
+  expect(qb.build()).toMatchInlineSnapshot(`
+    Object {
+      "text": "INSERT INTO foo (a, b, c) VALUES ($1, $2, $3)",
+      "values": Array [
+        1,
+        2,
+        3,
+      ],
+    }
+  `);
+});
+
 test('Insert default value', () => {
   const qb = new PostgresQueryBuilder('INSERT INTO foo (a) VALUES');
   qb.addQuery(`(${qb.addValueOrDefault(null)})`);

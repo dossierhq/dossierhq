@@ -12,6 +12,11 @@ import {
   adminEntityPublishUpdateEntity,
 } from './admin-entity/publishEntities';
 import {
+  adminEntityUnpublishEntities,
+  adminEntityUnpublishGetEntitiesInfo,
+  adminEntityUnpublishGetPublishedReferencedEntities,
+} from './admin-entity/unpublishEntities';
+import {
   adminEntityUpdateEntity,
   adminEntityUpdateGetEntityInfo,
 } from './admin-entity/updateEntity';
@@ -56,15 +61,11 @@ export async function createSqliteDatabaseAdapter(
     adminEntityUpdateEntity: (...args) => adminEntityUpdateEntity(sqliteAdapter, ...args),
     adminEntityUpdateGetEntityInfo: (...args) =>
       adminEntityUpdateGetEntityInfo(sqliteAdapter, ...args),
-    adminEntityUnpublishGetEntitiesInfo: () => {
-      throw new Error('TODO');
-    },
-    adminEntityUnpublishEntities: () => {
-      throw new Error('TODO');
-    },
-    adminEntityUnpublishGetPublishedReferencedEntities: () => {
-      throw new Error('TODO');
-    },
+    adminEntityUnpublishGetEntitiesInfo: (...args) =>
+      adminEntityUnpublishGetEntitiesInfo(sqliteAdapter, ...args),
+    adminEntityUnpublishEntities: (...args) => adminEntityUnpublishEntities(sqliteAdapter, ...args),
+    adminEntityUnpublishGetPublishedReferencedEntities: (...args) =>
+      adminEntityUnpublishGetPublishedReferencedEntities(sqliteAdapter, ...args),
     authCreateSession: (...args) => authCreateSession(sqliteAdapter, ...args),
     disconnect: sqliteAdapter.disconnect,
     queryLegacy: () => {
