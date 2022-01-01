@@ -13,6 +13,7 @@ export const UpdateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
   updateEntity_updateAndPublishEntityWithSubjectAuthKey,
   updateEntity_noChangeAndPublishDraftEntity,
   updateEntity_noChangeAndPublishPublishedEntity,
+  updateEntity_errorWhenNotSpecifyingSubjectAuthKey,
   updateEntity_errorPublishWithoutRequiredTitle,
 ];
 
@@ -242,6 +243,22 @@ async function updateEntity_noChangeAndPublishPublishedEntity({ client }: AdminE
         entity: createResult.value.entity,
       });
     }
+  }
+}
+
+async function updateEntity_errorWhenNotSpecifyingSubjectAuthKey({
+  client,
+}: AdminEntityTestContext) {
+  const createResult = await client.createEntity(
+    copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } })
+  );
+  if (expectOkResult(createResult)) {
+    const {
+      entity: { id },
+    } = createResult.value;
+
+    const updateResult = await client.updateEntity({ id, fields: {} });
+    expectErrorResult(updateResult, ErrorType.NotAuthorized, 'Wrong authKey provided');
   }
 }
 
