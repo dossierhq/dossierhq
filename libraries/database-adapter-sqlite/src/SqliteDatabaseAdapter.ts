@@ -56,6 +56,15 @@ export async function createSqliteDatabaseAdapter(
     adminEntityUpdateEntity: (...args) => adminEntityUpdateEntity(sqliteAdapter, ...args),
     adminEntityUpdateGetEntityInfo: (...args) =>
       adminEntityUpdateGetEntityInfo(sqliteAdapter, ...args),
+    adminEntityUnpublishGetEntitiesInfo: () => {
+      throw new Error('TODO');
+    },
+    adminEntityUnpublishEntities: () => {
+      throw new Error('TODO');
+    },
+    adminEntityUnpublishGetPublishedReferencedEntities: () => {
+      throw new Error('TODO');
+    },
     authCreateSession: (...args) => authCreateSession(sqliteAdapter, ...args),
     disconnect: sqliteAdapter.disconnect,
     queryLegacy: () => {

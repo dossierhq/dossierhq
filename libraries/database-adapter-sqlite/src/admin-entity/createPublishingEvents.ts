@@ -23,7 +23,9 @@ export async function adminEntityPublishingCreateEvents(
   for (const reference of event.references) {
     qb.addQuery(
       `(${qb.addValue(reference.entityInternalId as number)}, ${qb.addValue(
-        reference.entityVersionInternalId as number
+        'entityVersionInternalId' in reference
+          ? (reference.entityVersionInternalId as number)
+          : null
       )}, ${subjectValue}, ${publishedAtValue}, ${kindValue})`
     );
   }

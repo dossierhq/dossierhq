@@ -77,11 +77,16 @@ export interface DatabaseAdminEntityPublishUpdateEntityPayload {
   updatedAt: Temporal.Instant;
 }
 
-export interface DatabaseAdminEntityPublishingCreateEventArg {
-  session: Session;
-  kind: 'publish';
-  references: DatabaseResolvedEntityVersionReference[];
-}
+export type DatabaseAdminEntityPublishingCreateEventArg = { session: Session } & (
+  | {
+      kind: 'publish';
+      references: DatabaseResolvedEntityVersionReference[];
+    }
+  | {
+      kind: 'unpublish';
+      references: DatabaseResolvedEntityReference[];
+    }
+);
 
 export interface DatabaseEntityUpdateGetEntityInfoPayload extends DatabaseResolvedEntityReference {
   type: string;
@@ -109,6 +114,20 @@ export interface DatabaseEntityUpdateEntityArg extends DatabaseResolvedEntityRef
 
 export interface DatabaseEntityUpdateEntityPayload {
   name: string;
+  updatedAt: Temporal.Instant;
+}
+
+export interface DatabaseAdminEntityUnpublishGetEntityInfoPayload
+  extends DatabaseResolvedEntityReference {
+  id: string;
+  authKey: string;
+  resolvedAuthKey: string;
+  status: AdminEntityStatus;
+  updatedAt: Temporal.Instant;
+}
+
+export interface DatabaseAdminEntityUnpublishUpdateEntityPayload
+  extends DatabaseResolvedEntityReference {
   updatedAt: Temporal.Instant;
 }
 
@@ -181,6 +200,25 @@ export interface DatabaseAdapter {
     randomNameGenerator: (name: string) => string,
     entity: DatabaseEntityUpdateEntityArg
   ): PromiseResult<DatabaseEntityUpdateEntityPayload, ErrorType.Generic>;
+
+  adminEntityUnpublishGetEntitiesInfo(
+    context: TransactionContext,
+    references: EntityReference[]
+  ): PromiseResult<
+    DatabaseAdminEntityUnpublishGetEntityInfoPayload[],
+    ErrorType.NotFound | ErrorType.Generic
+  >;
+
+  adminEntityUnpublishEntities(
+    context: TransactionContext,
+    status: AdminEntityStatus,
+    references: DatabaseResolvedEntityReference[]
+  ): PromiseResult<DatabaseAdminEntityUnpublishUpdateEntityPayload[], ErrorType.Generic>;
+
+  adminEntityUnpublishGetPublishedReferencedEntities(
+    context: TransactionContext,
+    reference: DatabaseResolvedEntityReference
+  ): PromiseResult<EntityReference[], ErrorType.Generic>;
 
   authCreateSession(
     context: TransactionContext,

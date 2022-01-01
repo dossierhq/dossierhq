@@ -10,10 +10,13 @@ export type {
   DatabaseAdminEntityPublishingCreateEventArg,
   DatabaseAdminEntityPublishUpdateEntityArg,
   DatabaseAdminEntityPublishUpdateEntityPayload,
+  DatabaseAdminEntityUnpublishGetEntityInfoPayload,
+  DatabaseAdminEntityUnpublishUpdateEntityPayload,
   DatabaseAuthCreateSessionPayload,
   DatabaseEntityUpdateEntityArg,
   DatabaseEntityUpdateEntityPayload,
   DatabaseEntityUpdateGetEntityInfoPayload,
+  DatabaseResolvedEntityReference,
   Transaction,
 } from './DatabaseAdapter';
 export * as DatabaseTables from './DatabaseTables'; //TODO move to postgres-core
