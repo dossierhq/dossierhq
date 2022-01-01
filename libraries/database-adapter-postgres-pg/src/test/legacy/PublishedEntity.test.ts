@@ -2,7 +2,7 @@ import type {
   AdminClient,
   AdminEntity,
   AdminSchemaSpecificationUpdate,
-  Entity,
+  PublishedEntity,
   PublishedClient,
 } from '@jonasb/datadata-core';
 import {
@@ -154,7 +154,7 @@ async function createBarWithFooReferences(fooCount: number, referencesPerFoo = 1
     entity: { id: barId },
   } = createBarResult.value;
 
-  const fooEntities: Entity[] = [];
+  const fooEntities: PublishedEntity[] = [];
 
   for (let i = 0; i < fooCount; i += 1) {
     const bars = [...new Array(referencesPerFoo - 1)].map(() => ({ id: barId }));

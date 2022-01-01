@@ -412,24 +412,24 @@ enum ValueType {
   ValueTwo
 }
 
-type EntityInfo {
+type PublishedEntityInfo {
   name: String!
   authKey: String!
   createdAt: Instant!
 }
 
-interface Entity implements Node {
+interface PublishedEntity implements Node {
   id: ID!
-  info: EntityInfo!
+  info: PublishedEntityInfo!
 }
 
-interface Value {
+interface PublishedValue {
   type: ValueType!
 }
 
-type RichText {
+type PublishedRichText {
   blocks: JSON!
-  entities: [Entity]
+  entities: [PublishedEntity]
 }
 
 \\"\\"\\"
@@ -437,14 +437,14 @@ The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http:
 \\"\\"\\"
 scalar JSON
 
-type EntityEdge {
-  node: Entity
+type PublishedEntityEdge {
+  node: PublishedEntity
   cursor: String!
 }
 
-type EntityConnection {
+type PublishedEntityConnection {
   pageInfo: PageInfo!
-  edges: [EntityEdge]
+  edges: [PublishedEntityEdge]
   totalCount: Int!
 }
 
@@ -463,17 +463,17 @@ input QueryInput {
   text: String
 }
 
-type BarFields {
+type PublishedBarFields {
   body: String
 }
 
-type Bar implements Node & Entity {
+type PublishedBar implements Node & PublishedEntity {
   id: ID!
-  info: EntityInfo!
-  fields: BarFields!
+  info: PublishedEntityInfo!
+  fields: PublishedBarFields!
 }
 
-type ValueTwo implements Value {
+type PublishedValueTwo implements PublishedValue {
   type: ValueType!
   body: String
 }
@@ -481,7 +481,7 @@ type ValueTwo implements Value {
 type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
-  searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
+  searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
 }"
 `;
 
@@ -524,24 +524,24 @@ enum ValueType {
   ValueTwo
 }
 
-type EntityInfo {
+type PublishedEntityInfo {
   name: String!
   authKey: String!
   createdAt: Instant!
 }
 
-interface Entity implements Node {
+interface PublishedEntity implements Node {
   id: ID!
-  info: EntityInfo!
+  info: PublishedEntityInfo!
 }
 
-interface Value {
+interface PublishedValue {
   type: ValueType!
 }
 
-type RichText {
+type PublishedRichText {
   blocks: JSON!
-  entities: [Entity]
+  entities: [PublishedEntity]
 }
 
 \\"\\"\\"
@@ -549,14 +549,14 @@ The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http:
 \\"\\"\\"
 scalar JSON
 
-type EntityEdge {
-  node: Entity
+type PublishedEntityEdge {
+  node: PublishedEntity
   cursor: String!
 }
 
-type EntityConnection {
+type PublishedEntityConnection {
   pageInfo: PageInfo!
-  edges: [EntityEdge]
+  edges: [PublishedEntityEdge]
   totalCount: Int!
 }
 
@@ -575,17 +575,17 @@ input QueryInput {
   text: String
 }
 
-type BarFields {
+type PublishedBarFields {
   body: String
 }
 
-type Bar implements Node & Entity {
+type PublishedBar implements Node & PublishedEntity {
   id: ID!
-  info: EntityInfo!
-  fields: BarFields!
+  info: PublishedEntityInfo!
+  fields: PublishedBarFields!
 }
 
-type ValueTwo implements Value {
+type PublishedValueTwo implements PublishedValue {
   type: ValueType!
   body: String
 }
@@ -908,7 +908,7 @@ input AdminValueTwoInput {
 type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
-  searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
+  searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   adminEntity(id: ID!, version: Int, authKeys: [String!]): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
@@ -1355,20 +1355,20 @@ enum EntityType {
   Bar
 }
 
-type EntityInfo {
+type PublishedEntityInfo {
   name: String!
   authKey: String!
   createdAt: Instant!
 }
 
-interface Entity implements Node {
+interface PublishedEntity implements Node {
   id: ID!
-  info: EntityInfo!
+  info: PublishedEntityInfo!
 }
 
-type RichText {
+type PublishedRichText {
   blocks: JSON!
-  entities: [Entity]
+  entities: [PublishedEntity]
 }
 
 \\"\\"\\"
@@ -1376,14 +1376,14 @@ The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http:
 \\"\\"\\"
 scalar JSON
 
-type EntityEdge {
-  node: Entity
+type PublishedEntityEdge {
+  node: PublishedEntity
   cursor: String!
 }
 
-type EntityConnection {
+type PublishedEntityConnection {
   pageInfo: PageInfo!
-  edges: [EntityEdge]
+  edges: [PublishedEntityEdge]
   totalCount: Int!
 }
 
@@ -1402,28 +1402,28 @@ input QueryInput {
   text: String
 }
 
-type FooFields {
+type PublishedFooFields {
   strings: [String!]
   booleans: [Boolean!]
   locations: [Location!]
-  bars: [Bar!]
+  bars: [PublishedBar!]
 }
 
-type Foo implements Node & Entity {
+type PublishedFoo implements Node & PublishedEntity {
   id: ID!
-  info: EntityInfo!
-  fields: FooFields!
+  info: PublishedEntityInfo!
+  fields: PublishedFooFields!
 }
 
-type Bar implements Node & Entity {
+type PublishedBar implements Node & PublishedEntity {
   id: ID!
-  info: EntityInfo!
+  info: PublishedEntityInfo!
 }
 
 type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
-  searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
+  searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
 }"
 `;
 
@@ -1463,20 +1463,20 @@ enum EntityType {
   Bar
 }
 
-type EntityInfo {
+type PublishedEntityInfo {
   name: String!
   authKey: String!
   createdAt: Instant!
 }
 
-interface Entity implements Node {
+interface PublishedEntity implements Node {
   id: ID!
-  info: EntityInfo!
+  info: PublishedEntityInfo!
 }
 
-type RichText {
+type PublishedRichText {
   blocks: JSON!
-  entities: [Entity]
+  entities: [PublishedEntity]
 }
 
 \\"\\"\\"
@@ -1484,14 +1484,14 @@ The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http:
 \\"\\"\\"
 scalar JSON
 
-type EntityEdge {
-  node: Entity
+type PublishedEntityEdge {
+  node: PublishedEntity
   cursor: String!
 }
 
-type EntityConnection {
+type PublishedEntityConnection {
   pageInfo: PageInfo!
-  edges: [EntityEdge]
+  edges: [PublishedEntityEdge]
   totalCount: Int!
 }
 
@@ -1510,22 +1510,22 @@ input QueryInput {
   text: String
 }
 
-type FooFields {
+type PublishedFooFields {
   strings: [String!]
   booleans: [Boolean!]
   locations: [Location!]
-  bars: [Bar!]
+  bars: [PublishedBar!]
 }
 
-type Foo implements Node & Entity {
+type PublishedFoo implements Node & PublishedEntity {
   id: ID!
-  info: EntityInfo!
-  fields: FooFields!
+  info: PublishedEntityInfo!
+  fields: PublishedFooFields!
 }
 
-type Bar implements Node & Entity {
+type PublishedBar implements Node & PublishedEntity {
   id: ID!
-  info: EntityInfo!
+  info: PublishedEntityInfo!
 }
 
 enum AdminEntityType {
@@ -1811,7 +1811,7 @@ type AdminBarUpsertPayload {
 type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
-  searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
+  searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   adminEntity(id: ID!, version: Int, authKeys: [String!]): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
@@ -2260,20 +2260,20 @@ enum EntityType {
   Baz
 }
 
-type EntityInfo {
+type PublishedEntityInfo {
   name: String!
   authKey: String!
   createdAt: Instant!
 }
 
-interface Entity implements Node {
+interface PublishedEntity implements Node {
   id: ID!
-  info: EntityInfo!
+  info: PublishedEntityInfo!
 }
 
-type RichText {
+type PublishedRichText {
   blocks: JSON!
-  entities: [Entity]
+  entities: [PublishedEntity]
 }
 
 \\"\\"\\"
@@ -2281,14 +2281,14 @@ The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http:
 \\"\\"\\"
 scalar JSON
 
-type EntityEdge {
-  node: Entity
+type PublishedEntityEdge {
+  node: PublishedEntity
   cursor: String!
 }
 
-type EntityConnection {
+type PublishedEntityConnection {
   pageInfo: PageInfo!
-  edges: [EntityEdge]
+  edges: [PublishedEntityEdge]
   totalCount: Int!
 }
 
@@ -2307,45 +2307,45 @@ input QueryInput {
   text: String
 }
 
-type FooFields {
-  noMeansAll: Entity
-  bar: Bar
-  bazBar: _BarOrBaz
-  fooBarBaz: _BarOrBazOrFoo
-  barBarBar: Bar
+type PublishedFooFields {
+  noMeansAll: PublishedEntity
+  bar: PublishedBar
+  bazBar: _PublishedBarOrBaz
+  fooBarBaz: _PublishedBarOrBazOrFoo
+  barBarBar: PublishedBar
 }
 
-type Foo implements Node & Entity {
+type PublishedFoo implements Node & PublishedEntity {
   id: ID!
-  info: EntityInfo!
-  fields: FooFields!
+  info: PublishedEntityInfo!
+  fields: PublishedFooFields!
 }
 
-type Bar implements Node & Entity {
+type PublishedBar implements Node & PublishedEntity {
   id: ID!
-  info: EntityInfo!
+  info: PublishedEntityInfo!
 }
 
-type Baz implements Node & Entity {
+type PublishedBaz implements Node & PublishedEntity {
   id: ID!
-  info: EntityInfo!
+  info: PublishedEntityInfo!
 }
 
-enum _BarOrBaz {
-  Bar
-  Baz
+enum _PublishedBarOrBaz {
+  PublishedBar
+  PublishedBaz
 }
 
-enum _BarOrBazOrFoo {
-  Bar
-  Baz
-  Foo
+enum _PublishedBarOrBazOrFoo {
+  PublishedBar
+  PublishedBaz
+  PublishedFoo
 }
 
 type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
-  searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
+  searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
 }"
 `;
 
@@ -2386,20 +2386,20 @@ enum EntityType {
   Baz
 }
 
-type EntityInfo {
+type PublishedEntityInfo {
   name: String!
   authKey: String!
   createdAt: Instant!
 }
 
-interface Entity implements Node {
+interface PublishedEntity implements Node {
   id: ID!
-  info: EntityInfo!
+  info: PublishedEntityInfo!
 }
 
-type RichText {
+type PublishedRichText {
   blocks: JSON!
-  entities: [Entity]
+  entities: [PublishedEntity]
 }
 
 \\"\\"\\"
@@ -2407,14 +2407,14 @@ The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http:
 \\"\\"\\"
 scalar JSON
 
-type EntityEdge {
-  node: Entity
+type PublishedEntityEdge {
+  node: PublishedEntity
   cursor: String!
 }
 
-type EntityConnection {
+type PublishedEntityConnection {
   pageInfo: PageInfo!
-  edges: [EntityEdge]
+  edges: [PublishedEntityEdge]
   totalCount: Int!
 }
 
@@ -2433,28 +2433,28 @@ input QueryInput {
   text: String
 }
 
-type FooFields {
-  noMeansAll: Entity
-  bar: Bar
-  bazBar: _BarOrBaz
-  fooBarBaz: _BarOrBazOrFoo
-  barBarBar: Bar
+type PublishedFooFields {
+  noMeansAll: PublishedEntity
+  bar: PublishedBar
+  bazBar: _PublishedBarOrBaz
+  fooBarBaz: _PublishedBarOrBazOrFoo
+  barBarBar: PublishedBar
 }
 
-type Foo implements Node & Entity {
+type PublishedFoo implements Node & PublishedEntity {
   id: ID!
-  info: EntityInfo!
-  fields: FooFields!
+  info: PublishedEntityInfo!
+  fields: PublishedFooFields!
 }
 
-type Bar implements Node & Entity {
+type PublishedBar implements Node & PublishedEntity {
   id: ID!
-  info: EntityInfo!
+  info: PublishedEntityInfo!
 }
 
-type Baz implements Node & Entity {
+type PublishedBaz implements Node & PublishedEntity {
   id: ID!
-  info: EntityInfo!
+  info: PublishedEntityInfo!
 }
 
 enum AdminEntityType {
@@ -2775,15 +2775,15 @@ type AdminBazUpsertPayload {
   entity: AdminBaz!
 }
 
-enum _BarOrBaz {
-  Bar
-  Baz
+enum _PublishedBarOrBaz {
+  PublishedBar
+  PublishedBaz
 }
 
-enum _BarOrBazOrFoo {
-  Bar
-  Baz
-  Foo
+enum _PublishedBarOrBazOrFoo {
+  PublishedBar
+  PublishedBaz
+  PublishedFoo
 }
 
 enum _AdminBarOrBaz {
@@ -2800,7 +2800,7 @@ enum _AdminBarOrBazOrFoo {
 type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
-  searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
+  searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   adminEntity(id: ID!, version: Int, authKeys: [String!]): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
@@ -3141,20 +3141,20 @@ enum EntityType {
   Foo
 }
 
-type EntityInfo {
+type PublishedEntityInfo {
   name: String!
   authKey: String!
   createdAt: Instant!
 }
 
-interface Entity implements Node {
+interface PublishedEntity implements Node {
   id: ID!
-  info: EntityInfo!
+  info: PublishedEntityInfo!
 }
 
-type RichText {
+type PublishedRichText {
   blocks: JSON!
-  entities: [Entity]
+  entities: [PublishedEntity]
 }
 
 \\"\\"\\"
@@ -3162,14 +3162,14 @@ The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http:
 \\"\\"\\"
 scalar JSON
 
-type EntityEdge {
-  node: Entity
+type PublishedEntityEdge {
+  node: PublishedEntity
   cursor: String!
 }
 
-type EntityConnection {
+type PublishedEntityConnection {
   pageInfo: PageInfo!
-  edges: [EntityEdge]
+  edges: [PublishedEntityEdge]
   totalCount: Int!
 }
 
@@ -3188,15 +3188,15 @@ input QueryInput {
   text: String
 }
 
-type Foo implements Node & Entity {
+type PublishedFoo implements Node & PublishedEntity {
   id: ID!
-  info: EntityInfo!
+  info: PublishedEntityInfo!
 }
 
 type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
-  searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
+  searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
 }"
 `;
 
@@ -3235,20 +3235,20 @@ enum EntityType {
   Foo
 }
 
-type EntityInfo {
+type PublishedEntityInfo {
   name: String!
   authKey: String!
   createdAt: Instant!
 }
 
-interface Entity implements Node {
+interface PublishedEntity implements Node {
   id: ID!
-  info: EntityInfo!
+  info: PublishedEntityInfo!
 }
 
-type RichText {
+type PublishedRichText {
   blocks: JSON!
-  entities: [Entity]
+  entities: [PublishedEntity]
 }
 
 \\"\\"\\"
@@ -3256,14 +3256,14 @@ The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http:
 \\"\\"\\"
 scalar JSON
 
-type EntityEdge {
-  node: Entity
+type PublishedEntityEdge {
+  node: PublishedEntity
   cursor: String!
 }
 
-type EntityConnection {
+type PublishedEntityConnection {
   pageInfo: PageInfo!
-  edges: [EntityEdge]
+  edges: [PublishedEntityEdge]
   totalCount: Int!
 }
 
@@ -3282,9 +3282,9 @@ input QueryInput {
   text: String
 }
 
-type Foo implements Node & Entity {
+type PublishedFoo implements Node & PublishedEntity {
   id: ID!
-  info: EntityInfo!
+  info: PublishedEntityInfo!
 }
 
 enum AdminEntityType {
@@ -3516,7 +3516,7 @@ type AdminFooUpsertPayload {
 type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
-  searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
+  searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   adminEntity(id: ID!, version: Int, authKeys: [String!]): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
@@ -3890,24 +3890,24 @@ enum ValueType {
   ValueOne
 }
 
-type EntityInfo {
+type PublishedEntityInfo {
   name: String!
   authKey: String!
   createdAt: Instant!
 }
 
-interface Entity implements Node {
+interface PublishedEntity implements Node {
   id: ID!
-  info: EntityInfo!
+  info: PublishedEntityInfo!
 }
 
-interface Value {
+interface PublishedValue {
   type: ValueType!
 }
 
-type RichText {
+type PublishedRichText {
   blocks: JSON!
-  entities: [Entity]
+  entities: [PublishedEntity]
 }
 
 \\"\\"\\"
@@ -3915,14 +3915,14 @@ The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http:
 \\"\\"\\"
 scalar JSON
 
-type EntityEdge {
-  node: Entity
+type PublishedEntityEdge {
+  node: PublishedEntity
   cursor: String!
 }
 
-type EntityConnection {
+type PublishedEntityConnection {
   pageInfo: PageInfo!
-  edges: [EntityEdge]
+  edges: [PublishedEntityEdge]
   totalCount: Int!
 }
 
@@ -3941,19 +3941,19 @@ input QueryInput {
   text: String
 }
 
-type FooFields {
+type PublishedFooFields {
   body: String!
   tags: [String!]!
-  valueOne: ValueOne!
+  valueOne: PublishedValueOne!
 }
 
-type Foo implements Node & Entity {
+type PublishedFoo implements Node & PublishedEntity {
   id: ID!
-  info: EntityInfo!
-  fields: FooFields!
+  info: PublishedEntityInfo!
+  fields: PublishedFooFields!
 }
 
-type ValueOne implements Value {
+type PublishedValueOne implements PublishedValue {
   type: ValueType!
   body: String!
 }
@@ -3961,7 +3961,7 @@ type ValueOne implements Value {
 type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
-  searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
+  searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
 }"
 `;
 
@@ -4004,24 +4004,24 @@ enum ValueType {
   ValueOne
 }
 
-type EntityInfo {
+type PublishedEntityInfo {
   name: String!
   authKey: String!
   createdAt: Instant!
 }
 
-interface Entity implements Node {
+interface PublishedEntity implements Node {
   id: ID!
-  info: EntityInfo!
+  info: PublishedEntityInfo!
 }
 
-interface Value {
+interface PublishedValue {
   type: ValueType!
 }
 
-type RichText {
+type PublishedRichText {
   blocks: JSON!
-  entities: [Entity]
+  entities: [PublishedEntity]
 }
 
 \\"\\"\\"
@@ -4029,14 +4029,14 @@ The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http:
 \\"\\"\\"
 scalar JSON
 
-type EntityEdge {
-  node: Entity
+type PublishedEntityEdge {
+  node: PublishedEntity
   cursor: String!
 }
 
-type EntityConnection {
+type PublishedEntityConnection {
   pageInfo: PageInfo!
-  edges: [EntityEdge]
+  edges: [PublishedEntityEdge]
   totalCount: Int!
 }
 
@@ -4055,19 +4055,19 @@ input QueryInput {
   text: String
 }
 
-type FooFields {
+type PublishedFooFields {
   body: String!
   tags: [String!]!
-  valueOne: ValueOne!
+  valueOne: PublishedValueOne!
 }
 
-type Foo implements Node & Entity {
+type PublishedFoo implements Node & PublishedEntity {
   id: ID!
-  info: EntityInfo!
-  fields: FooFields!
+  info: PublishedEntityInfo!
+  fields: PublishedFooFields!
 }
 
-type ValueOne implements Value {
+type PublishedValueOne implements PublishedValue {
   type: ValueType!
   body: String!
 }
@@ -4336,7 +4336,7 @@ input AdminValueOneInput {
 type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
-  searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
+  searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   adminEntity(id: ID!, version: Int, authKeys: [String!]): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
@@ -4683,20 +4683,20 @@ enum EntityType {
   Foo
 }
 
-type EntityInfo {
+type PublishedEntityInfo {
   name: String!
   authKey: String!
   createdAt: Instant!
 }
 
-interface Entity implements Node {
+interface PublishedEntity implements Node {
   id: ID!
-  info: EntityInfo!
+  info: PublishedEntityInfo!
 }
 
-type RichText {
+type PublishedRichText {
   blocks: JSON!
-  entities: [Entity]
+  entities: [PublishedEntity]
 }
 
 \\"\\"\\"
@@ -4704,14 +4704,14 @@ The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http:
 \\"\\"\\"
 scalar JSON
 
-type EntityEdge {
-  node: Entity
+type PublishedEntityEdge {
+  node: PublishedEntity
   cursor: String!
 }
 
-type EntityConnection {
+type PublishedEntityConnection {
   pageInfo: PageInfo!
-  edges: [EntityEdge]
+  edges: [PublishedEntityEdge]
   totalCount: Int!
 }
 
@@ -4730,20 +4730,20 @@ input QueryInput {
   text: String
 }
 
-type FooFields {
-  body: RichText
+type PublishedFooFields {
+  body: PublishedRichText
 }
 
-type Foo implements Node & Entity {
+type PublishedFoo implements Node & PublishedEntity {
   id: ID!
-  info: EntityInfo!
-  fields: FooFields!
+  info: PublishedEntityInfo!
+  fields: PublishedFooFields!
 }
 
 type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
-  searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
+  searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
 }"
 `;
 
@@ -4782,20 +4782,20 @@ enum EntityType {
   Foo
 }
 
-type EntityInfo {
+type PublishedEntityInfo {
   name: String!
   authKey: String!
   createdAt: Instant!
 }
 
-interface Entity implements Node {
+interface PublishedEntity implements Node {
   id: ID!
-  info: EntityInfo!
+  info: PublishedEntityInfo!
 }
 
-type RichText {
+type PublishedRichText {
   blocks: JSON!
-  entities: [Entity]
+  entities: [PublishedEntity]
 }
 
 \\"\\"\\"
@@ -4803,14 +4803,14 @@ The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http:
 \\"\\"\\"
 scalar JSON
 
-type EntityEdge {
-  node: Entity
+type PublishedEntityEdge {
+  node: PublishedEntity
   cursor: String!
 }
 
-type EntityConnection {
+type PublishedEntityConnection {
   pageInfo: PageInfo!
-  edges: [EntityEdge]
+  edges: [PublishedEntityEdge]
   totalCount: Int!
 }
 
@@ -4829,14 +4829,14 @@ input QueryInput {
   text: String
 }
 
-type FooFields {
-  body: RichText
+type PublishedFooFields {
+  body: PublishedRichText
 }
 
-type Foo implements Node & Entity {
+type PublishedFoo implements Node & PublishedEntity {
   id: ID!
-  info: EntityInfo!
-  fields: FooFields!
+  info: PublishedEntityInfo!
+  fields: PublishedFooFields!
 }
 
 enum AdminEntityType {
@@ -5080,7 +5080,7 @@ type AdminFooUpsertPayload {
 type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
-  searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
+  searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   adminEntity(id: ID!, version: Int, authKeys: [String!]): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
@@ -5485,20 +5485,20 @@ enum EntityType {
   Bar
 }
 
-type EntityInfo {
+type PublishedEntityInfo {
   name: String!
   authKey: String!
   createdAt: Instant!
 }
 
-interface Entity implements Node {
+interface PublishedEntity implements Node {
   id: ID!
-  info: EntityInfo!
+  info: PublishedEntityInfo!
 }
 
-type RichText {
+type PublishedRichText {
   blocks: JSON!
-  entities: [Entity]
+  entities: [PublishedEntity]
 }
 
 \\"\\"\\"
@@ -5506,14 +5506,14 @@ The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http:
 \\"\\"\\"
 scalar JSON
 
-type EntityEdge {
-  node: Entity
+type PublishedEntityEdge {
+  node: PublishedEntity
   cursor: String!
 }
 
-type EntityConnection {
+type PublishedEntityConnection {
   pageInfo: PageInfo!
-  edges: [EntityEdge]
+  edges: [PublishedEntityEdge]
   totalCount: Int!
 }
 
@@ -5532,33 +5532,33 @@ input QueryInput {
   text: String
 }
 
-type FooFields {
+type PublishedFooFields {
   fooField: String
 }
 
-type Foo implements Node & Entity {
+type PublishedFoo implements Node & PublishedEntity {
   id: ID!
-  info: EntityInfo!
-  fields: FooFields!
+  info: PublishedEntityInfo!
+  fields: PublishedFooFields!
 }
 
-type BarFields {
+type PublishedBarFields {
   barField1: String
-  barField2: Entity
+  barField2: PublishedEntity
   barField3: Location
   barField4: Boolean
 }
 
-type Bar implements Node & Entity {
+type PublishedBar implements Node & PublishedEntity {
   id: ID!
-  info: EntityInfo!
-  fields: BarFields!
+  info: PublishedEntityInfo!
+  fields: PublishedBarFields!
 }
 
 type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
-  searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
+  searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
 }"
 `;
 
@@ -5598,20 +5598,20 @@ enum EntityType {
   Bar
 }
 
-type EntityInfo {
+type PublishedEntityInfo {
   name: String!
   authKey: String!
   createdAt: Instant!
 }
 
-interface Entity implements Node {
+interface PublishedEntity implements Node {
   id: ID!
-  info: EntityInfo!
+  info: PublishedEntityInfo!
 }
 
-type RichText {
+type PublishedRichText {
   blocks: JSON!
-  entities: [Entity]
+  entities: [PublishedEntity]
 }
 
 \\"\\"\\"
@@ -5619,14 +5619,14 @@ The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http:
 \\"\\"\\"
 scalar JSON
 
-type EntityEdge {
-  node: Entity
+type PublishedEntityEdge {
+  node: PublishedEntity
   cursor: String!
 }
 
-type EntityConnection {
+type PublishedEntityConnection {
   pageInfo: PageInfo!
-  edges: [EntityEdge]
+  edges: [PublishedEntityEdge]
   totalCount: Int!
 }
 
@@ -5645,27 +5645,27 @@ input QueryInput {
   text: String
 }
 
-type FooFields {
+type PublishedFooFields {
   fooField: String
 }
 
-type Foo implements Node & Entity {
+type PublishedFoo implements Node & PublishedEntity {
   id: ID!
-  info: EntityInfo!
-  fields: FooFields!
+  info: PublishedEntityInfo!
+  fields: PublishedFooFields!
 }
 
-type BarFields {
+type PublishedBarFields {
   barField1: String
-  barField2: Entity
+  barField2: PublishedEntity
   barField3: Location
   barField4: Boolean
 }
 
-type Bar implements Node & Entity {
+type PublishedBar implements Node & PublishedEntity {
   id: ID!
-  info: EntityInfo!
-  fields: BarFields!
+  info: PublishedEntityInfo!
+  fields: PublishedBarFields!
 }
 
 enum AdminEntityType {
@@ -5963,7 +5963,7 @@ type AdminBarUpsertPayload {
 type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
-  searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
+  searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   adminEntity(id: ID!, version: Int, authKeys: [String!]): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
@@ -6427,24 +6427,24 @@ enum ValueType {
   NestedValue
 }
 
-type EntityInfo {
+type PublishedEntityInfo {
   name: String!
   authKey: String!
   createdAt: Instant!
 }
 
-interface Entity implements Node {
+interface PublishedEntity implements Node {
   id: ID!
-  info: EntityInfo!
+  info: PublishedEntityInfo!
 }
 
-interface Value {
+interface PublishedValue {
   type: ValueType!
 }
 
-type RichText {
+type PublishedRichText {
   blocks: JSON!
-  entities: [Entity]
+  entities: [PublishedEntity]
 }
 
 \\"\\"\\"
@@ -6452,14 +6452,14 @@ The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http:
 \\"\\"\\"
 scalar JSON
 
-type EntityEdge {
-  node: Entity
+type PublishedEntityEdge {
+  node: PublishedEntity
   cursor: String!
 }
 
-type EntityConnection {
+type PublishedEntityConnection {
   pageInfo: PageInfo!
-  edges: [EntityEdge]
+  edges: [PublishedEntityEdge]
   totalCount: Int!
 }
 
@@ -6478,55 +6478,55 @@ input QueryInput {
   text: String
 }
 
-type FooFields {
-  valueOne: ValueOne
-  unspecifiedValue: Value
-  valueOneOrList: _ValueListOrValueOne
-  nestedValue: NestedValue
+type PublishedFooFields {
+  valueOne: PublishedValueOne
+  unspecifiedValue: PublishedValue
+  valueOneOrList: _PublishedValueListOrValueOne
+  nestedValue: PublishedNestedValue
 }
 
-type Foo implements Node & Entity {
+type PublishedFoo implements Node & PublishedEntity {
   id: ID!
-  info: EntityInfo!
-  fields: FooFields!
+  info: PublishedEntityInfo!
+  fields: PublishedFooFields!
 }
 
-type Bar implements Node & Entity {
+type PublishedBar implements Node & PublishedEntity {
   id: ID!
-  info: EntityInfo!
+  info: PublishedEntityInfo!
 }
 
-type ValueOne implements Value {
+type PublishedValueOne implements PublishedValue {
   type: ValueType!
   one: String
-  two: Bar
+  two: PublishedBar
   three: Location
   four: Boolean
 }
 
-type ValueList implements Value {
+type PublishedValueList implements PublishedValue {
   type: ValueType!
   one: [String!]
-  two: [Bar!]
+  two: [PublishedBar!]
   three: [Location!]
   four: [Boolean!]
 }
 
-type NestedValue implements Value {
+type PublishedNestedValue implements PublishedValue {
   type: ValueType!
   text: String
-  child: NestedValue
+  child: PublishedNestedValue
 }
 
-enum _ValueListOrValueOne {
-  ValueList
-  ValueOne
+enum _PublishedValueListOrValueOne {
+  PublishedValueList
+  PublishedValueOne
 }
 
 type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
-  searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
+  searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
 }"
 `;
 
@@ -6572,24 +6572,24 @@ enum ValueType {
   NestedValue
 }
 
-type EntityInfo {
+type PublishedEntityInfo {
   name: String!
   authKey: String!
   createdAt: Instant!
 }
 
-interface Entity implements Node {
+interface PublishedEntity implements Node {
   id: ID!
-  info: EntityInfo!
+  info: PublishedEntityInfo!
 }
 
-interface Value {
+interface PublishedValue {
   type: ValueType!
 }
 
-type RichText {
+type PublishedRichText {
   blocks: JSON!
-  entities: [Entity]
+  entities: [PublishedEntity]
 }
 
 \\"\\"\\"
@@ -6597,14 +6597,14 @@ The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http:
 \\"\\"\\"
 scalar JSON
 
-type EntityEdge {
-  node: Entity
+type PublishedEntityEdge {
+  node: PublishedEntity
   cursor: String!
 }
 
-type EntityConnection {
+type PublishedEntityConnection {
   pageInfo: PageInfo!
-  edges: [EntityEdge]
+  edges: [PublishedEntityEdge]
   totalCount: Int!
 }
 
@@ -6623,44 +6623,44 @@ input QueryInput {
   text: String
 }
 
-type FooFields {
-  valueOne: ValueOne
-  unspecifiedValue: Value
-  valueOneOrList: _ValueListOrValueOne
-  nestedValue: NestedValue
+type PublishedFooFields {
+  valueOne: PublishedValueOne
+  unspecifiedValue: PublishedValue
+  valueOneOrList: _PublishedValueListOrValueOne
+  nestedValue: PublishedNestedValue
 }
 
-type Foo implements Node & Entity {
+type PublishedFoo implements Node & PublishedEntity {
   id: ID!
-  info: EntityInfo!
-  fields: FooFields!
+  info: PublishedEntityInfo!
+  fields: PublishedFooFields!
 }
 
-type Bar implements Node & Entity {
+type PublishedBar implements Node & PublishedEntity {
   id: ID!
-  info: EntityInfo!
+  info: PublishedEntityInfo!
 }
 
-type ValueOne implements Value {
+type PublishedValueOne implements PublishedValue {
   type: ValueType!
   one: String
-  two: Bar
+  two: PublishedBar
   three: Location
   four: Boolean
 }
 
-type ValueList implements Value {
+type PublishedValueList implements PublishedValue {
   type: ValueType!
   one: [String!]
-  two: [Bar!]
+  two: [PublishedBar!]
   three: [Location!]
   four: [Boolean!]
 }
 
-type NestedValue implements Value {
+type PublishedNestedValue implements PublishedValue {
   type: ValueType!
   text: String
-  child: NestedValue
+  child: PublishedNestedValue
 }
 
 enum AdminEntityType {
@@ -7000,9 +7000,9 @@ input AdminNestedValueInput {
   child: AdminNestedValueInput
 }
 
-enum _ValueListOrValueOne {
-  ValueList
-  ValueOne
+enum _PublishedValueListOrValueOne {
+  PublishedValueList
+  PublishedValueOne
 }
 
 enum _AdminValueListOrValueOne {
@@ -7013,7 +7013,7 @@ enum _AdminValueListOrValueOne {
 type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
-  searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
+  searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   adminEntity(id: ID!, version: Int, authKeys: [String!]): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection

@@ -1,4 +1,8 @@
-import type { Entity, EntityReference, EntityTypeSpecification } from '@jonasb/datadata-core';
+import type {
+  EntityReference,
+  EntityTypeSpecification,
+  PublishedEntity,
+} from '@jonasb/datadata-core';
 import { Field, FullscreenContainer, Text } from '@jonasb/datadata-design';
 import React, { useContext, useEffect } from 'react';
 import { PublishedDataDataContext, useEntity } from '../../index.js';
@@ -56,7 +60,7 @@ function EntityFields({
   entity,
   typeSpec,
 }: {
-  entity: Entity;
+  entity: PublishedEntity;
   typeSpec: EntityTypeSpecification;
 }): JSX.Element {
   const fieldComponents = [];

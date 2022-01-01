@@ -3,7 +3,7 @@ import type {
   AdminEntityCreate,
   AdminEntityUpdate,
   AdminSchema,
-  Entity,
+  PublishedEntity,
   EntityLike,
   EntityReference,
   FieldSpecification,
@@ -178,16 +178,26 @@ export function isRichTextValueItemBlock(
 }
 
 export function isItemValueItem(
-  item: ValueItem | Entity | AdminEntity | AdminEntityCreate | AdminEntityUpdate | EntityLike
+  item:
+    | ValueItem
+    | PublishedEntity
+    | AdminEntity
+    | AdminEntityCreate
+    | AdminEntityUpdate
+    | EntityLike
 ): item is ValueItem {
   return 'type' in item;
 }
 
-export function isItemAdminEntity(item: ValueItem | Entity | AdminEntity): item is AdminEntity {
+export function isItemAdminEntity(
+  item: ValueItem | PublishedEntity | AdminEntity
+): item is AdminEntity {
   return !isItemValueItem(item) && 'version' in item.info;
 }
 
-export function isItemEntity(item: ValueItem | Entity | AdminEntity): item is Entity {
+export function isItemEntity(
+  item: ValueItem | PublishedEntity | AdminEntity
+): item is PublishedEntity {
   return !isItemValueItem(item) && !isItemAdminEntity(item);
 }
 

@@ -1,6 +1,6 @@
 import { Temporal } from '@js-temporal/polyfill';
 import type {
-  Entity,
+  PublishedEntity,
   PublishedClient,
   PublishedClientMiddleware,
   PublishedClientOperation,
@@ -68,7 +68,7 @@ function createJsonConvertingPublishedClientsForOperation<
   return { publishedClient: outerPublishedClient, operationHandlerMock };
 }
 
-function createDummyEntity({ id }: { id: string }): Entity {
+function createDummyEntity({ id }: { id: string }): PublishedEntity {
   return {
     id,
     info: {
@@ -310,7 +310,7 @@ describe('PublishedClient forward operation over JSON', () => {
   });
 
   test('searchEntities', async () => {
-    const entity1: Entity = {
+    const entity1: PublishedEntity = {
       id: 'id',
       info: {
         type: 'Foo',

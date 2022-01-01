@@ -1,4 +1,10 @@
-import type { AdminEntity, AdminSchema, Entity, Location, Schema } from '@jonasb/datadata-core';
+import type {
+  AdminEntity,
+  AdminSchema,
+  Location,
+  PublishedEntity,
+  Schema,
+} from '@jonasb/datadata-core';
 import { isLocationItemField, visitItemRecursively } from '@jonasb/datadata-core';
 import type { Dispatch } from 'react';
 import React from 'react';
@@ -14,7 +20,7 @@ export interface EntityMapProps<TEntity> {
   renderEntityMarker: (key: string, entity: TEntity, location: Location) => JSX.Element;
 }
 
-export function EntityMap2<TEntity extends AdminEntity | Entity>({
+export function EntityMap2<TEntity extends AdminEntity | PublishedEntity>({
   className,
   schema,
   searchEntityState,
@@ -47,7 +53,10 @@ export function EntityMap2<TEntity extends AdminEntity | Entity>({
   );
 }
 
-function extractEntityLocations(schema: AdminSchema | Schema, entity: AdminEntity | Entity) {
+function extractEntityLocations(
+  schema: AdminSchema | Schema,
+  entity: AdminEntity | PublishedEntity
+) {
   const locations: Location[] = [];
   visitItemRecursively({
     schema,

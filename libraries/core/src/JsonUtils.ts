@@ -7,9 +7,9 @@ import type {
   AdminEntityUpsertPayload,
   Connection,
   Edge,
-  Entity,
+  PublishedEntity,
   EntityHistory,
-  EntityInfo,
+  PublishedEntityInfo,
   AdminEntityPublishingPayload,
   EntityVersionInfo,
   ErrorType,
@@ -43,11 +43,11 @@ export interface JsonAdminEntity extends Omit<AdminEntity, 'info'> {
   info: JsonAdminEntityInfo;
 }
 
-export interface JsonEntityInfo extends Omit<EntityInfo, 'createdAt'> {
+export interface JsonEntityInfo extends Omit<PublishedEntityInfo, 'createdAt'> {
   createdAt: string;
 }
 
-export interface JsonEntity extends Omit<Entity, 'info'> {
+export interface JsonEntity extends Omit<PublishedEntity, 'info'> {
   info: JsonEntityInfo;
 }
 
@@ -126,7 +126,7 @@ export function convertJsonAdminEntity(entity: JsonAdminEntity): AdminEntity {
   };
 }
 
-export function convertJsonEntity(entity: JsonEntity): Entity {
+export function convertJsonEntity(entity: JsonEntity): PublishedEntity {
   return {
     ...entity,
     info: {

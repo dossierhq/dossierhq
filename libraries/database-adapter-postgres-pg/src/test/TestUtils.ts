@@ -2,11 +2,11 @@ import type {
   AdminEntity,
   Connection,
   Edge,
-  Entity,
   EntityHistory,
   ErrorType,
   Logger,
   PromiseResult,
+  PublishedEntity,
   Result,
 } from '@jonasb/datadata-core';
 import { assertIsDefined, CoreTestUtils, ok } from '@jonasb/datadata-core';
@@ -118,7 +118,7 @@ export function expectEntityHistoryVersions(
   expect(actualVersions).toEqual(expectedVersions);
 }
 
-export function expectSearchResultEntities<TItem extends AdminEntity | Entity>(
+export function expectSearchResultEntities<TItem extends AdminEntity | PublishedEntity>(
   result: Result<
     Connection<Edge<TItem, ErrorType>> | null,
     ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic

@@ -1,4 +1,4 @@
-import type { AdminQueryOrder, Entity } from '@jonasb/datadata-core';
+import type { AdminQueryOrder, PublishedEntity } from '@jonasb/datadata-core';
 import { QueryOrder } from '@jonasb/datadata-core';
 import { Table } from '@jonasb/datadata-design';
 import type { Dispatch } from 'react';
@@ -9,7 +9,7 @@ import { AuthKeyTag, PublishedDataDataContext, SearchEntityStateActions } from '
 interface Props {
   searchEntityState: SearchEntityState;
   dispatchSearchEntityState: Dispatch<SearchEntityStateAction>;
-  onItemClick: (item: Entity) => void;
+  onItemClick: (item: PublishedEntity) => void;
 }
 
 export function EntityList({ searchEntityState, dispatchSearchEntityState, onItemClick }: Props) {

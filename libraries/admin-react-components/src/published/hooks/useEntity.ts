@@ -1,9 +1,9 @@
 import type {
-  Entity,
   EntityReference,
   ErrorResult,
   ErrorType,
   PublishedClient,
+  PublishedEntity,
 } from '@jonasb/datadata-core';
 import { useCallback } from 'react';
 import useSWR from 'swr';
@@ -12,7 +12,7 @@ export function useEntity(
   publishedClient: PublishedClient,
   reference: EntityReference | undefined
 ): {
-  entity: Entity | undefined;
+  entity: PublishedEntity | undefined;
   entityError: ErrorResult<unknown, ErrorType.NotFound | ErrorType.Generic> | undefined;
 } {
   const fetcher = useCallback(
@@ -30,7 +30,7 @@ export function useEntity(
 async function fetchEntity(
   publishedClient: PublishedClient,
   reference: EntityReference
-): Promise<Entity> {
+): Promise<PublishedEntity> {
   const result = await publishedClient.getEntity(reference);
   if (result.isError()) {
     throw result; // throw result, don't convert to Error

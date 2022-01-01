@@ -8,7 +8,7 @@ import type {
   AdminQuery,
   AdminSchema,
   AdminValueTypeSpecification,
-  Entity,
+  PublishedEntity,
   EntityReferenceWithAuthKeys,
   EntityTypeSpecification,
   EntityVersionReferenceWithAuthKeys,
@@ -72,7 +72,11 @@ export interface SessionGraphQLContext {
 }
 
 function toAdminTypeName(name: string, isAdmin = true) {
-  return isAdmin ? 'Admin' + name : name;
+  return isAdmin ? `Admin${name}` : toPublishedTypeName(name);
+}
+
+function toPublishedTypeName(name: string) {
+  return `Published${name}`;
 }
 
 function toAdminCreateInputTypeName(name: string) {
@@ -377,10 +381,10 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       );
     }
 
-    // EntityInfo
+    // PublishedEntityInfo
     this.addType(
       new GraphQLObjectType({
-        name: 'EntityInfo',
+        name: 'PublishedEntityInfo',
         fields: {
           name: { type: new GraphQLNonNull(GraphQLString) },
           authKey: { type: new GraphQLNonNull(GraphQLString) },
@@ -389,23 +393,23 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       })
     );
 
-    // Entity
+    // PublishedEntity
     this.addType(
       new GraphQLInterfaceType({
-        name: 'Entity',
+        name: 'PublishedEntity',
         interfaces: this.getInterfaces('Node'),
         fields: {
           id: { type: new GraphQLNonNull(GraphQLID) },
-          info: { type: new GraphQLNonNull(this.getOutputType('EntityInfo')) },
+          info: { type: new GraphQLNonNull(this.getOutputType('PublishedEntityInfo')) },
         },
       })
     );
 
     if (publishedSchema.getValueTypeCount() > 0) {
-      // Value
+      // PublishedValue
       this.addType(
         new GraphQLInterfaceType({
-          name: 'Value',
+          name: toPublishedTypeName('Value'),
           fields: {
             type: { type: new GraphQLNonNull(this.getEnumType('ValueType')) },
           },
@@ -413,35 +417,35 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       );
     }
 
-    // RichText
+    // PublishedRichText
     this.addType(
       new GraphQLObjectType({
-        name: 'RichText',
+        name: 'PublishedRichText',
         fields: {
           blocks: { type: new GraphQLNonNull(GraphQLJSON) },
-          entities: { type: new GraphQLList(this.getInterface('Entity')) },
+          entities: { type: new GraphQLList(this.getInterface('PublishedEntity')) },
         },
       })
     );
 
-    // EntityEdge
+    // PublishedEntityEdge
     this.addType(
       new GraphQLObjectType({
-        name: 'EntityEdge',
+        name: 'PublishedEntityEdge',
         fields: {
-          node: { type: this.getOutputType('Entity') },
+          node: { type: this.getOutputType('PublishedEntity') },
           cursor: { type: new GraphQLNonNull(GraphQLString) },
         },
       })
     );
 
-    // EntityConnection
+    // PublishedEntityConnection
     this.addType(
       new GraphQLObjectType({
-        name: 'EntityConnection',
+        name: 'PublishedEntityConnection',
         fields: {
           pageInfo: { type: new GraphQLNonNull(this.getOutputType('PageInfo')) },
-          edges: { type: new GraphQLList(this.getOutputType('EntityEdge')) },
+          edges: { type: new GraphQLList(this.getOutputType('PublishedEntityEdge')) },
           totalCount: { type: new GraphQLNonNull(GraphQLInt) },
         },
       })
@@ -481,13 +485,14 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
   }
 
   addEntityType(entitySpec: EntityTypeSpecification): void {
-    const fieldsTypeName = `${entitySpec.name}Fields`;
+    // PublishedFooFields
+    const fieldsTypeName = `Published${entitySpec.name}Fields`;
     if (entitySpec.fields.length > 0) {
       this.addType(
-        new GraphQLObjectType<Entity, TContext>({
+        new GraphQLObjectType<PublishedEntity, TContext>({
           name: fieldsTypeName,
           fields: () => {
-            const fields: GraphQLFieldConfigMap<Entity, TContext> = {};
+            const fields: GraphQLFieldConfigMap<PublishedEntity, TContext> = {};
             this.addTypeSpecificationOutputFields(entitySpec, fields, false);
             return fields;
           },
@@ -495,15 +500,16 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       );
     }
 
+    // PublishedFoo
     this.addType(
-      new GraphQLObjectType<Entity, TContext>({
-        name: entitySpec.name,
-        interfaces: this.getInterfaces('Node', 'Entity'),
+      new GraphQLObjectType<PublishedEntity, TContext>({
+        name: toAdminTypeName(entitySpec.name, false),
+        interfaces: this.getInterfaces('Node', 'PublishedEntity'),
         isTypeOf: (source, _context, _info) => source.info.type === entitySpec.name,
         fields: () => {
-          const fields: GraphQLFieldConfigMap<Entity, TContext> = {
+          const fields: GraphQLFieldConfigMap<PublishedEntity, TContext> = {
             id: { type: new GraphQLNonNull(GraphQLID) },
-            info: { type: new GraphQLNonNull(this.getOutputType('EntityInfo')) },
+            info: { type: new GraphQLNonNull(this.getOutputType('PublishedEntityInfo')) },
           };
           if (entitySpec.fields.length > 0) {
             fields.fields = { type: new GraphQLNonNull(this.getOutputType(fieldsTypeName)) };
@@ -514,17 +520,18 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     );
   }
 
-  addValueTypes(publishedSchema: Schema): void {
+  addPublishedValueTypes(publishedSchema: Schema): void {
     for (const valueSpec of publishedSchema.spec.valueTypes) {
-      this.addValueType(valueSpec);
+      this.addPublishedValueType(valueSpec);
     }
   }
 
-  addValueType(valueSpec: ValueTypeSpecification): void {
+  addPublishedValueType(valueSpec: ValueTypeSpecification): void {
+    // PublishedFoo
     this.addType(
       new GraphQLObjectType<ValueItem, TContext>({
-        name: valueSpec.name,
-        interfaces: this.getInterfaces('Value'),
+        name: toPublishedTypeName(valueSpec.name),
+        interfaces: this.getInterfaces(toPublishedTypeName('Value')),
         isTypeOf: (source, _context, _info) => source.type === valueSpec.name,
         fields: () => {
           const fields: GraphQLFieldConfigMap<ValueItem, TContext> = {
@@ -1115,6 +1122,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
   }
 
   addAdminValueType(valueSpec: AdminValueTypeSpecification): void {
+    // AdminFoo
     this.addType(
       new GraphQLObjectType<ValueItem, TContext>({
         name: toAdminTypeName(valueSpec.name),
@@ -1329,7 +1337,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         before?: string;
       }
     >({
-      type: this.getOutputType('EntityConnection'),
+      type: this.getOutputType('PublishedEntityConnection'),
       args: {
         query: { type: this.getInputType('QueryInput') },
         first: { type: GraphQLInt },
@@ -1684,7 +1692,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     if (this.publishedSchema) {
       this.addPublishedSupportingTypes(this.publishedSchema);
       this.addEntityTypes(this.publishedSchema);
-      this.addValueTypes(this.publishedSchema);
+      this.addPublishedValueTypes(this.publishedSchema);
     }
     if (this.adminSchema) {
       this.addAdminSupportingTypes(this.adminSchema);
