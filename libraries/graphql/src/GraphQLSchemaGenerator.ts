@@ -8,17 +8,17 @@ import type {
   AdminQuery,
   AdminSchema,
   AdminValueTypeSpecification,
-  PublishedEntity,
   EntityReferenceWithAuthKeys,
-  EntityTypeSpecification,
   EntityVersionReferenceWithAuthKeys,
   ErrorType,
   PublishedClient,
+  PublishedEntity,
+  PublishedEntityTypeSpecification,
   PublishedQuery,
+  PublishedSchema,
+  PublishedValueTypeSpecification,
   Result,
-  Schema,
   ValueItem,
-  ValueTypeSpecification,
 } from '@jonasb/datadata-core';
 import { FieldType, isItemValueItem, isValueTypeField, notOk } from '@jonasb/datadata-core';
 import { Temporal } from '@js-temporal/polyfill';
@@ -116,14 +116,14 @@ function fieldConfigWithArgs<TSource, TContext, TArgs>(
 export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
   #types: GraphQLNamedType[] = [];
   private readonly adminSchema: AdminSchema | null;
-  private readonly publishedSchema: Schema | null;
+  private readonly publishedSchema: PublishedSchema | null;
 
   constructor({
     adminSchema,
     publishedSchema,
   }: {
     adminSchema: AdminSchema | null;
-    publishedSchema: Schema | null;
+    publishedSchema: PublishedSchema | null;
   }) {
     this.adminSchema = adminSchema;
     this.publishedSchema = publishedSchema;
@@ -350,7 +350,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     );
   }
 
-  addPublishedSupportingTypes(publishedSchema: Schema): void {
+  addPublishedSupportingTypes(publishedSchema: PublishedSchema): void {
     if (publishedSchema.getEntityTypeCount() === 0) {
       return;
     }
@@ -478,13 +478,13 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     );
   }
 
-  addEntityTypes(publishedSchema: Schema): void {
+  addEntityTypes(publishedSchema: PublishedSchema): void {
     for (const entitySpec of publishedSchema.spec.entityTypes) {
       this.addEntityType(entitySpec);
     }
   }
 
-  addEntityType(entitySpec: EntityTypeSpecification): void {
+  addEntityType(entitySpec: PublishedEntityTypeSpecification): void {
     // PublishedFooFields
     const fieldsTypeName = `Published${entitySpec.name}Fields`;
     if (entitySpec.fields.length > 0) {
@@ -520,13 +520,13 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     );
   }
 
-  addPublishedValueTypes(publishedSchema: Schema): void {
+  addPublishedValueTypes(publishedSchema: PublishedSchema): void {
     for (const valueSpec of publishedSchema.spec.valueTypes) {
       this.addPublishedValueType(valueSpec);
     }
   }
 
-  addPublishedValueType(valueSpec: ValueTypeSpecification): void {
+  addPublishedValueType(valueSpec: PublishedValueTypeSpecification): void {
     // PublishedFoo
     this.addType(
       new GraphQLObjectType<ValueItem, TContext>({
@@ -1153,7 +1153,10 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
   }
 
   addTypeSpecificationOutputFields<TSource>(
-    typeSpec: EntityTypeSpecification | AdminEntityTypeSpecification | AdminValueTypeSpecification,
+    typeSpec:
+      | PublishedEntityTypeSpecification
+      | AdminEntityTypeSpecification
+      | AdminValueTypeSpecification,
     fields: GraphQLFieldConfigMap<TSource, TContext>,
     isAdmin: boolean
   ): void {
@@ -1235,7 +1238,9 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     }
   }
 
-  buildQueryFieldNode<TSource>(publishedSchema: Schema): GraphQLFieldConfig<TSource, TContext> {
+  buildQueryFieldNode<TSource>(
+    publishedSchema: PublishedSchema
+  ): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<TSource, TContext, { id: string }>({
       type: this.getInterface('Node'),
       args: {
@@ -1247,7 +1252,9 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     });
   }
 
-  buildQueryFieldNodes<TSource>(publishedSchema: Schema): GraphQLFieldConfig<TSource, TContext> {
+  buildQueryFieldNodes<TSource>(
+    publishedSchema: PublishedSchema
+  ): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<TSource, TContext, { ids: string[] }>({
       type: new GraphQLList(this.getInterface('Node')),
       args: {
@@ -1324,7 +1331,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
   }
 
   buildQueryFieldSearchEntities<TSource>(
-    publishedSchema: Schema
+    publishedSchema: PublishedSchema
   ): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<
       TSource,

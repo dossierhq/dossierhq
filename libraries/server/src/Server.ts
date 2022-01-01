@@ -9,7 +9,14 @@ import type {
   PublishedClient,
   PublishedClientMiddleware,
 } from '@jonasb/datadata-core';
-import { AdminSchema, assertIsDefined, NoOpLogger, notOk, ok, Schema } from '@jonasb/datadata-core';
+import {
+  AdminSchema,
+  assertIsDefined,
+  NoOpLogger,
+  notOk,
+  ok,
+  PublishedSchema,
+} from '@jonasb/datadata-core';
 import type { AuthorizationAdapter, DatabaseAdapter, Session, SessionContext } from '.';
 import { authCreateSession } from './Auth';
 import type { InternalContext } from './Context';
@@ -45,7 +52,7 @@ export class ServerImpl {
   #databaseAdapter: DatabaseAdapter | null;
   #logger: Logger;
   #adminSchema: AdminSchema | null = null;
-  #schema: Schema | null = null;
+  #publishedSchema: PublishedSchema | null = null;
 
   constructor({ databaseAdapter, logger }: { databaseAdapter: DatabaseAdapter; logger?: Logger }) {
     this.#databaseAdapter = databaseAdapter;
@@ -80,16 +87,16 @@ export class ServerImpl {
     return this.#adminSchema;
   }
 
-  getSchema(): Schema {
-    if (!this.#schema) {
-      throw new Error('Schema is not set');
+  getPublishedSchema(): PublishedSchema {
+    if (!this.#publishedSchema) {
+      throw new Error('PublishedSchema is not set');
     }
-    return this.#schema;
+    return this.#publishedSchema;
   }
 
   setAdminSchema(schemaSpec: AdminSchemaSpecification): void {
     this.#adminSchema = new AdminSchema(schemaSpec);
-    this.#schema = new Schema(this.#adminSchema.toPublishedSchema());
+    this.#publishedSchema = new PublishedSchema(this.#adminSchema.toPublishedSchema());
   }
 
   createInternalContext(logger?: Logger): InternalContext {

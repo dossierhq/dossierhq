@@ -3,14 +3,14 @@ import type {
   AdminEntityCreate,
   AdminEntityUpdate,
   AdminSchema,
-  PublishedEntity,
   EntityLike,
   EntityReference,
   FieldSpecification,
   FieldValueTypeMap,
+  PublishedEntity,
+  PublishedSchema,
   RichText,
   RichTextBlock,
-  Schema,
   ValueItem,
 } from '.';
 import { assertExhaustive, FieldType, RichTextBlockType } from '.';
@@ -277,7 +277,7 @@ export function visitItemRecursively<TVisitContext>({
   enterRichText = undefined,
   initialVisitContext,
 }: {
-  schema: AdminSchema | Schema;
+  schema: AdminSchema | PublishedSchema;
   item: EntityLike | ValueItem;
   path?: ItemValuePath;
   visitField: VisitorVisitField<TVisitContext>;
@@ -308,7 +308,7 @@ export function visitFieldRecursively<TVisitContext>({
   enterRichText = undefined,
   visitContext,
 }: {
-  schema: AdminSchema | Schema;
+  schema: AdminSchema | PublishedSchema;
   path?: ItemValuePath;
   fieldSpec: FieldSpecification;
   value: unknown;
@@ -330,7 +330,7 @@ export function visitFieldRecursively<TVisitContext>({
 }
 
 function doVisitItemRecursively<TVisitContext>(
-  schema: AdminSchema | Schema,
+  schema: AdminSchema | PublishedSchema,
   path: ItemValuePath,
   item: ValueItem | EntityLike,
   callbacks: VisitorCallbacks<TVisitContext>,
@@ -395,7 +395,7 @@ function doVisitItemRecursively<TVisitContext>(
 }
 
 function doVisitFieldRecursively<TVisitContext>(
-  schema: AdminSchema | Schema,
+  schema: AdminSchema | PublishedSchema,
   path: ItemValuePath,
   fieldSpec: FieldSpecification,
   value: unknown,

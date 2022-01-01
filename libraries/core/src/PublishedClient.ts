@@ -2,7 +2,6 @@ import type {
   Connection,
   ContextProvider,
   Edge,
-  PublishedEntity,
   EntityReference,
   EntityReferenceWithAuthKeys,
   JsonConnection,
@@ -10,9 +9,10 @@ import type {
   JsonResult,
   Paging,
   PromiseResult,
+  PublishedEntity,
   PublishedQuery,
+  PublishedSchemaSpecification,
   Result,
-  SchemaSpecification,
 } from '.';
 import {
   assertExhaustive,
@@ -35,7 +35,7 @@ import type {
 import { executeOperationPipeline } from './SharedClient';
 
 export interface PublishedClient {
-  getSchemaSpecification(): PromiseResult<SchemaSpecification, ErrorType.Generic>;
+  getSchemaSpecification(): PromiseResult<PublishedSchemaSpecification, ErrorType.Generic>;
 
   getEntity(
     reference: EntityReferenceWithAuthKeys

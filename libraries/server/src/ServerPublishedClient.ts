@@ -39,7 +39,7 @@ export function createServerPublishedClient({
         } = operation as PublishedClientOperation<PublishedClientOperationName.getEntities>;
         resolve(
           await getEntities(
-            serverImpl.getSchema(),
+            serverImpl.getPublishedSchema(),
             authorizationAdapter,
             databaseAdapter,
             context,
@@ -55,7 +55,7 @@ export function createServerPublishedClient({
         } = operation as PublishedClientOperation<PublishedClientOperationName.getEntity>;
         resolve(
           await getEntity(
-            serverImpl.getSchema(),
+            serverImpl.getPublishedSchema(),
             authorizationAdapter,
             databaseAdapter,
             context,
@@ -67,7 +67,7 @@ export function createServerPublishedClient({
       case PublishedClientOperationName.getSchemaSpecification: {
         const { resolve } =
           operation as PublishedClientOperation<PublishedClientOperationName.getSchemaSpecification>;
-        const schema = serverImpl.getSchema();
+        const schema = serverImpl.getPublishedSchema();
         resolve(ok(schema.spec));
         break;
       }
@@ -78,7 +78,7 @@ export function createServerPublishedClient({
         } = operation as PublishedClientOperation<PublishedClientOperationName.getTotalCount>;
         resolve(
           await getTotalCount(
-            serverImpl.getSchema(),
+            serverImpl.getPublishedSchema(),
             authorizationAdapter,
             databaseAdapter,
             context,
@@ -94,7 +94,7 @@ export function createServerPublishedClient({
         } = operation as PublishedClientOperation<PublishedClientOperationName.searchEntities>;
         resolve(
           await searchEntities(
-            serverImpl.getSchema(),
+            serverImpl.getPublishedSchema(),
             authorizationAdapter,
             databaseAdapter,
             context,

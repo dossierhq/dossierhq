@@ -1,7 +1,7 @@
 import type {
   EntityReference,
-  EntityTypeSpecification,
   PublishedEntity,
+  PublishedEntityTypeSpecification,
 } from '@jonasb/datadata-core';
 import { Field, FullscreenContainer, Text } from '@jonasb/datadata-design';
 import React, { useContext, useEffect } from 'react';
@@ -61,7 +61,7 @@ function EntityFields({
   typeSpec,
 }: {
   entity: PublishedEntity;
-  typeSpec: EntityTypeSpecification;
+  typeSpec: PublishedEntityTypeSpecification;
 }): JSX.Element {
   const fieldComponents = [];
   for (const fieldSpec of typeSpec.fields) {

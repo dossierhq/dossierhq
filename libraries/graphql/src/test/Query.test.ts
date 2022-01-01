@@ -4,8 +4,8 @@ import {
   FieldType,
   notOk,
   ok,
+  PublishedSchema,
   RichTextBlockType,
-  Schema,
 } from '@jonasb/datadata-core';
 import type { GraphQLSchema } from 'graphql';
 import { graphql, printError } from 'graphql';
@@ -52,7 +52,7 @@ beforeAll(async () => {
   server = await setUpServerWithSession(schemaSpecification);
   schema = new GraphQLSchemaGenerator({
     adminSchema: null,
-    publishedSchema: new Schema(server.schema.toPublishedSchema()),
+    publishedSchema: new PublishedSchema(server.schema.toPublishedSchema()),
   }).buildSchema();
 });
 

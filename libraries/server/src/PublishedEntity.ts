@@ -7,8 +7,8 @@ import type {
   PromiseResult,
   PublishedEntity,
   PublishedQuery,
+  PublishedSchema,
   Result,
-  Schema,
 } from '@jonasb/datadata-core';
 import { notOk, ok } from '@jonasb/datadata-core';
 import type { AuthorizationAdapter, DatabaseAdapter, SessionContext } from '.';
@@ -21,7 +21,7 @@ import type { SearchPublishedEntitiesItem } from './QueryGenerator';
 import { searchPublishedEntitiesQuery, totalPublishedEntitiesQuery } from './QueryGenerator';
 
 export async function getEntity(
-  schema: Schema,
+  schema: PublishedSchema,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
@@ -73,7 +73,7 @@ export async function getEntity(
  * @param ids The ids of the entities
  */
 export async function getEntities(
-  schema: Schema,
+  schema: PublishedSchema,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
@@ -142,7 +142,7 @@ export async function getEntities(
 }
 
 export async function getTotalCount(
-  schema: Schema,
+  schema: PublishedSchema,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
@@ -167,7 +167,7 @@ export async function getTotalCount(
 }
 
 export async function searchEntities(
-  schema: Schema,
+  schema: PublishedSchema,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
@@ -191,7 +191,7 @@ export async function searchEntities(
     return sqlQueryResult;
   }
 
-  return await sharedSearchEntities<Schema, PublishedEntity, SearchPublishedEntitiesItem>(
+  return await sharedSearchEntities<PublishedSchema, PublishedEntity, SearchPublishedEntitiesItem>(
     schema,
     databaseAdapter,
     context,
