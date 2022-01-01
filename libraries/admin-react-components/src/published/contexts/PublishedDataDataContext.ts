@@ -3,7 +3,7 @@ import type {
   ErrorType,
   Logger,
   PublishedClient,
-  Schema,
+  PublishedSchema,
 } from '@jonasb/datadata-core';
 import { createContext } from 'react';
 import type { DisplayAuthKey } from '../..';
@@ -11,7 +11,7 @@ import type { DisplayAuthKey } from '../..';
 export interface PublishedDataDataContextValue {
   publishedClient: PublishedClient;
   logger: Logger;
-  schema: Schema | undefined;
+  schema: PublishedSchema | undefined;
   schemaError: ErrorResult<unknown, ErrorType.Generic> | undefined;
   authKeys: DisplayAuthKey[];
 }

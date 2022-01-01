@@ -90,18 +90,18 @@ export type {
   PublishedClientMiddleware,
   PublishedClientOperation,
 } from './PublishedClient';
-export { AdminSchema, FieldType, RichTextBlockType, Schema } from './Schema';
+export { AdminSchema, FieldType, PublishedSchema, RichTextBlockType } from './Schema';
 export type {
   AdminEntityTypeSpecification,
   AdminSchemaSpecification,
   AdminSchemaSpecificationUpdate,
   AdminValueTypeSpecification,
-  EntityTypeSpecification,
   FieldSpecification,
   FieldValueTypeMap,
-  SchemaSpecification,
+  PublishedEntityTypeSpecification,
+  PublishedSchemaSpecification,
+  PublishedValueTypeSpecification,
   SchemaSpecificationUpdatePayload,
-  ValueTypeSpecification,
 } from './Schema';
 export { LoggingClientMiddleware } from './SharedClient';
 export type { ClientContext, ContextProvider } from './SharedClient';

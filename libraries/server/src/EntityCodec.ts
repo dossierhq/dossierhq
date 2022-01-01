@@ -5,15 +5,15 @@ import type {
   AdminEntityUpdate,
   AdminSchema,
   EntityLike,
-  EntityTypeSpecification,
   ErrorType,
   FieldSpecification,
   Location,
   PromiseResult,
   PublishedEntity,
+  PublishedEntityTypeSpecification,
+  PublishedSchema,
   Result,
   RichText,
-  Schema,
   ValueItem,
 } from '@jonasb/datadata-core';
 import {
@@ -65,7 +65,7 @@ interface RequestedReference {
 }
 
 export function decodePublishedEntity(
-  schema: Schema,
+  schema: PublishedSchema,
   values: Pick<EntitiesTable, 'uuid' | 'type' | 'name' | 'auth_key' | 'created_at'> &
     Pick<EntityVersionsTable, 'data'>
 ): PublishedEntity {
@@ -92,7 +92,7 @@ export function decodePublishedEntity(
 }
 
 function decodeFieldItemOrList(
-  schema: AdminSchema | Schema,
+  schema: AdminSchema | PublishedSchema,
   fieldSpec: FieldSpecification,
   fieldValue: unknown
 ) {
@@ -127,7 +127,7 @@ function decodeFieldItemOrList(
 }
 
 function decodeValueItemField(
-  schema: AdminSchema | Schema,
+  schema: AdminSchema | PublishedSchema,
   fieldSpec: FieldSpecification,
   encodedValue: ValueItem
 ) {
@@ -146,7 +146,7 @@ function decodeValueItemField(
 }
 
 function decodeRichTextField(
-  schema: AdminSchema | Schema,
+  schema: AdminSchema | PublishedSchema,
   fieldSpec: FieldSpecification,
   encodedValue: EncodedRichTextBlock[]
 ): RichText {
@@ -226,8 +226,8 @@ export function decodeAdminEntity2(
 }
 
 function decodeAdminEntityFields(
-  schema: AdminSchema | Schema,
-  entitySpec: AdminEntityTypeSpecification | EntityTypeSpecification,
+  schema: AdminSchema | PublishedSchema,
+  entitySpec: AdminEntityTypeSpecification | PublishedEntityTypeSpecification,
   values: Pick<EntityVersionsTable, 'data'>
 ): AdminEntity['fields'] {
   const fields: AdminEntity['fields'] = {};
@@ -240,8 +240,8 @@ function decodeAdminEntityFields(
 }
 
 export function decodeAdminEntityFields2(
-  schema: AdminSchema | Schema,
-  entitySpec: AdminEntityTypeSpecification | EntityTypeSpecification,
+  schema: AdminSchema | PublishedSchema,
+  entitySpec: AdminEntityTypeSpecification | PublishedEntityTypeSpecification,
   fieldValues: Record<string, unknown>
 ): AdminEntity['fields'] {
   const fields: AdminEntity['fields'] = {};

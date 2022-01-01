@@ -6,17 +6,17 @@ import type {
   AdminValueTypeSpecification,
   EntityHistory,
   EntityReferenceWithAuthKeys,
-  EntityTypeSpecification,
   FieldSpecification,
   PageInfo,
   Paging,
   PublishedEntity,
+  PublishedEntityTypeSpecification,
   PublishedQuery,
+  PublishedSchema,
+  PublishedValueTypeSpecification,
   PublishingHistory,
   RichText,
-  Schema,
   ValueItem,
-  ValueTypeSpecification,
 } from '@jonasb/datadata-core';
 import {
   isEntityTypeField,
@@ -52,7 +52,7 @@ interface Edge<T> {
 }
 
 export async function loadEntity<TContext extends SessionGraphQLContext>(
-  schema: Schema,
+  schema: PublishedSchema,
   context: TContext,
   id: string
 ): Promise<PublishedEntity> {
@@ -65,7 +65,7 @@ export async function loadEntity<TContext extends SessionGraphQLContext>(
 }
 
 export async function loadEntities<TContext extends SessionGraphQLContext>(
-  schema: Schema,
+  schema: PublishedSchema,
   context: TContext,
   ids: string[]
 ): Promise<Array<PublishedEntity | null>> {
@@ -84,7 +84,7 @@ export async function loadEntities<TContext extends SessionGraphQLContext>(
 }
 
 export async function loadSearchEntities<TContext extends SessionGraphQLContext>(
-  schema: Schema,
+  schema: PublishedSchema,
   context: TContext,
   query: PublishedQuery | undefined,
   paging: Paging
@@ -126,7 +126,7 @@ function buildTotalCount<TContext extends SessionGraphQLContext>(
 }
 
 function buildResolversForEntity<TContext extends SessionGraphQLContext>(
-  schema: Schema,
+  schema: PublishedSchema,
   entity: PublishedEntity
 ): PublishedEntity {
   const entitySpec = schema.getEntityTypeSpecification(entity.info.type);
@@ -222,12 +222,12 @@ export async function loadAdminSearchEntities<TContext extends SessionGraphQLCon
 }
 
 function resolveFields<TContext extends SessionGraphQLContext>(
-  schema: AdminSchema | Schema,
+  schema: AdminSchema | PublishedSchema,
   spec:
     | AdminEntityTypeSpecification
-    | EntityTypeSpecification
+    | PublishedEntityTypeSpecification
     | AdminValueTypeSpecification
-    | ValueTypeSpecification,
+    | PublishedValueTypeSpecification,
   item: ValueItem | PublishedEntity | AdminEntity,
   isAdmin: boolean
 ) {
@@ -269,7 +269,7 @@ function resolveFields<TContext extends SessionGraphQLContext>(
 }
 
 function extractEntityIdsForRichTextField(
-  schema: AdminSchema | Schema,
+  schema: AdminSchema | PublishedSchema,
   fieldSpec: FieldSpecification,
   value: RichText
 ) {
@@ -294,7 +294,7 @@ function extractEntityIdsForRichTextField(
 }
 
 export function buildResolversForValue<TContext extends SessionGraphQLContext>(
-  schema: AdminSchema | Schema,
+  schema: AdminSchema | PublishedSchema,
   valueItem: ValueItem,
   isAdmin: boolean
 ): ValueItem {

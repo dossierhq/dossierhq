@@ -4,8 +4,8 @@ import type {
   ErrorType,
   Paging,
   PublishedQuery,
+  PublishedSchema,
   Result,
-  Schema,
 } from '@jonasb/datadata-core';
 import { AdminQueryOrder, notOk, ok, PublishedQueryOrder } from '@jonasb/datadata-core';
 import { PostgresQueryBuilder } from '.';
@@ -38,7 +38,7 @@ export interface SharedEntitiesQuery<TItem> {
 }
 
 export function searchPublishedEntitiesQuery(
-  schema: Schema,
+  schema: PublishedSchema,
   query: PublishedQuery | undefined,
   paging: Paging | undefined,
   authKeys: ResolvedAuthKey[]
@@ -58,7 +58,7 @@ export function searchAdminEntitiesQuery(
 function sharedSearchEntitiesQuery<
   TItem extends SearchAdminEntitiesItem | SearchPublishedEntitiesItem
 >(
-  schema: AdminSchema | Schema,
+  schema: AdminSchema | PublishedSchema,
   query: PublishedQuery | AdminQuery | undefined,
   paging: Paging | undefined,
   authKeys: ResolvedAuthKey[],
@@ -269,7 +269,7 @@ export function totalAdminEntitiesQuery(
 }
 
 export function totalPublishedEntitiesQuery(
-  schema: Schema,
+  schema: PublishedSchema,
   authKeys: ResolvedAuthKey[],
   query: PublishedQuery | undefined
 ): Result<{ text: string; values: unknown[] }, ErrorType.BadRequest> {
@@ -277,7 +277,7 @@ export function totalPublishedEntitiesQuery(
 }
 
 function totalCountQuery(
-  schema: AdminSchema | Schema,
+  schema: AdminSchema | PublishedSchema,
   authKeys: ResolvedAuthKey[],
   query: AdminQuery | PublishedQuery | undefined,
   published: boolean
@@ -375,7 +375,7 @@ function totalCountQuery(
 }
 
 function getFilterEntityTypes(
-  schema: Schema | AdminSchema,
+  schema: PublishedSchema | AdminSchema,
   query: PublishedQuery | AdminQuery | undefined
 ): Result<string[], ErrorType.BadRequest> {
   if (!query?.entityTypes || query.entityTypes.length === 0) {

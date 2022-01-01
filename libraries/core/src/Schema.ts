@@ -25,12 +25,12 @@ export interface AdminValueTypeSpecificationUpdate {
   fields: FieldSpecification[];
 }
 
-export interface EntityTypeSpecification {
+export interface PublishedEntityTypeSpecification {
   name: string;
   fields: FieldSpecification[];
 }
 
-export interface ValueTypeSpecification {
+export interface PublishedValueTypeSpecification {
   name: string;
   fields: FieldSpecification[];
 }
@@ -80,9 +80,9 @@ export interface FieldValueTypeMap {
   [FieldType.ValueType]: ValueItem;
 }
 
-export interface SchemaSpecification {
-  entityTypes: EntityTypeSpecification[];
-  valueTypes: ValueTypeSpecification[];
+export interface PublishedSchemaSpecification {
+  entityTypes: PublishedEntityTypeSpecification[];
+  valueTypes: PublishedValueTypeSpecification[];
 }
 
 export interface AdminSchemaSpecification {
@@ -290,8 +290,8 @@ export class AdminSchema {
     return ok(schemaSpec);
   }
 
-  toPublishedSchema(): SchemaSpecification {
-    const spec: SchemaSpecification = {
+  toPublishedSchema(): PublishedSchemaSpecification {
+    const spec: PublishedSchemaSpecification = {
       entityTypes: [],
       valueTypes: [],
     };
@@ -313,10 +313,10 @@ export class AdminSchema {
   }
 }
 
-export class Schema {
-  readonly spec: SchemaSpecification;
+export class PublishedSchema {
+  readonly spec: PublishedSchemaSpecification;
 
-  constructor(spec: SchemaSpecification) {
+  constructor(spec: PublishedSchemaSpecification) {
     this.spec = spec;
   }
 
@@ -324,12 +324,12 @@ export class Schema {
     return this.spec.entityTypes.length;
   }
 
-  getEntityTypeSpecification(type: string): EntityTypeSpecification | null {
+  getEntityTypeSpecification(type: string): PublishedEntityTypeSpecification | null {
     return this.spec.entityTypes.find((it) => it.name === type) ?? null;
   }
 
   getEntityFieldSpecification(
-    entitySpec: EntityTypeSpecification,
+    entitySpec: PublishedEntityTypeSpecification,
     fieldName: string
   ): FieldSpecification | null {
     return entitySpec.fields.find((it) => it.name === fieldName) ?? null;
@@ -339,12 +339,12 @@ export class Schema {
     return this.spec.valueTypes.length;
   }
 
-  getValueTypeSpecification(type: string): ValueTypeSpecification | null {
+  getValueTypeSpecification(type: string): PublishedValueTypeSpecification | null {
     return this.spec.valueTypes.find((it) => it.name === type) ?? null;
   }
 
   getValueFieldSpecification(
-    valueSpec: ValueTypeSpecification,
+    valueSpec: PublishedValueTypeSpecification,
     fieldName: string
   ): FieldSpecification | null {
     return valueSpec.fields.find((it) => it.name === fieldName) ?? null;
