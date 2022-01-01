@@ -14,7 +14,7 @@ import type {
   EntityVersionReferenceWithAuthKeys,
   ErrorType,
   PublishedClient,
-  Query,
+  PublishedQuery,
   Result,
   Schema,
   ValueItem,
@@ -1330,7 +1330,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       TSource,
       TContext,
       {
-        query?: Query;
+        query?: PublishedQuery;
         first?: number;
         after?: string;
         last?: number;

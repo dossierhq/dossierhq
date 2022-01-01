@@ -1,10 +1,10 @@
 import {
+  AdminEntityStatus,
   AdminQueryOrder,
   AdminSchema,
   CoreTestUtils,
-  AdminEntityStatus,
   ErrorType,
-  QueryOrder,
+  PublishedQueryOrder,
 } from '@jonasb/datadata-core';
 import { toOpaqueCursor } from './Connection';
 import {
@@ -1014,7 +1014,7 @@ describe('searchPublishedEntitiesQuery()', () => {
     expect(
       searchPublishedEntitiesQuery(
         schema,
-        { order: QueryOrder.createdAt, reverse: true },
+        { order: PublishedQueryOrder.createdAt, reverse: true },
         undefined,
         authKeysNone
       )
@@ -1258,7 +1258,12 @@ describe('searchPublishedEntitiesQuery()', () => {
 
   test('order by createdAt', () => {
     expect(
-      searchPublishedEntitiesQuery(schema, { order: QueryOrder.createdAt }, undefined, authKeysNone)
+      searchPublishedEntitiesQuery(
+        schema,
+        { order: PublishedQueryOrder.createdAt },
+        undefined,
+        authKeysNone
+      )
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
@@ -1277,7 +1282,12 @@ describe('searchPublishedEntitiesQuery()', () => {
 
   test('order by name', () => {
     expect(
-      searchPublishedEntitiesQuery(schema, { order: QueryOrder.name }, undefined, authKeysNone)
+      searchPublishedEntitiesQuery(
+        schema,
+        { order: PublishedQueryOrder.name },
+        undefined,
+        authKeysNone
+      )
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {

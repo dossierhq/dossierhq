@@ -105,7 +105,12 @@ export type {
 } from './Schema';
 export { LoggingClientMiddleware } from './SharedClient';
 export type { ClientContext, ContextProvider } from './SharedClient';
-export { AdminEntityStatus, AdminQueryOrder, PublishingEventKind, QueryOrder } from './Types';
+export {
+  AdminEntityStatus,
+  AdminQueryOrder,
+  PublishedQueryOrder,
+  PublishingEventKind,
+} from './Types';
 export type {
   AdminEntity,
   AdminEntityArchivePayload,
@@ -137,9 +142,9 @@ export type {
   Paging,
   PublishedEntity,
   PublishedEntityInfo,
+  PublishedQuery,
   PublishingEvent,
   PublishingHistory,
-  Query,
   RichText,
   RichTextBlock,
   ValueItem,

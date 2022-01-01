@@ -1,4 +1,4 @@
-import type { AdminEntity, QueryOrder } from '@jonasb/datadata-core';
+import type { AdminEntity, PublishedQueryOrder } from '@jonasb/datadata-core';
 import { AdminQueryOrder } from '@jonasb/datadata-core';
 import { InstantDisplay, Table } from '@jonasb/datadata-design';
 import type { Dispatch } from 'react';
@@ -104,7 +104,7 @@ export function EntityList2({ searchEntityState, dispatchSearchEntityState, onIt
 
 function handleHeaderClick(
   dispatchSearchEntityState: Dispatch<SearchEntityStateAction>,
-  order: AdminQueryOrder | QueryOrder | undefined,
+  order: AdminQueryOrder | PublishedQueryOrder | undefined,
   reverse: boolean | undefined,
   headerOrder: AdminQueryOrder
 ) {

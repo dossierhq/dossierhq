@@ -10,7 +10,7 @@ import type {
   JsonResult,
   Paging,
   PromiseResult,
-  Query,
+  PublishedQuery,
   Result,
   SchemaSpecification,
 } from '.';
@@ -55,7 +55,7 @@ export interface PublishedClient {
   >;
 
   searchEntities(
-    query?: Query,
+    query?: PublishedQuery,
     paging?: Paging
   ): PromiseResult<
     Connection<Edge<PublishedEntity, ErrorType>> | null,
@@ -63,7 +63,7 @@ export interface PublishedClient {
   >;
 
   getTotalCount(
-    query?: Query
+    query?: PublishedQuery
   ): PromiseResult<number, ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic>;
 }
 
@@ -183,7 +183,7 @@ class BasePublishedClient<TContext extends ClientContext> implements PublishedCl
   }
 
   getTotalCount(
-    query?: Query
+    query?: PublishedQuery
   ): Promise<PublishedClientOperationReturn[PublishedClientOperationName.getTotalCount]> {
     return this.executeOperation({
       name: PublishedClientOperationName.getTotalCount,
@@ -193,7 +193,7 @@ class BasePublishedClient<TContext extends ClientContext> implements PublishedCl
   }
 
   searchEntities(
-    query?: Query,
+    query?: PublishedQuery,
     paging?: Paging
   ): Promise<PublishedClientOperationReturn[PublishedClientOperationName.searchEntities]> {
     return this.executeOperation({

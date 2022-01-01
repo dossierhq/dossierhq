@@ -1,4 +1,4 @@
-import type { Paging, Query } from '@jonasb/datadata-core';
+import type { Paging, PublishedQuery } from '@jonasb/datadata-core';
 import type { Dispatch } from 'react';
 import { useContext } from 'react';
 import type { SearchEntityStateAction } from '../index.js';
@@ -10,7 +10,7 @@ import {
 } from '../index.js';
 
 export function useLoadSearchEntity(
-  query: Query,
+  query: PublishedQuery,
   paging: Paging,
   dispatchSearchEntityState: Dispatch<SearchEntityStateAction>
 ) {

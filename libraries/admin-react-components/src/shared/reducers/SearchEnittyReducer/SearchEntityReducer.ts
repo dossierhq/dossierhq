@@ -7,7 +7,7 @@ import type {
   ErrorType,
   Paging,
   PublishedEntity,
-  Query,
+  PublishedQuery,
 } from '@jonasb/datadata-core';
 import { AdminQueryOrder, getPagingInfo } from '@jonasb/datadata-core';
 import isEqual from 'lodash/isEqual.js';
@@ -18,7 +18,7 @@ const defaultOrder = AdminQueryOrder.name;
 const defaultPagingCount = 25;
 
 export interface SearchEntityState {
-  query: AdminQuery | Query;
+  query: AdminQuery | PublishedQuery;
   paging: Paging;
   pagingCount: number;
   text: string;
@@ -90,16 +90,16 @@ class SetPagingAction implements SearchEntityStateAction {
 }
 
 class SetQueryAction implements SearchEntityStateAction {
-  readonly value: AdminQuery | Query;
+  readonly value: AdminQuery | PublishedQuery;
   readonly partial: boolean;
 
-  constructor(value: AdminQuery | Query, partial: boolean) {
+  constructor(value: AdminQuery | PublishedQuery, partial: boolean) {
     this.value = value;
     this.partial = partial;
   }
 
   reduce(state: SearchEntityState): SearchEntityState {
-    const query: AdminQuery | Query = this.partial
+    const query: AdminQuery | PublishedQuery = this.partial
       ? { ...state.query, ...this.value }
       : { ...this.value };
     if (query.authKeys?.length === 0) {
@@ -174,7 +174,9 @@ export const SearchEntityStateActions = {
   UpdateTotalCount: UpdateTotalCountAction,
 };
 
-export function getQueryWithoutDefaults(query: AdminQuery | Query): AdminQuery | Query {
+export function getQueryWithoutDefaults(
+  query: AdminQuery | PublishedQuery
+): AdminQuery | PublishedQuery {
   let changed = false;
   const newQuery = { ...query };
   if (query.order === defaultOrder) {
