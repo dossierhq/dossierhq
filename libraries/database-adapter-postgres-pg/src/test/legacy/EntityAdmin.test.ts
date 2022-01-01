@@ -4228,27 +4228,23 @@ describe('unpublishEntities()', () => {
         expectResultValue(unpublishResult, [
           { id, status: AdminEntityStatus.withdrawn, effect: 'unpublished', updatedAt },
         ]);
-      }
 
-      const getResult = await client.getEntity({ id });
-      if (expectOkResult(getResult)) {
-        //TODO should unpublishEntities return updatedAt?
-        const {
-          info: { updatedAt },
-        } = getResult.value;
-        expectResultValue(getResult, {
-          id,
-          info: {
-            type: 'EntityAdminBaz',
-            name,
-            version: 0,
-            authKey: 'none',
-            status: AdminEntityStatus.withdrawn,
-            createdAt,
-            updatedAt,
-          },
-          fields: { ...emptyBazFields, title: 'Baz title 1' },
-        });
+        const getResult = await client.getEntity({ id });
+        if (expectOkResult(getResult)) {
+          expectResultValue(getResult, {
+            id,
+            info: {
+              type: 'EntityAdminBaz',
+              name,
+              version: 0,
+              authKey: 'none',
+              status: AdminEntityStatus.withdrawn,
+              createdAt,
+              updatedAt,
+            },
+            fields: { ...emptyBazFields, title: 'Baz title 1' },
+          });
+        }
       }
     }
   });
@@ -4733,50 +4729,46 @@ describe('unarchiveEntity()', () => {
           effect: 'unarchived',
           updatedAt,
         });
-      }
 
-      const historyResult = await client.getPublishingHistory({ id });
-      if (expectOkResult(historyResult)) {
-        const { publishedAt: publishedAt0 } = historyResult.value.events[0];
-        const { publishedAt: publishedAt1 } = historyResult.value.events[1];
-        expectResultValue(historyResult, {
-          id,
-          events: [
-            {
-              kind: PublishingEventKind.Archive,
-              publishedAt: publishedAt0,
-              publishedBy: context.session.subjectId,
-              version: null,
-            },
-            {
-              kind: PublishingEventKind.Unarchive,
-              publishedAt: publishedAt1,
-              publishedBy: context.session.subjectId,
-              version: null,
-            },
-          ],
-        });
-      }
+        const historyResult = await client.getPublishingHistory({ id });
+        if (expectOkResult(historyResult)) {
+          const { publishedAt: publishedAt0 } = historyResult.value.events[0];
+          const { publishedAt: publishedAt1 } = historyResult.value.events[1];
+          expectResultValue(historyResult, {
+            id,
+            events: [
+              {
+                kind: PublishingEventKind.Archive,
+                publishedAt: publishedAt0,
+                publishedBy: context.session.subjectId,
+                version: null,
+              },
+              {
+                kind: PublishingEventKind.Unarchive,
+                publishedAt: publishedAt1,
+                publishedBy: context.session.subjectId,
+                version: null,
+              },
+            ],
+          });
+        }
 
-      const getResult = await client.getEntity({ id });
-      if (expectOkResult(getResult)) {
-        //TODO should unarchiveEntity return updatedAt?
-        const {
-          info: { updatedAt },
-        } = getResult.value;
-        expectResultValue(getResult, {
-          id,
-          info: {
-            name,
-            type: 'EntityAdminBar',
-            version: 0,
-            authKey: 'none',
-            status: AdminEntityStatus.draft,
-            createdAt,
-            updatedAt,
-          },
-          fields: { title: 'Bar title' },
-        });
+        const getResult = await client.getEntity({ id });
+        if (expectOkResult(getResult)) {
+          expectResultValue(getResult, {
+            id,
+            info: {
+              name,
+              type: 'EntityAdminBar',
+              version: 0,
+              authKey: 'none',
+              status: AdminEntityStatus.draft,
+              createdAt,
+              updatedAt,
+            },
+            fields: { title: 'Bar title' },
+          });
+        }
       }
     }
   });
