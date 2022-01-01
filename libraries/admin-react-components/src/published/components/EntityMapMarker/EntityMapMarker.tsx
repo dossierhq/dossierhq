@@ -1,4 +1,4 @@
-import type { Entity, Location } from '@jonasb/datadata-core';
+import type { Location, PublishedEntity } from '@jonasb/datadata-core';
 import { Column, Text } from '@jonasb/datadata-design';
 import React from 'react';
 import { MapContainer } from '../../../index.js';
@@ -8,7 +8,7 @@ export function EntityMapMarker({
   location,
   onClick,
 }: {
-  entity: Entity;
+  entity: PublishedEntity;
   location: Location;
   onClick: () => void;
 }) {

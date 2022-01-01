@@ -1,4 +1,16 @@
-import chalk from 'chalk';
+import type {
+  AdminEntity,
+  AdminEntityTypeSpecification,
+  AdminValueTypeSpecification,
+  BoundingBox,
+  ErrorResult,
+  ErrorType,
+  FieldSpecification,
+  Location,
+  PublishedEntity,
+  RichText,
+  ValueItem,
+} from '@jonasb/datadata-core';
 import {
   isEntityTypeField,
   isEntityTypeItemField,
@@ -18,19 +30,7 @@ import {
   isValueTypeListField,
   visitItemRecursively,
 } from '@jonasb/datadata-core';
-import type {
-  AdminEntity,
-  BoundingBox,
-  Entity,
-  AdminEntityTypeSpecification,
-  ErrorResult,
-  ErrorType,
-  FieldSpecification,
-  Location,
-  RichText,
-  ValueItem,
-  AdminValueTypeSpecification,
-} from '@jonasb/datadata-core';
+import chalk from 'chalk';
 import type { CliContext } from '.';
 
 export function logErrorResult(
@@ -63,7 +63,7 @@ export function logKeyValue(key: string, value: string): void {
   console.log(`${chalk.bold(`${key}:`)} ${value}`);
 }
 
-export function logEntity(context: CliContext, entity: AdminEntity | Entity): void {
+export function logEntity(context: CliContext, entity: AdminEntity | PublishedEntity): void {
   const { schema } = context;
   logKeyValue('type', entity.info.type);
   logKeyValue('name', entity.info.name);
@@ -112,7 +112,7 @@ export function logEntity(context: CliContext, entity: AdminEntity | Entity): vo
   });
 }
 
-export function formatEntityOneLine(entity: Entity | AdminEntity): string {
+export function formatEntityOneLine(entity: PublishedEntity | AdminEntity): string {
   if (isItemAdminEntity(entity)) {
     return `${entity.info.type} | ${entity.info.status} | ${chalk.bold(entity.info.name)} | ${
       entity.id

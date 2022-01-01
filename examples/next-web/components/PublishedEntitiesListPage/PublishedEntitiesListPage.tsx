@@ -1,5 +1,5 @@
 import { published } from '@jonasb/datadata-admin-react-components';
-import type { Entity } from '@jonasb/datadata-core';
+import type { PublishedEntity } from '@jonasb/datadata-core';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useCallback } from 'react';
@@ -12,7 +12,7 @@ const { EntityListScreen } = published;
 export default function PublishedEntitiesListPage(): JSX.Element | null {
   const router = useRouter();
   const handleEntityOpen = useCallback(
-    (entity: Entity) => router.push(urls.publishedEntityDetail(entity)),
+    (entity: PublishedEntity) => router.push(urls.publishedEntityDetail(entity)),
     [router]
   );
   const handleUrlQueryChanged = useCallback(

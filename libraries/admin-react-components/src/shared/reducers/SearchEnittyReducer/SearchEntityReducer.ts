@@ -3,10 +3,10 @@ import type {
   AdminQuery,
   Connection,
   Edge,
-  Entity,
   ErrorResult,
   ErrorType,
   Paging,
+  PublishedEntity,
   Query,
 } from '@jonasb/datadata-core';
 import { AdminQueryOrder, getPagingInfo } from '@jonasb/datadata-core';
@@ -23,7 +23,7 @@ export interface SearchEntityState {
   pagingCount: number;
   text: string;
 
-  connection: Connection<Edge<AdminEntity | Entity, ErrorType>> | null | undefined;
+  connection: Connection<Edge<AdminEntity | PublishedEntity, ErrorType>> | null | undefined;
   connectionError: ErrorResult<unknown, ErrorType.BadRequest | ErrorType.Generic> | undefined;
   totalCount: number | null;
 }
@@ -189,7 +189,7 @@ export function getQueryWithoutDefaults(query: AdminQuery | Query): AdminQuery |
 }
 
 export function useUpdateSearchEntityStateWithResponse(
-  connection: Connection<Edge<AdminEntity | Entity, ErrorType>> | null | undefined,
+  connection: Connection<Edge<AdminEntity | PublishedEntity, ErrorType>> | null | undefined,
   connectionError: ErrorResult<unknown, ErrorType.BadRequest | ErrorType.Generic> | undefined,
   totalCount: number | undefined,
   dispatchSearchEntityState: Dispatch<SearchEntityStateAction>

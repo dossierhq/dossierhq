@@ -5,10 +5,10 @@ import type {
   BoundingBox,
   Connection,
   Edge,
-  Entity,
   ErrorType,
   PromiseResult,
   PublishedClient,
+  PublishedEntity,
   Query,
 } from '@jonasb/datadata-core';
 import { AdminEntityStatus, getAllPagesForConnection, ok } from '@jonasb/datadata-core';
@@ -153,7 +153,7 @@ export async function getAllEntities(
   return ok(entities);
 }
 
-export function expectConnectionToMatchSlice<TEntity extends Entity | AdminEntity>(
+export function expectConnectionToMatchSlice<TEntity extends PublishedEntity | AdminEntity>(
   allEntities: TEntity[],
   connection: Connection<Edge<TEntity, ErrorType>> | null,
   sliceStart: number,

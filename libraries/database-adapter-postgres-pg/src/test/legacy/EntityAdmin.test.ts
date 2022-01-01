@@ -780,7 +780,12 @@ describe('createEntity()', () => {
         const publishedFooResult = await publishedClient.getEntity({ id: fooId });
         expectResultValue(publishedFooResult, {
           id: fooId,
-          info: { type: 'EntityAdminFoo', name, authKey: 'none', createdAt },
+          info: {
+            type: 'EntityAdminFoo',
+            name,
+            authKey: 'none',
+            createdAt,
+          },
           fields: {
             ...emptyFooFields,
             title: 'Foo title',

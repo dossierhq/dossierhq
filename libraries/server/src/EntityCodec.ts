@@ -4,13 +4,13 @@ import type {
   AdminEntityTypeSpecification,
   AdminEntityUpdate,
   AdminSchema,
-  Entity,
   EntityLike,
   EntityTypeSpecification,
   ErrorType,
   FieldSpecification,
   Location,
   PromiseResult,
+  PublishedEntity,
   Result,
   RichText,
   Schema,
@@ -68,12 +68,12 @@ export function decodePublishedEntity(
   schema: Schema,
   values: Pick<EntitiesTable, 'uuid' | 'type' | 'name' | 'auth_key' | 'created_at'> &
     Pick<EntityVersionsTable, 'data'>
-): Entity {
+): PublishedEntity {
   const entitySpec = schema.getEntityTypeSpecification(values.type);
   if (!entitySpec) {
     throw new Error(`No entity spec for type ${values.type}`);
   }
-  const entity: Entity = {
+  const entity: PublishedEntity = {
     id: values.uuid,
     info: {
       type: values.type,

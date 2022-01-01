@@ -107,7 +107,7 @@ describe('node()', () => {
             node(id: $id) {
               __typename
               id
-              ... on QueryFoo {
+              ... on PublishedQueryFoo {
                 info {
                   name
                   authKey
@@ -136,7 +136,7 @@ describe('node()', () => {
       expect(result).toEqual({
         data: {
           node: {
-            __typename: 'QueryFoo',
+            __typename: 'PublishedQueryFoo',
             id,
             info: { name, authKey: 'none', createdAt: createdAt.toString() },
             fields: {
@@ -178,7 +178,7 @@ describe('node()', () => {
             node(id: $id) {
               __typename
               id
-              ... on QueryFoo {
+              ... on PublishedQueryFoo {
                 info {
                   name
                   authKey
@@ -216,7 +216,7 @@ describe('node()', () => {
       expect(result).toEqual({
         data: {
           node: {
-            __typename: 'QueryFoo',
+            __typename: 'PublishedQueryFoo',
             id,
             info: { name, authKey: 'none', createdAt: createdAt.toString() },
             fields: {
@@ -260,7 +260,7 @@ describe('node()', () => {
             node(id: $id) {
               __typename
               id
-              ... on QueryFoo {
+              ... on PublishedQueryFoo {
                 info {
                   name
                   authKey
@@ -283,7 +283,7 @@ describe('node()', () => {
       expect(result).toEqual({
         data: {
           node: {
-            __typename: 'QueryFoo',
+            __typename: 'PublishedQueryFoo',
             id: fooId,
             info: { name, authKey: 'none' },
             fields: {
@@ -342,7 +342,7 @@ describe('node()', () => {
               node(id: $id) {
                 __typename
                 id
-                ... on QueryFoo {
+                ... on PublishedQueryFoo {
                   info {
                     name
                     authKey
@@ -368,7 +368,7 @@ describe('node()', () => {
         expect(result).toEqual({
           data: {
             node: {
-              __typename: 'QueryFoo',
+              __typename: 'PublishedQueryFoo',
               id: fooId,
               info: { name, authKey: 'none' },
               fields: {
@@ -424,7 +424,7 @@ describe('node()', () => {
               node(id: $id) {
                 __typename
                 id
-                ... on QueryFoo {
+                ... on PublishedQueryFoo {
                   info {
                     name
                     authKey
@@ -453,13 +453,13 @@ describe('node()', () => {
         expect(result).toEqual({
           data: {
             node: {
-              __typename: 'QueryFoo',
+              __typename: 'PublishedQueryFoo',
               id: fooId,
               info: { name: fooName, authKey: 'none' },
               fields: {
                 title: 'Foo title',
                 bar: {
-                  __typename: 'QueryBar',
+                  __typename: 'PublishedQueryBar',
                   id: barId,
                   info: { name: barName, authKey: 'none' },
                   fields: {
@@ -526,7 +526,7 @@ describe('node()', () => {
               node(id: $id) {
                 __typename
                 id
-                ... on QueryFoo {
+                ... on PublishedQueryFoo {
                   info {
                     name
                     authKey
@@ -555,20 +555,20 @@ describe('node()', () => {
         expect(result).toEqual({
           data: {
             node: {
-              __typename: 'QueryFoo',
+              __typename: 'PublishedQueryFoo',
               id: fooId,
               info: { name: fooName, authKey: 'none' },
               fields: {
                 title: 'Foo title',
                 bars: [
                   {
-                    __typename: 'QueryBar',
+                    __typename: 'PublishedQueryBar',
                     id: bar1Id,
                     info: { name: bar1Name, authKey: 'none' },
                     fields: { title: 'Bar 1 title' },
                   },
                   {
-                    __typename: 'QueryBar',
+                    __typename: 'PublishedQueryBar',
                     id: bar2Id,
                     info: { name: bar2Name, authKey: 'none' },
                     fields: { title: 'Bar 2 title' },
@@ -622,7 +622,7 @@ describe('node()', () => {
               node(id: $id) {
                 __typename
                 id
-                ... on QueryFoo {
+                ... on PublishedQueryFoo {
                   info {
                     name
                     authKey
@@ -656,17 +656,17 @@ describe('node()', () => {
         expect(result).toEqual({
           data: {
             node: {
-              __typename: 'QueryFoo',
+              __typename: 'PublishedQueryFoo',
               id: fooId,
               info: { name: fooName, authKey: 'none' },
               fields: {
                 title: 'Foo title',
                 stringedBar: {
-                  __typename: 'QueryStringedBar',
+                  __typename: 'PublishedQueryStringedBar',
                   type: 'QueryStringedBar',
                   text: 'Value text',
                   bar: {
-                    __typename: 'QueryBar',
+                    __typename: 'PublishedQueryBar',
                     id: barId,
                     info: { name: barName, authKey: 'none' },
                     fields: { title: 'Bar title' },
@@ -776,7 +776,7 @@ describe('nodes()', () => {
             nodes(ids: $ids) {
               __typename
               id
-              ... on QueryFoo {
+              ... on PublishedQueryFoo {
                 info {
                   name
                   authKey
@@ -793,12 +793,12 @@ describe('nodes()', () => {
         data: {
           nodes: [
             {
-              __typename: 'QueryFoo',
+              __typename: 'PublishedQueryFoo',
               id: foo1Id,
               info: { name: foo1Name, authKey: 'none', createdAt: foo1CreatedAt.toString() },
             },
             {
-              __typename: 'QueryFoo',
+              __typename: 'PublishedQueryFoo',
               id: foo2Id,
               info: { name: foo2Name, authKey: 'none', createdAt: foo2CreatedAt.toString() },
             },

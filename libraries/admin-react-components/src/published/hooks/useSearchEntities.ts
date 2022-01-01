@@ -1,11 +1,11 @@
 import type {
   Connection,
   Edge,
-  Entity,
   ErrorResult,
   ErrorType,
   Paging,
   PublishedClient,
+  PublishedEntity,
   Query,
 } from '@jonasb/datadata-core';
 import { useCallback } from 'react';
@@ -22,7 +22,7 @@ export function useSearchEntities(
   query: Query | undefined,
   paging?: Paging
 ): {
-  connection: Connection<Edge<Entity, ErrorType>> | null | undefined;
+  connection: Connection<Edge<PublishedEntity, ErrorType>> | null | undefined;
   connectionError: ErrorResult<unknown, ErrorType.BadRequest | ErrorType.Generic> | undefined;
 } {
   const fetcher = useCallback(
@@ -50,7 +50,7 @@ async function fetchSearchEntities(
   publishedClient: PublishedClient,
   query: Query,
   paging: Paging | undefined
-): Promise<Connection<Edge<Entity, ErrorType>> | null> {
+): Promise<Connection<Edge<PublishedEntity, ErrorType>> | null> {
   const result = await publishedClient.searchEntities(query, paging);
   if (result.isError()) {
     throw result; // throw result, don't convert to Error

@@ -2,7 +2,7 @@ import type {
   Connection,
   ContextProvider,
   Edge,
-  Entity,
+  PublishedEntity,
   EntityReference,
   EntityReferenceWithAuthKeys,
   JsonConnection,
@@ -40,7 +40,7 @@ export interface PublishedClient {
   getEntity(
     reference: EntityReferenceWithAuthKeys
   ): PromiseResult<
-    Entity,
+    PublishedEntity,
     ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
   >;
 
@@ -48,7 +48,7 @@ export interface PublishedClient {
     references: EntityReferenceWithAuthKeys[]
   ): PromiseResult<
     Result<
-      Entity,
+      PublishedEntity,
       ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
     >[],
     ErrorType.Generic
@@ -58,7 +58,7 @@ export interface PublishedClient {
     query?: Query,
     paging?: Paging
   ): PromiseResult<
-    Connection<Edge<Entity, ErrorType>> | null,
+    Connection<Edge<PublishedEntity, ErrorType>> | null,
     ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
   >;
 

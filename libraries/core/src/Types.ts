@@ -1,13 +1,13 @@
 import type { Temporal } from '@js-temporal/polyfill';
 import type { ErrorType, Result } from '.';
 
-export interface Entity {
+export interface PublishedEntity {
   id: string;
-  info: EntityInfo;
+  info: PublishedEntityInfo;
   fields: Record<string, unknown>;
 }
 
-export interface EntityInfo {
+export interface PublishedEntityInfo {
   type: string;
   name: string;
   authKey: string;

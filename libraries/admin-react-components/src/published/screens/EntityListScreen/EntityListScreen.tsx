@@ -1,4 +1,4 @@
-import type { Entity, Query } from '@jonasb/datadata-core';
+import type { PublishedEntity, Query } from '@jonasb/datadata-core';
 import { FullscreenContainer, IconButton, toSizeClassName } from '@jonasb/datadata-design';
 import React, { useCallback, useContext, useEffect, useReducer, useState } from 'react';
 import type { EntitySearchStateUrlQuery } from '../../index.js';
@@ -30,7 +30,7 @@ export interface EntityListScreenProps {
   footer?: React.ReactNode;
   urlQuery?: EntitySearchStateUrlQuery;
   onUrlQueryChanged?: (urlQuery: EntitySearchStateUrlQuery) => void;
-  onOpenEntity: (entity: Entity) => void;
+  onOpenEntity: (entity: PublishedEntity) => void;
 }
 
 export function EntityListScreen({
@@ -125,7 +125,7 @@ export function EntityListScreen({
       </FullscreenContainer.Row>
       {showMap ? (
         <FullscreenContainer.Row fillHeight fullWidth>
-          <EntityMap2<Entity>
+          <EntityMap2<PublishedEntity>
             className={toSizeClassName({ height: '100%' })}
             {...{ schema, searchEntityState, dispatchSearchEntityState }}
             renderEntityMarker={(key, entity, location) => (

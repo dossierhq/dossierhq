@@ -4,13 +4,13 @@ import type {
   AdminQuery,
   AdminSchema,
   AdminValueTypeSpecification,
-  Entity,
   EntityHistory,
   EntityReferenceWithAuthKeys,
   EntityTypeSpecification,
   FieldSpecification,
   PageInfo,
   Paging,
+  PublishedEntity,
   PublishingHistory,
   Query,
   RichText,
@@ -55,7 +55,7 @@ export async function loadEntity<TContext extends SessionGraphQLContext>(
   schema: Schema,
   context: TContext,
   id: string
-): Promise<Entity> {
+): Promise<PublishedEntity> {
   const publishedClient = getPublishedClient(context);
   const result = await publishedClient.getEntity({ id });
   if (result.isError()) {
@@ -68,7 +68,7 @@ export async function loadEntities<TContext extends SessionGraphQLContext>(
   schema: Schema,
   context: TContext,
   ids: string[]
-): Promise<Array<Entity | null>> {
+): Promise<Array<PublishedEntity | null>> {
   const publishedClient = getPublishedClient(context);
   const results = await publishedClient.getEntities(ids.map((id) => ({ id })));
   if (results.isError()) {
@@ -88,7 +88,7 @@ export async function loadSearchEntities<TContext extends SessionGraphQLContext>
   context: TContext,
   query: Query | undefined,
   paging: Paging
-): Promise<ConnectionWithTotalCount<Edge<Entity>, TContext> | null> {
+): Promise<ConnectionWithTotalCount<Edge<PublishedEntity>, TContext> | null> {
   const publishedClient = getPublishedClient(context);
   const result = await publishedClient.searchEntities(query, paging);
   if (result.isError()) {
@@ -127,8 +127,8 @@ function buildTotalCount<TContext extends SessionGraphQLContext>(
 
 function buildResolversForEntity<TContext extends SessionGraphQLContext>(
   schema: Schema,
-  entity: Entity
-): Entity {
+  entity: PublishedEntity
+): PublishedEntity {
   const entitySpec = schema.getEntityTypeSpecification(entity.info.type);
   if (!entitySpec) {
     throw new Error(`Couldn't find entity spec for type: ${entity.info.type}`);
@@ -228,7 +228,7 @@ function resolveFields<TContext extends SessionGraphQLContext>(
     | EntityTypeSpecification
     | AdminValueTypeSpecification
     | ValueTypeSpecification,
-  item: ValueItem | Entity | AdminEntity,
+  item: ValueItem | PublishedEntity | AdminEntity,
   isAdmin: boolean
 ) {
   const fields = isItemValueItem(item) ? item : item.fields;

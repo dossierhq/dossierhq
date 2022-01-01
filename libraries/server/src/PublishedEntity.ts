@@ -1,11 +1,11 @@
 import type {
   Connection,
   Edge,
-  Entity,
   EntityReferenceWithAuthKeys,
   ErrorType,
   Paging,
   PromiseResult,
+  PublishedEntity,
   Query,
   Result,
   Schema,
@@ -27,7 +27,7 @@ export async function getEntity(
   context: SessionContext,
   reference: EntityReferenceWithAuthKeys
 ): PromiseResult<
-  Entity,
+  PublishedEntity,
   ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
 > {
   const entityMain = await Db.queryNoneOrOne<
@@ -80,7 +80,7 @@ export async function getEntities(
   references: EntityReferenceWithAuthKeys[]
 ): PromiseResult<
   Result<
-    Entity,
+    PublishedEntity,
     ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
   >[],
   ErrorType.Generic
@@ -108,7 +108,7 @@ export async function getEntities(
     reference: EntityReferenceWithAuthKeys,
     entityMain: typeof entitiesMain[0] | undefined
   ): PromiseResult<
-    Entity,
+    PublishedEntity,
     ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
   > {
     if (!entityMain) {
@@ -130,7 +130,7 @@ export async function getEntities(
   }
 
   const result: Result<
-    Entity,
+    PublishedEntity,
     ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
   >[] = [];
   for (const reference of references) {
@@ -174,7 +174,7 @@ export async function searchEntities(
   query: Query | undefined,
   paging: Paging | undefined
 ): PromiseResult<
-  Connection<Edge<Entity, ErrorType>> | null,
+  Connection<Edge<PublishedEntity, ErrorType>> | null,
   ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
 > {
   const authKeysResult = await authResolveAuthorizationKeys(
@@ -191,7 +191,7 @@ export async function searchEntities(
     return sqlQueryResult;
   }
 
-  return await sharedSearchEntities<Schema, Entity, SearchPublishedEntitiesItem>(
+  return await sharedSearchEntities<Schema, PublishedEntity, SearchPublishedEntitiesItem>(
     schema,
     databaseAdapter,
     context,
