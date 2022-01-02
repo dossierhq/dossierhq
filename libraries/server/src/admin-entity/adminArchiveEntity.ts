@@ -55,9 +55,13 @@ export async function adminArchiveEntity(
     //TODO archive and creating publishing events can be performed in parallel
 
     // Step 4: Archive entity
-    const archiveResult = await databaseAdapter.adminEntityArchiveEntity(context, {
-      entityInternalId,
-    });
+    const archiveResult = await databaseAdapter.adminEntityArchiveEntity(
+      context,
+      AdminEntityStatus.archived,
+      {
+        entityInternalId,
+      }
+    );
     if (archiveResult.isError()) {
       return archiveResult;
     }

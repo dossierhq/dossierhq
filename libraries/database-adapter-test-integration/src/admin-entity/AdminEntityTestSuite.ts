@@ -1,6 +1,7 @@
 import type { AdminClient } from '@jonasb/datadata-core';
 import type { TestFunctionInitializer, TestSuite } from '..';
 import { buildSuite } from '../Builder';
+import { ArchiveEntitySubSuite } from './AdminEntityArchiveEntitySubSuite';
 import { CreateEntitySubSuite } from './AdminEntityCreateEntitySubSuite';
 import { GetEntitySubSuite } from './AdminEntityGetEntitySubSuite';
 import { PublishEntitiesSubSuite } from './AdminEntityPublishEntitiesSubSuite';
@@ -17,6 +18,7 @@ export function createAdminEntityTestSuite<TCleanup>(
 ): TestSuite {
   return buildSuite(
     initializer,
+    ...ArchiveEntitySubSuite,
     ...CreateEntitySubSuite,
     ...GetEntitySubSuite,
     ...PublishEntitiesSubSuite,

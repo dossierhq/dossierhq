@@ -11,13 +11,14 @@ import type {
   DatabaseResolvedEntityReference,
   TransactionContext,
 } from '@jonasb/datadata-server';
-import type { PostgresDatabaseAdapter } from '..';
+import { Temporal } from '@js-temporal/polyfill';
+import type { SqliteDatabaseAdapter } from '..';
 import type { EntitiesTable } from '../DatabaseSchema';
-import { queryNoneOrOne, queryOne } from '../QueryFunctions';
+import { queryNone, queryNoneOrOne } from '../QueryFunctions';
 import { resolveEntityStatus } from '../utils/CodecUtils';
 
 export async function adminEntityArchiveGetEntityInfo(
-  databaseAdapter: PostgresDatabaseAdapter,
+  databaseAdapter: SqliteDatabaseAdapter,
   context: TransactionContext,
   reference: EntityReference
 ): PromiseResult<
@@ -51,30 +52,28 @@ export async function adminEntityArchiveGetEntityInfo(
     authKey,
     resolvedAuthKey,
     status: resolveEntityStatus(status),
-    updatedAt,
+    updatedAt: Temporal.Instant.from(updatedAt),
   });
 }
 
 export async function adminEntityArchiveEntity(
-  databaseAdapter: PostgresDatabaseAdapter,
+  databaseAdapter: SqliteDatabaseAdapter,
   context: TransactionContext,
   status: AdminEntityStatus,
   reference: DatabaseResolvedEntityReference
 ): PromiseResult<DatabaseAdminEntityArchiveEntityPayload, ErrorType.Generic> {
-  const result = await queryOne<Pick<EntitiesTable, 'updated_at'>>(databaseAdapter, context, {
+  const now = Temporal.Now.instant();
+  const result = await queryNone(databaseAdapter, context, {
     text: `UPDATE entities SET
-        archived = TRUE,
-        updated_at = NOW(),
-        updated = nextval('entities_updated_seq'),
-        status = $1
-      WHERE id = $2
-      RETURNING updated_at`,
-    values: [status, reference.entityInternalId],
+        updated_at = ?1,
+        status = ?2
+      WHERE id = ?3`,
+    values: [now.toString(), status, reference.entityInternalId as number],
   });
 
   if (result.isError()) {
     return result;
   }
 
-  return ok({ updatedAt: result.value.updated_at });
+  return ok({ updatedAt: now });
 }

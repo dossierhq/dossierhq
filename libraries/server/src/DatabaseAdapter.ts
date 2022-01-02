@@ -174,6 +174,7 @@ export interface DatabaseAdapter {
 
   adminEntityArchiveEntity(
     context: TransactionContext,
+    status: AdminEntityStatus,
     reference: DatabaseResolvedEntityReference
   ): PromiseResult<DatabaseAdminEntityArchiveEntityPayload, ErrorType.Generic>;
 

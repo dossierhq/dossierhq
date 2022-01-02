@@ -2,6 +2,10 @@ import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
 import { notOk, ok } from '@jonasb/datadata-core';
 import type { Context, DatabaseAdapter } from '@jonasb/datadata-server';
 import type { UniqueConstraint } from '.';
+import {
+  adminEntityArchiveEntity,
+  adminEntityArchiveGetEntityInfo,
+} from './admin-entity/archiveEntity';
 import { adminCreateEntity } from './admin-entity/createEntity';
 import { adminEntityPublishingCreateEvents } from './admin-entity/createPublishingEvents';
 import { adminGetEntity } from './admin-entity/getEntity';
@@ -47,12 +51,9 @@ export async function createSqliteDatabaseAdapter(
   }
 
   const adapter: DatabaseAdapter = {
-    adminEntityArchiveGetEntityInfo: () => {
-      throw new Error('TODO');
-    },
-    adminEntityArchiveEntity: () => {
-      throw new Error('TODO');
-    },
+    adminEntityArchiveGetEntityInfo: (...args) =>
+      adminEntityArchiveGetEntityInfo(sqliteAdapter, ...args),
+    adminEntityArchiveEntity: (...args) => adminEntityArchiveEntity(sqliteAdapter, ...args),
     adminEntityCreate: (...args) => adminCreateEntity(sqliteAdapter, ...args),
     adminEntityGetOne: (...args) => adminGetEntity(sqliteAdapter, ...args),
     adminEntityGetEntityName: (...args) => adminEntityGetEntityName(sqliteAdapter, ...args),
