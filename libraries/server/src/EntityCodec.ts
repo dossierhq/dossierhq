@@ -40,7 +40,10 @@ import {
 import type { DatabaseAdapter, DatabaseAdminEntityGetOnePayload, SessionContext } from '.';
 import { ensureRequired } from './Assertions';
 import * as Db from './Database';
-import type { DatabaseEntityUpdateGetEntityInfoPayload } from './DatabaseAdapter';
+import type {
+  DatabaseEntityUpdateGetEntityInfoPayload,
+  DatabasePublishedEntityGetOnePayload,
+} from './DatabaseAdapter';
 import type { EntitiesTable, EntityVersionsTable } from './DatabaseTables';
 import * as EntityFieldTypeAdapters from './EntityFieldTypeAdapters';
 
@@ -86,6 +89,32 @@ export function decodePublishedEntity(
   for (const fieldSpec of entitySpec.fields) {
     const { name: fieldName } = fieldSpec;
     const fieldValue = values.data[fieldName];
+    entity.fields[fieldName] = decodeFieldItemOrList(schema, fieldSpec, fieldValue);
+  }
+  return entity;
+}
+
+export function decodePublishedEntity2(
+  schema: PublishedSchema,
+  values: DatabasePublishedEntityGetOnePayload
+): PublishedEntity {
+  const entitySpec = schema.getEntityTypeSpecification(values.type);
+  if (!entitySpec) {
+    throw new Error(`No entity spec for type ${values.type}`);
+  }
+  const entity: PublishedEntity = {
+    id: values.id,
+    info: {
+      type: values.type,
+      name: values.name,
+      authKey: values.authKey,
+      createdAt: values.createdAt,
+    },
+    fields: {},
+  };
+  for (const fieldSpec of entitySpec.fields) {
+    const { name: fieldName } = fieldSpec;
+    const fieldValue = values.fieldValues[fieldName];
     entity.fields[fieldName] = decodeFieldItemOrList(schema, fieldSpec, fieldValue);
   }
   return entity;

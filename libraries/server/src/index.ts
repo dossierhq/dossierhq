@@ -17,6 +17,7 @@ export type {
   DatabaseEntityUpdateEntityArg,
   DatabaseEntityUpdateEntityPayload,
   DatabaseEntityUpdateGetEntityInfoPayload,
+  DatabasePublishedEntityGetOnePayload,
   DatabaseResolvedEntityReference,
   Transaction,
 } from './DatabaseAdapter';

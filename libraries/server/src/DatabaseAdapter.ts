@@ -153,6 +153,16 @@ export interface DatabaseAuthCreateSessionPayload {
   session: Session;
 }
 
+export interface DatabasePublishedEntityGetOnePayload {
+  id: string;
+  name: string;
+  type: string;
+  authKey: string;
+  resolvedAuthKey: string;
+  createdAt: Temporal.Instant;
+  fieldValues: Record<string, unknown>;
+}
+
 export interface DatabaseAdapter {
   disconnect(): Promise<void>;
 
@@ -256,6 +266,11 @@ export interface DatabaseAdapter {
     provider: string,
     identifier: string
   ): PromiseResult<DatabaseAuthCreateSessionPayload, ErrorType.Generic>;
+
+  publishedEntityGetOne(
+    context: TransactionContext,
+    reference: EntityReference
+  ): PromiseResult<DatabasePublishedEntityGetOnePayload, ErrorType.NotFound | ErrorType.Generic>;
 
   schemaGetSpecification(
     context: TransactionContext

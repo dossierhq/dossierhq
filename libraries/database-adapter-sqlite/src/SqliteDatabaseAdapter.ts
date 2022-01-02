@@ -73,6 +73,9 @@ export async function createSqliteDatabaseAdapter(
       adminEntityUnpublishGetPublishedReferencedEntities(sqliteAdapter, ...args),
     authCreateSession: (...args) => authCreateSession(sqliteAdapter, ...args),
     disconnect: sqliteAdapter.disconnect,
+    publishedEntityGetOne: () => {
+      throw new Error('TODO');
+    },
     queryLegacy: () => {
       throw new Error('TODO');
     },

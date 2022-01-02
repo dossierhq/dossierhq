@@ -22,6 +22,7 @@ import {
 import { adminEntityUpdateStatus } from './admin-entity/updateStatus';
 import { authCreateSession } from './auth/createSession';
 import { withNestedTransaction, withRootTransaction } from './PostgresTransaction';
+import { publishedEntityGetOne } from './published-entity/getEntity';
 import { schemaGetSpecification } from './schema/getSpecification';
 import { schemaUpdateSpecification } from './schema/updateSpecification';
 
@@ -68,6 +69,7 @@ export function createPostgresDatabaseAdapterAdapter(
       adminEntityUnpublishGetPublishedReferencedEntities(databaseAdapter, ...args),
     authCreateSession: (...args) => authCreateSession(databaseAdapter, ...args),
     disconnect: databaseAdapter.disconnect,
+    publishedEntityGetOne: (...args) => publishedEntityGetOne(databaseAdapter, ...args),
     queryLegacy: databaseAdapter.query,
     schemaGetSpecification: (...args) => schemaGetSpecification(databaseAdapter, ...args),
     schemaUpdateSpecification: (...args) => schemaUpdateSpecification(databaseAdapter, ...args),
