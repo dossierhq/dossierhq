@@ -11,7 +11,7 @@ import type {
 import type { AuthorizationAdapter, DatabaseAdapter, SessionContext } from '..';
 import { authResolveAuthorizationKeys } from '../Auth';
 import { decodeAdminEntity } from '../EntityCodec';
-import { sharedSearchEntities2 } from '../EntitySearcher';
+import { sharedSearchEntities } from '../shared-entity/sharedSearchEntities';
 
 export async function adminSearchEntities(
   schema: AdminSchema,
@@ -44,5 +44,5 @@ export async function adminSearchEntities(
     return searchResult;
   }
 
-  return await sharedSearchEntities2(schema, searchResult.value, decodeAdminEntity);
+  return await sharedSearchEntities(schema, searchResult.value, decodeAdminEntity);
 }

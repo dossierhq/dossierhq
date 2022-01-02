@@ -18,7 +18,7 @@ import type {
 import { authVerifyAuthorizationKey } from '../Auth';
 import * as Db from '../Database';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseTables';
-import { decodePublishedEntity2 } from '../EntityCodec';
+import { decodePublishedEntity } from '../EntityCodec';
 
 /**
  * Fetches published entities. The entities are returned in the same order as in `ids`.
@@ -119,6 +119,6 @@ async function mapItem(
     return authResult;
   }
 
-  const entity = decodePublishedEntity2(schema, values);
+  const entity = decodePublishedEntity(schema, values);
   return ok(entity);
 }

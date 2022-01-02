@@ -10,11 +10,8 @@ import type {
 } from '@jonasb/datadata-core';
 import type { AuthorizationAdapter, DatabaseAdapter, SessionContext } from '..';
 import { authResolveAuthorizationKeys } from '../Auth';
-import { queryMany } from '../Database';
 import { decodePublishedEntity } from '../EntityCodec';
-import { sharedSearchEntities } from '../EntitySearcher';
-import type { SearchPublishedEntitiesItem } from '../QueryGenerator';
-import { searchPublishedEntitiesQuery } from '../QueryGenerator';
+import { sharedSearchEntities } from '../shared-entity/sharedSearchEntities';
 
 export async function publishedSearchEntities(
   schema: PublishedSchema,
@@ -36,21 +33,16 @@ export async function publishedSearchEntities(
     return authKeysResult;
   }
 
-  const sqlQueryResult = searchPublishedEntitiesQuery(schema, query, paging, authKeysResult.value);
-  if (sqlQueryResult.isError()) {
-    return sqlQueryResult;
+  const searchResult = await databaseAdapter.publishedEntitySearchEntities(
+    schema,
+    context,
+    query,
+    paging,
+    authKeysResult.value
+  );
+  if (searchResult.isError()) {
+    return searchResult;
   }
 
-  const entitiesValues = await queryMany<SearchPublishedEntitiesItem>(
-    databaseAdapter,
-    context,
-    sqlQueryResult.value
-  );
-
-  return await sharedSearchEntities<PublishedSchema, PublishedEntity, SearchPublishedEntitiesItem>(
-    schema,
-    sqlQueryResult.value,
-    entitiesValues,
-    decodePublishedEntity
-  );
+  return await sharedSearchEntities(schema, searchResult.value, decodePublishedEntity);
 }

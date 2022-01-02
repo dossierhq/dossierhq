@@ -171,14 +171,27 @@ export interface DatabaseAuthCreateSessionPayload {
   session: Session;
 }
 
-export interface DatabasePublishedEntityGetOnePayload {
+export interface DatabasePublishedEntityPayload {
   id: string;
   name: string;
   type: string;
   authKey: string;
-  resolvedAuthKey: string;
   createdAt: Temporal.Instant;
   fieldValues: Record<string, unknown>;
+}
+
+export interface DatabasePublishedEntityGetOnePayload extends DatabasePublishedEntityPayload {
+  resolvedAuthKey: string;
+}
+
+export interface DatabasePublishedEntitySearchPayload {
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+  entities: DatabasePublishedEntitySearchPayloadEntity[];
+}
+
+export interface DatabasePublishedEntitySearchPayloadEntity extends DatabasePublishedEntityPayload {
+  cursor: string;
 }
 
 export interface DatabaseAdapter {
@@ -314,6 +327,14 @@ export interface DatabaseAdapter {
     context: TransactionContext,
     references: EntityReference[]
   ): PromiseResult<DatabasePublishedEntityGetOnePayload[], ErrorType.Generic>;
+
+  publishedEntitySearchEntities(
+    schema: PublishedSchema,
+    context: TransactionContext,
+    query: PublishedQuery | undefined,
+    paging: Paging | undefined,
+    resolvedAuthKeys: ResolvedAuthKey[]
+  ): PromiseResult<DatabasePublishedEntitySearchPayload, ErrorType.BadRequest | ErrorType.Generic>;
 
   publishedEntitySearchTotalCount(
     schema: PublishedSchema,
