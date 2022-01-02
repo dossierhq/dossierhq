@@ -10,6 +10,7 @@ import type {
 } from '@jonasb/datadata-core';
 import type { AuthorizationAdapter, DatabaseAdapter, SessionContext } from '..';
 import { authResolveAuthorizationKeys } from '../Auth';
+import { queryMany } from '../Database';
 import { decodePublishedEntity } from '../EntityCodec';
 import { sharedSearchEntities } from '../EntitySearcher';
 import type { SearchPublishedEntitiesItem } from '../QueryGenerator';
@@ -40,11 +41,16 @@ export async function publishedSearchEntities(
     return sqlQueryResult;
   }
 
-  return await sharedSearchEntities<PublishedSchema, PublishedEntity, SearchPublishedEntitiesItem>(
-    schema,
+  const entitiesValues = await queryMany<SearchPublishedEntitiesItem>(
     databaseAdapter,
     context,
+    sqlQueryResult.value
+  );
+
+  return await sharedSearchEntities<PublishedSchema, PublishedEntity, SearchPublishedEntitiesItem>(
+    schema,
     sqlQueryResult.value,
+    entitiesValues,
     decodePublishedEntity
   );
 }

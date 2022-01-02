@@ -11,9 +11,7 @@ import type {
 import type { AuthorizationAdapter, DatabaseAdapter, SessionContext } from '..';
 import { authResolveAuthorizationKeys } from '../Auth';
 import { decodeAdminEntity } from '../EntityCodec';
-import { sharedSearchEntities } from '../EntitySearcher';
-import type { SearchAdminEntitiesItem } from '../QueryGenerator';
-import { searchAdminEntitiesQuery } from '../QueryGenerator';
+import { sharedSearchEntities2 } from '../EntitySearcher';
 
 export async function adminSearchEntities(
   schema: AdminSchema,
@@ -35,16 +33,16 @@ export async function adminSearchEntities(
     return authKeysResult;
   }
 
-  const sqlQueryResult = searchAdminEntitiesQuery(schema, query, paging, authKeysResult.value);
-  if (sqlQueryResult.isError()) {
-    return sqlQueryResult;
+  const searchResult = await databaseAdapter.adminEntitySearchEntities(
+    schema,
+    context,
+    query,
+    paging,
+    authKeysResult.value
+  );
+  if (searchResult.isError()) {
+    return searchResult;
   }
 
-  return await sharedSearchEntities<AdminSchema, AdminEntity, SearchAdminEntitiesItem>(
-    schema,
-    databaseAdapter,
-    context,
-    sqlQueryResult.value,
-    decodeAdminEntity
-  );
+  return await sharedSearchEntities2(schema, searchResult.value, decodeAdminEntity);
 }

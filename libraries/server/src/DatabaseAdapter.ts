@@ -7,6 +7,7 @@ import type {
   EntityVersionReference,
   ErrorType,
   Location,
+  Paging,
   PromiseResult,
   PublishedQuery,
   PublishedSchema,
@@ -55,17 +56,20 @@ export interface DatabaseAdminEntityCreatePayload {
   updatedAt: Temporal.Instant;
 }
 
-export interface DatabaseAdminEntityGetOnePayload {
+export interface DatabaseAdminEntityPayload {
   id: string;
   type: string;
   name: string;
   version: number;
   authKey: string;
-  resolvedAuthKey: string;
   status: AdminEntityStatus;
   createdAt: Temporal.Instant;
   updatedAt: Temporal.Instant;
   fieldValues: Record<string, unknown>;
+}
+
+export interface DatabaseAdminEntityGetOnePayload extends DatabaseAdminEntityPayload {
+  resolvedAuthKey: string;
 }
 
 export interface DatabaseAdminEntityPublishGetVersionInfoPayload
@@ -104,6 +108,16 @@ export type DatabaseAdminEntityPublishingCreateEventArg = { session: Session } &
       references: DatabaseResolvedEntityReference[];
     }
 );
+
+export interface DatabaseAdminEntitySearchPayload {
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+  entities: DatabaseAdminEntitySearchPayloadEntity[];
+}
+
+export interface DatabaseAdminEntitySearchPayloadEntity extends DatabaseAdminEntityPayload {
+  cursor: string;
+}
 
 export interface DatabaseEntityUpdateGetEntityInfoPayload extends DatabaseResolvedEntityReference {
   type: string;
@@ -230,6 +244,14 @@ export interface DatabaseAdapter {
     context: TransactionContext,
     event: DatabaseAdminEntityPublishingCreateEventArg
   ): PromiseResult<void, ErrorType.Generic>;
+
+  adminEntitySearchEntities(
+    schema: AdminSchema,
+    context: TransactionContext,
+    query: AdminQuery | undefined,
+    paging: Paging | undefined,
+    resolvedAuthKeys: ResolvedAuthKey[]
+  ): PromiseResult<DatabaseAdminEntitySearchPayload, ErrorType.BadRequest | ErrorType.Generic>;
 
   adminEntitySearchTotalCount(
     schema: AdminSchema,

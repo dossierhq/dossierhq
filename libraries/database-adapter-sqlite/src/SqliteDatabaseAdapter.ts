@@ -65,6 +65,9 @@ export async function createSqliteDatabaseAdapter(
       adminEntityPublishingCreateEvents(sqliteAdapter, ...args),
     adminEntityPublishUpdateEntity: (...args) =>
       adminEntityPublishUpdateEntity(sqliteAdapter, ...args),
+    adminEntitySearchEntities: () => {
+      throw new Error('TODO');
+    },
     adminEntitySearchTotalCount: () => {
       throw new Error('TODO');
     },
