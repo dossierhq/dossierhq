@@ -89,6 +89,7 @@ importers:
       graphql-voyager: ~1.0.0-rc.31
       jest: ~27.4.5
       joi: ~17.5.0
+      leaflet: ~1.7.1
       next: ~12.0.3
       prettier: 2.5.1
       react: ~17.0.2
@@ -115,6 +116,7 @@ importers:
       graphql: 16.2.0
       graphql-voyager: 1.0.0-rc.31_9ae9ef0e4c7999e1eb5e9fb6f081969c
       joi: 17.5.0
+      leaflet: 1.7.1
       next: 12.0.3_react-dom@17.0.2+react@17.0.2
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
@@ -325,6 +327,7 @@ importers:
       '@rushstack/heft': ~0.44.0
       '@rushstack/heft-jest-plugin': ~0.2.0
       '@types/heft-jest': 1.0.2
+      '@types/node': ^17.0.5
       '@typescript-eslint/eslint-plugin': ^5.8.0
       '@typescript-eslint/parser': ^5.8.0
       eslint: ^8.5.0
@@ -340,6 +343,7 @@ importers:
       '@rushstack/heft': 0.44.0
       '@rushstack/heft-jest-plugin': 0.2.0_@rushstack+heft@0.44.0
       '@types/heft-jest': 1.0.2
+      '@types/node': 17.0.5
       '@typescript-eslint/eslint-plugin': 5.8.0_836011a006f4f5d67178564baf2b6d34
       '@typescript-eslint/parser': 5.8.0_eslint@8.5.0+typescript@4.5.4
       eslint: 8.5.0

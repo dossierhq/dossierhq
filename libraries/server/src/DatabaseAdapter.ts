@@ -6,6 +6,8 @@ import type {
   ErrorType,
   Location,
   PromiseResult,
+  PublishedQuery,
+  PublishedSchema,
 } from '@jonasb/datadata-core';
 import type { Temporal } from '@js-temporal/polyfill';
 import type { ResolvedAuthKey, Session, TransactionContext } from '.';
@@ -281,6 +283,13 @@ export interface DatabaseAdapter {
     context: TransactionContext,
     references: EntityReference[]
   ): PromiseResult<DatabasePublishedEntityGetOnePayload[], ErrorType.Generic>;
+
+  publishedEntitySearchTotalCount(
+    schema: PublishedSchema,
+    context: TransactionContext,
+    query: PublishedQuery | undefined,
+    resolvedAuthKeys: ResolvedAuthKey[]
+  ): PromiseResult<number, ErrorType.BadRequest | ErrorType.Generic>;
 
   schemaGetSpecification(
     context: TransactionContext
