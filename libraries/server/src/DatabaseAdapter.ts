@@ -408,11 +408,4 @@ export interface DatabaseAdapter {
     context: TransactionContext,
     schemaSpec: AdminSchemaSpecification
   ): PromiseResult<void, ErrorType.Generic>;
-
-  // TODO remove when migrated away
-  queryLegacy<R = unknown>(
-    transaction: Transaction | null,
-    query: string,
-    values: unknown[] | undefined
-  ): Promise<R[]>;
 }

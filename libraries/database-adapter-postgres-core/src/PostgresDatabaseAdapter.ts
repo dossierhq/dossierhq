@@ -103,7 +103,6 @@ export function createPostgresDatabaseAdapterAdapter(
       publishedEntitySearchEntities(databaseAdapter, ...args),
     publishedEntitySearchTotalCount: (...args) =>
       publishedEntitySearchTotalCount(databaseAdapter, ...args),
-    queryLegacy: databaseAdapter.query,
     schemaGetSpecification: (...args) => schemaGetSpecification(databaseAdapter, ...args),
     schemaUpdateSpecification: (...args) => schemaUpdateSpecification(databaseAdapter, ...args),
     withNestedTransaction: (...args) => withNestedTransaction(databaseAdapter, ...args),

@@ -109,9 +109,6 @@ export async function createSqliteDatabaseAdapter(
     publishedEntitySearchTotalCount: () => {
       throw new Error('TODO');
     },
-    queryLegacy: () => {
-      throw new Error('TODO');
-    },
     schemaGetSpecification: (...args) => schemaGetSpecification(sqliteAdapter, ...args),
     schemaUpdateSpecification: (...args) => schemaUpdateSpecification(sqliteAdapter, ...args),
     withNestedTransaction: (...args) => withNestedTransaction(sqliteAdapter, ...args),
