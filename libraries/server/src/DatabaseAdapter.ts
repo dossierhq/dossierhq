@@ -11,6 +11,7 @@ import type {
   PromiseResult,
   PublishedQuery,
   PublishedSchema,
+  PublishingEvent,
 } from '@jonasb/datadata-core';
 import type { Temporal } from '@js-temporal/polyfill';
 import type { ResolvedAuthKey, Session, TransactionContext } from '.';
@@ -127,6 +128,12 @@ export type DatabaseAdminEntityPublishingCreateEventArg = { session: Session } &
       references: DatabaseResolvedEntityReference[];
     }
 );
+
+export interface DatabaseAdminEntityPublishingHistoryGetEntityInfoPayload
+  extends DatabaseResolvedEntityReference {
+  authKey: string;
+  resolvedAuthKey: string;
+}
 
 export interface DatabaseAdminEntitySearchPayload {
   hasNextPage: boolean;
@@ -294,6 +301,19 @@ export interface DatabaseAdapter {
     context: TransactionContext,
     event: DatabaseAdminEntityPublishingCreateEventArg
   ): PromiseResult<void, ErrorType.Generic>;
+
+  adminEntityPublishingHistoryGetEntityInfo(
+    context: TransactionContext,
+    reference: EntityReference
+  ): PromiseResult<
+    DatabaseAdminEntityPublishingHistoryGetEntityInfoPayload,
+    ErrorType.NotFound | ErrorType.Generic
+  >;
+
+  adminEntityPublishingHistoryGetEvents(
+    context: TransactionContext,
+    reference: DatabaseResolvedEntityReference
+  ): PromiseResult<PublishingEvent[], ErrorType.Generic>;
 
   adminEntitySearchEntities(
     schema: AdminSchema,
