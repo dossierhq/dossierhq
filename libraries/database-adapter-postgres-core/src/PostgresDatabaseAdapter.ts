@@ -28,6 +28,7 @@ import { withNestedTransaction, withRootTransaction } from './PostgresTransactio
 import { publishedEntityGetEntities } from './published-entity/getEntities';
 import { publishedEntityGetOne } from './published-entity/getEntity';
 import { publishedEntitySearchTotalCount } from './published-entity/getTotalCount';
+import { publishedEntitySearchEntities } from './published-entity/searchEntities';
 import { schemaGetSpecification } from './schema/getSpecification';
 import { schemaUpdateSpecification } from './schema/updateSpecification';
 
@@ -79,6 +80,8 @@ export function createPostgresDatabaseAdapterAdapter(
     disconnect: databaseAdapter.disconnect,
     publishedEntityGetOne: (...args) => publishedEntityGetOne(databaseAdapter, ...args),
     publishedEntityGetEntities: (...args) => publishedEntityGetEntities(databaseAdapter, ...args),
+    publishedEntitySearchEntities: (...args) =>
+      publishedEntitySearchEntities(databaseAdapter, ...args),
     publishedEntitySearchTotalCount: (...args) =>
       publishedEntitySearchTotalCount(databaseAdapter, ...args),
     queryLegacy: databaseAdapter.query,

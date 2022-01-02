@@ -8,7 +8,7 @@ import type {
 import { ok } from '@jonasb/datadata-core';
 import type { AuthorizationAdapter, DatabaseAdapter, SessionContext } from '..';
 import { authVerifyAuthorizationKey } from '../Auth';
-import { decodePublishedEntity2 } from '../EntityCodec';
+import { decodePublishedEntity } from '../EntityCodec';
 
 export async function publishedGetEntity(
   schema: PublishedSchema,
@@ -36,7 +36,7 @@ export async function publishedGetEntity(
     return authResult;
   }
 
-  const entity = decodePublishedEntity2(schema, result.value);
+  const entity = decodePublishedEntity(schema, result.value);
 
   return ok(entity);
 }

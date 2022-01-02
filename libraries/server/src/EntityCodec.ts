@@ -42,9 +42,9 @@ import * as Db from './Database';
 import type {
   DatabaseAdminEntityPayload,
   DatabaseEntityUpdateGetEntityInfoPayload,
-  DatabasePublishedEntityGetOnePayload,
+  DatabasePublishedEntityPayload,
 } from './DatabaseAdapter';
-import type { EntitiesTable, EntityVersionsTable } from './DatabaseTables';
+import type { EntitiesTable } from './DatabaseTables';
 import * as EntityFieldTypeAdapters from './EntityFieldTypeAdapters';
 
 export interface EncodeEntityResult {
@@ -69,34 +69,7 @@ interface RequestedReference {
 
 export function decodePublishedEntity(
   schema: PublishedSchema,
-  values: Pick<EntitiesTable, 'uuid' | 'type' | 'name' | 'auth_key' | 'created_at'> &
-    Pick<EntityVersionsTable, 'data'>
-): PublishedEntity {
-  const entitySpec = schema.getEntityTypeSpecification(values.type);
-  if (!entitySpec) {
-    throw new Error(`No entity spec for type ${values.type}`);
-  }
-  const entity: PublishedEntity = {
-    id: values.uuid,
-    info: {
-      type: values.type,
-      name: values.name,
-      authKey: values.auth_key,
-      createdAt: values.created_at,
-    },
-    fields: {},
-  };
-  for (const fieldSpec of entitySpec.fields) {
-    const { name: fieldName } = fieldSpec;
-    const fieldValue = values.data[fieldName];
-    entity.fields[fieldName] = decodeFieldItemOrList(schema, fieldSpec, fieldValue);
-  }
-  return entity;
-}
-
-export function decodePublishedEntity2(
-  schema: PublishedSchema,
-  values: DatabasePublishedEntityGetOnePayload
+  values: DatabasePublishedEntityPayload
 ): PublishedEntity {
   const entitySpec = schema.getEntityTypeSpecification(values.type);
   if (!entitySpec) {
