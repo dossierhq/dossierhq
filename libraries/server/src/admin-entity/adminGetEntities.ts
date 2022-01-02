@@ -14,7 +14,7 @@ import type {
   SessionContext,
 } from '..';
 import { authVerifyAuthorizationKey } from '../Auth';
-import { decodeAdminEntity2 } from '../EntityCodec';
+import { decodeAdminEntity } from '../EntityCodec';
 
 export async function adminGetEntities(
   schema: AdminSchema,
@@ -74,5 +74,5 @@ async function mapItem(
     return authResult;
   }
 
-  return ok(decodeAdminEntity2(schema, values));
+  return ok(decodeAdminEntity(schema, values));
 }

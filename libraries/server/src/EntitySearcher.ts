@@ -1,7 +1,6 @@
 import type { Connection, Edge, ErrorType, PromiseResult } from '@jonasb/datadata-core';
 import { ok } from '@jonasb/datadata-core';
-import type { DatabaseAdapter, SessionContext } from '.';
-import { queryMany } from './Database';
+import type { DatabaseAdminEntitySearchPayload } from '.';
 import type {
   SearchAdminEntitiesItem,
   SearchPublishedEntitiesItem,
@@ -14,12 +13,10 @@ export async function sharedSearchEntities<
   TDbItem extends SearchAdminEntitiesItem | SearchPublishedEntitiesItem
 >(
   schema: TSchema,
-  databaseAdapter: DatabaseAdapter,
-  context: SessionContext,
   sqlQuery: SharedEntitiesQuery<TDbItem>,
+  entitiesValues: TDbItem[],
   decoder: (schema: TSchema, rowValues: TDbItem) => TEntity
 ): PromiseResult<Connection<Edge<TEntity, ErrorType>> | null, ErrorType.BadRequest> {
-  const entitiesValues = await queryMany<TDbItem>(databaseAdapter, context, sqlQuery);
   const hasExtraPage = entitiesValues.length > sqlQuery.pagingCount;
   if (hasExtraPage) {
     entitiesValues.splice(sqlQuery.pagingCount, 1);
@@ -45,6 +42,34 @@ export async function sharedSearchEntities<
     },
     edges: entities.map((entity, index) => ({
       cursor: cursorExtractor(entitiesValues[index]),
+      node: ok(entity),
+    })),
+  });
+}
+
+export async function sharedSearchEntities2<
+  TSchema,
+  TSearchResult extends DatabaseAdminEntitySearchPayload,
+  TEntity
+>(
+  schema: TSchema,
+  searchResult: TSearchResult,
+  decoder: (schema: TSchema, values: TSearchResult['entities'][0]) => TEntity
+): PromiseResult<Connection<Edge<TEntity, ErrorType>> | null, ErrorType.BadRequest> {
+  const entities = searchResult.entities.map((it) => decoder(schema, it));
+  if (entities.length === 0) {
+    return ok(null);
+  }
+
+  return ok({
+    pageInfo: {
+      hasNextPage: searchResult.hasNextPage,
+      hasPreviousPage: searchResult.hasPreviousPage,
+      startCursor: searchResult.entities[0].cursor,
+      endCursor: searchResult.entities[searchResult.entities.length - 1].cursor,
+    },
+    edges: entities.map((entity, index) => ({
+      cursor: searchResult.entities[index].cursor,
       node: ok(entity),
     })),
   });

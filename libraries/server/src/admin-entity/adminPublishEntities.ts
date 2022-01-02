@@ -21,7 +21,7 @@ import {
 import type { Temporal } from '@js-temporal/polyfill';
 import type { AuthorizationAdapter, DatabaseAdapter, SessionContext } from '..';
 import { authVerifyAuthorizationKey } from '../Auth';
-import { collectDataFromEntity, decodeAdminEntityFields2 } from '../EntityCodec';
+import { collectDataFromEntity, decodeAdminEntityFields } from '../EntityCodec';
 import { checkUUIDsAreUnique } from './AdminEntityMutationUtils';
 
 interface VersionInfoToBePublished {
@@ -169,7 +169,7 @@ async function collectVersionsInfo(
     } else if (versionIsPublished) {
       versionsInfo.push({ effect: 'none', uuid: reference.id, status, updatedAt });
     } else {
-      const entityFields = decodeAdminEntityFields2(schema, entitySpec, fieldValues);
+      const entityFields = decodeAdminEntityFields(schema, entitySpec, fieldValues);
       const verifyFieldsResult = verifyFieldValuesAndCollectInformation(
         schema,
         reference,

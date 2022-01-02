@@ -18,7 +18,6 @@ import type {
 } from '@jonasb/datadata-core';
 import {
   AdminEntityStatus,
-  assertExhaustive,
   FieldType,
   isFieldValueEqual,
   isLocationItemField,
@@ -37,10 +36,11 @@ import {
   visitItemRecursively,
   visitorPathToString,
 } from '@jonasb/datadata-core';
-import type { DatabaseAdapter, DatabaseAdminEntityGetOnePayload, SessionContext } from '.';
+import type { DatabaseAdapter, SessionContext } from '.';
 import { ensureRequired } from './Assertions';
 import * as Db from './Database';
 import type {
+  DatabaseAdminEntityPayload,
   DatabaseEntityUpdateGetEntityInfoPayload,
   DatabasePublishedEntityGetOnePayload,
 } from './DatabaseAdapter';
@@ -198,39 +198,7 @@ function decodeRichTextField(
 
 export function decodeAdminEntity(
   schema: AdminSchema,
-  values: Pick<
-    EntitiesTable,
-    'uuid' | 'type' | 'name' | 'auth_key' | 'created_at' | 'updated_at' | 'status'
-  > &
-    Pick<EntityVersionsTable, 'version' | 'data'>
-): AdminEntity {
-  const entitySpec = schema.getEntityTypeSpecification(values.type);
-  if (!entitySpec) {
-    throw new Error(`No entity spec for type ${values.type}`);
-  }
-
-  const state = resolveEntityStatus(values.status);
-
-  const entity: AdminEntity = {
-    id: values.uuid,
-    info: {
-      type: values.type,
-      name: values.name,
-      version: values.version,
-      authKey: values.auth_key,
-      status: state,
-      createdAt: values.created_at,
-      updatedAt: values.updated_at,
-    },
-    fields: decodeAdminEntityFields(schema, entitySpec, values),
-  };
-
-  return entity;
-}
-
-export function decodeAdminEntity2(
-  schema: AdminSchema,
-  values: DatabaseAdminEntityGetOnePayload
+  values: DatabaseAdminEntityPayload
 ): AdminEntity {
   const entitySpec = schema.getEntityTypeSpecification(values.type);
   if (!entitySpec) {
@@ -248,27 +216,13 @@ export function decodeAdminEntity2(
       createdAt: values.createdAt,
       updatedAt: values.updatedAt,
     },
-    fields: decodeAdminEntityFields2(schema, entitySpec, values.fieldValues),
+    fields: decodeAdminEntityFields(schema, entitySpec, values.fieldValues),
   };
 
   return entity;
 }
 
-function decodeAdminEntityFields(
-  schema: AdminSchema | PublishedSchema,
-  entitySpec: AdminEntityTypeSpecification | PublishedEntityTypeSpecification,
-  values: Pick<EntityVersionsTable, 'data'>
-): AdminEntity['fields'] {
-  const fields: AdminEntity['fields'] = {};
-  for (const fieldSpec of entitySpec.fields) {
-    const { name: fieldName } = fieldSpec;
-    const fieldValue = values.data[fieldName];
-    fields[fieldName] = decodeFieldItemOrList(schema, fieldSpec, fieldValue);
-  }
-  return fields;
-}
-
-export function decodeAdminEntityFields2(
+export function decodeAdminEntityFields(
   schema: AdminSchema | PublishedSchema,
   entitySpec: AdminEntityTypeSpecification | PublishedEntityTypeSpecification,
   fieldValues: Record<string, unknown>
@@ -280,23 +234,6 @@ export function decodeAdminEntityFields2(
     fields[fieldName] = decodeFieldItemOrList(schema, fieldSpec, fieldValue);
   }
   return fields;
-}
-
-export function resolveEntityStatus(status: EntitiesTable['status']): AdminEntityStatus {
-  switch (status) {
-    case 'draft':
-      return AdminEntityStatus.draft;
-    case 'published':
-      return AdminEntityStatus.published;
-    case 'modified':
-      return AdminEntityStatus.modified;
-    case 'withdrawn':
-      return AdminEntityStatus.withdrawn;
-    case 'archived':
-      return AdminEntityStatus.archived;
-    default:
-      assertExhaustive(status);
-  }
 }
 
 export function resolveCreateEntity(

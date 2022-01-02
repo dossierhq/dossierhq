@@ -9,7 +9,7 @@ import type {
 import { ok } from '@jonasb/datadata-core';
 import type { AuthorizationAdapter, DatabaseAdapter, SessionContext } from '..';
 import { authVerifyAuthorizationKey } from '../Auth';
-import { decodeAdminEntity2 } from '../EntityCodec';
+import { decodeAdminEntity } from '../EntityCodec';
 
 export async function adminGetEntity(
   schema: AdminSchema,
@@ -38,7 +38,7 @@ export async function adminGetEntity(
     return authResult;
   }
 
-  const entity = decodeAdminEntity2(schema, entityValues);
+  const entity = decodeAdminEntity(schema, entityValues);
 
   return ok(entity);
 }
