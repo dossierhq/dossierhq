@@ -53,6 +53,9 @@ export async function createSqliteDatabaseAdapter(
       adminEntityArchivingGetEntityInfo(sqliteAdapter, ...args),
     adminEntityCreate: (...args) => adminCreateEntity(sqliteAdapter, ...args),
     adminEntityGetOne: (...args) => adminGetEntity(sqliteAdapter, ...args),
+    adminEntityGetMultiple: () => {
+      throw new Error('TODO');
+    },
     adminEntityGetEntityName: (...args) => adminEntityGetEntityName(sqliteAdapter, ...args),
     adminEntityPublishGetUnpublishedReferencedEntities: (...args) =>
       adminEntityPublishGetUnpublishedReferencedEntities(sqliteAdapter, ...args),
