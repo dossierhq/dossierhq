@@ -1,4 +1,5 @@
-import type { DatabaseTables } from '@jonasb/datadata-server';
+import type { AdminSchemaSpecification } from '@jonasb/datadata-core';
+import type { Temporal } from '@js-temporal/polyfill';
 
 export enum UniqueConstraints {
   entities_name_key = 'entities_name_key',
@@ -6,7 +7,54 @@ export enum UniqueConstraints {
   principals_provider_identifier_key = 'principals_provider_identifier_key',
 }
 
-export type EntitiesTable = DatabaseTables.EntitiesTable;
-export type EntityVersionsTable = DatabaseTables.EntityVersionsTable;
-export type SchemaVersionsTable = DatabaseTables.SchemaVersionsTable;
-export type SubjectsTable = DatabaseTables.SubjectsTable;
+export interface SchemaVersionsTable {
+  id: number;
+  specification: AdminSchemaSpecification;
+}
+
+export interface SubjectsTable {
+  id: number;
+  uuid: string;
+  created_at: Temporal.Instant;
+}
+
+export interface EntitiesTable {
+  id: number;
+  uuid: string;
+  name: string;
+  type: string;
+  created_at: Temporal.Instant;
+  updated_at: Temporal.Instant;
+  updated: number;
+  latest_draft_entity_versions_id: number | null;
+  never_published: boolean; // TODO remove and rely on status instead
+  archived: boolean; // TODO remove and rely on status instead
+  published_entity_versions_id: number | null;
+  status: 'draft' | 'published' | 'modified' | 'withdrawn' | 'archived';
+  auth_key: string;
+  resolved_auth_key: string;
+}
+
+export interface EntityVersionsTable {
+  id: number;
+  entities_id: number;
+  version: number;
+  created_at: Temporal.Instant;
+  created_by: number;
+  data: Record<string, unknown>;
+}
+
+export interface EntityVersionReferencesTable {
+  id: number;
+  entity_versions_id: number;
+  entities_id: number;
+}
+
+export interface EntityPublishingEventsTable {
+  id: number;
+  entities_id: number;
+  entity_versions_id: number | null;
+  kind: 'publish' | 'unpublish' | 'archive' | 'unarchive';
+  published_by: number;
+  published_at: Temporal.Instant;
+}

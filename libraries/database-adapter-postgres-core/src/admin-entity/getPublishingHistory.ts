@@ -11,9 +11,12 @@ import type {
   DatabaseResolvedEntityReference,
   TransactionContext,
 } from '@jonasb/datadata-server';
-import type { EntityPublishingEventsTable } from '@jonasb/datadata-server/lib/cjs/DatabaseTables';
 import type { PostgresDatabaseAdapter } from '..';
-import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema';
+import type {
+  EntitiesTable,
+  EntityPublishingEventsTable,
+  EntityVersionsTable,
+} from '../DatabaseSchema';
 import { queryMany, queryNoneOrOne } from '../QueryFunctions';
 
 export async function adminEntityPublishingHistoryGetEntityInfo(
