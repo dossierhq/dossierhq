@@ -1,15 +1,6 @@
 import type { AdminQuery, AdminSchema, ErrorType, PromiseResult } from '@jonasb/datadata-core';
-import { ok } from '@jonasb/datadata-core';
-import type {
-  AuthorizationAdapter,
-  DatabaseAdapter,
-  ResolvedAuthKey,
-  SessionContext,
-  TransactionContext,
-} from '..';
+import type { AuthorizationAdapter, DatabaseAdapter, SessionContext } from '..';
 import { authResolveAuthorizationKeys } from '../Auth';
-import * as Db from '../Database';
-import { totalAdminEntitiesQuery } from '../QueryGenerator';
 
 export async function adminGetTotalCount(
   schema: AdminSchema,
@@ -27,26 +18,10 @@ export async function adminGetTotalCount(
     return authKeysResult;
   }
 
-  return await adminEntitySearchTotalCount(
-    databaseAdapter,
+  return await databaseAdapter.adminEntitySearchTotalCount(
     schema,
     context,
     query,
     authKeysResult.value
   );
-}
-
-async function adminEntitySearchTotalCount(
-  databaseAdapter: DatabaseAdapter,
-  schema: AdminSchema,
-  context: TransactionContext,
-  query: AdminQuery | undefined,
-  resolvedAuthKeys: ResolvedAuthKey[]
-): PromiseResult<number, ErrorType.BadRequest | ErrorType.Generic> {
-  const sqlQuery = totalAdminEntitiesQuery(schema, resolvedAuthKeys, query);
-  if (sqlQuery.isError()) {
-    return sqlQuery;
-  }
-  const { count } = await Db.queryOne<{ count: number }>(databaseAdapter, context, sqlQuery.value);
-  return ok(count);
 }
