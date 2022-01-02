@@ -1,5 +1,4 @@
 import type {
-  EntityReference,
   EntityReferenceWithAuthKeys,
   ErrorType,
   PromiseResult,
@@ -13,11 +12,8 @@ import type {
   DatabaseAdapter,
   DatabasePublishedEntityGetOnePayload,
   SessionContext,
-  TransactionContext,
 } from '..';
 import { authVerifyAuthorizationKey } from '../Auth';
-import * as Db from '../Database';
-import type { EntitiesTable, EntityVersionsTable } from '../DatabaseTables';
 import { decodePublishedEntity } from '../EntityCodec';
 
 /**
@@ -45,7 +41,7 @@ export async function publishedGetEntities(
   if (references.length === 0) {
     return ok([]);
   }
-  const entitiesInfoResult = await publishedEntityGetEntities(databaseAdapter, context, references);
+  const entitiesInfoResult = await databaseAdapter.publishedEntityGetEntities(context, references);
   if (entitiesInfoResult.isError()) {
     return entitiesInfoResult;
   }
@@ -60,39 +56,6 @@ export async function publishedGetEntities(
   }
 
   return ok(result);
-}
-
-async function publishedEntityGetEntities(
-  databaseAdapter: DatabaseAdapter,
-  context: TransactionContext,
-  references: EntityReference[]
-): PromiseResult<DatabasePublishedEntityGetOnePayload[], ErrorType.Generic> {
-  const entitiesMain = await Db.queryMany<
-    Pick<
-      EntitiesTable,
-      'uuid' | 'type' | 'name' | 'auth_key' | 'resolved_auth_key' | 'created_at'
-    > &
-      Pick<EntityVersionsTable, 'data'>
-  >(
-    databaseAdapter,
-    context,
-    `SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, ev.data
-      FROM entities e, entity_versions ev
-      WHERE e.uuid = ANY($1)
-      AND e.published_entity_versions_id = ev.id`,
-    [references.map((it) => it.id)]
-  );
-  return ok(
-    entitiesMain.map((row) => ({
-      id: row.uuid,
-      type: row.type,
-      name: row.name,
-      authKey: row.auth_key,
-      resolvedAuthKey: row.resolved_auth_key,
-      createdAt: row.created_at,
-      fieldValues: row.data,
-    }))
-  );
 }
 
 async function mapItem(
