@@ -5,6 +5,10 @@ import { adminCreateEntity } from './admin-entity/createEntity';
 import { adminEntityPublishingCreateEvents } from './admin-entity/createPublishingEvents';
 import { adminEntityGetMultiple } from './admin-entity/getEntities';
 import { adminGetEntity } from './admin-entity/getEntity';
+import {
+  adminEntityHistoryGetEntityInfo,
+  adminEntityHistoryGetVersionsInfo,
+} from './admin-entity/getEntityHistory';
 import { adminEntityGetEntityName } from './admin-entity/getEntityName';
 import { adminEntityGetReferenceEntitiesInfo } from './admin-entity/getReferenceEntitiesInfo';
 import { adminEntitySearchTotalCount } from './admin-entity/getTotalCount';
@@ -59,6 +63,10 @@ export function createPostgresDatabaseAdapterAdapter(
     adminEntityGetEntityName: (...args) => adminEntityGetEntityName(databaseAdapter, ...args),
     adminEntityGetReferenceEntitiesInfo: (...args) =>
       adminEntityGetReferenceEntitiesInfo(databaseAdapter, ...args),
+    adminEntityHistoryGetEntityInfo: (...args) =>
+      adminEntityHistoryGetEntityInfo(databaseAdapter, ...args),
+    adminEntityHistoryGetVersionsInfo: (...args) =>
+      adminEntityHistoryGetVersionsInfo(databaseAdapter, ...args),
     adminEntityPublishGetUnpublishedReferencedEntities: (...args) =>
       adminEntityPublishGetUnpublishedReferencedEntities(databaseAdapter, ...args),
     adminEntityPublishGetVersionInfo: (...args) =>
