@@ -1,9 +1,6 @@
 import type { DatabaseAdapter } from '@jonasb/datadata-server';
 import type { PostgresTransaction } from '.';
-import {
-  adminEntityArchiveEntity,
-  adminEntityArchiveGetEntityInfo,
-} from './admin-entity/archiveEntity';
+import { adminEntityArchivingGetEntityInfo } from './admin-entity/archivingGetEntityInfo';
 import { adminCreateEntity } from './admin-entity/createEntity';
 import { adminEntityPublishingCreateEvents } from './admin-entity/createPublishingEvents';
 import { adminGetEntity } from './admin-entity/getEntity';
@@ -22,6 +19,7 @@ import {
   adminEntityUpdateEntity,
   adminEntityUpdateGetEntityInfo,
 } from './admin-entity/updateEntity';
+import { adminEntityUpdateStatus } from './admin-entity/updateStatus';
 import { authCreateSession } from './auth/createSession';
 import { withNestedTransaction, withRootTransaction } from './PostgresTransaction';
 import { schemaGetSpecification } from './schema/getSpecification';
@@ -45,9 +43,8 @@ export function createPostgresDatabaseAdapterAdapter(
   databaseAdapter: PostgresDatabaseAdapter
 ): DatabaseAdapter {
   return {
-    adminEntityArchiveGetEntityInfo: (...args) =>
-      adminEntityArchiveGetEntityInfo(databaseAdapter, ...args),
-    adminEntityArchiveEntity: (...args) => adminEntityArchiveEntity(databaseAdapter, ...args),
+    adminEntityArchivingGetEntityInfo: (...args) =>
+      adminEntityArchivingGetEntityInfo(databaseAdapter, ...args),
     adminEntityCreate: (...args) => adminCreateEntity(databaseAdapter, ...args),
     adminEntityGetOne: (...args) => adminGetEntity(databaseAdapter, ...args),
     adminEntityGetEntityName: (...args) => adminEntityGetEntityName(databaseAdapter, ...args),
@@ -62,6 +59,7 @@ export function createPostgresDatabaseAdapterAdapter(
     adminEntityUpdateGetEntityInfo: (...args) =>
       adminEntityUpdateGetEntityInfo(databaseAdapter, ...args),
     adminEntityUpdateEntity: (...args) => adminEntityUpdateEntity(databaseAdapter, ...args),
+    adminEntityUpdateStatus: (...args) => adminEntityUpdateStatus(databaseAdapter, ...args),
     adminEntityUnpublishGetEntitiesInfo: (...args) =>
       adminEntityUnpublishGetEntitiesInfo(databaseAdapter, ...args),
     adminEntityUnpublishEntities: (...args) =>

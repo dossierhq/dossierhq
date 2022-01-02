@@ -2,10 +2,7 @@ import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
 import { notOk, ok } from '@jonasb/datadata-core';
 import type { Context, DatabaseAdapter } from '@jonasb/datadata-server';
 import type { UniqueConstraint } from '.';
-import {
-  adminEntityArchiveEntity,
-  adminEntityArchiveGetEntityInfo,
-} from './admin-entity/archiveEntity';
+import { adminEntityArchivingGetEntityInfo } from './admin-entity/archivingGetEntityInfo';
 import { adminCreateEntity } from './admin-entity/createEntity';
 import { adminEntityPublishingCreateEvents } from './admin-entity/createPublishingEvents';
 import { adminGetEntity } from './admin-entity/getEntity';
@@ -24,6 +21,7 @@ import {
   adminEntityUpdateEntity,
   adminEntityUpdateGetEntityInfo,
 } from './admin-entity/updateEntity';
+import { adminEntityUpdateStatus } from './admin-entity/updateStatus';
 import { authCreateSession } from './auth/createSession';
 import { queryOne } from './QueryFunctions';
 import { schemaGetSpecification } from './schema/getSpecification';
@@ -51,9 +49,8 @@ export async function createSqliteDatabaseAdapter(
   }
 
   const adapter: DatabaseAdapter = {
-    adminEntityArchiveGetEntityInfo: (...args) =>
-      adminEntityArchiveGetEntityInfo(sqliteAdapter, ...args),
-    adminEntityArchiveEntity: (...args) => adminEntityArchiveEntity(sqliteAdapter, ...args),
+    adminEntityArchivingGetEntityInfo: (...args) =>
+      adminEntityArchivingGetEntityInfo(sqliteAdapter, ...args),
     adminEntityCreate: (...args) => adminCreateEntity(sqliteAdapter, ...args),
     adminEntityGetOne: (...args) => adminGetEntity(sqliteAdapter, ...args),
     adminEntityGetEntityName: (...args) => adminEntityGetEntityName(sqliteAdapter, ...args),
@@ -68,6 +65,7 @@ export async function createSqliteDatabaseAdapter(
     adminEntityUpdateEntity: (...args) => adminEntityUpdateEntity(sqliteAdapter, ...args),
     adminEntityUpdateGetEntityInfo: (...args) =>
       adminEntityUpdateGetEntityInfo(sqliteAdapter, ...args),
+    adminEntityUpdateStatus: (...args) => adminEntityUpdateStatus(sqliteAdapter, ...args),
     adminEntityUnpublishGetEntitiesInfo: (...args) =>
       adminEntityUnpublishGetEntitiesInfo(sqliteAdapter, ...args),
     adminEntityUnpublishEntities: (...args) => adminEntityUnpublishEntities(sqliteAdapter, ...args),
