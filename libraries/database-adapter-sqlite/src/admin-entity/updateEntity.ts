@@ -155,7 +155,7 @@ export async function adminEntityUpdateEntity(
       [versionsId]
     );
     for (const referenceId of entity.referenceIds) {
-      qb.addQuery(`(?1, ${qb.addValue(referenceId)})`);
+      qb.addQuery(`(?1, ${qb.addValue(referenceId.entityInternalId as number)})`);
     }
     const referenceResult = await queryNone(databaseAdapter, context, qb.build());
     if (referenceResult.isError()) {

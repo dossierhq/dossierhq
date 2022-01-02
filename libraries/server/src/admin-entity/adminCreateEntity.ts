@@ -10,7 +10,7 @@ import type {
 import { AdminEntityStatus, ok } from '@jonasb/datadata-core';
 import type { AuthorizationAdapter, DatabaseAdapter, SessionContext } from '..';
 import { authResolveAuthorizationKey } from '../Auth';
-import { encodeEntity, resolveCreateEntity } from '../EntityCodec';
+import { encodeAdminEntity, resolveCreateEntity } from '../EntityCodec';
 import { randomNameGenerator } from './AdminEntityMutationUtils';
 import { publishEntityAfterMutation } from './publishEntityAfterMutation';
 
@@ -40,7 +40,7 @@ export async function adminCreateEntity(
     return resolvedAuthKeyResult;
   }
 
-  const encodeResult = await encodeEntity(schema, databaseAdapter, context, createEntity);
+  const encodeResult = await encodeAdminEntity(schema, databaseAdapter, context, createEntity);
   if (encodeResult.isError()) {
     return encodeResult;
   }

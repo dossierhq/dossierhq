@@ -6,6 +6,7 @@ import { adminEntityPublishingCreateEvents } from './admin-entity/createPublishi
 import { adminEntityGetMultiple } from './admin-entity/getEntities';
 import { adminGetEntity } from './admin-entity/getEntity';
 import { adminEntityGetEntityName } from './admin-entity/getEntityName';
+import { adminEntityGetReferenceEntitiesInfo } from './admin-entity/getReferenceEntitiesInfo';
 import { adminEntitySearchTotalCount } from './admin-entity/getTotalCount';
 import {
   adminEntityPublishGetUnpublishedReferencedEntities,
@@ -56,6 +57,8 @@ export function createPostgresDatabaseAdapterAdapter(
     adminEntityGetOne: (...args) => adminGetEntity(databaseAdapter, ...args),
     adminEntityGetMultiple: (...args) => adminEntityGetMultiple(databaseAdapter, ...args),
     adminEntityGetEntityName: (...args) => adminEntityGetEntityName(databaseAdapter, ...args),
+    adminEntityGetReferenceEntitiesInfo: (...args) =>
+      adminEntityGetReferenceEntitiesInfo(databaseAdapter, ...args),
     adminEntityPublishGetUnpublishedReferencedEntities: (...args) =>
       adminEntityPublishGetUnpublishedReferencedEntities(databaseAdapter, ...args),
     adminEntityPublishGetVersionInfo: (...args) =>

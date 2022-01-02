@@ -45,7 +45,7 @@ export interface DatabaseAdminEntityCreateEntityArg {
   resolvedAuthKey: ResolvedAuthKey;
   fullTextSearchText: string;
   locations: Location[];
-  referenceIds: number[];
+  referenceIds: DatabaseResolvedEntityReference[];
   fieldsData: Record<string, unknown>;
 }
 
@@ -70,6 +70,12 @@ export interface DatabaseAdminEntityPayload {
 
 export interface DatabaseAdminEntityGetOnePayload extends DatabaseAdminEntityPayload {
   resolvedAuthKey: string;
+}
+
+export interface DatabaseAdminEntityGetReferenceEntityInfoPayload
+  extends DatabaseResolvedEntityReference {
+  id: string;
+  type: string;
 }
 
 export interface DatabaseAdminEntityPublishGetVersionInfoPayload
@@ -139,7 +145,7 @@ export interface DatabaseEntityUpdateEntityArg extends DatabaseResolvedEntityRef
   session: Session;
   fieldValues: Record<string, unknown>;
   fullTextSearchText: string;
-  referenceIds: number[];
+  referenceIds: DatabaseResolvedEntityReference[];
   locations: Location[];
 }
 
@@ -234,6 +240,11 @@ export interface DatabaseAdapter {
     context: TransactionContext,
     references: EntityReference[]
   ): PromiseResult<DatabaseAdminEntityGetOnePayload[], ErrorType.Generic>;
+
+  adminEntityGetReferenceEntitiesInfo(
+    context: TransactionContext,
+    references: EntityReference[]
+  ): PromiseResult<DatabaseAdminEntityGetReferenceEntityInfoPayload[], ErrorType.Generic>;
 
   adminEntityPublishGetVersionInfo(
     context: TransactionContext,
