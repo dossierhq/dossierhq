@@ -60,6 +60,12 @@ export async function createSqliteDatabaseAdapter(
     adminEntityGetReferenceEntitiesInfo: () => {
       throw new Error('TODO');
     },
+    adminEntityHistoryGetEntityInfo: () => {
+      throw new Error('TODO');
+    },
+    adminEntityHistoryGetVersionsInfo: () => {
+      throw new Error('TODO');
+    },
     adminEntityPublishGetUnpublishedReferencedEntities: (...args) =>
       adminEntityPublishGetUnpublishedReferencedEntities(sqliteAdapter, ...args),
     adminEntityPublishGetVersionInfo: (...args) =>

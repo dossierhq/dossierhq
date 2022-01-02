@@ -78,6 +78,19 @@ export interface DatabaseAdminEntityGetReferenceEntityInfoPayload
   type: string;
 }
 
+export interface DatabaseAdminEntityHistoryGetEntityInfoPayload
+  extends DatabaseResolvedEntityVersionReference {
+  authKey: string;
+  resolvedAuthKey: string;
+}
+
+export interface DatabaseAdminEntityHistoryGetVersionInfoPayload
+  extends DatabaseResolvedEntityVersionReference {
+  version: number;
+  createdAt: Temporal.Instant;
+  createdBy: string;
+}
+
 export interface DatabaseAdminEntityPublishGetVersionInfoPayload
   extends DatabaseResolvedEntityVersionReference {
   versionIsPublished: boolean;
@@ -245,6 +258,19 @@ export interface DatabaseAdapter {
     context: TransactionContext,
     references: EntityReference[]
   ): PromiseResult<DatabaseAdminEntityGetReferenceEntityInfoPayload[], ErrorType.Generic>;
+
+  adminEntityHistoryGetEntityInfo(
+    context: TransactionContext,
+    reference: EntityReference
+  ): PromiseResult<
+    DatabaseAdminEntityHistoryGetEntityInfoPayload,
+    ErrorType.NotFound | ErrorType.Generic
+  >;
+
+  adminEntityHistoryGetVersionsInfo(
+    context: TransactionContext,
+    reference: DatabaseResolvedEntityReference
+  ): PromiseResult<DatabaseAdminEntityHistoryGetVersionInfoPayload[], ErrorType.Generic>;
 
   adminEntityPublishGetVersionInfo(
     context: TransactionContext,

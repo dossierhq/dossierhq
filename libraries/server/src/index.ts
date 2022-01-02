@@ -8,6 +8,8 @@ export type {
   DatabaseAdminEntityCreatePayload,
   DatabaseAdminEntityGetOnePayload,
   DatabaseAdminEntityGetReferenceEntityInfoPayload,
+  DatabaseAdminEntityHistoryGetEntityInfoPayload,
+  DatabaseAdminEntityHistoryGetVersionInfoPayload,
   DatabaseAdminEntityPublishGetVersionInfoPayload,
   DatabaseAdminEntityPublishingCreateEventArg,
   DatabaseAdminEntityPublishUpdateEntityArg,
