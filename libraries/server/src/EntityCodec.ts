@@ -253,7 +253,7 @@ export function decodeAdminEntityFields2(
   return fields;
 }
 
-export function resolveEntityStatus(status: EntitiesTable['status']): AdminEntityStatus {
+function resolveEntityStatus(status: EntitiesTable['status']): AdminEntityStatus {
   switch (status) {
     case 'draft':
       return AdminEntityStatus.draft;

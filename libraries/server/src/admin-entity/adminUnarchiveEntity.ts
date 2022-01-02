@@ -4,12 +4,9 @@ import type {
   ErrorType,
   PromiseResult,
 } from '@jonasb/datadata-core';
-import { AdminEntityStatus, notOk, ok } from '@jonasb/datadata-core';
+import { AdminEntityStatus, ok } from '@jonasb/datadata-core';
 import type { AuthorizationAdapter, DatabaseAdapter, SessionContext } from '..';
 import { authVerifyAuthorizationKey } from '../Auth';
-import * as Db from '../Database';
-import type { EntitiesTable } from '../DatabaseTables';
-import { resolveEntityStatus } from '../EntityCodec';
 
 export async function adminUnarchiveEntity(
   databaseAdapter: DatabaseAdapter,
@@ -21,72 +18,64 @@ export async function adminUnarchiveEntity(
   ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.NotFound | ErrorType.Generic
 > {
   return context.withTransaction(async (context) => {
-    const entityInfo = await Db.queryNoneOrOne<
-      Pick<
-        EntitiesTable,
-        'id' | 'never_published' | 'updated_at' | 'status' | 'auth_key' | 'resolved_auth_key'
-      >
-    >(
-      databaseAdapter,
+    // Step 1: Get entity info
+    const entityInfoResult = await databaseAdapter.adminEntityArchivingGetEntityInfo(
       context,
-      `SELECT id, never_published, updated_at, status, auth_key, resolved_auth_key
-       FROM entities WHERE uuid = $1`,
-      [reference.id]
+      reference
     );
-
-    if (!entityInfo) {
-      return notOk.NotFound('No such entity');
+    if (entityInfoResult.isError()) {
+      return entityInfoResult;
     }
+    const { entityInternalId, authKey, resolvedAuthKey, status, neverPublished } =
+      entityInfoResult.value;
 
+    // Step 2: Verify authKeys
     const authResult = await authVerifyAuthorizationKey(
       authorizationAdapter,
       context,
       reference?.authKeys,
-      { authKey: entityInfo.auth_key, resolvedAuthKey: entityInfo.resolved_auth_key }
+      { authKey, resolvedAuthKey }
     );
     if (authResult.isError()) {
       return authResult;
     }
 
-    const {
-      id: entityId,
-      never_published: neverPublished,
-      updated_at: previousUpdatedAt,
-    } = entityInfo;
     const result: AdminEntityUnarchivePayload = {
       id: reference.id,
-      status: resolveEntityStatus(entityInfo.status),
+      status,
       effect: 'none',
-      updatedAt: previousUpdatedAt,
+      updatedAt: entityInfoResult.value.updatedAt,
     };
 
     if (result.status === AdminEntityStatus.archived) {
       result.status = neverPublished ? AdminEntityStatus.draft : AdminEntityStatus.withdrawn;
       result.effect = 'unarchived';
 
-      const [{ updated_at: updatedAt }, _] = await Promise.all([
-        Db.queryOne<Pick<EntitiesTable, 'updated_at'>>(
-          databaseAdapter,
-          context,
-          `UPDATE entities SET
-            archived = FALSE,
-            updated_at = NOW(),
-            updated = nextval('entities_updated_seq'),
-            status = $1
-          WHERE id = $2
-          RETURNING updated_at`,
-          [result.status, entityId]
-        ),
-        Db.queryNone(
-          databaseAdapter,
-          context,
-          "INSERT INTO entity_publishing_events (entities_id, kind, published_by) VALUES ($1, 'unarchive', $2)",
-          [entityId, context.session.subjectInternalId]
-        ),
-      ]);
-      result.updatedAt = updatedAt;
+      // Step 3: Update entity status
+      const unarchiveResult = await databaseAdapter.adminEntityUpdateStatus(
+        context,
+        result.status,
+        {
+          entityInternalId,
+        }
+      );
+      if (unarchiveResult.isError()) {
+        return unarchiveResult;
+      }
+      result.updatedAt = unarchiveResult.value.updatedAt;
+
+      // Step 4: Create publishing event
+      const createEventResult = await databaseAdapter.adminEntityPublishingCreateEvents(context, {
+        session: context.session,
+        kind: 'unarchive',
+        references: [{ entityInternalId }],
+      });
+      if (createEventResult.isError()) {
+        return createEventResult;
+      }
     }
 
+    //
     return ok(result);
   });
 }

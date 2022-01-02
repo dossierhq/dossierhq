@@ -28,6 +28,7 @@ export const SCHEMA_DEFINITION_STATEMENTS = [
     auth_key TEXT NOT NULL,
     resolved_auth_key TEXT NOT NULL,
     status TEXT NOT NULL,
+    never_published INTEGER NOT NULL DEFAULT TRUE,
     created_at TEXT NOT NULL,
     updated_at TEXT NOT NULL,
     latest_entity_versions_id INTEGER,

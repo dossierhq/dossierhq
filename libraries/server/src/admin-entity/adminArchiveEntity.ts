@@ -19,7 +19,7 @@ export async function adminArchiveEntity(
 > {
   return context.withTransaction(async (context) => {
     // Step 1: Get entity info
-    const entityInfoResult = await databaseAdapter.adminEntityArchiveGetEntityInfo(
+    const entityInfoResult = await databaseAdapter.adminEntityArchivingGetEntityInfo(
       context,
       reference
     );
@@ -55,7 +55,7 @@ export async function adminArchiveEntity(
     //TODO archive and creating publishing events can be performed in parallel
 
     // Step 4: Archive entity
-    const archiveResult = await databaseAdapter.adminEntityArchiveEntity(
+    const archiveResult = await databaseAdapter.adminEntityUpdateStatus(
       context,
       AdminEntityStatus.archived,
       {

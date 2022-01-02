@@ -23,16 +23,13 @@ export interface DatabaseResolvedEntityVersionReference {
   entityVersionInternalId: unknown;
 }
 
-export interface DatabaseAdminEntityArchiveEntityInfoPayload
+export interface DatabaseAdminEntityArchivingEntityInfoPayload
   extends DatabaseResolvedEntityReference {
   authKey: string;
   resolvedAuthKey: string;
   status: AdminEntityStatus;
   updatedAt: Temporal.Instant;
-}
-
-export interface DatabaseAdminEntityArchiveEntityPayload {
-  updatedAt: Temporal.Instant;
+  neverPublished: boolean;
 }
 
 export interface DatabaseAdminEntityCreateEntityArg {
@@ -85,10 +82,6 @@ export interface DatabaseAdminEntityPublishUpdateEntityArg
   fullTextSearchText: string;
 }
 
-export interface DatabaseAdminEntityPublishUpdateEntityPayload {
-  updatedAt: Temporal.Instant;
-}
-
 export type DatabaseAdminEntityPublishingCreateEventArg = { session: Session } & (
   | {
       kind: 'publish';
@@ -100,6 +93,10 @@ export type DatabaseAdminEntityPublishingCreateEventArg = { session: Session } &
     }
   | {
       kind: 'archive';
+      references: DatabaseResolvedEntityReference[];
+    }
+  | {
+      kind: 'unarchive';
       references: DatabaseResolvedEntityReference[];
     }
 );
@@ -130,6 +127,10 @@ export interface DatabaseEntityUpdateEntityArg extends DatabaseResolvedEntityRef
 
 export interface DatabaseEntityUpdateEntityPayload {
   name: string;
+  updatedAt: Temporal.Instant;
+}
+
+export interface DatabaseAdminEntityUpdateStatusPayload {
   updatedAt: Temporal.Instant;
 }
 
@@ -164,19 +165,13 @@ export interface DatabaseAdapter {
     callback: () => PromiseResult<TOk, TError>
   ): PromiseResult<TOk, TError>;
 
-  adminEntityArchiveGetEntityInfo(
+  adminEntityArchivingGetEntityInfo(
     context: TransactionContext,
     reference: EntityReference
   ): PromiseResult<
-    DatabaseAdminEntityArchiveEntityInfoPayload,
+    DatabaseAdminEntityArchivingEntityInfoPayload,
     ErrorType.NotFound | ErrorType.Generic
   >;
-
-  adminEntityArchiveEntity(
-    context: TransactionContext,
-    status: AdminEntityStatus,
-    reference: DatabaseResolvedEntityReference
-  ): PromiseResult<DatabaseAdminEntityArchiveEntityPayload, ErrorType.Generic>;
 
   adminEntityCreate(
     context: TransactionContext,
@@ -205,7 +200,7 @@ export interface DatabaseAdapter {
   adminEntityPublishUpdateEntity(
     context: TransactionContext,
     values: DatabaseAdminEntityPublishUpdateEntityArg
-  ): PromiseResult<DatabaseAdminEntityPublishUpdateEntityPayload, ErrorType.Generic>;
+  ): PromiseResult<DatabaseAdminEntityUpdateStatusPayload, ErrorType.Generic>;
 
   adminEntityPublishGetUnpublishedReferencedEntities(
     context: TransactionContext,
@@ -230,6 +225,12 @@ export interface DatabaseAdapter {
     randomNameGenerator: (name: string) => string,
     entity: DatabaseEntityUpdateEntityArg
   ): PromiseResult<DatabaseEntityUpdateEntityPayload, ErrorType.Generic>;
+
+  adminEntityUpdateStatus(
+    context: TransactionContext,
+    status: AdminEntityStatus,
+    reference: DatabaseResolvedEntityReference
+  ): PromiseResult<DatabaseAdminEntityUpdateStatusPayload, ErrorType.Generic>;
 
   adminEntityUnpublishGetEntitiesInfo(
     context: TransactionContext,

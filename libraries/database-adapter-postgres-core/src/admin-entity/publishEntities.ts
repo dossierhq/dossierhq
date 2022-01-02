@@ -8,7 +8,7 @@ import { notOk, ok } from '@jonasb/datadata-core';
 import type {
   DatabaseAdminEntityPublishGetVersionInfoPayload,
   DatabaseAdminEntityPublishUpdateEntityArg,
-  DatabaseAdminEntityPublishUpdateEntityPayload,
+  DatabaseAdminEntityUpdateStatusPayload,
   TransactionContext,
 } from '@jonasb/datadata-server';
 import type { DatabaseResolvedEntityVersionReference } from '@jonasb/datadata-server/lib/cjs/DatabaseAdapter';
@@ -80,7 +80,7 @@ export async function adminEntityPublishUpdateEntity(
   databaseAdapter: PostgresDatabaseAdapter,
   context: TransactionContext,
   values: DatabaseAdminEntityPublishUpdateEntityArg
-): PromiseResult<DatabaseAdminEntityPublishUpdateEntityPayload, ErrorType.Generic> {
+): PromiseResult<DatabaseAdminEntityUpdateStatusPayload, ErrorType.Generic> {
   const { entityVersionInternalId, fullTextSearchText, status, entityInternalId } = values;
 
   const updateResult = await queryOne<Pick<EntitiesTable, 'updated_at'>>(databaseAdapter, context, {

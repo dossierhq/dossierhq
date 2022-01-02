@@ -8,7 +8,7 @@ import { notOk, ok } from '@jonasb/datadata-core';
 import type {
   DatabaseAdminEntityPublishGetVersionInfoPayload,
   DatabaseAdminEntityPublishUpdateEntityArg,
-  DatabaseAdminEntityPublishUpdateEntityPayload,
+  DatabaseAdminEntityUpdateStatusPayload,
   TransactionContext,
 } from '@jonasb/datadata-server';
 import type { DatabaseResolvedEntityVersionReference } from '@jonasb/datadata-server/lib/cjs/DatabaseAdapter';
@@ -81,7 +81,7 @@ export async function adminEntityPublishUpdateEntity(
   databaseAdapter: SqliteDatabaseAdapter,
   context: TransactionContext,
   values: DatabaseAdminEntityPublishUpdateEntityArg
-): PromiseResult<DatabaseAdminEntityPublishUpdateEntityPayload, ErrorType.Generic> {
+): PromiseResult<DatabaseAdminEntityUpdateStatusPayload, ErrorType.Generic> {
   const { entityVersionInternalId, status, entityInternalId } = values;
 
   const now = Temporal.Now.instant();
@@ -90,6 +90,7 @@ export async function adminEntityPublishUpdateEntity(
   const updateResult = await queryNone(databaseAdapter, context, {
     text: `UPDATE entities
            SET
+             never_published = TRUE,
              published_entity_versions_id = ?1,
              updated_at = ?2,
              status = ?3

@@ -6,6 +6,7 @@ export interface EntitiesTable {
   auth_key: string;
   resolved_auth_key: string;
   status: 'draft' | 'published' | 'modified' | 'withdrawn' | 'archived';
+  never_published: boolean;
   created_at: string;
   updated_at: string;
   latest_entity_versions_id: number | null;
