@@ -11,7 +11,10 @@ import {
   PublishedClientOperationName,
 } from '@jonasb/datadata-core';
 import type { AuthorizationAdapter, DatabaseAdapter, SessionContext } from '.';
-import { getEntities, getEntity, getTotalCount, searchEntities } from './PublishedEntity';
+import { publishedGetEntities } from './published-entity/publishedGetEntities';
+import { publishedGetEntity } from './published-entity/publishedGetEntity';
+import { publishedGetTotalCount } from './published-entity/publishedGetTotalCount';
+import { publishedSearchEntities } from './published-entity/publishedSearchEntities';
 import type { ServerImpl } from './Server';
 
 export function createServerPublishedClient({
@@ -38,7 +41,7 @@ export function createServerPublishedClient({
           resolve,
         } = operation as PublishedClientOperation<PublishedClientOperationName.getEntities>;
         resolve(
-          await getEntities(
+          await publishedGetEntities(
             serverImpl.getPublishedSchema(),
             authorizationAdapter,
             databaseAdapter,
@@ -54,7 +57,7 @@ export function createServerPublishedClient({
           resolve,
         } = operation as PublishedClientOperation<PublishedClientOperationName.getEntity>;
         resolve(
-          await getEntity(
+          await publishedGetEntity(
             serverImpl.getPublishedSchema(),
             authorizationAdapter,
             databaseAdapter,
@@ -77,7 +80,7 @@ export function createServerPublishedClient({
           resolve,
         } = operation as PublishedClientOperation<PublishedClientOperationName.getTotalCount>;
         resolve(
-          await getTotalCount(
+          await publishedGetTotalCount(
             serverImpl.getPublishedSchema(),
             authorizationAdapter,
             databaseAdapter,
@@ -93,7 +96,7 @@ export function createServerPublishedClient({
           resolve,
         } = operation as PublishedClientOperation<PublishedClientOperationName.searchEntities>;
         resolve(
-          await searchEntities(
+          await publishedSearchEntities(
             serverImpl.getPublishedSchema(),
             authorizationAdapter,
             databaseAdapter,
