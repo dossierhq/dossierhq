@@ -10,6 +10,10 @@ import {
   adminEntityHistoryGetVersionsInfo,
 } from './admin-entity/getEntityHistory';
 import { adminEntityGetEntityName } from './admin-entity/getEntityName';
+import {
+  adminEntityPublishingHistoryGetEntityInfo,
+  adminEntityPublishingHistoryGetEvents,
+} from './admin-entity/getPublishingHistory';
 import { adminEntityGetReferenceEntitiesInfo } from './admin-entity/getReferenceEntitiesInfo';
 import { adminEntitySearchTotalCount } from './admin-entity/getTotalCount';
 import {
@@ -73,6 +77,10 @@ export function createPostgresDatabaseAdapterAdapter(
       adminEntityPublishGetVersionInfo(databaseAdapter, ...args),
     adminEntityPublishingCreateEvents: (...args) =>
       adminEntityPublishingCreateEvents(databaseAdapter, ...args),
+    adminEntityPublishingHistoryGetEntityInfo: (...args) =>
+      adminEntityPublishingHistoryGetEntityInfo(databaseAdapter, ...args),
+    adminEntityPublishingHistoryGetEvents: (...args) =>
+      adminEntityPublishingHistoryGetEvents(databaseAdapter, ...args),
     adminEntityPublishUpdateEntity: (...args) =>
       adminEntityPublishUpdateEntity(databaseAdapter, ...args),
     adminEntitySearchEntities: (...args) => adminEntitySearchEntities(databaseAdapter, ...args),
