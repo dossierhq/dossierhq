@@ -27,10 +27,9 @@ export async function adminEntityUnpublishGetEntitiesInfo(
   ErrorType.NotFound | ErrorType.Generic
 > {
   const qb = new SqliteQueryBuilder(
-    'SELECT e.id, e.uuid, e.auth_key, e.resolved_auth_key, e.status, e.updated_at FROM entities e WHERE e.uuid IN ('
+    'SELECT e.id, e.uuid, e.auth_key, e.resolved_auth_key, e.status, e.updated_at FROM entities e WHERE'
   );
-  references.forEach(({ id }) => qb.addQuery(qb.addValue(id)));
-  qb.addQuery(')');
+  qb.addQuery(`e.uuid IN ${qb.addValueList(references.map(({ id }) => id))}`);
 
   const result = await queryMany<
     Pick<EntitiesTable, 'id' | 'uuid' | 'auth_key' | 'resolved_auth_key' | 'status' | 'updated_at'>
@@ -72,17 +71,18 @@ export async function adminEntityUnpublishEntities(
   const now = Temporal.Now.instant();
   const qb = new SqliteQueryBuilder(
     `UPDATE entities
-  SET
-    published_entity_versions_id = NULL,
-    updated_at = ?1,
-    status = ?2
-  WHERE id IN (`,
+     SET
+       published_entity_versions_id = NULL,
+       updated_at = ?1,
+       status = ?2
+     WHERE`,
     [now.toString(), status]
   );
-  references.forEach(({ entityInternalId }) =>
-    qb.addQuery(qb.addValue(entityInternalId as number))
+  qb.addQuery(
+    `id IN ${qb.addValueList(
+      references.map(({ entityInternalId }) => entityInternalId as number)
+    )} RETURNING id`
   );
-  qb.addQuery(') RETURNING id');
 
   // TODO reset published_fts
   const result = await queryMany<Pick<EntitiesTable, 'id'>>(databaseAdapter, context, qb.build());
