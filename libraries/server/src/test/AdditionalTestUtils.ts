@@ -90,6 +90,7 @@ export function createMockDatabaseAdapter(): MockDatabaseAdapter {
     adminEntityUnpublishGetPublishedReferencedEntities: jest.fn(),
     authCreateSession: jest.fn(),
     disconnect: jest.fn(),
+    publishedEntityGetOne: jest.fn(),
     queryLegacy: jest.fn(),
     schemaGetSpecification: jest.fn(),
     schemaUpdateSpecification: jest.fn(),
