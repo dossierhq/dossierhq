@@ -58,7 +58,7 @@ export async function adminCreateEntity(
       [versionsId]
     );
     for (const referenceId of entity.referenceIds) {
-      qb.addQuery(`(?1, ${qb.addValue(referenceId)})`);
+      qb.addQuery(`(?1, ${qb.addValue(referenceId.entityInternalId as number)})`);
     }
     const insertReferencesResult = await queryNone(databaseAdapter, context, qb.build());
     if (insertReferencesResult.isError()) {

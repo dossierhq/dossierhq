@@ -36,22 +36,20 @@ import {
   visitItemRecursively,
   visitorPathToString,
 } from '@jonasb/datadata-core';
-import type { DatabaseAdapter, SessionContext } from '.';
+import type { DatabaseAdapter, DatabaseResolvedEntityReference, SessionContext } from '.';
 import { ensureRequired } from './Assertions';
-import * as Db from './Database';
 import type {
   DatabaseAdminEntityPayload,
   DatabaseEntityUpdateGetEntityInfoPayload,
   DatabasePublishedEntityPayload,
 } from './DatabaseAdapter';
-import type { EntitiesTable } from './DatabaseTables';
 import * as EntityFieldTypeAdapters from './EntityFieldTypeAdapters';
 
-export interface EncodeEntityResult {
+export interface EncodeAdminEntityResult {
   type: string;
   name: string;
   data: Record<string, unknown>;
-  referenceIds: number[];
+  referenceIds: DatabaseResolvedEntityReference[];
   locations: Location[];
   fullTextSearchText: string[];
 }
@@ -346,12 +344,12 @@ function checkForUnsupportedFields(
   return ok(undefined);
 }
 
-export async function encodeEntity(
+export async function encodeAdminEntity(
   schema: AdminSchema,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   entity: AdminEntity | AdminEntityCreate
-): PromiseResult<EncodeEntityResult, ErrorType.BadRequest> {
+): PromiseResult<EncodeAdminEntityResult, ErrorType.BadRequest | ErrorType.Generic> {
   const assertion = ensureRequired({
     'entity.info.type': entity.info.type,
     'entity.info.name': entity.info.name,
@@ -367,7 +365,7 @@ export async function encodeEntity(
     return notOk.BadRequest(`Entity type ${type} doesn’t exist`);
   }
 
-  const result: EncodeEntityResult = {
+  const result: EncodeAdminEntityResult = {
     type,
     name,
     data: {},
@@ -660,24 +658,27 @@ async function resolveRequestedEntityReferences(
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   requestedReferences: RequestedReference[]
-): PromiseResult<number[], ErrorType.BadRequest> {
-  const allUUIDs = new Set();
+): PromiseResult<DatabaseResolvedEntityReference[], ErrorType.BadRequest | ErrorType.Generic> {
+  const allUUIDs = new Set<string>();
   requestedReferences.forEach(({ uuids }) => uuids.forEach((uuid) => allUUIDs.add(uuid)));
 
   if (allUUIDs.size === 0) {
     return ok([]);
   }
 
-  const items = await Db.queryMany<Pick<EntitiesTable, 'id' | 'type' | 'uuid'>>(
-    databaseAdapter,
+  const result = await databaseAdapter.adminEntityGetReferenceEntitiesInfo(
     context,
-    'SELECT id, uuid, type FROM entities WHERE uuid = ANY($1)',
-    [[...allUUIDs]]
+    [...allUUIDs].map((id) => ({ id }))
   );
+  if (result.isError()) {
+    return result;
+  }
+
+  const items = result.value;
 
   for (const request of requestedReferences) {
     for (const uuid of request.uuids) {
-      const item = items.find((x) => x.uuid === uuid);
+      const item = items.find((it) => it.id === uuid);
       if (!item) {
         return notOk.BadRequest(`${request.prefix}: referenced entity (${uuid}) doesn’t exist`);
       }
@@ -691,7 +692,7 @@ async function resolveRequestedEntityReferences(
     }
   }
 
-  return ok(items.map(({ id }) => id));
+  return ok(items.map(({ entityInternalId }) => ({ entityInternalId })));
 }
 
 export const forTest = {
