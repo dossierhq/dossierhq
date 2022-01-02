@@ -199,6 +199,11 @@ export interface DatabaseAdapter {
     reference: EntityReference | EntityVersionReference
   ): PromiseResult<DatabaseAdminEntityGetOnePayload, ErrorType.NotFound | ErrorType.Generic>;
 
+  adminEntityGetMultiple(
+    context: TransactionContext,
+    references: EntityReference[]
+  ): PromiseResult<DatabaseAdminEntityGetOnePayload[], ErrorType.Generic>;
+
   adminEntityPublishGetVersionInfo(
     context: TransactionContext,
     reference: EntityVersionReference
