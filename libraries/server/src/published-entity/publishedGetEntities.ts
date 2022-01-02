@@ -1,0 +1,92 @@
+import type {
+  EntityReferenceWithAuthKeys,
+  ErrorType,
+  PromiseResult,
+  PublishedEntity,
+  PublishedSchema,
+  Result,
+} from '@jonasb/datadata-core';
+import { notOk, ok } from '@jonasb/datadata-core';
+import type { AuthorizationAdapter, DatabaseAdapter, SessionContext } from '..';
+import { authVerifyAuthorizationKey } from '../Auth';
+import * as Db from '../Database';
+import type { EntitiesTable, EntityVersionsTable } from '../DatabaseTables';
+import { decodePublishedEntity } from '../EntityCodec';
+
+/**
+ * Fetches published entities. The entities are returned in the same order as in `ids`.
+ *
+ * If any of the entities are missing that item is returned as an error but the others are returned
+ * as normal.
+ * @param context The session context
+ * @param ids The ids of the entities
+ */
+
+export async function publishedGetEntities(
+  schema: PublishedSchema,
+  authorizationAdapter: AuthorizationAdapter,
+  databaseAdapter: DatabaseAdapter,
+  context: SessionContext,
+  references: EntityReferenceWithAuthKeys[]
+): PromiseResult<
+  Result<
+    PublishedEntity,
+    ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
+  >[],
+  ErrorType.Generic
+> {
+  if (references.length === 0) {
+    return ok([]);
+  }
+  const entitiesMain = await Db.queryMany<
+    Pick<
+      EntitiesTable,
+      'uuid' | 'type' | 'name' | 'auth_key' | 'resolved_auth_key' | 'created_at'
+    > &
+      Pick<EntityVersionsTable, 'data'>
+  >(
+    databaseAdapter,
+    context,
+    `SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, ev.data
+      FROM entities e, entity_versions ev
+      WHERE e.uuid = ANY($1)
+      AND e.published_entity_versions_id = ev.id`,
+    [references.map((it) => it.id)]
+  );
+
+  async function mapItem(
+    reference: EntityReferenceWithAuthKeys,
+    entityMain: typeof entitiesMain[0] | undefined
+  ): PromiseResult<
+    PublishedEntity,
+    ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
+  > {
+    if (!entityMain) {
+      return notOk.NotFound('No such entity');
+    }
+
+    const authResult = await authVerifyAuthorizationKey(
+      authorizationAdapter,
+      context,
+      reference.authKeys,
+      { authKey: entityMain.auth_key, resolvedAuthKey: entityMain.resolved_auth_key }
+    );
+    if (authResult.isError()) {
+      return authResult;
+    }
+
+    const entity = decodePublishedEntity(schema, entityMain);
+    return ok(entity);
+  }
+
+  const result: Result<
+    PublishedEntity,
+    ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
+  >[] = [];
+  for (const reference of references) {
+    const entityMain = entitiesMain.find((it) => it.uuid === reference.id);
+    result.push(await mapItem(reference, entityMain));
+  }
+
+  return ok(result);
+}
