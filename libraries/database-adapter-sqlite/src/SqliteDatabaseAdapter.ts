@@ -76,6 +76,9 @@ export async function createSqliteDatabaseAdapter(
     publishedEntityGetOne: () => {
       throw new Error('TODO');
     },
+    publishedEntityGetEntities: () => {
+      throw new Error('TODO');
+    },
     queryLegacy: () => {
       throw new Error('TODO');
     },

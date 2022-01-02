@@ -272,6 +272,11 @@ export interface DatabaseAdapter {
     reference: EntityReference
   ): PromiseResult<DatabasePublishedEntityGetOnePayload, ErrorType.NotFound | ErrorType.Generic>;
 
+  publishedEntityGetEntities(
+    context: TransactionContext,
+    references: EntityReference[]
+  ): PromiseResult<DatabasePublishedEntityGetOnePayload[], ErrorType.Generic>;
+
   schemaGetSpecification(
     context: TransactionContext
   ): PromiseResult<AdminSchemaSpecification | null, ErrorType.Generic>;
