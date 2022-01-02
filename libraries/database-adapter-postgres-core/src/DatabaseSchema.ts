@@ -27,7 +27,7 @@ export interface EntitiesTable {
   updated_at: Temporal.Instant;
   updated: number;
   latest_draft_entity_versions_id: number | null;
-  never_published: boolean; // TODO remove and rely on status instead
+  never_published: boolean;
   archived: boolean; // TODO remove and rely on status instead
   published_entity_versions_id: number | null;
   status: 'draft' | 'published' | 'modified' | 'withdrawn' | 'archived';

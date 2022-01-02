@@ -8,7 +8,7 @@ import { ErrorType, notOk, ok } from '@jonasb/datadata-core';
 import type { AuthorizationAdapter, DatabaseAdapter, SessionContext } from '..';
 import { adminPublishEntities } from './adminPublishEntities';
 
-//TODO be optimized since we already have the entity data before this and adminPublishEntities() fetches it again
+//TODO not optimized since we already have the entity data before this and adminPublishEntities() fetches it again
 
 export async function publishEntityAfterMutation(
   schema: AdminSchema,
