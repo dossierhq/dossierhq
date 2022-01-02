@@ -74,6 +74,8 @@ export function createMockSessionContext({
 
 export function createMockDatabaseAdapter(): MockDatabaseAdapter {
   const adapter: MockDatabaseAdapter = {
+    adminEntityArchiveGetEntityInfo: jest.fn(),
+    adminEntityArchiveEntity: jest.fn(),
     adminEntityCreate: jest.fn(),
     adminEntityGetOne: jest.fn(),
     adminEntityGetEntityName: jest.fn(),

@@ -14,7 +14,6 @@ import {
 import type { Temporal } from '@js-temporal/polyfill';
 import type { AuthorizationAdapter, DatabaseAdapter, SessionContext } from '..';
 import { authVerifyAuthorizationKey } from '../Auth';
-import { resolveEntityStatus } from '../EntityCodec';
 import { checkUUIDsAreUnique } from './AdminEntityMutationUtils';
 
 interface EntityInfoToBeUnpublished {
@@ -180,7 +179,7 @@ async function unpublishEntitiesAndCollectResult(
     } else {
       result.push({
         id: entityInfo.id,
-        status: resolveEntityStatus(entityInfo.status),
+        status: entityInfo.status,
         effect: entityInfo.effect,
         updatedAt: entityInfo.updatedAt,
       });
