@@ -1,5 +1,9 @@
 import type { DatabaseAdapter } from '@jonasb/datadata-server';
 import type { PostgresTransaction } from '.';
+import {
+  adminEntityArchiveEntity,
+  adminEntityArchiveGetEntityInfo,
+} from './admin-entity/archiveEntity';
 import { adminCreateEntity } from './admin-entity/createEntity';
 import { adminEntityPublishingCreateEvents } from './admin-entity/createPublishingEvents';
 import { adminGetEntity } from './admin-entity/getEntity';
@@ -41,6 +45,9 @@ export function createPostgresDatabaseAdapterAdapter(
   databaseAdapter: PostgresDatabaseAdapter
 ): DatabaseAdapter {
   return {
+    adminEntityArchiveGetEntityInfo: (...args) =>
+      adminEntityArchiveGetEntityInfo(databaseAdapter, ...args),
+    adminEntityArchiveEntity: (...args) => adminEntityArchiveEntity(databaseAdapter, ...args),
     adminEntityCreate: (...args) => adminCreateEntity(databaseAdapter, ...args),
     adminEntityGetOne: (...args) => adminGetEntity(databaseAdapter, ...args),
     adminEntityGetEntityName: (...args) => adminEntityGetEntityName(databaseAdapter, ...args),

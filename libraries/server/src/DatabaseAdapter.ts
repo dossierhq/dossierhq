@@ -23,6 +23,18 @@ export interface DatabaseResolvedEntityVersionReference {
   entityVersionInternalId: unknown;
 }
 
+export interface DatabaseAdminEntityArchiveEntityInfoPayload
+  extends DatabaseResolvedEntityReference {
+  authKey: string;
+  resolvedAuthKey: string;
+  status: AdminEntityStatus;
+  updatedAt: Temporal.Instant;
+}
+
+export interface DatabaseAdminEntityArchiveEntityPayload {
+  updatedAt: Temporal.Instant;
+}
+
 export interface DatabaseAdminEntityCreateEntityArg {
   id: string | null;
   type: string;
@@ -86,6 +98,10 @@ export type DatabaseAdminEntityPublishingCreateEventArg = { session: Session } &
       kind: 'unpublish';
       references: DatabaseResolvedEntityReference[];
     }
+  | {
+      kind: 'archive';
+      references: DatabaseResolvedEntityReference[];
+    }
 );
 
 export interface DatabaseEntityUpdateGetEntityInfoPayload extends DatabaseResolvedEntityReference {
@@ -147,6 +163,19 @@ export interface DatabaseAdapter {
     transaction: Transaction,
     callback: () => PromiseResult<TOk, TError>
   ): PromiseResult<TOk, TError>;
+
+  adminEntityArchiveGetEntityInfo(
+    context: TransactionContext,
+    reference: EntityReference
+  ): PromiseResult<
+    DatabaseAdminEntityArchiveEntityInfoPayload,
+    ErrorType.NotFound | ErrorType.Generic
+  >;
+
+  adminEntityArchiveEntity(
+    context: TransactionContext,
+    reference: DatabaseResolvedEntityReference
+  ): PromiseResult<DatabaseAdminEntityArchiveEntityPayload, ErrorType.Generic>;
 
   adminEntityCreate(
     context: TransactionContext,

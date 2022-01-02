@@ -3,6 +3,8 @@ export type { AuthorizationAdapter } from './AuthorizationAdapter';
 export type { Context, SessionContext, TransactionContext } from './Context';
 export type {
   DatabaseAdapter,
+  DatabaseAdminEntityArchiveEntityInfoPayload,
+  DatabaseAdminEntityArchiveEntityPayload,
   DatabaseAdminEntityCreateEntityArg,
   DatabaseAdminEntityCreatePayload,
   DatabaseAdminEntityGetOnePayload,
