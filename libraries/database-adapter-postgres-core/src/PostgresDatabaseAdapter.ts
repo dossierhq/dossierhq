@@ -6,7 +6,7 @@ import { adminEntityPublishingCreateEvents } from './admin-entity/createPublishi
 import { adminEntityGetMultiple } from './admin-entity/getEntities';
 import { adminGetEntity } from './admin-entity/getEntity';
 import { adminEntityGetEntityName } from './admin-entity/getEntityName';
-import { publishedEntitySearchTotalCount } from './published-entity/getTotalCount';
+import { adminEntitySearchTotalCount } from './admin-entity/getTotalCount';
 import {
   adminEntityPublishGetUnpublishedReferencedEntities,
   adminEntityPublishGetVersionInfo,
@@ -26,6 +26,7 @@ import { authCreateSession } from './auth/createSession';
 import { withNestedTransaction, withRootTransaction } from './PostgresTransaction';
 import { publishedEntityGetEntities } from './published-entity/getEntities';
 import { publishedEntityGetOne } from './published-entity/getEntity';
+import { publishedEntitySearchTotalCount } from './published-entity/getTotalCount';
 import { schemaGetSpecification } from './schema/getSpecification';
 import { schemaUpdateSpecification } from './schema/updateSpecification';
 
@@ -61,6 +62,7 @@ export function createPostgresDatabaseAdapterAdapter(
       adminEntityPublishingCreateEvents(databaseAdapter, ...args),
     adminEntityPublishUpdateEntity: (...args) =>
       adminEntityPublishUpdateEntity(databaseAdapter, ...args),
+    adminEntitySearchTotalCount: (...args) => adminEntitySearchTotalCount(databaseAdapter, ...args),
     adminEntityUpdateGetEntityInfo: (...args) =>
       adminEntityUpdateGetEntityInfo(databaseAdapter, ...args),
     adminEntityUpdateEntity: (...args) => adminEntityUpdateEntity(databaseAdapter, ...args),

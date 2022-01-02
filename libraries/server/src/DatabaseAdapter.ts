@@ -1,5 +1,7 @@
 import type {
   AdminEntityStatus,
+  AdminQuery,
+  AdminSchema,
   AdminSchemaSpecification,
   EntityReference,
   EntityVersionReference,
@@ -228,6 +230,13 @@ export interface DatabaseAdapter {
     context: TransactionContext,
     event: DatabaseAdminEntityPublishingCreateEventArg
   ): PromiseResult<void, ErrorType.Generic>;
+
+  adminEntitySearchTotalCount(
+    schema: AdminSchema,
+    context: TransactionContext,
+    query: AdminQuery | undefined,
+    resolvedAuthKeys: ResolvedAuthKey[]
+  ): PromiseResult<number, ErrorType.BadRequest | ErrorType.Generic>;
 
   adminEntityUpdateGetEntityInfo(
     context: TransactionContext,
