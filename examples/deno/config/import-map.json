@@ -5,10 +5,10 @@
     "@jonasb/datadata-database-adapter-postgres-core": "../node_modules/@jonasb/datadata-database-adapter-postgres-core/lib/deno/index.js",
     "@jonasb/datadata-database-adapter-test-integration": "../node_modules/@jonasb/datadata-database-adapter-test-integration/lib/deno/index.js",
     "@jonasb/datadata-server": "../node_modules/@jonasb/datadata-server/lib/deno/index.js",
-    "@js-temporal/polyfill": "https://cdn.skypack.dev/@js-temporal/polyfill@~0.2.0?dts",
-    "dotenv": "https://deno.land/x/dotenv@v2.0.0/mod.ts",
-    "postgres": "https://deno.land/x/postgres@v0.12.0/mod.ts",
-    "std/": "https://deno.land/std@0.106.0/",
+    "@js-temporal/polyfill": "https://cdn.skypack.dev/@js-temporal/polyfill@~0.3.0?dts",
+    "dotenv": "https://deno.land/x/dotenv@v3.1.0/mod.ts",
+    "postgres": "https://deno.land/x/postgres@v0.14.2/mod.ts",
+    "std/": "https://deno.land/std@0.119.0/",
     "tslib": "https://cdn.skypack.dev/tslib@~2.3.1?dts",
     "uuid": "https://cdn.skypack.dev/uuid@^8.3.2?dts"
   }
