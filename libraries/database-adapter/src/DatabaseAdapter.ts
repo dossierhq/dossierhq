@@ -224,9 +224,10 @@ export interface DatabaseAdapter {
   ): PromiseResult<TOk, TError>;
 
   withNestedTransaction<TOk, TError extends ErrorType>(
+    context: TransactionContext,
     transaction: Transaction,
     callback: () => PromiseResult<TOk, TError>
-  ): PromiseResult<TOk, TError>;
+  ): PromiseResult<TOk, TError | ErrorType.Generic>;
 
   adminEntityArchivingGetEntityInfo(
     context: TransactionContext,

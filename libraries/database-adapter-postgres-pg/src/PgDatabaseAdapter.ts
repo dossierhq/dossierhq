@@ -33,6 +33,7 @@ export function createPostgresAdapter(poolConfig: PoolConfig): DatabaseAdapter {
       const client = await pool.connect();
       const transaction: TransactionWrapper = {
         _type: 'Transaction',
+        savePointCount: 0,
         client,
         release: () => client.release(),
       };

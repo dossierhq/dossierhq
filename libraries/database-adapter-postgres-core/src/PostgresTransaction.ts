@@ -1,9 +1,11 @@
-import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
-import type { Transaction } from '@jonasb/datadata-database-adapter';
+import type { ErrorType, PromiseResult, Result } from '@jonasb/datadata-core';
+import { notOk } from '@jonasb/datadata-core';
+import type { Transaction, TransactionContext } from '@jonasb/datadata-database-adapter';
 import type { PostgresDatabaseAdapter } from '.';
 
 export interface PostgresTransaction extends Transaction {
   release(): void;
+  savePointCount: number;
 }
 
 export async function withRootTransaction<TOk, TError extends ErrorType>(
@@ -30,21 +32,39 @@ export async function withRootTransaction<TOk, TError extends ErrorType>(
 
 export async function withNestedTransaction<TOk, TError extends ErrorType>(
   databaseAdapter: PostgresDatabaseAdapter,
+  context: TransactionContext,
   transaction: Transaction,
   callback: () => PromiseResult<TOk, TError>
-): PromiseResult<TOk, TError> {
+): PromiseResult<TOk, TError | ErrorType.Generic> {
+  //TODO need mutex to ensure not called from other "contexts" in the same transaction?
   const pgTransaction = transaction as PostgresTransaction;
+  const savePointName = `nested${pgTransaction.savePointCount++}`;
   try {
-    await databaseAdapter.query(pgTransaction, 'BEGIN', undefined);
-    const result = await callback();
-    if (result.isOk()) {
-      await databaseAdapter.query(pgTransaction, 'COMMIT', undefined);
-    } else {
-      await databaseAdapter.query(pgTransaction, 'ROLLBACK', undefined);
-    }
-    return result;
-  } catch (e) {
-    await databaseAdapter.query(pgTransaction, 'ROLLBACK', undefined);
-    throw e;
+    await databaseAdapter.query(pgTransaction, `SAVEPOINT ${savePointName}`, undefined);
+  } catch (error) {
+    return notOk.GenericUnexpectedException(context, error);
   }
+
+  let result: Result<TOk, TError | ErrorType.Generic>;
+  try {
+    result = await callback();
+  } catch (error) {
+    result = notOk.GenericUnexpectedException(context, error);
+  }
+
+  try {
+    if (result.isOk()) {
+      await databaseAdapter.query(pgTransaction, `RELEASE SAVEPOINT ${savePointName}`, undefined);
+    } else {
+      await databaseAdapter.query(
+        pgTransaction,
+        `ROLLBACK TO SAVEPOINT ${savePointName}`,
+        undefined
+      );
+    }
+  } catch (error) {
+    result = notOk.GenericUnexpectedException(context, error);
+  }
+
+  return result;
 }

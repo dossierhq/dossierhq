@@ -52,7 +52,11 @@ export function createMockAdapter(): MockedPostgresDatabaseAdapter {
       error instanceof MockUniqueViolationOfConstraintError &&
       error.uniqueConstraint === constraintName,
     query,
-    createTransaction: async () => ({ _type: 'Transaction', release: jest.fn() }),
+    createTransaction: async () => ({
+      _type: 'Transaction',
+      savePointCount: 0,
+      release: jest.fn(),
+    }),
   };
 }
 

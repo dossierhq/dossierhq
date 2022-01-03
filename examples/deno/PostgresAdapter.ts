@@ -34,6 +34,7 @@ export function createPostgresAdapter(databaseUrl: string): DatabaseAdapter {
       const transaction: TransactionWrapper = {
         _type: "Transaction",
         client,
+        savePointCount: 0,
         release: () => {
           client.release();
         },

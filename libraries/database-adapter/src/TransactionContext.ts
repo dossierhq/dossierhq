@@ -16,7 +16,7 @@ export interface TransactionContext<
 
   withTransaction<TOk, TError extends ErrorType>(
     callback: (context: TContext) => PromiseResult<TOk, TError>
-  ): PromiseResult<TOk, TError>;
+  ): PromiseResult<TOk, TError | ErrorType.Generic>;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -40,10 +40,10 @@ export abstract class TransactionContextImpl<TContext extends TransactionContext
 
   async withTransaction<TOk, TError extends ErrorType>(
     callback: (context: TContext) => PromiseResult<TOk, TError>
-  ): PromiseResult<TOk, TError> {
+  ): PromiseResult<TOk, TError | ErrorType.Generic> {
     if (this.transaction) {
       // Already in transaction
-      return await this.#databaseAdapter.withNestedTransaction(this.transaction, async () => {
+      return await this.#databaseAdapter.withNestedTransaction(this, this.transaction, async () => {
         return callback(this as unknown as TContext);
       });
     }
