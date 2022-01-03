@@ -1,12 +1,11 @@
-import { CoreTestUtils, ok } from '@jonasb/datadata-core';
+import { ok } from '@jonasb/datadata-core';
+import { expectResultValue } from '@jonasb/datadata-core-jest';
 import { authCreateSession } from './Auth';
 import {
   createMockDatabaseAdapter,
   createMockTransactionContext,
   getDatabaseAdapterMockedCallsWithoutContextAndUnordered,
 } from './test/AdditionalTestUtils';
-
-const { expectResultValue } = CoreTestUtils;
 
 describe('Auth authCreateSession', () => {
   test('Success', async () => {

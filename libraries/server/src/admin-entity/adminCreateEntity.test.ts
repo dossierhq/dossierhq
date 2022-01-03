@@ -1,4 +1,5 @@
-import { AdminEntityStatus, CoreTestUtils, ok, ErrorType } from '@jonasb/datadata-core';
+import { AdminEntityStatus, ErrorType, ok } from '@jonasb/datadata-core';
+import { expectErrorResult, expectResultValue } from '@jonasb/datadata-core-jest';
 import { Temporal } from '@js-temporal/polyfill';
 import {
   createMockAuthorizationAdapter,
@@ -8,8 +9,6 @@ import {
 } from '../test/AdditionalTestUtils';
 import { adminTestSchema } from '../test/TestSchema';
 import { adminCreateEntity } from './adminCreateEntity';
-
-const { expectErrorResult, expectResultValue } = CoreTestUtils;
 
 describe('Admin adminCreateEntity', () => {
   test('Minimal', async () => {

@@ -1,20 +1,12 @@
 import type { AdminSchemaSpecificationUpdate } from '@jonasb/datadata-core';
-import {
-  CoreTestUtils,
-  FieldType,
-  notOk,
-  ok,
-  PublishedSchema,
-  RichTextBlockType,
-} from '@jonasb/datadata-core';
+import { FieldType, notOk, ok, PublishedSchema, RichTextBlockType } from '@jonasb/datadata-core';
+import { expectOkResult } from '@jonasb/datadata-core-jest';
 import type { GraphQLSchema } from 'graphql';
 import { graphql, printError } from 'graphql';
 import type { SessionGraphQLContext } from '..';
 import { GraphQLSchemaGenerator } from '..';
 import type { TestServerWithSession } from './TestUtils';
 import { setUpServerWithSession } from './TestUtils';
-
-const { expectOkResult } = CoreTestUtils;
 
 let server: TestServerWithSession;
 let schema: GraphQLSchema;

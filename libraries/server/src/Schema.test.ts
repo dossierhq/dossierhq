@@ -1,13 +1,12 @@
 import type { AdminSchemaSpecification } from '@jonasb/datadata-core';
-import { CoreTestUtils, ok } from '@jonasb/datadata-core';
+import { ok } from '@jonasb/datadata-core';
+import { expectResultValue } from '@jonasb/datadata-core-jest';
 import { getSchemaSpecification } from './Schema';
 import {
   createMockDatabaseAdapter,
   createMockTransactionContext,
   getDatabaseAdapterMockedCallsWithoutContextAndUnordered,
 } from './test/AdditionalTestUtils';
-
-const { expectResultValue } = CoreTestUtils;
 
 describe('AdminSchema getSchema', () => {
   test('No schema', async () => {

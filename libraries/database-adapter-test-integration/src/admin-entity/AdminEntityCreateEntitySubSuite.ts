@@ -1,11 +1,15 @@
-import { AdminEntityStatus, copyEntity, CoreTestUtils, ErrorType } from '@jonasb/datadata-core';
+import { AdminEntityStatus, copyEntity, ErrorType } from '@jonasb/datadata-core';
 import { v4 as uuidv4 } from 'uuid';
-import { assertNotSame, assertTruthy } from '../Asserts';
+import {
+  assertErrorResult,
+  assertNotSame,
+  assertOkResult,
+  assertResultValue,
+  assertTruthy,
+} from '../Asserts';
 import type { UnboundTestFunction } from '../Builder';
 import type { AdminEntityTestContext } from './AdminEntityTestSuite';
 import { TITLE_ONLY_CREATE, TITLE_ONLY_ENTITY } from './Fixtures';
-
-const { expectErrorResult, expectOkResult, expectResultValue } = CoreTestUtils;
 
 export const CreateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
   createEntity_minimal,
@@ -18,7 +22,7 @@ export const CreateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
 
 async function createEntity_minimal({ client }: AdminEntityTestContext) {
   const createResult = await client.createEntity(TITLE_ONLY_CREATE);
-  if (expectOkResult(createResult)) {
+  if (assertOkResult(createResult)) {
     const {
       entity: {
         id,
@@ -35,20 +39,20 @@ async function createEntity_minimal({ client }: AdminEntityTestContext) {
       },
     });
 
-    expectResultValue(createResult, {
+    assertResultValue(createResult, {
       effect: 'created',
       entity: expectedEntity,
     });
 
     const getResult = await client.getEntity({ id });
-    expectResultValue(getResult, expectedEntity);
+    assertResultValue(getResult, expectedEntity);
   }
 }
 
 async function createEntity_withId({ client }: AdminEntityTestContext) {
   const id = uuidv4();
   const createResult = await client.createEntity(copyEntity(TITLE_ONLY_CREATE, { id }));
-  if (expectOkResult(createResult)) {
+  if (assertOkResult(createResult)) {
     const {
       entity: {
         info: { name, createdAt, updatedAt },
@@ -64,20 +68,20 @@ async function createEntity_withId({ client }: AdminEntityTestContext) {
       },
     });
 
-    expectResultValue(createResult, {
+    assertResultValue(createResult, {
       effect: 'created',
       entity: expectedEntity,
     });
 
     const getResult = await client.getEntity({ id });
-    expectResultValue(getResult, expectedEntity);
+    assertResultValue(getResult, expectedEntity);
   }
 }
 
 async function createEntity_duplicateName({ client }: AdminEntityTestContext) {
   const firstResult = await client.createEntity(TITLE_ONLY_CREATE);
   const secondResult = await client.createEntity(TITLE_ONLY_CREATE);
-  if (expectOkResult(firstResult) && expectOkResult(secondResult)) {
+  if (assertOkResult(firstResult) && assertOkResult(secondResult)) {
     const {
       entity: {
         id: firstId,
@@ -99,7 +103,7 @@ async function createEntity_duplicateName({ client }: AdminEntityTestContext) {
 
 async function createEntity_publishMinimal({ client }: AdminEntityTestContext) {
   const createResult = await client.createEntity(TITLE_ONLY_CREATE, { publish: true });
-  if (expectOkResult(createResult)) {
+  if (assertOkResult(createResult)) {
     const {
       entity: {
         id,
@@ -117,13 +121,13 @@ async function createEntity_publishMinimal({ client }: AdminEntityTestContext) {
       },
     });
 
-    expectResultValue(createResult, {
+    assertResultValue(createResult, {
       effect: 'createdAndPublished',
       entity: expectedEntity,
     });
 
     const getResult = await client.getEntity({ id });
-    expectResultValue(getResult, expectedEntity);
+    assertResultValue(getResult, expectedEntity);
   }
 }
 
@@ -132,7 +136,7 @@ async function createEntity_publishWithSubjectAuthKey({ client }: AdminEntityTes
     copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } }),
     { publish: true }
   );
-  if (expectOkResult(createResult)) {
+  if (assertOkResult(createResult)) {
     const {
       entity: {
         id,
@@ -151,13 +155,13 @@ async function createEntity_publishWithSubjectAuthKey({ client }: AdminEntityTes
       },
     });
 
-    expectResultValue(createResult, {
+    assertResultValue(createResult, {
       effect: 'createdAndPublished',
       entity: expectedEntity,
     });
 
     const getResult = await client.getEntity({ id, authKeys: ['subject'] });
-    expectResultValue(getResult, expectedEntity);
+    assertResultValue(getResult, expectedEntity);
   }
 }
 
@@ -167,12 +171,12 @@ async function createEntity_errorPublishWithoutRequiredTitle({ client }: AdminEn
     copyEntity(TITLE_ONLY_CREATE, { id, fields: { title: null } }),
     { publish: true }
   );
-  expectErrorResult(
+  assertErrorResult(
     createResult,
     ErrorType.BadRequest,
     `entity(${id}).fields.title: Required field is empty`
   );
 
   const getResult = await client.getEntity({ id });
-  expectErrorResult(getResult, ErrorType.NotFound, 'No such entity');
+  assertErrorResult(getResult, ErrorType.NotFound, 'No such entity');
 }

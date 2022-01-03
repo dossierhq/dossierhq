@@ -1,10 +1,9 @@
-import { AdminEntityStatus, copyEntity, CoreTestUtils } from '@jonasb/datadata-core';
+import { AdminEntityStatus, copyEntity } from '@jonasb/datadata-core';
 import { v4 as uuidv4 } from 'uuid';
+import { assertOkResult, assertResultValue } from '../Asserts';
 import type { UnboundTestFunction } from '../Builder';
 import type { AdminEntityTestContext } from './AdminEntityTestSuite';
 import { TITLE_ONLY_CREATE, TITLE_ONLY_ENTITY, TITLE_ONLY_UPSERT } from './Fixtures';
-
-const { expectOkResult, expectResultValue } = CoreTestUtils;
 
 export const UpsertEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
   upsertEntity_minimalCreate,
@@ -15,7 +14,7 @@ export const UpsertEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
 async function upsertEntity_minimalCreate({ client }: AdminEntityTestContext) {
   const id = uuidv4();
   const upsertResult = await client.upsertEntity(copyEntity(TITLE_ONLY_UPSERT, { id }));
-  if (expectOkResult(upsertResult)) {
+  if (assertOkResult(upsertResult)) {
     const {
       entity: {
         info: { name, createdAt, updatedAt },
@@ -31,19 +30,19 @@ async function upsertEntity_minimalCreate({ client }: AdminEntityTestContext) {
       },
     });
 
-    expectResultValue(upsertResult, {
+    assertResultValue(upsertResult, {
       effect: 'created',
       entity: expectedEntity,
     });
 
     const getResult = await client.getEntity({ id });
-    expectResultValue(getResult, expectedEntity);
+    assertResultValue(getResult, expectedEntity);
   }
 }
 
 async function upsertEntity_minimalUpdate({ client }: AdminEntityTestContext) {
   const createResult = await client.createEntity(TITLE_ONLY_CREATE);
-  if (expectOkResult(createResult)) {
+  if (assertOkResult(createResult)) {
     const {
       entity: { id },
     } = createResult.value;
@@ -51,7 +50,7 @@ async function upsertEntity_minimalUpdate({ client }: AdminEntityTestContext) {
     const upsertResult = await client.upsertEntity(
       copyEntity(TITLE_ONLY_UPSERT, { id, fields: { title: 'Updated title' } })
     );
-    if (expectOkResult(upsertResult)) {
+    if (assertOkResult(upsertResult)) {
       const {
         entity: {
           info: { updatedAt },
@@ -63,13 +62,13 @@ async function upsertEntity_minimalUpdate({ client }: AdminEntityTestContext) {
         fields: { title: 'Updated title' },
       });
 
-      expectResultValue(upsertResult, {
+      assertResultValue(upsertResult, {
         effect: 'updated',
         entity: expectedEntity,
       });
 
       const getResult = await client.getEntity({ id });
-      expectResultValue(getResult, expectedEntity);
+      assertResultValue(getResult, expectedEntity);
     }
   }
 }
@@ -78,7 +77,7 @@ async function upsertEntity_updateAndPublishWithSubjectAuthKey({ client }: Admin
   const createResult = await client.createEntity(
     copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } })
   );
-  if (expectOkResult(createResult)) {
+  if (assertOkResult(createResult)) {
     const {
       entity: { id },
     } = createResult.value;
@@ -91,7 +90,7 @@ async function upsertEntity_updateAndPublishWithSubjectAuthKey({ client }: Admin
       }),
       { publish: true }
     );
-    if (expectOkResult(upsertResult)) {
+    if (assertOkResult(upsertResult)) {
       const {
         entity: {
           info: { updatedAt },
@@ -103,13 +102,13 @@ async function upsertEntity_updateAndPublishWithSubjectAuthKey({ client }: Admin
         fields: { title: 'Updated title' },
       });
 
-      expectResultValue(upsertResult, {
+      assertResultValue(upsertResult, {
         effect: 'updatedAndPublished',
         entity: expectedEntity,
       });
 
       const getResult = await client.getEntity({ id, authKeys: ['subject'] });
-      expectResultValue(getResult, expectedEntity);
+      assertResultValue(getResult, expectedEntity);
     }
   }
 }

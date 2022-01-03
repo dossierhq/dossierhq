@@ -2,10 +2,10 @@ import {
   AdminEntityStatus,
   AdminQueryOrder,
   AdminSchema,
-  CoreTestUtils,
   ErrorType,
   PublishedQueryOrder,
 } from '@jonasb/datadata-core';
+import { expectErrorResult } from '@jonasb/datadata-core-jest';
 import { toOpaqueCursor } from './OpaqueCursor';
 import {
   searchAdminEntitiesQuery,
@@ -13,8 +13,6 @@ import {
   totalAdminEntitiesQuery,
   totalPublishedEntitiesQuery,
 } from './QueryGenerator';
-
-const { expectErrorResult } = CoreTestUtils;
 
 const schema = new AdminSchema({
   entityTypes: [

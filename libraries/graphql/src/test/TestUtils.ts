@@ -4,15 +4,12 @@ import type {
   ErrorType,
   PromiseResult,
   PublishedClient,
-  Result,
 } from '@jonasb/datadata-core';
-import { AdminSchema, assertIsDefined, CoreTestUtils, ok } from '@jonasb/datadata-core';
+import { AdminSchema, assertIsDefined, ok } from '@jonasb/datadata-core';
 import { createPostgresAdapter } from '@jonasb/datadata-database-adapter-postgres-pg';
 import type { AuthorizationAdapter, SessionContext } from '@jonasb/datadata-server';
 import { createServer } from '@jonasb/datadata-server';
 import { v4 as uuidv4 } from 'uuid';
-
-const { expectOkResult } = CoreTestUtils;
 
 export interface TestServerWithSession {
   schema: AdminSchema;
@@ -20,15 +17,6 @@ export interface TestServerWithSession {
   publishedClient: PublishedClient;
   subjectId: string;
   tearDown: () => PromiseResult<void, ErrorType.Generic>;
-}
-
-export function expectResultValue<TOk, TError extends ErrorType>(
-  result: Result<TOk, TError>,
-  expectedValue: TOk
-): void {
-  if (expectOkResult(result)) {
-    expect(result.value).toEqual<TOk>(expectedValue);
-  }
 }
 
 export async function setUpServerWithSession(

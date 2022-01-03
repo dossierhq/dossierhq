@@ -1,9 +1,8 @@
 import type { AdminClient } from '@jonasb/datadata-core';
-import { CoreTestUtils, AdminSchema } from '@jonasb/datadata-core';
+import { AdminSchema } from '@jonasb/datadata-core';
 import type { TestFunctionInitializer, TestSuite } from '..';
+import { assertOkResult } from '../Asserts';
 import { buildSuite } from '../Builder';
-
-const { expectOkResult } = CoreTestUtils;
 
 export function createSchemaTestSuite<TCleanup>(
   initializer: TestFunctionInitializer<{ client: AdminClient }, TCleanup>
@@ -13,8 +12,8 @@ export function createSchemaTestSuite<TCleanup>(
 
 async function getSchemaSpecification_normal({ client }: { client: AdminClient }) {
   const result = await client.getSchemaSpecification();
-  if (expectOkResult(result)) {
+  if (assertOkResult(result)) {
     const schema = new AdminSchema(result.value);
-    expectOkResult(schema.validate());
+    assertOkResult(schema.validate());
   }
 }

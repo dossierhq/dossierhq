@@ -1,8 +1,8 @@
-import { CoreTestUtils, AdminEntityStatus } from '@jonasb/datadata-core';
+import { AdminEntityStatus } from '@jonasb/datadata-core';
+import { expectResultValue } from '@jonasb/datadata-core-jest';
+import { Temporal } from '@js-temporal/polyfill';
 import { createMockAdapter, createMockContext, getQueryCalls } from '../test/TestUtils';
 import { adminGetEntity } from './getEntity';
-import { Temporal } from '@js-temporal/polyfill';
-const { expectResultValue } = CoreTestUtils;
 
 describe('adminGetEntity', () => {
   test('Get latest version', async () => {

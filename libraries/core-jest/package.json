@@ -1,6 +1,6 @@
 {
-  "name": "@jonasb/datadata-database-adapter-sqlite",
-  "version": "0.1.1-25",
+  "name": "@jonasb/datadata-core-jest",
+  "version": "0.1.1-58",
   "description": "",
   "main": "./lib/cjs/index.js",
   "types": "./lib/cjs/index.d.ts",
@@ -8,7 +8,7 @@
     ".": "./lib/cjs/index.js"
   },
   "scripts": {
-    "build": "npm run prettier:check && heft test --clean",
+    "build": "npm run prettier:check && heft test --clean && ./deno-build.js",
     "build:watch": "heft build --watch",
     "clean": "heft clean",
     "eslint:check": "eslint .",
@@ -29,15 +29,9 @@
     "url": "git+https://github.com/jonasb/datadata.git"
   },
   "devDependencies": {
-    "@jonasb/datadata-core-jest": "workspace:*",
-    "@jonasb/datadata-database-adapter-test-integration": "workspace:*",
-    "@jonasb/datadata-server": "workspace:*",
     "@rushstack/heft": "~0.44.0",
     "@rushstack/heft-jest-plugin": "~0.2.0",
     "@types/heft-jest": "1.0.2",
-    "@types/sql.js": "~1.4.2",
-    "@types/sqlite3": "~3.1.7",
-    "@types/uuid": "~8.3.1",
     "@typescript-eslint/eslint-plugin": "^5.8.0",
     "@typescript-eslint/parser": "^5.8.0",
     "eslint": "^8.5.0",
@@ -46,11 +40,7 @@
   },
   "dependencies": {
     "@jonasb/datadata-core": "workspace:*",
-    "@jonasb/datadata-database-adapter": "workspace:*",
     "@js-temporal/polyfill": "~0.3.0",
-    "sql.js": "~1.6.1",
-    "sqlite3": "jonasb/node-sqlite3#3.36.0",
-    "tslib": "~2.3.1",
-    "uuid": "^8.3.2"
+    "tslib": "~2.3.1"
   }
 }

@@ -1,8 +1,7 @@
-import { CoreTestUtils, ErrorType } from '@jonasb/datadata-core';
+import { ErrorType } from '@jonasb/datadata-core';
+import { expectErrorResult } from '@jonasb/datadata-core-jest';
 import { toOpaqueCursor } from './OpaqueCursor';
 import { resolvePaging } from './Paging';
-
-const { expectErrorResult } = CoreTestUtils;
 
 describe('resolvePaging()', () => {
   test('undefined', () =>

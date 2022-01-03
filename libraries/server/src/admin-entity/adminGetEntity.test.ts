@@ -1,6 +1,6 @@
-import { CoreTestUtils, AdminEntityStatus, ok } from '@jonasb/datadata-core';
+import { AdminEntityStatus, ok } from '@jonasb/datadata-core';
+import { expectResultValue } from '@jonasb/datadata-core-jest';
 import { Temporal } from '@js-temporal/polyfill';
-import { adminGetEntity } from './adminGetEntity';
 import {
   createMockAuthorizationAdapter,
   createMockDatabaseAdapter,
@@ -8,8 +8,7 @@ import {
   getDatabaseAdapterMockedCallsWithoutContextAndUnordered,
 } from '../test/AdditionalTestUtils';
 import { adminTestSchema } from '../test/TestSchema';
-
-const { expectResultValue } = CoreTestUtils;
+import { adminGetEntity } from './adminGetEntity';
 
 describe('Admin adminGetEntity', () => {
   test('Minimal', async () => {

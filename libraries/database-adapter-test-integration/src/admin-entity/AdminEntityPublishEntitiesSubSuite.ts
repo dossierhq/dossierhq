@@ -1,9 +1,8 @@
-import { AdminEntityStatus, copyEntity, CoreTestUtils, ErrorType } from '@jonasb/datadata-core';
+import { AdminEntityStatus, copyEntity, ErrorType } from '@jonasb/datadata-core';
+import { assertErrorResult, assertOkResult, assertResultValue } from '../Asserts';
 import type { UnboundTestFunction } from '../Builder';
 import type { AdminEntityTestContext } from './AdminEntityTestSuite';
 import { TITLE_ONLY_CREATE } from './Fixtures';
-
-const { expectErrorResult, expectOkResult, expectResultValue } = CoreTestUtils;
 
 export const PublishEntitiesSubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
   publishEntities_minimal,
@@ -14,7 +13,7 @@ export const PublishEntitiesSubSuite: UnboundTestFunction<AdminEntityTestContext
 
 async function publishEntities_minimal({ client }: AdminEntityTestContext) {
   const createResult = await client.createEntity(TITLE_ONLY_CREATE);
-  if (expectOkResult(createResult)) {
+  if (assertOkResult(createResult)) {
     const {
       entity: {
         id,
@@ -23,9 +22,9 @@ async function publishEntities_minimal({ client }: AdminEntityTestContext) {
     } = createResult.value;
 
     const publishResult = await client.publishEntities([{ id, version }]);
-    if (expectOkResult(publishResult)) {
+    if (assertOkResult(publishResult)) {
       const [{ updatedAt }] = publishResult.value;
-      expectResultValue(publishResult, [
+      assertResultValue(publishResult, [
         {
           id,
           effect: 'published',
@@ -39,7 +38,7 @@ async function publishEntities_minimal({ client }: AdminEntityTestContext) {
       });
 
       const getResult = await client.getEntity({ id });
-      expectResultValue(getResult, expectedEntity);
+      assertResultValue(getResult, expectedEntity);
     }
   }
 }
@@ -48,7 +47,7 @@ async function publishEntities_minimalWithSubjectAuthKey({ client }: AdminEntity
   const createResult = await client.createEntity(
     copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } })
   );
-  if (expectOkResult(createResult)) {
+  if (assertOkResult(createResult)) {
     const {
       entity: {
         id,
@@ -57,9 +56,9 @@ async function publishEntities_minimalWithSubjectAuthKey({ client }: AdminEntity
     } = createResult.value;
 
     const publishResult = await client.publishEntities([{ id, version, authKeys: ['subject'] }]);
-    if (expectOkResult(publishResult)) {
+    if (assertOkResult(publishResult)) {
       const [{ updatedAt }] = publishResult.value;
-      expectResultValue(publishResult, [
+      assertResultValue(publishResult, [
         {
           id,
           effect: 'published',
@@ -73,7 +72,7 @@ async function publishEntities_minimalWithSubjectAuthKey({ client }: AdminEntity
       });
 
       const getResult = await client.getEntity({ id, authKeys: ['subject'] });
-      expectResultValue(getResult, expectedEntity);
+      assertResultValue(getResult, expectedEntity);
     }
   }
 }
@@ -82,7 +81,7 @@ async function publishEntities_errorMissingRequiredTitle({ client }: AdminEntity
   const createResult = await client.createEntity(
     copyEntity(TITLE_ONLY_CREATE, { fields: { title: null } })
   );
-  if (expectOkResult(createResult)) {
+  if (assertOkResult(createResult)) {
     const {
       entity: {
         id,
@@ -91,7 +90,7 @@ async function publishEntities_errorMissingRequiredTitle({ client }: AdminEntity
     } = createResult.value;
 
     const publishResult = await client.publishEntities([{ id, version }]);
-    expectErrorResult(
+    assertErrorResult(
       publishResult,
       ErrorType.BadRequest,
       `entity(${id}).fields.title: Required field is empty`
@@ -103,7 +102,7 @@ async function publishEntities_errorWrongAuthKey({ client }: AdminEntityTestCont
   const createResult = await client.createEntity(
     copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } })
   );
-  if (expectOkResult(createResult)) {
+  if (assertOkResult(createResult)) {
     const {
       entity: {
         id,
@@ -112,7 +111,7 @@ async function publishEntities_errorWrongAuthKey({ client }: AdminEntityTestCont
     } = createResult.value;
 
     const publishResult = await client.publishEntities([{ id, version }]);
-    expectErrorResult(
+    assertErrorResult(
       publishResult,
       ErrorType.NotAuthorized,
       `entity(${id}): Wrong authKey provided`
