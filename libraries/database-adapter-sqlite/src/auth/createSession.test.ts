@@ -1,7 +1,6 @@
-import { CoreTestUtils } from '@jonasb/datadata-core';
+import { expectOkResult, expectResultValue } from '@jonasb/datadata-core-jest';
 import { createMockAdapter, createMockContext, getQueryCalls } from '../test/TestUtils';
 import { authCreateSession } from './createSession';
-const { expectOkResult, expectResultValue } = CoreTestUtils;
 
 describe('authCreateSession', () => {
   test('Create new principal', async () => {

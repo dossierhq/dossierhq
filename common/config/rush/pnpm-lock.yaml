@@ -321,6 +321,33 @@ importers:
       prettier: 2.5.1
       typescript: 4.5.4
 
+  ../../libraries/core-jest:
+    specifiers:
+      '@jonasb/datadata-core': workspace:*
+      '@js-temporal/polyfill': ~0.3.0
+      '@rushstack/heft': ~0.44.0
+      '@rushstack/heft-jest-plugin': ~0.2.0
+      '@types/heft-jest': 1.0.2
+      '@typescript-eslint/eslint-plugin': ^5.8.0
+      '@typescript-eslint/parser': ^5.8.0
+      eslint: ^8.5.0
+      prettier: 2.5.1
+      tslib: ~2.3.1
+      typescript: ^4.5.4
+    dependencies:
+      '@jonasb/datadata-core': link:../core
+      '@js-temporal/polyfill': 0.3.0
+      tslib: 2.3.1
+    devDependencies:
+      '@rushstack/heft': 0.44.0
+      '@rushstack/heft-jest-plugin': 0.2.0_@rushstack+heft@0.44.0
+      '@types/heft-jest': 1.0.2
+      '@typescript-eslint/eslint-plugin': 5.8.0_836011a006f4f5d67178564baf2b6d34
+      '@typescript-eslint/parser': 5.8.0_eslint@8.5.0+typescript@4.5.4
+      eslint: 8.5.0
+      prettier: 2.5.1
+      typescript: 4.5.4
+
   ../../libraries/database-adapter:
     specifiers:
       '@jonasb/datadata-core': workspace:*
@@ -353,6 +380,7 @@ importers:
   ../../libraries/database-adapter-postgres-core:
     specifiers:
       '@jonasb/datadata-core': workspace:*
+      '@jonasb/datadata-core-jest': workspace:*
       '@jonasb/datadata-database-adapter': workspace:*
       '@js-temporal/polyfill': ~0.3.0
       '@rushstack/heft': ~0.44.0
@@ -370,6 +398,7 @@ importers:
       '@jonasb/datadata-database-adapter': link:../database-adapter
       tslib: 2.3.1
     devDependencies:
+      '@jonasb/datadata-core-jest': link:../core-jest
       '@js-temporal/polyfill': 0.3.0
       '@rushstack/heft': 0.44.0
       '@rushstack/heft-jest-plugin': 0.2.0_@rushstack+heft@0.44.0
@@ -384,6 +413,7 @@ importers:
   ../../libraries/database-adapter-postgres-pg:
     specifiers:
       '@jonasb/datadata-core': workspace:*
+      '@jonasb/datadata-core-jest': workspace:*
       '@jonasb/datadata-database-adapter': workspace:*
       '@jonasb/datadata-database-adapter-postgres-core': workspace:*
       '@jonasb/datadata-database-adapter-test-integration': workspace:*
@@ -412,6 +442,7 @@ importers:
       pg: 8.7.1
       tslib: 2.3.1
     devDependencies:
+      '@jonasb/datadata-core-jest': link:../core-jest
       '@jonasb/datadata-database-adapter-test-integration': link:../database-adapter-test-integration
       '@jonasb/datadata-postgres': link:../postgres
       '@jonasb/datadata-server': link:../server
@@ -431,6 +462,7 @@ importers:
   ../../libraries/database-adapter-sqlite:
     specifiers:
       '@jonasb/datadata-core': workspace:*
+      '@jonasb/datadata-core-jest': workspace:*
       '@jonasb/datadata-database-adapter': workspace:*
       '@jonasb/datadata-database-adapter-test-integration': workspace:*
       '@jonasb/datadata-server': workspace:*
@@ -459,6 +491,7 @@ importers:
       tslib: 2.3.1
       uuid: 8.3.2
     devDependencies:
+      '@jonasb/datadata-core-jest': link:../core-jest
       '@jonasb/datadata-database-adapter-test-integration': link:../database-adapter-test-integration
       '@jonasb/datadata-server': link:../server
       '@rushstack/heft': 0.44.0
@@ -580,6 +613,7 @@ importers:
   ../../libraries/graphql:
     specifiers:
       '@jonasb/datadata-core': workspace:*
+      '@jonasb/datadata-core-jest': workspace:*
       '@jonasb/datadata-database-adapter-postgres-pg': workspace:*
       '@jonasb/datadata-postgres': workspace:*
       '@jonasb/datadata-server': workspace:*
@@ -606,6 +640,7 @@ importers:
       graphql-type-json: 0.3.2_graphql@16.2.0
       tslib: 2.3.1
     devDependencies:
+      '@jonasb/datadata-core-jest': link:../core-jest
       '@jonasb/datadata-postgres': link:../postgres
       '@jonasb/datadata-server': link:../server
       '@rushstack/heft': 0.44.0
@@ -631,6 +666,7 @@ importers:
   ../../libraries/server:
     specifiers:
       '@jonasb/datadata-core': workspace:*
+      '@jonasb/datadata-core-jest': workspace:*
       '@jonasb/datadata-database-adapter': workspace:*
       '@js-temporal/polyfill': ~0.3.0
       '@rushstack/heft': ~0.44.0
@@ -649,6 +685,7 @@ importers:
       '@js-temporal/polyfill': 0.3.0
       tslib: 2.3.1
     devDependencies:
+      '@jonasb/datadata-core-jest': link:../core-jest
       '@rushstack/heft': 0.44.0
       '@rushstack/heft-jest-plugin': 0.2.0_@rushstack+heft@0.44.0
       '@types/heft-jest': 1.0.2

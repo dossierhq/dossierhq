@@ -4,25 +4,22 @@ import type {
   Edge,
   EntityHistory,
   ErrorType,
-  Logger,
   PromiseResult,
   PublishedEntity,
   Result,
 } from '@jonasb/datadata-core';
-import { assertIsDefined, CoreTestUtils, ok } from '@jonasb/datadata-core';
+import { assertIsDefined, ok } from '@jonasb/datadata-core';
+import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
 import {
   createTestAuthorizationAdapter,
   IntegrationTestSchemaSpecifciationUpdate,
   type TestSuite,
 } from '@jonasb/datadata-database-adapter-test-integration';
-import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
+import { createMockLogger, expectOkResult, expectResultValue } from '@jonasb/datadata-core-jest';
 import type { Server, SessionContext } from '@jonasb/datadata-server';
 import { createServer } from '@jonasb/datadata-server';
-import { Temporal } from '@js-temporal/polyfill';
 import { v4 as uuidv4 } from 'uuid';
 import { createPostgresAdapter } from '..';
-
-const { expectOkResult } = CoreTestUtils;
 
 export function registerTestSuite(testSuite: TestSuite): void {
   for (const [testName, testFunction] of Object.entries(testSuite)) {
@@ -87,26 +84,6 @@ export async function initializeIntegrationTestServer() {
   return serverResult;
 }
 
-export function createMockLogger(): Logger {
-  return {
-    error: jest.fn(),
-    warn: jest.fn(),
-    info: jest.fn(),
-    debug: jest.fn(),
-  };
-}
-
-export function expectResultValue<TOk, TError extends ErrorType>(
-  result: Result<TOk, TError>,
-  expectedValue: TOk
-): void {
-  if (expectOkResult(result)) {
-    const actualCopy = deepCopyForIsEqual(result.value);
-    const expectedCopy = deepCopyForIsEqual(expectedValue);
-    expect(actualCopy).toEqual<TOk>(expectedCopy);
-  }
-}
-
 export function expectEntityHistoryVersions(
   actual: EntityHistory,
   expectedVersions: Omit<EntityHistory['versions'][0], 'createdAt'>[]
@@ -149,21 +126,4 @@ export function insecureTestUuidv4(): string {
   return uuidv4({
     random,
   });
-}
-
-function deepCopyForIsEqual<T>(obj: T): T {
-  if (obj === null || obj === undefined) return obj;
-  if (obj instanceof Temporal.Instant) {
-    // Since the epoch isn't stored as a property for Instant (but a slot), jest isn't able to compare them.
-    // Replace with string representation
-    return obj.toString() as unknown as T;
-  }
-  if (typeof obj === 'object') {
-    const copy = { ...obj };
-    for (const [key, value] of Object.entries(obj)) {
-      copy[key as keyof T] = deepCopyForIsEqual(value);
-    }
-    return copy;
-  }
-  return obj;
 }

@@ -1,10 +1,8 @@
-import { CoreTestUtils, ErrorType } from '@jonasb/datadata-core';
+import { ErrorType } from '@jonasb/datadata-core';
 import type { Server } from '@jonasb/datadata-server';
 import type { TestFunctionInitializer, TestSuite } from '..';
-import { assertSame } from '../Asserts';
+import { assertErrorResult, assertOkResult, assertSame } from '../Asserts';
 import { buildSuite } from '../Builder';
-
-const { expectErrorResult, expectOkResult } = CoreTestUtils;
 
 export function createAuthTestSuite<TCleanup>(
   initializer: TestFunctionInitializer<{ server: Server }, TCleanup>
@@ -32,7 +30,7 @@ async function createSession(server: Server, options?: { provider?: string; iden
 
 async function createSession_create_new_identifier({ server }: { server: Server }) {
   const result = await createSession(server);
-  if (expectOkResult(result)) {
+  if (assertOkResult(result)) {
     const { principalEffect } = result.value;
     assertSame(principalEffect, 'created');
   }
@@ -42,13 +40,13 @@ async function createSession_create_existing_identifier({ server }: { server: Se
   const identifier = randomIdentifier();
 
   const firstResult = await createSession(server, { identifier });
-  if (expectOkResult(firstResult)) {
+  if (assertOkResult(firstResult)) {
     const { principalEffect } = firstResult.value;
     assertSame(principalEffect, 'created');
   }
 
   const secondResult = await createSession(server, { identifier });
-  if (expectOkResult(secondResult)) {
+  if (assertOkResult(secondResult)) {
     const { principalEffect } = secondResult.value;
     assertSame(principalEffect, 'none');
   }
@@ -56,10 +54,10 @@ async function createSession_create_existing_identifier({ server }: { server: Se
 
 async function createSession_error_missing_provider({ server }: { server: Server }) {
   const result = await createSession(server, { provider: '' });
-  expectErrorResult(result, ErrorType.BadRequest, 'Missing provider');
+  assertErrorResult(result, ErrorType.BadRequest, 'Missing provider');
 }
 
 async function createSession_error_create_missing_identifier({ server }: { server: Server }) {
   const result = await createSession(server, { identifier: '' });
-  expectErrorResult(result, ErrorType.BadRequest, 'Missing identifier');
+  assertErrorResult(result, ErrorType.BadRequest, 'Missing identifier');
 }

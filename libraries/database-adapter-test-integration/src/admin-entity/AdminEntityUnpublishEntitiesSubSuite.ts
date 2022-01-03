@@ -1,9 +1,8 @@
-import { AdminEntityStatus, copyEntity, CoreTestUtils } from '@jonasb/datadata-core';
+import { AdminEntityStatus, copyEntity } from '@jonasb/datadata-core';
+import { assertOkResult, assertResultValue } from '../Asserts';
 import type { UnboundTestFunction } from '../Builder';
 import type { AdminEntityTestContext } from './AdminEntityTestSuite';
 import { TITLE_ONLY_CREATE } from './Fixtures';
-
-const { expectOkResult, expectResultValue } = CoreTestUtils;
 
 export const UnpublishEntitiesSubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
   unpublishEntities_minimal,
@@ -11,15 +10,15 @@ export const UnpublishEntitiesSubSuite: UnboundTestFunction<AdminEntityTestConte
 
 async function unpublishEntities_minimal({ client }: AdminEntityTestContext) {
   const createResult = await client.createEntity(TITLE_ONLY_CREATE, { publish: true });
-  if (expectOkResult(createResult)) {
+  if (assertOkResult(createResult)) {
     const {
       entity: { id },
     } = createResult.value;
 
     const unpublishResult = await client.unpublishEntities([{ id }]);
-    if (expectOkResult(unpublishResult)) {
+    if (assertOkResult(unpublishResult)) {
       const [{ updatedAt }] = unpublishResult.value;
-      expectResultValue(unpublishResult, [
+      assertResultValue(unpublishResult, [
         {
           id,
           effect: 'unpublished',
@@ -33,7 +32,7 @@ async function unpublishEntities_minimal({ client }: AdminEntityTestContext) {
       });
 
       const getResult = await client.getEntity({ id });
-      expectResultValue(getResult, expectedEntity);
+      assertResultValue(getResult, expectedEntity);
     }
   }
 }

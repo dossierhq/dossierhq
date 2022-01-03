@@ -7,18 +7,14 @@ import type {
 } from '@jonasb/datadata-core';
 import {
   AdminEntityStatus,
-  CoreTestUtils,
   ErrorType,
   FieldType,
   PublishedQueryOrder,
   RichTextBlockType,
 } from '@jonasb/datadata-core';
+import { expectErrorResult, expectOkResult, expectResultValue } from '@jonasb/datadata-core-jest';
 import type { Server, SessionContext } from '@jonasb/datadata-server';
-import {
-  createPostgresTestServerAndClient,
-  expectResultValue,
-  expectSearchResultEntities,
-} from '../TestUtils';
+import { createPostgresTestServerAndClient, expectSearchResultEntities } from '../TestUtils';
 import {
   countSearchResultWithEntity,
   ensureEntityCount,
@@ -78,8 +74,6 @@ const emptyFooFields = {
   locations: null,
   title: null,
 };
-
-const { expectErrorResult, expectOkResult } = CoreTestUtils;
 
 let server: Server;
 let context: SessionContext;

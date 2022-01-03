@@ -1,8 +1,7 @@
-import { CoreTestUtils, ErrorType } from '@jonasb/datadata-core';
+import { ErrorType } from '@jonasb/datadata-core';
+import { expectErrorResult } from '@jonasb/datadata-core-jest';
 import type { Server, SessionContext } from '@jonasb/datadata-server';
 import { createPostgresTestServerAndClient, insecureTestUuidv4 } from '../TestUtils';
-
-const { expectErrorResult } = CoreTestUtils;
 
 let server: Server;
 let context: SessionContext;

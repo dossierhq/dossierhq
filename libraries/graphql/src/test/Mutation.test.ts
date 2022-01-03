@@ -4,22 +4,20 @@ import type {
   AdminSchemaSpecificationUpdate,
 } from '@jonasb/datadata-core';
 import {
-  CoreTestUtils,
   AdminEntityStatus,
   FieldType,
   ok,
   PublishingEventKind,
   RichTextBlockType,
 } from '@jonasb/datadata-core';
+import { expectOkResult, expectResultValue } from '@jonasb/datadata-core-jest';
 import { Temporal } from '@js-temporal/polyfill';
 import type { GraphQLSchema } from 'graphql';
 import { graphql } from 'graphql';
 import type { SessionGraphQLContext } from '..';
 import { GraphQLSchemaGenerator } from '..';
 import type { TestServerWithSession } from './TestUtils';
-import { expectResultValue, insecureTestUuidv4, setUpServerWithSession } from './TestUtils';
-
-const { expectOkResult } = CoreTestUtils;
+import { insecureTestUuidv4, setUpServerWithSession } from './TestUtils';
 
 let server: TestServerWithSession;
 let schema: GraphQLSchema;

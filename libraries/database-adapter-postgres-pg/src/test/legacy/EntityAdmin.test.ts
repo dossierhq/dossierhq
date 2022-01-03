@@ -9,19 +9,18 @@ import {
   AdminEntityStatus,
   AdminQueryOrder,
   copyEntity,
-  CoreTestUtils,
   ErrorType,
   FieldType,
   PublishingEventKind,
   RichTextBlockType,
 } from '@jonasb/datadata-core';
+import { expectErrorResult, expectOkResult, expectResultValue } from '@jonasb/datadata-core-jest';
 import type { Server, SessionContext } from '@jonasb/datadata-server';
 import { Temporal } from '@js-temporal/polyfill';
 import { validate as validateUuid } from 'uuid';
 import {
   createPostgresTestServerAndClient,
   expectEntityHistoryVersions,
-  expectResultValue,
   expectSearchResultEntities,
   insecureTestUuidv4,
 } from '../TestUtils';
@@ -34,8 +33,6 @@ import {
   getAllEntities,
   randomBoundingBox,
 } from './EntitySearchTestUtils';
-
-const { expectErrorResult, expectOkResult } = CoreTestUtils;
 
 let server: Server;
 let context: SessionContext;

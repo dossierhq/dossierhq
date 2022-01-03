@@ -12,7 +12,6 @@ export type {
   AdminClientOperation,
 } from './AdminClient';
 export { assertExhaustive, assertIsDefined } from './Asserts';
-export * as CoreTestUtils from './CoreTestUtils';
 export {
   createErrorResult,
   createErrorResultFromError,

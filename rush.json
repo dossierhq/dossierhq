@@ -373,6 +373,11 @@
       "versionPolicyName": "DataDataFramework"
     },
     {
+      "packageName": "@jonasb/datadata-core-jest",
+      "projectFolder": "libraries/core-jest",
+      "versionPolicyName": "DataDataFramework"
+    },
+    {
       "packageName": "@jonasb/datadata-database-adapter",
       "projectFolder": "libraries/database-adapter",
       "versionPolicyName": "DataDataFramework"

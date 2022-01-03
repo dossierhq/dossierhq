@@ -1,4 +1,5 @@
-import { AdminEntityStatus, CoreTestUtils, ok } from '@jonasb/datadata-core';
+import { AdminEntityStatus, ok } from '@jonasb/datadata-core';
+import { expectResultValue } from '@jonasb/datadata-core-jest';
 import { Temporal } from '@js-temporal/polyfill';
 import {
   createMockAuthorizationAdapter,
@@ -8,8 +9,6 @@ import {
 } from '../test/AdditionalTestUtils';
 import { adminTestSchema } from '../test/TestSchema';
 import { adminPublishEntities } from './adminPublishEntities';
-
-const { expectResultValue } = CoreTestUtils;
 
 describe('Admin adminPublishEntities', () => {
   test('Minimal', async () => {
