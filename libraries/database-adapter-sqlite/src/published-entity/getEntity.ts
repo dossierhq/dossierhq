@@ -4,12 +4,13 @@ import type {
   DatabasePublishedEntityGetOnePayload,
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
-import type { PostgresDatabaseAdapter } from '..';
+import { Temporal } from '@js-temporal/polyfill';
+import type { SqliteDatabaseAdapter } from '..';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema';
 import { queryNoneOrOne } from '../QueryFunctions';
 
 export async function publishedEntityGetOne(
-  databaseAdapter: PostgresDatabaseAdapter,
+  databaseAdapter: SqliteDatabaseAdapter,
   context: TransactionContext,
   reference: EntityReference
 ): PromiseResult<DatabasePublishedEntityGetOnePayload, ErrorType.NotFound | ErrorType.Generic> {
@@ -18,11 +19,11 @@ export async function publishedEntityGetOne(
       EntitiesTable,
       'uuid' | 'type' | 'name' | 'auth_key' | 'resolved_auth_key' | 'created_at'
     > &
-      Pick<EntityVersionsTable, 'data'>
+      Pick<EntityVersionsTable, 'fields'>
   >(databaseAdapter, context, {
-    text: `SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, ev.data
+    text: `SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, ev.fields
     FROM entities e, entity_versions ev
-    WHERE e.uuid = $1
+    WHERE e.uuid = ?1
     AND e.published_entity_versions_id = ev.id`,
     values: [reference.id],
   });
@@ -39,7 +40,16 @@ export async function publishedEntityGetOne(
     auth_key: authKey,
     resolved_auth_key: resolvedAuthKey,
     created_at: createdAt,
-    data: fieldValues,
+    fields: fieldValues,
   } = result.value;
-  return ok({ id, type, name, authKey, resolvedAuthKey, createdAt, fieldValues });
+
+  return ok({
+    id,
+    type,
+    name,
+    authKey,
+    resolvedAuthKey,
+    createdAt: Temporal.Instant.from(createdAt),
+    fieldValues: JSON.parse(fieldValues),
+  });
 }

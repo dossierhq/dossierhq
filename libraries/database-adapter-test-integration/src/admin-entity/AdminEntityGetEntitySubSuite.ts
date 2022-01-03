@@ -2,7 +2,7 @@ import { copyEntity, ErrorType } from '@jonasb/datadata-core';
 import { assertErrorResult, assertOkResult, assertResultValue } from '../Asserts';
 import type { UnboundTestFunction } from '../Builder';
 import type { AdminEntityTestContext } from './AdminEntityTestSuite';
-import { TITLE_ONLY_CREATE } from './Fixtures';
+import { TITLE_ONLY_CREATE } from '../shared-entity/Fixtures';
 
 export const GetEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
   getEntity_withSubjectAuthKey,

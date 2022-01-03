@@ -2,7 +2,7 @@ import { AdminEntityStatus, copyEntity } from '@jonasb/datadata-core';
 import { assertOkResult, assertResultValue } from '../Asserts';
 import type { UnboundTestFunction } from '../Builder';
 import type { AdminEntityTestContext } from './AdminEntityTestSuite';
-import { TITLE_ONLY_CREATE } from './Fixtures';
+import { TITLE_ONLY_CREATE } from '../shared-entity/Fixtures';
 
 export const ArchiveEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
   archiveEntity_minimal,
