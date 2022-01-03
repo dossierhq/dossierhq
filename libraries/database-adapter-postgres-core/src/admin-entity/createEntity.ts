@@ -90,7 +90,6 @@ async function createEntityRow(
   entity: DatabaseAdminEntityCreateEntityArg
 ) {
   return await withUniqueNameAttempt(
-    databaseAdapter,
     context,
     entity.name,
     randomNameGenerator,

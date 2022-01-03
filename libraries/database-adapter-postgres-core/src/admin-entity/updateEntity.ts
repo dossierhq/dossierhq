@@ -99,7 +99,6 @@ export async function adminEntityUpdateEntity(
   let newName = entity.name;
   if (entity.changeName) {
     const nameResult = await withUniqueNameAttempt(
-      databaseAdapter,
       context,
       entity.name,
       randomNameGenerator,

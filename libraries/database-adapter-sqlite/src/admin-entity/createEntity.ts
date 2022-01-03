@@ -96,7 +96,6 @@ async function createEntityRow(
   const now = Temporal.Now.instant();
 
   return await withUniqueNameAttempt(
-    databaseAdapter,
     context,
     entity.name,
     randomNameGenerator,
