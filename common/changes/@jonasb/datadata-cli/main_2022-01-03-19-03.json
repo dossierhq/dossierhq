@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-cli",
+      "comment": "Upgrade depencencies",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-cli"
+}

@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-database-adapter-postgres-core",
+      "comment": "Upgrade dependencies. Support all server actions. Fix boken nested transactions.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-database-adapter-postgres-core"
+}
