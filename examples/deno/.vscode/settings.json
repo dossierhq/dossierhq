@@ -6,7 +6,7 @@
     "https://cdn.skypack.dev": false
   },
   "editor.defaultFormatter": "denoland.vscode-deno",
-  "cSpell.words": ["Deno", "Postgres", "datadata"],
+  "cSpell.words": ["datadata", "Deno", "Postgres", "sprintf"],
   "editor.formatOnSave": true,
   "editor.tabSize": 2
 }

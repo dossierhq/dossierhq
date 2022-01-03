@@ -25,7 +25,7 @@ export async function getSchemaSpecification(
     return ok({ entityTypes: [], valueTypes: [] });
   }
   logger.info(
-    'Loaded schema with %d entity types and  %d value types',
+    'Loaded schema with %d entity types and %d value types',
     specification.entityTypes.length,
     specification.valueTypes.length
   );

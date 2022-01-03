@@ -1,5 +1,6 @@
-import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
-import type { Transaction } from '@jonasb/datadata-database-adapter';
+import type { ErrorType, PromiseResult, Result } from '@jonasb/datadata-core';
+import { notOk } from '@jonasb/datadata-core';
+import type { Transaction, TransactionContext } from '@jonasb/datadata-database-adapter';
 import type { SqliteDatabaseAdapter } from './SqliteDatabaseAdapter';
 
 const sqliteTransactionSymbol = Symbol('SqliteTransaction');
@@ -35,22 +36,34 @@ export async function withRootTransaction<TOk, TError extends ErrorType>(
 
 export async function withNestedTransaction<TOk, TError extends ErrorType>(
   databaseAdapter: SqliteDatabaseAdapter,
+  context: TransactionContext,
   transaction: Transaction,
   callback: () => PromiseResult<TOk, TError>
-): PromiseResult<TOk, TError> {
+): PromiseResult<TOk, TError | ErrorType.Generic> {
   const sqliteTransaction = transaction as SqliteTransaction;
   const savePointName = `nested${sqliteTransaction.savePointCount++}`;
   try {
     await databaseAdapter.query(`SAVEPOINT ${savePointName}`, undefined);
-    const result = await callback();
+  } catch (error) {
+    return notOk.GenericUnexpectedException(context, error);
+  }
+
+  let result: Result<TOk, TError | ErrorType.Generic>;
+  try {
+    result = await callback();
+  } catch (error) {
+    result = notOk.GenericUnexpectedException(context, error);
+  }
+
+  try {
     if (result.isOk()) {
       await databaseAdapter.query(`RELEASE ${savePointName}`, undefined);
     } else {
       await databaseAdapter.query(`ROLLBACK TO ${savePointName}`, undefined);
     }
-    return result;
-  } catch (e) {
-    await databaseAdapter.query(`ROLLBACK TO ${savePointName}`, undefined);
-    throw e;
+  } catch (error) {
+    result = notOk.GenericUnexpectedException(context, error);
   }
+
+  return result;
 }
