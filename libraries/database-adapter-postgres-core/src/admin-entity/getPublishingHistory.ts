@@ -10,7 +10,7 @@ import type {
   DatabaseAdminEntityPublishingHistoryGetEntityInfoPayload,
   DatabaseResolvedEntityReference,
   TransactionContext,
-} from '@jonasb/datadata-server';
+} from '@jonasb/datadata-database-adapter';
 import type { PostgresDatabaseAdapter } from '..';
 import type {
   EntitiesTable,

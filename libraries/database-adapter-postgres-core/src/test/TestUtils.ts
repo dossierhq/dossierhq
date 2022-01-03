@@ -1,10 +1,29 @@
-import type { TransactionContext } from '@jonasb/datadata-server';
-import { ServerTestUtils } from '@jonasb/datadata-server';
+import type { Logger } from '@jonasb/datadata-core';
+import { NoOpLogger } from '@jonasb/datadata-core';
+import type {
+  DatabaseAdapter,
+  Transaction,
+  TransactionContext,
+} from '@jonasb/datadata-database-adapter';
+import { TransactionContextImpl } from '@jonasb/datadata-database-adapter';
 import type { PostgresDatabaseAdapter } from '..';
 import { createPostgresDatabaseAdapterAdapter } from '..';
 import type { UniqueConstraints } from '../DatabaseSchema';
 
 type QueryFn = PostgresDatabaseAdapter['query'];
+
+class DummyContextImpl extends TransactionContextImpl<TransactionContext> {
+  constructor(databaseAdapter: DatabaseAdapter, logger: Logger, transaction: Transaction | null) {
+    super(databaseAdapter, logger, transaction);
+  }
+
+  protected copyWithNewTransaction(
+    databaseAdapter: DatabaseAdapter,
+    transaction: Transaction
+  ): TransactionContext {
+    return new DummyContextImpl(databaseAdapter, this.logger, transaction);
+  }
+}
 
 interface MockedPostgresDatabaseAdapter extends PostgresDatabaseAdapter {
   query: jest.MockedFunction<QueryFn>;
@@ -22,7 +41,7 @@ export class MockUniqueViolationOfConstraintError extends Error {
 
 export function createMockContext(adapter: PostgresDatabaseAdapter): TransactionContext {
   const databaseAdapter = createPostgresDatabaseAdapterAdapter(adapter);
-  return ServerTestUtils.createDummyContext(databaseAdapter);
+  return new DummyContextImpl(databaseAdapter, NoOpLogger, null);
 }
 
 export function createMockAdapter(): MockedPostgresDatabaseAdapter {

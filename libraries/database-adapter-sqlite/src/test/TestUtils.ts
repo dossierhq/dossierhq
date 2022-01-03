@@ -1,8 +1,12 @@
-import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
+import type { ErrorType, Logger, PromiseResult } from '@jonasb/datadata-core';
 import { NoOpLogger, ok } from '@jonasb/datadata-core';
+import type {
+  DatabaseAdapter,
+  Transaction,
+  TransactionContext,
+} from '@jonasb/datadata-database-adapter';
+import { TransactionContextImpl } from '@jonasb/datadata-database-adapter';
 import type { TestSuite } from '@jonasb/datadata-database-adapter-test-integration';
-import type { DatabaseAdapter, TransactionContext } from '@jonasb/datadata-server';
-import { ServerTestUtils } from '@jonasb/datadata-server';
 import type { SqliteDatabaseAdapter } from '..';
 import { createSqlite3Adapter, createSqliteDatabaseAdapter, createSqlJsAdapter } from '..';
 
@@ -10,6 +14,19 @@ type QueryFn = SqliteDatabaseAdapter['query'];
 
 interface MockedSqliteDatabaseAdapter extends SqliteDatabaseAdapter {
   query: jest.MockedFunction<QueryFn>;
+}
+
+class DummyContextImpl extends TransactionContextImpl<TransactionContext> {
+  constructor(databaseAdapter: DatabaseAdapter, logger: Logger, transaction: Transaction | null) {
+    super(databaseAdapter, logger, transaction);
+  }
+
+  protected copyWithNewTransaction(
+    databaseAdapter: DatabaseAdapter,
+    transaction: Transaction
+  ): TransactionContext {
+    return new DummyContextImpl(databaseAdapter, this.logger, transaction);
+  }
 }
 
 export async function createSqlJsTestAdapter(): PromiseResult<
@@ -42,7 +59,7 @@ export async function createMockContext(
     return result;
   }
   const databaseAdapter = result.value;
-  return ok(ServerTestUtils.createDummyContext(databaseAdapter));
+  return ok(new DummyContextImpl(databaseAdapter, NoOpLogger, null));
 }
 
 export function createMockAdapter(): MockedSqliteDatabaseAdapter {

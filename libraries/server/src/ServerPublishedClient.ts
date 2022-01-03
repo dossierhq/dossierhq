@@ -10,7 +10,8 @@ import {
   ok,
   PublishedClientOperationName,
 } from '@jonasb/datadata-core';
-import type { AuthorizationAdapter, DatabaseAdapter, SessionContext } from '.';
+import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
+import type { AuthorizationAdapter, SessionContext } from '.';
 import { publishedGetEntities } from './published-entity/publishedGetEntities';
 import { publishedGetEntity } from './published-entity/publishedGetEntity';
 import { publishedGetTotalCount } from './published-entity/publishedGetTotalCount';

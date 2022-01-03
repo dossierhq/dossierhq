@@ -1,5 +1,5 @@
 import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
-import type { Transaction } from '@jonasb/datadata-server';
+import type { Transaction } from '@jonasb/datadata-database-adapter';
 import type { PostgresDatabaseAdapter } from '.';
 
 export interface PostgresTransaction extends Transaction {

@@ -1,6 +1,6 @@
 import type { ErrorType, PromiseResult, Result } from '@jonasb/datadata-core';
 import { notOk, ok } from '@jonasb/datadata-core';
-import type { Context } from '@jonasb/datadata-server';
+import type { Context } from '@jonasb/datadata-database-adapter';
 import type { SqliteDatabaseAdapter } from '.';
 import type { ColumnValue } from './SqliteDatabaseAdapter';
 

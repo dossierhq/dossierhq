@@ -7,7 +7,8 @@ import type {
   PromiseResult,
 } from '@jonasb/datadata-core';
 import { ok } from '@jonasb/datadata-core';
-import type { AuthorizationAdapter, DatabaseAdapter, SessionContext } from '..';
+import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
+import type { AuthorizationAdapter, SessionContext } from '..';
 import { authVerifyAuthorizationKey } from '../Auth';
 import { decodeAdminEntity } from '../EntityCodec';
 

@@ -1,8 +1,7 @@
 import { CoreTestUtils } from '@jonasb/datadata-core';
-import { expectOkResult } from '@jonasb/datadata-core/lib/cjs/CoreTestUtils';
 import { createMockAdapter, createMockContext, getQueryCalls } from '../test/TestUtils';
 import { authCreateSession } from './createSession';
-const { expectResultValue } = CoreTestUtils;
+const { expectOkResult, expectResultValue } = CoreTestUtils;
 
 describe('authCreateSession', () => {
   test('Create new principal', async () => {

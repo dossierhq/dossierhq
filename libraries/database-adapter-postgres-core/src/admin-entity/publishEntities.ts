@@ -9,9 +9,9 @@ import type {
   DatabaseAdminEntityPublishGetVersionInfoPayload,
   DatabaseAdminEntityPublishUpdateEntityArg,
   DatabaseAdminEntityUpdateStatusPayload,
+  DatabaseResolvedEntityVersionReference,
   TransactionContext,
-} from '@jonasb/datadata-server';
-import type { DatabaseResolvedEntityVersionReference } from '@jonasb/datadata-server/lib/cjs/DatabaseAdapter';
+} from '@jonasb/datadata-database-adapter';
 import type { PostgresDatabaseAdapter } from '..';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema';
 import { queryMany, queryNoneOrOne, queryOne } from '../QueryFunctions';

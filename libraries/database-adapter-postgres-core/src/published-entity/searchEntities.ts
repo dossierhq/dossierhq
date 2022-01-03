@@ -6,8 +6,11 @@ import type {
   PublishedSchema,
 } from '@jonasb/datadata-core';
 import { ok } from '@jonasb/datadata-core';
-import type { ResolvedAuthKey, TransactionContext } from '@jonasb/datadata-server';
-import type { DatabasePublishedEntitySearchPayload } from '@jonasb/datadata-server/lib/cjs/DatabaseAdapter';
+import type {
+  DatabasePublishedEntitySearchPayload,
+  ResolvedAuthKey,
+  TransactionContext,
+} from '@jonasb/datadata-database-adapter';
 import type { PostgresDatabaseAdapter } from '..';
 import { queryMany } from '../QueryFunctions';
 import type { SearchPublishedEntitiesItem } from '../search/QueryGenerator';

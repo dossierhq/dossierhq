@@ -30,6 +30,7 @@
   },
   "devDependencies": {
     "@jonasb/datadata-database-adapter-test-integration": "workspace:*",
+    "@jonasb/datadata-server": "workspace:*",
     "@rushstack/heft": "~0.44.0",
     "@rushstack/heft-jest-plugin": "~0.2.0",
     "@types/heft-jest": "1.0.2",
@@ -44,7 +45,7 @@
   },
   "dependencies": {
     "@jonasb/datadata-core": "workspace:*",
-    "@jonasb/datadata-server": "workspace:*",
+    "@jonasb/datadata-database-adapter": "workspace:*",
     "@js-temporal/polyfill": "~0.3.0",
     "sql.js": "~1.6.1",
     "sqlite3": "jonasb/node-sqlite3#3.36.0",

@@ -5,6 +5,7 @@
     "postgres",
     "rushstack",
     "TIMESTAMPTZ",
+    "unarchived",
     "upsert",
     "uuidv"
   ],

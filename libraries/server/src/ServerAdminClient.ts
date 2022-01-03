@@ -10,7 +10,8 @@ import {
   createBaseAdminClient,
   ok,
 } from '@jonasb/datadata-core';
-import type { AuthorizationAdapter, DatabaseAdapter, SessionContext } from '.';
+import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
+import type { AuthorizationAdapter, SessionContext } from '.';
 import { adminArchiveEntity } from './admin-entity/adminArchiveEntity';
 import { adminCreateEntity } from './admin-entity/adminCreateEntity';
 import { adminGetEntities } from './admin-entity/adminGetEntities';

@@ -10,7 +10,7 @@ import type {
   DatabaseAdminEntitySearchPayload,
   ResolvedAuthKey,
   TransactionContext,
-} from '@jonasb/datadata-server';
+} from '@jonasb/datadata-database-adapter';
 import type { PostgresDatabaseAdapter } from '..';
 import { queryMany } from '../QueryFunctions';
 import type { SearchAdminEntitiesItem } from '../search/QueryGenerator';

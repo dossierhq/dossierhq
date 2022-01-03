@@ -4,7 +4,7 @@ import type {
   DatabaseAdminEntityUpdateStatusPayload,
   DatabaseResolvedEntityReference,
   TransactionContext,
-} from '@jonasb/datadata-server';
+} from '@jonasb/datadata-database-adapter';
 import { Temporal } from '@js-temporal/polyfill';
 import type { SqliteDatabaseAdapter } from '..';
 import { queryNone } from '../QueryFunctions';

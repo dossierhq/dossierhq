@@ -1,5 +1,5 @@
 import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
-import type { Transaction } from '@jonasb/datadata-server';
+import type { Transaction } from '@jonasb/datadata-database-adapter';
 import type { SqliteDatabaseAdapter } from './SqliteDatabaseAdapter';
 
 const sqliteTransactionSymbol = Symbol('SqliteTransaction');

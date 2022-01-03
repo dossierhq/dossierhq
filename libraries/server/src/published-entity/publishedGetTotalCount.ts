@@ -4,7 +4,8 @@ import type {
   PublishedQuery,
   PublishedSchema,
 } from '@jonasb/datadata-core';
-import type { AuthorizationAdapter, DatabaseAdapter, SessionContext } from '..';
+import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
+import type { AuthorizationAdapter, SessionContext } from '..';
 import { authResolveAuthorizationKeys } from '../Auth';
 
 export async function publishedGetTotalCount(

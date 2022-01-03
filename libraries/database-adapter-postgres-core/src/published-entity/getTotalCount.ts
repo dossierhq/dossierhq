@@ -5,7 +5,7 @@ import type {
   PublishedSchema,
 } from '@jonasb/datadata-core';
 import { ok } from '@jonasb/datadata-core';
-import type { ResolvedAuthKey, TransactionContext } from '@jonasb/datadata-server';
+import type { ResolvedAuthKey, TransactionContext } from '@jonasb/datadata-database-adapter';
 import type { PostgresDatabaseAdapter } from '..';
 import { queryOne } from '../QueryFunctions';
 import { totalPublishedEntitiesQuery } from '../search/QueryGenerator';

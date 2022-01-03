@@ -1,12 +1,12 @@
 import type {
-  ErrorType,
-  PromiseResult,
   AdminSchemaSpecification,
   AdminSchemaSpecificationUpdate,
+  ErrorType,
+  PromiseResult,
   SchemaSpecificationUpdatePayload,
 } from '@jonasb/datadata-core';
-import { ok, AdminSchema } from '@jonasb/datadata-core';
-import type { DatabaseAdapter, TransactionContext } from '.';
+import { AdminSchema, ok } from '@jonasb/datadata-core';
+import type { DatabaseAdapter, TransactionContext } from '@jonasb/datadata-database-adapter';
 
 export async function getSchemaSpecification(
   databaseAdapter: DatabaseAdapter,
