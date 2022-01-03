@@ -622,12 +622,12 @@ importers:
 
   ../../tools/generic-tools:
     specifiers:
-      concurrently: ^6.1.0
+      concurrently: ^7.0.0
       dotenv: ^10.0.0
       pg: ^8.7.1
       tslib: ~2.3.1
     dependencies:
-      concurrently: 6.3.0
+      concurrently: 7.0.0
       dotenv: 10.0.0
       pg: 8.7.1
       tslib: 2.3.1
@@ -7316,9 +7316,9 @@ packages:
       typedarray: 0.0.6
     dev: true
 
-  /concurrently/6.3.0:
-    resolution: {integrity: sha512-k4k1jQGHHKsfbqzkUszVf29qECBrkvBKkcPJEUDTyVR7tZd1G/JOfnst4g1sYbFvJ4UjHZisj1aWQR8yLKpGPw==}
-    engines: {node: '>=10.0.0'}
+  /concurrently/7.0.0:
+    resolution: {integrity: sha512-WKM7PUsI8wyXpF80H+zjHP32fsgsHNQfPLw/e70Z5dYkV7hF+rf8q3D+ScWJIEr57CpkO3OWBko6hwhQLPR8Pw==}
+    engines: {node: ^12.20.0 || ^14.13.0 || >=16.0.0}
     hasBin: true
     dependencies:
       chalk: 4.1.2
