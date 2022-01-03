@@ -1,6 +1,7 @@
 export { createAdminEntityTestSuite } from './admin-entity/AdminEntityTestSuite';
 export { createAuthTestSuite } from './auth/AuthTestSuite';
 export { IntegrationTestSchemaSpecifciationUpdate } from './IntegrationTestSchemaSpecifciationUpdate';
+export { createPublishedEntityTestSuite } from './published-entity/PublishedEntityTestSuite';
 export { createSchemaTestSuite } from './schema/SchemaTestSuite';
 export { createTestAuthorizationAdapter } from './TestAuthorizationAdapter';
 

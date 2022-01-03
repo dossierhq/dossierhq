@@ -9,7 +9,7 @@ import {
 } from '../Asserts';
 import type { UnboundTestFunction } from '../Builder';
 import type { AdminEntityTestContext } from './AdminEntityTestSuite';
-import { TITLE_ONLY_CREATE, TITLE_ONLY_ENTITY } from './Fixtures';
+import { TITLE_ONLY_CREATE, TITLE_ONLY_ADMIN_ENTITY } from '../shared-entity/Fixtures';
 
 export const CreateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
   createEntity_minimal,
@@ -30,7 +30,7 @@ async function createEntity_minimal({ client }: AdminEntityTestContext) {
       },
     } = createResult.value;
 
-    const expectedEntity = copyEntity(TITLE_ONLY_ENTITY, {
+    const expectedEntity = copyEntity(TITLE_ONLY_ADMIN_ENTITY, {
       id,
       info: {
         name,
@@ -59,7 +59,7 @@ async function createEntity_withId({ client }: AdminEntityTestContext) {
       },
     } = createResult.value;
 
-    const expectedEntity = copyEntity(TITLE_ONLY_ENTITY, {
+    const expectedEntity = copyEntity(TITLE_ONLY_ADMIN_ENTITY, {
       id,
       info: {
         name,
@@ -111,7 +111,7 @@ async function createEntity_publishMinimal({ client }: AdminEntityTestContext) {
       },
     } = createResult.value;
 
-    const expectedEntity = copyEntity(TITLE_ONLY_ENTITY, {
+    const expectedEntity = copyEntity(TITLE_ONLY_ADMIN_ENTITY, {
       id,
       info: {
         name,
@@ -144,7 +144,7 @@ async function createEntity_publishWithSubjectAuthKey({ client }: AdminEntityTes
       },
     } = createResult.value;
 
-    const expectedEntity = copyEntity(TITLE_ONLY_ENTITY, {
+    const expectedEntity = copyEntity(TITLE_ONLY_ADMIN_ENTITY, {
       id,
       info: {
         name,

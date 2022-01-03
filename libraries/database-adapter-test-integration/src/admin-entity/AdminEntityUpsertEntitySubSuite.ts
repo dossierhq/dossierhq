@@ -3,7 +3,11 @@ import { v4 as uuidv4 } from 'uuid';
 import { assertOkResult, assertResultValue } from '../Asserts';
 import type { UnboundTestFunction } from '../Builder';
 import type { AdminEntityTestContext } from './AdminEntityTestSuite';
-import { TITLE_ONLY_CREATE, TITLE_ONLY_ENTITY, TITLE_ONLY_UPSERT } from './Fixtures';
+import {
+  TITLE_ONLY_CREATE,
+  TITLE_ONLY_ADMIN_ENTITY,
+  TITLE_ONLY_UPSERT,
+} from '../shared-entity/Fixtures';
 
 export const UpsertEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
   upsertEntity_minimalCreate,
@@ -21,7 +25,7 @@ async function upsertEntity_minimalCreate({ client }: AdminEntityTestContext) {
       },
     } = upsertResult.value;
 
-    const expectedEntity = copyEntity(TITLE_ONLY_ENTITY, {
+    const expectedEntity = copyEntity(TITLE_ONLY_ADMIN_ENTITY, {
       id,
       info: {
         name,
