@@ -4,7 +4,7 @@ import {
   type DatabaseAdminEntityCreateEntityArg,
   type DatabaseAdminEntityCreatePayload,
   type TransactionContext,
-} from '@jonasb/datadata-server';
+} from '@jonasb/datadata-database-adapter';
 import type { PostgresDatabaseAdapter } from '..';
 import { UniqueConstraints, type EntitiesTable, type EntityVersionsTable } from '../DatabaseSchema';
 import { queryNone, queryOne } from '../QueryFunctions';

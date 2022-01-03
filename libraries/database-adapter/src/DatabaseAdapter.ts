@@ -14,11 +14,7 @@ import type {
   PublishingEvent,
 } from '@jonasb/datadata-core';
 import type { Temporal } from '@js-temporal/polyfill';
-import type { ResolvedAuthKey, Session, TransactionContext } from '.';
-
-export interface Transaction {
-  _type: 'Transaction';
-}
+import type { ResolvedAuthKey, Session, Transaction, TransactionContext } from '.';
 
 export interface DatabaseResolvedEntityReference {
   entityInternalId: unknown;

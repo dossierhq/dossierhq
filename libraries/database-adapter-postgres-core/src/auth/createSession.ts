@@ -4,7 +4,7 @@ import type {
   DatabaseAuthCreateSessionPayload,
   Session,
   TransactionContext,
-} from '@jonasb/datadata-server';
+} from '@jonasb/datadata-database-adapter';
 import type { PostgresDatabaseAdapter } from '..';
 import type { SubjectsTable } from '../DatabaseSchema';
 import { UniqueConstraints } from '../DatabaseSchema';

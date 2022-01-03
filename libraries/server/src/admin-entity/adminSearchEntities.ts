@@ -8,7 +8,8 @@ import type {
   Paging,
   PromiseResult,
 } from '@jonasb/datadata-core';
-import type { AuthorizationAdapter, DatabaseAdapter, SessionContext } from '..';
+import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
+import type { AuthorizationAdapter, SessionContext } from '..';
 import { authResolveAuthorizationKeys } from '../Auth';
 import { decodeAdminEntity } from '../EntityCodec';
 import { sharedSearchEntities } from '../shared-entity/sharedSearchEntities';

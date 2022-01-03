@@ -1,6 +1,6 @@
 import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
 import { notOk, ok } from '@jonasb/datadata-core';
-import type { Context, DatabaseAdapter } from '@jonasb/datadata-server';
+import type { Context, DatabaseAdapter } from '@jonasb/datadata-database-adapter';
 import type { UniqueConstraint } from '.';
 import { adminEntityArchivingGetEntityInfo } from './admin-entity/archivingGetEntityInfo';
 import { adminCreateEntity } from './admin-entity/createEntity';

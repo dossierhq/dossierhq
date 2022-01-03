@@ -5,7 +5,10 @@ import type {
   PromiseResult,
 } from '@jonasb/datadata-core';
 import { notOk, ok } from '@jonasb/datadata-core';
-import type { DatabaseAdminEntityGetOnePayload, TransactionContext } from '@jonasb/datadata-server';
+import type {
+  DatabaseAdminEntityGetOnePayload,
+  TransactionContext,
+} from '@jonasb/datadata-database-adapter';
 import type { PostgresDatabaseAdapter } from '..';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema';
 import { queryNoneOrOne } from '../QueryFunctions';

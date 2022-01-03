@@ -1,9 +1,9 @@
+import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
 import type {
   PostgresDatabaseAdapter,
   PostgresTransaction,
 } from '@jonasb/datadata-database-adapter-postgres-core';
 import { createPostgresDatabaseAdapterAdapter } from '@jonasb/datadata-database-adapter-postgres-core';
-import type { DatabaseAdapter } from '@jonasb/datadata-server';
 import { Temporal } from '@js-temporal/polyfill';
 import type { PoolClient, PoolConfig } from 'pg';
 import { DatabaseError, Pool, types as PgTypes } from 'pg';

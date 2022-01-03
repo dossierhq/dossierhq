@@ -18,8 +18,9 @@ import {
   traverseAdminItem,
   visitorPathToString,
 } from '@jonasb/datadata-core';
+import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
 import type { Temporal } from '@js-temporal/polyfill';
-import type { AuthorizationAdapter, DatabaseAdapter, SessionContext } from '..';
+import type { AuthorizationAdapter, SessionContext } from '..';
 import { authVerifyAuthorizationKey } from '../Auth';
 import { collectDataFromEntity, decodeAdminEntityFields } from '../EntityCodec';
 import { checkUUIDsAreUnique } from './AdminEntityMutationUtils';

@@ -5,7 +5,10 @@ import type {
   PromiseResult,
 } from '@jonasb/datadata-core';
 import { notOk, ok } from '@jonasb/datadata-core';
-import type { DatabaseAdminEntityGetOnePayload, TransactionContext } from '@jonasb/datadata-server';
+import type {
+  DatabaseAdminEntityGetOnePayload,
+  TransactionContext,
+} from '@jonasb/datadata-database-adapter';
 import { Temporal } from '@js-temporal/polyfill';
 import type { SqliteDatabaseAdapter } from '..';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema';

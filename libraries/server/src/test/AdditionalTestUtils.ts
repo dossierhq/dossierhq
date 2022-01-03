@@ -1,12 +1,11 @@
 import type { Logger } from '@jonasb/datadata-core';
 import { NoOpLogger } from '@jonasb/datadata-core';
 import type {
-  AuthorizationAdapter,
   DatabaseAdapter,
   Session,
-  SessionContext,
   TransactionContext,
-} from '..';
+} from '@jonasb/datadata-database-adapter';
+import type { AuthorizationAdapter, SessionContext } from '..';
 import { SessionContextImpl } from '../Context';
 
 interface MockDatabaseAdapter extends DatabaseAdapter {

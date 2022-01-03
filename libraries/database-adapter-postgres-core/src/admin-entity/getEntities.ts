@@ -1,6 +1,9 @@
 import type { EntityReference, ErrorType, PromiseResult } from '@jonasb/datadata-core';
 import { ok } from '@jonasb/datadata-core';
-import type { DatabaseAdminEntityGetOnePayload, TransactionContext } from '@jonasb/datadata-server';
+import type {
+  DatabaseAdminEntityGetOnePayload,
+  TransactionContext,
+} from '@jonasb/datadata-database-adapter';
 import type { PostgresDatabaseAdapter } from '..';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema';
 import { queryMany } from '../QueryFunctions';

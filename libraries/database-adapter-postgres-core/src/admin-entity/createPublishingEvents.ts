@@ -2,8 +2,8 @@ import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
 import type {
   DatabaseAdminEntityPublishingCreateEventArg,
   TransactionContext,
-} from '@jonasb/datadata-server';
-import { PostgresQueryBuilder } from '@jonasb/datadata-server';
+} from '@jonasb/datadata-database-adapter';
+import { PostgresQueryBuilder } from '@jonasb/datadata-database-adapter';
 import type { PostgresDatabaseAdapter } from '..';
 import { queryNone } from '../QueryFunctions';
 

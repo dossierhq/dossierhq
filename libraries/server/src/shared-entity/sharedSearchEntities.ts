@@ -1,7 +1,9 @@
 import type { Connection, Edge, ErrorType, PromiseResult } from '@jonasb/datadata-core';
 import { ok } from '@jonasb/datadata-core';
-import type { DatabaseAdminEntitySearchPayload } from '..';
-import type { DatabasePublishedEntitySearchPayload } from '../DatabaseAdapter';
+import type {
+  DatabaseAdminEntitySearchPayload,
+  DatabasePublishedEntitySearchPayload,
+} from '@jonasb/datadata-database-adapter';
 
 export async function sharedSearchEntities<
   TSchema,

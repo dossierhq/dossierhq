@@ -1,5 +1,5 @@
 import type { AdminSchemaSpecification, ErrorType, PromiseResult } from '@jonasb/datadata-core';
-import type { TransactionContext } from '@jonasb/datadata-server';
+import type { TransactionContext } from '@jonasb/datadata-database-adapter';
 import type { SqliteDatabaseAdapter } from '..';
 import { queryNone } from '../QueryFunctions';
 

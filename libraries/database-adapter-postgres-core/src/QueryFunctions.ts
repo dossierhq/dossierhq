@@ -1,6 +1,6 @@
 import type { ErrorType, PromiseResult, Result } from '@jonasb/datadata-core';
 import { notOk, ok } from '@jonasb/datadata-core';
-import type { TransactionContext } from '@jonasb/datadata-server';
+import type { TransactionContext } from '@jonasb/datadata-database-adapter';
 import type { PostgresDatabaseAdapter, PostgresTransaction } from '.';
 
 interface ErrorConverter<TRow, TError extends ErrorType> {

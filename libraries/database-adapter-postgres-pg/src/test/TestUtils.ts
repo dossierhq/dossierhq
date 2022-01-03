@@ -15,7 +15,8 @@ import {
   IntegrationTestSchemaSpecifciationUpdate,
   type TestSuite,
 } from '@jonasb/datadata-database-adapter-test-integration';
-import type { DatabaseAdapter, Server, SessionContext } from '@jonasb/datadata-server';
+import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
+import type { Server, SessionContext } from '@jonasb/datadata-server';
 import { createServer } from '@jonasb/datadata-server';
 import { Temporal } from '@js-temporal/polyfill';
 import { v4 as uuidv4 } from 'uuid';

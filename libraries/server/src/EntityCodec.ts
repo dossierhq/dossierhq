@@ -36,13 +36,15 @@ import {
   visitItemRecursively,
   visitorPathToString,
 } from '@jonasb/datadata-core';
-import type { DatabaseAdapter, DatabaseResolvedEntityReference, SessionContext } from '.';
-import { ensureRequired } from './Assertions';
 import type {
+  DatabaseAdapter,
   DatabaseAdminEntityPayload,
   DatabaseEntityUpdateGetEntityInfoPayload,
   DatabasePublishedEntityPayload,
-} from './DatabaseAdapter';
+  DatabaseResolvedEntityReference,
+} from '@jonasb/datadata-database-adapter';
+import type { SessionContext } from '.';
+import { ensureRequired } from './Assertions';
 import * as EntityFieldTypeAdapters from './EntityFieldTypeAdapters';
 
 export interface EncodeAdminEntityResult {

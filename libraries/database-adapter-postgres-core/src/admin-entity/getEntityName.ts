@@ -1,6 +1,6 @@
 import type { EntityReference, ErrorType, PromiseResult } from '@jonasb/datadata-core';
 import { notOk, ok } from '@jonasb/datadata-core';
-import type { TransactionContext } from '@jonasb/datadata-server';
+import type { TransactionContext } from '@jonasb/datadata-database-adapter';
 import type { PostgresDatabaseAdapter } from '..';
 import type { EntitiesTable } from '../DatabaseSchema';
 import { queryNoneOrOne } from '../QueryFunctions';

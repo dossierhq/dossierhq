@@ -1,4 +1,4 @@
-import type { DatabaseAdapter } from "@jonasb/datadata-server";
+import type { DatabaseAdapter } from "@jonasb/datadata-database-adapter";
 import type {
   PostgresDatabaseAdapter,
   PostgresTransaction,

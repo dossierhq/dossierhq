@@ -3,7 +3,7 @@ import { notOk, ok } from '@jonasb/datadata-core';
 import type {
   DatabaseAdminEntityArchivingEntityInfoPayload,
   TransactionContext,
-} from '@jonasb/datadata-server';
+} from '@jonasb/datadata-database-adapter';
 import { Temporal } from '@js-temporal/polyfill';
 import type { SqliteDatabaseAdapter } from '..';
 import type { EntitiesTable } from '../DatabaseSchema';

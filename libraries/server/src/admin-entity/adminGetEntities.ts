@@ -8,11 +8,10 @@ import type {
 } from '@jonasb/datadata-core';
 import { notOk, ok } from '@jonasb/datadata-core';
 import type {
-  AuthorizationAdapter,
   DatabaseAdapter,
   DatabaseAdminEntityGetOnePayload,
-  SessionContext,
-} from '..';
+} from '@jonasb/datadata-database-adapter';
+import type { AuthorizationAdapter, SessionContext } from '..';
 import { authVerifyAuthorizationKey } from '../Auth';
 import { decodeAdminEntity } from '../EntityCodec';
 

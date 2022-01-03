@@ -17,7 +17,8 @@ import {
   ok,
   PublishedSchema,
 } from '@jonasb/datadata-core';
-import type { AuthorizationAdapter, DatabaseAdapter, Session, SessionContext } from '.';
+import type { DatabaseAdapter, Session } from '@jonasb/datadata-database-adapter';
+import type { AuthorizationAdapter, SessionContext } from '.';
 import { authCreateSession } from './Auth';
 import type { InternalContext } from './Context';
 import { InternalContextImpl, SessionContextImpl } from './Context';

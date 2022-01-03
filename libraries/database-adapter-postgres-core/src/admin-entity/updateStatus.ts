@@ -4,7 +4,7 @@ import type {
   DatabaseAdminEntityUpdateStatusPayload,
   DatabaseResolvedEntityReference,
   TransactionContext,
-} from '@jonasb/datadata-server';
+} from '@jonasb/datadata-database-adapter';
 import type { PostgresDatabaseAdapter } from '..';
 import type { EntitiesTable } from '../DatabaseSchema';
 import { queryOne } from '../QueryFunctions';

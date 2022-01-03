@@ -8,8 +8,8 @@ import type {
   Result,
 } from '@jonasb/datadata-core';
 import { AdminQueryOrder, notOk, ok, PublishedQueryOrder } from '@jonasb/datadata-core';
-import type { ResolvedAuthKey } from '@jonasb/datadata-server';
-import { PostgresQueryBuilder } from '@jonasb/datadata-server';
+import type { ResolvedAuthKey } from '@jonasb/datadata-database-adapter';
+import { PostgresQueryBuilder } from '@jonasb/datadata-database-adapter';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema';
 import type { CursorNativeType } from './OpaqueCursor';
 import { toOpaqueCursor } from './OpaqueCursor';
