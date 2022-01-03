@@ -25,7 +25,16 @@ try {
     defaultAuthKeys: ["none", "subject"],
   });
   if (sessionResult.isError()) throw sessionResult.toError();
-  const { context: _context } = sessionResult.value;
+  const adminClient = server.createAdminClient(sessionResult.value.context);
+  const createResult = await adminClient.createEntity({
+    info: { type: "TitleOnly", name: "Deno test", authKey: "none" },
+    fields: { title: "Deno test" },
+  }, { publish: true });
+  if (createResult.isError()) {
+    logger.error("Failed creating entity: %O", createResult);
+  } else {
+    logger.info("Created entity: %O", createResult.value);
+  }
 } finally {
   await server.shutdown();
 }
