@@ -1,20 +1,16 @@
 #!/usr/bin/env -S deno run --import-map=./config/import-map.json --allow-net=localhost:5432 --allow-read=.env,.env.defaults
-import type { ErrorType, Logger, PromiseResult } from "@jonasb/datadata-core";
+import type { ErrorType, PromiseResult } from "@jonasb/datadata-core";
 import { notOk, ok } from "@jonasb/datadata-core";
 import { createServer } from "@jonasb/datadata-server";
 import type {
   AuthorizationAdapter,
   SessionContext,
 } from "@jonasb/datadata-server";
-import * as log from "std/log/mod.ts";
 import { createDotenvAdapter } from "./ServerUtils.ts";
+import { getLogger } from "./Logger.ts";
 
-const logger: Logger = {
-  error: log.error,
-  warn: log.warning,
-  info: log.info,
-  debug: log.debug,
-};
+const logger = getLogger();
+
 const serverResult = await createServer({
   databaseAdapter: createDotenvAdapter(),
   logger,
