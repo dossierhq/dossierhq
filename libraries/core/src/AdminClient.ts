@@ -119,7 +119,7 @@ export interface AdminClient {
   >;
 
   getEntityHistory(
-    reference: EntityReferenceWithAuthKeys
+    reference: EntityReference
   ): PromiseResult<
     EntityHistory,
     ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic

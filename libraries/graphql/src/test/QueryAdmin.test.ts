@@ -1586,8 +1586,8 @@ describe('entityHistory()', () => {
   });
 
   test('Error: Wrong authKey', async () => {
-    const { adminClient } = server;
-    const createResult = await adminClient.createEntity({
+    const { adminClientOther } = server;
+    const createResult = await adminClientOther.createEntity({
       info: { type: 'QueryAdminFoo', name: 'Howdy name', authKey: 'subject' },
       fields: { title: 'Howdy title', summary: 'Howdy summary' },
     });
@@ -1599,8 +1599,8 @@ describe('entityHistory()', () => {
       const result = (await graphql({
         schema,
         source: `
-          query EntityHistory($id: ID!, $authKeys: [String!]) {
-            entityHistory(id: $id, authKeys: $authKeys) {
+          query EntityHistory($id: ID!) {
+            entityHistory(id: $id) {
               id
             }
           }

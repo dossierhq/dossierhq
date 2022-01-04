@@ -5,6 +5,7 @@ import type {
   AdminSchema,
   AdminValueTypeSpecification,
   EntityHistory,
+  EntityReference,
   EntityReferenceWithAuthKeys,
   FieldSpecification,
   PageInfo,
@@ -319,7 +320,7 @@ function buildAdminTotalCount<TContext extends SessionGraphQLContext>(
 
 export async function loadVersionHistory<TContext extends SessionGraphQLContext>(
   context: TContext,
-  reference: EntityReferenceWithAuthKeys
+  reference: EntityReference
 ): Promise<EntityHistory> {
   const adminClient = getAdminClient(context);
   const result = await adminClient.getEntityHistory(reference);
