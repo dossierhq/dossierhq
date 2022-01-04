@@ -1,5 +1,5 @@
 import type {
-  EntityReferenceWithAuthKeys,
+  EntityReference,
   ErrorType,
   PromiseResult,
   PublishingHistory,
@@ -7,13 +7,13 @@ import type {
 import { ok } from '@jonasb/datadata-core';
 import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
 import type { AuthorizationAdapter, SessionContext } from '..';
-import { authVerifyAuthorizationKey } from '../Auth';
+import { authVerifyAuthorizationKey2 } from '../Auth';
 
 export async function adminGetPublishingHistory(
   databaseAdapter: DatabaseAdapter,
   authorizationAdapter: AuthorizationAdapter,
   context: SessionContext,
-  reference: EntityReferenceWithAuthKeys
+  reference: EntityReference
 ): PromiseResult<
   PublishingHistory,
   ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
@@ -27,12 +27,10 @@ export async function adminGetPublishingHistory(
   }
   const { entityInternalId, authKey, resolvedAuthKey } = entityInfoResult.value;
 
-  const authResult = await authVerifyAuthorizationKey(
-    authorizationAdapter,
-    context,
-    reference?.authKeys,
-    { authKey, resolvedAuthKey }
-  );
+  const authResult = await authVerifyAuthorizationKey2(authorizationAdapter, context, {
+    authKey,
+    resolvedAuthKey,
+  });
   if (authResult.isError()) {
     return authResult;
   }

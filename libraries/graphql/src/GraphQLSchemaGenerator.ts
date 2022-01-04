@@ -1367,15 +1367,14 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
   }
 
   buildQueryFieldPublishingHistory<TSource>(): GraphQLFieldConfig<TSource, TContext> {
-    return fieldConfigWithArgs<TSource, TContext, { id: string; authKeys: string[] | null }>({
+    return fieldConfigWithArgs<TSource, TContext, { id: string }>({
       type: this.getOutputType('PublishingHistory'),
       args: {
         id: { type: new GraphQLNonNull(GraphQLID) },
-        authKeys: { type: new GraphQLList(new GraphQLNonNull(GraphQLString)) },
       },
       resolve: async (_source, args, context, _info) => {
-        const { id, authKeys } = args;
-        return await loadPublishingHistory(context, { id, authKeys: authKeys ?? undefined });
+        const { id } = args;
+        return await loadPublishingHistory(context, { id });
       },
     });
   }

@@ -18,7 +18,6 @@ import type {
   Edge,
   EntityHistory,
   EntityReference,
-  EntityReferenceWithAuthKeys,
   EntityVersionReference,
   JsonResult,
   Paging,
@@ -153,7 +152,7 @@ export interface AdminClient {
   >;
 
   getPublishingHistory(
-    reference: EntityReferenceWithAuthKeys
+    reference: EntityReference
   ): PromiseResult<
     PublishingHistory,
     ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
