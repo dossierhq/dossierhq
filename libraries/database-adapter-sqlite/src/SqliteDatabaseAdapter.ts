@@ -23,6 +23,7 @@ import {
 } from './admin-entity/updateEntity';
 import { adminEntityUpdateStatus } from './admin-entity/updateStatus';
 import { authCreateSession } from './auth/createSession';
+import { publishedEntityGetEntities } from './published-entity/getEntities';
 import { publishedEntityGetOne } from './published-entity/getEntity';
 import { queryOne } from './QueryFunctions';
 import { schemaGetSpecification } from './schema/getSpecification';
@@ -99,9 +100,7 @@ export async function createSqliteDatabaseAdapter(
     authCreateSession: (...args) => authCreateSession(sqliteAdapter, ...args),
     disconnect: sqliteAdapter.disconnect,
     publishedEntityGetOne: (...args) => publishedEntityGetOne(sqliteAdapter, ...args),
-    publishedEntityGetEntities: () => {
-      throw new Error('TODO');
-    },
+    publishedEntityGetEntities: (...args) => publishedEntityGetEntities(sqliteAdapter, ...args),
     publishedEntitySearchEntities: () => {
       throw new Error('TODO');
     },
