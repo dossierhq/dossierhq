@@ -57,8 +57,8 @@ import {
   loadAdminEntities,
   loadAdminEntity,
   loadAdminSearchEntities,
-  loadEntities,
-  loadEntity,
+  loadPublishedEntities,
+  loadPublishedEntity,
   loadPublishingHistory,
   loadSearchEntities,
   loadVersionHistory,
@@ -1247,7 +1247,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         id: { type: new GraphQLNonNull(GraphQLID) },
       },
       resolve: async (_source, args, context, _info) => {
-        return await loadEntity(publishedSchema, context, args.id);
+        return await loadPublishedEntity(publishedSchema, context, args.id);
       },
     });
   }
@@ -1261,7 +1261,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
         ids: { type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(GraphQLID))) },
       },
       resolve: async (_source, args, context, _info) => {
-        return await loadEntities(publishedSchema, context, args.ids);
+        return await loadPublishedEntities(publishedSchema, context, args.ids);
       },
     });
   }
@@ -1269,19 +1269,14 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
   buildQueryFieldAdminEntity<TSource>(
     adminSchema: AdminSchema
   ): GraphQLFieldConfig<TSource, TContext> {
-    return fieldConfigWithArgs<
-      TSource,
-      TContext,
-      { id: string; version: number | null; authKeys: string[] | null }
-    >({
+    return fieldConfigWithArgs<TSource, TContext, { id: string; version: number | null }>({
       type: this.getInterface('AdminEntity'),
       args: {
         id: { type: new GraphQLNonNull(GraphQLID) },
         version: { type: GraphQLInt },
-        authKeys: { type: new GraphQLList(new GraphQLNonNull(GraphQLString)) },
       },
       resolve: async (_source, args, context, _info) => {
-        return await loadAdminEntity(adminSchema, context, args.id, args.version, args.authKeys);
+        return await loadAdminEntity(adminSchema, context, args.id, args.version);
       },
     });
   }

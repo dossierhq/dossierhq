@@ -111,7 +111,7 @@ async function upsertEntity_updateAndPublishWithSubjectAuthKey({ client }: Admin
         entity: expectedEntity,
       });
 
-      const getResult = await client.getEntity({ id, authKeys: ['subject'] });
+      const getResult = await client.getEntity({ id });
       assertResultValue(getResult, expectedEntity);
     }
   }

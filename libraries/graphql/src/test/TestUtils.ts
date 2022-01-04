@@ -5,7 +5,7 @@ import type {
   PromiseResult,
   PublishedClient,
 } from '@jonasb/datadata-core';
-import { AdminSchema, assertIsDefined, ok } from '@jonasb/datadata-core';
+import { AdminSchema, assertIsDefined, notOk, ok } from '@jonasb/datadata-core';
 import { createPostgresAdapter } from '@jonasb/datadata-database-adapter-postgres-pg';
 import type { AuthorizationAdapter, SessionContext } from '@jonasb/datadata-server';
 import { createServer } from '@jonasb/datadata-server';
@@ -14,6 +14,7 @@ import { v4 as uuidv4 } from 'uuid';
 export interface TestServerWithSession {
   schema: AdminSchema;
   adminClient: AdminClient;
+  adminClientOther: AdminClient;
   publishedClient: PublishedClient;
   subjectId: string;
   tearDown: () => PromiseResult<void, ErrorType.Generic>;
@@ -43,6 +44,13 @@ async function setUpRealServerWithSession(schemaSpecification: AdminSchemaSpecif
   const { context } = sessionResult.value;
   const subjectId = context.session.subjectId;
   const adminClient = server.createAdminClient(context);
+  const adminClientOther = server.createAdminClient(() =>
+    server.createSession({
+      provider: 'test',
+      identifier: 'other',
+      defaultAuthKeys: ['none'],
+    })
+  );
   const publishedClient = server.createPublishedClient(context);
 
   await adminClient.updateSchemaSpecification(schemaSpecification);
@@ -53,6 +61,7 @@ async function setUpRealServerWithSession(schemaSpecification: AdminSchemaSpecif
   return {
     schema: new AdminSchema(schemaResult.value),
     adminClient,
+    adminClientOther,
     publishedClient,
     subjectId,
     tearDown: () => server.shutdown(),
@@ -64,7 +73,15 @@ function createTestAuthorizationAdapter(): AuthorizationAdapter {
     async resolveAuthorizationKeys<T extends string>(context: SessionContext, authKeys: T[]) {
       const result = {} as Record<T, string>;
       for (const key of authKeys) {
-        result[key] = key;
+        let resolved;
+        if (key === 'none') {
+          resolved = 'none';
+        } else if (key === 'subject') {
+          resolved = `subject:${context.session.subjectId}`;
+        } else {
+          return notOk.BadRequest(`The authKey ${key} doesn't exist`);
+        }
+        result[key] = resolved;
       }
       return ok(result);
     },

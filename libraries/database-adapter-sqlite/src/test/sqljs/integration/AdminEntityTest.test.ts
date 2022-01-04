@@ -31,7 +31,8 @@ registerTestSuite(
         })
       );
 
-      return [{ client }, undefined];
+      //TODO remove client
+      return [{ server, client }, undefined];
     },
     after: async () => {
       //empty

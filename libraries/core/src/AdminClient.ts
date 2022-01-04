@@ -66,7 +66,7 @@ export interface AdminClient {
   ): PromiseResult<SchemaSpecificationUpdatePayload, ErrorType.BadRequest | ErrorType.Generic>;
 
   getEntity(
-    reference: EntityReferenceWithAuthKeys | EntityVersionReferenceWithAuthKeys
+    reference: EntityReference | EntityVersionReference
   ): PromiseResult<
     AdminEntity,
     ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic

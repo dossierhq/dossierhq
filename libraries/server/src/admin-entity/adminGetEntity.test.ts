@@ -42,7 +42,7 @@ describe('Admin adminGetEntity', () => {
       authorizationAdapter,
       databaseAdapter,
       context,
-      { id: '123', version: 3, authKeys: ['none'] }
+      { id: '123', version: 3 }
     );
 
     expectResultValue(result, {

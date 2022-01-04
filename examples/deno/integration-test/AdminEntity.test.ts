@@ -20,7 +20,8 @@ registerTestSuite(createAdminEntityTestSuite({
       })
     );
 
-    return [{ client }, { server }];
+    //TODO remove client
+    return [{ server, client }, { server }];
   },
   after: async ({ server }: { server: Server }) => {
     await server.shutdown();

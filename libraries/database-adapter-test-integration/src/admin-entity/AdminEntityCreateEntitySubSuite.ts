@@ -166,7 +166,7 @@ async function createEntity_publishWithSubjectAuthKey({ client }: AdminEntityTes
       entity: expectedEntity,
     });
 
-    const getResult = await client.getEntity({ id, authKeys: ['subject'] });
+    const getResult = await client.getEntity({ id });
     assertResultValue(getResult, expectedEntity);
   }
 }

@@ -3,6 +3,10 @@ import { assertErrorResult, assertOkResult, assertResultValue } from '../Asserts
 import type { UnboundTestFunction } from '../Builder';
 import type { AdminEntityTestContext } from './AdminEntityTestSuite';
 import { TITLE_ONLY_CREATE } from '../shared-entity/Fixtures';
+import {
+  adminClientForMainPrincipal,
+  adminClientForSecondaryPrincipal,
+} from '../shared-entity/TestClients';
 
 export const GetEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
   getEntity_withSubjectAuthKey,
@@ -20,7 +24,7 @@ async function getEntity_withSubjectAuthKey({ client }: AdminEntityTestContext) 
       entity: { id },
     } = createResult.value;
 
-    const getResult = await client.getEntity({ id, authKeys: ['subject'] });
+    const getResult = await client.getEntity({ id });
     assertResultValue(getResult, createResult.value.entity);
   }
 }
@@ -46,8 +50,8 @@ async function getEntity_errorInvalidVersion({ client }: AdminEntityTestContext)
   }
 }
 
-async function getEntity_errorWrongAuthKey({ client }: AdminEntityTestContext) {
-  const createResult = await client.createEntity(
+async function getEntity_errorWrongAuthKey({ server }: AdminEntityTestContext) {
+  const createResult = await adminClientForMainPrincipal(server).createEntity(
     copyEntity(TITLE_ONLY_CREATE, {
       info: { authKey: 'subject' },
     })
@@ -58,7 +62,7 @@ async function getEntity_errorWrongAuthKey({ client }: AdminEntityTestContext) {
       entity: { id },
     } = createResult.value;
 
-    const getResult = await client.getEntity({ id, authKeys: ['none'] });
+    const getResult = await adminClientForSecondaryPrincipal(server).getEntity({ id });
     assertErrorResult(getResult, ErrorType.NotAuthorized, 'Wrong authKey provided');
   }
 }
