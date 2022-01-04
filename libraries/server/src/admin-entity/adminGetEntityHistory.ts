@@ -7,7 +7,7 @@ import type {
 import { ok } from '@jonasb/datadata-core';
 import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
 import type { AuthorizationAdapter, SessionContext } from '..';
-import { authVerifyAuthorizationKey2 } from '../Auth';
+import { authVerifyAuthorizationKey } from '../Auth';
 
 export async function adminGetEntityHistory(
   databaseAdapter: DatabaseAdapter,
@@ -28,7 +28,7 @@ export async function adminGetEntityHistory(
   const { entityInternalId, entityVersionInternalId, authKey, resolvedAuthKey } =
     entityInfoResult.value;
 
-  const authResult = await authVerifyAuthorizationKey2(authorizationAdapter, context, {
+  const authResult = await authVerifyAuthorizationKey(authorizationAdapter, context, {
     authKey,
     resolvedAuthKey,
   });

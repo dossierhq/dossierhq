@@ -9,7 +9,7 @@ import type {
 import { ok } from '@jonasb/datadata-core';
 import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
 import type { AuthorizationAdapter, SessionContext } from '..';
-import { authVerifyAuthorizationKey2 } from '../Auth';
+import { authVerifyAuthorizationKey } from '../Auth';
 import { decodeAdminEntity } from '../EntityCodec';
 
 export async function adminGetEntity(
@@ -28,7 +28,7 @@ export async function adminGetEntity(
   }
   const entityValues = getResult.value;
 
-  const authResult = await authVerifyAuthorizationKey2(authorizationAdapter, context, {
+  const authResult = await authVerifyAuthorizationKey(authorizationAdapter, context, {
     authKey: entityValues.authKey,
     resolvedAuthKey: entityValues.resolvedAuthKey,
   });

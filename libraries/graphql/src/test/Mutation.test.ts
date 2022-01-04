@@ -2464,7 +2464,7 @@ describe('archiveEntity()', () => {
           }
         `,
         contextValue: createContext(),
-        variableValues: { id, authKeys: ['none'] },
+        variableValues: { id },
       })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
       expect(result).toMatchInlineSnapshot(`
         Object {
@@ -2594,7 +2594,7 @@ describe('unarchiveEntity()', () => {
           }
         `,
         contextValue: createContext(),
-        variableValues: { id, authKeys: ['none'] },
+        variableValues: { id },
       })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
       expect(result).toMatchInlineSnapshot(`
         Object {

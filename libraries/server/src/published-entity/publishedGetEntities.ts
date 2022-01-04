@@ -12,7 +12,7 @@ import type {
   DatabasePublishedEntityGetOnePayload,
 } from '@jonasb/datadata-database-adapter';
 import type { AuthorizationAdapter, SessionContext } from '..';
-import { authVerifyAuthorizationKey2 } from '../Auth';
+import { authVerifyAuthorizationKey } from '../Auth';
 import { decodePublishedEntity } from '../EntityCodec';
 
 /**
@@ -71,7 +71,7 @@ async function mapItem(
     return notOk.NotFound('No such entity');
   }
 
-  const authResult = await authVerifyAuthorizationKey2(authorizationAdapter, context, {
+  const authResult = await authVerifyAuthorizationKey(authorizationAdapter, context, {
     authKey: values.authKey,
     resolvedAuthKey: values.resolvedAuthKey,
   });

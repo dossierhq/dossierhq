@@ -1165,7 +1165,6 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
           fieldType = GraphQLBoolean;
           break;
         case FieldType.EntityType:
-          //TODO ability to specify authKeys?
           fieldType = this.getOrCreateEntityUnion(isAdmin, fieldSpec.entityTypes ?? []);
           break;
         case FieldType.Location:
