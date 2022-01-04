@@ -132,7 +132,7 @@ export interface AdminClient {
   >;
 
   unpublishEntities(
-    references: EntityReferenceWithAuthKeys[]
+    references: EntityReference[]
   ): PromiseResult<
     AdminEntityUnpublishPayload[],
     ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic

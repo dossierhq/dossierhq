@@ -11,6 +11,7 @@ import type {
   AdminEntityUpsert,
   AdminEntityUpsertPayload,
   AdminSchema,
+  EntityReference,
   EntityReferenceWithAuthKeys,
   EntityVersionReference,
 } from '@jonasb/datadata-core';
@@ -83,7 +84,7 @@ export async function publishEntities<TContext extends SessionGraphQLContext>(
 
 export async function unpublishEntities<TContext extends SessionGraphQLContext>(
   context: TContext,
-  references: EntityReferenceWithAuthKeys[]
+  references: EntityReference[]
 ): Promise<AdminEntityUnpublishPayload[]> {
   const adminClient = getAdminClient(context);
   const result = await adminClient.unpublishEntities(references);

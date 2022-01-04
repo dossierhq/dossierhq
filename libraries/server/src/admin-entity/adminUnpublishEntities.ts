@@ -1,6 +1,6 @@
 import type {
   AdminEntityUnpublishPayload,
-  EntityReferenceWithAuthKeys,
+  EntityReference,
   ErrorType,
   PromiseResult,
 } from '@jonasb/datadata-core';
@@ -14,14 +14,13 @@ import {
 import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
 import type { Temporal } from '@js-temporal/polyfill';
 import type { AuthorizationAdapter, SessionContext } from '..';
-import { authVerifyAuthorizationKey } from '../Auth';
+import { authVerifyAuthorizationKey2 } from '../Auth';
 import { checkUUIDsAreUnique } from './AdminEntityMutationUtils';
 
 interface EntityInfoToBeUnpublished {
   effect: 'unpublished';
   id: string;
   entityInternalId: unknown;
-  referenceAuthKeys: string[] | undefined;
   authKey: string;
   resolvedAuthKey: string;
 }
@@ -29,7 +28,6 @@ interface EntityInfoToBeUnpublished {
 interface EntityInfoAlreadyUnpublished {
   effect: 'none';
   id: string;
-  referenceAuthKeys: string[] | undefined;
   authKey: string;
   resolvedAuthKey: string;
   status: AdminEntityStatus;
@@ -40,7 +38,7 @@ export async function adminUnpublishEntities(
   databaseAdapter: DatabaseAdapter,
   authorizationAdapter: AuthorizationAdapter,
   context: SessionContext,
-  references: EntityReferenceWithAuthKeys[]
+  references: EntityReference[]
 ): PromiseResult<
   AdminEntityUnpublishPayload[],
   ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
@@ -63,12 +61,10 @@ export async function adminUnpublishEntities(
 
     // Step 2: Check authKeys
     for (const entityInfo of entitiesInfo) {
-      const authResult = await authVerifyAuthorizationKey(
-        authorizationAdapter,
-        context,
-        entityInfo.referenceAuthKeys,
-        { authKey: entityInfo.authKey, resolvedAuthKey: entityInfo.resolvedAuthKey }
-      );
+      const authResult = await authVerifyAuthorizationKey2(authorizationAdapter, context, {
+        authKey: entityInfo.authKey,
+        resolvedAuthKey: entityInfo.resolvedAuthKey,
+      });
       if (authResult.isError()) {
         return createErrorResult(
           authResult.error,
@@ -116,7 +112,7 @@ export async function adminUnpublishEntities(
 async function collectEntityInfo(
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  references: EntityReferenceWithAuthKeys[]
+  references: EntityReference[]
 ): PromiseResult<
   (EntityInfoToBeUnpublished | EntityInfoAlreadyUnpublished)[],
   ErrorType.NotFound | ErrorType.Generic
@@ -131,7 +127,6 @@ async function collectEntityInfo(
       const shared = {
         id: it.id,
         entityInternalId: it.entityInternalId,
-        referenceAuthKeys: references.find(({ id }) => id === it.id)?.authKeys,
         authKey: it.authKey,
         resolvedAuthKey: it.resolvedAuthKey,
       };

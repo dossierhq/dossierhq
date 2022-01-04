@@ -8,7 +8,7 @@ import type {
   AdminQuery,
   AdminSchema,
   AdminValueTypeSpecification,
-  EntityReferenceWithAuthKeys,
+  EntityReference,
   EntityVersionReference,
   ErrorType,
   PublishedClient,
@@ -753,13 +753,12 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       })
     );
 
-    // EntityReferenceWithAuthKeysInput
+    // EntityReferenceInput
     this.addType(
       new GraphQLInputObjectType({
-        name: 'EntityReferenceWithAuthKeysInput',
+        name: 'EntityReferenceInput',
         fields: {
           id: { type: new GraphQLNonNull(GraphQLID) },
-          authKeys: { type: new GraphQLList(new GraphQLNonNull(GraphQLString)) },
         },
       })
     );
@@ -1600,14 +1599,12 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
   }
 
   buildMutationUnpublishEntities<TSource>(): GraphQLFieldConfig<TSource, TContext> {
-    return fieldConfigWithArgs<TSource, TContext, { references: EntityReferenceWithAuthKeys[] }>({
+    return fieldConfigWithArgs<TSource, TContext, { references: EntityReference[] }>({
       type: new GraphQLList(new GraphQLNonNull(this.getOutputType('AdminEntityUnpublishPayload'))),
       args: {
         references: {
           type: new GraphQLNonNull(
-            new GraphQLList(
-              new GraphQLNonNull(this.getInputType('EntityReferenceWithAuthKeysInput'))
-            )
+            new GraphQLList(new GraphQLNonNull(this.getInputType('EntityReferenceInput')))
           ),
         },
       },
