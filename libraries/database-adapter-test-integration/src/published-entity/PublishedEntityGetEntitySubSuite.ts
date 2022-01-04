@@ -2,6 +2,10 @@ import { copyEntity, ErrorType } from '@jonasb/datadata-core';
 import { assertErrorResult, assertOkResult, assertResultValue } from '../Asserts';
 import type { UnboundTestFunction } from '../Builder';
 import { TITLE_ONLY_CREATE, TITLE_ONLY_PUBLISHED_ENTITY } from '../shared-entity/Fixtures';
+import {
+  adminClientForMainPrincipal,
+  publishedClientForSecondaryPrincipal,
+} from '../shared-entity/TestClients';
 import type { PublishedEntityTestContext } from './PublishedEntityTestSuite';
 
 export const GetEntitySubSuite: UnboundTestFunction<PublishedEntityTestContext>[] = [
@@ -26,7 +30,7 @@ async function getEntity_withSubjectAuthKey({
       },
     } = createResult.value;
 
-    const getResult = await publishedClient.getEntity({ id, authKeys: ['subject'] });
+    const getResult = await publishedClient.getEntity({ id });
     assertResultValue(
       getResult,
       copyEntity(TITLE_ONLY_PUBLISHED_ENTITY, {
@@ -42,11 +46,8 @@ async function getEntity_errorInvalidId({ publishedClient }: PublishedEntityTest
   assertErrorResult(result, ErrorType.NotFound, 'No such entity');
 }
 
-async function getEntity_errorWrongAuthKey({
-  adminClient,
-  publishedClient,
-}: PublishedEntityTestContext) {
-  const createResult = await adminClient.createEntity(
+async function getEntity_errorWrongAuthKey({ server }: PublishedEntityTestContext) {
+  const createResult = await adminClientForMainPrincipal(server).createEntity(
     copyEntity(TITLE_ONLY_CREATE, {
       info: { authKey: 'subject' },
     }),
@@ -58,7 +59,7 @@ async function getEntity_errorWrongAuthKey({
       entity: { id },
     } = createResult.value;
 
-    const getResult = await publishedClient.getEntity({ id, authKeys: ['none'] });
+    const getResult = await publishedClientForSecondaryPrincipal(server).getEntity({ id });
     assertErrorResult(getResult, ErrorType.NotAuthorized, 'Wrong authKey provided');
   }
 }

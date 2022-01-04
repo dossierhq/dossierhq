@@ -103,7 +103,30 @@ export async function authVerifyAuthorizationKey(
 
   for (const expectedAuthKey of resolveResult.value) {
     if (
-      expectedAuthKey.authKey === actualAuthKey.authKey ||
+      expectedAuthKey.authKey === actualAuthKey.authKey &&
+      expectedAuthKey.resolvedAuthKey === actualAuthKey.resolvedAuthKey
+    ) {
+      return ok(undefined);
+    }
+  }
+  return notOk.NotAuthorized('Wrong authKey provided');
+}
+
+export async function authVerifyAuthorizationKey2(
+  authorizationAdapter: AuthorizationAdapter,
+  context: SessionContext,
+  actualAuthKey: ResolvedAuthKey
+): PromiseResult<void, ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic> {
+  const resolveResult = await authResolveAuthorizationKeys(authorizationAdapter, context, [
+    actualAuthKey.authKey,
+  ]);
+  if (resolveResult.isError()) {
+    return resolveResult;
+  }
+
+  for (const expectedAuthKey of resolveResult.value) {
+    if (
+      expectedAuthKey.authKey === actualAuthKey.authKey &&
       expectedAuthKey.resolvedAuthKey === actualAuthKey.resolvedAuthKey
     ) {
       return ok(undefined);

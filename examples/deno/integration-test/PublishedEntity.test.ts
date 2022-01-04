@@ -23,7 +23,7 @@ registerTestSuite(createPublishedEntityTestSuite({
     const adminClient = server.createAdminClient(context);
     const publishedClient = server.createPublishedClient(context);
 
-    return [{ adminClient, publishedClient }, { server }];
+    return [{ server, adminClient, publishedClient }, { server }];
   },
   after: async ({ server }: { server: Server }) => {
     await server.shutdown();
