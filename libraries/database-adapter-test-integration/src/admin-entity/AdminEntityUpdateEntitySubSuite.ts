@@ -2,7 +2,11 @@ import { AdminEntityStatus, copyEntity, ErrorType } from '@jonasb/datadata-core'
 import { assertErrorResult, assertOkResult, assertResultValue } from '../Asserts';
 import type { UnboundTestFunction } from '../Builder';
 import type { AdminEntityTestContext } from './AdminEntityTestSuite';
-import { TITLE_ONLY_CREATE } from '../shared-entity/Fixtures';
+import {
+  REFERENCES_ADMIN_ENTITY,
+  REFERENCES_CREATE,
+  TITLE_ONLY_CREATE,
+} from '../shared-entity/Fixtures';
 
 export const UpdateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
   updateEntity_minimal,
@@ -12,6 +16,7 @@ export const UpdateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
   updateEntity_updateAndPublishEntityWithSubjectAuthKey,
   updateEntity_noChangeAndPublishDraftEntity,
   updateEntity_noChangeAndPublishPublishedEntity,
+  updateEntity_withTwoReferences,
   updateEntity_errorWhenNotSpecifyingSubjectAuthKey,
   updateEntity_errorPublishWithoutRequiredTitle,
 ];
@@ -241,6 +246,66 @@ async function updateEntity_noChangeAndPublishPublishedEntity({ client }: AdminE
         effect: 'none',
         entity: createResult.value.entity,
       });
+    }
+  }
+}
+
+async function updateEntity_withTwoReferences({ client }: AdminEntityTestContext) {
+  const createResult = await client.createEntity(REFERENCES_CREATE);
+  const createTitleOnly1Result = await client.createEntity(TITLE_ONLY_CREATE);
+  const createTitleOnly2Result = await client.createEntity(TITLE_ONLY_CREATE);
+  if (
+    assertOkResult(createResult) &&
+    assertOkResult(createTitleOnly1Result) &&
+    assertOkResult(createTitleOnly2Result)
+  ) {
+    const {
+      entity: {
+        id,
+        info: { name, createdAt },
+      },
+    } = createResult.value;
+    const {
+      entity: { id: idTitleOnly1 },
+    } = createTitleOnly1Result.value;
+    const {
+      entity: { id: idTitleOnly2 },
+    } = createTitleOnly2Result.value;
+
+    const updateResult = await client.updateEntity({
+      id,
+      fields: { any: { id: idTitleOnly1 }, titleOnly: { id: idTitleOnly2 } },
+    });
+
+    if (assertOkResult(updateResult)) {
+      const {
+        entity: {
+          id,
+          info: { updatedAt },
+        },
+      } = updateResult.value;
+
+      const expectedEntity = copyEntity(REFERENCES_ADMIN_ENTITY, {
+        id,
+        info: {
+          name,
+          createdAt,
+          updatedAt,
+          version: 1,
+        },
+        fields: {
+          any: { id: idTitleOnly1 },
+          titleOnly: { id: idTitleOnly2 },
+        },
+      });
+
+      assertResultValue(updateResult, {
+        effect: 'updated',
+        entity: expectedEntity,
+      });
+
+      const getResult = await client.getEntity({ id });
+      assertResultValue(getResult, expectedEntity);
     }
   }
 }
