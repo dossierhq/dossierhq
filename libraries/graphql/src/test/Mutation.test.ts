@@ -2444,8 +2444,8 @@ describe('archiveEntity()', () => {
   });
 
   test('Error: Wrong authKey', async () => {
-    const { adminClient } = server;
-    const createResult = await adminClient.createEntity({
+    const { adminClientOther } = server;
+    const createResult = await adminClientOther.createEntity({
       info: { type: 'MutationFoo', name: 'Howdy name', authKey: 'subject' },
       fields: { title: 'Howdy title', summary: 'Howdy summary' },
     });
@@ -2457,8 +2457,8 @@ describe('archiveEntity()', () => {
       const result = (await graphql({
         schema,
         source: `
-          mutation ArchiveEntity($id: ID!, $authKeys: [String!]) {
-            archiveEntity(id: $id, authKeys: $authKeys) {
+          mutation ArchiveEntity($id: ID!) {
+            archiveEntity(id: $id) {
               id
             }
           }
@@ -2574,8 +2574,8 @@ describe('unarchiveEntity()', () => {
   });
 
   test('Error: Wrong authKey', async () => {
-    const { adminClient } = server;
-    const createResult = await adminClient.createEntity({
+    const { adminClientOther } = server;
+    const createResult = await adminClientOther.createEntity({
       info: { type: 'MutationFoo', name: 'Howdy name', authKey: 'subject' },
       fields: { title: 'Howdy title', summary: 'Howdy summary' },
     });
@@ -2587,8 +2587,8 @@ describe('unarchiveEntity()', () => {
       const result = (await graphql({
         schema,
         source: `
-          mutation UnarchiveEntity($id: ID!, $authKeys: [String!]) {
-            unarchiveEntity(id: $id, authKeys: $authKeys) {
+          mutation UnarchiveEntity($id: ID!) {
+            unarchiveEntity(id: $id) {
               id
             }
           }

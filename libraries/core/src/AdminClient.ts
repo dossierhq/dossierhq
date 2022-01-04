@@ -139,14 +139,14 @@ export interface AdminClient {
   >;
 
   archiveEntity(
-    reference: EntityReferenceWithAuthKeys
+    reference: EntityReference
   ): PromiseResult<
     AdminEntityArchivePayload,
     ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
   >;
 
   unarchiveEntity(
-    reference: EntityReferenceWithAuthKeys
+    reference: EntityReference
   ): PromiseResult<
     AdminEntityUnarchivePayload,
     ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic

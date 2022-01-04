@@ -1616,29 +1616,27 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
   }
 
   buildMutationArchiveEntity<TSource>(): GraphQLFieldConfig<TSource, TContext> {
-    return fieldConfigWithArgs<TSource, TContext, { id: string; authKeys: string[] | null }>({
+    return fieldConfigWithArgs<TSource, TContext, { id: string }>({
       type: this.getOutputType('AdminEntityArchivePayload'),
       args: {
         id: { type: new GraphQLNonNull(GraphQLID) },
-        authKeys: { type: new GraphQLList(new GraphQLNonNull(GraphQLString)) },
       },
       resolve: async (_source, args, context, _info) => {
-        const { id, authKeys } = args;
-        return await Mutations.archiveEntity(context, { id, authKeys: authKeys ?? undefined });
+        const { id } = args;
+        return await Mutations.archiveEntity(context, { id });
       },
     });
   }
 
   buildMutationUnarchiveEntity<TSource>(): GraphQLFieldConfig<TSource, TContext> {
-    return fieldConfigWithArgs<TSource, TContext, { id: string; authKeys: string[] | null }>({
+    return fieldConfigWithArgs<TSource, TContext, { id: string }>({
       type: this.getOutputType('AdminEntityUnarchivePayload'),
       args: {
         id: { type: new GraphQLNonNull(GraphQLID) },
-        authKeys: { type: new GraphQLList(new GraphQLNonNull(GraphQLString)) },
       },
       resolve: async (_source, args, context, _info) => {
-        const { id, authKeys } = args;
-        return await Mutations.unarchiveEntity(context, { id, authKeys: authKeys ?? undefined });
+        const { id } = args;
+        return await Mutations.unarchiveEntity(context, { id });
       },
     });
   }
