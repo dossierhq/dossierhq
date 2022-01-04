@@ -355,7 +355,7 @@ type Query {
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
-  entityHistory(id: ID!, authKeys: [String!]): EntityHistory
+  entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!, authKeys: [String!]): PublishingHistory
 }
 
@@ -912,7 +912,7 @@ type Query {
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
-  entityHistory(id: ID!, authKeys: [String!]): EntityHistory
+  entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!, authKeys: [String!]): PublishingHistory
 }
 
@@ -1301,7 +1301,7 @@ type Query {
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
-  entityHistory(id: ID!, authKeys: [String!]): EntityHistory
+  entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!, authKeys: [String!]): PublishingHistory
 }
 
@@ -1815,7 +1815,7 @@ type Query {
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
-  entityHistory(id: ID!, authKeys: [String!]): EntityHistory
+  entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!, authKeys: [String!]): PublishingHistory
 }
 
@@ -2202,7 +2202,7 @@ type Query {
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
-  entityHistory(id: ID!, authKeys: [String!]): EntityHistory
+  entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!, authKeys: [String!]): PublishingHistory
 }
 
@@ -2804,7 +2804,7 @@ type Query {
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
-  entityHistory(id: ID!, authKeys: [String!]): EntityHistory
+  entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!, authKeys: [String!]): PublishingHistory
 }
 
@@ -3091,7 +3091,7 @@ type Query {
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
-  entityHistory(id: ID!, authKeys: [String!]): EntityHistory
+  entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!, authKeys: [String!]): PublishingHistory
 }
 
@@ -3520,7 +3520,7 @@ type Query {
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
-  entityHistory(id: ID!, authKeys: [String!]): EntityHistory
+  entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!, authKeys: [String!]): PublishingHistory
 }
 
@@ -3836,7 +3836,7 @@ type Query {
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
-  entityHistory(id: ID!, authKeys: [String!]): EntityHistory
+  entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!, authKeys: [String!]): PublishingHistory
 }
 
@@ -4340,7 +4340,7 @@ type Query {
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
-  entityHistory(id: ID!, authKeys: [String!]): EntityHistory
+  entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!, authKeys: [String!]): PublishingHistory
 }
 
@@ -4633,7 +4633,7 @@ type Query {
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
-  entityHistory(id: ID!, authKeys: [String!]): EntityHistory
+  entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!, authKeys: [String!]): PublishingHistory
 }
 
@@ -5084,7 +5084,7 @@ type Query {
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
-  entityHistory(id: ID!, authKeys: [String!]): EntityHistory
+  entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!, authKeys: [String!]): PublishingHistory
 }
 
@@ -5431,7 +5431,7 @@ type Query {
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
-  entityHistory(id: ID!, authKeys: [String!]): EntityHistory
+  entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!, authKeys: [String!]): PublishingHistory
 }
 
@@ -5967,7 +5967,7 @@ type Query {
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
-  entityHistory(id: ID!, authKeys: [String!]): EntityHistory
+  entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!, authKeys: [String!]): PublishingHistory
 }
 
@@ -6367,7 +6367,7 @@ type Query {
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
-  entityHistory(id: ID!, authKeys: [String!]): EntityHistory
+  entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!, authKeys: [String!]): PublishingHistory
 }
 
@@ -7017,7 +7017,7 @@ type Query {
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
-  entityHistory(id: ID!, authKeys: [String!]): EntityHistory
+  entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!, authKeys: [String!]): PublishingHistory
 }
 
