@@ -1,4 +1,5 @@
 import type { AdminClient } from '@jonasb/datadata-core';
+import type { Server } from '@jonasb/datadata-server';
 import type { TestFunctionInitializer, TestSuite } from '..';
 import { buildSuite } from '../Builder';
 import { ArchiveEntitySubSuite } from './AdminEntityArchiveEntitySubSuite';
@@ -11,6 +12,7 @@ import { UpdateEntitySubSuite } from './AdminEntityUpdateEntitySubSuite';
 import { UpsertEntitySubSuite } from './AdminEntityUpsertEntitySubSuite';
 
 export interface AdminEntityTestContext {
+  server: Server;
   client: AdminClient;
 }
 

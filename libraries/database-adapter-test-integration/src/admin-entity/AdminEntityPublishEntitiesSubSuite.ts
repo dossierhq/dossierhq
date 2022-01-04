@@ -71,7 +71,7 @@ async function publishEntities_minimalWithSubjectAuthKey({ client }: AdminEntity
         info: { status: AdminEntityStatus.published, updatedAt },
       });
 
-      const getResult = await client.getEntity({ id, authKeys: ['subject'] });
+      const getResult = await client.getEntity({ id });
       assertResultValue(getResult, expectedEntity);
     }
   }

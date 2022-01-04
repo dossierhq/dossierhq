@@ -352,7 +352,7 @@ input AdminValueTwoInput {
 }
 
 type Query {
-  adminEntity(id: ID!, version: Int, authKeys: [String!]): AdminEntity
+  adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   entityHistory(id: ID!, authKeys: [String!]): EntityHistory
@@ -909,7 +909,7 @@ type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
   searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
-  adminEntity(id: ID!, version: Int, authKeys: [String!]): AdminEntity
+  adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   entityHistory(id: ID!, authKeys: [String!]): EntityHistory
@@ -1298,7 +1298,7 @@ type AdminBarUpsertPayload {
 }
 
 type Query {
-  adminEntity(id: ID!, version: Int, authKeys: [String!]): AdminEntity
+  adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   entityHistory(id: ID!, authKeys: [String!]): EntityHistory
@@ -1812,7 +1812,7 @@ type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
   searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
-  adminEntity(id: ID!, version: Int, authKeys: [String!]): AdminEntity
+  adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   entityHistory(id: ID!, authKeys: [String!]): EntityHistory
@@ -2199,7 +2199,7 @@ enum _AdminBarOrBazOrFoo {
 }
 
 type Query {
-  adminEntity(id: ID!, version: Int, authKeys: [String!]): AdminEntity
+  adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   entityHistory(id: ID!, authKeys: [String!]): EntityHistory
@@ -2801,7 +2801,7 @@ type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
   searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
-  adminEntity(id: ID!, version: Int, authKeys: [String!]): AdminEntity
+  adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   entityHistory(id: ID!, authKeys: [String!]): EntityHistory
@@ -3088,7 +3088,7 @@ type AdminFooUpsertPayload {
 }
 
 type Query {
-  adminEntity(id: ID!, version: Int, authKeys: [String!]): AdminEntity
+  adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   entityHistory(id: ID!, authKeys: [String!]): EntityHistory
@@ -3517,7 +3517,7 @@ type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
   searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
-  adminEntity(id: ID!, version: Int, authKeys: [String!]): AdminEntity
+  adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   entityHistory(id: ID!, authKeys: [String!]): EntityHistory
@@ -3833,7 +3833,7 @@ input AdminValueOneInput {
 }
 
 type Query {
-  adminEntity(id: ID!, version: Int, authKeys: [String!]): AdminEntity
+  adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   entityHistory(id: ID!, authKeys: [String!]): EntityHistory
@@ -4337,7 +4337,7 @@ type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
   searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
-  adminEntity(id: ID!, version: Int, authKeys: [String!]): AdminEntity
+  adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   entityHistory(id: ID!, authKeys: [String!]): EntityHistory
@@ -4630,7 +4630,7 @@ type AdminFooUpsertPayload {
 }
 
 type Query {
-  adminEntity(id: ID!, version: Int, authKeys: [String!]): AdminEntity
+  adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   entityHistory(id: ID!, authKeys: [String!]): EntityHistory
@@ -5081,7 +5081,7 @@ type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
   searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
-  adminEntity(id: ID!, version: Int, authKeys: [String!]): AdminEntity
+  adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   entityHistory(id: ID!, authKeys: [String!]): EntityHistory
@@ -5428,7 +5428,7 @@ type AdminBarUpsertPayload {
 }
 
 type Query {
-  adminEntity(id: ID!, version: Int, authKeys: [String!]): AdminEntity
+  adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   entityHistory(id: ID!, authKeys: [String!]): EntityHistory
@@ -5964,7 +5964,7 @@ type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
   searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
-  adminEntity(id: ID!, version: Int, authKeys: [String!]): AdminEntity
+  adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   entityHistory(id: ID!, authKeys: [String!]): EntityHistory
@@ -6364,7 +6364,7 @@ enum _AdminValueListOrValueOne {
 }
 
 type Query {
-  adminEntity(id: ID!, version: Int, authKeys: [String!]): AdminEntity
+  adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   entityHistory(id: ID!, authKeys: [String!]): EntityHistory
@@ -7014,7 +7014,7 @@ type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
   searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
-  adminEntity(id: ID!, version: Int, authKeys: [String!]): AdminEntity
+  adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   entityHistory(id: ID!, authKeys: [String!]): EntityHistory

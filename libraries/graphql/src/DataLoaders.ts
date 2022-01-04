@@ -51,7 +51,7 @@ interface Edge<T> {
   cursor: string;
 }
 
-export async function loadEntity<TContext extends SessionGraphQLContext>(
+export async function loadPublishedEntity<TContext extends SessionGraphQLContext>(
   schema: PublishedSchema,
   context: TContext,
   id: string
@@ -64,7 +64,7 @@ export async function loadEntity<TContext extends SessionGraphQLContext>(
   return buildResolversForEntity(schema, result.value);
 }
 
-export async function loadEntities<TContext extends SessionGraphQLContext>(
+export async function loadPublishedEntities<TContext extends SessionGraphQLContext>(
   schema: PublishedSchema,
   context: TContext,
   ids: string[]
@@ -142,13 +142,11 @@ export async function loadAdminEntity<TContext extends SessionGraphQLContext>(
   schema: AdminSchema,
   context: TContext,
   id: string,
-  version: number | undefined | null,
-  authKeys: string[] | undefined | null
+  version: number | undefined | null
 ): Promise<AdminEntity> {
   const adminClient = getAdminClient(context);
   const reference = {
     id,
-    authKeys: authKeys ?? undefined,
     ...(typeof version === 'number' ? { version } : {}),
   };
   const result = await adminClient.getEntity(reference);
@@ -244,21 +242,20 @@ function resolveFields<TContext extends SessionGraphQLContext>(
             : (_args: undefined, context: TContext, _info: unknown) => {
                 return isAdmin
                   ? loadAdminEntities(schema as AdminSchema, context, ids)
-                  : loadEntities(schema, context, ids);
+                  : loadPublishedEntities(schema, context, ids);
               },
       };
     } else if (isEntityTypeField(fieldSpec, value) && value) {
-      //TODO ability to specify authKeys?
       fields[fieldSpec.name] = (_args: undefined, context: TContext, _info: unknown) =>
         isAdmin
-          ? loadAdminEntity(schema as AdminSchema, context, value.id, null, undefined)
-          : loadEntity(schema, context, value.id);
+          ? loadAdminEntity(schema as AdminSchema, context, value.id, null)
+          : loadPublishedEntity(schema, context, value.id);
     } else if (isEntityTypeListField(fieldSpec, value) && value && value.length > 0) {
       fields[fieldSpec.name] = (_args: undefined, context: TContext, _info: unknown) => {
         const ids = value.map((x) => x.id);
         return isAdmin
           ? loadAdminEntities(schema as AdminSchema, context, ids)
-          : loadEntities(schema, context, ids);
+          : loadPublishedEntities(schema, context, ids);
       };
     } else if (isValueTypeField(fieldSpec, value) && value) {
       fields[fieldSpec.name] = buildResolversForValue(schema, value, isAdmin);

@@ -1090,9 +1090,9 @@ GraphQL request:3:11
   });
 
   test('Error: Query using the wrong authKey', async () => {
-    const { adminClient } = server;
-    const createResult = await adminClient.createEntity({
-      info: { type: 'QueryAdminFoo', name: 'First name', authKey: 'none' },
+    const { adminClientOther } = server;
+    const createResult = await adminClientOther.createEntity({
+      info: { type: 'QueryAdminFoo', name: 'First name', authKey: 'subject' },
       fields: { title: 'First title', summary: 'First summary' },
     });
     if (expectOkResult(createResult)) {
@@ -1103,14 +1103,14 @@ GraphQL request:3:11
       const result = await graphql({
         schema,
         source: `
-        query AdminEntity($id: ID!, $authKeys: [String!]) {
-          adminEntity(id: $id, authKeys: $authKeys) {
+        query AdminEntity($id: ID!) {
+          adminEntity(id: $id) {
             id
           }
         }
       `,
         contextValue: createContext(),
-        variableValues: { id, authKeys: ['subject'] },
+        variableValues: { id },
       });
       expect(result.data).toEqual({
         adminEntity: null,
@@ -1120,8 +1120,8 @@ GraphQL request:3:11
         `NotAuthorized: Wrong authKey provided
 
 GraphQL request:3:11
-2 |         query AdminEntity($id: ID!, $authKeys: [String!]) {
-3 |           adminEntity(id: $id, authKeys: $authKeys) {
+2 |         query AdminEntity($id: ID!) {
+3 |           adminEntity(id: $id) {
   |           ^
 4 |             id`,
       ]);
