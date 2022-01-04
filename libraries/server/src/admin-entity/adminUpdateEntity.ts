@@ -65,7 +65,6 @@ export async function adminUpdateEntity(
           {
             id: updatedEntity.id,
             version: updatedEntity.info.version,
-            authKeys: [updatedEntity.info.authKey],
           }
         );
         if (publishResult.isError()) {
@@ -118,7 +117,6 @@ export async function adminUpdateEntity(
         {
           id: updatedEntity.id,
           version: updatedEntity.info.version,
-          authKeys: [updatedEntity.info.authKey],
         }
       );
       if (publishResult.isError()) {

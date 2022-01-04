@@ -1,7 +1,7 @@
 import type {
   AdminEntityPublishPayload,
   AdminSchema,
-  EntityVersionReferenceWithAuthKeys,
+  EntityVersionReference,
   PromiseResult,
 } from '@jonasb/datadata-core';
 import { ErrorType, notOk, ok } from '@jonasb/datadata-core';
@@ -16,7 +16,7 @@ export async function publishEntityAfterMutation(
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  reference: EntityVersionReferenceWithAuthKeys
+  reference: EntityVersionReference
 ): PromiseResult<
   AdminEntityPublishPayload,
   ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic

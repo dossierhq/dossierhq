@@ -12,7 +12,7 @@ import type {
   AdminEntityUpsertPayload,
   AdminSchema,
   EntityReferenceWithAuthKeys,
-  EntityVersionReferenceWithAuthKeys,
+  EntityVersionReference,
 } from '@jonasb/datadata-core';
 import type { SessionGraphQLContext } from '.';
 import { buildResolversForAdminEntity } from './DataLoaders';
@@ -71,7 +71,7 @@ export async function upsertEntity<TContext extends SessionGraphQLContext>(
 
 export async function publishEntities<TContext extends SessionGraphQLContext>(
   context: TContext,
-  references: EntityVersionReferenceWithAuthKeys[]
+  references: EntityVersionReference[]
 ): Promise<AdminEntityPublishPayload[]> {
   const adminClient = getAdminClient(context);
   const result = await adminClient.publishEntities(references);

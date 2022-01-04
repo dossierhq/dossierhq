@@ -35,22 +35,15 @@ export async function ensureEntityCount(
 
   for (let count = countResult.value; count < requestedCount; count += 1) {
     const random = String(Math.random()).slice(2);
-    const createResult = await client.createEntity({
-      info: { type: entityType, name: random, authKey },
-      fields: fieldProvider(random),
-    });
+    const createResult = await client.createEntity(
+      {
+        info: { type: entityType, name: random, authKey },
+        fields: fieldProvider(random),
+      },
+      { publish: true }
+    );
     if (createResult.isError()) {
       return createResult;
-    }
-    const {
-      entity: {
-        id,
-        info: { version },
-      },
-    } = createResult.value;
-    const publishResult = await client.publishEntities([{ id, version, authKeys: [authKey] }]);
-    if (publishResult.isError()) {
-      return publishResult;
     }
   }
   return ok(undefined);

@@ -142,10 +142,9 @@ input EntityReferenceWithAuthKeysInput {
   authKeys: [String!]
 }
 
-input EntityVersionReferenceWithAuthKeysInput {
+input EntityVersionReferenceInput {
   id: ID!
   version: Int!
-  authKeys: [String!]
 }
 
 interface AdminValue {
@@ -360,7 +359,7 @@ type Query {
 }
 
 type Mutation {
-  publishEntities(references: [EntityVersionReferenceWithAuthKeysInput!]!): [AdminEntityPublishPayload!]
+  publishEntities(references: [EntityVersionReferenceInput!]!): [AdminEntityPublishPayload!]
   unpublishEntities(references: [EntityReferenceWithAuthKeysInput!]!): [AdminEntityUnpublishPayload!]
   archiveEntity(id: ID!, authKeys: [String!]): AdminEntityArchivePayload
   unarchiveEntity(id: ID!, authKeys: [String!]): AdminEntityUnarchivePayload
@@ -701,10 +700,9 @@ input EntityReferenceWithAuthKeysInput {
   authKeys: [String!]
 }
 
-input EntityVersionReferenceWithAuthKeysInput {
+input EntityVersionReferenceInput {
   id: ID!
   version: Int!
-  authKeys: [String!]
 }
 
 interface AdminValue {
@@ -917,7 +915,7 @@ type Query {
 }
 
 type Mutation {
-  publishEntities(references: [EntityVersionReferenceWithAuthKeysInput!]!): [AdminEntityPublishPayload!]
+  publishEntities(references: [EntityVersionReferenceInput!]!): [AdminEntityPublishPayload!]
   unpublishEntities(references: [EntityReferenceWithAuthKeysInput!]!): [AdminEntityUnpublishPayload!]
   archiveEntity(id: ID!, authKeys: [String!]): AdminEntityArchivePayload
   unarchiveEntity(id: ID!, authKeys: [String!]): AdminEntityUnarchivePayload
@@ -1118,10 +1116,9 @@ input EntityReferenceWithAuthKeysInput {
   authKeys: [String!]
 }
 
-input EntityVersionReferenceWithAuthKeysInput {
+input EntityVersionReferenceInput {
   id: ID!
   version: Int!
-  authKeys: [String!]
 }
 
 type AdminRichText {
@@ -1306,7 +1303,7 @@ type Query {
 }
 
 type Mutation {
-  publishEntities(references: [EntityVersionReferenceWithAuthKeysInput!]!): [AdminEntityPublishPayload!]
+  publishEntities(references: [EntityVersionReferenceInput!]!): [AdminEntityPublishPayload!]
   unpublishEntities(references: [EntityReferenceWithAuthKeysInput!]!): [AdminEntityUnpublishPayload!]
   archiveEntity(id: ID!, authKeys: [String!]): AdminEntityArchivePayload
   unarchiveEntity(id: ID!, authKeys: [String!]): AdminEntityUnarchivePayload
@@ -1634,10 +1631,9 @@ input EntityReferenceWithAuthKeysInput {
   authKeys: [String!]
 }
 
-input EntityVersionReferenceWithAuthKeysInput {
+input EntityVersionReferenceInput {
   id: ID!
   version: Int!
-  authKeys: [String!]
 }
 
 type AdminRichText {
@@ -1820,7 +1816,7 @@ type Query {
 }
 
 type Mutation {
-  publishEntities(references: [EntityVersionReferenceWithAuthKeysInput!]!): [AdminEntityPublishPayload!]
+  publishEntities(references: [EntityVersionReferenceInput!]!): [AdminEntityPublishPayload!]
   unpublishEntities(references: [EntityReferenceWithAuthKeysInput!]!): [AdminEntityUnpublishPayload!]
   archiveEntity(id: ID!, authKeys: [String!]): AdminEntityArchivePayload
   unarchiveEntity(id: ID!, authKeys: [String!]): AdminEntityUnarchivePayload
@@ -1971,10 +1967,9 @@ input EntityReferenceWithAuthKeysInput {
   authKeys: [String!]
 }
 
-input EntityVersionReferenceWithAuthKeysInput {
+input EntityVersionReferenceInput {
   id: ID!
   version: Int!
-  authKeys: [String!]
 }
 
 type AdminRichText {
@@ -2207,7 +2202,7 @@ type Query {
 }
 
 type Mutation {
-  publishEntities(references: [EntityVersionReferenceWithAuthKeysInput!]!): [AdminEntityPublishPayload!]
+  publishEntities(references: [EntityVersionReferenceInput!]!): [AdminEntityPublishPayload!]
   unpublishEntities(references: [EntityReferenceWithAuthKeysInput!]!): [AdminEntityUnpublishPayload!]
   archiveEntity(id: ID!, authKeys: [String!]): AdminEntityArchivePayload
   unarchiveEntity(id: ID!, authKeys: [String!]): AdminEntityUnarchivePayload
@@ -2564,10 +2559,9 @@ input EntityReferenceWithAuthKeysInput {
   authKeys: [String!]
 }
 
-input EntityVersionReferenceWithAuthKeysInput {
+input EntityVersionReferenceInput {
   id: ID!
   version: Int!
-  authKeys: [String!]
 }
 
 type AdminRichText {
@@ -2809,7 +2803,7 @@ type Query {
 }
 
 type Mutation {
-  publishEntities(references: [EntityVersionReferenceWithAuthKeysInput!]!): [AdminEntityPublishPayload!]
+  publishEntities(references: [EntityVersionReferenceInput!]!): [AdminEntityPublishPayload!]
   unpublishEntities(references: [EntityReferenceWithAuthKeysInput!]!): [AdminEntityUnpublishPayload!]
   archiveEntity(id: ID!, authKeys: [String!]): AdminEntityArchivePayload
   unarchiveEntity(id: ID!, authKeys: [String!]): AdminEntityUnarchivePayload
@@ -2961,10 +2955,9 @@ input EntityReferenceWithAuthKeysInput {
   authKeys: [String!]
 }
 
-input EntityVersionReferenceWithAuthKeysInput {
+input EntityVersionReferenceInput {
   id: ID!
   version: Int!
-  authKeys: [String!]
 }
 
 type AdminRichText {
@@ -3096,7 +3089,7 @@ type Query {
 }
 
 type Mutation {
-  publishEntities(references: [EntityVersionReferenceWithAuthKeysInput!]!): [AdminEntityPublishPayload!]
+  publishEntities(references: [EntityVersionReferenceInput!]!): [AdminEntityPublishPayload!]
   unpublishEntities(references: [EntityReferenceWithAuthKeysInput!]!): [AdminEntityUnpublishPayload!]
   archiveEntity(id: ID!, authKeys: [String!]): AdminEntityArchivePayload
   unarchiveEntity(id: ID!, authKeys: [String!]): AdminEntityUnarchivePayload
@@ -3392,10 +3385,9 @@ input EntityReferenceWithAuthKeysInput {
   authKeys: [String!]
 }
 
-input EntityVersionReferenceWithAuthKeysInput {
+input EntityVersionReferenceInput {
   id: ID!
   version: Int!
-  authKeys: [String!]
 }
 
 type AdminRichText {
@@ -3525,7 +3517,7 @@ type Query {
 }
 
 type Mutation {
-  publishEntities(references: [EntityVersionReferenceWithAuthKeysInput!]!): [AdminEntityPublishPayload!]
+  publishEntities(references: [EntityVersionReferenceInput!]!): [AdminEntityPublishPayload!]
   unpublishEntities(references: [EntityReferenceWithAuthKeysInput!]!): [AdminEntityUnpublishPayload!]
   archiveEntity(id: ID!, authKeys: [String!]): AdminEntityArchivePayload
   unarchiveEntity(id: ID!, authKeys: [String!]): AdminEntityUnarchivePayload
@@ -3675,10 +3667,9 @@ input EntityReferenceWithAuthKeysInput {
   authKeys: [String!]
 }
 
-input EntityVersionReferenceWithAuthKeysInput {
+input EntityVersionReferenceInput {
   id: ID!
   version: Int!
-  authKeys: [String!]
 }
 
 interface AdminValue {
@@ -3841,7 +3832,7 @@ type Query {
 }
 
 type Mutation {
-  publishEntities(references: [EntityVersionReferenceWithAuthKeysInput!]!): [AdminEntityPublishPayload!]
+  publishEntities(references: [EntityVersionReferenceInput!]!): [AdminEntityPublishPayload!]
   unpublishEntities(references: [EntityReferenceWithAuthKeysInput!]!): [AdminEntityUnpublishPayload!]
   archiveEntity(id: ID!, authKeys: [String!]): AdminEntityArchivePayload
   unarchiveEntity(id: ID!, authKeys: [String!]): AdminEntityUnarchivePayload
@@ -4181,10 +4172,9 @@ input EntityReferenceWithAuthKeysInput {
   authKeys: [String!]
 }
 
-input EntityVersionReferenceWithAuthKeysInput {
+input EntityVersionReferenceInput {
   id: ID!
   version: Int!
-  authKeys: [String!]
 }
 
 interface AdminValue {
@@ -4345,7 +4335,7 @@ type Query {
 }
 
 type Mutation {
-  publishEntities(references: [EntityVersionReferenceWithAuthKeysInput!]!): [AdminEntityPublishPayload!]
+  publishEntities(references: [EntityVersionReferenceInput!]!): [AdminEntityPublishPayload!]
   unpublishEntities(references: [EntityReferenceWithAuthKeysInput!]!): [AdminEntityUnpublishPayload!]
   archiveEntity(id: ID!, authKeys: [String!]): AdminEntityArchivePayload
   unarchiveEntity(id: ID!, authKeys: [String!]): AdminEntityUnarchivePayload
@@ -4491,10 +4481,9 @@ input EntityReferenceWithAuthKeysInput {
   authKeys: [String!]
 }
 
-input EntityVersionReferenceWithAuthKeysInput {
+input EntityVersionReferenceInput {
   id: ID!
   version: Int!
-  authKeys: [String!]
 }
 
 type AdminRichText {
@@ -4638,7 +4627,7 @@ type Query {
 }
 
 type Mutation {
-  publishEntities(references: [EntityVersionReferenceWithAuthKeysInput!]!): [AdminEntityPublishPayload!]
+  publishEntities(references: [EntityVersionReferenceInput!]!): [AdminEntityPublishPayload!]
   unpublishEntities(references: [EntityReferenceWithAuthKeysInput!]!): [AdminEntityUnpublishPayload!]
   archiveEntity(id: ID!, authKeys: [String!]): AdminEntityArchivePayload
   unarchiveEntity(id: ID!, authKeys: [String!]): AdminEntityUnarchivePayload
@@ -4944,10 +4933,9 @@ input EntityReferenceWithAuthKeysInput {
   authKeys: [String!]
 }
 
-input EntityVersionReferenceWithAuthKeysInput {
+input EntityVersionReferenceInput {
   id: ID!
   version: Int!
-  authKeys: [String!]
 }
 
 type AdminRichText {
@@ -5089,7 +5077,7 @@ type Query {
 }
 
 type Mutation {
-  publishEntities(references: [EntityVersionReferenceWithAuthKeysInput!]!): [AdminEntityPublishPayload!]
+  publishEntities(references: [EntityVersionReferenceInput!]!): [AdminEntityPublishPayload!]
   unpublishEntities(references: [EntityReferenceWithAuthKeysInput!]!): [AdminEntityUnpublishPayload!]
   archiveEntity(id: ID!, authKeys: [String!]): AdminEntityArchivePayload
   unarchiveEntity(id: ID!, authKeys: [String!]): AdminEntityUnarchivePayload
@@ -5236,10 +5224,9 @@ input EntityReferenceWithAuthKeysInput {
   authKeys: [String!]
 }
 
-input EntityVersionReferenceWithAuthKeysInput {
+input EntityVersionReferenceInput {
   id: ID!
   version: Int!
-  authKeys: [String!]
 }
 
 type AdminRichText {
@@ -5436,7 +5423,7 @@ type Query {
 }
 
 type Mutation {
-  publishEntities(references: [EntityVersionReferenceWithAuthKeysInput!]!): [AdminEntityPublishPayload!]
+  publishEntities(references: [EntityVersionReferenceInput!]!): [AdminEntityPublishPayload!]
   unpublishEntities(references: [EntityReferenceWithAuthKeysInput!]!): [AdminEntityUnpublishPayload!]
   archiveEntity(id: ID!, authKeys: [String!]): AdminEntityArchivePayload
   unarchiveEntity(id: ID!, authKeys: [String!]): AdminEntityUnarchivePayload
@@ -5774,10 +5761,9 @@ input EntityReferenceWithAuthKeysInput {
   authKeys: [String!]
 }
 
-input EntityVersionReferenceWithAuthKeysInput {
+input EntityVersionReferenceInput {
   id: ID!
   version: Int!
-  authKeys: [String!]
 }
 
 type AdminRichText {
@@ -5972,7 +5958,7 @@ type Query {
 }
 
 type Mutation {
-  publishEntities(references: [EntityVersionReferenceWithAuthKeysInput!]!): [AdminEntityPublishPayload!]
+  publishEntities(references: [EntityVersionReferenceInput!]!): [AdminEntityPublishPayload!]
   unpublishEntities(references: [EntityReferenceWithAuthKeysInput!]!): [AdminEntityUnpublishPayload!]
   archiveEntity(id: ID!, authKeys: [String!]): AdminEntityArchivePayload
   unarchiveEntity(id: ID!, authKeys: [String!]): AdminEntityUnarchivePayload
@@ -6128,10 +6114,9 @@ input EntityReferenceWithAuthKeysInput {
   authKeys: [String!]
 }
 
-input EntityVersionReferenceWithAuthKeysInput {
+input EntityVersionReferenceInput {
   id: ID!
   version: Int!
-  authKeys: [String!]
 }
 
 interface AdminValue {
@@ -6372,7 +6357,7 @@ type Query {
 }
 
 type Mutation {
-  publishEntities(references: [EntityVersionReferenceWithAuthKeysInput!]!): [AdminEntityPublishPayload!]
+  publishEntities(references: [EntityVersionReferenceInput!]!): [AdminEntityPublishPayload!]
   unpublishEntities(references: [EntityReferenceWithAuthKeysInput!]!): [AdminEntityUnpublishPayload!]
   archiveEntity(id: ID!, authKeys: [String!]): AdminEntityArchivePayload
   unarchiveEntity(id: ID!, authKeys: [String!]): AdminEntityUnarchivePayload
@@ -6775,10 +6760,9 @@ input EntityReferenceWithAuthKeysInput {
   authKeys: [String!]
 }
 
-input EntityVersionReferenceWithAuthKeysInput {
+input EntityVersionReferenceInput {
   id: ID!
   version: Int!
-  authKeys: [String!]
 }
 
 interface AdminValue {
@@ -7022,7 +7006,7 @@ type Query {
 }
 
 type Mutation {
-  publishEntities(references: [EntityVersionReferenceWithAuthKeysInput!]!): [AdminEntityPublishPayload!]
+  publishEntities(references: [EntityVersionReferenceInput!]!): [AdminEntityPublishPayload!]
   unpublishEntities(references: [EntityReferenceWithAuthKeysInput!]!): [AdminEntityUnpublishPayload!]
   archiveEntity(id: ID!, authKeys: [String!]): AdminEntityArchivePayload
   unarchiveEntity(id: ID!, authKeys: [String!]): AdminEntityUnarchivePayload
