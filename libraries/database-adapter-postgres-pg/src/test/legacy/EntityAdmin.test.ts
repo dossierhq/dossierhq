@@ -37,6 +37,7 @@ import {
 let server: Server;
 let context: SessionContext;
 let client: AdminClient;
+let adminClientOther: AdminClient;
 let publishedClient: PublishedClient;
 let entitiesOfTypeAdminOnlyEditBeforeNone: AdminEntity[];
 let entitiesOfTypeAdminOnlyEditBeforeSubject: AdminEntity[];
@@ -72,6 +73,9 @@ beforeAll(async () => {
   server = result.value.server;
   context = result.value.context;
   client = server.createAdminClient(context);
+  adminClientOther = server.createAdminClient(() =>
+    server.createSession({ provider: 'test', identifier: 'other', defaultAuthKeys: ['none'] })
+  );
   publishedClient = server.createPublishedClient(context);
   await client.updateSchemaSpecification({
     entityTypes: [
@@ -430,7 +434,7 @@ describe('getEntities()', () => {
   });
 
   test('One with correct authKey, one with wrong authKey', async () => {
-    const createOneResult = await client.createEntity({
+    const createOneResult = await adminClientOther.createEntity({
       info: { type: 'EntityAdminFoo', name: 'Foo 1', authKey: 'subject' },
       fields: { title: 'Title' },
     });
@@ -450,10 +454,7 @@ describe('getEntities()', () => {
         },
       } = createTwoResult.value;
 
-      const getResult = await client.getEntities([
-        { id: foo1Id, authKeys: ['none'] },
-        { id: foo2Id, authKeys: ['subject'] },
-      ]);
+      const getResult = await client.getEntities([{ id: foo1Id }, { id: foo2Id }]);
       if (expectOkResult(getResult)) {
         expect(getResult.value).toHaveLength(2);
         expectErrorResult(getResult.value[0], ErrorType.NotAuthorized, 'Wrong authKey provided');
