@@ -17,7 +17,7 @@
     "db:start": "./scripts/db-start.sh",
     "db:stop": "./scripts/db-stop.sh",
     "db:wait": "./scripts/db-wait-for-connection.js",
-    "docs:generate-graphviz": "dot -Tsvg -O docs/*.dot",
+    "docs:generate-graphviz": "dot -Tsvg -O ../../docs/*.dot",
     "eslint:check:all": "./scripts/npm-all-projects.sh run eslint:check --if-present",
     "prettier:fix:all": "./scripts/npm-all-projects.sh run prettier:fix --if-present",
     "ts:check:all": "./scripts/npm-all-projects.sh run ts:check --if-present",
