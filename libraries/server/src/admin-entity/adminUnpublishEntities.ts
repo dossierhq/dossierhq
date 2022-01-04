@@ -14,7 +14,7 @@ import {
 import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
 import type { Temporal } from '@js-temporal/polyfill';
 import type { AuthorizationAdapter, SessionContext } from '..';
-import { authVerifyAuthorizationKey2 } from '../Auth';
+import { authVerifyAuthorizationKey } from '../Auth';
 import { checkUUIDsAreUnique } from './AdminEntityMutationUtils';
 
 interface EntityInfoToBeUnpublished {
@@ -59,9 +59,9 @@ export async function adminUnpublishEntities(
       ({ effect }) => effect === 'unpublished'
     ) as EntityInfoToBeUnpublished[];
 
-    // Step 2: Check authKeys
+    // Step 2: Check authKey
     for (const entityInfo of entitiesInfo) {
-      const authResult = await authVerifyAuthorizationKey2(authorizationAdapter, context, {
+      const authResult = await authVerifyAuthorizationKey(authorizationAdapter, context, {
         authKey: entityInfo.authKey,
         resolvedAuthKey: entityInfo.resolvedAuthKey,
       });

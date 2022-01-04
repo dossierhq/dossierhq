@@ -9,7 +9,7 @@ import type {
 import { AdminEntityStatus, ok } from '@jonasb/datadata-core';
 import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
 import type { AuthorizationAdapter, SessionContext } from '..';
-import { authVerifyAuthorizationKey2 } from '../Auth';
+import { authVerifyAuthorizationKey } from '../Auth';
 import { encodeAdminEntity, resolveUpdateEntity } from '../EntityCodec';
 import { randomNameGenerator } from './AdminEntityMutationUtils';
 import { publishEntityAfterMutation } from './publishEntityAfterMutation';
@@ -39,7 +39,7 @@ export async function adminUpdateEntity(
       resolvedAuthKey,
     } = entityInfoResult.value;
 
-    const authResult = await authVerifyAuthorizationKey2(authorizationAdapter, context, {
+    const authResult = await authVerifyAuthorizationKey(authorizationAdapter, context, {
       authKey,
       resolvedAuthKey,
     });

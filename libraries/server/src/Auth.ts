@@ -85,7 +85,7 @@ export async function authResolveAuthorizationKeys(
   return ok(result);
 }
 
-export async function authVerifyAuthorizationKey2(
+export async function authVerifyAuthorizationKey(
   authorizationAdapter: AuthorizationAdapter,
   context: SessionContext,
   actualAuthKey: ResolvedAuthKey

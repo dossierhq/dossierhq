@@ -20,7 +20,7 @@ import {
 import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
 import type { Temporal } from '@js-temporal/polyfill';
 import type { AuthorizationAdapter, SessionContext } from '..';
-import { authVerifyAuthorizationKey2 } from '../Auth';
+import { authVerifyAuthorizationKey } from '../Auth';
 import { collectDataFromEntity, decodeAdminEntityFields } from '../EntityCodec';
 import { checkUUIDsAreUnique } from './AdminEntityMutationUtils';
 
@@ -149,7 +149,7 @@ async function collectVersionsInfo(
       fieldValues,
     } = versionInfoResult.value;
 
-    const authResult = await authVerifyAuthorizationKey2(authorizationAdapter, context, {
+    const authResult = await authVerifyAuthorizationKey(authorizationAdapter, context, {
       authKey,
       resolvedAuthKey,
     });
