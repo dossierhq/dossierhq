@@ -78,6 +78,7 @@ const emptyFooFields = {
 let server: Server;
 let context: SessionContext;
 let adminClient: AdminClient;
+let adminClientOther: AdminClient;
 let publishedClient: PublishedClient;
 let publishedClientOther: PublishedClient;
 let entitiesOfTypePublishedEntityOnlyEditBeforeNone: AdminEntity[];
@@ -89,6 +90,9 @@ beforeAll(async () => {
   server = result.value.server;
   context = result.value.context;
   adminClient = server.createAdminClient(context);
+  adminClientOther = server.createAdminClient(() =>
+    server.createSession({ provider: 'test', identifier: 'other', defaultAuthKeys: ['none'] })
+  );
   publishedClient = server.createPublishedClient(context);
   publishedClientOther = server.createPublishedClient(() =>
     server.createSession({ provider: 'test', identifier: 'other', defaultAuthKeys: ['none'] })
@@ -426,14 +430,20 @@ describe('getEntities()', () => {
   });
 
   test('One with correct authKey, one with wrong authKey', async () => {
-    const createOneResult = await adminClient.createEntity({
-      info: { type: 'PublishedEntityFoo', name: 'Foo 1', authKey: 'subject' },
-      fields: { title: 'Title' },
-    });
-    const createTwoResult = await adminClient.createEntity({
-      info: { type: 'PublishedEntityFoo', name: 'Foo 2', authKey: 'subject' },
-      fields: { title: 'Title' },
-    });
+    const createOneResult = await adminClientOther.createEntity(
+      {
+        info: { type: 'PublishedEntityFoo', name: 'Foo 1', authKey: 'subject' },
+        fields: { title: 'Title' },
+      },
+      { publish: true }
+    );
+    const createTwoResult = await adminClient.createEntity(
+      {
+        info: { type: 'PublishedEntityFoo', name: 'Foo 2', authKey: 'subject' },
+        fields: { title: 'Title' },
+      },
+      { publish: true }
+    );
 
     if (expectOkResult(createOneResult) && expectOkResult(createTwoResult)) {
       const {
@@ -446,17 +456,7 @@ describe('getEntities()', () => {
         },
       } = createTwoResult.value;
 
-      expectOkResult(
-        await adminClient.publishEntities([
-          { id: foo1Id, version: 0, authKeys: ['subject'] },
-          { id: foo2Id, version: 0, authKeys: ['subject'] },
-        ])
-      );
-
-      const getResult = await publishedClient.getEntities([
-        { id: foo1Id, authKeys: ['none'] },
-        { id: foo2Id, authKeys: ['subject'] },
-      ]);
+      const getResult = await publishedClient.getEntities([{ id: foo1Id }, { id: foo2Id }]);
       if (expectOkResult(getResult)) {
         expect(getResult.value).toHaveLength(2);
         expectErrorResult(getResult.value[0], ErrorType.NotAuthorized, 'Wrong authKey provided');
