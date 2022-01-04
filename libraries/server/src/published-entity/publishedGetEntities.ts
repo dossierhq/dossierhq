@@ -1,5 +1,5 @@
 import type {
-  EntityReferenceWithAuthKeys,
+  EntityReference,
   ErrorType,
   PromiseResult,
   PublishedEntity,
@@ -12,7 +12,7 @@ import type {
   DatabasePublishedEntityGetOnePayload,
 } from '@jonasb/datadata-database-adapter';
 import type { AuthorizationAdapter, SessionContext } from '..';
-import { authVerifyAuthorizationKey } from '../Auth';
+import { authVerifyAuthorizationKey2 } from '../Auth';
 import { decodePublishedEntity } from '../EntityCodec';
 
 /**
@@ -29,7 +29,7 @@ export async function publishedGetEntities(
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  references: EntityReferenceWithAuthKeys[]
+  references: EntityReference[]
 ): PromiseResult<
   Result<
     PublishedEntity,
@@ -61,7 +61,7 @@ async function mapItem(
   schema: PublishedSchema,
   authorizationAdapter: AuthorizationAdapter,
   context: SessionContext,
-  reference: EntityReferenceWithAuthKeys,
+  reference: EntityReference,
   values: DatabasePublishedEntityGetOnePayload | undefined
 ): PromiseResult<
   PublishedEntity,
@@ -71,12 +71,10 @@ async function mapItem(
     return notOk.NotFound('No such entity');
   }
 
-  const authResult = await authVerifyAuthorizationKey(
-    authorizationAdapter,
-    context,
-    reference.authKeys,
-    { authKey: values.authKey, resolvedAuthKey: values.resolvedAuthKey }
-  );
+  const authResult = await authVerifyAuthorizationKey2(authorizationAdapter, context, {
+    authKey: values.authKey,
+    resolvedAuthKey: values.resolvedAuthKey,
+  });
   if (authResult.isError()) {
     return authResult;
   }

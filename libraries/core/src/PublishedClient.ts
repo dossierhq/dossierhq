@@ -3,7 +3,6 @@ import type {
   ContextProvider,
   Edge,
   EntityReference,
-  EntityReferenceWithAuthKeys,
   JsonConnection,
   JsonEdge,
   JsonResult,
@@ -45,7 +44,7 @@ export interface PublishedClient {
   >;
 
   getEntities(
-    references: EntityReferenceWithAuthKeys[]
+    references: EntityReference[]
   ): PromiseResult<
     Result<
       PublishedEntity,
