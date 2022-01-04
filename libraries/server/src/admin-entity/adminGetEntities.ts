@@ -1,7 +1,7 @@
 import type {
   AdminEntity,
   AdminSchema,
-  EntityReferenceWithAuthKeys,
+  EntityReference,
   ErrorType,
   PromiseResult,
   Result,
@@ -12,7 +12,7 @@ import type {
   DatabaseAdminEntityGetOnePayload,
 } from '@jonasb/datadata-database-adapter';
 import type { AuthorizationAdapter, SessionContext } from '..';
-import { authVerifyAuthorizationKey } from '../Auth';
+import { authVerifyAuthorizationKey2 } from '../Auth';
 import { decodeAdminEntity } from '../EntityCodec';
 
 export async function adminGetEntities(
@@ -20,7 +20,7 @@ export async function adminGetEntities(
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  references: EntityReferenceWithAuthKeys[]
+  references: EntityReference[]
 ): PromiseResult<
   Result<
     AdminEntity,
@@ -53,7 +53,7 @@ async function mapItem(
   schema: AdminSchema,
   authorizationAdapter: AuthorizationAdapter,
   context: SessionContext,
-  reference: EntityReferenceWithAuthKeys,
+  reference: EntityReference,
   values: DatabaseAdminEntityGetOnePayload | undefined
 ): PromiseResult<
   AdminEntity,
@@ -63,12 +63,10 @@ async function mapItem(
     return notOk.NotFound('No such entity');
   }
 
-  const authResult = await authVerifyAuthorizationKey(
-    authorizationAdapter,
-    context,
-    reference.authKeys,
-    { authKey: values.authKey, resolvedAuthKey: values.resolvedAuthKey }
-  );
+  const authResult = await authVerifyAuthorizationKey2(authorizationAdapter, context, {
+    authKey: values.authKey,
+    resolvedAuthKey: values.resolvedAuthKey,
+  });
   if (authResult.isError()) {
     return authResult;
   }

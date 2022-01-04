@@ -73,7 +73,7 @@ export interface AdminClient {
   >;
 
   getEntities(
-    references: EntityReferenceWithAuthKeys[]
+    references: EntityReference[]
   ): PromiseResult<
     Result<
       AdminEntity,
