@@ -5,6 +5,7 @@ import type { UniqueConstraint } from '.';
 import { adminEntityArchivingGetEntityInfo } from './admin-entity/archivingGetEntityInfo';
 import { adminCreateEntity } from './admin-entity/createEntity';
 import { adminEntityPublishingCreateEvents } from './admin-entity/createPublishingEvents';
+import { adminEntityGetMultiple } from './admin-entity/getEntities';
 import { adminGetEntity } from './admin-entity/getEntity';
 import { adminEntityGetEntityName } from './admin-entity/getEntityName';
 import {
@@ -55,9 +56,7 @@ export async function createSqliteDatabaseAdapter(
       adminEntityArchivingGetEntityInfo(sqliteAdapter, ...args),
     adminEntityCreate: (...args) => adminCreateEntity(sqliteAdapter, ...args),
     adminEntityGetOne: (...args) => adminGetEntity(sqliteAdapter, ...args),
-    adminEntityGetMultiple: () => {
-      throw new Error('TODO');
-    },
+    adminEntityGetMultiple: (...args) => adminEntityGetMultiple(sqliteAdapter, ...args),
     adminEntityGetEntityName: (...args) => adminEntityGetEntityName(sqliteAdapter, ...args),
     adminEntityGetReferenceEntitiesInfo: () => {
       throw new Error('TODO');
