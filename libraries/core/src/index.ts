@@ -132,7 +132,6 @@ export type {
   EntityHistory,
   EntityLike,
   EntityReference,
-  EntityReferenceWithAuthKeys,
   EntityVersionInfo,
   EntityVersionReference,
   Location,

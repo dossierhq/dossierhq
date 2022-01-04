@@ -23,10 +23,6 @@ export interface EntityReference {
   id: string;
 }
 
-export interface EntityReferenceWithAuthKeys extends EntityReference {
-  authKeys?: string[];
-}
-
 export interface EntityVersionReference {
   id: string;
   version: number;

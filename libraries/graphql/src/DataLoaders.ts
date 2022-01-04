@@ -6,7 +6,6 @@ import type {
   AdminValueTypeSpecification,
   EntityHistory,
   EntityReference,
-  EntityReferenceWithAuthKeys,
   FieldSpecification,
   PageInfo,
   Paging,
@@ -332,7 +331,7 @@ export async function loadVersionHistory<TContext extends SessionGraphQLContext>
 
 export async function loadPublishingHistory<TContext extends SessionGraphQLContext>(
   context: TContext,
-  reference: EntityReferenceWithAuthKeys
+  reference: EntityReference
 ): Promise<PublishingHistory> {
   const adminClient = getAdminClient(context);
   const result = await adminClient.getPublishingHistory(reference);

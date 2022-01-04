@@ -4971,27 +4971,8 @@ describe('getPublishingHistory()', () => {
         entity: { id },
       } = createResult.value;
 
-      const archiveResult = await client.getPublishingHistory({ id, authKeys: ['none'] });
+      const archiveResult = await adminClientOther.getPublishingHistory({ id });
       expectErrorResult(archiveResult, ErrorType.NotAuthorized, 'Wrong authKey provided');
-    }
-  });
-
-  test('Error: Using authKey where adapter returns error', async () => {
-    const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBar', name: 'Bar name', authKey: 'subject' },
-      fields: { title: 'Bar title' },
-    });
-    if (expectOkResult(createResult)) {
-      const {
-        entity: { id },
-      } = createResult.value;
-
-      const archiveResult = await client.getPublishingHistory({ id, authKeys: ['unauthorized'] });
-      expectErrorResult(
-        archiveResult,
-        ErrorType.NotAuthorized,
-        'User not authorized to use authKey unauthorized'
-      );
     }
   });
 });
