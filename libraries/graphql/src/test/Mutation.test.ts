@@ -2155,7 +2155,7 @@ describe('publishEntities()', () => {
       const result = (await graphql({
         schema,
         source: `
-          mutation PublishEntities($references: [EntityVersionReferenceWithAuthKeysInput!]!) {
+          mutation PublishEntities($references: [EntityVersionReferenceInput!]!) {
             publishEntities(references: $references) {
               __typename
               id
@@ -2202,7 +2202,7 @@ describe('publishEntities()', () => {
     const result = await graphql({
       schema,
       source: `
-        mutation PublishEntities($references: [EntityVersionReferenceWithAuthKeysInput!]!) {
+        mutation PublishEntities($references: [EntityVersionReferenceInput!]!) {
           publishEntities(references: $references) {
             __typename
             id
@@ -2226,8 +2226,8 @@ describe('publishEntities()', () => {
   });
 
   test('Error: using the wrong authKey', async () => {
-    const { adminClient } = server;
-    const createResult = await adminClient.createEntity({
+    const { adminClientOther } = server;
+    const createResult = await adminClientOther.createEntity({
       info: { type: 'MutationFoo', name: 'Howdy name', authKey: 'subject' },
       fields: { title: 'Howdy title', summary: 'Howdy summary' },
     });
@@ -2239,14 +2239,14 @@ describe('publishEntities()', () => {
       const result = (await graphql({
         schema,
         source: `
-          mutation PublishEntities($references: [EntityVersionReferenceWithAuthKeysInput!]!) {
+          mutation PublishEntities($references: [EntityVersionReferenceInput!]!) {
             publishEntities(references: $references) {
               id
             }
           }
         `,
         contextValue: createContext(),
-        variableValues: { references: [{ id, version: 0, authKeys: ['none'] }] },
+        variableValues: { references: [{ id, version: 0 }] },
       })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
       expect(result).toEqual({
         data: {
@@ -2627,7 +2627,7 @@ describe('Multiple', () => {
         source: `
           mutation UpdateAndPublishFooEntity(
             $entity: AdminMutationFooUpdateInput!
-            $references: [EntityVersionReferenceWithAuthKeysInput!]!
+            $references: [EntityVersionReferenceInput!]!
           ) {
             updateMutationFooEntity(entity: $entity) {
               effect

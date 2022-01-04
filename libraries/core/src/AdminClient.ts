@@ -20,7 +20,6 @@ import type {
   EntityReference,
   EntityReferenceWithAuthKeys,
   EntityVersionReference,
-  EntityVersionReferenceWithAuthKeys,
   JsonResult,
   Paging,
   PromiseResult,
@@ -126,7 +125,7 @@ export interface AdminClient {
   >;
 
   publishEntities(
-    references: EntityVersionReferenceWithAuthKeys[]
+    references: EntityVersionReference[]
   ): PromiseResult<
     AdminEntityPublishPayload[],
     ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic

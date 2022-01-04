@@ -289,19 +289,18 @@ describe('getEntity()', () => {
   });
 
   test('Error: Using wrong authKey', async () => {
-    const createResult = await adminClient.createEntity({
-      info: { type: 'PublishedEntityFoo', name: 'Foo', authKey: 'subject' },
-      fields: { title: 'Title' },
-    });
+    const createResult = await adminClient.createEntity(
+      {
+        info: { type: 'PublishedEntityFoo', name: 'Foo', authKey: 'subject' },
+        fields: { title: 'Title' },
+      },
+      { publish: true }
+    );
 
     if (expectOkResult(createResult)) {
       const {
         entity: { id },
       } = createResult.value;
-
-      expectOkResult(
-        await adminClient.publishEntities([{ id, version: 0, authKeys: ['subject'] }])
-      );
 
       const getResult = await publishedClientOther.getEntity({ id });
       expectErrorResult(getResult, ErrorType.NotAuthorized, 'Wrong authKey provided');

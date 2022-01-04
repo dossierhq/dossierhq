@@ -13,7 +13,7 @@ import type {
   Connection,
   Edge,
   EntityHistory,
-  EntityVersionReferenceWithAuthKeys,
+  EntityVersionReference,
   ErrorResult,
   FieldSpecification,
   Logger,
@@ -211,7 +211,7 @@ export class DataDataContextValue {
   };
 
   publishEntities = async (
-    entities: EntityVersionReferenceWithAuthKeys[]
+    entities: EntityVersionReference[]
   ): PromiseResult<
     AdminEntityPublishPayload[],
     ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic

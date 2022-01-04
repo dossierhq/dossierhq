@@ -32,10 +32,6 @@ export interface EntityVersionReference {
   version: number;
 }
 
-export interface EntityVersionReferenceWithAuthKeys extends EntityVersionReference {
-  authKeys?: string[];
-}
-
 export interface RichText {
   blocks: RichTextBlock[];
 }

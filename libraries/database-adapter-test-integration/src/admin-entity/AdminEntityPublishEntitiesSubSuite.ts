@@ -3,6 +3,10 @@ import { assertErrorResult, assertOkResult, assertResultValue } from '../Asserts
 import type { UnboundTestFunction } from '../Builder';
 import type { AdminEntityTestContext } from './AdminEntityTestSuite';
 import { TITLE_ONLY_CREATE } from '../shared-entity/Fixtures';
+import {
+  adminClientForMainPrincipal,
+  adminClientForSecondaryPrincipal,
+} from '../shared-entity/TestClients';
 
 export const PublishEntitiesSubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
   publishEntities_minimal,
@@ -55,7 +59,7 @@ async function publishEntities_minimalWithSubjectAuthKey({ client }: AdminEntity
       },
     } = createResult.value;
 
-    const publishResult = await client.publishEntities([{ id, version, authKeys: ['subject'] }]);
+    const publishResult = await client.publishEntities([{ id, version }]);
     if (assertOkResult(publishResult)) {
       const [{ updatedAt }] = publishResult.value;
       assertResultValue(publishResult, [
@@ -98,8 +102,8 @@ async function publishEntities_errorMissingRequiredTitle({ client }: AdminEntity
   }
 }
 
-async function publishEntities_errorWrongAuthKey({ client }: AdminEntityTestContext) {
-  const createResult = await client.createEntity(
+async function publishEntities_errorWrongAuthKey({ server }: AdminEntityTestContext) {
+  const createResult = await adminClientForMainPrincipal(server).createEntity(
     copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } })
   );
   if (assertOkResult(createResult)) {
@@ -110,7 +114,9 @@ async function publishEntities_errorWrongAuthKey({ client }: AdminEntityTestCont
       },
     } = createResult.value;
 
-    const publishResult = await client.publishEntities([{ id, version }]);
+    const publishResult = await adminClientForSecondaryPrincipal(server).publishEntities([
+      { id, version },
+    ]);
     assertErrorResult(
       publishResult,
       ErrorType.NotAuthorized,

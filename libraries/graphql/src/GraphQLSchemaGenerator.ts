@@ -9,7 +9,7 @@ import type {
   AdminSchema,
   AdminValueTypeSpecification,
   EntityReferenceWithAuthKeys,
-  EntityVersionReferenceWithAuthKeys,
+  EntityVersionReference,
   ErrorType,
   PublishedClient,
   PublishedEntity,
@@ -764,14 +764,13 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       })
     );
 
-    // EntityVersionReferenceWithAuthKeysInput
+    // EntityVersionReferenceInput
     this.addType(
       new GraphQLInputObjectType({
-        name: 'EntityVersionReferenceWithAuthKeysInput',
+        name: 'EntityVersionReferenceInput',
         fields: {
           id: { type: new GraphQLNonNull(GraphQLID) },
           version: { type: new GraphQLNonNull(GraphQLInt) },
-          authKeys: { type: new GraphQLList(new GraphQLNonNull(GraphQLString)) },
         },
       })
     );
@@ -1584,18 +1583,12 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
   }
 
   buildMutationPublishEntities<TSource>(): GraphQLFieldConfig<TSource, TContext> {
-    return fieldConfigWithArgs<
-      TSource,
-      TContext,
-      { references: EntityVersionReferenceWithAuthKeys[] }
-    >({
+    return fieldConfigWithArgs<TSource, TContext, { references: EntityVersionReference[] }>({
       type: new GraphQLList(new GraphQLNonNull(this.getOutputType('AdminEntityPublishPayload'))),
       args: {
         references: {
           type: new GraphQLNonNull(
-            new GraphQLList(
-              new GraphQLNonNull(this.getInputType('EntityVersionReferenceWithAuthKeysInput'))
-            )
+            new GraphQLList(new GraphQLNonNull(this.getInputType('EntityVersionReferenceInput')))
           ),
         },
       },

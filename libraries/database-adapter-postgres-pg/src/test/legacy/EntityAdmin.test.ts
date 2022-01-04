@@ -4006,9 +4006,7 @@ describe('publishEntities()', () => {
         entity: { id: bazId },
       } = createBazResult.value;
 
-      const publishResult = await client.publishEntities([
-        { id: bazId, version: 0, authKeys: ['none'] },
-      ]);
+      const publishResult = await adminClientOther.publishEntities([{ id: bazId, version: 0 }]);
       expectErrorResult(
         publishResult,
         ErrorType.NotAuthorized,

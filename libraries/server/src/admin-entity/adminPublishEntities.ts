@@ -4,7 +4,6 @@ import type {
   EntityLike,
   EntityReference,
   EntityVersionReference,
-  EntityVersionReferenceWithAuthKeys,
   PromiseResult,
   Result,
 } from '@jonasb/datadata-core';
@@ -21,7 +20,7 @@ import {
 import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
 import type { Temporal } from '@js-temporal/polyfill';
 import type { AuthorizationAdapter, SessionContext } from '..';
-import { authVerifyAuthorizationKey } from '../Auth';
+import { authVerifyAuthorizationKey2 } from '../Auth';
 import { collectDataFromEntity, decodeAdminEntityFields } from '../EntityCodec';
 import { checkUUIDsAreUnique } from './AdminEntityMutationUtils';
 
@@ -46,7 +45,7 @@ export async function adminPublishEntities(
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  references: EntityVersionReferenceWithAuthKeys[]
+  references: EntityVersionReference[]
 ): PromiseResult<
   AdminEntityPublishPayload[],
   ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
@@ -114,7 +113,7 @@ async function collectVersionsInfo(
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  references: EntityVersionReferenceWithAuthKeys[]
+  references: EntityVersionReference[]
 ): PromiseResult<
   (VersionInfoToBePublished | VersionInfoAlreadyPublished)[],
   ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
@@ -150,12 +149,10 @@ async function collectVersionsInfo(
       fieldValues,
     } = versionInfoResult.value;
 
-    const authResult = await authVerifyAuthorizationKey(
-      authorizationAdapter,
-      context,
-      reference?.authKeys,
-      { authKey, resolvedAuthKey }
-    );
+    const authResult = await authVerifyAuthorizationKey2(authorizationAdapter, context, {
+      authKey,
+      resolvedAuthKey,
+    });
     if (authResult.isError()) {
       return createErrorResult(authResult.error, `entity(${reference.id}): ${authResult.message}`);
     }

@@ -85,7 +85,7 @@ export async function adminCreateEntity(
         authorizationAdapter,
         databaseAdapter,
         context,
-        { id, version: result.info.version, authKeys: [result.info.authKey] }
+        { id, version: result.info.version }
       );
       if (publishResult.isError()) {
         return publishResult;
