@@ -12,13 +12,14 @@ export const UpdateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
   updateEntity_minimal,
   updateEntity_noChange,
   updateEntity_minimalWithSubjectAuthKey,
+  updateEntity_minimalWithoutProvidingSubjectAuthKey,
   updateEntity_updateAndPublishEntity,
   updateEntity_updateAndPublishEntityWithSubjectAuthKey,
   updateEntity_noChangeAndPublishDraftEntity,
   updateEntity_noChangeAndPublishPublishedEntity,
   updateEntity_withTwoReferences,
-  updateEntity_errorWhenNotSpecifyingSubjectAuthKey,
   updateEntity_errorPublishWithoutRequiredTitle,
+  updateEntity_errorTryingToChangeAuthKey,
 ];
 
 async function updateEntity_minimal({ client }: AdminEntityTestContext) {
@@ -84,6 +85,48 @@ async function updateEntity_minimalWithSubjectAuthKey({ client }: AdminEntityTes
     const updateResult = await client.updateEntity({
       id,
       info: { authKey: 'subject' },
+      fields: { title: 'Updated title' },
+    });
+    if (assertOkResult(updateResult)) {
+      const {
+        entity: {
+          info: { updatedAt },
+        },
+      } = updateResult.value;
+
+      const expectedEntity = copyEntity(createResult.value.entity, {
+        info: {
+          updatedAt,
+          version: 1,
+        },
+        fields: {
+          title: 'Updated title',
+        },
+      });
+
+      assertResultValue(updateResult, {
+        effect: 'updated',
+        entity: expectedEntity,
+      });
+
+      const getResult = await client.getEntity({ id });
+      assertResultValue(getResult, expectedEntity);
+    }
+  }
+}
+
+async function updateEntity_minimalWithoutProvidingSubjectAuthKey({
+  client,
+}: AdminEntityTestContext) {
+  const createResult = await client.createEntity(
+    copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } })
+  );
+  if (assertOkResult(createResult)) {
+    const {
+      entity: { id },
+    } = createResult.value;
+    const updateResult = await client.updateEntity({
+      id,
       fields: { title: 'Updated title' },
     });
     if (assertOkResult(updateResult)) {
@@ -310,22 +353,6 @@ async function updateEntity_withTwoReferences({ client }: AdminEntityTestContext
   }
 }
 
-async function updateEntity_errorWhenNotSpecifyingSubjectAuthKey({
-  client,
-}: AdminEntityTestContext) {
-  const createResult = await client.createEntity(
-    copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } })
-  );
-  if (assertOkResult(createResult)) {
-    const {
-      entity: { id },
-    } = createResult.value;
-
-    const updateResult = await client.updateEntity({ id, fields: {} });
-    assertErrorResult(updateResult, ErrorType.NotAuthorized, 'Wrong authKey provided');
-  }
-}
-
 async function updateEntity_errorPublishWithoutRequiredTitle({ client }: AdminEntityTestContext) {
   const createResult = await client.createEntity(TITLE_ONLY_CREATE);
   if (assertOkResult(createResult)) {
@@ -341,6 +368,29 @@ async function updateEntity_errorPublishWithoutRequiredTitle({ client }: AdminEn
       updateResult,
       ErrorType.BadRequest,
       `entity(${id}).fields.title: Required field is empty`
+    );
+
+    const getResult = await client.getEntity({ id });
+    assertResultValue(getResult, createResult.value.entity);
+  }
+}
+
+async function updateEntity_errorTryingToChangeAuthKey({ client }: AdminEntityTestContext) {
+  const createResult = await client.createEntity(TITLE_ONLY_CREATE);
+  if (assertOkResult(createResult)) {
+    const {
+      entity: { id },
+    } = createResult.value;
+
+    const updateResult = await client.updateEntity({
+      id,
+      info: { authKey: 'subject' },
+      fields: {},
+    });
+    assertErrorResult(
+      updateResult,
+      ErrorType.BadRequest,
+      'New authKey subject doesn’t correspond to previous authKey none'
     );
 
     const getResult = await client.getEntity({ id });

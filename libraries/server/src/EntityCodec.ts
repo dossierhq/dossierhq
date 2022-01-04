@@ -267,6 +267,11 @@ export function resolveUpdateEntity(
       `New type ${entity.info.type} doesn’t correspond to previous type ${entityInfo.type}`
     );
   }
+  if (entity.info?.authKey && entity.info.authKey !== entityInfo.authKey) {
+    return notOk.BadRequest(
+      `New authKey ${entity.info.authKey} doesn’t correspond to previous authKey ${entityInfo.authKey}`
+    );
+  }
 
   const status =
     entityInfo.status === AdminEntityStatus.published

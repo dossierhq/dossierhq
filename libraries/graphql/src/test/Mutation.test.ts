@@ -1836,7 +1836,7 @@ describe('update*Entity()', () => {
             "updateMutationFooEntity": null,
           },
           "errors": Array [
-            [GraphQLError: NotAuthorized: Wrong authKey provided],
+            [GraphQLError: BadRequest: New authKey none doesn’t correspond to previous authKey subject],
           ],
         }
       `);

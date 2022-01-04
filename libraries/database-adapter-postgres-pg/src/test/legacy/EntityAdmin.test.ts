@@ -3569,29 +3569,6 @@ describe('updateEntity()', () => {
     }
   });
 
-  test('Error: Using authKey where adapter returns error', async () => {
-    const createResult = await client.createEntity({
-      info: { type: 'EntityAdminFoo', name: 'Foo name', authKey: 'none' },
-      fields: { title: 'Foo title' },
-    });
-    if (expectOkResult(createResult)) {
-      const {
-        entity: { id },
-      } = createResult.value;
-
-      const updateResult = await client.updateEntity({
-        id,
-        info: { authKey: 'unauthorized' },
-        fields: {},
-      });
-      expectErrorResult(
-        updateResult,
-        ErrorType.NotAuthorized,
-        'User not authorized to use authKey unauthorized'
-      );
-    }
-  });
-
   test('Error: Using wrong authKey', async () => {
     const createResult = await client.createEntity({
       info: { type: 'EntityAdminFoo', name: 'Foo name', authKey: 'subject' },
@@ -3602,9 +3579,8 @@ describe('updateEntity()', () => {
         entity: { id },
       } = createResult.value;
 
-      const updateResult = await client.updateEntity({
+      const updateResult = await adminClientOther.updateEntity({
         id,
-        info: { authKey: 'none' },
         fields: {},
       });
       expectErrorResult(updateResult, ErrorType.NotAuthorized, 'Wrong authKey provided');
@@ -3801,7 +3777,7 @@ describe('upsertEntity()', () => {
         entity: { id },
       } = createResult.value;
 
-      const updateResult = await client.upsertEntity({
+      const updateResult = await adminClientOther.upsertEntity({
         id,
         info: { type: 'EntityAdminFoo', name: 'Foo name', authKey: 'none' },
         fields: {},

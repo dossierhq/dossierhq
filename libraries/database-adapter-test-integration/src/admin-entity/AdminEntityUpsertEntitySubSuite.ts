@@ -1,6 +1,6 @@
-import { AdminEntityStatus, copyEntity } from '@jonasb/datadata-core';
+import { AdminEntityStatus, copyEntity, ErrorType } from '@jonasb/datadata-core';
 import { v4 as uuidv4 } from 'uuid';
-import { assertOkResult, assertResultValue } from '../Asserts';
+import { assertErrorResult, assertOkResult, assertResultValue } from '../Asserts';
 import type { UnboundTestFunction } from '../Builder';
 import type { AdminEntityTestContext } from './AdminEntityTestSuite';
 import {
@@ -13,6 +13,7 @@ export const UpsertEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
   upsertEntity_minimalCreate,
   upsertEntity_minimalUpdate,
   upsertEntity_updateAndPublishWithSubjectAuthKey,
+  upsertEntity_errorUpdateTryingToChangeAuthKey,
 ];
 
 async function upsertEntity_minimalCreate({ client }: AdminEntityTestContext) {
@@ -114,5 +115,30 @@ async function upsertEntity_updateAndPublishWithSubjectAuthKey({ client }: Admin
       const getResult = await client.getEntity({ id });
       assertResultValue(getResult, expectedEntity);
     }
+  }
+}
+
+async function upsertEntity_errorUpdateTryingToChangeAuthKey({ client }: AdminEntityTestContext) {
+  const createResult = await client.createEntity(TITLE_ONLY_CREATE);
+  if (assertOkResult(createResult)) {
+    const {
+      entity: { id },
+    } = createResult.value;
+
+    const updateResult = await client.upsertEntity(
+      copyEntity(TITLE_ONLY_UPSERT, {
+        id,
+        info: { authKey: 'subject' },
+        fields: {},
+      })
+    );
+    assertErrorResult(
+      updateResult,
+      ErrorType.BadRequest,
+      'New authKey subject doesn’t correspond to previous authKey none'
+    );
+
+    const getResult = await client.getEntity({ id });
+    assertResultValue(getResult, createResult.value.entity);
   }
 }
