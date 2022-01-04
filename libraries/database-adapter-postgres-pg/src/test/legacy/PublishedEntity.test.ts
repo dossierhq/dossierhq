@@ -79,6 +79,7 @@ let server: Server;
 let context: SessionContext;
 let adminClient: AdminClient;
 let publishedClient: PublishedClient;
+let publishedClientOther: PublishedClient;
 let entitiesOfTypePublishedEntityOnlyEditBeforeNone: AdminEntity[];
 let entitiesOfTypePublishedEntityOnlyEditBeforeSubject: AdminEntity[];
 
@@ -89,6 +90,9 @@ beforeAll(async () => {
   context = result.value.context;
   adminClient = server.createAdminClient(context);
   publishedClient = server.createPublishedClient(context);
+  publishedClientOther = server.createPublishedClient(() =>
+    server.createSession({ provider: 'test', identifier: 'other', defaultAuthKeys: ['none'] })
+  );
 
   await adminClient.updateSchemaSpecification(SCHEMA);
 
@@ -295,7 +299,7 @@ describe('getEntity()', () => {
         await adminClient.publishEntities([{ id, version: 0, authKeys: ['subject'] }])
       );
 
-      const getResult = await publishedClient.getEntity({ id, authKeys: ['none'] });
+      const getResult = await publishedClientOther.getEntity({ id });
       expectErrorResult(getResult, ErrorType.NotAuthorized, 'Wrong authKey provided');
     }
   });

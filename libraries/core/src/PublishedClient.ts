@@ -38,7 +38,7 @@ export interface PublishedClient {
   getSchemaSpecification(): PromiseResult<PublishedSchemaSpecification, ErrorType.Generic>;
 
   getEntity(
-    reference: EntityReferenceWithAuthKeys
+    reference: EntityReference
   ): PromiseResult<
     PublishedEntity,
     ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic

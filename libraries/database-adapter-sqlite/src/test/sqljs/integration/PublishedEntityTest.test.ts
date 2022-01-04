@@ -32,7 +32,7 @@ registerTestSuite(
 
       const adminClient = server.createAdminClient(context);
       const publishedClient = server.createPublishedClient(context);
-      return [{ adminClient, publishedClient }, undefined];
+      return [{ server, adminClient, publishedClient }, undefined];
     },
     after: async () => {
       //empty
