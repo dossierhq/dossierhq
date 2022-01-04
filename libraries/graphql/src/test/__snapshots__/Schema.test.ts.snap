@@ -360,8 +360,8 @@ type Query {
 type Mutation {
   publishEntities(references: [EntityVersionReferenceInput!]!): [AdminEntityPublishPayload!]
   unpublishEntities(references: [EntityReferenceInput!]!): [AdminEntityUnpublishPayload!]
-  archiveEntity(id: ID!, authKeys: [String!]): AdminEntityArchivePayload
-  unarchiveEntity(id: ID!, authKeys: [String!]): AdminEntityUnarchivePayload
+  archiveEntity(id: ID!): AdminEntityArchivePayload
+  unarchiveEntity(id: ID!): AdminEntityUnarchivePayload
   createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
   updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
   upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
@@ -915,8 +915,8 @@ type Query {
 type Mutation {
   publishEntities(references: [EntityVersionReferenceInput!]!): [AdminEntityPublishPayload!]
   unpublishEntities(references: [EntityReferenceInput!]!): [AdminEntityUnpublishPayload!]
-  archiveEntity(id: ID!, authKeys: [String!]): AdminEntityArchivePayload
-  unarchiveEntity(id: ID!, authKeys: [String!]): AdminEntityUnarchivePayload
+  archiveEntity(id: ID!): AdminEntityArchivePayload
+  unarchiveEntity(id: ID!): AdminEntityUnarchivePayload
   createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
   updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
   upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
@@ -1302,8 +1302,8 @@ type Query {
 type Mutation {
   publishEntities(references: [EntityVersionReferenceInput!]!): [AdminEntityPublishPayload!]
   unpublishEntities(references: [EntityReferenceInput!]!): [AdminEntityUnpublishPayload!]
-  archiveEntity(id: ID!, authKeys: [String!]): AdminEntityArchivePayload
-  unarchiveEntity(id: ID!, authKeys: [String!]): AdminEntityUnarchivePayload
+  archiveEntity(id: ID!): AdminEntityArchivePayload
+  unarchiveEntity(id: ID!): AdminEntityUnarchivePayload
   createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
   updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
   upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
@@ -1814,8 +1814,8 @@ type Query {
 type Mutation {
   publishEntities(references: [EntityVersionReferenceInput!]!): [AdminEntityPublishPayload!]
   unpublishEntities(references: [EntityReferenceInput!]!): [AdminEntityUnpublishPayload!]
-  archiveEntity(id: ID!, authKeys: [String!]): AdminEntityArchivePayload
-  unarchiveEntity(id: ID!, authKeys: [String!]): AdminEntityUnarchivePayload
+  archiveEntity(id: ID!): AdminEntityArchivePayload
+  unarchiveEntity(id: ID!): AdminEntityUnarchivePayload
   createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
   updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
   upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
@@ -2199,8 +2199,8 @@ type Query {
 type Mutation {
   publishEntities(references: [EntityVersionReferenceInput!]!): [AdminEntityPublishPayload!]
   unpublishEntities(references: [EntityReferenceInput!]!): [AdminEntityUnpublishPayload!]
-  archiveEntity(id: ID!, authKeys: [String!]): AdminEntityArchivePayload
-  unarchiveEntity(id: ID!, authKeys: [String!]): AdminEntityUnarchivePayload
+  archiveEntity(id: ID!): AdminEntityArchivePayload
+  unarchiveEntity(id: ID!): AdminEntityUnarchivePayload
   createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
   updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
   upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
@@ -2799,8 +2799,8 @@ type Query {
 type Mutation {
   publishEntities(references: [EntityVersionReferenceInput!]!): [AdminEntityPublishPayload!]
   unpublishEntities(references: [EntityReferenceInput!]!): [AdminEntityUnpublishPayload!]
-  archiveEntity(id: ID!, authKeys: [String!]): AdminEntityArchivePayload
-  unarchiveEntity(id: ID!, authKeys: [String!]): AdminEntityUnarchivePayload
+  archiveEntity(id: ID!): AdminEntityArchivePayload
+  unarchiveEntity(id: ID!): AdminEntityUnarchivePayload
   createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
   updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
   upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
@@ -3084,8 +3084,8 @@ type Query {
 type Mutation {
   publishEntities(references: [EntityVersionReferenceInput!]!): [AdminEntityPublishPayload!]
   unpublishEntities(references: [EntityReferenceInput!]!): [AdminEntityUnpublishPayload!]
-  archiveEntity(id: ID!, authKeys: [String!]): AdminEntityArchivePayload
-  unarchiveEntity(id: ID!, authKeys: [String!]): AdminEntityUnarchivePayload
+  archiveEntity(id: ID!): AdminEntityArchivePayload
+  unarchiveEntity(id: ID!): AdminEntityUnarchivePayload
   createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
   updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
   upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
@@ -3511,8 +3511,8 @@ type Query {
 type Mutation {
   publishEntities(references: [EntityVersionReferenceInput!]!): [AdminEntityPublishPayload!]
   unpublishEntities(references: [EntityReferenceInput!]!): [AdminEntityUnpublishPayload!]
-  archiveEntity(id: ID!, authKeys: [String!]): AdminEntityArchivePayload
-  unarchiveEntity(id: ID!, authKeys: [String!]): AdminEntityUnarchivePayload
+  archiveEntity(id: ID!): AdminEntityArchivePayload
+  unarchiveEntity(id: ID!): AdminEntityUnarchivePayload
   createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
   updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
   upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
@@ -3825,8 +3825,8 @@ type Query {
 type Mutation {
   publishEntities(references: [EntityVersionReferenceInput!]!): [AdminEntityPublishPayload!]
   unpublishEntities(references: [EntityReferenceInput!]!): [AdminEntityUnpublishPayload!]
-  archiveEntity(id: ID!, authKeys: [String!]): AdminEntityArchivePayload
-  unarchiveEntity(id: ID!, authKeys: [String!]): AdminEntityUnarchivePayload
+  archiveEntity(id: ID!): AdminEntityArchivePayload
+  unarchiveEntity(id: ID!): AdminEntityUnarchivePayload
   createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
   updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
   upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
@@ -4327,8 +4327,8 @@ type Query {
 type Mutation {
   publishEntities(references: [EntityVersionReferenceInput!]!): [AdminEntityPublishPayload!]
   unpublishEntities(references: [EntityReferenceInput!]!): [AdminEntityUnpublishPayload!]
-  archiveEntity(id: ID!, authKeys: [String!]): AdminEntityArchivePayload
-  unarchiveEntity(id: ID!, authKeys: [String!]): AdminEntityUnarchivePayload
+  archiveEntity(id: ID!): AdminEntityArchivePayload
+  unarchiveEntity(id: ID!): AdminEntityUnarchivePayload
   createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
   updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
   upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
@@ -4618,8 +4618,8 @@ type Query {
 type Mutation {
   publishEntities(references: [EntityVersionReferenceInput!]!): [AdminEntityPublishPayload!]
   unpublishEntities(references: [EntityReferenceInput!]!): [AdminEntityUnpublishPayload!]
-  archiveEntity(id: ID!, authKeys: [String!]): AdminEntityArchivePayload
-  unarchiveEntity(id: ID!, authKeys: [String!]): AdminEntityUnarchivePayload
+  archiveEntity(id: ID!): AdminEntityArchivePayload
+  unarchiveEntity(id: ID!): AdminEntityUnarchivePayload
   createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
   updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
   upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
@@ -5067,8 +5067,8 @@ type Query {
 type Mutation {
   publishEntities(references: [EntityVersionReferenceInput!]!): [AdminEntityPublishPayload!]
   unpublishEntities(references: [EntityReferenceInput!]!): [AdminEntityUnpublishPayload!]
-  archiveEntity(id: ID!, authKeys: [String!]): AdminEntityArchivePayload
-  unarchiveEntity(id: ID!, authKeys: [String!]): AdminEntityUnarchivePayload
+  archiveEntity(id: ID!): AdminEntityArchivePayload
+  unarchiveEntity(id: ID!): AdminEntityUnarchivePayload
   createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
   updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
   upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
@@ -5412,8 +5412,8 @@ type Query {
 type Mutation {
   publishEntities(references: [EntityVersionReferenceInput!]!): [AdminEntityPublishPayload!]
   unpublishEntities(references: [EntityReferenceInput!]!): [AdminEntityUnpublishPayload!]
-  archiveEntity(id: ID!, authKeys: [String!]): AdminEntityArchivePayload
-  unarchiveEntity(id: ID!, authKeys: [String!]): AdminEntityUnarchivePayload
+  archiveEntity(id: ID!): AdminEntityArchivePayload
+  unarchiveEntity(id: ID!): AdminEntityUnarchivePayload
   createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
   updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
   upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
@@ -5946,8 +5946,8 @@ type Query {
 type Mutation {
   publishEntities(references: [EntityVersionReferenceInput!]!): [AdminEntityPublishPayload!]
   unpublishEntities(references: [EntityReferenceInput!]!): [AdminEntityUnpublishPayload!]
-  archiveEntity(id: ID!, authKeys: [String!]): AdminEntityArchivePayload
-  unarchiveEntity(id: ID!, authKeys: [String!]): AdminEntityUnarchivePayload
+  archiveEntity(id: ID!): AdminEntityArchivePayload
+  unarchiveEntity(id: ID!): AdminEntityUnarchivePayload
   createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
   updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
   upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
@@ -6344,8 +6344,8 @@ type Query {
 type Mutation {
   publishEntities(references: [EntityVersionReferenceInput!]!): [AdminEntityPublishPayload!]
   unpublishEntities(references: [EntityReferenceInput!]!): [AdminEntityUnpublishPayload!]
-  archiveEntity(id: ID!, authKeys: [String!]): AdminEntityArchivePayload
-  unarchiveEntity(id: ID!, authKeys: [String!]): AdminEntityUnarchivePayload
+  archiveEntity(id: ID!): AdminEntityArchivePayload
+  unarchiveEntity(id: ID!): AdminEntityUnarchivePayload
   createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
   updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
   upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
@@ -6992,8 +6992,8 @@ type Query {
 type Mutation {
   publishEntities(references: [EntityVersionReferenceInput!]!): [AdminEntityPublishPayload!]
   unpublishEntities(references: [EntityReferenceInput!]!): [AdminEntityUnpublishPayload!]
-  archiveEntity(id: ID!, authKeys: [String!]): AdminEntityArchivePayload
-  unarchiveEntity(id: ID!, authKeys: [String!]): AdminEntityUnarchivePayload
+  archiveEntity(id: ID!): AdminEntityArchivePayload
+  unarchiveEntity(id: ID!): AdminEntityUnarchivePayload
   createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
   updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
   upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
