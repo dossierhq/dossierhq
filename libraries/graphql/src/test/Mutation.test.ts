@@ -2275,7 +2275,7 @@ describe('unpublishEntities()', () => {
       const result = (await graphql({
         schema,
         source: `
-          mutation UnpublishEntities($references: [EntityReferenceWithAuthKeysInput!]!) {
+          mutation UnpublishEntities($references: [EntityReferenceInput!]!) {
             unpublishEntities(references: $references) {
               __typename
               id
@@ -2331,7 +2331,7 @@ describe('unpublishEntities()', () => {
     const result = await graphql({
       schema,
       source: `
-        mutation UnpublishEntities($references: [EntityReferenceWithAuthKeysInput!]!) {
+        mutation UnpublishEntities($references: [EntityReferenceInput!]!) {
           unpublishEntities(references: $references) {
             __typename
             id
@@ -2355,8 +2355,8 @@ describe('unpublishEntities()', () => {
   });
 
   test('Error: using the wrong authKey', async () => {
-    const { adminClient } = server;
-    const createResult = await adminClient.createEntity({
+    const { adminClientOther } = server;
+    const createResult = await adminClientOther.createEntity({
       info: { type: 'MutationFoo', name: 'Howdy name', authKey: 'subject' },
       fields: { title: 'Howdy title', summary: 'Howdy summary' },
     });
@@ -2368,14 +2368,14 @@ describe('unpublishEntities()', () => {
       const result = (await graphql({
         schema,
         source: `
-          mutation UnpublishEntities($references: [EntityReferenceWithAuthKeysInput!]!) {
+          mutation UnpublishEntities($references: [EntityReferenceInput!]!) {
             unpublishEntities(references: $references) {
               id
             }
           }
         `,
         contextValue: createContext(),
-        variableValues: { references: [{ id, authKeys: ['none'] }] },
+        variableValues: { references: [{ id }] },
       })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
       expect(result).toEqual({
         data: {

@@ -4423,7 +4423,7 @@ describe('unpublishEntities()', () => {
         entity: { id: bazId },
       } = createBazResult.value;
 
-      const unpublishResult = await client.unpublishEntities([{ id: bazId, authKeys: ['none'] }]);
+      const unpublishResult = await adminClientOther.unpublishEntities([{ id: bazId }]);
       expectErrorResult(
         unpublishResult,
         ErrorType.NotAuthorized,
