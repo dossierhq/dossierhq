@@ -6,6 +6,7 @@ import type {
 import { PostgresQueryBuilder } from '@jonasb/datadata-database-adapter';
 import type { PostgresDatabaseAdapter } from '..';
 import { queryNone } from '../QueryFunctions';
+import { getSessionSubjectInternalId } from '../utils/SessionUtils';
 
 export async function adminEntityPublishingCreateEvents(
   databaseAdapter: PostgresDatabaseAdapter,
@@ -15,7 +16,7 @@ export async function adminEntityPublishingCreateEvents(
   const qb = new PostgresQueryBuilder(
     'INSERT INTO entity_publishing_events (entities_id, entity_versions_id, published_by, kind) VALUES'
   );
-  const subjectValue = qb.addValue(event.session.subjectInternalId);
+  const subjectValue = qb.addValue(getSessionSubjectInternalId(event.session));
   const kindValue = qb.addValue(event.kind);
   for (const reference of event.references) {
     qb.addQuery(

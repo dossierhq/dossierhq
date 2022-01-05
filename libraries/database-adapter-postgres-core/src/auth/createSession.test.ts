@@ -13,7 +13,7 @@ describe('authCreateSession', () => {
     const result = await authCreateSession(adapter, context, 'test', 'hello');
     expectResultValue(result, {
       principalEffect: 'created',
-      session: { subjectInternalId: 123, subjectId: '4321' },
+      session: { subjectId: '4321' },
     });
     expect(getQueryCalls(adapter)).toMatchInlineSnapshot(`
       Array [
@@ -52,7 +52,7 @@ describe('authCreateSession', () => {
     const result = await authCreateSession(adapter, context, 'test', 'hello');
     expectResultValue(result, {
       principalEffect: 'none',
-      session: { subjectInternalId: 123, subjectId: '4321' },
+      session: { subjectId: '4321' },
     });
     expect(getQueryCalls(adapter)).toMatchInlineSnapshot(`
       Array [
