@@ -127,10 +127,7 @@ export async function authVerifyAuthorizationKey(
   }
 
   for (const expectedAuthKey of resolveResult.value) {
-    if (
-      expectedAuthKey.authKey === actualAuthKey.authKey &&
-      expectedAuthKey.resolvedAuthKey === actualAuthKey.resolvedAuthKey
-    ) {
+    if (expectedAuthKey.resolvedAuthKey === actualAuthKey.resolvedAuthKey) {
       return ok(undefined);
     }
   }
