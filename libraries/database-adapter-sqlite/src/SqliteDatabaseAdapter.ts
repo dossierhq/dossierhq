@@ -12,6 +12,10 @@ import {
   adminEntityHistoryGetVersionsInfo,
 } from './admin-entity/getEntityHistory';
 import { adminEntityGetEntityName } from './admin-entity/getEntityName';
+import {
+  adminEntityPublishingHistoryGetEntityInfo,
+  adminEntityPublishingHistoryGetEvents,
+} from './admin-entity/getPublishingHistory';
 import { adminEntityGetReferenceEntitiesInfo } from './admin-entity/getReferenceEntitiesInfo';
 import {
   adminEntityPublishGetUnpublishedReferencedEntities,
@@ -75,12 +79,10 @@ export async function createSqliteDatabaseAdapter(
       adminEntityPublishGetVersionInfo(sqliteAdapter, ...args),
     adminEntityPublishingCreateEvents: (...args) =>
       adminEntityPublishingCreateEvents(sqliteAdapter, ...args),
-    adminEntityPublishingHistoryGetEntityInfo: () => {
-      throw new Error('TODO');
-    },
-    adminEntityPublishingHistoryGetEvents: () => {
-      throw new Error('TODO');
-    },
+    adminEntityPublishingHistoryGetEntityInfo: (...args) =>
+      adminEntityPublishingHistoryGetEntityInfo(sqliteAdapter, ...args),
+    adminEntityPublishingHistoryGetEvents: (...args) =>
+      adminEntityPublishingHistoryGetEvents(sqliteAdapter, ...args),
     adminEntityPublishUpdateEntity: (...args) =>
       adminEntityPublishUpdateEntity(sqliteAdapter, ...args),
     adminEntitySearchEntities: () => {
