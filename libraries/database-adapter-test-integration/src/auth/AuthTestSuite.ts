@@ -12,7 +12,8 @@ export function createAuthTestSuite<TCleanup>(
     createSession_create_new_identifier,
     createSession_create_existing_identifier,
     createSession_error_missing_provider,
-    createSession_error_create_missing_identifier
+    createSession_error_create_missing_identifier,
+    createSession_error_invalid_default_auth_key
   );
 }
 
@@ -20,11 +21,14 @@ function randomIdentifier() {
   return Math.random().toString();
 }
 
-async function createSession(server: Server, options?: { provider?: string; identifier?: string }) {
+async function createSession(
+  server: Server,
+  options?: { provider?: string; identifier?: string; defaultAuthKeys?: string[] }
+) {
   return await server.createSession({
     provider: options?.provider ?? 'test',
     identifier: options?.identifier ?? randomIdentifier(),
-    defaultAuthKeys: ['none'],
+    defaultAuthKeys: options?.defaultAuthKeys ?? ['none'],
   });
 }
 
@@ -60,4 +64,13 @@ async function createSession_error_missing_provider({ server }: { server: Server
 async function createSession_error_create_missing_identifier({ server }: { server: Server }) {
   const result = await createSession(server, { identifier: '' });
   assertErrorResult(result, ErrorType.BadRequest, 'Missing identifier');
+}
+
+async function createSession_error_invalid_default_auth_key({ server }: { server: Server }) {
+  const result = await createSession(server, { defaultAuthKeys: ['none', ' starting whitespace'] });
+  assertErrorResult(
+    result,
+    ErrorType.BadRequest,
+    'Invalid authKey ( starting whitespace), can’t start with whitespace'
+  );
 }

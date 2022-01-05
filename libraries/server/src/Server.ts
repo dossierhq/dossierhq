@@ -8,6 +8,7 @@ import type {
   PromiseResult,
   PublishedClient,
   PublishedClientMiddleware,
+  Result,
 } from '@jonasb/datadata-core';
 import {
   AdminSchema,
@@ -19,7 +20,7 @@ import {
 } from '@jonasb/datadata-core';
 import type { DatabaseAdapter, Session } from '@jonasb/datadata-database-adapter';
 import type { AuthorizationAdapter, SessionContext } from '.';
-import { authCreateSession } from './Auth';
+import { authCreateSession, verifyAuthKeysFormat } from './Auth';
 import type { InternalContext } from './Context';
 import { InternalContextImpl, SessionContextImpl } from './Context';
 import { getSchemaSpecification } from './Schema';
@@ -106,16 +107,22 @@ export class ServerImpl {
   }
 
   createSessionContext(
-    session: Session,
+    session: Readonly<Session>,
     defaultAuthKeys: readonly string[],
     logger: Logger | undefined
-  ): SessionContext {
+  ): Result<SessionContext, ErrorType.BadRequest> {
     assertIsDefined(this.#databaseAdapter);
-    return new SessionContextImpl(
-      session,
-      defaultAuthKeys,
-      this.#databaseAdapter,
-      logger ?? this.#logger
+
+    const verifyResult = verifyAuthKeysFormat(defaultAuthKeys);
+    if (verifyResult.isError()) return verifyResult;
+
+    return ok(
+      new SessionContextImpl(
+        session,
+        defaultAuthKeys,
+        this.#databaseAdapter,
+        logger ?? this.#logger
+      )
     );
   }
 }
@@ -154,16 +161,17 @@ export async function createServer({
         provider,
         identifier
       );
-      if (sessionResult.isError()) {
-        return sessionResult;
-      }
+      if (sessionResult.isError()) return sessionResult;
       const { principalEffect, session } = sessionResult.value;
-      const context = serverImpl.createSessionContext(
+
+      const contextResult = serverImpl.createSessionContext(
         session,
         defaultAuthKeys ?? [],
         sessionLogger ?? serverLogger
       );
-      return ok({ principalEffect, context });
+      if (contextResult.isError()) return contextResult;
+
+      return ok({ principalEffect, context: contextResult.value });
     },
     createAdminClient: (context, middleware) =>
       createServerAdminClient({
