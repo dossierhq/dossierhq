@@ -13,6 +13,15 @@ export interface EntitiesTable {
   published_entity_versions_id: number | null;
 }
 
+export interface EntityPublishingEventsTable {
+  id: number;
+  entities_id: number;
+  entity_versions_id: number | null;
+  kind: 'publish' | 'unpublish' | 'archive' | 'unarchive';
+  published_by: number;
+  published_at: string;
+}
+
 export interface EntityVersionsTable {
   id: number;
   entities_id: number;
