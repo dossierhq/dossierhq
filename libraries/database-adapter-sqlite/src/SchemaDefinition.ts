@@ -42,6 +42,7 @@ export const SCHEMA_DEFINITION_STATEMENTS = [
     id INTEGER PRIMARY KEY,
     entities_id INTEGER NOT NULL,
     version INTEGER NOT NULL,
+    created_at TEST NOT NULL,
     created_by INTEGER NOT NULL,
     fields TEXT NOT NULL,
     FOREIGN KEY (entities_id) REFERENCES entities(id) ON DELETE CASCADE,

@@ -80,13 +80,16 @@ export async function adminEntityUpdateEntity(
   randomNameGenerator: (name: string) => string,
   entity: DatabaseEntityUpdateEntityArg
 ): PromiseResult<DatabaseEntityUpdateEntityPayload, ErrorType.Generic> {
+  const now = Temporal.Now.instant();
+
   const createVersionResult = await queryOne<Pick<EntityVersionsTable, 'id'>>(
     databaseAdapter,
     context,
     {
-      text: 'INSERT INTO entity_versions (entities_id, created_by, version, fields) VALUES (?1, ?2, ?3, ?4) RETURNING id',
+      text: 'INSERT INTO entity_versions (entities_id, created_at, created_by, version, fields) VALUES (?1, ?2, ?3, ?4, ?5) RETURNING id',
       values: [
         entity.entityInternalId as number,
+        now.toString(),
         getSessionSubjectInternalId(entity.session),
         entity.version,
         JSON.stringify(entity.fieldValues),
@@ -135,7 +138,6 @@ export async function adminEntityUpdateEntity(
     newName = nameResult.value;
   }
 
-  const now = Temporal.Now.instant();
   //TODO update latest_fts
   const updateEntityResult = await queryNone(databaseAdapter, context, {
     text: `UPDATE entities SET

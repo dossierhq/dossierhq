@@ -7,6 +7,10 @@ import { adminCreateEntity } from './admin-entity/createEntity';
 import { adminEntityPublishingCreateEvents } from './admin-entity/createPublishingEvents';
 import { adminEntityGetMultiple } from './admin-entity/getEntities';
 import { adminGetEntity } from './admin-entity/getEntity';
+import {
+  adminEntityHistoryGetEntityInfo,
+  adminEntityHistoryGetVersionsInfo,
+} from './admin-entity/getEntityHistory';
 import { adminEntityGetEntityName } from './admin-entity/getEntityName';
 import { adminEntityGetReferenceEntitiesInfo } from './admin-entity/getReferenceEntitiesInfo';
 import {
@@ -61,12 +65,10 @@ export async function createSqliteDatabaseAdapter(
     adminEntityGetEntityName: (...args) => adminEntityGetEntityName(sqliteAdapter, ...args),
     adminEntityGetReferenceEntitiesInfo: (...args) =>
       adminEntityGetReferenceEntitiesInfo(sqliteAdapter, ...args),
-    adminEntityHistoryGetEntityInfo: () => {
-      throw new Error('TODO');
-    },
-    adminEntityHistoryGetVersionsInfo: () => {
-      throw new Error('TODO');
-    },
+    adminEntityHistoryGetEntityInfo: (...args) =>
+      adminEntityHistoryGetEntityInfo(sqliteAdapter, ...args),
+    adminEntityHistoryGetVersionsInfo: (...args) =>
+      adminEntityHistoryGetVersionsInfo(sqliteAdapter, ...args),
     adminEntityPublishGetUnpublishedReferencedEntities: (...args) =>
       adminEntityPublishGetUnpublishedReferencedEntities(sqliteAdapter, ...args),
     adminEntityPublishGetVersionInfo: (...args) =>
