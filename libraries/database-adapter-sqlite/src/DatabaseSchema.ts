@@ -17,6 +17,7 @@ export interface EntityVersionsTable {
   id: number;
   entities_id: number;
   version: number;
+  created_at: string;
   created_by: number;
   fields: string;
 }

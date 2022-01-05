@@ -4,6 +4,7 @@ import type { TestFunctionInitializer, TestSuite } from '..';
 import { buildSuite } from '../Builder';
 import { ArchiveEntitySubSuite } from './AdminEntityArchiveEntitySubSuite';
 import { CreateEntitySubSuite } from './AdminEntityCreateEntitySubSuite';
+import { GetEntityHistorySubSuite } from './AdminEntityGetEntityHistorySubSuite';
 import { GetEntitySubSuite } from './AdminEntityGetEntitySubSuite';
 import { PublishEntitiesSubSuite } from './AdminEntityPublishEntitiesSubSuite';
 import { UnarchiveEntitySubSuite } from './AdminEntityUnarchiveEntitySubSuite';
@@ -23,6 +24,7 @@ export function createAdminEntityTestSuite<TCleanup>(
     initializer,
     ...ArchiveEntitySubSuite,
     ...CreateEntitySubSuite,
+    ...GetEntityHistorySubSuite,
     ...GetEntitySubSuite,
     ...PublishEntitiesSubSuite,
     ...UnarchiveEntitySubSuite,
