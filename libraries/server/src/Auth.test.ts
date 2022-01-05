@@ -1,6 +1,6 @@
-import { ok } from '@jonasb/datadata-core';
-import { expectResultValue } from '@jonasb/datadata-core-jest';
-import { authCreateSession } from './Auth';
+import { ErrorType, ok } from '@jonasb/datadata-core';
+import { expectErrorResult, expectOkResult, expectResultValue } from '@jonasb/datadata-core-jest';
+import { authCreateSession, verifyAuthKeysFormat } from './Auth';
 import {
   createMockDatabaseAdapter,
   createMockTransactionContext,
@@ -31,5 +31,43 @@ describe('Auth authCreateSession', () => {
         ],
       ]
     `);
+  });
+});
+
+describe('Auth verifyAuthKeysFormat', () => {
+  test('Ok', () => {
+    expectOkResult(verifyAuthKeysFormat(['none', 'subject']));
+  });
+
+  test('Error: Empty', () => {
+    expectErrorResult(
+      verifyAuthKeysFormat(['none', '']),
+      ErrorType.BadRequest,
+      'No authKey provided'
+    );
+  });
+
+  test('Error: Initial whitespace', () => {
+    expectErrorResult(
+      verifyAuthKeysFormat(['none', ' subject']),
+      ErrorType.BadRequest,
+      'Invalid authKey ( subject), can’t start with whitespace'
+    );
+  });
+
+  test('Error: Ending whitespace', () => {
+    expectErrorResult(
+      verifyAuthKeysFormat(['none', 'subject ']),
+      ErrorType.BadRequest,
+      'Invalid authKey (subject ), can’t end with whitespace'
+    );
+  });
+
+  test('Error: Comma', () => {
+    expectErrorResult(
+      verifyAuthKeysFormat(['none', 'sub,ject']),
+      ErrorType.BadRequest,
+      'Invalid authKey (sub,ject), can’t contain comma'
+    );
   });
 });

@@ -1,4 +1,4 @@
-import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
+import type { ErrorType, PromiseResult, Result } from '@jonasb/datadata-core';
 import { notOk, ok } from '@jonasb/datadata-core';
 import type {
   DatabaseAdapter,
@@ -23,6 +23,33 @@ export async function authCreateSession(
   return await databaseAdapter.authCreateSession(context, provider, identifier);
 }
 
+function verifyAuthKeyFormat(authKey: string): Result<void, ErrorType.BadRequest> {
+  if (!authKey) {
+    return notOk.BadRequest('No authKey provided');
+  }
+  if (authKey.trimStart() !== authKey) {
+    return notOk.BadRequest(`Invalid authKey (${authKey}), can’t start with whitespace`);
+  }
+  if (authKey.trimEnd() !== authKey) {
+    return notOk.BadRequest(`Invalid authKey (${authKey}), can’t end with whitespace`);
+  }
+  if (authKey.includes(',')) {
+    // Don't allow commas since it makes CSV error prone in HTTP header
+    return notOk.BadRequest(`Invalid authKey (${authKey}), can’t contain comma`);
+  }
+  return ok(undefined);
+}
+
+export function verifyAuthKeysFormat(
+  authKeys: Readonly<string[]>
+): Result<void, ErrorType.BadRequest> {
+  for (const authKey of authKeys) {
+    const result = verifyAuthKeyFormat(authKey);
+    if (result.isError()) return result;
+  }
+  return ok(undefined);
+}
+
 export async function authResolveAuthorizationKey(
   authorizationAdapter: AuthorizationAdapter,
   context: SessionContext,
@@ -31,13 +58,12 @@ export async function authResolveAuthorizationKey(
   ResolvedAuthKey,
   ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
 > {
-  if (!authKey) {
-    return notOk.BadRequest('No authKey provided');
-  }
+  const verifyResult = verifyAuthKeyFormat(authKey);
+  if (verifyResult.isError()) return verifyResult;
+
   const resolvedResult = await authorizationAdapter.resolveAuthorizationKeys(context, [authKey]);
-  if (resolvedResult.isError()) {
-    return resolvedResult;
-  }
+  if (resolvedResult.isError()) return resolvedResult;
+
   const resolvedAuthKey = resolvedResult.value[authKey];
   if (!resolvedAuthKey) {
     return notOk.Generic(
@@ -63,6 +89,9 @@ export async function authResolveAuthorizationKeys(
   if (expectedAuthKeys.length === 0) {
     return notOk.BadRequest('No authKeys provided');
   }
+
+  const verifyResult = verifyAuthKeysFormat(expectedAuthKeys);
+  if (verifyResult.isError()) return verifyResult;
 
   const resolvedResult = await authorizationAdapter.resolveAuthorizationKeys(
     context,
