@@ -42,6 +42,6 @@ The **Session Context** represents the authenticated **Subject** to the **Server
 
 ## Authorization
 
-All **Entities** are associated with an **Authorization Key** and **Resolved Authorization Key** pair. A **Subject** can only access **Entities** if they have access to the same pair.
+When creating an **Entity** the **Subject** provides an **Authorization Key**. The **Authorization Key** is resolved to a **Resolved Authorization Key**. The **Resolved Authorization Key** is required to access the **Entity**.
 
-The **Application** provides an **Authorization Adapter** that 1) authorizes the **Subject** to use an **Authorization Key** and 2) resolves it to a **Resolved Authorization Key** (that can differ for different **Subjects**).
+The **Application** provides an **Authorization Adapter** that 1) authorizes the **Subject** to use an **Authorization Key** and 2) resolves it to a **Resolved Authorization Key**. The **Resolved Authorization Key** can differ for different **Subjects**.
