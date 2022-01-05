@@ -22,7 +22,7 @@ describe('authCreateSession', () => {
       } = result.value;
       expectResultValue(result, {
         principalEffect: 'created',
-        session: { subjectInternalId: 123, subjectId },
+        session: { subjectId },
       });
 
       expect(getQueryCalls(adapter)).toEqual([
@@ -68,7 +68,7 @@ describe('authCreateSession', () => {
       } = result.value;
       expectResultValue(result, {
         principalEffect: 'none',
-        session: { subjectInternalId: 123, subjectId },
+        session: { subjectId },
       });
 
       expect(getQueryCalls(adapter)).toMatchInlineSnapshot(`

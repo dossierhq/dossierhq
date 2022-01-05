@@ -8,6 +8,7 @@ import {
 import type { PostgresDatabaseAdapter } from '..';
 import { UniqueConstraints, type EntitiesTable, type EntityVersionsTable } from '../DatabaseSchema';
 import { queryNone, queryOne } from '../QueryFunctions';
+import { getSessionSubjectInternalId } from '../utils/SessionUtils';
 import { withUniqueNameAttempt } from '../utils/withUniqueNameAttempt';
 
 export async function adminCreateEntity(
@@ -33,7 +34,7 @@ export async function adminCreateEntity(
     context,
     {
       text: 'INSERT INTO entity_versions (entities_id, version, created_by, data) VALUES ($1, 0, $2, $3) RETURNING id',
-      values: [entityId, entity.creator.subjectInternalId, entity.fieldsData],
+      values: [entityId, getSessionSubjectInternalId(entity.creator), entity.fieldsData],
     }
   );
   if (createEntityVersionResult.isError()) {

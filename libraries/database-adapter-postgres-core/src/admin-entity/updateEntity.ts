@@ -12,6 +12,7 @@ import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema';
 import { UniqueConstraints } from '../DatabaseSchema';
 import { queryNone, queryNoneOrOne, queryOne } from '../QueryFunctions';
 import { resolveEntityStatus } from '../utils/CodecUtils';
+import { getSessionSubjectInternalId } from '../utils/SessionUtils';
 import { withUniqueNameAttempt } from '../utils/withUniqueNameAttempt';
 
 export async function adminEntityUpdateGetEntityInfo(
@@ -85,7 +86,7 @@ export async function adminEntityUpdateEntity(
       text: 'INSERT INTO entity_versions (entities_id, created_by, version, data) VALUES ($1, $2, $3, $4) RETURNING id',
       values: [
         entity.entityInternalId,
-        entity.session.subjectInternalId,
+        getSessionSubjectInternalId(entity.session),
         entity.version,
         entity.fieldValues,
       ],

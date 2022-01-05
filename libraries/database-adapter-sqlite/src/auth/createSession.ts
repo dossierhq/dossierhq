@@ -2,7 +2,6 @@ import type { OkResult, PromiseResult } from '@jonasb/datadata-core';
 import { ErrorType, notOk, ok } from '@jonasb/datadata-core';
 import type {
   DatabaseAuthCreateSessionPayload,
-  Session,
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
 import { Temporal } from '@js-temporal/polyfill';
@@ -11,6 +10,7 @@ import type { SqliteDatabaseAdapter } from '..';
 import type { SubjectsTable } from '../DatabaseSchema';
 import { PrincipalsUniqueProviderIdentifierConstraint } from '../DatabaseSchema';
 import { queryNone, queryNoneOrOne, queryOne } from '../QueryFunctions';
+import { createSession } from '../utils/SessionUtils';
 
 export async function authCreateSession(
   adapter: SqliteDatabaseAdapter,
@@ -52,7 +52,7 @@ function createPayload<TError extends ErrorType>(
   principalEffect: 'created' | 'none',
   { id, uuid }: Pick<SubjectsTable, 'id' | 'uuid'>
 ): OkResult<DatabaseAuthCreateSessionPayload, TError> {
-  const session: Session = { subjectInternalId: id, subjectId: uuid };
+  const session = createSession({ subjectInternalId: id, subjectId: uuid });
   return ok({ principalEffect, session });
 }
 
