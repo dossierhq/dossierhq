@@ -1,4 +1,4 @@
-import type { ErrorType, OkResult, Result } from '@jonasb/datadata-core';
+import type { ErrorResult, ErrorType, OkResult, Result } from '@jonasb/datadata-core';
 import { createErrorResult, isFieldValueEqual } from '@jonasb/datadata-core';
 
 class AssertionError extends Error {
@@ -47,7 +47,7 @@ export function assertErrorResult(
   actual: Result<unknown, ErrorType>,
   expectedErrorType: ErrorType,
   expectedMessage: string
-): void {
+): asserts actual is ErrorResult<unknown, ErrorType> {
   if (!actual.isError()) {
     throw new AssertionError(
       actual,
