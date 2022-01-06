@@ -33,7 +33,7 @@ export function assertNotSame<T>(actual: T, expected: T): void {
 
 export function assertOkResult<TOk, TError extends ErrorType>(
   actual: Result<unknown, ErrorType>
-): actual is OkResult<TOk, TError> {
+): asserts actual is OkResult<TOk, TError> {
   if (actual.isError()) {
     throw new AssertionError(
       actual,
@@ -41,7 +41,6 @@ export function assertOkResult<TOk, TError extends ErrorType>(
       `Expected ok, got error ${actual.error}: ${actual.message}`
     );
   }
-  return true;
 }
 
 export function assertErrorResult(
@@ -65,9 +64,8 @@ export function assertResultValue<TOk, TError extends ErrorType>(
   result: Result<TOk, TError>,
   expectedValue: TOk
 ): void {
-  if (assertOkResult(result)) {
-    if (!isFieldValueEqual(result.value, expectedValue)) {
-      throw new AssertionError(result.value, expectedValue, `Expected result values to equal`);
-    }
+  assertOkResult(result);
+  if (!isFieldValueEqual(result.value, expectedValue)) {
+    throw new AssertionError(result.value, expectedValue, `Expected result values to equal`);
   }
 }

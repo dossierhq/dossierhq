@@ -17,110 +17,104 @@ export const PublishEntitiesSubSuite: UnboundTestFunction<AdminEntityTestContext
 
 async function publishEntities_minimal({ client }: AdminEntityTestContext) {
   const createResult = await client.createEntity(TITLE_ONLY_CREATE);
-  if (assertOkResult(createResult)) {
-    const {
-      entity: {
-        id,
-        info: { version },
-      },
-    } = createResult.value;
+  assertOkResult(createResult);
+  const {
+    entity: {
+      id,
+      info: { version },
+    },
+  } = createResult.value;
 
-    const publishResult = await client.publishEntities([{ id, version }]);
-    if (assertOkResult(publishResult)) {
-      const [{ updatedAt }] = publishResult.value;
-      assertResultValue(publishResult, [
-        {
-          id,
-          effect: 'published',
-          status: AdminEntityStatus.published,
-          updatedAt,
-        },
-      ]);
+  const publishResult = await client.publishEntities([{ id, version }]);
+  assertOkResult(publishResult);
+  const [{ updatedAt }] = publishResult.value;
+  assertResultValue(publishResult, [
+    {
+      id,
+      effect: 'published',
+      status: AdminEntityStatus.published,
+      updatedAt,
+    },
+  ]);
 
-      const expectedEntity = copyEntity(createResult.value.entity, {
-        info: { status: AdminEntityStatus.published, updatedAt },
-      });
+  const expectedEntity = copyEntity(createResult.value.entity, {
+    info: { status: AdminEntityStatus.published, updatedAt },
+  });
 
-      const getResult = await client.getEntity({ id });
-      assertResultValue(getResult, expectedEntity);
-    }
-  }
+  const getResult = await client.getEntity({ id });
+  assertResultValue(getResult, expectedEntity);
 }
 
 async function publishEntities_minimalWithSubjectAuthKey({ client }: AdminEntityTestContext) {
   const createResult = await client.createEntity(
     copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } })
   );
-  if (assertOkResult(createResult)) {
-    const {
-      entity: {
-        id,
-        info: { version },
-      },
-    } = createResult.value;
+  assertOkResult(createResult);
+  const {
+    entity: {
+      id,
+      info: { version },
+    },
+  } = createResult.value;
 
-    const publishResult = await client.publishEntities([{ id, version }]);
-    if (assertOkResult(publishResult)) {
-      const [{ updatedAt }] = publishResult.value;
-      assertResultValue(publishResult, [
-        {
-          id,
-          effect: 'published',
-          status: AdminEntityStatus.published,
-          updatedAt,
-        },
-      ]);
+  const publishResult = await client.publishEntities([{ id, version }]);
+  assertOkResult(publishResult);
+  const [{ updatedAt }] = publishResult.value;
+  assertResultValue(publishResult, [
+    {
+      id,
+      effect: 'published',
+      status: AdminEntityStatus.published,
+      updatedAt,
+    },
+  ]);
 
-      const expectedEntity = copyEntity(createResult.value.entity, {
-        info: { status: AdminEntityStatus.published, updatedAt },
-      });
+  const expectedEntity = copyEntity(createResult.value.entity, {
+    info: { status: AdminEntityStatus.published, updatedAt },
+  });
 
-      const getResult = await client.getEntity({ id });
-      assertResultValue(getResult, expectedEntity);
-    }
-  }
+  const getResult = await client.getEntity({ id });
+  assertResultValue(getResult, expectedEntity);
 }
 
 async function publishEntities_errorMissingRequiredTitle({ client }: AdminEntityTestContext) {
   const createResult = await client.createEntity(
     copyEntity(TITLE_ONLY_CREATE, { fields: { title: null } })
   );
-  if (assertOkResult(createResult)) {
-    const {
-      entity: {
-        id,
-        info: { version },
-      },
-    } = createResult.value;
+  assertOkResult(createResult);
+  const {
+    entity: {
+      id,
+      info: { version },
+    },
+  } = createResult.value;
 
-    const publishResult = await client.publishEntities([{ id, version }]);
-    assertErrorResult(
-      publishResult,
-      ErrorType.BadRequest,
-      `entity(${id}).fields.title: Required field is empty`
-    );
-  }
+  const publishResult = await client.publishEntities([{ id, version }]);
+  assertErrorResult(
+    publishResult,
+    ErrorType.BadRequest,
+    `entity(${id}).fields.title: Required field is empty`
+  );
 }
 
 async function publishEntities_errorWrongAuthKey({ server }: AdminEntityTestContext) {
   const createResult = await adminClientForMainPrincipal(server).createEntity(
     copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } })
   );
-  if (assertOkResult(createResult)) {
-    const {
-      entity: {
-        id,
-        info: { version },
-      },
-    } = createResult.value;
+  assertOkResult(createResult);
+  const {
+    entity: {
+      id,
+      info: { version },
+    },
+  } = createResult.value;
 
-    const publishResult = await adminClientForSecondaryPrincipal(server).publishEntities([
-      { id, version },
-    ]);
-    assertErrorResult(
-      publishResult,
-      ErrorType.NotAuthorized,
-      `entity(${id}): Wrong authKey provided`
-    );
-  }
+  const publishResult = await adminClientForSecondaryPrincipal(server).publishEntities([
+    { id, version },
+  ]);
+  assertErrorResult(
+    publishResult,
+    ErrorType.NotAuthorized,
+    `entity(${id}): Wrong authKey provided`
+  );
 }

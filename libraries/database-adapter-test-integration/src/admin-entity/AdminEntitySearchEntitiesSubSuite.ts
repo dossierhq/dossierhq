@@ -10,13 +10,11 @@ export const SearchEntitiesSubSuite: UnboundTestFunction<AdminEntityTestContext>
 
 async function searchEntities_minimal({ server }: AdminEntityTestContext) {
   const setupResult = await getReadOnlyEntities(server);
-  if (assertOkResult(setupResult)) {
-    const readOnlyEntities = setupResult.value;
-    const result = await adminClientForMainPrincipal(server).searchEntities({
-      entityTypes: ['ReadOnly'],
-    });
-    if (assertOkResult(result)) {
-      assertSame(result.value?.edges.length, readOnlyEntities.length);
-    }
-  }
+  assertOkResult(setupResult);
+  const readOnlyEntities = setupResult.value;
+  const result = await adminClientForMainPrincipal(server).searchEntities({
+    entityTypes: ['ReadOnly'],
+  });
+  assertOkResult(result);
+  assertSame(result.value?.edges.length, readOnlyEntities.length);
 }

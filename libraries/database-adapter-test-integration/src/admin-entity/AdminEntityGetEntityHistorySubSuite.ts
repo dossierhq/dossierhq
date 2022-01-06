@@ -18,82 +18,76 @@ export const GetEntityHistorySubSuite: UnboundTestFunction<AdminEntityTestContex
 
 async function getEntityHistory_minimal({ server }: AdminEntityTestContext) {
   const sessionResult = await sessionForMainPrincipal(server);
-  if (assertOkResult(sessionResult)) {
-    const context = sessionResult.value;
-    const adminClient = server.createAdminClient(context);
-    const createResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
+  assertOkResult(sessionResult);
 
-    if (assertOkResult(createResult)) {
-      const {
-        entity: {
-          id,
-          info: { createdAt },
-        },
-      } = createResult.value;
+  const context = sessionResult.value;
+  const adminClient = server.createAdminClient(context);
+  const createResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
+  assertOkResult(createResult);
+  const {
+    entity: {
+      id,
+      info: { createdAt },
+    },
+  } = createResult.value;
 
-      const getResult = await adminClient.getEntityHistory({ id });
-      assertResultValue(getResult, {
-        id,
-        versions: [
-          {
-            createdAt,
-            createdBy: context.session.subjectId,
-            published: false,
-            version: 0,
-          },
-        ],
-      });
-    }
-  }
+  const getResult = await adminClient.getEntityHistory({ id });
+  assertResultValue(getResult, {
+    id,
+    versions: [
+      {
+        createdAt,
+        createdBy: context.session.subjectId,
+        published: false,
+        version: 0,
+      },
+    ],
+  });
 }
 
 async function getEntityHistory_updateAndPublish({ server }: AdminEntityTestContext) {
   const sessionResult = await sessionForMainPrincipal(server);
-  if (assertOkResult(sessionResult)) {
-    const context = sessionResult.value;
-    const adminClient = server.createAdminClient(context);
-    const createResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
+  assertOkResult(sessionResult);
+  const context = sessionResult.value;
+  const adminClient = server.createAdminClient(context);
+  const createResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
+  assertOkResult(createResult);
+  const {
+    entity: {
+      id,
+      info: { createdAt },
+    },
+  } = createResult.value;
 
-    if (assertOkResult(createResult)) {
-      const {
-        entity: {
-          id,
-          info: { createdAt },
-        },
-      } = createResult.value;
+  const updateResult = await adminClient.updateEntity(
+    { id, fields: { title: 'Updated title' } },
+    { publish: true }
+  );
+  assertOkResult(updateResult);
+  const {
+    entity: {
+      info: { updatedAt },
+    },
+  } = updateResult.value;
 
-      const updateResult = await adminClient.updateEntity(
-        { id, fields: { title: 'Updated title' } },
-        { publish: true }
-      );
-      if (assertOkResult(updateResult)) {
-        const {
-          entity: {
-            info: { updatedAt },
-          },
-        } = updateResult.value;
-
-        const getResult = await adminClient.getEntityHistory({ id });
-        assertResultValue(getResult, {
-          id,
-          versions: [
-            {
-              createdAt,
-              createdBy: context.session.subjectId,
-              published: false,
-              version: 0,
-            },
-            {
-              createdAt: updatedAt,
-              createdBy: context.session.subjectId,
-              published: true,
-              version: 1,
-            },
-          ],
-        });
-      }
-    }
-  }
+  const getResult = await adminClient.getEntityHistory({ id });
+  assertResultValue(getResult, {
+    id,
+    versions: [
+      {
+        createdAt,
+        createdBy: context.session.subjectId,
+        published: false,
+        version: 0,
+      },
+      {
+        createdAt: updatedAt,
+        createdBy: context.session.subjectId,
+        published: true,
+        version: 1,
+      },
+    ],
+  });
 }
 
 async function getEntityHistory_errorInvalidId({ client }: AdminEntityTestContext) {
@@ -107,13 +101,11 @@ async function getEntityHistory_errorWrongAuthKey({ server }: AdminEntityTestCon
       info: { authKey: 'subject' },
     })
   );
+  assertOkResult(createResult);
+  const {
+    entity: { id },
+  } = createResult.value;
 
-  if (assertOkResult(createResult)) {
-    const {
-      entity: { id },
-    } = createResult.value;
-
-    const getResult = await adminClientForSecondaryPrincipal(server).getEntityHistory({ id });
-    assertErrorResult(getResult, ErrorType.NotAuthorized, 'Wrong authKey provided');
-  }
+  const getResult = await adminClientForSecondaryPrincipal(server).getEntityHistory({ id });
+  assertErrorResult(getResult, ErrorType.NotAuthorized, 'Wrong authKey provided');
 }

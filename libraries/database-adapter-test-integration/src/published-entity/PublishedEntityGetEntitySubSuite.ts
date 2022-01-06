@@ -22,23 +22,22 @@ async function getEntity_withSubjectAuthKey({
     copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } }),
     { publish: true }
   );
-  if (assertOkResult(createResult)) {
-    const {
-      entity: {
-        id,
-        info: { name, createdAt },
-      },
-    } = createResult.value;
+  assertOkResult(createResult);
+  const {
+    entity: {
+      id,
+      info: { name, createdAt },
+    },
+  } = createResult.value;
 
-    const getResult = await publishedClient.getEntity({ id });
-    assertResultValue(
-      getResult,
-      copyEntity(TITLE_ONLY_PUBLISHED_ENTITY, {
-        id,
-        info: { authKey: 'subject', name, createdAt },
-      })
-    );
-  }
+  const getResult = await publishedClient.getEntity({ id });
+  assertResultValue(
+    getResult,
+    copyEntity(TITLE_ONLY_PUBLISHED_ENTITY, {
+      id,
+      info: { authKey: 'subject', name, createdAt },
+    })
+  );
 }
 
 async function getEntity_errorInvalidId({ publishedClient }: PublishedEntityTestContext) {
@@ -54,12 +53,11 @@ async function getEntity_errorWrongAuthKey({ server }: PublishedEntityTestContex
     { publish: true }
   );
 
-  if (assertOkResult(createResult)) {
-    const {
-      entity: { id },
-    } = createResult.value;
+  assertOkResult(createResult);
+  const {
+    entity: { id },
+  } = createResult.value;
 
-    const getResult = await publishedClientForSecondaryPrincipal(server).getEntity({ id });
-    assertErrorResult(getResult, ErrorType.NotAuthorized, 'Wrong authKey provided');
-  }
+  const getResult = await publishedClientForSecondaryPrincipal(server).getEntity({ id });
+  assertErrorResult(getResult, ErrorType.NotAuthorized, 'Wrong authKey provided');
 }
