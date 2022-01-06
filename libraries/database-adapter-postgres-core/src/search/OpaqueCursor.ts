@@ -1,36 +1,43 @@
 import type { ErrorType, Result } from '@jonasb/datadata-core';
-import { ok, notOk } from '@jonasb/datadata-core';
+import { assertExhaustive, notOk, ok } from '@jonasb/datadata-core';
+import type { PostgresDatabaseAdapter } from '..';
 
 export type CursorNativeType = 'int' | 'string';
 
-export function toOpaqueCursor(type: CursorNativeType, value: unknown): string {
+export function toOpaqueCursor(
+  databaseAdapter: PostgresDatabaseAdapter,
+  type: CursorNativeType,
+  value: unknown
+): string {
   switch (type) {
     case 'int':
-      return Buffer.from(String(value as number)).toString('base64');
+      return databaseAdapter.base64Encode(String(value as number));
     case 'string':
-      return Buffer.from(value as string).toString('base64');
+      return databaseAdapter.base64Encode(value as string);
     default:
-      throw new Error(`Unknown cursor type ${type}`);
+      assertExhaustive(type);
   }
 }
 
 export function fromOpaqueCursor(
+  databaseAdapter: PostgresDatabaseAdapter,
   type: CursorNativeType,
   cursor: string
 ): Result<unknown, ErrorType.BadRequest> {
   switch (type) {
     case 'int': {
-      const value = Number.parseInt(Buffer.from(cursor, 'base64').toString('ascii'));
+      const decoded = databaseAdapter.base64Decode(cursor);
+      const value = Number.parseInt(decoded);
       if (Number.isNaN(value)) {
         return notOk.BadRequest('Invalid format of cursor');
       }
       return ok(value);
     }
     case 'string': {
-      const value = Buffer.from(cursor, 'base64').toString('ascii');
+      const value = databaseAdapter.base64Decode(cursor);
       return ok(value);
     }
     default:
-      throw new Error(`Unknown cursor type ${type}`);
+      assertExhaustive(type);
   }
 }

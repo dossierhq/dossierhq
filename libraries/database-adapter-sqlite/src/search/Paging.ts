@@ -1,6 +1,5 @@
 import type { ErrorType, Paging, Result } from '@jonasb/datadata-core';
 import { getPagingInfo, ok } from '@jonasb/datadata-core';
-import type { PostgresDatabaseAdapter } from '..';
 import type { CursorNativeType } from './OpaqueCursor';
 import { fromOpaqueCursor } from './OpaqueCursor';
 
@@ -14,7 +13,6 @@ export interface ResolvedPaging<TCursor> {
 }
 
 function getCursor(
-  databaseAdapter: PostgresDatabaseAdapter,
   cursorType: CursorNativeType,
   paging: Paging | undefined,
   key: 'after' | 'before'
@@ -22,18 +20,17 @@ function getCursor(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const cursor = (paging as any)?.[key];
   if (cursor) {
-    return fromOpaqueCursor(databaseAdapter, cursorType, cursor);
+    return fromOpaqueCursor(cursorType, cursor);
   }
   return null;
 }
 
 export function resolvePaging<TCursor>(
-  databaseAdapter: PostgresDatabaseAdapter,
   cursorType: CursorNativeType,
   paging?: Paging
 ): Result<ResolvedPaging<TCursor>, ErrorType.BadRequest> {
-  const after = getCursor(databaseAdapter, cursorType, paging, 'after');
-  const before = getCursor(databaseAdapter, cursorType, paging, 'before');
+  const after = getCursor(cursorType, paging, 'after');
+  const before = getCursor(cursorType, paging, 'before');
 
   if (after?.isError()) {
     return after;

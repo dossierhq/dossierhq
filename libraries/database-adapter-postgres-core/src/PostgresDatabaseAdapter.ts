@@ -53,6 +53,9 @@ export interface PostgresDatabaseAdapter {
   ): Promise<R[]>;
 
   isUniqueViolationOfConstraint(error: unknown, constraintName: string): boolean;
+
+  base64Encode(value: string): string;
+  base64Decode(value: string): string;
 }
 
 export function createPostgresDatabaseAdapterAdapter(
