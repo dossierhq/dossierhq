@@ -63,7 +63,7 @@ export function assertErrorResult(
 export function assertResultValue<TOk, TError extends ErrorType>(
   result: Result<TOk, TError>,
   expectedValue: TOk
-): void {
+): asserts result is OkResult<TOk, TError> {
   assertOkResult(result);
   if (!isFieldValueEqual(result.value, expectedValue)) {
     throw new AssertionError(result.value, expectedValue, `Expected result values to equal`);
