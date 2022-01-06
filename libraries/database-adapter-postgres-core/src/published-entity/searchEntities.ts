@@ -24,7 +24,13 @@ export async function publishedEntitySearchEntities(
   paging: Paging | undefined,
   resolvedAuthKeys: ResolvedAuthKey[]
 ): PromiseResult<DatabasePublishedEntitySearchPayload, ErrorType.BadRequest | ErrorType.Generic> {
-  const sqlQueryResult = searchPublishedEntitiesQuery(schema, query, paging, resolvedAuthKeys);
+  const sqlQueryResult = searchPublishedEntitiesQuery(
+    databaseAdapter,
+    schema,
+    query,
+    paging,
+    resolvedAuthKeys
+  );
   if (sqlQueryResult.isError()) {
     return sqlQueryResult;
   }

@@ -22,6 +22,7 @@ import {
   adminEntityPublishGetVersionInfo,
   adminEntityPublishUpdateEntity,
 } from './admin-entity/publishEntities';
+import { adminEntitySearchEntities } from './admin-entity/searchEntities';
 import {
   adminEntityUnpublishEntities,
   adminEntityUnpublishGetEntitiesInfo,
@@ -85,9 +86,7 @@ export async function createSqliteDatabaseAdapter(
       adminEntityPublishingHistoryGetEvents(sqliteAdapter, ...args),
     adminEntityPublishUpdateEntity: (...args) =>
       adminEntityPublishUpdateEntity(sqliteAdapter, ...args),
-    adminEntitySearchEntities: () => {
-      throw new Error('TODO');
-    },
+    adminEntitySearchEntities: (...args) => adminEntitySearchEntities(sqliteAdapter, ...args),
     adminEntitySearchTotalCount: () => {
       throw new Error('TODO');
     },

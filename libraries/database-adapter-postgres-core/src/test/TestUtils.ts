@@ -27,6 +27,8 @@ class DummyContextImpl extends TransactionContextImpl<TransactionContext> {
 
 interface MockedPostgresDatabaseAdapter extends PostgresDatabaseAdapter {
   query: jest.MockedFunction<QueryFn>;
+  base64Encode: jest.MockedFunction<PostgresDatabaseAdapter['base64Encode']>;
+  base64Decode: jest.MockedFunction<PostgresDatabaseAdapter['base64Decode']>;
 }
 
 export class MockUniqueViolationOfConstraintError extends Error {
@@ -46,7 +48,8 @@ export function createMockContext(adapter: PostgresDatabaseAdapter): Transaction
 
 export function createMockAdapter(): MockedPostgresDatabaseAdapter {
   const query: jest.MockedFunction<QueryFn> = jest.fn();
-  return {
+
+  const databaseAdapter: MockedPostgresDatabaseAdapter = {
     disconnect: jest.fn(),
     isUniqueViolationOfConstraint: (error, constraintName) =>
       error instanceof MockUniqueViolationOfConstraintError &&
@@ -57,7 +60,16 @@ export function createMockAdapter(): MockedPostgresDatabaseAdapter {
       savePointCount: 0,
       release: jest.fn(),
     }),
+    base64Encode: jest.fn(),
+    base64Decode: jest.fn(),
   };
+
+  databaseAdapter.base64Encode.mockImplementation((value) => Buffer.from(value).toString('base64'));
+  databaseAdapter.base64Decode.mockImplementation((value) =>
+    Buffer.from(value, 'base64').toString('ascii')
+  );
+
+  return databaseAdapter;
 }
 
 export function getQueryCalls(adapter: MockedPostgresDatabaseAdapter): [string, ...unknown[]][] {

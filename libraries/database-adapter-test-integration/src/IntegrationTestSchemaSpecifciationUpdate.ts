@@ -3,6 +3,10 @@ import { FieldType, type AdminSchemaSpecificationUpdate } from '@jonasb/datadata
 export const IntegrationTestSchemaSpecifciationUpdate: AdminSchemaSpecificationUpdate = {
   entityTypes: [
     {
+      name: 'ReadOnly',
+      fields: [{ name: 'message', type: FieldType.String, required: true }],
+    },
+    {
       name: 'References',
       fields: [
         { name: 'any', type: FieldType.EntityType },

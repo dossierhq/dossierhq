@@ -46,6 +46,14 @@ export function createPostgresAdapter(poolConfig: PoolConfig): DatabaseAdapter {
       return result.rows;
     },
     isUniqueViolationOfConstraint,
+
+    base64Encode(value) {
+      return Buffer.from(value).toString('base64');
+    },
+
+    base64Decode(value) {
+      return Buffer.from(value, 'base64').toString('ascii');
+    },
   };
   return createPostgresDatabaseAdapterAdapter(adapter);
 }

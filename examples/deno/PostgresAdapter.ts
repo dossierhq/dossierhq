@@ -6,6 +6,7 @@ import type {
 import { createPostgresDatabaseAdapterAdapter } from "@jonasb/datadata-database-adapter-postgres-core";
 import type { PoolClient } from "postgres";
 import { Pool, PostgresError } from "postgres";
+import { decode, encode } from "std/encoding/base64.ts";
 
 //TODO configure type parser for deno
 // PgTypes.setTypeParser(PgTypes.builtins.INT8, BigInt);
@@ -21,6 +22,8 @@ interface TransactionWrapper extends PostgresTransaction {
   client: PoolClient;
 }
 
+const textDecoder = new TextDecoder("utf-8");
+
 function getTransaction(transaction: PostgresTransaction): PoolClient {
   return (transaction as TransactionWrapper).client;
 }
@@ -29,6 +32,7 @@ export function createPostgresAdapter(databaseUrl: string): DatabaseAdapter {
   const pool = new Pool(databaseUrl, 4, true);
   const adapter: PostgresDatabaseAdapter = {
     disconnect: () => pool.end(),
+
     createTransaction: async () => {
       const client = await pool.connect();
       const transaction: TransactionWrapper = {
@@ -41,6 +45,7 @@ export function createPostgresAdapter(databaseUrl: string): DatabaseAdapter {
       };
       return transaction;
     },
+
     query: async (transaction, query, values) => {
       let result: { rows: unknown[] };
       if (transaction) {
@@ -59,7 +64,16 @@ export function createPostgresAdapter(databaseUrl: string): DatabaseAdapter {
       // deno-lint-ignore no-explicit-any
       return result.rows as any[];
     },
+
     isUniqueViolationOfConstraint,
+
+    base64Encode(value) {
+      return encode(value);
+    },
+
+    base64Decode(value) {
+      return textDecoder.decode(decode(value));
+    },
   };
   return createPostgresDatabaseAdapterAdapter(adapter);
 }

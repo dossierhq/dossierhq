@@ -9,59 +9,57 @@ import type {
 } from '@jonasb/datadata-core';
 import { AdminQueryOrder, notOk, ok, PublishedQueryOrder } from '@jonasb/datadata-core';
 import type { ResolvedAuthKey } from '@jonasb/datadata-database-adapter';
-import { PostgresQueryBuilder } from '@jonasb/datadata-database-adapter';
-import type { PostgresDatabaseAdapter } from '..';
+import { SqliteQueryBuilder } from '@jonasb/datadata-database-adapter';
+import type { ColumnValue } from '..';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema';
 import type { CursorNativeType } from './OpaqueCursor';
 import { toOpaqueCursor } from './OpaqueCursor';
 import { resolvePaging } from './Paging';
 
 // id and updated are included for order by
+//TODO add updated
 export type SearchAdminEntitiesItem = Pick<
   EntitiesTable,
-  'id' | 'uuid' | 'type' | 'name' | 'auth_key' | 'created_at' | 'updated_at' | 'updated' | 'status'
+  'id' | 'uuid' | 'type' | 'name' | 'auth_key' | 'created_at' | 'updated_at' | 'status'
 > &
-  Pick<EntityVersionsTable, 'version' | 'data'>;
+  Pick<EntityVersionsTable, 'version' | 'fields'>;
 export type SearchPublishedEntitiesItem = Pick<
   EntitiesTable,
   'id' | 'uuid' | 'type' | 'name' | 'auth_key' | 'created_at'
 > &
-  Pick<EntityVersionsTable, 'data'>;
+  Pick<EntityVersionsTable, 'fields'>;
 
 type CursorName = 'name' | 'updated' | 'id';
 
 export interface SharedEntitiesQuery<TItem> {
   text: string;
-  values: unknown[];
+  values: ColumnValue[];
   isForwards: boolean;
   pagingCount: number;
   cursorExtractor: (item: TItem) => string;
 }
 
 export function searchPublishedEntitiesQuery(
-  databaseAdapter: PostgresDatabaseAdapter,
   schema: PublishedSchema,
   query: PublishedQuery | undefined,
   paging: Paging | undefined,
   authKeys: ResolvedAuthKey[]
 ): Result<SharedEntitiesQuery<SearchPublishedEntitiesItem>, ErrorType.BadRequest> {
-  return sharedSearchEntitiesQuery(databaseAdapter, schema, query, paging, authKeys, true);
+  return sharedSearchEntitiesQuery(schema, query, paging, authKeys, true);
 }
 
 export function searchAdminEntitiesQuery(
-  databaseAdapter: PostgresDatabaseAdapter,
   schema: AdminSchema,
   query: AdminQuery | undefined,
   paging: Paging | undefined,
   authKeys: ResolvedAuthKey[]
 ): Result<SharedEntitiesQuery<SearchAdminEntitiesItem>, ErrorType.BadRequest> {
-  return sharedSearchEntitiesQuery(databaseAdapter, schema, query, paging, authKeys, false);
+  return sharedSearchEntitiesQuery(schema, query, paging, authKeys, false);
 }
 
 function sharedSearchEntitiesQuery<
   TItem extends SearchAdminEntitiesItem | SearchPublishedEntitiesItem
 >(
-  databaseAdapter: PostgresDatabaseAdapter,
   schema: AdminSchema | PublishedSchema,
   query: PublishedQuery | AdminQuery | undefined,
   paging: Paging | undefined,
@@ -69,27 +67,27 @@ function sharedSearchEntitiesQuery<
   published: boolean
 ): Result<SharedEntitiesQuery<TItem>, ErrorType.BadRequest> {
   const { cursorType, cursorName, cursorExtractor } = queryOrderToCursor<TItem>(
-    databaseAdapter,
     query?.order,
     published
   );
 
-  const pagingResult = resolvePaging(databaseAdapter, cursorType, paging);
+  const pagingResult = resolvePaging(cursorType, paging);
   if (pagingResult.isError()) {
     return pagingResult;
   }
   const resolvedPaging = pagingResult.value;
 
-  const qb = new PostgresQueryBuilder('SELECT');
+  const qb = new SqliteQueryBuilder('SELECT');
   if (query?.boundingBox) {
     qb.addQuery('DISTINCT');
   }
   if (published) {
     qb.addQuery(
-      'e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, ev.data FROM entities e, entity_versions ev'
+      'e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, ev.fields FROM entities e, entity_versions ev'
     );
   } else {
-    qb.addQuery(`e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, ev.version, ev.data
+    //TODO e.updated
+    qb.addQuery(`e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.status, ev.version, ev.fields
   FROM entities e, entity_versions ev`);
   }
   if (query?.referencing) {
@@ -102,7 +100,7 @@ function sharedSearchEntitiesQuery<
   if (published) {
     qb.addQuery('WHERE e.published_entity_versions_id = ev.id');
   } else {
-    qb.addQuery('WHERE e.latest_draft_entity_versions_id = ev.id');
+    qb.addQuery('WHERE e.latest_entity_versions_id = ev.id');
   }
 
   // Filter: authKeys
@@ -112,7 +110,7 @@ function sharedSearchEntitiesQuery<
     qb.addQuery(`AND e.resolved_auth_key = ${qb.addValue(authKeys[0].resolvedAuthKey)}`);
   } else {
     qb.addQuery(
-      `AND e.resolved_auth_key = ANY(${qb.addValue(authKeys.map((it) => it.resolvedAuthKey))})`
+      `AND e.resolved_auth_key IN ${qb.addValueList(authKeys.map((it) => it.resolvedAuthKey))}`
     );
   }
 
@@ -122,7 +120,7 @@ function sharedSearchEntitiesQuery<
     return entityTypesResult;
   }
   if (entityTypesResult.value.length > 0) {
-    qb.addQuery(`AND e.type = ANY(${qb.addValue(entityTypesResult.value)})`);
+    qb.addQuery(`AND e.type IN ${qb.addValueList(entityTypesResult.value)}`);
   }
 
   // Filter: status
@@ -164,12 +162,16 @@ function sharedSearchEntitiesQuery<
   // Paging 1/2
   if (resolvedPaging.after !== null) {
     qb.addQuery(
-      `AND e.${cursorName} ${query?.reverse ? '<' : '>'} ${qb.addValue(resolvedPaging.after)}`
+      `AND e.${cursorName} ${query?.reverse ? '<' : '>'} ${qb.addValue(
+        resolvedPaging.after as string
+      )}`
     );
   }
   if (resolvedPaging.before !== null) {
     qb.addQuery(
-      `AND e.${cursorName} ${query?.reverse ? '>' : '<'} ${qb.addValue(resolvedPaging.before)}`
+      `AND e.${cursorName} ${query?.reverse ? '>' : '<'} ${qb.addValue(
+        resolvedPaging.before as string
+      )}`
     );
   }
 
@@ -191,7 +193,6 @@ function sharedSearchEntitiesQuery<
 }
 
 function queryOrderToCursor<TItem extends SearchAdminEntitiesItem | SearchPublishedEntitiesItem>(
-  databaseAdapter: PostgresDatabaseAdapter,
   order: PublishedQueryOrder | AdminQueryOrder | undefined,
   published: boolean
 ): {
@@ -207,8 +208,7 @@ function queryOrderToCursor<TItem extends SearchAdminEntitiesItem | SearchPublis
         return {
           cursorType,
           cursorName,
-          cursorExtractor: (item: TItem) =>
-            toOpaqueCursor(databaseAdapter, cursorType, item[cursorName]),
+          cursorExtractor: (item: TItem) => toOpaqueCursor(cursorType, item[cursorName]),
         };
       }
       case PublishedQueryOrder.createdAt:
@@ -218,8 +218,7 @@ function queryOrderToCursor<TItem extends SearchAdminEntitiesItem | SearchPublis
         return {
           cursorType,
           cursorName,
-          cursorExtractor: (item: TItem) =>
-            toOpaqueCursor(databaseAdapter, cursorType, item[cursorName]),
+          cursorExtractor: (item: TItem) => toOpaqueCursor(cursorType, item[cursorName]),
         };
       }
     }
@@ -231,24 +230,19 @@ function queryOrderToCursor<TItem extends SearchAdminEntitiesItem | SearchPublis
       return {
         cursorType,
         cursorName,
-        cursorExtractor: (item: TItem) =>
-          toOpaqueCursor(databaseAdapter, cursorType, item[cursorName]),
+        cursorExtractor: (item: TItem) => toOpaqueCursor(cursorType, item[cursorName]),
       };
     }
-    case AdminQueryOrder.updatedAt: {
-      const cursorType = 'int';
-      const cursorName = 'updated';
-      return {
-        cursorType,
-        cursorName,
-        cursorExtractor: (item: TItem) =>
-          toOpaqueCursor(
-            databaseAdapter,
-            cursorType,
-            (item as SearchAdminEntitiesItem)[cursorName]
-          ),
-      };
-    }
+    // case AdminQueryOrder.updatedAt: {
+    //   const cursorType = 'int';
+    //   const cursorName = 'updated';
+    //   return {
+    //     cursorType,
+    //     cursorName,
+    //     cursorExtractor: (item: TItem) =>
+    //       toOpaqueCursor(cursorType, (item as SearchAdminEntitiesItem)[cursorName]),
+    //   };
+    // }
     case AdminQueryOrder.createdAt:
     default: {
       const cursorType = 'int';
@@ -256,21 +250,20 @@ function queryOrderToCursor<TItem extends SearchAdminEntitiesItem | SearchPublis
       return {
         cursorType,
         cursorName,
-        cursorExtractor: (item: TItem) =>
-          toOpaqueCursor(databaseAdapter, cursorType, item[cursorName]),
+        cursorExtractor: (item: TItem) => toOpaqueCursor(cursorType, item[cursorName]),
       };
     }
   }
 }
 
-function addFilterStatusSqlSegment(query: AdminQuery, qb: PostgresQueryBuilder) {
+function addFilterStatusSqlSegment(query: AdminQuery, qb: SqliteQueryBuilder) {
   if (!query.status || query.status.length === 0) {
     return;
   }
   if (query.status.length === 1) {
     qb.addQuery(`AND status = ${qb.addValue(query.status[0])}`);
   } else {
-    qb.addQuery(`AND status = ANY(${qb.addValue(query.status)})`);
+    qb.addQuery(`AND status IN (${qb.addValueList(query.status)})`);
   }
 }
 
@@ -296,7 +289,7 @@ function totalCountQuery(
   query: AdminQuery | PublishedQuery | undefined,
   published: boolean
 ): Result<{ text: string; values: unknown[] }, ErrorType.BadRequest> {
-  const qb = new PostgresQueryBuilder('SELECT');
+  const qb = new SqliteQueryBuilder('SELECT');
   // Convert count to ::integer since count() is bigint (js doesn't support 64 bit numbers so pg return it as string)
   if (query?.boundingBox) {
     qb.addQuery('COUNT(DISTINCT e.id)::integer');
@@ -328,7 +321,7 @@ function totalCountQuery(
     qb.addQuery(`AND e.resolved_auth_key = ${qb.addValue(authKeys[0].resolvedAuthKey)}`);
   } else {
     qb.addQuery(
-      `AND e.resolved_auth_key = ANY(${qb.addValue(authKeys.map((it) => it.resolvedAuthKey))})`
+      `AND e.resolved_auth_key IN ${qb.addValueList(authKeys.map((it) => it.resolvedAuthKey))}`
     );
   }
 
@@ -338,7 +331,7 @@ function totalCountQuery(
     return entityTypesResult;
   }
   if (entityTypesResult.value.length > 0) {
-    qb.addQuery(`AND e.type = ANY(${qb.addValue(entityTypesResult.value)})`);
+    qb.addQuery(`AND e.type IN ${qb.addValueList(entityTypesResult.value)}`);
   }
 
   // Filter: status
@@ -350,7 +343,7 @@ function totalCountQuery(
     if (published) {
       qb.addQuery('AND e.published_entity_versions_id = ev.id');
     } else {
-      qb.addQuery('AND e.latest_draft_entity_versions_id = ev.id');
+      qb.addQuery('AND e.latest_entity_versions_id = ev.id');
     }
   }
 

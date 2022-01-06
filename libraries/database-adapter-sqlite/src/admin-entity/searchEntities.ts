@@ -11,27 +11,22 @@ import type {
   ResolvedAuthKey,
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
-import type { PostgresDatabaseAdapter } from '..';
+import { Temporal } from '@js-temporal/polyfill';
+import type { SqliteDatabaseAdapter } from '..';
 import { queryMany } from '../QueryFunctions';
 import type { SearchAdminEntitiesItem } from '../search/QueryGenerator';
 import { searchAdminEntitiesQuery } from '../search/QueryGenerator';
 import { resolveEntityStatus } from '../utils/CodecUtils';
 
 export async function adminEntitySearchEntities(
-  databaseAdapter: PostgresDatabaseAdapter,
+  databaseAdapter: SqliteDatabaseAdapter,
   schema: AdminSchema,
   context: TransactionContext,
   query: AdminQuery | undefined,
   paging: Paging | undefined,
   resolvedAuthKeys: ResolvedAuthKey[]
 ): PromiseResult<DatabaseAdminEntitySearchPayload, ErrorType.BadRequest | ErrorType.Generic> {
-  const sqlQueryResult = searchAdminEntitiesQuery(
-    databaseAdapter,
-    schema,
-    query,
-    paging,
-    resolvedAuthKeys
-  );
+  const sqlQueryResult = searchAdminEntitiesQuery(schema, query, paging, resolvedAuthKeys);
   if (sqlQueryResult.isError()) {
     return sqlQueryResult;
   }
@@ -65,11 +60,11 @@ export async function adminEntitySearchEntities(
       type: it.type,
       name: it.name,
       version: it.version,
-      createdAt: it.created_at,
-      updatedAt: it.updated_at,
+      createdAt: Temporal.Instant.from(it.created_at),
+      updatedAt: Temporal.Instant.from(it.updated_at),
       authKey: it.auth_key,
       status: resolveEntityStatus(it.status),
-      fieldValues: it.data,
+      fieldValues: JSON.parse(it.fields),
       cursor: cursorExtractor(it),
     })),
   });

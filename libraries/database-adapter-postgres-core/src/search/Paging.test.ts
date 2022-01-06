@@ -1,11 +1,13 @@
 import { ErrorType } from '@jonasb/datadata-core';
 import { expectErrorResult } from '@jonasb/datadata-core-jest';
+import { createMockAdapter } from '../test/TestUtils';
 import { toOpaqueCursor } from './OpaqueCursor';
 import { resolvePaging } from './Paging';
 
 describe('resolvePaging()', () => {
-  test('undefined', () =>
-    expect(resolvePaging('int')).toMatchInlineSnapshot(`
+  test('undefined', () => {
+    const databaseAdapter = createMockAdapter();
+    expect(resolvePaging(databaseAdapter, 'int')).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
           "after": null,
@@ -14,10 +16,12 @@ describe('resolvePaging()', () => {
           "forwards": true,
         },
       }
-    `));
+    `);
+  });
 
-  test('first', () =>
-    expect(resolvePaging('int', { first: 10 })).toMatchInlineSnapshot(`
+  test('first', () => {
+    const databaseAdapter = createMockAdapter();
+    expect(resolvePaging(databaseAdapter, 'int', { first: 10 })).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
           "after": null,
@@ -26,10 +30,14 @@ describe('resolvePaging()', () => {
           "forwards": true,
         },
       }
-    `));
+    `);
+  });
 
-  test('after', () =>
-    expect(resolvePaging('int', { after: toOpaqueCursor('int', 999) })).toMatchInlineSnapshot(`
+  test('after', () => {
+    const databaseAdapter = createMockAdapter();
+    expect(
+      resolvePaging(databaseAdapter, 'int', { after: toOpaqueCursor(databaseAdapter, 'int', 999) })
+    ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
           "after": 999,
@@ -38,11 +46,17 @@ describe('resolvePaging()', () => {
           "forwards": true,
         },
       }
-    `));
+    `);
+  });
 
-  test('first,after', () =>
-    expect(resolvePaging('int', { first: 10, after: toOpaqueCursor('int', 999) }))
-      .toMatchInlineSnapshot(`
+  test('first,after', () => {
+    const databaseAdapter = createMockAdapter();
+    expect(
+      resolvePaging(databaseAdapter, 'int', {
+        first: 10,
+        after: toOpaqueCursor(databaseAdapter, 'int', 999),
+      })
+    ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
           "after": 999,
@@ -51,10 +65,12 @@ describe('resolvePaging()', () => {
           "forwards": true,
         },
       }
-    `));
+    `);
+  });
 
-  test('last', () =>
-    expect(resolvePaging('int', { last: 10 })).toMatchInlineSnapshot(`
+  test('last', () => {
+    const databaseAdapter = createMockAdapter();
+    expect(resolvePaging(databaseAdapter, 'int', { last: 10 })).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
           "after": null,
@@ -63,10 +79,14 @@ describe('resolvePaging()', () => {
           "forwards": false,
         },
       }
-    `));
+    `);
+  });
 
-  test('before', () =>
-    expect(resolvePaging('int', { before: toOpaqueCursor('int', 999) })).toMatchInlineSnapshot(`
+  test('before', () => {
+    const databaseAdapter = createMockAdapter();
+    expect(
+      resolvePaging(databaseAdapter, 'int', { before: toOpaqueCursor(databaseAdapter, 'int', 999) })
+    ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
           "after": null,
@@ -75,11 +95,17 @@ describe('resolvePaging()', () => {
           "forwards": true,
         },
       }
-    `));
+    `);
+  });
 
-  test('last,before', () =>
-    expect(resolvePaging('int', { last: 10, before: toOpaqueCursor('int', 999) }))
-      .toMatchInlineSnapshot(`
+  test('last,before', () => {
+    const databaseAdapter = createMockAdapter();
+    expect(
+      resolvePaging(databaseAdapter, 'int', {
+        last: 10,
+        before: toOpaqueCursor(databaseAdapter, 'int', 999),
+      })
+    ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
           "after": null,
@@ -88,11 +114,19 @@ describe('resolvePaging()', () => {
           "forwards": false,
         },
       }
-    `));
+    `);
+  });
 
-  test('last, rest undefined', () =>
-    expect(resolvePaging('int', { first: undefined, after: undefined, last: 1, before: undefined }))
-      .toMatchInlineSnapshot(`
+  test('last, rest undefined', () => {
+    const databaseAdapter = createMockAdapter();
+    expect(
+      resolvePaging(databaseAdapter, 'int', {
+        first: undefined,
+        after: undefined,
+        last: 1,
+        before: undefined,
+      })
+    ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
           "after": null,
@@ -101,13 +135,15 @@ describe('resolvePaging()', () => {
           "forwards": false,
         },
       }
-    `));
+    `);
+  });
 
-  test('after,before', () =>
+  test('after,before', () => {
+    const databaseAdapter = createMockAdapter();
     expect(
-      resolvePaging('int', {
-        after: toOpaqueCursor('int', 111),
-        before: toOpaqueCursor('int', 222),
+      resolvePaging(databaseAdapter, 'int', {
+        after: toOpaqueCursor(databaseAdapter, 'int', 111),
+        before: toOpaqueCursor(databaseAdapter, 'int', 222),
       })
     ).toMatchInlineSnapshot(`
       OkResult {
@@ -118,14 +154,16 @@ describe('resolvePaging()', () => {
           "forwards": true,
         },
       }
-    `));
+    `);
+  });
 
-  test('first,after,before', () =>
+  test('first,after,before', () => {
+    const databaseAdapter = createMockAdapter();
     expect(
-      resolvePaging('int', {
+      resolvePaging(databaseAdapter, 'int', {
         first: 10,
-        after: toOpaqueCursor('int', 111),
-        before: toOpaqueCursor('int', 222),
+        after: toOpaqueCursor(databaseAdapter, 'int', 111),
+        before: toOpaqueCursor(databaseAdapter, 'int', 222),
       })
     ).toMatchInlineSnapshot(`
       OkResult {
@@ -136,14 +174,16 @@ describe('resolvePaging()', () => {
           "forwards": true,
         },
       }
-    `));
+    `);
+  });
 
-  test('last,after,before', () =>
+  test('last,after,before', () => {
+    const databaseAdapter = createMockAdapter();
     expect(
-      resolvePaging('int', {
+      resolvePaging(databaseAdapter, 'int', {
         last: 10,
-        after: toOpaqueCursor('int', 111),
-        before: toOpaqueCursor('int', 222),
+        after: toOpaqueCursor(databaseAdapter, 'int', 111),
+        before: toOpaqueCursor(databaseAdapter, 'int', 222),
       })
     ).toMatchInlineSnapshot(`
       OkResult {
@@ -154,26 +194,33 @@ describe('resolvePaging()', () => {
           "forwards": false,
         },
       }
-    `));
+    `);
+  });
 
-  test('Error: negative first', () =>
-    expectErrorResult(
-      resolvePaging('int', { first: -10 }),
+  test('Error: negative first', () => {
+    const databaseAdapter = createMockAdapter();
+    return expectErrorResult(
+      resolvePaging(databaseAdapter, 'int', { first: -10 }),
       ErrorType.BadRequest,
       'Paging first is a negative value'
-    ));
+    );
+  });
 
-  test('Error: negative last', () =>
-    expectErrorResult(
-      resolvePaging('int', { last: -10 }),
+  test('Error: negative last', () => {
+    const databaseAdapter = createMockAdapter();
+    return expectErrorResult(
+      resolvePaging(databaseAdapter, 'int', { last: -10 }),
       ErrorType.BadRequest,
       'Paging last is a negative value'
-    ));
+    );
+  });
 
-  test('Error: first,last', () =>
+  test('Error: first,last', () => {
+    const databaseAdapter = createMockAdapter();
     expectErrorResult(
-      resolvePaging('int', { first: 10, last: 10 }),
+      resolvePaging(databaseAdapter, 'int', { first: 10, last: 10 }),
       ErrorType.BadRequest,
       'Both first and last are defined for paging, which is not supported'
-    ));
+    );
+  });
 });
