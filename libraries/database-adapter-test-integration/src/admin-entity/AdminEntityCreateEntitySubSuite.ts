@@ -28,113 +28,111 @@ export const CreateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
 
 async function createEntity_minimal({ client }: AdminEntityTestContext) {
   const createResult = await client.createEntity(TITLE_ONLY_CREATE);
-  if (assertOkResult(createResult)) {
-    const {
-      entity: {
-        id,
-        info: { name, createdAt, updatedAt },
-      },
-    } = createResult.value;
-
-    const expectedEntity = copyEntity(TITLE_ONLY_ADMIN_ENTITY, {
+  assertOkResult(createResult);
+  const {
+    entity: {
       id,
-      info: {
-        name,
-        createdAt,
-        updatedAt,
-      },
-    });
+      info: { name, createdAt, updatedAt },
+    },
+  } = createResult.value;
 
-    assertResultValue(createResult, {
-      effect: 'created',
-      entity: expectedEntity,
-    });
+  const expectedEntity = copyEntity(TITLE_ONLY_ADMIN_ENTITY, {
+    id,
+    info: {
+      name,
+      createdAt,
+      updatedAt,
+    },
+  });
 
-    const getResult = await client.getEntity({ id });
-    assertResultValue(getResult, expectedEntity);
-  }
+  assertResultValue(createResult, {
+    effect: 'created',
+    entity: expectedEntity,
+  });
+
+  const getResult = await client.getEntity({ id });
+  assertResultValue(getResult, expectedEntity);
 }
 
 async function createEntity_withId({ client }: AdminEntityTestContext) {
   const id = uuidv4();
   const createResult = await client.createEntity(copyEntity(TITLE_ONLY_CREATE, { id }));
-  if (assertOkResult(createResult)) {
-    const {
-      entity: {
-        info: { name, createdAt, updatedAt },
-      },
-    } = createResult.value;
+  assertOkResult(createResult);
+  const {
+    entity: {
+      info: { name, createdAt, updatedAt },
+    },
+  } = createResult.value;
 
-    const expectedEntity = copyEntity(TITLE_ONLY_ADMIN_ENTITY, {
-      id,
-      info: {
-        name,
-        createdAt,
-        updatedAt,
-      },
-    });
+  const expectedEntity = copyEntity(TITLE_ONLY_ADMIN_ENTITY, {
+    id,
+    info: {
+      name,
+      createdAt,
+      updatedAt,
+    },
+  });
 
-    assertResultValue(createResult, {
-      effect: 'created',
-      entity: expectedEntity,
-    });
+  assertResultValue(createResult, {
+    effect: 'created',
+    entity: expectedEntity,
+  });
 
-    const getResult = await client.getEntity({ id });
-    assertResultValue(getResult, expectedEntity);
-  }
+  const getResult = await client.getEntity({ id });
+  assertResultValue(getResult, expectedEntity);
 }
 
 async function createEntity_duplicateName({ client }: AdminEntityTestContext) {
   const firstResult = await client.createEntity(TITLE_ONLY_CREATE);
   const secondResult = await client.createEntity(TITLE_ONLY_CREATE);
-  if (assertOkResult(firstResult) && assertOkResult(secondResult)) {
-    const {
-      entity: {
-        id: firstId,
-        info: { name: firstName },
-      },
-    } = firstResult.value;
-    const {
-      entity: {
-        id: secondId,
-        info: { name: secondName },
-      },
-    } = secondResult.value;
-    assertNotSame(firstId, secondId);
-    assertNotSame(firstName, secondName);
+  assertOkResult(firstResult);
+  assertOkResult(secondResult);
 
-    assertTruthy(secondName.match(/^TitleOnly name#\d{8}$/));
-  }
+  const {
+    entity: {
+      id: firstId,
+      info: { name: firstName },
+    },
+  } = firstResult.value;
+  const {
+    entity: {
+      id: secondId,
+      info: { name: secondName },
+    },
+  } = secondResult.value;
+  assertNotSame(firstId, secondId);
+  assertNotSame(firstName, secondName);
+
+  assertTruthy(secondName.match(/^TitleOnly name#\d{8}$/));
 }
 
 async function createEntity_publishMinimal({ client }: AdminEntityTestContext) {
   const createResult = await client.createEntity(TITLE_ONLY_CREATE, { publish: true });
-  if (assertOkResult(createResult)) {
-    const {
-      entity: {
-        id,
-        info: { name, createdAt, updatedAt },
-      },
-    } = createResult.value;
-
-    const expectedEntity = copyEntity(TITLE_ONLY_ADMIN_ENTITY, {
+  assertOkResult(createResult);
+  const {
+    entity: {
       id,
-      info: {
-        name,
-        status: AdminEntityStatus.published,
-        createdAt,
-        updatedAt,
-      },
-    });
+      info: { name, createdAt, updatedAt },
+    },
+  } = createResult.value;
 
-    assertResultValue(createResult, {
-      effect: 'createdAndPublished',
-      entity: expectedEntity,
-    });
+  const expectedEntity = copyEntity(TITLE_ONLY_ADMIN_ENTITY, {
+    id,
+    info: {
+      name,
+      status: AdminEntityStatus.published,
+      createdAt,
+      updatedAt,
+    },
+  });
 
-    const getResult = await client.getEntity({ id });
-    assertResultValue(getResult, expectedEntity);
-  }
+  assertResultValue(createResult, {
+    effect: 'createdAndPublished',
+    entity: expectedEntity,
+  });
+
+  const getResult = await client.getEntity({ id });
+  assertResultValue(getResult, expectedEntity);
 }
 
 async function createEntity_publishWithSubjectAuthKey({ client }: AdminEntityTestContext) {
@@ -142,82 +140,80 @@ async function createEntity_publishWithSubjectAuthKey({ client }: AdminEntityTes
     copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } }),
     { publish: true }
   );
-  if (assertOkResult(createResult)) {
-    const {
-      entity: {
-        id,
-        info: { name, createdAt, updatedAt },
-      },
-    } = createResult.value;
-
-    const expectedEntity = copyEntity(TITLE_ONLY_ADMIN_ENTITY, {
+  assertOkResult(createResult);
+  const {
+    entity: {
       id,
-      info: {
-        name,
-        status: AdminEntityStatus.published,
-        authKey: 'subject',
-        createdAt,
-        updatedAt,
-      },
-    });
+      info: { name, createdAt, updatedAt },
+    },
+  } = createResult.value;
 
-    assertResultValue(createResult, {
-      effect: 'createdAndPublished',
-      entity: expectedEntity,
-    });
+  const expectedEntity = copyEntity(TITLE_ONLY_ADMIN_ENTITY, {
+    id,
+    info: {
+      name,
+      status: AdminEntityStatus.published,
+      authKey: 'subject',
+      createdAt,
+      updatedAt,
+    },
+  });
 
-    const getResult = await client.getEntity({ id });
-    assertResultValue(getResult, expectedEntity);
-  }
+  assertResultValue(createResult, {
+    effect: 'createdAndPublished',
+    entity: expectedEntity,
+  });
+
+  const getResult = await client.getEntity({ id });
+  assertResultValue(getResult, expectedEntity);
 }
 
 async function createEntity_withTwoReferences({ client }: AdminEntityTestContext) {
   const createTitleOnly1Result = await client.createEntity(TITLE_ONLY_CREATE);
   const createTitleOnly2Result = await client.createEntity(TITLE_ONLY_CREATE);
-  if (assertOkResult(createTitleOnly1Result) && assertOkResult(createTitleOnly2Result)) {
-    const {
-      entity: { id: idTitleOnly1 },
-    } = createTitleOnly1Result.value;
-    const {
-      entity: { id: idTitleOnly2 },
-    } = createTitleOnly2Result.value;
+  assertOkResult(createTitleOnly1Result);
+  assertOkResult(createTitleOnly2Result);
+  const {
+    entity: { id: idTitleOnly1 },
+  } = createTitleOnly1Result.value;
+  const {
+    entity: { id: idTitleOnly2 },
+  } = createTitleOnly2Result.value;
 
-    const createResult = await client.createEntity(
-      copyEntity(REFERENCES_CREATE, {
-        fields: { any: { id: idTitleOnly1 }, titleOnly: { id: idTitleOnly2 } },
-      })
-    );
+  const createResult = await client.createEntity(
+    copyEntity(REFERENCES_CREATE, {
+      fields: { any: { id: idTitleOnly1 }, titleOnly: { id: idTitleOnly2 } },
+    })
+  );
 
-    if (assertOkResult(createResult)) {
-      const {
-        entity: {
-          id,
-          info: { name, createdAt, updatedAt },
-        },
-      } = createResult.value;
+  assertOkResult(createResult);
+  const {
+    entity: {
+      id,
+      info: { name, createdAt, updatedAt },
+    },
+  } = createResult.value;
 
-      const expectedEntity = copyEntity(REFERENCES_ADMIN_ENTITY, {
-        id,
-        info: {
-          name,
-          createdAt,
-          updatedAt,
-        },
-        fields: {
-          any: { id: idTitleOnly1 },
-          titleOnly: { id: idTitleOnly2 },
-        },
-      });
+  const expectedEntity = copyEntity(REFERENCES_ADMIN_ENTITY, {
+    id,
+    info: {
+      name,
+      createdAt,
+      updatedAt,
+    },
+    fields: {
+      any: { id: idTitleOnly1 },
+      titleOnly: { id: idTitleOnly2 },
+    },
+  });
 
-      assertResultValue(createResult, {
-        effect: 'created',
-        entity: expectedEntity,
-      });
+  assertResultValue(createResult, {
+    effect: 'created',
+    entity: expectedEntity,
+  });
 
-      const getResult = await client.getEntity({ id });
-      assertResultValue(getResult, expectedEntity);
-    }
-  }
+  const getResult = await client.getEntity({ id });
+  assertResultValue(getResult, expectedEntity);
 }
 
 async function createEntity_errorPublishWithoutRequiredTitle({ client }: AdminEntityTestContext) {

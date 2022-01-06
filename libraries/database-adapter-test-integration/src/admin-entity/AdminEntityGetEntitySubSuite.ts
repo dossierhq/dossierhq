@@ -19,14 +19,13 @@ async function getEntity_withSubjectAuthKey({ client }: AdminEntityTestContext) 
   const createResult = await client.createEntity(
     copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } })
   );
-  if (assertOkResult(createResult)) {
-    const {
-      entity: { id },
-    } = createResult.value;
+  assertOkResult(createResult);
+  const {
+    entity: { id },
+  } = createResult.value;
 
-    const getResult = await client.getEntity({ id });
-    assertResultValue(getResult, createResult.value.entity);
-  }
+  const getResult = await client.getEntity({ id });
+  assertResultValue(getResult, createResult.value.entity);
 }
 
 async function getEntity_errorInvalidId({ client }: AdminEntityTestContext) {
@@ -37,17 +36,16 @@ async function getEntity_errorInvalidId({ client }: AdminEntityTestContext) {
 async function getEntity_errorInvalidVersion({ client }: AdminEntityTestContext) {
   const createResult = await client.createEntity(TITLE_ONLY_CREATE);
 
-  if (assertOkResult(createResult)) {
-    const {
-      entity: { id },
-    } = createResult.value;
+  assertOkResult(createResult);
+  const {
+    entity: { id },
+  } = createResult.value;
 
-    const resultMinusOne = await client.getEntity({ id, version: -1 });
-    assertErrorResult(resultMinusOne, ErrorType.NotFound, 'No such entity or version');
+  const resultMinusOne = await client.getEntity({ id, version: -1 });
+  assertErrorResult(resultMinusOne, ErrorType.NotFound, 'No such entity or version');
 
-    const resultOne = await client.getEntity({ id, version: 1 });
-    assertErrorResult(resultOne, ErrorType.NotFound, 'No such entity or version');
-  }
+  const resultOne = await client.getEntity({ id, version: 1 });
+  assertErrorResult(resultOne, ErrorType.NotFound, 'No such entity or version');
 }
 
 async function getEntity_errorWrongAuthKey({ server }: AdminEntityTestContext) {
@@ -57,12 +55,11 @@ async function getEntity_errorWrongAuthKey({ server }: AdminEntityTestContext) {
     })
   );
 
-  if (assertOkResult(createResult)) {
-    const {
-      entity: { id },
-    } = createResult.value;
+  assertOkResult(createResult);
+  const {
+    entity: { id },
+  } = createResult.value;
 
-    const getResult = await adminClientForSecondaryPrincipal(server).getEntity({ id });
-    assertErrorResult(getResult, ErrorType.NotAuthorized, 'Wrong authKey provided');
-  }
+  const getResult = await adminClientForSecondaryPrincipal(server).getEntity({ id });
+  assertErrorResult(getResult, ErrorType.NotAuthorized, 'Wrong authKey provided');
 }

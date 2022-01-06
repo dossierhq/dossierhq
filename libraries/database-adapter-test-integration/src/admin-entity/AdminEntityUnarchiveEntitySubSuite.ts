@@ -10,30 +10,28 @@ export const UnarchiveEntitySubSuite: UnboundTestFunction<AdminEntityTestContext
 
 async function unarchiveEntity_minimal({ client }: AdminEntityTestContext) {
   const createResult = await client.createEntity(TITLE_ONLY_CREATE);
-  if (assertOkResult(createResult)) {
-    const {
-      entity: { id },
-    } = createResult.value;
+  assertOkResult(createResult);
+  const {
+    entity: { id },
+  } = createResult.value;
 
-    const archiveResult = await client.archiveEntity({ id });
-    assertOkResult(archiveResult);
+  const archiveResult = await client.archiveEntity({ id });
+  assertOkResult(archiveResult);
 
-    const unarchiveResult = await client.unarchiveEntity({ id });
-    if (assertOkResult(unarchiveResult)) {
-      const { updatedAt } = unarchiveResult.value;
-      assertResultValue(unarchiveResult, {
-        id,
-        effect: 'unarchived',
-        status: AdminEntityStatus.draft,
-        updatedAt,
-      });
+  const unarchiveResult = await client.unarchiveEntity({ id });
+  assertOkResult(unarchiveResult);
+  const { updatedAt } = unarchiveResult.value;
+  assertResultValue(unarchiveResult, {
+    id,
+    effect: 'unarchived',
+    status: AdminEntityStatus.draft,
+    updatedAt,
+  });
 
-      const expectedEntity = copyEntity(createResult.value.entity, {
-        info: { status: AdminEntityStatus.draft, updatedAt },
-      });
+  const expectedEntity = copyEntity(createResult.value.entity, {
+    info: { status: AdminEntityStatus.draft, updatedAt },
+  });
 
-      const getResult = await client.getEntity({ id });
-      assertResultValue(getResult, expectedEntity);
-    }
-  }
+  const getResult = await client.getEntity({ id });
+  assertResultValue(getResult, expectedEntity);
 }

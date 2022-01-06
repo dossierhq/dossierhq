@@ -34,26 +34,23 @@ async function createSession(
 
 async function createSession_create_new_identifier({ server }: { server: Server }) {
   const result = await createSession(server);
-  if (assertOkResult(result)) {
-    const { principalEffect } = result.value;
-    assertSame(principalEffect, 'created');
-  }
+  assertOkResult(result);
+  const { principalEffect } = result.value;
+  assertSame(principalEffect, 'created');
 }
 
 async function createSession_create_existing_identifier({ server }: { server: Server }) {
   const identifier = randomIdentifier();
 
   const firstResult = await createSession(server, { identifier });
-  if (assertOkResult(firstResult)) {
-    const { principalEffect } = firstResult.value;
-    assertSame(principalEffect, 'created');
-  }
+  assertOkResult(firstResult);
+  const { principalEffect: principalEffect1 } = firstResult.value;
+  assertSame(principalEffect1, 'created');
 
   const secondResult = await createSession(server, { identifier });
-  if (assertOkResult(secondResult)) {
-    const { principalEffect } = secondResult.value;
-    assertSame(principalEffect, 'none');
-  }
+  assertOkResult(secondResult);
+  const { principalEffect: principalEffect2 } = secondResult.value;
+  assertSame(principalEffect2, 'none');
 }
 
 async function createSession_error_missing_provider({ server }: { server: Server }) {

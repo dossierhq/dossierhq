@@ -12,8 +12,7 @@ export function createSchemaTestSuite<TCleanup>(
 
 async function getSchemaSpecification_normal({ client }: { client: AdminClient }) {
   const result = await client.getSchemaSpecification();
-  if (assertOkResult(result)) {
-    const schema = new AdminSchema(result.value);
-    assertOkResult(schema.validate());
-  }
+  assertOkResult(result);
+  const schema = new AdminSchema(result.value);
+  assertOkResult(schema.validate());
 }
