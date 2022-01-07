@@ -1,0 +1,83 @@
+import { createPostgresSqlQuery, createSqliteSqlQuery, DEFAULT } from './SqlQueryBuilder';
+
+describe('createPostgresSqlQuery', () => {
+  test('one text', () => {
+    const { sql, query } = createPostgresSqlQuery();
+    sql`SELECT * FROM foo WHERE bar IS NULL`;
+
+    expect(query).toMatchInlineSnapshot(`
+      Object {
+        "text": "SELECT * FROM foo WHERE bar IS NULL",
+        "values": Array [],
+      }
+    `);
+  });
+
+  test('one text with values', () => {
+    const { sql, query } = createPostgresSqlQuery();
+    sql`SELECT * FROM foo WHERE id = ${123} AND name = ${'Hello world'}`;
+
+    expect(query).toMatchInlineSnapshot(`
+      Object {
+        "text": "SELECT * FROM foo WHERE id = $1 AND name = $2",
+        "values": Array [
+          123,
+          "Hello world",
+        ],
+      }
+    `);
+  });
+
+  test('one text with DEFAULT', () => {
+    const { sql, query } = createPostgresSqlQuery();
+    sql`INSERT INTO foo (bar) VALUES (${DEFAULT})`;
+
+    expect(query).toMatchInlineSnapshot(`
+      Object {
+        "text": "INSERT INTO foo (bar) VALUES (DEFAULT)",
+        "values": Array [],
+      }
+    `);
+  });
+});
+
+describe('createSqliteSqlQuery', () => {
+  test('one text', () => {
+    const { sql, query } = createSqliteSqlQuery();
+    sql`SELECT * FROM foo WHERE bar IS NULL`;
+
+    expect(query).toMatchInlineSnapshot(`
+      Object {
+        "text": "SELECT * FROM foo WHERE bar IS NULL",
+        "values": Array [],
+      }
+    `);
+  });
+
+  test('one text with values', () => {
+    const { sql, query } = createSqliteSqlQuery();
+    sql`SELECT * FROM foo WHERE id = ${123} AND name = ${'Hello world'}`;
+
+    expect(query).toMatchInlineSnapshot(`
+      Object {
+        "text": "SELECT * FROM foo WHERE id = ?1 AND name = ?2",
+        "values": Array [
+          123,
+          "Hello world",
+        ],
+      }
+    `);
+  });
+
+  test('one text with DEFAULT', () => {
+    const { sql, query } = createSqliteSqlQuery();
+    sql`INSERT INTO foo (bar) VALUES (${DEFAULT})`;
+
+    expect(query).toMatchInlineSnapshot(`
+      Object {
+        "text": "INSERT INTO foo (bar) VALUES (DEFAULT)",
+        "values": Array [],
+      }
+    `);
+  });
+});

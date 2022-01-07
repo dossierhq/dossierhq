@@ -46,9 +46,8 @@ describe('adminGetEntity', () => {
       Array [
         Array [
           "SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, ev.version, ev.data
-          FROM entities e, entity_versions ev
-          WHERE e.uuid = $1
-          AND e.latest_draft_entity_versions_id = ev.id",
+            FROM entities e, entity_versions ev
+            WHERE e.uuid = $1 AND e.latest_draft_entity_versions_id = ev.id",
           "123",
         ],
       ]

@@ -9,6 +9,7 @@ import type {
   DatabaseAdminEntityGetOnePayload,
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
+import { createPostgresSqlQuery } from '@jonasb/datadata-database-adapter';
 import type { PostgresDatabaseAdapter } from '..';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema';
 import { queryNoneOrOne } from '../QueryFunctions';
@@ -59,6 +60,11 @@ async function getEntityWithLatestVersion(
   context: TransactionContext,
   reference: EntityReference
 ) {
+  const { sql, query } = createPostgresSqlQuery();
+  sql`SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, ev.version, ev.data
+      FROM entities e, entity_versions ev
+      WHERE e.uuid = ${reference.id} AND e.latest_draft_entity_versions_id = ev.id`;
+
   const result = await queryNoneOrOne<
     Pick<
       EntitiesTable,
@@ -72,13 +78,7 @@ async function getEntityWithLatestVersion(
       | 'status'
     > &
       Pick<EntityVersionsTable, 'version' | 'data'>
-  >(databaseAdapter, context, {
-    text: `SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, ev.version, ev.data
-    FROM entities e, entity_versions ev
-    WHERE e.uuid = $1
-    AND e.latest_draft_entity_versions_id = ev.id`,
-    values: [reference.id],
-  });
+  >(databaseAdapter, context, query);
   if (result.isError()) {
     return result;
   }
