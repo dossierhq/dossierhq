@@ -1,6 +1,13 @@
 export const DEFAULT = Symbol('DEFAULT');
 
-type InputValue<TValue> = TValue | typeof DEFAULT;
+const ValueReferenceSymbol = Symbol('ValueReference');
+
+interface ValueReference {
+  marker: typeof ValueReferenceSymbol;
+  index: number;
+}
+
+type InputValue<TValue> = TValue | typeof DEFAULT | ValueReference;
 
 type SqlTemplateTag<TValue> = (
   strings: TemplateStringsArray,
@@ -15,6 +22,7 @@ interface Query<TValue> {
 interface SqlQueryBuilder<TValue> {
   sql: SqlTemplateTag<TValue>;
   query: Query<TValue>;
+  addValue: (value: TValue) => ValueReference;
 }
 
 interface DialectConfig {
@@ -26,24 +34,42 @@ function createSqlQuery<TValue>(config: DialectConfig): SqlQueryBuilder<TValue> 
   const sql: SqlTemplateTag<TValue> = (strings, ...args) => {
     for (let i = 0; i < strings.length; i++) {
       if (i > 0) {
-        addValue(config, query, args[i - 1]);
+        addValueToQuery(config, query, args[i - 1]);
       }
-      addText(query, strings[i]);
+      addTextToQuery(query, strings[i]);
     }
   };
-  return { sql, query };
+
+  const addValue = (value: TValue) => addValueReference(query, value);
+
+  return { sql, query, addValue };
 }
 
-function addValue<TValue>(config: DialectConfig, query: Query<TValue>, value: InputValue<TValue>) {
+function addValueReference<TValue>(query: Query<TValue>, value: TValue): ValueReference {
+  query.values.push(value);
+  return { marker: ValueReferenceSymbol, index: query.values.length };
+}
+
+function addValueToQuery<TValue>(
+  config: DialectConfig,
+  query: Query<TValue>,
+  value: InputValue<TValue>
+) {
   if (value === DEFAULT) {
     query.text += 'DEFAULT';
+  } else if (
+    typeof value === 'object' &&
+    'marker' in value &&
+    value.marker === ValueReferenceSymbol
+  ) {
+    query.text += `${config.indexPrefix}${value.index}`;
   } else {
-    query.values.push(value);
+    query.values.push(value as TValue);
     query.text += `${config.indexPrefix}${query.values.length}`; // 1-based index
   }
 }
 
-function addText(query: Query<unknown>, text: string) {
+function addTextToQuery(query: Query<unknown>, text: string) {
   query.text += text;
 }
 
