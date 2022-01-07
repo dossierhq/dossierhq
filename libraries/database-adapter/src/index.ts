@@ -28,5 +28,6 @@ export type {
 } from './DatabaseAdapter';
 export { PostgresQueryBuilder, SqliteQueryBuilder } from './QueryBuilder';
 export type { ResolvedAuthKey, Session } from './Session';
+export { createPostgresSqlQuery, createSqliteSqlQuery, DEFAULT } from './SqlQueryBuilder';
 export { TransactionContextImpl } from './TransactionContext';
 export type { Context, Transaction, TransactionContext } from './TransactionContext';

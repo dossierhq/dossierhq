@@ -9,6 +9,7 @@ import type {
   DatabaseAdminEntityGetOnePayload,
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
+import { createSqliteSqlQuery } from '@jonasb/datadata-database-adapter';
 import { Temporal } from '@js-temporal/polyfill';
 import type { SqliteDatabaseAdapter } from '..';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema';
@@ -60,6 +61,11 @@ async function getEntityWithLatestVersion(
   context: TransactionContext,
   reference: EntityReference
 ) {
+  const { sql, query } = createSqliteSqlQuery();
+  sql`SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, ev.version, ev.fields
+      FROM entities e, entity_versions ev
+      WHERE e.uuid = ${reference.id} AND e.latest_entity_versions_id = ev.id`;
+
   const result = await queryNoneOrOne<
     Pick<
       EntitiesTable,
@@ -73,13 +79,7 @@ async function getEntityWithLatestVersion(
       | 'status'
     > &
       Pick<EntityVersionsTable, 'version' | 'fields'>
-  >(databaseAdapter, context, {
-    text: `SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, ev.version, ev.fields
-    FROM entities e, entity_versions ev
-    WHERE e.uuid = ?1
-    AND e.latest_entity_versions_id = ev.id`,
-    values: [reference.id],
-  });
+  >(databaseAdapter, context, query);
   if (result.isError()) {
     return result;
   }
