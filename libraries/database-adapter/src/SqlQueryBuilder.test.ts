@@ -39,6 +39,21 @@ describe('createPostgresSqlQuery', () => {
       }
     `);
   });
+
+  test('one text with addValue', () => {
+    const { sql, query, addValue } = createPostgresSqlQuery();
+    const reference = addValue('Hello');
+    sql`INSERT INTO foo (bar, baz) VALUES (${reference}, ${reference})`;
+
+    expect(query).toMatchInlineSnapshot(`
+      Object {
+        "text": "INSERT INTO foo (bar, baz) VALUES ($1, $1)",
+        "values": Array [
+          "Hello",
+        ],
+      }
+    `);
+  });
 });
 
 describe('createSqliteSqlQuery', () => {
@@ -77,6 +92,21 @@ describe('createSqliteSqlQuery', () => {
       Object {
         "text": "INSERT INTO foo (bar) VALUES (DEFAULT)",
         "values": Array [],
+      }
+    `);
+  });
+
+  test('one text with addValue', () => {
+    const { sql, query, addValue } = createSqliteSqlQuery();
+    const reference = addValue('Hello');
+    sql`INSERT INTO foo (bar, baz) VALUES (${reference}, ${reference})`;
+
+    expect(query).toMatchInlineSnapshot(`
+      Object {
+        "text": "INSERT INTO foo (bar, baz) VALUES (?1, ?1)",
+        "values": Array [
+          "Hello",
+        ],
       }
     `);
   });
