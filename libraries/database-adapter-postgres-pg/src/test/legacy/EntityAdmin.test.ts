@@ -4781,39 +4781,6 @@ describe('unarchiveEntity()', () => {
       expectErrorResult(archiveResult, ErrorType.NotAuthorized, 'Wrong authKey provided');
     }
   });
-
-  test('Error: unarchive with invalid id', async () => {
-    const result = await client.unarchiveEntity({
-      id: '5b14e69f-6612-4ddb-bb42-7be273104486',
-    });
-    expectErrorResult(result, ErrorType.NotFound, 'No such entity');
-  });
-});
-
-describe('getEntityHistory()', () => {
-  // rest is tested elsewhere
-
-  test('Error: Get version history with invalid id', async () => {
-    const result = await client.getEntityHistory({
-      id: '5b14e69f-6612-4ddb-bb42-7be273104486',
-    });
-    expectErrorResult(result, ErrorType.NotFound, 'No such entity');
-  });
-
-  test('Error: With wrong authKey', async () => {
-    const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBar', name: 'Bar name', authKey: 'subject' },
-      fields: { title: 'Bar title' },
-    });
-    if (expectOkResult(createResult)) {
-      const {
-        entity: { id },
-      } = createResult.value;
-
-      const archiveResult = await adminClientOther.getEntityHistory({ id });
-      expectErrorResult(archiveResult, ErrorType.NotAuthorized, 'Wrong authKey provided');
-    }
-  });
 });
 
 describe('getPublishingHistory()', () => {
@@ -4915,28 +4882,6 @@ describe('getPublishingHistory()', () => {
           ],
         });
       }
-    }
-  });
-
-  test('Error: Get publish history with invalid id', async () => {
-    const result = await client.getPublishingHistory({
-      id: '5b14e69f-6612-4ddb-bb42-7be273104486',
-    });
-    expectErrorResult(result, ErrorType.NotFound, 'No such entity');
-  });
-
-  test('Error: With wrong authKey', async () => {
-    const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBar', name: 'Bar name', authKey: 'subject' },
-      fields: { title: 'Bar title' },
-    });
-    if (expectOkResult(createResult)) {
-      const {
-        entity: { id },
-      } = createResult.value;
-
-      const archiveResult = await adminClientOther.getPublishingHistory({ id });
-      expectErrorResult(archiveResult, ErrorType.NotAuthorized, 'Wrong authKey provided');
     }
   });
 });
