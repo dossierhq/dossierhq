@@ -17,6 +17,7 @@ import {
   adminEntityPublishingHistoryGetEvents,
 } from './admin-entity/getPublishingHistory';
 import { adminEntityGetReferenceEntitiesInfo } from './admin-entity/getReferenceEntitiesInfo';
+import { adminEntitySearchTotalCount } from './admin-entity/getTotalCount';
 import {
   adminEntityPublishGetUnpublishedReferencedEntities,
   adminEntityPublishGetVersionInfo,
@@ -89,9 +90,7 @@ export async function createSqliteDatabaseAdapter(
     adminEntityPublishUpdateEntity: (...args) =>
       adminEntityPublishUpdateEntity(sqliteAdapter, ...args),
     adminEntitySearchEntities: (...args) => adminEntitySearchEntities(sqliteAdapter, ...args),
-    adminEntitySearchTotalCount: () => {
-      throw new Error('TODO');
-    },
+    adminEntitySearchTotalCount: (...args) => adminEntitySearchTotalCount(sqliteAdapter, ...args),
     adminEntityUpdateEntity: (...args) => adminEntityUpdateEntity(sqliteAdapter, ...args),
     adminEntityUpdateGetEntityInfo: (...args) =>
       adminEntityUpdateGetEntityInfo(sqliteAdapter, ...args),

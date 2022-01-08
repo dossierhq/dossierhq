@@ -7,6 +7,7 @@ import { CreateEntitySubSuite } from './AdminEntityCreateEntitySubSuite';
 import { GetEntityHistorySubSuite } from './AdminEntityGetEntityHistorySubSuite';
 import { GetEntitySubSuite } from './AdminEntityGetEntitySubSuite';
 import { GetPublishingHistorySubSuite } from './AdminEntityGetPublishingHistorySubSuite';
+import { GetTotalCountSubSuite } from './AdminEntityGetTotalCountSubSuite';
 import { PublishEntitiesSubSuite } from './AdminEntityPublishEntitiesSubSuite';
 import { SearchEntitiesSubSuite } from './AdminEntitySearchEntitiesSubSuite';
 import { UnarchiveEntitySubSuite } from './AdminEntityUnarchiveEntitySubSuite';
@@ -29,6 +30,7 @@ export function createAdminEntityTestSuite<TCleanup>(
     ...GetEntityHistorySubSuite,
     ...GetEntitySubSuite,
     ...GetPublishingHistorySubSuite,
+    ...GetTotalCountSubSuite,
     ...PublishEntitiesSubSuite,
     ...SearchEntitiesSubSuite,
     ...UnarchiveEntitySubSuite,
