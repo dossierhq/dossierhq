@@ -3,11 +3,15 @@ import { assertErrorResult, assertOkResult, assertResultValue } from '../Asserts
 import type { UnboundTestFunction } from '../Builder';
 import type { AdminEntityTestContext } from './AdminEntityTestSuite';
 import { TITLE_ONLY_CREATE } from '../shared-entity/Fixtures';
-import { adminClientForMainPrincipal } from '../shared-entity/TestClients';
+import {
+  adminClientForMainPrincipal,
+  adminClientForSecondaryPrincipal,
+} from '../shared-entity/TestClients';
 
 export const UnarchiveEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
   unarchiveEntity_minimal,
   unarchiveEntity_errorInvalidId,
+  unarchiveEntity_errorWrongAuthKey,
 ];
 
 async function unarchiveEntity_minimal({ client }: AdminEntityTestContext) {
@@ -43,4 +47,20 @@ async function unarchiveEntity_errorInvalidId({ server }: AdminEntityTestContext
     id: '5b14e69f-6612-4ddb-bb42-7be273104486',
   });
   assertErrorResult(result, ErrorType.NotFound, 'No such entity');
+}
+
+async function unarchiveEntity_errorWrongAuthKey({ server }: AdminEntityTestContext) {
+  const createResult = await adminClientForMainPrincipal(server).createEntity(
+    copyEntity(TITLE_ONLY_CREATE, {
+      info: { authKey: 'subject' },
+    })
+  );
+
+  assertOkResult(createResult);
+  const {
+    entity: { id },
+  } = createResult.value;
+
+  const getResult = await adminClientForSecondaryPrincipal(server).unarchiveEntity({ id });
+  assertErrorResult(getResult, ErrorType.NotAuthorized, 'Wrong authKey provided');
 }

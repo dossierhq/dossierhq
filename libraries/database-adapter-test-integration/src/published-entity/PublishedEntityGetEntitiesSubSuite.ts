@@ -3,10 +3,12 @@ import { copyEntity, ok } from '@jonasb/datadata-core';
 import { assertOkResult, assertResultValue } from '../Asserts';
 import type { UnboundTestFunction } from '../Builder';
 import { TITLE_ONLY_CREATE, TITLE_ONLY_PUBLISHED_ENTITY } from '../shared-entity/Fixtures';
+import { publishedClientForMainPrincipal } from '../shared-entity/TestClients';
 import type { PublishedEntityTestContext } from './PublishedEntityTestSuite';
 
 export const GetEntitiesSubSuite: UnboundTestFunction<PublishedEntityTestContext>[] = [
   getEntities_minimal,
+  getEntities_none,
 ];
 
 async function getEntities_minimal({ adminClient, publishedClient }: PublishedEntityTestContext) {
@@ -42,4 +44,9 @@ async function getEntities_minimal({ adminClient, publishedClient }: PublishedEn
       })
     ),
   ]);
+}
+
+async function getEntities_none({ server }: PublishedEntityTestContext) {
+  const result = await publishedClientForMainPrincipal(server).getEntities([]);
+  assertResultValue(result, []);
 }

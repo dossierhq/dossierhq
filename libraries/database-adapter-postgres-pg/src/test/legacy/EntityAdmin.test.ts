@@ -2,7 +2,6 @@ import type {
   AdminClient,
   AdminEntity,
   AdminEntityCreate,
-  AdminEntityUpsert,
   PublishedClient,
 } from '@jonasb/datadata-core';
 import {
@@ -323,70 +322,6 @@ async function createBarWithFooBazReferences(
 }
 
 describe('getEntities()', () => {
-  test('Get no entities', async () => {
-    const result = await client.getEntities([]);
-    if (expectOkResult(result)) {
-      expect(result.value).toHaveLength(0);
-    }
-  });
-
-  test('Get 2 entities', async () => {
-    const createFoo1Result = await client.createEntity({
-      info: { type: 'EntityAdminFoo', name: 'Foo', authKey: 'none' },
-      fields: { title: 'Title 1' },
-    });
-    const createFoo2Result = await client.createEntity({
-      info: { type: 'EntityAdminFoo', name: 'Foo', authKey: 'none' },
-      fields: { title: 'Title 2' },
-    });
-
-    if (expectOkResult(createFoo1Result) && expectOkResult(createFoo2Result)) {
-      const {
-        entity: {
-          id: foo1Id,
-          info: { name: foo1Name, createdAt: createdAt1, updatedAt: updatedAt1 },
-        },
-      } = createFoo1Result.value;
-      const {
-        entity: {
-          id: foo2Id,
-          info: { name: foo2Name, createdAt: createdAt2, updatedAt: updatedAt2 },
-        },
-      } = createFoo2Result.value;
-
-      const result = await client.getEntities([{ id: foo2Id }, { id: foo1Id }]);
-      if (expectOkResult(result)) {
-        expect(result.value).toHaveLength(2);
-        expectResultValue(result.value[0], {
-          id: foo2Id,
-          info: {
-            type: 'EntityAdminFoo',
-            name: foo2Name,
-            version: 0,
-            authKey: 'none',
-            status: AdminEntityStatus.draft,
-            createdAt: createdAt2,
-            updatedAt: updatedAt2,
-          },
-          fields: { ...emptyFooFields, title: 'Title 2' },
-        });
-        expectResultValue(result.value[1], {
-          id: foo1Id,
-          info: {
-            type: 'EntityAdminFoo',
-            name: foo1Name,
-            version: 0,
-            authKey: 'none',
-            status: AdminEntityStatus.draft,
-            createdAt: createdAt1,
-            updatedAt: updatedAt1,
-          },
-          fields: { ...emptyFooFields, title: 'Title 1' },
-        });
-      }
-    }
-  });
-
   test('Gets the last version', async () => {
     const createFooResult = await client.createEntity({
       info: { type: 'EntityAdminFoo', name: 'Foo', authKey: 'none' },
@@ -3577,125 +3512,6 @@ describe('updateEntity()', () => {
 });
 
 describe('upsertEntity()', () => {
-  test('Create new entity', async () => {
-    const id = insecureTestUuidv4();
-    const upsertResult = await client.upsertEntity({
-      id,
-      info: { type: 'EntityAdminBaz', name: 'Baz', authKey: 'none' },
-      fields: {},
-    });
-    if (expectOkResult(upsertResult)) {
-      const {
-        entity: {
-          info: { name, createdAt, updatedAt },
-        },
-      } = upsertResult.value;
-
-      const expectedEntity: AdminEntity = {
-        id,
-        info: {
-          name,
-          authKey: 'none',
-          status: AdminEntityStatus.draft,
-          type: 'EntityAdminBaz',
-          version: 0,
-          createdAt,
-          updatedAt,
-        },
-        fields: {
-          ...emptyBazFields,
-        },
-      };
-
-      expectResultValue(upsertResult, { effect: 'created', entity: expectedEntity });
-
-      const getResult = await client.getEntity({ id });
-      expectResultValue(getResult, expectedEntity);
-    }
-  });
-
-  test('Update existing entity', async () => {
-    const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBaz', name: 'Original Baz', authKey: 'none' },
-      fields: { title: 'Original title' },
-    });
-
-    if (expectOkResult(createResult)) {
-      const {
-        entity: {
-          id,
-          info: { createdAt },
-        },
-      } = createResult.value;
-
-      const upsertResult = await client.upsertEntity({
-        id,
-        info: { type: 'EntityAdminBaz', name: 'Updated Baz', authKey: 'none' },
-        fields: { title: 'Updated title' },
-      });
-      if (expectOkResult(upsertResult)) {
-        const {
-          entity: {
-            info: { name, updatedAt },
-          },
-        } = upsertResult.value;
-
-        expect(name).toMatch(/^Updated Baz/);
-        expectResultValue(upsertResult, {
-          effect: 'updated',
-          entity: {
-            id,
-            info: {
-              name,
-              authKey: 'none',
-              status: AdminEntityStatus.draft,
-              type: 'EntityAdminBaz',
-              version: 1,
-              createdAt,
-              updatedAt,
-            },
-            fields: {
-              ...emptyBazFields,
-              title: 'Updated title',
-            },
-          },
-        });
-
-        const getResult = await client.getEntity({ id });
-        expectResultValue(getResult, upsertResult.value.entity);
-      }
-    }
-  });
-
-  test('Update entity without any change', async () => {
-    const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBaz', name: 'Original Baz', authKey: 'none' },
-      fields: { title: 'Original title' },
-    });
-
-    if (expectOkResult(createResult)) {
-      const {
-        entity: {
-          id,
-          info: { name },
-        },
-      } = createResult.value;
-
-      const upsertResult = await client.upsertEntity({
-        id,
-        info: { type: 'EntityAdminBaz', name, authKey: 'none' },
-        fields: { title: 'Original title' },
-      });
-      expectResultValue(upsertResult, {
-        effect: 'none',
-        entity: createResult.value.entity,
-      });
-
-      const getResult = await client.getEntity({ id });
-      expectResultValue(getResult, createResult.value.entity);
-    }
-  });
-
   test('Update entity without any change and same name', async () => {
     // Create another entity to ensure we get a non-unique name
     expectOkResult(
@@ -3722,19 +3538,6 @@ describe('upsertEntity()', () => {
         entity: createResult.value.entity,
       });
     }
-  });
-
-  test('Error: Upsert without authKey', async () => {
-    const result = await client.upsertEntity({
-      id: insecureTestUuidv4(),
-      info: {
-        type: 'EntityAdminFoo',
-        name: 'Foo',
-      },
-      fields: {},
-    } as AdminEntityUpsert);
-
-    expectErrorResult(result, ErrorType.BadRequest, 'Missing entity.info.authKey');
   });
 
   test('Error: Using authKey where adapter returns error', async () => {
@@ -4586,26 +4389,6 @@ describe('archiveEntity()', () => {
       expectErrorResult(archiveResult, ErrorType.BadRequest, 'Entity is published');
     }
   });
-
-  test('Error: archive with wrong authKey', async () => {
-    const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBar', name: 'Bar name', authKey: 'subject' },
-      fields: { title: 'Bar title' },
-    });
-    if (expectOkResult(createResult)) {
-      const {
-        entity: { id },
-      } = createResult.value;
-
-      const archiveResult = await adminClientOther.archiveEntity({ id });
-      expectErrorResult(archiveResult, ErrorType.NotAuthorized, 'Wrong authKey provided');
-    }
-  });
-
-  test('Error: archive with invalid id', async () => {
-    const result = await client.archiveEntity({ id: '5b14e69f-6612-4ddb-bb42-7be273104486' });
-    expectErrorResult(result, ErrorType.NotFound, 'No such entity');
-  });
 });
 
 describe('unarchiveEntity()', () => {
@@ -4764,21 +4547,6 @@ describe('unarchiveEntity()', () => {
           updatedAt,
         });
       }
-    }
-  });
-
-  test('Error: unarchive with wrong authKey', async () => {
-    const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBar', name: 'Bar name', authKey: 'subject' },
-      fields: { title: 'Bar title' },
-    });
-    if (expectOkResult(createResult)) {
-      const {
-        entity: { id },
-      } = createResult.value;
-
-      const archiveResult = await adminClientOther.unarchiveEntity({ id });
-      expectErrorResult(archiveResult, ErrorType.NotAuthorized, 'Wrong authKey provided');
     }
   });
 });

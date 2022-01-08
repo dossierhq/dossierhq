@@ -8,6 +8,7 @@ import type { AdminEntityTestContext } from './AdminEntityTestSuite';
 
 export const GetEntitiesSubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
   getEntities_minimal,
+  getEntities_none,
   getEntities_errorMissingIds,
 ];
 
@@ -28,6 +29,11 @@ async function getEntities_minimal({ client }: AdminEntityTestContext) {
     ok<AdminEntity, ErrorType.Generic>(create1Result.value.entity),
     ok<AdminEntity, ErrorType.Generic>(create2Result.value.entity),
   ]);
+}
+
+async function getEntities_none({ server }: AdminEntityTestContext) {
+  const result = await adminClientForMainPrincipal(server).getEntities([]);
+  assertResultValue(result, []);
 }
 
 async function getEntities_errorMissingIds({ server }: AdminEntityTestContext) {
