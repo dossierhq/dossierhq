@@ -477,18 +477,6 @@ describe('getEntities()', () => {
       }
     }
   });
-
-  test('Error: Get entities with invalid ids', async () => {
-    const result = await client.getEntities([
-      { id: '13e4c7da-616e-44a3-a039-24f96f9b17da' },
-      { id: '13e4c7da-616e-44a3-44a3-24f96f9b17da' },
-    ]);
-    if (expectOkResult(result)) {
-      expect(result.value).toHaveLength(2);
-      expectErrorResult(result.value[0], ErrorType.NotFound, 'No such entity');
-      expectErrorResult(result.value[1], ErrorType.NotFound, 'No such entity');
-    }
-  });
 });
 
 describe('createEntity()', () => {
