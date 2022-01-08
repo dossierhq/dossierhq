@@ -271,7 +271,7 @@ export function totalAdminEntitiesQuery(
   schema: AdminSchema,
   authKeys: ResolvedAuthKey[],
   query: AdminQuery | undefined
-): Result<{ text: string; values: unknown[] }, ErrorType.BadRequest> {
+): Result<{ text: string; values: ColumnValue[] }, ErrorType.BadRequest> {
   return totalCountQuery(schema, authKeys, query, false);
 }
 
@@ -279,7 +279,7 @@ export function totalPublishedEntitiesQuery(
   schema: PublishedSchema,
   authKeys: ResolvedAuthKey[],
   query: PublishedQuery | undefined
-): Result<{ text: string; values: unknown[] }, ErrorType.BadRequest> {
+): Result<{ text: string; values: ColumnValue[] }, ErrorType.BadRequest> {
   return totalCountQuery(schema, authKeys, query, true);
 }
 
@@ -288,13 +288,12 @@ function totalCountQuery(
   authKeys: ResolvedAuthKey[],
   query: AdminQuery | PublishedQuery | undefined,
   published: boolean
-): Result<{ text: string; values: unknown[] }, ErrorType.BadRequest> {
+): Result<{ text: string; values: ColumnValue[] }, ErrorType.BadRequest> {
   const qb = new SqliteQueryBuilder('SELECT');
-  // Convert count to ::integer since count() is bigint (js doesn't support 64 bit numbers so pg return it as string)
   if (query?.boundingBox) {
-    qb.addQuery('COUNT(DISTINCT e.id)::integer');
+    qb.addQuery('COUNT(DISTINCT e.id)');
   } else {
-    qb.addQuery('COUNT(e.id)::integer');
+    qb.addQuery('COUNT(e.id)');
   }
   qb.addQuery('AS count FROM entities e');
 

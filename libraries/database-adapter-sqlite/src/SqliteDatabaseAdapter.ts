@@ -36,6 +36,7 @@ import { adminEntityUpdateStatus } from './admin-entity/updateStatus';
 import { authCreateSession } from './auth/createSession';
 import { publishedEntityGetEntities } from './published-entity/getEntities';
 import { publishedEntityGetOne } from './published-entity/getEntity';
+import { publishedEntitySearchTotalCount } from './published-entity/getTotalCount';
 import { publishedEntitySearchEntities } from './published-entity/searchEntities';
 import { queryOne } from './QueryFunctions';
 import { schemaGetSpecification } from './schema/getSpecification';
@@ -106,9 +107,8 @@ export async function createSqliteDatabaseAdapter(
     publishedEntityGetEntities: (...args) => publishedEntityGetEntities(sqliteAdapter, ...args),
     publishedEntitySearchEntities: (...args) =>
       publishedEntitySearchEntities(sqliteAdapter, ...args),
-    publishedEntitySearchTotalCount: () => {
-      throw new Error('TODO');
-    },
+    publishedEntitySearchTotalCount: (...args) =>
+      publishedEntitySearchTotalCount(sqliteAdapter, ...args),
     schemaGetSpecification: (...args) => schemaGetSpecification(sqliteAdapter, ...args),
     schemaUpdateSpecification: (...args) => schemaUpdateSpecification(sqliteAdapter, ...args),
     withNestedTransaction: (...args) => withNestedTransaction(sqliteAdapter, ...args),
