@@ -4,6 +4,7 @@ import type { TestFunctionInitializer, TestSuite } from '..';
 import { buildSuite } from '../Builder';
 import { GetEntitiesSubSuite } from './PublishedEntityGetEntitiesSubSuite';
 import { GetEntitySubSuite } from './PublishedEntityGetEntitySubSuite';
+import { SearchEntitiesSubSuite } from './PublishedEntitySearchEntitiesSubSuite';
 
 export interface PublishedEntityTestContext {
   server: Server;
@@ -14,5 +15,10 @@ export interface PublishedEntityTestContext {
 export function createPublishedEntityTestSuite<TCleanup>(
   initializer: TestFunctionInitializer<PublishedEntityTestContext, TCleanup>
 ): TestSuite {
-  return buildSuite(initializer, ...GetEntitySubSuite, ...GetEntitiesSubSuite);
+  return buildSuite(
+    initializer,
+    ...GetEntitySubSuite,
+    ...GetEntitiesSubSuite,
+    ...SearchEntitiesSubSuite
+  );
 }
