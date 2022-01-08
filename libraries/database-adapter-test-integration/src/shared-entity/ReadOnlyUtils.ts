@@ -1,5 +1,5 @@
-import type { AdminEntity, ErrorType, PromiseResult } from '@jonasb/datadata-core';
-import { notOk, ok } from '@jonasb/datadata-core';
+import type { AdminEntity, ErrorType, PromiseResult, PublishedEntity } from '@jonasb/datadata-core';
+import { AdminEntityStatus, notOk, ok } from '@jonasb/datadata-core';
 import type { Server } from '@jonasb/datadata-server';
 import { adminClientForMainPrincipal } from './TestClients';
 
@@ -18,22 +18,51 @@ const ids = [
   'f53e5851-91ed-4966-ab43-da5fe8893396',
 ];
 
-export async function getReadOnlyEntities(
-  server: Server
-): PromiseResult<AdminEntity[], ErrorType.Generic> {
+async function createEntities(server: Server): PromiseResult<AdminEntity[], ErrorType.Generic> {
   if (entities) return ok(entities);
 
   const adminClient = adminClientForMainPrincipal(server);
   const newEntities: AdminEntity[] = [];
-  for (const id of ids) {
-    const upsertResult = await adminClient.upsertEntity({
-      id,
-      info: { type: 'ReadOnly', name: `ReadOnly`, authKey: 'none' },
-      fields: { message: 'Hello' },
-    });
+  for (const [index, id] of ids.entries()) {
+    const upsertResult = await adminClient.upsertEntity(
+      {
+        id,
+        info: { type: 'ReadOnly', name: `ReadOnly`, authKey: 'none' },
+        fields: { message: 'Hello' },
+      },
+      { publish: index < ids.length * 0.8 }
+    );
     if (upsertResult.isError()) return notOk.GenericUnexpectedError(upsertResult);
     newEntities.push(upsertResult.value.entity);
   }
+
   entities = newEntities;
   return ok(entities);
+}
+
+export async function getReadOnlyAdminEntities(
+  server: Server
+): PromiseResult<AdminEntity[], ErrorType.Generic> {
+  return createEntities(server);
+}
+
+export async function getReadOnlyPublishedEntities(
+  server: Server
+): PromiseResult<PublishedEntity[], ErrorType.Generic> {
+  const adminEntities = await getReadOnlyAdminEntities(server);
+  if (adminEntities.isError()) return adminEntities;
+  const publishedOnly = adminEntities.value.filter((it) =>
+    [AdminEntityStatus.published, AdminEntityStatus.modified].includes(it.info.status)
+  );
+  const publishedEntities: PublishedEntity[] = publishedOnly.map((it) => ({
+    id: it.id,
+    info: {
+      type: it.info.type,
+      name: it.info.name,
+      authKey: it.info.authKey,
+      createdAt: it.info.createdAt,
+    },
+    fields: it.fields,
+  }));
+  return ok(publishedEntities);
 }
