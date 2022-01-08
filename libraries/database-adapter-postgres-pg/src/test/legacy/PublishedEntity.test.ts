@@ -80,7 +80,6 @@ let context: SessionContext;
 let adminClient: AdminClient;
 let adminClientOther: AdminClient;
 let publishedClient: PublishedClient;
-let publishedClientOther: PublishedClient;
 let entitiesOfTypePublishedEntityOnlyEditBeforeNone: AdminEntity[];
 let entitiesOfTypePublishedEntityOnlyEditBeforeSubject: AdminEntity[];
 
@@ -94,9 +93,6 @@ beforeAll(async () => {
     server.createSession({ provider: 'test', identifier: 'other', defaultAuthKeys: ['none'] })
   );
   publishedClient = server.createPublishedClient(context);
-  publishedClientOther = server.createPublishedClient(() =>
-    server.createSession({ provider: 'test', identifier: 'other', defaultAuthKeys: ['none'] })
-  );
 
   await adminClient.updateSchemaSpecification(SCHEMA);
 
@@ -256,66 +252,9 @@ describe('getEntity()', () => {
       }
     }
   });
-
-  test('Error: Archived entity', async () => {
-    const createResult = await adminClient.createEntity({
-      info: { type: 'PublishedEntityFoo', name: 'Foo 1', authKey: 'none' },
-      fields: { title: 'Title 1' },
-    });
-    if (expectOkResult(createResult)) {
-      const {
-        entity: { id },
-      } = createResult.value;
-
-      const archiveResult = await adminClient.archiveEntity({ id });
-      if (expectOkResult(archiveResult)) {
-        const { updatedAt } = archiveResult.value;
-        expectResultValue(archiveResult, {
-          id,
-          status: AdminEntityStatus.archived,
-          effect: 'archived',
-          updatedAt,
-        });
-      }
-
-      const result = await publishedClient.getEntity({ id });
-      expectErrorResult(result, ErrorType.NotFound, 'No such entity');
-    }
-  });
-
-  test('Error: Get missing id', async () => {
-    const result = await publishedClient.getEntity({ id: 'f09fdd62-4a1e-4320-afba-8dd0781799df' });
-    expectErrorResult(result, ErrorType.NotFound, 'No such entity');
-  });
-
-  test('Error: Using wrong authKey', async () => {
-    const createResult = await adminClient.createEntity(
-      {
-        info: { type: 'PublishedEntityFoo', name: 'Foo', authKey: 'subject' },
-        fields: { title: 'Title' },
-      },
-      { publish: true }
-    );
-
-    if (expectOkResult(createResult)) {
-      const {
-        entity: { id },
-      } = createResult.value;
-
-      const getResult = await publishedClientOther.getEntity({ id });
-      expectErrorResult(getResult, ErrorType.NotAuthorized, 'Wrong authKey provided');
-    }
-  });
 });
 
 describe('getEntities()', () => {
-  test('No ids', async () => {
-    const result = await publishedClient.getEntities([]);
-    if (expectOkResult(result)) {
-      expect(result.value).toHaveLength(0);
-    }
-  });
-
   test('Get two entities', async () => {
     const createFoo1Result = await adminClient.createEntity({
       info: { type: 'PublishedEntityFoo', name: 'Foo 1', authKey: 'none' },
