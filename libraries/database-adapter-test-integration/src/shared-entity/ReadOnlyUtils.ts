@@ -1,55 +1,145 @@
-import type { AdminEntity, ErrorType, PromiseResult, PublishedEntity } from '@jonasb/datadata-core';
-import { AdminEntityStatus, notOk, ok } from '@jonasb/datadata-core';
+import type {
+  AdminClient,
+  AdminEntity,
+  AdminEntityUpsert,
+  ErrorType,
+  PromiseResult,
+  PublishedEntity,
+} from '@jonasb/datadata-core';
+import { AdminEntityStatus, assertExhaustive, copyEntity, notOk, ok } from '@jonasb/datadata-core';
 import type { Server } from '@jonasb/datadata-server';
-import { adminClientForMainPrincipal } from './TestClients';
+import { v5 as uuidv5 } from 'uuid';
+import { assertSame } from '../Asserts';
+import { adminClientForMainPrincipal, adminClientForSecondaryPrincipal } from './TestClients';
 
-let entities: AdminEntity[] | null = null;
+const UUID_NAMESPACE = '10db07d4-3666-48e9-8080-12db0365ab81';
+const ENTITIES_PER_CATEGORY = 5;
 
-const ids = [
-  '573056ca-d48a-4333-ad0d-b11ac59d2b0a',
-  '200eec97-6572-475a-ae0c-a4a39fa2977e',
-  '1c1dcffa-c18b-4dfc-9fff-70ef719bebda',
-  'ceaee21c-9ab7-4dbe-9c9d-35f3cbf4eb73',
-  '3e648346-2940-4780-beba-c2ca415b49b2',
-  '12b7bb05-b32c-4234-8f3e-88791920e003',
-  'f6f64ed1-988c-4db8-b58c-e612fefcf7a0',
-  'ace348b6-ca43-48bf-ae42-4270d98f978c',
-  'fee697fe-c315-4c3e-a61b-1da5f6ba9e91',
-  'f53e5851-91ed-4966-ab43-da5fe8893396',
-];
+const READONLY_UPSERT: AdminEntityUpsert = {
+  id: 'REPLACE',
+  info: { type: 'ReadOnly', name: `ReadOnly`, authKey: 'none' },
+  fields: { message: 'Hello' },
+};
 
-async function createEntities(server: Server): PromiseResult<AdminEntity[], ErrorType.Generic> {
-  if (entities) return ok(entities);
+let createEntitiesPromise: PromiseResult<
+  { main: AdminEntity[]; secondary: AdminEntity[] },
+  ErrorType.Generic
+> | null = null;
 
-  const adminClient = adminClientForMainPrincipal(server);
-  const newEntities: AdminEntity[] = [];
-  for (const [index, id] of ids.entries()) {
-    const upsertResult = await adminClient.upsertEntity(
-      {
+async function createEntities(
+  server: Server
+): PromiseResult<{ main: AdminEntity[]; secondary: AdminEntity[] }, ErrorType.Generic> {
+  if (!createEntitiesPromise) {
+    createEntitiesPromise = (async (): PromiseResult<
+      { main: AdminEntity[]; secondary: AdminEntity[] },
+      ErrorType.Generic
+    > => {
+      const mainEntities: AdminEntity[] = [];
+      const secondaryEntities: AdminEntity[] = [];
+
+      for (const principal of ['main', 'secondary'] as const) {
+        const adminClient =
+          principal === 'main'
+            ? adminClientForMainPrincipal(server)
+            : adminClientForSecondaryPrincipal(server);
+        const principalEntities: AdminEntity[] =
+          principal === 'main' ? mainEntities : secondaryEntities;
+        for (const authKey of ['none', 'subject']) {
+          for (const status of Object.values(AdminEntityStatus)) {
+            for (let index = 0; index < ENTITIES_PER_CATEGORY; index++) {
+              const id = uuidv5(`${principal}-${authKey}-${status}-${index}`, UUID_NAMESPACE);
+              const result = await createEntity(adminClient, id, authKey, status);
+              if (result.isError()) return notOk.GenericUnexpectedError(result);
+              principalEntities.push(result.value);
+            }
+          }
+        }
+      }
+      return ok({ main: mainEntities, secondary: secondaryEntities });
+    })();
+  }
+  return createEntitiesPromise;
+}
+
+async function createEntity(
+  adminClient: AdminClient,
+  id: string,
+  authKey: string,
+  status: AdminEntityStatus
+): PromiseResult<
+  AdminEntity,
+  ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.NotFound | ErrorType.Generic
+> {
+  const upsertResult = await adminClient.upsertEntity(
+    copyEntity(READONLY_UPSERT, { id, info: { authKey } }),
+    {
+      publish: [
+        AdminEntityStatus.withdrawn,
+        AdminEntityStatus.modified,
+        AdminEntityStatus.published,
+      ].includes(status),
+    }
+  );
+  if (upsertResult.isError()) return upsertResult;
+  let { entity } = upsertResult.value;
+
+  switch (status) {
+    case AdminEntityStatus.draft:
+      break;
+    case AdminEntityStatus.published:
+      break;
+    case AdminEntityStatus.modified: {
+      const updateResult = await adminClient.updateEntity({
         id,
-        info: { type: 'ReadOnly', name: `ReadOnly`, authKey: 'none' },
-        fields: { message: 'Hello' },
-      },
-      { publish: index < ids.length * 0.8 }
-    );
-    if (upsertResult.isError()) return notOk.GenericUnexpectedError(upsertResult);
-    newEntities.push(upsertResult.value.entity);
+        fields: { message: 'Updated message' },
+      });
+      if (updateResult.isError()) return updateResult;
+      entity = updateResult.value.entity;
+      break;
+    }
+    case AdminEntityStatus.withdrawn: {
+      const unpublishResult = await adminClient.unpublishEntities([{ id }]);
+      if (unpublishResult.isError()) return unpublishResult;
+      entity.info.status = unpublishResult.value[0].status;
+      entity.info.updatedAt = unpublishResult.value[0].updatedAt;
+      break;
+    }
+    case AdminEntityStatus.archived: {
+      const archiveResult = await adminClient.archiveEntity({ id });
+      if (archiveResult.isError()) return archiveResult;
+      entity.info.status = archiveResult.value.status;
+      entity.info.updatedAt = archiveResult.value.updatedAt;
+      break;
+    }
+    default:
+      assertExhaustive(status);
   }
 
-  entities = newEntities;
+  assertSame(entity.info.status, status);
+
+  return ok(entity);
+}
+
+export async function getMainPrincipalReadOnlyAdminEntities(
+  server: Server,
+  authKeys: string[] = ['none']
+): PromiseResult<AdminEntity[], ErrorType.Generic> {
+  const entitiesResult = await createEntities(server);
+  if (entitiesResult.isError()) return entitiesResult;
+  const { main, secondary } = entitiesResult.value;
+
+  const entities = [
+    ...main.filter((it) => authKeys.includes(it.info.authKey)),
+    ...secondary.filter((it) => it.info.authKey === 'none' && authKeys.includes(it.info.authKey)),
+  ];
+
   return ok(entities);
 }
 
-export async function getReadOnlyAdminEntities(
-  server: Server
-): PromiseResult<AdminEntity[], ErrorType.Generic> {
-  return createEntities(server);
-}
-
-export async function getReadOnlyPublishedEntities(
+export async function getMainPrincipalReadOnlyPublishedEntities(
   server: Server
 ): PromiseResult<PublishedEntity[], ErrorType.Generic> {
-  const adminEntities = await getReadOnlyAdminEntities(server);
+  const adminEntities = await getMainPrincipalReadOnlyAdminEntities(server);
   if (adminEntities.isError()) return adminEntities;
   const publishedOnly = adminEntities.value.filter((it) =>
     [AdminEntityStatus.published, AdminEntityStatus.modified].includes(it.info.status)
