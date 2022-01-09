@@ -1,6 +1,7 @@
 import type { Server } from "@jonasb/datadata-server";
 import {
   createPublishedEntityTestSuite,
+  createReadOnlyEntityRepository,
 } from "@jonasb/datadata-database-adapter-test-integration";
 import {
   initializeIntegrationTestServer,
@@ -20,10 +21,17 @@ registerTestSuite(createPublishedEntityTestSuite({
     if (sessionResult.isError()) throw sessionResult.toError();
     const { context } = sessionResult.value;
 
+    const readOnlyEntityRepository = await createReadOnlyEntityRepository(
+      server,
+    );
+
     const adminClient = server.createAdminClient(context);
     const publishedClient = server.createPublishedClient(context);
 
-    return [{ server, adminClient, publishedClient }, { server }];
+    return [
+      { server, adminClient, publishedClient, readOnlyEntityRepository },
+      { server },
+    ];
   },
   after: async ({ server }: { server: Server }) => {
     await server.shutdown();

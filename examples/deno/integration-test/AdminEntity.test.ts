@@ -1,6 +1,7 @@
 import type { Server } from "@jonasb/datadata-server";
 import {
   createAdminEntityTestSuite,
+  createReadOnlyEntityRepository,
 } from "@jonasb/datadata-database-adapter-test-integration";
 import {
   initializeIntegrationTestServer,
@@ -20,8 +21,12 @@ registerTestSuite(createAdminEntityTestSuite({
       })
     );
 
+    const readOnlyEntityRepository = await createReadOnlyEntityRepository(
+      server,
+    );
+
     //TODO remove client
-    return [{ server, client }, { server }];
+    return [{ server, client, readOnlyEntityRepository }, { server }];
   },
   after: async ({ server }: { server: Server }) => {
     await server.shutdown();

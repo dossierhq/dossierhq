@@ -1,15 +1,21 @@
 import { assertIsDefined } from '@jonasb/datadata-core';
-import { createPublishedEntityTestSuite } from '@jonasb/datadata-database-adapter-test-integration';
+import type { ReadOnlyEntityRepository } from '@jonasb/datadata-database-adapter-test-integration';
+import {
+  createPublishedEntityTestSuite,
+  createReadOnlyEntityRepository,
+} from '@jonasb/datadata-database-adapter-test-integration';
 import type { Server } from '@jonasb/datadata-server';
 import { registerTestSuite } from '../../TestUtils';
 import { initializeSqlite3Server } from './Sqlite3TestUtils';
 
 let server: Server | null = null;
+let readOnlyEntityRepository: ReadOnlyEntityRepository;
 
 beforeAll(async () => {
   const result = await initializeSqlite3Server();
   if (result.isError()) throw result.toError();
   server = result.value;
+  readOnlyEntityRepository = await createReadOnlyEntityRepository(server);
 });
 afterAll(async () => {
   if (server) {
@@ -32,7 +38,7 @@ registerTestSuite(
 
       const adminClient = server.createAdminClient(context);
       const publishedClient = server.createPublishedClient(context);
-      return [{ server, adminClient, publishedClient }, undefined];
+      return [{ server, adminClient, publishedClient, readOnlyEntityRepository }, undefined];
     },
     after: async () => {
       //empty

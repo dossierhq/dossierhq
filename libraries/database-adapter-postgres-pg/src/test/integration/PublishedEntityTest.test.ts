@@ -1,5 +1,8 @@
 import { assertIsDefined } from '@jonasb/datadata-core';
-import { createPublishedEntityTestSuite } from '@jonasb/datadata-database-adapter-test-integration';
+import {
+  createPublishedEntityTestSuite,
+  createReadOnlyEntityRepository,
+} from '@jonasb/datadata-database-adapter-test-integration';
 import type { Server } from '@jonasb/datadata-server';
 import { initializeIntegrationTestServer, registerTestSuite } from '../TestUtils';
 
@@ -31,9 +34,11 @@ registerTestSuite(
       if (sessionResult.isError()) throw sessionResult.toError();
       const { context } = sessionResult.value;
 
+      const readOnlyEntityRepository = await createReadOnlyEntityRepository(server);
+      //TODO remove clients
       const adminClient = server.createAdminClient(context);
       const publishedClient = server.createPublishedClient(context);
-      return [{ server, adminClient, publishedClient }, undefined];
+      return [{ server, adminClient, publishedClient, readOnlyEntityRepository }, undefined];
     },
     after: async () => {
       // empty

@@ -1,6 +1,5 @@
-import { assertOkResult, assertResultValue } from '../Asserts';
+import { assertResultValue } from '../Asserts';
 import type { UnboundTestFunction } from '../Builder';
-import { getMainPrincipalReadOnlyPublishedEntities } from '../shared-entity/ReadOnlyUtils';
 import { publishedClientForMainPrincipal } from '../shared-entity/TestClients';
 import type { PublishedEntityTestContext } from './PublishedEntityTestSuite';
 
@@ -8,10 +7,11 @@ export const GetTotalCountSubSuite: UnboundTestFunction<PublishedEntityTestConte
   totalCount_minimal,
 ];
 
-async function totalCount_minimal({ server }: PublishedEntityTestContext) {
-  const setupResult = await getMainPrincipalReadOnlyPublishedEntities(server);
-  assertOkResult(setupResult);
-  const expectedEntities = setupResult.value;
+async function totalCount_minimal({
+  server,
+  readOnlyEntityRepository,
+}: PublishedEntityTestContext) {
+  const expectedEntities = readOnlyEntityRepository.getMainPrincipalPublishedEntities();
   const result = await publishedClientForMainPrincipal(server).getTotalCount({
     entityTypes: ['ReadOnly'],
   });
