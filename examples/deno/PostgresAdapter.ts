@@ -4,19 +4,10 @@ import type {
   PostgresTransaction,
 } from "@jonasb/datadata-database-adapter-postgres-core";
 import { createPostgresDatabaseAdapterAdapter } from "@jonasb/datadata-database-adapter-postgres-core";
+import { toTemporalInstant } from "@js-temporal/polyfill";
 import type { PoolClient } from "postgres";
 import { Pool, PostgresError } from "postgres";
 import { decode, encode } from "std/encoding/base64.ts";
-
-//TODO configure type parser for deno
-// PgTypes.setTypeParser(PgTypes.builtins.INT8, BigInt);
-// // 1016 = _int8 (int8 array)
-// PgTypes.setTypeParser(1016, (value) => PgTypes.arrayParser(value, BigInt));
-// PgTypes.setTypeParser(PgTypes.builtins.TIMESTAMPTZ, (value) => {
-//   if (value === "-infinity") return Number.NEGATIVE_INFINITY;
-//   if (value === "infinity") return Number.POSITIVE_INFINITY;
-//   return Temporal.Instant.from(value);
-// });
 
 interface TransactionWrapper extends PostgresTransaction {
   client: PoolClient;
@@ -46,8 +37,12 @@ export function createPostgresAdapter(databaseUrl: string): DatabaseAdapter {
       return transaction;
     },
 
-    query: async (transaction, query, values) => {
-      let result: { rows: unknown[] };
+    async query<R>(
+      transaction: PostgresTransaction | null,
+      query: string,
+      values: unknown[] | undefined,
+    ): Promise<R[]> {
+      let result: { rows: Record<string, unknown>[] };
       if (transaction) {
         result = await getTransaction(transaction).queryObject(
           query,
@@ -56,13 +51,25 @@ export function createPostgresAdapter(databaseUrl: string): DatabaseAdapter {
       } else {
         const poolClient = await pool.connect();
         try {
-          result = await poolClient.queryObject(query, ...(values ?? []));
+          result = await poolClient.queryObject<Record<string, unknown>>(
+            query,
+            ...(values ?? []),
+          );
         } finally {
           poolClient.release();
         }
       }
-      // deno-lint-ignore no-explicit-any
-      return result.rows as any[];
+
+      //TODO switch to some other way when deno-postgres support type decoders
+      result.rows.forEach((row) => {
+        for (const [key, value] of Object.entries(row)) {
+          if (value instanceof Date) {
+            row[key] = toTemporalInstant.apply(value);
+          }
+        }
+      });
+
+      return result.rows as R[];
     },
 
     isUniqueViolationOfConstraint,
