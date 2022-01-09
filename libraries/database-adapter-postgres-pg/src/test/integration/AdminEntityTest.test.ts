@@ -1,9 +1,14 @@
 import { assertIsDefined } from '@jonasb/datadata-core';
-import { createAdminEntityTestSuite } from '@jonasb/datadata-database-adapter-test-integration';
+import type { ReadOnlyEntityRepository } from '@jonasb/datadata-database-adapter-test-integration';
+import {
+  createAdminEntityTestSuite,
+  createReadOnlyEntityRepository,
+} from '@jonasb/datadata-database-adapter-test-integration';
 import type { Server } from '@jonasb/datadata-server';
 import { initializeIntegrationTestServer, registerTestSuite } from '../TestUtils';
 
 let server: Server | null = null;
+let readOnlyEntityRepository: ReadOnlyEntityRepository;
 
 beforeAll(async () => {
   const result = await initializeIntegrationTestServer();
@@ -11,6 +16,7 @@ beforeAll(async () => {
     throw result.toError();
   }
   server = result.value;
+  readOnlyEntityRepository = await createReadOnlyEntityRepository(server);
 });
 afterAll(async () => {
   if (server) {
@@ -32,7 +38,7 @@ registerTestSuite(
         })
       );
       //TODO remove client
-      return [{ server, client }, undefined];
+      return [{ server, client, readOnlyEntityRepository }, undefined];
     },
     after: async () => {
       // empty
