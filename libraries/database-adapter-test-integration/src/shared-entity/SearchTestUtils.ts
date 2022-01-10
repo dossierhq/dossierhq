@@ -32,7 +32,8 @@ export function assertAdminEntityConnectionToMatchSlice(
   connectionResult: Result<Connection<Edge<AdminEntity, ErrorType>> | null, ErrorType>,
   sliceStart: number,
   sliceEnd: number | undefined,
-  order?: AdminQueryOrder
+  order?: AdminQueryOrder,
+  reverse?: boolean
 ): void {
   assertOkResult(connectionResult);
   const connection = connectionResult.value;
@@ -43,6 +44,7 @@ export function assertAdminEntityConnectionToMatchSlice(
   const allEntitiesOrdered = [...allEntities].sort(
     adminOrderCompare[order ?? AdminQueryOrder.createdAt]
   );
+  if (reverse) allEntitiesOrdered.reverse();
   const expectedEntities = allEntitiesOrdered.slice(sliceStart, sliceEnd);
   const expectedIds = expectedEntities.map(({ id }) => ({ id }));
 
@@ -54,7 +56,7 @@ export function assertPublishedEntityConnectionToMatchSlice(
   connectionResult: Result<Connection<Edge<PublishedEntity, ErrorType>> | null, ErrorType>,
   sliceStart: number,
   sliceEnd: number | undefined,
-  order: PublishedQueryOrder
+  order?: PublishedQueryOrder
 ): void {
   assertOkResult(connectionResult);
   const connection = connectionResult.value;
@@ -62,7 +64,9 @@ export function assertPublishedEntityConnectionToMatchSlice(
     id: edge.node.isOk() ? edge.node.value.id : edge.node,
   }));
 
-  const allEntitiesOrdered = [...allEntities].sort(publishedOrderCompare[order]);
+  const allEntitiesOrdered = [...allEntities].sort(
+    publishedOrderCompare[order ?? PublishedQueryOrder.createdAt]
+  );
   const expectedEntities = allEntitiesOrdered.slice(sliceStart, sliceEnd);
   const expectedIds = expectedEntities.map(({ id }) => ({ id }));
 
