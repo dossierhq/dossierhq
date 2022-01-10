@@ -12,12 +12,13 @@ import type {
 import {
   AdminEntityStatus,
   AdminQueryOrder,
+  assertIsDefined,
   getAllPagesForConnection,
   ok,
   PublishedQueryOrder,
 } from '@jonasb/datadata-core';
 import { Temporal } from '@js-temporal/polyfill';
-import { assertEquals, assertOkResult } from '../Asserts';
+import { assertEquals, assertOkResult, assertResultValue, assertSame } from '../Asserts';
 
 const adminOrderCompare: Record<AdminQueryOrder, (a: AdminEntity, b: AdminEntity) => number> = {
   [AdminQueryOrder.createdAt]: (a, b) =>
@@ -82,6 +83,25 @@ export function assertPublishedEntityConnectionToMatchSlice(
   const expectedIds = expectedEntities.map(({ id }) => ({ id }));
 
   assertEquals(actualIds, expectedIds);
+}
+
+export function assertSearchResultEntities<TItem extends AdminEntity | PublishedEntity>(
+  result: Result<
+    Connection<Edge<TItem, ErrorType>> | null,
+    ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
+  >,
+  actualEntities: TItem[]
+): void {
+  assertOkResult(result);
+  if (actualEntities.length === 0) {
+    assertSame(result.value, null);
+  } else {
+    assertIsDefined(result.value);
+    assertEquals(result.value.edges.length, actualEntities.length);
+    for (const [index, actualEntity] of actualEntities.entries()) {
+      assertResultValue(result.value.edges[index].node, actualEntity);
+    }
+  }
 }
 
 export async function countSearchResultStatuses(
