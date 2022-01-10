@@ -10,6 +10,7 @@ import {
 
 export const GetEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
   getEntity_withSubjectAuthKey,
+  getEntity_getLatestVersion,
   getEntity_errorInvalidId,
   getEntity_errorInvalidVersion,
   getEntity_errorWrongAuthKey,
@@ -26,6 +27,22 @@ async function getEntity_withSubjectAuthKey({ client }: AdminEntityTestContext) 
 
   const getResult = await client.getEntity({ id });
   assertResultValue(getResult, createResult.value.entity);
+}
+
+async function getEntity_getLatestVersion({ server }: AdminEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const createResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
+  assertOkResult(createResult);
+  const {
+    entity: { id },
+  } = createResult.value;
+
+  const updateResult = await adminClient.updateEntity({ id, fields: { title: 'Updated title' } });
+  assertOkResult(updateResult);
+
+  const result = await adminClient.getEntity({ id });
+  assertOkResult(result);
+  assertResultValue(result, updateResult.value.entity);
 }
 
 async function getEntity_errorInvalidId({ client }: AdminEntityTestContext) {

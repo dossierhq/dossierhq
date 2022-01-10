@@ -5,6 +5,7 @@ import { buildSuite } from '../Builder';
 import type { ReadOnlyEntityRepository } from '../shared-entity/ReadOnlyEntityRepository';
 import { ArchiveEntitySubSuite } from './AdminEntityArchiveEntitySubSuite';
 import { CreateEntitySubSuite } from './AdminEntityCreateEntitySubSuite';
+import { GetEntitiesSubSuite } from './AdminEntityGetEntitiesSubSuite';
 import { GetEntityHistorySubSuite } from './AdminEntityGetEntityHistorySubSuite';
 import { GetEntitySubSuite } from './AdminEntityGetEntitySubSuite';
 import { GetPublishingHistorySubSuite } from './AdminEntityGetPublishingHistorySubSuite';
@@ -29,6 +30,7 @@ export function createAdminEntityTestSuite<TCleanup>(
     initializer,
     ...ArchiveEntitySubSuite,
     ...CreateEntitySubSuite,
+    ...GetEntitiesSubSuite,
     ...GetEntityHistorySubSuite,
     ...GetEntitySubSuite,
     ...GetPublishingHistorySubSuite,

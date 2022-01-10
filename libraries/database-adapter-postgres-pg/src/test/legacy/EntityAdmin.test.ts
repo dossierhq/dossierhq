@@ -39,7 +39,6 @@ let client: AdminClient;
 let adminClientOther: AdminClient;
 let publishedClient: PublishedClient;
 let entitiesOfTypeAdminOnlyEditBeforeNone: AdminEntity[];
-let entitiesOfTypeAdminOnlyEditBeforeSubject: AdminEntity[];
 
 const emptyFooFields = { bar: null, summary: null, title: null };
 const emptyBazFields = {
@@ -235,12 +234,6 @@ beforeAll(async () => {
 
   await ensureEntitiesExistForAdminOnlyEditBefore(client, 'none');
   entitiesOfTypeAdminOnlyEditBeforeNone = await getEntitiesForAdminOnlyEditBefore(client, 'none');
-
-  await ensureEntitiesExistForAdminOnlyEditBefore(client, 'subject');
-  entitiesOfTypeAdminOnlyEditBeforeSubject = await getEntitiesForAdminOnlyEditBefore(
-    client,
-    'subject'
-  );
 });
 afterAll(async () => {
   await server.shutdown();
@@ -320,99 +313,6 @@ async function createBarWithFooBazReferences(
   }
   return { barId, fooEntities, bazEntities };
 }
-
-describe('getEntities()', () => {
-  test('Gets the last version', async () => {
-    const createFooResult = await client.createEntity({
-      info: { type: 'EntityAdminFoo', name: 'Foo', authKey: 'none' },
-      fields: { title: 'First title' },
-    });
-
-    if (expectOkResult(createFooResult)) {
-      const {
-        entity: {
-          id: fooId,
-          info: { name: fooName, createdAt },
-        },
-      } = createFooResult.value;
-
-      const updateResult = await client.updateEntity({
-        id: fooId,
-        fields: { title: 'Updated title' },
-      });
-      if (expectOkResult(updateResult)) {
-        const {
-          entity: {
-            info: { updatedAt },
-          },
-        } = updateResult.value;
-
-        const result = await client.getEntities([{ id: fooId }]);
-        if (expectOkResult(result)) {
-          expect(result.value).toHaveLength(1);
-          expectResultValue(result.value[0], {
-            id: fooId,
-            info: {
-              type: 'EntityAdminFoo',
-              name: fooName,
-              version: 1,
-              authKey: 'none',
-              status: AdminEntityStatus.draft,
-              createdAt,
-              updatedAt,
-            },
-            fields: { ...emptyFooFields, title: 'Updated title' },
-          });
-        }
-      }
-    }
-  });
-
-  test('One with correct authKey, one with wrong authKey', async () => {
-    const createOneResult = await adminClientOther.createEntity({
-      info: { type: 'EntityAdminFoo', name: 'Foo 1', authKey: 'subject' },
-      fields: { title: 'Title' },
-    });
-    const createTwoResult = await client.createEntity({
-      info: { type: 'EntityAdminFoo', name: 'Foo 2', authKey: 'subject' },
-      fields: { title: 'Title' },
-    });
-
-    if (expectOkResult(createOneResult) && expectOkResult(createTwoResult)) {
-      const {
-        entity: { id: foo1Id },
-      } = createOneResult.value;
-      const {
-        entity: {
-          id: foo2Id,
-          info: { name: foo2Name, createdAt, updatedAt },
-        },
-      } = createTwoResult.value;
-
-      const getResult = await client.getEntities([{ id: foo1Id }, { id: foo2Id }]);
-      if (expectOkResult(getResult)) {
-        expect(getResult.value).toHaveLength(2);
-        expectErrorResult(getResult.value[0], ErrorType.NotAuthorized, 'Wrong authKey provided');
-        expectResultValue(getResult.value[1], {
-          id: foo2Id,
-          info: {
-            type: 'EntityAdminFoo',
-            name: foo2Name,
-            authKey: 'subject',
-            version: 0,
-            status: AdminEntityStatus.draft,
-            createdAt,
-            updatedAt,
-          },
-          fields: {
-            ...emptyFooFields,
-            title: 'Title',
-          },
-        });
-      }
-    }
-  });
-});
 
 describe('createEntity()', () => {
   test('Create EntityAdminFoo and publish', async () => {
@@ -2444,38 +2344,6 @@ describe('searchEntities() status', () => {
 });
 
 describe('getTotalCount', () => {
-  test('Check that we get the correct count', async () => {
-    const result = await client.getTotalCount({
-      entityTypes: ['AdminOnlyEditBefore'],
-    });
-    if (expectOkResult(result)) {
-      expect(result.value).toBe(entitiesOfTypeAdminOnlyEditBeforeNone.length);
-    }
-  });
-
-  test('Check that we get the correct count (subject)', async () => {
-    const result = await client.getTotalCount({
-      authKeys: ['subject'],
-      entityTypes: ['AdminOnlyEditBefore'],
-    });
-    if (expectOkResult(result)) {
-      expect(result.value).toBe(entitiesOfTypeAdminOnlyEditBeforeSubject.length);
-    }
-  });
-
-  test('Check that we get the correct count (none+subject)', async () => {
-    const result = await client.getTotalCount({
-      authKeys: ['none', 'subject'],
-      entityTypes: ['AdminOnlyEditBefore'],
-    });
-    if (expectOkResult(result)) {
-      expect(result.value).toBe(
-        entitiesOfTypeAdminOnlyEditBeforeNone.length +
-          entitiesOfTypeAdminOnlyEditBeforeSubject.length
-      );
-    }
-  });
-
   test('Query based on referencing, one reference', async () => {
     const { barId } = await createBarWithFooBazReferences(1, 0);
 
