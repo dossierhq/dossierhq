@@ -1,5 +1,6 @@
-import { assertOkResult, assertSame } from '../Asserts';
+import { AdminQueryOrder } from '@jonasb/datadata-core';
 import type { UnboundTestFunction } from '../Builder';
+import { assertAdminEntityConnectionToMatchSlice } from '../shared-entity/SearchTestUtils';
 import { adminClientForMainPrincipal } from '../shared-entity/TestClients';
 import type { AdminEntityTestContext } from './AdminEntityTestSuite';
 
@@ -15,12 +16,16 @@ async function searchEntities_minimal({
 }: AdminEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities();
 
-  const result = await adminClientForMainPrincipal(server).searchEntities(
-    { entityTypes: ['ReadOnly'] },
-    { first: 500 }
+  const result = await adminClientForMainPrincipal(server).searchEntities({
+    entityTypes: ['ReadOnly'],
+  });
+  assertAdminEntityConnectionToMatchSlice(
+    expectedEntities,
+    result,
+    0,
+    25,
+    AdminQueryOrder.createdAt
   );
-  assertOkResult(result);
-  assertSame(result.value?.edges.length, expectedEntities.length);
 }
 
 async function searchEntities_subjectAuthKey({
@@ -29,12 +34,17 @@ async function searchEntities_subjectAuthKey({
 }: AdminEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities(['subject']);
 
-  const result = await adminClientForMainPrincipal(server).searchEntities(
-    { entityTypes: ['ReadOnly'], authKeys: ['subject'] },
-    { first: 500 }
+  const result = await adminClientForMainPrincipal(server).searchEntities({
+    entityTypes: ['ReadOnly'],
+    authKeys: ['subject'],
+  });
+  assertAdminEntityConnectionToMatchSlice(
+    expectedEntities,
+    result,
+    0,
+    25,
+    AdminQueryOrder.createdAt
   );
-  assertOkResult(result);
-  assertSame(result.value?.edges.length, expectedEntities.length);
 }
 
 async function searchEntities_noneAndSubjectAuthKeys({
@@ -46,10 +56,15 @@ async function searchEntities_noneAndSubjectAuthKeys({
     'subject',
   ]);
 
-  const result = await adminClientForMainPrincipal(server).searchEntities(
-    { entityTypes: ['ReadOnly'], authKeys: ['none', 'subject'] },
-    { first: 750 }
+  const result = await adminClientForMainPrincipal(server).searchEntities({
+    entityTypes: ['ReadOnly'],
+    authKeys: ['none', 'subject'],
+  });
+  assertAdminEntityConnectionToMatchSlice(
+    expectedEntities,
+    result,
+    0,
+    25,
+    AdminQueryOrder.createdAt
   );
-  assertOkResult(result);
-  assertSame(result.value?.edges.length, expectedEntities.length);
 }

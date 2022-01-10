@@ -31,6 +31,13 @@ export function assertNotSame<T>(actual: T, expected: T): void {
   }
 }
 
+export function assertEquals<T>(actual: T, expected: T): void {
+  //TODO need a different name for isFieldValueEqual
+  if (!isFieldValueEqual(actual, expected)) {
+    throw new AssertionError(actual, expected, `Expected equals, got ${actual} !== ${expected}`);
+  }
+}
+
 export function assertOkResult<TOk, TError extends ErrorType>(
   actual: Result<unknown, ErrorType>
 ): asserts actual is OkResult<TOk, TError> {
