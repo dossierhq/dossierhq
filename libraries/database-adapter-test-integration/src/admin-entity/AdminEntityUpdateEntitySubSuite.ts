@@ -18,8 +18,11 @@ export const UpdateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
   updateEntity_noChangeAndPublishDraftEntity,
   updateEntity_noChangeAndPublishPublishedEntity,
   updateEntity_withTwoReferences,
-  updateEntity_errorPublishWithoutRequiredTitle,
+  updateEntity_errorInvalidId,
+  updateEntity_errorDifferentType,
   updateEntity_errorTryingToChangeAuthKey,
+  updateEntity_errorPublishWithoutRequiredTitle,
+  updateEntity_errorInvalidField,
 ];
 
 async function updateEntity_minimal({ client }: AdminEntityTestContext) {
@@ -334,6 +337,51 @@ async function updateEntity_withTwoReferences({ client }: AdminEntityTestContext
   assertResultValue(getResult, expectedEntity);
 }
 
+async function updateEntity_errorInvalidId({ client }: AdminEntityTestContext) {
+  const result = await client.updateEntity({
+    id: 'f773ac54-37db-42df-9b55-b6da8de344c3',
+    info: { name: 'Updated name' },
+    fields: {},
+  });
+  assertErrorResult(result, ErrorType.NotFound, 'No such entity');
+}
+
+async function updateEntity_errorDifferentType({ client }: AdminEntityTestContext) {
+  const createResult = await client.createEntity(TITLE_ONLY_CREATE);
+  assertOkResult(createResult);
+  const {
+    entity: { id },
+  } = createResult.value;
+  const updateResult = await client.updateEntity({ id, info: { type: 'References' }, fields: {} });
+  assertErrorResult(
+    updateResult,
+    ErrorType.BadRequest,
+    'New type References doesn’t correspond to previous type TitleOnly'
+  );
+}
+
+async function updateEntity_errorTryingToChangeAuthKey({ client }: AdminEntityTestContext) {
+  const createResult = await client.createEntity(TITLE_ONLY_CREATE);
+  assertOkResult(createResult);
+  const {
+    entity: { id },
+  } = createResult.value;
+
+  const updateResult = await client.updateEntity({
+    id,
+    info: { authKey: 'subject' },
+    fields: {},
+  });
+  assertErrorResult(
+    updateResult,
+    ErrorType.BadRequest,
+    'New authKey subject doesn’t correspond to previous authKey none'
+  );
+
+  const getResult = await client.getEntity({ id });
+  assertResultValue(getResult, createResult.value.entity);
+}
+
 async function updateEntity_errorPublishWithoutRequiredTitle({ client }: AdminEntityTestContext) {
   const createResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(createResult);
@@ -355,23 +403,15 @@ async function updateEntity_errorPublishWithoutRequiredTitle({ client }: AdminEn
   assertResultValue(getResult, createResult.value.entity);
 }
 
-async function updateEntity_errorTryingToChangeAuthKey({ client }: AdminEntityTestContext) {
+async function updateEntity_errorInvalidField({ client }: AdminEntityTestContext) {
   const createResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(createResult);
   const {
     entity: { id },
   } = createResult.value;
 
-  const updateResult = await client.updateEntity({
-    id,
-    info: { authKey: 'subject' },
-    fields: {},
-  });
-  assertErrorResult(
-    updateResult,
-    ErrorType.BadRequest,
-    'New authKey subject doesn’t correspond to previous authKey none'
-  );
+  const updateResult = await client.updateEntity({ id, fields: { invalid: 'hello' } });
+  assertErrorResult(updateResult, ErrorType.BadRequest, 'Unsupported field names: invalid');
 
   const getResult = await client.getEntity({ id });
   assertResultValue(getResult, createResult.value.entity);

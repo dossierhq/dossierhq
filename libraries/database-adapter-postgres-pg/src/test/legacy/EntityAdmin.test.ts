@@ -2792,20 +2792,6 @@ describe('updateEntity()', () => {
     }
   });
 
-  test('Update with the same field does not create new version', async () => {
-    const createResult = await client.createEntity({
-      info: { type: 'EntityAdminFoo', name: 'Foo', authKey: 'none' },
-      fields: { title: 'Foo title' },
-    });
-    if (expectOkResult(createResult)) {
-      const {
-        entity: { id },
-      } = createResult.value;
-      const updateResult = await client.updateEntity({ id, fields: { title: 'Foo title' } });
-      expectResultValue(updateResult, { effect: 'none', entity: createResult.value.entity });
-    }
-  });
-
   test('Update published with the same field does not create new version and returns correct publishing state', async () => {
     const createResult = await client.createEntity({
       info: { type: 'EntityAdminFoo', name: 'Foo', authKey: 'none' },
@@ -2833,53 +2819,6 @@ describe('updateEntity()', () => {
           }),
         });
       }
-    }
-  });
-
-  test('Error: Update with invalid id', async () => {
-    const result = await client.updateEntity({
-      id: 'f773ac54-37db-42df-9b55-b6da8de344c3',
-      info: { type: 'EntityAdminFoo', name: 'name' },
-      fields: { foo: 'title' },
-    });
-
-    expectErrorResult(result, ErrorType.NotFound, 'No such entity');
-  });
-
-  test('Error: Update with different type', async () => {
-    const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBar', name: 'foo', authKey: 'none' },
-      fields: { title: 'foo' },
-    });
-    if (expectOkResult(createResult)) {
-      const {
-        entity: { id },
-      } = createResult.value;
-      const updateResult = await client.updateEntity({
-        id,
-        info: { type: 'EntityAdminFoo', name: 'name' },
-        fields: { foo: 'title' },
-      });
-      expectErrorResult(
-        updateResult,
-        ErrorType.BadRequest,
-        'New type EntityAdminFoo doesn’t correspond to previous type EntityAdminBar'
-      );
-    }
-  });
-
-  test('Error: Update with invalid field', async () => {
-    const createResult = await client.createEntity({
-      info: { type: 'EntityAdminFoo', name: 'Foo name', authKey: 'none' },
-      fields: { title: 'Foo title' },
-    });
-    if (expectOkResult(createResult)) {
-      const {
-        entity: { id },
-      } = createResult.value;
-      const updateResult = await client.updateEntity({ id, fields: { invalid: 'hello' } });
-
-      expectErrorResult(updateResult, ErrorType.BadRequest, 'Unsupported field names: invalid');
     }
   });
 
