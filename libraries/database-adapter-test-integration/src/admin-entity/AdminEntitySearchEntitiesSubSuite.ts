@@ -1,7 +1,10 @@
-import { AdminQueryOrder } from '@jonasb/datadata-core';
-import { assertOkResult, assertResultValue } from '../Asserts';
+import { AdminEntityStatus, AdminQueryOrder } from '@jonasb/datadata-core';
+import { assertEquals, assertOkResult, assertResultValue, assertTruthy } from '../Asserts';
 import type { UnboundTestFunction } from '../Builder';
-import { assertAdminEntityConnectionToMatchSlice } from '../shared-entity/SearchTestUtils';
+import {
+  assertAdminEntityConnectionToMatchSlice,
+  countSearchResultStatuses,
+} from '../shared-entity/SearchTestUtils';
 import { adminClientForMainPrincipal } from '../shared-entity/TestClients';
 import type { AdminEntityTestContext } from './AdminEntityTestSuite';
 
@@ -19,6 +22,14 @@ export const SearchEntitiesSubSuite: UnboundTestFunction<AdminEntityTestContext>
   searchEntities_orderCreatedAtReversed,
   searchEntities_orderName,
   searchEntities_orderNameReversed,
+  searchEntities_statusDraft,
+  searchEntities_statusPublished,
+  searchEntities_statusModified,
+  searchEntities_statusWithdrawn,
+  searchEntities_statusArchived,
+  searchEntities_statusDraftArchived,
+  searchEntities_statusModifiedPublished,
+  searchEntities_statusAll,
   searchEntities_authKeySubject,
   searchEntities_authKeyNoneAndSubject,
 ];
@@ -220,6 +231,152 @@ async function searchEntities_orderNameReversed({
     AdminQueryOrder.name,
     true
   );
+}
+
+async function searchEntities_statusDraft({ server }: AdminEntityTestContext) {
+  const statusesResult = await countSearchResultStatuses(adminClientForMainPrincipal(server), {
+    entityTypes: ['ReadOnly'],
+    status: [AdminEntityStatus.draft],
+  });
+  assertOkResult(statusesResult);
+  const { [AdminEntityStatus.draft]: draft, ...otherStatuses } = statusesResult.value;
+  assertTruthy(draft > 0);
+  assertEquals(otherStatuses, {
+    [AdminEntityStatus.published]: 0,
+    [AdminEntityStatus.modified]: 0,
+    [AdminEntityStatus.withdrawn]: 0,
+    [AdminEntityStatus.archived]: 0,
+  });
+}
+
+async function searchEntities_statusPublished({ server }: AdminEntityTestContext) {
+  const statusesResult = await countSearchResultStatuses(adminClientForMainPrincipal(server), {
+    entityTypes: ['ReadOnly'],
+    status: [AdminEntityStatus.published],
+  });
+  assertOkResult(statusesResult);
+  const { [AdminEntityStatus.published]: published, ...otherStatuses } = statusesResult.value;
+  assertTruthy(published > 0);
+  assertEquals(otherStatuses, {
+    [AdminEntityStatus.draft]: 0,
+    [AdminEntityStatus.modified]: 0,
+    [AdminEntityStatus.withdrawn]: 0,
+    [AdminEntityStatus.archived]: 0,
+  });
+}
+
+async function searchEntities_statusModified({ server }: AdminEntityTestContext) {
+  const statusesResult = await countSearchResultStatuses(adminClientForMainPrincipal(server), {
+    entityTypes: ['ReadOnly'],
+    status: [AdminEntityStatus.modified],
+  });
+  assertOkResult(statusesResult);
+  const { [AdminEntityStatus.modified]: modified, ...otherStatuses } = statusesResult.value;
+  assertTruthy(modified > 0);
+  assertEquals(otherStatuses, {
+    [AdminEntityStatus.draft]: 0,
+    [AdminEntityStatus.published]: 0,
+    [AdminEntityStatus.withdrawn]: 0,
+    [AdminEntityStatus.archived]: 0,
+  });
+}
+
+async function searchEntities_statusWithdrawn({ server }: AdminEntityTestContext) {
+  const statusesResult = await countSearchResultStatuses(adminClientForMainPrincipal(server), {
+    entityTypes: ['ReadOnly'],
+    status: [AdminEntityStatus.withdrawn],
+  });
+  assertOkResult(statusesResult);
+  const { [AdminEntityStatus.withdrawn]: withdrawn, ...otherStatuses } = statusesResult.value;
+  assertTruthy(withdrawn > 0);
+  assertEquals(otherStatuses, {
+    [AdminEntityStatus.draft]: 0,
+    [AdminEntityStatus.published]: 0,
+    [AdminEntityStatus.modified]: 0,
+    [AdminEntityStatus.archived]: 0,
+  });
+}
+
+async function searchEntities_statusArchived({ server }: AdminEntityTestContext) {
+  const statusesResult = await countSearchResultStatuses(adminClientForMainPrincipal(server), {
+    entityTypes: ['ReadOnly'],
+    status: [AdminEntityStatus.archived],
+  });
+  assertOkResult(statusesResult);
+  const { [AdminEntityStatus.archived]: archived, ...otherStatuses } = statusesResult.value;
+  assertTruthy(archived > 0);
+  assertEquals(otherStatuses, {
+    [AdminEntityStatus.draft]: 0,
+    [AdminEntityStatus.published]: 0,
+    [AdminEntityStatus.modified]: 0,
+    [AdminEntityStatus.withdrawn]: 0,
+  });
+}
+
+async function searchEntities_statusDraftArchived({ server }: AdminEntityTestContext) {
+  const statusesResult = await countSearchResultStatuses(adminClientForMainPrincipal(server), {
+    entityTypes: ['ReadOnly'],
+    status: [AdminEntityStatus.draft, AdminEntityStatus.archived],
+  });
+  assertOkResult(statusesResult);
+  const {
+    [AdminEntityStatus.draft]: draft,
+    [AdminEntityStatus.archived]: archived,
+    ...otherStatuses
+  } = statusesResult.value;
+  assertTruthy(draft > 0);
+  assertTruthy(archived > 0);
+  assertEquals(otherStatuses, {
+    [AdminEntityStatus.published]: 0,
+    [AdminEntityStatus.modified]: 0,
+    [AdminEntityStatus.withdrawn]: 0,
+  });
+}
+
+async function searchEntities_statusModifiedPublished({ server }: AdminEntityTestContext) {
+  const statusesResult = await countSearchResultStatuses(adminClientForMainPrincipal(server), {
+    entityTypes: ['ReadOnly'],
+    status: [AdminEntityStatus.draft, AdminEntityStatus.archived],
+  });
+  assertOkResult(statusesResult);
+  const {
+    [AdminEntityStatus.modified]: modified,
+    [AdminEntityStatus.published]: published,
+    ...otherStatuses
+  } = statusesResult.value;
+  assertTruthy(modified > 0);
+  assertTruthy(published > 0);
+  assertEquals(otherStatuses, {
+    [AdminEntityStatus.draft]: 0,
+    [AdminEntityStatus.withdrawn]: 0,
+    [AdminEntityStatus.archived]: 0,
+  });
+}
+
+async function searchEntities_statusAll({ server }: AdminEntityTestContext) {
+  const statusesResult = await countSearchResultStatuses(adminClientForMainPrincipal(server), {
+    entityTypes: ['ReadOnly'],
+    status: [
+      AdminEntityStatus.draft,
+      AdminEntityStatus.published,
+      AdminEntityStatus.modified,
+      AdminEntityStatus.archived,
+      AdminEntityStatus.withdrawn,
+    ],
+  });
+  assertOkResult(statusesResult);
+  const {
+    [AdminEntityStatus.draft]: draft,
+    [AdminEntityStatus.archived]: archived,
+    [AdminEntityStatus.published]: published,
+    [AdminEntityStatus.modified]: modified,
+    [AdminEntityStatus.withdrawn]: withdrawn,
+  } = statusesResult.value;
+  assertTruthy(draft > 0);
+  assertTruthy(archived > 0);
+  assertTruthy(published > 0);
+  assertTruthy(modified > 0);
+  assertTruthy(withdrawn > 0);
 }
 
 async function searchEntities_authKeySubject({
