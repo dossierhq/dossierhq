@@ -336,7 +336,7 @@ async function searchEntities_statusDraftArchived({ server }: AdminEntityTestCon
 async function searchEntities_statusModifiedPublished({ server }: AdminEntityTestContext) {
   const statusesResult = await countSearchResultStatuses(adminClientForMainPrincipal(server), {
     entityTypes: ['ReadOnly'],
-    status: [AdminEntityStatus.draft, AdminEntityStatus.archived],
+    status: [AdminEntityStatus.modified, AdminEntityStatus.published],
   });
   assertOkResult(statusesResult);
   const {
