@@ -10,7 +10,10 @@ import {
 
 export const PublishEntitiesSubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
   publishEntities_minimal,
-  publishEntities_minimalWithSubjectAuthKey,
+  publishEntities_authKeySubject,
+  publishEntities_oldVersion,
+  publishEntities_errorInvalidId,
+  publishEntities_errorDuplicateIds,
   publishEntities_errorMissingRequiredTitle,
   publishEntities_errorWrongAuthKey,
 ];
@@ -45,7 +48,7 @@ async function publishEntities_minimal({ client }: AdminEntityTestContext) {
   assertResultValue(getResult, expectedEntity);
 }
 
-async function publishEntities_minimalWithSubjectAuthKey({ client }: AdminEntityTestContext) {
+async function publishEntities_authKeySubject({ client }: AdminEntityTestContext) {
   const createResult = await client.createEntity(
     copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } })
   );
@@ -75,6 +78,59 @@ async function publishEntities_minimalWithSubjectAuthKey({ client }: AdminEntity
 
   const getResult = await client.getEntity({ id });
   assertResultValue(getResult, expectedEntity);
+}
+
+async function publishEntities_oldVersion({ client }: AdminEntityTestContext) {
+  const createResult = await client.createEntity(TITLE_ONLY_CREATE);
+  assertOkResult(createResult);
+  const {
+    entity: { id },
+  } = createResult.value;
+
+  const updateResult = await client.updateEntity({ id, fields: { title: 'Updated title' } });
+  assertOkResult(updateResult);
+
+  const publishResult = await client.publishEntities([{ id, version: 0 }]);
+  assertOkResult(publishResult);
+  const [{ updatedAt }] = publishResult.value;
+  assertResultValue(publishResult, [
+    {
+      id,
+      effect: 'published',
+      status: AdminEntityStatus.modified,
+      updatedAt,
+    },
+  ]);
+
+  const expectedEntity = copyEntity(updateResult.value.entity, {
+    info: { status: AdminEntityStatus.modified, updatedAt },
+  });
+
+  const getResult = await client.getEntity({ id });
+  assertResultValue(getResult, expectedEntity);
+}
+
+async function publishEntities_errorInvalidId({ server }: AdminEntityTestContext) {
+  const publishResult = await adminClientForMainPrincipal(server).publishEntities([
+    { id: 'b1bdcb61-e6aa-47ff-98d8-4cfe8197b290', version: 0 },
+  ]);
+  assertErrorResult(
+    publishResult,
+    ErrorType.NotFound,
+    'No such entities: b1bdcb61-e6aa-47ff-98d8-4cfe8197b290'
+  );
+}
+
+async function publishEntities_errorDuplicateIds({ server }: AdminEntityTestContext) {
+  const publishResult = await adminClientForMainPrincipal(server).publishEntities([
+    { id: 'b1bdcb61-e6aa-47ff-98d8-4cfe8197b290', version: 0 },
+    { id: 'b1bdcb61-e6aa-47ff-98d8-4cfe8197b290', version: 1 },
+  ]);
+  assertErrorResult(
+    publishResult,
+    ErrorType.BadRequest,
+    'Duplicate ids: b1bdcb61-e6aa-47ff-98d8-4cfe8197b290'
+  );
 }
 
 async function publishEntities_errorMissingRequiredTitle({ client }: AdminEntityTestContext) {

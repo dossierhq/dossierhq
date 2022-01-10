@@ -15,6 +15,7 @@ export const GetEntitiesSubSuite: UnboundTestFunction<PublishedEntityTestContext
   getEntities_none,
   getEntities_authKeySubjectOneCorrectOneWrong,
   getEntities_oneMissingOneExisting,
+  getEntities_errorArchivedEntity,
 ];
 
 async function getEntities_minimal({ adminClient, publishedClient }: PublishedEntityTestContext) {
@@ -117,4 +118,21 @@ async function getEntities_oneMissingOneExisting({ server }: PublishedEntityTest
       copyEntity(TITLE_ONLY_PUBLISHED_ENTITY, { id, info: { name, createdAt } })
     ),
   ]);
+}
+
+async function getEntities_errorArchivedEntity({ server }: PublishedEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const publishedClient = publishedClientForMainPrincipal(server);
+
+  const createResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
+  assertOkResult(createResult);
+  const {
+    entity: { id },
+  } = createResult.value;
+
+  const archiveResult = await adminClient.archiveEntity({ id });
+  assertOkResult(archiveResult);
+
+  const result = await publishedClient.getEntities([{ id }]);
+  assertResultValue(result, [notOk.NotFound('No such entity')]);
 }

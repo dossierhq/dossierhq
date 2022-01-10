@@ -7,12 +7,11 @@ import type {
 } from '@jonasb/datadata-core';
 import {
   AdminEntityStatus,
-  ErrorType,
   FieldType,
   PublishedQueryOrder,
   RichTextBlockType,
 } from '@jonasb/datadata-core';
-import { expectErrorResult, expectOkResult, expectResultValue } from '@jonasb/datadata-core-jest';
+import { expectOkResult, expectResultValue } from '@jonasb/datadata-core-jest';
 import type { Server, SessionContext } from '@jonasb/datadata-server';
 import { createPostgresTestServerAndClient, expectSearchResultEntities } from '../TestUtils';
 import {
@@ -64,15 +63,6 @@ const SCHEMA: AdminSchemaSpecificationUpdate = {
       ],
     },
   ],
-};
-
-const emptyFooFields = {
-  bar: null,
-  bars: null,
-  body: null,
-  location: null,
-  locations: null,
-  title: null,
 };
 
 let server: Server;
@@ -170,118 +160,6 @@ async function createBarWithFooReferences(fooCount: number, referencesPerFoo = 1
   }
   return { barId, fooEntities };
 }
-
-describe('getEntity()', () => {
-  test('Archived then published entity', async () => {
-    const createResult = await adminClient.createEntity({
-      info: { type: 'PublishedEntityFoo', name: 'Foo 1', authKey: 'none' },
-      fields: { title: 'Title 1' },
-    });
-    if (expectOkResult(createResult)) {
-      const {
-        entity: {
-          id,
-          info: { name, version, createdAt },
-        },
-      } = createResult.value;
-
-      const archiveResult = await adminClient.archiveEntity({ id });
-      if (expectOkResult(archiveResult)) {
-        const { updatedAt } = archiveResult.value;
-        expectResultValue(archiveResult, {
-          id,
-          status: AdminEntityStatus.archived,
-          effect: 'archived',
-          updatedAt,
-        });
-      }
-
-      const publishResult = await adminClient.publishEntities([{ id, version }]);
-      if (expectOkResult(publishResult)) {
-        const [{ updatedAt }] = publishResult.value;
-        expectResultValue(publishResult, [
-          { id, status: AdminEntityStatus.published, effect: 'published', updatedAt },
-        ]);
-      }
-
-      const result = await publishedClient.getEntity({ id });
-      expectResultValue(result, {
-        id,
-        info: { type: 'PublishedEntityFoo', name, authKey: 'none', createdAt },
-        fields: { ...emptyFooFields, title: 'Title 1' },
-      });
-    }
-  });
-
-  test('Publish old version', async () => {
-    const createFooResult = await adminClient.createEntity({
-      info: { type: 'PublishedEntityFoo', name: 'Foo 1', authKey: 'none' },
-      fields: { title: 'Foo title 1' },
-    });
-    if (expectOkResult(createFooResult)) {
-      const {
-        entity: {
-          id,
-          info: { name, createdAt },
-        },
-      } = createFooResult.value;
-
-      const updateResult = await adminClient.updateEntity({ id, fields: { title: 'Foo title 2' } });
-      expectOkResult(updateResult);
-
-      const publishResult = await adminClient.publishEntities([{ id, version: 0 }]);
-
-      if (expectOkResult(publishResult)) {
-        const [{ updatedAt }] = publishResult.value;
-        expectResultValue(publishResult, [
-          { id, status: AdminEntityStatus.modified, effect: 'published', updatedAt },
-        ]);
-
-        const getResult = await publishedClient.getEntity({ id });
-        if (expectOkResult(getResult)) {
-          expectResultValue(getResult, {
-            id,
-            info: { type: 'PublishedEntityFoo', name, authKey: 'none', createdAt },
-            fields: { ...emptyFooFields, title: 'Foo title 1' },
-          });
-        }
-      }
-    }
-  });
-});
-
-describe('getEntities()', () => {
-  test('Error: Get archived entity', async () => {
-    const createResult = await adminClient.createEntity({
-      info: { type: 'PublishedEntityFoo', name: 'Foo 1', authKey: 'none' },
-      fields: {
-        title: 'Title 1',
-      },
-    });
-    if (expectOkResult(createResult)) {
-      const {
-        entity: { id },
-      } = createResult.value;
-
-      const archiveResult = await adminClient.archiveEntity({ id });
-      if (expectOkResult(archiveResult)) {
-        const { updatedAt } = archiveResult.value;
-        expectResultValue(archiveResult, {
-          id,
-          status: AdminEntityStatus.archived,
-          effect: 'archived',
-          updatedAt,
-        });
-      }
-
-      const result = await publishedClient.getEntities([{ id }]);
-      if (expectOkResult(result)) {
-        expect(result.value).toHaveLength(1);
-        expectErrorResult(result.value[0], ErrorType.NotFound, 'No such entity');
-      }
-    }
-  });
-});
 
 describe('searchEntities() paging', () => {
   test('Default => first 25', async () => {
