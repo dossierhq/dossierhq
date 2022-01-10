@@ -1,8 +1,10 @@
-import { AdminEntityStatus, AdminQueryOrder } from '@jonasb/datadata-core';
+import { AdminEntityStatus, AdminQueryOrder, copyEntity } from '@jonasb/datadata-core';
 import { assertEquals, assertOkResult, assertResultValue, assertTruthy } from '../Asserts';
 import type { UnboundTestFunction } from '../Builder';
+import { REFERENCES_CREATE, TITLE_ONLY_CREATE } from '../shared-entity/Fixtures';
 import {
   assertAdminEntityConnectionToMatchSlice,
+  assertSearchResultEntities,
   countSearchResultStatuses,
 } from '../shared-entity/SearchTestUtils';
 import { adminClientForMainPrincipal } from '../shared-entity/TestClients';
@@ -30,6 +32,9 @@ export const SearchEntitiesSubSuite: UnboundTestFunction<AdminEntityTestContext>
   searchEntities_statusDraftArchived,
   searchEntities_statusModifiedPublished,
   searchEntities_statusAll,
+  searchEntities_referenceOneReference,
+  searchEntities_referenceNoReferences,
+  searchEntities_referenceTwoReferencesFromOneEntity,
   searchEntities_authKeySubject,
   searchEntities_authKeyNoneAndSubject,
 ];
@@ -377,6 +382,56 @@ async function searchEntities_statusAll({ server }: AdminEntityTestContext) {
   assertTruthy(published > 0);
   assertTruthy(modified > 0);
   assertTruthy(withdrawn > 0);
+}
+
+async function searchEntities_referenceOneReference({ server }: AdminEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
+  assertOkResult(titleOnlyResult);
+  const {
+    entity: { id: titleOnlyId },
+  } = titleOnlyResult.value;
+
+  const referenceResult = await adminClient.createEntity(
+    copyEntity(REFERENCES_CREATE, { fields: { titleOnly: { id: titleOnlyId } } })
+  );
+  assertOkResult(referenceResult);
+
+  const searchResult = await adminClient.searchEntities({ referencing: titleOnlyId });
+  assertSearchResultEntities(searchResult, [referenceResult.value.entity]);
+}
+
+async function searchEntities_referenceNoReferences({ server }: AdminEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
+  assertOkResult(titleOnlyResult);
+  const {
+    entity: { id: titleOnlyId },
+  } = titleOnlyResult.value;
+
+  const searchResult = await adminClient.searchEntities({ referencing: titleOnlyId });
+  assertSearchResultEntities(searchResult, []);
+}
+
+async function searchEntities_referenceTwoReferencesFromOneEntity({
+  server,
+}: AdminEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
+  assertOkResult(titleOnlyResult);
+  const {
+    entity: { id: titleOnlyId },
+  } = titleOnlyResult.value;
+
+  const referenceResult = await adminClient.createEntity(
+    copyEntity(REFERENCES_CREATE, {
+      fields: { any: { id: titleOnlyId }, titleOnly: { id: titleOnlyId } },
+    })
+  );
+  assertOkResult(referenceResult);
+
+  const searchResult = await adminClient.searchEntities({ referencing: titleOnlyId });
+  assertSearchResultEntities(searchResult, [referenceResult.value.entity]);
 }
 
 async function searchEntities_authKeySubject({

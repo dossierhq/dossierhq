@@ -1753,28 +1753,6 @@ describe('searchEntities() order', () => {
 });
 
 describe('searchEntities() referencing', () => {
-  test('Query based on referencing, one reference', async () => {
-    const { barId, fooEntities } = await createBarWithFooBazReferences(1, 0);
-    const [fooEntity] = fooEntities;
-
-    const searchResult = await client.searchEntities({ referencing: barId });
-    expectSearchResultEntities(searchResult, [fooEntity]);
-  });
-
-  test('Query based on referencing, no references', async () => {
-    const { barId } = await createBarWithFooBazReferences(0, 0);
-
-    const searchResult = await client.searchEntities({ referencing: barId });
-    expectResultValue(searchResult, null);
-  });
-
-  test('Query based on referencing, two references from one entity', async () => {
-    const { barId, bazEntities } = await createBarWithFooBazReferences(0, 1, 2);
-
-    const searchResult = await client.searchEntities({ referencing: barId });
-    expectSearchResultEntities(searchResult, bazEntities);
-  });
-
   test('Query based on referencing and entityTypes, one reference', async () => {
     const { barId, bazEntities } = await createBarWithFooBazReferences(1, 1);
     const [bazEntity] = bazEntities;
@@ -1940,24 +1918,6 @@ describe('searchEntities() text', () => {
 });
 
 describe('getTotalCount', () => {
-  test('Query based on referencing, one reference', async () => {
-    const { barId } = await createBarWithFooBazReferences(1, 0);
-
-    const result = await client.getTotalCount({ referencing: barId });
-    if (expectOkResult(result)) {
-      expect(result.value).toBe(1);
-    }
-  });
-
-  test('Query based on referencing, no references', async () => {
-    const { barId } = await createBarWithFooBazReferences(0, 0);
-
-    const result = await client.getTotalCount({ referencing: barId });
-    if (expectOkResult(result)) {
-      expect(result.value).toBe(0);
-    }
-  });
-
   test('Query based on referencing and entityTypes, one reference', async () => {
     const { barId } = await createBarWithFooBazReferences(1, 1);
 
@@ -1965,15 +1925,6 @@ describe('getTotalCount', () => {
       entityTypes: ['EntityAdminBaz'],
       referencing: barId,
     });
-    if (expectOkResult(result)) {
-      expect(result.value).toBe(1);
-    }
-  });
-
-  test('Query based on referencing, two references from one entity', async () => {
-    const { barId } = await createBarWithFooBazReferences(0, 1, 2);
-
-    const result = await client.getTotalCount({ referencing: barId });
     if (expectOkResult(result)) {
       expect(result.value).toBe(1);
     }
