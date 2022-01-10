@@ -1,5 +1,6 @@
-import { assertOkResult, assertSame } from '../Asserts';
+import { PublishedQueryOrder } from '@jonasb/datadata-core';
 import type { UnboundTestFunction } from '../Builder';
+import { assertPublishedEntityConnectionToMatchSlice } from '../shared-entity/SearchTestUtils';
 import { publishedClientForMainPrincipal } from '../shared-entity/TestClients';
 import type { PublishedEntityTestContext } from './PublishedEntityTestSuite';
 
@@ -14,12 +15,16 @@ async function searchEntities_minimal({
   readOnlyEntityRepository,
 }: PublishedEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalPublishedEntities();
-  const result = await publishedClientForMainPrincipal(server).searchEntities(
-    { entityTypes: ['ReadOnly'] },
-    { first: 500 }
+  const result = await publishedClientForMainPrincipal(server).searchEntities({
+    entityTypes: ['ReadOnly'],
+  });
+  assertPublishedEntityConnectionToMatchSlice(
+    expectedEntities,
+    result,
+    0,
+    25,
+    PublishedQueryOrder.createdAt
   );
-  assertOkResult(result);
-  assertSame(result.value?.edges.length, expectedEntities.length);
 }
 
 async function searchEntities_subjectAuthKey({
@@ -27,12 +32,17 @@ async function searchEntities_subjectAuthKey({
   readOnlyEntityRepository,
 }: PublishedEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalPublishedEntities(['subject']);
-  const result = await publishedClientForMainPrincipal(server).searchEntities(
-    { entityTypes: ['ReadOnly'], authKeys: ['subject'] },
-    { first: 500 }
+  const result = await publishedClientForMainPrincipal(server).searchEntities({
+    entityTypes: ['ReadOnly'],
+    authKeys: ['subject'],
+  });
+  assertPublishedEntityConnectionToMatchSlice(
+    expectedEntities,
+    result,
+    0,
+    25,
+    PublishedQueryOrder.createdAt
   );
-  assertOkResult(result);
-  assertSame(result.value?.edges.length, expectedEntities.length);
 }
 
 async function searchEntities_noneAndSubjectAuthKeys({
@@ -43,10 +53,15 @@ async function searchEntities_noneAndSubjectAuthKeys({
     'none',
     'subject',
   ]);
-  const result = await publishedClientForMainPrincipal(server).searchEntities(
-    { entityTypes: ['ReadOnly'], authKeys: ['none', 'subject'] },
-    { first: 500 }
+  const result = await publishedClientForMainPrincipal(server).searchEntities({
+    entityTypes: ['ReadOnly'],
+    authKeys: ['none', 'subject'],
+  });
+  assertPublishedEntityConnectionToMatchSlice(
+    expectedEntities,
+    result,
+    0,
+    25,
+    PublishedQueryOrder.createdAt
   );
-  assertOkResult(result);
-  assertSame(result.value?.edges.length, expectedEntities.length);
 }
