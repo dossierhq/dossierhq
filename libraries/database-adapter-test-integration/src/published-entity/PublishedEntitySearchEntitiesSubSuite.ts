@@ -1,3 +1,4 @@
+import { PublishedQueryOrder } from '@jonasb/datadata-core';
 import { assertOkResult, assertResultValue } from '../Asserts';
 import type { UnboundTestFunction } from '../Builder';
 import { assertPublishedEntityConnectionToMatchSlice } from '../shared-entity/SearchTestUtils';
@@ -14,6 +15,10 @@ export const SearchEntitiesSubSuite: UnboundTestFunction<PublishedEntityTestCont
   searchEntities_pagingLastBefore,
   searchEntities_pagingFirstBetween,
   searchEntities_pagingLastBetween,
+  searchEntities_orderCreatedAt,
+  searchEntities_orderCreatedAtReversed,
+  searchEntities_orderName,
+  searchEntities_orderNameReversed,
   searchEntities_authKeySubject,
   searchEntities_authKeyNoneAndSubject,
 ];
@@ -144,6 +149,82 @@ async function searchEntities_pagingLastBetween({
     secondResult,
     3 /*inclusive*/,
     8 /*exclusive*/
+  );
+}
+
+async function searchEntities_orderCreatedAt({
+  server,
+  readOnlyEntityRepository,
+}: PublishedEntityTestContext) {
+  const expectedEntities = readOnlyEntityRepository.getMainPrincipalPublishedEntities();
+  const result = await publishedClientForMainPrincipal(server).searchEntities({
+    entityTypes: ['ReadOnly'],
+    order: PublishedQueryOrder.createdAt,
+  });
+  assertPublishedEntityConnectionToMatchSlice(
+    expectedEntities,
+    result,
+    0,
+    25,
+    PublishedQueryOrder.createdAt
+  );
+}
+
+async function searchEntities_orderCreatedAtReversed({
+  server,
+  readOnlyEntityRepository,
+}: PublishedEntityTestContext) {
+  const expectedEntities = readOnlyEntityRepository.getMainPrincipalPublishedEntities();
+  const result = await publishedClientForMainPrincipal(server).searchEntities({
+    entityTypes: ['ReadOnly'],
+    order: PublishedQueryOrder.createdAt,
+    reverse: true,
+  });
+  assertPublishedEntityConnectionToMatchSlice(
+    expectedEntities,
+    result,
+    0,
+    25,
+    PublishedQueryOrder.createdAt,
+    true
+  );
+}
+
+async function searchEntities_orderName({
+  server,
+  readOnlyEntityRepository,
+}: PublishedEntityTestContext) {
+  const expectedEntities = readOnlyEntityRepository.getMainPrincipalPublishedEntities();
+  const result = await publishedClientForMainPrincipal(server).searchEntities({
+    entityTypes: ['ReadOnly'],
+    order: PublishedQueryOrder.name,
+  });
+  assertPublishedEntityConnectionToMatchSlice(
+    expectedEntities,
+    result,
+    0,
+    25,
+    PublishedQueryOrder.name
+  );
+}
+
+async function searchEntities_orderNameReversed({
+  server,
+  readOnlyEntityRepository,
+}: PublishedEntityTestContext) {
+  const expectedEntities = readOnlyEntityRepository.getMainPrincipalPublishedEntities();
+  const result = await publishedClientForMainPrincipal(server).searchEntities({
+    entityTypes: ['ReadOnly'],
+    order: PublishedQueryOrder.name,
+    reverse: true,
+  });
+  assertPublishedEntityConnectionToMatchSlice(
+    expectedEntities,
+    result,
+    0,
+    25,
+    PublishedQueryOrder.name,
+    true
   );
 }
 

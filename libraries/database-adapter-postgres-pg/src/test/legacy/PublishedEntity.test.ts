@@ -5,12 +5,7 @@ import type {
   PublishedClient,
   PublishedEntity,
 } from '@jonasb/datadata-core';
-import {
-  AdminEntityStatus,
-  FieldType,
-  PublishedQueryOrder,
-  RichTextBlockType,
-} from '@jonasb/datadata-core';
+import { AdminEntityStatus, FieldType, RichTextBlockType } from '@jonasb/datadata-core';
 import { expectOkResult, expectResultValue } from '@jonasb/datadata-core-jest';
 import type { Server, SessionContext } from '@jonasb/datadata-server';
 import { createPostgresTestServerAndClient, expectSearchResultEntities } from '../TestUtils';
@@ -181,88 +176,6 @@ describe('searchEntities() paging', () => {
           10 + 20
         );
       }
-    }
-  });
-});
-
-describe('searchEntities() order', () => {
-  test('First default, ordered by createdAt', async () => {
-    const result = await publishedClient.searchEntities(
-      {
-        entityTypes: ['PublishedEntityOnlyEditBefore'],
-        order: PublishedQueryOrder.createdAt,
-      },
-      { first: 20 }
-    );
-    if (expectOkResult(result)) {
-      expectConnectionToMatchSlice(
-        entitiesOfTypePublishedEntityOnlyEditBeforeNone,
-        result.value,
-        0,
-        20
-      );
-    }
-  });
-
-  test('First default, ordered by createdAt reversed', async () => {
-    const result = await publishedClient.searchEntities(
-      {
-        entityTypes: ['PublishedEntityOnlyEditBefore'],
-        order: PublishedQueryOrder.createdAt,
-        reverse: true,
-      },
-      { first: 20 }
-    );
-    if (expectOkResult(result)) {
-      expectConnectionToMatchSlice(
-        [...entitiesOfTypePublishedEntityOnlyEditBeforeNone].reverse(),
-        result.value,
-        0,
-        20
-      );
-    }
-  });
-
-  test('First default, ordered by name', async () => {
-    const result = await publishedClient.searchEntities(
-      {
-        entityTypes: ['PublishedEntityOnlyEditBefore'],
-        order: PublishedQueryOrder.name,
-      },
-      { first: 20 }
-    );
-    if (expectOkResult(result)) {
-      expectConnectionToMatchSlice(
-        entitiesOfTypePublishedEntityOnlyEditBeforeNone,
-        result.value,
-        0,
-        20,
-        (a, b) => {
-          return a.info.name < b.info.name ? -1 : 1;
-        }
-      );
-    }
-  });
-
-  test('First default, ordered by name reversed', async () => {
-    const result = await publishedClient.searchEntities(
-      {
-        entityTypes: ['PublishedEntityOnlyEditBefore'],
-        order: PublishedQueryOrder.name,
-        reverse: true,
-      },
-      { first: 20 }
-    );
-    if (expectOkResult(result)) {
-      expectConnectionToMatchSlice(
-        entitiesOfTypePublishedEntityOnlyEditBeforeNone,
-        result.value,
-        0,
-        20,
-        (a, b) => {
-          return b.info.name < a.info.name ? -1 : 1;
-        }
-      );
     }
   });
 });
