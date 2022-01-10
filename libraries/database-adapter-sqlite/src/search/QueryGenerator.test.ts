@@ -487,7 +487,7 @@ describe('searchAdminEntitiesQuery()', () => {
           "isForwards": true,
           "pagingCount": 25,
           "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.status, ev.version, ev.fields
-        FROM entities e, entity_versions ev WHERE e.latest_entity_versions_id = ev.id AND e.resolved_auth_key = ?1 AND status IN ((?2, ?3)) ORDER BY e.id LIMIT ?4",
+        FROM entities e, entity_versions ev WHERE e.latest_entity_versions_id = ev.id AND e.resolved_auth_key = ?1 AND status IN (?2, ?3) ORDER BY e.id LIMIT ?4",
           "values": Array [
             "none",
             "draft",
@@ -514,7 +514,7 @@ describe('searchAdminEntitiesQuery()', () => {
           "isForwards": true,
           "pagingCount": 25,
           "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.status, ev.version, ev.fields
-        FROM entities e, entity_versions ev WHERE e.latest_entity_versions_id = ev.id AND e.resolved_auth_key = ?1 AND status IN ((?2, ?3)) ORDER BY e.id LIMIT ?4",
+        FROM entities e, entity_versions ev WHERE e.latest_entity_versions_id = ev.id AND e.resolved_auth_key = ?1 AND status IN (?2, ?3) ORDER BY e.id LIMIT ?4",
           "values": Array [
             "none",
             "draft",
@@ -550,7 +550,7 @@ describe('searchAdminEntitiesQuery()', () => {
           "isForwards": true,
           "pagingCount": 25,
           "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.status, ev.version, ev.fields
-        FROM entities e, entity_versions ev WHERE e.latest_entity_versions_id = ev.id AND e.resolved_auth_key = ?1 AND status IN ((?2, ?3, ?4, ?5, ?6)) ORDER BY e.id LIMIT ?7",
+        FROM entities e, entity_versions ev WHERE e.latest_entity_versions_id = ev.id AND e.resolved_auth_key = ?1 AND status IN (?2, ?3, ?4, ?5, ?6) ORDER BY e.id LIMIT ?7",
           "values": Array [
             "none",
             "draft",
