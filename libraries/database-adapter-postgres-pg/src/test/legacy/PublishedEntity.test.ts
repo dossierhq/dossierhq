@@ -65,7 +65,6 @@ let context: SessionContext;
 let adminClient: AdminClient;
 let publishedClient: PublishedClient;
 let entitiesOfTypePublishedEntityOnlyEditBeforeNone: AdminEntity[];
-let entitiesOfTypePublishedEntityOnlyEditBeforeSubject: AdminEntity[];
 
 beforeAll(async () => {
   const result = await createPostgresTestServerAndClient();
@@ -80,10 +79,6 @@ beforeAll(async () => {
   await ensureEntitiesExistForPublishedEntityOnlyEditBefore(adminClient, 'none');
   entitiesOfTypePublishedEntityOnlyEditBeforeNone =
     await getEntitiesForPublishedEntityOnlyEditBefore(adminClient, 'none');
-
-  await ensureEntitiesExistForPublishedEntityOnlyEditBefore(adminClient, 'subject');
-  entitiesOfTypePublishedEntityOnlyEditBeforeSubject =
-    await getEntitiesForPublishedEntityOnlyEditBefore(adminClient, 'subject');
 });
 afterAll(async () => {
   await server.shutdown();
@@ -377,33 +372,6 @@ describe('searchEntities() text', () => {
 });
 
 describe('getTotalCount', () => {
-  test('Check that we get the correct count', async () => {
-    const result = await publishedClient.getTotalCount({
-      entityTypes: ['PublishedEntityOnlyEditBefore'],
-    });
-    expectResultValue(result, entitiesOfTypePublishedEntityOnlyEditBeforeNone.length);
-  });
-
-  test('Check that we get the correct count (subject)', async () => {
-    const result = await publishedClient.getTotalCount({
-      authKeys: ['subject'],
-      entityTypes: ['PublishedEntityOnlyEditBefore'],
-    });
-    expectResultValue(result, entitiesOfTypePublishedEntityOnlyEditBeforeSubject.length);
-  });
-
-  test('Check that we get the correct count (none+subject)', async () => {
-    const result = await publishedClient.getTotalCount({
-      authKeys: ['none', 'subject'],
-      entityTypes: ['PublishedEntityOnlyEditBefore'],
-    });
-    expectResultValue(
-      result,
-      entitiesOfTypePublishedEntityOnlyEditBeforeNone.length +
-        entitiesOfTypePublishedEntityOnlyEditBeforeSubject.length
-    );
-  });
-
   test('Query based on referencing, one reference', async () => {
     const { barId } = await createBarWithFooReferences(1);
 
