@@ -78,7 +78,6 @@ const emptyFooFields = {
 let server: Server;
 let context: SessionContext;
 let adminClient: AdminClient;
-let adminClientOther: AdminClient;
 let publishedClient: PublishedClient;
 let entitiesOfTypePublishedEntityOnlyEditBeforeNone: AdminEntity[];
 let entitiesOfTypePublishedEntityOnlyEditBeforeSubject: AdminEntity[];
@@ -89,9 +88,6 @@ beforeAll(async () => {
   server = result.value.server;
   context = result.value.context;
   adminClient = server.createAdminClient(context);
-  adminClientOther = server.createAdminClient(() =>
-    server.createSession({ provider: 'test', identifier: 'other', defaultAuthKeys: ['none'] })
-  );
   publishedClient = server.createPublishedClient(context);
 
   await adminClient.updateSchemaSpecification(SCHEMA);
@@ -255,94 +251,6 @@ describe('getEntity()', () => {
 });
 
 describe('getEntities()', () => {
-  test('Get one missing, one existing entity', async () => {
-    const createFooResult = await adminClient.createEntity({
-      info: { type: 'PublishedEntityFoo', name: 'Foo', authKey: 'none' },
-      fields: { title: 'Title' },
-    });
-    if (expectOkResult(createFooResult)) {
-      const {
-        entity: {
-          id: foo1Id,
-          info: { name: foo1Name, createdAt },
-        },
-      } = createFooResult.value;
-
-      const publishResult = await adminClient.publishEntities([{ id: foo1Id, version: 0 }]);
-      if (expectOkResult(publishResult)) {
-        const [{ updatedAt }] = publishResult.value;
-        expectResultValue(publishResult, [
-          { id: foo1Id, status: AdminEntityStatus.published, effect: 'published', updatedAt },
-        ]);
-      }
-
-      const result = await publishedClient.getEntities([
-        { id: 'f09fdd62-4a1e-4320-afba-8dd0781799df' },
-        { id: foo1Id },
-      ]);
-      if (expectOkResult(result)) {
-        expect(result.value).toHaveLength(2);
-        expectErrorResult(result.value[0], ErrorType.NotFound, 'No such entity');
-        expectResultValue(result.value[1], {
-          id: foo1Id,
-          info: { type: 'PublishedEntityFoo', name: foo1Name, authKey: 'none', createdAt },
-          fields: {
-            ...emptyFooFields,
-            title: 'Title',
-          },
-        });
-      }
-    }
-  });
-
-  test('One with correct authKey, one with wrong authKey', async () => {
-    const createOneResult = await adminClientOther.createEntity(
-      {
-        info: { type: 'PublishedEntityFoo', name: 'Foo 1', authKey: 'subject' },
-        fields: { title: 'Title' },
-      },
-      { publish: true }
-    );
-    const createTwoResult = await adminClient.createEntity(
-      {
-        info: { type: 'PublishedEntityFoo', name: 'Foo 2', authKey: 'subject' },
-        fields: { title: 'Title' },
-      },
-      { publish: true }
-    );
-
-    if (expectOkResult(createOneResult) && expectOkResult(createTwoResult)) {
-      const {
-        entity: { id: foo1Id },
-      } = createOneResult.value;
-      const {
-        entity: {
-          id: foo2Id,
-          info: { name: foo2Name, createdAt: foo2CreatedAt },
-        },
-      } = createTwoResult.value;
-
-      const getResult = await publishedClient.getEntities([{ id: foo1Id }, { id: foo2Id }]);
-      if (expectOkResult(getResult)) {
-        expect(getResult.value).toHaveLength(2);
-        expectErrorResult(getResult.value[0], ErrorType.NotAuthorized, 'Wrong authKey provided');
-        expectResultValue(getResult.value[1], {
-          id: foo2Id,
-          info: {
-            type: 'PublishedEntityFoo',
-            name: foo2Name,
-            authKey: 'subject',
-            createdAt: foo2CreatedAt,
-          },
-          fields: {
-            ...emptyFooFields,
-            title: 'Title',
-          },
-        });
-      }
-    }
-  });
-
   test('Error: Get archived entity', async () => {
     const createResult = await adminClient.createEntity({
       info: { type: 'PublishedEntityFoo', name: 'Foo 1', authKey: 'none' },

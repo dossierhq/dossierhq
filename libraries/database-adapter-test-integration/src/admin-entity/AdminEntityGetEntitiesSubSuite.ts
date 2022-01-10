@@ -14,7 +14,7 @@ export const GetEntitiesSubSuite: UnboundTestFunction<AdminEntityTestContext>[] 
   getEntities_none,
   getEntities_getLatestVersion,
   getEntities_authKeySubjectOneCorrectOneWrong,
-  getEntities_errorMissingIds,
+  getEntities_oneMissingOneExisting,
 ];
 
 async function getEntities_minimal({ client }: AdminEntityTestContext) {
@@ -81,10 +81,20 @@ async function getEntities_authKeySubjectOneCorrectOneWrong({ server }: AdminEnt
   ]);
 }
 
-async function getEntities_errorMissingIds({ server }: AdminEntityTestContext) {
-  const result = await adminClientForMainPrincipal(server).getEntities([
-    { id: '13e4c7da-616e-44a3-a039-24f96f9b17da' },
-    { id: '13e4c7da-616e-44a3-44a3-24f96f9b17da' },
+async function getEntities_oneMissingOneExisting({ server }: AdminEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const createResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
+  assertOkResult(createResult);
+  const {
+    entity: { id },
+  } = createResult.value;
+
+  const getResult = await adminClient.getEntities([
+    { id: 'f09fdd62-4a1e-4320-afba-8dd0781799df' },
+    { id },
   ]);
-  assertResultValue(result, [notOk.NotFound('No such entity'), notOk.NotFound('No such entity')]);
+  assertResultValue(getResult, [
+    notOk.NotFound('No such entity'),
+    ok<AdminEntity, ErrorType.Generic>(createResult.value.entity),
+  ]);
 }

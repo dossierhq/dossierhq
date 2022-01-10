@@ -3,13 +3,18 @@ import { copyEntity, notOk, ok } from '@jonasb/datadata-core';
 import { assertOkResult, assertResultValue } from '../Asserts';
 import type { UnboundTestFunction } from '../Builder';
 import { TITLE_ONLY_CREATE, TITLE_ONLY_PUBLISHED_ENTITY } from '../shared-entity/Fixtures';
-import { publishedClientForMainPrincipal } from '../shared-entity/TestClients';
+import {
+  adminClientForMainPrincipal,
+  adminClientForSecondaryPrincipal,
+  publishedClientForMainPrincipal,
+} from '../shared-entity/TestClients';
 import type { PublishedEntityTestContext } from './PublishedEntityTestSuite';
 
 export const GetEntitiesSubSuite: UnboundTestFunction<PublishedEntityTestContext>[] = [
   getEntities_minimal,
   getEntities_none,
-  getEntities_errorMissingIds,
+  getEntities_authKeySubjectOneCorrectOneWrong,
+  getEntities_oneMissingOneExisting,
 ];
 
 async function getEntities_minimal({ adminClient, publishedClient }: PublishedEntityTestContext) {
@@ -52,13 +57,64 @@ async function getEntities_none({ server }: PublishedEntityTestContext) {
   assertResultValue(result, []);
 }
 
-async function getEntities_errorMissingIds({ server }: PublishedEntityTestContext) {
+async function getEntities_authKeySubjectOneCorrectOneWrong({
+  server,
+}: PublishedEntityTestContext) {
+  const create1Result = await adminClientForSecondaryPrincipal(server).createEntity(
+    copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } }),
+    { publish: true }
+  );
+  const create2Result = await adminClientForMainPrincipal(server).createEntity(
+    copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } }),
+    { publish: true }
+  );
+  assertOkResult(create1Result);
+  assertOkResult(create2Result);
+  const {
+    entity: { id: id1 },
+  } = create1Result.value;
+  const {
+    entity: {
+      id: id2,
+      info: { name: name2, createdAt: createdAt2 },
+    },
+  } = create2Result.value;
+
+  const getResult = await publishedClientForMainPrincipal(server).getEntities([
+    { id: id1 },
+    { id: id2 },
+  ]);
+  assertResultValue(getResult, [
+    notOk.NotAuthorized('Wrong authKey provided'),
+    ok<PublishedEntity, ErrorType.Generic>(
+      copyEntity(TITLE_ONLY_PUBLISHED_ENTITY, {
+        id: id2,
+        info: { name: name2, createdAt: createdAt2, authKey: 'subject' },
+      })
+    ),
+  ]);
+}
+
+async function getEntities_oneMissingOneExisting({ server }: PublishedEntityTestContext) {
+  const createResult = await adminClientForMainPrincipal(server).createEntity(TITLE_ONLY_CREATE, {
+    publish: true,
+  });
+  assertOkResult(createResult);
+  const {
+    entity: {
+      id,
+      info: { name, createdAt },
+    },
+  } = createResult.value;
+
   const getResult = await publishedClientForMainPrincipal(server).getEntities([
     { id: 'f09fdd62-4a1e-4320-afba-8dd0781799df' },
-    { id: 'f09fdd62-4a1e-4320-4320-8dd0781799df' },
+    { id },
   ]);
   assertResultValue(getResult, [
     notOk.NotFound('No such entity'),
-    notOk.NotFound('No such entity'),
+    ok<PublishedEntity, ErrorType.Generic>(
+      copyEntity(TITLE_ONLY_PUBLISHED_ENTITY, { id, info: { name, createdAt } })
+    ),
   ]);
 }
