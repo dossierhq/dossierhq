@@ -56,7 +56,8 @@ export function assertPublishedEntityConnectionToMatchSlice(
   connectionResult: Result<Connection<Edge<PublishedEntity, ErrorType>> | null, ErrorType>,
   sliceStart: number,
   sliceEnd: number | undefined,
-  order?: PublishedQueryOrder
+  order?: PublishedQueryOrder,
+  reverse?: boolean
 ): void {
   assertOkResult(connectionResult);
   const connection = connectionResult.value;
@@ -67,6 +68,7 @@ export function assertPublishedEntityConnectionToMatchSlice(
   const allEntitiesOrdered = [...allEntities].sort(
     publishedOrderCompare[order ?? PublishedQueryOrder.createdAt]
   );
+  if (reverse) allEntitiesOrdered.reverse();
   const expectedEntities = allEntitiesOrdered.slice(sliceStart, sliceEnd);
   const expectedIds = expectedEntities.map(({ id }) => ({ id }));
 
