@@ -3012,57 +3012,6 @@ describe('upsertEntity()', () => {
 });
 
 describe('publishEntities()', () => {
-  test('Two entities referencing each other', async () => {
-    const createBaz1Result = await client.createEntity({
-      info: { type: 'EntityAdminBaz', name: 'Baz 1', authKey: 'none' },
-      fields: {
-        title: 'Baz title 1',
-      },
-    });
-    if (expectOkResult(createBaz1Result)) {
-      const {
-        entity: { id: baz1Id },
-      } = createBaz1Result.value;
-
-      const createBaz2Result = await client.createEntity({
-        info: { type: 'EntityAdminBaz', name: 'Baz 2', authKey: 'none' },
-        fields: {
-          title: 'Baz title 2',
-          baz: { id: baz1Id },
-        },
-      });
-      if (expectOkResult(createBaz2Result)) {
-        const {
-          entity: { id: baz2Id },
-        } = createBaz2Result.value;
-
-        expectOkResult(await client.updateEntity({ id: baz1Id, fields: { baz: { id: baz2Id } } }));
-
-        const publishResult = await client.publishEntities([
-          { id: baz1Id, version: 1 },
-          { id: baz2Id, version: 0 },
-        ]);
-        if (expectOkResult(publishResult)) {
-          const [{ updatedAt: updatedAt1 }, { updatedAt: updatedAt2 }] = publishResult.value;
-          expectResultValue(publishResult, [
-            {
-              id: baz1Id,
-              status: AdminEntityStatus.published,
-              effect: 'published',
-              updatedAt: updatedAt1,
-            },
-            {
-              id: baz2Id,
-              status: AdminEntityStatus.published,
-              effect: 'published',
-              updatedAt: updatedAt2,
-            },
-          ]);
-        }
-      }
-    }
-  });
-
   test('Archived entity', async () => {
     const createBaz1Result = await client.createEntity({
       info: { type: 'EntityAdminBaz', name: 'Baz 1', authKey: 'none' },
