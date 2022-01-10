@@ -1,12 +1,21 @@
 import type {
+  AdminClient,
   AdminEntity,
+  AdminQuery,
   Connection,
   Edge,
   ErrorType,
+  PromiseResult,
   PublishedEntity,
   Result,
 } from '@jonasb/datadata-core';
-import { AdminQueryOrder, PublishedQueryOrder } from '@jonasb/datadata-core';
+import {
+  AdminEntityStatus,
+  AdminQueryOrder,
+  getAllPagesForConnection,
+  ok,
+  PublishedQueryOrder,
+} from '@jonasb/datadata-core';
 import { Temporal } from '@js-temporal/polyfill';
 import { assertEquals, assertOkResult } from '../Asserts';
 
@@ -73,4 +82,36 @@ export function assertPublishedEntityConnectionToMatchSlice(
   const expectedIds = expectedEntities.map(({ id }) => ({ id }));
 
   assertEquals(actualIds, expectedIds);
+}
+
+export async function countSearchResultStatuses(
+  client: AdminClient,
+  query: AdminQuery
+): PromiseResult<
+  Record<AdminEntityStatus, number>,
+  ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
+> {
+  const result = {
+    [AdminEntityStatus.draft]: 0,
+    [AdminEntityStatus.published]: 0,
+    [AdminEntityStatus.modified]: 0,
+    [AdminEntityStatus.withdrawn]: 0,
+    [AdminEntityStatus.archived]: 0,
+  };
+
+  for await (const pageResult of getAllPagesForConnection({ first: 50 }, (currentPaging) =>
+    client.searchEntities(query, currentPaging)
+  )) {
+    if (pageResult.isError()) {
+      return pageResult;
+    }
+    for (const edge of pageResult.value.edges) {
+      if (edge.node.isOk()) {
+        const entity = edge.node.value;
+        result[entity.info.status] += 1;
+      }
+    }
+  }
+
+  return ok(result);
 }
