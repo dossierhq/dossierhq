@@ -32,7 +32,7 @@ export function assertAdminEntityConnectionToMatchSlice(
   connectionResult: Result<Connection<Edge<AdminEntity, ErrorType>> | null, ErrorType>,
   sliceStart: number,
   sliceEnd: number | undefined,
-  order: AdminQueryOrder
+  order?: AdminQueryOrder
 ): void {
   assertOkResult(connectionResult);
   const connection = connectionResult.value;
@@ -40,7 +40,9 @@ export function assertAdminEntityConnectionToMatchSlice(
     id: edge.node.isOk() ? edge.node.value.id : edge.node,
   }));
 
-  const allEntitiesOrdered = [...allEntities].sort(adminOrderCompare[order]);
+  const allEntitiesOrdered = [...allEntities].sort(
+    adminOrderCompare[order ?? AdminQueryOrder.createdAt]
+  );
   const expectedEntities = allEntitiesOrdered.slice(sliceStart, sliceEnd);
   const expectedIds = expectedEntities.map(({ id }) => ({ id }));
 
