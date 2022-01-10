@@ -3521,50 +3521,6 @@ describe('publishEntities()', () => {
     }
   });
 
-  test('Older version entity means status modified', async () => {
-    const createBaz1Result = await client.createEntity({
-      info: { type: 'EntityAdminBaz', name: 'Baz 1', authKey: 'none' },
-      fields: { title: 'Baz title 1' },
-    });
-    if (expectOkResult(createBaz1Result)) {
-      const {
-        entity: {
-          id,
-          info: { name, createdAt },
-        },
-      } = createBaz1Result.value;
-
-      const updateResult = await client.updateEntity({ id, fields: { title: 'Baz title 2' } });
-      expectOkResult(updateResult);
-
-      const publishResult = await client.publishEntities([{ id, version: 0 }]);
-
-      if (expectOkResult(publishResult)) {
-        const [{ updatedAt }] = publishResult.value;
-        expectResultValue(publishResult, [
-          { id, status: AdminEntityStatus.modified, effect: 'published', updatedAt },
-        ]);
-
-        const getResult = await client.getEntity({ id });
-        if (expectOkResult(getResult)) {
-          expectResultValue(getResult, {
-            id,
-            info: {
-              type: 'EntityAdminBaz',
-              name,
-              version: 1,
-              authKey: 'none',
-              status: AdminEntityStatus.modified,
-              createdAt,
-              updatedAt,
-            },
-            fields: { ...emptyBazFields, title: 'Baz title 2' },
-          });
-        }
-      }
-    }
-  });
-
   test('Publish published version', async () => {
     const createBazResult = await client.createEntity({
       info: { type: 'EntityAdminBaz', name: 'Baz 1', authKey: 'none' },
@@ -3597,25 +3553,6 @@ describe('publishEntities()', () => {
           },
         ]);
       }
-    }
-  });
-
-  test('Error: Publish using the wrong authKey', async () => {
-    const createBazResult = await client.createEntity({
-      info: { type: 'EntityAdminBaz', name: 'Baz 1', authKey: 'subject' },
-      fields: { title: 'Baz title 1' },
-    });
-    if (expectOkResult(createBazResult)) {
-      const {
-        entity: { id: bazId },
-      } = createBazResult.value;
-
-      const publishResult = await adminClientOther.publishEntities([{ id: bazId, version: 0 }]);
-      expectErrorResult(
-        publishResult,
-        ErrorType.NotAuthorized,
-        `entity(${bazId}): Wrong authKey provided`
-      );
     }
   });
 
@@ -3653,18 +3590,6 @@ describe('publishEntities()', () => {
     }
   });
 
-  test('Error: Duplicate ids', async () => {
-    const publishResult = await client.publishEntities([
-      { id: 'b1bdcb61-e6aa-47ff-98d8-4cfe8197b290', version: 0 },
-      { id: 'b1bdcb61-e6aa-47ff-98d8-4cfe8197b290', version: 1 },
-    ]);
-    expectErrorResult(
-      publishResult,
-      ErrorType.BadRequest,
-      'Duplicate ids: b1bdcb61-e6aa-47ff-98d8-4cfe8197b290'
-    );
-  });
-
   test('Error: adminOnly entity type', async () => {
     const createQuxResult = await client.createEntity({
       info: { type: 'EntityAdminQux', name: 'Qux name', authKey: 'none' },
@@ -3700,27 +3625,6 @@ describe('publishEntities()', () => {
         publishResult,
         ErrorType.BadRequest,
         `entity(${bazId}).fields.valueItem: Value item of type EntityAdminOneStringAdminOnly is adminOnly`
-      );
-    }
-  });
-
-  test('Error: missing value for required field in entity', async () => {
-    const createFooResult = await client.createEntity({
-      info: { type: 'EntityAdminFoo', name: 'Foo name', authKey: 'none' },
-      fields: {
-        // no title
-      },
-    });
-    if (expectOkResult(createFooResult)) {
-      const {
-        entity: { id: fooId },
-      } = createFooResult.value;
-
-      const publishResult = await client.publishEntities([{ id: fooId, version: 0 }]);
-      expectErrorResult(
-        publishResult,
-        ErrorType.BadRequest,
-        `entity(${fooId}).fields.title: Required field is empty`
       );
     }
   });
@@ -4006,36 +3910,6 @@ describe('unpublishEntities()', () => {
     }
   });
 
-  test('Error: invalid id', async () => {
-    const publishResult = await client.unpublishEntities([
-      { id: '8a678bad-fa57-4f18-a377-633f704fd0d3' },
-    ]);
-    expectErrorResult(
-      publishResult,
-      ErrorType.NotFound,
-      `No such entities: 8a678bad-fa57-4f18-a377-633f704fd0d3`
-    );
-  });
-
-  test('Error: Unpublish using the wrong authKey', async () => {
-    const createBazResult = await client.createEntity({
-      info: { type: 'EntityAdminBaz', name: 'Baz 1', authKey: 'subject' },
-      fields: { title: 'Baz title 1' },
-    });
-    if (expectOkResult(createBazResult)) {
-      const {
-        entity: { id: bazId },
-      } = createBazResult.value;
-
-      const unpublishResult = await adminClientOther.unpublishEntities([{ id: bazId }]);
-      expectErrorResult(
-        unpublishResult,
-        ErrorType.NotAuthorized,
-        `entity(${bazId}): Wrong authKey provided`
-      );
-    }
-  });
-
   test('Error: Reference from published entity', async () => {
     const createBarResult = await client.createEntity({
       info: { type: 'EntityAdminBar', name: 'Bar name', authKey: 'none' },
@@ -4088,18 +3962,6 @@ describe('unpublishEntities()', () => {
         );
       }
     }
-  });
-
-  test('Error: duplicate ids', async () => {
-    const unpublishResult = await client.unpublishEntities([
-      { id: 'b1bdcb61-e6aa-47ff-98d8-4cfe8197b290' },
-      { id: 'b1bdcb61-e6aa-47ff-98d8-4cfe8197b290' },
-    ]);
-    expectErrorResult(
-      unpublishResult,
-      ErrorType.BadRequest,
-      'Duplicate ids: b1bdcb61-e6aa-47ff-98d8-4cfe8197b290'
-    );
   });
 });
 
@@ -4198,32 +4060,6 @@ describe('archiveEntity()', () => {
       if (expectOkResult(historyResult)) {
         expect(historyResult.value.events).toHaveLength(1); // no event created by second archive
       }
-    }
-  });
-
-  test('Error: archive published entity', async () => {
-    const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBar', name: 'Bar name', authKey: 'none' },
-      fields: { title: 'Bar title' },
-    });
-    if (expectOkResult(createResult)) {
-      const {
-        entity: {
-          id,
-          info: { version },
-        },
-      } = createResult.value;
-
-      const publishResult = await client.publishEntities([{ id, version }]);
-      if (expectOkResult(publishResult)) {
-        const [{ updatedAt }] = publishResult.value;
-        expectResultValue(publishResult, [
-          { id, status: AdminEntityStatus.published, effect: 'published', updatedAt },
-        ]);
-      }
-
-      const archiveResult = await client.archiveEntity({ id });
-      expectErrorResult(archiveResult, ErrorType.BadRequest, 'Entity is published');
     }
   });
 });

@@ -12,6 +12,7 @@ export const ArchiveEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[
   archiveEntity_minimal,
   archiveEntity_errorInvalidError,
   archiveEntity_errorWrongAuthKey,
+  archiveEntity_errorPublishedEntity,
 ];
 
 async function archiveEntity_minimal({ client }: AdminEntityTestContext) {
@@ -60,4 +61,18 @@ async function archiveEntity_errorWrongAuthKey({ server }: AdminEntityTestContex
 
   const getResult = await adminClientForSecondaryPrincipal(server).archiveEntity({ id });
   assertErrorResult(getResult, ErrorType.NotAuthorized, 'Wrong authKey provided');
+}
+
+async function archiveEntity_errorPublishedEntity({ server }: AdminEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const createResult = await adminClient.createEntity(TITLE_ONLY_CREATE, {
+    publish: true,
+  });
+  assertOkResult(createResult);
+  const {
+    entity: { id },
+  } = createResult.value;
+
+  const getResult = await adminClient.archiveEntity({ id });
+  assertErrorResult(getResult, ErrorType.BadRequest, 'Entity is published');
 }
