@@ -2100,37 +2100,6 @@ describe('searchEntities() order', () => {
   });
 });
 
-describe('searchEntities() authKeys', () => {
-  test('Entities with subject authKey', async () => {
-    const result = await client.searchEntities({
-      authKeys: ['subject'],
-      entityTypes: ['AdminOnlyEditBefore'],
-    });
-    if (expectOkResult(result)) {
-      expectConnectionToMatchSlice(entitiesOfTypeAdminOnlyEditBeforeSubject, result.value, 0, 25);
-    }
-  });
-
-  test('Entities with none or subject authKey', async () => {
-    const result = await client.searchEntities({
-      authKeys: ['none', 'subject'],
-      entityTypes: ['AdminOnlyEditBefore'],
-      order: AdminQueryOrder.name,
-    });
-    if (expectOkResult(result)) {
-      expectConnectionToMatchSlice(
-        [...entitiesOfTypeAdminOnlyEditBeforeNone, ...entitiesOfTypeAdminOnlyEditBeforeSubject],
-        result.value,
-        0,
-        25,
-        (a, b) => {
-          return a.info.name < b.info.name ? -1 : 1;
-        }
-      );
-    }
-  });
-});
-
 describe('searchEntities() referencing', () => {
   test('Query based on referencing, one reference', async () => {
     const { barId, fooEntities } = await createBarWithFooBazReferences(1, 0);
