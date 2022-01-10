@@ -255,78 +255,6 @@ describe('getEntity()', () => {
 });
 
 describe('getEntities()', () => {
-  test('Get two entities', async () => {
-    const createFoo1Result = await adminClient.createEntity({
-      info: { type: 'PublishedEntityFoo', name: 'Foo 1', authKey: 'none' },
-      fields: { title: 'Title 1' },
-    });
-    const createFoo2Result = await adminClient.createEntity({
-      info: { type: 'PublishedEntityFoo', name: 'Foo 2', authKey: 'none' },
-      fields: { title: 'Title 2' },
-    });
-    if (expectOkResult(createFoo1Result) && expectOkResult(createFoo2Result)) {
-      const {
-        entity: {
-          id: foo1Id,
-          info: { name: foo1Name, createdAt: foo1CreatedAt },
-        },
-      } = createFoo1Result.value;
-      const {
-        entity: {
-          id: foo2Id,
-          info: { name: foo2Name, createdAt: foo2CreatedAt },
-        },
-      } = createFoo2Result.value;
-
-      const publishResult = await adminClient.publishEntities([
-        { id: foo1Id, version: 0 },
-        { id: foo2Id, version: 0 },
-      ]);
-      if (expectOkResult(publishResult)) {
-        const [{ updatedAt: updatedAt1 }, { updatedAt: updatedAt2 }] = publishResult.value;
-        expectResultValue(publishResult, [
-          {
-            id: foo1Id,
-            status: AdminEntityStatus.published,
-            effect: 'published',
-            updatedAt: updatedAt1,
-          },
-          {
-            id: foo2Id,
-            status: AdminEntityStatus.published,
-            effect: 'published',
-            updatedAt: updatedAt2,
-          },
-        ]);
-      }
-
-      const result = await publishedClient.getEntities([{ id: foo2Id }, { id: foo1Id }]);
-      if (expectOkResult(result)) {
-        expect(result.value).toHaveLength(2);
-        expectResultValue(result.value[0], {
-          id: foo2Id,
-          info: {
-            type: 'PublishedEntityFoo',
-            name: foo2Name,
-            authKey: 'none',
-            createdAt: foo2CreatedAt,
-          },
-          fields: { ...emptyFooFields, title: 'Title 2' },
-        });
-        expectResultValue(result.value[1], {
-          id: foo1Id,
-          info: {
-            type: 'PublishedEntityFoo',
-            name: foo1Name,
-            authKey: 'none',
-            createdAt: foo1CreatedAt,
-          },
-          fields: { ...emptyFooFields, title: 'Title 1' },
-        });
-      }
-    }
-  });
-
   test('Get one missing, one existing entity', async () => {
     const createFooResult = await adminClient.createEntity({
       info: { type: 'PublishedEntityFoo', name: 'Foo', authKey: 'none' },
@@ -443,18 +371,6 @@ describe('getEntities()', () => {
         expect(result.value).toHaveLength(1);
         expectErrorResult(result.value[0], ErrorType.NotFound, 'No such entity');
       }
-    }
-  });
-
-  test('Error: Get missing ids', async () => {
-    const result = await publishedClient.getEntities([
-      { id: 'f09fdd62-4a1e-4320-afba-8dd0781799df' },
-      { id: 'f09fdd62-4a1e-4320-4320-8dd0781799df' },
-    ]);
-    if (expectOkResult(result)) {
-      expect(result.value).toHaveLength(2);
-      expectErrorResult(result.value[0], ErrorType.NotFound, 'No such entity');
-      expectErrorResult(result.value[1], ErrorType.NotFound, 'No such entity');
     }
   });
 });

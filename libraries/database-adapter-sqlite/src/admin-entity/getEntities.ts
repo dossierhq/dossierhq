@@ -18,7 +18,7 @@ export async function adminEntityGetMultiple(
 ): PromiseResult<DatabaseAdminEntityGetOnePayload[], ErrorType.Generic> {
   const qb =
     new SqliteQueryBuilder(`SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, ev.version, ev.fields
-    FROM entities e, entity_versions ev WHERE`);
+    FROM entities e, entity_versions ev`);
   qb.addQuery(
     `WHERE e.uuid IN ${qb.addValueList(
       references.map((it) => it.id)
