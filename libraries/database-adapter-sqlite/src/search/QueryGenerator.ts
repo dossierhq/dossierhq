@@ -263,7 +263,7 @@ function addFilterStatusSqlSegment(query: AdminQuery, qb: SqliteQueryBuilder) {
   if (query.status.length === 1) {
     qb.addQuery(`AND status = ${qb.addValue(query.status[0])}`);
   } else {
-    qb.addQuery(`AND status IN (${qb.addValueList(query.status)})`);
+    qb.addQuery(`AND status IN ${qb.addValueList(query.status)}`);
   }
 }
 
