@@ -6,8 +6,8 @@ import type { PublishedEntityTestContext } from './PublishedEntityTestSuite';
 
 export const SearchEntitiesSubSuite: UnboundTestFunction<PublishedEntityTestContext>[] = [
   searchEntities_minimal,
-  searchEntities_subjectAuthKey,
-  searchEntities_noneAndSubjectAuthKeys,
+  searchEntities_authKeySubject,
+  searchEntities_authKeyNoneAndSubject,
 ];
 
 async function searchEntities_minimal({
@@ -27,7 +27,7 @@ async function searchEntities_minimal({
   );
 }
 
-async function searchEntities_subjectAuthKey({
+async function searchEntities_authKeySubject({
   server,
   readOnlyEntityRepository,
 }: PublishedEntityTestContext) {
@@ -45,7 +45,7 @@ async function searchEntities_subjectAuthKey({
   );
 }
 
-async function searchEntities_noneAndSubjectAuthKeys({
+async function searchEntities_authKeyNoneAndSubject({
   server,
   readOnlyEntityRepository,
 }: PublishedEntityTestContext) {
