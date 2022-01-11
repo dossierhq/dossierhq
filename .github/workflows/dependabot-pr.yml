@@ -15,7 +15,7 @@ jobs:
       - name: Use deno
         uses: denoland/setup-deno@v1
         with:
-          deno-version: "1.17.1"
+          deno-version: "1.17.2"
       - name: Make dependencies consistent
         run: |
           which node
