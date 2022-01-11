@@ -48,10 +48,17 @@ export const SCHEMA_DEFINITION_STATEMENTS = [
     FOREIGN KEY (entities_id) REFERENCES entities(id) ON DELETE CASCADE,
     FOREIGN KEY (created_by) REFERENCES subjects(id)
   )`,
+  `CREATE TABLE entity_version_locations (
+    id INTEGER PRIMARY KEY,
+    entity_versions_id INTEGER NOT NULL,
+    lat REAL NOT NULL,
+    lng REAL NOT NULL,
+    FOREIGN KEY (entity_versions_id) REFERENCES entity_versions(id) ON DELETE CASCADE
+  )`,
   `CREATE TABLE entity_version_references (
     id INTEGER PRIMARY KEY,
-    entities_id INTEGER NOT NULL,
     entity_versions_id INTEGER NOT NULL,
+    entities_id INTEGER NOT NULL,
     FOREIGN KEY (entities_id) REFERENCES entities(id) ON DELETE CASCADE,
     FOREIGN KEY (entity_versions_id) REFERENCES entity_versions(id) ON DELETE CASCADE
   )`,

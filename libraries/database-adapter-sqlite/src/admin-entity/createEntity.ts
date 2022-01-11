@@ -1,5 +1,6 @@
 import { notOk, ok, type ErrorType, type PromiseResult } from '@jonasb/datadata-core';
 import {
+  createSqliteSqlQuery,
   SqliteQueryBuilder,
   type DatabaseAdminEntityCreateEntityArg,
   type DatabaseAdminEntityCreatePayload,
@@ -72,18 +73,13 @@ export async function adminCreateEntity(
     }
   }
   if (entity.locations.length > 0) {
-    const qb = new SqliteQueryBuilder(
-      'INSERT INTO entity_version_locations (entity_versions_id, location) VALUES',
-      [versionsId]
-    );
+    const { query, sql, addValue } = createSqliteSqlQuery();
+    sql`INSERT INTO entity_version_locations (entity_versions_id, lat, lng) VALUES`;
+    const entityVersion = addValue(versionsId);
     for (const location of entity.locations) {
-      qb.addQuery(
-        `(?1, ST_SetSRID(ST_Point(${qb.addValue(location.lng)}, ${qb.addValue(
-          location.lat
-        )}), 4326))`
-      );
+      sql`(${entityVersion}, ${location.lat}, ${location.lng})`;
     }
-    const insertLocationsResult = await queryNone(databaseAdapter, context, qb.build());
+    const insertLocationsResult = await queryNone(databaseAdapter, context, query);
     if (insertLocationsResult.isError()) {
       return insertLocationsResult;
     }

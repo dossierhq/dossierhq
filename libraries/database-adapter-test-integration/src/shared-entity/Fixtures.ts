@@ -7,6 +7,15 @@ import type {
 import { AdminEntityStatus } from '@jonasb/datadata-core';
 import { Temporal } from '@js-temporal/polyfill';
 
+export const LOCATIONS_CREATE: Readonly<AdminEntityCreate> = {
+  info: {
+    type: 'Locations',
+    name: 'Locations name',
+    authKey: 'none',
+  },
+  fields: {},
+};
+
 export const REFERENCES_CREATE: Readonly<AdminEntityCreate> = {
   info: {
     type: 'References',
