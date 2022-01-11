@@ -614,13 +614,13 @@ describe('searchAdminEntitiesQuery()', () => {
           "isForwards": true,
           "pagingCount": 25,
           "text": "SELECT DISTINCT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.status, ev.version, ev.fields
-        FROM entities e, entity_versions ev, entity_version_locations evl WHERE e.latest_entity_versions_id = ev.id AND e.resolved_auth_key = ?1 AND ev.id = evl.entity_versions_id AND evl.location && ST_MakeEnvelope(?2, ?3, ?4, ?5, 4326) ORDER BY e.id LIMIT ?6",
+        FROM entities e, entity_versions ev, entity_version_locations evl WHERE e.latest_entity_versions_id = ev.id AND e.resolved_auth_key = ?1 AND ev.id = evl.entity_versions_id AND evl.lat >= ?2 AND evl.lat <= ?3 AND evl.lng >= ?4 AND evl.lng <= ?5 ORDER BY e.id LIMIT ?6",
           "values": Array [
             "none",
-            11.62,
             55.07,
-            16.25,
             56.79,
+            11.62,
+            16.25,
             26,
           ],
         },
@@ -1173,13 +1173,13 @@ describe('searchPublishedEntitiesQuery()', () => {
           "cursorExtractor": [Function],
           "isForwards": true,
           "pagingCount": 25,
-          "text": "SELECT DISTINCT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, ev.fields FROM entities e, entity_versions ev, entity_version_locations evl WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = ?1 AND ev.id = evl.entity_versions_id AND evl.location && ST_MakeEnvelope(?2, ?3, ?4, ?5, 4326) ORDER BY e.id LIMIT ?6",
+          "text": "SELECT DISTINCT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, ev.fields FROM entities e, entity_versions ev, entity_version_locations evl WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = ?1 AND ev.id = evl.entity_versions_id AND evl.lat >= ?2 AND evl.lat <= ?3 AND evl.lng >= ?4 AND evl.lng <= ?5 ORDER BY e.id LIMIT ?6",
           "values": Array [
             "none",
-            11.62,
             55.07,
-            16.25,
             56.79,
+            11.62,
+            16.25,
             26,
           ],
         },
@@ -1508,13 +1508,13 @@ describe('totalAdminEntitiesQuery()', () => {
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
-          "text": "SELECT COUNT(DISTINCT e.id) AS count FROM entities e, entity_versions ev, entity_version_locations evl WHERE e.resolved_auth_key = ?1 AND e.latest_entity_versions_id = ev.id AND ev.id = evl.entity_versions_id AND evl.location && ST_MakeEnvelope(?2, ?3, ?4, ?5, 4326)",
+          "text": "SELECT COUNT(DISTINCT e.id) AS count FROM entities e, entity_versions ev, entity_version_locations evl WHERE e.resolved_auth_key = ?1 AND e.latest_entity_versions_id = ev.id AND ev.id = evl.entity_versions_id AND evl.lat >= ?2 AND evl.lat <= ?3 AND evl.lng >= ?4 AND evl.lng <= ?5",
           "values": Array [
             "none",
-            11.62,
             55.07,
-            16.25,
             56.79,
+            11.62,
+            16.25,
           ],
         },
       }
@@ -1655,13 +1655,13 @@ describe('totalPublishedEntitiesQuery()', () => {
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
-          "text": "SELECT COUNT(DISTINCT e.id) AS count FROM entities e, entity_versions ev, entity_version_locations evl WHERE e.published_entity_versions_id IS NOT NULL AND e.resolved_auth_key = ?1 AND e.published_entity_versions_id = ev.id AND ev.id = evl.entity_versions_id AND evl.location && ST_MakeEnvelope(?2, ?3, ?4, ?5, 4326)",
+          "text": "SELECT COUNT(DISTINCT e.id) AS count FROM entities e, entity_versions ev, entity_version_locations evl WHERE e.published_entity_versions_id IS NOT NULL AND e.resolved_auth_key = ?1 AND e.published_entity_versions_id = ev.id AND ev.id = evl.entity_versions_id AND evl.lat >= ?2 AND evl.lat <= ?3 AND evl.lng >= ?4 AND evl.lng <= ?5",
           "values": Array [
             "none",
-            11.62,
             55.07,
-            16.25,
             56.79,
+            11.62,
+            16.25,
           ],
         },
       }

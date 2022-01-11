@@ -6,7 +6,9 @@ import type {
   Edge,
   ErrorType,
   PromiseResult,
+  PublishedClient,
   PublishedEntity,
+  PublishedQuery,
   Result,
 } from '@jonasb/datadata-core';
 import {
@@ -102,6 +104,40 @@ export function assertSearchResultEntities<TItem extends AdminEntity | Published
       assertResultValue(result.value.edges[index].node, actualEntity);
     }
   }
+}
+
+export async function countSearchResultWithEntity(
+  client: AdminClient,
+  query: AdminQuery,
+  entityId: string
+): PromiseResult<number, ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic>;
+export async function countSearchResultWithEntity(
+  client: PublishedClient,
+  query: PublishedQuery,
+  entityId: string
+): PromiseResult<number, ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic>;
+export async function countSearchResultWithEntity(
+  client: AdminClient | PublishedClient,
+  query: AdminQuery | PublishedQuery,
+  entityId: string
+): PromiseResult<number, ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic> {
+  let matchCount = 0;
+
+  for await (const pageResult of getAllPagesForConnection({ first: 50 }, (currentPaging) =>
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    client.searchEntities(query as any, currentPaging)
+  )) {
+    if (pageResult.isError()) {
+      return pageResult;
+    }
+    for (const edge of pageResult.value.edges) {
+      if (edge.node.isOk() && edge.node.value.id === entityId) {
+        matchCount += 1;
+      }
+    }
+  }
+
+  return ok(matchCount);
 }
 
 export async function countSearchResultStatuses(
