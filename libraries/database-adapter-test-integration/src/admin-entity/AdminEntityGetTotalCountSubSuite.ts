@@ -1,7 +1,8 @@
 import { AdminEntityStatus, copyEntity } from '@jonasb/datadata-core';
-import { assertOkResult, assertResultValue } from '../Asserts';
+import { assertOkResult, assertResultValue, assertTruthy } from '../Asserts';
 import type { UnboundTestFunction } from '../Builder';
-import { REFERENCES_CREATE, TITLE_ONLY_CREATE } from '../shared-entity/Fixtures';
+import { LOCATIONS_CREATE, REFERENCES_CREATE, TITLE_ONLY_CREATE } from '../shared-entity/Fixtures';
+import { randomBoundingBox } from '../shared-entity/LocationTestUtils';
 import { adminClientForMainPrincipal } from '../shared-entity/TestClients';
 import type { AdminEntityTestContext } from './AdminEntityTestSuite';
 
@@ -20,6 +21,7 @@ export const GetTotalCountSubSuite: UnboundTestFunction<AdminEntityTestContext>[
   getTotalCount_referenceOneReference,
   getTotalCount_referenceNoReferences,
   getTotalCount_referenceTwoReferencesFromOneEntity,
+  getTotalCount_boundingBoxOneInside,
 ];
 
 async function getTotalCount_minimal({ server, readOnlyEntityRepository }: AdminEntityTestContext) {
@@ -223,4 +225,25 @@ async function getTotalCount_referenceTwoReferencesFromOneEntity({
 
   const totalResult = await adminClient.getTotalCount({ referencing: titleOnlyId });
   assertResultValue(totalResult, 1);
+}
+
+async function getTotalCount_boundingBoxOneInside({ server }: AdminEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const boundingBox = randomBoundingBox();
+  const center = {
+    lat: (boundingBox.minLat + boundingBox.maxLat) / 2,
+    lng: (boundingBox.minLng + boundingBox.maxLng) / 2,
+  };
+  const createResult = await adminClient.createEntity(
+    copyEntity(LOCATIONS_CREATE, { fields: { location: center } })
+  );
+  assertOkResult(createResult);
+
+  const searchResult = await adminClient.searchEntities({ boundingBox }, { first: 100 });
+  assertOkResult(searchResult);
+  const searchCount = searchResult.value?.edges.length;
+  assertTruthy(searchCount);
+
+  const totalResult = await adminClient.getTotalCount({ boundingBox });
+  assertResultValue(totalResult, searchCount);
 }
