@@ -32,9 +32,7 @@ jobs:
           npm run db:make-users:no-superuser
       - name: rush build
         run: |
-          # TODO skip deno for now, "Trace/breakpoint trap (core dumped)" during test
-          node common/scripts/install-run-rush.js build --verbose --to-except datadata-examples-deno
-          (cd examples/deno && npm run build:except-test)
+          node common/scripts/install-run-rush.js build --verbose
       - name: ci:check
         run: |
           node common/scripts/install-run-rush.js ci:check --verbose
