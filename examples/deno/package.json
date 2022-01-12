@@ -4,6 +4,7 @@
   "description": "",
   "scripts": {
     "build": "deno lint -q && (deno fmt --check 2>&1) && (deno cache --import-map config/import-map.json server.ts 2>&1) && (npm run test 2>&1)",
+    "build:except-test": "deno lint -q && (deno fmt --check 2>&1) && (deno cache --import-map config/import-map.json server.ts 2>&1)",
     "db:cli": "./scripts/db-cli.sh",
     "db:migrate": "./scripts/db-migrate.sh",
     "postinstall": "deno cache --import-map config/import-map.json external-dependencies.ts",
