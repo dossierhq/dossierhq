@@ -3,7 +3,7 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
-    # timeout-minutes: 10
+    timeout-minutes: 10
     if: ${{ !startsWith(github.ref, 'refs/heads/dependabot/npm_and_yarn') }}
     steps:
       - uses: actions/checkout@v2
@@ -30,11 +30,10 @@ jobs:
           npm run db:make-users:superuser
           npm run db:migrate:all
           npm run db:make-users:no-superuser
-      - name: Setup upterm session
-        uses: lhotari/action-upterm@v1
       - name: rush build
         run: |
-          node common/scripts/install-run-rush.js build --verbose
+          node common/scripts/install-run-rush.js build --verbose --to-except datadata-examples-deno
+          node common/scripts/install-run-rush.js build --verbose --to datadata-examples-deno
       - name: ci:check
         run: |
           node common/scripts/install-run-rush.js ci:check --verbose
