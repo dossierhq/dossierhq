@@ -7,7 +7,7 @@
     "@jonasb/datadata-server": "../node_modules/@jonasb/datadata-server/lib/deno/index.js",
     "@js-temporal/polyfill": "https://cdn.skypack.dev/@js-temporal/polyfill@~0.3.0?dts",
     "dotenv": "https://deno.land/x/dotenv@v3.1.0/mod.ts",
-    "postgres": "https://deno.land/x/postgres@v0.14.2/mod.ts",
+    "postgres": "https://deno.land/x/postgres@v0.14.3/mod.ts",
     "std/": "https://deno.land/std@0.119.0/",
     "tslib": "https://cdn.skypack.dev/tslib@~2.3.1?dts",
     "uuid": "https://cdn.skypack.dev/uuid@^8.3.2?dts"
