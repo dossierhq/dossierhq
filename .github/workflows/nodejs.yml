@@ -30,6 +30,9 @@ jobs:
           npm run db:make-users:superuser
           npm run db:migrate:all
           npm run db:make-users:no-superuser
+      - uses: actions/checkout@v2
+      - name: Setup upterm session
+        uses: lhotari/action-upterm@v1
       - name: rush build
         run: |
           node common/scripts/install-run-rush.js build --verbose
