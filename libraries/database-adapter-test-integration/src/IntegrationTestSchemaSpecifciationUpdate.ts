@@ -4,7 +4,10 @@ export const IntegrationTestSchemaSpecifciationUpdate: AdminSchemaSpecificationU
   entityTypes: [
     {
       name: 'Locations',
-      fields: [{ name: 'location', type: FieldType.Location }],
+      fields: [
+        { name: 'location', type: FieldType.Location },
+        { name: 'locationList', type: FieldType.Location, list: true },
+      ],
     },
     {
       name: 'ReadOnly',

@@ -1766,26 +1766,6 @@ describe('searchEntities() referencing', () => {
 });
 
 describe('searchEntities() boundingBox', () => {
-  test('Query based on bounding box (outside)', async () => {
-    const boundingBox = randomBoundingBox();
-    const outside = {
-      lat: (boundingBox.minLat + boundingBox.maxLat) / 2,
-      lng: boundingBox.minLng > 0 ? boundingBox.minLng - 1 : boundingBox.maxLng + 1,
-    };
-    const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBaz', name: 'Baz', authKey: 'none' },
-      fields: { location: outside },
-    });
-
-    if (expectOkResult(createResult)) {
-      const {
-        entity: { id: fooId },
-      } = createResult.value;
-      const matches = await countSearchResultWithEntity(client, { boundingBox }, fooId);
-      expectResultValue(matches, 0);
-    }
-  });
-
   test('Query based on bounding box with two locations inside', async () => {
     const boundingBox = randomBoundingBox();
     const center = {
