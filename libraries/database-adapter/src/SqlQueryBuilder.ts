@@ -36,7 +36,7 @@ function createSqlQuery<TValue>(config: DialectConfig): SqlQueryBuilder<TValue> 
       if (i > 0) {
         addValueToQuery(config, query, args[i - 1]);
       }
-      addTextToQuery(query, strings[i]);
+      addTextToQuery(query, strings[i], i === 0);
     }
   };
 
@@ -69,8 +69,44 @@ function addValueToQuery<TValue>(
   }
 }
 
-function addTextToQuery(query: Query<unknown>, text: string) {
-  query.text += text;
+function addTextToQuery(query: Query<unknown>, text: string, addSeparator: boolean) {
+  let separator = '';
+  if (query.text && addSeparator) {
+    const currentEndsWithBracket = endsWithBracket(query.text);
+    const newStartsWithBracket = startsWithBracket(text);
+    const currentEndsWithKeyword = endsWithKeyword(query.text);
+    const newStartsWithKeyword = startsWithKeyword(text);
+
+    if (currentEndsWithBracket || newStartsWithBracket) {
+      separator = '';
+    } else if (currentEndsWithKeyword && !newStartsWithKeyword) {
+      separator = ' ';
+    } else if (!currentEndsWithKeyword && !newStartsWithKeyword) {
+      separator = ', ';
+    } else if (!currentEndsWithKeyword && newStartsWithKeyword) {
+      separator = ' ';
+    } else if (currentEndsWithKeyword && newStartsWithKeyword) {
+      separator = ' ';
+    }
+  }
+
+  query.text += separator + text;
+}
+
+function startsWithBracket(query: string) {
+  return query.startsWith(')');
+}
+
+function endsWithBracket(query: string) {
+  return query.endsWith('(');
+}
+
+function startsWithKeyword(query: string) {
+  return !!query.match(/^[A-Z]+\w/);
+}
+
+function endsWithKeyword(query: string) {
+  return !!query.match(/\w[A-Z]+$/);
 }
 
 // POSTGRES

@@ -54,6 +54,25 @@ describe('createPostgresSqlQuery', () => {
       }
     `);
   });
+
+  test('INSERT multiple values', () => {
+    const { sql, query, addValue } = createPostgresSqlQuery();
+    const reference = addValue('Hello');
+    sql`INSERT INTO foo (bar, baz) VALUES`; // adds space after values
+    sql`(${reference}, ${1})`; // adds ', ' between () ()
+    sql`(${reference}, ${2})`;
+
+    expect(query).toMatchInlineSnapshot(`
+      Object {
+        "text": "INSERT INTO foo (bar, baz) VALUES ($1, $2), ($1, $3)",
+        "values": Array [
+          "Hello",
+          1,
+          2,
+        ],
+      }
+    `);
+  });
 });
 
 describe('createSqliteSqlQuery', () => {

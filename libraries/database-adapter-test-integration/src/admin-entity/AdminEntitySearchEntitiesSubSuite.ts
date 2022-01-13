@@ -37,7 +37,9 @@ export const SearchEntitiesSubSuite: UnboundTestFunction<AdminEntityTestContext>
   searchEntities_referenceOneReference,
   searchEntities_referenceNoReferences,
   searchEntities_referenceTwoReferencesFromOneEntity,
+  searchEntities_boundingBoxOneEntityTwoLocationsInside,
   searchEntities_boundingBoxOneInside,
+  searchEntities_boundingBoxOneOutside,
   searchEntities_authKeySubject,
   searchEntities_authKeyNoneAndSubject,
 ];
@@ -454,6 +456,50 @@ async function searchEntities_boundingBoxOneInside({ server }: AdminEntityTestCo
 
   const matches = await countSearchResultWithEntity(adminClient, { boundingBox }, id);
   assertResultValue(matches, 1);
+}
+
+async function searchEntities_boundingBoxOneEntityTwoLocationsInside({
+  server,
+}: AdminEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const boundingBox = randomBoundingBox();
+  const center = {
+    lat: (boundingBox.minLat + boundingBox.maxLat) / 2,
+    lng: (boundingBox.minLng + boundingBox.maxLng) / 2,
+  };
+  const inside = {
+    lat: center.lat,
+    lng: (center.lng + boundingBox.maxLng) / 2,
+  };
+  const createResult = await adminClient.createEntity(
+    copyEntity(LOCATIONS_CREATE, { fields: { location: center, locationList: [inside] } })
+  );
+  assertOkResult(createResult);
+  const {
+    entity: { id },
+  } = createResult.value;
+
+  const matches = await countSearchResultWithEntity(adminClient, { boundingBox }, id);
+  assertResultValue(matches, 1);
+}
+
+async function searchEntities_boundingBoxOneOutside({ server }: AdminEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const boundingBox = randomBoundingBox();
+  const outside = {
+    lat: (boundingBox.minLat + boundingBox.maxLat) / 2,
+    lng: boundingBox.minLng > 0 ? boundingBox.minLng - 1 : boundingBox.maxLng + 1,
+  };
+  const createResult = await adminClient.createEntity(
+    copyEntity(LOCATIONS_CREATE, { fields: { location: outside } })
+  );
+  assertOkResult(createResult);
+  const {
+    entity: { id },
+  } = createResult.value;
+
+  const matches = await countSearchResultWithEntity(adminClient, { boundingBox }, id);
+  assertResultValue(matches, 0);
 }
 
 async function searchEntities_authKeySubject({
