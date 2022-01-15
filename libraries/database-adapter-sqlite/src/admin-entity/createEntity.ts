@@ -14,6 +14,7 @@ import { EntitiesUniqueNameConstraint, EntitiesUniqueUuidConstraint } from '../D
 import { queryNone, queryOne } from '../QueryFunctions';
 import { getSessionSubjectInternalId } from '../utils/SessionUtils';
 import { withUniqueNameAttempt } from '../utils/withUniqueNameAttempt';
+import { getEntitiesUpdatedSeq } from './getEntitiesUpdatedSeq';
 
 export async function adminCreateEntity(
   databaseAdapter: SqliteDatabaseAdapter,
@@ -97,6 +98,9 @@ async function createEntityRow(
   const uuid = entity.id ?? uuidv4();
   const now = Temporal.Now.instant();
 
+  const updatedSecResult = await getEntitiesUpdatedSeq(databaseAdapter, context);
+  if (updatedSecResult.isError()) return updatedSecResult;
+
   return await withUniqueNameAttempt(
     context,
     entity.name,
@@ -107,8 +111,8 @@ async function createEntityRow(
         databaseAdapter,
         context,
         {
-          text: `INSERT INTO entities (uuid, name, type, auth_key, resolved_auth_key, status, created_at, updated_at)
-                 VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?7) RETURNING id`,
+          text: `INSERT INTO entities (uuid, name, type, auth_key, resolved_auth_key, status, created_at, updated_at, updated_seq)
+                 VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?7, ?8) RETURNING id`,
           values: [
             uuid,
             name,
@@ -117,6 +121,7 @@ async function createEntityRow(
             entity.resolvedAuthKey.resolvedAuthKey,
             'draft',
             now.toString(),
+            updatedSecResult.value,
           ],
         },
         (error) => {

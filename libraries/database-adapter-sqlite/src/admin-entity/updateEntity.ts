@@ -15,6 +15,7 @@ import { queryNone, queryNoneOrOne, queryOne } from '../QueryFunctions';
 import { resolveEntityStatus } from '../utils/CodecUtils';
 import { getSessionSubjectInternalId } from '../utils/SessionUtils';
 import { withUniqueNameAttempt } from '../utils/withUniqueNameAttempt';
+import { getEntitiesUpdatedSeq } from './getEntitiesUpdatedSeq';
 
 export async function adminEntityUpdateGetEntityInfo(
   databaseAdapter: SqliteDatabaseAdapter,
@@ -138,14 +139,24 @@ export async function adminEntityUpdateEntity(
     newName = nameResult.value;
   }
 
+  const updatedReqResult = await getEntitiesUpdatedSeq(databaseAdapter, context);
+  if (updatedReqResult.isError()) return updatedReqResult;
+
   //TODO update latest_fts
   const updateEntityResult = await queryNone(databaseAdapter, context, {
     text: `UPDATE entities SET
              latest_entity_versions_id = ?1,
              updated_at = ?2,
-             status = ?3
-           WHERE id = ?4`,
-    values: [versionsId, now.toString(), entity.status, entity.entityInternalId as number],
+             updated_seq = ?3,
+             status = ?4
+           WHERE id = ?5`,
+    values: [
+      versionsId,
+      now.toString(),
+      updatedReqResult.value,
+      entity.status,
+      entity.entityInternalId as number,
+    ],
   });
   if (updateEntityResult.isError()) {
     return updateEntityResult;

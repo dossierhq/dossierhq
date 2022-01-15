@@ -17,6 +17,7 @@ import type { SqliteDatabaseAdapter } from '..';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema';
 import { queryMany, queryNone, queryNoneOrOne } from '../QueryFunctions';
 import { resolveEntityStatus } from '../utils/CodecUtils';
+import { getEntitiesUpdatedSeq } from './getEntitiesUpdatedSeq';
 
 export async function adminEntityPublishGetVersionInfo(
   databaseAdapter: SqliteDatabaseAdapter,
@@ -84,6 +85,9 @@ export async function adminEntityPublishUpdateEntity(
 ): PromiseResult<DatabaseAdminEntityUpdateStatusPayload, ErrorType.Generic> {
   const { entityVersionInternalId, status, entityInternalId } = values;
 
+  const updatedSeqResult = await getEntitiesUpdatedSeq(databaseAdapter, context);
+  if (updatedSeqResult.isError()) return updatedSeqResult;
+
   const now = Temporal.Now.instant();
 
   //TODO set published_fts
@@ -93,9 +97,16 @@ export async function adminEntityPublishUpdateEntity(
              never_published = TRUE,
              published_entity_versions_id = ?1,
              updated_at = ?2,
-             status = ?3
-           WHERE id = ?4`,
-    values: [entityVersionInternalId as number, now.toString(), status, entityInternalId as number],
+             updated_seq = ?3,
+             status = ?4
+           WHERE id = ?5`,
+    values: [
+      entityVersionInternalId as number,
+      now.toString(),
+      updatedSeqResult.value,
+      status,
+      entityInternalId as number,
+    ],
   });
   if (updateResult.isError()) {
     return updateResult;

@@ -16,11 +16,18 @@ import type { CursorNativeType } from './OpaqueCursor';
 import { toOpaqueCursor } from './OpaqueCursor';
 import { resolvePaging } from './Paging';
 
-// id and updated are included for order by
-//TODO add updated
+// id and updated_seq are included for order by
 export type SearchAdminEntitiesItem = Pick<
   EntitiesTable,
-  'id' | 'uuid' | 'type' | 'name' | 'auth_key' | 'created_at' | 'updated_at' | 'status'
+  | 'id'
+  | 'uuid'
+  | 'type'
+  | 'name'
+  | 'auth_key'
+  | 'created_at'
+  | 'updated_at'
+  | 'updated_seq'
+  | 'status'
 > &
   Pick<EntityVersionsTable, 'version' | 'fields'>;
 export type SearchPublishedEntitiesItem = Pick<
@@ -29,7 +36,7 @@ export type SearchPublishedEntitiesItem = Pick<
 > &
   Pick<EntityVersionsTable, 'fields'>;
 
-type CursorName = 'name' | 'updated' | 'id';
+type CursorName = 'name' | 'updated_seq' | 'id';
 
 export interface SharedEntitiesQuery<TItem> {
   text: string;
@@ -86,8 +93,7 @@ function sharedSearchEntitiesQuery<
       'e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, ev.fields FROM entities e, entity_versions ev'
     );
   } else {
-    //TODO e.updated
-    qb.addQuery(`e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.status, ev.version, ev.fields
+    qb.addQuery(`e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated_seq, e.status, ev.version, ev.fields
   FROM entities e, entity_versions ev`);
   }
   if (query?.referencing) {
@@ -239,16 +245,16 @@ function queryOrderToCursor<TItem extends SearchAdminEntitiesItem | SearchPublis
         cursorExtractor: (item: TItem) => toOpaqueCursor(cursorType, item[cursorName]),
       };
     }
-    // case AdminQueryOrder.updatedAt: {
-    //   const cursorType = 'int';
-    //   const cursorName = 'updated';
-    //   return {
-    //     cursorType,
-    //     cursorName,
-    //     cursorExtractor: (item: TItem) =>
-    //       toOpaqueCursor(cursorType, (item as SearchAdminEntitiesItem)[cursorName]),
-    //   };
-    // }
+    case AdminQueryOrder.updatedAt: {
+      const cursorType = 'int';
+      const cursorName = 'updated_seq';
+      return {
+        cursorType,
+        cursorName,
+        cursorExtractor: (item: TItem) =>
+          toOpaqueCursor(cursorType, (item as SearchAdminEntitiesItem)[cursorName]),
+      };
+    }
     case AdminQueryOrder.createdAt:
     default: {
       const cursorType = 'int';

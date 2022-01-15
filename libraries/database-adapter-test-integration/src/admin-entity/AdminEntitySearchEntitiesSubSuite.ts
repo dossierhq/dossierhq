@@ -1,5 +1,11 @@
 import type { BoundingBox } from '@jonasb/datadata-core';
-import { AdminEntityStatus, AdminQueryOrder, copyEntity } from '@jonasb/datadata-core';
+import {
+  AdminEntityStatus,
+  AdminQueryOrder,
+  copyEntity,
+  getAllNodesForConnection,
+} from '@jonasb/datadata-core';
+import { Temporal } from '@js-temporal/polyfill';
 import { assertEquals, assertOkResult, assertResultValue, assertTruthy } from '../Asserts';
 import type { UnboundTestFunction } from '../Builder';
 import { LOCATIONS_CREATE, REFERENCES_CREATE, TITLE_ONLY_CREATE } from '../shared-entity/Fixtures';
@@ -29,6 +35,8 @@ export const SearchEntitiesSubSuite: UnboundTestFunction<AdminEntityTestContext>
   searchEntities_pagingLastBetween,
   searchEntities_orderCreatedAt,
   searchEntities_orderCreatedAtReversed,
+  searchEntities_orderUpdatedAt,
+  searchEntities_orderUpdatedAtReversed,
   searchEntities_orderName,
   searchEntities_orderNameReversed,
   searchEntities_statusDraft,
@@ -215,6 +223,76 @@ async function searchEntities_orderCreatedAtReversed({
     AdminQueryOrder.createdAt,
     true
   );
+}
+
+async function searchEntities_orderUpdatedAt({
+  server,
+  readOnlyEntityRepository,
+}: AdminEntityTestContext) {
+  const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities();
+
+  // The postgres backend sometimes `updated` that's slightly off from `updated_at`. I believe it's
+  // due to NOW() being fixed by transaction.
+  // Check that all updatedAt are after the previous updatedAt, with a small adjustment.
+
+  let count = 0;
+  let previousUpdatedAt: Temporal.Instant | null = null;
+
+  const adminClient = adminClientForMainPrincipal(server);
+  for await (const node of getAllNodesForConnection({ first: 50 }, (currentPaging) =>
+    adminClient.searchEntities(
+      { entityTypes: ['ReadOnly'], order: AdminQueryOrder.updatedAt },
+      currentPaging
+    )
+  )) {
+    assertOkResult(node);
+    count++;
+    const {
+      info: { updatedAt },
+    } = node.value;
+    if (previousUpdatedAt) {
+      const adjustedUpdatedAt = updatedAt.add({ milliseconds: 20 });
+      assertTruthy(Temporal.Instant.compare(previousUpdatedAt, adjustedUpdatedAt) < 0);
+    }
+    previousUpdatedAt = updatedAt;
+  }
+
+  assertEquals(count, expectedEntities.length);
+}
+
+async function searchEntities_orderUpdatedAtReversed({
+  server,
+  readOnlyEntityRepository,
+}: AdminEntityTestContext) {
+  const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities();
+
+  // The postgres backend sometimes `updated` that's slightly off from `updated_at`. I believe it's
+  // due to NOW() being fixed by transaction.
+  // Check that all updatedAt are before the previous updatedAt, with a small adjustment.
+
+  let count = 0;
+  let previousUpdatedAt: Temporal.Instant | null = null;
+
+  const adminClient = adminClientForMainPrincipal(server);
+  for await (const node of getAllNodesForConnection({ first: 50 }, (currentPaging) =>
+    adminClient.searchEntities(
+      { entityTypes: ['ReadOnly'], order: AdminQueryOrder.updatedAt, reverse: true },
+      currentPaging
+    )
+  )) {
+    assertOkResult(node);
+    count++;
+    const {
+      info: { updatedAt },
+    } = node.value;
+    if (previousUpdatedAt) {
+      const adjustedUpdatedAt = updatedAt.subtract({ milliseconds: 20 });
+      assertTruthy(Temporal.Instant.compare(previousUpdatedAt, adjustedUpdatedAt) > 0);
+    }
+    previousUpdatedAt = updatedAt;
+  }
+
+  assertEquals(count, expectedEntities.length);
 }
 
 async function searchEntities_orderName({

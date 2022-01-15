@@ -82,3 +82,22 @@ export async function* getAllPagesForConnection<
     }
   }
 }
+
+export async function* getAllNodesForConnection<
+  TEdge extends Edge<unknown, ErrorType>,
+  TError extends ErrorType
+>(
+  initialPaging: Paging | undefined,
+  pageGenerator: (paging: Paging) => PromiseResult<Connection<TEdge> | null, TError>
+): AsyncGenerator<TEdge['node'], undefined> {
+  for await (const pageResult of getAllPagesForConnection(initialPaging, pageGenerator)) {
+    if (pageResult.isError()) {
+      yield pageResult;
+      return;
+    }
+
+    for (const edge of pageResult.value.edges) {
+      yield edge.node;
+    }
+  }
+}

@@ -17,6 +17,7 @@ import type { SqliteDatabaseAdapter } from '..';
 import type { EntitiesTable } from '../DatabaseSchema';
 import { queryMany } from '../QueryFunctions';
 import { resolveEntityStatus } from '../utils/CodecUtils';
+import { getEntitiesUpdatedSeq } from './getEntitiesUpdatedSeq';
 
 export async function adminEntityUnpublishGetEntitiesInfo(
   databaseAdapter: SqliteDatabaseAdapter,
@@ -68,15 +69,19 @@ export async function adminEntityUnpublishEntities(
   status: AdminEntityStatus,
   references: DatabaseResolvedEntityReference[]
 ): PromiseResult<DatabaseAdminEntityUnpublishUpdateEntityPayload[], ErrorType.Generic> {
+  const updatedSeqResult = await getEntitiesUpdatedSeq(databaseAdapter, context);
+  if (updatedSeqResult.isError()) return updatedSeqResult;
+
   const now = Temporal.Now.instant();
   const qb = new SqliteQueryBuilder(
     `UPDATE entities
      SET
        published_entity_versions_id = NULL,
        updated_at = ?1,
-       status = ?2
+       updated_seq = ?2,
+       status = ?3
      WHERE`,
-    [now.toString(), status]
+    [now.toString(), updatedSeqResult.value, status]
   );
   qb.addQuery(
     `id IN ${qb.addValueList(

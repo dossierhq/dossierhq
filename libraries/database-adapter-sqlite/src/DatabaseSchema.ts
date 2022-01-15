@@ -9,8 +9,14 @@ export interface EntitiesTable {
   never_published: boolean;
   created_at: string;
   updated_at: string;
+  updated_seq: number;
   latest_entity_versions_id: number | null;
   published_entity_versions_id: number | null;
+}
+
+export interface SequencesTable {
+  name: string;
+  value: number;
 }
 
 export interface EntityPublishingEventsTable {
