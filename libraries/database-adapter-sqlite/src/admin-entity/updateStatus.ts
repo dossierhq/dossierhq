@@ -8,6 +8,7 @@ import type {
 import { Temporal } from '@js-temporal/polyfill';
 import type { SqliteDatabaseAdapter } from '..';
 import { queryNone } from '../QueryFunctions';
+import { getEntitiesUpdatedSeq } from './getEntitiesUpdatedSeq';
 
 export async function adminEntityUpdateStatus(
   databaseAdapter: SqliteDatabaseAdapter,
@@ -16,12 +17,16 @@ export async function adminEntityUpdateStatus(
   reference: DatabaseResolvedEntityReference
 ): PromiseResult<DatabaseAdminEntityUpdateStatusPayload, ErrorType.Generic> {
   const now = Temporal.Now.instant();
+  const updatedReqResult = await getEntitiesUpdatedSeq(databaseAdapter, context);
+  if (updatedReqResult.isError()) return updatedReqResult;
+
   const result = await queryNone(databaseAdapter, context, {
     text: `UPDATE entities SET
         updated_at = ?1,
-        status = ?2
-      WHERE id = ?3`,
-    values: [now.toString(), status, reference.entityInternalId as number],
+        updated_seq = ?2,
+        status = ?3
+      WHERE id = ?4`,
+    values: [now.toString(), updatedReqResult.value, status, reference.entityInternalId as number],
   });
 
   if (result.isError()) {

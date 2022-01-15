@@ -20,6 +20,11 @@ export const SCHEMA_DEFINITION_STATEMENTS = [
     id INTEGER PRIMARY KEY,
     specification TEXT NOT NULL
   )`,
+  `CREATE TABLE sequences (
+    name TEXT NOT NULL UNIQUE,
+    value INTEGER DEFAULT 0
+  )`,
+  `INSERT INTO sequences (name) VALUES ('entities_updated')`,
   `CREATE TABLE entities (
     id INTEGER PRIMARY KEY,
     uuid TEXT NOT NULL,
@@ -31,10 +36,12 @@ export const SCHEMA_DEFINITION_STATEMENTS = [
     never_published INTEGER NOT NULL DEFAULT TRUE,
     created_at TEXT NOT NULL,
     updated_at TEXT NOT NULL,
+    updated_seq INTEGER NOT NULL,
     latest_entity_versions_id INTEGER,
     published_entity_versions_id INTEGER,
     CONSTRAINT entities_uuid UNIQUE (uuid),
     CONSTRAINT entities_name UNIQUE (name),
+    CONSTRAINT entities_updated_seq UNIQUE (updated_seq),
     FOREIGN KEY (latest_entity_versions_id) REFERENCES entity_versions(id),
     FOREIGN KEY (published_entity_versions_id) REFERENCES entity_versions(id)
   )`,
