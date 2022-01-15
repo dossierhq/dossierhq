@@ -143,14 +143,17 @@ function sharedSearchEntitiesQuery<
   // Filter: bounding box
   if (query?.boundingBox) {
     const { minLat, maxLat, minLng, maxLng } = query.boundingBox;
-    //TODO deal with bounding boxes spanning 180/-180 longitude border?
     qb.addQuery(
       `AND ev.id = evl.entity_versions_id AND evl.lat >= ${qb.addValue(
         minLat
-      )} AND evl.lat <= ${qb.addValue(maxLat)} AND evl.lng >= ${qb.addValue(
-        minLng
-      )} AND evl.lng <= ${qb.addValue(maxLng)}`
+      )} AND evl.lat <= ${qb.addValue(maxLat)}`
     );
+    if (minLng > 0 && maxLng < 0) {
+      // wrapping around 180/-180 boundary
+      qb.addQuery(`AND (evl.lng <= ${qb.addValue(minLng)} OR evl.lng >= ${qb.addValue(maxLng)})`);
+    } else {
+      qb.addQuery(`AND evl.lng >= ${qb.addValue(minLng)} AND evl.lng <= ${qb.addValue(maxLng)}`);
+    }
   }
 
   // Filter: text
@@ -364,14 +367,17 @@ function totalCountQuery(
   // Filter: bounding box
   if (query?.boundingBox) {
     const { minLat, maxLat, minLng, maxLng } = query.boundingBox;
-    //TODO deal with bounding boxes spanning 180/-180 longitude border?
     qb.addQuery(
       `AND ev.id = evl.entity_versions_id AND evl.lat >= ${qb.addValue(
         minLat
-      )} AND evl.lat <= ${qb.addValue(maxLat)} AND evl.lng >= ${qb.addValue(
-        minLng
-      )} AND evl.lng <= ${qb.addValue(maxLng)}`
+      )} AND evl.lat <= ${qb.addValue(maxLat)}`
     );
+    if (minLng > 0 && maxLng < 0) {
+      // wrapping around 180/-180 boundary
+      qb.addQuery(`AND (evl.lng <= ${qb.addValue(minLng)} OR evl.lng >= ${qb.addValue(maxLng)})`);
+    } else {
+      qb.addQuery(`AND evl.lng >= ${qb.addValue(minLng)} AND evl.lng <= ${qb.addValue(maxLng)}`);
+    }
   }
 
   // Filter: text

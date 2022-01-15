@@ -1,8 +1,13 @@
+import type { BoundingBox } from '@jonasb/datadata-core';
 import { AdminEntityStatus, AdminQueryOrder, copyEntity } from '@jonasb/datadata-core';
 import { assertEquals, assertOkResult, assertResultValue, assertTruthy } from '../Asserts';
 import type { UnboundTestFunction } from '../Builder';
 import { LOCATIONS_CREATE, REFERENCES_CREATE, TITLE_ONLY_CREATE } from '../shared-entity/Fixtures';
-import { randomBoundingBox } from '../shared-entity/LocationTestUtils';
+import {
+  boundingBoxBelowCenter,
+  boundingBoxCenter,
+  randomBoundingBox,
+} from '../shared-entity/LocationTestUtils';
 import {
   assertAdminEntityConnectionToMatchSlice,
   assertSearchResultEntities,
@@ -37,9 +42,10 @@ export const SearchEntitiesSubSuite: UnboundTestFunction<AdminEntityTestContext>
   searchEntities_referenceOneReference,
   searchEntities_referenceNoReferences,
   searchEntities_referenceTwoReferencesFromOneEntity,
-  searchEntities_boundingBoxOneEntityTwoLocationsInside,
   searchEntities_boundingBoxOneInside,
+  searchEntities_boundingBoxOneEntityTwoLocationsInside,
   searchEntities_boundingBoxOneOutside,
+  searchEntities_boundingBoxWrappingMaxMinLongitude,
   searchEntities_authKeySubject,
   searchEntities_authKeyNoneAndSubject,
 ];
@@ -442,10 +448,7 @@ async function searchEntities_referenceTwoReferencesFromOneEntity({
 async function searchEntities_boundingBoxOneInside({ server }: AdminEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
   const boundingBox = randomBoundingBox();
-  const center = {
-    lat: (boundingBox.minLat + boundingBox.maxLat) / 2,
-    lng: (boundingBox.minLng + boundingBox.maxLng) / 2,
-  };
+  const center = boundingBoxCenter(boundingBox);
   const createResult = await adminClient.createEntity(
     copyEntity(LOCATIONS_CREATE, { fields: { location: center } })
   );
@@ -463,14 +466,8 @@ async function searchEntities_boundingBoxOneEntityTwoLocationsInside({
 }: AdminEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
   const boundingBox = randomBoundingBox();
-  const center = {
-    lat: (boundingBox.minLat + boundingBox.maxLat) / 2,
-    lng: (boundingBox.minLng + boundingBox.maxLng) / 2,
-  };
-  const inside = {
-    lat: center.lat,
-    lng: (center.lng + boundingBox.maxLng) / 2,
-  };
+  const center = boundingBoxCenter(boundingBox);
+  const inside = boundingBoxBelowCenter(boundingBox);
   const createResult = await adminClient.createEntity(
     copyEntity(LOCATIONS_CREATE, { fields: { location: center, locationList: [inside] } })
   );
@@ -500,6 +497,24 @@ async function searchEntities_boundingBoxOneOutside({ server }: AdminEntityTestC
 
   const matches = await countSearchResultWithEntity(adminClient, { boundingBox }, id);
   assertResultValue(matches, 0);
+}
+
+async function searchEntities_boundingBoxWrappingMaxMinLongitude({
+  server,
+}: AdminEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const boundingBox: BoundingBox = { minLat: -50, maxLat: -49, minLng: 179, maxLng: -179 };
+  const center = boundingBoxCenter(boundingBox);
+  const createResult = await adminClient.createEntity(
+    copyEntity(LOCATIONS_CREATE, { fields: { location: center } })
+  );
+  assertOkResult(createResult);
+  const {
+    entity: { id },
+  } = createResult.value;
+
+  const matches = await countSearchResultWithEntity(adminClient, { boundingBox }, id);
+  assertResultValue(matches, 1);
 }
 
 async function searchEntities_authKeySubject({

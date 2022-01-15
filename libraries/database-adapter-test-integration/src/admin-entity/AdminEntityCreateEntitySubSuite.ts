@@ -8,13 +8,15 @@ import {
   assertTruthy,
 } from '../Asserts';
 import type { UnboundTestFunction } from '../Builder';
-import type { AdminEntityTestContext } from './AdminEntityTestSuite';
 import {
-  TITLE_ONLY_CREATE,
-  TITLE_ONLY_ADMIN_ENTITY,
-  REFERENCES_CREATE,
+  LOCATIONS_ADMIN_ENTITY,
+  LOCATIONS_CREATE,
   REFERENCES_ADMIN_ENTITY,
+  REFERENCES_CREATE,
+  TITLE_ONLY_ADMIN_ENTITY,
+  TITLE_ONLY_CREATE,
 } from '../shared-entity/Fixtures';
+import type { AdminEntityTestContext } from './AdminEntityTestSuite';
 
 export const CreateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
   createEntity_minimal,
@@ -23,6 +25,7 @@ export const CreateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
   createEntity_publishMinimal,
   createEntity_publishWithSubjectAuthKey,
   createEntity_withTwoReferences,
+  createEntity_withMultipleLocations,
   createEntity_errorPublishWithoutRequiredTitle,
 ];
 
@@ -204,6 +207,52 @@ async function createEntity_withTwoReferences({ client }: AdminEntityTestContext
     fields: {
       any: { id: idTitleOnly1 },
       titleOnly: { id: idTitleOnly2 },
+    },
+  });
+
+  assertResultValue(createResult, {
+    effect: 'created',
+    entity: expectedEntity,
+  });
+
+  const getResult = await client.getEntity({ id });
+  assertResultValue(getResult, expectedEntity);
+}
+
+async function createEntity_withMultipleLocations({ client }: AdminEntityTestContext) {
+  const createResult = await client.createEntity(
+    copyEntity(LOCATIONS_CREATE, {
+      fields: {
+        location: { lat: 1, lng: 2 },
+        locationList: [
+          { lat: 3, lng: 4 },
+          { lat: -179, lng: -178 },
+        ],
+      },
+    })
+  );
+
+  assertOkResult(createResult);
+  const {
+    entity: {
+      id,
+      info: { name, createdAt, updatedAt },
+    },
+  } = createResult.value;
+
+  const expectedEntity = copyEntity(LOCATIONS_ADMIN_ENTITY, {
+    id,
+    info: {
+      name,
+      createdAt,
+      updatedAt,
+    },
+    fields: {
+      location: { lat: 1, lng: 2 },
+      locationList: [
+        { lat: 3, lng: 4 },
+        { lat: -179, lng: -178 },
+      ],
     },
   });
 
