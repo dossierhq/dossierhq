@@ -7,7 +7,7 @@ import { initializeSqlite3Server } from './Sqlite3TestUtils';
 let server: Server | null = null;
 
 beforeAll(async () => {
-  const result = await initializeSqlite3Server();
+  const result = await initializeSqlite3Server('databases/integration-test-schema.sqlite');
   if (result.isError()) throw result.toError();
   server = result.value;
 });

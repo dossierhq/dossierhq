@@ -59,8 +59,11 @@ function all<R>(db: Database, query: string, values: unknown[] = []) {
   );
 }
 
-export async function createSqlite3Adapter(): Promise<SqliteDatabaseAdapter> {
-  const db = await open(':memory:');
+export async function createSqlite3Adapter(
+  filename: string | ':memory:',
+  mode?: number
+): Promise<SqliteDatabaseAdapter> {
+  const db = await open(filename, mode);
   for (const statement of SCHEMA_DEFINITION_STATEMENTS) {
     await run(db, statement);
   }

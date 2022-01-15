@@ -37,11 +37,11 @@ export async function createSqlJsTestAdapter(): PromiseResult<
   return createSqliteDatabaseAdapter({ logger: NoOpLogger }, adapter);
 }
 
-export async function createSqlite3TestAdapter(): PromiseResult<
-  DatabaseAdapter,
-  ErrorType.BadRequest | ErrorType.Generic
-> {
-  const adapter = await createSqlite3Adapter();
+export async function createSqlite3TestAdapter(
+  filename: string | ':memory:',
+  mode?: number
+): PromiseResult<DatabaseAdapter, ErrorType.BadRequest | ErrorType.Generic> {
+  const adapter = await createSqlite3Adapter(filename, mode);
   return createSqliteDatabaseAdapter({ logger: NoOpLogger }, adapter);
 }
 
