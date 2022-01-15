@@ -603,7 +603,6 @@ describe('searchAdminEntitiesQuery()', () => {
             maxLng: 16.25,
           },
         },
-
         undefined,
         authKeysNone
       )
@@ -621,6 +620,35 @@ describe('searchAdminEntitiesQuery()', () => {
             56.79,
             11.62,
             16.25,
+            26,
+          ],
+        },
+      }
+    `);
+  });
+
+  test('query bounding box (wrapping 180/-180 lng)', () => {
+    expect(
+      searchAdminEntitiesQuery(
+        schema,
+        { boundingBox: { minLat: 55.07, maxLat: 56.79, minLng: 179, maxLng: -179 } },
+        undefined,
+        authKeysNone
+      )
+    ).toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "cursorExtractor": [Function],
+          "isForwards": true,
+          "pagingCount": 25,
+          "text": "SELECT DISTINCT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.status, ev.version, ev.fields
+        FROM entities e, entity_versions ev, entity_version_locations evl WHERE e.latest_entity_versions_id = ev.id AND e.resolved_auth_key = ?1 AND ev.id = evl.entity_versions_id AND evl.lat >= ?2 AND evl.lat <= ?3 AND (evl.lng <= ?4 OR evl.lng >= ?5) ORDER BY e.id LIMIT ?6",
+          "values": Array [
+            "none",
+            55.07,
+            56.79,
+            179,
+            -179,
             26,
           ],
         },
@@ -1163,7 +1191,6 @@ describe('searchPublishedEntitiesQuery()', () => {
             maxLng: 16.25,
           },
         },
-
         undefined,
         authKeysNone
       )
@@ -1180,6 +1207,34 @@ describe('searchPublishedEntitiesQuery()', () => {
             56.79,
             11.62,
             16.25,
+            26,
+          ],
+        },
+      }
+    `);
+  });
+
+  test('query bounding box (wrapping 180/-180 lng boundary)', () => {
+    expect(
+      searchPublishedEntitiesQuery(
+        schema,
+        { boundingBox: { minLat: 55.07, maxLat: 56.79, minLng: 179, maxLng: -179 } },
+        undefined,
+        authKeysNone
+      )
+    ).toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "cursorExtractor": [Function],
+          "isForwards": true,
+          "pagingCount": 25,
+          "text": "SELECT DISTINCT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, ev.fields FROM entities e, entity_versions ev, entity_version_locations evl WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = ?1 AND ev.id = evl.entity_versions_id AND evl.lat >= ?2 AND evl.lat <= ?3 AND (evl.lng <= ?4 OR evl.lng >= ?5) ORDER BY e.id LIMIT ?6",
+          "values": Array [
+            "none",
+            55.07,
+            56.79,
+            179,
+            -179,
             26,
           ],
         },
@@ -1521,6 +1576,32 @@ describe('totalAdminEntitiesQuery()', () => {
     `);
   });
 
+  test('query bounding box (wrapping 180/-180 lng)', () => {
+    expect(
+      totalAdminEntitiesQuery(schema, authKeysNone, {
+        boundingBox: {
+          minLat: 55.07,
+          maxLat: 56.79,
+          minLng: 179.11,
+          maxLng: -179.88,
+        },
+      })
+    ).toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "text": "SELECT COUNT(DISTINCT e.id) AS count FROM entities e, entity_versions ev, entity_version_locations evl WHERE e.resolved_auth_key = ?1 AND e.latest_entity_versions_id = ev.id AND ev.id = evl.entity_versions_id AND evl.lat >= ?2 AND evl.lat <= ?3 AND (evl.lng <= ?4 OR evl.lng >= ?5)",
+          "values": Array [
+            "none",
+            55.07,
+            56.79,
+            179.11,
+            -179.88,
+          ],
+        },
+      }
+    `);
+  });
+
   test('query text', () => {
     expect(
       totalAdminEntitiesQuery(schema, authKeysNone, {
@@ -1645,12 +1726,7 @@ describe('totalPublishedEntitiesQuery()', () => {
   test('query bounding box', () => {
     expect(
       totalPublishedEntitiesQuery(schema, authKeysNone, {
-        boundingBox: {
-          minLat: 55.07,
-          maxLat: 56.79,
-          minLng: 11.62,
-          maxLng: 16.25,
-        },
+        boundingBox: { minLat: 55.07, maxLat: 56.79, minLng: 11.62, maxLng: 16.25 },
       })
     ).toMatchInlineSnapshot(`
       OkResult {
@@ -1662,6 +1738,27 @@ describe('totalPublishedEntitiesQuery()', () => {
             56.79,
             11.62,
             16.25,
+          ],
+        },
+      }
+    `);
+  });
+
+  test('query bounding box (wrapping the 180/-180 lng boundary)', () => {
+    expect(
+      totalPublishedEntitiesQuery(schema, authKeysNone, {
+        boundingBox: { minLat: 55.07, maxLat: 56.79, minLng: 179, maxLng: -179 },
+      })
+    ).toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "text": "SELECT COUNT(DISTINCT e.id) AS count FROM entities e, entity_versions ev, entity_version_locations evl WHERE e.published_entity_versions_id IS NOT NULL AND e.resolved_auth_key = ?1 AND e.published_entity_versions_id = ev.id AND ev.id = evl.entity_versions_id AND evl.lat >= ?2 AND evl.lat <= ?3 AND (evl.lng <= ?4 OR evl.lng >= ?5)",
+          "values": Array [
+            "none",
+            55.07,
+            56.79,
+            179,
+            -179,
           ],
         },
       }

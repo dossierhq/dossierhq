@@ -16,6 +16,20 @@ export const LOCATIONS_CREATE: Readonly<AdminEntityCreate> = {
   fields: {},
 };
 
+export const LOCATIONS_ADMIN_ENTITY: Readonly<AdminEntity> = {
+  id: 'REPLACE',
+  info: {
+    type: 'Locations',
+    name: 'Locations name',
+    version: 0,
+    authKey: 'none',
+    status: AdminEntityStatus.draft,
+    createdAt: Temporal.Instant.from('2021-08-17T07:51:25.56Z'),
+    updatedAt: Temporal.Instant.from('2021-08-17T07:51:25.56Z'),
+  },
+  fields: { location: null, locationList: null },
+};
+
 export const REFERENCES_CREATE: Readonly<AdminEntityCreate> = {
   info: {
     type: 'References',

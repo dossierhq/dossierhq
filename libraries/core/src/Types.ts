@@ -37,15 +37,23 @@ export interface RichTextBlock<Type extends string = string, Data = unknown> {
   data: Data;
 }
 
+/** Geographic location using EPSG:4326/WGS 84 */
 export interface Location {
+  /** South/north -90°/90° */
   lat: number;
+  /** West/east -180°/180° */
   lng: number;
 }
 
+/** Geographic bounding box using EPSG:4326/WGS 84 */
 export interface BoundingBox {
+  /** South/north -90°/90° */
   minLat: number;
+  /** South/north -90°/90° */
   maxLat: number;
+  /** West/east -180°/180° */
   minLng: number;
+  /** West/east -180°/180° */
   maxLng: number;
 }
 
