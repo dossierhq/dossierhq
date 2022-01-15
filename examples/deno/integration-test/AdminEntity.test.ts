@@ -40,7 +40,7 @@ let testSuite = createAdminEntityTestSuite({
 if (Deno.env.get("GITHUB_ACTIONS")) {
   const subSetTestSuite: TestSuite = {};
   for (const [name, fun] of Object.entries(testSuite)) {
-    if (Math.random() < 0.9) subSetTestSuite[name] = fun;
+    if (Math.random() < 0.75) subSetTestSuite[name] = fun;
   }
   testSuite = subSetTestSuite;
 }
