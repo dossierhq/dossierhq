@@ -25,6 +25,8 @@ interface SqlQueryBuilder<TValue> {
   addValue: (value: TValue) => ValueReference;
 }
 
+type SqlQueryBuilderCallback<TValue> = (builder: Omit<SqlQueryBuilder<TValue>, 'query'>) => void;
+
 interface DialectConfig {
   indexPrefix: string;
 }
@@ -115,10 +117,24 @@ export function createPostgresSqlQuery() {
   return createSqlQuery<unknown>({ indexPrefix: '$' });
 }
 
+export function buildPostgresSqlQuery(callback: SqlQueryBuilderCallback<unknown>): Query<unknown> {
+  const { query, ...builder } = createPostgresSqlQuery();
+  callback(builder);
+  return query;
+}
+
 // SQLITE
 
 type SqliteColumnValue = number | string | Uint8Array | null;
 
 export function createSqliteSqlQuery() {
   return createSqlQuery<SqliteColumnValue>({ indexPrefix: '?' });
+}
+
+export function buildSqliteSqlQuery(
+  callback: SqlQueryBuilderCallback<SqliteColumnValue>
+): Query<SqliteColumnValue> {
+  const { query, ...builder } = createSqliteSqlQuery();
+  callback(builder);
+  return query;
 }

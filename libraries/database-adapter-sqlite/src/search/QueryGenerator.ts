@@ -102,6 +102,9 @@ function sharedSearchEntitiesQuery<
   if (query?.boundingBox) {
     qb.addQuery('entity_version_locations evl');
   }
+  if (query?.text) {
+    qb.addQuery(published ? 'entities_published_fts fts' : 'entities_latest_fts fts');
+  }
 
   if (published) {
     qb.addQuery('WHERE e.published_entity_versions_id = ev.id');
@@ -164,11 +167,8 @@ function sharedSearchEntitiesQuery<
 
   // Filter: text
   if (query?.text) {
-    if (published) {
-      qb.addQuery(`AND e.published_fts @@ websearch_to_tsquery(${qb.addValue(query.text)})`);
-    } else {
-      qb.addQuery(`AND e.latest_fts @@ websearch_to_tsquery(${qb.addValue(query.text)})`);
-    }
+    // fts points to different identical tables base on `published`
+    qb.addQuery(`AND fts.content match ${qb.addValue(query.text)} AND fts.docid = e.id`);
   }
 
   // Paging 1/2
@@ -318,6 +318,9 @@ function totalCountQuery(
   if (query?.boundingBox) {
     qb.addQuery('entity_version_locations evl');
   }
+  if (query?.text) {
+    qb.addQuery(published ? 'entities_published_fts fts' : 'entities_latest_fts fts');
+  }
 
   qb.addQuery('WHERE');
 
@@ -388,11 +391,8 @@ function totalCountQuery(
 
   // Filter: text
   if (query?.text) {
-    if (published) {
-      qb.addQuery(`AND e.published_fts @@ websearch_to_tsquery(${qb.addValue(query.text)})`);
-    } else {
-      qb.addQuery(`AND e.latest_fts @@ websearch_to_tsquery(${qb.addValue(query.text)})`);
-    }
+    // fts points to different identical tables base on `published`
+    qb.addQuery(`AND fts.content match ${qb.addValue(query.text)} AND fts.docid = e.id`);
   }
 
   return ok(qb.build());

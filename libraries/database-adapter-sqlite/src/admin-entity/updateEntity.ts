@@ -6,7 +6,7 @@ import type {
   DatabaseEntityUpdateGetEntityInfoPayload,
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
-import { SqliteQueryBuilder } from '@jonasb/datadata-database-adapter';
+import { buildSqliteSqlQuery, SqliteQueryBuilder } from '@jonasb/datadata-database-adapter';
 import { Temporal } from '@js-temporal/polyfill';
 import type { SqliteDatabaseAdapter } from '..';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema';
@@ -142,7 +142,6 @@ export async function adminEntityUpdateEntity(
   const updatedReqResult = await getEntitiesUpdatedSeq(databaseAdapter, context);
   if (updatedReqResult.isError()) return updatedReqResult;
 
-  //TODO update latest_fts
   const updateEntityResult = await queryNone(databaseAdapter, context, {
     text: `UPDATE entities SET
              latest_entity_versions_id = ?1,
@@ -161,6 +160,18 @@ export async function adminEntityUpdateEntity(
   if (updateEntityResult.isError()) {
     return updateEntityResult;
   }
+
+  const ftsResult = await queryNone(
+    databaseAdapter,
+    context,
+    buildSqliteSqlQuery(
+      ({ sql }) =>
+        sql`UPDATE entities_latest_fts SET content = ${entity.fullTextSearchText} WHERE docid = ${
+          entity.entityInternalId as number
+        }`
+    )
+  );
+  if (ftsResult.isError()) return ftsResult;
 
   if (entity.referenceIds.length > 0) {
     const qb = new SqliteQueryBuilder(

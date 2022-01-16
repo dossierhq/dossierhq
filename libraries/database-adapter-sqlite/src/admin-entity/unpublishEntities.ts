@@ -15,7 +15,7 @@ import { SqliteQueryBuilder } from '@jonasb/datadata-database-adapter';
 import { Temporal } from '@js-temporal/polyfill';
 import type { SqliteDatabaseAdapter } from '..';
 import type { EntitiesTable } from '../DatabaseSchema';
-import { queryMany } from '../QueryFunctions';
+import { queryMany, queryNone } from '../QueryFunctions';
 import { resolveEntityStatus } from '../utils/CodecUtils';
 import { getEntitiesUpdatedSeq } from './getEntitiesUpdatedSeq';
 
@@ -88,12 +88,20 @@ export async function adminEntityUnpublishEntities(
       references.map(({ entityInternalId }) => entityInternalId as number)
     )} RETURNING id`
   );
-
-  // TODO reset published_fts
   const result = await queryMany<Pick<EntitiesTable, 'id'>>(databaseAdapter, context, qb.build());
   if (result.isError()) {
     return result;
   }
+
+  const qbFts = new SqliteQueryBuilder(`DELETE FROM entities_published_fts WHERE`);
+  qbFts.addQuery(
+    `docid IN ${qbFts.addValueList(
+      references.map(({ entityInternalId }) => entityInternalId as number)
+    )}`
+  );
+  const ftsResult = await queryNone(databaseAdapter, context, qbFts.build());
+  if (ftsResult.isError()) return ftsResult;
+
   return ok(
     references.map((reference) => {
       const row = result.value.find((it) => it.id === reference.entityInternalId);

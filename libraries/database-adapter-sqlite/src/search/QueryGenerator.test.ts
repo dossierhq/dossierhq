@@ -675,7 +675,7 @@ describe('searchAdminEntitiesQuery()', () => {
           "isForwards": true,
           "pagingCount": 25,
           "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated_seq, e.status, ev.version, ev.fields
-        FROM entities e, entity_versions ev WHERE e.latest_entity_versions_id = ev.id AND e.resolved_auth_key = ?1 AND e.latest_fts @@ websearch_to_tsquery(?2) ORDER BY e.id LIMIT ?3",
+        FROM entities e, entity_versions ev, entities_latest_fts fts WHERE e.latest_entity_versions_id = ev.id AND e.resolved_auth_key = ?1 AND fts.content match ?2 AND fts.docid = e.id ORDER BY e.id LIMIT ?3",
           "values": Array [
             "none",
             "foo bar",
@@ -1260,7 +1260,7 @@ describe('searchPublishedEntitiesQuery()', () => {
           "cursorExtractor": [Function],
           "isForwards": true,
           "pagingCount": 25,
-          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, ev.fields FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = ?1 AND e.published_fts @@ websearch_to_tsquery(?2) ORDER BY e.id LIMIT ?3",
+          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, ev.fields FROM entities e, entity_versions ev, entities_published_fts fts WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = ?1 AND fts.content match ?2 AND fts.docid = e.id ORDER BY e.id LIMIT ?3",
           "values": Array [
             "none",
             "foo bar",
@@ -1611,7 +1611,7 @@ describe('totalAdminEntitiesQuery()', () => {
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
-          "text": "SELECT COUNT(e.id) AS count FROM entities e WHERE e.resolved_auth_key = ?1 AND e.latest_fts @@ websearch_to_tsquery(?2)",
+          "text": "SELECT COUNT(e.id) AS count FROM entities e, entities_latest_fts fts WHERE e.resolved_auth_key = ?1 AND fts.content match ?2 AND fts.docid = e.id",
           "values": Array [
             "none",
             "foo bar",
@@ -1774,7 +1774,7 @@ describe('totalPublishedEntitiesQuery()', () => {
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
-          "text": "SELECT COUNT(e.id) AS count FROM entities e WHERE e.published_entity_versions_id IS NOT NULL AND e.resolved_auth_key = ?1 AND e.published_fts @@ websearch_to_tsquery(?2)",
+          "text": "SELECT COUNT(e.id) AS count FROM entities e, entities_published_fts fts WHERE e.published_entity_versions_id IS NOT NULL AND e.resolved_auth_key = ?1 AND fts.content match ?2 AND fts.docid = e.id",
           "values": Array [
             "none",
             "foo bar",
