@@ -14,11 +14,6 @@ export interface EntitiesTable {
   published_entity_versions_id: number | null;
 }
 
-export interface SequencesTable {
-  name: string;
-  value: number;
-}
-
 export interface EntityPublishingEventsTable {
   id: number;
   entities_id: number;
@@ -35,6 +30,11 @@ export interface EntityVersionsTable {
   created_at: string;
   created_by: number;
   fields: string;
+}
+
+export interface SequencesTable {
+  name: string;
+  value: number;
 }
 
 export interface SubjectsTable {

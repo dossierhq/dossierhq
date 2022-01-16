@@ -1,5 +1,6 @@
 import { notOk, ok, type ErrorType, type PromiseResult } from '@jonasb/datadata-core';
 import {
+  buildSqliteSqlQuery,
   createSqliteSqlQuery,
   SqliteQueryBuilder,
   type DatabaseAdminEntityCreateEntityArg,
@@ -33,6 +34,16 @@ export async function adminCreateEntity(
   }
 
   const { uuid, actualName, entityId, createdAt, updatedAt } = createEntityRowResult.value;
+
+  const ftsResult = await queryNone(
+    databaseAdapter,
+    context,
+    buildSqliteSqlQuery(
+      ({ sql }) =>
+        sql`INSERT INTO entities_latest_fts (docid, content) VALUES (${entityId}, ${entity.fullTextSearchText})`
+    )
+  );
+  if (ftsResult.isError()) return ftsResult;
 
   const createEntityVersionResult = await queryOne<Pick<EntityVersionsTable, 'id'>>(
     databaseAdapter,
@@ -106,7 +117,6 @@ async function createEntityRow(
     entity.name,
     randomNameGenerator,
     async (context, name, nameConflictErrorMessage) => {
-      //TODO set latest_fts
       const createResult = await queryOne<Pick<EntitiesTable, 'id'>, ErrorType.Conflict>(
         databaseAdapter,
         context,

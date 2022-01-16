@@ -12,6 +12,7 @@ import type {
   DatabaseResolvedEntityVersionReference,
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
+import { buildSqliteSqlQuery } from '@jonasb/datadata-database-adapter';
 import { Temporal } from '@js-temporal/polyfill';
 import type { SqliteDatabaseAdapter } from '..';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema';
@@ -90,7 +91,6 @@ export async function adminEntityPublishUpdateEntity(
 
   const now = Temporal.Now.instant();
 
-  //TODO set published_fts
   const updateResult = await queryNone(databaseAdapter, context, {
     text: `UPDATE entities
            SET
@@ -111,6 +111,20 @@ export async function adminEntityPublishUpdateEntity(
   if (updateResult.isError()) {
     return updateResult;
   }
+
+  const ftsResult = await queryNone(
+    databaseAdapter,
+    context,
+    buildSqliteSqlQuery(
+      ({ sql }) =>
+        //TODO upsert?
+        sql`INSERT INTO entities_published_fts (docid, content) VALUES (${
+          entityInternalId as number
+        }, ${values.fullTextSearchText})`
+    )
+  );
+  if (ftsResult.isError()) return ftsResult;
+
   return ok({ updatedAt: now });
 }
 

@@ -6,7 +6,6 @@ import type {
 } from '@jonasb/datadata-core';
 import {
   AdminEntityStatus,
-  AdminQueryOrder,
   copyEntity,
   ErrorType,
   FieldType,
@@ -15,7 +14,6 @@ import {
 } from '@jonasb/datadata-core';
 import { expectErrorResult, expectOkResult, expectResultValue } from '@jonasb/datadata-core-jest';
 import type { Server, SessionContext } from '@jonasb/datadata-server';
-import { Temporal } from '@js-temporal/polyfill';
 import { validate as validateUuid } from 'uuid';
 import {
   createPostgresTestServerAndClient,
@@ -27,7 +25,6 @@ import {
   countSearchResultWithEntity,
   ensureEntityCount,
   ensureEntityWithStatus,
-  expectConnectionToMatchSlice,
   getAllEntities,
   randomBoundingBox,
 } from './EntitySearchTestUtils';
@@ -1705,53 +1702,6 @@ describe('createEntity()', () => {
   });
 });
 
-describe('searchEntities() order', () => {
-  test('First default, ordered by updatedAt', async () => {
-    const result = await client.searchEntities(
-      {
-        entityTypes: ['AdminOnlyEditBefore'],
-        order: AdminQueryOrder.updatedAt,
-      },
-      { first: 20 }
-    );
-    expectOkResult(result);
-    if (expectOkResult(result)) {
-      expectConnectionToMatchSlice(
-        entitiesOfTypeAdminOnlyEditBeforeNone,
-        result.value,
-        0,
-        20,
-        (a, b) => {
-          return Temporal.Instant.compare(a.info.updatedAt, b.info.updatedAt);
-        }
-      );
-    }
-  });
-
-  test('First default, ordered by updatedAt reversed', async () => {
-    const result = await client.searchEntities(
-      {
-        entityTypes: ['AdminOnlyEditBefore'],
-        order: AdminQueryOrder.updatedAt,
-        reverse: true,
-      },
-      { first: 20 }
-    );
-    expectOkResult(result);
-    if (expectOkResult(result)) {
-      expectConnectionToMatchSlice(
-        entitiesOfTypeAdminOnlyEditBeforeNone,
-        result.value,
-        0,
-        20,
-        (a, b) => {
-          return Temporal.Instant.compare(b.info.updatedAt, a.info.updatedAt);
-        }
-      );
-    }
-  });
-});
-
 describe('searchEntities() referencing', () => {
   test('Query based on referencing and entityTypes, one reference', async () => {
     const { barId, bazEntities } = await createBarWithFooBazReferences(1, 1);
@@ -1797,57 +1747,6 @@ describe('searchEntities() boundingBox', () => {
       } = createResult.value;
       const matches = await countSearchResultWithEntity(client, { boundingBox }, bazId);
       expectResultValue(matches, 1);
-    }
-  });
-});
-
-describe('searchEntities() text', () => {
-  test('Query based on text (after creation and updating)', async () => {
-    const createResult = await client.createEntity({
-      info: { type: 'EntityAdminFoo', name: 'Foo', authKey: 'none' },
-      fields: { summary: 'this is some serious summary with the best conclusion' },
-    });
-    if (expectOkResult(createResult)) {
-      const {
-        entity: { id: fooId },
-      } = createResult.value;
-
-      const matchesInitial = await countSearchResultWithEntity(
-        client,
-        {
-          entityTypes: ['EntityAdminFoo'],
-          text: 'serious conclusion',
-        },
-        fooId
-      );
-      expectResultValue(matchesInitial, 1);
-
-      const matchesBeforeUpdate = await countSearchResultWithEntity(
-        client,
-        {
-          entityTypes: ['EntityAdminFoo'],
-          text: 'fox jumping',
-        },
-        fooId
-      );
-      expectResultValue(matchesBeforeUpdate, 0);
-
-      expectOkResult(
-        await client.updateEntity({
-          id: fooId,
-          fields: { summary: "who's jumping? It it the fox" },
-        })
-      );
-
-      const matchesAfterUpdate = await countSearchResultWithEntity(
-        client,
-        {
-          entityTypes: ['EntityAdminFoo'],
-          text: 'fox jumping',
-        },
-        fooId
-      );
-      expectResultValue(matchesAfterUpdate, 1);
     }
   });
 });

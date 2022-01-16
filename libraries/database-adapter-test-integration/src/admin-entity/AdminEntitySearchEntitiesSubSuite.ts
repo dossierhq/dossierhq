@@ -54,6 +54,9 @@ export const SearchEntitiesSubSuite: UnboundTestFunction<AdminEntityTestContext>
   searchEntities_boundingBoxOneEntityTwoLocationsInside,
   searchEntities_boundingBoxOneOutside,
   searchEntities_boundingBoxWrappingMaxMinLongitude,
+  searchEntities_textIncludedAfterCreation,
+  searchEntities_textIncludedAfterUpdate,
+  searchEntities_textExcludedAfterUpdate,
   searchEntities_authKeySubject,
   searchEntities_authKeyNoneAndSubject,
 ];
@@ -605,6 +608,82 @@ async function searchEntities_authKeySubject({
     authKeys: ['subject'],
   });
   assertAdminEntityConnectionToMatchSlice(expectedEntities, result, 0, 25);
+}
+
+async function searchEntities_textIncludedAfterCreation({ server }: AdminEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const createResult = await adminClient.createEntity(
+    copyEntity(TITLE_ONLY_CREATE, {
+      fields: { title: 'this is a serious title with the best insights' },
+    })
+  );
+  assertOkResult(createResult);
+  const {
+    entity: { id },
+  } = createResult.value;
+
+  const matches = await countSearchResultWithEntity(adminClient, { text: 'serious insights' }, id);
+  assertResultValue(matches, 1);
+}
+
+async function searchEntities_textIncludedAfterUpdate({ server }: AdminEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const createResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
+  assertOkResult(createResult);
+  const {
+    entity: { id },
+  } = createResult.value;
+
+  const matchesBeforeUpdate = await countSearchResultWithEntity(
+    adminClient,
+    { text: 'fox jumping' },
+    id
+  );
+  assertResultValue(matchesBeforeUpdate, 0);
+
+  const updateResult = await adminClient.updateEntity({
+    id,
+    fields: { title: "who's jumping? It it the fox" },
+  });
+  assertOkResult(updateResult);
+
+  const matchesAfterUpdate = await countSearchResultWithEntity(
+    adminClient,
+    { text: 'fox jumping' },
+    id
+  );
+  assertResultValue(matchesAfterUpdate, 1);
+}
+
+async function searchEntities_textExcludedAfterUpdate({ server }: AdminEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const createResult = await adminClient.createEntity(
+    copyEntity(TITLE_ONLY_CREATE, { fields: { title: "who's jumping? It it the fox" } })
+  );
+  assertOkResult(createResult);
+  const {
+    entity: { id },
+  } = createResult.value;
+
+  const matchesBeforeUpdate = await countSearchResultWithEntity(
+    adminClient,
+    { text: 'fox jumping' },
+    id
+  );
+  assertResultValue(matchesBeforeUpdate, 1);
+
+  const updateResult = await adminClient.updateEntity({
+    id,
+    fields: { title: 'Random title' },
+  });
+  assertOkResult(updateResult);
+
+  const matchesAfterUpdate = await countSearchResultWithEntity(
+    adminClient,
+    { text: 'fox jumping' },
+    id
+  );
+  assertResultValue(matchesAfterUpdate, 0);
 }
 
 async function searchEntities_authKeyNoneAndSubject({

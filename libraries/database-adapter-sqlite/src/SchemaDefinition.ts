@@ -45,6 +45,12 @@ export const SCHEMA_DEFINITION_STATEMENTS = [
     FOREIGN KEY (latest_entity_versions_id) REFERENCES entity_versions(id),
     FOREIGN KEY (published_entity_versions_id) REFERENCES entity_versions(id)
   )`,
+  `CREATE VIRTUAL TABLE entities_latest_fts USING fts4 (
+    content
+  )`,
+  `CREATE VIRTUAL TABLE entities_published_fts USING fts4 (
+    content
+  )`,
   `CREATE TABLE entity_versions (
     id INTEGER PRIMARY KEY,
     entities_id INTEGER NOT NULL,
