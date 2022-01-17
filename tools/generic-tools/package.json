@@ -36,7 +36,7 @@
   },
   "homepage": "https://github.com/jonasb/datadata#readme",
   "dependencies": {
-    "dotenv": "^10.0.0",
+    "dotenv": "^14.1.0",
     "pg": "^8.7.1",
     "tslib": "~2.3.1"
   }
