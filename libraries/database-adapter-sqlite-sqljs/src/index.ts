@@ -1,0 +1,1 @@
+export { createSqlJsAdapter } from './SqlJsAdapter';
