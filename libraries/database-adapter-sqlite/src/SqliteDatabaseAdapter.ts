@@ -42,6 +42,8 @@ import { publishedEntitySearchEntities } from './published-entity/searchEntities
 import { queryOne } from './QueryFunctions';
 import { schemaGetSpecification } from './schema/getSpecification';
 import { schemaUpdateSpecification } from './schema/updateSpecification';
+import { migrateDatabaseIfNecessary } from './SchemaDefinition';
+import { createMigrationContext } from './SchemaMigrator';
 import { isSemVerEqualOrGreaterThan, parseSemVer } from './SemVer';
 import { withNestedTransaction, withRootTransaction } from './SqliteTransaction';
 
@@ -60,11 +62,19 @@ export async function createSqliteDatabaseAdapter(
   sqliteAdapter: SqliteDatabaseAdapter
 ): PromiseResult<DatabaseAdapter, ErrorType.BadRequest | ErrorType.Generic> {
   const validityResult = await checkAdapterValidity(context, sqliteAdapter);
-  if (validityResult.isError()) {
-    return validityResult;
-  }
+  if (validityResult.isError()) return validityResult;
 
-  const adapter: DatabaseAdapter = {
+  const outerAdapter = createAdapter(sqliteAdapter);
+
+  const migrationContext = createMigrationContext(outerAdapter, context.logger);
+  const migrationResult = await migrateDatabaseIfNecessary(sqliteAdapter, migrationContext);
+  if (migrationResult.isError()) return migrationResult;
+
+  return ok(outerAdapter);
+}
+
+function createAdapter(sqliteAdapter: SqliteDatabaseAdapter): DatabaseAdapter {
+  return {
     adminEntityArchivingGetEntityInfo: (...args) =>
       adminEntityArchivingGetEntityInfo(sqliteAdapter, ...args),
     adminEntityCreate: (...args) => adminCreateEntity(sqliteAdapter, ...args),
@@ -113,7 +123,6 @@ export async function createSqliteDatabaseAdapter(
     withNestedTransaction: (...args) => withNestedTransaction(sqliteAdapter, ...args),
     withRootTransaction: (...args) => withRootTransaction(sqliteAdapter, ...args),
   };
-  return ok(adapter);
 }
 
 async function checkAdapterValidity(

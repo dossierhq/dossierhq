@@ -1,6 +1,12 @@
+import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
+import type { TransactionContext } from '@jonasb/datadata-database-adapter';
+import type { SqliteDatabaseAdapter } from '.';
+import type { QueryOrQueryAndValues } from './QueryFunctions';
+import { migrate } from './SchemaMigrator';
+
 //TODO enable strict tables when sqlite 3.37+ https://www.sqlite.org/stricttables.html
 
-export const SCHEMA_DEFINITION_STATEMENTS = [
+const VERSION_1: QueryOrQueryAndValues[] = [
   'PRAGMA foreign_keys=TRUE',
   `CREATE TABLE subjects (
     id INTEGER PRIMARY KEY,
@@ -87,3 +93,17 @@ export const SCHEMA_DEFINITION_STATEMENTS = [
     FOREIGN KEY (published_by) REFERENCES subjects(id)
   )`,
 ];
+
+const VERSIONS: QueryOrQueryAndValues[][] = [
+  [], // nothing for version 0
+  VERSION_1,
+];
+
+export async function migrateDatabaseIfNecessary(
+  databaseAdapter: SqliteDatabaseAdapter,
+  context: TransactionContext
+): PromiseResult<void, ErrorType.Generic> {
+  return await migrate(databaseAdapter, context, (version) => {
+    return VERSIONS[version] ?? null;
+  });
+}

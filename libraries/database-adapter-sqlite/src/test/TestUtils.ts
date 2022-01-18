@@ -66,6 +66,7 @@ export function createMockAdapter(): MockedSqliteDatabaseAdapter {
   const query: jest.MockedFunction<QueryFn> = jest.fn();
   query.mockImplementation(async (query, _values) => {
     if (query.startsWith('SELECT sqlite_version()')) return [{ version: '3.35.0' }];
+    if (query === 'PRAGMA user_version') return [{ user_version: 999 }]; // high number to avoid migrations
     return [];
   });
 

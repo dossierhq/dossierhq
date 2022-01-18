@@ -1,11 +1,9 @@
 import initSqlJs from 'sql.js';
 import type { ColumnValue, SqliteDatabaseAdapter, UniqueConstraint } from '.';
-import { SCHEMA_DEFINITION_STATEMENTS } from './SchemaDefinition';
 
 export async function createSqlJsAdapter(): Promise<SqliteDatabaseAdapter> {
   const SQL = await initSqlJs();
   const db = new SQL.Database();
-  db.run(SCHEMA_DEFINITION_STATEMENTS.join(';'));
 
   const adapter: SqliteDatabaseAdapter = {
     disconnect: async () => {
