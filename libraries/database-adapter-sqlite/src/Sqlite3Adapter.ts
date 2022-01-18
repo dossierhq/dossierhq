@@ -1,7 +1,6 @@
-import type { Database, RunResult, Statement } from 'sqlite3';
+import type { Database, Statement } from 'sqlite3';
 import sqlite3, { OPEN_CREATE, OPEN_READWRITE } from 'sqlite3';
 import type { ColumnValue, SqliteDatabaseAdapter, UniqueConstraint } from '.';
-import { SCHEMA_DEFINITION_STATEMENTS } from './SchemaDefinition';
 
 interface Sqlite3Error {
   code: 'SQLITE_CONSTRAINT';
@@ -36,17 +35,6 @@ function disconnect(db: Database) {
   );
 }
 
-function run(db: Database, query: string, values: unknown[] = []) {
-  return new Promise((resolve, reject) =>
-    db.run(query, values, (result: RunResult, error: Error | null) => {
-      if (error) {
-        reject(error);
-      }
-      resolve(result);
-    })
-  );
-}
-
 function all<R>(db: Database, query: string, values: unknown[] = []) {
   return new Promise<R[]>((resolve, reject) =>
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -64,9 +52,6 @@ export async function createSqlite3Adapter(
   mode?: number
 ): Promise<SqliteDatabaseAdapter> {
   const db = await open(filename, mode);
-  for (const statement of SCHEMA_DEFINITION_STATEMENTS) {
-    await run(db, statement);
-  }
 
   const adapter: SqliteDatabaseAdapter = {
     disconnect: async () => {

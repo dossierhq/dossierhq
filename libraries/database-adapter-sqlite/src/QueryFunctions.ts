@@ -8,7 +8,7 @@ interface ErrorConverter<TRow, TError extends ErrorType> {
   (error: unknown): Result<TRow[], TError | ErrorType.Generic>;
 }
 
-type QueryOrQueryAndValues = string | { text: string; values?: ColumnValue[] };
+export type QueryOrQueryAndValues = string | { text: string; values?: ColumnValue[] };
 
 async function queryCommon<TRow, TError extends ErrorType>(
   adapter: SqliteDatabaseAdapter,
