@@ -1,7 +1,7 @@
 import { assertIsDefined } from '@jonasb/datadata-core';
 import { createSchemaTestSuite } from '@jonasb/datadata-database-adapter-test-integration';
 import type { Server } from '@jonasb/datadata-server';
-import { registerTestSuite } from '../../TestUtils';
+import { registerTestSuite } from '../TestUtils';
 import { initializeSqlite3Server } from './Sqlite3TestUtils';
 
 let server: Server | null = null;
