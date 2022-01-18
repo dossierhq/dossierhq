@@ -5,7 +5,7 @@ import {
   createReadOnlyEntityRepository,
 } from '@jonasb/datadata-database-adapter-test-integration';
 import type { Server } from '@jonasb/datadata-server';
-import { registerTestSuite } from '../../TestUtils';
+import { registerTestSuite } from '../TestUtils';
 import { initializeSqlJsServer } from './SqlJsTestUtils';
 
 let server: Server | null = null;

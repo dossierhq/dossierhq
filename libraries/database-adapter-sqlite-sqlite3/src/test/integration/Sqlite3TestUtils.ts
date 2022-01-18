@@ -3,7 +3,7 @@ import {
   IntegrationTestSchemaSpecifciationUpdate,
 } from '@jonasb/datadata-database-adapter-test-integration';
 import { createServer } from '@jonasb/datadata-server';
-import { createSqlite3TestAdapter } from '../../TestUtils';
+import { createSqlite3TestAdapter } from '../TestUtils';
 
 export async function initializeSqlite3Server(filename: string | ':memory:', mode?: number) {
   const databaseAdapterResult = await createSqlite3TestAdapter(filename, mode);
