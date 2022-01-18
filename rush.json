@@ -393,8 +393,16 @@
       "versionPolicyName": "DataDataFramework"
     },
     {
-      "packageName": "@jonasb/datadata-database-adapter-sqlite",
-      "projectFolder": "libraries/database-adapter-sqlite"
+      "packageName": "@jonasb/datadata-database-adapter-sqlite-core",
+      "projectFolder": "libraries/database-adapter-sqlite-core"
+    },
+    {
+      "packageName": "@jonasb/datadata-database-adapter-sqlite-sqlite3",
+      "projectFolder": "libraries/database-adapter-sqlite-sqlite3"
+    },
+    {
+      "packageName": "@jonasb/datadata-database-adapter-sqlite-sql.js",
+      "projectFolder": "libraries/database-adapter-sqlite-sqljs"
     },
     {
       "packageName": "@jonasb/datadata-database-adapter-test-integration",
