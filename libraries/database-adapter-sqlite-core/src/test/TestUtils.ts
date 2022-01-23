@@ -7,7 +7,7 @@ import type {
 } from '@jonasb/datadata-database-adapter';
 import { TransactionContextImpl } from '@jonasb/datadata-database-adapter';
 import type { SqliteDatabaseAdapter } from '..';
-import { createSqliteDatabaseAdapter } from '..';
+import { createSqliteDatabaseAdapterAdapter } from '..';
 
 type QueryFn = SqliteDatabaseAdapter['query'];
 
@@ -31,7 +31,7 @@ class DummyContextImpl extends TransactionContextImpl<TransactionContext> {
 export async function createMockContext(
   adapter: SqliteDatabaseAdapter
 ): PromiseResult<TransactionContext, ErrorType.BadRequest | ErrorType.Generic> {
-  const result = await createSqliteDatabaseAdapter({ logger: NoOpLogger }, adapter);
+  const result = await createSqliteDatabaseAdapterAdapter({ logger: NoOpLogger }, adapter);
   if (result.isError()) {
     return result;
   }

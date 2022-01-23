@@ -59,7 +59,7 @@ export interface SqliteDatabaseAdapter {
   base64Decode(value: string): string;
 }
 
-export async function createSqliteDatabaseAdapter(
+export async function createSqliteDatabaseAdapterAdapter(
   context: Context,
   sqliteAdapter: SqliteDatabaseAdapter
 ): PromiseResult<DatabaseAdapter, ErrorType.BadRequest | ErrorType.Generic> {

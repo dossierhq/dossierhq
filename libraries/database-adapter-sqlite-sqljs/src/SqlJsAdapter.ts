@@ -1,11 +1,16 @@
+import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
+import type { Context, DatabaseAdapter } from '@jonasb/datadata-database-adapter';
 import type {
   ColumnValue,
   SqliteDatabaseAdapter,
   UniqueConstraint,
 } from '@jonasb/datadata-database-adapter-sqlite-core';
+import { createSqliteDatabaseAdapterAdapter } from '@jonasb/datadata-database-adapter-sqlite-core';
 import initSqlJs from 'sql.js';
 
-export async function createSqlJsAdapter(): Promise<SqliteDatabaseAdapter> {
+export async function createSqlJsAdapter(
+  context: Context
+): PromiseResult<DatabaseAdapter, ErrorType.BadRequest | ErrorType.Generic> {
   const SQL = await initSqlJs();
   const db = new SQL.Database();
 
@@ -33,7 +38,8 @@ export async function createSqlJsAdapter(): Promise<SqliteDatabaseAdapter> {
       return Buffer.from(value, 'base64').toString('ascii');
     },
   };
-  return adapter;
+
+  return createSqliteDatabaseAdapterAdapter(context, adapter);
 }
 
 function isUniqueViolationOfConstraint(error: unknown, constraint: UniqueConstraint): boolean {
