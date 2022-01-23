@@ -1,8 +1,11 @@
+import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
+import type { Context, DatabaseAdapter } from '@jonasb/datadata-database-adapter';
 import type {
   ColumnValue,
   SqliteDatabaseAdapter,
   UniqueConstraint,
 } from '@jonasb/datadata-database-adapter-sqlite-core';
+import { createSqliteDatabaseAdapterAdapter } from '@jonasb/datadata-database-adapter-sqlite-core';
 import type { Database, Statement } from 'sqlite3';
 import sqlite3, { OPEN_CREATE, OPEN_READWRITE } from 'sqlite3';
 
@@ -52,9 +55,10 @@ function all<R>(db: Database, query: string, values: unknown[] = []) {
 }
 
 export async function createSqlite3Adapter(
+  context: Context,
   filename: string | ':memory:',
   mode?: number
-): Promise<SqliteDatabaseAdapter> {
+): PromiseResult<DatabaseAdapter, ErrorType.BadRequest | ErrorType.Generic> {
   const db = await open(filename, mode);
 
   const adapter: SqliteDatabaseAdapter = {
@@ -75,7 +79,7 @@ export async function createSqlite3Adapter(
     },
   };
 
-  return adapter;
+  return createSqliteDatabaseAdapterAdapter(context, adapter);
 }
 
 function isUniqueViolationOfConstraint(error: unknown, constraint: UniqueConstraint): boolean {
