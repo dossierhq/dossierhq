@@ -75,6 +75,7 @@ importers:
       '@jonasb/datadata-cli': workspace:*
       '@jonasb/datadata-core': workspace:*
       '@jonasb/datadata-database-adapter-postgres-pg': workspace:*
+      '@jonasb/datadata-database-adapter-sqlite-sqlite3': workspace:*
       '@jonasb/datadata-design': workspace:*
       '@jonasb/datadata-graphql': workspace:*
       '@jonasb/datadata-postgres': workspace:*
@@ -96,6 +97,7 @@ importers:
       prettier: 2.5.1
       react: ~17.0.2
       react-dom: ~17.0.2
+      sqlite3: jonasb/node-sqlite3#3.36.0
       ts-jest: ~27.1.0
       ts-node: ^10.2.0
       typescript: ^4.5.4
@@ -111,6 +113,7 @@ importers:
       '@jonasb/datadata-cli': link:../../libraries/cli
       '@jonasb/datadata-core': link:../../libraries/core
       '@jonasb/datadata-database-adapter-postgres-pg': link:../../libraries/database-adapter-postgres-pg
+      '@jonasb/datadata-database-adapter-sqlite-sqlite3': link:../../libraries/database-adapter-sqlite-sqlite3
       '@jonasb/datadata-design': link:../../libraries/design
       '@jonasb/datadata-graphql': link:../../libraries/graphql
       '@jonasb/datadata-server': link:../../libraries/server
@@ -122,6 +125,7 @@ importers:
       next: 12.0.3_react-dom@17.0.2+react@17.0.2
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
+      sqlite3: github.com/jonasb/node-sqlite3/624ce96be9c9f166c4d4b98393297bb644a03179
     devDependencies:
       '@jonasb/datadata-postgres': link:../../libraries/postgres
       '@types/debug': 4.1.7
