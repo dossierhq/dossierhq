@@ -1,6 +1,8 @@
 import type { AdminClient, ErrorType, PromiseResult, PublishedClient } from '@jonasb/datadata-core';
+import { NoOpLogger } from '@jonasb/datadata-core';
 import { AdminSchema, notOk, ok } from '@jonasb/datadata-core';
 import { createPostgresAdapter } from '@jonasb/datadata-database-adapter-postgres-pg';
+import { createSqlite3Adapter } from '@jonasb/datadata-database-adapter-sqlite-sqlite3';
 import type { AuthorizationAdapter, Server, SessionContext } from '@jonasb/datadata-server';
 import { createServer } from '@jonasb/datadata-server';
 import type { NextApiRequest } from 'next';
@@ -49,9 +51,7 @@ function getDefaultAuthKeysFromHeaders(req: NextApiRequest) {
 export async function getServerConnection(): Promise<{ server: Server; schema: AdminSchema }> {
   if (!serverConnectionPromise) {
     serverConnectionPromise = (async () => {
-      const databaseAdapter = createPostgresAdapter({
-        connectionString: process.env.DATABASE_URL!,
-      });
+      const databaseAdapter = await createDatabaseAdapter();
       const serverResult = await createServer({
         databaseAdapter,
         authorizationAdapter: createAuthenticationAdapter(),
@@ -75,6 +75,21 @@ export async function getServerConnection(): Promise<{ server: Server; schema: A
   }
 
   return serverConnectionPromise;
+}
+
+async function createDatabaseAdapter() {
+  if (process.env.DATABASE_SQLITE_FILE) {
+    const databaseAdapterResult = await createSqlite3Adapter(
+      { logger: NoOpLogger },
+      process.env.DATABASE_SQLITE_FILE
+    );
+    if (databaseAdapterResult.isError()) throw databaseAdapterResult.toError();
+    return databaseAdapterResult.value;
+  }
+
+  return createPostgresAdapter({
+    connectionString: process.env.DATABASE_URL!,
+  });
 }
 
 function createAuthenticationAdapter(): AuthorizationAdapter {
