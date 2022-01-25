@@ -189,15 +189,11 @@ export async function adminEntityUpdateEntity(
 
   if (entity.locations.length > 0) {
     const qb = new SqliteQueryBuilder(
-      'INSERT INTO entity_version_locations (entity_versions_id, location) VALUES',
+      'INSERT INTO entity_version_locations (entity_versions_id, lat, lng) VALUES',
       [versionsId]
     );
     for (const location of entity.locations) {
-      qb.addQuery(
-        `(?1, ST_SetSRID(ST_Point(${qb.addValue(location.lng)}, ${qb.addValue(
-          location.lat
-        )}), 4326))`
-      );
+      qb.addQuery(`(?1, ${qb.addValue(location.lat)}, ${qb.addValue(location.lng)})`);
     }
     const locationsResult = await queryNone(databaseAdapter, context, qb.build());
     if (locationsResult.isError()) {
