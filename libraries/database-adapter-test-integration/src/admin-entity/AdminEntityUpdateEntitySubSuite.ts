@@ -1,12 +1,13 @@
 import { AdminEntityStatus, copyEntity, ErrorType } from '@jonasb/datadata-core';
 import { assertErrorResult, assertOkResult, assertResultValue } from '../Asserts';
 import type { UnboundTestFunction } from '../Builder';
-import type { AdminEntityTestContext } from './AdminEntityTestSuite';
 import {
+  LOCATIONS_CREATE,
   REFERENCES_ADMIN_ENTITY,
   REFERENCES_CREATE,
   TITLE_ONLY_CREATE,
 } from '../shared-entity/Fixtures';
+import type { AdminEntityTestContext } from './AdminEntityTestSuite';
 
 export const UpdateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
   updateEntity_minimal,
@@ -18,6 +19,7 @@ export const UpdateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
   updateEntity_noChangeAndPublishDraftEntity,
   updateEntity_noChangeAndPublishPublishedEntity,
   updateEntity_withTwoReferences,
+  updateEntity_withMultipleLocations,
   updateEntity_errorInvalidId,
   updateEntity_errorDifferentType,
   updateEntity_errorTryingToChangeAuthKey,
@@ -325,6 +327,51 @@ async function updateEntity_withTwoReferences({ client }: AdminEntityTestContext
     fields: {
       any: { id: idTitleOnly1 },
       titleOnly: { id: idTitleOnly2 },
+    },
+  });
+
+  assertResultValue(updateResult, {
+    effect: 'updated',
+    entity: expectedEntity,
+  });
+
+  const getResult = await client.getEntity({ id });
+  assertResultValue(getResult, expectedEntity);
+}
+
+async function updateEntity_withMultipleLocations({ client }: AdminEntityTestContext) {
+  const createResult = await client.createEntity(LOCATIONS_CREATE);
+
+  assertOkResult(createResult);
+  const {
+    entity: { id },
+  } = createResult.value;
+
+  const updateResult = await client.updateEntity({
+    id,
+    fields: {
+      location: { lat: 1, lng: 2 },
+      locationList: [
+        { lat: 3, lng: 4 },
+        { lat: -179, lng: -178 },
+      ],
+    },
+  });
+  assertOkResult(updateResult);
+  const {
+    entity: {
+      info: { updatedAt },
+    },
+  } = updateResult.value;
+
+  const expectedEntity = copyEntity(createResult.value.entity, {
+    info: { updatedAt, version: 1 },
+    fields: {
+      location: { lat: 1, lng: 2 },
+      locationList: [
+        { lat: 3, lng: 4 },
+        { lat: -179, lng: -178 },
+      ],
     },
   });
 
