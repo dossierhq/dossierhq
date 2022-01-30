@@ -1,8 +1,5 @@
 {
   "cSpell.words": [
-    "SAVEPOINT",
-    "Unpublish",
-    "Upsert",
     "datadata",
     "dbaeumer",
     "deno",
@@ -19,6 +16,10 @@
     "pnpm",
     "postgres",
     "rushstack",
+    "SAVEPOINT",
+    "sqljs",
+    "Unpublish",
+    "Upsert",
     "uuidv"
   ],
   "editor.defaultFormatter": "esbenp.prettier-vscode",
