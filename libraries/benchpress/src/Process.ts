@@ -13,10 +13,10 @@ export interface BenchPressProcessedResult {
   failureCount: number;
   successDuration_ms: number;
   standardDeviation_ms: number;
-  mean_ms: number;
-  min_ms: number;
-  max_ms: number;
-  percentiles_ms: Record<string, number>;
+  mean_ms: number | null;
+  min_ms: number | null;
+  max_ms: number | null;
+  percentiles_ms: Record<string, number | null>;
   iterations_ms: Array<number | null>;
 }
 
@@ -32,9 +32,10 @@ export function processResults(
 
   const successCount = successfulIterations_ns.length;
   const successDuration_ns = successfulIterations_ns.reduce((sum, val) => sum + val, 0n);
-  const min_ms = ns_to_ms(resultSorted_ns[0]);
-  const max_ms = ns_to_ms(resultSorted_ns[resultSorted_ns.length - 1]);
-  const mean_ms = ns_to_ms(successDuration_ns / BigInt(successCount));
+  const min_ms = resultSorted_ns.length > 0 ? ns_to_ms(resultSorted_ns[0]) : null;
+  const max_ms =
+    resultSorted_ns.length > 0 ? ns_to_ms(resultSorted_ns[resultSorted_ns.length - 1]) : null;
+  const mean_ms = successCount > 0 ? ns_to_ms(successDuration_ns / BigInt(successCount)) : null;
   const standardDeviation_ms = getStandardDeviation_ms(successfulIterations_ns);
   const percentiles_ms = Object.fromEntries(
     options.percentiles.map((p) => [p, percentile_ms(resultSorted_ns, p)])
@@ -65,6 +66,9 @@ function getStandardDeviation_ms(data_ns: bigint[]) {
 }
 
 function percentile_ms(resultSorted_ns: bigint[], percentile: number) {
+  if (resultSorted_ns.length === 0) {
+    return null;
+  }
   let index = Math.round((resultSorted_ns.length * percentile) / 100);
   if (index >= resultSorted_ns.length) {
     index = resultSorted_ns.length - 1;
