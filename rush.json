@@ -415,6 +415,10 @@
       "versionPolicyName": "DataDataFramework"
     },
     {
+      "packageName": "datadata-examples-benchmark",
+      "projectFolder": "examples/benchmark"
+    },
+    {
       "packageName": "datadata-examples-deno",
       "projectFolder": "examples/deno"
     },

@@ -5,6 +5,41 @@ importers:
   .:
     specifiers: {}
 
+  ../../examples/benchmark:
+    specifiers:
+      '@faker-js/faker': ~6.0.0-alpha.5
+      '@jonasb/datadata-core': workspace:*
+      '@jonasb/datadata-database-adapter-postgres-pg': workspace:*
+      '@jonasb/datadata-postgres': workspace:*
+      '@jonasb/datadata-server': workspace:*
+      '@rushstack/heft': ~0.44.0
+      '@types/node': ^17.0.5
+      '@typescript-eslint/eslint-plugin': ^5.8.0
+      '@typescript-eslint/parser': ^5.8.0
+      benchpress: workspace:*
+      dotenv: ^14.1.0
+      eslint: ^8.5.0
+      prettier: 2.5.1
+      tslib: ~2.3.1
+      typescript: ^4.5.4
+    dependencies:
+      '@faker-js/faker': 6.0.0-alpha.5
+      '@jonasb/datadata-core': link:../../libraries/core
+      '@jonasb/datadata-database-adapter-postgres-pg': link:../../libraries/database-adapter-postgres-pg
+      '@jonasb/datadata-server': link:../../libraries/server
+      benchpress: link:../../libraries/benchpress
+      dotenv: 14.1.0
+      tslib: 2.3.1
+    devDependencies:
+      '@jonasb/datadata-postgres': link:../../libraries/postgres
+      '@rushstack/heft': 0.44.0
+      '@types/node': 17.0.5
+      '@typescript-eslint/eslint-plugin': 5.8.0_836011a006f4f5d67178564baf2b6d34
+      '@typescript-eslint/parser': 5.8.0_eslint@8.5.0+typescript@4.5.4
+      eslint: 8.5.0
+      prettier: 2.5.1
+      typescript: 4.5.4
+
   ../../examples/deno:
     specifiers:
       '@jonasb/datadata-core': workspace:*
@@ -2450,6 +2485,11 @@ packages:
     resolution: {integrity: sha1-GK73nEl15UQVrfMm5LXg0FPSB/A=}
     dependencies:
       '@f/map-obj': 1.2.2
+    dev: false
+
+  /@faker-js/faker/6.0.0-alpha.5:
+    resolution: {integrity: sha512-8Is/xFxNgricqmhQR/AJ4Vi0cKzSR7FcpE0ImG9dWciuSxUkyCiK+B5/hTQP8jrVbtgTjpFC1AaTCnALJOBDmw==}
+    engines: {node: '>=12.0.0', npm: '>=7.0.0'}
     dev: false
 
   /@fortawesome/fontawesome-common-types/0.2.36:
