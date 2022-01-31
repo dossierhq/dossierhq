@@ -17,7 +17,7 @@ importers:
       '@typescript-eslint/eslint-plugin': ^5.8.0
       '@typescript-eslint/parser': ^5.8.0
       benchpress: workspace:*
-      dotenv: ^14.1.0
+      dotenv: ^15.0.0
       eslint: ^8.5.0
       prettier: 2.5.1
       tslib: ~2.3.1
@@ -28,7 +28,7 @@ importers:
       '@jonasb/datadata-database-adapter-postgres-pg': link:../../libraries/database-adapter-postgres-pg
       '@jonasb/datadata-server': link:../../libraries/server
       benchpress: link:../../libraries/benchpress
-      dotenv: 14.1.0
+      dotenv: 15.0.0
       tslib: 2.3.1
     devDependencies:
       '@jonasb/datadata-postgres': link:../../libraries/postgres
@@ -69,7 +69,7 @@ importers:
       '@types/node': ^17.0.5
       '@typescript-eslint/eslint-plugin': ^5.8.0
       '@typescript-eslint/parser': ^5.8.0
-      dotenv: ^14.1.0
+      dotenv: ^15.0.0
       eslint: ^8.5.0
       express: ~4.17.1
       express-graphql: ~0.12.0
@@ -82,7 +82,7 @@ importers:
       '@jonasb/datadata-database-adapter-postgres-pg': link:../../libraries/database-adapter-postgres-pg
       '@jonasb/datadata-graphql': link:../../libraries/graphql
       '@jonasb/datadata-server': link:../../libraries/server
-      dotenv: 14.1.0
+      dotenv: 15.0.0
       express: 4.17.1
       express-graphql: 0.12.0
       tslib: 2.3.1
@@ -466,7 +466,7 @@ importers:
       '@types/uuid': ~8.3.1
       '@typescript-eslint/eslint-plugin': ^5.8.0
       '@typescript-eslint/parser': ^5.8.0
-      dotenv: ^14.1.0
+      dotenv: ^15.0.0
       eslint: ^8.5.0
       pg: ^8.7.1
       prettier: 2.5.1
@@ -492,7 +492,7 @@ importers:
       '@types/uuid': 8.3.1
       '@typescript-eslint/eslint-plugin': 5.8.0_836011a006f4f5d67178564baf2b6d34
       '@typescript-eslint/parser': 5.8.0_eslint@8.5.0+typescript@4.5.4
-      dotenv: 14.1.0
+      dotenv: 15.0.0
       eslint: 8.5.0
       prettier: 2.5.1
       typescript: 4.5.4
@@ -727,7 +727,7 @@ importers:
       '@types/uuid': ~8.3.1
       '@typescript-eslint/eslint-plugin': ^5.8.0
       '@typescript-eslint/parser': ^5.8.0
-      dotenv: ^14.1.0
+      dotenv: ^15.0.0
       eslint: ^8.5.0
       graphql: ~16.2.0
       graphql-type-json: ~0.3.2
@@ -752,7 +752,7 @@ importers:
       '@types/uuid': 8.3.1
       '@typescript-eslint/eslint-plugin': 5.8.0_836011a006f4f5d67178564baf2b6d34
       '@typescript-eslint/parser': 5.8.0_eslint@8.5.0+typescript@4.5.4
-      dotenv: 14.1.0
+      dotenv: 15.0.0
       eslint: 8.5.0
       prettier: 2.5.1
       typescript: 4.5.4
@@ -801,11 +801,11 @@ importers:
 
   ../../tools/generic-tools:
     specifiers:
-      dotenv: ^14.1.0
+      dotenv: ^15.0.0
       pg: ^8.7.1
       tslib: ~2.3.1
     dependencies:
-      dotenv: 14.1.0
+      dotenv: 15.0.0
       pg: 8.7.1
       tslib: 2.3.1
 
@@ -8185,8 +8185,8 @@ packages:
       webpack: 5.63.0
     dev: true
 
-  /dotenv/14.1.0:
-    resolution: {integrity: sha512-h8V+Yfa8m0YSjf3Rgbno51cxWldb4PEixIJVL55VmW7uAfeLQKiaPrEUiBps+ARK9MeqjJgTf269OMmu6lOODQ==}
+  /dotenv/15.0.0:
+    resolution: {integrity: sha512-/l1sXXm79ry34KwwS0y4oVZjB468iw/6u9g1W26dtexKcIJAnVL2pMF+hxQwzZ7LutxOwEgtym9eIxvX33CMKg==}
     engines: {node: '>=12'}
 
   /dotenv/6.2.0:
