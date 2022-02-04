@@ -25,6 +25,7 @@
     "@faker-js/faker": "~6.0.0-alpha.5",
     "@jonasb/datadata-core": "workspace:*",
     "@jonasb/datadata-database-adapter-postgres-pg": "workspace:*",
+    "@jonasb/datadata-database-adapter-sqlite-sqlite3": "workspace:*",
     "@jonasb/datadata-server": "workspace:*",
     "benchpress": "workspace:*",
     "dotenv": "^14.1.0",
