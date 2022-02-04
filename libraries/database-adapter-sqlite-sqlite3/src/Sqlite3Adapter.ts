@@ -9,6 +9,8 @@ import { createSqliteDatabaseAdapterAdapter } from '@jonasb/datadata-database-ad
 import type { Database, Statement } from 'sqlite3';
 import sqlite3, { OPEN_CREATE, OPEN_READWRITE } from 'sqlite3';
 
+export type Sqlite3DatabaseAdapter = DatabaseAdapter;
+
 interface Sqlite3Error {
   code: 'SQLITE_CONSTRAINT';
   errno: number;
@@ -58,7 +60,7 @@ export async function createSqlite3Adapter(
   context: Context,
   filename: string | ':memory:',
   mode?: number
-): PromiseResult<DatabaseAdapter, ErrorType.BadRequest | ErrorType.Generic> {
+): PromiseResult<Sqlite3DatabaseAdapter, ErrorType.BadRequest | ErrorType.Generic> {
   const db = await open(filename, mode);
 
   const adapter: SqliteDatabaseAdapter = {

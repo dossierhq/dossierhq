@@ -17,6 +17,8 @@ PgTypes.setTypeParser(PgTypes.builtins.TIMESTAMPTZ, (value) => {
   return Temporal.Instant.from(value);
 });
 
+export type PgDatabaseAdapter = DatabaseAdapter;
+
 interface TransactionWrapper extends PostgresTransaction {
   client: PoolClient;
 }
@@ -25,7 +27,7 @@ function getPoolClient(transaction: PostgresTransaction): PoolClient {
   return (transaction as TransactionWrapper).client;
 }
 
-export function createPostgresAdapter(poolConfig: PoolConfig): DatabaseAdapter {
+export function createPostgresAdapter(poolConfig: PoolConfig): PgDatabaseAdapter {
   const pool = new Pool(poolConfig);
   const adapter: PostgresDatabaseAdapter = {
     disconnect: () => pool.end(),
