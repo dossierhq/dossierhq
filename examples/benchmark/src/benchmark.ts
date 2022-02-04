@@ -13,6 +13,7 @@ import {
   reportResult,
   runTest,
 } from 'benchpress';
+import 'dotenv/config';
 import path from 'path';
 import { DatabaseAdapterSelector, initializeServer } from './server';
 
