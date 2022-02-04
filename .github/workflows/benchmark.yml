@@ -1,0 +1,42 @@
+name: Node CI
+on: workflow_dispatch
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 16
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16.13.1
+      - name: Use deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: "1.17.3"
+      - name: rush install
+        run: |
+          node common/scripts/install-run-rush.js install
+      - name: start db
+        run: |
+          cd tools/generic-tools/
+          npm run db:start &
+          npm run db:wait
+      - name: setup db
+        run: |
+          cd tools/generic-tools/
+          npm run db:ensure-dbs
+          npm run db:make-users:superuser
+          npm run db:migrate:all
+          npm run db:make-users:no-superuser
+      - name: rush build
+        run: |
+          node common/scripts/install-run-rush.js build --verbose --to datadata-examples-benchmark
+      - name: npm start (benchmark)
+        run: |
+          cd examples/benchmark
+          npm start
+      - name: stop db
+        run: |
+          cd tools/generic-tools/
+          npm run db:stop
