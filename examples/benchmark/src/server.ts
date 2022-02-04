@@ -1,18 +1,33 @@
-import { assertIsDefined, notOk, ok } from '@jonasb/datadata-core';
-import { createPostgresAdapter } from '@jonasb/datadata-database-adapter-postgres-pg';
+import { ErrorType, NoOpLogger, notOk, ok, Result } from '@jonasb/datadata-core';
+import {
+  createPostgresAdapter,
+  type PgDatabaseAdapter,
+} from '@jonasb/datadata-database-adapter-postgres-pg';
+import {
+  createSqlite3Adapter,
+  type Sqlite3DatabaseAdapter,
+} from '@jonasb/datadata-database-adapter-sqlite-sqlite3';
 import { AuthorizationAdapter, createServer, SessionContext } from '@jonasb/datadata-server';
 import schemaSpecification from './schema.json';
 
 const validAuthorizationKeys: readonly string[] = ['none'];
 
-export async function initializeServer() {
-  const connectionString = process.env.EXAMPLES_BENCHMARK_DATABASE_URL;
-  assertIsDefined(connectionString);
-  const databaseAdapter = createPostgresAdapter({
-    connectionString,
-  });
+export type DatabaseAdapterSelector =
+  | { postgresConnectionString: string }
+  | { sqliteDatabasePath: string };
+
+export async function initializeServer(adapterSelector: DatabaseAdapterSelector) {
+  const databaseAdapterResult: Result<
+    Sqlite3DatabaseAdapter,
+    ErrorType.BadRequest | ErrorType.Generic
+  > =
+    'sqliteDatabasePath' in adapterSelector
+      ? await createSqliteDatabaseAdapter(adapterSelector.sqliteDatabasePath)
+      : createPostgresDatabaseAdapter(adapterSelector.postgresConnectionString);
+  if (databaseAdapterResult.isError()) return databaseAdapterResult;
+
   const serverResult = await createServer({
-    databaseAdapter,
+    databaseAdapter: databaseAdapterResult.value,
     authorizationAdapter: createAuthorizationAdapter(),
   });
   if (serverResult.isError()) return serverResult;
@@ -25,6 +40,18 @@ export async function initializeServer() {
   if (schemaResult.isError()) return schemaResult;
 
   return serverResult;
+}
+
+function createPostgresDatabaseAdapter(
+  connectionString: string
+): Result<PgDatabaseAdapter, ErrorType.Generic> {
+  const databaseAdapter = createPostgresAdapter({ connectionString });
+  return ok(databaseAdapter);
+}
+
+async function createSqliteDatabaseAdapter(databasePath: string) {
+  const adapterResult = await createSqlite3Adapter({ logger: NoOpLogger }, databasePath);
+  return adapterResult;
 }
 
 function createAuthorizationAdapter(): AuthorizationAdapter {

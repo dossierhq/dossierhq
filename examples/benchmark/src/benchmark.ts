@@ -1,5 +1,11 @@
 import faker from '@faker-js/faker';
-import { AdminClient, AdminEntityCreate, copyEntity } from '@jonasb/datadata-core';
+import {
+  AdminClient,
+  AdminEntityCreate,
+  assertIsDefined,
+  copyEntity,
+  ok,
+} from '@jonasb/datadata-core';
 import {
   BenchPressOptions,
   BenchPressResult,
@@ -8,7 +14,7 @@ import {
   runTest,
 } from 'benchpress';
 import path from 'path';
-import { initializeServer } from './server';
+import { DatabaseAdapterSelector, initializeServer } from './server';
 
 function cleanupEntity(entity: AdminEntityCreate) {
   const cleanedUpEntity: AdminEntityCreate = copyEntity(entity, { fields: {} });
@@ -276,9 +282,9 @@ async function runTests(runName: string, adminClient: AdminClient) {
   // );
 }
 
-async function main(runName: string) {
-  const serverResult = await initializeServer();
-  if (serverResult.isError()) throw serverResult.toError();
+async function initializeAndRunTests(runName: string, databaseSelector: DatabaseAdapterSelector) {
+  const serverResult = await initializeServer(databaseSelector);
+  if (serverResult.isError()) return serverResult;
   const server = serverResult.value;
   try {
     const sessionResult = await server.createSession({
@@ -286,13 +292,26 @@ async function main(runName: string) {
       identifier: 'principal1',
       defaultAuthKeys: ['none'],
     });
-    if (sessionResult.isError()) throw sessionResult.toError();
+    if (sessionResult.isError()) return sessionResult;
 
     const adminClient = server.createAdminClient(sessionResult.value.context);
 
     await runTests(runName, adminClient);
   } finally {
     await server.shutdown();
+  }
+  return ok(undefined);
+}
+
+async function main(runName: string) {
+  assertIsDefined(process.env.EXAMPLES_BENCHMARK_DATABASE_URL);
+  const adapters: DatabaseAdapterSelector[] = [
+    { postgresConnectionString: process.env.EXAMPLES_BENCHMARK_DATABASE_URL },
+    { sqliteDatabasePath: 'output/db.sqlite' },
+  ];
+  for (const databaseSelector of adapters) {
+    const result = await initializeAndRunTests(runName, databaseSelector);
+    result.throwIfError();
   }
 }
 
