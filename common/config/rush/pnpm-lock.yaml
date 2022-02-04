@@ -15,11 +15,13 @@ importers:
       '@jonasb/datadata-server': workspace:*
       '@rushstack/heft': ~0.44.0
       '@types/node': ^17.0.5
+      '@types/pg': ^8.6.1
       '@typescript-eslint/eslint-plugin': ^5.8.0
       '@typescript-eslint/parser': ^5.8.0
       benchpress: workspace:*
       dotenv: ^14.1.0
       eslint: ^8.5.0
+      pg: ^8.7.1
       prettier: 2.5.1
       tslib: ~2.3.1
       typescript: ^4.5.4
@@ -31,11 +33,13 @@ importers:
       '@jonasb/datadata-server': link:../../libraries/server
       benchpress: link:../../libraries/benchpress
       dotenv: 14.1.0
+      pg: 8.7.1
       tslib: 2.3.1
     devDependencies:
       '@jonasb/datadata-postgres': link:../../libraries/postgres
       '@rushstack/heft': 0.44.0
       '@types/node': 17.0.5
+      '@types/pg': 8.6.1
       '@typescript-eslint/eslint-plugin': 5.8.0_836011a006f4f5d67178564baf2b6d34
       '@typescript-eslint/parser': 5.8.0_eslint@8.5.0+typescript@4.5.4
       eslint: 8.5.0

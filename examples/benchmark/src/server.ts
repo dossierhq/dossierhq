@@ -1,4 +1,4 @@
-import { ErrorType, NoOpLogger, notOk, ok, Result } from '@jonasb/datadata-core';
+import { ErrorType, NoOpLogger, notOk, ok, PromiseResult, Result } from '@jonasb/datadata-core';
 import {
   createPostgresAdapter,
   type PgDatabaseAdapter,
@@ -8,6 +8,8 @@ import {
   type Sqlite3DatabaseAdapter,
 } from '@jonasb/datadata-database-adapter-sqlite-sqlite3';
 import { AuthorizationAdapter, createServer, SessionContext } from '@jonasb/datadata-server';
+import fs from 'fs/promises';
+import { Client } from 'pg';
 import schemaSpecification from './schema.json';
 
 const validAuthorizationKeys: readonly string[] = ['none'];
@@ -23,7 +25,7 @@ export async function initializeServer(adapterSelector: DatabaseAdapterSelector)
   > =
     'sqliteDatabasePath' in adapterSelector
       ? await createSqliteDatabaseAdapter(adapterSelector.sqliteDatabasePath)
-      : createPostgresDatabaseAdapter(adapterSelector.postgresConnectionString);
+      : await createPostgresDatabaseAdapter(adapterSelector.postgresConnectionString);
   if (databaseAdapterResult.isError()) return databaseAdapterResult;
 
   const serverResult = await createServer({
@@ -42,14 +44,33 @@ export async function initializeServer(adapterSelector: DatabaseAdapterSelector)
   return serverResult;
 }
 
-function createPostgresDatabaseAdapter(
+async function createPostgresDatabaseAdapter(
   connectionString: string
-): Result<PgDatabaseAdapter, ErrorType.Generic> {
+): PromiseResult<PgDatabaseAdapter, ErrorType.Generic> {
+  // delete database to have consistent results
+  const client = new Client({ connectionString });
+  await client.connect();
+  const {
+    rows: [{ count }],
+  } = await client.query('SELECT COUNT(*) FROM entities');
+  if (count > 0) {
+    console.log(`Deleting ${count} entities from database`);
+    await client.query('DELETE FROM entities');
+  }
+  await client.end();
+
   const databaseAdapter = createPostgresAdapter({ connectionString });
   return ok(databaseAdapter);
 }
 
 async function createSqliteDatabaseAdapter(databasePath: string) {
+  try {
+    // delete database to have consistent results
+    await fs.unlink(databasePath);
+  } catch (error) {
+    // ignore
+  }
+
   const adapterResult = await createSqlite3Adapter({ logger: NoOpLogger }, databasePath);
   return adapterResult;
 }
