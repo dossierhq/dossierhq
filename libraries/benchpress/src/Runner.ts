@@ -23,7 +23,9 @@ export async function runTest(
 
   console.log(`Warming up '${options.testName}' (${options.warmup} iterations)`);
   for (let i = 0; i < options.warmup; i += 1) {
-    process.stdout.write(`\x1b[0GIteration [${i + 1}/${options.warmup}]`);
+    if (process.stdout.isTTY) {
+      process.stdout.write(`\x1b[0GIteration [${i + 1}/${options.warmup}]`);
+    }
     controlClock.reset();
     const _success = await iteration(clock);
   }
@@ -31,7 +33,9 @@ export async function runTest(
   console.log(`\nStarting test '${options.testName}' (${options.iterations} iterations)`);
   const iterationDurations_ms = new Array<bigint | null>(options.iterations).fill(null);
   for (let i = 0; i < options.iterations; i += 1) {
-    process.stdout.write(`\x1b[0GIteration [${i + 1}/${options.iterations}]`);
+    if (process.stdout.isTTY) {
+      process.stdout.write(`\x1b[0GIteration [${i + 1}/${options.iterations}]`);
+    }
 
     controlClock.reset();
     const success = await iteration(clock);
