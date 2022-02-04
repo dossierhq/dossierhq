@@ -37,7 +37,7 @@ function reportResultConsole(processed: BenchPressProcessedResult) {
     `Number of successful iterations: ${processed.successCount} / ${processed.iterationCount}`
   );
   console.log(`Number of failed iterations: ${processed.failureCount}`);
-  console.log(`Duration of successful iterations: ${processed.successDuration_ms} ms`);
+  console.log(`Duration of successful iterations: ${processed.successDuration_ms.toFixed(2)} ms`);
   console.log();
 
   function logMetric(name: string, duration_ms: number | null, suffix?: string) {
@@ -45,7 +45,7 @@ function reportResultConsole(processed: BenchPressProcessedResult) {
       console.log(`${name}: – ${suffix ? ' ' + suffix : ''}`);
     } else {
       console.log(
-        `${name}: ${duration_ms} ms (${ms_to_hz(duration_ms).toFixed(2)} ops/s)${
+        `${name}: ${duration_ms.toFixed(2)} ms (${ms_to_hz(duration_ms).toFixed(2)} ops/s)${
           suffix ? ' ' + suffix : ''
         }`
       );
