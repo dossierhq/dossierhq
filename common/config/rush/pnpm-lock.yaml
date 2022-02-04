@@ -126,7 +126,7 @@ importers:
       graphql: ~16.3.0
       graphql-voyager: ~1.0.0-rc.31
       jest: ~27.4.5
-      joi: ~17.5.0
+      joi: ~17.6.0
       leaflet: ~1.7.1
       next: ~12.0.3
       prettier: 2.5.1
@@ -155,7 +155,7 @@ importers:
       debug: 4.3.2
       graphql: 16.3.0
       graphql-voyager: 1.0.0-rc.31_10b85413aa9bce04b08fa40c3cba6ad9
-      joi: 17.5.0
+      joi: 17.6.0
       leaflet: 1.7.1
       next: 12.0.3_react-dom@17.0.2+react@17.0.2
       react: 17.0.2
@@ -11654,8 +11654,8 @@ packages:
     resolution: {integrity: sha1-o6vicYryQaKykE+EpiWXDzia4yo=}
     dev: true
 
-  /joi/17.5.0:
-    resolution: {integrity: sha512-R7hR50COp7StzLnDi4ywOXHrBrgNXuUUfJWIR5lPY5Bm/pOD3jZaTwpluUXVLRWcoWZxkrHBBJ5hLxgnlehbdw==}
+  /joi/17.6.0:
+    resolution: {integrity: sha512-OX5dG6DTbcr/kbMFj0KGYxuew69HPcAE3K/sZpEV2nP6e/j/C0HV+HNiBPCASxdx5T7DMoa0s8UeHWMnb6n2zw==}
     dependencies:
       '@hapi/hoek': 9.2.1
       '@hapi/topo': 5.1.0
