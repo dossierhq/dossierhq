@@ -102,8 +102,7 @@ async function reportResultTsv(
     }
     await fs.promises.writeFile(tsvPath, `${existingData}${row}`);
   } catch (error) {
-    const noSuchFile = (error as { code?: string })?.code === 'ENOENT';
-    if (!noSuchFile) {
+    if (!isNoSuchFileError(error)) {
       throw error;
     }
     await fs.promises.writeFile(tsvPath, `${header}${row}`);
@@ -185,8 +184,19 @@ plot '${path.basename(gnuPlotDataPath)}' title '${processed.testName}'`;
   await fs.promises.writeFile(gnuPlotScriptPath, gnuPlotScript);
   console.log(`Writing to ${gnuPlotDataPath}`);
   await fs.promises.writeFile(gnuPlotDataPath, gnuPlotData);
-  console.log(`Executing gnuplot (generating ${gnuPlotPngPath})`);
-  await promisify(childProcess.execFile)('gnuplot', [gnuPlotScriptPath], {
-    cwd: options.folder,
-  });
+  try {
+    await promisify(childProcess.execFile)('gnuplot', [gnuPlotScriptPath], {
+      cwd: options.folder,
+    });
+    console.log(`Executing gnuplot (generating ${gnuPlotPngPath})`);
+  } catch (error) {
+    if (!isNoSuchFileError(error)) {
+      throw error;
+    }
+    console.log('No gnuplot installed');
+  }
+}
+
+function isNoSuchFileError(error: unknown) {
+  return (error as { code?: string })?.code === 'ENOENT';
 }
