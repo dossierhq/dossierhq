@@ -40,7 +40,7 @@
     "@editorjs/underline": "~1.0.0",
     "@hapi/boom": "~9.1.2",
     "debug": "~4.3.1",
-    "joi": "~17.5.0",
+    "joi": "~17.6.0",
     "graphql": "~16.3.0",
     "graphql-voyager": "~1.0.0-rc.31",
     "leaflet": "~1.7.1",
