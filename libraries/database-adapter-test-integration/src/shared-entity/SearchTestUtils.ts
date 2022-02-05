@@ -30,6 +30,12 @@ const adminOrderCompare: Record<AdminQueryOrder, (a: AdminEntity, b: AdminEntity
   [AdminQueryOrder.name]: (a, b) => a.info.name.localeCompare(b.info.name),
 };
 
+const adminOrderExtract: Record<AdminQueryOrder, (it: AdminEntity) => unknown> = {
+  [AdminQueryOrder.createdAt]: (it) => it.info.createdAt,
+  [AdminQueryOrder.updatedAt]: (it) => it.info.updatedAt,
+  [AdminQueryOrder.name]: (it) => it.info.name,
+};
+
 const publishedOrderCompare: Record<
   PublishedQueryOrder,
   (a: PublishedEntity, b: PublishedEntity) => number
@@ -47,18 +53,20 @@ export function assertAdminEntityConnectionToMatchSlice(
   order?: AdminQueryOrder,
   reverse?: boolean
 ): void {
+  const resolvedOrder = order ?? AdminQueryOrder.createdAt;
+  const orderExtractor = adminOrderExtract[resolvedOrder];
+
   assertOkResult(connectionResult);
   const connection = connectionResult.value;
   const actualIds = connection?.edges.map((edge) => ({
     id: edge.node.isOk() ? edge.node.value.id : edge.node,
+    order: edge.node.isOk() ? orderExtractor(edge.node.value) : null,
   }));
 
-  const allEntitiesOrdered = [...allEntities].sort(
-    adminOrderCompare[order ?? AdminQueryOrder.createdAt]
-  );
+  const allEntitiesOrdered = [...allEntities].sort(adminOrderCompare[resolvedOrder]);
   if (reverse) allEntitiesOrdered.reverse();
   const expectedEntities = allEntitiesOrdered.slice(sliceStart, sliceEnd);
-  const expectedIds = expectedEntities.map(({ id }) => ({ id }));
+  const expectedIds = expectedEntities.map((it) => ({ id: it.id, order: orderExtractor(it) }));
 
   assertEquals(actualIds, expectedIds);
 }
