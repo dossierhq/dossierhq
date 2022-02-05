@@ -201,8 +201,25 @@ plot '${path.basename(gnuPlotDataPath)}' title '${processed.testName}'`;
     return;
   }
 
-  const dumbGnuPlotScript = `set term dumb size 120, 30
-${mainGnuPlotScript}`;
+  reportResultGnuPlotDumb(processed, options, gnuPlotDataPath);
+}
+
+function reportResultGnuPlotDumb(
+  processed: BenchPressProcessedResult,
+  options: BenchPressReportOptions,
+  gnuPlotDataPath: string
+) {
+  const dumbGnuPlotScript = `set term dumb size 120, 30 ansirgb nofeed
+set key horizontal outside bottom center
+
+set xlabel 'Iteration'
+set ylabel 'Duration (ms)'
+set yrange [0:]
+
+plot ${processed.max_ms} with points pt '-' title 'max',\
+  ${processed.mean_ms} with points pt '-' title 'avg',\
+  ${processed.min_ms} with points pt '-' title 'min',\
+  '${path.basename(gnuPlotDataPath)}' with points pt '*' title '${processed.testName}'`;
 
   const output = childProcess.execFileSync('gnuplot', [], {
     cwd: options.folder,
