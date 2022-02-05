@@ -35,8 +35,15 @@ jobs:
       - name: npm start (benchmark)
         run: |
           cd examples/benchmark
-          npm start
+          npm run start:ci
       - name: stop db
         run: |
           cd tools/generic-tools/
           npm run db:stop
+      - name: Git status
+        run: |
+          git status
+      - name: Add and commit changes for dependabot
+        uses: EndBug/add-and-commit@v8.0.1
+        with:
+          default_author: github_actions
