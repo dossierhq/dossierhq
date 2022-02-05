@@ -148,11 +148,7 @@ async function reportResultGnuPlot(
   const gnuPlotDataPath = path.join(options.folder, `${options.baseName}.dat`);
   const gnuPlotPngPath = path.join(options.folder, `${options.baseName}.png`);
 
-  let gnuPlotScript = `# gnuplot script
-set term pngcairo dashed font 'Avenir Next Condensed Regular' fontscale 0.8 size 1024,768
-set output '${path.basename(gnuPlotPngPath)}'
-
-set key outside
+  let mainGnuPlotScript = `set key outside
 
 set xlabel 'Iteration'
 set ylabel 'Duration (ms)'
@@ -161,19 +157,24 @@ set yrange [0:]
 plot '${path.basename(gnuPlotDataPath)}' title '${processed.testName}'`;
 
   if (processed.mean_ms !== null) {
-    gnuPlotScript += `,\\\n  ${processed.mean_ms} title 'avg'`;
+    mainGnuPlotScript += `,\\\n  ${processed.mean_ms} title 'avg'`;
   }
   if (processed.max_ms !== null) {
-    gnuPlotScript += `,\\\n  ${processed.max_ms} title 'max'`;
+    mainGnuPlotScript += `,\\\n  ${processed.max_ms} title 'max'`;
   }
   Object.entries(processed.percentiles_ms)
     .filter(([_p, v_ms]) => v_ms !== null)
     .reverse()
-    .forEach(([p, v_ms]) => (gnuPlotScript += `,\\\n  ${v_ms} dashtype 3 title 'p${p}'`));
+    .forEach(([p, v_ms]) => (mainGnuPlotScript += `,\\\n  ${v_ms} dashtype 3 title 'p${p}'`));
 
   if (processed.min_ms !== null) {
-    gnuPlotScript += `,\\\n  ${processed.min_ms} title 'min'`;
+    mainGnuPlotScript += `,\\\n  ${processed.min_ms} title 'min'`;
   }
+
+  const pngGnuPlotScript = `# gnuplot script
+  set term pngcairo dashed font 'Avenir Next Condensed Regular' fontscale 0.8 size 1024,768
+  set output '${path.basename(gnuPlotPngPath)}'
+  ${mainGnuPlotScript}`;
 
   const gnuPlotData = processed.iterations_ms.map((x) => (x === null ? 'NaN' : x)).join('\n');
 
@@ -184,7 +185,7 @@ plot '${path.basename(gnuPlotDataPath)}' title '${processed.testName}'`;
   }
 
   console.log(`Writing to ${gnuPlotScriptPath}`);
-  await fs.promises.writeFile(gnuPlotScriptPath, gnuPlotScript);
+  await fs.promises.writeFile(gnuPlotScriptPath, pngGnuPlotScript);
   console.log(`Writing to ${gnuPlotDataPath}`);
   await fs.promises.writeFile(gnuPlotDataPath, gnuPlotData);
   try {
@@ -197,7 +198,17 @@ plot '${path.basename(gnuPlotDataPath)}' title '${processed.testName}'`;
       throw error;
     }
     console.log('No gnuplot installed');
+    return;
   }
+
+  const dumbGnuPlotScript = `set term dumb size 120, 30
+${mainGnuPlotScript}`;
+
+  const output = childProcess.execFileSync('gnuplot', [], {
+    cwd: options.folder,
+    input: dumbGnuPlotScript,
+  });
+  console.log(output.toString());
 }
 
 function isNoSuchFileError(error: unknown) {
