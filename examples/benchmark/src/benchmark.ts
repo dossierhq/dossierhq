@@ -191,7 +191,10 @@ async function testCreateEntities(adminClient: AdminClient, options: BenchPressO
 //   }, options);
 // }
 
-async function testGetEntities(adminClient: AdminClient, options: BenchPressOptions) {
+async function testSearchAdminEntitiesAnyFirst50(
+  adminClient: AdminClient,
+  options: BenchPressOptions
+) {
   return await runTest(async (clock) => {
     clock.start();
 
@@ -230,7 +233,7 @@ async function runTests(
 
   await report(
     testCreateEntities(adminClient, {
-      testName: 'create entities',
+      testName: 'create entity',
       variant,
       runName,
       warmup,
@@ -242,25 +245,25 @@ async function runTests(
 
   await report(
     testCreateOrganizationEntities(adminClient, {
-      testName: 'create organization',
+      testName: 'create entity organization',
       variant,
       runName,
       warmup,
       iterations,
     }),
-    `${runName}-${variant}-create-organization`,
+    `${runName}-${variant}-create-entity-organization`,
     tsvFilename
   );
 
   await report(
     testCreatePersonEntities(adminClient, {
-      testName: 'create person',
+      testName: 'create entity person',
       variant,
       runName,
       warmup,
       iterations,
     }),
-    `${runName}-${variant}-create-person`,
+    `${runName}-${variant}-create-entity-person`,
     tsvFilename
   );
 
@@ -280,14 +283,14 @@ async function runTests(
   // );
 
   await report(
-    testGetEntities(adminClient, {
-      testName: 'get entities',
+    testSearchAdminEntitiesAnyFirst50(adminClient, {
+      testName: 'search admin entities (any, first 50)',
       variant,
       runName,
       warmup,
       iterations,
     }),
-    `${runName}-${variant}-get-entities`,
+    `${runName}-${variant}-search-admin-entities-any-first-50`,
     tsvFilename
   );
 
