@@ -17,6 +17,8 @@ import 'dotenv/config';
 import path from 'path';
 import { DatabaseAdapterSelector, initializeServer } from './server';
 
+const outputFolder = path.join(process.cwd(), 'output');
+
 function cleanupEntity(entity: AdminEntityCreate) {
   const cleanedUpEntity: AdminEntityCreate = copyEntity(entity, { fields: {} });
   for (const [key, value] of Object.entries(cleanedUpEntity.fields)) {
@@ -201,19 +203,28 @@ async function testGetEntities(adminClient: AdminClient, options: BenchPressOpti
   }, options);
 }
 
-async function report(resultPromise: Promise<BenchPressResult>, baseName: string) {
+async function report(
+  resultPromise: Promise<BenchPressResult>,
+  baseName: string,
+  tsvFilename: string
+) {
   const result = await resultPromise;
   await reportResult(result, {
     percentiles: [50, 90, 95],
-    folder: path.join(process.cwd(), 'output'),
+    folder: outputFolder,
     baseName,
-    tsvFilename: 'crud-benchmark.tsv',
+    tsvFilename,
   });
 
   console.log();
 }
 
-async function runTests(runName: string, variant: string, adminClient: AdminClient) {
+async function runTests(
+  runName: string,
+  variant: string,
+  tsvFilename: string,
+  adminClient: AdminClient
+) {
   const warmup = 30;
   const iterations = 1_000;
 
@@ -225,7 +236,8 @@ async function runTests(runName: string, variant: string, adminClient: AdminClie
       warmup,
       iterations,
     }),
-    `${runName}-${variant}-create-entity`
+    `${runName}-${variant}-create-entity`,
+    tsvFilename
   );
 
   await report(
@@ -236,7 +248,8 @@ async function runTests(runName: string, variant: string, adminClient: AdminClie
       warmup,
       iterations,
     }),
-    `${runName}-${variant}-create-organization`
+    `${runName}-${variant}-create-organization`,
+    tsvFilename
   );
 
   await report(
@@ -247,7 +260,8 @@ async function runTests(runName: string, variant: string, adminClient: AdminClie
       warmup,
       iterations,
     }),
-    `${runName}-${variant}-create-person`
+    `${runName}-${variant}-create-person`,
+    tsvFilename
   );
 
   // await report(
@@ -257,12 +271,12 @@ async function runTests(runName: string, variant: string, adminClient: AdminClie
   //     warmup,
   //     iterations,
   //   }),
-  //   `${runName}-${variant}-edit-entity`
+  //   `${runName}-${variant}-edit-entity`, tsvFilename
   // );
 
   // await report(
   //   testGetEntity({ testName: 'get entity', runName, warmup, iterations }),
-  //   `${runName}-${variant}-get-entity`
+  //   `${runName}-${variant}-get-entity`, tsvFilename
   // );
 
   await report(
@@ -273,7 +287,8 @@ async function runTests(runName: string, variant: string, adminClient: AdminClie
       warmup,
       iterations,
     }),
-    `${runName}-${variant}-get-entities`
+    `${runName}-${variant}-get-entities`,
+    tsvFilename
   );
 
   // await report(
@@ -283,13 +298,14 @@ async function runTests(runName: string, variant: string, adminClient: AdminClie
   //     warmup,
   //     iterations,
   //   }),
-  //   `${runName}-${variant}-delete-entity`
+  //   `${runName}-${variant}-delete-entity`, tsvFilename
   // );
 }
 
 async function initializeAndRunTests(
   runName: string,
   variant: string,
+  tsvFilename: string,
   databaseSelector: DatabaseAdapterSelector
 ) {
   const serverResult = await initializeServer(databaseSelector);
@@ -305,14 +321,14 @@ async function initializeAndRunTests(
 
     const adminClient = server.createAdminClient(sessionResult.value.context);
 
-    await runTests(runName, variant, adminClient);
+    await runTests(runName, variant, tsvFilename, adminClient);
   } finally {
     await server.shutdown();
   }
   return ok(undefined);
 }
 
-async function main(runName: string) {
+async function main(runName: string, tsvFilename: string) {
   assertIsDefined(process.env.EXAMPLES_BENCHMARK_DATABASE_URL);
   const variants: { variant: string; adapter: DatabaseAdapterSelector }[] = [
     {
@@ -325,16 +341,25 @@ async function main(runName: string) {
     },
   ];
   for (const { variant, adapter } of variants) {
-    const fullRunName = runName ? `${timestamp}-${runName}` : timestamp;
-    const result = await initializeAndRunTests(fullRunName, variant, adapter);
+    const result = await initializeAndRunTests(runName, variant, tsvFilename, adapter);
     result.throwIfError();
   }
 }
 
-const runName = process.argv[2] || '';
-const timestamp = fileTimestamp();
+const runNameOrCiSwitch = process.argv[2] || '';
+let runName;
+let tsvFilename;
+if (runNameOrCiSwitch === 'ci') {
+  assertIsDefined(process.env.GITHUB_SHA);
+  runName = process.env.GITHUB_SHA;
+  tsvFilename = 'ci-benchmark.tsv';
+} else {
+  const timestamp = fileTimestamp();
+  runName = runNameOrCiSwitch ? `${timestamp}-${runNameOrCiSwitch}` : timestamp;
+  tsvFilename = 'local-benchmark.tsv';
+}
 
-main(runName).catch((error) => {
+main(runName, tsvFilename).catch((error) => {
   console.warn(error);
   process.exitCode = 1;
 });

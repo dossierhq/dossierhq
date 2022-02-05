@@ -15,6 +15,7 @@
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write .",
     "start": "node lib/benchmark.js",
+    "start:ci": "node lib/benchmark.js ci",
     "ts:check": "tsc --noEmit",
     "upgrade-dependencies": "npx npm-check-updates -u --packageFile ./package.json",
     "upgrade-dependencies:check": "npx npm-check-updates"
