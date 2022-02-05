@@ -7,6 +7,7 @@ export interface BenchPressProcessOptions {
 
 export interface BenchPressProcessedResult {
   testName: string;
+  variant: string;
   runName: string;
   iterationCount: number;
   successCount: number;
@@ -43,6 +44,7 @@ export function processResults(
 
   return {
     testName: result.testName,
+    variant: result.variant,
     runName: result.runName,
     iterationCount: result.iterationCount,
     successCount,

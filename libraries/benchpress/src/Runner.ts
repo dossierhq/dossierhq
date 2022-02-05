@@ -3,6 +3,7 @@ import { createClock } from './Clock';
 
 export interface BenchPressOptions {
   testName: string;
+  variant: string;
   runName: string;
   warmup: number;
   iterations: number;
@@ -10,6 +11,7 @@ export interface BenchPressOptions {
 
 export interface BenchPressResult {
   testName: string;
+  variant: string;
   runName: string;
   iterationDurations_ns: Array<bigint | null>;
   iterationCount: number;
@@ -21,7 +23,9 @@ export async function runTest(
 ): Promise<BenchPressResult> {
   const { clock, controlClock } = createClock();
 
-  console.log(`Warming up '${options.testName}' (${options.warmup} iterations)`);
+  console.log(
+    `Warming up '${options.testName}' - ${options.variant} (${options.warmup} iterations)`
+  );
   for (let i = 0; i < options.warmup; i += 1) {
     if (process.stdout.isTTY) {
       process.stdout.write(`\x1b[0GIteration [${i + 1}/${options.warmup}]`);
@@ -30,7 +34,9 @@ export async function runTest(
     const _success = await iteration(clock);
   }
 
-  console.log(`\nStarting test '${options.testName}' (${options.iterations} iterations)`);
+  console.log(
+    `\nStarting test '${options.testName}' - ${options.variant} (${options.iterations} iterations)`
+  );
   const iterationDurations_ms = new Array<bigint | null>(options.iterations).fill(null);
   for (let i = 0; i < options.iterations; i += 1) {
     if (process.stdout.isTTY) {
@@ -48,6 +54,7 @@ export async function runTest(
 
   return {
     testName: options.testName,
+    variant: options.variant,
     runName: options.runName,
     iterationDurations_ns: iterationDurations_ms,
     iterationCount: options.iterations,
