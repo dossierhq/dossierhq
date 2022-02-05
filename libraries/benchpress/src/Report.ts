@@ -137,7 +137,7 @@ async function reportResultJson(
 
   const jsonPath = path.join(options.folder, `${options.baseName}.json`);
   console.log(`Writing to ${jsonPath}`);
-  await fs.promises.writeFile(jsonPath, JSON.stringify(data, null, 2));
+  await fs.promises.writeFile(jsonPath, JSON.stringify(data, null, 2) + '\n');
 }
 
 async function reportResultGnuPlot(
