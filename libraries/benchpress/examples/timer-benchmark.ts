@@ -15,7 +15,7 @@ async function main(runName: string, variant: string) {
   await reportResult(result, {
     percentiles: [50, 90, 95],
     folder: path.join(__dirname, 'output'),
-    baseName: `${runName}-set-timeout`,
+    baseName: `${runName}-${variant}-set-timeout`,
     tsvFilename: 'benchmark.tsv',
   });
 }
@@ -24,7 +24,7 @@ if (require.main === module) {
   const runName = process.argv[2] || '';
   const variant = 'main';
   const timestamp = fileTimestamp();
-  const fullRunName = runName ? `${timestamp}-${variant}-${runName}` : `${timestamp}-${variant}`;
+  const fullRunName = runName ? `${timestamp}-${runName}` : timestamp;
   main(fullRunName, variant).catch((error) => {
     console.warn(error);
     process.exitCode = 1;
