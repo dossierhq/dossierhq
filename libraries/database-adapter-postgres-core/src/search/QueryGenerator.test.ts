@@ -9,6 +9,8 @@ import { expectErrorResult } from '@jonasb/datadata-core-jest';
 import { createMockAdapter } from '../test/TestUtils';
 import { toOpaqueCursor } from './OpaqueCursor';
 import {
+  sampleAdminEntitiesQuery,
+  samplePublishedEntitiesQuery,
   searchAdminEntitiesQuery,
   searchPublishedEntitiesQuery,
   totalAdminEntitiesQuery,
@@ -1426,6 +1428,89 @@ describe('searchPublishedEntitiesQuery()', () => {
       authKeysNone
     );
     expectErrorResult(result, ErrorType.BadRequest, 'Can’t find entity type in query: Invalid');
+  });
+});
+
+describe('sampleAdminEntitiesQuery()', () => {
+  test('no query', () => {
+    expect(sampleAdminEntitiesQuery(schema, undefined, 5, 10, authKeysNone)).toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, ev.version, ev.data
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 ORDER BY e.id OFFSET $2 LIMIT $3",
+          "values": Array [
+            "none",
+            5,
+            10,
+          ],
+        },
+      }
+    `);
+  });
+
+  test('entityType', () => {
+    expect(
+      sampleAdminEntitiesQuery(schema, { entityTypes: ['QueryGeneratorFoo'] }, 5, 10, authKeysNone)
+    ).toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, ev.version, ev.data
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.type = ANY($2) ORDER BY e.id OFFSET $3 LIMIT $4",
+          "values": Array [
+            "none",
+            Array [
+              "QueryGeneratorFoo",
+            ],
+            5,
+            10,
+          ],
+        },
+      }
+    `);
+  });
+});
+
+describe('samplePublishedEntitiesQuery()', () => {
+  test('no query', () => {
+    expect(samplePublishedEntitiesQuery(schema, undefined, 5, 10, authKeysNone))
+      .toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 ORDER BY e.id OFFSET $2 LIMIT $3",
+          "values": Array [
+            "none",
+            5,
+            10,
+          ],
+        },
+      }
+    `);
+  });
+
+  test('entityType', () => {
+    expect(
+      samplePublishedEntitiesQuery(
+        schema,
+        { entityTypes: ['QueryGeneratorFoo'] },
+        5,
+        10,
+        authKeysNone
+      )
+    ).toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.type = ANY($2) ORDER BY e.id OFFSET $3 LIMIT $4",
+          "values": Array [
+            "none",
+            Array [
+              "QueryGeneratorFoo",
+            ],
+            5,
+            10,
+          ],
+        },
+      }
+    `);
   });
 });
 

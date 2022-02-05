@@ -81,23 +81,7 @@ function sharedSearchEntitiesQuery<
   const resolvedPaging = pagingResult.value;
 
   const qb = new PostgresQueryBuilder('SELECT');
-  if (query?.boundingBox) {
-    qb.addQuery('DISTINCT');
-  }
-  if (published) {
-    qb.addQuery(
-      'e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, ev.data FROM entities e, entity_versions ev'
-    );
-  } else {
-    qb.addQuery(`e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, ev.version, ev.data
-  FROM entities e, entity_versions ev`);
-  }
-  if (query?.referencing) {
-    qb.addQuery('entity_version_references evr, entities e2');
-  }
-  if (query?.boundingBox) {
-    qb.addQuery('entity_version_locations evl');
-  }
+  addEntityQuerySelectColumn(qb, query, published);
 
   qb.addQuery('WHERE');
 
@@ -217,6 +201,48 @@ function addFilterStatusSqlSegment(query: AdminQuery, qb: PostgresQueryBuilder) 
   }
 }
 
+export function sampleAdminEntitiesQuery(
+  schema: AdminSchema,
+  query: AdminQuery | undefined,
+  offset: number,
+  limit: number,
+  authKeys: ResolvedAuthKey[]
+): Result<{ text: string; values: unknown[] }, ErrorType.BadRequest> {
+  return sampleEntitiesQuery(schema, query, offset, limit, authKeys, false);
+}
+
+export function samplePublishedEntitiesQuery(
+  schema: PublishedSchema,
+  query: PublishedQuery | undefined,
+  offset: number,
+  limit: number,
+  authKeys: ResolvedAuthKey[]
+): Result<{ text: string; values: unknown[] }, ErrorType.BadRequest> {
+  return sampleEntitiesQuery(schema, query, offset, limit, authKeys, true);
+}
+
+function sampleEntitiesQuery(
+  schema: AdminSchema | PublishedSchema,
+  query: AdminQuery | PublishedQuery | undefined,
+  offset: number,
+  limit: number,
+  authKeys: ResolvedAuthKey[],
+  published: boolean
+): Result<{ text: string; values: unknown[] }, ErrorType.BadRequest> {
+  const qb = new PostgresQueryBuilder('SELECT');
+
+  addEntityQuerySelectColumn(qb, query, published);
+
+  qb.addQuery('WHERE');
+
+  const filterResult = addQueryFilters(qb, schema, query, authKeys, published, true);
+  if (filterResult.isError()) return filterResult;
+
+  qb.addQuery(`ORDER BY e.id OFFSET ${qb.addValue(offset)} LIMIT ${qb.addValue(limit)}`);
+
+  return ok(qb.build());
+}
+
 export function totalAdminEntitiesQuery(
   schema: AdminSchema,
   authKeys: ResolvedAuthKey[],
@@ -266,6 +292,33 @@ function totalCountQuery(
   if (filterResult.isError()) return filterResult;
 
   return ok(qb.build());
+}
+
+function addEntityQuerySelectColumn(
+  qb: PostgresQueryBuilder,
+  query: PublishedQuery | AdminQuery | undefined,
+  published: boolean
+) {
+  if (query?.boundingBox) {
+    qb.addQuery('DISTINCT');
+  }
+  // TODO could skip some columns depending on sample/search and sort order
+  if (published) {
+    qb.addQuery(
+      'e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, ev.data FROM entities e, entity_versions ev'
+    );
+  } else {
+    qb.addQuery(
+      `e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, ev.version, ev.data
+  FROM entities e, entity_versions ev`
+    );
+  }
+  if (query?.referencing) {
+    qb.addQuery('entity_version_references evr, entities e2');
+  }
+  if (query?.boundingBox) {
+    qb.addQuery('entity_version_locations evl');
+  }
 }
 
 function addQueryFilters(
