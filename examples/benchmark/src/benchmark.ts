@@ -354,7 +354,7 @@ let runName;
 let tsvFilename;
 if (runNameOrCiSwitch === 'ci') {
   assertIsDefined(process.env.GITHUB_SHA);
-  runName = process.env.GITHUB_SHA;
+  runName = process.env.GITHUB_SHA.slice(0, 8); // use short sha
   tsvFilename = 'ci-benchmark.tsv';
 } else {
   const timestamp = fileTimestamp();

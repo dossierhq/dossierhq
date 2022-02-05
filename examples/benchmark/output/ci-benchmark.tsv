@@ -1,9 +1,9 @@
 Test name	Variant	Run name	Base name	Avg	StdDev	Min	p50	p90	p95	Max
-create entity	postgres	dfeefffbb9198f4ed85cfb6128a5e47b2ac69e4b	dfeefffbb9198f4ed85cfb6128a5e47b2ac69e4b-postgres-create-entity	3.001228	1.03	2.290519	2.660722	3.670431	4.80944	14.00222
-create entity organization	postgres	dfeefffbb9198f4ed85cfb6128a5e47b2ac69e4b	dfeefffbb9198f4ed85cfb6128a5e47b2ac69e4b-postgres-create-entity-organization	2.752504	1.01	2.216218	2.504221	3.610531	4.048634	24.666206
-create entity person	postgres	dfeefffbb9198f4ed85cfb6128a5e47b2ac69e4b	dfeefffbb9198f4ed85cfb6128a5e47b2ac69e4b-postgres-create-entity-person	2.507226	0.56	2.150818	2.404321	2.603522	2.897324	8.913775
-search admin entities (any, first 50)	postgres	dfeefffbb9198f4ed85cfb6128a5e47b2ac69e4b	dfeefffbb9198f4ed85cfb6128a5e47b2ac69e4b-postgres-search-admin-entities-any-first-50	10.458452	1.86	9.59278	9.880984	12.035	13.777215	33.270281
-create entity	sqlite	dfeefffbb9198f4ed85cfb6128a5e47b2ac69e4b	dfeefffbb9198f4ed85cfb6128a5e47b2ac69e4b-sqlite-create-entity	3.252386	1.47	2.210519	2.941724	3.825532	4.605739	27.762934
-create entity organization	sqlite	dfeefffbb9198f4ed85cfb6128a5e47b2ac69e4b	dfeefffbb9198f4ed85cfb6128a5e47b2ac69e4b-sqlite-create-entity-organization	3.245948	1.38	2.128418	3.064925	3.709031	4.081535	28.847144
-create entity person	sqlite	dfeefffbb9198f4ed85cfb6128a5e47b2ac69e4b	dfeefffbb9198f4ed85cfb6128a5e47b2ac69e4b-sqlite-create-entity-person	3.125071	1.00	2.139919	2.978825	3.635231	3.947134	23.756601
-search admin entities (any, first 50)	sqlite	dfeefffbb9198f4ed85cfb6128a5e47b2ac69e4b	dfeefffbb9198f4ed85cfb6128a5e47b2ac69e4b-sqlite-search-admin-entities-any-first-50	5.379597	4.06	4.256836	4.453739	4.891842	9.267679	32.158077
+create entity	postgres	dfeefffb	dfeefffb-postgres-create-entity	3.001228	1.03	2.290519	2.660722	3.670431	4.80944	14.00222
+create entity organization	postgres	dfeefffb	dfeefffb-postgres-create-entity-organization	2.752504	1.01	2.216218	2.504221	3.610531	4.048634	24.666206
+create entity person	postgres	dfeefffb	dfeefffb-postgres-create-entity-person	2.507226	0.56	2.150818	2.404321	2.603522	2.897324	8.913775
+search admin entities (any, first 50)	postgres	dfeefffb	dfeefffb-postgres-search-admin-entities-any-first-50	10.458452	1.86	9.59278	9.880984	12.035	13.777215	33.270281
+create entity	sqlite	dfeefffb	dfeefffb-sqlite-create-entity	3.252386	1.47	2.210519	2.941724	3.825532	4.605739	27.762934
+create entity organization	sqlite	dfeefffb	dfeefffb-sqlite-create-entity-organization	3.245948	1.38	2.128418	3.064925	3.709031	4.081535	28.847144
+create entity person	sqlite	dfeefffb	dfeefffb-sqlite-create-entity-person	3.125071	1.00	2.139919	2.978825	3.635231	3.947134	23.756601
+search admin entities (any, first 50)	sqlite	dfeefffb	dfeefffb-sqlite-search-admin-entities-any-first-50	5.379597	4.06	4.256836	4.453739	4.891842	9.267679	32.158077
