@@ -213,38 +213,41 @@ async function report(resultPromise: Promise<BenchPressResult>, baseName: string
   console.log();
 }
 
-async function runTests(runName: string, adminClient: AdminClient) {
+async function runTests(runName: string, variant: string, adminClient: AdminClient) {
   const warmup = 30;
   const iterations = 1_000;
 
   await report(
     testCreateEntities(adminClient, {
       testName: 'create entities',
+      variant,
       runName,
       warmup,
       iterations,
     }),
-    `${runName}-create-entity`
+    `${runName}-${variant}-create-entity`
   );
 
   await report(
     testCreateOrganizationEntities(adminClient, {
       testName: 'create organization',
+      variant,
       runName,
       warmup,
       iterations,
     }),
-    `${runName}-create-organization`
+    `${runName}-${variant}-create-organization`
   );
 
   await report(
     testCreatePersonEntities(adminClient, {
       testName: 'create person',
+      variant,
       runName,
       warmup,
       iterations,
     }),
-    `${runName}-create-person`
+    `${runName}-${variant}-create-person`
   );
 
   // await report(
@@ -254,22 +257,23 @@ async function runTests(runName: string, adminClient: AdminClient) {
   //     warmup,
   //     iterations,
   //   }),
-  //   `${runName}-edit-entity`
+  //   `${runName}-${variant}-edit-entity`
   // );
 
   // await report(
   //   testGetEntity({ testName: 'get entity', runName, warmup, iterations }),
-  //   `${runName}-get-entity`
+  //   `${runName}-${variant}-get-entity`
   // );
 
   await report(
     testGetEntities(adminClient, {
       testName: 'get entities',
+      variant,
       runName,
       warmup,
       iterations,
     }),
-    `${runName}-get-entities`
+    `${runName}-${variant}-get-entities`
   );
 
   // await report(
@@ -279,11 +283,15 @@ async function runTests(runName: string, adminClient: AdminClient) {
   //     warmup,
   //     iterations,
   //   }),
-  //   `${runName}-delete-entity`
+  //   `${runName}-${variant}-delete-entity`
   // );
 }
 
-async function initializeAndRunTests(runName: string, databaseSelector: DatabaseAdapterSelector) {
+async function initializeAndRunTests(
+  runName: string,
+  variant: string,
+  databaseSelector: DatabaseAdapterSelector
+) {
   const serverResult = await initializeServer(databaseSelector);
   if (serverResult.isError()) return serverResult;
   const server = serverResult.value;
@@ -297,7 +305,7 @@ async function initializeAndRunTests(runName: string, databaseSelector: Database
 
     const adminClient = server.createAdminClient(sessionResult.value.context);
 
-    await runTests(runName, adminClient);
+    await runTests(runName, variant, adminClient);
   } finally {
     await server.shutdown();
   }
@@ -306,20 +314,27 @@ async function initializeAndRunTests(runName: string, databaseSelector: Database
 
 async function main(runName: string) {
   assertIsDefined(process.env.EXAMPLES_BENCHMARK_DATABASE_URL);
-  const adapters: DatabaseAdapterSelector[] = [
-    { postgresConnectionString: process.env.EXAMPLES_BENCHMARK_DATABASE_URL },
-    { sqliteDatabasePath: 'output/db.sqlite' },
+  const variants: { variant: string; adapter: DatabaseAdapterSelector }[] = [
+    {
+      variant: 'postgres',
+      adapter: { postgresConnectionString: process.env.EXAMPLES_BENCHMARK_DATABASE_URL },
+    },
+    {
+      variant: 'sqlite',
+      adapter: { sqliteDatabasePath: 'output/db.sqlite' },
+    },
   ];
-  for (const databaseSelector of adapters) {
-    const result = await initializeAndRunTests(runName, databaseSelector);
+  for (const { variant, adapter } of variants) {
+    const fullRunName = runName ? `${timestamp}-${runName}` : timestamp;
+    const result = await initializeAndRunTests(fullRunName, variant, adapter);
     result.throwIfError();
   }
 }
 
 const runName = process.argv[2] || '';
 const timestamp = fileTimestamp();
-const fullRunName = runName ? `${timestamp}-${runName}` : timestamp;
-main(fullRunName).catch((error) => {
+
+main(runName).catch((error) => {
   console.warn(error);
   process.exitCode = 1;
 });
