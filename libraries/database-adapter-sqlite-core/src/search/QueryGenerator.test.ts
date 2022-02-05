@@ -1619,7 +1619,7 @@ describe('totalAdminEntitiesQuery()', () => {
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
-          "text": "SELECT COUNT(e.id) AS count FROM entities e, entity_versions ev, entity_version_references evr, entities e2 WHERE e.resolved_auth_key = ?1 AND e.latest_entity_versions_id = ev.id AND ev.id = evr.entity_versions_id AND evr.entities_id = e2.id AND e2.uuid = ?2",
+          "text": "SELECT COUNT(e.id) AS count FROM entities e, entity_versions ev, entity_version_references evr, entities e2 WHERE e.latest_entity_versions_id = ev.id AND e.resolved_auth_key = ?1 AND ev.id = evr.entity_versions_id AND evr.entities_id = e2.id AND e2.uuid = ?2",
           "values": Array [
             "none",
             "37b48706-803e-4227-a51e-8208db12d949",
@@ -1638,7 +1638,7 @@ describe('totalAdminEntitiesQuery()', () => {
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
-          "text": "SELECT COUNT(e.id) AS count FROM entities e, entity_versions ev, entity_version_references evr, entities e2 WHERE e.resolved_auth_key = ?1 AND e.type IN (?2, ?3) AND e.latest_entity_versions_id = ev.id AND ev.id = evr.entity_versions_id AND evr.entities_id = e2.id AND e2.uuid = ?4",
+          "text": "SELECT COUNT(e.id) AS count FROM entities e, entity_versions ev, entity_version_references evr, entities e2 WHERE e.latest_entity_versions_id = ev.id AND e.resolved_auth_key = ?1 AND e.type IN (?2, ?3) AND ev.id = evr.entity_versions_id AND evr.entities_id = e2.id AND e2.uuid = ?4",
           "values": Array [
             "none",
             "QueryGeneratorFoo",
@@ -1663,7 +1663,7 @@ describe('totalAdminEntitiesQuery()', () => {
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
-          "text": "SELECT COUNT(DISTINCT e.id) AS count FROM entities e, entity_versions ev, entity_version_locations evl WHERE e.resolved_auth_key = ?1 AND e.latest_entity_versions_id = ev.id AND ev.id = evl.entity_versions_id AND evl.lat >= ?2 AND evl.lat <= ?3 AND evl.lng >= ?4 AND evl.lng <= ?5",
+          "text": "SELECT COUNT(DISTINCT e.id) AS count FROM entities e, entity_versions ev, entity_version_locations evl WHERE e.latest_entity_versions_id = ev.id AND e.resolved_auth_key = ?1 AND ev.id = evl.entity_versions_id AND evl.lat >= ?2 AND evl.lat <= ?3 AND evl.lng >= ?4 AND evl.lng <= ?5",
           "values": Array [
             "none",
             55.07,
@@ -1689,7 +1689,7 @@ describe('totalAdminEntitiesQuery()', () => {
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
-          "text": "SELECT COUNT(DISTINCT e.id) AS count FROM entities e, entity_versions ev, entity_version_locations evl WHERE e.resolved_auth_key = ?1 AND e.latest_entity_versions_id = ev.id AND ev.id = evl.entity_versions_id AND evl.lat >= ?2 AND evl.lat <= ?3 AND (evl.lng <= ?4 OR evl.lng >= ?5)",
+          "text": "SELECT COUNT(DISTINCT e.id) AS count FROM entities e, entity_versions ev, entity_version_locations evl WHERE e.latest_entity_versions_id = ev.id AND e.resolved_auth_key = ?1 AND ev.id = evl.entity_versions_id AND evl.lat >= ?2 AND evl.lat <= ?3 AND (evl.lng <= ?4 OR evl.lng >= ?5)",
           "values": Array [
             "none",
             55.07,
@@ -1792,7 +1792,7 @@ describe('totalPublishedEntitiesQuery()', () => {
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
-          "text": "SELECT COUNT(e.id) AS count FROM entities e, entity_versions ev, entity_version_references evr, entities e2 WHERE e.published_entity_versions_id IS NOT NULL AND e.resolved_auth_key = ?1 AND e.published_entity_versions_id = ev.id AND ev.id = evr.entity_versions_id AND evr.entities_id = e2.id AND e2.uuid = ?2 AND e2.published_entity_versions_id IS NOT NULL",
+          "text": "SELECT COUNT(e.id) AS count FROM entities e, entity_versions ev, entity_version_references evr, entities e2 WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = ?1 AND ev.id = evr.entity_versions_id AND evr.entities_id = e2.id AND e2.uuid = ?2 AND e2.published_entity_versions_id IS NOT NULL",
           "values": Array [
             "none",
             "37b48706-803e-4227-a51e-8208db12d949",
@@ -1811,7 +1811,7 @@ describe('totalPublishedEntitiesQuery()', () => {
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
-          "text": "SELECT COUNT(e.id) AS count FROM entities e, entity_versions ev, entity_version_references evr, entities e2 WHERE e.published_entity_versions_id IS NOT NULL AND e.resolved_auth_key = ?1 AND e.type IN (?2, ?3) AND e.published_entity_versions_id = ev.id AND ev.id = evr.entity_versions_id AND evr.entities_id = e2.id AND e2.uuid = ?4 AND e2.published_entity_versions_id IS NOT NULL",
+          "text": "SELECT COUNT(e.id) AS count FROM entities e, entity_versions ev, entity_version_references evr, entities e2 WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = ?1 AND e.type IN (?2, ?3) AND ev.id = evr.entity_versions_id AND evr.entities_id = e2.id AND e2.uuid = ?4 AND e2.published_entity_versions_id IS NOT NULL",
           "values": Array [
             "none",
             "QueryGeneratorFoo",
@@ -1831,7 +1831,7 @@ describe('totalPublishedEntitiesQuery()', () => {
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
-          "text": "SELECT COUNT(DISTINCT e.id) AS count FROM entities e, entity_versions ev, entity_version_locations evl WHERE e.published_entity_versions_id IS NOT NULL AND e.resolved_auth_key = ?1 AND e.published_entity_versions_id = ev.id AND ev.id = evl.entity_versions_id AND evl.lat >= ?2 AND evl.lat <= ?3 AND evl.lng >= ?4 AND evl.lng <= ?5",
+          "text": "SELECT COUNT(DISTINCT e.id) AS count FROM entities e, entity_versions ev, entity_version_locations evl WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = ?1 AND ev.id = evl.entity_versions_id AND evl.lat >= ?2 AND evl.lat <= ?3 AND evl.lng >= ?4 AND evl.lng <= ?5",
           "values": Array [
             "none",
             55.07,
@@ -1852,7 +1852,7 @@ describe('totalPublishedEntitiesQuery()', () => {
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
-          "text": "SELECT COUNT(DISTINCT e.id) AS count FROM entities e, entity_versions ev, entity_version_locations evl WHERE e.published_entity_versions_id IS NOT NULL AND e.resolved_auth_key = ?1 AND e.published_entity_versions_id = ev.id AND ev.id = evl.entity_versions_id AND evl.lat >= ?2 AND evl.lat <= ?3 AND (evl.lng <= ?4 OR evl.lng >= ?5)",
+          "text": "SELECT COUNT(DISTINCT e.id) AS count FROM entities e, entity_versions ev, entity_version_locations evl WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = ?1 AND ev.id = evl.entity_versions_id AND evl.lat >= ?2 AND evl.lat <= ?3 AND (evl.lng <= ?4 OR evl.lng >= ?5)",
           "values": Array [
             "none",
             55.07,

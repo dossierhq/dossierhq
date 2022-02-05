@@ -110,70 +110,10 @@ function sharedSearchEntitiesQuery<
     qb.addQuery(published ? 'entities_published_fts fts' : 'entities_latest_fts fts');
   }
 
-  if (published) {
-    qb.addQuery('WHERE e.published_entity_versions_id = ev.id');
-  } else {
-    qb.addQuery('WHERE e.latest_entity_versions_id = ev.id');
-  }
+  qb.addQuery('WHERE');
 
-  // Filter: authKeys
-  if (authKeys.length === 0) {
-    return notOk.BadRequest('No authKeys provided');
-  } else if (authKeys.length === 1) {
-    qb.addQuery(`AND e.resolved_auth_key = ${qb.addValue(authKeys[0].resolvedAuthKey)}`);
-  } else {
-    qb.addQuery(
-      `AND e.resolved_auth_key IN ${qb.addValueList(authKeys.map((it) => it.resolvedAuthKey))}`
-    );
-  }
-
-  // Filter: entityTypes
-  const entityTypesResult = getFilterEntityTypes(schema, query);
-  if (entityTypesResult.isError()) {
-    return entityTypesResult;
-  }
-  if (entityTypesResult.value.length > 0) {
-    qb.addQuery(`AND e.type IN ${qb.addValueList(entityTypesResult.value)}`);
-  }
-
-  // Filter: status
-  if (!published && query && 'status' in query) {
-    addFilterStatusSqlSegment(query, qb);
-  }
-
-  // Filter: referencing
-  if (query?.referencing) {
-    qb.addQuery(
-      `AND ev.id = evr.entity_versions_id AND evr.entities_id = e2.id AND e2.uuid = ${qb.addValue(
-        query.referencing
-      )}`
-    );
-    if (published) {
-      qb.addQuery('AND e2.published_entity_versions_id IS NOT NULL');
-    }
-  }
-
-  // Filter: bounding box
-  if (query?.boundingBox) {
-    const { minLat, maxLat, minLng, maxLng } = query.boundingBox;
-    qb.addQuery(
-      `AND ev.id = evl.entity_versions_id AND evl.lat >= ${qb.addValue(
-        minLat
-      )} AND evl.lat <= ${qb.addValue(maxLat)}`
-    );
-    if (minLng > 0 && maxLng < 0) {
-      // wrapping around 180/-180 boundary
-      qb.addQuery(`AND (evl.lng <= ${qb.addValue(minLng)} OR evl.lng >= ${qb.addValue(maxLng)})`);
-    } else {
-      qb.addQuery(`AND evl.lng >= ${qb.addValue(minLng)} AND evl.lng <= ${qb.addValue(maxLng)}`);
-    }
-  }
-
-  // Filter: text
-  if (query?.text) {
-    // fts points to different identical tables base on `published`
-    qb.addQuery(`AND fts.content match ${qb.addValue(query.text)} AND fts.docid = e.id`);
-  }
+  const filterResult = addQueryFilters(qb, schema, query, authKeys, published, true);
+  if (filterResult.isError()) return filterResult;
 
   // Paging 1/2
   if (resolvedPaging.after !== null) {
@@ -322,7 +262,9 @@ function totalCountQuery(
   }
   qb.addQuery('AS count FROM entities e');
 
-  if (query?.referencing || query?.boundingBox) {
+  const linkToEntityVersion = !!(query?.referencing || query?.boundingBox);
+
+  if (linkToEntityVersion) {
     qb.addQuery('entity_versions ev');
   }
   if (query?.referencing) {
@@ -337,7 +279,27 @@ function totalCountQuery(
 
   qb.addQuery('WHERE');
 
-  if (published) {
+  const filterResult = addQueryFilters(qb, schema, query, authKeys, published, linkToEntityVersion);
+  if (filterResult.isError()) return filterResult;
+
+  return ok(qb.build());
+}
+
+function addQueryFilters(
+  qb: SqliteQueryBuilder,
+  schema: AdminSchema | PublishedSchema,
+  query: PublishedQuery | AdminQuery | undefined,
+  authKeys: ResolvedAuthKey[],
+  published: boolean,
+  linkToEntityVersion: boolean
+): Result<void, ErrorType.BadRequest> {
+  if (linkToEntityVersion) {
+    if (published) {
+      qb.addQuery('AND e.published_entity_versions_id = ev.id');
+    } else {
+      qb.addQuery('AND e.latest_entity_versions_id = ev.id');
+    }
+  } else if (published) {
     qb.addQuery('AND e.published_entity_versions_id IS NOT NULL');
   }
 
@@ -364,14 +326,6 @@ function totalCountQuery(
   // Filter: status
   if (!published && query && 'status' in query) {
     addFilterStatusSqlSegment(query, qb);
-  }
-
-  if (query?.referencing || query?.boundingBox) {
-    if (published) {
-      qb.addQuery('AND e.published_entity_versions_id = ev.id');
-    } else {
-      qb.addQuery('AND e.latest_entity_versions_id = ev.id');
-    }
   }
 
   // Filter: referencing
@@ -404,11 +358,11 @@ function totalCountQuery(
 
   // Filter: text
   if (query?.text) {
-    // fts points to different identical tables base on `published`
+    // fts points to different identical tables based on `published`
     qb.addQuery(`AND fts.content match ${qb.addValue(query.text)} AND fts.docid = e.id`);
   }
 
-  return ok(qb.build());
+  return ok(undefined);
 }
 
 function getFilterEntityTypes(
