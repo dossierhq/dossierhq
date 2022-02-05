@@ -305,7 +305,9 @@ function totalCountQuery(
   }
   qb.addQuery('AS count FROM entities e');
 
-  if (query?.referencing || query?.boundingBox) {
+  const linkToEntityVersion = query?.referencing || query?.boundingBox;
+
+  if (linkToEntityVersion) {
     qb.addQuery('entity_versions ev');
   }
   if (query?.referencing) {
@@ -317,7 +319,13 @@ function totalCountQuery(
 
   qb.addQuery('WHERE');
 
-  if (published) {
+  if (linkToEntityVersion) {
+    if (published) {
+      qb.addQuery('AND e.published_entity_versions_id = ev.id');
+    } else {
+      qb.addQuery('AND e.latest_draft_entity_versions_id = ev.id');
+    }
+  } else if (published) {
     qb.addQuery('AND e.published_entity_versions_id IS NOT NULL');
   }
 
@@ -344,14 +352,6 @@ function totalCountQuery(
   // Filter: status
   if (!published && query && 'status' in query) {
     addFilterStatusSqlSegment(query, qb);
-  }
-
-  if (query?.referencing || query?.boundingBox) {
-    if (published) {
-      qb.addQuery('AND e.published_entity_versions_id = ev.id');
-    } else {
-      qb.addQuery('AND e.latest_draft_entity_versions_id = ev.id');
-    }
   }
 
   // Filter: referencing
