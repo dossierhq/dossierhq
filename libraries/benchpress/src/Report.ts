@@ -71,6 +71,7 @@ async function reportResultTsv(
   const header =
     [
       'Test name',
+      'Variant',
       'Run name',
       'Base name',
       'Avg',
@@ -82,6 +83,7 @@ async function reportResultTsv(
   const row =
     [
       processed.testName,
+      processed.variant,
       processed.runName,
       options.baseName,
       processed.mean_ms,
@@ -120,6 +122,7 @@ async function reportResultJson(
 
   const data = {
     name: processed.testName,
+    variant: processed.variant,
     unit: 'ms',
     iterationCount: processed.iterationCount,
     successCount: processed.successCount,

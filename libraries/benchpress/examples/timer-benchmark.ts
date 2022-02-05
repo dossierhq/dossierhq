@@ -1,7 +1,7 @@
 import path from 'path';
 import { delay, runTest, reportResult, fileTimestamp } from '../src/';
 
-async function main(runName: string) {
+async function main(runName: string, variant: string) {
   const result = await runTest(
     async (clock) => {
       clock.start();
@@ -9,7 +9,7 @@ async function main(runName: string) {
       clock.stop();
       return Math.random() > 0.1; // fail 10% of the time
     },
-    { testName: 'setTimeout', runName, warmup: 5, iterations: 100 }
+    { testName: 'setTimeout', variant, runName, warmup: 5, iterations: 100 }
   );
 
   await reportResult(result, {
@@ -22,9 +22,10 @@ async function main(runName: string) {
 
 if (require.main === module) {
   const runName = process.argv[2] || '';
+  const variant = 'main';
   const timestamp = fileTimestamp();
-  const fullRunName = runName ? `${timestamp}-${runName}` : timestamp;
-  main(fullRunName).catch((error) => {
+  const fullRunName = runName ? `${timestamp}-${variant}-${runName}` : `${timestamp}-${variant}`;
+  main(fullRunName, variant).catch((error) => {
     console.warn(error);
     process.exitCode = 1;
   });
