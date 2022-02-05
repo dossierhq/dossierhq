@@ -99,67 +99,10 @@ function sharedSearchEntitiesQuery<
     qb.addQuery('entity_version_locations evl');
   }
 
-  if (published) {
-    qb.addQuery('WHERE e.published_entity_versions_id = ev.id');
-  } else {
-    qb.addQuery('WHERE e.latest_draft_entity_versions_id = ev.id');
-  }
+  qb.addQuery('WHERE');
 
-  // Filter: authKeys
-  if (authKeys.length === 0) {
-    return notOk.BadRequest('No authKeys provided');
-  } else if (authKeys.length === 1) {
-    qb.addQuery(`AND e.resolved_auth_key = ${qb.addValue(authKeys[0].resolvedAuthKey)}`);
-  } else {
-    qb.addQuery(
-      `AND e.resolved_auth_key = ANY(${qb.addValue(authKeys.map((it) => it.resolvedAuthKey))})`
-    );
-  }
-
-  // Filter: entityTypes
-  const entityTypesResult = getFilterEntityTypes(schema, query);
-  if (entityTypesResult.isError()) {
-    return entityTypesResult;
-  }
-  if (entityTypesResult.value.length > 0) {
-    qb.addQuery(`AND e.type = ANY(${qb.addValue(entityTypesResult.value)})`);
-  }
-
-  // Filter: status
-  if (!published && query && 'status' in query) {
-    addFilterStatusSqlSegment(query, qb);
-  }
-
-  // Filter: referencing
-  if (query?.referencing) {
-    qb.addQuery(
-      `AND ev.id = evr.entity_versions_id AND evr.entities_id = e2.id AND e2.uuid = ${qb.addValue(
-        query.referencing
-      )}`
-    );
-    if (published) {
-      qb.addQuery('AND e2.published_entity_versions_id IS NOT NULL');
-    }
-  }
-
-  // Filter: bounding box
-  if (query?.boundingBox) {
-    const { minLat, maxLat, minLng, maxLng } = query.boundingBox;
-    qb.addQuery(
-      `AND ev.id = evl.entity_versions_id AND evl.location && ST_MakeEnvelope(${qb.addValue(
-        minLng
-      )}, ${qb.addValue(minLat)}, ${qb.addValue(maxLng)}, ${qb.addValue(maxLat)}, 4326)`
-    );
-  }
-
-  // Filter: text
-  if (query?.text) {
-    if (published) {
-      qb.addQuery(`AND e.published_fts @@ websearch_to_tsquery(${qb.addValue(query.text)})`);
-    } else {
-      qb.addQuery(`AND e.latest_fts @@ websearch_to_tsquery(${qb.addValue(query.text)})`);
-    }
-  }
+  const filterResult = addQueryFilters(qb, schema, query, authKeys, published, true);
+  if (filterResult.isError()) return filterResult;
 
   // Paging 1/2
   if (resolvedPaging.after !== null) {
@@ -305,7 +248,7 @@ function totalCountQuery(
   }
   qb.addQuery('AS count FROM entities e');
 
-  const linkToEntityVersion = query?.referencing || query?.boundingBox;
+  const linkToEntityVersion = !!(query?.referencing || query?.boundingBox);
 
   if (linkToEntityVersion) {
     qb.addQuery('entity_versions ev');
@@ -319,6 +262,20 @@ function totalCountQuery(
 
   qb.addQuery('WHERE');
 
+  const filterResult = addQueryFilters(qb, schema, query, authKeys, published, linkToEntityVersion);
+  if (filterResult.isError()) return filterResult;
+
+  return ok(qb.build());
+}
+
+function addQueryFilters(
+  qb: PostgresQueryBuilder,
+  schema: AdminSchema | PublishedSchema,
+  query: PublishedQuery | AdminQuery | undefined,
+  authKeys: ResolvedAuthKey[],
+  published: boolean,
+  linkToEntityVersion: boolean
+): Result<void, ErrorType.BadRequest> {
   if (linkToEntityVersion) {
     if (published) {
       qb.addQuery('AND e.published_entity_versions_id = ev.id');
@@ -342,9 +299,7 @@ function totalCountQuery(
 
   // Filter: entityTypes
   const entityTypesResult = getFilterEntityTypes(schema, query);
-  if (entityTypesResult.isError()) {
-    return entityTypesResult;
-  }
+  if (entityTypesResult.isError()) return entityTypesResult;
   if (entityTypesResult.value.length > 0) {
     qb.addQuery(`AND e.type = ANY(${qb.addValue(entityTypesResult.value)})`);
   }
@@ -385,7 +340,7 @@ function totalCountQuery(
     }
   }
 
-  return ok(qb.build());
+  return ok(undefined);
 }
 
 function getFilterEntityTypes(
