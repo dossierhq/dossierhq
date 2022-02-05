@@ -10,6 +10,8 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 16.13.1
+      - name: Install gnuplot
+        run: sudo apt-get install -y gnuplot
       - name: Use deno
         uses: denoland/setup-deno@v1
         with:
