@@ -7,3 +7,11 @@ create entity	sqlite	dfeefffb	dfeefffb-sqlite-create-entity	3.252386	1.47	2.2105
 create entity organization	sqlite	dfeefffb	dfeefffb-sqlite-create-entity-organization	3.245948	1.38	2.128418	3.064925	3.709031	4.081535	28.847144
 create entity person	sqlite	dfeefffb	dfeefffb-sqlite-create-entity-person	3.125071	1.00	2.139919	2.978825	3.635231	3.947134	23.756601
 search admin entities (any, first 50)	sqlite	dfeefffb	dfeefffb-sqlite-search-admin-entities-any-first-50	5.379597	4.06	4.256836	4.453739	4.891842	9.267679	32.158077
+create entity	postgres	a1c02d27	a1c02d27-postgres-create-entity	2.997788	1.03	2.249214	2.643117	3.807424	4.81643	12.408477
+create entity organization	postgres	a1c02d27	a1c02d27-postgres-create-entity-organization	2.710144	0.76	2.009012	2.472715	3.573222	4.017925	11.900474
+create entity person	postgres	a1c02d27	a1c02d27-postgres-create-entity-person	2.560046	0.91	2.137613	2.367114	2.798517	3.310621	19.200318
+search admin entities (any, first 50)	postgres	a1c02d27	a1c02d27-postgres-search-admin-entities-any-first-50	10.582026	2.04	9.497358	10.059561	11.817971	13.566147	35.131021
+create entity	sqlite	a1c02d27	a1c02d27-sqlite-create-entity	3.548602	1.62	2.237413	3.170111	4.429115	5.856336	30.385384
+create entity organization	sqlite	a1c02d27	a1c02d27-sqlite-create-entity-organization	3.307997	1.18	2.075713	3.048219	4.235627	4.833429	17.758613
+create entity person	sqlite	a1c02d27	a1c02d27-sqlite-create-entity-person	3.082508	0.86	2.066813	2.877019	4.014425	4.543429	10.184564
+search admin entities (any, first 50)	sqlite	a1c02d27	a1c02d27-sqlite-search-admin-entities-any-first-50	5.093693	1.96	4.253728	4.467728	7.260448	10.328568	25.613162
