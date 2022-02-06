@@ -1,10 +1,7 @@
 #!/usr/bin/env -S deno run --import-map=./config/import-map.json --allow-net=localhost:5432 --allow-read=.env,.env.defaults
-import type { ErrorType, PromiseResult } from "@jonasb/datadata-core";
-import { notOk, ok } from "@jonasb/datadata-core";
-import { createServer } from "@jonasb/datadata-server";
-import type {
-  AuthorizationAdapter,
-  SessionContext,
+import {
+  createServer,
+  NoneAndSubjectAuthorizationAdapter,
 } from "@jonasb/datadata-server";
 import { createDotenvAdapter } from "./ServerUtils.ts";
 import { getLogger } from "./Logger.ts";
@@ -14,7 +11,7 @@ const logger = getLogger();
 const serverResult = await createServer({
   databaseAdapter: createDotenvAdapter(),
   logger,
-  authorizationAdapter: createAuthorizationAdapter(),
+  authorizationAdapter: NoneAndSubjectAuthorizationAdapter,
 });
 if (serverResult.isError()) throw serverResult.toError();
 const server = serverResult.value;
@@ -37,32 +34,4 @@ try {
   }
 } finally {
   await server.shutdown();
-}
-
-function createAuthorizationAdapter(): AuthorizationAdapter {
-  return {
-    resolveAuthorizationKeys<T extends string>(
-      context: SessionContext,
-      authKeys: T[],
-    ): PromiseResult<
-      Record<T, string>,
-      ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
-    > {
-      const result = {} as Record<T, string>;
-      for (const key of authKeys) {
-        let resolved: string;
-        if (key === "subject") {
-          resolved = `subject:${context.session.subjectId}`;
-        } else if (key === "none") {
-          resolved = key;
-        } else {
-          return Promise.resolve(
-            notOk.BadRequest(`The authKey ${key} doesn't exist`),
-          );
-        }
-        result[key] = resolved;
-      }
-      return Promise.resolve(ok(result));
-    },
-  };
 }
