@@ -309,6 +309,72 @@ describe('PublishedClient forward operation over JSON', () => {
     `);
   });
 
+  test('sampleEntities', async () => {
+    const entity1: PublishedEntity = {
+      id: 'id',
+      info: {
+        type: 'Foo',
+        name: 'Name',
+        authKey: 'none',
+        createdAt: Temporal.Now.instant(),
+      },
+      fields: { foo: 'Hello' },
+    };
+
+    const { publishedClient, operationHandlerMock } =
+      createJsonConvertingPublishedClientsForOperation(
+        { logger: NoOpLogger },
+        PublishedClientOperationName.sampleEntities,
+        async (_context, operation) => {
+          const [_query, _options] = operation.args;
+          operation.resolve(ok([entity1]));
+        }
+      );
+
+    const result = await publishedClient.sampleEntities(
+      { boundingBox: { minLat: 0, maxLat: 1, minLng: 20, maxLng: 21 } },
+      { count: 10 }
+    );
+    expectResultValue(result, [entity1]);
+
+    expectOkResult(result) &&
+      expect(result.value[0].info.createdAt).toBeInstanceOf(Temporal.Instant);
+
+    expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
+      Array [
+        Array [
+          Object {
+            "logger": Object {
+              "debug": [Function],
+              "error": [Function],
+              "info": [Function],
+              "warn": [Function],
+            },
+          },
+          Object {
+            "args": Array [
+              Object {
+                "boundingBox": Object {
+                  "maxLat": 1,
+                  "maxLng": 21,
+                  "minLat": 0,
+                  "minLng": 20,
+                },
+              },
+              Object {
+                "count": 10,
+              },
+            ],
+            "modifies": false,
+            "name": "sampleEntities",
+            "next": [Function],
+            "resolve": [Function],
+          },
+        ],
+      ]
+    `);
+  });
+
   test('searchEntities', async () => {
     const entity1: PublishedEntity = {
       id: 'id',
