@@ -39,6 +39,7 @@ import { authCreateSession } from './auth/createSession';
 import { publishedEntityGetEntities } from './published-entity/getEntities';
 import { publishedEntityGetOne } from './published-entity/getEntity';
 import { publishedEntitySearchTotalCount } from './published-entity/getTotalCount';
+import { publishedEntitySampleEntities } from './published-entity/sampleEntities';
 import { publishedEntitySearchEntities } from './published-entity/searchEntities';
 import { queryOne } from './QueryFunctions';
 import { schemaGetSpecification } from './schema/getSpecification';
@@ -118,6 +119,8 @@ function createAdapter(sqliteAdapter: SqliteDatabaseAdapter): DatabaseAdapter {
     disconnect: sqliteAdapter.disconnect,
     publishedEntityGetOne: (...args) => publishedEntityGetOne(sqliteAdapter, ...args),
     publishedEntityGetEntities: (...args) => publishedEntityGetEntities(sqliteAdapter, ...args),
+    publishedEntitySampleEntities: (...args) =>
+      publishedEntitySampleEntities(sqliteAdapter, ...args),
     publishedEntitySearchEntities: (...args) =>
       publishedEntitySearchEntities(sqliteAdapter, ...args),
     publishedEntitySearchTotalCount: (...args) =>
