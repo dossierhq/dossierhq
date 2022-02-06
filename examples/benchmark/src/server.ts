@@ -1,4 +1,4 @@
-import { ErrorType, NoOpLogger, notOk, ok, PromiseResult, Result } from '@jonasb/datadata-core';
+import { ErrorType, NoOpLogger, ok, PromiseResult, Result } from '@jonasb/datadata-core';
 import {
   createPostgresAdapter,
   type PgDatabaseAdapter,
@@ -7,12 +7,14 @@ import {
   createSqlite3Adapter,
   type Sqlite3DatabaseAdapter,
 } from '@jonasb/datadata-database-adapter-sqlite-sqlite3';
-import { AuthorizationAdapter, createServer, SessionContext } from '@jonasb/datadata-server';
+import {
+  AuthorizationAdapter,
+  createServer,
+  NoneAndSubjectAuthorizationAdapter,
+} from '@jonasb/datadata-server';
 import fs from 'fs/promises';
 import { Client } from 'pg';
 import schemaSpecification from './schema.json';
-
-const validAuthorizationKeys: readonly string[] = ['none'];
 
 export type DatabaseAdapterSelector =
   | { postgresConnectionString: string }
@@ -76,16 +78,5 @@ async function createSqliteDatabaseAdapter(databasePath: string) {
 }
 
 function createAuthorizationAdapter(): AuthorizationAdapter {
-  return {
-    async resolveAuthorizationKeys<T extends string>(_context: SessionContext, authKeys: T[]) {
-      const result = {} as Record<T, string>;
-      for (const key of authKeys) {
-        if (!validAuthorizationKeys.includes(key)) {
-          return notOk.BadRequest(`Invalid authorization key ${key}`);
-        }
-        result[key] = key;
-      }
-      return ok(result);
-    },
-  };
+  return NoneAndSubjectAuthorizationAdapter;
 }

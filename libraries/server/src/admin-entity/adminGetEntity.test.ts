@@ -34,7 +34,7 @@ describe('Admin adminGetEntity', () => {
       )
     );
     authorizationAdapter.resolveAuthorizationKeys.mockReturnValueOnce(
-      Promise.resolve(ok({ none: 'none' }))
+      Promise.resolve(ok([{ authKey: 'none', resolvedAuthKey: 'none' }]))
     );
 
     const result = await adminGetEntity(

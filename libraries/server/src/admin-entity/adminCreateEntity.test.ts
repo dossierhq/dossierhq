@@ -18,7 +18,7 @@ describe('Admin adminCreateEntity', () => {
     const now = Temporal.Now.instant();
 
     authorizationAdapter.resolveAuthorizationKeys.mockReturnValueOnce(
-      Promise.resolve(ok({ none: 'none' }))
+      Promise.resolve(ok([{ authKey: 'none', resolvedAuthKey: 'none' }]))
     );
     databaseAdapter.adminEntityCreate.mockReturnValueOnce(
       Promise.resolve(ok({ id: '123', name: 'TitleOnly name', createdAt: now, updatedAt: now }))

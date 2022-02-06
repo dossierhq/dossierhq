@@ -64,16 +64,13 @@ export async function authResolveAuthorizationKey(
   const resolvedResult = await authorizationAdapter.resolveAuthorizationKeys(context, [authKey]);
   if (resolvedResult.isError()) return resolvedResult;
 
-  const resolvedAuthKey = resolvedResult.value[authKey];
+  const resolvedAuthKey = resolvedResult.value.find((it) => it.authKey === authKey);
   if (!resolvedAuthKey) {
     return notOk.Generic(
       `Authorization adapter didn't return a key when resolving authKey (${authKey})`
     );
   }
-  return ok({
-    authKey,
-    resolvedAuthKey,
-  });
+  return ok(resolvedAuthKey);
 }
 
 export async function authResolveAuthorizationKeys(
@@ -93,25 +90,7 @@ export async function authResolveAuthorizationKeys(
   const verifyResult = verifyAuthKeysFormat(expectedAuthKeys);
   if (verifyResult.isError()) return verifyResult;
 
-  const resolvedResult = await authorizationAdapter.resolveAuthorizationKeys(
-    context,
-    expectedAuthKeys
-  );
-  if (resolvedResult.isError()) {
-    return resolvedResult;
-  }
-
-  const result: ResolvedAuthKey[] = [];
-  for (const authKey of expectedAuthKeys) {
-    const resolvedAuthKey = resolvedResult.value[authKey];
-    if (!resolvedAuthKey) {
-      return notOk.Generic(
-        `Authorization adapter didn't return a key when resolving authKey (${authKey})`
-      );
-    }
-    result.push({ authKey, resolvedAuthKey });
-  }
-  return ok(result);
+  return await authorizationAdapter.resolveAuthorizationKeys(context, expectedAuthKeys);
 }
 
 export async function authVerifyAuthorizationKey(
