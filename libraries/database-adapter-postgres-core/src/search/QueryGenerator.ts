@@ -238,7 +238,7 @@ function sampleEntitiesQuery(
   const filterResult = addQueryFilters(qb, schema, query, authKeys, published, true);
   if (filterResult.isError()) return filterResult;
 
-  qb.addQuery(`ORDER BY e.id OFFSET ${qb.addValue(offset)} LIMIT ${qb.addValue(limit)}`);
+  qb.addQuery(`ORDER BY e.uuid LIMIT ${qb.addValue(limit)} OFFSET ${qb.addValue(offset)}`);
 
   return ok(qb.build());
 }

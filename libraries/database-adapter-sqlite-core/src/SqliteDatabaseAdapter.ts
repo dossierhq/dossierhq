@@ -23,6 +23,7 @@ import {
   adminEntityPublishGetVersionInfo,
   adminEntityPublishUpdateEntity,
 } from './admin-entity/publishEntities';
+import { adminEntitySampleEntities } from './admin-entity/sampleEntities';
 import { adminEntitySearchEntities } from './admin-entity/searchEntities';
 import {
   adminEntityUnpublishEntities,
@@ -101,6 +102,7 @@ function createAdapter(sqliteAdapter: SqliteDatabaseAdapter): DatabaseAdapter {
       adminEntityPublishingHistoryGetEvents(sqliteAdapter, ...args),
     adminEntityPublishUpdateEntity: (...args) =>
       adminEntityPublishUpdateEntity(sqliteAdapter, ...args),
+    adminEntitySampleEntities: (...args) => adminEntitySampleEntities(sqliteAdapter, ...args),
     adminEntitySearchEntities: (...args) => adminEntitySearchEntities(sqliteAdapter, ...args),
     adminEntitySearchTotalCount: (...args) => adminEntitySearchTotalCount(sqliteAdapter, ...args),
     adminEntityUpdateEntity: (...args) => adminEntityUpdateEntity(sqliteAdapter, ...args),

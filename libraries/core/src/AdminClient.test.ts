@@ -670,6 +670,72 @@ describe('AdminClient forward operation over JSON', () => {
     `);
   });
 
+  test('sampleEntities', async () => {
+    const entity1: AdminEntity = {
+      id: 'id',
+      info: {
+        type: 'Foo',
+        name: 'Name',
+        version: 2,
+        authKey: 'none',
+        status: AdminEntityStatus.published,
+        createdAt: Temporal.Instant.from('2021-08-17T08:51:25.56Z'),
+        updatedAt: Temporal.Instant.from('2021-10-17T08:51:25.56Z'),
+      },
+      fields: { foo: 'Hello' },
+    };
+
+    const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
+      { logger: NoOpLogger },
+      AdminClientOperationName.sampleEntities,
+      async (_context, operation) => {
+        const [_query] = operation.args;
+        operation.resolve(ok([entity1]));
+      }
+    );
+
+    const result = await adminClient.sampleEntities({
+      boundingBox: { minLat: 0, maxLat: 1, minLng: 20, maxLng: 21 },
+    });
+    expectResultValue(result, [entity1]);
+
+    if (expectOkResult(result)) {
+      expect(result.value[0].info.createdAt).toBeInstanceOf(Temporal.Instant);
+      expect(result.value[0].info.updatedAt).toBeInstanceOf(Temporal.Instant);
+    }
+
+    expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
+      Array [
+        Array [
+          Object {
+            "logger": Object {
+              "debug": [Function],
+              "error": [Function],
+              "info": [Function],
+              "warn": [Function],
+            },
+          },
+          Object {
+            "args": Array [
+              Object {
+                "boundingBox": Object {
+                  "maxLat": 1,
+                  "maxLng": 21,
+                  "minLat": 0,
+                  "minLng": 20,
+                },
+              },
+            ],
+            "modifies": false,
+            "name": "sampleEntities",
+            "next": [Function],
+            "resolve": [Function],
+          },
+        ],
+      ]
+    `);
+  });
+
   test('searchEntities', async () => {
     const entity1: AdminEntity = {
       id: 'id',
