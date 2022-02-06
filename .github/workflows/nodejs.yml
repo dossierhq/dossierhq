@@ -19,6 +19,7 @@ jobs:
         with:
           path: |
             common/temp/pnpm-store
+            common/temp/node_modules/.pnpm/github.com+jonasb+node-sqlite3*
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Use Node.js 16
         uses: actions/setup-node@v2
