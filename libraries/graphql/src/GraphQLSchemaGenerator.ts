@@ -60,6 +60,7 @@ import {
   loadAdminSearchEntities,
   loadPublishedEntities,
   loadPublishedEntity,
+  loadPublishedSampleEntities,
   loadPublishingHistory,
   loadSearchEntities,
   loadVersionHistory,
@@ -1347,6 +1348,30 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     });
   }
 
+  buildQueryFieldPublishedSampleEntities<TSource>(
+    publishedSchema: PublishedSchema
+  ): GraphQLFieldConfig<TSource, TContext> {
+    return fieldConfigWithArgs<
+      TSource,
+      TContext,
+      {
+        query?: PublishedQuery;
+        count?: number;
+      }
+    >({
+      type: new GraphQLList(this.getOutputType('PublishedEntity')),
+      args: {
+        query: { type: this.getInputType('QueryInput') },
+        count: { type: GraphQLInt },
+      },
+      resolve: async (_source, args, context, _info) => {
+        const { query, count } = args;
+        const options = { count };
+        return await loadPublishedSampleEntities(publishedSchema, context, query, options);
+      },
+    });
+  }
+
   buildQueryFieldSearchEntities<TSource>(
     publishedSchema: PublishedSchema
   ): GraphQLFieldConfig<TSource, TContext> {
@@ -1411,6 +1436,9 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
           ? {
               node: this.buildQueryFieldNode(this.publishedSchema),
               nodes: this.buildQueryFieldNodes(this.publishedSchema),
+              publishedSampleEntities: this.buildQueryFieldPublishedSampleEntities(
+                this.publishedSchema
+              ),
               searchEntities: this.buildQueryFieldSearchEntities(this.publishedSchema),
             }
           : {}),
