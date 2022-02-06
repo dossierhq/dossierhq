@@ -15,6 +15,7 @@ import type { AuthorizationAdapter, SessionContext } from '.';
 import { publishedGetEntities } from './published-entity/publishedGetEntities';
 import { publishedGetEntity } from './published-entity/publishedGetEntity';
 import { publishedGetTotalCount } from './published-entity/publishedGetTotalCount';
+import { publishedSampleEntities } from './published-entity/publishedSampleEntities';
 import { publishedSearchEntities } from './published-entity/publishedSearchEntities';
 import type { ServerImpl } from './Server';
 
@@ -87,6 +88,23 @@ export function createServerPublishedClient({
             databaseAdapter,
             context,
             query
+          )
+        );
+        break;
+      }
+      case PublishedClientOperationName.sampleEntities: {
+        const {
+          args: [query, options],
+          resolve,
+        } = operation as PublishedClientOperation<PublishedClientOperationName.sampleEntities>;
+        resolve(
+          await publishedSampleEntities(
+            serverImpl.getPublishedSchema(),
+            authorizationAdapter,
+            databaseAdapter,
+            context,
+            query,
+            options
           )
         );
         break;

@@ -391,6 +391,15 @@ export interface DatabaseAdapter {
     references: EntityReference[]
   ): PromiseResult<DatabasePublishedEntityGetOnePayload[], ErrorType.Generic>;
 
+  publishedEntitySampleEntities(
+    schema: PublishedSchema,
+    context: TransactionContext,
+    query: PublishedQuery | undefined,
+    offset: number,
+    limit: number,
+    resolvedAuthKeys: ResolvedAuthKey[]
+  ): PromiseResult<DatabasePublishedEntityPayload[], ErrorType.BadRequest | ErrorType.Generic>;
+
   publishedEntitySearchEntities(
     schema: PublishedSchema,
     context: TransactionContext,
