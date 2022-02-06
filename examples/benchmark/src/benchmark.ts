@@ -2,9 +2,13 @@ import faker from '@faker-js/faker';
 import {
   AdminClient,
   AdminEntityCreate,
+  AdminQuery,
   assertIsDefined,
   copyEntity,
+  EntityReference,
+  ErrorType,
   ok,
+  PromiseResult,
 } from '@jonasb/datadata-core';
 import {
   BenchPressOptions,
@@ -57,11 +61,17 @@ function randomNullUndefined<T>(
   return randomGenerate([value, null, undefined], [valueWeight, nullWeight, undefinedWeight]);
 }
 
-// async function randomReference(adminClient: AdminClient, query?: AdminQuery) {
-//   const result = await adminClient.searchEntities(query);
-//   if (result.isError()) return result;
-
-// }
+async function randomReference(
+  adminClient: AdminClient,
+  query?: AdminQuery
+): PromiseResult<
+  EntityReference,
+  ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
+> {
+  const result = await adminClient.sampleEntities(query);
+  if (result.isError()) return result;
+  return ok({ id: result.value[0].id });
+}
 
 function createEntity(type: string): AdminEntityCreate {
   if (type === 'Organization') {
@@ -174,22 +184,22 @@ async function testCreateEntities(adminClient: AdminClient, options: BenchPressO
 //   }, options);
 // }
 
-// async function testGetEntity(options: BenchPressOptions) {
-//   return await runTest(async (clock) => {
-//     const reference = await randomReference({});
-//     if (!reference) {
-//       return false;
-//     }
+async function testGetAdminEntity(adminClient: AdminClient, options: BenchPressOptions) {
+  return await runTest(async (clock) => {
+    const referenceResult = await randomReference(adminClient);
+    if (referenceResult.isError()) {
+      return false;
+    }
 
-//     clock.start();
+    clock.start();
 
-//     const entity = await Core.getEntity(reference.uuid);
+    const entityResult = await adminClient.getEntity(referenceResult.value);
 
-//     clock.stop();
+    clock.stop();
 
-//     return entity !== null;
-//   }, options);
-// }
+    return entityResult.isOk();
+  }, options);
+}
 
 async function testSearchAdminEntitiesAnyFirst50(
   adminClient: AdminClient,
@@ -277,10 +287,17 @@ async function runTests(
   //   `${runName}-${variant}-edit-entity`, tsvFilename
   // );
 
-  // await report(
-  //   testGetEntity({ testName: 'get entity', runName, warmup, iterations }),
-  //   `${runName}-${variant}-get-entity`, tsvFilename
-  // );
+  await report(
+    testGetAdminEntity(adminClient, {
+      testName: 'get admin entity',
+      variant,
+      runName,
+      warmup,
+      iterations,
+    }),
+    `${runName}-${variant}-get-admin-entity`,
+    tsvFilename
+  );
 
   await report(
     testSearchAdminEntitiesAnyFirst50(adminClient, {
