@@ -84,6 +84,21 @@ export async function loadPublishedEntities<TContext extends SessionGraphQLConte
   });
 }
 
+export async function loadPublishedSampleEntities<TContext extends SessionGraphQLContext>(
+  schema: PublishedSchema,
+  context: TContext,
+  query: PublishedQuery | undefined,
+  options: EntitySamplingOptions | undefined
+): Promise<PublishedEntity[]> {
+  const publishedClient = getPublishedClient(context);
+  const result = await publishedClient.sampleEntities(query, options);
+  if (result.isError()) {
+    throw result.toError();
+  }
+
+  return result.value.map((it) => buildResolversForEntity(schema, it));
+}
+
 export async function loadSearchEntities<TContext extends SessionGraphQLContext>(
   schema: PublishedSchema,
   context: TContext,
