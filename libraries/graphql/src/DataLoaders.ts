@@ -6,6 +6,7 @@ import type {
   AdminValueTypeSpecification,
   EntityHistory,
   EntityReference,
+  EntitySamplingOptions,
   FieldSpecification,
   PageInfo,
   Paging,
@@ -188,6 +189,21 @@ export function buildResolversForAdminEntity<TContext extends SessionGraphQLCont
   resolveFields<TContext>(schema, entitySpec, result, true);
 
   return result;
+}
+
+export async function loadAdminSampleEntities<TContext extends SessionGraphQLContext>(
+  schema: AdminSchema,
+  context: TContext,
+  query: AdminQuery | undefined,
+  options: EntitySamplingOptions | undefined
+): Promise<AdminEntity[]> {
+  const adminClient = getAdminClient(context);
+  const result = await adminClient.sampleEntities(query, options);
+  if (result.isError()) {
+    throw result.toError();
+  }
+
+  return result.value.map((it) => buildResolversForAdminEntity(schema, it));
 }
 
 export async function loadAdminSearchEntities<TContext extends SessionGraphQLContext>(
