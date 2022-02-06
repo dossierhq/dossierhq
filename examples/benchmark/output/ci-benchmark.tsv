@@ -23,3 +23,19 @@ create entity	sqlite	904e01d6	904e01d6-sqlite-create-entity	2.919989	1.43	1.8455
 create entity organization	sqlite	904e01d6	904e01d6-sqlite-create-entity-organization	2.869191	1.45	1.889621	2.548329	3.668742	4.536753	26.821908
 create entity person	sqlite	904e01d6	904e01d6-sqlite-create-entity-person	2.829874	1.25	1.769694	2.483292	3.931745	4.838055	25.751212
 search admin entities (any, first 50)	sqlite	904e01d6	904e01d6-sqlite-search-admin-entities-any-first-50	4.414832	2.20	3.470735	3.846387	5.274454	8.542787	28.333903
+create entity	postgres	82383a9e	82383a9e-postgres-create-entity	4.99338	1.68	2.811701	4.556477	6.810066	8.627957	14.467827
+create entity organization	postgres	82383a9e	82383a9e-postgres-create-entity-organization	4.131004	1.33	2.841602	3.767802	5.51401	6.486104	22.980645
+create entity person	postgres	82383a9e	82383a9e-postgres-create-entity-person	4.816332	1.58	2.711905	4.500809	5.938912	7.185814	32.597884
+create and publish entity	postgres	82383a9e	82383a9e-postgres-create-publish-entity	9.262638	1.85	6.564601	8.835096	11.199995	12.857302	25.350205
+edit entity	postgres	82383a9e	82383a9e-postgres-edit-entity	5.541819	1.67	3.577399	5.341198	6.67012	7.453308	36.099337
+archive entity	postgres	82383a9e	82383a9e-postgres-archive-entity	3.124524	2.06	2.133821	2.872293	3.581399	4.497099	60.536506
+get admin entity	postgres	82383a9e	82383a9e-postgres-get-admin-entity	0.983915	0.37	0.704599	0.916066	1.181298	1.313297	6.257689
+search admin entities (any, first 50)	postgres	82383a9e	82383a9e-postgres-search-admin-entities-any-first-50	9.18722	2.42	6.688487	8.496347	12.309869	14.461081	34.12149
+create entity	sqlite	82383a9e	82383a9e-sqlite-create-entity	6.617466	2.08	4.059334	6.105507	9.015136	10.949033	27.12037
+create entity organization	sqlite	82383a9e	82383a9e-sqlite-create-entity-organization	6.113557	1.53	3.992839	5.767612	7.711483	9.16256	18.023525
+create entity person	sqlite	82383a9e	82383a9e-sqlite-create-entity-person	6.226907	1.60	3.805618	5.843127	7.667235	9.463943	23.949011
+create and publish entity	sqlite	82383a9e	82383a9e-sqlite-create-publish-entity	9.173594	2.41	6.003325	8.599524	11.497348	13.805958	35.534197
+edit entity	sqlite	82383a9e	82383a9e-sqlite-edit-entity	6.669835	1.71	4.196096	6.268893	8.129791	10.078289	25.15247
+archive entity	sqlite	82383a9e	82383a9e-sqlite-archive-entity	5.299159	1.85	3.31317	4.868756	6.702706	8.892708	25.30207
+get admin entity	sqlite	82383a9e	82383a9e-sqlite-get-admin-entity	0.545849	0.72	0.327203	0.459303	0.603304	0.694405	18.385038
+search admin entities (any, first 50)	sqlite	82383a9e	82383a9e-sqlite-search-admin-entities-any-first-50	8.145787	2.30	5.614542	7.524557	10.796781	13.989833	20.811335
