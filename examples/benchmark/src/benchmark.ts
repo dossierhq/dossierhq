@@ -156,7 +156,9 @@ async function createPerson(
       () =>
         randomAdminEntity(adminClient, {
           entityTypes: ['Organization'],
-          status: options?.publishable ? [AdminEntityStatus.published] : undefined,
+          status: options?.publishable
+            ? [AdminEntityStatus.published, AdminEntityStatus.modified]
+            : undefined,
         }),
     ],
     [10, 90]
@@ -267,6 +269,44 @@ async function testEditEntity(adminClient: AdminClient, options: BenchPressOptio
     clock.stop();
 
     return updateResult.isOk();
+  }, options);
+}
+
+async function testArchiveEntity(adminClient: AdminClient, options: BenchPressOptions) {
+  return await runTest(async (clock) => {
+    let entity = null;
+    while (!entity) {
+      const randomResult = await randomAdminEntity(adminClient, {
+        entityTypes: ['Organization', 'Person'],
+        status: [AdminEntityStatus.draft, AdminEntityStatus.withdrawn],
+      });
+      if (randomResult.isError()) return false;
+
+      if (randomResult.value.info.type === 'Person' && randomResult.value.fields.organization) {
+        const referencedOrgResult = await adminClient.getEntity(
+          randomResult.value.fields.organization as EntityReference
+        );
+        if (referencedOrgResult.isError()) return false;
+
+        if (
+          [AdminEntityStatus.published, AdminEntityStatus.modified].includes(
+            referencedOrgResult.value.info.status
+          )
+        ) {
+          // Need to find another Person
+          continue;
+        }
+      }
+      entity = { id: randomResult.value.id };
+    }
+
+    clock.start();
+
+    const archiveResult = await adminClient.archiveEntity(entity);
+
+    clock.stop();
+
+    return archiveResult.isOk();
   }, options);
 }
 
@@ -388,6 +428,18 @@ async function runTests(
   );
 
   await report(
+    testArchiveEntity(adminClient, {
+      testName: 'archive entity',
+      variant,
+      runName,
+      warmup,
+      iterations,
+    }),
+    `${runName}-${variant}-archive-entity`,
+    tsvFilename
+  );
+
+  await report(
     testGetAdminEntity(adminClient, {
       testName: 'get admin entity',
       variant,
@@ -410,16 +462,6 @@ async function runTests(
     `${runName}-${variant}-search-admin-entities-any-first-50`,
     tsvFilename
   );
-
-  // await report(
-  //   testDeleteEntities(adminClient, {
-  //     testName: 'delete entity',
-  //     runName,
-  //     warmup,
-  //     iterations,
-  //   }),
-  //   `${runName}-${variant}-delete-entity`, tsvFilename
-  // );
 }
 
 async function initializeAndRunTests(
