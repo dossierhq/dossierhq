@@ -89,26 +89,7 @@ function sharedSearchEntitiesQuery<
   const resolvedPaging = pagingResult.value;
 
   const qb = new SqliteQueryBuilder('SELECT');
-  if (query?.boundingBox) {
-    qb.addQuery('DISTINCT');
-  }
-  if (published) {
-    qb.addQuery(
-      'e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, ev.fields FROM entities e, entity_versions ev'
-    );
-  } else {
-    qb.addQuery(`e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated_seq, e.status, ev.version, ev.fields
-  FROM entities e, entity_versions ev`);
-  }
-  if (query?.referencing) {
-    qb.addQuery('entity_version_references evr, entities e2');
-  }
-  if (query?.boundingBox) {
-    qb.addQuery('entity_version_locations evl');
-  }
-  if (query?.text) {
-    qb.addQuery(published ? 'entities_published_fts fts' : 'entities_latest_fts fts');
-  }
+  addEntityQuerySelectColumn(qb, query, published);
 
   qb.addQuery('WHERE');
 
@@ -232,6 +213,48 @@ function addFilterStatusSqlSegment(query: AdminQuery, qb: SqliteQueryBuilder) {
   }
 }
 
+export function sampleAdminEntitiesQuery(
+  schema: AdminSchema,
+  query: AdminQuery | undefined,
+  offset: number,
+  limit: number,
+  authKeys: ResolvedAuthKey[]
+): Result<{ text: string; values: ColumnValue[] }, ErrorType.BadRequest> {
+  return sampleEntitiesQuery(schema, query, offset, limit, authKeys, false);
+}
+
+export function samplePublishedEntitiesQuery(
+  schema: PublishedSchema,
+  query: PublishedQuery | undefined,
+  offset: number,
+  limit: number,
+  authKeys: ResolvedAuthKey[]
+): Result<{ text: string; values: ColumnValue[] }, ErrorType.BadRequest> {
+  return sampleEntitiesQuery(schema, query, offset, limit, authKeys, true);
+}
+
+function sampleEntitiesQuery(
+  schema: AdminSchema | PublishedSchema,
+  query: AdminQuery | PublishedQuery | undefined,
+  offset: number,
+  limit: number,
+  authKeys: ResolvedAuthKey[],
+  published: boolean
+): Result<{ text: string; values: ColumnValue[] }, ErrorType.BadRequest> {
+  const qb = new SqliteQueryBuilder('SELECT');
+
+  addEntityQuerySelectColumn(qb, query, published);
+
+  qb.addQuery('WHERE');
+
+  const filterResult = addQueryFilters(qb, schema, query, authKeys, published, true);
+  if (filterResult.isError()) return filterResult;
+
+  qb.addQuery(`ORDER BY e.uuid LIMIT ${qb.addValue(limit)} OFFSET ${qb.addValue(offset)}`);
+
+  return ok(qb.build());
+}
+
 export function totalAdminEntitiesQuery(
   schema: AdminSchema,
   authKeys: ResolvedAuthKey[],
@@ -283,6 +306,33 @@ function totalCountQuery(
   if (filterResult.isError()) return filterResult;
 
   return ok(qb.build());
+}
+
+function addEntityQuerySelectColumn(
+  qb: SqliteQueryBuilder,
+  query: PublishedQuery | AdminQuery | undefined,
+  published: boolean
+) {
+  if (query?.boundingBox) {
+    qb.addQuery('DISTINCT');
+  }
+  if (published) {
+    qb.addQuery(
+      'e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, ev.fields FROM entities e, entity_versions ev'
+    );
+  } else {
+    qb.addQuery(`e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated_seq, e.status, ev.version, ev.fields
+  FROM entities e, entity_versions ev`);
+  }
+  if (query?.referencing) {
+    qb.addQuery('entity_version_references evr, entities e2');
+  }
+  if (query?.boundingBox) {
+    qb.addQuery('entity_version_locations evl');
+  }
+  if (query?.text) {
+    qb.addQuery(published ? 'entities_published_fts fts' : 'entities_latest_fts fts');
+  }
 }
 
 function addQueryFilters(

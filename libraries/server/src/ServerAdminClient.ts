@@ -20,6 +20,7 @@ import { adminGetEntityHistory } from './admin-entity/adminGetEntityHistory';
 import { adminGetPublishingHistory } from './admin-entity/adminGetPublishingHistory';
 import { adminGetTotalCount } from './admin-entity/adminGetTotalCount';
 import { adminPublishEntities } from './admin-entity/adminPublishEntities';
+import { adminSampleEntities } from './admin-entity/adminSampleEntities';
 import { adminSearchEntities } from './admin-entity/adminSearchEntities';
 import { adminUnarchiveEntity } from './admin-entity/adminUnarchiveEntity';
 import { adminUnpublishEntities } from './admin-entity/adminUnpublishEntities';
@@ -160,6 +161,22 @@ export function createServerAdminClient({
             databaseAdapter,
             context,
             references
+          )
+        );
+        break;
+      }
+      case AdminClientOperationName.sampleEntities: {
+        const {
+          args: [query],
+          resolve,
+        } = operation as AdminClientOperation<AdminClientOperationName.sampleEntities>;
+        resolve(
+          await adminSampleEntities(
+            serverImpl.getAdminSchema(),
+            authorizationAdapter,
+            databaseAdapter,
+            context,
+            query
           )
         );
         break;

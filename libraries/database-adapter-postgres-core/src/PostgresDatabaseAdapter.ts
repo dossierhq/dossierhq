@@ -21,6 +21,7 @@ import {
   adminEntityPublishGetVersionInfo,
   adminEntityPublishUpdateEntity,
 } from './admin-entity/publishEntities';
+import { adminEntitySampleEntities } from './admin-entity/sampleEntities';
 import { adminEntitySearchEntities } from './admin-entity/searchEntities';
 import {
   adminEntityUnpublishEntities,
@@ -86,6 +87,7 @@ export function createPostgresDatabaseAdapterAdapter(
       adminEntityPublishingHistoryGetEvents(databaseAdapter, ...args),
     adminEntityPublishUpdateEntity: (...args) =>
       adminEntityPublishUpdateEntity(databaseAdapter, ...args),
+    adminEntitySampleEntities: (...args) => adminEntitySampleEntities(databaseAdapter, ...args),
     adminEntitySearchEntities: (...args) => adminEntitySearchEntities(databaseAdapter, ...args),
     adminEntitySearchTotalCount: (...args) => adminEntitySearchTotalCount(databaseAdapter, ...args),
     adminEntityUpdateGetEntityInfo: (...args) =>

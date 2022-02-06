@@ -312,6 +312,15 @@ export interface DatabaseAdapter {
     reference: DatabaseResolvedEntityReference
   ): PromiseResult<PublishingEvent[], ErrorType.Generic>;
 
+  adminEntitySampleEntities(
+    schema: AdminSchema,
+    context: TransactionContext,
+    query: AdminQuery | undefined,
+    offset: number,
+    limit: number,
+    resolvedAuthKeys: ResolvedAuthKey[]
+  ): PromiseResult<DatabaseAdminEntityPayload[], ErrorType.BadRequest | ErrorType.Generic>;
+
   adminEntitySearchEntities(
     schema: AdminSchema,
     context: TransactionContext,
