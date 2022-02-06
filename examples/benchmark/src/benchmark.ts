@@ -1,7 +1,9 @@
 import faker from '@faker-js/faker';
 import {
   AdminClient,
+  AdminEntity,
   AdminEntityCreate,
+  AdminEntityUpdate,
   AdminQuery,
   assertIsDefined,
   copyEntity,
@@ -68,9 +70,18 @@ async function randomReference(
   EntityReference,
   ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
 > {
+  const result = await randomAdminEntity(adminClient, query);
+  if (result.isError()) return result;
+  return ok({ id: result.value.id });
+}
+
+async function randomAdminEntity(
+  adminClient: AdminClient,
+  query?: AdminQuery
+): PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic> {
   const result = await adminClient.sampleEntities(query);
   if (result.isError()) return result;
-  return ok({ id: result.value[0].id });
+  return ok(result.value[0]);
 }
 
 function createEntity(type: string): AdminEntityCreate {
@@ -81,6 +92,18 @@ function createEntity(type: string): AdminEntityCreate {
     return createPerson();
   }
   throw new Error('Unknown type: ' + type);
+}
+
+function updateEntity(type: string, id: string): AdminEntityUpdate {
+  const entityCreate = createEntity(type);
+  const result: AdminEntityUpdate = {
+    id,
+    info: {
+      name: entityCreate.info.name,
+    },
+    fields: entityCreate.fields,
+  };
+  return result;
 }
 
 function createOrganization(): AdminEntityCreate {
@@ -163,26 +186,26 @@ async function testCreateEntities(adminClient: AdminClient, options: BenchPressO
   }, options);
 }
 
-// async function testEditEntities(adminClient: AdminClient, options: BenchPressOptions) {
-//   return await runTest(async (clock) => {
-//     const existingEntity = await Core.getRandomEntity({
-//       entityTypes: ['Organization', 'PlaceOfBusiness'],
-//     });
-//     if (!existingEntity) {
-//       return false;
-//     }
-//     const { type } = existingEntity.item;
-//     const { name: newName, entity: newEntity } = await createEntity(type);
+async function testEditEntity(adminClient: AdminClient, options: BenchPressOptions) {
+  return await runTest(async (clock) => {
+    const randomResult = await randomAdminEntity(adminClient, {
+      entityTypes: ['Organization', 'Person'],
+    });
+    if (randomResult.isError()) {
+      return false;
+    }
+    const entity = randomResult.value;
+    const entityUpdate = updateEntity(entity.info.type, entity.id);
 
-//     clock.start();
+    clock.start();
 
-//     await Core.updateEntity(session, existingEntity.item.uuid, newName, newEntity);
+    const updateResult = await adminClient.updateEntity(entityUpdate);
 
-//     clock.stop();
+    clock.stop();
 
-//     return true;
-//   }, options);
-// }
+    return updateResult.isOk();
+  }, options);
+}
 
 async function testGetAdminEntity(adminClient: AdminClient, options: BenchPressOptions) {
   return await runTest(async (clock) => {
@@ -277,15 +300,17 @@ async function runTests(
     tsvFilename
   );
 
-  // await report(
-  //   testEditEntities(adminClient, {
-  //     testName: 'edit entity',
-  //     runName,
-  //     warmup,
-  //     iterations,
-  //   }),
-  //   `${runName}-${variant}-edit-entity`, tsvFilename
-  // );
+  await report(
+    testEditEntity(adminClient, {
+      testName: 'edit entity',
+      variant,
+      runName,
+      warmup,
+      iterations,
+    }),
+    `${runName}-${variant}-edit-entity`,
+    tsvFilename
+  );
 
   await report(
     testGetAdminEntity(adminClient, {
