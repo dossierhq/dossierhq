@@ -167,7 +167,7 @@ export function createServerAdminClient({
       }
       case AdminClientOperationName.sampleEntities: {
         const {
-          args: [query],
+          args: [query, options],
           resolve,
         } = operation as AdminClientOperation<AdminClientOperationName.sampleEntities>;
         resolve(
@@ -176,7 +176,8 @@ export function createServerAdminClient({
             authorizationAdapter,
             databaseAdapter,
             context,
-            query
+            query,
+            options
           )
         );
         break;

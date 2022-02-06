@@ -238,6 +238,10 @@ export interface PublishedQuery {
   text?: string;
 }
 
+export interface EntitySamplingOptions {
+  count?: number;
+}
+
 export interface Paging {
   first?: number;
   after?: string;

@@ -18,6 +18,7 @@ import type {
   Edge,
   EntityHistory,
   EntityReference,
+  EntitySamplingOptions,
   EntityVersionReference,
   JsonResult,
   Paging,
@@ -81,7 +82,8 @@ export interface AdminClient {
   >;
 
   sampleEntities(
-    query?: AdminQuery
+    query?: AdminQuery,
+    options?: EntitySamplingOptions
   ): PromiseResult<
     AdminEntity[],
     ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
@@ -329,14 +331,15 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
   }
 
   sampleEntities(
-    query?: AdminQuery
+    query?: AdminQuery,
+    options?: EntitySamplingOptions
   ): PromiseResult<
     AdminEntity[],
     ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
   > {
     return this.executeOperation({
       name: AdminClientOperationName.sampleEntities,
-      args: [query],
+      args: [query, options],
       modifies: false,
     });
   }
@@ -560,9 +563,9 @@ export async function executeAdminClientOperationFromJson<TName extends AdminCli
       return await adminClient.publishEntities(references);
     }
     case AdminClientOperationName.sampleEntities: {
-      const [query] =
+      const [query, options] =
         operation as AdminClientOperationArguments[AdminClientOperationName.sampleEntities];
-      return await adminClient.sampleEntities(query);
+      return await adminClient.sampleEntities(query, options);
     }
     case AdminClientOperationName.searchEntities: {
       const [query, paging] =

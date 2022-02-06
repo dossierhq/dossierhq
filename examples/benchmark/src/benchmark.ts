@@ -96,7 +96,7 @@ async function randomAdminEntity(
   adminClient: AdminClient,
   query?: AdminQuery
 ): PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic> {
-  const result = await adminClient.sampleEntities(query);
+  const result = await adminClient.sampleEntities(query, { count: 1 });
   if (result.isError()) return result;
   return ok(result.value[0]);
 }

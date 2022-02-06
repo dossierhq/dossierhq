@@ -4,6 +4,7 @@ import type { PostgresDatabaseAdapter } from '..';
 import type { CursorNativeType } from './OpaqueCursor';
 import { fromOpaqueCursor } from './OpaqueCursor';
 
+//TODO move to server?
 export const pagingDefaultCount = 25;
 
 export interface ResolvedPaging<TCursor> {
