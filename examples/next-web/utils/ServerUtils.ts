@@ -1,10 +1,9 @@
 import type { AdminClient, ErrorType, PromiseResult, PublishedClient } from '@jonasb/datadata-core';
-import { NoOpLogger } from '@jonasb/datadata-core';
-import { AdminSchema, notOk, ok } from '@jonasb/datadata-core';
+import { AdminSchema, NoOpLogger, notOk, ok } from '@jonasb/datadata-core';
 import { createPostgresAdapter } from '@jonasb/datadata-database-adapter-postgres-pg';
 import { createSqlite3Adapter } from '@jonasb/datadata-database-adapter-sqlite-sqlite3';
-import type { AuthorizationAdapter, Server, SessionContext } from '@jonasb/datadata-server';
-import { createServer } from '@jonasb/datadata-server';
+import type { AuthorizationAdapter, Server } from '@jonasb/datadata-server';
+import { createServer, NoneAndSubjectAuthorizationAdapter } from '@jonasb/datadata-server';
 import type { NextApiRequest } from 'next';
 import SchemaSpec from './schema.json';
 
@@ -93,16 +92,5 @@ async function createDatabaseAdapter() {
 }
 
 function createAuthenticationAdapter(): AuthorizationAdapter {
-  return {
-    async resolveAuthorizationKeys<T extends string>(_context: SessionContext, authKeys: T[]) {
-      const result = {} as Record<T, string>;
-      for (const key of authKeys) {
-        if (!validKeys.includes(key)) {
-          return notOk.BadRequest(`Invalid authorization key (${key})`);
-        }
-        result[key] = key;
-      }
-      return ok(result);
-    },
-  };
+  return NoneAndSubjectAuthorizationAdapter;
 }

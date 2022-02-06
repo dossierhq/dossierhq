@@ -18,7 +18,7 @@ describe('Admin adminPublishEntities', () => {
     const now = Temporal.Now.instant();
 
     authorizationAdapter.resolveAuthorizationKeys.mockReturnValueOnce(
-      Promise.resolve(ok({ none: 'none' }))
+      Promise.resolve(ok([{ authKey: 'none', resolvedAuthKey: 'none' }]))
     );
     databaseAdapter.adminEntityPublishGetVersionInfo.mockReturnValueOnce(
       Promise.resolve(

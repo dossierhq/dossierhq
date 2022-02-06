@@ -5,10 +5,10 @@ import type {
   PromiseResult,
   PublishedClient,
 } from '@jonasb/datadata-core';
-import { AdminSchema, assertIsDefined, notOk, ok } from '@jonasb/datadata-core';
+import { AdminSchema, assertIsDefined } from '@jonasb/datadata-core';
 import { createPostgresAdapter } from '@jonasb/datadata-database-adapter-postgres-pg';
-import type { AuthorizationAdapter, SessionContext } from '@jonasb/datadata-server';
-import { createServer } from '@jonasb/datadata-server';
+import type { AuthorizationAdapter } from '@jonasb/datadata-server';
+import { createServer, NoneAndSubjectAuthorizationAdapter } from '@jonasb/datadata-server';
 import { v4 as uuidv4 } from 'uuid';
 
 export interface TestServerWithSession {
@@ -69,23 +69,7 @@ async function setUpRealServerWithSession(schemaSpecification: AdminSchemaSpecif
 }
 
 function createTestAuthorizationAdapter(): AuthorizationAdapter {
-  return {
-    async resolveAuthorizationKeys<T extends string>(context: SessionContext, authKeys: T[]) {
-      const result = {} as Record<T, string>;
-      for (const key of authKeys) {
-        let resolved;
-        if (key === 'none') {
-          resolved = 'none';
-        } else if (key === 'subject') {
-          resolved = `subject:${context.session.subjectId}`;
-        } else {
-          return notOk.BadRequest(`The authKey ${key} doesn't exist`);
-        }
-        result[key] = resolved;
-      }
-      return ok(result);
-    },
-  };
+  return NoneAndSubjectAuthorizationAdapter;
 }
 
 /** N.B. This is insecure but needed since the default uuidv4() results in open handle for tests */
