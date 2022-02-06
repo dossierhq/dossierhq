@@ -186,6 +186,21 @@ async function testCreateEntities(adminClient: AdminClient, options: BenchPressO
   }, options);
 }
 
+async function testCreateAndPublishEntity(adminClient: AdminClient, options: BenchPressOptions) {
+  return await runTest(async (clock) => {
+    const type = randomWeightedSelect(['Organization', 'Person'], [30, 70]);
+    const entity = createEntity(type);
+
+    clock.start();
+
+    const result = await adminClient.createEntity(entity, { publish: true });
+
+    clock.stop();
+
+    return result.isOk();
+  }, options);
+}
+
 async function testEditEntity(adminClient: AdminClient, options: BenchPressOptions) {
   return await runTest(async (clock) => {
     const randomResult = await randomAdminEntity(adminClient, {
@@ -297,6 +312,18 @@ async function runTests(
       iterations,
     }),
     `${runName}-${variant}-create-entity-person`,
+    tsvFilename
+  );
+
+  await report(
+    testCreateAndPublishEntity(adminClient, {
+      testName: 'create and publish entity',
+      variant,
+      runName,
+      warmup,
+      iterations,
+    }),
+    `${runName}-${variant}-create-publish-entity`,
     tsvFilename
   );
 
