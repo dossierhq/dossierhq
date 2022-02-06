@@ -2,6 +2,7 @@ import type {
   AdminEntity,
   AdminQuery,
   AdminSchema,
+  EntitySamplingOptions,
   ErrorType,
   PromiseResult,
 } from '@jonasb/datadata-core';
@@ -11,12 +12,15 @@ import type { AuthorizationAdapter, SessionContext } from '..';
 import { authResolveAuthorizationKeys } from '../Auth';
 import { decodeAdminEntity } from '../EntityCodec';
 
+const samplingDefaultCount = 25;
+
 export async function adminSampleEntities(
   schema: AdminSchema,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  query: AdminQuery | undefined
+  query: AdminQuery | undefined,
+  options: EntitySamplingOptions | undefined
 ): PromiseResult<
   AdminEntity[],
   ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
@@ -38,7 +42,7 @@ export async function adminSampleEntities(
   );
   if (totalCountResult.isError()) return totalCountResult;
 
-  const limit = 1;
+  const limit = options?.count ?? samplingDefaultCount;
   const offset = getRandomInt(0, totalCountResult.value - limit - 1);
 
   const sampleResult = await databaseAdapter.adminEntitySampleEntities(

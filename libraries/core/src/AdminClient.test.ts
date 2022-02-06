@@ -689,14 +689,15 @@ describe('AdminClient forward operation over JSON', () => {
       { logger: NoOpLogger },
       AdminClientOperationName.sampleEntities,
       async (_context, operation) => {
-        const [_query] = operation.args;
+        const [_query, _options] = operation.args;
         operation.resolve(ok([entity1]));
       }
     );
 
-    const result = await adminClient.sampleEntities({
-      boundingBox: { minLat: 0, maxLat: 1, minLng: 20, maxLng: 21 },
-    });
+    const result = await adminClient.sampleEntities(
+      { boundingBox: { minLat: 0, maxLat: 1, minLng: 20, maxLng: 21 } },
+      { count: 10 }
+    );
     expectResultValue(result, [entity1]);
 
     if (expectOkResult(result)) {
@@ -724,6 +725,9 @@ describe('AdminClient forward operation over JSON', () => {
                   "minLat": 0,
                   "minLng": 20,
                 },
+              },
+              Object {
+                "count": 10,
               },
             ],
             "modifies": false,
