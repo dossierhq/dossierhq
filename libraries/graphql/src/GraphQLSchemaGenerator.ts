@@ -56,6 +56,7 @@ import { GraphQLJSON } from 'graphql-type-json';
 import {
   loadAdminEntities,
   loadAdminEntity,
+  loadAdminSampleEntities,
   loadAdminSearchEntities,
   loadPublishedEntities,
   loadPublishedEntity,
@@ -1292,6 +1293,30 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     });
   }
 
+  buildQueryFieldAdminSampleEntities<TSource>(
+    adminSchema: AdminSchema
+  ): GraphQLFieldConfig<TSource, TContext> {
+    return fieldConfigWithArgs<
+      TSource,
+      TContext,
+      {
+        query?: AdminQuery;
+        count?: number;
+      }
+    >({
+      type: new GraphQLList(this.getOutputType('AdminEntity')),
+      args: {
+        query: { type: this.getInputType('AdminQueryInput') },
+        count: { type: GraphQLInt },
+      },
+      resolve: async (_source, args, context, _info) => {
+        const { query, count } = args;
+        const options = { count };
+        return await loadAdminSampleEntities(adminSchema, context, query, options);
+      },
+    });
+  }
+
   buildQueryFieldAdminSearchEntities<TSource>(
     adminSchema: AdminSchema
   ): GraphQLFieldConfig<TSource, TContext> {
@@ -1393,6 +1418,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
           ? {
               adminEntity: this.buildQueryFieldAdminEntity(this.adminSchema),
               adminEntities: this.buildQueryFieldAdminEntities(this.adminSchema),
+              adminSampleEntities: this.buildQueryFieldAdminSampleEntities(this.adminSchema),
               adminSearchEntities: this.buildQueryFieldAdminSearchEntities(this.adminSchema),
               entityHistory: this.buildQueryFieldEntityHistory(),
               publishingHistory: this.buildQueryFieldPublishingHistory(),
