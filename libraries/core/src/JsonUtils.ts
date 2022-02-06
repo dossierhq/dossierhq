@@ -43,12 +43,12 @@ export interface JsonAdminEntity extends Omit<AdminEntity, 'info'> {
   info: JsonAdminEntityInfo;
 }
 
-export interface JsonEntityInfo extends Omit<PublishedEntityInfo, 'createdAt'> {
+export interface JsonPublishedEntityInfo extends Omit<PublishedEntityInfo, 'createdAt'> {
   createdAt: string;
 }
 
-export interface JsonEntity extends Omit<PublishedEntity, 'info'> {
-  info: JsonEntityInfo;
+export interface JsonPublishedEntity extends Omit<PublishedEntity, 'info'> {
+  info: JsonPublishedEntityInfo;
 }
 
 export interface JsonAdminEntityCreatePayload extends Omit<AdminEntityCreatePayload, 'entity'> {
@@ -126,7 +126,7 @@ export function convertJsonAdminEntity(entity: JsonAdminEntity): AdminEntity {
   };
 }
 
-export function convertJsonEntity(entity: JsonEntity): PublishedEntity {
+export function convertJsonPublishedEntity(entity: JsonPublishedEntity): PublishedEntity {
   return {
     ...entity,
     info: {
