@@ -1,1 +1,0 @@
-CREATE INDEX entity_field_references_entity_fields_id_index ON entity_field_references(entity_fields_id);
