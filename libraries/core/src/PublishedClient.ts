@@ -24,8 +24,8 @@ import {
   ok,
 } from '.';
 import type { ErrorFromPromiseResult, OkFromPromiseResult } from './ErrorResult';
-import type { JsonEntity } from './JsonUtils';
-import { convertJsonEntity } from './JsonUtils';
+import type { JsonPublishedEntity } from './JsonUtils';
+import { convertJsonPublishedEntity } from './JsonUtils';
 import type {
   ClientContext,
   Middleware,
@@ -333,16 +333,16 @@ export function convertJsonPublishedClientResult<TName extends PublishedClientOp
   switch (operationName) {
     case PublishedClientOperationName.getEntities: {
       const result: MethodReturnTypeWithoutPromise<PublishedClientOperationName.getEntities> = ok(
-        (value as JsonResult<JsonEntity, ErrorType.NotFound>[]).map((jsonItemResult) => {
+        (value as JsonResult<JsonPublishedEntity, ErrorType.NotFound>[]).map((jsonItemResult) => {
           const itemResult = convertJsonResult(jsonItemResult);
-          return itemResult.isOk() ? itemResult.map(convertJsonEntity) : itemResult;
+          return itemResult.isOk() ? itemResult.map(convertJsonPublishedEntity) : itemResult;
         })
       );
       return result as MethodReturnTypeWithoutPromise<TName>;
     }
     case PublishedClientOperationName.getEntity: {
       const result: MethodReturnTypeWithoutPromise<PublishedClientOperationName.getEntity> = ok(
-        convertJsonEntity(value as JsonEntity)
+        convertJsonPublishedEntity(value as JsonPublishedEntity)
       );
       return result as MethodReturnTypeWithoutPromise<TName>;
     }
@@ -352,15 +352,15 @@ export function convertJsonPublishedClientResult<TName extends PublishedClientOp
       return ok(value) as MethodReturnTypeWithoutPromise<TName>;
     case PublishedClientOperationName.sampleEntities: {
       const result: MethodReturnTypeWithoutPromise<PublishedClientOperationName.sampleEntities> =
-        ok((value as JsonEntity[]).map((it) => convertJsonEntity(it)));
+        ok((value as JsonPublishedEntity[]).map((it) => convertJsonPublishedEntity(it)));
       return result as MethodReturnTypeWithoutPromise<TName>;
     }
     case PublishedClientOperationName.searchEntities: {
       const result: MethodReturnTypeWithoutPromise<PublishedClientOperationName.searchEntities> =
         ok(
           convertJsonConnection(
-            value as JsonConnection<JsonEdge<JsonEntity, ErrorType>> | null,
-            convertJsonEntityEdge
+            value as JsonConnection<JsonEdge<JsonPublishedEntity, ErrorType>> | null,
+            convertJsonPublishedEntityEdge
           )
         );
       return result as MethodReturnTypeWithoutPromise<TName>;
@@ -370,6 +370,6 @@ export function convertJsonPublishedClientResult<TName extends PublishedClientOp
   }
 }
 
-function convertJsonEntityEdge(edge: JsonEdge<JsonEntity, ErrorType>) {
-  return convertJsonEdge(edge, convertJsonEntity);
+function convertJsonPublishedEntityEdge(edge: JsonEdge<JsonPublishedEntity, ErrorType>) {
+  return convertJsonEdge(edge, convertJsonPublishedEntity);
 }
