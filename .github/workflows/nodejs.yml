@@ -6,6 +6,19 @@ jobs:
     timeout-minutes: 10
     if: ${{ !startsWith(github.ref, 'refs/heads/dependabot/npm_and_yarn') }}
     steps:
+      - name: Cache Rush
+        uses: actions/cache@v2
+        with:
+          path: |
+            common/temp/install-run
+            ~/.rush
+          key: ${{ runner.os }}-${{ hashFiles('rush.json') }}
+      - name: Cache pnpm
+        uses: actions/cache@v2
+        with:
+          path: |
+            common/temp/pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('common/temp/pnpm-lock.yaml') }}
       - uses: actions/checkout@v2
       - name: Use Node.js 16
         uses: actions/setup-node@v2
