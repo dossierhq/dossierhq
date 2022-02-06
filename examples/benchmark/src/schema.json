@@ -35,6 +35,11 @@
           "name": "address",
           "type": "ValueType",
           "valueTypes": ["PostalAddress"]
+        },
+        {
+          "name": "organization",
+          "type": "EntityType",
+          "entityTypes": ["Organization"]
         }
       ]
     }
