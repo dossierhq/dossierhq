@@ -3,14 +3,17 @@ import {
   AdminClient,
   AdminEntity,
   AdminEntityCreate,
+  AdminEntityStatus,
   AdminEntityUpdate,
   AdminQuery,
   assertIsDefined,
   copyEntity,
   EntityReference,
   ErrorType,
+  notOk,
   ok,
   PromiseResult,
+  Result,
 } from '@jonasb/datadata-core';
 import {
   BenchPressOptions,
@@ -24,6 +27,10 @@ import path from 'path';
 import { DatabaseAdapterSelector, initializeServer } from './server';
 
 const outputFolder = path.join(process.cwd(), 'output');
+
+interface CreateEntityOptions {
+  publishable?: boolean;
+}
 
 function cleanupEntity(entity: AdminEntityCreate) {
   const cleanedUpEntity: AdminEntityCreate = copyEntity(entity, { fields: {} });
@@ -52,6 +59,16 @@ function randomWeightedSelect<T>(values: T[], weights: number[]) {
 function randomGenerate<T>(values: Array<T | (() => T)>, weights: number[]) {
   const selected = randomWeightedSelect(values, weights);
   return typeof selected === 'function' ? (selected as () => T)() : selected;
+}
+
+async function randomGenerateResult<T>(
+  values: Array<Result<T, ErrorType> | (() => PromiseResult<T, ErrorType>)>,
+  weights: number[]
+): PromiseResult<T, ErrorType> {
+  const selected = randomWeightedSelect(values, weights);
+  return typeof selected === 'function'
+    ? await (selected as () => PromiseResult<T, ErrorType>)()
+    : selected;
 }
 
 function randomNullUndefined<T>(
@@ -84,29 +101,39 @@ async function randomAdminEntity(
   return ok(result.value[0]);
 }
 
-function createEntity(type: string): AdminEntityCreate {
+async function createEntity(
+  adminClient: AdminClient,
+  type: string,
+  options?: CreateEntityOptions
+): PromiseResult<AdminEntityCreate, ErrorType> {
   if (type === 'Organization') {
-    return createOrganization();
+    return ok(createOrganization(options));
   }
   if (type === 'Person') {
-    return createPerson();
+    return await createPerson(adminClient, options);
   }
-  throw new Error('Unknown type: ' + type);
+  return notOk.BadRequest(`Type ${type} not supported`);
 }
 
-function updateEntity(type: string, id: string): AdminEntityUpdate {
-  const entityCreate = createEntity(type);
+async function updateEntity(
+  adminClient: AdminClient,
+  type: string,
+  id: string
+): PromiseResult<AdminEntityUpdate, ErrorType> {
+  const createResult = await createEntity(adminClient, type);
+  if (createResult.isError()) return createResult;
+
   const result: AdminEntityUpdate = {
     id,
     info: {
-      name: entityCreate.info.name,
+      name: createResult.value.info.name,
     },
-    fields: entityCreate.fields,
+    fields: createResult.value.fields,
   };
-  return result;
+  return ok(result);
 }
 
-function createOrganization(): AdminEntityCreate {
+function createOrganization(_options?: CreateEntityOptions): AdminEntityCreate {
   const name = faker.company.companyName();
   return cleanupEntity({
     info: { authKey: 'none', type: 'Organization', name },
@@ -119,15 +146,34 @@ function createOrganization(): AdminEntityCreate {
   });
 }
 
-function createPerson() {
+async function createPerson(
+  adminClient: AdminClient,
+  options?: CreateEntityOptions
+): PromiseResult<AdminEntityCreate, ErrorType> {
+  const organizationResult = await randomGenerateResult(
+    [
+      ok(null),
+      () =>
+        randomAdminEntity(adminClient, {
+          entityTypes: ['Organization'],
+          status: options?.publishable ? [AdminEntityStatus.published] : undefined,
+        }),
+    ],
+    [10, 90]
+  );
+  if (organizationResult.isError()) return organizationResult;
+
   const name = `${faker.name.firstName()} ${faker.name.lastName()}`;
-  return cleanupEntity({
-    info: { authKey: 'none', type: 'Person', name },
-    fields: {
-      name,
-      address: createPostalAddress(),
-    },
-  });
+  return ok(
+    cleanupEntity({
+      info: { authKey: 'none', type: 'Person', name },
+      fields: {
+        name,
+        address: createPostalAddress(),
+        organization: organizationResult.value,
+      },
+    })
+  );
 }
 
 function createPostalAddress() {
@@ -159,11 +205,12 @@ async function testCreateOrganizationEntities(
 
 async function testCreatePersonEntities(adminClient: AdminClient, options: BenchPressOptions) {
   return await runTest(async (clock) => {
-    const entity = createPerson();
+    const entityResult = await createPerson(adminClient);
+    if (entityResult.isError()) return false;
 
     clock.start();
 
-    const result = await adminClient.createEntity(entity);
+    const result = await adminClient.createEntity(entityResult.value);
 
     clock.stop();
 
@@ -174,11 +221,12 @@ async function testCreatePersonEntities(adminClient: AdminClient, options: Bench
 async function testCreateEntities(adminClient: AdminClient, options: BenchPressOptions) {
   return await runTest(async (clock) => {
     const type = randomWeightedSelect(['Organization', 'Person'], [30, 70]);
-    const entity = createEntity(type);
+    const entityResult = await createEntity(adminClient, type);
+    if (entityResult.isError()) return false;
 
     clock.start();
 
-    const result = await adminClient.createEntity(entity);
+    const result = await adminClient.createEntity(entityResult.value);
 
     clock.stop();
 
@@ -189,11 +237,12 @@ async function testCreateEntities(adminClient: AdminClient, options: BenchPressO
 async function testCreateAndPublishEntity(adminClient: AdminClient, options: BenchPressOptions) {
   return await runTest(async (clock) => {
     const type = randomWeightedSelect(['Organization', 'Person'], [30, 70]);
-    const entity = createEntity(type);
+    const entityResult = await createEntity(adminClient, type, { publishable: true });
+    if (entityResult.isError()) return false;
 
     clock.start();
 
-    const result = await adminClient.createEntity(entity, { publish: true });
+    const result = await adminClient.createEntity(entityResult.value, { publish: true });
 
     clock.stop();
 
@@ -206,15 +255,14 @@ async function testEditEntity(adminClient: AdminClient, options: BenchPressOptio
     const randomResult = await randomAdminEntity(adminClient, {
       entityTypes: ['Organization', 'Person'],
     });
-    if (randomResult.isError()) {
-      return false;
-    }
+    if (randomResult.isError()) return false;
     const entity = randomResult.value;
-    const entityUpdate = updateEntity(entity.info.type, entity.id);
+    const entityUpdateResult = await updateEntity(adminClient, entity.info.type, entity.id);
+    if (entityUpdateResult.isError()) return false;
 
     clock.start();
 
-    const updateResult = await adminClient.updateEntity(entityUpdate);
+    const updateResult = await adminClient.updateEntity(entityUpdateResult.value);
 
     clock.stop();
 
