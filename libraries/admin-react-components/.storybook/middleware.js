@@ -5,10 +5,8 @@ const {
   executeAdminClientOperationFromJson,
   executePublishedClientOperationFromJson,
   LoggingClientMiddleware,
-  notOk,
-  ok,
 } = require('@jonasb/datadata-core');
-const { createServer } = require('@jonasb/datadata-server');
+const { createServer, NoneAndSubjectAuthorizationAdapter } = require('@jonasb/datadata-server');
 const { createPostgresAdapter } = require('@jonasb/datadata-database-adapter-postgres-pg');
 // @ts-ignore
 const bodyParser = require('body-parser');
@@ -26,7 +24,7 @@ async function getServer() {
     const result = await createServer({
       databaseAdapter,
       logger,
-      authorizationAdapter: createAuthorizationAdapter(),
+      authorizationAdapter: NoneAndSubjectAuthorizationAdapter,
     });
     serverResultSingleton = result;
 
@@ -46,27 +44,6 @@ async function getServer() {
     }
   }
   return serverResultSingleton;
-}
-
-function createAuthorizationAdapter() {
-  const adapter = {
-    async resolveAuthorizationKeys(context, authKeys) {
-      const result = {};
-      for (const key of authKeys) {
-        let resolved = key;
-        if (key === 'subject') {
-          resolved = `subject:${context.session.subjectId}`;
-        } else if (key === 'unauthorized') {
-          return notOk.NotAuthorized(`User not authorized to use authKey ${key}`);
-        } else if (key === 'non-existing') {
-          return notOk.BadRequest(`The authKey ${key} doesn't exist`);
-        }
-        result[key] = resolved;
-      }
-      return ok(result);
-    },
-  };
-  return /** @type {import('@jonasb/datadata-server').AuthorizationAdapter} */ (adapter);
 }
 
 const expressMiddleWare = (router) => {
