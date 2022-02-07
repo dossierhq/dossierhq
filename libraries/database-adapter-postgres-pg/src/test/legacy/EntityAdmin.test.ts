@@ -696,7 +696,7 @@ describe('createEntity()', () => {
         body: { blocks: [{ type: 'paragraph', data: { text: 'Hello world' } }] },
         bodyList: [
           { blocks: [{ type: 'paragraph', data: { text: 'First rich text' } }] },
-          { blocks: [{ type: 'paragraph', data: { text: 'Second rich text' } }] },
+          { blocks: [{ id: 'Gw_iK0dS0q', type: 'paragraph', data: { text: 'Second rich text' } }] },
         ],
       },
     });
@@ -724,7 +724,9 @@ describe('createEntity()', () => {
           body: { blocks: [{ type: 'paragraph', data: { text: 'Hello world' } }] },
           bodyList: [
             { blocks: [{ type: 'paragraph', data: { text: 'First rich text' } }] },
-            { blocks: [{ type: 'paragraph', data: { text: 'Second rich text' } }] },
+            {
+              blocks: [{ id: 'Gw_iK0dS0q', type: 'paragraph', data: { text: 'Second rich text' } }],
+            },
           ],
         },
       };

@@ -42,7 +42,7 @@ Normal.args = {
 export const NormalWithParagraph = Template.bind({});
 NormalWithParagraph.args = {
   fieldSpec: getFieldSpec('Baz', 'body'),
-  value: { blocks: [{ type: 'paragraph', data: { text: 'Hello world' } }] },
+  value: { blocks: [{ id: 'wCdxSHVT7R', type: 'paragraph', data: { text: 'Hello world' } }] },
 };
 
 export const NormalWithValueItem = Template.bind({});
@@ -51,6 +51,7 @@ NormalWithValueItem.args = {
   value: {
     blocks: [
       {
+        id: 'FediqVr0Pw',
         type: 'valueItem',
         data: { type: 'AnnotatedBar', annotation: 'Annotation', bar: { id: bar2Id } },
       },
@@ -61,7 +62,7 @@ NormalWithValueItem.args = {
 export const NormalWithEntity = Template.bind({});
 NormalWithEntity.args = {
   fieldSpec: getFieldSpec('Baz', 'body'),
-  value: { blocks: [{ type: 'entity', data: { id: foo1Id } }] },
+  value: { blocks: [{ id: 'yQACAbwfRT', type: 'entity', data: { id: foo1Id } }] },
 };
 
 export const OnlyBar = Template.bind({});

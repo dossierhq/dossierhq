@@ -33,6 +33,7 @@ export interface RichText {
 }
 
 export interface RichTextBlock<Type extends string = string, Data = unknown> {
+  id?: string;
   type: Type;
   data: Data;
 }

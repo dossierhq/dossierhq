@@ -14,6 +14,7 @@ import type {
   PublishedSchema,
   Result,
   RichText,
+  RichTextBlock,
   ValueItem,
 } from '@jonasb/datadata-core';
 import {
@@ -57,6 +58,7 @@ export interface EncodeAdminEntityResult {
 }
 
 interface EncodedRichTextBlock {
+  id?: string;
   t: string;
   d: unknown;
 }
@@ -152,8 +154,8 @@ function decodeRichTextField(
   fieldSpec: FieldSpecification,
   encodedValue: EncodedRichTextBlock[]
 ): RichText {
-  const decodedBlocks = encodedValue.map((block) => {
-    const { t: type, d: encodedData } = block;
+  const decodedBlocks = encodedValue.map<RichTextBlock>((block) => {
+    const { id, t: type, d: encodedData } = block;
     let decodedData = encodedData;
     if (type === RichTextBlockType.valueItem && encodedData) {
       decodedData = decodeValueItemField(schema, fieldSpec, encodedData as ValueItem);
@@ -161,10 +163,9 @@ function decodeRichTextField(
       const adapter = EntityFieldTypeAdapters.getAdapterForType(FieldType.EntityType);
       decodedData = adapter.decodeData(encodedData);
     }
-    return {
-      type,
-      data: decodedData,
-    };
+    const decodedBlock: RichTextBlock = { type, data: decodedData };
+    if (id !== undefined) decodedBlock.id = id;
+    return decodedBlock;
   });
   return { blocks: decodedBlocks };
 }
@@ -540,7 +541,7 @@ function encodeRichTextField(
   for (let i = 0; i < blocks.length; i += 1) {
     const blockPrefix = `${prefix}[${i}]`;
     const block = blocks[i];
-    const { type, data, ...unexpectedBlockData } = block;
+    const { id, type, data, ...unexpectedBlockData } = block;
     if (
       fieldSpec.richTextBlocks &&
       fieldSpec.richTextBlocks.length > 0 &&
@@ -570,8 +571,9 @@ function encodeRichTextField(
       }
       encodedBlockData = encodeResult.value;
     }
-
-    encodedBlocks.push({ t: type, d: encodedBlockData });
+    const encodedBlock: EncodedRichTextBlock = { t: type, d: encodedBlockData };
+    if (id !== undefined) encodedBlock.id = id;
+    encodedBlocks.push(encodedBlock);
   }
 
   return ok(encodedBlocks);
