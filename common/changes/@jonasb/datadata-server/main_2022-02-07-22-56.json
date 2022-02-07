@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-server",
+      "comment": "Actually verify authKeys. Simplify AuthorizationAdapter. Export standard NoneAndSubjectAuthorizationAdapter. Support sample entities.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-server"
+}
