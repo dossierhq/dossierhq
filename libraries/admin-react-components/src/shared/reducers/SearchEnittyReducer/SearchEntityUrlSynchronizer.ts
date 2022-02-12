@@ -1,4 +1,4 @@
-import type { AdminQuery, Paging } from '@jonasb/datadata-core';
+import type { AdminQuery, EntitySamplingOptions, Paging } from '@jonasb/datadata-core';
 import { decodeUrlQueryStringifiedParam, stringifyUrlQueryParams } from '@jonasb/datadata-core';
 import type { Dispatch } from 'react';
 import { useEffect } from 'react';
@@ -12,6 +12,8 @@ import {
 export interface EntitySearchStateUrlQuery {
   query?: string;
   paging?: string;
+  sampling?: string;
+  sample?: string;
 }
 
 export function initializeSearchEntityStateFromUrlQuery(
@@ -26,9 +28,17 @@ function urlQueryToSearchEntityStateActions(urlQuery: EntitySearchStateUrlQuery 
   if (urlQuery) {
     const decodedQuery: AdminQuery = decodeUrlQueryStringifiedParam('query', urlQuery) ?? {};
     actions.push(new SearchEntityStateActions.SetQuery(decodedQuery, false));
-    const decodedPaging: Paging | undefined =
-      decodeUrlQueryStringifiedParam('paging', urlQuery) ?? {};
+
+    const decodedPaging: Paging = decodeUrlQueryStringifiedParam('paging', urlQuery) ?? {};
     actions.push(new SearchEntityStateActions.SetPaging(decodedPaging));
+
+    const decodedSampling: EntitySamplingOptions =
+      decodeUrlQueryStringifiedParam('sampling', urlQuery) ?? {};
+    actions.push(new SearchEntityStateActions.SetSampling(decodedSampling));
+
+    const decodedSample: boolean | undefined =
+      decodeUrlQueryStringifiedParam('sample', urlQuery) ?? false;
+    actions.push(new SearchEntityStateActions.SetSample(decodedSample));
   }
   return actions;
 }
@@ -39,18 +49,25 @@ export function useSynchronizeUrlQueryAndSearchEntityState(
   searchEntityState: SearchEntityState,
   dispatchSearchEntityState: Dispatch<SearchEntityStateAction>
 ) {
-  const { query, paging } = searchEntityState;
+  const { query, paging, sampling, sample } = searchEntityState;
   useEffect(() => {
     if (!onUrlQueryChanged || !urlQuery) return;
     const result: EntitySearchStateUrlQuery = stringifyUrlQueryParams({
       query: getQueryWithoutDefaults(query),
       paging,
+      sampling,
+      sample,
     });
-    if (result.paging !== urlQuery.paging || result.query !== urlQuery.query) {
+    if (
+      result.paging !== urlQuery.paging ||
+      result.query !== urlQuery.query ||
+      result.sampling !== urlQuery.sampling ||
+      result.sample !== urlQuery.sample
+    ) {
       onUrlQueryChanged(result);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [query, paging]);
+  }, [query, paging, sampling, sample]);
 
   useEffect(() => {
     if (!urlQuery) return;
@@ -58,5 +75,5 @@ export function useSynchronizeUrlQueryAndSearchEntityState(
     actions.forEach((action) => dispatchSearchEntityState(action));
   }, [dispatchSearchEntityState, urlQuery]);
 
-  // useDebugLogChangedValues('useSynchronizeUrlQueryState', { query, paging, urlQuery });
+  // useDebugLogChangedValues('useSynchronizeUrlQueryState', { query, paging, sampling, sample, urlQuery });
 }

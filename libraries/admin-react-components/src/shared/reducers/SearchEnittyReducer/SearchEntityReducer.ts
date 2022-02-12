@@ -3,6 +3,7 @@ import type {
   AdminQuery,
   Connection,
   Edge,
+  EntitySamplingOptions,
   ErrorResult,
   ErrorType,
   Paging,
@@ -20,6 +21,8 @@ const defaultPagingCount = 25;
 export interface SearchEntityState {
   query: AdminQuery | PublishedQuery;
   paging: Paging;
+  sampling: EntitySamplingOptions;
+  sample: boolean;
   pagingCount: number;
   text: string;
 
@@ -36,6 +39,8 @@ export function initializeSearchEntityState(actions: SearchEntityStateAction[]):
   let state: SearchEntityState = {
     query: {},
     paging: {},
+    sampling: {},
+    sample: false,
     pagingCount: defaultPagingCount,
     text: '',
     connection: undefined,
@@ -82,10 +87,53 @@ class SetPagingAction implements SearchEntityStateAction {
   }
 
   reduce(state: SearchEntityState): SearchEntityState {
-    if (isEqual(this.value, state.paging)) return state;
+    if (isEqual(this.value, state.paging)) {
+      return state;
+    }
     const result = getPagingInfo(this.value);
     if (result.isError()) throw result.toError();
-    return { ...state, paging: this.value, pagingCount: result.value.count || state.pagingCount };
+    return {
+      ...state,
+      paging: this.value,
+      pagingCount: result.value.count || state.pagingCount,
+    };
+  }
+}
+
+class SetSamplingAction implements SearchEntityStateAction {
+  value: EntitySamplingOptions;
+
+  constructor(value: EntitySamplingOptions) {
+    this.value = value;
+  }
+
+  reduce(state: SearchEntityState): SearchEntityState {
+    if (isEqual(this.value, state.sampling)) {
+      return state;
+    }
+    return {
+      ...state,
+      sampling: this.value,
+      pagingCount: this.value.count || state.pagingCount,
+    };
+  }
+}
+
+class SetSampleAction implements SearchEntityStateAction {
+  value: boolean;
+
+  constructor(value: boolean) {
+    this.value = value;
+  }
+
+  reduce(state: SearchEntityState): SearchEntityState {
+    if (this.value === state.sample) {
+      return state;
+    }
+    return {
+      ...state,
+      sample: this.value,
+    };
   }
 }
 
@@ -102,6 +150,7 @@ class SetQueryAction implements SearchEntityStateAction {
     const query: AdminQuery | PublishedQuery = this.partial
       ? { ...state.query, ...this.value }
       : { ...this.value };
+    // Normalize
     if (query.authKeys?.length === 0) {
       delete query.authKeys;
     }
@@ -117,6 +166,7 @@ class SetQueryAction implements SearchEntityStateAction {
     if (query.text?.length === 0) {
       delete query.text;
     }
+
     if (isEqual(query, state.query)) {
       return state;
     }
@@ -169,6 +219,8 @@ class UpdateTotalCountAction implements SearchEntityStateAction {
 export const SearchEntityStateActions = {
   SetText: SetTextAction,
   SetPaging: SetPagingAction,
+  SetSampling: SetSamplingAction,
+  SetSample: SetSampleAction,
   SetQuery: SetQueryAction,
   UpdateResult: UpdateResultAction,
   UpdateTotalCount: UpdateTotalCountAction,
