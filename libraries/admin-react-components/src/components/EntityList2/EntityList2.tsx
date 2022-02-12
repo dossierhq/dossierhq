@@ -3,8 +3,8 @@ import { AdminQueryOrder } from '@jonasb/datadata-core';
 import { InstantDisplay, Table } from '@jonasb/datadata-design';
 import type { Dispatch } from 'react';
 import React, { useContext } from 'react';
-import type { SearchEntityState, SearchEntityStateAction } from '../../index.js';
-import { AuthKeyTag, DataDataContext2, SearchEntityStateActions, StatusTag } from '../../index.js';
+import type { SearchEntityState, SearchEntityStateAction } from '../..';
+import { AuthKeyTag, DataDataContext2, SearchEntityStateActions, StatusTag } from '../..';
 
 interface Props {
   searchEntityState: SearchEntityState;

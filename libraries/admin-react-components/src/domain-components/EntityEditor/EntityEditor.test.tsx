@@ -15,9 +15,9 @@ import {
 import userEvent from '@testing-library/user-event';
 import * as React from 'react';
 import * as renderer from 'react-test-renderer';
-import { createBackendAdminClient } from '../../test/TestContextAdapter.js';
-import type { EntityEditorStoryProps } from './EntityEditor.stories.js';
-import { default as StoryMeta, ArchivedFoo, FullFoo, NewFoo } from './EntityEditor.stories.js';
+import { createBackendAdminClient } from '../../test/TestContextAdapter';
+import type { EntityEditorStoryProps } from './EntityEditor.stories';
+import { default as StoryMeta, ArchivedFoo, FullFoo, NewFoo } from './EntityEditor.stories';
 
 function renderStory(
   StoryUnderTest: Story<EntityEditorStoryProps>,

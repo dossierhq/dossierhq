@@ -1,5 +1,12 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/heft/typescript.schema.json",
+  "additionalModuleKindsToEmit": [
+    {
+      "moduleKind": "commonjs",
+      "outFolderName": "lib-cjs"
+    }
+  ],
+  "emitFolderNameForTests": "lib-cjs",
   "staticAssetsToCopy": {
     "fileExtensions": [".css"]
   }
