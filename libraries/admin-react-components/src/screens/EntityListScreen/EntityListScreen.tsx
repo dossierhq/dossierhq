@@ -1,5 +1,5 @@
 import type { AdminEntity, AdminQuery } from '@jonasb/datadata-core';
-import { FullscreenContainer, IconButton, toSizeClassName } from '@jonasb/datadata-design';
+import { Button, FullscreenContainer, IconButton, toSizeClassName } from '@jonasb/datadata-design';
 import React, { useCallback, useContext, useEffect, useReducer, useState } from 'react';
 import type { EntitySearchStateUrlQuery } from '../../index.js';
 import {
@@ -77,6 +77,8 @@ export function EntityListScreen({
     initializeAuthKeySelectorState
   );
 
+  // map or list
+
   const [showMap, setShowMap] = useState(!!searchEntityState.query.boundingBox);
 
   const handleToggleShowMap = useCallback(() => {
@@ -87,6 +89,12 @@ export function EntityListScreen({
     }
     setShowMap(!showMap);
   }, [showMap]);
+
+  // sampling or ordered
+
+  const handleToggleSample = useCallback(() => {
+    dispatchSearchEntityState(new SearchEntityStateActions.SetSample(!searchEntityState.sample));
+  }, [searchEntityState.sample]);
 
   // sync entity type filter -> search state
   useEffect(() => {
@@ -190,6 +198,9 @@ export function EntityListScreen({
       >
         <SearchEntityPagingButtons {...{ searchEntityState, dispatchSearchEntityState }} />
         <SearchEntityPagingCount {...{ searchEntityState, dispatchSearchEntityState }} />
+        <Button onClick={handleToggleSample}>
+          {searchEntityState.sample ? 'Ordered' : 'Sample'}
+        </Button>
       </FullscreenContainer.Row>
       {footer ? <FullscreenContainer.Row fullWidth>{footer}</FullscreenContainer.Row> : null}
     </FullscreenContainer>
