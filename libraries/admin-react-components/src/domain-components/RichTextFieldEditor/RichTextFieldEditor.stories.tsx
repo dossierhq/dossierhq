@@ -1,11 +1,11 @@
-import type { Meta, Story } from '@storybook/react/types-6-0.js';
+import type { Meta, Story } from '@storybook/react/types-6-0';
 import React, { useState } from 'react';
-import schema from '../../stories/StoryboardSchema.js';
-import { bar2Id, foo1Id } from '../../test/EntityFixtures.js';
-import { LoadContextProvider } from '../../test/LoadContextProvider.js';
-import { LoadFixtures } from '../../test/LoadFixtures.js';
-import type { RichTextFieldEditorProps } from './RichTextFieldEditor.js';
-import { RichTextFieldEditor } from './RichTextFieldEditor.js';
+import schema from '../../stories/StoryboardSchema';
+import { bar2Id, foo1Id } from '../../test/EntityFixtures';
+import { LoadContextProvider } from '../../test/LoadContextProvider';
+import { LoadFixtures } from '../../test/LoadFixtures';
+import type { RichTextFieldEditorProps } from './RichTextFieldEditor';
+import { RichTextFieldEditor } from './RichTextFieldEditor';
 
 export type RichTextFieldEditorStoryProps = Omit<RichTextFieldEditorProps, 'onChange'>;
 

@@ -1,16 +1,16 @@
 import type { AdminClient } from '@jonasb/datadata-core';
-import schema from '../../stories/StoryboardSchema.js';
-import { foo1Id } from '../../test/EntityFixtures.js';
-import { createBackendAdminClient } from '../../test/TestContextAdapter.js';
-import { insecureTestUuidv4 } from '../../test/TestUtils.js';
-import type { EntityEditorState } from './EntityEditorReducer.js';
+import schema from '../../stories/StoryboardSchema';
+import { foo1Id } from '../../test/EntityFixtures';
+import { createBackendAdminClient } from '../../test/TestContextAdapter';
+import { insecureTestUuidv4 } from '../../test/TestUtils';
+import type { EntityEditorState } from './EntityEditorReducer';
 import {
   AddEntityDraftAction,
   initializeEntityEditorState,
   reduceEntityEditorState,
   SetNameAction,
   UpdateEntityAction,
-} from './EntityEditorReducer.js';
+} from './EntityEditorReducer';
 
 function newState(): EntityEditorState {
   return initializeEntityEditorState({ schema });

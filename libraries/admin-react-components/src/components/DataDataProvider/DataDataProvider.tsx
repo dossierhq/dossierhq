@@ -1,8 +1,8 @@
 import type { AdminClient, Logger } from '@jonasb/datadata-core';
 import { NoOpLogger } from '@jonasb/datadata-core';
 import React, { useContext, useMemo } from 'react';
-import type { DataDataContextAdapter, DataDataContextValue2, DisplayAuthKey } from '../../index.js';
-import { DataDataContext, DataDataContext2, DataDataContextValue, useSchema } from '../../index.js';
+import type { DataDataContextAdapter, DataDataContextValue2, DisplayAuthKey } from '../..';
+import { DataDataContext, DataDataContext2, DataDataContextValue, useSchema } from '../..';
 
 interface Props {
   adapter: DataDataContextAdapter;

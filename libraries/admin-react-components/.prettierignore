@@ -1,5 +1,6 @@
 /.heft/
 /lib/
+/lib-cjs/
 /storybook-static/
 /temp/
 /CHANGELOG.md

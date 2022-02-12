@@ -1,8 +1,8 @@
 import React from 'react';
-import type { Kind } from '../../index.js';
-import { Loader, Stack } from '../../index.js';
-import { joinClassNames } from '../../utils/ClassNameUtils.js';
-import { kindToClassName } from '../../utils/KindUtils.js';
+import type { Kind } from '../..';
+import { Loader, Stack } from '../..';
+import { joinClassNames } from '../../utils/ClassNameUtils';
+import { kindToClassName } from '../../utils/KindUtils';
 
 export interface ButtonProps {
   id?: string;
