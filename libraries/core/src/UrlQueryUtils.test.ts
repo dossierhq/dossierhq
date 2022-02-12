@@ -1,5 +1,11 @@
 import { buildUrlWithUrlQuery, decodeUrlQueryStringifiedParam, stringifyUrlQueryParams } from '.';
 
+interface TestQueryParams {
+  foo: string;
+  bar?: string;
+  baz?: string;
+}
+
 describe('stringifyUrlQueryParams', () => {
   test('empty', () => {
     expect(stringifyUrlQueryParams({})).toEqual({});
@@ -30,6 +36,13 @@ describe('stringifyUrlQueryParams', () => {
 describe('buildUrlWithUrlQuery', () => {
   test('no params', () => {
     expect(buildUrlWithUrlQuery('http://example.com', {})).toBe('http://example.com');
+  });
+
+  test('interface with ?string values', () => {
+    const params: TestQueryParams = { foo: 'one', baz: 'two' };
+    expect(buildUrlWithUrlQuery('http://example.com', params)).toBe(
+      'http://example.com?foo=one&baz=two'
+    );
   });
 
   test('deep value', () => {
