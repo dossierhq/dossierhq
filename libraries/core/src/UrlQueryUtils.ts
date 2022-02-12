@@ -25,15 +25,18 @@ export function stringifyUrlQueryParams<TKey extends string>(
   return result;
 }
 
-export function buildUrlWithUrlQuery(
+export function buildUrlWithUrlQuery<TKey extends string>(
   baseUrl: string,
-  params: Record<string, string | undefined>
+  params: Partial<Record<TKey, string | undefined>>
 ): string {
   const parts: string[] = [];
 
   for (const [key, value] of Object.entries(params)) {
     if (!value) {
       continue;
+    }
+    if (typeof value !== 'string') {
+      throw new Error(`Unexpected type ${typeof value} for ${key}`);
     }
     parts.push(`${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
   }
