@@ -1,4 +1,4 @@
-import { AdminSchema, FieldType } from '@jonasb/datadata-core';
+import { AdminSchema, FieldType, PublishedSchema } from '@jonasb/datadata-core';
 
 export const adminTestSchema = new AdminSchema({
   entityTypes: [
@@ -6,3 +6,5 @@ export const adminTestSchema = new AdminSchema({
   ],
   valueTypes: [],
 });
+
+export const publishedTestSchema = new PublishedSchema(adminTestSchema.toPublishedSchema());

@@ -43,7 +43,7 @@ export async function adminSampleEntities(
   if (totalCountResult.isError()) return totalCountResult;
 
   const limit = options?.count ?? samplingDefaultCount;
-  const offset = getRandomInt(0, totalCountResult.value - limit - 1);
+  const offset = Math.max(0, getRandomInt(0, totalCountResult.value - limit - 1));
 
   const sampleResult = await databaseAdapter.adminEntitySampleEntities(
     schema,
