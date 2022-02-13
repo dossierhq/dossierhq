@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-admin-react-components",
+      "comment": "Some sampling support",
+      "type": "patch"
+    }
+  ],
+  "packageName": "@jonasb/datadata-admin-react-components"
+}
