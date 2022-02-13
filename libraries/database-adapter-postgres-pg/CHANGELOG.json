@@ -1,0 +1,47 @@
+{
+  "name": "@jonasb/datadata-database-adapter-postgres-pg",
+  "entries": [
+    {
+      "version": "0.1.1",
+      "tag": "@jonasb/datadata-database-adapter-postgres-pg_v0.1.1",
+      "date": "Sun, 13 Feb 2022 21:58:15 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Initial release"
+          },
+          {
+            "comment": "Minor tweaks"
+          },
+          {
+            "comment": "Add searchEntities and getTotalCount to PublishedClient"
+          },
+          {
+            "comment": "Enable full pool config"
+          },
+          {
+            "comment": "Upgrade dependencies"
+          },
+          {
+            "comment": "Support required fields"
+          },
+          {
+            "comment": "Use new status column"
+          },
+          {
+            "comment": "Support authKeys"
+          },
+          {
+            "comment": "Add createdAt to EntityInfo"
+          },
+          {
+            "comment": "Upgrade dependencies."
+          },
+          {
+            "comment": "Support sample entities. Cleanup tests (moved to integration tests)."
+          }
+        ]
+      }
+    }
+  ]
+}

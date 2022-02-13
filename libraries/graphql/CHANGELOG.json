@@ -2,6 +2,75 @@
   "name": "@jonasb/datadata-graphql",
   "entries": [
     {
+      "version": "0.1.1",
+      "tag": "@jonasb/datadata-graphql_v0.1.1",
+      "date": "Sun, 13 Feb 2022 21:58:15 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Configure importHelpers for ts, and add tslib dependency"
+          },
+          {
+            "comment": "Export transpiled JavaScript"
+          },
+          {
+            "comment": "Fix export configuration"
+          },
+          {
+            "comment": "Support boolean type"
+          },
+          {
+            "comment": "Effect on create/update entity"
+          },
+          {
+            "comment": "Upgrade dependencies and add upsert*Entity()"
+          },
+          {
+            "comment": "createdAt/updatedAt sort order"
+          },
+          {
+            "comment": "JSON scalar for RichText blocks. updatedAt, createdAt, Instant scalar"
+          },
+          {
+            "comment": "Minor tweaks"
+          },
+          {
+            "comment": "Add searchEntities"
+          },
+          {
+            "comment": "Support building only published/admin schema"
+          },
+          {
+            "comment": "Upgrade dependencies. Support adminOnly."
+          },
+          {
+            "comment": "Remove schema from context."
+          },
+          {
+            "comment": "Set nonnull on required fields for published schema"
+          },
+          {
+            "comment": "Support reverse order"
+          },
+          {
+            "comment": "Support authKeys"
+          },
+          {
+            "comment": "Add createdAt to EntityInfo"
+          },
+          {
+            "comment": "Do not use instanceof for checking Instant scalar check"
+          },
+          {
+            "comment": "Upgrade dependencies. Support publish after modifying/creating entity. Rename by adding Published prefix/"
+          },
+          {
+            "comment": "Add sample entities. Remove authKeys from references."
+          }
+        ]
+      }
+    },
+    {
       "version": "0.1.0",
       "tag": "@jonasb/datadata-graphql_v0.1.0",
       "date": "Mon, 12 Jul 2021 17:25:50 GMT",

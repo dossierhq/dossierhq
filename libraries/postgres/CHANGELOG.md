@@ -1,6 +1,22 @@
 # Change Log - @jonasb/datadata-postgres
 
-This log was last generated on Mon, 12 Jul 2021 17:25:50 GMT and should not be manually modified.
+This log was last generated on Sun, 13 Feb 2022 21:58:15 GMT and should not be manually modified.
+
+## 0.1.1
+Sun, 13 Feb 2022 21:58:15 GMT
+
+### Updates
+
+- Configure importHelpers for ts, and add tslib dependency
+- Export transpiled JavaScript
+- Fix export configuration
+- Fix broken publish (migrations were missing)
+- Upgrade dependendencies
+- Add createdAt/updatedAt/updated columns
+- Add entities.published_fts
+- Support authKeys
+- Support DATABASE_CERTIFICATE_AUTHORITY for migration
+- Export migration function as a library
 
 ## 0.1.0
 Mon, 12 Jul 2021 17:25:50 GMT

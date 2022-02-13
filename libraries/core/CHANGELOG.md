@@ -1,6 +1,45 @@
 # Change Log - @jonasb/datadata-core
 
-This log was last generated on Mon, 12 Jul 2021 17:25:50 GMT and should not be manually modified.
+This log was last generated on Sun, 13 Feb 2022 21:58:15 GMT and should not be manually modified.
+
+## 0.1.1
+Sun, 13 Feb 2022 21:58:15 GMT
+
+### Updates
+
+- Add OkResult.map() and ErrorType.isErrorType()
+- Configure importHelpers for ts, and add tslib dependency
+- Export transpiled JavaScript
+- Fix export configuration
+- Allow string in schema field specification
+- Enable easier JSON serialization of adminClient
+- Support boolean type
+- upsertEntity() support in AdminClient
+- Make AdminEntityUpsert.fields required
+- Normalize field values. Effect on create/update entity
+- Add isEntityNameAsRequested()
+- Normalize value items with missing fields'
+- Add Conflict as error to createEntity(). Upgrade dependencies
+- createdAt/updatedAt sort order
+- Use Temporal, createdAt, updatedAt, random tweaks
+- Minor tweaks
+- Support context provider for published client
+- Convert instants for searchAdminEntities() for JSON, require logger for client context
+- Add NoOpLogger, createConsoleLogger
+- Add url query utils
+- Add searchEntities and getTotalCount to PublishedClient
+- Add JSON support to PublishedClient
+- Add getSchemaSpecification() to PublishedClient. Fix JSON conversion of getEntities().
+- Upgrade dependencies. Support adminOnly.
+- Status filter
+- Support ItemValuePath
+- Support required fields. Add item traverser. 
+- Support reverse order
+- Support authKeys
+- Add createdAt to EntityInfo
+- Upgrade depencencies. Renames by adding Published prefix. Add {publish:true}.
+- Remove authKeys from reference to entity (they always use the actual authkey of the entity). Support sampleEntities(). Add optional id to RichTextBlock.
+- Support interface for buildUrlWithUrlQuery
 
 ## 0.1.0
 Mon, 12 Jul 2021 17:25:50 GMT

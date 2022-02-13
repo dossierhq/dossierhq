@@ -2,6 +2,125 @@
   "name": "@jonasb/datadata-admin-react-components",
   "entries": [
     {
+      "version": "0.1.1",
+      "tag": "@jonasb/datadata-admin-react-components_v0.1.1",
+      "date": "Sun, 13 Feb 2022 21:58:15 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Configure importHelpers for ts, and add tslib dependency"
+          },
+          {
+            "comment": "Export transpiled JavaScript"
+          },
+          {
+            "comment": "Fix export configuration"
+          },
+          {
+            "comment": "Export .css in npm package"
+          },
+          {
+            "comment": "Entity list paging"
+          },
+          {
+            "comment": "Support boolean type"
+          },
+          {
+            "comment": "Fix checkbox warning"
+          },
+          {
+            "comment": "Add w-0 h-0 classnames"
+          },
+          {
+            "comment": "Add width/height to Row/Columm"
+          },
+          {
+            "comment": "End paging button"
+          },
+          {
+            "comment": "Update dependency"
+          },
+          {
+            "comment": "Integrate new design library"
+          },
+          {
+            "comment": "Improve design, introduce DataDataContext2/DataDataProvider"
+          },
+          {
+            "comment": "Add WaitForDataDataContext"
+          },
+          {
+            "comment": "Switch to ESM output"
+          },
+          {
+            "comment": "Fix bug where opening dropdown would submit entity form. Add total count to entity list."
+          },
+          {
+            "comment": "Fix large modals"
+          },
+          {
+            "comment": "Add query/paging to EntityListScreen url"
+          },
+          {
+            "comment": "Keep paging when changeing page size"
+          },
+          {
+            "comment": "Add PublishedEntitiesListScreen"
+          },
+          {
+            "comment": "Change PublishedEntityListScreen to published/EntityListScreen"
+          },
+          {
+            "comment": "Add published detail screen"
+          },
+          {
+            "comment": "Add entity map to entity list screen. Tweak published entity layout."
+          },
+          {
+            "comment": "Add map to published list screen. Fix map in list screen."
+          },
+          {
+            "comment": "Enable edit linked entities."
+          },
+          {
+            "comment": "Upgrade dependencies. Support adminOnly"
+          },
+          {
+            "comment": "Support status filter"
+          },
+          {
+            "comment": "Zoom in when changeing location and show other entities"
+          },
+          {
+            "comment": "Show 100 entities in location editor"
+          },
+          {
+            "comment": "Show required fields"
+          },
+          {
+            "comment": "Support reverse order"
+          },
+          {
+            "comment": "Support authKeys"
+          },
+          {
+            "comment": "Upgrade depencencies"
+          },
+          {
+            "comment": "Fix broken editor.js (block id)"
+          },
+          {
+            "comment": "Show sample entities."
+          }
+        ],
+        "patch": [
+          {
+            "comment": "Some sampling support"
+          }
+        ]
+      }
+    },
+    {
       "version": "0.1.0",
       "tag": "@jonasb/datadata-admin-react-components_v0.1.0",
       "date": "Mon, 12 Jul 2021 17:25:50 GMT",

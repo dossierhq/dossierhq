@@ -2,6 +2,36 @@
   "name": "@jonasb/datadata-cli",
   "entries": [
     {
+      "version": "0.1.1",
+      "tag": "@jonasb/datadata-cli_v0.1.1",
+      "date": "Sun, 13 Feb 2022 21:58:15 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Configure importHelpers for ts, and add tslib dependency"
+          },
+          {
+            "comment": "Export transpiled JavaScript"
+          },
+          {
+            "comment": "Fix export configuration"
+          },
+          {
+            "comment": "createdAt/updatedAt sort order"
+          },
+          {
+            "comment": "Upgrade dependencies"
+          },
+          {
+            "comment": "Support authKeys"
+          },
+          {
+            "comment": "Upgrade depencencies"
+          }
+        ]
+      }
+    },
+    {
       "version": "0.1.0",
       "tag": "@jonasb/datadata-cli_v0.1.0",
       "date": "Mon, 12 Jul 2021 17:25:50 GMT",
