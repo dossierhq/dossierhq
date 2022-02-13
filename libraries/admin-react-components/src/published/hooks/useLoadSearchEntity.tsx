@@ -1,12 +1,12 @@
 import type { Paging, PublishedQuery } from '@jonasb/datadata-core';
 import type { Dispatch } from 'react';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import type { SearchEntityStateAction } from '../index.js';
 import {
   PublishedDataDataContext,
+  SearchEntityStateActions,
   useSearchEntities,
   useTotalCount,
-  useUpdateSearchEntityStateWithResponse,
 } from '../index.js';
 
 export function useLoadSearchEntity(
@@ -18,10 +18,13 @@ export function useLoadSearchEntity(
   const { connection, connectionError } = useSearchEntities(publishedClient, query, paging);
   const { totalCount } = useTotalCount(publishedClient, query);
 
-  useUpdateSearchEntityStateWithResponse(
-    connection,
-    connectionError,
-    totalCount,
-    dispatchSearchEntityState
-  );
+  useEffect(() => {
+    dispatchSearchEntityState(
+      new SearchEntityStateActions.UpdateResult(connection, connectionError)
+    );
+  }, [connection, connectionError, dispatchSearchEntityState]);
+
+  useEffect(() => {
+    dispatchSearchEntityState(new SearchEntityStateActions.UpdateTotalCount(totalCount ?? null));
+  }, [totalCount, dispatchSearchEntityState]);
 }

@@ -3,7 +3,7 @@ import { AdminQueryOrder } from '@jonasb/datadata-core';
 import { InstantDisplay, Table } from '@jonasb/datadata-design';
 import type { Dispatch } from 'react';
 import React, { useContext } from 'react';
-import type { SearchEntityState, SearchEntityStateAction } from '../..';
+import type { DisplayAuthKey, SearchEntityState, SearchEntityStateAction } from '../..';
 import { AuthKeyTag, DataDataContext2, SearchEntityStateActions, StatusTag } from '../..';
 
 interface Props {
@@ -15,6 +15,7 @@ interface Props {
 export function EntityList2({ searchEntityState, dispatchSearchEntityState, onItemClick }: Props) {
   const {
     connection,
+    entitySamples,
     query: { order, reverse },
   } = searchEntityState;
   const { authKeys } = useContext(DataDataContext2);
@@ -70,35 +71,65 @@ export function EntityList2({ searchEntityState, dispatchSearchEntityState, onIt
           if (edge.node.isOk()) {
             const entity = edge.node.value as AdminEntity;
             return (
-              <Table.Row key={entity.id} clickable onClick={() => onItemClick(entity)}>
-                <Table.Cell>{entity.info.name}</Table.Cell>
-                <Table.Cell>{entity.info.type}</Table.Cell>
-                <Table.Cell narrow>
-                  <StatusTag status={entity.info.status} />
-                </Table.Cell>
-                <Table.Cell narrow>
-                  <AuthKeyTag
-                    authKey={entity.info.authKey}
-                    displayName={
-                      authKeys.find((it) => it.authKey === entity.info.authKey)?.displayName ?? null
-                    }
-                  />
-                </Table.Cell>
-                <Table.Cell narrow>
-                  <InstantDisplay instant={entity.info.createdAt} />
-                </Table.Cell>
-                <Table.Cell narrow>
-                  {order === AdminQueryOrder.updatedAt ||
-                  !entity.info.updatedAt.equals(entity.info.createdAt) ? (
-                    <InstantDisplay instant={entity.info.updatedAt} />
-                  ) : null}
-                </Table.Cell>
-              </Table.Row>
+              <EntityListRow
+                key={entity.id}
+                {...{ entity, authKeys, order: order as AdminQueryOrder | undefined, onItemClick }}
+              />
             );
           }
         })}
+        {entitySamples?.map((entity) => (
+          <EntityListRow
+            key={entity.id}
+            {...{
+              entity: entity as AdminEntity,
+              authKeys,
+              order: order as AdminQueryOrder | undefined,
+              onItemClick,
+            }}
+          />
+        ))}
       </Table.Body>
     </Table>
+  );
+}
+
+function EntityListRow({
+  entity,
+  order,
+  authKeys,
+  onItemClick,
+}: {
+  entity: AdminEntity;
+  order: AdminQueryOrder | undefined;
+  authKeys: DisplayAuthKey[];
+  onItemClick: (item: AdminEntity) => void;
+}) {
+  return (
+    <Table.Row clickable onClick={() => onItemClick(entity)}>
+      <Table.Cell>{entity.info.name}</Table.Cell>
+      <Table.Cell>{entity.info.type}</Table.Cell>
+      <Table.Cell narrow>
+        <StatusTag status={entity.info.status} />
+      </Table.Cell>
+      <Table.Cell narrow>
+        <AuthKeyTag
+          authKey={entity.info.authKey}
+          displayName={
+            authKeys.find((it) => it.authKey === entity.info.authKey)?.displayName ?? null
+          }
+        />
+      </Table.Cell>
+      <Table.Cell narrow>
+        <InstantDisplay instant={entity.info.createdAt} />
+      </Table.Cell>
+      <Table.Cell narrow>
+        {order === AdminQueryOrder.updatedAt ||
+        !entity.info.updatedAt.equals(entity.info.createdAt) ? (
+          <InstantDisplay instant={entity.info.updatedAt} />
+        ) : null}
+      </Table.Cell>
+    </Table.Row>
   );
 }
 

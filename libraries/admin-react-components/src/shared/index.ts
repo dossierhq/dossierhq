@@ -31,7 +31,6 @@ export {
   initializeSearchEntityState,
   reduceSearchEntityState,
   SearchEntityStateActions,
-  useUpdateSearchEntityStateWithResponse,
 } from './reducers/SearchEnittyReducer/SearchEntityReducer.js';
 export type {
   SearchEntityState,

@@ -12,8 +12,6 @@ import type {
 } from '@jonasb/datadata-core';
 import { AdminQueryOrder, getPagingInfo } from '@jonasb/datadata-core';
 import isEqual from 'lodash/isEqual.js';
-import type { Dispatch } from 'react';
-import { useEffect } from 'react';
 
 const defaultOrder = AdminQueryOrder.name;
 const defaultPagingCount = 25;
@@ -28,6 +26,8 @@ export interface SearchEntityState {
 
   connection: Connection<Edge<AdminEntity | PublishedEntity, ErrorType>> | null | undefined;
   connectionError: ErrorResult<unknown, ErrorType.BadRequest | ErrorType.Generic> | undefined;
+  entitySamples: (AdminEntity | PublishedEntity)[] | undefined;
+  entitySamplesError: ErrorResult<unknown, ErrorType.BadRequest | ErrorType.Generic> | undefined;
   totalCount: number | null;
 }
 
@@ -45,6 +45,8 @@ export function initializeSearchEntityState(actions: SearchEntityStateAction[]):
     text: '',
     connection: undefined,
     connectionError: undefined,
+    entitySamples: undefined,
+    entitySamplesError: undefined,
     totalCount: null,
   };
   // Normalize query state
@@ -198,6 +200,33 @@ class UpdateResultAction implements SearchEntityStateAction {
   }
 }
 
+class UpdateSampleResultAction implements SearchEntityStateAction {
+  entitySamples: SearchEntityState['entitySamples'];
+  entitySamplesError: SearchEntityState['entitySamplesError'];
+
+  constructor(
+    entitySamples: SearchEntityState['entitySamples'],
+    entitySamplesError: SearchEntityState['entitySamplesError']
+  ) {
+    this.entitySamples = entitySamples;
+    this.entitySamplesError = entitySamplesError;
+  }
+
+  reduce(state: SearchEntityState): SearchEntityState {
+    if (
+      state.entitySamples === this.entitySamples &&
+      state.entitySamplesError === this.entitySamplesError
+    ) {
+      return state;
+    }
+    return {
+      ...state,
+      entitySamples: this.entitySamples,
+      entitySamplesError: this.entitySamplesError,
+    };
+  }
+}
+
 class UpdateTotalCountAction implements SearchEntityStateAction {
   totalCount: number | null;
 
@@ -223,6 +252,7 @@ export const SearchEntityStateActions = {
   SetSample: SetSampleAction,
   SetQuery: SetQueryAction,
   UpdateResult: UpdateResultAction,
+  UpdateSampleResult: UpdateSampleResultAction,
   UpdateTotalCount: UpdateTotalCountAction,
 };
 
@@ -240,23 +270,4 @@ export function getQueryWithoutDefaults(
     changed = true;
   }
   return changed ? newQuery : query;
-}
-
-export function useUpdateSearchEntityStateWithResponse(
-  connection: Connection<Edge<AdminEntity | PublishedEntity, ErrorType>> | null | undefined,
-  connectionError: ErrorResult<unknown, ErrorType.BadRequest | ErrorType.Generic> | undefined,
-  totalCount: number | undefined,
-  dispatchSearchEntityState: Dispatch<SearchEntityStateAction>
-) {
-  useEffect(() => {
-    dispatchSearchEntityState(
-      new SearchEntityStateActions.UpdateResult(connection, connectionError)
-    );
-  }, [connection, connectionError, dispatchSearchEntityState]);
-
-  useEffect(() => {
-    dispatchSearchEntityState(new SearchEntityStateActions.UpdateTotalCount(totalCount ?? null));
-  }, [totalCount, dispatchSearchEntityState]);
-
-  // useDebugLogChangedValues('useUpdateSearchEntityStateWithResponse changed values', { dispatchSearchEntityState, connection, connectionError, totalCount, });
 }
