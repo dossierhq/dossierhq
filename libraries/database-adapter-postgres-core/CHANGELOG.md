@@ -1,0 +1,18 @@
+# Change Log - @jonasb/datadata-database-adapter-postgres-core
+
+This log was last generated on Sun, 13 Feb 2022 21:58:15 GMT and should not be manually modified.
+
+## 0.1.1
+Sun, 13 Feb 2022 21:58:15 GMT
+
+### Updates
+
+- Initial release
+- Minor tweaks
+- Upgrade dependencies
+- Support reverse order
+- Use new status column
+- Support authKeys
+- Upgrade dependencies. Support all server actions. Fix boken nested transactions.
+- Support sample entities.
+

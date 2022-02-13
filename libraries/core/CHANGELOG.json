@@ -2,6 +2,114 @@
   "name": "@jonasb/datadata-core",
   "entries": [
     {
+      "version": "0.1.1",
+      "tag": "@jonasb/datadata-core_v0.1.1",
+      "date": "Sun, 13 Feb 2022 21:58:15 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Add OkResult.map() and ErrorType.isErrorType()"
+          },
+          {
+            "comment": "Configure importHelpers for ts, and add tslib dependency"
+          },
+          {
+            "comment": "Export transpiled JavaScript"
+          },
+          {
+            "comment": "Fix export configuration"
+          },
+          {
+            "comment": "Allow string in schema field specification"
+          },
+          {
+            "comment": "Enable easier JSON serialization of adminClient"
+          },
+          {
+            "comment": "Support boolean type"
+          },
+          {
+            "comment": "upsertEntity() support in AdminClient"
+          },
+          {
+            "comment": "Make AdminEntityUpsert.fields required"
+          },
+          {
+            "comment": "Normalize field values. Effect on create/update entity"
+          },
+          {
+            "comment": "Add isEntityNameAsRequested()"
+          },
+          {
+            "comment": "Normalize value items with missing fields'"
+          },
+          {
+            "comment": "Add Conflict as error to createEntity(). Upgrade dependencies"
+          },
+          {
+            "comment": "createdAt/updatedAt sort order"
+          },
+          {
+            "comment": "Use Temporal, createdAt, updatedAt, random tweaks"
+          },
+          {
+            "comment": "Minor tweaks"
+          },
+          {
+            "comment": "Support context provider for published client"
+          },
+          {
+            "comment": "Convert instants for searchAdminEntities() for JSON, require logger for client context"
+          },
+          {
+            "comment": "Add NoOpLogger, createConsoleLogger"
+          },
+          {
+            "comment": "Add url query utils"
+          },
+          {
+            "comment": "Add searchEntities and getTotalCount to PublishedClient"
+          },
+          {
+            "comment": "Add JSON support to PublishedClient"
+          },
+          {
+            "comment": "Add getSchemaSpecification() to PublishedClient. Fix JSON conversion of getEntities()."
+          },
+          {
+            "comment": "Upgrade dependencies. Support adminOnly."
+          },
+          {
+            "comment": "Status filter"
+          },
+          {
+            "comment": "Support ItemValuePath"
+          },
+          {
+            "comment": "Support required fields. Add item traverser. "
+          },
+          {
+            "comment": "Support reverse order"
+          },
+          {
+            "comment": "Support authKeys"
+          },
+          {
+            "comment": "Add createdAt to EntityInfo"
+          },
+          {
+            "comment": "Upgrade depencencies. Renames by adding Published prefix. Add {publish:true}."
+          },
+          {
+            "comment": "Remove authKeys from reference to entity (they always use the actual authkey of the entity). Support sampleEntities(). Add optional id to RichTextBlock."
+          },
+          {
+            "comment": "Support interface for buildUrlWithUrlQuery"
+          }
+        ]
+      }
+    },
+    {
       "version": "0.1.0",
       "tag": "@jonasb/datadata-core_v0.1.0",
       "date": "Mon, 12 Jul 2021 17:25:50 GMT",

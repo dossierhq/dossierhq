@@ -1,0 +1,17 @@
+{
+  "name": "@jonasb/datadata-core-jest",
+  "entries": [
+    {
+      "version": "0.1.1",
+      "tag": "@jonasb/datadata-core-jest_v0.1.1",
+      "date": "Sun, 13 Feb 2022 21:58:15 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "First version."
+          }
+        ]
+      }
+    }
+  ]
+}

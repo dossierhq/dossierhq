@@ -2,6 +2,96 @@
   "name": "@jonasb/datadata-server",
   "entries": [
     {
+      "version": "0.1.1",
+      "tag": "@jonasb/datadata-server_v0.1.1",
+      "date": "Sun, 13 Feb 2022 21:58:15 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Support createPrincipalIfMissing in createSessionForPrincipal()"
+          },
+          {
+            "comment": "Configure importHelpers for ts, and add tslib dependency"
+          },
+          {
+            "comment": "Export transpiled JavaScript"
+          },
+          {
+            "comment": "Fix export configuration"
+          },
+          {
+            "comment": "Rename resolveContext to context when creating clients"
+          },
+          {
+            "comment": "Support boolean type"
+          },
+          {
+            "comment": "upsertEntity() support in AdminClient"
+          },
+          {
+            "comment": "Normalize field values. Effect on create/update entity"
+          },
+          {
+            "comment": "Do not change entity with upsert if the name is as requested"
+          },
+          {
+            "comment": "Normalize value items with missing fields"
+          },
+          {
+            "comment": "Upgrade dependenncies"
+          },
+          {
+            "comment": " createdAt/updatedAt sort order"
+          },
+          {
+            "comment": "Temporal, create DatabaseAdapter"
+          },
+          {
+            "comment": "Rewrite integration with the server"
+          },
+          {
+            "comment": "Support context provider for published client"
+          },
+          {
+            "comment": "Middleware support when creating client"
+          },
+          {
+            "comment": "Add searchEntities and getTotalCount to PublishedClient"
+          },
+          {
+            "comment": "Add getSchemaSpecification() to PublishedClient"
+          },
+          {
+            "comment": "Upgrade dependencies. Support adminOnly."
+          },
+          {
+            "comment": "Status filter"
+          },
+          {
+            "comment": "Support required fields"
+          },
+          {
+            "comment": "Support reverse order"
+          },
+          {
+            "comment": "Support authKeys"
+          },
+          {
+            "comment": "Add createdAt to EntityInfo"
+          },
+          {
+            "comment": "Extract database adapter."
+          },
+          {
+            "comment": "Actually verify authKeys. Simplify AuthorizationAdapter. Export standard NoneAndSubjectAuthorizationAdapter. Support sample entities."
+          },
+          {
+            "comment": "Support sample entities with fewer than requested count"
+          }
+        ]
+      }
+    },
+    {
       "version": "0.1.0",
       "tag": "@jonasb/datadata-server_v0.1.0",
       "date": "Mon, 12 Jul 2021 17:25:50 GMT",
