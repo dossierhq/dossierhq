@@ -11,6 +11,7 @@ import {
   EntityMapMarker,
   EntityTypeSelector,
   EntityTypeTagSelector,
+  useLoadSampleEntities,
   initializeAuthKeySelectorState,
   initializeEntityTypeSelectorState,
   initializeSearchEntityStateFromUrlQuery,
@@ -26,7 +27,8 @@ import {
   StatusSelector,
   StatusTagSelector,
   TypePicker2,
-  useLoadSearchEntity,
+  useLoadTotalCount,
+  useLoadSearchEntities,
   useSynchronizeUrlQueryAndSearchEntityState,
 } from '../../index.js';
 
@@ -128,11 +130,20 @@ export function EntityListScreen({
     dispatchSearchEntityState
   );
 
-  useLoadSearchEntity(
-    searchEntityState.query as AdminQuery,
-    searchEntityState.paging,
-    dispatchSearchEntityState
+  // load
+  useLoadSearchEntities(
+    dispatchSearchEntityState,
+    searchEntityState.sample ? undefined : (searchEntityState.query as AdminQuery),
+    searchEntityState.paging
   );
+
+  useLoadSampleEntities(
+    dispatchSearchEntityState,
+    searchEntityState.sample ? (searchEntityState.query as AdminQuery) : undefined,
+    searchEntityState.sampling
+  );
+
+  useLoadTotalCount(dispatchSearchEntityState, searchEntityState.query as AdminQuery);
 
   // useDebugLogChangedValues('EntityList changed props', { header, footer, onCreateEntity, onOpenEntity, searchEntityState, dispatchSearchEntityState, entityTypeFilterState, dispatchEntityTypeFilter, });
 
