@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-server",
+      "comment": "Support sample entities with fewer than requested count",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-server"
+}

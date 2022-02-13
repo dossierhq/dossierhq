@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-core",
+      "comment": "Support interface for buildUrlWithUrlQuery",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-core"
+}
