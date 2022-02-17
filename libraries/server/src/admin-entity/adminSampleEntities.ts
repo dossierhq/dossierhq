@@ -9,12 +9,9 @@ import type {
 } from '@jonasb/datadata-core';
 import { ok } from '@jonasb/datadata-core';
 import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
-import type { AuthorizationAdapter, SessionContext } from '..';
-import { authResolveAuthorizationKeys } from '../Auth';
+import type { AuthorizationAdapter, ResolvedAuthKey, SessionContext } from '..';
 import { decodeAdminEntity } from '../EntityCodec';
-import { Randomizer } from '../utils/Randomizer';
-
-const samplingDefaultCount = 25;
+import { sharedSampleEntities } from '../shared-entity/sharedSampleEntities';
 
 export async function adminSampleEntities(
   schema: AdminSchema,
@@ -27,43 +24,37 @@ export async function adminSampleEntities(
   EntitySamplingPayload<AdminEntity>,
   ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
 > {
-  const authKeysResult = await authResolveAuthorizationKeys(
-    authorizationAdapter,
-    context,
-    query?.authKeys
-  );
-  if (authKeysResult.isError()) {
-    return authKeysResult;
+  function getTotal(
+    authKeys: ResolvedAuthKey[]
+  ): PromiseResult<number, ErrorType.BadRequest | ErrorType.Generic> {
+    return databaseAdapter.adminEntitySearchTotalCount(schema, context, query, authKeys);
   }
 
-  const totalCountResult = await databaseAdapter.adminEntitySearchTotalCount(
-    schema,
+  async function sampleEntities(
+    offset: number,
+    limit: number,
+    authKeys: ResolvedAuthKey[]
+  ): PromiseResult<AdminEntity[], ErrorType.BadRequest | ErrorType.Generic> {
+    const sampleResult = await databaseAdapter.adminEntitySampleEntities(
+      schema,
+      context,
+      query,
+      offset,
+      limit,
+      authKeys
+    );
+    if (sampleResult.isError()) return sampleResult;
+
+    const entities = sampleResult.value.map((it) => decodeAdminEntity(schema, it));
+    return ok(entities);
+  }
+
+  return await sharedSampleEntities(
+    authorizationAdapter,
     context,
     query,
-    authKeysResult.value
+    options,
+    getTotal,
+    sampleEntities
   );
-  if (totalCountResult.isError()) return totalCountResult;
-  const totalCount = totalCountResult.value;
-
-  const seed = options?.seed ?? Math.floor(Math.random() * 2147483647);
-  const randomizer = new Randomizer(seed);
-
-  const limit = options?.count ?? samplingDefaultCount;
-  const offset = limit >= totalCount ? 0 : randomizer.randomInt(totalCount - limit - 1);
-
-  const sampleResult = await databaseAdapter.adminEntitySampleEntities(
-    schema,
-    context,
-    query,
-    offset,
-    limit,
-    authKeysResult.value
-  );
-  if (sampleResult.isError()) return sampleResult;
-
-  const entities = sampleResult.value.map((it) => decodeAdminEntity(schema, it));
-
-  randomizer.shuffleArray(entities);
-
-  return ok({ seed, totalCount, items: entities });
 }
