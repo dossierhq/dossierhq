@@ -117,6 +117,12 @@ type AdminEntityConnection {
   totalCount: Int!
 }
 
+type AdminEntitySamplingPayload {
+  seed: Int!
+  totalCount: Int!
+  items: [AdminEntity]
+}
+
 enum AdminQueryOrder {
   createdAt
   updatedAt
@@ -352,7 +358,7 @@ input AdminValueTwoInput {
 type Query {
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
-  adminSampleEntities(query: AdminQueryInput, count: Int): [AdminEntity]
+  adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
@@ -676,6 +682,12 @@ type AdminEntityConnection {
   totalCount: Int!
 }
 
+type AdminEntitySamplingPayload {
+  seed: Int!
+  totalCount: Int!
+  items: [AdminEntity]
+}
+
 enum AdminQueryOrder {
   createdAt
   updatedAt
@@ -910,7 +922,7 @@ type Query {
   searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
-  adminSampleEntities(query: AdminQueryInput, count: Int): [AdminEntity]
+  adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
@@ -1091,6 +1103,12 @@ type AdminEntityConnection {
   pageInfo: PageInfo!
   edges: [AdminEntityEdge]
   totalCount: Int!
+}
+
+type AdminEntitySamplingPayload {
+  seed: Int!
+  totalCount: Int!
+  items: [AdminEntity]
 }
 
 enum AdminQueryOrder {
@@ -1298,7 +1316,7 @@ type AdminBarUpsertPayload {
 type Query {
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
-  adminSampleEntities(query: AdminQueryInput, count: Int): [AdminEntity]
+  adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
@@ -1609,6 +1627,12 @@ type AdminEntityConnection {
   totalCount: Int!
 }
 
+type AdminEntitySamplingPayload {
+  seed: Int!
+  totalCount: Int!
+  items: [AdminEntity]
+}
+
 enum AdminQueryOrder {
   createdAt
   updatedAt
@@ -1813,7 +1837,7 @@ type Query {
   searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
-  adminSampleEntities(query: AdminQueryInput, count: Int): [AdminEntity]
+  adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
@@ -1944,6 +1968,12 @@ type AdminEntityConnection {
   pageInfo: PageInfo!
   edges: [AdminEntityEdge]
   totalCount: Int!
+}
+
+type AdminEntitySamplingPayload {
+  seed: Int!
+  totalCount: Int!
+  items: [AdminEntity]
 }
 
 enum AdminQueryOrder {
@@ -2199,7 +2229,7 @@ enum _AdminBarOrBazOrFoo {
 type Query {
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
-  adminSampleEntities(query: AdminQueryInput, count: Int): [AdminEntity]
+  adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
@@ -2539,6 +2569,12 @@ type AdminEntityConnection {
   totalCount: Int!
 }
 
+type AdminEntitySamplingPayload {
+  seed: Int!
+  totalCount: Int!
+  items: [AdminEntity]
+}
+
 enum AdminQueryOrder {
   createdAt
   updatedAt
@@ -2802,7 +2838,7 @@ type Query {
   searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
-  adminSampleEntities(query: AdminQueryInput, count: Int): [AdminEntity]
+  adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
@@ -2934,6 +2970,12 @@ type AdminEntityConnection {
   pageInfo: PageInfo!
   edges: [AdminEntityEdge]
   totalCount: Int!
+}
+
+type AdminEntitySamplingPayload {
+  seed: Int!
+  totalCount: Int!
+  items: [AdminEntity]
 }
 
 enum AdminQueryOrder {
@@ -3088,7 +3130,7 @@ type AdminFooUpsertPayload {
 type Query {
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
-  adminSampleEntities(query: AdminQueryInput, count: Int): [AdminEntity]
+  adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
@@ -3367,6 +3409,12 @@ type AdminEntityConnection {
   totalCount: Int!
 }
 
+type AdminEntitySamplingPayload {
+  seed: Int!
+  totalCount: Int!
+  items: [AdminEntity]
+}
+
 enum AdminQueryOrder {
   createdAt
   updatedAt
@@ -3518,7 +3566,7 @@ type Query {
   searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
-  adminSampleEntities(query: AdminQueryInput, count: Int): [AdminEntity]
+  adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
@@ -3648,6 +3696,12 @@ type AdminEntityConnection {
   pageInfo: PageInfo!
   edges: [AdminEntityEdge]
   totalCount: Int!
+}
+
+type AdminEntitySamplingPayload {
+  seed: Int!
+  totalCount: Int!
+  items: [AdminEntity]
 }
 
 enum AdminQueryOrder {
@@ -3833,7 +3887,7 @@ input AdminValueOneInput {
 type Query {
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
-  adminSampleEntities(query: AdminQueryInput, count: Int): [AdminEntity]
+  adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
@@ -4156,6 +4210,12 @@ type AdminEntityConnection {
   totalCount: Int!
 }
 
+type AdminEntitySamplingPayload {
+  seed: Int!
+  totalCount: Int!
+  items: [AdminEntity]
+}
+
 enum AdminQueryOrder {
   createdAt
   updatedAt
@@ -4338,7 +4398,7 @@ type Query {
   searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
-  adminSampleEntities(query: AdminQueryInput, count: Int): [AdminEntity]
+  adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
@@ -4464,6 +4524,12 @@ type AdminEntityConnection {
   pageInfo: PageInfo!
   edges: [AdminEntityEdge]
   totalCount: Int!
+}
+
+type AdminEntitySamplingPayload {
+  seed: Int!
+  totalCount: Int!
+  items: [AdminEntity]
 }
 
 enum AdminQueryOrder {
@@ -4630,7 +4696,7 @@ type AdminFooUpsertPayload {
 type Query {
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
-  adminSampleEntities(query: AdminQueryInput, count: Int): [AdminEntity]
+  adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
@@ -4919,6 +4985,12 @@ type AdminEntityConnection {
   totalCount: Int!
 }
 
+type AdminEntitySamplingPayload {
+  seed: Int!
+  totalCount: Int!
+  items: [AdminEntity]
+}
+
 enum AdminQueryOrder {
   createdAt
   updatedAt
@@ -5082,7 +5154,7 @@ type Query {
   searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
-  adminSampleEntities(query: AdminQueryInput, count: Int): [AdminEntity]
+  adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
@@ -5209,6 +5281,12 @@ type AdminEntityConnection {
   pageInfo: PageInfo!
   edges: [AdminEntityEdge]
   totalCount: Int!
+}
+
+type AdminEntitySamplingPayload {
+  seed: Int!
+  totalCount: Int!
+  items: [AdminEntity]
 }
 
 enum AdminQueryOrder {
@@ -5428,7 +5506,7 @@ type AdminBarUpsertPayload {
 type Query {
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
-  adminSampleEntities(query: AdminQueryInput, count: Int): [AdminEntity]
+  adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
@@ -5749,6 +5827,12 @@ type AdminEntityConnection {
   totalCount: Int!
 }
 
+type AdminEntitySamplingPayload {
+  seed: Int!
+  totalCount: Int!
+  items: [AdminEntity]
+}
+
 enum AdminQueryOrder {
   createdAt
   updatedAt
@@ -5965,7 +6049,7 @@ type Query {
   searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
-  adminSampleEntities(query: AdminQueryInput, count: Int): [AdminEntity]
+  adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
@@ -6101,6 +6185,12 @@ type AdminEntityConnection {
   pageInfo: PageInfo!
   edges: [AdminEntityEdge]
   totalCount: Int!
+}
+
+type AdminEntitySamplingPayload {
+  seed: Int!
+  totalCount: Int!
+  items: [AdminEntity]
 }
 
 enum AdminQueryOrder {
@@ -6364,7 +6454,7 @@ enum _AdminValueListOrValueOne {
 type Query {
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
-  adminSampleEntities(query: AdminQueryInput, count: Int): [AdminEntity]
+  adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
@@ -6750,6 +6840,12 @@ type AdminEntityConnection {
   totalCount: Int!
 }
 
+type AdminEntitySamplingPayload {
+  seed: Int!
+  totalCount: Int!
+  items: [AdminEntity]
+}
+
 enum AdminQueryOrder {
   createdAt
   updatedAt
@@ -7015,7 +7111,7 @@ type Query {
   searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
-  adminSampleEntities(query: AdminQueryInput, count: Int): [AdminEntity]
+  adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory

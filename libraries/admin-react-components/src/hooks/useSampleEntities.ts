@@ -3,9 +3,9 @@ import type {
   AdminEntity,
   AdminQuery,
   EntitySamplingOptions,
+  EntitySamplingPayload,
   ErrorResult,
   ErrorType,
-  PublishedEntity,
 } from '@jonasb/datadata-core';
 import { useCallback } from 'react';
 import useSWR from 'swr';
@@ -20,7 +20,7 @@ export function useSampleEntities(
   query: AdminQuery | undefined,
   options: EntitySamplingOptions | undefined
 ): {
-  entitySamples: (AdminEntity | PublishedEntity)[] | undefined;
+  entitySamples: EntitySamplingPayload<AdminEntity> | undefined;
   entitySamplesError: ErrorResult<unknown, ErrorType.BadRequest | ErrorType.Generic> | undefined;
 } {
   const fetcher = useCallback(
@@ -52,7 +52,7 @@ async function fetchSampleEntities(
   adminClient: AdminClient,
   query: AdminQuery,
   options: EntitySamplingOptions | undefined
-): Promise<(AdminEntity | PublishedEntity)[]> {
+): Promise<EntitySamplingPayload<AdminEntity>> {
   const result = await adminClient.sampleEntities(query, options);
   if (result.isError()) {
     throw result; // throw result, don't convert to Error

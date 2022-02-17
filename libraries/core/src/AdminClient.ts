@@ -19,6 +19,7 @@ import type {
   EntityHistory,
   EntityReference,
   EntitySamplingOptions,
+  EntitySamplingPayload,
   EntityVersionReference,
   JsonResult,
   Paging,
@@ -85,7 +86,7 @@ export interface AdminClient {
     query?: AdminQuery,
     options?: EntitySamplingOptions
   ): PromiseResult<
-    AdminEntity[],
+    EntitySamplingPayload<AdminEntity>,
     ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
   >;
 
@@ -334,7 +335,7 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
     query?: AdminQuery,
     options?: EntitySamplingOptions
   ): PromiseResult<
-    AdminEntity[],
+    EntitySamplingPayload<AdminEntity>,
     ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
   > {
     return this.executeOperation({
@@ -667,9 +668,11 @@ export function convertJsonAdminClientResult<TName extends AdminClientOperationN
     case AdminClientOperationName.getTotalCount:
       return ok(value) as MethodReturnTypeWithoutPromise<TName>;
     case AdminClientOperationName.sampleEntities: {
-      const result: MethodReturnTypeWithoutPromise<AdminClientOperationName.sampleEntities> = ok(
-        (value as JsonAdminEntity[]).map((it) => convertJsonAdminEntity(it))
-      );
+      const payload = value as EntitySamplingPayload<JsonAdminEntity>;
+      const result: MethodReturnTypeWithoutPromise<AdminClientOperationName.sampleEntities> = ok({
+        ...payload,
+        items: payload.items.map((it) => convertJsonAdminEntity(it)),
+      });
       return result as MethodReturnTypeWithoutPromise<TName>;
     }
     case AdminClientOperationName.searchEntities: {

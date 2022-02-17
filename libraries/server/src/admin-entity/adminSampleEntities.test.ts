@@ -28,10 +28,10 @@ describe('Admin adminSampleEntities', () => {
       databaseAdapter,
       context,
       undefined,
-      undefined
+      { seed: 9876 }
     );
 
-    expectResultValue(result, []);
+    expectResultValue(result, { seed: 9876, totalCount: 0, items: [] });
     expect(getDatabaseAdapterMockedCallsWithoutContextAndUnordered(databaseAdapter))
       .toMatchInlineSnapshot(`
       Array [
@@ -127,24 +127,28 @@ describe('Admin adminSampleEntities', () => {
       databaseAdapter,
       context,
       undefined,
-      undefined
+      { seed: 3435 }
     );
 
-    expectResultValue(result, [
-      {
-        id: '123',
-        info: {
-          authKey: 'none',
-          type: 'TitleOnly',
-          createdAt: now,
-          updatedAt: now,
-          version: 0,
-          status: AdminEntityStatus.published,
-          name: 'TitleOnly name',
+    expectResultValue(result, {
+      seed: 3435,
+      totalCount: 1,
+      items: [
+        {
+          id: '123',
+          info: {
+            authKey: 'none',
+            type: 'TitleOnly',
+            createdAt: now,
+            updatedAt: now,
+            version: 0,
+            status: AdminEntityStatus.published,
+            name: 'TitleOnly name',
+          },
+          fields: { title: null },
         },
-        fields: { title: null },
-      },
-    ]);
+      ],
+    });
     expect(getDatabaseAdapterMockedCallsWithoutContextAndUnordered(databaseAdapter))
       .toMatchInlineSnapshot(`
       Array [

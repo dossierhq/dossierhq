@@ -4,6 +4,7 @@ import type {
   Connection,
   Edge,
   EntitySamplingOptions,
+  EntitySamplingPayload,
   ErrorResult,
   ErrorType,
   Paging,
@@ -26,7 +27,7 @@ export interface SearchEntityState {
 
   connection: Connection<Edge<AdminEntity | PublishedEntity, ErrorType>> | null | undefined;
   connectionError: ErrorResult<unknown, ErrorType.BadRequest | ErrorType.Generic> | undefined;
-  entitySamples: (AdminEntity | PublishedEntity)[] | undefined;
+  entitySamples: EntitySamplingPayload<AdminEntity | PublishedEntity> | undefined;
   entitySamplesError: ErrorResult<unknown, ErrorType.BadRequest | ErrorType.Generic> | undefined;
   totalCount: number | null;
 }
