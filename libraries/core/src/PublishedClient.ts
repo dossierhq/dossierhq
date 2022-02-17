@@ -4,6 +4,7 @@ import type {
   Edge,
   EntityReference,
   EntitySamplingOptions,
+  EntitySamplingPayload,
   JsonConnection,
   JsonEdge,
   JsonResult,
@@ -58,7 +59,7 @@ export interface PublishedClient {
     query?: PublishedQuery,
     options?: EntitySamplingOptions
   ): PromiseResult<
-    PublishedEntity[],
+    EntitySamplingPayload<PublishedEntity>,
     ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
   >;
 
@@ -209,7 +210,7 @@ class BasePublishedClient<TContext extends ClientContext> implements PublishedCl
     query?: PublishedQuery,
     options?: EntitySamplingOptions
   ): PromiseResult<
-    PublishedEntity[],
+    EntitySamplingPayload<PublishedEntity>,
     ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
   > {
     return this.executeOperation({
@@ -351,8 +352,12 @@ export function convertJsonPublishedClientResult<TName extends PublishedClientOp
     case PublishedClientOperationName.getTotalCount:
       return ok(value) as MethodReturnTypeWithoutPromise<TName>;
     case PublishedClientOperationName.sampleEntities: {
+      const payload = value as EntitySamplingPayload<JsonPublishedEntity>;
       const result: MethodReturnTypeWithoutPromise<PublishedClientOperationName.sampleEntities> =
-        ok((value as JsonPublishedEntity[]).map((it) => convertJsonPublishedEntity(it)));
+        ok({
+          ...payload,
+          items: payload.items.map((it) => convertJsonPublishedEntity(it)),
+        });
       return result as MethodReturnTypeWithoutPromise<TName>;
     }
     case PublishedClientOperationName.searchEntities: {

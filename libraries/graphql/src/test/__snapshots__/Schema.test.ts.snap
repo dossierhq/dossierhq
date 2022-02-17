@@ -453,6 +453,12 @@ type PublishedEntityConnection {
   totalCount: Int!
 }
 
+type PublishedEntitySamplingPayload {
+  seed: Int!
+  totalCount: Int!
+  items: [PublishedEntity]
+}
+
 enum QueryOrder {
   createdAt
   name
@@ -486,7 +492,7 @@ type PublishedValueTwo implements PublishedValue {
 type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
-  publishedSampleEntities(query: QueryInput, count: Int): [PublishedEntity]
+  publishedSampleEntities(query: QueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
   searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
 }"
 `;
@@ -564,6 +570,12 @@ type PublishedEntityConnection {
   pageInfo: PageInfo!
   edges: [PublishedEntityEdge]
   totalCount: Int!
+}
+
+type PublishedEntitySamplingPayload {
+  seed: Int!
+  totalCount: Int!
+  items: [PublishedEntity]
 }
 
 enum QueryOrder {
@@ -918,7 +930,7 @@ input AdminValueTwoInput {
 type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
-  publishedSampleEntities(query: QueryInput, count: Int): [PublishedEntity]
+  publishedSampleEntities(query: QueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
   searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
@@ -1404,6 +1416,12 @@ type PublishedEntityConnection {
   totalCount: Int!
 }
 
+type PublishedEntitySamplingPayload {
+  seed: Int!
+  totalCount: Int!
+  items: [PublishedEntity]
+}
+
 enum QueryOrder {
   createdAt
   name
@@ -1440,7 +1458,7 @@ type PublishedBar implements Node & PublishedEntity {
 type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
-  publishedSampleEntities(query: QueryInput, count: Int): [PublishedEntity]
+  publishedSampleEntities(query: QueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
   searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
 }"
 `;
@@ -1511,6 +1529,12 @@ type PublishedEntityConnection {
   pageInfo: PageInfo!
   edges: [PublishedEntityEdge]
   totalCount: Int!
+}
+
+type PublishedEntitySamplingPayload {
+  seed: Int!
+  totalCount: Int!
+  items: [PublishedEntity]
 }
 
 enum QueryOrder {
@@ -1833,7 +1857,7 @@ type AdminBarUpsertPayload {
 type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
-  publishedSampleEntities(query: QueryInput, count: Int): [PublishedEntity]
+  publishedSampleEntities(query: QueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
   searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
@@ -2321,6 +2345,12 @@ type PublishedEntityConnection {
   totalCount: Int!
 }
 
+type PublishedEntitySamplingPayload {
+  seed: Int!
+  totalCount: Int!
+  items: [PublishedEntity]
+}
+
 enum QueryOrder {
   createdAt
   name
@@ -2374,7 +2404,7 @@ enum _PublishedBarOrBazOrFoo {
 type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
-  publishedSampleEntities(query: QueryInput, count: Int): [PublishedEntity]
+  publishedSampleEntities(query: QueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
   searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
 }"
 `;
@@ -2446,6 +2476,12 @@ type PublishedEntityConnection {
   pageInfo: PageInfo!
   edges: [PublishedEntityEdge]
   totalCount: Int!
+}
+
+type PublishedEntitySamplingPayload {
+  seed: Int!
+  totalCount: Int!
+  items: [PublishedEntity]
 }
 
 enum QueryOrder {
@@ -2834,7 +2870,7 @@ enum _AdminBarOrBazOrFoo {
 type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
-  publishedSampleEntities(query: QueryInput, count: Int): [PublishedEntity]
+  publishedSampleEntities(query: QueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
   searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
@@ -3214,6 +3250,12 @@ type PublishedEntityConnection {
   totalCount: Int!
 }
 
+type PublishedEntitySamplingPayload {
+  seed: Int!
+  totalCount: Int!
+  items: [PublishedEntity]
+}
+
 enum QueryOrder {
   createdAt
   name
@@ -3237,7 +3279,7 @@ type PublishedFoo implements Node & PublishedEntity {
 type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
-  publishedSampleEntities(query: QueryInput, count: Int): [PublishedEntity]
+  publishedSampleEntities(query: QueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
   searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
 }"
 `;
@@ -3307,6 +3349,12 @@ type PublishedEntityConnection {
   pageInfo: PageInfo!
   edges: [PublishedEntityEdge]
   totalCount: Int!
+}
+
+type PublishedEntitySamplingPayload {
+  seed: Int!
+  totalCount: Int!
+  items: [PublishedEntity]
 }
 
 enum QueryOrder {
@@ -3562,7 +3610,7 @@ type AdminFooUpsertPayload {
 type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
-  publishedSampleEntities(query: QueryInput, count: Int): [PublishedEntity]
+  publishedSampleEntities(query: QueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
   searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
@@ -3979,6 +4027,12 @@ type PublishedEntityConnection {
   totalCount: Int!
 }
 
+type PublishedEntitySamplingPayload {
+  seed: Int!
+  totalCount: Int!
+  items: [PublishedEntity]
+}
+
 enum QueryOrder {
   createdAt
   name
@@ -4014,7 +4068,7 @@ type PublishedValueOne implements PublishedValue {
 type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
-  publishedSampleEntities(query: QueryInput, count: Int): [PublishedEntity]
+  publishedSampleEntities(query: QueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
   searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
 }"
 `;
@@ -4092,6 +4146,12 @@ type PublishedEntityConnection {
   pageInfo: PageInfo!
   edges: [PublishedEntityEdge]
   totalCount: Int!
+}
+
+type PublishedEntitySamplingPayload {
+  seed: Int!
+  totalCount: Int!
+  items: [PublishedEntity]
 }
 
 enum QueryOrder {
@@ -4394,7 +4454,7 @@ input AdminValueOneInput {
 type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
-  publishedSampleEntities(query: QueryInput, count: Int): [PublishedEntity]
+  publishedSampleEntities(query: QueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
   searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
@@ -4780,6 +4840,12 @@ type PublishedEntityConnection {
   totalCount: Int!
 }
 
+type PublishedEntitySamplingPayload {
+  seed: Int!
+  totalCount: Int!
+  items: [PublishedEntity]
+}
+
 enum QueryOrder {
   createdAt
   name
@@ -4808,7 +4874,7 @@ type PublishedFoo implements Node & PublishedEntity {
 type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
-  publishedSampleEntities(query: QueryInput, count: Int): [PublishedEntity]
+  publishedSampleEntities(query: QueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
   searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
 }"
 `;
@@ -4878,6 +4944,12 @@ type PublishedEntityConnection {
   pageInfo: PageInfo!
   edges: [PublishedEntityEdge]
   totalCount: Int!
+}
+
+type PublishedEntitySamplingPayload {
+  seed: Int!
+  totalCount: Int!
+  items: [PublishedEntity]
 }
 
 enum QueryOrder {
@@ -5150,7 +5222,7 @@ type AdminFooUpsertPayload {
 type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
-  publishedSampleEntities(query: QueryInput, count: Int): [PublishedEntity]
+  publishedSampleEntities(query: QueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
   searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
@@ -5594,6 +5666,12 @@ type PublishedEntityConnection {
   totalCount: Int!
 }
 
+type PublishedEntitySamplingPayload {
+  seed: Int!
+  totalCount: Int!
+  items: [PublishedEntity]
+}
+
 enum QueryOrder {
   createdAt
   name
@@ -5635,7 +5713,7 @@ type PublishedBar implements Node & PublishedEntity {
 type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
-  publishedSampleEntities(query: QueryInput, count: Int): [PublishedEntity]
+  publishedSampleEntities(query: QueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
   searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
 }"
 `;
@@ -5706,6 +5784,12 @@ type PublishedEntityConnection {
   pageInfo: PageInfo!
   edges: [PublishedEntityEdge]
   totalCount: Int!
+}
+
+type PublishedEntitySamplingPayload {
+  seed: Int!
+  totalCount: Int!
+  items: [PublishedEntity]
 }
 
 enum QueryOrder {
@@ -6045,7 +6129,7 @@ type AdminBarUpsertPayload {
 type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
-  publishedSampleEntities(query: QueryInput, count: Int): [PublishedEntity]
+  publishedSampleEntities(query: QueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
   searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
@@ -6552,6 +6636,12 @@ type PublishedEntityConnection {
   totalCount: Int!
 }
 
+type PublishedEntitySamplingPayload {
+  seed: Int!
+  totalCount: Int!
+  items: [PublishedEntity]
+}
+
 enum QueryOrder {
   createdAt
   name
@@ -6615,7 +6705,7 @@ enum _PublishedValueListOrValueOne {
 type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
-  publishedSampleEntities(query: QueryInput, count: Int): [PublishedEntity]
+  publishedSampleEntities(query: QueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
   searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
 }"
 `;
@@ -6696,6 +6786,12 @@ type PublishedEntityConnection {
   pageInfo: PageInfo!
   edges: [PublishedEntityEdge]
   totalCount: Int!
+}
+
+type PublishedEntitySamplingPayload {
+  seed: Int!
+  totalCount: Int!
+  items: [PublishedEntity]
 }
 
 enum QueryOrder {
@@ -7107,7 +7203,7 @@ enum _AdminValueListOrValueOne {
 type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
-  publishedSampleEntities(query: QueryInput, count: Int): [PublishedEntity]
+  publishedSampleEntities(query: QueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
   searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
