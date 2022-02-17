@@ -95,7 +95,12 @@ export function EntityListScreen({
   // sampling or ordered
 
   const handleToggleSample = useCallback(() => {
-    dispatchSearchEntityState(new SearchEntityStateActions.SetSample(!searchEntityState.sample));
+    const sample = !searchEntityState.sample;
+    if (sample) {
+      const seed = Math.floor(Math.random() * 999999);
+      dispatchSearchEntityState(new SearchEntityStateActions.SetSampling({ seed }));
+    }
+    dispatchSearchEntityState(new SearchEntityStateActions.SetSample(sample));
   }, [searchEntityState.sample]);
 
   // sync entity type filter -> search state
