@@ -327,7 +327,7 @@ describe('PublishedClient forward operation over JSON', () => {
         PublishedClientOperationName.sampleEntities,
         async (_context, operation) => {
           const [_query, _options] = operation.args;
-          operation.resolve(ok([entity1]));
+          operation.resolve(ok({ seed: 123, totalCount: 1, items: [entity1] }));
         }
       );
 
@@ -335,10 +335,10 @@ describe('PublishedClient forward operation over JSON', () => {
       { boundingBox: { minLat: 0, maxLat: 1, minLng: 20, maxLng: 21 } },
       { count: 10 }
     );
-    expectResultValue(result, [entity1]);
+    expectResultValue(result, { seed: 123, totalCount: 1, items: [entity1] });
 
     expectOkResult(result) &&
-      expect(result.value[0].info.createdAt).toBeInstanceOf(Temporal.Instant);
+      expect(result.value.items[0].info.createdAt).toBeInstanceOf(Temporal.Instant);
 
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
       Array [

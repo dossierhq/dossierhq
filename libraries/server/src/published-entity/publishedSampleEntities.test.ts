@@ -28,10 +28,10 @@ describe('Published publishedSampleEntities', () => {
       databaseAdapter,
       context,
       undefined,
-      undefined
+      { seed: 777 }
     );
 
-    expectResultValue(result, []);
+    expectResultValue(result, { seed: 777, totalCount: 0, items: [] });
     expect(getDatabaseAdapterMockedCallsWithoutContextAndUnordered(databaseAdapter))
       .toMatchInlineSnapshot(`
       Array [
@@ -124,21 +124,25 @@ describe('Published publishedSampleEntities', () => {
       databaseAdapter,
       context,
       undefined,
-      undefined
+      { seed: 312 }
     );
 
-    expectResultValue(result, [
-      {
-        id: '123',
-        info: {
-          authKey: 'none',
-          type: 'TitleOnly',
-          createdAt: now,
-          name: 'TitleOnly name',
+    expectResultValue(result, {
+      seed: 312,
+      totalCount: 1,
+      items: [
+        {
+          id: '123',
+          info: {
+            authKey: 'none',
+            type: 'TitleOnly',
+            createdAt: now,
+            name: 'TitleOnly name',
+          },
+          fields: { title: null },
         },
-        fields: { title: null },
-      },
-    ]);
+      ],
+    });
     expect(getDatabaseAdapterMockedCallsWithoutContextAndUnordered(databaseAdapter))
       .toMatchInlineSnapshot(`
       Array [

@@ -453,6 +453,18 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       })
     );
 
+    // PublishedEntitySamplingPayload
+    this.addType(
+      new GraphQLObjectType({
+        name: 'PublishedEntitySamplingPayload',
+        fields: {
+          seed: { type: new GraphQLNonNull(GraphQLInt) },
+          totalCount: { type: new GraphQLNonNull(GraphQLInt) },
+          items: { type: new GraphQLList(this.getOutputType('PublishedEntity')) },
+        },
+      })
+    );
+
     // QueryOrder
     this.addType(
       new GraphQLEnumType({
@@ -1370,17 +1382,19 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       TContext,
       {
         query?: PublishedQuery;
+        seed?: number;
         count?: number;
       }
     >({
-      type: new GraphQLList(this.getOutputType('PublishedEntity')),
+      type: this.getOutputType('PublishedEntitySamplingPayload'),
       args: {
         query: { type: this.getInputType('QueryInput') },
+        seed: { type: GraphQLInt },
         count: { type: GraphQLInt },
       },
       resolve: async (_source, args, context, _info) => {
-        const { query, count } = args;
-        const options = { count };
+        const { query, count, seed } = args;
+        const options = { count, seed };
         return await loadPublishedSampleEntities(publishedSchema, context, query, options);
       },
     });
