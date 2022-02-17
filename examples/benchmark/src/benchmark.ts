@@ -85,7 +85,7 @@ async function randomReference(
   query?: AdminQuery
 ): PromiseResult<
   EntityReference,
-  ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
+  ErrorType.NotFound | ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
 > {
   const result = await randomAdminEntity(adminClient, query);
   if (result.isError()) return result;
@@ -95,10 +95,16 @@ async function randomReference(
 async function randomAdminEntity(
   adminClient: AdminClient,
   query?: AdminQuery
-): PromiseResult<AdminEntity, ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic> {
+): PromiseResult<
+  AdminEntity,
+  ErrorType.NotFound | ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
+> {
   const result = await adminClient.sampleEntities(query, { count: 1 });
   if (result.isError()) return result;
-  return ok(result.value[0]);
+  if (result.value.items.length === 0) {
+    return notOk.NotFound('No such entity');
+  }
+  return ok(result.value.items[0]);
 }
 
 async function createEntity(

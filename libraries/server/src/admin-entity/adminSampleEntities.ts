@@ -3,6 +3,7 @@ import type {
   AdminQuery,
   AdminSchema,
   EntitySamplingOptions,
+  EntitySamplingPayload,
   ErrorType,
   PromiseResult,
 } from '@jonasb/datadata-core';
@@ -11,6 +12,7 @@ import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
 import type { AuthorizationAdapter, SessionContext } from '..';
 import { authResolveAuthorizationKeys } from '../Auth';
 import { decodeAdminEntity } from '../EntityCodec';
+import { Randomizer } from '../utils/Randomizer';
 
 const samplingDefaultCount = 25;
 
@@ -22,7 +24,7 @@ export async function adminSampleEntities(
   query: AdminQuery | undefined,
   options: EntitySamplingOptions | undefined
 ): PromiseResult<
-  AdminEntity[],
+  EntitySamplingPayload<AdminEntity>,
   ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
 > {
   const authKeysResult = await authResolveAuthorizationKeys(
@@ -41,9 +43,13 @@ export async function adminSampleEntities(
     authKeysResult.value
   );
   if (totalCountResult.isError()) return totalCountResult;
+  const totalCount = totalCountResult.value;
+
+  const seed = options?.seed ?? Math.floor(Math.random() * 2147483647);
+  const randomizer = new Randomizer(seed);
 
   const limit = options?.count ?? samplingDefaultCount;
-  const offset = Math.max(0, getRandomInt(0, totalCountResult.value - limit - 1));
+  const offset = limit >= totalCount ? 0 : randomizer.randomInt(totalCount - limit - 1);
 
   const sampleResult = await databaseAdapter.adminEntitySampleEntities(
     schema,
@@ -55,11 +61,9 @@ export async function adminSampleEntities(
   );
   if (sampleResult.isError()) return sampleResult;
 
-  return ok(sampleResult.value.map((it) => decodeAdminEntity(schema, it)));
-}
+  const entities = sampleResult.value.map((it) => decodeAdminEntity(schema, it));
 
-function getRandomInt(min: number, max: number) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+  randomizer.shuffleArray(entities);
+
+  return ok({ seed, totalCount, items: entities });
 }

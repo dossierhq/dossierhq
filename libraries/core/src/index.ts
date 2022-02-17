@@ -133,6 +133,7 @@ export type {
   EntityLike,
   EntityReference,
   EntitySamplingOptions,
+  EntitySamplingPayload,
   EntityVersionInfo,
   EntityVersionReference,
   Location,

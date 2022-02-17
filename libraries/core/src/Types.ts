@@ -240,7 +240,14 @@ export interface PublishedQuery {
 }
 
 export interface EntitySamplingOptions {
+  seed?: number;
   count?: number;
+}
+
+export interface EntitySamplingPayload<T> {
+  seed: number;
+  totalCount: number;
+  items: T[];
 }
 
 export interface Paging {

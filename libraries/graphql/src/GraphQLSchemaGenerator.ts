@@ -719,6 +719,18 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       })
     );
 
+    // AdminEntitySamplingPayload
+    this.addType(
+      new GraphQLObjectType({
+        name: 'AdminEntitySamplingPayload',
+        fields: {
+          seed: { type: new GraphQLNonNull(GraphQLInt) },
+          totalCount: { type: new GraphQLNonNull(GraphQLInt) },
+          items: { type: new GraphQLList(this.getOutputType('AdminEntity')) },
+        },
+      })
+    );
+
     // AdminQueryOrder
     this.addType(
       new GraphQLEnumType({
@@ -1302,17 +1314,19 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       TContext,
       {
         query?: AdminQuery;
+        seed?: number;
         count?: number;
       }
     >({
-      type: new GraphQLList(this.getOutputType('AdminEntity')),
+      type: this.getOutputType('AdminEntitySamplingPayload'),
       args: {
         query: { type: this.getInputType('AdminQueryInput') },
+        seed: { type: GraphQLInt },
         count: { type: GraphQLInt },
       },
       resolve: async (_source, args, context, _info) => {
-        const { query, count } = args;
-        const options = { count };
+        const { query, seed, count } = args;
+        const options = { seed, count };
         return await loadAdminSampleEntities(adminSchema, context, query, options);
       },
     });

@@ -689,20 +689,20 @@ describe('AdminClient forward operation over JSON', () => {
       { logger: NoOpLogger },
       AdminClientOperationName.sampleEntities,
       async (_context, operation) => {
-        const [_query, _options] = operation.args;
-        operation.resolve(ok([entity1]));
+        const [_query, options] = operation.args;
+        operation.resolve(ok({ seed: options?.seed ?? 1, totalCount: 1, items: [entity1] }));
       }
     );
 
     const result = await adminClient.sampleEntities(
       { boundingBox: { minLat: 0, maxLat: 1, minLng: 20, maxLng: 21 } },
-      { count: 10 }
+      { seed: 1234, count: 10 }
     );
-    expectResultValue(result, [entity1]);
+    expectResultValue(result, { seed: 1234, totalCount: 1, items: [entity1] });
 
     if (expectOkResult(result)) {
-      expect(result.value[0].info.createdAt).toBeInstanceOf(Temporal.Instant);
-      expect(result.value[0].info.updatedAt).toBeInstanceOf(Temporal.Instant);
+      expect(result.value.items[0].info.createdAt).toBeInstanceOf(Temporal.Instant);
+      expect(result.value.items[0].info.updatedAt).toBeInstanceOf(Temporal.Instant);
     }
 
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
@@ -728,6 +728,7 @@ describe('AdminClient forward operation over JSON', () => {
               },
               Object {
                 "count": 10,
+                "seed": 1234,
               },
             ],
             "modifies": false,

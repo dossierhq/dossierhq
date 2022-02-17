@@ -78,7 +78,7 @@ export function EntityList2({ searchEntityState, dispatchSearchEntityState, onIt
             );
           }
         })}
-        {entitySamples?.map((entity) => (
+        {entitySamples?.items.map((entity) => (
           <EntityListRow
             key={entity.id}
             {...{
