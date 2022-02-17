@@ -1,0 +1,58 @@
+import type {
+  AdminQuery,
+  EntitySamplingOptions,
+  EntitySamplingPayload,
+  ErrorType,
+  PromiseResult,
+  PublishedQuery,
+} from '@jonasb/datadata-core';
+import { ok } from '@jonasb/datadata-core';
+import type { AuthorizationAdapter, ResolvedAuthKey, SessionContext } from '..';
+import { authResolveAuthorizationKeys } from '../Auth';
+import { Randomizer } from '../utils/Randomizer';
+
+const MAX_SEED = 2147483647;
+const SAMPLING_DEFAULT_COUNT = 25;
+
+export async function sharedSampleEntities<TQuery extends AdminQuery | PublishedQuery, TEntity>(
+  authorizationAdapter: AuthorizationAdapter,
+  context: SessionContext,
+  query: TQuery | undefined,
+  options: EntitySamplingOptions | undefined,
+  getTotal: (
+    authKeys: ResolvedAuthKey[]
+  ) => PromiseResult<number, ErrorType.BadRequest | ErrorType.Generic>,
+  sampleEntities: (
+    offset: number,
+    limit: number,
+    authKeys: ResolvedAuthKey[]
+  ) => PromiseResult<TEntity[], ErrorType.BadRequest | ErrorType.Generic>
+): PromiseResult<
+  EntitySamplingPayload<TEntity>,
+  ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
+> {
+  const authKeysResult = await authResolveAuthorizationKeys(
+    authorizationAdapter,
+    context,
+    query?.authKeys
+  );
+  if (authKeysResult.isError()) return authKeysResult;
+
+  const totalCountResult = await getTotal(authKeysResult.value);
+  if (totalCountResult.isError()) return totalCountResult;
+  const totalCount = totalCountResult.value;
+
+  const seed = options?.seed ?? Math.floor(Math.random() * MAX_SEED);
+  const randomizer = new Randomizer(seed);
+
+  const limit = options?.count ?? SAMPLING_DEFAULT_COUNT;
+  const offset = limit >= totalCount ? 0 : randomizer.randomInt(totalCount - limit - 1);
+
+  const sampleResult = await sampleEntities(offset, limit, authKeysResult.value);
+  if (sampleResult.isError()) return sampleResult;
+  const entities = sampleResult.value;
+
+  randomizer.shuffleArray(entities);
+
+  return ok({ seed, totalCount, items: entities });
+}
