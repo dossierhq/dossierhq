@@ -36,34 +36,6 @@ describe('Admin adminSampleEntities', () => {
       .toMatchInlineSnapshot(`
       Array [
         Array [
-          "adminEntitySampleEntities",
-          SessionContextImpl {
-            "defaultAuthKeys": Array [
-              "none",
-            ],
-            "logger": Object {
-              "debug": [Function],
-              "error": [Function],
-              "info": [Function],
-              "warn": [Function],
-            },
-            "session": Object {
-              "subjectId": "subject-id",
-              "subjectInternalId": 123,
-            },
-            "transaction": null,
-          },
-          undefined,
-          0,
-          25,
-          Array [
-            Object {
-              "authKey": "none",
-              "resolvedAuthKey": "none",
-            },
-          ],
-        ],
-        Array [
           "adminEntitySearchTotalCount",
           SessionContextImpl {
             "defaultAuthKeys": Array [

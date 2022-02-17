@@ -36,34 +36,6 @@ describe('Published publishedSampleEntities', () => {
       .toMatchInlineSnapshot(`
       Array [
         Array [
-          "publishedEntitySampleEntities",
-          SessionContextImpl {
-            "defaultAuthKeys": Array [
-              "none",
-            ],
-            "logger": Object {
-              "debug": [Function],
-              "error": [Function],
-              "info": [Function],
-              "warn": [Function],
-            },
-            "session": Object {
-              "subjectId": "subject-id",
-              "subjectInternalId": 123,
-            },
-            "transaction": null,
-          },
-          undefined,
-          0,
-          25,
-          Array [
-            Object {
-              "authKey": "none",
-              "resolvedAuthKey": "none",
-            },
-          ],
-        ],
-        Array [
           "publishedEntitySearchTotalCount",
           SessionContextImpl {
             "defaultAuthKeys": Array [

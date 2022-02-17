@@ -31,6 +31,9 @@ export async function sharedSampleEntities<TQuery extends AdminQuery | Published
   EntitySamplingPayload<TEntity>,
   ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
 > {
+  const seed = options?.seed ?? Math.floor(Math.random() * MAX_SEED);
+
+  // Check authorization
   const authKeysResult = await authResolveAuthorizationKeys(
     authorizationAdapter,
     context,
@@ -38,21 +41,28 @@ export async function sharedSampleEntities<TQuery extends AdminQuery | Published
   );
   if (authKeysResult.isError()) return authKeysResult;
 
+  // Get total count
   const totalCountResult = await getTotal(authKeysResult.value);
   if (totalCountResult.isError()) return totalCountResult;
   const totalCount = totalCountResult.value;
 
-  const seed = options?.seed ?? Math.floor(Math.random() * MAX_SEED);
-  const randomizer = new Randomizer(seed);
+  if (totalCount === 0) {
+    return ok({ seed, totalCount, items: [] });
+  }
 
+  // Calculate offset/limit
+  const randomizer = new Randomizer(seed);
   const limit = options?.count ?? SAMPLING_DEFAULT_COUNT;
   const offset = limit >= totalCount ? 0 : randomizer.randomInt(totalCount - limit - 1);
 
+  // Get entities
   const sampleResult = await sampleEntities(offset, limit, authKeysResult.value);
   if (sampleResult.isError()) return sampleResult;
   const entities = sampleResult.value;
 
+  // Shuffle entities
   randomizer.shuffleArray(entities);
 
+  //
   return ok({ seed, totalCount, items: entities });
 }
