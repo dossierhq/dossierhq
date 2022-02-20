@@ -23,6 +23,7 @@ export type {
 } from './components/EntityTypeSelector/EntityTypeSelector.js';
 export { EntityTypeTagSelector } from './components/EntityTypeTagSelector/EntityTypeTagSelector.js';
 export { MapContainer } from './components/MapContainer/MapContainer.js';
+export { SampleEntitiesOptionsCount } from './components/SampleEntitiesOptionsCount/SampleEntitiesOptionsCount.js';
 export { SearchEntityPagingButtons } from './components/SearchEntityPagingButtons/SearchEntityPagingButtons.js';
 export { SearchEntityPagingCount } from './components/SearchEntityPagingCount/SearchEntityPagingCount.js';
 export { SearchEntitySearchInput } from './components/SearchEntitySearchInput/SearchEntitySearchInput.js';

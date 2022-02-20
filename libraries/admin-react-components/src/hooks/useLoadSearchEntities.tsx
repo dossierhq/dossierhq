@@ -12,14 +12,14 @@ import { DataDataContext2, SearchEntityStateActions, useSearchEntities } from '.
 export function useLoadSearchEntities(
   dispatchSearchEntityState: Dispatch<SearchEntityStateAction>,
   query: AdminQuery | undefined,
-  paging: Paging
+  paging: Paging | undefined
 ) {
   const { adminClient } = useContext(DataDataContext2);
   const { connection, connectionError } = useSearchEntities(adminClient, query, paging);
 
   useEffect(() => {
     dispatchSearchEntityState(
-      new SearchEntityStateActions.UpdateResult(connection, connectionError)
+      new SearchEntityStateActions.UpdateSearchResult(connection, connectionError)
     );
   }, [connection, connectionError, dispatchSearchEntityState]);
 }

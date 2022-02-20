@@ -11,7 +11,7 @@ import {
 
 export function useLoadSearchEntity(
   query: PublishedQuery,
-  paging: Paging,
+  paging: Paging | undefined,
   dispatchSearchEntityState: Dispatch<SearchEntityStateAction>
 ) {
   const { publishedClient } = useContext(PublishedDataDataContext);
@@ -20,7 +20,7 @@ export function useLoadSearchEntity(
 
   useEffect(() => {
     dispatchSearchEntityState(
-      new SearchEntityStateActions.UpdateResult(connection, connectionError)
+      new SearchEntityStateActions.UpdateSearchResult(connection, connectionError)
     );
   }, [connection, connectionError, dispatchSearchEntityState]);
 

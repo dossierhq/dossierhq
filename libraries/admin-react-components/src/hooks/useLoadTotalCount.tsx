@@ -4,9 +4,14 @@ import { useContext, useEffect } from 'react';
 import type { SearchEntityStateAction } from '../index.js';
 import { DataDataContext2, SearchEntityStateActions, useTotalCount } from '../index.js';
 
+/**
+ *
+ * @param dispatchSearchEntityState
+ * @param query If `undefined`, no data is fetched
+ */
 export function useLoadTotalCount(
   dispatchSearchEntityState: Dispatch<SearchEntityStateAction>,
-  query: AdminQuery
+  query: AdminQuery | undefined
 ) {
   const { adminClient } = useContext(DataDataContext2);
   const { totalCount } = useTotalCount(adminClient, query);

@@ -22,7 +22,7 @@ export function SearchEntityPagingCount({
     <ConnectionPagingCount
       connection={searchEntityState.connection}
       paging={searchEntityState.paging}
-      pagingCount={searchEntityState.pagingCount}
+      pagingCount={searchEntityState.requestedCount}
       totalCount={searchEntityState.totalCount}
       onPagingChange={handlePagingChange}
     />

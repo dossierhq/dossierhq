@@ -20,8 +20,8 @@ export function SearchEntityPagingButtons({ searchEntityState, dispatchSearchEnt
   return (
     <ConnectionPagingButtons
       connection={searchEntityState.connection}
-      paging={searchEntityState.paging}
-      pagingCount={searchEntityState.pagingCount}
+      paging={searchEntityState.paging ?? {}}
+      pagingCount={searchEntityState.requestedCount}
       onPagingChange={handlePagingChange}
     />
   );

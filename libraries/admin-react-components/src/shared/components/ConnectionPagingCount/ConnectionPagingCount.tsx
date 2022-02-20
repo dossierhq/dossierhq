@@ -5,7 +5,7 @@ import React from 'react';
 
 interface Props {
   connection: Connection<Edge<unknown, ErrorType>> | null | undefined;
-  paging: Paging;
+  paging: Paging | undefined;
   pagingCount: number;
   totalCount: number | null;
   onPagingChange: (paging: Paging) => void;

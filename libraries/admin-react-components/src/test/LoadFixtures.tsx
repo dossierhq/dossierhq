@@ -33,7 +33,7 @@ export function LoadFixtures({ children }: Props): JSX.Element | null {
 async function loadFixtures(adminClient: AdminClient): PromiseResult<void, ErrorType> {
   for (const fixture of entitiesFixture) {
     const { id, type, name, archived, publishedVersion } = fixture;
-    const latestVersion = fixture.versions.at(-1);
+    const latestVersion = fixture.versions[fixture.versions.length - 1];
     if (!latestVersion) return notOk.BadRequest(`Fixture is missing version: ${id}`);
 
     const { _version, ...fields } = latestVersion;
