@@ -3,6 +3,7 @@ import type {
   AdminEntityTypeSpecification,
   AdminQuery,
   AdminSchema,
+  AdminSearchQuery,
   AdminValueTypeSpecification,
   EntityHistory,
   EntityReference,
@@ -15,6 +16,7 @@ import type {
   PublishedEntityTypeSpecification,
   PublishedQuery,
   PublishedSchema,
+  PublishedSearchQuery,
   PublishedValueTypeSpecification,
   PublishingHistory,
   RichText,
@@ -106,7 +108,7 @@ export async function loadPublishedSampleEntities<TContext extends SessionGraphQ
 export async function loadSearchEntities<TContext extends SessionGraphQLContext>(
   schema: PublishedSchema,
   context: TContext,
-  query: PublishedQuery | undefined,
+  query: PublishedSearchQuery | undefined,
   paging: Paging
 ): Promise<ConnectionWithTotalCount<Edge<PublishedEntity>, TContext> | null> {
   const publishedClient = getPublishedClient(context);
@@ -231,7 +233,7 @@ export async function loadAdminSampleEntities<TContext extends SessionGraphQLCon
 export async function loadAdminSearchEntities<TContext extends SessionGraphQLContext>(
   schema: AdminSchema,
   context: TContext,
-  query: AdminQuery | undefined,
+  query: AdminSearchQuery | undefined,
   paging: Paging
 ): Promise<ConnectionWithTotalCount<Edge<AdminEntity>, TContext> | null> {
   const adminClient = getAdminClient(context);

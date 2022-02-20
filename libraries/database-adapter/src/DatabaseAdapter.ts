@@ -3,6 +3,7 @@ import type {
   AdminQuery,
   AdminSchema,
   AdminSchemaSpecification,
+  AdminSearchQuery,
   EntityReference,
   EntityVersionReference,
   ErrorType,
@@ -11,6 +12,7 @@ import type {
   PromiseResult,
   PublishedQuery,
   PublishedSchema,
+  PublishedSearchQuery,
   PublishingEvent,
 } from '@jonasb/datadata-core';
 import type { Temporal } from '@js-temporal/polyfill';
@@ -324,7 +326,7 @@ export interface DatabaseAdapter {
   adminEntitySearchEntities(
     schema: AdminSchema,
     context: TransactionContext,
-    query: AdminQuery | undefined,
+    query: AdminSearchQuery | undefined,
     paging: Paging | undefined,
     resolvedAuthKeys: ResolvedAuthKey[]
   ): PromiseResult<DatabaseAdminEntitySearchPayload, ErrorType.BadRequest | ErrorType.Generic>;
@@ -403,7 +405,7 @@ export interface DatabaseAdapter {
   publishedEntitySearchEntities(
     schema: PublishedSchema,
     context: TransactionContext,
-    query: PublishedQuery | undefined,
+    query: PublishedSearchQuery | undefined,
     paging: Paging | undefined,
     resolvedAuthKeys: ResolvedAuthKey[]
   ): PromiseResult<DatabasePublishedEntitySearchPayload, ErrorType.BadRequest | ErrorType.Generic>;

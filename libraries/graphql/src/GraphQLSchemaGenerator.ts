@@ -7,6 +7,7 @@ import type {
   AdminEntityUpsert,
   AdminQuery,
   AdminSchema,
+  AdminSearchQuery,
   AdminValueTypeSpecification,
   EntityReference,
   EntityVersionReference,
@@ -16,6 +17,7 @@ import type {
   PublishedEntityTypeSpecification,
   PublishedQuery,
   PublishedSchema,
+  PublishedSearchQuery,
   PublishedValueTypeSpecification,
   Result,
   ValueItem,
@@ -473,20 +475,32 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       })
     );
 
-    // QueryInput
+    // PublishedQueryInput
+    const sharedQueryInputFields = {
+      authKeys: { type: new GraphQLList(new GraphQLNonNull(GraphQLString)) },
+      entityTypes: {
+        type: new GraphQLList(new GraphQLNonNull(this.getEnumType('EntityType'))),
+      },
+      referencing: { type: GraphQLID },
+      boundingBox: { type: this.getInputType('BoundingBoxInput') },
+      text: { type: GraphQLString },
+    };
+
     this.addType(
       new GraphQLInputObjectType({
-        name: 'QueryInput',
+        name: 'PublishedQueryInput',
+        fields: sharedQueryInputFields,
+      })
+    );
+
+    // PublishedSearchQueryInput
+    this.addType(
+      new GraphQLInputObjectType({
+        name: 'PublishedSearchQueryInput',
         fields: {
-          authKeys: { type: new GraphQLList(new GraphQLNonNull(GraphQLString)) },
-          entityTypes: {
-            type: new GraphQLList(new GraphQLNonNull(this.getEnumType('EntityType'))),
-          },
-          referencing: { type: GraphQLID },
-          boundingBox: { type: this.getInputType('BoundingBoxInput') },
+          ...sharedQueryInputFields,
           order: { type: this.getEnumType('QueryOrder') },
           reverse: { type: GraphQLBoolean },
-          text: { type: GraphQLString },
         },
       })
     );
@@ -752,19 +766,31 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     );
 
     // AdminQueryInput
+    const sharedQueryInputFields = {
+      authKeys: { type: new GraphQLList(new GraphQLNonNull(GraphQLString)) },
+      entityTypes: {
+        type: new GraphQLList(new GraphQLNonNull(this.getEnumType('AdminEntityType'))),
+      },
+      referencing: { type: GraphQLID },
+      boundingBox: { type: this.getInputType('BoundingBoxInput') },
+      text: { type: GraphQLString },
+    };
+
     this.addType(
       new GraphQLInputObjectType({
         name: 'AdminQueryInput',
+        fields: sharedQueryInputFields,
+      })
+    );
+
+    // AdminSearchQueryInput
+    this.addType(
+      new GraphQLInputObjectType({
+        name: 'AdminSearchQueryInput',
         fields: {
-          authKeys: { type: new GraphQLList(new GraphQLNonNull(GraphQLString)) },
-          entityTypes: {
-            type: new GraphQLList(new GraphQLNonNull(this.getEnumType('AdminEntityType'))),
-          },
-          referencing: { type: GraphQLID },
-          boundingBox: { type: this.getInputType('BoundingBoxInput') },
+          ...sharedQueryInputFields,
           order: { type: this.getEnumType('AdminQueryOrder') },
           reverse: { type: GraphQLBoolean },
-          text: { type: GraphQLString },
         },
       })
     );
@@ -1351,7 +1377,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       TSource,
       TContext,
       {
-        query?: AdminQuery;
+        query?: AdminSearchQuery;
         first?: number;
         after?: string;
         last?: number;
@@ -1360,7 +1386,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     >({
       type: this.getOutputType('AdminEntityConnection'),
       args: {
-        query: { type: this.getInputType('AdminQueryInput') },
+        query: { type: this.getInputType('AdminSearchQueryInput') },
         first: { type: GraphQLInt },
         after: { type: GraphQLString },
         last: { type: GraphQLInt },
@@ -1388,7 +1414,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     >({
       type: this.getOutputType('PublishedEntitySamplingPayload'),
       args: {
-        query: { type: this.getInputType('QueryInput') },
+        query: { type: this.getInputType('PublishedQueryInput') },
         seed: { type: GraphQLInt },
         count: { type: GraphQLInt },
       },
@@ -1407,7 +1433,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       TSource,
       TContext,
       {
-        query?: PublishedQuery;
+        query?: PublishedSearchQuery;
         first?: number;
         after?: string;
         last?: number;
@@ -1416,7 +1442,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
     >({
       type: this.getOutputType('PublishedEntityConnection'),
       args: {
-        query: { type: this.getInputType('QueryInput') },
+        query: { type: this.getInputType('PublishedSearchQueryInput') },
         first: { type: GraphQLInt },
         after: { type: GraphQLString },
         last: { type: GraphQLInt },

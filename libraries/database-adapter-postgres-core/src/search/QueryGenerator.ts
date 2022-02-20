@@ -1,10 +1,12 @@
 import type {
   AdminQuery,
   AdminSchema,
+  AdminSearchQuery,
   ErrorType,
   Paging,
   PublishedQuery,
   PublishedSchema,
+  PublishedSearchQuery,
   Result,
 } from '@jonasb/datadata-core';
 import { AdminQueryOrder, notOk, ok, PublishedQueryOrder } from '@jonasb/datadata-core';
@@ -41,7 +43,7 @@ export interface SharedEntitiesQuery<TItem> {
 export function searchPublishedEntitiesQuery(
   databaseAdapter: PostgresDatabaseAdapter,
   schema: PublishedSchema,
-  query: PublishedQuery | undefined,
+  query: PublishedSearchQuery | undefined,
   paging: Paging | undefined,
   authKeys: ResolvedAuthKey[]
 ): Result<SharedEntitiesQuery<SearchPublishedEntitiesItem>, ErrorType.BadRequest> {
@@ -51,7 +53,7 @@ export function searchPublishedEntitiesQuery(
 export function searchAdminEntitiesQuery(
   databaseAdapter: PostgresDatabaseAdapter,
   schema: AdminSchema,
-  query: AdminQuery | undefined,
+  query: AdminSearchQuery | undefined,
   paging: Paging | undefined,
   authKeys: ResolvedAuthKey[]
 ): Result<SharedEntitiesQuery<SearchAdminEntitiesItem>, ErrorType.BadRequest> {
@@ -63,7 +65,7 @@ function sharedSearchEntitiesQuery<
 >(
   databaseAdapter: PostgresDatabaseAdapter,
   schema: AdminSchema | PublishedSchema,
-  query: PublishedQuery | AdminQuery | undefined,
+  query: PublishedSearchQuery | AdminSearchQuery | undefined,
   paging: Paging | undefined,
   authKeys: ResolvedAuthKey[],
   published: boolean

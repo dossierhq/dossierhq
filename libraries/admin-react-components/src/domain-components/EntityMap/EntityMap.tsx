@@ -1,7 +1,7 @@
 import type {
   AdminEntity,
-  AdminQuery,
   AdminSchema,
+  AdminSearchQuery,
   BoundingBox,
   ItemValuePath,
   Location,
@@ -16,7 +16,7 @@ export interface EntityMapProps {
   className?: string;
   center?: Location | null;
   zoom?: number | null;
-  query?: AdminQuery;
+  query?: AdminSearchQuery;
   paging?: Paging;
   filterEntityLocations?: (entity: AdminEntity, valuePath: ItemValuePath) => boolean;
   onEntityClick: (entity: AdminEntity) => void;
@@ -34,7 +34,7 @@ export function EntityMap({
   children,
 }: EntityMapProps): JSX.Element | null {
   const { schema, useSearchEntities } = useContext(DataDataContext);
-  const [currentQuery, setCurrentQuery] = useState<AdminQuery | undefined>(undefined);
+  const [currentQuery, setCurrentQuery] = useState<AdminSearchQuery | undefined>(undefined);
   const [boundingBox, setBoundingBox] = useState<BoundingBox | null>(null);
   //TODO handle error
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

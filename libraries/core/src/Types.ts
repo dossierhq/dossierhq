@@ -218,9 +218,12 @@ export interface AdminQuery {
   /** Entities referencing the entity (by id) */
   referencing?: string;
   boundingBox?: BoundingBox;
+  text?: string;
+}
+
+export interface AdminSearchQuery extends AdminQuery {
   order?: AdminQueryOrder;
   reverse?: boolean;
-  text?: string;
 }
 
 export enum PublishedQueryOrder {
@@ -234,9 +237,12 @@ export interface PublishedQuery {
   /** Entities referencing the entity (by id) */
   referencing?: string;
   boundingBox?: BoundingBox;
+  text?: string;
+}
+
+export interface PublishedSearchQuery extends PublishedQuery {
   order?: PublishedQueryOrder;
   reverse?: boolean;
-  text?: string;
 }
 
 export interface EntitySamplingOptions {

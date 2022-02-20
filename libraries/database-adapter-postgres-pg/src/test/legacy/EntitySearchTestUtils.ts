@@ -1,7 +1,7 @@
 import type {
   AdminClient,
   AdminEntity,
-  AdminQuery,
+  AdminSearchQuery,
   BoundingBox,
   Connection,
   Edge,
@@ -9,7 +9,7 @@ import type {
   PromiseResult,
   PublishedClient,
   PublishedEntity,
-  PublishedQuery,
+  PublishedSearchQuery,
 } from '@jonasb/datadata-core';
 import { AdminEntityStatus, getAllPagesForConnection, ok } from '@jonasb/datadata-core';
 
@@ -123,7 +123,7 @@ export async function ensureEntityWithStatus(
 
 export async function getAllEntities(
   client: AdminClient,
-  query: AdminQuery
+  query: AdminSearchQuery
 ): PromiseResult<
   AdminEntity[],
   ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
@@ -182,17 +182,17 @@ export function randomBoundingBox(heightLat = 1.0, widthLng = 1.0): BoundingBox 
 
 export async function countSearchResultWithEntity(
   client: AdminClient,
-  query: AdminQuery,
+  query: AdminSearchQuery,
   entityId: string
 ): PromiseResult<number, ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic>;
 export async function countSearchResultWithEntity(
   client: PublishedClient,
-  query: PublishedQuery,
+  query: PublishedSearchQuery,
   entityId: string
 ): PromiseResult<number, ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic>;
 export async function countSearchResultWithEntity(
   client: AdminClient | PublishedClient,
-  query: AdminQuery | PublishedQuery,
+  query: AdminSearchQuery | PublishedSearchQuery,
   entityId: string
 ): PromiseResult<number, ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic> {
   let matchCount = 0;

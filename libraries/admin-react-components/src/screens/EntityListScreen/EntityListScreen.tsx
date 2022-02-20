@@ -1,4 +1,4 @@
-import type { AdminEntity, AdminQuery } from '@jonasb/datadata-core';
+import type { AdminEntity, AdminQuery, AdminSearchQuery } from '@jonasb/datadata-core';
 import { FullscreenContainer, IconButton, toSizeClassName } from '@jonasb/datadata-design';
 import React, { useCallback, useContext, useEffect, useReducer, useState } from 'react';
 import type { EntitySearchStateUrlQuery } from '../../index.js';
@@ -63,7 +63,7 @@ export function EntityListScreen({
   const [statusFilterState, dispatchStatusFilterState] = useReducer(
     reduceStatusSelectorState,
     {
-      selectedIds: (searchEntityState.query as AdminQuery).status,
+      selectedIds: (searchEntityState.query as AdminSearchQuery).status,
     },
     initializeStatusSelectorState
   );
@@ -124,7 +124,7 @@ export function EntityListScreen({
 
   // load search/total or sampling
   useLoadSearchEntitiesAndTotalCount(
-    searchEntityState.paging ? (searchEntityState.query as AdminQuery) : undefined,
+    searchEntityState.paging ? (searchEntityState.query as AdminSearchQuery) : undefined,
     searchEntityState.paging,
     dispatchSearchEntityState
   );

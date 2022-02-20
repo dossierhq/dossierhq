@@ -1,4 +1,4 @@
-import type { AdminQuery, EntitySamplingOptions, Paging } from '@jonasb/datadata-core';
+import type { AdminSearchQuery, EntitySamplingOptions, Paging } from '@jonasb/datadata-core';
 import { decodeUrlQueryStringifiedParam, stringifyUrlQueryParams } from '@jonasb/datadata-core';
 import type { Dispatch } from 'react';
 import { useEffect } from 'react';
@@ -25,7 +25,7 @@ export function initializeSearchEntityStateFromUrlQuery(
 function urlQueryToSearchEntityStateActions(urlQuery: EntitySearchStateUrlQuery | undefined) {
   const actions = [];
   if (urlQuery) {
-    const decodedQuery: AdminQuery = decodeUrlQueryStringifiedParam('query', urlQuery) ?? {};
+    const decodedQuery: AdminSearchQuery = decodeUrlQueryStringifiedParam('query', urlQuery) ?? {};
     actions.push(new SearchEntityStateActions.SetQuery(decodedQuery, false));
 
     const decodedSampling: EntitySamplingOptions | undefined = decodeUrlQueryStringifiedParam(

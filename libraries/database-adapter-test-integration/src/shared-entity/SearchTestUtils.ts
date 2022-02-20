@@ -1,14 +1,14 @@
 import type {
   AdminClient,
   AdminEntity,
-  AdminQuery,
+  AdminSearchQuery,
   Connection,
   Edge,
   ErrorType,
   PromiseResult,
   PublishedClient,
   PublishedEntity,
-  PublishedQuery,
+  PublishedSearchQuery,
   Result,
 } from '@jonasb/datadata-core';
 import {
@@ -116,17 +116,17 @@ export function assertSearchResultEntities<TItem extends AdminEntity | Published
 
 export async function countSearchResultWithEntity(
   client: AdminClient,
-  query: AdminQuery,
+  query: AdminSearchQuery,
   entityId: string
 ): PromiseResult<number, ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic>;
 export async function countSearchResultWithEntity(
   client: PublishedClient,
-  query: PublishedQuery,
+  query: PublishedSearchQuery,
   entityId: string
 ): PromiseResult<number, ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic>;
 export async function countSearchResultWithEntity(
   client: AdminClient | PublishedClient,
-  query: AdminQuery | PublishedQuery,
+  query: AdminSearchQuery | PublishedSearchQuery,
   entityId: string
 ): PromiseResult<number, ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic> {
   let matchCount = 0;
@@ -150,7 +150,7 @@ export async function countSearchResultWithEntity(
 
 export async function countSearchResultStatuses(
   client: AdminClient,
-  query: AdminQuery
+  query: AdminSearchQuery
 ): PromiseResult<
   Record<AdminEntityStatus, number>,
   ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic

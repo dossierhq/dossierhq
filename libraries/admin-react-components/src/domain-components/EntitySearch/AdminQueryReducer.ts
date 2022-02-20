@@ -1,7 +1,7 @@
-import type { AdminQuery } from '@jonasb/datadata-core';
+import type { AdminSearchQuery } from '@jonasb/datadata-core';
 
 export interface AdminQueryState {
-  resolvedQuery: AdminQuery;
+  resolvedQuery: AdminSearchQuery;
   text: string;
 }
 
@@ -9,7 +9,7 @@ interface AdminQueryStateAction {
   reduce(state: AdminQueryState): AdminQueryState;
 }
 
-export function initializeAdminQueryState(query: AdminQuery | undefined): AdminQueryState {
+export function initializeAdminQueryState(query: AdminSearchQuery | undefined): AdminQueryState {
   return { resolvedQuery: query || {}, text: query?.text || '' };
 }
 

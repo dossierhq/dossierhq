@@ -1,4 +1,4 @@
-import type { AdminQuery, Paging } from '@jonasb/datadata-core';
+import type { AdminSearchQuery, Paging } from '@jonasb/datadata-core';
 import type { Dispatch } from 'react';
 import { useContext, useEffect } from 'react';
 import type { SearchEntityStateAction } from '../index.js';
@@ -15,7 +15,7 @@ import {
  * @param paging
  */
 export function useLoadSearchEntitiesAndTotalCount(
-  query: AdminQuery | undefined,
+  query: AdminSearchQuery | undefined,
   paging: Paging | undefined,
   dispatchSearchEntityState: Dispatch<SearchEntityStateAction>
 ) {

@@ -134,9 +134,17 @@ input AdminQueryInput {
   entityTypes: [AdminEntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
+  text: String
+}
+
+input AdminSearchQueryInput {
+  authKeys: [String!]
+  entityTypes: [AdminEntityType!]
+  referencing: ID
+  boundingBox: BoundingBoxInput
+  text: String
   order: AdminQueryOrder
   reverse: Boolean
-  text: String
 }
 
 input AdminReferenceInput {
@@ -359,7 +367,7 @@ type Query {
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
-  adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminSearchEntities(query: AdminSearchQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
 }
@@ -464,14 +472,22 @@ enum QueryOrder {
   name
 }
 
-input QueryInput {
+input PublishedQueryInput {
   authKeys: [String!]
   entityTypes: [EntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
+  text: String
+}
+
+input PublishedSearchQueryInput {
+  authKeys: [String!]
+  entityTypes: [EntityType!]
+  referencing: ID
+  boundingBox: BoundingBoxInput
+  text: String
   order: QueryOrder
   reverse: Boolean
-  text: String
 }
 
 type PublishedBarFields {
@@ -492,8 +508,8 @@ type PublishedValueTwo implements PublishedValue {
 type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
-  publishedSampleEntities(query: QueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedSampleEntities(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
+  searchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
 }"
 `;
 
@@ -583,14 +599,22 @@ enum QueryOrder {
   name
 }
 
-input QueryInput {
+input PublishedQueryInput {
   authKeys: [String!]
   entityTypes: [EntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
+  text: String
+}
+
+input PublishedSearchQueryInput {
+  authKeys: [String!]
+  entityTypes: [EntityType!]
+  referencing: ID
+  boundingBox: BoundingBoxInput
+  text: String
   order: QueryOrder
   reverse: Boolean
-  text: String
 }
 
 type PublishedBarFields {
@@ -711,9 +735,17 @@ input AdminQueryInput {
   entityTypes: [AdminEntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
+  text: String
+}
+
+input AdminSearchQueryInput {
+  authKeys: [String!]
+  entityTypes: [AdminEntityType!]
+  referencing: ID
+  boundingBox: BoundingBoxInput
+  text: String
   order: AdminQueryOrder
   reverse: Boolean
-  text: String
 }
 
 input AdminReferenceInput {
@@ -930,12 +962,12 @@ input AdminValueTwoInput {
 type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
-  publishedSampleEntities(query: QueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedSampleEntities(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
+  searchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
-  adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminSearchEntities(query: AdminSearchQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
 }
@@ -1134,9 +1166,17 @@ input AdminQueryInput {
   entityTypes: [AdminEntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
+  text: String
+}
+
+input AdminSearchQueryInput {
+  authKeys: [String!]
+  entityTypes: [AdminEntityType!]
+  referencing: ID
+  boundingBox: BoundingBoxInput
+  text: String
   order: AdminQueryOrder
   reverse: Boolean
-  text: String
 }
 
 input AdminReferenceInput {
@@ -1329,7 +1369,7 @@ type Query {
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
-  adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminSearchEntities(query: AdminSearchQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
 }
@@ -1427,14 +1467,22 @@ enum QueryOrder {
   name
 }
 
-input QueryInput {
+input PublishedQueryInput {
   authKeys: [String!]
   entityTypes: [EntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
+  text: String
+}
+
+input PublishedSearchQueryInput {
+  authKeys: [String!]
+  entityTypes: [EntityType!]
+  referencing: ID
+  boundingBox: BoundingBoxInput
+  text: String
   order: QueryOrder
   reverse: Boolean
-  text: String
 }
 
 type PublishedFooFields {
@@ -1458,8 +1506,8 @@ type PublishedBar implements Node & PublishedEntity {
 type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
-  publishedSampleEntities(query: QueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedSampleEntities(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
+  searchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
 }"
 `;
 
@@ -1542,14 +1590,22 @@ enum QueryOrder {
   name
 }
 
-input QueryInput {
+input PublishedQueryInput {
   authKeys: [String!]
   entityTypes: [EntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
+  text: String
+}
+
+input PublishedSearchQueryInput {
+  authKeys: [String!]
+  entityTypes: [EntityType!]
+  referencing: ID
+  boundingBox: BoundingBoxInput
+  text: String
   order: QueryOrder
   reverse: Boolean
-  text: String
 }
 
 type PublishedFooFields {
@@ -1668,9 +1724,17 @@ input AdminQueryInput {
   entityTypes: [AdminEntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
+  text: String
+}
+
+input AdminSearchQueryInput {
+  authKeys: [String!]
+  entityTypes: [AdminEntityType!]
+  referencing: ID
+  boundingBox: BoundingBoxInput
+  text: String
   order: AdminQueryOrder
   reverse: Boolean
-  text: String
 }
 
 input AdminReferenceInput {
@@ -1857,12 +1921,12 @@ type AdminBarUpsertPayload {
 type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
-  publishedSampleEntities(query: QueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedSampleEntities(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
+  searchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
-  adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminSearchEntities(query: AdminSearchQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
 }
@@ -2011,9 +2075,17 @@ input AdminQueryInput {
   entityTypes: [AdminEntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
+  text: String
+}
+
+input AdminSearchQueryInput {
+  authKeys: [String!]
+  entityTypes: [AdminEntityType!]
+  referencing: ID
+  boundingBox: BoundingBoxInput
+  text: String
   order: AdminQueryOrder
   reverse: Boolean
-  text: String
 }
 
 input AdminReferenceInput {
@@ -2254,7 +2326,7 @@ type Query {
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
-  adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminSearchEntities(query: AdminSearchQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
 }
@@ -2356,14 +2428,22 @@ enum QueryOrder {
   name
 }
 
-input QueryInput {
+input PublishedQueryInput {
   authKeys: [String!]
   entityTypes: [EntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
+  text: String
+}
+
+input PublishedSearchQueryInput {
+  authKeys: [String!]
+  entityTypes: [EntityType!]
+  referencing: ID
+  boundingBox: BoundingBoxInput
+  text: String
   order: QueryOrder
   reverse: Boolean
-  text: String
 }
 
 type PublishedFooFields {
@@ -2404,8 +2484,8 @@ enum _PublishedBarOrBazOrFoo {
 type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
-  publishedSampleEntities(query: QueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedSampleEntities(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
+  searchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
 }"
 `;
 
@@ -2489,14 +2569,22 @@ enum QueryOrder {
   name
 }
 
-input QueryInput {
+input PublishedQueryInput {
   authKeys: [String!]
   entityTypes: [EntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
+  text: String
+}
+
+input PublishedSearchQueryInput {
+  authKeys: [String!]
+  entityTypes: [EntityType!]
+  referencing: ID
+  boundingBox: BoundingBoxInput
+  text: String
   order: QueryOrder
   reverse: Boolean
-  text: String
 }
 
 type PublishedFooFields {
@@ -2622,9 +2710,17 @@ input AdminQueryInput {
   entityTypes: [AdminEntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
+  text: String
+}
+
+input AdminSearchQueryInput {
+  authKeys: [String!]
+  entityTypes: [AdminEntityType!]
+  referencing: ID
+  boundingBox: BoundingBoxInput
+  text: String
   order: AdminQueryOrder
   reverse: Boolean
-  text: String
 }
 
 input AdminReferenceInput {
@@ -2870,12 +2966,12 @@ enum _AdminBarOrBazOrFoo {
 type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
-  publishedSampleEntities(query: QueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedSampleEntities(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
+  searchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
-  adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminSearchEntities(query: AdminSearchQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
 }
@@ -3025,9 +3121,17 @@ input AdminQueryInput {
   entityTypes: [AdminEntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
+  text: String
+}
+
+input AdminSearchQueryInput {
+  authKeys: [String!]
+  entityTypes: [AdminEntityType!]
+  referencing: ID
+  boundingBox: BoundingBoxInput
+  text: String
   order: AdminQueryOrder
   reverse: Boolean
-  text: String
 }
 
 input AdminReferenceInput {
@@ -3167,7 +3271,7 @@ type Query {
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
-  adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminSearchEntities(query: AdminSearchQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
 }
@@ -3261,14 +3365,22 @@ enum QueryOrder {
   name
 }
 
-input QueryInput {
+input PublishedQueryInput {
   authKeys: [String!]
   entityTypes: [EntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
+  text: String
+}
+
+input PublishedSearchQueryInput {
+  authKeys: [String!]
+  entityTypes: [EntityType!]
+  referencing: ID
+  boundingBox: BoundingBoxInput
+  text: String
   order: QueryOrder
   reverse: Boolean
-  text: String
 }
 
 type PublishedFoo implements Node & PublishedEntity {
@@ -3279,8 +3391,8 @@ type PublishedFoo implements Node & PublishedEntity {
 type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
-  publishedSampleEntities(query: QueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedSampleEntities(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
+  searchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
 }"
 `;
 
@@ -3362,14 +3474,22 @@ enum QueryOrder {
   name
 }
 
-input QueryInput {
+input PublishedQueryInput {
   authKeys: [String!]
   entityTypes: [EntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
+  text: String
+}
+
+input PublishedSearchQueryInput {
+  authKeys: [String!]
+  entityTypes: [EntityType!]
+  referencing: ID
+  boundingBox: BoundingBoxInput
+  text: String
   order: QueryOrder
   reverse: Boolean
-  text: String
 }
 
 type PublishedFoo implements Node & PublishedEntity {
@@ -3474,9 +3594,17 @@ input AdminQueryInput {
   entityTypes: [AdminEntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
+  text: String
+}
+
+input AdminSearchQueryInput {
+  authKeys: [String!]
+  entityTypes: [AdminEntityType!]
+  referencing: ID
+  boundingBox: BoundingBoxInput
+  text: String
   order: AdminQueryOrder
   reverse: Boolean
-  text: String
 }
 
 input AdminReferenceInput {
@@ -3610,12 +3738,12 @@ type AdminFooUpsertPayload {
 type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
-  publishedSampleEntities(query: QueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedSampleEntities(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
+  searchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
-  adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminSearchEntities(query: AdminSearchQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
 }
@@ -3763,9 +3891,17 @@ input AdminQueryInput {
   entityTypes: [AdminEntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
+  text: String
+}
+
+input AdminSearchQueryInput {
+  authKeys: [String!]
+  entityTypes: [AdminEntityType!]
+  referencing: ID
+  boundingBox: BoundingBoxInput
+  text: String
   order: AdminQueryOrder
   reverse: Boolean
-  text: String
 }
 
 input AdminReferenceInput {
@@ -3936,7 +4072,7 @@ type Query {
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
-  adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminSearchEntities(query: AdminSearchQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
 }
@@ -4038,14 +4174,22 @@ enum QueryOrder {
   name
 }
 
-input QueryInput {
+input PublishedQueryInput {
   authKeys: [String!]
   entityTypes: [EntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
+  text: String
+}
+
+input PublishedSearchQueryInput {
+  authKeys: [String!]
+  entityTypes: [EntityType!]
+  referencing: ID
+  boundingBox: BoundingBoxInput
+  text: String
   order: QueryOrder
   reverse: Boolean
-  text: String
 }
 
 type PublishedFooFields {
@@ -4068,8 +4212,8 @@ type PublishedValueOne implements PublishedValue {
 type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
-  publishedSampleEntities(query: QueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedSampleEntities(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
+  searchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
 }"
 `;
 
@@ -4159,14 +4303,22 @@ enum QueryOrder {
   name
 }
 
-input QueryInput {
+input PublishedQueryInput {
   authKeys: [String!]
   entityTypes: [EntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
+  text: String
+}
+
+input PublishedSearchQueryInput {
+  authKeys: [String!]
+  entityTypes: [EntityType!]
+  referencing: ID
+  boundingBox: BoundingBoxInput
+  text: String
   order: QueryOrder
   reverse: Boolean
-  text: String
 }
 
 type PublishedFooFields {
@@ -4287,9 +4439,17 @@ input AdminQueryInput {
   entityTypes: [AdminEntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
+  text: String
+}
+
+input AdminSearchQueryInput {
+  authKeys: [String!]
+  entityTypes: [AdminEntityType!]
+  referencing: ID
+  boundingBox: BoundingBoxInput
+  text: String
   order: AdminQueryOrder
   reverse: Boolean
-  text: String
 }
 
 input AdminReferenceInput {
@@ -4454,12 +4614,12 @@ input AdminValueOneInput {
 type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
-  publishedSampleEntities(query: QueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedSampleEntities(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
+  searchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
-  adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminSearchEntities(query: AdminSearchQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
 }
@@ -4603,9 +4763,17 @@ input AdminQueryInput {
   entityTypes: [AdminEntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
+  text: String
+}
+
+input AdminSearchQueryInput {
+  authKeys: [String!]
+  entityTypes: [AdminEntityType!]
+  referencing: ID
+  boundingBox: BoundingBoxInput
+  text: String
   order: AdminQueryOrder
   reverse: Boolean
-  text: String
 }
 
 input AdminReferenceInput {
@@ -4757,7 +4925,7 @@ type Query {
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
-  adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminSearchEntities(query: AdminSearchQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
 }
@@ -4851,14 +5019,22 @@ enum QueryOrder {
   name
 }
 
-input QueryInput {
+input PublishedQueryInput {
   authKeys: [String!]
   entityTypes: [EntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
+  text: String
+}
+
+input PublishedSearchQueryInput {
+  authKeys: [String!]
+  entityTypes: [EntityType!]
+  referencing: ID
+  boundingBox: BoundingBoxInput
+  text: String
   order: QueryOrder
   reverse: Boolean
-  text: String
 }
 
 type PublishedFooFields {
@@ -4874,8 +5050,8 @@ type PublishedFoo implements Node & PublishedEntity {
 type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
-  publishedSampleEntities(query: QueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedSampleEntities(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
+  searchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
 }"
 `;
 
@@ -4957,14 +5133,22 @@ enum QueryOrder {
   name
 }
 
-input QueryInput {
+input PublishedQueryInput {
   authKeys: [String!]
   entityTypes: [EntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
+  text: String
+}
+
+input PublishedSearchQueryInput {
+  authKeys: [String!]
+  entityTypes: [EntityType!]
+  referencing: ID
+  boundingBox: BoundingBoxInput
+  text: String
   order: QueryOrder
   reverse: Boolean
-  text: String
 }
 
 type PublishedFooFields {
@@ -5074,9 +5258,17 @@ input AdminQueryInput {
   entityTypes: [AdminEntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
+  text: String
+}
+
+input AdminSearchQueryInput {
+  authKeys: [String!]
+  entityTypes: [AdminEntityType!]
+  referencing: ID
+  boundingBox: BoundingBoxInput
+  text: String
   order: AdminQueryOrder
   reverse: Boolean
-  text: String
 }
 
 input AdminReferenceInput {
@@ -5222,12 +5414,12 @@ type AdminFooUpsertPayload {
 type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
-  publishedSampleEntities(query: QueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedSampleEntities(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
+  searchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
-  adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminSearchEntities(query: AdminSearchQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
 }
@@ -5372,9 +5564,17 @@ input AdminQueryInput {
   entityTypes: [AdminEntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
+  text: String
+}
+
+input AdminSearchQueryInput {
+  authKeys: [String!]
+  entityTypes: [AdminEntityType!]
+  referencing: ID
+  boundingBox: BoundingBoxInput
+  text: String
   order: AdminQueryOrder
   reverse: Boolean
-  text: String
 }
 
 input AdminReferenceInput {
@@ -5579,7 +5779,7 @@ type Query {
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
-  adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminSearchEntities(query: AdminSearchQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
 }
@@ -5677,14 +5877,22 @@ enum QueryOrder {
   name
 }
 
-input QueryInput {
+input PublishedQueryInput {
   authKeys: [String!]
   entityTypes: [EntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
+  text: String
+}
+
+input PublishedSearchQueryInput {
+  authKeys: [String!]
+  entityTypes: [EntityType!]
+  referencing: ID
+  boundingBox: BoundingBoxInput
+  text: String
   order: QueryOrder
   reverse: Boolean
-  text: String
 }
 
 type PublishedFooFields {
@@ -5713,8 +5921,8 @@ type PublishedBar implements Node & PublishedEntity {
 type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
-  publishedSampleEntities(query: QueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedSampleEntities(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
+  searchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
 }"
 `;
 
@@ -5797,14 +6005,22 @@ enum QueryOrder {
   name
 }
 
-input QueryInput {
+input PublishedQueryInput {
   authKeys: [String!]
   entityTypes: [EntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
+  text: String
+}
+
+input PublishedSearchQueryInput {
+  authKeys: [String!]
+  entityTypes: [EntityType!]
+  referencing: ID
+  boundingBox: BoundingBoxInput
+  text: String
   order: QueryOrder
   reverse: Boolean
-  text: String
 }
 
 type PublishedFooFields {
@@ -5928,9 +6144,17 @@ input AdminQueryInput {
   entityTypes: [AdminEntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
+  text: String
+}
+
+input AdminSearchQueryInput {
+  authKeys: [String!]
+  entityTypes: [AdminEntityType!]
+  referencing: ID
+  boundingBox: BoundingBoxInput
+  text: String
   order: AdminQueryOrder
   reverse: Boolean
-  text: String
 }
 
 input AdminReferenceInput {
@@ -6129,12 +6353,12 @@ type AdminBarUpsertPayload {
 type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
-  publishedSampleEntities(query: QueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedSampleEntities(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
+  searchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
-  adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminSearchEntities(query: AdminSearchQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
 }
@@ -6288,9 +6512,17 @@ input AdminQueryInput {
   entityTypes: [AdminEntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
+  text: String
+}
+
+input AdminSearchQueryInput {
+  authKeys: [String!]
+  entityTypes: [AdminEntityType!]
+  referencing: ID
+  boundingBox: BoundingBoxInput
+  text: String
   order: AdminQueryOrder
   reverse: Boolean
-  text: String
 }
 
 input AdminReferenceInput {
@@ -6539,7 +6771,7 @@ type Query {
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
-  adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminSearchEntities(query: AdminSearchQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
 }
@@ -6647,14 +6879,22 @@ enum QueryOrder {
   name
 }
 
-input QueryInput {
+input PublishedQueryInput {
   authKeys: [String!]
   entityTypes: [EntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
+  text: String
+}
+
+input PublishedSearchQueryInput {
+  authKeys: [String!]
+  entityTypes: [EntityType!]
+  referencing: ID
+  boundingBox: BoundingBoxInput
+  text: String
   order: QueryOrder
   reverse: Boolean
-  text: String
 }
 
 type PublishedFooFields {
@@ -6705,8 +6945,8 @@ enum _PublishedValueListOrValueOne {
 type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
-  publishedSampleEntities(query: QueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedSampleEntities(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
+  searchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
 }"
 `;
 
@@ -6799,14 +7039,22 @@ enum QueryOrder {
   name
 }
 
-input QueryInput {
+input PublishedQueryInput {
   authKeys: [String!]
   entityTypes: [EntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
+  text: String
+}
+
+input PublishedSearchQueryInput {
+  authKeys: [String!]
+  entityTypes: [EntityType!]
+  referencing: ID
+  boundingBox: BoundingBoxInput
+  text: String
   order: QueryOrder
   reverse: Boolean
-  text: String
 }
 
 type PublishedFooFields {
@@ -6953,9 +7201,17 @@ input AdminQueryInput {
   entityTypes: [AdminEntityType!]
   referencing: ID
   boundingBox: BoundingBoxInput
+  text: String
+}
+
+input AdminSearchQueryInput {
+  authKeys: [String!]
+  entityTypes: [AdminEntityType!]
+  referencing: ID
+  boundingBox: BoundingBoxInput
+  text: String
   order: AdminQueryOrder
   reverse: Boolean
-  text: String
 }
 
 input AdminReferenceInput {
@@ -7203,12 +7459,12 @@ enum _AdminValueListOrValueOne {
 type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
-  publishedSampleEntities(query: QueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  searchEntities(query: QueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedSampleEntities(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
+  searchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
-  adminSearchEntities(query: AdminQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminSearchEntities(query: AdminSearchQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
 }

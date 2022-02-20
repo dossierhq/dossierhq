@@ -1,6 +1,6 @@
 import type {
   AdminEntity,
-  AdminQuery,
+  AdminSearchQuery,
   Connection,
   Edge,
   EntitySamplingOptions,
@@ -9,8 +9,8 @@ import type {
   ErrorType,
   Paging,
   PublishedEntity,
-  PublishedQuery,
   PublishedQueryOrder,
+  PublishedSearchQuery,
 } from '@jonasb/datadata-core';
 import { AdminQueryOrder, getPagingInfo } from '@jonasb/datadata-core';
 import isEqual from 'lodash/isEqual.js';
@@ -19,7 +19,7 @@ const defaultOrder: AdminQueryOrder | PublishedQueryOrder = AdminQueryOrder.name
 const defaultRequestedCount = 25;
 
 export interface SearchEntityState {
-  query: AdminQuery | PublishedQuery;
+  query: AdminSearchQuery | PublishedSearchQuery;
   paging: Paging | undefined;
   sampling: EntitySamplingOptions | undefined;
   requestedCount: number;
@@ -137,16 +137,16 @@ class SetSamplingAction implements SearchEntityStateAction {
 }
 
 class SetQueryAction implements SearchEntityStateAction {
-  readonly value: AdminQuery | PublishedQuery;
+  readonly value: AdminSearchQuery | PublishedSearchQuery;
   readonly partial: boolean;
 
-  constructor(value: AdminQuery | PublishedQuery, partial: boolean) {
+  constructor(value: AdminSearchQuery | PublishedSearchQuery, partial: boolean) {
     this.value = value;
     this.partial = partial;
   }
 
   reduce(state: SearchEntityState): SearchEntityState {
-    const query: AdminQuery | PublishedQuery = this.partial
+    const query: AdminSearchQuery | PublishedSearchQuery = this.partial
       ? { ...state.query, ...this.value }
       : { ...this.value };
 
@@ -274,8 +274,8 @@ export const SearchEntityStateActions = {
 };
 
 export function getQueryWithoutDefaults(
-  query: AdminQuery | PublishedQuery
-): AdminQuery | PublishedQuery {
+  query: AdminSearchQuery | PublishedSearchQuery
+): AdminSearchQuery | PublishedSearchQuery {
   let changed = false;
   const newQuery = { ...query };
   if (query.order === defaultOrder) {

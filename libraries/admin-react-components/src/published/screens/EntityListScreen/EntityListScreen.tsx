@@ -1,4 +1,4 @@
-import type { PublishedEntity, PublishedQuery } from '@jonasb/datadata-core';
+import type { PublishedEntity, PublishedQuery, PublishedSearchQuery } from '@jonasb/datadata-core';
 import { FullscreenContainer, IconButton, toSizeClassName } from '@jonasb/datadata-design';
 import React, { useCallback, useContext, useEffect, useReducer, useState } from 'react';
 import type { EntitySearchStateUrlQuery } from '../../index.js';
@@ -102,7 +102,7 @@ export function EntityListScreen({
 
   // load search/total or sampling
   useLoadSearchEntitiesAndTotalCount(
-    searchEntityState.paging ? (searchEntityState.query as PublishedQuery) : undefined,
+    searchEntityState.paging ? (searchEntityState.query as PublishedSearchQuery) : undefined,
     searchEntityState.paging,
     dispatchSearchEntityState
   );
