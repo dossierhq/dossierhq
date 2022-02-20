@@ -2,24 +2,34 @@ import type { AdminQuery, Paging } from '@jonasb/datadata-core';
 import type { Dispatch } from 'react';
 import { useContext, useEffect } from 'react';
 import type { SearchEntityStateAction } from '../index.js';
-import { DataDataContext2, SearchEntityStateActions, useSearchEntities } from '../index.js';
+import {
+  DataDataContext2,
+  SearchEntityStateActions,
+  useSearchEntities,
+  useTotalCount,
+} from '../index.js';
 
 /**
  * @param dispatchSearchEntityState
  * @param query If `undefined`, no data is fetched
  * @param paging
  */
-export function useLoadSearchEntities(
-  dispatchSearchEntityState: Dispatch<SearchEntityStateAction>,
+export function useLoadSearchEntitiesAndTotalCount(
   query: AdminQuery | undefined,
-  paging: Paging | undefined
+  paging: Paging | undefined,
+  dispatchSearchEntityState: Dispatch<SearchEntityStateAction>
 ) {
   const { adminClient } = useContext(DataDataContext2);
   const { connection, connectionError } = useSearchEntities(adminClient, query, paging);
+  const { totalCount } = useTotalCount(adminClient, query);
 
   useEffect(() => {
     dispatchSearchEntityState(
       new SearchEntityStateActions.UpdateSearchResult(connection, connectionError)
     );
   }, [connection, connectionError, dispatchSearchEntityState]);
+
+  useEffect(() => {
+    dispatchSearchEntityState(new SearchEntityStateActions.UpdateTotalCount(totalCount ?? null));
+  }, [totalCount, dispatchSearchEntityState]);
 }
