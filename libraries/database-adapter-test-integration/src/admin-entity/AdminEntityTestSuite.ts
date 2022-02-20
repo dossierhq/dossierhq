@@ -11,6 +11,7 @@ import { GetEntitySubSuite } from './AdminEntityGetEntitySubSuite';
 import { GetPublishingHistorySubSuite } from './AdminEntityGetPublishingHistorySubSuite';
 import { GetTotalCountSubSuite } from './AdminEntityGetTotalCountSubSuite';
 import { PublishEntitiesSubSuite } from './AdminEntityPublishEntitiesSubSuite';
+import { SampleEntitiesSubSuite } from './AdminEntitySampleEntitiesSubSuite';
 import { SearchEntitiesSubSuite } from './AdminEntitySearchEntitiesSubSuite';
 import { UnarchiveEntitySubSuite } from './AdminEntityUnarchiveEntitySubSuite';
 import { UnpublishEntitiesSubSuite } from './AdminEntityUnpublishEntitiesSubSuite';
@@ -36,6 +37,7 @@ export function createAdminEntityTestSuite<TCleanup>(
     ...GetPublishingHistorySubSuite,
     ...GetTotalCountSubSuite,
     ...PublishEntitiesSubSuite,
+    ...SampleEntitiesSubSuite,
     ...SearchEntitiesSubSuite,
     ...UnarchiveEntitySubSuite,
     ...UnpublishEntitiesSubSuite,

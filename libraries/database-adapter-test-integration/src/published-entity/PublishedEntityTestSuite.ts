@@ -6,6 +6,7 @@ import type { ReadOnlyEntityRepository } from '../shared-entity/ReadOnlyEntityRe
 import { GetEntitiesSubSuite } from './PublishedEntityGetEntitiesSubSuite';
 import { GetEntitySubSuite } from './PublishedEntityGetEntitySubSuite';
 import { GetTotalCountSubSuite } from './PublishedEntityGetTotalCountSubSuite';
+import { SampleEntitiesSubSuite } from './PublishedEntitySampleEntitiesSubSuite';
 import { SearchEntitiesSubSuite } from './PublishedEntitySearchEntitiesSubSuite';
 
 export interface PublishedEntityTestContext {
@@ -23,6 +24,7 @@ export function createPublishedEntityTestSuite<TCleanup>(
     ...GetEntitySubSuite,
     ...GetEntitiesSubSuite,
     ...GetTotalCountSubSuite,
+    ...SampleEntitiesSubSuite,
     ...SearchEntitiesSubSuite
   );
 }
