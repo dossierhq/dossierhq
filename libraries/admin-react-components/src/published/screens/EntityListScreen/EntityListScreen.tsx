@@ -21,7 +21,7 @@ import {
   SearchEntityStateActions,
   SearchOrSampleEntitiesButtons,
   useLoadSampleEntities,
-  useLoadSearchEntity,
+  useLoadSearchEntitiesAndTotalCount,
   useSynchronizeUrlQueryAndSearchEntityState,
 } from '../../index.js';
 
@@ -100,9 +100,8 @@ export function EntityListScreen({
     dispatchSearchEntityState
   );
 
-  // load
-
-  useLoadSearchEntity(
+  // load search/total or sampling
+  useLoadSearchEntitiesAndTotalCount(
     searchEntityState.paging ? (searchEntityState.query as PublishedQuery) : undefined,
     searchEntityState.paging,
     dispatchSearchEntityState

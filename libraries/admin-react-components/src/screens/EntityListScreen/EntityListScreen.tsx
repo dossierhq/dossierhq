@@ -26,8 +26,7 @@ import {
   StatusTagSelector,
   TypePicker2,
   useLoadSampleEntities,
-  useLoadSearchEntities,
-  useLoadTotalCount,
+  useLoadSearchEntitiesAndTotalCount,
   useSynchronizeUrlQueryAndSearchEntityState,
 } from '../../index.js';
 
@@ -123,16 +122,11 @@ export function EntityListScreen({
     dispatchSearchEntityState
   );
 
-  // load
-  useLoadSearchEntities(
-    dispatchSearchEntityState,
+  // load search/total or sampling
+  useLoadSearchEntitiesAndTotalCount(
     searchEntityState.paging ? (searchEntityState.query as AdminQuery) : undefined,
-    searchEntityState.paging
-  );
-
-  useLoadTotalCount(
-    dispatchSearchEntityState,
-    searchEntityState.paging ? (searchEntityState.query as AdminQuery) : undefined
+    searchEntityState.paging,
+    dispatchSearchEntityState
   );
 
   useLoadSampleEntities(
