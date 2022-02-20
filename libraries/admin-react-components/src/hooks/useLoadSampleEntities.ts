@@ -6,14 +6,14 @@ import { DataDataContext2, SearchEntityStateActions } from '../index.js';
 import { useSampleEntities } from './useSampleEntities.js';
 
 /**
- * @param dispatchSearchEntityState
  * @param query If `undefined`, no data is fetched
  * @param options
+ * @param dispatchSearchEntityState
  */
 export function useLoadSampleEntities(
-  dispatchSearchEntityState: Dispatch<SearchEntityStateAction>,
   query: AdminQuery | undefined,
-  options: EntitySamplingOptions | undefined
+  options: EntitySamplingOptions | undefined,
+  dispatchSearchEntityState: Dispatch<SearchEntityStateAction>
 ) {
   const { adminClient } = useContext(DataDataContext2);
   const { entitySamples, entitySamplesError } = useSampleEntities(adminClient, query, options);
