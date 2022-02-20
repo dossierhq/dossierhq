@@ -13,7 +13,7 @@ import { useSampleEntities } from './useSampleEntities.js';
 export function useLoadSampleEntities(
   dispatchSearchEntityState: Dispatch<SearchEntityStateAction>,
   query: AdminQuery | undefined,
-  options: EntitySamplingOptions
+  options: EntitySamplingOptions | undefined
 ) {
   const { adminClient } = useContext(DataDataContext2);
   const { entitySamples, entitySamplesError } = useSampleEntities(adminClient, query, options);

@@ -15,14 +15,13 @@ import { AdminQueryOrder, getPagingInfo } from '@jonasb/datadata-core';
 import isEqual from 'lodash/isEqual.js';
 
 const defaultOrder = AdminQueryOrder.name;
-const defaultPagingCount = 25;
+const defaultRequestedCount = 25;
 
 export interface SearchEntityState {
   query: AdminQuery | PublishedQuery;
-  paging: Paging;
-  sampling: EntitySamplingOptions;
-  sample: boolean;
-  pagingCount: number;
+  paging: Paging | undefined;
+  sampling: EntitySamplingOptions | undefined;
+  requestedCount: number;
   text: string;
 
   connection: Connection<Edge<AdminEntity | PublishedEntity, ErrorType>> | null | undefined;
@@ -40,9 +39,8 @@ export function initializeSearchEntityState(actions: SearchEntityStateAction[]):
   let state: SearchEntityState = {
     query: {},
     paging: {},
-    sampling: {},
-    sample: false,
-    pagingCount: defaultPagingCount,
+    sampling: undefined,
+    requestedCount: defaultRequestedCount,
     text: '',
     connection: undefined,
     connectionError: undefined,
@@ -98,44 +96,35 @@ class SetPagingAction implements SearchEntityStateAction {
     return {
       ...state,
       paging: this.value,
-      pagingCount: result.value.count || state.pagingCount,
+      sampling: undefined,
+      requestedCount: result.value.count || state.requestedCount,
     };
   }
 }
 
 class SetSamplingAction implements SearchEntityStateAction {
-  value: EntitySamplingOptions;
+  readonly value: EntitySamplingOptions;
+  readonly partial: boolean;
 
-  constructor(value: EntitySamplingOptions) {
+  constructor(value: EntitySamplingOptions, partial: boolean) {
     this.value = value;
+    this.partial = partial;
   }
 
   reduce(state: SearchEntityState): SearchEntityState {
-    if (isEqual(this.value, state.sampling)) {
+    const sampling = this.partial ? { ...state.sampling, ...this.value } : { ...this.value };
+    if (sampling.seed === undefined) {
+      sampling.seed = Math.floor(Math.random() * 999999);
+    }
+    if (isEqual(sampling, state.sampling)) {
       return state;
     }
+
     return {
       ...state,
-      sampling: this.value,
-      pagingCount: this.value.count || state.pagingCount,
-    };
-  }
-}
-
-class SetSampleAction implements SearchEntityStateAction {
-  value: boolean;
-
-  constructor(value: boolean) {
-    this.value = value;
-  }
-
-  reduce(state: SearchEntityState): SearchEntityState {
-    if (this.value === state.sample) {
-      return state;
-    }
-    return {
-      ...state,
-      sample: this.value,
+      sampling,
+      paging: undefined,
+      requestedCount: sampling.count || state.requestedCount,
     };
   }
 }
@@ -177,7 +166,7 @@ class SetQueryAction implements SearchEntityStateAction {
   }
 }
 
-class UpdateResultAction implements SearchEntityStateAction {
+class UpdateSearchResultAction implements SearchEntityStateAction {
   connection: SearchEntityState['connection'];
   connectionError: SearchEntityState['connectionError'];
 
@@ -250,9 +239,8 @@ export const SearchEntityStateActions = {
   SetText: SetTextAction,
   SetPaging: SetPagingAction,
   SetSampling: SetSamplingAction,
-  SetSample: SetSampleAction,
   SetQuery: SetQueryAction,
-  UpdateResult: UpdateResultAction,
+  UpdateSearchResult: UpdateSearchResultAction,
   UpdateSampleResult: UpdateSampleResultAction,
   UpdateTotalCount: UpdateTotalCountAction,
 };

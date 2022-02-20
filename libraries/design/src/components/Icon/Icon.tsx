@@ -1,4 +1,5 @@
 import {
+  faArrowDownShortWide,
   faChevronDown,
   faChevronUp,
   faFastBackward,
@@ -6,6 +7,7 @@ import {
   faMapMarkedAlt,
   faPlusSquare,
   faSearch,
+  faShuffle,
   faSortDown,
   faSortUp,
   faStepBackward,
@@ -34,8 +36,10 @@ const icons = {
   next: faStepForward,
   orderAsc: faSortDown,
   orderDesc: faSortUp,
+  ordered: faArrowDownShortWide,
   previous: faStepBackward,
   search: faSearch,
+  shuffle: faShuffle,
 };
 
 export type IconName = keyof typeof icons;

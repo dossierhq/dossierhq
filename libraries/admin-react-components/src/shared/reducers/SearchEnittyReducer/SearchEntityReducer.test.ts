@@ -10,13 +10,14 @@ describe('initializeSearchEntityState', () => {
       Object {
         "connection": undefined,
         "connectionError": undefined,
+        "entitySamples": undefined,
+        "entitySamplesError": undefined,
         "paging": Object {},
-        "pagingCount": 25,
         "query": Object {
           "order": "name",
         },
-        "sample": false,
-        "sampling": Object {},
+        "requestedCount": 25,
+        "sampling": undefined,
         "text": "",
         "totalCount": null,
       }
@@ -24,22 +25,51 @@ describe('initializeSearchEntityState', () => {
   });
 });
 
+describe('SearchEntityStateActions.SetPaging', () => {
+  test('Empty paging', () => {
+    const state = reduceSearchEntityState(
+      initializeSearchEntityState([]),
+      new SearchEntityStateActions.SetPaging({})
+    );
+    expect(state.paging).toEqual({});
+    expect(state.sampling).toBeUndefined();
+  });
+
+  test('Resets sampling', () => {
+    const state = reduceSearchEntityState(
+      initializeSearchEntityState([new SearchEntityStateActions.SetSampling({}, true)]),
+      new SearchEntityStateActions.SetPaging({})
+    );
+    expect(state.paging).toEqual({});
+    expect(state.sampling).toBeUndefined();
+  });
+});
+
 describe('SearchEntityStateActions.SetSampling', () => {
   test('Empty sampling', () => {
     const state = reduceSearchEntityState(
       initializeSearchEntityState([]),
-      new SearchEntityStateActions.SetSampling({})
+      new SearchEntityStateActions.SetSampling({}, true)
     );
-    expect(state.sampling).toEqual({});
+    expect(state.sampling).toEqual({ seed: expect.any(Number) });
+    expect(state.paging).toBeUndefined();
   });
-});
 
-describe('SearchEntityStateActions.SetSample', () => {
-  test('false->true', () => {
+  test('Resets paging', () => {
     const state = reduceSearchEntityState(
-      initializeSearchEntityState([]),
-      new SearchEntityStateActions.SetSample(true)
+      initializeSearchEntityState([new SearchEntityStateActions.SetPaging({ first: 200 })]),
+      new SearchEntityStateActions.SetSampling({}, true)
     );
-    expect(state.sample).toBeTruthy();
+    expect(state.sampling).toEqual({ seed: expect.any(Number) });
+    expect(state.paging).toBeUndefined();
+  });
+
+  test('Partial count, keeps seed', () => {
+    const state = reduceSearchEntityState(
+      initializeSearchEntityState([new SearchEntityStateActions.SetSampling({ seed: 123 }, false)]),
+      new SearchEntityStateActions.SetSampling({ count: 100 }, true)
+    );
+    expect(state.sampling).toEqual({ seed: 123, count: 100 });
+    expect(state.requestedCount).toBe(100);
   });
 });

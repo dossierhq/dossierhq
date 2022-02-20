@@ -13,7 +13,6 @@ export interface EntitySearchStateUrlQuery {
   query?: string;
   paging?: string;
   sampling?: string;
-  sample?: string;
 }
 
 export function initializeSearchEntityStateFromUrlQuery(
@@ -29,16 +28,18 @@ function urlQueryToSearchEntityStateActions(urlQuery: EntitySearchStateUrlQuery 
     const decodedQuery: AdminQuery = decodeUrlQueryStringifiedParam('query', urlQuery) ?? {};
     actions.push(new SearchEntityStateActions.SetQuery(decodedQuery, false));
 
-    const decodedPaging: Paging = decodeUrlQueryStringifiedParam('paging', urlQuery) ?? {};
-    actions.push(new SearchEntityStateActions.SetPaging(decodedPaging));
+    const decodedSampling: EntitySamplingOptions | undefined = decodeUrlQueryStringifiedParam(
+      'sampling',
+      urlQuery
+    );
+    if (decodedSampling) {
+      actions.push(new SearchEntityStateActions.SetSampling(decodedSampling, false));
+    }
 
-    const decodedSampling: EntitySamplingOptions =
-      decodeUrlQueryStringifiedParam('sampling', urlQuery) ?? {};
-    actions.push(new SearchEntityStateActions.SetSampling(decodedSampling));
-
-    const decodedSample: boolean | undefined =
-      decodeUrlQueryStringifiedParam('sample', urlQuery) ?? false;
-    actions.push(new SearchEntityStateActions.SetSample(decodedSample));
+    const decodedPaging: Paging | undefined = decodeUrlQueryStringifiedParam('paging', urlQuery);
+    if (decodedPaging || !decodedSampling) {
+      actions.push(new SearchEntityStateActions.SetPaging(decodedPaging ?? {}));
+    }
   }
   return actions;
 }
@@ -49,25 +50,23 @@ export function useSynchronizeUrlQueryAndSearchEntityState(
   searchEntityState: SearchEntityState,
   dispatchSearchEntityState: Dispatch<SearchEntityStateAction>
 ) {
-  const { query, paging, sampling, sample } = searchEntityState;
+  const { query, paging, sampling } = searchEntityState;
   useEffect(() => {
     if (!onUrlQueryChanged || !urlQuery) return;
     const result: EntitySearchStateUrlQuery = stringifyUrlQueryParams({
       query: getQueryWithoutDefaults(query),
       paging,
       sampling,
-      sample,
     });
     if (
       result.paging !== urlQuery.paging ||
       result.query !== urlQuery.query ||
-      result.sampling !== urlQuery.sampling ||
-      result.sample !== urlQuery.sample
+      result.sampling !== urlQuery.sampling
     ) {
       onUrlQueryChanged(result);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [query, paging, sampling, sample]);
+  }, [query, paging, sampling]);
 
   useEffect(() => {
     if (!urlQuery) return;
