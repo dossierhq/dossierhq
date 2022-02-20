@@ -1,4 +1,4 @@
-import type { AdminEntity, AdminQuery } from '@jonasb/datadata-core';
+import type { AdminEntity, AdminSearchQuery } from '@jonasb/datadata-core';
 import React, { useCallback, useReducer, useState } from 'react';
 import {
   Button,
@@ -18,7 +18,7 @@ import {
 
 export interface EntitySearchProps {
   className?: string;
-  query?: AdminQuery;
+  query?: AdminSearchQuery;
   onEntityClick: (entity: AdminEntity) => void;
 }
 

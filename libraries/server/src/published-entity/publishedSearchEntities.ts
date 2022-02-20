@@ -5,8 +5,8 @@ import type {
   Paging,
   PromiseResult,
   PublishedEntity,
-  PublishedQuery,
   PublishedSchema,
+  PublishedSearchQuery,
 } from '@jonasb/datadata-core';
 import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
 import type { AuthorizationAdapter, SessionContext } from '..';
@@ -19,7 +19,7 @@ export async function publishedSearchEntities(
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  query: PublishedQuery | undefined,
+  query: PublishedSearchQuery | undefined,
   paging: Paging | undefined
 ): PromiseResult<
   Connection<Edge<PublishedEntity, ErrorType>> | null,

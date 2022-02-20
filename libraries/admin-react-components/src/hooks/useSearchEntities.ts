@@ -1,7 +1,7 @@
 import type {
   AdminClient,
   AdminEntity,
-  AdminQuery,
+  AdminSearchQuery,
   Connection,
   Edge,
   ErrorResult,
@@ -19,7 +19,7 @@ import useSWR from 'swr';
  */
 export function useSearchEntities(
   adminClient: AdminClient,
-  query: AdminQuery | undefined,
+  query: AdminSearchQuery | undefined,
   paging?: Paging
 ): {
   connection: Connection<Edge<AdminEntity, ErrorType>> | null | undefined;
@@ -28,7 +28,7 @@ export function useSearchEntities(
   const fetcher = useCallback(
     (_action: string, paramsJson: string) => {
       const { query, paging } = JSON.parse(paramsJson) as {
-        query: AdminQuery;
+        query: AdminSearchQuery;
         paging: Paging | undefined;
       };
       return fetchSearchEntities(adminClient, query, paging);
@@ -52,7 +52,7 @@ export function useSearchEntities(
 
 async function fetchSearchEntities(
   adminClient: AdminClient,
-  query: AdminQuery,
+  query: AdminSearchQuery,
   paging: Paging | undefined
 ): Promise<Connection<Edge<AdminEntity, ErrorType>> | null> {
   const result = await adminClient.searchEntities(query, paging);

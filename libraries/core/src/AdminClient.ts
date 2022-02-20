@@ -14,6 +14,7 @@ import type {
   AdminQuery,
   AdminSchemaSpecification,
   AdminSchemaSpecificationUpdate,
+  AdminSearchQuery,
   Connection,
   Edge,
   EntityHistory,
@@ -91,7 +92,7 @@ export interface AdminClient {
   >;
 
   searchEntities(
-    query?: AdminQuery,
+    query?: AdminSearchQuery,
     paging?: Paging
   ): PromiseResult<
     Connection<Edge<AdminEntity, ErrorType>> | null,
@@ -346,7 +347,7 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
   }
 
   searchEntities(
-    query?: AdminQuery,
+    query?: AdminSearchQuery,
     paging?: Paging
   ): MethodReturnType<AdminClientOperationName.searchEntities> {
     return this.executeOperation({

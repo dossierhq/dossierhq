@@ -1,6 +1,6 @@
 import type {
-  AdminQuery,
   AdminSchema,
+  AdminSearchQuery,
   ErrorType,
   Paging,
   PromiseResult,
@@ -22,7 +22,7 @@ export async function adminEntitySearchEntities(
   databaseAdapter: SqliteDatabaseAdapter,
   schema: AdminSchema,
   context: TransactionContext,
-  query: AdminQuery | undefined,
+  query: AdminSearchQuery | undefined,
   paging: Paging | undefined,
   resolvedAuthKeys: ResolvedAuthKey[]
 ): PromiseResult<DatabaseAdminEntitySearchPayload, ErrorType.BadRequest | ErrorType.Generic> {

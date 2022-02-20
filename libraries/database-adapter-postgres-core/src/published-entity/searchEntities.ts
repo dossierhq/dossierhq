@@ -2,8 +2,8 @@ import type {
   ErrorType,
   Paging,
   PromiseResult,
-  PublishedQuery,
   PublishedSchema,
+  PublishedSearchQuery,
 } from '@jonasb/datadata-core';
 import { ok } from '@jonasb/datadata-core';
 import type {
@@ -20,7 +20,7 @@ export async function publishedEntitySearchEntities(
   databaseAdapter: PostgresDatabaseAdapter,
   schema: PublishedSchema,
   context: TransactionContext,
-  query: PublishedQuery | undefined,
+  query: PublishedSearchQuery | undefined,
   paging: Paging | undefined,
   resolvedAuthKeys: ResolvedAuthKey[]
 ): PromiseResult<DatabasePublishedEntitySearchPayload, ErrorType.BadRequest | ErrorType.Generic> {

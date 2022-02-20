@@ -1,11 +1,12 @@
 import type {
   AdminEntity,
   AdminEntityCreate,
-  AdminEntityUpdate,
-  AdminQuery,
   AdminEntityStatus,
-  EntityReference,
   AdminEntityTypeSpecification,
+  AdminEntityUpdate,
+  AdminSearchQuery,
+  AdminValueTypeSpecification,
+  EntityReference,
   ErrorType,
   FieldSpecification,
   Location,
@@ -13,7 +14,6 @@ import type {
   PromiseResult,
   RichText,
   ValueItem,
-  AdminValueTypeSpecification,
 } from '@jonasb/datadata-core';
 import {
   AdminQueryOrder,
@@ -75,7 +75,7 @@ interface EntitySelectorItem {
 export async function selectEntity(
   context: CliContext,
   message: string,
-  initialQuery: AdminQuery | null,
+  initialQuery: AdminSearchQuery | null,
   _defaultValue: EntityReference | null
 ): PromiseResult<
   AdminEntity,
@@ -142,10 +142,10 @@ export async function selectEntity(
 
 async function configureQuery(
   context: CliContext,
-  initialQuery: AdminQuery | null
-): Promise<{ query: AdminQuery; paging: Paging }> {
+  initialQuery: AdminSearchQuery | null
+): Promise<{ query: AdminSearchQuery; paging: Paging }> {
   let lastItemId = '_search';
-  const query: AdminQuery = initialQuery ? { ...initialQuery } : {};
+  const query: AdminSearchQuery = initialQuery ? { ...initialQuery } : {};
   let pagingIsForward = true;
   let pagingCount = 25;
   // eslint-disable-next-line no-constant-condition

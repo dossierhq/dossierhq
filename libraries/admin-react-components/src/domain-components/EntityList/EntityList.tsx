@@ -1,4 +1,4 @@
-import type { AdminEntity, AdminQuery, Paging } from '@jonasb/datadata-core';
+import type { AdminEntity, AdminSearchQuery, Paging } from '@jonasb/datadata-core';
 import { IconButton } from '@jonasb/datadata-design';
 import React, { useContext, useMemo, useState } from 'react';
 import { Button, DataDataContext, Message, PublishStateTag } from '../../index.js';
@@ -6,7 +6,7 @@ import { joinClassNames } from '../../utils/ClassNameUtils.js';
 
 export interface EntityListProps {
   className?: string;
-  query?: AdminQuery;
+  query?: AdminSearchQuery;
   onEntityClick: (entity: AdminEntity) => void;
 }
 

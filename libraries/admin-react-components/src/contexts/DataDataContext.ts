@@ -8,8 +8,8 @@ import type {
   AdminEntityUnarchivePayload,
   AdminEntityUnpublishPayload,
   AdminEntityUpdate,
-  AdminQuery,
   AdminSchema,
+  AdminSearchQuery,
   Connection,
   Edge,
   EntityHistory,
@@ -147,7 +147,7 @@ export class DataDataContextValue {
 
   /** Searches for entities. If `query` is `undefined` no data is fetched */
   useSearchEntities = (
-    query?: AdminQuery,
+    query?: AdminSearchQuery,
     paging?: Paging
   ): {
     connection?: Connection<Edge<AdminEntity, ErrorType>> | null;
@@ -352,7 +352,7 @@ export class DataDataContextValue {
       }
       case FetcherActions.UseSearchEntities: {
         const [json] = args as [string];
-        const { query, paging }: { query: AdminQuery; paging: Paging | undefined } =
+        const { query, paging }: { query: AdminSearchQuery; paging: Paging | undefined } =
           JSON.parse(json);
         const result = await this.#adminClient.searchEntities(query, paging);
         if (result.isError()) {

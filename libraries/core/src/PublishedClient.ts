@@ -13,6 +13,7 @@ import type {
   PublishedEntity,
   PublishedQuery,
   PublishedSchemaSpecification,
+  PublishedSearchQuery,
   Result,
 } from '.';
 import {
@@ -64,7 +65,7 @@ export interface PublishedClient {
   >;
 
   searchEntities(
-    query?: PublishedQuery,
+    query?: PublishedSearchQuery,
     paging?: Paging
   ): PromiseResult<
     Connection<Edge<PublishedEntity, ErrorType>> | null,
@@ -221,7 +222,7 @@ class BasePublishedClient<TContext extends ClientContext> implements PublishedCl
   }
 
   searchEntities(
-    query?: PublishedQuery,
+    query?: PublishedSearchQuery,
     paging?: Paging
   ): Promise<PublishedClientOperationReturn[PublishedClientOperationName.searchEntities]> {
     return this.executeOperation({
