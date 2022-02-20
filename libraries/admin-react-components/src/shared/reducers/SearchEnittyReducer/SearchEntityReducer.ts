@@ -10,11 +10,12 @@ import type {
   Paging,
   PublishedEntity,
   PublishedQuery,
+  PublishedQueryOrder,
 } from '@jonasb/datadata-core';
 import { AdminQueryOrder, getPagingInfo } from '@jonasb/datadata-core';
 import isEqual from 'lodash/isEqual.js';
 
-const defaultOrder = AdminQueryOrder.name;
+const defaultOrder: AdminQueryOrder | PublishedQueryOrder = AdminQueryOrder.name;
 const defaultRequestedCount = 25;
 
 export interface SearchEntityState {
@@ -116,13 +117,19 @@ class SetSamplingAction implements SearchEntityStateAction {
     if (sampling.seed === undefined) {
       sampling.seed = Math.floor(Math.random() * 999999);
     }
-    if (isEqual(sampling, state.sampling)) {
+
+    const query = { ...state.query };
+    delete query.order;
+    delete query.reverse;
+
+    if (isEqual(sampling, state.sampling) && isEqual(query, state.query)) {
       return state;
     }
 
     return {
       ...state,
       sampling,
+      query,
       paging: undefined,
       requestedCount: sampling.count || state.requestedCount,
     };
@@ -142,12 +149,19 @@ class SetQueryAction implements SearchEntityStateAction {
     const query: AdminQuery | PublishedQuery = this.partial
       ? { ...state.query, ...this.value }
       : { ...this.value };
-    // Normalize
+
+    // Sampling/paging
+    const switchToSearch = (this.value.order || this.value.reverse !== undefined) && state.sampling;
+    let sampling = state.sampling;
+    let paging = state.paging;
+    if (switchToSearch) {
+      sampling = undefined;
+      paging = {};
+    }
+
+    // Normalize (except for order/reverse)
     if (query.authKeys?.length === 0) {
       delete query.authKeys;
-    }
-    if (!query.order) {
-      query.order = defaultOrder;
     }
     if (query.entityTypes?.length === 0) {
       delete query.entityTypes;
@@ -159,10 +173,24 @@ class SetQueryAction implements SearchEntityStateAction {
       delete query.text;
     }
 
-    if (isEqual(query, state.query)) {
+    if (paging) {
+      if (!query.order) {
+        query.order = defaultOrder;
+      }
+    } else {
+      delete query.order;
+      delete query.reverse;
+    }
+
+    if (
+      isEqual(
+        { query, paging, sampling },
+        { query: state.query, paging: state.paging, sampling: state.sampling }
+      )
+    ) {
       return state;
     }
-    return { ...state, query, text: query.text ?? '' };
+    return { ...state, query, text: query.text ?? '', paging, sampling };
   }
 }
 

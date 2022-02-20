@@ -1,3 +1,4 @@
+import { AdminQueryOrder } from '@jonasb/datadata-core';
 import {
   initializeSearchEntityState,
   reduceSearchEntityState,
@@ -22,6 +23,18 @@ describe('initializeSearchEntityState', () => {
         "totalCount": null,
       }
     `);
+  });
+});
+
+describe('SearchEntityStateActions.SetQuery', () => {
+  test('Resets sampling if setting order', () => {
+    const state = reduceSearchEntityState(
+      initializeSearchEntityState([new SearchEntityStateActions.SetSampling({}, true)]),
+      new SearchEntityStateActions.SetQuery({ order: AdminQueryOrder.updatedAt }, true)
+    );
+    expect(state.query).toEqual({ order: AdminQueryOrder.updatedAt });
+    expect(state.paging).toEqual({});
+    expect(state.sampling).toBeUndefined();
   });
 });
 
@@ -62,6 +75,17 @@ describe('SearchEntityStateActions.SetSampling', () => {
     );
     expect(state.sampling).toEqual({ seed: expect.any(Number) });
     expect(state.paging).toBeUndefined();
+  });
+
+  test('Resets order', () => {
+    const state = reduceSearchEntityState(
+      initializeSearchEntityState([
+        new SearchEntityStateActions.SetQuery({ order: AdminQueryOrder.updatedAt }, true),
+      ]),
+      new SearchEntityStateActions.SetSampling({}, true)
+    );
+    expect(state.sampling).toEqual({ seed: expect.any(Number) });
+    expect(state.query).toEqual({});
   });
 
   test('Partial count, keeps seed', () => {
