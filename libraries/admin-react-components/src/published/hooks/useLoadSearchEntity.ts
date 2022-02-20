@@ -9,8 +9,13 @@ import {
   useTotalCount,
 } from '../index.js';
 
+/**
+ * @param query If `undefined`, no data is fetched
+ * @param paging
+ * @param dispatchSearchEntityState
+ */
 export function useLoadSearchEntity(
-  query: PublishedQuery,
+  query: PublishedQuery | undefined,
   paging: Paging | undefined,
   dispatchSearchEntityState: Dispatch<SearchEntityStateAction>
 ) {

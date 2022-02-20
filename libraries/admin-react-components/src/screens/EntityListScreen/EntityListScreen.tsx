@@ -1,12 +1,7 @@
 import type { AdminEntity, AdminQuery } from '@jonasb/datadata-core';
 import { FullscreenContainer, IconButton, toSizeClassName } from '@jonasb/datadata-design';
-import type { Dispatch } from 'react';
 import React, { useCallback, useContext, useEffect, useReducer, useState } from 'react';
-import type {
-  EntitySearchStateUrlQuery,
-  SearchEntityState,
-  SearchEntityStateAction,
-} from '../../index.js';
+import type { EntitySearchStateUrlQuery } from '../../index.js';
 import {
   AuthKeySelector,
   AuthKeyTagSelector,
@@ -24,11 +19,9 @@ import {
   reduceEntityTypeSelectorState,
   reduceSearchEntityState,
   reduceStatusSelectorState,
-  SampleEntitiesOptionsCount,
-  SearchEntityPagingButtons,
-  SearchEntityPagingCount,
   SearchEntitySearchInput,
   SearchEntityStateActions,
+  SearchOrSampleEntitiesButtons,
   StatusSelector,
   StatusTagSelector,
   TypePicker2,
@@ -143,9 +136,9 @@ export function EntityListScreen({
   );
 
   useLoadSampleEntities(
-    dispatchSearchEntityState,
     searchEntityState.sampling ? (searchEntityState.query as AdminQuery) : undefined,
-    searchEntityState.sampling
+    searchEntityState.sampling,
+    dispatchSearchEntityState
   );
 
   // useDebugLogChangedValues('EntityList changed props', { header, footer, onCreateEntity, onOpenEntity, searchEntityState, dispatchSearchEntityState, entityTypeFilterState, dispatchEntityTypeFilter, });
@@ -210,57 +203,9 @@ export function EntityListScreen({
         flexDirection="row"
         alignItems="center"
       >
-        {searchEntityState.sampling ? (
-          <SamplingButtons {...{ searchEntityState, dispatchSearchEntityState }} />
-        ) : (
-          <SearchButtons {...{ searchEntityState, dispatchSearchEntityState }} />
-        )}
+        <SearchOrSampleEntitiesButtons {...{ searchEntityState, dispatchSearchEntityState }} />
       </FullscreenContainer.Row>
       {footer ? <FullscreenContainer.Row fullWidth>{footer}</FullscreenContainer.Row> : null}
     </FullscreenContainer>
-  );
-}
-
-function SearchButtons({
-  searchEntityState,
-  dispatchSearchEntityState,
-}: {
-  searchEntityState: SearchEntityState;
-  dispatchSearchEntityState: Dispatch<SearchEntityStateAction>;
-}) {
-  const handleEnableSample = useCallback(() => {
-    dispatchSearchEntityState(new SearchEntityStateActions.SetSampling({}, false));
-  }, [dispatchSearchEntityState]);
-
-  return (
-    <>
-      <SearchEntityPagingButtons {...{ searchEntityState, dispatchSearchEntityState }} />
-      <SearchEntityPagingCount {...{ searchEntityState, dispatchSearchEntityState }} />
-      <IconButton icon="shuffle" onClick={handleEnableSample} />
-    </>
-  );
-}
-
-function SamplingButtons({
-  searchEntityState,
-  dispatchSearchEntityState,
-}: {
-  searchEntityState: SearchEntityState;
-  dispatchSearchEntityState: Dispatch<SearchEntityStateAction>;
-}) {
-  const handleOrdered = useCallback(() => {
-    dispatchSearchEntityState(new SearchEntityStateActions.SetPaging({}));
-  }, [dispatchSearchEntityState]);
-
-  const handleChangeSeed = useCallback(() => {
-    dispatchSearchEntityState(new SearchEntityStateActions.SetSampling({ seed: undefined }, true));
-  }, [dispatchSearchEntityState]);
-
-  return (
-    <>
-      <SampleEntitiesOptionsCount {...{ searchEntityState, dispatchSearchEntityState }} />
-      <IconButton icon="shuffle" onClick={handleChangeSeed} />
-      <IconButton icon="ordered" onClick={handleOrdered} />
-    </>
   );
 }

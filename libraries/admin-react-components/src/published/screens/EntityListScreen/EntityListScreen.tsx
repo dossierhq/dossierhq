@@ -17,10 +17,10 @@ import {
   reduceAuthKeySelectorState,
   reduceEntityTypeSelectorState,
   reduceSearchEntityState,
-  SearchEntityPagingButtons,
-  SearchEntityPagingCount,
   SearchEntitySearchInput,
   SearchEntityStateActions,
+  SearchOrSampleEntitiesButtons,
+  useLoadSampleEntities,
   useLoadSearchEntity,
   useSynchronizeUrlQueryAndSearchEntityState,
 } from '../../index.js';
@@ -62,6 +62,8 @@ export function EntityListScreen({
     initializeAuthKeySelectorState
   );
 
+  // map or list
+
   const [showMap, setShowMap] = useState(!!searchEntityState.query.boundingBox);
 
   const handleToggleShowMap = useCallback(() => {
@@ -98,9 +100,17 @@ export function EntityListScreen({
     dispatchSearchEntityState
   );
 
+  // load
+
   useLoadSearchEntity(
-    searchEntityState.query as PublishedQuery,
+    searchEntityState.paging ? (searchEntityState.query as PublishedQuery) : undefined,
     searchEntityState.paging,
+    dispatchSearchEntityState
+  );
+
+  useLoadSampleEntities(
+    searchEntityState.sampling ? (searchEntityState.query as PublishedQuery) : undefined,
+    searchEntityState.sampling,
     dispatchSearchEntityState
   );
 
@@ -159,8 +169,7 @@ export function EntityListScreen({
         flexDirection="row"
         alignItems="center"
       >
-        <SearchEntityPagingButtons {...{ searchEntityState, dispatchSearchEntityState }} />
-        <SearchEntityPagingCount {...{ searchEntityState, dispatchSearchEntityState }} />
+        <SearchOrSampleEntitiesButtons {...{ searchEntityState, dispatchSearchEntityState }} />
       </FullscreenContainer.Row>
       {footer ? <FullscreenContainer.Row fullWidth>{footer}</FullscreenContainer.Row> : null}
     </FullscreenContainer>

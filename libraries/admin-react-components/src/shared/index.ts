@@ -27,6 +27,7 @@ export { SampleEntitiesOptionsCount } from './components/SampleEntitiesOptionsCo
 export { SearchEntityPagingButtons } from './components/SearchEntityPagingButtons/SearchEntityPagingButtons.js';
 export { SearchEntityPagingCount } from './components/SearchEntityPagingCount/SearchEntityPagingCount.js';
 export { SearchEntitySearchInput } from './components/SearchEntitySearchInput/SearchEntitySearchInput.js';
+export { SearchOrSampleEntitiesButtons } from './components/SearchOrSampleEntitiesButtons/SearchOrSampleEntitiesButtons.js';
 export {
   getQueryWithoutDefaults,
   initializeSearchEntityState,

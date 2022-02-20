@@ -8,6 +8,7 @@ export { useEntity } from './hooks/useEntity.js';
 export { useLoadSearchEntity } from './hooks/useLoadSearchEntity.js';
 export { useSchema } from './hooks/useSchema.js';
 export { useSearchEntities } from './hooks/useSearchEntities.js';
+export { useLoadSampleEntities } from './hooks/useLoadSampleEntities.js';
 export { useTotalCount } from './hooks/useTotalCount.js';
 export { EntityDetailScreen } from './screens/EntityDetailScreen/EntityDetailScreen.js';
 export { EntityListScreen } from './screens/EntityListScreen/EntityListScreen.js';

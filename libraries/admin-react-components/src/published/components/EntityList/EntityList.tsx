@@ -3,7 +3,7 @@ import { PublishedQueryOrder } from '@jonasb/datadata-core';
 import { Table } from '@jonasb/datadata-design';
 import type { Dispatch } from 'react';
 import React, { useContext } from 'react';
-import type { SearchEntityState, SearchEntityStateAction } from '../../index.js';
+import type { DisplayAuthKey, SearchEntityState, SearchEntityStateAction } from '../../index.js';
 import { AuthKeyTag, PublishedDataDataContext, SearchEntityStateActions } from '../../index.js';
 
 interface Props {
@@ -15,6 +15,7 @@ interface Props {
 export function EntityList({ searchEntityState, dispatchSearchEntityState, onItemClick }: Props) {
   const {
     connection,
+    entitySamples,
     query: { order, reverse },
   } = searchEntityState;
   const { authKeys } = useContext(PublishedDataDataContext);
@@ -40,23 +41,56 @@ export function EntityList({ searchEntityState, dispatchSearchEntityState, onIte
           if (edge.node.isOk()) {
             const entity = edge.node.value;
             return (
-              <Table.Row key={entity.id} clickable onClick={() => onItemClick(entity)}>
-                <Table.Cell>{entity.info.name}</Table.Cell>
-                <Table.Cell>{entity.info.type}</Table.Cell>
-                <Table.Cell narrow>
-                  <AuthKeyTag
-                    authKey={entity.info.authKey}
-                    displayName={
-                      authKeys.find((it) => it.authKey === entity.info.authKey)?.displayName ?? null
-                    }
-                  />
-                </Table.Cell>
-              </Table.Row>
+              <EntityListRow
+                key={entity.id}
+                {...{
+                  entity,
+                  authKeys,
+                  order: order as PublishedQueryOrder | undefined,
+                  onItemClick,
+                }}
+              />
             );
           }
         })}
+        {entitySamples?.items.map((entity) => (
+          <EntityListRow
+            key={entity.id}
+            {...{
+              entity: entity as PublishedEntity,
+              authKeys,
+              order: order as PublishedQueryOrder | undefined,
+              onItemClick,
+            }}
+          />
+        ))}
       </Table.Body>
     </Table>
+  );
+}
+
+function EntityListRow({
+  entity,
+  authKeys,
+  onItemClick,
+}: {
+  entity: PublishedEntity;
+  authKeys: DisplayAuthKey[];
+  onItemClick: (item: PublishedEntity) => void;
+}) {
+  return (
+    <Table.Row key={entity.id} clickable onClick={() => onItemClick(entity)}>
+      <Table.Cell>{entity.info.name}</Table.Cell>
+      <Table.Cell>{entity.info.type}</Table.Cell>
+      <Table.Cell narrow>
+        <AuthKeyTag
+          authKey={entity.info.authKey}
+          displayName={
+            authKeys.find((it) => it.authKey === entity.info.authKey)?.displayName ?? null
+          }
+        />
+      </Table.Cell>
+    </Table.Row>
   );
 }
 
