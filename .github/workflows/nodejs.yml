@@ -55,10 +55,6 @@ jobs:
       - name: ci:check
         run: |
           node common/scripts/install-run-rush.js ci:check --verbose
-      - name: TODO temporary second test of deno
-        run: |
-          cd examples/deno
-          npm run test
       - name: stop db
         run: |
           cd tools/generic-tools/

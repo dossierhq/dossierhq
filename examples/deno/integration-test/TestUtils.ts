@@ -8,8 +8,19 @@ import {
   TestSuite,
 } from "@jonasb/datadata-database-adapter-test-integration";
 
-export function registerTestSuite(testSuite: TestSuite) {
-  for (const [testName, testFunction] of Object.entries(testSuite)) {
+export function registerTestSuite(
+  testSuite: TestSuite,
+  part?: [number, number],
+) {
+  let testSuiteToAdd = Object.entries(testSuite);
+  if (part) {
+    const [page, totalPages] = part;
+    const testsPerPage = Math.ceil(testSuiteToAdd.length / totalPages);
+    const offset = page * testsPerPage;
+    testSuiteToAdd = testSuiteToAdd.slice(offset, offset + testsPerPage);
+  }
+
+  for (const [testName, testFunction] of testSuiteToAdd) {
     Deno.test({ name: testName, fn: testFunction });
   }
 }
