@@ -10,11 +10,11 @@ import {
 
 export function registerTestSuite(
   testSuite: TestSuite,
-  part?: [number, number],
+  subset?: { page: number; totalPages: number },
 ) {
   let testSuiteToAdd = Object.entries(testSuite);
-  if (part) {
-    const [page, totalPages] = part;
+  if (subset) {
+    const { page, totalPages } = subset;
     const testsPerPage = Math.ceil(testSuiteToAdd.length / totalPages);
     const offset = page * testsPerPage;
     testSuiteToAdd = testSuiteToAdd.slice(offset, offset + testsPerPage);
