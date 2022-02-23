@@ -64,7 +64,7 @@ const VERSION_1: QueryOrQueryAndValues[] = [
     id INTEGER PRIMARY KEY,
     entities_id INTEGER NOT NULL,
     version INTEGER NOT NULL,
-    created_at TEST NOT NULL,
+    created_at TEXT NOT NULL,
     created_by INTEGER NOT NULL,
     fields TEXT NOT NULL,
     FOREIGN KEY (entities_id) REFERENCES entities(id) ON DELETE CASCADE,
@@ -97,9 +97,23 @@ const VERSION_1: QueryOrQueryAndValues[] = [
   )`,
 ];
 
+const VERSION_2: QueryOrQueryAndValues[] = [
+  `CREATE TABLE advisory_locks (
+    id INTEGER PRIMARY KEY,
+    name TEXT NOT NULL,
+    handle INTEGER NOT NULL,
+    acquired_at TEXT NOT NULL,
+    renewed_at TEXT NOT NULL,
+    expires_at INTEGER NOT NULL,
+    lease_duration INTEGER NOT NULL,
+    CONSTRAINT advisory_locks_name UNIQUE (name)
+  )`,
+];
+
 const VERSIONS: QueryOrQueryAndValues[][] = [
   [], // nothing for version 0
   VERSION_1,
+  VERSION_2,
 ];
 
 export async function migrateDatabaseIfNecessary(

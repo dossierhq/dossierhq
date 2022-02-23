@@ -279,3 +279,12 @@ export interface Edge<TOk, TError extends ErrorType> {
   node: Result<TOk, TError>;
   cursor: string;
 }
+
+export interface AdvisoryLockOptions {
+  leaseDuration: number;
+}
+
+export interface AdvisoryLockPayload {
+  name: string;
+  handle: number;
+}

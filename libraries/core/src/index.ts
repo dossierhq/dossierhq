@@ -127,6 +127,8 @@ export type {
   AdminEntityUpsertPayload,
   AdminQuery,
   AdminSearchQuery,
+  AdvisoryLockOptions,
+  AdvisoryLockPayload,
   BoundingBox,
   Connection,
   Edge,

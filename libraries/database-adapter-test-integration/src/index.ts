@@ -1,4 +1,5 @@
 export { createAdminEntityTestSuite } from './admin-entity/AdminEntityTestSuite';
+export { createAdvisoryLockTestSuite } from './advisory-lock/AdvisoryLockTestSuite';
 export { createAuthTestSuite } from './auth/AuthTestSuite';
 export { IntegrationTestSchemaSpecifciationUpdate } from './IntegrationTestSchemaSpecifciationUpdate';
 export { createPublishedEntityTestSuite } from './published-entity/PublishedEntityTestSuite';

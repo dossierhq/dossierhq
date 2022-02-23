@@ -2,9 +2,18 @@ import type { AdminSchemaSpecification } from '@jonasb/datadata-core';
 import type { Temporal } from '@js-temporal/polyfill';
 
 export enum UniqueConstraints {
+  advisory_locks_name_key = 'advisory_locks_name_key',
   entities_name_key = 'entities_name_key',
   entities_uuid_key = 'entities_uuid_key',
   principals_provider_identifier_key = 'principals_provider_identifier_key',
+}
+
+export interface AdvisoryLocksTable {
+  id: number;
+  name: string;
+  acquired_at: string;
+  renewed_at: string;
+  lease_duration: number;
 }
 
 export interface SchemaVersionsTable {

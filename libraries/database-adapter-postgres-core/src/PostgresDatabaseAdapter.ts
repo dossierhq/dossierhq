@@ -33,6 +33,10 @@ import {
   adminEntityUpdateGetEntityInfo,
 } from './admin-entity/updateEntity';
 import { adminEntityUpdateStatus } from './admin-entity/updateStatus';
+import { advisoryLockAcquire } from './advisory-lock/advisoryLockAcquire';
+import { advisoryLockDeleteExpired } from './advisory-lock/advisoryLockDeleteExpired';
+import { advisoryLockRelease } from './advisory-lock/advisoryLockRelease';
+import { advisoryLockRenew } from './advisory-lock/advisoryLockRenew';
 import { authCreateSession } from './auth/createSession';
 import { withNestedTransaction, withRootTransaction } from './PostgresTransaction';
 import { publishedEntityGetEntities } from './published-entity/getEntities';
@@ -101,6 +105,10 @@ export function createPostgresDatabaseAdapterAdapter(
       adminEntityUnpublishEntities(databaseAdapter, ...args),
     adminEntityUnpublishGetPublishedReferencedEntities: (...args) =>
       adminEntityUnpublishGetPublishedReferencedEntities(databaseAdapter, ...args),
+    advisoryLockAcquire: (...args) => advisoryLockAcquire(databaseAdapter, ...args),
+    advisoryLockDeleteExpired: (...args) => advisoryLockDeleteExpired(databaseAdapter, ...args),
+    advisoryLockRelease: (...args) => advisoryLockRelease(databaseAdapter, ...args),
+    advisoryLockRenew: (...args) => advisoryLockRenew(databaseAdapter, ...args),
     authCreateSession: (...args) => authCreateSession(databaseAdapter, ...args),
     disconnect: databaseAdapter.disconnect,
     publishedEntityGetOne: (...args) => publishedEntityGetOne(databaseAdapter, ...args),

@@ -377,6 +377,32 @@ export interface DatabaseAdapter {
     reference: DatabaseResolvedEntityReference
   ): PromiseResult<EntityReference[], ErrorType.Generic>;
 
+  advisoryLockAcquire(
+    context: TransactionContext,
+    name: string,
+    handle: number,
+    leaseDuration: number
+  ): PromiseResult<{ acquiredAt: Temporal.Instant }, ErrorType.Conflict | ErrorType.Generic>;
+
+  advisoryLockDeleteExpired(
+    context: TransactionContext
+  ): PromiseResult<{ name: string }[], ErrorType.Generic>;
+
+  advisoryLockRelease(
+    context: TransactionContext,
+    name: string,
+    handle: number
+  ): PromiseResult<void, ErrorType.NotFound | ErrorType.Generic>;
+
+  advisoryLockRenew(
+    context: TransactionContext,
+    name: string,
+    handle: number
+  ): PromiseResult<
+    { acquiredAt: Temporal.Instant; renewedAt: Temporal.Instant },
+    ErrorType.NotFound | ErrorType.Generic
+  >;
+
   authCreateSession(
     context: TransactionContext,
     provider: string,

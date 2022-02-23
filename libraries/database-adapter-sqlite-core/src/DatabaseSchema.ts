@@ -1,3 +1,12 @@
+export interface AdvisoryLocksTable {
+  id: number;
+  name: string;
+  acquired_at: string;
+  renewed_at: string;
+  expires_at: number;
+  lease_duration: number;
+}
+
 export interface EntitiesTable {
   id: number;
   uuid: string;
@@ -60,8 +69,14 @@ export interface UniqueConstraint {
   columns: string[];
 }
 
+const AdvisoryLocksTable = 'advisory_locks';
 const EntitiesTable = 'entities';
 const PrincipalsTable = 'principals';
+
+export const AdvisoryLocksUniqueNameConstraint: UniqueConstraint = {
+  table: AdvisoryLocksTable,
+  columns: ['name'],
+};
 
 export const EntitiesUniqueNameConstraint: UniqueConstraint = {
   table: EntitiesTable,
