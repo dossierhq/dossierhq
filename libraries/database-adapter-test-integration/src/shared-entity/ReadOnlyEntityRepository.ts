@@ -2,6 +2,7 @@ import type {
   AdminClient,
   AdminEntity,
   AdminEntityUpsert,
+  AdvisoryLockPayload,
   PromiseResult,
   PublishedEntity,
   Result,
@@ -22,6 +23,7 @@ import { adminClientForMainPrincipal, adminClientForSecondaryPrincipal } from '.
 const UUID_NAMESPACE = '10db07d4-3666-48e9-8080-12db0365ab81';
 const ENTITIES_PER_CATEGORY = 5;
 const MAX_RETRY_COUNT = 3;
+const ADVISORY_LOCK_NAME = 'integration-test-read-only-entities';
 
 const READONLY_UPSERT: AdminEntityUpsert = {
   id: 'REPLACE',
@@ -77,6 +79,11 @@ export async function createReadOnlyEntityRepository(
 ): Promise<ReadOnlyEntityRepository> {
   if (!createEntitiesPromise) {
     createEntitiesPromise = (async (): Promise<ReadOnlyEntityRepository> => {
+      const adminClientMain = adminClientForMainPrincipal(server);
+      const adminClientSecondary = adminClientForSecondaryPrincipal(server);
+
+      const lock = await acquireLock(adminClientMain);
+
       const mainEntities: AdminEntity[] = [];
       const secondaryEntities: AdminEntity[] = [];
 
@@ -97,12 +104,6 @@ export async function createReadOnlyEntityRepository(
         }
       }
 
-      // Randomize order (in order to avoid trying to create same entity at the same time when running from different test runners)
-      entityConfigs.sort(() => 0.5 - Math.random());
-
-      const adminClientMain = adminClientForMainPrincipal(server);
-      const adminClientSecondary = adminClientForSecondaryPrincipal(server);
-
       for (const { principal, authKey, status, index } of entityConfigs) {
         const adminClient = principal === 'main' ? adminClientMain : adminClientSecondary;
         const id = uuidv5(`${principal}-${authKey}-${status}-${index}`, UUID_NAMESPACE);
@@ -111,10 +112,37 @@ export async function createReadOnlyEntityRepository(
         (principal === 'main' ? mainEntities : secondaryEntities).push(result.value);
       }
 
+      await releaseLock(adminClientMain, lock);
+
       return new ReadOnlyEntityRepository(mainEntities, secondaryEntities);
     })();
   }
   return createEntitiesPromise;
+}
+
+async function acquireLock(adminClient: AdminClient) {
+  //TODO add helper to core
+  // eslint-disable-next-line no-constant-condition
+  while (true) {
+    const result = await adminClient.acquireAdvisoryLock(ADVISORY_LOCK_NAME, {
+      leaseDuration: 30_000,
+    });
+    if (result.isOk()) {
+      return result.value;
+    }
+    if (result.isErrorType(ErrorType.Conflict)) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      await new Promise((resolve) => setTimeout(resolve, 5000));
+      continue;
+    }
+    assertOkResult(result);
+  }
+}
+
+async function releaseLock(adminClient: AdminClient, lock: AdvisoryLockPayload) {
+  const result = await adminClient.releaseAdvisoryLock(lock.name, lock.handle);
+  assertOkResult(result);
 }
 
 async function createEntityRetry(
