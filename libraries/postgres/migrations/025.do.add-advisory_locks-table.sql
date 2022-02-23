@@ -1,0 +1,8 @@
+CREATE TABLE advisory_locks (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255) UNIQUE NOT NULL,
+  handle INTEGER NOT NULL,
+  acquired_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  renewed_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  lease_duration INTERVAL NOT NULL
+)

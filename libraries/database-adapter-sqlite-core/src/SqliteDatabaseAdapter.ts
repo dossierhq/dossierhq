@@ -35,6 +35,10 @@ import {
   adminEntityUpdateGetEntityInfo,
 } from './admin-entity/updateEntity';
 import { adminEntityUpdateStatus } from './admin-entity/updateStatus';
+import { advisoryLockAcquire } from './advisory-lock/advisoryLockAcquire';
+import { advisoryLockDeleteExpired } from './advisory-lock/advisoryLockDeleteExpired';
+import { advisoryLockRelease } from './advisory-lock/advisoryLockRelease';
+import { advisoryLockRenew } from './advisory-lock/advisoryLockRenew';
 import { authCreateSession } from './auth/createSession';
 import { publishedEntityGetEntities } from './published-entity/getEntities';
 import { publishedEntityGetOne } from './published-entity/getEntity';
@@ -115,6 +119,10 @@ function createAdapter(sqliteAdapter: SqliteDatabaseAdapter): DatabaseAdapter {
     adminEntityUnpublishEntities: (...args) => adminEntityUnpublishEntities(sqliteAdapter, ...args),
     adminEntityUnpublishGetPublishedReferencedEntities: (...args) =>
       adminEntityUnpublishGetPublishedReferencedEntities(sqliteAdapter, ...args),
+    advisoryLockAcquire: (...args) => advisoryLockAcquire(sqliteAdapter, ...args),
+    advisoryLockDeleteExpired: (...args) => advisoryLockDeleteExpired(sqliteAdapter, ...args),
+    advisoryLockRelease: (...args) => advisoryLockRelease(sqliteAdapter, ...args),
+    advisoryLockRenew: (...args) => advisoryLockRenew(sqliteAdapter, ...args),
     authCreateSession: (...args) => authCreateSession(sqliteAdapter, ...args),
     disconnect: sqliteAdapter.disconnect,
     publishedEntityGetOne: (...args) => publishedEntityGetOne(sqliteAdapter, ...args),

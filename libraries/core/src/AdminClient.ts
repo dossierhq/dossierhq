@@ -15,6 +15,8 @@ import type {
   AdminSchemaSpecification,
   AdminSchemaSpecificationUpdate,
   AdminSearchQuery,
+  AdvisoryLockOptions,
+  AdvisoryLockPayload,
   Connection,
   Edge,
   EntityHistory,
@@ -168,9 +170,28 @@ export interface AdminClient {
     PublishingHistory,
     ErrorType.BadRequest | ErrorType.NotFound | ErrorType.NotAuthorized | ErrorType.Generic
   >;
+
+  acquireAdvisoryLock(
+    name: string,
+    options: AdvisoryLockOptions
+  ): PromiseResult<
+    AdvisoryLockPayload,
+    ErrorType.BadRequest | ErrorType.Conflict | ErrorType.Generic
+  >;
+
+  renewAdvisoryLock(
+    name: string,
+    handle: number
+  ): PromiseResult<AdvisoryLockPayload, ErrorType.NotFound | ErrorType.Generic>;
+
+  releaseAdvisoryLock(
+    name: string,
+    handle: number
+  ): PromiseResult<void, ErrorType.NotFound | ErrorType.Generic>;
 }
 
 export enum AdminClientOperationName {
+  acquireAdvisoryLock = 'acquireAdvisoryLock',
   archiveEntity = 'archiveEntity',
   createEntity = 'createEntity',
   getEntities = 'getEntities',
@@ -180,6 +201,8 @@ export enum AdminClientOperationName {
   getSchemaSpecification = 'getSchemaSpecification',
   getTotalCount = 'getTotalCount',
   publishEntities = 'publishEntities',
+  releaseAdvisoryLock = 'releaseAdvisoryLock',
+  renewAdvisoryLock = 'renewAdvisoryLock',
   sampleEntities = 'sampleEntities',
   searchEntities = 'searchEntities',
   unarchiveEntity = 'unarchiveEntity',
@@ -205,6 +228,7 @@ type MethodReturnTypeError<T extends keyof AdminClient> = ErrorFromPromiseResult
 >;
 
 interface AdminClientOperationArguments {
+  [AdminClientOperationName.acquireAdvisoryLock]: MethodParameters<'acquireAdvisoryLock'>;
   [AdminClientOperationName.archiveEntity]: MethodParameters<'archiveEntity'>;
   [AdminClientOperationName.createEntity]: MethodParameters<'createEntity'>;
   [AdminClientOperationName.getEntities]: MethodParameters<'getEntities'>;
@@ -214,6 +238,8 @@ interface AdminClientOperationArguments {
   [AdminClientOperationName.getSchemaSpecification]: MethodParameters<'getSchemaSpecification'>;
   [AdminClientOperationName.getTotalCount]: MethodParameters<'getTotalCount'>;
   [AdminClientOperationName.publishEntities]: MethodParameters<'publishEntities'>;
+  [AdminClientOperationName.releaseAdvisoryLock]: MethodParameters<'releaseAdvisoryLock'>;
+  [AdminClientOperationName.renewAdvisoryLock]: MethodParameters<'renewAdvisoryLock'>;
   [AdminClientOperationName.sampleEntities]: MethodParameters<'sampleEntities'>;
   [AdminClientOperationName.searchEntities]: MethodParameters<'searchEntities'>;
   [AdminClientOperationName.unarchiveEntity]: MethodParameters<'unarchiveEntity'>;
@@ -224,6 +250,7 @@ interface AdminClientOperationArguments {
 }
 
 interface AdminClientOperationReturnOk {
+  [AdminClientOperationName.acquireAdvisoryLock]: MethodReturnTypeOk<'acquireAdvisoryLock'>;
   [AdminClientOperationName.archiveEntity]: MethodReturnTypeOk<'archiveEntity'>;
   [AdminClientOperationName.createEntity]: MethodReturnTypeOk<'createEntity'>;
   [AdminClientOperationName.getEntities]: MethodReturnTypeOk<'getEntities'>;
@@ -233,6 +260,8 @@ interface AdminClientOperationReturnOk {
   [AdminClientOperationName.getSchemaSpecification]: MethodReturnTypeOk<'getSchemaSpecification'>;
   [AdminClientOperationName.getTotalCount]: MethodReturnTypeOk<'getTotalCount'>;
   [AdminClientOperationName.publishEntities]: MethodReturnTypeOk<'publishEntities'>;
+  [AdminClientOperationName.releaseAdvisoryLock]: MethodReturnTypeOk<'releaseAdvisoryLock'>;
+  [AdminClientOperationName.renewAdvisoryLock]: MethodReturnTypeOk<'renewAdvisoryLock'>;
   [AdminClientOperationName.sampleEntities]: MethodReturnTypeOk<'sampleEntities'>;
   [AdminClientOperationName.searchEntities]: MethodReturnTypeOk<'searchEntities'>;
   [AdminClientOperationName.unarchiveEntity]: MethodReturnTypeOk<'unarchiveEntity'>;
@@ -243,6 +272,7 @@ interface AdminClientOperationReturnOk {
 }
 
 interface AdminClientOperationReturnError {
+  [AdminClientOperationName.acquireAdvisoryLock]: MethodReturnTypeError<'acquireAdvisoryLock'>;
   [AdminClientOperationName.archiveEntity]: MethodReturnTypeError<'archiveEntity'>;
   [AdminClientOperationName.createEntity]: MethodReturnTypeError<'createEntity'>;
   [AdminClientOperationName.getEntities]: MethodReturnTypeError<'getEntities'>;
@@ -252,6 +282,8 @@ interface AdminClientOperationReturnError {
   [AdminClientOperationName.getSchemaSpecification]: MethodReturnTypeError<'getSchemaSpecification'>;
   [AdminClientOperationName.getTotalCount]: MethodReturnTypeError<'getTotalCount'>;
   [AdminClientOperationName.publishEntities]: MethodReturnTypeError<'publishEntities'>;
+  [AdminClientOperationName.releaseAdvisoryLock]: MethodReturnTypeError<'releaseAdvisoryLock'>;
+  [AdminClientOperationName.renewAdvisoryLock]: MethodReturnTypeError<'renewAdvisoryLock'>;
   [AdminClientOperationName.sampleEntities]: MethodReturnTypeError<'sampleEntities'>;
   [AdminClientOperationName.searchEntities]: MethodReturnTypeError<'searchEntities'>;
   [AdminClientOperationName.unarchiveEntity]: MethodReturnTypeError<'unarchiveEntity'>;
@@ -458,6 +490,42 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
     });
   }
 
+  acquireAdvisoryLock(
+    name: string,
+    options: AdvisoryLockOptions
+  ): PromiseResult<
+    AdvisoryLockPayload,
+    ErrorType.BadRequest | ErrorType.Conflict | ErrorType.Generic
+  > {
+    return this.executeOperation({
+      name: AdminClientOperationName.acquireAdvisoryLock,
+      args: [name, options],
+      modifies: true,
+    });
+  }
+
+  renewAdvisoryLock(
+    name: string,
+    handle: number
+  ): PromiseResult<AdvisoryLockPayload, ErrorType.NotFound | ErrorType.Generic> {
+    return this.executeOperation({
+      name: AdminClientOperationName.renewAdvisoryLock,
+      args: [name, handle],
+      modifies: true,
+    });
+  }
+
+  releaseAdvisoryLock(
+    name: string,
+    handle: number
+  ): PromiseResult<void, ErrorType.NotFound | ErrorType.Generic> {
+    return this.executeOperation({
+      name: AdminClientOperationName.releaseAdvisoryLock,
+      args: [name, handle],
+      modifies: true,
+    });
+  }
+
   private async executeOperation<TName extends AdminClientOperationName>(
     operation: OperationWithoutCallbacks<AdminClientOperation<TName>>
   ): PromiseResult<AdminClientOperationReturnOk[TName], AdminClientOperationReturnError[TName]> {
@@ -492,6 +560,7 @@ export function convertAdminClientOperationToJson(
 ): AdminClientJsonOperation {
   const { args } = operation;
   switch (operation.name) {
+    case AdminClientOperationName.acquireAdvisoryLock:
     case AdminClientOperationName.archiveEntity:
     case AdminClientOperationName.createEntity:
     case AdminClientOperationName.getEntities:
@@ -501,6 +570,8 @@ export function convertAdminClientOperationToJson(
     case AdminClientOperationName.getSchemaSpecification:
     case AdminClientOperationName.getTotalCount:
     case AdminClientOperationName.publishEntities:
+    case AdminClientOperationName.releaseAdvisoryLock:
+    case AdminClientOperationName.renewAdvisoryLock:
     case AdminClientOperationName.sampleEntities:
     case AdminClientOperationName.searchEntities:
     case AdminClientOperationName.unarchiveEntity:
@@ -521,6 +592,11 @@ export async function executeAdminClientOperationFromJson<TName extends AdminCli
   operation: AdminClientJsonOperation
 ): PromiseResult<unknown, ErrorType> {
   switch (operationName) {
+    case AdminClientOperationName.acquireAdvisoryLock: {
+      const [name, options] =
+        operation as AdminClientOperationArguments[AdminClientOperationName.acquireAdvisoryLock];
+      return await adminClient.acquireAdvisoryLock(name, options);
+    }
     case AdminClientOperationName.archiveEntity: {
       const [reference] =
         operation as AdminClientOperationArguments[AdminClientOperationName.archiveEntity];
@@ -563,6 +639,16 @@ export async function executeAdminClientOperationFromJson<TName extends AdminCli
       const [references] =
         operation as AdminClientOperationArguments[AdminClientOperationName.publishEntities];
       return await adminClient.publishEntities(references);
+    }
+    case AdminClientOperationName.releaseAdvisoryLock: {
+      const [name, handle] =
+        operation as AdminClientOperationArguments[AdminClientOperationName.releaseAdvisoryLock];
+      return await adminClient.releaseAdvisoryLock(name, handle);
+    }
+    case AdminClientOperationName.renewAdvisoryLock: {
+      const [name, handle] =
+        operation as AdminClientOperationArguments[AdminClientOperationName.renewAdvisoryLock];
+      return await adminClient.renewAdvisoryLock(name, handle);
     }
     case AdminClientOperationName.sampleEntities: {
       const [query, options] =
@@ -614,6 +700,11 @@ export function convertJsonAdminClientResult<TName extends AdminClientOperationN
   }
   const { value } = jsonResult;
   switch (operationName) {
+    case AdminClientOperationName.acquireAdvisoryLock: {
+      const result: MethodReturnTypeWithoutPromise<AdminClientOperationName.acquireAdvisoryLock> =
+        ok(value as AdvisoryLockPayload);
+      return result as MethodReturnTypeWithoutPromise<TName>;
+    }
     case AdminClientOperationName.archiveEntity: {
       const result: MethodReturnTypeWithoutPromise<AdminClientOperationName.archiveEntity> = ok(
         convertJsonPublishingResult(
@@ -668,6 +759,17 @@ export function convertJsonAdminClientResult<TName extends AdminClientOperationN
     }
     case AdminClientOperationName.getTotalCount:
       return ok(value) as MethodReturnTypeWithoutPromise<TName>;
+    case AdminClientOperationName.releaseAdvisoryLock: {
+      const result: MethodReturnTypeWithoutPromise<AdminClientOperationName.releaseAdvisoryLock> =
+        ok(value as undefined);
+      return result as MethodReturnTypeWithoutPromise<TName>;
+    }
+    case AdminClientOperationName.renewAdvisoryLock: {
+      const result: MethodReturnTypeWithoutPromise<AdminClientOperationName.renewAdvisoryLock> = ok(
+        value as AdvisoryLockPayload
+      );
+      return result as MethodReturnTypeWithoutPromise<TName>;
+    }
     case AdminClientOperationName.sampleEntities: {
       const payload = value as EntitySamplingPayload<JsonAdminEntity>;
       const result: MethodReturnTypeWithoutPromise<AdminClientOperationName.sampleEntities> = ok({

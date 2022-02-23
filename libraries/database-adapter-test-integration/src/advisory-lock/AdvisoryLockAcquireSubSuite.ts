@@ -1,0 +1,40 @@
+import { ErrorType } from '@jonasb/datadata-core';
+import { assertEquals, assertErrorResult, assertOkResult } from '../Asserts';
+import type { UnboundTestFunction } from '../Builder';
+import { adminClientForMainPrincipal } from '../shared-entity/TestClients';
+import type { AdvisoryLockTestContext } from './AdvisoryLockTestSuite';
+
+export const AdvisoryLockAcquireSubSuite: UnboundTestFunction<AdvisoryLockTestContext>[] = [
+  acquireLock_minimal,
+  acquireLock_errorConflictIfAlreadyAcquired,
+];
+
+async function acquireLock_minimal({ server }: AdvisoryLockTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const result = await adminClient.acquireAdvisoryLock('acquireLock_minimal', { leaseDuration: 1 });
+  assertOkResult(result);
+  const { name, handle } = result.value;
+  assertEquals(name, 'acquireLock_minimal');
+  assertEquals(typeof handle, 'number');
+  // assertTruthy(acquiredAt instanceof Temporal.Instant);
+  // assertEquals(acquiredAt, renewedAt);
+}
+
+async function acquireLock_errorConflictIfAlreadyAcquired({ server }: AdvisoryLockTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const firstResult = await adminClient.acquireAdvisoryLock(
+    'acquireLock_errorConflictIfAlreadyAcquired',
+    { leaseDuration: 500 }
+  );
+  assertOkResult(firstResult);
+
+  const secondResult = await adminClient.acquireAdvisoryLock(
+    'acquireLock_errorConflictIfAlreadyAcquired',
+    { leaseDuration: 500 }
+  );
+  assertErrorResult(
+    secondResult,
+    ErrorType.Conflict,
+    'Lock with name acquireLock_errorConflictIfAlreadyAcquired already exists'
+  );
+}

@@ -26,6 +26,9 @@ import { adminUnarchiveEntity } from './admin-entity/adminUnarchiveEntity';
 import { adminUnpublishEntities } from './admin-entity/adminUnpublishEntities';
 import { adminUpdateEntity } from './admin-entity/adminUpdateEntity';
 import { adminUpsertEntity } from './admin-entity/adminUpsertEntity';
+import { acquireAdvisoryLock } from './advisory-lock/acquireAdvisoryLock';
+import { releaseAdvisoryLock } from './advisory-lock/releaseAdvisoryLock';
+import { renewAdvisoryLock } from './advisory-lock/renewAdvisoryLock';
 import { updateSchemaSpecification } from './Schema';
 import type { ServerImpl } from './Server';
 
@@ -47,6 +50,14 @@ export function createServerAdminClient({
     operation: AdminClientOperation
   ): Promise<void> {
     switch (operation.name) {
+      case AdminClientOperationName.acquireAdvisoryLock: {
+        const {
+          args: [name, options],
+          resolve,
+        } = operation as AdminClientOperation<AdminClientOperationName.acquireAdvisoryLock>;
+        resolve(await acquireAdvisoryLock(databaseAdapter, context, name, options));
+        break;
+      }
       case AdminClientOperationName.archiveEntity: {
         const {
           args: [reference],
@@ -163,6 +174,22 @@ export function createServerAdminClient({
             references
           )
         );
+        break;
+      }
+      case AdminClientOperationName.releaseAdvisoryLock: {
+        const {
+          args: [name, handle],
+          resolve,
+        } = operation as AdminClientOperation<AdminClientOperationName.releaseAdvisoryLock>;
+        resolve(await releaseAdvisoryLock(databaseAdapter, context, name, handle));
+        break;
+      }
+      case AdminClientOperationName.renewAdvisoryLock: {
+        const {
+          args: [name, handle],
+          resolve,
+        } = operation as AdminClientOperation<AdminClientOperationName.renewAdvisoryLock>;
+        resolve(await renewAdvisoryLock(databaseAdapter, context, name, handle));
         break;
       }
       case AdminClientOperationName.sampleEntities: {
