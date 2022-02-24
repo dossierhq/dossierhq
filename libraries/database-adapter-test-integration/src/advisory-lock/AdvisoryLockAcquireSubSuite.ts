@@ -16,8 +16,6 @@ async function acquireLock_minimal({ server }: AdvisoryLockTestContext) {
   const { name, handle } = result.value;
   assertEquals(name, 'acquireLock_minimal');
   assertEquals(typeof handle, 'number');
-  // assertTruthy(acquiredAt instanceof Temporal.Instant);
-  // assertEquals(acquiredAt, renewedAt);
 }
 
 async function acquireLock_errorConflictIfAlreadyAcquired({ server }: AdvisoryLockTestContext) {
