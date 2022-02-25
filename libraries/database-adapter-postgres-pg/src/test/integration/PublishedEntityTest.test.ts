@@ -31,10 +31,11 @@ registerTestSuite(
         identifier: 'id',
         defaultAuthKeys: ['none'],
       });
-      if (sessionResult.isError()) throw sessionResult.toError();
-      const { context } = sessionResult.value;
+      const { context } = sessionResult.valueOrThrow();
 
-      const readOnlyEntityRepository = await createReadOnlyEntityRepository(server);
+      const readOnlyEntityRepository = (
+        await createReadOnlyEntityRepository(server)
+      ).valueOrThrow();
       //TODO remove clients
       const adminClient = server.createAdminClient(context);
       const publishedClient = server.createPublishedClient(context);

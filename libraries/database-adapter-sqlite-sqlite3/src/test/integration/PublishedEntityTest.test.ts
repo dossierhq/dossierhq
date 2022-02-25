@@ -12,12 +12,11 @@ let server: Server | null = null;
 let readOnlyEntityRepository: ReadOnlyEntityRepository;
 
 beforeAll(async () => {
-  const result = await initializeSqlite3Server(
-    'databases/integration-test-published-entity.sqlite'
-  );
-  if (result.isError()) throw result.toError();
-  server = result.value;
-  readOnlyEntityRepository = await createReadOnlyEntityRepository(server);
+  server = (
+    await initializeSqlite3Server('databases/integration-test-published-entity.sqlite')
+  ).valueOrThrow();
+
+  readOnlyEntityRepository = (await createReadOnlyEntityRepository(server)).valueOrThrow();
 });
 afterAll(async () => {
   if (server) {

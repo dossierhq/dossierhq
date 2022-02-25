@@ -69,25 +69,30 @@ export class ReadOnlyEntityRepository {
   }
 }
 
-let createEntitiesPromise: Promise<ReadOnlyEntityRepository> | null = null;
+let createEntitiesPromise: PromiseResult<
+  ReadOnlyEntityRepository,
+  ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic
+> | null = null;
 
 export async function createReadOnlyEntityRepository(
   server: Server
-): Promise<ReadOnlyEntityRepository> {
+): PromiseResult<
+  ReadOnlyEntityRepository,
+  ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic
+> {
+  // Wrap in a promise to use the same result for all instances running in the same process
   if (!createEntitiesPromise) {
-    createEntitiesPromise = (async (): Promise<ReadOnlyEntityRepository> => {
-      const result = await doCreateReadOnlyEntityRepository(server);
-      if (result.isError()) throw result.toError();
-
-      return result.value;
-    })();
+    createEntitiesPromise = doCreateReadOnlyEntityRepository(server);
   }
   return createEntitiesPromise;
 }
 
 async function doCreateReadOnlyEntityRepository(
   server: Server
-): PromiseResult<ReadOnlyEntityRepository, ErrorType> {
+): PromiseResult<
+  ReadOnlyEntityRepository,
+  ErrorType.BadRequest | ErrorType.NotFound | ErrorType.Generic
+> {
   const adminClientMain = adminClientForMainPrincipal(server);
   const adminClientSecondary = adminClientForSecondaryPrincipal(server);
 
