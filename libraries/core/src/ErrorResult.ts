@@ -49,6 +49,10 @@ export class OkResult<TOk, TError extends ErrorType> {
     // do nothing
   }
 
+  valueOrThrow(): TOk {
+    return this.value;
+  }
+
   map<TNewOk, TNewError extends ErrorType>(
     mapper: (value: TOk) => TNewOk
   ): Result<TNewOk, TNewError> {
@@ -78,6 +82,10 @@ export class ErrorResult<TOk, TError extends ErrorType> {
   }
 
   throwIfError(): never {
+    throw new ErrorResultError(this);
+  }
+
+  valueOrThrow(): never {
     throw new ErrorResultError(this);
   }
 
