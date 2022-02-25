@@ -2,7 +2,6 @@ import type {
   AdminClient,
   AdminEntity,
   AdminEntityUpsert,
-  AdvisoryLockPayload,
   PromiseResult,
   PublishedEntity,
   Result,
@@ -14,6 +13,7 @@ import {
   ErrorType,
   notOk,
   ok,
+  withAdvisoryLock,
 } from '@jonasb/datadata-core';
 import type { Server } from '@jonasb/datadata-server';
 import { v5 as uuidv5 } from 'uuid';
@@ -79,14 +79,26 @@ export async function createReadOnlyEntityRepository(
 ): Promise<ReadOnlyEntityRepository> {
   if (!createEntitiesPromise) {
     createEntitiesPromise = (async (): Promise<ReadOnlyEntityRepository> => {
-      const adminClientMain = adminClientForMainPrincipal(server);
-      const adminClientSecondary = adminClientForSecondaryPrincipal(server);
+      const result = await doCreateReadOnlyEntityRepository(server);
+      if (result.isError()) throw result.toError();
 
-      const lock = await acquireLock(adminClientMain);
+      return result.value;
+    })();
+  }
+  return createEntitiesPromise;
+}
 
-      const mainEntities: AdminEntity[] = [];
-      const secondaryEntities: AdminEntity[] = [];
+async function doCreateReadOnlyEntityRepository(
+  server: Server
+): PromiseResult<ReadOnlyEntityRepository, ErrorType> {
+  const adminClientMain = adminClientForMainPrincipal(server);
+  const adminClientSecondary = adminClientForSecondaryPrincipal(server);
 
+  return await withAdvisoryLock(
+    adminClientMain,
+    ADVISORY_LOCK_NAME,
+    { acquireInterval: 500, leaseDuration: 2_000, renewInterval: 2_000 - 200 },
+    async (advisoryLock) => {
       // Decide configurations for the entities
       const entityConfigs: {
         principal: 'main' | 'secondary';
@@ -104,7 +116,13 @@ export async function createReadOnlyEntityRepository(
         }
       }
 
+      const mainEntities: AdminEntity[] = [];
+      const secondaryEntities: AdminEntity[] = [];
+
       for (const { principal, authKey, status, index } of entityConfigs) {
+        if (!advisoryLock.active) {
+          return advisoryLock.renewError;
+        }
         const adminClient = principal === 'main' ? adminClientMain : adminClientSecondary;
         const id = uuidv5(`${principal}-${authKey}-${status}-${index}`, UUID_NAMESPACE);
         const result = await createEntityRetry(adminClient, id, authKey, status);
@@ -112,37 +130,9 @@ export async function createReadOnlyEntityRepository(
         (principal === 'main' ? mainEntities : secondaryEntities).push(result.value);
       }
 
-      await releaseLock(adminClientMain, lock);
-
-      return new ReadOnlyEntityRepository(mainEntities, secondaryEntities);
-    })();
-  }
-  return createEntitiesPromise;
-}
-
-async function acquireLock(adminClient: AdminClient) {
-  //TODO add helper to core
-  // eslint-disable-next-line no-constant-condition
-  while (true) {
-    const result = await adminClient.acquireAdvisoryLock(ADVISORY_LOCK_NAME, {
-      leaseDuration: 30_000,
-    });
-    if (result.isOk()) {
-      return result.value;
+      return ok(new ReadOnlyEntityRepository(mainEntities, secondaryEntities));
     }
-    if (result.isErrorType(ErrorType.Conflict)) {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      await new Promise((resolve) => setTimeout(resolve, 5000));
-      continue;
-    }
-    assertOkResult(result);
-  }
-}
-
-async function releaseLock(adminClient: AdminClient, lock: AdvisoryLockPayload) {
-  const result = await adminClient.releaseAdvisoryLock(lock.name, lock.handle);
-  assertOkResult(result);
+  );
 }
 
 async function createEntityRetry(

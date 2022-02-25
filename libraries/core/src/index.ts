@@ -11,6 +11,7 @@ export type {
   AdminClientMiddleware,
   AdminClientOperation,
 } from './AdminClient';
+export { withAdvisoryLock } from './AdvisoryLockUtils';
 export { assertExhaustive, assertIsDefined } from './Asserts';
 export {
   createErrorResult,
