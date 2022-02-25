@@ -2,16 +2,14 @@ import type {
   AdminClient,
   AdminEntity,
   AdminEntityUpsert,
+  ErrorType,
   PromiseResult,
   PublishedEntity,
-  Result,
 } from '@jonasb/datadata-core';
 import {
   AdminEntityStatus,
   assertExhaustive,
   copyEntity,
-  ErrorType,
-  notOk,
   ok,
   withAdvisoryLock,
 } from '@jonasb/datadata-core';
@@ -22,7 +20,6 @@ import { adminClientForMainPrincipal, adminClientForSecondaryPrincipal } from '.
 
 const UUID_NAMESPACE = '10db07d4-3666-48e9-8080-12db0365ab81';
 const ENTITIES_PER_CATEGORY = 5;
-const MAX_RETRY_COUNT = 3;
 const ADVISORY_LOCK_NAME = 'integration-test-read-only-entities';
 
 const READONLY_UPSERT: AdminEntityUpsert = {
@@ -125,7 +122,7 @@ async function doCreateReadOnlyEntityRepository(
         }
         const adminClient = principal === 'main' ? adminClientMain : adminClientSecondary;
         const id = uuidv5(`${principal}-${authKey}-${status}-${index}`, UUID_NAMESPACE);
-        const result = await createEntityRetry(adminClient, id, authKey, status);
+        const result = await createEntity(adminClient, id, authKey, status);
         assertOkResult(result);
         (principal === 'main' ? mainEntities : secondaryEntities).push(result.value);
       }
@@ -133,36 +130,6 @@ async function doCreateReadOnlyEntityRepository(
       return ok(new ReadOnlyEntityRepository(mainEntities, secondaryEntities));
     }
   );
-}
-
-async function createEntityRetry(
-  adminClient: AdminClient,
-  id: string,
-  authKey: string,
-  status: AdminEntityStatus
-): PromiseResult<
-  AdminEntity,
-  ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.NotFound | ErrorType.Generic
-> {
-  let result: Result<
-    AdminEntity,
-    ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.NotFound | ErrorType.Generic
-  >;
-  const newLocal = true;
-  for (let retry = 0; newLocal; retry++) {
-    result = await createEntity(adminClient, id, authKey, status);
-    if (result.isOk()) {
-      return result;
-    }
-    if (!result.isErrorType(ErrorType.Generic)) {
-      return result;
-    }
-    // Could fail with deadlock if multiple instances try to create the same entity at the same time
-    if (retry === MAX_RETRY_COUNT) {
-      return result;
-    }
-  }
-  return notOk.Generic('Should not happen');
 }
 
 async function createEntity(
