@@ -17,6 +17,7 @@ import type {
   AdminSearchQuery,
   AdvisoryLockOptions,
   AdvisoryLockPayload,
+  AdvisoryLockReleasePayload,
   Connection,
   Edge,
   EntityHistory,
@@ -187,7 +188,7 @@ export interface AdminClient {
   releaseAdvisoryLock(
     name: string,
     handle: number
-  ): PromiseResult<void, ErrorType.NotFound | ErrorType.Generic>;
+  ): PromiseResult<AdvisoryLockReleasePayload, ErrorType.NotFound | ErrorType.Generic>;
 }
 
 export enum AdminClientOperationName {
@@ -518,7 +519,7 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
   releaseAdvisoryLock(
     name: string,
     handle: number
-  ): PromiseResult<void, ErrorType.NotFound | ErrorType.Generic> {
+  ): PromiseResult<AdvisoryLockReleasePayload, ErrorType.NotFound | ErrorType.Generic> {
     return this.executeOperation({
       name: AdminClientOperationName.releaseAdvisoryLock,
       args: [name, handle],
@@ -761,7 +762,7 @@ export function convertJsonAdminClientResult<TName extends AdminClientOperationN
       return ok(value) as MethodReturnTypeWithoutPromise<TName>;
     case AdminClientOperationName.releaseAdvisoryLock: {
       const result: MethodReturnTypeWithoutPromise<AdminClientOperationName.releaseAdvisoryLock> =
-        ok(value as undefined);
+        ok(value as AdvisoryLockReleasePayload);
       return result as MethodReturnTypeWithoutPromise<TName>;
     }
     case AdminClientOperationName.renewAdvisoryLock: {

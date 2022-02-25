@@ -129,6 +129,7 @@ export type {
   AdminSearchQuery,
   AdvisoryLockOptions,
   AdvisoryLockPayload,
+  AdvisoryLockReleasePayload,
   BoundingBox,
   Connection,
   Edge,

@@ -288,3 +288,7 @@ export interface AdvisoryLockPayload {
   name: string;
   handle: number;
 }
+
+export interface AdvisoryLockReleasePayload {
+  name: string;
+}
