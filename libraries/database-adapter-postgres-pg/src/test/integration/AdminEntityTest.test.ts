@@ -11,12 +11,9 @@ let server: Server | null = null;
 let readOnlyEntityRepository: ReadOnlyEntityRepository;
 
 beforeAll(async () => {
-  const result = await initializeIntegrationTestServer();
-  if (result.isError()) {
-    throw result.toError();
-  }
-  server = result.value;
-  readOnlyEntityRepository = await createReadOnlyEntityRepository(server);
+  const serverResult = await initializeIntegrationTestServer();
+  server = serverResult.valueOrThrow();
+  readOnlyEntityRepository = (await createReadOnlyEntityRepository(server)).valueOrThrow();
 });
 afterAll(async () => {
   if (server) {

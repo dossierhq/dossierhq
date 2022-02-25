@@ -10,20 +10,17 @@ import {
 
 registerTestSuite(createPublishedEntityTestSuite({
   before: async () => {
-    const serverResult = await initializeIntegrationTestServer();
-    if (serverResult.isError()) throw serverResult.toError();
-    const server = serverResult.value;
+    const server = (await initializeIntegrationTestServer()).valueOrThrow();
     const sessionResult = await server.createSession({
       provider: "test",
       identifier: "id",
       defaultAuthKeys: ["none"],
     });
-    if (sessionResult.isError()) throw sessionResult.toError();
-    const { context } = sessionResult.value;
+    const { context } = sessionResult.valueOrThrow();
 
-    const readOnlyEntityRepository = await createReadOnlyEntityRepository(
+    const readOnlyEntityRepository = (await createReadOnlyEntityRepository(
       server,
-    );
+    )).valueOrThrow();
 
     const adminClient = server.createAdminClient(context);
     const publishedClient = server.createPublishedClient(context);

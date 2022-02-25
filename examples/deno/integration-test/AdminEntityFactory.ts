@@ -13,11 +13,7 @@ export function registerAdminEntityTestSuite(
 ) {
   const testSuite = createAdminEntityTestSuite({
     before: async () => {
-      const serverResult = await initializeIntegrationTestServer();
-      if (serverResult.isError()) {
-        throw serverResult.toError();
-      }
-      const server = serverResult.value;
+      const server = (await initializeIntegrationTestServer()).valueOrThrow();
       const client = server.createAdminClient(() =>
         server.createSession({
           provider: "test",
@@ -26,9 +22,9 @@ export function registerAdminEntityTestSuite(
         })
       );
 
-      const readOnlyEntityRepository = await createReadOnlyEntityRepository(
+      const readOnlyEntityRepository = (await createReadOnlyEntityRepository(
         server,
-      );
+      )).valueOrThrow();
 
       //TODO remove client
       return [{ server, client, readOnlyEntityRepository }, { server }];
