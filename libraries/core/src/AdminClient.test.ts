@@ -84,6 +84,50 @@ function createDummyEntity(changes: Parameters<typeof copyEntity>[1]): AdminEnti
 }
 
 describe('AdminClient forward operation over JSON', () => {
+  test('acquireAdvisoryLock', async () => {
+    const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
+      { logger: NoOpLogger },
+      AdminClientOperationName.acquireAdvisoryLock,
+      async (_context, operation) => {
+        const [name, _options] = operation.args;
+        operation.resolve(ok({ name, handle: 123 }));
+      }
+    );
+
+    const result = await adminClient.acquireAdvisoryLock('lock-name', { leaseDuration: 100 });
+    expectResultValue(result, {
+      name: 'lock-name',
+      handle: 123,
+    });
+
+    expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
+      Array [
+        Array [
+          Object {
+            "logger": Object {
+              "debug": [Function],
+              "error": [Function],
+              "info": [Function],
+              "warn": [Function],
+            },
+          },
+          Object {
+            "args": Array [
+              "lock-name",
+              Object {
+                "leaseDuration": 100,
+              },
+            ],
+            "modifies": true,
+            "name": "acquireAdvisoryLock",
+            "next": [Function],
+            "resolve": [Function],
+          },
+        ],
+      ]
+    `);
+  });
+
   test('archiveEntity', async () => {
     const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
       { logger: NoOpLogger },
@@ -662,6 +706,84 @@ describe('AdminClient forward operation over JSON', () => {
             ],
             "modifies": true,
             "name": "publishEntities",
+            "next": [Function],
+            "resolve": [Function],
+          },
+        ],
+      ]
+    `);
+  });
+
+  test('releaseAdvisoryLock', async () => {
+    const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
+      { logger: NoOpLogger },
+      AdminClientOperationName.releaseAdvisoryLock,
+      async (_context, operation) => {
+        const [name, _handle] = operation.args;
+        operation.resolve(ok({ name }));
+      }
+    );
+
+    const result = await adminClient.releaseAdvisoryLock('lock-name', 123);
+    expectResultValue(result, { name: 'lock-name' });
+
+    expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
+      Array [
+        Array [
+          Object {
+            "logger": Object {
+              "debug": [Function],
+              "error": [Function],
+              "info": [Function],
+              "warn": [Function],
+            },
+          },
+          Object {
+            "args": Array [
+              "lock-name",
+              123,
+            ],
+            "modifies": true,
+            "name": "releaseAdvisoryLock",
+            "next": [Function],
+            "resolve": [Function],
+          },
+        ],
+      ]
+    `);
+  });
+
+  test('renewAdvisoryLock', async () => {
+    const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
+      { logger: NoOpLogger },
+      AdminClientOperationName.renewAdvisoryLock,
+      async (_context, operation) => {
+        const [name, handle] = operation.args;
+        operation.resolve(ok({ name, handle }));
+      }
+    );
+
+    const result = await adminClient.renewAdvisoryLock('lock-name', 123);
+    expectResultValue(result, { name: 'lock-name', handle: 123 });
+
+    expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
+      Array [
+        Array [
+          Object {
+            "logger": Object {
+              "debug": [Function],
+              "error": [Function],
+              "info": [Function],
+              "warn": [Function],
+            },
+          },
+          Object {
+            "args": Array [
+              "lock-name",
+              123,
+            ],
+            "modifies": true,
+            "name": "renewAdvisoryLock",
             "next": [Function],
             "resolve": [Function],
           },

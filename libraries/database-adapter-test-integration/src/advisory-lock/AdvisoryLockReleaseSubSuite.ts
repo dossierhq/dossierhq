@@ -1,5 +1,5 @@
 import { ErrorType } from '@jonasb/datadata-core';
-import { assertErrorResult, assertOkResult } from '../Asserts';
+import { assertErrorResult, assertOkResult, assertResultValue } from '../Asserts';
 import type { UnboundTestFunction } from '../Builder';
 import { adminClientForMainPrincipal } from '../shared-entity/TestClients';
 import type { AdvisoryLockTestContext } from './AdvisoryLockTestSuite';
@@ -20,7 +20,7 @@ async function releaseLock_minimal({ server }: AdvisoryLockTestContext) {
   const { name, handle } = acquireResult.value;
 
   const releaseResult = await adminClient.releaseAdvisoryLock(name, handle);
-  assertOkResult(releaseResult);
+  assertResultValue(releaseResult, { name });
 
   const acquireAgainResult = await adminClient.acquireAdvisoryLock('releaseLock_minimal', {
     leaseDuration: 1,
