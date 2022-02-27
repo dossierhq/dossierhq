@@ -18,9 +18,12 @@ export const GetTotalCountSubSuite: UnboundTestFunction<AdminEntityTestContext>[
   getTotalCount_statusDraftArchived,
   getTotalCount_statusModifiedPublished,
   getTotalCount_statusAll,
-  getTotalCount_referenceOneReference,
-  getTotalCount_referenceNoReferences,
-  getTotalCount_referenceTwoReferencesFromOneEntity,
+  getTotalCount_linksToOneReference,
+  getTotalCount_linksToNoReferences,
+  getTotalCount_linksToTwoReferencesFromOneEntity,
+  getTotalCount_linksFromOneReference,
+  getTotalCount_linksFromNoReferences,
+  getTotalCount_linksFromTwoReferencesFromOneEntity,
   getTotalCount_boundingBoxOneInside,
 ];
 
@@ -177,7 +180,7 @@ async function getTotalCount_statusAll({
   assertResultValue(result, expectedEntities.length);
 }
 
-async function getTotalCount_referenceOneReference({ server }: AdminEntityTestContext) {
+async function getTotalCount_linksToOneReference({ server }: AdminEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
   const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(titleOnlyResult);
@@ -194,7 +197,7 @@ async function getTotalCount_referenceOneReference({ server }: AdminEntityTestCo
   assertResultValue(totalResult, 1);
 }
 
-async function getTotalCount_referenceNoReferences({ server }: AdminEntityTestContext) {
+async function getTotalCount_linksToNoReferences({ server }: AdminEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
   const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(titleOnlyResult);
@@ -206,9 +209,7 @@ async function getTotalCount_referenceNoReferences({ server }: AdminEntityTestCo
   assertResultValue(totalResult, 0);
 }
 
-async function getTotalCount_referenceTwoReferencesFromOneEntity({
-  server,
-}: AdminEntityTestContext) {
+async function getTotalCount_linksToTwoReferencesFromOneEntity({ server }: AdminEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
   const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(titleOnlyResult);
@@ -224,6 +225,62 @@ async function getTotalCount_referenceTwoReferencesFromOneEntity({
   assertOkResult(referenceResult);
 
   const totalResult = await adminClient.getTotalCount({ linksTo: { id: titleOnlyId } });
+  assertResultValue(totalResult, 1);
+}
+
+async function getTotalCount_linksFromOneReference({ server }: AdminEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
+  assertOkResult(titleOnlyResult);
+  const {
+    entity: { id: titleOnlyId },
+  } = titleOnlyResult.value;
+
+  const referenceResult = await adminClient.createEntity(
+    copyEntity(REFERENCES_CREATE, { fields: { titleOnly: { id: titleOnlyId } } })
+  );
+  assertOkResult(referenceResult);
+  const {
+    entity: { id: referenceId },
+  } = referenceResult.value;
+
+  const totalResult = await adminClient.getTotalCount({ linksFrom: { id: referenceId } });
+  assertResultValue(totalResult, 1);
+}
+
+async function getTotalCount_linksFromNoReferences({ server }: AdminEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const referenceResult = await adminClient.createEntity(REFERENCES_CREATE);
+  assertOkResult(referenceResult);
+  const {
+    entity: { id },
+  } = referenceResult.value;
+
+  const totalResult = await adminClient.getTotalCount({ linksFrom: { id } });
+  assertResultValue(totalResult, 0);
+}
+
+async function getTotalCount_linksFromTwoReferencesFromOneEntity({
+  server,
+}: AdminEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
+  assertOkResult(titleOnlyResult);
+  const {
+    entity: { id: titleOnlyId },
+  } = titleOnlyResult.value;
+
+  const referenceResult = await adminClient.createEntity(
+    copyEntity(REFERENCES_CREATE, {
+      fields: { any: { id: titleOnlyId }, titleOnly: { id: titleOnlyId } },
+    })
+  );
+  assertOkResult(referenceResult);
+  const {
+    entity: { id: referenceId },
+  } = referenceResult.value;
+
+  const totalResult = await adminClient.getTotalCount({ linksFrom: { id: referenceId } });
   assertResultValue(totalResult, 1);
 }
 
