@@ -51,7 +51,7 @@ export const REFERENCES_ADMIN_ENTITY: Readonly<AdminEntity> = {
     createdAt: Temporal.Instant.from('2021-08-17T07:51:25.56Z'),
     updatedAt: Temporal.Instant.from('2021-08-17T07:51:25.56Z'),
   },
-  fields: { any: null, titleOnly: null },
+  fields: { any: null, anyList: null, titleOnly: null },
 };
 
 export const TITLE_ONLY_CREATE: Readonly<AdminEntityCreate> = {

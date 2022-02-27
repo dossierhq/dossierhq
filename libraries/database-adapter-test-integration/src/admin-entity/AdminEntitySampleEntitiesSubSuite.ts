@@ -1,7 +1,13 @@
+import type { BoundingBox } from '@jonasb/datadata-core';
 import { AdminEntityStatus, copyEntity } from '@jonasb/datadata-core';
 import { assertEquals, assertOkResult, assertTruthy } from '../Asserts';
 import type { UnboundTestFunction } from '../Builder';
-import { REFERENCES_CREATE, TITLE_ONLY_CREATE } from '../shared-entity/Fixtures';
+import { LOCATIONS_CREATE, REFERENCES_CREATE, TITLE_ONLY_CREATE } from '../shared-entity/Fixtures';
+import {
+  boundingBoxBelowCenter,
+  boundingBoxCenter,
+  randomBoundingBox,
+} from '../shared-entity/LocationTestUtils';
 import {
   assertSampledEntities,
   assertSampledEntitiesArePartOfExpected,
@@ -26,6 +32,13 @@ export const SampleEntitiesSubSuite: UnboundTestFunction<AdminEntityTestContext>
   sampleEntities_linksFromOneReference,
   sampleEntities_linksFromNoReferences,
   sampleEntities_linksFromTwoReferencesFromOneEntity,
+  sampleEntities_boundingBoxOneInside,
+  sampleEntities_boundingBoxOneEntityTwoLocationsInside,
+  sampleEntities_boundingBoxOneOutside,
+  sampleEntities_boundingBoxWrappingMaxMinLongitude,
+  sampleEntities_textIncludedAfterCreation,
+  sampleEntities_textIncludedAfterUpdate,
+  sampleEntities_textExcludedAfterUpdate,
   sampleEntities_authKeySubject,
   sampleEntities_authKeyNoneAndSubject,
 ];
@@ -326,6 +339,125 @@ async function sampleEntities_linksFromTwoReferencesFromOneEntity({
   assertSampledEntities(sampleResult, 789, [titleOnlyEntity]);
 }
 
+async function sampleEntities_boundingBoxOneInside({ server }: AdminEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const boundingBox = randomBoundingBox();
+
+  const center = boundingBoxCenter(boundingBox);
+  const createResult = await adminClient.createEntity(
+    copyEntity(LOCATIONS_CREATE, { fields: { location: center } })
+  );
+  assertOkResult(createResult);
+  const { entity: locationsEntity } = createResult.value;
+
+  const referenceResult = await adminClient.createEntity(
+    copyEntity(REFERENCES_CREATE, { fields: { anyList: [{ id: locationsEntity.id }] } })
+  );
+  assertOkResult(referenceResult);
+  const {
+    entity: { id: referenceId },
+  } = referenceResult.value;
+
+  const sampleResult = await adminClient.sampleEntities(
+    {
+      boundingBox,
+      linksFrom: { id: referenceId },
+    },
+    { seed: 123 }
+  );
+  assertSampledEntities(sampleResult, 123, [locationsEntity]);
+}
+
+async function sampleEntities_boundingBoxOneEntityTwoLocationsInside({
+  server,
+}: AdminEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const boundingBox = randomBoundingBox();
+  const center = boundingBoxCenter(boundingBox);
+  const inside = boundingBoxBelowCenter(boundingBox);
+  const createResult = await adminClient.createEntity(
+    copyEntity(LOCATIONS_CREATE, { fields: { location: center, locationList: [inside] } })
+  );
+  assertOkResult(createResult);
+  const {
+    entity: { id },
+  } = createResult.value;
+
+  const referenceResult = await adminClient.createEntity(
+    copyEntity(REFERENCES_CREATE, { fields: { anyList: [{ id }] } })
+  );
+  assertOkResult(referenceResult);
+  const {
+    entity: { id: referenceId },
+  } = referenceResult.value;
+
+  const sampleResult = await adminClient.sampleEntities(
+    { boundingBox, linksFrom: { id: referenceId } },
+    { seed: 321 }
+  );
+  assertSampledEntities(sampleResult, 321, [{ id }]);
+}
+
+async function sampleEntities_boundingBoxOneOutside({ server }: AdminEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const boundingBox = randomBoundingBox();
+  const outside = {
+    lat: (boundingBox.minLat + boundingBox.maxLat) / 2,
+    lng: boundingBox.minLng > 0 ? boundingBox.minLng - 1 : boundingBox.maxLng + 1,
+  };
+  const createResult = await adminClient.createEntity(
+    copyEntity(LOCATIONS_CREATE, { fields: { location: outside } })
+  );
+  assertOkResult(createResult);
+  const {
+    entity: { id },
+  } = createResult.value;
+
+  const referenceResult = await adminClient.createEntity(
+    copyEntity(REFERENCES_CREATE, { fields: { anyList: [{ id }] } })
+  );
+  assertOkResult(referenceResult);
+  const {
+    entity: { id: referenceId },
+  } = referenceResult.value;
+
+  const sampleResult = await adminClient.sampleEntities(
+    {
+      boundingBox,
+      linksFrom: { id: referenceId },
+    },
+    { seed: 123 }
+  );
+  assertSampledEntities(sampleResult, 123, []);
+}
+
+async function sampleEntities_boundingBoxWrappingMaxMinLongitude({
+  server,
+}: AdminEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const boundingBox: BoundingBox = { minLat: -50, maxLat: -49, minLng: 179, maxLng: -179 };
+  const center = boundingBoxCenter(boundingBox);
+  const createResult = await adminClient.createEntity(
+    copyEntity(LOCATIONS_CREATE, { fields: { location: center } })
+  );
+  assertOkResult(createResult);
+  const { entity: locationsEntity } = createResult.value;
+
+  const referenceResult = await adminClient.createEntity(
+    copyEntity(REFERENCES_CREATE, { fields: { anyList: [{ id: locationsEntity.id }] } })
+  );
+  assertOkResult(referenceResult);
+  const {
+    entity: { id: referenceId },
+  } = referenceResult.value;
+
+  const sampleResult = await adminClient.sampleEntities(
+    { boundingBox, linksFrom: { id: referenceId } },
+    { seed: 321 }
+  );
+  assertSampledEntities(sampleResult, 321, [locationsEntity]);
+}
+
 async function sampleEntities_authKeySubject({
   server,
   readOnlyEntityRepository,
@@ -336,6 +468,115 @@ async function sampleEntities_authKeySubject({
     authKeys: ['subject'],
   });
   assertSampledEntitiesArePartOfExpected(result, expectedEntities);
+}
+
+async function sampleEntities_textIncludedAfterCreation({ server }: AdminEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const createResult = await adminClient.createEntity(
+    copyEntity(TITLE_ONLY_CREATE, {
+      fields: { title: 'this is a serious title with the best storytelling' },
+    })
+  );
+  assertOkResult(createResult);
+  const { entity: titleOnlyEntity } = createResult.value;
+
+  const referenceResult = await adminClient.createEntity(
+    copyEntity(REFERENCES_CREATE, { fields: { anyList: [{ id: titleOnlyEntity.id }] } })
+  );
+  assertOkResult(referenceResult);
+  const {
+    entity: { id: referenceId },
+  } = referenceResult.value;
+
+  const sampleResult = await adminClient.sampleEntities(
+    { text: 'serious storytelling', linksFrom: { id: referenceId } },
+    { seed: 111 }
+  );
+  assertSampledEntities(sampleResult, 111, [titleOnlyEntity]);
+}
+
+async function sampleEntities_textIncludedAfterUpdate({ server }: AdminEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const createResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
+  assertOkResult(createResult);
+  const {
+    entity: { id },
+  } = createResult.value;
+
+  const referenceResult = await adminClient.createEntity(
+    copyEntity(REFERENCES_CREATE, { fields: { anyList: [{ id }] } })
+  );
+  assertOkResult(referenceResult);
+  const {
+    entity: { id: referenceId },
+  } = referenceResult.value;
+
+  assertSampledEntities(
+    await adminClient.sampleEntities(
+      { text: 'lightning strikes', linksFrom: { id: referenceId } },
+      { seed: 123 }
+    ),
+    123,
+    []
+  );
+
+  const updateResult = await adminClient.updateEntity({
+    id,
+    fields: { title: 'the lightning only strikes once' },
+  });
+  assertOkResult(updateResult);
+
+  assertSampledEntities(
+    await adminClient.sampleEntities(
+      { text: 'lightning strikes', linksFrom: { id: referenceId } },
+      { seed: 123 }
+    ),
+    123,
+    [{ id }]
+  );
+}
+
+async function sampleEntities_textExcludedAfterUpdate({ server }: AdminEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const createResult = await adminClient.createEntity(
+    copyEntity(TITLE_ONLY_CREATE, { fields: { title: "who's eating? It is the bear" } })
+  );
+  assertOkResult(createResult);
+  const {
+    entity: { id },
+  } = createResult.value;
+
+  const referenceResult = await adminClient.createEntity(
+    copyEntity(REFERENCES_CREATE, { fields: { anyList: [{ id }] } })
+  );
+  assertOkResult(referenceResult);
+  const {
+    entity: { id: referenceId },
+  } = referenceResult.value;
+
+  assertSampledEntities(
+    await adminClient.sampleEntities(
+      { text: 'bear eating', linksFrom: { id: referenceId } },
+      { seed: 123 }
+    ),
+    123,
+    [{ id }]
+  );
+
+  const updateResult = await adminClient.updateEntity({
+    id,
+    fields: { title: 'Random title' },
+  });
+  assertOkResult(updateResult);
+
+  assertSampledEntities(
+    await adminClient.sampleEntities(
+      { text: 'bear eating', linksFrom: { id: referenceId } },
+      { seed: 123 }
+    ),
+    123,
+    []
+  );
 }
 
 async function sampleEntities_authKeyNoneAndSubject({

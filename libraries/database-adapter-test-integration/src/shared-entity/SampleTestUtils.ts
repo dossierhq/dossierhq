@@ -1,5 +1,6 @@
 import type {
   AdminEntity,
+  EntityReference,
   EntitySamplingPayload,
   ErrorType,
   PublishedEntity,
@@ -24,8 +25,10 @@ export function countEntityStatuses(entities: AdminEntity[]): Record<AdminEntity
   return result;
 }
 
-export function assertSampledEntities<TEntity extends AdminEntity | PublishedEntity>(
-  actualResult: Result<EntitySamplingPayload<TEntity>, ErrorType>,
+export function assertSampledEntities<
+  TEntity extends AdminEntity | PublishedEntity | EntityReference
+>(
+  actualResult: Result<EntitySamplingPayload<AdminEntity | PublishedEntity>, ErrorType>,
   expectedSeed: number,
   expectedEntities: TEntity[]
 ) {
