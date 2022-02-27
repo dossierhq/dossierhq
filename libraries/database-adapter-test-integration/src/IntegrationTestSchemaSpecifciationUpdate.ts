@@ -17,6 +17,7 @@ export const IntegrationTestSchemaSpecifciationUpdate: AdminSchemaSpecificationU
       name: 'References',
       fields: [
         { name: 'any', type: FieldType.EntityType },
+        { name: 'anyList', type: FieldType.EntityType, list: true },
         { name: 'titleOnly', type: FieldType.EntityType, entityTypes: ['TitleOnly'] },
       ],
     },
