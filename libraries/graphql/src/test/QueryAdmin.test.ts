@@ -1426,6 +1426,38 @@ describe('searchAdminEntities()', () => {
     });
   });
 
+  test('Filter based on linksFrom, one reference', async () => {
+    const { barId, fooEntities } = await createBarWithFooReferences(1);
+    const [fooEntity] = fooEntities;
+
+    const result = await graphql({
+      schema,
+      source: `
+        query QueryReferencing($id: ID!) {
+          adminSearchEntities(query: { linksFrom: { id: $id } }) {
+            edges {
+              node {
+                id
+              }
+            }
+            totalCount
+          }
+        }
+      `,
+      contextValue: createContext(),
+      variableValues: { id: fooEntity.id },
+    });
+
+    expect(result).toEqual({
+      data: {
+        adminSearchEntities: {
+          totalCount: 1,
+          edges: [{ node: { id: barId } }],
+        },
+      },
+    });
+  });
+
   test('Filter based on bounding box', async () => {
     const { adminClient } = server;
     const boundingBox = randomBoundingBox();

@@ -1,8 +1,9 @@
 import { AdminEntityStatus, copyEntity } from '@jonasb/datadata-core';
-import { assertEquals, assertOkResult, assertResultValue, assertTruthy } from '../Asserts';
+import { assertEquals, assertOkResult, assertTruthy } from '../Asserts';
 import type { UnboundTestFunction } from '../Builder';
 import { REFERENCES_CREATE, TITLE_ONLY_CREATE } from '../shared-entity/Fixtures';
 import {
+  assertSampledEntities,
   assertSampledEntitiesArePartOfExpected,
   countEntityStatuses,
 } from '../shared-entity/SampleTestUtils';
@@ -19,9 +20,12 @@ export const SampleEntitiesSubSuite: UnboundTestFunction<AdminEntityTestContext>
   sampleEntities_statusDraftArchived,
   sampleEntities_statusModifiedPublished,
   sampleEntities_statusAll,
-  sampleEntities_referenceOneReference,
-  sampleEntities_referenceNoReferences,
-  sampleEntities_referenceTwoReferencesFromOneEntity,
+  sampleEntities_linksToOneReference,
+  sampleEntities_linksToNoReferences,
+  sampleEntities_linksToTwoReferencesFromOneEntity,
+  sampleEntities_linksFromOneReference,
+  sampleEntities_linksFromNoReferences,
+  sampleEntities_linksFromTwoReferencesFromOneEntity,
   sampleEntities_authKeySubject,
   sampleEntities_authKeyNoneAndSubject,
 ];
@@ -205,7 +209,7 @@ async function sampleEntities_statusAll({ server }: AdminEntityTestContext) {
   assertTruthy(withdrawn > 0);
 }
 
-async function sampleEntities_referenceOneReference({ server }: AdminEntityTestContext) {
+async function sampleEntities_linksToOneReference({ server }: AdminEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
   const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(titleOnlyResult);
@@ -222,14 +226,10 @@ async function sampleEntities_referenceOneReference({ server }: AdminEntityTestC
     { linksTo: { id: titleOnlyId } },
     { seed: 123 }
   );
-  assertResultValue(sampleResult, {
-    seed: 123,
-    totalCount: 1,
-    items: [referenceResult.value.entity],
-  });
+  assertSampledEntities(sampleResult, 123, [referenceResult.value.entity]);
 }
 
-async function sampleEntities_referenceNoReferences({ server }: AdminEntityTestContext) {
+async function sampleEntities_linksToNoReferences({ server }: AdminEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
   const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(titleOnlyResult);
@@ -241,14 +241,10 @@ async function sampleEntities_referenceNoReferences({ server }: AdminEntityTestC
     { linksTo: { id: titleOnlyId } },
     { seed: 456 }
   );
-  assertResultValue(sampleResult, {
-    seed: 456,
-    totalCount: 0,
-    items: [],
-  });
+  assertSampledEntities(sampleResult, 456, []);
 }
 
-async function sampleEntities_referenceTwoReferencesFromOneEntity({
+async function sampleEntities_linksToTwoReferencesFromOneEntity({
   server,
 }: AdminEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
@@ -269,11 +265,65 @@ async function sampleEntities_referenceTwoReferencesFromOneEntity({
     { linksTo: { id: titleOnlyId } },
     { seed: 789 }
   );
-  assertResultValue(sampleResult, {
-    seed: 789,
-    totalCount: 1,
-    items: [referenceResult.value.entity],
-  });
+  assertSampledEntities(sampleResult, 789, [referenceResult.value.entity]);
+}
+
+async function sampleEntities_linksFromOneReference({ server }: AdminEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
+  assertOkResult(titleOnlyResult);
+  const { entity: titleEntity } = titleOnlyResult.value;
+
+  const referenceResult = await adminClient.createEntity(
+    copyEntity(REFERENCES_CREATE, { fields: { titleOnly: { id: titleEntity.id } } })
+  );
+  assertOkResult(referenceResult);
+  const {
+    entity: { id: referenceId },
+  } = referenceResult.value;
+
+  const sampleResult = await adminClient.sampleEntities(
+    { linksFrom: { id: referenceId } },
+    { seed: 123 }
+  );
+  assertSampledEntities(sampleResult, 123, [titleEntity]);
+}
+
+async function sampleEntities_linksFromNoReferences({ server }: AdminEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const referenceResult = await adminClient.createEntity(REFERENCES_CREATE);
+  assertOkResult(referenceResult);
+  const {
+    entity: { id },
+  } = referenceResult.value;
+
+  const sampleResult = await adminClient.sampleEntities({ linksFrom: { id } }, { seed: 456 });
+  assertSampledEntities(sampleResult, 456, []);
+}
+
+async function sampleEntities_linksFromTwoReferencesFromOneEntity({
+  server,
+}: AdminEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
+  assertOkResult(titleOnlyResult);
+  const { entity: titleOnlyEntity } = titleOnlyResult.value;
+
+  const referenceResult = await adminClient.createEntity(
+    copyEntity(REFERENCES_CREATE, {
+      fields: { any: { id: titleOnlyEntity.id }, titleOnly: { id: titleOnlyEntity.id } },
+    })
+  );
+  assertOkResult(referenceResult);
+  const {
+    entity: { id: referenceId },
+  } = referenceResult.value;
+
+  const sampleResult = await adminClient.sampleEntities(
+    { linksFrom: { id: referenceId } },
+    { seed: 789 }
+  );
+  assertSampledEntities(sampleResult, 789, [titleOnlyEntity]);
 }
 
 async function sampleEntities_authKeySubject({
