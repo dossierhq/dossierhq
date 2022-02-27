@@ -318,6 +318,16 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       return;
     }
 
+    // EntityReferenceInput
+    this.addType(
+      new GraphQLInputObjectType({
+        name: 'EntityReferenceInput',
+        fields: {
+          id: { type: new GraphQLNonNull(GraphQLID) },
+        },
+      })
+    );
+
     // Location
     this.addType(
       new GraphQLObjectType({
@@ -481,7 +491,8 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       entityTypes: {
         type: new GraphQLList(new GraphQLNonNull(this.getEnumType('EntityType'))),
       },
-      referencing: { type: GraphQLID },
+      linksTo: { type: this.getInputType('EntityReferenceInput') },
+      linksFrom: { type: this.getInputType('EntityReferenceInput') },
       boundingBox: { type: this.getInputType('BoundingBoxInput') },
       text: { type: GraphQLString },
     };
@@ -771,7 +782,8 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
       entityTypes: {
         type: new GraphQLList(new GraphQLNonNull(this.getEnumType('AdminEntityType'))),
       },
-      referencing: { type: GraphQLID },
+      linksTo: { type: this.getInputType('EntityReferenceInput') },
+      linksFrom: { type: this.getInputType('EntityReferenceInput') },
       boundingBox: { type: this.getInputType('BoundingBoxInput') },
       text: { type: GraphQLString },
     };
@@ -791,26 +803,6 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
           ...sharedQueryInputFields,
           order: { type: this.getEnumType('AdminQueryOrder') },
           reverse: { type: GraphQLBoolean },
-        },
-      })
-    );
-
-    // AdminReferenceInput
-    this.addType(
-      new GraphQLInputObjectType({
-        name: 'AdminReferenceInput',
-        fields: {
-          id: { type: new GraphQLNonNull(GraphQLID) },
-        },
-      })
-    );
-
-    // EntityReferenceInput
-    this.addType(
-      new GraphQLInputObjectType({
-        name: 'EntityReferenceInput',
-        fields: {
-          id: { type: new GraphQLNonNull(GraphQLID) },
         },
       })
     );
@@ -1257,7 +1249,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> {
           fieldType = GraphQLBoolean;
           break;
         case FieldType.EntityType:
-          fieldType = this.getInputType('AdminReferenceInput');
+          fieldType = this.getInputType('EntityReferenceInput');
           break;
         case FieldType.Location:
           fieldType = this.getInputType('LocationInput');

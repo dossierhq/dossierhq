@@ -826,14 +826,10 @@ describe('createEntity()', () => {
         const getResult = await client.getEntity({ id: bazId });
         expectResultValue(getResult, expectedBazEntity);
 
-        const referencingBar1Result = await client.searchEntities({
-          referencing: bar1Id,
-        });
+        const referencingBar1Result = await client.searchEntities({ linksTo: { id: bar1Id } });
         expectSearchResultEntities(referencingBar1Result, [baz]);
 
-        const referencingBar2Result = await client.searchEntities({
-          referencing: bar2Id,
-        });
+        const referencingBar2Result = await client.searchEntities({ linksTo: { id: bar2Id } });
         expectSearchResultEntities(referencingBar2Result, [baz]);
       }
     }
@@ -936,10 +932,10 @@ describe('createEntity()', () => {
         const getResult = await client.getEntity({ id });
         expectResultValue(getResult, expectedEntity);
 
-        const referencesTo1 = await client.searchEntities({ referencing: bar1Id });
+        const referencesTo1 = await client.searchEntities({ linksTo: { id: bar1Id } });
         expectSearchResultEntities(referencesTo1, [baz]);
 
-        const referencesTo2 = await client.searchEntities({ referencing: bar2Id });
+        const referencesTo2 = await client.searchEntities({ linksTo: { id: bar2Id } });
         expectSearchResultEntities(referencesTo2, [baz]);
       }
     }
@@ -1121,7 +1117,7 @@ describe('createEntity()', () => {
         const getResult = await client.getEntity({ id: bazId });
         expectResultValue(getResult, expectedEntity);
 
-        const barReferences = await client.searchEntities({ referencing: barId });
+        const barReferences = await client.searchEntities({ linksTo: { id: barId } });
         expectSearchResultEntities(barReferences, [baz]);
       }
     }
@@ -1212,14 +1208,14 @@ describe('createEntity()', () => {
         const getResult = await client.getEntity({ id: bazId });
         expectResultValue(getResult, expectedEntity);
 
-        const bar1References = await client.searchEntities({ referencing: bar1Id });
+        const bar1References = await client.searchEntities({ linksTo: { id: bar1Id } });
 
         expect(
           bar1References.isOk() &&
             bar1References.value?.edges.map((x) => (x.node.isOk() ? x.node.value.id : null))
         ).toEqual([bazId]);
 
-        const bar2References = await client.searchEntities({ referencing: bar2Id });
+        const bar2References = await client.searchEntities({ linksTo: { id: bar2Id } });
 
         expect(
           bar2References.isOk() &&
@@ -1704,14 +1700,14 @@ describe('createEntity()', () => {
   });
 });
 
-describe('searchEntities() referencing', () => {
-  test('Query based on referencing and entityTypes, one reference', async () => {
+describe('searchEntities() linksTo', () => {
+  test('Query based on linksTo and entityTypes, one reference', async () => {
     const { barId, bazEntities } = await createBarWithFooBazReferences(1, 1);
     const [bazEntity] = bazEntities;
 
     const searchResult = await client.searchEntities({
       entityTypes: ['EntityAdminBaz'],
-      referencing: barId,
+      linksTo: { id: barId },
     });
     expectSearchResultEntities(searchResult, [bazEntity]);
   });
@@ -1754,12 +1750,12 @@ describe('searchEntities() boundingBox', () => {
 });
 
 describe('getTotalCount', () => {
-  test('Query based on referencing and entityTypes, one reference', async () => {
+  test('Query based on linksTo and entityTypes, one reference', async () => {
     const { barId } = await createBarWithFooBazReferences(1, 1);
 
     const result = await client.getTotalCount({
       entityTypes: ['EntityAdminBaz'],
-      referencing: barId,
+      linksTo: { id: barId },
     });
     if (expectOkResult(result)) {
       expect(result.value).toBe(1);

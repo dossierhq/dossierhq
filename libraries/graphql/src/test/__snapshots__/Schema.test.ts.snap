@@ -14,6 +14,10 @@ type PageInfo {
 
 scalar Instant
 
+input EntityReferenceInput {
+  id: ID!
+}
+
 type Location {
   lat: Float!
   lng: Float!
@@ -132,7 +136,8 @@ enum AdminQueryOrder {
 input AdminQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
 }
@@ -140,19 +145,12 @@ input AdminQueryInput {
 input AdminSearchQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
   order: AdminQueryOrder
   reverse: Boolean
-}
-
-input AdminReferenceInput {
-  id: ID!
-}
-
-input EntityReferenceInput {
-  id: ID!
 }
 
 input EntityVersionReferenceInput {
@@ -400,6 +398,10 @@ type PageInfo {
 
 scalar Instant
 
+input EntityReferenceInput {
+  id: ID!
+}
+
 type Location {
   lat: Float!
   lng: Float!
@@ -475,7 +477,8 @@ enum QueryOrder {
 input PublishedQueryInput {
   authKeys: [String!]
   entityTypes: [EntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
 }
@@ -483,7 +486,8 @@ input PublishedQueryInput {
 input PublishedSearchQueryInput {
   authKeys: [String!]
   entityTypes: [EntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
   order: QueryOrder
@@ -527,6 +531,10 @@ type PageInfo {
 
 scalar Instant
 
+input EntityReferenceInput {
+  id: ID!
+}
+
 type Location {
   lat: Float!
   lng: Float!
@@ -602,7 +610,8 @@ enum QueryOrder {
 input PublishedQueryInput {
   authKeys: [String!]
   entityTypes: [EntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
 }
@@ -610,7 +619,8 @@ input PublishedQueryInput {
 input PublishedSearchQueryInput {
   authKeys: [String!]
   entityTypes: [EntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
   order: QueryOrder
@@ -733,7 +743,8 @@ enum AdminQueryOrder {
 input AdminQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
 }
@@ -741,19 +752,12 @@ input AdminQueryInput {
 input AdminSearchQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
   order: AdminQueryOrder
   reverse: Boolean
-}
-
-input AdminReferenceInput {
-  id: ID!
-}
-
-input EntityReferenceInput {
-  id: ID!
 }
 
 input EntityVersionReferenceInput {
@@ -1051,6 +1055,10 @@ type PageInfo {
 
 scalar Instant
 
+input EntityReferenceInput {
+  id: ID!
+}
+
 type Location {
   lat: Float!
   lng: Float!
@@ -1164,7 +1172,8 @@ enum AdminQueryOrder {
 input AdminQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
 }
@@ -1172,19 +1181,12 @@ input AdminQueryInput {
 input AdminSearchQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
   order: AdminQueryOrder
   reverse: Boolean
-}
-
-input AdminReferenceInput {
-  id: ID!
-}
-
-input EntityReferenceInput {
-  id: ID!
 }
 
 input EntityVersionReferenceInput {
@@ -1294,7 +1296,7 @@ input AdminFooFieldsInput {
   strings: [String!]
   booleans: [Boolean!]
   locations: [LocationInput!]
-  bars: [AdminReferenceInput!]
+  bars: [EntityReferenceInput!]
 }
 
 input AdminFooCreateInput {
@@ -1402,6 +1404,10 @@ type PageInfo {
 
 scalar Instant
 
+input EntityReferenceInput {
+  id: ID!
+}
+
 type Location {
   lat: Float!
   lng: Float!
@@ -1470,7 +1476,8 @@ enum QueryOrder {
 input PublishedQueryInput {
   authKeys: [String!]
   entityTypes: [EntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
 }
@@ -1478,7 +1485,8 @@ input PublishedQueryInput {
 input PublishedSearchQueryInput {
   authKeys: [String!]
   entityTypes: [EntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
   order: QueryOrder
@@ -1525,6 +1533,10 @@ type PageInfo {
 
 scalar Instant
 
+input EntityReferenceInput {
+  id: ID!
+}
+
 type Location {
   lat: Float!
   lng: Float!
@@ -1593,7 +1605,8 @@ enum QueryOrder {
 input PublishedQueryInput {
   authKeys: [String!]
   entityTypes: [EntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
 }
@@ -1601,7 +1614,8 @@ input PublishedQueryInput {
 input PublishedSearchQueryInput {
   authKeys: [String!]
   entityTypes: [EntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
   order: QueryOrder
@@ -1722,7 +1736,8 @@ enum AdminQueryOrder {
 input AdminQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
 }
@@ -1730,19 +1745,12 @@ input AdminQueryInput {
 input AdminSearchQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
   order: AdminQueryOrder
   reverse: Boolean
-}
-
-input AdminReferenceInput {
-  id: ID!
-}
-
-input EntityReferenceInput {
-  id: ID!
 }
 
 input EntityVersionReferenceInput {
@@ -1847,7 +1855,7 @@ input AdminFooFieldsInput {
   strings: [String!]
   booleans: [Boolean!]
   locations: [LocationInput!]
-  bars: [AdminReferenceInput!]
+  bars: [EntityReferenceInput!]
 }
 
 input AdminFooCreateInput {
@@ -1958,6 +1966,10 @@ type PageInfo {
 }
 
 scalar Instant
+
+input EntityReferenceInput {
+  id: ID!
+}
 
 type Location {
   lat: Float!
@@ -2073,7 +2085,8 @@ enum AdminQueryOrder {
 input AdminQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
 }
@@ -2081,19 +2094,12 @@ input AdminQueryInput {
 input AdminSearchQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
   order: AdminQueryOrder
   reverse: Boolean
-}
-
-input AdminReferenceInput {
-  id: ID!
-}
-
-input EntityReferenceInput {
-  id: ID!
 }
 
 input EntityVersionReferenceInput {
@@ -2201,11 +2207,11 @@ type AdminFoo implements AdminEntity {
 }
 
 input AdminFooFieldsInput {
-  noMeansAll: AdminReferenceInput
-  bar: AdminReferenceInput
-  bazBar: AdminReferenceInput
-  fooBarBaz: AdminReferenceInput
-  barBarBar: AdminReferenceInput
+  noMeansAll: EntityReferenceInput
+  bar: EntityReferenceInput
+  bazBar: EntityReferenceInput
+  fooBarBaz: EntityReferenceInput
+  barBarBar: EntityReferenceInput
 }
 
 input AdminFooCreateInput {
@@ -2362,6 +2368,10 @@ type PageInfo {
 
 scalar Instant
 
+input EntityReferenceInput {
+  id: ID!
+}
+
 type Location {
   lat: Float!
   lng: Float!
@@ -2431,7 +2441,8 @@ enum QueryOrder {
 input PublishedQueryInput {
   authKeys: [String!]
   entityTypes: [EntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
 }
@@ -2439,7 +2450,8 @@ input PublishedQueryInput {
 input PublishedSearchQueryInput {
   authKeys: [String!]
   entityTypes: [EntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
   order: QueryOrder
@@ -2503,6 +2515,10 @@ type PageInfo {
 
 scalar Instant
 
+input EntityReferenceInput {
+  id: ID!
+}
+
 type Location {
   lat: Float!
   lng: Float!
@@ -2572,7 +2588,8 @@ enum QueryOrder {
 input PublishedQueryInput {
   authKeys: [String!]
   entityTypes: [EntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
 }
@@ -2580,7 +2597,8 @@ input PublishedQueryInput {
 input PublishedSearchQueryInput {
   authKeys: [String!]
   entityTypes: [EntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
   order: QueryOrder
@@ -2708,7 +2726,8 @@ enum AdminQueryOrder {
 input AdminQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
 }
@@ -2716,19 +2735,12 @@ input AdminQueryInput {
 input AdminSearchQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
   order: AdminQueryOrder
   reverse: Boolean
-}
-
-input AdminReferenceInput {
-  id: ID!
-}
-
-input EntityReferenceInput {
-  id: ID!
 }
 
 input EntityVersionReferenceInput {
@@ -2831,11 +2843,11 @@ type AdminFoo implements AdminEntity {
 }
 
 input AdminFooFieldsInput {
-  noMeansAll: AdminReferenceInput
-  bar: AdminReferenceInput
-  bazBar: AdminReferenceInput
-  fooBarBaz: AdminReferenceInput
-  barBarBar: AdminReferenceInput
+  noMeansAll: EntityReferenceInput
+  bar: EntityReferenceInput
+  bazBar: EntityReferenceInput
+  fooBarBaz: EntityReferenceInput
+  barBarBar: EntityReferenceInput
 }
 
 input AdminFooCreateInput {
@@ -3007,6 +3019,10 @@ type PageInfo {
 
 scalar Instant
 
+input EntityReferenceInput {
+  id: ID!
+}
+
 type Location {
   lat: Float!
   lng: Float!
@@ -3119,7 +3135,8 @@ enum AdminQueryOrder {
 input AdminQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
 }
@@ -3127,19 +3144,12 @@ input AdminQueryInput {
 input AdminSearchQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
   order: AdminQueryOrder
   reverse: Boolean
-}
-
-input AdminReferenceInput {
-  id: ID!
-}
-
-input EntityReferenceInput {
-  id: ID!
 }
 
 input EntityVersionReferenceInput {
@@ -3301,6 +3311,10 @@ type PageInfo {
 
 scalar Instant
 
+input EntityReferenceInput {
+  id: ID!
+}
+
 type Location {
   lat: Float!
   lng: Float!
@@ -3368,7 +3382,8 @@ enum QueryOrder {
 input PublishedQueryInput {
   authKeys: [String!]
   entityTypes: [EntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
 }
@@ -3376,7 +3391,8 @@ input PublishedQueryInput {
 input PublishedSearchQueryInput {
   authKeys: [String!]
   entityTypes: [EntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
   order: QueryOrder
@@ -3410,6 +3426,10 @@ type PageInfo {
 
 scalar Instant
 
+input EntityReferenceInput {
+  id: ID!
+}
+
 type Location {
   lat: Float!
   lng: Float!
@@ -3477,7 +3497,8 @@ enum QueryOrder {
 input PublishedQueryInput {
   authKeys: [String!]
   entityTypes: [EntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
 }
@@ -3485,7 +3506,8 @@ input PublishedQueryInput {
 input PublishedSearchQueryInput {
   authKeys: [String!]
   entityTypes: [EntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
   order: QueryOrder
@@ -3592,7 +3614,8 @@ enum AdminQueryOrder {
 input AdminQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
 }
@@ -3600,19 +3623,12 @@ input AdminQueryInput {
 input AdminSearchQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
   order: AdminQueryOrder
   reverse: Boolean
-}
-
-input AdminReferenceInput {
-  id: ID!
-}
-
-input EntityReferenceInput {
-  id: ID!
 }
 
 input EntityVersionReferenceInput {
@@ -3773,6 +3789,10 @@ type PageInfo {
 
 scalar Instant
 
+input EntityReferenceInput {
+  id: ID!
+}
+
 type Location {
   lat: Float!
   lng: Float!
@@ -3889,7 +3909,8 @@ enum AdminQueryOrder {
 input AdminQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
 }
@@ -3897,19 +3918,12 @@ input AdminQueryInput {
 input AdminSearchQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
   order: AdminQueryOrder
   reverse: Boolean
-}
-
-input AdminReferenceInput {
-  id: ID!
-}
-
-input EntityReferenceInput {
-  id: ID!
 }
 
 input EntityVersionReferenceInput {
@@ -4102,6 +4116,10 @@ type PageInfo {
 
 scalar Instant
 
+input EntityReferenceInput {
+  id: ID!
+}
+
 type Location {
   lat: Float!
   lng: Float!
@@ -4177,7 +4195,8 @@ enum QueryOrder {
 input PublishedQueryInput {
   authKeys: [String!]
   entityTypes: [EntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
 }
@@ -4185,7 +4204,8 @@ input PublishedQueryInput {
 input PublishedSearchQueryInput {
   authKeys: [String!]
   entityTypes: [EntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
   order: QueryOrder
@@ -4231,6 +4251,10 @@ type PageInfo {
 
 scalar Instant
 
+input EntityReferenceInput {
+  id: ID!
+}
+
 type Location {
   lat: Float!
   lng: Float!
@@ -4306,7 +4330,8 @@ enum QueryOrder {
 input PublishedQueryInput {
   authKeys: [String!]
   entityTypes: [EntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
 }
@@ -4314,7 +4339,8 @@ input PublishedQueryInput {
 input PublishedSearchQueryInput {
   authKeys: [String!]
   entityTypes: [EntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
   order: QueryOrder
@@ -4437,7 +4463,8 @@ enum AdminQueryOrder {
 input AdminQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
 }
@@ -4445,19 +4472,12 @@ input AdminQueryInput {
 input AdminSearchQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
   order: AdminQueryOrder
   reverse: Boolean
-}
-
-input AdminReferenceInput {
-  id: ID!
-}
-
-input EntityReferenceInput {
-  id: ID!
 }
 
 input EntityVersionReferenceInput {
@@ -4649,6 +4669,10 @@ type PageInfo {
 
 scalar Instant
 
+input EntityReferenceInput {
+  id: ID!
+}
+
 type Location {
   lat: Float!
   lng: Float!
@@ -4761,7 +4785,8 @@ enum AdminQueryOrder {
 input AdminQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
 }
@@ -4769,19 +4794,12 @@ input AdminQueryInput {
 input AdminSearchQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
   order: AdminQueryOrder
   reverse: Boolean
-}
-
-input AdminReferenceInput {
-  id: ID!
-}
-
-input EntityReferenceInput {
-  id: ID!
 }
 
 input EntityVersionReferenceInput {
@@ -4955,6 +4973,10 @@ type PageInfo {
 
 scalar Instant
 
+input EntityReferenceInput {
+  id: ID!
+}
+
 type Location {
   lat: Float!
   lng: Float!
@@ -5022,7 +5044,8 @@ enum QueryOrder {
 input PublishedQueryInput {
   authKeys: [String!]
   entityTypes: [EntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
 }
@@ -5030,7 +5053,8 @@ input PublishedQueryInput {
 input PublishedSearchQueryInput {
   authKeys: [String!]
   entityTypes: [EntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
   order: QueryOrder
@@ -5069,6 +5093,10 @@ type PageInfo {
 
 scalar Instant
 
+input EntityReferenceInput {
+  id: ID!
+}
+
 type Location {
   lat: Float!
   lng: Float!
@@ -5136,7 +5164,8 @@ enum QueryOrder {
 input PublishedQueryInput {
   authKeys: [String!]
   entityTypes: [EntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
 }
@@ -5144,7 +5173,8 @@ input PublishedQueryInput {
 input PublishedSearchQueryInput {
   authKeys: [String!]
   entityTypes: [EntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
   order: QueryOrder
@@ -5256,7 +5286,8 @@ enum AdminQueryOrder {
 input AdminQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
 }
@@ -5264,19 +5295,12 @@ input AdminQueryInput {
 input AdminSearchQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
   order: AdminQueryOrder
   reverse: Boolean
-}
-
-input AdminReferenceInput {
-  id: ID!
-}
-
-input EntityReferenceInput {
-  id: ID!
 }
 
 input EntityVersionReferenceInput {
@@ -5449,6 +5473,10 @@ type PageInfo {
 
 scalar Instant
 
+input EntityReferenceInput {
+  id: ID!
+}
+
 type Location {
   lat: Float!
   lng: Float!
@@ -5562,7 +5590,8 @@ enum AdminQueryOrder {
 input AdminQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
 }
@@ -5570,19 +5599,12 @@ input AdminQueryInput {
 input AdminSearchQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
   order: AdminQueryOrder
   reverse: Boolean
-}
-
-input AdminReferenceInput {
-  id: ID!
-}
-
-input EntityReferenceInput {
-  id: ID!
 }
 
 input EntityVersionReferenceInput {
@@ -5737,7 +5759,7 @@ type AdminBar implements AdminEntity {
 
 input AdminBarFieldsInput {
   barField1: String
-  barField2: AdminReferenceInput
+  barField2: EntityReferenceInput
   barField3: LocationInput
   barField4: Boolean
 }
@@ -5812,6 +5834,10 @@ type PageInfo {
 
 scalar Instant
 
+input EntityReferenceInput {
+  id: ID!
+}
+
 type Location {
   lat: Float!
   lng: Float!
@@ -5880,7 +5906,8 @@ enum QueryOrder {
 input PublishedQueryInput {
   authKeys: [String!]
   entityTypes: [EntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
 }
@@ -5888,7 +5915,8 @@ input PublishedQueryInput {
 input PublishedSearchQueryInput {
   authKeys: [String!]
   entityTypes: [EntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
   order: QueryOrder
@@ -5940,6 +5968,10 @@ type PageInfo {
 
 scalar Instant
 
+input EntityReferenceInput {
+  id: ID!
+}
+
 type Location {
   lat: Float!
   lng: Float!
@@ -6008,7 +6040,8 @@ enum QueryOrder {
 input PublishedQueryInput {
   authKeys: [String!]
   entityTypes: [EntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
 }
@@ -6016,7 +6049,8 @@ input PublishedQueryInput {
 input PublishedSearchQueryInput {
   authKeys: [String!]
   entityTypes: [EntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
   order: QueryOrder
@@ -6142,7 +6176,8 @@ enum AdminQueryOrder {
 input AdminQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
 }
@@ -6150,19 +6185,12 @@ input AdminQueryInput {
 input AdminSearchQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
   order: AdminQueryOrder
   reverse: Boolean
-}
-
-input AdminReferenceInput {
-  id: ID!
-}
-
-input EntityReferenceInput {
-  id: ID!
 }
 
 input EntityVersionReferenceInput {
@@ -6312,7 +6340,7 @@ type AdminBar implements AdminEntity {
 
 input AdminBarFieldsInput {
   barField1: String
-  barField2: AdminReferenceInput
+  barField2: EntityReferenceInput
   barField3: LocationInput
   barField4: Boolean
 }
@@ -6391,6 +6419,10 @@ type PageInfo {
 
 scalar Instant
 
+input EntityReferenceInput {
+  id: ID!
+}
+
 type Location {
   lat: Float!
   lng: Float!
@@ -6510,7 +6542,8 @@ enum AdminQueryOrder {
 input AdminQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
 }
@@ -6518,19 +6551,12 @@ input AdminQueryInput {
 input AdminSearchQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
   order: AdminQueryOrder
   reverse: Boolean
-}
-
-input AdminReferenceInput {
-  id: ID!
-}
-
-input EntityReferenceInput {
-  id: ID!
 }
 
 input EntityVersionReferenceInput {
@@ -6728,7 +6754,7 @@ type AdminValueOne implements AdminValue {
 input AdminValueOneInput {
   type: AdminValueType!
   one: String
-  two: AdminReferenceInput
+  two: EntityReferenceInput
   three: LocationInput
   four: Boolean
 }
@@ -6744,7 +6770,7 @@ type AdminValueList implements AdminValue {
 input AdminValueListInput {
   type: AdminValueType!
   one: [String!]
-  two: [AdminReferenceInput!]
+  two: [EntityReferenceInput!]
   three: [LocationInput!]
   four: [Boolean!]
 }
@@ -6803,6 +6829,10 @@ type PageInfo {
 }
 
 scalar Instant
+
+input EntityReferenceInput {
+  id: ID!
+}
 
 type Location {
   lat: Float!
@@ -6882,7 +6912,8 @@ enum QueryOrder {
 input PublishedQueryInput {
   authKeys: [String!]
   entityTypes: [EntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
 }
@@ -6890,7 +6921,8 @@ input PublishedQueryInput {
 input PublishedSearchQueryInput {
   authKeys: [String!]
   entityTypes: [EntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
   order: QueryOrder
@@ -6964,6 +6996,10 @@ type PageInfo {
 
 scalar Instant
 
+input EntityReferenceInput {
+  id: ID!
+}
+
 type Location {
   lat: Float!
   lng: Float!
@@ -7042,7 +7078,8 @@ enum QueryOrder {
 input PublishedQueryInput {
   authKeys: [String!]
   entityTypes: [EntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
 }
@@ -7050,7 +7087,8 @@ input PublishedQueryInput {
 input PublishedSearchQueryInput {
   authKeys: [String!]
   entityTypes: [EntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
   order: QueryOrder
@@ -7199,7 +7237,8 @@ enum AdminQueryOrder {
 input AdminQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
 }
@@ -7207,19 +7246,12 @@ input AdminQueryInput {
 input AdminSearchQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  referencing: ID
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
   order: AdminQueryOrder
   reverse: Boolean
-}
-
-input AdminReferenceInput {
-  id: ID!
-}
-
-input EntityReferenceInput {
-  id: ID!
 }
 
 input EntityVersionReferenceInput {
@@ -7412,7 +7444,7 @@ type AdminValueOne implements AdminValue {
 input AdminValueOneInput {
   type: AdminValueType!
   one: String
-  two: AdminReferenceInput
+  two: EntityReferenceInput
   three: LocationInput
   four: Boolean
 }
@@ -7428,7 +7460,7 @@ type AdminValueList implements AdminValue {
 input AdminValueListInput {
   type: AdminValueType!
   one: [String!]
-  two: [AdminReferenceInput!]
+  two: [EntityReferenceInput!]
   three: [LocationInput!]
   four: [Boolean!]
 }

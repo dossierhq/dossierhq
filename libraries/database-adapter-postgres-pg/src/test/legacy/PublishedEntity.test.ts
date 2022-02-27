@@ -175,26 +175,26 @@ describe('searchEntities() paging', () => {
   });
 });
 
-describe('searchEntities() referencing', () => {
+describe('searchEntities() linksTo', () => {
   test('One reference', async () => {
     const { barId, fooEntities } = await createBarWithFooReferences(1);
     const [fooEntity] = fooEntities;
 
-    const searchResult = await publishedClient.searchEntities({ referencing: barId });
+    const searchResult = await publishedClient.searchEntities({ linksTo: { id: barId } });
     expectSearchResultEntities(searchResult, [fooEntity]);
   });
 
   test('No references', async () => {
     const { barId } = await createBarWithFooReferences(0);
 
-    const searchResult = await publishedClient.searchEntities({ referencing: barId });
+    const searchResult = await publishedClient.searchEntities({ linksTo: { id: barId } });
     expectResultValue(searchResult, null);
   });
 
   test('Two references from one entity', async () => {
     const { barId, fooEntities } = await createBarWithFooReferences(1, 2);
 
-    const searchResult = await publishedClient.searchEntities({ referencing: barId });
+    const searchResult = await publishedClient.searchEntities({ linksTo: { id: barId } });
     expectSearchResultEntities(searchResult, fooEntities);
   });
 
@@ -211,7 +211,7 @@ describe('searchEntities() referencing', () => {
     if (expectOkResult(anotherBarCreateResult)) {
       const searchResult = await publishedClient.searchEntities({
         entityTypes: ['PublishedEntityFoo'],
-        referencing: barId,
+        linksTo: { id: barId },
       });
       expectSearchResultEntities(searchResult, fooEntities);
     }
@@ -224,7 +224,7 @@ describe('searchEntities() referencing', () => {
     expectOkResult(unpublishResult);
 
     const searchResult = await publishedClient.searchEntities({
-      referencing: barId,
+      linksTo: { id: barId },
     });
     expectSearchResultEntities(searchResult, []);
   });
@@ -372,21 +372,21 @@ describe('searchEntities() text', () => {
 });
 
 describe('getTotalCount', () => {
-  test('Query based on referencing, one reference', async () => {
+  test('Query based on linksTo, one reference', async () => {
     const { barId } = await createBarWithFooReferences(1);
 
-    const result = await publishedClient.getTotalCount({ referencing: barId });
+    const result = await publishedClient.getTotalCount({ linksTo: { id: barId } });
     expectResultValue(result, 1);
   });
 
-  test('Query based on referencing, no references', async () => {
+  test('Query based on linksTo, no references', async () => {
     const { barId } = await createBarWithFooReferences(0);
 
-    const result = await publishedClient.getTotalCount({ referencing: barId });
+    const result = await publishedClient.getTotalCount({ linksTo: { id: barId } });
     expectResultValue(result, 0);
   });
 
-  test('Query based on referencing and entityTypes, one reference', async () => {
+  test('Query based on linksTo and entityTypes, one reference', async () => {
     const { barId } = await createBarWithFooReferences(1, 1);
 
     const anotherBarCreateResult = await adminClient.createEntity(
@@ -399,16 +399,16 @@ describe('getTotalCount', () => {
     if (expectOkResult(anotherBarCreateResult)) {
       const result = await publishedClient.getTotalCount({
         entityTypes: ['PublishedEntityFoo'],
-        referencing: barId,
+        linksTo: { id: barId },
       });
       expectResultValue(result, 1);
     }
   });
 
-  test('Query based on referencing, two references from one entity', async () => {
+  test('Query based on linksTo, two references from one entity', async () => {
     const { barId } = await createBarWithFooReferences(1, 2);
 
-    const result = await publishedClient.getTotalCount({ referencing: barId });
+    const result = await publishedClient.getTotalCount({ linksTo: { id: barId } });
     expectResultValue(result, 1);
   });
 

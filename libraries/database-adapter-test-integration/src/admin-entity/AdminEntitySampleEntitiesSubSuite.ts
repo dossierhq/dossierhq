@@ -219,7 +219,7 @@ async function sampleEntities_referenceOneReference({ server }: AdminEntityTestC
   assertOkResult(referenceResult);
 
   const sampleResult = await adminClient.sampleEntities(
-    { referencing: titleOnlyId },
+    { linksTo: { id: titleOnlyId } },
     { seed: 123 }
   );
   assertResultValue(sampleResult, {
@@ -238,7 +238,7 @@ async function sampleEntities_referenceNoReferences({ server }: AdminEntityTestC
   } = titleOnlyResult.value;
 
   const sampleResult = await adminClient.sampleEntities(
-    { referencing: titleOnlyId },
+    { linksTo: { id: titleOnlyId } },
     { seed: 456 }
   );
   assertResultValue(sampleResult, {
@@ -266,7 +266,7 @@ async function sampleEntities_referenceTwoReferencesFromOneEntity({
   assertOkResult(referenceResult);
 
   const sampleResult = await adminClient.sampleEntities(
-    { referencing: titleOnlyId },
+    { linksTo: { id: titleOnlyId } },
     { seed: 789 }
   );
   assertResultValue(sampleResult, {

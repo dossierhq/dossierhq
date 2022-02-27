@@ -287,13 +287,16 @@ function totalCountQuery(
   }
   qb.addQuery('AS count FROM entities e');
 
-  const linkToEntityVersion = !!(query?.referencing || query?.boundingBox);
+  const linkToEntityVersion = !!(query?.linksTo || query?.boundingBox);
 
   if (linkToEntityVersion) {
     qb.addQuery('entity_versions ev');
   }
-  if (query?.referencing) {
+  if (query?.linksTo) {
     qb.addQuery('entity_version_references evr, entities e2');
+  }
+  if (query?.linksFrom) {
+    qb.addQuery('entities e_from, entity_version_references evr_from');
   }
   if (query?.boundingBox) {
     qb.addQuery('entity_version_locations evl');
@@ -326,8 +329,11 @@ function addEntityQuerySelectColumn(
     qb.addQuery(`e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated_seq, e.status, ev.version, ev.fields
   FROM entities e, entity_versions ev`);
   }
-  if (query?.referencing) {
+  if (query?.linksTo) {
     qb.addQuery('entity_version_references evr, entities e2');
+  }
+  if (query?.linksFrom) {
+    qb.addQuery('entities e_from, entity_version_references evr_from');
   }
   if (query?.boundingBox) {
     qb.addQuery('entity_version_locations evl');
@@ -380,16 +386,27 @@ function addQueryFilters(
     addFilterStatusSqlSegment(query, qb);
   }
 
-  // Filter: referencing
-  if (query?.referencing) {
+  // Filter: linksTo
+  if (query?.linksTo) {
     qb.addQuery(
       `AND ev.id = evr.entity_versions_id AND evr.entities_id = e2.id AND e2.uuid = ${qb.addValue(
-        query.referencing
+        query.linksTo.id
       )}`
     );
     if (published) {
       qb.addQuery('AND e2.published_entity_versions_id IS NOT NULL');
     }
+  }
+
+  // Filter: linksFrom
+  if (query?.linksFrom) {
+    qb.addQuery(`AND e_from.uuid = ${qb.addValue(query.linksFrom.id)}`);
+    qb.addQuery(
+      published
+        ? 'AND e_from.published_entity_versions_id = evr_from.entity_versions_id'
+        : 'AND e_from.latest_entity_versions_id = evr_from.entity_versions_id'
+    );
+    qb.addQuery('AND evr_from.entities_id = e.id');
   }
 
   // Filter: bounding box

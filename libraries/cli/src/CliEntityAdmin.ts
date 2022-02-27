@@ -727,13 +727,13 @@ export async function showLatestEntity(context: CliContext, id: string): Promise
     const entity = result.value;
     logEntity(context, entity);
 
-    const totalResult = await adminClient.getTotalCount({ referencing: id });
+    const totalResult = await adminClient.getTotalCount({ linksTo: { id } });
     if (totalResult.isError()) {
       logErrorResult('Failed getting items referencing this entity', totalResult);
     } else if (totalResult.value > 0) {
       console.log();
       logKeyValue('Entities referencing this entity', String(totalResult.value));
-      const referencesResult = await adminClient.searchEntities({ referencing: id });
+      const referencesResult = await adminClient.searchEntities({ linksTo: { id } });
       if (referencesResult.isError()) {
         logErrorResult('Failed searching references', referencesResult);
       } else if (referencesResult.value) {

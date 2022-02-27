@@ -623,13 +623,41 @@ describe('searchAdminEntitiesQuery()', () => {
     `);
   });
 
-  test('query referencing', () => {
+  test('query linksFrom', () => {
     const databaseAdapter = createMockAdapter();
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
         schema,
-        { referencing: '37b48706-803e-4227-a51e-8208db12d949' },
+        { linksFrom: { id: '37b48706-803e-4227-a51e-8208db12d949' } },
+        undefined,
+        authKeysNone
+      )
+    ).toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "cursorExtractor": [Function],
+          "isForwards": true,
+          "pagingCount": 25,
+          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, ev.version, ev.data
+        FROM entities e, entity_versions ev, entities e_from, entity_version_references evr_from WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e_from.uuid = $2 AND e_from.latest_draft_entity_versions_id = evr_from.entity_versions_id AND evr_from.entities_id = e.id ORDER BY e.id LIMIT $3",
+          "values": Array [
+            "none",
+            "37b48706-803e-4227-a51e-8208db12d949",
+            26,
+          ],
+        },
+      }
+    `);
+  });
+
+  test('query linksTo', () => {
+    const databaseAdapter = createMockAdapter();
+    expect(
+      searchAdminEntitiesQuery(
+        databaseAdapter,
+        schema,
+        { linksTo: { id: '37b48706-803e-4227-a51e-8208db12d949' } },
         undefined,
         authKeysNone
       )
@@ -719,7 +747,7 @@ describe('searchAdminEntitiesQuery()', () => {
     `);
   });
 
-  test('query referencing and entity types and paging', () => {
+  test('query linksTo and entity types and paging', () => {
     const databaseAdapter = createMockAdapter();
     expect(
       searchAdminEntitiesQuery(
@@ -727,7 +755,7 @@ describe('searchAdminEntitiesQuery()', () => {
         schema,
         {
           entityTypes: ['QueryGeneratorFoo', 'QueryGeneratorBar'],
-          referencing: '37b48706-803e-4227-a51e-8208db12d949',
+          linksTo: { id: '37b48706-803e-4227-a51e-8208db12d949' },
         },
         { first: 10, after: toOpaqueCursor(databaseAdapter, 'int', 123) },
         authKeysNone
@@ -1238,13 +1266,40 @@ describe('searchPublishedEntitiesQuery()', () => {
     `);
   });
 
-  test('query referencing', () => {
+  test('query linksFrom', () => {
     const databaseAdapter = createMockAdapter();
     expect(
       searchPublishedEntitiesQuery(
         databaseAdapter,
         schema,
-        { referencing: '37b48706-803e-4227-a51e-8208db12d949' },
+        { linksFrom: { id: '37b48706-803e-4227-a51e-8208db12d949' } },
+        undefined,
+        authKeysNone
+      )
+    ).toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "cursorExtractor": [Function],
+          "isForwards": true,
+          "pagingCount": 25,
+          "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, ev.data FROM entities e, entity_versions ev, entities e_from, entity_version_references evr_from WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e_from.uuid = $2 AND e_from.published_entity_versions_id = evr_from.entity_versions_id AND evr_from.entities_id = e.id ORDER BY e.id LIMIT $3",
+          "values": Array [
+            "none",
+            "37b48706-803e-4227-a51e-8208db12d949",
+            26,
+          ],
+        },
+      }
+    `);
+  });
+
+  test('query linksTo', () => {
+    const databaseAdapter = createMockAdapter();
+    expect(
+      searchPublishedEntitiesQuery(
+        databaseAdapter,
+        schema,
+        { linksTo: { id: '37b48706-803e-4227-a51e-8208db12d949' } },
         undefined,
         authKeysNone
       )
@@ -1331,7 +1386,7 @@ describe('searchPublishedEntitiesQuery()', () => {
     `);
   });
 
-  test('query referencing and entity types and paging', () => {
+  test('query linksTi and entity types and paging', () => {
     const databaseAdapter = createMockAdapter();
     expect(
       searchPublishedEntitiesQuery(
@@ -1339,7 +1394,7 @@ describe('searchPublishedEntitiesQuery()', () => {
         schema,
         {
           entityTypes: ['QueryGeneratorFoo', 'QueryGeneratorBar'],
-          referencing: '37b48706-803e-4227-a51e-8208db12d949',
+          linksTo: { id: '37b48706-803e-4227-a51e-8208db12d949' },
         },
         { first: 10, after: toOpaqueCursor(databaseAdapter, 'int', 123) },
         authKeysNone
@@ -1668,10 +1723,28 @@ describe('totalAdminEntitiesQuery()', () => {
     `);
   });
 
-  test('query referencing', () => {
+  test('query linksFrom', () => {
     expect(
       totalAdminEntitiesQuery(schema, authKeysNone, {
-        referencing: '37b48706-803e-4227-a51e-8208db12d949',
+        linksFrom: { id: '37b48706-803e-4227-a51e-8208db12d949' },
+      })
+    ).toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e, entities e_from, entity_version_references evr_from WHERE e.resolved_auth_key = $1 AND e_from.uuid = $2 AND e_from.latest_draft_entity_versions_id = evr_from.entity_versions_id AND evr_from.entities_id = e.id",
+          "values": Array [
+            "none",
+            "37b48706-803e-4227-a51e-8208db12d949",
+          ],
+        },
+      }
+    `);
+  });
+
+  test('query linksTo', () => {
+    expect(
+      totalAdminEntitiesQuery(schema, authKeysNone, {
+        linksTo: { id: '37b48706-803e-4227-a51e-8208db12d949' },
       })
     ).toMatchInlineSnapshot(`
       OkResult {
@@ -1686,11 +1759,11 @@ describe('totalAdminEntitiesQuery()', () => {
     `);
   });
 
-  test('query referencing and entity types and paging', () => {
+  test('query linksTo and entity types and paging', () => {
     expect(
       totalAdminEntitiesQuery(schema, authKeysNone, {
         entityTypes: ['QueryGeneratorFoo', 'QueryGeneratorBar'],
-        referencing: '37b48706-803e-4227-a51e-8208db12d949',
+        linksTo: { id: '37b48706-803e-4227-a51e-8208db12d949' },
       })
     ).toMatchInlineSnapshot(`
       OkResult {
@@ -1821,10 +1894,28 @@ describe('totalPublishedEntitiesQuery()', () => {
     `);
   });
 
-  test('query referencing', () => {
+  test('query linksFrom', () => {
     expect(
       totalPublishedEntitiesQuery(schema, authKeysNone, {
-        referencing: '37b48706-803e-4227-a51e-8208db12d949',
+        linksFrom: { id: '37b48706-803e-4227-a51e-8208db12d949' },
+      })
+    ).toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e, entities e_from, entity_version_references evr_from WHERE e.published_entity_versions_id IS NOT NULL AND e.resolved_auth_key = $1 AND e_from.uuid = $2 AND e_from.published_entity_versions_id = evr_from.entity_versions_id AND evr_from.entities_id = e.id",
+          "values": Array [
+            "none",
+            "37b48706-803e-4227-a51e-8208db12d949",
+          ],
+        },
+      }
+    `);
+  });
+
+  test('query linksTo', () => {
+    expect(
+      totalPublishedEntitiesQuery(schema, authKeysNone, {
+        linksTo: { id: '37b48706-803e-4227-a51e-8208db12d949' },
       })
     ).toMatchInlineSnapshot(`
       OkResult {
@@ -1839,11 +1930,11 @@ describe('totalPublishedEntitiesQuery()', () => {
     `);
   });
 
-  test('query referencing and entity types and paging', () => {
+  test('query linksTo and entity types and paging', () => {
     expect(
       totalPublishedEntitiesQuery(schema, authKeysNone, {
         entityTypes: ['QueryGeneratorFoo', 'QueryGeneratorBar'],
-        referencing: '37b48706-803e-4227-a51e-8208db12d949',
+        linksTo: { id: '37b48706-803e-4227-a51e-8208db12d949' },
       })
     ).toMatchInlineSnapshot(`
       OkResult {

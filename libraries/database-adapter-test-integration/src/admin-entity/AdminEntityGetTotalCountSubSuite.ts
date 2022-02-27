@@ -190,7 +190,7 @@ async function getTotalCount_referenceOneReference({ server }: AdminEntityTestCo
   );
   assertOkResult(referenceResult);
 
-  const totalResult = await adminClient.getTotalCount({ referencing: titleOnlyId });
+  const totalResult = await adminClient.getTotalCount({ linksTo: { id: titleOnlyId } });
   assertResultValue(totalResult, 1);
 }
 
@@ -202,7 +202,7 @@ async function getTotalCount_referenceNoReferences({ server }: AdminEntityTestCo
     entity: { id: titleOnlyId },
   } = titleOnlyResult.value;
 
-  const totalResult = await adminClient.getTotalCount({ referencing: titleOnlyId });
+  const totalResult = await adminClient.getTotalCount({ linksTo: { id: titleOnlyId } });
   assertResultValue(totalResult, 0);
 }
 
@@ -223,7 +223,7 @@ async function getTotalCount_referenceTwoReferencesFromOneEntity({
   );
   assertOkResult(referenceResult);
 
-  const totalResult = await adminClient.getTotalCount({ referencing: titleOnlyId });
+  const totalResult = await adminClient.getTotalCount({ linksTo: { id: titleOnlyId } });
   assertResultValue(totalResult, 1);
 }
 
