@@ -24,6 +24,23 @@ export function countEntityStatuses(entities: AdminEntity[]): Record<AdminEntity
   return result;
 }
 
+export function assertSampledEntities<TEntity extends AdminEntity | PublishedEntity>(
+  actualResult: Result<EntitySamplingPayload<TEntity>, ErrorType>,
+  expectedSeed: number,
+  expectedEntities: TEntity[]
+) {
+  assertOkResult(actualResult);
+  const { seed, totalCount, items } = actualResult.value;
+
+  assertEquals(seed, expectedSeed);
+  assertEquals(totalCount, expectedEntities.length);
+
+  const actualIds = items.map((it) => it.id).sort();
+  const expectedIds = expectedEntities.map((it) => it.id).sort();
+
+  assertEquals(actualIds, expectedIds);
+}
+
 export function assertSampledEntitiesArePartOfExpected<
   TEntity extends AdminEntity | PublishedEntity
 >(actualResult: Result<EntitySamplingPayload<TEntity>, ErrorType>, expectedEntities: TEntity[]) {
