@@ -47,9 +47,12 @@ export const SearchEntitiesSubSuite: UnboundTestFunction<AdminEntityTestContext>
   searchEntities_statusDraftArchived,
   searchEntities_statusModifiedPublished,
   searchEntities_statusAll,
-  searchEntities_referenceOneReference,
-  searchEntities_referenceNoReferences,
-  searchEntities_referenceTwoReferencesFromOneEntity,
+  searchEntities_linksToOneReference,
+  searchEntities_linksToNoReferences,
+  searchEntities_linksToTwoReferencesFromOneEntity,
+  searchEntities_linksFromOneReference,
+  searchEntities_linksFromNoReferences,
+  searchEntities_linksFromTwoReferencesFromOneEntity,
   searchEntities_boundingBoxOneInside,
   searchEntities_boundingBoxOneEntityTwoLocationsInside,
   searchEntities_boundingBoxOneOutside,
@@ -476,7 +479,7 @@ async function searchEntities_statusAll({ server }: AdminEntityTestContext) {
   assertTruthy(withdrawn > 0);
 }
 
-async function searchEntities_referenceOneReference({ server }: AdminEntityTestContext) {
+async function searchEntities_linksToOneReference({ server }: AdminEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
   const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(titleOnlyResult);
@@ -489,11 +492,11 @@ async function searchEntities_referenceOneReference({ server }: AdminEntityTestC
   );
   assertOkResult(referenceResult);
 
-  const searchResult = await adminClient.searchEntities({ referencing: titleOnlyId });
+  const searchResult = await adminClient.searchEntities({ linksTo: { id: titleOnlyId } });
   assertSearchResultEntities(searchResult, [referenceResult.value.entity]);
 }
 
-async function searchEntities_referenceNoReferences({ server }: AdminEntityTestContext) {
+async function searchEntities_linksToNoReferences({ server }: AdminEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
   const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(titleOnlyResult);
@@ -501,11 +504,11 @@ async function searchEntities_referenceNoReferences({ server }: AdminEntityTestC
     entity: { id: titleOnlyId },
   } = titleOnlyResult.value;
 
-  const searchResult = await adminClient.searchEntities({ referencing: titleOnlyId });
+  const searchResult = await adminClient.searchEntities({ linksTo: { id: titleOnlyId } });
   assertSearchResultEntities(searchResult, []);
 }
 
-async function searchEntities_referenceTwoReferencesFromOneEntity({
+async function searchEntities_linksToTwoReferencesFromOneEntity({
   server,
 }: AdminEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
@@ -522,8 +525,60 @@ async function searchEntities_referenceTwoReferencesFromOneEntity({
   );
   assertOkResult(referenceResult);
 
-  const searchResult = await adminClient.searchEntities({ referencing: titleOnlyId });
+  const searchResult = await adminClient.searchEntities({ linksTo: { id: titleOnlyId } });
   assertSearchResultEntities(searchResult, [referenceResult.value.entity]);
+}
+
+async function searchEntities_linksFromOneReference({ server }: AdminEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
+  assertOkResult(titleOnlyResult);
+  const { entity: titleOnlyEntity } = titleOnlyResult.value;
+
+  const referenceResult = await adminClient.createEntity(
+    copyEntity(REFERENCES_CREATE, { fields: { titleOnly: { id: titleOnlyEntity.id } } })
+  );
+  assertOkResult(referenceResult);
+  const {
+    entity: { id: referenceId },
+  } = referenceResult.value;
+
+  const searchResult = await adminClient.searchEntities({ linksFrom: { id: referenceId } });
+  assertSearchResultEntities(searchResult, [titleOnlyEntity]);
+}
+
+async function searchEntities_linksFromNoReferences({ server }: AdminEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const referenceResult = await adminClient.createEntity(REFERENCES_CREATE);
+  assertOkResult(referenceResult);
+  const {
+    entity: { id },
+  } = referenceResult.value;
+
+  const searchResult = await adminClient.searchEntities({ linksFrom: { id } });
+  assertSearchResultEntities(searchResult, []);
+}
+
+async function searchEntities_linksFromTwoReferencesFromOneEntity({
+  server,
+}: AdminEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
+  assertOkResult(titleOnlyResult);
+  const { entity: titleOnlyEntity } = titleOnlyResult.value;
+
+  const referenceResult = await adminClient.createEntity(
+    copyEntity(REFERENCES_CREATE, {
+      fields: { any: { id: titleOnlyEntity.id }, titleOnly: { id: titleOnlyEntity.id } },
+    })
+  );
+  assertOkResult(referenceResult);
+  const {
+    entity: { id: referenceId },
+  } = referenceResult.value;
+
+  const searchResult = await adminClient.searchEntities({ linksFrom: { id: referenceId } });
+  assertSearchResultEntities(searchResult, [titleOnlyEntity]);
 }
 
 async function searchEntities_boundingBoxOneInside({ server }: AdminEntityTestContext) {

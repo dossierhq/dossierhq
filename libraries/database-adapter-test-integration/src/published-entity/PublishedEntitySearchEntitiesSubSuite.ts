@@ -1,8 +1,19 @@
-import { PublishedQueryOrder } from '@jonasb/datadata-core';
+import { copyEntity, PublishedQueryOrder } from '@jonasb/datadata-core';
 import { assertOkResult, assertResultValue } from '../Asserts';
 import type { UnboundTestFunction } from '../Builder';
-import { assertPublishedEntityConnectionToMatchSlice } from '../shared-entity/SearchTestUtils';
-import { publishedClientForMainPrincipal } from '../shared-entity/TestClients';
+import {
+  adminToPublishedEntity,
+  REFERENCES_CREATE,
+  TITLE_ONLY_CREATE,
+} from '../shared-entity/Fixtures';
+import {
+  assertPublishedEntityConnectionToMatchSlice,
+  assertSearchResultEntities,
+} from '../shared-entity/SearchTestUtils';
+import {
+  adminClientForMainPrincipal,
+  publishedClientForMainPrincipal,
+} from '../shared-entity/TestClients';
 import type { PublishedEntityTestContext } from './PublishedEntityTestSuite';
 
 export const SearchEntitiesSubSuite: UnboundTestFunction<PublishedEntityTestContext>[] = [
@@ -21,6 +32,9 @@ export const SearchEntitiesSubSuite: UnboundTestFunction<PublishedEntityTestCont
   searchEntities_orderNameReversed,
   searchEntities_authKeySubject,
   searchEntities_authKeyNoneAndSubject,
+  searchEntities_linksFromOneReference,
+  searchEntities_linksFromNoReferences,
+  searchEntities_linksFromTwoReferencesFromOneEntity,
 ];
 
 async function searchEntities_minimal({
@@ -253,4 +267,64 @@ async function searchEntities_authKeyNoneAndSubject({
     authKeys: ['none', 'subject'],
   });
   assertPublishedEntityConnectionToMatchSlice(expectedEntities, result, 0, 25);
+}
+
+async function searchEntities_linksFromOneReference({ server }: PublishedEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const publishedClient = publishedClientForMainPrincipal(server);
+
+  const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true });
+  assertOkResult(titleOnlyResult);
+  const { entity: titleOnlyEntity } = titleOnlyResult.value;
+
+  const referenceResult = await adminClient.createEntity(
+    copyEntity(REFERENCES_CREATE, { fields: { titleOnly: { id: titleOnlyEntity.id } } }),
+    { publish: true }
+  );
+  assertOkResult(referenceResult);
+  const {
+    entity: { id: referenceId },
+  } = referenceResult.value;
+
+  const searchResult = await publishedClient.searchEntities({ linksFrom: { id: referenceId } });
+  assertSearchResultEntities(searchResult, [adminToPublishedEntity(titleOnlyEntity)]);
+}
+
+async function searchEntities_linksFromNoReferences({ server }: PublishedEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const publishedClient = publishedClientForMainPrincipal(server);
+
+  const referenceResult = await adminClient.createEntity(REFERENCES_CREATE, { publish: true });
+  assertOkResult(referenceResult);
+  const {
+    entity: { id },
+  } = referenceResult.value;
+
+  const searchResult = await publishedClient.searchEntities({ linksFrom: { id } });
+  assertSearchResultEntities(searchResult, []);
+}
+
+async function searchEntities_linksFromTwoReferencesFromOneEntity({
+  server,
+}: PublishedEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const publishedClient = publishedClientForMainPrincipal(server);
+
+  const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true });
+  assertOkResult(titleOnlyResult);
+  const { entity: titleOnlyEntity } = titleOnlyResult.value;
+
+  const referenceResult = await adminClient.createEntity(
+    copyEntity(REFERENCES_CREATE, {
+      fields: { any: { id: titleOnlyEntity.id }, titleOnly: { id: titleOnlyEntity.id } },
+    }),
+    { publish: true }
+  );
+  assertOkResult(referenceResult);
+  const {
+    entity: { id: referenceId },
+  } = referenceResult.value;
+
+  const searchResult = await publishedClient.searchEntities({ linksFrom: { id: referenceId } });
+  assertSearchResultEntities(searchResult, [adminToPublishedEntity(titleOnlyEntity)]);
 }

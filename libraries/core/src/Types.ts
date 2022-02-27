@@ -215,8 +215,8 @@ export interface AdminQuery {
   authKeys?: string[];
   entityTypes?: string[];
   status?: AdminEntityStatus[];
-  /** Entities referencing the entity (by id) */
-  referencing?: string;
+  linksTo?: EntityReference;
+  linksFrom?: EntityReference;
   boundingBox?: BoundingBox;
   text?: string;
 }
@@ -234,8 +234,8 @@ export enum PublishedQueryOrder {
 export interface PublishedQuery {
   authKeys?: string[];
   entityTypes?: string[];
-  /** Entities referencing the entity (by id) */
-  referencing?: string;
+  linksTo?: EntityReference;
+  linksFrom?: EntityReference;
   boundingBox?: BoundingBox;
   text?: string;
 }

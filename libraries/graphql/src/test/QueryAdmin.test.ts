@@ -1394,7 +1394,7 @@ describe('searchAdminEntities()', () => {
     );
   });
 
-  test('Filter based on referencing, one reference', async () => {
+  test('Filter based on linksTo, one reference', async () => {
     const { barId, fooEntities } = await createBarWithFooReferences(1);
     const [fooEntity] = fooEntities;
 
@@ -1402,7 +1402,7 @@ describe('searchAdminEntities()', () => {
       schema,
       source: `
         query QueryReferencing($id: ID!) {
-          adminSearchEntities(query: { referencing: $id }) {
+          adminSearchEntities(query: { linksTo: {id: $id } }) {
             edges {
               node {
                 id

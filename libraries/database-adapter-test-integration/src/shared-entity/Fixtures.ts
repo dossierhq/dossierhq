@@ -6,6 +6,7 @@ import type {
 } from '@jonasb/datadata-core';
 import { AdminEntityStatus } from '@jonasb/datadata-core';
 import { Temporal } from '@js-temporal/polyfill';
+import { assertEquals } from '../Asserts';
 
 export const LOCATIONS_CREATE: Readonly<AdminEntityCreate> = {
   info: {
@@ -96,3 +97,23 @@ export const TITLE_ONLY_PUBLISHED_ENTITY: Readonly<PublishedEntity> = {
   },
   fields: { title: 'Title' },
 };
+
+export function adminToPublishedEntity(entity: AdminEntity): PublishedEntity {
+  assertEquals(entity.info.status, AdminEntityStatus.published);
+  const {
+    id,
+    info: { name, type, authKey, createdAt },
+    fields,
+  } = entity;
+  const result: PublishedEntity = {
+    id,
+    info: {
+      type,
+      name,
+      authKey,
+      createdAt,
+    },
+    fields,
+  };
+  return result;
+}
