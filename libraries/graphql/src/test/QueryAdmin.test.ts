@@ -17,6 +17,7 @@ import type { GraphQLSchema } from 'graphql';
 import { graphql, printError } from 'graphql';
 import type { SessionGraphQLContext } from '..';
 import { GraphQLSchemaGenerator } from '..';
+import { expectSampledEntitiesArePartOfExpected } from './SampleTestUtils';
 import type { TestServerWithSession } from './TestUtils';
 import { setUpServerWithSession } from './TestUtils';
 
@@ -1219,6 +1220,32 @@ describe('adminEntities()', () => {
       adminEntities: [null],
     });
     expect(result.errors).toBeFalsy();
+  });
+});
+
+describe('adminSampleEntities()', () => {
+  test('20 entities', async () => {
+    const result = (await graphql({
+      schema,
+      source: `
+        {
+          adminSampleEntities(query: { entityTypes: [QueryAdminOnlyEditBefore] }, seed: 123, count: 20) {
+            seed
+            totalCount
+            items {
+              id
+            }
+          }
+        }
+      `,
+      contextValue: createContext(),
+    })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
+    expect(result.error).toBeUndefined();
+    expectSampledEntitiesArePartOfExpected(
+      result.data?.adminSampleEntities,
+      123,
+      entitiesOfTypeQueryAdminOnlyEditBeforeNone
+    );
   });
 });
 
