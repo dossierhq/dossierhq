@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-postgres",
+      "comment": "Support advisory locks.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-postgres"
+}
