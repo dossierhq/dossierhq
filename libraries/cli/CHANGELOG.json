@@ -2,6 +2,12 @@
   "name": "@jonasb/datadata-cli",
   "entries": [
     {
+      "version": "0.1.2",
+      "tag": "@jonasb/datadata-cli_v0.1.2",
+      "date": "Mon, 28 Feb 2022 22:25:07 GMT",
+      "comments": {}
+    },
+    {
       "version": "0.1.1",
       "tag": "@jonasb/datadata-cli_v0.1.1",
       "date": "Sun, 13 Feb 2022 21:58:15 GMT",
