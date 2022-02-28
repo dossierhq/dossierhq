@@ -27,7 +27,7 @@ jobs:
             examples/next-web/.next/cache/
           key: ${{ runner.os }}-next-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Use Node.js 16
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: 16.13.1
       - name: Use deno
