@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-design",
+      "comment": "Update FontAwesome. Add sampling icon.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-design"
+}
