@@ -25,7 +25,7 @@ export async function advisoryLockAcquire(
 
   const result = await queryNone(databaseAdapter, context, query, (error) => {
     if (databaseAdapter.isUniqueViolationOfConstraint(error, AdvisoryLocksUniqueNameConstraint)) {
-      return notOk.Conflict(`Lock with name ${name} already exists`);
+      return notOk.Conflict(`Lock with name '${name}' already exists`);
     }
     return notOk.GenericUnexpectedException(context, error);
   });

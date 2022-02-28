@@ -33,6 +33,6 @@ async function acquireLock_errorConflictIfAlreadyAcquired({ server }: AdvisoryLo
   assertErrorResult(
     secondResult,
     ErrorType.Conflict,
-    'Lock with name acquireLock_errorConflictIfAlreadyAcquired already exists'
+    "Lock with name 'acquireLock_errorConflictIfAlreadyAcquired' already exists"
   );
 }

@@ -9,6 +9,7 @@ import type {
   AdminSchema,
   AdminSearchQuery,
   AdminValueTypeSpecification,
+  AdvisoryLockOptions,
   EntityReference,
   EntityVersionReference,
   ErrorType,
@@ -840,6 +841,27 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         },
       })
     );
+
+    // AdvisoryLockPayload
+    this.addType(
+      new GraphQLObjectType({
+        name: 'AdvisoryLockPayload',
+        fields: {
+          name: { type: new GraphQLNonNull(GraphQLString) },
+          handle: { type: new GraphQLNonNull(GraphQLInt) },
+        },
+      })
+    );
+
+    // AdvisoryLockReleasePayload
+    this.addType(
+      new GraphQLObjectType({
+        name: 'AdvisoryLockReleasePayload',
+        fields: {
+          name: { type: new GraphQLNonNull(GraphQLString) },
+        },
+      })
+    );
   }
 
   addAdminEntityTypes(adminSchema: AdminSchema): void {
@@ -1445,6 +1467,49 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
     });
   }
 
+  buildMutationAcquireAdvisoryLock<TSource>(): GraphQLFieldConfig<TSource, TContext> {
+    return fieldConfigWithArgs<TSource, TContext, { name: string; leaseDuration: number }>({
+      type: this.getOutputType('AdvisoryLockPayload'),
+      args: {
+        name: { type: new GraphQLNonNull(GraphQLString) },
+        leaseDuration: { type: new GraphQLNonNull(GraphQLInt) },
+      },
+      resolve: async (_source, args, context, _info) => {
+        const { name, leaseDuration } = args;
+        const options: AdvisoryLockOptions = { leaseDuration };
+        return await Mutations.acquireAdvisoryLock(context, name, options);
+      },
+    });
+  }
+
+  buildMutationRenewAdvisoryLock<TSource>(): GraphQLFieldConfig<TSource, TContext> {
+    return fieldConfigWithArgs<TSource, TContext, { name: string; handle: number }>({
+      type: this.getOutputType('AdvisoryLockPayload'),
+      args: {
+        name: { type: new GraphQLNonNull(GraphQLString) },
+        handle: { type: new GraphQLNonNull(GraphQLInt) },
+      },
+      resolve: async (_source, args, context, _info) => {
+        const { name, handle } = args;
+        return await Mutations.renewAdvisoryLock(context, name, handle);
+      },
+    });
+  }
+
+  buildMutationReleaseAdvisoryLock<TSource>(): GraphQLFieldConfig<TSource, TContext> {
+    return fieldConfigWithArgs<TSource, TContext, { name: string; handle: number }>({
+      type: this.getOutputType('AdvisoryLockReleasePayload'),
+      args: {
+        name: { type: new GraphQLNonNull(GraphQLString) },
+        handle: { type: new GraphQLNonNull(GraphQLInt) },
+      },
+      resolve: async (_source, args, context, _info) => {
+        const { name, handle } = args;
+        return await Mutations.releaseAdvisoryLock(context, name, handle);
+      },
+    });
+  }
+
   resolveJsonInputFields(
     adminSchema: AdminSchema,
     entity: AdminEntityCreate | AdminEntityUpdate,
@@ -1609,6 +1674,10 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         entitySpec.name
       );
     }
+
+    fields.acquireAdvisoryLock = this.buildMutationAcquireAdvisoryLock();
+    fields.renewAdvisoryLock = this.buildMutationRenewAdvisoryLock();
+    fields.releaseAdvisoryLock = this.buildMutationReleaseAdvisoryLock();
 
     return new GraphQLObjectType<TSource, TContext>({
       name: 'Mutation',
