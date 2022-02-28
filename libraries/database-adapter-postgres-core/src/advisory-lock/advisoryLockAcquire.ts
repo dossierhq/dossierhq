@@ -32,7 +32,7 @@ export async function advisoryLockAcquire(
           UniqueConstraints.advisory_locks_name_key
         )
       ) {
-        return notOk.Conflict(`Lock with name ${name} already exists`);
+        return notOk.Conflict(`Lock with name '${name}' already exists`);
       }
       return notOk.GenericUnexpectedException(context, error);
     }

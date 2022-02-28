@@ -247,6 +247,15 @@ type AdminEntityUnarchivePayload {
   updatedAt: Instant!
 }
 
+type AdvisoryLockPayload {
+  name: String!
+  handle: Int!
+}
+
+type AdvisoryLockReleasePayload {
+  name: String!
+}
+
 type AdminFooFields {
   body: String
 }
@@ -381,6 +390,9 @@ type Mutation {
   createBarEntity(entity: AdminBarCreateInput!, publish: Boolean): AdminBarCreatePayload
   updateBarEntity(entity: AdminBarUpdateInput!, publish: Boolean): AdminBarUpdatePayload
   upsertBarEntity(entity: AdminBarUpsertInput!, publish: Boolean): AdminBarUpsertPayload
+  acquireAdvisoryLock(name: String!, leaseDuration: Int!): AdvisoryLockPayload
+  renewAdvisoryLock(name: String!, handle: Int!): AdvisoryLockPayload
+  releaseAdvisoryLock(name: String!, handle: Int!): AdvisoryLockReleasePayload
 }"
 `;
 
@@ -849,6 +861,15 @@ type AdminEntityUnarchivePayload {
   updatedAt: Instant!
 }
 
+type AdvisoryLockPayload {
+  name: String!
+  handle: Int!
+}
+
+type AdvisoryLockReleasePayload {
+  name: String!
+}
+
 type AdminFooFields {
   body: String
 }
@@ -987,6 +1008,9 @@ type Mutation {
   createBarEntity(entity: AdminBarCreateInput!, publish: Boolean): AdminBarCreatePayload
   updateBarEntity(entity: AdminBarUpdateInput!, publish: Boolean): AdminBarUpdatePayload
   upsertBarEntity(entity: AdminBarUpsertInput!, publish: Boolean): AdminBarUpsertPayload
+  acquireAdvisoryLock(name: String!, leaseDuration: Int!): AdvisoryLockPayload
+  renewAdvisoryLock(name: String!, handle: Int!): AdvisoryLockPayload
+  releaseAdvisoryLock(name: String!, handle: Int!): AdvisoryLockReleasePayload
 }"
 `;
 
@@ -1279,6 +1303,15 @@ type AdminEntityUnarchivePayload {
   updatedAt: Instant!
 }
 
+type AdvisoryLockPayload {
+  name: String!
+  handle: Int!
+}
+
+type AdvisoryLockReleasePayload {
+  name: String!
+}
+
 type AdminFooFields {
   strings: [String!]
   booleans: [Boolean!]
@@ -1387,6 +1420,9 @@ type Mutation {
   createBarEntity(entity: AdminBarCreateInput!, publish: Boolean): AdminBarCreatePayload
   updateBarEntity(entity: AdminBarUpdateInput!, publish: Boolean): AdminBarUpdatePayload
   upsertBarEntity(entity: AdminBarUpsertInput!, publish: Boolean): AdminBarUpsertPayload
+  acquireAdvisoryLock(name: String!, leaseDuration: Int!): AdvisoryLockPayload
+  renewAdvisoryLock(name: String!, handle: Int!): AdvisoryLockPayload
+  releaseAdvisoryLock(name: String!, handle: Int!): AdvisoryLockReleasePayload
 }"
 `;
 
@@ -1838,6 +1874,15 @@ type AdminEntityUnarchivePayload {
   updatedAt: Instant!
 }
 
+type AdvisoryLockPayload {
+  name: String!
+  handle: Int!
+}
+
+type AdvisoryLockReleasePayload {
+  name: String!
+}
+
 type AdminFooFields {
   strings: [String!]
   booleans: [Boolean!]
@@ -1950,6 +1995,9 @@ type Mutation {
   createBarEntity(entity: AdminBarCreateInput!, publish: Boolean): AdminBarCreatePayload
   updateBarEntity(entity: AdminBarUpdateInput!, publish: Boolean): AdminBarUpdatePayload
   upsertBarEntity(entity: AdminBarUpsertInput!, publish: Boolean): AdminBarUpsertPayload
+  acquireAdvisoryLock(name: String!, leaseDuration: Int!): AdvisoryLockPayload
+  renewAdvisoryLock(name: String!, handle: Int!): AdvisoryLockPayload
+  releaseAdvisoryLock(name: String!, handle: Int!): AdvisoryLockReleasePayload
 }"
 `;
 
@@ -2192,6 +2240,15 @@ type AdminEntityUnarchivePayload {
   updatedAt: Instant!
 }
 
+type AdvisoryLockPayload {
+  name: String!
+  handle: Int!
+}
+
+type AdvisoryLockReleasePayload {
+  name: String!
+}
+
 type AdminFooFields {
   noMeansAll: AdminEntity
   bar: AdminBar
@@ -2351,6 +2408,9 @@ type Mutation {
   createBazEntity(entity: AdminBazCreateInput!, publish: Boolean): AdminBazCreatePayload
   updateBazEntity(entity: AdminBazUpdateInput!, publish: Boolean): AdminBazUpdatePayload
   upsertBazEntity(entity: AdminBazUpsertInput!, publish: Boolean): AdminBazUpsertPayload
+  acquireAdvisoryLock(name: String!, leaseDuration: Int!): AdvisoryLockPayload
+  renewAdvisoryLock(name: String!, handle: Int!): AdvisoryLockPayload
+  releaseAdvisoryLock(name: String!, handle: Int!): AdvisoryLockReleasePayload
 }"
 `;
 
@@ -2828,6 +2888,15 @@ type AdminEntityUnarchivePayload {
   updatedAt: Instant!
 }
 
+type AdvisoryLockPayload {
+  name: String!
+  handle: Int!
+}
+
+type AdvisoryLockReleasePayload {
+  name: String!
+}
+
 type AdminFooFields {
   noMeansAll: AdminEntity
   bar: AdminBar
@@ -3002,6 +3071,9 @@ type Mutation {
   createBazEntity(entity: AdminBazCreateInput!, publish: Boolean): AdminBazCreatePayload
   updateBazEntity(entity: AdminBazUpdateInput!, publish: Boolean): AdminBazUpdatePayload
   upsertBazEntity(entity: AdminBazUpsertInput!, publish: Boolean): AdminBazUpsertPayload
+  acquireAdvisoryLock(name: String!, leaseDuration: Int!): AdvisoryLockPayload
+  renewAdvisoryLock(name: String!, handle: Int!): AdvisoryLockPayload
+  releaseAdvisoryLock(name: String!, handle: Int!): AdvisoryLockReleasePayload
 }"
 `;
 
@@ -3242,6 +3314,15 @@ type AdminEntityUnarchivePayload {
   updatedAt: Instant!
 }
 
+type AdvisoryLockPayload {
+  name: String!
+  handle: Int!
+}
+
+type AdvisoryLockReleasePayload {
+  name: String!
+}
+
 type AdminFoo implements AdminEntity {
   id: ID!
   info: AdminEntityInfo!
@@ -3294,6 +3375,9 @@ type Mutation {
   createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
   updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
   upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
+  acquireAdvisoryLock(name: String!, leaseDuration: Int!): AdvisoryLockPayload
+  renewAdvisoryLock(name: String!, handle: Int!): AdvisoryLockPayload
+  releaseAdvisoryLock(name: String!, handle: Int!): AdvisoryLockReleasePayload
 }"
 `;
 
@@ -3716,6 +3800,15 @@ type AdminEntityUnarchivePayload {
   updatedAt: Instant!
 }
 
+type AdvisoryLockPayload {
+  name: String!
+  handle: Int!
+}
+
+type AdvisoryLockReleasePayload {
+  name: String!
+}
+
 type AdminFoo implements AdminEntity {
   id: ID!
   info: AdminEntityInfo!
@@ -3772,6 +3865,9 @@ type Mutation {
   createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
   updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
   upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
+  acquireAdvisoryLock(name: String!, leaseDuration: Int!): AdvisoryLockPayload
+  renewAdvisoryLock(name: String!, handle: Int!): AdvisoryLockPayload
+  releaseAdvisoryLock(name: String!, handle: Int!): AdvisoryLockReleasePayload
 }"
 `;
 
@@ -4020,6 +4116,15 @@ type AdminEntityUnarchivePayload {
   updatedAt: Instant!
 }
 
+type AdvisoryLockPayload {
+  name: String!
+  handle: Int!
+}
+
+type AdvisoryLockReleasePayload {
+  name: String!
+}
+
 type AdminFooFields {
   body: String
   tags: [String!]
@@ -4099,6 +4204,9 @@ type Mutation {
   createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
   updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
   upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
+  acquireAdvisoryLock(name: String!, leaseDuration: Int!): AdvisoryLockPayload
+  renewAdvisoryLock(name: String!, handle: Int!): AdvisoryLockPayload
+  releaseAdvisoryLock(name: String!, handle: Int!): AdvisoryLockReleasePayload
 }"
 `;
 
@@ -4569,6 +4677,15 @@ type AdminEntityUnarchivePayload {
   updatedAt: Instant!
 }
 
+type AdvisoryLockPayload {
+  name: String!
+  handle: Int!
+}
+
+type AdvisoryLockReleasePayload {
+  name: String!
+}
+
 type AdminFooFields {
   body: String
   tags: [String!]
@@ -4652,6 +4769,9 @@ type Mutation {
   createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
   updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
   upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
+  acquireAdvisoryLock(name: String!, leaseDuration: Int!): AdvisoryLockPayload
+  renewAdvisoryLock(name: String!, handle: Int!): AdvisoryLockPayload
+  releaseAdvisoryLock(name: String!, handle: Int!): AdvisoryLockReleasePayload
 }"
 `;
 
@@ -4892,6 +5012,15 @@ type AdminEntityUnarchivePayload {
   updatedAt: Instant!
 }
 
+type AdvisoryLockPayload {
+  name: String!
+  handle: Int!
+}
+
+type AdvisoryLockReleasePayload {
+  name: String!
+}
+
 type AdminFooFields {
   body: AdminRichText
 }
@@ -4956,6 +5085,9 @@ type Mutation {
   createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
   updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
   upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
+  acquireAdvisoryLock(name: String!, leaseDuration: Int!): AdvisoryLockPayload
+  renewAdvisoryLock(name: String!, handle: Int!): AdvisoryLockPayload
+  releaseAdvisoryLock(name: String!, handle: Int!): AdvisoryLockReleasePayload
 }"
 `;
 
@@ -5388,6 +5520,15 @@ type AdminEntityUnarchivePayload {
   updatedAt: Instant!
 }
 
+type AdvisoryLockPayload {
+  name: String!
+  handle: Int!
+}
+
+type AdvisoryLockReleasePayload {
+  name: String!
+}
+
 type AdminFooFields {
   body: AdminRichText
 }
@@ -5456,6 +5597,9 @@ type Mutation {
   createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
   updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
   upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
+  acquireAdvisoryLock(name: String!, leaseDuration: Int!): AdvisoryLockPayload
+  renewAdvisoryLock(name: String!, handle: Int!): AdvisoryLockPayload
+  releaseAdvisoryLock(name: String!, handle: Int!): AdvisoryLockReleasePayload
 }"
 `;
 
@@ -5697,6 +5841,15 @@ type AdminEntityUnarchivePayload {
   updatedAt: Instant!
 }
 
+type AdvisoryLockPayload {
+  name: String!
+  handle: Int!
+}
+
+type AdvisoryLockReleasePayload {
+  name: String!
+}
+
 type AdminFooFields {
   fooField: String
 }
@@ -5817,6 +5970,9 @@ type Mutation {
   createBarEntity(entity: AdminBarCreateInput!, publish: Boolean): AdminBarCreatePayload
   updateBarEntity(entity: AdminBarUpdateInput!, publish: Boolean): AdminBarUpdatePayload
   upsertBarEntity(entity: AdminBarUpsertInput!, publish: Boolean): AdminBarUpsertPayload
+  acquireAdvisoryLock(name: String!, leaseDuration: Int!): AdvisoryLockPayload
+  renewAdvisoryLock(name: String!, handle: Int!): AdvisoryLockPayload
+  releaseAdvisoryLock(name: String!, handle: Int!): AdvisoryLockReleasePayload
 }"
 `;
 
@@ -6278,6 +6434,15 @@ type AdminEntityUnarchivePayload {
   updatedAt: Instant!
 }
 
+type AdvisoryLockPayload {
+  name: String!
+  handle: Int!
+}
+
+type AdvisoryLockReleasePayload {
+  name: String!
+}
+
 type AdminFooFields {
   fooField: String
 }
@@ -6402,6 +6567,9 @@ type Mutation {
   createBarEntity(entity: AdminBarCreateInput!, publish: Boolean): AdminBarCreatePayload
   updateBarEntity(entity: AdminBarUpdateInput!, publish: Boolean): AdminBarUpdatePayload
   upsertBarEntity(entity: AdminBarUpsertInput!, publish: Boolean): AdminBarUpsertPayload
+  acquireAdvisoryLock(name: String!, leaseDuration: Int!): AdvisoryLockPayload
+  renewAdvisoryLock(name: String!, handle: Int!): AdvisoryLockPayload
+  releaseAdvisoryLock(name: String!, handle: Int!): AdvisoryLockReleasePayload
 }"
 `;
 
@@ -6653,6 +6821,15 @@ type AdminEntityUnarchivePayload {
   updatedAt: Instant!
 }
 
+type AdvisoryLockPayload {
+  name: String!
+  handle: Int!
+}
+
+type AdvisoryLockReleasePayload {
+  name: String!
+}
+
 type AdminFooFields {
   valueOne: AdminValueOne
   unspecifiedValue: AdminValue
@@ -6813,6 +6990,9 @@ type Mutation {
   createBarEntity(entity: AdminBarCreateInput!, publish: Boolean): AdminBarCreatePayload
   updateBarEntity(entity: AdminBarUpdateInput!, publish: Boolean): AdminBarUpdatePayload
   upsertBarEntity(entity: AdminBarUpsertInput!, publish: Boolean): AdminBarUpsertPayload
+  acquireAdvisoryLock(name: String!, leaseDuration: Int!): AdvisoryLockPayload
+  renewAdvisoryLock(name: String!, handle: Int!): AdvisoryLockPayload
+  releaseAdvisoryLock(name: String!, handle: Int!): AdvisoryLockReleasePayload
 }"
 `;
 
@@ -7343,6 +7523,15 @@ type AdminEntityUnarchivePayload {
   updatedAt: Instant!
 }
 
+type AdvisoryLockPayload {
+  name: String!
+  handle: Int!
+}
+
+type AdvisoryLockReleasePayload {
+  name: String!
+}
+
 type AdminFooFields {
   valueOne: AdminValueOne
   unspecifiedValue: AdminValue
@@ -7512,5 +7701,8 @@ type Mutation {
   createBarEntity(entity: AdminBarCreateInput!, publish: Boolean): AdminBarCreatePayload
   updateBarEntity(entity: AdminBarUpdateInput!, publish: Boolean): AdminBarUpdatePayload
   upsertBarEntity(entity: AdminBarUpsertInput!, publish: Boolean): AdminBarUpsertPayload
+  acquireAdvisoryLock(name: String!, leaseDuration: Int!): AdvisoryLockPayload
+  renewAdvisoryLock(name: String!, handle: Int!): AdvisoryLockPayload
+  releaseAdvisoryLock(name: String!, handle: Int!): AdvisoryLockReleasePayload
 }"
 `;

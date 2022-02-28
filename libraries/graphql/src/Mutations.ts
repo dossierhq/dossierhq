@@ -11,6 +11,9 @@ import type {
   AdminEntityUpsert,
   AdminEntityUpsertPayload,
   AdminSchema,
+  AdvisoryLockOptions,
+  AdvisoryLockPayload,
+  AdvisoryLockReleasePayload,
   EntityReference,
   EntityVersionReference,
 } from '@jonasb/datadata-core';
@@ -115,4 +118,34 @@ export async function unarchiveEntity<TContext extends SessionGraphQLContext>(
     throw result.toError();
   }
   return result.value;
+}
+
+export async function acquireAdvisoryLock<TContext extends SessionGraphQLContext>(
+  context: TContext,
+  name: string,
+  options: AdvisoryLockOptions
+): Promise<AdvisoryLockPayload> {
+  const adminClient = getAdminClient(context);
+  const result = await adminClient.acquireAdvisoryLock(name, options);
+  return result.valueOrThrow();
+}
+
+export async function renewAdvisoryLock<TContext extends SessionGraphQLContext>(
+  context: TContext,
+  name: string,
+  handle: number
+): Promise<AdvisoryLockPayload> {
+  const adminClient = getAdminClient(context);
+  const result = await adminClient.renewAdvisoryLock(name, handle);
+  return result.valueOrThrow();
+}
+
+export async function releaseAdvisoryLock<TContext extends SessionGraphQLContext>(
+  context: TContext,
+  name: string,
+  handle: number
+): Promise<AdvisoryLockReleasePayload> {
+  const adminClient = getAdminClient(context);
+  const result = await adminClient.releaseAdvisoryLock(name, handle);
+  return result.valueOrThrow();
 }
