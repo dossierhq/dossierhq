@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-design",
+      "comment": "Change from type: module in package.json",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-design"
+}
