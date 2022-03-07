@@ -125,7 +125,7 @@ describe('renewAdvisoryLock()', () => {
       schema,
       source: renewAdvisoryLockQuery,
       contextValue: createContext(),
-      variableValues: { name: 'Invalid loch name', handle: 123 },
+      variableValues: { name: 'Invalid lock name', handle: 123 },
     })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
     expect(result).toMatchInlineSnapshot(`
