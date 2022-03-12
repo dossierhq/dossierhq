@@ -1,6 +1,11 @@
 # Change Log - @jonasb/datadata-core
 
-This log was last generated on Mon, 07 Mar 2022 22:35:33 GMT and should not be manually modified.
+This log was last generated on Sat, 12 Mar 2022 09:19:52 GMT and should not be manually modified.
+
+## 0.1.5
+Sat, 12 Mar 2022 09:19:52 GMT
+
+_Version update only_
 
 ## 0.1.4
 Mon, 07 Mar 2022 22:35:33 GMT
