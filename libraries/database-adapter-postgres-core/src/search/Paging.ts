@@ -7,9 +7,14 @@ import { fromOpaqueCursor } from './OpaqueCursor';
 //TODO move to server?
 export const pagingDefaultCount = 25;
 
-export interface ResolvedPaging<TCursor> {
+export interface ResolvedPaging {
   forwards: boolean;
   count: number;
+  before: string | null;
+  after: string | null;
+}
+
+export interface ResolvedPagingCursors<TCursor> {
   before: TCursor | null;
   after: TCursor | null;
 }
@@ -17,42 +22,44 @@ export interface ResolvedPaging<TCursor> {
 function getCursor(
   databaseAdapter: PostgresDatabaseAdapter,
   cursorType: CursorNativeType,
-  paging: Paging | undefined,
+  paging: ResolvedPaging,
   key: 'after' | 'before'
-) {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const cursor = (paging as any)?.[key];
+): Result<unknown, ErrorType.BadRequest> {
+  const cursor = paging[key];
   if (cursor) {
     return fromOpaqueCursor(databaseAdapter, cursorType, cursor);
   }
-  return null;
+  return ok(null);
 }
 
-export function resolvePaging<TCursor>(
-  databaseAdapter: PostgresDatabaseAdapter,
-  cursorType: CursorNativeType,
-  paging?: Paging
-): Result<ResolvedPaging<TCursor>, ErrorType.BadRequest> {
-  const after = getCursor(databaseAdapter, cursorType, paging, 'after');
-  const before = getCursor(databaseAdapter, cursorType, paging, 'before');
-
-  if (after?.isError()) {
-    return after;
-  }
-  if (before?.isError()) {
-    return before;
-  }
-
+export function resolvePaging(
+  paging: Paging | undefined
+): Result<ResolvedPaging, ErrorType.BadRequest> {
   const pagingInfo = getPagingInfo(paging);
-  if (pagingInfo.isError()) {
-    return pagingInfo;
-  }
-  const { forwards, count } = pagingInfo.value;
+  if (pagingInfo.isError()) return pagingInfo;
 
+  const { forwards, count } = pagingInfo.value;
   return ok({
     forwards,
     count: count ?? pagingDefaultCount,
-    before: before?.isOk() ? (before.value as TCursor) : null,
-    after: after?.isOk() ? (after.value as TCursor) : null,
+    before: paging?.before ?? null,
+    after: paging?.after ?? null,
+  });
+}
+
+export function resolvePagingCursors<TCursor>(
+  databaseAdapter: PostgresDatabaseAdapter,
+  cursorType: CursorNativeType,
+  paging: ResolvedPaging
+): Result<ResolvedPagingCursors<TCursor>, ErrorType.BadRequest> {
+  const after = getCursor(databaseAdapter, cursorType, paging, 'after');
+  const before = getCursor(databaseAdapter, cursorType, paging, 'before');
+
+  if (after.isError()) return after;
+  if (before.isError()) return before;
+
+  return ok({
+    before: before.value as TCursor | null,
+    after: after.value as TCursor | null,
   });
 }

@@ -13,6 +13,7 @@ import type {
 } from '@jonasb/datadata-database-adapter';
 import type { PostgresDatabaseAdapter } from '..';
 import { queryMany } from '../QueryFunctions';
+import { resolvePaging } from '../search/Paging';
 import type { SearchPublishedEntitiesItem } from '../search/QueryGenerator';
 import { searchPublishedEntitiesQuery } from '../search/QueryGenerator';
 
@@ -24,22 +25,26 @@ export async function publishedEntitySearchEntities(
   paging: Paging | undefined,
   resolvedAuthKeys: ResolvedAuthKey[]
 ): PromiseResult<DatabasePublishedEntitySearchPayload, ErrorType.BadRequest | ErrorType.Generic> {
+  const pagingResult = resolvePaging(paging);
+  if (pagingResult.isError()) return pagingResult;
+  const { forwards, count } = pagingResult.value;
+
   const sqlQueryResult = searchPublishedEntitiesQuery(
     databaseAdapter,
     schema,
     query,
-    paging,
+    pagingResult.value,
     resolvedAuthKeys
   );
   if (sqlQueryResult.isError()) {
     return sqlQueryResult;
   }
-  const { cursorExtractor, pagingCount, isForwards } = sqlQueryResult.value;
+  const { cursorExtractor, sqlQuery } = sqlQueryResult.value;
 
   const searchResult = await queryMany<SearchPublishedEntitiesItem>(
     databaseAdapter,
     context,
-    sqlQueryResult.value
+    sqlQuery
   );
   if (searchResult.isError()) {
     return searchResult;
@@ -47,18 +52,18 @@ export async function publishedEntitySearchEntities(
 
   const entitiesValues = searchResult.value;
 
-  const hasExtraPage = entitiesValues.length > pagingCount;
+  const hasExtraPage = entitiesValues.length > count;
   if (hasExtraPage) {
-    entitiesValues.splice(pagingCount, 1);
+    entitiesValues.splice(count, 1);
   }
-  if (!isForwards) {
+  if (!forwards) {
     // Reverse since DESC order returns the rows in the wrong order, we want them in the same order as for forwards pagination
     entitiesValues.reverse();
   }
 
   return ok({
-    hasNextPage: isForwards ? hasExtraPage : false,
-    hasPreviousPage: isForwards ? false : hasExtraPage,
+    hasNextPage: forwards ? hasExtraPage : false,
+    hasPreviousPage: forwards ? false : hasExtraPage,
     entities: entitiesValues.map((it) => ({
       id: it.uuid,
       type: it.type,
