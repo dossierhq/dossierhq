@@ -1,5 +1,5 @@
 import type { Logger } from '@jonasb/datadata-core';
-import { NoOpLogger } from '@jonasb/datadata-core';
+import { AdminSchema, NoOpLogger } from '@jonasb/datadata-core';
 import type {
   DatabaseAdapter,
   Transaction,
@@ -77,4 +77,8 @@ export function getQueryCalls(adapter: MockedPostgresDatabaseAdapter): [string, 
     const [_transaction, query, values] = call;
     return [query, ...(values ?? [])];
   });
+}
+
+export function createTestAdminSchema(): AdminSchema {
+  return new AdminSchema({ entityTypes: [], valueTypes: [] });
 }
