@@ -3,7 +3,6 @@ import type {
   AdminSchema,
   AdminSearchQuery,
   ErrorType,
-  Paging,
   PublishedQuery,
   PublishedSchema,
   PublishedSearchQuery,
@@ -16,7 +15,8 @@ import type { PostgresDatabaseAdapter } from '..';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema';
 import type { CursorNativeType } from './OpaqueCursor';
 import { toOpaqueCursor } from './OpaqueCursor';
-import { resolvePaging } from './Paging';
+import type { ResolvedPaging } from './Paging';
+import { resolvePagingCursors } from './Paging';
 
 // id and updated are included for order by
 export type SearchAdminEntitiesItem = Pick<
@@ -33,10 +33,7 @@ export type SearchPublishedEntitiesItem = Pick<
 type CursorName = 'name' | 'updated' | 'id';
 
 export interface SharedEntitiesQuery<TItem> {
-  text: string;
-  values: unknown[];
-  isForwards: boolean;
-  pagingCount: number;
+  sqlQuery: { text: string; values: unknown[] };
   cursorExtractor: (item: TItem) => string;
 }
 
@@ -44,7 +41,7 @@ export function searchPublishedEntitiesQuery(
   databaseAdapter: PostgresDatabaseAdapter,
   schema: PublishedSchema,
   query: PublishedSearchQuery | undefined,
-  paging: Paging | undefined,
+  paging: ResolvedPaging,
   authKeys: ResolvedAuthKey[]
 ): Result<SharedEntitiesQuery<SearchPublishedEntitiesItem>, ErrorType.BadRequest> {
   return sharedSearchEntitiesQuery(databaseAdapter, schema, query, paging, authKeys, true);
@@ -54,7 +51,7 @@ export function searchAdminEntitiesQuery(
   databaseAdapter: PostgresDatabaseAdapter,
   schema: AdminSchema,
   query: AdminSearchQuery | undefined,
-  paging: Paging | undefined,
+  paging: ResolvedPaging,
   authKeys: ResolvedAuthKey[]
 ): Result<SharedEntitiesQuery<SearchAdminEntitiesItem>, ErrorType.BadRequest> {
   return sharedSearchEntitiesQuery(databaseAdapter, schema, query, paging, authKeys, false);
@@ -66,7 +63,7 @@ function sharedSearchEntitiesQuery<
   databaseAdapter: PostgresDatabaseAdapter,
   schema: AdminSchema | PublishedSchema,
   query: PublishedSearchQuery | AdminSearchQuery | undefined,
-  paging: Paging | undefined,
+  paging: ResolvedPaging,
   authKeys: ResolvedAuthKey[],
   published: boolean
 ): Result<SharedEntitiesQuery<TItem>, ErrorType.BadRequest> {
@@ -76,7 +73,7 @@ function sharedSearchEntitiesQuery<
     published
   );
 
-  const pagingResult = resolvePaging(databaseAdapter, cursorType, paging);
+  const pagingResult = resolvePagingCursors(databaseAdapter, cursorType, paging);
   if (pagingResult.isError()) {
     return pagingResult;
   }
@@ -107,14 +104,12 @@ function sharedSearchEntitiesQuery<
   let ascending = !query?.reverse;
 
   // Paging 2/2
-  if (!resolvedPaging.forwards) ascending = !ascending;
-  const countToRequest = resolvedPaging.count + 1; // request one more to calculate hasNextPage
+  if (!paging.forwards) ascending = !ascending;
+  const countToRequest = paging.count + 1;
   qb.addQuery(`${ascending ? '' : 'DESC '}LIMIT ${qb.addValue(countToRequest)}`);
 
   return ok({
-    ...qb.build(),
-    isForwards: resolvedPaging.forwards,
-    pagingCount: resolvedPaging.count,
+    sqlQuery: qb.build(),
     cursorExtractor,
   });
 }
