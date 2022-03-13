@@ -1,5 +1,5 @@
 import type { ErrorType, Logger, PromiseResult } from '@jonasb/datadata-core';
-import { NoOpLogger, ok } from '@jonasb/datadata-core';
+import { AdminSchema, NoOpLogger, ok } from '@jonasb/datadata-core';
 import type {
   DatabaseAdapter,
   Transaction,
@@ -68,4 +68,8 @@ export function getQueryCalls(adapter: MockedSqliteDatabaseAdapter): [string, ..
     const [query, values] = call;
     return [query, ...(values ?? [])];
   });
+}
+
+export function createTestAdminSchema(): AdminSchema {
+  return new AdminSchema({ entityTypes: [], valueTypes: [] });
 }
