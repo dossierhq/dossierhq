@@ -1,6 +1,13 @@
 import type { Connection, Edge, ErrorType, Paging, PromiseResult, Result } from '.';
 import { notOk, ok } from '.';
 
+export interface PagingInfo {
+  forwards: boolean;
+  count: number | null;
+  after: string | null;
+  before: string | null;
+}
+
 export function getPagingInfo(
   paging: Paging | undefined
 ): Result<{ forwards: boolean; count: number | null }, ErrorType.BadRequest> {
@@ -16,7 +23,7 @@ export function getPagingInfo(
 
   const forwards = firstIsSet || !lastIsSet;
 
-  let count = null;
+  let count: number | null = null;
 
   if (firstIsSet) {
     count = first;
@@ -24,7 +31,7 @@ export function getPagingInfo(
     count = last;
   }
 
-  return ok({ forwards, count });
+  return ok({ forwards, count, after: paging?.after ?? null, before: paging?.before ?? null });
 }
 
 function validatePaging(paging?: Paging | undefined) {
