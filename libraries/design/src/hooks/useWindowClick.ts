@@ -1,6 +1,7 @@
 import type { RefObject } from 'react';
 import { useCallback } from 'react';
 import { findAscendantElement } from '../utils/DOMUtils.js';
+import { isEventTargetNode } from '../utils/EventUtils.js';
 import { useWindowEventListener } from './useWindowEventListener.js';
 
 export function useWindowClick(
@@ -14,7 +15,7 @@ export function useWindowClick(
         return;
       }
       const ignoreElement = ignoreRef.current;
-      if (ignoreElement && event.target instanceof HTMLElement) {
+      if (ignoreElement && isEventTargetNode(event.target)) {
         if (findAscendantElement(event.target, (it) => it === ignoreElement)) {
           return;
         }
