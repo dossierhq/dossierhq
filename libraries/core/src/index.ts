@@ -77,6 +77,7 @@ export type {
 export { createConsoleLogger, NoOpLogger } from './Logger';
 export type { Logger } from './Logger';
 export { getAllNodesForConnection, getAllPagesForConnection, getPagingInfo } from './PagingUtils';
+export type { PagingInfo } from './PagingUtils';
 export {
   convertJsonPublishedClientResult,
   convertPublishedClientOperationToJson,
