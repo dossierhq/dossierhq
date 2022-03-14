@@ -1,5 +1,6 @@
 import { expectResultValue } from '@jonasb/datadata-core-jest';
 import { Temporal } from '@js-temporal/polyfill';
+import { resolvePaging } from '../search/Paging';
 import type { SearchAdminEntitiesItem } from '../search/QueryGenerator';
 import {
   createMockAdapter,
@@ -35,10 +36,10 @@ describe('adminEntitySearchEntities', () => {
       createTestAdminSchema(),
       context,
       undefined,
-      undefined,
+      resolvePaging(undefined).valueOrThrow(),
       [{ authKey: 'none', resolvedAuthKey: 'none' }]
     );
-    expectResultValue(result, { entities: [], hasPreviousPage: false, hasNextPage: false });
+    expectResultValue(result, { entities: [], hasMore: false });
     expect(getQueryCalls(adapter)).toMatchInlineSnapshot(`
       Array [
         Array [
@@ -62,7 +63,7 @@ describe('adminEntitySearchEntities', () => {
       createTestAdminSchema(),
       context,
       undefined,
-      undefined,
+      resolvePaging(undefined).valueOrThrow(),
       [{ authKey: 'none', resolvedAuthKey: 'none' }]
     );
     expect(result).toMatchInlineSnapshot(`
@@ -84,8 +85,7 @@ describe('adminEntitySearchEntities', () => {
               "version": 0,
             },
           ],
-          "hasNextPage": false,
-          "hasPreviousPage": false,
+          "hasMore": false,
         },
       }
     `);
@@ -112,7 +112,7 @@ describe('adminEntitySearchEntities', () => {
       createTestAdminSchema(),
       context,
       undefined,
-      { after: 'MQ==', first: 10 },
+      resolvePaging({ after: 'MQ==', first: 10 }).valueOrThrow(),
       [{ authKey: 'none', resolvedAuthKey: 'none' }]
     );
     expect(result).toMatchInlineSnapshot(`
@@ -134,8 +134,7 @@ describe('adminEntitySearchEntities', () => {
               "version": 0,
             },
           ],
-          "hasNextPage": false,
-          "hasPreviousPage": false,
+          "hasMore": false,
         },
       }
     `);
@@ -163,7 +162,7 @@ describe('adminEntitySearchEntities', () => {
       createTestAdminSchema(),
       context,
       undefined,
-      { before: 'MQ==', first: 10 },
+      resolvePaging({ before: 'MQ==', first: 10 }).valueOrThrow(),
       [{ authKey: 'none', resolvedAuthKey: 'none' }]
     );
     expect(result).toMatchInlineSnapshot(`
@@ -185,8 +184,7 @@ describe('adminEntitySearchEntities', () => {
               "version": 0,
             },
           ],
-          "hasNextPage": false,
-          "hasPreviousPage": false,
+          "hasMore": false,
         },
       }
     `);

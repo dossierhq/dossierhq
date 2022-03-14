@@ -101,6 +101,7 @@ export function createMockDatabaseAdapter(): MockDatabaseAdapter {
     adminEntityPublishUpdateEntity: jest.fn(),
     adminEntitySampleEntities: jest.fn(),
     adminEntitySearchEntities: jest.fn(),
+    adminEntitySearchEntities2: jest.fn(),
     adminEntitySearchTotalCount: jest.fn(),
     adminEntityUpdateEntity: jest.fn(),
     adminEntityUpdateGetEntityInfo: jest.fn(),

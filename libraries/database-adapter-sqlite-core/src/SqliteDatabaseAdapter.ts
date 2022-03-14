@@ -109,6 +109,7 @@ function createAdapter(sqliteAdapter: SqliteDatabaseAdapter): DatabaseAdapter {
       adminEntityPublishUpdateEntity(sqliteAdapter, ...args),
     adminEntitySampleEntities: (...args) => adminEntitySampleEntities(sqliteAdapter, ...args),
     adminEntitySearchEntities: (...args) => adminEntitySearchEntities(sqliteAdapter, ...args),
+    adminEntitySearchEntities2: async () => notOk.Generic('Not implemented'),
     adminEntitySearchTotalCount: (...args) => adminEntitySearchTotalCount(sqliteAdapter, ...args),
     adminEntityUpdateEntity: (...args) => adminEntityUpdateEntity(sqliteAdapter, ...args),
     adminEntityUpdateGetEntityInfo: (...args) =>

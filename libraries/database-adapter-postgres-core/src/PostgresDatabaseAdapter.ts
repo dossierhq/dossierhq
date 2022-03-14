@@ -1,3 +1,4 @@
+import { notOk } from '@jonasb/datadata-core';
 import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
 import type { PostgresTransaction } from '.';
 import { adminEntityArchivingGetEntityInfo } from './admin-entity/archivingGetEntityInfo';
@@ -93,7 +94,8 @@ export function createPostgresDatabaseAdapterAdapter(
     adminEntityPublishUpdateEntity: (...args) =>
       adminEntityPublishUpdateEntity(databaseAdapter, ...args),
     adminEntitySampleEntities: (...args) => adminEntitySampleEntities(databaseAdapter, ...args),
-    adminEntitySearchEntities: (...args) => adminEntitySearchEntities(databaseAdapter, ...args),
+    adminEntitySearchEntities: async () => notOk.Generic('TODO remove'),
+    adminEntitySearchEntities2: (...args) => adminEntitySearchEntities(databaseAdapter, ...args),
     adminEntitySearchTotalCount: (...args) => adminEntitySearchTotalCount(databaseAdapter, ...args),
     adminEntityUpdateGetEntityInfo: (...args) =>
       adminEntityUpdateGetEntityInfo(databaseAdapter, ...args),
