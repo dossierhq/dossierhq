@@ -117,7 +117,8 @@ export function createPostgresDatabaseAdapterAdapter(
     publishedEntityGetEntities: (...args) => publishedEntityGetEntities(databaseAdapter, ...args),
     publishedEntitySampleEntities: (...args) =>
       publishedEntitySampleEntities(databaseAdapter, ...args),
-    publishedEntitySearchEntities: (...args) =>
+    publishedEntitySearchEntities: async () => notOk.Generic('TODO remove'),
+    publishedEntitySearchEntities2: (...args) =>
       publishedEntitySearchEntities(databaseAdapter, ...args),
     publishedEntitySearchTotalCount: (...args) =>
       publishedEntitySearchTotalCount(databaseAdapter, ...args),

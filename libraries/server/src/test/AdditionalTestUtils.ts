@@ -118,6 +118,7 @@ export function createMockDatabaseAdapter(): MockDatabaseAdapter {
     publishedEntityGetEntities: jest.fn(),
     publishedEntitySampleEntities: jest.fn(),
     publishedEntitySearchEntities: jest.fn(),
+    publishedEntitySearchEntities2: jest.fn(),
     publishedEntitySearchTotalCount: jest.fn(),
     schemaGetSpecification: jest.fn(),
     schemaUpdateSpecification: jest.fn(),
