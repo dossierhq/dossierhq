@@ -1,7 +1,8 @@
-import type { Logger } from '@jonasb/datadata-core';
-import { AdminSchema, NoOpLogger } from '@jonasb/datadata-core';
+import type { ErrorType, Logger, Paging, Result } from '@jonasb/datadata-core';
+import { AdminSchema, getPagingInfo, NoOpLogger, ok } from '@jonasb/datadata-core';
 import type {
   DatabaseAdapter,
+  ResolvedPagingInfo,
   Transaction,
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
@@ -81,4 +82,12 @@ export function getQueryCalls(adapter: MockedPostgresDatabaseAdapter): [string, 
 
 export function createTestAdminSchema(): AdminSchema {
   return new AdminSchema({ entityTypes: [], valueTypes: [] });
+}
+
+export function resolvePaging(
+  paging: Paging | undefined
+): Result<ResolvedPagingInfo, ErrorType.BadRequest> {
+  const result = getPagingInfo(paging);
+  if (result.isError()) return result;
+  return ok({ ...result.value, count: result.value.count ?? 25 });
 }

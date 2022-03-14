@@ -6,9 +6,8 @@ import {
   PublishedQueryOrder,
 } from '@jonasb/datadata-core';
 import { expectErrorResult } from '@jonasb/datadata-core-jest';
-import { createMockAdapter } from '../test/TestUtils';
+import { createMockAdapter, resolvePaging } from '../test/TestUtils';
 import { toOpaqueCursor } from './OpaqueCursor';
-import { resolvePaging } from './Paging';
 import {
   sampleAdminEntitiesQuery,
   samplePublishedEntitiesQuery,

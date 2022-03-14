@@ -1,12 +1,8 @@
-import type { ErrorType, Paging, PagingInfo, Result } from '@jonasb/datadata-core';
-import { getPagingInfo, ok } from '@jonasb/datadata-core';
-import type { ResolvedPagingInfo } from '@jonasb/datadata-database-adapter';
+import type { ErrorType, PagingInfo, Result } from '@jonasb/datadata-core';
+import { ok } from '@jonasb/datadata-core';
 import type { PostgresDatabaseAdapter } from '..';
 import type { CursorNativeType } from './OpaqueCursor';
 import { fromOpaqueCursor } from './OpaqueCursor';
-
-//TODO move to server?
-export const pagingDefaultCount = 25;
 
 export interface ResolvedPagingCursors<TCursor> {
   before: TCursor | null;
@@ -24,14 +20,6 @@ function getCursor(
     return fromOpaqueCursor(databaseAdapter, cursorType, cursor);
   }
   return ok(null);
-}
-
-export function resolvePaging(
-  paging: Paging | undefined
-): Result<ResolvedPagingInfo, ErrorType.BadRequest> {
-  const result = getPagingInfo(paging);
-  if (result.isError()) return result;
-  return ok({ ...result.value, count: result.value.count ?? pagingDefaultCount });
 }
 
 export function resolvePagingCursors<TCursor>(

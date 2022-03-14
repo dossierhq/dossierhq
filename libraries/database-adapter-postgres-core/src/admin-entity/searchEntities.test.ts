@@ -1,12 +1,12 @@
 import { expectResultValue } from '@jonasb/datadata-core-jest';
 import { Temporal } from '@js-temporal/polyfill';
-import { resolvePaging } from '../search/Paging';
 import type { SearchAdminEntitiesItem } from '../search/QueryGenerator';
 import {
   createMockAdapter,
   createMockContext,
   createTestAdminSchema,
   getQueryCalls,
+  resolvePaging,
 } from '../test/TestUtils';
 import { adminEntitySearchEntities } from './searchEntities';
 
