@@ -1,19 +1,18 @@
 import type {
   ErrorType,
-  Paging,
   PromiseResult,
   PublishedSchema,
   PublishedSearchQuery,
 } from '@jonasb/datadata-core';
 import { ok } from '@jonasb/datadata-core';
 import type {
-  DatabasePublishedEntitySearchPayload,
+  DatabasePublishedEntitySearchPayload2,
   ResolvedAuthKey,
+  ResolvedPagingInfo,
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
 import type { PostgresDatabaseAdapter } from '..';
 import { queryMany } from '../QueryFunctions';
-import { resolvePaging } from '../search/Paging';
 import type { SearchPublishedEntitiesItem } from '../search/QueryGenerator';
 import { searchPublishedEntitiesQuery } from '../search/QueryGenerator';
 
@@ -22,23 +21,17 @@ export async function publishedEntitySearchEntities(
   schema: PublishedSchema,
   context: TransactionContext,
   query: PublishedSearchQuery | undefined,
-  paging: Paging | undefined,
+  paging: ResolvedPagingInfo,
   resolvedAuthKeys: ResolvedAuthKey[]
-): PromiseResult<DatabasePublishedEntitySearchPayload, ErrorType.BadRequest | ErrorType.Generic> {
-  const pagingResult = resolvePaging(paging);
-  if (pagingResult.isError()) return pagingResult;
-  const { forwards, count } = pagingResult.value;
-
+): PromiseResult<DatabasePublishedEntitySearchPayload2, ErrorType.BadRequest | ErrorType.Generic> {
   const sqlQueryResult = searchPublishedEntitiesQuery(
     databaseAdapter,
     schema,
     query,
-    pagingResult.value,
+    paging,
     resolvedAuthKeys
   );
-  if (sqlQueryResult.isError()) {
-    return sqlQueryResult;
-  }
+  if (sqlQueryResult.isError()) return sqlQueryResult;
   const { cursorExtractor, sqlQuery } = sqlQueryResult.value;
 
   const searchResult = await queryMany<SearchPublishedEntitiesItem>(
@@ -46,24 +39,21 @@ export async function publishedEntitySearchEntities(
     context,
     sqlQuery
   );
-  if (searchResult.isError()) {
-    return searchResult;
-  }
+  if (searchResult.isError()) return searchResult;
 
   const entitiesValues = searchResult.value;
 
-  const hasExtraPage = entitiesValues.length > count;
-  if (hasExtraPage) {
-    entitiesValues.splice(count, 1);
+  const hasMore = entitiesValues.length > paging.count;
+  if (hasMore) {
+    entitiesValues.splice(paging.count, 1);
   }
-  if (!forwards) {
+  if (!paging.forwards) {
     // Reverse since DESC order returns the rows in the wrong order, we want them in the same order as for forwards pagination
     entitiesValues.reverse();
   }
 
   return ok({
-    hasNextPage: forwards ? hasExtraPage : false,
-    hasPreviousPage: forwards ? false : hasExtraPage,
+    hasMore,
     entities: entitiesValues.map((it) => ({
       id: it.uuid,
       type: it.type,

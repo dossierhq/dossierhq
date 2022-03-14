@@ -12,6 +12,7 @@ import type {
   DatabaseAdminEntitySearchPayload,
   DatabaseAdminEntitySearchPayload2,
   DatabasePublishedEntitySearchPayload,
+  DatabasePublishedEntitySearchPayload2,
   ResolvedPagingInfo,
 } from '@jonasb/datadata-database-adapter';
 
@@ -59,7 +60,7 @@ export async function sharedSearchEntities<
 
 export async function sharedSearchEntities2<
   TSchema,
-  TSearchResult extends DatabaseAdminEntitySearchPayload2,
+  TSearchResult extends DatabaseAdminEntitySearchPayload2 | DatabasePublishedEntitySearchPayload2,
   TEntity
 >(
   schema: TSchema,

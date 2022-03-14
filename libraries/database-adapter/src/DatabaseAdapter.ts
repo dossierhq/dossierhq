@@ -224,6 +224,11 @@ export interface DatabasePublishedEntitySearchPayload {
   entities: DatabasePublishedEntitySearchPayloadEntity[];
 }
 
+export interface DatabasePublishedEntitySearchPayload2 {
+  hasMore: boolean;
+  entities: DatabasePublishedEntitySearchPayloadEntity[];
+}
+
 export interface DatabasePublishedEntitySearchPayloadEntity extends DatabasePublishedEntityPayload {
   cursor: string;
 }
@@ -453,6 +458,14 @@ export interface DatabaseAdapter {
     paging: Paging | undefined,
     resolvedAuthKeys: ResolvedAuthKey[]
   ): PromiseResult<DatabasePublishedEntitySearchPayload, ErrorType.BadRequest | ErrorType.Generic>;
+
+  publishedEntitySearchEntities2(
+    schema: PublishedSchema,
+    context: TransactionContext,
+    query: PublishedSearchQuery | undefined,
+    paging: ResolvedPagingInfo,
+    resolvedAuthKeys: ResolvedAuthKey[]
+  ): PromiseResult<DatabasePublishedEntitySearchPayload2, ErrorType.BadRequest | ErrorType.Generic>;
 
   publishedEntitySearchTotalCount(
     schema: PublishedSchema,

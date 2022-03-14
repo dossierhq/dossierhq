@@ -24,6 +24,7 @@ export type {
   DatabasePublishedEntityGetOnePayload,
   DatabasePublishedEntityPayload,
   DatabasePublishedEntitySearchPayload,
+  DatabasePublishedEntitySearchPayload2,
   DatabaseResolvedEntityReference,
   DatabaseResolvedEntityVersionReference,
   ResolvedPagingInfo,

@@ -132,6 +132,7 @@ function createAdapter(sqliteAdapter: SqliteDatabaseAdapter): DatabaseAdapter {
       publishedEntitySampleEntities(sqliteAdapter, ...args),
     publishedEntitySearchEntities: (...args) =>
       publishedEntitySearchEntities(sqliteAdapter, ...args),
+    publishedEntitySearchEntities2: async () => notOk.Generic('Not implemented'),
     publishedEntitySearchTotalCount: (...args) =>
       publishedEntitySearchTotalCount(sqliteAdapter, ...args),
     schemaGetSpecification: (...args) => schemaGetSpecification(sqliteAdapter, ...args),
