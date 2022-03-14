@@ -13,6 +13,7 @@ export type {
   DatabaseAdminEntityPublishingHistoryGetEntityInfoPayload,
   DatabaseAdminEntityPublishUpdateEntityArg,
   DatabaseAdminEntitySearchPayload,
+  DatabaseAdminEntitySearchPayload2,
   DatabaseAdminEntityUnpublishGetEntityInfoPayload,
   DatabaseAdminEntityUnpublishUpdateEntityPayload,
   DatabaseAdminEntityUpdateStatusPayload,
@@ -25,6 +26,7 @@ export type {
   DatabasePublishedEntitySearchPayload,
   DatabaseResolvedEntityReference,
   DatabaseResolvedEntityVersionReference,
+  ResolvedPagingInfo,
 } from './DatabaseAdapter';
 export { PostgresQueryBuilder, SqliteQueryBuilder } from './QueryBuilder';
 export type { ResolvedAuthKey, Session } from './Session';

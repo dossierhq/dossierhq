@@ -1,18 +1,12 @@
-import type { ErrorType, Paging, Result } from '@jonasb/datadata-core';
+import type { ErrorType, Paging, PagingInfo, Result } from '@jonasb/datadata-core';
 import { getPagingInfo, ok } from '@jonasb/datadata-core';
+import type { ResolvedPagingInfo } from '@jonasb/datadata-database-adapter';
 import type { PostgresDatabaseAdapter } from '..';
 import type { CursorNativeType } from './OpaqueCursor';
 import { fromOpaqueCursor } from './OpaqueCursor';
 
 //TODO move to server?
 export const pagingDefaultCount = 25;
-
-export interface ResolvedPaging {
-  forwards: boolean;
-  count: number;
-  before: string | null;
-  after: string | null;
-}
 
 export interface ResolvedPagingCursors<TCursor> {
   before: TCursor | null;
@@ -22,7 +16,7 @@ export interface ResolvedPagingCursors<TCursor> {
 function getCursor(
   databaseAdapter: PostgresDatabaseAdapter,
   cursorType: CursorNativeType,
-  paging: ResolvedPaging,
+  paging: PagingInfo,
   key: 'after' | 'before'
 ): Result<unknown, ErrorType.BadRequest> {
   const cursor = paging[key];
@@ -34,23 +28,16 @@ function getCursor(
 
 export function resolvePaging(
   paging: Paging | undefined
-): Result<ResolvedPaging, ErrorType.BadRequest> {
-  const pagingInfo = getPagingInfo(paging);
-  if (pagingInfo.isError()) return pagingInfo;
-
-  const { forwards, count } = pagingInfo.value;
-  return ok({
-    forwards,
-    count: count ?? pagingDefaultCount,
-    before: paging?.before ?? null,
-    after: paging?.after ?? null,
-  });
+): Result<ResolvedPagingInfo, ErrorType.BadRequest> {
+  const result = getPagingInfo(paging);
+  if (result.isError()) return result;
+  return ok({ ...result.value, count: result.value.count ?? pagingDefaultCount });
 }
 
 export function resolvePagingCursors<TCursor>(
   databaseAdapter: PostgresDatabaseAdapter,
   cursorType: CursorNativeType,
-  paging: ResolvedPaging
+  paging: PagingInfo
 ): Result<ResolvedPagingCursors<TCursor>, ErrorType.BadRequest> {
   const after = getCursor(databaseAdapter, cursorType, paging, 'after');
   const before = getCursor(databaseAdapter, cursorType, paging, 'before');

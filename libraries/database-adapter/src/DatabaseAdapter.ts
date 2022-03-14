@@ -9,6 +9,7 @@ import type {
   ErrorType,
   Location,
   Paging,
+  PagingInfo,
   PromiseResult,
   PublishedQuery,
   PublishedSchema,
@@ -17,6 +18,10 @@ import type {
 } from '@jonasb/datadata-core';
 import type { Temporal } from '@js-temporal/polyfill';
 import type { ResolvedAuthKey, Session, Transaction, TransactionContext } from '.';
+
+export interface ResolvedPagingInfo extends PagingInfo {
+  count: number;
+}
 
 export interface DatabaseResolvedEntityReference {
   entityInternalId: unknown;
@@ -136,6 +141,11 @@ export interface DatabaseAdminEntityPublishingHistoryGetEntityInfoPayload
 export interface DatabaseAdminEntitySearchPayload {
   hasNextPage: boolean;
   hasPreviousPage: boolean;
+  entities: DatabaseAdminEntitySearchPayloadEntity[];
+}
+
+export interface DatabaseAdminEntitySearchPayload2 {
+  hasMore: boolean;
   entities: DatabaseAdminEntitySearchPayloadEntity[];
 }
 
@@ -330,6 +340,14 @@ export interface DatabaseAdapter {
     paging: Paging | undefined,
     resolvedAuthKeys: ResolvedAuthKey[]
   ): PromiseResult<DatabaseAdminEntitySearchPayload, ErrorType.BadRequest | ErrorType.Generic>;
+
+  adminEntitySearchEntities2(
+    schema: AdminSchema,
+    context: TransactionContext,
+    query: AdminSearchQuery | undefined,
+    paging: ResolvedPagingInfo,
+    resolvedAuthKeys: ResolvedAuthKey[]
+  ): PromiseResult<DatabaseAdminEntitySearchPayload2, ErrorType.BadRequest | ErrorType.Generic>;
 
   adminEntitySearchTotalCount(
     schema: AdminSchema,

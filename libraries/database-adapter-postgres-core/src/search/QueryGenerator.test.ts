@@ -31,7 +31,6 @@ const authKeysNone = [{ authKey: 'none', resolvedAuthKey: 'none' }];
 describe('searchAdminEntitiesQuery()', () => {
   test('default paging', () => {
     const databaseAdapter = createMockAdapter();
-
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
