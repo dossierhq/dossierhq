@@ -20,7 +20,13 @@ import {
   PublishedQueryOrder,
 } from '@jonasb/datadata-core';
 import { Temporal } from '@js-temporal/polyfill';
-import { assertEquals, assertOkResult, assertResultValue, assertSame } from '../Asserts';
+import {
+  assertEquals,
+  assertOkResult,
+  assertResultValue,
+  assertSame,
+  assertTruthy,
+} from '../Asserts';
 
 const adminOrderCompare: Record<AdminQueryOrder, (a: AdminEntity, b: AdminEntity) => number> = {
   [AdminQueryOrder.createdAt]: (a, b) =>
@@ -112,6 +118,22 @@ export function assertSearchResultEntities<TItem extends AdminEntity | Published
       assertResultValue(result.value.edges[index].node, actualEntity);
     }
   }
+}
+
+export function assertPageInfoEquals(
+  connectionResult: Result<Connection<Edge<PublishedEntity, ErrorType>> | null, ErrorType>,
+  { hasNextPage, hasPreviousPage }: { hasNextPage: boolean; hasPreviousPage: boolean }
+) {
+  assertOkResult(connectionResult);
+  assertTruthy(connectionResult.value);
+  const connection = connectionResult.value;
+
+  assertEquals(connection.pageInfo, {
+    startCursor: connection.edges[0].cursor,
+    endCursor: connection.edges[connection.edges.length - 1].cursor,
+    hasNextPage,
+    hasPreviousPage,
+  });
 }
 
 export async function countSearchResultWithEntity(

@@ -12,7 +12,11 @@ import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
 import type { AuthorizationAdapter, SessionContext } from '..';
 import { authResolveAuthorizationKeys } from '../Auth';
 import { decodePublishedEntity } from '../EntityCodec';
-import { resolvePagingInfo, sharedSearchEntities } from '../shared-entity/sharedSearchEntities';
+import {
+  getOppositeDirectionPaging,
+  resolvePagingInfo,
+  sharedSearchEntities,
+} from '../shared-entity/sharedSearchEntities';
 
 export async function publishedSearchEntities(
   schema: PublishedSchema,
@@ -45,5 +49,25 @@ export async function publishedSearchEntities(
   );
   if (searchResult.isError()) return searchResult;
 
-  return await sharedSearchEntities(schema, pagingInfo, searchResult.value, decodePublishedEntity);
+  let hasMoreOppositeDirection = false;
+  const oppositePagingInfo = getOppositeDirectionPaging(pagingInfo, searchResult.value);
+  if (oppositePagingInfo) {
+    const oppositeResult = await databaseAdapter.publishedEntitySearchEntities(
+      schema,
+      context,
+      query,
+      oppositePagingInfo,
+      authKeysResult.value
+    );
+    if (oppositeResult.isError()) return oppositeResult;
+    hasMoreOppositeDirection = oppositeResult.value.hasMore;
+  }
+
+  return await sharedSearchEntities(
+    schema,
+    pagingInfo,
+    searchResult.value,
+    hasMoreOppositeDirection,
+    decodePublishedEntity
+  );
 }

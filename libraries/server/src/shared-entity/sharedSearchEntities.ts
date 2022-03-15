@@ -27,6 +27,33 @@ export function resolvePagingInfo(
   });
 }
 
+export function getOppositeDirectionPaging<
+  TSearchResult extends DatabaseAdminEntitySearchPayload | DatabasePublishedEntitySearchPayload
+>(pagingInfo: ResolvedPagingInfo, result: TSearchResult): ResolvedPagingInfo | null {
+  if (result.entities.length === 0) {
+    // If we don't get any entities in the normal direction we won't return any PageInfo, only null
+    return null;
+  }
+
+  if (pagingInfo.forwards && pagingInfo.after) {
+    return {
+      count: 0,
+      forwards: false,
+      before: pagingInfo.after,
+      after: null,
+    };
+  }
+  if (!pagingInfo.forwards && pagingInfo.before) {
+    return {
+      count: 0,
+      forwards: true,
+      after: null,
+      before: pagingInfo.after,
+    };
+  }
+  return null;
+}
+
 export async function sharedSearchEntities<
   TSchema,
   TSearchResult extends DatabaseAdminEntitySearchPayload | DatabasePublishedEntitySearchPayload,
@@ -35,6 +62,7 @@ export async function sharedSearchEntities<
   schema: TSchema,
   paging: PagingInfo,
   searchResult: TSearchResult,
+  hasMoreOppositeDirection: boolean,
   decoder: (schema: TSchema, values: TSearchResult['entities'][0]) => TEntity
 ): PromiseResult<Connection<Edge<TEntity, ErrorType>> | null, ErrorType.BadRequest> {
   const entities = searchResult.entities.map((it) => decoder(schema, it));
@@ -44,8 +72,8 @@ export async function sharedSearchEntities<
 
   return ok({
     pageInfo: {
-      hasNextPage: paging.forwards ? searchResult.hasMore : false,
-      hasPreviousPage: paging.forwards ? false : searchResult.hasMore,
+      hasNextPage: paging.forwards ? searchResult.hasMore : hasMoreOppositeDirection,
+      hasPreviousPage: paging.forwards ? hasMoreOppositeDirection : searchResult.hasMore,
       startCursor: searchResult.entities[0].cursor,
       endCursor: searchResult.entities[searchResult.entities.length - 1].cursor,
     },
