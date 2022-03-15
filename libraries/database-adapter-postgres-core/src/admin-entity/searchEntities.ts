@@ -7,8 +7,8 @@ import type {
 import { ok } from '@jonasb/datadata-core';
 import type {
   DatabaseAdminEntitySearchPayload,
+  DatabasePagingInfo,
   ResolvedAuthKey,
-  ResolvedPagingInfo,
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
 import type { PostgresDatabaseAdapter } from '..';
@@ -22,7 +22,7 @@ export async function adminEntitySearchEntities(
   schema: AdminSchema,
   context: TransactionContext,
   query: AdminSearchQuery | undefined,
-  paging: ResolvedPagingInfo,
+  paging: DatabasePagingInfo,
   resolvedAuthKeys: ResolvedAuthKey[]
 ): PromiseResult<DatabaseAdminEntitySearchPayload, ErrorType.BadRequest | ErrorType.Generic> {
   const sqlQueryResult = searchAdminEntitiesQuery(

@@ -2,7 +2,7 @@ import type { ErrorType, Logger, Paging, PromiseResult } from '@jonasb/datadata-
 import { AdminSchema, getPagingInfo, NoOpLogger, ok } from '@jonasb/datadata-core';
 import type {
   DatabaseAdapter,
-  ResolvedPagingInfo,
+  DatabasePagingInfo,
   Transaction,
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
@@ -75,7 +75,12 @@ export function createTestAdminSchema(): AdminSchema {
   return new AdminSchema({ entityTypes: [], valueTypes: [] });
 }
 
-export function resolvePaging(paging: Paging | undefined): ResolvedPagingInfo {
+export function resolvePaging(paging: Paging | undefined): DatabasePagingInfo {
   const pagingInfo = getPagingInfo(paging).valueOrThrow();
-  return { ...pagingInfo, count: pagingInfo.count ?? 25 };
+  return {
+    ...pagingInfo,
+    count: pagingInfo.count ?? 25,
+    after: paging?.after ?? null,
+    before: paging?.before ?? null,
+  };
 }

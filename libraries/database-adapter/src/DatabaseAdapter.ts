@@ -18,7 +18,9 @@ import type {
 import type { Temporal } from '@js-temporal/polyfill';
 import type { ResolvedAuthKey, Session, Transaction, TransactionContext } from '.';
 
-export interface ResolvedPagingInfo extends PagingInfo {
+export interface DatabasePagingInfo extends PagingInfo {
+  after: string | null;
+  before: string | null;
   count: number;
 }
 
@@ -329,7 +331,7 @@ export interface DatabaseAdapter {
     schema: AdminSchema,
     context: TransactionContext,
     query: AdminSearchQuery | undefined,
-    paging: ResolvedPagingInfo,
+    paging: DatabasePagingInfo,
     resolvedAuthKeys: ResolvedAuthKey[]
   ): PromiseResult<DatabaseAdminEntitySearchPayload, ErrorType.BadRequest | ErrorType.Generic>;
 
@@ -434,7 +436,7 @@ export interface DatabaseAdapter {
     schema: PublishedSchema,
     context: TransactionContext,
     query: PublishedSearchQuery | undefined,
-    paging: ResolvedPagingInfo,
+    paging: DatabasePagingInfo,
     resolvedAuthKeys: ResolvedAuthKey[]
   ): PromiseResult<DatabasePublishedEntitySearchPayload, ErrorType.BadRequest | ErrorType.Generic>;
 
