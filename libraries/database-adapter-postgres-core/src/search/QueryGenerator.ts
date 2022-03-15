@@ -72,11 +72,9 @@ function sharedSearchEntitiesQuery<
     published
   );
 
-  const pagingResult = resolvePagingCursors(databaseAdapter, cursorType, paging);
-  if (pagingResult.isError()) {
-    return pagingResult;
-  }
-  const resolvedPaging = pagingResult.value;
+  const cursorsResult = resolvePagingCursors(databaseAdapter, cursorType, paging);
+  if (cursorsResult.isError()) return cursorsResult;
+  const resolvedCursors = cursorsResult.value;
 
   const qb = new PostgresQueryBuilder('SELECT');
   addEntityQuerySelectColumn(qb, query, published);
@@ -87,14 +85,14 @@ function sharedSearchEntitiesQuery<
   if (filterResult.isError()) return filterResult;
 
   // Paging 1/2
-  if (resolvedPaging.after !== null) {
+  if (resolvedCursors.after !== null) {
     qb.addQuery(
-      `AND e.${cursorName} ${query?.reverse ? '<' : '>'} ${qb.addValue(resolvedPaging.after)}`
+      `AND e.${cursorName} ${query?.reverse ? '<' : '>'} ${qb.addValue(resolvedCursors.after)}`
     );
   }
-  if (resolvedPaging.before !== null) {
+  if (resolvedCursors.before !== null) {
     qb.addQuery(
-      `AND e.${cursorName} ${query?.reverse ? '>' : '<'} ${qb.addValue(resolvedPaging.before)}`
+      `AND e.${cursorName} ${query?.reverse ? '>' : '<'} ${qb.addValue(resolvedCursors.before)}`
     );
   }
 
@@ -104,7 +102,7 @@ function sharedSearchEntitiesQuery<
 
   // Paging 2/2
   if (!paging.forwards) ascending = !ascending;
-  const countToRequest = paging.count + 1;
+  const countToRequest = paging.count + 1; // request one more to calculate hasMore
   qb.addQuery(`${ascending ? '' : 'DESC '}LIMIT ${qb.addValue(countToRequest)}`);
 
   return ok({

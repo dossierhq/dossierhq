@@ -1,7 +1,8 @@
-import type { ErrorType, Logger, PromiseResult } from '@jonasb/datadata-core';
-import { AdminSchema, NoOpLogger, ok } from '@jonasb/datadata-core';
+import type { ErrorType, Logger, Paging, PromiseResult } from '@jonasb/datadata-core';
+import { AdminSchema, getPagingInfo, NoOpLogger, ok } from '@jonasb/datadata-core';
 import type {
   DatabaseAdapter,
+  ResolvedPagingInfo,
   Transaction,
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
@@ -72,4 +73,9 @@ export function getQueryCalls(adapter: MockedSqliteDatabaseAdapter): [string, ..
 
 export function createTestAdminSchema(): AdminSchema {
   return new AdminSchema({ entityTypes: [], valueTypes: [] });
+}
+
+export function resolvePaging(paging: Paging | undefined): ResolvedPagingInfo {
+  const pagingInfo = getPagingInfo(paging).valueOrThrow();
+  return { ...pagingInfo, count: pagingInfo.count ?? 25 };
 }
