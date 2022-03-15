@@ -24,6 +24,7 @@ interface MockDatabaseAdapter extends DatabaseAdapter {
     DatabaseAdapter['adminEntityPublishUpdateEntity']
   >;
   adminEntitySampleEntities: jest.MockedFunction<DatabaseAdapter['adminEntitySampleEntities']>;
+  adminEntitySearchEntities: jest.MockedFunction<DatabaseAdapter['adminEntitySearchEntities']>;
   adminEntitySearchTotalCount: jest.MockedFunction<DatabaseAdapter['adminEntitySearchTotalCount']>;
   advisoryLockAcquire: jest.MockedFunction<DatabaseAdapter['advisoryLockAcquire']>;
   advisoryLockDeleteExpired: jest.MockedFunction<DatabaseAdapter['advisoryLockDeleteExpired']>;
@@ -32,6 +33,9 @@ interface MockDatabaseAdapter extends DatabaseAdapter {
   authCreateSession: jest.MockedFunction<DatabaseAdapter['authCreateSession']>;
   publishedEntitySampleEntities: jest.MockedFunction<
     DatabaseAdapter['publishedEntitySampleEntities']
+  >;
+  publishedEntitySearchEntities: jest.MockedFunction<
+    DatabaseAdapter['publishedEntitySearchEntities']
   >;
   publishedEntitySearchTotalCount: jest.MockedFunction<
     DatabaseAdapter['publishedEntitySearchTotalCount']

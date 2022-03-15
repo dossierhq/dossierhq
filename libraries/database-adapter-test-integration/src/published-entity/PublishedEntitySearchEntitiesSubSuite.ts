@@ -7,6 +7,7 @@ import {
   TITLE_ONLY_CREATE,
 } from '../shared-entity/Fixtures';
 import {
+  assertPageInfoEquals,
   assertPublishedEntityConnectionToMatchSlice,
   assertSearchResultEntities,
 } from '../shared-entity/SearchTestUtils';
@@ -49,6 +50,10 @@ async function searchEntities_minimal({
     entityTypes: ['ReadOnly'],
   });
   assertPublishedEntityConnectionToMatchSlice(expectedEntities, result, 0, 25);
+  assertPageInfoEquals(result, {
+    hasPreviousPage: false,
+    hasNextPage: expectedEntities.length > 25,
+  });
 }
 
 async function searchEntities_pagingFirst({
@@ -61,6 +66,10 @@ async function searchEntities_pagingFirst({
     { first: 10 }
   );
   assertPublishedEntityConnectionToMatchSlice(expectedEntities, result, 0, 10);
+  assertPageInfoEquals(result, {
+    hasPreviousPage: false,
+    hasNextPage: expectedEntities.length > 10,
+  });
 }
 
 async function searchEntities_pagingFirst0({ server }: PublishedEntityTestContext) {
@@ -81,6 +90,7 @@ async function searchEntities_pagingLast({
     { last: 10 }
   );
   assertPublishedEntityConnectionToMatchSlice(expectedEntities, result, -10, undefined);
+  assertPageInfoEquals(result, { hasPreviousPage: true, hasNextPage: false });
 }
 
 async function searchEntities_pagingLast0({ server }: PublishedEntityTestContext) {
@@ -104,6 +114,10 @@ async function searchEntities_pagingFirstAfter({
     { first: 20, after: firstResult.value?.pageInfo.endCursor }
   );
   assertPublishedEntityConnectionToMatchSlice(expectedEntities, secondResult, 10, 10 + 20);
+  assertPageInfoEquals(secondResult, {
+    hasPreviousPage: true,
+    hasNextPage: expectedEntities.length > 10 + 20,
+  });
 }
 
 async function searchEntities_pagingLastBefore({
@@ -119,6 +133,7 @@ async function searchEntities_pagingLastBefore({
     { last: 20, before: firstResult.value?.pageInfo.startCursor }
   );
   assertPublishedEntityConnectionToMatchSlice(expectedEntities, secondResult, -10 - 20, -10);
+  assertPageInfoEquals(secondResult, { hasPreviousPage: false, hasNextPage: true });
 }
 
 async function searchEntities_pagingFirstBetween({
@@ -143,6 +158,8 @@ async function searchEntities_pagingFirstBetween({
     3 /*inclusive*/,
     8 /*exclusive*/
   );
+  // No next since we're paging forwards and there's a 'before'
+  assertPageInfoEquals(secondResult, { hasPreviousPage: true, hasNextPage: false });
 }
 
 async function searchEntities_pagingLastBetween({
@@ -156,7 +173,7 @@ async function searchEntities_pagingLastBetween({
   const secondResult = await client.searchEntities(
     { entityTypes: ['ReadOnly'] },
     {
-      first: 20,
+      last: 20,
       after: firstResult.value?.edges[2].cursor,
       before: firstResult.value?.edges[8].cursor,
     }
@@ -167,6 +184,8 @@ async function searchEntities_pagingLastBetween({
     3 /*inclusive*/,
     8 /*exclusive*/
   );
+  // No prev since we're paging backwards and there's a 'after'
+  assertPageInfoEquals(secondResult, { hasPreviousPage: false, hasNextPage: true });
 }
 
 async function searchEntities_orderCreatedAt({
@@ -185,6 +204,10 @@ async function searchEntities_orderCreatedAt({
     25,
     PublishedQueryOrder.createdAt
   );
+  assertPageInfoEquals(result, {
+    hasPreviousPage: false,
+    hasNextPage: expectedEntities.length > 25,
+  });
 }
 
 async function searchEntities_orderCreatedAtReversed({
@@ -205,6 +228,10 @@ async function searchEntities_orderCreatedAtReversed({
     PublishedQueryOrder.createdAt,
     true
   );
+  assertPageInfoEquals(result, {
+    hasPreviousPage: false,
+    hasNextPage: expectedEntities.length > 25,
+  });
 }
 
 async function searchEntities_orderName({
@@ -223,6 +250,10 @@ async function searchEntities_orderName({
     25,
     PublishedQueryOrder.name
   );
+  assertPageInfoEquals(result, {
+    hasPreviousPage: false,
+    hasNextPage: expectedEntities.length > 25,
+  });
 }
 
 async function searchEntities_orderNameReversed({
@@ -243,6 +274,10 @@ async function searchEntities_orderNameReversed({
     PublishedQueryOrder.name,
     true
   );
+  assertPageInfoEquals(result, {
+    hasPreviousPage: false,
+    hasNextPage: expectedEntities.length > 25,
+  });
 }
 
 async function searchEntities_authKeySubject({
@@ -255,6 +290,10 @@ async function searchEntities_authKeySubject({
     authKeys: ['subject'],
   });
   assertPublishedEntityConnectionToMatchSlice(expectedEntities, result, 0, 25);
+  assertPageInfoEquals(result, {
+    hasPreviousPage: false,
+    hasNextPage: expectedEntities.length > 25,
+  });
 }
 
 async function searchEntities_authKeyNoneAndSubject({
@@ -270,6 +309,7 @@ async function searchEntities_authKeyNoneAndSubject({
     authKeys: ['none', 'subject'],
   });
   assertPublishedEntityConnectionToMatchSlice(expectedEntities, result, 0, 25);
+  assertPageInfoEquals(result, { hasPreviousPage: false, hasNextPage: true });
 }
 
 async function searchEntities_linksToOneReference({ server }: PublishedEntityTestContext) {
@@ -291,6 +331,7 @@ async function searchEntities_linksToOneReference({ server }: PublishedEntityTes
 
   const searchResult = await publishedClient.searchEntities({ linksTo: { id: titleOnlyId } });
   assertSearchResultEntities(searchResult, [adminToPublishedEntity(referenceEntity)]);
+  assertPageInfoEquals(searchResult, { hasPreviousPage: false, hasNextPage: false });
 }
 
 async function searchEntities_linksToNoReferences({ server }: PublishedEntityTestContext) {
@@ -330,6 +371,7 @@ async function searchEntities_linksToTwoReferencesFromOneEntity({
 
   const searchResult = await publishedClient.searchEntities({ linksTo: { id: titleOnlyId } });
   assertSearchResultEntities(searchResult, [adminToPublishedEntity(referenceEntity)]);
+  assertPageInfoEquals(searchResult, { hasPreviousPage: false, hasNextPage: false });
 }
 
 async function searchEntities_linksFromOneReference({ server }: PublishedEntityTestContext) {
@@ -351,6 +393,7 @@ async function searchEntities_linksFromOneReference({ server }: PublishedEntityT
 
   const searchResult = await publishedClient.searchEntities({ linksFrom: { id: referenceId } });
   assertSearchResultEntities(searchResult, [adminToPublishedEntity(titleOnlyEntity)]);
+  assertPageInfoEquals(searchResult, { hasPreviousPage: false, hasNextPage: false });
 }
 
 async function searchEntities_linksFromNoReferences({ server }: PublishedEntityTestContext) {
@@ -390,4 +433,5 @@ async function searchEntities_linksFromTwoReferencesFromOneEntity({
 
   const searchResult = await publishedClient.searchEntities({ linksFrom: { id: referenceId } });
   assertSearchResultEntities(searchResult, [adminToPublishedEntity(titleOnlyEntity)]);
+  assertPageInfoEquals(searchResult, { hasPreviousPage: false, hasNextPage: false });
 }
