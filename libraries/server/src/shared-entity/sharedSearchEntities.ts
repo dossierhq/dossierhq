@@ -10,9 +10,7 @@ import type {
 import { getPagingInfo, ok } from '@jonasb/datadata-core';
 import type {
   DatabaseAdminEntitySearchPayload,
-  DatabaseAdminEntitySearchPayload2,
   DatabasePublishedEntitySearchPayload,
-  DatabasePublishedEntitySearchPayload2,
   ResolvedPagingInfo,
 } from '@jonasb/datadata-database-adapter';
 
@@ -29,38 +27,9 @@ export function resolvePagingInfo(
   });
 }
 
-//TODO remove
 export async function sharedSearchEntities<
   TSchema,
   TSearchResult extends DatabaseAdminEntitySearchPayload | DatabasePublishedEntitySearchPayload,
-  TEntity
->(
-  schema: TSchema,
-  searchResult: TSearchResult,
-  decoder: (schema: TSchema, values: TSearchResult['entities'][0]) => TEntity
-): PromiseResult<Connection<Edge<TEntity, ErrorType>> | null, ErrorType.BadRequest> {
-  const entities = searchResult.entities.map((it) => decoder(schema, it));
-  if (entities.length === 0) {
-    return ok(null);
-  }
-
-  return ok({
-    pageInfo: {
-      hasNextPage: searchResult.hasNextPage,
-      hasPreviousPage: searchResult.hasPreviousPage,
-      startCursor: searchResult.entities[0].cursor,
-      endCursor: searchResult.entities[searchResult.entities.length - 1].cursor,
-    },
-    edges: entities.map((entity, index) => ({
-      cursor: searchResult.entities[index].cursor,
-      node: ok(entity),
-    })),
-  });
-}
-
-export async function sharedSearchEntities2<
-  TSchema,
-  TSearchResult extends DatabaseAdminEntitySearchPayload2 | DatabasePublishedEntitySearchPayload2,
   TEntity
 >(
   schema: TSchema,

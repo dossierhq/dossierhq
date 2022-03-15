@@ -6,7 +6,7 @@ import type {
 } from '@jonasb/datadata-core';
 import { ok } from '@jonasb/datadata-core';
 import type {
-  DatabaseAdminEntitySearchPayload2,
+  DatabaseAdminEntitySearchPayload,
   ResolvedAuthKey,
   ResolvedPagingInfo,
   TransactionContext,
@@ -25,7 +25,7 @@ export async function adminEntitySearchEntities(
   query: AdminSearchQuery | undefined,
   paging: ResolvedPagingInfo,
   resolvedAuthKeys: ResolvedAuthKey[]
-): PromiseResult<DatabaseAdminEntitySearchPayload2, ErrorType.BadRequest | ErrorType.Generic> {
+): PromiseResult<DatabaseAdminEntitySearchPayload, ErrorType.BadRequest | ErrorType.Generic> {
   const sqlQueryResult = searchAdminEntitiesQuery(
     databaseAdapter,
     schema,

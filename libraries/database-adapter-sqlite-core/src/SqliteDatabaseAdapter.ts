@@ -108,8 +108,7 @@ function createAdapter(sqliteAdapter: SqliteDatabaseAdapter): DatabaseAdapter {
     adminEntityPublishUpdateEntity: (...args) =>
       adminEntityPublishUpdateEntity(sqliteAdapter, ...args),
     adminEntitySampleEntities: (...args) => adminEntitySampleEntities(sqliteAdapter, ...args),
-    adminEntitySearchEntities: async () => notOk.Generic('TODO remove'),
-    adminEntitySearchEntities2: (...args) => adminEntitySearchEntities(sqliteAdapter, ...args),
+    adminEntitySearchEntities: (...args) => adminEntitySearchEntities(sqliteAdapter, ...args),
     adminEntitySearchTotalCount: (...args) => adminEntitySearchTotalCount(sqliteAdapter, ...args),
     adminEntityUpdateEntity: (...args) => adminEntityUpdateEntity(sqliteAdapter, ...args),
     adminEntityUpdateGetEntityInfo: (...args) =>
@@ -130,8 +129,7 @@ function createAdapter(sqliteAdapter: SqliteDatabaseAdapter): DatabaseAdapter {
     publishedEntityGetEntities: (...args) => publishedEntityGetEntities(sqliteAdapter, ...args),
     publishedEntitySampleEntities: (...args) =>
       publishedEntitySampleEntities(sqliteAdapter, ...args),
-    publishedEntitySearchEntities: async () => notOk.Generic('TODO remove'),
-    publishedEntitySearchEntities2: (...args) =>
+    publishedEntitySearchEntities: (...args) =>
       publishedEntitySearchEntities(sqliteAdapter, ...args),
     publishedEntitySearchTotalCount: (...args) =>
       publishedEntitySearchTotalCount(sqliteAdapter, ...args),
