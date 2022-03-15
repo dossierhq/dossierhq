@@ -6,7 +6,7 @@ import type {
 } from '@jonasb/datadata-core';
 import { ok } from '@jonasb/datadata-core';
 import type {
-  DatabasePublishedEntitySearchPayload2,
+  DatabasePublishedEntitySearchPayload,
   ResolvedAuthKey,
   ResolvedPagingInfo,
   TransactionContext,
@@ -24,7 +24,7 @@ export async function publishedEntitySearchEntities(
   query: PublishedSearchQuery | undefined,
   paging: ResolvedPagingInfo,
   resolvedAuthKeys: ResolvedAuthKey[]
-): PromiseResult<DatabasePublishedEntitySearchPayload2, ErrorType.BadRequest | ErrorType.Generic> {
+): PromiseResult<DatabasePublishedEntitySearchPayload, ErrorType.BadRequest | ErrorType.Generic> {
   const sqlQueryResult = searchPublishedEntitiesQuery(
     databaseAdapter,
     schema,

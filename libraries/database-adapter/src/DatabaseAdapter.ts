@@ -8,7 +8,6 @@ import type {
   EntityVersionReference,
   ErrorType,
   Location,
-  Paging,
   PagingInfo,
   PromiseResult,
   PublishedQuery,
@@ -139,12 +138,6 @@ export interface DatabaseAdminEntityPublishingHistoryGetEntityInfoPayload
 }
 
 export interface DatabaseAdminEntitySearchPayload {
-  hasNextPage: boolean;
-  hasPreviousPage: boolean;
-  entities: DatabaseAdminEntitySearchPayloadEntity[];
-}
-
-export interface DatabaseAdminEntitySearchPayload2 {
   hasMore: boolean;
   entities: DatabaseAdminEntitySearchPayloadEntity[];
 }
@@ -219,12 +212,6 @@ export interface DatabasePublishedEntityGetOnePayload extends DatabasePublishedE
 }
 
 export interface DatabasePublishedEntitySearchPayload {
-  hasNextPage: boolean;
-  hasPreviousPage: boolean;
-  entities: DatabasePublishedEntitySearchPayloadEntity[];
-}
-
-export interface DatabasePublishedEntitySearchPayload2 {
   hasMore: boolean;
   entities: DatabasePublishedEntitySearchPayloadEntity[];
 }
@@ -342,17 +329,9 @@ export interface DatabaseAdapter {
     schema: AdminSchema,
     context: TransactionContext,
     query: AdminSearchQuery | undefined,
-    paging: Paging | undefined,
-    resolvedAuthKeys: ResolvedAuthKey[]
-  ): PromiseResult<DatabaseAdminEntitySearchPayload, ErrorType.BadRequest | ErrorType.Generic>;
-
-  adminEntitySearchEntities2(
-    schema: AdminSchema,
-    context: TransactionContext,
-    query: AdminSearchQuery | undefined,
     paging: ResolvedPagingInfo,
     resolvedAuthKeys: ResolvedAuthKey[]
-  ): PromiseResult<DatabaseAdminEntitySearchPayload2, ErrorType.BadRequest | ErrorType.Generic>;
+  ): PromiseResult<DatabaseAdminEntitySearchPayload, ErrorType.BadRequest | ErrorType.Generic>;
 
   adminEntitySearchTotalCount(
     schema: AdminSchema,
@@ -455,17 +434,9 @@ export interface DatabaseAdapter {
     schema: PublishedSchema,
     context: TransactionContext,
     query: PublishedSearchQuery | undefined,
-    paging: Paging | undefined,
-    resolvedAuthKeys: ResolvedAuthKey[]
-  ): PromiseResult<DatabasePublishedEntitySearchPayload, ErrorType.BadRequest | ErrorType.Generic>;
-
-  publishedEntitySearchEntities2(
-    schema: PublishedSchema,
-    context: TransactionContext,
-    query: PublishedSearchQuery | undefined,
     paging: ResolvedPagingInfo,
     resolvedAuthKeys: ResolvedAuthKey[]
-  ): PromiseResult<DatabasePublishedEntitySearchPayload2, ErrorType.BadRequest | ErrorType.Generic>;
+  ): PromiseResult<DatabasePublishedEntitySearchPayload, ErrorType.BadRequest | ErrorType.Generic>;
 
   publishedEntitySearchTotalCount(
     schema: PublishedSchema,

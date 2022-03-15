@@ -1,22 +1,18 @@
 import type {
   Connection,
   Edge,
+  ErrorType,
   Paging,
   PromiseResult,
   PublishedEntity,
   PublishedSchema,
   PublishedSearchQuery,
 } from '@jonasb/datadata-core';
-import { ErrorType } from '@jonasb/datadata-core';
 import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
 import type { AuthorizationAdapter, SessionContext } from '..';
 import { authResolveAuthorizationKeys } from '../Auth';
 import { decodePublishedEntity } from '../EntityCodec';
-import {
-  resolvePagingInfo,
-  sharedSearchEntities,
-  sharedSearchEntities2,
-} from '../shared-entity/sharedSearchEntities';
+import { resolvePagingInfo, sharedSearchEntities } from '../shared-entity/sharedSearchEntities';
 
 export async function publishedSearchEntities(
   schema: PublishedSchema,
@@ -40,33 +36,14 @@ export async function publishedSearchEntities(
   );
   if (authKeysResult.isError()) return authKeysResult;
 
-  const searchResult2 = await databaseAdapter.publishedEntitySearchEntities2(
+  const searchResult = await databaseAdapter.publishedEntitySearchEntities(
     schema,
     context,
     query,
     pagingInfo,
     authKeysResult.value
   );
-  if (searchResult2.isOk() || !searchResult2.isErrorType(ErrorType.Generic)) {
-    if (searchResult2.isError()) return searchResult2;
-    return await sharedSearchEntities2(
-      schema,
-      pagingInfo,
-      searchResult2.value,
-      decodePublishedEntity
-    );
-  }
+  if (searchResult.isError()) return searchResult;
 
-  const searchResult = await databaseAdapter.publishedEntitySearchEntities(
-    schema,
-    context,
-    query,
-    paging,
-    authKeysResult.value
-  );
-  if (searchResult.isError()) {
-    return searchResult;
-  }
-
-  return await sharedSearchEntities(schema, searchResult.value, decodePublishedEntity);
+  return await sharedSearchEntities(schema, pagingInfo, searchResult.value, decodePublishedEntity);
 }
