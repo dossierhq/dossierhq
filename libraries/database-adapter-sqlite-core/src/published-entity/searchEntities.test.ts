@@ -5,6 +5,7 @@ import {
   createMockContext,
   createTestAdminSchema,
   getQueryCalls,
+  resolvePaging,
 } from '../test/TestUtils';
 import { publishedEntitySearchEntities } from './searchEntities';
 
@@ -32,10 +33,10 @@ describe('publishedEntitySearchEntities', () => {
       createTestAdminSchema(),
       context,
       undefined,
-      undefined,
+      resolvePaging(undefined),
       [{ authKey: 'none', resolvedAuthKey: 'none' }]
     );
-    expectResultValue(result, { entities: [], hasPreviousPage: false, hasNextPage: false });
+    expectResultValue(result, { entities: [], hasMore: false });
     expect(getQueryCalls(adapter)).toMatchInlineSnapshot(`
       Array [
         Array [
@@ -58,7 +59,7 @@ describe('publishedEntitySearchEntities', () => {
       createTestAdminSchema(),
       context,
       undefined,
-      undefined,
+      resolvePaging(undefined),
       [{ authKey: 'none', resolvedAuthKey: 'none' }]
     );
     expect(result).toMatchInlineSnapshot(`
@@ -77,8 +78,7 @@ describe('publishedEntitySearchEntities', () => {
               "type": "TitleOnly",
             },
           ],
-          "hasNextPage": false,
-          "hasPreviousPage": false,
+          "hasMore": false,
         },
       }
     `);
@@ -104,7 +104,7 @@ describe('publishedEntitySearchEntities', () => {
       createTestAdminSchema(),
       context,
       undefined,
-      { after: 'MQ==', first: 10 },
+      resolvePaging({ after: 'MQ==', first: 10 }),
       [{ authKey: 'none', resolvedAuthKey: 'none' }]
     );
     expect(result).toMatchInlineSnapshot(`
@@ -123,8 +123,7 @@ describe('publishedEntitySearchEntities', () => {
               "type": "TitleOnly",
             },
           ],
-          "hasNextPage": false,
-          "hasPreviousPage": false,
+          "hasMore": false,
         },
       }
     `);
@@ -151,7 +150,7 @@ describe('publishedEntitySearchEntities', () => {
       createTestAdminSchema(),
       context,
       undefined,
-      { before: 'MQ==', first: 10 },
+      resolvePaging({ before: 'MQ==', first: 10 }),
       [{ authKey: 'none', resolvedAuthKey: 'none' }]
     );
     expect(result).toMatchInlineSnapshot(`
@@ -170,8 +169,7 @@ describe('publishedEntitySearchEntities', () => {
               "type": "TitleOnly",
             },
           ],
-          "hasNextPage": false,
-          "hasPreviousPage": false,
+          "hasMore": false,
         },
       }
     `);

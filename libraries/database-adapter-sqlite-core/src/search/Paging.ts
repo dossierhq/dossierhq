@@ -1,14 +1,10 @@
-import type { ErrorType, Paging, Result } from '@jonasb/datadata-core';
-import { getPagingInfo, ok } from '@jonasb/datadata-core';
+import type { ErrorType, PagingInfo, Result } from '@jonasb/datadata-core';
+import { ok } from '@jonasb/datadata-core';
 import type { SqliteDatabaseAdapter } from '..';
 import type { CursorNativeType } from './OpaqueCursor';
 import { fromOpaqueCursor } from './OpaqueCursor';
 
-export const pagingDefaultCount = 25;
-
-export interface ResolvedPaging<TCursor> {
-  forwards: boolean;
-  count: number;
+export interface ResolvedPagingCursors<TCursor> {
   before: TCursor | null;
   after: TCursor | null;
 }
@@ -16,42 +12,29 @@ export interface ResolvedPaging<TCursor> {
 function getCursor(
   databaseAdapter: SqliteDatabaseAdapter,
   cursorType: CursorNativeType,
-  paging: Paging | undefined,
+  paging: PagingInfo,
   key: 'after' | 'before'
-) {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const cursor = (paging as any)?.[key];
+): Result<unknown, ErrorType.BadRequest> {
+  const cursor = paging[key];
   if (cursor) {
     return fromOpaqueCursor(databaseAdapter, cursorType, cursor);
   }
-  return null;
+  return ok(null);
 }
 
-export function resolvePaging<TCursor>(
+export function resolvePagingCursors<TCursor>(
   databaseAdapter: SqliteDatabaseAdapter,
   cursorType: CursorNativeType,
-  paging?: Paging
-): Result<ResolvedPaging<TCursor>, ErrorType.BadRequest> {
+  paging: PagingInfo
+): Result<ResolvedPagingCursors<TCursor>, ErrorType.BadRequest> {
   const after = getCursor(databaseAdapter, cursorType, paging, 'after');
   const before = getCursor(databaseAdapter, cursorType, paging, 'before');
 
-  if (after?.isError()) {
-    return after;
-  }
-  if (before?.isError()) {
-    return before;
-  }
-
-  const pagingInfo = getPagingInfo(paging);
-  if (pagingInfo.isError()) {
-    return pagingInfo;
-  }
-  const { forwards, count } = pagingInfo.value;
+  if (after.isError()) return after;
+  if (before.isError()) return before;
 
   return ok({
-    forwards,
-    count: count ?? pagingDefaultCount,
-    before: before?.isOk() ? (before.value as TCursor) : null,
-    after: after?.isOk() ? (after.value as TCursor) : null,
+    before: before.value as TCursor,
+    after: after.value as TCursor,
   });
 }

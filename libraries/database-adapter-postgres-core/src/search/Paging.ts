@@ -34,7 +34,7 @@ export function resolvePagingCursors<TCursor>(
   if (before.isError()) return before;
 
   return ok({
-    before: before.value as TCursor | null,
-    after: after.value as TCursor | null,
+    before: before.value as TCursor,
+    after: after.value as TCursor,
   });
 }
