@@ -8,7 +8,7 @@ import { ok } from '@jonasb/datadata-core';
 import type {
   DatabasePublishedEntitySearchPayload,
   ResolvedAuthKey,
-  ResolvedPagingInfo,
+  DatabasePagingInfo,
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
 import type { PostgresDatabaseAdapter } from '..';
@@ -21,7 +21,7 @@ export async function publishedEntitySearchEntities(
   schema: PublishedSchema,
   context: TransactionContext,
   query: PublishedSearchQuery | undefined,
-  paging: ResolvedPagingInfo,
+  paging: DatabasePagingInfo,
   resolvedAuthKeys: ResolvedAuthKey[]
 ): PromiseResult<DatabasePublishedEntitySearchPayload, ErrorType.BadRequest | ErrorType.Generic> {
   const sqlQueryResult = searchPublishedEntitiesQuery(

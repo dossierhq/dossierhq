@@ -9,7 +9,7 @@ import type {
   Result,
 } from '@jonasb/datadata-core';
 import { AdminQueryOrder, notOk, ok, PublishedQueryOrder } from '@jonasb/datadata-core';
-import type { ResolvedAuthKey, ResolvedPagingInfo } from '@jonasb/datadata-database-adapter';
+import type { DatabasePagingInfo, ResolvedAuthKey } from '@jonasb/datadata-database-adapter';
 import { PostgresQueryBuilder } from '@jonasb/datadata-database-adapter';
 import type { PostgresDatabaseAdapter } from '..';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema';
@@ -40,7 +40,7 @@ export function searchPublishedEntitiesQuery(
   databaseAdapter: PostgresDatabaseAdapter,
   schema: PublishedSchema,
   query: PublishedSearchQuery | undefined,
-  paging: ResolvedPagingInfo,
+  paging: DatabasePagingInfo,
   authKeys: ResolvedAuthKey[]
 ): Result<SharedEntitiesQuery<SearchPublishedEntitiesItem>, ErrorType.BadRequest> {
   return sharedSearchEntitiesQuery(databaseAdapter, schema, query, paging, authKeys, true);
@@ -50,7 +50,7 @@ export function searchAdminEntitiesQuery(
   databaseAdapter: PostgresDatabaseAdapter,
   schema: AdminSchema,
   query: AdminSearchQuery | undefined,
-  paging: ResolvedPagingInfo,
+  paging: DatabasePagingInfo,
   authKeys: ResolvedAuthKey[]
 ): Result<SharedEntitiesQuery<SearchAdminEntitiesItem>, ErrorType.BadRequest> {
   return sharedSearchEntitiesQuery(databaseAdapter, schema, query, paging, authKeys, false);
@@ -62,7 +62,7 @@ function sharedSearchEntitiesQuery<
   databaseAdapter: PostgresDatabaseAdapter,
   schema: AdminSchema | PublishedSchema,
   query: PublishedSearchQuery | AdminSearchQuery | undefined,
-  paging: ResolvedPagingInfo,
+  paging: DatabasePagingInfo,
   authKeys: ResolvedAuthKey[],
   published: boolean
 ): Result<SharedEntitiesQuery<TItem>, ErrorType.BadRequest> {

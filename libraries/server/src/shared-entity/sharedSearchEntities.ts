@@ -10,26 +10,30 @@ import type {
 import { getPagingInfo, ok } from '@jonasb/datadata-core';
 import type {
   DatabaseAdminEntitySearchPayload,
+  DatabasePagingInfo,
   DatabasePublishedEntitySearchPayload,
-  ResolvedPagingInfo,
 } from '@jonasb/datadata-database-adapter';
 
+//TODO move to constants or make configurable?
 const defaultPagingCount = 25;
 
 export function resolvePagingInfo(
   paging: Paging | undefined
-): Result<ResolvedPagingInfo, ErrorType.BadRequest> {
+): Result<DatabasePagingInfo, ErrorType.BadRequest> {
   const pagingResult = getPagingInfo(paging);
   if (pagingResult.isError()) return pagingResult;
+
   return ok({
     ...pagingResult.value,
+    after: paging?.after ?? null,
+    before: paging?.before ?? null,
     count: pagingResult.value.count ?? defaultPagingCount,
   });
 }
 
 export function getOppositeDirectionPaging<
   TSearchResult extends DatabaseAdminEntitySearchPayload | DatabasePublishedEntitySearchPayload
->(pagingInfo: ResolvedPagingInfo, result: TSearchResult): ResolvedPagingInfo | null {
+>(pagingInfo: DatabasePagingInfo, result: TSearchResult): DatabasePagingInfo | null {
   if (result.entities.length === 0) {
     // If we don't get any entities in the normal direction we won't return any PageInfo, only null
     return null;

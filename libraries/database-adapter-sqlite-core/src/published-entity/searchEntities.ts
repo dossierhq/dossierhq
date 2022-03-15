@@ -6,9 +6,9 @@ import type {
 } from '@jonasb/datadata-core';
 import { ok } from '@jonasb/datadata-core';
 import type {
+  DatabasePagingInfo,
   DatabasePublishedEntitySearchPayload,
   ResolvedAuthKey,
-  ResolvedPagingInfo,
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
 import { Temporal } from '@js-temporal/polyfill';
@@ -22,7 +22,7 @@ export async function publishedEntitySearchEntities(
   schema: PublishedSchema,
   context: TransactionContext,
   query: PublishedSearchQuery | undefined,
-  paging: ResolvedPagingInfo,
+  paging: DatabasePagingInfo,
   resolvedAuthKeys: ResolvedAuthKey[]
 ): PromiseResult<DatabasePublishedEntitySearchPayload, ErrorType.BadRequest | ErrorType.Generic> {
   const sqlQueryResult = searchPublishedEntitiesQuery(

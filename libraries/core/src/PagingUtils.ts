@@ -4,8 +4,6 @@ import { notOk, ok } from '.';
 export interface PagingInfo {
   forwards: boolean;
   count: number | null;
-  after: string | null;
-  before: string | null;
 }
 
 export function getPagingInfo(
@@ -31,7 +29,7 @@ export function getPagingInfo(
     count = last;
   }
 
-  return ok({ forwards, count, after: paging?.after ?? null, before: paging?.before ?? null });
+  return ok({ forwards, count });
 }
 
 function validatePaging(paging?: Paging | undefined) {
