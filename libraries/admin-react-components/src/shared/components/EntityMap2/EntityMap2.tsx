@@ -34,7 +34,12 @@ export function EntityMap2<TEntity extends AdminEntity | PublishedEntity>({
       className={className}
       center={null}
       onBoundingBoxChanged={(boundingBox) =>
-        dispatchSearchEntityState(new SearchEntityStateActions.SetQuery({ boundingBox }, true))
+        dispatchSearchEntityState(
+          new SearchEntityStateActions.SetQuery(
+            { boundingBox },
+            { partial: true, resetPaging: true }
+          )
+        )
       }
     >
       {connection && schema

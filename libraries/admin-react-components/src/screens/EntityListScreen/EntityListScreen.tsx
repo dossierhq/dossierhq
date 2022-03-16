@@ -84,7 +84,10 @@ export function EntityListScreen({
   const handleToggleShowMap = useCallback(() => {
     if (showMap) {
       dispatchSearchEntityState(
-        new SearchEntityStateActions.SetQuery({ boundingBox: undefined }, true)
+        new SearchEntityStateActions.SetQuery(
+          { boundingBox: undefined },
+          { partial: true, resetPaging: true }
+        )
       );
     }
     setShowMap(!showMap);
@@ -95,7 +98,7 @@ export function EntityListScreen({
     dispatchSearchEntityState(
       new SearchEntityStateActions.SetQuery(
         { entityTypes: entityTypeFilterState.selectedIds },
-        true
+        { partial: true, resetPaging: true }
       )
     );
   }, [entityTypeFilterState.selectedIds]);
@@ -103,14 +106,20 @@ export function EntityListScreen({
   // sync status filter -> search state
   useEffect(() => {
     dispatchSearchEntityState(
-      new SearchEntityStateActions.SetQuery({ status: statusFilterState.selectedIds }, true)
+      new SearchEntityStateActions.SetQuery(
+        { status: statusFilterState.selectedIds },
+        { partial: true, resetPaging: true }
+      )
     );
   }, [statusFilterState.selectedIds]);
 
   // sync auth key filter -> search state
   useEffect(() => {
     dispatchSearchEntityState(
-      new SearchEntityStateActions.SetQuery({ authKeys: authKeyFilterState.selectedIds }, true)
+      new SearchEntityStateActions.SetQuery(
+        { authKeys: authKeyFilterState.selectedIds },
+        { partial: true, resetPaging: true }
+      )
     );
   }, [authKeyFilterState.selectedIds]);
 

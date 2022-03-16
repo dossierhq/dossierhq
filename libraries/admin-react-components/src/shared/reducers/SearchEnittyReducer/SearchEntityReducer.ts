@@ -50,7 +50,10 @@ export function initializeSearchEntityState(actions: SearchEntityStateAction[]):
     totalCount: null,
   };
   // Normalize query state
-  state = reduceSearchEntityState(state, new SetQueryAction({}, true));
+  state = reduceSearchEntityState(
+    state,
+    new SetQueryAction({}, { partial: true, resetPaging: false })
+  );
   for (const action of actions) {
     state = reduceSearchEntityState(state, action);
   }
@@ -139,10 +142,15 @@ class SetSamplingAction implements SearchEntityStateAction {
 class SetQueryAction implements SearchEntityStateAction {
   readonly value: AdminSearchQuery | PublishedSearchQuery;
   readonly partial: boolean;
+  readonly resetPaging: boolean;
 
-  constructor(value: AdminSearchQuery | PublishedSearchQuery, partial: boolean) {
+  constructor(
+    value: AdminSearchQuery | PublishedSearchQuery,
+    { partial, resetPaging }: { partial: boolean; resetPaging: boolean }
+  ) {
     this.value = value;
     this.partial = partial;
+    this.resetPaging = resetPaging;
   }
 
   reduce(state: SearchEntityState): SearchEntityState {
@@ -150,10 +158,11 @@ class SetQueryAction implements SearchEntityStateAction {
       ? { ...state.query, ...this.value }
       : { ...this.value };
 
+    let paging = this.resetPaging ? {} : state.paging;
+
     // Sampling/paging
     const switchToSearch = (this.value.order || this.value.reverse !== undefined) && state.sampling;
     let sampling = state.sampling;
-    let paging = state.paging;
     if (switchToSearch) {
       sampling = undefined;
       paging = {};
