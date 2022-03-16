@@ -1,6 +1,6 @@
 import React from 'react';
-import type { LayoutProps, SpacingSize } from '../../index.js';
-import { gapClassName, joinClassNames } from '../../utils/ClassNameUtils.js';
+import type { LayoutProps, SpacingSize } from '../..';
+import { gapClassName, joinClassNames } from '../../utils/ClassNameUtils';
 
 export interface RowProps {
   className?: string;

@@ -5,7 +5,7 @@ import type {
 } from '@jonasb/datadata-core';
 import { Field, FullscreenContainer, Text } from '@jonasb/datadata-design';
 import React, { useContext, useEffect } from 'react';
-import { PublishedDataDataContext, useEntity } from '../../index.js';
+import { PublishedDataDataContext, useEntity } from '../..';
 
 export interface EntityDetailScreenProps {
   header?: React.ReactNode;

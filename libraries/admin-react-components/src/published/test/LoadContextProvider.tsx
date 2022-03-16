@@ -1,8 +1,8 @@
 import type { ErrorType, PromiseResult, PublishedClient } from '@jonasb/datadata-core';
 import { ok } from '@jonasb/datadata-core';
 import React, { useEffect, useState } from 'react';
-import { createBackendPublishedClient, DISPLAY_AUTH_KEYS } from '../../test/TestContextAdapter.js';
-import { PublishedDataDataProvider } from '../index.js';
+import { createBackendPublishedClient, DISPLAY_AUTH_KEYS } from '../../test/TestContextAdapter';
+import { PublishedDataDataProvider } from '..';
 
 interface Props {
   publishedClient?: () => PromiseResult<PublishedClient, ErrorType>;

@@ -1,7 +1,7 @@
 jest.mock('@editorjs/editorjs');
 
 import { ok } from '@jonasb/datadata-core';
-import type { Story } from '@storybook/react/types-6-0.js';
+import type { Story } from '@storybook/react/types-6-0';
 import '@testing-library/jest-dom';
 import {
   act,

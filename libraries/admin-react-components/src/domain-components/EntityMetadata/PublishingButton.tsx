@@ -6,8 +6,8 @@ import type {
 } from '@jonasb/datadata-core';
 import { AdminEntityStatus } from '@jonasb/datadata-core';
 import React, { useContext, useState } from 'react';
-import type { DataDataContextValue } from '../../index.js';
-import { ButtonWithDropDown, DataDataContext } from '../../index.js';
+import type { DataDataContextValue } from '../..';
+import { ButtonWithDropDown, DataDataContext } from '../..';
 
 interface PublishAction {
   name: string;

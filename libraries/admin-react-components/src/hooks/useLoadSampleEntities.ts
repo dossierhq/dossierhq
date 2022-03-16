@@ -1,9 +1,9 @@
 import type { AdminQuery, EntitySamplingOptions } from '@jonasb/datadata-core';
 import type { Dispatch } from 'react';
 import { useContext, useEffect } from 'react';
-import type { SearchEntityStateAction } from '../index.js';
-import { DataDataContext2, SearchEntityStateActions } from '../index.js';
-import { useSampleEntities } from './useSampleEntities.js';
+import type { SearchEntityStateAction } from '..';
+import { DataDataContext2, SearchEntityStateActions } from '..';
+import { useSampleEntities } from './useSampleEntities';
 
 /**
  * @param query If `undefined`, no data is fetched

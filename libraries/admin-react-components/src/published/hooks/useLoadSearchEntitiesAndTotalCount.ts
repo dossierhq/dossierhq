@@ -1,13 +1,13 @@
 import type { Paging, PublishedSearchQuery } from '@jonasb/datadata-core';
 import type { Dispatch } from 'react';
 import { useContext, useEffect } from 'react';
-import type { SearchEntityStateAction } from '../index.js';
+import type { SearchEntityStateAction } from '..';
 import {
   PublishedDataDataContext,
   SearchEntityStateActions,
   useSearchEntities,
   useTotalCount,
-} from '../index.js';
+} from '..';
 
 /**
  * @param query If `undefined`, no data is fetched

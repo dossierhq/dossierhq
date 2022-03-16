@@ -1,8 +1,8 @@
 import type { AdminClient, ErrorType, PromiseResult } from '@jonasb/datadata-core';
 import { ok } from '@jonasb/datadata-core';
-import type { Meta, Story } from '@storybook/react/types-6-0.js';
+import type { Meta, Story } from '@storybook/react/types-6-0';
 import React, { useContext, useReducer } from 'react';
-import type { EntityEditorSelector } from '../../index.js';
+import type { EntityEditorSelector } from '../..';
 import {
   AddEntityDraftAction,
   DataDataContext,
@@ -11,12 +11,12 @@ import {
   EntityMetadata,
   initializeEntityEditorState,
   reduceEntityEditorState,
-} from '../../index.js';
-import { foo1Id, fooArchivedId } from '../../test/EntityFixtures.js';
-import { LoadContextProvider } from '../../test/LoadContextProvider.js';
-import { createBackendAdminClient, SlowMiddleware } from '../../test/TestContextAdapter.js';
-import { EntityLoader } from '../EntityEditor/EntityEditor.js';
-import type { EntityMetadataProps } from './EntityMetadata.js';
+} from '../..';
+import { foo1Id, fooArchivedId } from '../../test/EntityFixtures';
+import { LoadContextProvider } from '../../test/LoadContextProvider';
+import { createBackendAdminClient, SlowMiddleware } from '../../test/TestContextAdapter';
+import { EntityLoader } from '../EntityEditor/EntityEditor';
+import type { EntityMetadataProps } from './EntityMetadata';
 
 export type EntityMetadataStoryProps = Omit<EntityMetadataProps, 'entityId'> & {
   entitySelector: EntityEditorSelector;

@@ -1,7 +1,7 @@
 import { AdminEntityStatus } from '@jonasb/datadata-core';
 import React from 'react';
-import { Tag } from '../../index.js';
-import type { Kind } from '../../index.js';
+import { Tag } from '../..';
+import type { Kind } from '../..';
 
 const LOOKUP: Record<AdminEntityStatus, Kind> = {
   [AdminEntityStatus.archived]: 'danger',

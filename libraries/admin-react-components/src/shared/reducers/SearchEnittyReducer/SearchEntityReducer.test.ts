@@ -39,6 +39,21 @@ describe('SearchEntityStateActions.SetQuery', () => {
     expect(state.paging).toEqual({});
     expect(state.sampling).toBeUndefined();
   });
+
+  test('Resets paging (when configured)', () => {
+    const state = reduceSearchEntityState(
+      initializeSearchEntityState([
+        new SearchEntityStateActions.SetPaging({ after: 'cursor', first: 10 }),
+      ]),
+      new SearchEntityStateActions.SetQuery(
+        { order: AdminQueryOrder.updatedAt },
+        { partial: true, resetPaging: true }
+      )
+    );
+    expect(state.query).toEqual({ order: AdminQueryOrder.updatedAt });
+    expect(state.paging).toEqual({});
+    expect(state.sampling).toBeUndefined();
+  });
 });
 
 describe('SearchEntityStateActions.SetPaging', () => {

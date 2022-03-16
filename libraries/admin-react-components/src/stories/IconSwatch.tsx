@@ -1,6 +1,6 @@
 import React from 'react';
-import type { IconProps } from '../index.js';
-import { Icon, IconTypes } from '../index.js';
+import type { IconProps } from '..';
+import { Icon, IconTypes } from '..';
 
 export function IconSwatch({ icon }: IconProps): JSX.Element {
   return (

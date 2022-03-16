@@ -1,6 +1,6 @@
 import React from 'react';
-import type { EntityFieldEditorProps } from '../../index.js';
-import { Checkbox, IconButton } from '../../index.js';
+import type { EntityFieldEditorProps } from '../..';
+import { Checkbox, IconButton } from '../..';
 
 type Props = EntityFieldEditorProps<boolean>;
 

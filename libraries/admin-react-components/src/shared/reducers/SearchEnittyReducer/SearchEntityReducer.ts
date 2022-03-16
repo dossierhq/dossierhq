@@ -13,7 +13,7 @@ import type {
   PublishedSearchQuery,
 } from '@jonasb/datadata-core';
 import { AdminQueryOrder, getPagingInfo } from '@jonasb/datadata-core';
-import isEqual from 'lodash/isEqual.js';
+import isEqual from 'lodash/isEqual';
 
 const defaultOrder: AdminQueryOrder | PublishedQueryOrder = AdminQueryOrder.name;
 const defaultRequestedCount = 25;

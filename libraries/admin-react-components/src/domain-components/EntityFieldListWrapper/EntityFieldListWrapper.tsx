@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
-import type { EntityFieldEditorProps } from '../../index.js';
-import { Column } from '../../index.js';
+import type { EntityFieldEditorProps } from '../..';
+import { Column } from '../..';
 
 interface Props<Item> extends EntityFieldEditorProps<Item[]> {
   Editor: React.JSXElementConstructor<EntityFieldEditorProps<Item>>;

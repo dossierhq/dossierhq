@@ -6,9 +6,9 @@ import type {
   AdminSchema,
 } from '@jonasb/datadata-core';
 import { ErrorType } from '@jonasb/datadata-core';
-import isEqual from 'lodash/isEqual.js';
+import isEqual from 'lodash/isEqual';
 import { v4 as uuidv4 } from 'uuid';
-import type { MessageItem } from '../../generic-components/Message/Message.js';
+import type { MessageItem } from '../../generic-components/Message/Message';
 
 export type EntityEditorSelector = { id: string } | { id?: string; newType: string };
 

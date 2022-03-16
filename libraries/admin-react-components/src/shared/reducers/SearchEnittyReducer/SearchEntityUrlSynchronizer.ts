@@ -2,12 +2,12 @@ import type { AdminSearchQuery, EntitySamplingOptions, Paging } from '@jonasb/da
 import { decodeUrlQueryStringifiedParam, stringifyUrlQueryParams } from '@jonasb/datadata-core';
 import type { Dispatch } from 'react';
 import { useEffect } from 'react';
-import type { SearchEntityState, SearchEntityStateAction } from '../../index.js';
+import type { SearchEntityState, SearchEntityStateAction } from '../..';
 import {
   getQueryWithoutDefaults,
   initializeSearchEntityState,
   SearchEntityStateActions,
-} from '../../index.js';
+} from '../..';
 
 export interface EntitySearchStateUrlQuery {
   query?: string;

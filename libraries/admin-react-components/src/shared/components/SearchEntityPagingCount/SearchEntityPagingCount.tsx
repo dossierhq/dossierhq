@@ -1,8 +1,8 @@
 import type { Paging } from '@jonasb/datadata-core';
 import type { Dispatch } from 'react';
 import React, { useCallback } from 'react';
-import type { SearchEntityState, SearchEntityStateAction } from '../../index.js';
-import { ConnectionPagingCount, SearchEntityStateActions } from '../../index.js';
+import type { SearchEntityState, SearchEntityStateAction } from '../..';
+import { ConnectionPagingCount, SearchEntityStateActions } from '../..';
 
 export function SearchEntityPagingCount({
   searchEntityState,

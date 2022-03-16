@@ -10,7 +10,7 @@ import type {
 import { isLocationItemField, visitItemRecursively } from '@jonasb/datadata-core';
 import type { ReactNode } from 'react';
 import React, { useContext, useEffect, useState } from 'react';
-import { DataDataContext, MapContainer, PublishStateTag } from '../../index.js';
+import { DataDataContext, MapContainer, PublishStateTag } from '../..';
 
 export interface EntityMapProps {
   className?: string;

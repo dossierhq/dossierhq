@@ -1,13 +1,13 @@
 import { IconButton } from '@jonasb/datadata-design';
 import type { Dispatch } from 'react';
 import React, { useCallback } from 'react';
-import type { SearchEntityState, SearchEntityStateAction } from '../../../index.js';
+import type { SearchEntityState, SearchEntityStateAction } from '../../..';
 import {
   SampleEntitiesOptionsCount,
   SearchEntityPagingButtons,
   SearchEntityPagingCount,
   SearchEntityStateActions,
-} from '../../../index.js';
+} from '../../..';
 
 export function SearchOrSampleEntitiesButtons({
   searchEntityState,

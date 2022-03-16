@@ -1,8 +1,8 @@
 import type { Logger, PublishedClient } from '@jonasb/datadata-core';
 import { NoOpLogger } from '@jonasb/datadata-core';
 import React, { useMemo } from 'react';
-import type { DisplayAuthKey, PublishedDataDataContextValue } from '../../index.js';
-import { PublishedDataDataContext, useSchema } from '../../index.js';
+import type { DisplayAuthKey, PublishedDataDataContextValue } from '../..';
+import { PublishedDataDataContext, useSchema } from '../..';
 
 interface Props {
   publishedClient: PublishedClient;

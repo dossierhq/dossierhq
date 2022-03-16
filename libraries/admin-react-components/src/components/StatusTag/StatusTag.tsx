@@ -1,7 +1,7 @@
 import type { AdminEntityStatus } from '@jonasb/datadata-core';
 import { Tag } from '@jonasb/datadata-design';
 import React from 'react';
-import { statusDisplay } from '../../utils/DisplayUtils.js';
+import { statusDisplay } from '../../utils/DisplayUtils';
 
 interface Props {
   status: AdminEntityStatus;

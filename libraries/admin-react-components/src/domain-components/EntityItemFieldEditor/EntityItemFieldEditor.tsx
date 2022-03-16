@@ -1,6 +1,6 @@
 import type { EntityReference } from '@jonasb/datadata-core';
 import React, { useCallback, useContext, useState } from 'react';
-import type { EntityFieldEditorProps } from '../../index.js';
+import type { EntityFieldEditorProps } from '../..';
 import {
   Button,
   DataDataContext,
@@ -10,8 +10,8 @@ import {
   Modal,
   PublishStateTag,
   Row,
-} from '../../index.js';
-import { AddEntityDraftAction } from '../EntityEditor/EntityEditorReducer.js';
+} from '../..';
+import { AddEntityDraftAction } from '../EntityEditor/EntityEditorReducer';
 
 export type EntityItemFieldEditorProps = EntityFieldEditorProps<EntityReference>;
 

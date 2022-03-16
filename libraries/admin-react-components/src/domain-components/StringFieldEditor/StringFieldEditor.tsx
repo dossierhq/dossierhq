@@ -1,6 +1,6 @@
 import React from 'react';
-import type { EntityFieldEditorProps } from '../../index.js';
-import { IconButton, InputText } from '../../index.js';
+import type { EntityFieldEditorProps } from '../..';
+import { IconButton, InputText } from '../..';
 
 type Props = EntityFieldEditorProps<string>;
 
