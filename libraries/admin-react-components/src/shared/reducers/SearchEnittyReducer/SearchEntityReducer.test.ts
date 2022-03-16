@@ -30,7 +30,10 @@ describe('SearchEntityStateActions.SetQuery', () => {
   test('Resets sampling if setting order', () => {
     const state = reduceSearchEntityState(
       initializeSearchEntityState([new SearchEntityStateActions.SetSampling({}, true)]),
-      new SearchEntityStateActions.SetQuery({ order: AdminQueryOrder.updatedAt }, true)
+      new SearchEntityStateActions.SetQuery(
+        { order: AdminQueryOrder.updatedAt },
+        { partial: true, resetPaging: true }
+      )
     );
     expect(state.query).toEqual({ order: AdminQueryOrder.updatedAt });
     expect(state.paging).toEqual({});
@@ -80,7 +83,10 @@ describe('SearchEntityStateActions.SetSampling', () => {
   test('Resets order', () => {
     const state = reduceSearchEntityState(
       initializeSearchEntityState([
-        new SearchEntityStateActions.SetQuery({ order: AdminQueryOrder.updatedAt }, true),
+        new SearchEntityStateActions.SetQuery(
+          { order: AdminQueryOrder.updatedAt },
+          { partial: true, resetPaging: true }
+        ),
       ]),
       new SearchEntityStateActions.SetSampling({}, true)
     );

@@ -144,6 +144,9 @@ function handleHeaderClick(
     newReverse = !reverse;
   }
   dispatchSearchEntityState(
-    new SearchEntityStateActions.SetQuery({ order: headerOrder, reverse: newReverse }, true)
+    new SearchEntityStateActions.SetQuery(
+      { order: headerOrder, reverse: newReverse },
+      { partial: true, resetPaging: true }
+    )
   );
 }
