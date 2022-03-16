@@ -6,6 +6,7 @@ Object {
   "drafts": Array [
     Object {
       "entity": Object {
+        "authKey": null,
         "fields": Array [
           Object {
             "initialValue": null,
@@ -69,176 +70,27 @@ Object {
 
 exports[`reduceEntityEditorState UpdateEntityAction 1`] = `
 Object {
-  "activeEntityId": "fc66b4d7-61ff-44d4-8f68-cb7f526df046",
+  "activeEntityId": "cb228716-d3dd-444f-9a77-80443d436339",
   "drafts": Array [
     Object {
       "entity": Object {
+        "authKey": "none",
         "fields": Array [
           Object {
             "initialValue": "Hello",
             "value": "Hello",
           },
-          Object {
-            "initialValue": Array [
-              "one",
-              "two",
-              "three",
-            ],
-            "value": Array [
-              "one",
-              "two",
-              "three",
-            ],
-          },
-          Object {
-            "initialValue": Object {
-              "lat": 55.60498,
-              "lng": 13.003822,
-            },
-            "value": Object {
-              "lat": 55.60498,
-              "lng": 13.003822,
-            },
-          },
-          Object {
-            "initialValue": Array [
-              Object {
-                "lat": 55.60498,
-                "lng": 13.003822,
-              },
-              Object {
-                "lat": 56.381561,
-                "lng": 13.99286,
-              },
-            ],
-            "value": Array [
-              Object {
-                "lat": 55.60498,
-                "lng": 13.003822,
-              },
-              Object {
-                "lat": 56.381561,
-                "lng": 13.99286,
-              },
-            ],
-          },
-          Object {
-            "initialValue": Object {
-              "id": "cb228716-d3dd-444f-9a77-80443d436339",
-            },
-            "value": Object {
-              "id": "cb228716-d3dd-444f-9a77-80443d436339",
-            },
-          },
-          Object {
-            "initialValue": Array [
-              Object {
-                "id": "cb228716-d3dd-444f-9a77-80443d436339",
-              },
-              Object {
-                "id": "eb5732e2-b931-492b-82f1-f8fdd464f0d2",
-              },
-            ],
-            "value": Array [
-              Object {
-                "id": "cb228716-d3dd-444f-9a77-80443d436339",
-              },
-              Object {
-                "id": "eb5732e2-b931-492b-82f1-f8fdd464f0d2",
-              },
-            ],
-          },
-          Object {
-            "initialValue": Object {
-              "blocks": Array [
-                Object {
-                  "data": Object {
-                    "text": "Hello world",
-                  },
-                  "type": "paragraph",
-                },
-              ],
-            },
-            "value": Object {
-              "blocks": Array [
-                Object {
-                  "data": Object {
-                    "text": "Hello world",
-                  },
-                  "type": "paragraph",
-                },
-              ],
-            },
-          },
-          Object {
-            "initialValue": null,
-            "value": null,
-          },
-          Object {
-            "initialValue": Object {
-              "annotation": "Annotation",
-              "bar": Object {
-                "id": "eb5732e2-b931-492b-82f1-f8fdd464f0d2",
-              },
-              "type": "AnnotatedBar",
-            },
-            "value": Object {
-              "annotation": "Annotation",
-              "bar": Object {
-                "id": "eb5732e2-b931-492b-82f1-f8fdd464f0d2",
-              },
-              "type": "AnnotatedBar",
-            },
-          },
-          Object {
-            "initialValue": Array [
-              Object {
-                "annotation": "First",
-                "bar": Object {
-                  "id": "cb228716-d3dd-444f-9a77-80443d436339",
-                },
-                "type": "AnnotatedBar",
-              },
-              Object {
-                "annotation": "Second",
-                "bar": Object {
-                  "id": "eb5732e2-b931-492b-82f1-f8fdd464f0d2",
-                },
-                "type": "AnnotatedBar",
-              },
-            ],
-            "value": Array [
-              Object {
-                "annotation": "First",
-                "bar": Object {
-                  "id": "cb228716-d3dd-444f-9a77-80443d436339",
-                },
-                "type": "AnnotatedBar",
-              },
-              Object {
-                "annotation": "Second",
-                "bar": Object {
-                  "id": "eb5732e2-b931-492b-82f1-f8fdd464f0d2",
-                },
-                "type": "AnnotatedBar",
-              },
-            ],
-          },
-          Object {
-            "initialValue": null,
-            "value": null,
-          },
         ],
-        "initialName": "Foo 1",
-        "name": "Foo 1",
+        "initialName": "Hello",
+        "name": "Hello",
         "version": 1,
       },
       "entityLoadMessage": null,
       "exists": true,
-      "id": "fc66b4d7-61ff-44d4-8f68-cb7f526df046",
+      "id": "cb228716-d3dd-444f-9a77-80443d436339",
       "initMessage": null,
       "latestServerVersion": 0,
-      "status": "published",
+      "status": "draft",
     },
   ],
 }

@@ -10,7 +10,7 @@
     "./main.css": "./lib/main.css"
   },
   "scripts": {
-    "build": "npm run prettier:check && heft build --clean",
+    "build": "npm run prettier:check && heft test --clean",
     "build:watch": "heft build --watch",
     "clean": "heft clean",
     "db:cli": "./scripts/db-cli.sh",
@@ -41,6 +41,7 @@
     "@jonasb/datadata-database-adapter-postgres-pg": "workspace:*",
     "@jonasb/datadata-postgres": "workspace:*",
     "@jonasb/datadata-server": "workspace:*",
+    "@js-temporal/polyfill": "~0.3.0",
     "@rushstack/eslint-plugin": "~0.8.4",
     "@rushstack/heft": "~0.44.0",
     "@rushstack/heft-jest-plugin": "~0.2.0",
