@@ -4,22 +4,16 @@ import React, { useMemo } from 'react';
 
 interface Props {
   connection: Connection<Edge<unknown, ErrorType>> | null | undefined;
-  paging: Paging;
   pagingCount: number;
   onPagingChange: (paging: Paging) => void;
 }
 
-export function ConnectionPagingButtons({
-  connection,
-  paging,
-  pagingCount,
-  onPagingChange,
-}: Props) {
+export function ConnectionPagingButtons({ connection, pagingCount, onPagingChange }: Props) {
   const handleStart = useMemo(() => {
-    return paging.last || paging.after || paging.before
+    return connection?.pageInfo.hasPreviousPage
       ? () => onPagingChange({ first: pagingCount })
       : undefined;
-  }, [onPagingChange, paging.after, paging.before, paging.last, pagingCount]);
+  }, [connection?.pageInfo.hasPreviousPage, onPagingChange, pagingCount]);
 
   const handlePrevious = useMemo(() => {
     return connection?.pageInfo.hasPreviousPage
