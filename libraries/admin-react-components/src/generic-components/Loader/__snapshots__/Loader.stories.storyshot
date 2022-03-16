@@ -1,7 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`Storyshots Generic/Loader Normal 1`] = `
-<div
-  className="dd loader"
-/>
-`;

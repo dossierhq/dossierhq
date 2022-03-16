@@ -1,7 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`Storyshots Domain/EntityMap Normal 1`] = `
-<div
-  className="dd position-fixed inset-0"
-/>
-`;

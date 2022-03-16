@@ -197,7 +197,6 @@ importers:
       '@storybook/addon-actions': ^6.3.9
       '@storybook/addon-essentials': ^6.3.9
       '@storybook/addon-links': ^6.3.9
-      '@storybook/addon-storyshots': ^6.3.9
       '@storybook/builder-webpack5': ^6.3.9
       '@storybook/manager-webpack5': ^6.3.9
       '@storybook/react': ^6.3.9
@@ -258,7 +257,6 @@ importers:
       '@storybook/addon-actions': 6.3.12_c8c53a2a5a2c84791ce34d6dbdd05753
       '@storybook/addon-essentials': 6.3.12_8b6fd8c4f8d19b5ff50b798b4b12e833
       '@storybook/addon-links': 6.3.12_react-dom@17.0.2+react@17.0.2
-      '@storybook/addon-storyshots': 6.3.12_8e8b9c4e69e64ad559306a6d68f7e002
       '@storybook/builder-webpack5': 6.3.12_41df8d46f52a543353297c450364f830
       '@storybook/manager-webpack5': 6.3.12_41df8d46f52a543353297c450364f830
       '@storybook/react': 6.3.12_7919d8ce1f850730b72e6c04228ef54f
@@ -3732,93 +3730,6 @@ packages:
       react-dom: 17.0.2_react@17.0.2
     dev: true
 
-  /@storybook/addon-storyshots/6.3.12_8e8b9c4e69e64ad559306a6d68f7e002:
-    resolution: {integrity: sha512-plpy/q3pPpXtK9DyofE0trTeCZIyU0Z+baybbxltsM/tKFuQxbHSxTwgluq/7LOMkaRPgbddGyHForHoRLjsWg==}
-    peerDependencies:
-      '@angular/core': '>=6.0.0'
-      '@angular/platform-browser-dynamic': '>=6.0.0'
-      '@storybook/angular': '*'
-      '@storybook/react': '*'
-      '@storybook/vue': '*'
-      '@storybook/vue3': '*'
-      jest: '*'
-      jest-preset-angular: '*'
-      jest-vue-preprocessor: '*'
-      preact: ^10.5.13
-      react: ^16.8.0 || ^17.0.0
-      react-dom: ^16.8.0 || ^17.0.0
-      rxjs: '*'
-      svelte: '*'
-      vue: '*'
-      vue-jest: '*'
-    peerDependenciesMeta:
-      '@angular/core':
-        optional: true
-      '@angular/platform-browser-dynamic':
-        optional: true
-      '@storybook/angular':
-        optional: true
-      '@storybook/react':
-        optional: true
-      '@storybook/vue':
-        optional: true
-      '@storybook/vue3':
-        optional: true
-      jest-preset-angular:
-        optional: true
-      jest-vue-preprocessor:
-        optional: true
-      preact:
-        optional: true
-      react:
-        optional: true
-      react-dom:
-        optional: true
-      rxjs:
-        optional: true
-      svelte:
-        optional: true
-      vue:
-        optional: true
-      vue-jest:
-        optional: true
-    dependencies:
-      '@jest/transform': 26.6.2
-      '@storybook/addons': 6.3.12_react-dom@17.0.2+react@17.0.2
-      '@storybook/client-api': 6.3.12_react-dom@17.0.2+react@17.0.2
-      '@storybook/core': 6.3.12_7919d8ce1f850730b72e6c04228ef54f
-      '@storybook/core-common': 6.3.12_05e59b520ac3ec5b5c63514484626b2f
-      '@storybook/react': 6.3.12_7919d8ce1f850730b72e6c04228ef54f
-      '@types/glob': 7.2.0
-      '@types/jest': 26.0.24
-      '@types/jest-specific-snapshot': 0.5.5
-      babel-plugin-require-context-hook: 1.0.0
-      core-js: 3.19.1
-      glob: 7.2.0
-      global: 4.4.0
-      jest-specific-snapshot: 4.0.0
-      preact-render-to-string: 5.1.19
-      pretty-format: 26.6.2
-      react: 17.0.2
-      react-dom: 17.0.2_react@17.0.2
-      react-test-renderer: 17.0.2_react@17.0.2
-      read-pkg-up: 7.0.1
-      regenerator-runtime: 0.13.9
-      ts-dedent: 2.2.0
-    transitivePeerDependencies:
-      - '@babel/core'
-      - '@storybook/builder-webpack5'
-      - '@storybook/manager-webpack5'
-      - '@types/react'
-      - eslint
-      - supports-color
-      - typescript
-      - vue-template-compiler
-      - webpack
-      - webpack-cli
-      - webpack-command
-    dev: true
-
   /@storybook/addon-toolbars/6.3.12_c8c53a2a5a2c84791ce34d6dbdd05753:
     resolution: {integrity: sha512-8GvP6zmAfLPRnYRARSaIwLkQClLIRbflRh4HZoFk6IMjQLXZb4NL3JS5OLFKG+HRMMU2UQzfoSDqjI7k7ptyRw==}
     peerDependencies:
@@ -5122,19 +5033,6 @@ packages:
     resolution: {integrity: sha512-c3mAZEuK0lvBp8tmuL74XRKn1+y2dcwOUpH7x4WrF6gk1GIgiluDRgMYQtw2OFcBvAJWlt6ASU3tSqxp0Uu0Aw==}
     dependencies:
       '@types/istanbul-lib-report': 3.0.0
-    dev: true
-
-  /@types/jest-specific-snapshot/0.5.5:
-    resolution: {integrity: sha512-AaPPw2tE8ewfjD6qGLkEd4DOfM6pPOK7ob/RSOe1Z8Oo70r9Jgo0SlWyfxslPAOvLfQukQtiVPm6DcnjSoZU5A==}
-    dependencies:
-      '@types/jest': 27.4.0
-    dev: true
-
-  /@types/jest/26.0.24:
-    resolution: {integrity: sha512-E/X5Vib8BWqZNRlDxj9vYXhsDwPYbPINqKF9BsnSoon4RQ0D9moEuLD8txgyypFLH7J4+Lho9Nr/c8H0Fi+17w==}
-    dependencies:
-      jest-diff: 26.6.2
-      pretty-format: 26.6.2
     dev: true
 
   /@types/jest/27.4.0:
@@ -6607,10 +6505,6 @@ packages:
       - supports-color
     dev: true
 
-  /babel-plugin-require-context-hook/1.0.0:
-    resolution: {integrity: sha512-EMZD1563QUqLhzrqcThk759RhuNVX/ZJdrtGK6drwzgvnR+ARjWyXIHPbu+tUNaMGtPz/gQeAM2M6VUw2UiUeA==}
-    dev: true
-
   /babel-plugin-syntax-jsx/6.18.0:
     resolution: {integrity: sha1-CvMqmm4Tyno/1QaeYtew9Y0NiUY=}
     dev: true
@@ -8035,11 +7929,6 @@ packages:
       debug: 2.6.9
     dev: true
 
-  /diff-sequences/26.6.2:
-    resolution: {integrity: sha512-Mv/TDa3nZ9sbc5soK+OoA74BsS3mL37yixCvUAQkiuA4Wz6YtwP/K47n2rv2ovzHZvoiQeA5FTQOschKkEwB0Q==}
-    engines: {node: '>= 10.14.2'}
-    dev: true
-
   /diff-sequences/27.4.0:
     resolution: {integrity: sha512-YqiQzkrsmHMH5uuh8OdQFU9/ZpADnwzml8z0O5HvRNda+5UZsaX/xN+AAxfR2hWq1Y7HZnAzO9J5lJXOuDz2Ww==}
     engines: {node: ^10.13.0 || ^12.13.0 || ^14.15.0 || >=15.0.0}
@@ -8990,18 +8879,6 @@ packages:
       regex-not: 1.0.2
       snapdragon: 0.8.2
       to-regex: 3.0.2
-    dev: true
-
-  /expect/26.6.2:
-    resolution: {integrity: sha512-9/hlOBkQl2l/PLHJx6JjoDF6xPKcJEsUlWKb23rKE7KzeDqUZKXKNMW27KIue5JMdBV9HgmoJPcc8HtO85t9IA==}
-    engines: {node: '>= 10.14.2'}
-    dependencies:
-      '@jest/types': 26.6.2
-      ansi-styles: 4.3.0
-      jest-get-type: 26.3.0
-      jest-matcher-utils: 26.6.2
-      jest-message-util: 26.6.2
-      jest-regex-util: 26.0.0
     dev: true
 
   /expect/27.4.2:
@@ -11065,16 +10942,6 @@ packages:
       - utf-8-validate
     dev: true
 
-  /jest-diff/26.6.2:
-    resolution: {integrity: sha512-6m+9Z3Gv9wN0WFVasqjCL/06+EFCMTqDEUl/b87HYK2rAPTyfz4ZIuSlPhY51PIQRWx5TaxeF1qmXKe9gfN3sA==}
-    engines: {node: '>= 10.14.2'}
-    dependencies:
-      chalk: 4.1.2
-      diff-sequences: 26.6.2
-      jest-get-type: 26.3.0
-      pretty-format: 26.6.2
-    dev: true
-
   /jest-diff/27.4.2:
     resolution: {integrity: sha512-ujc9ToyUZDh9KcqvQDkk/gkbf6zSaeEg9AiBxtttXW59H/AcqEYp1ciXAtJp+jXWva5nAf/ePtSsgWwE5mqp4Q==}
     engines: {node: ^10.13.0 || ^12.13.0 || ^14.15.0 || >=15.0.0}
@@ -11150,11 +11017,6 @@ packages:
       '@types/node': 17.0.5
       jest-mock: 27.4.2
       jest-util: 27.4.2
-    dev: true
-
-  /jest-get-type/26.3.0:
-    resolution: {integrity: sha512-TpfaviN1R2pQWkIihlfEanwOXK0zcxrKEE4MlU6Tn7keoXdN6/3gK/xl0yEh8DOunn5pOVGKf8hB4R9gVh04ig==}
-    engines: {node: '>= 10.14.2'}
     dev: true
 
   /jest-get-type/27.4.0:
@@ -11237,16 +11099,6 @@ packages:
       pretty-format: 27.4.2
     dev: true
 
-  /jest-matcher-utils/26.6.2:
-    resolution: {integrity: sha512-llnc8vQgYcNqDrqRDXWwMr9i7rS5XFiCwvh6DTP7Jqa2mqpcCBBlpCbn+trkG0KNhPu/h8rzyBkriOtBstvWhw==}
-    engines: {node: '>= 10.14.2'}
-    dependencies:
-      chalk: 4.1.2
-      jest-diff: 26.6.2
-      jest-get-type: 26.3.0
-      pretty-format: 26.6.2
-    dev: true
-
   /jest-matcher-utils/27.4.2:
     resolution: {integrity: sha512-jyP28er3RRtMv+fmYC/PKG8wvAmfGcSNproVTW2Y0P/OY7/hWUOmsPfxN1jOhM+0u2xU984u2yEagGivz9OBGQ==}
     engines: {node: ^10.13.0 || ^12.13.0 || ^14.15.0 || >=15.0.0}
@@ -11255,21 +11107,6 @@ packages:
       jest-diff: 27.4.2
       jest-get-type: 27.4.0
       pretty-format: 27.4.2
-    dev: true
-
-  /jest-message-util/26.6.2:
-    resolution: {integrity: sha512-rGiLePzQ3AzwUshu2+Rn+UMFk0pHN58sOG+IaJbk5Jxuqo3NYO1U2/MIR4S1sKgsoYSXSzdtSa0TgrmtUwEbmA==}
-    engines: {node: '>= 10.14.2'}
-    dependencies:
-      '@babel/code-frame': 7.16.0
-      '@jest/types': 26.6.2
-      '@types/stack-utils': 2.0.1
-      chalk: 4.1.2
-      graceful-fs: 4.2.8
-      micromatch: 4.0.4
-      pretty-format: 26.6.2
-      slash: 3.0.0
-      stack-utils: 2.0.5
     dev: true
 
   /jest-message-util/27.4.0:
@@ -11318,18 +11155,6 @@ packages:
       '@types/node': 17.0.5
     dev: true
 
-  /jest-pnp-resolver/1.2.2_jest-resolve@26.6.2:
-    resolution: {integrity: sha512-olV41bKSMm8BdnuMsewT4jqlZ8+3TCARAXjZGT9jcoSnrfUnRCqnMoF9XEeoWjbzObpqF9dRhHQj0Xb9QdF6/w==}
-    engines: {node: '>=6'}
-    peerDependencies:
-      jest-resolve: '*'
-    peerDependenciesMeta:
-      jest-resolve:
-        optional: true
-    dependencies:
-      jest-resolve: 26.6.2
-    dev: true
-
   /jest-pnp-resolver/1.2.2_jest-resolve@27.4.5:
     resolution: {integrity: sha512-olV41bKSMm8BdnuMsewT4jqlZ8+3TCARAXjZGT9jcoSnrfUnRCqnMoF9XEeoWjbzObpqF9dRhHQj0Xb9QdF6/w==}
     engines: {node: '>=6'}
@@ -11361,20 +11186,6 @@ packages:
       jest-snapshot: 27.4.5
     transitivePeerDependencies:
       - supports-color
-    dev: true
-
-  /jest-resolve/26.6.2:
-    resolution: {integrity: sha512-sOxsZOq25mT1wRsfHcbtkInS+Ek7Q8jCHUB0ZUTP0tc/c41QHriU/NunqMfCUWsL4H3MHpvQD4QR9kSYhS7UvQ==}
-    engines: {node: '>= 10.14.2'}
-    dependencies:
-      '@jest/types': 26.6.2
-      chalk: 4.1.2
-      graceful-fs: 4.2.8
-      jest-pnp-resolver: 1.2.2_jest-resolve@26.6.2
-      jest-util: 26.6.2
-      read-pkg-up: 7.0.1
-      resolve: 1.20.0
-      slash: 3.0.0
     dev: true
 
   /jest-resolve/27.4.5:
@@ -11476,28 +11287,6 @@ packages:
       graceful-fs: 4.2.8
     dev: true
 
-  /jest-snapshot/26.6.2:
-    resolution: {integrity: sha512-OLhxz05EzUtsAmOMzuupt1lHYXCNib0ECyuZ/PZOx9TrZcC8vL0x+DUG3TL+GLX3yHG45e6YGjIm0XwDc3q3og==}
-    engines: {node: '>= 10.14.2'}
-    dependencies:
-      '@babel/types': 7.16.0
-      '@jest/types': 26.6.2
-      '@types/babel__traverse': 7.14.2
-      '@types/prettier': 2.4.1
-      chalk: 4.1.2
-      expect: 26.6.2
-      graceful-fs: 4.2.8
-      jest-diff: 26.6.2
-      jest-get-type: 26.3.0
-      jest-haste-map: 26.6.2
-      jest-matcher-utils: 26.6.2
-      jest-message-util: 26.6.2
-      jest-resolve: 26.6.2
-      natural-compare: 1.4.0
-      pretty-format: 26.6.2
-      semver: 7.3.5
-    dev: true
-
   /jest-snapshot/27.4.5:
     resolution: {integrity: sha512-eCi/iM1YJFrJWiT9de4+RpWWWBqsHiYxFG9V9o/n0WXs6GpW4lUt4FAHAgFPTLPqCUVzrMQmSmTZSgQzwqR7IQ==}
     engines: {node: ^10.13.0 || ^12.13.0 || ^14.15.0 || >=15.0.0}
@@ -11528,14 +11317,6 @@ packages:
       semver: 7.3.5
     transitivePeerDependencies:
       - supports-color
-    dev: true
-
-  /jest-specific-snapshot/4.0.0:
-    resolution: {integrity: sha512-YdW5P/MVwOizWR0MJwURxdrjdXvdG2MMpXKVGr7dZ2YrBmE6E6Ab74UL3DOYmGmzaCnNAW1CL02pY5MTHE3ulQ==}
-    peerDependencies:
-      jest: '>= 26.0.0'
-    dependencies:
-      jest-snapshot: 26.6.2
     dev: true
 
   /jest-util/26.6.2:
@@ -13582,14 +13363,6 @@ packages:
     dependencies:
       xtend: 4.0.2
 
-  /preact-render-to-string/5.1.19:
-    resolution: {integrity: sha512-bj8sn/oytIKO6RtOGSS/1+5CrQyRSC99eLUnEVbqUa6MzJX5dYh7wu9bmT0d6lm/Vea21k9KhCQwvr2sYN3rrQ==}
-    peerDependencies:
-      preact: '>=10'
-    dependencies:
-      pretty-format: 3.8.0
-    dev: true
-
   /prelude-ls/1.1.2:
     resolution: {integrity: sha1-IZMqVJ9eUv/ZqCf1cOBL5iqX2lQ=}
     engines: {node: '>= 0.8.0'}
@@ -13670,10 +13443,6 @@ packages:
       ansi-regex: 5.0.1
       ansi-styles: 5.2.0
       react-is: 17.0.2
-    dev: true
-
-  /pretty-format/3.8.0:
-    resolution: {integrity: sha1-v77VbV6ad2ZF9LH/eqGjrE+jw4U=}
     dev: true
 
   /pretty-hrtime/1.0.3:
