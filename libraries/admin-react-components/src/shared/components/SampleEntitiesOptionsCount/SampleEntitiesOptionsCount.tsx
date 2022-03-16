@@ -33,9 +33,10 @@ export function SampleEntitiesOptionsCount({
     [dispatchSearchEntityState]
   );
 
-  const currentPage = searchEntityState.entitySamples
-    ? `${searchEntityState.entitySamples.items.length} of ${searchEntityState.entitySamples.totalCount}`
-    : requestedCount;
+  const currentPage =
+    searchEntityState.entitySamples && searchEntityState.entitySamples.items.length > 0
+      ? `${searchEntityState.entitySamples.items.length} of ${searchEntityState.entitySamples.totalCount}`
+      : requestedCount;
 
   return (
     <Dropdown
