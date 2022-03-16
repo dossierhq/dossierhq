@@ -7,7 +7,7 @@ import {
   EntityEditorStateContext,
   SetActiveEntityAction,
   TypePicker,
-} from '../../index.js';
+} from '../..';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface EntityEditorOverviewProps {}

@@ -7,7 +7,7 @@ import {
   createBackendAdminClient,
   DISPLAY_AUTH_KEYS,
   TestContextAdapter,
-} from './TestContextAdapter.js';
+} from './TestContextAdapter';
 
 interface Props {
   adapter?: DataDataContextAdapter;

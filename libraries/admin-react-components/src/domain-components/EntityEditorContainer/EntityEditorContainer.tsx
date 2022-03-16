@@ -6,10 +6,10 @@ import {
   EntityEditorOverview,
   EntityMetadata,
   SetActiveEntityAction,
-} from '../../index.js';
-import { joinClassNames } from '../../utils/ClassNameUtils.js';
-import { findAscendantElement } from '../../utils/DOMUtils.js';
-import { useWindowEventListener } from '../../utils/EventUtils.js';
+} from '../..';
+import { joinClassNames } from '../../utils/ClassNameUtils';
+import { findAscendantElement } from '../../utils/DOMUtils';
+import { useWindowEventListener } from '../../utils/EventUtils';
 
 export interface EntityEditorContainerProps {
   className?: string;

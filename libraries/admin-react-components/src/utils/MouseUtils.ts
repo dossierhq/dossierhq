@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
-import { findAscendantElement } from './DOMUtils.js';
-import { useWindowEventListener } from './EventUtils.js';
+import { findAscendantElement } from './DOMUtils';
+import { useWindowEventListener } from './EventUtils';
 
 export function useWindowClick(ignoreId: string, onClick: () => void, enabled?: boolean): void {
   const listener = useCallback(

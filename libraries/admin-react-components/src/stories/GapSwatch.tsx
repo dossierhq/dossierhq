@@ -1,6 +1,6 @@
 import React from 'react';
 import type { SpacingSize } from '..';
-import { gapClassName, joinClassNames } from '../utils/ClassNameUtils.js';
+import { gapClassName, joinClassNames } from '../utils/ClassNameUtils';
 
 interface GapSwatchProps {
   size: SpacingSize;

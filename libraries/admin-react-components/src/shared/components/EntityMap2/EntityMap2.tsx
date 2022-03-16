@@ -8,9 +8,9 @@ import type {
 import { isLocationItemField, visitItemRecursively } from '@jonasb/datadata-core';
 import type { Dispatch } from 'react';
 import React from 'react';
-import type { SearchEntityState, SearchEntityStateAction } from '../../../index.js';
-import { MapContainer } from '../../../index.js';
-import { SearchEntityStateActions } from '../../index.js';
+import type { SearchEntityState, SearchEntityStateAction } from '../../..';
+import { MapContainer } from '../../..';
+import { SearchEntityStateActions } from '../..';
 
 export interface EntityMapProps<TEntity> {
   className?: string;

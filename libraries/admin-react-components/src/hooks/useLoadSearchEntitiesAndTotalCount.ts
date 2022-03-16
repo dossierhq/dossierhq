@@ -1,13 +1,8 @@
 import type { AdminSearchQuery, Paging } from '@jonasb/datadata-core';
 import type { Dispatch } from 'react';
 import { useContext, useEffect } from 'react';
-import type { SearchEntityStateAction } from '../index.js';
-import {
-  DataDataContext2,
-  SearchEntityStateActions,
-  useSearchEntities,
-  useTotalCount,
-} from '../index.js';
+import type { SearchEntityStateAction } from '..';
+import { DataDataContext2, SearchEntityStateActions, useSearchEntities, useTotalCount } from '..';
 
 /**
  * @param dispatchSearchEntityState

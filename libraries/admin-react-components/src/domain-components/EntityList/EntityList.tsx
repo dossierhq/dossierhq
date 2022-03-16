@@ -1,8 +1,8 @@
 import type { AdminEntity, AdminSearchQuery, Paging } from '@jonasb/datadata-core';
 import { IconButton } from '@jonasb/datadata-design';
 import React, { useContext, useMemo, useState } from 'react';
-import { Button, DataDataContext, Message, PublishStateTag } from '../../index.js';
-import { joinClassNames } from '../../utils/ClassNameUtils.js';
+import { Button, DataDataContext, Message, PublishStateTag } from '../..';
+import { joinClassNames } from '../../utils/ClassNameUtils';
 
 export interface EntityListProps {
   className?: string;

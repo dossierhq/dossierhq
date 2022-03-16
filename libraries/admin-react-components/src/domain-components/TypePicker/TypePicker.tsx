@@ -5,7 +5,7 @@ import type {
 import type { IconName } from '@jonasb/datadata-design';
 import { Dropdown } from '@jonasb/datadata-design';
 import React, { useContext } from 'react';
-import { DataDataContext } from '../../index.js';
+import { DataDataContext } from '../..';
 
 export interface TypePickerProps {
   text: string;

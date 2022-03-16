@@ -1,7 +1,7 @@
 import type { AdminEntity, Location } from '@jonasb/datadata-core';
 import { Column, Text } from '@jonasb/datadata-design';
 import React from 'react';
-import { MapContainer, StatusTag } from '../../index.js';
+import { MapContainer, StatusTag } from '../..';
 
 export function EntityMapMarker({
   entity,

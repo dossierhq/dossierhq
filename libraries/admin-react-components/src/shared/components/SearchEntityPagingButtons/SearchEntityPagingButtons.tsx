@@ -1,8 +1,8 @@
 import type { Paging } from '@jonasb/datadata-core';
 import type { Dispatch } from 'react';
 import React, { useCallback } from 'react';
-import type { SearchEntityState, SearchEntityStateAction } from '../../index.js';
-import { ConnectionPagingButtons, SearchEntityStateActions } from '../../index.js';
+import type { SearchEntityState, SearchEntityStateAction } from '../..';
+import { ConnectionPagingButtons, SearchEntityStateActions } from '../..';
 
 interface Props {
   searchEntityState: SearchEntityState;

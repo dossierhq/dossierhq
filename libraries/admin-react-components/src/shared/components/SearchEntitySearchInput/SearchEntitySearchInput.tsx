@@ -1,8 +1,8 @@
 import { Input } from '@jonasb/datadata-design';
 import type { Dispatch } from 'react';
 import React from 'react';
-import type { SearchEntityState, SearchEntityStateAction } from '../../index.js';
-import { SearchEntityStateActions } from '../../index.js';
+import type { SearchEntityState, SearchEntityStateAction } from '../..';
+import { SearchEntityStateActions } from '../..';
 
 interface Props {
   searchEntityState: SearchEntityState;

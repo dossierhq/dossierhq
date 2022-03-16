@@ -7,10 +7,10 @@ import type {
 import type { FieldSpecification, ItemValuePath, ValueItem } from '@jonasb/datadata-core';
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import icons from '../../icons.js';
-import type { DataDataContextValue } from '../../index.js';
-import { DataDataContext, ValueTypeFieldEditor } from '../../index.js';
-import type { EntityEditorDraftState } from '../EntityEditor/EntityEditorReducer.js';
+import icons from '../../icons';
+import type { DataDataContextValue } from '../..';
+import { DataDataContext, ValueTypeFieldEditor } from '../..';
+import type { EntityEditorDraftState } from '../EntityEditor/EntityEditorReducer';
 
 export interface ValueItemToolConfig {
   id: string;

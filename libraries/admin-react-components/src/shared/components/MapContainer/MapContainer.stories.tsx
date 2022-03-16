@@ -1,7 +1,7 @@
-import type { Meta, Story } from '@storybook/react/types-6-0.js';
+import type { Meta, Story } from '@storybook/react/types-6-0';
 import React from 'react';
-import type { MapContainerProps } from './MapContainer.js';
-import { MapContainer } from './MapContainer.js';
+import type { MapContainerProps } from './MapContainer';
+import { MapContainer } from './MapContainer';
 
 const meta: Meta<MapContainerProps> = {
   title: 'Shared/MapContainer',

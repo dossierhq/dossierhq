@@ -1,20 +1,11 @@
 import type { AdminEntity, ItemValuePath, Location } from '@jonasb/datadata-core';
 import { isItemValuePathEqual } from '@jonasb/datadata-core';
 import React, { useCallback, useEffect, useReducer, useState } from 'react';
-import type { EntityFieldEditorProps } from '../../index.js';
-import {
-  Button,
-  Column,
-  ColumnItem,
-  IconButton,
-  InputText,
-  MapContainer,
-  Modal,
-  Row,
-} from '../../index.js';
-import type { EntityEditorDraftState } from '../EntityEditor/EntityEditorReducer.js';
-import { EntityMap } from '../EntityMap/EntityMap.js';
-import { initializeLocationState, reduceLocation } from './LocationReducer.js';
+import type { EntityFieldEditorProps } from '../..';
+import { Button, Column, ColumnItem, IconButton, InputText, MapContainer, Modal, Row } from '../..';
+import type { EntityEditorDraftState } from '../EntityEditor/EntityEditorReducer';
+import { EntityMap } from '../EntityMap/EntityMap';
+import { initializeLocationState, reduceLocation } from './LocationReducer';
 
 type Props = EntityFieldEditorProps<Location>;
 

@@ -23,8 +23,8 @@ import {
   RichTextFieldEditor,
   StringFieldEditor,
   ValueTypeFieldEditor,
-} from '../../index.js';
-import type { EntityEditorDraftState } from '../EntityEditor/EntityEditorReducer.js';
+} from '../..';
+import type { EntityEditorDraftState } from '../EntityEditor/EntityEditorReducer';
 
 interface Props {
   idPrefix: string;

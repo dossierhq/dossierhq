@@ -3,7 +3,7 @@ import { assertIsDefined } from '@jonasb/datadata-core';
 import { Dropdown } from '@jonasb/datadata-design';
 import type { Dispatch, SetStateAction } from 'react';
 import React, { useContext, useEffect, useState } from 'react';
-import type { DataDataContextValue, MessageItem } from '../../index.js';
+import type { DataDataContextValue, MessageItem } from '../..';
 import {
   Button,
   ColumnAs,
@@ -18,8 +18,8 @@ import {
   Loader,
   Message,
   Row,
-} from '../../index.js';
-import type { EntityEditorDraftState, EntityEditorStateAction } from './EntityEditorReducer.js';
+} from '../..';
+import type { EntityEditorDraftState, EntityEditorStateAction } from './EntityEditorReducer';
 import {
   EntityUpsertedAction,
   ResetEntityAction,
@@ -28,7 +28,7 @@ import {
   SetMessageLoadMessageAction,
   SetNameAction,
   UpdateEntityAction,
-} from './EntityEditorReducer.js';
+} from './EntityEditorReducer';
 
 export interface EntityEditorProps {
   entityId: string;

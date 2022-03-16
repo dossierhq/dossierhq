@@ -1,8 +1,8 @@
 import { Dropdown } from '@jonasb/datadata-design';
 import type { Dispatch } from 'react';
 import React, { useCallback } from 'react';
-import type { SearchEntityState, SearchEntityStateAction } from '../../index.js';
-import { SearchEntityStateActions } from '../../index.js';
+import type { SearchEntityState, SearchEntityStateAction } from '../..';
+import { SearchEntityStateActions } from '../..';
 
 interface Item {
   id: string;

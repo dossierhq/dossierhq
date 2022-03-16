@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { useDocumentEventListener } from './EventUtils.js';
+import { useDocumentEventListener } from './EventUtils';
 
 export function useKeyHandler(
   handleKeys: string[],

@@ -1,7 +1,7 @@
 import type { AdminEntity, AdminQuery, AdminSearchQuery } from '@jonasb/datadata-core';
 import { FullscreenContainer, IconButton, toSizeClassName } from '@jonasb/datadata-design';
 import React, { useCallback, useContext, useEffect, useReducer, useState } from 'react';
-import type { EntitySearchStateUrlQuery } from '../../index.js';
+import type { EntitySearchStateUrlQuery } from '../..';
 import {
   AuthKeySelector,
   AuthKeyTagSelector,
@@ -28,7 +28,7 @@ import {
   useLoadSampleEntities,
   useLoadSearchEntitiesAndTotalCount,
   useSynchronizeUrlQueryAndSearchEntityState,
-} from '../../index.js';
+} from '../..';
 
 export interface EntityListScreenProps {
   header?: React.ReactNode;

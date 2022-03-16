@@ -1,11 +1,11 @@
 import { buildUrlWithUrlQuery } from '@jonasb/datadata-core';
 import { Text } from '@jonasb/datadata-design';
-import type { Meta, Story } from '@storybook/react/types-6-0.js';
+import type { Meta, Story } from '@storybook/react/types-6-0';
 import React, { useMemo, useState } from 'react';
-import type { EntitySearchStateUrlQuery } from '../../index.js';
-import { LoadContextProvider } from '../../test/LoadContextProvider.js';
-import type { EntityListScreenProps } from './EntityListScreen.js';
-import { EntityListScreen } from './EntityListScreen.js';
+import type { EntitySearchStateUrlQuery } from '../..';
+import { LoadContextProvider } from '../../test/LoadContextProvider';
+import type { EntityListScreenProps } from './EntityListScreen';
+import { EntityListScreen } from './EntityListScreen';
 
 type StoryProps = Omit<EntityListScreenProps, 'urlQuery' | 'onUrlQueryChanged'> & {
   initialUrlQuery?: EntitySearchStateUrlQuery;

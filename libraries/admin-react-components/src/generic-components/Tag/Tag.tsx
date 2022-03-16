@@ -1,7 +1,7 @@
 import React from 'react';
-import { joinClassNames } from '../../utils/ClassNameUtils.js';
-import type { Kind } from '../../utils/KindUtils.js';
-import { kindToClassName } from '../../utils/KindUtils.js';
+import { joinClassNames } from '../../utils/ClassNameUtils';
+import type { Kind } from '../../utils/KindUtils';
+import { kindToClassName } from '../../utils/KindUtils';
 
 export interface TagProps {
   kind: Kind;

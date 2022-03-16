@@ -1,9 +1,9 @@
-import type { Meta, Story } from '@storybook/react/types-6-0.js';
+import type { Meta, Story } from '@storybook/react/types-6-0';
 import React from 'react';
-import { foo1Id } from '../../../test/EntityFixtures.js';
-import { LoadContextProvider } from '../../test/LoadContextProvider.js';
-import type { EntityDetailScreenProps } from './EntityDetailScreen.js';
-import { EntityDetailScreen } from './EntityDetailScreen.js';
+import { foo1Id } from '../../../test/EntityFixtures';
+import { LoadContextProvider } from '../../test/LoadContextProvider';
+import type { EntityDetailScreenProps } from './EntityDetailScreen';
+import { EntityDetailScreen } from './EntityDetailScreen';
 
 type StoryProps = EntityDetailScreenProps;
 
