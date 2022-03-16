@@ -22,7 +22,7 @@ function Wrapper({ up, left, children }: DropdownDisplayProps) {
     <DropdownDisplay
       active={active}
       trigger={
-        <Button iconRight={up ? 'chevronUp' : 'chevronDown'} onClick={() => setActive(!active)}>
+        <Button iconRight={up ? 'chevronUp' : 'chevronDown'} onMouseDown={() => setActive(!active)}>
           Drop down
         </Button>
       }

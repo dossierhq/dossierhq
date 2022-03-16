@@ -11,14 +11,21 @@ export interface ButtonProps {
   iconRight?: IconName;
   light?: boolean;
   onClick?: MouseEventHandler<HTMLButtonElement>;
+  onMouseDown?: MouseEventHandler<HTMLButtonElement>;
   children: ReactNode;
 }
 
 export const Button: FunctionComponent<ButtonProps> = forwardRef(
-  ({ disabled, iconLeft, iconRight, light, onClick, children }: ButtonProps, ref) => {
+  ({ disabled, iconLeft, iconRight, light, onClick, onMouseDown, children }: ButtonProps, ref) => {
     const className = toClassName('button', light && 'is-light');
     return (
-      <button ref={ref} className={className} onClick={onClick} disabled={disabled}>
+      <button
+        ref={ref}
+        className={className}
+        onClick={onClick}
+        onMouseDown={onMouseDown}
+        disabled={disabled}
+      >
         {iconLeft ? <Icon icon={iconLeft} /> : null}
         {iconLeft || iconRight ? <span>{children}</span> : children}
         {iconRight ? <Icon icon={iconRight} /> : null}

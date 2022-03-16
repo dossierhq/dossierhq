@@ -54,7 +54,7 @@ export function Dropdown<TItem extends DropdownItem>({
           iconRight={sneaky ? undefined : up ? 'chevronUp' : 'chevronDown'}
           light={sneaky}
           disabled={disabled}
-          onClick={(event) => {
+          onMouseDown={(event) => {
             event.preventDefault();
             setActive((it) => !it);
           }}
