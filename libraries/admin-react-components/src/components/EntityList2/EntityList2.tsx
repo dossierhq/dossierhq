@@ -146,7 +146,7 @@ function handleHeaderClick(
   dispatchSearchEntityState(
     new SearchEntityStateActions.SetQuery(
       { order: headerOrder, reverse: newReverse },
-      { partial: true, resetPaging: true }
+      { partial: true, resetPagingIfModifying: true }
     )
   );
 }

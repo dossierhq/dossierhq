@@ -52,7 +52,7 @@ export function initializeSearchEntityState(actions: SearchEntityStateAction[]):
   // Normalize query state
   state = reduceSearchEntityState(
     state,
-    new SetQueryAction({}, { partial: true, resetPaging: false })
+    new SetQueryAction({}, { partial: true, resetPagingIfModifying: false })
   );
   for (const action of actions) {
     state = reduceSearchEntityState(state, action);
@@ -65,6 +65,7 @@ export function reduceSearchEntityState(
   action: SearchEntityStateAction
 ): SearchEntityState {
   const newState = action.reduce(state);
+  // if (state !== newState) console.log(`State changed for ${action.constructor.name}`, state, action, newState);
   return newState;
 }
 
@@ -142,15 +143,15 @@ class SetSamplingAction implements SearchEntityStateAction {
 class SetQueryAction implements SearchEntityStateAction {
   readonly value: AdminSearchQuery | PublishedSearchQuery;
   readonly partial: boolean;
-  readonly resetPaging: boolean;
+  readonly resetPagingIfModifying: boolean;
 
   constructor(
     value: AdminSearchQuery | PublishedSearchQuery,
-    { partial, resetPaging }: { partial: boolean; resetPaging: boolean }
+    { partial, resetPagingIfModifying }: { partial: boolean; resetPagingIfModifying: boolean }
   ) {
     this.value = value;
     this.partial = partial;
-    this.resetPaging = resetPaging;
+    this.resetPagingIfModifying = resetPagingIfModifying;
   }
 
   reduce(state: SearchEntityState): SearchEntityState {
@@ -158,11 +159,10 @@ class SetQueryAction implements SearchEntityStateAction {
       ? { ...state.query, ...this.value }
       : { ...this.value };
 
-    let paging = this.resetPaging ? {} : state.paging;
-
     // Sampling/paging
     const switchToSearch = (this.value.order || this.value.reverse !== undefined) && state.sampling;
     let sampling = state.sampling;
+    let paging = state.paging;
     if (switchToSearch) {
       sampling = undefined;
       paging = {};
@@ -198,6 +198,9 @@ class SetQueryAction implements SearchEntityStateAction {
       )
     ) {
       return state;
+    }
+    if (this.resetPagingIfModifying) {
+      paging = {};
     }
     return { ...state, query, text: query.text ?? '', paging, sampling };
   }

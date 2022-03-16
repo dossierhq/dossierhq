@@ -71,7 +71,7 @@ export function EntityListScreen({
       dispatchSearchEntityState(
         new SearchEntityStateActions.SetQuery(
           { boundingBox: undefined },
-          { partial: true, resetPaging: true }
+          { partial: true, resetPagingIfModifying: true }
         )
       );
     }
@@ -83,7 +83,7 @@ export function EntityListScreen({
     dispatchSearchEntityState(
       new SearchEntityStateActions.SetQuery(
         { entityTypes: entityTypeFilterState.selectedIds },
-        { partial: true, resetPaging: true }
+        { partial: true, resetPagingIfModifying: true }
       )
     );
   }, [entityTypeFilterState.selectedIds]);
@@ -93,7 +93,7 @@ export function EntityListScreen({
     dispatchSearchEntityState(
       new SearchEntityStateActions.SetQuery(
         { authKeys: authKeyFilterState.selectedIds },
-        { partial: true, resetPaging: true }
+        { partial: true, resetPagingIfModifying: true }
       )
     );
   }, [authKeyFilterState.selectedIds]);
