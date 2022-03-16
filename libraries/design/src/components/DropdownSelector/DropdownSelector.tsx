@@ -58,7 +58,7 @@ export function DropdownSelector<TItem extends MultipleSelectorItem>({
           iconLeft={iconLeft}
           iconRight={sneaky ? undefined : up ? 'chevronUp' : 'chevronDown'}
           light={sneaky}
-          onClick={(event) => {
+          onMouseDown={(event) => {
             event.preventDefault();
             setActive((it) => !it);
           }}
