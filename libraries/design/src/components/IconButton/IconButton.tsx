@@ -8,6 +8,7 @@ export interface IconButtonProps {
   disabled?: boolean;
   icon: IconName;
   onClick?: MouseEventHandler<HTMLButtonElement>;
+  onMouseDown?: MouseEventHandler<HTMLButtonElement>;
 }
 
 export interface IconButtonGroupProps {
@@ -20,9 +21,14 @@ interface IconButtonComponent extends FunctionComponent<IconButtonProps> {
   Group: FunctionComponent<IconButtonGroupProps>;
 }
 
-export const IconButton: IconButtonComponent = ({ disabled, icon, onClick }: IconButtonProps) => {
+export const IconButton: IconButtonComponent = ({
+  disabled,
+  icon,
+  onClick,
+  onMouseDown,
+}: IconButtonProps) => {
   return (
-    <Button onClick={onClick} disabled={disabled}>
+    <Button onClick={onClick} onMouseDown={onMouseDown} disabled={disabled}>
       <Icon icon={icon} />
     </Button>
   );

@@ -53,10 +53,10 @@ export function ConnectionPagingButtons({ connection, pagingCount, onPagingChang
 
   return (
     <IconButton.Group condensed skipBottomMargin>
-      <IconButton icon="first" disabled={!handleStart} onClick={handleStart} />
-      <IconButton icon="previous" disabled={!handlePrevious} onClick={handlePrevious} />
-      <IconButton icon="next" disabled={!handleNext} onClick={handleNext} />
-      <IconButton icon="last" disabled={!handleEnd} onClick={handleEnd} />
+      <IconButton icon="first" disabled={!handleStart} onMouseDown={handleStart} />
+      <IconButton icon="previous" disabled={!handlePrevious} onMouseDown={handlePrevious} />
+      <IconButton icon="next" disabled={!handleNext} onMouseDown={handleNext} />
+      <IconButton icon="last" disabled={!handleEnd} onMouseDown={handleEnd} />
     </IconButton.Group>
   );
 }
