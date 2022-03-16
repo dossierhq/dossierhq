@@ -1,7 +1,7 @@
-import type { AdminClient } from '@jonasb/datadata-core';
+import { AdminEntityStatus } from '@jonasb/datadata-core';
+import { Temporal } from '@js-temporal/polyfill';
 import schema from '../../stories/StoryboardSchema';
-import { foo1Id } from '../../test/EntityFixtures';
-import { createBackendAdminClient } from '../../test/TestContextAdapter';
+import { bar1Id } from '../../test/EntityFixtures';
 import { insecureTestUuidv4 } from '../../test/TestUtils';
 import type { EntityEditorState } from './EntityEditorReducer';
 import {
@@ -35,19 +35,6 @@ function stateWithoutSchema(state: EntityEditorState) {
   return newState;
 }
 
-async function updateEntityWithFixture(
-  adminClient: AdminClient,
-  state: EntityEditorState,
-  id: string
-): Promise<EntityEditorState> {
-  const entityResult = await adminClient.getEntity({ id });
-  if (entityResult.isError()) {
-    throw entityResult.toError();
-  }
-  const entity = entityResult.value;
-  return reduceEntityEditorState(state, new UpdateEntityAction(entity.id, entity));
-}
-
 describe('reduceEntityEditorState', () => {
   test('AddDraftAction new entity', async () => {
     const id = 'e4e78fce-1089-41b8-9b6b-440d2e044061';
@@ -65,10 +52,24 @@ describe('reduceEntityEditorState', () => {
   });
 
   test('UpdateEntityAction', async () => {
-    const adminClient = createBackendAdminClient();
     let state = newState();
-    state = reduceEntityEditorState(state, new AddEntityDraftAction({ id: foo1Id }));
-    state = await updateEntityWithFixture(adminClient, state, foo1Id);
+    state = reduceEntityEditorState(state, new AddEntityDraftAction({ id: bar1Id }));
+    state = reduceEntityEditorState(
+      state,
+      new UpdateEntityAction(bar1Id, {
+        id: bar1Id,
+        info: {
+          type: 'Bar',
+          authKey: 'none',
+          createdAt: Temporal.Instant.from('2021-08-17T07:51:25.56Z'),
+          updatedAt: Temporal.Instant.from('2021-08-17T07:51:25.56Z'),
+          name: 'Hello',
+          version: 0,
+          status: AdminEntityStatus.draft,
+        },
+        fields: { title: 'Hello' },
+      })
+    );
     expect(stateWithoutSchema(state)).toMatchSnapshot();
   });
 });
