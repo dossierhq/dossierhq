@@ -37,7 +37,7 @@ export function EntityMap2<TEntity extends AdminEntity | PublishedEntity>({
         dispatchSearchEntityState(
           new SearchEntityStateActions.SetQuery(
             { boundingBox },
-            { partial: true, resetPaging: true }
+            { partial: true, resetPagingIfModifying: true }
           )
         )
       }

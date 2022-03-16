@@ -32,7 +32,7 @@ describe('SearchEntityStateActions.SetQuery', () => {
       initializeSearchEntityState([new SearchEntityStateActions.SetSampling({}, true)]),
       new SearchEntityStateActions.SetQuery(
         { order: AdminQueryOrder.updatedAt },
-        { partial: true, resetPaging: true }
+        { partial: true, resetPagingIfModifying: true }
       )
     );
     expect(state.query).toEqual({ order: AdminQueryOrder.updatedAt });
@@ -47,7 +47,7 @@ describe('SearchEntityStateActions.SetQuery', () => {
       ]),
       new SearchEntityStateActions.SetQuery(
         { order: AdminQueryOrder.updatedAt },
-        { partial: true, resetPaging: true }
+        { partial: true, resetPagingIfModifying: true }
       )
     );
     expect(state.query).toEqual({ order: AdminQueryOrder.updatedAt });
@@ -100,7 +100,7 @@ describe('SearchEntityStateActions.SetSampling', () => {
       initializeSearchEntityState([
         new SearchEntityStateActions.SetQuery(
           { order: AdminQueryOrder.updatedAt },
-          { partial: true, resetPaging: true }
+          { partial: true, resetPagingIfModifying: true }
         ),
       ]),
       new SearchEntityStateActions.SetSampling({}, true)

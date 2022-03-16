@@ -27,7 +27,10 @@ function urlQueryToSearchEntityStateActions(urlQuery: EntitySearchStateUrlQuery 
   if (urlQuery) {
     const decodedQuery: AdminSearchQuery = decodeUrlQueryStringifiedParam('query', urlQuery) ?? {};
     actions.push(
-      new SearchEntityStateActions.SetQuery(decodedQuery, { partial: false, resetPaging: false })
+      new SearchEntityStateActions.SetQuery(decodedQuery, {
+        partial: false,
+        resetPagingIfModifying: false,
+      })
     );
 
     const decodedSampling: EntitySamplingOptions | undefined = decodeUrlQueryStringifiedParam(
