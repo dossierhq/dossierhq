@@ -56,3 +56,14 @@ UpLeft.args = {
     </>
   ),
 };
+
+export const OneHundredItems = Template.bind({});
+OneHundredItems.args = {
+  children: (() => (
+    <>
+      {Array.from(Array(100).keys()).map((item) => (
+        <DropdownDisplay.Item key={item}>Item: {item}</DropdownDisplay.Item>
+      ))}
+    </>
+  ))(),
+};

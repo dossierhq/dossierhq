@@ -4,3 +4,8 @@ $dropdown-content-z: $base-z-index + 20;
 
 @import '../../node_modules/bulma/bulma.sass';
 @import '../../node_modules/@creativebulma/bulma-badge/src/sass/index.sass';
+
+.dropdown-content {
+  max-height: 50vh;
+  overflow: auto;
+}
