@@ -11,8 +11,9 @@ import type {
   PublishedEntity,
   PublishedQueryOrder,
   PublishedSearchQuery,
+  Result,
 } from '@jonasb/datadata-core';
-import { AdminQueryOrder, getPagingInfo } from '@jonasb/datadata-core';
+import { AdminQueryOrder, getPagingInfo, ok } from '@jonasb/datadata-core';
 import isEqual from 'lodash/isEqual';
 
 const defaultOrder: AdminQueryOrder | PublishedQueryOrder = AdminQueryOrder.name;
@@ -30,6 +31,8 @@ export interface SearchEntityState {
   entitySamples: EntitySamplingPayload<AdminEntity | PublishedEntity> | undefined;
   entitySamplesError: ErrorResult<unknown, ErrorType.BadRequest | ErrorType.Generic> | undefined;
   totalCount: number | null;
+
+  entities: Result<AdminEntity | PublishedEntity, ErrorType>[];
 }
 
 export interface SearchEntityStateAction {
@@ -48,6 +51,7 @@ export function initializeSearchEntityState(actions: SearchEntityStateAction[]):
     entitySamples: undefined,
     entitySamplesError: undefined,
     totalCount: null,
+    entities: [],
   };
   // Normalize query state
   state = reduceSearchEntityState(
@@ -219,17 +223,18 @@ class UpdateSearchResultAction implements SearchEntityStateAction {
   }
 
   reduce(state: SearchEntityState): SearchEntityState {
-    const isLoading = this.connection === undefined && this.connectionError === undefined;
-    if (isLoading) {
-      return state;
-    }
     if (state.connection === this.connection && state.connectionError === this.connectionError) {
       return state;
+    }
+    let entities = state.entities;
+    if (!state.sampling && this.connection !== undefined) {
+      entities = this.connection === null ? [] : this.connection.edges.map((it) => it.node);
     }
     return {
       ...state,
       connection: this.connection,
       connectionError: this.connectionError,
+      entities,
     };
   }
 }
@@ -253,10 +258,15 @@ class UpdateSampleResultAction implements SearchEntityStateAction {
     ) {
       return state;
     }
+    let entities = state.entities;
+    if (state.sampling && this.entitySamples) {
+      entities = this.entitySamples.items.map((it) => ok(it));
+    }
     return {
       ...state,
       entitySamples: this.entitySamples,
       entitySamplesError: this.entitySamplesError,
+      entities,
     };
   }
 }

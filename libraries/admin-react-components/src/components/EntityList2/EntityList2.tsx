@@ -14,9 +14,7 @@ interface Props {
 
 export function EntityList2({ searchEntityState, dispatchSearchEntityState, onItemClick }: Props) {
   const {
-    connection,
-    entitySamples,
-    sampling,
+    entities,
     query: { order, reverse },
   } = searchEntityState;
   const { authKeys } = useContext(DataDataContext2);
@@ -68,35 +66,22 @@ export function EntityList2({ searchEntityState, dispatchSearchEntityState, onIt
         </Table.Row>
       </Table.Head>
       <Table.Body>
-        {!sampling &&
-          connection?.edges.map((edge) => {
-            if (edge.node.isOk()) {
-              const entity = edge.node.value as AdminEntity;
-              return (
-                <EntityListRow
-                  key={entity.id}
-                  {...{
-                    entity,
-                    authKeys,
-                    order: order as AdminQueryOrder | undefined,
-                    onItemClick,
-                  }}
-                />
-              );
-            }
-          })}
-        {sampling &&
-          entitySamples?.items.map((entity) => (
-            <EntityListRow
-              key={entity.id}
-              {...{
-                entity: entity as AdminEntity,
-                authKeys,
-                order: order as AdminQueryOrder | undefined,
-                onItemClick,
-              }}
-            />
-          ))}
+        {entities.map((entityResult) => {
+          if (entityResult.isOk()) {
+            const entity = entityResult.value as AdminEntity;
+            return (
+              <EntityListRow
+                key={entity.id}
+                {...{
+                  entity,
+                  authKeys,
+                  order: order as AdminQueryOrder | undefined,
+                  onItemClick,
+                }}
+              />
+            );
+          }
+        })}
       </Table.Body>
     </Table>
   );
