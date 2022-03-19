@@ -1,5 +1,294 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`SearchEntityState scenarios From sampling -> set paging -> loading -> loaded: 1 - initial 1`] = `
+Object {
+  "connection": undefined,
+  "connectionError": undefined,
+  "entities": Array [
+    OkResult {
+      "value": Object {
+        "fields": Object {
+          "title": "Title 1",
+        },
+        "id": "1",
+        "info": Object {
+          "authKey": "none",
+          "createdAt": "2022-03-19T07:51:25.56Z",
+          "name": "Entity 1",
+          "type": "TitleOnly",
+        },
+      },
+    },
+  ],
+  "entitySamples": Object {
+    "items": Array [
+      Object {
+        "fields": Object {
+          "title": "Title 1",
+        },
+        "id": "1",
+        "info": Object {
+          "authKey": "none",
+          "createdAt": "2022-03-19T07:51:25.56Z",
+          "name": "Entity 1",
+          "type": "TitleOnly",
+        },
+      },
+    ],
+    "seed": 123,
+    "totalCount": 1,
+  },
+  "entitySamplesError": undefined,
+  "paging": undefined,
+  "query": Object {},
+  "requestedCount": 1,
+  "sampling": Object {
+    "count": 1,
+    "seed": 123,
+  },
+  "text": "",
+  "totalCount": null,
+}
+`;
+
+exports[`SearchEntityState scenarios From sampling -> set paging -> loading -> loaded: 2 - loading 1`] = `
+Object {
+  "connection": undefined,
+  "connectionError": undefined,
+  "entities": Array [
+    OkResult {
+      "value": Object {
+        "fields": Object {
+          "title": "Title 1",
+        },
+        "id": "1",
+        "info": Object {
+          "authKey": "none",
+          "createdAt": "2022-03-19T07:51:25.56Z",
+          "name": "Entity 1",
+          "type": "TitleOnly",
+        },
+      },
+    },
+  ],
+  "entitySamples": undefined,
+  "entitySamplesError": undefined,
+  "paging": Object {
+    "first": 1,
+  },
+  "query": Object {},
+  "requestedCount": 1,
+  "sampling": undefined,
+  "text": "",
+  "totalCount": null,
+}
+`;
+
+exports[`SearchEntityState scenarios From sampling -> set paging -> loading -> loaded: 3 - loaded 1`] = `
+Object {
+  "connection": Object {
+    "edges": Array [
+      Object {
+        "cursor": "cursor-2",
+        "node": OkResult {
+          "value": Object {
+            "fields": Object {
+              "title": "Title 2",
+            },
+            "id": "2",
+            "info": Object {
+              "authKey": "none",
+              "createdAt": "2022-03-19T07:51:25.56Z",
+              "name": "Entity 2",
+              "type": "TitleOnly",
+            },
+          },
+        },
+      },
+    ],
+    "pageInfo": Object {
+      "endCursor": "cursor-2",
+      "hasNextPage": true,
+      "hasPreviousPage": false,
+      "startCursor": "cursor-2",
+    },
+  },
+  "connectionError": undefined,
+  "entities": Array [
+    OkResult {
+      "value": Object {
+        "fields": Object {
+          "title": "Title 2",
+        },
+        "id": "2",
+        "info": Object {
+          "authKey": "none",
+          "createdAt": "2022-03-19T07:51:25.56Z",
+          "name": "Entity 2",
+          "type": "TitleOnly",
+        },
+      },
+    },
+  ],
+  "entitySamples": undefined,
+  "entitySamplesError": undefined,
+  "paging": Object {
+    "first": 1,
+  },
+  "query": Object {},
+  "requestedCount": 1,
+  "sampling": undefined,
+  "text": "",
+  "totalCount": 2,
+}
+`;
+
+exports[`SearchEntityState scenarios From searching -> set sampling -> loading -> loaded: 1 - initial 1`] = `
+Object {
+  "connection": Object {
+    "edges": Array [
+      Object {
+        "cursor": "cursor-1",
+        "node": OkResult {
+          "value": Object {
+            "fields": Object {
+              "title": "Title 1",
+            },
+            "id": "1",
+            "info": Object {
+              "authKey": "none",
+              "createdAt": "2022-03-19T07:51:25.56Z",
+              "name": "Entity 1",
+              "type": "TitleOnly",
+            },
+          },
+        },
+      },
+    ],
+    "pageInfo": Object {
+      "endCursor": "cursor-1",
+      "hasNextPage": true,
+      "hasPreviousPage": false,
+      "startCursor": "cursor-1",
+    },
+  },
+  "connectionError": undefined,
+  "entities": Array [
+    OkResult {
+      "value": Object {
+        "fields": Object {
+          "title": "Title 1",
+        },
+        "id": "1",
+        "info": Object {
+          "authKey": "none",
+          "createdAt": "2022-03-19T07:51:25.56Z",
+          "name": "Entity 1",
+          "type": "TitleOnly",
+        },
+      },
+    },
+  ],
+  "entitySamples": undefined,
+  "entitySamplesError": undefined,
+  "paging": Object {
+    "first": 1,
+  },
+  "query": Object {
+    "order": "name",
+  },
+  "requestedCount": 1,
+  "sampling": undefined,
+  "text": "",
+  "totalCount": 2,
+}
+`;
+
+exports[`SearchEntityState scenarios From searching -> set sampling -> loading -> loaded: 2 - loading 1`] = `
+Object {
+  "connection": undefined,
+  "connectionError": undefined,
+  "entities": Array [
+    OkResult {
+      "value": Object {
+        "fields": Object {
+          "title": "Title 1",
+        },
+        "id": "1",
+        "info": Object {
+          "authKey": "none",
+          "createdAt": "2022-03-19T07:51:25.56Z",
+          "name": "Entity 1",
+          "type": "TitleOnly",
+        },
+      },
+    },
+  ],
+  "entitySamples": undefined,
+  "entitySamplesError": undefined,
+  "paging": undefined,
+  "query": Object {},
+  "requestedCount": 1,
+  "sampling": Object {
+    "count": 1,
+    "seed": 123,
+  },
+  "text": "",
+  "totalCount": null,
+}
+`;
+
+exports[`SearchEntityState scenarios From searching -> set sampling -> loading -> loaded: 3 - loaded 1`] = `
+Object {
+  "connection": undefined,
+  "connectionError": undefined,
+  "entities": Array [
+    OkResult {
+      "value": Object {
+        "fields": Object {
+          "title": "Title 2",
+        },
+        "id": "2",
+        "info": Object {
+          "authKey": "none",
+          "createdAt": "2022-03-19T07:51:25.56Z",
+          "name": "Entity 2",
+          "type": "TitleOnly",
+        },
+      },
+    },
+  ],
+  "entitySamples": Object {
+    "items": Array [
+      Object {
+        "fields": Object {
+          "title": "Title 2",
+        },
+        "id": "2",
+        "info": Object {
+          "authKey": "none",
+          "createdAt": "2022-03-19T07:51:25.56Z",
+          "name": "Entity 2",
+          "type": "TitleOnly",
+        },
+      },
+    ],
+    "seed": 123,
+    "totalCount": 1,
+  },
+  "entitySamplesError": undefined,
+  "paging": undefined,
+  "query": Object {},
+  "requestedCount": 1,
+  "sampling": Object {
+    "count": 1,
+    "seed": 123,
+  },
+  "text": "",
+  "totalCount": null,
+}
+`;
+
 exports[`SearchEntityState scenarios Next page -> loading -> loaded: 1 - initial 1`] = `
 Object {
   "connection": Object {
@@ -157,35 +446,9 @@ Object {
 }
 `;
 
-exports[`SearchEntityState scenarios Set sampling -> loading -> loaded: 1 - initial 1`] = `
+exports[`SearchEntityState scenarios Sampling -> change seed -> loading -> loaded: 1 - initial 1`] = `
 Object {
-  "connection": Object {
-    "edges": Array [
-      Object {
-        "cursor": "cursor-1",
-        "node": OkResult {
-          "value": Object {
-            "fields": Object {
-              "title": "Title 1",
-            },
-            "id": "1",
-            "info": Object {
-              "authKey": "none",
-              "createdAt": "2022-03-19T07:51:25.56Z",
-              "name": "Entity 1",
-              "type": "TitleOnly",
-            },
-          },
-        },
-      },
-    ],
-    "pageInfo": Object {
-      "endCursor": "cursor-1",
-      "hasNextPage": true,
-      "hasPreviousPage": false,
-      "startCursor": "cursor-1",
-    },
-  },
+  "connection": undefined,
   "connectionError": undefined,
   "entities": Array [
     OkResult {
@@ -203,22 +466,38 @@ Object {
       },
     },
   ],
-  "entitySamples": undefined,
+  "entitySamples": Object {
+    "items": Array [
+      Object {
+        "fields": Object {
+          "title": "Title 1",
+        },
+        "id": "1",
+        "info": Object {
+          "authKey": "none",
+          "createdAt": "2022-03-19T07:51:25.56Z",
+          "name": "Entity 1",
+          "type": "TitleOnly",
+        },
+      },
+    ],
+    "seed": 123,
+    "totalCount": 2,
+  },
   "entitySamplesError": undefined,
-  "paging": Object {
-    "first": 1,
-  },
-  "query": Object {
-    "order": "name",
-  },
+  "paging": undefined,
+  "query": Object {},
   "requestedCount": 1,
-  "sampling": undefined,
+  "sampling": Object {
+    "count": 1,
+    "seed": 123,
+  },
   "text": "",
-  "totalCount": 2,
+  "totalCount": null,
 }
 `;
 
-exports[`SearchEntityState scenarios Set sampling -> loading -> loaded: 2 - loading 1`] = `
+exports[`SearchEntityState scenarios Sampling -> change seed -> loading -> loaded: 2 - loading 1`] = `
 Object {
   "connection": undefined,
   "connectionError": undefined,
@@ -245,14 +524,14 @@ Object {
   "requestedCount": 1,
   "sampling": Object {
     "count": 1,
-    "seed": 123,
+    "seed": 456,
   },
   "text": "",
   "totalCount": null,
 }
 `;
 
-exports[`SearchEntityState scenarios Set sampling -> loading -> loaded: 3 - loaded 1`] = `
+exports[`SearchEntityState scenarios Sampling -> change seed -> loading -> loaded: 3 - loaded 1`] = `
 Object {
   "connection": undefined,
   "connectionError": undefined,
@@ -287,8 +566,8 @@ Object {
         },
       },
     ],
-    "seed": 123,
-    "totalCount": 1,
+    "seed": 456,
+    "totalCount": 2,
   },
   "entitySamplesError": undefined,
   "paging": undefined,
@@ -296,7 +575,7 @@ Object {
   "requestedCount": 1,
   "sampling": Object {
     "count": 1,
-    "seed": 123,
+    "seed": 456,
   },
   "text": "",
   "totalCount": null,

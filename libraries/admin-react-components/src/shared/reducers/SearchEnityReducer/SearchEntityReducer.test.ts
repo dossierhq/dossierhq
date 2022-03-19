@@ -211,7 +211,34 @@ describe('SearchEntityState scenarios', () => {
     expect(loadedState).toMatchSnapshot('3 - loaded');
   });
 
-  test('Set sampling -> loading -> loaded', () => {
+  test('Sampling -> change seed -> loading -> loaded', () => {
+    const initialState = initializeSearchEntityState([
+      new SearchEntityStateActions.SetSampling({ count: 1, seed: 123 }, false),
+      new SearchEntityStateActions.UpdateSampleResult(
+        createPublishedEntitySamplingPayload(['1'], { seed: 123, totalCount: 2 }),
+        undefined
+      ),
+    ]);
+    expect(initialState).toMatchSnapshot('1 - initial');
+
+    const loadingState = reduceSearchEntityStateActions(
+      initialState,
+      new SearchEntityStateActions.SetSampling({ seed: 456 }, true),
+      new SearchEntityStateActions.UpdateSampleResult(undefined, undefined)
+    );
+    expect(loadingState).toMatchSnapshot('2 - loading');
+
+    const loadedState = reduceSearchEntityStateActions(
+      loadingState,
+      new SearchEntityStateActions.UpdateSampleResult(
+        createPublishedEntitySamplingPayload(['2'], { seed: 456, totalCount: 2 }),
+        undefined
+      )
+    );
+    expect(loadedState).toMatchSnapshot('3 - loaded');
+  });
+
+  test('From searching -> set sampling -> loading -> loaded', () => {
     const initialState = initializeSearchEntityState([
       new SearchEntityStateActions.SetPaging({ first: 1 }),
       new SearchEntityStateActions.UpdateSearchResult(
@@ -237,6 +264,36 @@ describe('SearchEntityState scenarios', () => {
         createPublishedEntitySamplingPayload(['2'], { seed: 123, totalCount: 1 }),
         undefined
       )
+    );
+    expect(loadedState).toMatchSnapshot('3 - loaded');
+  });
+
+  test('From sampling -> set paging -> loading -> loaded', () => {
+    const initialState = initializeSearchEntityState([
+      new SearchEntityStateActions.SetSampling({ count: 1, seed: 123 }, false),
+      new SearchEntityStateActions.UpdateSampleResult(
+        createPublishedEntitySamplingPayload(['1'], { seed: 123, totalCount: 1 }),
+        undefined
+      ),
+    ]);
+    expect(initialState).toMatchSnapshot('1 - initial');
+
+    const loadingState = reduceSearchEntityStateActions(
+      initialState,
+      new SearchEntityStateActions.SetPaging({ first: 1 }),
+      new SearchEntityStateActions.UpdateSampleResult(undefined, undefined),
+      new SearchEntityStateActions.UpdateSearchResult(undefined, undefined),
+      new SearchEntityStateActions.UpdateTotalCount(null)
+    );
+    expect(loadingState).toMatchSnapshot('2 - loading');
+
+    const loadedState = reduceSearchEntityStateActions(
+      loadingState,
+      new SearchEntityStateActions.UpdateSearchResult(
+        createPublishedEntityConnection(['2'], { hasPreviousPage: false, hasNextPage: true }),
+        undefined
+      ),
+      new SearchEntityStateActions.UpdateTotalCount(2)
     );
     expect(loadedState).toMatchSnapshot('3 - loaded');
   });
