@@ -1,0 +1,110 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SearchEntityState scenarios Next page -> loading -> loaded 1`] = `
+Object {
+  "connection": Object {
+    "edges": Array [
+      Object {
+        "cursor": "cursor-1",
+        "node": OkResult {
+          "value": Object {
+            "fields": Object {
+              "title": "Title 1",
+            },
+            "id": "1",
+            "info": Object {
+              "authKey": "none",
+              "createdAt": "2022-03-19T07:51:25.56Z",
+              "name": "Entity 1",
+              "type": "TitleOnly",
+            },
+          },
+        },
+      },
+    ],
+    "pageInfo": Object {
+      "endCursor": "cursor-1",
+      "hasNextPage": true,
+      "hasPreviousPage": false,
+      "startCursor": "cursor-1",
+    },
+  },
+  "connectionError": undefined,
+  "entitySamples": undefined,
+  "entitySamplesError": undefined,
+  "paging": Object {
+    "first": 1,
+  },
+  "query": Object {
+    "order": "name",
+  },
+  "requestedCount": 1,
+  "sampling": undefined,
+  "text": "",
+  "totalCount": 2,
+}
+`;
+
+exports[`SearchEntityState scenarios Next page -> loading -> loaded 2`] = `
+Object {
+  "connection": undefined,
+  "connectionError": undefined,
+  "entitySamples": undefined,
+  "entitySamplesError": undefined,
+  "paging": Object {
+    "after": "cursor-1",
+  },
+  "query": Object {
+    "order": "name",
+  },
+  "requestedCount": 1,
+  "sampling": undefined,
+  "text": "",
+  "totalCount": 2,
+}
+`;
+
+exports[`SearchEntityState scenarios Next page -> loading -> loaded 3`] = `
+Object {
+  "connection": Object {
+    "edges": Array [
+      Object {
+        "cursor": "cursor-2",
+        "node": OkResult {
+          "value": Object {
+            "fields": Object {
+              "title": "Title 2",
+            },
+            "id": "2",
+            "info": Object {
+              "authKey": "none",
+              "createdAt": "2022-03-19T07:51:25.56Z",
+              "name": "Entity 2",
+              "type": "TitleOnly",
+            },
+          },
+        },
+      },
+    ],
+    "pageInfo": Object {
+      "endCursor": "cursor-2",
+      "hasNextPage": false,
+      "hasPreviousPage": true,
+      "startCursor": "cursor-2",
+    },
+  },
+  "connectionError": undefined,
+  "entitySamples": undefined,
+  "entitySamplesError": undefined,
+  "paging": Object {
+    "after": "cursor-1",
+  },
+  "query": Object {
+    "order": "name",
+  },
+  "requestedCount": 1,
+  "sampling": undefined,
+  "text": "",
+  "totalCount": 2,
+}
+`;

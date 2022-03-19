@@ -1,9 +1,38 @@
-import { AdminQueryOrder } from '@jonasb/datadata-core';
+import type { Connection, Edge, ErrorType, PublishedEntity } from '@jonasb/datadata-core';
+import { AdminQueryOrder, ok } from '@jonasb/datadata-core';
+import { Temporal } from '@js-temporal/polyfill';
 import {
   initializeSearchEntityState,
   reduceSearchEntityState,
   SearchEntityStateActions,
 } from './SearchEntityReducer';
+
+function createPublishedEntityConnection(
+  ids: string[],
+  { hasPreviousPage, hasNextPage }: { hasPreviousPage: boolean; hasNextPage: boolean }
+): Connection<Edge<PublishedEntity, ErrorType>> {
+  return {
+    pageInfo: {
+      hasPreviousPage,
+      hasNextPage,
+      startCursor: `cursor-${ids[0]}`,
+      endCursor: `cursor-${ids[ids.length - 1]}`,
+    },
+    edges: ids.map((id) => ({
+      cursor: `cursor-${id}`,
+      node: ok({
+        id,
+        info: {
+          name: `Entity ${id}`,
+          type: 'TitleOnly',
+          authKey: 'none',
+          createdAt: Temporal.Instant.from('2022-03-19T07:51:25.56Z'),
+        },
+        fields: { title: `Title ${id}` },
+      }),
+    })),
+  };
+}
 
 describe('initializeSearchEntityState', () => {
   test('default', () => {
@@ -116,5 +145,37 @@ describe('SearchEntityStateActions.SetSampling', () => {
     );
     expect(state.sampling).toEqual({ seed: 123, count: 100 });
     expect(state.requestedCount).toBe(100);
+  });
+});
+
+describe('SearchEntityState scenarios', () => {
+  test('Next page -> loading -> loaded', () => {
+    const loadedInitialPageState = initializeSearchEntityState([
+      new SearchEntityStateActions.SetPaging({ first: 1 }),
+      new SearchEntityStateActions.UpdateSearchResult(
+        createPublishedEntityConnection(['1'], { hasPreviousPage: false, hasNextPage: true }),
+        undefined
+      ),
+      new SearchEntityStateActions.UpdateTotalCount(2),
+    ]);
+    expect(loadedInitialPageState).toMatchSnapshot();
+
+    const loadingNextPageState = reduceSearchEntityState(
+      reduceSearchEntityState(
+        loadedInitialPageState,
+        new SearchEntityStateActions.SetPaging({ after: 'cursor-1' })
+      ),
+      new SearchEntityStateActions.UpdateSearchResult(undefined, undefined)
+    );
+    expect(loadingNextPageState).toMatchSnapshot();
+
+    const loadedNextPageState = reduceSearchEntityState(
+      loadingNextPageState,
+      new SearchEntityStateActions.UpdateSearchResult(
+        createPublishedEntityConnection(['2'], { hasPreviousPage: true, hasNextPage: false }),
+        undefined
+      )
+    );
+    expect(loadedNextPageState).toMatchSnapshot();
   });
 });
