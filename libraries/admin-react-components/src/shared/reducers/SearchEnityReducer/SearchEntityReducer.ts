@@ -219,6 +219,10 @@ class UpdateSearchResultAction implements SearchEntityStateAction {
   }
 
   reduce(state: SearchEntityState): SearchEntityState {
+    const isLoading = this.connection === undefined && this.connectionError === undefined;
+    if (isLoading) {
+      return state;
+    }
     if (state.connection === this.connection && state.connectionError === this.connectionError) {
       return state;
     }

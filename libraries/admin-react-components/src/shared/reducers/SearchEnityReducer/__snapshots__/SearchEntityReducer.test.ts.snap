@@ -47,7 +47,33 @@ Object {
 
 exports[`SearchEntityState scenarios Next page -> loading -> loaded 2`] = `
 Object {
-  "connection": undefined,
+  "connection": Object {
+    "edges": Array [
+      Object {
+        "cursor": "cursor-1",
+        "node": OkResult {
+          "value": Object {
+            "fields": Object {
+              "title": "Title 1",
+            },
+            "id": "1",
+            "info": Object {
+              "authKey": "none",
+              "createdAt": "2022-03-19T07:51:25.56Z",
+              "name": "Entity 1",
+              "type": "TitleOnly",
+            },
+          },
+        },
+      },
+    ],
+    "pageInfo": Object {
+      "endCursor": "cursor-1",
+      "hasNextPage": true,
+      "hasPreviousPage": false,
+      "startCursor": "cursor-1",
+    },
+  },
   "connectionError": undefined,
   "entitySamples": undefined,
   "entitySamplesError": undefined,
