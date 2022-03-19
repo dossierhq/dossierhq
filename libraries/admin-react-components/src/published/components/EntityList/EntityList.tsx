@@ -14,6 +14,7 @@ interface Props {
 
 export function EntityList({ searchEntityState, dispatchSearchEntityState, onItemClick }: Props) {
   const {
+    sampling,
     connection,
     entitySamples,
     query: { order, reverse },
@@ -37,33 +38,35 @@ export function EntityList({ searchEntityState, dispatchSearchEntityState, onIte
         </Table.Row>
       </Table.Head>
       <Table.Body>
-        {connection?.edges.map((edge) => {
-          if (edge.node.isOk()) {
-            const entity = edge.node.value;
-            return (
-              <EntityListRow
-                key={entity.id}
-                {...{
-                  entity,
-                  authKeys,
-                  order: order as PublishedQueryOrder | undefined,
-                  onItemClick,
-                }}
-              />
-            );
-          }
-        })}
-        {entitySamples?.items.map((entity) => (
-          <EntityListRow
-            key={entity.id}
-            {...{
-              entity: entity as PublishedEntity,
-              authKeys,
-              order: order as PublishedQueryOrder | undefined,
-              onItemClick,
-            }}
-          />
-        ))}
+        {!sampling &&
+          connection?.edges.map((edge) => {
+            if (edge.node.isOk()) {
+              const entity = edge.node.value;
+              return (
+                <EntityListRow
+                  key={entity.id}
+                  {...{
+                    entity,
+                    authKeys,
+                    order: order as PublishedQueryOrder | undefined,
+                    onItemClick,
+                  }}
+                />
+              );
+            }
+          })}
+        {sampling &&
+          entitySamples?.items.map((entity) => (
+            <EntityListRow
+              key={entity.id}
+              {...{
+                entity: entity as PublishedEntity,
+                authKeys,
+                order: order as PublishedQueryOrder | undefined,
+                onItemClick,
+              }}
+            />
+          ))}
       </Table.Body>
     </Table>
   );

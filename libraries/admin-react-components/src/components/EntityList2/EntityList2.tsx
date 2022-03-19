@@ -16,6 +16,7 @@ export function EntityList2({ searchEntityState, dispatchSearchEntityState, onIt
   const {
     connection,
     entitySamples,
+    sampling,
     query: { order, reverse },
   } = searchEntityState;
   const { authKeys } = useContext(DataDataContext2);
@@ -67,28 +68,35 @@ export function EntityList2({ searchEntityState, dispatchSearchEntityState, onIt
         </Table.Row>
       </Table.Head>
       <Table.Body>
-        {connection?.edges.map((edge) => {
-          if (edge.node.isOk()) {
-            const entity = edge.node.value as AdminEntity;
-            return (
-              <EntityListRow
-                key={entity.id}
-                {...{ entity, authKeys, order: order as AdminQueryOrder | undefined, onItemClick }}
-              />
-            );
-          }
-        })}
-        {entitySamples?.items.map((entity) => (
-          <EntityListRow
-            key={entity.id}
-            {...{
-              entity: entity as AdminEntity,
-              authKeys,
-              order: order as AdminQueryOrder | undefined,
-              onItemClick,
-            }}
-          />
-        ))}
+        {!sampling &&
+          connection?.edges.map((edge) => {
+            if (edge.node.isOk()) {
+              const entity = edge.node.value as AdminEntity;
+              return (
+                <EntityListRow
+                  key={entity.id}
+                  {...{
+                    entity,
+                    authKeys,
+                    order: order as AdminQueryOrder | undefined,
+                    onItemClick,
+                  }}
+                />
+              );
+            }
+          })}
+        {sampling &&
+          entitySamples?.items.map((entity) => (
+            <EntityListRow
+              key={entity.id}
+              {...{
+                entity: entity as AdminEntity,
+                authKeys,
+                order: order as AdminQueryOrder | undefined,
+                onItemClick,
+              }}
+            />
+          ))}
       </Table.Body>
     </Table>
   );
