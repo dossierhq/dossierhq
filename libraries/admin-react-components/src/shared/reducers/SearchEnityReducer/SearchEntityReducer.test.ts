@@ -1,11 +1,31 @@
-import type { Connection, Edge, ErrorType, PublishedEntity } from '@jonasb/datadata-core';
+import type {
+  Connection,
+  Edge,
+  EntitySamplingPayload,
+  ErrorType,
+  PublishedEntity,
+} from '@jonasb/datadata-core';
 import { AdminQueryOrder, ok } from '@jonasb/datadata-core';
 import { Temporal } from '@js-temporal/polyfill';
+import type { SearchEntityState, SearchEntityStateAction } from './SearchEntityReducer';
 import {
   initializeSearchEntityState,
   reduceSearchEntityState,
   SearchEntityStateActions,
 } from './SearchEntityReducer';
+
+function createPublishedEntity(id: string): PublishedEntity {
+  return {
+    id,
+    info: {
+      name: `Entity ${id}`,
+      type: 'TitleOnly',
+      authKey: 'none',
+      createdAt: Temporal.Instant.from('2022-03-19T07:51:25.56Z'),
+    },
+    fields: { title: `Title ${id}` },
+  };
+}
 
 function createPublishedEntityConnection(
   ids: string[],
@@ -20,18 +40,31 @@ function createPublishedEntityConnection(
     },
     edges: ids.map((id) => ({
       cursor: `cursor-${id}`,
-      node: ok({
-        id,
-        info: {
-          name: `Entity ${id}`,
-          type: 'TitleOnly',
-          authKey: 'none',
-          createdAt: Temporal.Instant.from('2022-03-19T07:51:25.56Z'),
-        },
-        fields: { title: `Title ${id}` },
-      }),
+      node: ok(createPublishedEntity(id)),
     })),
   };
+}
+
+function createPublishedEntitySamplingPayload(
+  ids: string[],
+  { seed, totalCount }: { seed: number; totalCount: number }
+): EntitySamplingPayload<PublishedEntity> {
+  return {
+    seed,
+    totalCount,
+    items: ids.map(createPublishedEntity),
+  };
+}
+
+function reduceSearchEntityStateActions(
+  state: SearchEntityState,
+  ...actions: SearchEntityStateAction[]
+) {
+  let newState = state;
+  for (const action of actions) {
+    newState = reduceSearchEntityState(newState, action);
+  }
+  return newState;
 }
 
 describe('initializeSearchEntityState', () => {
@@ -160,11 +193,9 @@ describe('SearchEntityState scenarios', () => {
     ]);
     expect(loadedInitialPageState).toMatchSnapshot();
 
-    const loadingNextPageState = reduceSearchEntityState(
-      reduceSearchEntityState(
-        loadedInitialPageState,
-        new SearchEntityStateActions.SetPaging({ after: 'cursor-1' })
-      ),
+    const loadingNextPageState = reduceSearchEntityStateActions(
+      loadedInitialPageState,
+      new SearchEntityStateActions.SetPaging({ after: 'cursor-1' }),
       new SearchEntityStateActions.UpdateSearchResult(undefined, undefined)
     );
     expect(loadingNextPageState).toMatchSnapshot();
@@ -177,5 +208,35 @@ describe('SearchEntityState scenarios', () => {
       )
     );
     expect(loadedNextPageState).toMatchSnapshot();
+  });
+
+  test('Set sampling -> loading -> loaded', () => {
+    const initialState = initializeSearchEntityState([
+      new SearchEntityStateActions.SetPaging({ first: 1 }),
+      new SearchEntityStateActions.UpdateSearchResult(
+        createPublishedEntityConnection(['1'], { hasPreviousPage: false, hasNextPage: true }),
+        undefined
+      ),
+      new SearchEntityStateActions.UpdateTotalCount(2),
+      new SearchEntityStateActions.UpdateSampleResult(undefined, undefined),
+    ]);
+    expect(initialState).toMatchSnapshot();
+
+    const loadingSamplingState = reduceSearchEntityStateActions(
+      initialState,
+      new SearchEntityStateActions.SetSampling({ count: 1, seed: 123 }, false),
+      new SearchEntityStateActions.UpdateSearchResult(undefined, undefined),
+      new SearchEntityStateActions.UpdateTotalCount(null)
+    );
+    expect(loadingSamplingState).toMatchSnapshot();
+
+    const loadedSamplingState = reduceSearchEntityState(
+      loadingSamplingState,
+      new SearchEntityStateActions.UpdateSampleResult(
+        createPublishedEntitySamplingPayload(['2'], { seed: 123, totalCount: 1 }),
+        undefined
+      )
+    );
+    expect(loadedSamplingState).toMatchSnapshot();
   });
 });
