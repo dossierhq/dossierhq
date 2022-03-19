@@ -33,14 +33,14 @@ export {
   initializeSearchEntityState,
   reduceSearchEntityState,
   SearchEntityStateActions,
-} from './reducers/SearchEnittyReducer/SearchEntityReducer';
+} from './reducers/SearchEnityReducer/SearchEntityReducer';
 export type {
   SearchEntityState,
   SearchEntityStateAction,
-} from './reducers/SearchEnittyReducer/SearchEntityReducer';
+} from './reducers/SearchEnityReducer/SearchEntityReducer';
 export {
   initializeSearchEntityStateFromUrlQuery,
   useSynchronizeUrlQueryAndSearchEntityState,
-} from './reducers/SearchEnittyReducer/SearchEntityUrlSynchronizer';
-export type { EntitySearchStateUrlQuery } from './reducers/SearchEnittyReducer/SearchEntityUrlSynchronizer';
+} from './reducers/SearchEnityReducer/SearchEntityUrlSynchronizer';
+export type { EntitySearchStateUrlQuery } from './reducers/SearchEnityReducer/SearchEntityUrlSynchronizer';
 export type { DisplayAuthKey } from './types/DisplayAuthKey';
