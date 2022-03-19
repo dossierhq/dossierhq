@@ -73,6 +73,7 @@ describe('initializeSearchEntityState', () => {
       Object {
         "connection": undefined,
         "connectionError": undefined,
+        "entities": Array [],
         "entitySamples": undefined,
         "entitySamplesError": undefined,
         "paging": Object {},
@@ -183,7 +184,7 @@ describe('SearchEntityStateActions.SetSampling', () => {
 
 describe('SearchEntityState scenarios', () => {
   test('Next page -> loading -> loaded', () => {
-    const loadedInitialPageState = initializeSearchEntityState([
+    const initialState = initializeSearchEntityState([
       new SearchEntityStateActions.SetPaging({ first: 1 }),
       new SearchEntityStateActions.UpdateSearchResult(
         createPublishedEntityConnection(['1'], { hasPreviousPage: false, hasNextPage: true }),
@@ -191,23 +192,23 @@ describe('SearchEntityState scenarios', () => {
       ),
       new SearchEntityStateActions.UpdateTotalCount(2),
     ]);
-    expect(loadedInitialPageState).toMatchSnapshot();
+    expect(initialState).toMatchSnapshot('1 - initial');
 
-    const loadingNextPageState = reduceSearchEntityStateActions(
-      loadedInitialPageState,
+    const loadingState = reduceSearchEntityStateActions(
+      initialState,
       new SearchEntityStateActions.SetPaging({ after: 'cursor-1' }),
       new SearchEntityStateActions.UpdateSearchResult(undefined, undefined)
     );
-    expect(loadingNextPageState).toMatchSnapshot();
+    expect(loadingState).toMatchSnapshot('2 - loading');
 
-    const loadedNextPageState = reduceSearchEntityState(
-      loadingNextPageState,
+    const loadedState = reduceSearchEntityState(
+      loadingState,
       new SearchEntityStateActions.UpdateSearchResult(
         createPublishedEntityConnection(['2'], { hasPreviousPage: true, hasNextPage: false }),
         undefined
       )
     );
-    expect(loadedNextPageState).toMatchSnapshot();
+    expect(loadedState).toMatchSnapshot('3 - loaded');
   });
 
   test('Set sampling -> loading -> loaded', () => {
@@ -220,23 +221,23 @@ describe('SearchEntityState scenarios', () => {
       new SearchEntityStateActions.UpdateTotalCount(2),
       new SearchEntityStateActions.UpdateSampleResult(undefined, undefined),
     ]);
-    expect(initialState).toMatchSnapshot();
+    expect(initialState).toMatchSnapshot('1 - initial');
 
-    const loadingSamplingState = reduceSearchEntityStateActions(
+    const loadingState = reduceSearchEntityStateActions(
       initialState,
       new SearchEntityStateActions.SetSampling({ count: 1, seed: 123 }, false),
       new SearchEntityStateActions.UpdateSearchResult(undefined, undefined),
       new SearchEntityStateActions.UpdateTotalCount(null)
     );
-    expect(loadingSamplingState).toMatchSnapshot();
+    expect(loadingState).toMatchSnapshot('2 - loading');
 
-    const loadedSamplingState = reduceSearchEntityState(
-      loadingSamplingState,
+    const loadedState = reduceSearchEntityState(
+      loadingState,
       new SearchEntityStateActions.UpdateSampleResult(
         createPublishedEntitySamplingPayload(['2'], { seed: 123, totalCount: 1 }),
         undefined
       )
     );
-    expect(loadedSamplingState).toMatchSnapshot();
+    expect(loadedState).toMatchSnapshot('3 - loaded');
   });
 });

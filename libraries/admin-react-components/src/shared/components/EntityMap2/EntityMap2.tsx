@@ -27,7 +27,7 @@ export function EntityMap2<TEntity extends AdminEntity | PublishedEntity>({
   dispatchSearchEntityState,
   renderEntityMarker,
 }: EntityMapProps<TEntity>): JSX.Element | null {
-  const { connection, entitySamples, sampling } = searchEntityState;
+  const { entities } = searchEntityState;
 
   return (
     <MapContainer
@@ -42,32 +42,19 @@ export function EntityMap2<TEntity extends AdminEntity | PublishedEntity>({
         )
       }
     >
-      {!sampling && connection && schema
-        ? connection.edges.map((edge) => {
-            if (edge.node.isError()) {
+      {schema
+        ? entities.map((entityResult) => {
+            if (entityResult.isError()) {
               return null;
             }
-            const entity = edge.node.value;
-            return renderEntityLocations(schema, entity as TEntity, renderEntityMarker);
+            const entity = entityResult.value;
+            const locations = extractEntityLocations(schema, entity);
+            return locations.map((location, locationIndex) =>
+              renderEntityMarker(`${entity.id}-${locationIndex}`, entity as TEntity, location)
+            );
           })
         : null}
-      {sampling && entitySamples && schema
-        ? entitySamples.items.map((entity) =>
-            renderEntityLocations(schema, entity as TEntity, renderEntityMarker)
-          )
-        : null}
     </MapContainer>
-  );
-}
-
-function renderEntityLocations<TEntity extends AdminEntity | PublishedEntity>(
-  schema: AdminSchema | PublishedSchema,
-  entity: TEntity,
-  renderEntityMarker: (key: string, entity: TEntity, location: Location) => JSX.Element
-) {
-  const locations = extractEntityLocations(schema, entity);
-  return locations.map((location, locationIndex) =>
-    renderEntityMarker(`${entity.id}-${locationIndex}`, entity as TEntity, location)
   );
 }
 

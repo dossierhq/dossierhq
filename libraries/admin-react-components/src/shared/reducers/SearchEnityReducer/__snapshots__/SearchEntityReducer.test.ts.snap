@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SearchEntityState scenarios Next page -> loading -> loaded 1`] = `
+exports[`SearchEntityState scenarios Next page -> loading -> loaded: 1 - initial 1`] = `
 Object {
   "connection": Object {
     "edges": Array [
@@ -30,6 +30,22 @@ Object {
     },
   },
   "connectionError": undefined,
+  "entities": Array [
+    OkResult {
+      "value": Object {
+        "fields": Object {
+          "title": "Title 1",
+        },
+        "id": "1",
+        "info": Object {
+          "authKey": "none",
+          "createdAt": "2022-03-19T07:51:25.56Z",
+          "name": "Entity 1",
+          "type": "TitleOnly",
+        },
+      },
+    },
+  ],
   "entitySamples": undefined,
   "entitySamplesError": undefined,
   "paging": Object {
@@ -45,36 +61,26 @@ Object {
 }
 `;
 
-exports[`SearchEntityState scenarios Next page -> loading -> loaded 2`] = `
+exports[`SearchEntityState scenarios Next page -> loading -> loaded: 2 - loading 1`] = `
 Object {
-  "connection": Object {
-    "edges": Array [
-      Object {
-        "cursor": "cursor-1",
-        "node": OkResult {
-          "value": Object {
-            "fields": Object {
-              "title": "Title 1",
-            },
-            "id": "1",
-            "info": Object {
-              "authKey": "none",
-              "createdAt": "2022-03-19T07:51:25.56Z",
-              "name": "Entity 1",
-              "type": "TitleOnly",
-            },
-          },
+  "connection": undefined,
+  "connectionError": undefined,
+  "entities": Array [
+    OkResult {
+      "value": Object {
+        "fields": Object {
+          "title": "Title 1",
+        },
+        "id": "1",
+        "info": Object {
+          "authKey": "none",
+          "createdAt": "2022-03-19T07:51:25.56Z",
+          "name": "Entity 1",
+          "type": "TitleOnly",
         },
       },
-    ],
-    "pageInfo": Object {
-      "endCursor": "cursor-1",
-      "hasNextPage": true,
-      "hasPreviousPage": false,
-      "startCursor": "cursor-1",
     },
-  },
-  "connectionError": undefined,
+  ],
   "entitySamples": undefined,
   "entitySamplesError": undefined,
   "paging": Object {
@@ -90,7 +96,7 @@ Object {
 }
 `;
 
-exports[`SearchEntityState scenarios Next page -> loading -> loaded 3`] = `
+exports[`SearchEntityState scenarios Next page -> loading -> loaded: 3 - loaded 1`] = `
 Object {
   "connection": Object {
     "edges": Array [
@@ -120,6 +126,22 @@ Object {
     },
   },
   "connectionError": undefined,
+  "entities": Array [
+    OkResult {
+      "value": Object {
+        "fields": Object {
+          "title": "Title 2",
+        },
+        "id": "2",
+        "info": Object {
+          "authKey": "none",
+          "createdAt": "2022-03-19T07:51:25.56Z",
+          "name": "Entity 2",
+          "type": "TitleOnly",
+        },
+      },
+    },
+  ],
   "entitySamples": undefined,
   "entitySamplesError": undefined,
   "paging": Object {
@@ -135,7 +157,7 @@ Object {
 }
 `;
 
-exports[`SearchEntityState scenarios Set sampling -> loading -> loaded 1`] = `
+exports[`SearchEntityState scenarios Set sampling -> loading -> loaded: 1 - initial 1`] = `
 Object {
   "connection": Object {
     "edges": Array [
@@ -165,6 +187,22 @@ Object {
     },
   },
   "connectionError": undefined,
+  "entities": Array [
+    OkResult {
+      "value": Object {
+        "fields": Object {
+          "title": "Title 1",
+        },
+        "id": "1",
+        "info": Object {
+          "authKey": "none",
+          "createdAt": "2022-03-19T07:51:25.56Z",
+          "name": "Entity 1",
+          "type": "TitleOnly",
+        },
+      },
+    },
+  ],
   "entitySamples": undefined,
   "entitySamplesError": undefined,
   "paging": Object {
@@ -180,36 +218,26 @@ Object {
 }
 `;
 
-exports[`SearchEntityState scenarios Set sampling -> loading -> loaded 2`] = `
+exports[`SearchEntityState scenarios Set sampling -> loading -> loaded: 2 - loading 1`] = `
 Object {
-  "connection": Object {
-    "edges": Array [
-      Object {
-        "cursor": "cursor-1",
-        "node": OkResult {
-          "value": Object {
-            "fields": Object {
-              "title": "Title 1",
-            },
-            "id": "1",
-            "info": Object {
-              "authKey": "none",
-              "createdAt": "2022-03-19T07:51:25.56Z",
-              "name": "Entity 1",
-              "type": "TitleOnly",
-            },
-          },
+  "connection": undefined,
+  "connectionError": undefined,
+  "entities": Array [
+    OkResult {
+      "value": Object {
+        "fields": Object {
+          "title": "Title 1",
+        },
+        "id": "1",
+        "info": Object {
+          "authKey": "none",
+          "createdAt": "2022-03-19T07:51:25.56Z",
+          "name": "Entity 1",
+          "type": "TitleOnly",
         },
       },
-    ],
-    "pageInfo": Object {
-      "endCursor": "cursor-1",
-      "hasNextPage": true,
-      "hasPreviousPage": false,
-      "startCursor": "cursor-1",
     },
-  },
-  "connectionError": undefined,
+  ],
   "entitySamples": undefined,
   "entitySamplesError": undefined,
   "paging": undefined,
@@ -224,36 +252,26 @@ Object {
 }
 `;
 
-exports[`SearchEntityState scenarios Set sampling -> loading -> loaded 3`] = `
+exports[`SearchEntityState scenarios Set sampling -> loading -> loaded: 3 - loaded 1`] = `
 Object {
-  "connection": Object {
-    "edges": Array [
-      Object {
-        "cursor": "cursor-1",
-        "node": OkResult {
-          "value": Object {
-            "fields": Object {
-              "title": "Title 1",
-            },
-            "id": "1",
-            "info": Object {
-              "authKey": "none",
-              "createdAt": "2022-03-19T07:51:25.56Z",
-              "name": "Entity 1",
-              "type": "TitleOnly",
-            },
-          },
+  "connection": undefined,
+  "connectionError": undefined,
+  "entities": Array [
+    OkResult {
+      "value": Object {
+        "fields": Object {
+          "title": "Title 2",
+        },
+        "id": "2",
+        "info": Object {
+          "authKey": "none",
+          "createdAt": "2022-03-19T07:51:25.56Z",
+          "name": "Entity 2",
+          "type": "TitleOnly",
         },
       },
-    ],
-    "pageInfo": Object {
-      "endCursor": "cursor-1",
-      "hasNextPage": true,
-      "hasPreviousPage": false,
-      "startCursor": "cursor-1",
     },
-  },
-  "connectionError": undefined,
+  ],
   "entitySamples": Object {
     "items": Array [
       Object {
