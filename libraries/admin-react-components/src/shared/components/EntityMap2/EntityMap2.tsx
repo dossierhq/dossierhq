@@ -8,9 +8,9 @@ import type {
 import { isLocationItemField, visitItemRecursively } from '@jonasb/datadata-core';
 import type { Dispatch } from 'react';
 import React from 'react';
+import { SearchEntityStateActions } from '../..';
 import type { SearchEntityState, SearchEntityStateAction } from '../../..';
 import { MapContainer } from '../../..';
-import { SearchEntityStateActions } from '../..';
 
 export interface EntityMapProps<TEntity> {
   className?: string;
@@ -27,7 +27,7 @@ export function EntityMap2<TEntity extends AdminEntity | PublishedEntity>({
   dispatchSearchEntityState,
   renderEntityMarker,
 }: EntityMapProps<TEntity>): JSX.Element | null {
-  const { connection } = searchEntityState;
+  const { connection, entitySamples, sampling } = searchEntityState;
 
   return (
     <MapContainer
@@ -42,19 +42,32 @@ export function EntityMap2<TEntity extends AdminEntity | PublishedEntity>({
         )
       }
     >
-      {connection && schema
+      {!sampling && connection && schema
         ? connection.edges.map((edge) => {
             if (edge.node.isError()) {
               return null;
             }
             const entity = edge.node.value;
-            const locations = extractEntityLocations(schema, entity);
-            return locations.map((location, locationIndex) =>
-              renderEntityMarker(`${entity.id}-${locationIndex}`, entity as TEntity, location)
-            );
+            return renderEntityLocations(schema, entity as TEntity, renderEntityMarker);
           })
         : null}
+      {sampling && entitySamples && schema
+        ? entitySamples.items.map((entity) =>
+            renderEntityLocations(schema, entity as TEntity, renderEntityMarker)
+          )
+        : null}
     </MapContainer>
+  );
+}
+
+function renderEntityLocations<TEntity extends AdminEntity | PublishedEntity>(
+  schema: AdminSchema | PublishedSchema,
+  entity: TEntity,
+  renderEntityMarker: (key: string, entity: TEntity, location: Location) => JSX.Element
+) {
+  const locations = extractEntityLocations(schema, entity);
+  return locations.map((location, locationIndex) =>
+    renderEntityMarker(`${entity.id}-${locationIndex}`, entity as TEntity, location)
   );
 }
 
