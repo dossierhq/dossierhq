@@ -33,6 +33,7 @@ export interface SearchEntityState {
   totalCount: number | null;
 
   entities: Result<AdminEntity | PublishedEntity, ErrorType>[];
+  entitiesScrollToTopSignal: number;
 }
 
 export interface SearchEntityStateAction {
@@ -52,6 +53,7 @@ export function initializeSearchEntityState(actions: SearchEntityStateAction[]):
     entitySamplesError: undefined,
     totalCount: null,
     entities: [],
+    entitiesScrollToTopSignal: 0,
   };
   // Normalize query state
   state = reduceSearchEntityState(
@@ -226,15 +228,17 @@ class UpdateSearchResultAction implements SearchEntityStateAction {
     if (state.connection === this.connection && state.connectionError === this.connectionError) {
       return state;
     }
-    let entities = state.entities;
+    let { entities, entitiesScrollToTopSignal } = state;
     if (!state.sampling && this.connection !== undefined) {
       entities = this.connection === null ? [] : this.connection.edges.map((it) => it.node);
+      entitiesScrollToTopSignal += 1;
     }
     return {
       ...state,
       connection: this.connection,
       connectionError: this.connectionError,
       entities,
+      entitiesScrollToTopSignal,
     };
   }
 }
@@ -258,15 +262,17 @@ class UpdateSampleResultAction implements SearchEntityStateAction {
     ) {
       return state;
     }
-    let entities = state.entities;
+    let { entities, entitiesScrollToTopSignal } = state;
     if (state.sampling && this.entitySamples) {
       entities = this.entitySamples.items.map((it) => ok(it));
+      entitiesScrollToTopSignal += 1;
     }
     return {
       ...state,
       entitySamples: this.entitySamples,
       entitySamplesError: this.entitySamplesError,
       entities,
+      entitiesScrollToTopSignal,
     };
   }
 }

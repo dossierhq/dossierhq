@@ -74,6 +74,7 @@ describe('initializeSearchEntityState', () => {
         "connection": undefined,
         "connectionError": undefined,
         "entities": Array [],
+        "entitiesScrollToTopSignal": 0,
         "entitySamples": undefined,
         "entitySamplesError": undefined,
         "paging": Object {},
