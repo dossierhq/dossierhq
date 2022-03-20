@@ -20,6 +20,7 @@ export interface FullscreenContainerRowProps extends PaddingProps, GapProps, Fle
 }
 
 export interface FullscreenContainerScrollableRowProps {
+  scrollToTopSignal?: unknown;
   children: React.ReactNode;
 }
 
@@ -66,9 +67,15 @@ FullscreenContainer.Row = ({
 FullscreenContainer.Row.displayName = 'FullscreenContainer.Row';
 FullscreenContainer.Row.defaultProps = { flexDirection: 'column' };
 
-FullscreenContainer.ScrollableRow = ({ children }: FullscreenContainerRowProps) => {
+FullscreenContainer.ScrollableRow = ({
+  scrollToTopSignal,
+  children,
+}: FullscreenContainerScrollableRowProps) => {
   return (
-    <Scrollable className={toClassName('is-flex-grow-1', toSizeClassName({ height: 0 }))}>
+    <Scrollable
+      className={toClassName('is-flex-grow-1', toSizeClassName({ height: 0 }))}
+      scrollToTopSignal={scrollToTopSignal}
+    >
       {children}
     </Scrollable>
   );
