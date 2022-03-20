@@ -77,22 +77,6 @@ export function reduceSearchEntityState(
   return newState;
 }
 
-class SetTextAction implements SearchEntityStateAction {
-  value: string;
-
-  constructor(value: string) {
-    this.value = value;
-  }
-
-  reduce(state: SearchEntityState): SearchEntityState {
-    return {
-      ...state,
-      text: this.value,
-      query: { ...state.query, text: this.value },
-    };
-  }
-}
-
 class SetPagingAction implements SearchEntityStateAction {
   paging: Paging;
   pagingCause: 'first-page' | 'prev-page' | 'next-page' | 'last-page' | undefined;
@@ -180,8 +164,7 @@ class SetQueryAction implements SearchEntityStateAction {
 
     // Sampling/paging
     const switchToSearch = (this.value.order || this.value.reverse !== undefined) && state.sampling;
-    let sampling = state.sampling;
-    let paging = state.paging;
+    let { sampling, paging, loadingState } = state;
     if (switchToSearch) {
       sampling = undefined;
       paging = {};
@@ -218,10 +201,12 @@ class SetQueryAction implements SearchEntityStateAction {
     ) {
       return state;
     }
+
     if (this.resetPagingIfModifying) {
       paging = {};
+      loadingState = 'first-page';
     }
-    return { ...state, query, text: query.text ?? '', paging, sampling };
+    return { ...state, query, text: query.text ?? '', paging, sampling, loadingState };
   }
 }
 
@@ -317,7 +302,6 @@ class UpdateTotalCountAction implements SearchEntityStateAction {
 }
 
 export const SearchEntityStateActions = {
-  SetText: SetTextAction,
   SetPaging: SetPagingAction,
   SetSampling: SetSamplingAction,
   SetQuery: SetQueryAction,
