@@ -51,7 +51,7 @@ function SamplingButtons({
   dispatchSearchEntityState: Dispatch<SearchEntityStateAction>;
 }) {
   const handleOrdered = useCallback(() => {
-    dispatchSearchEntityState(new SearchEntityStateActions.SetPaging({}));
+    dispatchSearchEntityState(new SearchEntityStateActions.SetPaging({}, 'first-page'));
   }, [dispatchSearchEntityState]);
 
   const handleChangeSeed = useCallback(() => {

@@ -17,7 +17,12 @@ export function SearchEntitySearchInput({ searchEntityState, dispatchSearchEntit
       value={text}
       placeholder="Search"
       onChange={(e) =>
-        dispatchSearchEntityState(new SearchEntityStateActions.SetText(e.target.value))
+        dispatchSearchEntityState(
+          new SearchEntityStateActions.SetQuery(
+            { text: e.target.value },
+            { partial: true, resetPagingIfModifying: true }
+          )
+        )
       }
     />
   );
