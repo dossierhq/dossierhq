@@ -40,6 +40,7 @@ Object {
     "totalCount": 1,
   },
   "entitySamplesError": undefined,
+  "loadingState": "",
   "paging": undefined,
   "query": Object {},
   "requestedCount": 1,
@@ -75,6 +76,7 @@ Object {
   "entitiesScrollToTopSignal": 1,
   "entitySamples": undefined,
   "entitySamplesError": undefined,
+  "loadingState": "first-page",
   "paging": Object {
     "first": 1,
   },
@@ -135,6 +137,7 @@ Object {
   "entitiesScrollToTopSignal": 2,
   "entitySamples": undefined,
   "entitySamplesError": undefined,
+  "loadingState": "",
   "paging": Object {
     "first": 1,
   },
@@ -192,9 +195,10 @@ Object {
       },
     },
   ],
-  "entitiesScrollToTopSignal": 1,
+  "entitiesScrollToTopSignal": 0,
   "entitySamples": undefined,
   "entitySamplesError": undefined,
+  "loadingState": "",
   "paging": Object {
     "first": 1,
   },
@@ -228,9 +232,10 @@ Object {
       },
     },
   ],
-  "entitiesScrollToTopSignal": 1,
+  "entitiesScrollToTopSignal": 0,
   "entitySamples": undefined,
   "entitySamplesError": undefined,
+  "loadingState": "sample",
   "paging": undefined,
   "query": Object {},
   "requestedCount": 1,
@@ -263,7 +268,7 @@ Object {
       },
     },
   ],
-  "entitiesScrollToTopSignal": 2,
+  "entitiesScrollToTopSignal": 1,
   "entitySamples": Object {
     "items": Array [
       Object {
@@ -283,6 +288,7 @@ Object {
     "totalCount": 1,
   },
   "entitySamplesError": undefined,
+  "loadingState": "",
   "paging": undefined,
   "query": Object {},
   "requestedCount": 1,
@@ -341,9 +347,10 @@ Object {
       },
     },
   ],
-  "entitiesScrollToTopSignal": 1,
+  "entitiesScrollToTopSignal": 0,
   "entitySamples": undefined,
   "entitySamplesError": undefined,
+  "loadingState": "",
   "paging": Object {
     "first": 1,
   },
@@ -377,9 +384,10 @@ Object {
       },
     },
   ],
-  "entitiesScrollToTopSignal": 1,
+  "entitiesScrollToTopSignal": 0,
   "entitySamples": undefined,
   "entitySamplesError": undefined,
+  "loadingState": "next-page",
   "paging": Object {
     "after": "cursor-1",
   },
@@ -439,11 +447,138 @@ Object {
       },
     },
   ],
-  "entitiesScrollToTopSignal": 2,
+  "entitiesScrollToTopSignal": 1,
   "entitySamples": undefined,
   "entitySamplesError": undefined,
+  "loadingState": "",
   "paging": Object {
     "after": "cursor-1",
+  },
+  "query": Object {
+    "order": "name",
+  },
+  "requestedCount": 1,
+  "sampling": undefined,
+  "text": "",
+  "totalCount": 2,
+}
+`;
+
+exports[`SearchEntityState scenarios Refresh: 1 - initial 1`] = `
+Object {
+  "connection": Object {
+    "edges": Array [
+      Object {
+        "cursor": "cursor-1",
+        "node": OkResult {
+          "value": Object {
+            "fields": Object {
+              "title": "Title 1",
+            },
+            "id": "1",
+            "info": Object {
+              "authKey": "none",
+              "createdAt": "2022-03-19T07:51:25.56Z",
+              "name": "Entity 1",
+              "type": "TitleOnly",
+            },
+          },
+        },
+      },
+    ],
+    "pageInfo": Object {
+      "endCursor": "cursor-1",
+      "hasNextPage": true,
+      "hasPreviousPage": false,
+      "startCursor": "cursor-1",
+    },
+  },
+  "connectionError": undefined,
+  "entities": Array [
+    OkResult {
+      "value": Object {
+        "fields": Object {
+          "title": "Title 1",
+        },
+        "id": "1",
+        "info": Object {
+          "authKey": "none",
+          "createdAt": "2022-03-19T07:51:25.56Z",
+          "name": "Entity 1",
+          "type": "TitleOnly",
+        },
+      },
+    },
+  ],
+  "entitiesScrollToTopSignal": 0,
+  "entitySamples": undefined,
+  "entitySamplesError": undefined,
+  "loadingState": "",
+  "paging": Object {
+    "first": 1,
+  },
+  "query": Object {
+    "order": "name",
+  },
+  "requestedCount": 1,
+  "sampling": undefined,
+  "text": "",
+  "totalCount": 2,
+}
+`;
+
+exports[`SearchEntityState scenarios Refresh: 2 - loaded 1`] = `
+Object {
+  "connection": Object {
+    "edges": Array [
+      Object {
+        "cursor": "cursor-2",
+        "node": OkResult {
+          "value": Object {
+            "fields": Object {
+              "title": "Title 2",
+            },
+            "id": "2",
+            "info": Object {
+              "authKey": "none",
+              "createdAt": "2022-03-19T07:51:25.56Z",
+              "name": "Entity 2",
+              "type": "TitleOnly",
+            },
+          },
+        },
+      },
+    ],
+    "pageInfo": Object {
+      "endCursor": "cursor-2",
+      "hasNextPage": true,
+      "hasPreviousPage": false,
+      "startCursor": "cursor-2",
+    },
+  },
+  "connectionError": undefined,
+  "entities": Array [
+    OkResult {
+      "value": Object {
+        "fields": Object {
+          "title": "Title 2",
+        },
+        "id": "2",
+        "info": Object {
+          "authKey": "none",
+          "createdAt": "2022-03-19T07:51:25.56Z",
+          "name": "Entity 2",
+          "type": "TitleOnly",
+        },
+      },
+    },
+  ],
+  "entitiesScrollToTopSignal": 0,
+  "entitySamples": undefined,
+  "entitySamplesError": undefined,
+  "loadingState": "",
+  "paging": Object {
+    "first": 1,
   },
   "query": Object {
     "order": "name",
@@ -495,6 +630,7 @@ Object {
     "totalCount": 2,
   },
   "entitySamplesError": undefined,
+  "loadingState": "",
   "paging": undefined,
   "query": Object {},
   "requestedCount": 1,
@@ -530,6 +666,7 @@ Object {
   "entitiesScrollToTopSignal": 1,
   "entitySamples": undefined,
   "entitySamplesError": undefined,
+  "loadingState": "sample",
   "paging": undefined,
   "query": Object {},
   "requestedCount": 1,
@@ -582,6 +719,7 @@ Object {
     "totalCount": 2,
   },
   "entitySamplesError": undefined,
+  "loadingState": "",
   "paging": undefined,
   "query": Object {},
   "requestedCount": 1,

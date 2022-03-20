@@ -77,6 +77,7 @@ describe('initializeSearchEntityState', () => {
         "entitiesScrollToTopSignal": 0,
         "entitySamples": undefined,
         "entitySamplesError": undefined,
+        "loadingState": "",
         "paging": Object {},
         "query": Object {
           "order": "name",
@@ -107,7 +108,7 @@ describe('SearchEntityStateActions.SetQuery', () => {
   test('Resets paging (when configured)', () => {
     const state = reduceSearchEntityState(
       initializeSearchEntityState([
-        new SearchEntityStateActions.SetPaging({ after: 'cursor', first: 10 }),
+        new SearchEntityStateActions.SetPaging({ after: 'cursor', first: 10 }, 'next-page'),
       ]),
       new SearchEntityStateActions.SetQuery(
         { order: AdminQueryOrder.updatedAt },
@@ -197,7 +198,7 @@ describe('SearchEntityState scenarios', () => {
 
     const loadingState = reduceSearchEntityStateActions(
       initialState,
-      new SearchEntityStateActions.SetPaging({ after: 'cursor-1' }),
+      new SearchEntityStateActions.SetPaging({ after: 'cursor-1' }, 'next-page'),
       new SearchEntityStateActions.UpdateSearchResult(undefined, undefined)
     );
     expect(loadingState).toMatchSnapshot('2 - loading');
@@ -210,6 +211,10 @@ describe('SearchEntityState scenarios', () => {
       )
     );
     expect(loadedState).toMatchSnapshot('3 - loaded');
+
+    expect(initialState.entitiesScrollToTopSignal).toBeLessThan(
+      loadedState.entitiesScrollToTopSignal
+    );
   });
 
   test('Sampling -> change seed -> loading -> loaded', () => {
@@ -237,6 +242,10 @@ describe('SearchEntityState scenarios', () => {
       )
     );
     expect(loadedState).toMatchSnapshot('3 - loaded');
+
+    expect(initialState.entitiesScrollToTopSignal).toBeLessThan(
+      loadedState.entitiesScrollToTopSignal
+    );
   });
 
   test('From searching -> set sampling -> loading -> loaded', () => {
@@ -267,6 +276,10 @@ describe('SearchEntityState scenarios', () => {
       )
     );
     expect(loadedState).toMatchSnapshot('3 - loaded');
+
+    expect(initialState.entitiesScrollToTopSignal).toBeLessThan(
+      loadedState.entitiesScrollToTopSignal
+    );
   });
 
   test('From sampling -> set paging -> loading -> loaded', () => {
@@ -281,7 +294,7 @@ describe('SearchEntityState scenarios', () => {
 
     const loadingState = reduceSearchEntityStateActions(
       initialState,
-      new SearchEntityStateActions.SetPaging({ first: 1 }),
+      new SearchEntityStateActions.SetPaging({ first: 1 }, 'first-page'),
       new SearchEntityStateActions.UpdateSampleResult(undefined, undefined),
       new SearchEntityStateActions.UpdateSearchResult(undefined, undefined),
       new SearchEntityStateActions.UpdateTotalCount(null)
@@ -297,5 +310,32 @@ describe('SearchEntityState scenarios', () => {
       new SearchEntityStateActions.UpdateTotalCount(2)
     );
     expect(loadedState).toMatchSnapshot('3 - loaded');
+
+    expect(initialState.entitiesScrollToTopSignal).toBeLessThan(
+      loadedState.entitiesScrollToTopSignal
+    );
+  });
+
+  test('Refresh', () => {
+    const initialState = initializeSearchEntityState([
+      new SearchEntityStateActions.SetPaging({ first: 1 }),
+      new SearchEntityStateActions.UpdateSearchResult(
+        createPublishedEntityConnection(['1'], { hasPreviousPage: false, hasNextPage: true }),
+        undefined
+      ),
+      new SearchEntityStateActions.UpdateTotalCount(2),
+    ]);
+    expect(initialState).toMatchSnapshot('1 - initial');
+
+    const loadedState = reduceSearchEntityStateActions(
+      initialState,
+      new SearchEntityStateActions.UpdateSearchResult(
+        createPublishedEntityConnection(['2'], { hasPreviousPage: false, hasNextPage: true }),
+        undefined
+      )
+    );
+    expect(loadedState).toMatchSnapshot('2 - loaded');
+
+    expect(initialState.entitiesScrollToTopSignal).toEqual(loadedState.entitiesScrollToTopSignal);
   });
 });
