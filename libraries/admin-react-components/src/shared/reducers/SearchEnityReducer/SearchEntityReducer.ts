@@ -33,6 +33,7 @@ export interface SearchEntityState {
   totalCount: number | null;
 
   entities: Result<AdminEntity | PublishedEntity, ErrorType>[];
+  loadingState: '' | 'sample' | 'next-page' | 'prev-page' | 'first-page' | 'last-page';
   entitiesScrollToTopSignal: number;
 }
 
@@ -53,6 +54,7 @@ export function initializeSearchEntityState(actions: SearchEntityStateAction[]):
     entitySamplesError: undefined,
     totalCount: null,
     entities: [],
+    loadingState: '',
     entitiesScrollToTopSignal: 0,
   };
   // Normalize query state
@@ -92,23 +94,28 @@ class SetTextAction implements SearchEntityStateAction {
 }
 
 class SetPagingAction implements SearchEntityStateAction {
-  value: Paging;
+  paging: Paging;
+  pagingCause: 'first-page' | 'prev-page' | 'next-page' | 'last-page' | undefined;
 
-  constructor(value: Paging) {
-    this.value = value;
+  constructor(
+    paging: Paging,
+    pagingCause?: 'first-page' | 'prev-page' | 'next-page' | 'last-page'
+  ) {
+    this.paging = paging;
+    this.pagingCause = pagingCause;
   }
 
   reduce(state: SearchEntityState): SearchEntityState {
-    if (isEqual(this.value, state.paging)) {
+    if (isEqual(this.paging, state.paging)) {
       return state;
     }
-    const result = getPagingInfo(this.value);
-    if (result.isError()) throw result.toError();
+    const { count } = getPagingInfo(this.paging).valueOrThrow();
     return {
       ...state,
-      paging: this.value,
+      paging: this.paging,
       sampling: undefined,
-      requestedCount: result.value.count || state.requestedCount,
+      requestedCount: count || state.requestedCount,
+      loadingState: this.pagingCause ?? '',
     };
   }
 }
@@ -136,12 +143,18 @@ class SetSamplingAction implements SearchEntityStateAction {
       return state;
     }
 
+    let { loadingState } = state;
+    if (sampling) {
+      loadingState = 'sample';
+    }
+
     return {
       ...state,
       sampling,
       query,
       paging: undefined,
       requestedCount: sampling.count || state.requestedCount,
+      loadingState,
     };
   }
 }
@@ -228,10 +241,13 @@ class UpdateSearchResultAction implements SearchEntityStateAction {
     if (state.connection === this.connection && state.connectionError === this.connectionError) {
       return state;
     }
-    let { entities, entitiesScrollToTopSignal } = state;
+    let { entities, entitiesScrollToTopSignal, loadingState } = state;
     if (!state.sampling && this.connection !== undefined) {
       entities = this.connection === null ? [] : this.connection.edges.map((it) => it.node);
-      entitiesScrollToTopSignal += 1;
+      if (['first-page', 'prev-page', 'next-page', 'last-page'].includes(loadingState)) {
+        entitiesScrollToTopSignal += 1;
+        loadingState = '';
+      }
     }
     return {
       ...state,
@@ -239,6 +255,7 @@ class UpdateSearchResultAction implements SearchEntityStateAction {
       connectionError: this.connectionError,
       entities,
       entitiesScrollToTopSignal,
+      loadingState,
     };
   }
 }
@@ -262,10 +279,13 @@ class UpdateSampleResultAction implements SearchEntityStateAction {
     ) {
       return state;
     }
-    let { entities, entitiesScrollToTopSignal } = state;
+    let { entities, entitiesScrollToTopSignal, loadingState } = state;
     if (state.sampling && this.entitySamples) {
       entities = this.entitySamples.items.map((it) => ok(it));
-      entitiesScrollToTopSignal += 1;
+      if (loadingState === 'sample') {
+        entitiesScrollToTopSignal += 1;
+        loadingState = '';
+      }
     }
     return {
       ...state,
@@ -273,6 +293,7 @@ class UpdateSampleResultAction implements SearchEntityStateAction {
       entitySamplesError: this.entitySamplesError,
       entities,
       entitiesScrollToTopSignal,
+      loadingState,
     };
   }
 }

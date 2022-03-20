@@ -5,23 +5,29 @@ import React, { useMemo } from 'react';
 interface Props {
   connection: Connection<Edge<unknown, ErrorType>> | null | undefined;
   pagingCount: number;
-  onPagingChange: (paging: Paging) => void;
+  onPagingChange: (
+    paging: Paging,
+    pagingAction: 'first-page' | 'prev-page' | 'next-page' | 'last-page'
+  ) => void;
 }
 
 export function ConnectionPagingButtons({ connection, pagingCount, onPagingChange }: Props) {
   const handleStart = useMemo(() => {
     return connection?.pageInfo.hasPreviousPage
-      ? () => onPagingChange({ first: pagingCount })
+      ? () => onPagingChange({ first: pagingCount }, 'first-page')
       : undefined;
   }, [connection?.pageInfo.hasPreviousPage, onPagingChange, pagingCount]);
 
   const handlePrevious = useMemo(() => {
     return connection?.pageInfo.hasPreviousPage
       ? () =>
-          onPagingChange({
-            last: pagingCount,
-            before: connection.pageInfo.startCursor,
-          })
+          onPagingChange(
+            {
+              last: pagingCount,
+              before: connection.pageInfo.startCursor,
+            },
+            'prev-page'
+          )
       : undefined;
   }, [
     connection?.pageInfo.hasPreviousPage,
@@ -33,10 +39,13 @@ export function ConnectionPagingButtons({ connection, pagingCount, onPagingChang
   const handleNext = useMemo(() => {
     return connection?.pageInfo.hasNextPage
       ? () =>
-          onPagingChange({
-            first: pagingCount,
-            after: connection.pageInfo.endCursor,
-          })
+          onPagingChange(
+            {
+              first: pagingCount,
+              after: connection.pageInfo.endCursor,
+            },
+            'next-page'
+          )
       : undefined;
   }, [
     connection?.pageInfo.endCursor,
@@ -47,7 +56,7 @@ export function ConnectionPagingButtons({ connection, pagingCount, onPagingChang
 
   const handleEnd = useMemo(() => {
     return connection?.pageInfo.hasNextPage
-      ? () => onPagingChange({ last: pagingCount })
+      ? () => onPagingChange({ last: pagingCount }, 'last-page')
       : undefined;
   }, [connection?.pageInfo.hasNextPage, onPagingChange, pagingCount]);
 

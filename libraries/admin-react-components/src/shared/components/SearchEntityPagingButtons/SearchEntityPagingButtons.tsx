@@ -11,8 +11,8 @@ interface Props {
 
 export function SearchEntityPagingButtons({ searchEntityState, dispatchSearchEntityState }: Props) {
   const handlePagingChange = useCallback(
-    (paging: Paging) => {
-      dispatchSearchEntityState(new SearchEntityStateActions.SetPaging(paging));
+    (paging: Paging, pagingAction: 'first-page' | 'prev-page' | 'next-page' | 'last-page') => {
+      dispatchSearchEntityState(new SearchEntityStateActions.SetPaging(paging, pagingAction));
     },
     [dispatchSearchEntityState]
   );
