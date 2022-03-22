@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-server",
+      "comment": "Support accurate hasPreviousPage info.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-server"
+}
