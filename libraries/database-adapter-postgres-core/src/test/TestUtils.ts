@@ -1,5 +1,5 @@
-import type { ErrorType, Logger, Paging, Result } from '@jonasb/datadata-core';
-import { AdminSchema, getPagingInfo, NoOpLogger, ok } from '@jonasb/datadata-core';
+import type { Logger, Paging } from '@jonasb/datadata-core';
+import { AdminSchema, getPagingInfo, NoOpLogger } from '@jonasb/datadata-core';
 import type {
   DatabaseAdapter,
   DatabasePagingInfo,
@@ -85,14 +85,16 @@ export function createTestAdminSchema(): AdminSchema {
 }
 
 export function resolvePaging(
-  paging: Paging | undefined
-): Result<DatabasePagingInfo, ErrorType.BadRequest> {
-  const result = getPagingInfo(paging);
-  if (result.isError()) return result;
-  return ok({
-    ...result.value,
-    count: result.value.count ?? 25,
+  paging: Paging | undefined,
+  inclusive?: { afterInclusive?: boolean; beforeInclusive?: boolean }
+): DatabasePagingInfo {
+  const pagingInfo = getPagingInfo(paging).valueOrThrow();
+  return {
+    ...pagingInfo,
+    count: pagingInfo.count ?? 25,
     after: paging?.after ?? null,
+    afterInclusive: inclusive?.afterInclusive ?? false,
     before: paging?.before ?? null,
-  });
+    beforeInclusive: inclusive?.beforeInclusive ?? false,
+  };
 }

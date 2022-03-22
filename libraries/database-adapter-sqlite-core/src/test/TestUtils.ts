@@ -75,12 +75,17 @@ export function createTestAdminSchema(): AdminSchema {
   return new AdminSchema({ entityTypes: [], valueTypes: [] });
 }
 
-export function resolvePaging(paging: Paging | undefined): DatabasePagingInfo {
+export function resolvePaging(
+  paging: Paging | undefined,
+  inclusive?: { afterInclusive?: boolean; beforeInclusive?: boolean }
+): DatabasePagingInfo {
   const pagingInfo = getPagingInfo(paging).valueOrThrow();
   return {
     ...pagingInfo,
     count: pagingInfo.count ?? 25,
     after: paging?.after ?? null,
+    afterInclusive: inclusive?.afterInclusive ?? false,
     before: paging?.before ?? null,
+    beforeInclusive: inclusive?.beforeInclusive ?? false,
   };
 }

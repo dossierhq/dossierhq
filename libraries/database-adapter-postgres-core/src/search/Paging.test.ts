@@ -1,18 +1,12 @@
-import { createMockAdapter } from '../test/TestUtils';
+import { createMockAdapter, resolvePaging } from '../test/TestUtils';
 import { toOpaqueCursor } from './OpaqueCursor';
 import { resolvePagingCursors } from './Paging';
 
 describe('resolvePagingCursors()', () => {
-  test('undefined/undefined', () => {
+  test('undefined', () => {
     const databaseAdapter = createMockAdapter();
-    expect(
-      resolvePagingCursors(databaseAdapter, 'int', {
-        forwards: true,
-        count: 25,
-        after: null,
-        before: null,
-      })
-    ).toMatchInlineSnapshot(`
+    expect(resolvePagingCursors(databaseAdapter, 'int', resolvePaging(undefined)))
+      .toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
           "after": null,
@@ -25,12 +19,13 @@ describe('resolvePagingCursors()', () => {
   test('after', () => {
     const databaseAdapter = createMockAdapter();
     expect(
-      resolvePagingCursors(databaseAdapter, 'int', {
-        forwards: true,
-        count: 25,
-        after: toOpaqueCursor(databaseAdapter, 'int', 999),
-        before: null,
-      })
+      resolvePagingCursors(
+        databaseAdapter,
+        'int',
+        resolvePaging({
+          after: toOpaqueCursor(databaseAdapter, 'int', 999),
+        })
+      )
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
@@ -44,12 +39,13 @@ describe('resolvePagingCursors()', () => {
   test('before', () => {
     const databaseAdapter = createMockAdapter();
     expect(
-      resolvePagingCursors(databaseAdapter, 'int', {
-        forwards: true,
-        count: 25,
-        after: null,
-        before: toOpaqueCursor(databaseAdapter, 'int', 999),
-      })
+      resolvePagingCursors(
+        databaseAdapter,
+        'int',
+        resolvePaging({
+          before: toOpaqueCursor(databaseAdapter, 'int', 999),
+        })
+      )
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {
@@ -63,12 +59,14 @@ describe('resolvePagingCursors()', () => {
   test('after,before', () => {
     const databaseAdapter = createMockAdapter();
     expect(
-      resolvePagingCursors(databaseAdapter, 'int', {
-        forwards: true,
-        count: 25,
-        after: toOpaqueCursor(databaseAdapter, 'int', 111),
-        before: toOpaqueCursor(databaseAdapter, 'int', 222),
-      })
+      resolvePagingCursors(
+        databaseAdapter,
+        'int',
+        resolvePaging({
+          after: toOpaqueCursor(databaseAdapter, 'int', 111),
+          before: toOpaqueCursor(databaseAdapter, 'int', 222),
+        })
+      )
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": Object {

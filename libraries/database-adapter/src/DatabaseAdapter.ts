@@ -20,7 +20,9 @@ import type { ResolvedAuthKey, Session, Transaction, TransactionContext } from '
 
 export interface DatabasePagingInfo extends PagingInfo {
   after: string | null;
+  afterInclusive: boolean;
   before: string | null;
+  beforeInclusive: boolean;
   count: number;
 }
 
