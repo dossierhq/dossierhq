@@ -32,7 +32,7 @@ describe('publishedEntitySearchEntities', () => {
       createTestAdminSchema(),
       context,
       undefined,
-      resolvePaging(undefined).valueOrThrow(),
+      resolvePaging(undefined),
       [{ authKey: 'none', resolvedAuthKey: 'none' }]
     );
     expectResultValue(result, { entities: [], hasMore: false });
@@ -58,7 +58,7 @@ describe('publishedEntitySearchEntities', () => {
       createTestAdminSchema(),
       context,
       undefined,
-      resolvePaging(undefined).valueOrThrow(),
+      resolvePaging(undefined),
       [{ authKey: 'none', resolvedAuthKey: 'none' }]
     );
     expect(result).toMatchInlineSnapshot(`
@@ -103,7 +103,7 @@ describe('publishedEntitySearchEntities', () => {
       createTestAdminSchema(),
       context,
       undefined,
-      resolvePaging({ after: 'MQ==', first: 10 }).valueOrThrow(),
+      resolvePaging({ after: 'MQ==', first: 10 }),
       [{ authKey: 'none', resolvedAuthKey: 'none' }]
     );
     expect(result).toMatchInlineSnapshot(`
@@ -149,7 +149,7 @@ describe('publishedEntitySearchEntities', () => {
       createTestAdminSchema(),
       context,
       undefined,
-      resolvePaging({ before: 'MQ==', first: 10 }).valueOrThrow(),
+      resolvePaging({ before: 'MQ==', first: 10 }),
       [{ authKey: 'none', resolvedAuthKey: 'none' }]
     );
     expect(result).toMatchInlineSnapshot(`

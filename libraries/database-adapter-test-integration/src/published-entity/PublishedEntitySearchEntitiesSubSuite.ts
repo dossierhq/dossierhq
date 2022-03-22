@@ -24,6 +24,7 @@ export const SearchEntitiesSubSuite: UnboundTestFunction<PublishedEntityTestCont
   searchEntities_pagingLast,
   searchEntities_pagingLast0,
   searchEntities_pagingFirstAfter,
+  searchEntities_pagingFirstAfterFirstEntity,
   searchEntities_pagingFirstAfterNameWithUnicode,
   searchEntities_pagingLastBefore,
   searchEntities_pagingFirstBetween,
@@ -121,6 +122,25 @@ async function searchEntities_pagingFirstAfter({
   });
 }
 
+async function searchEntities_pagingFirstAfterFirstEntity({
+  server,
+  readOnlyEntityRepository,
+}: PublishedEntityTestContext) {
+  const client = publishedClientForMainPrincipal(server);
+  const expectedEntities = readOnlyEntityRepository.getMainPrincipalPublishedEntities();
+  const firstResult = await client.searchEntities({ entityTypes: ['ReadOnly'] }, { first: 10 });
+  assertOkResult(firstResult);
+  const secondResult = await client.searchEntities(
+    { entityTypes: ['ReadOnly'] },
+    { first: 10, after: firstResult.value?.edges[0].cursor }
+  );
+  assertPublishedEntityConnectionToMatchSlice(expectedEntities, secondResult, 1, 1 + 10);
+  assertPageInfoEquals(secondResult, {
+    hasPreviousPage: true,
+    hasNextPage: expectedEntities.length > 1 + 10,
+  });
+}
+
 async function searchEntities_pagingFirstAfterNameWithUnicode({
   server,
 }: PublishedEntityTestContext) {
@@ -172,7 +192,7 @@ async function searchEntities_pagingFirstAfterNameWithUnicode({
     { first: 10, after: startCursor }
   );
   assertSearchResultEntities(secondSearchResult, [secondEntity]);
-  assertPageInfoEquals(secondSearchResult, { hasPreviousPage: false, hasNextPage: false });
+  assertPageInfoEquals(secondSearchResult, { hasPreviousPage: true, hasNextPage: false });
 }
 
 async function searchEntities_pagingLastBefore({

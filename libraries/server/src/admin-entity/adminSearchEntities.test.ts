@@ -58,7 +58,9 @@ describe('Admin adminSearchEntities', () => {
           undefined,
           Object {
             "after": null,
+            "afterInclusive": false,
             "before": null,
+            "beforeInclusive": false,
             "count": 25,
             "forwards": true,
           },
@@ -156,7 +158,9 @@ describe('Admin adminSearchEntities', () => {
           undefined,
           Object {
             "after": null,
+            "afterInclusive": false,
             "before": null,
+            "beforeInclusive": false,
             "count": 25,
             "forwards": true,
           },
@@ -253,7 +257,9 @@ describe('Admin adminSearchEntities', () => {
           undefined,
           Object {
             "after": "cursor-1",
+            "afterInclusive": false,
             "before": null,
+            "beforeInclusive": false,
             "count": 25,
             "forwards": true,
           },
@@ -285,7 +291,9 @@ describe('Admin adminSearchEntities', () => {
           undefined,
           Object {
             "after": null,
+            "afterInclusive": false,
             "before": "cursor-1",
+            "beforeInclusive": true,
             "count": 0,
             "forwards": false,
           },

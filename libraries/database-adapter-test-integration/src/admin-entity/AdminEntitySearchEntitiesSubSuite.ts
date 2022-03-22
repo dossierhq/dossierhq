@@ -181,7 +181,7 @@ async function searchEntities_pagingFirstAfterNameWithUnicode({ server }: AdminE
     { first: 10, after: startCursor }
   );
   assertSearchResultEntities(secondSearchResult, [secondEntity]);
-  assertPageInfoEquals(secondSearchResult, { hasPreviousPage: false, hasNextPage: false });
+  assertPageInfoEquals(secondSearchResult, { hasPreviousPage: true, hasNextPage: false });
 }
 
 async function searchEntities_pagingLastBefore({

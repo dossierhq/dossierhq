@@ -110,6 +110,38 @@ describe('searchAdminEntitiesQuery()', () => {
     `);
   });
 
+  test('first 10 after (inclusive)', () => {
+    const databaseAdapter = createMockAdapter();
+    expect(
+      searchAdminEntitiesQuery(
+        databaseAdapter,
+        schema,
+        undefined,
+        resolvePaging(
+          { first: 10, after: toOpaqueCursor(databaseAdapter, 'int', 999) },
+          { afterInclusive: true }
+        ),
+
+        authKeysNone
+      )
+    ).toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "cursorExtractor": [Function],
+          "sqlQuery": Object {
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated_seq, e.status, ev.version, ev.fields
+        FROM entities e, entity_versions ev WHERE e.latest_entity_versions_id = ev.id AND e.resolved_auth_key = ?1 AND e.id >= ?2 ORDER BY e.id LIMIT ?3",
+            "values": Array [
+              "none",
+              999,
+              11,
+            ],
+          },
+        },
+      }
+    `);
+  });
+
   test('last 10', () => {
     const databaseAdapter = createMockAdapter();
     expect(
@@ -154,6 +186,38 @@ describe('searchAdminEntitiesQuery()', () => {
           "sqlQuery": Object {
             "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated_seq, e.status, ev.version, ev.fields
         FROM entities e, entity_versions ev WHERE e.latest_entity_versions_id = ev.id AND e.resolved_auth_key = ?1 AND e.id < ?2 ORDER BY e.id DESC LIMIT ?3",
+            "values": Array [
+              "none",
+              456,
+              11,
+            ],
+          },
+        },
+      }
+    `);
+  });
+
+  test('last 10 before (inclusive)', () => {
+    const databaseAdapter = createMockAdapter();
+    expect(
+      searchAdminEntitiesQuery(
+        databaseAdapter,
+        schema,
+        undefined,
+        resolvePaging(
+          { last: 10, before: toOpaqueCursor(databaseAdapter, 'int', 456) },
+          { beforeInclusive: true }
+        ),
+
+        authKeysNone
+      )
+    ).toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "cursorExtractor": [Function],
+          "sqlQuery": Object {
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated_seq, e.status, ev.version, ev.fields
+        FROM entities e, entity_versions ev WHERE e.latest_entity_versions_id = ev.id AND e.resolved_auth_key = ?1 AND e.id <= ?2 ORDER BY e.id DESC LIMIT ?3",
             "values": Array [
               "none",
               456,

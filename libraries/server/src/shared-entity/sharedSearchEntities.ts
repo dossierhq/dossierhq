@@ -26,7 +26,9 @@ export function resolvePagingInfo(
   return ok({
     ...pagingResult.value,
     after: paging?.after ?? null,
+    afterInclusive: false,
     before: paging?.before ?? null,
+    beforeInclusive: false,
     count: pagingResult.value.count ?? defaultPagingCount,
   });
 }
@@ -44,7 +46,9 @@ export function getOppositeDirectionPaging<
       count: 0,
       forwards: false,
       before: pagingInfo.after,
+      beforeInclusive: true,
       after: null,
+      afterInclusive: false,
     };
   }
   if (!pagingInfo.forwards && pagingInfo.before) {
@@ -52,7 +56,9 @@ export function getOppositeDirectionPaging<
       count: 0,
       forwards: true,
       after: null,
+      afterInclusive: false,
       before: pagingInfo.after,
+      beforeInclusive: true,
     };
   }
   return null;

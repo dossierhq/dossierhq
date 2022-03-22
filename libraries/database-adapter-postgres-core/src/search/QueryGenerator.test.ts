@@ -35,7 +35,7 @@ describe('searchAdminEntitiesQuery()', () => {
         databaseAdapter,
         schema,
         undefined,
-        resolvePaging(undefined).valueOrThrow(),
+        resolvePaging(undefined),
         authKeysNone
       )
     ).toMatchInlineSnapshot(`
@@ -62,7 +62,7 @@ describe('searchAdminEntitiesQuery()', () => {
         databaseAdapter,
         schema,
         undefined,
-        resolvePaging({ first: 10 }).valueOrThrow(),
+        resolvePaging({ first: 10 }),
         authKeysNone
       )
     ).toMatchInlineSnapshot(`
@@ -92,7 +92,7 @@ describe('searchAdminEntitiesQuery()', () => {
         resolvePaging({
           first: 10,
           after: toOpaqueCursor(databaseAdapter, 'int', 999),
-        }).valueOrThrow(),
+        }),
         authKeysNone
       )
     ).toMatchInlineSnapshot(`
@@ -113,6 +113,41 @@ describe('searchAdminEntitiesQuery()', () => {
     `);
   });
 
+  test('first 10 after (inclusive)', () => {
+    const databaseAdapter = createMockAdapter();
+    expect(
+      searchAdminEntitiesQuery(
+        databaseAdapter,
+        schema,
+        undefined,
+        resolvePaging(
+          {
+            first: 10,
+            after: toOpaqueCursor(databaseAdapter, 'int', 999),
+          },
+
+          { afterInclusive: true }
+        ),
+        authKeysNone
+      )
+    ).toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "cursorExtractor": [Function],
+          "sqlQuery": Object {
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, ev.version, ev.data
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.id >= $2 ORDER BY e.id LIMIT $3",
+            "values": Array [
+              "none",
+              999,
+              11,
+            ],
+          },
+        },
+      }
+    `);
+  });
+
   test('last 10', () => {
     const databaseAdapter = createMockAdapter();
     expect(
@@ -120,7 +155,7 @@ describe('searchAdminEntitiesQuery()', () => {
         databaseAdapter,
         schema,
         undefined,
-        resolvePaging({ last: 10 }).valueOrThrow(),
+        resolvePaging({ last: 10 }),
         authKeysNone
       )
     ).toMatchInlineSnapshot(`
@@ -150,7 +185,7 @@ describe('searchAdminEntitiesQuery()', () => {
         resolvePaging({
           last: 10,
           before: toOpaqueCursor(databaseAdapter, 'int', 456),
-        }).valueOrThrow(),
+        }),
         authKeysNone
       )
     ).toMatchInlineSnapshot(`
@@ -160,6 +195,40 @@ describe('searchAdminEntitiesQuery()', () => {
           "sqlQuery": Object {
             "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, ev.version, ev.data
         FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.id < $2 ORDER BY e.id DESC LIMIT $3",
+            "values": Array [
+              "none",
+              456,
+              11,
+            ],
+          },
+        },
+      }
+    `);
+  });
+
+  test('last 10 before (inclusive)', () => {
+    const databaseAdapter = createMockAdapter();
+    expect(
+      searchAdminEntitiesQuery(
+        databaseAdapter,
+        schema,
+        undefined,
+        resolvePaging(
+          {
+            last: 10,
+            before: toOpaqueCursor(databaseAdapter, 'int', 456),
+          },
+          { beforeInclusive: true }
+        ),
+        authKeysNone
+      )
+    ).toMatchInlineSnapshot(`
+      OkResult {
+        "value": Object {
+          "cursorExtractor": [Function],
+          "sqlQuery": Object {
+            "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, ev.version, ev.data
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.id <= $2 ORDER BY e.id DESC LIMIT $3",
             "values": Array [
               "none",
               456,
@@ -182,7 +251,7 @@ describe('searchAdminEntitiesQuery()', () => {
           first: 10,
           after: toOpaqueCursor(databaseAdapter, 'int', 123),
           before: toOpaqueCursor(databaseAdapter, 'int', 456),
-        }).valueOrThrow(),
+        }),
         authKeysNone
       )
     ).toMatchInlineSnapshot(`
@@ -215,7 +284,7 @@ describe('searchAdminEntitiesQuery()', () => {
           last: 10,
           after: toOpaqueCursor(databaseAdapter, 'int', 123),
           before: toOpaqueCursor(databaseAdapter, 'int', 456),
-        }).valueOrThrow(),
+        }),
         authKeysNone
       )
     ).toMatchInlineSnapshot(`
@@ -244,7 +313,7 @@ describe('searchAdminEntitiesQuery()', () => {
         databaseAdapter,
         schema,
         { order: AdminQueryOrder.createdAt, reverse: true },
-        resolvePaging(undefined).valueOrThrow(),
+        resolvePaging(undefined),
         authKeysNone
       )
     ).toMatchInlineSnapshot(`
@@ -271,7 +340,7 @@ describe('searchAdminEntitiesQuery()', () => {
         databaseAdapter,
         schema,
         { entityTypes: [] },
-        resolvePaging(undefined).valueOrThrow(),
+        resolvePaging(undefined),
         authKeysNone
       )
     ).toMatchInlineSnapshot(`
@@ -298,7 +367,7 @@ describe('searchAdminEntitiesQuery()', () => {
         databaseAdapter,
         schema,
         { entityTypes: ['QueryGeneratorFoo'] },
-        resolvePaging(undefined).valueOrThrow(),
+        resolvePaging(undefined),
         authKeysNone
       )
     ).toMatchInlineSnapshot(`
@@ -328,7 +397,7 @@ describe('searchAdminEntitiesQuery()', () => {
         databaseAdapter,
         schema,
         { entityTypes: ['QueryGeneratorFoo', 'QueryGeneratorBar'] },
-        resolvePaging(undefined).valueOrThrow(),
+        resolvePaging(undefined),
         authKeysNone
       )
     ).toMatchInlineSnapshot(`
@@ -362,7 +431,7 @@ describe('searchAdminEntitiesQuery()', () => {
         resolvePaging({
           first: 10,
           after: toOpaqueCursor(databaseAdapter, 'int', 543),
-        }).valueOrThrow(),
+        }),
         authKeysNone
       )
     ).toMatchInlineSnapshot(`
@@ -394,7 +463,7 @@ describe('searchAdminEntitiesQuery()', () => {
         databaseAdapter,
         schema,
         { status: [] },
-        resolvePaging(undefined).valueOrThrow(),
+        resolvePaging(undefined),
         authKeysNone
       )
     ).toMatchInlineSnapshot(`
@@ -421,7 +490,7 @@ describe('searchAdminEntitiesQuery()', () => {
         databaseAdapter,
         schema,
         { status: [AdminEntityStatus.draft] },
-        resolvePaging(undefined).valueOrThrow(),
+        resolvePaging(undefined),
         authKeysNone
       )
     ).toMatchInlineSnapshot(`
@@ -449,7 +518,7 @@ describe('searchAdminEntitiesQuery()', () => {
         databaseAdapter,
         schema,
         { status: [AdminEntityStatus.published] },
-        resolvePaging(undefined).valueOrThrow(),
+        resolvePaging(undefined),
         authKeysNone
       )
     ).toMatchInlineSnapshot(`
@@ -477,7 +546,7 @@ describe('searchAdminEntitiesQuery()', () => {
         databaseAdapter,
         schema,
         { status: [AdminEntityStatus.modified] },
-        resolvePaging(undefined).valueOrThrow(),
+        resolvePaging(undefined),
         authKeysNone
       )
     ).toMatchInlineSnapshot(`
@@ -505,7 +574,7 @@ describe('searchAdminEntitiesQuery()', () => {
         databaseAdapter,
         schema,
         { status: [AdminEntityStatus.withdrawn] },
-        resolvePaging(undefined).valueOrThrow(),
+        resolvePaging(undefined),
         authKeysNone
       )
     ).toMatchInlineSnapshot(`
@@ -533,7 +602,7 @@ describe('searchAdminEntitiesQuery()', () => {
         databaseAdapter,
         schema,
         { status: [AdminEntityStatus.archived] },
-        resolvePaging(undefined).valueOrThrow(),
+        resolvePaging(undefined),
         authKeysNone
       )
     ).toMatchInlineSnapshot(`
@@ -561,7 +630,7 @@ describe('searchAdminEntitiesQuery()', () => {
         databaseAdapter,
         schema,
         { status: [AdminEntityStatus.draft, AdminEntityStatus.published] },
-        resolvePaging(undefined).valueOrThrow(),
+        resolvePaging(undefined),
         authKeysNone
       )
     ).toMatchInlineSnapshot(`
@@ -592,7 +661,7 @@ describe('searchAdminEntitiesQuery()', () => {
         databaseAdapter,
         schema,
         { status: [AdminEntityStatus.draft, AdminEntityStatus.archived] },
-        resolvePaging(undefined).valueOrThrow(),
+        resolvePaging(undefined),
         authKeysNone
       )
     ).toMatchInlineSnapshot(`
@@ -632,7 +701,7 @@ describe('searchAdminEntitiesQuery()', () => {
           ],
         },
 
-        resolvePaging(undefined).valueOrThrow(),
+        resolvePaging(undefined),
         authKeysNone
       )
     ).toMatchInlineSnapshot(`
@@ -666,7 +735,7 @@ describe('searchAdminEntitiesQuery()', () => {
         databaseAdapter,
         schema,
         { linksFrom: { id: '37b48706-803e-4227-a51e-8208db12d949' } },
-        resolvePaging(undefined).valueOrThrow(),
+        resolvePaging(undefined),
         authKeysNone
       )
     ).toMatchInlineSnapshot(`
@@ -694,7 +763,7 @@ describe('searchAdminEntitiesQuery()', () => {
         databaseAdapter,
         schema,
         { linksTo: { id: '37b48706-803e-4227-a51e-8208db12d949' } },
-        resolvePaging(undefined).valueOrThrow(),
+        resolvePaging(undefined),
         authKeysNone
       )
     ).toMatchInlineSnapshot(`
@@ -730,7 +799,7 @@ describe('searchAdminEntitiesQuery()', () => {
           },
         },
 
-        resolvePaging(undefined).valueOrThrow(),
+        resolvePaging(undefined),
         authKeysNone
       )
     ).toMatchInlineSnapshot(`
@@ -764,7 +833,7 @@ describe('searchAdminEntitiesQuery()', () => {
           text: 'foo bar',
         },
 
-        resolvePaging({}).valueOrThrow(),
+        resolvePaging({}),
         authKeysNone
       )
     ).toMatchInlineSnapshot(`
@@ -799,7 +868,7 @@ describe('searchAdminEntitiesQuery()', () => {
         resolvePaging({
           first: 10,
           after: toOpaqueCursor(databaseAdapter, 'int', 123),
-        }).valueOrThrow(),
+        }),
         authKeysNone
       )
     ).toMatchInlineSnapshot(`
@@ -832,7 +901,7 @@ describe('searchAdminEntitiesQuery()', () => {
         databaseAdapter,
         schema,
         { order: AdminQueryOrder.createdAt },
-        resolvePaging(undefined).valueOrThrow(),
+        resolvePaging(undefined),
         authKeysNone
       )
     ).toMatchInlineSnapshot(`
@@ -859,7 +928,7 @@ describe('searchAdminEntitiesQuery()', () => {
         databaseAdapter,
         schema,
         { order: AdminQueryOrder.updatedAt },
-        resolvePaging(undefined).valueOrThrow(),
+        resolvePaging(undefined),
         authKeysNone
       )
     ).toMatchInlineSnapshot(`
@@ -886,7 +955,7 @@ describe('searchAdminEntitiesQuery()', () => {
         databaseAdapter,
         schema,
         { order: AdminQueryOrder.name },
-        resolvePaging(undefined).valueOrThrow(),
+        resolvePaging(undefined),
         authKeysNone
       )
     ).toMatchInlineSnapshot(`
@@ -912,7 +981,7 @@ describe('searchAdminEntitiesQuery()', () => {
       databaseAdapter,
       schema,
       { entityTypes: ['Invalid'] },
-      resolvePaging(undefined).valueOrThrow(),
+      resolvePaging(undefined),
       authKeysNone
     );
     expectErrorResult(result, ErrorType.BadRequest, 'Can’t find entity type in query: Invalid');
@@ -927,7 +996,7 @@ describe('searchPublishedEntitiesQuery()', () => {
         databaseAdapter,
         schema,
         undefined,
-        resolvePaging(undefined).valueOrThrow(),
+        resolvePaging(undefined),
         authKeysNone
       )
     ).toMatchInlineSnapshot(`
@@ -953,7 +1022,7 @@ describe('searchPublishedEntitiesQuery()', () => {
         databaseAdapter,
         schema,
         undefined,
-        resolvePaging({ first: 10 }).valueOrThrow(),
+        resolvePaging({ first: 10 }),
         authKeysNone
       )
     ).toMatchInlineSnapshot(`
@@ -982,7 +1051,7 @@ describe('searchPublishedEntitiesQuery()', () => {
         resolvePaging({
           first: 10,
           after: toOpaqueCursor(databaseAdapter, 'int', 999),
-        }).valueOrThrow(),
+        }),
         authKeysNone
       )
     ).toMatchInlineSnapshot(`
@@ -1012,7 +1081,7 @@ describe('searchPublishedEntitiesQuery()', () => {
         resolvePaging({
           first: 10,
           after: toOpaqueCursor(databaseAdapter, 'int', 999),
-        }).valueOrThrow(),
+        }),
         authKeysNone
       )
     ).toMatchInlineSnapshot(`
@@ -1039,7 +1108,7 @@ describe('searchPublishedEntitiesQuery()', () => {
         databaseAdapter,
         schema,
         undefined,
-        resolvePaging({ last: 10 }).valueOrThrow(),
+        resolvePaging({ last: 10 }),
         authKeysNone
       )
     ).toMatchInlineSnapshot(`
@@ -1068,7 +1137,7 @@ describe('searchPublishedEntitiesQuery()', () => {
         resolvePaging({
           last: 10,
           before: toOpaqueCursor(databaseAdapter, 'int', 456),
-        }).valueOrThrow(),
+        }),
         authKeysNone
       )
     ).toMatchInlineSnapshot(`
@@ -1099,7 +1168,7 @@ describe('searchPublishedEntitiesQuery()', () => {
           first: 10,
           after: toOpaqueCursor(databaseAdapter, 'int', 123),
           before: toOpaqueCursor(databaseAdapter, 'int', 456),
-        }).valueOrThrow(),
+        }),
         authKeysNone
       )
     ).toMatchInlineSnapshot(`
@@ -1131,7 +1200,7 @@ describe('searchPublishedEntitiesQuery()', () => {
           first: 10,
           after: toOpaqueCursor(databaseAdapter, 'int', 123),
           before: toOpaqueCursor(databaseAdapter, 'int', 456),
-        }).valueOrThrow(),
+        }),
         authKeysNone
       )
     ).toMatchInlineSnapshot(`
@@ -1163,7 +1232,7 @@ describe('searchPublishedEntitiesQuery()', () => {
           last: 10,
           after: toOpaqueCursor(databaseAdapter, 'int', 123),
           before: toOpaqueCursor(databaseAdapter, 'int', 456),
-        }).valueOrThrow(),
+        }),
         authKeysNone
       )
     ).toMatchInlineSnapshot(`
@@ -1191,7 +1260,7 @@ describe('searchPublishedEntitiesQuery()', () => {
         databaseAdapter,
         schema,
         { order: PublishedQueryOrder.createdAt, reverse: true },
-        resolvePaging(undefined).valueOrThrow(),
+        resolvePaging(undefined),
         authKeysNone
       )
     ).toMatchInlineSnapshot(`
@@ -1217,7 +1286,7 @@ describe('searchPublishedEntitiesQuery()', () => {
         databaseAdapter,
         schema,
         { entityTypes: [] },
-        resolvePaging(undefined).valueOrThrow(),
+        resolvePaging(undefined),
         authKeysNone
       )
     ).toMatchInlineSnapshot(`
@@ -1243,7 +1312,7 @@ describe('searchPublishedEntitiesQuery()', () => {
         databaseAdapter,
         schema,
         { entityTypes: ['QueryGeneratorFoo'] },
-        resolvePaging(undefined).valueOrThrow(),
+        resolvePaging(undefined),
         authKeysNone
       )
     ).toMatchInlineSnapshot(`
@@ -1272,7 +1341,7 @@ describe('searchPublishedEntitiesQuery()', () => {
         databaseAdapter,
         schema,
         { entityTypes: ['QueryGeneratorFoo', 'QueryGeneratorBar'] },
-        resolvePaging(undefined).valueOrThrow(),
+        resolvePaging(undefined),
         authKeysNone
       )
     ).toMatchInlineSnapshot(`
@@ -1305,7 +1374,7 @@ describe('searchPublishedEntitiesQuery()', () => {
         resolvePaging({
           first: 10,
           after: toOpaqueCursor(databaseAdapter, 'int', 543),
-        }).valueOrThrow(),
+        }),
         authKeysNone
       )
     ).toMatchInlineSnapshot(`
@@ -1336,7 +1405,7 @@ describe('searchPublishedEntitiesQuery()', () => {
         databaseAdapter,
         schema,
         { linksFrom: { id: '37b48706-803e-4227-a51e-8208db12d949' } },
-        resolvePaging(undefined).valueOrThrow(),
+        resolvePaging(undefined),
         authKeysNone
       )
     ).toMatchInlineSnapshot(`
@@ -1363,7 +1432,7 @@ describe('searchPublishedEntitiesQuery()', () => {
         databaseAdapter,
         schema,
         { linksTo: { id: '37b48706-803e-4227-a51e-8208db12d949' } },
-        resolvePaging(undefined).valueOrThrow(),
+        resolvePaging(undefined),
         authKeysNone
       )
     ).toMatchInlineSnapshot(`
@@ -1398,7 +1467,7 @@ describe('searchPublishedEntitiesQuery()', () => {
           },
         },
 
-        resolvePaging(undefined).valueOrThrow(),
+        resolvePaging(undefined),
         authKeysNone
       )
     ).toMatchInlineSnapshot(`
@@ -1431,7 +1500,7 @@ describe('searchPublishedEntitiesQuery()', () => {
           text: 'foo bar',
         },
 
-        resolvePaging({}).valueOrThrow(),
+        resolvePaging({}),
         authKeysNone
       )
     ).toMatchInlineSnapshot(`
@@ -1465,7 +1534,7 @@ describe('searchPublishedEntitiesQuery()', () => {
         resolvePaging({
           first: 10,
           after: toOpaqueCursor(databaseAdapter, 'int', 123),
-        }).valueOrThrow(),
+        }),
         authKeysNone
       )
     ).toMatchInlineSnapshot(`
@@ -1497,7 +1566,7 @@ describe('searchPublishedEntitiesQuery()', () => {
         databaseAdapter,
         schema,
         { order: PublishedQueryOrder.createdAt },
-        resolvePaging(undefined).valueOrThrow(),
+        resolvePaging(undefined),
         authKeysNone
       )
     ).toMatchInlineSnapshot(`
@@ -1523,7 +1592,7 @@ describe('searchPublishedEntitiesQuery()', () => {
         databaseAdapter,
         schema,
         { order: PublishedQueryOrder.name },
-        resolvePaging(undefined).valueOrThrow(),
+        resolvePaging(undefined),
         authKeysNone
       )
     ).toMatchInlineSnapshot(`
@@ -1548,7 +1617,7 @@ describe('searchPublishedEntitiesQuery()', () => {
       databaseAdapter,
       schema,
       { entityTypes: ['Invalid'] },
-      resolvePaging(undefined).valueOrThrow(),
+      resolvePaging(undefined),
       authKeysNone
     );
     expectErrorResult(result, ErrorType.BadRequest, 'Can’t find entity type in query: Invalid');

@@ -86,14 +86,14 @@ function sharedSearchEntitiesQuery<
 
   // Paging 1/2
   if (resolvedCursors.after !== null) {
-    qb.addQuery(
-      `AND e.${cursorName} ${query?.reverse ? '<' : '>'} ${qb.addValue(resolvedCursors.after)}`
-    );
+    let operator = query?.reverse ? '<' : '>';
+    if (paging.afterInclusive) operator += '=';
+    qb.addQuery(`AND e.${cursorName} ${operator} ${qb.addValue(resolvedCursors.after)}`);
   }
   if (resolvedCursors.before !== null) {
-    qb.addQuery(
-      `AND e.${cursorName} ${query?.reverse ? '>' : '<'} ${qb.addValue(resolvedCursors.before)}`
-    );
+    let operator = query?.reverse ? '>' : '<';
+    if (paging.beforeInclusive) operator += '=';
+    qb.addQuery(`AND e.${cursorName} ${operator} ${qb.addValue(resolvedCursors.before)}`);
   }
 
   // Ordering
