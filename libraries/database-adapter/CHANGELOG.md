@@ -1,6 +1,13 @@
 # Change Log - @jonasb/datadata-database-adapter
 
-This log was last generated on Sat, 12 Mar 2022 09:19:52 GMT and should not be manually modified.
+This log was last generated on Tue, 22 Mar 2022 21:24:28 GMT and should not be manually modified.
+
+## 0.1.6
+Tue, 22 Mar 2022 21:24:28 GMT
+
+### Updates
+
+- Changes to entity search API
 
 ## 0.1.5
 Sat, 12 Mar 2022 09:19:52 GMT

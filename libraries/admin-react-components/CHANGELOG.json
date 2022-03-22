@@ -2,6 +2,18 @@
   "name": "@jonasb/datadata-admin-react-components",
   "entries": [
     {
+      "version": "0.1.6",
+      "tag": "@jonasb/datadata-admin-react-components_v0.1.6",
+      "date": "Tue, 22 Mar 2022 21:24:28 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Improve paging and loading of entities. Change to CommonJS. Debounce of search text input."
+          }
+        ]
+      }
+    },
+    {
       "version": "0.1.5",
       "tag": "@jonasb/datadata-admin-react-components_v0.1.5",
       "date": "Sat, 12 Mar 2022 09:19:52 GMT",
