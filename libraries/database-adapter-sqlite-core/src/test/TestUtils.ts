@@ -58,7 +58,7 @@ export function createMockAdapter(): MockedSqliteDatabaseAdapter {
 
   mockAdapter.base64Encode.mockImplementation((value) => Buffer.from(value).toString('base64'));
   mockAdapter.base64Decode.mockImplementation((value) =>
-    Buffer.from(value, 'base64').toString('ascii')
+    Buffer.from(value, 'base64').toString('utf8')
   );
 
   return mockAdapter;

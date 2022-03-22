@@ -1,5 +1,5 @@
 import { copyEntity, PublishedQueryOrder } from '@jonasb/datadata-core';
-import { assertOkResult, assertResultValue } from '../Asserts';
+import { assertOkResult, assertResultValue, assertTruthy } from '../Asserts';
 import type { UnboundTestFunction } from '../Builder';
 import {
   adminToPublishedEntity,
@@ -24,6 +24,7 @@ export const SearchEntitiesSubSuite: UnboundTestFunction<PublishedEntityTestCont
   searchEntities_pagingLast,
   searchEntities_pagingLast0,
   searchEntities_pagingFirstAfter,
+  searchEntities_pagingFirstAfterNameWithUnicode,
   searchEntities_pagingLastBefore,
   searchEntities_pagingFirstBetween,
   searchEntities_pagingLastBetween,
@@ -118,6 +119,60 @@ async function searchEntities_pagingFirstAfter({
     hasPreviousPage: true,
     hasNextPage: expectedEntities.length > 10 + 20,
   });
+}
+
+async function searchEntities_pagingFirstAfterNameWithUnicode({
+  server,
+}: PublishedEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const publishedClient = publishedClientForMainPrincipal(server);
+
+  // Since the name is converted to base64 encoded cursors, use unicode in the name
+  // to ensure the encode/decode is proper
+
+  // First create two entities with unicode in the name
+  const firstEntityResult = await adminClient.createEntity(
+    copyEntity(TITLE_ONLY_CREATE, { info: { name: 'Endash – and emoji 😅' } }),
+    { publish: true }
+  );
+  const firstEntity = adminToPublishedEntity(firstEntityResult.valueOrThrow().entity);
+
+  const secondEntityResult = await adminClient.createEntity(
+    copyEntity(TITLE_ONLY_CREATE, { info: { name: 'Ö, Endash – and emoji 😅' } }),
+    { publish: true }
+  );
+  const secondEntity = adminToPublishedEntity(secondEntityResult.valueOrThrow().entity);
+
+  // Create entity with links to the unicode entities to create a scoped query
+  const linkEntityResult = await adminClient.createEntity(
+    copyEntity(REFERENCES_CREATE, {
+      fields: { anyList: [{ id: firstEntity.id }, { id: secondEntity.id }] },
+    }),
+    { publish: true }
+  );
+  const {
+    entity: { id: linkId },
+  } = linkEntityResult.valueOrThrow();
+
+  // Search to get the cursor
+  const firstSearchResult = await publishedClient.searchEntities(
+    { linksFrom: { id: linkId }, order: PublishedQueryOrder.name },
+    { first: 10 }
+  );
+  assertSearchResultEntities(firstSearchResult, [firstEntity, secondEntity]);
+  assertPageInfoEquals(firstSearchResult, { hasPreviousPage: false, hasNextPage: false });
+  assertTruthy(firstSearchResult.value);
+  const {
+    pageInfo: { startCursor },
+  } = firstSearchResult.value;
+
+  // Search again using the cursor
+  const secondSearchResult = await publishedClient.searchEntities(
+    { linksFrom: { id: linkId }, order: PublishedQueryOrder.name },
+    { first: 10, after: startCursor }
+  );
+  assertSearchResultEntities(secondSearchResult, [secondEntity]);
+  assertPageInfoEquals(secondSearchResult, { hasPreviousPage: false, hasNextPage: false });
 }
 
 async function searchEntities_pagingLastBefore({
