@@ -35,7 +35,7 @@ export async function createSqlJsAdapter(
     },
 
     base64Decode(value) {
-      return Buffer.from(value, 'base64').toString('ascii');
+      return Buffer.from(value, 'base64').toString('utf8');
     },
   };
 

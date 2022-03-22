@@ -54,7 +54,7 @@ export function createPostgresAdapter(poolConfig: PoolConfig): PgDatabaseAdapter
     },
 
     base64Decode(value) {
-      return Buffer.from(value, 'base64').toString('ascii');
+      return Buffer.from(value, 'base64').toString('utf8');
     },
   };
   return createPostgresDatabaseAdapterAdapter(adapter);

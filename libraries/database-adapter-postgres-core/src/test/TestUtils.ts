@@ -67,7 +67,7 @@ export function createMockAdapter(): MockedPostgresDatabaseAdapter {
 
   databaseAdapter.base64Encode.mockImplementation((value) => Buffer.from(value).toString('base64'));
   databaseAdapter.base64Decode.mockImplementation((value) =>
-    Buffer.from(value, 'base64').toString('ascii')
+    Buffer.from(value, 'base64').toString('utf8')
   );
 
   return databaseAdapter;

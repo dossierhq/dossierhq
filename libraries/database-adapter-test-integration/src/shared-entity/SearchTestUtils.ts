@@ -5,6 +5,7 @@ import type {
   Connection,
   Edge,
   ErrorType,
+  OkResult,
   PromiseResult,
   PublishedClient,
   PublishedEntity,
@@ -107,7 +108,10 @@ export function assertSearchResultEntities<TItem extends AdminEntity | Published
     ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
   >,
   actualEntities: TItem[]
-): void {
+): asserts result is OkResult<
+  Connection<Edge<TItem, ErrorType>> | null,
+  ErrorType.BadRequest | ErrorType.NotAuthorized | ErrorType.Generic
+> {
   assertOkResult(result);
   if (actualEntities.length === 0) {
     assertSame(result.value, null);

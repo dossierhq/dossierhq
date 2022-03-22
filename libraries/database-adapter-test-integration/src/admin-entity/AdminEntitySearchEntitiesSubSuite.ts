@@ -31,6 +31,7 @@ export const SearchEntitiesSubSuite: UnboundTestFunction<AdminEntityTestContext>
   searchEntities_pagingLast,
   searchEntities_pagingLast0,
   searchEntities_pagingFirstAfter,
+  searchEntities_pagingFirstAfterNameWithUnicode,
   searchEntities_pagingLastBefore,
   searchEntities_pagingFirstBetween,
   searchEntities_pagingLastBetween,
@@ -133,6 +134,54 @@ async function searchEntities_pagingFirstAfter({
   );
   assertAdminEntityConnectionToMatchSlice(expectedEntities, secondResult, 10, 10 + 20);
   assertPageInfoEquals(secondResult, { hasPreviousPage: true, hasNextPage: true });
+}
+
+async function searchEntities_pagingFirstAfterNameWithUnicode({ server }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
+
+  // Since the name is converted to base64 encoded cursors, use unicode in the name
+  // to ensure the encode/decode is proper
+
+  // First create two entities with unicode in the name
+  const firstEntityResult = await client.createEntity(
+    copyEntity(TITLE_ONLY_CREATE, { info: { name: 'Endash – and emoji 😅' } })
+  );
+  const { entity: firstEntity } = firstEntityResult.valueOrThrow();
+
+  const secondEntityResult = await client.createEntity(
+    copyEntity(TITLE_ONLY_CREATE, { info: { name: 'Ö, Endash – and emoji 😅' } })
+  );
+  const { entity: secondEntity } = secondEntityResult.valueOrThrow();
+
+  // Create entity with links to the unicode entities to create a scoped query
+  const linkEntityResult = await client.createEntity(
+    copyEntity(REFERENCES_CREATE, {
+      fields: { anyList: [{ id: firstEntity.id }, { id: secondEntity.id }] },
+    })
+  );
+  const {
+    entity: { id: linkId },
+  } = linkEntityResult.valueOrThrow();
+
+  // Search to get the cursor
+  const firstSearchResult = await client.searchEntities(
+    { linksFrom: { id: linkId }, order: AdminQueryOrder.name },
+    { first: 10 }
+  );
+  assertSearchResultEntities(firstSearchResult, [firstEntity, secondEntity]);
+  assertPageInfoEquals(firstSearchResult, { hasPreviousPage: false, hasNextPage: false });
+  assertTruthy(firstSearchResult.value);
+  const {
+    pageInfo: { startCursor },
+  } = firstSearchResult.value;
+
+  // Search again using the cursor
+  const secondSearchResult = await client.searchEntities(
+    { linksFrom: { id: linkId }, order: AdminQueryOrder.name },
+    { first: 10, after: startCursor }
+  );
+  assertSearchResultEntities(secondSearchResult, [secondEntity]);
+  assertPageInfoEquals(secondSearchResult, { hasPreviousPage: false, hasNextPage: false });
 }
 
 async function searchEntities_pagingLastBefore({
