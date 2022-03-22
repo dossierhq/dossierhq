@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-database-adapter",
+      "comment": "Changes to entity search API",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-database-adapter"
+}
