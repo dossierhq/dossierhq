@@ -2,6 +2,18 @@
   "name": "@jonasb/datadata-design",
   "entries": [
     {
+      "version": "0.1.6",
+      "tag": "@jonasb/datadata-design_v0.1.6",
+      "date": "Tue, 22 Mar 2022 21:24:28 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Optimise by reacting to mouse down. Support scroll to top in Scrollable. Fix clicking of SVG in button."
+          }
+        ]
+      }
+    },
+    {
       "version": "0.1.5",
       "tag": "@jonasb/datadata-design_v0.1.5",
       "date": "Sat, 12 Mar 2022 09:19:52 GMT",
