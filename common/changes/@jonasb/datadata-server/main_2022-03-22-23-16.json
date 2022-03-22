@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@jonasb/datadata-server",
+      "comment": "Fix off-by-one error when calculating hasPreviousPage",
+      "type": "none"
+    }
+  ],
+  "packageName": "@jonasb/datadata-server"
+}
