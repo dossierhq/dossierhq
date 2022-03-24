@@ -354,6 +354,10 @@
       "projectFolder": "tools/generic-tools"
     },
     {
+      "packageName": "playground",
+      "projectFolder": "apps/playground"
+    },
+    {
       "packageName": "benchpress",
       "projectFolder": "libraries/benchpress"
     },
