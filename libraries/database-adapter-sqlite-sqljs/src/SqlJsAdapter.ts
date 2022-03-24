@@ -6,21 +6,19 @@ import type {
   UniqueConstraint,
 } from '@jonasb/datadata-database-adapter-sqlite-core';
 import { createSqliteDatabaseAdapterAdapter } from '@jonasb/datadata-database-adapter-sqlite-core';
-import initSqlJs from 'sql.js';
+import type { Database } from 'sql.js';
 
 export async function createSqlJsAdapter(
-  context: Context
+  context: Context,
+  database: Database
 ): PromiseResult<DatabaseAdapter, ErrorType.BadRequest | ErrorType.Generic> {
-  const SQL = await initSqlJs();
-  const db = new SQL.Database();
-
   const adapter: SqliteDatabaseAdapter = {
     disconnect: async () => {
-      db.close();
+      database.close();
     },
     query: async <R>(query: string, values: ColumnValue[] | undefined) => {
       const result: R[] = [];
-      const statement = db.prepare(query, values);
+      const statement = database.prepare(query, values);
       while (statement.step()) {
         const row = statement.getAsObject() as unknown as R;
         result.push(row);
