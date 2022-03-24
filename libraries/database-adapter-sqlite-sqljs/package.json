@@ -41,11 +41,11 @@
     "@typescript-eslint/parser": "^5.8.0",
     "eslint": "^8.5.0",
     "prettier": "2.5.1",
+    "sql.js": "~1.6.1",
     "typescript": "^4.5.4"
   },
   "dependencies": {
     "@jonasb/datadata-database-adapter-sqlite-core": "workspace:*",
-    "sql.js": "~1.6.1",
     "tslib": "~2.3.1"
   }
 }
