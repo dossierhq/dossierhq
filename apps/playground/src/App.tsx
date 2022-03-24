@@ -1,8 +1,8 @@
 import { useContext, useEffect } from "react";
-import "./App.css";
 import { ServerProvider } from "./components/ServerProvider";
 import { ServerContext } from "./contexts/ServerContext";
 import { createConsoleLogger } from "@jonasb/datadata-core";
+import { Button, FullscreenContainer } from "@jonasb/datadata-design";
 
 function App() {
   return (
@@ -43,13 +43,11 @@ function AppContent() {
   }, [server]);
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          server: {server ? "initialized" : ""}, error: {error}
-        </p>
-      </header>
-    </div>
+    <FullscreenContainer>
+      <FullscreenContainer.Row>
+        server: {server ? "initialized" : ""}, error: {error}
+      </FullscreenContainer.Row>
+    </FullscreenContainer>
   );
 }
 
