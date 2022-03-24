@@ -1,8 +1,9 @@
+import { Tag } from "@jonasb/datadata-admin-react-components";
+import { createConsoleLogger } from "@jonasb/datadata-core";
+import { FullscreenContainer } from "@jonasb/datadata-design";
 import { useContext, useEffect } from "react";
 import { ServerProvider } from "./components/ServerProvider";
 import { ServerContext } from "./contexts/ServerContext";
-import { createConsoleLogger } from "@jonasb/datadata-core";
-import { Button, FullscreenContainer } from "@jonasb/datadata-design";
 
 function App() {
   return (
@@ -46,6 +47,7 @@ function AppContent() {
     <FullscreenContainer>
       <FullscreenContainer.Row>
         server: {server ? "initialized" : ""}, error: {error}
+        <Tag kind="danger" text="HELLO from ARC" />
       </FullscreenContainer.Row>
     </FullscreenContainer>
   );
