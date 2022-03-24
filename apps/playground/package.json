@@ -10,6 +10,7 @@
   "dependencies": {
     "@jonasb/datadata-core": "workspace:*",
     "@jonasb/datadata-database-adapter-sqlite-sql.js": "workspace:*",
+    "@jonasb/datadata-design": "workspace:*",
     "@jonasb/datadata-server": "workspace:*",
     "react": "~17.0.2",
     "react-dom": "~17.0.2",
@@ -18,9 +19,9 @@
   "devDependencies": {
     "@types/react": "~17.0.5",
     "@types/react-dom": "~17.0.5",
+    "@types/sql.js": "~1.4.2",
     "@vitejs/plugin-react": "^1.0.7",
     "typescript": "^4.5.4",
-    "vite": "^2.8.0",
-    "@types/sql.js": "~1.4.2"
+    "vite": "^2.8.0"
   }
 }
