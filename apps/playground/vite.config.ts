@@ -6,6 +6,23 @@ export default defineConfig({
   plugins: [react()],
   build: {
     commonjsOptions: { include: [] },
+    chunkSizeWarningLimit: 2100,
+  },
+  css: {
+    postcss: {
+      plugins: [
+        {
+          postcssPlugin: "internal:charset-removal",
+          AtRule: {
+            charset: (atRule) => {
+              if (atRule.name === "charset") {
+                atRule.remove();
+              }
+            },
+          },
+        },
+      ],
+    },
   },
   optimizeDeps: {
     include: [
