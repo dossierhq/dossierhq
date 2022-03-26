@@ -1,9 +1,9 @@
 import { ServerProvider } from './components/ServerProvider';
 import { DataDataSharedProvider } from './components/DataDataSharedProvider';
-import { AdminEntitiesRoute } from './routes/admin-entities';
+import { AdminEntitiesRoute } from './routes/AdminEntitiesRoute';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { ROUTE } from './utils/RouteUtils';
-import { IndexRoute } from './routes';
+import { IndexRoute } from './routes/IndexRoute';
 
 export default function App() {
   return (
