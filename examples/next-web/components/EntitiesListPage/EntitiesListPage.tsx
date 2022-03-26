@@ -1,4 +1,7 @@
-import { EntityListScreen } from '@jonasb/datadata-admin-react-components';
+import {
+  EntityListScreen,
+  EntitySearchStateUrlQuery,
+} from '@jonasb/datadata-admin-react-components';
 import type { AdminEntity } from '@jonasb/datadata-core';
 import Head from 'next/head';
 import { useRouter } from 'next/router';

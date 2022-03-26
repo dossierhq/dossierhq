@@ -11,7 +11,7 @@ export function NavBar({ current }: Props) {
     <DesignNavBar>
       <DesignNavBar.Brand>
         <DesignNavBar.Item active={current === 'home'}>
-          {NavItemRender('next-web', ROUTE.index.url)}
+          {NavItemRender('Playground', ROUTE.index.url)}
         </DesignNavBar.Item>
       </DesignNavBar.Brand>
       <DesignNavBar.Item active={current === 'admin-entities'}>
