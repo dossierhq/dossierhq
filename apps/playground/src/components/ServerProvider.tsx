@@ -1,18 +1,9 @@
-import {
-  createConsoleLogger,
-  ErrorType,
-  notOk,
-  PromiseResult,
-} from "@jonasb/datadata-core";
-import { createSqlJsAdapter } from "@jonasb/datadata-database-adapter-sqlite-sql.js";
-import {
-  createServer,
-  NoneAndSubjectAuthorizationAdapter,
-  Server,
-} from "@jonasb/datadata-server";
-import { useEffect, useState } from "react";
-import initSqlJs from "sql.js/dist/sql-wasm-debug";
-import { ServerContext, ServerContextValue } from "../contexts/ServerContext";
+import { createConsoleLogger, ErrorType, notOk, PromiseResult } from '@jonasb/datadata-core';
+import { createSqlJsAdapter } from '@jonasb/datadata-database-adapter-sqlite-sql.js';
+import { createServer, NoneAndSubjectAuthorizationAdapter, Server } from '@jonasb/datadata-server';
+import { useEffect, useState } from 'react';
+import initSqlJs from 'sql.js/dist/sql-wasm-debug';
+import { ServerContext, ServerContextValue } from '../contexts/ServerContext';
 
 interface Props {
   children: React.ReactNode;
@@ -36,15 +27,10 @@ export function ServerProvider({ children }: Props) {
     });
   }, []);
 
-  return (
-    <ServerContext.Provider value={value}>{children}</ServerContext.Provider>
-  );
+  return <ServerContext.Provider value={value}>{children}</ServerContext.Provider>;
 }
 
-async function initializeServer(): PromiseResult<
-  Server,
-  ErrorType.BadRequest | ErrorType.Generic
-> {
+async function initializeServer(): PromiseResult<Server, ErrorType.BadRequest | ErrorType.Generic> {
   try {
     //TODO use version from node_modules
     const SQL = await initSqlJs({
