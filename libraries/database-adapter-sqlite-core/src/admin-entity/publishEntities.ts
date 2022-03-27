@@ -1,9 +1,5 @@
-import type {
-  EntityReference,
-  EntityVersionReference,
-  ErrorType,
-  PromiseResult,
-} from '@jonasb/datadata-core';
+import type { EntityReference, EntityVersionReference, PromiseResult } from '@jonasb/datadata-core';
+import { ErrorType } from '@jonasb/datadata-core';
 import { notOk, ok } from '@jonasb/datadata-core';
 import type {
   DatabaseAdminEntityPublishGetVersionInfoPayload,
@@ -112,18 +108,40 @@ export async function adminEntityPublishUpdateEntity(
     return updateResult;
   }
 
-  const ftsResult = await queryNone(
+  // FTS virtual tables don't support upsert
+  // FTS upsert 1/2) Try to insert
+  const ftsInsertResult = await queryNone(
     databaseAdapter,
     context,
     buildSqliteSqlQuery(
       ({ sql }) =>
-        //TODO upsert?
-        sql`INSERT INTO entities_published_fts (docid, content) VALUES (${
-          entityInternalId as number
-        }, ${values.fullTextSearchText})`
-    )
+        sql`INSERT INTO entities_published_fts (docid, content)
+          VALUES (${entityInternalId as number}, ${values.fullTextSearchText})`
+    ),
+    (error) => {
+      if (databaseAdapter.isFtsVirtualTableConstraintFailed(error)) {
+        return notOk.Conflict('Document already exists');
+      }
+      return notOk.GenericUnexpectedException(context, error);
+    }
   );
-  if (ftsResult.isError()) return ftsResult;
+
+  // FTS upsert 2/2) Update when insert failed
+  if (ftsInsertResult.isError()) {
+    if (ftsInsertResult.isErrorType(ErrorType.Generic)) return ftsInsertResult;
+
+    const ftsUpdateResult = await queryNone(
+      databaseAdapter,
+      context,
+      buildSqliteSqlQuery(
+        ({ sql }) =>
+          sql`UPDATE entities_published_fts
+            SET content = ${values.fullTextSearchText}
+            WHERE docid = ${entityInternalId as number}`
+      )
+    );
+    if (ftsUpdateResult.isError()) return ftsUpdateResult;
+  }
 
   return ok({ updatedAt: now });
 }

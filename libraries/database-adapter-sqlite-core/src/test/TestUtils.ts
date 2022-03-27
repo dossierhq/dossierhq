@@ -51,6 +51,7 @@ export function createMockAdapter(): MockedSqliteDatabaseAdapter {
   const mockAdapter = {
     disconnect: jest.fn(),
     query,
+    isFtsVirtualTableConstraintFailed: jest.fn().mockReturnValue(false),
     isUniqueViolationOfConstraint: jest.fn().mockReturnValue(false),
     encodeCursor: jest.fn(),
     decodeCursor: jest.fn(),
