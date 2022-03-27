@@ -4,7 +4,7 @@ import Link from 'next/link';
 export function NavBar({
   current,
 }: {
-  current: 'home' | 'entities' | 'published-entities' | 'graphiql' | 'voyager';
+  current: 'home' | 'entities' | 'published-entities' | 'schema' | 'graphiql' | 'voyager';
 }) {
   return (
     <DesignNavBar>
@@ -18,6 +18,9 @@ export function NavBar({
       </DesignNavBar.Item>
       <DesignNavBar.Item active={current === 'published-entities'}>
         {NavItemRender('Published entities', '/published-entities')}
+      </DesignNavBar.Item>
+      <DesignNavBar.Item active={current === 'schema'}>
+        {NavItemRender('Schema', '/schema')}
       </DesignNavBar.Item>
       <DesignNavBar.Item active={current === 'graphiql'}>
         {NavItemRender('GraphiQL', '/graphiql')}
