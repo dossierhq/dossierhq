@@ -14,6 +14,13 @@
       }
     },
     {
+      "label": "rush build --verbose",
+      "type": "shell",
+      "command": "$SHELL -i -c \"rush build --verbose\"",
+      "problemMatcher": [],
+      "group": "build"
+    },
+    {
       "label": "rush rebuild",
       "type": "shell",
       "command": "$SHELL -i -c \"rush rebuild\"",

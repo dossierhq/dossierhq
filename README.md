@@ -55,3 +55,10 @@ Check that the same versions of dependencies are used, run `rush check`.
 - `git add common/changes/ && git commit`
 - `git push`
 - Start [publish](https://github.com/jonasb/datadata/actions/workflows/publish.yml) workflow
+
+## Ports
+
+- 3001: examples/next-web
+- 3002: apps/playground
+- 6006: libraries/admin-react-components
+- 6007: libraries/design
