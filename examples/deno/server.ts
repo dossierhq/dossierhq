@@ -1,4 +1,4 @@
-#!/usr/bin/env -S deno run --import-map=./config/import-map.json --allow-net=localhost:5432 --allow-read=.env,.env.defaults
+#!/usr/bin/env -S deno run --allow-net=localhost:5432 --allow-read=.env,.env.defaults
 import {
   createServer,
   NoneAndSubjectAuthorizationAdapter,

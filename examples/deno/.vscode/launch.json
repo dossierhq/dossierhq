@@ -11,13 +11,7 @@
       "program": "server.ts",
       "cwd": "${workspaceFolder}",
       "runtimeExecutable": "deno",
-      "runtimeArgs": [
-        "run",
-        "--inspect-brk",
-        "--allow-all",
-        "--import-map",
-        "./config/import-map.json"
-      ],
+      "runtimeArgs": ["run", "--inspect-brk", "--allow-all"],
       "attachSimplePort": 9229
     }
   ]

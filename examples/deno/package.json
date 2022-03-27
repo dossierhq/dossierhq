@@ -3,12 +3,12 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "build": "deno lint -q && (deno fmt --check 2>&1) && (deno cache --import-map config/import-map.json server.ts 2>&1) && (npm run test 2>&1)",
+    "build": "deno lint -q && (deno fmt --check 2>&1) && (deno cache server.ts 2>&1) && (npm run test 2>&1)",
     "db:cli": "./scripts/db-cli.sh",
     "db:migrate": "./scripts/db-migrate.sh",
-    "postinstall": "deno cache --import-map config/import-map.json external-dependencies.ts",
-    "test": "deno test -j --import-map=./config/import-map.json --allow-net=localhost:5432 --allow-read=.env,.env.defaults --allow-env=GITHUB_ACTIONS",
-    "test:watch": "deno test --watch --import-map=./config/import-map.json"
+    "postinstall": "deno cache external-dependencies.ts",
+    "test": "deno test -j --allow-net=localhost:5432 --allow-read=.env,.env.defaults --allow-env=GITHUB_ACTIONS",
+    "test:watch": "deno test --watch"
   },
   "author": "",
   "license": "ISC",
