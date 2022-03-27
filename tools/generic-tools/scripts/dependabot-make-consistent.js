@@ -34,9 +34,12 @@ async function main(prTitle) {
 
 // e.g. chore(deps-dev): Bump @typescript-eslint/eslint-plugin from 4.33.0 to 5.0.0 in /libraries/graphql
 function extractInfoFromPrTitle(prTitle) {
-  const match = prTitle.match(/^.*Bump (\S+).* in (\S+)$/i);
+  const prTitlePattern = /^.*Bump (\S+).* in (\S+)$/i;
+  const match = prTitle.match(prTitlePattern);
   if (!match) {
-    throw new Error(`PR title (${prTitle}) doesn't match expected format`);
+    throw new Error(
+      `PR title (${prTitle}) doesn't match expected format (${prTitlePattern})`
+    );
   }
   return { dependency: match[1], directory: match[2] };
 }
