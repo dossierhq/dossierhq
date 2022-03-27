@@ -1,4 +1,5 @@
 export {
+  BeforeUnload,
   Button,
   Column,
   Dropdown,
