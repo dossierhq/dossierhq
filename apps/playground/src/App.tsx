@@ -1,13 +1,14 @@
 import { BeforeUnload } from '@jonasb/datadata-design';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { ServerProvider } from './components/ServerProvider';
 import { DataDataSharedProvider } from './components/DataDataSharedProvider';
+import { ServerProvider } from './components/ServerProvider';
 import { AdminEntitiesRoute } from './routes/AdminEntitiesRoute';
-import { ROUTE } from './utils/RouteUtils';
-import { IndexRoute } from './routes/IndexRoute';
 import { EditEntitiesRoute } from './routes/EditEntitiesRoute';
+import { EditSchemaRoute } from './routes/EditSchemaRoute';
+import { IndexRoute } from './routes/IndexRoute';
 import { PublishedEntitiesRoute } from './routes/PublishedEntitiesRoute';
 import { PublishedEntityDetailsRoute } from './routes/PublishedEntityDetailsRoute';
+import { ROUTE } from './utils/RouteUtils';
 
 export default function App() {
   return (
@@ -24,6 +25,7 @@ export default function App() {
               path={ROUTE.publishedEntityDetails.route}
               element={<PublishedEntityDetailsRoute />}
             />
+            <Route path={ROUTE.schema.route} element={<EditSchemaRoute />} />
           </Routes>
         </BrowserRouter>
       </DataDataSharedProvider>

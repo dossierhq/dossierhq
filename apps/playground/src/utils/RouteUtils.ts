@@ -24,4 +24,8 @@ export const ROUTE = {
     route: 'published-entities/:entityId',
     url: (entityId: string) => `/published-entities/${entityId}`,
   },
+  schema: {
+    route: 'schema',
+    url: '/schema',
+  },
 };
