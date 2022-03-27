@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { ROUTE } from '../utils/RouteUtils';
 
 interface Props {
-  current: 'home' | 'admin-entities';
+  current: 'home' | 'admin-entities' | 'published-entities';
 }
 
 export function NavBar({ current }: Props) {
@@ -16,6 +16,9 @@ export function NavBar({ current }: Props) {
       </DesignNavBar.Brand>
       <DesignNavBar.Item active={current === 'admin-entities'}>
         {NavItemRender('Admin entities', ROUTE.adminEntities.url)}
+      </DesignNavBar.Item>
+      <DesignNavBar.Item active={current === 'published-entities'}>
+        {NavItemRender('Published entities', ROUTE.publishedEntities.url)}
       </DesignNavBar.Item>
     </DesignNavBar>
   );
