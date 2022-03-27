@@ -28,12 +28,12 @@ export async function createSqlJsAdapter(
     },
     isUniqueViolationOfConstraint,
 
-    base64Encode(value) {
-      return Buffer.from(value).toString('base64');
+    encodeCursor(value) {
+      return btoa(unescape(encodeURIComponent(value)));
     },
 
-    base64Decode(value) {
-      return Buffer.from(value, 'base64').toString('utf8');
+    decodeCursor(value) {
+      return decodeURIComponent(escape(atob(value)));
     },
   };
 

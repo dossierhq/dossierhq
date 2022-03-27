@@ -52,12 +52,12 @@ export function createMockAdapter(): MockedSqliteDatabaseAdapter {
     disconnect: jest.fn(),
     query,
     isUniqueViolationOfConstraint: jest.fn().mockReturnValue(false),
-    base64Encode: jest.fn(),
-    base64Decode: jest.fn(),
+    encodeCursor: jest.fn(),
+    decodeCursor: jest.fn(),
   };
 
-  mockAdapter.base64Encode.mockImplementation((value) => Buffer.from(value).toString('base64'));
-  mockAdapter.base64Decode.mockImplementation((value) =>
+  mockAdapter.encodeCursor.mockImplementation((value) => Buffer.from(value).toString('base64'));
+  mockAdapter.decodeCursor.mockImplementation((value) =>
     Buffer.from(value, 'base64').toString('utf8')
   );
 
