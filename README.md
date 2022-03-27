@@ -34,7 +34,8 @@ Check that the same versions of dependencies are used, run `rush check`.
 
 ## Upgrade dependencies
 
-- Update node version in `.nvmrc` and `.github/workflows/nodejs.yml`
+- Upgrade node version in `.nvmrc`
+- Upgrade deno version in Github Actions workflows (`deno-version`)
 - Update `rushVersion` and `pnpmVersion` in `rush.json` (`npm show @microsoft/rush version`/`npm show pnpm version`)
 - Either upgrade individual dependencies:
   - `rush add --package typescript@latest --dev --make-consistent` in project where dependency exist, or:
