@@ -1,0 +1,45 @@
+import { EntitySearchStateUrlQuery, published } from '@jonasb/datadata-admin-react-components';
+import { PublishedEntity } from '@jonasb/datadata-core';
+import { useCallback, useMemo } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { NavBar } from '../components/NavBar';
+import { ROUTE } from '../utils/RouteUtils';
+
+const { EntityListScreen } = published;
+
+//TODO fix type of EntitySearchStateUrlQuery in arc to work better with react-router
+type EntitySearchStateUrlQueryRecord = Record<'query' | 'paging' | 'sampling', string>;
+
+export function PublishedEntitiesRoute() {
+  const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const urlQuery = useMemo(() => {
+    const result: EntitySearchStateUrlQuery = {};
+    for (const [key, value] of searchParams.entries()) {
+      result[key as keyof EntitySearchStateUrlQuery] = value;
+    }
+    return result;
+  }, [searchParams]);
+
+  const handleUrlQueryChanged = useCallback(
+    (urlQuery: EntitySearchStateUrlQuery) => {
+      setSearchParams(urlQuery as EntitySearchStateUrlQueryRecord);
+    },
+    [setSearchParams]
+  );
+
+  const handleEntityOpen = useCallback(
+    (entity: PublishedEntity) => navigate(ROUTE.publishedEntityDetails.url(entity.id)),
+    []
+  );
+
+  return (
+    <EntityListScreen
+      header={<NavBar current="published-entities" />}
+      urlQuery={urlQuery}
+      onUrlQueryChanged={handleUrlQueryChanged}
+      onOpenEntity={handleEntityOpen}
+    />
+  );
+}

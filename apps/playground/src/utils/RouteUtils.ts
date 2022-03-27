@@ -16,4 +16,12 @@ export const ROUTE = {
       return `/admin-entities/edit?${search.toString()}`;
     },
   },
+  publishedEntities: {
+    route: 'published-entities',
+    url: '/published-entities',
+  },
+  publishedEntityDetails: {
+    route: 'published-entities/:entityId',
+    url: (entityId: string) => `/published-entities/${entityId}`,
+  },
 };
