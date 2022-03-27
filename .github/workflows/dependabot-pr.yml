@@ -37,7 +37,8 @@ jobs:
           git add .
           if [[ `git status --porcelain` ]]; then
             git commit -m "chore: Make dependencies consistent"
-            git push
+            env # TODO debugging
+            git push origin "HEAD:$GITHUB_HEAD_REF"
           fi
       - name: start db
         run: |
