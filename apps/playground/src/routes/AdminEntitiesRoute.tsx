@@ -2,14 +2,17 @@ import {
   EntityListScreen,
   EntitySearchStateUrlQuery,
 } from '@jonasb/datadata-admin-react-components';
+import { AdminEntity } from '@jonasb/datadata-core';
 import { useCallback, useMemo } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { NavBar } from '../components/NavBar';
+import { ROUTE } from '../utils/RouteUtils';
 
 //TODO fix type of EntitySearchStateUrlQuery in arc to work better with react-router
 type EntitySearchStateUrlQueryRecord = Record<'query' | 'paging' | 'sampling', string>;
 
 export function AdminEntitiesRoute() {
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const urlQuery = useMemo(() => {
@@ -27,13 +30,22 @@ export function AdminEntitiesRoute() {
     [setSearchParams]
   );
 
+  const handleCreateEntity = useCallback(
+    (type: string) => navigate(ROUTE.editEntities.url([], type)),
+    []
+  );
+  const handleEntityOpen = useCallback(
+    (entity: AdminEntity) => navigate(ROUTE.editEntities.url([entity.id])),
+    []
+  );
+
   return (
     <EntityListScreen
       header={<NavBar current="admin-entities" />}
       urlQuery={urlQuery}
       onUrlQueryChanged={handleUrlQueryChanged}
-      onCreateEntity={console.log}
-      onOpenEntity={console.log}
+      onCreateEntity={handleCreateEntity}
+      onOpenEntity={handleEntityOpen}
     />
   );
 }
