@@ -11,7 +11,9 @@ jobs:
         with:
           node-version-file: ".nvmrc"
       - name: Install gnuplot
-        run: sudo apt-get install -y gnuplot
+        run: |
+          sudo apt-get update # to avoid error: Unable to fetch some archives, maybe run apt-get update or try with --fix-missing?
+          sudo apt-get install -y gnuplot
       - name: Use deno
         uses: denoland/setup-deno@v1
         with:
