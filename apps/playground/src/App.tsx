@@ -1,3 +1,4 @@
+import { BeforeUnload } from '@jonasb/datadata-design';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { ServerProvider } from './components/ServerProvider';
 import { DataDataSharedProvider } from './components/DataDataSharedProvider';
@@ -11,6 +12,7 @@ import { PublishedEntityDetailsRoute } from './routes/PublishedEntityDetailsRout
 export default function App() {
   return (
     <ServerProvider>
+      <BeforeUnload message="Leaving the page will delete the database" />
       <DataDataSharedProvider>
         <BrowserRouter>
           <Routes>
