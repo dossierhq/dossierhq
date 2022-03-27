@@ -39,3 +39,19 @@ edit entity	sqlite	82383a9e	82383a9e-sqlite-edit-entity	6.669835	1.71	4.196096	6
 archive entity	sqlite	82383a9e	82383a9e-sqlite-archive-entity	5.299159	1.85	3.31317	4.868756	6.702706	8.892708	25.30207
 get admin entity	sqlite	82383a9e	82383a9e-sqlite-get-admin-entity	0.545849	0.72	0.327203	0.459303	0.603304	0.694405	18.385038
 search admin entities (any, first 50)	sqlite	82383a9e	82383a9e-sqlite-search-admin-entities-any-first-50	8.145787	2.30	5.614542	7.524557	10.796781	13.989833	20.811335
+create entity	postgres	40ff3668	40ff3668-postgres-create-entity	4.397526	1.80	2.605847	3.993469	5.894601	7.656731	22.42911
+create entity organization	postgres	40ff3668	40ff3668-postgres-create-entity-organization	3.387451	1.36	2.553947	3.009754	4.41318	5.328697	24.037438
+create entity person	postgres	40ff3668	40ff3668-postgres-create-entity-person	4.157321	1.62	2.614248	3.792769	4.878489	6.529419	19.966064
+create and publish entity	postgres	40ff3668	40ff3668-postgres-create-publish-entity	7.782772	1.80	5.98451	7.379836	9.370771	10.992003	27.1892
+edit entity	postgres	40ff3668	40ff3668-postgres-edit-entity	4.810479	2.10	3.579566	4.561883	5.622803	7.09313	55.334709
+archive entity	postgres	40ff3668	40ff3668-postgres-archive-entity	2.74394	1.13	2.213441	2.517246	3.016955	3.558765	19.338753
+get admin entity	postgres	40ff3668	40ff3668-postgres-get-admin-entity	1.011075	0.49	0.850416	0.932517	1.056319	1.194422	7.373734
+search admin entities (any, first 50)	postgres	40ff3668	40ff3668-postgres-search-admin-entities-any-first-50	7.486493	2.16	6.156013	6.622121	10.847398	12.513028	26.619286
+create entity	sqlite	40ff3668	40ff3668-sqlite-create-entity	4.696692	2.22	2.948754	4.073375	6.110911	9.201168	26.431483
+create entity organization	sqlite	40ff3668	40ff3668-sqlite-create-entity-organization	4.256428	1.49	2.903953	3.907471	4.96439	6.479518	17.711723
+create entity person	sqlite	40ff3668	40ff3668-sqlite-create-entity-person	4.912961	2.38	3.012755	4.332379	5.874707	9.002965	29.53574
+create and publish entity	sqlite	40ff3668	40ff3668-sqlite-create-publish-entity	7.620806	3.00	5.287096	6.708523	10.42779	13.088039	42.590577
+edit entity	sqlite	40ff3668	40ff3668-sqlite-edit-entity	5.186789	2.23	3.534964	4.634185	6.339216	8.981564	31.24187
+archive entity	sqlite	40ff3668	40ff3668-sqlite-archive-entity	3.669664	1.95	2.432544	3.234259	4.287478	6.196213	27.95791
+get admin entity	sqlite	40ff3668	40ff3668-sqlite-get-admin-entity	0.4553	0.55	0.312706	0.377906	0.467908	0.55991	8.404253
+search admin entities (any, first 50)	sqlite	40ff3668	40ff3668-sqlite-search-admin-entities-any-first-50	6.443567	2.44	5.325196	5.603702	9.121163	12.397922	36.813771
