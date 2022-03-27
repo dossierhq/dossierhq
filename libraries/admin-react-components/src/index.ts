@@ -95,6 +95,7 @@ export { useTotalCount } from './hooks/useTotalCount';
 export * as published from './published';
 export { EntityListScreen } from './screens/EntityListScreen/EntityListScreen';
 export { EntityEditorScreen } from './screens/EntityEditorScreen/EntityEditorScreen';
+export { SchemaEditorScreen } from './screens/SchemaEditorScreen/SchemaEditorScreen';
 export * from './shared';
 export { MapContainer } from './shared/components/MapContainer/MapContainer';
 export type { LayoutProps, SpacingSize } from './types/LayoutTypes';
