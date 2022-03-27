@@ -624,10 +624,12 @@ importers:
       '@jonasb/datadata-server': workspace:*
       '@rushstack/heft': ~0.44.0
       '@rushstack/heft-jest-plugin': ~0.2.0
+      '@types/base-64': ~1.0.0
       '@types/heft-jest': 1.0.2
       '@types/sql.js': ~1.4.2
       '@typescript-eslint/eslint-plugin': ^5.8.0
       '@typescript-eslint/parser': ^5.8.0
+      base-64: ~1.0.0
       eslint: ^8.5.0
       prettier: 2.5.1
       sql.js: ~1.6.1
@@ -643,10 +645,12 @@ importers:
       '@jonasb/datadata-server': link:../server
       '@rushstack/heft': 0.44.0
       '@rushstack/heft-jest-plugin': 0.2.0_@rushstack+heft@0.44.0
+      '@types/base-64': 1.0.0
       '@types/heft-jest': 1.0.2
       '@types/sql.js': 1.4.3
       '@typescript-eslint/eslint-plugin': 5.8.0_836011a006f4f5d67178564baf2b6d34
       '@typescript-eslint/parser': 5.8.0_eslint@8.5.0+typescript@4.5.4
+      base-64: 1.0.0
       eslint: 8.5.0
       prettier: 2.5.1
       sql.js: 1.6.2
@@ -5226,6 +5230,10 @@ packages:
       '@babel/types': 7.16.0
     dev: true
 
+  /@types/base-64/1.0.0:
+    resolution: {integrity: sha512-AvCJx/HrfYHmOQRFdVvgKMplXfzTUizmh0tz9GFTpDePWgCY4uoKll84zKlaRoeiYiCr7c9ZnqSTzkl0BUVD6g==}
+    dev: true
+
   /@types/body-parser/1.19.1:
     resolution: {integrity: sha512-a6bTJ21vFOGIkwM0kzh9Yr89ziVxq4vYH2fQ6N8AeipEzai/cFK6aGMArIkUeIdRIgpwQa+2bXiLuUJCpSf2Cg==}
     dependencies:
@@ -6893,6 +6901,10 @@ packages:
 
   /balanced-match/1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
+
+  /base-64/1.0.0:
+    resolution: {integrity: sha512-kwDPIFCGx0NZHog36dj+tHiwP4QMzsZ3AgMViUBKI0+V5n4U0ufTCUMhnQ04diaRI8EX/QcPfql7zlhZ7j4zgg==}
+    dev: true
 
   /base/0.11.2:
     resolution: {integrity: sha512-5T6P4xPgpp0YDFvSWwEZ4NoE3aM4QBQXDzmVbraCkFj8zHM+mba8SyqB5DbZWyR7mYHo6Y7BdQo3MoA4m0TeQg==}

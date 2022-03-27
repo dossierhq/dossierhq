@@ -11,9 +11,9 @@ export function toOpaqueCursor(
 ): string {
   switch (type) {
     case 'int':
-      return databaseAdapter.base64Encode(String(value as number));
+      return databaseAdapter.encodeCursor(String(value as number));
     case 'string':
-      return databaseAdapter.base64Encode(value as string);
+      return databaseAdapter.encodeCursor(value as string);
     default:
       throw new Error(`Unknown cursor type ${type}`);
   }
@@ -26,7 +26,7 @@ export function fromOpaqueCursor(
 ): Result<unknown, ErrorType.BadRequest> {
   switch (type) {
     case 'int': {
-      const decoded = databaseAdapter.base64Decode(cursor);
+      const decoded = databaseAdapter.decodeCursor(cursor);
       const value = Number.parseInt(decoded);
       if (Number.isNaN(value)) {
         return notOk.BadRequest('Invalid format of cursor');
@@ -34,7 +34,7 @@ export function fromOpaqueCursor(
       return ok(value);
     }
     case 'string': {
-      const value = databaseAdapter.base64Decode(cursor);
+      const value = databaseAdapter.decodeCursor(cursor);
       return ok(value);
     }
     default:

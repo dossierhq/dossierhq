@@ -72,11 +72,11 @@ export async function createSqlite3Adapter(
     },
     isUniqueViolationOfConstraint,
 
-    base64Encode(value) {
+    encodeCursor(value) {
       return Buffer.from(value).toString('base64');
     },
 
-    base64Decode(value) {
+    decodeCursor(value) {
       return Buffer.from(value, 'base64').toString('utf8');
     },
   };

@@ -61,8 +61,8 @@ export interface SqliteDatabaseAdapter {
   disconnect(): Promise<void>;
   query<R>(query: string, values: ColumnValue[] | undefined): Promise<R[]>;
   isUniqueViolationOfConstraint(error: unknown, constraint: UniqueConstraint): boolean;
-  base64Encode(value: string): string;
-  base64Decode(value: string): string;
+  encodeCursor(value: string): string;
+  decodeCursor(value: string): string;
 }
 
 export async function createSqliteDatabaseAdapterAdapter(
