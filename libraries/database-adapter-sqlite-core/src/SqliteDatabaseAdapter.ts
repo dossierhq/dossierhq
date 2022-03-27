@@ -60,6 +60,7 @@ const minimumSupportedVersion = { major: 3, minor: 35, patch: 0 };
 export interface SqliteDatabaseAdapter {
   disconnect(): Promise<void>;
   query<R>(query: string, values: ColumnValue[] | undefined): Promise<R[]>;
+  isFtsVirtualTableConstraintFailed(error: unknown): boolean;
   isUniqueViolationOfConstraint(error: unknown, constraint: UniqueConstraint): boolean;
   encodeCursor(value: string): string;
   decodeCursor(value: string): string;

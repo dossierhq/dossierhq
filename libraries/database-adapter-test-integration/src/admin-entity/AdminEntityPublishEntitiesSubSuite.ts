@@ -13,6 +13,7 @@ export const PublishEntitiesSubSuite: UnboundTestFunction<AdminEntityTestContext
   publishEntities_authKeySubject,
   publishEntities_oldVersion,
   publishEntities_twoEntitiesReferencingEachOther,
+  publishEntities_publishAlreadyPublishedEntity,
   publishEntities_errorInvalidId,
   publishEntities_errorDuplicateIds,
   publishEntities_errorMissingRequiredTitle,
@@ -156,6 +157,41 @@ async function publishEntities_twoEntitiesReferencingEachOther({ client }: Admin
 
   const getResult = await client.getEntity({ id: id1 });
   assertResultValue(getResult, expected1Entity);
+}
+
+async function publishEntities_publishAlreadyPublishedEntity({ client }: AdminEntityTestContext) {
+  const createResult = await client.createEntity(TITLE_ONLY_CREATE, { publish: true });
+  assertOkResult(createResult);
+  const {
+    entity: { id },
+  } = createResult.value;
+
+  const updateResult = await client.updateEntity({ id, fields: { title: 'Updated title' } });
+  assertOkResult(updateResult);
+  const {
+    entity: {
+      info: { version },
+    },
+  } = updateResult.value;
+
+  const publishResult = await client.publishEntities([{ id, version }]);
+  assertOkResult(publishResult);
+  const [{ updatedAt }] = publishResult.value;
+  assertResultValue(publishResult, [
+    {
+      id,
+      effect: 'published',
+      status: AdminEntityStatus.published,
+      updatedAt,
+    },
+  ]);
+
+  const expectedEntity = copyEntity(updateResult.value.entity, {
+    info: { status: AdminEntityStatus.published, updatedAt },
+  });
+
+  const getResult = await client.getEntity({ id });
+  assertResultValue(getResult, expectedEntity);
 }
 
 async function publishEntities_errorInvalidId({ server }: AdminEntityTestContext) {

@@ -26,6 +26,8 @@ export async function createSqlJsAdapter(
       statement.free();
       return result;
     },
+
+    isFtsVirtualTableConstraintFailed,
     isUniqueViolationOfConstraint,
 
     encodeCursor(value) {
@@ -38,6 +40,10 @@ export async function createSqlJsAdapter(
   };
 
   return createSqliteDatabaseAdapterAdapter(context, adapter);
+}
+
+function isFtsVirtualTableConstraintFailed(error: unknown): boolean {
+  return error instanceof Error && error.message === 'constraint failed';
 }
 
 function isUniqueViolationOfConstraint(error: unknown, constraint: UniqueConstraint): boolean {

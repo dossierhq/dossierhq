@@ -70,6 +70,8 @@ export async function createSqlite3Adapter(
     query: async <R>(query: string, values: ColumnValue[] | undefined) => {
       return await all<R>(db, query, values);
     },
+
+    isFtsVirtualTableConstraintFailed,
     isUniqueViolationOfConstraint,
 
     encodeCursor(value) {
@@ -84,15 +86,25 @@ export async function createSqlite3Adapter(
   return createSqliteDatabaseAdapterAdapter(context, adapter);
 }
 
+function isSqlite3Error(error: unknown): error is Sqlite3Error {
+  return !!error && typeof error === 'object' && 'errno' in error;
+}
+
+function isFtsVirtualTableConstraintFailed(error: unknown): boolean {
+  return (
+    isSqlite3Error(error) &&
+    error.code === 'SQLITE_CONSTRAINT' &&
+    error.message === 'SQLITE_CONSTRAINT: constraint failed'
+  );
+}
+
 function isUniqueViolationOfConstraint(error: unknown, constraint: UniqueConstraint): boolean {
-  const sqlite3Error =
-    error && typeof error === 'object' && 'errno' in error ? (error as Sqlite3Error) : null;
-  if (sqlite3Error?.code === 'SQLITE_CONSTRAINT') {
+  if (isSqlite3Error(error) && error.code === 'SQLITE_CONSTRAINT') {
     const qualifiedColumns = constraint.columns.map((column) => `${constraint.table}.${column}`);
     const expectedMessage = `SQLITE_CONSTRAINT: UNIQUE constraint failed: ${qualifiedColumns.join(
       ', '
     )}`;
-    return sqlite3Error.message === expectedMessage;
+    return error.message === expectedMessage;
   }
   return false;
 }
