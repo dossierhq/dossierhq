@@ -17,7 +17,7 @@ export interface FieldControlProps {
 }
 
 export interface FieldLabelColumnProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 export interface FieldBodyColumnProps {

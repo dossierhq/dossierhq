@@ -1,6 +1,7 @@
 export {
   BeforeUnload,
   Button,
+  Checkbox,
   Column,
   Dropdown,
   DropdownDisplay,
