@@ -38,3 +38,20 @@ SmallLabel.args = {
     </>
   ),
 };
+
+export const Horizontal = Template.bind({});
+Horizontal.args = {
+  horizontal: true,
+  children: (
+    <>
+      <Field.LabelColumn>
+        <Field.Label>Label</Field.Label>
+      </Field.LabelColumn>
+      <Field.BodyColumn>
+        <Field.Control>
+          <Input />
+        </Field.Control>
+      </Field.BodyColumn>
+    </>
+  ),
+};
