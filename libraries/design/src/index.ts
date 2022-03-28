@@ -12,6 +12,7 @@ export {
   initializeMultipleSelectorState,
   Input,
   InstantDisplay,
+  Level,
   MultipleSelectorStateActions,
   NavBar,
   reduceMultipleSelectorState,
@@ -27,7 +28,7 @@ export type {
   MultipleSelectorReducer,
   MultipleSelectorState,
   MultipleSelectorStateAction,
-  TextStyle,
 } from './components/index.js';
 export { StatusColor } from './config/Colors.js';
 export { toSizeClassName } from './utils/LayoutPropsUtils.js';
+export type { TextStyle } from './utils/TextStylePropsUtils.js';
