@@ -60,10 +60,7 @@ Table.Body = ({ children }: TableBodyProps) => <tbody>{children}</tbody>;
 Table.Body.displayName = 'Table.Body';
 
 Table.Row = ({ clickable, sticky, onClick, children }: TableRowProps) => {
-  const className = toClassName(
-    clickable && 'is-clickable',
-    sticky && 'is-sticky-row has-background-white'
-  );
+  const className = toClassName(clickable && 'is-clickable', sticky && 'is-sticky-row');
   return (
     <tr className={className} onClick={onClick}>
       {children}

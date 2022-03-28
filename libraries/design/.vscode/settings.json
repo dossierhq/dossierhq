@@ -7,6 +7,8 @@
     "Flexbox",
     "fontawesome",
     "fortawesome",
+    "fullwidth",
+    "hoverable",
     "rushstack"
   ],
   "files.insertFinalNewline": true,
