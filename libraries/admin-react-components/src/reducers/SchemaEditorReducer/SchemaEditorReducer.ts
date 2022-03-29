@@ -45,6 +45,21 @@ export function reduceSchemaEditorState(
 
 // ACTIONS
 
+class AddEntityTypeAction implements SchemaEditorStateAction {
+  name: string;
+
+  constructor(name: string) {
+    this.name = name;
+  }
+
+  reduce(state: Readonly<SchemaEditorState>): Readonly<SchemaEditorState> {
+    const entityType: SchemaEntityTypeDraft = { type: 'entity', name: this.name, fields: [] };
+    const entityTypes = [...state.entityTypes, entityType];
+    entityTypes.sort((a, b) => a.name.localeCompare(b.name));
+    return { ...state, entityTypes };
+  }
+}
+
 class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
   schema: AdminSchema;
 
@@ -80,5 +95,6 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
 }
 
 export const SchemaEditorActions = {
+  AddEntityType: AddEntityTypeAction,
   UpdateSchemaSpecification: UpdateSchemaSpecificationAction,
 };

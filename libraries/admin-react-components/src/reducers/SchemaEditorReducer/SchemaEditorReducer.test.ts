@@ -1,9 +1,21 @@
 import { AdminSchema, FieldType } from '@jonasb/datadata-core';
+import type { SchemaEditorState, SchemaEditorStateAction } from './SchemaEditorReducer';
 import {
   initializeSchemaEditorState,
   reduceSchemaEditorState,
   SchemaEditorActions,
 } from './SchemaEditorReducer';
+
+function reduceSchemaEditorStateActions(
+  state: SchemaEditorState,
+  ...actions: SchemaEditorStateAction[]
+) {
+  let newState = state;
+  for (const action of actions) {
+    newState = reduceSchemaEditorState(newState, action);
+  }
+  return newState;
+}
 
 describe('initializeSchemaEditorState', () => {
   test('no args', () => {
@@ -17,11 +29,58 @@ describe('initializeSchemaEditorState', () => {
   });
 });
 
+describe('AddEntityTypeAction', () => {
+  test('add type', () => {
+    const state = reduceSchemaEditorState(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.AddEntityType('Foo')
+    );
+    expect(state).toMatchInlineSnapshot(`
+      Object {
+        "entityTypes": Array [
+          Object {
+            "fields": Array [],
+            "name": "Foo",
+            "type": "entity",
+          },
+        ],
+        "schema": null,
+        "valueTypes": Array [],
+      }
+    `);
+  });
+
+  test('add two types (orders)', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.AddEntityType('ZooKeeper'),
+      new SchemaEditorActions.AddEntityType('Anaconda')
+    );
+    expect(state).toMatchInlineSnapshot(`
+      Object {
+        "entityTypes": Array [
+          Object {
+            "fields": Array [],
+            "name": "Anaconda",
+            "type": "entity",
+          },
+          Object {
+            "fields": Array [],
+            "name": "ZooKeeper",
+            "type": "entity",
+          },
+        ],
+        "schema": null,
+        "valueTypes": Array [],
+      }
+    `);
+  });
+});
+
 describe('UpdateSchemaSpecificationAction', () => {
   test('add empty schema', () => {
-    const initialState = initializeSchemaEditorState();
     const emptySchemaState = reduceSchemaEditorState(
-      initialState,
+      initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
         new AdminSchema({ entityTypes: [], valueTypes: [] })
       )
@@ -41,9 +100,8 @@ describe('UpdateSchemaSpecificationAction', () => {
   });
 
   test('one entity type', () => {
-    const initialState = initializeSchemaEditorState();
     const schemaState = reduceSchemaEditorState(
-      initialState,
+      initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
         new AdminSchema({
           entityTypes: [
@@ -95,9 +153,8 @@ describe('UpdateSchemaSpecificationAction', () => {
   });
 
   test('one value type', () => {
-    const initialState = initializeSchemaEditorState();
     const schemaState = reduceSchemaEditorState(
-      initialState,
+      initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
         new AdminSchema({
           entityTypes: [],

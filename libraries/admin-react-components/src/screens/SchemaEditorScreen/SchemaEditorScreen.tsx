@@ -1,6 +1,6 @@
-import { FullscreenContainer, Text } from '@jonasb/datadata-design';
+import { Button, FullscreenContainer, Text } from '@jonasb/datadata-design';
 import type { Dispatch } from 'react';
-import React, { useContext, useEffect, useReducer } from 'react';
+import React, { useCallback, useContext, useEffect, useReducer } from 'react';
 import { DataDataContext2 } from '../..';
 import { SchemaTypeEditor } from '../../components/SchemaTypeEditor/SchemaTypeEditor';
 import type {
@@ -36,15 +36,18 @@ export function SchemaEditorScreen({ header, footer }: SchemaEditorScreenProps) 
     <FullscreenContainer>
       {header ? <FullscreenContainer.Row fullWidth>{header}</FullscreenContainer.Row> : null}
       <FullscreenContainer.ScrollableRow>
+        <FullscreenContainer.Row flexDirection="row" paddingVertical={5}>
+          <AddEntityTypeButton dispatchSchemaEditorState={dispatchSchemaEditorState} />
+        </FullscreenContainer.Row>
         {schemaEditorState.entityTypes.map((entityType) => (
-          <TypeEditor
+          <TypeEditorRows
             key={entityType.name}
             type={entityType}
             dispatchSchemaEditorState={dispatchSchemaEditorState}
           />
         ))}
         {schemaEditorState.valueTypes.map((valueType) => (
-          <TypeEditor
+          <TypeEditorRows
             key={valueType.name}
             type={valueType}
             dispatchSchemaEditorState={dispatchSchemaEditorState}
@@ -56,7 +59,21 @@ export function SchemaEditorScreen({ header, footer }: SchemaEditorScreenProps) 
   );
 }
 
-function TypeEditor({
+function AddEntityTypeButton({
+  dispatchSchemaEditorState,
+}: {
+  dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>;
+}) {
+  const handleClick = useCallback(() => {
+    const name = window.prompt('Entity type name?');
+    if (name) {
+      dispatchSchemaEditorState(new SchemaEditorActions.AddEntityType(name));
+    }
+  }, [dispatchSchemaEditorState]);
+  return <Button onClick={handleClick}>Add entity type</Button>;
+}
+
+function TypeEditorRows({
   type,
   dispatchSchemaEditorState,
 }: {
