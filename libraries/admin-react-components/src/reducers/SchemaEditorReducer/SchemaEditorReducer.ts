@@ -1,18 +1,27 @@
 import type { AdminSchema } from '@jonasb/datadata-core';
 
-export interface EntityTypeDraft {
+export interface SchemaTypeDraft {
   name: string;
-  fields: FieldDraft[];
+  fields: SchemaFieldDraft[];
 }
 
-export interface FieldDraft {
+export interface SchemaEntityTypeDraft extends SchemaTypeDraft {
+  type: 'entity';
+}
+
+export interface SchemaValueTypeDraft extends SchemaTypeDraft {
+  type: 'value';
+}
+
+export interface SchemaFieldDraft {
   name: string;
 }
 
 export interface SchemaEditorState {
   schema: AdminSchema | null;
 
-  entityTypes: EntityTypeDraft[];
+  entityTypes: SchemaEntityTypeDraft[];
+  valueTypes: SchemaValueTypeDraft[];
 }
 
 export interface SchemaEditorStateAction {
@@ -20,7 +29,7 @@ export interface SchemaEditorStateAction {
 }
 
 export function initializeSchemaEditorState(): SchemaEditorState {
-  return { schema: null, entityTypes: [] };
+  return { schema: null, entityTypes: [], valueTypes: [] };
 }
 
 export function reduceSchemaEditorState(
@@ -42,16 +51,25 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
   }
 
   reduce(state: Readonly<SchemaEditorState>): Readonly<SchemaEditorState> {
-    const entityTypes = this.schema.spec.entityTypes.map((entityType) => ({
+    const entityTypes = this.schema.spec.entityTypes.map<SchemaEntityTypeDraft>((entityType) => ({
+      type: 'entity',
       name: entityType.name,
       fields: entityType.fields.map((field) => ({
         name: field.name,
       })),
     }));
 
+    const valueTypes = this.schema.spec.valueTypes.map<SchemaValueTypeDraft>((valueType) => ({
+      type: 'value',
+      name: valueType.name,
+      fields: valueType.fields.map((field) => ({
+        name: field.name,
+      })),
+    }));
+
     if (state.schema) return state; //TODO handle update to schema
 
-    return { ...state, schema: this.schema, entityTypes };
+    return { ...state, schema: this.schema, entityTypes, valueTypes };
   }
 }
 
