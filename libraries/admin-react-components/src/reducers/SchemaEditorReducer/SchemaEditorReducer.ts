@@ -1,4 +1,4 @@
-import type { AdminSchema } from '@jonasb/datadata-core';
+import type { AdminSchema, AdminSchemaSpecificationUpdate } from '@jonasb/datadata-core';
 import { FieldType } from '@jonasb/datadata-core';
 
 export interface SchemaTypeDraft {
@@ -151,3 +151,20 @@ export const SchemaEditorActions = {
   AddEntityTypeField: AddEntityTypeFieldAction,
   UpdateSchemaSpecification: UpdateSchemaSpecificationAction,
 };
+
+// CONVERSION
+
+export function getSchemaSpecificationUpdateFromEditorState(
+  state: SchemaEditorState
+): AdminSchemaSpecificationUpdate {
+  return {
+    entityTypes: state.entityTypes.map((draftType) => ({
+      name: draftType.name,
+      fields: draftType.fields.map((draftField) => ({
+        name: draftField.name,
+        type: draftField.type,
+        list: draftField.list,
+      })),
+    })),
+  };
+}
