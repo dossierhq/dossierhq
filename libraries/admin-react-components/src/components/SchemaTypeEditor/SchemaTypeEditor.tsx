@@ -2,17 +2,17 @@ import { Card, Text } from '@jonasb/datadata-design';
 import type { Dispatch } from 'react';
 import React from 'react';
 import type {
-  EntityTypeDraft,
-  FieldDraft,
+  SchemaFieldDraft,
   SchemaEditorStateAction,
+  SchemaTypeDraft,
 } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer';
 
 interface Props {
-  entityType: EntityTypeDraft;
+  entityType: SchemaTypeDraft;
   dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>;
 }
 
-export function SchemaEntityTypeEditor({ entityType, dispatchSchemaEditorState: _unused }: Props) {
+export function SchemaTypeEditor({ entityType, dispatchSchemaEditorState: _unused }: Props) {
   return (
     <>
       <Text textStyle="headline4">{entityType.name}</Text>
@@ -23,7 +23,7 @@ export function SchemaEntityTypeEditor({ entityType, dispatchSchemaEditorState: 
   );
 }
 
-function SchemaFieldEditor({ field }: { field: FieldDraft }) {
+function SchemaFieldEditor({ field }: { field: SchemaFieldDraft }) {
   return (
     <Card>
       <Card.Header>{field.name}</Card.Header>

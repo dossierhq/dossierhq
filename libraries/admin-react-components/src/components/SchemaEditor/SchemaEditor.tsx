@@ -4,7 +4,7 @@ import type {
   SchemaEditorState,
   SchemaEditorStateAction,
 } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer';
-import { SchemaEntityTypeEditor } from '../SchemaEntityTypeEditor/SchemaEntityTypeEditor';
+import { SchemaTypeEditor } from '../SchemaTypeEditor/SchemaTypeEditor';
 
 interface Props {
   schemaEditorState: SchemaEditorState;
@@ -15,9 +15,16 @@ export function SchemaEditor({ schemaEditorState, dispatchSchemaEditorState }: P
   return (
     <>
       {schemaEditorState.entityTypes.map((entityType) => (
-        <SchemaEntityTypeEditor
+        <SchemaTypeEditor
           key={entityType.name}
           entityType={entityType}
+          dispatchSchemaEditorState={dispatchSchemaEditorState}
+        />
+      ))}
+      {schemaEditorState.valueTypes.map((valueType) => (
+        <SchemaTypeEditor
+          key={valueType.name}
+          entityType={valueType}
           dispatchSchemaEditorState={dispatchSchemaEditorState}
         />
       ))}

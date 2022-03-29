@@ -11,6 +11,7 @@ describe('initializeSchemaEditorState', () => {
       Object {
         "entityTypes": Array [],
         "schema": null,
+        "valueTypes": Array [],
       }
     `);
   });
@@ -34,13 +35,14 @@ describe('UpdateSchemaSpecificationAction', () => {
             "valueTypes": Array [],
           },
         },
+        "valueTypes": Array [],
       }
     `);
   });
 
   test('one entity type', () => {
     const initialState = initializeSchemaEditorState();
-    const emptySchemaState = reduceSchemaEditorState(
+    const schemaState = reduceSchemaEditorState(
       initialState,
       new SchemaEditorActions.UpdateSchemaSpecification(
         new AdminSchema({
@@ -55,7 +57,7 @@ describe('UpdateSchemaSpecificationAction', () => {
         })
       )
     );
-    expect(emptySchemaState).toMatchInlineSnapshot(`
+    expect(schemaState).toMatchInlineSnapshot(`
       Object {
         "entityTypes": Array [
           Object {
@@ -65,6 +67,7 @@ describe('UpdateSchemaSpecificationAction', () => {
               },
             ],
             "name": "TitleOnly",
+            "type": "entity",
           },
         ],
         "schema": AdminSchema {
@@ -84,6 +87,59 @@ describe('UpdateSchemaSpecificationAction', () => {
             "valueTypes": Array [],
           },
         },
+        "valueTypes": Array [],
+      }
+    `);
+  });
+
+  test('one value type', () => {
+    const initialState = initializeSchemaEditorState();
+    const schemaState = reduceSchemaEditorState(
+      initialState,
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        new AdminSchema({
+          entityTypes: [],
+          valueTypes: [
+            {
+              name: 'TitleOnly',
+              adminOnly: false,
+              fields: [{ name: 'title', type: FieldType.String }],
+            },
+          ],
+        })
+      )
+    );
+    expect(schemaState).toMatchInlineSnapshot(`
+      Object {
+        "entityTypes": Array [],
+        "schema": AdminSchema {
+          "spec": Object {
+            "entityTypes": Array [],
+            "valueTypes": Array [
+              Object {
+                "adminOnly": false,
+                "fields": Array [
+                  Object {
+                    "name": "title",
+                    "type": "String",
+                  },
+                ],
+                "name": "TitleOnly",
+              },
+            ],
+          },
+        },
+        "valueTypes": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "name": "title",
+              },
+            ],
+            "name": "TitleOnly",
+            "type": "value",
+          },
+        ],
       }
     `);
   });
