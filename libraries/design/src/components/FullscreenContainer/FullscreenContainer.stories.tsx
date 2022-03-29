@@ -42,6 +42,49 @@ Normal.args = {
   ),
 };
 
+export const StickyRows = Template.bind({});
+StickyRows.args = {
+  children: (
+    <>
+      <FullscreenContainer.Row>
+        <div style={{ height: 100 }} />
+      </FullscreenContainer.Row>
+      <FullscreenContainer.ScrollableRow>
+        <FullscreenContainer.Row>
+          <div style={{ height: 100 }} />
+        </FullscreenContainer.Row>
+        <FullscreenContainer.Row sticky>
+          <div style={{ height: 100, backgroundColor: 'deeppink' }} />
+        </FullscreenContainer.Row>
+        <FullscreenContainer.Row>
+          <div
+            style={{
+              background:
+                'repeating-linear-gradient(45deg, burlywood, burlywood 10px, transparent 10px, transparent 40px)',
+              height: '30vh',
+            }}
+          />
+        </FullscreenContainer.Row>
+        <FullscreenContainer.Row sticky fullWidth>
+          <div style={{ height: 100, backgroundColor: 'greenyellow' }} />
+        </FullscreenContainer.Row>
+        <FullscreenContainer.Row>
+          <div
+            style={{
+              background:
+                'repeating-linear-gradient(45deg, burlywood, burlywood 10px, transparent 10px, transparent 40px)',
+              height: '100vh',
+            }}
+          />
+        </FullscreenContainer.Row>
+      </FullscreenContainer.ScrollableRow>
+      <FullscreenContainer.Row>
+        <div style={{ height: 100 }} />
+      </FullscreenContainer.Row>
+    </>
+  ),
+};
+
 export const RowTypes = Template.bind({});
 RowTypes.args = {
   children: (
