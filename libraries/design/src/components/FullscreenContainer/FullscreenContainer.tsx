@@ -16,6 +16,7 @@ export interface FullscreenContainerRowProps extends PaddingProps, GapProps, Fle
   center?: boolean;
   fullWidth?: boolean;
   fillHeight?: boolean;
+  sticky?: boolean;
   children: React.ReactNode;
 }
 
@@ -49,19 +50,30 @@ FullscreenContainer.Row = ({
   center,
   fullWidth,
   fillHeight,
+  sticky,
   children,
   ...props
 }: FullscreenContainerRowProps) => {
   const width = !fullWidth && !center ? '100%' : undefined; // .container centers by default
   const height = fillHeight ? 0 : undefined;
+  const addStickyFullWidthWrapper = sticky && !fullWidth;
 
   const className = toClassName(
     !fullWidth && 'is-flex-grow-0 container',
     fillHeight && 'is-flex-grow-1',
+    sticky && !addStickyFullWidthWrapper && 'is-sticky-row',
     toSizeClassName({ width, height }),
     toFlexContainerClassName(props),
     toSpacingClassName(props)
   );
+
+  if (addStickyFullWidthWrapper) {
+    return (
+      <div className="is-sticky-row">
+        <div className={className}>{children}</div>
+      </div>
+    );
+  }
   return <div className={className}>{children}</div>;
 };
 FullscreenContainer.Row.displayName = 'FullscreenContainer.Row';
