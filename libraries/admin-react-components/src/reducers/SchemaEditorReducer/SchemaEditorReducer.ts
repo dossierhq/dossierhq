@@ -1,4 +1,4 @@
-import type { AdminSchema } from '@jonasb/datadata-core';
+import type { AdminSchema, FieldType } from '@jonasb/datadata-core';
 
 export interface SchemaTypeDraft {
   name: string;
@@ -15,6 +15,8 @@ export interface SchemaValueTypeDraft extends SchemaTypeDraft {
 
 export interface SchemaFieldDraft {
   name: string;
+  type: FieldType;
+  list: boolean;
 }
 
 export interface SchemaEditorState {
@@ -54,16 +56,20 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
     const entityTypes = this.schema.spec.entityTypes.map<SchemaEntityTypeDraft>((entityType) => ({
       type: 'entity',
       name: entityType.name,
-      fields: entityType.fields.map((field) => ({
+      fields: entityType.fields.map<SchemaFieldDraft>((field) => ({
         name: field.name,
+        type: field.type as FieldType,
+        list: !!field.list,
       })),
     }));
 
     const valueTypes = this.schema.spec.valueTypes.map<SchemaValueTypeDraft>((valueType) => ({
       type: 'value',
       name: valueType.name,
-      fields: valueType.fields.map((field) => ({
+      fields: valueType.fields.map<SchemaFieldDraft>((field) => ({
         name: field.name,
+        type: field.type as FieldType,
+        list: !!field.list,
       })),
     }));
 
