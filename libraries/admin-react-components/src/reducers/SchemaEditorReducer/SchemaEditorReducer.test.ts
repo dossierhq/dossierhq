@@ -59,6 +59,11 @@ describe('UpdateSchemaSpecificationAction', () => {
       Object {
         "entityTypes": Array [
           Object {
+            "fields": Array [
+              Object {
+                "name": "title",
+              },
+            ],
             "name": "TitleOnly",
           },
         ],
