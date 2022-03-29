@@ -2,6 +2,11 @@ import type { AdminSchema } from '@jonasb/datadata-core';
 
 export interface EntityTypeDraft {
   name: string;
+  fields: FieldDraft[];
+}
+
+export interface FieldDraft {
+  name: string;
 }
 
 export interface SchemaEditorState {
@@ -39,6 +44,9 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
   reduce(state: Readonly<SchemaEditorState>): Readonly<SchemaEditorState> {
     const entityTypes = this.schema.spec.entityTypes.map((entityType) => ({
       name: entityType.name,
+      fields: entityType.fields.map((field) => ({
+        name: field.name,
+      })),
     }));
 
     if (state.schema) return state; //TODO handle update to schema
