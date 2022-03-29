@@ -1,7 +1,12 @@
-import { FullscreenContainer } from '@jonasb/datadata-design';
+import { FullscreenContainer, Text } from '@jonasb/datadata-design';
+import type { Dispatch } from 'react';
 import React, { useContext, useEffect, useReducer } from 'react';
 import { DataDataContext2 } from '../..';
-import { SchemaEditor } from '../../components/SchemaEditor/SchemaEditor';
+import { SchemaTypeEditor } from '../../components/SchemaTypeEditor/SchemaTypeEditor';
+import type {
+  SchemaEditorStateAction,
+  SchemaTypeDraft,
+} from '../../reducers/SchemaEditorReducer/SchemaEditorReducer';
 import {
   initializeSchemaEditorState,
   reduceSchemaEditorState,
@@ -31,11 +36,41 @@ export function SchemaEditorScreen({ header, footer }: SchemaEditorScreenProps) 
     <FullscreenContainer>
       {header ? <FullscreenContainer.Row fullWidth>{header}</FullscreenContainer.Row> : null}
       <FullscreenContainer.ScrollableRow>
-        <FullscreenContainer.Row>
-          <SchemaEditor {...{ schemaEditorState, dispatchSchemaEditorState }} />
-        </FullscreenContainer.Row>
+        {schemaEditorState.entityTypes.map((entityType) => (
+          <TypeEditor
+            key={entityType.name}
+            type={entityType}
+            dispatchSchemaEditorState={dispatchSchemaEditorState}
+          />
+        ))}
+        {schemaEditorState.valueTypes.map((valueType) => (
+          <TypeEditor
+            key={valueType.name}
+            type={valueType}
+            dispatchSchemaEditorState={dispatchSchemaEditorState}
+          />
+        ))}
       </FullscreenContainer.ScrollableRow>
       {footer ? <FullscreenContainer.Row fullWidth>{footer}</FullscreenContainer.Row> : null}
     </FullscreenContainer>
+  );
+}
+
+function TypeEditor({
+  type,
+  dispatchSchemaEditorState,
+}: {
+  type: SchemaTypeDraft;
+  dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>;
+}) {
+  return (
+    <>
+      <FullscreenContainer.Row sticky>
+        <Text textStyle="headline4">{type.name}</Text>
+      </FullscreenContainer.Row>
+      <FullscreenContainer.Row gap={3} paddingVertical={3}>
+        <SchemaTypeEditor type={type} dispatchSchemaEditorState={dispatchSchemaEditorState} />
+      </FullscreenContainer.Row>
+    </>
   );
 }
