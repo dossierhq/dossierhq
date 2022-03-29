@@ -1,4 +1,5 @@
-import type { AdminSchema, FieldType } from '@jonasb/datadata-core';
+import type { AdminSchema } from '@jonasb/datadata-core';
+import { FieldType } from '@jonasb/datadata-core';
 
 export interface SchemaTypeDraft {
   name: string;
@@ -43,6 +44,36 @@ export function reduceSchemaEditorState(
   return newState;
 }
 
+// ACTION HELPERS
+
+abstract class EntityTypeAction implements SchemaEditorStateAction {
+  entityTypeName: string;
+
+  constructor(entityTypeName: string) {
+    this.entityTypeName = entityTypeName;
+  }
+
+  reduce(state: Readonly<SchemaEditorState>): Readonly<SchemaEditorState> {
+    const entityTypeIndex = state.entityTypes.findIndex((it) => it.name === this.entityTypeName);
+    if (entityTypeIndex < 0) throw new Error(`No such entity type ${this.entityTypeName}`);
+    const currentEntityType = state.entityTypes[entityTypeIndex];
+
+    const newEntityType = this.reduceEntityType(currentEntityType);
+    if (newEntityType === currentEntityType) {
+      return state;
+    }
+
+    const entityTypes = [...state.entityTypes];
+    entityTypes[entityTypeIndex] = newEntityType;
+
+    return { ...state, entityTypes };
+  }
+
+  abstract reduceEntityType(
+    entityType: Readonly<SchemaEntityTypeDraft>
+  ): Readonly<SchemaEntityTypeDraft>;
+}
+
 // ACTIONS
 
 class AddEntityTypeAction implements SchemaEditorStateAction {
@@ -57,6 +88,27 @@ class AddEntityTypeAction implements SchemaEditorStateAction {
     const entityTypes = [...state.entityTypes, entityType];
     entityTypes.sort((a, b) => a.name.localeCompare(b.name));
     return { ...state, entityTypes };
+  }
+}
+
+class AddEntityTypeFieldAction extends EntityTypeAction {
+  fieldName: string;
+
+  constructor(entityTypeName: string, fieldName: string) {
+    super(entityTypeName);
+    this.fieldName = fieldName;
+  }
+
+  reduceEntityType(entityType: Readonly<SchemaEntityTypeDraft>): Readonly<SchemaEntityTypeDraft> {
+    const field: SchemaFieldDraft = {
+      name: this.fieldName,
+      type: FieldType.String,
+      list: false,
+    };
+
+    const fields = [...entityType.fields, field];
+
+    return { ...entityType, fields };
   }
 }
 
@@ -96,5 +148,6 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
 
 export const SchemaEditorActions = {
   AddEntityType: AddEntityTypeAction,
+  AddEntityTypeField: AddEntityTypeFieldAction,
   UpdateSchemaSpecification: UpdateSchemaSpecificationAction,
 };

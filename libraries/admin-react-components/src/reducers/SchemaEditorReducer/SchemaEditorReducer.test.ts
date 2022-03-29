@@ -77,6 +77,35 @@ describe('AddEntityTypeAction', () => {
   });
 });
 
+describe('AddEntityTypeFieldAction', () => {
+  test('add type', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.AddEntityType('Foo'),
+      new SchemaEditorActions.AddEntityTypeField('Foo', 'bar')
+    );
+    expect(state).toMatchInlineSnapshot(`
+      Object {
+        "entityTypes": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "list": false,
+                "name": "bar",
+                "type": "String",
+              },
+            ],
+            "name": "Foo",
+            "type": "entity",
+          },
+        ],
+        "schema": null,
+        "valueTypes": Array [],
+      }
+    `);
+  });
+});
+
 describe('UpdateSchemaSpecificationAction', () => {
   test('add empty schema', () => {
     const emptySchemaState = reduceSchemaEditorState(

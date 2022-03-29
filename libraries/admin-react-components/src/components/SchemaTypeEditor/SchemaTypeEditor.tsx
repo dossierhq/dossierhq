@@ -1,21 +1,28 @@
 import type { FieldType } from '@jonasb/datadata-core';
-import { Card, Field, SelectDisplay } from '@jonasb/datadata-design';
+import { Button, Card, Field, SelectDisplay } from '@jonasb/datadata-design';
 import type { Dispatch } from 'react';
-import React from 'react';
-import type {
-  SchemaEditorStateAction,
-  SchemaFieldDraft,
-  SchemaTypeDraft,
-} from '../../reducers/SchemaEditorReducer/SchemaEditorReducer';
+import React, { useCallback } from 'react';
+import type * as SchemaEditorReducer from '../../reducers/SchemaEditorReducer/SchemaEditorReducer';
+import { SchemaEditorActions } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer';
 
 interface Props {
-  type: SchemaTypeDraft;
-  dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>;
+  type: SchemaEditorReducer.SchemaEntityTypeDraft | SchemaEditorReducer.SchemaValueTypeDraft;
+  dispatchSchemaEditorState: Dispatch<SchemaEditorReducer.SchemaEditorStateAction>;
 }
 
-export function SchemaTypeEditor({ type, dispatchSchemaEditorState: _unused }: Props) {
+export function SchemaTypeEditor({ type, dispatchSchemaEditorState }: Props) {
   return (
     <>
+      {type.type === 'entity' ? (
+        <Field>
+          <Field.Control>
+            <AddFieldButton
+              entityTypeName={type.name}
+              dispatchSchemaEditorState={dispatchSchemaEditorState}
+            />
+          </Field.Control>
+        </Field>
+      ) : null}
       {type.fields.map((field) => (
         <SchemaFieldEditor key={field.name} field={field} />
       ))}
@@ -23,7 +30,25 @@ export function SchemaTypeEditor({ type, dispatchSchemaEditorState: _unused }: P
   );
 }
 
-function SchemaFieldEditor({ field }: { field: SchemaFieldDraft }) {
+function AddFieldButton({
+  entityTypeName,
+  dispatchSchemaEditorState,
+}: {
+  entityTypeName: string;
+  dispatchSchemaEditorState: Dispatch<SchemaEditorReducer.SchemaEditorStateAction>;
+}) {
+  const handleClick = useCallback(() => {
+    const fieldName = window.prompt('Field name?');
+    if (fieldName) {
+      dispatchSchemaEditorState(
+        new SchemaEditorActions.AddEntityTypeField(entityTypeName, fieldName)
+      );
+    }
+  }, [dispatchSchemaEditorState, entityTypeName]);
+  return <Button onClick={handleClick}>Add field</Button>;
+}
+
+function SchemaFieldEditor({ field }: { field: SchemaEditorReducer.SchemaFieldDraft }) {
   return (
     <Card>
       <Card.Header>{field.name}</Card.Header>

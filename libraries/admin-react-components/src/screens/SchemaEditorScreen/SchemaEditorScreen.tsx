@@ -5,7 +5,8 @@ import { DataDataContext2 } from '../..';
 import { SchemaTypeEditor } from '../../components/SchemaTypeEditor/SchemaTypeEditor';
 import type {
   SchemaEditorStateAction,
-  SchemaTypeDraft,
+  SchemaEntityTypeDraft,
+  SchemaValueTypeDraft,
 } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer';
 import {
   initializeSchemaEditorState,
@@ -77,7 +78,7 @@ function TypeEditorRows({
   type,
   dispatchSchemaEditorState,
 }: {
-  type: SchemaTypeDraft;
+  type: SchemaEntityTypeDraft | SchemaValueTypeDraft;
   dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>;
 }) {
   return (
