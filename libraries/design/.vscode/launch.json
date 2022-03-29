@@ -7,7 +7,7 @@
     {
       "type": "pwa-chrome",
       "request": "launch",
-      "name": "Chrome localhost:6007",
+      "name": "Chrome :6007",
       "url": "http://localhost:6007",
       "webRoot": "${workspaceFolder}"
     }
