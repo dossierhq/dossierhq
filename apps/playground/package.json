@@ -5,7 +5,7 @@
   "scripts": {
     "start": "vite --force --port 3002",
     "build": "tsc && vite build",
-    "preview": "vite --force --port 3002 preview"
+    "preview": "vite --port 3002 preview"
   },
   "dependencies": {
     "@jonasb/datadata-admin-react-components": "workspace:*",

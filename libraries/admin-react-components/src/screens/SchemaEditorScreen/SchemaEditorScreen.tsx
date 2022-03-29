@@ -4,11 +4,13 @@ import React, { useCallback, useContext, useEffect, useReducer } from 'react';
 import { DataDataContext2 } from '../..';
 import { SchemaTypeEditor } from '../../components/SchemaTypeEditor/SchemaTypeEditor';
 import type {
+  SchemaEditorState,
   SchemaEditorStateAction,
   SchemaEntityTypeDraft,
   SchemaValueTypeDraft,
 } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer';
 import {
+  getSchemaSpecificationUpdateFromEditorState,
   initializeSchemaEditorState,
   reduceSchemaEditorState,
   SchemaEditorActions,
@@ -39,6 +41,10 @@ export function SchemaEditorScreen({ header, footer }: SchemaEditorScreenProps) 
       <FullscreenContainer.ScrollableRow>
         <FullscreenContainer.Row flexDirection="row" paddingVertical={5}>
           <AddEntityTypeButton dispatchSchemaEditorState={dispatchSchemaEditorState} />
+          <SaveSchemaButton
+            schemaEditorState={schemaEditorState}
+            dispatchSchemaEditorState={dispatchSchemaEditorState}
+          />
         </FullscreenContainer.Row>
         {schemaEditorState.entityTypes.map((entityType) => (
           <TypeEditorRows
@@ -58,6 +64,21 @@ export function SchemaEditorScreen({ header, footer }: SchemaEditorScreenProps) 
       {footer ? <FullscreenContainer.Row fullWidth>{footer}</FullscreenContainer.Row> : null}
     </FullscreenContainer>
   );
+}
+
+function SaveSchemaButton({
+  schemaEditorState,
+  dispatchSchemaEditorState: _,
+}: {
+  schemaEditorState: SchemaEditorState;
+  dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>;
+}) {
+  const { adminClient } = useContext(DataDataContext2);
+  const handleClick = useCallback(() => {
+    const schemaSpecUpdate = getSchemaSpecificationUpdateFromEditorState(schemaEditorState);
+    adminClient.updateSchemaSpecification(schemaSpecUpdate);
+  }, [adminClient, schemaEditorState]);
+  return <Button onClick={handleClick}>Save schema</Button>;
 }
 
 function AddEntityTypeButton({
