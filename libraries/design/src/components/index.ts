@@ -30,6 +30,7 @@ export { InstantDisplay } from './InstantDisplay/InstantDisplay.js';
 export { Level } from './Level/Level.js';
 export { NavBar } from './NavBar/NavBar.js';
 export { Scrollable } from './Scrollable/Scrollable.js';
+export { SelectDisplay } from './SelectDisplay/SelectDisplay.js';
 export { Table } from './Table/Table.js';
 export { Tag } from './Tag/Tag.js';
 export type { TagProps } from './Tag/Tag.js';

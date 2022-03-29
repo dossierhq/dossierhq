@@ -17,6 +17,7 @@ export {
   MultipleSelectorStateActions,
   NavBar,
   reduceMultipleSelectorState,
+  SelectDisplay,
   Table,
   Tag,
   TagSelector,
