@@ -63,7 +63,9 @@ describe('UpdateSchemaSpecificationAction', () => {
           Object {
             "fields": Array [
               Object {
+                "list": false,
                 "name": "title",
+                "type": "String",
               },
             ],
             "name": "TitleOnly",
@@ -133,7 +135,9 @@ describe('UpdateSchemaSpecificationAction', () => {
           Object {
             "fields": Array [
               Object {
+                "list": false,
                 "name": "title",
+                "type": "String",
               },
             ],
             "name": "TitleOnly",
