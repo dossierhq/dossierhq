@@ -16,6 +16,7 @@ export {
   Level,
   MultipleSelectorStateActions,
   NavBar,
+  NotificationContainer,
   reduceMultipleSelectorState,
   SelectDisplay,
   Table,
@@ -32,5 +33,6 @@ export type {
   MultipleSelectorStateAction,
 } from './components/index.js';
 export { StatusColor } from './config/Colors.js';
+export { NotificationContext } from './contexts/NotificationContext.js';
 export { toSizeClassName } from './utils/LayoutPropsUtils.js';
 export type { TextStyle } from './utils/TextStylePropsUtils.js';
