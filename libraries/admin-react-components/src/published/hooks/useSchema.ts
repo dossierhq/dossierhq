@@ -2,13 +2,14 @@ import type { ErrorResult, ErrorType, PublishedClient } from '@jonasb/datadata-c
 import { PublishedSchema } from '@jonasb/datadata-core';
 import { useCallback } from 'react';
 import useSWR from 'swr';
+import { CACHE_KEYS } from '../../utils/CacheUtils';
 
 export function useSchema(publishedClient: PublishedClient): {
   schema: PublishedSchema | undefined;
   schemaError: ErrorResult<unknown, ErrorType.Generic> | undefined;
 } {
   const fetcher = useCallback((_action: string) => fetchSchema(publishedClient), [publishedClient]);
-  const { data, error } = useSWR('datadata/published/useSchema', fetcher);
+  const { data, error } = useSWR(CACHE_KEYS.publishedSchema, fetcher);
 
   // useDebugLogChangedValues('useSchema changed values', { data, error });
 

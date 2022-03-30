@@ -2,13 +2,14 @@ import type { AdminClient, ErrorResult, ErrorType } from '@jonasb/datadata-core'
 import { AdminSchema } from '@jonasb/datadata-core';
 import { useCallback } from 'react';
 import useSWR from 'swr';
+import { CACHE_KEYS } from '../utils/CacheUtils';
 
 export function useSchema(adminClient: AdminClient): {
   schema: AdminSchema | undefined;
   schemaError: ErrorResult<unknown, ErrorType.Generic> | undefined;
 } {
   const fetcher = useCallback((_action: string) => fetchSchema(adminClient), [adminClient]);
-  const { data, error } = useSWR('datadata/admin/useSchema', fetcher);
+  const { data, error } = useSWR(CACHE_KEYS.adminSchema, fetcher);
 
   // useDebugLogChangedValues('useSchema changed values', { data, error });
 
