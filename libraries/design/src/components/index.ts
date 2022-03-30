@@ -29,6 +29,7 @@ export { Input } from './Input/Input.js';
 export { InstantDisplay } from './InstantDisplay/InstantDisplay.js';
 export { Level } from './Level/Level.js';
 export { NavBar } from './NavBar/NavBar.js';
+export { NotificationContainer } from './NotificationContainer/NotificationContainer.js';
 export { Scrollable } from './Scrollable/Scrollable.js';
 export { SelectDisplay } from './SelectDisplay/SelectDisplay.js';
 export { Table } from './Table/Table.js';

@@ -79,3 +79,19 @@ tr.is-sticky-row :is(td, th),
     margin-bottom: 0 !important;
   }
 }
+
+.isolation-isolate {
+  isolation: isolate;
+}
+
+.notification-center {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  right: 1rem;
+  max-width: 40rem;
+  max-height: 80vh;
+  margin-left: auto;
+  margin-right: auto;
+  overflow-y: auto;
+}
