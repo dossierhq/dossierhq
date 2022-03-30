@@ -1,6 +1,7 @@
 import { Button, FullscreenContainer, Text } from '@jonasb/datadata-design';
 import type { Dispatch } from 'react';
 import React, { useCallback, useContext, useEffect, useReducer } from 'react';
+import { useSWRConfig } from 'swr';
 import { DataDataContext2 } from '../..';
 import { SchemaTypeEditor } from '../../components/SchemaTypeEditor/SchemaTypeEditor';
 import type {
@@ -15,6 +16,7 @@ import {
   reduceSchemaEditorState,
   SchemaEditorActions,
 } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer';
+import { updateCacheSchemas } from '../../utils/CacheUtils';
 
 export interface SchemaEditorScreenProps {
   header?: React.ReactNode;
@@ -74,10 +76,17 @@ function SaveSchemaButton({
   dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>;
 }) {
   const { adminClient } = useContext(DataDataContext2);
-  const handleClick = useCallback(() => {
+  const { cache, mutate } = useSWRConfig();
+  const handleClick = useCallback(async () => {
     const schemaSpecUpdate = getSchemaSpecificationUpdateFromEditorState(schemaEditorState);
-    adminClient.updateSchemaSpecification(schemaSpecUpdate);
-  }, [adminClient, schemaEditorState]);
+    const result = await adminClient.updateSchemaSpecification(schemaSpecUpdate);
+    // TODO handle error
+    // TODO show success
+    // TODO reset state
+    if (result.isOk()) {
+      updateCacheSchemas(cache, mutate, result.value.schemaSpecification);
+    }
+  }, [adminClient, cache, mutate, schemaEditorState]);
   return <Button onClick={handleClick}>Save schema</Button>;
 }
 
