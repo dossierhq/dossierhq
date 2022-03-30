@@ -10,6 +10,7 @@ export interface NotificationContainerProps {
 
 interface NotificationState extends NotificationInfo {
   id: number;
+  hideHandle: number;
 }
 
 const COLOR_CLASSNAMES = {
@@ -21,16 +22,32 @@ export function NotificationContainer({ children }: NotificationContainerProps) 
   const notificationId = useRef(1);
   const [notifications, setNotifications] = useState<NotificationState[]>([]);
 
-  const showNotification = useCallback((notification: NotificationInfo) => {
-    setNotifications((prevNotifications) => [
-      ...prevNotifications,
-      { id: notificationId.current++, ...notification },
-    ]);
+  const hideNotification = useCallback((id: number) => {
+    setNotifications((prevNotifications) => {
+      const newNotifications = [...prevNotifications];
+      const notificationIndex = newNotifications.findIndex((it) => it.id === id);
+      if (notificationIndex >= 0) {
+        clearTimeout(newNotifications[notificationIndex].hideHandle);
+      }
+      newNotifications.splice(notificationIndex, 1);
+
+      return newNotifications;
+    });
   }, []);
 
-  const hideNotification = useCallback((id: number) => {
-    setNotifications((prevNotifications) => [...prevNotifications].filter((it) => it.id !== id));
-  }, []);
+  const showNotification = useCallback(
+    (notification: NotificationInfo) => {
+      const id = notificationId.current++;
+      const hideHandle = setTimeout(() => {
+        hideNotification(id);
+      }, 2_000);
+      setNotifications((prevNotifications) => [
+        ...prevNotifications,
+        { id, hideHandle, ...notification },
+      ]);
+    },
+    [hideNotification]
+  );
 
   return (
     <NotificationContext.Provider value={{ showNotification }}>
