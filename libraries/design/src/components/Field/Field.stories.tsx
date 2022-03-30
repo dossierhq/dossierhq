@@ -1,5 +1,6 @@
 import type { Meta, Story } from '@storybook/react/types-6-0.js';
 import React from 'react';
+import { Button } from '../Button/Button.js';
 import { Input } from '../index.js';
 import type { FieldProps } from './Field.js';
 import { Field } from './Field.js';
@@ -34,6 +35,24 @@ SmallLabel.args = {
       <Field.Label size="small">Label</Field.Label>
       <Field.Control>
         <Input />
+      </Field.Control>
+    </>
+  ),
+};
+
+export const GroupedControls = Template.bind({});
+GroupedControls.args = {
+  grouped: true,
+  children: (
+    <>
+      <Field.Control>
+        <Button>One</Button>
+      </Field.Control>
+      <Field.Control>
+        <Input />
+      </Field.Control>
+      <Field.Control>
+        <Button>Three</Button>
       </Field.Control>
     </>
   ),

@@ -3,6 +3,7 @@ import React from 'react';
 import { toClassName } from '../../utils/ClassNameUtils';
 
 export interface FieldProps {
+  grouped?: boolean;
   horizontal?: boolean;
   children: React.ReactNode;
 }
@@ -37,8 +38,12 @@ const LABEL_SIZE_CLASSNAMES = {
   large: 'is-large',
 };
 
-export const Field: FieldComponent = ({ horizontal, children }: FieldProps) => {
-  return <div className={toClassName('field', horizontal && 'is-horizontal')}>{children}</div>;
+export const Field: FieldComponent = ({ grouped, horizontal, children }: FieldProps) => {
+  return (
+    <div className={toClassName('field', grouped && 'is-grouped', horizontal && 'is-horizontal')}>
+      {children}
+    </div>
+  );
 };
 Field.displayName = 'Field';
 
