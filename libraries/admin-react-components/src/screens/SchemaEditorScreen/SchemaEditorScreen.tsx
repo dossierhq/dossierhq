@@ -1,4 +1,4 @@
-import { Button, FullscreenContainer, Text } from '@jonasb/datadata-design';
+import { Button, FullscreenContainer, NotificationContext, Text } from '@jonasb/datadata-design';
 import type { Dispatch } from 'react';
 import React, { useCallback, useContext, useEffect, useReducer } from 'react';
 import { useSWRConfig } from 'swr';
@@ -76,17 +76,19 @@ function SaveSchemaButton({
   dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>;
 }) {
   const { adminClient } = useContext(DataDataContext2);
+  const { showNotification } = useContext(NotificationContext);
   const { cache, mutate } = useSWRConfig();
   const handleClick = useCallback(async () => {
     const schemaSpecUpdate = getSchemaSpecificationUpdateFromEditorState(schemaEditorState);
     const result = await adminClient.updateSchemaSpecification(schemaSpecUpdate);
-    // TODO handle error
-    // TODO show success
     // TODO reset state
     if (result.isOk()) {
+      showNotification({ color: 'success', message: 'Updated schema.' });
       updateCacheSchemas(cache, mutate, result.value.schemaSpecification);
+    } else {
+      showNotification({ color: 'error', message: 'Failed saving schema.' });
     }
-  }, [adminClient, cache, mutate, schemaEditorState]);
+  }, [adminClient, cache, mutate, schemaEditorState, showNotification]);
   return <Button onClick={handleClick}>Save schema</Button>;
 }
 

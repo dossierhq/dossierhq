@@ -2,6 +2,7 @@ import type {
   AdminEntityTypeSpecification,
   AdminValueTypeSpecification,
 } from '@jonasb/datadata-core';
+import { NotificationContainer } from '@jonasb/datadata-design';
 import type { Meta, Story } from '@storybook/react/types-6-0';
 import React, { useContext } from 'react';
 import { DataDataContext2 } from '../../contexts/DataDataContext2';
@@ -27,7 +28,9 @@ const Template: Story<StoryProps> = (args) => {
 function Wrapper(props: StoryProps) {
   return (
     <LoadContextProvider>
-      <SchemaEditorScreen {...props} />
+      <NotificationContainer>
+        <SchemaEditorScreen {...props} />
+      </NotificationContainer>
     </LoadContextProvider>
   );
 }
