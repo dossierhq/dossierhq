@@ -1,5 +1,5 @@
 import type { Meta, Story } from '@storybook/react/types-6-0.js';
-import React, { useContext } from 'react';
+import React, { useContext, useRef } from 'react';
 import { NotificationContext } from '../../contexts/NotificationContext.js';
 import { Button } from '../Button/Button.js';
 import { Column } from '../Column/Column.js';
@@ -52,15 +52,28 @@ Normal.args = {
 };
 
 function ShowNotificationButton() {
+  const countRef = useRef(0);
   const { showNotification } = useContext(NotificationContext);
   return (
     <>
       <Button
-        onClick={() => showNotification({ color: 'success', message: 'Notification message' })}
+        onClick={() =>
+          showNotification({
+            color: 'success',
+            message: `Notification message: ${countRef.current++}`,
+          })
+        }
       >
         Show success
       </Button>
-      <Button onClick={() => showNotification({ color: 'error', message: 'Notification message' })}>
+      <Button
+        onClick={() =>
+          showNotification({
+            color: 'error',
+            message: `Notification message: ${countRef.current++}`,
+          })
+        }
+      >
         Show error
       </Button>
     </>
