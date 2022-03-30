@@ -3,6 +3,7 @@ import '@jonasb/datadata-admin-react-components/icons.css';
 import '@jonasb/datadata-design/main.css';
 import 'graphql-voyager/dist/voyager.css';
 import 'leaflet/dist/leaflet.css';
+import { NotificationContainer } from '@jonasb/datadata-design';
 
 function MyApp({
   Component,
@@ -12,7 +13,11 @@ function MyApp({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   pageProps: any;
 }): JSX.Element {
-  return <Component {...pageProps} />;
+  return (
+    <NotificationContainer>
+      <Component {...pageProps} />
+    </NotificationContainer>
+  );
 }
 
 export default MyApp;
