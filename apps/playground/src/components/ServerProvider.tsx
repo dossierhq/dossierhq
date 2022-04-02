@@ -43,21 +43,6 @@ async function initializeServer(): PromiseResult<Server, ErrorType.BadRequest | 
       databaseAdapter: adapterResult.value,
       authorizationAdapter: NoneAndSubjectAuthorizationAdapter,
     });
-    if (serverResult.isError()) return serverResult;
-    const server = serverResult.value;
-
-    const adminClient = server.createAdminClient(() =>
-      server.createSession({
-        provider: 'sys',
-        identifier: 'johndoe',
-        defaultAuthKeys: [],
-      })
-    );
-    const schemaResult = await adminClient.updateSchemaSpecification({
-      entityTypes: [{ name: 'TitleOnly', fields: [{ name: 'title', type: 'String' }] }],
-    });
-    if (schemaResult.isError()) return schemaResult;
-
     return serverResult;
   } catch (error) {
     return notOk.GenericUnexpectedException({ logger: SERVER_LOGGER }, error);
