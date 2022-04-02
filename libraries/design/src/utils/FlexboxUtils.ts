@@ -3,6 +3,7 @@ import { toClassName } from './ClassNameUtils.js';
 export interface FlexContainerProps {
   flexDirection?: 'column' | 'row';
   alignItems?: 'center';
+  justifyContent?: 'center';
 }
 
 const flexDirectionClassNames = {
@@ -14,13 +15,19 @@ const alignItemsClassNames = {
   center: 'is-align-items-center',
 };
 
+const justifyContentClassNames = {
+  center: 'is-justify-content-center',
+};
+
 export function toFlexContainerClassName({
   flexDirection,
   alignItems,
+  justifyContent,
 }: FlexContainerProps): string {
   return toClassName(
     'is-flex',
     flexDirection && flexDirectionClassNames[flexDirection],
-    alignItems && alignItemsClassNames[alignItems]
+    alignItems && alignItemsClassNames[alignItems],
+    justifyContent && justifyContentClassNames[justifyContent]
   );
 }
