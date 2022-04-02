@@ -29,6 +29,10 @@ tr.is-sticky-row :is(td, th),
   height: 100%;
 }
 
+.is-max-width-40rem {
+  max-width: 40rem;
+}
+
 @each $name, $value in $spacing-values {
   .g-#{$name} {
     #{gap}: $value !important ;
@@ -89,7 +93,6 @@ tr.is-sticky-row :is(td, th),
   top: 1rem;
   left: 1rem;
   right: 1rem;
-  max-width: 40rem;
   max-height: 80vh;
   margin-left: auto;
   margin-right: auto;

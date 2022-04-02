@@ -53,7 +53,7 @@ export function NotificationContainer({ children }: NotificationContainerProps) 
     <NotificationContext.Provider value={{ showNotification }}>
       <div className="isolation-isolate">{children}</div>
       {notifications.length > 0 ? (
-        <div className="notification-center isolation-isolate">
+        <div className="notification-center isolation-isolate is-max-width-40rem">
           {notifications.map((notification) => (
             <div
               key={notification.id}

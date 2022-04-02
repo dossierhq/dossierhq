@@ -20,6 +20,7 @@ export type {
   MultipleSelectorStateAction,
   MultipleSelectorStateInitializerArgs,
 } from './DropdownSelector/MultipleSelectorReducer.js';
+export { EmptyStateMessage } from './EmptyStateMessage/EmptyStateMessage.js';
 export { Field } from './Field/Field.js';
 export { FullscreenContainer } from './FullscreenContainer/FullscreenContainer.js';
 export { Icon } from './Icon/Icon.js';
