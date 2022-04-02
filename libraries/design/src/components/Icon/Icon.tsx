@@ -16,13 +16,13 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
-import { Icon as BulmaIcon } from 'react-bulma-components';
 import { toClassName } from '../../utils/ClassNameUtils.js';
 
 export interface IconProps {
   className?: string;
   icon?: IconName | null;
   text?: boolean;
+  size?: 'small' | '' | 'medium' | 'large';
 }
 
 const icons = {
@@ -44,12 +44,26 @@ const icons = {
 
 export type IconName = keyof typeof icons;
 
-export function Icon({ className, icon, text }: IconProps): JSX.Element {
+const containerSize = {
+  small: 'is-small',
+  medium: 'is-medium',
+  large: 'is-large',
+};
+
+const iconSize = {
+  small: 'sm',
+  medium: 'lg',
+  large: '2x',
+} as const;
+
+export function Icon({ className, icon, text, size }: IconProps): JSX.Element {
   const iconImage = icon ? icons[icon] : null;
   const bulmaIcon = (
-    <BulmaIcon className={!text ? className : undefined}>
-      {iconImage ? <FontAwesomeIcon icon={iconImage} /> : null}
-    </BulmaIcon>
+    <span className={toClassName('icon', size && containerSize[size], !text && className)}>
+      {iconImage ? (
+        <FontAwesomeIcon icon={iconImage} size={size ? iconSize[size] : undefined} />
+      ) : null}
+    </span>
   );
   if (text) {
     return <span className={toClassName(className, 'icon-text')}>{bulmaIcon}</span>;
