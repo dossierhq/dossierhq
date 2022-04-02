@@ -11,7 +11,8 @@ interface StoryProps extends IconProps {
 const meta: Meta<StoryProps> = {
   title: 'Components/Icon',
   component: Icon,
-  args: {},
+  args: { icon: 'list' },
+  parameters: { layout: 'centered' },
 };
 export default meta;
 
@@ -25,7 +26,11 @@ const Template: Story<StoryProps> = ({ prefixText, suffixText, ...args }: StoryP
       </p>
     );
   }
-  return <Icon {...args} />;
+  return (
+    <div style={{ backgroundColor: '#1111' }}>
+      <Icon {...args} />
+    </div>
+  );
 };
 
 export const Normal = Template.bind({});
@@ -36,3 +41,6 @@ Empty.args = { icon: null };
 
 export const TextIcon = Template.bind({});
 TextIcon.args = { icon: 'map', text: true, prefixText: 'Icon in', suffixText: 'text' };
+
+export const SizeLarge = Template.bind({});
+SizeLarge.args = { size: 'large' };
