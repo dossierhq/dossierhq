@@ -1,4 +1,10 @@
-import { Button, FullscreenContainer, NotificationContext, Text } from '@jonasb/datadata-design';
+import {
+  Button,
+  EmptyStateMessage,
+  FullscreenContainer,
+  NotificationContext,
+  Text,
+} from '@jonasb/datadata-design';
 import type { Dispatch } from 'react';
 import React, { useCallback, useContext, useEffect, useReducer } from 'react';
 import { useSWRConfig } from 'swr';
@@ -37,6 +43,9 @@ export function SchemaEditorScreen({ header, footer }: SchemaEditorScreenProps) 
     }
   }, [schema]);
 
+  const isEmpty =
+    schemaEditorState.entityTypes.length === 0 && schemaEditorState.valueTypes.length === 0;
+
   return (
     <FullscreenContainer>
       {header ? <FullscreenContainer.Row fullWidth>{header}</FullscreenContainer.Row> : null}
@@ -48,20 +57,30 @@ export function SchemaEditorScreen({ header, footer }: SchemaEditorScreenProps) 
             dispatchSchemaEditorState={dispatchSchemaEditorState}
           />
         </FullscreenContainer.Row>
-        {schemaEditorState.entityTypes.map((entityType) => (
-          <TypeEditorRows
-            key={entityType.name}
-            type={entityType}
-            dispatchSchemaEditorState={dispatchSchemaEditorState}
+        {isEmpty ? (
+          <EmptyStateMessage
+            icon="add"
+            title="Schema is empty"
+            message="There are no types in the schema."
           />
-        ))}
-        {schemaEditorState.valueTypes.map((valueType) => (
-          <TypeEditorRows
-            key={valueType.name}
-            type={valueType}
-            dispatchSchemaEditorState={dispatchSchemaEditorState}
-          />
-        ))}
+        ) : (
+          <>
+            {schemaEditorState.entityTypes.map((entityType) => (
+              <TypeEditorRows
+                key={entityType.name}
+                type={entityType}
+                dispatchSchemaEditorState={dispatchSchemaEditorState}
+              />
+            ))}
+            {schemaEditorState.valueTypes.map((valueType) => (
+              <TypeEditorRows
+                key={valueType.name}
+                type={valueType}
+                dispatchSchemaEditorState={dispatchSchemaEditorState}
+              />
+            ))}
+          </>
+        )}
       </FullscreenContainer.ScrollableRow>
       {footer ? <FullscreenContainer.Row fullWidth>{footer}</FullscreenContainer.Row> : null}
     </FullscreenContainer>
