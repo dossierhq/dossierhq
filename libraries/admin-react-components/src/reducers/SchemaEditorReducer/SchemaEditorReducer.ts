@@ -3,6 +3,7 @@ import { FieldType } from '@jonasb/datadata-core';
 
 export interface SchemaTypeDraft {
   name: string;
+  status: 'new' | '' | 'changed';
   fields: SchemaFieldDraft[];
 }
 
@@ -16,11 +17,13 @@ export interface SchemaValueTypeDraft extends SchemaTypeDraft {
 
 export interface SchemaFieldDraft {
   name: string;
+  status: 'new' | '' | 'changed';
   type: FieldType;
   list: boolean;
 }
 
 export interface SchemaEditorState {
+  status: 'uninitialized' | 'changed' | '';
   schema: AdminSchema | null;
 
   entityTypes: SchemaEntityTypeDraft[];
@@ -32,7 +35,7 @@ export interface SchemaEditorStateAction {
 }
 
 export function initializeSchemaEditorState(): SchemaEditorState {
-  return { schema: null, entityTypes: [], valueTypes: [] };
+  return { status: 'uninitialized', schema: null, entityTypes: [], valueTypes: [] };
 }
 
 export function reduceSchemaEditorState(
@@ -42,6 +45,25 @@ export function reduceSchemaEditorState(
   const newState = action.reduce(state);
   // if (state !== newState) console.log(`State changed for ${action.constructor.name}`, state, action, newState);
   return newState;
+}
+
+// STATUS RESOLVERS
+
+function resolveSchemaStatus(state: SchemaEditorState): SchemaEditorState['status'] {
+  if (state.status === 'uninitialized') state.status;
+  for (const type of [...state.entityTypes, ...state.valueTypes]) {
+    if (type.status !== '') return 'changed';
+  }
+  return '';
+}
+
+function resolveTypeStatus(state: SchemaEntityTypeDraft): SchemaEntityTypeDraft['status'] {
+  if (state.status === 'new') state.status;
+  //TODO check field order
+  for (const field of state.fields) {
+    if (field.status !== '') return 'changed';
+  }
+  return '';
 }
 
 // ACTION HELPERS
@@ -58,10 +80,12 @@ abstract class EntityTypeAction implements SchemaEditorStateAction {
     if (entityTypeIndex < 0) throw new Error(`No such entity type ${this.entityTypeName}`);
     const currentEntityType = state.entityTypes[entityTypeIndex];
 
-    const newEntityType = this.reduceEntityType(currentEntityType);
+    let newEntityType = this.reduceEntityType(currentEntityType);
     if (newEntityType === currentEntityType) {
       return state;
     }
+
+    newEntityType = { ...newEntityType, status: resolveTypeStatus(newEntityType) };
 
     const entityTypes = [...state.entityTypes];
     entityTypes[entityTypeIndex] = newEntityType;
@@ -84,10 +108,17 @@ class AddEntityTypeAction implements SchemaEditorStateAction {
   }
 
   reduce(state: Readonly<SchemaEditorState>): Readonly<SchemaEditorState> {
-    const entityType: SchemaEntityTypeDraft = { type: 'entity', name: this.name, fields: [] };
+    const entityType: SchemaEntityTypeDraft = {
+      type: 'entity',
+      status: 'new',
+      name: this.name,
+      fields: [],
+    };
     const entityTypes = [...state.entityTypes, entityType];
     entityTypes.sort((a, b) => a.name.localeCompare(b.name));
-    return { ...state, entityTypes };
+    const newState = { ...state, entityTypes };
+    newState.status = resolveSchemaStatus(newState);
+    return newState;
   }
 }
 
@@ -102,6 +133,7 @@ class AddEntityTypeFieldAction extends EntityTypeAction {
   reduceEntityType(entityType: Readonly<SchemaEntityTypeDraft>): Readonly<SchemaEntityTypeDraft> {
     const field: SchemaFieldDraft = {
       name: this.fieldName,
+      status: 'new',
       type: FieldType.String,
       list: false,
     };
@@ -114,17 +146,21 @@ class AddEntityTypeFieldAction extends EntityTypeAction {
 
 class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
   schema: AdminSchema;
+  force: boolean;
 
-  constructor(schema: AdminSchema) {
+  constructor(schema: AdminSchema, options?: { force: boolean }) {
     this.schema = schema;
+    this.force = !!options?.force;
   }
 
   reduce(state: Readonly<SchemaEditorState>): Readonly<SchemaEditorState> {
     const entityTypes = this.schema.spec.entityTypes.map<SchemaEntityTypeDraft>((entityType) => ({
       type: 'entity',
       name: entityType.name,
+      status: '',
       fields: entityType.fields.map<SchemaFieldDraft>((field) => ({
         name: field.name,
+        status: '',
         type: field.type as FieldType,
         list: !!field.list,
       })),
@@ -133,16 +169,18 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
     const valueTypes = this.schema.spec.valueTypes.map<SchemaValueTypeDraft>((valueType) => ({
       type: 'value',
       name: valueType.name,
+      status: '',
       fields: valueType.fields.map<SchemaFieldDraft>((field) => ({
         name: field.name,
+        status: '',
         type: field.type as FieldType,
         list: !!field.list,
       })),
     }));
 
-    if (state.schema) return state; //TODO handle update to schema
+    if (!this.force && state.schema) return state; //TODO handle update to schema
 
-    return { ...state, schema: this.schema, entityTypes, valueTypes };
+    return { ...state, status: '', schema: this.schema, entityTypes, valueTypes };
   }
 }
 

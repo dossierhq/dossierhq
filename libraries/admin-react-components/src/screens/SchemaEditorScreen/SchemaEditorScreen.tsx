@@ -1,3 +1,4 @@
+import { AdminSchema } from '@jonasb/datadata-core';
 import {
   Button,
   EmptyStateMessage,
@@ -89,7 +90,7 @@ export function SchemaEditorScreen({ header, footer }: SchemaEditorScreenProps) 
 
 function SaveSchemaButton({
   schemaEditorState,
-  dispatchSchemaEditorState: _,
+  dispatchSchemaEditorState,
 }: {
   schemaEditorState: SchemaEditorState;
   dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>;
@@ -100,15 +101,22 @@ function SaveSchemaButton({
   const handleClick = useCallback(async () => {
     const schemaSpecUpdate = getSchemaSpecificationUpdateFromEditorState(schemaEditorState);
     const result = await adminClient.updateSchemaSpecification(schemaSpecUpdate);
-    // TODO reset state
     if (result.isOk()) {
       showNotification({ color: 'success', message: 'Updated schema.' });
-      updateCacheSchemas(cache, mutate, result.value.schemaSpecification);
+      const adminSchema = new AdminSchema(result.value.schemaSpecification);
+      dispatchSchemaEditorState(
+        new SchemaEditorActions.UpdateSchemaSpecification(adminSchema, { force: true })
+      );
+      updateCacheSchemas(cache, mutate, adminSchema);
     } else {
       showNotification({ color: 'error', message: 'Failed saving schema.' });
     }
-  }, [adminClient, cache, mutate, schemaEditorState, showNotification]);
-  return <Button onClick={handleClick}>Save schema</Button>;
+  }, [adminClient, cache, dispatchSchemaEditorState, mutate, schemaEditorState, showNotification]);
+  return (
+    <Button onClick={handleClick} disabled={schemaEditorState.status !== 'changed'}>
+      Save schema
+    </Button>
+  );
 }
 
 function AddEntityTypeButton({
