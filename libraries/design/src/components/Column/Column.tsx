@@ -8,6 +8,7 @@ import { toSpacingClassName } from '../../utils/LayoutPropsUtils.js';
 
 export interface ColumnProps extends Omit<FlexContainerProps, 'flexDirection'>, SpacingProps {
   className?: string;
+  style?: CSSProperties;
   children: ReactNode;
 }
 
@@ -21,7 +22,7 @@ interface ColumnComponent extends FunctionComponent<ColumnProps> {
   Item: FunctionComponent<ColumnItemProps>;
 }
 
-export const Column: ColumnComponent = ({ className, children, ...props }: ColumnProps) => {
+export const Column: ColumnComponent = ({ className, style, children, ...props }: ColumnProps) => {
   return (
     <div
       className={toClassName(
@@ -29,6 +30,7 @@ export const Column: ColumnComponent = ({ className, children, ...props }: Colum
         toFlexContainerClassName({ ...props, flexDirection: 'column' }),
         toSpacingClassName(props)
       )}
+      style={style}
     >
       {children}
     </div>
