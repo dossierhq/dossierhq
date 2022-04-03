@@ -1,34 +1,9 @@
-import type { ErrorType, Logger, PromiseResult } from '@jonasb/datadata-core';
+import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
 import { notOk, ok } from '@jonasb/datadata-core';
-import type {
-  DatabaseAdapter,
-  Transaction,
-  TransactionContext,
-} from '@jonasb/datadata-database-adapter';
-import { TransactionContextImpl } from '@jonasb/datadata-database-adapter';
+import type { TransactionContext } from '@jonasb/datadata-database-adapter';
 import type { SqliteDatabaseAdapter } from '.';
 import type { QueryOrQueryAndValues } from './QueryFunctions';
 import { queryNone, queryOne } from './QueryFunctions';
-
-class MigrationContext extends TransactionContextImpl<MigrationContext> {
-  constructor(databaseAdapter: DatabaseAdapter, logger: Logger, transaction: Transaction | null) {
-    super(databaseAdapter, logger, transaction);
-  }
-
-  protected copyWithNewTransaction(
-    databaseAdapter: DatabaseAdapter,
-    transaction: Transaction
-  ): MigrationContext {
-    return new MigrationContext(databaseAdapter, this.logger, transaction);
-  }
-}
-
-export function createMigrationContext(
-  databaseAdapter: DatabaseAdapter,
-  logger: Logger
-): TransactionContext {
-  return new MigrationContext(databaseAdapter, logger, null);
-}
 
 /** Migrates the database to the latest version.
  *
