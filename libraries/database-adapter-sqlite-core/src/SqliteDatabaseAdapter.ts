@@ -44,6 +44,7 @@ import { advisoryLockDeleteExpired } from './advisory-lock/advisoryLockDeleteExp
 import { advisoryLockRelease } from './advisory-lock/advisoryLockRelease';
 import { advisoryLockRenew } from './advisory-lock/advisoryLockRenew';
 import { authCreateSession } from './auth/createSession';
+import { createInitializationContext } from './InitializationContext';
 import { publishedEntityGetEntities } from './published-entity/getEntities';
 import { publishedEntityGetOne } from './published-entity/getEntity';
 import { publishedEntitySearchTotalCount } from './published-entity/getTotalCount';
@@ -53,7 +54,6 @@ import { queryOne } from './QueryFunctions';
 import { schemaGetSpecification } from './schema/getSpecification';
 import { schemaUpdateSpecification } from './schema/updateSpecification';
 import { migrateDatabaseIfNecessary } from './SchemaDefinition';
-import { createMigrationContext } from './SchemaMigrator';
 import { isSemVerEqualOrGreaterThan, parseSemVer } from './SemVer';
 import { withNestedTransaction, withRootTransaction } from './SqliteTransaction';
 import { Mutex } from './utils/MutexUtils';
@@ -78,13 +78,12 @@ export async function createSqliteDatabaseAdapterAdapter(
   const databaseMutex = new Mutex();
 
   const outerAdapter = createAdapter(databaseMutex, sqliteAdapter);
-  //TODO rename to initializationContext
-  const migrationContext = createMigrationContext(outerAdapter, context.logger);
+  const initializationContext = createInitializationContext(outerAdapter, context.logger);
 
-  const validityResult = await checkAdapterValidity(migrationContext, sqliteAdapter);
+  const validityResult = await checkAdapterValidity(initializationContext, sqliteAdapter);
   if (validityResult.isError()) return validityResult;
 
-  const migrationResult = await migrateDatabaseIfNecessary(sqliteAdapter, migrationContext);
+  const migrationResult = await migrateDatabaseIfNecessary(sqliteAdapter, initializationContext);
   if (migrationResult.isError()) return migrationResult;
 
   return ok(outerAdapter);
