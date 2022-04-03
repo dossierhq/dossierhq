@@ -3,12 +3,12 @@ import { notOk, ok } from '@jonasb/datadata-core';
 import type { TransactionContext } from '@jonasb/datadata-database-adapter';
 import { buildSqliteSqlQuery } from '@jonasb/datadata-database-adapter';
 import { Temporal } from '@js-temporal/polyfill';
-import type { SqliteDatabaseAdapter } from '..';
 import { AdvisoryLocksUniqueNameConstraint } from '../DatabaseSchema';
+import type { Database } from '../QueryFunctions';
 import { queryNone } from '../QueryFunctions';
 
 export async function advisoryLockAcquire(
-  databaseAdapter: SqliteDatabaseAdapter,
+  database: Database,
   context: TransactionContext,
   name: string,
   handle: number,
@@ -23,8 +23,8 @@ export async function advisoryLockAcquire(
         VALUES (${name}, ${handle}, ${nowValue}, ${nowValue}, ${expires_at}, ${leaseDuration})`;
   });
 
-  const result = await queryNone(databaseAdapter, context, query, (error) => {
-    if (databaseAdapter.isUniqueViolationOfConstraint(error, AdvisoryLocksUniqueNameConstraint)) {
+  const result = await queryNone(database, context, query, (error) => {
+    if (database.adapter.isUniqueViolationOfConstraint(error, AdvisoryLocksUniqueNameConstraint)) {
       return notOk.Conflict(`Lock with name '${name}' already exists`);
     }
     return notOk.GenericUnexpectedException(context, error);

@@ -11,20 +11,20 @@ import type {
 } from '@jonasb/datadata-database-adapter';
 import { createSqliteSqlQuery } from '@jonasb/datadata-database-adapter';
 import { Temporal } from '@js-temporal/polyfill';
-import type { SqliteDatabaseAdapter } from '..';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema';
+import type { Database } from '../QueryFunctions';
 import { queryNoneOrOne } from '../QueryFunctions';
 import { resolveEntityStatus } from '../utils/CodecUtils';
 
 export async function adminGetEntity(
-  databaseAdapter: SqliteDatabaseAdapter,
+  database: Database,
   context: TransactionContext,
   reference: EntityReference | EntityVersionReference
 ): PromiseResult<DatabaseAdminEntityGetOnePayload, ErrorType.NotFound | ErrorType.Generic> {
   const result =
     'version' in reference
-      ? await getEntityWithVersion(databaseAdapter, context, reference)
-      : await getEntityWithLatestVersion(databaseAdapter, context, reference);
+      ? await getEntityWithVersion(database, context, reference)
+      : await getEntityWithLatestVersion(database, context, reference);
   if (result.isError()) {
     return result;
   }
@@ -57,7 +57,7 @@ export async function adminGetEntity(
 }
 
 async function getEntityWithLatestVersion(
-  databaseAdapter: SqliteDatabaseAdapter,
+  database: Database,
   context: TransactionContext,
   reference: EntityReference
 ) {
@@ -79,7 +79,7 @@ async function getEntityWithLatestVersion(
       | 'status'
     > &
       Pick<EntityVersionsTable, 'version' | 'fields'>
-  >(databaseAdapter, context, query);
+  >(database, context, query);
   if (result.isError()) {
     return result;
   }
@@ -90,7 +90,7 @@ async function getEntityWithLatestVersion(
 }
 
 async function getEntityWithVersion(
-  databaseAdapter: SqliteDatabaseAdapter,
+  database: Database,
   context: TransactionContext,
   reference: EntityVersionReference
 ) {
@@ -107,7 +107,7 @@ async function getEntityWithVersion(
       | 'status'
     > &
       Pick<EntityVersionsTable, 'version' | 'fields'>
-  >(databaseAdapter, context, {
+  >(database, context, {
     text: `SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, ev.version, ev.fields
     FROM entities e, entity_versions ev
     WHERE e.uuid = ?1

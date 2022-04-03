@@ -50,6 +50,7 @@ import { publishedEntityGetOne } from './published-entity/getEntity';
 import { publishedEntitySearchTotalCount } from './published-entity/getTotalCount';
 import { publishedEntitySampleEntities } from './published-entity/sampleEntities';
 import { publishedEntitySearchEntities } from './published-entity/searchEntities';
+import type { Database } from './QueryFunctions';
 import { queryOne } from './QueryFunctions';
 import { schemaGetSpecification } from './schema/getSpecification';
 import { schemaUpdateSpecification } from './schema/updateSpecification';
@@ -75,88 +76,81 @@ export async function createSqliteDatabaseAdapterAdapter(
   context: Context,
   sqliteAdapter: SqliteDatabaseAdapter
 ): PromiseResult<DatabaseAdapter, ErrorType.BadRequest | ErrorType.Generic> {
-  const databaseMutex = new Mutex();
+  const database: Database = { mutex: new Mutex(), adapter: sqliteAdapter };
 
-  const outerAdapter = createAdapter(databaseMutex, sqliteAdapter);
+  const outerAdapter = createOuterAdapter(database);
   const initializationContext = createInitializationContext(outerAdapter, context.logger);
 
-  const validityResult = await checkAdapterValidity(initializationContext, sqliteAdapter);
+  const validityResult = await checkAdapterValidity(database, initializationContext);
   if (validityResult.isError()) return validityResult;
 
-  const migrationResult = await migrateDatabaseIfNecessary(sqliteAdapter, initializationContext);
+  const migrationResult = await migrateDatabaseIfNecessary(database, initializationContext);
   if (migrationResult.isError()) return migrationResult;
 
   return ok(outerAdapter);
 }
 
-function createAdapter(
-  databaseMutex: Mutex,
-  sqliteAdapter: SqliteDatabaseAdapter
-): DatabaseAdapter {
+function createOuterAdapter(database: Database): DatabaseAdapter {
   return {
     adminEntityArchivingGetEntityInfo: (...args) =>
-      adminEntityArchivingGetEntityInfo(sqliteAdapter, ...args),
-    adminEntityCreate: (...args) => adminCreateEntity(sqliteAdapter, ...args),
-    adminEntityGetOne: (...args) => adminGetEntity(sqliteAdapter, ...args),
-    adminEntityGetMultiple: (...args) => adminEntityGetMultiple(sqliteAdapter, ...args),
-    adminEntityGetEntityName: (...args) => adminEntityGetEntityName(sqliteAdapter, ...args),
+      adminEntityArchivingGetEntityInfo(database, ...args),
+    adminEntityCreate: (...args) => adminCreateEntity(database, ...args),
+    adminEntityGetOne: (...args) => adminGetEntity(database, ...args),
+    adminEntityGetMultiple: (...args) => adminEntityGetMultiple(database, ...args),
+    adminEntityGetEntityName: (...args) => adminEntityGetEntityName(database, ...args),
     adminEntityGetReferenceEntitiesInfo: (...args) =>
-      adminEntityGetReferenceEntitiesInfo(sqliteAdapter, ...args),
+      adminEntityGetReferenceEntitiesInfo(database, ...args),
     adminEntityHistoryGetEntityInfo: (...args) =>
-      adminEntityHistoryGetEntityInfo(sqliteAdapter, ...args),
+      adminEntityHistoryGetEntityInfo(database, ...args),
     adminEntityHistoryGetVersionsInfo: (...args) =>
-      adminEntityHistoryGetVersionsInfo(sqliteAdapter, ...args),
+      adminEntityHistoryGetVersionsInfo(database, ...args),
     adminEntityPublishGetUnpublishedReferencedEntities: (...args) =>
-      adminEntityPublishGetUnpublishedReferencedEntities(sqliteAdapter, ...args),
+      adminEntityPublishGetUnpublishedReferencedEntities(database, ...args),
     adminEntityPublishGetVersionInfo: (...args) =>
-      adminEntityPublishGetVersionInfo(sqliteAdapter, ...args),
+      adminEntityPublishGetVersionInfo(database, ...args),
     adminEntityPublishingCreateEvents: (...args) =>
-      adminEntityPublishingCreateEvents(sqliteAdapter, ...args),
+      adminEntityPublishingCreateEvents(database, ...args),
     adminEntityPublishingHistoryGetEntityInfo: (...args) =>
-      adminEntityPublishingHistoryGetEntityInfo(sqliteAdapter, ...args),
+      adminEntityPublishingHistoryGetEntityInfo(database, ...args),
     adminEntityPublishingHistoryGetEvents: (...args) =>
-      adminEntityPublishingHistoryGetEvents(sqliteAdapter, ...args),
-    adminEntityPublishUpdateEntity: (...args) =>
-      adminEntityPublishUpdateEntity(sqliteAdapter, ...args),
-    adminEntitySampleEntities: (...args) => adminEntitySampleEntities(sqliteAdapter, ...args),
-    adminEntitySearchEntities: (...args) => adminEntitySearchEntities(sqliteAdapter, ...args),
-    adminEntitySearchTotalCount: (...args) => adminEntitySearchTotalCount(sqliteAdapter, ...args),
-    adminEntityUpdateEntity: (...args) => adminEntityUpdateEntity(sqliteAdapter, ...args),
-    adminEntityUpdateGetEntityInfo: (...args) =>
-      adminEntityUpdateGetEntityInfo(sqliteAdapter, ...args),
-    adminEntityUpdateStatus: (...args) => adminEntityUpdateStatus(sqliteAdapter, ...args),
+      adminEntityPublishingHistoryGetEvents(database, ...args),
+    adminEntityPublishUpdateEntity: (...args) => adminEntityPublishUpdateEntity(database, ...args),
+    adminEntitySampleEntities: (...args) => adminEntitySampleEntities(database, ...args),
+    adminEntitySearchEntities: (...args) => adminEntitySearchEntities(database, ...args),
+    adminEntitySearchTotalCount: (...args) => adminEntitySearchTotalCount(database, ...args),
+    adminEntityUpdateEntity: (...args) => adminEntityUpdateEntity(database, ...args),
+    adminEntityUpdateGetEntityInfo: (...args) => adminEntityUpdateGetEntityInfo(database, ...args),
+    adminEntityUpdateStatus: (...args) => adminEntityUpdateStatus(database, ...args),
     adminEntityUnpublishGetEntitiesInfo: (...args) =>
-      adminEntityUnpublishGetEntitiesInfo(sqliteAdapter, ...args),
-    adminEntityUnpublishEntities: (...args) => adminEntityUnpublishEntities(sqliteAdapter, ...args),
+      adminEntityUnpublishGetEntitiesInfo(database, ...args),
+    adminEntityUnpublishEntities: (...args) => adminEntityUnpublishEntities(database, ...args),
     adminEntityUnpublishGetPublishedReferencedEntities: (...args) =>
-      adminEntityUnpublishGetPublishedReferencedEntities(sqliteAdapter, ...args),
-    advisoryLockAcquire: (...args) => advisoryLockAcquire(sqliteAdapter, ...args),
-    advisoryLockDeleteExpired: (...args) => advisoryLockDeleteExpired(sqliteAdapter, ...args),
-    advisoryLockRelease: (...args) => advisoryLockRelease(sqliteAdapter, ...args),
-    advisoryLockRenew: (...args) => advisoryLockRenew(sqliteAdapter, ...args),
-    authCreateSession: (...args) => authCreateSession(sqliteAdapter, ...args),
-    disconnect: sqliteAdapter.disconnect,
-    publishedEntityGetOne: (...args) => publishedEntityGetOne(sqliteAdapter, ...args),
-    publishedEntityGetEntities: (...args) => publishedEntityGetEntities(sqliteAdapter, ...args),
-    publishedEntitySampleEntities: (...args) =>
-      publishedEntitySampleEntities(sqliteAdapter, ...args),
-    publishedEntitySearchEntities: (...args) =>
-      publishedEntitySearchEntities(sqliteAdapter, ...args),
+      adminEntityUnpublishGetPublishedReferencedEntities(database, ...args),
+    advisoryLockAcquire: (...args) => advisoryLockAcquire(database, ...args),
+    advisoryLockDeleteExpired: (...args) => advisoryLockDeleteExpired(database, ...args),
+    advisoryLockRelease: (...args) => advisoryLockRelease(database, ...args),
+    advisoryLockRenew: (...args) => advisoryLockRenew(database, ...args),
+    authCreateSession: (...args) => authCreateSession(database, ...args),
+    disconnect: database.adapter.disconnect,
+    publishedEntityGetOne: (...args) => publishedEntityGetOne(database, ...args),
+    publishedEntityGetEntities: (...args) => publishedEntityGetEntities(database, ...args),
+    publishedEntitySampleEntities: (...args) => publishedEntitySampleEntities(database, ...args),
+    publishedEntitySearchEntities: (...args) => publishedEntitySearchEntities(database, ...args),
     publishedEntitySearchTotalCount: (...args) =>
-      publishedEntitySearchTotalCount(sqliteAdapter, ...args),
-    schemaGetSpecification: (...args) => schemaGetSpecification(sqliteAdapter, ...args),
-    schemaUpdateSpecification: (...args) => schemaUpdateSpecification(sqliteAdapter, ...args),
-    withNestedTransaction: (...args) => withNestedTransaction(sqliteAdapter, ...args),
-    withRootTransaction: (...args) => withRootTransaction(databaseMutex, sqliteAdapter, ...args),
+      publishedEntitySearchTotalCount(database, ...args),
+    schemaGetSpecification: (...args) => schemaGetSpecification(database, ...args),
+    schemaUpdateSpecification: (...args) => schemaUpdateSpecification(database, ...args),
+    withNestedTransaction: (...args) => withNestedTransaction(database, ...args),
+    withRootTransaction: (...args) => withRootTransaction(database, ...args),
   };
 }
 
 async function checkAdapterValidity(
-  context: TransactionContext,
-  adapter: SqliteDatabaseAdapter
+  database: Database,
+  context: TransactionContext
 ): PromiseResult<void, ErrorType.Generic | ErrorType.BadRequest> {
   const result = await queryOne<{ version: string }>(
-    adapter,
+    database,
     context,
     'SELECT sqlite_version() AS version',
     undefined

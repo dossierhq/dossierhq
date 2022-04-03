@@ -1,13 +1,12 @@
 import { expectResultValue } from '@jonasb/datadata-core-jest';
 import type { SearchAdminEntitiesItem } from '../search/QueryGenerator';
 import {
-  createMockAdapter,
   createMockContext,
+  createMockInnerAndOuterAdapter,
   createTestAdminSchema,
   getQueryCalls,
   resolvePaging,
 } from '../test/TestUtils';
-import { adminEntitySearchEntities } from './searchEntities';
 
 function createEntityDbRow(id: number): SearchAdminEntitiesItem {
   return {
@@ -27,13 +26,12 @@ function createEntityDbRow(id: number): SearchAdminEntitiesItem {
 
 describe('adminEntitySearchEntities', () => {
   test('Minimal, no results', async () => {
-    const adapter = createMockAdapter();
-    const context = (await createMockContext(adapter)).valueOrThrow();
+    const { innerAdapter, outerAdapter } = (await createMockInnerAndOuterAdapter()).valueOrThrow();
+    const context = createMockContext(outerAdapter);
 
-    adapter.query.mockClear();
-    adapter.query.mockImplementation(async (_query, _values) => []);
-    const result = await adminEntitySearchEntities(
-      adapter,
+    innerAdapter.query.mockClear();
+    innerAdapter.query.mockImplementation(async (_query, _values) => []);
+    const result = await outerAdapter.adminEntitySearchEntities(
       createTestAdminSchema(),
       context,
       undefined,
@@ -41,7 +39,7 @@ describe('adminEntitySearchEntities', () => {
       [{ authKey: 'none', resolvedAuthKey: 'none' }]
     );
     expectResultValue(result, { entities: [], hasMore: false });
-    expect(getQueryCalls(adapter)).toMatchInlineSnapshot(`
+    expect(getQueryCalls(innerAdapter)).toMatchInlineSnapshot(`
       Array [
         Array [
           "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated_seq, e.status, ev.version, ev.fields
@@ -54,13 +52,12 @@ describe('adminEntitySearchEntities', () => {
   });
 
   test('Minimal, one result', async () => {
-    const adapter = createMockAdapter();
-    const context = (await createMockContext(adapter)).valueOrThrow();
+    const { innerAdapter, outerAdapter } = (await createMockInnerAndOuterAdapter()).valueOrThrow();
+    const context = createMockContext(outerAdapter);
 
-    adapter.query.mockClear();
-    adapter.query.mockImplementation(async (_query, _values) => [createEntityDbRow(1)]);
-    const result = await adminEntitySearchEntities(
-      adapter,
+    innerAdapter.query.mockClear();
+    innerAdapter.query.mockImplementation(async (_query, _values) => [createEntityDbRow(1)]);
+    const result = await outerAdapter.adminEntitySearchEntities(
       createTestAdminSchema(),
       context,
       undefined,
@@ -90,7 +87,7 @@ describe('adminEntitySearchEntities', () => {
         },
       }
     `);
-    expect(getQueryCalls(adapter)).toMatchInlineSnapshot(`
+    expect(getQueryCalls(innerAdapter)).toMatchInlineSnapshot(`
       Array [
         Array [
           "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated_seq, e.status, ev.version, ev.fields
@@ -103,13 +100,12 @@ describe('adminEntitySearchEntities', () => {
   });
 
   test('Paging after, one result', async () => {
-    const adapter = createMockAdapter();
-    const context = (await createMockContext(adapter)).valueOrThrow();
+    const { innerAdapter, outerAdapter } = (await createMockInnerAndOuterAdapter()).valueOrThrow();
+    const context = createMockContext(outerAdapter);
 
-    adapter.query.mockClear();
-    adapter.query.mockImplementation(async (_query, _values) => [createEntityDbRow(2)]);
-    const result = await adminEntitySearchEntities(
-      adapter,
+    innerAdapter.query.mockClear();
+    innerAdapter.query.mockImplementation(async (_query, _values) => [createEntityDbRow(2)]);
+    const result = await outerAdapter.adminEntitySearchEntities(
       createTestAdminSchema(),
       context,
       undefined,
@@ -139,7 +135,7 @@ describe('adminEntitySearchEntities', () => {
         },
       }
     `);
-    expect(getQueryCalls(adapter)).toMatchInlineSnapshot(`
+    expect(getQueryCalls(innerAdapter)).toMatchInlineSnapshot(`
       Array [
         Array [
           "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated_seq, e.status, ev.version, ev.fields
@@ -153,13 +149,12 @@ describe('adminEntitySearchEntities', () => {
   });
 
   test('Paging before, one result', async () => {
-    const adapter = createMockAdapter();
-    const context = (await createMockContext(adapter)).valueOrThrow();
+    const { innerAdapter, outerAdapter } = (await createMockInnerAndOuterAdapter()).valueOrThrow();
+    const context = createMockContext(outerAdapter);
 
-    adapter.query.mockClear();
-    adapter.query.mockImplementation(async (_query, _values) => [createEntityDbRow(2)]);
-    const result = await adminEntitySearchEntities(
-      adapter,
+    innerAdapter.query.mockClear();
+    innerAdapter.query.mockImplementation(async (_query, _values) => [createEntityDbRow(2)]);
+    const result = await outerAdapter.adminEntitySearchEntities(
       createTestAdminSchema(),
       context,
       undefined,
@@ -189,7 +184,7 @@ describe('adminEntitySearchEntities', () => {
         },
       }
     `);
-    expect(getQueryCalls(adapter)).toMatchInlineSnapshot(`
+    expect(getQueryCalls(innerAdapter)).toMatchInlineSnapshot(`
       Array [
         Array [
           "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated_seq, e.status, ev.version, ev.fields

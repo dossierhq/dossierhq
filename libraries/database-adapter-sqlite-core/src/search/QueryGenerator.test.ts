@@ -6,7 +6,7 @@ import {
   PublishedQueryOrder,
 } from '@jonasb/datadata-core';
 import { expectErrorResult } from '@jonasb/datadata-core-jest';
-import { createMockAdapter, resolvePaging } from '../test/TestUtils';
+import { createMockDatabase, resolvePaging } from '../test/TestUtils';
 import { toOpaqueCursor } from './OpaqueCursor';
 import {
   sampleAdminEntitiesQuery,
@@ -29,7 +29,7 @@ const authKeysNone = [{ authKey: 'none', resolvedAuthKey: 'none' }];
 
 describe('searchAdminEntitiesQuery()', () => {
   test('default paging', () => {
-    const databaseAdapter = createMockAdapter();
+    const databaseAdapter = createMockDatabase();
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
@@ -56,7 +56,7 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('first 10', () => {
-    const databaseAdapter = createMockAdapter();
+    const databaseAdapter = createMockDatabase();
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
@@ -83,7 +83,7 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('first 10 after', () => {
-    const databaseAdapter = createMockAdapter();
+    const databaseAdapter = createMockDatabase();
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
@@ -111,7 +111,7 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('first 10 after (inclusive)', () => {
-    const databaseAdapter = createMockAdapter();
+    const databaseAdapter = createMockDatabase();
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
@@ -143,7 +143,7 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('last 10', () => {
-    const databaseAdapter = createMockAdapter();
+    const databaseAdapter = createMockDatabase();
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
@@ -170,7 +170,7 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('last 10 before', () => {
-    const databaseAdapter = createMockAdapter();
+    const databaseAdapter = createMockDatabase();
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
@@ -198,7 +198,7 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('last 10 before (inclusive)', () => {
-    const databaseAdapter = createMockAdapter();
+    const databaseAdapter = createMockDatabase();
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
@@ -230,7 +230,7 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('first 10 between after and before', () => {
-    const databaseAdapter = createMockAdapter();
+    const databaseAdapter = createMockDatabase();
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
@@ -264,7 +264,7 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('last 10 between after and before', () => {
-    const databaseAdapter = createMockAdapter();
+    const databaseAdapter = createMockDatabase();
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
@@ -298,7 +298,7 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('order by createdAt, reversed', () => {
-    const databaseAdapter = createMockAdapter();
+    const databaseAdapter = createMockDatabase();
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
@@ -325,7 +325,7 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('query no entity type, i.e. include all', () => {
-    const databaseAdapter = createMockAdapter();
+    const databaseAdapter = createMockDatabase();
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
@@ -352,7 +352,7 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('query one entity type', () => {
-    const databaseAdapter = createMockAdapter();
+    const databaseAdapter = createMockDatabase();
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
@@ -380,7 +380,7 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('query two entity types', () => {
-    const databaseAdapter = createMockAdapter();
+    const databaseAdapter = createMockDatabase();
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
@@ -409,7 +409,7 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('query two entity types, first and after', () => {
-    const databaseAdapter = createMockAdapter();
+    const databaseAdapter = createMockDatabase();
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
@@ -439,7 +439,7 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('query status empty list', () => {
-    const databaseAdapter = createMockAdapter();
+    const databaseAdapter = createMockDatabase();
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
@@ -466,7 +466,7 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('query status draft', () => {
-    const databaseAdapter = createMockAdapter();
+    const databaseAdapter = createMockDatabase();
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
@@ -494,7 +494,7 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('query status published', () => {
-    const databaseAdapter = createMockAdapter();
+    const databaseAdapter = createMockDatabase();
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
@@ -522,7 +522,7 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('query status modified', () => {
-    const databaseAdapter = createMockAdapter();
+    const databaseAdapter = createMockDatabase();
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
@@ -550,7 +550,7 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('query status withdrawn', () => {
-    const databaseAdapter = createMockAdapter();
+    const databaseAdapter = createMockDatabase();
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
@@ -578,7 +578,7 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('query status archived', () => {
-    const databaseAdapter = createMockAdapter();
+    const databaseAdapter = createMockDatabase();
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
@@ -606,7 +606,7 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('query status draft+published', () => {
-    const databaseAdapter = createMockAdapter();
+    const databaseAdapter = createMockDatabase();
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
@@ -635,7 +635,7 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('query status draft+archived', () => {
-    const databaseAdapter = createMockAdapter();
+    const databaseAdapter = createMockDatabase();
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
@@ -664,7 +664,7 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('query status all', () => {
-    const databaseAdapter = createMockAdapter();
+    const databaseAdapter = createMockDatabase();
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
@@ -705,7 +705,7 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('query linksFrom', () => {
-    const databaseAdapter = createMockAdapter();
+    const databaseAdapter = createMockDatabase();
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
@@ -733,7 +733,7 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('query linksTo', () => {
-    const databaseAdapter = createMockAdapter();
+    const databaseAdapter = createMockDatabase();
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
@@ -761,7 +761,7 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('query bounding box', () => {
-    const databaseAdapter = createMockAdapter();
+    const databaseAdapter = createMockDatabase();
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
@@ -800,7 +800,7 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('query bounding box (wrapping 180/-180 lng)', () => {
-    const databaseAdapter = createMockAdapter();
+    const databaseAdapter = createMockDatabase();
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
@@ -831,7 +831,7 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('query text', () => {
-    const databaseAdapter = createMockAdapter();
+    const databaseAdapter = createMockDatabase();
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
@@ -859,7 +859,7 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('query linksTo and entity types and paging', () => {
-    const databaseAdapter = createMockAdapter();
+    const databaseAdapter = createMockDatabase();
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
@@ -894,7 +894,7 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('order by createdAt', () => {
-    const databaseAdapter = createMockAdapter();
+    const databaseAdapter = createMockDatabase();
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
@@ -921,7 +921,7 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('order by updatedAt', () => {
-    const databaseAdapter = createMockAdapter();
+    const databaseAdapter = createMockDatabase();
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
@@ -948,7 +948,7 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('order by name', () => {
-    const databaseAdapter = createMockAdapter();
+    const databaseAdapter = createMockDatabase();
     expect(
       searchAdminEntitiesQuery(
         databaseAdapter,
@@ -975,7 +975,7 @@ describe('searchAdminEntitiesQuery()', () => {
   });
 
   test('Error: invalid entity type in query', () => {
-    const databaseAdapter = createMockAdapter();
+    const databaseAdapter = createMockDatabase();
     const result = searchAdminEntitiesQuery(
       databaseAdapter,
       schema,
@@ -989,7 +989,7 @@ describe('searchAdminEntitiesQuery()', () => {
 
 describe('searchPublishedEntitiesQuery()', () => {
   test('default paging', () => {
-    const databaseAdapter = createMockAdapter();
+    const databaseAdapter = createMockDatabase();
     expect(
       searchPublishedEntitiesQuery(
         databaseAdapter,
@@ -1015,7 +1015,7 @@ describe('searchPublishedEntitiesQuery()', () => {
   });
 
   test('first 10', () => {
-    const databaseAdapter = createMockAdapter();
+    const databaseAdapter = createMockDatabase();
     expect(
       searchPublishedEntitiesQuery(
         databaseAdapter,
@@ -1041,7 +1041,7 @@ describe('searchPublishedEntitiesQuery()', () => {
   });
 
   test('first 10 after', () => {
-    const databaseAdapter = createMockAdapter();
+    const databaseAdapter = createMockDatabase();
     expect(
       searchPublishedEntitiesQuery(
         databaseAdapter,
@@ -1072,7 +1072,7 @@ describe('searchPublishedEntitiesQuery()', () => {
   });
 
   test('first 10 after reversed', () => {
-    const databaseAdapter = createMockAdapter();
+    const databaseAdapter = createMockDatabase();
     expect(
       searchPublishedEntitiesQuery(
         databaseAdapter,
@@ -1099,7 +1099,7 @@ describe('searchPublishedEntitiesQuery()', () => {
   });
 
   test('last 10', () => {
-    const databaseAdapter = createMockAdapter();
+    const databaseAdapter = createMockDatabase();
     expect(
       searchPublishedEntitiesQuery(
         databaseAdapter,
@@ -1125,7 +1125,7 @@ describe('searchPublishedEntitiesQuery()', () => {
   });
 
   test('last 10 before', () => {
-    const databaseAdapter = createMockAdapter();
+    const databaseAdapter = createMockDatabase();
     expect(
       searchPublishedEntitiesQuery(
         databaseAdapter,
@@ -1152,7 +1152,7 @@ describe('searchPublishedEntitiesQuery()', () => {
   });
 
   test('first 10 between after and before', () => {
-    const databaseAdapter = createMockAdapter();
+    const databaseAdapter = createMockDatabase();
     expect(
       searchPublishedEntitiesQuery(
         databaseAdapter,
@@ -1185,7 +1185,7 @@ describe('searchPublishedEntitiesQuery()', () => {
   });
 
   test('first 10 between after and before reversed', () => {
-    const databaseAdapter = createMockAdapter();
+    const databaseAdapter = createMockDatabase();
     expect(
       searchPublishedEntitiesQuery(
         databaseAdapter,
@@ -1218,7 +1218,7 @@ describe('searchPublishedEntitiesQuery()', () => {
   });
 
   test('last 10 between after and before', () => {
-    const databaseAdapter = createMockAdapter();
+    const databaseAdapter = createMockDatabase();
     expect(
       searchPublishedEntitiesQuery(
         databaseAdapter,
@@ -1251,7 +1251,7 @@ describe('searchPublishedEntitiesQuery()', () => {
   });
 
   test('order by createdAt, reversed', () => {
-    const databaseAdapter = createMockAdapter();
+    const databaseAdapter = createMockDatabase();
     expect(
       searchPublishedEntitiesQuery(
         databaseAdapter,
@@ -1277,7 +1277,7 @@ describe('searchPublishedEntitiesQuery()', () => {
   });
 
   test('query no entity type, i.e. include all', () => {
-    const databaseAdapter = createMockAdapter();
+    const databaseAdapter = createMockDatabase();
     expect(
       searchPublishedEntitiesQuery(
         databaseAdapter,
@@ -1303,7 +1303,7 @@ describe('searchPublishedEntitiesQuery()', () => {
   });
 
   test('query one entity type', () => {
-    const databaseAdapter = createMockAdapter();
+    const databaseAdapter = createMockDatabase();
     expect(
       searchPublishedEntitiesQuery(
         databaseAdapter,
@@ -1330,7 +1330,7 @@ describe('searchPublishedEntitiesQuery()', () => {
   });
 
   test('query two entity types', () => {
-    const databaseAdapter = createMockAdapter();
+    const databaseAdapter = createMockDatabase();
     expect(
       searchPublishedEntitiesQuery(
         databaseAdapter,
@@ -1358,7 +1358,7 @@ describe('searchPublishedEntitiesQuery()', () => {
   });
 
   test('query two entity types, first and after', () => {
-    const databaseAdapter = createMockAdapter();
+    const databaseAdapter = createMockDatabase();
     expect(
       searchPublishedEntitiesQuery(
         databaseAdapter,
@@ -1387,7 +1387,7 @@ describe('searchPublishedEntitiesQuery()', () => {
   });
 
   test('query linksFrom', () => {
-    const databaseAdapter = createMockAdapter();
+    const databaseAdapter = createMockDatabase();
     expect(
       searchPublishedEntitiesQuery(
         databaseAdapter,
@@ -1414,7 +1414,7 @@ describe('searchPublishedEntitiesQuery()', () => {
   });
 
   test('query linksTo', () => {
-    const databaseAdapter = createMockAdapter();
+    const databaseAdapter = createMockDatabase();
     expect(
       searchPublishedEntitiesQuery(
         databaseAdapter,
@@ -1441,7 +1441,7 @@ describe('searchPublishedEntitiesQuery()', () => {
   });
 
   test('query bounding box', () => {
-    const databaseAdapter = createMockAdapter();
+    const databaseAdapter = createMockDatabase();
     expect(
       searchPublishedEntitiesQuery(
         databaseAdapter,
@@ -1479,7 +1479,7 @@ describe('searchPublishedEntitiesQuery()', () => {
   });
 
   test('query bounding box (wrapping 180/-180 lng boundary)', () => {
-    const databaseAdapter = createMockAdapter();
+    const databaseAdapter = createMockDatabase();
     expect(
       searchPublishedEntitiesQuery(
         databaseAdapter,
@@ -1509,7 +1509,7 @@ describe('searchPublishedEntitiesQuery()', () => {
   });
 
   test('query text', () => {
-    const databaseAdapter = createMockAdapter();
+    const databaseAdapter = createMockDatabase();
     expect(
       searchPublishedEntitiesQuery(
         databaseAdapter,
@@ -1536,7 +1536,7 @@ describe('searchPublishedEntitiesQuery()', () => {
   });
 
   test('query linksTo and entity types and paging', () => {
-    const databaseAdapter = createMockAdapter();
+    const databaseAdapter = createMockDatabase();
     expect(
       searchPublishedEntitiesQuery(
         databaseAdapter,
@@ -1570,7 +1570,7 @@ describe('searchPublishedEntitiesQuery()', () => {
   });
 
   test('order by createdAt', () => {
-    const databaseAdapter = createMockAdapter();
+    const databaseAdapter = createMockDatabase();
     expect(
       searchPublishedEntitiesQuery(
         databaseAdapter,
@@ -1596,7 +1596,7 @@ describe('searchPublishedEntitiesQuery()', () => {
   });
 
   test('order by name', () => {
-    const databaseAdapter = createMockAdapter();
+    const databaseAdapter = createMockDatabase();
     expect(
       searchPublishedEntitiesQuery(
         databaseAdapter,
@@ -1622,7 +1622,7 @@ describe('searchPublishedEntitiesQuery()', () => {
   });
 
   test('Error: invalid entity type in query', () => {
-    const databaseAdapter = createMockAdapter();
+    const databaseAdapter = createMockDatabase();
     const result = searchPublishedEntitiesQuery(
       databaseAdapter,
       schema,

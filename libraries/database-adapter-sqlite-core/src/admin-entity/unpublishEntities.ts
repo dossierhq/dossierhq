@@ -13,14 +13,14 @@ import type {
 } from '@jonasb/datadata-database-adapter';
 import { SqliteQueryBuilder } from '@jonasb/datadata-database-adapter';
 import { Temporal } from '@js-temporal/polyfill';
-import type { SqliteDatabaseAdapter } from '..';
 import type { EntitiesTable } from '../DatabaseSchema';
+import type { Database } from '../QueryFunctions';
 import { queryMany, queryNone } from '../QueryFunctions';
 import { resolveEntityStatus } from '../utils/CodecUtils';
 import { getEntitiesUpdatedSeq } from './getEntitiesUpdatedSeq';
 
 export async function adminEntityUnpublishGetEntitiesInfo(
-  databaseAdapter: SqliteDatabaseAdapter,
+  database: Database,
   context: TransactionContext,
   references: EntityReference[]
 ): PromiseResult<
@@ -34,7 +34,7 @@ export async function adminEntityUnpublishGetEntitiesInfo(
 
   const result = await queryMany<
     Pick<EntitiesTable, 'id' | 'uuid' | 'auth_key' | 'resolved_auth_key' | 'status' | 'updated_at'>
-  >(databaseAdapter, context, qb.build());
+  >(database, context, qb.build());
   if (result.isError()) {
     return result;
   }
@@ -64,12 +64,12 @@ export async function adminEntityUnpublishGetEntitiesInfo(
 }
 
 export async function adminEntityUnpublishEntities(
-  databaseAdapter: SqliteDatabaseAdapter,
+  database: Database,
   context: TransactionContext,
   status: AdminEntityStatus,
   references: DatabaseResolvedEntityReference[]
 ): PromiseResult<DatabaseAdminEntityUnpublishUpdateEntityPayload[], ErrorType.Generic> {
-  const updatedSeqResult = await getEntitiesUpdatedSeq(databaseAdapter, context);
+  const updatedSeqResult = await getEntitiesUpdatedSeq(database, context);
   if (updatedSeqResult.isError()) return updatedSeqResult;
 
   const now = Temporal.Now.instant();
@@ -88,7 +88,7 @@ export async function adminEntityUnpublishEntities(
       references.map(({ entityInternalId }) => entityInternalId as number)
     )} RETURNING id`
   );
-  const result = await queryMany<Pick<EntitiesTable, 'id'>>(databaseAdapter, context, qb.build());
+  const result = await queryMany<Pick<EntitiesTable, 'id'>>(database, context, qb.build());
   if (result.isError()) {
     return result;
   }
@@ -99,7 +99,7 @@ export async function adminEntityUnpublishEntities(
       references.map(({ entityInternalId }) => entityInternalId as number)
     )}`
   );
-  const ftsResult = await queryNone(databaseAdapter, context, qbFts.build());
+  const ftsResult = await queryNone(database, context, qbFts.build());
   if (ftsResult.isError()) return ftsResult;
 
   return ok(
@@ -112,11 +112,11 @@ export async function adminEntityUnpublishEntities(
 }
 
 export async function adminEntityUnpublishGetPublishedReferencedEntities(
-  databaseAdapter: SqliteDatabaseAdapter,
+  database: Database,
   context: TransactionContext,
   reference: DatabaseResolvedEntityReference
 ): PromiseResult<EntityReference[], ErrorType.Generic> {
-  const result = await queryMany<Pick<EntitiesTable, 'uuid'>>(databaseAdapter, context, {
+  const result = await queryMany<Pick<EntitiesTable, 'uuid'>>(database, context, {
     text: `SELECT e.uuid
        FROM entity_version_references evr, entity_versions ev, entities e
        WHERE evr.entities_id = $1

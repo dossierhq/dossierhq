@@ -6,19 +6,19 @@ import type {
 } from '@jonasb/datadata-database-adapter';
 import { Temporal } from '@js-temporal/polyfill';
 import { v4 as uuidv4 } from 'uuid';
-import type { SqliteDatabaseAdapter } from '..';
 import type { SubjectsTable } from '../DatabaseSchema';
 import { PrincipalsUniqueProviderIdentifierConstraint } from '../DatabaseSchema';
+import type { Database } from '../QueryFunctions';
 import { queryNone, queryNoneOrOne, queryOne } from '../QueryFunctions';
 import { createSession } from '../utils/SessionUtils';
 
 export async function authCreateSession(
-  adapter: SqliteDatabaseAdapter,
+  database: Database,
   context: TransactionContext,
   provider: string,
   identifier: string
 ): PromiseResult<DatabaseAuthCreateSessionPayload, ErrorType.Generic> {
-  const firstGetResult = await getSubject(adapter, context, provider, identifier);
+  const firstGetResult = await getSubject(database, context, provider, identifier);
   if (firstGetResult.isError()) {
     return firstGetResult;
   }
@@ -26,13 +26,13 @@ export async function authCreateSession(
     return ok(firstGetResult.value);
   }
 
-  const createResult = await createSubject(adapter, context, provider, identifier);
+  const createResult = await createSubject(database, context, provider, identifier);
   if (createResult.isOk()) {
     return createResult.map((it) => it);
   }
   if (createResult.isErrorType(ErrorType.Conflict)) {
     // this should only happen if the principal is created by another request after our first check
-    const secondGetResult = await getSubject(adapter, context, provider, identifier);
+    const secondGetResult = await getSubject(database, context, provider, identifier);
     if (secondGetResult.isError()) {
       return secondGetResult;
     }
@@ -57,12 +57,12 @@ function createPayload<TError extends ErrorType>(
 }
 
 async function getSubject(
-  adapter: SqliteDatabaseAdapter,
+  database: Database,
   context: TransactionContext,
   provider: string,
   identifier: string
 ): PromiseResult<DatabaseAuthCreateSessionPayload | null, ErrorType.Generic> {
-  const result = await queryNoneOrOne<Pick<SubjectsTable, 'id' | 'uuid'>>(adapter, context, {
+  const result = await queryNoneOrOne<Pick<SubjectsTable, 'id' | 'uuid'>>(database, context, {
     text: `SELECT s.id, s.uuid FROM subjects s, principals p
     WHERE p.provider = ?1 AND p.identifier = ?2 AND p.subjects_id = s.id`,
     values: [provider, identifier],
@@ -77,7 +77,7 @@ async function getSubject(
 }
 
 async function createSubject(
-  adapter: SqliteDatabaseAdapter,
+  database: Database,
   context: TransactionContext,
   provider: string,
   identifier: string
@@ -85,7 +85,7 @@ async function createSubject(
   return await context.withTransaction(async (context) => {
     const uuid = uuidv4();
     const now = Temporal.Now.instant();
-    const subjectsResult = await queryOne<Pick<SubjectsTable, 'id'>>(adapter, context, {
+    const subjectsResult = await queryOne<Pick<SubjectsTable, 'id'>>(database, context, {
       text: 'INSERT INTO subjects (uuid, created_at) VALUES (?1, ?2) RETURNING id',
       values: [uuid, now.toString()],
     });
@@ -94,7 +94,7 @@ async function createSubject(
     }
     const { id } = subjectsResult.value;
     const principalsResult = await queryNone(
-      adapter,
+      database,
       context,
       {
         text: 'INSERT INTO principals (provider, identifier, subjects_id) VALUES (?1, ?2, ?3)',
@@ -102,7 +102,10 @@ async function createSubject(
       },
       (error) => {
         if (
-          adapter.isUniqueViolationOfConstraint(error, PrincipalsUniqueProviderIdentifierConstraint)
+          database.adapter.isUniqueViolationOfConstraint(
+            error,
+            PrincipalsUniqueProviderIdentifierConstraint
+          )
         ) {
           return notOk.Conflict('Principal already exist');
         }

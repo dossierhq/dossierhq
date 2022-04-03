@@ -5,13 +5,13 @@ import type {
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
 import { Temporal } from '@js-temporal/polyfill';
-import type { SqliteDatabaseAdapter } from '..';
 import type { EntitiesTable } from '../DatabaseSchema';
+import type { Database } from '../QueryFunctions';
 import { queryNoneOrOne } from '../QueryFunctions';
 import { resolveEntityStatus } from '../utils/CodecUtils';
 
 export async function adminEntityArchivingGetEntityInfo(
-  databaseAdapter: SqliteDatabaseAdapter,
+  database: Database,
   context: TransactionContext,
   reference: EntityReference
 ): PromiseResult<
@@ -23,7 +23,7 @@ export async function adminEntityArchivingGetEntityInfo(
       EntitiesTable,
       'id' | 'auth_key' | 'resolved_auth_key' | 'status' | 'updated_at' | 'never_published'
     >
-  >(databaseAdapter, context, {
+  >(database, context, {
     text: 'SELECT e.id, e.auth_key, e.resolved_auth_key, e.status, e.updated_at, e.never_published FROM entities e WHERE e.uuid = $1',
     values: [reference.id],
   });

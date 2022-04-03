@@ -1,12 +1,12 @@
 import type { AdminQuery, AdminSchema, ErrorType, PromiseResult } from '@jonasb/datadata-core';
 import { ok } from '@jonasb/datadata-core';
 import type { ResolvedAuthKey, TransactionContext } from '@jonasb/datadata-database-adapter';
-import type { SqliteDatabaseAdapter } from '..';
+import type { Database } from '../QueryFunctions';
 import { queryOne } from '../QueryFunctions';
 import { totalAdminEntitiesQuery } from '../search/QueryGenerator';
 
 export async function adminEntitySearchTotalCount(
-  databaseAdapter: SqliteDatabaseAdapter,
+  database: Database,
   schema: AdminSchema,
   context: TransactionContext,
   query: AdminQuery | undefined,
@@ -17,7 +17,7 @@ export async function adminEntitySearchTotalCount(
     return sqlQuery;
   }
 
-  const result = await queryOne<{ count: number }>(databaseAdapter, context, sqlQuery.value);
+  const result = await queryOne<{ count: number }>(database, context, sqlQuery.value);
   if (result.isError()) {
     return result;
   }

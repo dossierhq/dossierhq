@@ -5,12 +5,12 @@ import type {
 } from '@jonasb/datadata-database-adapter';
 import { SqliteQueryBuilder } from '@jonasb/datadata-database-adapter';
 import { Temporal } from '@js-temporal/polyfill';
-import type { SqliteDatabaseAdapter } from '..';
+import type { Database } from '../QueryFunctions';
 import { queryNone } from '../QueryFunctions';
 import { getSessionSubjectInternalId } from '../utils/SessionUtils';
 
 export async function adminEntityPublishingCreateEvents(
-  databaseAdapter: SqliteDatabaseAdapter,
+  database: Database,
   context: TransactionContext,
   event: DatabaseAdminEntityPublishingCreateEventArg
 ): PromiseResult<void, ErrorType.Generic> {
@@ -30,5 +30,5 @@ export async function adminEntityPublishingCreateEvents(
       )}, ${subjectValue}, ${publishedAtValue}, ${kindValue})`
     );
   }
-  return await queryNone(databaseAdapter, context, qb.build());
+  return await queryNone(database, context, qb.build());
 }

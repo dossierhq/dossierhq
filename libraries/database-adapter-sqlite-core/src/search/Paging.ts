@@ -1,7 +1,7 @@
 import type { ErrorType, Result } from '@jonasb/datadata-core';
 import { ok } from '@jonasb/datadata-core';
 import type { DatabasePagingInfo } from '@jonasb/datadata-database-adapter';
-import type { SqliteDatabaseAdapter } from '..';
+import type { Database } from '../QueryFunctions';
 import type { CursorNativeType } from './OpaqueCursor';
 import { fromOpaqueCursor } from './OpaqueCursor';
 
@@ -11,25 +11,25 @@ export interface ResolvedPagingCursors<TCursor> {
 }
 
 function getCursor(
-  databaseAdapter: SqliteDatabaseAdapter,
+  database: Database,
   cursorType: CursorNativeType,
   paging: DatabasePagingInfo,
   key: 'after' | 'before'
 ): Result<unknown, ErrorType.BadRequest> {
   const cursor = paging[key];
   if (cursor) {
-    return fromOpaqueCursor(databaseAdapter, cursorType, cursor);
+    return fromOpaqueCursor(database, cursorType, cursor);
   }
   return ok(null);
 }
 
 export function resolvePagingCursors<TCursor>(
-  databaseAdapter: SqliteDatabaseAdapter,
+  database: Database,
   cursorType: CursorNativeType,
   paging: DatabasePagingInfo
 ): Result<ResolvedPagingCursors<TCursor>, ErrorType.BadRequest> {
-  const after = getCursor(databaseAdapter, cursorType, paging, 'after');
-  const before = getCursor(databaseAdapter, cursorType, paging, 'before');
+  const after = getCursor(database, cursorType, paging, 'after');
+  const before = getCursor(database, cursorType, paging, 'before');
 
   if (after.isError()) return after;
   if (before.isError()) return before;

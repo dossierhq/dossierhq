@@ -1,7 +1,6 @@
 import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
 import type { TransactionContext } from '@jonasb/datadata-database-adapter';
-import type { SqliteDatabaseAdapter } from '.';
-import type { QueryOrQueryAndValues } from './QueryFunctions';
+import type { Database, QueryOrQueryAndValues } from './QueryFunctions';
 import { migrate } from './SchemaMigrator';
 
 //TODO enable strict tables when sqlite 3.37+ https://www.sqlite.org/stricttables.html
@@ -117,10 +116,10 @@ const VERSIONS: QueryOrQueryAndValues[][] = [
 ];
 
 export async function migrateDatabaseIfNecessary(
-  databaseAdapter: SqliteDatabaseAdapter,
+  database: Database,
   context: TransactionContext
 ): PromiseResult<void, ErrorType.Generic> {
-  return await migrate(databaseAdapter, context, (version) => {
+  return await migrate(database, context, (version) => {
     return VERSIONS[version] ?? null;
   });
 }

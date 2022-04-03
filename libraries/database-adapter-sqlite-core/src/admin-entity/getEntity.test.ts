@@ -1,19 +1,20 @@
 import { AdminEntityStatus } from '@jonasb/datadata-core';
 import { expectResultValue } from '@jonasb/datadata-core-jest';
 import { Temporal } from '@js-temporal/polyfill';
-import { createMockAdapter, createMockContext, getQueryCalls } from '../test/TestUtils';
-import { adminGetEntity } from './getEntity';
+import {
+  createMockContext,
+  createMockInnerAndOuterAdapter,
+  getQueryCalls,
+} from '../test/TestUtils';
 
 describe('adminGetEntity', () => {
   test('Get latest version', async () => {
     const now = Temporal.Now.instant();
-    const adapter = createMockAdapter();
-    const contextResult = await createMockContext(adapter);
-    if (contextResult.isError()) throw contextResult.toError();
-    const context = contextResult.value;
+    const { innerAdapter, outerAdapter } = (await createMockInnerAndOuterAdapter()).valueOrThrow();
+    const context = createMockContext(outerAdapter);
 
-    adapter.query.mockClear();
-    adapter.query.mockImplementation(async (query, _values) => {
+    innerAdapter.query.mockClear();
+    innerAdapter.query.mockImplementation(async (query, _values) => {
       if (query.startsWith('SELECT e.uuid'))
         return [
           {
@@ -32,7 +33,7 @@ describe('adminGetEntity', () => {
       return [];
     });
 
-    const result = await adminGetEntity(adapter, context, { id: '123' });
+    const result = await outerAdapter.adminEntityGetOne(context, { id: '123' });
 
     expectResultValue(result, {
       id: '123',
@@ -46,7 +47,7 @@ describe('adminGetEntity', () => {
       updatedAt: now,
       fieldValues: { title: 'Title' },
     });
-    expect(getQueryCalls(adapter)).toMatchInlineSnapshot(`
+    expect(getQueryCalls(innerAdapter)).toMatchInlineSnapshot(`
       Array [
         Array [
           "SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, ev.version, ev.fields
@@ -60,13 +61,11 @@ describe('adminGetEntity', () => {
 
   test('Get specific version', async () => {
     const now = Temporal.Now.instant();
-    const adapter = createMockAdapter();
-    const contextResult = await createMockContext(adapter);
-    if (contextResult.isError()) throw contextResult.toError();
-    const context = contextResult.value;
+    const { innerAdapter, outerAdapter } = (await createMockInnerAndOuterAdapter()).valueOrThrow();
+    const context = createMockContext(outerAdapter);
 
-    adapter.query.mockClear();
-    adapter.query.mockImplementation(async (query, _values) => {
+    innerAdapter.query.mockClear();
+    innerAdapter.query.mockImplementation(async (query, _values) => {
       if (query.startsWith('SELECT e.uuid'))
         return [
           {
@@ -85,7 +84,7 @@ describe('adminGetEntity', () => {
       return [];
     });
 
-    const result = await adminGetEntity(adapter, context, { id: '123', version: 5 });
+    const result = await outerAdapter.adminEntityGetOne(context, { id: '123', version: 5 });
 
     expectResultValue(result, {
       id: '123',
@@ -99,7 +98,7 @@ describe('adminGetEntity', () => {
       updatedAt: now,
       fieldValues: { title: 'Title' },
     });
-    expect(getQueryCalls(adapter)).toMatchInlineSnapshot(`
+    expect(getQueryCalls(innerAdapter)).toMatchInlineSnapshot(`
       Array [
         Array [
           "SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, ev.version, ev.fields

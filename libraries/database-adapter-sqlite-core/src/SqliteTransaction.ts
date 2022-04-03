@@ -1,8 +1,8 @@
 import type { ErrorType, PromiseResult, Result } from '@jonasb/datadata-core';
 import { notOk } from '@jonasb/datadata-core';
 import type { Transaction, TransactionContext } from '@jonasb/datadata-database-adapter';
-import type { SqliteDatabaseAdapter } from './SqliteDatabaseAdapter';
-import type { Mutex } from './utils/MutexUtils';
+import type { Database } from './QueryFunctions';
+import { queryNone } from './QueryFunctions';
 
 const sqliteTransactionSymbol = Symbol('SqliteTransaction');
 export interface SqliteTransaction extends Transaction {
@@ -11,8 +11,7 @@ export interface SqliteTransaction extends Transaction {
 }
 
 export async function withRootTransaction<TOk, TError extends ErrorType>(
-  databaseMutex: Mutex,
-  databaseAdapter: SqliteDatabaseAdapter,
+  database: Database,
   context: TransactionContext,
   callback: (transaction: Transaction) => PromiseResult<TOk, TError>
 ): PromiseResult<TOk, TError | ErrorType.Generic> {
@@ -26,36 +25,38 @@ export async function withRootTransaction<TOk, TError extends ErrorType>(
     [sqliteTransactionSymbol]: true,
     savePointCount: 0,
   };
-  return await databaseMutex.withLock<TOk, TError | ErrorType.Generic>(context, async () => {
+  return await database.mutex.withLock<TOk, TError | ErrorType.Generic>(context, async () => {
+    const beginResult = await queryNone(database, context, 'BEGIN');
+    if (beginResult.isError()) return beginResult;
+
+    let result: Result<TOk, TError | ErrorType.Generic>;
     try {
-      await databaseAdapter.query('BEGIN', undefined);
-      const result = await callback(transaction);
-      if (result.isOk()) {
-        await databaseAdapter.query('COMMIT', undefined);
-      } else {
-        await databaseAdapter.query('ROLLBACK', undefined);
-      }
-      return result;
+      result = await callback(transaction);
     } catch (error) {
-      await databaseAdapter.query('ROLLBACK', undefined);
-      return notOk.GenericUnexpectedException(context, error);
+      result = notOk.GenericUnexpectedException(context, error);
     }
+
+    const commitOrRollbackResult = await queryNone(
+      database,
+      context,
+      result.isOk() ? 'COMMIT' : 'ROLLBACK'
+    );
+    if (commitOrRollbackResult.isError()) return commitOrRollbackResult;
+
+    return result;
   });
 }
 
 export async function withNestedTransaction<TOk, TError extends ErrorType>(
-  databaseAdapter: SqliteDatabaseAdapter,
+  database: Database,
   context: TransactionContext,
   transaction: Transaction,
   callback: () => PromiseResult<TOk, TError>
 ): PromiseResult<TOk, TError | ErrorType.Generic> {
   const sqliteTransaction = transaction as SqliteTransaction;
   const savePointName = `nested${sqliteTransaction.savePointCount++}`;
-  try {
-    await databaseAdapter.query(`SAVEPOINT ${savePointName}`, undefined);
-  } catch (error) {
-    return notOk.GenericUnexpectedException(context, error);
-  }
+  const savePointResult = await queryNone(database, context, `SAVEPOINT ${savePointName}`);
+  if (savePointResult.isError()) return savePointResult;
 
   let result: Result<TOk, TError | ErrorType.Generic>;
   try {
@@ -64,15 +65,12 @@ export async function withNestedTransaction<TOk, TError extends ErrorType>(
     result = notOk.GenericUnexpectedException(context, error);
   }
 
-  try {
-    if (result.isOk()) {
-      await databaseAdapter.query(`RELEASE ${savePointName}`, undefined);
-    } else {
-      await databaseAdapter.query(`ROLLBACK TO ${savePointName}`, undefined);
-    }
-  } catch (error) {
-    result = notOk.GenericUnexpectedException(context, error);
-  }
+  const releaseOrRollbackResult = await queryNone(
+    database,
+    context,
+    result.isOk() ? `RELEASE ${savePointName}` : `ROLLBACK TO ${savePointName}`
+  );
+  if (releaseOrRollbackResult.isError()) return releaseOrRollbackResult;
 
   return result;
 }

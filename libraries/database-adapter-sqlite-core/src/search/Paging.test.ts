@@ -1,10 +1,10 @@
-import { createMockAdapter, resolvePaging } from '../test/TestUtils';
+import { createMockDatabase, resolvePaging } from '../test/TestUtils';
 import { toOpaqueCursor } from './OpaqueCursor';
 import { resolvePagingCursors } from './Paging';
 
 describe('resolvePagingCursors()', () => {
   test('undefined', () => {
-    const databaseAdapter = createMockAdapter();
+    const databaseAdapter = createMockDatabase();
     expect(resolvePagingCursors(databaseAdapter, 'int', resolvePaging(undefined)))
       .toMatchInlineSnapshot(`
       OkResult {
@@ -17,7 +17,7 @@ describe('resolvePagingCursors()', () => {
   });
 
   test('after', () => {
-    const databaseAdapter = createMockAdapter();
+    const databaseAdapter = createMockDatabase();
     expect(
       resolvePagingCursors(
         databaseAdapter,
@@ -37,7 +37,7 @@ describe('resolvePagingCursors()', () => {
   });
 
   test('before', () => {
-    const databaseAdapter = createMockAdapter();
+    const databaseAdapter = createMockDatabase();
     expect(
       resolvePagingCursors(
         databaseAdapter,
@@ -57,7 +57,7 @@ describe('resolvePagingCursors()', () => {
   });
 
   test('after,before', () => {
-    const databaseAdapter = createMockAdapter();
+    const databaseAdapter = createMockDatabase();
     expect(
       resolvePagingCursors(
         databaseAdapter,

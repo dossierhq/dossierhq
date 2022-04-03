@@ -8,9 +8,9 @@ import type {
 } from '@jonasb/datadata-database-adapter';
 import { buildSqliteSqlQuery, SqliteQueryBuilder } from '@jonasb/datadata-database-adapter';
 import { Temporal } from '@js-temporal/polyfill';
-import type { SqliteDatabaseAdapter } from '..';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema';
 import { EntitiesUniqueNameConstraint } from '../DatabaseSchema';
+import type { Database } from '../QueryFunctions';
 import { queryNone, queryNoneOrOne, queryOne } from '../QueryFunctions';
 import { resolveEntityStatus } from '../utils/CodecUtils';
 import { getSessionSubjectInternalId } from '../utils/SessionUtils';
@@ -18,7 +18,7 @@ import { withUniqueNameAttempt } from '../utils/withUniqueNameAttempt';
 import { getEntitiesUpdatedSeq } from './getEntitiesUpdatedSeq';
 
 export async function adminEntityUpdateGetEntityInfo(
-  databaseAdapter: SqliteDatabaseAdapter,
+  database: Database,
   context: TransactionContext,
   reference: EntityReference
 ): PromiseResult<DatabaseEntityUpdateGetEntityInfoPayload, ErrorType.NotFound | ErrorType.Generic> {
@@ -35,7 +35,7 @@ export async function adminEntityUpdateGetEntityInfo(
       | 'status'
     > &
       Pick<EntityVersionsTable, 'version' | 'fields'>
-  >(databaseAdapter, context, {
+  >(database, context, {
     text: `SELECT e.id, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, ev.version, ev.fields
         FROM entities e, entity_versions ev
         WHERE e.uuid = ?1 AND e.latest_entity_versions_id = ev.id`,
@@ -76,27 +76,23 @@ export async function adminEntityUpdateGetEntityInfo(
 }
 
 export async function adminEntityUpdateEntity(
-  databaseAdapter: SqliteDatabaseAdapter,
+  database: Database,
   context: TransactionContext,
   randomNameGenerator: (name: string) => string,
   entity: DatabaseEntityUpdateEntityArg
 ): PromiseResult<DatabaseEntityUpdateEntityPayload, ErrorType.Generic> {
   const now = Temporal.Now.instant();
 
-  const createVersionResult = await queryOne<Pick<EntityVersionsTable, 'id'>>(
-    databaseAdapter,
-    context,
-    {
-      text: 'INSERT INTO entity_versions (entities_id, created_at, created_by, version, fields) VALUES (?1, ?2, ?3, ?4, ?5) RETURNING id',
-      values: [
-        entity.entityInternalId as number,
-        now.toString(),
-        getSessionSubjectInternalId(entity.session),
-        entity.version,
-        JSON.stringify(entity.fieldValues),
-      ],
-    }
-  );
+  const createVersionResult = await queryOne<Pick<EntityVersionsTable, 'id'>>(database, context, {
+    text: 'INSERT INTO entity_versions (entities_id, created_at, created_by, version, fields) VALUES (?1, ?2, ?3, ?4, ?5) RETURNING id',
+    values: [
+      entity.entityInternalId as number,
+      now.toString(),
+      getSessionSubjectInternalId(entity.session),
+      entity.version,
+      JSON.stringify(entity.fieldValues),
+    ],
+  });
   if (createVersionResult.isError()) {
     return createVersionResult;
   }
@@ -110,7 +106,7 @@ export async function adminEntityUpdateEntity(
       randomNameGenerator,
       async (context, name, nameConflictErrorMessage) => {
         const updateNameResult = await queryNone(
-          databaseAdapter,
+          database,
           context,
           {
             text: 'UPDATE entities SET name = ?1 WHERE id = ?2',
@@ -118,7 +114,7 @@ export async function adminEntityUpdateEntity(
           },
           (error) => {
             if (
-              databaseAdapter.isUniqueViolationOfConstraint(error, EntitiesUniqueNameConstraint)
+              database.adapter.isUniqueViolationOfConstraint(error, EntitiesUniqueNameConstraint)
             ) {
               return notOk.Conflict(nameConflictErrorMessage);
             }
@@ -139,10 +135,10 @@ export async function adminEntityUpdateEntity(
     newName = nameResult.value;
   }
 
-  const updatedReqResult = await getEntitiesUpdatedSeq(databaseAdapter, context);
+  const updatedReqResult = await getEntitiesUpdatedSeq(database, context);
   if (updatedReqResult.isError()) return updatedReqResult;
 
-  const updateEntityResult = await queryNone(databaseAdapter, context, {
+  const updateEntityResult = await queryNone(database, context, {
     text: `UPDATE entities SET
              latest_entity_versions_id = ?1,
              updated_at = ?2,
@@ -162,7 +158,7 @@ export async function adminEntityUpdateEntity(
   }
 
   const ftsResult = await queryNone(
-    databaseAdapter,
+    database,
     context,
     buildSqliteSqlQuery(
       ({ sql }) =>
@@ -181,7 +177,7 @@ export async function adminEntityUpdateEntity(
     for (const referenceId of entity.referenceIds) {
       qb.addQuery(`(?1, ${qb.addValue(referenceId.entityInternalId as number)})`);
     }
-    const referenceResult = await queryNone(databaseAdapter, context, qb.build());
+    const referenceResult = await queryNone(database, context, qb.build());
     if (referenceResult.isError()) {
       return referenceResult;
     }
@@ -195,7 +191,7 @@ export async function adminEntityUpdateEntity(
     for (const location of entity.locations) {
       qb.addQuery(`(?1, ${qb.addValue(location.lat)}, ${qb.addValue(location.lng)})`);
     }
-    const locationsResult = await queryNone(databaseAdapter, context, qb.build());
+    const locationsResult = await queryNone(database, context, qb.build());
     if (locationsResult.isError()) {
       return locationsResult;
     }

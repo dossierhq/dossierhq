@@ -5,12 +5,12 @@ import type {
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
 import { SqliteQueryBuilder } from '@jonasb/datadata-database-adapter';
-import type { SqliteDatabaseAdapter } from '..';
 import type { EntitiesTable } from '../DatabaseSchema';
+import type { Database } from '../QueryFunctions';
 import { queryMany } from '../QueryFunctions';
 
 export async function adminEntityGetReferenceEntitiesInfo(
-  databaseAdapter: SqliteDatabaseAdapter,
+  database: Database,
   context: TransactionContext,
   references: EntityReference[]
 ): PromiseResult<DatabaseAdminEntityGetReferenceEntityInfoPayload[], ErrorType.Generic> {
@@ -18,7 +18,7 @@ export async function adminEntityGetReferenceEntitiesInfo(
   qb.addQuery(`uuid IN ${qb.addValueList(references.map(({ id }) => id))}`);
 
   const result = await queryMany<Pick<EntitiesTable, 'id' | 'type' | 'uuid'>>(
-    databaseAdapter,
+    database,
     context,
     qb.build()
   );

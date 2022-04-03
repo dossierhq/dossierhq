@@ -3,12 +3,12 @@ import { notOk, ok } from '@jonasb/datadata-core';
 import type { TransactionContext } from '@jonasb/datadata-database-adapter';
 import { buildSqliteSqlQuery } from '@jonasb/datadata-database-adapter';
 import { Temporal } from '@js-temporal/polyfill';
-import type { SqliteDatabaseAdapter } from '..';
 import type { AdvisoryLocksTable } from '../DatabaseSchema';
+import type { Database } from '../QueryFunctions';
 import { queryNoneOrOne } from '../QueryFunctions';
 
 export async function advisoryLockRenew(
-  databaseAdapter: SqliteDatabaseAdapter,
+  database: Database,
   context: TransactionContext,
   name: string,
   handle: number
@@ -25,7 +25,7 @@ export async function advisoryLockRenew(
   });
 
   const result = await queryNoneOrOne<Pick<AdvisoryLocksTable, 'acquired_at'>>(
-    databaseAdapter,
+    database,
     context,
     query
   );

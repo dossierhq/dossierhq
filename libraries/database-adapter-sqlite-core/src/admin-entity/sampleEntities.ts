@@ -6,14 +6,14 @@ import type {
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
 import { Temporal } from '@js-temporal/polyfill';
-import type { SqliteDatabaseAdapter } from '..';
+import type { Database } from '../QueryFunctions';
 import { queryMany } from '../QueryFunctions';
 import type { SearchAdminEntitiesItem } from '../search/QueryGenerator';
 import { sampleAdminEntitiesQuery } from '../search/QueryGenerator';
 import { resolveEntityStatus } from '../utils/CodecUtils';
 
 export async function adminEntitySampleEntities(
-  databaseAdapter: SqliteDatabaseAdapter,
+  database: Database,
   schema: AdminSchema,
   context: TransactionContext,
   query: AdminQuery | undefined,
@@ -25,7 +25,7 @@ export async function adminEntitySampleEntities(
   if (sqlQueryResult.isError()) return sqlQueryResult;
 
   const searchResult = await queryMany<SearchAdminEntitiesItem>(
-    databaseAdapter,
+    database,
     context,
     sqlQueryResult.value
   );
