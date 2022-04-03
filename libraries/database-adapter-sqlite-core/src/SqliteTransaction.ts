@@ -13,37 +13,34 @@ export interface SqliteTransaction extends Transaction {
 export async function withRootTransaction<TOk, TError extends ErrorType>(
   database: Database,
   context: TransactionContext,
-  callback: (transaction: Transaction) => PromiseResult<TOk, TError>
+  childContextFactory: (transaction: Transaction) => TransactionContext,
+  callback: (context: TransactionContext) => PromiseResult<TOk, TError>
 ): PromiseResult<TOk, TError | ErrorType.Generic> {
   if (context.transaction) {
     return notOk.Generic('Trying to create a root transaction with current transaction');
   }
 
-  //TODO probably the same mutex needs to be run in queryCommon for queries outside of transaction
   const transaction: SqliteTransaction = {
     _type: 'Transaction',
     [sqliteTransactionSymbol]: true,
     savePointCount: 0,
   };
-  return await database.mutex.withLock<TOk, TError | ErrorType.Generic>(context, async () => {
-    const beginResult = await queryNone(database, context, 'BEGIN', undefined, {
-      iPromiseIHaveTheDatabaseMutex: true,
-    });
+  const childContext = childContextFactory(transaction);
+  return await database.mutex.withLock<TOk, TError | ErrorType.Generic>(childContext, async () => {
+    const beginResult = await queryNone(database, childContext, 'BEGIN');
     if (beginResult.isError()) return beginResult;
 
     let result: Result<TOk, TError | ErrorType.Generic>;
     try {
-      result = await callback(transaction);
+      result = await callback(childContext);
     } catch (error) {
-      result = notOk.GenericUnexpectedException(context, error);
+      result = notOk.GenericUnexpectedException(childContext, error);
     }
 
     const commitOrRollbackResult = await queryNone(
       database,
-      context,
-      result.isOk() ? 'COMMIT' : 'ROLLBACK',
-      undefined,
-      { iPromiseIHaveTheDatabaseMutex: true }
+      childContext,
+      result.isOk() ? 'COMMIT' : 'ROLLBACK'
     );
     if (commitOrRollbackResult.isError()) return commitOrRollbackResult;
 

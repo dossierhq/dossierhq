@@ -11,15 +11,17 @@ export interface PostgresTransaction extends Transaction {
 export async function withRootTransaction<TOk, TError extends ErrorType>(
   databaseAdapter: PostgresDatabaseAdapter,
   context: TransactionContext,
-  callback: (transaction: Transaction) => PromiseResult<TOk, TError>
+  childContextFactory: (transaction: Transaction) => TransactionContext,
+  callback: (context: TransactionContext) => PromiseResult<TOk, TError>
 ): PromiseResult<TOk, TError | ErrorType.Generic> {
   if (context.transaction) {
     return notOk.Generic('Trying to create a root transaction with current transaction');
   }
   const transaction = await databaseAdapter.createTransaction();
+  const childContext = childContextFactory(transaction);
   try {
     await databaseAdapter.query(transaction, 'BEGIN', undefined);
-    const result = await callback(transaction);
+    const result = await callback(childContext);
     if (result.isOk()) {
       await databaseAdapter.query(transaction, 'COMMIT', undefined);
     } else {
