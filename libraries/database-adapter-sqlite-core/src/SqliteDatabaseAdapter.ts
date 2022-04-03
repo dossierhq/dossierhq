@@ -1,6 +1,10 @@
 import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
 import { notOk, ok } from '@jonasb/datadata-core';
-import type { Context, DatabaseAdapter } from '@jonasb/datadata-database-adapter';
+import type {
+  Context,
+  DatabaseAdapter,
+  TransactionContext,
+} from '@jonasb/datadata-database-adapter';
 import type { UniqueConstraint } from '.';
 import { adminEntityArchivingGetEntityInfo } from './admin-entity/archivingGetEntityInfo';
 import { adminCreateEntity } from './admin-entity/createEntity';
@@ -52,6 +56,7 @@ import { migrateDatabaseIfNecessary } from './SchemaDefinition';
 import { createMigrationContext } from './SchemaMigrator';
 import { isSemVerEqualOrGreaterThan, parseSemVer } from './SemVer';
 import { withNestedTransaction, withRootTransaction } from './SqliteTransaction';
+import { Mutex } from './utils/MutexUtils';
 
 export type ColumnValue = number | string | Uint8Array | null;
 
@@ -70,19 +75,25 @@ export async function createSqliteDatabaseAdapterAdapter(
   context: Context,
   sqliteAdapter: SqliteDatabaseAdapter
 ): PromiseResult<DatabaseAdapter, ErrorType.BadRequest | ErrorType.Generic> {
-  const validityResult = await checkAdapterValidity(context, sqliteAdapter);
+  const databaseMutex = new Mutex();
+
+  const outerAdapter = createAdapter(databaseMutex, sqliteAdapter);
+  //TODO rename to initializationContext
+  const migrationContext = createMigrationContext(outerAdapter, context.logger);
+
+  const validityResult = await checkAdapterValidity(migrationContext, sqliteAdapter);
   if (validityResult.isError()) return validityResult;
 
-  const outerAdapter = createAdapter(sqliteAdapter);
-
-  const migrationContext = createMigrationContext(outerAdapter, context.logger);
   const migrationResult = await migrateDatabaseIfNecessary(sqliteAdapter, migrationContext);
   if (migrationResult.isError()) return migrationResult;
 
   return ok(outerAdapter);
 }
 
-function createAdapter(sqliteAdapter: SqliteDatabaseAdapter): DatabaseAdapter {
+function createAdapter(
+  databaseMutex: Mutex,
+  sqliteAdapter: SqliteDatabaseAdapter
+): DatabaseAdapter {
   return {
     adminEntityArchivingGetEntityInfo: (...args) =>
       adminEntityArchivingGetEntityInfo(sqliteAdapter, ...args),
@@ -137,12 +148,12 @@ function createAdapter(sqliteAdapter: SqliteDatabaseAdapter): DatabaseAdapter {
     schemaGetSpecification: (...args) => schemaGetSpecification(sqliteAdapter, ...args),
     schemaUpdateSpecification: (...args) => schemaUpdateSpecification(sqliteAdapter, ...args),
     withNestedTransaction: (...args) => withNestedTransaction(sqliteAdapter, ...args),
-    withRootTransaction: (...args) => withRootTransaction(sqliteAdapter, ...args),
+    withRootTransaction: (...args) => withRootTransaction(databaseMutex, sqliteAdapter, ...args),
   };
 }
 
 async function checkAdapterValidity(
-  context: Context,
+  context: TransactionContext,
   adapter: SqliteDatabaseAdapter
 ): PromiseResult<void, ErrorType.Generic | ErrorType.BadRequest> {
   const result = await queryOne<{ version: string }>(

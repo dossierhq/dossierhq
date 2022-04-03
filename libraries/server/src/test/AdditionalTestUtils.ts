@@ -128,7 +128,7 @@ export function createMockDatabaseAdapter(): MockDatabaseAdapter {
     withRootTransaction: jest.fn(),
   };
 
-  adapter.withRootTransaction.mockImplementation((callback) => {
+  adapter.withRootTransaction.mockImplementation((context, callback) => {
     return callback({
       _type: 'Transaction',
     });

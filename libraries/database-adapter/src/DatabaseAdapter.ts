@@ -228,8 +228,9 @@ export interface DatabaseAdapter {
   disconnect(): Promise<void>;
 
   withRootTransaction<TOk, TError extends ErrorType>(
+    context: TransactionContext,
     callback: (transaction: Transaction) => PromiseResult<TOk, TError>
-  ): PromiseResult<TOk, TError>;
+  ): PromiseResult<TOk, TError | ErrorType.Generic>;
 
   withNestedTransaction<TOk, TError extends ErrorType>(
     context: TransactionContext,

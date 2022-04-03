@@ -1,6 +1,6 @@
 import type { ErrorType, PromiseResult, Result } from '@jonasb/datadata-core';
 import { notOk, ok } from '@jonasb/datadata-core';
-import type { Context } from '@jonasb/datadata-database-adapter';
+import type { TransactionContext } from '@jonasb/datadata-database-adapter';
 import type { SqliteDatabaseAdapter } from '.';
 import type { ColumnValue } from './SqliteDatabaseAdapter';
 
@@ -12,7 +12,7 @@ export type QueryOrQueryAndValues = string | { text: string; values?: ColumnValu
 
 async function queryCommon<TRow, TError extends ErrorType>(
   adapter: SqliteDatabaseAdapter,
-  context: Context,
+  context: TransactionContext,
   queryOrQueryAndValues: QueryOrQueryAndValues,
   errorConverter: ErrorConverter<TRow, TError> | undefined
 ): PromiseResult<TRow[], TError | ErrorType.Generic> {
@@ -34,7 +34,7 @@ async function queryCommon<TRow, TError extends ErrorType>(
 
 export async function queryNone<TError extends ErrorType | ErrorType.Generic = ErrorType.Generic>(
   adapter: SqliteDatabaseAdapter,
-  context: Context,
+  context: TransactionContext,
   query: QueryOrQueryAndValues,
   errorConverter?: ErrorConverter<unknown, TError | ErrorType.Generic>
 ): PromiseResult<void, TError | ErrorType.Generic> {
@@ -56,7 +56,7 @@ export async function queryNone<TError extends ErrorType | ErrorType.Generic = E
 
 export async function queryNoneOrOne<TRow, TError extends ErrorType = ErrorType.Generic>(
   adapter: SqliteDatabaseAdapter,
-  context: Context,
+  context: TransactionContext,
   query: QueryOrQueryAndValues,
   errorConverter?: ErrorConverter<TRow, TError | ErrorType.Generic>
 ): PromiseResult<TRow | null, TError | ErrorType.Generic> {
@@ -81,7 +81,7 @@ export async function queryNoneOrOne<TRow, TError extends ErrorType = ErrorType.
 
 export async function queryOne<TRow, TError extends ErrorType = ErrorType.Generic>(
   adapter: SqliteDatabaseAdapter,
-  context: Context,
+  context: TransactionContext,
   query: QueryOrQueryAndValues,
   errorConverter?: ErrorConverter<TRow, TError | ErrorType.Generic>
 ): PromiseResult<TRow, TError | ErrorType.Generic> {
@@ -103,7 +103,7 @@ export async function queryOne<TRow, TError extends ErrorType = ErrorType.Generi
 
 export async function queryMany<TRow, TError extends ErrorType = ErrorType.Generic>(
   adapter: SqliteDatabaseAdapter,
-  context: Context,
+  context: TransactionContext,
   query: QueryOrQueryAndValues,
   errorConverter?: ErrorConverter<TRow, TError | ErrorType.Generic>
 ): PromiseResult<TRow[], TError | ErrorType.Generic> {
