@@ -82,6 +82,7 @@ describe('Admin adminCreateEntity', () => {
         ],
         Array [
           "withRootTransaction",
+          [Function],
         ],
       ]
     `);

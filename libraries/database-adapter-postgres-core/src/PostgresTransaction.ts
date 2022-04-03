@@ -10,8 +10,12 @@ export interface PostgresTransaction extends Transaction {
 
 export async function withRootTransaction<TOk, TError extends ErrorType>(
   databaseAdapter: PostgresDatabaseAdapter,
+  context: TransactionContext,
   callback: (transaction: Transaction) => PromiseResult<TOk, TError>
-): PromiseResult<TOk, TError> {
+): PromiseResult<TOk, TError | ErrorType.Generic> {
+  if (context.transaction) {
+    return notOk.Generic('Trying to create a root transaction with current transaction');
+  }
   const transaction = await databaseAdapter.createTransaction();
   try {
     await databaseAdapter.query(transaction, 'BEGIN', undefined);
