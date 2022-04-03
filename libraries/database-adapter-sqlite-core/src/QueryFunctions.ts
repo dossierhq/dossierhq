@@ -9,6 +9,12 @@ interface ErrorConverter<TRow, TError extends ErrorType> {
   (error: unknown): Result<TRow[], TError | ErrorType.Generic>;
 }
 
+interface ExtraOptions {
+  /** Only used when starting creating the transaction, since we use context.transaction to
+   * determine if we have the lock otherwise. */
+  iPromiseIHaveTheDatabaseMutex?: boolean;
+}
+
 export interface Database {
   mutex: Mutex;
   adapter: SqliteDatabaseAdapter;
@@ -20,7 +26,8 @@ async function queryCommon<TRow, TError extends ErrorType>(
   database: Database,
   context: TransactionContext,
   queryOrQueryAndValues: QueryOrQueryAndValues,
-  errorConverter: ErrorConverter<TRow, TError> | undefined
+  errorConverter: ErrorConverter<TRow, TError> | undefined,
+  extraOptions?: ExtraOptions
 ): PromiseResult<TRow[], TError | ErrorType.Generic> {
   const { text, values } =
     typeof queryOrQueryAndValues === 'string'
@@ -39,7 +46,7 @@ async function queryCommon<TRow, TError extends ErrorType>(
     }
   };
 
-  return context.transaction
+  return context.transaction || extraOptions?.iPromiseIHaveTheDatabaseMutex
     ? queryAndConvert()
     : database.mutex.withLock(context, queryAndConvert);
 }
@@ -48,13 +55,15 @@ export async function queryNone<TError extends ErrorType | ErrorType.Generic = E
   database: Database,
   context: TransactionContext,
   query: QueryOrQueryAndValues,
-  errorConverter?: ErrorConverter<unknown, TError | ErrorType.Generic>
+  errorConverter?: ErrorConverter<unknown, TError | ErrorType.Generic>,
+  extraOptions?: ExtraOptions
 ): PromiseResult<void, TError | ErrorType.Generic> {
   const result = await queryCommon<[], TError>(
     database,
     context,
     query,
-    errorConverter as ErrorConverter<[], TError>
+    errorConverter as ErrorConverter<[], TError>,
+    extraOptions
   );
   if (result.isError()) {
     return result;

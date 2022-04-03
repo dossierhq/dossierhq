@@ -27,7 +27,7 @@ export class Mutex {
   ): PromiseResult<TOk, TError | ErrorType.Generic> {
     const unlock = await this.#lock();
     try {
-      return worker();
+      return await worker();
     } catch (error) {
       return notOk.GenericUnexpectedException(context, error);
     } finally {

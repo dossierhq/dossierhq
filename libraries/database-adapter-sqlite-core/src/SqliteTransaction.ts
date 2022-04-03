@@ -26,7 +26,9 @@ export async function withRootTransaction<TOk, TError extends ErrorType>(
     savePointCount: 0,
   };
   return await database.mutex.withLock<TOk, TError | ErrorType.Generic>(context, async () => {
-    const beginResult = await queryNone(database, context, 'BEGIN');
+    const beginResult = await queryNone(database, context, 'BEGIN', undefined, {
+      iPromiseIHaveTheDatabaseMutex: true,
+    });
     if (beginResult.isError()) return beginResult;
 
     let result: Result<TOk, TError | ErrorType.Generic>;
@@ -39,7 +41,9 @@ export async function withRootTransaction<TOk, TError extends ErrorType>(
     const commitOrRollbackResult = await queryNone(
       database,
       context,
-      result.isOk() ? 'COMMIT' : 'ROLLBACK'
+      result.isOk() ? 'COMMIT' : 'ROLLBACK',
+      undefined,
+      { iPromiseIHaveTheDatabaseMutex: true }
     );
     if (commitOrRollbackResult.isError()) return commitOrRollbackResult;
 
