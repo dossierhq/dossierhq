@@ -22,6 +22,7 @@ export const CreateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
   createEntity_minimal,
   createEntity_withId,
   createEntity_duplicateName,
+  createEntity_fiveInParallelWithSameName,
   createEntity_publishMinimal,
   createEntity_publishWithSubjectAuthKey,
   createEntity_withTwoReferences,
@@ -107,6 +108,17 @@ async function createEntity_duplicateName({ client }: AdminEntityTestContext) {
   assertNotSame(firstName, secondName);
 
   assertTruthy(secondName.match(/^TitleOnly name#\d{8}$/));
+}
+
+async function createEntity_fiveInParallelWithSameName({ client }: AdminEntityTestContext) {
+  const results = await Promise.all(
+    [1, 2, 3, 4, 5].map((num) =>
+      client.createEntity(copyEntity(TITLE_ONLY_CREATE, { fields: { title: `Title ${num}` } }))
+    )
+  );
+  for (const result of results) {
+    assertOkResult(result);
+  }
 }
 
 async function createEntity_publishMinimal({ client }: AdminEntityTestContext) {
