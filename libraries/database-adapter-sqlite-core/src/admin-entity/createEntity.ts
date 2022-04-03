@@ -9,22 +9,22 @@ import {
 } from '@jonasb/datadata-database-adapter';
 import { Temporal } from '@js-temporal/polyfill';
 import { v4 as uuidv4 } from 'uuid';
-import type { SqliteDatabaseAdapter } from '..';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema';
 import { EntitiesUniqueNameConstraint, EntitiesUniqueUuidConstraint } from '../DatabaseSchema';
+import type { Database } from '../QueryFunctions';
 import { queryNone, queryOne } from '../QueryFunctions';
 import { getSessionSubjectInternalId } from '../utils/SessionUtils';
 import { withUniqueNameAttempt } from '../utils/withUniqueNameAttempt';
 import { getEntitiesUpdatedSeq } from './getEntitiesUpdatedSeq';
 
 export async function adminCreateEntity(
-  databaseAdapter: SqliteDatabaseAdapter,
+  database: Database,
   context: TransactionContext,
   randomNameGenerator: (name: string) => string,
   entity: DatabaseAdminEntityCreateEntityArg
 ): PromiseResult<DatabaseAdminEntityCreatePayload, ErrorType.Conflict | ErrorType.Generic> {
   const createEntityRowResult = await createEntityRow(
-    databaseAdapter,
+    database,
     context,
     randomNameGenerator,
     entity
@@ -36,7 +36,7 @@ export async function adminCreateEntity(
   const { uuid, actualName, entityId, createdAt, updatedAt } = createEntityRowResult.value;
 
   const ftsResult = await queryNone(
-    databaseAdapter,
+    database,
     context,
     buildSqliteSqlQuery(
       ({ sql }) =>
@@ -46,7 +46,7 @@ export async function adminCreateEntity(
   if (ftsResult.isError()) return ftsResult;
 
   const createEntityVersionResult = await queryOne<Pick<EntityVersionsTable, 'id'>>(
-    databaseAdapter,
+    database,
     context,
     {
       text: 'INSERT INTO entity_versions (entities_id, version, created_at, created_by, fields) VALUES (?1, 0, ?2, ?3, ?4) RETURNING id',
@@ -63,7 +63,7 @@ export async function adminCreateEntity(
   }
   const { id: versionsId } = createEntityVersionResult.value;
 
-  const updateLatestDraftIdResult = await queryNone(databaseAdapter, context, {
+  const updateLatestDraftIdResult = await queryNone(database, context, {
     text: 'UPDATE entities SET latest_entity_versions_id = ?1 WHERE id = ?2',
     values: [versionsId, entityId],
   });
@@ -79,7 +79,7 @@ export async function adminCreateEntity(
     for (const referenceId of entity.referenceIds) {
       qb.addQuery(`(?1, ${qb.addValue(referenceId.entityInternalId as number)})`);
     }
-    const insertReferencesResult = await queryNone(databaseAdapter, context, qb.build());
+    const insertReferencesResult = await queryNone(database, context, qb.build());
     if (insertReferencesResult.isError()) {
       return insertReferencesResult;
     }
@@ -91,7 +91,7 @@ export async function adminCreateEntity(
     for (const location of entity.locations) {
       sql`(${entityVersion}, ${location.lat}, ${location.lng})`;
     }
-    const insertLocationsResult = await queryNone(databaseAdapter, context, query);
+    const insertLocationsResult = await queryNone(database, context, query);
     if (insertLocationsResult.isError()) {
       return insertLocationsResult;
     }
@@ -101,7 +101,7 @@ export async function adminCreateEntity(
 }
 
 async function createEntityRow(
-  databaseAdapter: SqliteDatabaseAdapter,
+  database: Database,
   context: TransactionContext,
   randomNameGenerator: (name: string) => string,
   entity: DatabaseAdminEntityCreateEntityArg
@@ -109,7 +109,7 @@ async function createEntityRow(
   const uuid = entity.id ?? uuidv4();
   const now = Temporal.Now.instant();
 
-  const updatedSecResult = await getEntitiesUpdatedSeq(databaseAdapter, context);
+  const updatedSecResult = await getEntitiesUpdatedSeq(database, context);
   if (updatedSecResult.isError()) return updatedSecResult;
 
   return await withUniqueNameAttempt(
@@ -118,7 +118,7 @@ async function createEntityRow(
     randomNameGenerator,
     async (context, name, nameConflictErrorMessage) => {
       const createResult = await queryOne<Pick<EntitiesTable, 'id'>, ErrorType.Conflict>(
-        databaseAdapter,
+        database,
         context,
         {
           text: `INSERT INTO entities (uuid, name, type, auth_key, resolved_auth_key, status, created_at, updated_at, updated_seq)
@@ -135,10 +135,10 @@ async function createEntityRow(
           ],
         },
         (error) => {
-          if (databaseAdapter.isUniqueViolationOfConstraint(error, EntitiesUniqueNameConstraint)) {
+          if (database.adapter.isUniqueViolationOfConstraint(error, EntitiesUniqueNameConstraint)) {
             return notOk.Conflict(nameConflictErrorMessage);
           } else if (
-            databaseAdapter.isUniqueViolationOfConstraint(error, EntitiesUniqueUuidConstraint)
+            database.adapter.isUniqueViolationOfConstraint(error, EntitiesUniqueUuidConstraint)
           ) {
             return notOk.Conflict(`Entity with id (${entity.id}) already exist`);
           }

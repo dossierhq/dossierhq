@@ -12,14 +12,14 @@ import type {
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
 import { Temporal } from '@js-temporal/polyfill';
-import type { SqliteDatabaseAdapter } from '..';
+import type { Database } from '../QueryFunctions';
 import { queryMany } from '../QueryFunctions';
 import type { SearchAdminEntitiesItem } from '../search/QueryGenerator';
 import { searchAdminEntitiesQuery } from '../search/QueryGenerator';
 import { resolveEntityStatus } from '../utils/CodecUtils';
 
 export async function adminEntitySearchEntities(
-  databaseAdapter: SqliteDatabaseAdapter,
+  database: Database,
   schema: AdminSchema,
   context: TransactionContext,
   query: AdminSearchQuery | undefined,
@@ -27,7 +27,7 @@ export async function adminEntitySearchEntities(
   resolvedAuthKeys: ResolvedAuthKey[]
 ): PromiseResult<DatabaseAdminEntitySearchPayload, ErrorType.BadRequest | ErrorType.Generic> {
   const sqlQueryResult = searchAdminEntitiesQuery(
-    databaseAdapter,
+    database,
     schema,
     query,
     paging,
@@ -36,7 +36,7 @@ export async function adminEntitySearchEntities(
   if (sqlQueryResult.isError()) return sqlQueryResult;
   const { cursorExtractor, sqlQuery } = sqlQueryResult.value;
 
-  const searchResult = await queryMany<SearchAdminEntitiesItem>(databaseAdapter, context, sqlQuery);
+  const searchResult = await queryMany<SearchAdminEntitiesItem>(database, context, sqlQuery);
   if (searchResult.isError()) return searchResult;
 
   const entitiesValues = searchResult.value;

@@ -11,13 +11,13 @@ import type {
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
 import { Temporal } from '@js-temporal/polyfill';
-import type { SqliteDatabaseAdapter } from '..';
+import type { Database } from '../QueryFunctions';
 import { queryMany } from '../QueryFunctions';
 import type { SearchPublishedEntitiesItem } from '../search/QueryGenerator';
 import { samplePublishedEntitiesQuery } from '../search/QueryGenerator';
 
 export async function publishedEntitySampleEntities(
-  databaseAdapter: SqliteDatabaseAdapter,
+  database: Database,
   schema: PublishedSchema,
   context: TransactionContext,
   query: PublishedQuery | undefined,
@@ -35,7 +35,7 @@ export async function publishedEntitySampleEntities(
   if (sqlQueryResult.isError()) return sqlQueryResult;
 
   const searchResult = await queryMany<SearchPublishedEntitiesItem>(
-    databaseAdapter,
+    database,
     context,
     sqlQueryResult.value
   );

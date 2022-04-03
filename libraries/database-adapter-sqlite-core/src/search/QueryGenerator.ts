@@ -11,8 +11,9 @@ import type {
 import { AdminQueryOrder, notOk, ok, PublishedQueryOrder } from '@jonasb/datadata-core';
 import type { DatabasePagingInfo, ResolvedAuthKey } from '@jonasb/datadata-database-adapter';
 import { SqliteQueryBuilder } from '@jonasb/datadata-database-adapter';
-import type { ColumnValue, SqliteDatabaseAdapter } from '..';
+import type { ColumnValue } from '..';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema';
+import type { Database } from '../QueryFunctions';
 import type { CursorNativeType } from './OpaqueCursor';
 import { toOpaqueCursor } from './OpaqueCursor';
 import { resolvePagingCursors } from './Paging';
@@ -45,29 +46,29 @@ export interface SharedEntitiesQuery<TItem> {
 }
 
 export function searchPublishedEntitiesQuery(
-  databaseAdapter: SqliteDatabaseAdapter,
+  database: Database,
   schema: PublishedSchema,
   query: PublishedSearchQuery | undefined,
   paging: DatabasePagingInfo,
   authKeys: ResolvedAuthKey[]
 ): Result<SharedEntitiesQuery<SearchPublishedEntitiesItem>, ErrorType.BadRequest> {
-  return sharedSearchEntitiesQuery(databaseAdapter, schema, query, paging, authKeys, true);
+  return sharedSearchEntitiesQuery(database, schema, query, paging, authKeys, true);
 }
 
 export function searchAdminEntitiesQuery(
-  databaseAdapter: SqliteDatabaseAdapter,
+  database: Database,
   schema: AdminSchema,
   query: AdminSearchQuery | undefined,
   paging: DatabasePagingInfo,
   authKeys: ResolvedAuthKey[]
 ): Result<SharedEntitiesQuery<SearchAdminEntitiesItem>, ErrorType.BadRequest> {
-  return sharedSearchEntitiesQuery(databaseAdapter, schema, query, paging, authKeys, false);
+  return sharedSearchEntitiesQuery(database, schema, query, paging, authKeys, false);
 }
 
 function sharedSearchEntitiesQuery<
   TItem extends SearchAdminEntitiesItem | SearchPublishedEntitiesItem
 >(
-  databaseAdapter: SqliteDatabaseAdapter,
+  database: Database,
   schema: AdminSchema | PublishedSchema,
   query: PublishedSearchQuery | AdminSearchQuery | undefined,
   paging: DatabasePagingInfo,
@@ -75,12 +76,12 @@ function sharedSearchEntitiesQuery<
   published: boolean
 ): Result<SharedEntitiesQuery<TItem>, ErrorType.BadRequest> {
   const { cursorType, cursorName, cursorExtractor } = queryOrderToCursor<TItem>(
-    databaseAdapter,
+    database,
     query?.order,
     published
   );
 
-  const cursorsResult = resolvePagingCursors(databaseAdapter, cursorType, paging);
+  const cursorsResult = resolvePagingCursors(database, cursorType, paging);
   if (cursorsResult.isError()) return cursorsResult;
   const resolvedCursors = cursorsResult.value;
 
@@ -120,7 +121,7 @@ function sharedSearchEntitiesQuery<
 }
 
 function queryOrderToCursor<TItem extends SearchAdminEntitiesItem | SearchPublishedEntitiesItem>(
-  databaseAdapter: SqliteDatabaseAdapter,
+  database: Database,
   order: PublishedQueryOrder | AdminQueryOrder | undefined,
   published: boolean
 ): {
@@ -136,8 +137,7 @@ function queryOrderToCursor<TItem extends SearchAdminEntitiesItem | SearchPublis
         return {
           cursorType,
           cursorName,
-          cursorExtractor: (item: TItem) =>
-            toOpaqueCursor(databaseAdapter, cursorType, item[cursorName]),
+          cursorExtractor: (item: TItem) => toOpaqueCursor(database, cursorType, item[cursorName]),
         };
       }
       case PublishedQueryOrder.createdAt:
@@ -147,8 +147,7 @@ function queryOrderToCursor<TItem extends SearchAdminEntitiesItem | SearchPublis
         return {
           cursorType,
           cursorName,
-          cursorExtractor: (item: TItem) =>
-            toOpaqueCursor(databaseAdapter, cursorType, item[cursorName]),
+          cursorExtractor: (item: TItem) => toOpaqueCursor(database, cursorType, item[cursorName]),
         };
       }
     }
@@ -160,8 +159,7 @@ function queryOrderToCursor<TItem extends SearchAdminEntitiesItem | SearchPublis
       return {
         cursorType,
         cursorName,
-        cursorExtractor: (item: TItem) =>
-          toOpaqueCursor(databaseAdapter, cursorType, item[cursorName]),
+        cursorExtractor: (item: TItem) => toOpaqueCursor(database, cursorType, item[cursorName]),
       };
     }
     case AdminQueryOrder.updatedAt: {
@@ -171,11 +169,7 @@ function queryOrderToCursor<TItem extends SearchAdminEntitiesItem | SearchPublis
         cursorType,
         cursorName,
         cursorExtractor: (item: TItem) =>
-          toOpaqueCursor(
-            databaseAdapter,
-            cursorType,
-            (item as SearchAdminEntitiesItem)[cursorName]
-          ),
+          toOpaqueCursor(database, cursorType, (item as SearchAdminEntitiesItem)[cursorName]),
       };
     }
     case AdminQueryOrder.createdAt:
@@ -185,8 +179,7 @@ function queryOrderToCursor<TItem extends SearchAdminEntitiesItem | SearchPublis
       return {
         cursorType,
         cursorName,
-        cursorExtractor: (item: TItem) =>
-          toOpaqueCursor(databaseAdapter, cursorType, item[cursorName]),
+        cursorExtractor: (item: TItem) => toOpaqueCursor(database, cursorType, item[cursorName]),
       };
     }
   }

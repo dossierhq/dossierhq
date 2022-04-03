@@ -6,13 +6,13 @@ import type {
 } from '@jonasb/datadata-database-adapter';
 import { SqliteQueryBuilder } from '@jonasb/datadata-database-adapter';
 import { Temporal } from '@js-temporal/polyfill';
-import type { SqliteDatabaseAdapter } from '..';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema';
+import type { Database } from '../QueryFunctions';
 import { queryMany } from '../QueryFunctions';
 import { resolveEntityStatus } from '../utils/CodecUtils';
 
 export async function adminEntityGetMultiple(
-  databaseAdapter: SqliteDatabaseAdapter,
+  database: Database,
   context: TransactionContext,
   references: EntityReference[]
 ): PromiseResult<DatabaseAdminEntityGetOnePayload[], ErrorType.Generic> {
@@ -38,7 +38,7 @@ export async function adminEntityGetMultiple(
       | 'status'
     > &
       Pick<EntityVersionsTable, 'version' | 'fields'>
-  >(databaseAdapter, context, qb.build());
+  >(database, context, qb.build());
 
   if (result.isError()) {
     return result;

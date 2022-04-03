@@ -12,13 +12,13 @@ import type {
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
 import { Temporal } from '@js-temporal/polyfill';
-import type { SqliteDatabaseAdapter } from '..';
+import type { Database } from '../QueryFunctions';
 import { queryMany } from '../QueryFunctions';
 import type { SearchPublishedEntitiesItem } from '../search/QueryGenerator';
 import { searchPublishedEntitiesQuery } from '../search/QueryGenerator';
 
 export async function publishedEntitySearchEntities(
-  databaseAdapter: SqliteDatabaseAdapter,
+  database: Database,
   schema: PublishedSchema,
   context: TransactionContext,
   query: PublishedSearchQuery | undefined,
@@ -26,7 +26,7 @@ export async function publishedEntitySearchEntities(
   resolvedAuthKeys: ResolvedAuthKey[]
 ): PromiseResult<DatabasePublishedEntitySearchPayload, ErrorType.BadRequest | ErrorType.Generic> {
   const sqlQueryResult = searchPublishedEntitiesQuery(
-    databaseAdapter,
+    database,
     schema,
     query,
     paging,
@@ -35,11 +35,7 @@ export async function publishedEntitySearchEntities(
   if (sqlQueryResult.isError()) return sqlQueryResult;
   const { cursorExtractor, sqlQuery } = sqlQueryResult.value;
 
-  const searchResult = await queryMany<SearchPublishedEntitiesItem>(
-    databaseAdapter,
-    context,
-    sqlQuery
-  );
+  const searchResult = await queryMany<SearchPublishedEntitiesItem>(database, context, sqlQuery);
   if (searchResult.isError()) {
     return searchResult;
   }

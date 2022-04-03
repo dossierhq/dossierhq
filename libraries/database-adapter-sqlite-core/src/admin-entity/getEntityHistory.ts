@@ -7,12 +7,12 @@ import type {
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
 import { Temporal } from '@js-temporal/polyfill';
-import type { SqliteDatabaseAdapter } from '..';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema';
+import type { Database } from '../QueryFunctions';
 import { queryMany, queryNoneOrOne } from '../QueryFunctions';
 
 export async function adminEntityHistoryGetEntityInfo(
-  databaseAdapter: SqliteDatabaseAdapter,
+  database: Database,
   context: TransactionContext,
   reference: EntityReference
 ): PromiseResult<
@@ -21,7 +21,7 @@ export async function adminEntityHistoryGetEntityInfo(
 > {
   const result = await queryNoneOrOne<
     Pick<EntitiesTable, 'id' | 'published_entity_versions_id' | 'auth_key' | 'resolved_auth_key'>
-  >(databaseAdapter, context, {
+  >(database, context, {
     text: `SELECT id, published_entity_versions_id, auth_key, resolved_auth_key
       FROM entities e
       WHERE uuid = ?1`,
@@ -43,7 +43,7 @@ export async function adminEntityHistoryGetEntityInfo(
 }
 
 export async function adminEntityHistoryGetVersionsInfo(
-  databaseAdapter: SqliteDatabaseAdapter,
+  database: Database,
   context: TransactionContext,
   reference: DatabaseResolvedEntityReference
 ): PromiseResult<DatabaseAdminEntityHistoryGetVersionInfoPayload[], ErrorType.Generic> {
@@ -51,7 +51,7 @@ export async function adminEntityHistoryGetVersionsInfo(
     Pick<EntityVersionsTable, 'id' | 'version' | 'created_at'> & {
       created_by_uuid: string;
     }
-  >(databaseAdapter, context, {
+  >(database, context, {
     text: `SELECT
     ev.id,
     ev.version,

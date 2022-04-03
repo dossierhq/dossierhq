@@ -5,12 +5,12 @@ import type {
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
 import { Temporal } from '@js-temporal/polyfill';
-import type { SqliteDatabaseAdapter } from '..';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema';
+import type { Database } from '../QueryFunctions';
 import { queryNoneOrOne } from '../QueryFunctions';
 
 export async function publishedEntityGetOne(
-  databaseAdapter: SqliteDatabaseAdapter,
+  database: Database,
   context: TransactionContext,
   reference: EntityReference
 ): PromiseResult<DatabasePublishedEntityGetOnePayload, ErrorType.NotFound | ErrorType.Generic> {
@@ -20,7 +20,7 @@ export async function publishedEntityGetOne(
       'uuid' | 'type' | 'name' | 'auth_key' | 'resolved_auth_key' | 'created_at'
     > &
       Pick<EntityVersionsTable, 'fields'>
-  >(databaseAdapter, context, {
+  >(database, context, {
     text: `SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, ev.fields
     FROM entities e, entity_versions ev
     WHERE e.uuid = ?1

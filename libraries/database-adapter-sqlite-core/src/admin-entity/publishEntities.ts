@@ -1,6 +1,5 @@
 import type { EntityReference, EntityVersionReference, PromiseResult } from '@jonasb/datadata-core';
-import { ErrorType } from '@jonasb/datadata-core';
-import { notOk, ok } from '@jonasb/datadata-core';
+import { ErrorType, notOk, ok } from '@jonasb/datadata-core';
 import type {
   DatabaseAdminEntityPublishGetVersionInfoPayload,
   DatabaseAdminEntityPublishUpdateEntityArg,
@@ -10,14 +9,14 @@ import type {
 } from '@jonasb/datadata-database-adapter';
 import { buildSqliteSqlQuery } from '@jonasb/datadata-database-adapter';
 import { Temporal } from '@js-temporal/polyfill';
-import type { SqliteDatabaseAdapter } from '..';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema';
+import type { Database } from '../QueryFunctions';
 import { queryMany, queryNone, queryNoneOrOne } from '../QueryFunctions';
 import { resolveEntityStatus } from '../utils/CodecUtils';
 import { getEntitiesUpdatedSeq } from './getEntitiesUpdatedSeq';
 
 export async function adminEntityPublishGetVersionInfo(
-  databaseAdapter: SqliteDatabaseAdapter,
+  database: Database,
   context: TransactionContext,
   reference: EntityVersionReference
 ): PromiseResult<
@@ -36,7 +35,7 @@ export async function adminEntityPublishGetVersionInfo(
         | 'published_entity_versions_id'
         | 'latest_entity_versions_id'
       >
-  >(databaseAdapter, context, {
+  >(database, context, {
     text: `SELECT ev.id, ev.entities_id, ev.fields, e.type, e.auth_key, e.resolved_auth_key, e.status, e.updated_at, e.published_entity_versions_id, e.latest_entity_versions_id
          FROM entity_versions ev, entities e
          WHERE e.uuid = ?1 AND e.id = ev.entities_id AND ev.version = ?2`,
@@ -76,18 +75,18 @@ export async function adminEntityPublishGetVersionInfo(
 }
 
 export async function adminEntityPublishUpdateEntity(
-  databaseAdapter: SqliteDatabaseAdapter,
+  database: Database,
   context: TransactionContext,
   values: DatabaseAdminEntityPublishUpdateEntityArg
 ): PromiseResult<DatabaseAdminEntityUpdateStatusPayload, ErrorType.Generic> {
   const { entityVersionInternalId, status, entityInternalId } = values;
 
-  const updatedSeqResult = await getEntitiesUpdatedSeq(databaseAdapter, context);
+  const updatedSeqResult = await getEntitiesUpdatedSeq(database, context);
   if (updatedSeqResult.isError()) return updatedSeqResult;
 
   const now = Temporal.Now.instant();
 
-  const updateResult = await queryNone(databaseAdapter, context, {
+  const updateResult = await queryNone(database, context, {
     text: `UPDATE entities
            SET
              never_published = TRUE,
@@ -111,7 +110,7 @@ export async function adminEntityPublishUpdateEntity(
   // FTS virtual tables don't support upsert
   // FTS upsert 1/2) Try to insert
   const ftsInsertResult = await queryNone(
-    databaseAdapter,
+    database,
     context,
     buildSqliteSqlQuery(
       ({ sql }) =>
@@ -119,7 +118,7 @@ export async function adminEntityPublishUpdateEntity(
           VALUES (${entityInternalId as number}, ${values.fullTextSearchText})`
     ),
     (error) => {
-      if (databaseAdapter.isFtsVirtualTableConstraintFailed(error)) {
+      if (database.adapter.isFtsVirtualTableConstraintFailed(error)) {
         return notOk.Conflict('Document already exists');
       }
       return notOk.GenericUnexpectedException(context, error);
@@ -131,7 +130,7 @@ export async function adminEntityPublishUpdateEntity(
     if (ftsInsertResult.isErrorType(ErrorType.Generic)) return ftsInsertResult;
 
     const ftsUpdateResult = await queryNone(
-      databaseAdapter,
+      database,
       context,
       buildSqliteSqlQuery(
         ({ sql }) =>
@@ -147,11 +146,11 @@ export async function adminEntityPublishUpdateEntity(
 }
 
 export async function adminEntityPublishGetUnpublishedReferencedEntities(
-  databaseAdapter: SqliteDatabaseAdapter,
+  database: Database,
   context: TransactionContext,
   reference: DatabaseResolvedEntityVersionReference
 ): PromiseResult<EntityReference[], ErrorType.Generic> {
-  const result = await queryMany<Pick<EntitiesTable, 'uuid'>>(databaseAdapter, context, {
+  const result = await queryMany<Pick<EntitiesTable, 'uuid'>>(database, context, {
     text: `SELECT e.uuid
            FROM entity_version_references evr, entities e
            WHERE evr.entity_versions_id = ?1

@@ -3,15 +3,21 @@ import { notOk, ok } from '@jonasb/datadata-core';
 import type { TransactionContext } from '@jonasb/datadata-database-adapter';
 import type { SqliteDatabaseAdapter } from '.';
 import type { ColumnValue } from './SqliteDatabaseAdapter';
+import type { Mutex } from './utils/MutexUtils';
 
 interface ErrorConverter<TRow, TError extends ErrorType> {
   (error: unknown): Result<TRow[], TError | ErrorType.Generic>;
 }
 
+export interface Database {
+  mutex: Mutex;
+  adapter: SqliteDatabaseAdapter;
+}
+
 export type QueryOrQueryAndValues = string | { text: string; values?: ColumnValue[] };
 
 async function queryCommon<TRow, TError extends ErrorType>(
-  adapter: SqliteDatabaseAdapter,
+  database: Database,
   context: TransactionContext,
   queryOrQueryAndValues: QueryOrQueryAndValues,
   errorConverter: ErrorConverter<TRow, TError> | undefined
@@ -21,25 +27,31 @@ async function queryCommon<TRow, TError extends ErrorType>(
       ? { text: queryOrQueryAndValues, values: undefined }
       : queryOrQueryAndValues;
 
-  try {
-    const rows = await adapter.query<TRow>(text, values);
-    return ok(rows);
-  } catch (error) {
-    if (errorConverter) {
-      return errorConverter(error);
+  const queryAndConvert: () => PromiseResult<TRow[], TError | ErrorType.Generic> = async () => {
+    try {
+      const rows = await database.adapter.query<TRow>(text, values);
+      return ok(rows);
+    } catch (error) {
+      if (errorConverter) {
+        return errorConverter(error);
+      }
+      return notOk.GenericUnexpectedException(context, error);
     }
-    return notOk.GenericUnexpectedException(context, error);
-  }
+  };
+
+  return context.transaction
+    ? queryAndConvert()
+    : database.mutex.withLock(context, queryAndConvert);
 }
 
 export async function queryNone<TError extends ErrorType | ErrorType.Generic = ErrorType.Generic>(
-  adapter: SqliteDatabaseAdapter,
+  database: Database,
   context: TransactionContext,
   query: QueryOrQueryAndValues,
   errorConverter?: ErrorConverter<unknown, TError | ErrorType.Generic>
 ): PromiseResult<void, TError | ErrorType.Generic> {
   const result = await queryCommon<[], TError>(
-    adapter,
+    database,
     context,
     query,
     errorConverter as ErrorConverter<[], TError>
@@ -55,13 +67,13 @@ export async function queryNone<TError extends ErrorType | ErrorType.Generic = E
 }
 
 export async function queryNoneOrOne<TRow, TError extends ErrorType = ErrorType.Generic>(
-  adapter: SqliteDatabaseAdapter,
+  database: Database,
   context: TransactionContext,
   query: QueryOrQueryAndValues,
   errorConverter?: ErrorConverter<TRow, TError | ErrorType.Generic>
 ): PromiseResult<TRow | null, TError | ErrorType.Generic> {
   const result = await queryCommon<TRow, TError>(
-    adapter,
+    database,
     context,
     query,
     errorConverter as ErrorConverter<TRow, TError>
@@ -80,13 +92,13 @@ export async function queryNoneOrOne<TRow, TError extends ErrorType = ErrorType.
 }
 
 export async function queryOne<TRow, TError extends ErrorType = ErrorType.Generic>(
-  adapter: SqliteDatabaseAdapter,
+  database: Database,
   context: TransactionContext,
   query: QueryOrQueryAndValues,
   errorConverter?: ErrorConverter<TRow, TError | ErrorType.Generic>
 ): PromiseResult<TRow, TError | ErrorType.Generic> {
   const result = await queryCommon<TRow, TError>(
-    adapter,
+    database,
     context,
     query,
     errorConverter as ErrorConverter<TRow, TError>
@@ -102,13 +114,13 @@ export async function queryOne<TRow, TError extends ErrorType = ErrorType.Generi
 }
 
 export async function queryMany<TRow, TError extends ErrorType = ErrorType.Generic>(
-  adapter: SqliteDatabaseAdapter,
+  database: Database,
   context: TransactionContext,
   query: QueryOrQueryAndValues,
   errorConverter?: ErrorConverter<TRow, TError | ErrorType.Generic>
 ): PromiseResult<TRow[], TError | ErrorType.Generic> {
   const result = await queryCommon<TRow, TError>(
-    adapter,
+    database,
     context,
     query,
     errorConverter as ErrorConverter<TRow, TError>

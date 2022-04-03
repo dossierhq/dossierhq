@@ -12,16 +12,16 @@ import type {
   TransactionContext,
 } from '@jonasb/datadata-database-adapter';
 import { Temporal } from '@js-temporal/polyfill';
-import type { SqliteDatabaseAdapter } from '..';
 import type {
   EntitiesTable,
   EntityPublishingEventsTable,
   EntityVersionsTable,
 } from '../DatabaseSchema';
+import type { Database } from '../QueryFunctions';
 import { queryMany, queryNoneOrOne } from '../QueryFunctions';
 
 export async function adminEntityPublishingHistoryGetEntityInfo(
-  databaseAdapter: SqliteDatabaseAdapter,
+  database: Database,
   context: TransactionContext,
   reference: EntityReference
 ): PromiseResult<
@@ -29,7 +29,7 @@ export async function adminEntityPublishingHistoryGetEntityInfo(
   ErrorType.NotFound | ErrorType.Generic
 > {
   const result = await queryNoneOrOne<Pick<EntitiesTable, 'id' | 'auth_key' | 'resolved_auth_key'>>(
-    databaseAdapter,
+    database,
     context,
     {
       text: 'SELECT id, auth_key, resolved_auth_key FROM entities WHERE uuid = ?1',
@@ -51,7 +51,7 @@ export async function adminEntityPublishingHistoryGetEntityInfo(
 }
 
 export async function adminEntityPublishingHistoryGetEvents(
-  databaseAdapter: SqliteDatabaseAdapter,
+  database: Database,
   context: TransactionContext,
   reference: DatabaseResolvedEntityReference
 ): PromiseResult<PublishingEvent[], ErrorType.Generic> {
@@ -60,7 +60,7 @@ export async function adminEntityPublishingHistoryGetEvents(
       Pick<EntityPublishingEventsTable, 'published_at' | 'kind'> & {
         published_by: string;
       }
-  >(databaseAdapter, context, {
+  >(database, context, {
     text: `SELECT ev.version, s.uuid AS published_by, epe.published_at, epe.kind
       FROM entity_publishing_events epe
         LEFT OUTER JOIN entity_versions ev ON (epe.entity_versions_id = ev.id)

@@ -9,11 +9,17 @@ import type {
 import { TransactionContextImpl } from '@jonasb/datadata-database-adapter';
 import type { SqliteDatabaseAdapter } from '..';
 import { createSqliteDatabaseAdapterAdapter } from '..';
+import { Mutex } from '../utils/MutexUtils';
 
 type QueryFn = SqliteDatabaseAdapter['query'];
 
 interface MockedSqliteDatabaseAdapter extends SqliteDatabaseAdapter {
   query: jest.MockedFunction<QueryFn>;
+}
+
+interface MockedDatabase {
+  mutex: Mutex;
+  adapter: MockedSqliteDatabaseAdapter;
 }
 
 class DummyContextImpl extends TransactionContextImpl<TransactionContext> {
@@ -29,18 +35,29 @@ class DummyContextImpl extends TransactionContextImpl<TransactionContext> {
   }
 }
 
-export async function createMockContext(
-  adapter: SqliteDatabaseAdapter
-): PromiseResult<TransactionContext, ErrorType.BadRequest | ErrorType.Generic> {
-  const result = await createSqliteDatabaseAdapterAdapter({ logger: NoOpLogger }, adapter);
-  if (result.isError()) {
-    return result;
-  }
-  const databaseAdapter = result.value;
-  return ok(new DummyContextImpl(databaseAdapter, NoOpLogger, null));
+export async function createMockInnerAndOuterAdapter(): PromiseResult<
+  { innerAdapter: MockedSqliteDatabaseAdapter; outerAdapter: DatabaseAdapter },
+  ErrorType.BadRequest | ErrorType.Generic
+> {
+  const innerAdapter = createMockInnerAdapter();
+  const result = await createSqliteDatabaseAdapterAdapter({ logger: NoOpLogger }, innerAdapter);
+  if (result.isError()) return result;
+  return ok({ innerAdapter, outerAdapter: result.value });
 }
 
-export function createMockAdapter(): MockedSqliteDatabaseAdapter {
+export function createMockContext(adapter: DatabaseAdapter): TransactionContext {
+  return new DummyContextImpl(adapter, NoOpLogger, null);
+}
+
+/** Used when unit testing functions not needing the full SqliteAdapter */
+export function createMockDatabase(): MockedDatabase {
+  return {
+    mutex: new Mutex(),
+    adapter: createMockInnerAdapter(),
+  };
+}
+
+export function createMockInnerAdapter(): MockedSqliteDatabaseAdapter {
   const query: jest.MockedFunction<QueryFn> = jest.fn();
   query.mockImplementation(async (query, _values) => {
     if (query.startsWith('SELECT sqlite_version()')) return [{ version: '3.35.0' }];

@@ -5,16 +5,16 @@ import {
   type PromiseResult,
 } from '@jonasb/datadata-core';
 import type { TransactionContext } from '@jonasb/datadata-database-adapter';
-import type { SqliteDatabaseAdapter } from '..';
 import type { SchemaVersionsTable } from '../DatabaseSchema';
+import type { Database } from '../QueryFunctions';
 import { queryNoneOrOne } from '../QueryFunctions';
 
 export async function schemaGetSpecification(
-  adapter: SqliteDatabaseAdapter,
+  database: Database,
   context: TransactionContext
 ): PromiseResult<AdminSchemaSpecification | null, ErrorType.Generic> {
   const result = await queryNoneOrOne<Pick<SchemaVersionsTable, 'specification'>>(
-    adapter,
+    database,
     context,
     'SELECT specification FROM schema_versions ORDER BY id DESC LIMIT 1'
   );

@@ -1,8 +1,7 @@
 import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
 import { notOk, ok } from '@jonasb/datadata-core';
 import type { TransactionContext } from '@jonasb/datadata-database-adapter';
-import type { SqliteDatabaseAdapter } from '.';
-import type { QueryOrQueryAndValues } from './QueryFunctions';
+import type { Database, QueryOrQueryAndValues } from './QueryFunctions';
 import { queryNone, queryOne } from './QueryFunctions';
 
 /** Migrates the database to the latest version.
@@ -11,12 +10,12 @@ import { queryNone, queryOne } from './QueryFunctions';
  * each version is run in a transaction.
  */
 export async function migrate(
-  databaseAdapter: SqliteDatabaseAdapter,
+  database: Database,
   context: TransactionContext,
   schemaVersionGenerator: (version: number) => QueryOrQueryAndValues[] | null
 ): PromiseResult<void, ErrorType.Generic> {
   const initialVersionResult = await queryOne<{ user_version: number }>(
-    databaseAdapter,
+    database,
     context,
     'PRAGMA user_version'
   );
@@ -30,12 +29,7 @@ export async function migrate(
     if (!statements) {
       return ok(undefined);
     }
-    const migrateVersionResult = await migrateVersion(
-      databaseAdapter,
-      context,
-      version,
-      statements
-    );
+    const migrateVersionResult = await migrateVersion(database, context, version, statements);
     if (migrateVersionResult.isError()) return migrateVersionResult;
 
     version += 1;
@@ -43,7 +37,7 @@ export async function migrate(
 }
 
 async function migrateVersion(
-  databaseAdapter: SqliteDatabaseAdapter,
+  database: Database,
   context: TransactionContext,
   version: number,
   statements: QueryOrQueryAndValues[]
@@ -52,7 +46,7 @@ async function migrateVersion(
     const { logger } = context;
     logger.info(`Starting migration of database schema to version=${version}...`);
     for (const statement of statements) {
-      const statementResult = await queryNone(databaseAdapter, context, statement);
+      const statementResult = await queryNone(database, context, statement);
       if (statementResult.isError()) return statementResult;
     }
 
@@ -60,7 +54,7 @@ async function migrateVersion(
     if (typeof version !== 'number')
       return notOk.Generic(`version is for some reason nan (${version})`);
     const updateVersionResult = await queryNone(
-      databaseAdapter,
+      database,
       context,
       'PRAGMA user_version=' + version
     );

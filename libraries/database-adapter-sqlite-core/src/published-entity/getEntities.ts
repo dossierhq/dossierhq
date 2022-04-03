@@ -6,12 +6,12 @@ import type {
 } from '@jonasb/datadata-database-adapter';
 import { SqliteQueryBuilder } from '@jonasb/datadata-database-adapter';
 import { Temporal } from '@js-temporal/polyfill';
-import type { SqliteDatabaseAdapter } from '..';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema';
+import type { Database } from '../QueryFunctions';
 import { queryMany } from '../QueryFunctions';
 
 export async function publishedEntityGetEntities(
-  databaseAdapter: SqliteDatabaseAdapter,
+  database: Database,
   context: TransactionContext,
   references: EntityReference[]
 ): PromiseResult<DatabasePublishedEntityGetOnePayload[], ErrorType.Generic> {
@@ -30,7 +30,7 @@ export async function publishedEntityGetEntities(
       'uuid' | 'type' | 'name' | 'auth_key' | 'resolved_auth_key' | 'created_at'
     > &
       Pick<EntityVersionsTable, 'fields'>
-  >(databaseAdapter, context, qb.build());
+  >(database, context, qb.build());
   if (result.isError()) {
     return result;
   }

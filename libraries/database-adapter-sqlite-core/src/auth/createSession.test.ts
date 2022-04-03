@@ -1,21 +1,22 @@
 import { expectOkResult, expectResultValue } from '@jonasb/datadata-core-jest';
-import { createMockAdapter, createMockContext, getQueryCalls } from '../test/TestUtils';
-import { authCreateSession } from './createSession';
+import {
+  createMockContext,
+  createMockInnerAndOuterAdapter,
+  getQueryCalls,
+} from '../test/TestUtils';
 
 describe('authCreateSession', () => {
   test('Create new principal', async () => {
-    const adapter = createMockAdapter();
-    const contextResult = await createMockContext(adapter);
-    if (contextResult.isError()) throw contextResult.toError();
-    const context = contextResult.value;
+    const { innerAdapter, outerAdapter } = (await createMockInnerAndOuterAdapter()).valueOrThrow();
+    const context = createMockContext(outerAdapter);
 
-    adapter.query.mockClear();
-    adapter.query.mockImplementation(async (query, _values) => {
+    innerAdapter.query.mockClear();
+    innerAdapter.query.mockImplementation(async (query, _values) => {
       if (query.startsWith('INSERT INTO subjects')) return [{ id: 123 }];
       return [];
     });
 
-    const result = await authCreateSession(adapter, context, 'test', 'hello');
+    const result = await outerAdapter.authCreateSession(context, 'test', 'hello');
     if (expectOkResult(result)) {
       const {
         session: { subjectId },
@@ -25,7 +26,7 @@ describe('authCreateSession', () => {
         session: { subjectId },
       });
 
-      expect(getQueryCalls(adapter)).toEqual([
+      expect(getQueryCalls(innerAdapter)).toEqual([
         [
           `SELECT s.id, s.uuid FROM subjects s, principals p
     WHERE p.provider = ?1 AND p.identifier = ?2 AND p.subjects_id = s.id`,
@@ -50,18 +51,16 @@ describe('authCreateSession', () => {
   });
 
   test('Existing principal', async () => {
-    const adapter = createMockAdapter();
-    const contextResult = await createMockContext(adapter);
-    if (contextResult.isError()) throw contextResult.toError();
-    const context = contextResult.value;
+    const { innerAdapter, outerAdapter } = (await createMockInnerAndOuterAdapter()).valueOrThrow();
+    const context = createMockContext(outerAdapter);
 
-    adapter.query.mockClear();
-    adapter.query.mockImplementation(async (query, _values) => {
+    innerAdapter.query.mockClear();
+    innerAdapter.query.mockImplementation(async (query, _values) => {
       if (query.startsWith('SELECT s.id, s.uuid FROM')) return [{ id: 123 }];
       return [];
     });
 
-    const result = await authCreateSession(adapter, context, 'test', 'hello');
+    const result = await outerAdapter.authCreateSession(context, 'test', 'hello');
     if (expectOkResult(result)) {
       const {
         session: { subjectId },
@@ -71,7 +70,7 @@ describe('authCreateSession', () => {
         session: { subjectId },
       });
 
-      expect(getQueryCalls(adapter)).toMatchInlineSnapshot(`
+      expect(getQueryCalls(innerAdapter)).toMatchInlineSnapshot(`
         Array [
           Array [
             "SELECT s.id, s.uuid FROM subjects s, principals p
