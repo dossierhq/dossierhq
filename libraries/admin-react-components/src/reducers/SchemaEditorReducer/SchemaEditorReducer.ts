@@ -90,7 +90,9 @@ abstract class EntityTypeAction implements SchemaEditorStateAction {
     const entityTypes = [...state.entityTypes];
     entityTypes[entityTypeIndex] = newEntityType;
 
-    return { ...state, entityTypes };
+    const newState = { ...state, entityTypes };
+    newState.status = resolveSchemaStatus(newState);
+    return newState;
   }
 
   abstract reduceEntityType(
