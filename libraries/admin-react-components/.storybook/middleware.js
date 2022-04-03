@@ -30,13 +30,12 @@ async function getServer() {
 
     if (result.isOk()) {
       const server = result.value;
-      const adminClient = server.createAdminClient(() =>
-        server.createSession({
-          provider: 'sys',
-          identifier: 'schemaLoader',
-          defaultAuthKeys: ['none'],
-        })
-      );
+      const sessionResult = server.createSession({
+        provider: 'sys',
+        identifier: 'schemaLoader',
+        defaultAuthKeys: ['none'],
+      });
+      const adminClient = server.createAdminClient(() => sessionResult);
       const schemaResult = await adminClient.updateSchemaSpecification(schemaJson);
       if (schemaResult.isError()) {
         serverResultSingleton = schemaResult;
@@ -51,15 +50,12 @@ const expressMiddleWare = (router) => {
   router.use('/admin', (req, res) => {
     handleClientOperation(req, res, async (server, name, operation) => {
       const defaultAuthKeys = getDefaultAuthKeysFromRequest(req);
-      const adminClient = server.createAdminClient(
-        () =>
-          server.createSession({
-            provider: 'sys',
-            identifier: 'storybook',
-            defaultAuthKeys,
-          }),
-        [LoggingClientMiddleware]
-      );
+      const sessionResult = server.createSession({
+        provider: 'sys',
+        identifier: 'storybook',
+        defaultAuthKeys,
+      });
+      const adminClient = server.createAdminClient(() => sessionResult, [LoggingClientMiddleware]);
       //TODO ensure only !modifies operations are executed for GET
       return await executeAdminClientOperationFromJson(adminClient, name, operation);
     });
@@ -67,13 +63,13 @@ const expressMiddleWare = (router) => {
   router.use('/published', (req, res) => {
     handleClientOperation(req, res, async (server, name, operation) => {
       const defaultAuthKeys = getDefaultAuthKeysFromRequest(req);
+      const sessionResult = server.createSession({
+        provider: 'sys',
+        identifier: 'storybook',
+        defaultAuthKeys,
+      });
       const adminClient = server.createPublishedClient(
-        () =>
-          server.createSession({
-            provider: 'sys',
-            identifier: 'storybook',
-            defaultAuthKeys,
-          }),
+        () => sessionResult,
         [LoggingClientMiddleware]
       );
       return await executePublishedClientOperationFromJson(adminClient, name, operation);

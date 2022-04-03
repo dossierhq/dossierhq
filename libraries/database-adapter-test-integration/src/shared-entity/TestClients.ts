@@ -22,17 +22,21 @@ export async function sessionForMainPrincipal(
 }
 
 export function adminClientForMainPrincipal(server: Server): AdminClient {
-  return server.createAdminClient(() => server.createSession(mainPrincipal));
+  const sessionResult = server.createSession(mainPrincipal);
+  return server.createAdminClient(() => sessionResult);
 }
 
 export function adminClientForSecondaryPrincipal(server: Server): AdminClient {
-  return server.createAdminClient(() => server.createSession(secondaryPrincipal));
+  const sessionResult = server.createSession(secondaryPrincipal);
+  return server.createAdminClient(() => sessionResult);
 }
 
 export function publishedClientForMainPrincipal(server: Server): PublishedClient {
-  return server.createPublishedClient(() => server.createSession(mainPrincipal));
+  const sessionResult = server.createSession(mainPrincipal);
+  return server.createPublishedClient(() => sessionResult);
 }
 
 export function publishedClientForSecondaryPrincipal(server: Server): PublishedClient {
-  return server.createPublishedClient(() => server.createSession(secondaryPrincipal));
+  const sessionResult = server.createSession(secondaryPrincipal);
+  return server.createPublishedClient(() => sessionResult);
 }

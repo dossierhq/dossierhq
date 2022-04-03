@@ -37,9 +37,14 @@ export async function initializeServer(adapterSelector: DatabaseAdapterSelector)
   if (serverResult.isError()) return serverResult;
   const server = serverResult.value;
 
-  const adminClient = server.createAdminClient(() =>
-    server.createSession({ provider: 'sys', identifier: 'schemaloader', defaultAuthKeys: ['none'] })
-  );
+  const sessionResult = await server.createSession({
+    provider: 'sys',
+    identifier: 'schemaloader',
+    defaultAuthKeys: ['none'],
+  });
+  if (sessionResult.isError()) return sessionResult;
+
+  const adminClient = server.createAdminClient(sessionResult.value.context);
   const schemaResult = await adminClient.updateSchemaSpecification(schemaSpecification);
   if (schemaResult.isError()) return schemaResult;
 

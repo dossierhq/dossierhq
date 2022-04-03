@@ -8,23 +8,24 @@ import {
   registerTestSuite,
 } from "./TestUtils.ts";
 
-export function registerAdminEntityTestSuite(
-  suitePage: { page: number; totalPages: number },
-) {
+export function registerAdminEntityTestSuite(suitePage: {
+  page: number;
+  totalPages: number;
+}) {
   const testSuite = createAdminEntityTestSuite({
     before: async () => {
       const server = (await initializeIntegrationTestServer()).valueOrThrow();
-      const client = server.createAdminClient(() =>
-        server.createSession({
-          provider: "test",
-          identifier: "id",
-          defaultAuthKeys: ["none"],
-        })
-      );
 
-      const readOnlyEntityRepository = (await createReadOnlyEntityRepository(
-        server,
-      )).valueOrThrow();
+      const sessionResult = server.createSession({
+        provider: "test",
+        identifier: "id",
+        defaultAuthKeys: ["none"],
+      });
+      const client = server.createAdminClient(() => sessionResult);
+
+      const readOnlyEntityRepository = (
+        await createReadOnlyEntityRepository(server)
+      ).valueOrThrow();
 
       //TODO remove client
       return [{ server, client, readOnlyEntityRepository }, { server }];
