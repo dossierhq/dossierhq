@@ -7,25 +7,27 @@ import {
 import { createDotenvAdapter } from "../ServerUtils.ts";
 import { registerTestSuite } from "./TestUtils.ts";
 
-registerTestSuite(createSchemaTestSuite({
-  before: async () => {
-    const serverResult = await createServer({
-      databaseAdapter: createDotenvAdapter(),
-      authorizationAdapter: createTestAuthorizationAdapter(),
-    });
-    if (serverResult.isError()) throw serverResult.toError();
-    const server = serverResult.value;
-    const client = server.createAdminClient(() =>
-      server.createSession({
+registerTestSuite(
+  createSchemaTestSuite({
+    before: async () => {
+      const server = (
+        await createServer({
+          databaseAdapter: createDotenvAdapter(),
+          authorizationAdapter: createTestAuthorizationAdapter(),
+        })
+      ).valueOrThrow();
+
+      const sessionResult = server.createSession({
         provider: "test",
         identifier: "id",
         defaultAuthKeys: ["none"],
-      })
-    );
+      });
+      const client = server.createAdminClient(() => sessionResult);
 
-    return [{ client }, { server }];
-  },
-  after: async ({ server }: { server: Server }) => {
-    await server.shutdown();
-  },
-}));
+      return [{ client }, { server }];
+    },
+    after: async ({ server }: { server: Server }) => {
+      await server.shutdown();
+    },
+  }),
+);

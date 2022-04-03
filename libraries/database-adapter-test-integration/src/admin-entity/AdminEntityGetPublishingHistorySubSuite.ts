@@ -17,10 +17,7 @@ export const GetPublishingHistorySubSuite: UnboundTestFunction<AdminEntityTestCo
 ];
 
 async function getPublishingHistory_minimal({ server }: AdminEntityTestContext) {
-  const sessionResult = await sessionForMainPrincipal(server);
-  assertOkResult(sessionResult);
-  const context = sessionResult.value;
-  const adminClient = server.createAdminClient(context);
+  const adminClient = adminClientForMainPrincipal(server);
   const createResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
 
   assertOkResult(createResult);
@@ -36,9 +33,7 @@ async function getPublishingHistory_minimal({ server }: AdminEntityTestContext) 
 }
 
 async function getPublishingHistory_updateAndPublish({ server }: AdminEntityTestContext) {
-  const sessionResult = await sessionForMainPrincipal(server);
-  assertOkResult(sessionResult);
-  const context = sessionResult.value;
+  const context = (await sessionForMainPrincipal(server)).valueOrThrow();
   const adminClient = server.createAdminClient(context);
   const createResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
 

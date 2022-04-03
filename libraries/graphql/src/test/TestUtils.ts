@@ -43,14 +43,15 @@ async function setUpRealServerWithSession(schemaSpecification: AdminSchemaSpecif
   if (sessionResult.isError()) throw serverResult.toError();
   const { context } = sessionResult.value;
   const subjectId = context.session.subjectId;
+
   const adminClient = server.createAdminClient(context);
-  const adminClientOther = server.createAdminClient(() =>
-    server.createSession({
-      provider: 'test',
-      identifier: 'other',
-      defaultAuthKeys: ['none'],
-    })
-  );
+
+  const sessionOtherResult = server.createSession({
+    provider: 'test',
+    identifier: 'other',
+    defaultAuthKeys: ['none'],
+  });
+  const adminClientOther = server.createAdminClient(() => sessionOtherResult);
   const publishedClient = server.createPublishedClient(context);
 
   await adminClient.updateSchemaSpecification(schemaSpecification);

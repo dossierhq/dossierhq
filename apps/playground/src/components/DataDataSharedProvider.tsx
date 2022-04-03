@@ -12,22 +12,21 @@ export function DataDataSharedProvider({ children }: { children: React.ReactNode
   const args = useMemo(() => {
     if (!server) return null;
 
-    const sessionProvider = () =>
-      server.createSession({
-        provider: 'sys',
-        identifier: 'johndoe',
-        defaultAuthKeys: DISPLAY_AUTH_KEYS.map((it) => it.authKey),
-        logger: SESSION_LOGGER,
-      });
+    const sessionResult = server.createSession({
+      provider: 'sys',
+      identifier: 'johndoe',
+      defaultAuthKeys: DISPLAY_AUTH_KEYS.map((it) => it.authKey),
+      logger: SESSION_LOGGER,
+    });
 
     const adminArgs = {
-      adminClient: server.createAdminClient(sessionProvider),
+      adminClient: server.createAdminClient(() => sessionResult),
       adapter: new ContextAdapter(),
       authKeys: DISPLAY_AUTH_KEYS,
     };
 
     const publishedArgs = {
-      publishedClient: server.createPublishedClient(sessionProvider),
+      publishedClient: server.createPublishedClient(() => sessionResult),
       authKeys: DISPLAY_AUTH_KEYS,
     };
     return { adminArgs, publishedArgs };

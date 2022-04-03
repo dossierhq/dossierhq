@@ -27,13 +27,13 @@ registerTestSuite(
     before: async () => {
       assertIsDefined(server);
       const resolvedServer = server;
-      const client = resolvedServer.createAdminClient(() =>
-        resolvedServer.createSession({
-          provider: 'test',
-          identifier: 'id',
-          defaultAuthKeys: ['none'],
-        })
-      );
+
+      const sessionResult = resolvedServer.createSession({
+        provider: 'test',
+        identifier: 'id',
+        defaultAuthKeys: ['none'],
+      });
+      const client = resolvedServer.createAdminClient(() => sessionResult);
       //TODO remove client
       return [{ server, client, readOnlyEntityRepository }, undefined];
     },

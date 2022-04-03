@@ -33,13 +33,13 @@ registerTestSuite(
     before: async () => {
       assertIsDefined(server);
       const resolvedServer = server;
-      const client = server.createAdminClient(() =>
-        resolvedServer.createSession({
-          provider: 'test',
-          identifier: 'id',
-          defaultAuthKeys: ['none'],
-        })
-      );
+
+      const sessionResult = resolvedServer.createSession({
+        provider: 'test',
+        identifier: 'id',
+        defaultAuthKeys: ['none'],
+      });
+      const client = server.createAdminClient(() => sessionResult);
       return [{ client }, undefined];
     },
     after: async () => {

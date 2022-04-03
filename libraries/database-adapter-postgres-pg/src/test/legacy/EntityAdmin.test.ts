@@ -67,9 +67,14 @@ beforeAll(async () => {
   server = result.value.server;
   context = result.value.context;
   client = server.createAdminClient(context);
-  adminClientOther = server.createAdminClient(() =>
-    server.createSession({ provider: 'test', identifier: 'other', defaultAuthKeys: ['none'] })
-  );
+
+  const sessionOtherResult = server.createSession({
+    provider: 'test',
+    identifier: 'other',
+    defaultAuthKeys: ['none'],
+  });
+  adminClientOther = server.createAdminClient(() => sessionOtherResult);
+
   publishedClient = server.createPublishedClient(context);
   await client.updateSchemaSpecification({
     entityTypes: [
