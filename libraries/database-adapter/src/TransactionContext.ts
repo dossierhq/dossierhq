@@ -48,9 +48,12 @@ export abstract class TransactionContextImpl<TContext extends TransactionContext
       });
     }
 
-    return await this.#databaseAdapter.withRootTransaction(this, async (client) => {
-      const context = this.copyWithNewTransaction(this.#databaseAdapter, client);
-      return callback(context);
-    });
+    return await this.#databaseAdapter.withRootTransaction(
+      this,
+      (transaction) => this.copyWithNewTransaction(this.#databaseAdapter, transaction),
+      async (context) => {
+        return callback(context as unknown as TContext);
+      }
+    );
   }
 }

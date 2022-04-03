@@ -108,6 +108,7 @@ describe('Admin adminPublishEntities', () => {
         Array [
           "withRootTransaction",
           [Function],
+          [Function],
         ],
       ]
     `);
