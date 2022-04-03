@@ -141,7 +141,7 @@ describe('AddEntityTypeFieldAction', () => {
             "valueTypes": Array [],
           },
         },
-        "status": "",
+        "status": "changed",
         "valueTypes": Array [],
       }
     `);
