@@ -13,7 +13,7 @@ interface Props {
 export function SchemaTypeEditor({ type, dispatchSchemaEditorState }: Props) {
   return (
     <>
-      {type.type === 'entity' ? (
+      {type.kind === 'entity' ? (
         <Field>
           <Field.Control>
             <AddFieldButton
