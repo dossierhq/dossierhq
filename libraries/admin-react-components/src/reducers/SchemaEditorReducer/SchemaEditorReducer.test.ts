@@ -20,7 +20,8 @@ function reduceSchemaEditorStateActions(
 
 describe('initializeSchemaEditorState', () => {
   test('no args', () => {
-    expect(initializeSchemaEditorState()).toMatchInlineSnapshot(`
+    const state = initializeSchemaEditorState();
+    expect(state).toMatchInlineSnapshot(`
       Object {
         "entityTypes": Array [],
         "schema": null,
@@ -28,6 +29,8 @@ describe('initializeSchemaEditorState', () => {
         "valueTypes": Array [],
       }
     `);
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`Object {}`);
   });
 });
 
@@ -40,6 +43,7 @@ describe('AddEntityTypeAction', () => {
       ),
       new SchemaEditorActions.AddEntityType('Foo')
     );
+
     expect(state).toMatchInlineSnapshot(`
       Object {
         "entityTypes": Array [
@@ -60,6 +64,17 @@ describe('AddEntityTypeAction', () => {
         "valueTypes": Array [],
       }
     `);
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`
+      Object {
+        "entityTypes": Array [
+          Object {
+            "fields": Array [],
+            "name": "Foo",
+          },
+        ],
+      }
+    `);
   });
 
   test('add two types (orders)', () => {
@@ -71,6 +86,7 @@ describe('AddEntityTypeAction', () => {
       new SchemaEditorActions.AddEntityType('ZooKeeper'),
       new SchemaEditorActions.AddEntityType('Anaconda')
     );
+
     expect(state).toMatchInlineSnapshot(`
       Object {
         "entityTypes": Array [
@@ -95,6 +111,21 @@ describe('AddEntityTypeAction', () => {
         },
         "status": "changed",
         "valueTypes": Array [],
+      }
+    `);
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`
+      Object {
+        "entityTypes": Array [
+          Object {
+            "fields": Array [],
+            "name": "Anaconda",
+          },
+          Object {
+            "fields": Array [],
+            "name": "ZooKeeper",
+          },
+        ],
       }
     `);
   });
@@ -145,18 +176,35 @@ describe('AddEntityTypeFieldAction', () => {
         "valueTypes": Array [],
       }
     `);
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`
+      Object {
+        "entityTypes": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "list": false,
+                "name": "bar",
+                "type": "String",
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+      }
+    `);
   });
 });
 
 describe('UpdateSchemaSpecificationAction', () => {
   test('add empty schema', () => {
-    const emptySchemaState = reduceSchemaEditorState(
+    const state = reduceSchemaEditorState(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
         new AdminSchema({ entityTypes: [], valueTypes: [] })
       )
     );
-    expect(emptySchemaState).toMatchInlineSnapshot(`
+    expect(state).toMatchInlineSnapshot(`
       Object {
         "entityTypes": Array [],
         "schema": AdminSchema {
@@ -169,10 +217,12 @@ describe('UpdateSchemaSpecificationAction', () => {
         "valueTypes": Array [],
       }
     `);
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`Object {}`);
   });
 
   test('one entity type', () => {
-    const schemaState = reduceSchemaEditorState(
+    const state = reduceSchemaEditorState(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
         new AdminSchema({
@@ -187,7 +237,8 @@ describe('UpdateSchemaSpecificationAction', () => {
         })
       )
     );
-    expect(schemaState).toMatchInlineSnapshot(`
+
+    expect(state).toMatchInlineSnapshot(`
       Object {
         "entityTypes": Array [
           Object {
@@ -225,10 +276,12 @@ describe('UpdateSchemaSpecificationAction', () => {
         "valueTypes": Array [],
       }
     `);
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`Object {}`);
   });
 
   test('one value type', () => {
-    const schemaState = reduceSchemaEditorState(
+    const state = reduceSchemaEditorState(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
         new AdminSchema({
@@ -243,7 +296,8 @@ describe('UpdateSchemaSpecificationAction', () => {
         })
       )
     );
-    expect(schemaState).toMatchInlineSnapshot(`
+
+    expect(state).toMatchInlineSnapshot(`
       Object {
         "entityTypes": Array [],
         "schema": AdminSchema {
@@ -281,6 +335,8 @@ describe('UpdateSchemaSpecificationAction', () => {
         ],
       }
     `);
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`Object {}`);
   });
 });
 

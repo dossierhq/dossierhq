@@ -1,4 +1,9 @@
-import type { AdminSchema, AdminSchemaSpecificationUpdate } from '@jonasb/datadata-core';
+import type {
+  AdminSchema,
+  AdminSchemaSpecificationUpdate,
+  AdminEntityTypeSpecificationUpdate,
+  AdminValueTypeSpecificationUpdate,
+} from '@jonasb/datadata-core';
 import { FieldType } from '@jonasb/datadata-core';
 
 export interface SchemaTypeDraft {
@@ -197,14 +202,37 @@ export const SchemaEditorActions = {
 export function getSchemaSpecificationUpdateFromEditorState(
   state: SchemaEditorState
 ): AdminSchemaSpecificationUpdate {
+  const update: AdminSchemaSpecificationUpdate = {};
+
+  const entityTypes = state.entityTypes
+    .filter((it) => it.status !== '')
+    .map(getTypeUpdateFromEditorState);
+
+  const valueTypes = state.valueTypes
+    .filter((it) => it.status !== '')
+    .map(getTypeUpdateFromEditorState);
+
+  if (entityTypes.length > 0) {
+    update.entityTypes = entityTypes;
+  }
+  if (valueTypes.length > 0) {
+    update.valueTypes = valueTypes;
+  }
+
+  return update;
+}
+
+function getTypeUpdateFromEditorState(
+  draftType: SchemaTypeDraft
+): AdminEntityTypeSpecificationUpdate | AdminValueTypeSpecificationUpdate {
+  const fields = draftType.fields.map((draftField) => ({
+    name: draftField.name,
+    type: draftField.type,
+    list: draftField.list,
+  }));
+
   return {
-    entityTypes: state.entityTypes.map((draftType) => ({
-      name: draftType.name,
-      fields: draftType.fields.map((draftField) => ({
-        name: draftField.name,
-        type: draftField.type,
-        list: draftField.list,
-      })),
-    })),
+    name: draftType.name,
+    fields,
   };
 }

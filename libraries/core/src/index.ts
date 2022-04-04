@@ -94,9 +94,11 @@ export type {
 export { AdminSchema, FieldType, PublishedSchema, RichTextBlockType } from './Schema';
 export type {
   AdminEntityTypeSpecification,
+  AdminEntityTypeSpecificationUpdate,
   AdminSchemaSpecification,
   AdminSchemaSpecificationUpdate,
   AdminValueTypeSpecification,
+  AdminValueTypeSpecificationUpdate,
   FieldSpecification,
   FieldValueTypeMap,
   PublishedEntityTypeSpecification,
