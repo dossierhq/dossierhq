@@ -808,10 +808,10 @@ importers:
   ../../libraries/postgres:
     specifiers:
       pg: ^8.7.1
-      postgrator: ^5.0.0
+      postgrator: ^7.1.0
     dependencies:
       pg: 8.7.1
-      postgrator: 5.0.0
+      postgrator: 7.1.0
 
   ../../libraries/server:
     specifiers:
@@ -10264,7 +10264,7 @@ packages:
       fs.realpath: 1.0.0
       inflight: 1.0.6
       inherits: 2.0.4
-      minimatch: 3.0.4
+      minimatch: 3.1.2
       once: 1.4.0
       path-is-absolute: 1.0.1
 
@@ -12824,12 +12824,12 @@ packages:
     resolution: {integrity: sha512-yJHVQEhyqPLUTgt9B83PXu6W3rx4MvvHvSUvToogpwoGDOUQ+yDrR0HRot+yOCdCO7u4hX3pWft6kWBBcqh0UA==}
     dependencies:
       brace-expansion: 1.1.11
+    dev: true
 
   /minimatch/3.1.2:
     resolution: {integrity: sha512-J7p63hRiAjw1NDEww1W7i37+ByIrOWO5XQQAzZ3VOcL0PNybwpfmV/N05zFAzwQ9USyEcX6t3UO+K5aqBQOIHw==}
     dependencies:
       brace-expansion: 1.1.11
-    dev: true
 
   /minimist/1.2.5:
     resolution: {integrity: sha512-FM9nNUYrRBAELZQT3xeZQ7fmMOBg6nWNmJKTcgsJeaLstP/UODVpGsr5OhXhhXg6f+qtJ8uiZ+PUxkDWcgIXLw==}
@@ -14003,9 +14003,9 @@ packages:
       source-map-js: 1.0.2
     dev: true
 
-  /postgrator/5.0.0:
-    resolution: {integrity: sha512-8ngKQcNBvWRULmH5/Utp/Vy4yGsl1WDJbf04bBCR9mTxCoIxY5SIwm9Ys0zqlwppd6/aB6H5otgs5TnYahTNxQ==}
-    engines: {node: '>=12.0.0'}
+  /postgrator/7.1.0:
+    resolution: {integrity: sha512-twbg6EBhC/GYpRV75ZHzWUcztjfmRQf+rGTHm9r8epCTaWbDBplbjh5keruUJkWP4Lb3UeHnHrDVuFl6BRS3Wg==}
+    engines: {node: '>=14.0.0'}
     dependencies:
       glob: 7.2.0
     dev: false
