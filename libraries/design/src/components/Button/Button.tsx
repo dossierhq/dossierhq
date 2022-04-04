@@ -1,4 +1,4 @@
-import type { FunctionComponent, MouseEventHandler, ReactNode, Ref } from 'react';
+import type { CSSProperties, FunctionComponent, MouseEventHandler, ReactNode, Ref } from 'react';
 import React, { forwardRef } from 'react';
 import { toClassName } from '../../utils/ClassNameUtils.js';
 import type { IconName } from '../index.js';
@@ -6,6 +6,8 @@ import { Icon } from '../index.js';
 
 export interface ButtonProps {
   ref?: Ref<HTMLButtonElement>;
+  className?: string;
+  style?: CSSProperties;
   disabled?: boolean;
   iconLeft?: IconName;
   iconRight?: IconName;
@@ -16,12 +18,25 @@ export interface ButtonProps {
 }
 
 export const Button: FunctionComponent<ButtonProps> = forwardRef(
-  ({ disabled, iconLeft, iconRight, light, onClick, onMouseDown, children }: ButtonProps, ref) => {
-    const className = toClassName('button', light && 'is-light');
+  (
+    {
+      className,
+      disabled,
+      iconLeft,
+      iconRight,
+      light,
+      style,
+      onClick,
+      onMouseDown,
+      children,
+    }: ButtonProps,
+    ref
+  ) => {
     return (
       <button
         ref={ref}
-        className={className}
+        className={toClassName('button', light && 'is-light', className)}
+        style={style}
         onClick={onClick}
         onMouseDown={onMouseDown}
         disabled={disabled}
