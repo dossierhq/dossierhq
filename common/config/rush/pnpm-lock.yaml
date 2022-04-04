@@ -266,7 +266,7 @@ importers:
       react: ~17.0.2
       react-dom: ~17.0.2
       react-leaflet: ~3.2.1
-      react-test-renderer: ~17.0.2
+      react-test-renderer: ~18.0.0
       svgo: ~2.8.0
       swr: ~1.1.1
       tslib: ~2.3.1
@@ -322,7 +322,7 @@ importers:
       jest-environment-jsdom: 27.5.1
       mini-svg-data-uri: 1.4.3
       prettier: 2.6.2
-      react-test-renderer: 17.0.2_react@17.0.2
+      react-test-renderer: 18.0.0_react@17.0.2
       svgo: 2.8.0
       typescript: 4.6.3
 
@@ -14505,6 +14505,10 @@ packages:
   /react-is/17.0.2:
     resolution: {integrity: sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==}
 
+  /react-is/18.0.0:
+    resolution: {integrity: sha512-yUcBYdBBbo3QiPsgYDcfQcIkGZHfxOaoE6HLSnr1sPzMhdyxusbfKOSUbSd/ocGi32dxcj366PsTj+5oggeKKw==}
+    dev: true
+
   /react-leaflet/3.2.2_91fa1427a3331e02931dfea77720a290:
     resolution: {integrity: sha512-5W7iWjI9+CdTGVAICe8RUyK0n+uLshr+eLQa8eBCbmstPNpCHZJTUSbju4Ws5dkS/PUCr9t5VmoIE9CXuSBEhw==}
     peerDependencies:
@@ -14608,16 +14612,15 @@ packages:
       refractor: 3.5.0
     dev: true
 
-  /react-test-renderer/17.0.2_react@17.0.2:
-    resolution: {integrity: sha512-yaQ9cB89c17PUb0x6UfWRs7kQCorVdHlutU1boVPEsB8IDZH6n9tHxMacc3y0JoXOJUsZb/t/Mb8FUWMKaM7iQ==}
+  /react-test-renderer/18.0.0_react@17.0.2:
+    resolution: {integrity: sha512-SyZTP/FSkwfiKOZuTZiISzsrC8A80KNlQ8PyyoGoOq+VzMAab6Em1POK/CiX3+XyXG6oiJa1C53zYDbdrJu9fw==}
     peerDependencies:
-      react: 17.0.2
+      react: ^18.0.0
     dependencies:
-      object-assign: 4.1.1
       react: 17.0.2
-      react-is: 17.0.2
+      react-is: 18.0.0
       react-shallow-renderer: 16.14.1_react@17.0.2
-      scheduler: 0.20.2
+      scheduler: 0.21.0
     dev: true
 
   /react-textarea-autosize/8.3.3_27d7f75f5fffc1228c129be468caca5c:
@@ -15168,6 +15171,13 @@ packages:
     dependencies:
       loose-envify: 1.4.0
       object-assign: 4.1.1
+    dev: false
+
+  /scheduler/0.21.0:
+    resolution: {integrity: sha512-1r87x5fz9MXqswA2ERLo0EbOAU74DpIUO090gIasYTqlVoJeMcl+Z1Rg7WHz+qtPujhS/hGIt9kxZOYBV3faRQ==}
+    dependencies:
+      loose-envify: 1.4.0
+    dev: true
 
   /schema-utils/1.0.0:
     resolution: {integrity: sha512-i27Mic4KovM/lnGsy8whRCHhc7VicJajAjTrYg11K9zfZXnYIt4k5F+kZkwjnrhKzLic/HLU4j11mjsz2G/75g==}
