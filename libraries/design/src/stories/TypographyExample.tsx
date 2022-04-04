@@ -32,7 +32,7 @@ export default function TypographyExample({ textStyle, loremIpsum }: Props): JSX
         borderLeftColor: 'black',
         borderLeftStyle: 'solid',
         paddingLeft: '1rem',
-        marginBottom: '0.25rem',
+        marginBottom: '1rem',
       }}
     >
       <div style={{ border: '1px dashed black', marginBottom: '0.5rem' }}>

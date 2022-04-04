@@ -25,6 +25,7 @@ export {
   Tag,
   TagSelector,
   Text,
+  TextArea,
 } from './components/index.js';
 export type {
   DropdownSelectorProps,

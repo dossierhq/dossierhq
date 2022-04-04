@@ -39,3 +39,4 @@ export { Tag } from './Tag/Tag.js';
 export type { TagProps } from './Tag/Tag.js';
 export { TagSelector } from './TagSelector/TagSelector.js';
 export { Text } from './Text/Text.js';
+export { TextArea } from './TextArea/TextArea.js';
