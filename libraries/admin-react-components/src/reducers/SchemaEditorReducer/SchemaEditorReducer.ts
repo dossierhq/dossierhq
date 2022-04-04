@@ -225,11 +225,17 @@ export function getSchemaSpecificationUpdateFromEditorState(
 function getTypeUpdateFromEditorState(
   draftType: SchemaTypeDraft
 ): AdminEntityTypeSpecificationUpdate | AdminValueTypeSpecificationUpdate {
-  const fields = draftType.fields.map((draftField) => ({
-    name: draftField.name,
-    type: draftField.type,
-    list: draftField.list,
-  }));
+  const fields = draftType.fields.map((draftField) => {
+    return {
+      name: draftField.name,
+      type: draftField.type,
+      ...(draftField.list
+        ? {
+            list: draftField.list,
+          }
+        : undefined),
+    };
+  });
 
   return {
     name: draftType.name,
