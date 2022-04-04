@@ -49,9 +49,9 @@ describe('AddTypeAction', () => {
         "entityTypes": Array [
           Object {
             "fields": Array [],
+            "kind": "entity",
             "name": "Foo",
             "status": "new",
-            "type": "entity",
           },
         ],
         "schema": AdminSchema {
@@ -99,9 +99,9 @@ describe('AddTypeAction', () => {
         "valueTypes": Array [
           Object {
             "fields": Array [],
+            "kind": "value",
             "name": "Foo",
             "status": "new",
-            "type": "value",
           },
         ],
       }
@@ -136,15 +136,15 @@ describe('AddTypeAction', () => {
         "entityTypes": Array [
           Object {
             "fields": Array [],
+            "kind": "entity",
             "name": "Bar",
             "status": "new",
-            "type": "entity",
           },
           Object {
             "fields": Array [],
+            "kind": "entity",
             "name": "Foo",
             "status": "",
-            "type": "entity",
           },
         ],
         "schema": AdminSchema {
@@ -207,15 +207,15 @@ describe('AddTypeAction', () => {
         "valueTypes": Array [
           Object {
             "fields": Array [],
+            "kind": "value",
             "name": "Bar",
             "status": "new",
-            "type": "value",
           },
           Object {
             "fields": Array [],
+            "kind": "value",
             "name": "Foo",
             "status": "",
-            "type": "value",
           },
         ],
       }
@@ -248,15 +248,15 @@ describe('AddTypeAction', () => {
         "entityTypes": Array [
           Object {
             "fields": Array [],
+            "kind": "entity",
             "name": "Anaconda",
             "status": "new",
-            "type": "entity",
           },
           Object {
             "fields": Array [],
+            "kind": "entity",
             "name": "ZooKeeper",
             "status": "new",
-            "type": "entity",
           },
         ],
         "schema": AdminSchema {
@@ -309,15 +309,15 @@ describe('AddTypeAction', () => {
         "valueTypes": Array [
           Object {
             "fields": Array [],
+            "kind": "value",
             "name": "Anaconda",
             "status": "new",
-            "type": "value",
           },
           Object {
             "fields": Array [],
+            "kind": "value",
             "name": "ZooKeeper",
             "status": "new",
-            "type": "value",
           },
         ],
       }
@@ -364,9 +364,9 @@ describe('AddEntityTypeFieldAction', () => {
                 "type": "String",
               },
             ],
+            "kind": "entity",
             "name": "Foo",
             "status": "changed",
-            "type": "entity",
           },
         ],
         "schema": AdminSchema {
@@ -435,9 +435,9 @@ describe('AddEntityTypeFieldAction', () => {
                 "type": "String",
               },
             ],
+            "kind": "entity",
             "name": "Foo",
             "status": "changed",
-            "type": "entity",
           },
         ],
         "schema": AdminSchema {
@@ -538,9 +538,9 @@ describe('UpdateSchemaSpecificationAction', () => {
                 "type": "String",
               },
             ],
+            "kind": "entity",
             "name": "TitleOnly",
             "status": "",
-            "type": "entity",
           },
         ],
         "schema": AdminSchema {
@@ -616,9 +616,9 @@ describe('UpdateSchemaSpecificationAction', () => {
                 "type": "String",
               },
             ],
+            "kind": "value",
             "name": "TitleOnly",
             "status": "",
-            "type": "value",
           },
         ],
       }
@@ -653,9 +653,9 @@ describe('SchemaEditorReducer scenarios', () => {
         "entityTypes": Array [
           Object {
             "fields": Array [],
+            "kind": "entity",
             "name": "NewType",
             "status": "",
-            "type": "entity",
           },
         ],
         "schema": AdminSchema {

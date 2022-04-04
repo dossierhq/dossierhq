@@ -13,11 +13,11 @@ export interface SchemaTypeDraft {
 }
 
 export interface SchemaEntityTypeDraft extends SchemaTypeDraft {
-  type: 'entity';
+  kind: 'entity';
 }
 
 export interface SchemaValueTypeDraft extends SchemaTypeDraft {
-  type: 'value';
+  kind: 'value';
 }
 
 export interface SchemaFieldDraft {
@@ -108,11 +108,11 @@ abstract class EntityTypeAction implements SchemaEditorStateAction {
 // ACTIONS
 
 class AddTypeAction implements SchemaEditorStateAction {
-  type: 'entity' | 'value';
+  kind: 'entity' | 'value';
   name: string;
 
-  constructor(type: 'entity' | 'value', name: string) {
-    this.type = type;
+  constructor(kind: 'entity' | 'value', name: string) {
+    this.kind = kind;
     this.name = name;
   }
 
@@ -123,11 +123,11 @@ class AddTypeAction implements SchemaEditorStateAction {
       fields: [],
     } as const;
     const newState = { ...state };
-    if (this.type === 'entity') {
-      newState.entityTypes = [...newState.entityTypes, { ...typeDraft, type: 'entity' }];
+    if (this.kind === 'entity') {
+      newState.entityTypes = [...newState.entityTypes, { ...typeDraft, kind: 'entity' }];
       newState.entityTypes.sort((a, b) => a.name.localeCompare(b.name));
     } else {
-      newState.valueTypes = [...newState.valueTypes, { ...typeDraft, type: 'value' }];
+      newState.valueTypes = [...newState.valueTypes, { ...typeDraft, kind: 'value' }];
       newState.valueTypes.sort((a, b) => a.name.localeCompare(b.name));
     }
     newState.status = resolveSchemaStatus(newState);
@@ -168,7 +168,7 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
 
   reduce(state: Readonly<SchemaEditorState>): Readonly<SchemaEditorState> {
     const entityTypes = this.schema.spec.entityTypes.map<SchemaEntityTypeDraft>((entityType) => ({
-      type: 'entity',
+      kind: 'entity',
       name: entityType.name,
       status: '',
       fields: entityType.fields.map<SchemaFieldDraft>((field) => ({
@@ -180,7 +180,7 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
     }));
 
     const valueTypes = this.schema.spec.valueTypes.map<SchemaValueTypeDraft>((valueType) => ({
-      type: 'value',
+      kind: 'value',
       name: valueType.name,
       status: '',
       fields: valueType.fields.map<SchemaFieldDraft>((field) => ({
@@ -235,11 +235,7 @@ function getTypeUpdateFromEditorState(
     return {
       name: draftField.name,
       type: draftField.type,
-      ...(draftField.list
-        ? {
-            list: draftField.list,
-          }
-        : undefined),
+      ...(draftField.list ? { list: draftField.list } : undefined),
     };
   });
 
