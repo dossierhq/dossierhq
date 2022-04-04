@@ -9,7 +9,7 @@ import { FieldType } from '@jonasb/datadata-core';
 export interface SchemaTypeDraft {
   name: string;
   status: 'new' | '' | 'changed';
-  fields: SchemaFieldDraft[];
+  fields: readonly SchemaFieldDraft[];
 }
 
 export interface SchemaEntityTypeDraft extends SchemaTypeDraft {
@@ -107,23 +107,29 @@ abstract class EntityTypeAction implements SchemaEditorStateAction {
 
 // ACTIONS
 
-class AddEntityTypeAction implements SchemaEditorStateAction {
+class AddTypeAction implements SchemaEditorStateAction {
+  type: 'entity' | 'value';
   name: string;
 
-  constructor(name: string) {
+  constructor(type: 'entity' | 'value', name: string) {
+    this.type = type;
     this.name = name;
   }
 
   reduce(state: Readonly<SchemaEditorState>): Readonly<SchemaEditorState> {
-    const entityType: SchemaEntityTypeDraft = {
-      type: 'entity',
+    const typeDraft = {
       status: 'new',
       name: this.name,
       fields: [],
-    };
-    const entityTypes = [...state.entityTypes, entityType];
-    entityTypes.sort((a, b) => a.name.localeCompare(b.name));
-    const newState = { ...state, entityTypes };
+    } as const;
+    const newState = { ...state };
+    if (this.type === 'entity') {
+      newState.entityTypes = [...newState.entityTypes, { ...typeDraft, type: 'entity' }];
+      newState.entityTypes.sort((a, b) => a.name.localeCompare(b.name));
+    } else {
+      newState.valueTypes = [...newState.valueTypes, { ...typeDraft, type: 'value' }];
+      newState.valueTypes.sort((a, b) => a.name.localeCompare(b.name));
+    }
     newState.status = resolveSchemaStatus(newState);
     return newState;
   }
@@ -192,7 +198,7 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
 }
 
 export const SchemaEditorActions = {
-  AddEntityType: AddEntityTypeAction,
+  AddType: AddTypeAction,
   AddEntityTypeField: AddEntityTypeFieldAction,
   UpdateSchemaSpecification: UpdateSchemaSpecificationAction,
 };

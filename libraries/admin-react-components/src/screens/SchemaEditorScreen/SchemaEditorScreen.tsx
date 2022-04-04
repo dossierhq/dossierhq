@@ -10,7 +10,7 @@ import {
   Text,
   TextArea,
 } from '@jonasb/datadata-design';
-import type { Dispatch } from 'react';
+import type { Dispatch, ReactNode } from 'react';
 import React, { useCallback, useContext, useEffect, useMemo, useReducer, useState } from 'react';
 import { useSWRConfig } from 'swr';
 import { DataDataContext2 } from '../..';
@@ -57,10 +57,20 @@ export function SchemaEditorScreen({ header, footer }: SchemaEditorScreenProps) 
       {header ? <FullscreenContainer.Row fullWidth>{header}</FullscreenContainer.Row> : null}
       <FullscreenContainer.ScrollableRow>
         <FullscreenContainer.Row flexDirection="row" paddingVertical={5}>
-          <AddEntityTypeButton
+          <AddTypeButton
+            type="entity"
             disabled={!schema}
             dispatchSchemaEditorState={dispatchSchemaEditorState}
-          />
+          >
+            Add entity type
+          </AddTypeButton>
+          <AddTypeButton
+            type="value"
+            disabled={!schema}
+            dispatchSchemaEditorState={dispatchSchemaEditorState}
+          >
+            Add value type
+          </AddTypeButton>
           <Button
             disabled={schemaEditorState.status !== 'changed'}
             onClick={() => setShowSaveDialog(true)}
@@ -183,22 +193,26 @@ function SaveSchemaDialogContent({
   );
 }
 
-function AddEntityTypeButton({
+function AddTypeButton({
+  type,
   disabled,
   dispatchSchemaEditorState,
+  children,
 }: {
+  type: 'entity' | 'value';
   disabled: boolean;
   dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>;
+  children: ReactNode;
 }) {
   const handleClick = useCallback(() => {
     const name = window.prompt('Entity type name?');
     if (name) {
-      dispatchSchemaEditorState(new SchemaEditorActions.AddEntityType(name));
+      dispatchSchemaEditorState(new SchemaEditorActions.AddType(type, name));
     }
-  }, [dispatchSchemaEditorState]);
+  }, [dispatchSchemaEditorState, type]);
   return (
     <Button disabled={disabled} onClick={handleClick}>
-      Add entity type
+      {children}
     </Button>
   );
 }
