@@ -21,7 +21,24 @@ Normal.args = {
       <Card.Header>Header</Card.Header>
       <Card.Content>Content</Card.Content>
       <Card.Footer>
-        <Card.FooterItem>Footer</Card.FooterItem>
+        <Card.FooterItem>First</Card.FooterItem>
+        <Card.FooterItem>
+          <a>Second footer</a>
+        </Card.FooterItem>
+      </Card.Footer>
+    </>
+  ),
+};
+
+export const FooterButtons = Template.bind({});
+FooterButtons.args = {
+  children: (
+    <>
+      <Card.Header>Header</Card.Header>
+      <Card.Content>Content</Card.Content>
+      <Card.Footer>
+        <Card.FooterButton>First</Card.FooterButton>
+        <Card.FooterButton>Second button</Card.FooterButton>
       </Card.Footer>
     </>
   ),

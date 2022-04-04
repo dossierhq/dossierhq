@@ -21,10 +21,16 @@ interface CardFooterItemProps {
   children?: ReactNode;
 }
 
+interface CardFooterButtonProps {
+  value?: string;
+  children?: ReactNode;
+}
+
 interface CardComponent extends FunctionComponent<CardProps> {
   Header: FunctionComponent<CardHeaderProps>;
   Content: FunctionComponent<CardContentProps>;
   Footer: FunctionComponent<CardFooterProps>;
+  FooterButton: FunctionComponent<CardFooterButtonProps>;
   FooterItem: FunctionComponent<CardFooterItemProps>;
 }
 
@@ -56,7 +62,16 @@ Card.Footer = ({ children }: CardFooterProps) => {
 };
 Card.Footer.displayName = 'Card.Footer';
 
+Card.FooterButton = ({ value, children }: CardFooterButtonProps) => {
+  return (
+    <button className="card-footer-item button is-white card-footer-button" value={value}>
+      {children}
+    </button>
+  );
+};
+Card.FooterButton.displayName = 'Card.FooterButton';
+
 Card.FooterItem = ({ children }: CardFooterItemProps) => {
-  return <a className="card-footer-item">{children}</a>;
+  return <p className="card-footer-item">{children}</p>;
 };
 Card.FooterItem.displayName = 'Card.FooterItem';

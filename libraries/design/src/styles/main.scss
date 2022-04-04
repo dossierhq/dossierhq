@@ -84,6 +84,11 @@ tr.is-sticky-row :is(td, th),
   }
 }
 
+.card-footer-button {
+  white-space: normal;
+  height: auto;
+}
+
 .isolation-isolate {
   isolation: isolate;
 }
