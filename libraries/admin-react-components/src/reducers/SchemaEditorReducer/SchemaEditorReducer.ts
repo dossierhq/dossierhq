@@ -62,7 +62,7 @@ function resolveSchemaStatus(state: SchemaEditorState): SchemaEditorState['statu
   return '';
 }
 
-function resolveTypeStatus(state: SchemaEntityTypeDraft): SchemaEntityTypeDraft['status'] {
+function resolveTypeStatus(state: SchemaTypeDraft): SchemaTypeDraft['status'] {
   if (state.status === 'new') state.status;
   //TODO check field order
   for (const field of state.fields) {
@@ -73,36 +73,44 @@ function resolveTypeStatus(state: SchemaEntityTypeDraft): SchemaEntityTypeDraft[
 
 // ACTION HELPERS
 
-abstract class EntityTypeAction implements SchemaEditorStateAction {
-  entityTypeName: string;
+abstract class TypeAction implements SchemaEditorStateAction {
+  kind: 'entity' | 'value';
+  typeName: string;
 
-  constructor(entityTypeName: string) {
-    this.entityTypeName = entityTypeName;
+  constructor(kind: 'entity' | 'value', typeName: string) {
+    this.kind = kind;
+    this.typeName = typeName;
   }
 
   reduce(state: Readonly<SchemaEditorState>): Readonly<SchemaEditorState> {
-    const entityTypeIndex = state.entityTypes.findIndex((it) => it.name === this.entityTypeName);
-    if (entityTypeIndex < 0) throw new Error(`No such entity type ${this.entityTypeName}`);
-    const currentEntityType = state.entityTypes[entityTypeIndex];
+    const typeCollection = this.kind === 'entity' ? state.entityTypes : state.valueTypes;
+    const typeIndex = typeCollection.findIndex((it) => it.name === this.typeName);
+    if (typeIndex < 0) throw new Error(`No such ${this.kind} type ${this.typeName}`);
+    const currentTypeDraft = typeCollection[typeIndex];
 
-    let newEntityType = this.reduceEntityType(currentEntityType);
-    if (newEntityType === currentEntityType) {
+    let newTypeDraft = this.reduceType(currentTypeDraft);
+    if (newTypeDraft === currentTypeDraft) {
       return state;
     }
 
-    newEntityType = { ...newEntityType, status: resolveTypeStatus(newEntityType) };
+    newTypeDraft = { ...newTypeDraft, status: resolveTypeStatus(newTypeDraft) };
 
-    const entityTypes = [...state.entityTypes];
-    entityTypes[entityTypeIndex] = newEntityType;
+    const newTypeCollection = [...typeCollection];
+    newTypeCollection[typeIndex] = newTypeDraft;
 
-    const newState = { ...state, entityTypes };
+    const newState = { ...state };
+    if (this.kind === 'entity') {
+      newState.entityTypes = newTypeCollection as SchemaEntityTypeDraft[];
+    } else {
+      newState.valueTypes = newTypeCollection as SchemaValueTypeDraft[];
+    }
     newState.status = resolveSchemaStatus(newState);
     return newState;
   }
 
-  abstract reduceEntityType(
-    entityType: Readonly<SchemaEntityTypeDraft>
-  ): Readonly<SchemaEntityTypeDraft>;
+  abstract reduceType(
+    typeDraft: Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft>
+  ): Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft>;
 }
 
 // ACTIONS
@@ -135,15 +143,15 @@ class AddTypeAction implements SchemaEditorStateAction {
   }
 }
 
-class AddEntityTypeFieldAction extends EntityTypeAction {
+class AddTypeFieldAction extends TypeAction {
   fieldName: string;
 
-  constructor(entityTypeName: string, fieldName: string) {
-    super(entityTypeName);
+  constructor(kind: 'entity' | 'value', typeName: string, fieldName: string) {
+    super(kind, typeName);
     this.fieldName = fieldName;
   }
 
-  reduceEntityType(entityType: Readonly<SchemaEntityTypeDraft>): Readonly<SchemaEntityTypeDraft> {
+  reduceType(entityType: Readonly<SchemaEntityTypeDraft>): Readonly<SchemaEntityTypeDraft> {
     const field: SchemaFieldDraft = {
       name: this.fieldName,
       status: 'new',
@@ -199,7 +207,7 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
 
 export const SchemaEditorActions = {
   AddType: AddTypeAction,
-  AddEntityTypeField: AddEntityTypeFieldAction,
+  AddTypeField: AddTypeFieldAction,
   UpdateSchemaSpecification: UpdateSchemaSpecificationAction,
 };
 

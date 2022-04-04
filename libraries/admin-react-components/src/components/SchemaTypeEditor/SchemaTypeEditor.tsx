@@ -13,16 +13,15 @@ interface Props {
 export function SchemaTypeEditor({ type, dispatchSchemaEditorState }: Props) {
   return (
     <>
-      {type.kind === 'entity' ? (
-        <Field>
-          <Field.Control>
-            <AddFieldButton
-              entityTypeName={type.name}
-              dispatchSchemaEditorState={dispatchSchemaEditorState}
-            />
-          </Field.Control>
-        </Field>
-      ) : null}
+      <Field>
+        <Field.Control>
+          <AddFieldButton
+            kind={type.kind}
+            typeName={type.name}
+            dispatchSchemaEditorState={dispatchSchemaEditorState}
+          />
+        </Field.Control>
+      </Field>
       {type.fields.map((field) => (
         <SchemaFieldEditor key={field.name} field={field} />
       ))}
@@ -31,20 +30,20 @@ export function SchemaTypeEditor({ type, dispatchSchemaEditorState }: Props) {
 }
 
 function AddFieldButton({
-  entityTypeName,
+  kind,
+  typeName,
   dispatchSchemaEditorState,
 }: {
-  entityTypeName: string;
+  kind: 'entity' | 'value';
+  typeName: string;
   dispatchSchemaEditorState: Dispatch<SchemaEditorReducer.SchemaEditorStateAction>;
 }) {
   const handleClick = useCallback(() => {
     const fieldName = window.prompt('Field name?');
     if (fieldName) {
-      dispatchSchemaEditorState(
-        new SchemaEditorActions.AddEntityTypeField(entityTypeName, fieldName)
-      );
+      dispatchSchemaEditorState(new SchemaEditorActions.AddTypeField(kind, typeName, fieldName));
     }
-  }, [dispatchSchemaEditorState, entityTypeName]);
+  }, [dispatchSchemaEditorState, kind, typeName]);
   return <Button onClick={handleClick}>Add field</Button>;
 }
 
