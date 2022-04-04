@@ -9,6 +9,8 @@ const StyleClassName = {
   subtitle2: 'is-size-7 has-text-weight-bold',
   body1: 'is-size-6',
   body2: 'is-size-7',
+  code1: 'is-size-6 is-family-code',
+  code2: 'is-size-7 is-family-code',
   // button: '',
   // caption: '',
   // overline: '',
