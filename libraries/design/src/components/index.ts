@@ -4,6 +4,7 @@ export { Button } from './Button/Button.js';
 export { Card } from './Card/Card.js';
 export { Checkbox } from './Checkbox/Checkbox.js';
 export { Column } from './Column/Column.js';
+export { Dialog } from './Dialog/Dialog.js';
 export { Dropdown } from './Dropdown/Dropdown.js';
 export { DropdownDisplay } from './DropdownDisplay/DropdownDisplay.js';
 export { DropdownSelector } from './DropdownSelector/DropdownSelector.js';
