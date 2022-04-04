@@ -89,6 +89,11 @@ tr.is-sticky-row :is(td, th),
   height: auto;
 }
 
+.dialog {
+  border: none;
+  background-color: transparent;
+}
+
 .isolation-isolate {
   isolation: isolate;
 }

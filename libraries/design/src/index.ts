@@ -4,6 +4,7 @@ export {
   Card,
   Checkbox,
   Column,
+  Dialog,
   Dropdown,
   DropdownDisplay,
   DropdownSelector,
