@@ -3,6 +3,7 @@ import type {
   AdminSchemaSpecificationUpdate,
   AdminEntityTypeSpecificationUpdate,
   AdminValueTypeSpecificationUpdate,
+  AdminValueTypeSpecification,
 } from '@jonasb/datadata-core';
 import { FieldType } from '@jonasb/datadata-core';
 
@@ -34,6 +35,7 @@ export interface SchemaFieldDraft {
   status: 'new' | '' | 'changed';
   type: FieldType;
   list: boolean;
+  required: boolean;
 }
 
 export interface SchemaEditorState {
@@ -196,11 +198,29 @@ class AddTypeFieldAction extends TypeAction {
       status: 'new',
       type: FieldType.String,
       list: false,
+      required: false,
     };
 
     const fields = [...entityType.fields, field];
 
     return { ...entityType, fields };
+  }
+}
+
+class ChangeFieldRequiredAction extends FieldAction {
+  required: boolean;
+
+  constructor(fieldSelector: SchemaFieldSelector, required: boolean) {
+    super(fieldSelector);
+    this.required = required;
+  }
+
+  reduceField(fieldDraft: Readonly<SchemaFieldDraft>): Readonly<SchemaFieldDraft> {
+    if (fieldDraft.required === this.required) {
+      return fieldDraft;
+    }
+
+    return { ...fieldDraft, required: this.required };
   }
 }
 
@@ -233,39 +253,42 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
   }
 
   reduce(state: Readonly<SchemaEditorState>): Readonly<SchemaEditorState> {
-    const entityTypes = this.schema.spec.entityTypes.map<SchemaEntityTypeDraft>((entityType) => ({
-      kind: 'entity',
-      name: entityType.name,
-      status: '',
-      fields: entityType.fields.map<SchemaFieldDraft>((field) => ({
-        name: field.name,
-        status: '',
-        type: field.type as FieldType,
-        list: !!field.list,
-      })),
-    }));
+    const entityTypes = this.schema.spec.entityTypes.map((entityTypeSpec) =>
+      this.convertField('entity', entityTypeSpec)
+    );
 
-    const valueTypes = this.schema.spec.valueTypes.map<SchemaValueTypeDraft>((valueType) => ({
-      kind: 'value',
-      name: valueType.name,
-      status: '',
-      fields: valueType.fields.map<SchemaFieldDraft>((field) => ({
-        name: field.name,
-        status: '',
-        type: field.type as FieldType,
-        list: !!field.list,
-      })),
-    }));
+    const valueTypes = this.schema.spec.valueTypes.map((valueTypeSpec) =>
+      this.convertField('value', valueTypeSpec)
+    );
 
     if (!this.force && state.schema) return state; //TODO handle update to schema
 
     return { ...state, status: '', schema: this.schema, entityTypes, valueTypes };
+  }
+
+  convertField<TKind extends 'entity' | 'value'>(
+    kind: TKind,
+    typeSpec: AdminEntityTypeSpecificationUpdate | AdminValueTypeSpecification
+  ): SchemaTypeDraft & { kind: TKind } {
+    return {
+      kind,
+      name: typeSpec.name,
+      status: '',
+      fields: typeSpec.fields.map<SchemaFieldDraft>((fieldSpec) => ({
+        name: fieldSpec.name,
+        status: '',
+        type: fieldSpec.type as FieldType,
+        list: !!fieldSpec.list,
+        required: !!fieldSpec.required,
+      })),
+    };
   }
 }
 
 export const SchemaEditorActions = {
   AddType: AddTypeAction,
   AddTypeField: AddTypeFieldAction,
+  ChangeFieldRequired: ChangeFieldRequiredAction,
   ChangeFieldType: ChangeFieldTypeAction,
   UpdateSchemaSpecification: UpdateSchemaSpecificationAction,
 };
@@ -302,6 +325,7 @@ function getTypeUpdateFromEditorState(
     return {
       name: draftField.name,
       type: draftField.type,
+      required: draftField.required,
       ...(draftField.list ? { list: draftField.list } : undefined),
     };
   });

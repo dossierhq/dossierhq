@@ -360,6 +360,7 @@ describe('AddTypeFieldAction', () => {
               Object {
                 "list": false,
                 "name": "bar",
+                "required": false,
                 "status": "new",
                 "type": "String",
               },
@@ -393,6 +394,7 @@ describe('AddTypeFieldAction', () => {
             "fields": Array [
               Object {
                 "name": "bar",
+                "required": false,
                 "type": "String",
               },
             ],
@@ -436,6 +438,7 @@ describe('AddTypeFieldAction', () => {
               Object {
                 "list": false,
                 "name": "bar",
+                "required": false,
                 "status": "new",
                 "type": "String",
               },
@@ -455,6 +458,7 @@ describe('AddTypeFieldAction', () => {
             "fields": Array [
               Object {
                 "name": "bar",
+                "required": false,
                 "type": "String",
               },
             ],
@@ -487,12 +491,14 @@ describe('AddTypeFieldAction', () => {
               Object {
                 "list": false,
                 "name": "title",
+                "required": false,
                 "status": "",
                 "type": "String",
               },
               Object {
                 "list": false,
                 "name": "bar",
+                "required": false,
                 "status": "new",
                 "type": "String",
               },
@@ -531,10 +537,12 @@ describe('AddTypeFieldAction', () => {
             "fields": Array [
               Object {
                 "name": "title",
+                "required": false,
                 "type": "String",
               },
               Object {
                 "name": "bar",
+                "required": false,
                 "type": "String",
               },
             ],
@@ -586,12 +594,14 @@ describe('AddTypeFieldAction', () => {
               Object {
                 "list": false,
                 "name": "title",
+                "required": false,
                 "status": "",
                 "type": "String",
               },
               Object {
                 "list": false,
                 "name": "bar",
+                "required": false,
                 "status": "new",
                 "type": "String",
               },
@@ -611,10 +621,82 @@ describe('AddTypeFieldAction', () => {
             "fields": Array [
               Object {
                 "name": "title",
+                "required": false,
                 "type": "String",
               },
               Object {
                 "name": "bar",
+                "required": false,
+                "type": "String",
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+      }
+    `);
+  });
+});
+
+describe('ChangeFieldRequiredAction', () => {
+  test('make new field required in existing entity type', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        new AdminSchema({
+          entityTypes: [{ name: 'Foo', adminOnly: false, fields: [] }],
+          valueTypes: [],
+        })
+      ),
+      new SchemaEditorActions.AddTypeField('entity', 'Foo', 'bar'),
+      new SchemaEditorActions.ChangeFieldRequired(
+        { kind: 'entity', typeName: 'Foo', fieldName: 'bar' },
+        true
+      )
+    );
+    expect(state).toMatchInlineSnapshot(`
+      Object {
+        "entityTypes": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "list": false,
+                "name": "bar",
+                "required": true,
+                "status": "new",
+                "type": "String",
+              },
+            ],
+            "kind": "entity",
+            "name": "Foo",
+            "status": "changed",
+          },
+        ],
+        "schema": AdminSchema {
+          "spec": Object {
+            "entityTypes": Array [
+              Object {
+                "adminOnly": false,
+                "fields": Array [],
+                "name": "Foo",
+              },
+            ],
+            "valueTypes": Array [],
+          },
+        },
+        "status": "changed",
+        "valueTypes": Array [],
+      }
+    `);
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`
+      Object {
+        "entityTypes": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "name": "bar",
+                "required": true,
                 "type": "String",
               },
             ],
@@ -651,6 +733,7 @@ describe('ChangeFieldTypeAction', () => {
               Object {
                 "list": true,
                 "name": "bar",
+                "required": false,
                 "status": "new",
                 "type": "Location",
               },
@@ -685,6 +768,7 @@ describe('ChangeFieldTypeAction', () => {
               Object {
                 "list": true,
                 "name": "bar",
+                "required": false,
                 "type": "Location",
               },
             ],
@@ -733,6 +817,7 @@ describe('ChangeFieldTypeAction', () => {
               Object {
                 "list": true,
                 "name": "bar",
+                "required": false,
                 "status": "new",
                 "type": "Location",
               },
@@ -753,6 +838,7 @@ describe('ChangeFieldTypeAction', () => {
               Object {
                 "list": true,
                 "name": "bar",
+                "required": false,
                 "type": "Location",
               },
             ],
@@ -814,6 +900,7 @@ describe('UpdateSchemaSpecificationAction', () => {
               Object {
                 "list": false,
                 "name": "title",
+                "required": false,
                 "status": "",
                 "type": "String",
               },
@@ -892,6 +979,7 @@ describe('UpdateSchemaSpecificationAction', () => {
               Object {
                 "list": false,
                 "name": "title",
+                "required": false,
                 "status": "",
                 "type": "String",
               },
