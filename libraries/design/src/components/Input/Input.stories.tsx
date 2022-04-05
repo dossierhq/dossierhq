@@ -23,5 +23,8 @@ Normal.args = {};
 export const Placeholder = Template.bind({});
 Placeholder.args = { placeholder: 'Placeholder' };
 
+export const ReadOnly = Template.bind({});
+ReadOnly.args = { value: 'Read only', readOnly: true };
+
 export const LeftIcon = Template.bind({});
 LeftIcon.args = { iconLeft: 'map' };

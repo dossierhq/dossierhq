@@ -6,11 +6,18 @@ import { toClassName } from '../../utils/ClassNameUtils.js';
 export interface InputProps {
   iconLeft?: IconName;
   placeholder?: string;
+  readOnly?: boolean;
   value?: string;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
 }
 
-export function Input({ iconLeft, placeholder, value, onChange }: InputProps): JSX.Element {
+export function Input({
+  iconLeft,
+  placeholder,
+  readOnly,
+  value,
+  onChange,
+}: InputProps): JSX.Element {
   const className = toClassName('control', iconLeft && 'has-icons-left');
   return (
     <p className={className}>
@@ -18,6 +25,7 @@ export function Input({ iconLeft, placeholder, value, onChange }: InputProps): J
         className="input"
         type="text"
         placeholder={placeholder}
+        readOnly={readOnly}
         value={value}
         onChange={onChange}
       />
