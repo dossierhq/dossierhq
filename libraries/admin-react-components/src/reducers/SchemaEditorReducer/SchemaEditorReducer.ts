@@ -19,6 +19,7 @@ export interface SchemaFieldSelector extends SchemaTypeSelector {
 export interface SchemaTypeDraft {
   name: string;
   status: 'new' | '' | 'changed';
+  adminOnly: boolean;
   fields: readonly SchemaFieldDraft[];
 }
 
@@ -74,7 +75,7 @@ function resolveSchemaStatus(state: SchemaEditorState): SchemaEditorState['statu
 }
 
 function resolveTypeStatus(state: SchemaTypeDraft): SchemaTypeDraft['status'] {
-  if (state.status === 'new') state.status;
+  if (state.status === 'new') return state.status;
   //TODO check field order
   for (const field of state.fields) {
     if (field.status !== '') return 'changed';
@@ -88,7 +89,7 @@ abstract class TypeAction implements SchemaEditorStateAction {
   kind: 'entity' | 'value';
   typeName: string;
 
-  constructor(kind: 'entity' | 'value', typeName: string) {
+  constructor({ kind, typeName }: SchemaTypeSelector) {
     this.kind = kind;
     this.typeName = typeName;
   }
@@ -127,9 +128,9 @@ abstract class TypeAction implements SchemaEditorStateAction {
 abstract class FieldAction extends TypeAction {
   fieldName: string;
 
-  constructor({ kind, typeName, fieldName }: SchemaFieldSelector) {
-    super(kind, typeName);
-    this.fieldName = fieldName;
+  constructor(fieldSelector: SchemaFieldSelector) {
+    super(fieldSelector);
+    this.fieldName = fieldSelector.fieldName;
   }
 
   reduceType(
@@ -169,6 +170,7 @@ class AddTypeAction implements SchemaEditorStateAction {
     const typeDraft = {
       status: 'new',
       name: this.name,
+      adminOnly: false,
       fields: [],
     } as const;
     const newState = { ...state };
@@ -187,12 +189,12 @@ class AddTypeAction implements SchemaEditorStateAction {
 class AddTypeFieldAction extends TypeAction {
   fieldName: string;
 
-  constructor(kind: 'entity' | 'value', typeName: string, fieldName: string) {
-    super(kind, typeName);
+  constructor(typeSelector: SchemaTypeSelector, fieldName: string) {
+    super(typeSelector);
     this.fieldName = fieldName;
   }
 
-  reduceType(entityType: Readonly<SchemaEntityTypeDraft>): Readonly<SchemaEntityTypeDraft> {
+  reduceType(typeSpec: Readonly<SchemaEntityTypeDraft>): Readonly<SchemaEntityTypeDraft> {
     const field: SchemaFieldDraft = {
       name: this.fieldName,
       status: 'new',
@@ -201,9 +203,9 @@ class AddTypeFieldAction extends TypeAction {
       required: false,
     };
 
-    const fields = [...entityType.fields, field];
+    const fields = [...typeSpec.fields, field];
 
-    return { ...entityType, fields };
+    return { ...typeSpec, fields };
   }
 }
 
@@ -243,6 +245,22 @@ class ChangeFieldTypeAction extends FieldAction {
   }
 }
 
+class ChangeTypeAdminOnlyAction extends TypeAction {
+  adminOnly: boolean;
+
+  constructor(typeSelector: SchemaTypeSelector, adminOnly: boolean) {
+    super(typeSelector);
+    this.adminOnly = adminOnly;
+  }
+
+  reduceType(typeDraft: Readonly<SchemaEntityTypeDraft>): Readonly<SchemaEntityTypeDraft> {
+    if (typeDraft.adminOnly === this.adminOnly) {
+      return typeDraft;
+    }
+    return { ...typeDraft, adminOnly: this.adminOnly };
+  }
+}
+
 class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
   schema: AdminSchema;
   force: boolean;
@@ -274,6 +292,7 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
       kind,
       name: typeSpec.name,
       status: '',
+      adminOnly: !!typeSpec.adminOnly,
       fields: typeSpec.fields.map<SchemaFieldDraft>((fieldSpec) => ({
         name: fieldSpec.name,
         status: '',
@@ -290,6 +309,7 @@ export const SchemaEditorActions = {
   AddTypeField: AddTypeFieldAction,
   ChangeFieldRequired: ChangeFieldRequiredAction,
   ChangeFieldType: ChangeFieldTypeAction,
+  ChangeTypeAdminOnly: ChangeTypeAdminOnlyAction,
   UpdateSchemaSpecification: UpdateSchemaSpecificationAction,
 };
 
@@ -332,6 +352,7 @@ function getTypeUpdateFromEditorState(
 
   return {
     name: draftType.name,
+    adminOnly: draftType.adminOnly,
     fields,
   };
 }
