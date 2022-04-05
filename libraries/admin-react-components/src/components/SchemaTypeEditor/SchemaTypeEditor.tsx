@@ -1,16 +1,50 @@
-import type { FieldType } from '@jonasb/datadata-core';
-import { Button, Card, Field, SelectDisplay } from '@jonasb/datadata-design';
-import type { Dispatch } from 'react';
+import { FieldType } from '@jonasb/datadata-core';
+import { Button, Card, Field, Input, SelectDisplay } from '@jonasb/datadata-design';
+import type { ChangeEvent, Dispatch } from 'react';
 import React, { useCallback } from 'react';
-import type * as SchemaEditorReducer from '../../reducers/SchemaEditorReducer/SchemaEditorReducer';
+import type {
+  SchemaEditorStateAction,
+  SchemaEntityTypeDraft,
+  SchemaFieldDraft,
+  SchemaFieldSelector,
+  SchemaValueTypeDraft,
+} from '../../reducers/SchemaEditorReducer/SchemaEditorReducer';
 import { SchemaEditorActions } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer';
 
+interface FieldTypeItem {
+  value: string;
+  display: string;
+  type: FieldType;
+  list: boolean;
+}
+
+function fieldTypeValue(type: FieldType, list: boolean) {
+  return list ? `${type}List` : type;
+}
+
+const FIELD_TYPE_ITEMS: FieldTypeItem[] = [
+  FieldType.Boolean,
+  FieldType.EntityType,
+  FieldType.Location,
+  FieldType.RichText,
+  FieldType.String,
+  FieldType.ValueType,
+].flatMap((type) =>
+  [false, true].map((list) => ({
+    value: fieldTypeValue(type, list),
+    display: list ? `${type} list` : type,
+    type,
+    list,
+  }))
+);
+
 interface Props {
-  type: SchemaEditorReducer.SchemaEntityTypeDraft | SchemaEditorReducer.SchemaValueTypeDraft;
-  dispatchSchemaEditorState: Dispatch<SchemaEditorReducer.SchemaEditorStateAction>;
+  type: SchemaEntityTypeDraft | SchemaValueTypeDraft;
+  dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>;
 }
 
 export function SchemaTypeEditor({ type, dispatchSchemaEditorState }: Props) {
+  const typeSelector = { kind: type.kind, typeName: type.name };
   return (
     <>
       <Field>
@@ -23,7 +57,12 @@ export function SchemaTypeEditor({ type, dispatchSchemaEditorState }: Props) {
         </Field.Control>
       </Field>
       {type.fields.map((field) => (
-        <SchemaFieldEditor key={field.name} field={field} />
+        <SchemaFieldEditor
+          key={field.name}
+          fieldSelector={{ ...typeSelector, fieldName: field.name }}
+          field={field}
+          dispatchSchemaEditorState={dispatchSchemaEditorState}
+        />
       ))}
     </>
   );
@@ -36,7 +75,7 @@ function AddFieldButton({
 }: {
   kind: 'entity' | 'value';
   typeName: string;
-  dispatchSchemaEditorState: Dispatch<SchemaEditorReducer.SchemaEditorStateAction>;
+  dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>;
 }) {
   const handleClick = useCallback(() => {
     const fieldName = window.prompt('Field name?');
@@ -47,7 +86,16 @@ function AddFieldButton({
   return <Button onClick={handleClick}>Add field</Button>;
 }
 
-function SchemaFieldEditor({ field }: { field: SchemaEditorReducer.SchemaFieldDraft }) {
+function SchemaFieldEditor({
+  fieldSelector,
+  field,
+  dispatchSchemaEditorState,
+}: {
+  fieldSelector: SchemaFieldSelector;
+  field: SchemaFieldDraft;
+  dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>;
+}) {
+  const canChangeType = field.status === 'new';
   return (
     <Card>
       <Card.Header>{field.name}</Card.Header>
@@ -58,7 +106,16 @@ function SchemaFieldEditor({ field }: { field: SchemaEditorReducer.SchemaFieldDr
           </Field.LabelColumn>
           <Field.BodyColumn>
             <Field.Control>
-              <FieldTypeSelector type={field.type} list={field.list} />
+              {canChangeType ? (
+                <FieldTypeSelector
+                  fieldSelector={fieldSelector}
+                  type={field.type}
+                  list={field.list}
+                  dispatchSchemaEditorState={dispatchSchemaEditorState}
+                />
+              ) : (
+                <FieldTypeDisplay type={field.type} list={field.list} />
+              )}
             </Field.Control>
           </Field.BodyColumn>
         </Field>
@@ -66,22 +123,43 @@ function SchemaFieldEditor({ field }: { field: SchemaEditorReducer.SchemaFieldDr
     </Card>
   );
 }
-function FieldTypeSelector({ type, list }: { type: FieldType; list: boolean }) {
-  const value = list ? `${type}List` : type;
+
+function FieldTypeDisplay({ type, list }: { type: FieldType; list: boolean }) {
+  const value = fieldTypeValue(type, list);
+  const item = FIELD_TYPE_ITEMS.find((it) => it.value === value);
+  return <Input value={item?.display} readOnly />;
+}
+
+function FieldTypeSelector({
+  fieldSelector,
+  type,
+  list,
+  dispatchSchemaEditorState,
+}: {
+  fieldSelector: SchemaFieldSelector;
+  type: FieldType;
+  list: boolean;
+  dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>;
+}) {
+  const handleChange = useCallback(
+    (event: ChangeEvent<HTMLSelectElement>) => {
+      const item = FIELD_TYPE_ITEMS.find((it) => it.value === event.currentTarget.value);
+      if (item) {
+        dispatchSchemaEditorState(
+          new SchemaEditorActions.ChangeFieldType(fieldSelector, item.type, item.list)
+        );
+      }
+    },
+    [dispatchSchemaEditorState, fieldSelector]
+  );
+
   return (
-    <SelectDisplay value={value}>
-      <SelectDisplay.Option value="Boolean">Boolean</SelectDisplay.Option>
-      <SelectDisplay.Option value="BooleanList">Boolean list</SelectDisplay.Option>
-      <SelectDisplay.Option value="EntityType">EntityType</SelectDisplay.Option>
-      <SelectDisplay.Option value="EntityTypeList">EntityType list</SelectDisplay.Option>
-      <SelectDisplay.Option value="Location">Location</SelectDisplay.Option>
-      <SelectDisplay.Option value="LocationList">Location list</SelectDisplay.Option>
-      <SelectDisplay.Option value="RichText">RichText</SelectDisplay.Option>
-      <SelectDisplay.Option value="RichTextList">RichText list</SelectDisplay.Option>
-      <SelectDisplay.Option value="String">String</SelectDisplay.Option>
-      <SelectDisplay.Option value="StringList">String list</SelectDisplay.Option>
-      <SelectDisplay.Option value="ValueType">ValueType</SelectDisplay.Option>
-      <SelectDisplay.Option value="ValueTypeList">ValueType list</SelectDisplay.Option>
+    <SelectDisplay value={fieldTypeValue(type, list)} onChange={handleChange}>
+      {FIELD_TYPE_ITEMS.map(({ value, display }) => (
+        <SelectDisplay.Option key={value} value={value}>
+          {display}
+        </SelectDisplay.Option>
+      ))}
     </SelectDisplay>
   );
 }
