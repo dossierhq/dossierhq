@@ -48,6 +48,7 @@ describe('AddTypeAction', () => {
       Object {
         "entityTypes": Array [
           Object {
+            "adminOnly": false,
             "fields": Array [],
             "kind": "entity",
             "name": "Foo",
@@ -69,6 +70,7 @@ describe('AddTypeAction', () => {
       Object {
         "entityTypes": Array [
           Object {
+            "adminOnly": false,
             "fields": Array [],
             "name": "Foo",
           },
@@ -98,6 +100,7 @@ describe('AddTypeAction', () => {
         "status": "changed",
         "valueTypes": Array [
           Object {
+            "adminOnly": false,
             "fields": Array [],
             "kind": "value",
             "name": "Foo",
@@ -111,6 +114,7 @@ describe('AddTypeAction', () => {
       Object {
         "valueTypes": Array [
           Object {
+            "adminOnly": false,
             "fields": Array [],
             "name": "Foo",
           },
@@ -135,12 +139,14 @@ describe('AddTypeAction', () => {
       Object {
         "entityTypes": Array [
           Object {
+            "adminOnly": false,
             "fields": Array [],
             "kind": "entity",
             "name": "Bar",
             "status": "new",
           },
           Object {
+            "adminOnly": false,
             "fields": Array [],
             "kind": "entity",
             "name": "Foo",
@@ -168,6 +174,7 @@ describe('AddTypeAction', () => {
       Object {
         "entityTypes": Array [
           Object {
+            "adminOnly": false,
             "fields": Array [],
             "name": "Bar",
           },
@@ -206,12 +213,14 @@ describe('AddTypeAction', () => {
         "status": "changed",
         "valueTypes": Array [
           Object {
+            "adminOnly": false,
             "fields": Array [],
             "kind": "value",
             "name": "Bar",
             "status": "new",
           },
           Object {
+            "adminOnly": false,
             "fields": Array [],
             "kind": "value",
             "name": "Foo",
@@ -225,6 +234,7 @@ describe('AddTypeAction', () => {
       Object {
         "valueTypes": Array [
           Object {
+            "adminOnly": false,
             "fields": Array [],
             "name": "Bar",
           },
@@ -247,12 +257,14 @@ describe('AddTypeAction', () => {
       Object {
         "entityTypes": Array [
           Object {
+            "adminOnly": false,
             "fields": Array [],
             "kind": "entity",
             "name": "Anaconda",
             "status": "new",
           },
           Object {
+            "adminOnly": false,
             "fields": Array [],
             "kind": "entity",
             "name": "ZooKeeper",
@@ -274,10 +286,12 @@ describe('AddTypeAction', () => {
       Object {
         "entityTypes": Array [
           Object {
+            "adminOnly": false,
             "fields": Array [],
             "name": "Anaconda",
           },
           Object {
+            "adminOnly": false,
             "fields": Array [],
             "name": "ZooKeeper",
           },
@@ -308,12 +322,14 @@ describe('AddTypeAction', () => {
         "status": "changed",
         "valueTypes": Array [
           Object {
+            "adminOnly": false,
             "fields": Array [],
             "kind": "value",
             "name": "Anaconda",
             "status": "new",
           },
           Object {
+            "adminOnly": false,
             "fields": Array [],
             "kind": "value",
             "name": "ZooKeeper",
@@ -327,10 +343,12 @@ describe('AddTypeAction', () => {
       Object {
         "valueTypes": Array [
           Object {
+            "adminOnly": false,
             "fields": Array [],
             "name": "Anaconda",
           },
           Object {
+            "adminOnly": false,
             "fields": Array [],
             "name": "ZooKeeper",
           },
@@ -350,12 +368,13 @@ describe('AddTypeFieldAction', () => {
           valueTypes: [],
         })
       ),
-      new SchemaEditorActions.AddTypeField('entity', 'Foo', 'bar')
+      new SchemaEditorActions.AddTypeField({ kind: 'entity', typeName: 'Foo' }, 'bar')
     );
     expect(state).toMatchInlineSnapshot(`
       Object {
         "entityTypes": Array [
           Object {
+            "adminOnly": false,
             "fields": Array [
               Object {
                 "list": false,
@@ -391,6 +410,7 @@ describe('AddTypeFieldAction', () => {
       Object {
         "entityTypes": Array [
           Object {
+            "adminOnly": false,
             "fields": Array [
               Object {
                 "name": "bar",
@@ -414,7 +434,7 @@ describe('AddTypeFieldAction', () => {
           valueTypes: [{ name: 'Foo', adminOnly: false, fields: [] }],
         })
       ),
-      new SchemaEditorActions.AddTypeField('value', 'Foo', 'bar')
+      new SchemaEditorActions.AddTypeField({ kind: 'value', typeName: 'Foo' }, 'bar')
     );
     expect(state).toMatchInlineSnapshot(`
       Object {
@@ -434,6 +454,7 @@ describe('AddTypeFieldAction', () => {
         "status": "changed",
         "valueTypes": Array [
           Object {
+            "adminOnly": false,
             "fields": Array [
               Object {
                 "list": false,
@@ -455,6 +476,7 @@ describe('AddTypeFieldAction', () => {
       Object {
         "valueTypes": Array [
           Object {
+            "adminOnly": false,
             "fields": Array [
               Object {
                 "name": "bar",
@@ -480,13 +502,14 @@ describe('AddTypeFieldAction', () => {
           valueTypes: [],
         })
       ),
-      new SchemaEditorActions.AddTypeField('entity', 'Foo', 'bar')
+      new SchemaEditorActions.AddTypeField({ kind: 'entity', typeName: 'Foo' }, 'bar')
     );
 
     expect(state).toMatchInlineSnapshot(`
       Object {
         "entityTypes": Array [
           Object {
+            "adminOnly": false,
             "fields": Array [
               Object {
                 "list": false,
@@ -534,6 +557,7 @@ describe('AddTypeFieldAction', () => {
       Object {
         "entityTypes": Array [
           Object {
+            "adminOnly": false,
             "fields": Array [
               Object {
                 "name": "title",
@@ -564,7 +588,7 @@ describe('AddTypeFieldAction', () => {
           ],
         })
       ),
-      new SchemaEditorActions.AddTypeField('value', 'Foo', 'bar')
+      new SchemaEditorActions.AddTypeField({ kind: 'value', typeName: 'Foo' }, 'bar')
     );
 
     expect(state).toMatchInlineSnapshot(`
@@ -590,6 +614,7 @@ describe('AddTypeFieldAction', () => {
         "status": "changed",
         "valueTypes": Array [
           Object {
+            "adminOnly": false,
             "fields": Array [
               Object {
                 "list": false,
@@ -618,6 +643,7 @@ describe('AddTypeFieldAction', () => {
       Object {
         "valueTypes": Array [
           Object {
+            "adminOnly": false,
             "fields": Array [
               Object {
                 "name": "title",
@@ -648,7 +674,7 @@ describe('ChangeFieldRequiredAction', () => {
           valueTypes: [],
         })
       ),
-      new SchemaEditorActions.AddTypeField('entity', 'Foo', 'bar'),
+      new SchemaEditorActions.AddTypeField({ kind: 'entity', typeName: 'Foo' }, 'bar'),
       new SchemaEditorActions.ChangeFieldRequired(
         { kind: 'entity', typeName: 'Foo', fieldName: 'bar' },
         true
@@ -658,6 +684,7 @@ describe('ChangeFieldRequiredAction', () => {
       Object {
         "entityTypes": Array [
           Object {
+            "adminOnly": false,
             "fields": Array [
               Object {
                 "list": false,
@@ -693,6 +720,7 @@ describe('ChangeFieldRequiredAction', () => {
       Object {
         "entityTypes": Array [
           Object {
+            "adminOnly": false,
             "fields": Array [
               Object {
                 "name": "bar",
@@ -718,7 +746,7 @@ describe('ChangeFieldTypeAction', () => {
           valueTypes: [],
         })
       ),
-      new SchemaEditorActions.AddTypeField('entity', 'Foo', 'bar'),
+      new SchemaEditorActions.AddTypeField({ kind: 'entity', typeName: 'Foo' }, 'bar'),
       new SchemaEditorActions.ChangeFieldType(
         { kind: 'entity', typeName: 'Foo', fieldName: 'bar' },
         FieldType.Location,
@@ -729,6 +757,7 @@ describe('ChangeFieldTypeAction', () => {
       Object {
         "entityTypes": Array [
           Object {
+            "adminOnly": false,
             "fields": Array [
               Object {
                 "list": true,
@@ -764,6 +793,7 @@ describe('ChangeFieldTypeAction', () => {
       Object {
         "entityTypes": Array [
           Object {
+            "adminOnly": false,
             "fields": Array [
               Object {
                 "list": true,
@@ -788,7 +818,7 @@ describe('ChangeFieldTypeAction', () => {
           valueTypes: [{ name: 'Foo', adminOnly: false, fields: [] }],
         })
       ),
-      new SchemaEditorActions.AddTypeField('value', 'Foo', 'bar'),
+      new SchemaEditorActions.AddTypeField({ kind: 'value', typeName: 'Foo' }, 'bar'),
       new SchemaEditorActions.ChangeFieldType(
         { kind: 'value', typeName: 'Foo', fieldName: 'bar' },
         FieldType.Location,
@@ -813,6 +843,7 @@ describe('ChangeFieldTypeAction', () => {
         "status": "changed",
         "valueTypes": Array [
           Object {
+            "adminOnly": false,
             "fields": Array [
               Object {
                 "list": true,
@@ -834,6 +865,7 @@ describe('ChangeFieldTypeAction', () => {
       Object {
         "valueTypes": Array [
           Object {
+            "adminOnly": false,
             "fields": Array [
               Object {
                 "list": true,
@@ -842,6 +874,55 @@ describe('ChangeFieldTypeAction', () => {
                 "type": "Location",
               },
             ],
+            "name": "Foo",
+          },
+        ],
+      }
+    `);
+  });
+});
+
+describe('ChangeTypeAdminOnlyAction', () => {
+  test('make new entity type admin only', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        new AdminSchema({
+          entityTypes: [],
+          valueTypes: [],
+        })
+      ),
+      new SchemaEditorActions.AddType('entity', 'Foo'),
+      new SchemaEditorActions.ChangeTypeAdminOnly({ kind: 'entity', typeName: 'Foo' }, true)
+    );
+    expect(state).toMatchInlineSnapshot(`
+      Object {
+        "entityTypes": Array [
+          Object {
+            "adminOnly": true,
+            "fields": Array [],
+            "kind": "entity",
+            "name": "Foo",
+            "status": "new",
+          },
+        ],
+        "schema": AdminSchema {
+          "spec": Object {
+            "entityTypes": Array [],
+            "valueTypes": Array [],
+          },
+        },
+        "status": "changed",
+        "valueTypes": Array [],
+      }
+    `);
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`
+      Object {
+        "entityTypes": Array [
+          Object {
+            "adminOnly": true,
+            "fields": Array [],
             "name": "Foo",
           },
         ],
@@ -896,6 +977,7 @@ describe('UpdateSchemaSpecificationAction', () => {
       Object {
         "entityTypes": Array [
           Object {
+            "adminOnly": false,
             "fields": Array [
               Object {
                 "list": false,
@@ -975,6 +1057,7 @@ describe('UpdateSchemaSpecificationAction', () => {
         "status": "",
         "valueTypes": Array [
           Object {
+            "adminOnly": false,
             "fields": Array [
               Object {
                 "list": false,
@@ -1020,6 +1103,7 @@ describe('SchemaEditorReducer scenarios', () => {
       Object {
         "entityTypes": Array [
           Object {
+            "adminOnly": false,
             "fields": Array [],
             "kind": "entity",
             "name": "NewType",

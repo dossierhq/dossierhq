@@ -7,6 +7,7 @@ import type {
   SchemaEntityTypeDraft,
   SchemaFieldDraft,
   SchemaFieldSelector,
+  SchemaTypeSelector,
   SchemaValueTypeDraft,
 } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer';
 import { SchemaEditorActions } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer';
@@ -39,24 +40,39 @@ const FIELD_TYPE_ITEMS: FieldTypeItem[] = [
 );
 
 interface Props {
-  type: SchemaEntityTypeDraft | SchemaValueTypeDraft;
+  typeDraft: SchemaEntityTypeDraft | SchemaValueTypeDraft;
   dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>;
 }
 
-export function SchemaTypeEditor({ type, dispatchSchemaEditorState }: Props) {
-  const typeSelector = { kind: type.kind, typeName: type.name };
+export function SchemaTypeEditor({ typeDraft, dispatchSchemaEditorState }: Props) {
+  const typeSelector = { kind: typeDraft.kind, typeName: typeDraft.name };
+  const canChangeAdminOnly = typeDraft.status === 'new'; //TODO too restrictive
   return (
     <>
       <Field>
         <Field.Control>
           <AddFieldButton
-            kind={type.kind}
-            typeName={type.name}
+            typeSelector={typeSelector}
             dispatchSchemaEditorState={dispatchSchemaEditorState}
           />
         </Field.Control>
       </Field>
-      {type.fields.map((fieldDraft) => (
+      <Field>
+        <Field.Control>
+          <Checkbox
+            checked={typeDraft.adminOnly}
+            disabled={!canChangeAdminOnly}
+            onChange={(event) =>
+              dispatchSchemaEditorState(
+                new SchemaEditorActions.ChangeTypeAdminOnly(typeSelector, event.target.checked)
+              )
+            }
+          >
+            Admin only
+          </Checkbox>
+        </Field.Control>
+      </Field>
+      {typeDraft.fields.map((fieldDraft) => (
         <SchemaFieldEditor
           key={fieldDraft.name}
           fieldSelector={{ ...typeSelector, fieldName: fieldDraft.name }}
@@ -69,20 +85,23 @@ export function SchemaTypeEditor({ type, dispatchSchemaEditorState }: Props) {
 }
 
 function AddFieldButton({
-  kind,
-  typeName,
+  typeSelector,
   dispatchSchemaEditorState,
 }: {
-  kind: 'entity' | 'value';
-  typeName: string;
+  typeSelector: SchemaTypeSelector;
   dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>;
 }) {
   const handleClick = useCallback(() => {
     const fieldName = window.prompt('Field name?');
     if (fieldName) {
-      dispatchSchemaEditorState(new SchemaEditorActions.AddTypeField(kind, typeName, fieldName));
+      dispatchSchemaEditorState(
+        new SchemaEditorActions.AddTypeField(
+          { kind: typeSelector.kind, typeName: typeSelector.typeName },
+          fieldName
+        )
+      );
     }
-  }, [dispatchSchemaEditorState, kind, typeName]);
+  }, [dispatchSchemaEditorState, typeSelector.kind, typeSelector.typeName]);
   return <Button onClick={handleClick}>Add field</Button>;
 }
 

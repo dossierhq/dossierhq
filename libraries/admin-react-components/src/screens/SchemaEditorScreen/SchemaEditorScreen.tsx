@@ -230,7 +230,7 @@ function TypeEditorRows({
         <Text textStyle="headline4">{type.name}</Text>
       </FullscreenContainer.Row>
       <FullscreenContainer.Row gap={2} paddingVertical={3}>
-        <SchemaTypeEditor type={type} dispatchSchemaEditorState={dispatchSchemaEditorState} />
+        <SchemaTypeEditor typeDraft={type} dispatchSchemaEditorState={dispatchSchemaEditorState} />
       </FullscreenContainer.Row>
     </>
   );
