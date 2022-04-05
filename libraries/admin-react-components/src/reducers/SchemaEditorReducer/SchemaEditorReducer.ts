@@ -6,6 +6,15 @@ import type {
 } from '@jonasb/datadata-core';
 import { FieldType } from '@jonasb/datadata-core';
 
+export interface SchemaTypeSelector {
+  kind: 'entity' | 'value';
+  typeName: string;
+}
+
+export interface SchemaFieldSelector extends SchemaTypeSelector {
+  fieldName: string;
+}
+
 export interface SchemaTypeDraft {
   name: string;
   status: 'new' | '' | 'changed';
@@ -113,6 +122,36 @@ abstract class TypeAction implements SchemaEditorStateAction {
   ): Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft>;
 }
 
+abstract class FieldAction extends TypeAction {
+  fieldName: string;
+
+  constructor({ kind, typeName, fieldName }: SchemaFieldSelector) {
+    super(kind, typeName);
+    this.fieldName = fieldName;
+  }
+
+  reduceType(
+    typeDraft: Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft>
+  ): Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft> {
+    const fieldIndex = typeDraft.fields.findIndex((it) => it.name === this.fieldName);
+    if (fieldIndex < 0) throw new Error(`No such field ${this.fieldName} in type ${this.typeName}`);
+    const currentFieldDraft = typeDraft.fields[fieldIndex];
+
+    const newFieldDraft = this.reduceField(currentFieldDraft);
+    if (newFieldDraft === currentFieldDraft) {
+      return typeDraft;
+    }
+
+    const newFields = [...typeDraft.fields];
+    newFields[fieldIndex] = newFieldDraft;
+
+    const newTypeDraft = { ...typeDraft, fields: newFields };
+    return newTypeDraft;
+  }
+
+  abstract reduceField(fieldDraft: Readonly<SchemaFieldDraft>): Readonly<SchemaFieldDraft>;
+}
+
 // ACTIONS
 
 class AddTypeAction implements SchemaEditorStateAction {
@@ -165,6 +204,25 @@ class AddTypeFieldAction extends TypeAction {
   }
 }
 
+class ChangeFieldTypeAction extends FieldAction {
+  fieldType: FieldType;
+  list: boolean;
+
+  constructor(fieldSelector: SchemaFieldSelector, fieldType: FieldType, list: boolean) {
+    super(fieldSelector);
+    this.fieldType = fieldType;
+    this.list = list;
+  }
+
+  reduceField(fieldDraft: Readonly<SchemaFieldDraft>): Readonly<SchemaFieldDraft> {
+    if (fieldDraft.type === this.fieldType && fieldDraft.list === this.list) {
+      return fieldDraft;
+    }
+
+    return { ...fieldDraft, type: this.fieldType, list: this.list };
+  }
+}
+
 class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
   schema: AdminSchema;
   force: boolean;
@@ -208,6 +266,7 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
 export const SchemaEditorActions = {
   AddType: AddTypeAction,
   AddTypeField: AddTypeFieldAction,
+  ChangeFieldType: ChangeFieldTypeAction,
   UpdateSchemaSpecification: UpdateSchemaSpecificationAction,
 };
 

@@ -626,6 +626,144 @@ describe('AddTypeFieldAction', () => {
   });
 });
 
+describe('ChangeFieldTypeAction', () => {
+  test('from string to location list of new field to existing entity type', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        new AdminSchema({
+          entityTypes: [{ name: 'Foo', adminOnly: false, fields: [] }],
+          valueTypes: [],
+        })
+      ),
+      new SchemaEditorActions.AddTypeField('entity', 'Foo', 'bar'),
+      new SchemaEditorActions.ChangeFieldType(
+        { kind: 'entity', typeName: 'Foo', fieldName: 'bar' },
+        FieldType.Location,
+        true
+      )
+    );
+    expect(state).toMatchInlineSnapshot(`
+      Object {
+        "entityTypes": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "list": true,
+                "name": "bar",
+                "status": "new",
+                "type": "Location",
+              },
+            ],
+            "kind": "entity",
+            "name": "Foo",
+            "status": "changed",
+          },
+        ],
+        "schema": AdminSchema {
+          "spec": Object {
+            "entityTypes": Array [
+              Object {
+                "adminOnly": false,
+                "fields": Array [],
+                "name": "Foo",
+              },
+            ],
+            "valueTypes": Array [],
+          },
+        },
+        "status": "changed",
+        "valueTypes": Array [],
+      }
+    `);
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`
+      Object {
+        "entityTypes": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "list": true,
+                "name": "bar",
+                "type": "Location",
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+      }
+    `);
+  });
+
+  test('from string to location list of new field to existing value type', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        new AdminSchema({
+          entityTypes: [],
+          valueTypes: [{ name: 'Foo', adminOnly: false, fields: [] }],
+        })
+      ),
+      new SchemaEditorActions.AddTypeField('value', 'Foo', 'bar'),
+      new SchemaEditorActions.ChangeFieldType(
+        { kind: 'value', typeName: 'Foo', fieldName: 'bar' },
+        FieldType.Location,
+        true
+      )
+    );
+    expect(state).toMatchInlineSnapshot(`
+      Object {
+        "entityTypes": Array [],
+        "schema": AdminSchema {
+          "spec": Object {
+            "entityTypes": Array [],
+            "valueTypes": Array [
+              Object {
+                "adminOnly": false,
+                "fields": Array [],
+                "name": "Foo",
+              },
+            ],
+          },
+        },
+        "status": "changed",
+        "valueTypes": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "list": true,
+                "name": "bar",
+                "status": "new",
+                "type": "Location",
+              },
+            ],
+            "kind": "value",
+            "name": "Foo",
+            "status": "changed",
+          },
+        ],
+      }
+    `);
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`
+      Object {
+        "valueTypes": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "list": true,
+                "name": "bar",
+                "type": "Location",
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+      }
+    `);
+  });
+});
+
 describe('UpdateSchemaSpecificationAction', () => {
   test('add empty schema', () => {
     const state = reduceSchemaEditorState(
