@@ -1,5 +1,5 @@
 import { FieldType } from '@jonasb/datadata-core';
-import { Button, Card, Field, Input, SelectDisplay } from '@jonasb/datadata-design';
+import { Button, Card, Checkbox, Field, Input, SelectDisplay } from '@jonasb/datadata-design';
 import type { ChangeEvent, Dispatch } from 'react';
 import React, { useCallback } from 'react';
 import type {
@@ -56,11 +56,11 @@ export function SchemaTypeEditor({ type, dispatchSchemaEditorState }: Props) {
           />
         </Field.Control>
       </Field>
-      {type.fields.map((field) => (
+      {type.fields.map((fieldDraft) => (
         <SchemaFieldEditor
-          key={field.name}
-          fieldSelector={{ ...typeSelector, fieldName: field.name }}
-          field={field}
+          key={fieldDraft.name}
+          fieldSelector={{ ...typeSelector, fieldName: fieldDraft.name }}
+          fieldDraft={fieldDraft}
           dispatchSchemaEditorState={dispatchSchemaEditorState}
         />
       ))}
@@ -88,18 +88,35 @@ function AddFieldButton({
 
 function SchemaFieldEditor({
   fieldSelector,
-  field,
+  fieldDraft,
   dispatchSchemaEditorState,
 }: {
   fieldSelector: SchemaFieldSelector;
-  field: SchemaFieldDraft;
+  fieldDraft: SchemaFieldDraft;
   dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>;
 }) {
-  const canChangeType = field.status === 'new';
+  const canChangeRequired = fieldDraft.status === 'new'; //TODO too restrictive
+  const canChangeType = fieldDraft.status === 'new';
   return (
     <Card>
-      <Card.Header>{field.name}</Card.Header>
+      <Card.Header>{fieldDraft.name}</Card.Header>
       <Card.Content>
+        <Field horizontal>
+          <Field.LabelColumn />
+          <Field.BodyColumn>
+            <Checkbox
+              checked={fieldDraft.required}
+              disabled={!canChangeRequired}
+              onChange={(event) =>
+                dispatchSchemaEditorState(
+                  new SchemaEditorActions.ChangeFieldRequired(fieldSelector, event.target.checked)
+                )
+              }
+            >
+              Required
+            </Checkbox>
+          </Field.BodyColumn>
+        </Field>
         <Field horizontal>
           <Field.LabelColumn>
             <Field.Label>Type</Field.Label>
@@ -109,12 +126,12 @@ function SchemaFieldEditor({
               {canChangeType ? (
                 <FieldTypeSelector
                   fieldSelector={fieldSelector}
-                  type={field.type}
-                  list={field.list}
+                  type={fieldDraft.type}
+                  list={fieldDraft.list}
                   dispatchSchemaEditorState={dispatchSchemaEditorState}
                 />
               ) : (
-                <FieldTypeDisplay type={field.type} list={field.list} />
+                <FieldTypeDisplay type={fieldDraft.type} list={fieldDraft.list} />
               )}
             </Field.Control>
           </Field.BodyColumn>
