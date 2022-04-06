@@ -9,6 +9,10 @@ interface CardHeaderProps {
   children?: ReactNode;
 }
 
+interface CardHeaderTitleProps {
+  children?: ReactNode;
+}
+
 interface CardContentProps {
   children?: ReactNode;
 }
@@ -28,6 +32,7 @@ interface CardFooterButtonProps {
 
 interface CardComponent extends FunctionComponent<CardProps> {
   Header: FunctionComponent<CardHeaderProps>;
+  HeaderTitle: FunctionComponent<CardHeaderProps>;
   Content: FunctionComponent<CardContentProps>;
   Footer: FunctionComponent<CardFooterProps>;
   FooterButton: FunctionComponent<CardFooterButtonProps>;
@@ -40,13 +45,14 @@ export const Card: CardComponent = ({ children }: CardProps) => {
 Card.displayName = 'Card';
 
 Card.Header = ({ children }: CardHeaderProps) => {
-  return (
-    <header className="card-header">
-      <p className="card-header-title">{children}</p>
-    </header>
-  );
+  return <header className="card-header">{children}</header>;
 };
 Card.Header.displayName = 'Card.Header';
+
+Card.HeaderTitle = ({ children }: CardHeaderProps) => {
+  return <p className="card-header-title">{children}</p>;
+};
+Card.HeaderTitle.displayName = 'Card.HeaderTitle';
 
 Card.Content = ({ children }: CardContentProps) => {
   return (

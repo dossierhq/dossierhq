@@ -62,7 +62,9 @@ export const Normal = Template.bind({});
 Normal.args = {
   children: (
     <Card>
-      <Card.Header>Card title</Card.Header>
+      <Card.Header>
+        <Card.HeaderTitle>Card title</Card.HeaderTitle>
+      </Card.Header>
       <Card.Content>Lorem ipsum</Card.Content>
       <Card.Footer>
         <Card.FooterButton value="cancel">Cancel</Card.FooterButton>

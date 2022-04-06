@@ -19,7 +19,9 @@ export const Normal = Template.bind({});
 Normal.args = {
   children: (
     <>
-      <Card.Header>Header</Card.Header>
+      <Card.Header>
+        <Card.HeaderTitle>Header</Card.HeaderTitle>
+      </Card.Header>
       <Card.Content>Content</Card.Content>
       <Card.Footer>
         <Card.FooterItem>First</Card.FooterItem>
@@ -35,7 +37,9 @@ export const TwoParagraphsInContent = Template.bind({});
 TwoParagraphsInContent.args = {
   children: (
     <>
-      <Card.Header>Header</Card.Header>
+      <Card.Header>
+        <Card.HeaderTitle>Header</Card.HeaderTitle>
+      </Card.Header>
       <Card.Content>
         <Text textStyle="body1">First paragraph</Text>
         <Text textStyle="body2">Second paragraph</Text>
@@ -54,7 +58,9 @@ export const FooterButtons = Template.bind({});
 FooterButtons.args = {
   children: (
     <>
-      <Card.Header>Header</Card.Header>
+      <Card.Header>
+        <Card.HeaderTitle>Header</Card.HeaderTitle>
+      </Card.Header>
       <Card.Content>Content</Card.Content>
       <Card.Footer>
         <Card.FooterButton>First</Card.FooterButton>
