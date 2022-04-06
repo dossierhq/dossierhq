@@ -89,14 +89,14 @@ export function SchemaEditorScreen({ header, footer }: SchemaEditorScreenProps) 
             {schemaEditorState.entityTypes.map((entityType) => (
               <TypeEditorRows
                 key={entityType.name}
-                type={entityType}
+                typeDraft={entityType}
                 dispatchSchemaEditorState={dispatchSchemaEditorState}
               />
             ))}
             {schemaEditorState.valueTypes.map((valueType) => (
               <TypeEditorRows
                 key={valueType.name}
-                type={valueType}
+                typeDraft={valueType}
                 dispatchSchemaEditorState={dispatchSchemaEditorState}
               />
             ))}
@@ -218,19 +218,27 @@ function AddTypeButton({
 }
 
 function TypeEditorRows({
-  type,
+  typeDraft,
   dispatchSchemaEditorState,
 }: {
-  type: SchemaEntityTypeDraft | SchemaValueTypeDraft;
+  typeDraft: SchemaEntityTypeDraft | SchemaValueTypeDraft;
   dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>;
 }) {
   return (
     <>
       <FullscreenContainer.Row sticky>
-        <Text textStyle="headline4">{type.name}</Text>
+        <Text textStyle="headline4">
+          {typeDraft.name}{' '}
+          <Text as="span" textStyle="headline6">
+            {typeDraft.kind === 'entity' ? 'Entity type' : 'Value type'}
+          </Text>
+        </Text>
       </FullscreenContainer.Row>
       <FullscreenContainer.Row gap={2} paddingVertical={3}>
-        <SchemaTypeEditor typeDraft={type} dispatchSchemaEditorState={dispatchSchemaEditorState} />
+        <SchemaTypeEditor
+          typeDraft={typeDraft}
+          dispatchSchemaEditorState={dispatchSchemaEditorState}
+        />
       </FullscreenContainer.Row>
     </>
   );
