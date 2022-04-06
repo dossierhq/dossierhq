@@ -6,7 +6,9 @@ import {
   Dialog,
   EmptyStateMessage,
   FullscreenContainer,
+  Level,
   NotificationContext,
+  Tag,
   Text,
   TextArea,
 } from '@jonasb/datadata-design';
@@ -227,12 +229,25 @@ function TypeEditorRows({
   return (
     <>
       <FullscreenContainer.Row sticky>
-        <Text textStyle="headline4">
-          {typeDraft.name}{' '}
-          <Text as="span" textStyle="headline6">
-            {typeDraft.kind === 'entity' ? 'Entity type' : 'Value type'}
-          </Text>
-        </Text>
+        <Level>
+          <Level.Left>
+            <Level.Item>
+              <Text textStyle="headline4">
+                {typeDraft.name}{' '}
+                <Text as="span" textStyle="headline6">
+                  {typeDraft.kind === 'entity' ? 'Entity type' : 'Value type'}
+                </Text>
+              </Text>
+            </Level.Item>
+          </Level.Left>
+          {typeDraft.status !== '' ? (
+            <Level.Right>
+              <Level.Item>
+                <TypeDraftStatusTag status={typeDraft.status} />
+              </Level.Item>
+            </Level.Right>
+          ) : null}
+        </Level>
       </FullscreenContainer.Row>
       <FullscreenContainer.Row gap={2} paddingVertical={3}>
         <SchemaTypeEditor
@@ -242,4 +257,14 @@ function TypeEditorRows({
       </FullscreenContainer.Row>
     </>
   );
+}
+
+function TypeDraftStatusTag({ status }: { status: 'new' | 'changed' }) {
+  const { color, text } = (
+    {
+      new: { color: 'draft', text: 'New' },
+      changed: { color: 'modified', text: 'Changed' },
+    } as const
+  )[status];
+  return <Tag color={color}>{text}</Tag>;
 }
