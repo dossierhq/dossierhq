@@ -180,7 +180,9 @@ function SaveSchemaDialogContent({
 }) {
   return (
     <Card>
-      <Card.Header>Save schema</Card.Header>
+      <Card.Header>
+        <Card.HeaderTitle>Save schema</Card.HeaderTitle>
+      </Card.Header>
       <Card.Content>
         <Text textStyle="body1">Do you want to save the following changes?</Text>
         <TextArea fixedSize textStyle="code2" readOnly style={{ minHeight: '300px' }}>

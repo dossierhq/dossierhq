@@ -118,7 +118,9 @@ function SchemaFieldEditor({
   const canChangeType = fieldDraft.status === 'new';
   return (
     <Card>
-      <Card.Header>{fieldDraft.name}</Card.Header>
+      <Card.Header>
+        <Card.HeaderTitle>{fieldDraft.name}</Card.HeaderTitle>
+      </Card.Header>
       <Card.Content>
         <Field horizontal>
           <Field.LabelColumn />
