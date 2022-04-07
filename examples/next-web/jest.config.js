@@ -1,5 +1,7 @@
-module.exports = {
-  displayName: 'next-web',
-  preset: 'ts-jest',
-  testEnvironment: 'node',
-};
+const nextJest = require('next/jest');
+
+const createJestConfig = nextJest({ dir: './' });
+
+const customJestConfig = {};
+
+module.exports = createJestConfig(customJestConfig);
