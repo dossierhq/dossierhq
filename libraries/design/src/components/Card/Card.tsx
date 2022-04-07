@@ -32,7 +32,7 @@ interface CardFooterButtonProps {
 
 interface CardComponent extends FunctionComponent<CardProps> {
   Header: FunctionComponent<CardHeaderProps>;
-  HeaderTitle: FunctionComponent<CardHeaderProps>;
+  HeaderTitle: FunctionComponent<CardHeaderTitleProps>;
   Content: FunctionComponent<CardContentProps>;
   Footer: FunctionComponent<CardFooterProps>;
   FooterButton: FunctionComponent<CardFooterButtonProps>;
