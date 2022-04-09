@@ -1,5 +1,12 @@
 import type { FunctionComponent, ReactNode } from 'react';
+import { useRef } from 'react';
+import { useCallback } from 'react';
+import { useState } from 'react';
 import React from 'react';
+import type { DropdownItem } from '../Dropdown/Dropdown';
+import { DropdownDisplay } from '../DropdownDisplay/DropdownDisplay';
+import { Icon } from '../Icon/Icon';
+import { useWindowClick } from '../../hooks/useWindowClick';
 
 export interface CardProps {
   children: ReactNode;
@@ -11,6 +18,12 @@ interface CardHeaderProps {
 
 interface CardHeaderTitleProps {
   children?: ReactNode;
+}
+
+interface CardHeaderDropDownProps<TItem extends DropdownItem> {
+  items: TItem[];
+  renderItem: (item: TItem) => React.ReactNode;
+  onItemClick?: (item: TItem) => void;
 }
 
 interface CardContentProps {
@@ -33,6 +46,10 @@ interface CardFooterButtonProps {
 interface CardComponent extends FunctionComponent<CardProps> {
   Header: FunctionComponent<CardHeaderProps>;
   HeaderTitle: FunctionComponent<CardHeaderTitleProps>;
+  HeaderDropDown: <TItem extends DropdownItem>(
+    props: CardHeaderDropDownProps<TItem>,
+    context?: unknown
+  ) => JSX.Element;
   Content: FunctionComponent<CardContentProps>;
   Footer: FunctionComponent<CardFooterProps>;
   FooterButton: FunctionComponent<CardFooterButtonProps>;
@@ -49,10 +66,47 @@ Card.Header = ({ children }: CardHeaderProps) => {
 };
 Card.Header.displayName = 'Card.Header';
 
-Card.HeaderTitle = ({ children }: CardHeaderProps) => {
+Card.HeaderTitle = ({ children }: CardHeaderTitleProps) => {
   return <p className="card-header-title">{children}</p>;
 };
 Card.HeaderTitle.displayName = 'Card.HeaderTitle';
+
+// eslint-disable-next-line react/display-name
+Card.HeaderDropDown = <TItem extends DropdownItem>({
+  items,
+  renderItem,
+  onItemClick,
+}: CardHeaderDropDownProps<TItem>) => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const [active, setActive] = useState(false);
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const handleClose = useCallback(() => setActive(false), [setActive]);
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  useWindowClick(triggerRef, handleClose, active);
+  const trigger = (
+    <button
+      ref={triggerRef}
+      className="card-header-icon"
+      onMouseDown={(event) => {
+        event.preventDefault();
+        setActive((it) => !it);
+      }}
+    >
+      <Icon icon={'chevronDown'} />
+    </button>
+  );
+  return (
+    <DropdownDisplay active={active} trigger={trigger} left>
+      {items.map((item) => (
+        <DropdownDisplay.Item key={item.id} onClick={() => onItemClick?.(item)}>
+          {renderItem(item)}
+        </DropdownDisplay.Item>
+      ))}
+    </DropdownDisplay>
+  );
+};
 
 Card.Content = ({ children }: CardContentProps) => {
   return (
