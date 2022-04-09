@@ -1,7 +1,5 @@
-import {
-  EntityListScreen,
-  EntitySearchStateUrlQuery,
-} from '@jonasb/datadata-admin-react-components';
+import type { EntitySearchStateUrlQuery } from '@jonasb/datadata-admin-react-components';
+import { EntityListScreen } from '@jonasb/datadata-admin-react-components';
 import type { AdminEntity } from '@jonasb/datadata-core';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -21,7 +19,8 @@ export default function EntitiesListPage(): JSX.Element | null {
     [router]
   );
   const handleUrlQueryChanged = useCallback(
-    (urlQuery) => {
+    (urlQuery: EntitySearchStateUrlQuery) => {
+      // @ts-ignore TODO fix type of url query
       router.replace({ pathname: router.pathname, query: urlQuery });
     },
     [router]

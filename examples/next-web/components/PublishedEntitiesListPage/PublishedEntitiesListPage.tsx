@@ -1,3 +1,4 @@
+import type { EntitySearchStateUrlQuery } from '@jonasb/datadata-admin-react-components';
 import { published } from '@jonasb/datadata-admin-react-components';
 import type { PublishedEntity } from '@jonasb/datadata-core';
 import Head from 'next/head';
@@ -16,7 +17,8 @@ export default function PublishedEntitiesListPage(): JSX.Element | null {
     [router]
   );
   const handleUrlQueryChanged = useCallback(
-    (urlQuery) => {
+    (urlQuery: EntitySearchStateUrlQuery) => {
+      //@ts-ignore TODO fix type of url query
       router.replace({ pathname: router.pathname, query: urlQuery });
     },
     [router]

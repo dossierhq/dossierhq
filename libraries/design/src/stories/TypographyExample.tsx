@@ -11,7 +11,7 @@ export default function TypographyExample({ textStyle, loremIpsum }: Props): JSX
   const [fontStyles, setFontStyles] = useState<Record<string, string>>({});
 
   const onRefChanged = useCallback(
-    (ref) => {
+    (ref: HTMLSpanElement) => {
       if (ref) {
         const { fontFamily, fontWeight, fontSize, lineHeight } = getComputedStyle(ref);
         setFontStyles({

@@ -1,4 +1,4 @@
-import type { EntityReference } from '@jonasb/datadata-core';
+import type { AdminEntity, EntityReference } from '@jonasb/datadata-core';
 import React, { useCallback, useContext, useState } from 'react';
 import type { EntityFieldEditorProps } from '../..';
 import {
@@ -27,7 +27,7 @@ export function EntityItemFieldEditor({
   const handleShow = useCallback(() => setShow(true), [setShow]);
   const handleClose = useCallback(() => setShow(false), [setShow]);
   const handleEntityClick = useCallback(
-    (entity) => {
+    (entity: AdminEntity) => {
       if (onChange) {
         onChange({ id: entity.id });
       }

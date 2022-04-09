@@ -9,7 +9,7 @@ export default function TypographyExample({ className, loremIpsum }: Props): JSX
   const [fontStyles, setFontStyles] = useState<Record<string, string>>({});
 
   const onRefChanged = useCallback(
-    (ref) => {
+    (ref: HTMLParagraphElement) => {
       if (ref) {
         const { fontFamily, fontWeight, fontSize, lineHeight } = getComputedStyle(ref);
         setFontStyles({
