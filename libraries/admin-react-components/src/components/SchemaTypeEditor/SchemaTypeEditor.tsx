@@ -95,7 +95,7 @@ function AddFieldButton({
     const fieldName = window.prompt('Field name?');
     if (fieldName) {
       dispatchSchemaEditorState(
-        new SchemaEditorActions.AddTypeField(
+        new SchemaEditorActions.AddField(
           { kind: typeSelector.kind, typeName: typeSelector.typeName },
           fieldName
         )
@@ -116,10 +116,32 @@ function SchemaFieldEditor({
 }) {
   const canChangeRequired = fieldDraft.status === 'new'; //TODO too restrictive
   const canChangeType = fieldDraft.status === 'new';
+  const canDeleteOrRenameField = fieldDraft.status === 'new'; //TODO too restrictive
+
+  const handleDropDownItemClick = useCallback(
+    ({ id }: { id: string }) => {
+      switch (id) {
+        case 'delete': {
+          dispatchSchemaEditorState(new SchemaEditorActions.DeleteField(fieldSelector));
+          break;
+        }
+      }
+    },
+    [dispatchSchemaEditorState, fieldSelector]
+  );
+
+  const dropDownItems = canDeleteOrRenameField ? [{ id: 'delete', title: 'Delete field' }] : [];
   return (
     <Card>
       <Card.Header>
         <Card.HeaderTitle>{fieldDraft.name}</Card.HeaderTitle>
+        {dropDownItems.length > 0 ? (
+          <Card.HeaderDropDown
+            items={dropDownItems}
+            renderItem={(item) => item.title}
+            onItemClick={handleDropDownItemClick}
+          />
+        ) : null}
       </Card.Header>
       <Card.Content>
         <Field horizontal>
