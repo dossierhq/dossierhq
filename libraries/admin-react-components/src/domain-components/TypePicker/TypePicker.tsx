@@ -3,7 +3,7 @@ import type {
   AdminValueTypeSpecification,
 } from '@jonasb/datadata-core';
 import type { IconName } from '@jonasb/datadata-design';
-import { Dropdown } from '@jonasb/datadata-design';
+import { ButtonDropdown } from '@jonasb/datadata-design';
 import React, { useContext } from 'react';
 import { DataDataContext } from '../..';
 
@@ -42,14 +42,14 @@ export function TypePicker({
   }
 
   return (
-    <Dropdown
+    <ButtonDropdown
       iconLeft={iconLeft}
       items={items}
       renderItem={(item) => item.name}
       onItemClick={(item) => onTypeSelected(item.id)}
     >
       {text}
-    </Dropdown>
+    </ButtonDropdown>
   );
 }
 

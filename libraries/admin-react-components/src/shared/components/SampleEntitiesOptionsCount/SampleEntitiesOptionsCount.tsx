@@ -1,4 +1,4 @@
-import { Dropdown } from '@jonasb/datadata-design';
+import { ButtonDropdown } from '@jonasb/datadata-design';
 import type { Dispatch } from 'react';
 import React, { useCallback } from 'react';
 import type { SearchEntityState, SearchEntityStateAction } from '../..';
@@ -39,7 +39,7 @@ export function SampleEntitiesOptionsCount({
       : requestedCount;
 
   return (
-    <Dropdown
+    <ButtonDropdown
       up
       sneaky
       activeItemId={String(requestedCount)}
@@ -48,6 +48,6 @@ export function SampleEntitiesOptionsCount({
       onItemClick={handleCountChange}
     >
       {currentPage}
-    </Dropdown>
+    </ButtonDropdown>
   );
 }

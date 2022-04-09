@@ -3,7 +3,7 @@ import type {
   AdminValueTypeSpecification,
 } from '@jonasb/datadata-core';
 import type { IconName } from '@jonasb/datadata-design';
-import { Dropdown } from '@jonasb/datadata-design';
+import { ButtonDropdown } from '@jonasb/datadata-design';
 import React, { useContext } from 'react';
 import { DataDataContext2 } from '../..';
 
@@ -44,7 +44,7 @@ export function TypePicker2({
   }
 
   return (
-    <Dropdown
+    <ButtonDropdown
       iconLeft={iconLeft}
       items={items}
       renderItem={(item) => item.name}
@@ -52,7 +52,7 @@ export function TypePicker2({
       onItemClick={onTypeSelected ? (item) => onTypeSelected(item.id) : undefined}
     >
       {children}
-    </Dropdown>
+    </ButtonDropdown>
   );
 }
 

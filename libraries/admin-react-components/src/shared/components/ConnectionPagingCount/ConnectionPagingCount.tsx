@@ -1,6 +1,6 @@
 import type { Connection, Edge, ErrorType, Paging } from '@jonasb/datadata-core';
 import { getPagingInfo } from '@jonasb/datadata-core';
-import { Dropdown } from '@jonasb/datadata-design';
+import { ButtonDropdown } from '@jonasb/datadata-design';
 import React from 'react';
 
 interface Props {
@@ -30,7 +30,7 @@ export function ConnectionPagingCount({
   ];
 
   return (
-    <Dropdown
+    <ButtonDropdown
       up
       sneaky
       activeItemId={String(pagingCount)}
@@ -48,6 +48,6 @@ export function ConnectionPagingCount({
       }}
     >
       {currentPage}
-    </Dropdown>
+    </ButtonDropdown>
   );
 }

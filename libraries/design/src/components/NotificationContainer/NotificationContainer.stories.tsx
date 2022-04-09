@@ -3,7 +3,7 @@ import React, { useContext, useRef } from 'react';
 import { NotificationContext } from '../../contexts/NotificationContext.js';
 import { Button } from '../Button/Button.js';
 import { Column } from '../Column/Column.js';
-import { Dropdown } from '../Dropdown/Dropdown.js';
+import { ButtonDropdown } from '../ButtonDropdown/ButtonDropdown.js';
 import { Scrollable } from '../Scrollable/Scrollable.js';
 import type { NotificationContainerProps } from './NotificationContainer.js';
 import { NotificationContainer } from './NotificationContainer.js';
@@ -42,9 +42,9 @@ Normal.args = {
           >
             z-index 100
           </div>
-          <Dropdown up items={[{ id: 'one', text: 'One' }]} renderItem={(item) => item.text}>
+          <ButtonDropdown up items={[{ id: 'one', text: 'One' }]} renderItem={(item) => item.text}>
             Dropdown
-          </Dropdown>
+          </ButtonDropdown>
         </Scrollable>
       </Column.Item>
     </Column>

@@ -1,68 +1,47 @@
+import type { ReactNode, Ref } from 'react';
 import React, { useCallback, useRef, useState } from 'react';
 import { useKeyHandler } from '../../hooks/useKeyHandler.js';
 import { useWindowClick } from '../../hooks/useWindowClick.js';
-import type { IconName } from '../index.js';
-import { Button, DropdownDisplay } from '../index.js';
-
-export interface DropdownProps<TItem extends DropdownItem = DropdownItem> {
-  id?: string;
-  iconLeft?: IconName;
-  left?: boolean;
-  up?: boolean;
-  items: TItem[];
-  activeItemId?: string;
-  disabled?: boolean;
-  sneaky?: boolean;
-  renderItem: (item: TItem) => React.ReactNode;
-  onItemClick?: (item: TItem) => void;
-  children?: React.ReactNode;
-}
+import { DropdownDisplay } from '../index.js';
 
 export interface DropdownItem {
   id: string;
 }
 
-export function Dropdown<TItem extends DropdownItem>({
-  id,
-  iconLeft,
+export interface DropdownProps<
+  TTrigger extends HTMLElement,
+  TItem extends DropdownItem = DropdownItem
+> {
+  items: TItem[];
+  activeItemId?: string;
+  left?: boolean;
+  up?: boolean;
+  renderItem: (item: TItem) => React.ReactNode;
+  renderTrigger: (ref: Ref<TTrigger>, onOpenDropDown: () => void) => ReactNode;
+  onItemClick?: (item: TItem) => void;
+}
+
+export function Dropdown<TTrigger extends HTMLElement, TItem extends DropdownItem>({
+  activeItemId,
+  items,
   left,
   up,
-  items,
-  activeItemId,
-  sneaky,
-  disabled,
   renderItem,
+  renderTrigger,
   onItemClick,
-  children,
-}: DropdownProps<TItem>): JSX.Element {
+}: DropdownProps<TTrigger, TItem>) {
   const [active, setActive] = useState(false);
-  const handleClose = useCallback(() => setActive(false), [setActive]);
-  const triggerRef = useRef<HTMLButtonElement>(null);
+  const handleOpen = useCallback(() => setActive(true), []);
+  const handleClose = useCallback(() => setActive(false), []);
+  const triggerRef = useRef<TTrigger>(null);
   useWindowClick(triggerRef, handleClose, active);
   useKeyHandler(['Escape'], handleClose, active);
 
+  // eslint-disable-next-line testing-library/render-result-naming-convention
+  const trigger = renderTrigger(triggerRef, handleOpen);
+
   return (
-    <DropdownDisplay
-      id={id}
-      active={active}
-      up={up}
-      left={left}
-      trigger={
-        <Button
-          ref={triggerRef}
-          iconLeft={iconLeft}
-          iconRight={sneaky ? undefined : up ? 'chevronUp' : 'chevronDown'}
-          light={sneaky}
-          disabled={disabled}
-          onMouseDown={(event) => {
-            event.preventDefault();
-            setActive((it) => !it);
-          }}
-        >
-          {children}
-        </Button>
-      }
-    >
+    <DropdownDisplay active={active} up={up} left={left} trigger={trigger}>
       {items.map((item) => (
         <DropdownDisplay.Item
           key={item.id}

@@ -1,18 +1,18 @@
 import type { Meta, Story } from '@storybook/react/types-6-0.js';
 import React from 'react';
-import type { DropdownProps } from './Dropdown.js';
-import { Dropdown } from './Dropdown.js';
+import type { ButtonDropdownProps } from './ButtonDropdown.js';
+import { ButtonDropdown } from './ButtonDropdown.js';
 
 interface StoryItem {
   id: string;
   name: string;
 }
 
-type StoryProps = DropdownProps<StoryItem>;
+type StoryProps = ButtonDropdownProps<StoryItem>;
 
 const meta: Meta<StoryProps> = {
-  title: 'Components/Dropdown',
-  component: Dropdown,
+  title: 'Components/ButtonDropdown',
+  component: ButtonDropdown,
   args: {
     children: 'Select',
     items: [
@@ -28,7 +28,7 @@ const meta: Meta<StoryProps> = {
 export default meta;
 
 const Template: Story<StoryProps> = (args) => {
-  return <Dropdown {...args} />;
+  return <ButtonDropdown {...args} />;
 };
 
 export const Normal = Template.bind({});
