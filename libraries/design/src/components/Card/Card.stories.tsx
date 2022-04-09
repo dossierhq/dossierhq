@@ -69,3 +69,24 @@ FooterButtons.args = {
     </>
   ),
 };
+
+export const DropDown = Template.bind({});
+DropDown.args = {
+  children: (
+    <>
+      <Card.Header>
+        <Card.HeaderTitle>Header</Card.HeaderTitle>
+        <Card.HeaderDropDown
+          items={[
+            { id: '1', title: 'One' },
+            { id: '2', title: 'Two' },
+            { id: '3', title: 'Three' },
+          ]}
+          renderItem={(item) => item.title}
+          onItemClick={console.log}
+        />
+      </Card.Header>
+      <Card.Content>Content</Card.Content>
+    </>
+  ),
+};
