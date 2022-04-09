@@ -358,7 +358,7 @@ describe('AddTypeAction', () => {
   });
 });
 
-describe('AddTypeFieldAction', () => {
+describe('AddFieldAction', () => {
   test('add field to existing entity type (without any fields)', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
@@ -368,7 +368,7 @@ describe('AddTypeFieldAction', () => {
           valueTypes: [],
         })
       ),
-      new SchemaEditorActions.AddTypeField({ kind: 'entity', typeName: 'Foo' }, 'bar')
+      new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'bar')
     );
     expect(state).toMatchInlineSnapshot(`
       Object {
@@ -434,7 +434,7 @@ describe('AddTypeFieldAction', () => {
           valueTypes: [{ name: 'Foo', adminOnly: false, fields: [] }],
         })
       ),
-      new SchemaEditorActions.AddTypeField({ kind: 'value', typeName: 'Foo' }, 'bar')
+      new SchemaEditorActions.AddField({ kind: 'value', typeName: 'Foo' }, 'bar')
     );
     expect(state).toMatchInlineSnapshot(`
       Object {
@@ -502,7 +502,7 @@ describe('AddTypeFieldAction', () => {
           valueTypes: [],
         })
       ),
-      new SchemaEditorActions.AddTypeField({ kind: 'entity', typeName: 'Foo' }, 'bar')
+      new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'bar')
     );
 
     expect(state).toMatchInlineSnapshot(`
@@ -588,7 +588,7 @@ describe('AddTypeFieldAction', () => {
           ],
         })
       ),
-      new SchemaEditorActions.AddTypeField({ kind: 'value', typeName: 'Foo' }, 'bar')
+      new SchemaEditorActions.AddField({ kind: 'value', typeName: 'Foo' }, 'bar')
     );
 
     expect(state).toMatchInlineSnapshot(`
@@ -674,7 +674,7 @@ describe('ChangeFieldRequiredAction', () => {
           valueTypes: [],
         })
       ),
-      new SchemaEditorActions.AddTypeField({ kind: 'entity', typeName: 'Foo' }, 'bar'),
+      new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'bar'),
       new SchemaEditorActions.ChangeFieldRequired(
         { kind: 'entity', typeName: 'Foo', fieldName: 'bar' },
         true
@@ -746,7 +746,7 @@ describe('ChangeFieldTypeAction', () => {
           valueTypes: [],
         })
       ),
-      new SchemaEditorActions.AddTypeField({ kind: 'entity', typeName: 'Foo' }, 'bar'),
+      new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'bar'),
       new SchemaEditorActions.ChangeFieldType(
         { kind: 'entity', typeName: 'Foo', fieldName: 'bar' },
         FieldType.Location,
@@ -818,7 +818,7 @@ describe('ChangeFieldTypeAction', () => {
           valueTypes: [{ name: 'Foo', adminOnly: false, fields: [] }],
         })
       ),
-      new SchemaEditorActions.AddTypeField({ kind: 'value', typeName: 'Foo' }, 'bar'),
+      new SchemaEditorActions.AddField({ kind: 'value', typeName: 'Foo' }, 'bar'),
       new SchemaEditorActions.ChangeFieldType(
         { kind: 'value', typeName: 'Foo', fieldName: 'bar' },
         FieldType.Location,
@@ -928,6 +928,66 @@ describe('ChangeTypeAdminOnlyAction', () => {
         ],
       }
     `);
+  });
+});
+
+describe('DeleteFieldAction', () => {
+  test('add and delete field', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        new AdminSchema({
+          entityTypes: [
+            { name: 'Foo', adminOnly: false, fields: [{ name: 'title', type: FieldType.String }] },
+          ],
+          valueTypes: [],
+        })
+      ),
+      new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'bar'),
+      new SchemaEditorActions.DeleteField({ kind: 'entity', typeName: 'Foo', fieldName: 'bar' })
+    );
+    expect(state).toMatchInlineSnapshot(`
+      Object {
+        "entityTypes": Array [
+          Object {
+            "adminOnly": false,
+            "fields": Array [
+              Object {
+                "list": false,
+                "name": "title",
+                "required": false,
+                "status": "",
+                "type": "String",
+              },
+            ],
+            "kind": "entity",
+            "name": "Foo",
+            "status": "",
+          },
+        ],
+        "schema": AdminSchema {
+          "spec": Object {
+            "entityTypes": Array [
+              Object {
+                "adminOnly": false,
+                "fields": Array [
+                  Object {
+                    "name": "title",
+                    "type": "String",
+                  },
+                ],
+                "name": "Foo",
+              },
+            ],
+            "valueTypes": Array [],
+          },
+        },
+        "status": "",
+        "valueTypes": Array [],
+      }
+    `);
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`Object {}`);
   });
 });
 

@@ -186,7 +186,7 @@ class AddTypeAction implements SchemaEditorStateAction {
   }
 }
 
-class AddTypeFieldAction extends TypeAction {
+class AddFieldAction extends TypeAction {
   fieldName: string;
 
   constructor(typeSelector: SchemaTypeSelector, fieldName: string) {
@@ -261,6 +261,21 @@ class ChangeTypeAdminOnlyAction extends TypeAction {
   }
 }
 
+class DeleteFieldAction extends TypeAction {
+  fieldName: string;
+
+  constructor({ fieldName, ...typeSelector }: SchemaFieldSelector) {
+    super(typeSelector);
+    this.fieldName = fieldName;
+  }
+
+  reduceType(typeDraft: Readonly<SchemaEntityTypeDraft>): Readonly<SchemaEntityTypeDraft> {
+    const fields = typeDraft.fields.filter((fieldDraft) => fieldDraft.name !== this.fieldName);
+
+    return { ...typeDraft, fields };
+  }
+}
+
 class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
   schema: AdminSchema;
   force: boolean;
@@ -306,10 +321,11 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
 
 export const SchemaEditorActions = {
   AddType: AddTypeAction,
-  AddTypeField: AddTypeFieldAction,
+  AddField: AddFieldAction,
   ChangeFieldRequired: ChangeFieldRequiredAction,
   ChangeFieldType: ChangeFieldTypeAction,
   ChangeTypeAdminOnly: ChangeTypeAdminOnlyAction,
+  DeleteField: DeleteFieldAction,
   UpdateSchemaSpecification: UpdateSchemaSpecificationAction,
 };
 
