@@ -149,7 +149,7 @@ function SchemaFieldEditor({
       <Card.Header>
         <Card.HeaderTitle>{fieldDraft.name}</Card.HeaderTitle>
         {dropDownItems.length > 0 ? (
-          <Card.HeaderDropDown
+          <Card.HeaderDropdown
             items={dropDownItems}
             renderItem={(item) => item.title}
             onItemClick={handleDropDownItemClick}

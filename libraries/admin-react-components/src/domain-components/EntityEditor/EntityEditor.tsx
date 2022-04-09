@@ -1,6 +1,6 @@
 import type { AdminEntityCreate, AdminEntityUpdate } from '@jonasb/datadata-core';
 import { assertIsDefined } from '@jonasb/datadata-core';
-import { Dropdown } from '@jonasb/datadata-design';
+import { ButtonDropdown } from '@jonasb/datadata-design';
 import type { Dispatch, SetStateAction } from 'react';
 import React, { useContext, useEffect, useState } from 'react';
 import type { DataDataContextValue, MessageItem } from '../..';
@@ -215,14 +215,14 @@ function AuthKeyPicker({
   }
 
   return (
-    <Dropdown
+    <ButtonDropdown
       id={id}
       items={items}
       renderItem={(item) => item.displayName}
       onItemClick={(item) => onValueChanged(item.id)}
     >
       {text}
-    </Dropdown>
+    </ButtonDropdown>
   );
 }
 

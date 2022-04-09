@@ -1,6 +1,7 @@
 export { Badge } from './Badge/Badge.js';
 export { BeforeUnload } from './BeforeUnload/BeforeUnload.js';
 export { Button } from './Button/Button.js';
+export { ButtonDropdown } from './ButtonDropdown/ButtonDropdown.js';
 export { Card } from './Card/Card.js';
 export { Checkbox } from './Checkbox/Checkbox.js';
 export { Column } from './Column/Column.js';

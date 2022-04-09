@@ -2,7 +2,7 @@ import type { Meta, Story } from '@storybook/react/types-6-0.js';
 import type { MouseEvent } from 'react';
 import React, { useReducer } from 'react';
 import {
-  Dropdown,
+  ButtonDropdown,
   Field,
   FullscreenContainer,
   IconButton,
@@ -111,7 +111,7 @@ function Screen({
           <IconButton icon="next" />
           <IconButton icon="last" />
         </IconButton.Group>
-        <Dropdown
+        <ButtonDropdown
           up
           sneaky
           items={[{ id: '25' }, { id: '50' }, { id: '100' }]}
@@ -119,7 +119,7 @@ function Screen({
           renderItem={(it) => it.id}
         >
           1&thinsp;–&thinsp;25 of 240
-        </Dropdown>
+        </ButtonDropdown>
       </FullscreenContainer.Row>
     </FullscreenContainer>
   );
@@ -157,7 +157,7 @@ function SearchBar({
         Status
       </StatusSelector>
       <IconButton icon="map" onClick={onMapClick} />
-      <Dropdown
+      <ButtonDropdown
         iconLeft="add"
         left
         items={[
@@ -168,7 +168,7 @@ function SearchBar({
         onItemClick={onCreateClick}
       >
         Create
-      </Dropdown>
+      </ButtonDropdown>
     </>
   );
 }

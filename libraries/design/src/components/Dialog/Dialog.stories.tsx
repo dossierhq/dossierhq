@@ -2,7 +2,7 @@ import type { Meta, Story } from '@storybook/react/types-6-0.js';
 import React, { useState } from 'react';
 import { Button } from '../Button/Button.js';
 import { Card } from '../Card/Card.js';
-import { Dropdown } from '../Dropdown/Dropdown.js';
+import { ButtonDropdown } from '../ButtonDropdown/ButtonDropdown.js';
 import type { DialogProps } from './Dialog.js';
 import { Dialog } from './Dialog.js';
 
@@ -40,9 +40,9 @@ function Wrapper({ children, onClose, ...args }: StoryProps) {
       >
         <Button>Unrelated button</Button>
         <Button onClick={() => setShow(!show)}>{show ? 'Hide' : 'Show'}</Button>
-        <Dropdown up items={[{ id: 'one', text: 'One' }]} renderItem={(item) => item.text}>
+        <ButtonDropdown up items={[{ id: 'one', text: 'One' }]} renderItem={(item) => item.text}>
           Dropdown
-        </Dropdown>
+        </ButtonDropdown>
       </div>
       <Dialog
         show={show}

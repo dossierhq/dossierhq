@@ -70,13 +70,13 @@ FooterButtons.args = {
   ),
 };
 
-export const DropDown = Template.bind({});
-DropDown.args = {
+export const Dropdown = Template.bind({});
+Dropdown.args = {
   children: (
     <>
       <Card.Header>
         <Card.HeaderTitle>Header</Card.HeaderTitle>
-        <Card.HeaderDropDown
+        <Card.HeaderDropdown
           items={[
             { id: '1', title: 'One' },
             { id: '2', title: 'Two' },
