@@ -121,8 +121,16 @@ function SchemaFieldEditor({
   const handleDropDownItemClick = useCallback(
     ({ id }: { id: string }) => {
       switch (id) {
-        case 'delete': {
+        case 'delete':
           dispatchSchemaEditorState(new SchemaEditorActions.DeleteField(fieldSelector));
+          break;
+        case 'rename': {
+          const fieldName = window.prompt('New field name?', fieldSelector.fieldName);
+          if (fieldName) {
+            dispatchSchemaEditorState(
+              new SchemaEditorActions.RenameField(fieldSelector, fieldName)
+            );
+          }
           break;
         }
       }
@@ -130,7 +138,12 @@ function SchemaFieldEditor({
     [dispatchSchemaEditorState, fieldSelector]
   );
 
-  const dropDownItems = canDeleteOrRenameField ? [{ id: 'delete', title: 'Delete field' }] : [];
+  const dropDownItems = canDeleteOrRenameField
+    ? [
+        { id: 'rename', title: 'Rename field' },
+        { id: 'delete', title: 'Delete field' },
+      ]
+    : [];
   return (
     <Card>
       <Card.Header>

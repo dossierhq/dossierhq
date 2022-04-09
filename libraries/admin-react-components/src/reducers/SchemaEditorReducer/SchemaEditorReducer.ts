@@ -276,6 +276,22 @@ class DeleteFieldAction extends TypeAction {
   }
 }
 
+class RenameFieldAction extends FieldAction {
+  newFieldName: string;
+
+  constructor(fieldSelector: SchemaFieldSelector, newFieldName: string) {
+    super(fieldSelector);
+    this.newFieldName = newFieldName;
+  }
+
+  reduceField(fieldDraft: Readonly<SchemaFieldDraft>): Readonly<SchemaFieldDraft> {
+    if (this.newFieldName === fieldDraft.name) {
+      return fieldDraft;
+    }
+    return { ...fieldDraft, name: this.newFieldName };
+  }
+}
+
 class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
   schema: AdminSchema;
   force: boolean;
@@ -326,6 +342,7 @@ export const SchemaEditorActions = {
   ChangeFieldType: ChangeFieldTypeAction,
   ChangeTypeAdminOnly: ChangeTypeAdminOnlyAction,
   DeleteField: DeleteFieldAction,
+  RenameField: RenameFieldAction,
   UpdateSchemaSpecification: UpdateSchemaSpecificationAction,
 };
 

@@ -991,6 +991,97 @@ describe('DeleteFieldAction', () => {
   });
 });
 
+describe('RenameFieldAction', () => {
+  test('add and rename field', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        new AdminSchema({
+          entityTypes: [
+            { name: 'Foo', adminOnly: false, fields: [{ name: 'title', type: FieldType.String }] },
+          ],
+          valueTypes: [],
+        })
+      ),
+      new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'bar'),
+      new SchemaEditorActions.RenameField(
+        { kind: 'entity', typeName: 'Foo', fieldName: 'bar' },
+        'baz'
+      )
+    );
+    expect(state).toMatchInlineSnapshot(`
+      Object {
+        "entityTypes": Array [
+          Object {
+            "adminOnly": false,
+            "fields": Array [
+              Object {
+                "list": false,
+                "name": "title",
+                "required": false,
+                "status": "",
+                "type": "String",
+              },
+              Object {
+                "list": false,
+                "name": "baz",
+                "required": false,
+                "status": "new",
+                "type": "String",
+              },
+            ],
+            "kind": "entity",
+            "name": "Foo",
+            "status": "changed",
+          },
+        ],
+        "schema": AdminSchema {
+          "spec": Object {
+            "entityTypes": Array [
+              Object {
+                "adminOnly": false,
+                "fields": Array [
+                  Object {
+                    "name": "title",
+                    "type": "String",
+                  },
+                ],
+                "name": "Foo",
+              },
+            ],
+            "valueTypes": Array [],
+          },
+        },
+        "status": "changed",
+        "valueTypes": Array [],
+      }
+    `);
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`
+      Object {
+        "entityTypes": Array [
+          Object {
+            "adminOnly": false,
+            "fields": Array [
+              Object {
+                "name": "title",
+                "required": false,
+                "type": "String",
+              },
+              Object {
+                "name": "baz",
+                "required": false,
+                "type": "String",
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+      }
+    `);
+  });
+});
+
 describe('UpdateSchemaSpecificationAction', () => {
   test('add empty schema', () => {
     const state = reduceSchemaEditorState(
