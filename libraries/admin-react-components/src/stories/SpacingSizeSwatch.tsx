@@ -8,7 +8,7 @@ interface SpacingSizeSwatchProps {
 export function SpacingSizeSwatch({ size }: SpacingSizeSwatchProps): JSX.Element {
   const [computedSize, setComputesSize] = useState<string | null>(null);
 
-  const onRefChanged = useCallback((ref) => {
+  const onRefChanged = useCallback((ref: HTMLDivElement) => {
     if (ref) {
       const { marginLeft } = getComputedStyle(ref);
       setComputesSize(marginLeft);

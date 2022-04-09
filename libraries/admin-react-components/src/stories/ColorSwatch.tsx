@@ -9,7 +9,7 @@ export function ColorSwatch({ className }: ColorSwatchProps): JSX.Element {
   const [colors, setColors] = useState<null | { backgroundColor: string; color: string }>(null);
 
   const onRefChanged = useCallback(
-    (ref) => {
+    (ref: HTMLDivElement) => {
       if (ref) {
         const { backgroundColor, color } = getComputedStyle(ref);
         setColors({ backgroundColor, color });
