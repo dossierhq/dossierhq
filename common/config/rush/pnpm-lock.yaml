@@ -238,7 +238,7 @@ importers:
       '@storybook/react': ^6.3.9
       '@testing-library/jest-dom': ~5.16.0
       '@testing-library/react': ~12.1.2
-      '@testing-library/user-event': ~13.5.0
+      '@testing-library/user-event': ~14.0.4
       '@types/heft-jest': 1.0.2
       '@types/leaflet': ~1.7.4
       '@types/lodash': ~4.14.169
@@ -299,7 +299,7 @@ importers:
       '@storybook/react': 6.3.12_f7928aadc1a010381108590b7cf73a62
       '@testing-library/jest-dom': 5.16.0
       '@testing-library/react': 12.1.2_react-dom@18.0.0+react@18.0.0
-      '@testing-library/user-event': 13.5.0
+      '@testing-library/user-event': 14.0.4
       '@types/heft-jest': 1.0.2
       '@types/leaflet': 1.7.5
       '@types/lodash': 4.14.176
@@ -5164,13 +5164,11 @@ packages:
       react-dom: 18.0.0_react@18.0.0
     dev: true
 
-  /@testing-library/user-event/13.5.0:
-    resolution: {integrity: sha512-5Kwtbo3Y/NowpkbRuSepbyMFkZmHgD+vPzYB/RJ4oxt5Gj/avFFBYjhw27cqSVPVw/3a67NK1PbiIr9k4Gwmdg==}
-    engines: {node: '>=10', npm: '>=6'}
+  /@testing-library/user-event/14.0.4:
+    resolution: {integrity: sha512-VBZe5lcUsmrQyOwIFvqOxLBoaTw1/Qy4Ek+VgmFYs719bs2SxUp42vbsb7ATlQDkHdj4OIQlucfpwxe5WoG1jA==}
+    engines: {node: '>=12', npm: '>=6'}
     peerDependencies:
       '@testing-library/dom': '>=7.21.4'
-    dependencies:
-      '@babel/runtime': 7.16.3
     dev: true
 
   /@tootallnate/once/1.1.2:
