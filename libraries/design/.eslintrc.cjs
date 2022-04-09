@@ -9,6 +9,7 @@ module.exports = {
     'plugin:jest-dom/recommended',
     'plugin:react-hooks/recommended',
     'plugin:react/recommended',
+    'plugin:storybook/recommended',
     'plugin:testing-library/dom',
     'plugin:testing-library/react',
   ],

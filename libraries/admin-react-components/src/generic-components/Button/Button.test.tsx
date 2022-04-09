@@ -20,7 +20,8 @@ describe('Normal', () => {
     const onClick = jest.fn();
     render(renderStory(Normal, { onClick }));
 
-    userEvent.click(finders.button());
+    const user = userEvent.setup();
+    await user.click(finders.button());
 
     expect(onClick.mock.calls).toHaveLength(1);
   });
@@ -31,7 +32,7 @@ describe('Disabled', () => {
     const onClick = jest.fn();
     render(renderStory(Disabled, { onClick }));
 
-    userEvent.click(finders.button());
+    await userEvent.click(finders.button());
 
     expect(onClick.mock.calls).toHaveLength(0);
   });
@@ -42,7 +43,7 @@ describe('SubmitLoading', () => {
     const onClick = jest.fn();
     render(renderStory(SubmitLoading, { onClick }));
 
-    userEvent.click(finders.button());
+    await userEvent.click(finders.button());
 
     expect(onClick.mock.calls).toHaveLength(0);
   });
