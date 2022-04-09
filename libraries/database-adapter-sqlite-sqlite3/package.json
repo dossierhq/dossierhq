@@ -36,7 +36,7 @@
     "@rushstack/heft": "~0.44.8",
     "@rushstack/heft-jest-plugin": "~0.2.9",
     "@types/heft-jest": "1.0.2",
-    "@types/sqlite3": "~3.1.7",
+    "@types/sqlite3": "~3.1.8",
     "@typescript-eslint/eslint-plugin": "^5.18.0",
     "@typescript-eslint/parser": "^5.18.0",
     "eslint": "^8.13.0",

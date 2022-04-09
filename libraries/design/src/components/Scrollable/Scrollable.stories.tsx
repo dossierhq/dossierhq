@@ -1,4 +1,4 @@
-import type { Meta, Story, StoryContext } from '@storybook/react/types-6-0.js';
+import type { Meta, Story } from '@storybook/react/types-6-0.js';
 import React from 'react';
 import { Table } from '../index.js';
 import type { ScrollableProps } from './Scrollable.js';
@@ -10,7 +10,7 @@ const meta: Meta<StoryProps> = {
   title: 'Components/Scrollable',
   component: Scrollable,
   decorators: [
-    (Story: () => React.ReactElement<unknown>, _context: StoryContext): JSX.Element => (
+    (Story: () => React.ReactElement<unknown>, _context): JSX.Element => (
       <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
         <div style={{ height: '50px' }} />
         <Story />

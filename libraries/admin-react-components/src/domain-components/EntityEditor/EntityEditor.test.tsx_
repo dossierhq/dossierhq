@@ -97,11 +97,9 @@ describe('NewFoo', () => {
     });
 
     const name = finders.nameInput();
-    userEvent.type(name, 'New name');
+    await userEvent.type(name, 'New name');
 
-    await act(async () => {
-      userEvent.click(finders.saveButton());
-    });
+    await userEvent.click(finders.saveButton());
 
     expect(createEntity.mock.calls).toMatchInlineSnapshot(`
       Array [
@@ -128,12 +126,10 @@ describe('NewFoo', () => {
       render(renderStory(NewFoo, { adminClient: async () => ok(adminClient) }));
     });
 
-    userEvent.type(finders.nameInput(), 'New name'); // TODO remove, update automatically
-    userEvent.type(finders.fooTitleInput(), 'New title');
+    await userEvent.type(finders.nameInput(), 'New name'); // TODO remove, update automatically
+    await userEvent.type(finders.fooTitleInput(), 'New title');
 
-    await act(async () => {
-      userEvent.click(finders.saveButton());
-    });
+    await userEvent.click(finders.saveButton());
 
     expect(createEntity.mock.calls).toMatchInlineSnapshot(`
       Array [
@@ -166,11 +162,11 @@ describe('NewFoo', () => {
     expect(submit).toBeDisabled();
 
     // Enabled when name is updated
-    userEvent.type(name, 'New name');
+    await userEvent.type(name, 'New name');
     expect(submit).toBeEnabled();
 
     // Enabled when name is updated
-    userEvent.clear(name);
+    await userEvent.clear(name);
     expect(submit).toBeDisabled();
   });
 
@@ -193,11 +189,9 @@ describe('NewFoo', () => {
 
     getEntity.mockClear();
 
-    userEvent.type(finders.nameInput(), 'New name');
+    await userEvent.type(finders.nameInput(), 'New name');
 
-    await act(async () => {
-      userEvent.click(finders.saveButton());
-    });
+    await userEvent.click(finders.saveButton());
 
     expect(getEntity.mock.calls).toHaveLength(0);
   });
@@ -216,12 +210,10 @@ describe('FullFoo', () => {
     });
 
     const name = finders.nameInput();
-    userEvent.clear(name);
-    userEvent.type(name, 'New name');
+    await userEvent.clear(name);
+    await userEvent.type(name, 'New name');
 
-    await act(async () => {
-      userEvent.click(finders.saveButton());
-    });
+    await userEvent.click(finders.saveButton());
 
     expect(updateEntity.mock.calls).toMatchInlineSnapshot(`
       Array [
@@ -247,12 +239,10 @@ describe('FullFoo', () => {
     });
 
     const fooTitle = finders.fooTitleInput();
-    userEvent.clear(fooTitle);
-    userEvent.type(fooTitle, 'New title');
+    await userEvent.clear(fooTitle);
+    await userEvent.type(fooTitle, 'New title');
 
-    await act(async () => {
-      userEvent.click(finders.saveButton());
-    });
+    await userEvent.click(finders.saveButton());
 
     expect(updateEntity.mock.calls).toMatchInlineSnapshot(`
       Array [
@@ -278,11 +268,9 @@ describe('FullFoo', () => {
       render(renderStory(FullFoo, { adminClient: async () => ok(adminClient) }));
     });
 
-    userEvent.click(finders.fooBarRemoveButton(FullFoo));
+    await userEvent.click(finders.fooBarRemoveButton(FullFoo));
 
-    await act(async () => {
-      userEvent.click(finders.saveButton());
-    });
+    await userEvent.click(finders.saveButton());
 
     expect(updateEntity.mock.calls).toMatchInlineSnapshot(`
       Array [
@@ -309,14 +297,12 @@ describe('FullFoo', () => {
     });
 
     const bar = finders.fooBarButton(FullFoo);
-    userEvent.click(bar);
+    await userEvent.click(bar);
 
     const bar2 = await waitFor(() => finders.entityPickerBar2());
-    userEvent.click(bar2);
+    await userEvent.click(bar2);
 
-    await act(async () => {
-      userEvent.click(finders.saveButton());
-    });
+    await userEvent.click(finders.saveButton());
 
     expect(updateEntity.mock.calls).toMatchInlineSnapshot(`
       Array [
@@ -345,11 +331,9 @@ describe('FullFoo', () => {
       render(renderStory(FullFoo, { adminClient: async () => ok(adminClient) }));
     });
 
-    userEvent.click(finders.fooAnnotatedBarRemoveButton(FullFoo));
+    await userEvent.click(finders.fooAnnotatedBarRemoveButton(FullFoo));
 
-    await act(async () => {
-      userEvent.click(finders.saveButton());
-    });
+    await userEvent.click(finders.saveButton());
 
     expect(updateEntity.mock.calls).toMatchInlineSnapshot(`
       Array [
@@ -377,12 +361,10 @@ describe('FullFoo', () => {
     });
 
     const annotation = finders.fooAnnotatedBarAnnotationInput(FullFoo);
-    userEvent.clear(annotation);
-    userEvent.type(annotation, 'New annotation');
+    await userEvent.clear(annotation);
+    await userEvent.type(annotation, 'New annotation');
 
-    await act(async () => {
-      userEvent.click(finders.saveButton());
-    });
+    await userEvent.click(finders.saveButton());
 
     expect(updateEntity.mock.calls).toMatchInlineSnapshot(`
       Array [
@@ -414,14 +396,12 @@ describe('FullFoo', () => {
       render(renderStory(FullFoo, { adminClient: async () => ok(adminClient) }));
     });
 
-    userEvent.click(finders.fooAnnotatedBarBarButton(FullFoo));
+    await userEvent.click(finders.fooAnnotatedBarBarButton(FullFoo));
 
     const bar1 = await waitFor(() => finders.entityPickerBar1());
-    userEvent.click(bar1);
+    await userEvent.click(bar1);
 
-    await act(async () => {
-      userEvent.click(finders.saveButton());
-    });
+    await userEvent.click(finders.saveButton());
 
     expect(updateEntity.mock.calls).toMatchInlineSnapshot(`
       Array [
@@ -452,13 +432,11 @@ describe('FullFoo', () => {
     });
 
     const name = finders.nameInput();
-    userEvent.clear(name);
-    userEvent.type(name, 'New name');
+    await userEvent.clear(name);
+    await userEvent.type(name, 'New name');
     expect(name.value).toEqual('New name');
 
-    await act(async () => {
-      userEvent.click(finders.resetButton());
-    });
+    await userEvent.click(finders.resetButton());
 
     expect(name.value).toEqual('Foo 1');
   });
@@ -469,13 +447,11 @@ describe('FullFoo', () => {
     });
 
     const fooTitle = finders.fooTitleInput();
-    userEvent.clear(fooTitle);
-    userEvent.type(fooTitle, 'New title');
+    await userEvent.clear(fooTitle);
+    await userEvent.type(fooTitle, 'New title');
     expect(fooTitle.value).toEqual('New title');
 
-    await act(async () => {
-      userEvent.click(finders.resetButton());
-    });
+    await userEvent.click(finders.resetButton());
 
     expect(fooTitle.value).toEqual('Hello');
   });
