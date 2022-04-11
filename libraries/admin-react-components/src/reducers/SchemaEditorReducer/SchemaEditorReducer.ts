@@ -37,6 +37,7 @@ export interface SchemaFieldDraft {
   type: FieldType;
   list: boolean;
   required: boolean;
+  entityTypes?: string[];
 }
 
 export interface SchemaEditorState {
@@ -241,7 +242,14 @@ class ChangeFieldTypeAction extends FieldAction {
       return fieldDraft;
     }
 
-    return { ...fieldDraft, type: this.fieldType, list: this.list };
+    const newFieldDraft = { ...fieldDraft, type: this.fieldType, list: this.list };
+    if (this.fieldType === FieldType.EntityType) {
+      newFieldDraft.entityTypes = [];
+    } else {
+      delete newFieldDraft.entityTypes;
+    }
+
+    return newFieldDraft;
   }
 }
 
@@ -324,13 +332,19 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
       name: typeSpec.name,
       status: '',
       adminOnly: !!typeSpec.adminOnly,
-      fields: typeSpec.fields.map<SchemaFieldDraft>((fieldSpec) => ({
-        name: fieldSpec.name,
-        status: '',
-        type: fieldSpec.type as FieldType,
-        list: !!fieldSpec.list,
-        required: !!fieldSpec.required,
-      })),
+      fields: typeSpec.fields.map<SchemaFieldDraft>((fieldSpec) => {
+        const fieldDraft: SchemaFieldDraft = {
+          name: fieldSpec.name,
+          status: '',
+          type: fieldSpec.type as FieldType,
+          list: !!fieldSpec.list,
+          required: !!fieldSpec.required,
+        };
+        if (fieldSpec.type === FieldType.EntityType) {
+          fieldDraft.entityTypes = fieldSpec.entityTypes ?? [];
+        }
+        return fieldDraft;
+      }),
     };
   }
 }
@@ -380,6 +394,9 @@ function getTypeUpdateFromEditorState(
       type: draftField.type,
       required: draftField.required,
       ...(draftField.list ? { list: draftField.list } : undefined),
+      ...(draftField.type === FieldType.EntityType
+        ? { entityTypes: draftField.entityTypes ?? [] }
+        : undefined),
     };
   });
 
