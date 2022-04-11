@@ -115,7 +115,7 @@ function Screen({
           up
           sneaky
           items={[{ id: '25' }, { id: '50' }, { id: '100' }]}
-          activeItemId="25"
+          activeItemIds={['25']}
           renderItem={(it) => it.id}
         >
           1&thinsp;–&thinsp;25 of 240

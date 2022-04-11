@@ -35,6 +35,7 @@ export function TagInputSelector<TItem extends MultipleSelectorItem>({
   return (
     <Dropdown<HTMLDivElement, TItem>
       items={items}
+      activeItemIds={selectedIds}
       renderItem={(item) => {
         const { tag, color } = itemTag(item);
         return (

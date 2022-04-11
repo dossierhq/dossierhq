@@ -1,11 +1,12 @@
 import type {
+  AdminEntityTypeSpecificationUpdate,
   AdminSchema,
   AdminSchemaSpecificationUpdate,
-  AdminEntityTypeSpecificationUpdate,
-  AdminValueTypeSpecificationUpdate,
   AdminValueTypeSpecification,
+  AdminValueTypeSpecificationUpdate,
 } from '@jonasb/datadata-core';
 import { FieldType } from '@jonasb/datadata-core';
+import isEqual from 'lodash/isEqual';
 
 export interface SchemaTypeSelector {
   kind: 'entity' | 'value';
@@ -210,6 +211,23 @@ class AddFieldAction extends TypeAction {
   }
 }
 
+class ChangeFieldEntityTypesAction extends FieldAction {
+  entityTypes: string[];
+
+  constructor(fieldSelector: SchemaFieldSelector, entityTypes: string[]) {
+    super(fieldSelector);
+    this.entityTypes = entityTypes;
+  }
+
+  reduceField(fieldDraft: Readonly<SchemaFieldDraft>): Readonly<SchemaFieldDraft> {
+    if (isEqual(fieldDraft.entityTypes, this.entityTypes)) {
+      return fieldDraft;
+    }
+
+    return { ...fieldDraft, entityTypes: this.entityTypes };
+  }
+}
+
 class ChangeFieldRequiredAction extends FieldAction {
   required: boolean;
 
@@ -352,6 +370,7 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
 export const SchemaEditorActions = {
   AddType: AddTypeAction,
   AddField: AddFieldAction,
+  ChangeFieldEntityTypes: ChangeFieldEntityTypesAction,
   ChangeFieldRequired: ChangeFieldRequiredAction,
   ChangeFieldType: ChangeFieldTypeAction,
   ChangeTypeAdminOnly: ChangeTypeAdminOnlyAction,
