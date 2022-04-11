@@ -737,7 +737,7 @@ describe('ChangeFieldRequiredAction', () => {
 });
 
 describe('ChangeFieldTypeAction', () => {
-  test('from string to location list of new field to existing entity type', () => {
+  test('from string to location list (new field of existing entity type)', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
@@ -809,7 +809,7 @@ describe('ChangeFieldTypeAction', () => {
     `);
   });
 
-  test('from string to location list of new field to existing value type', () => {
+  test('from string to location list (new field of existing value type)', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
@@ -872,6 +872,79 @@ describe('ChangeFieldTypeAction', () => {
                 "name": "bar",
                 "required": false,
                 "type": "Location",
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+      }
+    `);
+  });
+
+  test('from string to entity (new field of existing entity type)', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        new AdminSchema({
+          entityTypes: [{ name: 'Foo', adminOnly: false, fields: [] }],
+          valueTypes: [],
+        })
+      ),
+      new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'bar'),
+      new SchemaEditorActions.ChangeFieldType(
+        { kind: 'entity', typeName: 'Foo', fieldName: 'bar' },
+        FieldType.EntityType,
+        false
+      )
+    );
+    expect(state).toMatchInlineSnapshot(`
+      Object {
+        "entityTypes": Array [
+          Object {
+            "adminOnly": false,
+            "fields": Array [
+              Object {
+                "entityTypes": Array [],
+                "list": false,
+                "name": "bar",
+                "required": false,
+                "status": "new",
+                "type": "EntityType",
+              },
+            ],
+            "kind": "entity",
+            "name": "Foo",
+            "status": "changed",
+          },
+        ],
+        "schema": AdminSchema {
+          "spec": Object {
+            "entityTypes": Array [
+              Object {
+                "adminOnly": false,
+                "fields": Array [],
+                "name": "Foo",
+              },
+            ],
+            "valueTypes": Array [],
+          },
+        },
+        "status": "changed",
+        "valueTypes": Array [],
+      }
+    `);
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`
+      Object {
+        "entityTypes": Array [
+          Object {
+            "adminOnly": false,
+            "fields": Array [
+              Object {
+                "entityTypes": Array [],
+                "name": "bar",
+                "required": false,
+                "type": "EntityType",
               },
             ],
             "name": "Foo",
@@ -1220,6 +1293,112 @@ describe('UpdateSchemaSpecificationAction', () => {
             ],
             "kind": "value",
             "name": "TitleOnly",
+            "status": "",
+          },
+        ],
+      }
+    `);
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`Object {}`);
+  });
+
+  test('entity type field', () => {
+    const state = reduceSchemaEditorState(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        new AdminSchema({
+          entityTypes: [
+            {
+              name: 'EntityReference',
+              adminOnly: false,
+              fields: [{ name: 'reference', type: FieldType.EntityType, entityTypes: ['Foo'] }],
+            },
+          ],
+          valueTypes: [
+            {
+              name: 'ValueReference',
+              adminOnly: false,
+              fields: [{ name: 'reference', type: FieldType.EntityType, entityTypes: ['Foo'] }],
+            },
+          ],
+        })
+      )
+    );
+
+    expect(state).toMatchInlineSnapshot(`
+      Object {
+        "entityTypes": Array [
+          Object {
+            "adminOnly": false,
+            "fields": Array [
+              Object {
+                "entityTypes": Array [
+                  "Foo",
+                ],
+                "list": false,
+                "name": "reference",
+                "required": false,
+                "status": "",
+                "type": "EntityType",
+              },
+            ],
+            "kind": "entity",
+            "name": "EntityReference",
+            "status": "",
+          },
+        ],
+        "schema": AdminSchema {
+          "spec": Object {
+            "entityTypes": Array [
+              Object {
+                "adminOnly": false,
+                "fields": Array [
+                  Object {
+                    "entityTypes": Array [
+                      "Foo",
+                    ],
+                    "name": "reference",
+                    "type": "EntityType",
+                  },
+                ],
+                "name": "EntityReference",
+              },
+            ],
+            "valueTypes": Array [
+              Object {
+                "adminOnly": false,
+                "fields": Array [
+                  Object {
+                    "entityTypes": Array [
+                      "Foo",
+                    ],
+                    "name": "reference",
+                    "type": "EntityType",
+                  },
+                ],
+                "name": "ValueReference",
+              },
+            ],
+          },
+        },
+        "status": "",
+        "valueTypes": Array [
+          Object {
+            "adminOnly": false,
+            "fields": Array [
+              Object {
+                "entityTypes": Array [
+                  "Foo",
+                ],
+                "list": false,
+                "name": "reference",
+                "required": false,
+                "status": "",
+                "type": "EntityType",
+              },
+            ],
+            "kind": "value",
+            "name": "ValueReference",
             "status": "",
           },
         ],
