@@ -39,6 +39,7 @@ export interface SchemaFieldDraft {
   list: boolean;
   required: boolean;
   entityTypes?: string[];
+  valueTypes?: string[];
 }
 
 export interface SchemaEditorState {
@@ -211,7 +212,7 @@ class AddFieldAction extends TypeAction {
   }
 }
 
-class ChangeFieldEntityTypesAction extends FieldAction {
+class ChangeFieldAllowedEntityTypesAction extends FieldAction {
   entityTypes: string[];
 
   constructor(fieldSelector: SchemaFieldSelector, entityTypes: string[]) {
@@ -225,6 +226,23 @@ class ChangeFieldEntityTypesAction extends FieldAction {
     }
 
     return { ...fieldDraft, entityTypes: this.entityTypes };
+  }
+}
+
+class ChangeFieldAllowedValueTypesAction extends FieldAction {
+  valueTypes: string[];
+
+  constructor(fieldSelector: SchemaFieldSelector, valueTypes: string[]) {
+    super(fieldSelector);
+    this.valueTypes = valueTypes;
+  }
+
+  reduceField(fieldDraft: Readonly<SchemaFieldDraft>): Readonly<SchemaFieldDraft> {
+    if (isEqual(fieldDraft.valueTypes, this.valueTypes)) {
+      return fieldDraft;
+    }
+
+    return { ...fieldDraft, valueTypes: this.valueTypes };
   }
 }
 
@@ -261,10 +279,17 @@ class ChangeFieldTypeAction extends FieldAction {
     }
 
     const newFieldDraft = { ...fieldDraft, type: this.fieldType, list: this.list };
+
     if (this.fieldType === FieldType.EntityType) {
       newFieldDraft.entityTypes = [];
     } else {
       delete newFieldDraft.entityTypes;
+    }
+
+    if (this.fieldType === FieldType.ValueType) {
+      newFieldDraft.valueTypes = [];
+    } else {
+      delete newFieldDraft.valueTypes;
     }
 
     return newFieldDraft;
@@ -361,6 +386,9 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
         if (fieldSpec.type === FieldType.EntityType) {
           fieldDraft.entityTypes = fieldSpec.entityTypes ?? [];
         }
+        if (fieldSpec.type === FieldType.ValueType) {
+          fieldDraft.valueTypes = fieldSpec.valueTypes ?? [];
+        }
         return fieldDraft;
       }),
     };
@@ -370,7 +398,8 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
 export const SchemaEditorActions = {
   AddType: AddTypeAction,
   AddField: AddFieldAction,
-  ChangeFieldEntityTypes: ChangeFieldEntityTypesAction,
+  ChangeFieldAllowedEntityTypes: ChangeFieldAllowedEntityTypesAction,
+  ChangeFieldAllowedValueTypes: ChangeFieldAllowedValueTypesAction,
   ChangeFieldRequired: ChangeFieldRequiredAction,
   ChangeFieldType: ChangeFieldTypeAction,
   ChangeTypeAdminOnly: ChangeTypeAdminOnlyAction,
@@ -415,6 +444,9 @@ function getTypeUpdateFromEditorState(
       ...(draftField.list ? { list: draftField.list } : undefined),
       ...(draftField.type === FieldType.EntityType
         ? { entityTypes: draftField.entityTypes ?? [] }
+        : undefined),
+      ...(draftField.type === FieldType.ValueType
+        ? { valueType: draftField.valueTypes ?? [] }
         : undefined),
     };
   });

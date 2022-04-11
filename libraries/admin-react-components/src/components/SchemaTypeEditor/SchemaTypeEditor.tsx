@@ -22,6 +22,7 @@ import type {
 } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer';
 import { SchemaEditorActions } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer';
 import { FieldEntityTypeSelector } from './FieldEntityTypeSelector';
+import { FieldValueTypeSelector } from './FieldValueTypeSelector';
 
 interface FieldTypeItem {
   value: string;
@@ -137,6 +138,7 @@ function SchemaFieldEditor({
   const canChangeType = fieldDraft.status === 'new';
   const canDeleteOrRenameField = fieldDraft.status === 'new'; //TODO too restrictive
   const canChangeEntityTypes = fieldDraft.status === 'new'; //TODO too restrictive
+  const canChangeValueTypes = fieldDraft.status === 'new'; //TODO too restrictive
 
   const handleDropDownItemClick = useCallback(
     ({ id }: { id: string }) => {
@@ -233,6 +235,27 @@ function SchemaFieldEditor({
             </Field.BodyColumn>
           </Field>
         ) : null}
+        {fieldDraft.type === FieldType.ValueType ? (
+          <Field horizontal>
+            <Field.LabelColumn>
+              <Field.Label>Value types</Field.Label>
+            </Field.LabelColumn>
+            <Field.BodyColumn>
+              <Field.Control>
+                {canChangeValueTypes ? (
+                  <FieldValueTypeSelector
+                    fieldSelector={fieldSelector}
+                    valueTypes={fieldDraft.valueTypes ?? []}
+                    schemaEditorState={schemaEditorState}
+                    dispatchSchemaEditorState={dispatchSchemaEditorState}
+                  />
+                ) : (
+                  <FieldValueTypeDisplay valueTypes={fieldDraft.valueTypes ?? []} />
+                )}
+              </Field.Control>
+            </Field.BodyColumn>
+          </Field>
+        ) : null}
       </Card.Content>
     </Card>
   );
@@ -249,6 +272,16 @@ function FieldEntityTypeDisplay({ entityTypes }: { entityTypes: string[] }) {
     <TagInput>
       {entityTypes.map((entityType) => (
         <Tag key={entityType}>{entityType}</Tag>
+      ))}
+    </TagInput>
+  );
+}
+
+function FieldValueTypeDisplay({ valueTypes }: { valueTypes: string[] }) {
+  return (
+    <TagInput>
+      {valueTypes.map((valueType) => (
+        <Tag key={valueType}>{valueType}</Tag>
       ))}
     </TagInput>
   );
