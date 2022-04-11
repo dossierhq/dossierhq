@@ -38,6 +38,8 @@ export { SelectDisplay } from './SelectDisplay/SelectDisplay.js';
 export { Table } from './Table/Table.js';
 export { Tag } from './Tag/Tag.js';
 export type { TagProps } from './Tag/Tag.js';
+export { TagInput } from './TagInput/TagInput.js';
+export { TagInputSelector } from './TagInputSelector/TagInputSelector.js';
 export { TagSelector } from './TagSelector/TagSelector.js';
 export { Text } from './Text/Text.js';
 export { TextArea } from './TextArea/TextArea.js';

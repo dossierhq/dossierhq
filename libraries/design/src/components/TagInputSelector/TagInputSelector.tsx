@@ -1,0 +1,73 @@
+import type { Dispatch } from 'react';
+import React, { useCallback } from 'react';
+import { Dropdown } from '../Dropdown/Dropdown.js';
+import type {
+  MultipleSelectorItem,
+  MultipleSelectorState,
+  MultipleSelectorStateAction,
+  TagProps,
+} from '../index.js';
+import { MultipleSelectorStateActions, Tag } from '../index.js';
+import { TagInput } from '../TagInput/TagInput.js';
+
+export interface TagInputSelectorProps<TItem extends MultipleSelectorItem> {
+  clearLabel: string;
+  itemTag: (item: TItem) => { tag: string; color?: TagProps['color'] };
+  state: MultipleSelectorState<TItem>;
+  dispatch: Dispatch<MultipleSelectorStateAction<TItem>>;
+}
+
+export function TagInputSelector<TItem extends MultipleSelectorItem>({
+  clearLabel,
+  itemTag,
+  state,
+  dispatch,
+}: TagInputSelectorProps<TItem>): JSX.Element | null {
+  const { items, selectedIds } = state;
+
+  const selectedItems = items.filter(({ id }) => selectedIds.includes(id));
+
+  const handleItemClick = useCallback(
+    ({ id }: TItem) => dispatch(new MultipleSelectorStateActions.ToggleItem(id)),
+    [dispatch]
+  );
+
+  return (
+    <Dropdown<HTMLDivElement, TItem>
+      items={items}
+      renderItem={(item) => {
+        const { tag, color } = itemTag(item);
+        return (
+          <Tag key={item.id} color={color}>
+            {tag}
+          </Tag>
+        );
+      }}
+      renderTrigger={(ref, onOpenDropDown) => {
+        return (
+          <TagInput ref={ref} onClick={onOpenDropDown}>
+            {selectedItems.map((item) => {
+              const { tag, color } = itemTag(item);
+              return (
+                <Tag key={item.id} color={color}>
+                  {tag}
+                  <Tag.Remove
+                    onClick={() => dispatch(new MultipleSelectorStateActions.ToggleItem(item.id))}
+                  />
+                </Tag>
+              );
+            })}
+            {selectedItems.length > 0 ? (
+              <Tag.Clear
+                onClick={() => dispatch(new MultipleSelectorStateActions.ClearSelection())}
+              >
+                {clearLabel}
+              </Tag.Clear>
+            ) : null}
+          </TagInput>
+        );
+      }}
+      onItemClick={handleItemClick}
+    />
+  );
+}

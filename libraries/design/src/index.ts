@@ -24,6 +24,8 @@ export {
   SelectDisplay,
   Table,
   Tag,
+  TagInput,
+  TagInputSelector,
   TagSelector,
   Text,
   TextArea,
