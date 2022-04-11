@@ -42,7 +42,7 @@ export function SampleEntitiesOptionsCount({
     <ButtonDropdown
       up
       sneaky
-      activeItemId={String(requestedCount)}
+      activeItemIds={[String(requestedCount)]}
       items={items}
       renderItem={(item) => item.count}
       onItemClick={handleCountChange}

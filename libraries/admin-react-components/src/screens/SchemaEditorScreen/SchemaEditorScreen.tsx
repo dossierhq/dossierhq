@@ -92,6 +92,7 @@ export function SchemaEditorScreen({ header, footer }: SchemaEditorScreenProps) 
               <TypeEditorRows
                 key={entityType.name}
                 typeDraft={entityType}
+                schemaEditorState={schemaEditorState}
                 dispatchSchemaEditorState={dispatchSchemaEditorState}
               />
             ))}
@@ -99,6 +100,7 @@ export function SchemaEditorScreen({ header, footer }: SchemaEditorScreenProps) 
               <TypeEditorRows
                 key={valueType.name}
                 typeDraft={valueType}
+                schemaEditorState={schemaEditorState}
                 dispatchSchemaEditorState={dispatchSchemaEditorState}
               />
             ))}
@@ -223,9 +225,11 @@ function AddTypeButton({
 
 function TypeEditorRows({
   typeDraft,
+  schemaEditorState,
   dispatchSchemaEditorState,
 }: {
   typeDraft: SchemaEntityTypeDraft | SchemaValueTypeDraft;
+  schemaEditorState: SchemaEditorState;
   dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>;
 }) {
   return (
@@ -254,6 +258,7 @@ function TypeEditorRows({
       <FullscreenContainer.Row gap={2} paddingVertical={3}>
         <SchemaTypeEditor
           typeDraft={typeDraft}
+          schemaEditorState={schemaEditorState}
           dispatchSchemaEditorState={dispatchSchemaEditorState}
         />
       </FullscreenContainer.Row>

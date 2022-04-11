@@ -33,7 +33,7 @@ export function ConnectionPagingCount({
     <ButtonDropdown
       up
       sneaky
-      activeItemId={String(pagingCount)}
+      activeItemIds={[String(pagingCount)]}
       items={items}
       renderItem={(item) => item.count}
       onItemClick={({ count }) => {

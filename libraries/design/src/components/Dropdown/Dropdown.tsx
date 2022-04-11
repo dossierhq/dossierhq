@@ -13,7 +13,7 @@ export interface DropdownProps<
   TItem extends DropdownItem = DropdownItem
 > {
   items: TItem[];
-  activeItemId?: string;
+  activeItemIds?: string[];
   left?: boolean;
   up?: boolean;
   renderItem: (item: TItem) => React.ReactNode;
@@ -22,7 +22,7 @@ export interface DropdownProps<
 }
 
 export function Dropdown<TTrigger extends HTMLElement, TItem extends DropdownItem>({
-  activeItemId,
+  activeItemIds,
   items,
   left,
   up,
@@ -45,7 +45,7 @@ export function Dropdown<TTrigger extends HTMLElement, TItem extends DropdownIte
       {items.map((item) => (
         <DropdownDisplay.Item
           key={item.id}
-          active={item.id === activeItemId}
+          active={activeItemIds?.includes(item.id)}
           onClick={() => onItemClick?.(item)}
         >
           {renderItem(item)}

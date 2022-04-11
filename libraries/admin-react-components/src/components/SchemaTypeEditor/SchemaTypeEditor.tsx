@@ -1,8 +1,18 @@
 import { FieldType } from '@jonasb/datadata-core';
-import { Button, Card, Checkbox, Field, Input, SelectDisplay } from '@jonasb/datadata-design';
+import {
+  Button,
+  Card,
+  Checkbox,
+  Field,
+  Input,
+  SelectDisplay,
+  Tag,
+  TagInput,
+} from '@jonasb/datadata-design';
 import type { ChangeEvent, Dispatch } from 'react';
 import React, { useCallback } from 'react';
 import type {
+  SchemaEditorState,
   SchemaEditorStateAction,
   SchemaEntityTypeDraft,
   SchemaFieldDraft,
@@ -11,6 +21,7 @@ import type {
   SchemaValueTypeDraft,
 } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer';
 import { SchemaEditorActions } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer';
+import { FieldEntityTypeSelector } from './FieldEntityTypeSelector';
 
 interface FieldTypeItem {
   value: string;
@@ -41,10 +52,15 @@ const FIELD_TYPE_ITEMS: FieldTypeItem[] = [
 
 interface Props {
   typeDraft: SchemaEntityTypeDraft | SchemaValueTypeDraft;
+  schemaEditorState: SchemaEditorState;
   dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>;
 }
 
-export function SchemaTypeEditor({ typeDraft, dispatchSchemaEditorState }: Props) {
+export function SchemaTypeEditor({
+  typeDraft,
+  schemaEditorState,
+  dispatchSchemaEditorState,
+}: Props) {
   const typeSelector = { kind: typeDraft.kind, typeName: typeDraft.name };
   const canChangeAdminOnly = typeDraft.status === 'new'; //TODO too restrictive
   return (
@@ -77,6 +93,7 @@ export function SchemaTypeEditor({ typeDraft, dispatchSchemaEditorState }: Props
           key={fieldDraft.name}
           fieldSelector={{ ...typeSelector, fieldName: fieldDraft.name }}
           fieldDraft={fieldDraft}
+          schemaEditorState={schemaEditorState}
           dispatchSchemaEditorState={dispatchSchemaEditorState}
         />
       ))}
@@ -108,15 +125,18 @@ function AddFieldButton({
 function SchemaFieldEditor({
   fieldSelector,
   fieldDraft,
+  schemaEditorState,
   dispatchSchemaEditorState,
 }: {
   fieldSelector: SchemaFieldSelector;
   fieldDraft: SchemaFieldDraft;
+  schemaEditorState: SchemaEditorState;
   dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>;
 }) {
   const canChangeRequired = fieldDraft.status === 'new'; //TODO too restrictive
   const canChangeType = fieldDraft.status === 'new';
   const canDeleteOrRenameField = fieldDraft.status === 'new'; //TODO too restrictive
+  const canChangeEntityTypes = fieldDraft.status === 'new'; //TODO too restrictive
 
   const handleDropDownItemClick = useCallback(
     ({ id }: { id: string }) => {
@@ -192,6 +212,27 @@ function SchemaFieldEditor({
             </Field.Control>
           </Field.BodyColumn>
         </Field>
+        {fieldDraft.type === FieldType.EntityType ? (
+          <Field horizontal>
+            <Field.LabelColumn>
+              <Field.Label>Entity types</Field.Label>
+            </Field.LabelColumn>
+            <Field.BodyColumn>
+              <Field.Control>
+                {canChangeEntityTypes ? (
+                  <FieldEntityTypeSelector
+                    fieldSelector={fieldSelector}
+                    entityTypes={fieldDraft.entityTypes ?? []}
+                    schemaEditorState={schemaEditorState}
+                    dispatchSchemaEditorState={dispatchSchemaEditorState}
+                  />
+                ) : (
+                  <FieldEntityTypeDisplay entityTypes={fieldDraft.entityTypes ?? []} />
+                )}
+              </Field.Control>
+            </Field.BodyColumn>
+          </Field>
+        ) : null}
       </Card.Content>
     </Card>
   );
@@ -201,6 +242,16 @@ function FieldTypeDisplay({ type, list }: { type: FieldType; list: boolean }) {
   const value = fieldTypeValue(type, list);
   const item = FIELD_TYPE_ITEMS.find((it) => it.value === value);
   return <Input value={item?.display} readOnly />;
+}
+
+function FieldEntityTypeDisplay({ entityTypes }: { entityTypes: string[] }) {
+  return (
+    <TagInput>
+      {entityTypes.map((entityType) => (
+        <Tag key={entityType}>{entityType}</Tag>
+      ))}
+    </TagInput>
+  );
 }
 
 function FieldTypeSelector({

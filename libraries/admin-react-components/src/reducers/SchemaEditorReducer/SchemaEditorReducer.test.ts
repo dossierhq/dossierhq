@@ -664,6 +664,89 @@ describe('AddFieldAction', () => {
   });
 });
 
+describe('ChangeFieldEntityTypesAction', () => {
+  test('change entity types of a new entity field', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        new AdminSchema({
+          entityTypes: [{ name: 'Foo', adminOnly: false, fields: [] }],
+          valueTypes: [],
+        })
+      ),
+      new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'foo'),
+      new SchemaEditorActions.ChangeFieldType(
+        { kind: 'entity', typeName: 'Foo', fieldName: 'foo' },
+        FieldType.EntityType,
+        false
+      ),
+      new SchemaEditorActions.ChangeFieldEntityTypes(
+        { kind: 'entity', typeName: 'Foo', fieldName: 'foo' },
+        ['Foo']
+      )
+    );
+    expect(state).toMatchInlineSnapshot(`
+      Object {
+        "entityTypes": Array [
+          Object {
+            "adminOnly": false,
+            "fields": Array [
+              Object {
+                "entityTypes": Array [
+                  "Foo",
+                ],
+                "list": false,
+                "name": "foo",
+                "required": false,
+                "status": "new",
+                "type": "EntityType",
+              },
+            ],
+            "kind": "entity",
+            "name": "Foo",
+            "status": "changed",
+          },
+        ],
+        "schema": AdminSchema {
+          "spec": Object {
+            "entityTypes": Array [
+              Object {
+                "adminOnly": false,
+                "fields": Array [],
+                "name": "Foo",
+              },
+            ],
+            "valueTypes": Array [],
+          },
+        },
+        "status": "changed",
+        "valueTypes": Array [],
+      }
+    `);
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`
+      Object {
+        "entityTypes": Array [
+          Object {
+            "adminOnly": false,
+            "fields": Array [
+              Object {
+                "entityTypes": Array [
+                  "Foo",
+                ],
+                "name": "foo",
+                "required": false,
+                "type": "EntityType",
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+      }
+    `);
+  });
+});
+
 describe('ChangeFieldRequiredAction', () => {
   test('make new field required in existing entity type', () => {
     const state = reduceSchemaEditorStateActions(

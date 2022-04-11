@@ -29,8 +29,8 @@ Normal.args = {
         One
         <Tag.Remove />
       </Tag>
-      <Tag color="archived">One two three</Tag>
-      <Tag color="archived">One two three</Tag>
+      <Tag color="archived">Two</Tag>
+      <Tag color="archived">Three</Tag>
     </>
   ),
 };
