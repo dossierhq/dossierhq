@@ -200,18 +200,21 @@ function SchemaFieldEditor({
             <Field.Label>Type</Field.Label>
           </Field.LabelColumn>
           <Field.BodyColumn>
-            <Field.Control>
-              {canChangeType ? (
-                <FieldTypeSelector
-                  fieldSelector={fieldSelector}
-                  type={fieldDraft.type}
-                  list={fieldDraft.list}
-                  dispatchSchemaEditorState={dispatchSchemaEditorState}
-                />
-              ) : (
-                <FieldTypeDisplay type={fieldDraft.type} list={fieldDraft.list} />
-              )}
-            </Field.Control>
+            <Field>
+              <Field.Control>
+                {canChangeType ? (
+                  <FieldTypeSelector
+                    fullWidth
+                    fieldSelector={fieldSelector}
+                    type={fieldDraft.type}
+                    list={fieldDraft.list}
+                    dispatchSchemaEditorState={dispatchSchemaEditorState}
+                  />
+                ) : (
+                  <FieldTypeDisplay type={fieldDraft.type} list={fieldDraft.list} />
+                )}
+              </Field.Control>
+            </Field>
           </Field.BodyColumn>
         </Field>
         {fieldDraft.type === FieldType.EntityType ? (
@@ -220,18 +223,20 @@ function SchemaFieldEditor({
               <Field.Label>Entity types</Field.Label>
             </Field.LabelColumn>
             <Field.BodyColumn>
-              <Field.Control>
-                {canChangeEntityTypes ? (
-                  <FieldEntityTypeSelector
-                    fieldSelector={fieldSelector}
-                    entityTypes={fieldDraft.entityTypes ?? []}
-                    schemaEditorState={schemaEditorState}
-                    dispatchSchemaEditorState={dispatchSchemaEditorState}
-                  />
-                ) : (
-                  <FieldEntityTypeDisplay entityTypes={fieldDraft.entityTypes ?? []} />
-                )}
-              </Field.Control>
+              <Field>
+                <Field.Control>
+                  {canChangeEntityTypes ? (
+                    <FieldEntityTypeSelector
+                      fieldSelector={fieldSelector}
+                      entityTypes={fieldDraft.entityTypes ?? []}
+                      schemaEditorState={schemaEditorState}
+                      dispatchSchemaEditorState={dispatchSchemaEditorState}
+                    />
+                  ) : (
+                    <FieldEntityTypeDisplay entityTypes={fieldDraft.entityTypes ?? []} />
+                  )}
+                </Field.Control>
+              </Field>
             </Field.BodyColumn>
           </Field>
         ) : null}
@@ -241,18 +246,20 @@ function SchemaFieldEditor({
               <Field.Label>Value types</Field.Label>
             </Field.LabelColumn>
             <Field.BodyColumn>
-              <Field.Control>
-                {canChangeValueTypes ? (
-                  <FieldValueTypeSelector
-                    fieldSelector={fieldSelector}
-                    valueTypes={fieldDraft.valueTypes ?? []}
-                    schemaEditorState={schemaEditorState}
-                    dispatchSchemaEditorState={dispatchSchemaEditorState}
-                  />
-                ) : (
-                  <FieldValueTypeDisplay valueTypes={fieldDraft.valueTypes ?? []} />
-                )}
-              </Field.Control>
+              <Field>
+                <Field.Control>
+                  {canChangeValueTypes ? (
+                    <FieldValueTypeSelector
+                      fieldSelector={fieldSelector}
+                      valueTypes={fieldDraft.valueTypes ?? []}
+                      schemaEditorState={schemaEditorState}
+                      dispatchSchemaEditorState={dispatchSchemaEditorState}
+                    />
+                  ) : (
+                    <FieldValueTypeDisplay valueTypes={fieldDraft.valueTypes ?? []} />
+                  )}
+                </Field.Control>
+              </Field>
             </Field.BodyColumn>
           </Field>
         ) : null}
@@ -311,7 +318,7 @@ function FieldTypeSelector({
   );
 
   return (
-    <SelectDisplay value={fieldTypeValue(type, list)} onChange={handleChange}>
+    <SelectDisplay fullWidth value={fieldTypeValue(type, list)} onChange={handleChange}>
       {FIELD_TYPE_ITEMS.map(({ value, display }) => (
         <SelectDisplay.Option key={value} value={value}>
           {display}

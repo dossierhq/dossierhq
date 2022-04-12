@@ -34,6 +34,7 @@ export function TagInputSelector<TItem extends MultipleSelectorItem>({
 
   return (
     <Dropdown<HTMLDivElement, TItem>
+      className="is-width-100"
       items={items}
       activeItemIds={selectedIds}
       renderItem={(item) => {

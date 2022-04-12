@@ -30,3 +30,16 @@ Normal.args = {
     </>
   ),
 };
+
+export const Fullscreen = Template.bind({});
+Fullscreen.args = {
+  fullWidth: true,
+  children: (
+    <>
+      <SelectDisplay.Option value="one">One</SelectDisplay.Option>
+      <SelectDisplay.Option value="two">Two</SelectDisplay.Option>
+      <SelectDisplay.Option value="three">Three</SelectDisplay.Option>
+    </>
+  ),
+};
+Fullscreen.parameters = { layout: 'fullscreen' };

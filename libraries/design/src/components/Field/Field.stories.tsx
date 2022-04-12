@@ -67,9 +67,11 @@ Horizontal.args = {
         <Field.Label>Label</Field.Label>
       </Field.LabelColumn>
       <Field.BodyColumn>
-        <Field.Control>
-          <Input />
-        </Field.Control>
+        <Field>
+          <Field.Control>
+            <Input />
+          </Field.Control>
+        </Field>
       </Field.BodyColumn>
     </>
   ),

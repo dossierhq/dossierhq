@@ -63,6 +63,6 @@ Tag.Clear = ({ onClick, children }: TagClearProps) => {
 Tag.Clear.displayName = 'Tag.Clear';
 
 Tag.Group = ({ children }: TagGroupProps) => {
-  return <div className="field is-grouped">{children}</div>;
+  return <div className="field is-grouped is-grouped-multiline">{children}</div>;
 };
 Tag.Group.displayName = 'Tag.Group';
