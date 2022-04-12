@@ -204,7 +204,6 @@ function SchemaFieldEditor({
               <Field.Control>
                 {canChangeType ? (
                   <FieldTypeSelector
-                    fullWidth
                     fieldSelector={fieldSelector}
                     type={fieldDraft.type}
                     list={fieldDraft.list}
