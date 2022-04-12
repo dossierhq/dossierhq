@@ -12,6 +12,7 @@ export interface DropdownProps<
   TTrigger extends HTMLElement,
   TItem extends DropdownItem = DropdownItem
 > {
+  className?: string;
   items: TItem[];
   activeItemIds?: string[];
   left?: boolean;
@@ -22,6 +23,7 @@ export interface DropdownProps<
 }
 
 export function Dropdown<TTrigger extends HTMLElement, TItem extends DropdownItem>({
+  className,
   activeItemIds,
   items,
   left,
@@ -41,7 +43,7 @@ export function Dropdown<TTrigger extends HTMLElement, TItem extends DropdownIte
   const trigger = renderTrigger(triggerRef, handleOpen);
 
   return (
-    <DropdownDisplay active={active} up={up} left={left} trigger={trigger}>
+    <DropdownDisplay className={className} active={active} up={up} left={left} trigger={trigger}>
       {items.map((item) => (
         <DropdownDisplay.Item
           key={item.id}

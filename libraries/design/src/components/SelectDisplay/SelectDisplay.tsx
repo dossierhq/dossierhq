@@ -5,8 +5,10 @@ import type {
   SelectHTMLAttributes,
 } from 'react';
 import React from 'react';
+import { toClassName } from '../../utils/ClassNameUtils';
 
 export interface SelectDisplayProps {
+  fullWidth?: boolean;
   value?: SelectHTMLAttributes<HTMLSelectElement>['value'];
   onChange?: React.ChangeEventHandler<HTMLSelectElement>;
   children: ReactNode;
@@ -22,13 +24,14 @@ interface SelectDisplayComponent extends FunctionComponent<SelectDisplayProps> {
 }
 
 export const SelectDisplay: SelectDisplayComponent = ({
+  fullWidth,
   value,
   onChange,
   children,
 }: SelectDisplayProps) => {
   return (
-    <div className="select">
-      <select value={value} onChange={onChange}>
+    <div className={toClassName('select', fullWidth && 'is-width-100')}>
+      <select className={fullWidth ? 'is-width-100' : undefined} value={value} onChange={onChange}>
         {children}
       </select>
     </div>

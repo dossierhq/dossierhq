@@ -35,15 +35,10 @@ Normal.args = {
   ),
 };
 
-export const ManyTags = Template.bind({});
-ManyTags.args = {
-  children: (
-    <>
-      <Tag color="archived">One two three</Tag>
-      <Tag color="archived">One wlekjlwerkjwelkrj lksdjf</Tag>
-      <Tag color="archived">One wlekjlwerkjwelkrj lksdjf</Tag>
-      <Tag color="archived">One wlekjlwerkjwelkrj lksdjf</Tag>
-      <Tag color="archived">One wlekjlwerkjwelkrj lksdjf</Tag>
-    </>
-  ),
+export const Empty = Template.bind({});
+Empty.args = {};
+
+export const TwentyTags = Template.bind({});
+TwentyTags.args = {
+  children: [...Array(20).keys()].map((it) => <Tag key={it}>{`Tag ${it}`}</Tag>),
 };

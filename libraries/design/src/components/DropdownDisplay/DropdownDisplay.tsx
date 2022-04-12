@@ -4,6 +4,7 @@ import { toClassName } from '../../utils/ClassNameUtils.js';
 
 export interface DropdownDisplayProps {
   id?: string;
+  className?: string;
   active?: boolean;
   up?: boolean;
   left?: boolean;
@@ -23,6 +24,7 @@ interface DropdownDisplayComponent extends FunctionComponent<DropdownDisplayProp
 
 export const DropdownDisplay: DropdownDisplayComponent = ({
   id,
+  className,
   active,
   up,
   left,
@@ -32,9 +34,15 @@ export const DropdownDisplay: DropdownDisplayComponent = ({
   return (
     <div
       id={id}
-      className={toClassName('dropdown', active && 'is-active', up && 'is-up', left && 'is-right')}
+      className={toClassName(
+        'dropdown',
+        active && 'is-active',
+        up && 'is-up',
+        left && 'is-right',
+        className
+      )}
     >
-      <div className="dropdown-trigger">{trigger}</div>
+      <div className="dropdown-trigger is-width-100">{trigger}</div>
       <div className="dropdown-menu" role="menu">
         <div className="dropdown-content">{children}</div>
       </div>

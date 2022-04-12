@@ -68,3 +68,11 @@ Status.args = {
     </Tag>,
   ],
 };
+
+export const TwentyAndClear = Template.bind({});
+TwentyAndClear.args = {
+  children: [
+    ...[...Array(20).keys()].map((it) => <Tag key={it}>{`Tag ${it}`}</Tag>),
+    <Tag.Clear key="clear">Clear</Tag.Clear>,
+  ],
+};
