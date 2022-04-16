@@ -4,6 +4,7 @@ import {
   type PgDatabaseAdapter,
 } from '@jonasb/datadata-database-adapter-postgres-pg';
 import {
+  createDatabase,
   createSqlite3Adapter,
   type Sqlite3DatabaseAdapter,
 } from '@jonasb/datadata-database-adapter-sqlite-sqlite3';
@@ -14,6 +15,7 @@ import {
 } from '@jonasb/datadata-server';
 import fs from 'fs/promises';
 import { Client } from 'pg';
+import { Database } from 'sqlite3';
 import schemaSpecification from './schema.json';
 
 export type DatabaseAdapterSelector =
@@ -78,7 +80,13 @@ async function createSqliteDatabaseAdapter(databasePath: string) {
     // ignore
   }
 
-  const adapterResult = await createSqlite3Adapter({ logger: NoOpLogger }, databasePath);
+  const context = { logger: NoOpLogger };
+  const databaseResult = await createDatabase(context, Database, {
+    filename: databasePath,
+    journalMode: 'wal',
+  });
+  if (databaseResult.isError()) return databaseResult;
+  const adapterResult = await createSqlite3Adapter(context, databaseResult.value);
   return adapterResult;
 }
 

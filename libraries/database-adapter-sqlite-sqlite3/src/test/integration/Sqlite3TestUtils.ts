@@ -1,9 +1,14 @@
+import type { ErrorType, PromiseResult } from '@jonasb/datadata-core';
+import { NoOpLogger } from '@jonasb/datadata-core';
+import type { DatabaseAdapter } from '@jonasb/datadata-database-adapter';
 import {
   createTestAuthorizationAdapter,
   IntegrationTestSchemaSpecifciationUpdate,
 } from '@jonasb/datadata-database-adapter-test-integration';
 import { createServer } from '@jonasb/datadata-server';
-import { createSqlite3TestAdapter } from '../TestUtils';
+import { Database } from 'sqlite3';
+import { createSqlite3Adapter } from '../../Sqlite3Adapter';
+import { createDatabase } from '../../SqliteUtils';
 
 export async function initializeSqlite3Server(filename: string | ':memory:', mode?: number) {
   const databaseAdapterResult = await createSqlite3TestAdapter(filename, mode);
@@ -29,4 +34,18 @@ export async function initializeSqlite3Server(filename: string | ':memory:', mod
   if (schemaResult.isError()) return schemaResult;
 
   return createServerResult;
+}
+
+async function createSqlite3TestAdapter(
+  filename: string | ':memory:',
+  mode?: number
+): PromiseResult<DatabaseAdapter, ErrorType.BadRequest | ErrorType.Generic> {
+  const context = { logger: NoOpLogger };
+  const databaseResult = await createDatabase(context, Database, {
+    filename,
+    mode,
+    journalMode: 'wal',
+  });
+  if (databaseResult.isError()) return databaseResult;
+  return await createSqlite3Adapter(context, databaseResult.value);
 }

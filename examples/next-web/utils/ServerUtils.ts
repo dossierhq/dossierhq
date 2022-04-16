@@ -1,10 +1,14 @@
 import type { AdminClient, ErrorType, PromiseResult, PublishedClient } from '@jonasb/datadata-core';
 import { AdminSchema, NoOpLogger, notOk, ok } from '@jonasb/datadata-core';
 import { createPostgresAdapter } from '@jonasb/datadata-database-adapter-postgres-pg';
-import { createSqlite3Adapter } from '@jonasb/datadata-database-adapter-sqlite-sqlite3';
+import {
+  createDatabase,
+  createSqlite3Adapter,
+} from '@jonasb/datadata-database-adapter-sqlite-sqlite3';
 import type { AuthorizationAdapter, Server } from '@jonasb/datadata-server';
 import { createServer, NoneAndSubjectAuthorizationAdapter } from '@jonasb/datadata-server';
 import type { NextApiRequest } from 'next';
+import { Database } from 'sqlite3';
 import SchemaSpec from './schema.json';
 
 const validKeys: readonly string[] = ['none', 'subject'];
@@ -50,7 +54,7 @@ function getDefaultAuthKeysFromHeaders(req: NextApiRequest) {
 export async function getServerConnection(): Promise<{ server: Server; schema: AdminSchema }> {
   if (!serverConnectionPromise) {
     serverConnectionPromise = (async () => {
-      const databaseAdapter = await createDatabaseAdapter();
+      const databaseAdapter = (await createDatabaseAdapter()).valueOrThrow();
       const serverResult = await createServer({
         databaseAdapter,
         authorizationAdapter: createAuthenticationAdapter(),
@@ -78,17 +82,21 @@ export async function getServerConnection(): Promise<{ server: Server; schema: A
 
 async function createDatabaseAdapter() {
   if (process.env.DATABASE_SQLITE_FILE) {
-    const databaseAdapterResult = await createSqlite3Adapter(
-      { logger: NoOpLogger },
-      process.env.DATABASE_SQLITE_FILE
-    );
-    if (databaseAdapterResult.isError()) throw databaseAdapterResult.toError();
-    return databaseAdapterResult.value;
+    const context = { logger: NoOpLogger };
+    const databaseResult = await createDatabase(context, Database, {
+      filename: process.env.DATABASE_SQLITE_FILE,
+      journalMode: 'wal',
+    });
+    if (databaseResult.isError()) return databaseResult;
+    const databaseAdapterResult = await createSqlite3Adapter(context, databaseResult.value);
+    return databaseAdapterResult;
   }
 
-  return createPostgresAdapter({
-    connectionString: process.env.DATABASE_URL!,
-  });
+  return ok(
+    createPostgresAdapter({
+      connectionString: process.env.DATABASE_URL!,
+    })
+  );
 }
 
 function createAuthenticationAdapter(): AuthorizationAdapter {

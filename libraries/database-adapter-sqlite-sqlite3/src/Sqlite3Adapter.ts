@@ -6,8 +6,8 @@ import type {
   UniqueConstraint,
 } from '@jonasb/datadata-database-adapter-sqlite-core';
 import { createSqliteDatabaseAdapterAdapter } from '@jonasb/datadata-database-adapter-sqlite-core';
-import type { Database, Statement } from 'sqlite3';
-import sqlite3, { OPEN_CREATE, OPEN_READWRITE } from 'sqlite3';
+import type { Database } from 'sqlite3';
+import { closeDatabase, queryAll } from './SqliteUtils';
 
 export type Sqlite3DatabaseAdapter = DatabaseAdapter;
 
@@ -18,57 +18,16 @@ interface Sqlite3Error {
   stack: string;
 }
 
-function open(filename: string | ':memory:', mode?: number) {
-  return new Promise<Database>((resolve, reject) => {
-    const db = new sqlite3.Database(
-      filename,
-      mode ?? OPEN_READWRITE | OPEN_CREATE,
-      (error: Error | null) => {
-        if (error) {
-          reject(error);
-        }
-        resolve(db);
-      }
-    );
-  });
-}
-
-function disconnect(db: Database) {
-  return new Promise((resolve, reject) =>
-    db.close((error: Error | null) => {
-      if (error) {
-        reject(error);
-      }
-      resolve(undefined);
-    })
-  );
-}
-
-function all<R>(db: Database, query: string, values: unknown[] = []) {
-  return new Promise<R[]>((resolve, reject) =>
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    db.all(query, values, function (this: Statement, error: Error | null, rows: any[]) {
-      if (error) {
-        reject(error);
-      }
-      resolve(rows as R[]);
-    })
-  );
-}
-
 export async function createSqlite3Adapter(
   context: Context,
-  filename: string | ':memory:',
-  mode?: number
+  database: Database
 ): PromiseResult<Sqlite3DatabaseAdapter, ErrorType.BadRequest | ErrorType.Generic> {
-  const db = await open(filename, mode);
-
   const adapter: SqliteDatabaseAdapter = {
     disconnect: async () => {
-      await disconnect(db);
+      await closeDatabase(database);
     },
     query: async <R>(query: string, values: ColumnValue[] | undefined) => {
-      return await all<R>(db, query, values);
+      return await queryAll<R>(database, query, values);
     },
 
     isFtsVirtualTableConstraintFailed,
