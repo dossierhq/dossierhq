@@ -87,3 +87,19 @@ edit entity	sqlite	61821d44	61821d44-sqlite-edit-entity	3.856489	1.27	2.614407	3
 archive entity	sqlite	61821d44	61821d44-sqlite-archive-entity	2.697273	1.00	1.858604	2.508806	3.185508	3.478609	20.119149
 get admin entity	sqlite	61821d44	61821d44-sqlite-get-admin-entity	0.335539	0.39	0.2612	0.3101	0.332401	0.343001	10.359025
 search admin entities (any, first 50)	sqlite	61821d44	61821d44-sqlite-search-admin-entities-any-first-50	5.055553	1.96	3.91071	4.483111	7.310418	10.293026	25.221062
+create entity	postgres	7c131e47	7c131e47-postgres-create-entity	2.999426	0.94	1.94098	2.885871	3.84366	4.743852	10.656089
+create entity organization	postgres	7c131e47	7c131e47-postgres-create-entity-organization	2.316886	0.67	1.830882	2.149879	2.820772	3.321967	9.9343
+create entity person	postgres	7c131e47	7c131e47-postgres-create-entity-person	2.659724	0.55	1.862981	2.606573	2.746572	3.085668	7.440824
+create and publish entity	postgres	7c131e47	7c131e47-postgres-create-publish-entity	5.161094	0.76	4.399655	5.151847	5.534043	6.086538	13.480762
+edit entity	postgres	7c131e47	7c131e47-postgres-edit-entity	3.115646	1.16	2.469175	3.124367	3.390465	3.86946	33.306273
+archive entity	postgres	7c131e47	7c131e47-postgres-archive-entity	1.703701	0.35	1.556385	1.644684	1.740083	1.794481	5.87814
+get admin entity	postgres	7c131e47	7c131e47-postgres-get-admin-entity	0.648874	0.18	0.583694	0.633894	0.658493	0.667694	4.310856
+search admin entities (any, first 50)	postgres	7c131e47	7c131e47-postgres-search-admin-entities-any-first-50	5.527688	1.14	4.95905	5.165747	7.541724	8.361115	19.241807
+create entity	sqlite	7c131e47	7c131e47-sqlite-create-entity	1.820846	1.14	1.184688	1.585783	1.96328	3.183368	11.581481
+create entity organization	sqlite	7c131e47	7c131e47-sqlite-create-entity-organization	1.528897	1.02	1.136988	1.340687	1.646683	2.558674	20.356492
+create entity person	sqlite	7c131e47	7c131e47-sqlite-create-entity-person	1.706729	0.75	1.15069	1.630586	1.781785	1.975684	11.467805
+create and publish entity	sqlite	7c131e47	7c131e47-sqlite-create-publish-entity	3.274532	1.23	2.532079	3.052969	3.522065	5.206956	23.765802
+edit entity	sqlite	7c131e47	7c131e47-sqlite-edit-entity	2.020123	0.79	1.421586	1.904381	2.095979	2.374076	11.941779
+archive entity	sqlite	7c131e47	7c131e47-sqlite-archive-entity	1.229486	0.61	0.885391	1.155488	1.239787	1.291187	9.836401
+get admin entity	sqlite	7c131e47	7c131e47-sqlite-get-admin-entity	0.256948	0.23	0.222398	0.238898	0.254198	0.260198	6.040441
+search admin entities (any, first 50)	sqlite	7c131e47	7c131e47-sqlite-search-admin-entities-any-first-50	4.795455	1.42	4.228358	4.319357	7.19263	8.14982	22.732578
