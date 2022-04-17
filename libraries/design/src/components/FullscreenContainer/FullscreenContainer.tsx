@@ -25,10 +25,32 @@ export interface FullscreenContainerScrollableRowProps {
   children: React.ReactNode;
 }
 
+interface FullscreenContainerColumnsProps {
+  fillHeight?: boolean;
+  children: React.ReactNode;
+}
+
+interface FullscreenContainerColumnProps {
+  width?: keyof typeof COLUMN_WIDTHS;
+  children: React.ReactNode;
+}
+
+interface FullscreenContainerScrollableColumnProps {
+  width?: keyof typeof COLUMN_WIDTHS;
+  children: React.ReactNode;
+}
+
 interface FullscreenContainerComponent extends FunctionComponent<FullscreenContainerProps> {
   Row: FunctionComponent<FullscreenContainerRowProps>;
   ScrollableRow: FunctionComponent<FullscreenContainerScrollableRowProps>;
+  Columns: FunctionComponent<FullscreenContainerColumnsProps>;
+  Column: FunctionComponent<FullscreenContainerColumnProps>;
+  ScrollableColumn: FunctionComponent<FullscreenContainerScrollableColumnProps>;
 }
+
+const COLUMN_WIDTHS = {
+  '3/12': 'is-3',
+};
 
 export const FullscreenContainer: FullscreenContainerComponent = ({
   children,
@@ -93,3 +115,29 @@ FullscreenContainer.ScrollableRow = ({
   );
 };
 FullscreenContainer.ScrollableRow.displayName = 'FullscreenContainer.ScrollableRow';
+
+FullscreenContainer.Columns = ({ fillHeight, children }: FullscreenContainerColumnsProps) => {
+  return (
+    <div className={toClassName('columns', fillHeight && 'is-height-0 is-flex-grow-1')}>
+      {children}
+    </div>
+  );
+};
+FullscreenContainer.Columns.displayName = 'FullscreenContainer.Column';
+
+FullscreenContainer.Column = ({ width, children }: FullscreenContainerColumnProps) => {
+  return <div className={toClassName('column', width && COLUMN_WIDTHS[width])}>{children}</div>;
+};
+FullscreenContainer.Column.displayName = 'FullscreenContainer.Columns';
+
+FullscreenContainer.ScrollableColumn = ({
+  width,
+  children,
+}: FullscreenContainerScrollableColumnProps) => {
+  return (
+    <Scrollable className={toClassName('column', width && COLUMN_WIDTHS[width])} noShadows>
+      {children}
+    </Scrollable>
+  );
+};
+FullscreenContainer.ScrollableColumn.displayName = 'FullscreenContainer.ScrollableColumn';
