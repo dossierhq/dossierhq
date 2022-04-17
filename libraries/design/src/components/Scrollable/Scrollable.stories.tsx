@@ -40,6 +40,20 @@ Normal.args = {
   ),
 };
 
+export const NoShadows = Template.bind({});
+NoShadows.args = {
+  noShadows: true,
+  children: (
+    <div
+      style={{
+        background:
+          'repeating-linear-gradient(45deg, burlywood, burlywood 10px, transparent 10px, transparent 40px)',
+        height: '300vh',
+      }}
+    />
+  ),
+};
+
 export const NoScroll = Template.bind({});
 NoScroll.args = {
   children: (

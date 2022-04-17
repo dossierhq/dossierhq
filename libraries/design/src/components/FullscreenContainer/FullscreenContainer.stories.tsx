@@ -131,3 +131,81 @@ RowLayout.args = {
     </>
   ),
 };
+
+export const TwoScrollableColumns = Template.bind({});
+TwoScrollableColumns.args = {
+  children: (
+    <>
+      <FullscreenContainer.Row>
+        <div style={{ height: 100 }} />
+      </FullscreenContainer.Row>
+      <FullscreenContainer.Columns fillHeight>
+        <FullscreenContainer.ScrollableColumn width="3/12">
+          <div
+            style={{
+              background:
+                'repeating-linear-gradient(45deg, burlywood, burlywood 10px, transparent 10px, transparent 40px)',
+              height: '300vh',
+            }}
+          />
+        </FullscreenContainer.ScrollableColumn>
+        <FullscreenContainer.ScrollableColumn>
+          <div
+            style={{
+              background:
+                'repeating-linear-gradient(-45deg, burlywood, burlywood 10px, transparent 10px, transparent 40px)',
+              height: '300vh',
+            }}
+          />
+        </FullscreenContainer.ScrollableColumn>
+      </FullscreenContainer.Columns>
+      <FullscreenContainer.Row>
+        <div style={{ height: 100 }} />
+      </FullscreenContainer.Row>
+    </>
+  ),
+};
+
+export const ThreeScrollableColumns = Template.bind({});
+ThreeScrollableColumns.args = {
+  children: (
+    <>
+      <FullscreenContainer.Row>
+        <div style={{ height: 100 }} />
+      </FullscreenContainer.Row>
+      <FullscreenContainer.Columns fillHeight>
+        <FullscreenContainer.ScrollableColumn width="3/12">
+          <div
+            style={{
+              background:
+                'repeating-linear-gradient(45deg, burlywood, burlywood 10px, transparent 10px, transparent 40px)',
+              height: '300vh',
+            }}
+          />
+        </FullscreenContainer.ScrollableColumn>
+        <FullscreenContainer.ScrollableColumn>
+          <div
+            style={{
+              background:
+                'repeating-linear-gradient(-45deg, burlywood, burlywood 10px, transparent 10px, transparent 40px)',
+              height: '300vh',
+            }}
+          />
+        </FullscreenContainer.ScrollableColumn>
+        <FullscreenContainer.ScrollableColumn width="3/12">
+          <div
+            style={{
+              background:
+                'repeating-linear-gradient(45deg, burlywood, burlywood 10px, transparent 10px, transparent 40px)',
+              height: '300vh',
+            }}
+          />
+        </FullscreenContainer.ScrollableColumn>
+      </FullscreenContainer.Columns>
+      <FullscreenContainer.Row>
+        <div style={{ height: 100 }} />
+      </FullscreenContainer.Row>
+    </>
+  ),
+};
+
