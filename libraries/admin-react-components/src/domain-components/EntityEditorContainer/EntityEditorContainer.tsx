@@ -1,4 +1,4 @@
-import { useWindowEventListener } from '@jonasb/datadata-design';
+import { findAscendantHTMLElement, useWindowEventListener } from '@jonasb/datadata-design';
 import React, { useContext } from 'react';
 import {
   EntityEditor,
@@ -9,7 +9,6 @@ import {
   SetActiveEntityAction,
 } from '../..';
 import { joinClassNames } from '../../utils/ClassNameUtils';
-import { findAscendantElement } from '../../utils/DOMUtils';
 
 export interface EntityEditorContainerProps {
   className?: string;
@@ -39,7 +38,7 @@ function useEntityEditorFocused() {
   const dispatchEditorState = useContext(EntityEditorDispatchContext);
   useWindowEventListener('focusin', (event) => {
     if (event.target instanceof HTMLElement) {
-      const editorElement = findAscendantElement(event.target, (el) => !!el.dataset.entityid);
+      const editorElement = findAscendantHTMLElement(event.target, (el) => !!el.dataset.entityid);
       const focusedEntityId = editorElement?.dataset.entityid;
       if (focusedEntityId && focusedEntityId !== activeEntityId) {
         dispatchEditorState(new SetActiveEntityAction(focusedEntityId));

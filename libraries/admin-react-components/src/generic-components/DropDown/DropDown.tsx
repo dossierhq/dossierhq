@@ -1,7 +1,7 @@
 import { useKeyHandler } from '@jonasb/datadata-design';
 import React, { useCallback, useState } from 'react';
 import { Button, Icon, IconButton } from '../..';
-import { useWindowClick } from '../../utils/MouseUtils';
+import { useLegacyWindowClick } from '../../utils/MouseUtils';
 
 export interface DropDownProps<TItem extends DropDownItem = DropDownItem> {
   id: string;
@@ -28,7 +28,7 @@ export function DropDown<TItem extends DropDownItem>({
   const [isActive, setActive] = useState(false);
   const handleClose = useCallback(() => setActive(false), [setActive]);
   useKeyHandler(['Escape'], handleClose, isActive);
-  useWindowClick(id, handleClose, isActive);
+  useLegacyWindowClick(id, handleClose, isActive);
 
   return (
     <div className={className}>

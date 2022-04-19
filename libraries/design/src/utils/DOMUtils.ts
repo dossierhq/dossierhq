@@ -14,3 +14,14 @@ export function findAscendantElement(
 function isElementNode(node: Node): node is Element {
   return node.nodeType === Node.ELEMENT_NODE;
 }
+
+export function findAscendantHTMLElement(
+  node: Node,
+  predicate: (element: HTMLElement) => boolean
+): HTMLElement | null {
+  const result = findAscendantElement(
+    node,
+    (element) => element instanceof HTMLElement && predicate(element)
+  );
+  return result instanceof HTMLElement ? result : null;
+}
