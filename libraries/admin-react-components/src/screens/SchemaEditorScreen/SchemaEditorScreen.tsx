@@ -47,10 +47,14 @@ export function SchemaEditorScreen({ header, footer }: SchemaEditorScreenProps) 
     }
   }, [schema]);
 
-  useSelectorFocused(dispatchSchemaEditorState);
+  useSelectorFocused(schemaEditorState, dispatchSchemaEditorState);
 
   const isEmpty =
     schemaEditorState.entityTypes.length === 0 && schemaEditorState.valueTypes.length === 0;
+
+  const scrollToId = schemaEditorState.activeSelector
+    ? `${schemaEditorState.activeSelector.typeName}-header`
+    : undefined;
 
   return (
     <FullscreenContainer>
@@ -77,9 +81,15 @@ export function SchemaEditorScreen({ header, footer }: SchemaEditorScreenProps) 
           >
             Review &amp; save schema
           </Button>
-          <SchemaMenu schemaEditorState={schemaEditorState} />
+          <SchemaMenu
+            schemaEditorState={schemaEditorState}
+            dispatchEditorState={dispatchSchemaEditorState}
+          />
         </FullscreenContainer.ScrollableColumn>
-        <FullscreenContainer.ScrollableColumn>
+        <FullscreenContainer.ScrollableColumn
+          scrollToId={scrollToId}
+          scrollToIdSignal={schemaEditorState.activeSelectorScrollSignal}
+        >
           {isEmpty ? (
             <EmptyStateMessage
               icon="add"
@@ -130,7 +140,7 @@ function TypeEditorRows({
 }) {
   return (
     <>
-      <FullscreenContainer.Row sticky>
+      <FullscreenContainer.Row id={`${typeDraft.name}-header`} sticky>
         <Level>
           <Level.Left>
             <Level.Item>
@@ -162,7 +172,12 @@ function TypeEditorRows({
   );
 }
 
-function useSelectorFocused(dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>) {
+function useSelectorFocused(
+  schemaEditorState: SchemaEditorState,
+  dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>
+) {
+  const { activeSelectorScrollSignal } = schemaEditorState;
+
   const listener = useCallback(
     (event: FocusEvent) => {
       if (event.target instanceof HTMLElement) {
@@ -177,7 +192,8 @@ function useSelectorFocused(dispatchSchemaEditorState: Dispatch<SchemaEditorStat
         if ((kind === 'entity' || kind === 'value') && typeName) {
           dispatchSchemaEditorState(
             new SchemaEditorActions.SetActiveSelector(
-              fieldName ? { kind, typeName, fieldName } : { kind, typeName }
+              fieldName ? { kind, typeName, fieldName } : { kind, typeName },
+              false
             )
           );
         }
@@ -186,4 +202,10 @@ function useSelectorFocused(dispatchSchemaEditorState: Dispatch<SchemaEditorStat
     [dispatchSchemaEditorState]
   );
   useWindowEventListener('focusin', listener);
+
+  useEffect(() => {
+    if (activeSelectorScrollSignal > 0) {
+      window.blur();
+    }
+  }, [activeSelectorScrollSignal]);
 }

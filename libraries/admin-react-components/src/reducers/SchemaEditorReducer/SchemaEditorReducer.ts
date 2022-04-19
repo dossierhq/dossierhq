@@ -50,6 +50,7 @@ export interface SchemaEditorState {
   valueTypes: SchemaValueTypeDraft[];
 
   activeSelector: null | SchemaFieldSelector | SchemaTypeSelector;
+  activeSelectorScrollSignal: number;
 }
 
 export interface SchemaEditorStateAction {
@@ -63,6 +64,7 @@ export function initializeSchemaEditorState(): SchemaEditorState {
     entityTypes: [],
     valueTypes: [],
     activeSelector: null,
+    activeSelectorScrollSignal: 0,
   };
 }
 
@@ -353,16 +355,25 @@ class RenameFieldAction extends FieldAction {
 
 class SetActiveSelectorAction implements SchemaEditorStateAction {
   selector: SchemaTypeSelector | SchemaFieldSelector | null;
+  increaseScrollSignal: boolean;
 
-  constructor(selector: SchemaTypeSelector | SchemaFieldSelector | null) {
+  constructor(
+    selector: SchemaTypeSelector | SchemaFieldSelector | null,
+    increaseScrollSignal: boolean
+  ) {
     this.selector = selector;
+    this.increaseScrollSignal = increaseScrollSignal;
   }
 
   reduce(state: Readonly<SchemaEditorState>): Readonly<SchemaEditorState> {
     if (isEqual(state.activeSelector, this.selector)) {
       return state;
     }
-    return { ...state, activeSelector: this.selector };
+    let { activeSelectorScrollSignal } = state;
+    if (this.increaseScrollSignal) {
+      activeSelectorScrollSignal += 1;
+    }
+    return { ...state, activeSelector: this.selector, activeSelectorScrollSignal };
   }
 }
 
