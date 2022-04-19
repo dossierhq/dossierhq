@@ -197,15 +197,10 @@ function useSelectorFocused(
         );
         const kind = selectorElement?.dataset.kind;
         const typeName = selectorElement?.dataset.typename;
-        const fieldName = selectorElement?.dataset.fieldname;
 
         if ((kind === 'entity' || kind === 'value') && typeName) {
           dispatchSchemaEditorState(
-            new SchemaEditorActions.SetActiveSelector(
-              fieldName ? { kind, typeName, fieldName } : { kind, typeName },
-              true,
-              false
-            )
+            new SchemaEditorActions.SetActiveSelector({ kind, typeName }, true, false)
           );
         }
       }
