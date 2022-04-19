@@ -50,7 +50,8 @@ export interface SchemaEditorState {
   valueTypes: SchemaValueTypeDraft[];
 
   activeSelector: null | SchemaFieldSelector | SchemaTypeSelector;
-  activeSelectorScrollSignal: number;
+  activeSelectorEditorScrollSignal: number;
+  activeSelectorMenuScrollSignal: number;
 }
 
 export interface SchemaEditorStateAction {
@@ -64,7 +65,8 @@ export function initializeSchemaEditorState(): SchemaEditorState {
     entityTypes: [],
     valueTypes: [],
     activeSelector: null,
-    activeSelectorScrollSignal: 0,
+    activeSelectorMenuScrollSignal: 0,
+    activeSelectorEditorScrollSignal: 0,
   };
 }
 
@@ -189,7 +191,8 @@ class AddTypeAction implements SchemaEditorStateAction {
     const newState: SchemaEditorState = {
       ...state,
       activeSelector: { kind: this.kind, typeName: this.name },
-      activeSelectorScrollSignal: state.activeSelectorScrollSignal + 1,
+      activeSelectorMenuScrollSignal: state.activeSelectorMenuScrollSignal + 1,
+      activeSelectorEditorScrollSignal: state.activeSelectorEditorScrollSignal + 1,
     };
     if (this.kind === 'entity') {
       newState.entityTypes = [...newState.entityTypes, { ...typeDraft, kind: 'entity' }];
@@ -359,25 +362,36 @@ class RenameFieldAction extends FieldAction {
 
 class SetActiveSelectorAction implements SchemaEditorStateAction {
   selector: SchemaTypeSelector | SchemaFieldSelector | null;
-  increaseScrollSignal: boolean;
+  increaseMenuScrollSignal: boolean;
+  increaseEditorScrollSignal: boolean;
 
   constructor(
     selector: SchemaTypeSelector | SchemaFieldSelector | null,
-    increaseScrollSignal: boolean
+    increaseMenuScrollSignal: boolean,
+    increaseEditorScrollSignal: boolean
   ) {
     this.selector = selector;
-    this.increaseScrollSignal = increaseScrollSignal;
+    this.increaseMenuScrollSignal = increaseMenuScrollSignal;
+    this.increaseEditorScrollSignal = increaseEditorScrollSignal;
   }
 
   reduce(state: Readonly<SchemaEditorState>): Readonly<SchemaEditorState> {
     if (isEqual(state.activeSelector, this.selector)) {
       return state;
     }
-    let { activeSelectorScrollSignal } = state;
-    if (this.increaseScrollSignal) {
-      activeSelectorScrollSignal += 1;
+    let { activeSelectorMenuScrollSignal, activeSelectorEditorScrollSignal } = state;
+    if (this.increaseMenuScrollSignal) {
+      activeSelectorMenuScrollSignal += 1;
     }
-    return { ...state, activeSelector: this.selector, activeSelectorScrollSignal };
+    if (this.increaseEditorScrollSignal) {
+      activeSelectorEditorScrollSignal += 1;
+    }
+    return {
+      ...state,
+      activeSelector: this.selector,
+      activeSelectorMenuScrollSignal,
+      activeSelectorEditorScrollSignal,
+    };
   }
 }
 
