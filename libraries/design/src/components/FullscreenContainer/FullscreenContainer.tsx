@@ -30,12 +30,15 @@ interface FullscreenContainerColumnsProps {
   children: React.ReactNode;
 }
 
-interface FullscreenContainerColumnProps {
+interface FullscreenContainerColumnProps extends PaddingProps, GapProps, FlexContainerProps {
   width?: keyof typeof COLUMN_WIDTHS;
   children: React.ReactNode;
 }
 
-interface FullscreenContainerScrollableColumnProps {
+interface FullscreenContainerScrollableColumnProps
+  extends PaddingProps,
+    GapProps,
+    FlexContainerProps {
   width?: keyof typeof COLUMN_WIDTHS;
   children: React.ReactNode;
 }
@@ -118,26 +121,41 @@ FullscreenContainer.ScrollableRow.displayName = 'FullscreenContainer.ScrollableR
 
 FullscreenContainer.Columns = ({ fillHeight, children }: FullscreenContainerColumnsProps) => {
   return (
-    <div className={toClassName('columns', fillHeight && 'is-height-0 is-flex-grow-1')}>
+    <div className={toClassName('columns m-0', fillHeight && 'is-height-0 is-flex-grow-1')}>
       {children}
     </div>
   );
 };
 FullscreenContainer.Columns.displayName = 'FullscreenContainer.Column';
 
-FullscreenContainer.Column = ({ width, children }: FullscreenContainerColumnProps) => {
-  return <div className={toClassName('column', width && COLUMN_WIDTHS[width])}>{children}</div>;
+FullscreenContainer.Column = ({ width, children, ...props }: FullscreenContainerColumnProps) => {
+  const className = toClassName(
+    'column',
+    width && COLUMN_WIDTHS[width],
+    toFlexContainerClassName(props),
+    toSpacingClassName(props)
+  );
+  return <div className={className}>{children}</div>;
 };
 FullscreenContainer.Column.displayName = 'FullscreenContainer.Columns';
+FullscreenContainer.Column.defaultProps = { flexDirection: 'column' };
 
 FullscreenContainer.ScrollableColumn = ({
   width,
   children,
+  ...props
 }: FullscreenContainerScrollableColumnProps) => {
+  const className = toClassName(
+    'column p-0',
+    width && COLUMN_WIDTHS[width],
+    toFlexContainerClassName(props),
+    toSpacingClassName(props)
+  );
   return (
-    <Scrollable className={toClassName('column', width && COLUMN_WIDTHS[width])} noShadows>
+    <Scrollable className={className} noShadows>
       {children}
     </Scrollable>
   );
 };
 FullscreenContainer.ScrollableColumn.displayName = 'FullscreenContainer.ScrollableColumn';
+FullscreenContainer.ScrollableColumn.defaultProps = { flexDirection: 'column' };
