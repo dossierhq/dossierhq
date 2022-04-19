@@ -24,6 +24,7 @@ describe('initializeSchemaEditorState', () => {
     expect(state).toMatchInlineSnapshot(`
       Object {
         "activeSelector": null,
+        "activeSelectorScrollSignal": 0,
         "entityTypes": Array [],
         "schema": null,
         "status": "uninitialized",
@@ -48,6 +49,7 @@ describe('AddTypeAction', () => {
     expect(state).toMatchInlineSnapshot(`
       Object {
         "activeSelector": null,
+        "activeSelectorScrollSignal": 0,
         "entityTypes": Array [
           Object {
             "adminOnly": false,
@@ -93,6 +95,7 @@ describe('AddTypeAction', () => {
     expect(state).toMatchInlineSnapshot(`
       Object {
         "activeSelector": null,
+        "activeSelectorScrollSignal": 0,
         "entityTypes": Array [],
         "schema": AdminSchema {
           "spec": Object {
@@ -141,6 +144,7 @@ describe('AddTypeAction', () => {
     expect(state).toMatchInlineSnapshot(`
       Object {
         "activeSelector": null,
+        "activeSelectorScrollSignal": 0,
         "entityTypes": Array [
           Object {
             "adminOnly": false,
@@ -202,6 +206,7 @@ describe('AddTypeAction', () => {
     expect(state).toMatchInlineSnapshot(`
       Object {
         "activeSelector": null,
+        "activeSelectorScrollSignal": 0,
         "entityTypes": Array [],
         "schema": AdminSchema {
           "spec": Object {
@@ -261,6 +266,7 @@ describe('AddTypeAction', () => {
     expect(state).toMatchInlineSnapshot(`
       Object {
         "activeSelector": null,
+        "activeSelectorScrollSignal": 0,
         "entityTypes": Array [
           Object {
             "adminOnly": false,
@@ -319,6 +325,7 @@ describe('AddTypeAction', () => {
     expect(state).toMatchInlineSnapshot(`
       Object {
         "activeSelector": null,
+        "activeSelectorScrollSignal": 0,
         "entityTypes": Array [],
         "schema": AdminSchema {
           "spec": Object {
@@ -380,6 +387,7 @@ describe('AddFieldAction', () => {
     expect(state).toMatchInlineSnapshot(`
       Object {
         "activeSelector": null,
+        "activeSelectorScrollSignal": 0,
         "entityTypes": Array [
           Object {
             "adminOnly": false,
@@ -447,6 +455,7 @@ describe('AddFieldAction', () => {
     expect(state).toMatchInlineSnapshot(`
       Object {
         "activeSelector": null,
+        "activeSelectorScrollSignal": 0,
         "entityTypes": Array [],
         "schema": AdminSchema {
           "spec": Object {
@@ -517,6 +526,7 @@ describe('AddFieldAction', () => {
     expect(state).toMatchInlineSnapshot(`
       Object {
         "activeSelector": null,
+        "activeSelectorScrollSignal": 0,
         "entityTypes": Array [
           Object {
             "adminOnly": false,
@@ -604,6 +614,7 @@ describe('AddFieldAction', () => {
     expect(state).toMatchInlineSnapshot(`
       Object {
         "activeSelector": null,
+        "activeSelectorScrollSignal": 0,
         "entityTypes": Array [],
         "schema": AdminSchema {
           "spec": Object {
@@ -699,6 +710,7 @@ describe('ChangeFieldAllowedEntityTypesAction', () => {
     expect(state).toMatchInlineSnapshot(`
       Object {
         "activeSelector": null,
+        "activeSelectorScrollSignal": 0,
         "entityTypes": Array [
           Object {
             "adminOnly": false,
@@ -783,6 +795,7 @@ describe('ChangeFieldAllowedValueTypesAction', () => {
     expect(state).toMatchInlineSnapshot(`
       Object {
         "activeSelector": null,
+        "activeSelectorScrollSignal": 0,
         "entityTypes": Array [],
         "schema": AdminSchema {
           "spec": Object {
@@ -862,6 +875,7 @@ describe('ChangeFieldRequiredAction', () => {
     expect(state).toMatchInlineSnapshot(`
       Object {
         "activeSelector": null,
+        "activeSelectorScrollSignal": 0,
         "entityTypes": Array [
           Object {
             "adminOnly": false,
@@ -936,6 +950,7 @@ describe('ChangeFieldTypeAction', () => {
     expect(state).toMatchInlineSnapshot(`
       Object {
         "activeSelector": null,
+        "activeSelectorScrollSignal": 0,
         "entityTypes": Array [
           Object {
             "adminOnly": false,
@@ -1009,6 +1024,7 @@ describe('ChangeFieldTypeAction', () => {
     expect(state).toMatchInlineSnapshot(`
       Object {
         "activeSelector": null,
+        "activeSelectorScrollSignal": 0,
         "entityTypes": Array [],
         "schema": AdminSchema {
           "spec": Object {
@@ -1082,6 +1098,7 @@ describe('ChangeFieldTypeAction', () => {
     expect(state).toMatchInlineSnapshot(`
       Object {
         "activeSelector": null,
+        "activeSelectorScrollSignal": 0,
         "entityTypes": Array [
           Object {
             "adminOnly": false,
@@ -1156,6 +1173,7 @@ describe('ChangeFieldTypeAction', () => {
     expect(state).toMatchInlineSnapshot(`
       Object {
         "activeSelector": null,
+        "activeSelectorScrollSignal": 0,
         "entityTypes": Array [
           Object {
             "adminOnly": false,
@@ -1228,6 +1246,7 @@ describe('ChangeTypeAdminOnlyAction', () => {
     expect(state).toMatchInlineSnapshot(`
       Object {
         "activeSelector": null,
+        "activeSelectorScrollSignal": 0,
         "entityTypes": Array [
           Object {
             "adminOnly": true,
@@ -1280,6 +1299,7 @@ describe('DeleteFieldAction', () => {
     expect(state).toMatchInlineSnapshot(`
       Object {
         "activeSelector": null,
+        "activeSelectorScrollSignal": 0,
         "entityTypes": Array [
           Object {
             "adminOnly": false,
@@ -1344,6 +1364,7 @@ describe('RenameFieldAction', () => {
     expect(state).toMatchInlineSnapshot(`
       Object {
         "activeSelector": null,
+        "activeSelectorScrollSignal": 0,
         "entityTypes": Array [
           Object {
             "adminOnly": false,
@@ -1416,7 +1437,7 @@ describe('RenameFieldAction', () => {
 });
 
 describe('SetActiveSelectorAction', () => {
-  test('set to field', () => {
+  test('set to type', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
@@ -1425,7 +1446,7 @@ describe('SetActiveSelectorAction', () => {
           valueTypes: [],
         })
       ),
-      new SchemaEditorActions.SetActiveSelector({ kind: 'entity', typeName: 'Foo' })
+      new SchemaEditorActions.SetActiveSelector({ kind: 'entity', typeName: 'Foo' }, false)
     );
     expect(state).toMatchInlineSnapshot(`
       Object {
@@ -1433,6 +1454,54 @@ describe('SetActiveSelectorAction', () => {
           "kind": "entity",
           "typeName": "Foo",
         },
+        "activeSelectorScrollSignal": 0,
+        "entityTypes": Array [
+          Object {
+            "adminOnly": false,
+            "fields": Array [],
+            "kind": "entity",
+            "name": "Foo",
+            "status": "",
+          },
+        ],
+        "schema": AdminSchema {
+          "spec": Object {
+            "entityTypes": Array [
+              Object {
+                "adminOnly": false,
+                "fields": Array [],
+                "name": "Foo",
+              },
+            ],
+            "valueTypes": Array [],
+          },
+        },
+        "status": "",
+        "valueTypes": Array [],
+      }
+    `);
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`Object {}`);
+  });
+
+  test('set to type with scroll', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        new AdminSchema({
+          entityTypes: [{ name: 'Foo', adminOnly: false, fields: [] }],
+          valueTypes: [],
+        })
+      ),
+      new SchemaEditorActions.SetActiveSelector({ kind: 'entity', typeName: 'Foo' }, true)
+    );
+    expect(state).toMatchInlineSnapshot(`
+      Object {
+        "activeSelector": Object {
+          "kind": "entity",
+          "typeName": "Foo",
+        },
+        "activeSelectorScrollSignal": 1,
         "entityTypes": Array [
           Object {
             "adminOnly": false,
@@ -1474,6 +1543,7 @@ describe('UpdateSchemaSpecificationAction', () => {
     expect(state).toMatchInlineSnapshot(`
       Object {
         "activeSelector": null,
+        "activeSelectorScrollSignal": 0,
         "entityTypes": Array [],
         "schema": AdminSchema {
           "spec": Object {
@@ -1509,6 +1579,7 @@ describe('UpdateSchemaSpecificationAction', () => {
     expect(state).toMatchInlineSnapshot(`
       Object {
         "activeSelector": null,
+        "activeSelectorScrollSignal": 0,
         "entityTypes": Array [
           Object {
             "adminOnly": false,
@@ -1571,6 +1642,7 @@ describe('UpdateSchemaSpecificationAction', () => {
     expect(state).toMatchInlineSnapshot(`
       Object {
         "activeSelector": null,
+        "activeSelectorScrollSignal": 0,
         "entityTypes": Array [],
         "schema": AdminSchema {
           "spec": Object {
@@ -1639,6 +1711,7 @@ describe('UpdateSchemaSpecificationAction', () => {
     expect(state).toMatchInlineSnapshot(`
       Object {
         "activeSelector": null,
+        "activeSelectorScrollSignal": 0,
         "entityTypes": Array [
           Object {
             "adminOnly": false,
@@ -1746,6 +1819,7 @@ describe('UpdateSchemaSpecificationAction', () => {
     expect(state).toMatchInlineSnapshot(`
       Object {
         "activeSelector": null,
+        "activeSelectorScrollSignal": 0,
         "entityTypes": Array [
           Object {
             "adminOnly": false,
@@ -1851,6 +1925,7 @@ describe('SchemaEditorReducer scenarios', () => {
     expect(afterSaveState).toMatchInlineSnapshot(`
       Object {
         "activeSelector": null,
+        "activeSelectorScrollSignal": 0,
         "entityTypes": Array [
           Object {
             "adminOnly": false,
