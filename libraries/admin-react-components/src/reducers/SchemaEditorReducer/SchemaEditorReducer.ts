@@ -48,6 +48,8 @@ export interface SchemaEditorState {
 
   entityTypes: SchemaEntityTypeDraft[];
   valueTypes: SchemaValueTypeDraft[];
+
+  activeSelector: null | SchemaFieldSelector | SchemaTypeSelector;
 }
 
 export interface SchemaEditorStateAction {
@@ -55,7 +57,13 @@ export interface SchemaEditorStateAction {
 }
 
 export function initializeSchemaEditorState(): SchemaEditorState {
-  return { status: 'uninitialized', schema: null, entityTypes: [], valueTypes: [] };
+  return {
+    status: 'uninitialized',
+    schema: null,
+    entityTypes: [],
+    valueTypes: [],
+    activeSelector: null,
+  };
 }
 
 export function reduceSchemaEditorState(
