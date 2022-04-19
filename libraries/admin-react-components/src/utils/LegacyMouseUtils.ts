@@ -1,15 +1,18 @@
-import { useWindowEventListener } from '@jonasb/datadata-design';
+import { findAscendantHTMLElement, useWindowEventListener } from '@jonasb/datadata-design';
 import { useCallback } from 'react';
-import { findAscendantElement } from './DOMUtils';
 
-export function useWindowClick(ignoreId: string, onClick: () => void, enabled?: boolean): void {
+export function useLegacyWindowClick(
+  ignoreId: string,
+  onClick: () => void,
+  enabled?: boolean
+): void {
   const listener = useCallback(
     (event: MouseEvent) => {
       if (enabled === false) {
         return;
       }
       if (event.target instanceof HTMLElement) {
-        if (findAscendantElement(event.target, (it) => it.getAttribute('id') === ignoreId)) {
+        if (findAscendantHTMLElement(event.target, (it) => it.getAttribute('id') === ignoreId)) {
           return;
         }
       }
