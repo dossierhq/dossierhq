@@ -13,6 +13,7 @@ export interface FullscreenContainerProps {
 }
 
 export interface FullscreenContainerRowProps extends PaddingProps, GapProps, FlexContainerProps {
+  id?: string;
   center?: boolean;
   fullWidth?: boolean;
   fillHeight?: boolean;
@@ -40,6 +41,8 @@ interface FullscreenContainerScrollableColumnProps
     GapProps,
     FlexContainerProps {
   width?: keyof typeof COLUMN_WIDTHS;
+  scrollToId?: string;
+  scrollToIdSignal?: unknown;
   children: React.ReactNode;
 }
 
@@ -72,6 +75,7 @@ export const FullscreenContainer: FullscreenContainerComponent = ({
 FullscreenContainer.displayName = 'FullscreenContainer';
 
 FullscreenContainer.Row = ({
+  id,
   center,
   fullWidth,
   fillHeight,
@@ -94,12 +98,16 @@ FullscreenContainer.Row = ({
 
   if (addStickyFullWidthWrapper) {
     return (
-      <div className="is-sticky-row">
+      <div id={id} className="is-sticky-row">
         <div className={className}>{children}</div>
       </div>
     );
   }
-  return <div className={className}>{children}</div>;
+  return (
+    <div id={id} className={className}>
+      {children}
+    </div>
+  );
 };
 FullscreenContainer.Row.displayName = 'FullscreenContainer.Row';
 FullscreenContainer.Row.defaultProps = { flexDirection: 'column' };
@@ -141,6 +149,8 @@ FullscreenContainer.Column.displayName = 'FullscreenContainer.Columns';
 FullscreenContainer.Column.defaultProps = { flexDirection: 'column' };
 
 FullscreenContainer.ScrollableColumn = ({
+  scrollToId,
+  scrollToIdSignal,
   width,
   children,
   ...props
@@ -152,7 +162,12 @@ FullscreenContainer.ScrollableColumn = ({
     toSpacingClassName(props)
   );
   return (
-    <Scrollable className={className} noShadows>
+    <Scrollable
+      className={className}
+      noShadows
+      scrollToId={scrollToId}
+      scrollToIdSignal={scrollToIdSignal}
+    >
       {children}
     </Scrollable>
   );
