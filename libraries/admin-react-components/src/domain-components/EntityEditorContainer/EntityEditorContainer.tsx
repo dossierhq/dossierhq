@@ -1,3 +1,4 @@
+import { useWindowEventListener } from '@jonasb/datadata-design';
 import React, { useContext } from 'react';
 import {
   EntityEditor,
@@ -9,7 +10,6 @@ import {
 } from '../..';
 import { joinClassNames } from '../../utils/ClassNameUtils';
 import { findAscendantElement } from '../../utils/DOMUtils';
-import { useWindowEventListener } from '../../utils/EventUtils';
 
 export interface EntityEditorContainerProps {
   className?: string;
