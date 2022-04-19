@@ -9,8 +9,8 @@ import {
   Tag,
   TagInput,
 } from '@jonasb/datadata-design';
-import type { ChangeEvent, Dispatch } from 'react';
-import React, { useCallback } from 'react';
+import type { ChangeEvent, Dispatch, MouseEvent } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import type {
   SchemaEditorState,
   SchemaEditorStateAction,
@@ -62,10 +62,23 @@ export function SchemaTypeEditor({
   schemaEditorState,
   dispatchSchemaEditorState,
 }: Props) {
-  const typeSelector = { kind: typeDraft.kind, typeName: typeDraft.name };
+  const typeSelector = useMemo(
+    () => ({ kind: typeDraft.kind, typeName: typeDraft.name }),
+    [typeDraft.kind, typeDraft.name]
+  );
+
+  const handleClick = useCallback(
+    (_event: MouseEvent) =>
+      dispatchSchemaEditorState(
+        new SchemaEditorActions.SetActiveSelector(typeSelector, true, false)
+      ),
+    [dispatchSchemaEditorState, typeSelector]
+  );
+
   const canChangeAdminOnly = typeDraft.status === 'new'; //TODO too restrictive
+
   return (
-    <div data-kind={typeDraft.kind} data-typename={typeDraft.name}>
+    <div data-kind={typeDraft.kind} data-typename={typeDraft.name} onClick={handleClick}>
       <Field>
         <Field.Control>
           <AddFieldButton
