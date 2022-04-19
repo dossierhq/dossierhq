@@ -6,6 +6,8 @@ export interface ScrollableProps {
   className?: string;
   style?: React.CSSProperties;
   noShadows?: boolean;
+  scrollToId?: string;
+  scrollToIdSignal?: unknown;
   scrollToTopSignal?: unknown;
   children: React.ReactNode;
 }
@@ -14,6 +16,8 @@ export function Scrollable({
   className,
   style,
   noShadows,
+  scrollToId,
+  scrollToIdSignal,
   scrollToTopSignal,
   children,
 }: ScrollableProps): JSX.Element {
@@ -25,6 +29,24 @@ export function Scrollable({
       ref.current.scrollTo({ top: 0, behavior: 'smooth' });
     }
   }, [scrollToTopSignal]);
+
+  useEffect(() => {
+    if (scrollToId && scrollToIdSignal && ref.current) {
+      const scrollToElement = document.getElementById(scrollToId);
+      if (scrollToElement) {
+        let top = scrollToElement.offsetTop;
+        const style = getComputedStyle(scrollToElement);
+        if (style.position === 'sticky') {
+          const nextElement = scrollToElement.nextElementSibling;
+          if (nextElement && nextElement instanceof HTMLElement) {
+            top = nextElement.offsetTop - scrollToElement.scrollHeight - ref.current.offsetTop;
+          }
+        }
+        ref.current.scrollTo({ behavior: 'smooth', top });
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [scrollToIdSignal]);
 
   return (
     <div ref={ref} className={realClassName} style={style}>
