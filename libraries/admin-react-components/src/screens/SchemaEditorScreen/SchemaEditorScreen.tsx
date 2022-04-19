@@ -52,7 +52,11 @@ export function SchemaEditorScreen({ header, footer }: SchemaEditorScreenProps) 
   const isEmpty =
     schemaEditorState.entityTypes.length === 0 && schemaEditorState.valueTypes.length === 0;
 
-  const scrollToId = schemaEditorState.activeSelector
+  const menuScrollToId = schemaEditorState.activeSelector
+    ? `${schemaEditorState.activeSelector.typeName}-menuItem`
+    : undefined;
+
+  const editorScrollToId = schemaEditorState.activeSelector
     ? `${schemaEditorState.activeSelector.typeName}-header`
     : undefined;
 
@@ -60,7 +64,13 @@ export function SchemaEditorScreen({ header, footer }: SchemaEditorScreenProps) 
     <FullscreenContainer>
       {header ? <FullscreenContainer.Row fullWidth>{header}</FullscreenContainer.Row> : null}
       <FullscreenContainer.Columns fillHeight>
-        <FullscreenContainer.ScrollableColumn width="3/12" padding={2} gap={2}>
+        <FullscreenContainer.ScrollableColumn
+          width="3/12"
+          padding={2}
+          gap={2}
+          scrollToId={menuScrollToId}
+          scrollToIdSignal={schemaEditorState.activeSelectorMenuScrollSignal}
+        >
           <AddTypeButton
             type="entity"
             disabled={!schema}
@@ -87,8 +97,8 @@ export function SchemaEditorScreen({ header, footer }: SchemaEditorScreenProps) 
           />
         </FullscreenContainer.ScrollableColumn>
         <FullscreenContainer.ScrollableColumn
-          scrollToId={scrollToId}
-          scrollToIdSignal={schemaEditorState.activeSelectorScrollSignal}
+          scrollToId={editorScrollToId}
+          scrollToIdSignal={schemaEditorState.activeSelectorEditorScrollSignal}
         >
           {isEmpty ? (
             <EmptyStateMessage
@@ -176,7 +186,7 @@ function useSelectorFocused(
   schemaEditorState: SchemaEditorState,
   dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>
 ) {
-  const { activeSelectorScrollSignal } = schemaEditorState;
+  const { activeSelectorEditorScrollSignal } = schemaEditorState;
 
   const listener = useCallback(
     (event: FocusEvent) => {
@@ -193,6 +203,7 @@ function useSelectorFocused(
           dispatchSchemaEditorState(
             new SchemaEditorActions.SetActiveSelector(
               fieldName ? { kind, typeName, fieldName } : { kind, typeName },
+              true,
               false
             )
           );
@@ -204,8 +215,8 @@ function useSelectorFocused(
   useWindowEventListener('focusin', listener);
 
   useEffect(() => {
-    if (activeSelectorScrollSignal > 0) {
+    if (activeSelectorEditorScrollSignal > 0) {
       window.blur();
     }
-  }, [activeSelectorScrollSignal]);
+  }, [activeSelectorEditorScrollSignal]);
 }

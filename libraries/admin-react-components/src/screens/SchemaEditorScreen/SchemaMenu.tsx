@@ -64,7 +64,7 @@ function TypeDraftItem({
     (event: MouseEvent) => {
       event.preventDefault();
       dispatchEditorState(
-        new SchemaEditorActions.SetActiveSelector(typeDraftToSelector(typeDraft), true)
+        new SchemaEditorActions.SetActiveSelector(typeDraftToSelector(typeDraft), false, true)
       );
     },
     [dispatchEditorState, typeDraft]
@@ -72,6 +72,7 @@ function TypeDraftItem({
   return (
     <Menu.Item>
       <a
+        id={`${typeDraft.name}-menuItem`}
         className={isTypeDraftActive(typeDraft, activeSelector) ? 'is-active' : undefined}
         onClick={handleClick}
       >
