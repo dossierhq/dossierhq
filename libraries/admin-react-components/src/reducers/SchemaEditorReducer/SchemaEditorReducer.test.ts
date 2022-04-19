@@ -48,8 +48,11 @@ describe('AddTypeAction', () => {
 
     expect(state).toMatchInlineSnapshot(`
       Object {
-        "activeSelector": null,
-        "activeSelectorScrollSignal": 0,
+        "activeSelector": Object {
+          "kind": "entity",
+          "typeName": "Foo",
+        },
+        "activeSelectorScrollSignal": 1,
         "entityTypes": Array [
           Object {
             "adminOnly": false,
@@ -94,8 +97,11 @@ describe('AddTypeAction', () => {
 
     expect(state).toMatchInlineSnapshot(`
       Object {
-        "activeSelector": null,
-        "activeSelectorScrollSignal": 0,
+        "activeSelector": Object {
+          "kind": "value",
+          "typeName": "Foo",
+        },
+        "activeSelectorScrollSignal": 1,
         "entityTypes": Array [],
         "schema": AdminSchema {
           "spec": Object {
@@ -143,8 +149,11 @@ describe('AddTypeAction', () => {
 
     expect(state).toMatchInlineSnapshot(`
       Object {
-        "activeSelector": null,
-        "activeSelectorScrollSignal": 0,
+        "activeSelector": Object {
+          "kind": "entity",
+          "typeName": "Bar",
+        },
+        "activeSelectorScrollSignal": 1,
         "entityTypes": Array [
           Object {
             "adminOnly": false,
@@ -205,8 +214,11 @@ describe('AddTypeAction', () => {
 
     expect(state).toMatchInlineSnapshot(`
       Object {
-        "activeSelector": null,
-        "activeSelectorScrollSignal": 0,
+        "activeSelector": Object {
+          "kind": "value",
+          "typeName": "Bar",
+        },
+        "activeSelectorScrollSignal": 1,
         "entityTypes": Array [],
         "schema": AdminSchema {
           "spec": Object {
@@ -265,8 +277,11 @@ describe('AddTypeAction', () => {
 
     expect(state).toMatchInlineSnapshot(`
       Object {
-        "activeSelector": null,
-        "activeSelectorScrollSignal": 0,
+        "activeSelector": Object {
+          "kind": "entity",
+          "typeName": "Anaconda",
+        },
+        "activeSelectorScrollSignal": 2,
         "entityTypes": Array [
           Object {
             "adminOnly": false,
@@ -324,8 +339,11 @@ describe('AddTypeAction', () => {
 
     expect(state).toMatchInlineSnapshot(`
       Object {
-        "activeSelector": null,
-        "activeSelectorScrollSignal": 0,
+        "activeSelector": Object {
+          "kind": "value",
+          "typeName": "Anaconda",
+        },
+        "activeSelectorScrollSignal": 2,
         "entityTypes": Array [],
         "schema": AdminSchema {
           "spec": Object {
@@ -1245,8 +1263,11 @@ describe('ChangeTypeAdminOnlyAction', () => {
     );
     expect(state).toMatchInlineSnapshot(`
       Object {
-        "activeSelector": null,
-        "activeSelectorScrollSignal": 0,
+        "activeSelector": Object {
+          "kind": "entity",
+          "typeName": "Foo",
+        },
+        "activeSelectorScrollSignal": 1,
         "entityTypes": Array [
           Object {
             "adminOnly": true,
@@ -1924,8 +1945,11 @@ describe('SchemaEditorReducer scenarios', () => {
 
     expect(afterSaveState).toMatchInlineSnapshot(`
       Object {
-        "activeSelector": null,
-        "activeSelectorScrollSignal": 0,
+        "activeSelector": Object {
+          "kind": "entity",
+          "typeName": "NewType",
+        },
+        "activeSelectorScrollSignal": 1,
         "entityTypes": Array [
           Object {
             "adminOnly": false,
