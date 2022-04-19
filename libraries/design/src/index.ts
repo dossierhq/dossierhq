@@ -17,6 +17,7 @@ export {
   Input,
   InstantDisplay,
   Level,
+  Menu,
   MultipleSelectorStateActions,
   NavBar,
   NotificationContainer,

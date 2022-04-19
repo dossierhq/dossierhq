@@ -132,17 +132,54 @@ RowLayout.args = {
   ),
 };
 
+export const ColumnLayout = Template.bind({});
+ColumnLayout.args = {
+  children: (
+    <>
+      <FullscreenContainer.Row>
+        <div style={{ height: 100, backgroundColor: 'papayawhip' }} />
+      </FullscreenContainer.Row>
+      <FullscreenContainer.Columns fillHeight>
+        <FullscreenContainer.Column gap={5}>
+          <p>Gap</p>
+          <div style={{ backgroundColor: 'burlywood', height: 10, width: 10 }} />
+          <div style={{ backgroundColor: 'burlywood', height: 10, width: 10 }} />
+        </FullscreenContainer.Column>
+        <FullscreenContainer.Column flexDirection="row" gap={5}>
+          <p>Row with gap</p>
+          <div style={{ backgroundColor: 'burlywood', height: 10, width: 10 }} />
+          <div style={{ backgroundColor: 'burlywood', height: 10, width: 10 }} />
+        </FullscreenContainer.Column>
+        <FullscreenContainer.ScrollableColumn gap={5}>
+          <p>Scrollable gap</p>
+          <div style={{ backgroundColor: 'burlywood', height: 10, width: 10 }} />
+          <div style={{ backgroundColor: 'burlywood', height: 10, width: 10 }} />
+        </FullscreenContainer.ScrollableColumn>
+        <FullscreenContainer.ScrollableColumn flexDirection="row" gap={5}>
+          <p>Scrollable row with gap</p>
+          <div style={{ backgroundColor: 'burlywood', height: 10, width: 10 }} />
+          <div style={{ backgroundColor: 'burlywood', height: 10, width: 10 }} />
+        </FullscreenContainer.ScrollableColumn>
+      </FullscreenContainer.Columns>
+      <FullscreenContainer.Row>
+        <div style={{ height: 100, backgroundColor: 'papayawhip' }} />
+      </FullscreenContainer.Row>
+    </>
+  ),
+};
+
 export const TwoScrollableColumns = Template.bind({});
 TwoScrollableColumns.args = {
   children: (
     <>
       <FullscreenContainer.Row>
-        <div style={{ height: 100 }} />
+        <div style={{ height: 100, backgroundColor: 'papayawhip' }} />
       </FullscreenContainer.Row>
       <FullscreenContainer.Columns fillHeight>
         <FullscreenContainer.ScrollableColumn width="3/12">
           <div
             style={{
+              border: '5px solid burlywood',
               background:
                 'repeating-linear-gradient(45deg, burlywood, burlywood 10px, transparent 10px, transparent 40px)',
               height: '300vh',
@@ -152,6 +189,7 @@ TwoScrollableColumns.args = {
         <FullscreenContainer.ScrollableColumn>
           <div
             style={{
+              border: '5px solid burlywood',
               background:
                 'repeating-linear-gradient(-45deg, burlywood, burlywood 10px, transparent 10px, transparent 40px)',
               height: '300vh',
@@ -160,7 +198,7 @@ TwoScrollableColumns.args = {
         </FullscreenContainer.ScrollableColumn>
       </FullscreenContainer.Columns>
       <FullscreenContainer.Row>
-        <div style={{ height: 100 }} />
+        <div style={{ height: 100, backgroundColor: 'papayawhip' }} />
       </FullscreenContainer.Row>
     </>
   ),
@@ -171,12 +209,13 @@ ThreeScrollableColumns.args = {
   children: (
     <>
       <FullscreenContainer.Row>
-        <div style={{ height: 100 }} />
+        <div style={{ height: 100, backgroundColor: 'papayawhip' }} />
       </FullscreenContainer.Row>
       <FullscreenContainer.Columns fillHeight>
         <FullscreenContainer.ScrollableColumn width="3/12">
           <div
             style={{
+              border: '5px solid burlywood',
               background:
                 'repeating-linear-gradient(45deg, burlywood, burlywood 10px, transparent 10px, transparent 40px)',
               height: '300vh',
@@ -186,8 +225,9 @@ ThreeScrollableColumns.args = {
         <FullscreenContainer.ScrollableColumn>
           <div
             style={{
+              border: '5px solid pink',
               background:
-                'repeating-linear-gradient(-45deg, burlywood, burlywood 10px, transparent 10px, transparent 40px)',
+                'repeating-linear-gradient(-45deg, pink, pink 10px, transparent 10px, transparent 40px)',
               height: '300vh',
             }}
           />
@@ -195,6 +235,7 @@ ThreeScrollableColumns.args = {
         <FullscreenContainer.ScrollableColumn width="3/12">
           <div
             style={{
+              border: '5px solid burlywood',
               background:
                 'repeating-linear-gradient(45deg, burlywood, burlywood 10px, transparent 10px, transparent 40px)',
               height: '300vh',
@@ -203,9 +244,8 @@ ThreeScrollableColumns.args = {
         </FullscreenContainer.ScrollableColumn>
       </FullscreenContainer.Columns>
       <FullscreenContainer.Row>
-        <div style={{ height: 100 }} />
+        <div style={{ height: 100, backgroundColor: 'papayawhip' }} />
       </FullscreenContainer.Row>
     </>
   ),
 };
-
