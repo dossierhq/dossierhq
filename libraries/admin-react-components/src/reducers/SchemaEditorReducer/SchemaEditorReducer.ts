@@ -186,7 +186,11 @@ class AddTypeAction implements SchemaEditorStateAction {
       adminOnly: false,
       fields: [],
     } as const;
-    const newState = { ...state };
+    const newState: SchemaEditorState = {
+      ...state,
+      activeSelector: { kind: this.kind, typeName: this.name },
+      activeSelectorScrollSignal: state.activeSelectorScrollSignal + 1,
+    };
     if (this.kind === 'entity') {
       newState.entityTypes = [...newState.entityTypes, { ...typeDraft, kind: 'entity' }];
       newState.entityTypes.sort((a, b) => a.name.localeCompare(b.name));
