@@ -1,7 +1,7 @@
 import { useKeyHandler } from '@jonasb/datadata-design';
 import React, { useCallback, useState } from 'react';
 import { Button, Icon, IconButton } from '../..';
-import { useLegacyWindowClick } from '../../utils/MouseUtils';
+import { useLegacyWindowClick } from '../../utils/LegacyMouseUtils';
 
 export interface DropDownProps<TItem extends DropDownItem = DropDownItem> {
   id: string;

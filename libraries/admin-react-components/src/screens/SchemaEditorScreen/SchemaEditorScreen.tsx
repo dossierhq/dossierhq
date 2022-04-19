@@ -1,12 +1,14 @@
 import {
   Button,
   EmptyStateMessage,
+  findAscendantHTMLElement,
   FullscreenContainer,
   Level,
   Text,
+  useWindowEventListener,
 } from '@jonasb/datadata-design';
 import type { Dispatch } from 'react';
-import React, { useContext, useEffect, useReducer, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useReducer, useState } from 'react';
 import { DataDataContext2 } from '../..';
 import { SchemaTypeEditor } from '../../components/SchemaTypeEditor/SchemaTypeEditor';
 import type {
@@ -44,6 +46,8 @@ export function SchemaEditorScreen({ header, footer }: SchemaEditorScreenProps) 
       dispatchSchemaEditorState(new SchemaEditorActions.UpdateSchemaSpecification(schema));
     }
   }, [schema]);
+
+  useSelectorFocused(dispatchSchemaEditorState);
 
   const isEmpty =
     schemaEditorState.entityTypes.length === 0 && schemaEditorState.valueTypes.length === 0;
@@ -156,4 +160,30 @@ function TypeEditorRows({
       </FullscreenContainer.Row>
     </>
   );
+}
+
+function useSelectorFocused(dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>) {
+  const listener = useCallback(
+    (event: FocusEvent) => {
+      if (event.target instanceof HTMLElement) {
+        const selectorElement = findAscendantHTMLElement(
+          event.target,
+          (el) => !!el.dataset.typename
+        );
+        const kind = selectorElement?.dataset.kind;
+        const typeName = selectorElement?.dataset.typename;
+        const fieldName = selectorElement?.dataset.fieldname;
+
+        if ((kind === 'entity' || kind === 'value') && typeName) {
+          dispatchSchemaEditorState(
+            new SchemaEditorActions.SetActiveSelector(
+              fieldName ? { kind, typeName, fieldName } : { kind, typeName }
+            )
+          );
+        }
+      }
+    },
+    [dispatchSchemaEditorState]
+  );
+  useWindowEventListener('focusin', listener);
 }
