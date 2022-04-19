@@ -49,7 +49,7 @@ export interface SchemaEditorState {
   entityTypes: SchemaEntityTypeDraft[];
   valueTypes: SchemaValueTypeDraft[];
 
-  activeSelector: null | SchemaFieldSelector | SchemaTypeSelector;
+  activeSelector: null | SchemaTypeSelector;
   activeSelectorEditorScrollSignal: number;
   activeSelectorMenuScrollSignal: number;
 }
@@ -361,12 +361,12 @@ class RenameFieldAction extends FieldAction {
 }
 
 class SetActiveSelectorAction implements SchemaEditorStateAction {
-  selector: SchemaTypeSelector | SchemaFieldSelector | null;
+  selector: SchemaTypeSelector | null;
   increaseMenuScrollSignal: boolean;
   increaseEditorScrollSignal: boolean;
 
   constructor(
-    selector: SchemaTypeSelector | SchemaFieldSelector | null,
+    selector: SchemaTypeSelector | null,
     increaseMenuScrollSignal: boolean,
     increaseEditorScrollSignal: boolean
   ) {
