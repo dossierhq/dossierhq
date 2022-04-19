@@ -65,7 +65,7 @@ export function SchemaTypeEditor({
   const typeSelector = { kind: typeDraft.kind, typeName: typeDraft.name };
   const canChangeAdminOnly = typeDraft.status === 'new'; //TODO too restrictive
   return (
-    <>
+    <div data-kind={typeDraft.kind} data-typename={typeDraft.name}>
       <Field>
         <Field.Control>
           <AddFieldButton
@@ -98,7 +98,7 @@ export function SchemaTypeEditor({
           dispatchSchemaEditorState={dispatchSchemaEditorState}
         />
       ))}
-    </>
+    </div>
   );
 }
 

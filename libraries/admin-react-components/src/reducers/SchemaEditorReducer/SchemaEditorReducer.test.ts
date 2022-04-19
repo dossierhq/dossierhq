@@ -1415,6 +1415,54 @@ describe('RenameFieldAction', () => {
   });
 });
 
+describe('SetActiveSelectorAction', () => {
+  test('set to field', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        new AdminSchema({
+          entityTypes: [{ name: 'Foo', adminOnly: false, fields: [] }],
+          valueTypes: [],
+        })
+      ),
+      new SchemaEditorActions.SetActiveSelector({ kind: 'entity', typeName: 'Foo' })
+    );
+    expect(state).toMatchInlineSnapshot(`
+      Object {
+        "activeSelector": Object {
+          "kind": "entity",
+          "typeName": "Foo",
+        },
+        "entityTypes": Array [
+          Object {
+            "adminOnly": false,
+            "fields": Array [],
+            "kind": "entity",
+            "name": "Foo",
+            "status": "",
+          },
+        ],
+        "schema": AdminSchema {
+          "spec": Object {
+            "entityTypes": Array [
+              Object {
+                "adminOnly": false,
+                "fields": Array [],
+                "name": "Foo",
+              },
+            ],
+            "valueTypes": Array [],
+          },
+        },
+        "status": "",
+        "valueTypes": Array [],
+      }
+    `);
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`Object {}`);
+  });
+});
+
 describe('UpdateSchemaSpecificationAction', () => {
   test('add empty schema', () => {
     const state = reduceSchemaEditorState(

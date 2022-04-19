@@ -351,6 +351,21 @@ class RenameFieldAction extends FieldAction {
   }
 }
 
+class SetActiveSelectorAction implements SchemaEditorStateAction {
+  selector: SchemaTypeSelector | SchemaFieldSelector | null;
+
+  constructor(selector: SchemaTypeSelector | SchemaFieldSelector | null) {
+    this.selector = selector;
+  }
+
+  reduce(state: Readonly<SchemaEditorState>): Readonly<SchemaEditorState> {
+    if (isEqual(state.activeSelector, this.selector)) {
+      return state;
+    }
+    return { ...state, activeSelector: this.selector };
+  }
+}
+
 class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
   schema: AdminSchema;
   force: boolean;
@@ -413,6 +428,7 @@ export const SchemaEditorActions = {
   ChangeTypeAdminOnly: ChangeTypeAdminOnlyAction,
   DeleteField: DeleteFieldAction,
   RenameField: RenameFieldAction,
+  SetActiveSelector: SetActiveSelectorAction,
   UpdateSchemaSpecification: UpdateSchemaSpecificationAction,
 };
 
