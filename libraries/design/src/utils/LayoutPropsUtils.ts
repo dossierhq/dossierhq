@@ -1,4 +1,5 @@
 import { toClassName } from './ClassNameUtils.js';
+import type { FlexContainerProps } from './FlexboxUtils.js';
 
 type SpacingValue = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
@@ -40,10 +41,12 @@ const widthToClassNameMap = {
   '100%': 'is-width-100',
 };
 
-export interface SpaceProps {
+export interface SizeProps {
   width?: keyof typeof widthToClassNameMap;
   height?: keyof typeof heightToClassNameMap;
 }
+
+type LayoutProps = SizeProps & SpacingProps & FlexContainerProps;
 
 export function toSpacingClassName({
   margin,
@@ -89,9 +92,62 @@ function valueClassName(prefix: string, value: SpacingValue | undefined) {
   return typeof value === 'number' ? prefix + value : undefined;
 }
 
-export function toSizeClassName({ width, height }: SpaceProps): string {
+export function toSizeClassName({ width, height }: SizeProps): string {
   return toClassName(
     width !== undefined && widthToClassNameMap[width],
     height !== undefined && heightToClassNameMap[height]
   );
+}
+
+export function extractLayoutProps<T extends LayoutProps>(
+  props: T
+): { layoutProps: LayoutProps; otherProps: Omit<T, keyof LayoutProps> } {
+  const {
+    margin,
+    marginLeft,
+    marginTop,
+    marginRight,
+    marginHorizontal,
+    marginVertical,
+    padding,
+    paddingLeft,
+    paddingTop,
+    paddingRight,
+    paddingBottom,
+    paddingHorizontal,
+    paddingVertical,
+    gap,
+    columnGap,
+    rowGap,
+    width,
+    height,
+    flexDirection,
+    alignItems,
+    justifyContent,
+    ...otherProps
+  } = props;
+  const layoutProps = {
+    margin,
+    marginLeft,
+    marginTop,
+    marginRight,
+    marginHorizontal,
+    marginVertical,
+    padding,
+    paddingLeft,
+    paddingTop,
+    paddingRight,
+    paddingBottom,
+    paddingHorizontal,
+    paddingVertical,
+    gap,
+    columnGap,
+    rowGap,
+    width,
+    height,
+    flexDirection,
+    alignItems,
+    justifyContent,
+  };
+  return { layoutProps, otherProps: otherProps as Omit<T, keyof LayoutProps> };
 }

@@ -1,10 +1,11 @@
-import type { FunctionComponent } from 'react';
+import type { FunctionComponent, MouseEventHandler } from 'react';
 import React from 'react';
 import { toSizeClassName } from '../../index.js';
 import { toClassName } from '../../utils/ClassNameUtils.js';
 import type { FlexContainerProps } from '../../utils/FlexboxUtils.js';
 import { toFlexContainerClassName } from '../../utils/FlexboxUtils.js';
 import type { GapProps, PaddingProps } from '../../utils/LayoutPropsUtils.js';
+import { extractLayoutProps } from '../../utils/LayoutPropsUtils.js';
 import { toSpacingClassName } from '../../utils/LayoutPropsUtils.js';
 import { Scrollable } from '../index.js';
 
@@ -18,6 +19,7 @@ export interface FullscreenContainerRowProps extends PaddingProps, GapProps, Fle
   fullWidth?: boolean;
   fillHeight?: boolean;
   sticky?: boolean;
+  onClick?: MouseEventHandler<HTMLDivElement>;
   children: React.ReactNode;
 }
 
@@ -86,25 +88,26 @@ FullscreenContainer.Row = ({
   const width = !fullWidth && !center ? '100%' : undefined; // .container centers by default
   const height = fillHeight ? 0 : undefined;
   const addStickyFullWidthWrapper = sticky && !fullWidth;
+  const { layoutProps, otherProps } = extractLayoutProps(props);
 
   const className = toClassName(
     !fullWidth && 'is-flex-grow-0 container',
     fillHeight && 'is-flex-grow-1',
     sticky && !addStickyFullWidthWrapper && 'is-sticky-row',
     toSizeClassName({ width, height }),
-    toFlexContainerClassName(props),
-    toSpacingClassName(props)
+    toFlexContainerClassName(layoutProps),
+    toSpacingClassName(layoutProps)
   );
 
   if (addStickyFullWidthWrapper) {
     return (
-      <div id={id} className="is-sticky-row">
+      <div id={id} className="is-sticky-row" {...otherProps}>
         <div className={className}>{children}</div>
       </div>
     );
   }
   return (
-    <div id={id} className={className}>
+    <div id={id} className={className} {...otherProps}>
       {children}
     </div>
   );

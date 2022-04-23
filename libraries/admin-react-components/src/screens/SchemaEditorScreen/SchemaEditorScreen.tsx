@@ -7,7 +7,8 @@ import {
   Text,
   useWindowEventListener,
 } from '@jonasb/datadata-design';
-import type { Dispatch } from 'react';
+import type { Dispatch, MouseEvent } from 'react';
+import { useMemo } from 'react';
 import React, { useCallback, useContext, useEffect, useReducer, useState } from 'react';
 import { DataDataContext2 } from '../..';
 import { SchemaTypeEditor } from '../../components/SchemaTypeEditor/SchemaTypeEditor';
@@ -148,6 +149,19 @@ function TypeEditorRows({
   schemaEditorState: SchemaEditorState;
   dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>;
 }) {
+  const typeSelector = useMemo(
+    () => ({ kind: typeDraft.kind, typeName: typeDraft.name }),
+    [typeDraft.kind, typeDraft.name]
+  );
+
+  const handleClick = useCallback(
+    (_event: MouseEvent) =>
+      dispatchSchemaEditorState(
+        new SchemaEditorActions.SetActiveSelector(typeSelector, true, false)
+      ),
+    [dispatchSchemaEditorState, typeSelector]
+  );
+
   return (
     <>
       <FullscreenContainer.Row id={`${typeDraft.name}-header`} sticky>
@@ -171,8 +185,16 @@ function TypeEditorRows({
           ) : null}
         </Level>
       </FullscreenContainer.Row>
-      <FullscreenContainer.Row gap={2} paddingVertical={3}>
+      <FullscreenContainer.Row
+        gap={2}
+        paddingVertical={4}
+        paddingHorizontal={3}
+        data-kind={typeDraft.kind}
+        data-typename={typeDraft.name}
+        onClick={handleClick}
+      >
         <SchemaTypeEditor
+          typeSelector={typeSelector}
           typeDraft={typeDraft}
           schemaEditorState={schemaEditorState}
           dispatchSchemaEditorState={dispatchSchemaEditorState}
