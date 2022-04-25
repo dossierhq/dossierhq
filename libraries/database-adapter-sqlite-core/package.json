@@ -45,7 +45,7 @@
     "@jonasb/datadata-core": "workspace:*",
     "@jonasb/datadata-database-adapter": "workspace:*",
     "@js-temporal/polyfill": "~0.4.0",
-    "tslib": "~2.3.1",
+    "tslib": "~2.4.0",
     "uuid": "^8.3.2"
   }
 }
