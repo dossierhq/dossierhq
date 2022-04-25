@@ -1,5 +1,7 @@
 import type { CSSProperties, FunctionComponent, MouseEventHandler, ReactNode, Ref } from 'react';
 import React, { forwardRef } from 'react';
+import type { Color } from '../../config/Colors.js';
+import { toColorClassName } from '../../config/Colors.js';
 import { toClassName } from '../../utils/ClassNameUtils.js';
 import type { IconName } from '../index.js';
 import { Icon } from '../index.js';
@@ -11,7 +13,7 @@ export interface ButtonProps {
   disabled?: boolean;
   iconLeft?: IconName;
   iconRight?: IconName;
-  light?: boolean;
+  color?: Color;
   onClick?: MouseEventHandler<HTMLButtonElement>;
   onMouseDown?: MouseEventHandler<HTMLButtonElement>;
   children: ReactNode;
@@ -24,7 +26,7 @@ export const Button: FunctionComponent<ButtonProps> = forwardRef(
       disabled,
       iconLeft,
       iconRight,
-      light,
+      color,
       style,
       onClick,
       onMouseDown,
@@ -35,7 +37,7 @@ export const Button: FunctionComponent<ButtonProps> = forwardRef(
     return (
       <button
         ref={ref}
-        className={toClassName('button', light && 'is-light', className)}
+        className={toClassName('button', toColorClassName(color), className)}
         style={style}
         onClick={onClick}
         onMouseDown={onMouseDown}

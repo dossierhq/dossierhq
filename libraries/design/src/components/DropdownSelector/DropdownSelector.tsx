@@ -57,7 +57,7 @@ export function DropdownSelector<TItem extends MultipleSelectorItem>({
           ref={triggerRef}
           iconLeft={iconLeft}
           iconRight={sneaky ? undefined : up ? 'chevronUp' : 'chevronDown'}
-          light={sneaky}
+          color={sneaky ? 'light' : undefined}
           onMouseDown={(event) => {
             event.preventDefault();
             setActive((it) => !it);

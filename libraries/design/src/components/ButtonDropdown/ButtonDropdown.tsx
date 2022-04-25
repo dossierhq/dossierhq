@@ -29,7 +29,7 @@ export function ButtonDropdown<TItem extends DropdownItem>({
           ref={triggerRef}
           iconLeft={iconLeft}
           iconRight={sneaky ? undefined : args.up ? 'chevronUp' : 'chevronDown'}
-          light={sneaky}
+          color={sneaky ? 'light' : undefined}
           disabled={disabled}
           onMouseDown={(event) => {
             event.preventDefault();
