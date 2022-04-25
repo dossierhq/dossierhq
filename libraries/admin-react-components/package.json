@@ -43,7 +43,7 @@
     "@jonasb/datadata-server": "workspace:*",
     "@js-temporal/polyfill": "~0.4.0",
     "@rushstack/eslint-plugin": "~0.8.6",
-    "@rushstack/heft": "~0.44.8",
+    "@rushstack/heft": "~0.45.0",
     "@rushstack/heft-jest-plugin": "~0.2.9",
     "@storybook/addon-actions": "^6.4.21",
     "@storybook/addon-essentials": "^6.4.21",

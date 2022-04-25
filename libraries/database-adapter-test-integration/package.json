@@ -26,7 +26,7 @@
     "url": "git+https://github.com/jonasb/datadata.git"
   },
   "devDependencies": {
-    "@rushstack/heft": "~0.44.8",
+    "@rushstack/heft": "~0.45.0",
     "@typescript-eslint/eslint-plugin": "^5.18.0",
     "@typescript-eslint/parser": "^5.18.0",
     "@types/uuid": "~8.3.4",
