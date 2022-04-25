@@ -71,6 +71,7 @@ export function SaveSchemaDialog({
     </Dialog>
   );
 }
+
 function SaveSchemaDialogContent({
   schemaSpecUpdate,
 }: {

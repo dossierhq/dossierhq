@@ -8,8 +8,7 @@ import {
   useWindowEventListener,
 } from '@jonasb/datadata-design';
 import type { Dispatch, MouseEvent } from 'react';
-import { useMemo } from 'react';
-import React, { useCallback, useContext, useEffect, useReducer, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useMemo, useReducer, useState } from 'react';
 import { DataDataContext2 } from '../..';
 import { SchemaTypeEditor } from '../../components/SchemaTypeEditor/SchemaTypeEditor';
 import type {
@@ -23,7 +22,7 @@ import {
   reduceSchemaEditorState,
   SchemaEditorActions,
 } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer';
-import { AddTypeButton } from './AddTypeButton';
+import { AddTypeDialog } from './AddTypeDialog';
 import { SaveSchemaDialog } from './SaveSchemaDialog';
 import { SchemaMenu } from './SchemaMenu';
 import { TypeDraftStatusTag } from './TypeDraftStatusTag';
@@ -40,6 +39,7 @@ export function SchemaEditorScreen({ header, footer }: SchemaEditorScreenProps) 
     undefined,
     initializeSchemaEditorState
   );
+  const [showAddTypeDialog, setShowAddTypeDialog] = useState(false);
   const [showSaveDialog, setShowSaveDialog] = useState(false);
 
   useEffect(() => {
@@ -72,22 +72,10 @@ export function SchemaEditorScreen({ header, footer }: SchemaEditorScreenProps) 
           scrollToId={menuScrollToId}
           scrollToIdSignal={schemaEditorState.activeSelectorMenuScrollSignal}
         >
-          <AddTypeButton
-            type="entity"
-            disabled={!schema}
-            dispatchSchemaEditorState={dispatchSchemaEditorState}
-          >
-            Add entity type
-          </AddTypeButton>
-          <AddTypeButton
-            type="value"
-            disabled={!schema}
-            dispatchSchemaEditorState={dispatchSchemaEditorState}
-          >
-            Add value type
-          </AddTypeButton>
+          <Button onClick={() => setShowAddTypeDialog(true)}>Add type</Button>
           <Button
             disabled={schemaEditorState.status !== 'changed'}
+            color="primary"
             onClick={() => setShowSaveDialog(true)}
           >
             Review &amp; save schema
@@ -130,6 +118,12 @@ export function SchemaEditorScreen({ header, footer }: SchemaEditorScreenProps) 
         </FullscreenContainer.ScrollableColumn>
       </FullscreenContainer.Columns>
       {footer ? <FullscreenContainer.Row fullWidth>{footer}</FullscreenContainer.Row> : null}
+      <AddTypeDialog
+        show={showAddTypeDialog}
+        schemaEditorState={schemaEditorState}
+        dispatchSchemaEditorState={dispatchSchemaEditorState}
+        onClose={() => setShowAddTypeDialog(false)}
+      />
       <SaveSchemaDialog
         show={showSaveDialog}
         schemaEditorState={schemaEditorState}
