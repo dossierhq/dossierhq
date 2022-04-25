@@ -1,12 +1,26 @@
-export enum StatusColor {
-  draft = 'draft',
-  published = 'published',
-  modified = 'modified',
-  withdrawn = 'withdrawn',
-  archived = 'archived',
-}
+export const StatusColor = {
+  draft: 'draft',
+  published: 'published',
+  modified: 'modified',
+  withdrawn: 'withdrawn',
+  archived: 'archived',
+} as const;
 
-const colorMap: Record<string, string> = {
+export type StatusColor = typeof StatusColor[keyof typeof StatusColor];
+
+const BulmaColor = {
+  light: 'light',
+  primary: 'primary',
+} as const;
+
+export const Color = {
+  ...StatusColor,
+  ...BulmaColor,
+};
+
+export type Color = typeof Color[keyof typeof Color];
+
+const statusColorMap: Record<StatusColor, string> = {
   draft: 'light',
   published: 'success',
   modified: 'warning',
@@ -14,7 +28,14 @@ const colorMap: Record<string, string> = {
   archived: 'danger',
 };
 
-export function resolveBulmaColor(color: keyof typeof StatusColor | undefined): string | undefined {
+export function resolveBulmaColor(color: Color | undefined): string | undefined {
   if (!color) return undefined;
-  return colorMap[color];
+  const statusColorValue = statusColorMap[color as StatusColor];
+  return statusColorValue ?? color;
+}
+
+export function toColorClassName(color: Color | undefined): string | undefined {
+  const colorName = resolveBulmaColor(color);
+  if (!colorName) return undefined;
+  return `is-${colorName}`;
 }

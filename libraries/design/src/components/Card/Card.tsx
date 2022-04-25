@@ -36,6 +36,7 @@ interface CardFooterItemProps {
 
 interface CardFooterButtonProps {
   value?: string;
+  disabled?: boolean;
   children?: ReactNode;
 }
 
@@ -109,9 +110,13 @@ Card.Footer = ({ children }: CardFooterProps) => {
 };
 Card.Footer.displayName = 'Card.Footer';
 
-Card.FooterButton = ({ value, children }: CardFooterButtonProps) => {
+Card.FooterButton = ({ value, disabled, children }: CardFooterButtonProps) => {
   return (
-    <button className="card-footer-item button is-white card-footer-button" value={value}>
+    <button
+      className="card-footer-item button is-white card-footer-button"
+      disabled={disabled}
+      value={value}
+    >
       {children}
     </button>
   );

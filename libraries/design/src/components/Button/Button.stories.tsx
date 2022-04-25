@@ -20,6 +20,9 @@ const Template: Story<StoryProps> = ({ ...args }: StoryProps) => {
 export const Normal = Template.bind({});
 Normal.args = {};
 
+export const Primary = Template.bind({});
+Primary.args = { color: 'primary' };
+
 export const Disabled = Template.bind({});
 Disabled.args = { disabled: true };
 
@@ -36,4 +39,4 @@ WithBadge.args = {
 };
 
 export const Light = Template.bind({});
-Light.args = { light: true };
+Light.args = { color: 'light' };

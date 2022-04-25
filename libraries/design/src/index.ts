@@ -21,6 +21,7 @@ export {
   MultipleSelectorStateActions,
   NavBar,
   NotificationContainer,
+  Radio,
   reduceMultipleSelectorState,
   SelectDisplay,
   Table,
@@ -39,7 +40,7 @@ export type {
   MultipleSelectorState,
   MultipleSelectorStateAction,
 } from './components/index.js';
-export { StatusColor } from './config/Colors.js';
+export { Color, StatusColor } from './config/Colors.js';
 export { NotificationContext } from './contexts/NotificationContext.js';
 export { useDocumentEventListener } from './hooks/useDocumentEventListener.js';
 export { useEventListener } from './hooks/useEventListener.js';

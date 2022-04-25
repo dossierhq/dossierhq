@@ -1,14 +1,16 @@
+import type { ChangeEventHandler, KeyboardEventHandler } from 'react';
 import React from 'react';
+import { toClassName } from '../../utils/ClassNameUtils.js';
 import type { IconName } from '../index.js';
 import { Icon } from '../index.js';
-import { toClassName } from '../../utils/ClassNameUtils.js';
 
 export interface InputProps {
   iconLeft?: IconName;
   placeholder?: string;
   readOnly?: boolean;
   value?: string;
-  onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  onChange?: ChangeEventHandler<HTMLInputElement>;
+  onKeyDown?: KeyboardEventHandler<HTMLInputElement>;
 }
 
 export function Input({
@@ -17,6 +19,7 @@ export function Input({
   readOnly,
   value,
   onChange,
+  onKeyDown,
 }: InputProps): JSX.Element {
   const className = toClassName('control', iconLeft && 'has-icons-left');
   return (
@@ -28,6 +31,7 @@ export function Input({
         readOnly={readOnly}
         value={value}
         onChange={onChange}
+        onKeyDown={onKeyDown}
       />
       {iconLeft ? <Icon className="is-left" icon={iconLeft} /> : null}
     </p>
