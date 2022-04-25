@@ -41,7 +41,7 @@
     "@hapi/boom": "~9.1.4",
     "debug": "~4.3.4",
     "joi": "~17.6.0",
-    "graphql": "~16.3.0",
+    "graphql": "~16.4.0",
     "graphql-voyager": "~1.0.0-rc.31",
     "leaflet": "~1.7.1",
     "next": "~12.1.4",
