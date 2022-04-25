@@ -83,7 +83,7 @@
     "@editorjs/editorjs": "~2.23.2",
     "@jonasb/datadata-core": "workspace:*",
     "@jonasb/datadata-design": "workspace:*",
-    "leaflet": "~1.7.1",
+    "leaflet": "~1.8.0",
     "lodash": "~4.17.21",
     "react": "~18.0.0",
     "react-dom": "~18.0.0",
