@@ -270,7 +270,7 @@ importers:
       prettier: 2.6.2
       react: ~18.0.0
       react-dom: ~18.0.0
-      react-leaflet: ~3.2.5
+      react-leaflet: ~4.0.0
       react-test-renderer: ~18.0.0
       svgo: ~2.8.0
       swr: ~1.3.0
@@ -285,7 +285,7 @@ importers:
       lodash: 4.17.21
       react: 18.0.0
       react-dom: 18.0.0_react@18.0.0
-      react-leaflet: 3.2.5_c962c0551b8a6acae2e5063f70db18f3
+      react-leaflet: 4.0.0_c962c0551b8a6acae2e5063f70db18f3
       swr: 1.3.0_react@18.0.0
       tslib: 2.3.1
       uuid: 8.3.2
@@ -3432,12 +3432,12 @@ packages:
     resolution: {integrity: sha512-IXf3XA7+XyN7CP9gGh/XB0UxVMlvARGEgGXLubFICsUMGz6Q+DU+i4gGlpOxTjKvXjkJDJC8YdqdKkDj9qZHEQ==}
     dev: true
 
-  /@react-leaflet/core/1.1.1_c962c0551b8a6acae2e5063f70db18f3:
-    resolution: {integrity: sha512-7PGLWa9MZ5x/cWy8EH2VzI4T8q5WpuHbixzCDXqixP/WyqwIrg5NDUPgYuFnB4IEIZF+6nA265mYzswFo/h1Pw==}
+  /@react-leaflet/core/2.0.0_c962c0551b8a6acae2e5063f70db18f3:
+    resolution: {integrity: sha512-SQQ5DCQIaLzvslN6wCXs5OWqtlvk1Ubv2n5d7zTM8SDl9hM5Rr2wVy7/nOCIY958D75/ovhq6ZoSvT7GLCX6sg==}
     peerDependencies:
-      leaflet: ^1.7.1
-      react: ^17.0.1
-      react-dom: ^17.0.1
+      leaflet: ^1.8.0
+      react: ^18.0.0
+      react-dom: ^18.0.0
     dependencies:
       leaflet: 1.7.1
       react: 18.0.0
@@ -14173,14 +14173,14 @@ packages:
     resolution: {integrity: sha512-yUcBYdBBbo3QiPsgYDcfQcIkGZHfxOaoE6HLSnr1sPzMhdyxusbfKOSUbSd/ocGi32dxcj366PsTj+5oggeKKw==}
     dev: true
 
-  /react-leaflet/3.2.5_c962c0551b8a6acae2e5063f70db18f3:
-    resolution: {integrity: sha512-Z3KZ+4SijsRbbrt2I1a3ZDY6+V6Pm91eYTdxTN18G6IOkFRsJo1BuSPLFnyFrlF3WDjQFPEcTPkEgD1VEeAoBg==}
+  /react-leaflet/4.0.0_c962c0551b8a6acae2e5063f70db18f3:
+    resolution: {integrity: sha512-qJJvoCNe12XHSWVUwhXYmMObPoSYy8h/hn0aDNvcBuq3O8zmVI5S2RdabhaDg/iWMCJ2jbCWZWtIU5VtztO9sg==}
     peerDependencies:
-      leaflet: ^1.7.1
-      react: ^17.0.1
-      react-dom: ^17.0.1
+      leaflet: ^1.8.0
+      react: ^18.0.0
+      react-dom: ^18.0.0
     dependencies:
-      '@react-leaflet/core': 1.1.1_c962c0551b8a6acae2e5063f70db18f3
+      '@react-leaflet/core': 2.0.0_c962c0551b8a6acae2e5063f70db18f3
       leaflet: 1.7.1
       react: 18.0.0
       react-dom: 18.0.0_react@18.0.0
