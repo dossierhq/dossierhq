@@ -206,6 +206,7 @@ function TypeEditorRows({
         gap={2}
         paddingVertical={4}
         paddingHorizontal={3}
+        marginBottom={4}
         data-kind={typeDraft.kind}
         data-typename={typeDraft.name}
         onClick={handleClick}
