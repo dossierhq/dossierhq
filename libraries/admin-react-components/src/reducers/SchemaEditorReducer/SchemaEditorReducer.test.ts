@@ -1397,10 +1397,7 @@ describe('DeleteTypeAction', () => {
 
     expect(state).toMatchInlineSnapshot(`
       Object {
-        "activeSelector": Object {
-          "kind": "entity",
-          "typeName": "Foo",
-        },
+        "activeSelector": null,
         "activeSelectorEditorScrollSignal": 1,
         "activeSelectorMenuScrollSignal": 1,
         "entityTypes": Array [],
@@ -1430,10 +1427,7 @@ describe('DeleteTypeAction', () => {
 
     expect(state).toMatchInlineSnapshot(`
       Object {
-        "activeSelector": Object {
-          "kind": "value",
-          "typeName": "Foo",
-        },
+        "activeSelector": null,
         "activeSelectorEditorScrollSignal": 1,
         "activeSelectorMenuScrollSignal": 1,
         "entityTypes": Array [],
