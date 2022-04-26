@@ -15,6 +15,7 @@ import type {
   SchemaEditorStateAction,
   SchemaFieldDraft,
   SchemaFieldSelector,
+  SchemaTypeSelector,
 } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer';
 import { SchemaEditorActions } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer';
 import { FieldEntityTypeSelector } from './FieldEntityTypeSelector';
@@ -25,6 +26,7 @@ interface Props {
   fieldDraft: SchemaFieldDraft;
   schemaEditorState: SchemaEditorState;
   dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>;
+  onAddOrRenameField: (selector: SchemaFieldSelector | SchemaTypeSelector) => void;
 }
 
 interface FieldTypeItem {
@@ -59,6 +61,7 @@ export function SchemaFieldEditor({
   fieldDraft,
   schemaEditorState,
   dispatchSchemaEditorState,
+  onAddOrRenameField,
 }: Props) {
   const canChangeRequired = fieldDraft.status === 'new'; //TODO too restrictive
   const canChangeType = fieldDraft.status === 'new';
@@ -72,18 +75,12 @@ export function SchemaFieldEditor({
         case 'delete':
           dispatchSchemaEditorState(new SchemaEditorActions.DeleteField(fieldSelector));
           break;
-        case 'rename': {
-          const fieldName = window.prompt('New field name?', fieldSelector.fieldName);
-          if (fieldName) {
-            dispatchSchemaEditorState(
-              new SchemaEditorActions.RenameField(fieldSelector, fieldName)
-            );
-          }
+        case 'rename':
+          onAddOrRenameField(fieldSelector);
           break;
-        }
       }
     },
-    [dispatchSchemaEditorState, fieldSelector]
+    [dispatchSchemaEditorState, fieldSelector, onAddOrRenameField]
   );
 
   const dropDownItems = canDeleteOrRenameField
@@ -208,6 +205,7 @@ function FieldEntityTypeDisplay({ entityTypes }: { entityTypes: string[] }) {
     </TagInput>
   );
 }
+
 function FieldValueTypeDisplay({ valueTypes }: { valueTypes: string[] }) {
   return (
     <TagInput>

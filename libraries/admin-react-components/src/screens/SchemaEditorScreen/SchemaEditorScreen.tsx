@@ -15,6 +15,8 @@ import type {
   SchemaEditorState,
   SchemaEditorStateAction,
   SchemaEntityTypeDraft,
+  SchemaFieldSelector,
+  SchemaTypeSelector,
   SchemaValueTypeDraft,
 } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer';
 import {
@@ -22,6 +24,7 @@ import {
   reduceSchemaEditorState,
   SchemaEditorActions,
 } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer';
+import { AddOrRenameFieldDialog } from './AddOrRenameFieldDialog';
 import { AddTypeDialog } from './AddTypeDialog';
 import { SaveSchemaDialog } from './SaveSchemaDialog';
 import { SchemaMenu } from './SchemaMenu';
@@ -40,7 +43,17 @@ export function SchemaEditorScreen({ header, footer }: SchemaEditorScreenProps) 
     initializeSchemaEditorState
   );
   const [showAddTypeDialog, setShowAddTypeDialog] = useState(false);
+  const [addOrRenameFieldSelector, setAddOrRenameFieldSelector] = useState<
+    SchemaFieldSelector | SchemaTypeSelector | null
+  >(null);
   const [showSaveDialog, setShowSaveDialog] = useState(false);
+
+  const handleCloseAddTypeDialog = useCallback(() => setShowAddTypeDialog(false), []);
+  const handleCloseAddOrRenameFieldDialog = useCallback(
+    () => setAddOrRenameFieldSelector(null),
+    []
+  );
+  const handleCloseSchemaDialog = useCallback(() => setShowSaveDialog(false), []);
 
   useEffect(() => {
     if (schema) {
@@ -103,6 +116,7 @@ export function SchemaEditorScreen({ header, footer }: SchemaEditorScreenProps) 
                   typeDraft={entityType}
                   schemaEditorState={schemaEditorState}
                   dispatchSchemaEditorState={dispatchSchemaEditorState}
+                  onAddOrRenameField={setAddOrRenameFieldSelector}
                 />
               ))}
               {schemaEditorState.valueTypes.map((valueType) => (
@@ -111,6 +125,7 @@ export function SchemaEditorScreen({ header, footer }: SchemaEditorScreenProps) 
                   typeDraft={valueType}
                   schemaEditorState={schemaEditorState}
                   dispatchSchemaEditorState={dispatchSchemaEditorState}
+                  onAddOrRenameField={setAddOrRenameFieldSelector}
                 />
               ))}
             </>
@@ -122,13 +137,19 @@ export function SchemaEditorScreen({ header, footer }: SchemaEditorScreenProps) 
         show={showAddTypeDialog}
         schemaEditorState={schemaEditorState}
         dispatchSchemaEditorState={dispatchSchemaEditorState}
-        onClose={() => setShowAddTypeDialog(false)}
+        onClose={handleCloseAddTypeDialog}
+      />
+      <AddOrRenameFieldDialog
+        selector={addOrRenameFieldSelector}
+        schemaEditorState={schemaEditorState}
+        dispatchSchemaEditorState={dispatchSchemaEditorState}
+        onClose={handleCloseAddOrRenameFieldDialog}
       />
       <SaveSchemaDialog
         show={showSaveDialog}
         schemaEditorState={schemaEditorState}
         dispatchSchemaEditorState={dispatchSchemaEditorState}
-        onClose={() => setShowSaveDialog(false)}
+        onClose={handleCloseSchemaDialog}
       />
     </FullscreenContainer>
   );
@@ -138,10 +159,12 @@ function TypeEditorRows({
   typeDraft,
   schemaEditorState,
   dispatchSchemaEditorState,
+  onAddOrRenameField,
 }: {
   typeDraft: SchemaEntityTypeDraft | SchemaValueTypeDraft;
   schemaEditorState: SchemaEditorState;
   dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>;
+  onAddOrRenameField: (selector: SchemaFieldSelector | SchemaTypeSelector) => void;
 }) {
   const typeSelector = useMemo(
     () => ({ kind: typeDraft.kind, typeName: typeDraft.name }),
@@ -192,6 +215,7 @@ function TypeEditorRows({
           typeDraft={typeDraft}
           schemaEditorState={schemaEditorState}
           dispatchSchemaEditorState={dispatchSchemaEditorState}
+          onAddOrRenameField={onAddOrRenameField}
         />
       </FullscreenContainer.Row>
     </>
