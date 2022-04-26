@@ -26,7 +26,7 @@ import {
   SchemaEditorActions,
 } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer';
 import { AddOrRenameFieldDialog } from './AddOrRenameFieldDialog';
-import { AddTypeDialog } from './AddTypeDialog';
+import { AddOrRenameTypeDialog } from './AddOrRenameTypeDialog';
 import { SaveSchemaDialog } from './SaveSchemaDialog';
 import { SchemaMenu } from './SchemaMenu';
 import { TypeDraftStatusTag } from './TypeDraftStatusTag';
@@ -43,13 +43,15 @@ export function SchemaEditorScreen({ header, footer }: SchemaEditorScreenProps) 
     undefined,
     initializeSchemaEditorState
   );
-  const [showAddTypeDialog, setShowAddTypeDialog] = useState(false);
+  const [addOrRenameTypeSelector, setAddOrRenameTypeSelector] = useState<
+    SchemaTypeSelector | 'add' | null
+  >(null);
   const [addOrRenameFieldSelector, setAddOrRenameFieldSelector] = useState<
     SchemaFieldSelector | SchemaTypeSelector | null
   >(null);
   const [showSaveDialog, setShowSaveDialog] = useState(false);
 
-  const handleCloseAddTypeDialog = useCallback(() => setShowAddTypeDialog(false), []);
+  const handleCloseAddTypeDialog = useCallback(() => setAddOrRenameTypeSelector(null), []);
   const handleCloseAddOrRenameFieldDialog = useCallback(
     () => setAddOrRenameFieldSelector(null),
     []
@@ -86,7 +88,7 @@ export function SchemaEditorScreen({ header, footer }: SchemaEditorScreenProps) 
           scrollToId={menuScrollToId}
           scrollToIdSignal={schemaEditorState.activeSelectorMenuScrollSignal}
         >
-          <Button onClick={() => setShowAddTypeDialog(true)}>Add type</Button>
+          <Button onClick={() => setAddOrRenameTypeSelector('add')}>Add type</Button>
           <Button
             disabled={schemaEditorState.status !== 'changed'}
             color="primary"
@@ -117,6 +119,7 @@ export function SchemaEditorScreen({ header, footer }: SchemaEditorScreenProps) 
                   typeDraft={entityType}
                   schemaEditorState={schemaEditorState}
                   dispatchSchemaEditorState={dispatchSchemaEditorState}
+                  onAddOrRenameType={setAddOrRenameTypeSelector}
                   onAddOrRenameField={setAddOrRenameFieldSelector}
                 />
               ))}
@@ -126,6 +129,7 @@ export function SchemaEditorScreen({ header, footer }: SchemaEditorScreenProps) 
                   typeDraft={valueType}
                   schemaEditorState={schemaEditorState}
                   dispatchSchemaEditorState={dispatchSchemaEditorState}
+                  onAddOrRenameType={setAddOrRenameTypeSelector}
                   onAddOrRenameField={setAddOrRenameFieldSelector}
                 />
               ))}
@@ -134,8 +138,8 @@ export function SchemaEditorScreen({ header, footer }: SchemaEditorScreenProps) 
         </FullscreenContainer.ScrollableColumn>
       </FullscreenContainer.Columns>
       {footer ? <FullscreenContainer.Row fullWidth>{footer}</FullscreenContainer.Row> : null}
-      <AddTypeDialog
-        show={showAddTypeDialog}
+      <AddOrRenameTypeDialog
+        selector={addOrRenameTypeSelector}
         schemaEditorState={schemaEditorState}
         dispatchSchemaEditorState={dispatchSchemaEditorState}
         onClose={handleCloseAddTypeDialog}
@@ -160,11 +164,13 @@ function TypeEditorRows({
   typeDraft,
   schemaEditorState,
   dispatchSchemaEditorState,
+  onAddOrRenameType,
   onAddOrRenameField,
 }: {
   typeDraft: SchemaEntityTypeDraft | SchemaValueTypeDraft;
   schemaEditorState: SchemaEditorState;
   dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>;
+  onAddOrRenameType: (selector: SchemaTypeSelector) => void;
   onAddOrRenameField: (selector: SchemaFieldSelector | SchemaTypeSelector) => void;
 }) {
   const canDeleteOrRenameType = typeDraft.status === 'new'; //TODO too restrictive
@@ -189,16 +195,16 @@ function TypeEditorRows({
           dispatchSchemaEditorState(new SchemaEditorActions.DeleteType(typeSelector));
           break;
         case 'rename':
-          // onAddOrRenameField(fieldSelector);
+          onAddOrRenameType(typeSelector);
           break;
       }
     },
-    [dispatchSchemaEditorState, typeSelector]
+    [dispatchSchemaEditorState, onAddOrRenameType, typeSelector]
   );
 
   const dropDownItems = canDeleteOrRenameType
     ? [
-        // { id: 'rename', title: 'Rename type' },
+        { id: 'rename', title: 'Rename type' },
         { id: 'delete', title: 'Delete type' },
       ]
     : [];

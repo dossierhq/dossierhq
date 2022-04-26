@@ -63,7 +63,6 @@ export function AddOrRenameFieldDialog({
         }
       }
       onClose();
-      setStatus(DialogStatus.empty);
     },
     [dispatchSchemaEditorState, name, onClose, selector]
   );

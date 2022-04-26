@@ -378,6 +378,39 @@ class RenameFieldAction extends FieldAction {
   }
 }
 
+class RenameTypeAction extends TypeAction {
+  name: string;
+
+  constructor(selector: SchemaTypeSelector, name: string) {
+    super(selector);
+    this.name = name;
+  }
+
+  reduceType(
+    typeDraft: Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft>
+  ): Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft> {
+    return { ...typeDraft, name: this.name };
+  }
+
+  override reduce(state: Readonly<SchemaEditorState>): Readonly<SchemaEditorState> {
+    const superState = super.reduce(state);
+
+    const newState: SchemaEditorState = {
+      ...superState,
+      activeSelector: { kind: this.kind, typeName: this.name },
+      activeSelectorMenuScrollSignal: state.activeSelectorMenuScrollSignal + 1,
+      activeSelectorEditorScrollSignal: state.activeSelectorEditorScrollSignal + 1,
+    };
+
+    if (this.kind === 'entity') {
+      newState.entityTypes.sort((a, b) => a.name.localeCompare(b.name));
+    } else {
+      newState.valueTypes.sort((a, b) => a.name.localeCompare(b.name));
+    }
+    return newState;
+  }
+}
+
 class SetActiveSelectorAction implements SchemaEditorStateAction {
   selector: SchemaTypeSelector | null;
   increaseMenuScrollSignal: boolean;
@@ -476,6 +509,7 @@ export const SchemaEditorActions = {
   DeleteField: DeleteFieldAction,
   DeleteType: DeleteTypeAction,
   RenameField: RenameFieldAction,
+  RenameType: RenameTypeAction,
   SetActiveSelector: SetActiveSelectorAction,
   UpdateSchemaSpecification: UpdateSchemaSpecificationAction,
 };
