@@ -4,7 +4,7 @@ import { toSizeClassName } from '../../index.js';
 import { toClassName } from '../../utils/ClassNameUtils.js';
 import type { FlexContainerProps } from '../../utils/FlexboxUtils.js';
 import { toFlexContainerClassName } from '../../utils/FlexboxUtils.js';
-import type { GapProps, PaddingProps } from '../../utils/LayoutPropsUtils.js';
+import type { GapProps, MarginProps, PaddingProps } from '../../utils/LayoutPropsUtils.js';
 import { extractLayoutProps } from '../../utils/LayoutPropsUtils.js';
 import { toSpacingClassName } from '../../utils/LayoutPropsUtils.js';
 import { Scrollable } from '../index.js';
@@ -13,7 +13,11 @@ export interface FullscreenContainerProps {
   children: React.ReactNode;
 }
 
-export interface FullscreenContainerRowProps extends PaddingProps, GapProps, FlexContainerProps {
+export interface FullscreenContainerRowProps
+  extends MarginProps,
+    PaddingProps,
+    GapProps,
+    FlexContainerProps {
   id?: string;
   center?: boolean;
   fullWidth?: boolean;
