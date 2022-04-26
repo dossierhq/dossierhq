@@ -1384,6 +1384,74 @@ describe('DeleteFieldAction', () => {
   });
 });
 
+describe('DeleteTypeAction', () => {
+  test('delete newly added entity type', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        new AdminSchema({ entityTypes: [], valueTypes: [] })
+      ),
+      new SchemaEditorActions.AddType('entity', 'Foo'),
+      new SchemaEditorActions.DeleteType({ kind: 'entity', typeName: 'Foo' })
+    );
+
+    expect(state).toMatchInlineSnapshot(`
+      Object {
+        "activeSelector": Object {
+          "kind": "entity",
+          "typeName": "Foo",
+        },
+        "activeSelectorEditorScrollSignal": 1,
+        "activeSelectorMenuScrollSignal": 1,
+        "entityTypes": Array [],
+        "schema": AdminSchema {
+          "spec": Object {
+            "entityTypes": Array [],
+            "valueTypes": Array [],
+          },
+        },
+        "status": "changed",
+        "valueTypes": Array [],
+      }
+    `);
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`Object {}`);
+  });
+
+  test('delete newly added value type', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        new AdminSchema({ entityTypes: [], valueTypes: [] })
+      ),
+      new SchemaEditorActions.AddType('value', 'Foo'),
+      new SchemaEditorActions.DeleteType({ kind: 'value', typeName: 'Foo' })
+    );
+
+    expect(state).toMatchInlineSnapshot(`
+      Object {
+        "activeSelector": Object {
+          "kind": "value",
+          "typeName": "Foo",
+        },
+        "activeSelectorEditorScrollSignal": 1,
+        "activeSelectorMenuScrollSignal": 1,
+        "entityTypes": Array [],
+        "schema": AdminSchema {
+          "spec": Object {
+            "entityTypes": Array [],
+            "valueTypes": Array [],
+          },
+        },
+        "status": "changed",
+        "valueTypes": Array [],
+      }
+    `);
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`Object {}`);
+  });
+});
+
 describe('RenameFieldAction', () => {
   test('add and rename field', () => {
     const state = reduceSchemaEditorStateActions(
