@@ -7,7 +7,24 @@ import type {
 } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer';
 import { SchemaEditorActions } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer';
 
-type DialogStatus = 'empty' | 'valid';
+const DialogStatus = {
+  alreadyExist: 'alreadyExist',
+  empty: 'empty',
+  invalidFormat: 'invalidFormat',
+  valid: 'valid',
+} as const;
+
+type DialogStatus = typeof DialogStatus[keyof typeof DialogStatus];
+
+//TODO move to core? add check to core
+const NAME_REGEXP = /^[A-Z][a-zA-Z0-9_]*$/;
+
+const NAME_DEFAULT_HELP_TEXT = 'The name of the type, such as MyType';
+const NAME_STATUS_HELP_TEST: Record<string, string> = {
+  [DialogStatus.invalidFormat]:
+    'The name has to start with a letter (A-Z) and can only contain letters (a-z, A-Z), numbers and underscore (_), such as MyType_123',
+  [DialogStatus.alreadyExist]: 'A type with that name already exists',
+};
 
 export function AddTypeDialog({
   show,
@@ -22,7 +39,7 @@ export function AddTypeDialog({
 }) {
   const nameRef = useRef('');
   const [kind, setKind] = useState<'entity' | 'value'>('entity');
-  const [status, setStatus] = useState<DialogStatus>('empty');
+  const [status, setStatus] = useState<DialogStatus>(DialogStatus.empty);
 
   const handleKindChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setKind(event.target.value as 'entity' | 'value');
@@ -30,13 +47,14 @@ export function AddTypeDialog({
 
   const handleNameChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
-      nameRef.current = event.target.value;
-      const newStatus = nameRef.current ? 'valid' : 'empty';
+      const name = event.target.value;
+      nameRef.current = name;
+      const newStatus = validateName(schemaEditorState, name);
       if (newStatus !== status) {
         setStatus(newStatus);
       }
     },
-    [status]
+    [schemaEditorState, status]
   );
 
   const handleClose = useCallback(
@@ -45,7 +63,9 @@ export function AddTypeDialog({
         dispatchSchemaEditorState(new SchemaEditorActions.AddType(kind, nameRef.current));
       }
       onClose();
+      nameRef.current = '';
       setKind('entity');
+      setStatus(DialogStatus.empty);
     },
     [dispatchSchemaEditorState, kind, onClose]
   );
@@ -60,7 +80,8 @@ export function AddTypeDialog({
             schemaEditorState,
             onKindChange: handleKindChange,
             onNameChange: handleNameChange,
-            onEnterKeyPress: () => handleClose(null as unknown as Event, 'add'),
+            onEnterKeyPress: () =>
+              status === DialogStatus.valid && handleClose(null as unknown as Event, 'add'),
           }}
         />
       ) : null}
@@ -68,17 +89,29 @@ export function AddTypeDialog({
   );
 }
 
+function validateName(schemaEditorState: SchemaEditorState, name: string): DialogStatus {
+  if (!name) return DialogStatus.empty;
+  if (!name.match(NAME_REGEXP)) {
+    return DialogStatus.invalidFormat;
+  }
+  if (
+    schemaEditorState.entityTypes.find((it) => it.name === name) ||
+    schemaEditorState.valueTypes.find((it) => it.name === name)
+  ) {
+    return DialogStatus.alreadyExist;
+  }
+  return DialogStatus.valid;
+}
+
 function DialogContent({
   status,
   kind,
-  schemaEditorState: _,
   onKindChange,
   onNameChange,
   onEnterKeyPress,
 }: {
   status: DialogStatus;
   kind: 'entity' | 'value';
-  schemaEditorState: SchemaEditorState;
   onKindChange: ChangeEventHandler<HTMLInputElement>;
   onNameChange: ChangeEventHandler<HTMLInputElement>;
   onEnterKeyPress: () => void;
@@ -93,12 +126,28 @@ function DialogContent({
     [onEnterKeyPress]
   );
 
+  const nameColor = Object.keys(NAME_STATUS_HELP_TEST).includes(status) ? 'danger' : undefined;
+
   return (
     <Card>
       <Card.Header>
         <Card.HeaderTitle>Add type</Card.HeaderTitle>
       </Card.Header>
       <Card.Content>
+        <Field>
+          <Field.Label>Name</Field.Label>
+          <Field.Control>
+            <Input
+              placeholder="Enter name…"
+              color={nameColor}
+              onChange={onNameChange}
+              onKeyDown={handleKeyDown}
+            />
+          </Field.Control>
+          <Field.Help color={nameColor}>
+            {NAME_STATUS_HELP_TEST[status] ?? NAME_DEFAULT_HELP_TEXT}
+          </Field.Help>
+        </Field>
         <Field>
           <Field.Control>
             <Radio name="kind" value="entity" checked={kind === 'entity'} onChange={onKindChange}>
@@ -109,13 +158,10 @@ function DialogContent({
             </Radio>
           </Field.Control>
         </Field>
-        <Field>
-          <Input placeholder="Enter name…" onChange={onNameChange} onKeyDown={handleKeyDown} />
-        </Field>
       </Card.Content>
       <Card.Footer>
         <Card.FooterButton>Cancel</Card.FooterButton>
-        <Card.FooterButton value="add" disabled={status !== 'valid'}>
+        <Card.FooterButton value="add" disabled={status !== DialogStatus.valid}>
           Add
         </Card.FooterButton>
       </Card.Footer>

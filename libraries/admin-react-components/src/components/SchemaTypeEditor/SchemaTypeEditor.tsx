@@ -70,14 +70,6 @@ export function SchemaTypeEditor({
     <>
       <Field>
         <Field.Control>
-          <AddFieldButton
-            typeSelector={typeSelector}
-            dispatchSchemaEditorState={dispatchSchemaEditorState}
-          />
-        </Field.Control>
-      </Field>
-      <Field>
-        <Field.Control>
           <Checkbox
             checked={typeDraft.adminOnly}
             disabled={!canChangeAdminOnly}
@@ -89,6 +81,14 @@ export function SchemaTypeEditor({
           >
             Admin only
           </Checkbox>
+        </Field.Control>
+      </Field>
+      <Field>
+        <Field.Control>
+          <AddFieldButton
+            typeSelector={typeSelector}
+            dispatchSchemaEditorState={dispatchSchemaEditorState}
+          />
         </Field.Control>
       </Field>
       {typeDraft.fields.map((fieldDraft) => (
