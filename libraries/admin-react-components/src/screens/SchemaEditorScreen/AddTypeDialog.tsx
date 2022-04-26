@@ -1,6 +1,6 @@
 import { Card, Dialog, Field, Input, Radio } from '@jonasb/datadata-design';
 import type { ChangeEvent, ChangeEventHandler, Dispatch, KeyboardEvent } from 'react';
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import type {
   SchemaEditorState,
   SchemaEditorStateAction,
@@ -37,7 +37,7 @@ export function AddTypeDialog({
   dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>;
   onClose: () => void;
 }) {
-  const nameRef = useRef('');
+  const [name, setName] = useState('');
   const [kind, setKind] = useState<'entity' | 'value'>('entity');
   const [status, setStatus] = useState<DialogStatus>(DialogStatus.empty);
 
@@ -45,30 +45,27 @@ export function AddTypeDialog({
     setKind(event.target.value as 'entity' | 'value');
   }, []);
 
-  const handleNameChange = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
-      const name = event.target.value;
-      nameRef.current = name;
-      const newStatus = validateName(schemaEditorState, name);
-      if (newStatus !== status) {
-        setStatus(newStatus);
-      }
-    },
-    [schemaEditorState, status]
-  );
+  const handleNameChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+    setName(event.target.value);
+  }, []);
 
   const handleClose = useCallback(
     async (_event: Event, returnValue: string) => {
       if (returnValue === 'add') {
-        dispatchSchemaEditorState(new SchemaEditorActions.AddType(kind, nameRef.current));
+        dispatchSchemaEditorState(new SchemaEditorActions.AddType(kind, name));
       }
       onClose();
-      nameRef.current = '';
+      setName('');
       setKind('entity');
       setStatus(DialogStatus.empty);
     },
-    [dispatchSchemaEditorState, kind, onClose]
+    [dispatchSchemaEditorState, kind, name, onClose]
   );
+
+  useEffect(() => {
+    const newStatus = validateName(schemaEditorState, name);
+    setStatus(newStatus);
+  }, [name, schemaEditorState]);
 
   return (
     <Dialog show={show} modal onClose={handleClose}>
@@ -76,6 +73,7 @@ export function AddTypeDialog({
         <DialogContent
           {...{
             status,
+            name,
             kind,
             schemaEditorState,
             onKindChange: handleKindChange,
@@ -105,12 +103,14 @@ function validateName(schemaEditorState: SchemaEditorState, name: string): Dialo
 
 function DialogContent({
   status,
+  name,
   kind,
   onKindChange,
   onNameChange,
   onEnterKeyPress,
 }: {
   status: DialogStatus;
+  name: string;
   kind: 'entity' | 'value';
   onKindChange: ChangeEventHandler<HTMLInputElement>;
   onNameChange: ChangeEventHandler<HTMLInputElement>;
@@ -140,6 +140,7 @@ function DialogContent({
             <Input
               placeholder="Enter name…"
               color={nameColor}
+              value={name}
               onChange={onNameChange}
               onKeyDown={handleKeyDown}
             />
