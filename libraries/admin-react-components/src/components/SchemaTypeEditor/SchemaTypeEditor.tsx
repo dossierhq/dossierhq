@@ -1,10 +1,11 @@
 import { Button, Checkbox, Field } from '@jonasb/datadata-design';
 import type { Dispatch } from 'react';
-import React, { useCallback } from 'react';
+import React from 'react';
 import type {
   SchemaEditorState,
   SchemaEditorStateAction,
   SchemaEntityTypeDraft,
+  SchemaFieldSelector,
   SchemaTypeSelector,
   SchemaValueTypeDraft,
 } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer';
@@ -16,6 +17,7 @@ interface Props {
   typeDraft: SchemaEntityTypeDraft | SchemaValueTypeDraft;
   schemaEditorState: SchemaEditorState;
   dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>;
+  onAddOrRenameField: (selector: SchemaFieldSelector | SchemaTypeSelector) => void;
 }
 
 export function SchemaTypeEditor({
@@ -23,6 +25,7 @@ export function SchemaTypeEditor({
   typeDraft,
   schemaEditorState,
   dispatchSchemaEditorState,
+  onAddOrRenameField,
 }: Props) {
   const canChangeAdminOnly = typeDraft.status === 'new'; //TODO too restrictive
 
@@ -45,10 +48,7 @@ export function SchemaTypeEditor({
       </Field>
       <Field>
         <Field.Control>
-          <AddFieldButton
-            typeSelector={typeSelector}
-            dispatchSchemaEditorState={dispatchSchemaEditorState}
-          />
+          <Button onClick={() => onAddOrRenameField(typeSelector)}>Add field</Button>
         </Field.Control>
       </Field>
       {typeDraft.fields.map((fieldDraft) => (
@@ -58,29 +58,9 @@ export function SchemaTypeEditor({
           fieldDraft={fieldDraft}
           schemaEditorState={schemaEditorState}
           dispatchSchemaEditorState={dispatchSchemaEditorState}
+          onAddOrRenameField={onAddOrRenameField}
         />
       ))}
     </>
   );
-}
-
-function AddFieldButton({
-  typeSelector,
-  dispatchSchemaEditorState,
-}: {
-  typeSelector: SchemaTypeSelector;
-  dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>;
-}) {
-  const handleClick = useCallback(() => {
-    const fieldName = window.prompt('Field name?');
-    if (fieldName) {
-      dispatchSchemaEditorState(
-        new SchemaEditorActions.AddField(
-          { kind: typeSelector.kind, typeName: typeSelector.typeName },
-          fieldName
-        )
-      );
-    }
-  }, [dispatchSchemaEditorState, typeSelector.kind, typeSelector.typeName]);
-  return <Button onClick={handleClick}>Add field</Button>;
 }
