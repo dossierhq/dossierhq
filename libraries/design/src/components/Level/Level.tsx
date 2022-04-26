@@ -1,10 +1,11 @@
 import type { FunctionComponent, ReactNode } from 'react';
 import React from 'react';
 import { toClassName } from '../../utils/ClassNameUtils';
+import { PaddingProps, toSpacingClassName } from '../../utils/LayoutPropsUtils';
 import type { TextStyle } from '../../utils/TextStylePropsUtils';
 import { toTextStyleClassName } from '../../utils/TextStylePropsUtils';
 
-export interface LevelProps {
+export interface LevelProps extends PaddingProps {
   sticky?: boolean;
   children: ReactNode;
 }
@@ -28,8 +29,12 @@ interface LevelComponent extends FunctionComponent<LevelProps> {
   Item: FunctionComponent<LevelItemProps>;
 }
 
-export const Level: LevelComponent = ({ sticky, children }: LevelProps) => {
-  return <nav className={toClassName('level', sticky && 'is-sticky-row')}>{children}</nav>;
+export const Level: LevelComponent = ({ sticky, children, ...props }: LevelProps) => {
+  return (
+    <nav className={toClassName('level', sticky && 'is-sticky-row', toSpacingClassName(props))}>
+      {children}
+    </nav>
+  );
 };
 Level.displayName = 'Level';
 

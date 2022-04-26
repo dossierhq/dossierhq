@@ -182,7 +182,7 @@ function TypeEditorRows({
   return (
     <>
       <FullscreenContainer.Row id={`${typeDraft.name}-header`} sticky>
-        <Level>
+        <Level paddingHorizontal={3}>
           <Level.Left>
             <Level.Item>
               <Text textStyle="headline4">

@@ -18,6 +18,12 @@ Normal.args = {
   children: <Level.Item>Item</Level.Item>,
 };
 
+export const Padding = Template.bind({});
+Padding.args = {
+  padding: 5,
+  children: <Level.Item>Item</Level.Item>,
+};
+
 export const LeftRight = Template.bind({});
 LeftRight.args = {
   children: (
