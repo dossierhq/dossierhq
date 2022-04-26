@@ -4,11 +4,12 @@ import React, { useCallback, useEffect, useState } from 'react';
 import type {
   SchemaEditorState,
   SchemaEditorStateAction,
+  SchemaTypeSelector,
 } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer';
 import { SchemaEditorActions } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer';
 
 interface Props {
-  show: boolean;
+  selector: SchemaTypeSelector | 'add' | null;
   schemaEditorState: SchemaEditorState;
   dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>;
   onClose: () => void;
@@ -18,6 +19,7 @@ const DialogStatus = {
   alreadyExist: 'alreadyExist',
   empty: 'empty',
   invalidFormat: 'invalidFormat',
+  noChange: 'noChange',
   valid: 'valid',
 } as const;
 
@@ -33,8 +35,8 @@ const NAME_STATUS_HELP_TEST: Record<string, string> = {
   [DialogStatus.alreadyExist]: 'A type with that name already exists',
 };
 
-export function AddTypeDialog({
-  show,
+export function AddOrRenameTypeDialog({
+  selector,
   schemaEditorState,
   dispatchSchemaEditorState,
   onClose,
@@ -53,27 +55,40 @@ export function AddTypeDialog({
 
   const handleClose = useCallback(
     async (_event: Event, returnValue: string) => {
-      if (returnValue === 'add') {
-        dispatchSchemaEditorState(new SchemaEditorActions.AddType(kind, name));
+      if (!selector) {
+        return;
+      }
+      if (returnValue === 'ok') {
+        if (selector === 'add') {
+          dispatchSchemaEditorState(new SchemaEditorActions.AddType(kind, name));
+        } else {
+          dispatchSchemaEditorState(new SchemaEditorActions.RenameType(selector, name));
+        }
       }
       onClose();
-      setName('');
       setKind('entity');
       setStatus(DialogStatus.empty);
     },
-    [dispatchSchemaEditorState, kind, name, onClose]
+    [dispatchSchemaEditorState, kind, name, onClose, selector]
   );
 
   useEffect(() => {
-    const newStatus = validateName(schemaEditorState, name);
+    setName(selector && selector !== 'add' ? selector.typeName : '');
+  }, [selector]);
+
+  useEffect(() => {
+    const newStatus = selector
+      ? validateName(schemaEditorState, selector, name)
+      : DialogStatus.empty;
     setStatus(newStatus);
-  }, [name, schemaEditorState]);
+  }, [name, schemaEditorState, selector]);
 
   return (
-    <Dialog show={show} modal onClose={handleClose}>
-      {show ? (
+    <Dialog show={!!selector} modal onClose={handleClose}>
+      {selector ? (
         <DialogContent
           {...{
+            selector,
             status,
             name,
             kind,
@@ -81,7 +96,7 @@ export function AddTypeDialog({
             onKindChange: handleKindChange,
             onNameChange: handleNameChange,
             onEnterKeyPress: () =>
-              status === DialogStatus.valid && handleClose(null as unknown as Event, 'add'),
+              status === DialogStatus.valid && handleClose(null as unknown as Event, 'ok'),
           }}
         />
       ) : null}
@@ -89,10 +104,17 @@ export function AddTypeDialog({
   );
 }
 
-function validateName(schemaEditorState: SchemaEditorState, name: string): DialogStatus {
+function validateName(
+  schemaEditorState: SchemaEditorState,
+  selector: SchemaTypeSelector | 'add',
+  name: string
+): DialogStatus {
   if (!name) return DialogStatus.empty;
   if (!name.match(NAME_REGEXP)) {
     return DialogStatus.invalidFormat;
+  }
+  if (selector !== 'add' && selector.typeName === name) {
+    return DialogStatus.noChange;
   }
   if (
     schemaEditorState.entityTypes.find((it) => it.name === name) ||
@@ -104,6 +126,7 @@ function validateName(schemaEditorState: SchemaEditorState, name: string): Dialo
 }
 
 function DialogContent({
+  selector,
   status,
   name,
   kind,
@@ -111,6 +134,7 @@ function DialogContent({
   onNameChange,
   onEnterKeyPress,
 }: {
+  selector: SchemaTypeSelector | 'add';
   status: DialogStatus;
   name: string;
   kind: 'entity' | 'value';
@@ -128,12 +152,13 @@ function DialogContent({
     [onEnterKeyPress]
   );
 
+  const isRename = selector !== 'add';
   const nameColor = Object.keys(NAME_STATUS_HELP_TEST).includes(status) ? 'danger' : undefined;
 
   return (
     <Card>
       <Card.Header>
-        <Card.HeaderTitle>Add type</Card.HeaderTitle>
+        <Card.HeaderTitle>{isRename ? 'Rename type' : 'Add type'}</Card.HeaderTitle>
       </Card.Header>
       <Card.Content>
         <Field>
@@ -151,21 +176,23 @@ function DialogContent({
             {NAME_STATUS_HELP_TEST[status] ?? NAME_DEFAULT_HELP_TEXT}
           </Field.Help>
         </Field>
-        <Field>
-          <Field.Control>
-            <Radio name="kind" value="entity" checked={kind === 'entity'} onChange={onKindChange}>
-              Entity type
-            </Radio>
-            <Radio name="kind" value="value" checked={kind === 'value'} onChange={onKindChange}>
-              Value type
-            </Radio>
-          </Field.Control>
-        </Field>
+        {isRename ? null : (
+          <Field>
+            <Field.Control>
+              <Radio name="kind" value="entity" checked={kind === 'entity'} onChange={onKindChange}>
+                Entity type
+              </Radio>
+              <Radio name="kind" value="value" checked={kind === 'value'} onChange={onKindChange}>
+                Value type
+              </Radio>
+            </Field.Control>
+          </Field>
+        )}
       </Card.Content>
       <Card.Footer>
         <Card.FooterButton>Cancel</Card.FooterButton>
-        <Card.FooterButton value="add" disabled={status !== DialogStatus.valid}>
-          Add
+        <Card.FooterButton value="ok" disabled={status !== DialogStatus.valid}>
+          {isRename ? 'Rename' : 'Add'}
         </Card.FooterButton>
       </Card.Footer>
     </Card>
