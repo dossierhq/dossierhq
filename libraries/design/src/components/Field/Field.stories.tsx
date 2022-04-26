@@ -28,6 +28,32 @@ Normal.args = {
   ),
 };
 
+export const Help = Template.bind({});
+Help.args = {
+  children: (
+    <>
+      <Field.Label>Label</Field.Label>
+      <Field.Control>
+        <Input />
+      </Field.Control>
+      <Field.Help>Help</Field.Help>
+    </>
+  ),
+};
+
+export const HelpDanger = Template.bind({});
+HelpDanger.args = {
+  children: (
+    <>
+      <Field.Label>Label</Field.Label>
+      <Field.Control>
+        <Input color="danger" />
+      </Field.Control>
+      <Field.Help color="danger">Help</Field.Help>
+    </>
+  ),
+};
+
 export const SmallLabel = Template.bind({});
 SmallLabel.args = {
   children: (

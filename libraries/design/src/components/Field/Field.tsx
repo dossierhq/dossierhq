@@ -1,5 +1,6 @@
 import type { FunctionComponent } from 'react';
 import React from 'react';
+import { Color, toColorClassName } from '../../config/Colors';
 import { toClassName } from '../../utils/ClassNameUtils';
 
 export interface FieldProps {
@@ -17,6 +18,11 @@ export interface FieldControlProps {
   children: React.ReactNode;
 }
 
+export interface FieldHelpProps {
+  color?: Color;
+  children: React.ReactNode;
+}
+
 export interface FieldLabelColumnProps {
   children?: React.ReactNode;
 }
@@ -28,6 +34,7 @@ export interface FieldBodyColumnProps {
 interface FieldComponent extends FunctionComponent<FieldProps> {
   Label: FunctionComponent<FieldLabelProps>;
   Control: FunctionComponent<FieldControlProps>;
+  Help: FunctionComponent<FieldHelpProps>;
   LabelColumn: FunctionComponent<FieldLabelColumnProps>;
   BodyColumn: FunctionComponent<FieldBodyColumnProps>;
 }
@@ -58,6 +65,11 @@ Field.Control = ({ children }: FieldControlProps) => {
   return <div className="control">{children}</div>;
 };
 Field.Control.displayName = 'Field.Control';
+
+Field.Help = ({ color, children }: FieldHelpProps) => {
+  return <p className={toClassName('help', toColorClassName(color))}>{children}</p>;
+};
+Field.Help.displayName = 'Field.Help';
 
 Field.LabelColumn = ({ children }: FieldLabelColumnProps) => {
   return <div className="field-label is-normal">{children}</div>;
