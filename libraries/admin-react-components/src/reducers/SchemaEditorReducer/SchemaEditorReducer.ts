@@ -352,13 +352,18 @@ class DeleteTypeAction implements SchemaEditorStateAction {
   }
 
   reduce(state: Readonly<SchemaEditorState>): Readonly<SchemaEditorState> {
-    let { entityTypes, valueTypes } = state;
+    let { activeSelector, entityTypes, valueTypes } = state;
     if (this.selector.kind === 'entity') {
       entityTypes = entityTypes.filter((it) => it.name !== this.selector.typeName);
     } else {
       valueTypes = valueTypes.filter((it) => it.name !== this.selector.typeName);
     }
-    return { ...state, entityTypes, valueTypes };
+
+    if (isEqual(activeSelector, this.selector)) {
+      activeSelector = null;
+    }
+
+    return { ...state, activeSelector, entityTypes, valueTypes };
   }
 }
 
