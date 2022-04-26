@@ -1,5 +1,6 @@
 import {
   Button,
+  ButtonDropdown,
   EmptyStateMessage,
   findAscendantHTMLElement,
   FullscreenContainer,
@@ -166,6 +167,8 @@ function TypeEditorRows({
   dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>;
   onAddOrRenameField: (selector: SchemaFieldSelector | SchemaTypeSelector) => void;
 }) {
+  const canDeleteOrRenameType = typeDraft.status === 'new'; //TODO too restrictive
+
   const typeSelector = useMemo(
     () => ({ kind: typeDraft.kind, typeName: typeDraft.name }),
     [typeDraft.kind, typeDraft.name]
@@ -178,6 +181,27 @@ function TypeEditorRows({
       ),
     [dispatchSchemaEditorState, typeSelector]
   );
+
+  const handleDropDownItemClick = useCallback(
+    ({ id }: { id: string }) => {
+      switch (id) {
+        case 'delete':
+          dispatchSchemaEditorState(new SchemaEditorActions.DeleteType(typeSelector));
+          break;
+        case 'rename':
+          // onAddOrRenameField(fieldSelector);
+          break;
+      }
+    },
+    [dispatchSchemaEditorState, typeSelector]
+  );
+
+  const dropDownItems = canDeleteOrRenameType
+    ? [
+        // { id: 'rename', title: 'Rename type' },
+        { id: 'delete', title: 'Delete type' },
+      ]
+    : [];
 
   return (
     <>
@@ -196,6 +220,13 @@ function TypeEditorRows({
           {typeDraft.status !== '' ? (
             <Level.Right>
               <Level.Item>
+                {dropDownItems.length > 0 ? (
+                  <ButtonDropdown
+                    items={dropDownItems}
+                    renderItem={(item) => item.title}
+                    onItemClick={handleDropDownItemClick}
+                  />
+                ) : null}
                 <TypeDraftStatusTag status={typeDraft.status} />
               </Level.Item>
             </Level.Right>

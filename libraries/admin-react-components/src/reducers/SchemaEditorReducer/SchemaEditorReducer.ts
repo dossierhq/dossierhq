@@ -344,6 +344,24 @@ class DeleteFieldAction extends TypeAction {
   }
 }
 
+class DeleteTypeAction implements SchemaEditorStateAction {
+  selector: SchemaTypeSelector;
+
+  constructor(selector: SchemaTypeSelector) {
+    this.selector = selector;
+  }
+
+  reduce(state: Readonly<SchemaEditorState>): Readonly<SchemaEditorState> {
+    let { entityTypes, valueTypes } = state;
+    if (this.selector.kind === 'entity') {
+      entityTypes = entityTypes.filter((it) => it.name !== this.selector.typeName);
+    } else {
+      valueTypes = valueTypes.filter((it) => it.name !== this.selector.typeName);
+    }
+    return { ...state, entityTypes, valueTypes };
+  }
+}
+
 class RenameFieldAction extends FieldAction {
   newFieldName: string;
 
@@ -456,6 +474,7 @@ export const SchemaEditorActions = {
   ChangeFieldType: ChangeFieldTypeAction,
   ChangeTypeAdminOnly: ChangeTypeAdminOnlyAction,
   DeleteField: DeleteFieldAction,
+  DeleteType: DeleteTypeAction,
   RenameField: RenameFieldAction,
   SetActiveSelector: SetActiveSelectorAction,
   UpdateSchemaSpecification: UpdateSchemaSpecificationAction,
