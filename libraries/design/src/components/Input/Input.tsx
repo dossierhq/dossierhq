@@ -1,10 +1,13 @@
 import type { ChangeEventHandler, KeyboardEventHandler } from 'react';
 import React from 'react';
+import type { Color } from '../../config/Colors.js';
+import { toColorClassName } from '../../config/Colors.js';
 import { toClassName } from '../../utils/ClassNameUtils.js';
 import type { IconName } from '../index.js';
 import { Icon } from '../index.js';
 
 export interface InputProps {
+  color?: Color;
   iconLeft?: IconName;
   placeholder?: string;
   readOnly?: boolean;
@@ -14,6 +17,7 @@ export interface InputProps {
 }
 
 export function Input({
+  color,
   iconLeft,
   placeholder,
   readOnly,
@@ -25,7 +29,7 @@ export function Input({
   return (
     <p className={className}>
       <input
-        className="input"
+        className={toClassName('input', toColorClassName(color))}
         type="text"
         placeholder={placeholder}
         readOnly={readOnly}

@@ -9,6 +9,7 @@ export const StatusColor = {
 export type StatusColor = typeof StatusColor[keyof typeof StatusColor];
 
 const BulmaColor = {
+  danger: 'danger',
   light: 'light',
   primary: 'primary',
 } as const;
