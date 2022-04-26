@@ -1,6 +1,7 @@
 import type { FunctionComponent } from 'react';
 import React from 'react';
-import { Color, toColorClassName } from '../../config/Colors';
+import type { Color } from '../../config/Colors';
+import { toColorClassName } from '../../config/Colors';
 import { toClassName } from '../../utils/ClassNameUtils';
 
 export interface FieldProps {
