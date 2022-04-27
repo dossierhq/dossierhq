@@ -7,7 +7,7 @@ import useSWR from 'swr';
  * @param query If `undefined`, no data is fetched
  * @returns If no result, `connection` is `undefined`.
  */
-export function useTotalCount(
+export function useAdminTotalCount(
   adminClient: AdminClient,
   query: AdminQuery | undefined
 ): {
@@ -22,11 +22,11 @@ export function useTotalCount(
     [adminClient]
   );
   const { data: totalCount, error: totalCountError } = useSWR(
-    query ? ['datadata/admin/useTotalCount', JSON.stringify(query)] : null,
+    query ? ['datadata/useAdminTotalCount', JSON.stringify(query)] : null,
     fetcher
   );
 
-  // useDebugLogChangedValues('useTotalCount updated values', { adminClient, query, totalCount, totalCountError, });
+  // useDebugLogChangedValues('useAdminTotalCount updated values', { adminClient, query, totalCount, totalCountError, });
 
   return { totalCount, totalCountError };
 }

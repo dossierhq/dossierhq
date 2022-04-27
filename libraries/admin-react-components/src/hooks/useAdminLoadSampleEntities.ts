@@ -3,20 +3,20 @@ import type { Dispatch } from 'react';
 import { useContext, useEffect } from 'react';
 import type { SearchEntityStateAction } from '..';
 import { AdminDataDataContext, SearchEntityStateActions } from '..';
-import { useSampleEntities } from './useSampleEntities';
+import { useAdminSampleEntities } from './useAdminSampleEntities';
 
 /**
  * @param query If `undefined`, no data is fetched
  * @param options
  * @param dispatchSearchEntityState
  */
-export function useLoadSampleEntities(
+export function useAdminLoadSampleEntities(
   query: AdminQuery | undefined,
   options: EntitySamplingOptions | undefined,
   dispatchSearchEntityState: Dispatch<SearchEntityStateAction>
 ) {
   const { adminClient } = useContext(AdminDataDataContext);
-  const { entitySamples, entitySamplesError } = useSampleEntities(adminClient, query, options);
+  const { entitySamples, entitySamplesError } = useAdminSampleEntities(adminClient, query, options);
 
   useEffect(() => {
     dispatchSearchEntityState(

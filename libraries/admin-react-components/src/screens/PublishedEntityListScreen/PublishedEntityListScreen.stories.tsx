@@ -1,6 +1,6 @@
 import type { Meta, Story } from '@storybook/react/types-6-0';
 import React, { useState } from 'react';
-import type { EntitySearchStateUrlQuery } from '../../published';
+import type { EntitySearchStateUrlQuery } from '../..';
 import { LoadContextProvider } from '../../published/test/LoadContextProvider';
 import type { PublishedEntityListScreenProps } from './PublishedEntityListScreen';
 import { PublishedEntityListScreen } from './PublishedEntityListScreen';

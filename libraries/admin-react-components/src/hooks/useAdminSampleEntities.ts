@@ -15,7 +15,7 @@ import useSWR from 'swr';
  * @param query If `undefined`, no data is fetched
  * @param options
  */
-export function useSampleEntities(
+export function useAdminSampleEntities(
   adminClient: AdminClient,
   query: AdminQuery | undefined,
   options: EntitySamplingOptions | undefined
@@ -34,11 +34,11 @@ export function useSampleEntities(
     [adminClient]
   );
   const { data, error } = useSWR(
-    query ? ['datadata/admin/useSampleEntities', JSON.stringify({ query, options })] : null,
+    query ? ['datadata/useAdminSampleEntities', JSON.stringify({ query, options })] : null,
     fetcher
   );
 
-  // useDebugLogChangedValues('useSampleEntities updated values', {
+  // useDebugLogChangedValues('useAdminSampleEntities updated values', {
   //   adminClient,
   //   query,
   //   options,

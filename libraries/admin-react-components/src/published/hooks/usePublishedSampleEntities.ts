@@ -15,7 +15,7 @@ import useSWR from 'swr';
  * @param query If `undefined`, no data is fetched
  * @param options
  */
-export function useSampleEntities(
+export function usePublishedSampleEntities(
   publishedClient: PublishedClient,
   query: PublishedQuery | undefined,
   options?: EntitySamplingOptions
@@ -34,11 +34,11 @@ export function useSampleEntities(
     [publishedClient]
   );
   const { data, error } = useSWR(
-    query ? ['datadata/published/useSampleEntities', JSON.stringify({ query, options })] : null,
+    query ? ['datadata/usePublishedSampleEntities', JSON.stringify({ query, options })] : null,
     fetcher
   );
 
-  // useDebugLogChangedValues('useSampleEntities updated values', { publishedClient, query, options, data, error, });
+  // useDebugLogChangedValues('usePublishedSampleEntities updated values', { publishedClient, query, options, data, error, });
   return { entitySamples: data, entitySamplesError: error };
 }
 

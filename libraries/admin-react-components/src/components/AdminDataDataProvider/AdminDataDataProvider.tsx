@@ -6,7 +6,7 @@ import {
   LegacyDataDataContext,
   AdminDataDataContext,
   LegacyDataDataContextValue,
-  useSchema,
+  useAdminSchema,
 } from '../..';
 
 interface Props {
@@ -24,7 +24,7 @@ export function AdminDataDataProvider({
   authKeys,
   children,
 }: Props): JSX.Element | null {
-  const { schema, schemaError } = useSchema(adminClient);
+  const { schema, schemaError } = useAdminSchema(adminClient);
   const value = useMemo(
     () =>
       schema

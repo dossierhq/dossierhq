@@ -25,8 +25,8 @@ import {
   SearchOrSampleEntitiesButtons,
   StatusSelector,
   StatusTagSelector,
-  useLoadSampleEntities,
-  useLoadSearchEntitiesAndTotalCount,
+  useAdminLoadSampleEntities,
+  useAdminLoadSearchEntitiesAndTotalCount,
   useSynchronizeUrlQueryAndSearchEntityState,
 } from '../..';
 
@@ -132,13 +132,13 @@ export function AdminEntityListScreen({
   );
 
   // load search/total or sampling
-  useLoadSearchEntitiesAndTotalCount(
+  useAdminLoadSearchEntitiesAndTotalCount(
     searchEntityState.paging ? (searchEntityState.query as AdminSearchQuery) : undefined,
     searchEntityState.paging,
     dispatchSearchEntityState
   );
 
-  useLoadSampleEntities(
+  useAdminLoadSampleEntities(
     searchEntityState.sampling ? (searchEntityState.query as AdminQuery) : undefined,
     searchEntityState.sampling,
     dispatchSearchEntityState

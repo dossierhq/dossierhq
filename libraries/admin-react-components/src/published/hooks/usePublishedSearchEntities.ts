@@ -1,61 +1,55 @@
 import type {
-  AdminClient,
-  AdminEntity,
-  AdminSearchQuery,
   Connection,
   Edge,
   ErrorResult,
   ErrorType,
   Paging,
+  PublishedClient,
+  PublishedEntity,
+  PublishedSearchQuery,
 } from '@jonasb/datadata-core';
 import { useCallback } from 'react';
 import useSWR from 'swr';
 
 /**
- * @param adminClient
+ * @param publishedClient
  * @param query If `undefined`, no data is fetched
  * @param paging
  * @returns If no result, `connection` is `undefined`. If there are no matches, `connection` is `null`
  */
-export function useSearchEntities(
-  adminClient: AdminClient,
-  query: AdminSearchQuery | undefined,
+export function usePublishedSearchEntities(
+  publishedClient: PublishedClient,
+  query: PublishedSearchQuery | undefined,
   paging?: Paging
 ): {
-  connection: Connection<Edge<AdminEntity, ErrorType>> | null | undefined;
+  connection: Connection<Edge<PublishedEntity, ErrorType>> | null | undefined;
   connectionError: ErrorResult<unknown, ErrorType.BadRequest | ErrorType.Generic> | undefined;
 } {
   const fetcher = useCallback(
     (_action: string, paramsJson: string) => {
       const { query, paging } = JSON.parse(paramsJson) as {
-        query: AdminSearchQuery;
+        query: PublishedSearchQuery;
         paging: Paging | undefined;
       };
-      return fetchSearchEntities(adminClient, query, paging);
+      return fetchSearchEntities(publishedClient, query, paging);
     },
-    [adminClient]
+    [publishedClient]
   );
   const { data, error } = useSWR(
-    query ? ['datadata/admin/useSearchEntities', JSON.stringify({ query, paging })] : null,
+    query ? ['datadata/usePublishedSearchEntities', JSON.stringify({ query, paging })] : null,
     fetcher
   );
 
-  // useDebugLogChangedValues('useSearchEntities updated values', {
-  //   adminClient,
-  //   query,
-  //   paging,
-  //   data,
-  //   error,
-  // });
+  // useDebugLogChangedValues('usePublishedSearchEntities updated values', { publishedClient, query, paging, data, error, });
   return { connection: data, connectionError: error };
 }
 
 async function fetchSearchEntities(
-  adminClient: AdminClient,
-  query: AdminSearchQuery,
+  publishedClient: PublishedClient,
+  query: PublishedSearchQuery,
   paging: Paging | undefined
-): Promise<Connection<Edge<AdminEntity, ErrorType>> | null> {
-  const result = await adminClient.searchEntities(query, paging);
+): Promise<Connection<Edge<PublishedEntity, ErrorType>> | null> {
+  const result = await publishedClient.searchEntities(query, paging);
   if (result.isError()) {
     throw result; // throw result, don't convert to Error
   }

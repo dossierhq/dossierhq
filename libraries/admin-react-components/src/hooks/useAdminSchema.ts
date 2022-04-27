@@ -4,14 +4,14 @@ import { useCallback } from 'react';
 import useSWR from 'swr';
 import { CACHE_KEYS } from '../utils/CacheUtils';
 
-export function useSchema(adminClient: AdminClient): {
+export function useAdminSchema(adminClient: AdminClient): {
   schema: AdminSchema | undefined;
   schemaError: ErrorResult<unknown, ErrorType.Generic> | undefined;
 } {
   const fetcher = useCallback((_action: string) => fetchSchema(adminClient), [adminClient]);
   const { data, error } = useSWR(CACHE_KEYS.adminSchema, fetcher);
 
-  // useDebugLogChangedValues('useSchema changed values', { data, error });
+  // useDebugLogChangedValues('useAdminSchema changed values', { data, error });
 
   return { schema: data, schemaError: error };
 }

@@ -3,7 +3,7 @@ import { Column, Text } from '@jonasb/datadata-design';
 import React from 'react';
 import { MapContainer } from '../../..';
 
-export function EntityMapMarker({
+export function PublishedEntityMapMarker({
   entity,
   location,
   onClick,

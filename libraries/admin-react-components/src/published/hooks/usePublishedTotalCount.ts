@@ -12,7 +12,7 @@ import useSWR from 'swr';
  * @param query If `undefined`, no data is fetched
  * @returns If no result, `connection` is `undefined`.
  */
-export function useTotalCount(
+export function usePublishedTotalCount(
   publishedClient: PublishedClient,
   query: PublishedQuery | undefined
 ): {
@@ -27,11 +27,11 @@ export function useTotalCount(
     [publishedClient]
   );
   const { data: totalCount, error: totalCountError } = useSWR(
-    query ? ['datadata/published/useTotalCount', JSON.stringify(query)] : null,
+    query ? ['datadata/usePublishedTotalCount', JSON.stringify(query)] : null,
     fetcher
   );
 
-  // useDebugLogChangedValues('useTotalCount updated values', { publishedClient, query, totalCount, totalCountError, });
+  // useDebugLogChangedValues('usePublishedTotalCount updated values', { publishedClient, query, totalCount, totalCountError, });
 
   return { totalCount, totalCountError };
 }

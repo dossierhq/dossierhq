@@ -1,8 +1,9 @@
 import type { Logger, PublishedClient } from '@jonasb/datadata-core';
 import { NoOpLogger } from '@jonasb/datadata-core';
 import React, { useMemo } from 'react';
-import type { DisplayAuthKey, PublishedDataDataContextValue } from '../..';
-import { PublishedDataDataContext, useSchema } from '../..';
+import type { PublishedDataDataContextValue } from '../..';
+import { PublishedDataDataContext, usePublishedSchema } from '../..';
+import type { DisplayAuthKey } from '../../../';
 
 interface Props {
   publishedClient: PublishedClient;
@@ -17,7 +18,7 @@ export function PublishedDataDataProvider({
   logger,
   children,
 }: Props): JSX.Element | null {
-  const { schema, schemaError } = useSchema(publishedClient);
+  const { schema, schemaError } = usePublishedSchema(publishedClient);
   const value: PublishedDataDataContextValue = useMemo(() => {
     return {
       publishedClient,

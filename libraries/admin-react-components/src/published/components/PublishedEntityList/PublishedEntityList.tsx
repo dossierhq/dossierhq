@@ -3,8 +3,9 @@ import { PublishedQueryOrder } from '@jonasb/datadata-core';
 import { Table } from '@jonasb/datadata-design';
 import type { Dispatch } from 'react';
 import React, { useContext } from 'react';
-import type { DisplayAuthKey, SearchEntityState, SearchEntityStateAction } from '../..';
-import { AuthKeyTag, PublishedDataDataContext, SearchEntityStateActions } from '../..';
+import { PublishedDataDataContext } from '../..';
+import type { DisplayAuthKey, SearchEntityState, SearchEntityStateAction } from '../../..';
+import { AuthKeyTag, SearchEntityStateActions } from '../../..';
 
 interface Props {
   searchEntityState: SearchEntityState;
@@ -12,7 +13,11 @@ interface Props {
   onItemClick: (item: PublishedEntity) => void;
 }
 
-export function EntityList({ searchEntityState, dispatchSearchEntityState, onItemClick }: Props) {
+export function PublishedEntityList({
+  searchEntityState,
+  dispatchSearchEntityState,
+  onItemClick,
+}: Props) {
   const {
     entities,
     query: { order, reverse },

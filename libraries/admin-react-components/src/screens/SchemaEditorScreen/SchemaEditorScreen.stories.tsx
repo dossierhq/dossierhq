@@ -6,7 +6,7 @@ import { NotificationContainer } from '@jonasb/datadata-design';
 import type { Meta, Story } from '@storybook/react/types-6-0';
 import React, { useContext } from 'react';
 import { AdminDataDataContext } from '../../contexts/AdminDataDataContext';
-import { useSchema } from '../../hooks/useSchema';
+import { useAdminSchema } from '../../hooks/useAdminSchema';
 import { LoadContextProvider } from '../../test/LoadContextProvider';
 import type { SchemaEditorScreenProps } from './SchemaEditorScreen';
 import { SchemaEditorScreen } from './SchemaEditorScreen';
@@ -54,7 +54,7 @@ SchemaDebug.args = {
 
 function SchemaDebugFooter() {
   const { adminClient } = useContext(AdminDataDataContext);
-  const { schema } = useSchema(adminClient);
+  const { schema } = useAdminSchema(adminClient);
 
   function typeToString(type: AdminEntityTypeSpecification | AdminValueTypeSpecification) {
     return `${type.name} (${type.fields.map((it) => it.name).join(', ')})`;
