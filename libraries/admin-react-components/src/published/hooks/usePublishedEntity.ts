@@ -8,7 +8,7 @@ import type {
 import { useCallback } from 'react';
 import useSWR from 'swr';
 
-export function useEntity(
+export function usePublishedEntity(
   publishedClient: PublishedClient,
   reference: EntityReference | undefined
 ): {
@@ -20,7 +20,7 @@ export function useEntity(
     [publishedClient]
   );
   const { data, error } = useSWR(
-    reference ? ['datadata/published/useEntity', reference.id] : null,
+    reference ? ['datadata/usePublishedEntity', reference.id] : null,
     fetcher
   );
 

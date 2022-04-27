@@ -1,28 +1,30 @@
 import type { PublishedEntity, PublishedQuery, PublishedSearchQuery } from '@jonasb/datadata-core';
 import { FullscreenContainer, IconButton, toSizeClassName } from '@jonasb/datadata-design';
 import React, { useCallback, useContext, useEffect, useReducer, useState } from 'react';
-import type { EntitySearchStateUrlQuery } from '../../published';
+import type { EntitySearchStateUrlQuery } from '../..';
 import {
   AuthKeySelector,
   AuthKeyTagSelector,
-  EntityList,
   EntityMap,
-  EntityMapMarker,
   EntityTypeSelector,
   EntityTypeTagSelector,
   initializeAuthKeySelectorState,
   initializeEntityTypeSelectorState,
   initializeSearchEntityStateFromUrlQuery,
-  PublishedDataDataContext,
   reduceAuthKeySelectorState,
   reduceEntityTypeSelectorState,
   reduceSearchEntityState,
   SearchEntitySearchInput,
   SearchEntityStateActions,
   SearchOrSampleEntitiesButtons,
-  useLoadSampleEntities,
-  useLoadSearchEntitiesAndTotalCount,
   useSynchronizeUrlQueryAndSearchEntityState,
+} from '../..';
+import {
+  PublishedEntityList,
+  PublishedEntityMapMarker,
+  PublishedDataDataContext,
+  useLoadPublishedSampleEntities,
+  useLoadPublishedSearchEntitiesAndTotalCount,
 } from '../../published';
 
 export interface PublishedEntityListScreenProps {
@@ -107,13 +109,13 @@ export function PublishedEntityListScreen({
   );
 
   // load search/total or sampling
-  useLoadSearchEntitiesAndTotalCount(
+  useLoadPublishedSearchEntitiesAndTotalCount(
     searchEntityState.paging ? (searchEntityState.query as PublishedSearchQuery) : undefined,
     searchEntityState.paging,
     dispatchSearchEntityState
   );
 
-  useLoadSampleEntities(
+  useLoadPublishedSampleEntities(
     searchEntityState.sampling ? (searchEntityState.query as PublishedQuery) : undefined,
     searchEntityState.sampling,
     dispatchSearchEntityState
@@ -144,7 +146,7 @@ export function PublishedEntityListScreen({
             className={toSizeClassName({ height: '100%' })}
             {...{ schema, searchEntityState, dispatchSearchEntityState }}
             renderEntityMarker={(key, entity, location) => (
-              <EntityMapMarker
+              <PublishedEntityMapMarker
                 key={key}
                 entity={entity}
                 location={location}
@@ -161,7 +163,7 @@ export function PublishedEntityListScreen({
               dispatch={dispatchEntityTypeFilter}
             />
             <AuthKeyTagSelector state={authKeyFilterState} dispatch={dispatchAuthKeyFilterState} />
-            <EntityList
+            <PublishedEntityList
               {...{ searchEntityState, dispatchSearchEntityState }}
               onItemClick={onOpenEntity}
             />

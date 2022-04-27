@@ -5,7 +5,7 @@ import type {
 } from '@jonasb/datadata-core';
 import { Field, FullscreenContainer, Text } from '@jonasb/datadata-design';
 import React, { useContext, useEffect } from 'react';
-import { PublishedDataDataContext, useEntity } from '../../published';
+import { PublishedDataDataContext, usePublishedEntity } from '../../published';
 
 export interface PublishedEntityDetailScreenProps {
   header?: React.ReactNode;
@@ -21,7 +21,7 @@ export function PublishedEntityDetailScreen({
   onTitleChange,
 }: PublishedEntityDetailScreenProps): JSX.Element | null {
   const { publishedClient, schema } = useContext(PublishedDataDataContext);
-  const { entity, entityError: _2 } = useEntity(publishedClient, reference);
+  const { entity, entityError: _2 } = usePublishedEntity(publishedClient, reference);
 
   const typeSpec = schema && entity ? schema.getEntityTypeSpecification(entity.info.type) : null;
 

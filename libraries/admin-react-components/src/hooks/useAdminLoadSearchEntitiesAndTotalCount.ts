@@ -1,27 +1,27 @@
-import type { Paging, PublishedSearchQuery } from '@jonasb/datadata-core';
+import type { AdminSearchQuery, Paging } from '@jonasb/datadata-core';
 import type { Dispatch } from 'react';
 import { useContext, useEffect } from 'react';
 import type { SearchEntityStateAction } from '..';
 import {
-  PublishedDataDataContext,
+  AdminDataDataContext,
   SearchEntityStateActions,
-  useSearchEntities,
-  useTotalCount,
+  useAdminSearchEntities,
+  useAdminTotalCount,
 } from '..';
 
 /**
+ * @param dispatchSearchEntityState
  * @param query If `undefined`, no data is fetched
  * @param paging
- * @param dispatchSearchEntityState
  */
-export function useLoadSearchEntitiesAndTotalCount(
-  query: PublishedSearchQuery | undefined,
+export function useAdminLoadSearchEntitiesAndTotalCount(
+  query: AdminSearchQuery | undefined,
   paging: Paging | undefined,
   dispatchSearchEntityState: Dispatch<SearchEntityStateAction>
 ) {
-  const { publishedClient } = useContext(PublishedDataDataContext);
-  const { connection, connectionError } = useSearchEntities(publishedClient, query, paging);
-  const { totalCount } = useTotalCount(publishedClient, query);
+  const { adminClient } = useContext(AdminDataDataContext);
+  const { connection, connectionError } = useAdminSearchEntities(adminClient, query, paging);
+  const { totalCount } = useAdminTotalCount(adminClient, query);
 
   useEffect(() => {
     dispatchSearchEntityState(

@@ -4,8 +4,8 @@ import type { Cache } from 'swr';
 import type { ScopedMutator } from 'swr/dist/types';
 
 export const CACHE_KEYS = {
-  adminSchema: 'datadata/admin/useSchema',
-  publishedSchema: 'datadata/published/useSchema',
+  adminSchema: 'datadata/useAdminSchema',
+  publishedSchema: 'datadata/usePublishedSchema',
 };
 
 export function updateCacheSchemas(cache: Cache, mutate: ScopedMutator, adminSchema: AdminSchema) {
