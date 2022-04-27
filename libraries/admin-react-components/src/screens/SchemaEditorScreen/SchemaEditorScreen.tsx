@@ -229,6 +229,7 @@ function TypeEditorRows({
                 {dropDownItems.length > 0 ? (
                   <ButtonDropdown
                     items={dropDownItems}
+                    left
                     renderItem={(item) => item.title}
                     onItemClick={handleDropDownItemClick}
                   />

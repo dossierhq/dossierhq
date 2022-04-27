@@ -12,6 +12,7 @@ const BulmaColor = {
   danger: 'danger',
   light: 'light',
   primary: 'primary',
+  white: 'white',
 } as const;
 
 export const Color = {

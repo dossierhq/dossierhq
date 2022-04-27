@@ -62,3 +62,6 @@ UpLeft.args = { up: true, left: true };
 
 export const Sneaky = Template.bind({});
 Sneaky.args = { sneaky: true };
+
+export const Empty = Template.bind({});
+Empty.args = { children: undefined };

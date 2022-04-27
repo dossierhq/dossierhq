@@ -21,6 +21,7 @@ export function ButtonDropdown<TItem extends DropdownItem>({
   children,
   ...args
 }: ButtonDropdownProps<TItem>): JSX.Element {
+  const color = sneaky ? 'light' : !iconLeft && !children ? 'white' : undefined;
   return (
     <Dropdown<HTMLButtonElement, TItem>
       {...args}
@@ -29,7 +30,7 @@ export function ButtonDropdown<TItem extends DropdownItem>({
           ref={triggerRef}
           iconLeft={iconLeft}
           iconRight={sneaky ? undefined : args.up ? 'chevronUp' : 'chevronDown'}
-          color={sneaky ? 'light' : undefined}
+          color={color}
           disabled={disabled}
           onMouseDown={(event) => {
             event.preventDefault();
