@@ -1,4 +1,4 @@
-import type { EntityEditorSelector } from '@jonasb/datadata-admin-react-components';
+import type { LegacyEntityEditorSelector } from '@jonasb/datadata-admin-react-components';
 import Joi from 'joi';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
@@ -26,7 +26,7 @@ export default function EntityPage(): JSX.Element | null {
     return null;
   }
   const query = validateQuery(router.query, routerSchema);
-  const entitySelectors: EntityEditorSelector[] = [];
+  const entitySelectors: LegacyEntityEditorSelector[] = [];
   if (query.type) {
     entitySelectors.push({ newType: query.type as string });
   }

@@ -1,4 +1,7 @@
-import { EntityEditorScreen, EntityEditorSelector } from '@jonasb/datadata-admin-react-components';
+import {
+  LegacyEntityEditorScreen,
+  LegacyEntityEditorSelector,
+} from '@jonasb/datadata-admin-react-components';
 import { useCallback, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { NavBar } from '../components/NavBar';
@@ -8,7 +11,7 @@ export function EditEntitiesRoute() {
 
   //TODO cleanup EntityEditorScreen urlQuery interface
   const entitySelectors = useMemo(() => {
-    const result: EntityEditorSelector[] = [];
+    const result: LegacyEntityEditorSelector[] = [];
     const type = searchParams.get('type');
     if (type) {
       result.push({ newType: type });
@@ -30,7 +33,7 @@ export function EditEntitiesRoute() {
   );
 
   return (
-    <EntityEditorScreen
+    <LegacyEntityEditorScreen
       header={<NavBar current="admin-entities" />}
       entitySelectors={entitySelectors}
       onEntityIdsChanged={handleEntityIdsChanged}

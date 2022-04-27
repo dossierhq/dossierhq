@@ -1,5 +1,5 @@
 import {
-  EntityListScreen,
+  AdminEntityListScreen,
   EntitySearchStateUrlQuery,
 } from '@jonasb/datadata-admin-react-components';
 import { AdminEntity } from '@jonasb/datadata-core';
@@ -40,7 +40,7 @@ export function AdminEntitiesRoute() {
   );
 
   return (
-    <EntityListScreen
+    <AdminEntityListScreen
       header={<NavBar current="admin-entities" />}
       urlQuery={urlQuery}
       onUrlQueryChanged={handleUrlQueryChanged}

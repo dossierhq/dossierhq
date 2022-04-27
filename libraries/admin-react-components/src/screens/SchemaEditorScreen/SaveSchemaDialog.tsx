@@ -4,7 +4,7 @@ import { Card, Dialog, NotificationContext, Text, TextArea } from '@jonasb/datad
 import type { Dispatch } from 'react';
 import React, { useCallback, useContext, useMemo } from 'react';
 import { useSWRConfig } from 'swr';
-import { DataDataContext2 } from '../..';
+import { AdminDataDataContext } from '../..';
 import type {
   SchemaEditorState,
   SchemaEditorStateAction,
@@ -26,7 +26,7 @@ export function SaveSchemaDialog({
   dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>;
   onClose: () => void;
 }) {
-  const { adminClient } = useContext(DataDataContext2);
+  const { adminClient } = useContext(AdminDataDataContext);
   const { showNotification } = useContext(NotificationContext);
   const { cache, mutate } = useSWRConfig();
 

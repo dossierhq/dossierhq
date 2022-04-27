@@ -2,7 +2,7 @@ import type { AdminQuery, EntitySamplingOptions } from '@jonasb/datadata-core';
 import type { Dispatch } from 'react';
 import { useContext, useEffect } from 'react';
 import type { SearchEntityStateAction } from '..';
-import { DataDataContext2, SearchEntityStateActions } from '..';
+import { AdminDataDataContext, SearchEntityStateActions } from '..';
 import { useSampleEntities } from './useSampleEntities';
 
 /**
@@ -15,7 +15,7 @@ export function useLoadSampleEntities(
   options: EntitySamplingOptions | undefined,
   dispatchSearchEntityState: Dispatch<SearchEntityStateAction>
 ) {
-  const { adminClient } = useContext(DataDataContext2);
+  const { adminClient } = useContext(AdminDataDataContext);
   const { entitySamples, entitySamplesError } = useSampleEntities(adminClient, query, options);
 
   useEffect(() => {

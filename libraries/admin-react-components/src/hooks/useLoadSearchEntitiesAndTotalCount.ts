@@ -2,7 +2,12 @@ import type { AdminSearchQuery, Paging } from '@jonasb/datadata-core';
 import type { Dispatch } from 'react';
 import { useContext, useEffect } from 'react';
 import type { SearchEntityStateAction } from '..';
-import { DataDataContext2, SearchEntityStateActions, useSearchEntities, useTotalCount } from '..';
+import {
+  AdminDataDataContext,
+  SearchEntityStateActions,
+  useSearchEntities,
+  useTotalCount,
+} from '..';
 
 /**
  * @param dispatchSearchEntityState
@@ -14,7 +19,7 @@ export function useLoadSearchEntitiesAndTotalCount(
   paging: Paging | undefined,
   dispatchSearchEntityState: Dispatch<SearchEntityStateAction>
 ) {
-  const { adminClient } = useContext(DataDataContext2);
+  const { adminClient } = useContext(AdminDataDataContext);
   const { connection, connectionError } = useSearchEntities(adminClient, query, paging);
   const { totalCount } = useTotalCount(adminClient, query);
 

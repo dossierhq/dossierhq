@@ -1,14 +1,14 @@
 import React from 'react';
-import type { Kind } from '../..';
+import type { LegacyKind } from '../..';
 import { Loader, Stack } from '../..';
 import { joinClassNames } from '../../utils/ClassNameUtils';
-import { kindToClassName } from '../../utils/KindUtils';
+import { kindToClassName } from '../../utils/LegacyKindUtils';
 
 export interface ButtonProps {
   id?: string;
   className?: string;
   type?: 'button' | 'reset' | 'submit';
-  kind?: Kind;
+  kind?: LegacyKind;
   disabled?: boolean;
   selected?: boolean;
   rounded?: boolean;

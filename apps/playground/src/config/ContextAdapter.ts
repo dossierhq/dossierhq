@@ -1,11 +1,11 @@
 import {
-  DataDataContextAdapter,
+  AdminDataDataContextAdapter,
   EditorJsToolSettings,
 } from '@jonasb/datadata-admin-react-components';
 import { EditorJsTools } from './EditorJsTools';
 
-export class ContextAdapter implements DataDataContextAdapter {
-  getEditorJSConfig: DataDataContextAdapter['getEditorJSConfig'] = (
+export class ContextAdapter implements AdminDataDataContextAdapter {
+  getEditorJSConfig: AdminDataDataContextAdapter['getEditorJSConfig'] = (
     fieldSpec,
     standardBlockTools,
     standardInlineTools

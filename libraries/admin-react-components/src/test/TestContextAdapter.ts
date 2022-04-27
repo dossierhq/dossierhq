@@ -28,8 +28,8 @@ import {
   stringifyUrlQueryParams,
 } from '@jonasb/datadata-core';
 import { v5 as uuidv5 } from 'uuid';
-import type { DataDataContextAdapter } from '..';
-import { DataDataContextValue } from '..';
+import type { AdminDataDataContextAdapter } from '..';
+import { LegacyDataDataContextValue } from '..';
 
 interface BackendContext {
   logger: Logger;
@@ -47,14 +47,14 @@ const AUTH_KEYS_HEADER = {
 
 export async function createContextValue2(
   middleware: AdminClientMiddleware<BackendContext>[] = []
-): PromiseResult<DataDataContextValue, ErrorType.Generic> {
+): PromiseResult<LegacyDataDataContextValue, ErrorType.Generic> {
   const adminClient = createBackendAdminClient(middleware);
   //TODO add a schema React context so we don't need to fetch here
   const schemaResult = await adminClient.getSchemaSpecification();
   if (schemaResult.isError()) return schemaResult;
   const schema = new AdminSchema(schemaResult.value);
   return ok(
-    new DataDataContextValue(
+    new LegacyDataDataContextValue(
       new TestContextAdapter(),
       adminClient,
       schema,
@@ -187,8 +187,8 @@ export const SlowMiddleware: AdminClientMiddleware<ClientContext> = async (_cont
   operation.resolve(await operation.next());
 };
 
-export class TestContextAdapter implements DataDataContextAdapter {
-  getEditorJSConfig: DataDataContextAdapter['getEditorJSConfig'] = (
+export class TestContextAdapter implements AdminDataDataContextAdapter {
+  getEditorJSConfig: AdminDataDataContextAdapter['getEditorJSConfig'] = (
     _fieldSpec,
     standardBlockTools,
     standardInlineTools

@@ -1,11 +1,9 @@
-import { published } from '@jonasb/datadata-admin-react-components';
+import { PublishedEntityDetailScreen } from '@jonasb/datadata-admin-react-components';
 import type { EntityReference } from '@jonasb/datadata-core';
 import Head from 'next/head';
 import { useState } from 'react';
 import { PublishedDataDataSharedProvider } from '../../contexts/DataDataSharedProvider';
 import { NavBar } from '../NavBar/NavBar';
-
-const { EntityDetailScreen } = published;
 
 export default function PublishedEntityDetailPage({
   reference,
@@ -19,7 +17,7 @@ export default function PublishedEntityDetailPage({
       <Head>
         <title>{title}</title>
       </Head>
-      <EntityDetailScreen
+      <PublishedEntityDetailScreen
         header={<NavBar current="published-entities" />}
         reference={reference}
         onTitleChange={setTitle}

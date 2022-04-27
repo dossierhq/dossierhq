@@ -1,9 +1,12 @@
 import type {
-  DataDataContextAdapter,
+  AdminDataDataContextAdapter,
+  DisplayAuthKey,
   EditorJsToolSettings,
 } from '@jonasb/datadata-admin-react-components';
-import type { DisplayAuthKey } from '@jonasb/datadata-admin-react-components';
-import { DataDataProvider, published } from '@jonasb/datadata-admin-react-components';
+import {
+  AdminDataDataProvider,
+  PublishedDataDataProvider,
+} from '@jonasb/datadata-admin-react-components';
 import type {
   AdminClient,
   AdminClientOperation,
@@ -25,8 +28,6 @@ import {
 import { useMemo } from 'react';
 import { fetchJsonResult, urls } from '../utils/BackendUtils';
 import { EditorJsTools } from './EditorJsTools';
-
-const { PublishedDataDataProvider } = published;
 
 const DISPLAY_AUTH_KEYS: DisplayAuthKey[] = [
   { authKey: 'none', displayName: 'None' },
@@ -53,8 +54,8 @@ const logger: Logger = {
   },
 };
 
-export class ContextAdapter implements DataDataContextAdapter {
-  getEditorJSConfig: DataDataContextAdapter['getEditorJSConfig'] = (
+export class ContextAdapter implements AdminDataDataContextAdapter {
+  getEditorJSConfig: AdminDataDataContextAdapter['getEditorJSConfig'] = (
     fieldSpec,
     standardBlockTools,
     standardInlineTools
@@ -112,7 +113,7 @@ export function DataDataSharedProvider({ children }: { children: React.ReactNode
     }),
     []
   );
-  return <DataDataProvider {...args}>{children}</DataDataProvider>;
+  return <AdminDataDataProvider {...args}>{children}</AdminDataDataProvider>;
 }
 
 export function PublishedDataDataSharedProvider({ children }: { children: React.ReactNode }) {
