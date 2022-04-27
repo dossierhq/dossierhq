@@ -44,7 +44,7 @@ export const Button: FunctionComponent<ButtonProps> = forwardRef(
         disabled={disabled}
       >
         {iconLeft ? <Icon icon={iconLeft} /> : null}
-        {iconLeft || iconRight ? <span>{children}</span> : children}
+        {(iconLeft || iconRight) && children ? <span>{children}</span> : children}
         {iconRight ? <Icon icon={iconRight} /> : null}
       </button>
     );

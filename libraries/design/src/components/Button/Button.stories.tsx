@@ -29,6 +29,9 @@ Disabled.args = { disabled: true };
 export const LeftIcon = Template.bind({});
 LeftIcon.args = { iconLeft: 'add' };
 
+export const RightIconOnly = Template.bind({});
+RightIconOnly.args = { iconRight: 'chevronDown', children: undefined };
+
 export const WithBadge = Template.bind({});
 WithBadge.args = {
   children: (
