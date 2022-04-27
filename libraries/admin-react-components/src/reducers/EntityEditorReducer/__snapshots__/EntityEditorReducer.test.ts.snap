@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AddDraftAction add Foo 1`] = `
+Object {
+  "drafts": Array [
+    Object {
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+    },
+  ],
+  "schema": null,
+  "status": "uninitialized",
+}
+`;
+
+exports[`UpdateSchemaSpecificationAction add empty schema 1`] = `
+Object {
+  "drafts": Array [],
+  "schema": AdminSchema {
+    "spec": Object {
+      "entityTypes": Array [],
+      "valueTypes": Array [],
+    },
+  },
+  "status": "uninitialized",
+}
+`;
