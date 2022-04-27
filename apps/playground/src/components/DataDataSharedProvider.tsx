@@ -1,11 +1,12 @@
-import { DataDataProvider, published } from '@jonasb/datadata-admin-react-components';
+import {
+  AdminDataDataProvider,
+  PublishedDataDataProvider,
+} from '@jonasb/datadata-admin-react-components';
 import { useContext, useMemo } from 'react';
 import { DISPLAY_AUTH_KEYS } from '../config/AuthConfig';
 import { ContextAdapter } from '../config/ContextAdapter';
 import { SESSION_LOGGER } from '../config/LoggerConfig';
 import { ServerContext } from '../contexts/ServerContext';
-
-const { PublishedDataDataProvider } = published;
 
 export function DataDataSharedProvider({ children }: { children: React.ReactNode }) {
   const { server } = useContext(ServerContext);
@@ -34,8 +35,8 @@ export function DataDataSharedProvider({ children }: { children: React.ReactNode
 
   if (!args) return null;
   return (
-    <DataDataProvider {...args.adminArgs}>
+    <AdminDataDataProvider {...args.adminArgs}>
       <PublishedDataDataProvider {...args.publishedArgs}>{children}</PublishedDataDataProvider>
-    </DataDataProvider>
+    </AdminDataDataProvider>
   );
 }

@@ -10,5 +10,3 @@ export { useLoadSearchEntitiesAndTotalCount } from './hooks/useLoadSearchEntitie
 export { useSchema } from './hooks/useSchema';
 export { useSearchEntities } from './hooks/useSearchEntities';
 export { useTotalCount } from './hooks/useTotalCount';
-export { EntityDetailScreen } from './screens/EntityDetailScreen/EntityDetailScreen';
-export { EntityListScreen } from './screens/EntityListScreen/EntityListScreen';

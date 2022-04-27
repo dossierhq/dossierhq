@@ -1,5 +1,5 @@
 import type { EntitySearchStateUrlQuery } from '@jonasb/datadata-admin-react-components';
-import { published } from '@jonasb/datadata-admin-react-components';
+import { PublishedEntityListScreen } from '@jonasb/datadata-admin-react-components';
 import type { PublishedEntity } from '@jonasb/datadata-core';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -7,8 +7,6 @@ import { useCallback } from 'react';
 import { PublishedDataDataSharedProvider } from '../../contexts/DataDataSharedProvider';
 import { urls } from '../../utils/PageUtils';
 import { NavBar } from '../NavBar/NavBar';
-
-const { EntityListScreen } = published;
 
 export default function PublishedEntitiesListPage(): JSX.Element | null {
   const router = useRouter();
@@ -29,7 +27,7 @@ export default function PublishedEntitiesListPage(): JSX.Element | null {
       <Head>
         <title>Published entities</title>
       </Head>
-      <EntityListScreen
+      <PublishedEntityListScreen
         header={<NavBar current="published-entities" />}
         urlQuery={router.query}
         onUrlQueryChanged={handleUrlQueryChanged}

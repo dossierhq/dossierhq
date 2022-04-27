@@ -1,5 +1,5 @@
 import type { EntitySearchStateUrlQuery } from '@jonasb/datadata-admin-react-components';
-import { EntityListScreen } from '@jonasb/datadata-admin-react-components';
+import { AdminEntityListScreen } from '@jonasb/datadata-admin-react-components';
 import type { AdminEntity } from '@jonasb/datadata-core';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -31,7 +31,7 @@ export default function EntitiesListPage(): JSX.Element | null {
       <Head>
         <title>Entities</title>
       </Head>
-      <EntityListScreen
+      <AdminEntityListScreen
         header={<NavBar current="entities" />}
         urlQuery={router.query}
         onUrlQueryChanged={handleUrlQueryChanged}

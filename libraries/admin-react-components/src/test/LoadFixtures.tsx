@@ -1,7 +1,7 @@
 import type { AdminClient, ErrorType, PromiseResult, Result } from '@jonasb/datadata-core';
 import { AdminEntityStatus, notOk, ok } from '@jonasb/datadata-core';
 import React, { useContext, useEffect, useState } from 'react';
-import { DataDataContext2 } from '..';
+import { AdminDataDataContext } from '..';
 import { entitiesFixture } from './EntityFixtures';
 
 interface Props {
@@ -9,7 +9,7 @@ interface Props {
 }
 
 export function LoadFixtures({ children }: Props): JSX.Element | null {
-  const { adminClient } = useContext(DataDataContext2);
+  const { adminClient } = useContext(AdminDataDataContext);
   const [result, setResult] = useState<Result<void, ErrorType> | null>(null);
   useEffect(() => {
     (async () => {

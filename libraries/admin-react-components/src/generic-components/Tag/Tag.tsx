@@ -1,10 +1,10 @@
 import React from 'react';
 import { joinClassNames } from '../../utils/ClassNameUtils';
-import type { Kind } from '../../utils/KindUtils';
-import { kindToClassName } from '../../utils/KindUtils';
+import type { LegacyKind } from '../../utils/LegacyKindUtils';
+import { kindToClassName } from '../../utils/LegacyKindUtils';
 
 export interface TagProps {
-  kind: Kind;
+  kind: LegacyKind;
   text: string;
 }
 

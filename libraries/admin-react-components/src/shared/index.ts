@@ -11,7 +11,7 @@ export { AuthKeyTag } from './components/AuthKeyTag/AuthKeyTag';
 export { AuthKeyTagSelector } from './components/AuthKeyTagSelector/AuthKeyTagSelector';
 export { ConnectionPagingButtons } from './components/ConnectionPagingButtons/ConnectionPagingButtons';
 export { ConnectionPagingCount } from './components/ConnectionPagingCount/ConnectionPagingCount';
-export { EntityMap2 } from './components/EntityMap2/EntityMap2';
+export { EntityMap } from './components/EntityMap/EntityMap';
 export {
   EntityTypeSelector,
   initializeEntityTypeSelectorState,

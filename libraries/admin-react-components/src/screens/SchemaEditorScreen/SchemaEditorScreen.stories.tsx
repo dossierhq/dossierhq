@@ -5,7 +5,7 @@ import type {
 import { NotificationContainer } from '@jonasb/datadata-design';
 import type { Meta, Story } from '@storybook/react/types-6-0';
 import React, { useContext } from 'react';
-import { DataDataContext2 } from '../../contexts/DataDataContext2';
+import { AdminDataDataContext } from '../../contexts/AdminDataDataContext';
 import { useSchema } from '../../hooks/useSchema';
 import { LoadContextProvider } from '../../test/LoadContextProvider';
 import type { SchemaEditorScreenProps } from './SchemaEditorScreen';
@@ -53,7 +53,7 @@ SchemaDebug.args = {
 };
 
 function SchemaDebugFooter() {
-  const { adminClient } = useContext(DataDataContext2);
+  const { adminClient } = useContext(AdminDataDataContext);
   const { schema } = useSchema(adminClient);
 
   function typeToString(type: AdminEntityTypeSpecification | AdminValueTypeSpecification) {

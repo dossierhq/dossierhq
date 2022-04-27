@@ -1,10 +1,10 @@
 import React from 'react';
-import type { Kind } from '../..';
+import type { LegacyKind } from '../..';
 import { IconButton, Stack } from '../..';
-import { kindToClassName } from '../../utils/KindUtils';
+import { kindToClassName } from '../../utils/LegacyKindUtils';
 
 export interface MessageItem {
-  kind?: Kind;
+  kind?: LegacyKind;
   title?: string;
   message?: string;
 }

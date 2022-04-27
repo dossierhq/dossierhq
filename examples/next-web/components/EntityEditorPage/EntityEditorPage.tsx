@@ -1,5 +1,5 @@
-import type { EntityEditorSelector } from '@jonasb/datadata-admin-react-components';
-import { EntityEditorScreen } from '@jonasb/datadata-admin-react-components';
+import type { LegacyEntityEditorSelector } from '@jonasb/datadata-admin-react-components';
+import { LegacyEntityEditorScreen } from '@jonasb/datadata-admin-react-components';
 import { useRouter } from 'next/router';
 import { useCallback } from 'react';
 import { DataDataSharedProvider } from '../../contexts/DataDataSharedProvider';
@@ -7,7 +7,7 @@ import { urls } from '../../utils/PageUtils';
 import { NavBar } from '../NavBar/NavBar';
 
 export interface EntityEditorPageProps {
-  entitySelectors: EntityEditorSelector[];
+  entitySelectors: LegacyEntityEditorSelector[];
 }
 
 export function EntityEditorPage({ entitySelectors }: EntityEditorPageProps): JSX.Element {
@@ -24,11 +24,11 @@ export function EntityEditorPage({ entitySelectors }: EntityEditorPageProps): JS
 
   return (
     <DataDataSharedProvider>
-      <EntityEditorScreen
+      <LegacyEntityEditorScreen
         header={<NavBar current="entities" />}
         entitySelectors={entitySelectors}
         onEntityIdsChanged={handleEntityIdsChanged}
-      ></EntityEditorScreen>
+      />
     </DataDataSharedProvider>
   );
 }

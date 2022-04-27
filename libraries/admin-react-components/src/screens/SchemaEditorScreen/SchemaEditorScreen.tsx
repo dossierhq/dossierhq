@@ -10,7 +10,7 @@ import {
 } from '@jonasb/datadata-design';
 import type { Dispatch, MouseEvent } from 'react';
 import React, { useCallback, useContext, useEffect, useMemo, useReducer, useState } from 'react';
-import { DataDataContext2 } from '../..';
+import { AdminDataDataContext } from '../..';
 import { SchemaTypeEditor } from '../../components/SchemaTypeEditor/SchemaTypeEditor';
 import type {
   SchemaEditorState,
@@ -37,7 +37,7 @@ export interface SchemaEditorScreenProps {
 }
 
 export function SchemaEditorScreen({ header, footer }: SchemaEditorScreenProps) {
-  const { schema } = useContext(DataDataContext2);
+  const { schema } = useContext(AdminDataDataContext);
   const [schemaEditorState, dispatchSchemaEditorState] = useReducer(
     reduceSchemaEditorState,
     undefined,

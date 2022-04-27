@@ -1,8 +1,8 @@
 import type { AdminClient, ErrorType, PromiseResult } from '@jonasb/datadata-core';
 import { ok } from '@jonasb/datadata-core';
 import React, { useEffect, useState } from 'react';
-import type { DataDataContextAdapter } from '..';
-import { DataDataProvider } from '..';
+import type { AdminDataDataContextAdapter } from '..';
+import { AdminDataDataProvider } from '..';
 import {
   createBackendAdminClient,
   DISPLAY_AUTH_KEYS,
@@ -10,7 +10,7 @@ import {
 } from './TestContextAdapter';
 
 interface Props {
-  adapter?: DataDataContextAdapter;
+  adapter?: AdminDataDataContextAdapter;
   adminClient?: () => PromiseResult<AdminClient, ErrorType>;
   children: React.ReactNode;
 }
@@ -35,12 +35,12 @@ export function LoadContextProvider({ adapter, adminClient, children }: Props): 
   }
   if (!resolvedAdminClient) return null;
   return (
-    <DataDataProvider
+    <AdminDataDataProvider
       adapter={adapter || new TestContextAdapter()}
       adminClient={resolvedAdminClient}
       authKeys={DISPLAY_AUTH_KEYS}
     >
       {children}
-    </DataDataProvider>
+    </AdminDataDataProvider>
   );
 }
