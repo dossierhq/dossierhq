@@ -7,18 +7,20 @@ export interface EntityEditorState {
   status: 'uninitialized' | 'changed' | '';
   schema: AdminSchema | null;
   drafts: EntityEditorDraftState[];
+  activeEntityId: string | null;
 }
 
 interface EntityEditorDraftState {
   id: string;
+  entity: { type: string } | null;
 }
 
-interface EntityEditorStateAction {
+export interface EntityEditorStateAction {
   reduce(state: Readonly<EntityEditorState>): Readonly<EntityEditorState>;
 }
 
 export function initializeEntityEditorState(): EntityEditorState {
-  return { status: 'uninitialized', schema: null, drafts: [] };
+  return { status: 'uninitialized', schema: null, drafts: [], activeEntityId: null };
 }
 
 export function reduceEntityEditorState(
@@ -39,8 +41,23 @@ class AddDraftAction implements EntityEditorStateAction {
   }
 
   reduce(state: Readonly<EntityEditorState>): Readonly<EntityEditorState> {
-    const draft: EntityEditorDraftState = { id: this.selector.id ?? uuidv4() };
-    return { ...state, drafts: [...state.drafts, draft] };
+    const draft: EntityEditorDraftState = { id: this.selector.id ?? uuidv4(), entity: null };
+    if ('newType' in this.selector) {
+      draft.entity = { type: this.selector.newType };
+    }
+
+    return { ...state, drafts: [...state.drafts, draft], activeEntityId: draft.id };
+  }
+}
+
+class SetActiveEntityAction implements EntityEditorStateAction {
+  id: string;
+  constructor(id: string) {
+    this.id = id;
+  }
+
+  reduce(state: Readonly<EntityEditorState>): Readonly<EntityEditorState> {
+    return { ...state, activeEntityId: this.id };
   }
 }
 
@@ -57,5 +74,6 @@ class UpdateSchemaSpecificationAction implements EntityEditorStateAction {
 
 export const EntityEditorActions = {
   AddDraft: AddDraftAction,
+  SetActiveEntity: SetActiveEntityAction,
   UpdateSchemaSpecification: UpdateSchemaSpecificationAction,
 };

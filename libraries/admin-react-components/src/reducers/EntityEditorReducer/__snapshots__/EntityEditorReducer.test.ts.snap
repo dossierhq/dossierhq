@@ -2,9 +2,35 @@
 
 exports[`AddDraftAction add Foo 1`] = `
 Object {
+  "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
   "drafts": Array [
     Object {
+      "entity": Object {
+        "type": "Foo",
+      },
       "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+    },
+  ],
+  "schema": null,
+  "status": "uninitialized",
+}
+`;
+
+exports[`SetActiveEntityAction add two entities, set active to first 1`] = `
+Object {
+  "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "drafts": Array [
+    Object {
+      "entity": Object {
+        "type": "Foo",
+      },
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+    },
+    Object {
+      "entity": Object {
+        "type": "Bar",
+      },
+      "id": "9516465b-935a-4cc7-8b97-ccaca81bbe9a",
     },
   ],
   "schema": null,
@@ -14,6 +40,7 @@ Object {
 
 exports[`UpdateSchemaSpecificationAction add empty schema 1`] = `
 Object {
+  "activeEntityId": null,
   "drafts": Array [],
   "schema": AdminSchema {
     "spec": Object {
