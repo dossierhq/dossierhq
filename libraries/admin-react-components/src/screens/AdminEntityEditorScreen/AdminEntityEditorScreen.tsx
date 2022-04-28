@@ -40,7 +40,10 @@ export function AdminEntityEditorScreen({ header, footer }: AdminEntityEditorScr
           <AdminTypePicker iconLeft="add" showEntityTypes onTypeSelected={onCreateEntity}>
             Create
           </AdminTypePicker>
-          <AdminEntityEditorMenu entityEditorState={entityEditorState} />
+          <AdminEntityEditorMenu
+            entityEditorState={entityEditorState}
+            dispatchEntityEditorState={dispatchEntityEditorState}
+          />
         </FullscreenContainer.ScrollableColumn>
         <FullscreenContainer.ScrollableColumn padding={2} gap={2}>
           CENTER
