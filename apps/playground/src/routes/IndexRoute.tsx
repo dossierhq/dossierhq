@@ -10,7 +10,7 @@ export function IndexRoute() {
         <NavBar current="home" />
       </FullscreenContainer.Row>
       <FullscreenContainer.Row>
-        <Link to={ROUTE.adminEntities.url}>Admin entities</Link>
+        <Link to={ROUTE.adminEditEntities.url}>New editor</Link>
       </FullscreenContainer.Row>
     </FullscreenContainer>
   );

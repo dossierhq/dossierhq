@@ -99,6 +99,8 @@ export { useAdminSchema } from './hooks/useAdminSchema';
 export { useAdminSearchEntities } from './hooks/useAdminSearchEntities';
 export { useAdminTotalCount } from './hooks/useAdminTotalCount';
 export { PublishedDataDataProvider } from './published/';
+export type { EntityEditorStateUrlQuery } from './reducers/EntityEditorReducer/EntityEditorUrlSynchronizer';
+export { AdminEntityEditorScreen } from './screens/AdminEntityEditorScreen/AdminEntityEditorScreen';
 export { AdminEntityListScreen } from './screens/AdminEntityListScreen/AdminEntityListScreen';
 export { LegacyEntityEditorScreen } from './screens/LegacyEntityEditorScreen/LegacyEntityEditorScreen';
 export { PublishedEntityDetailScreen } from './screens/PublishedEntityDetailScreen/PublishedEntityDetailScreen';
