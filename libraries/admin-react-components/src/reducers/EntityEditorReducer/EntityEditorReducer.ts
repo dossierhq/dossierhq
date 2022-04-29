@@ -41,6 +41,9 @@ class AddDraftAction implements EntityEditorStateAction {
   }
 
   reduce(state: Readonly<EntityEditorState>): Readonly<EntityEditorState> {
+    if (this.selector.id && state.drafts.find((it) => it.id === this.selector.id)) {
+      return state;
+    }
     const draft: EntityEditorDraftState = { id: this.selector.id ?? uuidv4(), entity: null };
     if ('newType' in this.selector) {
       draft.entity = { type: this.selector.newType };

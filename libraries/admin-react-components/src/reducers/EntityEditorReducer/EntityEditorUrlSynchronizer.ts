@@ -1,53 +1,46 @@
-import { decodeUrlQueryStringifiedParam, stringifyUrlQueryParams } from '@jonasb/datadata-core';
 import type { Dispatch } from 'react';
 import { useEffect } from 'react';
 import type { EntityEditorState, EntityEditorStateAction } from './EntityEditorReducer';
 import { EntityEditorActions } from './EntityEditorReducer';
 
-export interface EntityEditorStateUrlQuery {
-  type?: string;
-  ids?: string;
-}
-
 export function useSynchronizeUrlQueryAndEntityEditorState(
-  urlQuery: EntityEditorStateUrlQuery | undefined,
-  onUrlQueryChange: ((urlQuery: EntityEditorStateUrlQuery) => void) | undefined,
+  urlSearchParams: Readonly<URLSearchParams> | undefined,
+  onUrlSearchParamsChange: ((urlSearchParams: Readonly<URLSearchParams>) => void) | undefined,
   entityEditorState: EntityEditorState,
   dispatchEntityEditorState: Dispatch<EntityEditorStateAction>
 ) {
   const { drafts } = entityEditorState;
-  const idString = drafts.map((it) => it.id).join(',');
-  useEffect(() => {
-    if (!onUrlQueryChange || !urlQuery) return;
-    const result: EntityEditorStateUrlQuery = stringifyUrlQueryParams({
-      ids: drafts.map((it) => it.id),
-    });
-    if (result.ids !== urlQuery.ids || result.type !== urlQuery.type) {
-      onUrlQueryChange(result);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [idString]);
 
   useEffect(() => {
-    if (!urlQuery) return;
-    const actions = urlQueryToSearchEntityStateActions(urlQuery);
+    if (!onUrlSearchParamsChange || !urlSearchParams) return;
+    const result = new URLSearchParams();
+    for (const id of drafts.map((it) => it.id)) {
+      result.append('id', id);
+    }
+    if (urlSearchParams.toString() !== result.toString()) {
+      onUrlSearchParamsChange(result);
+    }
+  }, [drafts, onUrlSearchParamsChange, urlSearchParams]);
+
+  useEffect(() => {
+    if (!urlSearchParams) return;
+    const actions = urlQueryToSearchEntityStateActions(urlSearchParams);
     actions.forEach((action) => dispatchEntityEditorState(action));
-  }, [dispatchEntityEditorState, urlQuery]);
+  }, [dispatchEntityEditorState, urlSearchParams]);
 
   // useDebugLogChangedValues('useSynchronizeUrlQueryAndEntityEditorState', { query, paging, sampling, sample, urlQuery });
 }
 
-function urlQueryToSearchEntityStateActions(urlQuery: EntityEditorStateUrlQuery | undefined) {
+function urlQueryToSearchEntityStateActions(
+  urlSearchParams: Readonly<URLSearchParams> | undefined
+) {
   const actions = [];
-  if (urlQuery) {
-    const type: string | undefined = decodeUrlQueryStringifiedParam('type', urlQuery);
-    if (type) {
+  if (urlSearchParams) {
+    for (const type of urlSearchParams.getAll('type')) {
       actions.push(new EntityEditorActions.AddDraft({ newType: type }));
-
-      const ids: string[] = decodeUrlQueryStringifiedParam('ids', urlQuery) ?? [];
-      for (const id of ids) {
-        actions.push(new EntityEditorActions.AddDraft({ id }));
-      }
+    }
+    for (const id of urlSearchParams.getAll('id')) {
+      actions.push(new EntityEditorActions.AddDraft({ id }));
     }
   }
   return actions;

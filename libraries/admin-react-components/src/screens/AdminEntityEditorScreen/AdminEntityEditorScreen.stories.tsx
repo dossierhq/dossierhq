@@ -1,14 +1,15 @@
-import { buildUrlWithUrlQuery } from '@jonasb/datadata-core';
 import { Text } from '@jonasb/datadata-design';
 import type { Meta, Story } from '@storybook/react/types-6-0';
 import React, { useMemo, useState } from 'react';
-import type { EntityEditorStateUrlQuery } from '../../reducers/EntityEditorReducer/EntityEditorUrlSynchronizer';
 import { LoadContextProvider } from '../../test/LoadContextProvider';
 import type { AdminEntityEditorScreenProps } from './AdminEntityEditorScreen';
 import { AdminEntityEditorScreen } from './AdminEntityEditorScreen';
 
-type StoryProps = Omit<AdminEntityEditorScreenProps, 'urlQuery' | 'onUrlQueryChanged'> & {
-  initialUrlQuery?: EntityEditorStateUrlQuery;
+type StoryProps = Omit<
+  AdminEntityEditorScreenProps,
+  'urlSearchParams' | 'onUrlSearchParamsChange'
+> & {
+  initialUrlSearchParams?: URLSearchParams;
   showUrl: boolean;
 };
 
@@ -25,21 +26,28 @@ const Template: Story<StoryProps> = (args) => {
   return Wrapper(args);
 };
 
-function Wrapper({ initialUrlQuery, showUrl, header, ...props }: StoryProps) {
-  const [urlQuery, setUrlQuery] = useState<EntityEditorStateUrlQuery>(initialUrlQuery ?? {});
-  const displayUrl = useMemo(() => decodeURI(buildUrlWithUrlQuery('/', urlQuery)), [urlQuery]);
+function Wrapper({
+  initialUrlSearchParams: initialUrlQuery,
+  showUrl,
+  header,
+  ...props
+}: StoryProps) {
+  const [urlSearchParams, onUrlSearchParamsChange] = useState<URLSearchParams>(
+    initialUrlQuery ?? new URLSearchParams()
+  );
+  const displayUrl = useMemo(() => decodeURI(urlSearchParams.toString()), [urlSearchParams]);
   return (
     <LoadContextProvider>
       <AdminEntityEditorScreen
         {...props}
         header={
           <>
-            {showUrl ? <Text textStyle="body2">{displayUrl}</Text> : null}
+            {showUrl ? <Text textStyle="body2">/{displayUrl}</Text> : null}
             {header}
           </>
         }
-        urlQuery={urlQuery}
-        onUrlQueryChange={setUrlQuery}
+        urlSearchParams={urlSearchParams}
+        onUrlSearchParamsChange={onUrlSearchParamsChange}
       />
     </LoadContextProvider>
   );
@@ -54,4 +62,4 @@ HeaderFooter.args = {
 };
 
 export const NewFooUrl = Template.bind({});
-NewFooUrl.args = { initialUrlQuery: { type: '"Foo"' } };
+NewFooUrl.args = { initialUrlSearchParams: new URLSearchParams({ type: 'Foo' }) };
