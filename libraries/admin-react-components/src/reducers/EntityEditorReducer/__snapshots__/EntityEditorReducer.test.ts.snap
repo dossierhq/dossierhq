@@ -38,6 +38,22 @@ Object {
 }
 `;
 
+exports[`UpdateEntityAction add draft, update entity 1`] = `
+Object {
+  "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "drafts": Array [
+    Object {
+      "entity": Object {
+        "type": "Foo",
+      },
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+    },
+  ],
+  "schema": null,
+  "status": "uninitialized",
+}
+`;
+
 exports[`UpdateSchemaSpecificationAction add empty schema 1`] = `
 Object {
   "activeEntityId": null,

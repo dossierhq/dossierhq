@@ -1,4 +1,4 @@
-import type { AdminSchema } from '@jonasb/datadata-core';
+import type { AdminEntity, AdminSchema } from '@jonasb/datadata-core';
 import { v4 as uuidv4 } from 'uuid';
 
 type EntityEditorSelector = { id: string } | { id?: string; newType: string };
@@ -10,7 +10,7 @@ export interface EntityEditorState {
   activeEntityId: string | null;
 }
 
-interface EntityEditorDraftState {
+export interface EntityEditorDraftState {
   id: string;
   entity: { type: string } | null;
 }
@@ -30,6 +30,35 @@ export function reduceEntityEditorState(
   const newState = action.reduce(state);
   // if (state !== newState) console.log(`State changed for ${action.constructor.name}`, state, action, newState);
   return newState;
+}
+
+// ACTION HELPERS
+
+abstract class EntityEditorDraftAction implements EntityEditorStateAction {
+  id: string;
+  constructor(id: string) {
+    this.id = id;
+  }
+
+  reduce(state: Readonly<EntityEditorState>): Readonly<EntityEditorState> {
+    const draftIndex = state.drafts.findIndex((it) => it.id === this.id);
+    if (draftIndex < 0) throw new Error(`No such draft for id ${this.id}`);
+    const currentDraft = state.drafts[draftIndex];
+
+    const newDraft = this.reduceDraft(currentDraft);
+    if (newDraft === currentDraft) {
+      return state;
+    }
+
+    const newDrafts = [...state.drafts];
+    newDrafts[draftIndex] = newDraft;
+
+    return { ...state, drafts: newDrafts };
+  }
+
+  abstract reduceDraft(
+    draftState: Readonly<EntityEditorDraftState>
+  ): Readonly<EntityEditorDraftState>;
 }
 
 // ACTIONS
@@ -64,6 +93,22 @@ class SetActiveEntityAction implements EntityEditorStateAction {
   }
 }
 
+class UpdateEntityAction extends EntityEditorDraftAction {
+  entity: AdminEntity;
+  constructor(entity: AdminEntity) {
+    super(entity.id);
+    this.entity = entity;
+  }
+
+  reduceDraft(draftState: Readonly<EntityEditorDraftState>): Readonly<EntityEditorDraftState> {
+    //TODO handle when changed on server
+    if (draftState.entity) {
+      return draftState;
+    }
+    return { ...draftState, entity: { type: this.entity.info.type } };
+  }
+}
+
 class UpdateSchemaSpecificationAction implements EntityEditorStateAction {
   schema: AdminSchema;
   constructor(schema: AdminSchema) {
@@ -78,5 +123,6 @@ class UpdateSchemaSpecificationAction implements EntityEditorStateAction {
 export const EntityEditorActions = {
   AddDraft: AddDraftAction,
   SetActiveEntity: SetActiveEntityAction,
+  UpdateEntity: UpdateEntityAction,
   UpdateSchemaSpecification: UpdateSchemaSpecificationAction,
 };

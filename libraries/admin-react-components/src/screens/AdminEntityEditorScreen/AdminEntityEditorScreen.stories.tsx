@@ -1,6 +1,7 @@
 import { Text } from '@jonasb/datadata-design';
 import type { Meta, Story } from '@storybook/react/types-6-0';
 import React, { useMemo, useState } from 'react';
+import { foo1Id } from '../../test/EntityFixtures';
 import { LoadContextProvider } from '../../test/LoadContextProvider';
 import type { AdminEntityEditorScreenProps } from './AdminEntityEditorScreen';
 import { AdminEntityEditorScreen } from './AdminEntityEditorScreen';
@@ -63,3 +64,6 @@ HeaderFooter.args = {
 
 export const NewFooUrl = Template.bind({});
 NewFooUrl.args = { initialUrlSearchParams: new URLSearchParams({ type: 'Foo' }) };
+
+export const FooUrl = Template.bind({});
+FooUrl.args = { initialUrlSearchParams: new URLSearchParams({ id: foo1Id }) };

@@ -1,9 +1,12 @@
-import type { AdminSchema } from '@jonasb/datadata-core';
+import type { AdminSchema, EntityReference, EntityVersionReference } from '@jonasb/datadata-core';
 import { PublishedSchema } from '@jonasb/datadata-core';
 import type { Cache } from 'swr';
 import type { ScopedMutator } from 'swr/dist/types';
 
 export const CACHE_KEYS = {
+  adminEntity(reference: EntityReference | EntityVersionReference) {
+    return ['datadata/useAdminEntity', JSON.stringify(reference)];
+  },
   adminSchema: 'datadata/useAdminSchema',
   publishedSchema: 'datadata/usePublishedSchema',
 };
