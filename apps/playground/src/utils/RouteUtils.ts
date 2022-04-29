@@ -7,6 +7,10 @@ export const ROUTE = {
     route: 'admin-entities',
     url: '/admin-entities',
   },
+  adminEditEntities: {
+    route: 'admin-edit-entities',
+    url: '/admin-edit-entities',
+  },
   editEntities: {
     route: 'admin-entities/edit',
     url: (ids: string[], type?: string) => {

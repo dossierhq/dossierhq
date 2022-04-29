@@ -2,6 +2,7 @@ import { BeforeUnload, NotificationContainer } from '@jonasb/datadata-design';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { DataDataSharedProvider } from './components/DataDataSharedProvider';
 import { ServerProvider } from './components/ServerProvider';
+import { AdminEditEntitiesRoute } from './routes/AdminEditEntitiesRoute';
 import { AdminEntitiesRoute } from './routes/AdminEntitiesRoute';
 import { EditEntitiesRoute } from './routes/EditEntitiesRoute';
 import { EditSchemaRoute } from './routes/EditSchemaRoute';
@@ -20,6 +21,7 @@ export default function App() {
             <Routes>
               <Route path={ROUTE.index.route} element={<IndexRoute />} />
               <Route path={ROUTE.adminEntities.route} element={<AdminEntitiesRoute />} />
+              <Route path={ROUTE.adminEditEntities.route} element={<AdminEditEntitiesRoute />} />
               <Route path={ROUTE.editEntities.route} element={<EditEntitiesRoute />} />
               <Route path={ROUTE.publishedEntities.route} element={<PublishedEntitiesRoute />} />
               <Route
