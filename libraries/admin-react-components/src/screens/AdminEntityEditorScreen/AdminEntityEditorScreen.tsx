@@ -7,22 +7,21 @@ import {
   initializeEntityEditorState,
   reduceEntityEditorState,
 } from '../../reducers/EntityEditorReducer/EntityEditorReducer';
-import type { EntityEditorStateUrlQuery } from '../../reducers/EntityEditorReducer/EntityEditorUrlSynchronizer';
 import { useSynchronizeUrlQueryAndEntityEditorState } from '../../reducers/EntityEditorReducer/EntityEditorUrlSynchronizer';
 import { AdminEntityEditorMenu } from './AdminEntityEditorMenu';
 
 export interface AdminEntityEditorScreenProps {
   header?: React.ReactNode;
   footer?: React.ReactNode;
-  urlQuery?: EntityEditorStateUrlQuery;
-  onUrlQueryChange?: (urlQuery: EntityEditorStateUrlQuery) => void;
+  urlSearchParams?: Readonly<URLSearchParams>;
+  onUrlSearchParamsChange?: (urlSearchParams: Readonly<URLSearchParams>) => void;
 }
 
 export function AdminEntityEditorScreen({
   header,
   footer,
-  urlQuery,
-  onUrlQueryChange,
+  urlSearchParams,
+  onUrlSearchParamsChange,
 }: AdminEntityEditorScreenProps) {
   const { schema } = useContext(AdminDataDataContext);
   const [entityEditorState, dispatchEntityEditorState] = useReducer(
@@ -42,8 +41,8 @@ export function AdminEntityEditorScreen({
   }, [schema]);
 
   useSynchronizeUrlQueryAndEntityEditorState(
-    urlQuery,
-    onUrlQueryChange,
+    urlSearchParams,
+    onUrlSearchParamsChange,
     entityEditorState,
     dispatchEntityEditorState
   );
