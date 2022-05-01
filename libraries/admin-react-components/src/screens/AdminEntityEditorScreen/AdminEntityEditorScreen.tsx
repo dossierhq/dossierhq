@@ -1,7 +1,8 @@
-import { FullscreenContainer } from '@jonasb/datadata-design';
-import type { Dispatch } from 'react';
+import { FullscreenContainer, Level, Text } from '@jonasb/datadata-design';
+import type { Dispatch, MouseEvent } from 'react';
 import React, { useCallback, useContext, useEffect, useReducer } from 'react';
 import { AdminTypePicker } from '../../components/AdminTypePicker/AdminTypePicker';
+import { EntityEditor } from '../../components/EntityEditor/EntityEditor';
 import { AdminDataDataContext } from '../../contexts/AdminDataDataContext';
 import { useAdminEntity } from '../../hooks/useAdminEntity';
 import type {
@@ -35,7 +36,8 @@ export function AdminEntityEditorScreen({
     undefined,
     initializeEntityEditorState
   );
-  const { drafts } = entityEditorState;
+  const { drafts, activeEntityId, activeEntityMenuScrollSignal, activeEntityEditorScrollSignal } =
+    entityEditorState;
 
   const onCreateEntity = useCallback((type: string) => {
     dispatchEntityEditorState(new EntityEditorActions.AddDraft({ newType: type }));
@@ -54,11 +56,20 @@ export function AdminEntityEditorScreen({
     dispatchEntityEditorState
   );
 
+  const menuScrollToId = activeEntityId ? `${activeEntityId}-menuItem` : undefined;
+  const editorScrollToId = activeEntityId ? `${activeEntityId}-header` : undefined;
+
   return (
     <FullscreenContainer>
       {header ? <FullscreenContainer.Row fullWidth>{header}</FullscreenContainer.Row> : null}
       <FullscreenContainer.Columns fillHeight>
-        <FullscreenContainer.ScrollableColumn width="3/12" padding={2} gap={2}>
+        <FullscreenContainer.ScrollableColumn
+          width="3/12"
+          padding={2}
+          gap={2}
+          scrollToId={menuScrollToId}
+          scrollToIdSignal={activeEntityMenuScrollSignal}
+        >
           <AdminTypePicker iconLeft="add" showEntityTypes onTypeSelected={onCreateEntity}>
             Create
           </AdminTypePicker>
@@ -67,7 +78,10 @@ export function AdminEntityEditorScreen({
             dispatchEntityEditorState={dispatchEntityEditorState}
           />
         </FullscreenContainer.ScrollableColumn>
-        <FullscreenContainer.ScrollableColumn padding={2} gap={2}>
+        <FullscreenContainer.ScrollableColumn
+          scrollToId={editorScrollToId}
+          scrollToIdSignal={activeEntityEditorScrollSignal}
+        >
           {drafts.map((draft) => (
             <EntityRows
               key={draft.id}
@@ -101,10 +115,42 @@ function EntityRows({
     }
   }, [dispatchEntityEditorState, entity]);
 
+  const handleClick = useCallback(
+    (_event: MouseEvent) =>
+      dispatchEntityEditorState(new EntityEditorActions.SetActiveEntity(draft.id, true, false)),
+    [dispatchEntityEditorState, draft.id]
+  );
+
+  if (!draft.draft) {
+    return null;
+  }
+
   return (
     <>
-      {draft.entity?.type}
-      <pre>{JSON.stringify(entity)}</pre>
+      <FullscreenContainer.Row id={`${draft.id}-header`} sticky>
+        <Level paddingHorizontal={3}>
+          <Level.Left>
+            <Level.Item>
+              <Text textStyle="headline4">
+                {draft.draft.name || 'Untitled'}{' '}
+                <Text as="span" textStyle="headline6">
+                  {draft.draft.entitySpec.name}
+                </Text>
+              </Text>
+            </Level.Item>
+          </Level.Left>
+        </Level>
+      </FullscreenContainer.Row>
+      <FullscreenContainer.Row
+        gap={2}
+        paddingVertical={4}
+        paddingHorizontal={3}
+        marginBottom={4}
+        data-entityid={draft.id}
+        onClick={handleClick}
+      >
+        <EntityEditor draft={draft} dispatchEntityEditorState={dispatchEntityEditorState} />
+      </FullscreenContainer.Row>
     </>
   );
 }

@@ -2,61 +2,189 @@
 
 exports[`AddDraftAction add Foo 1`] = `
 Object {
+  "activeEntityEditorScrollSignal": 1,
   "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "activeEntityMenuScrollSignal": 1,
   "drafts": Array [
     Object {
-      "entity": Object {
-        "type": "Foo",
+      "draft": Object {
+        "authKey": null,
+        "entitySpec": Object {
+          "adminOnly": false,
+          "fields": Array [
+            Object {
+              "name": "title",
+              "type": "String",
+            },
+          ],
+          "name": "Foo",
+        },
+        "fields": Array [
+          Object {
+            "fieldSpec": Object {
+              "name": "title",
+              "type": "String",
+            },
+            "value": null,
+          },
+        ],
+        "name": "",
       },
+      "entity": null,
       "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
     },
   ],
-  "schema": null,
+  "schema": AdminSchema {
+    "spec": Object {
+      "entityTypes": Array [
+        Object {
+          "adminOnly": false,
+          "fields": Array [
+            Object {
+              "name": "title",
+              "type": "String",
+            },
+          ],
+          "name": "Foo",
+        },
+      ],
+      "valueTypes": Array [],
+    },
+  },
   "status": "uninitialized",
 }
 `;
 
 exports[`SetActiveEntityAction add two entities, set active to first 1`] = `
 Object {
+  "activeEntityEditorScrollSignal": 3,
   "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "activeEntityMenuScrollSignal": 3,
   "drafts": Array [
     Object {
-      "entity": Object {
-        "type": "Foo",
+      "draft": Object {
+        "authKey": null,
+        "entitySpec": Object {
+          "adminOnly": false,
+          "fields": Array [],
+          "name": "Foo",
+        },
+        "fields": Array [],
+        "name": "",
       },
+      "entity": null,
       "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
     },
     Object {
-      "entity": Object {
-        "type": "Bar",
+      "draft": Object {
+        "authKey": null,
+        "entitySpec": Object {
+          "adminOnly": false,
+          "fields": Array [],
+          "name": "Bar",
+        },
+        "fields": Array [],
+        "name": "",
       },
+      "entity": null,
       "id": "9516465b-935a-4cc7-8b97-ccaca81bbe9a",
     },
   ],
-  "schema": null,
+  "schema": AdminSchema {
+    "spec": Object {
+      "entityTypes": Array [
+        Object {
+          "adminOnly": false,
+          "fields": Array [],
+          "name": "Foo",
+        },
+        Object {
+          "adminOnly": false,
+          "fields": Array [],
+          "name": "Bar",
+        },
+      ],
+      "valueTypes": Array [],
+    },
+  },
   "status": "uninitialized",
 }
 `;
 
 exports[`UpdateEntityAction add draft, update entity 1`] = `
 Object {
+  "activeEntityEditorScrollSignal": 1,
   "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "activeEntityMenuScrollSignal": 1,
   "drafts": Array [
     Object {
+      "draft": Object {
+        "authKey": "none",
+        "entitySpec": Object {
+          "adminOnly": false,
+          "fields": Array [
+            Object {
+              "name": "title",
+              "type": "String",
+            },
+          ],
+          "name": "Foo",
+        },
+        "fields": Array [
+          Object {
+            "fieldSpec": Object {
+              "name": "title",
+              "type": "String",
+            },
+            "value": "Title",
+          },
+        ],
+        "name": "Foo name",
+      },
       "entity": Object {
-        "type": "Foo",
+        "fields": Object {
+          "title": "Title",
+        },
+        "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+        "info": Object {
+          "authKey": "none",
+          "createdAt": "2022-04-30T07:51:25.56Z",
+          "name": "Foo name",
+          "status": "draft",
+          "type": "Foo",
+          "updatedAt": "2022-04-30T07:51:25.56Z",
+          "version": 0,
+        },
       },
       "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
     },
   ],
-  "schema": null,
+  "schema": AdminSchema {
+    "spec": Object {
+      "entityTypes": Array [
+        Object {
+          "adminOnly": false,
+          "fields": Array [
+            Object {
+              "name": "title",
+              "type": "String",
+            },
+          ],
+          "name": "Foo",
+        },
+      ],
+      "valueTypes": Array [],
+    },
+  },
   "status": "uninitialized",
 }
 `;
 
 exports[`UpdateSchemaSpecificationAction add empty schema 1`] = `
 Object {
+  "activeEntityEditorScrollSignal": 0,
   "activeEntityId": null,
+  "activeEntityMenuScrollSignal": 0,
   "drafts": Array [],
   "schema": AdminSchema {
     "spec": Object {

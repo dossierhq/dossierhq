@@ -21,12 +21,15 @@ export function AdminEntityEditorMenu({ entityEditorState, dispatchEntityEditorS
         {entityEditorState.drafts.map((draft) => (
           <Menu.Item key={draft.id}>
             <a
+              id={`${draft.id}-menuItem`}
               className={draft.id === activeEntityId ? 'is-active' : undefined}
               onClick={() =>
-                dispatchEntityEditorState(new EntityEditorActions.SetActiveEntity(draft.id))
+                dispatchEntityEditorState(
+                  new EntityEditorActions.SetActiveEntity(draft.id, false, true)
+                )
               }
             >
-              {draft.entity?.type}
+              {`${draft.draft?.name || 'Untitled'}: ${draft.draft?.entitySpec.name}`}
             </a>
           </Menu.Item>
         ))}

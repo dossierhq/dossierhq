@@ -1,4 +1,4 @@
-import { AdminEntityStatus, AdminSchema } from '@jonasb/datadata-core';
+import { AdminEntityStatus, AdminSchema, FieldType } from '@jonasb/datadata-core';
 import { Temporal } from '@js-temporal/polyfill';
 import type { EntityEditorState, EntityEditorStateAction } from './EntityEditorReducer';
 import {
@@ -23,7 +23,9 @@ describe('initializeEntityEditorState', () => {
     const state = initializeEntityEditorState();
     expect(state).toMatchInlineSnapshot(`
       Object {
+        "activeEntityEditorScrollSignal": 0,
         "activeEntityId": null,
+        "activeEntityMenuScrollSignal": 0,
         "drafts": Array [],
         "schema": null,
         "status": "uninitialized",
@@ -34,8 +36,16 @@ describe('initializeEntityEditorState', () => {
 
 describe('AddDraftAction', () => {
   test('add Foo', () => {
-    const state = reduceEntityEditorState(
+    const state = reduceEntityEditorStateActions(
       initializeEntityEditorState(),
+      new EntityEditorActions.UpdateSchemaSpecification(
+        new AdminSchema({
+          entityTypes: [
+            { name: 'Foo', adminOnly: false, fields: [{ name: 'title', type: FieldType.String }] },
+          ],
+          valueTypes: [],
+        })
+      ),
       new EntityEditorActions.AddDraft({
         id: '619725d7-e583-4544-8bb0-23fc3c2870c0',
         newType: 'Foo',
@@ -49,6 +59,15 @@ describe('SetActiveEntityAction', () => {
   test('add two entities, set active to first', () => {
     const state = reduceEntityEditorStateActions(
       initializeEntityEditorState(),
+      new EntityEditorActions.UpdateSchemaSpecification(
+        new AdminSchema({
+          entityTypes: [
+            { name: 'Foo', adminOnly: false, fields: [] },
+            { name: 'Bar', adminOnly: false, fields: [] },
+          ],
+          valueTypes: [],
+        })
+      ),
       new EntityEditorActions.AddDraft({
         id: '619725d7-e583-4544-8bb0-23fc3c2870c0',
         newType: 'Foo',
@@ -57,7 +76,7 @@ describe('SetActiveEntityAction', () => {
         id: '9516465b-935a-4cc7-8b97-ccaca81bbe9a',
         newType: 'Bar',
       }),
-      new EntityEditorActions.SetActiveEntity('619725d7-e583-4544-8bb0-23fc3c2870c0')
+      new EntityEditorActions.SetActiveEntity('619725d7-e583-4544-8bb0-23fc3c2870c0', true, true)
     );
     expect(state).toMatchSnapshot();
     expect(state.activeEntityId).toBe('619725d7-e583-4544-8bb0-23fc3c2870c0');
@@ -69,6 +88,14 @@ describe('UpdateEntityAction', () => {
     const id = '619725d7-e583-4544-8bb0-23fc3c2870c0';
     const state = reduceEntityEditorStateActions(
       initializeEntityEditorState(),
+      new EntityEditorActions.UpdateSchemaSpecification(
+        new AdminSchema({
+          entityTypes: [
+            { name: 'Foo', adminOnly: false, fields: [{ name: 'title', type: FieldType.String }] },
+          ],
+          valueTypes: [],
+        })
+      ),
       new EntityEditorActions.AddDraft({ id }),
       new EntityEditorActions.UpdateEntity({
         id,
