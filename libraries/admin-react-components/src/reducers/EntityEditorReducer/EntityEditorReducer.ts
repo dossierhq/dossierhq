@@ -1,4 +1,10 @@
-import type { AdminEntity, AdminSchema } from '@jonasb/datadata-core';
+import type {
+  AdminEntity,
+  AdminEntityTypeSpecification,
+  AdminSchema,
+  FieldSpecification,
+} from '@jonasb/datadata-core';
+import { assertIsDefined } from '@jonasb/datadata-core';
 import { v4 as uuidv4 } from 'uuid';
 
 type EntityEditorSelector = { id: string } | { id?: string; newType: string };
@@ -8,11 +14,24 @@ export interface EntityEditorState {
   schema: AdminSchema | null;
   drafts: EntityEditorDraftState[];
   activeEntityId: string | null;
+  activeEntityEditorScrollSignal: number;
+  activeEntityMenuScrollSignal: number;
 }
 
 export interface EntityEditorDraftState {
   id: string;
-  entity: { type: string } | null;
+  draft: {
+    entitySpec: AdminEntityTypeSpecification;
+    authKey: string | null;
+    name: string;
+    fields: FieldEditorState[];
+  } | null;
+  entity: AdminEntity | null;
+}
+
+export interface FieldEditorState {
+  fieldSpec: FieldSpecification;
+  value: unknown;
 }
 
 export interface EntityEditorStateAction {
@@ -20,7 +39,14 @@ export interface EntityEditorStateAction {
 }
 
 export function initializeEntityEditorState(): EntityEditorState {
-  return { status: 'uninitialized', schema: null, drafts: [], activeEntityId: null };
+  return {
+    status: 'uninitialized',
+    schema: null,
+    drafts: [],
+    activeEntityId: null,
+    activeEntityEditorScrollSignal: 0,
+    activeEntityMenuScrollSignal: 0,
+  };
 }
 
 export function reduceEntityEditorState(
@@ -45,7 +71,7 @@ abstract class EntityEditorDraftAction implements EntityEditorStateAction {
     if (draftIndex < 0) throw new Error(`No such draft for id ${this.id}`);
     const currentDraft = state.drafts[draftIndex];
 
-    const newDraft = this.reduceDraft(currentDraft);
+    const newDraft = this.reduceDraft(currentDraft, state);
     if (newDraft === currentDraft) {
       return state;
     }
@@ -57,7 +83,8 @@ abstract class EntityEditorDraftAction implements EntityEditorStateAction {
   }
 
   abstract reduceDraft(
-    draftState: Readonly<EntityEditorDraftState>
+    draftState: Readonly<EntityEditorDraftState>,
+    editorState: Readonly<EntityEditorState>
   ): Readonly<EntityEditorDraftState>;
 }
 
@@ -73,23 +100,61 @@ class AddDraftAction implements EntityEditorStateAction {
     if (this.selector.id && state.drafts.find((it) => it.id === this.selector.id)) {
       return state;
     }
-    const draft: EntityEditorDraftState = { id: this.selector.id ?? uuidv4(), entity: null };
+    const { schema } = state;
+    assertIsDefined(schema);
+    const draft: EntityEditorDraftState = {
+      id: this.selector.id ?? uuidv4(),
+      draft: null,
+      entity: null,
+    };
     if ('newType' in this.selector) {
-      draft.entity = { type: this.selector.newType };
+      const entitySpec = schema.getEntityTypeSpecification(this.selector.newType);
+      assertIsDefined(entitySpec);
+      draft.draft = createEditorEntityDraftState(entitySpec, null);
     }
 
-    return { ...state, drafts: [...state.drafts, draft], activeEntityId: draft.id };
+    return {
+      ...state,
+      drafts: [...state.drafts, draft],
+      activeEntityId: draft.id,
+      activeEntityEditorScrollSignal: state.activeEntityEditorScrollSignal + 1,
+      activeEntityMenuScrollSignal: state.activeEntityMenuScrollSignal + 1,
+    };
   }
 }
 
 class SetActiveEntityAction implements EntityEditorStateAction {
   id: string;
-  constructor(id: string) {
+  increaseMenuScrollSignal: boolean;
+  increaseEditorScrollSignal: boolean;
+
+  constructor(id: string, increaseMenuScrollSignal: boolean, increaseEditorScrollSignal: boolean) {
     this.id = id;
+    this.increaseMenuScrollSignal = increaseMenuScrollSignal;
+    this.increaseEditorScrollSignal = increaseEditorScrollSignal;
   }
 
   reduce(state: Readonly<EntityEditorState>): Readonly<EntityEditorState> {
-    return { ...state, activeEntityId: this.id };
+    if (state.activeEntityId === this.id) {
+      return state;
+    }
+    let {
+      activeEntityMenuScrollSignal: activeSelectorMenuScrollSignal,
+      activeEntityEditorScrollSignal: activeSelectorEditorScrollSignal,
+    } = state;
+    if (this.increaseMenuScrollSignal) {
+      activeSelectorMenuScrollSignal += 1;
+    }
+    if (this.increaseEditorScrollSignal) {
+      activeSelectorEditorScrollSignal += 1;
+    }
+
+    return {
+      ...state,
+      activeEntityId: this.id,
+      activeEntityMenuScrollSignal: activeSelectorMenuScrollSignal,
+      activeEntityEditorScrollSignal: activeSelectorEditorScrollSignal,
+    };
   }
 }
 
@@ -100,12 +165,25 @@ class UpdateEntityAction extends EntityEditorDraftAction {
     this.entity = entity;
   }
 
-  reduceDraft(draftState: Readonly<EntityEditorDraftState>): Readonly<EntityEditorDraftState> {
+  reduceDraft(
+    draftState: Readonly<EntityEditorDraftState>,
+    editorState: EntityEditorState
+  ): Readonly<EntityEditorDraftState> {
     //TODO handle when changed on server
     if (draftState.entity) {
       return draftState;
     }
-    return { ...draftState, entity: { type: this.entity.info.type } };
+
+    const { schema } = editorState;
+    assertIsDefined(schema);
+    const entitySpec = schema.getEntityTypeSpecification(this.entity.info.type);
+    assertIsDefined(entitySpec);
+
+    return {
+      ...draftState,
+      draft: createEditorEntityDraftState(entitySpec, this.entity),
+      entity: this.entity,
+    };
   }
 }
 
@@ -126,3 +204,23 @@ export const EntityEditorActions = {
   UpdateEntity: UpdateEntityAction,
   UpdateSchemaSpecification: UpdateSchemaSpecificationAction,
 };
+
+// HELPERS
+
+function createEditorEntityDraftState(
+  entitySpec: AdminEntityTypeSpecification,
+  entity: AdminEntity | null
+): EntityEditorDraftState['draft'] {
+  const fields = entitySpec.fields.map<FieldEditorState>((fieldSpec) => {
+    const value = entity?.fields[fieldSpec.name] ?? null;
+    return { fieldSpec, value };
+  });
+  return {
+    entitySpec,
+    authKey: entity?.info.authKey ?? null,
+    // version: entity ? entity.info.version + 1 : 0,
+    name: entity?.info.name ?? '',
+    // initialName: entity?.info.name ?? '',
+    fields,
+  };
+}

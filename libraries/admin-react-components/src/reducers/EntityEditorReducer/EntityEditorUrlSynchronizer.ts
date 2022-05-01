@@ -9,10 +9,11 @@ export function useSynchronizeUrlQueryAndEntityEditorState(
   entityEditorState: EntityEditorState,
   dispatchEntityEditorState: Dispatch<EntityEditorStateAction>
 ) {
-  const { drafts } = entityEditorState;
+  const { schema, drafts } = entityEditorState;
+  const schemaIsLoaded = !!schema;
 
   useEffect(() => {
-    if (!onUrlSearchParamsChange || !urlSearchParams) return;
+    if (!schemaIsLoaded || !onUrlSearchParamsChange || !urlSearchParams) return;
     const result = new URLSearchParams();
     for (const id of drafts.map((it) => it.id)) {
       result.append('id', id);
@@ -20,13 +21,13 @@ export function useSynchronizeUrlQueryAndEntityEditorState(
     if (urlSearchParams.toString() !== result.toString()) {
       onUrlSearchParamsChange(result);
     }
-  }, [drafts, onUrlSearchParamsChange, urlSearchParams]);
+  }, [schemaIsLoaded, drafts, onUrlSearchParamsChange, urlSearchParams]);
 
   useEffect(() => {
-    if (!urlSearchParams) return;
+    if (!schemaIsLoaded || !urlSearchParams) return;
     const actions = urlQueryToSearchEntityStateActions(urlSearchParams);
     actions.forEach((action) => dispatchEntityEditorState(action));
-  }, [dispatchEntityEditorState, urlSearchParams]);
+  }, [schemaIsLoaded, dispatchEntityEditorState, urlSearchParams]);
 
   // useDebugLogChangedValues('useSynchronizeUrlQueryAndEntityEditorState', { query, paging, sampling, sample, urlQuery });
 }

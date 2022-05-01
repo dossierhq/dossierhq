@@ -188,7 +188,7 @@ function TypeEditorRows({
     [dispatchSchemaEditorState, typeSelector]
   );
 
-  const handleDropDownItemClick = useCallback(
+  const handleDropdownItemClick = useCallback(
     ({ id }: { id: string }) => {
       switch (id) {
         case 'delete':
@@ -231,7 +231,7 @@ function TypeEditorRows({
                     items={dropDownItems}
                     left
                     renderItem={(item) => item.title}
-                    onItemClick={handleDropDownItemClick}
+                    onItemClick={handleDropdownItemClick}
                   />
                 ) : null}
                 <TypeDraftStatusTag status={typeDraft.status} />
