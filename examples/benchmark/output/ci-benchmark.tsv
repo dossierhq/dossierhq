@@ -103,3 +103,19 @@ edit entity	sqlite	7c131e47	7c131e47-sqlite-edit-entity	2.020123	0.79	1.421586	1
 archive entity	sqlite	7c131e47	7c131e47-sqlite-archive-entity	1.229486	0.61	0.885391	1.155488	1.239787	1.291187	9.836401
 get admin entity	sqlite	7c131e47	7c131e47-sqlite-get-admin-entity	0.256948	0.23	0.222398	0.238898	0.254198	0.260198	6.040441
 search admin entities (any, first 50)	sqlite	7c131e47	7c131e47-sqlite-search-admin-entities-any-first-50	4.795455	1.42	4.228358	4.319357	7.19263	8.14982	22.732578
+create entity	postgres	458fa750	458fa750-postgres-create-entity	3.813484	1.26	2.211228	3.559405	5.090693	6.405569	12.152101
+create entity organization	postgres	458fa750	458fa750-postgres-create-entity-organization	3.084253	1.02	2.26643	2.787861	4.057034	4.600665	16.66886
+create entity person	postgres	458fa750	458fa750-postgres-create-entity-person	3.477825	0.99	2.158324	3.341592	3.715814	4.562563	12.087195
+create and publish entity	postgres	458fa750	458fa750-postgres-create-publish-entity	6.788647	1.36	4.997588	6.555279	7.740447	9.18503	20.053257
+edit entity	postgres	458fa750	458fa750-postgres-edit-entity	4.132076	1.69	2.803061	4.006334	4.80448	5.282605	44.571473
+archive entity	postgres	458fa750	458fa750-postgres-archive-entity	2.346781	0.66	1.786203	2.226428	2.474143	2.75836	9.314836
+get admin entity	postgres	458fa750	458fa750-postgres-get-admin-entity	0.78538	0.30	0.598434	0.756544	0.812746	0.86185	6.238659
+search admin entities (any, first 50)	postgres	458fa750	458fa750-postgres-search-admin-entities-any-first-50	6.598398	1.84	4.685471	6.06425	9.255534	11.145443	24.380706
+create entity	sqlite	458fa750	458fa750-sqlite-create-entity	2.680738	1.62	1.414488	2.268531	3.595023	5.874166	23.711676
+create entity organization	sqlite	458fa750	458fa750-sqlite-create-entity-organization	2.125293	0.86	1.454891	1.932621	2.550359	2.952384	11.506216
+create entity person	sqlite	458fa750	458fa750-sqlite-create-entity-person	2.51593	1.07	1.367679	2.306334	2.866278	3.475501	12.993851
+create and publish entity	sqlite	458fa750	458fa750-sqlite-create-publish-entity	4.577801	1.82	3.120481	4.103738	5.443515	7.909358	36.368005
+edit entity	sqlite	458fa750	458fa750-sqlite-edit-entity	2.944037	1.33	1.754805	2.627957	3.397603	4.756083	21.06752
+archive entity	sqlite	458fa750	458fa750-sqlite-archive-entity	1.942749	0.90	1.227572	1.749204	2.196628	2.67826	14.283578
+get admin entity	sqlite	458fa750	458fa750-sqlite-get-admin-entity	0.399104	0.37	0.277516	0.364321	0.409523	0.474128	8.639705
+search admin entities (any, first 50)	sqlite	458fa750	458fa750-sqlite-search-admin-entities-any-first-50	6.124886	2.16	4.164567	5.449648	10.187851	11.476233	30.440346
