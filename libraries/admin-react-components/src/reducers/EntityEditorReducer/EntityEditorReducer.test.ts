@@ -83,6 +83,27 @@ describe('SetActiveEntityAction', () => {
   });
 });
 
+describe('SetNameAction', () => {
+  test('set name of new draft', () => {
+    const id = '619725d7-e583-4544-8bb0-23fc3c2870c0';
+    const state = reduceEntityEditorStateActions(
+      initializeEntityEditorState(),
+      new EntityEditorActions.UpdateSchemaSpecification(
+        new AdminSchema({
+          entityTypes: [
+            { name: 'Foo', adminOnly: false, fields: [{ name: 'title', type: FieldType.String }] },
+          ],
+          valueTypes: [],
+        })
+      ),
+      new EntityEditorActions.AddDraft({ id, newType: 'Foo' }),
+      new EntityEditorActions.SetName(id, 'New name')
+    );
+    expect(state).toMatchSnapshot();
+    expect(state.drafts.find((it) => it.id === id)?.draft?.name).toEqual('New name');
+  });
+});
+
 describe('UpdateEntityAction', () => {
   test('add draft, update entity', () => {
     const id = '619725d7-e583-4544-8bb0-23fc3c2870c0';
