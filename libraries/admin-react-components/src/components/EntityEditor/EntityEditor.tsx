@@ -6,6 +6,7 @@ import type {
   EntityEditorStateAction,
 } from '../../reducers/EntityEditorReducer/EntityEditorReducer';
 import { EntityEditorActions } from '../../reducers/EntityEditorReducer/EntityEditorReducer';
+import { AuthKeyPicker } from './AuthKeyPicker';
 import { EntityFieldEditor } from './EntityFieldEditor';
 
 interface Props {
@@ -15,9 +16,13 @@ interface Props {
 
 export function EntityEditor({ draft, dispatchEntityEditorState }: Props) {
   const handleNameChange = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
-      dispatchEntityEditorState(new EntityEditorActions.SetName(draft.id, event.target.value));
-    },
+    (event: ChangeEvent<HTMLInputElement>) =>
+      dispatchEntityEditorState(new EntityEditorActions.SetName(draft.id, event.target.value)),
+    [dispatchEntityEditorState, draft.id]
+  );
+  const handleAuthKeyChange = useCallback(
+    (authKey: string) =>
+      dispatchEntityEditorState(new EntityEditorActions.SetAuthKey(draft.id, authKey)),
     [dispatchEntityEditorState, draft.id]
   );
 
@@ -32,6 +37,14 @@ export function EntityEditor({ draft, dispatchEntityEditorState }: Props) {
           <Input value={draft.draft.name} onChange={handleNameChange} />
         </Field.Control>
       </Field>
+      {!draft.entity ? (
+        <Field>
+          <Field.Label>Authorization key</Field.Label>
+          <Field.Control>
+            <AuthKeyPicker value={draft.draft.authKey} onValueChange={handleAuthKeyChange} />
+          </Field.Control>
+        </Field>
+      ) : null}
       {draft.draft.fields.map((field) => (
         <EntityFieldEditor key={field.fieldSpec.name} field={field} />
       ))}

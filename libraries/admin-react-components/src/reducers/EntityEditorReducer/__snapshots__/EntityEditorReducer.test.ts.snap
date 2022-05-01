@@ -111,6 +111,61 @@ Object {
 }
 `;
 
+exports[`SetAuthKeyAction set authKey of new draft 1`] = `
+Object {
+  "activeEntityEditorScrollSignal": 1,
+  "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "activeEntityMenuScrollSignal": 1,
+  "drafts": Array [
+    Object {
+      "draft": Object {
+        "authKey": "subject",
+        "entitySpec": Object {
+          "adminOnly": false,
+          "fields": Array [
+            Object {
+              "name": "title",
+              "type": "String",
+            },
+          ],
+          "name": "Foo",
+        },
+        "fields": Array [
+          Object {
+            "fieldSpec": Object {
+              "name": "title",
+              "type": "String",
+            },
+            "value": null,
+          },
+        ],
+        "name": "",
+      },
+      "entity": null,
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+    },
+  ],
+  "schema": AdminSchema {
+    "spec": Object {
+      "entityTypes": Array [
+        Object {
+          "adminOnly": false,
+          "fields": Array [
+            Object {
+              "name": "title",
+              "type": "String",
+            },
+          ],
+          "name": "Foo",
+        },
+      ],
+      "valueTypes": Array [],
+    },
+  },
+  "status": "uninitialized",
+}
+`;
+
 exports[`SetNameAction set name of new draft 1`] = `
 Object {
   "activeEntityEditorScrollSignal": 1,

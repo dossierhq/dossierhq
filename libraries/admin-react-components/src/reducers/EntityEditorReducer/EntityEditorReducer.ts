@@ -178,6 +178,26 @@ class SetNameAction extends EntityEditorDraftAction {
   }
 }
 
+class SetAuthKeyAction extends EntityEditorDraftAction {
+  authKey: string;
+
+  constructor(id: string, authKey: string) {
+    super(id);
+    this.authKey = authKey;
+  }
+
+  reduceDraft(
+    draftState: Readonly<EntityEditorDraftState>,
+    _editorState: Readonly<EntityEditorState>
+  ): Readonly<EntityEditorDraftState> {
+    if (!draftState.draft || draftState.draft?.name === this.authKey) {
+      return draftState;
+    }
+
+    return { ...draftState, draft: { ...draftState.draft, authKey: this.authKey } };
+  }
+}
+
 class UpdateEntityAction extends EntityEditorDraftAction {
   entity: AdminEntity;
   constructor(entity: AdminEntity) {
@@ -221,6 +241,7 @@ class UpdateSchemaSpecificationAction implements EntityEditorStateAction {
 export const EntityEditorActions = {
   AddDraft: AddDraftAction,
   SetActiveEntity: SetActiveEntityAction,
+  SetAuthKey: SetAuthKeyAction,
   SetName: SetNameAction,
   UpdateEntity: UpdateEntityAction,
   UpdateSchemaSpecification: UpdateSchemaSpecificationAction,
