@@ -158,6 +158,26 @@ class SetActiveEntityAction implements EntityEditorStateAction {
   }
 }
 
+class SetNameAction extends EntityEditorDraftAction {
+  name: string;
+
+  constructor(id: string, name: string) {
+    super(id);
+    this.name = name;
+  }
+
+  reduceDraft(
+    draftState: Readonly<EntityEditorDraftState>,
+    _editorState: Readonly<EntityEditorState>
+  ): Readonly<EntityEditorDraftState> {
+    if (!draftState.draft || draftState.draft?.name === this.name) {
+      return draftState;
+    }
+
+    return { ...draftState, draft: { ...draftState.draft, name: this.name } };
+  }
+}
+
 class UpdateEntityAction extends EntityEditorDraftAction {
   entity: AdminEntity;
   constructor(entity: AdminEntity) {
@@ -201,6 +221,7 @@ class UpdateSchemaSpecificationAction implements EntityEditorStateAction {
 export const EntityEditorActions = {
   AddDraft: AddDraftAction,
   SetActiveEntity: SetActiveEntityAction,
+  SetName: SetNameAction,
   UpdateEntity: UpdateEntityAction,
   UpdateSchemaSpecification: UpdateSchemaSpecificationAction,
 };
