@@ -152,7 +152,7 @@ importers:
       '@editorjs/list': ~1.7.0
       '@editorjs/quote': ~2.4.0
       '@editorjs/underline': ~1.0.0
-      '@hapi/boom': ~9.1.4
+      '@hapi/boom': ~10.0.0
       '@jonasb/datadata-admin-react-components': workspace:*
       '@jonasb/datadata-cli': workspace:*
       '@jonasb/datadata-core': workspace:*
@@ -190,7 +190,7 @@ importers:
       '@editorjs/list': 1.7.0
       '@editorjs/quote': 2.4.0
       '@editorjs/underline': 1.0.0
-      '@hapi/boom': 9.1.4
+      '@hapi/boom': 10.0.0
       '@jonasb/datadata-admin-react-components': link:../../libraries/admin-react-components
       '@jonasb/datadata-cli': link:../../libraries/cli
       '@jonasb/datadata-core': link:../../libraries/core
@@ -2632,10 +2632,14 @@ packages:
     resolution: {integrity: sha512-82cpyJyKRoQoRi+14ibCeGPu0CwypgtBAdBhq1WfvagpCZNKqwXbKwXllYSMG91DhmG4jt9gN8eP6lGOtozuaw==}
     dev: true
 
-  /@hapi/boom/9.1.4:
-    resolution: {integrity: sha512-Ls1oH8jaN1vNsqcaHVYJrKmgMcKsC1wcp8bujvXrHaAqD2iDYq3HoOwsxwo09Cuda5R5nC0o0IxlrlTuvPuzSw==}
+  /@hapi/boom/10.0.0:
+    resolution: {integrity: sha512-1YVs9tLHhypBqqinKQRqh7FUERIolarQApO37OWkzD+z6y6USi871Sv746zBPKcIOBuI6g6y4FrwX87mmJ90Gg==}
     dependencies:
-      '@hapi/hoek': 9.2.1
+      '@hapi/hoek': 10.0.0
+    dev: false
+
+  /@hapi/hoek/10.0.0:
+    resolution: {integrity: sha512-CeNFz1JcLZ5xE8Vc9aau37cgHw9bxXqSDK/D55GF2GAOv0n0XjyyjSodHtKahB7A1tV3FlgCpijp3zkSITmBdA==}
     dev: false
 
   /@hapi/hoek/9.2.1:
@@ -9856,7 +9860,7 @@ packages:
       console-control-strings: 1.1.0
       has-unicode: 2.0.1
       object-assign: 4.1.1
-      signal-exit: 3.0.5
+      signal-exit: 3.0.7
       string-width: 1.0.2
       strip-ansi: 3.0.1
       wide-align: 1.1.5
@@ -9871,7 +9875,7 @@ packages:
       console-control-strings: 1.1.0
       has-unicode: 2.0.1
       object-assign: 4.1.1
-      signal-exit: 3.0.5
+      signal-exit: 3.0.7
       string-width: 2.1.1
       strip-ansi: 4.0.0
       wide-align: 1.1.5
@@ -15157,7 +15161,6 @@ packages:
 
   /signal-exit/3.0.7:
     resolution: {integrity: sha512-wnD2ZE+l+SPC/uoS0vXeE9L1+0wuaMqKlfz9AMUo38JsyLSBWSFcHR1Rri62LZc12vLr1gb3jl7iwQhgwpAbGQ==}
-    dev: true
 
   /sisteransi/1.0.5:
     resolution: {integrity: sha512-bLGGlR1QxBcynn2d5YmDX4MGjlZvy2MRBDRNHLJ8VI6l6+9FUiyTFNJ0IveOSP0bcXgVDPRcfGqA0pjaqUpfVg==}
