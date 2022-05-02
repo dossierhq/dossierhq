@@ -1,6 +1,6 @@
 import type { AdminClient } from '@jonasb/datadata-core';
 import { Button, Field, Input, NotificationContext } from '@jonasb/datadata-design';
-import { NotificationInfo } from '@jonasb/datadata-design/lib/contexts/NotificationContext';
+import type { NotificationInfo } from '@jonasb/datadata-design/lib/contexts/NotificationContext';
 import type { ChangeEvent, Dispatch, SetStateAction } from 'react';
 import React, { useCallback, useContext, useState } from 'react';
 import { AdminDataDataContext } from '../../contexts/AdminDataDataContext';
@@ -87,6 +87,10 @@ async function submitEntity(
   showNotification: (notification: NotificationInfo) => void
 ) {
   setSubmitLoading(true);
+  dispatchEntityEditorState(
+    new EntityEditorActions.SetNextEntityUpdateIsDueToUpsert(draftState.id, true)
+  );
+
   const isCreate = !draftState.entity;
   let result;
   if (isCreate) {
@@ -97,18 +101,16 @@ async function submitEntity(
     result = await adminClient.updateEntity(entityUpdate);
   }
   if (result.isOk()) {
-    dispatchEntityEditorState(
-      new EntityEditorActions.UpdateEntity(result.value.entity, { force: true })
-    );
     showNotification({ color: 'success', message: isCreate ? 'Created entity' : 'Updated entity' });
   } else {
     showNotification({
       color: 'error',
       message: isCreate ? 'Failed creating entity' : 'Failed updating entity',
     });
+    dispatchEntityEditorState(
+      new EntityEditorActions.SetNextEntityUpdateIsDueToUpsert(draftState.id, false)
+    );
   }
-
-  //TODO update cache
 
   setSubmitLoading(false);
 }

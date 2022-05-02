@@ -1,25 +1,24 @@
-import type { AdminClient, ErrorType, PromiseResult } from '@jonasb/datadata-core';
-import { ok } from '@jonasb/datadata-core';
+import type { AdminClientMiddleware, ClientContext } from '@jonasb/datadata-core';
 import type { Meta, Story } from '@storybook/react/types-6-0';
 import React, { useContext, useReducer } from 'react';
 import type { LegacyEntityEditorProps, LegacyEntityEditorSelector } from '../..';
 import {
+  initializeLegacyEntityEditorState,
   LegacyAddEntityDraftAction,
   LegacyDataDataContext,
   LegacyEntityEditor,
   LegacyEntityEditorDispatchContext,
   LegacyEntityEditorStateContext,
-  initializeLegacyEntityEditorState,
   reduceLegacyEntityEditorState,
 } from '../..';
 import { baz1Id, foo1Id, fooArchivedId } from '../../test/EntityFixtures';
 import { LoadContextProvider } from '../../test/LoadContextProvider';
 import { LoadFixtures } from '../../test/LoadFixtures';
-import { createBackendAdminClient, SlowMiddleware } from '../../test/TestContextAdapter';
+import { SlowMiddleware } from '../../test/TestContextAdapter';
 
 export type LegacyEntityEditorStoryProps = Omit<LegacyEntityEditorProps, 'entityId'> & {
   entitySelector: LegacyEntityEditorSelector;
-  adminClient?: () => PromiseResult<AdminClient, ErrorType>;
+  adminClientMiddleware?: AdminClientMiddleware<ClientContext>[];
 };
 
 const meta: Meta<LegacyEntityEditorStoryProps> = {
@@ -31,7 +30,7 @@ export default meta;
 
 const Template: Story<LegacyEntityEditorStoryProps> = (args) => {
   return (
-    <LoadContextProvider adminClient={args.adminClient}>
+    <LoadContextProvider adminClientMiddleware={args.adminClientMiddleware}>
       <LoadFixtures>
         <Wrapper entitySelector={args.entitySelector} />
       </LoadFixtures>
@@ -72,7 +71,7 @@ FullBaz.args = { entitySelector: { id: baz1Id } };
 export const SlowFullFoo = Template.bind({});
 SlowFullFoo.args = {
   entitySelector: { id: foo1Id },
-  adminClient: async () => ok(createBackendAdminClient([SlowMiddleware])),
+  adminClientMiddleware: [SlowMiddleware],
 };
 
 export const NotFound = Template.bind({});

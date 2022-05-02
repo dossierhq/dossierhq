@@ -1,4 +1,9 @@
-import type { AdminSchema, EntityReference, EntityVersionReference } from '@jonasb/datadata-core';
+import type {
+  AdminEntity,
+  AdminSchema,
+  EntityReference,
+  EntityVersionReference,
+} from '@jonasb/datadata-core';
 import { PublishedSchema } from '@jonasb/datadata-core';
 import type { Cache } from 'swr';
 import type { ScopedMutator } from 'swr/dist/types';
@@ -23,4 +28,9 @@ export function updateCacheSchemas(cache: Cache, mutate: ScopedMutator, adminSch
       mutate(CACHE_KEYS.publishedSchema, publishedSchema);
     }
   }
+}
+
+export function updateCacheEntity(mutate: ScopedMutator, entity: AdminEntity) {
+  const key = CACHE_KEYS.adminEntity({ id: entity.id });
+  mutate(key, entity);
 }

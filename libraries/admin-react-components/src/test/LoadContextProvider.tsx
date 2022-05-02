@@ -1,6 +1,6 @@
-import type { AdminClient, ErrorType, PromiseResult } from '@jonasb/datadata-core';
-import { ok } from '@jonasb/datadata-core';
-import React, { useEffect, useState } from 'react';
+import type { AdminClientMiddleware, ClientContext } from '@jonasb/datadata-core';
+import React, { useMemo, useRef } from 'react';
+import { useSWRConfig } from 'swr';
 import type { AdminDataDataContextAdapter } from '..';
 import { AdminDataDataProvider } from '..';
 import {
@@ -11,33 +11,28 @@ import {
 
 interface Props {
   adapter?: AdminDataDataContextAdapter;
-  adminClient?: () => PromiseResult<AdminClient, ErrorType>;
+  adminClientMiddleware?: AdminClientMiddleware<ClientContext>[];
   children: React.ReactNode;
 }
 
-export function LoadContextProvider({ adapter, adminClient, children }: Props): JSX.Element | null {
-  const [isError, setError] = useState(false);
-  const [resolvedAdminClient, setResolvedAdminClient] = useState<AdminClient | null>(null);
+export function LoadContextProvider({
+  adapter,
+  adminClientMiddleware,
+  children,
+}: Props): JSX.Element | null {
+  const { cache, mutate } = useSWRConfig();
+  const swrConfigRef = useRef({ cache, mutate });
+  swrConfigRef.current = { cache, mutate };
 
-  useEffect(() => {
-    (async () => {
-      const result = await (adminClient ? adminClient() : ok(createBackendAdminClient()));
-      if (result.isError()) {
-        setError(true);
-        return;
-      }
-      setResolvedAdminClient(result.value);
-    })();
-  }, [adminClient]);
+  const adminClient = useMemo(
+    () => createBackendAdminClient(swrConfigRef, adminClientMiddleware),
+    [adminClientMiddleware]
+  );
 
-  if (isError) {
-    return <h1>Failed initializing</h1>;
-  }
-  if (!resolvedAdminClient) return null;
   return (
     <AdminDataDataProvider
       adapter={adapter || new TestContextAdapter()}
-      adminClient={resolvedAdminClient}
+      adminClient={adminClient}
       authKeys={DISPLAY_AUTH_KEYS}
     >
       {children}

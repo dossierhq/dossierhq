@@ -1,8 +1,10 @@
 import {
   AdminDataDataProvider,
   PublishedDataDataProvider,
+  createCachingAdminMiddleware,
 } from '@jonasb/datadata-admin-react-components';
-import { useContext, useMemo } from 'react';
+import { useContext, useMemo, useRef } from 'react';
+import { useSWRConfig } from 'swr';
 import { DISPLAY_AUTH_KEYS } from '../config/AuthConfig';
 import { ContextAdapter } from '../config/ContextAdapter';
 import { SESSION_LOGGER } from '../config/LoggerConfig';
@@ -10,6 +12,10 @@ import { ServerContext } from '../contexts/ServerContext';
 
 export function DataDataSharedProvider({ children }: { children: React.ReactNode }) {
   const { server } = useContext(ServerContext);
+  const { cache, mutate } = useSWRConfig();
+  const swrConfigRef = useRef({ cache, mutate });
+  swrConfigRef.current = { cache, mutate };
+
   const args = useMemo(() => {
     if (!server) return null;
 
@@ -21,7 +27,10 @@ export function DataDataSharedProvider({ children }: { children: React.ReactNode
     });
 
     const adminArgs = {
-      adminClient: server.createAdminClient(() => sessionResult),
+      adminClient: server.createAdminClient(
+        () => sessionResult,
+        [createCachingAdminMiddleware(swrConfigRef)]
+      ),
       adapter: new ContextAdapter(),
       authKeys: DISPLAY_AUTH_KEYS,
     };

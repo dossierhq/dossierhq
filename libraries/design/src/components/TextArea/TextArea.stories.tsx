@@ -8,7 +8,7 @@ type StoryProps = TextAreaProps;
 const meta: Meta<TextAreaProps> = {
   title: 'Components/TextArea',
   component: TextArea,
-  args: { children: 'Hello world' },
+  args: { defaultValue: 'Hello world' },
 };
 export default meta;
 

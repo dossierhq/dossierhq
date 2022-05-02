@@ -108,4 +108,5 @@ export { SchemaEditorScreen } from './screens/SchemaEditorScreen/SchemaEditorScr
 export * from './shared';
 export { MapContainer } from './shared/components/MapContainer/MapContainer';
 export type { LayoutProps, SpacingSize } from './types/LayoutTypes';
+export { createCachingAdminMiddleware, type SwrConfigRef } from './utils/CachingAdminMiddleware';
 export type { LegacyKind } from './utils/LegacyKindUtils';
