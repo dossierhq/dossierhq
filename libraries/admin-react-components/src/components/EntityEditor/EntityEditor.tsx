@@ -1,5 +1,6 @@
 import type { AdminClient } from '@jonasb/datadata-core';
-import { Button, Field, Input } from '@jonasb/datadata-design';
+import { Button, Field, Input, NotificationContext } from '@jonasb/datadata-design';
+import { NotificationInfo } from '@jonasb/datadata-design/lib/contexts/NotificationContext';
 import type { ChangeEvent, Dispatch, SetStateAction } from 'react';
 import React, { useCallback, useContext, useState } from 'react';
 import { AdminDataDataContext } from '../../contexts/AdminDataDataContext';
@@ -22,6 +23,7 @@ interface Props {
 
 export function EntityEditor({ draftState, dispatchEntityEditorState }: Props) {
   const { adminClient } = useContext(AdminDataDataContext);
+  const { showNotification } = useContext(NotificationContext);
   const [_submitLoading, setSubmitLoading] = useState(false);
 
   const handleNameChange = useCallback(
@@ -35,8 +37,14 @@ export function EntityEditor({ draftState, dispatchEntityEditorState }: Props) {
     [dispatchEntityEditorState, draftState.id]
   );
   const handleSubmitClick = useCallback(() => {
-    submitEntity(draftState, setSubmitLoading, adminClient, dispatchEntityEditorState);
-  }, [adminClient, dispatchEntityEditorState, draftState]);
+    submitEntity(
+      draftState,
+      setSubmitLoading,
+      adminClient,
+      dispatchEntityEditorState,
+      showNotification
+    );
+  }, [adminClient, dispatchEntityEditorState, draftState, showNotification]);
 
   if (!draftState.draft) {
     return null;
@@ -75,32 +83,32 @@ async function submitEntity(
   draftState: EntityEditorDraftState,
   setSubmitLoading: Dispatch<SetStateAction<boolean>>,
   adminClient: AdminClient,
-  dispatchEntityEditorState: Dispatch<EntityEditorStateAction>
+  dispatchEntityEditorState: Dispatch<EntityEditorStateAction>,
+  showNotification: (notification: NotificationInfo) => void
 ) {
   setSubmitLoading(true);
-  if (!draftState.entity) {
+  const isCreate = !draftState.entity;
+  let result;
+  if (isCreate) {
     const entityCreate = getEntityCreateFromDraftState(draftState);
-    const result = await adminClient.createEntity(entityCreate);
-    if (result.isOk()) {
-      dispatchEntityEditorState(
-        new EntityEditorActions.UpdateEntity(result.value.entity, { force: true })
-      );
-    }
+    result = await adminClient.createEntity(entityCreate);
   } else {
     const entityUpdate = getEntityUpdateFromDraftState(draftState);
-    const result = await adminClient.updateEntity(entityUpdate);
-    if (result.isOk()) {
-      dispatchEntityEditorState(
-        new EntityEditorActions.UpdateEntity(result.value.entity, { force: true })
-      );
-    }
+    result = await adminClient.updateEntity(entityUpdate);
+  }
+  if (result.isOk()) {
+    dispatchEntityEditorState(
+      new EntityEditorActions.UpdateEntity(result.value.entity, { force: true })
+    );
+    showNotification({ color: 'success', message: isCreate ? 'Created entity' : 'Updated entity' });
+  } else {
+    showNotification({
+      color: 'error',
+      message: isCreate ? 'Failed creating entity' : 'Failed updating entity',
+    });
   }
 
-  //TODO handle error
-  // setSubmitMessage({
-  //   kind: 'danger',
-  //   title: isNew ? 'Failed creating entity' : 'Failed saving entity',
-  //   message: `${result.error}: ${result.message}`,
-  // });
+  //TODO update cache
+
   setSubmitLoading(false);
 }
