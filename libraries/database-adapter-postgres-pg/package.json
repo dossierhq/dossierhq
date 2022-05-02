@@ -34,7 +34,7 @@
     "@jonasb/datadata-core-jest": "workspace:*",
     "@jonasb/datadata-postgres": "workspace:*",
     "@jonasb/datadata-server": "workspace:*",
-    "@rushstack/heft-jest-plugin": "~0.2.9",
+    "@rushstack/heft-jest-plugin": "~0.3.0",
     "@rushstack/heft": "~0.45.0",
     "@types/heft-jest": "1.0.2",
     "@types/pg": "^8.6.1",
