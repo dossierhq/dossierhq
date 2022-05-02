@@ -82,10 +82,10 @@ export function AdminEntityEditorScreen({
           scrollToId={editorScrollToId}
           scrollToIdSignal={activeEntityEditorScrollSignal}
         >
-          {drafts.map((draft) => (
+          {drafts.map((draftState) => (
             <EntityRows
-              key={draft.id}
-              draft={draft}
+              key={draftState.id}
+              draftState={draftState}
               dispatchEntityEditorState={dispatchEntityEditorState}
             />
           ))}
@@ -100,14 +100,14 @@ export function AdminEntityEditorScreen({
 }
 
 function EntityRows({
-  draft,
+  draftState,
   dispatchEntityEditorState,
 }: {
-  draft: EntityEditorDraftState;
+  draftState: EntityEditorDraftState;
   dispatchEntityEditorState: Dispatch<EntityEditorStateAction>;
 }) {
   const { adminClient } = useContext(AdminDataDataContext);
-  const { entity, entityError: _unused } = useAdminEntity(adminClient, { id: draft.id });
+  const { entity, entityError: _unused } = useAdminEntity(adminClient, { id: draftState.id });
 
   useEffect(() => {
     if (entity) {
@@ -117,24 +117,26 @@ function EntityRows({
 
   const handleClick = useCallback(
     (_event: MouseEvent) =>
-      dispatchEntityEditorState(new EntityEditorActions.SetActiveEntity(draft.id, true, false)),
-    [dispatchEntityEditorState, draft.id]
+      dispatchEntityEditorState(
+        new EntityEditorActions.SetActiveEntity(draftState.id, true, false)
+      ),
+    [dispatchEntityEditorState, draftState.id]
   );
 
-  if (!draft.draft) {
+  if (!draftState.draft) {
     return null;
   }
 
   return (
     <>
-      <FullscreenContainer.Row id={`${draft.id}-header`} sticky>
+      <FullscreenContainer.Row id={`${draftState.id}-header`} sticky>
         <Level paddingHorizontal={3}>
           <Level.Left>
             <Level.Item>
               <Text textStyle="headline4">
-                {draft.draft.name || 'Untitled'}{' '}
+                {draftState.draft.name || 'Untitled'}{' '}
                 <Text as="span" textStyle="headline6">
-                  {draft.draft.entitySpec.name}
+                  {draftState.draft.entitySpec.name}
                 </Text>
               </Text>
             </Level.Item>
@@ -146,10 +148,13 @@ function EntityRows({
         paddingVertical={4}
         paddingHorizontal={3}
         marginBottom={4}
-        data-entityid={draft.id}
+        data-entityid={draftState.id}
         onClick={handleClick}
       >
-        <EntityEditor draft={draft} dispatchEntityEditorState={dispatchEntityEditorState} />
+        <EntityEditor
+          draftState={draftState}
+          dispatchEntityEditorState={dispatchEntityEditorState}
+        />
       </FullscreenContainer.Row>
     </>
   );

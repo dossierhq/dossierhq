@@ -1,8 +1,13 @@
 import { AdminEntityStatus, AdminSchema, FieldType } from '@jonasb/datadata-core';
 import { Temporal } from '@js-temporal/polyfill';
-import type { EntityEditorState, EntityEditorStateAction } from './EntityEditorReducer';
+import {
+  EntityEditorState,
+  EntityEditorStateAction,
+  getEntityCreateFromDraftState,
+} from './EntityEditorReducer';
 import {
   EntityEditorActions,
+  getEntityUpdateFromDraftState,
   initializeEntityEditorState,
   reduceEntityEditorState,
 } from './EntityEditorReducer';
@@ -36,6 +41,7 @@ describe('initializeEntityEditorState', () => {
 
 describe('AddDraftAction', () => {
   test('add Foo', () => {
+    const id = '619725d7-e583-4544-8bb0-23fc3c2870c0';
     const state = reduceEntityEditorStateActions(
       initializeEntityEditorState(),
       new EntityEditorActions.UpdateSchemaSpecification(
@@ -46,10 +52,7 @@ describe('AddDraftAction', () => {
           valueTypes: [],
         })
       ),
-      new EntityEditorActions.AddDraft({
-        id: '619725d7-e583-4544-8bb0-23fc3c2870c0',
-        newType: 'Foo',
-      })
+      new EntityEditorActions.AddDraft({ id, newType: 'Foo' })
     );
     expect(state).toMatchSnapshot();
   });
@@ -156,6 +159,11 @@ describe('UpdateEntityAction', () => {
       })
     );
     expect(state).toMatchSnapshot();
+
+    expect(
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      getEntityUpdateFromDraftState(state.drafts.find((it) => it.id === id)!)
+    ).toMatchSnapshot();
   });
 });
 
@@ -168,5 +176,68 @@ describe('UpdateSchemaSpecificationAction', () => {
       )
     );
     expect(state).toMatchSnapshot();
+  });
+});
+
+describe('EntityEditorReducer scenarios', () => {
+  test('add new draft, set name and authKey, force update', async () => {
+    const id = '619725d7-e583-4544-8bb0-23fc3c2870c0';
+    const stateAfterAddingDraft = reduceEntityEditorStateActions(
+      initializeEntityEditorState(),
+      new EntityEditorActions.UpdateSchemaSpecification(
+        new AdminSchema({
+          entityTypes: [
+            {
+              name: 'Foo',
+              adminOnly: false,
+              fields: [{ name: 'title', type: FieldType.String }],
+            },
+          ],
+          valueTypes: [],
+        })
+      ),
+      new EntityEditorActions.AddDraft({ id, newType: 'Foo' })
+    );
+    expect(stateAfterAddingDraft).toMatchSnapshot();
+
+    const stateAfterSetName = reduceEntityEditorState(
+      stateAfterAddingDraft,
+      new EntityEditorActions.SetName(id, 'Foo name')
+    );
+    expect(stateAfterSetName).toMatchSnapshot();
+
+    const stateAfterSetAuthKey = reduceEntityEditorState(
+      stateAfterSetName,
+      new EntityEditorActions.SetAuthKey(id, 'none')
+    );
+    expect(stateAfterSetAuthKey).toMatchSnapshot();
+
+    expect(
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      getEntityCreateFromDraftState(stateAfterSetAuthKey.drafts.find((it) => it.id === id)!)
+    ).toMatchSnapshot();
+
+    const stateAfterEntityUpdate = reduceEntityEditorState(
+      stateAfterSetAuthKey,
+      new EntityEditorActions.UpdateEntity(
+        {
+          id,
+          info: {
+            authKey: 'none',
+            name: 'Foo name#123456',
+            type: 'Foo',
+            status: AdminEntityStatus.draft,
+            createdAt: Temporal.Instant.from('2022-04-30T07:51:25.56Z'),
+            updatedAt: Temporal.Instant.from('2022-04-30T07:51:25.56Z'),
+            version: 0,
+          },
+          fields: {
+            title: null,
+          },
+        },
+        { force: true }
+      )
+    );
+    expect(stateAfterEntityUpdate).toMatchSnapshot();
   });
 });
