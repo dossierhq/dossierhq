@@ -132,15 +132,16 @@ function EntityRows({
       <FullscreenContainer.Row id={`${draftState.id}-header`} sticky>
         <Level paddingHorizontal={3}>
           <Level.Left>
-            <Level.Item>
-              <Text textStyle="headline4">
-                {draftState.draft.name || 'Untitled'}{' '}
-                <Text as="span" textStyle="headline6">
-                  {draftState.draft.entitySpec.name}
-                </Text>
+            <Level.Item textStyle="headline4">
+              {draftState.draft.name || 'Untitled'}{' '}
+              <Text as="span" textStyle="headline6">
+                {draftState.draft.entitySpec.name}
               </Text>
             </Level.Item>
           </Level.Left>
+          <Level.Right>
+            <Level.Item textStyle="headline6">{draftState.status}</Level.Item>
+          </Level.Right>
         </Level>
       </FullscreenContainer.Row>
       <FullscreenContainer.Row

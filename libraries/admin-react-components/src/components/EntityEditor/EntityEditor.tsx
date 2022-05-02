@@ -24,7 +24,7 @@ interface Props {
 export function EntityEditor({ draftState, dispatchEntityEditorState }: Props) {
   const { adminClient } = useContext(AdminDataDataContext);
   const { showNotification } = useContext(NotificationContext);
-  const [_submitLoading, setSubmitLoading] = useState(false);
+  const [submitLoading, setSubmitLoading] = useState(false);
 
   const handleNameChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) =>
@@ -51,7 +51,11 @@ export function EntityEditor({ draftState, dispatchEntityEditorState }: Props) {
   }
 
   const isNewEntity = !draftState.entity;
-  const isSubmittable = draftState.draft.name && draftState.draft.authKey;
+  const isSubmittable =
+    !submitLoading &&
+    draftState.status === 'changed' &&
+    draftState.draft.name &&
+    draftState.draft.authKey;
 
   return (
     <>
