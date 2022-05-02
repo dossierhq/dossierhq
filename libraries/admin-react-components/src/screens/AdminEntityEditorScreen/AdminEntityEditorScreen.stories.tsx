@@ -1,4 +1,4 @@
-import { Text } from '@jonasb/datadata-design';
+import { NotificationContainer, Text } from '@jonasb/datadata-design';
 import type { Meta, Story } from '@storybook/react/types-6-0';
 import React, { useMemo, useState } from 'react';
 import { foo1Id } from '../../test/EntityFixtures';
@@ -39,17 +39,19 @@ function Wrapper({
   const displayUrl = useMemo(() => decodeURI(urlSearchParams.toString()), [urlSearchParams]);
   return (
     <LoadContextProvider>
-      <AdminEntityEditorScreen
-        {...props}
-        header={
-          <>
-            {showUrl ? <Text textStyle="body2">/{displayUrl}</Text> : null}
-            {header}
-          </>
-        }
-        urlSearchParams={urlSearchParams}
-        onUrlSearchParamsChange={onUrlSearchParamsChange}
-      />
+      <NotificationContainer>
+        <AdminEntityEditorScreen
+          {...props}
+          header={
+            <>
+              {showUrl ? <Text textStyle="body2">/{displayUrl}</Text> : null}
+              {header}
+            </>
+          }
+          urlSearchParams={urlSearchParams}
+          onUrlSearchParamsChange={onUrlSearchParamsChange}
+        />
+      </NotificationContainer>
     </LoadContextProvider>
   );
 }
