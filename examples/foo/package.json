@@ -30,7 +30,7 @@
     "@jonasb/datadata-graphql": "workspace:*",
     "@jonasb/datadata-server": "workspace:*",
     "dotenv": "^16.0.0",
-    "express": "~4.17.1",
+    "express": "~4.18.1",
     "express-graphql": "~0.12.0",
     "tslib": "~2.4.0"
   },
