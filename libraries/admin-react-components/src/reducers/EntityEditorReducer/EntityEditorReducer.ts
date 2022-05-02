@@ -1,6 +1,8 @@
 import type {
   AdminEntity,
+  AdminEntityCreate,
   AdminEntityTypeSpecification,
+  AdminEntityUpdate,
   AdminSchema,
   FieldSpecification,
 } from '@jonasb/datadata-core';
@@ -200,9 +202,12 @@ class SetAuthKeyAction extends EntityEditorDraftAction {
 
 class UpdateEntityAction extends EntityEditorDraftAction {
   entity: AdminEntity;
-  constructor(entity: AdminEntity) {
+  force: boolean;
+
+  constructor(entity: AdminEntity, options?: { force: boolean }) {
     super(entity.id);
     this.entity = entity;
+    this.force = !!options?.force;
   }
 
   reduceDraft(
@@ -210,7 +215,7 @@ class UpdateEntityAction extends EntityEditorDraftAction {
     editorState: EntityEditorState
   ): Readonly<EntityEditorDraftState> {
     //TODO handle when changed on server
-    if (draftState.entity) {
+    if (!this.force && draftState.entity) {
       return draftState;
     }
 
@@ -260,9 +265,46 @@ function createEditorEntityDraftState(
   return {
     entitySpec,
     authKey: entity?.info.authKey ?? null,
-    // version: entity ? entity.info.version + 1 : 0,
     name: entity?.info.name ?? '',
-    // initialName: entity?.info.name ?? '',
     fields,
   };
+}
+
+//
+
+export function getEntityCreateFromDraftState(draftState: EntityEditorDraftState) {
+  const { draft } = draftState;
+  assertIsDefined(draft);
+  assertIsDefined(draft.authKey);
+  const result: AdminEntityCreate = {
+    id: draftState.id,
+    info: {
+      type: draft.entitySpec.name,
+      name: draft.name,
+      authKey: draft.authKey,
+    },
+    fields: {},
+  };
+
+  //TODO add fields
+
+  return result;
+}
+
+export function getEntityUpdateFromDraftState(draftState: EntityEditorDraftState) {
+  const { draft, entity } = draftState;
+  assertIsDefined(draft);
+  assertIsDefined(entity);
+  const result: AdminEntityUpdate = {
+    id: draftState.id,
+    info: {
+      type: draft.entitySpec.name,
+      ...(draft.name !== entity.info.name ? { name: draft.name } : {}),
+    },
+    fields: {},
+  };
+
+  //TODO add fields
+
+  return result;
 }

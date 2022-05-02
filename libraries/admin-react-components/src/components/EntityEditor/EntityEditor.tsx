@@ -1,53 +1,106 @@
-import { Field, Input } from '@jonasb/datadata-design';
-import type { ChangeEvent, Dispatch } from 'react';
-import React, { useCallback } from 'react';
+import type { AdminClient } from '@jonasb/datadata-core';
+import { Button, Field, Input } from '@jonasb/datadata-design';
+import type { ChangeEvent, Dispatch, SetStateAction } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
+import { AdminDataDataContext } from '../../contexts/AdminDataDataContext';
 import type {
   EntityEditorDraftState,
   EntityEditorStateAction,
 } from '../../reducers/EntityEditorReducer/EntityEditorReducer';
-import { EntityEditorActions } from '../../reducers/EntityEditorReducer/EntityEditorReducer';
+import {
+  EntityEditorActions,
+  getEntityCreateFromDraftState,
+  getEntityUpdateFromDraftState,
+} from '../../reducers/EntityEditorReducer/EntityEditorReducer';
 import { AuthKeyPicker } from './AuthKeyPicker';
 import { EntityFieldEditor } from './EntityFieldEditor';
 
 interface Props {
-  draft: EntityEditorDraftState;
+  draftState: EntityEditorDraftState;
   dispatchEntityEditorState: Dispatch<EntityEditorStateAction>;
 }
 
-export function EntityEditor({ draft, dispatchEntityEditorState }: Props) {
+export function EntityEditor({ draftState, dispatchEntityEditorState }: Props) {
+  const { adminClient } = useContext(AdminDataDataContext);
+  const [_submitLoading, setSubmitLoading] = useState(false);
+
   const handleNameChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) =>
-      dispatchEntityEditorState(new EntityEditorActions.SetName(draft.id, event.target.value)),
-    [dispatchEntityEditorState, draft.id]
+      dispatchEntityEditorState(new EntityEditorActions.SetName(draftState.id, event.target.value)),
+    [dispatchEntityEditorState, draftState.id]
   );
   const handleAuthKeyChange = useCallback(
     (authKey: string) =>
-      dispatchEntityEditorState(new EntityEditorActions.SetAuthKey(draft.id, authKey)),
-    [dispatchEntityEditorState, draft.id]
+      dispatchEntityEditorState(new EntityEditorActions.SetAuthKey(draftState.id, authKey)),
+    [dispatchEntityEditorState, draftState.id]
   );
+  const handleSubmitClick = useCallback(() => {
+    submitEntity(draftState, setSubmitLoading, adminClient, dispatchEntityEditorState);
+  }, [adminClient, dispatchEntityEditorState, draftState]);
 
-  if (!draft.draft) {
+  if (!draftState.draft) {
     return null;
   }
+
+  const isNewEntity = !draftState.entity;
+  const isSubmittable = draftState.draft.name && draftState.draft.authKey;
+
   return (
     <>
       <Field>
         <Field.Label>Name</Field.Label>
         <Field.Control>
-          <Input value={draft.draft.name} onChange={handleNameChange} />
+          <Input value={draftState.draft.name} onChange={handleNameChange} />
         </Field.Control>
       </Field>
-      {!draft.entity ? (
+      {!draftState.entity ? (
         <Field>
           <Field.Label>Authorization key</Field.Label>
           <Field.Control>
-            <AuthKeyPicker value={draft.draft.authKey} onValueChange={handleAuthKeyChange} />
+            <AuthKeyPicker value={draftState.draft.authKey} onValueChange={handleAuthKeyChange} />
           </Field.Control>
         </Field>
       ) : null}
-      {draft.draft.fields.map((field) => (
+      <Button color="primary" disabled={!isSubmittable} onClick={handleSubmitClick}>
+        {isNewEntity ? 'Create' : 'Save'}
+      </Button>
+      {draftState.draft.fields.map((field) => (
         <EntityFieldEditor key={field.fieldSpec.name} field={field} />
       ))}
     </>
   );
+}
+
+async function submitEntity(
+  draftState: EntityEditorDraftState,
+  setSubmitLoading: Dispatch<SetStateAction<boolean>>,
+  adminClient: AdminClient,
+  dispatchEntityEditorState: Dispatch<EntityEditorStateAction>
+) {
+  setSubmitLoading(true);
+  if (!draftState.entity) {
+    const entityCreate = getEntityCreateFromDraftState(draftState);
+    const result = await adminClient.createEntity(entityCreate);
+    if (result.isOk()) {
+      dispatchEntityEditorState(
+        new EntityEditorActions.UpdateEntity(result.value.entity, { force: true })
+      );
+    }
+  } else {
+    const entityUpdate = getEntityUpdateFromDraftState(draftState);
+    const result = await adminClient.updateEntity(entityUpdate);
+    if (result.isOk()) {
+      dispatchEntityEditorState(
+        new EntityEditorActions.UpdateEntity(result.value.entity, { force: true })
+      );
+    }
+  }
+
+  //TODO handle error
+  // setSubmitMessage({
+  //   kind: 'danger',
+  //   title: isNew ? 'Failed creating entity' : 'Failed saving entity',
+  //   message: `${result.error}: ${result.message}`,
+  // });
+  setSubmitLoading(false);
 }
