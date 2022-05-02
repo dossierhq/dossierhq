@@ -33,6 +33,7 @@ Object {
       "entity": null,
       "entityWillBeUpdatedDueToUpsert": false,
       "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "",
     },
   ],
   "schema": AdminSchema {
@@ -89,6 +90,7 @@ Object {
       "entity": null,
       "entityWillBeUpdatedDueToUpsert": false,
       "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "",
     },
   ],
   "schema": AdminSchema {
@@ -145,6 +147,7 @@ Object {
       "entity": null,
       "entityWillBeUpdatedDueToUpsert": false,
       "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "changed",
     },
   ],
   "schema": AdminSchema {
@@ -201,6 +204,7 @@ Object {
       "entity": null,
       "entityWillBeUpdatedDueToUpsert": false,
       "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "changed",
     },
   ],
   "schema": AdminSchema {
@@ -269,6 +273,7 @@ Object {
       "entity": null,
       "entityWillBeUpdatedDueToUpsert": true,
       "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "changed",
     },
   ],
   "schema": AdminSchema {
@@ -339,6 +344,7 @@ Object {
       },
       "entityWillBeUpdatedDueToUpsert": true,
       "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "",
     },
   ],
   "schema": AdminSchema {
@@ -382,6 +388,7 @@ Object {
       "entity": null,
       "entityWillBeUpdatedDueToUpsert": false,
       "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "",
     },
     Object {
       "draft": Object {
@@ -397,6 +404,7 @@ Object {
       "entity": null,
       "entityWillBeUpdatedDueToUpsert": false,
       "id": "9516465b-935a-4cc7-8b97-ccaca81bbe9a",
+      "status": "",
     },
   ],
   "schema": AdminSchema {
@@ -453,6 +461,7 @@ Object {
       "entity": null,
       "entityWillBeUpdatedDueToUpsert": false,
       "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "changed",
     },
   ],
   "schema": AdminSchema {
@@ -509,6 +518,7 @@ Object {
       "entity": null,
       "entityWillBeUpdatedDueToUpsert": false,
       "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "changed",
     },
   ],
   "schema": AdminSchema {
@@ -579,6 +589,7 @@ Object {
       },
       "entityWillBeUpdatedDueToUpsert": false,
       "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "",
     },
   ],
   "schema": AdminSchema {

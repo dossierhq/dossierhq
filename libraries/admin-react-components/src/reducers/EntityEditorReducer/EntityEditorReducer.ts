@@ -22,6 +22,7 @@ export interface EntityEditorState {
 
 export interface EntityEditorDraftState {
   id: string;
+  status: '' | 'changed';
   draft: {
     entitySpec: AdminEntityTypeSpecification;
     authKey: string | null;
@@ -61,10 +62,24 @@ export function reduceEntityEditorState(
   return newState;
 }
 
+// STATUS RESOLVES
+
+function resolveDraftStatus(draftState: EntityEditorDraftState): EntityEditorDraftState['status'] {
+  if (!draftState.draft) {
+    return '';
+  }
+  if (!draftState.entity) {
+    return draftState.draft.authKey === null && !draftState.draft.name ? '' : 'changed';
+  }
+
+  return draftState.draft.name === draftState.entity.info.name ? '' : 'changed';
+}
+
 // ACTION HELPERS
 
 abstract class EntityEditorDraftAction implements EntityEditorStateAction {
   id: string;
+
   constructor(id: string) {
     this.id = id;
   }
@@ -74,10 +89,12 @@ abstract class EntityEditorDraftAction implements EntityEditorStateAction {
     if (draftIndex < 0) throw new Error(`No such draft for id ${this.id}`);
     const currentDraft = state.drafts[draftIndex];
 
-    const newDraft = this.reduceDraft(currentDraft, state);
+    let newDraft = this.reduceDraft(currentDraft, state);
     if (newDraft === currentDraft) {
       return state;
     }
+
+    newDraft = { ...newDraft, status: resolveDraftStatus(newDraft) };
 
     const newDrafts = [...state.drafts];
     newDrafts[draftIndex] = newDraft;
@@ -107,6 +124,7 @@ class AddDraftAction implements EntityEditorStateAction {
     assertIsDefined(schema);
     const draft: EntityEditorDraftState = {
       id: this.selector.id ?? uuidv4(),
+      status: '',
       draft: null,
       entity: null,
       entityWillBeUpdatedDueToUpsert: false,
