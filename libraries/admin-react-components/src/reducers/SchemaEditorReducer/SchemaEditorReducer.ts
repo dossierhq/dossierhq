@@ -45,6 +45,7 @@ export interface SchemaFieldDraft {
 export interface SchemaEditorState {
   status: 'uninitialized' | 'changed' | '';
   schema: AdminSchema | null;
+  schemaWillBeUpdatedDueToSave: boolean;
 
   entityTypes: SchemaEntityTypeDraft[];
   valueTypes: SchemaValueTypeDraft[];
@@ -62,6 +63,7 @@ export function initializeSchemaEditorState(): SchemaEditorState {
   return {
     status: 'uninitialized',
     schema: null,
+    schemaWillBeUpdatedDueToSave: false,
     entityTypes: [],
     valueTypes: [],
     activeSelector: null,
@@ -451,13 +453,24 @@ class SetActiveSelectorAction implements SchemaEditorStateAction {
   }
 }
 
+class SetNextUpdateSchemaSpecificationIsDueToSaveAction implements SchemaEditorStateAction {
+  schemaWillBeUpdatedDueToSave: boolean;
+
+  constructor(schemaWillBeUpdatedDueToSave: boolean) {
+    this.schemaWillBeUpdatedDueToSave = schemaWillBeUpdatedDueToSave;
+  }
+
+  reduce(state: Readonly<SchemaEditorState>): Readonly<SchemaEditorState> {
+    if (state.schemaWillBeUpdatedDueToSave === this.schemaWillBeUpdatedDueToSave) return state;
+    return { ...state, schemaWillBeUpdatedDueToSave: this.schemaWillBeUpdatedDueToSave };
+  }
+}
+
 class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
   schema: AdminSchema;
-  force: boolean;
 
-  constructor(schema: AdminSchema, options?: { force: boolean }) {
+  constructor(schema: AdminSchema) {
     this.schema = schema;
-    this.force = !!options?.force;
   }
 
   reduce(state: Readonly<SchemaEditorState>): Readonly<SchemaEditorState> {
@@ -469,9 +482,16 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
       this.convertField('value', valueTypeSpec)
     );
 
-    if (!this.force && state.schema) return state; //TODO handle update to schema
+    if (!state.schemaWillBeUpdatedDueToSave && state.schema) return state; //TODO handle update to schema
 
-    return { ...state, status: '', schema: this.schema, entityTypes, valueTypes };
+    return {
+      ...state,
+      status: '',
+      schema: this.schema,
+      schemaWillBeUpdatedDueToSave: false,
+      entityTypes,
+      valueTypes,
+    };
   }
 
   convertField<TKind extends 'entity' | 'value'>(
@@ -516,6 +536,7 @@ export const SchemaEditorActions = {
   RenameField: RenameFieldAction,
   RenameType: RenameTypeAction,
   SetActiveSelector: SetActiveSelectorAction,
+  SetNextUpdateSchemaSpecificationIsDueToSave: SetNextUpdateSchemaSpecificationIsDueToSaveAction,
   UpdateSchemaSpecification: UpdateSchemaSpecificationAction,
 };
 

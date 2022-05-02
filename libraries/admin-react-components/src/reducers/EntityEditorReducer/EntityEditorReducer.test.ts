@@ -1,12 +1,9 @@
 import { AdminEntityStatus, AdminSchema, FieldType } from '@jonasb/datadata-core';
 import { Temporal } from '@js-temporal/polyfill';
-import {
-  EntityEditorState,
-  EntityEditorStateAction,
-  getEntityCreateFromDraftState,
-} from './EntityEditorReducer';
+import type { EntityEditorState, EntityEditorStateAction } from './EntityEditorReducer';
 import {
   EntityEditorActions,
+  getEntityCreateFromDraftState,
   getEntityUpdateFromDraftState,
   initializeEntityEditorState,
   reduceEntityEditorState,
@@ -217,26 +214,29 @@ describe('EntityEditorReducer scenarios', () => {
       getEntityCreateFromDraftState(stateAfterSetAuthKey.drafts.find((it) => it.id === id)!)
     ).toMatchSnapshot();
 
-    const stateAfterEntityUpdate = reduceEntityEditorState(
+    const stateAfterMarkForUpsert = reduceEntityEditorState(
       stateAfterSetAuthKey,
-      new EntityEditorActions.UpdateEntity(
-        {
-          id,
-          info: {
-            authKey: 'none',
-            name: 'Foo name#123456',
-            type: 'Foo',
-            status: AdminEntityStatus.draft,
-            createdAt: Temporal.Instant.from('2022-04-30T07:51:25.56Z'),
-            updatedAt: Temporal.Instant.from('2022-04-30T07:51:25.56Z'),
-            version: 0,
-          },
-          fields: {
-            title: null,
-          },
+      new EntityEditorActions.SetNextEntityUpdateIsDueToUpsert(id, true)
+    );
+    expect(stateAfterMarkForUpsert).toMatchSnapshot();
+
+    const stateAfterEntityUpdate = reduceEntityEditorState(
+      stateAfterMarkForUpsert,
+      new EntityEditorActions.UpdateEntity({
+        id,
+        info: {
+          authKey: 'none',
+          name: 'Foo name#123456',
+          type: 'Foo',
+          status: AdminEntityStatus.draft,
+          createdAt: Temporal.Instant.from('2022-04-30T07:51:25.56Z'),
+          updatedAt: Temporal.Instant.from('2022-04-30T07:51:25.56Z'),
+          version: 0,
         },
-        { force: true }
-      )
+        fields: {
+          title: null,
+        },
+      })
     );
     expect(stateAfterEntityUpdate).toMatchSnapshot();
   });

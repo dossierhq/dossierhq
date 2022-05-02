@@ -28,6 +28,7 @@ describe('initializeSchemaEditorState', () => {
         "activeSelectorMenuScrollSignal": 0,
         "entityTypes": Array [],
         "schema": null,
+        "schemaWillBeUpdatedDueToSave": false,
         "status": "uninitialized",
         "valueTypes": Array [],
       }
@@ -70,6 +71,7 @@ describe('AddTypeAction', () => {
             "valueTypes": Array [],
           },
         },
+        "schemaWillBeUpdatedDueToSave": false,
         "status": "changed",
         "valueTypes": Array [],
       }
@@ -112,6 +114,7 @@ describe('AddTypeAction', () => {
             "valueTypes": Array [],
           },
         },
+        "schemaWillBeUpdatedDueToSave": false,
         "status": "changed",
         "valueTypes": Array [
           Object {
@@ -186,6 +189,7 @@ describe('AddTypeAction', () => {
             "valueTypes": Array [],
           },
         },
+        "schemaWillBeUpdatedDueToSave": false,
         "status": "changed",
         "valueTypes": Array [],
       }
@@ -237,6 +241,7 @@ describe('AddTypeAction', () => {
             ],
           },
         },
+        "schemaWillBeUpdatedDueToSave": false,
         "status": "changed",
         "valueTypes": Array [
           Object {
@@ -310,6 +315,7 @@ describe('AddTypeAction', () => {
             "valueTypes": Array [],
           },
         },
+        "schemaWillBeUpdatedDueToSave": false,
         "status": "changed",
         "valueTypes": Array [],
       }
@@ -358,6 +364,7 @@ describe('AddTypeAction', () => {
             "valueTypes": Array [],
           },
         },
+        "schemaWillBeUpdatedDueToSave": false,
         "status": "changed",
         "valueTypes": Array [
           Object {
@@ -443,6 +450,7 @@ describe('AddFieldAction', () => {
             "valueTypes": Array [],
           },
         },
+        "schemaWillBeUpdatedDueToSave": false,
         "status": "changed",
         "valueTypes": Array [],
       }
@@ -496,6 +504,7 @@ describe('AddFieldAction', () => {
             ],
           },
         },
+        "schemaWillBeUpdatedDueToSave": false,
         "status": "changed",
         "valueTypes": Array [
           Object {
@@ -596,6 +605,7 @@ describe('AddFieldAction', () => {
             "valueTypes": Array [],
           },
         },
+        "schemaWillBeUpdatedDueToSave": false,
         "status": "changed",
         "valueTypes": Array [],
       }
@@ -662,6 +672,7 @@ describe('AddFieldAction', () => {
             ],
           },
         },
+        "schemaWillBeUpdatedDueToSave": false,
         "status": "changed",
         "valueTypes": Array [
           Object {
@@ -773,6 +784,7 @@ describe('ChangeFieldAllowedEntityTypesAction', () => {
             "valueTypes": Array [],
           },
         },
+        "schemaWillBeUpdatedDueToSave": false,
         "status": "changed",
         "valueTypes": Array [],
       }
@@ -840,6 +852,7 @@ describe('ChangeFieldAllowedValueTypesAction', () => {
             ],
           },
         },
+        "schemaWillBeUpdatedDueToSave": false,
         "status": "changed",
         "valueTypes": Array [
           Object {
@@ -937,6 +950,7 @@ describe('ChangeFieldRequiredAction', () => {
             "valueTypes": Array [],
           },
         },
+        "schemaWillBeUpdatedDueToSave": false,
         "status": "changed",
         "valueTypes": Array [],
       }
@@ -1013,6 +1027,7 @@ describe('ChangeFieldTypeAction', () => {
             "valueTypes": Array [],
           },
         },
+        "schemaWillBeUpdatedDueToSave": false,
         "status": "changed",
         "valueTypes": Array [],
       }
@@ -1072,6 +1087,7 @@ describe('ChangeFieldTypeAction', () => {
             ],
           },
         },
+        "schemaWillBeUpdatedDueToSave": false,
         "status": "changed",
         "valueTypes": Array [
           Object {
@@ -1164,6 +1180,7 @@ describe('ChangeFieldTypeAction', () => {
             "valueTypes": Array [],
           },
         },
+        "schemaWillBeUpdatedDueToSave": false,
         "status": "changed",
         "valueTypes": Array [],
       }
@@ -1240,6 +1257,7 @@ describe('ChangeFieldTypeAction', () => {
             "valueTypes": Array [],
           },
         },
+        "schemaWillBeUpdatedDueToSave": false,
         "status": "changed",
         "valueTypes": Array [],
       }
@@ -1302,6 +1320,7 @@ describe('ChangeTypeAdminOnlyAction', () => {
             "valueTypes": Array [],
           },
         },
+        "schemaWillBeUpdatedDueToSave": false,
         "status": "changed",
         "valueTypes": Array [],
       }
@@ -1375,6 +1394,7 @@ describe('DeleteFieldAction', () => {
             "valueTypes": Array [],
           },
         },
+        "schemaWillBeUpdatedDueToSave": false,
         "status": "",
         "valueTypes": Array [],
       }
@@ -1407,6 +1427,7 @@ describe('DeleteTypeAction', () => {
             "valueTypes": Array [],
           },
         },
+        "schemaWillBeUpdatedDueToSave": false,
         "status": "changed",
         "valueTypes": Array [],
       }
@@ -1437,6 +1458,7 @@ describe('DeleteTypeAction', () => {
             "valueTypes": Array [],
           },
         },
+        "schemaWillBeUpdatedDueToSave": false,
         "status": "changed",
         "valueTypes": Array [],
       }
@@ -1510,6 +1532,7 @@ describe('RenameFieldAction', () => {
             "valueTypes": Array [],
           },
         },
+        "schemaWillBeUpdatedDueToSave": false,
         "status": "changed",
         "valueTypes": Array [],
       }
@@ -1577,6 +1600,7 @@ describe('RenameTypeAction', () => {
             "valueTypes": Array [],
           },
         },
+        "schemaWillBeUpdatedDueToSave": false,
         "status": "changed",
         "valueTypes": Array [],
       }
@@ -1637,6 +1661,7 @@ describe('SetActiveSelectorAction', () => {
             "valueTypes": Array [],
           },
         },
+        "schemaWillBeUpdatedDueToSave": false,
         "status": "",
         "valueTypes": Array [],
       }
@@ -1685,6 +1710,7 @@ describe('SetActiveSelectorAction', () => {
             "valueTypes": Array [],
           },
         },
+        "schemaWillBeUpdatedDueToSave": false,
         "status": "",
         "valueTypes": Array [],
       }
@@ -1714,6 +1740,7 @@ describe('UpdateSchemaSpecificationAction', () => {
             "valueTypes": Array [],
           },
         },
+        "schemaWillBeUpdatedDueToSave": false,
         "status": "",
         "valueTypes": Array [],
       }
@@ -1778,6 +1805,7 @@ describe('UpdateSchemaSpecificationAction', () => {
             "valueTypes": Array [],
           },
         },
+        "schemaWillBeUpdatedDueToSave": false,
         "status": "",
         "valueTypes": Array [],
       }
@@ -1826,6 +1854,7 @@ describe('UpdateSchemaSpecificationAction', () => {
             ],
           },
         },
+        "schemaWillBeUpdatedDueToSave": false,
         "status": "",
         "valueTypes": Array [
           Object {
@@ -1932,6 +1961,7 @@ describe('UpdateSchemaSpecificationAction', () => {
             ],
           },
         },
+        "schemaWillBeUpdatedDueToSave": false,
         "status": "",
         "valueTypes": Array [
           Object {
@@ -2041,6 +2071,7 @@ describe('UpdateSchemaSpecificationAction', () => {
             ],
           },
         },
+        "schemaWillBeUpdatedDueToSave": false,
         "status": "",
         "valueTypes": Array [
           Object {
@@ -2075,7 +2106,8 @@ describe('SchemaEditorReducer scenarios', () => {
     const beforeSaveState = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(initialSchema),
-      new SchemaEditorActions.AddType('entity', 'NewType')
+      new SchemaEditorActions.AddType('entity', 'NewType'),
+      new SchemaEditorActions.SetNextUpdateSchemaSpecificationIsDueToSave(true)
     );
 
     const newAdminSchema = new AdminSchema(
@@ -2086,7 +2118,7 @@ describe('SchemaEditorReducer scenarios', () => {
 
     const afterSaveState = reduceSchemaEditorState(
       beforeSaveState,
-      new SchemaEditorActions.UpdateSchemaSpecification(newAdminSchema, { force: true })
+      new SchemaEditorActions.UpdateSchemaSpecification(newAdminSchema)
     );
 
     expect(afterSaveState).toMatchInlineSnapshot(`
@@ -2118,6 +2150,7 @@ describe('SchemaEditorReducer scenarios', () => {
             "valueTypes": Array [],
           },
         },
+        "schemaWillBeUpdatedDueToSave": false,
         "status": "",
         "valueTypes": Array [],
       }

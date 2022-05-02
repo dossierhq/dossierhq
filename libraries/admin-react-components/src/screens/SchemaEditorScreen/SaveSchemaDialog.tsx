@@ -1,9 +1,7 @@
 import type { AdminSchemaSpecificationUpdate } from '@jonasb/datadata-core';
-import { AdminSchema } from '@jonasb/datadata-core';
 import { Card, Dialog, NotificationContext, Text, TextArea } from '@jonasb/datadata-design';
 import type { Dispatch } from 'react';
 import React, { useCallback, useContext, useMemo } from 'react';
-import { useSWRConfig } from 'swr';
 import { AdminDataDataContext } from '../..';
 import type {
   SchemaEditorState,
@@ -13,7 +11,6 @@ import {
   getSchemaSpecificationUpdateFromEditorState,
   SchemaEditorActions,
 } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer';
-import { updateCacheSchemas } from '../../utils/CacheUtils';
 
 export function SaveSchemaDialog({
   show,
@@ -28,7 +25,6 @@ export function SaveSchemaDialog({
 }) {
   const { adminClient } = useContext(AdminDataDataContext);
   const { showNotification } = useContext(NotificationContext);
-  const { cache, mutate } = useSWRConfig();
 
   const schemaSpecUpdate = useMemo(
     () => (show ? getSchemaSpecificationUpdateFromEditorState(schemaEditorState) : null),
@@ -38,29 +34,23 @@ export function SaveSchemaDialog({
   const handleClose = useCallback(
     async (event: Event, returnValue: string) => {
       if (returnValue === 'save' && schemaSpecUpdate) {
+        dispatchSchemaEditorState(
+          new SchemaEditorActions.SetNextUpdateSchemaSpecificationIsDueToSave(true)
+        );
+
         const result = await adminClient.updateSchemaSpecification(schemaSpecUpdate);
         if (result.isOk()) {
           showNotification({ color: 'success', message: 'Updated schema.' });
-          const adminSchema = new AdminSchema(result.value.schemaSpecification);
-          dispatchSchemaEditorState(
-            new SchemaEditorActions.UpdateSchemaSpecification(adminSchema, { force: true })
-          );
-          updateCacheSchemas(cache, mutate, adminSchema);
         } else {
           showNotification({ color: 'error', message: 'Failed saving schema.' });
+          dispatchSchemaEditorState(
+            new SchemaEditorActions.SetNextUpdateSchemaSpecificationIsDueToSave(false)
+          );
         }
       }
       onClose();
     },
-    [
-      adminClient,
-      cache,
-      dispatchSchemaEditorState,
-      mutate,
-      onClose,
-      schemaSpecUpdate,
-      showNotification,
-    ]
+    [adminClient, dispatchSchemaEditorState, onClose, schemaSpecUpdate, showNotification]
   );
 
   return (
@@ -84,9 +74,13 @@ function SaveSchemaDialogContent({
       </Card.Header>
       <Card.Content>
         <Text textStyle="body1">Do you want to save the following changes?</Text>
-        <TextArea fixedSize textStyle="code2" readOnly style={{ minHeight: '300px' }}>
-          {JSON.stringify(schemaSpecUpdate, null, 2)}
-        </TextArea>
+        <TextArea
+          fixedSize
+          textStyle="code2"
+          readOnly
+          style={{ minHeight: '300px' }}
+          defaultValue={JSON.stringify(schemaSpecUpdate, null, 2)}
+        />
       </Card.Content>
       <Card.Footer>
         <Card.FooterButton>Cancel</Card.FooterButton>

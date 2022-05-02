@@ -10,7 +10,7 @@ export interface TextAreaProps {
   fixedSize?: boolean;
   readOnly?: boolean;
   textStyle?: TextStyle;
-  children: string;
+  defaultValue?: string;
 }
 
 export function TextArea({
@@ -19,7 +19,7 @@ export function TextArea({
   readOnly,
   style,
   textStyle,
-  children,
+  defaultValue,
 }: TextAreaProps) {
   return (
     <textarea
@@ -31,8 +31,7 @@ export function TextArea({
       )}
       readOnly={readOnly}
       style={style}
-    >
-      {children}
-    </textarea>
+      defaultValue={defaultValue}
+    />
   );
 }

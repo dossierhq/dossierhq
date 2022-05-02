@@ -29,6 +29,7 @@ export interface EntityEditorDraftState {
     fields: FieldEditorState[];
   } | null;
   entity: AdminEntity | null;
+  entityWillBeUpdatedDueToUpsert: boolean;
 }
 
 export interface FieldEditorState {
@@ -108,6 +109,7 @@ class AddDraftAction implements EntityEditorStateAction {
       id: this.selector.id ?? uuidv4(),
       draft: null,
       entity: null,
+      entityWillBeUpdatedDueToUpsert: false,
     };
     if ('newType' in this.selector) {
       const entitySpec = schema.getEntityTypeSpecification(this.selector.newType);
@@ -180,6 +182,26 @@ class SetNameAction extends EntityEditorDraftAction {
   }
 }
 
+class SetNextEntityUpdateIsDueToUpsertAction extends EntityEditorDraftAction {
+  entityWillBeUpdatedDueToUpsert: boolean;
+
+  constructor(id: string, entityWillBeUpdatedDueToUpsert: boolean) {
+    super(id);
+    this.entityWillBeUpdatedDueToUpsert = entityWillBeUpdatedDueToUpsert;
+  }
+
+  reduceDraft(
+    draftState: Readonly<EntityEditorDraftState>,
+    _editorState: Readonly<EntityEditorState>
+  ): Readonly<EntityEditorDraftState> {
+    if (draftState.entityWillBeUpdatedDueToUpsert === this.entityWillBeUpdatedDueToUpsert) {
+      return draftState;
+    }
+
+    return { ...draftState, entityWillBeUpdatedDueToUpsert: this.entityWillBeUpdatedDueToUpsert };
+  }
+}
+
 class SetAuthKeyAction extends EntityEditorDraftAction {
   authKey: string;
 
@@ -202,12 +224,10 @@ class SetAuthKeyAction extends EntityEditorDraftAction {
 
 class UpdateEntityAction extends EntityEditorDraftAction {
   entity: AdminEntity;
-  force: boolean;
 
-  constructor(entity: AdminEntity, options?: { force: boolean }) {
+  constructor(entity: AdminEntity) {
     super(entity.id);
     this.entity = entity;
-    this.force = !!options?.force;
   }
 
   reduceDraft(
@@ -215,7 +235,7 @@ class UpdateEntityAction extends EntityEditorDraftAction {
     editorState: EntityEditorState
   ): Readonly<EntityEditorDraftState> {
     //TODO handle when changed on server
-    if (!this.force && draftState.entity) {
+    if (!draftState.entityWillBeUpdatedDueToUpsert && draftState.entity) {
       return draftState;
     }
 
@@ -248,6 +268,7 @@ export const EntityEditorActions = {
   SetActiveEntity: SetActiveEntityAction,
   SetAuthKey: SetAuthKeyAction,
   SetName: SetNameAction,
+  SetNextEntityUpdateIsDueToUpsert: SetNextEntityUpdateIsDueToUpsertAction,
   UpdateEntity: UpdateEntityAction,
   UpdateSchemaSpecification: UpdateSchemaSpecificationAction,
 };

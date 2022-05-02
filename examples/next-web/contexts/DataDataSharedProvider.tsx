@@ -2,9 +2,11 @@ import type {
   AdminDataDataContextAdapter,
   DisplayAuthKey,
   EditorJsToolSettings,
+  SwrConfigRef,
 } from '@jonasb/datadata-admin-react-components';
 import {
   AdminDataDataProvider,
+  createCachingAdminMiddleware,
   PublishedDataDataProvider,
 } from '@jonasb/datadata-admin-react-components';
 import type {
@@ -25,7 +27,8 @@ import {
   createBaseAdminClient,
   createBasePublishedClient,
 } from '@jonasb/datadata-core';
-import { useMemo } from 'react';
+import { useMemo, useRef } from 'react';
+import { useSWRConfig } from 'swr';
 import { fetchJsonResult, urls } from '../utils/BackendUtils';
 import { EditorJsTools } from './EditorJsTools';
 
@@ -105,9 +108,13 @@ export class ContextAdapter implements AdminDataDataContextAdapter {
 }
 
 export function DataDataSharedProvider({ children }: { children: React.ReactNode }) {
+  const { cache, mutate } = useSWRConfig();
+  const swrConfigRef = useRef({ cache, mutate });
+  swrConfigRef.current = { cache, mutate };
+
   const args = useMemo(
     () => ({
-      adminClient: createBackendAdminClient(),
+      adminClient: createBackendAdminClient(swrConfigRef),
       adapter: new ContextAdapter(),
       authKeys: DISPLAY_AUTH_KEYS,
     }),
@@ -127,9 +134,12 @@ export function PublishedDataDataSharedProvider({ children }: { children: React.
   return <PublishedDataDataProvider {...args}>{children}</PublishedDataDataProvider>;
 }
 
-function createBackendAdminClient(): AdminClient {
+function createBackendAdminClient(swrConfigRef: SwrConfigRef): AdminClient {
   const context: BackendContext = { logger };
-  return createBaseAdminClient({ context, pipeline: [terminatingAdminMiddleware] });
+  return createBaseAdminClient({
+    context,
+    pipeline: [createCachingAdminMiddleware(swrConfigRef), terminatingAdminMiddleware],
+  });
 }
 
 function createBackendPublishedClient(): PublishedClient {

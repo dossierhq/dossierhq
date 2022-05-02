@@ -1,5 +1,4 @@
-import type { AdminClient, ErrorType, PromiseResult } from '@jonasb/datadata-core';
-import { ok } from '@jonasb/datadata-core';
+import type { AdminClientMiddleware, ClientContext } from '@jonasb/datadata-core';
 import type { Meta, Story } from '@storybook/react/types-6-0';
 import React, { useContext, useReducer } from 'react';
 import type { LegacyEntityEditorSelector } from '../..';
@@ -12,17 +11,17 @@ import {
 import { bar1Id, bar2Id, foo1Id, fooArchivedId, qux1Id } from '../../test/EntityFixtures';
 import { LoadContextProvider } from '../../test/LoadContextProvider';
 import { LoadFixtures } from '../../test/LoadFixtures';
-import { createBackendAdminClient, SlowMiddleware } from '../../test/TestContextAdapter';
+import { SlowMiddleware } from '../../test/TestContextAdapter';
 import {
-  LegacyAddEntityDraftAction,
   initializeLegacyEntityEditorState,
+  LegacyAddEntityDraftAction,
   reduceLegacyEntityEditorState,
 } from '../LegacyEntityEditor/LegacyEntityEditorReducer';
 import type { LegacyEntityEditorContainerProps } from './LegacyEntityEditorContainer';
 
 interface StoryProps extends LegacyEntityEditorContainerProps {
   entitySelectors?: LegacyEntityEditorSelector[];
-  adminClient?: () => PromiseResult<AdminClient, ErrorType>;
+  adminClientMiddleware?: AdminClientMiddleware<ClientContext>[];
 }
 
 const meta: Meta<StoryProps> = {
@@ -34,7 +33,7 @@ export default meta;
 
 const Template: Story<StoryProps> = (args) => {
   return (
-    <LoadContextProvider adminClient={args.adminClient}>
+    <LoadContextProvider adminClientMiddleware={args.adminClientMiddleware}>
       <LoadFixtures>
         <Wrapper {...args} />
       </LoadFixtures>
@@ -83,7 +82,7 @@ TwoEntities.args = { entitySelectors: [{ id: bar1Id }, { id: bar2Id }] };
 export const SlowFullFoo = Template.bind({});
 SlowFullFoo.args = {
   entitySelectors: [{ id: foo1Id }],
-  adminClient: async () => ok(createBackendAdminClient([SlowMiddleware])),
+  adminClientMiddleware: [SlowMiddleware],
 };
 
 export const NotFound = Template.bind({});

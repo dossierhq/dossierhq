@@ -1,26 +1,25 @@
-import type { AdminClient, ErrorType, PromiseResult } from '@jonasb/datadata-core';
-import { ok } from '@jonasb/datadata-core';
+import type { AdminClientMiddleware, ClientContext } from '@jonasb/datadata-core';
 import type { Meta, Story } from '@storybook/react/types-6-0';
 import React, { useContext, useReducer } from 'react';
 import type { LegacyEntityEditorSelector } from '../..';
 import {
+  initializeLegacyEntityEditorState,
   LegacyAddEntityDraftAction,
   LegacyDataDataContext,
   LegacyEntityEditorDispatchContext,
   LegacyEntityEditorStateContext,
   LegacyEntityMetadata,
-  initializeLegacyEntityEditorState,
   reduceLegacyEntityEditorState,
 } from '../..';
 import { foo1Id, fooArchivedId } from '../../test/EntityFixtures';
 import { LoadContextProvider } from '../../test/LoadContextProvider';
-import { createBackendAdminClient, SlowMiddleware } from '../../test/TestContextAdapter';
+import { SlowMiddleware } from '../../test/TestContextAdapter';
 import { LegacyEntityLoader } from '../LegacyEntityEditor/LegacyEntityEditor';
 import type { LegacyEntityMetadataProps } from './LegacyEntityMetadata';
 
 export type EntityMetadataStoryProps = Omit<LegacyEntityMetadataProps, 'entityId'> & {
   entitySelector: LegacyEntityEditorSelector;
-  adminClient?: () => PromiseResult<AdminClient, ErrorType>;
+  adminClientMiddleware?: AdminClientMiddleware<ClientContext>[];
 };
 
 const meta: Meta<LegacyEntityMetadataProps> = {
@@ -32,7 +31,7 @@ export default meta;
 
 const Template: Story<EntityMetadataStoryProps> = (args) => {
   return (
-    <LoadContextProvider adminClient={args.adminClient}>
+    <LoadContextProvider adminClientMiddleware={args.adminClientMiddleware}>
       <Wrapper
         className={args.className}
         entitySelector={args.entitySelector}
@@ -98,5 +97,5 @@ ArchivedFooPublishingHistory.args = {
 export const SlowFullFoo = Template.bind({});
 SlowFullFoo.args = {
   entitySelector: { id: foo1Id },
-  adminClient: async () => ok(createBackendAdminClient([SlowMiddleware])),
+  adminClientMiddleware: [SlowMiddleware],
 };

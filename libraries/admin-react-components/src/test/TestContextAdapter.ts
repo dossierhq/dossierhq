@@ -30,6 +30,8 @@ import {
 import { v5 as uuidv5 } from 'uuid';
 import type { AdminDataDataContextAdapter } from '..';
 import { LegacyDataDataContextValue } from '..';
+import type { SwrConfigRef } from '../utils/CachingAdminMiddleware';
+import { createCachingAdminMiddleware } from '../utils/CachingAdminMiddleware';
 
 interface BackendContext {
   logger: Logger;
@@ -46,9 +48,10 @@ const AUTH_KEYS_HEADER = {
 };
 
 export async function createContextValue2(
+  swrConfig: SwrConfigRef,
   middleware: AdminClientMiddleware<BackendContext>[] = []
 ): PromiseResult<LegacyDataDataContextValue, ErrorType.Generic> {
-  const adminClient = createBackendAdminClient(middleware);
+  const adminClient = createBackendAdminClient(swrConfig, middleware);
   //TODO add a schema React context so we don't need to fetch here
   const schemaResult = await adminClient.getSchemaSpecification();
   if (schemaResult.isError()) return schemaResult;
@@ -65,6 +68,7 @@ export async function createContextValue2(
 }
 
 export function createBackendAdminClient(
+  swrConfig: SwrConfigRef,
   middleware: AdminClientMiddleware<BackendContext>[] = []
 ): AdminClient {
   const context: BackendContext = { logger: createConsoleLogger(console) };
@@ -72,6 +76,7 @@ export function createBackendAdminClient(
     context,
     pipeline: [
       ...middleware,
+      createCachingAdminMiddleware(swrConfig),
       LoggingClientMiddleware as AdminClientMiddleware<BackendContext>,
       terminatingAdminMiddleware,
     ],
