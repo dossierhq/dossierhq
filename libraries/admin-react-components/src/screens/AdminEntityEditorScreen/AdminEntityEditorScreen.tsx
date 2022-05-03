@@ -1,4 +1,10 @@
-import { FullscreenContainer, Level, Text } from '@jonasb/datadata-design';
+import {
+  findAscendantHTMLElement,
+  FullscreenContainer,
+  Level,
+  Text,
+  useWindowEventListener,
+} from '@jonasb/datadata-design';
 import type { Dispatch, MouseEvent } from 'react';
 import React, { useCallback, useContext, useEffect, useReducer } from 'react';
 import { AdminTypePicker } from '../../components/AdminTypePicker/AdminTypePicker';
@@ -7,6 +13,7 @@ import { AdminDataDataContext } from '../../contexts/AdminDataDataContext';
 import { useAdminEntity } from '../../hooks/useAdminEntity';
 import type {
   EntityEditorDraftState,
+  EntityEditorState,
   EntityEditorStateAction,
 } from '../../reducers/EntityEditorReducer/EntityEditorReducer';
 import {
@@ -61,6 +68,8 @@ export function AdminEntityEditorScreen({
   useEffect(() => {
     onEditorHasChangesChange(entityEditorState.status === 'changed');
   }, [entityEditorState.status, onEditorHasChangesChange]);
+
+  useFocusedEntity(entityEditorState, dispatchEntityEditorState);
 
   const menuScrollToId = activeEntityId ? `${activeEntityId}-menuItem` : undefined;
   const editorScrollToId = activeEntityId ? `${activeEntityId}-header` : undefined;
@@ -165,4 +174,35 @@ function EntityRows({
       </FullscreenContainer.Row>
     </>
   );
+}
+
+function useFocusedEntity(
+  entityEditorState: EntityEditorState,
+  dispatchEntityEditorState: Dispatch<EntityEditorStateAction>
+) {
+  const { activeEntityEditorScrollSignal } = entityEditorState;
+
+  const listener = useCallback(
+    (event: FocusEvent) => {
+      if (event.target instanceof HTMLElement) {
+        const selectorElement = findAscendantHTMLElement(
+          event.target,
+          (el) => !!el.dataset.entityid
+        );
+        const entityId = selectorElement?.dataset.entityid;
+
+        if (entityId) {
+          dispatchEntityEditorState(new EntityEditorActions.SetActiveEntity(entityId, true, false));
+        }
+      }
+    },
+    [dispatchEntityEditorState]
+  );
+  useWindowEventListener('focusin', listener);
+
+  useEffect(() => {
+    if (activeEntityEditorScrollSignal > 0) {
+      window.blur();
+    }
+  }, [activeEntityEditorScrollSignal]);
 }
