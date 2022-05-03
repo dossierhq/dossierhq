@@ -108,3 +108,12 @@ tr.is-sticky-row :is(td, th),
   margin-right: auto;
   overflow-y: auto;
 }
+
+.hover-reveal-container .item {
+  visibility: hidden;
+}
+
+.hover-reveal-container:hover .item,
+.hover-reveal-container .item.is-visible {
+  visibility: visible;
+}
