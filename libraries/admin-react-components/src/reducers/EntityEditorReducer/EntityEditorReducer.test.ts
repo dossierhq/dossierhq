@@ -30,7 +30,7 @@ describe('initializeEntityEditorState', () => {
         "activeEntityMenuScrollSignal": 0,
         "drafts": Array [],
         "schema": null,
-        "status": "uninitialized",
+        "status": "",
       }
     `);
   });
