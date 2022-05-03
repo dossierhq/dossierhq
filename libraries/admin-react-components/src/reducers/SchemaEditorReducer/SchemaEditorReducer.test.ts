@@ -1428,12 +1428,14 @@ describe('DeleteTypeAction', () => {
           },
         },
         "schemaWillBeUpdatedDueToSave": false,
-        "status": "changed",
+        "status": "",
         "valueTypes": Array [],
       }
     `);
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`Object {}`);
+
+    expect(state.status).toBe(''); // should be reset
   });
 
   test('delete newly added value type', () => {
@@ -1459,12 +1461,13 @@ describe('DeleteTypeAction', () => {
           },
         },
         "schemaWillBeUpdatedDueToSave": false,
-        "status": "changed",
+        "status": "",
         "valueTypes": Array [],
       }
     `);
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchInlineSnapshot(`Object {}`);
+    expect(state.status).toBe(''); // should be reset
   });
 });
 

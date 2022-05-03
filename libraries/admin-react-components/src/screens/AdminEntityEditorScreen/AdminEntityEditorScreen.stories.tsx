@@ -17,7 +17,11 @@ type StoryProps = Omit<
 const meta: Meta<StoryProps> = {
   title: 'Screens/AdminEntityEditorScreen',
   component: AdminEntityEditorScreen,
-  argTypes: {},
+  argTypes: {
+    onEditorHasChangesChange: {
+      action: 'editor-has-changes',
+    },
+  },
   args: { showUrl: false },
   parameters: { layout: 'fullscreen' },
 };

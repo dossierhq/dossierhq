@@ -16,6 +16,7 @@ importers:
       '@types/react-dom': ~18.0.0
       '@types/sql.js': ~1.4.2
       '@vitejs/plugin-react': ^1.0.7
+      history: ~5.3.0
       leaflet: ~1.7.1
       react: ~18.0.0
       react-dom: ~18.0.0
@@ -30,6 +31,7 @@ importers:
       '@jonasb/datadata-database-adapter-sqlite-sql.js': link:../../libraries/database-adapter-sqlite-sqljs
       '@jonasb/datadata-design': link:../../libraries/design
       '@jonasb/datadata-server': link:../../libraries/server
+      history: 5.3.0
       leaflet: 1.7.1
       react: 18.0.0
       react-dom: 18.0.0_react@18.0.0

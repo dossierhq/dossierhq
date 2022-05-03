@@ -1,5 +1,4 @@
 import {
-  BeforeUnload,
   Button,
   ButtonDropdown,
   EmptyStateMessage,
@@ -35,9 +34,14 @@ import { TypeDraftStatusTag } from './TypeDraftStatusTag';
 export interface SchemaEditorScreenProps {
   header?: React.ReactNode;
   footer?: React.ReactNode;
+  onEditorHasChangesChange: (hasChanges: boolean) => void;
 }
 
-export function SchemaEditorScreen({ header, footer }: SchemaEditorScreenProps) {
+export function SchemaEditorScreen({
+  header,
+  footer,
+  onEditorHasChangesChange,
+}: SchemaEditorScreenProps) {
   const { schema } = useContext(AdminDataDataContext);
   const [schemaEditorState, dispatchSchemaEditorState] = useReducer(
     reduceSchemaEditorState,
@@ -51,6 +55,7 @@ export function SchemaEditorScreen({ header, footer }: SchemaEditorScreenProps) 
     SchemaFieldSelector | SchemaTypeSelector | null
   >(null);
   const [showSaveDialog, setShowSaveDialog] = useState(false);
+  const hasChanges = schemaEditorState.status === 'changed';
 
   const handleCloseAddTypeDialog = useCallback(() => setAddOrRenameTypeSelector(null), []);
   const handleCloseAddOrRenameFieldDialog = useCallback(
@@ -64,6 +69,10 @@ export function SchemaEditorScreen({ header, footer }: SchemaEditorScreenProps) 
       dispatchSchemaEditorState(new SchemaEditorActions.UpdateSchemaSpecification(schema));
     }
   }, [schema]);
+
+  useEffect(() => {
+    onEditorHasChangesChange(hasChanges);
+  }, [hasChanges, onEditorHasChangesChange]);
 
   useSelectorFocused(schemaEditorState, dispatchSchemaEditorState);
 
@@ -80,9 +89,6 @@ export function SchemaEditorScreen({ header, footer }: SchemaEditorScreenProps) 
 
   return (
     <FullscreenContainer>
-      {schemaEditorState.status === 'changed' ? (
-        <BeforeUnload message="By leaving the page you will lose change to the schema" />
-      ) : null}
       {header ? <FullscreenContainer.Row fullWidth>{header}</FullscreenContainer.Row> : null}
       <FullscreenContainer.Columns fillHeight>
         <FullscreenContainer.ScrollableColumn
