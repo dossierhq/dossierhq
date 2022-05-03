@@ -1,4 +1,5 @@
 import {
+  BeforeUnload,
   Button,
   ButtonDropdown,
   EmptyStateMessage,
@@ -79,6 +80,9 @@ export function SchemaEditorScreen({ header, footer }: SchemaEditorScreenProps) 
 
   return (
     <FullscreenContainer>
+      {schemaEditorState.status === 'changed' ? (
+        <BeforeUnload message="By leaving the page you will lose change to the schema" />
+      ) : null}
       {header ? <FullscreenContainer.Row fullWidth>{header}</FullscreenContainer.Row> : null}
       <FullscreenContainer.Columns fillHeight>
         <FullscreenContainer.ScrollableColumn
