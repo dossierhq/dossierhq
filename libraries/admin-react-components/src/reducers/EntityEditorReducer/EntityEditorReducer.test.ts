@@ -37,7 +37,7 @@ describe('initializeEntityEditorState', () => {
 });
 
 describe('AddDraftAction', () => {
-  test('add Foo', () => {
+  test('add new Foo', () => {
     const id = '619725d7-e583-4544-8bb0-23fc3c2870c0';
     const state = reduceEntityEditorStateActions(
       initializeEntityEditorState(),
@@ -52,6 +52,41 @@ describe('AddDraftAction', () => {
       new EntityEditorActions.AddDraft({ id, newType: 'Foo' })
     );
     expect(state).toMatchSnapshot();
+  });
+
+  test('add already open Foo', () => {
+    const id = '619725d7-e583-4544-8bb0-23fc3c2870c0';
+    const state = reduceEntityEditorStateActions(
+      initializeEntityEditorState(),
+      new EntityEditorActions.UpdateSchemaSpecification(
+        new AdminSchema({
+          entityTypes: [
+            { name: 'Foo', adminOnly: false, fields: [{ name: 'title', type: FieldType.String }] },
+          ],
+          valueTypes: [],
+        })
+      ),
+      new EntityEditorActions.AddDraft({ id }),
+      new EntityEditorActions.UpdateEntity({
+        id,
+        info: {
+          authKey: 'none',
+          name: 'Foo',
+          type: 'Foo',
+          status: AdminEntityStatus.draft,
+          createdAt: Temporal.Instant.from('2022-04-30T07:51:25.56Z'),
+          updatedAt: Temporal.Instant.from('2022-05-01T07:51:25.56Z'),
+          version: 0,
+        },
+        fields: {
+          foo: null,
+        },
+      }),
+      new EntityEditorActions.AddDraft({ id })
+    );
+    expect(state).toMatchSnapshot();
+    expect(state.activeEntityMenuScrollSignal).toBe(2);
+    expect(state.activeEntityEditorScrollSignal).toBe(2);
   });
 });
 
@@ -413,5 +448,71 @@ describe('EntityEditorReducer scenarios', () => {
       })
     );
     expect(state).toMatchSnapshot();
+  });
+
+  test('open first entity, open second entity', async () => {
+    const firstId = '619725d7-e583-4544-8bb0-23fc3c2870c0';
+    const secondId = 'af83fa2d-e05c-49ef-9e31-61e6472c1f28';
+    let state = reduceEntityEditorStateActions(
+      initializeEntityEditorState(),
+      new EntityEditorActions.UpdateSchemaSpecification(
+        new AdminSchema({
+          entityTypes: [
+            {
+              name: 'Foo',
+              adminOnly: false,
+              fields: [{ name: 'foo', type: FieldType.EntityType }],
+            },
+          ],
+          valueTypes: [],
+        })
+      ),
+      new EntityEditorActions.AddDraft({ id: firstId }),
+      new EntityEditorActions.UpdateEntity({
+        id: firstId,
+        info: {
+          authKey: 'none',
+          name: 'Foo name#123456',
+          type: 'Foo',
+          status: AdminEntityStatus.draft,
+          createdAt: Temporal.Instant.from('2022-04-30T07:51:25.56Z'),
+          updatedAt: Temporal.Instant.from('2022-04-30T07:51:25.56Z'),
+          version: 0,
+        },
+        fields: {
+          foo: { id: secondId },
+        },
+      })
+    );
+    expect(state).toMatchSnapshot('1 Initial');
+    expect(state.activeEntityMenuScrollSignal).toBe(1);
+    expect(state.activeEntityEditorScrollSignal).toBe(1);
+
+    state = reduceEntityEditorState(state, new EntityEditorActions.AddDraft({ id: secondId }));
+    expect(state).toMatchSnapshot('2 After AddDraft');
+    expect(state.activeEntityMenuScrollSignal).toBe(1);
+    expect(state.activeEntityEditorScrollSignal).toBe(1);
+
+    state = reduceEntityEditorState(
+      state,
+      new EntityEditorActions.UpdateEntity({
+        id: secondId,
+        info: {
+          authKey: 'none',
+          name: 'Foo 2',
+          type: 'Foo',
+          status: AdminEntityStatus.draft,
+          createdAt: Temporal.Instant.from('2022-04-30T07:51:25.56Z'),
+          updatedAt: Temporal.Instant.from('2022-05-01T07:51:25.56Z'),
+          version: 0,
+        },
+        fields: {
+          foo: null,
+        },
+      })
+    );
+    expect(state).toMatchSnapshot('3 After UpdateEntity');
+    expect(state.activeEntityMenuScrollSignal).toBe(2);
+    expect(state.activeEntityEditorScrollSignal).toBe(2);
   });
 });

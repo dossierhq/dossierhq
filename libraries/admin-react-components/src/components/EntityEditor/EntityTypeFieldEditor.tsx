@@ -1,8 +1,11 @@
 import type { EntityReference } from '@jonasb/datadata-core';
 import { Button, Delete, HoverRevealContainer, Text } from '@jonasb/datadata-design';
+import type { MouseEvent } from 'react';
 import React, { useCallback, useContext } from 'react';
 import { AdminDataDataContext } from '../../contexts/AdminDataDataContext';
+import { EntityEditorDispatchContext } from '../../contexts/EntityEditorDispatchContext';
 import { useAdminEntity } from '../../hooks/useAdminEntity';
+import { EntityEditorActions } from '../../reducers/EntityEditorReducer/EntityEditorReducer';
 import { StatusTag } from '../StatusTag/StatusTag';
 import type { FieldEditorProps } from './FieldEditor';
 
@@ -10,8 +13,20 @@ type Props = FieldEditorProps<EntityReference>;
 
 export function EntityTypeFieldEditor({ value, onChange }: Props) {
   const { adminClient } = useContext(AdminDataDataContext);
+  const dispatchEntityEditorState = useContext(EntityEditorDispatchContext);
   const { entity, entityError: _error } = useAdminEntity(adminClient, value ?? undefined);
 
+  const handleEntityClick = useCallback(
+    (event: MouseEvent) => {
+      event.preventDefault();
+      if (!value) return;
+      // open entity asynchronously to not fight with the "click to activate entity" functionality
+      setTimeout(() =>
+        dispatchEntityEditorState(new EntityEditorActions.AddDraft({ id: value.id }))
+      );
+    },
+    [dispatchEntityEditorState, value]
+  );
   const handleDeleteClick = useCallback(() => onChange(null), [onChange]);
 
   return (
@@ -23,7 +38,7 @@ export function EntityTypeFieldEditor({ value, onChange }: Props) {
               {entity.info.type}
             </Text>
             <Text textStyle="body1">
-              <a>{entity.info.name}</a>
+              <a onClick={handleEntityClick}>{entity.info.name}</a>
             </Text>
           </HoverRevealContainer.Item>
           <HoverRevealContainer.Item forceVisible>
