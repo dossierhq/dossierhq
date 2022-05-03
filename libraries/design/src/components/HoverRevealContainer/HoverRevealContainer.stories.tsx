@@ -19,6 +19,7 @@ const Template: Story<StoryProps> = ({ ...args }: StoryProps) => {
 export const Row = Template.bind({});
 Row.args = {
   flexDirection: 'row',
+  gap: 5,
   children: (
     <>
       <HoverRevealContainer.Item style={{ backgroundColor: 'pink' }} flexGrow={1}>
