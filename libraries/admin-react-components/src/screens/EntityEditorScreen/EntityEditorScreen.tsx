@@ -1,4 +1,5 @@
 import {
+  EmptyStateMessage,
   findAscendantHTMLElement,
   FullscreenContainer,
   Level,
@@ -97,13 +98,21 @@ export function EntityEditorScreen({
           scrollToId={editorScrollToId}
           scrollToIdSignal={activeEntityEditorScrollSignal}
         >
-          {drafts.map((draftState) => (
-            <EntityRows
-              key={draftState.id}
-              draftState={draftState}
-              dispatchEntityEditorState={dispatchEntityEditorState}
+          {drafts.length === 0 ? (
+            <EmptyStateMessage
+              icon="add"
+              title="No active entities"
+              message="Create or open an entity"
             />
-          ))}
+          ) : (
+            drafts.map((draftState) => (
+              <EntityRows
+                key={draftState.id}
+                draftState={draftState}
+                dispatchEntityEditorState={dispatchEntityEditorState}
+              />
+            ))
+          )}
         </FullscreenContainer.ScrollableColumn>
         <FullscreenContainer.ScrollableColumn width="3/12" padding={2} gap={2}>
           RIGHT
