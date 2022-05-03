@@ -57,6 +57,33 @@ Object {
 }
 `;
 
+exports[`DeleteDraftAction add/delete Foo 1`] = `
+Object {
+  "activeEntityEditorScrollSignal": 1,
+  "activeEntityId": null,
+  "activeEntityMenuScrollSignal": 1,
+  "drafts": Array [],
+  "schema": AdminSchema {
+    "spec": Object {
+      "entityTypes": Array [
+        Object {
+          "adminOnly": false,
+          "fields": Array [
+            Object {
+              "name": "title",
+              "type": "String",
+            },
+          ],
+          "name": "Foo",
+        },
+      ],
+      "valueTypes": Array [],
+    },
+  },
+  "status": "",
+}
+`;
+
 exports[`EntityEditorReducer scenarios add new draft, set name and authKey, force update 1`] = `
 Object {
   "activeEntityEditorScrollSignal": 1,

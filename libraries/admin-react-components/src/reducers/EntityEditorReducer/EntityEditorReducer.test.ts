@@ -55,6 +55,29 @@ describe('AddDraftAction', () => {
   });
 });
 
+describe('DeleteDraftAction', () => {
+  test('add/delete Foo', () => {
+    const id = '619725d7-e583-4544-8bb0-23fc3c2870c0';
+    const state = reduceEntityEditorStateActions(
+      initializeEntityEditorState(),
+      new EntityEditorActions.UpdateSchemaSpecification(
+        new AdminSchema({
+          entityTypes: [
+            { name: 'Foo', adminOnly: false, fields: [{ name: 'title', type: FieldType.String }] },
+          ],
+          valueTypes: [],
+        })
+      ),
+      new EntityEditorActions.AddDraft({ id, newType: 'Foo' }),
+      new EntityEditorActions.DeleteDraft(id)
+    );
+    expect(state).toMatchSnapshot();
+    expect(state.status).toBe('');
+    expect(state.drafts).toHaveLength(0);
+    expect(state.activeEntityId).toBeNull();
+  });
+});
+
 describe('SetActiveEntityAction', () => {
   test('add two entities, set active to first', () => {
     const state = reduceEntityEditorStateActions(

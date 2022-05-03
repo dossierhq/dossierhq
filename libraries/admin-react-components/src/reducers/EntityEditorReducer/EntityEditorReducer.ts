@@ -152,6 +152,26 @@ class AddDraftAction implements EntityEditorStateAction {
   }
 }
 
+class DeleteDraftAction implements EntityEditorStateAction {
+  id: string;
+  constructor(id: string) {
+    this.id = id;
+  }
+
+  reduce(state: Readonly<EntityEditorState>): Readonly<EntityEditorState> {
+    let { activeEntityId } = state;
+    if (activeEntityId === this.id) {
+      activeEntityId = null;
+    }
+
+    return {
+      ...state,
+      activeEntityId,
+      drafts: state.drafts.filter((it) => it.id !== this.id),
+    };
+  }
+}
+
 class SetActiveEntityAction implements EntityEditorStateAction {
   id: string;
   increaseMenuScrollSignal: boolean;
@@ -290,6 +310,7 @@ class UpdateSchemaSpecificationAction implements EntityEditorStateAction {
 
 export const EntityEditorActions = {
   AddDraft: AddDraftAction,
+  DeleteDraft: DeleteDraftAction,
   SetActiveEntity: SetActiveEntityAction,
   SetAuthKey: SetAuthKeyAction,
   SetName: SetNameAction,
