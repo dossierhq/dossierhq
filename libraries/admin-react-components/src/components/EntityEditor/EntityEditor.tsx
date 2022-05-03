@@ -77,7 +77,15 @@ export function EntityEditor({ draftState, dispatchEntityEditorState }: Props) {
         {isNewEntity ? 'Create' : 'Save'}
       </Button>
       {draftState.draft.fields.map((field) => (
-        <EntityFieldEditor key={field.fieldSpec.name} field={field} />
+        <EntityFieldEditor
+          key={field.fieldSpec.name}
+          field={field}
+          onValueChange={(value) =>
+            dispatchEntityEditorState(
+              new EntityEditorActions.SetField(draftState.id, field.fieldSpec.name, value)
+            )
+          }
+        />
       ))}
     </>
   );
