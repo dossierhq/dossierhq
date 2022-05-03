@@ -53,7 +53,7 @@ Object {
       "valueTypes": Array [],
     },
   },
-  "status": "uninitialized",
+  "status": "",
 }
 `;
 
@@ -110,7 +110,7 @@ Object {
       "valueTypes": Array [],
     },
   },
-  "status": "uninitialized",
+  "status": "",
 }
 `;
 
@@ -167,7 +167,7 @@ Object {
       "valueTypes": Array [],
     },
   },
-  "status": "uninitialized",
+  "status": "changed",
 }
 `;
 
@@ -224,7 +224,7 @@ Object {
       "valueTypes": Array [],
     },
   },
-  "status": "uninitialized",
+  "status": "changed",
 }
 `;
 
@@ -293,7 +293,7 @@ Object {
       "valueTypes": Array [],
     },
   },
-  "status": "uninitialized",
+  "status": "changed",
 }
 `;
 
@@ -364,7 +364,7 @@ Object {
       "valueTypes": Array [],
     },
   },
-  "status": "uninitialized",
+  "status": "",
 }
 `;
 
@@ -424,7 +424,7 @@ Object {
       "valueTypes": Array [],
     },
   },
-  "status": "uninitialized",
+  "status": "",
 }
 `;
 
@@ -481,7 +481,7 @@ Object {
       "valueTypes": Array [],
     },
   },
-  "status": "uninitialized",
+  "status": "changed",
 }
 `;
 
@@ -538,7 +538,7 @@ Object {
       "valueTypes": Array [],
     },
   },
-  "status": "uninitialized",
+  "status": "changed",
 }
 `;
 
@@ -609,7 +609,7 @@ Object {
       "valueTypes": Array [],
     },
   },
-  "status": "uninitialized",
+  "status": "",
 }
 `;
 
@@ -635,6 +635,6 @@ Object {
       "valueTypes": Array [],
     },
   },
-  "status": "uninitialized",
+  "status": "",
 }
 `;

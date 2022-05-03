@@ -1,4 +1,4 @@
-import { FullscreenContainer, Level, Text } from '@jonasb/datadata-design';
+import { BeforeUnload, FullscreenContainer, Level, Text } from '@jonasb/datadata-design';
 import type { Dispatch, MouseEvent } from 'react';
 import React, { useCallback, useContext, useEffect, useReducer } from 'react';
 import { AdminTypePicker } from '../../components/AdminTypePicker/AdminTypePicker';
@@ -61,6 +61,9 @@ export function AdminEntityEditorScreen({
 
   return (
     <FullscreenContainer>
+      {entityEditorState.status !== '' ? (
+        <BeforeUnload message="By leaving the page you will lose changes" />
+      ) : null}
       {header ? <FullscreenContainer.Row fullWidth>{header}</FullscreenContainer.Row> : null}
       <FullscreenContainer.Columns fillHeight>
         <FullscreenContainer.ScrollableColumn

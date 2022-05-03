@@ -12,7 +12,7 @@ import { v4 as uuidv4 } from 'uuid';
 type EntityEditorSelector = { id: string } | { id?: string; newType: string };
 
 export interface EntityEditorState {
-  status: 'uninitialized' | 'changed' | '';
+  status: '' | 'changed';
   schema: AdminSchema | null;
   drafts: EntityEditorDraftState[];
   activeEntityId: string | null;
@@ -44,7 +44,7 @@ export interface EntityEditorStateAction {
 
 export function initializeEntityEditorState(): EntityEditorState {
   return {
-    status: 'uninitialized',
+    status: '',
     schema: null,
     drafts: [],
     activeEntityId: null,
@@ -63,6 +63,11 @@ export function reduceEntityEditorState(
 }
 
 // STATUS RESOLVES
+
+function resolveEditorStatus(state: EntityEditorState): EntityEditorState['status'] {
+  const someChanged = state.drafts.some((it) => it.status === 'changed');
+  return someChanged ? 'changed' : '';
+}
 
 function resolveDraftStatus(draftState: EntityEditorDraftState): EntityEditorDraftState['status'] {
   if (!draftState.draft) {
@@ -99,7 +104,9 @@ abstract class EntityEditorDraftAction implements EntityEditorStateAction {
     const newDrafts = [...state.drafts];
     newDrafts[draftIndex] = newDraft;
 
-    return { ...state, drafts: newDrafts };
+    const newState = { ...state, drafts: newDrafts };
+    newState.status = resolveEditorStatus(newState);
+    return newState;
   }
 
   abstract reduceDraft(
