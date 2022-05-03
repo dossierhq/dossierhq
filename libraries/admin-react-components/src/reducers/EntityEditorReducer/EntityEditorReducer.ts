@@ -6,7 +6,8 @@ import type {
   AdminSchema,
   FieldSpecification,
 } from '@jonasb/datadata-core';
-import { assertIsDefined } from '@jonasb/datadata-core';
+import { assertIsDefined, normalizeFieldValue } from '@jonasb/datadata-core';
+import isEqual from 'lodash/isEqual';
 import { v4 as uuidv4 } from 'uuid';
 
 type EntityEditorSelector = { id: string } | { id?: string; newType: string };
@@ -34,8 +35,10 @@ export interface EntityEditorDraftState {
 }
 
 export interface FieldEditorState {
+  status: '' | 'changed';
   fieldSpec: FieldSpecification;
   value: unknown;
+  normalizedValue: unknown;
 }
 
 export interface EntityEditorStateAction {
@@ -74,10 +77,33 @@ function resolveDraftStatus(draftState: EntityEditorDraftState): EntityEditorDra
     return '';
   }
   if (!draftState.entity) {
-    return draftState.draft.authKey === null && !draftState.draft.name ? '' : 'changed';
+    if (draftState.draft.authKey !== null || !draftState.draft.name) {
+      return 'changed';
+    }
+  } else {
+    if (draftState.draft.name !== draftState.entity.info.name) {
+      return 'changed';
+    }
   }
 
-  return draftState.draft.name === draftState.entity.info.name ? '' : 'changed';
+  const someChangedField = draftState.draft.fields.some((it) => it.status === 'changed');
+  if (someChangedField) {
+    return 'changed';
+  }
+  return '';
+}
+
+function resolveFieldStatus(
+  field: FieldEditorState,
+  draftState: EntityEditorDraftState
+): FieldEditorState['status'] {
+  const isEmpty = field.normalizedValue === null;
+  if (!draftState.entity) {
+    return isEmpty ? '' : 'changed';
+  }
+
+  const existingValue = draftState.entity.fields[field.fieldSpec.name];
+  return isEqual(existingValue, field.normalizedValue) ? '' : 'changed';
 }
 
 // ACTION HELPERS
@@ -115,6 +141,46 @@ abstract class EntityEditorDraftAction implements EntityEditorStateAction {
   ): Readonly<EntityEditorDraftState>;
 }
 
+abstract class EntityEditorFieldAction extends EntityEditorDraftAction {
+  fieldName: string;
+
+  constructor(entryId: string, fieldName: string) {
+    super(entryId);
+    this.fieldName = fieldName;
+  }
+
+  reduceDraft(
+    draftState: Readonly<EntityEditorDraftState>,
+    editorState: Readonly<EntityEditorState>
+  ): Readonly<EntityEditorDraftState> {
+    assertIsDefined(draftState.draft);
+    const fieldIndex = draftState.draft.fields.findIndex(
+      (it) => it.fieldSpec.name === this.fieldName
+    );
+    if (fieldIndex < 0) {
+      throw new Error(`No such field ${this.fieldName} for entity with id ${this.id}`);
+    }
+    const currentField = draftState.draft.fields[fieldIndex];
+
+    let newField = this.reduceField(currentField, draftState, editorState);
+    if (newField === currentField) {
+      return draftState;
+    }
+    newField = { ...newField, status: resolveFieldStatus(newField, draftState) };
+
+    const newFields = [...draftState.draft.fields];
+    newFields[fieldIndex] = newField;
+
+    return { ...draftState, draft: { ...draftState.draft, fields: newFields } };
+  }
+
+  abstract reduceField(
+    fieldState: Readonly<FieldEditorState>,
+    draftState: Readonly<EntityEditorDraftState>,
+    editorState: Readonly<EntityEditorState>
+  ): Readonly<FieldEditorState>;
+}
+
 // ACTIONS
 
 class AddDraftAction implements EntityEditorStateAction {
@@ -139,7 +205,7 @@ class AddDraftAction implements EntityEditorStateAction {
     if ('newType' in this.selector) {
       const entitySpec = schema.getEntityTypeSpecification(this.selector.newType);
       assertIsDefined(entitySpec);
-      draft.draft = createEditorEntityDraftState(entitySpec, null);
+      draft.draft = createEditorEntityDraftState(schema, entitySpec, null);
     }
 
     return {
@@ -204,6 +270,30 @@ class SetActiveEntityAction implements EntityEditorStateAction {
       activeEntityMenuScrollSignal: activeSelectorMenuScrollSignal,
       activeEntityEditorScrollSignal: activeSelectorEditorScrollSignal,
     };
+  }
+}
+
+class SetFieldAction extends EntityEditorFieldAction {
+  value: unknown;
+
+  constructor(entityId: string, fieldName: string, value: unknown) {
+    super(entityId, fieldName);
+    this.value = value;
+  }
+
+  reduceField(
+    fieldState: Readonly<FieldEditorState>,
+    draftState: Readonly<EntityEditorDraftState>,
+    editorState: Readonly<EntityEditorState>
+  ): Readonly<FieldEditorState> {
+    const { schema } = editorState;
+    assertIsDefined(schema);
+    if (fieldState.value === this.value) {
+      return fieldState;
+    }
+
+    const normalizedValue = normalizeFieldValue(schema, fieldState.fieldSpec, this.value);
+    return { ...fieldState, value: this.value, normalizedValue };
   }
 }
 
@@ -291,7 +381,7 @@ class UpdateEntityAction extends EntityEditorDraftAction {
 
     return {
       ...draftState,
-      draft: createEditorEntityDraftState(entitySpec, this.entity),
+      draft: createEditorEntityDraftState(schema, entitySpec, this.entity),
       entity: this.entity,
     };
   }
@@ -313,6 +403,7 @@ export const EntityEditorActions = {
   DeleteDraft: DeleteDraftAction,
   SetActiveEntity: SetActiveEntityAction,
   SetAuthKey: SetAuthKeyAction,
+  SetField: SetFieldAction,
   SetName: SetNameAction,
   SetNextEntityUpdateIsDueToUpsert: SetNextEntityUpdateIsDueToUpsertAction,
   UpdateEntity: UpdateEntityAction,
@@ -322,12 +413,14 @@ export const EntityEditorActions = {
 // HELPERS
 
 function createEditorEntityDraftState(
+  schema: AdminSchema,
   entitySpec: AdminEntityTypeSpecification,
   entity: AdminEntity | null
 ): EntityEditorDraftState['draft'] {
   const fields = entitySpec.fields.map<FieldEditorState>((fieldSpec) => {
     const value = entity?.fields[fieldSpec.name] ?? null;
-    return { fieldSpec, value };
+    const normalizedValue = normalizeFieldValue(schema, fieldSpec, value);
+    return { status: '', fieldSpec, value, normalizedValue };
   });
   return {
     entitySpec,
@@ -343,6 +436,12 @@ export function getEntityCreateFromDraftState(draftState: EntityEditorDraftState
   const { draft } = draftState;
   assertIsDefined(draft);
   assertIsDefined(draft.authKey);
+
+  const fields: AdminEntityCreate['fields'] = {};
+  for (const field of draft.fields) {
+    fields[field.fieldSpec.name] = field.value;
+  }
+
   const result: AdminEntityCreate = {
     id: draftState.id,
     info: {
@@ -350,10 +449,8 @@ export function getEntityCreateFromDraftState(draftState: EntityEditorDraftState
       name: draft.name,
       authKey: draft.authKey,
     },
-    fields: {},
+    fields,
   };
-
-  //TODO add fields
 
   return result;
 }
@@ -362,16 +459,20 @@ export function getEntityUpdateFromDraftState(draftState: EntityEditorDraftState
   const { draft, entity } = draftState;
   assertIsDefined(draft);
   assertIsDefined(entity);
+
+  const fields: AdminEntityCreate['fields'] = {};
+  for (const field of draft.fields) {
+    fields[field.fieldSpec.name] = field.value;
+  }
+
   const result: AdminEntityUpdate = {
     id: draftState.id,
     info: {
       type: draft.entitySpec.name,
       ...(draft.name !== entity.info.name ? { name: draft.name } : {}),
     },
-    fields: {},
+    fields,
   };
-
-  //TODO add fields
 
   return result;
 }

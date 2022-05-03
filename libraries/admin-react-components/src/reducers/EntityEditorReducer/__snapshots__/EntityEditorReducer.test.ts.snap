@@ -25,6 +25,8 @@ Object {
               "name": "title",
               "type": "String",
             },
+            "normalizedValue": null,
+            "status": "",
             "value": null,
           },
         ],
@@ -109,6 +111,8 @@ Object {
               "name": "title",
               "type": "String",
             },
+            "normalizedValue": null,
+            "status": "",
             "value": null,
           },
         ],
@@ -166,6 +170,8 @@ Object {
               "name": "title",
               "type": "String",
             },
+            "normalizedValue": null,
+            "status": "",
             "value": null,
           },
         ],
@@ -174,7 +180,7 @@ Object {
       "entity": null,
       "entityWillBeUpdatedDueToUpsert": false,
       "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
-      "status": "changed",
+      "status": "",
     },
   ],
   "schema": AdminSchema {
@@ -194,7 +200,7 @@ Object {
       "valueTypes": Array [],
     },
   },
-  "status": "changed",
+  "status": "",
 }
 `;
 
@@ -223,6 +229,8 @@ Object {
               "name": "title",
               "type": "String",
             },
+            "normalizedValue": null,
+            "status": "",
             "value": null,
           },
         ],
@@ -257,7 +265,9 @@ Object {
 
 exports[`EntityEditorReducer scenarios add new draft, set name and authKey, force update 4`] = `
 Object {
-  "fields": Object {},
+  "fields": Object {
+    "title": null,
+  },
   "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
   "info": Object {
     "authKey": "none",
@@ -292,6 +302,8 @@ Object {
               "name": "title",
               "type": "String",
             },
+            "normalizedValue": null,
+            "status": "",
             "value": null,
           },
         ],
@@ -349,6 +361,8 @@ Object {
               "name": "title",
               "type": "String",
             },
+            "normalizedValue": null,
+            "status": "",
             "value": null,
           },
         ],
@@ -367,6 +381,692 @@ Object {
           "type": "Foo",
           "updatedAt": "2022-04-30T07:51:25.56Z",
           "version": 0,
+        },
+      },
+      "entityWillBeUpdatedDueToUpsert": true,
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "",
+    },
+  ],
+  "schema": AdminSchema {
+    "spec": Object {
+      "entityTypes": Array [
+        Object {
+          "adminOnly": false,
+          "fields": Array [
+            Object {
+              "name": "title",
+              "type": "String",
+            },
+          ],
+          "name": "Foo",
+        },
+      ],
+      "valueTypes": Array [],
+    },
+  },
+  "status": "",
+}
+`;
+
+exports[`EntityEditorReducer scenarios add new draft, set name, authKey and title, simulate save 1`] = `
+Object {
+  "activeEntityEditorScrollSignal": 1,
+  "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "activeEntityMenuScrollSignal": 1,
+  "drafts": Array [
+    Object {
+      "draft": Object {
+        "authKey": null,
+        "entitySpec": Object {
+          "adminOnly": false,
+          "fields": Array [
+            Object {
+              "name": "title",
+              "type": "String",
+            },
+          ],
+          "name": "Foo",
+        },
+        "fields": Array [
+          Object {
+            "fieldSpec": Object {
+              "name": "title",
+              "type": "String",
+            },
+            "normalizedValue": null,
+            "status": "",
+            "value": null,
+          },
+        ],
+        "name": "",
+      },
+      "entity": null,
+      "entityWillBeUpdatedDueToUpsert": false,
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "",
+    },
+  ],
+  "schema": AdminSchema {
+    "spec": Object {
+      "entityTypes": Array [
+        Object {
+          "adminOnly": false,
+          "fields": Array [
+            Object {
+              "name": "title",
+              "type": "String",
+            },
+          ],
+          "name": "Foo",
+        },
+      ],
+      "valueTypes": Array [],
+    },
+  },
+  "status": "",
+}
+`;
+
+exports[`EntityEditorReducer scenarios add new draft, set name, authKey and title, simulate save 2`] = `
+Object {
+  "activeEntityEditorScrollSignal": 1,
+  "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "activeEntityMenuScrollSignal": 1,
+  "drafts": Array [
+    Object {
+      "draft": Object {
+        "authKey": null,
+        "entitySpec": Object {
+          "adminOnly": false,
+          "fields": Array [
+            Object {
+              "name": "title",
+              "type": "String",
+            },
+          ],
+          "name": "Foo",
+        },
+        "fields": Array [
+          Object {
+            "fieldSpec": Object {
+              "name": "title",
+              "type": "String",
+            },
+            "normalizedValue": null,
+            "status": "",
+            "value": null,
+          },
+        ],
+        "name": "Foo name",
+      },
+      "entity": null,
+      "entityWillBeUpdatedDueToUpsert": false,
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "",
+    },
+  ],
+  "schema": AdminSchema {
+    "spec": Object {
+      "entityTypes": Array [
+        Object {
+          "adminOnly": false,
+          "fields": Array [
+            Object {
+              "name": "title",
+              "type": "String",
+            },
+          ],
+          "name": "Foo",
+        },
+      ],
+      "valueTypes": Array [],
+    },
+  },
+  "status": "",
+}
+`;
+
+exports[`EntityEditorReducer scenarios add new draft, set name, authKey and title, simulate save 3`] = `
+Object {
+  "activeEntityEditorScrollSignal": 1,
+  "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "activeEntityMenuScrollSignal": 1,
+  "drafts": Array [
+    Object {
+      "draft": Object {
+        "authKey": "none",
+        "entitySpec": Object {
+          "adminOnly": false,
+          "fields": Array [
+            Object {
+              "name": "title",
+              "type": "String",
+            },
+          ],
+          "name": "Foo",
+        },
+        "fields": Array [
+          Object {
+            "fieldSpec": Object {
+              "name": "title",
+              "type": "String",
+            },
+            "normalizedValue": null,
+            "status": "",
+            "value": null,
+          },
+        ],
+        "name": "Foo name",
+      },
+      "entity": null,
+      "entityWillBeUpdatedDueToUpsert": false,
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "changed",
+    },
+  ],
+  "schema": AdminSchema {
+    "spec": Object {
+      "entityTypes": Array [
+        Object {
+          "adminOnly": false,
+          "fields": Array [
+            Object {
+              "name": "title",
+              "type": "String",
+            },
+          ],
+          "name": "Foo",
+        },
+      ],
+      "valueTypes": Array [],
+    },
+  },
+  "status": "changed",
+}
+`;
+
+exports[`EntityEditorReducer scenarios add new draft, set name, authKey and title, simulate save 4`] = `
+Object {
+  "activeEntityEditorScrollSignal": 1,
+  "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "activeEntityMenuScrollSignal": 1,
+  "drafts": Array [
+    Object {
+      "draft": Object {
+        "authKey": "none",
+        "entitySpec": Object {
+          "adminOnly": false,
+          "fields": Array [
+            Object {
+              "name": "title",
+              "type": "String",
+            },
+          ],
+          "name": "Foo",
+        },
+        "fields": Array [
+          Object {
+            "fieldSpec": Object {
+              "name": "title",
+              "type": "String",
+            },
+            "normalizedValue": "Foo title",
+            "status": "changed",
+            "value": "Foo title",
+          },
+        ],
+        "name": "Foo name",
+      },
+      "entity": null,
+      "entityWillBeUpdatedDueToUpsert": false,
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "changed",
+    },
+  ],
+  "schema": AdminSchema {
+    "spec": Object {
+      "entityTypes": Array [
+        Object {
+          "adminOnly": false,
+          "fields": Array [
+            Object {
+              "name": "title",
+              "type": "String",
+            },
+          ],
+          "name": "Foo",
+        },
+      ],
+      "valueTypes": Array [],
+    },
+  },
+  "status": "changed",
+}
+`;
+
+exports[`EntityEditorReducer scenarios add new draft, set name, authKey and title, simulate save 5`] = `
+Object {
+  "fields": Object {
+    "title": "Foo title",
+  },
+  "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "info": Object {
+    "authKey": "none",
+    "name": "Foo name",
+    "type": "Foo",
+  },
+}
+`;
+
+exports[`EntityEditorReducer scenarios add new draft, set name, authKey and title, simulate save 6`] = `
+Object {
+  "activeEntityEditorScrollSignal": 1,
+  "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "activeEntityMenuScrollSignal": 1,
+  "drafts": Array [
+    Object {
+      "draft": Object {
+        "authKey": "none",
+        "entitySpec": Object {
+          "adminOnly": false,
+          "fields": Array [
+            Object {
+              "name": "title",
+              "type": "String",
+            },
+          ],
+          "name": "Foo",
+        },
+        "fields": Array [
+          Object {
+            "fieldSpec": Object {
+              "name": "title",
+              "type": "String",
+            },
+            "normalizedValue": "Foo title",
+            "status": "changed",
+            "value": "Foo title",
+          },
+        ],
+        "name": "Foo name",
+      },
+      "entity": null,
+      "entityWillBeUpdatedDueToUpsert": true,
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "changed",
+    },
+  ],
+  "schema": AdminSchema {
+    "spec": Object {
+      "entityTypes": Array [
+        Object {
+          "adminOnly": false,
+          "fields": Array [
+            Object {
+              "name": "title",
+              "type": "String",
+            },
+          ],
+          "name": "Foo",
+        },
+      ],
+      "valueTypes": Array [],
+    },
+  },
+  "status": "changed",
+}
+`;
+
+exports[`EntityEditorReducer scenarios add new draft, set name, authKey and title, simulate save 7`] = `
+Object {
+  "activeEntityEditorScrollSignal": 1,
+  "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "activeEntityMenuScrollSignal": 1,
+  "drafts": Array [
+    Object {
+      "draft": Object {
+        "authKey": "none",
+        "entitySpec": Object {
+          "adminOnly": false,
+          "fields": Array [
+            Object {
+              "name": "title",
+              "type": "String",
+            },
+          ],
+          "name": "Foo",
+        },
+        "fields": Array [
+          Object {
+            "fieldSpec": Object {
+              "name": "title",
+              "type": "String",
+            },
+            "normalizedValue": "Foo title",
+            "status": "",
+            "value": "Foo title",
+          },
+        ],
+        "name": "Foo name#123456",
+      },
+      "entity": Object {
+        "fields": Object {
+          "title": "Foo title",
+        },
+        "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+        "info": Object {
+          "authKey": "none",
+          "createdAt": "2022-04-30T07:51:25.56Z",
+          "name": "Foo name#123456",
+          "status": "draft",
+          "type": "Foo",
+          "updatedAt": "2022-04-30T07:51:25.56Z",
+          "version": 0,
+        },
+      },
+      "entityWillBeUpdatedDueToUpsert": true,
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "",
+    },
+  ],
+  "schema": AdminSchema {
+    "spec": Object {
+      "entityTypes": Array [
+        Object {
+          "adminOnly": false,
+          "fields": Array [
+            Object {
+              "name": "title",
+              "type": "String",
+            },
+          ],
+          "name": "Foo",
+        },
+      ],
+      "valueTypes": Array [],
+    },
+  },
+  "status": "",
+}
+`;
+
+exports[`EntityEditorReducer scenarios open existing entity, set title field, simulate save 1`] = `
+Object {
+  "activeEntityEditorScrollSignal": 1,
+  "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "activeEntityMenuScrollSignal": 1,
+  "drafts": Array [
+    Object {
+      "draft": Object {
+        "authKey": "none",
+        "entitySpec": Object {
+          "adminOnly": false,
+          "fields": Array [
+            Object {
+              "name": "title",
+              "type": "String",
+            },
+          ],
+          "name": "Foo",
+        },
+        "fields": Array [
+          Object {
+            "fieldSpec": Object {
+              "name": "title",
+              "type": "String",
+            },
+            "normalizedValue": "Existing title",
+            "status": "",
+            "value": "Existing title",
+          },
+        ],
+        "name": "Foo name#123456",
+      },
+      "entity": Object {
+        "fields": Object {
+          "title": "Existing title",
+        },
+        "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+        "info": Object {
+          "authKey": "none",
+          "createdAt": "2022-04-30T07:51:25.56Z",
+          "name": "Foo name#123456",
+          "status": "draft",
+          "type": "Foo",
+          "updatedAt": "2022-04-30T07:51:25.56Z",
+          "version": 0,
+        },
+      },
+      "entityWillBeUpdatedDueToUpsert": false,
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "",
+    },
+  ],
+  "schema": AdminSchema {
+    "spec": Object {
+      "entityTypes": Array [
+        Object {
+          "adminOnly": false,
+          "fields": Array [
+            Object {
+              "name": "title",
+              "type": "String",
+            },
+          ],
+          "name": "Foo",
+        },
+      ],
+      "valueTypes": Array [],
+    },
+  },
+  "status": "",
+}
+`;
+
+exports[`EntityEditorReducer scenarios open existing entity, set title field, simulate save 2`] = `
+Object {
+  "activeEntityEditorScrollSignal": 1,
+  "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "activeEntityMenuScrollSignal": 1,
+  "drafts": Array [
+    Object {
+      "draft": Object {
+        "authKey": "none",
+        "entitySpec": Object {
+          "adminOnly": false,
+          "fields": Array [
+            Object {
+              "name": "title",
+              "type": "String",
+            },
+          ],
+          "name": "Foo",
+        },
+        "fields": Array [
+          Object {
+            "fieldSpec": Object {
+              "name": "title",
+              "type": "String",
+            },
+            "normalizedValue": "New title",
+            "status": "changed",
+            "value": "New title",
+          },
+        ],
+        "name": "Foo name#123456",
+      },
+      "entity": Object {
+        "fields": Object {
+          "title": "Existing title",
+        },
+        "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+        "info": Object {
+          "authKey": "none",
+          "createdAt": "2022-04-30T07:51:25.56Z",
+          "name": "Foo name#123456",
+          "status": "draft",
+          "type": "Foo",
+          "updatedAt": "2022-04-30T07:51:25.56Z",
+          "version": 0,
+        },
+      },
+      "entityWillBeUpdatedDueToUpsert": false,
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "changed",
+    },
+  ],
+  "schema": AdminSchema {
+    "spec": Object {
+      "entityTypes": Array [
+        Object {
+          "adminOnly": false,
+          "fields": Array [
+            Object {
+              "name": "title",
+              "type": "String",
+            },
+          ],
+          "name": "Foo",
+        },
+      ],
+      "valueTypes": Array [],
+    },
+  },
+  "status": "changed",
+}
+`;
+
+exports[`EntityEditorReducer scenarios open existing entity, set title field, simulate save 3`] = `
+Object {
+  "fields": Object {
+    "title": "New title",
+  },
+  "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "info": Object {
+    "type": "Foo",
+  },
+}
+`;
+
+exports[`EntityEditorReducer scenarios open existing entity, set title field, simulate save 4`] = `
+Object {
+  "activeEntityEditorScrollSignal": 1,
+  "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "activeEntityMenuScrollSignal": 1,
+  "drafts": Array [
+    Object {
+      "draft": Object {
+        "authKey": "none",
+        "entitySpec": Object {
+          "adminOnly": false,
+          "fields": Array [
+            Object {
+              "name": "title",
+              "type": "String",
+            },
+          ],
+          "name": "Foo",
+        },
+        "fields": Array [
+          Object {
+            "fieldSpec": Object {
+              "name": "title",
+              "type": "String",
+            },
+            "normalizedValue": "New title",
+            "status": "changed",
+            "value": "New title",
+          },
+        ],
+        "name": "Foo name#123456",
+      },
+      "entity": Object {
+        "fields": Object {
+          "title": "Existing title",
+        },
+        "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+        "info": Object {
+          "authKey": "none",
+          "createdAt": "2022-04-30T07:51:25.56Z",
+          "name": "Foo name#123456",
+          "status": "draft",
+          "type": "Foo",
+          "updatedAt": "2022-04-30T07:51:25.56Z",
+          "version": 0,
+        },
+      },
+      "entityWillBeUpdatedDueToUpsert": true,
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "changed",
+    },
+  ],
+  "schema": AdminSchema {
+    "spec": Object {
+      "entityTypes": Array [
+        Object {
+          "adminOnly": false,
+          "fields": Array [
+            Object {
+              "name": "title",
+              "type": "String",
+            },
+          ],
+          "name": "Foo",
+        },
+      ],
+      "valueTypes": Array [],
+    },
+  },
+  "status": "changed",
+}
+`;
+
+exports[`EntityEditorReducer scenarios open existing entity, set title field, simulate save 5`] = `
+Object {
+  "activeEntityEditorScrollSignal": 1,
+  "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "activeEntityMenuScrollSignal": 1,
+  "drafts": Array [
+    Object {
+      "draft": Object {
+        "authKey": "none",
+        "entitySpec": Object {
+          "adminOnly": false,
+          "fields": Array [
+            Object {
+              "name": "title",
+              "type": "String",
+            },
+          ],
+          "name": "Foo",
+        },
+        "fields": Array [
+          Object {
+            "fieldSpec": Object {
+              "name": "title",
+              "type": "String",
+            },
+            "normalizedValue": "New title",
+            "status": "",
+            "value": "New title",
+          },
+        ],
+        "name": "Foo name#123456",
+      },
+      "entity": Object {
+        "fields": Object {
+          "title": "New title",
+        },
+        "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+        "info": Object {
+          "authKey": "none",
+          "createdAt": "2022-04-30T07:51:25.56Z",
+          "name": "Foo name#123456",
+          "status": "draft",
+          "type": "Foo",
+          "updatedAt": "2022-05-01T07:51:25.56Z",
+          "version": 1,
         },
       },
       "entityWillBeUpdatedDueToUpsert": true,
@@ -480,7 +1180,68 @@ Object {
               "name": "title",
               "type": "String",
             },
+            "normalizedValue": null,
+            "status": "",
             "value": null,
+          },
+        ],
+        "name": "",
+      },
+      "entity": null,
+      "entityWillBeUpdatedDueToUpsert": false,
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "changed",
+    },
+  ],
+  "schema": AdminSchema {
+    "spec": Object {
+      "entityTypes": Array [
+        Object {
+          "adminOnly": false,
+          "fields": Array [
+            Object {
+              "name": "title",
+              "type": "String",
+            },
+          ],
+          "name": "Foo",
+        },
+      ],
+      "valueTypes": Array [],
+    },
+  },
+  "status": "changed",
+}
+`;
+
+exports[`SetFieldAction set title field of new draft 1`] = `
+Object {
+  "activeEntityEditorScrollSignal": 1,
+  "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "activeEntityMenuScrollSignal": 1,
+  "drafts": Array [
+    Object {
+      "draft": Object {
+        "authKey": null,
+        "entitySpec": Object {
+          "adminOnly": false,
+          "fields": Array [
+            Object {
+              "name": "title",
+              "type": "String",
+            },
+          ],
+          "name": "Foo",
+        },
+        "fields": Array [
+          Object {
+            "fieldSpec": Object {
+              "name": "title",
+              "type": "String",
+            },
+            "normalizedValue": "New title",
+            "status": "changed",
+            "value": "New title",
           },
         ],
         "name": "",
@@ -537,6 +1298,8 @@ Object {
               "name": "title",
               "type": "String",
             },
+            "normalizedValue": null,
+            "status": "",
             "value": null,
           },
         ],
@@ -545,7 +1308,7 @@ Object {
       "entity": null,
       "entityWillBeUpdatedDueToUpsert": false,
       "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
-      "status": "changed",
+      "status": "",
     },
   ],
   "schema": AdminSchema {
@@ -565,7 +1328,7 @@ Object {
       "valueTypes": Array [],
     },
   },
-  "status": "changed",
+  "status": "",
 }
 `;
 
@@ -594,6 +1357,8 @@ Object {
               "name": "title",
               "type": "String",
             },
+            "normalizedValue": "Title",
+            "status": "",
             "value": "Title",
           },
         ],
@@ -642,7 +1407,9 @@ Object {
 
 exports[`UpdateEntityAction add draft, update entity 2`] = `
 Object {
-  "fields": Object {},
+  "fields": Object {
+    "title": "Title",
+  },
   "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
   "info": Object {
     "type": "Foo",
