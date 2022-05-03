@@ -22,9 +22,9 @@ import {
   reduceEntityEditorState,
 } from '../../reducers/EntityEditorReducer/EntityEditorReducer';
 import { useSynchronizeUrlQueryAndEntityEditorState } from '../../reducers/EntityEditorReducer/EntityEditorUrlSynchronizer';
-import { AdminEntityEditorMenu } from './AdminEntityEditorMenu';
+import { EntityEditorMenu } from './EntityEditorMenu';
 
-export interface AdminEntityEditorScreenProps {
+export interface EntityEditorScreenProps {
   header?: React.ReactNode;
   footer?: React.ReactNode;
   urlSearchParams?: Readonly<URLSearchParams>;
@@ -32,13 +32,13 @@ export interface AdminEntityEditorScreenProps {
   onEditorHasChangesChange: (hasChanges: boolean) => void;
 }
 
-export function AdminEntityEditorScreen({
+export function EntityEditorScreen({
   header,
   footer,
   urlSearchParams,
   onUrlSearchParamsChange,
   onEditorHasChangesChange,
-}: AdminEntityEditorScreenProps) {
+}: EntityEditorScreenProps) {
   const { schema } = useContext(AdminDataDataContext);
   const [entityEditorState, dispatchEntityEditorState] = useReducer(
     reduceEntityEditorState,
@@ -88,7 +88,7 @@ export function AdminEntityEditorScreen({
           <AdminTypePicker iconLeft="add" showEntityTypes onTypeSelected={onCreateEntity}>
             Create
           </AdminTypePicker>
-          <AdminEntityEditorMenu
+          <EntityEditorMenu
             entityEditorState={entityEditorState}
             dispatchEntityEditorState={dispatchEntityEditorState}
           />

@@ -1,42 +1,21 @@
-import {
-  LegacyEntityEditorScreen,
-  LegacyEntityEditorSelector,
-} from '@jonasb/datadata-admin-react-components';
-import { useCallback, useMemo } from 'react';
+import { EntityEditorScreen } from '@jonasb/datadata-admin-react-components';
+import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { NavBar } from '../components/NavBar';
+import { useWarningOnExit } from '../hooks/useWarningOnExit';
 
 export function EditEntitiesRoute() {
   const [searchParams, setSearchParams] = useSearchParams();
+  const [hasChanges, setHasChanges] = useState(false);
 
-  //TODO cleanup EntityEditorScreen urlQuery interface
-  const entitySelectors = useMemo(() => {
-    const result: LegacyEntityEditorSelector[] = [];
-    const type = searchParams.get('type');
-    if (type) {
-      result.push({ newType: type });
-    }
-    for (const id of searchParams.get('ids')?.split(',') ?? []) {
-      result.push({ id });
-    }
-    return result;
-  }, [searchParams]);
-
-  const handleEntityIdsChanged = useCallback(
-    (ids: string[]) => {
-      const idsString = ids.join(',');
-      if (idsString !== searchParams.get('ids')) {
-        setSearchParams({ ids: idsString });
-      }
-    },
-    [setSearchParams, searchParams]
-  );
+  useWarningOnExit('Changes will be lost, are you sure you want to leave the page?', hasChanges);
 
   return (
-    <LegacyEntityEditorScreen
+    <EntityEditorScreen
       header={<NavBar current="admin-entities" />}
-      entitySelectors={entitySelectors}
-      onEntityIdsChanged={handleEntityIdsChanged}
+      urlSearchParams={searchParams}
+      onUrlSearchParamsChange={setSearchParams}
+      onEditorHasChangesChange={setHasChanges}
     />
   );
 }

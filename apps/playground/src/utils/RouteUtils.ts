@@ -7,11 +7,11 @@ export const ROUTE = {
     route: 'admin-entities',
     url: '/admin-entities',
   },
-  adminEditEntities: {
+  editEntities: {
     route: 'admin-edit-entities',
     url: '/admin-edit-entities',
   },
-  editEntities: {
+  legacyEditEntities: {
     route: 'admin-entities/edit',
     url: (ids: string[], type?: string) => {
       const search = new URLSearchParams();

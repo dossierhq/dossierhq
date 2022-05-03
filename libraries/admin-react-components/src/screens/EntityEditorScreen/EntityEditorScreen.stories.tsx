@@ -3,20 +3,17 @@ import type { Meta, Story } from '@storybook/react/types-6-0';
 import React, { useMemo, useState } from 'react';
 import { foo1Id } from '../../test/EntityFixtures';
 import { LoadContextProvider } from '../../test/LoadContextProvider';
-import type { AdminEntityEditorScreenProps } from './AdminEntityEditorScreen';
-import { AdminEntityEditorScreen } from './AdminEntityEditorScreen';
+import type { EntityEditorScreenProps } from './EntityEditorScreen';
+import { EntityEditorScreen } from './EntityEditorScreen';
 
-type StoryProps = Omit<
-  AdminEntityEditorScreenProps,
-  'urlSearchParams' | 'onUrlSearchParamsChange'
-> & {
+type StoryProps = Omit<EntityEditorScreenProps, 'urlSearchParams' | 'onUrlSearchParamsChange'> & {
   initialUrlSearchParams?: URLSearchParams;
   showUrl: boolean;
 };
 
 const meta: Meta<StoryProps> = {
-  title: 'Screens/AdminEntityEditorScreen',
-  component: AdminEntityEditorScreen,
+  title: 'Screens/EntityEditorScreen',
+  component: EntityEditorScreen,
   argTypes: {
     onEditorHasChangesChange: {
       action: 'editor-has-changes',
@@ -44,7 +41,7 @@ function Wrapper({
   return (
     <LoadContextProvider>
       <NotificationContainer>
-        <AdminEntityEditorScreen
+        <EntityEditorScreen
           {...props}
           header={
             <>
