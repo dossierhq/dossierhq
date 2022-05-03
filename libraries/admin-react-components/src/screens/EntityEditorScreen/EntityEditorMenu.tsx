@@ -12,7 +12,7 @@ interface Props {
   dispatchEntityEditorState: Dispatch<EntityEditorStateAction>;
 }
 
-export function AdminEntityEditorMenu({ entityEditorState, dispatchEntityEditorState }: Props) {
+export function EntityEditorMenu({ entityEditorState, dispatchEntityEditorState }: Props) {
   const { activeEntityId } = entityEditorState;
 
   return (

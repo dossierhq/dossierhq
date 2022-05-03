@@ -2,13 +2,13 @@ import type { LegacyEntityEditorSelector } from '@jonasb/datadata-admin-react-co
 import Joi from 'joi';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-import type { EntityEditorPageProps } from '../../components/EntityEditorPage/EntityEditorPage';
+import type { LegacyEntityEditorPageProps } from '../../components/LegacyEntityEditorPage/LegacyEntityEditorPage';
 import { validateQuery } from '../../utils/PageUtils';
 
-const EntityEditorPage = dynamic<EntityEditorPageProps>(
+const LegacyEntityEditorPage = dynamic<LegacyEntityEditorPageProps>(
   () =>
-    import('../../components/EntityEditorPage/EntityEditorPage').then(
-      (mod) => mod.EntityEditorPage
+    import('../../components/LegacyEntityEditorPage/LegacyEntityEditorPage').then(
+      (mod) => mod.LegacyEntityEditorPage
     ),
   { ssr: false }
 );
@@ -34,5 +34,5 @@ export default function EntityPage(): JSX.Element | null {
     entitySelectors.push({ id });
   }
 
-  return <EntityEditorPage entitySelectors={entitySelectors} />;
+  return <LegacyEntityEditorPage entitySelectors={entitySelectors} />;
 }
