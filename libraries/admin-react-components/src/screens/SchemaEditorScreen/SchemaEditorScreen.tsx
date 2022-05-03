@@ -119,7 +119,7 @@ export function SchemaEditorScreen({
             <EmptyStateMessage
               icon="add"
               title="Schema is empty"
-              message="There are no types in the schema."
+              message="There are no types in the schema"
             />
           ) : (
             <>
