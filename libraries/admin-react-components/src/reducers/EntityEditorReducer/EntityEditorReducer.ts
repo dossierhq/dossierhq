@@ -190,11 +190,23 @@ class AddDraftAction implements EntityEditorStateAction {
   }
 
   reduce(state: Readonly<EntityEditorState>): Readonly<EntityEditorState> {
+    let { activeEntityEditorScrollSignal, activeEntityMenuScrollSignal } = state;
+
+    // If the entity already exist, make it active and scroll to it
     if (this.selector.id && state.drafts.find((it) => it.id === this.selector.id)) {
-      return state;
+      activeEntityEditorScrollSignal++;
+      activeEntityMenuScrollSignal++;
+      return {
+        ...state,
+        activeEntityId: this.selector.id,
+        activeEntityEditorScrollSignal,
+        activeEntityMenuScrollSignal,
+      };
     }
+
     const { schema } = state;
     assertIsDefined(schema);
+
     const draft: EntityEditorDraftState = {
       id: this.selector.id ?? uuidv4(),
       status: '',
@@ -202,18 +214,23 @@ class AddDraftAction implements EntityEditorStateAction {
       entity: null,
       entityWillBeUpdatedDueToUpsert: false,
     };
+
     if ('newType' in this.selector) {
       const entitySpec = schema.getEntityTypeSpecification(this.selector.newType);
       assertIsDefined(entitySpec);
       draft.draft = createEditorEntityDraftState(schema, entitySpec, null);
+
+      // Delay scroll signals when opening a new entity
+      activeEntityEditorScrollSignal++;
+      activeEntityMenuScrollSignal++;
     }
 
     return {
       ...state,
       drafts: [...state.drafts, draft],
       activeEntityId: draft.id,
-      activeEntityEditorScrollSignal: state.activeEntityEditorScrollSignal + 1,
-      activeEntityMenuScrollSignal: state.activeEntityMenuScrollSignal + 1,
+      activeEntityEditorScrollSignal,
+      activeEntityMenuScrollSignal,
     };
   }
 }
@@ -363,6 +380,26 @@ class UpdateEntityAction extends EntityEditorDraftAction {
   constructor(entity: AdminEntity) {
     super(entity.id);
     this.entity = entity;
+  }
+
+  override reduce(state: Readonly<EntityEditorState>): Readonly<EntityEditorState> {
+    const newState = super.reduce(state);
+    if (state === newState) {
+      return newState;
+    }
+
+    const firstUpdateOfActiveEntity =
+      state.activeEntityId === this.id &&
+      state.drafts.some((it) => it.id === this.id && it.entity === null);
+
+    if (firstUpdateOfActiveEntity) {
+      return {
+        ...newState,
+        activeEntityMenuScrollSignal: newState.activeEntityMenuScrollSignal + 1,
+        activeEntityEditorScrollSignal: newState.activeEntityEditorScrollSignal + 1,
+      };
+    }
+    return newState;
   }
 
   reduceDraft(

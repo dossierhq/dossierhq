@@ -1,6 +1,79 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`AddDraftAction add Foo 1`] = `
+exports[`AddDraftAction add already open Foo 1`] = `
+Object {
+  "activeEntityEditorScrollSignal": 2,
+  "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "activeEntityMenuScrollSignal": 2,
+  "drafts": Array [
+    Object {
+      "draft": Object {
+        "authKey": "none",
+        "entitySpec": Object {
+          "adminOnly": false,
+          "fields": Array [
+            Object {
+              "name": "title",
+              "type": "String",
+            },
+          ],
+          "name": "Foo",
+        },
+        "fields": Array [
+          Object {
+            "fieldSpec": Object {
+              "name": "title",
+              "type": "String",
+            },
+            "normalizedValue": null,
+            "status": "",
+            "value": null,
+          },
+        ],
+        "name": "Foo",
+      },
+      "entity": Object {
+        "fields": Object {
+          "foo": null,
+        },
+        "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+        "info": Object {
+          "authKey": "none",
+          "createdAt": "2022-04-30T07:51:25.56Z",
+          "name": "Foo",
+          "status": "draft",
+          "type": "Foo",
+          "updatedAt": "2022-05-01T07:51:25.56Z",
+          "version": 0,
+        },
+      },
+      "entityWillBeUpdatedDueToUpsert": false,
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "",
+    },
+  ],
+  "schema": AdminSchema {
+    "spec": Object {
+      "entityTypes": Array [
+        Object {
+          "adminOnly": false,
+          "fields": Array [
+            Object {
+              "name": "title",
+              "type": "String",
+            },
+          ],
+          "name": "Foo",
+        },
+      ],
+      "valueTypes": Array [],
+    },
+  },
+  "status": "",
+}
+`;
+
+exports[`AddDraftAction add new Foo 1`] = `
 Object {
   "activeEntityEditorScrollSignal": 1,
   "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
@@ -338,9 +411,9 @@ Object {
 
 exports[`EntityEditorReducer scenarios add new draft, set name and authKey, force update 6`] = `
 Object {
-  "activeEntityEditorScrollSignal": 1,
+  "activeEntityEditorScrollSignal": 2,
   "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
-  "activeEntityMenuScrollSignal": 1,
+  "activeEntityMenuScrollSignal": 2,
   "drafts": Array [
     Object {
       "draft": Object {
@@ -720,9 +793,9 @@ Object {
 
 exports[`EntityEditorReducer scenarios add new draft, set name, authKey and title, simulate save 7`] = `
 Object {
-  "activeEntityEditorScrollSignal": 1,
+  "activeEntityEditorScrollSignal": 2,
   "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
-  "activeEntityMenuScrollSignal": 1,
+  "activeEntityMenuScrollSignal": 2,
   "drafts": Array [
     Object {
       "draft": Object {
@@ -1083,6 +1156,295 @@ Object {
             Object {
               "name": "title",
               "type": "String",
+            },
+          ],
+          "name": "Foo",
+        },
+      ],
+      "valueTypes": Array [],
+    },
+  },
+  "status": "",
+}
+`;
+
+exports[`EntityEditorReducer scenarios open first entity, open second entity: 1 Initial 1`] = `
+Object {
+  "activeEntityEditorScrollSignal": 1,
+  "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "activeEntityMenuScrollSignal": 1,
+  "drafts": Array [
+    Object {
+      "draft": Object {
+        "authKey": "none",
+        "entitySpec": Object {
+          "adminOnly": false,
+          "fields": Array [
+            Object {
+              "name": "foo",
+              "type": "EntityType",
+            },
+          ],
+          "name": "Foo",
+        },
+        "fields": Array [
+          Object {
+            "fieldSpec": Object {
+              "name": "foo",
+              "type": "EntityType",
+            },
+            "normalizedValue": Object {
+              "id": "af83fa2d-e05c-49ef-9e31-61e6472c1f28",
+            },
+            "status": "",
+            "value": Object {
+              "id": "af83fa2d-e05c-49ef-9e31-61e6472c1f28",
+            },
+          },
+        ],
+        "name": "Foo name#123456",
+      },
+      "entity": Object {
+        "fields": Object {
+          "foo": Object {
+            "id": "af83fa2d-e05c-49ef-9e31-61e6472c1f28",
+          },
+        },
+        "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+        "info": Object {
+          "authKey": "none",
+          "createdAt": "2022-04-30T07:51:25.56Z",
+          "name": "Foo name#123456",
+          "status": "draft",
+          "type": "Foo",
+          "updatedAt": "2022-04-30T07:51:25.56Z",
+          "version": 0,
+        },
+      },
+      "entityWillBeUpdatedDueToUpsert": false,
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "",
+    },
+  ],
+  "schema": AdminSchema {
+    "spec": Object {
+      "entityTypes": Array [
+        Object {
+          "adminOnly": false,
+          "fields": Array [
+            Object {
+              "name": "foo",
+              "type": "EntityType",
+            },
+          ],
+          "name": "Foo",
+        },
+      ],
+      "valueTypes": Array [],
+    },
+  },
+  "status": "",
+}
+`;
+
+exports[`EntityEditorReducer scenarios open first entity, open second entity: 2 After AddDraft 1`] = `
+Object {
+  "activeEntityEditorScrollSignal": 1,
+  "activeEntityId": "af83fa2d-e05c-49ef-9e31-61e6472c1f28",
+  "activeEntityMenuScrollSignal": 1,
+  "drafts": Array [
+    Object {
+      "draft": Object {
+        "authKey": "none",
+        "entitySpec": Object {
+          "adminOnly": false,
+          "fields": Array [
+            Object {
+              "name": "foo",
+              "type": "EntityType",
+            },
+          ],
+          "name": "Foo",
+        },
+        "fields": Array [
+          Object {
+            "fieldSpec": Object {
+              "name": "foo",
+              "type": "EntityType",
+            },
+            "normalizedValue": Object {
+              "id": "af83fa2d-e05c-49ef-9e31-61e6472c1f28",
+            },
+            "status": "",
+            "value": Object {
+              "id": "af83fa2d-e05c-49ef-9e31-61e6472c1f28",
+            },
+          },
+        ],
+        "name": "Foo name#123456",
+      },
+      "entity": Object {
+        "fields": Object {
+          "foo": Object {
+            "id": "af83fa2d-e05c-49ef-9e31-61e6472c1f28",
+          },
+        },
+        "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+        "info": Object {
+          "authKey": "none",
+          "createdAt": "2022-04-30T07:51:25.56Z",
+          "name": "Foo name#123456",
+          "status": "draft",
+          "type": "Foo",
+          "updatedAt": "2022-04-30T07:51:25.56Z",
+          "version": 0,
+        },
+      },
+      "entityWillBeUpdatedDueToUpsert": false,
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "",
+    },
+    Object {
+      "draft": null,
+      "entity": null,
+      "entityWillBeUpdatedDueToUpsert": false,
+      "id": "af83fa2d-e05c-49ef-9e31-61e6472c1f28",
+      "status": "",
+    },
+  ],
+  "schema": AdminSchema {
+    "spec": Object {
+      "entityTypes": Array [
+        Object {
+          "adminOnly": false,
+          "fields": Array [
+            Object {
+              "name": "foo",
+              "type": "EntityType",
+            },
+          ],
+          "name": "Foo",
+        },
+      ],
+      "valueTypes": Array [],
+    },
+  },
+  "status": "",
+}
+`;
+
+exports[`EntityEditorReducer scenarios open first entity, open second entity: 3 After UpdateEntity 1`] = `
+Object {
+  "activeEntityEditorScrollSignal": 2,
+  "activeEntityId": "af83fa2d-e05c-49ef-9e31-61e6472c1f28",
+  "activeEntityMenuScrollSignal": 2,
+  "drafts": Array [
+    Object {
+      "draft": Object {
+        "authKey": "none",
+        "entitySpec": Object {
+          "adminOnly": false,
+          "fields": Array [
+            Object {
+              "name": "foo",
+              "type": "EntityType",
+            },
+          ],
+          "name": "Foo",
+        },
+        "fields": Array [
+          Object {
+            "fieldSpec": Object {
+              "name": "foo",
+              "type": "EntityType",
+            },
+            "normalizedValue": Object {
+              "id": "af83fa2d-e05c-49ef-9e31-61e6472c1f28",
+            },
+            "status": "",
+            "value": Object {
+              "id": "af83fa2d-e05c-49ef-9e31-61e6472c1f28",
+            },
+          },
+        ],
+        "name": "Foo name#123456",
+      },
+      "entity": Object {
+        "fields": Object {
+          "foo": Object {
+            "id": "af83fa2d-e05c-49ef-9e31-61e6472c1f28",
+          },
+        },
+        "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+        "info": Object {
+          "authKey": "none",
+          "createdAt": "2022-04-30T07:51:25.56Z",
+          "name": "Foo name#123456",
+          "status": "draft",
+          "type": "Foo",
+          "updatedAt": "2022-04-30T07:51:25.56Z",
+          "version": 0,
+        },
+      },
+      "entityWillBeUpdatedDueToUpsert": false,
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "",
+    },
+    Object {
+      "draft": Object {
+        "authKey": "none",
+        "entitySpec": Object {
+          "adminOnly": false,
+          "fields": Array [
+            Object {
+              "name": "foo",
+              "type": "EntityType",
+            },
+          ],
+          "name": "Foo",
+        },
+        "fields": Array [
+          Object {
+            "fieldSpec": Object {
+              "name": "foo",
+              "type": "EntityType",
+            },
+            "normalizedValue": null,
+            "status": "",
+            "value": null,
+          },
+        ],
+        "name": "Foo 2",
+      },
+      "entity": Object {
+        "fields": Object {
+          "foo": null,
+        },
+        "id": "af83fa2d-e05c-49ef-9e31-61e6472c1f28",
+        "info": Object {
+          "authKey": "none",
+          "createdAt": "2022-04-30T07:51:25.56Z",
+          "name": "Foo 2",
+          "status": "draft",
+          "type": "Foo",
+          "updatedAt": "2022-05-01T07:51:25.56Z",
+          "version": 0,
+        },
+      },
+      "entityWillBeUpdatedDueToUpsert": false,
+      "id": "af83fa2d-e05c-49ef-9e31-61e6472c1f28",
+      "status": "",
+    },
+  ],
+  "schema": AdminSchema {
+    "spec": Object {
+      "entityTypes": Array [
+        Object {
+          "adminOnly": false,
+          "fields": Array [
+            Object {
+              "name": "foo",
+              "type": "EntityType",
             },
           ],
           "name": "Foo",

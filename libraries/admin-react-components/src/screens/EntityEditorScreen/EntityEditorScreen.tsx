@@ -11,6 +11,7 @@ import React, { useCallback, useContext, useEffect, useReducer } from 'react';
 import { AdminTypePicker } from '../../components/AdminTypePicker/AdminTypePicker';
 import { EntityEditor } from '../../components/EntityEditor/EntityEditor';
 import { AdminDataDataContext } from '../../contexts/AdminDataDataContext';
+import { EntityEditorDispatchContext } from '../../contexts/EntityEditorDispatchContext';
 import { useAdminEntity } from '../../hooks/useAdminEntity';
 import type {
   EntityEditorDraftState,
@@ -76,50 +77,52 @@ export function EntityEditorScreen({
   const editorScrollToId = activeEntityId ? `${activeEntityId}-header` : undefined;
 
   return (
-    <FullscreenContainer>
-      {header ? <FullscreenContainer.Row fullWidth>{header}</FullscreenContainer.Row> : null}
-      <FullscreenContainer.Columns fillHeight>
-        <FullscreenContainer.ScrollableColumn
-          width="3/12"
-          padding={2}
-          gap={2}
-          scrollToId={menuScrollToId}
-          scrollToIdSignal={activeEntityMenuScrollSignal}
-        >
-          <AdminTypePicker iconLeft="add" showEntityTypes onTypeSelected={onCreateEntity}>
-            Create
-          </AdminTypePicker>
-          <EntityEditorMenu
-            entityEditorState={entityEditorState}
-            dispatchEntityEditorState={dispatchEntityEditorState}
-          />
-        </FullscreenContainer.ScrollableColumn>
-        <FullscreenContainer.ScrollableColumn
-          scrollToId={editorScrollToId}
-          scrollToIdSignal={activeEntityEditorScrollSignal}
-        >
-          {drafts.length === 0 ? (
-            <EmptyStateMessage
-              icon="add"
-              title="No active entities"
-              message="Create or open an entity"
+    <EntityEditorDispatchContext.Provider value={dispatchEntityEditorState}>
+      <FullscreenContainer>
+        {header ? <FullscreenContainer.Row fullWidth>{header}</FullscreenContainer.Row> : null}
+        <FullscreenContainer.Columns fillHeight>
+          <FullscreenContainer.ScrollableColumn
+            width="3/12"
+            padding={2}
+            gap={2}
+            scrollToId={menuScrollToId}
+            scrollToIdSignal={activeEntityMenuScrollSignal}
+          >
+            <AdminTypePicker iconLeft="add" showEntityTypes onTypeSelected={onCreateEntity}>
+              Create
+            </AdminTypePicker>
+            <EntityEditorMenu
+              entityEditorState={entityEditorState}
+              dispatchEntityEditorState={dispatchEntityEditorState}
             />
-          ) : (
-            drafts.map((draftState) => (
-              <EntityRows
-                key={draftState.id}
-                draftState={draftState}
-                dispatchEntityEditorState={dispatchEntityEditorState}
+          </FullscreenContainer.ScrollableColumn>
+          <FullscreenContainer.ScrollableColumn
+            scrollToId={editorScrollToId}
+            scrollToIdSignal={activeEntityEditorScrollSignal}
+          >
+            {drafts.length === 0 ? (
+              <EmptyStateMessage
+                icon="add"
+                title="No active entities"
+                message="Create or open an entity"
               />
-            ))
-          )}
-        </FullscreenContainer.ScrollableColumn>
-        <FullscreenContainer.ScrollableColumn width="3/12" padding={2} gap={2}>
-          RIGHT
-        </FullscreenContainer.ScrollableColumn>
-      </FullscreenContainer.Columns>
-      {footer ? <FullscreenContainer.Row fullWidth>{footer}</FullscreenContainer.Row> : null}
-    </FullscreenContainer>
+            ) : (
+              drafts.map((draftState) => (
+                <EntityRows
+                  key={draftState.id}
+                  draftState={draftState}
+                  dispatchEntityEditorState={dispatchEntityEditorState}
+                />
+              ))
+            )}
+          </FullscreenContainer.ScrollableColumn>
+          <FullscreenContainer.ScrollableColumn width="3/12" padding={2} gap={2}>
+            RIGHT
+          </FullscreenContainer.ScrollableColumn>
+        </FullscreenContainer.Columns>
+        {footer ? <FullscreenContainer.Row fullWidth>{footer}</FullscreenContainer.Row> : null}
+      </FullscreenContainer>
+    </EntityEditorDispatchContext.Provider>
   );
 }
 
