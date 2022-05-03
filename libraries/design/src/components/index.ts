@@ -5,6 +5,7 @@ export { ButtonDropdown } from './ButtonDropdown/ButtonDropdown.js';
 export { Card } from './Card/Card.js';
 export { Checkbox } from './Checkbox/Checkbox.js';
 export { Column } from './Column/Column.js';
+export { Delete } from './Delete/Delete.js';
 export { Dialog } from './Dialog/Dialog.js';
 export { Dropdown } from './Dropdown/Dropdown.js';
 export { DropdownDisplay } from './DropdownDisplay/DropdownDisplay.js';
@@ -25,6 +26,7 @@ export type {
 export { EmptyStateMessage } from './EmptyStateMessage/EmptyStateMessage.js';
 export { Field } from './Field/Field.js';
 export { FullscreenContainer } from './FullscreenContainer/FullscreenContainer.js';
+export { HoverRevealContainer } from './HoverRevealContainer/HoverRevealContainer.js';
 export { Icon } from './Icon/Icon.js';
 export type { IconName } from './Icon/Icon.js';
 export { IconButton } from './IconButton/IconButton.js';

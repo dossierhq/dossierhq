@@ -31,3 +31,11 @@ export function toFlexContainerClassName({
     justifyContent && justifyContentClassNames[justifyContent]
   );
 }
+
+export interface FlexItemProps {
+  flexGrow?: 0 | 1;
+}
+
+export function toFlexItemClassName({ flexGrow }: FlexItemProps) {
+  return toClassName(typeof flexGrow === 'number' && `is-flex-grow-${flexGrow}`);
+}
