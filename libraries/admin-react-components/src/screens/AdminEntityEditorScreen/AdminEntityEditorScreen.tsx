@@ -1,4 +1,4 @@
-import { BeforeUnload, FullscreenContainer, Level, Text } from '@jonasb/datadata-design';
+import { FullscreenContainer, Level, Text } from '@jonasb/datadata-design';
 import type { Dispatch, MouseEvent } from 'react';
 import React, { useCallback, useContext, useEffect, useReducer } from 'react';
 import { AdminTypePicker } from '../../components/AdminTypePicker/AdminTypePicker';
@@ -22,6 +22,7 @@ export interface AdminEntityEditorScreenProps {
   footer?: React.ReactNode;
   urlSearchParams?: Readonly<URLSearchParams>;
   onUrlSearchParamsChange?: (urlSearchParams: Readonly<URLSearchParams>) => void;
+  onEditorHasChangesChange: (hasChanges: boolean) => void;
 }
 
 export function AdminEntityEditorScreen({
@@ -29,6 +30,7 @@ export function AdminEntityEditorScreen({
   footer,
   urlSearchParams,
   onUrlSearchParamsChange,
+  onEditorHasChangesChange,
 }: AdminEntityEditorScreenProps) {
   const { schema } = useContext(AdminDataDataContext);
   const [entityEditorState, dispatchEntityEditorState] = useReducer(
@@ -56,14 +58,15 @@ export function AdminEntityEditorScreen({
     dispatchEntityEditorState
   );
 
+  useEffect(() => {
+    onEditorHasChangesChange(entityEditorState.status === 'changed');
+  }, [entityEditorState.status, onEditorHasChangesChange]);
+
   const menuScrollToId = activeEntityId ? `${activeEntityId}-menuItem` : undefined;
   const editorScrollToId = activeEntityId ? `${activeEntityId}-header` : undefined;
 
   return (
     <FullscreenContainer>
-      {entityEditorState.status !== '' ? (
-        <BeforeUnload message="By leaving the page you will lose changes" />
-      ) : null}
       {header ? <FullscreenContainer.Row fullWidth>{header}</FullscreenContainer.Row> : null}
       <FullscreenContainer.Columns fillHeight>
         <FullscreenContainer.ScrollableColumn

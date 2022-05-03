@@ -1,12 +1,14 @@
 import { AdminEntityEditorScreen } from '@jonasb/datadata-admin-react-components';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { DataDataSharedProvider } from '../../contexts/DataDataSharedProvider';
+import { useWarningOnExit } from '../../hooks/useWarningOnExit';
 import { NavBar } from '../NavBar/NavBar';
 
 export default function AdminEntityEditorPage(): JSX.Element {
   const router = useRouter();
+  const [hasChanges, setHasChanges] = useState(false);
 
   const urlSearchParams = useMemo(() => {
     const result = new URLSearchParams();
@@ -27,6 +29,8 @@ export default function AdminEntityEditorPage(): JSX.Element {
     [router]
   );
 
+  useWarningOnExit('Changes will be lost, are you sure you want to leave the page?', hasChanges);
+
   return (
     <DataDataSharedProvider>
       <Head>
@@ -36,6 +40,7 @@ export default function AdminEntityEditorPage(): JSX.Element {
         header={<NavBar current="entities" />}
         urlSearchParams={urlSearchParams}
         onUrlSearchParamsChange={handleUrlSearchParamsChange}
+        onEditorHasChangesChange={setHasChanges}
       />
     </DataDataSharedProvider>
   );

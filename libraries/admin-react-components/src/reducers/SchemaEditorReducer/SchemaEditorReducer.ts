@@ -365,7 +365,9 @@ class DeleteTypeAction implements SchemaEditorStateAction {
       activeSelector = null;
     }
 
-    return { ...state, activeSelector, entityTypes, valueTypes };
+    const newState = { ...state, activeSelector, entityTypes, valueTypes };
+    newState.status = resolveSchemaStatus(newState);
+    return newState;
   }
 }
 

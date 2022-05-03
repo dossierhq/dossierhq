@@ -16,7 +16,11 @@ type StoryProps = SchemaEditorScreenProps;
 const meta: Meta<StoryProps> = {
   title: 'Screens/SchemaEditorScreen',
   component: SchemaEditorScreen,
-  argTypes: {},
+  argTypes: {
+    onEditorHasChangesChange: {
+      action: 'editor-has-changes',
+    },
+  },
   parameters: { layout: 'fullscreen' },
 };
 export default meta;
