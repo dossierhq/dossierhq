@@ -222,7 +222,7 @@ describe('UpdateSchemaSpecificationAction', () => {
 describe('EntityEditorReducer scenarios', () => {
   test('add new draft, set name and authKey, force update', async () => {
     const id = '619725d7-e583-4544-8bb0-23fc3c2870c0';
-    const stateAfterAddingDraft = reduceEntityEditorStateActions(
+    let state = reduceEntityEditorStateActions(
       initializeEntityEditorState(),
       new EntityEditorActions.UpdateSchemaSpecification(
         new AdminSchema({
@@ -238,33 +238,27 @@ describe('EntityEditorReducer scenarios', () => {
       ),
       new EntityEditorActions.AddDraft({ id, newType: 'Foo' })
     );
-    expect(stateAfterAddingDraft).toMatchSnapshot();
+    expect(state).toMatchSnapshot();
 
-    const stateAfterSetName = reduceEntityEditorState(
-      stateAfterAddingDraft,
-      new EntityEditorActions.SetName(id, 'Foo name')
-    );
-    expect(stateAfterSetName).toMatchSnapshot();
+    state = reduceEntityEditorState(state, new EntityEditorActions.SetName(id, 'Foo name'));
+    expect(state).toMatchSnapshot();
 
-    const stateAfterSetAuthKey = reduceEntityEditorState(
-      stateAfterSetName,
-      new EntityEditorActions.SetAuthKey(id, 'none')
-    );
-    expect(stateAfterSetAuthKey).toMatchSnapshot();
+    state = reduceEntityEditorState(state, new EntityEditorActions.SetAuthKey(id, 'none'));
+    expect(state).toMatchSnapshot();
 
     expect(
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      getEntityCreateFromDraftState(stateAfterSetAuthKey.drafts.find((it) => it.id === id)!)
+      getEntityCreateFromDraftState(state.drafts.find((it) => it.id === id)!)
     ).toMatchSnapshot();
 
-    const stateAfterMarkForUpsert = reduceEntityEditorState(
-      stateAfterSetAuthKey,
+    state = reduceEntityEditorState(
+      state,
       new EntityEditorActions.SetNextEntityUpdateIsDueToUpsert(id, true)
     );
-    expect(stateAfterMarkForUpsert).toMatchSnapshot();
+    expect(state).toMatchSnapshot();
 
-    const stateAfterEntityUpdate = reduceEntityEditorState(
-      stateAfterMarkForUpsert,
+    state = reduceEntityEditorState(
+      state,
       new EntityEditorActions.UpdateEntity({
         id,
         info: {
@@ -281,7 +275,7 @@ describe('EntityEditorReducer scenarios', () => {
         },
       })
     );
-    expect(stateAfterEntityUpdate).toMatchSnapshot();
+    expect(state).toMatchSnapshot();
   });
 
   test('add new draft, set name, authKey and title, simulate save', async () => {
