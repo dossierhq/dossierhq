@@ -90,3 +90,16 @@ Dropdown.args = {
     </>
   ),
 };
+
+export const CloseButton = Template.bind({});
+CloseButton.args = {
+  children: (
+    <>
+      <Card.Header>
+        <Card.HeaderTitle>Header</Card.HeaderTitle>
+        <Card.HeaderIconButton icon="close" onClick={console.log} />
+      </Card.Header>
+      <Card.Content>Content</Card.Content>
+    </>
+  ),
+};

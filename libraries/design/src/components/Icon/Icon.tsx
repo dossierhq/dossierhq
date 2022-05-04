@@ -13,6 +13,7 @@ import {
   faStepBackward,
   faStepForward,
   faThList,
+  faXmark,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
@@ -29,6 +30,7 @@ const icons = {
   add: faPlusSquare,
   chevronDown: faChevronDown,
   chevronUp: faChevronUp,
+  close: faXmark,
   first: faFastBackward,
   last: faFastForward,
   list: faThList,
