@@ -1,9 +1,5 @@
-import type { FunctionComponent, ReactNode } from 'react';
-import { useCallback, useRef } from 'react';
-import React, { useEffect } from 'react';
-import { toClassName } from '../../utils/ClassNameUtils';
-import type { TextStyle } from '../../utils/TextStylePropsUtils';
-import { toTextStyleClassName } from '../../utils/TextStylePropsUtils';
+import type { ReactNode } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 
 export interface DialogProps {
   show: boolean;
@@ -12,26 +8,7 @@ export interface DialogProps {
   children: ReactNode;
 }
 
-interface DialogLeftProps {
-  children: ReactNode;
-}
-
-interface DialogRightProps {
-  children: ReactNode;
-}
-
-interface DialogItemProps {
-  textStyle?: TextStyle;
-  children: ReactNode;
-}
-
-interface DialogComponent extends FunctionComponent<DialogProps> {
-  Left: FunctionComponent<DialogLeftProps>;
-  Right: FunctionComponent<DialogRightProps>;
-  Item: FunctionComponent<DialogItemProps>;
-}
-
-export const Dialog: DialogComponent = ({ show, modal, onClose, children }: DialogProps) => {
+export function Dialog({ show, modal, onClose, children }: DialogProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const handleClose = useCallback(
     (event: Event) => {
@@ -73,24 +50,4 @@ export const Dialog: DialogComponent = ({ show, modal, onClose, children }: Dial
       <form method="dialog">{children}</form>
     </dialog>
   );
-};
-Dialog.displayName = 'Dialog';
-
-Dialog.Left = ({ children }: DialogLeftProps) => {
-  return <div className="Dialog-left">{children}</div>;
-};
-Dialog.Left.displayName = 'Dialog.Left';
-
-Dialog.Right = ({ children }: DialogRightProps) => {
-  return <div className="Dialog-right">{children}</div>;
-};
-Dialog.Right.displayName = 'Dialog.Right';
-
-Dialog.Item = ({ textStyle, children }: DialogItemProps) => {
-  return (
-    <div className={toClassName('Dialog-item', textStyle && toTextStyleClassName(textStyle))}>
-      {children}
-    </div>
-  );
-};
-Dialog.Item.displayName = 'Dialog.Item';
+}

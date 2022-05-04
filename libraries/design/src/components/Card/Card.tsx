@@ -1,7 +1,8 @@
-import type { FunctionComponent, ReactNode } from 'react';
+import type { FunctionComponent, MouseEventHandler, ReactNode } from 'react';
 import React from 'react';
 import type { DropdownItem } from '../Dropdown/Dropdown';
 import { Dropdown } from '../Dropdown/Dropdown';
+import type { IconName } from '../Icon/Icon';
 import { Icon } from '../Icon/Icon';
 
 export interface CardProps {
@@ -20,6 +21,11 @@ interface CardHeaderDropDownProps<TItem extends DropdownItem> {
   items: TItem[];
   renderItem: (item: TItem) => React.ReactNode;
   onItemClick?: (item: TItem) => void;
+}
+
+interface CardHeaderIconButtonProps {
+  icon: IconName;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
 }
 
 interface CardContentProps {
@@ -47,6 +53,7 @@ interface CardComponent extends FunctionComponent<CardProps> {
     props: CardHeaderDropDownProps<TItem>,
     context?: unknown
   ) => JSX.Element;
+  HeaderIconButton: FunctionComponent<CardHeaderIconButtonProps>;
   Content: FunctionComponent<CardContentProps>;
   Footer: FunctionComponent<CardFooterProps>;
   FooterButton: FunctionComponent<CardFooterButtonProps>;
@@ -95,6 +102,15 @@ Card.HeaderDropdown = <TItem extends DropdownItem>({
     />
   );
 };
+
+Card.HeaderIconButton = ({ icon, onClick }: CardHeaderIconButtonProps) => {
+  return (
+    <button className="card-header-icon" onClick={onClick}>
+      <Icon icon={icon} />
+    </button>
+  );
+};
+Card.HeaderIconButton.displayName = 'Card.HeaderIconButton';
 
 Card.Content = ({ children }: CardContentProps) => {
   return (
