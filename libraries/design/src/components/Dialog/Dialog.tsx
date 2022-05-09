@@ -5,6 +5,7 @@ import { toSizeClassName } from '../../utils/LayoutPropsUtils';
 
 export interface DialogProps {
   show: boolean;
+  form?: boolean;
   modal?: boolean;
   width?: keyof typeof widthClassNameMap;
   height?: keyof typeof heightClassNameMap;
@@ -21,7 +22,7 @@ const heightClassNameMap = {
   fill: toSizeClassName({ height: '100vh' }),
 };
 
-export function Dialog({ show, width, height, modal, onClose, children }: DialogProps) {
+export function Dialog({ show, form, width, height, modal, onClose, children }: DialogProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const handleClose = useCallback(
     (event: Event) => {
@@ -52,6 +53,8 @@ export function Dialog({ show, width, height, modal, onClose, children }: Dialog
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [show]);
 
+  const containerClassName = `${width === 'wide' ? 'container ' : ''}is-height-100`;
+
   return (
     <dialog
       ref={dialogRef}
@@ -64,9 +67,13 @@ export function Dialog({ show, width, height, modal, onClose, children }: Dialog
       // @ts-ignore
       onClose={handleClose}
     >
-      <form method="dialog" className="container is-height-100">
-        {children}
-      </form>
+      {form ? (
+        <form method="dialog" className={containerClassName}>
+          {children}
+        </form>
+      ) : (
+        <div className={containerClassName}>{children}</div>
+      )}
     </dialog>
   );
 }
