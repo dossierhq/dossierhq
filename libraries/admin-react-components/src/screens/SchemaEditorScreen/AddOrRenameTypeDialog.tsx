@@ -84,7 +84,7 @@ export function AddOrRenameTypeDialog({
   }, [name, schemaEditorState, selector]);
 
   return (
-    <Dialog show={!!selector} modal onClose={handleClose}>
+    <Dialog show={!!selector} form modal onClose={handleClose}>
       {selector ? (
         <DialogContent
           {...{

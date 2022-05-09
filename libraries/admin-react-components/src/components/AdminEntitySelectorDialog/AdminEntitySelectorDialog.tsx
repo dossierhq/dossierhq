@@ -3,7 +3,11 @@ import { Dialog, FullscreenContainer, IconButton, Text } from '@jonasb/datadata-
 import React, { useReducer } from 'react';
 import { useAdminLoadSampleEntities } from '../../hooks/useAdminLoadSampleEntities';
 import { useAdminLoadSearchEntitiesAndTotalCount } from '../../hooks/useAdminLoadSearchEntitiesAndTotalCount';
-import { initializeSearchEntityState, reduceSearchEntityState } from '../../shared';
+import {
+  initializeSearchEntityState,
+  reduceSearchEntityState,
+  SearchOrSampleEntitiesButtons,
+} from '../../shared';
 import { AdminEntityList } from '../AdminEntityList/AdminEntityList';
 
 interface AdminEntitySelectorDialogProps {
@@ -23,16 +27,12 @@ export function AdminEntitySelectorDialog({
     <Dialog show={show} modal onClose={onClose} width="wide" height="fill">
       <FullscreenContainer card height="100%">
         <FullscreenContainer.Row flexDirection="row" alignItems="center">
-          <FullscreenContainer.Item flexGrow={1} paddingHorizontal={5} paddingVertical={2}>
+          <FullscreenContainer.Item flexGrow={1} paddingHorizontal={2} paddingVertical={2}>
             <Text textStyle="headline5">{title}</Text>
           </FullscreenContainer.Item>
-          <IconButton icon="close" color="white" />
+          <IconButton icon="close" color="white" onClick={onClose} />
         </FullscreenContainer.Row>
-        <FullscreenContainer.ScrollableRow>
-          <FullscreenContainer.Row>
-            {show ? <Content onItemClick={onItemClick} /> : null}
-          </FullscreenContainer.Row>
-        </FullscreenContainer.ScrollableRow>
+        {show ? <Content onItemClick={onItemClick} /> : null}
       </FullscreenContainer>
     </Dialog>
   );
@@ -58,5 +58,24 @@ function Content({ onItemClick }: { onItemClick: (item: AdminEntity) => void }) 
     dispatchSearchEntityState
   );
 
-  return <AdminEntityList {...{ searchEntityState, dispatchSearchEntityState, onItemClick }} />;
+  return (
+    <>
+      <FullscreenContainer.ScrollableRow
+        scrollToTopSignal={searchEntityState.entitiesScrollToTopSignal}
+      >
+        <FullscreenContainer.Row>
+          <AdminEntityList {...{ searchEntityState, dispatchSearchEntityState, onItemClick }} />
+        </FullscreenContainer.Row>
+      </FullscreenContainer.ScrollableRow>
+      <FullscreenContainer.Row
+        paddingHorizontal={2}
+        paddingVertical={2}
+        columnGap={2}
+        flexDirection="row"
+        alignItems="center"
+      >
+        <SearchOrSampleEntitiesButtons {...{ searchEntityState, dispatchSearchEntityState }} />
+      </FullscreenContainer.Row>
+    </>
+  );
 }

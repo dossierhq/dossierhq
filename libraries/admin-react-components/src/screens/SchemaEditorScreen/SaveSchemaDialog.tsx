@@ -54,7 +54,7 @@ export function SaveSchemaDialog({
   );
 
   return (
-    <Dialog show={show} modal onClose={handleClose}>
+    <Dialog show={show} form modal onClose={handleClose}>
       {show && schemaSpecUpdate ? (
         <SaveSchemaDialogContent schemaSpecUpdate={schemaSpecUpdate} />
       ) : null}

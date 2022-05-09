@@ -15,6 +15,7 @@ const meta: Meta<StoryProps> = {
   title: 'Components/Dialog',
   component: Dialog,
   args: {
+    form: true,
     modal: true,
   },
   parameters: { layout: 'centered' },
