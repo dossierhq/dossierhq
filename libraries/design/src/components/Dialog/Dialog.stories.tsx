@@ -23,7 +23,7 @@ const Template: Story<StoryProps> = (args) => {
 };
 
 function Wrapper({ children, onClose, ...args }: StoryProps) {
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(true);
   return (
     <>
       <div
@@ -60,8 +60,6 @@ function Wrapper({ children, onClose, ...args }: StoryProps) {
 
 export const Normal = Template.bind({});
 Normal.args = {
-  width: '100%',
-  maxWidth: '40rem',
   children: (
     <Card>
       <Card.Header>
@@ -76,15 +74,15 @@ Normal.args = {
   ),
 };
 
-export const FullScreen = Template.bind({});
-FullScreen.args = {
-  width: '100%',
-  height: '100%',
+export const Wide = Template.bind({});
+Wide.args = {
+  width: 'wide',
+  height: 'fill',
   children: (
     <Dialog.Frame>
       <Dialog.Header>
         <Dialog.HeaderTitle>Header</Dialog.HeaderTitle>
-        <Dialog.HeaderIcon icon="close" />
+        <Dialog.HeaderIconButton icon="close" />
       </Dialog.Header>
       <Dialog.Body>
         <div style={{ backgroundColor: 'transparent', height: '100%' }}>Body</div>
@@ -93,10 +91,10 @@ FullScreen.args = {
   ),
 };
 
-export const FullScreenNoButton = Template.bind({});
-FullScreenNoButton.args = {
-  width: '100%',
-  height: '100%',
+export const WideNoButton = Template.bind({});
+WideNoButton.args = {
+  width: 'wide',
+  height: 'fill',
   children: (
     <Dialog.Frame>
       <Dialog.Header>
