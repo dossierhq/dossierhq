@@ -1,11 +1,12 @@
-import type { EntityReference } from '@jonasb/datadata-core';
+import type { AdminEntity, EntityReference } from '@jonasb/datadata-core';
 import { Button, Delete, HoverRevealContainer, Text } from '@jonasb/datadata-design';
 import type { MouseEvent } from 'react';
-import React, { useCallback, useContext } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 import { AdminDataDataContext } from '../../contexts/AdminDataDataContext';
 import { EntityEditorDispatchContext } from '../../contexts/EntityEditorDispatchContext';
 import { useAdminEntity } from '../../hooks/useAdminEntity';
 import { EntityEditorActions } from '../../reducers/EntityEditorReducer/EntityEditorReducer';
+import { AdminEntitySelectorDialog } from '../AdminEntitySelectorDialog/AdminEntitySelectorDialog';
 import { StatusTag } from '../StatusTag/StatusTag';
 import type { FieldEditorProps } from './FieldEditor';
 
@@ -15,6 +16,8 @@ export function EntityTypeFieldEditor({ value, onChange }: Props) {
   const { adminClient } = useContext(AdminDataDataContext);
   const dispatchEntityEditorState = useContext(EntityEditorDispatchContext);
   const { entity, entityError: _error } = useAdminEntity(adminClient, value ?? undefined);
+
+  const [showSelector, setShowSelector] = useState(false);
 
   const handleEntityClick = useCallback(
     (event: MouseEvent) => {
@@ -28,6 +31,15 @@ export function EntityTypeFieldEditor({ value, onChange }: Props) {
     [dispatchEntityEditorState, value]
   );
   const handleDeleteClick = useCallback(() => onChange(null), [onChange]);
+  const handleSelectClick = useCallback(() => setShowSelector(true), []);
+  const handleItemClick = useCallback(
+    (item: AdminEntity) => {
+      onChange({ id: item.id });
+      setShowSelector(false);
+    },
+    [onChange]
+  );
+  const handleDialogClose = useCallback(() => setShowSelector(false), []);
 
   return (
     <>
@@ -49,8 +61,16 @@ export function EntityTypeFieldEditor({ value, onChange }: Props) {
           </HoverRevealContainer.Item>
         </HoverRevealContainer>
       ) : (
-        <Button>Select entity</Button>
+        <Button onClick={handleSelectClick}>Select entity</Button>
       )}
+      {showSelector ? (
+        <AdminEntitySelectorDialog
+          show
+          title="Select entity"
+          onClose={handleDialogClose}
+          onItemClick={handleItemClick}
+        />
+      ) : null}
     </>
   );
 }
