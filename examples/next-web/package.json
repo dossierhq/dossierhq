@@ -46,7 +46,7 @@
     "leaflet": "~1.7.1",
     "next": "~12.1.4",
     "react": "~18.1.0",
-    "react-dom": "~18.0.0",
+    "react-dom": "~18.1.0",
     "sqlite3": "jonasb/node-sqlite3#3.36.0",
     "swr": "~1.3.0"
   },
