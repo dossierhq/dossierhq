@@ -79,7 +79,7 @@ export function AddOrRenameFieldDialog({
   }, [name, schemaEditorState, selector]);
 
   return (
-    <Dialog show={!!selector} modal onClose={handleClose}>
+    <Dialog show={!!selector} modal onClose={handleClose} width="100%" maxWidth="40rem">
       {selector ? (
         <DialogContent
           {...{

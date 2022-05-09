@@ -3,10 +3,15 @@ import React from 'react';
 import type { IconName } from '../index.js';
 import { Button, Icon } from '../index.js';
 import { toClassName } from '../../utils/ClassNameUtils.js';
+import type { Color } from '../../config/Colors.js';
+import type { IconProps } from '../Icon/Icon.js';
 
 export interface IconButtonProps {
+  className?: string;
+  color?: Color;
   disabled?: boolean;
   icon: IconName;
+  size?: IconProps['size'];
   onClick?: MouseEventHandler<HTMLButtonElement>;
   onMouseDown?: MouseEventHandler<HTMLButtonElement>;
 }
@@ -22,14 +27,23 @@ interface IconButtonComponent extends FunctionComponent<IconButtonProps> {
 }
 
 export const IconButton: IconButtonComponent = ({
+  className,
+  color,
   disabled,
   icon,
+  size,
   onClick,
   onMouseDown,
 }: IconButtonProps) => {
   return (
-    <Button onClick={onClick} onMouseDown={onMouseDown} disabled={disabled}>
-      <Icon icon={icon} />
+    <Button
+      className={className}
+      color={color}
+      onClick={onClick}
+      onMouseDown={onMouseDown}
+      disabled={disabled}
+    >
+      <Icon icon={icon} size={size} />
     </Button>
   );
 };
