@@ -3,6 +3,9 @@ import React, { useState } from 'react';
 import { Button } from '../Button/Button.js';
 import { ButtonDropdown } from '../ButtonDropdown/ButtonDropdown.js';
 import { Card } from '../Card/Card.js';
+import { FullscreenContainer } from '../FullscreenContainer/FullscreenContainer.js';
+import { IconButton } from '../IconButton/IconButton.js';
+import { Text } from '../Text/Text.js';
 import type { DialogProps } from './Dialog.js';
 import { Dialog } from './Dialog.js';
 
@@ -74,36 +77,29 @@ Normal.args = {
   ),
 };
 
-export const Wide = Template.bind({});
-Wide.args = {
+export const WideFillHeight = Template.bind({});
+WideFillHeight.args = {
   width: 'wide',
   height: 'fill',
   children: (
-    <Dialog.Frame>
-      <Dialog.Header>
-        <Dialog.HeaderTitle>Header</Dialog.HeaderTitle>
-        <Dialog.HeaderIconButton icon="close" />
-      </Dialog.Header>
-      <Dialog.Body>
-        <div style={{ backgroundColor: 'transparent', height: '100%' }}>Body</div>
-      </Dialog.Body>
-    </Dialog.Frame>
-  ),
-};
-
-export const WideNoButton = Template.bind({});
-WideNoButton.args = {
-  width: 'wide',
-  height: 'fill',
-  children: (
-    <Dialog.Frame>
-      <Dialog.Header>
-        <Dialog.HeaderTitle>Header</Dialog.HeaderTitle>
-      </Dialog.Header>
-      <Dialog.Body>
-        <div style={{ backgroundColor: 'transparent', height: '100%' }}>Body</div>
-      </Dialog.Body>
-    </Dialog.Frame>
+    <FullscreenContainer height="100%" card>
+      <FullscreenContainer.Row flexDirection="row" alignItems="center">
+        <FullscreenContainer.Item flexGrow={1} paddingHorizontal={5} paddingVertical={2}>
+          <Text textStyle="headline5">Header</Text>
+        </FullscreenContainer.Item>
+        <IconButton icon="close" color="white" />
+      </FullscreenContainer.Row>
+      <FullscreenContainer.ScrollableRow>
+        <div
+          style={{
+            border: '5px solid burlywood',
+            background:
+              'repeating-linear-gradient(-45deg, burlywood, burlywood 10px, transparent 10px, transparent 40px)',
+            height: '300vh',
+          }}
+        />
+      </FullscreenContainer.ScrollableRow>
+    </FullscreenContainer>
   ),
 };
 

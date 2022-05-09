@@ -1,9 +1,7 @@
-import type { FunctionComponent, MouseEventHandler, ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import React, { useCallback, useEffect, useRef } from 'react';
 import { toClassName } from '../../utils/ClassNameUtils';
 import { toSizeClassName } from '../../utils/LayoutPropsUtils';
-import type { IconName } from '../Icon/Icon';
-import { IconButton } from '../IconButton/IconButton';
 
 export interface DialogProps {
   show: boolean;
@@ -12,35 +10,6 @@ export interface DialogProps {
   height?: keyof typeof heightClassNameMap;
   onClose: (event: Event, returnValue: string) => void;
   children: ReactNode;
-}
-
-interface DialogFrameProps {
-  children: ReactNode;
-}
-
-interface DialogHeaderProps {
-  children: ReactNode;
-}
-
-interface DialogHeaderTitleProps {
-  children: ReactNode;
-}
-
-interface DialogHeaderIconButtonProps {
-  icon: IconName;
-  onClick?: MouseEventHandler<HTMLButtonElement>;
-}
-
-interface DialogBodyProps {
-  children: ReactNode;
-}
-
-interface DialogComponent extends FunctionComponent<DialogProps> {
-  Frame: FunctionComponent<DialogFrameProps>;
-  Header: FunctionComponent<DialogHeaderProps>;
-  HeaderTitle: FunctionComponent<DialogHeaderTitleProps>;
-  HeaderIconButton: FunctionComponent<DialogHeaderIconButtonProps>;
-  Body: FunctionComponent<DialogBodyProps>;
 }
 
 const widthClassNameMap = {
@@ -52,14 +21,7 @@ const heightClassNameMap = {
   fill: toSizeClassName({ height: '100vh' }),
 };
 
-export const Dialog: DialogComponent = ({
-  show,
-  width,
-  height,
-  modal,
-  onClose,
-  children,
-}: DialogProps) => {
+export function Dialog({ show, width, height, modal, onClose, children }: DialogProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const handleClose = useCallback(
     (event: Event) => {
@@ -107,37 +69,4 @@ export const Dialog: DialogComponent = ({
       </form>
     </dialog>
   );
-};
-
-Dialog.Frame = ({ children }: DialogFrameProps) => {
-  return <div className="dialog-frame">{children}</div>;
-};
-Dialog.Frame.displayName = 'Dialog.Frame';
-
-Dialog.Header = ({ children }: DialogHeaderProps) => {
-  return <div className="dialog-header">{children}</div>;
-};
-Dialog.Header.displayName = 'Dialog.Header';
-
-Dialog.HeaderTitle = ({ children }: DialogHeaderTitleProps) => {
-  return <div className="dialog-header-title">{children}</div>;
-};
-Dialog.HeaderTitle.displayName = 'Dialog.HeaderTitle';
-
-Dialog.HeaderIconButton = ({ icon, onClick }: DialogHeaderIconButtonProps) => {
-  return (
-    <IconButton
-      className="is-height-100 is-aspect-1"
-      color="white"
-      icon={icon}
-      size="medium"
-      onClick={onClick}
-    />
-  );
-};
-Dialog.HeaderIconButton.displayName = 'Dialog.HeaderIconButton';
-
-Dialog.Body = ({ children }: DialogBodyProps) => {
-  return <div className="dialog-body">{children}</div>;
-};
-Dialog.Body.displayName = 'Dialog.Body';
+}
