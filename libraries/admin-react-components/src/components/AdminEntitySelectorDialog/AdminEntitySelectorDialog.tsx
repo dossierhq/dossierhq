@@ -1,14 +1,26 @@
 import type { AdminEntity, AdminQuery, AdminSearchQuery } from '@jonasb/datadata-core';
-import { Dialog, FullscreenContainer, IconButton, Text } from '@jonasb/datadata-design';
-import React, { useReducer } from 'react';
+import {
+  Dialog,
+  FullscreenContainer,
+  IconButton,
+  Text,
+  toSizeClassName,
+} from '@jonasb/datadata-design';
+import React, { useCallback, useContext, useReducer, useState } from 'react';
+import { AdminDataDataContext } from '../../contexts/AdminDataDataContext';
+import { useAdminEntitySearchFilters } from '../../hooks/useAdminEntitySearchFilters';
 import { useAdminLoadSampleEntities } from '../../hooks/useAdminLoadSampleEntities';
 import { useAdminLoadSearchEntitiesAndTotalCount } from '../../hooks/useAdminLoadSearchEntitiesAndTotalCount';
 import {
+  EntityMap,
   initializeSearchEntityState,
   reduceSearchEntityState,
+  SearchEntityStateActions,
   SearchOrSampleEntitiesButtons,
 } from '../../shared';
 import { AdminEntityList } from '../AdminEntityList/AdminEntityList';
+import { AdminEntityMapMarker } from '../AdminEntityMapMarker/AdminEntityMapMarker';
+import { AdminEntitySearchToolbar } from '../AdminEntitySearchToolbar/AdminEntitySearchToolbar';
 
 interface AdminEntitySelectorDialogProps {
   show: boolean;
@@ -39,11 +51,37 @@ export function AdminEntitySelectorDialog({
 }
 
 function Content({ onItemClick }: { onItemClick: (item: AdminEntity) => void }) {
+  const { schema } = useContext(AdminDataDataContext);
+
   const [searchEntityState, dispatchSearchEntityState] = useReducer(
     reduceSearchEntityState,
     [],
     initializeSearchEntityState
   );
+
+  const {
+    entityTypeFilterState,
+    dispatchEntityTypeFilterState,
+    statusFilterState,
+    dispatchStatusFilterState,
+    authKeyFilterState,
+    dispatchAuthKeyFilterState,
+  } = useAdminEntitySearchFilters(searchEntityState, dispatchSearchEntityState);
+
+  // map or list
+  const [showMap, setShowMap] = useState(!!searchEntityState.query.boundingBox);
+
+  const handleToggleShowMap = useCallback(() => {
+    if (showMap) {
+      dispatchSearchEntityState(
+        new SearchEntityStateActions.SetQuery(
+          { boundingBox: undefined },
+          { partial: true, resetPagingIfModifying: true }
+        )
+      );
+    }
+    setShowMap(!showMap);
+  }, [showMap]);
 
   // load search/total or sampling
   useAdminLoadSearchEntitiesAndTotalCount(
@@ -60,13 +98,46 @@ function Content({ onItemClick }: { onItemClick: (item: AdminEntity) => void }) 
 
   return (
     <>
-      <FullscreenContainer.ScrollableRow
-        scrollToTopSignal={searchEntityState.entitiesScrollToTopSignal}
-      >
-        <FullscreenContainer.Row>
-          <AdminEntityList {...{ searchEntityState, dispatchSearchEntityState, onItemClick }} />
+      <FullscreenContainer.Row center flexDirection="row" gap={2} paddingVertical={2}>
+        <AdminEntitySearchToolbar
+          {...{
+            showMap,
+            searchEntityState,
+            entityTypeFilterState,
+            statusFilterState,
+            authKeyFilterState,
+            dispatchSearchEntityState,
+            dispatchEntityTypeFilterState,
+            dispatchStatusFilterState,
+            dispatchAuthKeyFilterState,
+            onToggleMapClick: handleToggleShowMap,
+          }}
+        />
+      </FullscreenContainer.Row>
+      {showMap ? (
+        <FullscreenContainer.Row fillHeight fullWidth>
+          <EntityMap<AdminEntity>
+            className={toSizeClassName({ height: '100%' })}
+            {...{ schema, searchEntityState, dispatchSearchEntityState }}
+            renderEntityMarker={(key, entity, location) => (
+              <AdminEntityMapMarker
+                key={key}
+                entity={entity}
+                location={location}
+                onClick={() => onItemClick(entity)}
+              />
+            )}
+          />
         </FullscreenContainer.Row>
-      </FullscreenContainer.ScrollableRow>
+      ) : (
+        <FullscreenContainer.ScrollableRow
+          scrollToTopSignal={searchEntityState.entitiesScrollToTopSignal}
+        >
+          <FullscreenContainer.Row>
+            <AdminEntityList {...{ searchEntityState, dispatchSearchEntityState, onItemClick }} />
+          </FullscreenContainer.Row>
+        </FullscreenContainer.ScrollableRow>
+      )}
       <FullscreenContainer.Row
         paddingHorizontal={2}
         paddingVertical={2}
