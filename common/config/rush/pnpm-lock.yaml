@@ -232,7 +232,7 @@ importers:
   ../../libraries/admin-react-components:
     specifiers:
       '@babel/core': ^7.17.9
-      '@editorjs/editorjs': ~2.23.2
+      '@editorjs/editorjs': ~2.24.3
       '@jonasb/datadata-core': workspace:*
       '@jonasb/datadata-database-adapter-postgres-pg': workspace:*
       '@jonasb/datadata-design': workspace:*
@@ -284,7 +284,7 @@ importers:
       typescript: ^4.6.3
       uuid: ^8.3.2
     dependencies:
-      '@editorjs/editorjs': 2.23.2
+      '@editorjs/editorjs': 2.24.3
       '@jonasb/datadata-core': link:../core
       '@jonasb/datadata-design': link:../design
       leaflet: 1.7.1
@@ -2380,8 +2380,8 @@ packages:
     resolution: {integrity: sha512-087oW0oOIE5HX8llj4Eap/reFDFw8VCLlp6GU0E9GEp7f3zy2aV6KdFR+6dbYhZ50w7tSnkMpCAcSq1NXJeB4Q==}
     dev: false
 
-  /@editorjs/editorjs/2.23.2:
-    resolution: {integrity: sha512-SXWQjxE/ZO6zWvo83U+gfkM9LVJzYOtNkttyXkdfyYALVWiENyxtlej/Jmd1TZ4yWpKwQEICPXz0ceGkzKnJyQ==}
+  /@editorjs/editorjs/2.24.3:
+    resolution: {integrity: sha512-VzrWaQ7mggNUAPTDGcqXJNIlBZH3S2IqsIUGA43UM2Q9VFaeS5KuVFVOTrFJvAzF7G+vZTO52ocm+hrDhTwvyw==}
     dependencies:
       codex-notifier: 1.1.2
       codex-tooltip: 1.0.5
