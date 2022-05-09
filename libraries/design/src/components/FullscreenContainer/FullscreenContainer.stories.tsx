@@ -249,3 +249,29 @@ ThreeScrollableColumns.args = {
     </>
   ),
 };
+
+export const Card = Template.bind({});
+Card.args = {
+  card: true,
+  children: (
+    <>
+      <FullscreenContainer.Row>
+        <div style={{ height: 100 }} />
+      </FullscreenContainer.Row>
+      <FullscreenContainer.ScrollableRow>
+        <FullscreenContainer.Row>
+          <div
+            style={{
+              background:
+                'repeating-linear-gradient(45deg, burlywood, burlywood 10px, transparent 10px, transparent 40px)',
+              height: '300vh',
+            }}
+          />
+        </FullscreenContainer.Row>
+      </FullscreenContainer.ScrollableRow>
+      <FullscreenContainer.Row>
+        <div style={{ height: 100 }} />
+      </FullscreenContainer.Row>
+    </>
+  ),
+};

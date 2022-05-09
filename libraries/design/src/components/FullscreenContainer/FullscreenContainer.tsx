@@ -1,15 +1,21 @@
-import type { FunctionComponent, MouseEventHandler } from 'react';
+import type { FunctionComponent, MouseEventHandler, ReactNode } from 'react';
 import React from 'react';
 import { toSizeClassName } from '../../index.js';
 import { toClassName } from '../../utils/ClassNameUtils.js';
-import type { FlexContainerProps } from '../../utils/FlexboxUtils.js';
-import { toFlexContainerClassName } from '../../utils/FlexboxUtils.js';
-import type { GapProps, MarginProps, PaddingProps } from '../../utils/LayoutPropsUtils.js';
-import { extractLayoutProps } from '../../utils/LayoutPropsUtils.js';
-import { toSpacingClassName } from '../../utils/LayoutPropsUtils.js';
+import type { FlexContainerProps, FlexItemProps } from '../../utils/FlexboxUtils.js';
+import { toFlexContainerClassName, toFlexItemClassName } from '../../utils/FlexboxUtils.js';
+import type {
+  GapProps,
+  MarginProps,
+  PaddingProps,
+  SizeProps,
+} from '../../utils/LayoutPropsUtils.js';
+import { extractLayoutProps, toSpacingClassName } from '../../utils/LayoutPropsUtils.js';
 import { Scrollable } from '../index.js';
 
 export interface FullscreenContainerProps {
+  card?: boolean;
+  height?: SizeProps['height'];
   children: React.ReactNode;
 }
 
@@ -52,12 +58,17 @@ interface FullscreenContainerScrollableColumnProps
   children: React.ReactNode;
 }
 
+interface FullscreenContainerItemProps extends FlexItemProps, MarginProps, PaddingProps {
+  children?: ReactNode;
+}
+
 interface FullscreenContainerComponent extends FunctionComponent<FullscreenContainerProps> {
   Row: FunctionComponent<FullscreenContainerRowProps>;
   ScrollableRow: FunctionComponent<FullscreenContainerScrollableRowProps>;
   Columns: FunctionComponent<FullscreenContainerColumnsProps>;
   Column: FunctionComponent<FullscreenContainerColumnProps>;
   ScrollableColumn: FunctionComponent<FullscreenContainerScrollableColumnProps>;
+  Item: FunctionComponent<FullscreenContainerItemProps>;
 }
 
 const COLUMN_WIDTHS = {
@@ -65,13 +76,16 @@ const COLUMN_WIDTHS = {
 };
 
 export const FullscreenContainer: FullscreenContainerComponent = ({
+  card,
+  height,
   children,
 }: FullscreenContainerProps) => {
   return (
     <div
       className={toClassName(
         'is-flex is-flex-direction-column',
-        toSizeClassName({ height: '100vh' })
+        toSizeClassName({ height: height ?? '100vh' }),
+        card && 'is-card-container'
       )}
     >
       {children}
@@ -181,3 +195,10 @@ FullscreenContainer.ScrollableColumn = ({
 };
 FullscreenContainer.ScrollableColumn.displayName = 'FullscreenContainer.ScrollableColumn';
 FullscreenContainer.ScrollableColumn.defaultProps = { flexDirection: 'column' };
+
+FullscreenContainer.Item = ({ children, ...props }: FullscreenContainerItemProps) => (
+  <div className={toClassName(toFlexItemClassName(props), toSpacingClassName(props))}>
+    {children}
+  </div>
+);
+FullscreenContainer.Item.displayName = 'FullscreenContainer.Item';
