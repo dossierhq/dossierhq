@@ -256,7 +256,7 @@ importers:
       '@types/lodash': ~4.14.181
       '@types/react': ~18.0.0
       '@types/react-dom': ~18.0.0
-      '@types/react-test-renderer': ~17.0.1
+      '@types/react-test-renderer': ~18.0.0
       '@types/testing-library__jest-dom': ~5.14.3
       '@types/uuid': ~8.3.4
       '@typescript-eslint/eslint-plugin': ^5.18.0
@@ -318,7 +318,7 @@ importers:
       '@types/lodash': 4.14.181
       '@types/react': 18.0.0
       '@types/react-dom': 18.0.0
-      '@types/react-test-renderer': 17.0.1
+      '@types/react-test-renderer': 18.0.0
       '@types/testing-library__jest-dom': 5.14.3
       '@types/uuid': 8.3.4
       '@typescript-eslint/eslint-plugin': 5.18.0_0dd9be2ba5ed9805045f3fec8be848f5
@@ -5469,8 +5469,8 @@ packages:
       '@types/react': 18.0.0
     dev: true
 
-  /@types/react-test-renderer/17.0.1:
-    resolution: {integrity: sha512-3Fi2O6Zzq/f3QR9dRnlnHso9bMl7weKCviFmfF6B4LS1Uat6Hkm15k0ZAQuDz+UBq6B3+g+NM6IT2nr5QgPzCw==}
+  /@types/react-test-renderer/18.0.0:
+    resolution: {integrity: sha512-C7/5FBJ3g3sqUahguGi03O79b8afNeSD6T8/GU50oQrJCU0bVCCGQHaGKUbg2Ce8VQEEqTw8/HiS6lXHHdgkdQ==}
     dependencies:
       '@types/react': 18.0.0
     dev: true
