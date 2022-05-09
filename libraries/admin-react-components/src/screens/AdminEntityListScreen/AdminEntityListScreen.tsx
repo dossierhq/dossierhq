@@ -1,34 +1,25 @@
 import type { AdminEntity, AdminQuery, AdminSearchQuery } from '@jonasb/datadata-core';
-import { FullscreenContainer, IconButton, toSizeClassName } from '@jonasb/datadata-design';
-import React, { useCallback, useContext, useEffect, useReducer, useState } from 'react';
+import { FullscreenContainer, toSizeClassName } from '@jonasb/datadata-design';
+import React, { useCallback, useContext, useReducer, useState } from 'react';
 import type { EntitySearchStateUrlQuery } from '../..';
 import {
   AdminDataDataContext,
   AdminEntityList,
   AdminEntityMapMarker,
-  AdminTypePicker,
-  AuthKeySelector,
   AuthKeyTagSelector,
   EntityMap,
-  EntityTypeSelector,
   EntityTypeTagSelector,
-  initializeAuthKeySelectorState,
-  initializeEntityTypeSelectorState,
   initializeSearchEntityStateFromUrlQuery,
-  initializeStatusSelectorState,
-  reduceAuthKeySelectorState,
-  reduceEntityTypeSelectorState,
   reduceSearchEntityState,
-  reduceStatusSelectorState,
-  SearchEntitySearchInput,
   SearchEntityStateActions,
   SearchOrSampleEntitiesButtons,
-  StatusSelector,
   StatusTagSelector,
   useAdminLoadSampleEntities,
   useAdminLoadSearchEntitiesAndTotalCount,
   useSynchronizeUrlQueryAndSearchEntityState,
 } from '../..';
+import { AdminEntitySearchToolbar } from '../../components/AdminEntitySearchToolbar/AdminEntitySearchToolbar';
+import { useAdminEntitySearchFilters } from '../../hooks/useAdminEntitySearchFilters';
 
 export interface AdminEntityListScreenProps {
   header?: React.ReactNode;
@@ -47,38 +38,23 @@ export function AdminEntityListScreen({
   onCreateEntity,
   onOpenEntity,
 }: AdminEntityListScreenProps): JSX.Element | null {
-  const { schema, authKeys } = useContext(AdminDataDataContext);
+  const { schema } = useContext(AdminDataDataContext);
   const [searchEntityState, dispatchSearchEntityState] = useReducer(
     reduceSearchEntityState,
     urlQuery,
     initializeSearchEntityStateFromUrlQuery
   );
 
-  const [entityTypeFilterState, dispatchEntityTypeFilterState] = useReducer(
-    reduceEntityTypeSelectorState,
-    { selectedIds: searchEntityState.query.entityTypes },
-    initializeEntityTypeSelectorState
-  );
-
-  const [statusFilterState, dispatchStatusFilterState] = useReducer(
-    reduceStatusSelectorState,
-    {
-      selectedIds: (searchEntityState.query as AdminSearchQuery).status,
-    },
-    initializeStatusSelectorState
-  );
-
-  const [authKeyFilterState, dispatchAuthKeyFilterState] = useReducer(
-    reduceAuthKeySelectorState,
-    {
-      authKeys,
-      selectedIds: searchEntityState.query.authKeys,
-    },
-    initializeAuthKeySelectorState
-  );
+  const {
+    entityTypeFilterState,
+    dispatchEntityTypeFilterState,
+    statusFilterState,
+    dispatchStatusFilterState,
+    authKeyFilterState,
+    dispatchAuthKeyFilterState,
+  } = useAdminEntitySearchFilters(searchEntityState, dispatchSearchEntityState);
 
   // map or list
-
   const [showMap, setShowMap] = useState(!!searchEntityState.query.boundingBox);
 
   const handleToggleShowMap = useCallback(() => {
@@ -92,36 +68,6 @@ export function AdminEntityListScreen({
     }
     setShowMap(!showMap);
   }, [showMap]);
-
-  // sync entity type filter -> search state
-  useEffect(() => {
-    dispatchSearchEntityState(
-      new SearchEntityStateActions.SetQuery(
-        { entityTypes: entityTypeFilterState.selectedIds },
-        { partial: true, resetPagingIfModifying: true }
-      )
-    );
-  }, [entityTypeFilterState.selectedIds]);
-
-  // sync status filter -> search state
-  useEffect(() => {
-    dispatchSearchEntityState(
-      new SearchEntityStateActions.SetQuery(
-        { status: statusFilterState.selectedIds },
-        { partial: true, resetPagingIfModifying: true }
-      )
-    );
-  }, [statusFilterState.selectedIds]);
-
-  // sync auth key filter -> search state
-  useEffect(() => {
-    dispatchSearchEntityState(
-      new SearchEntityStateActions.SetQuery(
-        { authKeys: authKeyFilterState.selectedIds },
-        { partial: true, resetPagingIfModifying: true }
-      )
-    );
-  }, [authKeyFilterState.selectedIds]);
 
   // sync url <-> search entity state
   useSynchronizeUrlQueryAndSearchEntityState(
@@ -150,24 +96,21 @@ export function AdminEntityListScreen({
     <FullscreenContainer>
       {header ? <FullscreenContainer.Row fullWidth>{header}</FullscreenContainer.Row> : null}
       <FullscreenContainer.Row center flexDirection="row" gap={2} paddingVertical={2}>
-        <SearchEntitySearchInput {...{ searchEntityState, dispatchSearchEntityState }} />
-        <EntityTypeSelector
-          schema={schema}
-          state={entityTypeFilterState}
-          dispatch={dispatchEntityTypeFilterState}
-        >
-          Entity type
-        </EntityTypeSelector>
-        <StatusSelector state={statusFilterState} dispatch={dispatchStatusFilterState}>
-          Status
-        </StatusSelector>
-        <AuthKeySelector state={authKeyFilterState} dispatch={dispatchAuthKeyFilterState}>
-          Auth keys
-        </AuthKeySelector>
-        <IconButton icon={showMap ? 'list' : 'map'} onClick={handleToggleShowMap} />
-        <AdminTypePicker iconLeft="add" showEntityTypes onTypeSelected={onCreateEntity}>
-          Create
-        </AdminTypePicker>
+        <AdminEntitySearchToolbar
+          {...{
+            showMap,
+            searchEntityState,
+            dispatchSearchEntityState,
+            onToggleMapClick: handleToggleShowMap,
+            onCreateEntity,
+            entityTypeFilterState,
+            dispatchEntityTypeFilterState,
+            statusFilterState,
+            dispatchStatusFilterState,
+            authKeyFilterState,
+            dispatchAuthKeyFilterState,
+          }}
+        />
       </FullscreenContainer.Row>
       {showMap ? (
         <FullscreenContainer.Row fillHeight fullWidth>
