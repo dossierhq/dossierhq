@@ -33,6 +33,10 @@ tr.is-sticky-row :is(td, th),
   max-width: 40rem;
 }
 
+.is-aspect-1 {
+  aspect-ratio: 1;
+}
+
 @each $name, $value in $spacing-values {
   .g-#{$name} {
     #{gap}: $value !important ;
@@ -92,6 +96,34 @@ tr.is-sticky-row :is(td, th),
 .dialog {
   border: none;
   background-color: transparent;
+}
+
+.dialog-frame {
+  height: 100%;
+  background-color: $card-background-color;
+  border-radius: $card-radius;
+  box-shadow: $card-shadow;
+  color: $card-color;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.dialog-header {
+  background-color: $card-header-background-color;
+  box-shadow: $card-header-shadow;
+  display: flex;
+}
+
+.dialog-header-title {
+  color: $card-header-color;
+  font-weight: $card-header-weight;
+  padding: $card-header-padding;
+  flex-grow: 1;
+}
+
+.dialog-body {
+  flex-grow: 1;
 }
 
 .isolation-isolate {

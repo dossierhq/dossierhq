@@ -1,8 +1,8 @@
 import type { Meta, Story } from '@storybook/react/types-6-0.js';
 import React, { useState } from 'react';
 import { Button } from '../Button/Button.js';
-import { Card } from '../Card/Card.js';
 import { ButtonDropdown } from '../ButtonDropdown/ButtonDropdown.js';
+import { Card } from '../Card/Card.js';
 import type { DialogProps } from './Dialog.js';
 import { Dialog } from './Dialog.js';
 
@@ -60,6 +60,8 @@ function Wrapper({ children, onClose, ...args }: StoryProps) {
 
 export const Normal = Template.bind({});
 Normal.args = {
+  width: '100%',
+  maxWidth: '40rem',
   children: (
     <Card>
       <Card.Header>
@@ -71,6 +73,39 @@ Normal.args = {
         <Card.FooterButton value="save">Save</Card.FooterButton>
       </Card.Footer>
     </Card>
+  ),
+};
+
+export const FullScreen = Template.bind({});
+FullScreen.args = {
+  width: '100%',
+  height: '100%',
+  children: (
+    <Dialog.Frame>
+      <Dialog.Header>
+        <Dialog.HeaderTitle>Header</Dialog.HeaderTitle>
+        <Dialog.HeaderIcon icon="close" />
+      </Dialog.Header>
+      <Dialog.Body>
+        <div style={{ backgroundColor: 'transparent', height: '100%' }}>Body</div>
+      </Dialog.Body>
+    </Dialog.Frame>
+  ),
+};
+
+export const FullScreenNoButton = Template.bind({});
+FullScreenNoButton.args = {
+  width: '100%',
+  height: '100%',
+  children: (
+    <Dialog.Frame>
+      <Dialog.Header>
+        <Dialog.HeaderTitle>Header</Dialog.HeaderTitle>
+      </Dialog.Header>
+      <Dialog.Body>
+        <div style={{ backgroundColor: 'transparent', height: '100%' }}>Body</div>
+      </Dialog.Body>
+    </Dialog.Frame>
   ),
 };
 

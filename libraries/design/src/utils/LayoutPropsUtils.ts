@@ -41,9 +41,19 @@ const widthToClassNameMap = {
   '100%': 'is-width-100',
 };
 
+const maxWidthToClassNameMap = {
+  '40rem': 'is-max-width-40rem',
+};
+
+const aspectRatioClassNameMap = {
+  '1/1': 'is-aspect-1',
+};
+
 export interface SizeProps {
   width?: keyof typeof widthToClassNameMap;
   height?: keyof typeof heightToClassNameMap;
+  maxWidth?: keyof typeof maxWidthToClassNameMap;
+  aspectRatio?: keyof typeof aspectRatioClassNameMap;
 }
 
 type LayoutProps = SizeProps & SpacingProps & FlexContainerProps;
@@ -92,10 +102,12 @@ function valueClassName(prefix: string, value: SpacingValue | undefined) {
   return typeof value === 'number' ? prefix + value : undefined;
 }
 
-export function toSizeClassName({ width, height }: SizeProps): string {
+export function toSizeClassName({ width, height, maxWidth, aspectRatio }: SizeProps): string {
   return toClassName(
     width !== undefined && widthToClassNameMap[width],
-    height !== undefined && heightToClassNameMap[height]
+    height !== undefined && heightToClassNameMap[height],
+    maxWidth !== undefined && maxWidthToClassNameMap[maxWidth],
+    aspectRatio !== undefined && aspectRatioClassNameMap[aspectRatio]
   );
 }
 
