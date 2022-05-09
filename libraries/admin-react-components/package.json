@@ -42,7 +42,7 @@
     "@jonasb/datadata-postgres": "workspace:*",
     "@jonasb/datadata-server": "workspace:*",
     "@js-temporal/polyfill": "~0.4.0",
-    "@rushstack/eslint-plugin": "~0.8.6",
+    "@rushstack/eslint-plugin": "~0.9.0",
     "@rushstack/heft": "~0.45.0",
     "@rushstack/heft-jest-plugin": "~0.3.0",
     "@storybook/addon-actions": "^6.4.21",
@@ -75,12 +75,12 @@
     "jest-environment-jsdom": "~27.5.1",
     "mini-svg-data-uri": "~1.4.4",
     "prettier": "2.6.2",
-    "react-test-renderer": "~18.0.0",
+    "react-test-renderer": "~18.1.0",
     "svgo": "~2.8.0",
     "typescript": "^4.6.3"
   },
   "dependencies": {
-    "@editorjs/editorjs": "~2.23.2",
+    "@editorjs/editorjs": "~2.24.3",
     "@jonasb/datadata-core": "workspace:*",
     "@jonasb/datadata-design": "workspace:*",
     "leaflet": "~1.7.1",
