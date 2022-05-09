@@ -249,7 +249,7 @@ importers:
       '@storybook/manager-webpack5': ^6.4.21
       '@storybook/react': ^6.4.21
       '@testing-library/jest-dom': ~5.16.4
-      '@testing-library/react': ~13.0.0
+      '@testing-library/react': ~13.2.0
       '@testing-library/user-event': ~14.1.0
       '@types/heft-jest': 1.0.2
       '@types/leaflet': ~1.7.9
@@ -311,7 +311,7 @@ importers:
       '@storybook/manager-webpack5': 6.4.21_50b1b956b5760ca8423d11988514b152
       '@storybook/react': 6.4.21_ff03dd7978f24c5602263ef555f13018
       '@testing-library/jest-dom': 5.16.4
-      '@testing-library/react': 13.0.0_react-dom@18.0.0+react@18.0.0
+      '@testing-library/react': 13.2.0_react-dom@18.0.0+react@18.0.0
       '@testing-library/user-event': 14.1.0
       '@types/heft-jest': 1.0.2
       '@types/leaflet': 1.7.9
@@ -5121,8 +5121,8 @@ packages:
       redent: 3.0.0
     dev: true
 
-  /@testing-library/react/13.0.0_react-dom@18.0.0+react@18.0.0:
-    resolution: {integrity: sha512-p0lYA1M7uoEmk2LnCbZLGmHJHyH59sAaZVXChTXlyhV/PRW9LoIh4mdf7tiXsO8BoNG+vN8UnFJff1hbZeXv+w==}
+  /@testing-library/react/13.2.0_react-dom@18.0.0+react@18.0.0:
+    resolution: {integrity: sha512-Bprbz/SZVONCJy5f7hcihNCv313IJXdYiv0nSJklIs1SQCIHHNlnGNkosSXnGZTmesyGIcBGNppYhXcc11pb7g==}
     engines: {node: '>=12'}
     peerDependencies:
       react: ^18.0.0
