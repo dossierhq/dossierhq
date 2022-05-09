@@ -1,14 +1,15 @@
 import type { FunctionComponent, MouseEventHandler, ReactNode } from 'react';
 import React, { useCallback, useEffect, useRef } from 'react';
 import { toClassName } from '../../utils/ClassNameUtils';
-import type { SizeProps } from '../../utils/LayoutPropsUtils';
 import { toSizeClassName } from '../../utils/LayoutPropsUtils';
 import type { IconName } from '../Icon/Icon';
 import { IconButton } from '../IconButton/IconButton';
 
-export interface DialogProps extends SizeProps {
+export interface DialogProps {
   show: boolean;
   modal?: boolean;
+  width?: keyof typeof widthClassNameMap;
+  height?: keyof typeof heightClassNameMap;
   onClose: (event: Event, returnValue: string) => void;
   children: ReactNode;
 }
@@ -25,7 +26,7 @@ interface DialogHeaderTitleProps {
   children: ReactNode;
 }
 
-interface DialogHeaderIconProps {
+interface DialogHeaderIconButtonProps {
   icon: IconName;
   onClick?: MouseEventHandler<HTMLButtonElement>;
 }
@@ -38,16 +39,26 @@ interface DialogComponent extends FunctionComponent<DialogProps> {
   Frame: FunctionComponent<DialogFrameProps>;
   Header: FunctionComponent<DialogHeaderProps>;
   HeaderTitle: FunctionComponent<DialogHeaderTitleProps>;
-  HeaderIcon: FunctionComponent<DialogHeaderIconProps>;
+  HeaderIconButton: FunctionComponent<DialogHeaderIconButtonProps>;
   Body: FunctionComponent<DialogBodyProps>;
 }
 
+const widthClassNameMap = {
+  narrow: toSizeClassName({ width: '100%', maxWidth: '40rem' }),
+  wide: toSizeClassName({ width: '100%' }),
+};
+
+const heightClassNameMap = {
+  fill: toSizeClassName({ height: '100vh' }),
+};
+
 export const Dialog: DialogComponent = ({
   show,
+  width,
+  height,
   modal,
   onClose,
   children,
-  ...sizeProps
 }: DialogProps) => {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const handleClose = useCallback(
@@ -82,12 +93,16 @@ export const Dialog: DialogComponent = ({
   return (
     <dialog
       ref={dialogRef}
-      className={toClassName('dialog', toSizeClassName(sizeProps))}
+      className={toClassName(
+        'dialog',
+        widthClassNameMap[width ?? 'narrow'],
+        height && heightClassNameMap[height]
+      )}
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       onClose={handleClose}
     >
-      <form method="dialog" className="is-height-100">
+      <form method="dialog" className="container is-height-100">
         {children}
       </form>
     </dialog>
@@ -109,7 +124,7 @@ Dialog.HeaderTitle = ({ children }: DialogHeaderTitleProps) => {
 };
 Dialog.HeaderTitle.displayName = 'Dialog.HeaderTitle';
 
-Dialog.HeaderIcon = ({ icon, onClick }: DialogHeaderIconProps) => {
+Dialog.HeaderIconButton = ({ icon, onClick }: DialogHeaderIconButtonProps) => {
   return (
     <IconButton
       className="is-height-100 is-aspect-1"
@@ -120,7 +135,7 @@ Dialog.HeaderIcon = ({ icon, onClick }: DialogHeaderIconProps) => {
     />
   );
 };
-Dialog.HeaderIcon.displayName = 'Dialog.HeaderIcon';
+Dialog.HeaderIconButton.displayName = 'Dialog.HeaderIconButton';
 
 Dialog.Body = ({ children }: DialogBodyProps) => {
   return <div className="dialog-body">{children}</div>;
