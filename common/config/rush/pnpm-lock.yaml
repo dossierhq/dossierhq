@@ -268,7 +268,7 @@ importers:
       eslint-plugin-react: ~7.29.4
       eslint-plugin-react-hooks: ~4.4.0
       eslint-plugin-storybook: ~0.5.8
-      eslint-plugin-testing-library: ~5.2.1
+      eslint-plugin-testing-library: ~5.4.0
       jest-environment-jsdom: ~27.5.1
       leaflet: ~1.7.1
       lodash: ~4.17.21
@@ -330,7 +330,7 @@ importers:
       eslint-plugin-react: 7.29.4_eslint@8.13.0
       eslint-plugin-react-hooks: 4.4.0_eslint@8.13.0
       eslint-plugin-storybook: 0.5.8_eslint@8.13.0+typescript@4.6.3
-      eslint-plugin-testing-library: 5.2.1_eslint@8.13.0+typescript@4.6.3
+      eslint-plugin-testing-library: 5.4.0_eslint@8.13.0+typescript@4.6.3
       jest-environment-jsdom: 27.5.1
       mini-svg-data-uri: 1.4.4
       prettier: 2.6.2
@@ -727,7 +727,7 @@ importers:
       eslint-plugin-react: ~7.29.4
       eslint-plugin-react-hooks: ~4.4.0
       eslint-plugin-storybook: ~0.5.8
-      eslint-plugin-testing-library: ~5.2.1
+      eslint-plugin-testing-library: ~5.4.0
       prettier: 2.6.2
       react: ~18.1.0
       react-bulma-components: ~4.1.0
@@ -768,7 +768,7 @@ importers:
       eslint-plugin-react: 7.29.4_eslint@8.13.0
       eslint-plugin-react-hooks: 4.4.0_eslint@8.13.0
       eslint-plugin-storybook: 0.5.8_eslint@8.13.0+typescript@4.6.3
-      eslint-plugin-testing-library: 5.2.1_eslint@8.13.0+typescript@4.6.3
+      eslint-plugin-testing-library: 5.4.0_eslint@8.13.0+typescript@4.6.3
       prettier: 2.6.2
       sass: 1.50.0
       sass-loader: 12.6.0_sass@1.50.0
@@ -8996,8 +8996,8 @@ packages:
       - typescript
     dev: true
 
-  /eslint-plugin-testing-library/5.2.1_eslint@8.13.0+typescript@4.6.3:
-    resolution: {integrity: sha512-88qJv6uzYALtiYJDzhelP3ov0Px/GLgnu+UekjjDxL2nMyvgdTyboKqcDBsvFPmAeizlCoSWOjeBN4DxO0BxaA==}
+  /eslint-plugin-testing-library/5.4.0_eslint@8.13.0+typescript@4.6.3:
+    resolution: {integrity: sha512-XjxIf4g33KaZXxRNbR33+0WcRQ/zt8N0R58IY6/kkHnrY6zPsC1gs3u5cTZr5eUmCZN/sjoPak3uF5vHGKg2wg==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0, npm: '>=6'}
     peerDependencies:
       eslint: ^7.5.0 || ^8.0.0
