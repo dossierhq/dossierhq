@@ -85,7 +85,7 @@ WideFillHeight.args = {
   children: (
     <FullscreenContainer height="100%" card>
       <FullscreenContainer.Row flexDirection="row" alignItems="center">
-        <FullscreenContainer.Item flexGrow={1} paddingHorizontal={5} paddingVertical={2}>
+        <FullscreenContainer.Item flexGrow={1} paddingHorizontal={3} paddingVertical={2}>
           <Text textStyle="headline5">Header</Text>
         </FullscreenContainer.Item>
         <IconButton icon="close" color="white" />

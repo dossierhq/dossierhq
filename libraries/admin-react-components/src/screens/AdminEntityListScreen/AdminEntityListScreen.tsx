@@ -132,12 +132,17 @@ export function AdminEntityListScreen({
           scrollToTopSignal={searchEntityState.entitiesScrollToTopSignal}
         >
           <FullscreenContainer.Row>
-            <EntityTypeTagSelector
-              state={entityTypeFilterState}
-              dispatch={dispatchEntityTypeFilterState}
-            />
-            <StatusTagSelector state={statusFilterState} dispatch={dispatchStatusFilterState} />
-            <AuthKeyTagSelector state={authKeyFilterState} dispatch={dispatchAuthKeyFilterState} />
+            <FullscreenContainer.Item paddingHorizontal={3}>
+              <EntityTypeTagSelector
+                state={entityTypeFilterState}
+                dispatch={dispatchEntityTypeFilterState}
+              />
+              <StatusTagSelector state={statusFilterState} dispatch={dispatchStatusFilterState} />
+              <AuthKeyTagSelector
+                state={authKeyFilterState}
+                dispatch={dispatchAuthKeyFilterState}
+              />
+            </FullscreenContainer.Item>
             <AdminEntityList
               {...{ searchEntityState, dispatchSearchEntityState }}
               onItemClick={onOpenEntity}
