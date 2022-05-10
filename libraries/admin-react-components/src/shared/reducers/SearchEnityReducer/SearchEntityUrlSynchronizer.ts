@@ -19,7 +19,7 @@ export function initializeSearchEntityStateFromUrlQuery(
   urlQuery: EntitySearchStateUrlQuery | undefined
 ): SearchEntityState {
   const actions = urlQueryToSearchEntityStateActions(urlQuery);
-  return initializeSearchEntityState(actions);
+  return initializeSearchEntityState({ actions });
 }
 
 function urlQueryToSearchEntityStateActions(urlQuery: EntitySearchStateUrlQuery | undefined) {

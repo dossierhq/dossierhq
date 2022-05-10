@@ -28,6 +28,7 @@ import { StatusTagSelector } from '../StatusTagSelector/StatusTagSelector';
 interface AdminEntitySelectorDialogProps {
   show: boolean;
   title: string;
+  entityTypes: string[] | undefined;
   onClose: () => void;
   onItemClick: (item: AdminEntity) => void;
 }
@@ -35,6 +36,7 @@ interface AdminEntitySelectorDialogProps {
 export function AdminEntitySelectorDialog({
   show,
   title,
+  entityTypes,
   onClose,
   onItemClick,
 }: AdminEntitySelectorDialogProps) {
@@ -47,18 +49,24 @@ export function AdminEntitySelectorDialog({
           </FullscreenContainer.Item>
           <IconButton icon="close" color="white" onClick={onClose} />
         </FullscreenContainer.Row>
-        {show ? <Content onItemClick={onItemClick} /> : null}
+        {show ? <Content entityTypes={entityTypes} onItemClick={onItemClick} /> : null}
       </FullscreenContainer>
     </Dialog>
   );
 }
 
-function Content({ onItemClick }: { onItemClick: (item: AdminEntity) => void }) {
+function Content({
+  entityTypes,
+  onItemClick,
+}: {
+  entityTypes: string[] | undefined;
+  onItemClick: (item: AdminEntity) => void;
+}) {
   const { schema } = useContext(AdminDataDataContext);
 
   const [searchEntityState, dispatchSearchEntityState] = useReducer(
     reduceSearchEntityState,
-    [],
+    { restrictEntityTypes: entityTypes },
     initializeSearchEntityState
   );
 
