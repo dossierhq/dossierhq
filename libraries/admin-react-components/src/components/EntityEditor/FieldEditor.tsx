@@ -1,5 +1,7 @@
 import type { FieldSpecification } from '@jonasb/datadata-core';
 import {
+  isBooleanField,
+  isBooleanListField,
   isEntityTypeField,
   isEntityTypeListField,
   isStringField,
@@ -8,6 +10,7 @@ import {
   isValueTypeListField,
 } from '@jonasb/datadata-core';
 import React from 'react';
+import { BooleanFieldEditor } from './BooleanFieldEditor';
 import { EntityTypeFieldEditor } from './EntityTypeFieldEditor';
 import { FieldListWrapper } from './FieldListWrapper';
 import { StringFieldEditor } from './StringFieldEditor';
@@ -22,7 +25,11 @@ export interface FieldEditorProps<T> {
 export function FieldEditor({ value, ...props }: FieldEditorProps<unknown>) {
   const { fieldSpec } = props;
   let editor;
-  if (isEntityTypeField(fieldSpec, value)) {
+  if (isBooleanField(fieldSpec, value)) {
+    editor = <BooleanFieldEditor {...props} value={value} />;
+  } else if (isBooleanListField(fieldSpec, value)) {
+    editor = <FieldListWrapper {...props} value={value} Editor={BooleanFieldEditor} />;
+  } else if (isEntityTypeField(fieldSpec, value)) {
     editor = <EntityTypeFieldEditor {...props} value={value} />;
   } else if (isEntityTypeListField(fieldSpec, value)) {
     editor = <FieldListWrapper {...props} value={value} Editor={EntityTypeFieldEditor} />;
