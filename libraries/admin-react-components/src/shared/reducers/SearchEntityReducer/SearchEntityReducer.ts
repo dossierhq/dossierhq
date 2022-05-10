@@ -40,7 +40,7 @@ export interface SearchEntityState {
 }
 
 export interface SearchEntityStateAction {
-  reduce(state: SearchEntityState): SearchEntityState;
+  reduce(state: Readonly<SearchEntityState>): Readonly<SearchEntityState>;
 }
 
 export function initializeSearchEntityState({
@@ -80,9 +80,9 @@ export function initializeSearchEntityState({
 }
 
 export function reduceSearchEntityState(
-  state: SearchEntityState,
+  state: Readonly<SearchEntityState>,
   action: SearchEntityStateAction
-): SearchEntityState {
+): Readonly<SearchEntityState> {
   const newState = action.reduce(state);
   // if (state !== newState) console.log(`State changed for ${action.constructor.name}`, state, action, newState);
   return newState;
@@ -100,7 +100,7 @@ class SetPagingAction implements SearchEntityStateAction {
     this.pagingCause = pagingCause;
   }
 
-  reduce(state: SearchEntityState): SearchEntityState {
+  reduce(state: Readonly<SearchEntityState>): Readonly<SearchEntityState> {
     if (isEqual(this.paging, state.paging)) {
       return state;
     }
@@ -124,7 +124,7 @@ class SetSamplingAction implements SearchEntityStateAction {
     this.partial = partial;
   }
 
-  reduce(state: SearchEntityState): SearchEntityState {
+  reduce(state: Readonly<SearchEntityState>): Readonly<SearchEntityState> {
     const sampling = this.partial ? { ...state.sampling, ...this.value } : { ...this.value };
     if (sampling.seed === undefined) {
       sampling.seed = Math.floor(Math.random() * 999999);
@@ -168,7 +168,7 @@ class SetQueryAction implements SearchEntityStateAction {
     this.resetPagingIfModifying = resetPagingIfModifying;
   }
 
-  reduce(state: SearchEntityState): SearchEntityState {
+  reduce(state: Readonly<SearchEntityState>): Readonly<SearchEntityState> {
     const query: AdminSearchQuery | PublishedSearchQuery = this.partial
       ? { ...state.query, ...this.value }
       : { ...this.value };
@@ -244,7 +244,7 @@ class UpdateSearchResultAction implements SearchEntityStateAction {
     this.connectionError = connectionError;
   }
 
-  reduce(state: SearchEntityState): SearchEntityState {
+  reduce(state: Readonly<SearchEntityState>): Readonly<SearchEntityState> {
     if (state.connection === this.connection && state.connectionError === this.connectionError) {
       return state;
     }
@@ -279,7 +279,7 @@ class UpdateSampleResultAction implements SearchEntityStateAction {
     this.entitySamplesError = entitySamplesError;
   }
 
-  reduce(state: SearchEntityState): SearchEntityState {
+  reduce(state: Readonly<SearchEntityState>): Readonly<SearchEntityState> {
     if (
       state.entitySamples === this.entitySamples &&
       state.entitySamplesError === this.entitySamplesError
@@ -312,7 +312,7 @@ class UpdateTotalCountAction implements SearchEntityStateAction {
     this.totalCount = totalCount;
   }
 
-  reduce(state: SearchEntityState): SearchEntityState {
+  reduce(state: Readonly<SearchEntityState>): Readonly<SearchEntityState> {
     if (state.totalCount === this.totalCount) {
       return state;
     }
