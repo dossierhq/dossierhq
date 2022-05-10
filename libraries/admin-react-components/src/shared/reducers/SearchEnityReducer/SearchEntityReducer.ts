@@ -20,6 +20,8 @@ const defaultOrder: AdminQueryOrder | PublishedQueryOrder = AdminQueryOrder.name
 const defaultRequestedCount = 25;
 
 export interface SearchEntityState {
+  restrictEntityTypes: string[];
+
   query: AdminSearchQuery | PublishedSearchQuery;
   paging: Paging | undefined;
   sampling: EntitySamplingOptions | undefined;
@@ -41,8 +43,15 @@ export interface SearchEntityStateAction {
   reduce(state: SearchEntityState): SearchEntityState;
 }
 
-export function initializeSearchEntityState(actions: SearchEntityStateAction[]): SearchEntityState {
+export function initializeSearchEntityState({
+  actions,
+  restrictEntityTypes,
+}: {
+  actions?: SearchEntityStateAction[];
+  restrictEntityTypes?: string[];
+}): SearchEntityState {
   let state: SearchEntityState = {
+    restrictEntityTypes: restrictEntityTypes ?? [],
     query: {},
     paging: {},
     sampling: undefined,
@@ -62,8 +71,10 @@ export function initializeSearchEntityState(actions: SearchEntityStateAction[]):
     state,
     new SetQueryAction({}, { partial: true, resetPagingIfModifying: false })
   );
-  for (const action of actions) {
-    state = reduceSearchEntityState(state, action);
+  if (actions) {
+    for (const action of actions) {
+      state = reduceSearchEntityState(state, action);
+    }
   }
   return state;
 }
@@ -161,6 +172,17 @@ class SetQueryAction implements SearchEntityStateAction {
     const query: AdminSearchQuery | PublishedSearchQuery = this.partial
       ? { ...state.query, ...this.value }
       : { ...this.value };
+
+    // Restrictions
+    if (state.restrictEntityTypes.length > 0) {
+      if (query.entityTypes && query.entityTypes.length > 0) {
+        query.entityTypes = query.entityTypes.filter((it) =>
+          state.restrictEntityTypes.includes(it)
+        );
+      } else {
+        query.entityTypes = state.restrictEntityTypes;
+      }
+    }
 
     // Sampling/paging
     const switchToSearch = (this.value.order || this.value.reverse !== undefined) && state.sampling;

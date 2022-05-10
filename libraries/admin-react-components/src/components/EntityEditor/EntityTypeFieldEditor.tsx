@@ -12,7 +12,7 @@ import type { FieldEditorProps } from './FieldEditor';
 
 type Props = FieldEditorProps<EntityReference>;
 
-export function EntityTypeFieldEditor({ value, onChange }: Props) {
+export function EntityTypeFieldEditor({ value, onChange, fieldSpec }: Props) {
   const { adminClient } = useContext(AdminDataDataContext);
   const dispatchEntityEditorState = useContext(EntityEditorDispatchContext);
   const { entity, entityError: _error } = useAdminEntity(adminClient, value ?? undefined);
@@ -67,6 +67,7 @@ export function EntityTypeFieldEditor({ value, onChange }: Props) {
         <AdminEntitySelectorDialog
           show
           title="Select entity"
+          entityTypes={fieldSpec.entityTypes}
           onClose={handleDialogClose}
           onItemClick={handleItemClick}
         />
