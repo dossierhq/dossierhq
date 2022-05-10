@@ -27,6 +27,7 @@ export { EmptyStateMessage } from './EmptyStateMessage/EmptyStateMessage.js';
 export { Field } from './Field/Field.js';
 export { FullscreenContainer } from './FullscreenContainer/FullscreenContainer.js';
 export { HoverRevealContainer } from './HoverRevealContainer/HoverRevealContainer.js';
+export { HoverRevealStack } from './HoverRevealStack/HoverRevealStack.js';
 export { Icon } from './Icon/Icon.js';
 export type { IconName } from './Icon/Icon.js';
 export { IconButton } from './IconButton/IconButton.js';

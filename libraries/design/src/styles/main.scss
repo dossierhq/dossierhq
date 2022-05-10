@@ -37,6 +37,14 @@ tr.is-sticky-row :is(td, th),
   aspect-ratio: 1;
 }
 
+.is-absolute {
+  position: absolute;
+}
+
+.is-inset-0 {
+  inset: 0;
+}
+
 @each $name, $value in $spacing-values {
   .g-#{$name} {
     #{gap}: $value !important ;
